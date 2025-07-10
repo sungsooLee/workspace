@@ -1,18 +1,18 @@
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { IcoMinus, IcoPlus } from '@learnway/icons';
+import { Button, SplitPanel, TreeBox, TreeContainer } from '@learnway/ui';
 import { FormSubTitle } from '@shared/ui';
+import { Course } from '@types';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, SplitPanel, TreeBox, TreeContainer } from '@learnway/ui';
-import { IcoMinus, IcoPlus } from '@learnway/icons';
 import { CourseTabBaseProps, TabFormRef } from '../../-common/type';
-import { Course } from '@types';
+import { useDynamicForm2 } from '@learnway/hooks';
 
 const CurriculumComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
   ({ onSave, data: { formData, courseConfig } }, ref) => {
     const { t } = useTranslation();
     // const { provider, getValues, fetchData } = dynamicForm;
     const { provider, getValues, onSubmit, onFormValid, formState, updateFormData } =
-      useDynamicForm(formConfig);
+      useDynamicForm2();
 
     // 부모 컴포넌트에서 호출할 수 있는 유효성 검사 메서드
     useImperativeHandle(ref, () => ({
@@ -35,7 +35,7 @@ const CurriculumComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
       console.log('curriculumComponent init');
       // 초기 데이터가 있으면 설정
       if (formData) {
-        updateFormData(formData);
+        updateFormData(responseDataToFormData(formData));
       }
     }, [formData]);
 

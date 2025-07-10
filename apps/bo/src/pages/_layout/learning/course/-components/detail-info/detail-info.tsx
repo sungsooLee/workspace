@@ -17,6 +17,7 @@ import { useTranslation } from 'react-i18next';
 import { CourseTabBaseProps, TabFormRef } from '../../-common/type';
 import {
   ChannelListModal,
+  CourseChoiceModal,
   TeacherListModal,
 } from '@features/learning-operate/course/course-management';
 import { PassOptionFormField } from '../../-common/pass-option-form-field';
@@ -53,22 +54,13 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
 
     return (
       <div>
-        {/*테이블*/}
-        <ContentsRow>
-          <FormRow2
-            provider={provider}
-            name={'passOption'}
-            label={'이수기준'}
-            element={<PassOptionFormField />}
-          />
-        </ContentsRow>
         {/*학습환경*/}
         <ContentsRow type={'horizontal'} titleMode>
           <FormRow2
             provider={provider}
             name={'isLearnEnvEnabled'}
             label={'학습환경'}
-            element={<SwitchFormField />}
+            element={<SwitchFormField disabled={courseConfig.learningEnvOption === 'IMPOSSIBLE'} />}
           />
         </ContentsRow>
         {/* 기기 제한, 네트워크 제한, 학습시간 제한 */}
@@ -186,7 +178,9 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
             provider={provider}
             name={'isLearnControlEnabled'}
             label={'학습제어'}
-            element={<SwitchFormField />}
+            element={
+              <SwitchFormField disabled={courseConfig.learningControlOption === 'IMPOSSIBLE'} />
+            }
           />
         </ContentsRow>
         {/* 1일 진도제한, 진도 초기화, 순차 학습  */}
@@ -293,7 +287,7 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
             provider={provider}
             name={'isUsePassOption'}
             label={'이수기준 설정'}
-            element={<SwitchFormField />}
+            element={<SwitchFormField disabled={courseConfig.passOption === 'IMPOSSIBLE'} />}
           />
         </ContentsRow>
         <FormDisplay provider={provider} dependencies={[{ name: 'isUsePassOption', value: true }]}>
@@ -325,12 +319,41 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
                 />
               }
             />
-            {/* dummy */}
-            <FormRow provider={provider} name={''} />
+            {/* 학습 포인트 */}
+            <FormRow2
+              provider={provider}
+              name={'isRecognizedStudyPoint'}
+              label={'학습 포인트'}
+              element={
+                <RadioGroupFormField
+                  optionsConfig={{
+                    codeGroup: CODE_GROUP['mock.options.use'],
+                    optionsNode: [
+                      {
+                        value: true, // 사용
+                        node: (
+                          // 인정학습점수(학습포인트)
+                          <FormRow2
+                            provider={provider}
+                            name={'recognizedStudyPoint'}
+                            element={<Input type={'number'} min={0} suffixText="포인트" />}
+                          />
+                        ),
+                      },
+                    ],
+                  }}
+                />
+              }
+            />
           </ContentsRow>
-          {/* 이수기준 설정 */}
+          {/*이수기준 설정 */}
           <ContentsRow>
-            <FormRow provider={provider} name={'이수기준 설정'} element={<>EDIT GRID</>} />
+            <FormRow2
+              provider={provider}
+              name={'passOption'}
+              label={'이수기준 설정'}
+              element={<PassOptionFormField />}
+            />
           </ContentsRow>
           {/* 인정 학습시간, 학습 포인트 */}
           <ContentsRow>
@@ -368,32 +391,8 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
                 />
               }
             />
-            {/* 학습 포인트 */}
-            <FormRow2
-              provider={provider}
-              name={'isRecognizedStudyPoint'}
-              label={'학습 포인트'}
-              element={
-                <RadioGroupFormField
-                  optionsConfig={{
-                    codeGroup: CODE_GROUP['mock.options.use'],
-                    optionsNode: [
-                      {
-                        value: true, // 사용
-                        node: (
-                          // 인정학습점수(학습포인트)
-                          <FormRow2
-                            provider={provider}
-                            name={'recognizedStudyPoint'}
-                            element={<Input type={'number'} min={0} suffixText="포인트" />}
-                          />
-                        ),
-                      },
-                    ],
-                  }}
-                />
-              }
-            />
+            {/* dummy */}
+            <FormRow provider={provider} name={''} />
             {/* dummy */}
             <FormRow provider={provider} name={''} />
           </ContentsRow>
@@ -404,7 +403,9 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
             provider={provider}
             name={'isCommunicationToolEnabled'}
             label={'커뮤니티 및 공유설정'}
-            element={<SwitchFormField />}
+            element={
+              <SwitchFormField disabled={courseConfig.communicationOption === 'IMPOSSIBLE'} />
+            }
           />
         </ContentsRow>
         {/* 커뮤니티 및 공유 설정 */}
@@ -474,7 +475,7 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
             provider={provider}
             name={'isInstructorAssigned'}
             label={'강사'}
-            element={<SwitchFormField />}
+            element={<SwitchFormField disabled={courseConfig.instructorOption === 'IMPOSSIBLE'} />}
           />
         </ContentsRow>
         {/* 강사 */}
@@ -517,7 +518,7 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
             provider={provider}
             name={'isTextbookProvided'}
             label={'교재'}
-            element={<SwitchFormField />}
+            element={<SwitchFormField disabled={courseConfig.textBookOption === 'IMPOSSIBLE'} />}
           />
         </ContentsRow>
         <FormDisplay
@@ -548,7 +549,9 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
             provider={provider}
             name={'isRelatedPrerequisiteCourseExisted'}
             label={'사전/연관학습'}
-            element={<SwitchFormField />}
+            element={
+              <SwitchFormField disabled={courseConfig.relatedCourseOption === 'IMPOSSIBLE'} />
+            }
           />
         </ContentsRow>
         <FormDisplay
@@ -559,17 +562,24 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
           <ContentsRow>
             <FormRow2
               provider={provider}
-              name={'preRequisiteCourseIds'}
+              name={'preRequisiteCourseList'}
               label={'사전 필수과정'}
               element={
                 <ChipListModalSelectorFormField
-                  modalConfig={{ content: <TeacherListModal channelId={getValues()?.channelId} /> }}
+                  modalConfig={{
+                    content: (
+                      <CourseChoiceModal
+                        tenantIds={getValues()?.tenantIds}
+                        channelUuid={getValues()?.channelUuid}
+                      />
+                    ),
+                  }}
                   chipList={{
-                    labelField: 'name',
-                    valueField: 'id',
+                    labelField: 'courseName',
+                    valueField: 'courseId',
                     wordwrap: true,
                   }}
-                  actionNode={<Button variant="text" size="sm" label={t('추가')} />}
+                  showAddButton
                 />
               }
             />
@@ -578,17 +588,24 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
           <ContentsRow>
             <FormRow2
               provider={provider}
-              name={'relatedCourseIds'}
+              name={'relatedCourseList'}
               label={'연관 과정'}
               element={
                 <ChipListModalSelectorFormField
-                  modalConfig={{ content: <TeacherListModal channelId={getValues()?.channelId} /> }}
+                  modalConfig={{
+                    content: (
+                      <CourseChoiceModal
+                        tenantIds={getValues()?.tenantIds}
+                        channelUuid={getValues()?.channelUuid}
+                      />
+                    ),
+                  }}
                   chipList={{
-                    labelField: 'name',
-                    valueField: 'id',
+                    labelField: 'courseName',
+                    valueField: 'courseId',
                     wordwrap: true,
                   }}
-                  actionNode={<Button variant="text" size="sm" label={t('추가')} />}
+                  showAddButton
                 />
               }
             />
@@ -781,21 +798,30 @@ export const DetailInfo = DetailInfoComponent;
 /**
  * 응답 데이터를 폼 데이터로 변환
  */
-const responseDataToFormData = (response: Course): Course => {
-  // 이수기준
-  response.passOption = {
-    progressMinPassScore: response.progressMinPassScore, // 진도 최소 이수 점수
-    attendanceMinPassScore: response.attendanceMinPassScore, // 출석 최소 이수 점수
-    examMinPassScore: response.examMinPassScore, // 평가 최소 이수 점수
-    asgmtMinPassScore: response.asgmtMinPassScore, // 과제 최소 이수 점수
-    totalMinPassScore: response.totalMinPassScore, // 총점 최소 이수 점수
-    progressWeights: response.progressWeights, // 진도 반영 비율
-    attendanceWeights: response.attendanceWeights, // 출석 반영 비율
-    examWeights: response.examWeights, // 평가 반영 비율
-    asgmtWeights: response.asgmtWeights, // 과제 반영 비율
+const responseDataToFormData = (d: Course): Course => {
+  return {
+    ...d,
+    isLearnEnvEnabled: true, // 학습환경 설정 사용 여부
+    isLearnControlEnabled: true, // 학습제어 설정 사용 여부
+    isUsePassOption: true, // 이수기준 설정 사용 여부
+    isCommunicationToolEnabled: true, // 커뮤니티 및 공유설정 사용 여부
+    isInstructorAssigned: true, // 강사 설정 사용 여부
+    isTextbookProvided: true, // 교재 설정 사용 여부
+    isRelatedPrerequisiteCourseExisted: true, // 사전/연관학습 설정 사용 여부
+    isUseOutsourcing: true, // 오토에버 위탁 전용 설정 여부
+    // 이수기준 설정
+    passOption: {
+      progressMinPassScore: d.progressMinPassScore, // 진도 최소 이수 점수
+      attendanceMinPassScore: d.attendanceMinPassScore, // 출석 최소 이수 점수
+      examMinPassScore: d.examMinPassScore, // 평가 최소 이수 점수
+      asgmtMinPassScore: d.asgmtMinPassScore, // 과제 최소 이수 점수
+      totalMinPassScore: d.totalMinPassScore, // 총점 최소 이수 점수
+      progressWeights: d.progressWeights, // 진도 반영 비율
+      attendanceWeights: d.attendanceWeights, // 출석 반영 비율
+      examWeights: d.examWeights, // 평가 반영 비율
+      asgmtWeights: d.asgmtWeights, // 과제 반영 비율
+    },
   };
-  // 리턴
-  return response;
 };
 
 /**
@@ -807,8 +833,56 @@ const responseDataToFormData = (response: Course): Course => {
  */
 
 export const formDataToRequestData = (d: Course) => {
+  //사전 필수과정
+  const preRequisiteCourseIds = d.preRequisiteCourseList
+    ?.map((d) => d.courseId)
+    ?.filter((id): id is number => id !== undefined);
+  //연관 과정
+  const relatedCourseIds = d.relatedCourseList
+    ?.map((d) => d.courseId)
+    ?.filter((id): id is number => id !== undefined);
+
+  // 라디오 옵션 null 처리
+  // 복습 제한 > 미사용
+  if (d.isReviewRestricted === false) {
+    d.maxReviewPeriodMonths = undefined; // 복습 제한 기간(개월)
+  }
+
+  // 1일 진도제한 > 미사용
+  if (d.isDailyLearningProgressRestricted === false) {
+    d.maxDailyLearningProgress = undefined; // 1일 진도제한(분)
+  }
+
+  // 인정 학습시간 > 학습시간
+  if (d.recognizedStudyMinType === 'TIME') {
+    d.recognizedStudyCycles = undefined; // 인정 학습 횟수
+    d.recognizedStudyMinutes = undefined; // 인정 학습시간(분)
+  }
+
+  // 학습포인트 > 미사용
+  if (d.isRecognizedStudyPoint === false) {
+    d.recognizedStudyPoint = undefined; // 인정학습점수(학습포인트)
+  }
+
+  // 강사 > 강사선택
+  if (d.instructorAssignType === 'REGISTERED') {
+    d.instructorName = undefined; // 강사 직접입력
+  }
+
+  // 1인당 교육비 > 미사용
+  if (d.isUseTrainingCostPerPerson === false) {
+    d.trainingCostPerPerson = undefined; // 1인당 교육비(원)
+  }
+
+  // 고용보험 환급비용 > 미사용
+  if (d.isUseEmploymentInsuranceRefund === false) {
+    d.employmentInsuranceRefund = undefined; // 고용보험 환급비(원)
+  }
+
   return {
     ...d,
-    ...d.passOption, // 이수기준
+    ...d.passOption, // 이수기준 설정
+    preRequisiteCourseIds,
+    relatedCourseIds,
   };
 };

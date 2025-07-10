@@ -33,7 +33,7 @@ const PublishCourseComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
       console.log('PuComponent init');
       // 초기 데이터가 있으면 설정
       if (formData) {
-        updateFormData(formData);
+        updateFormData(responseDataToFormData(formData));
       }
     }, [formData]);
 

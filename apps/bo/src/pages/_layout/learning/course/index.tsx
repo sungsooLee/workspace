@@ -1,24 +1,26 @@
 import { queryOptions } from '@entities/course/service/course.queries';
 import { DropdownFormField } from '@features/form/ui/dropdown-form-field';
 import { CourseTypeOptionCardModal } from '@features/learning-operate/course/course-management';
-import {
-  GridExcelDownloadButton,
-  GridExcelUploadButton,
-  TenantByRoleDropdownFormField,
-  TenantChannelDropdownFormField,
-  SearchBoxForm,
-  FormRow2,
-} from '@shared/ui';
 import { LMSApiPrefix } from '@learnway/config';
 import { CODE_GROUP, getCodeLabel, useDynamicForm2 } from '@learnway/hooks';
+import { generateYears } from '@learnway/shared';
 import { Button, ContentsRow, Divider, GridBox, Input, useGridBox, useModal } from '@learnway/ui';
+import {
+  ContentsButtons,
+  FormRow2,
+  GridExcelDownloadButton,
+  GridExcelUploadButton,
+  MainContents,
+  PageContainer,
+  SearchBoxForm,
+  TenantByRoleDropdownFormField,
+  TenantChannelDropdownFormField,
+} from '@shared/ui';
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { CourseListItem, CoursesQueryParams } from '@types';
-import { PageContainer, MainContents, ContentsButtons } from '@shared/ui';
 import { t } from 'i18next';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { generateYears } from '@learnway/shared';
 
 export const Route = createFileRoute('/_layout/learning/course/')({
   component: RouteComponent,

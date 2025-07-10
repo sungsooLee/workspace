@@ -192,24 +192,13 @@ export const useCourseForm = (courseType?: string) => {
 const responseDataToFormData = (response: Course) => {
   return {
     ...response,
-    // step1
-    primaryCategoryId: 1, // 서버에서 받으면 삭제
-    categoryIds: response?.categories?.map((d: any) => d.categoryId), // 카테고리 아이디
-    tenantIds: response?.tenantList?.map((d: any) => d.tenantId), // 테넌트 아이디
-    targetList: response?.targetList?.map((d: any) => ({
-      ...d,
-      name: d?.combiners?.[0]?.combineValue,
-    })),
-    // step2
-    isEnrollRequired: true, // 수강신청 그룹
-    // step4
-    isLearnEnvEnabled: true, // 학습환경 설정 사용 여부
-    isLearnControlEnabled: true, // 학습제어 설정 사용 여부
-    isUsePassOption: true, // 이수기준 설정 사용 여부
-    isInstructorAssigned: true, // 강사 설정 사용 여부
-    isTextbookProvided: true, // 교재 설정 사용 여부
-    isRelatedPrerequisiteCourseExisted: true, // 사전/연관학습 설정 사용 여부
-    isUseOutsourcing: true, // 오토에버 위탁 전용 설정 여부
+    // primaryCategoryId: 1, // 서버에서 받으면 삭제
+    // categoryIds: response?.categories?.map((d: any) => d.categoryId), // 카테고리 아이디
+    // tenantIds: response?.tenantList?.map((d: any) => d.tenantId), // 테넌트 아이디
+    // targetList: response?.targetList?.map((d: any) => ({
+    //   ...d,
+    //   name: d?.combiners?.[0]?.combineValue,
+    // })),
   };
 };
 
@@ -219,12 +208,12 @@ const responseDataToFormData = (response: Course) => {
 const formDataToRequestData = (formData: Record<string, any>, activeTab: string): Course => {
   const newFormData = {
     ...formData,
-    categoryIds: formData?.categories?.map((d: any) => d.categoryId), // 카테고리 아이디
-    targetList: formData?.targetList?.map((d: any) => ({ ...d, name: undefined })), // 학습대상 아이디
     wizardStep: activeTab,
-    primaryCategoryId: 1, // 서버에서 받으면 삭제
-    coordinatorTelCountryCode: 'KOR_82',
-    operatorTelCountryCode: 'KOR_82',
+    // categoryIds: formData?.categories?.map((d: any) => d.categoryId), // 카테고리 아이디
+    // targetList: formData?.targetList?.map((d: any) => ({ ...d, name: undefined })), // 학습대상 아이디
+    // primaryCategoryId: 1, // 서버에서 받으면 삭제
+    // coordinatorTelCountryCode: 'KOR_82',
+    // operatorTelCountryCode: 'KOR_82',
   } as unknown as Course;
   // 수강신청
   return newFormData;

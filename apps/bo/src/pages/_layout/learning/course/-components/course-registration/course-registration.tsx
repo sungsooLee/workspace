@@ -36,7 +36,7 @@ const CourseRegistrationComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
       console.log('CourseRegistrationComponent init', formData);
       // 초기 데이터가 있으면 설정
       if (formData) {
-        updateFormData(formData);
+        updateFormData(responseDataToFormData(formData));
       }
     }, [formData]);
 
@@ -170,9 +170,11 @@ export const CourseRegistration = CourseRegistrationComponent;
 /**
  * 응답 데이터를 폼 데이터로 변환
  */
-const responseDataToFormData = (response: Course): Course => {
-  // 리턴
-  return response;
+const responseDataToFormData = (d: Course): Course => {
+  return {
+    ...d,
+    isEnrollRequired: true, // 수강신청 그룹
+  };
 };
 
 /**

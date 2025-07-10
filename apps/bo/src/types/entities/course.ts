@@ -472,13 +472,29 @@ export interface Course {
    */
   isRelatedPrerequisiteCourseExisted?: boolean;
   /**
-   * 사전 학습
+   * 사전 학습 과정 아이디 배열
    */
   preRequisiteCourseIds?: Array<number>;
   /**
-   * 연관 학습
+   * 사전 학습 과정 배열
+   */
+  preRequisiteCourseList?: Array<{
+    courseId?: number;
+    courseName?: string;
+    courseType?: string;
+  }>;
+  /**
+   * 연관 학습 과정 아이디 배열
    */
   relatedCourseIds?: Array<number>;
+  /**
+   * 연관 학습 과정 배열
+   */
+  relatedCourseList?: Array<{
+    courseId?: number;
+    courseName?: string;
+    courseType?: string;
+  }>;
   /**
    * HMG 과정 데이터 표준 분류 > 대분류
    */
