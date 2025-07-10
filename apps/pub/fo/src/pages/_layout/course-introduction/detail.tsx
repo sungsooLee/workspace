@@ -334,14 +334,6 @@ function RouteComponent() {
     });
   };
 
-  const options: SelectOption[] = [
-    { label: '실무세례 중심 학습', value: 'A' },
-    { label: '현직자 피드백 제공', value: 'B' },
-    { label: '프로그래밍 스킬 성장', value: 'C' },
-    { label: '중급 이상 난이도에 적합', value: 'D' },
-    { label: '타 과정에 비해 수료가 쉬운 편', value: 'E' },
-  ];
-
   // 학습유형 리스트 open, close
   const [listCategoryOpen, setListCategoryOpen] = useState<boolean>(true);
   const [listSubTitleOpen, setListSubTitleOpen] = useState<boolean>(false);
