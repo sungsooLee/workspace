@@ -6,6 +6,7 @@ import { queryOptions } from '@entities/course/service/course.queries';
 import { useQueryClient } from '@tanstack/react-query';
 import { Course, CourseConfig } from '@types';
 import { useCourseSaveMutations } from './use-course-save-mutation';
+import { getDummyCourse, getDummyCourse2, getDummyCourseConfig } from './course-mock-data';
 
 export const useCourseForm = (courseType?: string) => {
   // 현재 활성 탭
@@ -99,26 +100,39 @@ export const useCourseForm = (courseType?: string) => {
     [queryClient],
   );
 
-  // 과정 저장 API 호출
-  const saveCourseData = useCallback(
-    async (data: any) => {
-      const courseId = data?.formData?.courseId ?? data.courseId;
-      const requestData = formDataToRequestData(data, activeTab);
+  // 새 과정 생성
+  const createNewCourse = useCallback(
+    async (requestData: Course) => {
+      console.log('새로운 과정 생성:', requestData);
+      return await createCourse.mutateAsync(requestData);
+    },
+    [createCourse],
+  );
 
-      if (!courseId) {
-        console.log('새로운 과정 생성:', requestData);
-        return await createCourse.mutateAsync(requestData);
-      }
-
+  // 기존 과정 업데이트
+  const updateExistingCourse = useCallback(
+    async (requestData: Course) => {
       const saveMutation = saveMutations[activeTab];
       if (!saveMutation?.mutateAsync) {
         throw new Error(`${activeTab} 탭에 대한 저장 함수가 정의되지 않았습니다.`);
       }
-
       console.log(`${activeTab} 탭 업데이트:`, requestData);
       return await saveMutation.mutateAsync(requestData);
     },
-    [data, activeTab, createCourse, saveMutations],
+    [activeTab, saveMutations],
+  );
+
+  // 과정 저장 API 호출
+  const saveCourseData = useCallback(
+    async (formData: Partial<Course>) => {
+      const courseId = formData?.courseId;
+      const requestData = formDataToRequestData(formData, activeTab);
+
+      return courseId
+        ? await updateExistingCourse(requestData)
+        : await createNewCourse(requestData);
+    },
+    [activeTab, createNewCourse, updateExistingCourse],
   );
 
   // 현재 활성 탭 저장
@@ -141,8 +155,9 @@ export const useCourseForm = (courseType?: string) => {
       try {
         await deleteCourse.mutateAsync(courseId);
         return { success: true };
-      } catch (error) {
+      } catch (error: any) {
         console.error('과정 삭제 중 오류:', error);
+        throw new Error(`삭제 중 에러: ${error.message}`);
       }
     },
     [deleteCourse],
@@ -154,7 +169,7 @@ export const useCourseForm = (courseType?: string) => {
   }, []);
 
   // 테스트용
-  const loadMockData = useCallback((type: any) => {
+  const loadMockData = useCallback((type: 1 | 2 = 2) => {
     const dummyData = type === 1 ? getDummyCourse() : getDummyCourse2();
     setData((prev) => ({
       ...prev,
@@ -177,13 +192,7 @@ export const useCourseForm = (courseType?: string) => {
     loadCourseConfig,
     changeTab,
     loadMockData,
-    getTabValues: () => {
-      const currentRef = tabRefs.current[activeTab];
-      if (!currentRef) {
-        return null;
-      }
-      return currentRef.getValues?.();
-    },
+    getTabValues: () => tabRefs.current[activeTab]?.getValues?.() ?? null,
   };
 };
 
@@ -197,110 +206,9 @@ const responseDataToFormData = (response: Course) => {
 /**
  * 폼 데이터를 요청 데이터로 변환
  */
-const formDataToRequestData = (formData: Record<string, any>, activeTab: string): Course => {
-  const newFormData = {
+const formDataToRequestData = (formData: Partial<Course>, activeTab: CourseTab): Course => {
+  return {
     ...formData,
     wizardStep: activeTab,
-  } as unknown as Course;
-  // 수강신청
-  return newFormData;
-};
-
-// ------------------------------------------------------------------
-//
-// - 더미 데이터
-//
-// ------------------------------------------------------------------
-const getDummyCourseConfig = (): CourseConfig => {
-  return {
-    enrollOption: 'IMPOSSIBLE',
-    learningEnvOption: 'OPTIONAL',
-    learningControlOption: 'OPTIONAL',
-    passOption: 'MANDATORY',
-    communicationOption: 'OPTIONAL',
-    instructorOption: 'OPTIONAL',
-    textBookOption: 'OPTIONAL',
-    relatedCourseOption: 'OPTIONAL',
-    adminDataOption: 'OPTIONAL',
-    allowedContentTypes: ['VIDEO', 'EXAM', 'ASSIGNMENT'],
-    fileStorageType: 'AWS_INTERNAL',
-  };
-};
-
-// 이러닝1
-const getDummyCourse = () => {
-  return {
-    courseType: 'ELEARNING1',
-    categories: [
-      {
-        categoryId: 11,
-        name: '1-1',
-        categoryCode: 'category11',
-        categoryContent: '',
-        categoryPath: 'ROOT>한글명-CATE00011>1-1',
-        isPrimary: false,
-        tenantIds: [2],
-      },
-    ],
-    channelUuid: 'd4bf5f43-3184-445b-8985-f316619909db',
-    language: 'KO',
-    courseName: '과정명 1111111111111111',
-    courseSummary: 'ㅁㅁ',
-    courseContent:
-      '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"ㅍㅍㅍㅍㅍ","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}',
-    trainingLevelType: 'NONE',
-    learningSpaceType: 'LEARNING_WAY',
-    coordinatorUuid: 'c3927f00-3f6d-11f0-9435-0218a74d52f7',
-    coordinatorName: '정민혁/개발팀',
-    coordinatorDeptName: '정민혁/개발팀',
-    coordinatorTelCountryCode: 'KOR_82',
-    coordinatorTelNo: '2233',
-    coordinatorEmail: '2222',
-    operatorUuid: 'c39280c3-3f6d-11f0-9435-0218a74d52f7',
-    operatorName: '김지훈/개발팀',
-    operatorDeptName: '김지훈/개발팀',
-    primaryCategoryId: 11,
-    operatorTelCountryCode: 'KOR_82',
-  };
-};
-
-// 클래스
-const getDummyCourse2 = (): Course => {
-  return {
-    courseType: 'CLASS',
-    channelUuid: '67bbca16-4180-4982-a4e0-d192212dd7c2',
-    tenantIds: [2, 3],
-    categories: [
-      {
-        categoryId: 11,
-        name: '1-1',
-        categoryCode: 'category11',
-        categoryContent: '',
-        categoryPath: 'ROOT>한글명-CATE00011>1-1',
-        isPrimary: false,
-        tenantIds: [2],
-      },
-    ],
-    primaryCategoryId: 1,
-    targetList: [],
-    language: 'KO',
-    courseName: '과정명...',
-    courseSummary: '과장 요약',
-    courseContent:
-      '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"교육 내용","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}',
-    trainingLevelType: 'BASIC',
-    learningSpaceName: '장소',
-    operatorName: '김지훈/개발팀',
-    operatorUuid: 'c39280c3-3f6d-11f0-9435-0218a74d52f7',
-    operatorDeptName: '개발팀',
-    coordinatorUuid: 'c3929798-3f6d-11f0-9435-0218a74d5224',
-    learningSpaceType: 'MANUAL',
-    coordinatorName: '이현주/개발팀',
-    coordinatorDeptName: '개발팀',
-    coordinatorTelNo: '33332222',
-    coordinatorEmail: '담당자@email.com',
-    operatorTelNo: '44445555',
-    operatorEmail: '운영자@email.com',
-    learningSpaceNameKeyIn: 'xx',
-  } as unknown as Course;
+  } as Course;
 };
