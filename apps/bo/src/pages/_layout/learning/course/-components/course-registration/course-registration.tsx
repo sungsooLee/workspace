@@ -171,7 +171,6 @@ export const CourseRegistration = CourseRegistrationComponent;
  * 응답 데이터를 폼 데이터로 변환
  */
 const responseDataToFormData = (d: Course, courseConfig: CourseConfig): Course => {
-  const { enrollOption } = courseConfig;
   return {
     ...d,
     isEnrollRequired: courseConfig.enrollOption !== 'IMPOSSIBLE', // 수강신청 그룹

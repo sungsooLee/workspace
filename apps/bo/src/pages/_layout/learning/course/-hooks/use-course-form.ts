@@ -1,36 +1,30 @@
 import { useCallback, useRef, useState } from 'react';
-import { TabFormRef } from '../-common/type';
+import { CourseTab, TabFormRef } from '../-common/type';
 
-import {
-  useCreateCourse,
-  useUpdateCourseWizard1,
-  useUpdateCourseWizard2,
-  useUpdateCourseWizard3,
-  useUpdateCourseWizard4,
-  useUpdateCourseWizard5,
-} from '@entities/course';
-import { useQueryClient } from '@tanstack/react-query';
+import { useCreateCourse, useDeleteCourse } from '@entities/course';
 import { queryOptions } from '@entities/course/service/course.queries';
+import { useQueryClient } from '@tanstack/react-query';
 import { Course, CourseConfig } from '@types';
+import { useCourseSaveMutations } from './use-course-save-mutation';
 
 export const useCourseForm = (courseType?: string) => {
+  // 현재 활성 탭
+  const [activeTab, setActiveTab] = useState(CourseTab.STEP1);
+
   // QueryClient 인스턴스
   const queryClient = useQueryClient();
-  // 각 탭별 저장 훅
+  // 각 탭별 훅
   const createCourse = useCreateCourse();
-  const updateCourseWizard1 = useUpdateCourseWizard1();
-  const updateCourseWizard2 = useUpdateCourseWizard2();
-  const updateCourseWizard3 = useUpdateCourseWizard3();
-  const updateCourseWizard4 = useUpdateCourseWizard4();
-  const updateCourseWizard5 = useUpdateCourseWizard5();
+  const saveMutations = useCourseSaveMutations();
+  const deleteCourse = useDeleteCourse();
 
   // 각 탭의 ref 관리
   const tabRefs = useRef<Record<string, TabFormRef | null>>({
-    STEP1: null, // BasicInfo
-    STEP2: null, // CourseRegistration
-    STEP3: null, // Curriculum
-    STEP4: null, // DetailInfo
-    STEP5: null, // PublishCourse
+    [CourseTab.STEP1]: null, // BasicInfo
+    [CourseTab.STEP2]: null, // CourseRegistration
+    [CourseTab.STEP3]: null, // Curriculum
+    [CourseTab.STEP4]: null, // DetailInfo
+    [CourseTab.STEP5]: null, // PublishCourse
   });
 
   // 전체 폼 데이터 상태
@@ -40,9 +34,6 @@ export const useCourseForm = (courseType?: string) => {
     } as Course),
     courseConfig: {} as CourseConfig,
   });
-
-  // 현재 활성 탭
-  const [activeTab, setActiveTab] = useState('STEP1');
 
   // ref 설정 함수들
   const setTabRef = useCallback((tabKey: string, ref: TabFormRef | null) => {
@@ -64,27 +55,6 @@ export const useCourseForm = (courseType?: string) => {
       return { isValid: false, data: null, errors: '유효성 검사 중 오류가 발생했습니다.' };
     }
   }, []);
-
-  // 탭별 저장 함수 매핑
-  const getTabSaveFunction = useCallback(
-    (tabKey: string): { mutateAsync?: (data: any) => Promise<any> } | undefined => {
-      const saveHookMap = {
-        STEP1: updateCourseWizard1, // BasicInfo
-        STEP2: updateCourseWizard2, // CourseRegistration
-        STEP3: updateCourseWizard3, // Curriculum
-        STEP4: updateCourseWizard4, // DetailInfo
-        STEP5: updateCourseWizard5, // PublishCourse
-      };
-      return saveHookMap[tabKey as keyof typeof saveHookMap];
-    },
-    [
-      updateCourseWizard1,
-      updateCourseWizard2,
-      updateCourseWizard3,
-      updateCourseWizard4,
-      updateCourseWizard5,
-    ],
-  );
 
   // 데이터 항목 설정 정보 조회
   const loadCourseConfig = useCallback(
@@ -132,7 +102,7 @@ export const useCourseForm = (courseType?: string) => {
   // 과정 저장 API 호출
   const saveCourseData = useCallback(
     async (data: any) => {
-      const courseId = data?.formData?.courseId || data.courseId;
+      const courseId = data?.formData?.courseId ?? data.courseId;
       const requestData = formDataToRequestData(data, activeTab);
 
       if (!courseId) {
@@ -140,40 +110,46 @@ export const useCourseForm = (courseType?: string) => {
         return await createCourse.mutateAsync(requestData);
       }
 
-      const saveFunction = getTabSaveFunction(activeTab);
-      if (!saveFunction?.mutateAsync) {
+      const saveMutation = saveMutations[activeTab];
+      if (!saveMutation?.mutateAsync) {
         throw new Error(`${activeTab} 탭에 대한 저장 함수가 정의되지 않았습니다.`);
       }
 
       console.log(`${activeTab} 탭 업데이트:`, requestData);
-      return await saveFunction.mutateAsync(requestData);
+      return await saveMutation.mutateAsync(requestData);
     },
-    [data, activeTab, createCourse, getTabSaveFunction],
+    [data, activeTab, createCourse, saveMutations],
   );
 
   // 현재 활성 탭 저장
   const saveCurrentTab = useCallback(async () => {
     try {
-      // 1. 유효성 검사
       const { isValid, data: tabData, errors } = await validateTab(activeTab);
       if (!isValid) {
-        console.log(`${activeTab} 탭 유효성 검사 실패:`, errors);
         throw new Error(`유효성 검사 에러 : ${errors}`);
       }
-
-      // 2. API 호출 (상태 업데이트는 재조회에서 처리)
-      console.log(`${activeTab} 탭 유효성 검사 통과:`, tabData);
       await saveCourseData(tabData);
-
-      // 3. 리턴
       return { success: true };
     } catch (error: any) {
       throw new Error(`저장 중 에러 : ${error.message}`);
     }
   }, [activeTab, validateTab, saveCourseData]);
 
+  // 과정 삭제
+  const deleteCourseData = useCallback(
+    async (courseId: number) => {
+      try {
+        await deleteCourse.mutateAsync(courseId);
+        return { success: true };
+      } catch (error) {
+        console.error('과정 삭제 중 오류:', error);
+      }
+    },
+    [deleteCourse],
+  );
+
   // 탭 변경
-  const changeTab = useCallback((tabKey: string) => {
+  const changeTab = useCallback((tabKey: CourseTab) => {
     setActiveTab(tabKey);
   }, []);
 
@@ -196,6 +172,7 @@ export const useCourseForm = (courseType?: string) => {
     setTabRef,
     validateTab,
     saveCurrentTab,
+    deleteCourseData,
     loadCourseData,
     loadCourseConfig,
     changeTab,
@@ -214,16 +191,7 @@ export const useCourseForm = (courseType?: string) => {
  * 응답 데이터를 폼 데이터로 변환
  */
 const responseDataToFormData = (response: Course) => {
-  return {
-    ...response,
-    // primaryCategoryId: 1, // 서버에서 받으면 삭제
-    // categoryIds: response?.categories?.map((d: any) => d.categoryId), // 카테고리 아이디
-    // tenantIds: response?.tenantList?.map((d: any) => d.tenantId), // 테넌트 아이디
-    // targetList: response?.targetList?.map((d: any) => ({
-    //   ...d,
-    //   name: d?.combiners?.[0]?.combineValue,
-    // })),
-  };
+  return response;
 };
 
 /**
@@ -233,16 +201,16 @@ const formDataToRequestData = (formData: Record<string, any>, activeTab: string)
   const newFormData = {
     ...formData,
     wizardStep: activeTab,
-    // categoryIds: formData?.categories?.map((d: any) => d.categoryId), // 카테고리 아이디
-    // targetList: formData?.targetList?.map((d: any) => ({ ...d, name: undefined })), // 학습대상 아이디
-    // primaryCategoryId: 1, // 서버에서 받으면 삭제
-    // coordinatorTelCountryCode: 'KOR_82',
-    // operatorTelCountryCode: 'KOR_82',
   } as unknown as Course;
   // 수강신청
   return newFormData;
 };
 
+// ------------------------------------------------------------------
+//
+// - 더미 데이터
+//
+// ------------------------------------------------------------------
 const getDummyCourseConfig = (): CourseConfig => {
   return {
     enrollOption: 'IMPOSSIBLE',

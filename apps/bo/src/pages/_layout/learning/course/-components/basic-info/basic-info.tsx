@@ -394,7 +394,7 @@ const responseDataToFormData = (d: Course): Course => {
       ...d,
       name: d?.combiners?.[0]?.combineValue,
     })),
-    // 카테고리
+    // 카테고리 팝업 에러나서 임시 설정
     categories: [
       {
         categoryId: 11,
