@@ -28,15 +28,16 @@ import { useTranslation } from 'react-i18next';
 import { CourseTabBaseProps, TabFormRef } from '../../-common/type';
 
 const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
-  ({ onSave, data: { formData, courseConfig } }, ref) => {
+  ({ onSave, onConfigPropChange, data: { formData, courseConfig } }, ref) => {
     const { t } = useTranslation();
 
     const { provider, getValues, updateFormData, onFormValid, formState, watch } =
       useDynamicForm2();
 
     const channelUuid = watch('channelUuid');
+    const courseType = watch('courseType');
 
-    console.log('----- basic', { formData, courseConfig, channelUuid });
+    console.log('----- basic', { formData, courseConfig, channelUuid, courseType });
 
     // 부모 컴포넌트에서 호출할 수 있는 유효성 검사 메서드
     useImperativeHandle(ref, () => ({
@@ -62,6 +63,15 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
         updateFormData(responseDataToFormData(formData));
       }
     }, [formData]);
+
+    // 유형과 채널이 모두 변경되었을 때 상위 컴포넌트에 알림
+    useEffect(() => {
+      if (courseType && channelUuid) {
+        console.log('유형과 채널 변경됨:', { courseType, channelUuid });
+        // 상위 컴포넌트에 변경 알림
+        onConfigPropChange?.({ courseType, channelUuid });
+      }
+    }, [courseType, channelUuid, onConfigPropChange]);
 
     return (
       <div>

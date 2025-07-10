@@ -26,6 +26,7 @@ function RouteComponent() {
     activeTab,
     setTabRef,
     loadCourseData,
+    loadCourseConfig,
     saveCurrentTab,
     changeTab,
     loadMockData,
@@ -68,12 +69,24 @@ function RouteComponent() {
     changeTab(activeKey);
   };
 
+  // 기본정보 설정 컴포넌트에서 유형과 채널이 변경되었을 때 호출되는 함수
+  const handleConfigPropChange = (config: { courseType: string; channelUuid: string }) => {
+    console.log('handleConfigPropChange', config);
+    loadCourseConfig(config.courseType, config.channelUuid);
+  };
+
   const tabItems = useMemo(
     () => [
       {
         title: '기본정보 설정',
         key: 'STEP1',
-        content: <BasicInfo ref={(ref) => setTabRef('STEP1', ref)} data={data} />,
+        content: (
+          <BasicInfo
+            ref={(ref) => setTabRef('STEP1', ref)}
+            data={data}
+            onConfigPropChange={handleConfigPropChange}
+          />
+        ),
       },
       {
         title: '수강신청 설정',
