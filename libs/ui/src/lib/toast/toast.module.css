@@ -2,7 +2,7 @@
   &.toast_wrap {
     @apply fixed bottom-[48px] left-1/2 z-[10000] flex -translate-x-1/2 flex-col gap-[8px];
     .content {
-      @apply flex items-center;
+      @apply flex flex-1 items-center pr-[12px];
       .type_icon {
         @apply mr-[12px] h-[24px] w-[24px];
         .icon {
@@ -14,10 +14,21 @@
           }
         }
       }
+      .title {
+        @apply body_bo_3_r text-center text-white;
+      }
+
+      .description {
+        @apply body_bo_3_r text-center text-white;
+      }
     }
     .close {
+      @apply absolute right-[8px] top-1/2 flex h-[20px] w-[20px] -translate-y-1/2 cursor-pointer items-center justify-center rounded-full text-white/70 transition-colors hover:bg-white/10 hover:text-white;
+    }
+    .btn_action {
+      @apply label-xl shrink-0 !text-white;
       svg {
-        @apply fill-none stroke-white;
+        @apply fill-none !stroke-white;
       }
     }
   }
@@ -55,12 +66,6 @@
   &.large {
     @apply px-[20px] py-[16px];
     min-width: 360px;
-  }
-  .content {
-    @apply flex-1;
-  }
-  .nlp--button {
-    @apply shrink-0;
   }
 }
 
@@ -107,30 +112,4 @@
   to {
     transform: translateX(calc(100% - 25px));
   }
-}
-
-.title {
-  @apply body_bo_3_r text-center text-white;
-  grid-area: title;
-}
-
-.description {
-  grid-area: description;
-  @apply body_bo_3_r text-center text-white;
-}
-
-.close {
-  @apply absolute right-[8px] top-1/2 flex h-[20px] w-[20px] -translate-y-1/2 cursor-pointer items-center justify-center rounded-full text-white/70 transition-colors hover:bg-white/10 hover:text-white;
-  grid-area: action;
-}
-
-.btn_action {
-  @apply label-xl !text-white;
-  svg {
-    @apply fill-none !stroke-white;
-  }
-}
-
-.content {
-  @apply pr-[24px];
 }

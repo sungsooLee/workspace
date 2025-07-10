@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-imports */
 /* eslint-disable @nx/enforce-module-boundaries */
 import { createFileRoute } from '@tanstack/react-router';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
@@ -13,7 +14,7 @@ import {
   TreeContainer,
   SplitPanel,
 } from '@learnway/ui';
-import { MainContents } from '../../../../../../bo/src/widgets/layout/ui/container/slot/main-contents';
+import { MainContents } from '../../../../../../bo/src/shared/ui/layout/slot/main-contents';
 import { FormSubTitle } from '../../../../../../bo/src/shared/ui/form';
 import { IcoMinus, IcoPlus } from '@learnway/icons';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
