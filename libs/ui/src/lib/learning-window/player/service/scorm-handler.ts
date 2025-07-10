@@ -170,8 +170,7 @@ export class ScormHandler {
       this.srte.getWasLmsSuspendAllPushed() ||
       this.srte.getWasQuitButtonPushed() ||
       this.srte.getWasPreviousButtonPushed() ||
-      this.srte.getWasNextButtonPushed() ||
-      this.srte.getWasTOCPushed()
+      this.srte.getWasNextButtonPushed()
     ) {
       // set adl.nav.request to this.srte.getUserNavRequest()
       this.dm.setValue('adl.nav.request', this.srte.getUserNavRequest());
@@ -231,10 +230,12 @@ export class ScormHandler {
     // now handle the event ClientRTS:734
     if (
       !(
-        this.srte.getWasLmsSuspendAllPushed() ||
-        this.srte.getWasPreviousButtonPushed() ||
-        this.srte.getWasNextButtonPushed() ||
-        this.srte.getWasTOCPushed()
+        (
+          this.srte.getWasLmsSuspendAllPushed() ||
+          this.srte.getWasPreviousButtonPushed() ||
+          this.srte.getWasNextButtonPushed()
+        )
+        //        this.srte.getWasTOCPushed()
       ) &&
       tempevent !== '_none_'
     ) {

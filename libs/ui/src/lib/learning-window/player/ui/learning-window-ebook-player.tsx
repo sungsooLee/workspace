@@ -24,9 +24,9 @@ const LearningWindowEbookPlayerComponent: FC<any> = () => {
     if (!ebookInfo) return;
     if (!funcInfo) return;
 
-    console.log(ebookInfo);
+    console.log('ebookInfo', ebookInfo);
 
-    let itemUrl = ebookInfo.itemURL;
+    let itemUrl = ebookInfo.itemURL || ebookInfo.startFileUrl;
 
     if ((window as any).__ENV__?.APP_ENV === 'local') {
       const url = new URL(itemUrl);
