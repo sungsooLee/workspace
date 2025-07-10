@@ -1,9 +1,11 @@
 import { httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
+import { Department, DepartmentUser } from 'src/types/entities/department';
+import { PageableContent } from '@types';
 
 export class HmgDepartmentService {
-  static getDepartmentTree(companyCode: string[]): Promise<any> {
-    return httpService.get<any>(`${PMSApiPrefix()}/hmg/department/tree`, {
+  static getDepartmentTree(companyCode: string[]): Promise<Department> {
+    return httpService.get<Department>(`${PMSApiPrefix()}/hmg/department/tree`, {
       companyCodeList: companyCode,
     });
   }
@@ -13,11 +15,17 @@ export class HmgDepartmentService {
    * @param param
    * @returns
    */
-  static getDepartmentUserList(param: any): Promise<any> {
-    return httpService.get<any>(`${PMSApiPrefix()}/hmg/department/user`, param);
+  static getDepartmentUserList(param: any): Promise<PageableContent<DepartmentUser>> {
+    return httpService.get<PageableContent<DepartmentUser>>(
+      `${PMSApiPrefix()}/hmg/department/user`,
+      param,
+    );
   }
 
-  static getDepartmentChildDepartmentList(param: any): Promise<any> {
-    return httpService.get<any>(`${PMSApiPrefix()}/hmg/department/child`, param);
+  static getDepartmentChildDepartmentList(param: any): Promise<PageableContent<Department>> {
+    return httpService.get<PageableContent<Department>>(
+      `${PMSApiPrefix()}/hmg/department/child`,
+      param,
+    );
   }
 }
