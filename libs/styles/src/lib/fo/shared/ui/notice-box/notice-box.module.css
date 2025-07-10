@@ -19,7 +19,7 @@
     }
   }
   .link {
-    @apply ml-[8px] text-[var(--secondary3)] underline;
+    @apply ml-[8px] !p-0 text-[var(--secondary3)] underline;
     text-underline-offset: 4px;
   }
 }
