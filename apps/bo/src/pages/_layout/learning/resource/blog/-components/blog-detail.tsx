@@ -58,8 +58,8 @@ const BlogDetailComponent = forwardRef<HTMLFormElement, BlogDetailProps>(
       watch,
     } = useDynamicForm(formConfig(mode));
 
-    const getHourValueFromTime = (contentTime: string | number) => {
-      if (typeof contentTime === 'string') {
+    const getHourValueFromTime = (contentTime: string | number | undefined) => {
+      if (typeof contentTime !== 'number') {
         contentTime = isNaN(Number(contentTime)) ? 0 : Number(contentTime);
       }
 
@@ -124,31 +124,31 @@ const BlogDetailComponent = forwardRef<HTMLFormElement, BlogDetailProps>(
     const { data: loginUser } = useFetchAuthUser();
     const tenantId = loginUser?.activeTenant?.tenantId as number;
 
+    const initRoleInfo = async () => {
+      const myActiveRoleType = loginUser?.activeRole?.roleType;
+
+      const roleTypes = await codeStore.getCode(CODE_GROUP['pms.role.RoleType']);
+      const channelMemberRoleTypes = roleTypes
+        .map((role) => role.cdId)
+        .filter((cdId: string) => ['CHANNEL_OWNER', 'CHANNEL_MEMBER'].includes(cdId));
+      // const myChannelAuths = loginUser?.myRoles?.map((item: RoleInfo) => item.channelScope) || [];
+
+      // 등록자가 채널소유자 or 채널구성원일 경우 default로 등록자 정보 입력
+      if (
+        !isEmptyData(loginUser?.activeRole) &&
+        channelMemberRoleTypes.includes(myActiveRoleType)
+      ) {
+        updateFormData({
+          ...getValues(),
+          coordinatorUuid: loginUser?.uuid,
+          coordinatorName: loginUser?.name,
+          coordinatorTelCountryCode: loginUser?.phoneNumberNationCode,
+          coordinatorTelNo: loginUser?.phoneNumber,
+        });
+      }
+    };
+
     useEffect(() => {
-      const initRoleInfo = async () => {
-        const myActiveRoleType = loginUser?.activeRole?.roleType;
-
-        const roleTypes = await codeStore.getCode(CODE_GROUP['pms.role.RoleType']);
-        const channelMemberRoleTypes = roleTypes
-          .map((role) => role.cdId)
-          .filter((cdId: string) => ['CHANNEL_OWNER', 'CHANNEL_MEMBER'].includes(cdId));
-        // const myChannelAuths = loginUser?.myRoles?.map((item: RoleInfo) => item.channelScope) || [];
-
-        // 등록자가 채널소유자 or 채널구성원일 경우 default로 등록자 정보 입력
-        if (
-          !isEmptyData(loginUser?.activeRole) &&
-          channelMemberRoleTypes.includes(myActiveRoleType)
-        ) {
-          updateFormData({
-            ...getValues(),
-            coordinatorUuid: loginUser?.uuid,
-            coordinatorName: loginUser?.name,
-            coordinatorTelCountryCode: loginUser?.phoneNumberNationCode,
-            coordinatorTelNo: loginUser?.phoneNumber,
-          });
-        }
-      };
-
       initRoleInfo();
     }, [loginUser]);
 
@@ -166,11 +166,13 @@ const BlogDetailComponent = forwardRef<HTMLFormElement, BlogDetailProps>(
           coordinatorName: (blogInfo.coordinatorName ?? '').split('/')[0],
           coordinatorTelNo: blogInfo.coordinatorTelNo,
           contentUseDate: {
-            from: dayjs(blogInfo.contentUseStartDate).toDate(),
-            to: dayjs(blogInfo.contentUseEndDate).toDate(),
+            from: blogInfo.contentUseStartDate
+              ? dayjs(blogInfo.contentUseStartDate).toDate()
+              : undefined,
+            to: blogInfo.contentUseEndDate ? dayjs(blogInfo.contentUseEndDate).toDate() : undefined,
           },
           isLimitExist: !blogInfo.isUnlimited,
-          contentDuration: { ...getHourValueFromTime(blogInfo.contentAddInfo as number) },
+          contentDuration: { ...getHourValueFromTime(blogInfo.contentAddInfo) },
           isVendored: blogInfo.isVendored,
           // vendorCode: blogInfo.vendorCode,
           vendorName: blogInfo.vendorName,
@@ -194,12 +196,13 @@ const BlogDetailComponent = forwardRef<HTMLFormElement, BlogDetailProps>(
           tags: blogInfo.tags?.map((tag: string | Tag) =>
             typeof tag === 'string' ? tag : tag.tagName,
           ),
-          blogContent: JSON.stringify(blogInfo.blogContent),
+          blogContent: JSON.stringify(blogInfo.blogContent ?? {}),
         });
       }
     }, [blogInfo]);
 
     const thumbnailInfo: Partial<GroupFileInfo> = watch('contentThumbnailFileGroupUuid');
+
     useEffect(() => {
       console.log('thumbnail', thumbnailInfo);
       const files = thumbnailInfo?.files ?? [];
@@ -529,12 +532,6 @@ const formConfig = (mode: 'create' | 'update'): DynamicFormConfig => ({
       value: '',
       placeholder: t('LABEL.form.input.placeholder1', { type: t('개발업체 담당자명') }),
     },
-    // {
-    //   name: 'vendorCoordinatorUuid',
-    //   type: 'hidden',
-    //   format: 'string',
-    //   value: '',
-    // },
     {
       name: 'vendorTelCountryCode',
       type: 'hidden',
