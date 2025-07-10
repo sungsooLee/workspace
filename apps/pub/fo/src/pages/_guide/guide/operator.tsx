@@ -23,7 +23,7 @@ function RouteComponent() {
       <div className="group">
         <h3 className="guide_tit3">프로필 미리보기</h3>
         <div className="flex_box">
-          <div className="desc">
+          <div className="desc w-full">
             <div className={`${operatorStyles.start} ${operatorStyles.operator}`}>
               <div className={operatorStyles.avatar}>
                 <span>김</span>
