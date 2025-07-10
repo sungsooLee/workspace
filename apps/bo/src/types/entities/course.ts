@@ -602,7 +602,7 @@ export interface CourseConfigQueryParams {
   /**
    * 채널id
    */
-  channelId?: number;
+  channelUuid?: string;
   /**
    * 과정유형
    */

@@ -97,7 +97,7 @@ export const useCourseForm = (courseType?: string) => {
         const courseConfig: CourseConfig = await queryClient.fetchQuery(
           queryOptions.getCourseConfig({
             courseType: formData.courseType,
-            channelId: 1, //formData.channelUuid,
+            channelUuid: formData.channelUuid,
           }),
         );
         setData((prev) => ({ ...prev, formData, courseConfig }));
