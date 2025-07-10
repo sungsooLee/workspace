@@ -152,26 +152,9 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
                     />
                   ),
                 })}
-                // transformModalData={(modalData: Array<Group>) => {
-                //   console.log('modalData', modalData);
-                //   return modalData.map((d: any) => {
-                //     return {
-                //       combiners: d.groups?.length
-                //         ? d.groups
-                //         : [
-                //             {
-                //               combineType: 'JOB_ROLE',
-                //               combineValue: d?.userGroupIds?.[0],
-                //             },
-                //           ],
-                //       name: d.name || 'xx',
-                //       groupKey: getRandomId(),
-                //     };
-                //   });
-                // }}
                 chipList={{
-                  labelField: 'name',
-                  valueField: 'groupKey',
+                  labelField: 'fullName',
+                  valueField: 'fullName',
                   wordwrap: true,
                 }}
                 showAddButton
