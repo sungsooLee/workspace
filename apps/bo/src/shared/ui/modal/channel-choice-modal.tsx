@@ -73,7 +73,7 @@ const ChannelChoicePopupComponent = () => {
     },
   };
 
-  const { provider: sProvider, getValues } = useSearchBox(searchConfig);
+  const { provider: sProvider, getValues } = useSearchBox(searchConfig());
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
   const [selectedRow, setSelectedRow] = useState<Channel | null>(null);
 
@@ -116,7 +116,7 @@ const ChannelChoicePopupComponent = () => {
 
 export const ChannelChoiceModal = ChannelChoicePopupComponent;
 
-const searchConfig: SearchBoxConfig = {
+const searchConfig = (): SearchBoxConfig => ({
   builders: [
     [
       {
@@ -141,4 +141,4 @@ const searchConfig: SearchBoxConfig = {
   validator: {
     tenantId: true,
   },
-};
+});

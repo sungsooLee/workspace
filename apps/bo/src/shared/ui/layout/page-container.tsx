@@ -20,8 +20,6 @@ import {
   useActiveMenuDepthState,
   useAsycFetchMenusForceRefatch,
   useFetchAuthUser,
-  useFetchMenus,
-  useUpdateAuthUser,
   useUpdateUser,
 } from '@learnway/auth/entities';
 
@@ -200,7 +198,10 @@ const PageContainerComponent: FC<{
           onSuccess: async (data: any) => {
             console.log('data', data);
             if (authUser?.activeTenant?.tenantId) {
-              const menus = await asyncMenus(authUser?.activeTenant?.tenantId);
+              const menus = await asyncMenus(
+                authUser?.activeTenant?.tenantId as number,
+                authUser?.activeRole?.roleId as number,
+              );
               updateMenu(menus);
               const update = activeMenuDepth?.map((menu) =>
                 menu.menuId === currentMenu.menuId ? { ...menu, isFavorite: true } : menu,
@@ -225,7 +226,10 @@ const PageContainerComponent: FC<{
         onSuccess: async (data: any) => {
           console.log('data', data);
           if (authUser?.activeTenant?.tenantId) {
-            const menus = await asyncMenus(authUser?.activeTenant?.tenantId);
+            const menus = await asyncMenus(
+              authUser?.activeTenant?.tenantId as number,
+              authUser?.activeRole?.roleId as number,
+            );
             updateMenu(menus);
             const update = activeMenuDepth?.map((menu) =>
               menu.menuId === currentMenu.menuId ? { ...menu, isFavorite: false } : menu,

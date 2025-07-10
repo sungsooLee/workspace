@@ -4,7 +4,7 @@ import { cookieService } from '@learnway/shared';
 import AuthorizationService from '../api/authorization';
 import { assignToken, removeToken, convertToAuthUser } from './authorization.service';
 
-import type { AuthSSOLogin } from '../../../types';
+import type { AuthSSOLogin, AuthUser } from '../../../types';
 import VerificationsService from '../api/verifications';
 
 export const queryKeys = {
@@ -30,7 +30,7 @@ export const queryOptions = {
 
 export const mutateOptions = {
   login: () => ({
-    mutationFn: async (payload: any): Promise<any> => {
+    mutationFn: async (payload: any): Promise<AuthUser> => {
       try {
         const data = await AuthorizationService.login({ ...payload, orgId: Number(payload.orgId) });
         assignToken(data);

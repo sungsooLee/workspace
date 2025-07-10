@@ -44,6 +44,7 @@ export interface FileGroupInfo {
   languageCode: string;
   isDeleted: boolean;
   isUsed: boolean;
+  files: FileInfo[];
 }
 
 export interface ImageInfo {

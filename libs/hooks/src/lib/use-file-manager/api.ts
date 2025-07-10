@@ -52,6 +52,10 @@ export default class FileManagerService {
 
   // TODO. 아래 3가지는 요건이 없어서 추가하지 않았음
   // 파일 그룹 목록 조회
+  static getGroupInfo(groupUuid: string): Promise<FileGroupInfo> {
+    return httpService.get(`${prefixUrl}/group/${groupUuid}`);
+  }
+
   // 파일 그룹 정보 조회
   // 파일 그룹 파일 목록 조회
 }

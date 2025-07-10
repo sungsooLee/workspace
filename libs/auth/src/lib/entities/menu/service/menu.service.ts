@@ -18,7 +18,7 @@ import { useModal } from '@learnway/ui';
  */
 export function useMenuHierarchy(menuScope = 'BO') {
   const { data: authUser } = useFetchAuthUser();
-  const { data } = useFetchMenus(authUser?.activeTenant?.tenantId);
+  const { data } = useFetchMenus(authUser?.activeTenant?.tenantId, authUser?.activeRole?.roleId);
 
   return {
     data: useCreation(() => {

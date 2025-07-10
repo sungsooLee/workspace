@@ -27,7 +27,7 @@ const GnbRoleSelectComponent = ({ className }: Props) => {
 
   const { data: authUser } = useFetchAuthUser();
   const { asyncMenus } = useAsycFetchMenusForceRefatch();
-  const { updateMenu, updateActiveTenant } = useUpdateUser();
+  const { updateMenu, updateActiveTenant, updateActiveRole } = useUpdateUser();
   const { update: updateTenantRole } = useUpdateTenantRoleLastSelect();
 
   const [selectedTenant, setSelectedTenant] = useState<any | null>(null);
@@ -73,14 +73,18 @@ const GnbRoleSelectComponent = ({ className }: Props) => {
     // 기존 선택값 체크
     if (newValue.roleId === authUser?.activeRole?.roleId) return;
 
+    updateActiveRole(newValue);
     await updateTenantRole({
       lastVisitedBoRoleId: newValue?.roleId,
       lastVisitedBoTenantId: authUser?.activeTenant?.tenantId,
     });
-    const menus = await asyncMenus(newValue.tenantId);
-    updateMenu(menus);
-    setActiveMenuDepthMenu([]);
-    router.navigate({ to: '/' });
+
+    if (authUser?.activeTenant?.tenantId) {
+      const menus = await asyncMenus(authUser?.activeTenant?.tenantId, newValue?.roleId);
+      updateMenu(menus);
+      setActiveMenuDepthMenu([]);
+      router.navigate({ to: '/' });
+    }
   };
 
   const handleRoleLoadOptions = async (searchText: string): Promise<any[]> => {
@@ -104,16 +108,16 @@ const GnbRoleSelectComponent = ({ className }: Props) => {
     // 기존 선택값 체크
     if (newValue.tenantId === authUser?.activeTenant?.tenantId) return;
 
-    updateActiveTenant(newValue);
-    // TODO 역할 완료후 제거 필요
+    // updateActiveTenant(newValue);
     await updateTenantRole({
       lastVisitedBoTenantId: newValue.tenantId,
     });
 
-    const menus = await asyncMenus(newValue.tenantId);
-    updateMenu(menus);
-    setActiveMenuDepthMenu([]);
-    router.navigate({ to: '/' });
+    // TODO 역할 완료후 제거 필요
+    // const menus = await asyncMenus(newValue.tenantId);
+    // updateMenu(menus);
+    // setActiveMenuDepthMenu([]);
+    // router.navigate({ to: '/' });
   };
 
   const handleTenantLoadOptions = async (searchText: string): Promise<any[]> => {

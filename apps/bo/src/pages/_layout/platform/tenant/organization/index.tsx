@@ -1,14 +1,5 @@
-import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { t } from 'i18next';
+import { createFileRoute } from '@tanstack/react-router';
 import { PageContainer, MainContents } from '@shared/ui';
-
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
-import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import { Button, GridBox, useGridBox } from '@learnway/ui';
-import { SearchBox } from '@shared/ui/search-box';
-import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
-
 import { TenantCompanyOrganizationList } from '@features/platform-management/company';
 
 export const Route = createFileRoute('/_layout/platform/tenant/organization/')({

@@ -37,15 +37,15 @@ const LoginRestrictTimeSettingModalComponent: FC<any> = ({
 
   console.log('### mode', mode);
 
-  const { provider, control, onSubmit, updateFormData } = useDynamicForm(formConfig);
+  const { provider, control, onSubmit, updateFormData } = useDynamicForm(formConfig());
 
   const watchedRestrictionType = useWatch({
-    control: control,
+    control,
     name: ['loginRestrictionType'],
   });
 
   const watchedRestrictionSettingType = useWatch({
-    control: control,
+    control,
     name: ['loginRestrictionSettingType'],
   });
 
@@ -88,7 +88,7 @@ const LoginRestrictTimeSettingModalComponent: FC<any> = ({
         }
       });
     }
-    if (mode === EnFormMode.VIEW) close({ index: data.index, node: node });
+    if (mode === EnFormMode.VIEW) close({ index: data.index, node });
     else close(node);
   };
 
@@ -234,7 +234,7 @@ const LoginRestrictTimeSettingModalComponent: FC<any> = ({
 
 export const LoginRestrictTimeSettingModal = LoginRestrictTimeSettingModalComponent;
 
-const formConfig: DynamicFormConfig = {
+const formConfig = (): DynamicFormConfig => ({
   builders: [
     {
       name: 'loginRestrictionType',
@@ -313,4 +313,4 @@ const formConfig: DynamicFormConfig = {
       ],
     },
   },
-};
+});

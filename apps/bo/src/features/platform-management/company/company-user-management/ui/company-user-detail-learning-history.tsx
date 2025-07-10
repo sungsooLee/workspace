@@ -1,21 +1,12 @@
-import { FC, useEffect, useState, useCallback } from 'react';
-import { useRouterState } from '@tanstack/react-router';
+import { FC, useCallback } from 'react';
 import { t } from 'i18next';
-import { FormSubTitle, FormRow, ContentsHistoryInfoFormField } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
-import { cn } from '@learnway/shared';
 import { Divider, GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
-import {
-  DynamicFormConfig,
-  useDynamicForm,
-  useSearchBox,
-  SearchBoxConfig,
-  CODE_GROUP,
-} from '@learnway/hooks';
+import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
 const CompanyUserDetailLearningHistoryComponent: FC<any> = () => {
-  const { provider: sProvider, getValues } = useSearchBox(searchConfig);
+  const { provider: sProvider, getValues } = useSearchBox(searchConfig());
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
 
   const handleOnSearch = useCallback((data: any) => {
@@ -25,14 +16,14 @@ const CompanyUserDetailLearningHistoryComponent: FC<any> = () => {
     <>
       <SearchBox provider={sProvider} onSearch={handleOnSearch} />
       <Divider />
-      <GridBox config={gConfig} columns={columns} title={t('교육 이력 목록')} />
+      <GridBox config={gConfig} columns={columns()} title={t('교육 이력 목록')} />
     </>
   );
 };
 
 export const CompanyUserDetailLearningHistory = CompanyUserDetailLearningHistoryComponent;
 
-const searchConfig: SearchBoxConfig = {
+const searchConfig = (): SearchBoxConfig => ({
   builders: [
     [
       {
@@ -128,7 +119,7 @@ const searchConfig: SearchBoxConfig = {
       },
     ],
   ],
-};
+});
 
 const gridConfig: useGridBoxConfig = {
   query: '',
@@ -150,23 +141,23 @@ const gridConfig: useGridBoxConfig = {
 
 const columnHelper = createColumnHelper<any>();
 
-const columns = [
+const columns = (): ColumnDef<any, unknown>[] => [
   columnHelper.accessor('gubun1', {
     cell: (info) => info.getValue(),
-    header: '구분',
+    header: t('구분'),
     size: 200,
     enableGrouping: false,
   }),
   columnHelper.accessor('gubun2', {
     cell: (info) => info.getValue(),
-    header: '구분',
+    header: t('구분'),
     size: 200,
     enableGrouping: false,
   }),
   columnHelper.accessor('gubun3', {
     cell: (info) => info.getValue(),
-    header: '구분',
+    header: t('구분'),
     size: 200,
     enableGrouping: false,
   }),
-] as ColumnDef<any, unknown>[];
+];

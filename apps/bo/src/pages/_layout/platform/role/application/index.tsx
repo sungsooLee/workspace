@@ -20,14 +20,11 @@ import {
   roleManagerQueryOptions,
 } from '@entities/role';
 import { EnGlobalConst, LabelMessage } from '@types';
-import { RejectModal, RoleApplicationHistoryModal } from '@shared/ui';
+import { RejectModal, RoleApplicationHistoryModal, MainContents, PageContainer } from '@shared/ui';
 import { MyRoleExtendModal } from '@features/user/my-page/ui/my-role-extend-modal';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { useQueryClient } from '@tanstack/react-query';
-
 import { queryOptions as companysQueryOptions } from '@entities/companies/service/companies.queries';
-import { size } from 'lodash';
-import { MainContents, PageContainer } from '@shared/ui';
 
 export const Route = createFileRoute('/_layout/platform/role/application/')({
   component: RouteComponent,
@@ -63,6 +60,7 @@ function RouteComponent() {
   useEffect(() => {
     if (!loginUser) return;
     if (loginUser.activeTenant?.tenantId) {
+      console.log('loginUser', loginUser);
       getCompanyOptions(loginUser.activeTenant?.tenantId);
       getRoleOptions(loginUser.activeTenant?.tenantId);
     }
@@ -375,12 +373,18 @@ const columns = [
         cell: (info) => info.getValue(),
         enableGrouping: false,
         size: 100,
+        meta: {
+          cellAlign: 'center',
+        },
       }),
       columnHelper.accessor('endDate', {
         header: t('역할 종료일'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
         size: 100,
+        meta: {
+          cellAlign: 'center',
+        },
       }),
     ],
   }),
@@ -431,6 +435,9 @@ const columns = [
         : getDateToString(new Date(info.row.original.createdDate), DATE_TIME_FORMAT.DATETIME_SEC),
     enableGrouping: false,
     size: 160,
+    meta: {
+      cellAlign: 'center',
+    },
   }),
   columnHelper.accessor('status', {
     header: t('역할 신청 상태'),
