@@ -11,19 +11,20 @@
       @apply relative mr-[12px] h-[84px];
       .btn_file {
         & + div {
-          @apply absolute bottom-0 left-0 right-0 top-0 z-10 h-[84px] w-full !bg-transparent;
+          @apply absolute bottom-0 left-0 right-0 top-0 z-10 h-[84px] w-full;
           .input_file {
             @apply z-[2] flex h-full w-full cursor-pointer bg-transparent opacity-0;
           }
         }
         &.disabled {
           svg {
-            @apply !stroke-[var(--gray5)];
+            @apply stroke-[var(--gray5)];
           }
           span {
-            @apply !text-[var(--gray5)];
+            @apply text-[var(--gray5)];
           }
           & + div {
+            @apply !bg-transparent;
             .input_file {
               @apply cursor-not-allowed;
             }
