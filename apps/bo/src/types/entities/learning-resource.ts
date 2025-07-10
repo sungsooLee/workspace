@@ -78,6 +78,12 @@ export interface PostDraftVideosParams {
   fileUuids: string[];
 }
 
+export interface Tag {
+  tagId: string;
+  tagName: string;
+  contentUuid: string;
+}
+
 export interface ContentFileInfo {
   groupUuid: string;
   fileUuid: string;
@@ -119,7 +125,7 @@ export interface ContentInformation {
   isDeleted: boolean; //	삭제 여부[...]
   isOpened: boolean; //	공개 여부[...]
   isDrafted: boolean; //	임시저장 여부[...]
-  tags: string[]; //	태그 리스트[...]
+  tags: string[] | Tag[]; //	태그 리스트[...]
   aiSummary?: string; //	학습자원 개요 (AI자동추출)[...]
   aiKeyword?: string; //	키워드 (AI자동추출)[...]
 }
