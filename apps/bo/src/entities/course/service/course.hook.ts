@@ -6,6 +6,8 @@ import {
   Course,
   CourseConfig,
   CourseConfigQueryParams,
+  CoursePopupListItem,
+  CoursePopupQueryParams,
   CoursesQueryParams,
   MutationHookOptions,
   PaginationResponse,
@@ -157,4 +159,16 @@ export const useFetchCourseConfig = <T = CourseConfig>(
   options?: UseQueryOptions<T, Error>,
 ): UseQueryResult<T, Error> => {
   return useQuery({ ...queryOptions.getCourseConfig<T>(params), ...options });
+};
+
+/**
+ * 과정 조회 팝업 조회
+ * @param params - 코스 목록 조회 쿼리 파라미터.
+ * @param options - 추가 쿼리 옵션.
+ */
+export const useFetchCoursePopup = <T = CoursePopupListItem>(
+  params: CoursePopupQueryParams,
+  options?: UseQueryOptions<PaginationResponse<T>, Error>,
+): UseQueryResult<PaginationResponse<T>, Error> => {
+  return useQuery({ ...queryOptions.getCoursePopup<T>(params), ...options });
 };

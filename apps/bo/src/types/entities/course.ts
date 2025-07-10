@@ -648,3 +648,99 @@ export interface CourseTarget {
     combineValue: number;
   }>;
 }
+
+/**
+ * 과정 조회 팝업 파라미터
+ */
+export interface CoursePopupQueryParams extends PaginationRequest {
+  /**
+   * 테넌트 ID
+   */
+  tenantIds: Array<number>;
+  /**
+   * 채널 UUID
+   */
+  channelUuid: string;
+  /**
+   * 과정 유형
+   */
+  courseType?: string;
+  /**
+   * 과정 코드
+   */
+  courseId?: number;
+  /**
+   * 과정명
+   */
+  courseName?: string;
+  /**
+   * 담당자
+   */
+  coordinatorName?: string;
+  /**
+   * 운영자
+   */
+  operatorName?: string;
+  /**
+   * 사용 여부
+   */
+  isUsed?: boolean;
+  /**
+   * 개설연도
+   */
+  openingYear?: number;
+  /**
+   * 과정 유효 시작일
+   */
+  courseValidityStartDate?: string;
+  /**
+   * 과정 유효 종료일
+   */
+  courseValidityEndDate?: string;
+  /**
+   * 개설 대상 과정 ID
+   */
+  excludeCourseId?: number;
+}
+
+/**
+ * 과정 조회 팝업 리스트 아이템
+ */
+export interface CoursePopupListItem {
+  /**
+   * 과정 유형
+   */
+  courseType?: string;
+  /**
+   * 과정 코드
+   */
+  courseId?: number;
+  /**
+   * 과정명
+   */
+  courseName?: string;
+  /**
+   * 담당자
+   */
+  coordinatorName?: string;
+  /**
+   * 운영자
+   */
+  operatorName?: string;
+  /**
+   * 사용 여부
+   */
+  isUsed?: boolean;
+  /**
+   * 개설연도
+   */
+  openingYear?: number;
+  /**
+   * 과정 유효 시작일
+   */
+  courseValidityStartDate?: string;
+  /**
+   * 과정 유효 종료일
+   */
+  courseValidityEndDate?: string;
+}
