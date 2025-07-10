@@ -180,7 +180,7 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
     }, [thumbnailFiles]);
 
     const disabled = useMemo(
-      () => maxFileCount === (values.files || []).length,
+      () => maxFileCount <= (values.files || []).length,
       [values.files, maxFileCount],
     );
 
