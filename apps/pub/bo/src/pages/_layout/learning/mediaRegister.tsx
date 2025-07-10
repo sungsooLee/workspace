@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-imports */
 /* eslint-disable @nx/enforce-module-boundaries */
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
@@ -54,6 +55,7 @@ import {
   IcoSearch,
   IcoStatusFail,
   IcoDelete04,
+  IcoLoading,
 } from '@learnway/icons';
 import { FormSubTitle } from '../../../../../../bo/src/shared/ui/form';
 
@@ -975,6 +977,7 @@ function RouteComponent() {
                     console.log('onCheckedChange', options)
                   }
                 />
+                <IcoLoading width={24} height={24} stroke="#747d91" className={styles.icon} />
               </div>
               <p className={formStyles.guide_text}>
                 학습자원을 표현하는 썸네일을 선택하거나 업로드 하세요. (미선택 시 자동 선택)

@@ -103,6 +103,7 @@ import { RadioGroup } from '@learnway/ui';
                 { value: 'type4-3', label: 'ffff' },
               ]}
               disabled
+              defaultValue="type4-1"
               size="lg"
             />
           </div>
