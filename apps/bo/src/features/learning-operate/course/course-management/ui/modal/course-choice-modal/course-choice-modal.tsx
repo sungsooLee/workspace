@@ -1,4 +1,5 @@
 import { queryOptions } from '@entities/course/service/course.queries';
+import { DateRangePickerFormField } from '@features/form/ui/date-range-picker-form-field';
 import { DropdownFormField } from '@features/form/ui/dropdown-form-field';
 import { CODE_GROUP, getCodeLabel, useDynamicForm2 } from '@learnway/hooks';
 import { generateYears } from '@learnway/shared';
@@ -15,14 +16,12 @@ import {
   useModal,
 } from '@learnway/ui';
 import { FormRow2 } from '@shared/ui/form/form-row2';
-import { TenantChannelDropdownFormField } from '@shared/ui/form/tenant-channel-dropdown-form-field';
 import { SearchBoxForm } from '@shared/ui/search-box/search-box-form';
 import { CourseListItem, CoursePopupListItem } from '@types';
 import { t } from 'i18next';
 import { forwardRef, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './course-choice-modal.module.css';
-import { DateRangePickerFormField } from '@features/form/ui/date-range-picker-form-field';
 
 export interface CourseChoiceModalProps {
   tenantIds: Array<number>;
@@ -182,18 +181,6 @@ const CourseChoiceModalComponent = forwardRef<HTMLDivElement, CourseChoiceModalP
   },
 );
 export const CourseChoiceModal = CourseChoiceModalComponent;
-
-const getMockData = () => {
-  return {
-    data: Array(5)
-      .fill(null)
-      .map((d, i) => ({
-        channelId: `channel_id${i}`,
-        channelName: `channel_name${i}`,
-        etc: 'etc',
-      })),
-  };
-};
 
 const gridConfig = {
   title: t('LABEL.grid.title.courseList'),

@@ -1,12 +1,5 @@
 import { DropdownFormField } from '@features/form';
-import {
-  FormRow2,
-  TenantByRoleChannelCheckboxFormField,
-  TenantChannelDropdownFormField,
-  TrainingPlaceChoiceModal,
-  UserChoiceModal,
-  UserGroupTabsChoiceModal,
-} from '@shared/ui';
+import { CategoryChoiceModal } from '@features/learning-operate/course/course-management';
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import {
   Button,
@@ -21,13 +14,18 @@ import {
   RadioGroupFormField,
   TextareaFormField,
 } from '@learnway/ui';
+import {
+  FormRow2,
+  TenantByRoleChannelCheckboxFormField,
+  TenantChannelDropdownFormField,
+  TrainingPlaceChoiceModal,
+  UserChoiceModal,
+  UserGroupTabsChoiceModal,
+} from '@shared/ui';
+import { Course } from '@types';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CourseTabBaseProps, TabFormRef } from '../../-common/type';
-import { Course, TenantByRoleId } from '@types';
-import { CategoryChoiceModal } from '@features/learning-operate/course/course-management';
-import { queryConfig } from '@learnway/config';
-import { tenantQueryOptions } from '@entities/tenant';
 
 const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
   ({ onSave, data: { formData, courseConfig } }, ref) => {
@@ -54,17 +52,14 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
           errors,
         };
       },
-      getValues: () => {
-        console.log('getValues', getValues());
-        return getValues();
-      },
+      getValues: () => formDataToRequestData(getValues() as Course),
     }));
 
     useEffect(() => {
       console.log('BasicInfoComponent init');
       // 초기 데이터가 있으면 설정
       if (formData) {
-        updateFormData(formData);
+        updateFormData(responseDataToFormData(formData));
       }
     }, [formData]);
 
@@ -375,6 +370,22 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
 export const BasicInfo = BasicInfoComponent;
 
 /**
+ * 응답 데이터를 폼 데이터로 변환
+ */
+const responseDataToFormData = (d: Course): Course => {
+  return {
+    ...d,
+    // primaryCategoryId: 1, // 서버에서 받으면 삭제
+    // categoryIds: d?.categories?.map((d: any) => d.categoryId), // 카테고리 아이디
+    // tenantIds: d?.tenantList?.map((d: any) => d.tenantId), // 테넌트 아이디
+    targetList: d?.targetList?.map((d: any) => ({
+      ...d,
+      name: d?.combiners?.[0]?.combineValue,
+    })),
+  };
+};
+
+/**
  * 과정 기본 정보 컴포넌트 폼 데이터를 요청 데이터로 변환하는 함수
  *
  * @component BasicInfo
@@ -384,20 +395,28 @@ export const BasicInfo = BasicInfoComponent;
 
 export const formDataToRequestData = (d: Course) => {
   // 교육공간 라디오 선택에 따라 값 변경 관련 처리 (교육공간=learningSpaceType)
-  // 차세데 학습학습 플랫폼
+  // 교육공간 > 차세데 학습학습 플랫폼
   if (d.learningSpaceType === 'LEARNING_WAY') {
     d.learningSpaceId = undefined; // 교육 장소 ID
     d.learningSpaceName = undefined; // 교육 장소(선택입력)
     d.learningSpaceNameKeyIn = undefined; // 교육 장소 직접입력
   }
-  // 공간선택
+  // 교육공간 > 공간선택
   else if (d.learningSpaceType === 'REGISTERED') {
     d.learningSpaceNameKeyIn = undefined; // 교육 장소 직접입력
   }
-  // 직적입력
+  // 교육공간 > 직적입력
   else if (d.learningSpaceType === 'MANUAL') {
     d.learningSpaceId = undefined; // 교육 장소 ID
     d.learningSpaceName = undefined; // 교육 장소(선택입력)
   }
+
+  // 대표 커리큘럼
+  d.primaryCategoryId = d.categories?.[0]?.categoryId;
+
+  // 담당자, 운영자 연락처 국가코드
+  d.coordinatorTelCountryCode = 'KOR_82';
+  d.operatorTelCountryCode = 'KOR_82';
+
   return d;
 };
