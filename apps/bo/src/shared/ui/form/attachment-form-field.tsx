@@ -13,7 +13,7 @@ import { compact, difference, map } from 'lodash';
  * AttachmentFormField 컴포넌트의 props 인터페이스
  * 폼 필드로서 Attachment 컴포넌트를 래핑하여 폼 시스템과 통합합니다.
  */
-interface AttachmentFormFieldProps extends BaseFormFieldProps<string[] | string | null> {
+interface AttachmentFormFieldProps extends BaseFormFieldProps<string[] | string> {
   uploadConfig: S3UploaderConfig;
   uuidType: 'files' | 'group';
 }

@@ -15,7 +15,7 @@ import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.cs
  * AttachmentFormField 컴포넌트의 props 인터페이스
  * 폼 필드로서 Attachment 컴포넌트를 래핑하여 폼 시스템과 통합합니다.
  */
-interface AttachmentFormFieldProps extends BaseFormFieldProps<string | null> {
+interface AttachmentFormFieldProps extends BaseFormFieldProps<string> {
   uploadConfig: S3UploaderConfig;
   uuidType: 'files' | 'group';
 }
@@ -81,7 +81,7 @@ const SingleAttachmentFormFieldComponent = forwardRef<
       maxFileSize,
     });
 
-    const [fileUuid, setFileUuid] = useState<string | null>(null);
+    const [fileUuid, setFileUuid] = useState<string>('');
 
     /**
      * 서버에서 파일정보를 가져와서 files에 추가
@@ -141,7 +141,7 @@ const SingleAttachmentFormFieldComponent = forwardRef<
         ),
       );
       if (first(uploadedFileUuid) !== fileUuid) {
-        onChange(first(uploadedFileUuid) || null);
+        onChange(first(uploadedFileUuid) || '');
       }
     }, [files]);
 
