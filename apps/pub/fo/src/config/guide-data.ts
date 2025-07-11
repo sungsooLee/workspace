@@ -723,7 +723,7 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'course-introduction/detail',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-07-11',
     lastUpdateDate: '',
     remarks: '- introduction.tsx\n- toastpopup 공통 수정 요청중',
   },
@@ -855,8 +855,8 @@ export const guideData = [
     pageId: 'course-introduction/package',
     pageType: 'Page',
     completionDate: '2025-04-02',
-    lastUpdateDate: '2025-05-08',
-    remarks: '- package.tsx\n- toastpopup 공통 수정 요청중',
+    lastUpdateDate: '2025-07-11',
+    remarks: '- package.tsx\n- 썸네일 공통 컴포넌트 대기중',
   },
   {
     screenId: 'NLP_FO_LEC_MA_1000',
@@ -864,9 +864,9 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'course-introduction/detail-m',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-07-11',
     lastUpdateDate: '',
-    remarks: '- introduction.tsx\n- toastpopup 공통 수정 요청중',
+    remarks: '- introduction.tsx',
   },
   {
     screenId: 'NLP_FO_LEC_MA_1001',
@@ -894,9 +894,10 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'course-introduction/detail-m',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-07-11',
     lastUpdateDate: '',
-    remarks: '- introduction.tsx\n- tooltip 확인중\n- 차수선택 팝업 course-selection-popup.tsx',
+    remarks:
+      '- introduction.tsx\n- 차수선택 팝업 course-selection-popup.tsx\n- 썸네일 공통 컴포넌트 대기중',
   },
   {
     screenId: 'NLP_FO_LEC_MA_1004',
@@ -905,7 +906,7 @@ export const guideData = [
     pageId: 'course-introduction/detail-m',
     pageType: 'Page',
     completionDate: '2025-04-18',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-11',
     remarks: '- introduction.tsx',
   },
   {
@@ -915,7 +916,7 @@ export const guideData = [
     pageId: 'course-introduction/detail-m',
     pageType: 'Pop-up',
     completionDate: '2025-04-29',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-11',
     remarks: '- education-place-popup.tsx\n- popover가 modal 보다 아래에 있어서 공통 문의중',
   },
   {
@@ -925,7 +926,7 @@ export const guideData = [
     pageId: 'course-introduction/detail-m',
     pageType: 'Pop-up',
     completionDate: '2025-04-14',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-11',
     remarks: '- detail-m.tsx (CourseAlarmAlert)',
   },
   {
@@ -935,8 +936,8 @@ export const guideData = [
     pageId: 'course-introduction/detail-m',
     pageType: 'Pop-up',
     completionDate: '2025-04-14',
-    lastUpdateDate: '',
-    remarks: '- detail-m.tsx (CourseWaitAlert)',
+    lastUpdateDate: '2025-07-11',
+    remarks: '- detail-m.tsx (CourseWaitRegistrationAlert)',
   },
   {
     screenId: 'NLP_FO_LEC_MA_1008',
@@ -945,8 +946,8 @@ export const guideData = [
     pageId: 'course-introduction/detail-m',
     pageType: 'Pop-up',
     completionDate: '2025-04-14',
-    lastUpdateDate: '',
-    remarks: '- detail-m.tsx (CourseCencelConfirm)',
+    lastUpdateDate: '2025-07-11',
+    remarks: '- detail-m.tsx (CourseCancelConfirm)',
   },
   {
     screenId: 'NLP_FO_LEC_MA_1009',
@@ -955,8 +956,8 @@ export const guideData = [
     pageId: 'course-introduction/detail-m',
     pageType: 'Pop-up',
     completionDate: '2025-04-14',
-    lastUpdateDate: '',
-    remarks: '- detail-m.tsx (CourseCencelReasonConfirm)',
+    lastUpdateDate: '2025-07-11',
+    remarks: '- course-cancel-reason-popup.tsx',
   },
   {
     screenId: 'NLP_FO_LEC_MA_1010',
@@ -965,8 +966,8 @@ export const guideData = [
     pageId: 'course-introduction/detail-m',
     pageType: 'Pop-up',
     completionDate: '2025-04-14',
-    lastUpdateDate: '',
-    remarks: '- detail-m.tsx (CourseCencelCompleteAlert)',
+    lastUpdateDate: '2025-07-11',
+    remarks: '- detail-m.tsx (CourseCancelCompleteAlert)',
   },
   {
     screenId: 'NLP_FO_LEC_MA_1011',
@@ -985,8 +986,8 @@ export const guideData = [
     pageId: 'course-introduction/package-m',
     pageType: 'Page',
     completionDate: '2025-04-03',
-    lastUpdateDate: '',
-    remarks: '- package-m.tsx\n- toastpopup 공통 수정 요청중',
+    lastUpdateDate: '2025-07-11',
+    remarks: '- package-m.tsx\n- 썸네일 공통 컴포넌트 대기중',
   },
   {
     screenId: 'NLP_FO_LEC_1015',
