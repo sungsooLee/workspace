@@ -18,7 +18,7 @@ const LearningWindowOthersPlayerComponent: FC<any> = ({ othersInfo }) => {
   return (
     <div className={`${styles.start} ${styles.blog}`}>
       <div className={styles.header_color}></div>
-      <div className={styles.container} dangerouslySetInnerHTML={{ __html: htmlString }}></div>
+      <div className={styles.container}></div>
       {/* {htmlContent && $generateHtmlFromNodes(jsonInfo, null)} */}
     </div>
   );

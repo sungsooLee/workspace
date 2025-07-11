@@ -40,29 +40,12 @@
     .start {
       &.rating_box {
         @apply block;
-        .box {
-          @apply block !border-l-0 px-0;
-          &:nth-child(2) {
-            @apply border-t-[1px] pt-[20px];
-          }
-          & + .box {
-            @apply mt-[20px];
-          }
-          .number {
-            @apply justify-center;
-          }
-          ul {
-            li {
-              @apply justify-between;
-              & > div {
-                @apply w-full;
-                & > div {
-                  @apply w-full;
-                }
-              }
-              & > span {
-                &:last-child {
-                  @apply pl-[20px];
+        ul {
+          li {
+            .box {
+              div {
+                span {
+                  @apply body-md w-[45px];
                 }
               }
             }

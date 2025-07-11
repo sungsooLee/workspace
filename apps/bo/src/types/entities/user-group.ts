@@ -62,3 +62,32 @@ export type CombineUserGroup = {
   // ids?: number[]; // fe
   combiners: Combiner[];
 };
+
+export interface UserGroupManual {
+  userGroupId: number;
+  tenantId: number;
+  tenantName: string;
+  userGroupOriginType: string;
+  userGroupOriginMappingId: number;
+  originName: string;
+  userGroupName: string;
+  assignmentType: string;
+  userCount: number;
+  isUsed: boolean;
+  createdDate: Date;
+  modifiedDate: Date;
+  userList: UserList[];
+}
+
+export interface UserList {
+  companyId: number;
+  companyCode: string;
+  companyName: string;
+  deptId: number;
+  deptName: string;
+  employeeNumber: string;
+  userUuid: string;
+  userName: string;
+  userStatus: string;
+  accountStatus: string;
+}

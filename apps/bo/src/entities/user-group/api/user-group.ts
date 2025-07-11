@@ -1,12 +1,14 @@
-import { httpService } from '@learnway/shared';
+import { getQuerySkipToken, httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
 import {
   UserGroupsResponse,
   UserGroupsParam,
   UsersByIdsParam,
   OrganizationTreeResponse,
-  PageableContent,
+  PageableContent, Tenant,
 } from '@types';
+import TenantService from '@entities/tenant/api/tenant';
+import { tenantQueryKeys } from '@entities/tenant';
 
 export default class UserGroupService {
   static fetchUserGroups(
@@ -41,5 +43,9 @@ export default class UserGroupService {
 
   static fetchUserGroupManualList(params: any) {
     return httpService.get<PageableContent<any>>(`${PMSApiPrefix()}/userGroup`, params);
+  }
+
+  static fetchUserGroupManualDetail(userGroupId: number) {
+    return httpService.get<any>(`${PMSApiPrefix()}/userGroup/${userGroupId}`)
   }
 }

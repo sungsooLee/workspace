@@ -79,7 +79,7 @@ function RouteComponent() {
     });
     console.log('handleCourseOpenClick.value {} => ', value);
     router.navigate({
-      to: '/learning_test/course/create/view',
+      to: '/learning/course/create/view',
       state: {
         courseType: value, // 다국어 분류 - 공통코드
       },

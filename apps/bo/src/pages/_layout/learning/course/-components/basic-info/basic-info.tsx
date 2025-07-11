@@ -17,7 +17,7 @@ import {
 import {
   FormRow2,
   TenantByRoleChannelCheckboxFormField,
-  TenantChannelDropdownFormField,
+  TenantChannelDropdownFormField2,
   TrainingPlaceChoiceModal,
   UserChoiceModal,
   UserGroupTabsChoiceModal,
@@ -66,7 +66,9 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
 
     // 유형과 채널이 모두 변경되었을 때 상위 컴포넌트에 알림
     useEffect(() => {
-      if (courseType && channelUuid) {
+      const hasProp = courseType && channelUuid;
+      const isChanged = formData.courseType !== courseType || formData.channelUuid !== channelUuid;
+      if (hasProp && isChanged) {
         console.log('유형과 채널 변경됨:', { courseType, channelUuid });
         // 상위 컴포넌트에 변경 알림
         onConfigPropChange?.({ courseType, channelUuid });
@@ -97,7 +99,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
             provider={provider}
             name={'channelUuid'}
             label={'채널'}
-            element={<TenantChannelDropdownFormField tenantId={-1} />}
+            element={<TenantChannelDropdownFormField2 tenantId={-1} />}
           />
         </ContentsRow>
 
@@ -125,14 +127,14 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
                   content: <CategoryChoiceModal tenantIds={getValues().tenantIds} />,
                   width: 'lg',
                 })}
-                transformModalData={(data: any[]) => {
-                  return data?.map((d: any) => ({
+                transformModalData={(modalData: any[]) => {
+                  return modalData?.map((d: any) => ({
                     categoryId: d.id,
-                    name: d.name,
+                    categoryPath: d.path,
                   }));
                 }}
                 list={{
-                  labelField: 'name',
+                  labelField: 'categoryPath',
                   valueField: 'categoryId',
                 }}
                 actionNode={<Button variant="text" size="sm" label={t('추가')} />}
@@ -158,8 +160,8 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
                   ),
                 })}
                 chipList={{
-                  labelField: 'fullName',
-                  valueField: 'fullName',
+                  labelField: 'name',
+                  valueField: 'name',
                   wordwrap: true,
                 }}
                 showAddButton
@@ -392,6 +394,18 @@ const responseDataToFormData = (d: Course): Course => {
       ...d,
       name: d?.combiners?.[0]?.combineValue,
     })),
+    // 카테고리 팝업 에러나서 임시 설정
+    // categories: [
+    //   {
+    //     categoryId: 11,
+    //     name: '1-1',
+    //     categoryCode: 'category11',
+    //     categoryContent: '',
+    //     categoryPath: 'ROOT>한글명-CATE00011>1-1',
+    //     isPrimary: false,
+    //     tenantIds: [2],
+    //   },
+    // ],
   };
 };
 
@@ -421,8 +435,12 @@ export const formDataToRequestData = (d: Course) => {
     d.learningSpaceName = undefined; // 교육 장소(선택입력)
   }
 
-  // 대표 커리큘럼
+  // 카테고리 아이디 배열
+  d.categoryIds = d.categories?.map((d: any) => d.categoryId);
+  // 대표 카테고리
   d.primaryCategoryId = d.categories?.[0]?.categoryId;
+  // 학습대상-ID 배열
+  d.targetListIds = d.targetList?.map((d: any) => d.id);
 
   // 담당자, 운영자 연락처 국가코드
   d.coordinatorTelCountryCode = 'KOR_82';

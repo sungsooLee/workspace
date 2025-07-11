@@ -505,3 +505,74 @@ export const throttle = <T extends (...args: any[]) => any>(
     }
   };
 };
+
+/**
+ * API 데이터 배열을 트리 구조의 TreeNode 배열로 변환합니다.
+ * @param apiData 변환할 원본 데이터 배열
+ * @param titleKey 트리 노드의 title로 사용할 필드명 (기본값: 'name')
+ * @param idKey 트리 노드의 key로 사용할 필드명 (기본값: 'id')
+ * @param childrenKey 트리 노드의 자식 노드로 사용할 필드명 (기본값: 'children')
+ * @returns TreeNode[] 트리 구조로 변환된 데이터
+ */
+export const convertApiDataToTreeNodes = (
+  apiData: any[] | any,
+  options?: {
+    titleKey?: string;
+    idKey?: string;
+    pathKey?: string;
+    childrenKey?: string;
+    pathJoinText?: string;
+  },
+): TreeNode[] => {
+  if (!apiData) {
+    return [];
+  }
+
+  const {
+    titleKey = 'name',
+    idKey = 'id',
+    pathKey = 'path',
+    childrenKey = 'children',
+    pathJoinText = '>',
+  } = options || {};
+
+  // 입력값이 단일 객체일 경우 배열로 감싸서 일관성 있게 처리
+  const dataArray = Array.isArray(apiData) ? apiData : [apiData];
+
+  const convert = (nodes: any[], parentId?: string, parentTitles: string[] = []): TreeNode[] => {
+    // nodes가 배열이 아니거나 비어있으면 빈 배열 반환
+    if (!nodes?.length) {
+      return [];
+    }
+
+    return nodes.map((node) => {
+      // ID와 Title 값을 안전하게 문자열로 변환
+      const nodeId = String(node[idKey] ?? '');
+      const title = String(node[titleKey] ?? '');
+
+      // 부모 key와 현재 ID를 조합하여 전체 트리에서 고유한 key 생성
+      const key = parentId ? `${parentId}-${nodeId}` : nodeId;
+      const fullTitlePath = [...parentTitles, title];
+
+      // 변환된 트리 노드 객체
+      const treeNode: TreeNode = {
+        ...node,
+        key,
+        title,
+        parentId,
+        [pathKey]: fullTitlePath.join(pathJoinText),
+      };
+
+      const children = node[childrenKey];
+
+      // 자식 노드가 유효한 배열일 경우에만 재귀적으로 변환하여 추가
+      if (Array.isArray(children) && children.length > 0) {
+        treeNode.children = convert(children, key, fullTitlePath);
+      }
+
+      return treeNode;
+    });
+  };
+
+  return convert(dataArray);
+};

@@ -1,14 +1,17 @@
-import { UserGroupsParam } from '@types';
+import { UserGroupManual, UserGroupsParam } from '@types';
 import UserGroupsService from '../api/user-group';
 import { QueryOptions } from '@tanstack/react-query';
 import TenantService from '@entities/tenant/api/tenant';
 import { tenantQueryKeys } from '@entities/tenant';
+import { getQuerySkipToken, httpService } from '@learnway/shared';
+import { PMSApiPrefix } from '@learnway/config';
 
 export const queryKeys = {
   usergroups: ['user-groups'] as const,
   organizationTree: ['organization-tree'] as const,
   blackwhiteUsers: ['blackwhite-users'] as const,
   userGroupManualList: ['user-group-manual-list'] as const,
+  userGroupManualDetail: ['user-group-manual-detail'] as const,
 };
 
 export const queryOptions = {
@@ -36,4 +39,9 @@ export const queryOptions = {
     cacheTime: 0,
     staleTime: 0,
   }),
+  userGroupManualDetail: (userGroupId: number)  =>
+    userGroupId ? {
+      queryKey: queryKeys.userGroupManualDetail,
+      queryFn: (): Promise<any> => UserGroupsService.fetchUserGroupManualDetail(userGroupId),
+    }: getQuerySkipToken<UserGroupManual>(),
 };

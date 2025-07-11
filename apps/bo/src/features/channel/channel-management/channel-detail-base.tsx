@@ -1,11 +1,11 @@
 import { MainContents } from '@shared/ui';
 import { useRouterState, useRouter } from '@tanstack/react-router';
 import { ChannelDetail } from './channel-detail';
-import { FormSubTitle } from '@shared/ui';
 import { Button } from '@learnway/ui';
 
 import { cn } from '@learnway/shared';
 import styles from './channel-detail-base.module.css';
+import { EnFormMode } from '@types';
 
 const ChannelDetailBaseComponent = () => {
   const router = useRouter();
@@ -28,7 +28,8 @@ const ChannelDetailBaseComponent = () => {
           </>
         }
       /> */}
-      <ChannelDetail mode="view" channelId={channelId} />
+      <ChannelDetail mode={EnFormMode.VIEW} />
+      {/* <ChannelDetail mode={EnFormMode.VIEW} channelId={channelId} /> */}
     </div>
   );
 };

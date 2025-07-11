@@ -1,0 +1,17 @@
+/* progress.css */
+.progress_wrap {
+  .nlp--progress {
+    @apply bg-[var(--gray95)];
+    [class*='indicator'] {
+      @apply bg-[var(--blue50)];
+    }
+  }
+  [class*='progress_status'] {
+    @apply text-[var(--gray35)];
+  }
+  &[class*='error'] {
+    .nlp--progress [class*='indicator'] {
+      @apply bg-[var(--red65)];
+    }
+  }
+}

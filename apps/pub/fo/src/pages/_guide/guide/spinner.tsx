@@ -24,13 +24,13 @@ function RouteComponent() {
         <h3 className="guide_tit3">Spinner 기본</h3>
         <div className="flex_box">
           <div className="desc">
-            <Spinner isLoading={true} showBackdrop />
+            <Spinner isLoading={true} showBackdrop iconType={'blue'} />
           </div>
         </div>
       </div>
       <div className="code_example">
         <pre className="code_block">
-          <code>{`<Spinner isLoading={true} showBackdrop />`}</code>
+          <code>{`<Spinner isLoading={true} showBackdrop iconType={'blue'} />`}</code>
         </pre>
       </div>
     </div>

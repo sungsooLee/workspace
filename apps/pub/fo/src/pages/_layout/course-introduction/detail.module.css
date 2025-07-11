@@ -48,6 +48,11 @@
         & > div:nth-child(1) {
           @apply hidden;
         }
+        .introduction_content {
+          & > div {
+            @apply mt-[60px];
+          }
+        }
       }
     }
     .package_txt_box {

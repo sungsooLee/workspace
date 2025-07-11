@@ -98,8 +98,9 @@ function RouteComponent() {
           <CourseIntroduction />
           <CourseEducation />
           <CourseReview />
+          {/* 연관과정 썸네일 공통 컴포넌트 작업 예정 (현재 작업 x) */}
           <div className={cn(pageFullInner.start, pageFullInner.inner, pageFullInner.bg_sec1)}>
-            <div className={pageFullInner.contents}>abcdefg</div>
+            <div className={pageFullInner.contents}>공통 컴포넌트 대기중</div>
           </div>
         </div>
       ),

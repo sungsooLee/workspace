@@ -8,6 +8,7 @@ import { Curriculum } from '@pages/_layout/learning/course/-components/curriculu
 import { DetailInfo } from '@pages/_layout/learning/course/-components/detail-info/detail-info';
 import { PublishCourse } from '@pages/_layout/learning/course/-components/publish-course/publish-course';
 import { useCourseForm } from '@pages/_layout/learning/course/-hooks/use-course-form';
+import { CourseTab } from '@pages/_layout/learning/course/-common/type';
 
 export const Route = createLazyFileRoute('/_unauth/learning_test/course/create/view')({
   component: RouteComponent,
@@ -65,7 +66,7 @@ function RouteComponent() {
 
   const handleTabChange = (activeKey: string) => {
     console.log('activeKey', activeKey);
-    changeTab(activeKey);
+    changeTab(activeKey as CourseTab);
   };
 
   const tabItems = useMemo(
@@ -117,7 +118,7 @@ function RouteComponent() {
             variant="point"
             size="sm"
             label={'SET'}
-            onClick={() => loadMockData()}
+            onClick={() => loadMockData(1)}
           />
           <Button
             type="button"
