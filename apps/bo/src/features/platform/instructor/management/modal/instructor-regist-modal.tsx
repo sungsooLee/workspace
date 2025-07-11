@@ -10,14 +10,12 @@ import { useRef } from 'react';
 
 type InstructorRegistModalProps = {
   instructorId?: number; // 수정 및 단건조회인 경우
-  instructorType?: string; // 수정 및 단건조회인 경우
   readOnly?: boolean; // 단건조회인 경우
   refreshOnSearch?: () => void;
 };
 
 const InstructorRegistModal = ({
   instructorId,
-  instructorType,
   readOnly = false,
   refreshOnSearch,
 }: InstructorRegistModalProps) => {
@@ -50,21 +48,19 @@ const InstructorRegistModal = ({
         />
       </ModalBody>
       <ModalFooter>
-        <ModalFooter>
-          {!readOnly ? (
-            <>
-              <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={handleOnClose} />
-              <Button
-                label={!instructorId ? t('등록') : t('수정')}
-                variant={'primary'}
-                size={'lg'}
-                onClick={handleOnSubmit}
-              />
-            </>
-          ) : (
-            <Button label={t('확인')} variant={'primary'} size={'lg'} onClick={handleOnClose} />
-          )}
-        </ModalFooter>
+        {!readOnly ? (
+          <>
+            <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={handleOnClose} />
+            <Button
+              label={!instructorId ? t('등록') : t('수정')}
+              variant={'primary'}
+              size={'lg'}
+              onClick={handleOnSubmit}
+            />
+          </>
+        ) : (
+          <Button label={t('확인')} variant={'primary'} size={'lg'} onClick={handleOnClose} />
+        )}
       </ModalFooter>
     </ModalContainer>
   );

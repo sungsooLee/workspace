@@ -33,13 +33,6 @@ import { EnFormMode, EnPageMode } from '@types';
 const EMAIL_REGEX =
   /(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/;
 
-const duplicateCheckEmail = async (employeeIdOrEmail: string) => {
-  const result = false;
-
-  if (result) return DuplicateState.duplicated;
-  else return DuplicateState.ok;
-};
-
 /**
  * 화면번호: NLP_BO_LMS_0028
  * @param props
@@ -339,6 +332,24 @@ const InstructorRegistComponent = (props: any, ref: any) => {
 
   const tenantIdWatch = useWatch({ control: provider.control, name: 'tenantId' });
   const instructorTypeWatch = useWatch({ control: provider.control, name: 'instructorType' });
+
+  const duplicateCheckEmail = async (employeeIdOrEmail: string) => {
+    const result = false;
+    const data = { ...getValues() };
+    console.log('data=>', data);
+    const params = {
+      tenantId: data.tenantId,
+      email: employeeIdOrEmail,
+    };
+    try {
+      const check = await queryClient.fetchQuery(queryOptions.duplicateCheckEmail(params));
+      console.log('check==>', check);
+      if (result) return DuplicateState.duplicated;
+      else return DuplicateState.ok;
+    } catch (e) {
+      return;
+    }
+  };
 
   const handleOnSubmit = async (data: any) => {
     console.log('#### handleOnSubmit', data);

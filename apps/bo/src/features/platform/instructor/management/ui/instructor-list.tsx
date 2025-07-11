@@ -21,6 +21,7 @@ import { EnPageMode } from '@types';
 import { IcoPlus } from '@learnway/icons';
 import { InstructorRegistPopup } from '../modal/instructor-regist-modal';
 import { useActiveMenuDepthState, useFetchAuthUser } from '@learnway/auth/entities';
+import { Instructors } from 'src/types/entities/instructor';
 
 const _global = {
   linkClick: (payload: any) => {
@@ -30,13 +31,14 @@ const _global = {
 
 type InstructorListProps = {
   viewMode: string;
+  setSelectedItem?: (data: any) => any;
 };
 
 /**
  * NLP_BO_LMS_0027 : 강사 목록 조회
  * @returns
  */
-const InstructorListComponent = ({ viewMode }: InstructorListProps) => {
+const InstructorListComponent = ({ viewMode, setSelectedItem }: InstructorListProps) => {
   const router = useRouter();
   const { open: openModal, alert } = useModal();
   const [columns, setColumns] = useState() as any;
@@ -194,37 +196,6 @@ const InstructorListComponent = ({ viewMode }: InstructorListProps) => {
         }),
       ];
       columns = [...columns, ...pageColumns];
-    } else {
-      const modalColumns = [
-        columnHelper.accessor('mappedCourseCount', {
-          header: t('선택'),
-          cell: (info) => (
-            <Button
-              variant="primary"
-              onClick={(e) => {
-                e.stopPropagation();
-                const rowData = info.row.original;
-                openModal({
-                  width: 'md',
-                  content: (
-                    <InstructorRegistPopup
-                      instructorId={rowData.instructorId}
-                      refreshOnSearch={refreshOnSearch}
-                    />
-                  ),
-                });
-              }}
-              label={t('선택')}
-            />
-          ),
-          enableGrouping: false,
-          size: 120,
-          meta: {
-            cellAlign: 'center',
-          },
-        }),
-      ];
-      columns = [...columns, ...modalColumns];
     }
 
     setColumns(columns);
@@ -271,6 +242,10 @@ const InstructorListComponent = ({ viewMode }: InstructorListProps) => {
         config={gConfig}
         columns={columns}
         title={viewMode === EnPageMode.PAGE ? t('강사 목록') : t('강사/튜터 목록')}
+        hideRowSelectionRadioBox={viewMode === EnPageMode.PAGE ? true : false}
+        onRowSelect={(row: Instructors) => {
+          if (setSelectedItem) setSelectedItem(row);
+        }}
         customButtonNode={
           viewMode === EnPageMode.PAGE ? (
             <GridExcelDownloadButton
