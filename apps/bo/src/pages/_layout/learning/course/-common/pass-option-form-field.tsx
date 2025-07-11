@@ -15,11 +15,8 @@ const PassOptionFormFieldComponent = forwardRef<HTMLDivElement, PassOptionFormFi
   ({ value, onChange, ...props }, ref) => {
     const [criteria, setCriteria] = useState<PassCriteriaData>(value || {});
 
-    // 항목별 이수 기준 점수
-    const calcTotalScore = useCallback((d: PassCriteriaData) => {
-      if (!d) {
-        return 0;
-      }
+    // 항목별 이수 기준 점수 계산 후 리턴 (총점, 반영 비율, 이수 기준 점수)
+    const calcPassCriteriaData = useCallback((d: PassCriteriaData) => {
       const scoreSum =
         (d.progressMinPassScore || 0) +
         (d.attendanceMinPassScore || 0) +
@@ -30,7 +27,13 @@ const PassOptionFormFieldComponent = forwardRef<HTMLDivElement, PassOptionFormFi
         (d.attendanceWeights || 0) +
         (d.examWeights || 0) +
         (d.asgmtWeights || 0);
-      return scoreSum * (weightSum / 100);
+      const totalMinPassScore = scoreSum * (weightSum / 100);
+      return {
+        ...d,
+        scoreSum,
+        weightSum,
+        totalMinPassScore,
+      };
     }, []);
 
     const handleCriteriaChange = (field: keyof PassCriteriaData, newValue: string) => {
@@ -39,10 +42,7 @@ const PassOptionFormFieldComponent = forwardRef<HTMLDivElement, PassOptionFormFi
         ...criteria,
         [field]: numericValue,
       };
-      const updatedCriteria = {
-        ...newCriteria,
-        totalMinPassScore: calcTotalScore(newCriteria),
-      };
+      const updatedCriteria = calcPassCriteriaData(newCriteria);
       setCriteria(updatedCriteria);
       onChange?.(updatedCriteria);
     };
@@ -157,17 +157,20 @@ const PassOptionFormFieldComponent = forwardRef<HTMLDivElement, PassOptionFormFi
               <th scope={'row'}>총점</th>
               <td>
                 <span className={styles.info}>
-                  70<em className={styles.unit}>{'점'}</em>
+                  {criteria.scoreSum ?? '-'}
+                  <em className={styles.unit}>{criteria.scoreSum ? '점' : ''}</em>
                 </span>
               </td>
               <td>
                 <span className={cn(styles.info, styles.point)}>
-                  105<em className={styles.unit}>{'%'}</em>
+                  {criteria.weightSum ?? '-'}
+                  <em className={styles.unit}>{criteria.weightSum ? '%' : ''}</em>
                 </span>
               </td>
               <td>
                 <span className={styles.info}>
-                  -<em className={styles.unit}>{'점'}</em>
+                  {criteria.totalMinPassScore ?? '-'}
+                  <em className={styles.unit}>{criteria.totalMinPassScore ? '점' : ''}</em>
                 </span>
               </td>
             </tr>

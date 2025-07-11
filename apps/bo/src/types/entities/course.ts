@@ -781,9 +781,12 @@ export interface PassCriteriaData {
   attendanceMinPassScore?: number; // 항목별 이수 기준 (출석)
   examMinPassScore?: number; // 항목별 이수 기준 (평가)
   asgmtMinPassScore?: number; // 항목별 이수 기준 (과제)
-  totalMinPassScore?: number; // 항목별 이수 기준 (총점)
   progressWeights?: number; // 반영 비율 (진도)
   attendanceWeights?: number; // 반영 비율 (출석)
   examWeights?: number; // 반영 비율 (시험)
   asgmtWeights?: number; // 반영 비율 (과제)
+  totalMinPassScore?: number; // 항목별 이수 기준 (총점)
+  // 화면에서 사용 항목
+  scoreSum?: number; // 항목별 이수 기준 (총점)
+  weightSum?: number; // 반영 비율 (총점)
 }

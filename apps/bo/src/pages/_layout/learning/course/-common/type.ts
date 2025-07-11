@@ -21,3 +21,11 @@ export interface TabFormRef extends Partial<HTMLDivElement> {
   validate: () => Promise<{ isValid: boolean; data?: any; errors?: any }>;
   getValues?: () => any;
 }
+
+export enum CourseTab {
+  STEP1 = 'STEP1',
+  STEP2 = 'STEP2',
+  STEP3 = 'STEP3',
+  STEP4 = 'STEP4',
+  STEP5 = 'STEP5',
+}
