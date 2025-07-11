@@ -167,7 +167,8 @@ const PassOptionFormFieldComponent = forwardRef<HTMLDivElement, PassOptionFormFi
                 </span>
               </td>
               <td>
-                <span className={cn(styles.info, styles.point)}>
+                {/* <span className={cn(styles.info, styles.point)}> */}
+                <span className={cn(styles.info)}>
                   {criteria.weightSum ?? '-'}
                   <em className={styles.unit}>{criteria.weightSum ? '%' : ''}</em>
                 </span>
