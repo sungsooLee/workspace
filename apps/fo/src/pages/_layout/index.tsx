@@ -27,6 +27,8 @@ function HomeComponent() {
         <FormRow provider={provider} name="courseId" />
         <FormRow provider={provider} name="sequenceId" />
         <FormRow provider={provider} name="curriculumId" />
+      </ContentsRow>
+      <ContentsRow>
         <FormRow provider={provider} name="moduleId" />
         <FormRow provider={provider} name="lessonId" />
         <Button

@@ -9,30 +9,11 @@ import stylesMobile from '@learnway/styles/fo/pages/_learning/learning-m.module.
 
 const styles = isMobile ? stylesMobile : stylesWeb;
 
-const LearningWindowBlogPlayerComponent: FC<any> = ({
-  playInfo,
-  blogInfo,
-}: {
-  playInfo: any;
-  blogInfo: any;
-}) => {
-  const [htmlString, setHtmlString] = useState<string>('');
-
+const LearningWindowOthersPlayerComponent: FC<any> = ({ othersInfo }) => {
   useEffect(() => {
-    if (!blogInfo) return;
-    console.log('blogInfo', blogInfo);
-
-    const newJsonInfo = blogInfo.blogContent;
-    const editor = createEditor(editorConfig);
-    editor.setEditorState(editor.parseEditorState(newJsonInfo));
-    let htmlContent = '';
-    editor.update(() => {
-      htmlContent = $generateHtmlFromNodes(editor, null);
-    });
-
-    console.log(htmlContent);
-    setHtmlString(htmlContent);
-  }, [blogInfo]);
+    if (!othersInfo) return;
+    console.log('othersInfo', othersInfo);
+  }, [othersInfo]);
 
   return (
     <div className={`${styles.start} ${styles.blog}`}>
@@ -43,4 +24,4 @@ const LearningWindowBlogPlayerComponent: FC<any> = ({
   );
 };
 
-export const LearningWindowBlogPlayer = LearningWindowBlogPlayerComponent;
+export const LearningWindowOthersPlayer = LearningWindowOthersPlayerComponent;
