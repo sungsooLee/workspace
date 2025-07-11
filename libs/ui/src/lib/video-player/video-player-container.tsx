@@ -40,21 +40,13 @@ const VideoPlayerContainerComponent = forwardRef<HTMLDivElement, VideoPlayerCont
       <div className={`flex flex-row`}>
         <div
           ref={ref}
-          className={`relative flex h-screen w-full bg-black`}
+          className={`flex h-screen w-full bg-black`}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
           {children}
 
           {/* 상단 왼쪽 */}
-          <div
-            className={clsx({
-              'opacity-100': isHovered,
-              'opacity-0': !isHovered,
-            })}
-          >
-            <LessonTitle lessonTitle="Title" />
-          </div>
 
           {/* 중앙 제어 버튼 */}
           {/* <div
@@ -79,12 +71,7 @@ const VideoPlayerContainerComponent = forwardRef<HTMLDivElement, VideoPlayerCont
           )} */}
 
           {/* 하단 진행바 */}
-          <div
-            className={clsx({
-              'opacity-100': isHovered,
-              'opacity-0': !isHovered,
-            })}
-          >
+          <div>
             <BottomProgressBar {...props} />
           </div>
         </div>

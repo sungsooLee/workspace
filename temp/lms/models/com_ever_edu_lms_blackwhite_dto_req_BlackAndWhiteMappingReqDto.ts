@@ -24,6 +24,7 @@ export namespace com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteMappingReqDto 
     export enum combineOperator {
         AND = 'AND',
         OR = 'OR',
+        NONE = 'NONE',
     }
 }
 

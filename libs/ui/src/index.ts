@@ -89,6 +89,7 @@ export * from './lib/elements/divider/divider';
 export * from './lib/elements/split-panel/split-panel';
 export * from './lib/empty-text/empty-text';
 export * from './lib/file-upload/thumbnail-image-upload';
+export * from './lib/file-upload/thumbnail-image-upload-v2';
 export * from './lib/file-upload/uppy-file-upload';
 export * from './lib/form-field/checkbox-group-form-field/checkbox-group-form-field';
 export * from './lib/form-field/chip-list-modal-selector-form-field/chip-list-modal-selector-form-field';
@@ -205,6 +206,6 @@ export * from './lib/attachment/attachment';
 export * from './lib/attachment/single-attachment';
 export * from './lib/preview-image/preview-image';
 
-export * from './lib/learning-window/learning-window-layout';
-export * from './lib/learning-window/learning-window.store';
+export * from './lib/learning-window/learnway-learning-window-layout';
+export * from './lib/learning-window/learnway-learning-window.store';
 export * from './lib/learning-window/player/service/scorm-handler';

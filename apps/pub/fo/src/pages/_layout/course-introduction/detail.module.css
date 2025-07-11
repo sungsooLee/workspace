@@ -2,8 +2,9 @@
   &.package_wrap {
     @apply mt-[24px];
     .thumbnail_img {
+      @apply flex;
       button {
-        @apply relative;
+        @apply relative !px-0;
         .img_play {
           @apply absolute left-1/2 top-1/2 h-[80px] w-[80px] -translate-x-1/2 -translate-y-1/2;
           img {
@@ -21,7 +22,7 @@
         @apply flex w-full items-start border-b-[1px] border-solid border-[var(--gray3)];
       }
       button {
-        @apply button_2_r relative mx-0 h-[56px] py-[16px] text-[var(--gray7)];
+        @apply button_2_r relative mx-0 h-[56px] p-[16px] text-[var(--gray7)];
         em {
           @apply ml-[4px] inline-block text-[var(--gray6)];
         }
@@ -32,6 +33,12 @@
           }
           &::after {
             @apply absolute -bottom-[1px] left-0 h-[4px] w-full bg-[var(--gray9)] content-[''];
+          }
+        }
+        &.new {
+          @apply !pr-[23px];
+          &::before {
+            @apply absolute right-[16px] top-[20px] h-[5px] w-[5px] rounded-[50%] bg-[var(--red50)] content-[''];
           }
         }
       }

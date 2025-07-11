@@ -16,17 +16,20 @@ import { UserGroupJobGroup } from '../components/user-group-job-group';
 import { UserGroupJobTitle } from '../components/user-group-job-title';
 import { UserGroupJob } from '../components/user-group-job';
 import { UserGroupCustom } from '../components/user-group-custom';
-import { IcoRefresh02 } from '@learnway/icons';
 import { CombineUserGroup, UserGroupType } from '@types';
 
 type UserGroupTabModalProps = {
   initialTab?: UserGroupType;
-  tenantIds: number[];
+  tenantIds?: number[];
   option?: CombineUserGroup[];
 };
 
 const UserGroupTabModalComponent = forwardRef(
-  ({ initialTab = 'ORGANIZATION', tenantIds, option: optionProp = [] }: UserGroupTabModalProps) => {
+  ({
+    initialTab = 'ORGANIZATION',
+    tenantIds = [],
+    option: optionProp = [],
+  }: UserGroupTabModalProps) => {
     const { close: closeModal } = useModal();
 
     const [selectedTabKey, setSelectedTabKey] = useState<UserGroupType>(initialTab);
@@ -84,17 +87,17 @@ const UserGroupTabModalComponent = forwardRef(
                 key: 'JOB_POSITION',
                 content: <UserGroupJobPosition tenantIds={tenantIds} handleSetOption={setOption} />,
               },
-              {
-                title: '사용자 정의',
-                key: 'CUSTOM',
-                content: (
-                  <UserGroupCustom
-                    tenantIds={tenantIds}
-                    option={option}
-                    handleSetOption={setOption}
-                  />
-                ),
-              },
+              // {
+              //   title: '사용자 정의',
+              //   key: 'CUSTOM',
+              //   content: (
+              //     <UserGroupCustom
+              //       tenantIds={tenantIds}
+              //       option={option}
+              //       handleSetOption={setOption}
+              //     />
+              //   ),
+              // },
             ]}
             type="line"
             size={'sm'}
@@ -109,13 +112,6 @@ const UserGroupTabModalComponent = forwardRef(
         </ModalBody>
         <ModalFooter>
           <ModalFooter>
-            <Button
-              icon={<IcoRefresh02 width={16} height={16} className="icon_refresh" />}
-              variant={'gray'}
-              size={'lg'}
-            >
-              {t('초기화')}
-            </Button>
             <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={handleOnClose} />
             <Button label={t('적용')} variant={'primary'} size={'lg'} onClick={handleOnConfirm} />
           </ModalFooter>

@@ -12,12 +12,13 @@ export const queryKeys = {
 };
 
 export const queryOptions = {
-  all: (tenantId?: number) =>
-    tenantId //&& params?.roleIds
+  all: (tenantId?: number, roleId?: number) =>
+    // TODO roleId 체크 추가  && roleId
+    tenantId
       ? {
-          queryKey: queryKeys.detail(tenantId),
+          queryKey: queryKeys.detail(roleId || tenantId),
           queryFn: async () => {
-            const data = await MenuService.getMenus(tenantId, isMobile);
+            const data = await MenuService.getMenus(tenantId, roleId, isMobile);
 
             return convertHierarchyNode(
               data?.children || [],

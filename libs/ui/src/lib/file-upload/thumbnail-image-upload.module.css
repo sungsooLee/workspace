@@ -18,12 +18,13 @@
         }
         &.disabled {
           svg {
-            @apply stroke-[#b5c2d7];
+            @apply stroke-[var(--gray5)];
           }
           span {
-            @apply text-[#b5c2d7];
+            @apply text-[var(--gray5)];
           }
           & + div {
+            @apply !bg-transparent;
             .input_file {
               @apply cursor-not-allowed;
             }

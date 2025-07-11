@@ -1,13 +1,12 @@
 import { DropdownFormField } from '@features/form';
-import { TrainingPlaceChoiceModal, UserChoiceModal, UserGroupTabsChoiceModal } from '@shared/ui';
+import { CategoryChoiceModal } from '@features/learning-operate/course/course-management';
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
-import { getRandomId } from '@learnway/shared';
 import {
   Button,
-  CheckboxGroupFormField,
   ChipListModalSelectorFormField,
   ContentsRow,
   EditorFormField,
+  FormSubTitle,
   Input,
   InputModalSelectorFormField,
   ListModalSelectorFormField,
@@ -15,23 +14,30 @@ import {
   RadioGroupFormField,
   TextareaFormField,
 } from '@learnway/ui';
-import { FormRow2, FormSubTitle } from '@shared/ui';
+import {
+  FormRow2,
+  TenantByRoleChannelCheckboxFormField,
+  TenantChannelDropdownFormField2,
+  TrainingPlaceChoiceModal,
+  UserChoiceModal,
+  UserGroupTabsChoiceModal,
+} from '@shared/ui';
+import { Course } from '@types';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CourseTabBaseProps, TabFormRef } from '../../-common/type';
-import { Course } from '@types';
-import { CategoryChoiceModal } from '@features/learning-operate/course/course-management';
 
 const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
-  ({ onSave, data: { formData, courseConfig } }, ref) => {
+  ({ onSave, onConfigPropChange, data: { formData, courseConfig } }, ref) => {
     const { t } = useTranslation();
 
     const { provider, getValues, updateFormData, onFormValid, formState, watch } =
       useDynamicForm2();
 
     const channelUuid = watch('channelUuid');
+    const courseType = watch('courseType');
 
-    console.log('----- basic', { formData, courseConfig });
+    console.log('----- basic', { formData, courseConfig, channelUuid, courseType });
 
     // 부모 컴포넌트에서 호출할 수 있는 유효성 검사 메서드
     useImperativeHandle(ref, () => ({
@@ -47,19 +53,27 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
           errors,
         };
       },
-      getValues: () => {
-        console.log('getValues', getValues());
-        return getValues();
-      },
+      getValues: () => formDataToRequestData(getValues() as Course),
     }));
 
     useEffect(() => {
       console.log('BasicInfoComponent init');
       // 초기 데이터가 있으면 설정
       if (formData) {
-        updateFormData(formData);
+        updateFormData(responseDataToFormData(formData));
       }
     }, [formData]);
+
+    // 유형과 채널이 모두 변경되었을 때 상위 컴포넌트에 알림
+    useEffect(() => {
+      const hasProp = courseType && channelUuid;
+      const isChanged = formData.courseType !== courseType || formData.channelUuid !== channelUuid;
+      if (hasProp && isChanged) {
+        console.log('유형과 채널 변경됨:', { courseType, channelUuid });
+        // 상위 컴포넌트에 변경 알림
+        onConfigPropChange?.({ courseType, channelUuid });
+      }
+    }, [courseType, channelUuid, onConfigPropChange]);
 
     return (
       <div>
@@ -85,13 +99,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
             provider={provider}
             name={'channelUuid'}
             label={'채널'}
-            element={
-              <DropdownFormField
-                optionsConfig={{
-                  codeGroup: CODE_GROUP['manual.bo.my.channels'],
-                }}
-              />
-            }
+            element={<TenantChannelDropdownFormField2 tenantId={-1} />}
           />
         </ContentsRow>
 
@@ -103,26 +111,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
             provider={provider}
             name={'tenantIds'}
             label={'테넌트'}
-            element={
-              <CheckboxGroupFormField
-                key={`tenant-${channelUuid}`}
-                optionsConfig={{
-                  codeGroup: CODE_GROUP['manual.bo.my.tenant.tenantId'],
-                  // api: {
-                  //   fn: () => ChannelService.getChannelDetail(channelUuid),
-                  //   select: (data: any) => data?.tenantList || [],
-                  //   enabled: !!channelUuid,
-                  // },
-                  // labelField: 'tenantName',
-                  // valueField: 'tenantId',
-                }}
-                // options={[
-                //   { tenantName: 'tenant A', tenantId: 1 },
-                //   { tenantName: 'tenant B', tenantId: 2 },
-                //   { tenantName: 'tenant C', tenantId: 3 },
-                // ]}
-              />
-            }
+            element={<TenantByRoleChannelCheckboxFormField channelUuid={getValues().channelUuid} />}
           />
         </ContentsRow>
         {/*카테고리*/}
@@ -138,12 +127,14 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
                   content: <CategoryChoiceModal tenantIds={getValues().tenantIds} />,
                   width: 'lg',
                 })}
-                transformModalData={(data: any) => ({
-                  value: data.id,
-                  label: data.name,
-                })}
+                transformModalData={(modalData: any[]) => {
+                  return modalData?.map((d: any) => ({
+                    categoryId: d.id,
+                    categoryPath: d.path,
+                  }));
+                }}
                 list={{
-                  labelField: 'name',
+                  labelField: 'categoryPath',
                   valueField: 'categoryId',
                 }}
                 actionNode={<Button variant="text" size="sm" label={t('추가')} />}
@@ -151,6 +142,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
             }
           />
         </ContentsRow>
+
         {/*학습대상(유저그룹)*/}
         <ContentsRow>
           <FormRow2
@@ -160,28 +152,16 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
             element={
               <ChipListModalSelectorFormField
                 modalConfig={() => ({
-                  content: <UserGroupTabsChoiceModal tenantIds={getValues().tenantIds} />,
+                  content: (
+                    <UserGroupTabsChoiceModal
+                      tenantIds={getValues().tenantIds}
+                      option={getValues().targetList}
+                    />
+                  ),
                 })}
-                transformModalData={(modalData: Array<any>) => {
-                  console.log('modalData', modalData);
-                  return modalData.map((d: any) => {
-                    return {
-                      combiners: d.groups?.length
-                        ? d.groups
-                        : [
-                            {
-                              combineType: 'JOB_ROLE',
-                              combineValue: d?.userGroupIds?.[0],
-                            },
-                          ],
-                      name: d.name || 'xx',
-                      groupKey: getRandomId(),
-                    };
-                  });
-                }}
                 chipList={{
                   labelField: 'name',
-                  valueField: 'groupKey',
+                  valueField: 'name',
                   wordwrap: true,
                 }}
                 showAddButton
@@ -402,6 +382,34 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
 export const BasicInfo = BasicInfoComponent;
 
 /**
+ * 응답 데이터를 폼 데이터로 변환
+ */
+const responseDataToFormData = (d: Course): Course => {
+  return {
+    ...d,
+    // primaryCategoryId: 1, // 서버에서 받으면 삭제
+    // categoryIds: d?.categories?.map((d: any) => d.categoryId), // 카테고리 아이디
+    // tenantIds: d?.tenantList?.map((d: any) => d.tenantId), // 테넌트 아이디
+    targetList: d?.targetList?.map((d: any) => ({
+      ...d,
+      name: d?.combiners?.[0]?.combineValue,
+    })),
+    // 카테고리 팝업 에러나서 임시 설정
+    // categories: [
+    //   {
+    //     categoryId: 11,
+    //     name: '1-1',
+    //     categoryCode: 'category11',
+    //     categoryContent: '',
+    //     categoryPath: 'ROOT>한글명-CATE00011>1-1',
+    //     isPrimary: false,
+    //     tenantIds: [2],
+    //   },
+    // ],
+  };
+};
+
+/**
  * 과정 기본 정보 컴포넌트 폼 데이터를 요청 데이터로 변환하는 함수
  *
  * @component BasicInfo
@@ -411,20 +419,32 @@ export const BasicInfo = BasicInfoComponent;
 
 export const formDataToRequestData = (d: Course) => {
   // 교육공간 라디오 선택에 따라 값 변경 관련 처리 (교육공간=learningSpaceType)
-  // 차세데 학습학습 플랫폼
+  // 교육공간 > 차세데 학습학습 플랫폼
   if (d.learningSpaceType === 'LEARNING_WAY') {
     d.learningSpaceId = undefined; // 교육 장소 ID
     d.learningSpaceName = undefined; // 교육 장소(선택입력)
     d.learningSpaceNameKeyIn = undefined; // 교육 장소 직접입력
   }
-  // 공간선택
+  // 교육공간 > 공간선택
   else if (d.learningSpaceType === 'REGISTERED') {
     d.learningSpaceNameKeyIn = undefined; // 교육 장소 직접입력
   }
-  // 직적입력
+  // 교육공간 > 직적입력
   else if (d.learningSpaceType === 'MANUAL') {
     d.learningSpaceId = undefined; // 교육 장소 ID
     d.learningSpaceName = undefined; // 교육 장소(선택입력)
   }
+
+  // 카테고리 아이디 배열
+  d.categoryIds = d.categories?.map((d: any) => d.categoryId);
+  // 대표 카테고리
+  d.primaryCategoryId = d.categories?.[0]?.categoryId;
+  // 학습대상-ID 배열
+  d.targetListIds = d.targetList?.map((d: any) => d.id);
+
+  // 담당자, 운영자 연락처 국가코드
+  d.coordinatorTelCountryCode = 'KOR_82';
+  d.operatorTelCountryCode = 'KOR_82';
+
   return d;
 };

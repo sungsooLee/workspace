@@ -6,7 +6,7 @@ class CookieService {
   set(key: string, value: any, isJSON = false) {
     this.keys.push(key);
     if (isJSON) {
-      Cookies.set(key, JSON.stringify(value));
+      Cookies.set(key, JSON.stringify(value), { expires: 30 }); // 30일 저장
     } else {
       Cookies.set(key, value);
     }

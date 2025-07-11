@@ -15,5 +15,6 @@ export type com_ever_edu_pms_channel_dto_res_ChannelMappingTenantResDto = {
      * 테넌트이름
      */
     tenantName?: string;
+    isMainTenant?: boolean;
 };
 

@@ -12,10 +12,12 @@ import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 
 import { useFetchAuthUser } from '@learnway/auth/entities';
 
-import { Tenant } from '@types';
+import { EnGlobalConst, Tenant } from '@types';
 
 import { tenantQueryOptions } from '@entities/tenant';
 import { queryOptions as companysQueryOptions } from '@entities/companies/service/companies.queries';
+import { useCreation } from 'ahooks';
+import { TenantByRoleDropdownFormField } from '@shared/ui';
 
 const _global = {
   tenantIdValidator: false,
@@ -42,13 +44,91 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath, roleInfo }) => {
     router.navigate({
       to: `${rootPath}/tenant/management/detail`,
       state: {
-        tenantId: tenantId,
-        tenantName: tenantName,
+        tenantId,
+        tenantName,
         listParam: getValues(),
-        roleInfo: roleInfo
+        roleInfo
       },
     });
   };
+
+  const gridInitConfig = useCreation(
+    () => ({
+      query: tenantQueryOptions.list,
+      columns: [
+        {
+          name:  'tenantName', label: t('LABEL.grid.column.tenantName'), render: (row: any) => {
+            return (
+              <Button
+                className="link"
+                onClick={() =>
+                  _global.linkClick(row.row.original.tenantId, row.row.original.tenantName)
+                }
+              >
+                {row.getValue()}
+              </Button>
+            );
+          },
+          size: 192
+        },
+        {
+          name: 'companyTenantList', label: t('LABEL.grid.column.company'), render: (row: any) => {
+            return row.getValue() &&
+            row
+              .getValue()
+              .map((item: any) => item.companyName)
+              .join(',')
+          },
+          size: 200
+        },
+        {
+          name: 'tenantUserList', label: t('LABEL.grid.column.tenantManager'), render: (row: any) => {
+            return row.getValue() &&
+            row
+              .getValue()
+              .map((item: any) => item.userName)
+              .join(',')
+          },
+          size: 120
+        },
+        {
+          name: 'isUsed', label: t('사용여부'), render: (row: any) => {
+            return row.row.original.isUsed ? t('LABEL.common.enable') : t('미사용');
+          },
+          size: 104
+        },
+        {
+          name: 'createdBy', label: t('등록자'), size: 104
+        },
+        {
+          name: 'createdDate', label: t('등록일시'), render: (row: any) => {
+            return getDateToString(new Date(row.getValue()), DATE_TIME_FORMAT.DATETIME_SEC);
+          }, meta: {
+            cellAlign: 'center',
+          },
+          size: 192
+        },
+        {
+          name: 'lastModifiedBy', label: t('수정자'), size: 104
+        },
+        {
+          name: 'modifiedDate', label: t('수정일시'), render: (row: any) => {
+            return getDateToString(new Date(row.getValue()), DATE_TIME_FORMAT.DATETIME_SEC);
+          }, meta: {
+            cellAlign: 'center',
+          },
+          size: 192
+        },
+      ],
+      data: [],
+      gridState: {
+        page: 0,
+        size: 20,
+        sort: [],
+      }
+    }),
+    [],
+  );
 
   const {
     provider: searchProvider,
@@ -57,8 +137,8 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath, roleInfo }) => {
     onFormValid,
     setOptions,
     setValue,
-  } = useSearchBox(searchConfig);
-  const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
+  } = useSearchBox(searchConfig());
+  const { config: gConfig, gridFetch } = useGridBox(gridInitConfig, getValues);
 
   const tenantIdWatch = useWatch({ control: searchProvider.control, name: 'tenantId' });
 
@@ -114,26 +194,38 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath, roleInfo }) => {
     <>
       <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
       <Divider />
-      <GridBox config={gConfig} columns={columns} showNumberingColumn />
+      {/*<GridBox config={gConfig} columns={columns} showNumberingColumn />*/}
+      <GridBox config={gConfig} showNumberingColumn />
     </>
   );
 };
 
 export const TenantManagmentList = TenantManagmentListComponent;
 
-const searchConfig: SearchBoxConfig = {
+const searchConfig= (): SearchBoxConfig =>({
   builders: [
     [
+      // {
+      //   name: 'tenantId',
+      //   type: 'dropdown',
+      //   label: t('LABEL.form.label.tenant'),
+      //   format: 'object',
+      //   value: '',
+      //   options: [],
+      //   isClearable: true,
+      //   isSearchable: true,
+      //   placeholder: t('LABEL.grid.header.inputSelect'),
+      // },
       {
         name: 'tenantId',
-        type: 'dropdown',
-        label: t('LABEL.form.label.tenant'),
-        format: 'object',
+        type: 'custom',
+        label: t('LABEL.form.label.tenant', '테넌트'),
         value: '',
-        options: [],
-        isClearable: true,
-        isSearchable: true,
-        placeholder: t('LABEL.grid.header.inputSelect'),
+        format: 'number',
+        element: <TenantByRoleDropdownFormField />, // presetOptionLabel: t('LABEL.form.label.select', '선택'),
+        // optionsConfig: {
+        //   codeGroup: CODE_GROUP['manual.bo.my.tenant.tenantId'],
+        // },
       },
       // {
       //   name: 'companyName',
@@ -143,7 +235,6 @@ const searchConfig: SearchBoxConfig = {
       //   optionsConfig: {
       //     codeGroup: CODE_GROUP['manual.company.companyCode'],
       //   },
-
       {
         name: 'companyCode',
         type: 'dropdown',
@@ -194,91 +285,91 @@ const searchConfig: SearchBoxConfig = {
       ],
     },
   },
-};
+});
 
-const gridConfig: useGridBoxConfig = {
-  query: tenantQueryOptions.list,
-  columns: [],
-  data: [],
-
-  pagination: {
-    pageSize: 20,
-    pageIndex: 0,
-    totalRows: 0,
-  },
-};
-
-const columnHelper = createColumnHelper<Tenant>();
-const columns = [
-  columnHelper.accessor('tenantName', {
-    cell: (info) => {
-      return (
-        <Button
-          className="link"
-          onClick={() =>
-            _global.linkClick(info.row.original.tenantId, info.row.original.tenantName)
-          }
-        >
-          {info.getValue()}
-        </Button>
-      );
-    },
-    header: t('LABEL.grid.column.tenantName'),
-    size: 192,
-  }),
-  columnHelper.accessor('companyTenantList', {
-    cell: (info) =>
-      info.getValue() &&
-      info
-        .getValue()
-        .map((item) => item.companyName)
-        .join(','),
-    header: t('LABEL.grid.column.company'),
-    size: 200,
-  }),
-  columnHelper.accessor('tenantUserList', {
-    cell: (info) =>
-      info.getValue() &&
-      info
-        .getValue()
-        .map((item) => item.userName)
-        .join(','),
-    header: t('LABEL.grid.column.tenantManager'),
-    size: 120,
-  }),
-  columnHelper.accessor('isUsed', {
-    cell: (info) => {
-      return info.row.original.isUsed ? t('LABEL.common.enable') : t('미사용');
-    },
-    header: t('사용여부'),
-    size: 104,
-  }),
-  columnHelper.accessor('createdBy', {
-    header: t('등록자'),
-    size: 104,
-  }),
-  columnHelper.accessor('createdDate', {
-    cell: (info) => {
-      return getDateToString(new Date(info.getValue()), DATE_TIME_FORMAT.DATETIME_SEC);
-    },
-    header: t('등록일시'),
-    size: 192,
-    meta: {
-      cellAlign: 'center',
-    },
-  }),
-  columnHelper.accessor('lastModifiedBy', {
-    header: '수정자',
-    size: 104,
-  }),
-  columnHelper.accessor('modifiedDate', {
-    cell: (info) => {
-      return getDateToString(new Date(info.getValue()), DATE_TIME_FORMAT.DATETIME_SEC);
-    },
-    header: t('수정일시'),
-    size: 192,
-    meta: {
-      cellAlign: 'center',
-    },
-  }),
-] as ColumnDef<any, unknown>[];
+// const gridConfig: useGridBoxConfig = {
+//   query: tenantQueryOptions.list,
+//   columns: [],
+//   data: [],
+//
+//   pagination: {
+//     pageSize: 20,
+//     pageIndex: 0,
+//     totalRows: 0,
+//   },
+// };
+//
+// const columnHelper = createColumnHelper<Tenant>();
+// const columns = [
+//   columnHelper.accessor('tenantName', {
+//     cell: (info) => {
+//       return (
+//         <Button
+//           className="link"
+//           onClick={() =>
+//             _global.linkClick(info.row.original.tenantId, info.row.original.tenantName)
+//           }
+//         >
+//           {info.getValue()}
+//         </Button>
+//       );
+//     },
+//     header: t('LABEL.grid.column.tenantName'),
+//     size: 192,
+//   }),
+//   columnHelper.accessor('companyTenantList', {
+//     cell: (info) =>
+//       info.getValue() &&
+//       info
+//         .getValue()
+//         .map((item) => item.companyName)
+//         .join(','),
+//     header: t('LABEL.grid.column.company'),
+//     size: 200,
+//   }),
+//   columnHelper.accessor('tenantUserList', {
+//     cell: (info) =>
+//       info.getValue() &&
+//       info
+//         .getValue()
+//         .map((item) => item.userName)
+//         .join(','),
+//     header: t('LABEL.grid.column.tenantManager'),
+//     size: 120,
+//   }),
+//   columnHelper.accessor('isUsed', {
+//     cell: (info) => {
+//       return info.row.original.isUsed ? t('LABEL.common.enable') : t('미사용');
+//     },
+//     header: t('사용여부'),
+//     size: 104,
+//   }),
+//   columnHelper.accessor('createdBy', {
+//     header: t('등록자'),
+//     size: 104,
+//   }),
+//   columnHelper.accessor('createdDate', {
+//     cell: (info) => {
+//       return getDateToString(new Date(info.getValue()), DATE_TIME_FORMAT.DATETIME_SEC);
+//     },
+//     header: t('등록일시'),
+//     size: 192,
+//     meta: {
+//       cellAlign: 'center',
+//     },
+//   }),
+//   columnHelper.accessor('lastModifiedBy', {
+//     header: t('수정자'),
+//     size: 104,
+//   }),
+//   columnHelper.accessor('modifiedDate', {
+//     cell: (info) => {
+//       return getDateToString(new Date(info.getValue()), DATE_TIME_FORMAT.DATETIME_SEC);
+//     },
+//     header: t('수정일시'),
+//     size: 192,
+//     meta: {
+//       cellAlign: 'center',
+//     },
+//   }),
+// ] as ColumnDef<any, unknown>[];

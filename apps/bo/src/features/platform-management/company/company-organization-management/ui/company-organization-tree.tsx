@@ -1,12 +1,7 @@
-import { SectionLayout } from '@shared/ui';
 import React, { useEffect, useState } from 'react';
 import { useWatch } from 'react-hook-form';
 import { t } from 'i18next';
 import { useQueryClient } from '@tanstack/react-query';
-
-import styles from '@learnway/styles/bo/features/role/role-info.module.css';
-import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
-
 import { cn } from '@learnway/shared';
 import {
   Button,
@@ -23,11 +18,9 @@ import {
   SplitPanel,
 } from '@learnway/ui';
 import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
-import { ContentsHistoryInfoFormField, FormRow, FormSubTitle } from '@shared/ui';
-
+import { UserChoiceModal, FormRow, FormSubTitle } from '@shared/ui';
 import { transformDepartmentApiDataToTreeData } from '@features/platform-management/company/company-organization-management/service/company-organization.service';
 import { findOrganizationPathById } from '@features/platform-management/company';
-
 import {
   useGetCompanyDepartmentDetail,
   useGetCompanyHmgDepartmentTree,
@@ -39,14 +32,14 @@ import {
   DepartmentService,
   queryKeys,
 } from '@entities/department';
-
 import { CompanyOrganizationInfoList } from './company-organization-info-list';
 import { CompanyOrganizationUserList } from './company-organization-info-user';
-
 import { EnFormMode } from '@types';
 import { DuplicateState, DuplicateCheckInputFormField } from '@features/form';
-import { UserChoiceModal } from '@shared/ui';
-import CompaniesService from '@entities/companies/api/companies';
+
+import styles from '@learnway/styles/bo/features/role/role-info.module.css';
+import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
+
 export enum EnOrganizationShowType {
   check = 'check',
   origin = 'origin',
@@ -62,10 +55,12 @@ enum EnTabKeys {
  */
 const TenantCompanyOrganizationTreeComponent = ({
   companyCode,
+  companyId,
   showType,
   roleInfo,
 }: {
   companyCode: string;
+  companyId: string;
   showType: EnOrganizationShowType;
   roleInfo: string;
 }) => {
@@ -89,7 +84,7 @@ const TenantCompanyOrganizationTreeComponent = ({
     getValues,
     getInitByBuilders,
     control,
-  } = useDynamicForm(formConfig);
+  } = useDynamicForm(formConfig());
 
   const { data: departmentTreeData, refetch } = useGetCompanyDepartmentTree(
     showType === EnOrganizationShowType.platform ? [companyCode] : [],
@@ -186,7 +181,7 @@ const TenantCompanyOrganizationTreeComponent = ({
   };
 
   const duplicateDeptNameCheck = async (deptName: string) => {
-    const payload: any = { deptName };
+    const payload: any = { deptName, companyId };
     if (formMode === EnFormMode.VIEW) payload.deptId = getValues().deptId;
     const result: boolean = await DepartmentService.existDepartmentName(payload);
 
@@ -525,27 +520,27 @@ const TenantCompanyOrganizationTreeComponent = ({
               ></FormSubTitle>
               <div className={styles.contents_wrap}>
                 <ContentsRow>
-                  <FormRow provider={provider} name="deptLoc" element={<Input disabled={true} />} />
+                  <FormRow provider={provider} name="deptLoc" element={<Input readOnly={true} />} />
                 </ContentsRow>
                 <ContentsRow>
                   <FormRow
                     provider={provider}
                     name="parentName"
-                    element={<Input disabled={true} />}
+                    element={<Input readOnly={true} />}
                   />
                 </ContentsRow>
                 <ContentsRow>
                   <FormRow
                     provider={provider}
                     name="parentDeptCode"
-                    element={<Input disabled={true} />}
+                    element={<Input readOnly={true} />}
                   />
                 </ContentsRow>
                 <ContentsRow>
                   <FormRow
                     provider={provider}
                     name="deptCode"
-                    element={<Input disabled={true} />}
+                    element={<Input readOnly={true} />}
                   />
                 </ContentsRow>
                 <ContentsRow>
@@ -555,7 +550,7 @@ const TenantCompanyOrganizationTreeComponent = ({
                     element={
                       <DuplicateCheckInputFormField
                         onDuplicationCheck={duplicateDeptNameCheck}
-                        disabled={formMode === EnFormMode.EMPTY}
+                        readOnly={formMode === EnFormMode.EMPTY}
                       />
                     }
                   />
@@ -578,7 +573,7 @@ const TenantCompanyOrganizationTreeComponent = ({
                           content: <UserChoiceModal />,
                         }}
                         selectOnlyOne
-                        disabled={formMode === EnFormMode.EMPTY}
+                        readOnly={formMode === EnFormMode.EMPTY}
                       />
                     }
                   />
@@ -587,7 +582,7 @@ const TenantCompanyOrganizationTreeComponent = ({
                   <FormRow
                     provider={provider}
                     name="managerName"
-                    element={<Input disabled={true} />}
+                    element={<Input readOnly={true} />}
                   />
                 </ContentsRow>
                 <ContentsRow>
@@ -595,7 +590,7 @@ const TenantCompanyOrganizationTreeComponent = ({
                     provider={provider}
                     name="deptDesc"
                     element={
-                      <TextareaFormField resize={'none'} disabled={formMode === EnFormMode.EMPTY} />
+                      <TextareaFormField resize={'none'} readOnly={formMode === EnFormMode.EMPTY} />
                     }
                   />
                 </ContentsRow>
@@ -611,7 +606,7 @@ const TenantCompanyOrganizationTreeComponent = ({
 
 export const TenantCompanyOrganizationTree = TenantCompanyOrganizationTreeComponent;
 
-const formConfig: DynamicFormConfig = {
+const formConfig = (): DynamicFormConfig => ({
   builders: [
     {
       name: 'deptLoc',
@@ -702,4 +697,4 @@ const formConfig: DynamicFormConfig = {
       ],
     },
   },
-};
+});

@@ -1,10 +1,19 @@
 .nlp--radio {
   [role='radio'] {
+    @apply border-[var(--)];
     &[aria-checked='true'] {
       @apply !border-[var(--blue50)];
       [data-state='checked']::after {
         @apply !h-[11px] !w-[11px] !bg-[var(--blue50)];
       }
+      &:disabled {
+        [data-state='checked']::after {
+          @apply !bg-[var(--gray95)];
+        }
+      }
+    }
+    &:disabled {
+      @apply !border-[var(--gray90)] !bg-[var(--gray90)];
     }
   }
   label {

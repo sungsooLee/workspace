@@ -1,24 +1,26 @@
 import { queryOptions } from '@entities/course/service/course.queries';
 import { DropdownFormField } from '@features/form/ui/dropdown-form-field';
 import { CourseTypeOptionCardModal } from '@features/learning-operate/course/course-management';
-import {
-  GridExcelDownloadButton,
-  GridExcelUploadButton,
-  TenantByRoleDropdownFormField,
-  TenantChannelDropdownFormField,
-  SearchBoxForm,
-  FormRow2,
-} from '@shared/ui';
 import { LMSApiPrefix } from '@learnway/config';
 import { CODE_GROUP, getCodeLabel, useDynamicForm2 } from '@learnway/hooks';
+import { generateYears } from '@learnway/shared';
 import { Button, ContentsRow, Divider, GridBox, Input, useGridBox, useModal } from '@learnway/ui';
+import {
+  ContentsButtons,
+  FormRow2,
+  GridExcelDownloadButton,
+  GridExcelUploadButton,
+  MainContents,
+  PageContainer,
+  SearchBoxForm,
+  TenantByRoleDropdownFormField,
+  TenantChannelDropdownFormField,
+} from '@shared/ui';
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { CourseListItem, CoursesQueryParams } from '@types';
-import { PageContainer, MainContents, ContentsButtons } from '@shared/ui';
 import { t } from 'i18next';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { generateYears } from '@learnway/shared';
 
 export const Route = createFileRoute('/_layout/learning/course/')({
   component: RouteComponent,
@@ -77,7 +79,7 @@ function RouteComponent() {
     });
     console.log('handleCourseOpenClick.value {} => ', value);
     router.navigate({
-      to: '/learning_test/course/create/view',
+      to: '/learning/course/create/view',
       state: {
         courseType: value, // 다국어 분류 - 공통코드
       },
@@ -88,7 +90,7 @@ function RouteComponent() {
   return (
     <PageContainer>
       <ContentsButtons>
-        <Link to="/learning_test/course/create/view" state={{ courseId: 5 }} className="link">
+        <Link to="/learning/course/create/view" state={{ courseId: 5 }} className="link">
           상세 테스트
         </Link>
         <Button
@@ -111,24 +113,6 @@ function RouteComponent() {
         <SearchBoxForm onSearch={onSubmit(handleOnSearch)}>
           <ContentsRow>
             {/*테넌트*/}
-            {/* <FormRow2
-              provider={provider}
-              name={'tenantId'}
-              label={t('LABEL.form.label.tenant')}
-              element={
-                <DropdownFormField
-                  optionsConfig={{
-                    codeGroup: CODE_GROUP['manual.bo.my.tenant.tenantId'],
-                  }}
-                  presetOptionLabel={t('LABEL.form.label.select', '선택')}
-                />
-              }
-              validation={{
-                required: true,
-                format: 'object',
-              }}
-            /> */}
-            {/*테넌트 신규 폼필드*/}
             <FormRow2
               provider={provider}
               name={'tenantId'}
@@ -144,7 +128,7 @@ function RouteComponent() {
               provider={provider}
               name={'channelUuid'}
               label={t('LABEL.form.label.channel')}
-              element={<TenantChannelDropdownFormField tenantId={watch('tenantId')} />}
+              element={<TenantChannelDropdownFormField enableFilter={true} />}
               validation={{
                 required: true,
                 format: 'object',

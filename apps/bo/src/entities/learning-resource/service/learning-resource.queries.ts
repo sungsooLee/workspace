@@ -1,4 +1,9 @@
-import { BlogCreateReq, BlogUpdateReq, BlogWatchLogReq, PostDraftVideosParams } from '@types';
+import {
+  BlogCreateReq,
+  BlogUpdateReq,
+  PostDraftHtmlVideoParams,
+  PostDraftVideosParams,
+} from '@types';
 import LearningResourceService from '../api/learning-resource';
 
 export const queryKeys = {
@@ -6,6 +11,7 @@ export const queryKeys = {
   userByUuid: ['user-by-uuid'] as const,
   contents: ['contents'] as const,
   contentDetail: ['content-detail'] as const,
+  deleteContent: ['delete-content'] as const,
   createDraftVideo: ['create-draft-video'] as const,
   s3FileDownload: ['file-s3-download'] as const,
   learningResources: ['learning-resources'] as const,
@@ -72,10 +78,10 @@ export const learningResourceQueryOptions = {
     queryFn: () => LearningResourceService.fetchCourseMapping(contentUuid),
     cacheTime: 0,
     staleTime: 0,
-    enabled: false,
+    enabled: true,
   }),
   getSharedHistories: (params: any) => ({
-    queryKey: queryKeys.mappingCourses,
+    queryKey: queryKeys.sharedHistories,
     queryFn: () => LearningResourceService.fetchSharedHistories(params),
     cacheTime: 0,
     staleTime: 0,
@@ -89,13 +95,7 @@ export const learningResourceQueryOptions = {
     enabled: false,
   }),
 
-  createHTML5Draft: (params: {
-    tenantId: string;
-    tenantName: string;
-    channelUuid: string;
-    languageCountryCode: string;
-    fileUuid: string;
-  }) => ({
+  createHTML5Draft: (params: PostDraftHtmlVideoParams) => ({
     queryKey: queryKeys.html5Draft,
     queryFn: () => LearningResourceService.createHTML5Draft(params),
     cacheTime: 0,
@@ -129,13 +129,17 @@ export const mutateOptions = {
   postDraftVideos: () => ({
     mutationFn: (params: PostDraftVideosParams) => LearningResourceService.postDraftVideos(params),
   }),
+  postDraftHTML5: () => ({
+    mutationFn: (params: PostDraftHtmlVideoParams) =>
+      LearningResourceService.createHTML5Draft(params),
+  }),
   createBlogContent: () => ({
     mutationFn: (params: BlogCreateReq) => LearningResourceService.createBlogContent(params),
   }),
   updateBlogContent: () => ({
     mutationFn: (params: BlogUpdateReq) => LearningResourceService.updateBlogContent(params),
   }),
-  saveBlogWatchLog: () => ({
-    mutationFn: (params: BlogWatchLogReq) => LearningResourceService.saveBlogWatchLog(params),
+  deleteContent: () => ({
+    mutationFn: (contentUuid: string) => LearningResourceService.deleteContent(contentUuid),
   }),
 };

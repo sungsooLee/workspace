@@ -22,23 +22,16 @@ import {
 } from '@learnway/ui';
 import { DynamicFormConfig, useDynamicForm, CODE_GROUP, S3_PATH } from '@learnway/hooks';
 
-import { FormRow, FormSubTitle, AttachmentFormField } from '@shared/ui';
+import { FormRow, FormSubTitle, AttachmentFormField, DateRangeFormField } from '@shared/ui';
 import { FormDisplay } from '@features/form/ui/form-display';
 import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
 import { UserChoiceModal } from '@shared/ui';
 
 import { SingleAttachmentFormField } from '@shared/ui/form/single-attachment-form-field';
-import { EnFormMode } from '@types';
+import { EnFormMode, EnPageMode } from '@types';
 
 const EMAIL_REGEX =
   /(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/;
-
-const duplicateCheckEmail = async (employeeIdOrEmail: string) => {
-  const result = false;
-
-  if (result) return DuplicateState.duplicated;
-  else return DuplicateState.ok;
-};
 
 /**
  * 화면번호: NLP_BO_LMS_0028
@@ -63,6 +56,9 @@ const InstructorRegistComponent = (props: any, ref: any) => {
     showDeleteComplete,
   } = useModal();
 
+  const [carreerYearVal, setCarreerYearVal] = useState(0);
+  const [carreerMonthVal, setCarreerMonthVal] = useState(0);
+
   const { create: createInstructor } = useCreateInstructor({});
   const { update: updateInstructor } = useUpdateInstructor({});
   const { delete: deleteInstructor } = useDeleteInstructor({});
@@ -86,7 +82,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
         optionsConfig: {
           codeGroup: CODE_GROUP['manual.bo.my.tenant.tenantId'],
         },
-        disabled: props.instructorId,
+        disabled: props.instructorId || props.readOnly,
       },
       {
         name: 'instructorType',
@@ -97,7 +93,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
           { label: '사내', value: 'INTERNAL_INSTRUCTOR' },
           { label: '사외', value: 'EXTERNAL_INSTRUCTOR' },
         ],
-        disabled: props.instructorId,
+        disabled: props.instructorId || props.readOnly,
       },
       {
         name: 'isFulltimeInstructor',
@@ -108,7 +104,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
           { label: '비전임', value: 1 },
           { label: '전임', value: 2 },
         ],
-        disabled: props.instructorId,
+        disabled: props.instructorId || props.readOnly,
       },
       {
         name: 'roleId',
@@ -118,21 +114,17 @@ const InstructorRegistComponent = (props: any, ref: any) => {
         format: 'number',
         presetOptionLabel: t('LABEL.form.label.select', '선택'),
         options: roleIdOptions,
-        disabled: props.instructorId,
+        disabled: props.instructorId || props.readOnly,
       },
       {
-        label: t('역할 부여 기간(시작)'),
-        name: 'startDate',
-        type: 'text',
+        name: 'dateRange',
+        type: 'date-range',
+        label: t('역할 부여 기간'),
         format: 'object',
-        value: undefined,
-      },
-      {
-        label: t('역할 부여 기간(종료)'),
-        name: 'endDate',
-        type: 'text',
-        format: 'object',
-        value: undefined,
+        value: { from: undefined, to: undefined },
+        placeholder: '',
+        maxLength: 150,
+        disabled: props.readOnly,
       },
       {
         name: 'instructorName',
@@ -141,7 +133,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
         format: 'string',
         value: '',
         placeholder: ' ',
-        disabled: props.instructorId,
+        disabled: props.instructorId || props.readOnly,
       },
       {
         name: 'companyName',
@@ -149,7 +141,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
         label: t('회사'),
         value: '',
         placeholder: ' ',
-        disabled: props.instructorId,
+        disabled: props.instructorId || props.readOnly,
       },
       {
         name: 'profileFileUuid',
@@ -164,6 +156,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
           acceptFiles: ['JPEG', 'JPG', 'PNG', 'GIF'],
           maxFileCount: 1,
         },
+        disabled: props.readOnly,
       },
       {
         name: 'employeeIdOrEmail',
@@ -172,7 +165,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
         label: t('계정(사번/이메일)'),
         value: { fieldValue: '', checkState: DuplicateState.needInput },
         placeholder: ' ',
-        disabled: props.instructorId,
+        disabled: props.instructorId || props.readOnly,
       },
       {
         label: t('연락처'),
@@ -184,7 +177,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
           nationCode: 'telCountryCode',
           number: 'telNo',
         },
-        disabled: props.instructorId,
+        disabled: props.instructorId || props.readOnly,
       },
       {
         label: '',
@@ -192,14 +185,14 @@ const InstructorRegistComponent = (props: any, ref: any) => {
         type: 'hidden',
         format: 'string',
         value: 'KOR_82',
-        disabled: props.instructorId,
+        disabled: props.instructorId || props.readOnly,
       },
       {
         name: 'nationCd',
         type: 'text',
         label: t('국가코드'),
         value: 'ko_KR',
-        disabled: props.instructorId,
+        disabled: props.instructorId || props.readOnly,
       },
       {
         name: 'password',
@@ -219,13 +212,14 @@ const InstructorRegistComponent = (props: any, ref: any) => {
         type: 'text',
         format: 'object',
         value: undefined,
-        disabled: props.instructorId,
+        disabled: props.instructorId || props.readOnly,
       },
       {
         name: 'carNumber',
         type: 'text',
         label: t('차량번호'),
         value: '',
+        disabled: props.readOnly,
       },
       {
         name: 'introduction',
@@ -234,6 +228,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
         value: '',
         maxLength: 500,
         placeholder: '강사 소개를 입력해 주세요.',
+        disabled: props.readOnly,
       },
       {
         name: 'career',
@@ -242,6 +237,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
         value: '',
         maxLength: 500,
         placeholder: '강사 경력을 입력해 주세요.',
+        disabled: props.readOnly,
       },
       {
         name: 'carreerFileGroupUuid',
@@ -258,18 +254,16 @@ const InstructorRegistComponent = (props: any, ref: any) => {
         },
         description:
           '파일 사이즈 000x000 / 확장자 JPEG, JPG, PNG, GIF / 업로드 가능 1개 / 파일용량 최대 50MB',
+        disabled: props.readOnly,
       },
       {
-        name: 'carreerYear',
+        name: 'carreerYearMonth',
         type: 'number',
-        label: t('강사 경력 년'),
-        value: 0,
-      },
-      {
-        name: 'carreerMonth',
-        type: 'number',
-        label: t('강사 경력 월'),
-        value: 0,
+        label: t('강사 경력 년수'),
+        format: 'object',
+        value: { year: carreerYearVal, month: carreerMonthVal },
+        placeholder: '',
+        disabled: props.readOnly,
       },
     ],
     validator: {
@@ -284,9 +278,9 @@ const InstructorRegistComponent = (props: any, ref: any) => {
           {
             fn: (values) => {
               const value =
-                values.instructorType === 'INTERNAL_INSTRUCTOR'
+                typeof values.employeeIdOrEmail === 'string'
                   ? values.employeeIdOrEmail
-                  : values.employeeIdOrEmail?.fieldValue;
+                  : values.employeeIdOrEmail.fieldValue;
               if (value.trim().length === 0) return false;
               const pattern = new RegExp(EMAIL_REGEX, 'i');
               return !pattern.test(value.trim());
@@ -300,6 +294,27 @@ const InstructorRegistComponent = (props: any, ref: any) => {
       nationCd: true,
       birthday: true,
       introduction: true,
+      dateRange: {
+        required: false,
+        conditions: [
+          {
+            fn: (values) => values.activeIndex === 1 && !values.dateRange?.from,
+            message: t('시작 및 종료 날짜를 선택하세요'),
+          },
+          {
+            fn: (values) => values.activeIndex === 1 && !values.dateRange?.from,
+            message: t('시작 날짜를 선택하세요'),
+          },
+          {
+            fn: (values) => values.activeIndex === 1 && !values.dateRange?.to,
+            message: t('종료 날짜를 선택하세요.'),
+          },
+          {
+            fn: (values) => values.activeIndex === 1 && values.dateRange.from > values.dateRange.to,
+            message: t('시작 날짜는 종료 날짜 보다 이전일 이어야 합니다.'),
+          },
+        ],
+      },
     },
   };
 
@@ -317,6 +332,24 @@ const InstructorRegistComponent = (props: any, ref: any) => {
 
   const tenantIdWatch = useWatch({ control: provider.control, name: 'tenantId' });
   const instructorTypeWatch = useWatch({ control: provider.control, name: 'instructorType' });
+
+  const duplicateCheckEmail = async (employeeIdOrEmail: string) => {
+    const result = false;
+    const data = { ...getValues() };
+    console.log('data=>', data);
+    const params = {
+      tenantId: data.tenantId,
+      email: employeeIdOrEmail,
+    };
+    try {
+      const check = await queryClient.fetchQuery(queryOptions.duplicateCheckEmail(params));
+      console.log('check==>', check);
+      if (result) return DuplicateState.duplicated;
+      else return DuplicateState.ok;
+    } catch (e) {
+      return;
+    }
+  };
 
   const handleOnSubmit = async (data: any) => {
     console.log('#### handleOnSubmit', data);
@@ -338,13 +371,15 @@ const InstructorRegistComponent = (props: any, ref: any) => {
   };
 
   const handleOnInsert = async (data: any) => {
+    const startDate = data.dateRange.from;
+    const endDate = data.dateRange.to;
     const payload = {
       tenantId: data.tenantId,
       instructorType: data.instructorType,
       isFulltimeInstructor: data.isFulltimeInstructor === 2,
       roleId: data.roleId,
-      startDate: data.startDate !== '' ? dayjs(data.startDate).format('YYYY-MM-DD') : null,
-      endDate: data.endDate !== '' ? dayjs(data.endDate).format('YYYY-MM-DD') : null,
+      startDate: startDate ? dayjs(startDate).format('YYYY-MM-DD') : null,
+      endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
       instructorName: data.instructorName,
       companyName: data.companyName,
       profileFileUuid: data.profileFileUuid,
@@ -362,15 +397,19 @@ const InstructorRegistComponent = (props: any, ref: any) => {
       career: data.career,
       // carreerFileGroupUuid: data.carreerFileGroupUuid, // TODO: string[] 타입으로 BE확인필요
       carreerFileGroupUuid: '',
-      carreerYear: data.carreerYear,
-      carreerMonth: data.carreerMonth,
+      carreerYear: carreerYearVal,
+      carreerMonth: carreerMonthVal,
     };
 
     if (await openConfirm('저장 하시겠습니까?')) {
       createInstructor(payload, {
         onSuccess: async () => {
           await showSaveComplete();
-          router.navigate({ to: '/platform/instructor/management' });
+          if (props.viewMode === EnPageMode.PAGE) {
+            router.navigate({ to: '/platform/instructor/management' });
+          } else {
+            if (typeof props.handleSubmitSuccess === 'function') props.handleSubmitSuccess();
+          }
         },
         isError: () => {
           console.error('error');
@@ -380,17 +419,19 @@ const InstructorRegistComponent = (props: any, ref: any) => {
   };
 
   const handleOnUpdate = async (data: any) => {
+    const startDate = data.dateRange.from;
+    const endDate = data.dateRange.to;
     const payload = {
-      startDate: dayjs(data.startDate).format('YYYY-MM-DD'),
-      endDate: dayjs(data.endDate).format('YYYY-MM-DD'),
+      startDate: startDate ? dayjs(startDate).format('YYYY-MM-DD') : null,
+      endDate: endDate ? dayjs(endDate).format('YYYY-MM-DD') : null,
       profileFileUuid: data.profileFileUuid,
       carNumber: data.carNumber,
       introduction: data.introduction,
       career: data.career,
       // carreerFileGroupUuid: data.carreerFileGroupUuid,
       carreerFileGroupUuid: '',
-      carreerYear: data.carreerYear,
-      carreerMonth: data.carreerMonth,
+      carreerYear: carreerYearVal,
+      carreerMonth: carreerMonthVal,
       instructorId: props.instructorId,
     };
 
@@ -398,7 +439,11 @@ const InstructorRegistComponent = (props: any, ref: any) => {
       updateInstructor(payload, {
         onSuccess: async (data: any) => {
           await showUpdateComplete();
-          router.navigate({ to: '/platform/instructor/management' });
+          if (props.viewMode === EnPageMode.PAGE) {
+            router.navigate({ to: '/platform/instructor/management' });
+          } else {
+            if (typeof props.handleSubmitSuccess === 'function') props.handleSubmitSuccess();
+          }
         },
         isError: () => {
           console.error('error');
@@ -424,6 +469,8 @@ const InstructorRegistComponent = (props: any, ref: any) => {
   useImperativeHandle(ref, () => ({
     saveData() {
       console.log('saveData');
+      console.log('##formValid =>', onFormValid());
+      console.log('##getValues => ', getValues);
       const form = formRef.current;
       if (form) {
         form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
@@ -461,18 +508,28 @@ const InstructorRegistComponent = (props: any, ref: any) => {
         console.log('##info =>', info);
         if (info) {
           const data = {
-            isView: props.instructorId ? EnFormMode.VIEW : EnFormMode.ADD,
+            isView: EnFormMode.VIEW,
             ...info,
             isFulltimeInstructor: info.isFulltimeInstructor ? 2 : 1,
+            dateRange: { from: new Date(info.startDate), to: new Date(info.endDate) },
             // carreerFileGroupUuid: '', // TODO: Swagger에 string타입으로 확인필요
             carreerFileGroupUuid: [],
             password: '',
             passwordConfirm: '',
           };
-
+          setCarreerYearVal(info.carreerYear);
+          setCarreerMonthVal(info.carreerMonth);
           updateFormData(data);
         }
       })();
+    } else {
+      const data = {
+        ...getValues(),
+        isView: EnFormMode.ADD,
+        employeeIdOrEmail: '',
+      };
+      console.log('### add:', data);
+      updateFormData(data);
     }
   }, []);
 
@@ -495,8 +552,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
       </ContentsRow>
       <ContentsRow>
         <FormRow provider={provider} name="roleId" />
-        <FormRow provider={provider} name="startDate" element={<DatePicker displayType="day" />} />
-        <FormRow provider={provider} name="endDate" element={<DatePicker displayType="day" />} />
+        <FormRow provider={provider} name="dateRange" element={<DateRangeFormField />} />
       </ContentsRow>
 
       <FormSubTitle label={t('강사 정보')} lineType="dark" />
@@ -515,6 +571,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
             name="instructorName"
             element={
               <InputModalSelectorFormField
+                readOnly={props.readOnly}
                 transformModalData={(data: any) => ({
                   instructorName: data.name,
                   companyName: data.company?.name,
@@ -612,8 +669,28 @@ const InstructorRegistComponent = (props: any, ref: any) => {
         />
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider} name="carreerYear" />
-        <FormRow provider={provider} name="carreerMonth" />
+        <FormRow
+          provider={provider}
+          name="carreerYearMonth"
+          element={
+            <>
+              <Input
+                name="carreerYear"
+                type="number"
+                value={carreerYearVal}
+                onChange={(e: any) => setCarreerYearVal(e.target.value)}
+                disabled={props.readOnly}
+              />
+              <Input
+                name="carreerMonth"
+                type="number"
+                value={carreerMonthVal}
+                onChange={(e: any) => setCarreerMonthVal(e.target.value)}
+                disabled={props.readOnly}
+              />
+            </>
+          }
+        />
       </ContentsRow>
       {/* 강사 타입(사내/사외) 끝 */}
     </form>

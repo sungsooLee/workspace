@@ -27,6 +27,10 @@ function HomeComponent() {
         <FormRow provider={provider} name="courseId" />
         <FormRow provider={provider} name="sequenceId" />
         <FormRow provider={provider} name="curriculumId" />
+      </ContentsRow>
+      <ContentsRow>
+        <FormRow provider={provider} name="moduleId" />
+        <FormRow provider={provider} name="lessonId" />
         <Button
           label="학습창"
           variant="primary"
@@ -38,9 +42,13 @@ function HomeComponent() {
             router.navigate({
               to: `/learning-window`,
               state: {
-                courseId: values.courseId,
-                sequenceId: values.sequenceId,
-                curriculumId: values.curriculumId,
+                learningInfo: {
+                  courseId: values.courseId,
+                  sequenceId: values.sequenceId,
+                  curriculumId: values.curriculumId,
+                  moduleId: values.moduleId ? parseInt(values.moduleId) : undefined,
+                  lessonId: values.lessonId ? parseInt(values.lessonId) : undefined,
+                },
               },
             });
           }}
@@ -69,6 +77,20 @@ const formConfig: DynamicFormConfig = {
       type: 'text',
       label: '커리큘럼 Id',
       value: '1',
+    },
+    {
+      name: 'moduleId',
+      type: 'text',
+      label: '모듈 Id',
+      placeholder: '모듈 ID 입력 필요시',
+      value: '',
+    },
+    {
+      name: 'lessonId',
+      type: 'text',
+      label: '레슨 Id',
+      placeholder: '레슨 ID 입력 필요시',
+      value: '',
     },
   ],
   validator: {

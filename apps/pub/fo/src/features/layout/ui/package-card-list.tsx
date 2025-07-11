@@ -5,8 +5,8 @@ import styles from './package-card-list.module.css';
 
 interface PackageCardListData {
   label?: string;
-  imgSrc?: string;
-  text?: string;
+  imgSrc: string;
+  text: string;
 }
 
 interface PackageCardListProps {

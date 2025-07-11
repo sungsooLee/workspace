@@ -1,17 +1,18 @@
-import React, { forwardRef, useState } from 'react';
+import { useFetchTenantCategoryTreePopup } from '@entities/tenant';
 import {
   Button,
+  convertApiDataToTreeNodes,
   ModalBody,
   ModalContainer,
   ModalFooter,
   ModalTitle,
-  ShuttleTreeToChips,
+  ShuttleTreeToChipsV2,
   useModal,
+  useShuttleTreeToChips,
 } from '@learnway/ui';
+import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './category-choice-modal.module.css';
-import { useFetchTenantCategoryTreePopup } from '@entities/tenant';
-import { transformApiDataToApiTreeData } from '@features/platform-management/platform/menu-managemnet';
 
 export interface CategoryChoiceModalProps {
   /** 테넌트 아이디 배열 */
@@ -29,33 +30,27 @@ const CategoryChoiceModalComponent = forwardRef<HTMLDivElement, CategoryChoiceMo
   ({ tenantIds, ...props }, ref) => {
     const { t } = useTranslation();
     const { close: closeModal } = useModal();
-    const { data: treeData } = useFetchTenantCategoryTreePopup(tenantIds, {
-      select: (response: any) => transformApiDataToApiTreeData(response),
-    });
-    const [selectedRows, setSelectedRows] = useState();
-    const [selectedItems, setSelectedItems] = useState<any[]>([]);
+    const { data } = useFetchTenantCategoryTreePopup(tenantIds);
+    const treeData = convertApiDataToTreeNodes(data, { pathKey: 'categoryPath' });
+    const { selectedItems, handleSelectItem, cancelSelectItem, cancelAll } =
+      useShuttleTreeToChips();
 
-    console.log('Category ChoiceModalComponent', { tenantIds, treeData });
-
-    const handleItemsChange = (items: any[]) => {
-      setSelectedItems(items);
-    };
+    console.log('Category ChoiceModalComponent', { tenantIds, treeData, data });
 
     return (
       <ModalContainer>
         <ModalTitle>{t('카테고리 선택')}</ModalTitle>
         <ModalBody>
           <div className={styles.wrap}>
-            <ShuttleTreeToChips
-              title="source"
-              displayKey="title"
-              targetTitle="공통 카테고리 선택"
-              sourceTitle="선택 카테고리 목록"
-              treeId="category-tree"
-              sourceData={treeData}
-              // selectedItems={selectedItems}
-              initLevel={1}
-              onItemsChange={handleItemsChange}
+            <ShuttleTreeToChipsV2
+              sourceTitle="공통 카테고리 선택"
+              targetTitle="선택 카테고리 목록"
+              treeData={treeData}
+              renderText={(node: any) => node.path}
+              selectedItems={selectedItems}
+              handleSelectItem={handleSelectItem}
+              cancelSelectItem={cancelSelectItem}
+              cancelAll={cancelAll}
             />
           </div>
         </ModalBody>
@@ -65,7 +60,7 @@ const CategoryChoiceModalComponent = forwardRef<HTMLDivElement, CategoryChoiceMo
             label={t('확인')}
             variant={'primary'}
             size={'lg'}
-            onClick={() => closeModal(selectedRows)}
+            onClick={() => closeModal(selectedItems)}
           />
         </ModalFooter>
       </ModalContainer>
@@ -73,11 +68,3 @@ const CategoryChoiceModalComponent = forwardRef<HTMLDivElement, CategoryChoiceMo
   },
 );
 export const CategoryChoiceModal = CategoryChoiceModalComponent;
-
-const getMockData = () => {
-  return {
-    data: Array(10)
-      .fill(null)
-      .map((d, i) => ({ id: `id${i}`, name: `manager${i}` })),
-  };
-};

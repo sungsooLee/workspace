@@ -1,0 +1,71 @@
+/* pass-option-form-field.module.css */
+.start {
+  @apply border-t-[1px] border-solid border-[var(--gray6)];
+  table {
+    @apply w-full table-fixed border-collapse;
+    caption {
+      @apply static -m-px block h-px w-px overflow-hidden [clip:rect(1px,_1px,_1px,_1px)];
+    }
+    thead {
+      tr {
+        th {
+          @apply body_bo_2_b h-[50px] bg-[var(--gray1)] px-[16px] text-center align-middle text-[var(--gray9)];
+          &:not(:first-child) {
+            @apply border-l-[1px] border-solid border-[var(--gray4)];
+          }
+        }
+      }
+    }
+    tbody {
+      tr {
+        @apply border-b-[1px] border-solid border-[var(--gray4)];
+        td {
+          @apply body_bo_2_r h-[52px] px-[16px] align-middle text-[var(--gray8)];
+          .info_text {
+            strong {
+              @apply body_bo_2_b text-[var(--gray8)];
+            }
+          }
+          [class*='notice'] > div > ul li {
+            @apply !body_bo_2_r !leading-[1.8rem] !text-[var(--gray7)];
+            &::before {
+              @apply !bg-[var(--gray7)];
+            }
+          }
+          &:not(:first-child) {
+            @apply border-l-[1px] border-solid border-[var(--gray4)];
+          }
+          &[rowspan] {
+            @apply pt-[14px] text-left align-top;
+          }
+        }
+        &:first-child {
+          @apply border-t-[1px];
+        }
+      }
+    }
+    tfoot {
+      tr {
+        @apply border-b-[1px] border-solid border-[var(--gray4)];
+        th {
+          @apply body_bo_2_r h-[52px] bg-[var(--gray1)] px-[16px] text-left align-middle;
+        }
+        td {
+          @apply body_bo_2_r h-[52px] border-l-[1px] border-solid border-[var(--gray4)] bg-[var(--gray1)] px-[16px] text-right align-middle;
+        }
+      }
+    }
+  }
+  .info {
+    @apply body_bo_2_r text-[var(--gray8)];
+    .unit {
+      @apply body_bo_2_r text-[var(--gray8)];
+    }
+    &.point {
+      @apply text-[var(--status1)];
+      .unit {
+        @apply text-[var(--status1)];
+      }
+    }
+  }
+}

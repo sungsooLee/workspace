@@ -22,7 +22,7 @@ import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.cs
 
 const CompanyUserDetailBaseComponent: FC<any> = ({ userInfo }) => {
   const { provider, control, updateFormData, onSubmit, setFormError, clearFormError, getValues } =
-    useDynamicForm(formConfig);
+    useDynamicForm(formConfig());
   const [roleData, setRoleData] = useState<any[]>([]);
 
   const watchedValues = useWatch({
@@ -42,7 +42,7 @@ const CompanyUserDetailBaseComponent: FC<any> = ({ userInfo }) => {
   }, [userInfo]);
   return (
     <>
-      <FormSubTitle label={'개인 정보'} lineType={'dark'} />
+      <FormSubTitle label={t('개인 정보')} lineType={'dark'} />
       <ContentsRow>
         <FormRow provider={provider} name={'name'} element={<Input disabled={true} />} />
         <FormRow provider={provider} name={'engName'} element={<Input disabled={true} />} />
@@ -59,10 +59,10 @@ const CompanyUserDetailBaseComponent: FC<any> = ({ userInfo }) => {
         <FormRow provider={provider} name={'officePhone'} />
       </ContentsRow>
 
-      <FormSubTitle label={'교재 배송 주소 및 교재 신청 내역'} lineType={'dark'} />
+      <FormSubTitle label={t('교재 배송 주소 및 교재 신청 내역')} lineType={'dark'} />
       <TableBox data={textBookData} columns={textBookColumns} tableMode={true} />
 
-      <FormSubTitle label={'회사/조직 정보'} lineType={'dark'} />
+      <FormSubTitle label={t('회사/조직 정보')} lineType={'dark'} />
       <ContentsRow>
         <FormRow provider={provider} name={'companyName'} element={<Input disabled={true} />} />
         <FormRow provider={provider} name={'room'} element={<Input disabled={true} />} />
@@ -92,7 +92,7 @@ const CompanyUserDetailBaseComponent: FC<any> = ({ userInfo }) => {
         <div className={cn(formStyles.form_item)}></div>
       </ContentsRow>
 
-      <FormSubTitle label={'직군/직무 정보'} lineType={'dark'} />
+      <FormSubTitle label={t('직군/직무 정보')} lineType={'dark'} />
       <TableBox
         data={roleData}
         columns={roleColumns}
@@ -103,7 +103,7 @@ const CompanyUserDetailBaseComponent: FC<any> = ({ userInfo }) => {
         height={110}
       />
 
-      <FormSubTitle label={'계정 정보'} lineType={'dark'} />
+      <FormSubTitle label={t('계정 정보')} lineType={'dark'} />
       <ContentsRow>
         <FormRow provider={provider} name={'humanResourceManagementMethod'} />
       </ContentsRow>
@@ -149,7 +149,7 @@ const CompanyUserDetailBaseComponent: FC<any> = ({ userInfo }) => {
         />
       </ContentsRow>
 
-      <FormSubTitle label={'로그인 및 인증 설정 정보'} lineType={'dark'} />
+      <FormSubTitle label={t('로그인 및 인증 설정 정보')} lineType={'dark'} />
       <ContentsRow>
         <ContentsRowItem>
           <FormRow
@@ -186,7 +186,7 @@ const CompanyUserDetailBaseComponent: FC<any> = ({ userInfo }) => {
 
 export const CompanyUserDetailBase = CompanyUserDetailBaseComponent;
 
-const formConfig: DynamicFormConfig = {
+const formConfig = (): DynamicFormConfig => ({
   builders: [
     {
       name: 'name',
@@ -343,7 +343,7 @@ const formConfig: DynamicFormConfig = {
       type: 'radio-group',
       label: t('재직 상태'),
       value: '',
-      optionConfig: {
+      optionsConfig: {
         codeGroup: CODE_GROUP['pms.user.Status'],
       },
     },
@@ -359,26 +359,18 @@ const formConfig: DynamicFormConfig = {
       type: 'radio-group',
       label: t('인사 데이터 관리 방식'),
       value: 'opt1',
-      options: [
-        { label: t('자동 관리'), value: 'opt1' },
-        { label: t('수동 관리'), value: 'opt2' },
-      ],
+      optionsConfig: {
+        codeGroup: CODE_GROUP['pms.company.HrInfoManageType'],
+      },
     },
     {
       name: 'registerType',
       type: 'radio-group',
       label: t('회원 가입 유형'),
       value: 'GIM',
-      options: [
-        { label: t('GIM'), value: 'GIM' },
-        { label: t('HSW'), value: 'HSW' },
-        { label: t('KSW'), value: 'KSW' },
-        { label: t('DMSS(H)'), value: 'DMSSH' },
-        { label: t('DMSS(K)'), value: 'DMSSK' },
-        { label: t('DDMS(H)'), value: 'DDMSH' },
-        { label: t('DDMS(K)'), value: 'DDMSK' },
-        { label: t('VAATZ'), value: 'VAATZ' },
-      ],
+      optionsConfig: {
+        codeGroup: CODE_GROUP['pms.company.LinkageSystem'],
+      },
       guideText: t('수동 관리는 다수 선택할 수 있으며, 자동 관리는 하나만 선택할 수 있습니다.'),
     },
     {
@@ -386,7 +378,7 @@ const formConfig: DynamicFormConfig = {
       type: 'radio-group',
       label: t('계정 상태'),
       value: '',
-      optionConfig: {
+      optionsConfig: {
         codeGroup: CODE_GROUP['pms.user.AccountStatus'],
       },
     },
@@ -445,24 +437,20 @@ const formConfig: DynamicFormConfig = {
       name: 'ssoLoginType',
       type: 'radio-group',
       label: '',
-      value: 'opt1',
-      options: [
-        { label: 'HMG SSO', value: 'opt1' },
-        { label: 'Autoway', value: 'opt2' },
-        { label: 'AES Link', value: 'opt3' },
-      ],
+      value: 'AES_Link',
+      optionsConfig: {
+        codeGroup: CODE_GROUP['pms.company.SsoType'],
+      },
       guideText: t('SSO 로그인 사용 여부를 설정합니다.'),
     },
     {
       name: 'passwordAuthType',
       type: 'radio-group',
       label: t('비밀번호 인증 유형'),
-      value: 'opt1',
-      options: [
-        { label: '플랫폼', value: 'opt1' },
-        { label: 'Autoway', value: 'opt2' },
-        { label: 'AES Link', value: 'opt3' },
-      ],
+      value: 'PLATFORM',
+      optionsConfig: {
+        codeGroup: CODE_GROUP['pms.company.PasswordAuthType'],
+      },
       guideText: t(
         '플랫폼은 플랫폼에서 비밀번호를 관리하고, 그외의 유형은 각 시스템에서 비밀번호를 관리합니다.',
       ),
@@ -474,22 +462,18 @@ const formConfig: DynamicFormConfig = {
       format: 'array',
       value: [],
       guideText: t('2차 로그인 인증 여부를 설정할 수 있습니다.'),
-      options: [
-        { label: 'FO 로그인', value: 'FO' },
-        { label: 'BO 로그인', value: 'BO' },
-      ],
+      optionsConfig: {
+        codeGroup: CODE_GROUP['pms.company.TwoFactorAuthPlatformType'],
+      },
     },
     {
       name: '2FAType',
       type: 'radio-group',
       label: t('2차 인증 유형'),
-      value: 'opt1',
-      options: [
-        { label: 'MPASS (OTP/FIDO)', value: 'opt1' },
-        { label: 'MPASS (FIDO)', value: 'opt2' },
-        { label: 'MPASS (OTP)', value: 'opt3' },
-        { label: '구글 OTP', value: 'opt4' },
-      ],
+      value: 'GOOGLE_OTP',
+      optionsConfig: {
+        codeGroup: CODE_GROUP['pms.company.TwoFactorAuthType'],
+      },
       guideText: t('로그인 2차 인증 사용하는 경우 2차 인증 유형을 선택할 수 있습니다.'),
     },
     {
@@ -505,7 +489,7 @@ const formConfig: DynamicFormConfig = {
       guideText: t('로그인 시간 제한 선택 시 회사관리 제한 시간에는 로그인할 수 없습니다.'),
     },
   ],
-};
+});
 
 const textBookData: any[] = [
   {

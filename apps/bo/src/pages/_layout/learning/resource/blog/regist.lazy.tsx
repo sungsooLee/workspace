@@ -20,10 +20,8 @@ function RouteComponent() {
   const router = useRouter();
 
   const handleClickSubmitButton = (e: MouseEvent<HTMLButtonElement>) => {
-    const submitEvent = new Event('submit', { bubbles: true, cancelable: true });
-
     if (formRef.current) {
-      formRef.current?.dispatchEvent(submitEvent);
+      formRef.current?.requestSubmit();
     }
   };
 

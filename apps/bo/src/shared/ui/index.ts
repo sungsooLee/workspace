@@ -28,6 +28,8 @@ export * from './form/single-attachment-form-field';
 export * from './form/switch-form-field';
 export * from './form/tenant-by-role-dropdown-form-field';
 export * from './form/tenant-channel-dropdown-form-field';
+export * from './form/tenant-channel-dropdown-form-field2';
+export * from './form/tenant-by-role-channel-checkbox-form-field';
 export * from './form/thumbnail-list-form-field';
 export * from './layout/breadcrumbs/breadcrumbs';
 export * from './layout/page-container';
@@ -76,3 +78,5 @@ export * from './search-box/search-box';
 export * from './search-box/search-field-config';
 export * from './search-box/type';
 export * from './temp-server-status/server-status';
+
+export * from '../lib/convert-to-thumbnail-object';

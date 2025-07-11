@@ -1,7 +1,14 @@
 import { useEffect, useState, ReactNode } from 'react';
 import { useMount } from 'ahooks';
 
-import { initI18N, initZod, initAxios, tokenService, getDefaultLang } from '@learnway/config';
+import {
+  initI18N,
+  initZod,
+  initAxios,
+  tokenService,
+  getDefaultLang,
+  setConfig,
+} from '@learnway/config';
 import { Spinner, useModal } from '@learnway/ui';
 
 import { useFetchI18nResource, useFetchCodeGroups } from '../entities/platform';
@@ -33,7 +40,10 @@ export function AppConfigProvider({ children }: AppConfigProviderProps) {
   const queryClient = new QueryClient();
 
   useMount(async () => {
+    setConfig('APP_INFO', 'BO');
+    console.log('### useMount start');
     tokenService.refreshToken && (await reissue());
+    console.log('### useMount end');
   });
 
   useEffect(() => {
@@ -42,11 +52,12 @@ export function AppConfigProvider({ children }: AppConfigProviderProps) {
       onRejected: async (error: any) => {
         const { config, response: errorResponse } = error;
         if (error?.code === 'ERR_NETWORK' || errorResponse?.status === 500) {
-          await alert({
-            title: '시스템 에러',
-            content: '시스템 관리자에게 문의하세요',
-            type: 'error',
-          });
+          console.error('error', error);
+          // await alert({
+          //   title: '시스템 에러',
+          //   content: '시스템 관리자에게 문의하세요',
+          //   type: 'error',
+          // });
         }
         return Promise.reject(error);
       },

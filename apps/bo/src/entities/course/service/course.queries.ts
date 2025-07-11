@@ -3,6 +3,8 @@ import {
   Course,
   CourseConfig,
   CourseConfigQueryParams,
+  CoursePopupListItem,
+  CoursePopupQueryParams,
   CoursesQueryParams,
   PaginationResponse,
 } from '../../../types';
@@ -13,6 +15,8 @@ export const queryKeys = {
   get: (id: number) => ['course', id] as const,
   getCourseConfig: (queryParams: CourseConfigQueryParams) =>
     ['course', 'config', queryParams] as const,
+  getCoursePopup: (queryParams: CoursePopupQueryParams) =>
+    ['course', 'popup', queryParams] as const,
 };
 
 export const queryOptions = {
@@ -30,7 +34,13 @@ export const queryOptions = {
   getCourseConfig: <T = CourseConfig>(queryParams: CourseConfigQueryParams) => ({
     queryKey: queryKeys.getCourseConfig(queryParams),
     queryFn: () => CourseService.fetchCourseConfig<T>(queryParams),
-    enabled: !!queryParams.channelId && !!queryParams.courseType,
+    enabled: !!queryParams.channelUuid && !!queryParams.courseType,
+  }),
+  // 과정 조회 팝업 조회
+  getCoursePopup: <T = CoursePopupListItem>(queryParams: CoursePopupQueryParams) => ({
+    queryKey: queryKeys.getCoursePopup(queryParams),
+    queryFn: () => CourseService.fetchCoursePopup<T>(queryParams),
+    enabled: !!queryParams.tenantIds && !!queryParams.channelUuid,
   }),
 };
 

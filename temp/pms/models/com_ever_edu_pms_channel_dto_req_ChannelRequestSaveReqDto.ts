@@ -10,23 +10,19 @@ export type com_ever_edu_pms_channel_dto_req_ChannelRequestSaveReqDto = {
     /**
      * 채널이름
      */
-    channelName?: string;
+    channelName: string;
     /**
      * 채널메인아이디
      */
-    channelMainId?: string;
-    /**
-     * 채널메인링크내용
-     */
-    channelMainLinkContent?: string;
+    channelMainId: string;
     /**
      * 채널 테넌트 관계 유형
      */
-    channelTenatMappingType?: com_ever_edu_pms_channel_dto_req_ChannelRequestSaveReqDto.channelTenatMappingType;
+    channelTenatMappingType: com_ever_edu_pms_channel_dto_req_ChannelRequestSaveReqDto.channelTenatMappingType;
     /**
      * 채널비밀구분
      */
-    channelSecretType?: com_ever_edu_pms_channel_dto_req_ChannelRequestSaveReqDto.channelSecretType;
+    channelSecretType: com_ever_edu_pms_channel_dto_req_ChannelRequestSaveReqDto.channelSecretType;
     /**
      * 채널학습내용
      */
@@ -35,10 +31,6 @@ export type com_ever_edu_pms_channel_dto_req_ChannelRequestSaveReqDto = {
      * 채널목적내용
      */
     channelPurposeContent?: string;
-    /**
-     * 요청자ID
-     */
-    channelRequestorId?: number;
 };
 export namespace com_ever_edu_pms_channel_dto_req_ChannelRequestSaveReqDto {
     /**

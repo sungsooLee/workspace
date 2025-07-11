@@ -47,7 +47,6 @@ import styles from './test.module.css'; // 예시 페이지 모듈
   <i className={proccessResultStyles.ico}>
     {/* 아이콘 변경가능 */}
     <IcoComplete className={proccessResultStyles.ico1} />
-   
   </i>
   <h3 className={proccessResultStyles.title}>
     입력하신 정보로 가입된 아이디는 아래와 같습니다.

@@ -36,9 +36,9 @@ export function useUpdateAuthUser<T = AuthUser>() {
 export function useLoginUser(mutationOptions = {}) {
   const queryClient = useQueryClient();
   const { setExp, reset } = useExpStore();
-  const { mutateAsync, isSuccess, isError } = useMutation({
+  const { mutateAsync, isSuccess, isError } = useMutation<AuthUser, Error, any, unknown>({
     ...mutateOptions.login(),
-    onSuccess: async (data: any, variables, context) => {
+    onSuccess: async (data, variables, context) => {
       reset();
       setExp(data.exp);
       queryClient.setQueryData(queryKeys.authUser, data);
@@ -47,7 +47,7 @@ export function useLoginUser(mutationOptions = {}) {
   });
 
   return {
-    login: (payload: any, callback?: MutateCallback<any>) => {
+    login: (payload: any, callback?: MutateCallback<AuthUser>): Promise<AuthUser> => {
       return mutateAsync(payload, callback);
     },
     isSuccess,

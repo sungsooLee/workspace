@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type com_ever_edu_pms_channel_dto_req_ChannelTenantReqDto = {
-    tenantId: number;
+    tenantId?: number;
+    isMainTenant: boolean;
 };
 

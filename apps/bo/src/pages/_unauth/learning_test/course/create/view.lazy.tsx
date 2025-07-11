@@ -1,13 +1,14 @@
 import { Button, Divider, Tabs, useModal } from '@learnway/ui';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { useEffect, useMemo } from 'react';
-import { BasicInfo } from '../-components/basic-info/basic-info';
-import { CourseRegistration } from '../-components/course-registration/course-registration';
-import { Curriculum } from '../-components/curriculum/curriculum';
-import { DetailInfo } from '../-components/detail-info/detail-info';
-import { PublishCourse } from '../-components/publish-course/publish-course';
-import { useCourseForm } from '../-hooks/use-course-form';
 import { MainContents, PageContainer, ContentsButtons } from '@shared/ui';
+import { BasicInfo } from '@pages/_layout/learning/course/-components/basic-info/basic-info';
+import { CourseRegistration } from '@pages/_layout/learning/course/-components/course-registration/course-registration';
+import { Curriculum } from '@pages/_layout/learning/course/-components/curriculum/curriculum';
+import { DetailInfo } from '@pages/_layout/learning/course/-components/detail-info/detail-info';
+import { PublishCourse } from '@pages/_layout/learning/course/-components/publish-course/publish-course';
+import { useCourseForm } from '@pages/_layout/learning/course/-hooks/use-course-form';
+import { CourseTab } from '@pages/_layout/learning/course/-common/type';
 
 export const Route = createLazyFileRoute('/_unauth/learning_test/course/create/view')({
   component: RouteComponent,
@@ -65,7 +66,7 @@ function RouteComponent() {
 
   const handleTabChange = (activeKey: string) => {
     console.log('activeKey', activeKey);
-    changeTab(activeKey);
+    changeTab(activeKey as CourseTab);
   };
 
   const tabItems = useMemo(
@@ -109,15 +110,15 @@ function RouteComponent() {
             type="button"
             variant="point"
             size="sm"
-            label={'getTabValues'}
-            onClick={() => getTabValues()}
+            label={'Tab Values'}
+            onClick={() => console.log('getTabValues', getTabValues())}
           />
           <Button
             type="button"
             variant="point"
             size="sm"
             label={'SET'}
-            onClick={() => loadMockData()}
+            onClick={() => loadMockData(1)}
           />
           <Button
             type="button"

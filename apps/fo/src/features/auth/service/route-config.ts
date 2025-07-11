@@ -58,7 +58,7 @@ function authorization({ location, context }: { location: ParsedLocation; contex
 // framework 레벨에 Routing 관련 필요한 정의를 공통으로 페이지별 설정에 맞게 정의
 export function pageRouteConfig(routeConfig?: PageRouteConfig<PageMeta>) {
   return {
-    beforeLoad: ({ location, context, params, search, preload, route }: any) => {
+    beforeLoad: async ({ location, context, params, search, preload, route }: any) => {
       //   // 인증 정보 확인
       //   if (routeConfig?.authorization) {
       //     try {

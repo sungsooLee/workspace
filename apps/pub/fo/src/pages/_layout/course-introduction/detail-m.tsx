@@ -1,8 +1,22 @@
 import { useState } from 'react';
-import { createFileRoute, Link } from '@tanstack/react-router';
+import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import { Button, Tabs, useModal, Accordion, useToast } from '@learnway/ui';
-import { IcoHeart, IcoUser01, IcoArrowDown, IcoPlay } from '@learnway/icons';
+import { Button, Tabs, useModal, Accordion, useToast, Carousel } from '@learnway/ui';
+import {
+  IcoHeart,
+  IcoEye,
+  IcoStar,
+  IcoArrowDown,
+  IcoBook,
+  IcoBuilding,
+  IcoCategory,
+  IcoDivice,
+  IcoLevel,
+  IcoLocation,
+  IcoPrize,
+  IcoSubtitles02,
+  IcoTime,
+} from '@learnway/icons';
 import { MobileView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
 
@@ -17,16 +31,11 @@ import {
 } from '../../../features/layout';
 
 import packageSideStyles from './package-side.module.css';
-import relatedSideStyles from './related-side.module.css';
-import thumnailStyles from '../../../shared/ui/thumnail/thumnail.module.css';
-import thumnailImgStyles from '../../../shared/ui/thumnail/thumnail-img.module.css';
-import definitionListStyles from './definition-list.module.css';
 import packageInformationStyles from './package-information.module.css';
 import styles from './detail-m.module.css';
 
 // 예시 이미지
 import bnrImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
-import logoHyundai from '@learnway/styles/fo/assets/images/common/logo_hyundai.png';
 import playImg from '@learnway/styles/fo/assets/images/common/img_play.png';
 import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 
@@ -39,26 +48,45 @@ function RouteComponent() {
   const { confirm: openConfirm } = useModal();
   const { alert: openAlert } = useModal();
 
-  // 패키지 자세한 정보 아코디언
+  // 기본정보 자세히보기 아코디언
   const [packageInformation, setPackageInformation] = useState(true);
 
-  // 탭
-  const [selectedTabKey, setSelectedTabKey] = useState<string>('0');
-  const [selectedTabTitle, setSelectedTabTitle] = useState<number>(0);
+  // 탭 순서
+  const [selectedTabTitle, setSelectedTabTitle] = useState<number>(0); // 탭 타이틀 순서
+  const [selectedTabContent, setSelectedTabContent] = useState<string>('0'); // 탭 컨텐츠 순서
 
   // 탭 타이틀
   const tabTitle = [
-    { title: '대시보드', tabNumber: '0' },
-    { title: '과정소개', tabNumber: '1' },
-    { title: '교육일정', tabNumber: '1' }, // 과정소개 탭 안에서 교욱일정이 있기 때문에 tabNumber값 동일
-    { title: '후기', count: '0', tabNumber: '1' }, // 과정소개 탭 안에서 후기가 있기 때문에 tabNumber값 동일
+    { title: '대시보드', selectTabNumber: '0' },
+    { title: '과정소개', selectTabNumber: '1' },
+    { title: '교육일정', selectTabNumber: '1' }, // 과정소개 탭 안에서 교욱일정이 있기 때문에 tabNumber값 동일
+    { title: '후기', selectTabNumber: '1', count: '0', new: true }, // 과정소개 탭 안에서 후기가 있기 때문에 tabNumber값 동일
+    { title: '수강전 문의', selectTabNumber: '2', new: true },
+    { title: '커뮤니티', selectTabNumber: '3', new: true },
+    { title: '새소식', selectTabNumber: '4', new: true },
   ];
-  const handleTab = (key: string, index: number) => {
-    setSelectedTabKey(key);
-    setSelectedTabTitle(index);
+
+  const handleTab = (selectTabNumber: string, selectTabContentsNumber: number) => {
+    setSelectedTabContent(selectTabNumber); // 탭 타이틀 번호
+    setSelectedTabTitle(selectTabContentsNumber); // 탭 컨텐츠 번호
   };
 
-  const items = [
+  // 탭 타이틀 스와이퍼
+  const tabTitleSwiper = tabTitle.map((item, index) => (
+    // 클래스
+    // active : 선택 표시
+    // new : 새로운 표시
+    <Button
+      key={index}
+      className={cn(selectedTabTitle === index ? styles.active : '', item.new && styles.new)}
+      onClick={() => handleTab(item.selectTabNumber, index)}
+    >
+      {item.title}
+      <em>{item.count}</em>
+    </Button>
+  ));
+
+  const tabTitleContents = [
     {
       title: '대시보드',
       key: '0',
@@ -79,10 +107,51 @@ function RouteComponent() {
         </div>
       ),
     },
+    {
+      title: '수강전 문의',
+      key: '2',
+      content: '수강전 문의',
+    },
+    {
+      title: '커뮤니티',
+      key: '3',
+      content: '커뮤니티',
+    },
+    {
+      title: '새소식',
+      key: '4',
+      content: '새소식',
+    },
   ];
 
+  // Confirm 퍼블수정 20250708 (전체적으로 수정)
+  // 인원마감 + 수강대기 안내
+  const CourseDeadlineConfirm = () => {
+    openConfirm({
+      title: '수강인원이 마감되었습니다.',
+      content: '수강대기 신청을 하시겠습니까?',
+      okButtonLabel: '수강대기 신청',
+      cancelButtonLabel: '아니요',
+    });
+  };
+
+  // 수강중복 안내
+  const CourseDuplicateConfirm = () => {
+    openConfirm({
+      title: '수강중복 안내',
+      content: (
+        <>
+          동일한 기간에 다른 클래스 스케줄이 있습니다.
+          <br />
+          그래도 수강신청 하시겠습니까?
+        </>
+      ),
+      okButtonLabel: '수강 신청',
+      cancelButtonLabel: '아니요',
+    });
+  };
+
   // 수강신청 취소 신청
-  // 퍼블수정 20250703 함수명 변경 및 title Fragment 삭제
   const CourseCancelConfirm = () => {
     openConfirm({
       title: '수강 신청을 취소하시겠습니까?',
@@ -93,12 +162,36 @@ function RouteComponent() {
           다시 수강신청을 해주셔야 합니다.
         </>
       ),
-      okButtonLabel: '취소하기',
+      okButtonLabel: '확인',
       cancelButtonLabel: '아니요',
     });
   };
 
-  // 퍼블수정 20250703 수강신청 취소 사유 popup으로 변경 (CourseCancelReasonPopup)
+  // Alert 퍼블수정 20250708 (전체적으로 수정)
+  // 수강대기 신청 완료
+  const CourseWaitAlert = () => {
+    openAlert({
+      title: '수강대기 신청',
+      content: '수강대기 신청이 완료되었습니다.',
+    });
+  };
+
+  // 인원마감 안내
+  const CourseDeadlineAlert = () => {
+    openAlert({
+      title: '인원마감 안내',
+      content: '수강대기 인원까지 모두 마감되었습니다!',
+    });
+  };
+
+  // 수강제한 안내 (카테고리 내 제한, 월별 개수 제한)
+  const CourseLimitAlert = () => {
+    openAlert({
+      title: '수강제한 안내',
+      content: '더 이상 수강 하실 수 없습니다.',
+      // content: '본 과정을 수강 하실 수 없습니다.',
+    });
+  };
 
   // 수강취소 완료
   // 퍼블수정 20250703 함수명 변경 및 title Fragment 삭제
@@ -125,7 +218,7 @@ function RouteComponent() {
 
   // 수강대기자 등록
   // 퍼블수정 20250703 함수명 변경 및 title Fragment 삭제
-  const CourseWaitAlert = () => {
+  const CourseWaitRegistrationAlert = () => {
     openAlert({
       title: '수강대기자 등록',
       content: (
@@ -218,6 +311,10 @@ function RouteComponent() {
     },
   ];
 
+  // 학습유형 리스트 open, close
+  const [listCategoryOpen, setListCategoryOpen] = useState<boolean>(true);
+  const [listSubTitleOpen, setListSubTitleOpen] = useState<boolean>(false);
+
   return (
     <div className={`${styles.start} ${styles.package_wrap}`}>
       <div className={styles.thumbnail_img}>
@@ -225,7 +322,7 @@ function RouteComponent() {
         <Button
           onClick={() =>
             openModal({
-              width: 'sm',
+              width: 'm_full',
               content: <CourseCancelReasonPopup />,
             })
           }
@@ -249,11 +346,15 @@ function RouteComponent() {
           </strong>
           <div className={packageInformationStyles.count_box}>
             <div className={packageInformationStyles.box}>
-              <IcoHeart width={16} height={16} stroke="#6f798b" fill="none" />
+              <IcoStar width={16} height={16} stroke="#0056ff" fill="#0056ff" />
+              <span>4.2</span>
+            </div>
+            <div className={packageInformationStyles.box}>
+              <IcoHeart width={16} height={16} stroke="#f58b75" fill="#f58b75" />
               <span>500</span>
             </div>
             <div className={packageInformationStyles.box}>
-              <IcoUser01 width={16} height={16} stroke="#6f798b" />
+              <IcoEye width={16} height={16} stroke="#0056ff" />
               <span>77,500</span>
             </div>
 
@@ -273,31 +374,73 @@ function RouteComponent() {
           <div
             className={`${packageInformationStyles.list_box} ${packageInformation === true ? packageInformationStyles.active : ''}`}
           >
-            {/* definition module */}
-            <div className={`${definitionListStyles.start} ${definitionListStyles.list}`}>
-              <dl>
-                <dt>학습유형</dt>
-                <dd>패키지</dd>
-              </dl>
-              <dl>
-                <dt>카테고리</dt>
-                <dd>
-                  Quality &gt; Service &gt; Hydrogen/Electricity &gt; Ioniq 5 &gt; NE PE &gt;
-                  Technical Information
-                </dd>
-              </dl>
-            </div>
+            <ul>
+              <li>
+                <IcoBook width={20} height={20} stroke="#4d525c" fill="none" />
+                <p>동영상</p>
+              </li>
+              <li className={listCategoryOpen === true ? packageInformationStyles.open : ''}>
+                <IcoCategory width={20} height={20} fill="#4d525c" />
+                <p>Quality Service Hydrogen/Electricitysf Service Hydrogen/Electricitysf</p>
+                <Button
+                  onClick={() =>
+                    listCategoryOpen === true
+                      ? setListCategoryOpen(false)
+                      : setListCategoryOpen(true)
+                  }
+                >
+                  <IcoArrowDown width={20} height={20} stroke="#4d525c" />
+                </Button>
+              </li>
+              <li>
+                <IcoLocation width={20} height={20} stroke="#4d525c" />
+                <p>온라인 비대면</p>
+              </li>
+              <li>
+                <IcoTime width={20} height={20} fill="#4d525c" />
+                <p>1시간 24분</p>
+              </li>
+              <li>
+                <IcoBuilding width={20} height={20} fill="#4d525c" />
+                <p>야나두</p>
+              </li>
+              <li>
+                <IcoDivice width={20} height={20} fill="#4d525c" />
+                <p>앱, 웹, 모바일전용, 사외IP전용</p>
+              </li>
+              <li>
+                <IcoLevel width={20} height={20} fill="#4d525c" />
+                <p>중급</p>
+              </li>
+              <li>
+                <IcoPrize width={20} height={20} fill="#4d525c" />
+                <p>발급</p>
+              </li>
+              <li className={listSubTitleOpen === true ? packageInformationStyles.open : ''}>
+                <IcoSubtitles02 width={20} height={20} fill="#4d525c" />
+                <p>
+                  한국어, Aracic, Chinese Taiwan, Deutsch, English, Frensh, Indonesian, Japanese,
+                  Malay, Nepali, Portuguese
+                </p>
+                <Button
+                  onClick={() =>
+                    listSubTitleOpen === true
+                      ? setListSubTitleOpen(false)
+                      : setListSubTitleOpen(true)
+                  }
+                >
+                  <IcoArrowDown width={20} height={20} stroke="#4d525c" />
+                </Button>
+              </li>
+            </ul>
           </div>
           {/* 구독 */}
           <div className={packageInformationStyles.subscribe_box}>
-            <span className={packageInformationStyles.channel}>
-              <img src={logoHyundai} alt="" />
-            </span>
             <strong className={packageInformationStyles.channel_name}>현대오토에버 (elBls)</strong>
             <Button
               className={packageInformationStyles.btn_subscribe}
               variant="primary"
-              size="sm"
+              size="md"
               onClick={() => handleClickToast()}
             >
               구독하기
@@ -308,22 +451,24 @@ function RouteComponent() {
 
       <div className={styles.tab_title}>
         <div className={styles.box}>
-          {tabTitle.map((item, index) => (
-            // 퍼블수정 20250703 key 값 수정
-            <Button
-              key={index}
-              className={selectedTabTitle === index ? styles.active : ''}
-              onClick={() => handleTab(item.tabNumber, index)}
-            >
-              {item.title}
-              <em>{item.count}</em>
-            </Button>
-          ))}
+          <Carousel
+            items={tabTitleSwiper}
+            className={`${styles.tab_swiper}`}
+            spaceBetween={16}
+            slidesPerView="auto"
+            showNavigation={true}
+            freeMode={true}
+          />
         </div>
       </div>
 
       <div className={styles.tab_wrap}>
-        <Tabs className={styles.tab} selectedTabKey={selectedTabKey} items={items} type="line" />
+        <Tabs
+          className={styles.tab}
+          selectedTabKey={selectedTabContent}
+          items={tabTitleContents}
+          type="line"
+        />
       </div>
 
       {/* sub content */}

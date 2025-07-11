@@ -11,7 +11,6 @@ export type com_ever_edu_pms_channel_entity_ChannelRequestEntity = {
     tenantId?: number;
     channelName?: string;
     channelMainId?: string;
-    channelMainLinkContent?: string;
     channelTenatMappingType?: com_ever_edu_pms_channel_entity_ChannelRequestEntity.channelTenatMappingType;
     channelSecretType?: com_ever_edu_pms_channel_entity_ChannelRequestEntity.channelSecretType;
     channelLearningContent?: string;

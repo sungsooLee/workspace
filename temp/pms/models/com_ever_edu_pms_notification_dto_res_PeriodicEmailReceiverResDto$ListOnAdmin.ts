@@ -12,11 +12,10 @@ export type com_ever_edu_pms_notification_dto_res_PeriodicEmailReceiverResDto$Li
 };
 export namespace com_ever_edu_pms_notification_dto_res_PeriodicEmailReceiverResDto$ListOnAdmin {
     export enum userState {
-        WAIT = 'WAIT',
         NORMAL = 'NORMAL',
-        HALT = 'HALT',
-        LEAVE = 'LEAVE',
-        DELETE = 'DELETE',
+        WAIT = 'WAIT',
+        DORMANT = 'DORMANT',
+        LOCKED = 'LOCKED',
     }
 }
 

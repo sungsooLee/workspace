@@ -166,7 +166,7 @@ export enum ContentType {
   EXAM = 'EXAM',
   SURVEY = 'SURVEY',
   ASSIGNMENT = 'ASSIGNMENT',
-  HTML5 = 'HTML5',
+  HTML5_VIDEO = 'HTML5_VIDEO',
   YOUTUBE = 'YOUTUBE',
   BLOG = 'BLOG',
   SCORM = 'SCORM',

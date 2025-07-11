@@ -1,3 +1,9 @@
+const defaultCmi = {
+  'cmi._version': '1.0',
+  'cmi.learner_preference._children': 'delivery_speed,language,audio_level,audio_captioning',
+  'cmi.objectives._children':
+    'score,id,progress_measure,completion_status,description,success_status',
+};
 export class ScormDataManager {
   calls: any[] = [];
   elements: any = {};
@@ -10,8 +16,9 @@ export class ScormDataManager {
 
   fromJSON(dmjs: any) {
     if (dmjs.objectInfo) {
-      this.elements = dmjs.objectInfo;
+      this.elements = { ...defaultCmi, ...dmjs.objectInfo };
       console.log('dmjs', dmjs);
+      console.log('elements', this.elements);
     }
   }
   calllist() {

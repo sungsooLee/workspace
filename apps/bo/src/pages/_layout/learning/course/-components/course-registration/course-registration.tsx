@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { FormDisplay } from '@features/form/ui/form-display';
 import { CourseTabBaseProps, TabFormRef } from '../../-common/type';
-import { Course } from '@types';
+import { Course, CourseConfig } from '@types';
 
 const CourseRegistrationComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
   ({ onSave, data: { formData, courseConfig } }, ref) => {
@@ -29,19 +29,16 @@ const CourseRegistrationComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
           errors,
         };
       },
-      getValues: () => {
-        console.log('getValues', getValues());
-        return getValues();
-      },
+      getValues: () => formDataToRequestData(getValues() as Course),
     }));
 
     useEffect(() => {
       console.log('CourseRegistrationComponent init', formData);
       // 초기 데이터가 있으면 설정
       if (formData) {
-        updateFormData(formData);
+        updateFormData(responseDataToFormData(formData, courseConfig));
       }
-    }, [formData]);
+    }, [formData, courseConfig]);
 
     console.log('CourseRegistrationComponent initialData', getValues());
 
@@ -169,6 +166,16 @@ const CourseRegistrationComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
 );
 
 export const CourseRegistration = CourseRegistrationComponent;
+
+/**
+ * 응답 데이터를 폼 데이터로 변환
+ */
+const responseDataToFormData = (d: Course, courseConfig: CourseConfig): Course => {
+  return {
+    ...d,
+    isEnrollRequired: courseConfig.enrollOption !== 'IMPOSSIBLE', // 수강신청 그룹
+  };
+};
 
 /**
  * 수강신청 컴포넌트 폼 데이터를 요청 데이터로 변환하는 함수

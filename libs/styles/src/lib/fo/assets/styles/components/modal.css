@@ -5,7 +5,10 @@
   }
   .nlp--button {
     &[aria-label='Close'] {
-      @apply right-[24px] top-[20px] !px-0;
+      @apply right-[24px] top-[20px] !mx-0;
+      svg {
+        @apply mx-0;
+      }
     }
   }
   .modal-content {

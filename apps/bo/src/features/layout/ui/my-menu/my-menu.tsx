@@ -57,6 +57,13 @@ const PopoverContent = () => {
   }, [menus]);
 
   useEffect(() => {
+    refetch();
+    return () => {
+      //
+    };
+  }, []);
+
+  useEffect(() => {
     if (!menuFavorites) return;
 
     setList(
@@ -103,8 +110,11 @@ const PopoverContent = () => {
       onSuccess: async (data: any) => {
         console.log('data', data);
         refetch();
-        if (authUser?.activeTenant?.tenantId) {
-          const menus = await asyncMenus(authUser?.activeTenant?.tenantId);
+        if (authUser?.lastVisitedBoTenantId && authUser?.lastVisitedBoRoleId) {
+          const menus = await asyncMenus(
+            authUser?.lastVisitedBoTenantId,
+            authUser?.lastVisitedBoRoleId,
+          );
           updateMenu(menus);
           const update = activeMenuDepthMenu?.map((menu) =>
             menu.menuId === list[index].id ? { ...menu, isFavorite: false } : menu,

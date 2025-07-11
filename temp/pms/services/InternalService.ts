@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { com_ever_edu_pms_user_dto_req_UserSearchReqDto } from '../models/com_ever_edu_pms_user_dto_req_UserSearchReqDto';
 import type { com_ever_edu_pms_user_dto_res_UserResDto } from '../models/com_ever_edu_pms_user_dto_res_UserResDto';
 import type { org_springdoc_core_converters_models_Pageable } from '../models/org_springdoc_core_converters_models_Pageable';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_user_dto_res_UserResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_user_dto_res_UserResDto';
@@ -13,35 +14,20 @@ export class InternalService {
      * 사용자 조회(목록)
      * 사용자를 목록을 조회한다.
      * @param pageable
-     * @param companyType
-     * @param companyId
-     * @param deptId
-     * @param userName
-     * @param employeeNumber
-     * @param userState
+     * @param req
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_user_dto_res_UserResDto OK
      * @throws ApiError
      */
     public static findPage(
         pageable: org_springdoc_core_converters_models_Pageable,
-        companyType?: 'CAR' | 'GLOBAL' | 'GROUP' | 'SERVICE' | 'SALES' | 'GLOBAL_DEALER' | 'ETC_SERVICE' | 'HELLO_HMG' | 'EDU_SERVICE' | 'ETC',
-        companyId?: number,
-        deptId?: number,
-        userName?: string,
-        employeeNumber?: string,
-        userState?: 'WAIT' | 'NORMAL' | 'HALT' | 'LEAVE' | 'DELETE',
+        req: com_ever_edu_pms_user_dto_req_UserSearchReqDto,
     ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_user_dto_res_UserResDto> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/internal/api/v1/users',
             query: {
                 'pageable': pageable,
-                'companyType': companyType,
-                'companyId': companyId,
-                'deptId': deptId,
-                'userName': userName,
-                'employeeNumber': employeeNumber,
-                'userState': userState,
+                'req': req,
             },
             errors: {
                 400: `Bad Request`,

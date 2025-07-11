@@ -10,7 +10,7 @@ export type com_ever_edu_pms_user_dto_req_VerifyEmailReqDto = {
     /**
      * 생년월일
      */
-    birthday?: string;
+    birthday: string;
     /**
      * Email 주소
      */

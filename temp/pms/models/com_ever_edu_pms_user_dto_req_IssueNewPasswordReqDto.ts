@@ -6,6 +6,6 @@ export type com_ever_edu_pms_user_dto_req_IssueNewPasswordReqDto = {
     /**
      * 로그인 ID
      */
-    username?: string | null;
+    username: string | null;
 };
 

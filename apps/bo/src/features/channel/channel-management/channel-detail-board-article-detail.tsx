@@ -145,8 +145,8 @@ const formConfig: DynamicFormConfig = {
       type: 'date-range',
       label: t('게재 기간'),
       value: {
-        from: formUtils.now({ unit: 'day', offset: -30 }),
-        to: formUtils.now(),
+        from: formUtils.nowDate({ unit: 'day', offset: -30 }),
+        to: formUtils.nowDate(),
       },
     },
     {

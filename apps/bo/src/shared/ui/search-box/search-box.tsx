@@ -142,7 +142,7 @@ const SearchBoxComponent: FC<SearchBoxProps> = ({ provider, onSearch, onBeforeSu
               formState={formState}
               {...item}
               {...props}
-              component={renderSearchField(item)}
+              component={renderSearchField(item) || item.element}
               currentOptionsState={[
                 getOptions(item.name),
                 (options: SelectOption[]) => setOptions(item.name, options),

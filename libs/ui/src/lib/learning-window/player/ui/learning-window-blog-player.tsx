@@ -20,7 +20,7 @@ const LearningWindowBlogPlayerComponent: FC<any> = ({
 
   useEffect(() => {
     if (!blogInfo) return;
-    console.log(blogInfo);
+    console.log('blogInfo', blogInfo);
 
     const newJsonInfo = blogInfo.blogContent;
     const editor = createEditor(editorConfig);

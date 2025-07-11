@@ -1,16 +1,7 @@
-import { useState, useEffect } from 'react';
-import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
-import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
+import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { PageContainer, MainContents, LinkBox, ContentsButtons } from '@shared/ui';
-import { Button, TableBox, Tabs } from '@learnway/ui';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { formUtils } from '@entities/form-utils';
-import { FormSubTitle } from '@shared/ui';
-
-import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
-import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
-
+import { Button } from '@learnway/ui';
 import { CompanyUserDetail } from '@features/platform-management/company';
 
 export const Route = createLazyFileRoute('/_layout/platform/company/user/detail')({

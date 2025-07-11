@@ -1,21 +1,35 @@
-import { forwardRef, useMemo } from 'react';
-import { t } from 'i18next';
-import { DropdownFormField } from '../../../features/form/ui/dropdown-form-field';
-import { useFetchAuthUser } from '@learnway/auth/entities';
-import { AuthUser, RoleInfo } from '@learnway/auth/types';
-import { BaseFormFieldProps } from '@learnway/hooks';
 import { useFetchChannelByRoleId } from '@entities/channel/service/channel.hook';
+import { useFetchAuthUser } from '@learnway/auth/entities';
+import { AuthUser } from '@learnway/auth/types';
+import { BaseFormFieldProps } from '@learnway/hooks';
+import { t } from 'i18next';
+import { forwardRef, useEffect, useMemo } from 'react';
+import { DropdownFormField } from '../../../features/form/ui/dropdown-form-field';
+import { useWatch } from 'react-hook-form';
+import { ChannelByRoleId, TenantList } from '@types';
 
-interface TenantChannelDropdownFormFieldProps extends BaseFormFieldProps<boolean> {
-  tenantId: number;
+interface TenantChannelDropdownFormFieldProps extends BaseFormFieldProps<string> {
+  enableFilter: boolean; // 테넌트 id 필터 적용 여부
 }
 
 const TenantChannelDropdownFormFieldComponent = forwardRef<
   HTMLDivElement,
   TenantChannelDropdownFormFieldProps
->(({ value, onChange, tenantId, ...props }, ref) => {
+>(({ control, value, onChange, enableFilter = false, ...props }, ref) => {
+
   const { data } = useFetchAuthUser<AuthUser>();
   const { data: channel } = useFetchChannelByRoleId(data?.activeRole?.roleId as number);
+
+  const tenantId = useWatch({
+    control,
+    name: 'tenantId',
+  });
+
+  const filterFn = (item: ChannelByRoleId, id?: number) => {
+    if (!enableFilter) return true;
+    // 필터 적용
+    return !!item.tenantList.find((t) => t.tenantId === id);
+  };
 
   // myRole 데이터
   // const options = useMemo(() => {
@@ -32,20 +46,30 @@ const TenantChannelDropdownFormFieldComponent = forwardRef<
 
   // 채널조회 데이터
   const options = useMemo(() => {
+    if (!channel?.content) return [];
     return channel?.content
-      ?.filter((d) => !!d.tenantList.find((t) => t.tenantId === tenantId)) // 테넌트 필터
+      ?.filter((c) => filterFn(c, tenantId)) // 테넌트 필터
       ?.map(({ channelName, channelUuid }) => ({
         // 옵션 형식으로 변환
         label: channelName,
         value: channelUuid,
       }));
-  }, [channel, tenantId]);
+  }, [channel?.content, tenantId]);
+
+  useEffect(() => {
+    if (options && options.length === 1) {
+      onChange(options[0].value);
+      return;
+    }
+    onChange('');
+  }, [options]);
 
   return (
     <DropdownFormField
       {...props}
+      ref={ref}
       options={options}
-      value={tenantId ? value : ''}
+      value={value}
       presetOptionLabel={t('LABEL.form.label.select')}
       onChange={onChange}
     />

@@ -45,6 +45,8 @@ export interface AuthUser {
     deptName?: string;
     deptEngName?: string;
   };
+
+  exp: string;
 }
 
 export interface AuthSSOHealthcheck {
@@ -67,6 +69,7 @@ export interface Tenant {
 export interface Role {
   roleId: number;
   roleName: string;
+  roleType: string;
   tenantId: number;
 }
 
