@@ -57,7 +57,8 @@ export { ReactComponent as IcoTooltipArrow } from './lib/ic_tooltip_arrow.svg'; 
 export { ReactComponent as IcoTooltipArrow02 } from './lib/ic_tooltip_arrow02.svg';
 export { ReactComponent as IcoCloseCircle } from './lib/ic_close_circle.svg'; // close circle 24*24
 export { ReactComponent as IcLogOut01 } from './lib/ic_log_out_01.svg'; // logout
-export { ReactComponent as IcoUploadCloud } from './lib/ic_upload_cloud.svg'; // file upload 24*24
+export { ReactComponent as IcoUploadCloud } from './lib/ic_upload_cloud.svg'; // file upload
+export { ReactComponent as IcoFileUpload } from './lib/ic_file_upload.svg'; // file upload
 export { ReactComponent as IcoClipboard } from './lib/ic_clipboard.svg';
 export { ReactComponent as IcoLoading } from './lib/ic_loading.svg'; // file loading 24*24
 export { ReactComponent as IcoTrash03 } from './lib/ic_trash_03.svg'; // trash
