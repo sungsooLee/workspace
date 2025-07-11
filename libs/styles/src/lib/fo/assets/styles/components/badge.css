@@ -23,4 +23,12 @@
       @apply label-xl !px-[20px];
     }
   }
+  &[class*='dot'] {
+    &[class*='error'] {
+      @apply !bg-[var(--red65)];
+    }
+    &[class*='primary'] {
+      @apply !bg-[var(--blue75)];
+    }
+  }
 }
