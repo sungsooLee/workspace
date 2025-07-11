@@ -29,7 +29,7 @@
           }
         }
         p {
-          @apply body-sm;
+          @apply body-sm leading-[21px];
         }
       }
     }

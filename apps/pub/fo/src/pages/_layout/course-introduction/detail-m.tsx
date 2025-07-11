@@ -31,6 +31,7 @@ import {
 } from '../../../features/layout';
 
 import packageSideStyles from './package-side.module.css';
+import pageFullInner from '../../../widgets/layout/ui/container/page-full-inner.module.css';
 import packageInformationStyles from './package-information.module.css';
 import styles from './detail-m.module.css';
 
@@ -104,6 +105,12 @@ function RouteComponent() {
           <CourseIntroduction />
           <CourseEducation />
           <CourseReview />
+          {/* 연관과정 썸네일 공통 컴포넌트 작업 예정 (현재 작업 x) */}
+          <div
+            className={cn(pageFullInner.start, pageFullInner.inner_mobile, pageFullInner.bg_sec1)}
+          >
+            <div className={pageFullInner.contents}>공통 컴포넌트 대기중</div>
+          </div>
         </div>
       ),
     },

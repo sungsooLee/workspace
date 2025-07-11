@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import { isMobile } from 'react-device-detect';
 import { Carousel } from '@learnway/ui';
 import { IcoStar } from '@learnway/icons';
 import { Review, ReviewRating } from '../../../../features/layout';
@@ -32,8 +33,9 @@ const CourseReviewCompoment = () => {
           items={itemSwiper}
           className={`${styles.review_swiper}`}
           spaceBetween={20}
-          slidesPerView={3}
-          showNavigation={true}
+          slidesPerView={isMobile ? 'auto' : 3}
+          showNavigation={isMobile ? false : true}
+          loop={false}
         />
       </div>
     </div>

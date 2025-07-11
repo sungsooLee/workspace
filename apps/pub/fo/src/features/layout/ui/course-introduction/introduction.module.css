@@ -64,7 +64,7 @@
 
       .evaluation_box {
         & > ul {
-          @apply mb-[24px] flex w-full items-start;
+          @apply flex w-full items-start;
           li {
             @apply flex-1 rounded-[999px] bg-[var(--blue98)] py-[24px];
             span {
@@ -79,6 +79,7 @@
           }
         }
         & > div {
+          @apply mt-[24px];
           ul {
             li {
               @apply body-md leading-[24px] text-[var(--gray35)];
@@ -130,20 +131,28 @@
             }
           }
           span {
-            @apply relative;
+            @apply relative !px-0;
             svg {
-              @apply absolute right-0 top-1/2 h-[24px] w-[24px] -translate-y-1/2 stroke-[var(--gray10)];
+              @apply absolute right-[24px] top-1/2 mx-0 h-[24px] w-[24px] -translate-y-1/2 stroke-[var(--gray10)];
             }
           }
         }
         .title {
-          @apply py-[20px] pl-[24px];
+          @apply p-[16px] pl-[24px];
           p {
             @apply body-lg-b flex items-center text-[var(--gray35)];
             span {
-              @apply label-sm-b ml-[6px] inline-block rounded-[24px] bg-[var(--blue50)] px-[6px] py-[3px] text-white;
+              @apply label-sm-b ml-[6px] inline-block whitespace-nowrap rounded-[24px] bg-[var(--blue50)] !px-[6px] leading-[22px] text-white;
             }
           }
+        }
+      }
+    }
+
+    .operator_box {
+      & > div {
+        & + div {
+          @apply mt-[20px];
         }
       }
     }
@@ -188,8 +197,26 @@
             & > ul {
               @apply block;
               & > li {
-                & + li {
-                  @apply ml-0 mt-[8px];
+                @apply m-0 inline-block w-[calc((100%-16px)/2)] align-top;
+                &:nth-child(2n) {
+                  @apply ml-[16px];
+                }
+                &:nth-child(n + 3) {
+                  @apply mt-[16px];
+                }
+                span {
+                  @apply title2-b leading-[20px] text-[var(--gray10)];
+                }
+                strong {
+                  @apply headline1-b leading-[31px];
+                }
+              }
+            }
+            & > div {
+              @apply mt-[16px];
+              ul {
+                li {
+                  @apply body-sm;
                 }
               }
             }
@@ -221,6 +248,29 @@
           & > div {
             & + div {
               @apply mt-[8px];
+            }
+          }
+        }
+        .curriculum_box {
+          .acc_curriculum {
+            @apply py-[8px];
+            & > div {
+              & + div {
+                @apply mt-[16px];
+              }
+            }
+            button {
+              span {
+                svg {
+                  @apply right-[16px] h-[20px] w-[20px];
+                }
+              }
+            }
+            .title {
+              @apply p-[16px] pr-[44px];
+              p {
+                @apply title3-b text-[var(--gray10)];
+              }
             }
           }
         }

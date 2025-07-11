@@ -35,6 +35,9 @@
       &.course_button {
         @apply relative z-[1] mt-0 translate-y-0 pb-0 pt-[8px];
         .course {
+          button {
+            @apply label-xl-b;
+          }
           .tip {
             @apply left-[inherit] right-[15px];
             &::before {

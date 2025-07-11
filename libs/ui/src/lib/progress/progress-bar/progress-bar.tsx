@@ -20,7 +20,12 @@ const ProgressBarComponent = forwardRef<React.ElementRef<typeof Primitive.Root>,
     return (
       <div
         ref={ref}
-        className={cn(styles.progress_wrap, styles[progressClass], isFailed ? styles.error : '')}
+        className={cn(
+          styles.progress_wrap,
+          styles[progressClass],
+          isFailed ? styles.error : '',
+          'progress_wrap',
+        )}
       >
         {label && <p className={styles.progress_status}>{label}</p>}
         <Primitive.Root className={cn(styles.start, className, 'nlp--progress')} value={progress}>

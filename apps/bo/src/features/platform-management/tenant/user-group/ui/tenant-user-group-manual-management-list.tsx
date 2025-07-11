@@ -15,7 +15,7 @@ import { queryOptions as userGroupManualOptions } from '@entities/user-group/ser
 import { EnGlobalConst } from '@types';
 
 const _global = {
-  linkClick: (tenantId: number, tenantName: string) => {
+  linkClick: (userGroupId: number) => {
     return;
   },
 };
@@ -31,12 +31,11 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
 
   const { data: loginUser } = useFetchAuthUser();
 
-  _global.linkClick = (tenantId: number, tenantName: string) => {
+  _global.linkClick = (userGroupId: number) => {
     router.navigate({
-      to: `${rootPath}/tenant/management/user-group/handmade-detail`,
+      to: `/platform/tenant/usr-group/manual-detail`,
       state: {
-        tenantId,
-        tenantName,
+        userGroupId,
         listParam: getValues(),
       },
     });
@@ -67,9 +66,14 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
         {
           name: 'userGroupName', label: t('유저그룹명'), render: (row: any) => {
             return (
-              <Link to={'/tenant/management'} className="link">
-                {row.row.original.userGroupName}
-              </Link>
+              <Button
+                className="link"
+                onClick={() =>
+                  _global.linkClick(row.row.original.userGroupId)
+                }
+              >
+                {row.getValue()}
+              </Button>
             )
           },
           size: 207
@@ -85,9 +89,9 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
           name: 'userGroupId', label: t('대상자 확인'), render: (row: any) => {
             return <Button
               variant="gray2" size="xs"
-              onClick={() =>
-                _global.linkClick(row.row.original.tenantId, row.row.original.tenantName)
-              }
+              // onClick={() =>
+              //   openPopup();
+              // }
             >
               {t('대상자')}
             </Button>

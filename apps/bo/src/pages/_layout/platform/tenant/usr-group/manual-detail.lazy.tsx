@@ -1,19 +1,16 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { createColumnHelper, ColumnDef } from '@tanstack/react-table';
 import { t } from 'i18next';
 
-import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 
-import { IcoUploadCloud } from '@learnway/icons';
 import {
   Input,
   ContentsRow,
   Button,
   GridBox,
   useGridBox,
-  ChipListModalSelectorFormField,
 } from '@learnway/ui';
 import {
   DynamicFormConfig,
@@ -23,20 +20,16 @@ import {
   SearchBoxConfig,
 } from '@learnway/hooks';
 
-import { FormRow, FormSubTitle, SwitchFormField, LinkBox, ContentsButtons } from '@shared/ui';
+import { FormRow, FormSubTitle, LinkBox, ContentsButtons } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
 
-import { FormDisplay } from '@features/form/ui/form-display';
 import {
-  ChannelChoiceModal,
-  ChannelListChoiceModal,
-  CompanyShuttleModal,
   GridExcelUploadButton,
-  UserGroupChoiceModal,
 } from '@shared/ui';
 
 import { EnTenantDetailTabKey } from '@types';
 import { MainContents, PageContainer } from '@shared/ui';
+import { useFetchUserGroupDetail } from '@entities/user-group';
 
 export const Route = createLazyFileRoute('/_layout/platform/tenant/usr-group/manual-detail')({
   component: RouteComponent,
@@ -51,19 +44,12 @@ function RouteComponent() {
   const router = useRouter();
   const routerState = useRouterState();
 
-  const [selectedTabKey, setSelectedTabKey] = useState<string>(EnTenantDetailTabKey.base);
+  const { data: userGroupData, refetch } = useFetchUserGroupDetail(routerState.location.state?.userGroupId);
 
-  const { provider: searchMenualProvider, getValues: getMenualValues } =
-    useSearchBox(searchMenualConfig);
-  const { config: gMenualConfig, gridFetch: gridMenualFetch } = useGridBox(
-    gridMenualConfig,
-    getMenualValues,
-  );
-  const { provider: searchExceptionProvider, getValues: getExceptionValues } =
-    useSearchBox(searchExceptionConfig);
-  const { config: gExceptionConfig, gridFetch: gridExceptionFetch } = useGridBox(
-    gridExceptionConfig,
-    getExceptionValues,
+  const { provider: searchManualProvider, getValues: getManualValues } = useSearchBox(searchManualConfig());
+  const { config: gManualConfig, gridFetch: gridManualFetch } = useGridBox(
+    gridManualConfig,
+    getManualValues,
   );
 
   const {
@@ -76,14 +62,6 @@ function RouteComponent() {
     getValues,
   } = useDynamicForm(formConfig);
 
-  const handleTabChange = (tabKey: string) => {
-    if (tabKey !== selectedTabKey) {
-      setSelectedTabKey(tabKey);
-    }
-  };
-  // if (!routerState.location.state.tenantId) {
-  //   router.navigate({ to: '/platform/tenant/management', state: { listParam: {} } });
-  // }
   const handleListButtonClick = () => {
     const listParam = routerState.location.state?.listParam;
 
@@ -102,9 +80,17 @@ function RouteComponent() {
   const handleOnSubmit = (formData: any) => {
     console.log('save', formData);
   };
-  const handleOnSearchMenual = (searchData: any) => {
+  const handleOnSearchManual = (searchData: any) => {
     console.log('search', searchData);
   };
+
+  useEffect(() => {
+    if(userGroupData) {
+      console.log('#### userGroupData {} => ', userGroupData)
+
+      updateFormData({...userGroupData})
+    }
+  }, [userGroupData])
 
   return (
     <PageContainer>
@@ -126,64 +112,28 @@ function RouteComponent() {
         <form onSubmit={onSubmit(handleOnSubmit)}>
           <FormSubTitle label={t('유저그룹 기본 정보')} lineType="dark" />
           <ContentsRow>
-            <FormRow provider={provider} name={'c1'} />
+            <FormRow provider={provider} name={'userGroupOriginType'} />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider} name={'c2'} element={<Input disabled={true} />} />
-            <FormRow provider={provider} name={'c3'} />
+            <FormRow provider={provider} name={'tenantName'} element={<Input disabled={true} />} />
+            <FormRow provider={provider} name={'userGroupName'} />
             <FormRow
               provider={provider}
-              name={'c4'}
+              name={'isUsed'}
               className={dynamicFormStyles.form_item_horizontal}
             />
           </ContentsRow>
           <FormSubTitle label={t('유저그룹 대상자 정보')} lineType="dark" />
           <ContentsRow>
-            <FormRow provider={provider} name={'c5'} />
+            <FormRow provider={provider} name={'assignmentType'} />
           </ContentsRow>
-          <FormDisplay provider={provider} dependencies={[{ name: 'c5', value: true }]}>
-            <ContentsRow>
-              <FormRow
-                provider={provider}
-                name="c6"
-                element={
-                  <ChipListModalSelectorFormField
-                    modalConfig={{
-                      content: <UserGroupChoiceModal />,
-                      title: '',
-                      width: 'xl',
-                    }}
-                    chipList={{
-                      labelField: 'name',
-                      valueField: 'companyId',
-                      wordwrap: true,
-                    }}
-                  />
-                }
-              />
-            </ContentsRow>
-          </FormDisplay>
-          <FormDisplay provider={provider} dependencies={[{ name: 'c5', value: false }]}>
-            <SearchBox provider={searchMenualProvider} onSearch={handleOnSearchMenual} />
-            <GridBox
-              showAdd
-              showRemove
-              excelButtons={<GridExcelUploadButton />}
-              config={gMenualConfig}
-              columns={menualColumns}
-            />
-          </FormDisplay>
-          {/**유저그룹 대상자 제외 */}
-          <ContentsRow>
-            <FormRow provider={provider} name={'c7'} />
-          </ContentsRow>
-          <SearchBox provider={searchExceptionProvider} onSearch={handleOnSearchMenual} />
+          <SearchBox provider={searchManualProvider} onSearch={handleOnSearchManual} />
           <GridBox
             showAdd
             showRemove
             excelButtons={<GridExcelUploadButton />}
-            config={gExceptionConfig}
-            columns={exceptionColumns}
+            config={gManualConfig}
+            columns={manualColumns}
           />
         </form>
       </MainContents>
@@ -194,32 +144,32 @@ function RouteComponent() {
 const formConfig: DynamicFormConfig = {
   builders: [
     {
-      name: 'c1',
+      name: 'userGroupOriginType',
       type: 'radio-group',
       label: t('유저그룹 유형'),
       value: 'tenant',
       options: [
-        { label: t('테넌트 유저그룹'), value: 'tenant' },
-        { label: t('채널 유저그룹'), value: 'channel' },
-        { label: t('개인별 유저그룹'), value: 'manual' },
+        { label: t('테넌트 유저그룹'), value: 'TENANT' },
+        { label: t('채널 유저그룹'), value: 'CHANNEL' },
+        { label: t('개인 유저그룹'), value: 'PERSONAL' },
       ],
     },
     {
-      name: 'c2',
+      name: 'tenantName',
       type: 'text',
       label: t('테넌트'),
-      value: '테넌트1',
+      value: '',
     },
     {
-      name: 'c3',
+      name: 'userGroupName',
       type: 'text',
       label: t('유저그룹명'),
       value: '',
     },
     {
-      name: 'c4',
+      name: 'isUsed',
       type: 'switch',
-      label: t('유저그룹명'),
+      label: t('사용 여부'),
       value: true,
       switchConfig: {
         label: (value: boolean) => (value ? t('사용') : t('미사용')),
@@ -227,30 +177,15 @@ const formConfig: DynamicFormConfig = {
       guideText: t('사용상태인 경우 유저그룹에서 조회 할 수 있습니다.'),
     },
     {
-      name: 'c5',
+      name: 'assignmentType',
       type: 'radio-group',
       label: t('유저그룹 대상자 설정'),
-      value: true,
+      value: '',
       options: [
-        { label: t('유저그룹 설정'), value: true },
-        { label: t('직접 설정'), value: false },
+        { label: t('유저그룹 설정'), value: 'USER_GROUP_BASED' },
+        { label: t('직접 설정'), value: 'DIRECT_USER_BASED' },
       ],
       guideText: t('선택한 1개의 방식만 유저그룹 대상자로 설정됩니다.'),
-    },
-    {
-      name: 'c6',
-      type: 'radio-group',
-      label: t('유저그룹 대상자 설정'),
-      format: 'array',
-      value: [],
-    },
-    {
-      name: 'c7',
-      type: 'custom',
-      label: t('유저그룹 대상자 제외'),
-      format: 'array',
-      value: [],
-      guideText: t('선택한 사용자는 해당 유저그룹대상자에서 제외 합니다.'),
     },
   ],
   validator: {
@@ -260,7 +195,7 @@ const formConfig: DynamicFormConfig = {
   },
 };
 
-const searchMenualConfig: SearchBoxConfig = {
+const searchManualConfig = (): SearchBoxConfig => ({
   builders: [
     [
       {
@@ -268,6 +203,8 @@ const searchMenualConfig: SearchBoxConfig = {
         type: 'dropdown',
         label: t('회사'),
         value: '',
+        format: 'object',
+        presetOptionLabel: t('LABEL.form.label.select'),
         optionsConfig: {
           codeGroup: CODE_GROUP['manual.company.companyCode'],
         },
@@ -280,7 +217,7 @@ const searchMenualConfig: SearchBoxConfig = {
         },
       },
       {
-        name: 'companyName',
+        name: 'employeeNumber',
         type: 'text',
         label: t('사번'),
         value: '',
@@ -293,44 +230,9 @@ const searchMenualConfig: SearchBoxConfig = {
       },
     ],
   ],
-};
+});
 
-const searchExceptionConfig: SearchBoxConfig = {
-  builders: [
-    [
-      {
-        name: 'companyCode',
-        type: 'dropdown',
-        label: t('회사'),
-        value: '',
-        optionsConfig: {
-          codeGroup: CODE_GROUP['manual.company.companyCode'],
-        },
-        dropdownConfig: {
-          onchange: () => {
-            return '';
-          },
-          isSearchable: true,
-          placeholder: '입력 또는 선택',
-        },
-      },
-      {
-        name: 'companyName',
-        type: 'text',
-        label: t('사번'),
-        value: '',
-      },
-      {
-        name: 'tenantManagerName',
-        type: 'text',
-        label: t('이름'),
-        value: '',
-      },
-    ],
-  ],
-};
-
-const gridMenualConfig = {
+const gridManualConfig = {
   query: '',
   columns: [],
   data: [],
@@ -343,18 +245,12 @@ const gridMenualConfig = {
 };
 
 const columnHelper = createColumnHelper<any>();
-const menualColumns = [
+const manualColumns = [
   columnHelper.accessor('tenantName', {
     cell: (info) => info.getValue(),
     header: t('회사'),
     size: 152,
   }),
-  columnHelper.accessor('tenantSite', {
-    cell: (info) => info.getValue(),
-    header: t('실'),
-    size: 240,
-  }),
-
   columnHelper.accessor('companyTenantList', {
     cell: (info) => info.getValue(),
     header: t('소속'),
@@ -375,63 +271,6 @@ const menualColumns = [
     size: 152,
   }),
   columnHelper.accessor('isUsed', {
-    cell: (info) => {
-      return info.row.original.isUsed ? t('사용') : t('미사용');
-    },
-    header: t('계정상태'),
-    size: 104,
-  }),
-] as ColumnDef<any, unknown>[];
-
-const gridExceptionConfig = {
-  query: '',
-  columns: [],
-  data: [],
-
-  pagination: {
-    pageSize: 20,
-    pageIndex: 0,
-    totalRows: 0,
-  },
-};
-
-const exceptionColumns = [
-  columnHelper.accessor('tenantName', {
-    cell: (info) => info.getValue(),
-    header: t('회사'),
-    size: 152,
-  }),
-  columnHelper.accessor('tenantSite', {
-    cell: (info) => info.getValue(),
-    header: t('실'),
-    size: 240,
-  }),
-
-  columnHelper.accessor('companyTenantList', {
-    id: 'companyTenantList',
-    cell: (info) => info.getValue(),
-    header: t('소속'),
-    size: 200,
-  }),
-  columnHelper.accessor('tenantRoleList', {
-    id: 'tenantRoleList',
-    cell: (info) => info.getValue(),
-    header: t('사번'),
-    size: 120,
-  }),
-  columnHelper.accessor('createdBy', {
-    id: 'createdBy',
-    header: t('이름'),
-    size: 104,
-  }),
-  columnHelper.accessor('createdDate', {
-    id: 'createdDate',
-    cell: (info) => info.getValue(),
-    header: t('제직여부'),
-    size: 152,
-  }),
-  columnHelper.accessor('isUsed', {
-    id: 'isUsed',
     cell: (info) => {
       return info.row.original.isUsed ? t('사용') : t('미사용');
     },
