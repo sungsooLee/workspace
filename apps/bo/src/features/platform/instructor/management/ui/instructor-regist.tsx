@@ -48,7 +48,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
   const routerState = useRouterState();
   const queryClient = useQueryClient();
 
-  const [roleIdOptions, setRoleIdOptions] = useState();
+  const [roleIdOptions, setRoleIdOptions] = useState<any>();
 
   const {
     open: openModal,

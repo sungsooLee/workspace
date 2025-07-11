@@ -10,7 +10,7 @@ export default class InstructorService {
       siteScope: 'BO',
       roleType: 'TUTOR',
     };
-    return httpService.get(`${PMSApiPrefix()}/roles`, params);
+    return httpService.get<any[]>(`${PMSApiPrefix()}/roles`, params);
   }
 
   static fetchList(params: any) {
