@@ -120,6 +120,7 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
         (errors) => {
           // 첫 번째 에러 필드의 키를 추출 - builders 순서에 따라
           const firstErrorKey = config.builders.find((builder) => errors[builder.name])?.name;
+          console.log('validation error', errors);
 
           if (firstErrorKey) {
             // 현재 포커스된 요소가 이미 에러 필드 중 하나인지 확인

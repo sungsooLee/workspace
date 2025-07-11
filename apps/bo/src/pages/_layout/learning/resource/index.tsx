@@ -47,7 +47,7 @@ function RouteComponent() {
         break;
       }
       // HTML 동영상
-      case LEARNING_TYPE.HTML_VIDEO: {
+      case LEARNING_TYPE.HTML5_VIDEO: {
         router.navigate({ to: '/learning/resource/html-video/view' });
         break;
       }
