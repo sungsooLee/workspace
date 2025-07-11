@@ -1,6 +1,7 @@
 import { useFetchTenantCategoryTreePopup } from '@entities/tenant';
 import {
   Button,
+  convertApiDataToTreeNodes,
   ModalBody,
   ModalContainer,
   ModalFooter,
@@ -30,6 +31,7 @@ const CategoryChoiceModalComponent = forwardRef<HTMLDivElement, CategoryChoiceMo
     const { t } = useTranslation();
     const { close: closeModal } = useModal();
     const { data } = useFetchTenantCategoryTreePopup(tenantIds);
+    const treeData = convertApiDataToTreeNodes(data);
     const { selectedItems, handleSelectItem, cancelSelectItem, cancelAll } =
       useShuttleTreeToChips();
 
@@ -43,7 +45,7 @@ const CategoryChoiceModalComponent = forwardRef<HTMLDivElement, CategoryChoiceMo
             <ShuttleTreeToChipsV2
               sourceTitle="공통 카테고리 선택"
               targetTitle="선택 카테고리 목록"
-              treeData={(data as any) || []}
+              treeData={treeData}
               // fullNameKey={'name'}
               renderText={() => <></>}
               selectedItems={selectedItems}
