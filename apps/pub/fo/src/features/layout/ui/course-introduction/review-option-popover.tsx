@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import { isMobile } from 'react-device-detect';
 import { Button, useModal } from '@learnway/ui';
 import { ReviewPopup } from '../../../../features/layout';
 import styles from './review-option-popover.module.css';
@@ -28,7 +29,7 @@ function ReviewOptionPopoverComponent({ className }: ReviewOptionPopoverProps) {
           <Button
             onClick={() =>
               openModal({
-                width: 'sm',
+                width: isMobile ? 'm_full' : 'sm',
                 content: <ReviewPopup />,
               })
             }

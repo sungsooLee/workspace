@@ -145,6 +145,7 @@ function RouteComponent() {
             spaceBetween={8}
             slidesPerView="auto"
             centeredSlides={true}
+            loop={false}
             onSwiper={(swiper) => {
               setSwiperCount(swiper.slides.length);
               swiperRef.current = swiper;

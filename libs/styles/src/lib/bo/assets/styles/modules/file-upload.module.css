@@ -79,6 +79,15 @@
       .file_guide {
         @apply body_bo_2_r mt-[4px] text-[var(--gray7)];
       }
+      .icon_upload {
+        @apply h-[40px] w-[40px];
+        svg {
+          @apply fill-none;
+        }
+        path {
+          @apply fill-[#131416];
+        }
+      }
     }
     .input_file {
       @apply absolute left-0 top-0 h-full w-full cursor-pointer bg-transparent opacity-0;

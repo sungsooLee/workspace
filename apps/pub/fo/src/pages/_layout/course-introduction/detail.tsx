@@ -98,20 +98,25 @@ function RouteComponent() {
           <CourseIntroduction />
           <CourseEducation />
           <CourseReview />
+          {/* 연관과정 썸네일 공통 컴포넌트 작업 예정 (현재 작업 x) */}
           <div className={cn(pageFullInner.start, pageFullInner.inner, pageFullInner.bg_sec1)}>
-            <div className={pageFullInner.contents}>abcdefg</div>
+            <div className={pageFullInner.contents}>공통 컴포넌트 대기중</div>
           </div>
         </div>
       ),
     },
   ];
 
-  // 공통 컴포넌트 수정 요청중 (수정예정)
-  // toast popup
+  // toast popup (공통)
   const { open: openToast } = useToast();
-  const handleClickToast = () => {
+  const handleSubscribeToast = () => {
     openToast({
-      title: '채널을 구독하였습니다',
+      title: '채널을 구독하였습니다.',
+      // actionLabel: '버튼',
+      type: 'success',
+      // onActionClick: () => {
+      //   console.log('버튼 클릭');
+      // },
     });
   };
 
@@ -423,7 +428,7 @@ function RouteComponent() {
                   className={packageInformationStyles.btn_subscribe}
                   variant="primary"
                   size="xl"
-                  onClick={() => handleClickToast()}
+                  onClick={() => handleSubscribeToast()}
                 >
                   구독하기
                 </Button>

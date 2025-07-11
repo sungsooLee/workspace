@@ -1,0 +1,6 @@
+/* file_upload.css */
+.attach_wrap {
+  [class*='title_area'] strong {
+    @apply !title3-b !text-[var(--gray8)];
+  }
+}

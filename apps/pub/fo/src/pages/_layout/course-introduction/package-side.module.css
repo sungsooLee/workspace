@@ -32,25 +32,24 @@
             @apply title4-b leading-[24px] text-[var(--gray10)];
           }
         }
-      }
-    }
-  }
-}
-
-.sub_package_content {
-  @apply mt-[20px];
-  & > div {
-    & + div {
-      @apply mt-[12px];
-    }
-    & > div {
-      & > div {
-        @apply !w-[120px];
-      }
-      & > div {
-        @apply flex items-center;
-        & > p {
-          @apply body-md !line-clamp-3 !max-h-none !whitespace-normal break-words !leading-[24px] text-[var(--gray35)];
+        .sub_package_content {
+          @apply mt-[20px];
+          & > div {
+            & + div {
+              @apply mt-[12px];
+            }
+            & > div {
+              & > div {
+                @apply !w-[120px];
+              }
+              & > div {
+                @apply flex items-center;
+                & > p {
+                  @apply body-md !line-clamp-3 !max-h-none !whitespace-normal break-words !leading-[24px] text-[var(--gray35)];
+                }
+              }
+            }
+          }
         }
       }
     }
