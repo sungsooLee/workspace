@@ -115,6 +115,7 @@ export const CODE_GROUP = {
   'pms.user.UserState': 'pms.user.UserState',
   'pms.user.Status': 'pms.user.Status',
   'pms.user.AccountStatus': 'pms.user.AccountStatus',
+  'pms.user.UserGroupOriginType': 'pms.user.UserGroupOriginType',
   'vps.video.FfmpegTaskType': 'vps.video.FfmpegTaskType',
   'pms.multilingual.LangCountryCode': 'pms.multilingual.LangCountryCode',
   'pms.role.RoleType': 'pms.role.RoleType',
