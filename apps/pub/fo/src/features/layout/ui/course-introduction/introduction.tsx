@@ -1,5 +1,6 @@
 import { memo, useState } from 'react';
 import { Link } from '@tanstack/react-router';
+import { isMobile } from 'react-device-detect';
 import { cn } from '@learnway/shared';
 import { ChipList, SelectOption, Avatar, Button, Accordion } from '@learnway/ui';
 import { IcoSymbol, IcoEssential, IcoArrowDown } from '@learnway/icons';
@@ -14,7 +15,7 @@ import styles from './introduction.module.css';
 // 이미지
 import discriminationImg from '@learnway/styles/fo/assets/images/temp/img_discrimination.png';
 import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
-import { isMobile } from 'react-device-detect';
+import avatarDefault from '@learnway/styles/fo/assets/images/common/img_avatar.png';
 
 const CourseIntroductionCompoment = () => {
   // 태그
@@ -289,7 +290,7 @@ const CourseIntroductionCompoment = () => {
             <div className={`${operatorStyles.start} ${operatorStyles.operator}`}>
               <div className={operatorStyles.avatar}>
                 <Avatar
-                  imageUrl="https://github.com/shadcn.png"
+                  imageUrl={avatarDefault}
                   size={isMobile ? 'xl' : '2xl'}
                   className={styles.info_avata}
                 />

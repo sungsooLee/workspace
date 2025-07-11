@@ -16,12 +16,12 @@
       }
     }
     .package_txt_box {
-      @apply mt-[34px];
+      @apply mt-[60px];
       strong {
-        @apply title_5_b block text-[var(--gray9)];
+        @apply headline3-b block text-[var(--gray10)];
       }
       p {
-        @apply body_3_r mt-[16px] text-[var(--gray8)];
+        @apply body-md mt-[24px] text-[var(--gray35)];
       }
     }
     .package_box {
@@ -32,24 +32,27 @@
         }
       }
       .chip_box {
-        @apply mt-[24px];
+        @apply mt-[32px];
         & > div {
           @apply border-none p-0;
-          & > div {
-            @apply gap-[4px];
+          [class*='chips_wapper'] {
+            @apply gap-x-[8px] gap-y-[10px];
             span {
-              @apply rounded-[8px];
+              @apply !h-auto !min-h-min rounded-[24px] bg-[var(--gray95)] px-[12px] py-[6px];
+            }
+            button {
+              @apply !h-auto !min-h-min !px-0 leading-[20px] text-[var(--gray10)];
             }
           }
         }
       }
     }
     .sub_package {
-      @apply mt-[48px];
+      @apply mt-[60px];
       & > div {
         @apply relative;
         &::before {
-          @apply absolute left-[11px] top-[13px] h-[calc(100%-13px)] w-[2px] bg-[var(--gray4)] content-[''];
+          @apply absolute left-[19px] top-[13px] h-[calc(100%-13px)] w-[2px] bg-[var(--gray95)] content-[''];
         }
         & > div {
           @apply pb-[40px];
@@ -64,8 +67,8 @@
             & + div {
               @apply bg-inherit;
             }
-            & > svg {
-              @apply right-0 top-[2px] h-[20px] w-[20px] !stroke-[#6f798b];
+            svg {
+              @apply absolute right-0 top-[2px] h-[20px] w-[20px] !stroke-[#6f798b];
             }
             strong {
               @apply leading-[26px];
@@ -74,49 +77,28 @@
         }
       }
       .sub_package_title {
-        @apply relative pl-[32px];
+        @apply relative pl-[60px];
         .number {
-          @apply body_3_b absolute left-0 top-[3px] flex h-[24px] w-[24px] items-center justify-center rounded-[50%] bg-[var(--secondary1)] leading-[24px] text-white;
+          @apply body-lg-b absolute left-0 top-[3px] flex h-[40px] w-[40px] items-center justify-center rounded-[50%] bg-[var(--blue50)] leading-[24px] text-white;
         }
         strong {
-          @apply body_2_b block leading-[26px] text-[var(--gray8)];
+          @apply headline1-b block leading-[31px] text-[var(--gray10)];
           em {
-            @apply title_6_b ml-[4px] inline-block text-[var(--secondary1)];
+            @apply headline1-b ml-[8px] inline-block text-[var(--blue50)];
           }
         }
         p {
-          @apply body_3_r mt-[8px] text-[var(--gray7)];
+          @apply body-md mt-[20px] text-[var(--gray35)];
         }
       }
       .sub_package_content {
-        @apply pl-[32px];
-        & > ul {
-          @apply mt-[16px];
-          & > li {
-            @apply mr-[16px] inline-block w-[calc((100%-32px)/3)];
-            & > div {
-              @apply w-full;
-            }
-            &:nth-child(3n) {
-              @apply mr-0;
-            }
-            &:nth-child(n + 4) {
-              @apply mt-[32px];
-            }
-          }
-        }
-      }
-
-      button {
-        & > svg {
-          @apply top-[14px] mt-0;
-        }
+        @apply mt-[32px] pl-[60px];
       }
     }
     .operator_box {
-      @apply mt-[48px];
+      @apply mt-[60px];
       & > strong {
-        @apply title_6_b mb-[8px] block text-[var(--gray8)];
+        @apply headline1-b mb-[20px] block text-[var(--gray10)];
       }
     }
     .sub_box {

@@ -16,7 +16,6 @@ const TenantChannelDropdownFormFieldComponent = forwardRef<
   HTMLDivElement,
   TenantChannelDropdownFormFieldProps
 >(({ control, value, onChange, enableFilter = false, ...props }, ref) => {
-
   const { data } = useFetchAuthUser<AuthUser>();
   const { data: channel } = useFetchChannelByRoleId(data?.activeRole?.roleId as number);
 
@@ -46,15 +45,15 @@ const TenantChannelDropdownFormFieldComponent = forwardRef<
 
   // 채널조회 데이터
   const options = useMemo(() => {
-    if (!channel?.content) return [];
-    return channel?.content
+    if (!channel) return [];
+    return channel
       ?.filter((c) => filterFn(c, tenantId)) // 테넌트 필터
       ?.map(({ channelName, channelUuid }) => ({
         // 옵션 형식으로 변환
         label: channelName,
         value: channelUuid,
       }));
-  }, [channel?.content, tenantId]);
+  }, [channel, tenantId]);
 
   useEffect(() => {
     if (options && options.length === 1) {

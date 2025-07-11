@@ -48,7 +48,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
   const routerState = useRouterState();
   const queryClient = useQueryClient();
 
-  const [roleIdOptions, setRoleIdOptions] = useState();
+  const [roleIdOptions, setRoleIdOptions] = useState<any>();
 
   const {
     open: openModal,
@@ -305,6 +305,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
       nationCd: true,
       birthday: true,
       introduction: true,
+      roleId: true,
       dateRange: {
         required: true,
         conditions: [
@@ -609,6 +610,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
         ...getValues(),
         isView: EnFormMode.ADD,
         employeeIdOrEmail: '',
+        carreerFileGroupUuid: '',
       };
       updateFormData(data);
     }
