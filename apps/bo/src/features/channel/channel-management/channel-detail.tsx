@@ -1,20 +1,16 @@
-import { FC, useEffect, useState, useCallback } from 'react';
+import { useRef, useEffect, useImperativeHandle, forwardRef } from 'react';
 import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import {
   Button,
   ChipListModalSelectorFormField,
-  useGridBox,
-  useGridBoxConfig,
   ContentsRow,
-  GridBox,
   Input,
   TextareaFormField,
   RadioGroupFormField,
 } from '@learnway/ui';
 import { DuplicateCodeGuideText } from '@features/platform-management/platform/category-managemnet';
-import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { cn } from '@learnway/shared';
 import {
   FormSubTitle,
   ThumbnailListFormField,
@@ -23,161 +19,102 @@ import {
   TenantChoiceModal,
   UserChoiceModal,
   FormRow,
+  FormItem,
 } from '@shared/ui';
-import { EnGlobalConst } from '@types';
-import {
-  DynamicFormConfig,
-  useDynamicForm,
-  CODE_GROUP,
-  useSearchBox,
-  SearchBoxConfig,
-} from '@learnway/hooks';
-import { SearchBox } from '@shared/ui/search-box';
+import { EnGlobalConst, EnFormMode } from '@types';
+import { DuplicateCheckInputFormField, DuplicateState, FormDisplay } from '@features/form';
+import { DynamicFormConfig, useDynamicForm, CODE_GROUP, S3_PATH } from '@learnway/hooks';
 import { useGetRequestChannelDetail } from '@entities/channel/service/request-channel.hook';
-import { IcoPlus, IcoMinus } from '@learnway/icons';
 
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+import ChannelService from '@entities/channel/api/channel';
 
-const ChannelDetailComponent: FC<any> = ({ mode, method, requestId }) => {
+export enum EnChannelRegisterMethod {
+  REQUEST = 'REQUEST',
+  MANUAL = 'MANUAL',
+}
+
+interface ChannelDetailProps {
+  mode: EnFormMode;
+  method?: EnChannelRegisterMethod;
+  requestId?: string;
+}
+
+const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
   const { t } = useTranslation();
-  const [pageMode, setPageMode] = useState(mode);
 
-  const { provider, updateFormData, onSubmit, setFormError, clearFormError, getValues } =
+  const { provider, updateFormData, onSubmit, onFormChange, clearFormError, getValues } =
     useDynamicForm(formConfig);
-  const { provider: searchProvider, getValues: getSearchValues } = useSearchBox(searchConfig());
-  const { config: gConfig, gridFetch, data: gridData } = useGridBox(gridConfig, getValues);
 
-  const [isSuccessCodeCheck, setIsSuccessCodeCheck] = useState(false);
-  const [codeCheckState, setCodeCheckState] = useState<'none' | 'success' | 'duplicate' | 'error'>(
-    'none',
-  );
+  const formRef = useRef<HTMLFormElement>(null);
 
-  const { data: request } = useGetRequestChannelDetail(requestId);
-
-  const [pageIndex, setPageIndex] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
-
-  const handleOnSearch = useCallback((data: any) => {
-    //gridFetch(data);
-  }, []);
+  //const { data: request } = useGetRequestChannelDetail(props.requestId);
 
   useEffect(() => {
-    console.log('### pageMode=', pageMode);
-    console.log('### method=', method);
-    if (pageMode === 'add') {
+    console.log('### mode=', props.mode);
+    console.log('### method=', props.method);
+    if (props.mode === EnFormMode.ADD) {
       const initialData = {
-        channelOpenMethod: method,
-        channelRequestId: request?.channelRequestId,
-        tenantName: request?.tenantName,
-        requestDate:
-          request && getDateToString(new Date(request.requestDate), DATE_TIME_FORMAT.DATETIME_SEC),
-        status:
-          request &&
-          t(
-            `${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.channel.ChannelApprovalStatusType.${request.approvalStatusTypecd}`,
-          ),
-        channelLearningContent: request?.channelLearningContent,
-        channelPurposeContent: request?.channelPurposeContent,
-        channelName: request?.channelName,
-        channelId: request?.channelId,
-        channelMainLinkContent: request?.channelMainLinkContent,
-        channelType: 'PUBLIC',
-        tenantList: request ? [{ tenantId: request.tenantId, tenantName: request.tenantName }] : [],
-        channelDivision: 'PUBLIC',
-        subscribeType: 'MANUAL',
-        channelOwnerList: [],
-        isSecureChannel: request ? request.isSecretChannel : true,
-        isActived: false,
-        isUsed: false,
-        profileImageUrl: [],
-        imageUrl: [],
-        channelGuide: '',
-        tags: [],
-        channelTargetType: 'USER_GROUP',
-        userGroups: [],
-        useApprovalProcess: true,
-        learningTimeLimit: true,
-        dayProgressLimit: true,
-        resetProgress: true,
-        useTextbook: true,
-        useTrainingCost: true,
-        useEmploymentInsuranceRefunds: false,
-        availabilityOfCertificates: true,
-        useLearningPoint: false,
-        usePreLevelTesting: true,
-        useCourseFlag: true,
+        channelCreationType:
+          props.method === EnChannelRegisterMethod.REQUEST ? 'REQUEST_CREATE' : 'MANUAL_CREATE',
+        channelTenatMappingType: 'MAPPING_TENANT',
+        channelSecretType: 'NOT_SECRET',
+        channelSubscriptionType: 'MANUAL',
+        fileStorageType: 'AWS_INTERNAL',
+        isTextBookOption: true,
+        isInstructorOption: true,
+        isCommunicationOption: true,
+        isLearningEnvOption: true,
+        isLearningControlOption: true,
+        isRelatedCourseOption: true,
+        isAdminDataOption: true,
       };
       updateFormData(initialData);
-    } else if (pageMode === 'view') {
+    } else if (props.mode === EnFormMode.VIEW) {
       // TODO
+      const initialData = {
+        channelMainId: {
+          fieldValue: 'detailData.learningSpaceCode',
+          checkState: DuplicateState.okStart,
+        },
+      };
     }
-  }, [request, pageMode]);
+  }, [props]);
 
-  // action별 다른 위치 배정
-  const channelOpenMethod = (
-    <FormRow
-      provider={provider}
-      name={'channelOpenMethod'}
-      element={<RadioGroupFormField disabled={true} />}
-    />
-  );
-  const channelName = <FormRow provider={provider} name={'channelName'} />;
-  const channelMainLinkContent = (
-    <FormRow
-      provider={provider}
-      name={'channelMainLinkContent'}
-      element={<Input disabled={true} />}
-    />
-  );
-  const channelType = (
-    <FormRow
-      provider={provider}
-      name={'channelType'}
-      element={<RadioGroupFormField disabled={true} />}
-    />
-  );
-  const channelDivision = <FormRow provider={provider} name={'channelDivision'} />;
-  const subscribeType = <FormRow provider={provider} name={'subscribeType'} />;
-  const channelId = (
-    <FormRow
-      provider={provider}
-      name={'channelId'}
-      element={
-        <DuplicateCodeGuideText
-          clearFormError={clearFormError}
-          checkExists={(data: string) => {
-            // checkExists(data, {
-            //   onSuccess: (data: any) => {
-            //     const isUnique = data;
-            //     setIsSuccessCodeCheck(isUnique);
-            //     setCodeCheckState(isUnique ? 'success' : 'duplicate');
-            //     onFormChange?.({
-            //       isDuplicateCode: isUnique,
-            //     });
-            //   },
-            //   onError: () => {
-            //     setIsSuccessCodeCheck(false);
-            //     setCodeCheckState('error');
-            //     onFormChange?.({ isDuplicateCode: false });
-            //   },
-            // });
-          }}
-          isSuccess={isSuccessCodeCheck}
-          codeCheckState={codeCheckState}
-          handleCodeChange=""
-          setFormError={setFormError}
-        />
+  useImperativeHandle(ref, () => ({
+    saveData() {
+      const form = formRef.current;
+      if (form) {
+        form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
       }
-    />
-  );
+    },
+    clearForm() {
+      onFormChange();
+    },
+  }));
+
+  const duplicateCheck = async (channelMainId: string) => {
+    const result: boolean = await ChannelService.existsChannelMainId(channelMainId);
+    if (result) return DuplicateState.duplicated;
+    else return DuplicateState.ok;
+  };
+
+  const handleOnSubmit = async (data: any) => {
+    console.log('#### handleOnSubmit', data);
+
+    if (props.mode === EnFormMode.ADD) {
+      const payload = { ...data };
+      console.log('#### payload', payload);
+    } else if (props.mode === EnFormMode.VIEW) {
+      //
+    }
+  };
 
   return (
-    <>
-      {pageMode === 'add' && method === 'request' && (
+    <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
+      {props.mode === EnFormMode.ADD && props.method === EnChannelRegisterMethod.REQUEST && (
         <>
           <FormSubTitle label={'채널 신청 정보'} lineType={'light'} />
-          {channelOpenMethod}
           <ContentsRow>
             <FormRow
               provider={provider}
@@ -208,54 +145,35 @@ const ChannelDetailComponent: FC<any> = ({ mode, method, requestId }) => {
         </>
       )}
       <FormSubTitle label={'채널 기본 정보'} lineType={'light'} />
-
-      {pageMode === 'add' && method === 'request' && (
-        <>
-          <ContentsRow>
-            {channelName}
-            {channelId}
-            {channelMainLinkContent}
-          </ContentsRow>
-          <ContentsRow>
-            {channelType}
-            {channelDivision}
-            {subscribeType}
-          </ContentsRow>
-        </>
-      )}
-      {pageMode === 'add' && method !== 'request' && (
-        <>
-          <ContentsRow>
-            {channelOpenMethod}
-            {channelName}
-            {channelId}
-          </ContentsRow>
-          <ContentsRow>
-            {channelMainLinkContent}
-            {channelType}
-            <div className={cn(formStyles.form_item)}></div>
-          </ContentsRow>
-        </>
-      )}
-      {pageMode === 'view' && (
-        <>
-          <ContentsRow>
-            {channelOpenMethod}
-            <FormRow
-              provider={provider}
-              name={'channelRequestId'}
-              element={<Input disabled={true} />}
-            />
-            {channelName}
-          </ContentsRow>
-          <ContentsRow>
-            {channelId}
-            {channelMainLinkContent}
-            {channelType}
-          </ContentsRow>
-        </>
-      )}
-
+      <ContentsRow>
+        <FormRow
+          provider={provider}
+          name={'channelCreationType'}
+          element={<RadioGroupFormField disabled={true} />}
+        />
+        <FormRow provider={provider} name={'channelName'} />
+        <FormRow
+          provider={provider}
+          name={'channelMainId'}
+          element={<DuplicateCheckInputFormField onDuplicationCheck={duplicateCheck} />}
+        />
+      </ContentsRow>
+      <ContentsRow>
+        <FormRow
+          provider={provider}
+          name={'channelUrl'}
+          element={<Input disabled={true} readOnly={true} />}
+        />
+        <FormRow
+          provider={provider}
+          name={'channelTenatMappingType'}
+          element={<RadioGroupFormField />}
+        />
+        <FormRow provider={provider} name={'channelSecretType'} />
+      </ContentsRow>
+      <ContentsRow>
+        <FormRow provider={provider} name={'channelSubscriptionType'} />
+      </ContentsRow>
       <ContentsRow>
         <FormRow
           provider={provider}
@@ -276,17 +194,10 @@ const ChannelDetailComponent: FC<any> = ({ mode, method, requestId }) => {
           }
         />
       </ContentsRow>
-      {method !== 'request' && (
-        <ContentsRow>
-          {channelDivision}
-          {subscribeType}
-          <div className={cn(formStyles.form_item)}></div>
-        </ContentsRow>
-      )}
       <ContentsRow>
         <FormRow
           provider={provider}
-          name="channelOwnerList"
+          name="channelOwnerUserList"
           element={
             <ChipListModalSelectorFormField
               chipList={{
@@ -303,30 +214,38 @@ const ChannelDetailComponent: FC<any> = ({ mode, method, requestId }) => {
           }
         />
       </ContentsRow>
-      <ContentsRow type={'horizontal'}>
-        <FormRow provider={provider} name={'isSecureChannel'} />
-        <FormRow provider={provider} name={'isActived'} />
-        <FormRow provider={provider} name={'isUsed'} />
+      <ContentsRow>
+        <FormRow provider={provider} name={'fileStorageType'} />
+        <FormRow
+          provider={provider}
+          name={'isUsed'}
+          className={dynamicFormStyles.form_item_horizontal}
+        />
+        <FormRow
+          provider={provider}
+          name={'isDisplay'}
+          className={dynamicFormStyles.form_item_horizontal}
+        />
       </ContentsRow>
 
       <FormSubTitle label={'채널 홈 정보'} />
       <ContentsRow>
-        <FormRow provider={provider} name="profileImageUrl" element={<ThumbnailListFormField />} />
+        <FormRow provider={provider} name="channelProfileImageFile" />
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider} name="imageUrl" element={<ThumbnailListFormField />} />
+        <FormRow provider={provider} name="channelHomeImageFile" />
       </ContentsRow>
       <ContentsRow>
         <FormRow
           provider={provider}
-          name={'channelGuide'}
+          name={'channelDesc'}
           element={<TextareaFormField resize={'none'} />}
         />
       </ContentsRow>
       <ContentsRow>
         <FormRow
           provider={provider}
-          name={'tags'}
+          name={'channelTagList'}
           element={
             <ChipListFormField
               chipListConfig={{
@@ -335,118 +254,316 @@ const ChannelDetailComponent: FC<any> = ({ mode, method, requestId }) => {
                 valueField: 'value',
                 wordwrap: true,
               }}
+              limitSize={20}
+              limitPlaceholder={t('태그는 최대 20개까지 등록할 수 있습니다')}
             />
           }
         />
       </ContentsRow>
 
-      <FormSubTitle label={'채널 대상자 정보'} />
-      <ContentsRow>
-        <FormRow
-          className={dynamicFormStyles.w_half}
-          provider={provider}
-          name={'channelTargetType'}
-        />
+      <ContentsRow type={'horizontal'} titleMode>
+        <FormRow provider={provider} name={'isEnrollOption'} />
       </ContentsRow>
-      <ContentsRow>
-        <FormRow
-          provider={provider}
-          name={'userGroups'}
-          element={
-            <ChipListModalSelectorFormField
-              showAddButton
-              chipList={{
-                showInput: false,
-                labelField: 'label',
-                valueField: 'value',
-                wordwrap: true,
-              }}
-              actionNode={<Button variant="text" label={t('대상자')} />}
-            />
-          }
-        />
-      </ContentsRow>
-      <ContentsRow>
-        <div className={formStyles.form_item}>
-          <label className={formStyles.form_label}>
-            <span className={formStyles.form_text}>채널 대상자 제외</span>
-          </label>
-          <p className={formStyles.guide_text}>선택한 사용자는 해당 채널 대상자에서 제외됩니다.</p>
-        </div>
-      </ContentsRow>
-      <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
+      <FormDisplay provider={provider} dependencies={[{ name: 'isEnrollOption', value: true }]}>
+        <ContentsRow>
+          <FormItem label={t('승인')} guideText={t('수강신청 결재라인을 설정합니다.')} />
+          <FormItem label={t('정원')} guideText={t('수강 신청 정원 사용 여부를 설정합니다.')} />
+          <FormItem
+            label={t('수강신청 대기')}
+            guideText={t('수강 신청 대기 자동 모드, 수동 모드를 설정합니다.')}
+          />
+        </ContentsRow>
+        <ContentsRow>
+          <FormItem
+            label={t('차수 중복 수강')}
+            guideText={t('동일 차수 종북 학습 여부를 설정합니다.')}
+          />
+          <FormItem
+            label={t('사전 레벨 테스트')}
+            guideText={t('수강신청 학습 전 레벨 테스트 진행 여부를 설정합니다.')}
+          />
+          <FormItem
+            label={t('교재 배송지 수집 ')}
+            guideText={t('교재 배송지 주소 수집 여부를 설정합니다.')}
+          />
+        </ContentsRow>
+      </FormDisplay>
 
-      <div className="grid_wrap">
-        <GridBox
-          config={gConfig}
-          columns={columns}
-          // showColumnSettings={false}
-          // showNumberingColumn={true}
-          multiple
-          title="채널 대상자 제외 목록"
-          customButtonNode={
-            <>
-              <Button
-                variant="text"
-                size="sm"
-                //onClick={handleAddMode}
-              >
-                <IcoPlus width={16} height={16} stroke="#131C30" />
-                {t('LABEL.button.add')}
-              </Button>
-              <Button
-                variant="text"
-                size="sm"
-                //onClick={handleAddMode}
-              >
-                <IcoMinus width={16} height={16} stroke="#131C30" />
-                {t('LABEL.button.delete')}
-              </Button>
-            </>
-          }
-        />
-      </div>
+      <ContentsRow type={'horizontal'} titleMode>
+        <FormRow provider={provider} name={'isTextBookOption'} />
+      </ContentsRow>
+      <FormDisplay provider={provider} dependencies={[{ name: 'isTextBookOption', value: true }]}>
+        <ContentsRow>
+          <FormItem label={t('교재명')} guideText={t('교재명을 설정합니다.')} />
+          <FormItem label={t('교재비')} guideText={t('교재 비용을  설정합니다.')} />
+          <FormItem />
+        </ContentsRow>
+      </FormDisplay>
 
-      <FormSubTitle label={'교육 및 과정 연관 설정 정보'} />
-      <ContentsRow type={'horizontal'}>
-        <FormRow provider={provider} name={'useApprovalProcess'} />
-        <FormRow provider={provider} name={'learningTimeLimit'} />
-        <FormRow provider={provider} name={'dayProgressLimit'} />
+      <ContentsRow type={'horizontal'} titleMode>
+        <FormRow provider={provider} name={'isInstructorOption'} />
       </ContentsRow>
-      <ContentsRow type={'horizontal'}>
-        <FormRow provider={provider} name={'resetProgress'} />
-        <FormRow provider={provider} name={'useTextbook'} />
-        <FormRow provider={provider} name={'useTrainingCost'} />
+      <FormDisplay provider={provider} dependencies={[{ name: 'isInstructorOption', value: true }]}>
+        <ContentsRow>
+          <FormItem label={t('강사')} guideText={t('강사가 과정을 진행 시 강사를 설정합니다.')} />
+          <FormItem label={t('튜터')} guideText={t('튜터가 과정을 진행 시 튜터를 설정합니다.')} />
+          <FormItem />
+        </ContentsRow>
+      </FormDisplay>
+
+      <ContentsRow type={'horizontal'} titleMode>
+        <FormRow provider={provider} name={'isPassOption'} />
       </ContentsRow>
-      <ContentsRow type={'horizontal'}>
-        <FormRow provider={provider} name={'useEmploymentInsuranceRefunds'} />
-        <FormRow provider={provider} name={'availabilityOfCertificates'} />
-        <FormRow provider={provider} name={'useLearningPoint'} />
+      <FormDisplay provider={provider} dependencies={[{ name: 'isPassOption', value: true }]}>
+        <ContentsRow>
+          <FormItem
+            label={t('이수 처리 설정')}
+            guideText={t('과정 학습 이수 처리 여부를 설정합니다.')}
+          />
+          <FormItem
+            label={t('인정 학습시간')}
+            guideText={t('과정 학습 시 학습 시간 인정 시간을 설정합니다.')}
+          />
+          <FormItem
+            label={t('학습 포인트')}
+            guideText={t('과정 학습 시 자급하는 포인트를 설정합니다.')}
+          />
+        </ContentsRow>
+        <ContentsRow>
+          <FormItem
+            label={t('수료증 제공')}
+            guideText={t('과정 학습 이수 완료 시 수료증 제공 여부를 설정합니다.')}
+          />
+        </ContentsRow>
+      </FormDisplay>
+
+      <ContentsRow type={'horizontal'} titleMode>
+        <FormRow provider={provider} name={'isCommunicationOption'} />
       </ContentsRow>
-      <ContentsRow type={'horizontal'}>
-        <FormRow provider={provider} name={'usePreLevelTesting'} />
-        <FormRow provider={provider} name={'useCourseFlag'} />
-        <div className={cn(formStyles.form_item)}></div>
+      <FormDisplay
+        provider={provider}
+        dependencies={[{ name: 'isCommunicationOption', value: true }]}
+      >
+        <ContentsRow>
+          <FormItem
+            label={t('커뮤니티 및 공유 설정')}
+            guideText={t('과정 상세의 공지사항, 커뮤니티 등을 설정합니다.')}
+          />
+        </ContentsRow>
+      </FormDisplay>
+
+      <ContentsRow type={'horizontal'} titleMode>
+        <FormRow provider={provider} name={'isLearningEnvOption'} />
       </ContentsRow>
-      {mode === 'view' && <ContentsHistoryInfoFormField />}
-    </>
+      <FormDisplay
+        provider={provider}
+        dependencies={[{ name: 'isLearningEnvOption', value: true }]}
+      >
+        <ContentsRow>
+          <FormItem
+            label={t('기기 제한')}
+            guideText={t('PC, 모바일 등 학습 가능한 기기를 설정합니다.')}
+          />
+          <FormItem
+            label={t('네트워크 제한')}
+            guideText={t('과정 학습 시 사내망, 사외망 접속 제한을 설정합니다.')}
+          />
+          <FormItem
+            label={t('학습시간 제한')}
+            guideText={t('근무시간 기준 학습시간 제한을 설정합니다.')}
+          />
+        </ContentsRow>
+        <ContentsRow>
+          <FormItem label={t('복습 제한')} guideText={t('과정 복습에 제한을 설정합니다.')} />
+          <FormItem
+            label={t('화면 캡쳐 방지')}
+            guideText={t('학습창 화면 캡쳐 방지 여부를 설정합니다.')}
+          />
+          <FormItem
+            label={t('학습전 보안 서약')}
+            guideText={t('학습전 보안 서약 여부를 설정합니다.')}
+          />
+        </ContentsRow>
+      </FormDisplay>
+
+      <ContentsRow type={'horizontal'} titleMode>
+        <FormRow provider={provider} name={'isLearningControlOption'} />
+      </ContentsRow>
+      <FormDisplay
+        provider={provider}
+        dependencies={[{ name: 'isLearningControlOption', value: true }]}
+      >
+        <ContentsRow>
+          <FormItem label={t('1일 진도제한')} guideText={t('1일 진도제한 여부를 설정합니다.')} />
+          <FormItem
+            label={t('진도 초기화 ')}
+            guideText={t('학습한 과정의 진도 초기화 여부를 설정합니다.')}
+          />
+          <FormItem
+            label={t('순차 학습')}
+            guideText={t('과정 기준 순서로 학습 진행 여부를 설정합니다.')}
+          />
+        </ContentsRow>
+        <ContentsRow>
+          <FormItem
+            label={t('동영상 탐색바 제한')}
+            guideText={t('동영상 탐색바의 기능 제한을 설정합니다.')}
+          />
+          <FormItem
+            label={t('동영상 배속 제한')}
+            guideText={t('동영상 학습 시 재생 배속 제한을 설정합니다.')}
+          />
+          <FormItem />
+        </ContentsRow>
+      </FormDisplay>
+
+      <ContentsRow type={'horizontal'} titleMode>
+        <FormRow provider={provider} name={'isRelatedCourseOption'} />
+      </ContentsRow>
+      <FormDisplay
+        provider={provider}
+        dependencies={[{ name: 'isRelatedCourseOption', value: true }]}
+      >
+        <ContentsRow>
+          <FormItem
+            label={t('사전 필수 과정')}
+            guideText={t('과정 학습 전 필수 학습 과정을 설정합니다.')}
+          />
+          <FormItem
+            label={t('연관 학습')}
+            guideText={t('등록 과정과 연관된 학습 과정을 설정합니다.')}
+          />
+          <FormItem />
+        </ContentsRow>
+      </FormDisplay>
+
+      <ContentsRow type={'horizontal'} titleMode>
+        <FormRow provider={provider} name={'isAdminDataOption'} />
+      </ContentsRow>
+      <FormDisplay provider={provider} dependencies={[{ name: 'isAdminDataOption', value: true }]}>
+        <ContentsRow>
+          <FormItem
+            label={t('HMG 과정 데이터 표준 분류')}
+            guideText={t('과정 표준 분류를 설정합니다.')}
+          />
+          <FormItem
+            label={t('1인당 교육비')}
+            guideText={t('1인당 교육비 사용 금액을 설정합니다.')}
+          />
+          <FormItem
+            label={t('고용보험 환급')}
+            guideText={t('고용보험 환급 대상 과정 여부를 설정합니다.')}
+          />
+        </ContentsRow>
+        <ContentsRow>
+          <FormItem label={t('과정 플래그')} guideText={t('과정 플래그 기능을 설정합니다.')} />
+        </ContentsRow>
+      </FormDisplay>
+
+      <ContentsRow type={'horizontal'} titleMode>
+        <FormRow provider={provider} name={'isCarTenantCustomOption'} />
+      </ContentsRow>
+      <FormDisplay
+        provider={provider}
+        dependencies={[{ name: 'isCarTenantCustomOption', value: true }]}
+      >
+        <ContentsRow>
+          <FormItem label={t('테넌트 전용항목')} guideText={t('테넌트 전용 항목을 설정합니다.')} />
+          <FormItem label={t('테넌트 전용항목')} guideText={t('테넌트 전용 항목을 설정합니다.')} />
+          <FormItem label={t('테넌트 전용항목')} guideText={t('테넌트 전용 항목을 설정합니다.')} />
+        </ContentsRow>
+        <ContentsRow>
+          <FormItem label={t('테넌트 전용항목')} guideText={t('테넌트 전용 항목을 설정합니다.')} />
+          <FormItem label={t('테넌트 전용항목')} guideText={t('테넌트 전용 항목을 설정합니다.')} />
+          <FormItem />
+        </ContentsRow>
+      </FormDisplay>
+
+      <ContentsRow type={'horizontal'} titleMode>
+        <FormRow provider={provider} name={'isRotemTenantCustomOption'} />
+      </ContentsRow>
+      <FormDisplay
+        provider={provider}
+        dependencies={[{ name: 'isRotemTenantCustomOption', value: true }]}
+      >
+        <ContentsRow>
+          <FormItem label={t('테넌트 전용항목')} guideText={t('테넌트 전용 항목을 설정합니다.')} />
+          <FormItem label={t('테넌트 전용항목')} guideText={t('테넌트 전용 항목을 설정합니다.')} />
+          <FormItem label={t('테넌트 전용항목')} guideText={t('테넌트 전용 항목을 설정합니다.')} />
+        </ContentsRow>
+        <ContentsRow>
+          <FormItem label={t('테넌트 전용항목')} guideText={t('테넌트 전용 항목을 설정합니다.')} />
+          <FormItem label={t('테넌트 전용항목')} guideText={t('테넌트 전용 항목을 설정합니다.')} />
+          <FormItem />
+        </ContentsRow>
+      </FormDisplay>
+
+      <ContentsRow type={'horizontal'} titleMode>
+        <FormRow provider={provider} name={'isOutsourcingTenantCustomOption'} />
+      </ContentsRow>
+      <FormDisplay
+        provider={provider}
+        dependencies={[{ name: 'isOutsourcingTenantCustomOption', value: true }]}
+      >
+        <ContentsRow>
+          <FormItem label={t('테넌트 전용항목')} guideText={t('테넌트 전용 항목을 설정합니다.')} />
+          <FormItem label={t('테넌트 전용항목')} guideText={t('테넌트 전용 항목을 설정합니다.')} />
+          <FormItem label={t('테넌트 전용항목')} guideText={t('테넌트 전용 항목을 설정합니다.')} />
+        </ContentsRow>
+        <ContentsRow>
+          <FormItem label={t('테넌트 전용항목')} guideText={t('테넌트 전용 항목을 설정합니다.')} />
+          <FormItem label={t('테넌트 전용항목')} guideText={t('테넌트 전용 항목을 설정합니다.')} />
+          <FormItem />
+        </ContentsRow>
+      </FormDisplay>
+
+      <ContentsRow type={'horizontal'} titleMode>
+        <FormRow provider={provider} name={'isWiaTenantCustomOption'} />
+      </ContentsRow>
+      <FormDisplay
+        provider={provider}
+        dependencies={[{ name: 'isWiaTenantCustomOption', value: true }]}
+      >
+        <ContentsRow>
+          <FormItem label={t('테넌트 전용항목')} guideText={t('테넌트 전용 항목을 설정합니다.')} />
+          <FormItem label={t('테넌트 전용항목')} guideText={t('테넌트 전용 항목을 설정합니다.')} />
+          <FormItem label={t('테넌트 전용항목')} guideText={t('테넌트 전용 항목을 설정합니다.')} />
+        </ContentsRow>
+        <ContentsRow>
+          <FormItem label={t('테넌트 전용항목')} guideText={t('테넌트 전용 항목을 설정합니다.')} />
+          <FormItem label={t('테넌트 전용항목')} guideText={t('테넌트 전용 항목을 설정합니다.')} />
+          <FormItem />
+        </ContentsRow>
+      </FormDisplay>
+
+      <ContentsRow type={'horizontal'} titleMode>
+        <FormRow provider={provider} name={'isAutoeverTenantCustomOption'} />
+      </ContentsRow>
+      <FormDisplay
+        provider={provider}
+        dependencies={[{ name: 'isAutoeverTenantCustomOption', value: true }]}
+      >
+        <ContentsRow>
+          <FormItem label={t('테넌트 전용항목')} guideText={t('테넌트 전용 항목을 설정합니다.')} />
+          <FormItem label={t('테넌트 전용항목')} guideText={t('테넌트 전용 항목을 설정합니다.')} />
+          <FormItem label={t('테넌트 전용항목')} guideText={t('테넌트 전용 항목을 설정합니다.')} />
+        </ContentsRow>
+        <ContentsRow>
+          <FormItem label={t('테넌트 전용항목')} guideText={t('테넌트 전용 항목을 설정합니다.')} />
+          <FormItem label={t('테넌트 전용항목')} guideText={t('테넌트 전용 항목을 설정합니다.')} />
+          <FormItem />
+        </ContentsRow>
+      </FormDisplay>
+
+      {props.mode === EnFormMode.VIEW && <ContentsHistoryInfoFormField />}
+    </form>
   );
 };
 
-export const ChannelDetail = ChannelDetailComponent;
+export const ChannelDetail = forwardRef(ChannelDetailComponent);
 
 const formConfig: DynamicFormConfig = {
   builders: [
-    {
-      name: 'channelOpenMethod',
-      type: 'radio-group',
-      label: t('채널 개설 방식'),
-      value: 'request',
-      options: [
-        { value: 'request', label: '채널 신청 개설' },
-        { value: 'direct', label: '채널 직접 개설' },
-      ],
-    },
     {
       name: 'channelRequestId',
       type: 'text',
@@ -469,13 +586,6 @@ const formConfig: DynamicFormConfig = {
       placeholder: '',
     },
     {
-      name: 'status',
-      type: 'text',
-      label: t('신청 상태'),
-      value: '',
-      placeholder: '',
-    },
-    {
       name: 'channelLearningContent',
       type: 'textarea',
       label: t('채널 학습 대상'),
@@ -491,6 +601,16 @@ const formConfig: DynamicFormConfig = {
       placeholder: '',
       maxLength: 500,
     },
+    //// 채널 기본 정보
+    {
+      name: 'channelCreationType',
+      type: 'radio-group',
+      label: t('채널 개설 방식'),
+      value: '',
+      optionsConfig: {
+        codeGroup: CODE_GROUP['pms.channel.ChannelCreationType'],
+      },
+    },
     {
       name: 'channelName',
       type: 'text',
@@ -499,34 +619,28 @@ const formConfig: DynamicFormConfig = {
       placeholder: '',
     },
     {
-      name: 'channelId',
+      name: 'channelMainId',
       type: 'custom',
-      label: t('채널 아이디'),
-      value: '',
+      label: t('채널 핸들'),
+      value: { fieldValue: '', checkState: DuplicateState.needInput },
+      format: 'object',
       placeholder: '',
     },
     {
-      name: 'channelMainLinkContent',
+      name: 'channelUrl',
       type: 'text',
       label: t('채널 URL'),
       value: '',
-      placeholder: '',
+      placeholder: '채널 핸들 입력 시 자동 생성',
     },
     {
-      name: 'channelType',
+      name: 'channelTenatMappingType',
       type: 'radio-group',
       label: t('채널 유형'),
-      value: 'PUBLIC',
-      options: [
-        {
-          value: 'PUBLIC',
-          label: '일반 채널',
-        },
-        {
-          value: 'UNIVERSAL',
-          label: '유니버셜 채널',
-        },
-      ],
+      value: '',
+      optionsConfig: {
+        codeGroup: CODE_GROUP['pms.channel.ChannelTenatMappingType'],
+      },
     },
     {
       name: 'tenantList',
@@ -534,30 +648,29 @@ const formConfig: DynamicFormConfig = {
       type: 'custom',
       value: [],
       format: 'array',
-      guideText: '일반 채널은 1개의 테넌트만 선택할 수 있습니다.',
     },
     {
-      name: 'channelDivision',
+      name: 'channelSecretType',
       type: 'radio-group',
       label: t('채널 구분'),
       value: 'PUBLIC',
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.channel.ChannelSecretType'],
       },
+      guideText: t('공개 채널은 테넌트 전체, 비밀 채널은 설정한 사용자만 이용할 수 있습니다.'),
     },
     {
-      name: 'subscribeType',
+      name: 'channelSubscriptionType',
       type: 'radio-group',
       label: t('구독 방식'),
-      value: 'MANUAL',
-      options: [
-        { label: '수동 구독', value: 'MANUAL' },
-        { label: '자동 구독', value: 'AUTOMATIC' },
-      ],
-      guideText: '자동 구독은 채널 대상자를 구독자로 자동 설정합니다.',
+      value: '',
+      optionsConfig: {
+        codeGroup: CODE_GROUP['pms.channel.ChannelSubscriptionType'],
+      },
+      guideText: t('자동 구독은 채널 대상자를 구독자로 자동 설정합니다.'),
     },
     {
-      name: 'channelOwnerList',
+      name: 'channelOwnerUserList',
       label: t('채널 소유자'),
       type: 'custom',
       format: 'array',
@@ -565,29 +678,14 @@ const formConfig: DynamicFormConfig = {
       placeholder: '',
     },
     {
-      name: 'isSecureChannel',
-      type: 'switch',
-      label: t('보안 채널 여부'),
-      value: true,
-      placeholder: '',
-      switchConfig: {
-        label: (value: boolean) => (value ? '보안 적용' : '보안 미적용'),
-        guideText: (value: boolean) =>
-          value
-            ? t('보안채널 설정 시 학습자원의 불법 배포와 보안 위협에 강합니다.')
-            : t('보안채널 미 설정 시 학습자원의 불법 배포와 보안 위협에 취약합니다.'),
+      name: 'fileStorageType',
+      type: 'radio-group',
+      label: t('업로드 파일 저장소(채널)'),
+      value: '',
+      optionsConfig: {
+        codeGroup: CODE_GROUP['pms.company.FileStorageType'],
       },
-    },
-    {
-      name: 'isActived',
-      type: 'switch',
-      label: t('활성화 여부'),
-      value: false,
-      placeholder: '',
-      guideText: t('채널이 활성회되어야 과정을 등록할 수 있습니다.'),
-      switchConfig: {
-        label: (value: boolean) => (value ? '활성화' : '비활성화'),
-      },
+      guideText: t('HMG Cloud 선택 시 동시접속 제한이나, 속도 저하가 있을 수 있습니다.'),
     },
     {
       name: 'isUsed',
@@ -595,33 +693,59 @@ const formConfig: DynamicFormConfig = {
       label: t('사용 여부'),
       value: false,
       placeholder: '',
-      guideText: t('채널이 사용 상태인 경우 학습자가 채널에 접속할 수 있습니다.'),
+      guideText: t('채널이 사용 상태인 경우 과정을 등록할 수 있습니다.'),
       switchConfig: {
         label: (value: boolean) => (value ? '사용' : '미사용'),
       },
     },
     {
+      name: 'isDisplay',
+      type: 'switch',
+      label: t('노출 여부'),
+      value: false,
+      placeholder: '',
+      guideText: t('채널이 노출 상태인 경우 학습자가 채널에 접속할 수 있습니다.'),
+      switchConfig: {
+        label: (value: boolean) => (value ? '노출' : '비노출'),
+      },
+    },
+    //// 채널 홈 정보
+    {
       label: t('프로필'),
-      name: 'profileImageUrl',
-      type: 'custom',
+      name: 'channelProfileImageFile',
+      type: 'thumbnail-list',
       format: 'array',
       value: [],
+      uploadConfig: {
+        affairsType: 'PMS',
+        s3Path: S3_PATH['upload/channel/profileimg'],
+        acceptFiles: ['JPEG', 'JPG', 'PNG', 'GIF'],
+        maxFileSize: 50 * 1024 * 1024,
+        maxFileCount: 1,
+      },
       guideText: t(
         '파일 사이즈 000 x 000 / 확장자 JPEG, JPG, PNG, GIF / 업로드 가능 1개 / 파일용량 최대 50 MB',
       ),
     },
     {
       label: t('이미지'),
-      name: 'imageUrl',
-      type: 'custom',
+      name: 'channelHomeImageFile',
+      type: 'thumbnail-list',
       format: 'array',
       value: [],
+      uploadConfig: {
+        affairsType: 'PMS',
+        s3Path: S3_PATH['upload/channel/mainimg'],
+        acceptFiles: ['JPEG', 'JPG', 'PNG', 'GIF'],
+        maxFileSize: 50 * 1024 * 1024,
+        maxFileCount: 1,
+      },
       guideText: t(
         '파일 사이즈 000 x 000 / 확장자 JPEG, JPG, PNG, GIF / 업로드 가능 1개 / 파일용량 최대 50 MB',
       ),
     },
     {
-      name: 'channelGuide',
+      name: 'channelDesc',
       type: 'textarea',
       label: t('채널 안내'),
       value: '',
@@ -630,263 +754,197 @@ const formConfig: DynamicFormConfig = {
     },
     {
       label: t('태그'),
-      name: 'tags',
+      name: 'channelTagList',
       format: 'array',
       type: 'chip-list',
       guideText: t('태그는 최대 20개까지 등록할 수 있습니다.'),
       value: [],
     },
+    //// 채널 추가 설정
     {
-      name: 'channelTargetType',
-      type: 'radio-group',
-      label: t('채널 대상자 설정'),
-      value: 'USER_GROUP',
-      options: [
-        { label: '유저그룹 설정', value: 'USER_GROUP' },
-        { label: '직접 설정', value: 'DIRECT' },
-      ],
-      guideText: '선택한 1개의 방식만 채널 대상자로 설정됩니다.',
-    },
-    {
-      name: 'userGroups',
-      type: 'custom',
-      label: t('LABEL.form.label.userGroupSetting'),
-      format: 'array',
-      placeholder: '',
-      description: '',
-      value: [],
-    },
-    {
-      name: 'useApprovalProcess',
+      name: 'isEnrollOption',
       type: 'switch',
-      label: t('수강 신청 결재라인 사용'),
-      value: true,
-      placeholder: '',
-      guideText: t('수강 신청할 때 승인하는 결제 라인을 설정합니다.'),
-      switchConfig: {
-        label: (value: boolean) => (value ? '사용' : '미사용'),
-      },
-    },
-    {
-      name: 'learningTimeLimit',
-      type: 'switch',
-      label: t('학습시간 제한'),
-      value: true,
-      placeholder: '',
-      guideText: t('정해진 시간에만 학습을 할 수 있도록 설정합니다.'),
-      switchConfig: {
-        label: (value: boolean) => (value ? '사용' : '미사용'),
-      },
-    },
-    {
-      name: 'dayProgressLimit',
-      type: 'switch',
-      label: t('1일 진도 제한'),
-      value: true,
-      placeholder: '',
-      guideText: t('하루에 학습할 수 있는 진도 제한을 설정합니다.'),
-      switchConfig: {
-        label: (value: boolean) => (value ? '사용' : '미사용'),
-      },
-    },
-    {
-      name: 'resetProgress',
-      type: 'switch',
-      label: t('진도 초기화'),
-      value: true,
-      placeholder: '',
-      guideText: t('수강했던 학습 자원의 재학습 여부를 설정합니다.'),
-      switchConfig: {
-        label: (value: boolean) => (value ? '사용' : '미사용'),
-      },
-    },
-    {
-      name: 'useTextbook',
-      type: 'switch',
-      label: t('교재 사용'),
-      value: true,
-      placeholder: '',
-      guideText: t('과정 등록 시 교재와 교재 정보 사용 여부를 설정합니다.'),
-      switchConfig: {
-        label: (value: boolean) => (value ? '사용' : '미사용'),
-      },
-    },
-    {
-      name: 'useTrainingCost',
-      type: 'switch',
-      label: t('1인당 교육비 사용'),
-      value: true,
-      placeholder: '',
-      guideText: t('교육비 사용 여부를 설정합니다.'),
-      switchConfig: {
-        label: (value: boolean) => (value ? '사용' : '미사용'),
-      },
-    },
-    {
-      name: 'useEmploymentInsuranceRefunds',
-      type: 'switch',
-      label: t('고용보험 환급 사용'),
+      label: t('수강 신청'),
       value: false,
-      placeholder: '',
-      guideText: t('과정 등록 시 고융보험 환급 사용 여부를 설정합니다.'),
       switchConfig: {
         label: (value: boolean) => (value ? '사용' : '미사용'),
       },
+      tooltip: t('과정 등록 필수 값으로 사용 여부 수정이 불가합니다.'),
     },
     {
-      name: 'availabilityOfCertificates',
+      name: 'isTextBookOption',
       type: 'switch',
-      label: t('수료증 제공 여부'),
-      value: true,
-      placeholder: '',
-      guideText: t('과정 이수 시 수료증 제공 여부를 설정합니다.'),
-      switchConfig: {
-        label: (value: boolean) => (value ? '사용' : '미사용'),
-      },
-    },
-    {
-      name: 'useLearningPoint',
-      type: 'switch',
-      label: t('학습 포인트(마일리지) 사용'),
+      label: t('교재'),
       value: false,
-      placeholder: '',
-      guideText: t('학습 포인트 사용 여부를 설정합니다.'),
       switchConfig: {
         label: (value: boolean) => (value ? '사용' : '미사용'),
       },
+      tooltip: t('교재 허용 여부를 설정할 수 있으며, 비허용 시 테넌트에서 사용할 수 없습니다.'),
     },
     {
-      name: 'usePreLevelTesting',
+      name: 'isInstructorOption',
       type: 'switch',
-      label: t('사전 레벨 테스트 사용'),
-      value: true,
-      placeholder: '',
-      guideText: t('학습자가 해당 과청 수강 신청 시 사전 레벨 테스트 필요 여부를 설정합니다.'),
+      label: t('강사'),
+      value: false,
       switchConfig: {
         label: (value: boolean) => (value ? '사용' : '미사용'),
       },
+      tooltip: t('강사 허용 여부를 설정할 수 있으며, 비허용 시 테넌트에서 사용할 수 없습니다.'),
     },
     {
-      name: 'useCourseFlag',
+      name: 'isPassOption',
       type: 'switch',
-      label: t('과정 플래그 사용'),
-      value: true,
-      placeholder: '',
-      guideText: t(
-        '수강신청 마스터, 과정 추출, 교육 통계에 사용하는 과정 분류 값 사용 여부를 설정합니다.',
+      label: t('이수 기준'),
+      value: false,
+      switchConfig: {
+        label: (value: boolean) => (value ? '사용' : '미사용'),
+      },
+      tooltip: t('과정 등록 필수 값으로 사용 여부 수정이 불가합니다.'),
+    },
+    {
+      name: 'isCommunicationOption',
+      type: 'switch',
+      label: t('커뮤니티'),
+      value: false,
+      switchConfig: {
+        label: (value: boolean) => (value ? '사용' : '미사용'),
+      },
+      tooltip: t('커뮤니티 허용 여부를 설정할 수 있으며, 비허용 시 테넌트에서 사용할 수 없습니다.'),
+    },
+    {
+      name: 'isLearningEnvOption',
+      type: 'switch',
+      label: t('학습환경'),
+      value: false,
+      switchConfig: {
+        label: (value: boolean) => (value ? '사용' : '미사용'),
+      },
+      tooltip: t('학습환경 허용 여부를 설정할 수 있으며, 비허용 시 테넌트에서 사용할 수 없습니다.'),
+    },
+    {
+      name: 'isLearningControlOption',
+      type: 'switch',
+      label: t('학습제어'),
+      value: false,
+      switchConfig: {
+        label: (value: boolean) => (value ? '사용' : '미사용'),
+      },
+      tooltip: t('학습제어 허용 여부를 설정할 수 있으며, 비허용 시 테넌트에서 사용할 수 없습니다.'),
+    },
+    {
+      name: 'isRelatedCourseOption',
+      type: 'switch',
+      label: t('사전/연관학습'),
+      value: false,
+      switchConfig: {
+        label: (value: boolean) => (value ? '사용' : '미사용'),
+      },
+      tooltip: t(
+        '사전/연관학습 허용 여부를 설정할 수 있으며, 비허용 시 테넌트에서 사용할 수 없습니다.',
       ),
+    },
+    {
+      name: 'isAdminDataOption',
+      type: 'switch',
+      label: t('행정 항목'),
+      value: false,
       switchConfig: {
         label: (value: boolean) => (value ? '사용' : '미사용'),
       },
+      tooltip: t('행정항목 허용 여부를 설정할 수 있으며, 비허용 시 테넌트에서 사용할 수 없습니다.'),
+    },
+    {
+      name: 'isCarTenantCustomOption',
+      type: 'switch',
+      label: t('완성차 테넌트 전용 항목'),
+      value: false,
+      switchConfig: {
+        label: (value: boolean) => (value ? '사용' : '미사용'),
+      },
+      tooltip: t(
+        '완성차 테넌트의 전용 항목의 허용 여부를 설정합니다.  비허용 시 테넌트에서 사용할 수 없습니다.',
+      ),
+    },
+    {
+      name: 'isRotemTenantCustomOption',
+      type: 'switch',
+      label: t('로템 테넌트 전용 항목'),
+      value: false,
+      switchConfig: {
+        label: (value: boolean) => (value ? '사용' : '미사용'),
+      },
+      tooltip: t(
+        '로템 테넌트의 전용 항목의 허용 여부를 설정합니다.  비허용 시 테넌트에서 사용할 수 없습니다.',
+      ),
+    },
+    {
+      name: 'isOutsourcingTenantCustomOption',
+      type: 'switch',
+      label: t('위탁 테넌트 전용 항목'),
+      value: false,
+      switchConfig: {
+        label: (value: boolean) => (value ? '사용' : '미사용'),
+      },
+      tooltip: t(
+        '위탁 테넌트의 전용 항목의 허용 여부를 설정합니다.  비허용 시 테넌트에서 사용할 수 없습니다.',
+      ),
+    },
+    {
+      name: 'isWiaTenantCustomOption',
+      type: 'switch',
+      label: t('위아 테넌트 전용 항목'),
+      value: false,
+      switchConfig: {
+        label: (value: boolean) => (value ? '사용' : '미사용'),
+      },
+      tooltip: t(
+        '위아 테넌트의 전용 항목의 허용 여부를 설정합니다.  비허용 시 테넌트에서 사용할 수 없습니다.',
+      ),
+    },
+    {
+      name: 'isAutoeverTenantCustomOption',
+      type: 'switch',
+      label: t('오토에버 테넌트 전용 항목'),
+      value: false,
+      switchConfig: {
+        label: (value: boolean) => (value ? '사용' : '미사용'),
+      },
+      tooltip: t(
+        '오토에버 테넌트의 전용 항목의 허용 여부를 설정합니다.  비허용 시 테넌트에서 사용할 수 없습니다.',
+      ),
     },
   ],
   validator: {
     channelName: true,
-    channelId: true,
-    tenantList: true,
-    channelOwnerList: true,
-    profileImageUrl: true,
-    imageUrl: true,
-    channelGuide: true,
-    tags: true,
-    channelTargetType: true,
-    userGroups: true,
-  },
-};
-
-const searchConfig = (): SearchBoxConfig => ({
-  builders: [
-    [
-      {
-        name: 'company',
-        type: 'dropdown',
-        label: t('회사'),
-        value: '',
-        optionsConfig: {
-          codeGroup: CODE_GROUP['manual.company.companyCode'],
+    channelMainId: {
+      format: 'object',
+      required: true,
+      conditions: [
+        {
+          fn: (values) => {
+            const fieldValue = values.channelMainId.fieldValue;
+            if (fieldValue === '') return true;
+            return false;
+          },
+          message: t('LABEL.form.validation.needInput', { code: t('채널 핸들') }),
         },
-      },
-      {
-        name: 'userNo',
-        type: 'text',
-        label: t('사번'),
-        value: '',
-        placeholder: '',
-      },
-      {
-        name: 'userName',
-        type: 'text',
-        label: t('이름'),
-        value: '',
-        placeholder: '',
-      },
-    ],
-  ],
-});
-
-const gridConfig: useGridBoxConfig = {
-  query: '',
-  columns: [],
-  data: [],
-
-  pagination: {
-    pageSize: 10,
-    pageIndex: 0,
-    totalRows: 0,
-  },
-  excel: {
-    upload: '/upload',
+        {
+          fn: (values: Record<string, any>) =>
+            values.channelMainId.checkState === DuplicateState.check ||
+            values.channelMainId.checkState === DuplicateState.needInput,
+          message: t('LABEL.form.validation.check', { code: t('채널 핸들') }),
+        },
+        {
+          fn: (values: Record<string, any>) =>
+            values.channelMainId.checkState === DuplicateState.duplicated,
+          message: t('LABEL.form.validation.duplicated', { code: t('채널 핸들') }),
+        },
+      ],
+    },
+    tenantList: true,
+    channelProfileImageFile: true,
+    channelHomeImageFile: true,
+    channelDesc: true,
+    channelTagList: true,
   },
 };
-
-const columnHelper = createColumnHelper<any>();
-
-const columns = [
-  columnHelper.accessor('company', {
-    cell: (info) => info.getValue(),
-    header: '회사',
-    size: 200,
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('part', {
-    cell: (info) => info.getValue(),
-    header: '본부/사업부',
-    size: 200,
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('dept', {
-    cell: (info) => info.getValue(),
-    header: '부서',
-    size: 200,
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('affiliation', {
-    cell: (info) => info.getValue(),
-    header: '소속',
-    size: 200,
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('employeeNumber', {
-    cell: (info) => info.getValue(),
-    header: '사번',
-    size: 200,
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('name', {
-    cell: (info) => info.getValue(),
-    header: '이름',
-    size: 200,
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('employmentStatus', {
-    cell: (info) => info.getValue(),
-    header: '재직여부',
-    size: 200,
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('accountStatus', {
-    cell: (info) => info.getValue(),
-    header: '계정상태',
-    size: 100,
-  }),
-];

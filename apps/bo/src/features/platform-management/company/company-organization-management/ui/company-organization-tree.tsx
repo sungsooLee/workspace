@@ -370,7 +370,8 @@ const TenantCompanyOrganizationTreeComponent = ({
         <div className={'gap-10px flex'}>
           <div className={'flex items-center'}>
             <Button
-              onClick={(e) => {
+              stopPropagation
+              onClick={() => {
                 handleNodeCustomButton(node, level);
               }}
               variant={node?.key === selectedNode?.key ? 'primary' : 'gray2'}
@@ -407,7 +408,7 @@ const TenantCompanyOrganizationTreeComponent = ({
               size="xs"
               type="button"
               stopPropagation
-              onClick={(e) => {
+              onClick={() => {
                 handleNodeCustomButton(node, level);
               }}
             />

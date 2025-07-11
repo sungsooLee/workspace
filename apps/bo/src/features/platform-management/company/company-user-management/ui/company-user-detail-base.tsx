@@ -501,7 +501,7 @@ const textBookData: any[] = [
     address: '[12345] 서울시 강남구 테헤란로 00길 KG타워 1001호',
     textbookNo: '1212',
     deliveryDate: '2025-01-01',
-    deleveryCompleteDate: '2025-01-01',
+    deliveryCompleteDate: '2025-01-01',
   },
   {
     courseNo: '12121212',
@@ -512,7 +512,7 @@ const textBookData: any[] = [
     address: '[12345] 서울시 강남구 테헤란로 00길 KG타워 1001호',
     textbookNo: '1212',
     deliveryDate: '2025-01-01',
-    deleveryCompleteDate: '2025-01-01',
+    deliveryCompleteDate: '2025-01-01',
   },
   {
     courseNo: '12121212',
@@ -523,7 +523,7 @@ const textBookData: any[] = [
     address: '[12345] 서울시 강남구 테헤란로 00길 KG타워 1001호',
     textbookNo: '1212',
     deliveryDate: '2025-01-01',
-    deleveryCompleteDate: '2025-01-01',
+    deliveryCompleteDate: '2025-01-01',
   },
 ];
 
@@ -560,7 +560,7 @@ const textBookColumns = [
       cellAlign: 'center',
     },
   }),
-  columnHelper.accessor('deleveryCompleteDate', {
+  columnHelper.accessor('deliveryCompleteDate', {
     header: '교재 배송 완료일',
     size: 138,
     meta: {
