@@ -5,6 +5,7 @@ export const queryKeys = {
   list: ['instructors'] as const,
   detail: ['instructor'] as const,
   history: ['history'] as const,
+  duplicateCheckEmail: ['duplicate-check-email'] as const,
 };
 
 export const queryOptions = {
@@ -31,6 +32,10 @@ export const queryOptions = {
     },
     cacheTime: 0,
     staleTime: 0,
+  }),
+  duplicateCheckEmail: (params: any) => ({
+    queryKey: queryKeys.duplicateCheckEmail,
+    queryFn: () => InstructorService.fetchDuplicateCheckEmail(params),
   }),
 };
 

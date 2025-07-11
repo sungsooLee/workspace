@@ -442,21 +442,7 @@ function RouteComponent() {
                 e.stopPropagation();
                 openModal({
                   width: 'xl',
-                  content: (
-                    <UserGroupTabsChoiceModal
-                      tenantIds={[1, 2, 3, 4]}
-                      // option={[
-                      //   {
-                      //     combiners: [
-                      //       { combineName: '현대제철', combineType: 'USER_GROUP', combineValue: 1 },
-                      //     ],
-                      //     key: '1',
-                      //     id: 1,
-                      //   },
-                      // ]}
-                      initialTab="ORGANIZATION"
-                    />
-                  ),
+                  content: <UserGroupTabsChoiceModal initialTab="ORGANIZATION" />,
                 });
               }}
             >
@@ -714,11 +700,12 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'attachment',
       type: 'attachment',
+      uuidType: 'group',
       uploadConfig: {
         affairsType: 'PMS',
         s3Path: 'upload/temp/attachment',
       },
-      value: [],
+      value: '',
     },
     {
       name: 'singleAttachment',

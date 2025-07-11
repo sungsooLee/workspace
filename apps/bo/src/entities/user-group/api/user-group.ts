@@ -38,4 +38,8 @@ export default class UserGroupService {
   static fetchUsersByIds(params: Partial<UsersByIdsParam>): Promise<UserGroupsResponse[]> {
     return httpService.get(`${PMSApiPrefix()}/userGroup/users/by-ids`, params);
   }
+
+  static fetchUserGroupManualList(params: any) {
+    return httpService.get<PageableContent<any>>(`${PMSApiPrefix()}/userGroup`, params);
+  }
 }

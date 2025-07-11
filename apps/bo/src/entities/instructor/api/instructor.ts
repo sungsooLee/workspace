@@ -1,11 +1,12 @@
 import { httpService } from '@learnway/shared';
 import { PageableContent } from '@types';
 import { PMSApiPrefix, LMSApiPrefix } from '@learnway/config';
+import { InstructorHistory, Instructor, Instructors } from 'src/types/entities/instructor';
 
 export default class InstructorService {
-  static fetchRolesByTenantId(tenantId: number): Promise<any> {
+  static fetchRolesByTenantId(payload: number): Promise<any> {
     const params = {
-      tenantId: tenantId,
+      tenantId: payload,
       siteScope: 'BO',
       roleType: 'TUTOR',
     };
@@ -13,15 +14,22 @@ export default class InstructorService {
   }
 
   static fetchList(params: any) {
-    return httpService.get<PageableContent<any>>(`${LMSApiPrefix()}/instructor`, params);
+    return httpService.get<PageableContent<Instructors>>(`${LMSApiPrefix()}/instructor`, params);
   }
 
   static fetchOne(params: number) {
-    return httpService.get(`${LMSApiPrefix()}/instructor/${params}`);
+    return httpService.get<Instructor>(`${LMSApiPrefix()}/instructor/${params}`);
   }
 
   static fetchHistory(instructorId: number, params: any) {
-    return httpService.get(`${LMSApiPrefix()}/instructor/${instructorId}/history`, params);
+    return httpService.get<InstructorHistory>(
+      `${LMSApiPrefix()}/instructor/${instructorId}/history`,
+      params,
+    );
+  }
+
+  static fetchDuplicateCheckEmail(params: any) {
+    return httpService.get(`${LMSApiPrefix()}/instructor/email`, params);
   }
 
   static insertInstructor(params: any) {
