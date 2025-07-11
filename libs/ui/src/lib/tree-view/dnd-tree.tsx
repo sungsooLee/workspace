@@ -35,6 +35,7 @@ export const DndTreeView: React.FC<TreeProps> = ({
   isLoading = false,
   skeletonNodeCount = 5,
   emptyMessage = '노드를 추가해주세요.',
+  disableOptimisticUpdate = true,
 }) => {
   const [internalSelectedNode, setInternalSelectedNode] = useState<TreeNode | null>(null);
   const [internalExpandedKeys, setInternalExpandedKeys] = useState<string[]>(initExpandedKeys);
@@ -54,6 +55,7 @@ export const DndTreeView: React.FC<TreeProps> = ({
     isSearching,
     searchKeyword,
     onAction,
+    disableOptimisticUpdate, // 클라이언트 트리에서는 낙관적 업데이트 사용.
   );
 
   // 전역 드래그 상태 확인

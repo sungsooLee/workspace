@@ -43,6 +43,7 @@ const TreeBoxComponent: React.FC<TreeBoxProps> = ({
   isLoading,
   skeletonNodeCount,
   emptyMessage,
+  disableOptimisticUpdate,
 }) => {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [internalExpandedKeys, setInternalExpandedKeys] = useState<string[]>([]);
@@ -197,6 +198,7 @@ const TreeBoxComponent: React.FC<TreeBoxProps> = ({
           isLoading={isLoading}
           skeletonNodeCount={skeletonNodeCount}
           emptyMessage={emptyMessage}
+          disableOptimisticUpdate={disableOptimisticUpdate}
         />
       </div>
     </div>

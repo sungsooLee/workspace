@@ -148,6 +148,7 @@ export interface TreeProps {
   isLoading?: boolean; // 로딩 상태 표시
   skeletonNodeCount?: number; // 스켈레톤 노드 개수 (기본값: 5)
   emptyMessage?: string; // 데이터가 없을 때 표시할 메시지
+  disableOptimisticUpdate?: boolean; // 낙관적 업데이트 플래그
 }
 // 드랍 위치 감지를 위한 타입
 export interface IndicatorPosition {
