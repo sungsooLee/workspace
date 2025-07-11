@@ -416,7 +416,6 @@ function RouteComponent() {
                   <IcoEye width={16} height={16} stroke="#0056ff" />
                   <span>77,500</span>
                 </div>
-                /
               </div>
               {/* 구독 */}
               <div className={packageInformationStyles.subscribe_box}>

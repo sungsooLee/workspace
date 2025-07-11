@@ -93,8 +93,11 @@
   @apply body_3_r;
 }
 .title_mode {
-  @apply mb-[16px] border-b-[1px] border-solid border-[var(--gray8)] pb-[16px];
+  @apply relative mb-[16px] pb-[16px];
   & > div > label span {
     @apply !title_bo_4_b text-[var(--gray9)];
+  }
+  &::before {
+    @apply absolute bottom-0 left-0 flex h-[1px] w-full bg-[var(--gray8)] content-[''];
   }
 }
