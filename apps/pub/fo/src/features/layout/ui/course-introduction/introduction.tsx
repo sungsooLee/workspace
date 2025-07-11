@@ -14,6 +14,7 @@ import styles from './introduction.module.css';
 // 이미지
 import discriminationImg from '@learnway/styles/fo/assets/images/temp/img_discrimination.png';
 import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
+import { isMobile } from 'react-device-detect';
 
 const CourseIntroductionCompoment = () => {
   // 태그
@@ -283,19 +284,60 @@ const CourseIntroductionCompoment = () => {
           <div className={styles.tit_box}>
             <strong>강사소개</strong>
           </div>
-          {/* operator module */}
-          <div className={`${operatorStyles.start} ${operatorStyles.operator}`}>
-            <div className={operatorStyles.avatar}>
-              <Avatar imageUrl="https://github.com/shadcn.png" className={styles.info_avata} />
-            </div>
-            <div className={operatorStyles.txt_box}>
-              <div className={operatorStyles.profile}>
-                <strong>김현대 사외강사</strong>
+          <div className={styles.operator_box}>
+            {/* operator module */}
+            <div className={`${operatorStyles.start} ${operatorStyles.operator}`}>
+              <div className={operatorStyles.avatar}>
+                <Avatar
+                  imageUrl="https://github.com/shadcn.png"
+                  size={isMobile ? 'xl' : '2xl'}
+                  className={styles.info_avata}
+                />
               </div>
-              <div className={operatorStyles.definition_list}>
-                <span className={operatorStyles.txt}>현&#41; 한국산업기술협회 연구원 수석교수</span>
-                <span className={operatorStyles.txt}>현&#41; 표면처리기술사</span>
-                <span className={operatorStyles.txt}>현&#41; 한국산업인력공단 NSC 개발위원</span>
+              <div className={operatorStyles.txt_box}>
+                <div className={operatorStyles.profile}>
+                  <strong>김현대 사외강사</strong>
+                </div>
+                <div className={operatorStyles.definition_list}>
+                  <span className={operatorStyles.txt}>
+                    현&#41; 한국산업기술협회 연구원 수석교수
+                  </span>
+                  <span className={operatorStyles.txt}>현&#41; 표면처리기술사</span>
+                  <span className={operatorStyles.txt}>현&#41; 한국산업인력공단 NSC 개발위원</span>
+                </div>
+              </div>
+            </div>
+
+            {/* operator module */}
+            <div className={`${operatorStyles.start} ${operatorStyles.operator}`}>
+              <div className={operatorStyles.avatar}>
+                <Avatar
+                  imageUrl="https://github.com/shadcn.png"
+                  size={isMobile ? 'xl' : '2xl'}
+                  className={styles.info_avata}
+                />
+              </div>
+              <div className={operatorStyles.txt_box}>
+                <div className={operatorStyles.profile}>
+                  <strong>김현대 사외강사</strong>
+                  <div>
+                    <span>이메일</span>
+                    <span>abc@gmail.com</span>
+                  </div>
+                </div>
+                <div className={operatorStyles.definition_list}>
+                  {/* definition module */}
+                  <div className={`${definitionListStyles.start} ${definitionListStyles.list}`}>
+                    <dl>
+                      <dt>이메일</dt>
+                      <dd>abc@hyundai.conm</dd>
+                    </dl>
+                    <dl>
+                      <dt>전화</dt>
+                      <dd>02-555-2323</dd>
+                    </dl>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -306,30 +348,36 @@ const CourseIntroductionCompoment = () => {
           <div className={styles.tit_box}>
             <strong>과정 운영자</strong>
           </div>
-          {/* operator module */}
-          <div className={`${operatorStyles.start} ${operatorStyles.operator}`}>
-            <div className={operatorStyles.avatar}>
-              <span>김</span>
-            </div>
-            <div className={operatorStyles.txt_box}>
-              <div className={operatorStyles.profile}>
-                <strong>김지민 책임</strong>
-                <div>
-                  <span>현대오토에버</span>
-                  <span>L&D플랫폼팀</span>
-                </div>
+          <div className={styles.operator_box}>
+            {/* operator module */}
+            <div className={`${operatorStyles.start} ${operatorStyles.operator}`}>
+              <div className={operatorStyles.avatar}>
+                <Avatar
+                  imageUrl="https://github.com/shadcn.png"
+                  size={isMobile ? 'xl' : '2xl'}
+                  className={styles.info_avata}
+                />
               </div>
-              <div className={operatorStyles.definition_list}>
-                {/* definition module */}
-                <div className={`${definitionListStyles.start} ${definitionListStyles.list}`}>
-                  <dl>
-                    <dt>이메일</dt>
-                    <dd>abc@hyundai.conm</dd>
-                  </dl>
-                  <dl>
-                    <dt>전화</dt>
-                    <dd>02-555-2323</dd>
-                  </dl>
+              <div className={operatorStyles.txt_box}>
+                <div className={operatorStyles.profile}>
+                  <strong>박지혜 강사</strong>
+                  <div>
+                    <span>이메일</span>
+                    <span>abc@gmail.com</span>
+                  </div>
+                </div>
+                <div className={operatorStyles.definition_list}>
+                  {/* definition module */}
+                  <div className={`${definitionListStyles.start} ${definitionListStyles.list}`}>
+                    <dl>
+                      <dt>이메일</dt>
+                      <dd>abc@hyundai.conm</dd>
+                    </dl>
+                    <dl>
+                      <dt>전화</dt>
+                      <dd>02-555-2323</dd>
+                    </dl>
+                  </div>
                 </div>
               </div>
             </div>
