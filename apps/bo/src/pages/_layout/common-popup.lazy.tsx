@@ -25,6 +25,7 @@ import {
   PageContainer,
   SubContents,
   ContentsButtons,
+  ThumbnailListFormField,
 } from '@shared/ui';
 import {
   Button,
@@ -62,7 +63,8 @@ const imageFileUrl =
 function RouteComponent() {
   const { open: openModal } = useModal();
   const [organizations, setOrganizations] = useState<any>([]);
-  const { provider, onSubmit, control, getValues, updateFormData } = useDynamicForm(formConfig);
+  const { provider, onSubmit, control, getValues, updateFormData, onFormChange, watch } =
+    useDynamicForm(formConfig);
 
   const handleLabelUpdate = async () => {
     const langPath = jsonToPaths(langCodes.LABEL);
@@ -91,6 +93,12 @@ function RouteComponent() {
     URL.revokeObjectURL(url);
     link.remove();
   };
+
+  const selectedThumbnail1 = watch('selectedThumbnail1');
+  const handleSelected = (selectedThumbnail1: string) => onFormChange({ selectedThumbnail1 });
+
+  const selectedThumbnail2 = watch('selectedThumbnail2');
+  const handleSelected2 = (selectedThumbnail2: string) => onFormChange({ selectedThumbnail2 });
 
   const { deploy } = useDeployTranslation({});
   const handleDeployKorMenu = () => {
@@ -202,7 +210,30 @@ function RouteComponent() {
             />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider} name="thumbnails" />
+            <FormRow
+              provider={provider}
+              name="thumbnailGroup"
+              element={
+                <ThumbnailListFormField
+                  isLoading={true}
+                  selectedFileUuid={selectedThumbnail1}
+                  onSelected={handleSelected}
+                />
+              }
+            />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow
+              provider={provider}
+              name="thumbnailFiles"
+              element={
+                <ThumbnailListFormField
+                  isLoading={true}
+                  selectedFileUuid={selectedThumbnail2}
+                  onSelected={handleSelected2}
+                />
+              }
+            />
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider} name="attachment" />
@@ -680,19 +711,34 @@ const formConfig: DynamicFormConfig = {
       placeholder: '',
       maxLength: 50,
     },
+    { name: 'selectedThumbnail1', type: 'hidden', value: '' },
     {
-      name: 'thumbnails',
+      name: 'thumbnailGroup',
       label: t('썸네일'),
       type: 'thumbnail-list',
       max: 1,
-      format: 'object',
-      value: {
-        groupUuid: '990245c1-3516-465d-bdd2-fb03fbcd7591',
-      },
+      value: '990245c1-3516-465d-bdd2-fb03fbcd7591',
+      uuidType: 'group',
       showDefault: true,
       uploadConfig: {
         affairType: 'CMS',
-        s3Path: 'upload/content/image',
+        s3Path: S3_PATH['upload/content/image'],
+      },
+      description:
+        '파일 사이즈 000 x 000 / 확장자 JPEG, JPG, PNG, GIF / 업로드 가능 00개 / 파일용량 최대 00 MB',
+    },
+    { name: 'selectedThumbnail2', type: 'hidden', value: '' },
+    {
+      name: 'thumbnailFiles',
+      label: t('썸네일'),
+      type: 'thumbnail-list',
+      max: 2,
+      value: [],
+      uuidType: 'files',
+      showDefault: true,
+      uploadConfig: {
+        affairType: 'CMS',
+        s3Path: S3_PATH['upload/content/image'],
       },
       description:
         '파일 사이즈 000 x 000 / 확장자 JPEG, JPG, PNG, GIF / 업로드 가능 00개 / 파일용량 최대 00 MB',
