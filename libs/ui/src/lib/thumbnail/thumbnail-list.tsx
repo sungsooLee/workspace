@@ -53,7 +53,7 @@ export interface ThumbnailListComponentProps
   /**
    * 썸네일 목록을 클릭하면 파일 id를 전달하는 콜백 함수
    */
-  onChecked: Dispatch<SetStateAction<string | null>>;
+  onChecked: (uuid: string | null) => void;
   showDefault?: boolean;
 }
 
@@ -80,7 +80,6 @@ const ThumbnailListComponent = forwardRef<HTMLDivElement, ThumbnailListComponent
     },
     ref,
   ) => {
-    console.log('🚀 ~ checked:', checked);
     /**
      * 특정 썸네일이 삭제될 때 호출되는 핸들러 함수입니다.
      * @param currentOption - 삭제될 ImageOption 객체

@@ -21,17 +21,17 @@ export interface BaseGroupInfo {
 
 //  파일 정보
 export interface FileInfo {
-  group: FileGroupInfo;
+  group?: FileGroupInfo;
   fileUuid: string;
   originalFileName: string;
   serverFileName: string;
   fileSize: number;
   detailPath: string;
   filePath: string;
-  fileType: string;
-  uploadStatus: string;
-  deleteYn: boolean;
-  useYn: boolean;
+  fileType?: string;
+  uploadStatus?: string;
+  deleteYn?: boolean;
+  useYn?: boolean;
   fileUrl?: string;
 }
 // 파일 그룹 정보

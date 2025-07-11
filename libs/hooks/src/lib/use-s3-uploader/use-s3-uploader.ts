@@ -791,12 +791,12 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
         progress: 0,
         fileUrl: file.fileUrl,
         parts: [],
-        basicPath: file.group.basicPath,
-        groupUuid: file.group.groupUuid,
+        basicPath: file.group!.basicPath,
+        groupUuid: file.group!.groupUuid,
       }));
       return [...prev, ...fetchedFiles];
     });
-    const groupUuids = uniq(files.map((file) => file.group.groupUuid));
+    const groupUuids = uniq(files.map((file) => file.group!.groupUuid));
     if (groupUuids.length === 1) setBatchGroupUuid(first(groupUuids) || '');
   };
 

@@ -1,5 +1,5 @@
 // IA011 / NLP_BO_PMS_1100_05_01
-import { forwardRef, useEffect, useState } from 'react';
+import { Dispatch, forwardRef, SetStateAction, useEffect, useState } from 'react';
 import { ImageOption, ThumbnailImageUpload } from '@learnway/ui'; // @learnway/ui에서 ThumbnailImageUpload 컴포넌트 import
 import {
   S3UploaderConfig,
@@ -7,15 +7,20 @@ import {
   ThumbnailFileValue,
   useFileManager,
 } from '@learnway/hooks'; // @learnway/hooks에서 폼 필드 기본 props 타입 import
-import { isArray, isEqual } from 'lodash';
+import { difference, first, isArray, isEqual, uniq } from 'lodash';
 
 /**
  * ThumbnailImageUploadFormField 컴포넌트의 props 인터페이스
  * 폼 필드로서 ThumbnailImageUpload 컴포넌트를 래핑하여 폼 시스템과 통합합니다.
  */
-interface ThumbnailImageUploadFormFieldProps extends BaseFormFieldProps<ThumbnailFileValue> {
+interface ThumbnailImageUploadFormFieldProps extends BaseFormFieldProps<string[] | string> {
   uploadConfig?: S3UploaderConfig;
   max?: number;
+  uuidType: 'files' | 'group';
+  showDefault?: boolean;
+  isLoading?: boolean;
+  selected: string;
+  onSelected: (uuid: string) => void;
   // imageStorageType?: 'public' | 'db-manage';
   /**
    * 더미 속성 (현재 코드에서 사용되지 않음)
@@ -41,38 +46,56 @@ const ThumbnailImageUploadFormFieldComponent = forwardRef<
       value = {}, // 폼 필드의 현재 값 (string[] 타입, 이미지 경로 배열)
       onChange, // 폼 필드 값이 변경될 때 호출되는 콜백 함수
       uploadConfig,
+      uuidType = 'group',
       ...props // 나머지 HTMLDivElement 속성들
     },
     ref, // forwardRef로 전달받은 Ref 객체
   ) => {
-    const { getGroupInfo } = useFileManager();
+    const { getGroupInfo, getFileInfo } = useFileManager();
 
     // keep value
-    const [values, setValues] = useState<ThumbnailFileValue>(value);
+    const [values, setValues] = useState<ThumbnailFileValue>({});
     console.log('🚀 ~ ThumbnailImageUploadFormFieldComponent ~ values:', values);
+
+    async function fetchFileInfo(uuids: string[]) {
+      const fileInfos = await Promise.all(uuids.map(getFileInfo));
+      const groupUuids = uniq(fileInfos.map((file) => file.group!.groupUuid));
+      setValues({
+        groupUuid: first(groupUuids),
+        files: fileInfos,
+      });
+    }
 
     async function fetchGroupInfo(groupUuid: string) {
       const groupInfo = await getGroupInfo(groupUuid);
-      setValues((prev) => ({
-        ...prev,
-        groupUuid,
-        files: groupInfo.files,
-      }));
+      if (groupInfo.files.length === 0)
+        return setValues({
+          groupUuid,
+          files: [],
+        });
+
+      return fetchFileInfo(groupInfo.files.map((_) => _.fileUuid));
     }
 
     useEffect(() => {
-      if (!value.groupUuid) return;
-      if (value.files) return;
-      fetchGroupInfo(value.groupUuid);
-    }, [value.groupUuid]);
+      if (uuidType === 'group') {
+        if (value) fetchGroupInfo(value as string);
+        return;
+      }
+      if ((value || []).length) fetchFileInfo(value as string[]);
+    }, [value]);
 
     useEffect(() => {
-      if (value.isLoading === values.isLoading) return;
-      setValues((prev) => ({ ...prev, isLoading: value.isLoading }));
-    }, [value.isLoading]);
-
-    useEffect(() => {
-      onChange(values);
+      if (uuidType === 'group' && values.groupUuid) {
+        if (value !== values.groupUuid) onChange(values?.groupUuid || '');
+        if (values.files?.find((_) => !_.group)) fetchGroupInfo(values.groupUuid);
+        return;
+      }
+      const exists = value as string[];
+      const changes = values?.files?.map((_) => _.fileUuid) || [];
+      const added = difference(changes, exists);
+      const removed = difference(exists, changes);
+      if (added.length || removed.length) onChange(changes);
     }, [values]);
 
     // 폼 필드의 'value' (string[] 타입)를 'ThumbnailImageUpload'에서 사용할 'ImageOption[]' 타입으로 변환하여 내부 상태로 관리
@@ -116,39 +139,3 @@ const ThumbnailImageUploadFormFieldComponent = forwardRef<
 
 // 폼 필드 컴포넌트 내보내기
 export const ThumbnailListFormField = ThumbnailImageUploadFormFieldComponent;
-
-/**
- * `string[]` 타입의 이미지 경로 배열을 `ImageOption[]` 타입으로 변환하는 헬퍼 함수입니다.
- * 각 경로 문자열은 `ImageOption` 객체의 `id`와 `path` 속성으로 매핑됩니다.
- * @param value - 이미지 경로 문자열 배열 (예: ['/path/to/image1.jpg', '/path/to/image2.png'])
- * @returns `ImageOption` 객체 배열
- */
-const valueToOptions = (value: string[]): ImageOption[] => {
-  // value가 null 또는 undefined인 경우 빈 배열 반환
-  if (!value) {
-    return [];
-  }
-
-  if (isArray(value)) {
-    return value.map((path: string, index: number) => ({
-      id: path + index, // 경로를 ID로 사용
-      path, // 경로를 path로 사용
-      // ImageOption의 다른 속성 (checked, readonly 등)은 기본값 또는 필요에 따라 추가
-    }));
-  }
-  return [];
-};
-
-/**
- * `ImageOption[]` 타입의 배열을 `string[]` (이미지 경로 배열) 타입으로 변환하는 헬퍼 함수입니다.
- * 각 `ImageOption` 객체의 `path` 속성만 추출합니다.
- * @param options - `ImageOption` 객체 배열
- * @returns 이미지 경로 문자열 배열 (예: ['/path/to/image1.jpg', '/path/to/image2.png'])
- */
-const optionsToValue = (options: ImageOption[]): string[] => {
-  // options가 null 또는 undefined인 경우 빈 배열 반환
-  if (!options) {
-    return [];
-  }
-  return options.map((d: ImageOption) => d.path);
-};
