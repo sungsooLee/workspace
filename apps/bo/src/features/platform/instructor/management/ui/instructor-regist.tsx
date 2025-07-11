@@ -6,6 +6,8 @@ import { queryOptions, mutateOptions } from '@entities/instructor/service/instru
 import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import {
+  useCreateTutor,
+  useCreateUser,
   useCreateInstructor,
   useUpdateInstructor,
   useDeleteInstructor,
@@ -19,6 +21,7 @@ import {
   DatePicker,
   InputModalSelectorFormField,
   TextareaFormField,
+  PhoneNumberFormField,
 } from '@learnway/ui';
 import { DynamicFormConfig, useDynamicForm, CODE_GROUP, S3_PATH } from '@learnway/hooks';
 
@@ -45,7 +48,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
   const routerState = useRouterState();
   const queryClient = useQueryClient();
 
-  const [roleIdOptions, setRoleIdOptions] = useState();
+  const [roleIdOptions, setRoleIdOptions] = useState<any>();
 
   const {
     open: openModal,
@@ -59,6 +62,8 @@ const InstructorRegistComponent = (props: any, ref: any) => {
   const [carreerYearVal, setCarreerYearVal] = useState(0);
   const [carreerMonthVal, setCarreerMonthVal] = useState(0);
 
+  const { create: createTutor } = useCreateTutor({});
+  const { create: createUser } = useCreateUser({});
   const { create: createInstructor } = useCreateInstructor({});
   const { update: updateInstructor } = useUpdateInstructor({});
   const { delete: deleteInstructor } = useDeleteInstructor({});
@@ -71,6 +76,12 @@ const InstructorRegistComponent = (props: any, ref: any) => {
         name: 'isView',
         type: 'text',
         value: props.instructorId ? EnFormMode.VIEW : EnFormMode.ADD,
+      },
+      {
+        name: 'userUuid',
+        type: 'text',
+        value: '',
+        disabled: true,
       },
       {
         name: 'tenantId',
@@ -241,10 +252,10 @@ const InstructorRegistComponent = (props: any, ref: any) => {
       },
       {
         name: 'carreerFileGroupUuid',
-        type: 'thumbnail-list',
-        format: 'array',
+        type: 'attachment',
+        uuidType: 'group',
         label: t('강사 경력 인정 파일'),
-        value: [],
+        value: '',
         max: 10,
         uploadConfig: {
           affairsType: 'LMS',
@@ -294,8 +305,9 @@ const InstructorRegistComponent = (props: any, ref: any) => {
       nationCd: true,
       birthday: true,
       introduction: true,
+      roleId: true,
       dateRange: {
-        required: false,
+        required: true,
         conditions: [
           {
             fn: (values) => values.activeIndex === 1 && !values.dateRange?.from,
@@ -336,18 +348,15 @@ const InstructorRegistComponent = (props: any, ref: any) => {
   const duplicateCheckEmail = async (employeeIdOrEmail: string) => {
     const result = false;
     const data = { ...getValues() };
-    console.log('data=>', data);
     const params = {
       tenantId: data.tenantId,
       email: employeeIdOrEmail,
     };
     try {
-      const check = await queryClient.fetchQuery(queryOptions.duplicateCheckEmail(params));
-      console.log('check==>', check);
-      if (result) return DuplicateState.duplicated;
-      else return DuplicateState.ok;
-    } catch (e) {
-      return;
+      const valid = await queryClient.fetchQuery(queryOptions.duplicateCheckEmail(params));
+      return DuplicateState.ok;
+    } catch (error: any) {
+      return DuplicateState.duplicated;
     }
   };
 
@@ -371,9 +380,52 @@ const InstructorRegistComponent = (props: any, ref: any) => {
   };
 
   const handleOnInsert = async (data: any) => {
+    console.log('############################ data=>', data);
     const startDate = data.dateRange.from;
     const endDate = data.dateRange.to;
-    const payload = {
+
+    const payloadTutor = {
+      name: data.instructorName,
+      birthday: dayjs(data.birthday).format('YYYY-MM-DD'),
+      email:
+        data.instructorType === 'INTERNAL_INSTRUCTOR'
+          ? data.employeeIdOrEmail
+          : data.employeeIdOrEmail?.fieldValue,
+      password: data.instructorType === 'INTERNAL_INSTRUCTOR' ? null : data.password,
+      phoneNationNumber: data.telCountryCode,
+      phoneNumber: data.telNo,
+      // TODO: 확인 필요
+      nationCd: {
+        language: 'string',
+        script: 'string',
+        variant: 'string',
+        displayName: 'string',
+        country: 'string',
+        unicodeLocaleAttributes: ['string'],
+        unicodeLocaleKeys: ['string'],
+        displayLanguage: 'string',
+        displayScript: 'string',
+        displayCountry: 'string',
+        displayVariant: 'string',
+        extensionKeys: ['string'],
+        iso3Language: 'string',
+        iso3Country: 'string',
+      },
+    };
+    const payloadUser = {
+      roleId: data?.roleId,
+      body: {
+        addUserUuids: [
+          {
+            userUuid: data.userUuid,
+            startDate: startDate ? dayjs(startDate) : null,
+            endDate: endDate ? dayjs(endDate) : null,
+            isUsed: true,
+          },
+        ],
+      },
+    };
+    const payloadInstructor = {
       tenantId: data.tenantId,
       instructorType: data.instructorType,
       isFulltimeInstructor: data.isFulltimeInstructor === 2,
@@ -395,15 +447,49 @@ const InstructorRegistComponent = (props: any, ref: any) => {
       carNumber: data.carNumber,
       introduction: data.introduction,
       career: data.career,
-      // carreerFileGroupUuid: data.carreerFileGroupUuid, // TODO: string[] 타입으로 BE확인필요
-      carreerFileGroupUuid: '',
+      carreerFileGroupUuid: data.carreerFileGroupUuid,
       carreerYear: carreerYearVal,
       carreerMonth: carreerMonthVal,
     };
 
-    if (await openConfirm('저장 하시겠습니까?')) {
-      createInstructor(payload, {
-        onSuccess: async () => {
+    const confirmOk = await openConfirm('저장 하시겠습니까?');
+    if (!confirmOk) return;
+
+    let validation = true;
+    // [1] 사외 강사인 경우 회원가입 API호출
+    // if (data.instructorType === 'EXTERNAL_INSTRUCTOR') {
+    //   await createTutor(payloadTutor, {
+    //     onSuccess: async (data: any, variables: any, context: any) => {
+    //       console.log('[1] onSuccess:', data);
+    //       if (data && Object.keys(data).includes('uuid')) {
+    //         payloadUser.addUserUuids[0].userUuid = data.uuid;
+    //       }
+    //     },
+    //     onError: (data: any, variables: any, context: any) => {
+    //       console.log('[1] onError:', data);
+    //       validation = false;
+    //     },
+    //   });
+    // }
+
+    // [2] 역할 저장
+    if (validation) {
+      await createUser(payloadUser, {
+        onSuccess: async (data: any, variables: any, context: any) => {
+          console.log('[2] onSuccess:', data);
+        },
+        onError: (data: any, variables: any, context: any) => {
+          console.log('[2] onError:', data);
+          validation = false;
+        },
+      });
+    }
+
+    // [3] 강사 등록
+    if (validation) {
+      await createInstructor(payloadInstructor, {
+        onSuccess: async (data: any, variables: any, context: any) => {
+          console.log('[3] onSuccess:', data);
           await showSaveComplete();
           if (props.viewMode === EnPageMode.PAGE) {
             router.navigate({ to: '/platform/instructor/management' });
@@ -411,11 +497,12 @@ const InstructorRegistComponent = (props: any, ref: any) => {
             if (typeof props.handleSubmitSuccess === 'function') props.handleSubmitSuccess();
           }
         },
-        isError: () => {
-          console.error('error');
+        onError: (data: any, variables: any, context: any) => {
+          console.log('[3] onError:', data);
         },
       });
     }
+    // }
   };
 
   const handleOnUpdate = async (data: any) => {
@@ -428,8 +515,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
       carNumber: data.carNumber,
       introduction: data.introduction,
       career: data.career,
-      // carreerFileGroupUuid: data.carreerFileGroupUuid,
-      carreerFileGroupUuid: '',
+      carreerFileGroupUuid: data.carreerFileGroupUuid,
       carreerYear: carreerYearVal,
       carreerMonth: carreerMonthVal,
       instructorId: props.instructorId,
@@ -469,8 +555,6 @@ const InstructorRegistComponent = (props: any, ref: any) => {
   useImperativeHandle(ref, () => ({
     saveData() {
       console.log('saveData');
-      console.log('##formValid =>', onFormValid());
-      console.log('##getValues => ', getValues);
       const form = formRef.current;
       if (form) {
         form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
@@ -508,12 +592,11 @@ const InstructorRegistComponent = (props: any, ref: any) => {
         console.log('##info =>', info);
         if (info) {
           const data = {
+            userUuid: '',
             isView: EnFormMode.VIEW,
             ...info,
             isFulltimeInstructor: info.isFulltimeInstructor ? 2 : 1,
             dateRange: { from: new Date(info.startDate), to: new Date(info.endDate) },
-            // carreerFileGroupUuid: '', // TODO: Swagger에 string타입으로 확인필요
-            carreerFileGroupUuid: [],
             password: '',
             passwordConfirm: '',
           };
@@ -527,8 +610,8 @@ const InstructorRegistComponent = (props: any, ref: any) => {
         ...getValues(),
         isView: EnFormMode.ADD,
         employeeIdOrEmail: '',
+        carreerFileGroupUuid: '',
       };
-      console.log('### add:', data);
       updateFormData(data);
     }
   }, []);
@@ -578,6 +661,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
                   employeeIdOrEmail: data.email,
                   telNo: data.phoneNumber,
                   birthday: data.birthday,
+                  userUuid: data.uuid,
                 })}
                 modalConfig={{
                   title: '',
@@ -600,7 +684,17 @@ const InstructorRegistComponent = (props: any, ref: any) => {
             name="employeeIdOrEmail"
             element={<Input disabled={true} />}
           />
-          <FormRow provider={provider} name="telNo" />
+          <FormRow
+            provider={provider}
+            name="telNo"
+            element={
+              <PhoneNumberFormField
+                phoneNumberConfig={{
+                  options: [{ value: 'KOR_82', label: '+82' }],
+                }}
+              />
+            }
+          />
           <FormRow provider={provider} name="nationCd" element={<Input disabled={true} />} />
         </ContentsRow>
         <ContentsRow>
@@ -641,7 +735,17 @@ const InstructorRegistComponent = (props: any, ref: any) => {
           <FormRow provider={provider} name="passwordConfirm" element={<Input type="password" />} />
         </ContentsRow>
         <ContentsRow>
-          <FormRow provider={provider} name="telNo" />
+          <FormRow
+            provider={provider}
+            name="telNo"
+            element={
+              <PhoneNumberFormField
+                phoneNumberConfig={{
+                  options: [{ value: 'KOR_82', label: '+82' }],
+                }}
+              />
+            }
+          />
           <FormRow provider={provider} name="nationCd" element={<Input />} />
           <FormRow provider={provider} name="birthday" element={<DatePicker displayType="day" />} />
         </ContentsRow>

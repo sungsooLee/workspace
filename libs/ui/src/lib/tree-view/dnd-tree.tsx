@@ -34,6 +34,8 @@ export const DndTreeView: React.FC<TreeProps> = ({
   moveIcon,
   isLoading = false,
   skeletonNodeCount = 5,
+  emptyMessage = '노드를 추가해주세요.',
+  disableOptimisticUpdate = true,
 }) => {
   const [internalSelectedNode, setInternalSelectedNode] = useState<TreeNode | null>(null);
   const [internalExpandedKeys, setInternalExpandedKeys] = useState<string[]>(initExpandedKeys);
@@ -53,6 +55,7 @@ export const DndTreeView: React.FC<TreeProps> = ({
     isSearching,
     searchKeyword,
     onAction,
+    disableOptimisticUpdate, // 클라이언트 트리에서는 낙관적 업데이트 사용.
   );
 
   // 전역 드래그 상태 확인
@@ -148,7 +151,7 @@ export const DndTreeView: React.FC<TreeProps> = ({
     setInternalSelectedNode(node);
     onSelectedNodeChange?.(node);
     if (onAction && node) {
-      onAction({ type: 'NODE_SELECT', node: node } as SelectEventPayload);
+      onAction({ type: 'NODE_SELECT', node } as SelectEventPayload);
     }
   };
 
@@ -217,9 +220,9 @@ export const DndTreeView: React.FC<TreeProps> = ({
             />
           ))
         ) : (
-          <div>
+          <div className="flex w-full justify-center pt-8">
             {!isLoading &&
-              (searchKeyword ? `"${searchKeyword}" 검색 결과가 없습니다` : '노드를 추가해주세요')}
+              (searchKeyword ? `"${searchKeyword}" 검색 결과가 없습니다` : emptyMessage)}
           </div>
         )}
 

@@ -7,7 +7,7 @@ import { Review, ReviewRating } from '../../../../features/layout';
 import styles from './review.module.css';
 
 const CourseReviewCompoment = () => {
-  const itemSwiper = [<Review />, <Review />, <Review />, <Review />, <Review />, <Review />];
+  const itemSwiper = [<Review />, <Review />, <Review />, <Review />];
 
   return (
     <div className={`${styles.start} ${styles.review_wrap}`}>
@@ -30,12 +30,12 @@ const CourseReviewCompoment = () => {
       </div>
       <div className={styles.review_box}>
         <Carousel
+          loop={false}
           items={itemSwiper}
           className={`${styles.review_swiper}`}
           spaceBetween={20}
           slidesPerView={isMobile ? 'auto' : 3}
           showNavigation={isMobile ? false : true}
-          loop={false}
         />
       </div>
     </div>

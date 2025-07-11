@@ -438,6 +438,15 @@ export const munu = [
     memo: '작업 중',
     end: false,
   },
+  {
+    screenName: '강사/튜터 관리',
+    pageId: 'platform/instructor/management',
+    screenId: 'NLP_BO_LMS_0027',
+    pageType: 'Page',
+    completionDate: '2025-07-11',
+    memo: '작업 완료',
+    end: true,
+  },
 ];
 
 export const guide = [

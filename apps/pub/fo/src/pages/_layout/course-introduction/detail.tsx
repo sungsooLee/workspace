@@ -107,12 +107,16 @@ function RouteComponent() {
     },
   ];
 
-  // 공통 컴포넌트 수정 요청중 (수정예정)
-  // toast popup
+  // toast popup (공통)
   const { open: openToast } = useToast();
-  const handleClickToast = () => {
+  const handleSubscribeToast = () => {
     openToast({
-      title: '채널을 구독하였습니다',
+      title: '채널을 구독하였습니다.',
+      // actionLabel: '버튼',
+      type: 'success',
+      // onActionClick: () => {
+      //   console.log('버튼 클릭');
+      // },
     });
   };
 
@@ -412,7 +416,6 @@ function RouteComponent() {
                   <IcoEye width={16} height={16} stroke="#0056ff" />
                   <span>77,500</span>
                 </div>
-                /
               </div>
               {/* 구독 */}
               <div className={packageInformationStyles.subscribe_box}>
@@ -424,7 +427,7 @@ function RouteComponent() {
                   className={packageInformationStyles.btn_subscribe}
                   variant="primary"
                   size="xl"
-                  onClick={() => handleClickToast()}
+                  onClick={() => handleSubscribeToast()}
                 >
                   구독하기
                 </Button>

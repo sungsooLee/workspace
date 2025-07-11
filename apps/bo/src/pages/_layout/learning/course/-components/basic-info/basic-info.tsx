@@ -131,7 +131,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
                 transformModalData={(modalData: any[]) => {
                   return modalData?.map((d: any) => ({
                     categoryId: d.id,
-                    categoryPath: d.path,
+                    categoryPath: d.fullPath,
                   }));
                 }}
                 list={{
