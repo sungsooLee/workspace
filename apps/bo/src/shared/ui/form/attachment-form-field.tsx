@@ -13,8 +13,9 @@ import { compact, difference, map } from 'lodash';
  * AttachmentFormField 컴포넌트의 props 인터페이스
  * 폼 필드로서 Attachment 컴포넌트를 래핑하여 폼 시스템과 통합합니다.
  */
-interface AttachmentFormFieldProps extends BaseFormFieldProps<string[]> {
+interface AttachmentFormFieldProps extends BaseFormFieldProps<string[] | string | undefined> {
   uploadConfig: S3UploaderConfig;
+  uuidType: 'files' | 'group';
 }
 
 /**
@@ -35,6 +36,7 @@ const AttachmentFormFieldComponent = forwardRef<
       value,
       onChange,
       type,
+      uuidType = 'files',
       ...props // 나머지 HTMLDivElement 속성들
     },
     ref, // forwardRef로 전달받은 Ref 객체
@@ -43,7 +45,7 @@ const AttachmentFormFieldComponent = forwardRef<
       s3Path,
       affairsType,
       languageCode,
-      groupUuid,
+      groupUuid: _groupUuid,
       groupMode = 'batch',
       auto = true,
       async = true,
@@ -52,29 +54,33 @@ const AttachmentFormFieldComponent = forwardRef<
       maxFileSize = 5 * 1024 * 1024,
     } = uploadConfig;
 
-    const { getFileInfo } = useFileManager();
-    const { stats, files, addFiles, onPause, onRetry, onResume, onRemove, onFetch, inputAccept } =
-      useS3Uploader({
-        s3Path,
-        affairsType,
-        languageCode,
-        groupUuid,
-        groupMode,
-        auto,
-        async,
-        acceptFiles,
-        maxFileCount,
-        maxFileSize,
-      });
+    const { getFileInfo, getGroupInfo } = useFileManager();
+    const {
+      stats,
+      files,
+      addFiles,
+      onPause,
+      onRetry,
+      onResume,
+      onRemove,
+      onFetch,
+      inputAccept,
+      groupUuid,
+      setGroupUuid,
+    } = useS3Uploader({
+      s3Path,
+      affairsType,
+      languageCode,
+      groupUuid: _groupUuid,
+      groupMode,
+      auto,
+      async,
+      acceptFiles,
+      maxFileCount,
+      maxFileSize,
+    });
 
     const [fileUuids, setFileUuids] = useState<string[]>([]);
-
-    /**
-     * `value` 가 변경될 때마다 fileUuids를 set
-     */
-    useEffect(() => {
-      setFileUuids(value);
-    }, [value]); // `value` prop이 변경될 때마다 실행
 
     /**
      * 서버에서 파일정보를 가져와서 files에 추가
@@ -84,10 +90,33 @@ const AttachmentFormFieldComponent = forwardRef<
       onFetch(fileInfos);
     }
 
+    async function fetchGroupInfo(groupUuid: string) {
+      const groupInfo = await getGroupInfo(groupUuid);
+      setGroupUuid(groupUuid);
+      fetchFileInfo(groupInfo.files.map((_) => _.fileUuid));
+    }
+
+    /**
+     * uuidType이 files일 때
+     * value 가 변경될 때마다 fileUuids를 set
+     *
+     * uuidType이 group일 때
+     * value 가 변경될 때마다 group 데이터를 fetch함
+     */
+    useEffect(() => {
+      if (uuidType === 'group') {
+        if (value && value !== groupUuid) fetchGroupInfo(value as string);
+        return;
+      }
+
+      setFileUuids(value as string[]);
+    }, [value]); // `value` prop이 변경될 때마다 실행
+
     /**
      * fileUuid가 변경될 때마다 기존 files와 비교하여 추가된 파일이 있는 경우 서버에서 fetch 실행
      */
     useEffect(() => {
+      if (uuidType === 'group') return;
       const uploadFileUuid = compact(
         map(
           files.filter(({ status }) => ['fetched', 'completed'].includes(status)),
@@ -105,6 +134,7 @@ const AttachmentFormFieldComponent = forwardRef<
      * 변경이 있는 경우 onChange를 실행하여 상위 react-form으로 전달함
      */
     useEffect(() => {
+      if (uuidType === 'group') return;
       const uploadedFileUuid = compact(
         map(
           files.filter(({ status }) => ['fetched', 'completed'].includes(status)),
@@ -117,6 +147,15 @@ const AttachmentFormFieldComponent = forwardRef<
         onChange(uploadedFileUuid);
       }
     }, [files]);
+
+    /**
+     * uuidType이 group일 때 groupUUid 변경시
+     * onChange를 실행하여 상위 react-form으로 전달함
+     */
+    useEffect(() => {
+      if (uuidType !== 'group' || value === groupUuid) return;
+      onChange(groupUuid);
+    }, [groupUuid]);
 
     return (
       <>
