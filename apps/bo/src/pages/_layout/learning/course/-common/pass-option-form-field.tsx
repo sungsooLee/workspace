@@ -1,4 +1,4 @@
-import { forwardRef, useMemo, useState, useCallback } from 'react';
+import { forwardRef, useMemo, useState, useCallback, useEffect } from 'react';
 import { t } from 'i18next';
 import { BaseFormFieldProps } from '@learnway/hooks';
 import { Input } from '@learnway/ui';
@@ -14,6 +14,11 @@ interface PassOptionFormFieldProps extends BaseFormFieldProps<PassCriteriaData> 
 const PassOptionFormFieldComponent = forwardRef<HTMLDivElement, PassOptionFormFieldProps>(
   ({ value, onChange, ...props }, ref) => {
     const [criteria, setCriteria] = useState<PassCriteriaData>(value || {});
+
+    // value prop이 변경될 때마다 criteria 상태 동기화
+    useEffect(() => {
+      setCriteria(value || {});
+    }, [value]);
 
     // 항목별 이수 기준 점수 계산 후 리턴 (총점, 반영 비율, 이수 기준 점수)
     const calcPassCriteriaData = useCallback((d: PassCriteriaData) => {

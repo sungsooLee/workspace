@@ -674,6 +674,7 @@ export interface CourseTarget {
   combiners: Array<{
     combineType: string;
     combineValue: number;
+    combinerPath: string[];
   }>;
 }
 

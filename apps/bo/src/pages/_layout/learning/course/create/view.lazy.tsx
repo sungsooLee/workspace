@@ -144,7 +144,7 @@ function RouteComponent() {
             variant="point"
             size="sm"
             label={'SET'}
-            onClick={() => loadMockData(1)}
+            onClick={() => loadMockData(4)}
           />
           <Button
             type="button"
