@@ -170,7 +170,6 @@ const AttachmentFormFieldComponent = forwardRef<
           wrapSize={'lg'}
           {...props}
         />
-        <input type="hidden" name={name} value={fileUuids} />
       </>
     );
   },
