@@ -714,11 +714,12 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'attachment',
       type: 'attachment',
+      uuidType: 'group',
       uploadConfig: {
         affairsType: 'PMS',
         s3Path: 'upload/temp/attachment',
       },
-      value: [],
+      value: '',
     },
     {
       name: 'singleAttachment',
