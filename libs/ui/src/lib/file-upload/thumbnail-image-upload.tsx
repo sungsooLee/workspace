@@ -6,7 +6,7 @@ import { ThumbnailList } from '../thumbnail/thumbnail-list';
 import { Button } from '../button/button';
 import { Input } from '../input/input';
 import styles from './thumbnail-image-upload.module.css';
-import { IcoUploadCloud } from '@learnway/icons';
+import { IcoLoading, IcoUploadCloud } from '@learnway/icons';
 import {
   formatFileSize,
   S3_PATH,
@@ -21,7 +21,7 @@ export interface ThumbnailImageUploadProps {
   /**
    * 썸네일 이미지 업로드 타입 (이미지 경로 올릴지 결정되는 값)
    */
-  imageStorageType?: 'public' | 'db-manage';
+  // imageStorageType?: 'public' | 'db-manage';
   /**
    * 썸네일 이미지 옵션 배열 (초기값 또는 부모로부터 제어되는 값)
    */
@@ -72,28 +72,30 @@ export interface ThumbnailImageUploadProps {
    * 썸네일 변경 콜백
    */
   onChangeValues: Dispatch<SetStateAction<ThumbnailFileValue>>;
+  showDefault?: boolean;
 }
 
 const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageUploadProps>(
   (
     {
       className,
-      imageStorageType,
+      // imageStorageType,
       // options: ownerOptions = [],
       description,
-      max,
+      max = 1,
       uploadConfig,
       // onItemClick,
       // onChange,
       values,
       onChangeValues,
+      showDefault,
       ...props
     },
     ref,
   ) => {
     // S3 버킷의 기본 경로 TODO: (하드코딩되어 있음, 환경 변수로....)
-    const S3_URL =
-      'http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/';
+    // const S3_URL =
+    //   'http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/';
     // 파일 입력 필드에 접근하기 위한 Ref
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -113,8 +115,8 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
       stats: { status },
       inputAccept = 'image/*',
     } = useS3Uploader({
-      s3Path: S3_PATH['upload/content/image'],
-      affairsType: 'LMS',
+      s3Path: S3_PATH['upload/content/thumbnail'],
+      affairsType: 'CMS',
       ...uploadConfig,
       maxFileCount,
     });
@@ -134,8 +136,8 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
     useEffect(() => {
       if (values.groupUuid !== groupUuid) setGroupUuid(values.groupUuid);
 
-      if ((values.primaryUuid || null) !== checkedFileId)
-        setCheckedFileId(values.primaryUuid || null);
+      if ((values.selectedFileUuid || null) !== checkedFileId)
+        setCheckedFileId(values.selectedFileUuid || null);
     }, [values]);
 
     /**
@@ -180,7 +182,9 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
     }, [thumbnailFiles]);
 
     const disabled = useMemo(
-      () => maxFileCount === (values.files || []).length,
+      () =>
+        maxFileCount <=
+        (values.files?.filter((file) => !file.originalFileName.startsWith('sys-')) || []).length,
       [values.files, maxFileCount],
     );
 
@@ -308,7 +312,7 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
               onClick={handleButtonClick}
               direction={'column'}
             >
-              <span className={styles.text}>썸네일 업로드</span>
+              <span className={styles.text}>{'썸네일 업로드'}</span>
             </Button>
             <Input
               type="file"
@@ -321,8 +325,18 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
             />
           </div>
 
+          {values.isLoading && (
+            <div className={styles.loading}>
+              <span className={styles.text}>
+                <IcoLoading width={24} height={24} stroke="#747d91" className={styles.icon} />
+                {'동영상 추출중'}
+              </span>
+            </div>
+          )}
+
           {/*썸네일 리스트*/}
           <ThumbnailList
+            showDefault={showDefault}
             files={values.files || []}
             checked={checkedFileId}
             onChecked={setCheckedFileId}

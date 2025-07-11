@@ -31,6 +31,12 @@ export default defineConfig(({ mode }) => {
           secure: false,
           rewrite: (path) => path.replace(/^\/juso-api/, ''),
         },
+        '/upload': {
+          target:
+            'http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com',
+          changeOrigin: true,
+          secure: false,
+        },
       },
     },
     // optimizeDeps: {

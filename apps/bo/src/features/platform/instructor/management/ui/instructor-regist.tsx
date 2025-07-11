@@ -500,7 +500,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
             isView: EnFormMode.VIEW,
             ...info,
             isFulltimeInstructor: info.isFulltimeInstructor ? 2 : 1,
-            dateRange: { from: info.startDate, to: info.endDate },
+            dateRange: { from: new Date(info.startDate), to: new Date(info.endDate) },
             // carreerFileGroupUuid: '', // TODO: Swagger에 string타입으로 확인필요
             carreerFileGroupUuid: [],
             password: '',

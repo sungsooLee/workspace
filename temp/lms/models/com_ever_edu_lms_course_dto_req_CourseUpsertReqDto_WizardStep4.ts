@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { com_ever_edu_lms_course_dto_CourseCommunityDto_WizardStep4 } from './com_ever_edu_lms_course_dto_CourseCommunityDto_WizardStep4';
 export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4 = {
     /**
      * 과정 생성/수정 마법사 타입 (lms.course.WizardStep)
@@ -140,21 +141,9 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4 = {
      */
     isCommunicationToolEnabled: boolean;
     /**
-     * 공지사항 기능 사용 여부
+     * 커뮤니티[공지/자료실/커뮤니티/공유] 설정 내용
      */
-    isNoticeEnabled: boolean;
-    /**
-     * Q&A 기능 사용 여부
-     */
-    isQnaBoardEnabled: boolean;
-    /**
-     * 자료실 기능 사용 여부
-     */
-    isMartialBoardEnabled: boolean;
-    /**
-     * 커뮤니티 기능 사용 여부
-     */
-    isCommunityEnabled: boolean;
+    communityList?: Array<com_ever_edu_lms_course_dto_CourseCommunityDto_WizardStep4>;
     /**
      * 과정을 학습자가 공유할 수 있는지?
      */
@@ -219,6 +208,10 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4 = {
      * 고용보험 환급비(원)
      */
     employmentInsuranceRefund?: number;
+    /**
+     * 숙박 여부
+     */
+    isStayed?: boolean;
     /**
      * 오토에버 위탁 전용 설정 여부
      */

@@ -4,6 +4,8 @@
 /* eslint-disable */
 import type { com_ever_edu_pms_company_dto_res_CompanyDeptResDto } from './com_ever_edu_pms_company_dto_res_CompanyDeptResDto';
 import type { com_ever_edu_pms_company_dto_res_CompanyResDto } from './com_ever_edu_pms_company_dto_res_CompanyResDto';
+import type { com_ever_edu_pms_user_dto_res_UserResDto$UserRoleDto } from './com_ever_edu_pms_user_dto_res_UserResDto$UserRoleDto';
+import type { com_ever_edu_pms_user_dto_res_UserResDto$UserTenantDto } from './com_ever_edu_pms_user_dto_res_UserResDto$UserTenantDto';
 export type com_ever_edu_pms_user_dto_res_UserResDto = {
     /**
      * UUID
@@ -110,6 +112,10 @@ export type com_ever_edu_pms_user_dto_res_UserResDto = {
      */
     passwordChangeDate?: string;
     /**
+     * 비밀번호 만료 일자
+     */
+    passwordExpireDate?: string;
+    /**
      * 입사일자
      */
     joinDate?: string;
@@ -169,6 +175,14 @@ export type com_ever_edu_pms_user_dto_res_UserResDto = {
      * 최근 접속 BO 역할 ID
      */
     lastVisitedBoRoleId?: number;
+    /**
+     * 사용자 테넌트 목록
+     */
+    tenants?: Array<com_ever_edu_pms_user_dto_res_UserResDto$UserTenantDto>;
+    /**
+     * 사용자 역할 목록
+     */
+    roles?: Array<com_ever_edu_pms_user_dto_res_UserResDto$UserRoleDto>;
 };
 export namespace com_ever_edu_pms_user_dto_res_UserResDto {
     /**

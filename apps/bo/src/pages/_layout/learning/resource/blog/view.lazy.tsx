@@ -6,7 +6,7 @@ import { Button, Divider, useModal } from '@learnway/ui';
 import { isEmptyData } from '@learnway/shared';
 import defaultImage from '@assets/images/temp/img_temp_blog_default.png';
 import { MainContents, PageContainer, ContentsButtons, SubContents } from '@shared/ui';
-import { learningResourceQueryOptions } from '@entities/learning-resource';
+import { learningResourceQueryOptions, useDeleteContent } from '@entities/learning-resource';
 import { PreviewLearningWindow } from '@features/learning-resource/learning-resource-management/ui/preview-learning-window';
 
 import { BlogDetail } from './-components/blog-detail';
@@ -55,6 +55,13 @@ function RouteComponent() {
     }
   };
 
+  const { delete: deleteBlogContent } = useDeleteContent({
+    onSuccess: (result: any) => {
+      console.log('delete success', result);
+      return router.navigate({ to: '/learning/learning-resource', replace: true });
+    },
+  });
+
   const handleClickDeleteButton = async () => {
     console.log('mappingData', mappingData);
 
@@ -71,15 +78,13 @@ function RouteComponent() {
         });
         return;
       } else {
-        // delete
+        deleteBlogContent(data?.contentUuid as string);
       }
   };
 
   const handleClickSubmitButton = (e: MouseEvent<HTMLButtonElement>) => {
-    const submitEvent = new Event('submit', { bubbles: true, cancelable: true });
-
     if (formRef.current) {
-      formRef.current?.dispatchEvent(submitEvent);
+      formRef.current?.requestSubmit();
     }
   };
 

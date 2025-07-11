@@ -10,14 +10,14 @@ export type com_ever_edu_pms_user_dto_req_ChangePhoneNumberReqDto = {
     /**
      * 생년월일
      */
-    birthday?: string;
+    birthday: string;
     /**
      * 기존 휴대전화 번호
      */
-    currentPhoneNumber?: string;
+    currentPhoneNumber: string;
     /**
      * 변경할 휴대전화 번호
      */
-    newPhoneNumber?: string;
+    newPhoneNumber: string;
 };
 

@@ -26,8 +26,8 @@ export type com_ever_edu_pms_user_dto_res_UserGroupTargetDto = {
     employeeNumber?: string;
     userUuid?: string;
     userName?: string;
-    status?: string;
-    accountStatus?: string;
+    userStatus?: com_ever_edu_pms_user_dto_res_UserGroupTargetDto.userStatus;
+    accountStatus?: com_ever_edu_pms_user_dto_res_UserGroupTargetDto.accountStatus;
 };
 export namespace com_ever_edu_pms_user_dto_res_UserGroupTargetDto {
     /**
@@ -40,6 +40,15 @@ export namespace com_ever_edu_pms_user_dto_res_UserGroupTargetDto {
         JOB_TITLE = 'JOB_TITLE',
         JOB_POSITION = 'JOB_POSITION',
         CUSTOM_GROUP = 'CUSTOM_GROUP',
+    }
+    export enum userStatus {
+        ACTIVE = 'ACTIVE',
+        SUSPENDED = 'SUSPENDED',
+        LEAVE = 'LEAVE',
+    }
+    export enum accountStatus {
+        NORMAL = 'NORMAL',
+        LOCK = 'LOCK',
     }
 }
 

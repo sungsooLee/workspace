@@ -10,14 +10,14 @@ export type com_ever_edu_pms_user_dto_req_ChangeEmailReqDto = {
     /**
      * 생년월일
      */
-    birthday?: string;
+    birthday: string;
     /**
      * 기존 Email
      */
-    currentEmail?: string;
+    currentEmail: string;
     /**
      * 변경할 Email
      */
-    newEmail?: string;
+    newEmail: string;
 };
 

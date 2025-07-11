@@ -28,8 +28,8 @@ const PreviewImageModalComponent = ({ imageUrl }: Props) => {
   const isMin = step <= min;
   const isMax = step >= max;
   return (
-    <div className="flex h-screen w-screen items-start justify-center overflow-y-auto overflow-x-hidden">
-      <img className="block h-auto w-full" src={imageUrls[step]} alt="" />
+    <div className="bg-background flex h-screen w-screen flex-col items-start justify-center overflow-y-auto overflow-x-hidden">
+      <img className="block" src={imageUrls[step]} alt="" />
       {isMultiImage && (
         <>
           <Button

@@ -290,7 +290,6 @@ function RouteComponent() {
 
   const save = async (params: {
     tenantId: string;
-    tenantName: string;
     channelUuid: string;
     languageCountryCode: string;
     fileUuid: string;

@@ -656,7 +656,7 @@ export class BoService {
      * @returns number OK
      * @throws ApiError
      */
-    public static delete4(
+    public static delete5(
         requestBody: com_ever_edu_lms_badge_dto_req_BadgeUpdateReqDto,
     ): CancelablePromise<number> {
         return __request(OpenAPI, {
@@ -1016,6 +1016,31 @@ export class BoService {
         });
     }
     /**
+     * 과정 복사
+     * 과정을 복사한다. 현지화 대비용 json 으로 채널정보나 담당자를 별도로 받을 지도 모르겠다.
+     * @param courseId
+     * @returns number OK
+     * @throws ApiError
+     */
+    public static copy1(
+        courseId: number,
+    ): CancelablePromise<number> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/course/{courseId}/copy',
+            path: {
+                'courseId': courseId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
      * 과정 생성 마법사3-대표커리큘럼 신규/복사 등록
      * 과정 개설 > 3. 커리큘럼 설정 > 대표 커리큘럼 신규등록
      * @param courseId
@@ -1122,12 +1147,12 @@ export class BoService {
      * 블랙/화이트 목록을 mapping한다.
      * 블랙/화이트 목록을 mapping한다.
      * @param requestBody
-     * @returns number OK
+     * @returns any OK
      * @throws ApiError
      */
     public static mapping(
         requestBody: com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteMappingReqDto,
-    ): CancelablePromise<number> {
+    ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/admin/api/v1/black-and-white/mapping',
@@ -1440,6 +1465,35 @@ export class BoService {
         });
     }
     /**
+     * 외부강사 이메일로 정보 조회
+     * 외부강사 이메일로 정보 조회(같은 테넌트, 같은 이메일은 등록 불가)
+     * @param tenantId
+     * @param email
+     * @returns com_ever_edu_lms_instructor_dto_res_InstructorResDto OK
+     * @throws ApiError
+     */
+    public static getByEmail(
+        tenantId: number,
+        email: string,
+    ): CancelablePromise<com_ever_edu_lms_instructor_dto_res_InstructorResDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/instructor/email',
+            query: {
+                'tenantId': tenantId,
+                'email': email,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
      * 과정 목록 조회
      * 과정 목록을 조회한다.
      * @param pageable
@@ -1469,7 +1523,7 @@ export class BoService {
     }
     /**
      * 과정 조회 (팝업)
-     * 과정 조회 팝업
+     * 과정,사전과정,연관과정 조회 팝업
      * @param pageable
      * @param params
      * @returns org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_CoursePopSearchResDto OK
@@ -1527,7 +1581,7 @@ export class BoService {
      * @returns any OK
      * @throws ApiError
      */
-    public static findByUuid(
+    public static delete3(
         courseId: number,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -1775,7 +1829,7 @@ export class BoService {
      * @returns any OK
      * @throws ApiError
      */
-    public static delete3(
+    public static delete4(
         categoryId: number,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -1800,7 +1854,7 @@ export class BoService {
      * @returns number OK
      * @throws ApiError
      */
-    public static delete5(
+    public static delete6(
         badgeGroupId: number,
     ): CancelablePromise<number> {
         return __request(OpenAPI, {

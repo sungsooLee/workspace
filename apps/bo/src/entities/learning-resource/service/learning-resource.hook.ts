@@ -1,7 +1,11 @@
-import { LEARNING_TYPE } from '@learnway/config';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { learningResourceQueryOptions, mutateOptions } from './learning-resource.queries';
-import { BlogCreateReq, BlogUpdateReq, PostDraftVideosParams } from '@types';
+import {
+  BlogCreateReq,
+  BlogUpdateReq,
+  PostDraftHtmlVideoParams,
+  PostDraftVideosParams,
+} from '@types';
 
 export function usePostDraftVideos(options?: any) {
   const mutation = useMutation({
@@ -14,6 +18,17 @@ export function usePostDraftVideos(options?: any) {
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
     data: mutation.data,
+  };
+}
+
+export function usePostDraftHTMLVideo(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.postDraftHTML5(),
+    ...options,
+  });
+
+  return {
+    upload: (payload: PostDraftHtmlVideoParams) => mutation.mutate(payload as any),
   };
 }
 

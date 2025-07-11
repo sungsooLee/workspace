@@ -1,11 +1,11 @@
 import {
+  ContentAddInfoType,
   ContentCreateType,
+  ContentStatusCode,
+  ContentType,
   FileStatus,
   FileType,
   ProcessingStatus,
-  ContentStatusCode,
-  ContentType,
-  ContentAddInfoType,
 } from './enum';
 
 export interface BlogCreateReq {
@@ -78,6 +78,13 @@ export interface PostDraftVideosParams {
   fileUuids: string[];
 }
 
+export interface PostDraftHtmlVideoParams {
+  tenantId: string;
+  channelUuid: string;
+  languageCountryCode: string;
+  fileUuid: string;
+}
+
 export interface Tag {
   tagId: string;
   tagName: string;
@@ -128,6 +135,12 @@ export interface ContentInformation {
   tags: string[] | Tag[]; //	태그 리스트[...]
   aiSummary?: string; //	학습자원 개요 (AI자동추출)[...]
   aiKeyword?: string; //	키워드 (AI자동추출)[...]
+  children: any[];
+  resource?: {
+    resourceId: number;
+    startFile: string;
+    startFileUrl: string;
+  };
 }
 
 export type GetContentDetailRes = ContentInformation;
@@ -142,6 +155,15 @@ export interface PostDraftVideosRes {
     processingStatus: ProcessingStatus;
     isDrafted: boolean;
   }[];
+}
+
+export interface PostDraftHtmlVideoRes {
+  contentUuid: string;
+  fileUuid: string;
+  contentType: FileType;
+  contentStatusCode: FileStatus;
+  processingStatus: ProcessingStatus;
+  isDrafted: boolean;
 }
 
 export type MappedCourseItem = {

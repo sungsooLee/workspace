@@ -40,7 +40,6 @@ export interface UsersByIdsParam {
 
 export interface BlackwhiteUsersParam {
   groups?: CombineUserGroup[];
-  userGroupType?: UserGroupType;
   companyId?: string;
   companyCode?: string;
   deptName?: string;
@@ -57,10 +56,9 @@ type Combiner = {
 };
 
 export type CombineUserGroup = {
-  key: string; // fe
-  keys?: string[]; // fe
-  id?: number; // fe
-  ids?: number[]; // fe
-  fullName: string; // fe
+  // key: string; // fe
+  // keys?: string[]; // fe
+  // id?: number; // fe
+  // ids?: number[]; // fe
   combiners: Combiner[];
 };

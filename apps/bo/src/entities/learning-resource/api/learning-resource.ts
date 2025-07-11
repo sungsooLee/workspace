@@ -7,6 +7,7 @@ import {
   BlogWatchLogReq,
   CourseMappingStatusRes,
   GetContentDetailRes,
+  PostDraftHtmlVideoParams,
   PostDraftVideosParams,
   PostDraftVideosRes,
 } from '@types';
@@ -112,14 +113,8 @@ export default class LearningResourceService {
   }
 
   // 단건 HTML5 임시 컨텐츠 생성
-  static createHTML5Draft(params: {
-    tenantId: string;
-    tenantName: string;
-    channelUuid: string;
-    languageCountryCode: string;
-    fileUuid: string;
-  }) {
-    return httpService.post(`${CMSApiPrefix()}/html5/draft`, params);
+  static createHTML5Draft(body: PostDraftHtmlVideoParams) {
+    return httpService.post(`${CMSApiPrefix()}/html5/draft`, body);
   }
   // HTML5 동영상 콘텐츠 관리
   static updateHTML5FileChange(body: { contentUuid: string; fileUuid: string }): Promise<any> {
@@ -156,10 +151,5 @@ export default class LearningResourceService {
   // 단건 블로그 컨텐츠 수정
   static updateBlogContent(body: BlogUpdateReq) {
     return httpService.put(`${CMSApiPrefix()}/blog/update`, body);
-  }
-
-  // 블로그 사용/조회 이력 저장
-  static saveBlogWatchLog(body: BlogWatchLogReq) {
-    return httpService.post(`${CMSApiPrefix()}/blog/watch-log`, body);
   }
 }
