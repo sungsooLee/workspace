@@ -96,6 +96,7 @@ export { ReactComponent as IcoHtml } from './lib/ic_html.svg'; // html
 export { ReactComponent as IcoEtc } from './lib/ic_etc.svg'; // html
 export { ReactComponent as IcoUser01 } from './lib/ic_user_01.svg'; // user
 export { ReactComponent as IcoSpinner } from './lib/ic_spinner.svg'; // spinner
+export { ReactComponent as IcoSpinnerBlue } from './lib/ic_spinner_blue.svg'; // spinner blue
 export { ReactComponent as IcoSucess } from './lib/ic_sucess.svg'; // sucess
 export { ReactComponent as IcoArray } from './lib/ic_array.svg'; // array
 export { ReactComponent as IcoPlay } from './lib/ic_play.svg'; // play
