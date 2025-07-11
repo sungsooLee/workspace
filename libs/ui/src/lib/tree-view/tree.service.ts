@@ -516,15 +516,26 @@ export const throttle = <T extends (...args: any[]) => any>(
  */
 export const convertApiDataToTreeNodes = (
   apiData: any[] | any,
-  titleKey = 'name',
-  idKey = 'id',
-  pathKey = 'path',
-  childrenKey = 'children',
-  pathJoinText = '>',
+  options?: {
+    titleKey?: string;
+    idKey?: string;
+    pathKey?: string;
+    childrenKey?: string;
+    pathJoinText?: string;
+  },
 ): TreeNode[] => {
   if (!apiData) {
     return [];
   }
+
+  const {
+    titleKey = 'name',
+    idKey = 'id',
+    pathKey = 'path',
+    childrenKey = 'children',
+    pathJoinText = '>',
+  } = options || {};
+
   // 입력값이 단일 객체일 경우 배열로 감싸서 일관성 있게 처리
   const dataArray = Array.isArray(apiData) ? apiData : [apiData];
 

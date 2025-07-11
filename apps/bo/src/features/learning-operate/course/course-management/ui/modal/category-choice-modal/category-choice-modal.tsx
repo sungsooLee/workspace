@@ -31,7 +31,7 @@ const CategoryChoiceModalComponent = forwardRef<HTMLDivElement, CategoryChoiceMo
     const { t } = useTranslation();
     const { close: closeModal } = useModal();
     const { data } = useFetchTenantCategoryTreePopup(tenantIds);
-    const treeData = convertApiDataToTreeNodes(data);
+    const treeData = convertApiDataToTreeNodes(data, { pathKey: 'categoryPath' });
     const { selectedItems, handleSelectItem, cancelSelectItem, cancelAll } =
       useShuttleTreeToChips();
 
@@ -46,7 +46,7 @@ const CategoryChoiceModalComponent = forwardRef<HTMLDivElement, CategoryChoiceMo
               sourceTitle="공통 카테고리 선택"
               targetTitle="선택 카테고리 목록"
               treeData={treeData}
-              renderText={(node: any) => node.fullName}
+              renderText={(node: any) => node.path}
               selectedItems={selectedItems}
               handleSelectItem={handleSelectItem}
               cancelSelectItem={cancelSelectItem}

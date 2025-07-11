@@ -130,12 +130,11 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
                 transformModalData={(modalData: any[]) => {
                   return modalData?.map((d: any) => ({
                     categoryId: d.id,
-                    path: d.path,
-                    name: d.name,
+                    categoryPath: d.path,
                   }));
                 }}
                 list={{
-                  labelField: 'path',
+                  labelField: 'categoryPath',
                   valueField: 'categoryId',
                 }}
                 actionNode={<Button variant="text" size="sm" label={t('추가')} />}
@@ -396,17 +395,17 @@ const responseDataToFormData = (d: Course): Course => {
       name: d?.combiners?.[0]?.combineValue,
     })),
     // 카테고리 팝업 에러나서 임시 설정
-    categories: [
-      {
-        categoryId: 11,
-        name: '1-1',
-        categoryCode: 'category11',
-        categoryContent: '',
-        categoryPath: 'ROOT>한글명-CATE00011>1-1',
-        isPrimary: false,
-        tenantIds: [2],
-      },
-    ],
+    // categories: [
+    //   {
+    //     categoryId: 11,
+    //     name: '1-1',
+    //     categoryCode: 'category11',
+    //     categoryContent: '',
+    //     categoryPath: 'ROOT>한글명-CATE00011>1-1',
+    //     isPrimary: false,
+    //     tenantIds: [2],
+    //   },
+    // ],
   };
 };
 
