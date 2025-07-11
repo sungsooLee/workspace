@@ -216,7 +216,7 @@ function RouteComponent() {
               element={
                 <ThumbnailListFormField
                   isLoading={true}
-                  selectedFileUuid={selectedThumbnail1}
+                  selected={selectedThumbnail1}
                   onSelected={handleSelected}
                 />
               }
@@ -229,7 +229,7 @@ function RouteComponent() {
               element={
                 <ThumbnailListFormField
                   isLoading={true}
-                  selectedFileUuid={selectedThumbnail2}
+                  selected={selectedThumbnail2}
                   onSelected={handleSelected2}
                 />
               }
