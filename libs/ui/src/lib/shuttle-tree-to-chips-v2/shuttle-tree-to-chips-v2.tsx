@@ -8,17 +8,18 @@ import { Checkbox } from '../checkbox/checkbox';
 import { t } from 'i18next';
 import { FormSubTitle } from '../base-form/form-sub-title';
 import { TreeBox } from '../tree-view/tree-box';
-import { TreeNode } from '../tree-view/type';
+import { TreeData, TreeNode } from '../tree-view/type';
 
 type ShuttleTreeToChipsV2Props = {
-  treeData: TreeNode[];
-  selectedItems: TreeNode[];
-  handleSelectItem: (node: TreeNode) => void;
-  cancelSelectItem: (node: TreeNode) => void;
+  treeData: TreeData[];
+  selectedItems: TreeData[];
+  handleSelectItem: (node: TreeData) => void;
+  cancelSelectItem: (node: TreeData) => void;
   cancelAll: () => void;
   sourceTitle: string;
   targetTitle: string;
-  renderText: (item: TreeNode) => JSX.Element;
+  isShowConditionSettingsMode?: boolean;
+  renderText?: (item: TreeData) => JSX.Element;
 };
 
 export const ShuttleTreeToChipsV2 = ({
@@ -29,21 +30,22 @@ export const ShuttleTreeToChipsV2 = ({
   cancelAll,
   sourceTitle,
   targetTitle,
+  isShowConditionSettingsMode: isShowConditionSettingsModeProp = false,
   renderText,
 }: ShuttleTreeToChipsV2Props) => {
-  const isShowConditionSettingsMode = useMemo(
-    () => selectedItems.filter(({ isCombined }) => !isCombined).length > 1,
-    [selectedItems],
-  );
+  const isShowConditionSettingsMode = useMemo(() => {
+    if (!isShowConditionSettingsModeProp) return false;
+    // return selectedItems.filter(({ isCombined }) => !isCombined).length > 1;
+  }, [selectedItems, isShowConditionSettingsModeProp]);
 
   const treeBoxSelectedItems = useMemo(() => selectedItems.map(({ key }) => key), [selectedItems]);
 
   const [isConditionSettingsMode, setIsConditionSettingsMode] = useState<boolean>(false);
 
-  const isCombinedNodeKeys = useMemo<string[][]>(
-    () => selectedItems.filter(({ isCombined }) => isCombined).map(({ keys }) => keys),
-    [selectedItems],
-  );
+  // const isCombinedNodeKeys = useMemo<string[][]>(
+  //   () => selectedItems.filter(({ isCombined }) => isCombined).map(({ keys }) => keys),
+  //   [selectedItems],
+  // );
 
   const [checkedValues, setCheckedValues] = useState<TreeNode[]>([]);
 
@@ -66,21 +68,21 @@ export const ShuttleTreeToChipsV2 = ({
   };
 
   const applyConditionSetting = () => {
-    if (checkedValues.length > 1) {
-      const newKey = {
-        isCombined: true,
-        ids: checkedValues.map(({ id }) => id),
-        key: checkedValues.map(({ key }) => key).join('&&'),
-        keys: checkedValues.map(({ key }) => key),
-        fullName: checkedValues.map(({ fullName }) => fullName).join(' & '),
-      };
-      handleSelectItem(newKey);
-      checkedValues.forEach((checkedValue) => handleSelectItem(checkedValue));
-    }
-    handleSetIsConditionSettingsMode(false);
+    // if (checkedValues.length > 1) {
+    //   const newKey = {
+    //     isCombined: true,
+    //     // ids: checkedValues.map(({ id }) => id),
+    //     key: checkedValues.map(({ key }) => key).join('&&'),
+    //     // keys: checkedValues.map(({ key }) => key),
+    //     fullPath: checkedValues.map(({ fullPath }) => fullPath).join(' & '),
+    //   };
+    //   handleSelectItem(newKey);
+    //   checkedValues.forEach((checkedValue) => handleSelectItem(checkedValue));
+    // }
+    // handleSetIsConditionSettingsMode(false);
   };
 
-  const handleCancel = (deleteItem: TreeNode) => {
+  const handleCancel = (deleteItem: TreeData) => {
     off(deleteItem);
     cancelSelectItem(deleteItem);
   };
@@ -97,16 +99,16 @@ export const ShuttleTreeToChipsV2 = ({
           selectedNode={null}
           showSearchKeyword={true}
           selectedItems={treeBoxSelectedItems}
-          renderNodeButtons={(node: TreeNode) => {
+          renderNodeButtons={(node) => {
             const isAlreadySelected = selectedItems.some((item) => item.key === node.key);
-            if (node.id !== 0)
+            if (node.title !== 'ROOT')
               return (
                 <Button
                   onClick={(e) => {
                     e.stopPropagation();
-                    handleSelectItem(node);
+                    handleSelectItem(node as TreeData);
                   }}
-                  disabled={isCombinedNodeKeys.some((keys) => keys.includes(node.key))}
+                  // disabled={isCombinedNodeKeys.some((keys) => keys.includes(node.key))}
                   variant={isAlreadySelected ? 'primary' : 'gray2'}
                   size={'ts'}
                   type={'button'}
@@ -171,11 +173,10 @@ export const ShuttleTreeToChipsV2 = ({
                       onCheckedChange={(checked) => {
                         checked ? on(item) : off(item);
                       }}
-                      disabled={item?.isCombined}
+                      // disabled={item?.isCombined}
                     />
                   )}
-                  {renderText(item)}
-                  {/* <HighlightAmpersand text={item[selectedKey]} /> */}
+                  <HighlightAmpersand text={item.fullPath} />
                 </div>
                 <Button className={styles.btn_close}>
                   <IcoXclose
