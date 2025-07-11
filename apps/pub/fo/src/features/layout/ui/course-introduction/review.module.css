@@ -83,7 +83,7 @@
         .review_box {
           @apply mt-[32px];
           .review_swiper {
-            @apply w-full;
+            @apply -mx-[16px] w-[calc(100%+32px)] px-[16px];
             [class*='swiper-slide'] {
               @apply !w-[280px];
             }
