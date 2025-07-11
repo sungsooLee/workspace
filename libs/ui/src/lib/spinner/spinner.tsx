@@ -15,15 +15,12 @@ export interface SpinnerProps {
 
 const SpinnerComponent = forwardRef<HTMLDivElement, SpinnerProps>(
   ({ className, isLoading, showBackdrop, iconType = 'mint' }, ref) => {
+    const SpinnerIcon = iconType === 'mint' ? IcoSpinner : IcoSpinnerBlue;
+
     return (
       <div ref={ref} className={className}>
-        {isLoading &&
-          (iconType === 'mint' ? (
-            <IcoSpinner className={cn(styles.spinner, className, 'nlp--spinner')} />
-          ) : (
-            <IcoSpinnerBlue className={cn(styles.spinner, className, 'nlp--spinner')} />
-          ))}
-        {isLoading && showBackdrop ? <BackDrop /> : ''}
+        {isLoading && <SpinnerIcon className={cn(styles.spinner, className, 'nlp--spinner')} />}
+        {isLoading && showBackdrop && <BackDrop />}
       </div>
     );
   },
