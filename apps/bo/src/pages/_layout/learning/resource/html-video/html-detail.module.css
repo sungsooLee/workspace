@@ -1,0 +1,51 @@
+/* html-detail.module.css */
+.wrap {
+  & > [class*='notice'] {
+    @apply mb-[32px];
+  }
+  .row_wrap {
+    @apply flex w-full flex-wrap justify-between;
+    .main_container {
+      @apply flex-none basis-[calc(100%-337px)] items-stretch;
+    }
+    .sub_container {
+      @apply relative flex-none basis-[305px] items-stretch pl-[32px];
+      [class*='title_wrap'] {
+        @apply mb-0;
+      }
+      &::before {
+        @apply absolute left-0 top-0 h-full w-[1px] bg-[var(--gray4)] content-[''];
+      }
+    }
+  }
+}
+
+.sub_container {
+  & > p.preview {
+    @apply cursor-pointer text-[14px] font-normal text-[var(--gray7)];
+  }
+}
+
+.thumbnail_container {
+  @apply mt-[12px];
+  & > img {
+    @apply max-w-[448px];
+  }
+}
+
+.file_info_container {
+  @apply mt-[4px] w-full;
+  tr {
+    @apply border-b-[1px] border-solid border-[var(--gray4)];
+    > th,
+    > td {
+      @apply py-[10px] text-left text-[14px];
+    }
+    > th {
+      @apply text-[var(--gray9)];
+    }
+    > td {
+      @apply text-[var(--gray8)];
+    }
+  }
+}

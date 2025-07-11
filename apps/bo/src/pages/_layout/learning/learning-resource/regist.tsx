@@ -115,7 +115,7 @@ function RouteComponent() {
       content: (
         <LearningResourceFileUploadModal
           channel={channelInfo}
-          type={LEARNING_TYPE.HTML_VIDEO}
+          type={LEARNING_TYPE.HTML5_VIDEO}
           maxFileCount={1}
         />
       ),
@@ -163,7 +163,7 @@ function RouteComponent() {
         break;
       }
       // HTML 동영상
-      case LEARNING_TYPE.HTML_VIDEO: {
+      case LEARNING_TYPE.HTML5_VIDEO: {
         uploadHTML5();
         // router.navigate({ to: '/learning/resource/html-video/regist', replace: true });
         break;
