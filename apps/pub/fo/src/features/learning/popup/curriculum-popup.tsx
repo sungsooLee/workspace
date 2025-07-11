@@ -4,7 +4,7 @@ import { ModalBody, ModalContainer, ModalTitle, ProgressCheck } from '@learnway/
 import { SidePanel } from '../../../features/learning';
 import { IcoLinkblank } from '@learnway/icons';
 
-import styles from './curriculum-popup.module.css';
+import styles from '@learnway/styles/fo/pages/_learning/side-panel/popup/curriculum-popup.module.css';
 
 interface ChildData {
   panelState: boolean;
