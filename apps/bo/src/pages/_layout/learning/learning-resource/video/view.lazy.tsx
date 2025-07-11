@@ -9,7 +9,7 @@ import {
   ContentsButtons,
   LinkBox,
   SubContents,
-  convertToThumbnailObject,
+  ThumbnailListFormField,
 } from '@shared/ui';
 import { ChannelChoiceModal, ManagerChoiceModal } from '@shared/ui';
 import { DateRangePickerFormField } from '@features/form/ui';
@@ -17,7 +17,6 @@ import {
   CODE_GROUP,
   DynamicFormConfig,
   DynamicFormValues,
-  ThumbnailFileValue,
   useCurrentRoute,
   useDynamicForm,
 } from '@learnway/hooks';
@@ -46,22 +45,12 @@ function RouteComponent() {
     useDynamicForm<typeof formConfig>(formConfig);
 
   useEffect(() => {
-    if (data)
-      onFormChange(
-        convertToThumbnailObject({
-          data,
-          objectName: 'contentThumbnail',
-          groupUuidName: 'contentThumbnailFileGroupUuid',
-          selectedFileUuidName: 'selectedContentThumbnailFileUuid',
-          isLoading: false,
-        }),
-      );
+    if (data) onFormChange(data);
   }, [data]);
 
-  const contentThumbnail: ThumbnailFileValue = watch('contentThumbnail');
-  useEffect(() => {
-    onFormChange({ contentThumbnailFileGroupUuid: contentThumbnail.groupUuid });
-  }, [contentThumbnail]);
+  const selectedContentThumbnailFileUuid = watch('selectedContentThumbnailFileUuid');
+  const handelSelectedThumbnail = (uuid: string) =>
+    onFormChange({ selectedContentThumbnailFileUuid: uuid });
 
   const handleFormSubmit = (data: DynamicFormValues<typeof formConfig>) => {
     console.log(data);
@@ -211,7 +200,17 @@ function RouteComponent() {
           </FormDisplay>
           <ContentsRow>
             {/*썸네일*/}
-            <FormRow provider={provider} name="contentThumbnail" />
+            <FormRow
+              provider={provider}
+              name="contentThumbnailFileGroupUuid"
+              element={
+                <ThumbnailListFormField
+                  isLoading={true}
+                  selected={selectedContentThumbnailFileUuid}
+                  onSelected={handelSelectedThumbnail}
+                />
+              }
+            />
           </ContentsRow>
           <ContentsRow>
             {/*태그*/}
@@ -417,14 +416,15 @@ const formConfig: DynamicFormConfig = {
         number: 'vendorTelNo',
       },
     },
+    { name: 'selectedContentThumbnailFileUuid', type: 'hidden', value: '' },
     {
       label: t('썸네일'),
-      name: 'contentThumbnail',
+      name: 'contentThumbnailFileGroupUuid',
       type: 'thumbnail-list',
-      format: 'object',
+      format: 'string',
       showDefault: true,
       max: 1,
-      value: {},
+      value: '',
     },
     {
       label: t('태그'),

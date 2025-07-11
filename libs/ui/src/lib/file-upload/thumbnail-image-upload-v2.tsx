@@ -1,6 +1,7 @@
+// IA011 / NLP_BO_PMS_1100_05_01
 import { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
 
-import { cn, formatDate, getRandomId } from '@learnway/shared';
+import { cn, formatDate, getRandomId, splitFileName } from '@learnway/shared';
 
 import { ImageOption } from '../thumbnail/type';
 import { ThumbnailList } from '../thumbnail/thumbnail-list';
@@ -8,13 +9,10 @@ import { Button } from '../button/button';
 import { Input } from '../input/input';
 import styles from './thumbnail-image-upload.module.css';
 import { IcoUploadCloud } from '@learnway/icons';
-import { useFileManager } from '@learnway/hooks';
+import { FileInfo, S3_PATH, S3_PATH_TYPE, useFileManager } from '@learnway/hooks';
+import { isEqual } from 'lodash';
 
 export interface ThumbnailImageUploadV2Props {
-  /**
-   * 썸네일 이미지 옵션 배열 (초기값 또는 부모로부터 제어되는 값)
-   */
-  options: Array<ImageOption>;
   /**
    * 컴포넌트에 추가될 CSS 클래스 이름
    */
@@ -27,63 +25,69 @@ export interface ThumbnailImageUploadV2Props {
    * 업로드 및 썸네일 목록 최대갯수
    */
   max?: number;
-  /**
-   * 썸네일 항목 클릭 시 호출되는 콜백 함수
-   * @param option - 클릭된 ImageOption 객체
-   */
-  onItemClick?: (option: ImageOption) => void;
-  /**
-   * 썸네일 목록 전체가 변경될 때 호출되는 콜백 함수 (주로 업로드/삭제 후)
-   * @param options - 변경된 전체 ImageOption 배열
-   */
-  onChange?: (options: ImageOption[]) => void;
-  /**
-   * 이미지 선택 시 호출되는 콜백 함수 (현재 코드에서는 사용되지 않음)
-   * @deprecated 이 prop은 현재 코드에서 사용되지 않습니다.
-   * @param options - 선택된 ImageOption 객체
-   */
-  onImageSelect?: (options: ImageOption) => void;
-  /**
-   * 파일 변경 시 호출되는 콜백 함수 (현재 코드에서는 사용되지 않음)
-   * @deprecated 이 prop은 현재 코드에서 사용되지 않습니다.
-   * @param options - 변경된 ImageOption 객체
-   */
-  onFilesChange?: (options: ImageOption) => void;
-  /**
-   * 썸네일의 체크 상태가 변경될 때 호출되는 콜백 함수
-   * @param options - 체크 상태가 업데이트된 전체 ImageOption 배열
-   */
-  onCheckedChange?: (options: ImageOption[]) => void;
+  s3Path?: S3_PATH_TYPE;
+  value?: string[];
+  onChange?: (value: string[]) => void;
 }
 
 const ThumbnailImageUploadV2Component = forwardRef<HTMLDivElement, ThumbnailImageUploadV2Props>(
   (
     {
       className,
-      options: ownerOptions,
       description,
-      max,
-      onItemClick,
+      max = 0,
+      s3Path = S3_PATH['public/image/thumbnail'],
+      value,
       onChange,
-      onCheckedChange,
       ...props
     },
     ref,
   ) => {
+    const S3_URL =
+      'http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/';
     // 파일 입력 필드에 접근하기 위한 Ref
     const fileInputRef = useRef<HTMLInputElement>(null);
     // 썸네일 목록을 관리하는 내부 상태 (ownerOptions prop으로 초기화 및 동기화)
-    const [thumbnailImageInfoList, setThumbnailImageInfoList] =
-      useState<ImageOption[]>(ownerOptions);
-    const { uploadImageFile, deleteImageFile } = useFileManager();
-    const disabled = useMemo(
-      () => max === thumbnailImageInfoList.length,
-      [thumbnailImageInfoList, max],
-    );
+    const [files, setFiles] = useState<FileInfo[]>([]);
 
-    /**
-     * '업로드' 버튼 클릭 시 숨겨진 파일 선택창을 엽니다.
-     */
+    useEffect(() => {
+      if (!value) return;
+      const newFiles: FileInfo[] = value.map((filePath) => {
+        const pathArr = filePath.split('/');
+        const serverFileName = pathArr.pop() || '';
+        const { base: fileUuid } = splitFileName(serverFileName);
+        const exist = files.find((_) => _.fileUuid === fileUuid);
+        if (exist) return exist;
+        const day = pathArr.pop() || '';
+        const month = pathArr.pop() || '';
+        const year = pathArr.pop() || '';
+        const detailPath = '/' + [year, month, day].join('/');
+        return {
+          fileUuid,
+          filePath,
+          fileUrl: S3_URL + filePath,
+          fileSize: 0,
+          originalFileName: serverFileName,
+          serverFileName,
+          detailPath,
+        };
+      });
+
+      setFiles(newFiles);
+    }, [value]);
+
+    useEffect(() => {
+      const filePaths = files.map((file) => file.filePath);
+      if (isEqual(value, filePaths)) return;
+      onChange?.(filePaths);
+    }, [files]);
+
+    const { uploadImageFile, deleteImageFile } = useFileManager();
+
+    const disabled = useMemo(() => max <= files.length, [files, max]);
+
+    const multiple = useMemo(() => max > 1, [max]);
+
     const handleButtonClick = () => {
       fileInputRef?.current && fileInputRef.current.click();
     };
@@ -101,71 +105,39 @@ const ThumbnailImageUploadV2Component = forwardRef<HTMLDivElement, ThumbnailImag
       }
     };
 
-    const upload = async (files: File[]) => {
-      if (files.length > 0) {
-        const promises = files.map(async (file) => {
+    const upload = async (fileList: File[]) => {
+      if (fileList.length > 0) {
+        const promises: Promise<FileInfo>[] = fileList.map(async (file) => {
           const formData = new FormData();
-          const today = formatDate(new Date(), 'YYYY/MM/DD');
-          const extension = file.name.split('.').pop()?.toLowerCase() || ''; // 파일 확장자 추출
-          const id = getRandomId(); // 각 파일에 고유 ID 생성
+          const fileUuid = getRandomId(); // 각 파일에 고유 ID 생성
+          const detailPath = formatDate(new Date(), '/YYYY/MM/DD');
+          const { ext } = splitFileName(file.name);
+          const serverFileName = ext ? fileUuid + '.' + ext : fileUuid;
           formData.append('multipartFile', file);
           formData.append('reposType', 'S3'); // S3 || HMG
-          formData.append('filePath', `public/image/thumbnail/${today}/${id}.${extension}`); // file Path: 파일경로: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명) ex public/board/thumbnail/2025/06/02/thumbnail.jpg
+          formData.append('filePath', `${s3Path}${detailPath}/${serverFileName}`); // file Path: 파일경로: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명) ex public/board/thumbnail/2025/06/02/thumbnail.jpg
           const thumbnailImageInfo = await uploadImageFile(formData);
           return {
-            id: thumbnailImageInfo.filePath,
-            path: thumbnailImageInfo.imageUrl,
-            size: thumbnailImageInfo.fileSize,
-            displaySize: '40',
-            fileName: thumbnailImageInfo.originalFileName,
-            uploadType: thumbnailImageInfo.reposType,
+            fileUuid,
+            filePath: thumbnailImageInfo.filePath,
+            fileUrl: thumbnailImageInfo.imageUrl,
+            fileSize: thumbnailImageInfo.fileSize,
+            originalFileName: thumbnailImageInfo.originalFileName,
+            serverFileName,
+            detailPath,
           };
         });
-        const array = await Promise.all(promises);
-        setThumbnailImageInfoList((prev) => prev.concat(array));
+        const files = await Promise.all(promises);
+        setFiles((prev) => [...prev, ...files]);
       }
     };
 
-    /**
-     * `ThumbnailList` 컴포넌트의 `onCheckedChange` 콜백을 받아 부모 컴포넌트에 다시 전달합니다.
-     * @param newOptions - 체크 상태가 업데이트된 전체 ImageOption 배열
-     */
-    const handleCheckedThumbnailList = (newOptions: ImageOption[]) => {
-      onCheckedChange?.(newOptions);
-    };
-
-    /**
-     * `ThumbnailList` 컴포넌트의 `onRemoveOptions` 콜백을 받아 부모 컴포넌트에 다시 전달합니다.
-     * @param newOptions - 제거된 후의 전체 ImageOption 배열
-     */
-    const handleRemoveThumbnailList = (newOptions: ImageOption[]) => {
-      onChange?.(newOptions);
-      setThumbnailImageInfoList(newOptions);
-    };
-
     const handleRemove = (uuid: string) => {
-      deleteImageFile(uuid);
+      const deleting = files.find((_) => _.fileUuid === uuid);
+      if (!deleting) return;
+      deleteImageFile(deleting.fileUrl!);
+      setFiles((prev) => prev.filter((_) => _.fileUuid !== uuid));
     };
-
-    /**
-     * `useS3Uploader` 훅의 `thumbnailStats` 상태가 변경될 때마다 실행됩니다.
-     * 특히 파일 업로드가 'completed' 상태가 되면, 업로드된 파일 정보를 썸네일 목록에 추가합니다.
-     */
-    // useEffect(() => {
-    //   if (status === 'completed') {
-    //     const file = thumbnailFiles[0];
-    //     if (file) {
-    //       const newOption = {
-    //         ...file,
-    //         id: file?.id,
-    //         path: S3_PATH + file?.key,
-    //       };
-    //       const newOptions = [...options, newOption];
-    //       setOptions(newOptions);
-    //       onChange?.(newOptions);
-    //     }
-    //   }
-    // }, [status]);
 
     return (
       <div
@@ -188,12 +160,15 @@ const ThumbnailImageUploadV2Component = forwardRef<HTMLDivElement, ThumbnailImag
             <Input
               type="file"
               ref={fileInputRef}
+              multiple={multiple}
               disabled={disabled}
               className={styles.input_file}
               onChange={handleFilesChange}
+              accept="image/*"
             />
           </div>
           {/* 썸네일 리스트 */}
+          <ThumbnailList files={files || []} showCheckbox={false} onRemove={handleRemove} />
         </div>
         {/*설명*/}
         <p className={styles.description}>{description}</p>

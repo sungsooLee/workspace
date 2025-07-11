@@ -49,11 +49,11 @@ export interface ThumbnailListComponentProps
   /**
    * checked된 파일 id
    */
-  checked: string | null;
+  checked?: string | null;
   /**
    * 썸네일 목록을 클릭하면 파일 id를 전달하는 콜백 함수
    */
-  onChecked: (uuid: string | null) => void;
+  onChecked?: (uuid: string | null) => void;
   showDefault?: boolean;
 }
 
@@ -98,9 +98,9 @@ const ThumbnailListComponent = forwardRef<HTMLDivElement, ThumbnailListComponent
      * @param checkedFile - 체크 상태가 변경된 ImageOption 객체
      */
     const handleCheckChange = (_checked: CheckedState, checkedFile: FileInfo) => {
-      if (!_checked && checked) return onChecked(null);
+      if (!_checked && checked) return onChecked?.(null);
 
-      if (_checked) return onChecked(checkedFile.fileUuid);
+      if (_checked) return onChecked?.(checkedFile.fileUuid);
 
       // 현재 옵션 배열에서 체크 상태가 변경된 썸네일을 업데이트한 새로운 배열 생성
       // const newOptions = options.map((d: ImageOption) => {
@@ -137,7 +137,7 @@ const ThumbnailListComponent = forwardRef<HTMLDivElement, ThumbnailListComponent
       <DefaultThumbnail
         showCheckbox={showCheckbox}
         selected={!checked}
-        onCheckedChange={() => onChecked(null)}
+        onCheckedChange={() => onChecked?.(null)}
       />
     );
 
