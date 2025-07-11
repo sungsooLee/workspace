@@ -77,6 +77,12 @@
               }
             }
           }
+
+          .btn_more {
+            button {
+              @apply flex h-[44px] w-full justify-center;
+            }
+          }
         }
       }
     }
