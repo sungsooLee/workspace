@@ -35,7 +35,7 @@ const CategoryChoiceModalComponent = forwardRef<HTMLDivElement, CategoryChoiceMo
     const { selectedItems, handleSelectItem, cancelSelectItem, cancelAll } =
       useShuttleTreeToChips();
 
-    console.log('Category ChoiceModalComponent', { tenantIds, data });
+    console.log('Category ChoiceModalComponent', { tenantIds, treeData, data });
 
     return (
       <ModalContainer>
@@ -46,8 +46,7 @@ const CategoryChoiceModalComponent = forwardRef<HTMLDivElement, CategoryChoiceMo
               sourceTitle="공통 카테고리 선택"
               targetTitle="선택 카테고리 목록"
               treeData={treeData}
-              // fullNameKey={'name'}
-              renderText={() => <></>}
+              renderText={(node: any) => node.fullName}
               selectedItems={selectedItems}
               handleSelectItem={handleSelectItem}
               cancelSelectItem={cancelSelectItem}

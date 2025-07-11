@@ -127,14 +127,15 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
                   content: <CategoryChoiceModal tenantIds={getValues().tenantIds} />,
                   width: 'lg',
                 })}
-                transformModalData={(data: any[]) => {
-                  return data?.map((d: any) => ({
+                transformModalData={(modalData: any[]) => {
+                  return modalData?.map((d: any) => ({
                     categoryId: d.id,
+                    path: d.path,
                     name: d.name,
                   }));
                 }}
                 list={{
-                  labelField: 'name',
+                  labelField: 'path',
                   valueField: 'categoryId',
                 }}
                 actionNode={<Button variant="text" size="sm" label={t('추가')} />}
@@ -160,8 +161,8 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
                   ),
                 })}
                 chipList={{
-                  labelField: 'fullName',
-                  valueField: 'fullName',
+                  labelField: 'name',
+                  valueField: 'name',
                   wordwrap: true,
                 }}
                 showAddButton

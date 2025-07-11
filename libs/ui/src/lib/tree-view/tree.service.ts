@@ -518,16 +518,17 @@ export const convertApiDataToTreeNodes = (
   apiData: any[] | any,
   titleKey = 'name',
   idKey = 'id',
+  pathKey = 'path',
   childrenKey = 'children',
+  pathJoinText = '>',
 ): TreeNode[] => {
+  if (!apiData) {
+    return [];
+  }
   // 입력값이 단일 객체일 경우 배열로 감싸서 일관성 있게 처리
   const dataArray = Array.isArray(apiData) ? apiData : [apiData];
 
-  const convert = (
-    nodes: any[],
-    parentId?: string,
-    parentTitles: string[] = [],
-  ): TreeNode[] => {
+  const convert = (nodes: any[], parentId?: string, parentTitles: string[] = []): TreeNode[] => {
     // nodes가 배열이 아니거나 비어있으면 빈 배열 반환
     if (!nodes?.length) {
       return [];
@@ -548,7 +549,7 @@ export const convertApiDataToTreeNodes = (
         key,
         title,
         parentId,
-        fullName: fullTitlePath.join(' > '),
+        [pathKey]: fullTitlePath.join(pathJoinText),
       };
 
       const children = node[childrenKey];
