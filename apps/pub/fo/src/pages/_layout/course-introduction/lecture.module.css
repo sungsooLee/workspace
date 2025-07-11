@@ -18,6 +18,9 @@
             @apply mr-[8px];
           }
         }
+        & + .box {
+          @apply mt-[16px] border-none pt-0;
+        }
       }
     }
     .box {
