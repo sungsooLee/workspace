@@ -215,15 +215,20 @@ const ApiTreeComponent: FC<any> = ({ menuScope }) => {
                 : nodeInfo.targetNode?.parentId,
             sortOrder,
             apiScopeCode: menuScope,
+            type: nodeInfo.type,
+            sourceNode: nodeInfo.sourceNode,
+            targetNode: nodeInfo.targetNode,
+            position: nodeInfo.position,
           };
 
           dndProgram(payload, {
             onSuccess: async () => {
-              if (selectedNode?.apiUuid) {
-                await queryClient.invalidateQueries({
-                  queryKey: [...queryKeys.all, selectedNode.apiUuid],
-                });
-              }
+              // 낙관적 업데이트 결과 유지
+            },
+            onError: async () => {
+              await queryClient.invalidateQueries({
+                queryKey: [...queryKeys.all, menuScope],
+              });
             },
           });
         }
@@ -368,6 +373,8 @@ const ApiTreeComponent: FC<any> = ({ menuScope }) => {
             return node && node.level !== 0;
           }}
           isLoading={isLoading}
+          clientTree={true}
+          disableOptimisticUpdate={false} // 클라이언트 트리에서는 낙관적 업데이트 사용
         />
       </TreeContainer>
       <div className={layoutStyles.inner}>

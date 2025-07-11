@@ -21,6 +21,7 @@ import {
   TeacherListModal,
 } from '@features/learning-operate/course/course-management';
 import { PassOptionFormField } from '../../-common/pass-option-form-field';
+import { InstructorListPopup } from '@features/platform/instructor/management/modal/instructor-list-modal';
 
 const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
   ({ onSave, data: { formData, courseConfig } }, ref) => {
@@ -764,7 +765,13 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
               element={
                 <InputModalSelectorFormField
                   modalConfig={{
-                    content: <ChannelListModal />,
+                    content: <InstructorListPopup />,
+                  }}
+                  transformModalData={(modalData: any) => {
+                    return {
+                      tutorId: modalData.instructorId,
+                      tutorName: modalData.instructorName,
+                    };
                   }}
                 />
               }
@@ -779,7 +786,13 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
               element={
                 <InputModalSelectorFormField
                   modalConfig={{
-                    content: <ChannelListModal />,
+                    content: <InstructorListPopup />,
+                  }}
+                  transformModalData={(modalData: any) => {
+                    return {
+                      outsourcingCompanyId: modalData.instructorId,
+                      outsourcingCompanyName: modalData.instructorName,
+                    };
                   }}
                 />
               }

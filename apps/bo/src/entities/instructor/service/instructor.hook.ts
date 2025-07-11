@@ -1,55 +1,87 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import { queryKeys, queryOptions, mutateOptions } from './instructor.queries';
-
+import { queryOptions, mutateOptions as instructorMutateOptions } from './instructor.queries';
+import { roleMutateOptions } from '@entities/role';
 export function useFetchInstructors(param: any) {
   return useQuery(queryOptions.all(param));
 }
 
-export function useCreateInstructor(options: any) {
-  const mutation = useMutation({
-    ...mutateOptions.create(),
+export function useCreateTutor(options: any) {
+  const { mutateAsync, isSuccess, isError, data } = useMutation({
+    ...instructorMutateOptions.createTutor(),
     ...options,
   });
 
   return {
-    create: (payload: any, callback?: any) => {
-      mutation.mutate(payload, callback);
+    create: async (payload: any, callback?: any) => {
+      await mutateAsync(payload, callback);
     },
-    isSuccess: mutation.isSuccess,
-    isError: mutation.isError,
-    data: mutation.data,
+    isSuccess,
+    isError,
+    data,
+  };
+}
+
+export function useCreateUser(options: any) {
+  const { mutateAsync, isSuccess, isError, data } = useMutation({
+    ...roleMutateOptions.modifyUserToRole(),
+    ...options,
+  });
+
+  return {
+    create: async (payload: any, callback?: any) => {
+      await mutateAsync(payload, callback);
+    },
+    isSuccess,
+    isError,
+    data,
+  };
+}
+
+export function useCreateInstructor(options: any) {
+  const { mutateAsync, isSuccess, isError, data } = useMutation({
+    ...instructorMutateOptions.createInstructor(),
+    ...options,
+  });
+
+  return {
+    create: async (payload: any, callback?: any) => {
+      await mutateAsync(payload, callback);
+    },
+    isSuccess,
+    isError,
+    data,
   };
 }
 
 export function useUpdateInstructor(options: any) {
-  const mutation = useMutation({
-    ...mutateOptions.update(),
+  const { mutate, isSuccess, isError, data } = useMutation({
+    ...instructorMutateOptions.updateInstructor(),
     ...options,
   });
 
   return {
     update: (payload: any, callback?: any) => {
-      mutation.mutate(payload, callback);
+      mutate(payload, callback);
     },
-    isSuccess: mutation.isSuccess,
-    isError: mutation.isError,
-    data: mutation.data,
+    isSuccess,
+    isError,
+    data,
   };
 }
 
 export function useDeleteInstructor(options: any) {
-  const mutation = useMutation({
-    ...mutateOptions.delete(),
+  const { mutate, isSuccess, isError, data } = useMutation({
+    ...instructorMutateOptions.deleteInstructor(),
     ...options,
   });
 
   return {
     delete: (payload: any, callback?: any) => {
-      mutation.mutate(payload, callback);
+      mutate(payload, callback);
     },
-    isSuccess: mutation.isSuccess,
-    isError: mutation.isError,
-    data: mutation.data,
+    isSuccess,
+    isError,
+    data,
   };
 }

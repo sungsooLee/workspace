@@ -9,7 +9,7 @@ export interface CourseTabBaseProps {
   /** 유형과 채널 변경 시 호출되는 콜백 함수 */
   onConfigPropChange?: (config: { courseType: string; channelUuid: string }) => void;
   /** 폼 데이터와 과정 설정 정보 */
-  data: { formData: Course; courseConfig: CourseConfig };
+  data: CourseTabData;
 }
 
 /**
@@ -28,4 +28,16 @@ export enum CourseTab {
   STEP3 = 'STEP3',
   STEP4 = 'STEP4',
   STEP5 = 'STEP5',
+}
+
+/**
+ * 탭 컴포넌트에 전달되는 데이터 타입
+ */
+export interface CourseTabData {
+  /** 폼 데이터 (과정 정보) */
+  formData: Course;
+  /** 과정 설정 정보 */
+  courseConfig: CourseConfig;
+  /** 임시 저장 여부 */
+  isSaved: boolean;
 }

@@ -28,7 +28,7 @@ import { useTranslation } from 'react-i18next';
 import { CourseTabBaseProps, TabFormRef } from '../../-common/type';
 
 const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
-  ({ onSave, onConfigPropChange, data: { formData, courseConfig } }, ref) => {
+  ({ onSave, onConfigPropChange, data: { formData, courseConfig, isSaved } }, ref) => {
     const { t } = useTranslation();
 
     const { provider, getValues, updateFormData, onFormValid, formState, watch } =
@@ -37,7 +37,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
     const channelUuid = watch('channelUuid');
     const courseType = watch('courseType');
 
-    console.log('----- basic', { formData, courseConfig, channelUuid, courseType });
+    console.log('----- basic', { formData, courseConfig, channelUuid, courseType, isSaved });
 
     // 부모 컴포넌트에서 호출할 수 있는 유효성 검사 메서드
     useImperativeHandle(ref, () => ({
@@ -88,6 +88,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
             label={'유형'}
             element={
               <DropdownFormField
+                disabled={isSaved}
                 optionsConfig={{
                   codeGroup: CODE_GROUP['lms.course.CourseType'],
                 }}
@@ -99,7 +100,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
             provider={provider}
             name={'channelUuid'}
             label={'채널'}
-            element={<TenantChannelDropdownFormField2 tenantId={-1} />}
+            element={<TenantChannelDropdownFormField2 disabled={isSaved} tenantId={-1} />}
           />
         </ContentsRow>
 
@@ -388,8 +389,8 @@ const responseDataToFormData = (d: Course): Course => {
   return {
     ...d,
     // primaryCategoryId: 1, // 서버에서 받으면 삭제
-    // categoryIds: d?.categories?.map((d: any) => d.categoryId), // 카테고리 아이디
-    // tenantIds: d?.tenantList?.map((d: any) => d.tenantId), // 테넌트 아이디
+    categoryIds: d?.categories?.map((d: any) => d.categoryId), // 카테고리 아이디
+    tenantIds: d?.tenantList?.map((d: any) => d.tenantId), // 테넌트 아이디
     targetList: d?.targetList?.map((d: any) => ({
       ...d,
       name: d?.combiners?.[0]?.combineValue,
