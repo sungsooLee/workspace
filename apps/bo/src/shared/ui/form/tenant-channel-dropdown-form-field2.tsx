@@ -19,16 +19,16 @@ const TenantChannelDropdownFormField2Component = forwardRef<
 
   // 채널조회 데이터
   const options = useMemo(() => {
-    if (!channel?.content) return [];
+    if (!channel) return [];
     if (tenantId === -1) {
       // tenantId가 -1이면 필터 없이 전체 반환
-      return channel.content.map(({ channelName, channelUuid }) => ({
+      return channel.map(({ channelName, channelUuid }) => ({
         label: channelName,
         value: channelUuid,
       }));
     }
     // tenantId가 있으면 필터 적용
-    return channel.content
+    return channel
       .filter((d) => !!d.tenantList.find((t) => t.tenantId === tenantId))
       .map(({ channelName, channelUuid }) => ({
         label: channelName,

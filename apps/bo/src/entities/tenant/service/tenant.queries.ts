@@ -51,9 +51,9 @@ export const tenantQueryOptions = {
           },
         }
       : getQuerySkipToken<any[]>(),
-  tenantByRoleId: <T = TenantByRoleId>(roleId: number): UseQueryOptions<PaginationResponse<T>> => ({
+  tenantByRoleId: <T = TenantByRoleId[]>(roleId: number): UseQueryOptions<T> => ({
     queryKey: tenantQueryKeys.tenantByRoleId(roleId),
-    queryFn: async (): Promise<PaginationResponse<T>> => TenantService.fetchTenantByRoleId(roleId),
+    queryFn: async (): Promise<T> => TenantService.fetchTenantByRoleId(roleId),
   }),
 };
 

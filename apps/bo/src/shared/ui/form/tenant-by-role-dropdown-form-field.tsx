@@ -14,7 +14,7 @@ const TenantByRoleDropdownFormFieldComponent = forwardRef<
   const { data: tenant } = useFetchTenantByRoleId(data?.activeRole?.roleId as number);
 
   const options = useMemo(() => {
-    return tenant?.content?.map(({ tenantId, tenantName }) => ({
+    return tenant?.map(({ tenantId, tenantName }) => ({
       // 옵션 형식으로 변환
       label: tenantName,
       value: tenantId,
