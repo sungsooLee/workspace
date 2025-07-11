@@ -5,7 +5,6 @@ import styles from './spinner.module.css';
 import React, { forwardRef } from 'react';
 import { cn } from '@learnway/shared';
 
-/* eslint-disable-next-line */
 export interface SpinnerProps {
   isLoading?: boolean;
   className?: string;
