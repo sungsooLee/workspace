@@ -16,7 +16,7 @@ export const Route = createLazyFileRoute('/_layout/learning/course/create/view')
 
 function RouteComponent() {
   const router = useRouter();
-  const { showSaveComplete, showDeleteComplete } = useModal();
+  const { showSaveComplete, showDeleteComplete, deleteConfirm, saveConfirm } = useModal();
 
   // 라우터 state에서 courseId 가져오기
   const { courseId, courseType } = router.state.location.state;
@@ -55,9 +55,11 @@ function RouteComponent() {
 
   const handleSaveClick = async () => {
     try {
-      await saveCurrentTab();
-      await showSaveComplete();
-      moveListPage();
+      if (await saveConfirm()) {
+        await saveCurrentTab();
+        await showSaveComplete();
+        moveListPage();
+      }
     } catch (e) {
       // 에러는 상위에서 처리하거나, 필요시 여기서 처리
       console.error('저장 중 에러:', e);
@@ -66,9 +68,11 @@ function RouteComponent() {
 
   const handleDeleteClick = async () => {
     try {
-      await deleteCourseData(courseId);
-      await showDeleteComplete();
-      moveListPage();
+      if (await deleteConfirm()) {
+        await deleteCourseData(courseId);
+        await showDeleteComplete();
+        moveListPage();
+      }
     } catch (e) {
       // 에러는 상위에서 처리하거나, 필요시 여기서 처리
       console.error('삭제 중 에러:', e);

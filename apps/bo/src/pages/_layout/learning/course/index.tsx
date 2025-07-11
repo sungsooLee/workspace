@@ -265,7 +265,7 @@ const gridConfig = {
       size: 300,
       render: ({ row }: any) => (
         <Link
-          to="/learning_test/course/create/view"
+          to="/learning/course/create/view"
           state={{ courseId: row.original.courseId }}
           className="link"
         >
