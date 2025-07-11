@@ -96,7 +96,6 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
     },
     ref,
   ) => {
-    // S3 버킷의 기본 경로 TODO: (하드코딩되어 있음, 환경 변수로....)
     // const S3_URL =
     //   'http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/';
     // 파일 입력 필드에 접근하기 위한 Ref
@@ -191,7 +190,7 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
     const multiple = useMemo(() => maxFileCount > 1, [maxFileCount]);
 
     /**
-     * '업로드' 버튼 클릭 시 숨겨진 파일 선택창을 엽니다.
+     * '업로드' 버튼 클릭 시 파일 선택창을 엽니다.
      */
     const handleButtonClick = () => {
       fileInputRef?.current && fileInputRef.current.click();

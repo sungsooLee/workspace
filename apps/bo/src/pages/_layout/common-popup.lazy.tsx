@@ -52,6 +52,7 @@ import { EnFormMode } from '@types';
 
 import { useDeployTranslation } from '@entities/translation/service/translation.hook';
 import { PreviewLearningWindow } from '@features/learning-resource/learning-resource-management/ui/preview-learning-window';
+import { ThumbnailListFormFieldV2 } from '@shared/ui/form/thumbnail-list-form-field-v2';
 
 export const Route = createLazyFileRoute('/_layout/common-popup')({
   component: RouteComponent,
@@ -207,6 +208,13 @@ function RouteComponent() {
               variant="primary"
               size="sm"
               onClick={handleDeployKorMenu}
+            />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow
+              provider={provider}
+              name="thumbnailPath"
+              element={<ThumbnailListFormFieldV2 />}
             />
           </ContentsRow>
           <ContentsRow>
@@ -711,6 +719,16 @@ const formConfig: DynamicFormConfig = {
       placeholder: '',
       maxLength: 50,
     },
+    {
+      name: 'thumbnailPath',
+      label: t('썸네일'),
+      type: 'thumnbnail-list',
+      max: 1,
+      value: [],
+      description:
+        '파일 사이즈 000 x 000 / 확장자 JPEG, JPG, PNG, GIF / 업로드 가능 00개 / 파일용량 최대 00 MB',
+    },
+
     { name: 'selectedThumbnail1', type: 'hidden', value: '' },
     {
       name: 'thumbnailGroup',
