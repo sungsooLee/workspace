@@ -147,6 +147,7 @@ export interface TreeProps {
   moveIcon?: boolean; // 셔틀트리에서 사용하는 무브 아이콘 사용 여부
   isLoading?: boolean; // 로딩 상태 표시
   skeletonNodeCount?: number; // 스켈레톤 노드 개수 (기본값: 5)
+  emptyMessage?: string; // 데이터가 없을 때 표시할 메시지
 }
 // 드랍 위치 감지를 위한 타입
 export interface IndicatorPosition {

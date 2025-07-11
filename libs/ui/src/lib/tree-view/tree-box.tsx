@@ -42,6 +42,7 @@ const TreeBoxComponent: React.FC<TreeBoxProps> = ({
   moveIcon,
   isLoading,
   skeletonNodeCount,
+  emptyMessage,
 }) => {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [internalExpandedKeys, setInternalExpandedKeys] = useState<string[]>([]);
@@ -195,6 +196,7 @@ const TreeBoxComponent: React.FC<TreeBoxProps> = ({
           moveIcon={moveIcon}
           isLoading={isLoading}
           skeletonNodeCount={skeletonNodeCount}
+          emptyMessage={emptyMessage}
         />
       </div>
     </div>

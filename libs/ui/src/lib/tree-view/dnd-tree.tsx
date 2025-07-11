@@ -34,6 +34,7 @@ export const DndTreeView: React.FC<TreeProps> = ({
   moveIcon,
   isLoading = false,
   skeletonNodeCount = 5,
+  emptyMessage = '노드를 추가해주세요.',
 }) => {
   const [internalSelectedNode, setInternalSelectedNode] = useState<TreeNode | null>(null);
   const [internalExpandedKeys, setInternalExpandedKeys] = useState<string[]>(initExpandedKeys);
@@ -148,7 +149,7 @@ export const DndTreeView: React.FC<TreeProps> = ({
     setInternalSelectedNode(node);
     onSelectedNodeChange?.(node);
     if (onAction && node) {
-      onAction({ type: 'NODE_SELECT', node: node } as SelectEventPayload);
+      onAction({ type: 'NODE_SELECT', node } as SelectEventPayload);
     }
   };
 
@@ -217,9 +218,9 @@ export const DndTreeView: React.FC<TreeProps> = ({
             />
           ))
         ) : (
-          <div>
+          <div className="flex w-full justify-center pt-8">
             {!isLoading &&
-              (searchKeyword ? `"${searchKeyword}" 검색 결과가 없습니다` : '노드를 추가해주세요')}
+              (searchKeyword ? `"${searchKeyword}" 검색 결과가 없습니다` : emptyMessage)}
           </div>
         )}
 
