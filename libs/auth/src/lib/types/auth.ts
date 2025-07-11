@@ -69,6 +69,7 @@ export interface Tenant {
 export interface Role {
   roleId: number;
   roleName: string;
+  roleType: string;
   tenantId: number;
 }
 

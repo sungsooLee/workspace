@@ -31,7 +31,7 @@ const CompanyShuttleComponent = () => {
   const { close } = useModal();
 
   const queryClient = useQueryClient();
-  const { provider: sProvider } = useSearchBox(searchConfig);
+  const { provider: sProvider } = useSearchBox(searchConfig());
 
   const handleOnSearch = (data: any) => {
     const queryPromise = queryClient.fetchQuery(companyQueryOptions.listPopupAll(data));
@@ -84,7 +84,7 @@ const CompanyShuttleComponent = () => {
 
 export const CompanyShuttleModal = CompanyShuttleComponent;
 
-const searchConfig: SearchBoxConfig = {
+const searchConfig= (): SearchBoxConfig => ({
   builders: [
     [
       {
@@ -117,7 +117,7 @@ const searchConfig: SearchBoxConfig = {
       },
     ],
   ],
-};
+});
 
 const columnHelper = createColumnHelper<any>();
 const columns = [

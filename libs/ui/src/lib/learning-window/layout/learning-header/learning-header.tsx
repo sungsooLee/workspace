@@ -7,7 +7,7 @@ import { cn } from '@learnway/shared';
 
 import styles from '@learnway/styles/fo/pages/_learning/learning-header/learning-header.module.css';
 
-import { useLearningWindow } from '../../learning-window.store';
+import { useLearningWindow } from '../../learnway-learning-window.store';
 import { Button } from '../../../button/button';
 
 function LearningHeaderComponent() {

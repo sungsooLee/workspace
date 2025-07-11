@@ -7,7 +7,7 @@ import {
   ThumbnailFileValue,
   useFileManager,
 } from '@learnway/hooks'; // @learnway/hooks에서 폼 필드 기본 props 타입 import
-import { isArray } from 'lodash';
+import { isArray, isEqual } from 'lodash';
 
 /**
  * ThumbnailImageUploadFormField 컴포넌트의 props 인터페이스
@@ -15,6 +15,7 @@ import { isArray } from 'lodash';
  */
 interface ThumbnailImageUploadFormFieldProps extends BaseFormFieldProps<ThumbnailFileValue> {
   uploadConfig?: S3UploaderConfig;
+  max?: number;
   // imageStorageType?: 'public' | 'db-manage';
   /**
    * 더미 속성 (현재 코드에서 사용되지 않음)
@@ -36,7 +37,7 @@ const ThumbnailImageUploadFormFieldComponent = forwardRef<
 >(
   (
     {
-      imageStorageType = 'public',
+      // imageStorageType = 'public',
       value = {}, // 폼 필드의 현재 값 (string[] 타입, 이미지 경로 배열)
       onChange, // 폼 필드 값이 변경될 때 호출되는 콜백 함수
       uploadConfig,
@@ -54,15 +55,21 @@ const ThumbnailImageUploadFormFieldComponent = forwardRef<
       const groupInfo = await getGroupInfo(groupUuid);
       setValues((prev) => ({
         ...prev,
+        groupUuid,
         files: groupInfo.files,
       }));
     }
 
     useEffect(() => {
-      if (!values.groupUuid) return;
-      if (values.files) return;
-      fetchGroupInfo(values.groupUuid);
-    }, [values.groupUuid]);
+      if (!value.groupUuid) return;
+      if (value.files) return;
+      fetchGroupInfo(value.groupUuid);
+    }, [value.groupUuid]);
+
+    useEffect(() => {
+      if (value.isLoading === values.isLoading) return;
+      setValues((prev) => ({ ...prev, isLoading: value.isLoading }));
+    }, [value.isLoading]);
 
     useEffect(() => {
       onChange(values);
@@ -95,7 +102,7 @@ const ThumbnailImageUploadFormFieldComponent = forwardRef<
     return (
       <ThumbnailImageUpload
         ref={ref} // forwardRef로 받은 Ref를 ThumbnailImageUpload 컴포넌트에 연결
-        imageStorageType={imageStorageType}
+        // imageStorageType={imageStorageType}
         values={values}
         onChangeValues={setValues}
         // options={options} // 내부 상태의 ImageOption[] 배열을 options prop으로 전달

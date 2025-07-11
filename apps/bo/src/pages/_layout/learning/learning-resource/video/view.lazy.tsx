@@ -3,13 +3,21 @@
 import { createLazyFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { Button, ContentsRow, InputModalSelectorFormField } from '@learnway/ui';
-import { PageContainer, MainContents, ContentsButtons, LinkBox, SubContents } from '@shared/ui';
+import {
+  PageContainer,
+  MainContents,
+  ContentsButtons,
+  LinkBox,
+  SubContents,
+  convertToThumbnailObject,
+} from '@shared/ui';
 import { ChannelChoiceModal, ManagerChoiceModal } from '@shared/ui';
 import { DateRangePickerFormField } from '@features/form/ui';
 import {
   CODE_GROUP,
   DynamicFormConfig,
   DynamicFormValues,
+  ThumbnailFileValue,
   useCurrentRoute,
   useDynamicForm,
 } from '@learnway/hooks';
@@ -34,11 +42,26 @@ function RouteComponent() {
   );
 
   const router = useRouter();
-  const { provider, onSubmit, onFormChange } = useDynamicForm<typeof formConfig>(formConfig);
+  const { provider, onSubmit, onFormChange, getValues, watch } =
+    useDynamicForm<typeof formConfig>(formConfig);
 
   useEffect(() => {
-    if (data) onFormChange(data);
+    if (data)
+      onFormChange(
+        convertToThumbnailObject({
+          data,
+          objectName: 'contentThumbnail',
+          groupUuidName: 'contentThumbnailFileGroupUuid',
+          selectedFileUuidName: 'selectedContentThumbnailFileUuid',
+          isLoading: false,
+        }),
+      );
   }, [data]);
+
+  const contentThumbnail: ThumbnailFileValue = watch('contentThumbnail');
+  useEffect(() => {
+    onFormChange({ contentThumbnailFileGroupUuid: contentThumbnail.groupUuid });
+  }, [contentThumbnail]);
 
   const handleFormSubmit = (data: DynamicFormValues<typeof formConfig>) => {
     console.log(data);
@@ -81,7 +104,11 @@ function RouteComponent() {
           </LinkBox>
           {permission === 'READ' && (
             <>
-              <Button variant="point" size="sm">
+              <Button
+                variant="point"
+                size="sm"
+                onClick={() => console.log('🚀 ~ RouteComponent ~ getValues:', getValues())}
+              >
                 매핑과정 보기
               </Button>
               <Button variant="point" size="sm">
@@ -184,7 +211,7 @@ function RouteComponent() {
           </FormDisplay>
           <ContentsRow>
             {/*썸네일*/}
-            <FormRow provider={provider} name="contentThumbnailFileGroupUuid" />
+            <FormRow provider={provider} name="contentThumbnail" />
           </ContentsRow>
           <ContentsRow>
             {/*태그*/}
@@ -392,10 +419,12 @@ const formConfig: DynamicFormConfig = {
     },
     {
       label: t('썸네일'),
-      name: 'contentThumbnailFileGroupUuid',
+      name: 'contentThumbnail',
       type: 'thumbnail-list',
-      format: 'array',
-      value: '',
+      format: 'object',
+      showDefault: true,
+      max: 1,
+      value: {},
     },
     {
       label: t('태그'),

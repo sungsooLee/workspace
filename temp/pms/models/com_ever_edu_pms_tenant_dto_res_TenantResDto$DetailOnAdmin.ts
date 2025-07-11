@@ -3,6 +3,8 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { com_ever_edu_pms_tenant_dto_res_TenantResDto$CompanyResDto } from './com_ever_edu_pms_tenant_dto_res_TenantResDto$CompanyResDto';
+import type { com_ever_edu_pms_tenant_dto_res_TenantResDto$PropertiesFlatformResDto } from './com_ever_edu_pms_tenant_dto_res_TenantResDto$PropertiesFlatformResDto';
+import type { com_ever_edu_pms_tenant_dto_res_TenantResDto$PropertiesResDto } from './com_ever_edu_pms_tenant_dto_res_TenantResDto$PropertiesResDto';
 import type { com_ever_edu_pms_tenant_dto_res_TenantResDto$TagResDto } from './com_ever_edu_pms_tenant_dto_res_TenantResDto$TagResDto';
 import type { com_ever_edu_pms_tenant_dto_res_TenantResDto$UserResDto } from './com_ever_edu_pms_tenant_dto_res_TenantResDto$UserResDto';
 export type com_ever_edu_pms_tenant_dto_res_TenantResDto$DetailOnAdmin = {
@@ -23,6 +25,8 @@ export type com_ever_edu_pms_tenant_dto_res_TenantResDto$DetailOnAdmin = {
     isCommonCategory?: boolean;
     isTenantCategory?: boolean;
     langCountryCodeTypeList?: Array<'KO' | 'EN' | 'ES' | 'AR' | 'RU' | 'FR' | 'PT' | 'ID' | 'ZH' | 'VI' | 'TR' | 'TH' | 'DE' | 'HE' | 'NE' | 'FA' | 'HI' | 'JA' | 'MS' | 'IT' | 'SK' | 'RO' | 'HR' | 'ET'>;
+    flatformProperties?: com_ever_edu_pms_tenant_dto_res_TenantResDto$PropertiesFlatformResDto;
+    properties?: com_ever_edu_pms_tenant_dto_res_TenantResDto$PropertiesResDto;
 };
 export namespace com_ever_edu_pms_tenant_dto_res_TenantResDto$DetailOnAdmin {
     export enum fileStorageTypeBase {

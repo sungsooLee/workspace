@@ -160,8 +160,8 @@ const searchConfig = (): SearchBoxConfig => ({
         type: 'date-range',
         label: t('등록 기간'),
         value: {
-          from: formUtils.now({ unit: 'day', offset: -30 }),
-          to: formUtils.now(),
+          from: formUtils.nowDate({ unit: 'day', offset: -30 }),
+          to: formUtils.nowDate(),
         },
       },
     ],

@@ -3,12 +3,12 @@ import { useFetchAuthUser } from '@learnway/auth/entities';
 import { AuthUser } from '@learnway/auth/types';
 import { BaseFormFieldProps } from '@learnway/hooks';
 import { t } from 'i18next';
-import { forwardRef, useMemo } from 'react';
+import { forwardRef, useEffect, useMemo } from 'react';
 import { DropdownFormField } from '../../../features/form/ui/dropdown-form-field';
 import { useWatch } from 'react-hook-form';
 import { ChannelByRoleId, TenantList } from '@types';
 
-interface TenantChannelDropdownFormFieldProps extends BaseFormFieldProps<Array<string>> {
+interface TenantChannelDropdownFormFieldProps extends BaseFormFieldProps<string> {
   enableFilter: boolean; // 테넌트 id 필터 적용 여부
 }
 
@@ -16,7 +16,7 @@ const TenantChannelDropdownFormFieldComponent = forwardRef<
   HTMLDivElement,
   TenantChannelDropdownFormFieldProps
 >(({ control, value, onChange, enableFilter = false, ...props }, ref) => {
-  console.log('### enableFilter : ', enableFilter);
+
   const { data } = useFetchAuthUser<AuthUser>();
   const { data: channel } = useFetchChannelByRoleId(data?.activeRole?.roleId as number);
 
@@ -56,12 +56,20 @@ const TenantChannelDropdownFormFieldComponent = forwardRef<
       }));
   }, [channel?.content, tenantId]);
 
+  useEffect(() => {
+    if (options && options.length === 1) {
+      onChange(options[0].value);
+      return;
+    }
+    onChange('');
+  }, [options]);
+
   return (
     <DropdownFormField
       {...props}
       ref={ref}
       options={options}
-      value={enableFilter ? (tenantId ? value : '') : value}
+      value={value}
       presetOptionLabel={t('LABEL.form.label.select')}
       onChange={onChange}
     />

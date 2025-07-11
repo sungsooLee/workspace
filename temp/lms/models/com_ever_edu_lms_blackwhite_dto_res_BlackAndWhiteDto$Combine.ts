@@ -12,11 +12,6 @@ export type com_ever_edu_lms_blackwhite_dto_res_BlackAndWhiteDto$Combine = {
 export namespace com_ever_edu_lms_blackwhite_dto_res_BlackAndWhiteDto$Combine {
     export enum combineType {
         USER_GROUP = 'USER_GROUP',
-        JOB_ROLE = 'JOB_ROLE',
-        JOB_LEVEL = 'JOB_LEVEL',
-        JOB_TITLE = 'JOB_TITLE',
-        JOB_GROUP = 'JOB_GROUP',
-        COMPANY = 'COMPANY',
     }
 }
 

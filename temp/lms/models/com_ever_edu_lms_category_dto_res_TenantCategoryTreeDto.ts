@@ -10,6 +10,7 @@ export type com_ever_edu_lms_category_dto_res_TenantCategoryTreeDto = {
     sortSeq?: number;
     depth?: number;
     children?: Array<com_ever_edu_lms_category_dto_res_TreeBaseDto>;
+    path?: string;
 };
 export namespace com_ever_edu_lms_category_dto_res_TenantCategoryTreeDto {
     export enum categoryType {

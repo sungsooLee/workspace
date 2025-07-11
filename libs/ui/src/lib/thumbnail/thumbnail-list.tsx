@@ -8,6 +8,9 @@ import { Carousel } from '../carousel/carousel';
 
 import styles from './thumbnail-list.module.css';
 import { FileInfo } from '@learnway/hooks';
+import { DefaultThumbnail } from './default-thumbnail';
+import { Button } from '@learnway/ui';
+import { sortBy } from 'lodash';
 
 export interface ThumbnailListComponentProps
   extends Omit<ThumbnailProps, 'onCheckedChange' | 'path' | 'id'> {
@@ -51,6 +54,7 @@ export interface ThumbnailListComponentProps
    * 썸네일 목록을 클릭하면 파일 id를 전달하는 콜백 함수
    */
   onChecked: Dispatch<SetStateAction<string | null>>;
+  showDefault?: boolean;
 }
 
 /**
@@ -71,6 +75,7 @@ const ThumbnailListComponent = forwardRef<HTMLDivElement, ThumbnailListComponent
       // onCheckedChange,
       checked,
       onChecked,
+      showDefault,
       ...props
     },
     ref,
@@ -94,12 +99,6 @@ const ThumbnailListComponent = forwardRef<HTMLDivElement, ThumbnailListComponent
      * @param checkedFile - 체크 상태가 변경된 ImageOption 객체
      */
     const handleCheckChange = (_checked: CheckedState, checkedFile: FileInfo) => {
-      console.log(
-        '🚀 ~ handleCheckChange ~ checked, _checked, uuid:',
-        checked,
-        _checked,
-        checkedFile.fileUuid,
-      );
       if (!_checked && checked) return onChecked(null);
 
       if (_checked) return onChecked(checkedFile.fileUuid);
@@ -119,19 +118,29 @@ const ThumbnailListComponent = forwardRef<HTMLDivElement, ThumbnailListComponent
      * `options` 배열을 기반으로 `Thumbnail` 컴포넌트 배열을 생성합니다.
      * 각 `Thumbnail`은 고유한 `key`와 필요한 props를 가집니다.
      */
-    const items = files?.map((file: FileInfo, index: number) => (
-      <Thumbnail
-        key={file.fileUuid}
-        id={file.fileUuid}
-        path={file.fileUrl}
+    const items = sortBy(files, (file) => file.originalFileName.startsWith('sys-')).map(
+      (file: FileInfo, index: number) => (
+        <Thumbnail
+          key={file.fileUuid}
+          id={file.fileUuid}
+          path={file.fileUrl}
+          showCheckbox={showCheckbox}
+          showDeleteBtn={showDeleteButton}
+          showPreviewBtn={showPreviewButton}
+          selected={checked === file.fileUuid}
+          onCheckedChange={(checked: CheckedState) => handleCheckChange(checked, file)}
+          onRemoveClick={() => handleRemoveClick(file)}
+        />
+      ),
+    );
+
+    const defaultThumbnail = (
+      <DefaultThumbnail
         showCheckbox={showCheckbox}
-        showDeleteBtn={showDeleteButton}
-        showPreviewBtn={showPreviewButton}
-        selected={checked === file.fileUuid}
-        onCheckedChange={(checked: CheckedState) => handleCheckChange(checked, file)}
-        onRemoveClick={() => handleRemoveClick(file)}
+        selected={!checked}
+        onCheckedChange={() => onChecked(null)}
       />
-    ));
+    );
 
     return (
       <div
@@ -141,7 +150,7 @@ const ThumbnailListComponent = forwardRef<HTMLDivElement, ThumbnailListComponent
       >
         <Carousel
           {...props}
-          items={items}
+          items={showDefault ? [...items, defaultThumbnail] : items}
           slidesPerView={'auto'}
           spaceBetween={12}
           freeMode={true}

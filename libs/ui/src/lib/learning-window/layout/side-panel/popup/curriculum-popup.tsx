@@ -8,7 +8,7 @@ import styles from '@learnway/styles/fo/pages/_learning/side-panel/popup/curricu
 import { ModalBody, ModalContainer, ModalTitle } from '../../../../modal/modal-container';
 import { ProgressCheck } from '../../../../progress/progress-check/progress-check';
 
-import { useLearningWindow } from '../../../learning-window.store';
+import { useLearningWindow } from '../../../learnway-learning-window.store';
 
 interface ChildData {
   panelState: boolean;
