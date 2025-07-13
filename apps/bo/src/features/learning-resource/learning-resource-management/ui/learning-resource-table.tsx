@@ -172,6 +172,9 @@ function LearningResourceTableComponent() {
       case LEARNING_TYPE.BLOG:
         path = '/learning/resource/blog/view';
         break;
+      case LEARNING_TYPE.HTML5_VIDEO:
+        path = '/learning/resource/html-video/view';
+        break;
       // TODO: 유형 추가
     }
     return path;

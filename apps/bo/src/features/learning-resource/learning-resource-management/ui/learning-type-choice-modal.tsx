@@ -97,7 +97,7 @@ const learningTypes = [
   { label: '스콤', value: LEARNING_TYPE.SCORM, icon: <IcoEtc />, description: '설명문구2줄설명' },
   {
     label: 'HTML',
-    value: LEARNING_TYPE.HTML_VIDEO,
+    value: LEARNING_TYPE.HTML5_VIDEO,
     icon: <IcoHtml />,
     description: '설명 문구는 최대 2줄까지 노출됩니다. ',
   },
