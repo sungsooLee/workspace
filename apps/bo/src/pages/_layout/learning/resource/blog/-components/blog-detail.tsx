@@ -28,7 +28,6 @@ import {
   ChannelListChoiceModal,
   CompanyChoiceModal,
   ContentsHistoryInfoFormField,
-  convertToThumbnailObject,
   FormGroup,
   FormRow,
   FormRow2,
