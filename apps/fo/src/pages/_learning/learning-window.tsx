@@ -15,6 +15,7 @@ import {
   LearningWindowBaseInfo,
 } from '@learnway/ui';
 import { ScormRteService } from '@entities/learning-resource/api/scorm-rte';
+import { Html5Service } from '@entities/learning-resource/api/html5';
 import { useVideoWatchLog } from '@entities/learning-resource/service/video.hook';
 import { useGetBlogResource } from '@entities/learning-resource/service/blog.hook';
 import { useGetHtml5Resource } from '@entities/learning-resource/service/html5.hook';
@@ -162,6 +163,7 @@ function RouteComponent() {
       },
       scormInitialize: ScormRteService.initialize,
       scormCommit: ScormRteService.commit,
+      html5LearningHistory: Html5Service.saveHtml5Learning,
       videoOnProgress: handleVideoProgress,
     });
   }, []);

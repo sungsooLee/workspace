@@ -95,6 +95,8 @@ interface FunctionInfomation {
   scormCommit: (payload: any) => void;
   /** 비디오 Progress 호출 함수 */
   videoOnProgress: (payload: any) => void;
+  /** Html5 학습 이력 저장 */
+  html5LearningHistory: (payload: any) => void;
   /** 커리큘럼의 모든 lesson의 진척 조회 함수 */
   lessonProgress: (payload: any) => void;
 }
