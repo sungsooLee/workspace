@@ -183,7 +183,7 @@ function RouteComponent() {
                     </p>
                   </div>
                   <div>
-                    <Input id="name2" type="text" value="Kim" size={44} />
+                    <Input id="name2" type="text" value="Kim" className="lg" />
                     {/* error message */}
                     {/* <p className={cn(formStyles.guide_text, formStyles.error)}>영문 성을 입력해주세요</p> */}
                   </div>
