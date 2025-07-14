@@ -1,0 +1,34 @@
+/* order-list.module.css */
+.start {
+  &.procedure_wrap {
+    @apply overflow-hidden rounded-[8px] border border-solid border-[var(--gray5)];
+    .item {
+      .title_wrap {
+        @apply flex justify-between bg-[var(--gray1)] px-[16px] py-[13px];
+        .title {
+          @apply body_3_b flex-1 text-[var(--gray8)];
+        }
+        .status {
+          @apply body_3_r min-w-[40px] shrink-0 text-right text-[var(--gray8)];
+        }
+      }
+      .list {
+        li {
+          @apply flex items-center px-[16px] py-[13px];
+          .label {
+            @apply body_3_r relative flex-1 pl-[12px] text-[var(--gray7)];
+            &::before {
+              @apply absolute left-0 top-[7px] h-[4px] w-[4px] rounded-[2px] bg-[var(--gray6)] content-[''];
+            }
+          }
+          .time {
+            @apply body_3_r w-[40px] shrink-0 text-right text-[var(--gray7)];
+          }
+        }
+      }
+      & + .item {
+        @apply border-t-[1px] border-solid border-[var(--gray5)];
+      }
+    }
+  }
+}
