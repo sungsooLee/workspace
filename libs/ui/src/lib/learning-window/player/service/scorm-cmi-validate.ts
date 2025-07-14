@@ -40,7 +40,7 @@ cimSchema.set('cmi.location', new CimElementInfo(true));
 "logout" : 로그아웃을 통해 종료할 때. 
 "normal" : 정상적으로 SCO를 종료할 때. 
 "" : 종료 조건이 정의되지 않았을 때. */
-cimSchema.set('cmi.exit', new CimElementInfo());
+cimSchema.set('cmi.exit', new CimElementInfo(true));
 /* 임시정보 */
 cimSchema.set('cmi.suspend_data', new CimElementInfo(true));
 /* 총 학습시간 */
@@ -69,6 +69,8 @@ cimSchema.set('cmi.score.min', new CimElementInfo());
 cimSchema.set('cmi.score.max', new CimElementInfo());
 /* 정산된 합격점수 */
 cimSchema.set('cmi.scaled_passing_score', new CimElementInfo());
+/*현재 세션에서 해당 SCO를 학습한 시간 */
+cimSchema.set('cmi.session_time', new CimElementInfo(true));
 /* 학습자가 SCO를 마스터(master) 했는지 여부 */
 cimSchema.set('cmi.success_status', new CimElementInfo(true));
 
