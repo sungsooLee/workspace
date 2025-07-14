@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { ThumbnailImageUploadV2 } from '@learnway/ui'; // @learnway/ui에서 ThumbnailImageUpload 컴포넌트 import
+import { ThumbnailPublicUpload } from '@learnway/ui'; // @learnway/ui에서 ThumbnailImageUpload 컴포넌트 import
 import { BaseFormFieldProps, S3_PATH_TYPE } from '@learnway/hooks'; // @learnway/hooks에서 폼 필드 기본 props 타입 import
 
 /**
@@ -23,7 +23,7 @@ interface ThumbnailImageUploadFormFieldV2Props extends BaseFormFieldProps<string
  * `ThumbnailImageUpload`의 `ImageOption[]` 변경을 다시 `string[]`으로 변환하여 부모 폼에 전달합니다.
  * `forwardRef`를 사용하여 부모 폼 컴포넌트에서 이 필드의 DOM 요소에 접근할 수 있도록 합니다.
  */
-const ThumbnailImageUploadFormFieldV2Component = forwardRef<
+const ThumbnailPublicFormFieldComponent = forwardRef<
   HTMLDivElement, // Ref 타입: 렌더링할 최상위 div 요소
   ThumbnailImageUploadFormFieldV2Props // 컴포넌트 props 타입
 >(
@@ -32,7 +32,7 @@ const ThumbnailImageUploadFormFieldV2Component = forwardRef<
     ref, // forwardRef로 전달받은 Ref 객체
   ) => {
     return (
-      <ThumbnailImageUploadV2
+      <ThumbnailPublicUpload
         ref={ref} // forwardRef로 받은 Ref를 ThumbnailImageUpload 컴포넌트에 연결
         {...props} // ThumbnailImageUpload에 전달될 수 있는 나머지 props (예: className)
       />
@@ -41,4 +41,4 @@ const ThumbnailImageUploadFormFieldV2Component = forwardRef<
 );
 
 // 폼 필드 컴포넌트 내보내기
-export const ThumbnailListFormFieldV2 = ThumbnailImageUploadFormFieldV2Component;
+export const ThumbnailPublicFormField = ThumbnailPublicFormFieldComponent;

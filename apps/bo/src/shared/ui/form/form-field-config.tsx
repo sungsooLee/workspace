@@ -14,6 +14,7 @@ import { PhoneNumberFormField } from './phone-number-form-filed';
 import { DropdownFormField } from '../../../features/form/ui';
 import { CheckBoxFormField } from './checkbox-form-field';
 import { ThumbnailListFormField } from './thumbnail-list-form-field';
+import { ThumbnailPublicFormField } from './thumbnail-public-form-field';
 import { AttachmentFormField } from './attachment-form-field';
 import { SingleAttachmentFormField } from './single-attachment-form-field';
 
@@ -34,6 +35,7 @@ export const formFieldConfig: FormFieldConfig = {
   'phone-number': PhoneNumberFormField,
   'chip-list': ChipListFormField,
   'thumbnail-list': ThumbnailListFormField,
+  'thumbnail-public': ThumbnailPublicFormField,
   attachment: AttachmentFormField,
   'single-attachment': SingleAttachmentFormField,
 };

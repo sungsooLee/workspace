@@ -29,7 +29,7 @@ export interface ThumbnailImageUploadV2Props {
   onChange?: (value: string[]) => void;
 }
 
-const ThumbnailImageUploadV2Component = forwardRef<HTMLDivElement, ThumbnailImageUploadV2Props>(
+const ThumbnailPublicUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageUploadV2Props>(
   (
     {
       className,
@@ -174,4 +174,4 @@ const ThumbnailImageUploadV2Component = forwardRef<HTMLDivElement, ThumbnailImag
   },
 );
 
-export const ThumbnailImageUploadV2 = ThumbnailImageUploadV2Component;
+export const ThumbnailPublicUpload = ThumbnailPublicUploadComponent;
