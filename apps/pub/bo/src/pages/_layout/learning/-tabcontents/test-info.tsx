@@ -1,7 +1,6 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import { FC, useState } from 'react';
 import { cn } from '@learnway/shared';
-import { FormSubTitle } from '../../../../../../../bo/src/shared/ui/form';
 import { NoticeBox } from '../../../../../../../bo/src/shared/ui';
 import {
   Button,
@@ -25,6 +24,7 @@ import {
   ImageOption,
   ChipList,
   SplitPanel,
+  FormSubTitle,
 } from '@learnway/ui';
 import { IcoAlertCircle, IcoFormRequired, IcoRefresh02, IcoSearch } from '@learnway/icons';
 

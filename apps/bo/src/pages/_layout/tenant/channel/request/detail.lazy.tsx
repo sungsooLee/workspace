@@ -21,7 +21,7 @@ import {
   LinkBox,
   ContentsButtons,
 } from '@shared/ui';
-import { getChannelUrl } from '@features/channel';
+import { getChannelUrl, useChannelApplication } from '@features/channel';
 
 export const Route = createLazyFileRoute('/_layout/tenant/channel/request/detail')({
   component: RouteComponent,
@@ -33,6 +33,7 @@ function RouteComponent() {
   const channelRequestUuid = routerState.location.state?.channelRequestUuid;
 
   const { data, refetch } = useGetRequestChannelDetail(channelRequestUuid);
+  const { accept: acceptRequestChannel, reject: rejectRequestChannel } = useChannelApplication();
 
   const { provider, updateFormData, onSubmit, getValues, onFormChange } =
     useDynamicForm(formConfig);
@@ -89,42 +90,90 @@ function RouteComponent() {
     router.navigate({ to: '/tenant/channel/request' });
   };
 
+  const handleAcceptClick = (e: any) => {
+    acceptRequestChannel([channelRequestUuid], () => {
+      refetch();
+    });
+  };
+
+  const handleRejectClick = (e: any) => {
+    rejectRequestChannel([channelRequestUuid], () => {
+      refetch();
+    });
+  };
+
+  const handleOpenChannelClick = () => {
+    router.navigate({
+      to: '/tenant/channel/management/regist',
+      state: {
+        requestUuid: channelRequestUuid,
+      },
+    });
+  };
+
+  const handleChannelDetailClick = () => {
+    router.navigate({
+      to: '/tenant/channel/management/detail',
+      state: {
+        channelUuid: data.channelInfoChannelUuid,
+      },
+    });
+  };
+
   return (
     <PageContainer>
       <ContentsButtons>
         <LinkBox>
-          <Button variant="point" size="sm" onClick={handleListButtonClick}>
-            {t('LABEL.button.list')}
-          </Button>
+          <Button
+            variant="point"
+            size="sm"
+            onClick={handleListButtonClick}
+            stopPropagation
+            label={t('LABEL.button.list')}
+          />
         </LinkBox>
         {data && data.approvalStatusType === 'PENDING' && (
           <>
-            <Button variant="point" size="sm">
-              {t('접수')}
-            </Button>
-            <Button variant="point" size="sm">
-              {t('반려')}
-            </Button>
+            <Button
+              variant="point"
+              size="sm"
+              onClick={handleAcceptClick}
+              stopPropagation
+              label={t('접수')}
+            />
+            <Button
+              variant="point"
+              size="sm"
+              onClick={handleRejectClick}
+              stopPropagation
+              label={t('반려')}
+            />
           </>
         )}
         {data && data.approvalStatusType === 'ACCEPTED' && (
-          <Button variant="point" size="sm">
-            {t('채널 개설')}
-          </Button>
+          <Button
+            variant="point"
+            size="sm"
+            onClick={handleOpenChannelClick}
+            label={t('채널 개설')}
+            stopPropagation
+          />
         )}
         {data && data.approvalStatusType === 'APPROVED' && (
-          <Button variant="point" size="sm">
-            {t('채널 상세')}
-          </Button>
+          <Button
+            variant="point"
+            size="sm"
+            onClick={handleChannelDetailClick}
+            label={t('채널 상세')}
+            stopPropagation
+          />
         )}
         {data && data.approvalStatusType !== 'PENDING' && (
-          <Button type="submit" variant="primary" size="sm">
-            {t('저장')}
-          </Button>
+          <Button type="submit" variant="primary" size="sm" stopPropagation label={t('저장')} />
         )}
       </ContentsButtons>
       <MainContents>
-        <FormSubTitle label={'채널 신청 정보'} />
+        <FormSubTitle label={t('채널 신청 정보')} />
         <ContentsRow>
           <FormRow
             provider={provider}
@@ -164,7 +213,7 @@ function RouteComponent() {
             element={<TextareaFormField readOnly={true} resize={'none'} />}
           />
         </ContentsRow>
-        <FormSubTitle label={'채널 신청자 정보'} />
+        <FormSubTitle label={t('채널 신청자 정보')} />
         <ContentsRow>
           <FormRow provider={provider} name={'companyName'} element={<Input readOnly={true} />} />
           <FormRow
@@ -187,7 +236,7 @@ function RouteComponent() {
             element={<Input readOnly={true} />}
           />
         </ContentsRow>
-        <FormSubTitle label={'결재 정보'} />
+        <FormSubTitle label={t('결재 정보')} />
         <ContentsRow>
           <FormRow provider={provider} name={'approverName'} element={<Input readOnly={true} />} />
           <FormRow provider={provider} name={'approvalDate'} element={<Input readOnly={true} />} />
@@ -202,7 +251,7 @@ function RouteComponent() {
             />
           </ContentsRow>
         )}
-        <FormSubTitle label={'채널 개설 정보'} />
+        <FormSubTitle label={t('채널 개설 정보')} />
         <ContentsRow>
           <FormRow provider={provider} name={'channelInfo'} element={<Input readOnly={true} />} />
           <FormRow

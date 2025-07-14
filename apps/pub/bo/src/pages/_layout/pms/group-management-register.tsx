@@ -2,7 +2,6 @@
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import { FormSubTitle } from '../../../../../../bo/src/shared/ui';
 import { cn } from '@learnway/shared';
 import {
   Button,
@@ -12,6 +11,7 @@ import {
   PhoneNumber,
   Input,
   RadioGroupFormField,
+  FormSubTitle,
 } from '@learnway/ui';
 import { IcoFormRequired, IcoAlertCircle } from '@learnway/icons';
 

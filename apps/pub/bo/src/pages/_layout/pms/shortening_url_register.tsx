@@ -10,12 +10,12 @@ import {
   Textarea,
   RadioGroupFormField,
   GridBox,
+  FormSubTitle,
 } from '@learnway/ui';
 import { IcoFormRequired, IcoCopy, IcoMinus } from '@learnway/icons';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { cn } from '@learnway/shared';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import { FormSubTitle } from '../../../../../../bo/src/shared/ui/form';
 
 // style
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
