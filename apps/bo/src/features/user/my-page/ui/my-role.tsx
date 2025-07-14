@@ -1,5 +1,5 @@
 import { CODE_GROUP, compactValues, useCurrentRoute, useSearchBox } from '@learnway/hooks';
-import { Button, GridBox, useGridBox, useModal } from '@learnway/ui';
+import { Button, Divider, GridBox, useGridBox, useModal } from '@learnway/ui';
 import { t } from 'i18next';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { SearchBox } from '@shared/ui/search-box';
@@ -75,6 +75,7 @@ const MyRoleComponent = (route: any) => {
   return (
     <div>
       <SearchBox provider={sProvider} onSearch={handleOnSearch} />
+      <Divider />
       <GridBox
         title={t('HRD 담당자 역할 목록')}
         hideRowSelectionRadioBox={false}
