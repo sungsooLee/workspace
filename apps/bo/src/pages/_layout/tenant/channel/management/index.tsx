@@ -166,8 +166,8 @@ const searchConfig: SearchBoxConfig = {
         value: undefined,
         options: [
           { value: undefined, label: t('전체') },
-          { value: true, label: t('활성화') },
-          { value: false, label: t('비활성화') },
+          { value: true, label: t('노출') },
+          { value: false, label: t('비노출') },
         ],
       },
       {
