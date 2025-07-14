@@ -12,5 +12,8 @@
     &:nth-last-child(1) {
       @apply rounded-l-full;
     }
+    & + .btn {
+      @apply !ml-0;
+    }
   }
 }
