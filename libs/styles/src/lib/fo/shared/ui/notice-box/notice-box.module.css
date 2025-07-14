@@ -1,25 +1,25 @@
 .start {
   @apply rounded-[8px] bg-[var(--gray1)] p-[16px];
   .check_point {
-    @apply body_4_r text-left text-[var(--gray7)];
+    @apply body_4_r text-left text-[var(--gray35)];
     dt {
-      @apply body_4_b flex items-center justify-start;
+      @apply title4-b flex items-center justify-start leading-[24px];
       svg {
         @apply mr-[4px] stroke-[var(--gray7)];
       }
     }
     dd {
-      @apply relative mt-[8px] pl-[10px];
+      @apply body-md relative mt-[16px] pl-[12px] leading-[24px];
       + dd {
-        @apply mt-[4px];
+        @apply mt-[8px];
       }
       &::before {
-        @apply absolute left-[0] top-[6px] h-[4px] w-[4px] rounded-full bg-[var(--gray6)] content-[''];
+        @apply absolute left-[0] top-[9px] h-[4px] w-[4px] rounded-full bg-[var(--gray50)] content-[''];
       }
     }
   }
   .link {
-    @apply ml-[8px] !p-0 text-[var(--secondary3)] underline;
+    @apply ml-[12px] !p-0 text-[var(--blud50)] underline;
     text-underline-offset: 4px;
   }
 }

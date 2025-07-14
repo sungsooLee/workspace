@@ -60,10 +60,7 @@ const EducationComponent = ({ className }: EducationProps) => {
         </div>
       </div>
       <div className={styles.info_box}>
-        {/* definitionListStyles module */}
-        <div
-          className={`${definitionListStyles.start} ${definitionListStyles.list} ${styles.list}`}
-        >
+        <div className={styles.list}>
           <ul>
             <li>
               <IcoCalendar01 width={20} height={20} stroke="#4d525c" />
