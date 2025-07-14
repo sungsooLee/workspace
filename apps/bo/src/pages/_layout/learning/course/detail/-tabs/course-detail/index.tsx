@@ -77,7 +77,7 @@ const CourseDetailComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
     }, [courseType, channelUuid, onConfigPropChange]);
 
     return (
-      <div>
+      <>
         {/* 과정 통계 요약 CourseStatsSummary*/}
         <CourseStatsSummary courseId={formData.courseId} />
 
@@ -379,7 +379,7 @@ const CourseDetailComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
             <h2>커리큘럼</h2>
           </div>
         </SplitPanel>
-      </div>
+      </>
     );
   },
 );
