@@ -134,6 +134,9 @@ const PreviewLearningWindowComponent: FC<any> = ({
       html5LearningHistory: (payload) => {
         console.log('html5LearningHistory called', payload);
       },
+      galleryLearningHistory: (payload) => {
+        console.log('galleryLearningHistory called', payload);
+      },
     });
   }, [data]);
 

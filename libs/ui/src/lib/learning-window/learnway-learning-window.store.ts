@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-
+import { CmsImageContent } from '@learnway/types';
 export enum EnContentType {
   VIDEO = 'VIDEO',
   EBOOK = 'EBOOK',
@@ -97,6 +97,8 @@ interface FunctionInfomation {
   videoOnProgress: (payload: any) => void;
   /** Html5 학습 이력 저장 */
   html5LearningHistory: (payload: any) => void;
+  /** galleary 학습 이력 저장 */
+  galleryLearningHistory: (payload: any) => void;
   /** 커리큘럼의 모든 lesson의 진척 조회 함수 */
   lessonProgress: (payload: any) => void;
 }
@@ -115,8 +117,8 @@ interface LearningWindowStoreData {
 
   scormInfo: any;
   setScormInfo: (v: any) => void;
-  galleryInfo: any;
-  setGalleryInfo: (v: any) => void;
+  galleryInfo?: CmsImageContent;
+  setGalleryInfo: (v: CmsImageContent) => void;
   videoInfo: any;
   setVideoInfo: (v: any) => void;
   blogInfo: any;
@@ -173,7 +175,7 @@ const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
   setScormInfo(scormInfo: any) {
     set((state) => ({ scormInfo }));
   },
-  setGalleryInfo(galleryInfo: any) {
+  setGalleryInfo(galleryInfo) {
     set((state) => ({
       galleryInfo,
     }));

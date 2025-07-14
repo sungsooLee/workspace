@@ -21,8 +21,8 @@ const LearningWindowComponent: FC<any> = () => {
       {scormInfo && <LearningWindowScormPlayer />}
       {videoInfo && <LearningWindowVideoPlayer />}
       {galleryInfo && <LearningWindowGalleryPlayer />}
-      {blogInfo && <LearningWindowBlogPlayer playInfo={playInfo} blogInfo={blogInfo} />}
-      {htmlInfo && <LearningWindowHtmlPlayer htmlInfo={htmlInfo} />}
+      {blogInfo && <LearningWindowBlogPlayer />}
+      {htmlInfo && <LearningWindowHtmlPlayer />}
       {ebookInfo && <LearningWindowEbookPlayer />}
     </>
   );
