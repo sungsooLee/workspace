@@ -61,7 +61,7 @@ function RouteComponent() {
   }, []);
 
   const { delete: deleteBlogContent } = useDeleteContent({
-    onSuccess: (result: any) => {
+    onSuccess: (result: unknown) => {
       console.log('delete success', result);
       return router.navigate({ to: '/learning/learning-resource', replace: true });
     },
@@ -75,22 +75,21 @@ function RouteComponent() {
         title: t('삭제 하시겠습니까?'),
         content: t('삭제 후 목록으로 이동합니다.'),
       })
-    )
-      if (mappingData?.hasMapping) {
-        await openAlert({
-          title: t('과정에서 사용 중입니다.'),
-          content: t('과정에서 사용중인 학습자원은 삭제할 수 없습니다.'),
-        });
-        return;
-      } else {
-        deleteBlogContent(data?.contentUuid as string);
-      }
+    ) {
+      deleteBlogContent(data?.contentUuid as string);
+    }
   };
 
   const handleClickSubmitButton = (e: MouseEvent<HTMLButtonElement>) => {
     if (formRef.current) {
       formRef.current?.requestSubmit();
     }
+  };
+
+  const handleClickCourseButton = () => {
+    router.navigate({
+      to: '/learning/course/create/view',
+    });
   };
 
   useEffect(() => {
@@ -106,7 +105,13 @@ function RouteComponent() {
   return (
     <PageContainer>
       <ContentsButtons>
-        <Button type="button" variant="search" size="sm" label={t('과정개설')} />
+        <Button
+          type="button"
+          variant="search"
+          size="sm"
+          label={t('과정개설')}
+          onClick={handleClickCourseButton}
+        />
         <Button type="button" variant="point" size="sm" label={t('매핑과정')} />
         <Button type="button" variant="point" size="sm" label={t('번역현황')} />
         <Button
@@ -123,6 +128,7 @@ function RouteComponent() {
           size="sm"
           label={t('LABEL.button.delete')}
           onClick={handleClickDeleteButton}
+          disabled={!!mappingData?.hasMapping}
         />
         <Button type="button" variant="point" size="sm" label={t('LABEL.button.translate')} />
         <Button
