@@ -22,7 +22,7 @@ interface InputModalSelectorFormFieldComponentProps extends BaseFormFieldProps<s
   /** 입력 필드 Props */
   inputProps?: InputProps;
   /** 모달 데이터 변환 함수 (onFormChange 시 사용) */
-  transformModalData?: (modalData?: any) => string | ComplexFieldValue;
+  transformModalData?: (modalData?: any) => ComplexFieldValue;
   /** 복합 서치 필드 모드 활성화 */
   complexField?: boolean;
   complexName?: string;
@@ -79,8 +79,13 @@ const InputModalSelectorFormFieldComponent = forwardRef<
         const clearData = { [leftKey]: '', [rightKey]: '' };
         onFormChange({ [complexName]: clearData } as any);
       } else {
-        const clearEvent = { target: { value: '' } } as any;
-        onChange?.(clearEvent);
+        console.log('clear ----------------------', value);
+        // 값 초기화시 transformModalData 함수 호출 - 모달 선택시 transformModalData 통해 추가 설정한 데이터를 모두 초기화 하기 위해
+        const transformData = transformModalData ? transformModalData({}) : { [props.name]: '' };
+        onFormChange?.(transformData);
+
+        // const clearEvent = { target: { value: '' } } as any;
+        // onChange?.(clearEvent);
       }
     };
 

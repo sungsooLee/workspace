@@ -1,322 +1,172 @@
+/* IA112 / NLP_BO_CMS_1022 - 나의 학습자원 > HTML 상세(저장 및 조회용) */
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { t } from 'i18next';
-import { Button, ContentsRow, useModal } from '@learnway/ui';
-import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '@shared/ui';
-import { createLazyFileRoute } from '@tanstack/react-router';
-import { MainContents, PageContainer, SubContents, ContentsButtons } from '@shared/ui';
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { SharedChannelGridFormField } from '@features/form/ui';
-import styles from './test-detail.module.css';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import { cn } from '@learnway/shared';
-import { ImageInfo } from '@features/learning-resource';
+import { useQuery } from '@tanstack/react-query';
+import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
+import { useFetchAuthUser } from '@learnway/auth/entities';
+import { Button, Divider, useModal } from '@learnway/ui';
+import { learningResourceQueryOptions, useDeleteContent } from '@entities/learning-resource';
+import { ContentsButtons, MainContents, PageContainer, SubContents } from '@shared/ui';
+import { HtmlDetail } from './-components/html-detail';
+import { ProcessingStatus } from '@types';
+import { FileInfo } from '@pages/_layout/learning/resource/html-video/-components/file-info';
 
 export const Route = createLazyFileRoute('/_layout/learning/resource/html-video/view')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const formConfig: DynamicFormConfig = {
-    builders: [
-      {
-        name: 'companyModal',
-        type: 'text',
-        label: t('채널명'),
-        format: 'array',
-        value: [],
-        placeholder: '',
-        description: '',
-      },
-      {
-        name: 'language',
-        type: 'dropdown',
-        label: t('언어'),
-        format: 'array',
-        value: [],
-        placeholder: '',
-        description: '',
-      },
-      {
-        name: 'learningResourceName',
-        type: 'text',
-        label: t('학습자원명'),
-        format: 'array',
-        value: [],
-        placeholder: '',
-        description: '',
-      },
-      {
-        name: 'learningResourceDescription',
-        type: 'textarea',
-        label: t('학습자원 설명'),
-        readOnly: true,
-        placeholder: '',
-        maxLength: 2000,
-        value: '',
-      },
-      {
-        name: 'manager',
-        type: 'text',
-        label: t('담당자'),
-        format: 'array',
-        value: [],
-        placeholder: '',
-        description: '',
-      },
-      {
-        label: t('연락처'),
-        name: 'contact',
-        type: 'phone-number',
-        value: '',
-        fields: {
-          nationCode: 'nationCode',
-          number: 'contact',
-        },
-      },
-      {
-        label: t('사용기한'),
-        name: 'expirationDate',
-        type: 'switch',
-        value: false,
-        format: 'boolean',
-        tooltip: '사용기한 내 콘텐츠 공유/교육자원활용이  가능합니다.',
-      },
-      {
-        label: t('외주개발업체정보'),
-        name: 'isExternalDevelopmentCompany',
-        type: 'switch',
-        format: 'boolean',
-        value: false,
-      },
-      {
-        label: t('썸네일'),
-        name: 'thumbnails',
-        type: 'thumbnail-list',
-        format: 'array',
-        value: [],
-      },
-      {
-        label: t('태그'),
-        name: 'tags',
-        format: 'array',
-        type: 'chip-list',
-        placeholder: '한글, 영문, 숫자 포함 9자 이하 태그를 입력하세요.(9자 초과할 경우 얼럿)',
-        limitPlaceholder: '여러개의 태그는 쉼표로 구분',
-        tooltip: '태그는 학습자원 검색 시 활용되고, 학습자에게는 10개까지만 보여집니다.',
-        value: [],
-      },
-      {
-        label: t('학습자원개요 (AI 자동 추출)'),
-        name: 'learningResourceOverview',
-        type: 'textarea',
-        readOnly: true,
-        placeholder: '키워드는 AI 자동 추출되어 표기 됩니다.',
-        maxLength: 2000,
-        value: '',
-      },
-      {
-        label: t('키워드 (AI 자동 추출)'),
-        name: 'keywords',
-        type: 'textarea',
-        readOnly: true,
-        placeholder: '키워드는 AI 자동 추출되어 표기 됩니다.',
-        maxLength: 2000,
-        value: '',
-      },
-      {
-        label: t('교육지원활용 여부'),
-        name: 'isTrainingSupport',
-        type: 'switch',
-        format: 'boolean',
-        switchConfig: {
-          label: (value: boolean) => (value ? '활용가능' : '활용불가'),
-        },
-        guideText: '해당 학습자원으로 교육 과정을 개설할 수 없습니다.',
-        value: true,
-      },
-      {
-        label: t('공유채널 설정'),
-        name: 'sharedChannels',
-        type: 'custom',
-        format: 'array',
-        value: [
-          {
-            tenantId: 'tenantId1',
-            tenantName: 'tenantName1',
-            channelId: 'Channel Id1',
-            channelName: 'Channel Name1',
-            checked: true,
-          },
-        ],
-        guideText: '공유채널 설정',
-      },
-      {
-        label: t('검수확인'),
-        name: 'isInspectionConfirmed',
-        type: 'checkbox',
-        format: 'boolean',
-        guideText: '등록하고자 한 동영상이며, 처음부터 끝까지 정상적으로 재생됨이 확인되었습니다.',
-        checkConfig: {
-          reverse: true,
-        },
-        value: false,
-      },
-      {
-        label: t('저작권확인'),
-        name: 'isCopyrightConfirmed',
-        format: 'boolean',
-        guideText:
-          '저작권법(제25조2항)에 따라 학습자원(동영상,이미지등)은 해당 학습플랫폼에서만 이용가능하며, 이 외의 공간에서 저작물을 공유 또는 게시하는 행위는 저작권법 위반에 해당될 수 있음에 동의합니다.',
-        type: 'checkbox',
-        checkConfig: {
-          reverse: true,
-        },
-        value: false,
-      },
-      {
-        label: t('보안확인'),
-        name: 'isSecurityConfirmed',
-        format: 'boolean',
-        guideText:
-          '보안콘텐츠 미 설정 시, 불법복제, 무단사용,저작권 침해 위험에 노출되고, 이에 따른 피해를 입을 수 있음에 인지합니다',
-        type: 'checkbox',
-        checkConfig: {
-          reverse: true,
-        },
-        value: false,
-      },
-    ],
-    validator: {
-      companyModal: true,
-      language: true,
-      learningResourceName: true,
-      manager: true,
-      contact: true,
-      expirationDate: true,
-      thumbnails: true,
-      tags: true,
-      sharedChannels: true,
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const router = useRouter();
+  const routerState = useRouterState();
+
+  const { data: loginUser } = useFetchAuthUser();
+  const [tenantId, setTenantId] = useState<number>(-1);
+
+  const { data, error: fetchError } = useQuery(
+    learningResourceQueryOptions.getContent(routerState.location.state?.contentUuid),
+  );
+
+  const { data: mappingData } = useQuery(
+    learningResourceQueryOptions.getCoursesMapping(routerState.location.state?.contentUuid),
+  );
+
+  const { data: htmlStatus } = useQuery(
+    learningResourceQueryOptions.getHTML5Status(routerState.location.state?.contentUuid),
+  );
+
+  // draft: 임시저장 상태 / complete: 한 번이라도 저장 버튼을 눌러 저장한 상태
+  const [mode, setMode] = useState<'draft' | 'complete'>('draft');
+
+  const { open: openModal, confirm: openConfirm } = useModal();
+
+  const handleClickSaveButton = async () => {
+    if (formRef.current) {
+      formRef.current?.requestSubmit();
+    }
+  };
+
+  const handleClickGoListButton = useCallback(async () => {
+    if (
+      await openConfirm({
+        title: t('LABEL.confirm.goList.title'),
+        content: t('LABEL.confirm.goList.message'),
+      })
+    ) {
+      router.navigate({ to: '/learning/learning-resource' });
+    }
+  }, []);
+
+  const { delete: deleteBlogContent } = useDeleteContent({
+    onSuccess: (result: unknown) => {
+      console.log('delete success', result);
+      return router.navigate({ to: '/learning/learning-resource', replace: true });
     },
-  };
+  });
 
-  const { provider, onSubmit, control, getValues, updateFormData } = useDynamicForm(formConfig);
-  const handleOnSubmit = () => {
-    //
-  };
+  const handleClickDeleteButton = useCallback(async () => {
+    if (
+      await openConfirm({
+        title: t('삭제 하시겠습니까?'),
+        content: t('삭제 후 목록으로 이동합니다.'),
+      })
+    ) {
+      deleteBlogContent(data?.contentUuid as string);
+    }
+  }, [data?.contentUuid]);
 
-  const { confirm: openConfirm } = useModal();
-
-  const save = () => {
-    console.log('save');
-  };
-
-  const onSave = async () => {
-    const feedback = await openConfirm({
-      title: t('LABEL.confirm.save.title'),
-      content: t('LABEL.confirm.save.message'),
+  const handleClickCourseButton = () => {
+    router.navigate({
+      to: '/learning/course/create/view',
     });
-    feedback && save();
   };
-  const goList = async () => {
-    const feedback = await openConfirm({
-      title: t('LABEL.confirm.list.title'),
-      content: t('LABEL.confirm.list.message'),
-    });
-    feedback && save();
-  };
-  const onDelete = async () => {
-    const feedback = await openConfirm({
-      title: t('LABEL.confirm.delete.title'),
-      content: (
-        <p>{`모든 정보가 삭제되며 복구 불가합니다.\n삭제 후 학습자원 조회화면으로 이동합니다.`}</p>
-      ),
-    });
-    feedback && save();
-  };
+
+  useEffect(() => {
+    if (!routerState.location.state?.contentUuid) {
+      router.navigate({
+        to: '/learning/learning-resource',
+        replace: true,
+      });
+    }
+  }, [routerState.location.state]);
+
+  useEffect(() => {
+    if (loginUser?.activeTenant) {
+      setTenantId(loginUser.activeTenant.tenantId);
+    } else {
+      if (loginUser?.tenants?.length) {
+        setTenantId(loginUser.tenants[0].tenantId);
+      }
+    }
+  }, [loginUser]);
+
+  useEffect(() => {
+    if (htmlStatus?.processingStatus === ProcessingStatus.COMPLETE) {
+      setMode('complete');
+    } else {
+      setMode('draft');
+    }
+  }, [htmlStatus]);
 
   return (
-    <form onSubmit={onSubmit(handleOnSubmit)}>
-      <PageContainer>
-        <ContentsButtons>
-          <Button variant="point" size="sm">
-            과정개설
-          </Button>
-          <Button variant="point" size="sm">
-            매핑과정
-          </Button>
-          <Button variant="point" size="sm">
-            공유이력
-          </Button>
-          <Button type={'button'} variant="point" size="sm" onClick={goList}>
-            목록
-          </Button>
-          <Button type={'button'} variant="point" size="sm" onClick={onDelete}>
-            삭제
-          </Button>
-          <Button type={'button'} variant="point" size="sm" onClick={onSave}>
-            저장
-          </Button>
-        </ContentsButtons>
-        <MainContents>
-          <ContentsRow>
-            <FormRow provider={provider} name={'companyModal'} />
-            <FormRow provider={provider} name={'language'} />
-          </ContentsRow>
-          <ContentsRow>
-            <FormRow provider={provider} name={'learningResourceName'} />
-          </ContentsRow>
-          <ContentsRow>
-            <FormRow provider={provider} name={'manager'} />
-            <FormRow provider={provider} name={'contact'} />
-          </ContentsRow>
-          <ContentsRow>
-            <FormRow provider={provider} name={'expirationDate'} />
-          </ContentsRow>
-          <ContentsRow>
-            <FormRow provider={provider} name={'isExternalDevelopmentCompany'} />
-          </ContentsRow>
-          <ContentsRow>
-            <FormRow provider={provider} name="thumbnails" />
-          </ContentsRow>
-          <ContentsRow>
-            <FormRow provider={provider} name="tags" />
-          </ContentsRow>
-          <ContentsRow>
-            {/*학습자원개요*/}
-            <FormRow provider={provider} name="learningResourceOverview" />
-          </ContentsRow>
-
-          <ContentsRow>
-            {/* 키워드 */}
-            <FormRow provider={provider} name="keywords" />
-          </ContentsRow>
-          <ContentsRow>
-            <FormRow
-              provider={provider}
-              name={'sharedChannels'}
-              element={<SharedChannelGridFormField />}
+    <PageContainer>
+      <ContentsButtons>
+        {mode === 'complete' && (
+          <>
+            <Button
+              type="button"
+              variant="search"
+              size="sm"
+              label={t('과정개설')}
+              onClick={handleClickCourseButton}
             />
-          </ContentsRow>
-          <FormGroup title={'최종확인'} required={true}>
-            <ContentsRow>
-              <FormRow provider={provider} name={'isInspectionConfirmed'} />
-            </ContentsRow>
-            <ContentsRow>
-              <FormRow provider={provider} name={'isCopyrightConfirmed'} />
-            </ContentsRow>
-            <ContentsRow>
-              <FormRow provider={provider} name={'isSecurityConfirmed'} />
-            </ContentsRow>
-          </FormGroup>
-          <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
-            <ContentsHistoryInfoFormField />
-          </ContentsRow>
-        </MainContents>
-        <SubContents>
-          <div className={styles.sub_container}>
-            <ImageInfo />
-          </div>
-        </SubContents>
-      </PageContainer>
-    </form>
+            <Button type="button" variant="point" size="sm" label={t('매핑과정')} />
+            <Button type="button" variant="point" size="sm" label={t('번역현황')} />
+            <Button type="button" variant="point" size="sm" label={t('공유이력')} />
+          </>
+        )}
+        <Button
+          type="button"
+          variant="point"
+          size="sm"
+          label={t('목록')}
+          onClick={handleClickGoListButton}
+        />
+        <Divider orientation="vertical" />
+        <Button
+          type="button"
+          variant="point"
+          size="sm"
+          label={t('LABEL.button.delete')}
+          onClick={handleClickDeleteButton}
+          disabled={!!mappingData?.hasMapping}
+        />
+        <Button type="button" variant="point" size="sm" label={t('LABEL.button.translate')} />
+        <Button
+          type="button"
+          variant="primary"
+          size="sm"
+          label={t('LABEL.button.save')}
+          onClick={handleClickSaveButton}
+        />
+      </ContentsButtons>
+
+      <MainContents>
+        <HtmlDetail
+          ref={formRef}
+          mode={mode}
+          tenantId={tenantId}
+          data={data}
+          hasMapping={mappingData?.hasMapping}
+        />
+      </MainContents>
+
+      <SubContents>
+        {data?.contentUuid && data?.fileUuid && (
+          <FileInfo contentUuid={data.contentUuid} uuid={data.fileUuid} mode={mode} />
+        )}
+      </SubContents>
+    </PageContainer>
   );
 }

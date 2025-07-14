@@ -18,12 +18,9 @@ export const queryOptions = {
     queryKey: queryKeys.detail(channeId),
     queryFn: () => ChannelService.getChannelDetail(channeId),
   }),
-  channelByRoleId: <T = ChannelByRoleId>(
-    roleId: number,
-  ): UseQueryOptions<PaginationResponse<T>> => ({
+  channelByRoleId: <T = ChannelByRoleId[]>(roleId: number): UseQueryOptions<T> => ({
     queryKey: queryKeys.channelByRoleId(roleId),
-    queryFn: async (): Promise<PaginationResponse<T>> =>
-      ChannelService.fetchChannelByRoleId(roleId),
+    queryFn: async (): Promise<T> => ChannelService.fetchChannelByRoleId(roleId),
   }),
 };
 

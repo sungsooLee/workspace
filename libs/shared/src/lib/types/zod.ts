@@ -9,7 +9,8 @@ export type ValidatorFormat =
   | 'boolean'
   | 'password'
   | 'phone-number'
-  | 'thumbnail-list';
+  | 'thumbnail-list'
+  | 'thumbnail-public';
 export type ValidatorConfig = {
   [key: string]: {
     format:
@@ -23,7 +24,8 @@ export type ValidatorConfig = {
       | 'boolean'
       | 'password'
       | 'phone-number'
-      | 'thumbnail-list';
+      | 'thumbnail-list'
+      | 'thumbnail-public';
     default?: any;
     required?:
       | boolean

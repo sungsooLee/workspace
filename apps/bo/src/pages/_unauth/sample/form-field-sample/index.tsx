@@ -30,7 +30,7 @@ export const Route = createFileRoute('/_unauth/sample/form-field-sample/')({
 });
 
 function RouteComponent() {
-  const { open: openModal } = useModal();
+  const { open: openModal, saveConfirm } = useModal();
   const { provider, onSubmit, getValues, watch } = useDynamicForm2();
 
   // DropdownCodeGroup 필드 값 감시
@@ -46,8 +46,9 @@ function RouteComponent() {
     onFormChange(newValues);
   };
 
-  const handleOnSubmit = (data: any) => {
+  const handleOnSubmit = async (data: any) => {
     console.log('data {} => ', data);
+    await saveConfirm();
   };
 
   const handleFormData = () => {

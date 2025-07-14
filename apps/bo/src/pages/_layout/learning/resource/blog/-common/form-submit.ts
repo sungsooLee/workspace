@@ -1,5 +1,6 @@
-import { getParsedDataFromString, isEmptyData } from '@learnway/shared';
+import { getParsedDataFromString } from '@learnway/shared';
 import { BlogCreateReq, BlogUpdateReq, ContentAddInfoType } from '@types';
+import { getTimeValueFromHour } from '../../-common/common';
 
 export const getPayloadFromBlogSubmit = (options: {
   data: any;
@@ -7,27 +8,7 @@ export const getPayloadFromBlogSubmit = (options: {
   mode: 'create' | 'update';
   contentUuid?: string;
 }) => {
-  const getTimeValueFromHour = (duration: {
-    hour: number;
-    minute: number;
-    second: number;
-  }): number => {
-    const { hour, minute, second } = duration;
-    return hour * 60 * 60 + minute * 60 + second;
-  };
-  console.log(options.data);
-
   const contentTime = getTimeValueFromHour(options.data.contentDuration);
-  const contentThumbnailFileGroupUuid = !isEmptyData(
-    options.data.contentThumbnailFileGroupUuid?.files,
-  )
-    ? options.data.contentThumbnailFileGroupUuid?.files[0].group.groupUuid
-    : '';
-  const selectedContentThumbnailFileUuid = !isEmptyData(
-    options.data.contentThumbnailFileGroupUuid?.files,
-  )
-    ? options.data.contentThumbnailFileGroupUuid?.files[0].fileUuid
-    : '';
 
   const payload: BlogCreateReq = {
     tenantId: options.tenantId,
@@ -49,8 +30,8 @@ export const getPayloadFromBlogSubmit = (options: {
     vendorCoordinatorName: options.data.vendorCoordinatorName,
     vendorTelCountryCode: options.data.vendorTelCountryCode,
     vendorTelNo: options.data.vendorTelNo,
-    contentThumbnailFileGroupUuid,
-    selectedContentThumbnailFileUuid,
+    contentThumbnailFileGroupUuid: options.data.contentThumbnailFileGroupUuid,
+    selectedContentThumbnailFileUuid: options.data.selectedContentThumbnailFileUuid,
     isCourseUsed: options.data.isCourseUsed,
     isContentSecured: options.data.isContentSecured,
     isInspected: options.data.isInspected,

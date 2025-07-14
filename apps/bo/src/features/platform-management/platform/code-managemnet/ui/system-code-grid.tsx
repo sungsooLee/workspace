@@ -1,19 +1,20 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useSystemCodeDetail } from '@entities/common-code/service/system-code.hook';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import {
   ContentsRow,
   Divider,
+  FormSubTitle,
   GridBox,
   GridImperative,
   Input,
   SplitPanel,
   Textarea,
 } from '@learnway/ui';
-import { t } from 'i18next';
-import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
+import { FormRow } from '@shared/ui';
 import { createColumnHelper, Table } from '@tanstack/react-table';
-import { useSystemCodeDetail } from '@entities/common-code/service/system-code.hook';
-import { FormRow, FormSubTitle } from '@shared/ui';
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { t } from 'i18next';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 const columnHelper = createColumnHelper<any>();
 const listGridColumns = [

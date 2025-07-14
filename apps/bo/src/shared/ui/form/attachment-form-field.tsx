@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 // IA011 / NLP_BO_PMS_1100_5
 import { forwardRef, useEffect, useState } from 'react';
 import { Attachment } from '@learnway/ui'; // @learnway/ui에서 Attachment 컴포넌트 import
@@ -13,7 +14,7 @@ import { compact, difference, map } from 'lodash';
  * AttachmentFormField 컴포넌트의 props 인터페이스
  * 폼 필드로서 Attachment 컴포넌트를 래핑하여 폼 시스템과 통합합니다.
  */
-interface AttachmentFormFieldProps extends BaseFormFieldProps<string[] | string | undefined> {
+interface AttachmentFormFieldProps extends BaseFormFieldProps<string[] | string> {
   uploadConfig: S3UploaderConfig;
   uuidType: 'files' | 'group';
 }
@@ -66,7 +67,6 @@ const AttachmentFormFieldComponent = forwardRef<
       onFetch,
       inputAccept,
       groupUuid,
-      setGroupUuid,
     } = useS3Uploader({
       s3Path,
       affairsType,
@@ -92,7 +92,6 @@ const AttachmentFormFieldComponent = forwardRef<
 
     async function fetchGroupInfo(groupUuid: string) {
       const groupInfo = await getGroupInfo(groupUuid);
-      setGroupUuid(groupUuid);
       fetchFileInfo(groupInfo.files.map((_) => _.fileUuid));
     }
 
@@ -172,7 +171,6 @@ const AttachmentFormFieldComponent = forwardRef<
           wrapSize={'lg'}
           {...props}
         />
-        <input type="hidden" name={name} value={fileUuids} />
       </>
     );
   },

@@ -12,7 +12,6 @@ import {
 } from '@learnway/icons';
 import { EducationPlacePopup } from '../../../features/layout';
 
-import definitionListStyles from '../../../pages/_layout/course-introduction/definition-list.module.css';
 import bulletStyles from '../../../shared/ui/list/bullet.module.css';
 import styles from './education.module.css';
 
@@ -60,10 +59,7 @@ const EducationComponent = ({ className }: EducationProps) => {
         </div>
       </div>
       <div className={styles.info_box}>
-        {/* definitionListStyles module */}
-        <div
-          className={`${definitionListStyles.start} ${definitionListStyles.list} ${styles.list}`}
-        >
+        <div className={styles.list}>
           <ul>
             <li>
               <IcoCalendar01 width={20} height={20} stroke="#4d525c" />

@@ -1,33 +1,31 @@
-import { useRef, useEffect, useImperativeHandle, forwardRef } from 'react';
-import { t } from 'i18next';
-import { useTranslation } from 'react-i18next';
+import { DuplicateCheckInputFormField, DuplicateState, FormDisplay } from '@features/form';
+import { CODE_GROUP, DynamicFormConfig, S3_PATH, useDynamicForm } from '@learnway/hooks';
 import {
   Button,
   ChipListModalSelectorFormField,
   ContentsRow,
   Input,
-  TextareaFormField,
   RadioGroupFormField,
-} from '@learnway/ui';
-import { DuplicateCodeGuideText } from '@features/platform-management/platform/category-managemnet';
-import { cn } from '@learnway/shared';
-import {
+  TextareaFormField,
   FormSubTitle,
-  ThumbnailListFormField,
+} from '@learnway/ui';
+import {
   ChipListFormField,
   ContentsHistoryInfoFormField,
-  TenantChoiceModal,
-  UserChoiceModal,
-  FormRow,
   FormItem,
+  FormRow,
+  TenantShuttleModal,
+  UserChoiceModal,
 } from '@shared/ui';
-import { EnGlobalConst, EnFormMode } from '@types';
-import { DuplicateCheckInputFormField, DuplicateState, FormDisplay } from '@features/form';
-import { DynamicFormConfig, useDynamicForm, CODE_GROUP, S3_PATH } from '@learnway/hooks';
-import { useGetRequestChannelDetail } from '@entities/channel/service/request-channel.hook';
+import { EnFormMode } from '@types';
+import { t } from 'i18next';
+import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
-import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import ChannelService from '@entities/channel/api/channel';
+import { useFetchAuthUser } from '@learnway/auth/entities';
+import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+import { useWatch } from 'react-hook-form';
 
 export enum EnChannelRegisterMethod {
   REQUEST = 'REQUEST',
@@ -42,32 +40,74 @@ interface ChannelDetailProps {
 
 const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
   const { t } = useTranslation();
+  const { data: loginUser } = useFetchAuthUser();
 
-  const { provider, updateFormData, onSubmit, onFormChange, clearFormError, getValues } =
-    useDynamicForm(formConfig);
+  const { provider, control, updateFormData, onSubmit, onFormChange, getValues } =
+    useDynamicForm(formConfig());
 
   const formRef = useRef<HTMLFormElement>(null);
 
   //const { data: request } = useGetRequestChannelDetail(props.requestId);
 
+  const watchedChannelTenatMappingType = useWatch({
+    control,
+    name: 'channelTenatMappingType',
+  });
+
   useEffect(() => {
-    console.log('### mode=', props.mode);
-    console.log('### method=', props.method);
+    if (!loginUser) return;
+    const tenantList: any[] = [];
+    // TODO. ChipList 수정되면 대표 테넌트는 삭제되지 않도록 수정
+    if (loginUser.activeTenant) {
+      tenantList.push({ ...loginUser.activeTenant });
+    } else {
+      if (loginUser.tenants && loginUser.tenants.length > 0) {
+        tenantList.push(loginUser.tenants[0]);
+      }
+    }
+
     if (props.mode === EnFormMode.ADD) {
+      console.log('### getValues', getValues());
       const initialData = {
+        channelRequestId: '',
+        tenantName: '',
+        requestDate: '',
+        channelLearningContent: '',
+        channelPurposeContent: '',
         channelCreationType:
           props.method === EnChannelRegisterMethod.REQUEST ? 'REQUEST_CREATE' : 'MANUAL_CREATE',
+        channelName: '',
+        channelMainId: {
+          fieldValue: '',
+          checkState: 'needInput',
+        },
+        channelUrl: '',
         channelTenatMappingType: 'MAPPING_TENANT',
+        tenantList,
         channelSecretType: 'NOT_SECRET',
         channelSubscriptionType: 'MANUAL',
+        channelOwnerUserList: [],
         fileStorageType: 'AWS_INTERNAL',
+        isUsed: false,
+        isDisplay: false,
+        channelProfileImageFile: [],
+        channelHomeImageFile: [],
+        channelDesc: '',
+        channelTagList: [],
+        isEnrollOption: false,
         isTextBookOption: true,
         isInstructorOption: true,
+        isPassOption: false,
         isCommunicationOption: true,
         isLearningEnvOption: true,
         isLearningControlOption: true,
         isRelatedCourseOption: true,
         isAdminDataOption: true,
+        isCarTenantCustomOption: false,
+        isRotemTenantCustomOption: false,
+        isOutsourcingTenantCustomOption: false,
+        isWiaTenantCustomOption: false,
+        isAutoeverTenantCustomOption: false,
       };
       updateFormData(initialData);
     } else if (props.mode === EnFormMode.VIEW) {
@@ -155,20 +195,23 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
         <FormRow
           provider={provider}
           name={'channelMainId'}
-          element={<DuplicateCheckInputFormField onDuplicationCheck={duplicateCheck} />}
+          element={
+            <DuplicateCheckInputFormField
+              type={'alphanumeric'}
+              onDuplicationCheck={duplicateCheck}
+            />
+          }
         />
       </ContentsRow>
       <ContentsRow>
-        <FormRow
-          provider={provider}
-          name={'channelUrl'}
-          element={<Input disabled={true} readOnly={true} />}
-        />
+        <FormRow provider={provider} name={'channelUrl'} element={<Input disabled={true} />} />
         <FormRow
           provider={provider}
           name={'channelTenatMappingType'}
-          element={<RadioGroupFormField />}
+          element={<RadioGroupFormField disabled={true} />}
         />
+        {/* 직접 개설인 경우에는 일반 채널만 가능 
+        //TODO. 유니버설의 경우 대표 테넌트 자동 선택(readOnly or disabled), 업로드 파일 저장소(채널), 과정 연관 설정(수강신청 ~ 행정항목), 테넌트 전용항목은 대표 테넌트의 설정 값을 가져온다 */}
         <FormRow provider={provider} name={'channelSecretType'} />
       </ContentsRow>
       <ContentsRow>
@@ -188,8 +231,9 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
               modalConfig={{
                 title: '',
                 width: 'xl',
-                content: <TenantChoiceModal />,
+                content: <TenantShuttleModal />,
               }}
+              disabled={watchedChannelTenatMappingType === 'MAPPING_TENANT'}
             />
           }
         />
@@ -562,7 +606,7 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
 
 export const ChannelDetail = forwardRef(ChannelDetailComponent);
 
-const formConfig: DynamicFormConfig = {
+const formConfig = (): DynamicFormConfig => ({
   builders: [
     {
       name: 'channelRequestId',
@@ -653,7 +697,7 @@ const formConfig: DynamicFormConfig = {
       name: 'channelSecretType',
       type: 'radio-group',
       label: t('채널 구분'),
-      value: 'PUBLIC',
+      value: '',
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.channel.ChannelSecretType'],
       },
@@ -947,4 +991,4 @@ const formConfig: DynamicFormConfig = {
     channelDesc: true,
     channelTagList: true,
   },
-};
+});

@@ -40,17 +40,20 @@ export const queryOptions = {
 };
 
 export const mutateOptions = {
-  create: () => ({
+  createInstructor: () => ({
     mutationFn: (payload: any) => InstructorService.insertInstructor(payload),
   }),
-  update: () => ({
+  updateInstructor: () => ({
     mutationFn: (payload: any) => {
       const instructorId = payload.instructorId;
       delete payload.instructorId;
       return InstructorService.updateInstructor(instructorId, payload);
     },
   }),
-  delete: () => ({
+  deleteInstructor: () => ({
     mutationFn: (instructorId: number) => InstructorService.deleteInstructor(instructorId),
+  }),
+  createTutor: () => ({
+    mutationFn: (payload: any) => InstructorService.insertTutor(payload),
   }),
 };

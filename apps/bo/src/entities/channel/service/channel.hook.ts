@@ -21,10 +21,10 @@ export function useGetChannelDetail(channeId: number) {
  * @param roleId - 역할
  * @param options - 추가 쿼리 옵션.
  */
-export const useFetchChannelByRoleId = <T = ChannelByRoleId>(
+export const useFetchChannelByRoleId = <T = ChannelByRoleId[]>(
   roleId: number,
-  options?: UseQueryOptions<PaginationResponse<T>, Error>,
-): UseQueryResult<PaginationResponse<T>, Error> => {
+  options?: UseQueryOptions<T, Error>,
+): UseQueryResult<T, Error> => {
   return useQuery({ ...queryOptions.channelByRoleId<T>(roleId), ...options });
 };
 

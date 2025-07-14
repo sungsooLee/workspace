@@ -1,44 +1,44 @@
-import React, { useEffect, useState } from 'react';
-import { useWatch } from 'react-hook-form';
-import { t } from 'i18next';
-import { useQueryClient } from '@tanstack/react-query';
+import {
+  DepartmentService,
+  useCreateDepartment,
+  useDeleteDepartment,
+  useGetCompanyDepartmentDetail,
+  useGetCompanyDepartmentTree,
+  useGetCompanyHmgDepartmentTree,
+  useMoveDepartment,
+  useUpdateDepartment,
+} from '@entities/department';
+import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
+import { findOrganizationPathById } from '@features/platform-management/company';
+import { transformDepartmentApiDataToTreeData } from '@features/platform-management/company/company-organization-management/service/company-organization.service';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { cn } from '@learnway/shared';
 import {
   Button,
   ChipListModalSelectorFormField,
   ContentsRow,
+  FormSubTitle,
   Input,
+  SplitPanel,
+  Tabs,
   TextareaFormField,
   TreeBox,
   TreeContainer,
-  Tabs,
+  TreeEventPayload,
   TreeNode,
   useModal,
-  TreeEventPayload,
-  SplitPanel,
 } from '@learnway/ui';
-import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
-import { UserChoiceModal, FormRow, FormSubTitle } from '@shared/ui';
-import { transformDepartmentApiDataToTreeData } from '@features/platform-management/company/company-organization-management/service/company-organization.service';
-import { findOrganizationPathById } from '@features/platform-management/company';
-import {
-  useGetCompanyDepartmentDetail,
-  useGetCompanyHmgDepartmentTree,
-  useGetCompanyDepartmentTree,
-  useCreateDepartment,
-  useUpdateDepartment,
-  useMoveDepartment,
-  useDeleteDepartment,
-  DepartmentService,
-  queryKeys,
-} from '@entities/department';
+import { FormRow, UserChoiceModal } from '@shared/ui';
+import { useQueryClient } from '@tanstack/react-query';
+import { EnFormMode } from '@types';
+import { t } from 'i18next';
+import { useEffect, useState } from 'react';
+import { useWatch } from 'react-hook-form';
 import { CompanyOrganizationInfoList } from './company-organization-info-list';
 import { CompanyOrganizationUserList } from './company-organization-info-user';
-import { EnFormMode } from '@types';
-import { DuplicateState, DuplicateCheckInputFormField } from '@features/form';
 
-import styles from '@learnway/styles/bo/features/role/role-info.module.css';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
+import styles from '@learnway/styles/bo/features/role/role-info.module.css';
 
 export enum EnOrganizationShowType {
   check = 'check',
@@ -364,7 +364,7 @@ const TenantCompanyOrganizationTreeComponent = ({
 
   const renderTreeCustomButtonNode = (node: TreeNode, level: number) => {
     if (level === 0) return;
-
+    console.log('<>>>>> node', node);
     if (showType === EnOrganizationShowType.origin) {
       return (
         <div className={'gap-10px flex'}>
@@ -386,18 +386,22 @@ const TenantCompanyOrganizationTreeComponent = ({
       return (
         <div className={'gap-10px flex'}>
           <div className={'flex items-center'}>
-            <Button
-              label={t('하위 조직 추가')}
-              variant={
-                node?.key === selectedNode?.key && formMode === EnFormMode.ADD ? 'primary' : 'gray2'
-              }
-              size="xs"
-              type="button"
-              stopPropagation
-              onClick={(e) => {
-                handleAppendSubOrganization(node, level);
-              }}
-            />
+            {node.hrInfoManageType !== 'AUTO_MANAGE' && (
+              <Button
+                label={t('하위 조직 추가')}
+                variant={
+                  node?.key === selectedNode?.key && formMode === EnFormMode.ADD
+                    ? 'primary'
+                    : 'gray2'
+                }
+                size="xs"
+                type="button"
+                stopPropagation
+                onClick={(e) => {
+                  handleAppendSubOrganization(node, level);
+                }}
+              />
+            )}
             <Button
               label={t('선택')}
               variant={

@@ -1,14 +1,22 @@
+/* eslint-disable no-restricted-imports */
 /* eslint-disable @nx/enforce-module-boundaries */
 import React, { memo, ReactNode, useState, useEffect, useRef } from 'react';
 import { Link } from '@tanstack/react-router';
 // import { useTranslation } from 'react-i18next';
 import { Breadcrumbs } from './breadcrumbs/breadcrumbs';
-import { Button, Popover, Divider } from '@learnway/ui';
+import { Button, Popover, Divider, Tooltip } from '@learnway/ui';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-container.module.css';
 import fabStyles from '@learnway/styles/bo/assets/styles/modules/fab.module.css'; /* fab */
 import tooltipPopoverStyles from '@learnway/styles/bo/assets/styles/modules/tootip-popover.module.css';
 import { NoticeBox } from '../../../../../../../bo/src/shared/ui';
-import { IcoStar, IcoArrowLineTop, IcoAlertCircle, IcoClose02 } from '@learnway/icons'; // 2025-02-14 버튼 케이스 추가
+import {
+  IcoStar,
+  IcoArrowLineTop,
+  IcoAlertCircle,
+  IcoClose02,
+  IcoTranslation,
+  IcoImport,
+} from '@learnway/icons'; // 2025-02-14 버튼 케이스 추가
 import { cn } from '@learnway/shared';
 
 interface PageContainerComponentProps {
@@ -193,6 +201,26 @@ function PageContainerComponent({
                 <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
               </Popover>
             )}
+            {/* 퍼블수정 20250714 추가 S */}
+            <span className={styles.status_view}>
+              <Tooltip
+                className={styles.tooltip_area}
+                side="bottom"
+                align="start"
+                content={'가져온 과정입니다.'}
+              >
+                <IcoImport className={styles.icon_import} />
+              </Tooltip>
+              <Tooltip
+                className={styles.tooltip_area}
+                side="bottom"
+                align="start"
+                content={'변역 중입니다.'}
+              >
+                <IcoTranslation className={styles.icon_translation} />
+              </Tooltip>
+            </span>
+            {/* 퍼블수정 20250714 추가 E */}
           </h3>
           <div className={styles.btn_wrap}>
             <div className={styles.link_box}>

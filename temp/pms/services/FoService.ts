@@ -6,7 +6,6 @@ import type { com_ever_edu_pms_channel_dto_req_ChannelRequestSaveReqDto } from '
 import type { com_ever_edu_pms_channel_dto_req_ChannelSearchReqDto } from '../models/com_ever_edu_pms_channel_dto_req_ChannelSearchReqDto';
 import type { com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto } from '../models/com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto';
 import type { com_ever_edu_pms_channel_dto_res_ChannelResDto } from '../models/com_ever_edu_pms_channel_dto_res_ChannelResDto';
-import type { com_ever_edu_pms_channel_entity_ChannelRequestEntity } from '../models/com_ever_edu_pms_channel_entity_ChannelRequestEntity';
 import type { com_ever_edu_pms_company_dto_res_CompanyResDto } from '../models/com_ever_edu_pms_company_dto_res_CompanyResDto';
 import type { com_ever_edu_pms_menu_dto_res_GnbTenantMenuTreeDto } from '../models/com_ever_edu_pms_menu_dto_res_GnbTenantMenuTreeDto';
 import type { com_ever_edu_pms_notification_dto_req_AlarmSaveReqDto } from '../models/com_ever_edu_pms_notification_dto_req_AlarmSaveReqDto';
@@ -627,12 +626,12 @@ export class FoService {
      * 채널 신청 등록
      * 신청한 채널을 신규 등록한다.
      * @param requestBody
-     * @returns com_ever_edu_pms_channel_entity_ChannelRequestEntity OK
+     * @returns com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto OK
      * @throws ApiError
      */
     public static registerChannelRequest(
         requestBody: com_ever_edu_pms_channel_dto_req_ChannelRequestSaveReqDto,
-    ): CancelablePromise<com_ever_edu_pms_channel_entity_ChannelRequestEntity> {
+    ): CancelablePromise<com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/user/api/v1/request/channel',

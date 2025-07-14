@@ -3,7 +3,7 @@ import { isMobile } from 'react-device-detect';
 import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
-import logoImage from '@learnway/styles/fo/assets/images/logo_footer.png';
+import logoImage from '@learnway/styles/fo/assets/images/logo_foot.png';
 import { Dropdown, Button, useModal } from '@learnway/ui';
 import styles from '@learnway/styles/fo/widgets/layout/ui/main/footer/footer.module.css';
 import { AgreementPopup, PrivacyPopup, ContactPopup } from '../../../../../features/auth';
@@ -64,40 +64,35 @@ function FooterComponent() {
                         })
                       }
                     >
-                      <strong>개인정보 처리방침</strong>
+                      <strong>개인정보처리방침</strong>
                     </Button>
                   ) : (
                     <Link to="/footer-menu/privacy">
-                      <strong>개인정보 처리방침</strong>
+                      <strong>개인정보처리방침</strong>
                     </Link>
                   )}
                 </li>
-                <li>{isMobile ? '' : '오픈소스 라이선스'}</li>
-                <li>{isMobile ? '' : '사이트맵'}</li>
+                {/* <li>{isMobile ? '' : '오픈소스 라이선스'}</li>
+                <li>{isMobile ? '' : '사이트맵'}</li> */}
               </ul>
             </div>
 
             <div className={styles.info_box}>
               <span className={styles.info}>
-                <span className={styles.space}>사업자등록번호 : 123-12-12345</span>{' '}
-                <span className={styles.space}>통신판매업신고번호 : 제1234-서울강남-1234호</span>{' '}
-                <span className={styles.space}>대표이사 : 홍길동</span>
-              </span>
-              <address className={styles.address}>
-                <span className={styles.space}>주소 : 서울시 강남구 테헤란로 510</span>{' '}
-                <span className={styles.space}>호스팅 서비스 제공 : 현대오토에버(주)</span>{' '}
+                <span className={styles.space}>문의 전화번호 : 080-224-9696</span>{' '}
+                <span className={styles.space}>문의 이메일 : 7023688@hyundai-autoever.com</span>{' '}
                 <span className={styles.space}>
-                  고객센터 : <span className={styles.tel}>080-600-6000, 080-200-6000</span>
+                  평일 09:00 ~18:00 (점심시간 12:00 ~ 13:00 제외)
                 </span>
-              </address>
+              </span>
               <div className={styles.copyright}>
-                Copyright © 2023 Hyundai-Autoever. All rights reserved.
+                COPYRIGHT 2025 HYUNDAI AUTOEVER. ALL RIGHTS RESERVED
               </div>
             </div>
           </div>
 
-          <div className={styles.family_site_info}>
-            {/* 퍼블수정 : 드랍다운으로 변경 */}
+          {/* <div className={styles.family_site_info}>
+           
             <Dropdown
               options={options}
               value={selectedValues}
@@ -107,7 +102,7 @@ function FooterComponent() {
               isMulti={false}
               size={'lg'}
             />
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

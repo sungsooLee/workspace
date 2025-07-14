@@ -14,7 +14,6 @@ export * from './form/checkbox-form-field';
 export * from './form/chip-list-form-field';
 export * from './form/components/form-guide-text';
 export * from './form/components/form-info-area';
-export * from './form/components/form-sub-title';
 export * from './form/components/form-item';
 export * from './form/contents-history-info-form-field';
 export * from './form/custom-form-field';
@@ -82,5 +81,3 @@ export * from './search-box/search-box';
 export * from './search-box/search-field-config';
 export * from './search-box/type';
 export * from './temp-server-status/server-status';
-
-export * from '../lib/convert-to-thumbnail-object';

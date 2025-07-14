@@ -101,7 +101,10 @@ export const buildJodObject = (validator: ValidatorConfig): ZodSchema => {
         break;
       }
       case 'thumbnail-list':
-        schema = z.any();
+        schema = z.array(z.string()).or(z.string());
+        break;
+      case 'thumbnail-public':
+        schema = z.array(z.string());
         break;
       default:
         console.log('🚀 ~ buildJodObject ~ config:', config);
@@ -136,7 +139,8 @@ export const buildJodObject = (validator: ValidatorConfig): ZodSchema => {
           (config.fn && typeof config.fn === 'function' ? config.fn(data) : true) &&
           isData
         ) {
-          const message = typeof config.message === 'function' ? config.message(data) : config.message;
+          const message =
+            typeof config.message === 'function' ? config.message(data) : config.message;
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
             path: [config.path],
@@ -150,7 +154,8 @@ export const buildJodObject = (validator: ValidatorConfig): ZodSchema => {
     if (conditionsSuperRefine.length > 0) {
       conditionsSuperRefine.forEach(({ config }) => {
         if (config.fn ? config.fn(data) : false) {
-          const message = typeof config.message === 'function' ? config.message(data) : config.message;
+          const message =
+            typeof config.message === 'function' ? config.message(data) : config.message;
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
             path: [config.path],

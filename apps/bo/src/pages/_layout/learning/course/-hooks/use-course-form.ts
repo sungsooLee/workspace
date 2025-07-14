@@ -1,12 +1,17 @@
 import { useCallback, useRef, useState } from 'react';
-import { CourseTab, TabFormRef } from '../-common/type';
+import { CourseTab, CourseTabData, TabFormRef } from '../-common/type';
 
 import { useCreateCourse, useDeleteCourse } from '@entities/course';
 import { queryOptions } from '@entities/course/service/course.queries';
 import { useQueryClient } from '@tanstack/react-query';
 import { Course, CourseConfig } from '@types';
 import { useCourseSaveMutations } from './use-course-save-mutation';
-import { getDummyCourse, getDummyCourse2, getDummyCourseConfig } from './course-mock-data';
+import {
+  getDummyCourse,
+  getDummyCourse2,
+  getDummyCourse4,
+  getDummyCourseConfig,
+} from './course-mock-data';
 
 export const useCourseForm = (courseType?: string) => {
   // 현재 활성 탭
@@ -29,11 +34,12 @@ export const useCourseForm = (courseType?: string) => {
   });
 
   // 전체 폼 데이터 상태
-  const [data, setData] = useState<{ formData: Course; courseConfig: CourseConfig }>({
+  const [data, setData] = useState<CourseTabData>({
     formData: responseDataToFormData({
       courseType,
     } as Course),
     courseConfig: {} as CourseConfig,
+    isSaved: false,
   });
 
   // ref 설정 함수들
@@ -90,7 +96,7 @@ export const useCourseForm = (courseType?: string) => {
             channelUuid: formData.channelUuid,
           }),
         );
-        setData((prev) => ({ ...prev, formData, courseConfig }));
+        setData((prev) => ({ ...prev, formData, courseConfig, isSaved: true }));
         return { success: true, data: formData };
       } catch (error) {
         console.error('데이터 조회 중 오류:', error);
@@ -169,8 +175,15 @@ export const useCourseForm = (courseType?: string) => {
   }, []);
 
   // 테스트용
-  const loadMockData = useCallback((type: 1 | 2 = 2) => {
-    const dummyData = type === 1 ? getDummyCourse() : getDummyCourse2();
+  const loadMockData = useCallback((type = 1) => {
+    const dummyData =
+      type === 1
+        ? getDummyCourse()
+        : type === 2
+          ? getDummyCourse2()
+          : type === 4
+            ? getDummyCourse4()
+            : getDummyCourse();
     setData((prev) => ({
       ...prev,
       formData: dummyData as Course,

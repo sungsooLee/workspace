@@ -90,7 +90,7 @@
       @apply !w-[32px] !max-w-[32px] !px-0;
     }
     svg {
-      @apply !mr-0 fill-none stroke-none;
+      @apply !mr-0 h-[16px] w-[16px] fill-none stroke-none;
       path {
         @apply stroke-[var(--gray9)];
       }
@@ -106,7 +106,7 @@
   }
 }
 .form_display {
-  @apply mt-[4px] flex w-full flex-wrap border-t-[1px] border-solid border-[#E5ECF5] pt-[20px];
+  @apply mt-[6px] flex w-full flex-wrap border-t-[1px] border-solid border-[#E5ECF5] pt-[12px];
   .box {
     @apply flex;
     .dash {

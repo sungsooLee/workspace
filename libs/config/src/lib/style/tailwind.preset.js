@@ -652,7 +652,7 @@ module.exports = {
 
         '.label-xl-b': {
           ...baseTitle,
-          fontSize: '1.4rem',
+          fontSize: '1.6rem',
           fontWeight: '600',
         },
 

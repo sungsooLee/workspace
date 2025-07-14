@@ -1,6 +1,8 @@
 import {
   BlogCreateReq,
   BlogUpdateReq,
+  HtmlVideoFileChangeReq,
+  HtmlVideoMetadataReq,
   PostDraftHtmlVideoParams,
   PostDraftVideosParams,
 } from '@types';
@@ -20,8 +22,9 @@ export const queryKeys = {
   sharedHistories: ['shared-histories'] as const,
   programGuideDownload: ['program-guide-download'] as const,
   html5Draft: ['html5-draft'] as const,
-  html5FileChange: ['html5-file-change'] as const,
+  html5MetaUpdate: ['html5-update'] as const,
   html5Resource: ['html5-resource'] as const,
+  html5Status: ['html5-status'] as const,
   blogResource: ['blog-resource'] as const,
 };
 
@@ -95,23 +98,16 @@ export const learningResourceQueryOptions = {
     enabled: false,
   }),
 
-  createHTML5Draft: (params: PostDraftHtmlVideoParams) => ({
-    queryKey: queryKeys.html5Draft,
-    queryFn: () => LearningResourceService.createHTML5Draft(params),
-    cacheTime: 0,
-    staleTime: 0,
-    enabled: true,
-  }),
-  updateHTML5FileChange: (params: { contentUuid: string; fileUuid: string }) => ({
-    queryKey: queryKeys.html5FileChange,
-    queryFn: () => LearningResourceService.updateHTML5FileChange(params),
-    cacheTime: 0,
-    staleTime: 0,
-    enabled: true,
-  }),
   getHTML5Resource: (contentUuid: string) => ({
     queryKey: queryKeys.html5Resource,
     queryFn: () => LearningResourceService.fetchHTML5Resource(contentUuid),
+    cacheTime: 0,
+    staleTime: 0,
+    enabled: true,
+  }),
+  getHTML5Status: (contentUuid: string) => ({
+    queryKey: queryKeys.html5Status,
+    queryFn: () => LearningResourceService.fetchHTML5Status(contentUuid),
     cacheTime: 0,
     staleTime: 0,
     enabled: true,
@@ -132,6 +128,14 @@ export const mutateOptions = {
   postDraftHTML5: () => ({
     mutationFn: (params: PostDraftHtmlVideoParams) =>
       LearningResourceService.createHTML5Draft(params),
+  }),
+  updateHTML5Metadata: () => ({
+    mutationFn: (params: HtmlVideoMetadataReq) =>
+      LearningResourceService.updateHTML5Metadata(params),
+  }),
+  updateHTML5FileChange: () => ({
+    mutationFn: (params: HtmlVideoFileChangeReq) =>
+      LearningResourceService.updateHTML5FileChange(params),
   }),
   createBlogContent: () => ({
     mutationFn: (params: BlogCreateReq) => LearningResourceService.createBlogContent(params),

@@ -95,12 +95,13 @@ export class ScormRteClient {
     //  }
   }
 
-  send(data: any) {
-    // 전송 처리
-    //  return _comm.send((typeof data === "string") ?
-    //                 data : JSON.stringify(data));
-    return 'true';
-  }
+  // send 함수 사용하지 않음.
+  //send(data: any) {
+  // 전송 처리
+  //  return _comm.send((typeof data === "string") ?
+  //                 data : JSON.stringify(data));
+  //    return 'true';
+  //}
 
   getErrorManager() {
     return this._errorManager;

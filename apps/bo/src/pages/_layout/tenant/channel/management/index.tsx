@@ -14,6 +14,7 @@ import {
   ChannelRequestChoiceModal,
 } from '@shared/ui';
 import { EnGlobalConst } from '@types';
+import { getChannelUrl } from '@features/channel/channel-application/service/channel-application.service';
 
 export const Route = createFileRoute('/_layout/tenant/channel/management/')({
   component: RouteComponent,
@@ -166,8 +167,8 @@ const searchConfig: SearchBoxConfig = {
         value: undefined,
         options: [
           { value: undefined, label: t('전체') },
-          { value: true, label: t('활성화') },
-          { value: false, label: t('비활성화') },
+          { value: true, label: t('노출') },
+          { value: false, label: t('비노출') },
         ],
       },
       {
@@ -240,7 +241,7 @@ const columns = [
       <Button
         variant="link"
         label={info.getValue()}
-        onClick={() => window.open(`https://learningway.com/@${info.getValue()}`, '_blank')}
+        onClick={() => window.open(getChannelUrl(info.getValue()), '_blank')}
       />
     ),
     header: t('채널 핸들'),

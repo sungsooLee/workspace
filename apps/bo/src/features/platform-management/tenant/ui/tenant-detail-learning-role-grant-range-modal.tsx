@@ -1,31 +1,30 @@
-import { useEffect, useRef, useState } from 'react';
 import { t } from 'i18next';
+import { useRef, useState } from 'react';
 
 /* style */
+import dataInfostyles from '@learnway/styles/bo/assets/styles/modules/data-info.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form module css
 import popLayoutstyles from '@learnway/styles/bo/assets/styles/modules/popup-layout.module.css';
-import dataInfostyles from '@learnway/styles/bo/assets/styles/modules/data-info.module.css';
 import selectMenuStyles from '@learnway/styles/bo/assets/styles/modules/select-menu.module.css';
 
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { IcoAlertCircle, IcoFormRequired } from '@learnway/icons';
+import { cn } from '@learnway/shared';
 import {
   Button,
   ContentsRow,
-  DatePicker,
+  FormSubTitle,
   ModalBody,
   ModalContainer,
   ModalFooter,
   ModalTitle,
-  Switch,
   Tooltip,
   useModal,
 } from '@learnway/ui';
-import { IcoAlertCircle, IcoFormRequired } from '@learnway/icons';
-import { cn } from '@learnway/shared';
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 
-import { FormRow, FormSubTitle } from '@shared/ui';
-import { DateRangeFormField } from '@shared/ui/search-box';
 import { useSaveUsers } from '@entities/role/service/role-manage.hook';
+import { FormRow } from '@shared/ui';
+import { DateRangeFormField } from '@shared/ui/search-box';
 
 /**
  * 화면번호: NLP_BO_PMS_1111 (데이터접근범위 일괄적용)

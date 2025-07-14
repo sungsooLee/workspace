@@ -1,14 +1,13 @@
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import { IcoAlertCircle, IcoFormRequired } from '@learnway/icons';
+import { cn } from '@learnway/shared';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
-import popLayoutstyles from './contents-layout.module.css';
-import styles from './setting-item.module.css';
-import { useState } from 'react';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import {
   Button,
   Checkbox,
   ContentsRow,
   DatePicker,
+  FormSubTitle,
   GridBox,
   InputModalSelectorFormField,
   ModalBody,
@@ -20,10 +19,11 @@ import {
   Tooltip,
   useModal,
 } from '@learnway/ui';
-import { IcoAlertCircle, IcoFormRequired, IcoRefresh02, IcoSearch } from '@learnway/icons';
-import { cn } from '@learnway/shared';
-import { FormSubTitle } from '@shared/ui';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { useState } from 'react';
+import popLayoutstyles from './contents-layout.module.css';
 import { SelectCoordinatorModal } from './learning-resource-select-coordinator-modal';
+import styles from './setting-item.module.css';
 
 function BatchSettingModalComponent() {
   const { close: closeModal } = useModal();

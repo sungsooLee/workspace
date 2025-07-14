@@ -1,19 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
-import { t } from 'i18next';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
+import { t } from 'i18next';
+import { useEffect, useRef, useState } from 'react';
 
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 
-import {
-  Button,
-  CheckboxGroupFormField,
-  ChipListModalSelectorFormField,
-  ContentsRow,
-  Switch,
-  TextareaFormField,
-  Tooltip,
-  useModal,
-} from '@learnway/ui';
 import {
   CODE_GROUP,
   DynamicFormConfig,
@@ -21,28 +11,38 @@ import {
   useCodeStore,
   useDynamicForm,
 } from '@learnway/hooks';
+import {
+  Button,
+  CheckboxGroupFormField,
+  ChipListModalSelectorFormField,
+  ContentsRow,
+  FormSubTitle,
+  Switch,
+  TextareaFormField,
+  Tooltip,
+  useModal,
+} from '@learnway/ui';
 
 import {
-  FormSubTitle,
-  FormRow,
   CompanyShuttleModal,
-  UserChoiceModal,
+  ContentsButtons,
+  FormRow,
+  LinkBox,
   MainContents,
   PageContainer,
-  LinkBox,
-  ContentsButtons,
+  UserChoiceModal,
 } from '@shared/ui';
 
-import { useCreateTenant } from '@entities/tenant/service/tenant.hook';
-import { DuplicateCheckInputFormField, DuplicateState, FormDisplay } from '@features/form';
-import { pageRouteConfig } from '@features/auth';
 import TenantService from '@entities/tenant/api/tenant';
-import { isEqual } from 'lodash';
-import { EnDeviceType, EnUseCategory } from '@types';
-import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
+import { useCreateTenant } from '@entities/tenant/service/tenant.hook';
+import { pageRouteConfig } from '@features/auth';
+import { DuplicateCheckInputFormField, DuplicateState, FormDisplay } from '@features/form';
 import { IcoAlertCircle } from '@learnway/icons';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { cn } from '@learnway/shared';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
+import { EnDeviceType, EnUseCategory } from '@types';
+import { isEqual } from 'lodash';
 
 export const Route = createLazyFileRoute('/_layout/platform/tenant/management/regist')({
   component: RouteComponent,

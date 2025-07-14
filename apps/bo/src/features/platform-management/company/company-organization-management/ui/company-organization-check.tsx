@@ -1,38 +1,9 @@
 import { SectionLayout } from '@shared/ui';
-import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import { useRouter } from '@tanstack/react-router';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
+import { useEffect, useState } from 'react';
 
-
-import styles from '@learnway/styles/bo/features/role/role-info.module.css';
-import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
-
-import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import {
-  Button,
-  ChipListModalSelectorFormField,
-  ContentsRow,
-  Input,
-  RadioGroupFormField,
-  TextareaFormField,
-  TreeBox,
-  Tabs,
-  TreeType,
-  TreeNode,
-} from '@learnway/ui';
-import {
-  useSearchBox,
-  SearchBoxConfig,
-  CODE_GROUP,
-  useDynamicForm,
-  DynamicFormConfig,
-} from '@learnway/hooks';
-
-import { ContentsHistoryInfoFormField, FormRow, FormSubTitle, SwitchFormField } from '@shared/ui';
-import { SearchBox } from '@shared/ui/search-box';
-
-import { isEqual } from 'lodash';
+import { TreeBox } from '@learnway/ui';
 
 import { transformDepartmentApiDataToTreeData } from '@features/platform-management/company/company-organization-management/service/company-organization.service';
 

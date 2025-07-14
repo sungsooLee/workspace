@@ -25,6 +25,7 @@ import {
   PageContainer,
   SubContents,
   ContentsButtons,
+  ThumbnailListFormField,
 } from '@shared/ui';
 import {
   Button,
@@ -51,6 +52,7 @@ import { EnFormMode } from '@types';
 
 import { useDeployTranslation } from '@entities/translation/service/translation.hook';
 import { PreviewLearningWindow } from '@features/learning-resource/learning-resource-management/ui/preview-learning-window';
+import { ThumbnailPublicFormField } from '@shared/ui/form/thumbnail-public-form-field';
 
 export const Route = createLazyFileRoute('/_layout/common-popup')({
   component: RouteComponent,
@@ -60,37 +62,41 @@ const imageFileUrl =
   'https://images.pexels.com/photos/842711/pexels-photo-842711.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2';
 
 function RouteComponent() {
-  const { open: openModal } = useModal();
+  const { alert, open: openModal, confirm: openConfirm } = useModal();
   const [organizations, setOrganizations] = useState<any>([]);
-  const { provider, onSubmit, control, getValues, updateFormData } = useDynamicForm(formConfig);
+  const { provider, onSubmit, control, getValues, updateFormData, onFormChange, watch } =
+    useDynamicForm(formConfig);
 
   const handleLabelUpdate = async () => {
+    const confirmOk = await openConfirm('i18n-resource-ko.json 파일을 label에 추가 하겠습니까?');
+    if (!confirmOk) return;
+
     const langPath = jsonToPaths(langCodes.LABEL);
-    const data: any[] = [];
-    let rowNum = 1;
+    let insertCount = 0;
     for (const item of langPath) {
-      const result = await TranslationService.fetchTranslationExists({
-        keyTypeCode: 'LABEL',
-        messageCode: item.path,
-      });
-      if (!result) {
-        const row = [rowNum.toString(), 'LABEL', item.path, item.value, item.value];
-        data.push(row);
-        rowNum++;
+      const labelPostData = {
+        labelMessageMultilingulKey: item.path,
+        labelMessageType: 'LABEL',
+        labelMessageName: item.value,
+        labelMessageDesc: item.value,
+        isUsed: true,
+        isDeleted: false,
+      };
+      const data = await LabelMessagesService.fetchAll(labelPostData);
+
+      if (data.numberOfElements === 0) {
+        insertCount++;
+        await LabelMessagesService.create(labelPostData);
       }
     }
-    const csvContent = data
-      .map((row) => row.map((item: string) => `"${item.replace(/\n/gi, '\\n')}"`).join(','))
-      .join('\n');
-    const blob = new Blob([csvContent], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'data.csv';
-    link.click();
-    URL.revokeObjectURL(url);
-    link.remove();
+    await alert(`LABEL 하위 코드 ${insertCount}개를 추가 하였습니다.`);
   };
+
+  const selectedThumbnail1 = watch('selectedThumbnail1');
+  const handleSelected = (selectedThumbnail1: string) => onFormChange({ selectedThumbnail1 });
+
+  const selectedThumbnail2 = watch('selectedThumbnail2');
+  const handleSelected2 = (selectedThumbnail2: string) => onFormChange({ selectedThumbnail2 });
 
   const { deploy } = useDeployTranslation({});
   const handleDeployKorMenu = () => {
@@ -202,7 +208,33 @@ function RouteComponent() {
             />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider} name="thumbnails" />
+            <FormRow provider={provider} name="thumbnailPublic" />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow
+              provider={provider}
+              name="thumbnailGroup"
+              element={
+                <ThumbnailListFormField
+                  isLoading={true}
+                  selected={selectedThumbnail1}
+                  onSelected={handleSelected}
+                />
+              }
+            />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow
+              provider={provider}
+              name="thumbnailFiles"
+              element={
+                <ThumbnailListFormField
+                  isLoading={true}
+                  selected={selectedThumbnail2}
+                  onSelected={handleSelected2}
+                />
+              }
+            />
           </ContentsRow>
           <ContentsRow>
             <FormRow provider={provider} name="attachment" />
@@ -681,18 +713,44 @@ const formConfig: DynamicFormConfig = {
       maxLength: 50,
     },
     {
-      name: 'thumbnails',
+      name: 'thumbnailPublic',
+      label: t('썸네일'),
+      type: 'thumbnail-public',
+      max: 1,
+      s3Path: S3_PATH['public/image/thumbnail'],
+      value: [],
+      description:
+        '파일 사이즈 000 x 000 / 확장자 JPEG, JPG, PNG, GIF / 업로드 가능 00개 / 파일용량 최대 00 MB',
+    },
+
+    { name: 'selectedThumbnail1', type: 'hidden', value: '' },
+    {
+      name: 'thumbnailGroup',
       label: t('썸네일'),
       type: 'thumbnail-list',
       max: 1,
-      format: 'object',
-      value: {
-        groupUuid: '990245c1-3516-465d-bdd2-fb03fbcd7591',
-      },
+      value: '990245c1-3516-465d-bdd2-fb03fbcd7591',
+      uuidType: 'group',
       showDefault: true,
       uploadConfig: {
         affairType: 'CMS',
-        s3Path: 'upload/content/image',
+        s3Path: S3_PATH['upload/content/image'],
+      },
+      description:
+        '파일 사이즈 000 x 000 / 확장자 JPEG, JPG, PNG, GIF / 업로드 가능 00개 / 파일용량 최대 00 MB',
+    },
+    { name: 'selectedThumbnail2', type: 'hidden', value: '' },
+    {
+      name: 'thumbnailFiles',
+      label: t('썸네일'),
+      type: 'thumbnail-list',
+      max: 2,
+      value: [],
+      uuidType: 'files',
+      showDefault: true,
+      uploadConfig: {
+        affairType: 'CMS',
+        s3Path: S3_PATH['upload/content/image'],
       },
       description:
         '파일 사이즈 000 x 000 / 확장자 JPEG, JPG, PNG, GIF / 업로드 가능 00개 / 파일용량 최대 00 MB',

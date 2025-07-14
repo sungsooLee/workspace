@@ -42,7 +42,7 @@ const acceptFiles = {
     'SKM',
     'K3G',
   ],
-  [LEARNING_TYPE.HTML_VIDEO]: ['ZIP'],
+  [LEARNING_TYPE.HTML5_VIDEO]: ['ZIP'],
 };
 
 const LearningResourceFileUploadModalComponent: FC<Props> = ({

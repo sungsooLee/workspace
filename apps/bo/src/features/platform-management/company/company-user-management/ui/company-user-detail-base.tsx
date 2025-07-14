@@ -1,22 +1,21 @@
-import { FC, useEffect, useState, useCallback } from 'react';
-import { useWatch } from 'react-hook-form';
-import { useRouterState } from '@tanstack/react-router';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { t } from 'i18next';
 import { cn } from '@learnway/shared';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { t } from 'i18next';
+import { FC, useEffect, useState } from 'react';
+import { useWatch } from 'react-hook-form';
 
+import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import {
-  Input,
-  ContentsRow,
-  TableBox,
   ChipListModalSelectorFormField,
-  RadioGroupFormField,
+  ContentsRow,
   ContentsRowItem,
-  CheckboxGroupFormField,
+  FormSubTitle,
+  Input,
+  RadioGroupFormField,
+  TableBox,
 } from '@learnway/ui';
-import { DynamicFormConfig, useDynamicForm, CODE_GROUP } from '@learnway/hooks';
-import { FormSubTitle, FormRow, ContentsHistoryInfoFormField } from '@shared/ui';
+import { ContentsHistoryInfoFormField, FormRow } from '@shared/ui';
 
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 

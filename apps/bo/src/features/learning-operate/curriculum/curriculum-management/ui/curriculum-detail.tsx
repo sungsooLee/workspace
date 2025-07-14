@@ -2,7 +2,9 @@ import { Button, TreeBox, TreeNode } from '@learnway/ui';
 import { FormSubTitle, SectionLayout } from '@shared/ui';
 import { FORM_MODE, FROM_STATUS } from '@shared/const';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
-import { IcoMinus, IcoPlus } from '@learnway/icons';
+import { Button, FormSubTitle, TreeBox, TreeNode } from '@learnway/ui';
+import { FORM_MODE, FROM_STATUS } from '@shared/const';
+import { SectionLayout } from '@shared/ui';
 import { t } from 'i18next';
 import { useRef, useState, useEffect } from 'react';
 import { FormState } from '../types/form.types';

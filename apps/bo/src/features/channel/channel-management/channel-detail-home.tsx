@@ -1,12 +1,12 @@
-import { useRouterState, useRouter } from '@tanstack/react-router';
+import { Panel, FormSubTitle } from '@learnway/ui';
+import { ContentsHistoryInfoFormField, NoticeBox } from '@shared/ui';
+import { useRouter, useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
-import { Button, Panel } from '@learnway/ui';
-import { NoticeBox, ContentsHistoryInfoFormField, FormSubTitle } from '@shared/ui';
 import { ChannelDetailHomeContent } from './channel-detail-home-content';
 
 import { cn } from '@learnway/shared';
-import styles from './channel-detail-base.module.css';
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
+import styles from './channel-detail-base.module.css';
 
 const ChannelDetailHomeComponent = () => {
   const router = useRouter();

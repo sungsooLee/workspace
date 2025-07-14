@@ -1,12 +1,14 @@
-import { MouseEvent, useRef, useState } from 'react';
+/* IA110 / NLP_BO_CMS_1031 - 나의 학습자원 > 블로그 등록 */
+import { MouseEvent, useEffect, useRef, useState } from 'react';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { Button, Divider, useModal } from '@learnway/ui';
-import defaultImage from '@assets/images/temp/img_temp_blog_default.png';
-import { MainContents, PageContainer, ContentsButtons, SubContents } from '@shared/ui';
+import defaultImage from '@assets/images/thumb/img_thumb_default.jpg';
+import { ContentsButtons, MainContents, PageContainer, SubContents } from '@shared/ui';
 import { BlogDetail } from './-components/blog-detail';
 
 import styles from './blog-detail.module.css';
+import { useFetchAuthUser } from '@learnway/auth/entities';
 
 export const Route = createLazyFileRoute('/_layout/learning/resource/blog/regist')({
   component: RouteComponent,
@@ -16,8 +18,11 @@ function RouteComponent() {
   const formRef = useRef<HTMLFormElement>(null);
   const [thumbnailImage, setThumbnailImage] = useState<string>(defaultImage);
 
-  const { open: openModal, confirm: openConfirm } = useModal();
+  const { confirm: openConfirm } = useModal();
   const router = useRouter();
+
+  const { data: loginUser } = useFetchAuthUser();
+  const [tenantId, setTenantId] = useState<number>(-1);
 
   const handleClickSubmitButton = (e: MouseEvent<HTMLButtonElement>) => {
     if (formRef.current) {
@@ -35,6 +40,16 @@ function RouteComponent() {
       router.navigate({ to: '/learning/learning-resource' });
     }
   };
+
+  useEffect(() => {
+    if (loginUser?.activeTenant) {
+      setTenantId(loginUser.activeTenant.tenantId);
+    } else {
+      if (loginUser?.tenants?.length) {
+        setTenantId(loginUser.tenants[0].tenantId);
+      }
+    }
+  }, [loginUser]);
 
   return (
     <PageContainer>
@@ -57,7 +72,12 @@ function RouteComponent() {
       </ContentsButtons>
 
       <MainContents>
-        <BlogDetail ref={formRef} mode="create" setThumbnailImage={setThumbnailImage} />
+        <BlogDetail
+          ref={formRef}
+          tenantId={tenantId}
+          mode="create"
+          setThumbnailImage={setThumbnailImage}
+        />
       </MainContents>
 
       {/* 썸네일 영역 */}

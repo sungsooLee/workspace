@@ -60,7 +60,11 @@ export type com_ever_edu_pms_channel_dto_res_ChannelRequestListResDto = {
      */
     isChannelCreationMailSend?: boolean;
     /**
-     * 결재자(승인자
+     * 결재자(승인자 uuid)
+     */
+    approverUuid?: string;
+    /**
+     * 결재자(승인자 이름)
      */
     approverName?: string;
     /**
@@ -72,9 +76,9 @@ export type com_ever_edu_pms_channel_dto_res_ChannelRequestListResDto = {
      */
     rejectedReasonContent?: string;
     /**
-     * 채널ID
+     * 채널정보_채널ID
      */
-    channelId?: number;
+    channelInfoChannelUuid?: string;
     /**
      * 채널신청 uuid
      */
@@ -100,6 +104,7 @@ export namespace com_ever_edu_pms_channel_dto_res_ChannelRequestListResDto {
      */
     export enum approvalStatusType {
         PENDING = 'PENDING',
+        ACCEPTED = 'ACCEPTED',
         APPROVED = 'APPROVED',
         REJECTED = 'REJECTED',
     }

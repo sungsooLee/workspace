@@ -4,13 +4,13 @@ import { PMSApiPrefix, LMSApiPrefix } from '@learnway/config';
 import { InstructorHistory, Instructor, Instructors } from 'src/types/entities/instructor';
 
 export default class InstructorService {
-  static fetchRolesByTenantId(payload: number): Promise<any> {
+  static fetchRolesByTenantId(payload: number) {
     const params = {
       tenantId: payload,
       siteScope: 'BO',
       roleType: 'TUTOR',
     };
-    return httpService.get(`${PMSApiPrefix()}/roles`, params);
+    return httpService.get<any[]>(`${PMSApiPrefix()}/roles`, params);
   }
 
   static fetchList(params: any) {
@@ -29,7 +29,7 @@ export default class InstructorService {
   }
 
   static fetchDuplicateCheckEmail(params: any) {
-    return httpService.get(`${LMSApiPrefix()}/instructor/email`, params);
+    return httpService.post(`${LMSApiPrefix()}/instructor/email`, params);
   }
 
   static insertInstructor(params: any) {
@@ -42,5 +42,9 @@ export default class InstructorService {
 
   static deleteInstructor(instructorId: number) {
     return httpService.delete(`${LMSApiPrefix()}/instructor/${instructorId}`);
+  }
+
+  static insertTutor(params: any) {
+    return httpService.post<any>(`${PMSApiPrefix()}/users/tutor`, params);
   }
 }

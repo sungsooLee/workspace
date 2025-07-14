@@ -1,14 +1,14 @@
 import { Button, Divider, Tabs, useModal } from '@learnway/ui';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { useCallback, useEffect, useMemo } from 'react';
-import { BasicInfo } from '../-components/basic-info/basic-info';
-import { CourseRegistration } from '../-components/course-registration/course-registration';
-import { Curriculum } from '../-components/curriculum/curriculum';
-import { DetailInfo } from '../-components/detail-info/detail-info';
-import { PublishCourse } from '../-components/publish-course/publish-course';
 import { useCourseForm } from '../-hooks/use-course-form';
 import { MainContents, PageContainer, ContentsButtons } from '@shared/ui';
-import { CourseTab } from '../-common/type';
+import { CourseTab, TabFormRef } from '../-common/type';
+import { BasicInfo } from './-tabs/basic-info';
+import { CourseRegistration } from './-tabs/course-registration';
+import { Curriculum } from './-tabs/curriculum';
+import { DetailInfo } from './-tabs/detail-info';
+import { PublishCourse } from './-tabs/publish-course';
 
 export const Route = createLazyFileRoute('/_layout/learning/course/create/view')({
   component: RouteComponent,
@@ -16,7 +16,7 @@ export const Route = createLazyFileRoute('/_layout/learning/course/create/view')
 
 function RouteComponent() {
   const router = useRouter();
-  const { showSaveComplete, showDeleteComplete } = useModal();
+  const { showSaveComplete, showDeleteComplete, deleteConfirm, saveConfirm } = useModal();
 
   // 라우터 state에서 courseId 가져오기
   const { courseId, courseType } = router.state.location.state;
@@ -55,9 +55,11 @@ function RouteComponent() {
 
   const handleSaveClick = async () => {
     try {
-      await saveCurrentTab();
-      await showSaveComplete();
-      moveListPage();
+      if (await saveConfirm()) {
+        await saveCurrentTab();
+        await showSaveComplete();
+        moveListPage();
+      }
     } catch (e) {
       // 에러는 상위에서 처리하거나, 필요시 여기서 처리
       console.error('저장 중 에러:', e);
@@ -66,9 +68,11 @@ function RouteComponent() {
 
   const handleDeleteClick = async () => {
     try {
-      await deleteCourseData(courseId);
-      await showDeleteComplete();
-      moveListPage();
+      if (await deleteConfirm()) {
+        await deleteCourseData(courseId);
+        await showDeleteComplete();
+        moveListPage();
+      }
     } catch (e) {
       // 에러는 상위에서 처리하거나, 필요시 여기서 처리
       console.error('삭제 중 에러:', e);
@@ -96,7 +100,7 @@ function RouteComponent() {
         key: CourseTab.STEP1,
         content: (
           <BasicInfo
-            ref={(ref) => setTabRef(CourseTab.STEP1, ref)}
+            ref={(ref: TabFormRef) => setTabRef(CourseTab.STEP1, ref)}
             data={data}
             onConfigPropChange={handleConfigPropChange}
           />
@@ -105,22 +109,33 @@ function RouteComponent() {
       {
         title: '수강신청 설정',
         key: CourseTab.STEP2,
-        content: <CourseRegistration ref={(ref) => setTabRef(CourseTab.STEP2, ref)} data={data} />,
+        content: (
+          <CourseRegistration
+            ref={(ref: TabFormRef) => setTabRef(CourseTab.STEP2, ref)}
+            data={data}
+          />
+        ),
       },
       {
         title: '커리큘럼 설정',
         key: CourseTab.STEP3,
-        content: <Curriculum ref={(ref) => setTabRef(CourseTab.STEP3, ref)} data={data} />,
+        content: (
+          <Curriculum ref={(ref: TabFormRef) => setTabRef(CourseTab.STEP3, ref)} data={data} />
+        ),
       },
       {
         title: '상세 설정',
         key: CourseTab.STEP4,
-        content: <DetailInfo ref={(ref) => setTabRef(CourseTab.STEP4, ref)} data={data} />,
+        content: (
+          <DetailInfo ref={(ref: TabFormRef) => setTabRef(CourseTab.STEP4, ref)} data={data} />
+        ),
       },
       {
         title: '게시 설정',
         key: CourseTab.STEP5,
-        content: <PublishCourse ref={(ref) => setTabRef(CourseTab.STEP5, ref)} data={data} />,
+        content: (
+          <PublishCourse ref={(ref: TabFormRef) => setTabRef(CourseTab.STEP5, ref)} data={data} />
+        ),
       },
     ],
     [data, setTabRef],
@@ -144,7 +159,7 @@ function RouteComponent() {
             variant="point"
             size="sm"
             label={'SET'}
-            onClick={() => loadMockData(1)}
+            onClick={() => loadMockData(4)}
           />
           <Button
             type="button"

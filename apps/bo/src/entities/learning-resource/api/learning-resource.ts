@@ -4,9 +4,11 @@ import { CMSApiPrefix, PMSApiPrefix } from '@learnway/config';
 import {
   BlogCreateReq,
   BlogUpdateReq,
-  BlogWatchLogReq,
   CourseMappingStatusRes,
   GetContentDetailRes,
+  HtmlVideoFileChangeReq,
+  HtmlVideoMetadataReq,
+  HtmlVideoStatus,
   PostDraftHtmlVideoParams,
   PostDraftVideosParams,
   PostDraftVideosRes,
@@ -116,9 +118,19 @@ export default class LearningResourceService {
   static createHTML5Draft(body: PostDraftHtmlVideoParams) {
     return httpService.post(`${CMSApiPrefix()}/html5/draft`, body);
   }
-  // HTML5 동영상 콘텐츠 관리
-  static updateHTML5FileChange(body: { contentUuid: string; fileUuid: string }): Promise<any> {
+
+  // HTML5 동영상 메타 정보 저장
+  static updateHTML5Metadata(body: HtmlVideoMetadataReq) {
+    return httpService.put(`${CMSApiPrefix()}/html5/update`, body);
+  }
+
+  // HTML5 동영상 파일 변경
+  static updateHTML5FileChange(body: HtmlVideoFileChangeReq): Promise<any> {
     return httpService.put(`${CMSApiPrefix()}/html5/file/change`, body);
+  }
+  // HTML5 동영상 상태 조회
+  static fetchHTML5Status(contentUuid: string): Promise<HtmlVideoStatus> {
+    return httpService.get(`${CMSApiPrefix()}/html5/${contentUuid}/status`);
   }
 
   // HTML5 동영상 콘텐츠 리소스 조회

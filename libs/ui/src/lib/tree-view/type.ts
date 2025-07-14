@@ -112,6 +112,14 @@ export interface TreeNode {
   [key: string]: any;
 }
 
+export type TreeData = {
+  key: string;
+  id: number;
+  title: string;
+  fullPath: string;
+  children?: TreeData[];
+};
+
 // 검색을 추가하면서 검색 결과에 따라 표시 결정 여부 속성 추가
 export interface EnhancedTreeNode extends TreeNode {
   _visible?: boolean;

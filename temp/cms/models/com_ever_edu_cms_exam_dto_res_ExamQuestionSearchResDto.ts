@@ -1,0 +1,10 @@
+/* generated using openapi-typescript-codegen -- do not edit */
+/* istanbul ignore file */
+/* tslint:disable */
+/* eslint-disable */
+export type com_ever_edu_cms_exam_dto_res_ExamQuestionSearchResDto = {
+    contentName?: string;
+    examQuestionUuid?: string;
+    questionText?: string;
+};
+

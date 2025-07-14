@@ -48,11 +48,8 @@ export default class TenantService {
    * @param roleId
    * @returns TenantByRoleId[]
    */
-  static fetchTenantByRoleId<T = TenantByRoleId>(roleId: number): Promise<PaginationResponse<T>> {
-    return httpService.get<PaginationResponse<T>>(`${PMSApiPrefix()}/tenants/role/${roleId}`, {
-      page: 0,
-      size: 1000,
-    });
+  static fetchTenantByRoleId<T = TenantByRoleId[]>(roleId: number): Promise<T> {
+    return httpService.get<T>(`${PMSApiPrefix()}/tenants/role/${roleId}`);
   }
 }
 

@@ -68,10 +68,11 @@ const CheckboxGroupFormFieldComponent = forwardRef<HTMLDivElement, CheckboxGroup
      * 모든 옵션이 선택되었을 때 "전체" 체크박스를 체크합니다.
      */
     useEffect(() => {
-      setAllCheck(value.length === options.length);
+      setAllCheck((value?.length ?? 0) === (options?.length ?? 0));
     }, [value]);
+
     useEffect(() => {
-      setAllCheck(value.length === options.length);
+      setAllCheck((value?.length ?? 0) === (options?.length ?? 0));
     }, [options]);
 
     return (

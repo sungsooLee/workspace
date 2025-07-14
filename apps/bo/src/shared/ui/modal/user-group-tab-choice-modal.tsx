@@ -87,17 +87,11 @@ const UserGroupTabModalComponent = forwardRef(
                 key: 'JOB_POSITION',
                 content: <UserGroupJobPosition tenantIds={tenantIds} handleSetOption={setOption} />,
               },
-              // {
-              //   title: '사용자 정의',
-              //   key: 'CUSTOM',
-              //   content: (
-              //     <UserGroupCustom
-              //       tenantIds={tenantIds}
-              //       option={option}
-              //       handleSetOption={setOption}
-              //     />
-              //   ),
-              // },
+              {
+                title: '사용자 정의',
+                key: 'CUSTOM',
+                content: <UserGroupCustom option={option} handleSetOption={setOption} />,
+              },
             ]}
             type="line"
             size={'sm'}
