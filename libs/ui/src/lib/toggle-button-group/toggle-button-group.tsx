@@ -43,6 +43,7 @@ const ToggleButtonGroupComponent = forwardRef<HTMLButtonElement, ToggleButtonGro
             className={cn(styles.btn, selected === option.value && styles.active)}
             disabled={disabled}
             onClick={() => handleClick(option)}
+            size={'sm'}
           />
         ))}
       </div>

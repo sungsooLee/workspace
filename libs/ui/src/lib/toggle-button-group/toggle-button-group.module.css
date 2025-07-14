@@ -1,6 +1,6 @@
 /* segment-button.module.css */
 .start {
-  @apply inline-flex overflow-hidden rounded-full border border-solid border-[var(--primary3)] bg-white;
+  @apply mx-[16px] inline-flex overflow-hidden rounded-full border border-solid border-[var(--primary3)] bg-white;
   .btn {
     @apply inline-flex h-[32px] items-center bg-white px-[16px] text-[var(--primary3)];
     &.active {
