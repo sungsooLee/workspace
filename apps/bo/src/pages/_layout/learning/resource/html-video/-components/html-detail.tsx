@@ -4,7 +4,7 @@ import { t } from 'i18next';
 import { cloneDeepWith } from 'lodash-es';
 import { Company, User } from '@learnway/types';
 import { DynamicFormConfig, DynamicFormValues, useDynamicForm } from '@learnway/hooks';
-import { cn } from '@learnway/shared';
+import { cn, isEmptyData } from '@learnway/shared';
 import {
   ChipListModalSelectorFormField,
   ContentsRow,
@@ -52,35 +52,39 @@ const HtmlDetailComponent = forwardRef<HTMLFormElement, HtmlDetailProps>(
     console.log(formConfig(hasMapping));
 
     useEffect(() => {
-      updateFormData({
-        ...getValues(),
-        contentName: data.contentName,
-        langCountryCode: data.langCountryCode,
-        channelUuid: [{ channelUuid: data.channelUuid, channelName: data.channelName }],
-        description: data.description,
-        coordinatorUuid: data.coordinatorUuid,
-        coordinatorName: (data.coordinatorName ?? '').split('/')[0],
-        coordinatorTelNo: data.coordinatorTelNo,
-        contentUseDate: {
-          from: data.contentUseStartDate ? dayjs(data.contentUseStartDate).toDate() : undefined,
-          to: data.contentUseEndDate ? dayjs(data.contentUseEndDate).toDate() : undefined,
-        },
-        isLimitExist: !data.isUnlimited,
-        contentDuration: { ...getHourValueFromTime(data.contentAddInfo) },
-        isVendored: data.isVendored,
-        vendorName: data.vendorName ?? '',
-        vendorCoordinatorName: data.vendorCoordinatorName ?? '',
-        vendorTelNo: data.vendorTelNo ?? '',
-        contentThumbnailFileGroupUuid: data.contentThumbnailFileGroupUuid,
-        isCourseUsed: data.isCourseUsed,
-        isContentSecured: data.isSecured,
-        isInspected: data.isInspected,
-        isCopyrighted: data.isCopyrighted,
-        tags: data.tags?.map((tag: string | Tag) => (typeof tag === 'string' ? tag : tag.tagName)),
-        aiSummary: data.aiSummary ?? '',
-        aiKeyword: data.aiKeyword ?? '',
-        // resource: ??
-      });
+      if (!isEmptyData(data)) {
+        updateFormData({
+          ...getValues(),
+          contentName: data.contentName,
+          langCountryCode: data.langCountryCode,
+          channelUuid: [{ channelUuid: data.channelUuid, channelName: data.channelName }],
+          description: data.description,
+          coordinatorUuid: data.coordinatorUuid,
+          coordinatorName: (data.coordinatorName ?? '').split('/')[0],
+          coordinatorTelNo: data.coordinatorTelNo,
+          contentUseDate: {
+            from: data.contentUseStartDate ? dayjs(data.contentUseStartDate).toDate() : undefined,
+            to: data.contentUseEndDate ? dayjs(data.contentUseEndDate).toDate() : undefined,
+          },
+          isLimitExist: !data.isUnlimited,
+          contentDuration: { ...getHourValueFromTime(data.contentAddInfo) },
+          isVendored: data.isVendored,
+          vendorName: data.vendorName ?? '',
+          vendorCoordinatorName: data.vendorCoordinatorName ?? '',
+          vendorTelNo: data.vendorTelNo ?? '',
+          contentThumbnailFileGroupUuid: data.contentThumbnailFileGroupUuid,
+          isCourseUsed: data.isCourseUsed,
+          isContentSecured: data.isSecured,
+          isInspected: data.isInspected,
+          isCopyrighted: data.isCopyrighted,
+          tags: data.tags?.map((tag: string | Tag) =>
+            typeof tag === 'string' ? tag : tag.tagName,
+          ),
+          aiSummary: data.aiSummary ?? '',
+          aiKeyword: data.aiKeyword ?? '',
+          // resource: ??
+        });
+      }
     }, [data]);
 
     const selectedContentThumbnailFileUuid = watch('selectedContentThumbnailFileUuid');
