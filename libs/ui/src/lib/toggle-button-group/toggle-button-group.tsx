@@ -35,14 +35,15 @@ const ToggleButtonGroupComponent = forwardRef<HTMLButtonElement, ToggleButtonGro
     };
 
     return (
-      <div className={cn(styles.start, styles.btn, 'nlp--toggle-button-group', className)}>
+      <div className={cn(styles.start, 'nlp--toggle-button-group', className)}>
         {options.map((option: SelectOption) => (
           <Button
             key={option.value}
             label={option.label}
-            className={cn(selected === option.value && 'selected', 'button')}
+            className={cn(styles.btn, selected === option.value && styles.active)}
             disabled={disabled}
             onClick={() => handleClick(option)}
+            size={'sm'}
           />
         ))}
       </div>

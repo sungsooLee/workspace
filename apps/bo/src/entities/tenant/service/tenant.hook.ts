@@ -21,7 +21,7 @@ export const useFetchTenantByRoleId = <T = TenantByRoleId[]>(
   roleId: number,
   options?: UseQueryOptions<T, Error>,
 ): UseQueryResult<T, Error> => {
-  return useQuery({ ...queryOptions.tenantByRoleId<T>(roleId), ...options });
+  return useQuery({ ...queryOptions.tenantByRoleId<T>(roleId), ...options, staleTime: Infinity });
 };
 
 export function useCreateTenant(options: any) {
