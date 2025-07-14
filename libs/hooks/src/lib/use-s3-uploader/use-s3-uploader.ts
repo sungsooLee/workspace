@@ -26,7 +26,7 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
     // groupConfig,
     affairsType,
     languageCode = getDefaultLang().toUpperCase(),
-    groupUuid,
+    groupUuid = '',
     groupMode = 'batch',
     auto = true,
     async = true,
@@ -38,11 +38,9 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
 
   // 파일 상태 관리
   const [files, setFiles] = useState<UploadFile[]>([]);
-  console.log('🚀 ~ files:', files);
 
   // 배치 모드에서 그룹 UUID 저장 (한 번 생성 후 재사용)
-  const [batchGroupUuid, setBatchGroupUuid] = useState<string | undefined>(groupUuid);
-  console.log('🚀 ~ batchGroupUuid:', batchGroupUuid);
+  const [batchGroupUuid, setBatchGroupUuid] = useState<string>(groupUuid);
 
   // 업로드 통계 계산
   const stats = useMemo(() => {
@@ -793,13 +791,13 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
         progress: 0,
         fileUrl: file.fileUrl,
         parts: [],
-        basicPath: file.group.basicPath,
-        groupUuid: file.group.groupUuid,
+        basicPath: file.group!.basicPath,
+        groupUuid: file.group!.groupUuid,
       }));
       return [...prev, ...fetchedFiles];
     });
-    const groupUuids = uniq(files.map((file) => file.group.groupUuid));
-    if (groupUuids.length === 1) setBatchGroupUuid(first(groupUuids));
+    const groupUuids = uniq(files.map((file) => file.group!.groupUuid));
+    if (groupUuids.length === 1) setBatchGroupUuid(first(groupUuids) || '');
   };
 
   return {

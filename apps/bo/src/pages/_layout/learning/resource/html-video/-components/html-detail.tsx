@@ -1,29 +1,18 @@
-import React, { Dispatch, forwardRef, SetStateAction, useCallback, useEffect } from 'react';
+import { forwardRef, useEffect } from 'react';
 import { useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
-import dayjs from 'dayjs';
 import { cloneDeepWith } from 'lodash-es';
+import { Company, User } from '@learnway/types';
+import { DynamicFormConfig, DynamicFormValues, useDynamicForm } from '@learnway/hooks';
+import { cn, isEmptyData } from '@learnway/shared';
 import {
   ChipListModalSelectorFormField,
   ContentsRow,
-  EditorFormField,
   InputModalSelectorFormField,
   useModal,
 } from '@learnway/ui';
-import { Company, User } from '@learnway/types';
-import { cn, isEmptyData } from '@learnway/shared';
-import {
-  CODE_GROUP,
-  DynamicFormConfig,
-  DynamicFormValues,
-  ThumbnailFileValue,
-  useCodeStore,
-  useDynamicForm,
-  useFileManager,
-} from '@learnway/hooks';
-import { useFetchAuthUser } from '@learnway/auth/entities';
-import defaultImage from '@assets/images/thumb/img_thumb_default.jpg';
-import type { BlogDetailRes, BlogPostRes, BlogUpdateReq, Tag } from '@types';
+import { HtmlVideoDetailRes, HtmlVideoMetadataRes, ProcessingStatus, type Tag } from '@types';
+import { useUpdateHTML5Metadata } from '@entities/learning-resource';
 import {
   ChannelListChoiceModal,
   CompanyChoiceModal,
@@ -36,26 +25,22 @@ import {
 } from '@shared/ui';
 import { FormDisplay } from '@features/form';
 import { DateRangePickerFormField, DurationTimeFormField } from '@features/form/ui';
-import { useCreateBlogContent, useUpdateBlogContent } from '@entities/learning-resource';
-import { getHourValueFromTime } from '../../-common/common';
 import { mediaContentFormConfig } from '../../-common/content-form-config';
-import { getPayloadFromBlogSubmit } from '../-common/form-submit';
+import { getPayloadFromHtmlMetadataSubmit } from '../-common/form-submit';
 
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import dayjs from 'dayjs';
+import { getHourValueFromTime } from '@pages/_layout/learning/resource/-common/common';
 
-type BlogDetailProps = {
+type HtmlDetailProps = {
+  mode: 'draft' | 'complete';
   tenantId: number;
-  mode: 'create' | 'update';
-  blogInfo?: Partial<BlogDetailRes>;
-  setThumbnailImage?: Dispatch<SetStateAction<string>>;
+  data?: Partial<HtmlVideoDetailRes>;
   hasMapping?: boolean;
 };
 
-const BlogDetailComponent = forwardRef<HTMLFormElement, BlogDetailProps>(
-  ({ tenantId, mode, blogInfo = {}, setThumbnailImage, hasMapping = false }, ref) => {
-    const router = useRouter();
-    const { confirm: openConfirm } = useModal();
-
+const HtmlDetailComponent = forwardRef<HTMLFormElement, HtmlDetailProps>(
+  ({ mode, tenantId, data = {}, hasMapping = false }, ref) => {
     const {
       provider,
       onSubmit,
@@ -64,26 +49,57 @@ const BlogDetailComponent = forwardRef<HTMLFormElement, BlogDetailProps>(
       onFormChange: handleFormChange,
       watch,
     } = useDynamicForm(formConfig(hasMapping));
+    console.log(formConfig(hasMapping));
 
-    const { create: createBlogContent } = useCreateBlogContent({
-      onSuccess: (result: BlogPostRes) => {
-        if (result?.contentUuid) {
-          return router.navigate({
-            to: '/learning/resource/blog/view',
-            state: {
-              contentUuid: result.contentUuid,
-            },
-            replace: true,
-          });
-        }
-      },
-    });
+    useEffect(() => {
+      if (!isEmptyData(data)) {
+        updateFormData({
+          ...getValues(),
+          contentName: data.contentName,
+          langCountryCode: data.langCountryCode,
+          channelUuid: [{ channelUuid: data.channelUuid, channelName: data.channelName }],
+          description: data.description,
+          coordinatorUuid: data.coordinatorUuid,
+          coordinatorName: (data.coordinatorName ?? '').split('/')[0],
+          coordinatorTelNo: data.coordinatorTelNo,
+          contentUseDate: {
+            from: data.contentUseStartDate ? dayjs(data.contentUseStartDate).toDate() : undefined,
+            to: data.contentUseEndDate ? dayjs(data.contentUseEndDate).toDate() : undefined,
+          },
+          isLimitExist: !data.isUnlimited,
+          contentDuration: { ...getHourValueFromTime(data.contentAddInfo) },
+          isVendored: data.isVendored,
+          vendorName: data.vendorName ?? '',
+          vendorCoordinatorName: data.vendorCoordinatorName ?? '',
+          vendorTelNo: data.vendorTelNo ?? '',
+          contentThumbnailFileGroupUuid: data.contentThumbnailFileGroupUuid,
+          isCourseUsed: data.isCourseUsed,
+          isContentSecured: data.isSecured,
+          isInspected: data.isInspected,
+          isCopyrighted: data.isCopyrighted,
+          tags: data.tags?.map((tag: string | Tag) =>
+            typeof tag === 'string' ? tag : tag.tagName,
+          ),
+          aiSummary: data.aiSummary ?? '',
+          aiKeyword: data.aiKeyword ?? '',
+          // resource: ??
+        });
+      }
+    }, [data]);
 
-    const { update: updateBlogContent } = useUpdateBlogContent({
-      onSuccess: (result: BlogPostRes) => {
-        if (result?.contentUuid) {
+    const selectedContentThumbnailFileUuid = watch('selectedContentThumbnailFileUuid');
+
+    const handleThumbnailSelected = (selectedContentThumbnailFileUuid: string) =>
+      handleFormChange({ selectedContentThumbnailFileUuid });
+
+    const router = useRouter();
+    const { confirm: openConfirm } = useModal();
+
+    const { update: updateMetadata } = useUpdateHTML5Metadata({
+      onSuccess: (result: HtmlVideoMetadataRes) => {
+        if (result?.contentUuid && result.processingStatus === ProcessingStatus.COMPLETE) {
           return router.navigate({
-            to: '/learning/resource/blog/view',
+            to: '/learning/resource/html-video/view',
             state: {
               contentUuid: result.contentUuid,
             },
@@ -95,14 +111,14 @@ const BlogDetailComponent = forwardRef<HTMLFormElement, BlogDetailProps>(
 
     const dynamicFormConfig = formConfig(hasMapping);
 
-    const handleOnSubmit = async (
-      data: DynamicFormValues<typeof dynamicFormConfig>,
+    const handleSubmit = async (
+      formData: DynamicFormValues<typeof dynamicFormConfig>,
     ): Promise<void> => {
-      const { payload } = getPayloadFromBlogSubmit({
-        data,
+      console.log('formData', formData);
+      const { payload } = getPayloadFromHtmlMetadataSubmit({
+        data: formData,
         tenantId,
-        mode,
-        contentUuid: mode === 'update' ? blogInfo?.contentUuid : '',
+        contentUuid: data?.contentUuid ?? '',
       });
 
       if (
@@ -111,111 +127,14 @@ const BlogDetailComponent = forwardRef<HTMLFormElement, BlogDetailProps>(
           content: t('입력한 정보로 저장합니다.'),
         })
       ) {
-        if (mode === 'create') {
-          createBlogContent(payload);
-        } else {
-          updateBlogContent(payload as BlogUpdateReq);
-        }
-      }
-    };
-
-    const codeStore = useCodeStore();
-    const { data: loginUser } = useFetchAuthUser();
-
-    const initRoleInfo = useCallback(async () => {
-      const myActiveRoleType = loginUser?.activeRole?.roleType;
-
-      const roleTypes = await codeStore.getCode(CODE_GROUP['pms.role.RoleType']);
-      const channelMemberRoleTypes = roleTypes
-        .map((role) => role.cdId)
-        .filter((cdId: string) => ['CHANNEL_OWNER', 'CHANNEL_MEMBER'].includes(cdId));
-      // const myChannelAuths = loginUser?.myRoles?.map((item: RoleInfo) => item.channelScope) || [];
-
-      // 등록자가 채널소유자 or 채널구성원일 경우 default로 등록자 정보 입력
-      if (
-        !isEmptyData(loginUser?.activeRole) &&
-        channelMemberRoleTypes.includes(myActiveRoleType)
-      ) {
-        updateFormData({
-          ...getValues(),
-          coordinatorUuid: loginUser?.uuid,
-          coordinatorName: loginUser?.name,
-          coordinatorTelCountryCode: loginUser?.phoneNumberNationCode,
-          coordinatorTelNo: loginUser?.phoneNumber,
-        });
-      }
-    }, [codeStore]);
-
-    useEffect(() => {
-      (async () => {
-        await initRoleInfo();
-      })();
-    }, [loginUser]);
-
-    useEffect(() => {
-      if (mode === 'update' && !isEmptyData(blogInfo)) {
-        console.log(blogInfo);
-
-        updateFormData({
-          ...getValues(),
-          contentName: blogInfo.contentName,
-          langCountryCode: blogInfo.langCountryCode,
-          channelUuid: [{ channelUuid: blogInfo.channelUuid, channelName: blogInfo.channelName }],
-          description: blogInfo.description,
-          coordinatorUuid: blogInfo.coordinatorUuid,
-          coordinatorName: (blogInfo.coordinatorName ?? '').split('/')[0],
-          coordinatorTelNo: blogInfo.coordinatorTelNo,
-          contentUseDate: {
-            from: blogInfo.contentUseStartDate
-              ? dayjs(blogInfo.contentUseStartDate).toDate()
-              : undefined,
-            to: blogInfo.contentUseEndDate ? dayjs(blogInfo.contentUseEndDate).toDate() : undefined,
-          },
-          isLimitExist: !blogInfo.isUnlimited,
-          contentDuration: { ...getHourValueFromTime(blogInfo.contentAddInfo) },
-          isVendored: blogInfo.isVendored,
-          // vendorCode: blogInfo.vendorCode,
-          vendorName: blogInfo.vendorName ?? '',
-          vendorCoordinatorName: blogInfo.vendorCoordinatorName ?? '',
-          vendorTelNo: blogInfo.vendorTelNo ?? '',
-          contentThumbnailFileGroupUuid: blogInfo.contentThumbnailFileGroupUuid,
-          isCourseUsed: blogInfo.isCourseUsed,
-          isContentSecured: blogInfo.isSecured,
-          isInspected: blogInfo.isInspected,
-          isCopyrighted: blogInfo.isCopyrighted,
-          tags: blogInfo.tags?.map((tag: string | Tag) =>
-            typeof tag === 'string' ? tag : tag.tagName,
-          ),
-          blogContent: JSON.stringify(blogInfo.blogContent ?? {}),
-          aiSummary: blogInfo.aiSummary ?? '',
-          aiKeyword: blogInfo.aiKeyword ?? '',
-        });
-      }
-    }, [blogInfo]);
-
-    const selectedContentThumbnailFileUuid = watch('selectedContentThumbnailFileUuid');
-    const contentThumbnailFileGroupUuid = watch('contentThumbnailFileGroupUuid');
-    const { getGroupInfo } = useFileManager();
-
-    const handleThumbnailSelected = async (selectedContentThumbnailFileUuid: string) => {
-      handleFormChange({ selectedContentThumbnailFileUuid });
-
-      const groupInfo = await getGroupInfo(contentThumbnailFileGroupUuid);
-
-      const files = groupInfo?.files ?? [];
-      if (setThumbnailImage) {
-        if (files.length > 0) {
-          setThumbnailImage(files[0]?.fileUrl ?? '');
-        } else {
-          setThumbnailImage(defaultImage);
-        }
+        updateMetadata(payload);
       }
     };
 
     return (
-      <form ref={ref} onSubmit={onSubmit(handleOnSubmit)}>
-        {/* 채널 */}
+      <form ref={ref} onSubmit={onSubmit(handleSubmit)}>
         <ContentsRow>
+          {/* 채널 */}
           <FormRow
             provider={provider}
             name="channelUuid"
@@ -236,7 +155,7 @@ const BlogDetailComponent = forwardRef<HTMLFormElement, BlogDetailProps>(
             }
           />
           {/* 언어 */}
-          <FormRow provider={provider} name="languageCountryCode" />
+          <FormRow provider={provider} name="langCountryCode" />
         </ContentsRow>
 
         {/* 학습자원명 */}
@@ -339,11 +258,6 @@ const BlogDetailComponent = forwardRef<HTMLFormElement, BlogDetailProps>(
           </ContentsRow>
         </FormDisplay>
 
-        {/* 블로그 내용 (에디터 팝업 호출) */}
-        <ContentsRow>
-          <FormRow provider={provider} name="blogContent" element={<EditorFormField />} />
-        </ContentsRow>
-
         {/* 학습 시간 */}
         <ContentsRow>
           <FormRow provider={provider} name="contentDuration" element={<DurationTimeFormField />} />
@@ -400,37 +314,17 @@ const BlogDetailComponent = forwardRef<HTMLFormElement, BlogDetailProps>(
         </FormGroup>
 
         {/* 이력정보 */}
-        {mode === 'update' && (
-          <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
-            <ContentsHistoryInfoFormField />
-          </ContentsRow>
-        )}
+        <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
+          <ContentsHistoryInfoFormField />
+        </ContentsRow>
       </form>
     );
   },
 );
 
-BlogDetailComponent.displayName = 'BlogDetail';
+HtmlDetailComponent.displayName = 'HtmlDetail';
 
-export const BlogDetail = BlogDetailComponent;
+export const HtmlDetail = HtmlDetailComponent;
 
-const formConfig = (hasMapping: boolean): DynamicFormConfig => {
-  const commonMediaContentFormConfig = cloneDeepWith(mediaContentFormConfig({ hasMapping }));
-
-  return {
-    builders: [
-      ...commonMediaContentFormConfig.builders,
-      {
-        label: t('블로그 내용'),
-        name: 'blogContent',
-        type: 'custom',
-        format: 'string',
-        value: '',
-      },
-    ],
-    validator: {
-      ...commonMediaContentFormConfig.validator,
-      blogContent: true,
-    },
-  };
-};
+const formConfig = (hasMapping: boolean): DynamicFormConfig =>
+  cloneDeepWith(mediaContentFormConfig({ hasMapping }));

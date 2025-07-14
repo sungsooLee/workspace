@@ -17,10 +17,10 @@ export function useFetchTenant(tenantId?: number) {
  * @param roleId - 역할
  * @param options - 추가 쿼리 옵션.
  */
-export const useFetchTenantByRoleId = <T = TenantByRoleId>(
+export const useFetchTenantByRoleId = <T = TenantByRoleId[]>(
   roleId: number,
-  options?: UseQueryOptions<PaginationResponse<T>, Error>,
-): UseQueryResult<PaginationResponse<T>, Error> => {
+  options?: UseQueryOptions<T, Error>,
+): UseQueryResult<T, Error> => {
   return useQuery({ ...queryOptions.tenantByRoleId<T>(roleId), ...options });
 };
 

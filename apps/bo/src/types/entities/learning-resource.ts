@@ -8,7 +8,7 @@ import {
   ProcessingStatus,
 } from './enum';
 
-export interface BlogCreateReq {
+export interface MediaContentSaveReq {
   contentName: string;
   languageCountryCode: string;
   tenantId: number;
@@ -18,7 +18,6 @@ export interface BlogCreateReq {
   coordinatorName: string;
   coordinatorTelCountryCode: string;
   coordinatorTelNo: string;
-  blogContent: object;
   contentTime: number;
   isUnlimited: boolean;
   contentUseStartDate: Date | undefined;
@@ -26,7 +25,6 @@ export interface BlogCreateReq {
   isVendored: boolean;
   vendorCode: string | number;
   vendorName: string;
-  // vendorCoordinatorUuid: string; // 개발업체담당자명은 직접입력으로 명시되어 있음
   vendorCoordinatorName: string;
   vendorTelCountryCode: string;
   vendorTelNo: string;
@@ -42,6 +40,10 @@ export interface BlogCreateReq {
   tags: string[];
   contentAddInfoType: string;
   contentAddInfo: number;
+}
+
+export interface BlogCreateReq extends MediaContentSaveReq {
+  blogContent: object;
 }
 
 export interface BlogUpdateReq extends BlogCreateReq {
@@ -83,6 +85,12 @@ export interface PostDraftHtmlVideoParams {
   channelUuid: string;
   languageCountryCode: string;
   fileUuid: string;
+}
+
+export interface Resource {
+  resourceId: number;
+  startFile: string;
+  startFileUrl: string;
 }
 
 export interface Tag {
@@ -136,11 +144,7 @@ export interface ContentInformation {
   aiSummary?: string; //	학습자원 개요 (AI자동추출)[...]
   aiKeyword?: string; //	키워드 (AI자동추출)[...]
   children: any[];
-  resource?: {
-    resourceId: number;
-    startFile: string;
-    startFileUrl: string;
-  };
+  resource?: Resource;
 }
 
 export type GetContentDetailRes = ContentInformation;
@@ -164,6 +168,27 @@ export interface PostDraftHtmlVideoRes {
   contentStatusCode: FileStatus;
   processingStatus: ProcessingStatus;
   isDrafted: boolean;
+}
+
+export type HtmlVideoStatus = PostDraftHtmlVideoRes;
+
+export interface HtmlVideoMetadataReq extends MediaContentSaveReq {
+  contentUuid: string;
+}
+
+export interface HtmlVideoMetadataRes extends HtmlVideoMetadataReq {
+  processingStatus: ProcessingStatus;
+  resource?: Resource;
+}
+
+export interface HtmlVideoDetailRes extends GetContentDetailRes {
+  startFile: string;
+  startFileUrl: string;
+  resource?: {
+    resourceId: number;
+    startFile: string;
+    startFileUrl: string;
+  };
 }
 
 export type MappedCourseItem = {

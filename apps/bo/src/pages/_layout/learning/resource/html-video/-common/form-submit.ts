@@ -1,16 +1,17 @@
-import { getParsedDataFromString } from '@learnway/shared';
-import { BlogCreateReq, BlogUpdateReq, ContentAddInfoType } from '@types';
+import { ContentAddInfoType, HtmlVideoMetadataReq } from '@types';
 import { getTimeValueFromHour } from '../../-common/common';
 
-export const getPayloadFromBlogSubmit = (options: {
+export const getPayloadFromHtmlMetadataSubmit = (options: {
   data: any;
   tenantId: number;
-  mode: 'create' | 'update';
-  contentUuid?: string;
+  // mode: 'draft' | 'complete';
+  contentUuid: string;
 }) => {
+  console.log('get payload', options.tenantId, options.contentUuid);
   const contentTime = getTimeValueFromHour(options.data.contentDuration);
 
-  const payload: BlogCreateReq = {
+  const payload: HtmlVideoMetadataReq = {
+    contentUuid: options.contentUuid,
     tenantId: options.tenantId,
     contentName: options.data.contentName,
     languageCountryCode: options.data.languageCountryCode,
@@ -40,16 +41,9 @@ export const getPayloadFromBlogSubmit = (options: {
     isDeleted: false,
     isOpened: true,
     tags: options.data.tags,
-    blogContent: getParsedDataFromString(options.data.blogContent),
-    contentAddInfoType: ContentAddInfoType.VIDEO_ADD_INFO, // 블로그(초)
+    contentAddInfoType: ContentAddInfoType.VIDEO_ADD_INFO,
     contentAddInfo: contentTime,
   };
-
-  if (options.mode === 'update') {
-    Object.assign(payload, {
-      contentUuid: options.contentUuid ?? '',
-    } as BlogUpdateReq);
-  }
 
   console.log('payload ===>', payload);
 

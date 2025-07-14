@@ -1,3 +1,4 @@
+import { FileInfo } from '../use-file-manager/type';
 import { UploadFile, UploadPart } from './types';
 
 /**
@@ -53,3 +54,16 @@ export const formatFileSize = (size: number): string => {
     return `${(size / 1024 ** 4).toFixed(1)} TB`;
   }
 };
+
+export function convertUploadFilesToFileInfos(uploadFiles: UploadFile[]): FileInfo[] {
+  return uploadFiles
+    .filter((_) => _.fileUuid)
+    .map(({ fileUuid, fileName, s3FileName, size, detailPath, key }) => ({
+      fileUuid: fileUuid!,
+      originalFileName: fileName,
+      serverFileName: s3FileName,
+      fileSize: size,
+      detailPath,
+      filePath: key,
+    }));
+}

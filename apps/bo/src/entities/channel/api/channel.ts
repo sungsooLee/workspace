@@ -35,10 +35,7 @@ export default class ChannelService {
    * @param roleId
    * @returns ChannelByRoleId[]
    */
-  static fetchChannelByRoleId<T = ChannelByRoleId>(roleId: number): Promise<PaginationResponse<T>> {
-    return httpService.get<PaginationResponse<T>>(`${PMSApiPrefix()}/channel/role/${roleId}`, {
-      page: 0,
-      size: 1000,
-    });
+  static fetchChannelByRoleId<T = ChannelByRoleId[]>(roleId: number): Promise<T> {
+    return httpService.get<T>(`${PMSApiPrefix()}/channel/role/${roleId}`);
   }
 }

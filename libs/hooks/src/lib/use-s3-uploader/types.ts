@@ -66,8 +66,6 @@ export interface UploadFile {
 export interface ThumbnailFileValue {
   groupUuid?: string;
   files?: FileInfo[];
-  selectedFileUuid?: string;
-  isLoading?: boolean;
 }
 
 export interface UseUploadQueueConfig {
