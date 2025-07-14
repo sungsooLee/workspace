@@ -10,6 +10,10 @@ export function useFetchOrganizationTree(tenantIds: number[], tenantName?: strin
   return useQuery(queryOptions.organizationTree(tenantIds, tenantName));
 }
 
+export function useFetchCustomGroupsTree(userGroupName?: string) {
+  return useQuery(queryOptions.customGroupsTree(userGroupName));
+}
+
 export function useFetchUserGroupDetail(userGroupId: number) {
   return useQuery(queryOptions.userGroupManualDetail(userGroupId));
 }

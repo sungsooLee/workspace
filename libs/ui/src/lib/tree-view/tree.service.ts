@@ -525,7 +525,7 @@ export const transformApiDataToTreeData = <T extends Record<string, any>>(
   } = options || {};
 
   const transformNode = (node: T, parent?: TreeData): TreeData => {
-    const id = node[idKey] ?? 0;
+    const id = node[idKey] ?? undefined;
     const title = node[titleKey] ?? '';
     const key = parent ? `${parent.key}-${id}` : `${id}`;
     const fullPath = parent ? `${parent.fullPath} ${pathJoinText} ${title}` : title;
