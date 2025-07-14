@@ -175,6 +175,8 @@ export { ReactComponent as IcoEssential } from './lib/ic_essential.svg';
 export { ReactComponent as IcoTeacher } from './lib/ic_teacher.svg';
 export { ReactComponent as IcoMoney } from './lib/ic_money.svg';
 export { ReactComponent as IcoChair } from './lib/ic_chair.svg';
+export { ReactComponent as IcoTranslation } from './lib/ic_translation.svg';
+export { ReactComponent as IcoImport } from './lib/ic_import.svg';
 //export Default as Information from './lib/information.svg?react';
 
 //import Information from './lib/information.svg';

@@ -17,6 +17,29 @@
           .guide_popup {
             @apply ml-[4px] flex;
           }
+          .status_view {
+            @apply ml-[12px] inline-flex items-center;
+            .icon_translation {
+              @apply h-[20px] w-[20px] fill-none stroke-[#4C515E];
+              path {
+                @apply stroke-[#4C515E];
+              }
+            }
+            .icon_import {
+              @apply h-[20px] w-[20px] fill-none stroke-[#4C515E];
+              path {
+                @apply stroke-[#4C515E];
+              }
+            }
+            button {
+              & + button {
+                @apply ml-[6px];
+              }
+            }
+            &::before {
+              @apply mr-[12px] h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
+            }
+          }
         }
       }
     }
