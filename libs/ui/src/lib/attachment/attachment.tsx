@@ -9,7 +9,7 @@ import {
   IcoPause,
   IcoRefresh,
   IcoTrash03,
-  IcoUploadCloud,
+  IcoFileUpload,
 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import { UploadFile, useFileManager } from '@learnway/hooks';
@@ -298,7 +298,7 @@ const AttachmentComponent = ({
     return statusMap[file.status] || statusMap.default;
   };
   return (
-    <div className={cn(styles.start, styles.wrap)}>
+    <div className={cn(styles.start, styles.wrap, 'attach_wrap')}>
       <div className={styles.info_wrap}>
         <div className={styles.title_area}>
           <strong className={styles.title}>{'파일 올리기'}</strong>
@@ -356,7 +356,7 @@ const AttachmentComponent = ({
       <div className={cn(styles.file_wrap)}>
         <div className={cn(styles.attach_area, files.length > 0 && 'hidden')}>
           <Button className={styles.btn_file} {...getRootProps()} disabled={readOnly || disabled}>
-            <IcoUploadCloud width="40" height="40" stroke={'#131C30'} />
+            <IcoFileUpload className={styles.icon_upload} />
             <strong className={styles.file_title}>
               {'영역을 클릭하거나 파일을 마우스로 끌어놓으세요'}
             </strong>

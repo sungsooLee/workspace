@@ -4,6 +4,7 @@
 /* eslint-disable */
 import type { com_ever_edu_external_tenant_dto_res_TenantResDto } from './com_ever_edu_external_tenant_dto_res_TenantResDto';
 import type { com_ever_edu_lms_category_dto_res_CourseCategoryFlatDto } from './com_ever_edu_lms_category_dto_res_CourseCategoryFlatDto';
+import type { com_ever_edu_lms_course_dto_CourseCommunityDto } from './com_ever_edu_lms_course_dto_CourseCommunityDto';
 import type { com_ever_edu_lms_course_dto_res_CourseResDto$SimpleCourseDto } from './com_ever_edu_lms_course_dto_res_CourseResDto$SimpleCourseDto';
 import type { com_ever_edu_lms_course_dto_res_CourseTargetAudienceResDto } from './com_ever_edu_lms_course_dto_res_CourseTargetAudienceResDto';
 import type { com_ever_edu_lms_tag_dto_res_TagResDto } from './com_ever_edu_lms_tag_dto_res_TagResDto';
@@ -232,25 +233,9 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
      */
     isCommunicationToolEnabled?: boolean;
     /**
-     * 공지사항 기능 사용 여부
+     * 커뮤니티 사용 설정 내용
      */
-    isNoticeEnabled?: boolean;
-    /**
-     * Q&A 기능 사용 여부
-     */
-    isQnaBoardEnabled?: boolean;
-    /**
-     * 자료실 기능 사용 여부
-     */
-    isMartialBoardEnabled?: boolean;
-    /**
-     * 커뮤니티 기능 사용 여부
-     */
-    isCommunityEnabled?: boolean;
-    /**
-     * 과정을 학습자가 공유할 수 있는지?
-     */
-    isSharingAllowed?: boolean;
+    communityList?: Array<com_ever_edu_lms_course_dto_CourseCommunityDto>;
     /**
      * 강사 설정 여부
      */
@@ -309,6 +294,10 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
      * 고용보험 환급비(원)
      */
     employmentInsuranceRefund?: number;
+    /**
+     * 숙박 여부
+     */
+    isStayed?: boolean;
     /**
      * 오토에버 위탁 전용 설정 여부
      */

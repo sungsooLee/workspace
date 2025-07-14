@@ -97,7 +97,7 @@ export class DepartmentService {
    * @param payload
    * @returns
    */
-  static moveDeparment(payload: any) {
+  static moveDepartment(payload: any) {
     return httpService.put<Department>(
       `${PMSApiPrefix()}/department/${payload.deptId}/dnd`,
       payload,

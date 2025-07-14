@@ -1,0 +1,239 @@
+import { Course, CourseConfig } from '@types';
+
+// ------------------------------------------------------------------
+//
+// - 더미 데이터
+//
+// ------------------------------------------------------------------
+
+export const getDummyCourseConfig = (): CourseConfig => {
+  return {
+    enrollOption: 'IMPOSSIBLE',
+    learningEnvOption: 'OPTIONAL',
+    learningControlOption: 'OPTIONAL',
+    passOption: 'MANDATORY',
+    communicationOption: 'OPTIONAL',
+    instructorOption: 'OPTIONAL',
+    textBookOption: 'OPTIONAL',
+    relatedCourseOption: 'OPTIONAL',
+    adminDataOption: 'OPTIONAL',
+    allowedContentTypes: ['VIDEO', 'EXAM', 'ASSIGNMENT'],
+    fileStorageType: 'AWS_INTERNAL',
+  };
+};
+
+// 이러닝1
+export const getDummyCourse = () => {
+  return {
+    courseType: 'ELEARNING1',
+    categories: [
+      {
+        categoryId: 11,
+        name: '1-1',
+        categoryCode: 'category11',
+        categoryContent: '',
+        categoryPath: 'ROOT>한글명-CATE00011>1-1',
+        isPrimary: false,
+        tenantIds: [2],
+      },
+    ],
+    channelUuid: 'd4bf5f43-3184-445b-8985-f316619909db',
+    language: 'KO',
+    courseName: '과정명 1111111111111111',
+    courseSummary: 'ㅁㅁ',
+    courseContent:
+      '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"ㅍㅍㅍㅍㅍ","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}',
+    trainingLevelType: 'NONE',
+    learningSpaceType: 'LEARNING_WAY',
+    coordinatorUuid: 'c3927f00-3f6d-11f0-9435-0218a74d52f7',
+    coordinatorName: '정민혁/개발팀',
+    coordinatorDeptName: '정민혁/개발팀',
+    coordinatorTelCountryCode: 'KOR_82',
+    coordinatorTelNo: '2233',
+    coordinatorEmail: '2222',
+    operatorUuid: 'c39280c3-3f6d-11f0-9435-0218a74d52f7',
+    operatorName: '김지훈/개발팀',
+    operatorDeptName: '김지훈/개발팀',
+    primaryCategoryId: 11,
+    operatorTelCountryCode: 'KOR_82',
+  };
+};
+
+// 클래스
+export const getDummyCourse2 = (): Course => {
+  return {
+    courseType: 'CLASS',
+    channelUuid: '67bbca16-4180-4982-a4e0-d192212dd7c2',
+    tenantIds: [2, 3],
+    categories: [
+      {
+        categoryId: 11,
+        name: '1-1',
+        categoryCode: 'category11',
+        categoryContent: '',
+        categoryPath: 'ROOT>한글명-CATE00011>1-1',
+        isPrimary: false,
+        tenantIds: [2],
+      },
+    ],
+    primaryCategoryId: 1,
+    targetList: [],
+    language: 'KO',
+    courseName: '과정명...',
+    courseSummary: '과장 요약',
+    courseContent:
+      '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"교육 내용","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}',
+    trainingLevelType: 'BASIC',
+    learningSpaceName: '장소',
+    operatorName: '김지훈/개발팀',
+    operatorUuid: 'c39280c3-3f6d-11f0-9435-0218a74d52f7',
+    operatorDeptName: '개발팀',
+    coordinatorUuid: 'c3929798-3f6d-11f0-9435-0218a74d5224',
+    learningSpaceType: 'MANUAL',
+    coordinatorName: '이현주/개발팀',
+    coordinatorDeptName: '개발팀',
+    coordinatorTelNo: '33332222',
+    coordinatorEmail: '담당자@email.com',
+    operatorTelNo: '44445555',
+    operatorEmail: '운영자@email.com',
+    learningSpaceNameKeyIn: 'xx',
+  } as unknown as Course;
+};
+
+// 이러닝 > 4단계
+export const getDummyCourse4 = (): Course => {
+  return {
+    wizardStep: 'STEP4',
+    courseId: 5,
+    courseType: 'ELEARNING1',
+    channelUuid: 'd4bf5f43-3184-445b-8985-f316619909db',
+    tenantList: [
+      {
+        tenantId: 2,
+        tenantName: '현대카드👨‍💻🔥💯🚀',
+      },
+    ],
+    primaryCategoryId: 23,
+    categories: [
+      {
+        categoryId: 23,
+        name: '성희롱 예방교육',
+        categoryCode: '1102',
+        categoryContent: '성희롱 예방교육',
+        categoryPath: 'ROOT>필수교육>성희롱 예방교육',
+        isPrimary: true,
+        tenantIds: [2, 3, 4],
+      },
+      {
+        categoryId: 38,
+        name: '중학교 2학년',
+        categoryCode: 'common_category_00f4fe96-b1e9-409d-92bc-4c0f1e09e8a8',
+        categoryContent: '고딩 2학년 카테고리 내용입니다.',
+        categoryPath: 'ROOT>중학교>중학교 2학년',
+        isPrimary: false,
+        tenantIds: [2, 3, 4],
+      },
+    ],
+    targetList: [
+      {
+        groupId: 7,
+        combiners: [
+          {
+            combineType: 'USER_GROUP',
+            combineValue: 1678,
+            combinerPath: ['업무과', '죽전대리점'],
+          },
+        ],
+      },
+    ],
+    language: 'KO',
+    courseName: '과정명 ..... 33333333333',
+    courseSummary: '23123',
+    courseContent:
+      '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"ㅇㅁㅁㄴㅇㅁㄴㅁㄴㅇㅁㄴㅇ","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}',
+    trainingLevelType: 'NONE',
+    learningSpaceType: 'LEARNING_WAY',
+    coordinatorUuid: 'c3929798-3f6d-11f0-9435-0218a74d4312',
+    coordinatorName: '이나라/개발팀',
+    coordinatorDeptName: '이나라/개발팀',
+    coordinatorTelCountryCode: 'KOR_82',
+    coordinatorTelNo: '이나라/개발팀',
+    coordinatorEmail: '12312312',
+    operatorUuid: 'c3926f22-3f6d-11f0-9435-0218a74d52f7',
+    operatorName: '장성범/개발팀',
+    operatorDeptName: '장성범/개발팀',
+    operatorTelCountryCode: 'KOR_82',
+    operatorTelNo: '123123123123',
+    operatorEmail: '123123',
+    isEnrollRequired: false,
+    isLearnEnvEnabled: true,
+    deviceRestrictType: 'NONE',
+    isIntranetRestricted: false,
+    learningRestrictTimeType: 'NONE',
+    isReviewRestricted: false,
+    isCaptureBlockEnabled: false,
+    isSecurityAgreementEnable: false,
+    isLearnControlEnabled: true,
+    isDailyLearningProgressRestricted: false,
+    isProgressResetEnabled: false,
+    isSequentialLearningRequired: false,
+    isPlayerControlRestricted: false,
+    maxPlayBackRate: 'X1',
+    isUsePassOption: true,
+    passMethodType: 'AUTO',
+    isCertificateProvided: false,
+    progressMinPassScore: 70,
+    attendanceMinPassScore: 60,
+    examMinPassScore: 50,
+    asgmtMinPassScore: 40,
+    totalMinPassScore: 220,
+    progressWeights: 25,
+    attendanceWeights: 25,
+    examWeights: 25,
+    asgmtWeights: 25,
+    recognizedStudyMinType: 'TIME',
+    isRecognizedStudyPoint: false,
+    isCommunicationToolEnabled: true,
+    isInstructorAssigned: true,
+    instructorAssignType: 'REGISTERED',
+    isTextbookProvided: true,
+    textbookName: '2222',
+    textbookFee: 333,
+    isRelatedPrerequisiteCourseExisted: true,
+    hmgStandardMainCategory: 'COMM_ON_BOARD',
+    hmgStandardSubCategory: 'SOFTWARE',
+    isUseTrainingCostPerPerson: false,
+    isStayed: false,
+    isUseOutsourcing: true,
+    isPreLevelTestRequired: false,
+    isBookDeliveryInfoRequired: false,
+    isUsed: false,
+    courseValidityStartDate: '',
+    courseValidityStartHour: 0,
+    courseValidityEndDate: '',
+    courseValidityEndHour: 0,
+    thumbnailFileGroupUuid: '',
+    primaryThumbnailFileUuid: '',
+    tagNames: [],
+    passOption: {
+      progressMinPassScore: 70,
+      attendanceMinPassScore: 60,
+      examMinPassScore: 50,
+      asgmtMinPassScore: 40,
+      totalMinPassScore: 220,
+      progressWeights: 25,
+      attendanceWeights: 25,
+      examWeights: 25,
+      asgmtWeights: 25,
+      scoreSum: 220,
+      weightSum: 100,
+    },
+    isNoticeEnabled: false,
+    isQnaBoardEnabled: false,
+    isSharingAllowed: false,
+    tutorId: 4,
+    tutorName: '김규원',
+    outsourcingCompanyId: 9,
+    outsourcingCompanyName: '신민제',
+  };
+};

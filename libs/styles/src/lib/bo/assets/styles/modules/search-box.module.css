@@ -90,7 +90,7 @@
       @apply !w-[32px] !max-w-[32px] !px-0;
     }
     svg {
-      @apply !mr-0 fill-none stroke-none;
+      @apply !mr-0 h-[16px] w-[16px] fill-none stroke-none;
       path {
         @apply stroke-[var(--gray9)];
       }

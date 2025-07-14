@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { com_ever_edu_pms_tenant_dto_req_TenantPropertiesFlatformUpdateReqDto } from './com_ever_edu_pms_tenant_dto_req_TenantPropertiesFlatformUpdateReqDto';
 import type { com_ever_edu_pms_tenant_dto_req_TenantReqDto$CompanyReqDto } from './com_ever_edu_pms_tenant_dto_req_TenantReqDto$CompanyReqDto';
 import type { com_ever_edu_pms_tenant_dto_req_TenantReqDto$TagReqDto } from './com_ever_edu_pms_tenant_dto_req_TenantReqDto$TagReqDto';
 import type { com_ever_edu_pms_tenant_dto_req_TenantReqDto$UserReqDto } from './com_ever_edu_pms_tenant_dto_req_TenantReqDto$UserReqDto';
@@ -74,6 +75,7 @@ export type com_ever_edu_pms_tenant_dto_req_TenantUpdateReqDto = {
      * 언어
      */
     langCountryCodeTypeList?: Array<'KO' | 'EN' | 'ES' | 'AR' | 'RU' | 'FR' | 'PT' | 'ID' | 'ZH' | 'VI' | 'TR' | 'TH' | 'DE' | 'HE' | 'NE' | 'FA' | 'HI' | 'JA' | 'MS' | 'IT' | 'SK' | 'RO' | 'HR' | 'ET'>;
+    flatformProperties?: com_ever_edu_pms_tenant_dto_req_TenantPropertiesFlatformUpdateReqDto;
 };
 export namespace com_ever_edu_pms_tenant_dto_req_TenantUpdateReqDto {
     /**

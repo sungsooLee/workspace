@@ -1,4 +1,10 @@
-import { BlogCreateReq, BlogUpdateReq, BlogWatchLogReq, PostDraftVideosParams } from '@types';
+import {
+  BlogCreateReq,
+  BlogUpdateReq,
+  HtmlVideoMetadataReq,
+  PostDraftHtmlVideoParams,
+  PostDraftVideosParams,
+} from '@types';
 import LearningResourceService from '../api/learning-resource';
 
 export const queryKeys = {
@@ -16,7 +22,9 @@ export const queryKeys = {
   programGuideDownload: ['program-guide-download'] as const,
   html5Draft: ['html5-draft'] as const,
   html5FileChange: ['html5-file-change'] as const,
+  html5MetaUpdate: ['html5-update'] as const,
   html5Resource: ['html5-resource'] as const,
+  html5Status: ['html5-status'] as const,
   blogResource: ['blog-resource'] as const,
 };
 
@@ -73,10 +81,10 @@ export const learningResourceQueryOptions = {
     queryFn: () => LearningResourceService.fetchCourseMapping(contentUuid),
     cacheTime: 0,
     staleTime: 0,
-    enabled: false,
+    enabled: true,
   }),
   getSharedHistories: (params: any) => ({
-    queryKey: queryKeys.mappingCourses,
+    queryKey: queryKeys.sharedHistories,
     queryFn: () => LearningResourceService.fetchSharedHistories(params),
     cacheTime: 0,
     staleTime: 0,
@@ -90,13 +98,7 @@ export const learningResourceQueryOptions = {
     enabled: false,
   }),
 
-  createHTML5Draft: (params: {
-    tenantId: string;
-    tenantName: string;
-    channelUuid: string;
-    languageCountryCode: string;
-    fileUuid: string;
-  }) => ({
+  createHTML5Draft: (params: PostDraftHtmlVideoParams) => ({
     queryKey: queryKeys.html5Draft,
     queryFn: () => LearningResourceService.createHTML5Draft(params),
     cacheTime: 0,
@@ -117,6 +119,13 @@ export const learningResourceQueryOptions = {
     staleTime: 0,
     enabled: true,
   }),
+  getHTML5Status: (contentUuid: string) => ({
+    queryKey: queryKeys.html5Status,
+    queryFn: () => LearningResourceService.fetchHTML5Status(contentUuid),
+    cacheTime: 0,
+    staleTime: 0,
+    enabled: true,
+  }),
   getBlogContent: (contentUuid: string) => ({
     queryKey: queryKeys.blogResource,
     queryFn: () => LearningResourceService.fetchBlogResource(contentUuid),
@@ -129,6 +138,14 @@ export const learningResourceQueryOptions = {
 export const mutateOptions = {
   postDraftVideos: () => ({
     mutationFn: (params: PostDraftVideosParams) => LearningResourceService.postDraftVideos(params),
+  }),
+  postDraftHTML5: () => ({
+    mutationFn: (params: PostDraftHtmlVideoParams) =>
+      LearningResourceService.createHTML5Draft(params),
+  }),
+  updateHTML5Metadata: () => ({
+    mutationFn: (params: HtmlVideoMetadataReq) =>
+      LearningResourceService.updateHTML5Metadata(params),
   }),
   createBlogContent: () => ({
     mutationFn: (params: BlogCreateReq) => LearningResourceService.createBlogContent(params),

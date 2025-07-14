@@ -22,7 +22,7 @@ import {
   IcoPpt,
   IcoRefresh,
   IcoTrash03,
-  IcoUploadCloud,
+  IcoFileUpload,
   IcoFilePng,
 } from '@learnway/icons';
 
@@ -66,7 +66,7 @@ function RouteComponent() {
                 {/* 파일 첨부 하기 전 */}
                 <div className={styles.attach_area}>
                   <Button className={styles.btn_file}>
-                    <IcoUploadCloud width={'40'} height={'40'} stroke={'#131C30'} />
+                    <IcoFileUpload className={styles.icon_upload} />
                     <strong className={styles.file_title}>
                       {'영역을 클릭하거나 파일을 마우스로 끌어놓으세요'}
                     </strong>
@@ -278,7 +278,7 @@ function RouteComponent() {
     });
   }, [openModal]);
   return (
-    <div className={cn(styles.start, styles.wrap)}>
+    <div className={cn(styles.start, styles.wrap, 'attach_wrap')}>
       {/* info_wrap : 상단 타이틀 버튼 영역 */}
       <div className={styles.info_wrap}>
         <div className={styles.title_area}>
@@ -323,7 +323,7 @@ function RouteComponent() {
         {/* 파일 첨부 하기 전 */}
         <div className={styles.attach_area}>
           <Button className={styles.btn_file}>
-            <IcoUploadCloud width={'40'} height={'40'} stroke={'#131C30'} />
+            <IcoFileUpload className={styles.icon_upload} />
             <strong className={styles.file_title}>
               {'영역을 클릭하거나 파일을 마우스로 끌어놓으세요'}
             </strong>

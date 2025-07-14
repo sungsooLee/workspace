@@ -268,8 +268,8 @@ const searchConfig: SearchBoxConfig = {
         label: '신청일',
         type: 'date-range',
         value: {
-          from: formUtils.now({ unit: 'day', offset: -30 }),
-          to: formUtils.now(),
+          from: formUtils.nowDate({ unit: 'day', offset: -30 }),
+          to: formUtils.nowDate(),
         },
       },
       {
@@ -277,8 +277,8 @@ const searchConfig: SearchBoxConfig = {
         label: '접수/반려일',
         type: 'date-range',
         value: {
-          from: formUtils.now({ unit: 'day', offset: -30 }),
-          to: formUtils.now(),
+          from: formUtils.nowDate({ unit: 'day', offset: -30 }),
+          to: formUtils.nowDate(),
         },
       },
     ],

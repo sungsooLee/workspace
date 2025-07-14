@@ -70,13 +70,13 @@ export class ScormRteClient {
     }
   }
 
-  TOCPushed(scoID: string) {
-    if (this.isInitialized()) {
-      this._TOCPushed = true;
-      this._userNavRequest = '{target=' + scoID + '}choice';
-      // set adl.nav.request to "_none_" ??
-    }
-  }
+  // TOCPushed(scoID: string) {
+  //   if (this.isInitialized()) {
+  //     this._TOCPushed = true;
+  //     this._userNavRequest = '{target=' + scoID + '}choice';
+  //     // set adl.nav.request to "_none_" ??
+  //   }
+  // }
 
   resetLoggingVariable() {
     this._logging_on = !this._logging_on;
@@ -95,12 +95,13 @@ export class ScormRteClient {
     //  }
   }
 
-  send(data: any) {
-    // 전송 처리
-    //  return _comm.send((typeof data === "string") ?
-    //                 data : JSON.stringify(data));
-    return 'true';
-  }
+  // send 함수 사용하지 않음.
+  //send(data: any) {
+  // 전송 처리
+  //  return _comm.send((typeof data === "string") ?
+  //                 data : JSON.stringify(data));
+  //    return 'true';
+  //}
 
   getErrorManager() {
     return this._errorManager;
@@ -131,12 +132,12 @@ export class ScormRteClient {
   setWasNextButtonPushed(val: boolean) {
     this._nextButtonPushed = val;
   }
-  getWasTOCPushed() {
-    return this._TOCPushed;
-  }
-  setWasTOCPushed(val: boolean) {
-    this._TOCPushed = val;
-  }
+  // getWasTOCPushed() {
+  //   return this._TOCPushed;
+  // }
+  // setWasTOCPushed(val: boolean) {
+  //   this._TOCPushed = val;
+  // }
   setTOCPushed(val: string) {
     this._userNavRequest = val;
     this._TOCPushed = true;

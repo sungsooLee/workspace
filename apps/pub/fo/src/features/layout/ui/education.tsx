@@ -33,30 +33,34 @@ const EducationComponent = ({ className }: EducationProps) => {
         <div className={styles.txt_box}>
           <div className={styles.box}>
             <span className={styles.date}>2026-01-01 ~ 2026-01-31</span>
-            <span className={styles.state}>2차</span>
-            <span className={styles.label}>접수중</span>
+            {isMobile && (
+              <>
+                <span className={styles.state}>2차</span>
+                <span className={styles.label}>접수중</span>
+              </>
+            )}
           </div>
           <div className={styles.box}>
             <p>스마트제조를 위한 스마트공장 구축 및 추진실무 - MES 구축</p>
           </div>
         </div>
         <div className={styles.btn_box}>
-          <Button variant="primary" size={isMobile ? 'md' : 'lg'}>
+          <Button variant="primary" size="xl">
             수강 신청
           </Button>
-          <Button variant="gray" size={isMobile ? 'md' : 'lg'}>
+          <Button variant="gray" size="xl">
             학습완료
           </Button>
-          <Button variant="line" size={isMobile ? 'md' : 'lg'}>
+          <Button variant="line" size="xl">
             수강 취소
+          </Button>
+          <Button variant="primary" size="xl" disabled>
+            인원 마감
           </Button>
         </div>
       </div>
       <div className={styles.info_box}>
-        {/* definitionListStyles module */}
-        <div
-          className={`${definitionListStyles.start} ${definitionListStyles.list} ${styles.list}`}
-        >
+        <div className={styles.list}>
           <ul>
             <li>
               <IcoCalendar01 width={20} height={20} stroke="#4d525c" />

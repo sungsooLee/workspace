@@ -46,7 +46,7 @@
       [class*='nlp-select__menu-list'] {
         @apply scrollbar max-h-[260px] overflow-y-auto rounded-[4px] border border-solid border-[var(--gray7)] px-[8px] py-[4px];
         [class*='nlp-select__option'] {
-          @apply !body_bo_2_r h-[32px] !px-[8px] !py-[5px] text-[var(--gray8)];
+          @apply !body_bo_2_r h-[32px] !truncate !px-[8px] !py-[5px] text-[var(--gray8)];
           &[class*='nlp-select__option--is-focused'],
           &:hover {
             @apply !bg-[#EDFCFF];
@@ -70,7 +70,7 @@
   @apply flex items-center justify-center;
 }
 .nlp-select__option {
-  @apply !body_bo_2_r flex !h-[32px] !min-h-[32px] !cursor-pointer items-center !bg-[var(--white)] !px-[8px] !text-[#4C515E];
+  @apply !body_bo_2_r !h-[32px] !min-h-[32px] !cursor-pointer items-center !truncate whitespace-nowrap !bg-[var(--white)] !px-[8px] !text-[#4C515E];
 }
 .nlp-select__clear-indicator {
   @apply !mr-0;

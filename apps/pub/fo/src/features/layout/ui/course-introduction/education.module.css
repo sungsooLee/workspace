@@ -48,10 +48,12 @@
     .start {
       &.education_wrap {
         h2 {
-          @apply title_6_b inline-block;
+          @apply headline1-b inline-block leading-[31px];
         }
         .filter_wrap {
-          @apply float-right mt-0 inline-block;
+          .date {
+            @apply body-lg-b leading-[27px] text-[var(--gray10)];
+          }
           .filter {
             .array {
               button {
@@ -63,8 +65,24 @@
             }
           }
         }
+        .date_drop {
+          @apply mt-[10px];
+        }
         .education_box {
-          @apply mt-[8px];
+          @apply mt-[16px];
+          ul {
+            li {
+              & + li {
+                @apply mt-[30px];
+              }
+            }
+          }
+
+          .btn_more {
+            button {
+              @apply flex h-[44px] w-full justify-center;
+            }
+          }
         }
       }
     }

@@ -1,4 +1,4 @@
-import { FC, useCallback } from 'react';
+import { FC, useCallback, useEffect } from 'react';
 import { isMobile } from 'react-device-detect';
 
 import stylesWeb from '@learnway/styles/fo/pages/_learning/learning.module.css';
@@ -7,7 +7,7 @@ import stylesMobile from '@learnway/styles/fo/pages/_learning/learning-m.module.
 import { useVideoPlayer } from '../../../video-player/hooks/video-player.hook';
 import { VideoPlayer } from '../../../video-player/video-player';
 import { VideoPlayerContainer } from '../../../video-player/video-player-container';
-import { useLearningWindow } from '../../learning-window.store';
+import { useLearningWindow } from '../../learnway-learning-window.store';
 
 const styles = isMobile ? stylesMobile : stylesWeb;
 
@@ -17,6 +17,9 @@ const LearningWindowVideoPlayerComponent: FC<any> = () => {
   const handleOnProgress = (state: any) => {
     funcInfo?.videoOnProgress(state);
   };
+  useEffect(() => {
+    console.log('videoInfo', videoInfo);
+  }, [videoInfo]);
   const player = useVideoPlayer({ onProgressCallback: handleOnProgress });
   return (
     <div className={styles.start}>

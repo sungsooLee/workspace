@@ -1,27 +1,17 @@
 import { useState, memo } from 'react';
-import { Link } from '@tanstack/react-router';
-
-import { IcoLinkblank } from '@learnway/icons';
 
 import styles from '@learnway/styles/fo/pages/_learning/side-panel/popup/curriculum-popup.module.css';
-
+import { useLearningWindow, Button, useModal, ProgressCheck } from '@learnway/ui';
 import { ModalBody, ModalContainer, ModalTitle } from '../../../../modal/modal-container';
-import { ProgressCheck } from '../../../../progress/progress-check/progress-check';
-
-import { useLearningWindow } from '../../../learning-window.store';
 
 interface ChildData {
   panelState: boolean;
 }
 
 const CurriculumPopupComponent = () => {
-  const [childInfo, setChildInfo] = useState<boolean>();
+  const { close: closeModal } = useModal();
 
   const { curriculum, playInfo, playList, playIndex, setPlayInfo } = useLearningWindow();
-
-  const handleChildData = (data: ChildData) => {
-    setChildInfo(data.panelState);
-  };
 
   return (
     <ModalContainer>
@@ -53,6 +43,7 @@ const CurriculumPopupComponent = () => {
                               }
                               onClick={() => {
                                 setPlayInfo(module.moduleId, lesson.lessonId);
+                                closeModal();
                               }}
                             >
                               <div className={styles.step_box}>

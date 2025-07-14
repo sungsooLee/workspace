@@ -35,3 +35,26 @@
     }
   }
 }
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.curriculum {
+        .list {
+          @apply pr-[16px];
+          li {
+            @apply py-[8px];
+            .box {
+              @apply grid-cols-[4fr_1fr];
+              div {
+                & > span {
+                  @apply w-[90px];
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

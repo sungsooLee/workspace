@@ -57,7 +57,8 @@ export { ReactComponent as IcoTooltipArrow } from './lib/ic_tooltip_arrow.svg'; 
 export { ReactComponent as IcoTooltipArrow02 } from './lib/ic_tooltip_arrow02.svg';
 export { ReactComponent as IcoCloseCircle } from './lib/ic_close_circle.svg'; // close circle 24*24
 export { ReactComponent as IcLogOut01 } from './lib/ic_log_out_01.svg'; // logout
-export { ReactComponent as IcoUploadCloud } from './lib/ic_upload_cloud.svg'; // file upload 24*24
+export { ReactComponent as IcoUploadCloud } from './lib/ic_upload_cloud.svg'; // file upload
+export { ReactComponent as IcoFileUpload } from './lib/ic_file_upload.svg'; // file upload
 export { ReactComponent as IcoClipboard } from './lib/ic_clipboard.svg';
 export { ReactComponent as IcoLoading } from './lib/ic_loading.svg'; // file loading 24*24
 export { ReactComponent as IcoTrash03 } from './lib/ic_trash_03.svg'; // trash
@@ -95,6 +96,7 @@ export { ReactComponent as IcoHtml } from './lib/ic_html.svg'; // html
 export { ReactComponent as IcoEtc } from './lib/ic_etc.svg'; // html
 export { ReactComponent as IcoUser01 } from './lib/ic_user_01.svg'; // user
 export { ReactComponent as IcoSpinner } from './lib/ic_spinner.svg'; // spinner
+export { ReactComponent as IcoSpinnerBlue } from './lib/ic_spinner_blue.svg'; // spinner blue
 export { ReactComponent as IcoSucess } from './lib/ic_sucess.svg'; // sucess
 export { ReactComponent as IcoArray } from './lib/ic_array.svg'; // array
 export { ReactComponent as IcoPlay } from './lib/ic_play.svg'; // play
@@ -173,6 +175,8 @@ export { ReactComponent as IcoEssential } from './lib/ic_essential.svg';
 export { ReactComponent as IcoTeacher } from './lib/ic_teacher.svg';
 export { ReactComponent as IcoMoney } from './lib/ic_money.svg';
 export { ReactComponent as IcoChair } from './lib/ic_chair.svg';
+export { ReactComponent as IcoTranslation } from './lib/ic_translation.svg';
+export { ReactComponent as IcoImport } from './lib/ic_import.svg';
 //export Default as Information from './lib/information.svg?react';
 
 //import Information from './lib/information.svg';

@@ -1,6 +1,6 @@
 import { PageContainer } from '@shared/ui';
 // IA105 / NLP_BO_CMS_1058 // IA105 / NLP_BO_CMS_1017 // IA106 / NLP_BO_CMS_1060
-import { usePostDraftVideos } from '@entities/learning-resource';
+import { usePostDraftHTMLVideo, usePostDraftVideos } from '@entities/learning-resource';
 import {
   LearningResourceFileUploadModal,
   LearningTypeChoiceModal,
@@ -9,7 +9,7 @@ import { ChannelChoiceModal } from '@shared/ui';
 import { getDefaultLang, LEARNING_TYPE } from '@learnway/config';
 import { useModal } from '@learnway/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { PostDraftVideosRes } from '@types';
+import { PostDraftHtmlVideoRes, PostDraftVideosRes } from '@types';
 
 import { pick } from 'lodash';
 import { useEffect, useState } from 'react';
@@ -53,6 +53,27 @@ function RouteComponent() {
     },
   });
 
+  const { upload: postDraftHTMLVideo } = usePostDraftHTMLVideo({
+    onSuccess: (result: PostDraftHtmlVideoRes) => {
+      if (result.contentUuid) {
+        return router.navigate({
+          to: '/learning/resource/html-video/view',
+          state: {
+            contentUuid: result.contentUuid,
+          },
+          replace: true,
+        });
+      }
+      router.navigate({
+        to: '/learning/learning-resource',
+        state: {
+          listParam,
+        },
+        replace: true,
+      });
+    },
+  });
+
   const uploadVideo = async () => {
     const channelInfo = await openModal({
       content: <ChannelChoiceModal />,
@@ -77,6 +98,42 @@ function RouteComponent() {
       tenantId: channelInfo.tenantId,
       channelUuid: channelInfo.channelUuid,
       fileUuids,
+    });
+  };
+
+  const uploadHTML5 = async () => {
+    const channelInfo = await openModal({
+      content: <ChannelChoiceModal />,
+    });
+
+    if (!channelInfo) {
+      setSelectedType('');
+      return;
+    }
+
+    const fileUuid = await openModal({
+      content: (
+        <LearningResourceFileUploadModal
+          channel={channelInfo}
+          type={LEARNING_TYPE.HTML5_VIDEO}
+          maxFileCount={1}
+        />
+      ),
+      width: 'lg',
+    });
+
+    if (!fileUuid) {
+      setSelectedType('');
+      return;
+    }
+
+    setListParam(pick(channelInfo, ['tenantId', 'channelUuid']));
+
+    postDraftHTMLVideo({
+      languageCountryCode: getDefaultLang().toUpperCase(),
+      tenantId: channelInfo.tenantId,
+      channelUuid: channelInfo.channelUuid,
+      fileUuid,
     });
   };
 
@@ -106,8 +163,9 @@ function RouteComponent() {
         break;
       }
       // HTML 동영상
-      case LEARNING_TYPE.HTML_VIDEO: {
-        router.navigate({ to: '/learning/resource/html-video/regist', replace: true });
+      case LEARNING_TYPE.HTML5_VIDEO: {
+        uploadHTML5();
+        // router.navigate({ to: '/learning/resource/html-video/regist', replace: true });
         break;
       }
       // 이미지

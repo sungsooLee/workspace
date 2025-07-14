@@ -1,5 +1,6 @@
 import { ScormRteClient } from './scorm-rte-client';
 import { ScormDataManager } from './scorm-data-manager';
+import { checkSetValue } from './scorm-cmi-validate';
 
 /**
  * ASIS: AjaxDMHandlerAPI <- Sample RTE class
@@ -32,11 +33,11 @@ export class ScormHandler {
     if (param !== '') this.srte.getErrorManager().setCurrentErrorCode('201');
     else if (this.srte.isInitialized()) this.srte.getErrorManager().setCurrentErrorCode('103');
     else {
-      this.srte.setWasLmsSuspendAllPushed(false);
-      this.srte.setWasQuitButtonPushed(false);
-      this.srte.setWasPreviousButtonPushed(false);
-      this.srte.setWasNextButtonPushed(false);
-      this.srte.setWasTOCPushed(false);
+      // this.srte.setWasLmsSuspendAllPushed(false);
+      // this.srte.setWasQuitButtonPushed(false);
+      // this.srte.setWasPreviousButtonPushed(false);
+      // this.srte.setWasNextButtonPushed(false);
+      // this.srte.setWasTOCPushed(false);
       //this.srte.setUserNavRequest('_none_');
 
       // build request (ClientRTS:450)
@@ -61,7 +62,7 @@ export class ScormHandler {
       result = 'true';
     }
     this.srte.log(
-      'Initialize Returned Error Code ' + this.srte.getErrorManager().getCurrentErrorCode(),
+      `Initialize Returned Error Code ${this.srte.getErrorManager().getCurrentErrorCode()}`,
     );
 
     return result;
@@ -73,50 +74,55 @@ export class ScormHandler {
     if (this.srte.getTerminatedState()) {
       this.srte.getErrorManager().setCurrentErrorCode('143');
       this.srte.log(
-        'Commit Returned Error Code ' + this.srte.getErrorManager().getCurrentErrorCode(),
+        `Commit Returned Error Code ${this.srte.getErrorManager().getCurrentErrorCode()}`,
       );
       return result;
     }
 
     //top.frames['LMSFrame'].setUIState(false);
+    // UI 상태 변경시 오류 발생시 에러 확인을 하는 부분으로 현 화면에서는 필요 없는 것으로 판단됨.
+    // if (this.srte.getTerminatedState()) {
+    //   this.srte.getErrorManager().setCurrentErrorCode('143');
+    //   this.srte.log(
+    //     `Commit Returned Error Code  ${this.srte.getErrorManager().getCurrentErrorCode()}`,
+    //   );
+    //   return result;
+    // }
 
-    if (this.srte.getTerminatedState()) {
-      this.srte.getErrorManager().setCurrentErrorCode('143');
-      this.srte.log(
-        'Commit Returned Error Code ' + this.srte.getErrorManager().getCurrentErrorCode(),
-      );
-      return result;
-    }
     if (!this.srte.isInitialized()) {
       this.srte.getErrorManager().setCurrentErrorCode('142');
       this.srte.log(
-        'Commit Returned Error Code ' + this.srte.getErrorManager().getCurrentErrorCode(),
+        `Commit Returned Error Code ${this.srte.getErrorManager().getCurrentErrorCode()}`,
       );
       return result;
     }
     if (param !== '') {
       this.srte.getErrorManager().setCurrentErrorCode('201');
       this.srte.log(
-        'Commit Returned Error Code ' + this.srte.getErrorManager().getCurrentErrorCode(),
+        `Commit Returned Error Code ${this.srte.getErrorManager().getCurrentErrorCode()}`,
       );
       return result;
     }
 
-    // request type = type_set (4)
-    const reqdata = {
-      mActivityData: this.dm.calllist(),
-      mIsFinished: this.srte.getTerminateCalled(),
-      mRequestType: 4,
-      mCourseID: this.srte.getCourseID(),
-      mStudentID: this.srte.getUserID(),
-      mUserName: this.srte.getUserName(),
-      mStateID: this.srte.getStateID(),
-      mActivityID: this.srte.getActivityID(),
-      mNumAttempt: this.srte.getNumAttempts(),
-      mQuitPushed: this.srte.getWasQuitButtonPushed(),
-      mSuspendPushed: this.srte.getWasLmsSuspendAllPushed(),
-    };
+    // request 에 calllist 를 전달 하는 방식에서 모든 내용을 전달 하는 방식을 변경됨.
+    // // request type = type_set (4)
+    // const reqdata = {
+    //   mActivityData: this.dm.calllist(),
+    //   mIsFinished: this.srte.getTerminateCalled(),
+    //   mRequestType: 4,
+    //   mCourseID: this.srte.getCourseID(),
+    //   mStudentID: this.srte.getUserID(),
+    //   mUserName: this.srte.getUserName(),
+    //   mStateID: this.srte.getStateID(),
+    //   mActivityID: this.srte.getActivityID(),
+    //   mNumAttempt: this.srte.getNumAttempts(),
+    //   mQuitPushed: this.srte.getWasQuitButtonPushed(),
+    //   mSuspendPushed: this.srte.getWasLmsSuspendAllPushed(),
+    // };
+
+    // calllist 초기화는 그대로 나둠.
     this.dm.clearcalllist();
+
     // ClientRTS:1293
     this.srte.restAsyncCommit(this.dm.elements);
 
@@ -130,10 +136,10 @@ export class ScormHandler {
 
     //top.frames['LMSFrame'].setUIState(true);
     //top.frames['LMSFrame'].refreshMenu();
-
-    this.srte.log(
-      'Commit Returned Error Code ' + this.srte.getErrorManager().getCurrentErrorCode(),
-    );
+    // async 방식으로 연동 하기 떄문에 로그 출력 필요 없음.
+    // this.srte.log(
+    //   `Commit Returned Error Code ${this.srte.getErrorManager().getCurrentErrorCode()}`,
+    // );
 
     return result;
   }
@@ -146,21 +152,21 @@ export class ScormHandler {
     if (this.srte.getTerminatedState()) {
       this.srte.getErrorManager().setCurrentErrorCode('113');
       this.srte.log(
-        'Terminate Returned Error Code ' + this.srte.getErrorManager().getCurrentErrorCode(),
+        `Terminate Returned Error Code  + ${this.srte.getErrorManager().getCurrentErrorCode()}`,
       );
       return result;
     }
     if (!this.srte.isInitialized()) {
       this.srte.getErrorManager().setCurrentErrorCode('112');
       this.srte.log(
-        'Terminate Returned Error Code ' + this.srte.getErrorManager().getCurrentErrorCode(),
+        `Terminate Returned Error Code ${this.srte.getErrorManager().getCurrentErrorCode()}`,
       );
       return result;
     }
     if (param !== '') {
       this.srte.getErrorManager().setCurrentErrorCode('201');
       this.srte.log(
-        'Terminate Returned Error Code ' + this.srte.getErrorManager().getCurrentErrorCode(),
+        `Terminate Returned Error Code ${this.srte.getErrorManager().getCurrentErrorCode()}`,
       );
       return result;
     }
@@ -170,8 +176,7 @@ export class ScormHandler {
       this.srte.getWasLmsSuspendAllPushed() ||
       this.srte.getWasQuitButtonPushed() ||
       this.srte.getWasPreviousButtonPushed() ||
-      this.srte.getWasNextButtonPushed() ||
-      this.srte.getWasTOCPushed()
+      this.srte.getWasNextButtonPushed()
     ) {
       // set adl.nav.request to this.srte.getUserNavRequest()
       this.dm.setValue('adl.nav.request', this.srte.getUserNavRequest());
@@ -231,10 +236,12 @@ export class ScormHandler {
     // now handle the event ClientRTS:734
     if (
       !(
-        this.srte.getWasLmsSuspendAllPushed() ||
-        this.srte.getWasPreviousButtonPushed() ||
-        this.srte.getWasNextButtonPushed() ||
-        this.srte.getWasTOCPushed()
+        (
+          this.srte.getWasLmsSuspendAllPushed() ||
+          this.srte.getWasPreviousButtonPushed() ||
+          this.srte.getWasNextButtonPushed()
+        )
+        //        this.srte.getWasTOCPushed()
       ) &&
       tempevent !== '_none_'
     ) {
@@ -244,7 +251,7 @@ export class ScormHandler {
     }
 
     this.srte.log(
-      'Terminate Returned Error Code ' + this.srte.getErrorManager().getCurrentErrorCode(),
+      `Terminate Returned Error Code ${this.srte.getErrorManager().getCurrentErrorCode()}`,
     );
     return result;
   }
@@ -256,22 +263,27 @@ export class ScormHandler {
     if (this.srte.getTerminatedState()) {
       this.srte.getErrorManager().setCurrentErrorCode('133');
       this.srte.log(
-        'SetValue Returned Error Code ' + this.srte.getErrorManager().getCurrentErrorCode(),
+        `SetValue Returned Error Code ${this.srte.getErrorManager().getCurrentErrorCode()}`,
       );
       return 'false';
     }
     if (!this.srte.isInitialized()) {
       this.srte.getErrorManager().setCurrentErrorCode('132');
       this.srte.log(
-        'SetValue Returned Error Code ' + this.srte.getErrorManager().getCurrentErrorCode(),
+        `SetValue Returned Error Code ${this.srte.getErrorManager().getCurrentErrorCode()}`,
       );
+      return 'false';
+    }
+
+    if (!checkSetValue(dmelement)) {
+      this.srte.getErrorManager().setCurrentErrorCode('404');
       return 'false';
     }
 
     this.dm.setValue(dmelement, value);
     val = 'true';
 
-    this.srte.log('SetValue Returned ' + val);
+    this.srte.log(`SetValue Returned ${val}`);
     return val;
   }
 
@@ -281,14 +293,14 @@ export class ScormHandler {
     if (this.srte.getTerminatedState()) {
       this.srte.getErrorManager().setCurrentErrorCode('123');
       this.srte.log(
-        'GetValue Returned Error Code ' + this.srte.getErrorManager().getCurrentErrorCode(),
+        `GetValue Returned Error Code ${this.srte.getErrorManager().getCurrentErrorCode()}`,
       );
       return val;
     }
     if (!this.srte.isInitialized()) {
       this.srte.getErrorManager().setCurrentErrorCode('122');
       this.srte.log(
-        'GetValue Returned Error Code ' + this.srte.getErrorManager().getCurrentErrorCode(),
+        `GetValue Returned Error Code ${this.srte.getErrorManager().getCurrentErrorCode()}`,
       );
       return val;
     }
@@ -323,7 +335,7 @@ export class ScormHandler {
     }
 
     this.srte.log(
-      'GetValue Returned Error Code ' + this.srte.getErrorManager().getCurrentErrorCode(),
+      `GetValue Returned Error Code ${this.srte.getErrorManager().getCurrentErrorCode()}`,
     );
     return val;
   }
@@ -331,21 +343,21 @@ export class ScormHandler {
   GetLastError() {
     this.srte.log('Called GetLastError() ');
     const val = this.srte.getErrorManager().getCurrentErrorCode();
-    this.srte.log('GetLastError Returned ' + val);
+    this.srte.log(`GetLastError Returned ${val}`);
     return val;
   }
 
   GetErrorString(errcode: string) {
     this.srte.log(`Called GetErrorString(${errcode}) `);
     const val = this.srte.getErrorManager().getErrorDescription(errcode);
-    this.srte.log('GetErrorString Returned ' + val);
+    this.srte.log(`GetErrorString Returned ${val}`);
     return val;
   }
 
   GetDiagnostic(errcode: string) {
     this.srte.log(`Called GetDiagnostic(${errcode}) `);
     const val = this.srte.getErrorManager().getErrorDiagnostic(errcode);
-    this.srte.log('GetDiagnostic Returned ' + val);
+    this.srte.log(`GetDiagnostic Returned  ${val}`);
     return val;
   }
 }

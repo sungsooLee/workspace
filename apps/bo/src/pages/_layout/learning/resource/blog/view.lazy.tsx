@@ -1,16 +1,18 @@
-import { MouseEvent, useRef, useState } from 'react';
+/* IA110 / NLP_BO_CMS_1013 - 나의 학습자원 > 블로그 삳세 */
+import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { useQuery } from '@tanstack/react-query';
 import { t } from 'i18next';
 import { Button, Divider, useModal } from '@learnway/ui';
 import { isEmptyData } from '@learnway/shared';
-import defaultImage from '@assets/images/temp/img_temp_blog_default.png';
+import defaultImage from '@assets/images/thumb/img_thumb_default.jpg';
 import { MainContents, PageContainer, ContentsButtons, SubContents } from '@shared/ui';
-import { learningResourceQueryOptions } from '@entities/learning-resource';
+import { learningResourceQueryOptions, useDeleteContent } from '@entities/learning-resource';
 import { PreviewLearningWindow } from '@features/learning-resource/learning-resource-management/ui/preview-learning-window';
 
 import { BlogDetail } from './-components/blog-detail';
 import styles from './blog-detail.module.css';
+import { useFetchAuthUser } from '@learnway/auth/entities';
 
 export const Route = createLazyFileRoute('/_layout/learning/resource/blog/view')({
   component: RouteComponent,
@@ -21,6 +23,9 @@ function RouteComponent() {
   const routerState = useRouterState();
 
   const formRef = useRef<HTMLFormElement>(null);
+
+  const { data: loginUser } = useFetchAuthUser();
+  const [tenantId, setTenantId] = useState<number>(-1);
 
   const { data, error: fetchError } = useQuery(
     learningResourceQueryOptions.getContent(routerState.location.state?.contentUuid),
@@ -37,14 +42,14 @@ function RouteComponent() {
 
   const { open: openModal, alert: openAlert, confirm: openConfirm } = useModal();
 
-  const openBlogPreviewPopup = () => {
+  const openBlogPreviewPopup = useCallback(() => {
     openModal({
       width: 'full',
       content: <PreviewLearningWindow contentUuid={data?.contentUuid} />,
     });
-  };
+  }, [data?.contentUuid]);
 
-  const handleClickGoListButton = async () => {
+  const handleClickGoListButton = useCallback(async () => {
     if (
       await openConfirm({
         title: t('LABEL.confirm.goList.title'),
@@ -53,7 +58,14 @@ function RouteComponent() {
     ) {
       router.navigate({ to: '/learning/learning-resource' });
     }
-  };
+  }, []);
+
+  const { delete: deleteBlogContent } = useDeleteContent({
+    onSuccess: (result: any) => {
+      console.log('delete success', result);
+      return router.navigate({ to: '/learning/learning-resource', replace: true });
+    },
+  });
 
   const handleClickDeleteButton = async () => {
     console.log('mappingData', mappingData);
@@ -61,27 +73,35 @@ function RouteComponent() {
     if (
       await openConfirm({
         title: t('삭제 하시겠습니까?'),
-        content: '모든 정보가 삭제되며 복구 불가합니다.\n삭제 후 학습자원 조회화면으로 이동합니다.',
+        content: t('삭제 후 목록으로 이동합니다.'),
       })
     )
       if (mappingData?.hasMapping) {
         await openAlert({
-          title: '과정에서 사용 중입니다.',
-          content: '과정에서 사용중인 학습자원은 삭제할 수 없습니다.',
+          title: t('과정에서 사용 중입니다.'),
+          content: t('과정에서 사용중인 학습자원은 삭제할 수 없습니다.'),
         });
         return;
       } else {
-        // delete
+        deleteBlogContent(data?.contentUuid as string);
       }
   };
 
   const handleClickSubmitButton = (e: MouseEvent<HTMLButtonElement>) => {
-    const submitEvent = new Event('submit', { bubbles: true, cancelable: true });
-
     if (formRef.current) {
-      formRef.current?.dispatchEvent(submitEvent);
+      formRef.current?.requestSubmit();
     }
   };
+
+  useEffect(() => {
+    if (loginUser?.activeTenant) {
+      setTenantId(loginUser.activeTenant.tenantId);
+    } else {
+      if (loginUser?.tenants?.length) {
+        setTenantId(loginUser.tenants[0].tenantId);
+      }
+    }
+  }, [loginUser]);
 
   return (
     <PageContainer>
@@ -117,9 +137,11 @@ function RouteComponent() {
       <MainContents>
         <BlogDetail
           ref={formRef}
+          tenantId={tenantId}
           mode="update"
           blogInfo={data}
           setThumbnailImage={setThumbnailImage}
+          hasMapping={mappingData?.hasMapping}
         />
       </MainContents>
 

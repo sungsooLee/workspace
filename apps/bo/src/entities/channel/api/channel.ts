@@ -23,14 +23,10 @@ export default class ChannelService {
     return httpService.delete<any>(`${PMSApiPrefix()}/channel/${channelId}`);
   }
 
-  static async getAutoChannelAddress() {
-    return httpService.get<any>(`${PMSApiPrefix()}/channel/url/random`);
-  }
-
-  static async existsChannelUrl(channelId: number, channelMainLinkContent: string) {
-    return httpService.get<any>(`${PMSApiPrefix()}/channel/url/exist`, {
-      channelId,
-      channelMainLinkContent,
+  static async existsChannelMainId(channelMainId: string, channelUuid: any = undefined) {
+    return httpService.get<any>(`${PMSApiPrefix()}/channel/channelMainId/exist`, {
+      channelMainId,
+      channelUuid,
     });
   }
 
@@ -39,10 +35,7 @@ export default class ChannelService {
    * @param roleId
    * @returns ChannelByRoleId[]
    */
-  static fetchChannelByRoleId<T = ChannelByRoleId>(roleId: number): Promise<PaginationResponse<T>> {
-    return httpService.get<PaginationResponse<T>>(`${PMSApiPrefix()}/channel/role/${roleId}`, {
-      page: 0,
-      size: 1000,
-    });
+  static fetchChannelByRoleId<T = ChannelByRoleId[]>(roleId: number): Promise<T> {
+    return httpService.get<T>(`${PMSApiPrefix()}/channel/role/${roleId}`);
   }
 }

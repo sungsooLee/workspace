@@ -426,7 +426,7 @@ export class FoService {
      * @returns com_ever_edu_pms_user_dto_res_UserResDto OK
      * @throws ApiError
      */
-    public static register(
+    public static registerUser(
         requestBody: com_ever_edu_pms_user_dto_req_UserRegisterReqDto,
     ): CancelablePromise<com_ever_edu_pms_user_dto_res_UserResDto> {
         return __request(OpenAPI, {

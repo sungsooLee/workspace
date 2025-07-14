@@ -40,7 +40,6 @@ export interface UsersByIdsParam {
 
 export interface BlackwhiteUsersParam {
   groups?: CombineUserGroup[];
-  userGroupType?: UserGroupType;
   companyId?: string;
   companyCode?: string;
   deptName?: string;
@@ -57,10 +56,39 @@ type Combiner = {
 };
 
 export type CombineUserGroup = {
-  key: string; // fe
-  keys?: string[]; // fe
-  id?: number; // fe
-  ids?: number[]; // fe
-  fullName: string; // fe
+  key: string; // fe 추후 백엔드에서 추가될 필요 있음
+  fullPath: string; // fe 추후 백엔드에서 추가될 필요 있음
+  // keys?: string[]; // fe
+  // id?: number; // fe
+  // ids?: number[]; // fe
   combiners: Combiner[];
 };
+
+export interface UserGroupManual {
+  userGroupId: number;
+  tenantId: number;
+  tenantName: string;
+  userGroupOriginType: string;
+  userGroupOriginMappingId: number;
+  originName: string;
+  userGroupName: string;
+  assignmentType: string;
+  userCount: number;
+  isUsed: boolean;
+  createdDate: Date;
+  modifiedDate: Date;
+  userList: UserList[];
+}
+
+export interface UserList {
+  companyId: number;
+  companyCode: string;
+  companyName: string;
+  deptId: number;
+  deptName: string;
+  employeeNumber: string;
+  userUuid: string;
+  userName: string;
+  userStatus: string;
+  accountStatus: string;
+}

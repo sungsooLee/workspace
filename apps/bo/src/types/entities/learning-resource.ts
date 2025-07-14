@@ -1,14 +1,14 @@
 import {
+  ContentAddInfoType,
   ContentCreateType,
+  ContentStatusCode,
+  ContentType,
   FileStatus,
   FileType,
   ProcessingStatus,
-  ContentStatusCode,
-  ContentType,
-  ContentAddInfoType,
 } from './enum';
 
-export interface BlogCreateReq {
+export interface MediaContentSaveReq {
   contentName: string;
   languageCountryCode: string;
   tenantId: number;
@@ -18,7 +18,6 @@ export interface BlogCreateReq {
   coordinatorName: string;
   coordinatorTelCountryCode: string;
   coordinatorTelNo: string;
-  blogContent: object;
   contentTime: number;
   isUnlimited: boolean;
   contentUseStartDate: Date | undefined;
@@ -26,7 +25,6 @@ export interface BlogCreateReq {
   isVendored: boolean;
   vendorCode: string | number;
   vendorName: string;
-  // vendorCoordinatorUuid: string; // 개발업체담당자명은 직접입력으로 명시되어 있음
   vendorCoordinatorName: string;
   vendorTelCountryCode: string;
   vendorTelNo: string;
@@ -42,6 +40,10 @@ export interface BlogCreateReq {
   tags: string[];
   contentAddInfoType: string;
   contentAddInfo: number;
+}
+
+export interface BlogCreateReq extends MediaContentSaveReq {
+  blogContent: object;
 }
 
 export interface BlogUpdateReq extends BlogCreateReq {
@@ -76,6 +78,19 @@ export interface PostDraftVideosParams {
   tenantId: string;
   channelUuid: string;
   fileUuids: string[];
+}
+
+export interface PostDraftHtmlVideoParams {
+  tenantId: string;
+  channelUuid: string;
+  languageCountryCode: string;
+  fileUuid: string;
+}
+
+export interface Resource {
+  resourceId: number;
+  startFile: string;
+  startFileUrl: string;
 }
 
 export interface Tag {
@@ -128,6 +143,8 @@ export interface ContentInformation {
   tags: string[] | Tag[]; //	태그 리스트[...]
   aiSummary?: string; //	학습자원 개요 (AI자동추출)[...]
   aiKeyword?: string; //	키워드 (AI자동추출)[...]
+  children: any[];
+  resource?: Resource;
 }
 
 export type GetContentDetailRes = ContentInformation;
@@ -142,6 +159,36 @@ export interface PostDraftVideosRes {
     processingStatus: ProcessingStatus;
     isDrafted: boolean;
   }[];
+}
+
+export interface PostDraftHtmlVideoRes {
+  contentUuid: string;
+  fileUuid: string;
+  contentType: FileType;
+  contentStatusCode: FileStatus;
+  processingStatus: ProcessingStatus;
+  isDrafted: boolean;
+}
+
+export type HtmlVideoStatus = PostDraftHtmlVideoRes;
+
+export interface HtmlVideoMetadataReq extends MediaContentSaveReq {
+  contentUuid: string;
+}
+
+export interface HtmlVideoMetadataRes extends HtmlVideoMetadataReq {
+  processingStatus: ProcessingStatus;
+  resource?: Resource;
+}
+
+export interface HtmlVideoDetailRes extends GetContentDetailRes {
+  startFile: string;
+  startFileUrl: string;
+  resource?: {
+    resourceId: number;
+    startFile: string;
+    startFileUrl: string;
+  };
 }
 
 export type MappedCourseItem = {

@@ -11,10 +11,11 @@ import { useFetchAuthUser } from '@learnway/auth/entities';
 
 import { SearchBox } from '@shared/ui/search-box';
 import { useCreation } from 'ahooks';
-import { usersQueryOptions } from '@entities/users/service/users.queries';
+import { queryOptions as userGroupManualOptions } from '@entities/user-group/service/user-group.queries';
+import { EnGlobalConst } from '@types';
 
 const _global = {
-  linkClick: (tenantId: number, tenantName: string) => {
+  linkClick: (userGroupId: number) => {
     return;
   },
 };
@@ -30,12 +31,11 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
 
   const { data: loginUser } = useFetchAuthUser();
 
-  _global.linkClick = (tenantId: number, tenantName: string) => {
+  _global.linkClick = (userGroupId: number) => {
     router.navigate({
-      to: `${rootPath}/tenant/management/user-group/handmade-detail`,
+      to: `/platform/tenant/usr-group/manual-detail`,
       state: {
-        tenantId,
-        tenantName,
+        userGroupId,
         listParam: getValues(),
       },
     });
@@ -43,7 +43,7 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
 
   const gridInitConfig = useCreation(
     () => ({
-      query: '',
+      query: userGroupManualOptions.userGroupManualList,
       columns: [
         {
           name: 'no', label: t('NO.'), type: 'numbering'
@@ -52,7 +52,10 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
           name: 'tenantName', label: t('테넌트명'), size: 159
         },
         {
-          name: 'opt1', label: t('유저그룹유형'), size: 163
+          name: 'userGroupOriginType', label: t('유저그룹유형'), render: (row: any) => {
+            return t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.user.UserGroupOriginType.${row.getValue()}`);
+          },
+          size: 163
         },
         {
           name: 'opt2', label: t('채널'), size: 106
@@ -61,24 +64,49 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
           name: 'opt3', label: t('개인'), size: 101
         },
         {
-          name: 'opt4', label: t('유저그룹명'), render: (row: any) => {
+          name: 'userGroupName', label: t('유저그룹명'), render: (row: any) => {
             return (
-              <Link to={row.row.original.tenantSite} className="link">
-                {row.row.original.tenantId}
-              </Link>
+              <Button
+                className="link"
+                onClick={() =>
+                  _global.linkClick(row.row.original.userGroupId)
+                }
+              >
+                {row.getValue()}
+              </Button>
             )
           },
           size: 207
         },
         {
-          name: 'opt5', label: t('대상자'), size: 127
+          name: 'userCount', label: t('대상자'),
+          meta: {
+            cellAlign: 'right',
+          },
+          size: 127
         },
         {
-          name: 'opt6', label: t('확인'), size: 96
+          name: 'userGroupId', label: t('대상자 확인'), render: (row: any) => {
+            return <Button
+              variant="gray2" size="xs"
+              // onClick={() =>
+              //   openPopup();
+              // }
+            >
+              {t('대상자')}
+            </Button>
+          },
+          meta: {
+            cellAlign: 'center',
+          },
+          size: 96
         },
         {
           name: 'isUsed', label: t('사용여부'), render: (row: any) => {
             return row.row.original.isUsed ? t('사용') : t('미사용');
+          },
+          meta: {
+            cellAlign: 'center',
           },
           size: 88
         },
@@ -89,6 +117,9 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
               DATE_TIME_FORMAT.DATETIME_SEC,
             );
           },
+          meta: {
+            cellAlign: 'center',
+          },
           size: 194
         },
         {
@@ -97,6 +128,9 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
               new Date(row.row.original.modifiedDate),
               DATE_TIME_FORMAT.DATETIME_SEC,
             );
+          },
+          meta: {
+            cellAlign: 'center',
           },
           size: 194
         },
@@ -176,27 +210,31 @@ const searchConfig = (): SearchBoxConfig => ({
         options: [],
       },
       {
-        name: 'companyName',
-        type: 'text',
+        name: 'userGroupOriginType',
+        type: 'dropdown',
         label: t('유저그룹유형'),
+        value: '',
+        presetOptionLabel: t('전체'),
+        optionsConfig: {
+          codeGroup: CODE_GROUP['pms.user.UserGroupOriginType'],
+        },
+      },
+      {
+        name: 'channelName',
+        type: 'text',
+        label: t('채널'),
         value: '',
       },
       {
-        name: 'tenantManagerName',
+        name: 'personName',
         type: 'text',
-        label: t('채널'),
+        label: t('개인'),
         value: '',
       },
     ],
     [
       {
-        name: 'companyManagerName',
-        type: 'text',
-        label: t('개인별'),
-        value: '',
-      },
-      {
-        name: 'opt2',
+        name: 'userGroupName',
         type: 'text',
         label: t('유저그룹명'),
         value: '',
@@ -218,6 +256,9 @@ const searchConfig = (): SearchBoxConfig => ({
         label: t('수정기간'),
         format: 'object',
         value: { from: undefined, to: undefined },
+      },
+      {
+        name: '', type: 'hidden', value: ''
       },
     ],
   ],

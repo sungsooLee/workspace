@@ -17,7 +17,7 @@ import { NextLearningPopup } from './popup/next-learning-popup';
 
 import styles from '@learnway/styles/fo/pages/_learning/side-panel/side-panel.module.css';
 
-import { useLearningWindow } from '../../learning-window.store';
+import { useLearningWindow } from '../../learnway-learning-window.store';
 
 interface ChildData {
   className?: string;

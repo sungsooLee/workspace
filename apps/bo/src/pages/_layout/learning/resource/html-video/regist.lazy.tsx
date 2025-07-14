@@ -11,7 +11,7 @@ import { createLazyFileRoute, useRouterState } from '@tanstack/react-router';
 import { MainContents, PageContainer, ContentsButtons, SubContents } from '@shared/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { SharedChannelGridFormField } from '@features/form/ui';
-import styles from './test-detail.module.css';
+import styles from './html-detail.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { cn } from '@learnway/shared';
 import style from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
@@ -290,7 +290,6 @@ function RouteComponent() {
 
   const save = async (params: {
     tenantId: string;
-    tenantName: string;
     channelUuid: string;
     languageCountryCode: string;
     fileUuid: string;

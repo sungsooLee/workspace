@@ -58,7 +58,7 @@ const carouselItems = [<h3>item A</h3>, <h3>item B</h3>, <h3>item C</h3>];
               spaceBetween={8}
               slidesPerView={'auto'}
               items={carouselItems}
-              loop={true}
+              loop={false}
               showNavigation={true} // 필요에 따라
               pagination={{ clickable: true }}
             />

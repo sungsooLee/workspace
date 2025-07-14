@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { useTranslation } from 'react-i18next';
 import { isEmpty } from 'lodash';
 
-import { Button, ContentsRow, DynamicFormField, useModal } from '@learnway/ui';
+import { Button, ContentsRow, DynamicFormField, Input, useModal } from '@learnway/ui';
 import { useFetchAuthUser, useSessionTimeoutAlertState } from '@learnway/auth/entities';
 import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
 import { cn } from '@learnway/shared';
@@ -39,7 +39,8 @@ function RouteComponent() {
   const router = useRouter();
   const { alert } = useModal();
 
-  const { provider, onSubmit, onFormChange, control } = useDynamicForm(loginFormConfig);
+  const { provider, onSubmit, onFormChange, getValues, onFormValid, onFormFocus } =
+    useDynamicForm(formConfig);
 
   const [sessionTimeoutAlert, setSessionTimeoutAlert] = useSessionTimeoutAlertState();
   const { data: authData } = useFetchAuthUser();
@@ -54,6 +55,7 @@ function RouteComponent() {
   }, [authData, inProgress]);
 
   useEffect(() => {
+    onFormFocus('password');
     onFormChange({
       username: getSavedUserid() ?? '@ict-companion.com',
       password: 'hae1234',
@@ -87,10 +89,38 @@ function RouteComponent() {
         <div className={cn(styles.auth_box, 'auth--box')}>
           <div className="no_line col">
             <ContentsRow>
-              <FormRow provider={provider} name={'username'} />
+              <FormRow
+                provider={provider}
+                name={'username'}
+                element={
+                  <Input
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === 'Tab') {
+                        e.preventDefault();
+                        onFormFocus('password');
+                      }
+                    }}
+                  />
+                }
+              />
             </ContentsRow>
             <ContentsRow>
-              <FormRow provider={provider} name={'password'} />
+              <FormRow
+                provider={provider}
+                name={'password'}
+                element={
+                  <Input
+                    type="password"
+                    onKeyDown={async (e) => {
+                      if (e.key === 'Enter') {
+                        if (await onFormValid()) {
+                          handleOnSubmit(getValues());
+                        }
+                      }
+                    }}
+                  />
+                }
+              />
             </ContentsRow>
           </div>
 
@@ -143,7 +173,7 @@ function RouteComponent() {
   );
 }
 
-const loginFormConfig: DynamicFormConfig = {
+const formConfig: DynamicFormConfig = {
   builders: [
     {
       name: 'username',

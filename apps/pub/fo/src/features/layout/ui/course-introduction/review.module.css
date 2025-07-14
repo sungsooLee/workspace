@@ -26,7 +26,7 @@
             @apply mr-[2px];
           }
           strong {
-            @apply headline3-b text-[var(--gray10)];
+            @apply headline3-b leading-[45px] text-[var(--gray10)];
           }
         }
       }
@@ -56,11 +56,38 @@
   @screen mobile {
     .start {
       &.review_wrap {
-        h2 {
-          @apply title_6_b;
+        .tit_box {
+          @apply block;
+          h2 {
+            @apply headline1-b;
+            span {
+              @apply headline1-b;
+            }
+          }
+          p {
+            @apply mt-[8px];
+          }
         }
-        .review_rating {
-          @apply mt-[8px];
+        .rating_wrap {
+          @apply mt-[24px] block;
+          .know_box {
+            @apply h-[140px] w-full;
+            div {
+              @apply mt-[8px];
+            }
+          }
+          .review_rating {
+            @apply ml-0 mt-[16px] w-full flex-none;
+          }
+        }
+        .review_box {
+          @apply mt-[32px];
+          .review_swiper {
+            @apply -mx-[16px] w-[calc(100%+32px)] px-[16px];
+            [class*='swiper-slide'] {
+              @apply !w-[280px];
+            }
+          }
         }
       }
     }

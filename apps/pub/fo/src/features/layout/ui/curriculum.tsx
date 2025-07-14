@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import { cn } from '@learnway/shared';
+import { isMobile } from 'react-device-detect';
 import { IcoClock01 } from '@learnway/icons';
 
 import styles from './curriculum.module.css';
@@ -24,7 +25,7 @@ const CurriculumComponent = ({ className, curriculumData }: CurriculumProps) => 
             <div className={styles.box}>
               <p>{curriculumItems.txt}</p>
               <div>
-                {curriculumItems.type && <span>{curriculumItems.type}</span>}
+                {isMobile ? '' : <span>{curriculumItems.type}</span>}
                 <span className={styles.type}>
                   <IcoClock01 width={20} height={20} stroke="#131416" />
                   <span>{curriculumItems.time}</span>

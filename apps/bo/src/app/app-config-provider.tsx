@@ -41,7 +41,9 @@ export function AppConfigProvider({ children }: AppConfigProviderProps) {
 
   useMount(async () => {
     setConfig('APP_INFO', 'BO');
+    console.log('### useMount start');
     tokenService.refreshToken && (await reissue());
+    console.log('### useMount end');
   });
 
   useEffect(() => {

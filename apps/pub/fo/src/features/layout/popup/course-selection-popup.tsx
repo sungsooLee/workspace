@@ -8,15 +8,13 @@ import {
   ModalFooter,
 } from '@learnway/ui';
 
-import { IcoCaution, IcoClock01 } from '@learnway/icons';
+import { IcoChair, IcoLocation } from '@learnway/icons';
 
 import {
   CourseFixedButton, // 수강신청 버튼
 } from '../../../features/layout';
 
 import lectureStyles from '../../../pages/_layout/course-introduction/lecture.module.css';
-import definitionListStyles from '../../../pages/_layout/course-introduction/definition-list.module.css';
-import packageInformationStyles from '../../../pages/_layout/course-introduction/package-information.module.css';
 import styles from './course-selection-popup.module.css';
 
 const CourseSelectionPopupComponent = () => {
@@ -29,14 +27,14 @@ const CourseSelectionPopupComponent = () => {
       original: {
         number: '1차',
         date: '2026-01-15 ~ 2026-01-20',
-        definitionList: [
+        info: [
           {
-            tit: '잔여석',
+            icon: IcoChair,
             txt: '999',
           },
           {
-            tit: '장소',
-            txt: '온라인 비대면',
+            icon: IcoLocation,
+            txt: '온라인',
           },
         ],
       },
@@ -47,14 +45,14 @@ const CourseSelectionPopupComponent = () => {
       original: {
         number: '2차',
         date: '2026-01-15 ~ 2026-01-20',
-        definitionList: [
+        info: [
           {
-            tit: '잔여석',
-            txt: '111',
+            icon: IcoChair,
+            txt: '999',
           },
           {
-            tit: '장소',
-            txt: '온라인 비대면',
+            icon: IcoLocation,
+            txt: '온라인',
           },
         ],
       },
@@ -66,19 +64,6 @@ const CourseSelectionPopupComponent = () => {
       <ModalTitle>{'차수선택'}</ModalTitle>
       <ModalBody>
         <div className={`${styles.start} ${styles.course_selection}`}>
-          {/* 수강 신청 차수 없을 시 */}
-          <div className={styles.result_box}>
-            <IcoCaution width={40} height={40} stroke={'#A9AFB8'} />
-            <p>현재 수강 신청 가능한 차수가 없습니다.</p>
-          </div>
-
-          {/* 인원마감/대기신청 */}
-          <div className={styles.result_box}>
-            <IcoClock01 width={40} height={40} stroke={'#00afd5'} />
-            <strong>오전 10:00 수강신청이 시작됩니다!</strong>
-            <p>수강신청일시는 예고없이 변경될수 있습니다.</p>
-          </div>
-
           {/* 강의 정보 */}
           <OptionCard
             cols={1}
@@ -90,24 +75,20 @@ const CourseSelectionPopupComponent = () => {
               <div
                 className={`${lectureStyles.start} ${lectureStyles.course_information} ${lectureStyles.course_option}`}
               >
-                <div className={`${lectureStyles.box} ${packageInformationStyles.box}`}>
+                <div className={`${lectureStyles.box}`}>
                   <p className={lectureStyles.date}>
                     <span>{original?.date}</span>
                     <span>{original?.number}</span>
                   </p>
                   <strong className={lectureStyles.tit}>{label}</strong>
                 </div>
-                <div className={`${packageInformationStyles.box} ${styles.box}`}>
-                  {/* definitionListStyles module */}
-                  <div className={`${definitionListStyles.start} ${definitionListStyles.list}`}>
-                    {/* 퍼블수정 20250703 key값 추가 */}
-                    {original.definitionList.map((item: any, index: number) => (
-                      <dl key={index}>
-                        <dt>{item.tit}</dt>
-                        <dd>{item.txt}</dd>
-                      </dl>
-                    ))}
-                  </div>
+                <div className={`${lectureStyles.box} `}>
+                  {original.info.map((item: any, index: number) => (
+                    <span key={index} className={`${lectureStyles.info}`}>
+                      <item.icon width={20} height={20} />
+                      {item.txt}
+                    </span>
+                  ))}
                 </div>
               </div>
             )}

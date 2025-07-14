@@ -11,6 +11,7 @@ export * from './tenant-channel-dropdown-form-field';
 export * from './contents-history-info-form-field';
 export * from './duplicate-check-input-form-field';
 export * from './thumbnail-list-form-field';
+export * from './thumbnail-public-form-field';
 export * from './attachment-form-field';
 export * from './form-translation-box';
 
@@ -18,3 +19,4 @@ export * from './form-translation-box';
 export { FormGuideText } from './components/form-guide-text';
 export { FormInfoArea } from './components/form-info-area';
 export * from './components/form-sub-title';
+export * from './components/form-item';

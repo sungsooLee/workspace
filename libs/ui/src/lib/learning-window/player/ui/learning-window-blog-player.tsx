@@ -6,6 +6,7 @@ import { initialConfig as editorConfig } from '../../../editor/config/editor.con
 
 import stylesWeb from '@learnway/styles/fo/pages/_learning/learning.module.css';
 import stylesMobile from '@learnway/styles/fo/pages/_learning/learning-m.module.css';
+import { HtmlContent } from '@learnway/ui';
 
 const styles = isMobile ? stylesMobile : stylesWeb;
 
@@ -20,7 +21,7 @@ const LearningWindowBlogPlayerComponent: FC<any> = ({
 
   useEffect(() => {
     if (!blogInfo) return;
-    console.log(blogInfo);
+    console.log('blogInfo', blogInfo);
 
     const newJsonInfo = blogInfo.blogContent;
     const editor = createEditor(editorConfig);
@@ -37,7 +38,9 @@ const LearningWindowBlogPlayerComponent: FC<any> = ({
   return (
     <div className={`${styles.start} ${styles.blog}`}>
       <div className={styles.header_color}></div>
-      <div className={styles.container} dangerouslySetInnerHTML={{ __html: htmlString }}></div>
+      <div className={styles.container}>
+        <HtmlContent>{htmlString}</HtmlContent>
+      </div>
       {/* {htmlContent && $generateHtmlFromNodes(jsonInfo, null)} */}
     </div>
   );

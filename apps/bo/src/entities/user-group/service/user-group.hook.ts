@@ -9,3 +9,7 @@ export function useFetchUserGroups(tenantIds: number[], params: UserGroupsParam)
 export function useFetchOrganizationTree(tenantIds: number[], tenantName?: string) {
   return useQuery(queryOptions.organizationTree(tenantIds, tenantName));
 }
+
+export function useFetchUserGroupDetail(userGroupId: number) {
+  return useQuery(queryOptions.userGroupManualDetail(userGroupId));
+}

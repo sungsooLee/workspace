@@ -29,6 +29,9 @@ function RouteComponent() {
             openModal({
               width: 'xl',
               content: <InstructorListPopup />,
+              onClose: (data?: any) => {
+                console.log('## closed', data);
+              },
             });
           }}
         />
@@ -40,13 +43,7 @@ function RouteComponent() {
             e.stopPropagation();
             openModal({
               width: 'md',
-              content: (
-                <InstructorRegistPopup
-                  instructorId={1}
-                  instructorType={'INTERNAL_INSTRUCTOR'}
-                  readOnly={true}
-                />
-              ),
+              content: <InstructorRegistPopup instructorId={1} readOnly={true} />,
             });
           }}
         />

@@ -1,5 +1,5 @@
 import { CODE_GROUP, compactValues, useCurrentRoute, useSearchBox } from '@learnway/hooks';
-import { Button, GridBox, useGridBox, useModal } from '@learnway/ui';
+import { Button, Divider, GridBox, useGridBox, useModal } from '@learnway/ui';
 import { t } from 'i18next';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { SearchBox } from '@shared/ui/search-box';
@@ -9,13 +9,12 @@ import { roleManagerQueryOptions } from '@entities/role/service/role-manage.quer
 import { DATE_TIME_FORMAT, dateDiff, formatDate } from '@learnway/shared';
 import { CellContext, createColumnHelper } from '@tanstack/react-table';
 import { RoleApplication } from '@types';
+import { TenantByRoleDropdownFormField, TenantChannelDropdownFormField } from '@shared/ui';
 
 const MyRoleComponent = (route: any) => {
   const router = useRouter();
 
-  // const routerState = useRouterState();
   const { state } = useCurrentRoute();
-  const { close: closeModal, alert: openAlert, showSaveComplete } = useModal();
 
   const { provider: sProvider, getValues, onFormChange, onFormValid } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
@@ -28,7 +27,6 @@ const MyRoleComponent = (route: any) => {
   }
 
   function handleOnSearch(query: Record<string, any>) {
-    console.log('### query', query);
     gridFetch({
       ...compactValues(query),
       startDate: query.rolePeriod.from
@@ -77,6 +75,7 @@ const MyRoleComponent = (route: any) => {
   return (
     <div>
       <SearchBox provider={sProvider} onSearch={handleOnSearch} />
+      <Divider />
       <GridBox
         title={t('HRD 담당자 역할 목록')}
         hideRowSelectionRadioBox={false}
@@ -114,26 +113,19 @@ const searchConfig: any = {
       },
       {
         name: 'tenantId',
-        type: 'dropdown',
-        label: t('테넌트'),
+        type: 'custom',
+        label: t('LABEL.form.label.tenant', '테넌트'),
         value: '',
         format: 'object',
-        presetOptionLabel: t('LABEL.form.label.all'),
-        optionsConfig: {
-          codeGroup: CODE_GROUP['manual.bo.my.tenant.tenantId'],
-          // codeGroup: CODE_GROUP['manual.tenant.tenantId'],
-        },
+        element: <TenantByRoleDropdownFormField />,
       },
       {
         name: 'channelId',
-        type: 'dropdown',
-        label: t('채널'),
+        type: 'custom',
+        label: t('LABEL.form.label.channel', '테넌트'),
         value: '',
-        options: [
-          { value: '', label: t('전체') },
-          { value: 'channelA', label: t('채널1번') },
-          { value: 'channelB', label: t('채널2번') },
-        ],
+        format: 'object',
+        element: <TenantChannelDropdownFormField enableFilter={true} />,
       },
     ],
     [

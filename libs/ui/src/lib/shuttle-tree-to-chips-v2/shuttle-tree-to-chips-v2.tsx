@@ -8,64 +8,44 @@ import { Checkbox } from '../checkbox/checkbox';
 import { t } from 'i18next';
 import { FormSubTitle } from '../base-form/form-sub-title';
 import { TreeBox } from '../tree-view/tree-box';
-import { TreeNode } from '../tree-view/type';
-
-type TreeData = {
-  key: string;
-  id: number;
-  parentId?: string;
-  title: string;
-  fullName: string;
-  children?: TreeData[];
-};
-
-type ApiData = {
-  [key: string]: any;
-  children?: ApiData[];
-};
+import { TreeData, TreeNode } from '../tree-view/type';
 
 type ShuttleTreeToChipsV2Props = {
-  apiData: ApiData[];
-  selectedItems: TreeNode[];
-  handleSelectItem: (node: TreeNode) => void;
-  cancelSelectItem: (node: TreeNode) => void;
+  treeData: TreeData[];
+  selectedItems: TreeData[];
+  handleSelectItem: (node: TreeData) => void;
+  cancelSelectItem: (node: TreeData) => void;
   cancelAll: () => void;
   sourceTitle: string;
   targetTitle: string;
-  idKey?: string;
-  titleKey?: string;
-  fullNameKey?: string;
+  isShowConditionSettingsMode?: boolean;
+  renderText?: (item: TreeData) => JSX.Element;
 };
 
 export const ShuttleTreeToChipsV2 = ({
-  apiData,
+  treeData,
   selectedItems,
   handleSelectItem,
   cancelSelectItem,
   cancelAll,
   sourceTitle,
   targetTitle,
-  idKey = 'id',
-  titleKey = 'name',
-  fullNameKey = 'fullName',
+  isShowConditionSettingsMode: isShowConditionSettingsModeProp = false,
+  renderText,
 }: ShuttleTreeToChipsV2Props) => {
-  const treeData = useMemo(
-    () => transformApiDataToTreeData(apiData, [idKey, titleKey, fullNameKey]),
-    [apiData, idKey, titleKey, fullNameKey],
-  );
-  const isShowConditionSettingsMode = useMemo(
-    () => selectedItems.filter(({ isCombined }) => !isCombined).length > 1,
-    [selectedItems],
-  );
+  const isShowConditionSettingsMode = useMemo(() => {
+    if (!isShowConditionSettingsModeProp) return false;
+    // return selectedItems.filter(({ isCombined }) => !isCombined).length > 1;
+  }, [selectedItems, isShowConditionSettingsModeProp]);
 
   const treeBoxSelectedItems = useMemo(() => selectedItems.map(({ key }) => key), [selectedItems]);
 
   const [isConditionSettingsMode, setIsConditionSettingsMode] = useState<boolean>(false);
 
-  const isCombinedNodeKeys = useMemo<string[][]>(
-    () => selectedItems.filter(({ isCombined }) => isCombined).map(({ keys }) => keys),
-    [selectedItems],
-  );
+  // const isCombinedNodeKeys = useMemo<string[][]>(
+  //   () => selectedItems.filter(({ isCombined }) => isCombined).map(({ keys }) => keys),
+  //   [selectedItems],
+  // );
 
   const [checkedValues, setCheckedValues] = useState<TreeNode[]>([]);
 
@@ -88,21 +68,21 @@ export const ShuttleTreeToChipsV2 = ({
   };
 
   const applyConditionSetting = () => {
-    if (checkedValues.length > 1) {
-      const newKey = {
-        isCombined: true,
-        ids: checkedValues.map(({ id }) => id),
-        key: checkedValues.map(({ key }) => key).join('-'),
-        keys: checkedValues.map(({ key }) => key),
-        fullName: checkedValues.map(({ fullName }) => fullName).join(' & '),
-      };
-      handleSelectItem(newKey);
-      checkedValues.forEach((checkedValue) => handleSelectItem(checkedValue));
-    }
-    handleSetIsConditionSettingsMode(false);
+    // if (checkedValues.length > 1) {
+    //   const newKey = {
+    //     isCombined: true,
+    //     // ids: checkedValues.map(({ id }) => id),
+    //     key: checkedValues.map(({ key }) => key).join('&&'),
+    //     // keys: checkedValues.map(({ key }) => key),
+    //     fullPath: checkedValues.map(({ fullPath }) => fullPath).join(' & '),
+    //   };
+    //   handleSelectItem(newKey);
+    //   checkedValues.forEach((checkedValue) => handleSelectItem(checkedValue));
+    // }
+    // handleSetIsConditionSettingsMode(false);
   };
 
-  const handleCancel = (deleteItem: TreeNode) => {
+  const handleCancel = (deleteItem: TreeData) => {
     off(deleteItem);
     cancelSelectItem(deleteItem);
   };
@@ -119,23 +99,24 @@ export const ShuttleTreeToChipsV2 = ({
           selectedNode={null}
           showSearchKeyword={true}
           selectedItems={treeBoxSelectedItems}
-          renderNodeButtons={(node: TreeNode) => {
+          renderNodeButtons={(node) => {
             const isAlreadySelected = selectedItems.some((item) => item.key === node.key);
-            return (
-              <Button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleSelectItem(node);
-                }}
-                disabled={isCombinedNodeKeys.some((keys) => keys.includes(node.key))}
-                variant={isAlreadySelected ? 'primary' : 'gray2'}
-                size={'ts'}
-                type={'button'}
-                className={styles.btn_select}
-              >
-                {t('LABEL.button.select')}
-              </Button>
-            );
+            if (node.title !== 'ROOT')
+              return (
+                <Button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleSelectItem(node as TreeData);
+                  }}
+                  // disabled={isCombinedNodeKeys.some((keys) => keys.includes(node.key))}
+                  variant={isAlreadySelected ? 'primary' : 'gray2'}
+                  size={'ts'}
+                  type={'button'}
+                  className={styles.btn_select}
+                >
+                  {t('LABEL.button.select')}
+                </Button>
+              );
           }}
         />
       </div>
@@ -192,10 +173,10 @@ export const ShuttleTreeToChipsV2 = ({
                       onCheckedChange={(checked) => {
                         checked ? on(item) : off(item);
                       }}
-                      disabled={item?.isCombined}
+                      // disabled={item?.isCombined}
                     />
                   )}
-                  <HighlightAmpersand text={item[fullNameKey]} />
+                  <HighlightAmpersand text={item.fullPath} />
                 </div>
                 <Button className={styles.btn_close}>
                   <IcoXclose
@@ -221,7 +202,7 @@ interface HighlightAmpersandProps {
 const HighlightAmpersand: React.FC<HighlightAmpersandProps> = ({ text }) => {
   return (
     <span>
-      {text?.split('').map((char, index) =>
+      {text.split('').map((char, index) =>
         char === '&' ? (
           <span key={index} className="text-[#00AFD5]">
             {char}
@@ -232,34 +213,4 @@ const HighlightAmpersand: React.FC<HighlightAmpersandProps> = ({ text }) => {
       )}
     </span>
   );
-};
-
-type SelectedKeys = [idKey: string, nameKey: string, fullNameKey: string];
-
-const transformApiDataToTreeData = (
-  apiData: ApiData[],
-  [idKey, titleKey, fullNameKey]: SelectedKeys,
-): TreeData[] => {
-  const transform = (nodes: ApiData[], parentId?: string) => {
-    if (!nodes) return [];
-
-    return nodes.map((node) => {
-      const key = `${parentId ? `${parentId}-` : ''}${node.id.toString()}`;
-      const transformedNode: TreeData = {
-        key,
-        parentId,
-        id: node[idKey],
-        title: node[titleKey],
-        fullName: node[fullNameKey],
-      };
-
-      if (node.children && node.children.length > 0) {
-        transformedNode.children = transform(node.children, key);
-      }
-
-      return transformedNode;
-    });
-  };
-
-  return transform(apiData);
 };

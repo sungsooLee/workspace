@@ -11,7 +11,7 @@ import {
   RadioGroupFormField,
 } from '@learnway/ui';
 import { FormRow, FormRow2, SwitchFormField } from '@shared/ui';
-import { Course } from '@types';
+import { Course, CourseConfig } from '@types';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CourseTabBaseProps, TabFormRef } from '../../-common/type';
@@ -21,6 +21,7 @@ import {
   TeacherListModal,
 } from '@features/learning-operate/course/course-management';
 import { PassOptionFormField } from '../../-common/pass-option-form-field';
+import { InstructorListPopup } from '@features/platform/instructor/management/modal/instructor-list-modal';
 
 const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
   ({ onSave, data: { formData, courseConfig } }, ref) => {
@@ -48,9 +49,9 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
       console.log('DetailInfoComponent init');
       // 초기 데이터가 있으면 설정
       if (formData) {
-        updateFormData(responseDataToFormData(formData));
+        updateFormData(responseDataToFormData(formData, courseConfig));
       }
-    }, [formData]);
+    }, [formData, courseConfig]);
 
     return (
       <div>
@@ -764,7 +765,13 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
               element={
                 <InputModalSelectorFormField
                   modalConfig={{
-                    content: <ChannelListModal />,
+                    content: <InstructorListPopup />,
+                  }}
+                  transformModalData={(modalData: any) => {
+                    return {
+                      tutorId: modalData.instructorId,
+                      tutorName: modalData.instructorName,
+                    };
                   }}
                 />
               }
@@ -779,7 +786,13 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
               element={
                 <InputModalSelectorFormField
                   modalConfig={{
-                    content: <ChannelListModal />,
+                    content: <InstructorListPopup />,
+                  }}
+                  transformModalData={(modalData: any) => {
+                    return {
+                      outsourcingCompanyId: modalData.instructorId,
+                      outsourcingCompanyName: modalData.instructorName,
+                    };
                   }}
                 />
               }
@@ -798,17 +811,17 @@ export const DetailInfo = DetailInfoComponent;
 /**
  * 응답 데이터를 폼 데이터로 변환
  */
-const responseDataToFormData = (d: Course): Course => {
+const responseDataToFormData = (d: Course, c: CourseConfig): Course => {
   return {
     ...d,
-    isLearnEnvEnabled: true, // 학습환경 설정 사용 여부
-    isLearnControlEnabled: true, // 학습제어 설정 사용 여부
-    isUsePassOption: true, // 이수기준 설정 사용 여부
-    isCommunicationToolEnabled: true, // 커뮤니티 및 공유설정 사용 여부
-    isInstructorAssigned: true, // 강사 설정 사용 여부
-    isTextbookProvided: true, // 교재 설정 사용 여부
-    isRelatedPrerequisiteCourseExisted: true, // 사전/연관학습 설정 사용 여부
-    isUseOutsourcing: true, // 오토에버 위탁 전용 설정 여부
+    isLearnEnvEnabled: c.learningEnvOption !== 'IMPOSSIBLE', // 학습환경 설정 사용 여부
+    isLearnControlEnabled: c.learningControlOption !== 'IMPOSSIBLE', // 학습제어 설정 사용 여부
+    isUsePassOption: c.passOption !== 'IMPOSSIBLE', // 이수기준 설정 사용 여부
+    isCommunicationToolEnabled: c.communicationOption !== 'IMPOSSIBLE', // 커뮤니티 및 공유설정 사용 여부
+    isInstructorAssigned: c.instructorOption !== 'IMPOSSIBLE', // 강사 설정 사용 여부
+    isTextbookProvided: c.textBookOption !== 'IMPOSSIBLE', // 교재 설정 사용 여부
+    isRelatedPrerequisiteCourseExisted: c.relatedCourseOption !== 'IMPOSSIBLE', // 사전/연관학습 설정 사용 여부
+    isUseOutsourcing: true, // 오토에버 위탁 전용 설정 여부 (CourseConfig 에 관리안함)
     // 이수기준 설정
     passOption: {
       progressMinPassScore: d.progressMinPassScore, // 진도 최소 이수 점수

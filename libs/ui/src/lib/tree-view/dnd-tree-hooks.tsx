@@ -9,15 +9,10 @@ import {
   DragData,
   TreeType,
 } from './type';
-import {
-  calculateTargetIndex,
-  getNodeLevel,
-  insertNodeAtPosition,
-  isValidDrop,
-  removeNodeByKey,
-} from './tree.service';
+import { calculateTargetIndex, getNodeLevel, isValidDrop, removeNodeByKey } from './tree.service';
 import { useTreeContext } from './tree.context';
 import { updateNodeVisibility } from './dnd-tree-utils';
+import { optimisticallyUpdateTree } from './tree-optimistic-update';
 
 export const useDndTreeLogic = (
   treeId: string,
@@ -27,6 +22,7 @@ export const useDndTreeLogic = (
   isSearching?: boolean,
   searchKeyword?: string,
   onAction?: (payload: any) => void,
+  disableOptimisticUpdate?: boolean,
 ) => {
   const [initialData, setInitialData] = useState<EnhancedTreeNode[]>(
     JSON.parse(JSON.stringify(data)),
@@ -105,26 +101,18 @@ export const useDndTreeLogic = (
         return;
       }
 
-      // 클라이언트 트리 업데이트
-      if (clientTree) {
-        let newTreeData = [...treeData];
-
-        if (actionType === 'NODE_MOVE') {
-          newTreeData = removeNodeByKey(newTreeData, sourceNode.key);
-        }
-
-        newTreeData = insertNodeAtPosition(newTreeData, targetNode.key, sourceNode, dropPosition);
-
-        if (isSearching && searchKeyword) {
-          updateNodeVisibility(newTreeData, searchKeyword);
-        }
+      if (clientTree || !disableOptimisticUpdate) {
+        const { newTreeData, newInitialData } = optimisticallyUpdateTree(treeData, {
+          actionType,
+          sourceNode,
+          targetNode,
+          dropPosition,
+          isSearching,
+          searchKeyword,
+        });
 
         setTreeData(newTreeData);
-
-        const updatedInitialData = JSON.parse(JSON.stringify(newTreeData));
-        const fullData = JSON.parse(JSON.stringify(updatedInitialData));
-        updateNodeVisibility(fullData, '');
-        setInitialData(fullData);
+        setInitialData(newInitialData);
       }
 
       // 액션 콜백 호출
@@ -134,8 +122,8 @@ export const useDndTreeLogic = (
         if (actionType === 'NODE_MOVE') {
           const movePayload: MoveEventPayload = {
             type: 'NODE_MOVE',
-            sourceNode: sourceNode,
-            targetNode: targetNode,
+            sourceNode,
+            targetNode,
             position: dropPosition,
             treeId,
             targetIndex,
@@ -144,8 +132,8 @@ export const useDndTreeLogic = (
         } else {
           const copyPayload: CopyEventPayload = {
             type: 'NODE_COPY',
-            sourceNode: sourceNode,
-            targetNode: targetNode,
+            sourceNode,
+            targetNode,
             position: dropPosition,
             treeId,
             targetIndex,
@@ -265,7 +253,7 @@ export const useDndTreeLogic = (
         onDragStart: handleDragStart,
         onDragEnd: handleDragEnd,
         removeNode: handleRemoveNode,
-        resetLocalDragState: resetLocalDragState,
+        resetLocalDragState,
       });
     }
   }, [treeId, treeContext, handleDragStart, handleDragEnd, handleRemoveNode, resetLocalDragState]);

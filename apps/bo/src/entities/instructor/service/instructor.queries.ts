@@ -5,6 +5,7 @@ export const queryKeys = {
   list: ['instructors'] as const,
   detail: ['instructor'] as const,
   history: ['history'] as const,
+  duplicateCheckEmail: ['duplicate-check-email'] as const,
 };
 
 export const queryOptions = {
@@ -32,20 +33,27 @@ export const queryOptions = {
     cacheTime: 0,
     staleTime: 0,
   }),
+  duplicateCheckEmail: (params: any) => ({
+    queryKey: queryKeys.duplicateCheckEmail,
+    queryFn: () => InstructorService.fetchDuplicateCheckEmail(params),
+  }),
 };
 
 export const mutateOptions = {
-  create: () => ({
+  createInstructor: () => ({
     mutationFn: (payload: any) => InstructorService.insertInstructor(payload),
   }),
-  update: () => ({
+  updateInstructor: () => ({
     mutationFn: (payload: any) => {
       const instructorId = payload.instructorId;
       delete payload.instructorId;
       return InstructorService.updateInstructor(instructorId, payload);
     },
   }),
-  delete: () => ({
+  deleteInstructor: () => ({
     mutationFn: (instructorId: number) => InstructorService.deleteInstructor(instructorId),
+  }),
+  createTutor: () => ({
+    mutationFn: (payload: any) => InstructorService.insertTutor(payload),
   }),
 };

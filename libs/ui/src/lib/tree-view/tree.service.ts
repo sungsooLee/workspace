@@ -1,4 +1,4 @@
-import { NodeMovePositionType, TreeNode, TreeType } from './type';
+import { NodeMovePositionType, TreeData, TreeNode, TreeType } from './type';
 
 export const generateKey = (): string => {
   return Math.random().toString(36).substr(2, 9);
@@ -329,8 +329,8 @@ export const isValidDrop = (
       return sourceParent.key === targetKey;
     }
 
-    console.log('소스 부모' + sourceParent.key);
-    console.log('타겟 부모' + targetParent.key);
+    // console.log('소스 부모' + sourceParent.key);
+    // console.log('타겟 부모' + targetParent.key);
     return sourceParent.key === targetParent.key;
   }
 
@@ -504,4 +504,47 @@ export const throttle = <T extends (...args: any[]) => any>(
       setTimeout(() => (inThrottle = false), limit);
     }
   };
+};
+
+type TransformOptions = {
+  idKey?: string;
+  titleKey?: string;
+  childrenKey?: string;
+  pathJoinText?: string;
+};
+
+export const transformApiDataToTreeData = <T extends Record<string, any>>(
+  apiData: T | T[],
+  options?: TransformOptions,
+): TreeData[] => {
+  const {
+    idKey = 'id',
+    titleKey = 'name',
+    childrenKey = 'children',
+    pathJoinText = '>',
+  } = options || {};
+
+  const transformNode = (node: T, parent?: TreeData): TreeData => {
+    const id = node[idKey] ?? 0;
+    const title = node[titleKey] ?? '';
+    const key = parent ? `${parent.key}-${id}` : `${id}`;
+    const fullPath = parent ? `${parent.fullPath} ${pathJoinText} ${title}` : title;
+
+    const transformed: TreeData = {
+      key,
+      id,
+      title,
+      fullPath,
+    };
+
+    const children = node[childrenKey];
+    if (Array.isArray(children) && children.length > 0) {
+      transformed.children = children.map((child: T) => transformNode(child, transformed));
+    }
+
+    return transformed;
+  };
+
+  const nodes = Array.isArray(apiData) ? apiData : [apiData];
+  return nodes.map((node) => transformNode(node));
 };

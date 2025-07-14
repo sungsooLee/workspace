@@ -104,7 +104,7 @@ const Option = (props: any) => {
 };
 
 // 화살표
-const dropdownIndicator = (props: any) => {
+const DropdownIndicator = (props: any) => {
   return (
     <components.DropdownIndicator {...props}>
       <IcoArrowDown width={16} height={16} stroke="#131C30" className={styles.icon_arrow} />
@@ -113,7 +113,7 @@ const dropdownIndicator = (props: any) => {
 };
 
 // clear 버튼
-const clearIndicator = (props: any) => {
+const ClearIndicator = (props: any) => {
   return (
     <components.ClearIndicator {...props}>
       <Button onlyIcon className={styles.btn_clear}>
@@ -252,11 +252,11 @@ const PrimitiveComponent = forwardRef<any, ReactSelectComponentProps>(
           classNamePrefix="nlp-select"
           components={{
             Option,
-            DropdownIndicator: dropdownIndicator,
-            ClearIndicator: clearIndicator,
+            DropdownIndicator,
+            ClearIndicator,
             MenuPortal,
             ValueContainer: CustomValueContainer,
-            NoOptionsMessage: NoOptionsMessage,
+            NoOptionsMessage,
           }}
           noOptionsMessage={() => noOptionsMessage || '데이터가 없습니다.'}
           menuPortalTarget={document.body}

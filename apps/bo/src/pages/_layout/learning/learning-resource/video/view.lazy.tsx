@@ -3,7 +3,14 @@
 import { createLazyFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { Button, ContentsRow, InputModalSelectorFormField } from '@learnway/ui';
-import { PageContainer, MainContents, ContentsButtons, LinkBox, SubContents } from '@shared/ui';
+import {
+  PageContainer,
+  MainContents,
+  ContentsButtons,
+  LinkBox,
+  SubContents,
+  ThumbnailListFormField,
+} from '@shared/ui';
 import { ChannelChoiceModal, ManagerChoiceModal } from '@shared/ui';
 import { DateRangePickerFormField } from '@features/form/ui';
 import {
@@ -34,11 +41,16 @@ function RouteComponent() {
   );
 
   const router = useRouter();
-  const { provider, onSubmit, onFormChange } = useDynamicForm<typeof formConfig>(formConfig);
+  const { provider, onSubmit, onFormChange, getValues, watch } =
+    useDynamicForm<typeof formConfig>(formConfig);
 
   useEffect(() => {
     if (data) onFormChange(data);
   }, [data]);
+
+  const selectedContentThumbnailFileUuid = watch('selectedContentThumbnailFileUuid');
+  const handelSelectedThumbnail = (uuid: string) =>
+    onFormChange({ selectedContentThumbnailFileUuid: uuid });
 
   const handleFormSubmit = (data: DynamicFormValues<typeof formConfig>) => {
     console.log(data);
@@ -81,7 +93,11 @@ function RouteComponent() {
           </LinkBox>
           {permission === 'READ' && (
             <>
-              <Button variant="point" size="sm">
+              <Button
+                variant="point"
+                size="sm"
+                onClick={() => console.log('🚀 ~ RouteComponent ~ getValues:', getValues())}
+              >
                 매핑과정 보기
               </Button>
               <Button variant="point" size="sm">
@@ -184,7 +200,17 @@ function RouteComponent() {
           </FormDisplay>
           <ContentsRow>
             {/*썸네일*/}
-            <FormRow provider={provider} name="contentThumbnailFileGroupUuid" />
+            <FormRow
+              provider={provider}
+              name="contentThumbnailFileGroupUuid"
+              element={
+                <ThumbnailListFormField
+                  isLoading={true}
+                  selected={selectedContentThumbnailFileUuid}
+                  onSelected={handelSelectedThumbnail}
+                />
+              }
+            />
           </ContentsRow>
           <ContentsRow>
             {/*태그*/}
@@ -390,11 +416,14 @@ const formConfig: DynamicFormConfig = {
         number: 'vendorTelNo',
       },
     },
+    { name: 'selectedContentThumbnailFileUuid', type: 'hidden', value: '' },
     {
       label: t('썸네일'),
       name: 'contentThumbnailFileGroupUuid',
       type: 'thumbnail-list',
-      format: 'array',
+      format: 'string',
+      showDefault: true,
+      max: 1,
       value: '',
     },
     {

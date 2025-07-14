@@ -43,8 +43,14 @@ export type com_ever_edu_pms_company_dto_res_CompanyDeptUserResDto = {
      * 성명
      */
     name?: string;
+    /**
+     * 보직 여부
+     */
+    isLeader?: boolean;
     retireDate?: string;
     userState?: com_ever_edu_pms_company_dto_res_CompanyDeptUserResDto.userState;
+    userStatus?: com_ever_edu_pms_company_dto_res_CompanyDeptUserResDto.userStatus;
+    accountStatus?: com_ever_edu_pms_company_dto_res_CompanyDeptUserResDto.accountStatus;
 };
 export namespace com_ever_edu_pms_company_dto_res_CompanyDeptUserResDto {
     /**
@@ -70,11 +76,19 @@ export namespace com_ever_edu_pms_company_dto_res_CompanyDeptUserResDto {
         AUTO_MANAGE = 'AUTO_MANAGE',
     }
     export enum userState {
-        WAIT = 'WAIT',
         NORMAL = 'NORMAL',
-        HALT = 'HALT',
+        WAIT = 'WAIT',
+        DORMANT = 'DORMANT',
+        LOCKED = 'LOCKED',
+    }
+    export enum userStatus {
+        ACTIVE = 'ACTIVE',
+        SUSPENDED = 'SUSPENDED',
         LEAVE = 'LEAVE',
-        DELETE = 'DELETE',
+    }
+    export enum accountStatus {
+        NORMAL = 'NORMAL',
+        LOCK = 'LOCK',
     }
 }
 
