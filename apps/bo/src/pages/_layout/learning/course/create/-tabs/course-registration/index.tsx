@@ -5,7 +5,7 @@ import { FormRow2, SwitchFormField } from '@shared/ui';
 import { useTranslation } from 'react-i18next';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { FormDisplay } from '@features/form/ui/form-display';
-import { CourseTabBaseProps, TabFormRef } from '../../-common/type';
+import { CourseTabBaseProps, TabFormRef } from '../../../-common/type';
 import { Course, CourseConfig } from '@types';
 
 const CourseRegistrationComponent = forwardRef<TabFormRef, CourseTabBaseProps>(

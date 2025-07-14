@@ -93,6 +93,9 @@ function RouteComponent() {
     <PageContainer>
       <ContentsButtons>
         <Link to="/learning_test/course/create/view" state={{ courseId: 5 }} className="link">
+          등록 테스트
+        </Link>
+        <Link to="/learning_test/course/detail/view" state={{ courseId: 5 }} className="link">
           상세 테스트
         </Link>
         <Button

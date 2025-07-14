@@ -89,6 +89,7 @@ export * from './lib/editor/utils/get-selected-node';
 export * from './lib/editor/utils/url';
 export * from './lib/elements/count-text/count-text';
 export * from './lib/elements/divider/divider';
+export * from './lib/elements/stats-summary/stats-summary';
 export * from './lib/elements/split-panel/split-panel';
 export * from './lib/empty-text/empty-text';
 export * from './lib/file-upload/thumbnail-image-upload-v2';

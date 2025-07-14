@@ -41,8 +41,8 @@ const CategoryChoiceModalComponent = forwardRef<HTMLDivElement, CategoryChoiceMo
         <ModalBody>
           <div className={styles.wrap}>
             <ShuttleTreeToChipsV2
-              sourceTitle="공통 카테고리 선택"
-              targetTitle="선택 카테고리 목록"
+              sourceTitle="카테고리 목록"
+              targetTitle="선택 목록"
               treeData={treeData}
               selectedItems={selectedItems}
               handleSelectItem={handleSelectItem}

@@ -41,3 +41,11 @@ export interface CourseTabData {
   /** 임시 저장 여부 */
   isSaved: boolean;
 }
+
+// 과성 상세 조회 탭 타입
+export enum CourseDetailTab {
+  COURSE_DETAIL = 'COURSE_DETAIL',
+  CURRICULUM = 'CURRICULUM',
+  SEQUENCE = 'SEQUENCE',
+  COMMUNITY = 'COMMUNITY',
+}

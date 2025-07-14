@@ -1,9 +1,9 @@
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
-import { ContentsRow, RadioGroupFormField } from '@learnway/ui';
+import { ContentsRow, RadioGroupFormField, TextareaFormField } from '@learnway/ui';
 import { ChipListFormField, FormRow2, FormSubTitle } from '@shared/ui';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CourseTabBaseProps, TabFormRef } from '../../-common/type';
+import { CourseTabBaseProps, TabFormRef } from '../../../-common/type';
 import { Course } from '@types';
 import { DateRangePickerFormField } from '@features/form/ui';
 
@@ -41,12 +41,12 @@ const PublishCourseComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
       <div>
         {/*게시*/}
         <FormSubTitle label={t('게시')} />
-        {/*과정 사용유무*/}
+        {/*과정 사용*/}
         <ContentsRow>
           <FormRow2
             provider={provider}
             name={'isUsed'}
-            label={'과정 사용유무'}
+            label={'과정 사용'}
             element={
               <RadioGroupFormField
                 optionsConfig={{
@@ -65,12 +65,12 @@ const PublishCourseComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
             element={<DateRangePickerFormField />}
           />
         </ContentsRow>
-        {/*대표 이미지*/}
+        {/*썸네일*/}
         {/* <ContentsRow>
           <FormRow2
             provider={provider}
             name={'thumbnailFileGroupUuid'}
-            label={'대표 이미지'}
+            label={'썸네일'}
             element={<ThumbnailListFormField />}
           />
         </ContentsRow> */}
@@ -88,6 +88,15 @@ const PublishCourseComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
                 }}
               />
             }
+          />
+        </ContentsRow>
+        {/*AI 과정 요약(AI 자동추출)*/}
+        <ContentsRow>
+          <FormRow2
+            provider={provider}
+            name={'courseSummary'}
+            label={'AI 과정 요약(AI 자동추출)'}
+            element={<TextareaFormField maxLength={500} />}
           />
         </ContentsRow>
       </div>

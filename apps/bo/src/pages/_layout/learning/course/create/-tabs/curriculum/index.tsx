@@ -4,7 +4,7 @@ import { FormSubTitle } from '@shared/ui';
 import { Course } from '@types';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CourseTabBaseProps, TabFormRef } from '../../-common/type';
+import { CourseTabBaseProps, TabFormRef } from '../../../-common/type';
 import { useDynamicForm2 } from '@learnway/hooks';
 
 const CurriculumComponent = forwardRef<TabFormRef, CourseTabBaseProps>(

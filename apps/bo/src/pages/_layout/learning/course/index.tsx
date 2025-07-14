@@ -77,7 +77,6 @@ function RouteComponent() {
       content: <CourseTypeOptionCardModal />,
       width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
     });
-    console.log('handleCourseOpenClick.value {} => ', value);
     router.navigate({
       to: '/learning/course/create/view',
       state: {
@@ -91,6 +90,9 @@ function RouteComponent() {
     <PageContainer>
       <ContentsButtons>
         <Link to="/learning/course/create/view" state={{ courseId: 5 }} className="link">
+          등록 테스트
+        </Link>
+        <Link to="/learning/course/detail/view" state={{ courseId: 5 }} className="link">
           상세 테스트
         </Link>
         <Button

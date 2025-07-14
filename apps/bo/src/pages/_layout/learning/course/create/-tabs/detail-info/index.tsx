@@ -1,7 +1,8 @@
 import { DropdownFormField, FormDisplay } from '@features/form';
+import { CourseChoiceModal } from '@features/learning-operate/course/course-management';
+import { InstructorListPopup } from '@features/platform/instructor/management/modal/instructor-list-modal';
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import {
-  Button,
   CheckboxGroupFormField,
   ChipListModalSelectorFormField,
   ContentsRow,
@@ -14,14 +15,8 @@ import { FormRow, FormRow2, SwitchFormField } from '@shared/ui';
 import { Course, CourseConfig } from '@types';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CourseTabBaseProps, TabFormRef } from '../../-common/type';
-import {
-  ChannelListModal,
-  CourseChoiceModal,
-  TeacherListModal,
-} from '@features/learning-operate/course/course-management';
-import { PassOptionFormField } from '../../-common/pass-option-form-field';
-import { InstructorListPopup } from '@features/platform/instructor/management/modal/instructor-list-modal';
+import { PassOptionFormField } from '../../../-common/pass-option-form-field';
+import { CourseTabBaseProps, TabFormRef } from '../../../-common/type';
 
 const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
   ({ onSave, data: { formData, courseConfig } }, ref) => {
@@ -287,18 +282,18 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
           <FormRow2
             provider={provider}
             name={'isUsePassOption'}
-            label={'이수기준 설정'}
+            label={'이수기준'}
             element={<SwitchFormField disabled={courseConfig.passOption === 'IMPOSSIBLE'} />}
           />
         </ContentsRow>
         <FormDisplay provider={provider} dependencies={[{ name: 'isUsePassOption', value: true }]}>
           {/* 이수처리 설정, 수료증 제공 */}
           <ContentsRow>
-            {/* 이수처리 설정  */}
+            {/* 이수처리 방식*/}
             <FormRow2
               provider={provider}
               name={'passMethodType'}
-              label={'이수처리 설정'}
+              label={'이수처리 방식'}
               element={
                 <RadioGroupFormField
                   optionsConfig={{
@@ -721,7 +716,7 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
           <FormRow2
             provider={provider}
             name={'isUseOutsourcing'}
-            label={'오토에버 위탁 전용'}
+            label={'(테넌트) 전용'}
             element={<SwitchFormField />}
           />
         </ContentsRow>

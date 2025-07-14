@@ -25,7 +25,7 @@ import {
 import { Course } from '@types';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CourseTabBaseProps, TabFormRef } from '../../-common/type';
+import { CourseTabBaseProps, TabFormRef } from '../../../-common/type';
 
 const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
   ({ onSave, onConfigPropChange, data: { formData, courseConfig, isSaved } }, ref) => {
@@ -77,8 +77,8 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
 
     return (
       <div>
-        {/*기본 정보 설정*/}
-        <FormSubTitle label={t('기본 정보 설정')} />
+        {/*기본정보*/}
+        <FormSubTitle label={t('기본정보')} />
         {/*유형, 채널*/}
         <ContentsRow>
           {/*유형*/}
@@ -88,7 +88,6 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
             label={'유형'}
             element={
               <DropdownFormField
-                disabled={isSaved}
                 optionsConfig={{
                   codeGroup: CODE_GROUP['lms.course.CourseType'],
                 }}
@@ -100,7 +99,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
             provider={provider}
             name={'channelUuid'}
             label={'채널'}
-            element={<TenantChannelDropdownFormField2 disabled={isSaved} tenantId={-1} />}
+            element={<TenantChannelDropdownFormField2 tenantId={-1} />}
           />
         </ContentsRow>
 
@@ -131,7 +130,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
                 transformModalData={(modalData: any[]) => {
                   return modalData?.map((d: any) => ({
                     categoryId: d.id,
-                    categoryPath: d.fullPath,
+                    categoryPath: d.path,
                   }));
                 }}
                 list={{
@@ -149,7 +148,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
           <FormRow2
             provider={provider}
             name={'targetList'}
-            label={'학습대상'}
+            label={'학습대상(유저그룹)'}
             element={
               <ChipListModalSelectorFormField
                 modalConfig={() => ({
@@ -174,12 +173,12 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
 
         {/*과정소개*/}
         <FormSubTitle label={t('과정소개')} />
-        {/*언어 설정*/}
+        {/*언어*/}
         <ContentsRow>
           <FormRow2
             provider={provider}
             name={'language'}
-            label={'언어 설정'}
+            label={'언어'}
             element={
               <DropdownFormField
                 optionsConfig={{
@@ -198,21 +197,12 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
             element={<Input maxLength={40} />}
           />
         </ContentsRow>
-        {/*과정 요약*/}
-        <ContentsRow>
-          <FormRow2
-            provider={provider}
-            name={'courseSummary'}
-            label={'과정 요약'}
-            element={<TextareaFormField maxLength={500} />}
-          />
-        </ContentsRow>
         {/*교육 내용*/}
         <ContentsRow>
           <FormRow2
             provider={provider}
             name={'courseContent'}
-            label={'교육 내용'}
+            label={'교육내용'}
             element={<EditorFormField />}
           />
         </ContentsRow>
@@ -307,11 +297,11 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
               />
             }
           />
-          {/*담당자-연락처*/}
+          {/*연락처*/}
           <FormRow2
             provider={provider}
             name={'coordinatorTelNo'}
-            label={'담당자연락처'}
+            label={'연락처'}
             element={
               <PhoneNumberFormField
                 fields={{ nationCode: 'coordinatorTelCountryCode', number: 'coordinatorTelNo' }}
@@ -321,11 +311,11 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
               />
             }
           />
-          {/*담당자-이메일*/}
+          {/*이메일*/}
           <FormRow2
             provider={provider}
             name={'coordinatorEmail'}
-            label={'담당자이메일'}
+            label={'이메일'}
             element={<Input />}
           />
           {/*담당자 ID - hidden */}
@@ -351,11 +341,11 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
               />
             }
           />
-          {/*운영자-연락처*/}
+          {/*연락처*/}
           <FormRow2
             provider={provider}
             name={'operatorTelNo'}
-            label={'운영자연락처'}
+            label={'연락처'}
             element={
               <PhoneNumberFormField
                 fields={{ nationCode: 'operatorTelCountryCode', number: 'operatorTelNo' }}
@@ -365,11 +355,11 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
               />
             }
           />
-          {/*운영자-이메일*/}
+          {/*이메일*/}
           <FormRow2
             provider={provider}
             name={'operatorEmail'}
-            label={'운영자이메일'}
+            label={'이메일'}
             element={<Input />}
           />
           {/*운영자 ID - hidden */}
@@ -389,8 +379,8 @@ const responseDataToFormData = (d: Course): Course => {
   return {
     ...d,
     // primaryCategoryId: 1, // 서버에서 받으면 삭제
-    categoryIds: d?.categories?.map((d: any) => d.categoryId), // 카테고리 아이디
-    tenantIds: d?.tenantList?.map((d: any) => d.tenantId), // 테넌트 아이디
+    // categoryIds: d?.categories?.map((d: any) => d.categoryId), // 카테고리 아이디
+    // tenantIds: d?.tenantList?.map((d: any) => d.tenantId), // 테넌트 아이디
     targetList: d?.targetList?.map((d: any) => ({
       ...d,
       name: d?.combiners?.[0]?.combineValue,
