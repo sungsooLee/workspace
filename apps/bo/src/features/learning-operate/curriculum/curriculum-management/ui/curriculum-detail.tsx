@@ -1,21 +1,30 @@
 import { Button, TreeBox, TreeNode } from '@learnway/ui';
-import { ContentsRow, FormRow, FormSubTitle, SectionLayout } from '@shared/ui';
+import { FormSubTitle, SectionLayout } from '@shared/ui';
 import { FORM_MODE, FROM_STATUS } from '@shared/const';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import { IcoMinus, IcoPlus } from '@learnway/icons';
 import { t } from 'i18next';
-import { useState } from 'react';
-import { FormState, NODE_TYPE } from '../types/form.types';
-import { FormRenderer } from '../components/form-renderer';
+import { useRef, useState, useEffect } from 'react';
+import { FormState } from '../types/form.types';
+import { NodeFormRenderer } from '../components/node-form-renderer';
+import { useNodeData } from '../hooks/use-node-data';
 import { useTreeButtons } from '../hooks/use-tree-buttons';
-import { useCurriculumForm } from '../hooks/use-curriculum-form';
+import { useCreateCurriculum, useGetCurriculumDetail } from '@entities/curriculum';
+import { useDynamicForm3 } from '@learnway/hooks';
+import { CurriculumResponse, MAPPING_CURRICULUM_TYPE } from '@types';
+import { buildTreeFromCurriculumData, findParentNode } from '../services';
 
 interface CurriculumDetailProps {
   mode: FORM_MODE;
   curriculumId: number;
+  onCurriculumCreated?: (curriculumId: number) => void;
 }
 
-const CurriculumDetailComponent = ({ mode, curriculumId }: CurriculumDetailProps) => {
+const CurriculumDetailComponent = ({
+  mode,
+  curriculumId,
+  onCurriculumCreated,
+}: CurriculumDetailProps) => {
   const [formStatus, setFormStatus] = useState<FROM_STATUS>(FROM_STATUS.NONE);
   const [treeData, setTreeData] = useState<TreeNode[]>([]);
   const [formState, setFormState] = useState<FormState>({
@@ -25,25 +34,42 @@ const CurriculumDetailComponent = ({ mode, curriculumId }: CurriculumDetailProps
     isEditing: false,
   });
 
+  // 커리큘럼 상세 조회 (mode가 detail이고 curriculumId가 유효할 때만)
+  const shouldFetchDetail = mode === FORM_MODE.detail && curriculumId > 0;
+  const { data: curriculumDetail, isLoading: isLoadingDetail } = useGetCurriculumDetail(
+    shouldFetchDetail ? curriculumId : 0,
+  );
+
+  const { create: createCurriculum } = useCreateCurriculum({});
+
+  const { getValues, onSubmit, autoFormContext, handleSubmit, watch, setValue, loadFormData } =
+    useDynamicForm3();
+  const formRef = useRef<HTMLFormElement>(null);
+
+  // 선택된 노드의 상세 데이터 조회
   const {
-    provider,
-    getValues,
-    updateFormData,
-    onSubmit,
-    formState: hookFormState,
-    watch,
-  } = useCurriculumForm({
-    onSuccess: (data, nodeType) => {
-      console.log('Form submitted successfully:', data, nodeType);
-      // 폼 초기화
-      //   handleFormCancel();
-    },
-    onError: (error) => {
-      console.error('Form submission failed:', error);
-    },
+    data: selectedNodeData,
+    isLoading: isNodeDataLoading,
+    error: nodeDataError,
+  } = useNodeData({
+    selectedNode: formState.selectedNode,
+    curriculumId,
   });
 
-  const handleAddNode = (nodeType: NODE_TYPE, parentNode: TreeNode | null) => {
+  // 트리 데이터 변환은 이제 서비스 레이어에서 처리
+
+  // 커리큘럼 데이터가 변경될 때마다 트리 데이터 업데이트
+  useEffect(() => {
+    if (curriculumDetail) {
+      const treeNodes = buildTreeFromCurriculumData(curriculumDetail);
+      setTreeData(treeNodes);
+    } else if (mode === FORM_MODE.create) {
+      // 생성 모드일 때는 빈 트리
+      setTreeData([]);
+    }
+  }, [curriculumDetail, mode]);
+
+  const handleAddNode = (nodeType: MAPPING_CURRICULUM_TYPE, parentNode: TreeNode | null) => {
     setFormState({
       activeFormType: nodeType,
       selectedNode: null,
@@ -54,7 +80,20 @@ const CurriculumDetailComponent = ({ mode, curriculumId }: CurriculumDetailProps
   };
 
   const handleFormSubmit = (data: any) => {
-    console.log('Form submitted with data:', data);
+    if (formState.activeFormType === MAPPING_CURRICULUM_TYPE.CURRICULUM) {
+      const curriculumData = {
+        ...data,
+        channelUuid: '1', // TODO: 실제 채널 UUID로 교체
+        tenantId: 1, // TODO: 실제 테넌트 ID로 교체
+      };
+      createCurriculum(curriculumData, {
+        onSuccess: (createdCurriculum: CurriculumResponse) => {
+          if (createdCurriculum.curriculumId && onCurriculumCreated) {
+            onCurriculumCreated(createdCurriculum.curriculumId);
+          }
+        },
+      });
+    }
   };
 
   const handleFormCancel = () => {
@@ -67,45 +106,50 @@ const CurriculumDetailComponent = ({ mode, curriculumId }: CurriculumDetailProps
     setFormStatus(FROM_STATUS.NONE);
   };
 
+  // 트리 노드 선택 핸들러
+  const handleNodeSelect = (node: TreeNode) => {
+    setFormState({
+      activeFormType: node.type as MAPPING_CURRICULUM_TYPE,
+      selectedNode: node,
+      parentNode: findParentNode(treeData, node.parentId),
+      isEditing: true,
+    });
+    setFormStatus(FROM_STATUS.EDIT);
+  };
+
   const { renderNodeButtons, renderCustomTreeButtons } = useTreeButtons({
     onAddNode: handleAddNode,
+    formState,
   });
 
   const customTreeRenderButton = () => {
     if (mode === FORM_MODE.create) {
-      return renderCustomTreeButtons(() => handleAddNode(NODE_TYPE.CURRICULUM, null));
+      return renderCustomTreeButtons(() => handleAddNode(MAPPING_CURRICULUM_TYPE.CURRICULUM, null));
     }
   };
 
   const customFormActionButton = () => {
-    if (formStatus !== FROM_STATUS.NONE && mode === FORM_MODE.create) {
+    if (
+      formStatus !== FROM_STATUS.NONE &&
+      (mode === FORM_MODE.create || mode === FORM_MODE.detail)
+    ) {
       return (
         <>
-          {/* <Button
-            type="button"
-            variant="text"
-            size="sm"
-          //   onClick={handleReset}
-          //   disabled={formMode === FORM_MODE.NONE}
-            className={layoutStyles.btn_text}
-          >
-            {t('LABEL.button.reset')}
-          </Button> */}
           <Button
             variant="text"
             size="sm"
-            //   disabled={formMode === FORM_MODE.NONE || formMode === FORM_MODE.ADD}
-            //   onClick={handleDelete}
             className={layoutStyles.btn_text}
             icon={<IcoMinus width={16} height={16} stroke={'#4C515E'} />}
           >
             {t('LABEL.button.delete')}
           </Button>
           <Button
-            type="submit"
+            type="button"
             variant="save"
             size="sm"
-            // onClick={onSubmit(handleFormSubmit)}
+            onClick={() => {
+              handleSubmit(handleFormSubmit)();
+            }}
           >
             {t('LABEL.button.save')}
           </Button>
@@ -121,18 +165,31 @@ const CurriculumDetailComponent = ({ mode, curriculumId }: CurriculumDetailProps
         data={treeData}
         customButtonNode={customTreeRenderButton()}
         renderNodeButtons={renderNodeButtons}
+        handleSelectedNodeChange={handleNodeSelect}
+        type="DEFAULT"
         title="목차"
-        emptyMessage="'신규등록'버튼을 클릭하여 추가해주세요."
+        emptyMessage={
+          mode === FORM_MODE.create
+            ? "'신규등록'버튼을 클릭하여 커리큘럼을 추가해주세요."
+            : isLoadingDetail
+              ? '로딩 중...'
+              : '데이터가 없습니다.'
+        }
       />
 
       <div className={layoutStyles.inner}>
-        <form onSubmit={onSubmit(handleFormSubmit)}>
-          <FormSubTitle label={'상세 정보'} lineType="dark" actionNode={customFormActionButton()} />
-          <FormRenderer
+        <FormSubTitle label={'상세 정보'} lineType="dark" actionNode={customFormActionButton()} />
+        <form ref={formRef} onSubmit={onSubmit(handleFormSubmit)}>
+          <NodeFormRenderer
             formState={formState}
-            formProvider={provider}
             onFormSubmit={handleFormSubmit}
             onFormCancel={handleFormCancel}
+            autoFormContext={autoFormContext}
+            setValue={setValue}
+            watch={watch}
+            loadFormData={loadFormData}
+            selectedNodeData={selectedNodeData}
+            isLoading={isNodeDataLoading}
           />
         </form>
       </div>

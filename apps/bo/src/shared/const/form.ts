@@ -7,4 +7,5 @@ export enum FROM_STATUS {
   NONE = 'NONE',
   ADD = 'ADD',
   CREATE = 'CREATE',
+  EDIT = 'EDIT',
 }

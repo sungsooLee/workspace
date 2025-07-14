@@ -1,69 +1,51 @@
 import React from 'react';
 import { TreeNode, Button } from '@learnway/ui';
-import { NODE_TYPE } from '../types/form.types';
+import { FormState, NODE_CHILDREN_MAP } from '../types/form.types';
 import { IcoPlus } from '@learnway/icons';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
+import { MAPPING_CURRICULUM_TYPE } from '@types';
 
 interface UseTreeButtonsProps {
-  onAddNode: (nodeType: NODE_TYPE, parentNode: TreeNode | null) => void;
+  onAddNode: (nodeType: MAPPING_CURRICULUM_TYPE, parentNode: TreeNode | null) => void;
+  formState: FormState;
 }
 
-export const useTreeButtons = ({ onAddNode }: UseTreeButtonsProps) => {
+export const useTreeButtons = ({ onAddNode, formState }: UseTreeButtonsProps) => {
   const renderNodeButtons = (node: TreeNode, level: number): React.ReactNode => {
-    const nodeType = node.apiNodeType;
-
-    switch (nodeType) {
-      case NODE_TYPE.CURRICULUM:
-        return (
-          <>
-            <Button
-              variant="text"
-              size="sm"
-              className={layoutStyles.btn_text}
-              onClick={(e) => {
-                e.stopPropagation();
-                onAddNode(NODE_TYPE.MODULE, node);
-              }}
-              icon={<IcoPlus width={16} height={16} stroke="#131C30" />}
-            >
-              모듈추가
-            </Button>
-            <Button
-              variant="text"
-              size="sm"
-              className={layoutStyles.btn_text}
-              onClick={(e) => {
-                e.stopPropagation();
-                onAddNode(NODE_TYPE.LESSON, node);
-              }}
-              icon={<IcoPlus width={16} height={16} stroke="#131C30" />}
-            >
-              레슨추가
-            </Button>
-          </>
-        );
-
-      case NODE_TYPE.MODULE:
-        return (
+    const nodeType = node.type as MAPPING_CURRICULUM_TYPE;
+    const allowedChildren = NODE_CHILDREN_MAP[nodeType] || [];
+    return (
+      <div className="flex flex-row gap-2">
+        {allowedChildren.map((childType) => (
           <Button
-            variant="text"
-            size="sm"
+            key={childType}
+            variant={formState.activeFormType === childType ? 'primary' : 'gray2'}
+            //선택된 버튼 primary로 표시
+            size="xs"
             className={layoutStyles.btn_text}
             onClick={(e) => {
               e.stopPropagation();
-              onAddNode(NODE_TYPE.LESSON, node);
+              onAddNode(childType, node);
             }}
-            icon={<IcoPlus width={16} height={16} stroke="#131C30" />}
           >
-            레슨추가
+            {getAddButtonLabel(childType)}
           </Button>
-        );
+        ))}
+      </div>
+    );
+  };
 
-      case NODE_TYPE.LESSON:
-        return null; // 레슨은 하위 노드 생성 불가
-
+  // 버튼 라벨 생성 함수
+  const getAddButtonLabel = (nodeType: MAPPING_CURRICULUM_TYPE): string => {
+    switch (nodeType) {
+      case MAPPING_CURRICULUM_TYPE.MODULE:
+        return '모듈추가';
+      case MAPPING_CURRICULUM_TYPE.LESSON:
+        return '레슨추가';
+      case MAPPING_CURRICULUM_TYPE.CURRICULUM:
+        return '커리큘럼추가';
       default:
-        return null;
+        return '추가';
     }
   };
 

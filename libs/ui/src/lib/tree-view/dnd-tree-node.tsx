@@ -8,9 +8,7 @@ import {
   DropZoneData,
   DndTreeNodeProps,
 } from './type';
-import {
-  getNodeMaxDepth,
-} from './tree.service';
+import { getNodeMaxDepth } from './tree.service';
 import { useTreeContext } from './tree.context';
 import styles from './tree.module.css';
 import {
@@ -442,13 +440,15 @@ export const DndTreeNode: React.FC<DndTreeNodeProps> = ({
 
   // SAME_LEVEL_ONLY에서 첫 번째 AFTER 드롭존 렌더링 여부
   const shouldRenderFirstAfterZone = useMemo(() => {
-    return treeType === 'SAME_LEVEL_ONLY' &&
+    return (
+      treeType === 'SAME_LEVEL_ONLY' &&
       (!hasChildren || !isExpanded) &&
       (isGlobalDragging || effectiveDraggedNode) &&
       effectiveDraggedNodeKey !== node.key &&
       !isDescendantOfDraggedNode &&
       !shouldCollapseForSameLevel &&
-      isValidDropTargetForPosition('AFTER');
+      isValidDropTargetForPosition('AFTER')
+    );
   }, [
     treeType,
     hasChildren,
@@ -741,14 +741,19 @@ export const DndTreeNode: React.FC<DndTreeNodeProps> = ({
             zIndex: 10,
           }}
         >
+          {level === 0 ? (
+            <span
+              className={cn(hasChildren ? styles.has_children : '', styles.tree_menu)}
+              onClick={handleToggleExpand}
+            >
+              <IcoHome03 stroke="#131C30" className={styles.icon_home} />{' '}
+            </span>
+          ) : null}
           {hasChildren && (
             <span
               className={cn(hasChildren ? styles.has_children : '', styles.tree_menu)}
               onClick={handleToggleExpand}
             >
-              {level === 0 && hasChildren ? (
-                <IcoHome03 stroke="#131C30" className={styles.icon_home} />
-              ) : null}
               {level !== 0 && hasChildren ? (
                 isExpanded ? (
                   <IcoBoxMinus className={styles.icon_minus} width={20} height={21} />

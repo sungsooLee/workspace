@@ -10,6 +10,8 @@ export * from './lib/backdrop/backdrop';
 export * from './lib/badge/badge';
 export * from './lib/base-form/base-form-row';
 export * from './lib/base-form/base-form-row2';
+export * from './lib/base-form/base-form-row3';
+export * from './lib/base-form/auto-form-provider';
 export * from './lib/base-form/form-group';
 export * from './lib/base-form/form-guide-text';
 export * from './lib/base-form/form-info-area';
