@@ -48,4 +48,8 @@ export default class UserGroupService {
   static fetchUserGroupManualDetail(userGroupId: number) {
     return httpService.get<any>(`${PMSApiPrefix()}/userGroup/${userGroupId}`)
   }
+
+  static fetchUserGroupSubDirectoryList(params: any) {
+    return httpService.get<PageableContent<any>>(`${PMSApiPrefix()}/userGroup/subdirectory/users`, params);
+  }
 }

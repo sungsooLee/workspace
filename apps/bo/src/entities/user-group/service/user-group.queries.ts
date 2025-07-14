@@ -12,6 +12,7 @@ export const queryKeys = {
   blackwhiteUsers: ['blackwhite-users'] as const,
   userGroupManualList: ['user-group-manual-list'] as const,
   userGroupManualDetail: ['user-group-manual-detail'] as const,
+  userGroupSubDirectory: ['user-group-subdirectory'] as const,
 };
 
 export const queryOptions = {
@@ -44,4 +45,10 @@ export const queryOptions = {
       queryKey: queryKeys.userGroupManualDetail,
       queryFn: (): Promise<any> => UserGroupsService.fetchUserGroupManualDetail(userGroupId),
     }: getQuerySkipToken<UserGroupManual>(),
+  userGroupSubDirectoryList: (params: any) => ({
+    queryKey: queryKeys.userGroupSubDirectory,
+    queryFn: () => UserGroupsService.fetchUserGroupSubDirectoryList(params),
+    cacheTime: 0,
+    staleTime: 0,
+  })
 };
