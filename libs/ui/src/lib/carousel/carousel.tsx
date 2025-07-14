@@ -32,7 +32,7 @@ const CarouselComponent = forwardRef<React.ElementRef<typeof Swiper>, CarouselCo
 
     return (
       <div className={cn(styles.start, 'nlp--carousel-wrap')}>
-        {(showNavigation || items.length > 1) && renderNavigationButtons()}
+        {showNavigation && items.length > 1 && renderNavigationButtons()}
         <Swiper
           {...props}
           ref={ref}
