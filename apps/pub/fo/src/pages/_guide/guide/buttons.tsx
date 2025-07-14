@@ -12,7 +12,9 @@ function RouteComponent() {
       <div>
         <h2 className="guide_tit2">Button Component Guide</h2>
         <p className="loc react">/libs/ui/src/lib/button/button.tsx</p>
-        <p className="info">size(높이 기준) : sm(28), md(36), lg(44) ,xl(48) ,xl2(52)</p>
+        <p className="info">
+          size(높이 기준) : ts(24), ts(28), sm(32), md(36), lg(40), lx(44), xl(48) ,xl2(52)
+        </p>
         <div className="code_example">
           <pre className="code_block">
             <code>

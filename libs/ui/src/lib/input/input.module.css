@@ -12,7 +12,7 @@
       @apply !border-transparent !outline-none;
     }
     &[class*='lg'] {
-      @apply !h-[44px] !min-h-[44px];
+      @apply !h-[42px] !min-h-[42px];
     }
   }
 
