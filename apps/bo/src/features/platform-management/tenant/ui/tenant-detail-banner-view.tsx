@@ -1,15 +1,13 @@
-import { FC } from 'react';
 import { cn } from '@learnway/shared';
+import { FC } from 'react';
 
 // eslint-disable-next-line @nx/enforce-module-boundaries
-import { FormSubTitle } from '@shared/ui/form';
-import { FormRow, ContentsHistoryInfoFormField } from '@shared/ui';
-import { Button, ContentsRow, DynamicFormField } from '@learnway/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { Button, ContentsRow, FormSubTitle } from '@learnway/ui';
 /* style */
-import styles from './banner-info.module.css';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import fileUploadStyles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css'; // 파일 업로드
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
+import styles from './banner-info.module.css';
 
 import { IcoFormRequired, IcoPpt, IcoTrash03 } from '@learnway/icons';
 

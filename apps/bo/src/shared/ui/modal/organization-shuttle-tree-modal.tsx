@@ -1,46 +1,31 @@
-import React, { FC, useEffect, useState } from 'react';
 import { t } from 'i18next';
+import { useEffect, useState } from 'react';
 
+import popContentsStyles from '@features/platform-management/tenant/ui/pop-contents-layout.module.css';
 import { cn } from '@learnway/shared';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
-import popContentsStyles from '@features/platform-management/tenant/ui/pop-contents-layout.module.css';
 
 import {
+  Button,
+  ChipsForTreeShuttle,
+  FormSubTitle,
   ModalBody,
   ModalContainer,
   ModalFooter,
   ModalTitle,
-  useModal,
-  Button,
-  TreeContainer,
-  TreeView,
-  TreeNode,
-  TreeEventPayload,
   TreeBox,
-  ChipList,
-  ChipsForTreeShuttle,
+  TreeNode,
+  useModal,
 } from '@learnway/ui';
 
-import { IcoXclose, IcoRefresh02, IcoNarrowRight } from '@learnway/icons';
-
-import { ContentsHistoryInfoFormField, FormRow, FormSubTitle, SwitchFormField } from '@shared/ui';
+import { IcoNarrowRight, IcoRefresh02 } from '@learnway/icons';
 
 import { transformDepartmentApiDataToTreeData } from '@features/platform-management/company/company-organization-management/service/company-organization.service';
 
 import { useGetCompanyDepartmentTree } from '@entities/department';
-import {
-  getAllParentAndChildrenByKey,
-  getAllParentAndAllChildById,
-  getFirstExpandKeys,
-  getAllTreeKeys,
-  getAllParent,
-  getNodeByKey,
-  genMap,
-  deleteNodeByNode,
-  copyTreeNode,
-} from '@features/platform-management/tenant';
 import { findOrganizationPathById } from '@features/platform-management/company';
+import { genMap } from '@features/platform-management/tenant';
 
 /**
  * 화면번호: NLP_BO_TMS_1111_09 (회사조직조회 팝업(공통))

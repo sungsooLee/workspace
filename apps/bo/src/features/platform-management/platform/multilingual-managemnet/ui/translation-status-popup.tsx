@@ -1,21 +1,19 @@
+import { useTranslationStatus } from '@entities/translation/service/translation.hook';
+import { useLanguageMap } from '@learnway/hooks';
+import { cn } from '@learnway/shared';
+import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
 import {
   Button,
+  FormSubTitle,
   GridBox,
   ModalBody,
   ModalContainer,
   ModalFooter,
   ModalTitle,
-  Tooltip,
   useModal,
 } from '@learnway/ui';
-import { t } from 'i18next';
-import { useTranslationStatus } from '@entities/translation/service/translation.hook';
 import { createColumnHelper } from '@tanstack/react-table';
-import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
-import { IcoAlertCircle } from '@learnway/icons';
-import { FormSubTitle } from '@shared/ui';
-import { cn } from '@learnway/shared';
-import { useLanguageMap } from '@learnway/hooks';
+import { t } from 'i18next';
 import { useMemo } from 'react';
 
 interface TranslationStatusPopupProps {

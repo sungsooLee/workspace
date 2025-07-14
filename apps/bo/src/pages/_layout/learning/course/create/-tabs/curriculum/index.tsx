@@ -1,11 +1,10 @@
+import { useDynamicForm2 } from '@learnway/hooks';
 import { IcoMinus, IcoPlus } from '@learnway/icons';
-import { Button, SplitPanel, TreeBox, TreeContainer } from '@learnway/ui';
-import { FormSubTitle } from '@shared/ui';
+import { Button, FormSubTitle, SplitPanel, TreeBox, TreeContainer } from '@learnway/ui';
 import { Course } from '@types';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CourseTabBaseProps, TabFormRef } from '../../../-common/type';
-import { useDynamicForm2 } from '@learnway/hooks';
 
 const CurriculumComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
   ({ onSave, data: { formData, courseConfig } }, ref) => {

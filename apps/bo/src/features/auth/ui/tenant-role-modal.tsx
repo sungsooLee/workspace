@@ -1,5 +1,4 @@
 import { useMemo, useState } from 'react';
-import { FormSubTitle } from '../../../../../bo/src/shared/ui/form';
 import {
   Button,
   ModalBody,
@@ -9,6 +8,7 @@ import {
   ModalTitle,
   OptionCard,
   OptionCardItem,
+  FormSubTitle,
 } from '@learnway/ui';
 import { useFetchAuthUser, useUpdateTenantRoleLastSelect } from '@learnway/auth/entities';
 import { useTranslation } from 'react-i18next';
