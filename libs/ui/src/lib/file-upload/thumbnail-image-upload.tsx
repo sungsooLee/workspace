@@ -1,6 +1,6 @@
 // IA011 / NLP_BO_PMS_1100_05_01
 import { Dispatch, forwardRef, SetStateAction, useEffect, useMemo, useRef, useState } from 'react';
-import { cn, formatDate, getRandomId } from '@learnway/shared';
+import { cn } from '@learnway/shared';
 import { ImageOption } from '../thumbnail/type';
 import { ThumbnailList } from '../thumbnail/thumbnail-list';
 import { Button } from '../button/button';
@@ -96,7 +96,6 @@ const ThumbnailImageUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageU
     },
     ref,
   ) => {
-    // const S3_URL =
     //   'http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/';
     // 파일 입력 필드에 접근하기 위한 Ref
     const fileInputRef = useRef<HTMLInputElement>(null);

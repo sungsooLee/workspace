@@ -3,14 +3,13 @@ import { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
 
 import { cn, formatDate, getRandomId, splitFileName } from '@learnway/shared';
 
-import { ImageOption } from '../thumbnail/type';
 import { ThumbnailList } from '../thumbnail/thumbnail-list';
 import { Button } from '../button/button';
 import { Input } from '../input/input';
 import styles from './thumbnail-image-upload.module.css';
 import { IcoUploadCloud } from '@learnway/icons';
 import { FileInfo, S3_PATH, S3_PATH_TYPE, useFileManager } from '@learnway/hooks';
-import { isEqual } from 'lodash';
+import { difference, isEmpty } from 'lodash';
 
 export interface ThumbnailImageUploadV2Props {
   /**
@@ -30,7 +29,7 @@ export interface ThumbnailImageUploadV2Props {
   onChange?: (value: string[]) => void;
 }
 
-const ThumbnailImageUploadV2Component = forwardRef<HTMLDivElement, ThumbnailImageUploadV2Props>(
+const ThumbnailPublicUploadComponent = forwardRef<HTMLDivElement, ThumbnailImageUploadV2Props>(
   (
     {
       className,
@@ -43,15 +42,18 @@ const ThumbnailImageUploadV2Component = forwardRef<HTMLDivElement, ThumbnailImag
     },
     ref,
   ) => {
-    const S3_URL =
-      'http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/';
+    const S3_URL = import.meta.env.VITE_AXIOS_S3_URL + '/';
     // 파일 입력 필드에 접근하기 위한 Ref
     const fileInputRef = useRef<HTMLInputElement>(null);
     // 썸네일 목록을 관리하는 내부 상태 (ownerOptions prop으로 초기화 및 동기화)
     const [files, setFiles] = useState<FileInfo[]>([]);
 
     useEffect(() => {
-      if (!value) return;
+      if (!value || isEmpty(value)) return;
+      const filePaths = files.map((_) => _.filePath);
+      const added = difference(value, filePaths);
+      const removed = difference(filePaths, value);
+      if (!added.length && !removed.length) return;
       const newFiles: FileInfo[] = value.map((filePath) => {
         const pathArr = filePath.split('/');
         const serverFileName = pathArr.pop() || '';
@@ -78,7 +80,6 @@ const ThumbnailImageUploadV2Component = forwardRef<HTMLDivElement, ThumbnailImag
 
     useEffect(() => {
       const filePaths = files.map((file) => file.filePath);
-      if (isEqual(value, filePaths)) return;
       onChange?.(filePaths);
     }, [files]);
 
@@ -92,13 +93,9 @@ const ThumbnailImageUploadV2Component = forwardRef<HTMLDivElement, ThumbnailImag
       fileInputRef?.current && fileInputRef.current.click();
     };
 
-    /**
-     * 파일 입력 필드의 `onChange` 이벤트 발생 시 호출되는 핸들러입니다.
-     */
     const handleFilesChange = () => {
       const files = fileInputRef.current?.files;
       if (files?.length) {
-        // setThumbnailFiles(Array.from(files));
         const thumbnailFiles = Array.from(files);
 
         upload(thumbnailFiles);
@@ -177,4 +174,4 @@ const ThumbnailImageUploadV2Component = forwardRef<HTMLDivElement, ThumbnailImag
   },
 );
 
-export const ThumbnailImageUploadV2 = ThumbnailImageUploadV2Component;
+export const ThumbnailPublicUpload = ThumbnailPublicUploadComponent;

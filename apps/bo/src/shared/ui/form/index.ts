@@ -11,6 +11,7 @@ export * from './tenant-channel-dropdown-form-field';
 export * from './contents-history-info-form-field';
 export * from './duplicate-check-input-form-field';
 export * from './thumbnail-list-form-field';
+export * from './thumbnail-public-form-field';
 export * from './attachment-form-field';
 export * from './form-translation-box';
 
