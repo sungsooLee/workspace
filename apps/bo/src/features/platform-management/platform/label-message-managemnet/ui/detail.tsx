@@ -1,27 +1,33 @@
-import { useTranslation } from 'react-i18next';
-import { Button, ContentsRow, Input, RadioGroupFormField, Textarea, useModal } from '@learnway/ui';
-import React, { useEffect, useState } from 'react';
-import { useRouter } from '@tanstack/react-router';
-import { useQueryClient } from '@tanstack/react-query';
-import { t } from 'i18next';
-import {
-  // DuplicateCheckInputFormField,
-  FormRow,
-  FormSubTitle,
-  SwitchFormField,
-} from '@shared/ui/form';
-import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
 import {
   queryKeys,
-  queryOptions,
   useCreateLabelMessage,
   useFetchLabelMessage,
   useUpdateLabelMessage,
 } from '@entities/label-messages';
 import { translationQueryOptions } from '@entities/translation';
-import { UseFormReturn, useWatch } from 'react-hook-form';
 import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
+import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
+import {
+  Button,
+  ContentsRow,
+  FormSubTitle,
+  Input,
+  RadioGroupFormField,
+  Textarea,
+  useModal,
+} from '@learnway/ui';
+import {
+  // DuplicateCheckInputFormField,
+  FormRow,
+  SwitchFormField,
+} from '@shared/ui/form';
+import { useQueryClient } from '@tanstack/react-query';
+import { useRouter } from '@tanstack/react-router';
+import { t } from 'i18next';
+import React, { useEffect, useState } from 'react';
+import { UseFormReturn, useWatch } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 interface MessageDetailProps {
   /**

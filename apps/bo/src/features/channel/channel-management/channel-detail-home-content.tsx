@@ -1,11 +1,11 @@
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { IcoMinus, IcoPlus } from '@learnway/icons';
+import { Button, ContentsRow, FormSubTitle, RadioGroupFormField, TableBox } from '@learnway/ui';
+import { FormRow } from '@shared/ui';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { t } from 'i18next';
 import { useEffect, useState } from 'react';
 import { useWatch } from 'react-hook-form';
-import { t } from 'i18next';
-import { FormSubTitle, FormRow } from '@shared/ui';
-import { Button, TableBox, ContentsRow, RadioGroupFormField } from '@learnway/ui';
-import { createColumnHelper, ColumnDef } from '@tanstack/react-table';
-import { IcoPlus, IcoMinus } from '@learnway/icons';
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 
 import styles from './channel-detail-base.module.css';
 

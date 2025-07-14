@@ -1,9 +1,8 @@
 import { FC, useState } from 'react';
 import { useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
-import { Tabs } from '@learnway/ui';
+import { FormSubTitle, Tabs } from '@learnway/ui';
 import { cn } from '@learnway/shared';
-import { FormSubTitle } from '@shared/ui';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';

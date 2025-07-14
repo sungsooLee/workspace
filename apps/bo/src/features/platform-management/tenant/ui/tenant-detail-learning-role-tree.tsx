@@ -1,27 +1,27 @@
 import { SectionLayout } from '@shared/ui';
-import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import { useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
+import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 
 import { cn } from '@learnway/shared';
-import styles from '@learnway/styles/bo/features/role/role-info.module.css';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
+import styles from '@learnway/styles/bo/features/role/role-info.module.css';
 
+import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import {
   Button,
   ChipListModalSelectorFormField,
   ContentsRow,
+  FormSubTitle,
   Input,
   RadioGroupFormField,
-  Switch,
   TextareaFormField,
   TreeBox,
   TreeContainer,
   TreeNode,
 } from '@learnway/ui';
-import { DynamicFormConfig, useDynamicForm, CODE_GROUP } from '@learnway/hooks';
 
-import { ContentsHistoryInfoFormField, FormRow, FormSubTitle, SwitchFormField } from '@shared/ui';
+import { FormRow, SwitchFormField } from '@shared/ui';
 
 import {
   useFetchRole,
@@ -29,19 +29,14 @@ import {
   useMovePosition,
   useRoleManager,
 } from '@entities/role/service/role-manage.hook';
+import { DropdownFormField } from '@features/form';
+import { FormDisplay } from '@features/form/ui/form-display';
 import {
   moveRoleCheck,
   transformRoleApiDataToTreeData,
 } from '@features/platform-management/tenant/service/tenant-detail-tree.service';
-import { FormDisplay } from '@features/form/ui/form-display';
+import { ChannelListChoiceModal, CompanyShuttleModal, UserGroupChoiceModal } from '@shared/ui';
 import { EnChannelScope, EnCompanyScope, EnDeptScope, EnFormMode, EnTenantScope } from '@types';
-import {
-  ChannelChoiceModal,
-  ChannelListChoiceModal,
-  CompanyShuttleModal,
-  UserGroupChoiceModal,
-} from '@shared/ui';
-import { DropdownFormField } from '@features/form';
 
 /**
  * 화면번호:

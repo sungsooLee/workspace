@@ -1,48 +1,27 @@
-import React, { useRef, useState, useImperativeHandle, forwardRef, useEffect } from 'react';
-import { useWatch } from 'react-hook-form';
-import { CellContext, ColumnDef, createColumnHelper, Table } from '@tanstack/react-table';
 import { useRouter, useRouterState } from '@tanstack/react-router';
+import { CellContext } from '@tanstack/react-table';
 import { t } from 'i18next';
-import dayjs from 'dayjs';
+import { forwardRef, useImperativeHandle, useRef } from 'react';
 
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 
+import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import {
-  Button,
-  ContentsRow,
-  GridBox,
-  useModal,
-  RadioGroupFormField,
-  Input,
-  ContentsRowItem,
-  Switch,
-  CheckboxGroupFormField,
   ChipListModalSelectorFormField,
-  DatePicker,
-  GridFormField,
+  ContentsRow,
   EditDropdownCell,
   EditSwitchCell,
+  FormSubTitle,
+  GridFormField,
+  Input,
+  RadioGroupFormField,
   TextareaFormField,
+  useModal,
 } from '@learnway/ui';
-import { DynamicFormConfig, useDynamicForm, CODE_GROUP } from '@learnway/hooks';
-import { cn, DATE_TIME_FORMAT, getDateToString, getStringToDate } from '@learnway/shared';
 
-import { FormRow, FormSubTitle, ContentsHistoryInfoFormField } from '@shared/ui';
 import { FormDisplay } from '@features/form/ui/form-display';
-import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
-import { LoginRestrictTimeSettingModal } from '@shared/ui/modal/login-restrict-time-setting-modal';
-import {
-  UserGroupTabsChoiceModal,
-  UserGroupChoiceModal,
-  CompanyChoiceModal,
-  OrganizationChoiceTreeModal,
-} from '@shared/ui';
-import { EnFormMode, EnGlobalConst, EMAIL_REGEX } from '@types';
-
-import { useCreateCompany, useUpdateCompany, useFetchCompany } from '@entities/companies';
-import CompaniesService from '@entities/companies/api/companies';
-import { LoginAuthenticationSettingInformation } from '@features/platform-management/company';
+import { FormRow, OrganizationChoiceTreeModal } from '@shared/ui';
+import { EMAIL_REGEX } from '@types';
 
 /**
  *
