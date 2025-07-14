@@ -45,8 +45,8 @@ const ProgressDonutComponent = forwardRef<
       progress, // 진행률 값
       size = 24, // 전체 크기 (기본값 100)
       strokeWidth = 5.6, // 선 두께 (기본값 10)
-      trackColor = 'var(--gray4)', // 트랙 색상 (기본값 #e0e0e0)
-      progressColor = 'var(--secondary1)', // 진행률 색상 (기본값 #3b82f6)
+      trackColor = 'var(--gray92)', // 트랙 색상 (기본값 #e0e0e0)
+      progressColor = 'var(--blue50)', // 진행률 색상 (기본값 #3b82f6)
     },
     ref, // forwardRef로 전달받은 Ref 객체
   ) => {
