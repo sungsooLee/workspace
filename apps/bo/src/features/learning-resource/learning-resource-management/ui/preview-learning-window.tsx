@@ -117,6 +117,9 @@ const PreviewLearningWindowComponent: FC<any> = ({
         break;
     }
     setFuncInfo({
+      lessonProgress: (payload) => {
+        console.log('lessonProgress called', payload);
+      },
       scormInitialize: async (payload) => {
         console.log('scormInitialize called ', payload);
         return 'true';
@@ -125,11 +128,14 @@ const PreviewLearningWindowComponent: FC<any> = ({
         console.log('scormCommit called', payload);
         return 'true';
       },
-      lessonProgress: (payload) => {
-        console.log('lessonProgress called', payload);
-      },
       videoOnProgress: (payload) => {
         console.log('videoOnProgress called', payload);
+      },
+      html5LearningHistory: (payload) => {
+        console.log('html5LearningHistory called', payload);
+      },
+      galleryLearningHistory: (payload) => {
+        console.log('galleryLearningHistory called', payload);
       },
     });
   }, [data]);
