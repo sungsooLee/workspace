@@ -1,10 +1,3 @@
-import { Button, TreeBox, TreeNode } from '@learnway/ui';
-import { FormSubTitle, SectionLayout } from '@shared/ui';
-import { FORM_MODE, FROM_STATUS } from '@shared/const';
-import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
-import { Button, FormSubTitle, TreeBox, TreeNode } from '@learnway/ui';
-import { FORM_MODE, FROM_STATUS } from '@shared/const';
-import { SectionLayout } from '@shared/ui';
 import { t } from 'i18next';
 import { useRef, useState, useEffect } from 'react';
 import { FormState } from '../types/form.types';
@@ -15,6 +8,11 @@ import { useCreateCurriculum, useGetCurriculumDetail } from '@entities/curriculu
 import { useDynamicForm3 } from '@learnway/hooks';
 import { CurriculumResponse, MAPPING_CURRICULUM_TYPE } from '@types';
 import { buildTreeFromCurriculumData, findParentNode } from '../services';
+import { FORM_MODE, FROM_STATUS } from '@shared/const';
+import { Button, FormSubTitle, TreeBox, TreeNode } from '@learnway/ui';
+import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
+import { IcoMinus } from '@learnway/icons';
+import { SectionLayout } from '@shared/ui';
 
 interface CurriculumDetailProps {
   mode: FORM_MODE;
