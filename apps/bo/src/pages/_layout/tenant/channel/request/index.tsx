@@ -35,6 +35,12 @@ const _global = {
   linkClick: (uuid: string) => {
     return;
   },
+  openChannelClick: (uuid: string) => {
+    return;
+  },
+  channelDetailClick: (uuid: string) => {
+    return;
+  },
 };
 
 function RouteComponent() {
@@ -103,6 +109,22 @@ function RouteComponent() {
       to: '/tenant/channel/request/detail',
       state: {
         channelRequestUuid: uuid,
+      },
+    });
+  };
+  _global.openChannelClick = (uuid: string) => {
+    router.navigate({
+      to: '/tenant/channel/management/regist',
+      state: {
+        requestUuid: uuid,
+      },
+    });
+  };
+  _global.channelDetailClick = (uuid: string) => {
+    router.navigate({
+      to: '/tenant/channel/management/detail',
+      state: {
+        channelUuid: uuid,
       },
     });
   };
@@ -368,7 +390,7 @@ const columns = [
             variant="gray"
             stopPropagation
             onClick={(e) => {
-              //
+              _global.openChannelClick(info.row.original.channelRequestUuid);
             }}
             label={t('채널 개설')}
           />
@@ -380,7 +402,7 @@ const columns = [
             variant="gray"
             stopPropagation
             onClick={(e) => {
-              //
+              _global.channelDetailClick(info.row.original.channelInfoChannelUuid);
             }}
             label={t('채널 상세')}
           />

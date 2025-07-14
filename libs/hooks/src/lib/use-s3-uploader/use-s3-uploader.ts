@@ -204,7 +204,7 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
 
     const groupResponse = await createFileGroup({
       affairsType,
-      reposType: 'S3',
+      storageType: 'S3',
       basicPath,
       languageCode,
     });
