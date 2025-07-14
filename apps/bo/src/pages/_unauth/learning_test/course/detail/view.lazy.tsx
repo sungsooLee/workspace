@@ -1,4 +1,4 @@
-import { Button, Divider, Tabs, useModal } from '@learnway/ui';
+import { Button, Divider, Tabs, ToggleButtonGroup, useModal } from '@learnway/ui';
 import { CourseDetailTab } from '@pages/_layout/learning/course/-common/type';
 import { useCourseDetailForm } from '@pages/_layout/learning/course/-hooks/use-course-detail-form';
 import { Community } from '@pages/_layout/learning/course/detail/-tabs/community';
@@ -132,6 +132,13 @@ function RouteComponent() {
     <form>
       <PageContainer>
         <ContentsButtons>
+          <ToggleButtonGroup
+            options={[
+              { label: '과정관리', value: '과정관리value' },
+              { label: '수강관리', value: '수강관리value' },
+            ]}
+            onChange={(value) => console.log('ToggleButtonGroup.onChange', value)}
+          />
           <Button
             type="button"
             variant="point"

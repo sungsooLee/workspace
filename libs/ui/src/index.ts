@@ -191,6 +191,7 @@ export * from './lib/stepper/stepper';
 export * from './lib/stores/useModalStore';
 export * from './lib/stores/useSearchStore';
 export * from './lib/stores/useToastStore';
+export * from './lib/toggle-button-group/toggle-button-group';
 export * from './lib/switch/switch';
 export * from './lib/switch/type';
 export * from './lib/tabs/stepper-tabs/stepper-tabs';

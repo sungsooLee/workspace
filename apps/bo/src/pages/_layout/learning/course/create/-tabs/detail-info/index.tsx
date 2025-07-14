@@ -15,7 +15,7 @@ import { FormRow, FormRow2, SwitchFormField } from '@shared/ui';
 import { Course, CourseConfig } from '@types';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
-import { PassOptionFormField } from '../../../-common/pass-option-form-field';
+import { PassOptionFormField } from '../../../-components/pass-option-form-field/pass-option-form-field';
 import { CourseTabBaseProps, TabFormRef } from '../../../-common/type';
 
 const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(

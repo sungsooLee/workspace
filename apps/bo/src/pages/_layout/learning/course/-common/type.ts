@@ -1,4 +1,45 @@
-import { Course, CourseConfig } from '@types';
+import { Course, CourseConfig, CourseListItem, CoursesQueryParams } from '@types';
+
+// ===== 과정 관리 페이지 타입 =====
+export interface CourseSearchFormData {
+  tenantId: { value: string; label: string };
+  channelUuid: { value: string; label: string };
+  openingDate?: number;
+  courseType?: string;
+  useYn?: string;
+  adminName?: string;
+  courseCode?: string;
+  courseName?: string;
+}
+
+export interface CourseButtonState {
+  copy: boolean;
+  share: boolean;
+}
+
+export interface CourseGridColumn {
+  name: string;
+  label: () => string;
+  size: number;
+  render?: (info: any) => React.ReactNode;
+}
+
+export interface CourseManagementHookResult {
+  provider: any;
+  getValues: () => any;
+  onSubmit: any;
+  gConfig: any;
+  selectedRows: CourseListItem[];
+  buttonState: CourseButtonState;
+  handleOnSearch: (data: CourseSearchFormData) => void;
+  handleGridRowsSelect: (rows: CourseListItem[]) => void;
+  handleBatchUploadClick: () => void;
+  handleCourseOpenClick: () => Promise<void>;
+}
+
+export type CourseType = string;
+
+// ===== 과정 상세 탭 타입 =====
 
 /**
  * 과정 탭 컴포넌트의 기본 Props 인터페이스

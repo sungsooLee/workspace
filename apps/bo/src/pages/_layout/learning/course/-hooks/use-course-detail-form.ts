@@ -1,7 +1,7 @@
 import { useCallback, useRef, useState } from 'react';
 import { CourseDetailTab, CourseTabData, TabFormRef } from '../-common/type';
 
-import { useCreateCourse, useDeleteCourse } from '@entities/course';
+import { useCreateCourse, useDeleteCourse, useUpdateCourse } from '@entities/course';
 import { queryOptions } from '@entities/course/service/course.queries';
 import { useQueryClient } from '@tanstack/react-query';
 import { Course, CourseConfig } from '@types';
@@ -11,7 +11,6 @@ import {
   getDummyCourse4,
   getDummyCourseConfig,
 } from './course-mock-data';
-import { useCourseDetailSaveMutations } from './use-course-detail-save-mutation copy';
 
 export const useCourseDetailForm = (courseType?: string) => {
   // 현재 활성 탭
@@ -21,7 +20,7 @@ export const useCourseDetailForm = (courseType?: string) => {
   const queryClient = useQueryClient();
   // 각 탭별 훅
   const createCourse = useCreateCourse();
-  const saveMutations = useCourseDetailSaveMutations();
+  const saveMutations = useUpdateCourse();
   const deleteCourse = useDeleteCourse();
 
   // 각 탭의 ref 관리
@@ -122,12 +121,8 @@ export const useCourseDetailForm = (courseType?: string) => {
   // 기존 과정 업데이트
   const updateExistingCourse = useCallback(
     async (requestData: Course) => {
-      const saveMutation = saveMutations[activeTab];
-      if (!saveMutation?.mutateAsync) {
-        throw new Error(`${activeTab} 탭에 대한 저장 함수가 정의되지 않았습니다.`);
-      }
       console.log(`${activeTab} 탭 업데이트:`, requestData);
-      return await saveMutation.mutateAsync(requestData);
+      return await saveMutations.mutateAsync(requestData);
     },
     [activeTab, saveMutations],
   );
@@ -135,14 +130,10 @@ export const useCourseDetailForm = (courseType?: string) => {
   // 과정 저장 API 호출
   const saveCourseData = useCallback(
     async (formData: Partial<Course>) => {
-      const courseId = formData?.courseId;
       const requestData = formDataToRequestData(formData, activeTab);
-
-      return courseId
-        ? await updateExistingCourse(requestData)
-        : await createNewCourse(requestData);
+      updateExistingCourse(requestData);
     },
-    [activeTab, createNewCourse, updateExistingCourse],
+    [activeTab, updateExistingCourse],
   );
 
   // 현재 활성 탭 저장

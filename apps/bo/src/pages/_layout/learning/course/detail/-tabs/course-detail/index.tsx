@@ -26,7 +26,7 @@ import { Course } from '@types';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CourseTabBaseProps, TabFormRef } from '../../../-common/type';
-import { CourseStatsSummary } from '../../../-component/course-stats-summary/course-stats-summary';
+import { CourseStatsSummary } from '../../../-components/course-stats-summary/course-stats-summary';
 
 const CourseDetailComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
   ({ onSave, onConfigPropChange, data: { formData, courseConfig, isSaved } }, ref) => {
