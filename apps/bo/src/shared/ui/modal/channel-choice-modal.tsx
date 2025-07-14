@@ -14,7 +14,7 @@ import {
 } from '@learnway/ui';
 import { t } from 'i18next';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
-import { SearchBox } from '@shared/ui';
+import { SearchBox, TenantByRoleDropdownFormField } from '@shared/ui';
 import { RoleInfo } from '@types';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { AuthUser } from '@learnway/auth/types';
@@ -121,14 +121,11 @@ const searchConfig = (): SearchBoxConfig => ({
     [
       {
         name: 'tenantId',
-        type: 'dropdown',
+        type: 'custom',
         label: t('테넌트'),
         value: '',
-        format: 'number',
-        presetOptionLabel: t('선택'),
-        optionsConfig: {
-          codeGroup: CODE_GROUP['manual.bo.my.tenant.tenantId'],
-        },
+        format: 'object',
+        element: <TenantByRoleDropdownFormField />,
       },
       {
         name: 'channelName',

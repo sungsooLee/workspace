@@ -30,7 +30,7 @@ import { CopyModal } from './learning-resource-copy-modal';
 import { useRouter } from '@tanstack/react-router';
 import { useWatch } from 'react-hook-form';
 import { useQueryClient } from '@tanstack/react-query';
-import { GridExcelDownloadButton } from '@shared/ui';
+import { GridExcelDownloadButton, TenantByRoleDropdownFormField } from '@shared/ui';
 import { CMSApiPrefix, LEARNING_TYPE } from '@learnway/config';
 import { PreviewLearningWindow } from './preview-learning-window';
 
@@ -50,14 +50,11 @@ function LearningResourceTableComponent() {
       [
         {
           name: 'tenantId',
-          type: 'dropdown',
+          type: 'custom',
           label: t('LABEL.form.label.tenant', '테넌트'),
           value: '',
-          format: 'number',
-          presetOptionLabel: t('LABEL.form.label.select', '선택'),
-          optionsConfig: {
-            codeGroup: CODE_GROUP['manual.bo.my.tenant.tenantId'],
-          },
+          format: 'object',
+          element: <TenantByRoleDropdownFormField />,
         },
         {
           name: 'channelUuid',
