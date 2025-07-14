@@ -134,27 +134,42 @@ const columns = [
     cell: (info) =>
       t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.company.CompayType.${info.getValue()}`),
     enableGrouping: false,
+    meta: {
+      size: 'auto',
+    },
   }),
   columnHelper.accessor('name', {
     header: t('회사명'),
     cell: (info) => info.getValue(),
     enableGrouping: false,
+    meta: {
+      size: 'auto',
+    },
   }),
   columnHelper.accessor('api', {
     header: t('API'),
     cell: (info) => 'API',
     enableGrouping: false,
+    meta: {
+      size: 'auto',
+    },
   }),
   columnHelper.accessor('method', {
     header: t('Method 구분'),
     cell: (info) => 'POST',
     enableGrouping: false,
+    meta: {
+      size: 'auto',
+    },
   }),
   columnHelper.accessor('lastModifiedBy', {
     header: t('수정자'),
     cell: (info) =>
       info.row.original.isUseLinkageSystem ? '시스템' : info.row.original.lastModifiedBy,
     enableGrouping: false,
+    meta: {
+      size: 'auto',
+    },
   }),
   columnHelper.accessor('modifiedDate', {
     header: t('수정일'),
@@ -163,5 +178,8 @@ const columns = [
         ? ''
         : getDateToString(new Date(info.row.original.modifiedDate), DATE_TIME_FORMAT.DATETIME_SEC),
     enableGrouping: false,
+    meta: {
+      size: 'auto',
+    },
   }),
 ] as ColumnDef<any, unknown>[];
