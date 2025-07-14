@@ -13,14 +13,13 @@ import {
   useGridBoxConfig,
 } from '@learnway/ui';
 import { t } from 'i18next';
-import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
+import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { SearchBox, TenantByRoleDropdownFormField } from '@shared/ui';
-import { RoleInfo } from '@types';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { AuthUser } from '@learnway/auth/types';
 import { useMemo, useState } from 'react';
 import { get } from 'lodash';
-import { learningResourceQueryOptions } from '@entities/learning-resource';
+import { useFetchChannelByRoleId } from '@entities/channel/service/channel.hook';
 
 interface Channel {
   channelUuid: string;
@@ -31,34 +30,26 @@ const ChannelChoicePopupComponent = () => {
   const { close } = useModal();
 
   const { data } = useFetchAuthUser<AuthUser>();
+  const { data: channel } = useFetchChannelByRoleId(data?.activeRole?.roleId as number);
 
   const getChannels = useMemo(() => {
     return ({ tenantId, channelName }: { tenantId: number; channelName: string }) => {
-      // 업무 API로 이 함수를 대체해야 함
-      const channels =
-        data?.myRoles
-          ?.filter((d: RoleInfo) => !tenantId || d.tenantId === tenantId) // 테넌트 필터
-          ?.map((d: RoleInfo) => d.channels) // 채널만 추출
-          ?.flat() // 2차원 배열을 1차원 배열로
-          ?.filter((c: any) => c.name.includes(channelName)) // 이름 필터
-          ?.map(({ uuid, name }: any) => ({
-            channelName: name,
-            channelUuid: uuid,
-          })) || [];
+      const channels = channel
+        ?.filter((c) => c.tenantList.find((t) => t.tenantId === tenantId)) // tenant 필터
+        ?.filter((c) => c.channelName.includes(channelName)); // 이름 필터
       return {
         data: channels,
       };
     };
-  }, [data?.myRoles]);
+  }, [data, channel]);
 
   const gridConfig: useGridBoxConfig = {
-    query: learningResourceQueryOptions.getChannelsByTenantId,
-    // query: (params: any) => {
-    //   return {
-    //     queryKey: ['get-channels-by-tenant-and-role'],
-    //     queryFn: () => getChannels(params),
-    //   };
-    // },
+    query: (params: any) => {
+      return {
+        queryKey: ['get-channels-by-tenant-and-role'],
+        queryFn: () => getChannels(params),
+      };
+    },
     columns: [
       {
         size: 676,
