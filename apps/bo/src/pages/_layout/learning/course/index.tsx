@@ -2,9 +2,9 @@ import { Button, Divider } from '@learnway/ui';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { t } from 'i18next';
-import { CourseGrid } from './-components/CourseGrid';
-import { CourseSearchForm } from './-components/CourseSearchForm';
-import { useCourseManagement } from './-hooks/useCourseManagement';
+import { CourseGrid } from './-components/course-grid';
+import { CourseSearchForm } from './-components/course-search-form';
+import { useCourseManagement } from './-hooks/use-course-management';
 
 export const Route = createFileRoute('/_layout/learning/course/')({
   component: RouteComponent,
