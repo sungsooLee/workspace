@@ -1,6 +1,42 @@
 /* file_upload.css */
+/* file_upload.css */
 .attach_wrap {
-  [class*='title_area'] strong {
-    @apply !title3-b !text-[var(--gray8)];
+  [class*='info_wrap'] {
+    @apply !mb-[8px];
+  }
+  [class*='title_area'] {
+    & > strong {
+      @apply !font-semibold !text-[var(--gray8)];
+    }
+  }
+  [class*='file_length'] {
+    @apply !text-[var(--gray35)];
+    span,
+    strong {
+      @apply !text-[var(--blue50)];
+    }
+  }
+  [class*='file_volume'] {
+    em {
+      @apply !text-[var(--blue50)];
+    }
+  }
+  [class*='btn_area'] {
+    & > p {
+      svg {
+        @apply !h-[20px] !w-[20px];
+      }
+      span {
+        @apply !title2 !text-[var(--gray35)];
+      }
+    }
+  }
+  [class*='file_wrap'] {
+    [class*='icon_upload'] {
+      @apply !stroke-[var(--gray10)];
+    }
+    [class*='file_title'] {
+      @apply !text-[var(--gray10)];
+    }
   }
 }
