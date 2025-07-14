@@ -68,12 +68,12 @@ const useModal = (): useModalReturnValue => {
         const defaultProps =
           typeof props === 'string'
             ? {
-              title: props,
-              onClose: () => null,
-            }
+                title: props,
+                onClose: () => null,
+              }
             : {
-              ...props,
-            };
+                ...props,
+              };
         const config: ModalConfig = {
           id: getRandomId(),
           content: createElement(Alert, {
@@ -108,14 +108,14 @@ const useModal = (): useModalReturnValue => {
         const defaultProps =
           typeof props === 'string'
             ? {
-              title: props,
-              isConfirm: true,
-              onClose: () => null,
-            }
+                title: props,
+                isConfirm: true,
+                onClose: () => null,
+              }
             : {
-              ...props,
-              isConfirm: true,
-            };
+                ...props,
+                isConfirm: true,
+              };
         const config = {
           id: getRandomId(),
           content: createElement(Alert, defaultProps),
@@ -188,6 +188,36 @@ const useModal = (): useModalReturnValue => {
     [],
   );
 
+  const saveConfirm = useCallback(
+    (props?: AlertComponentProps): Promise<any> =>
+      confirm({
+        ...props,
+        content: '저장 하시겠습니까?',
+        type: 'complete',
+      }),
+    [], 
+  );
+
+  const updateConfirm = useCallback(
+    (props?: AlertComponentProps): Promise<any> =>
+      confirm({
+        ...props,
+        content: '수정 하시겠습니까?',
+        type: 'complete',
+      }),
+    [],
+  );
+
+  const deleteConfirm = useCallback(
+    (props?: AlertComponentProps): Promise<any> =>
+      confirm({
+        ...props,
+        content: '삭제 하시겠습니까?',
+        type: 'complete',
+      }),
+    [],
+  );
+
   return {
     open,
     close,
@@ -198,6 +228,9 @@ const useModal = (): useModalReturnValue => {
     showSaveComplete,
     showUpdateComplete,
     showDeleteComplete,
+    saveConfirm,
+    updateConfirm,
+    deleteConfirm,
   };
 };
 
