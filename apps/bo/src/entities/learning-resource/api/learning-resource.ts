@@ -4,9 +4,9 @@ import { CMSApiPrefix, PMSApiPrefix } from '@learnway/config';
 import {
   BlogCreateReq,
   BlogUpdateReq,
-  BlogWatchLogReq,
   CourseMappingStatusRes,
   GetContentDetailRes,
+  HtmlVideoFileChangeReq,
   HtmlVideoMetadataReq,
   HtmlVideoStatus,
   PostDraftHtmlVideoParams,
@@ -125,7 +125,7 @@ export default class LearningResourceService {
   }
 
   // HTML5 동영상 파일 변경
-  static updateHTML5FileChange(body: { contentUuid: string; fileUuid: string }): Promise<any> {
+  static updateHTML5FileChange(body: HtmlVideoFileChangeReq): Promise<any> {
     return httpService.put(`${CMSApiPrefix()}/html5/file/change`, body);
   }
   // HTML5 동영상 상태 조회

@@ -1,19 +1,15 @@
 /* IA112 / NLP_BO_CMS_1022 - 나의 학습자원 > HTML 상세(저장 및 조회용) */
-import React, { Fragment, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { t } from 'i18next';
 import { useQuery } from '@tanstack/react-query';
 import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { Button, Divider, useModal } from '@learnway/ui';
-
-import { FileStatus } from '@types';
-import { learningResourceQueryOptions } from '@entities/learning-resource';
+import { learningResourceQueryOptions, useDeleteContent } from '@entities/learning-resource';
 import { ContentsButtons, MainContents, PageContainer, SubContents } from '@shared/ui';
 import { HtmlDetail } from './-components/html-detail';
-
-import defaultImage from '@assets/images/thumb/img_thumb_default.jpg';
-import movieStyles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
-import styles from './html-detail.module.css';
+import { ProcessingStatus } from '@types';
+import { FileInfo } from '@pages/_layout/learning/resource/html-video/-components/file-info';
 
 export const Route = createLazyFileRoute('/_layout/learning/resource/html-video/view')({
   component: RouteComponent,
@@ -39,28 +35,19 @@ function RouteComponent() {
   const { data: htmlStatus } = useQuery(
     learningResourceQueryOptions.getHTML5Status(routerState.location.state?.contentUuid),
   );
-  console.log('html save status', htmlStatus);
 
   // draft: 임시저장 상태 / complete: 한 번이라도 저장 버튼을 눌러 저장한 상태
   const [mode, setMode] = useState<'draft' | 'complete'>('draft');
 
-  const { confirm: openConfirm } = useModal();
-
-  const fileAttributes = useMemo(
-    () => [
-      { label: t('파일명'), value: '화면 기록 2024-11-28 오후 3.00.55.mov' },
-      { label: t('원본용량'), value: '1.97GB' },
-      { label: t('파일형식'), value: 'ZIP' },
-    ],
-    [],
-  );
+  const { open: openModal, confirm: openConfirm } = useModal();
 
   const handleClickSaveButton = async () => {
     if (formRef.current) {
       formRef.current?.requestSubmit();
     }
   };
-  const handleClickGoListButton = async () => {
+
+  const handleClickGoListButton = useCallback(async () => {
     if (
       await openConfirm({
         title: t('LABEL.confirm.goList.title'),
@@ -69,9 +56,30 @@ function RouteComponent() {
     ) {
       router.navigate({ to: '/learning/learning-resource' });
     }
-  };
-  const handleClickDeleteButton = async () => {
-    console.log('mappingData', mappingData);
+  }, []);
+
+  const { delete: deleteBlogContent } = useDeleteContent({
+    onSuccess: (result: unknown) => {
+      console.log('delete success', result);
+      return router.navigate({ to: '/learning/learning-resource', replace: true });
+    },
+  });
+
+  const handleClickDeleteButton = useCallback(async () => {
+    if (
+      await openConfirm({
+        title: t('삭제 하시겠습니까?'),
+        content: t('삭제 후 목록으로 이동합니다.'),
+      })
+    ) {
+      deleteBlogContent(data?.contentUuid as string);
+    }
+  }, [data?.contentUuid]);
+
+  const handleClickCourseButton = () => {
+    router.navigate({
+      to: '/learning/course/create/view',
+    });
   };
 
   useEffect(() => {
@@ -94,7 +102,7 @@ function RouteComponent() {
   }, [loginUser]);
 
   useEffect(() => {
-    if (htmlStatus?.contentStatusCode === FileStatus.COMPLETE) {
+    if (htmlStatus?.processingStatus === ProcessingStatus.COMPLETE) {
       setMode('complete');
     } else {
       setMode('draft');
@@ -106,7 +114,13 @@ function RouteComponent() {
       <ContentsButtons>
         {mode === 'complete' && (
           <>
-            <Button type="button" variant="search" size="sm" label={t('과정개설')} />
+            <Button
+              type="button"
+              variant="search"
+              size="sm"
+              label={t('과정개설')}
+              onClick={handleClickCourseButton}
+            />
             <Button type="button" variant="point" size="sm" label={t('매핑과정')} />
             <Button type="button" variant="point" size="sm" label={t('번역현황')} />
             <Button type="button" variant="point" size="sm" label={t('공유이력')} />
@@ -126,6 +140,7 @@ function RouteComponent() {
           size="sm"
           label={t('LABEL.button.delete')}
           onClick={handleClickDeleteButton}
+          disabled={!!mappingData?.hasMapping}
         />
         <Button type="button" variant="point" size="sm" label={t('LABEL.button.translate')} />
         <Button
@@ -148,40 +163,9 @@ function RouteComponent() {
       </MainContents>
 
       <SubContents>
-        <div className={styles.sub_container}>
-          <strong className={styles.title}>{t('업로드 파일')}</strong>
-          <ul className={movieStyles.btn_list}>
-            <li>
-              <Button className={movieStyles.btn_text} label={t('원본 다운로드')} />
-            </li>
-            <li>
-              <Button className={movieStyles.btn_text} label={t('파일 변경')} />
-            </li>
-            {mode === 'complete' && (
-              <li>
-                <Button className={movieStyles.btn_text} label={t('미리보기')} />
-              </li>
-            )}
-          </ul>
-          {/* 파일 정보 조회 영역 */}
-          <div className={styles.thumbnail_container}>
-            <img src={defaultImage} width="100%" alt="" />
-          </div>
-          <table className={styles.file_info_container}>
-            <colgroup>
-              <col style={{ width: '30%' }} />
-              <col style={{ width: '70%' }} />
-            </colgroup>
-            <tbody>
-              {fileAttributes?.map((attr, i) => (
-                <tr key={i}>
-                  <th>{attr.label}</th>
-                  <td>{attr.value}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        {data?.contentUuid && data?.fileUuid && (
+          <FileInfo contentUuid={data.contentUuid} uuid={data.fileUuid} mode={mode} />
+        )}
       </SubContents>
     </PageContainer>
   );

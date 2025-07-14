@@ -131,6 +131,7 @@ export interface ContentInformation {
   contentThumbnailFileGroupUuid: string; //	썸네일 파일그룹 UUID[...]
   thumbnailFiles: ContentFileInfo[]; //	썸네일 파일 목록[...]
   selectedContentThumbnailFileUuid?: string; //	대표 썸네일 파일 UUID[...]
+  fileUuid?: string; // 파일 UUID[...]
   isCourseUsed: boolean; //	교육자원 활용 여부[...]
   isInspected: boolean; //	검수 확인 여부[...]
   isCopyrighted: boolean; //	저작권 확인 여부[...]
@@ -145,6 +146,12 @@ export interface ContentInformation {
   aiKeyword?: string; //	키워드 (AI자동추출)[...]
   children: any[];
   resource?: Resource;
+  createdBy?: string;
+  creatorName?: string;
+  createdDate?: Date | undefined;
+  lastModifiedBy?: string;
+  modifyerName?: string;
+  modifiedDate?: Date | undefined;
 }
 
 export type GetContentDetailRes = ContentInformation;
@@ -189,6 +196,16 @@ export interface HtmlVideoDetailRes extends GetContentDetailRes {
     startFile: string;
     startFileUrl: string;
   };
+}
+
+export interface HtmlVideoFileChangeReq {
+  contentUuid: string;
+  fileUuid: string;
+}
+
+export interface HtmlVideoFileChangeRes extends HtmlVideoFileChangeReq {
+  changeId: number;
+  processingStatus: ProcessingStatus;
 }
 
 export type MappedCourseItem = {
