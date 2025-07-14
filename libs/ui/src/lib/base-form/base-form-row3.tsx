@@ -6,6 +6,7 @@ import foStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css'
 import { IcoFormRequired } from '@learnway/icons';
 import { useTranslation } from 'react-i18next';
 import { useAutoFormContext } from '@learnway/hooks';
+import { Input } from '../input/input';
 
 interface FormRow3Props {
   className?: string;
@@ -114,6 +115,12 @@ const BaseFormRow3Component: FC<FormRow3Props> = ({
     return validationRules;
   }, [validation, label, name]);
 
+  const finalPlaceholder = useMemo(() => {
+    if (placeholder) return placeholder;
+    if (label) return `${label}을(를) 입력하세요`;
+    return undefined;
+  }, [placeholder, label]);
+
   // 에러 상태: 실시간 formState 사용
   const formState = autoFormContext?.methods?.formState;
   const contextErrors = formState?.errors || autoFormContext?.formState?.errors || {};
@@ -133,7 +140,7 @@ const BaseFormRow3Component: FC<FormRow3Props> = ({
     <div className={cn(styles.form_item, className)}>
       {/* 레이블 */}
       {label && (
-        <label htmlFor={name} className={cn(styles.form_label, 'flex')}>
+        <label htmlFor={name} className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
           <span className={styles.form_text}>{label}</span>
           {isRequired && (
             <span
@@ -200,7 +207,7 @@ const BaseFormRow3Component: FC<FormRow3Props> = ({
                 value: field.value || '',
                 onChange: enhancedOnChange,
                 onBlur: field.onBlur,
-                placeholder,
+                placeholder: finalPlaceholder,
                 error: hasCurrentError,
               };
 
@@ -217,13 +224,13 @@ const BaseFormRow3Component: FC<FormRow3Props> = ({
             }
 
             return (
-              <input
+              <Input
                 {...field}
                 id={name}
                 className={cn(styles.form_input, {
                   [styles.error]: hasCurrentError,
                 })}
-                placeholder={placeholder}
+                placeholder={finalPlaceholder}
               />
             );
           }}

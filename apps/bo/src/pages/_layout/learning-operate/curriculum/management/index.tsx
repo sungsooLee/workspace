@@ -58,9 +58,6 @@ function RouteComponent() {
             <Button variant="point" size="sm">
               매핑과정
             </Button>
-            <Button variant="point" size="sm" onClick={handleCreateNew}>
-              신규등록
-            </Button>
             <Button variant="point" size="sm" onClick={handleGoToList}>
               목록
             </Button>

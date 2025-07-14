@@ -116,7 +116,7 @@ export const CurriculumFormSimple: React.FC<CurriculumFormSimpleProps> = ({
           name="curriculumName"
           label="커리큘럼명"
           validation={{ required: true }}
-          element={<Input placeholder="커리큘럼명을 입력하세요" />}
+          element={<Input />}
         />
       </ContentsRow>
       <ContentsRow>
@@ -126,12 +126,12 @@ export const CurriculumFormSimple: React.FC<CurriculumFormSimpleProps> = ({
         <FormRow3
           name="coordinatorName"
           label="담당자"
-          element={<Input placeholder="담당자를 입력하세요" />}
+          element={<Input />}
         />
         <FormRow3
           name="coordinatorTelNo"
           label="연락처"
-          element={<PhoneNumberFormFieldSimple placeholder="연락처를 입력하세요" />}
+          element={<PhoneNumberFormFieldSimple />}
         />
       </ContentsRow>
       <ContentsRow type={'horizontal'}>
@@ -176,12 +176,12 @@ export const CurriculumFormSimple: React.FC<CurriculumFormSimpleProps> = ({
             <FormRow3
               name="vendorCoordinatorName"
               label="외주개발업체 담당자명"
-              element={<Input placeholder="담당자명을 입력하세요" />}
+              element={<Input />}
             />
             <FormRow3
               name="vendorTelNo"
               label="외주개발업체 연락처"
-              element={<Input placeholder="외주개발업체 연락처를 입력하세요" />}
+              element={<Input />}
             />
           </ContentsRow>
         </>

@@ -6,7 +6,7 @@ interface FormRow3Props {
   name: string;
   label?: string;
   element?: React.ReactNode;
-  control?: Control<any>; // 자동 모드에서는 선택적
+  control?: Control<any>;
   errors?: FieldErrors;
   validation?: {
     required?: boolean;

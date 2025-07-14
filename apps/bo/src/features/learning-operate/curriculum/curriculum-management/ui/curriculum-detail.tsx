@@ -56,8 +56,6 @@ const CurriculumDetailComponent = ({
     curriculumId,
   });
 
-  // 트리 데이터 변환은 이제 서비스 레이어에서 처리
-
   // 커리큘럼 데이터가 변경될 때마다 트리 데이터 업데이트
   useEffect(() => {
     if (curriculumDetail) {
@@ -80,19 +78,55 @@ const CurriculumDetailComponent = ({
   };
 
   const handleFormSubmit = (data: any) => {
-    if (formState.activeFormType === MAPPING_CURRICULUM_TYPE.CURRICULUM) {
-      const curriculumData = {
-        ...data,
-        channelUuid: '1', // TODO: 실제 채널 UUID로 교체
-        tenantId: 1, // TODO: 실제 테넌트 ID로 교체
-      };
-      createCurriculum(curriculumData, {
-        onSuccess: (createdCurriculum: CurriculumResponse) => {
-          if (createdCurriculum.curriculumId && onCurriculumCreated) {
-            onCurriculumCreated(createdCurriculum.curriculumId);
-          }
-        },
-      });
+    const { activeFormType, parentNode, isEditing } = formState;
+    const curriculumData = {
+      ...data,
+      channelUuid: '1', // TODO: 실제 채널 UUID로 교체
+      tenantId: 1, // TODO: 실제 테넌트 ID로 교체
+    };
+    switch (activeFormType) {
+      case MAPPING_CURRICULUM_TYPE.CURRICULUM:
+        if (isEditing && formState.selectedNode) {
+          console.log('수정 로직!');
+          // 수정 로직
+        } else {
+          createCurriculum(curriculumData, {
+            onSuccess: (createdCurriculum: CurriculumResponse) => {
+              if (createdCurriculum.curriculumId && onCurriculumCreated) {
+                onCurriculumCreated(createdCurriculum.curriculumId);
+              }
+
+              const newNode: TreeNode = {
+                id: createdCurriculum.curriculumId,
+                key: `curriculum-${createdCurriculum.curriculumId}`,
+                name: createdCurriculum.curriculumName || data.curriculumName,
+                type: MAPPING_CURRICULUM_TYPE.CURRICULUM,
+                parentId: parentNode?.id || null,
+                children: [],
+                data: createdCurriculum,
+              };
+
+              handleNodeSelect(newNode);
+            },
+          });
+        }
+        break;
+
+      case MAPPING_CURRICULUM_TYPE.MODULE:
+        if (isEditing && formState.selectedNode) {
+          console.log('모듈 수정 로직!');
+        } else {
+          console.log('모듈 생성 로직!');
+        }
+        break;
+
+      case MAPPING_CURRICULUM_TYPE.LESSON:
+        if (isEditing && formState.selectedNode) {
+          console.log('레슨 수정 로직!');
+        } else {
+          console.log('레슨 생성 로직!');
+        }
+        break;
     }
   };
 
@@ -108,6 +142,7 @@ const CurriculumDetailComponent = ({
 
   // 트리 노드 선택 핸들러
   const handleNodeSelect = (node: TreeNode) => {
+    console.log(node);
     setFormState({
       activeFormType: node.type as MAPPING_CURRICULUM_TYPE,
       selectedNode: node,
@@ -163,6 +198,7 @@ const CurriculumDetailComponent = ({
       <TreeBox
         treeId={'curriculum-tree'}
         data={treeData}
+        selectedNode={formState.selectedNode}
         customButtonNode={customTreeRenderButton()}
         renderNodeButtons={renderNodeButtons}
         handleSelectedNodeChange={handleNodeSelect}
