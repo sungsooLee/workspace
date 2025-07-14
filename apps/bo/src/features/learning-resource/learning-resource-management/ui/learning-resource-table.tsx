@@ -28,44 +28,40 @@ import { BatchSettingModal } from './learning-resource-batch-setting-modal';
 import { first, get, map, some, uniq } from 'lodash';
 import { CopyModal } from './learning-resource-copy-modal';
 import { useRouter } from '@tanstack/react-router';
-import { useWatch } from 'react-hook-form';
-import { useQueryClient } from '@tanstack/react-query';
-import { GridExcelDownloadButton } from '@shared/ui';
+import {
+  GridExcelDownloadButton,
+  TenantByRoleDropdownFormField,
+  TenantChannelDropdownFormField,
+} from '@shared/ui';
 import { CMSApiPrefix, LEARNING_TYPE } from '@learnway/config';
 import { PreviewLearningWindow } from './preview-learning-window';
 
 function LearningResourceTableComponent() {
   const {
-    state: { listParam },
+    state: { listParam }, // listParam으로 진입시 channelUuid 초기화되지 않게 하는 방법 필요
   } = useCurrentRoute();
-  const [isFetchedByListParam, setIsFetchedByListParam] = useState(false);
 
   const router = useRouter();
   const { open: openModal, alert } = useModal();
-
-  const queryClient = useQueryClient();
 
   const searchConfig: any = {
     builders: [
       [
         {
           name: 'tenantId',
-          type: 'dropdown',
+          type: 'custom',
           label: t('LABEL.form.label.tenant', '테넌트'),
           value: '',
-          format: 'number',
-          presetOptionLabel: t('LABEL.form.label.select', '선택'),
-          optionsConfig: {
-            codeGroup: CODE_GROUP['manual.bo.my.tenant.tenantId'],
-          },
+          format: 'object',
+          element: <TenantByRoleDropdownFormField />,
         },
         {
           name: 'channelUuid',
-          type: 'dropdown',
+          type: 'custom',
           label: t('LABEL.form.label.channel', '채널'),
           value: '',
-          presetOptionLabel: t('LABEL.form.label.select', '선택'),
-          options: [],
+          format: 'object',
+          element: <TenantChannelDropdownFormField enableFilter />,
         },
         {
           name: 'contentTypes',
@@ -327,9 +323,6 @@ function LearningResourceTableComponent() {
         ),
       },
     ],
-    // gridState: {
-    //   sort: ['modifiedDate,desc'], // 버그 발생함 state가 꼬여있음. sort를 지정하면 row 선택이 되지 않음.
-    // },
   };
 
   const {
@@ -345,27 +338,6 @@ function LearningResourceTableComponent() {
   const [params, setParams] = useState<Record<string, any>>({});
   const [valuesWithLabel, setValuesWithLabel] = useState<Record<string, SelectOption>>({});
   const [selectedRows, setSelectedRows] = useState<any[]>([]);
-
-  // tenant 정보로 channel 설정
-  const tenantId = useWatch({ control: searchProvider.control, name: 'tenantId' });
-  useEffect(() => {
-    if (!tenantId && tenantId !== 0) return;
-
-    (async () => {
-      const { content } = await queryClient.fetchQuery(
-        learningResourceQueryOptions.getChannelsByTenantId({ tenantId }),
-      );
-      if (listParam && !isFetchedByListParam)
-        // listParam에 의한 tenantId변경
-        setIsFetchedByListParam(true);
-      else setValue('channelUuid', '');
-      if (content)
-        setOptions(
-          'channelUuid',
-          content.map((_: any) => ({ value: _.channelUuid, label: _.channelName })),
-        );
-    })();
-  }, [tenantId]);
 
   function handleSearch(rawQuery: Record<string, any>) {
     const processedQuery = compactValues(rawQuery);
