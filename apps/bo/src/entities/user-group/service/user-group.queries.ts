@@ -1,14 +1,11 @@
 import { UserGroupManual, UserGroupsParam } from '@types';
 import UserGroupsService from '../api/user-group';
-import { QueryOptions } from '@tanstack/react-query';
-import TenantService from '@entities/tenant/api/tenant';
-import { tenantQueryKeys } from '@entities/tenant';
-import { getQuerySkipToken, httpService } from '@learnway/shared';
-import { PMSApiPrefix } from '@learnway/config';
+import { getQuerySkipToken } from '@learnway/shared';
 
 export const queryKeys = {
   usergroups: ['user-groups'] as const,
   organizationTree: ['organization-tree'] as const,
+  customGroupsTree: ['custom-groups-tree'] as const,
   blackwhiteUsers: ['blackwhite-users'] as const,
   userGroupManualList: ['user-group-manual-list'] as const,
   userGroupManualDetail: ['user-group-manual-detail'] as const,
@@ -30,6 +27,12 @@ export const queryOptions = {
     staleTime: 0,
     enabled: tenantIds.length > 0,
   }),
+  customGroupsTree: (userGroupName?: string) => ({
+    queryKey: queryKeys.customGroupsTree,
+    queryFn: () => UserGroupsService.fetchCustomGroupsTree(userGroupName),
+    cacheTime: 0,
+    staleTime: 0,
+  }),
   blackwhiteUsers: (params: any) => ({
     queryKey: ['blackwhite-users', params.companyId, params.page],
     queryFn: () => UserGroupsService.fetchBlackwhiteUsers(params),
@@ -40,15 +43,17 @@ export const queryOptions = {
     cacheTime: 0,
     staleTime: 0,
   }),
-  userGroupManualDetail: (userGroupId: number)  =>
-    userGroupId ? {
-      queryKey: queryKeys.userGroupManualDetail,
-      queryFn: (): Promise<any> => UserGroupsService.fetchUserGroupManualDetail(userGroupId),
-    }: getQuerySkipToken<UserGroupManual>(),
+  userGroupManualDetail: (userGroupId: number) =>
+    userGroupId
+      ? {
+          queryKey: queryKeys.userGroupManualDetail,
+          queryFn: (): Promise<any> => UserGroupsService.fetchUserGroupManualDetail(userGroupId),
+        }
+      : getQuerySkipToken<UserGroupManual>(),
   userGroupSubDirectoryList: (params: any) => ({
     queryKey: queryKeys.userGroupSubDirectory,
     queryFn: () => UserGroupsService.fetchUserGroupSubDirectoryList(params),
     cacheTime: 0,
     staleTime: 0,
-  })
+  }),
 };

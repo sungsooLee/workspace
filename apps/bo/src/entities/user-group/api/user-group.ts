@@ -1,14 +1,12 @@
-import { getQuerySkipToken, httpService } from '@learnway/shared';
+import { httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
 import {
   UserGroupsResponse,
   UserGroupsParam,
   UsersByIdsParam,
   OrganizationTreeResponse,
-  PageableContent, Tenant,
+  PageableContent,
 } from '@types';
-import TenantService from '@entities/tenant/api/tenant';
-import { tenantQueryKeys } from '@entities/tenant';
 
 export default class UserGroupService {
   static fetchUserGroups(
@@ -30,6 +28,13 @@ export default class UserGroupService {
       tenantName,
     });
   }
+
+  static fetchCustomGroupsTree(userGroupName?: string): Promise<OrganizationTreeResponse> {
+    return httpService.get(`${PMSApiPrefix()}/userGroup/custom-groups-tree`, {
+      userGroupName,
+    });
+  }
+
   static fetchBlackwhiteUsers(body: any) {
     return httpService.post<PageableContent<any>>(
       `${PMSApiPrefix()}/userGroup/blackwhite/users?page=${body.page}&size=${body.size}`,
@@ -46,10 +51,13 @@ export default class UserGroupService {
   }
 
   static fetchUserGroupManualDetail(userGroupId: number) {
-    return httpService.get<any>(`${PMSApiPrefix()}/userGroup/${userGroupId}`)
+    return httpService.get<any>(`${PMSApiPrefix()}/userGroup/${userGroupId}`);
   }
 
   static fetchUserGroupSubDirectoryList(params: any) {
-    return httpService.get<PageableContent<any>>(`${PMSApiPrefix()}/userGroup/subdirectory/users`, params);
+    return httpService.get<PageableContent<any>>(
+      `${PMSApiPrefix()}/userGroup/subdirectory/users`,
+      params,
+    );
   }
 }
