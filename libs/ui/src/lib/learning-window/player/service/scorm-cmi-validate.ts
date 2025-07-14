@@ -69,6 +69,8 @@ cimSchema.set('cmi.score.min', new CimElementInfo());
 cimSchema.set('cmi.score.max', new CimElementInfo());
 /* 정산된 합격점수 */
 cimSchema.set('cmi.scaled_passing_score', new CimElementInfo());
+/*현재 세션에서 해당 SCO를 학습한 시간 */
+cimSchema.set('cmi.session_time', new CimElementInfo(true));
 /* 학습자가 SCO를 마스터(master) 했는지 여부 */
 cimSchema.set('cmi.success_status', new CimElementInfo(true));
 
