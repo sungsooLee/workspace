@@ -12,7 +12,6 @@ import {
   ListModalSelectorFormField,
   PhoneNumberFormField,
   RadioGroupFormField,
-  TextareaFormField,
 } from '@learnway/ui';
 import {
   FormRow2,
@@ -78,7 +77,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
     return (
       <div>
         {/*기본정보*/}
-        <FormSubTitle label={t('기본정보')} underLine />
+        <FormSubTitle label={t('기본정보')} />
         {/*유형, 채널*/}
         <ContentsRow>
           {/*유형*/}
@@ -104,7 +103,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
         </ContentsRow>
 
         {/*공개대상*/}
-        <FormSubTitle label={t('공개대상')} underLine />
+        <FormSubTitle label={t('공개대상')} />
         {/*테넌트*/}
         <ContentsRow>
           <FormRow2
@@ -172,7 +171,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
         </ContentsRow>
 
         {/*과정소개*/}
-        <FormSubTitle label={t('과정소개')} underLine />
+        <FormSubTitle label={t('과정소개')} />
         {/*언어*/}
         <ContentsRow>
           <FormRow2
@@ -276,7 +275,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
         </ContentsRow>
 
         {/*관리자*/}
-        <FormSubTitle label={t('관리자')} underLine />
+        <FormSubTitle label={t('관리자')} />
         {/*담당자*/}
         <ContentsRow>
           {/*담당자*/}

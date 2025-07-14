@@ -1,9 +1,8 @@
-import { FormRow, FormSubTitle } from '../../../../../../../../shared/ui/form';
-import { Button, ContentsRow, DynamicFormField } from '@learnway/ui';
-import React from 'react';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { useTranslation } from 'react-i18next';
+import { Button, ContentsRow, FormSubTitle } from '@learnway/ui';
 import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
+import { FormRow } from '../../../../../../../../shared/ui/form';
 
 const CompanyInfoComponent = () => {
   const { t } = useTranslation();

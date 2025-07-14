@@ -1,11 +1,11 @@
+import { DateRangePickerFormField } from '@features/form/ui';
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
-import { ContentsRow, RadioGroupFormField, TextareaFormField } from '@learnway/ui';
-import { ChipListFormField, FormRow2, FormSubTitle } from '@shared/ui';
+import { ContentsRow, FormSubTitle, RadioGroupFormField, TextareaFormField } from '@learnway/ui';
+import { ChipListFormField, FormRow2 } from '@shared/ui';
+import { Course } from '@types';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CourseTabBaseProps, TabFormRef } from '../../../-common/type';
-import { Course } from '@types';
-import { DateRangePickerFormField } from '@features/form/ui';
 
 const PublishCourseComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
   ({ onSave, data: { formData, courseConfig } }, ref) => {

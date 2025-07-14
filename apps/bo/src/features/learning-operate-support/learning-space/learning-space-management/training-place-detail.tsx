@@ -1,10 +1,10 @@
 import React, { useRef, useImperativeHandle, forwardRef, useEffect, useState } from 'react';
 import { t } from 'i18next';
 import { useRouter } from '@tanstack/react-router';
-import { useModal, ContentsRow, TextareaFormField, Input, RadioGroupFormField } from '@learnway/ui';
+import { useModal, ContentsRow, TextareaFormField, Input, RadioGroupFormField, FormSubTitle } from '@learnway/ui';
 import { FormDisplay } from '@features/form/ui/form-display';
 import { DuplicateCheckInputFormField, DuplicateState, DropdownFormField } from '@features/form';
-import { FormRow, FormSubTitle } from '@shared/ui';
+import { FormRow } from '@shared/ui';
 import { DynamicFormConfig, useDynamicForm, CODE_GROUP, S3_PATH } from '@learnway/hooks';
 import { AddressSearchModal } from '@shared/ui/modal/address-search-modal';
 import { useSpaceMutation } from '@entities/training-place';

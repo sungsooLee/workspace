@@ -1,35 +1,26 @@
-import { useState, useEffect } from 'react';
 import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
-import { createColumnHelper, ColumnDef } from '@tanstack/react-table';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
+import { useEffect } from 'react';
 
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 
 import {
-  Input,
-  ContentsRow,
-  Button,
-  GridBox,
-  useGridBox,
-} from '@learnway/ui';
-import {
-  DynamicFormConfig,
-  useDynamicForm,
   CODE_GROUP,
-  useSearchBox,
+  DynamicFormConfig,
   SearchBoxConfig,
+  useDynamicForm,
+  useSearchBox,
 } from '@learnway/hooks';
+import { Button, ContentsRow, FormSubTitle, GridBox, Input, useGridBox } from '@learnway/ui';
 
-import { FormRow, FormSubTitle, LinkBox, ContentsButtons } from '@shared/ui';
+import { ContentsButtons, FormRow, LinkBox } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
 
-import {
-  GridExcelUploadButton,
-} from '@shared/ui';
+import { GridExcelUploadButton } from '@shared/ui';
 
-import { EnTenantDetailTabKey } from '@types';
-import { MainContents, PageContainer } from '@shared/ui';
 import { useFetchUserGroupDetail } from '@entities/user-group';
+import { MainContents, PageContainer } from '@shared/ui';
 
 export const Route = createLazyFileRoute('/_layout/platform/tenant/usr-group/manual-detail')({
   component: RouteComponent,
@@ -44,9 +35,12 @@ function RouteComponent() {
   const router = useRouter();
   const routerState = useRouterState();
 
-  const { data: userGroupData, refetch } = useFetchUserGroupDetail(routerState.location.state?.userGroupId);
+  const { data: userGroupData, refetch } = useFetchUserGroupDetail(
+    routerState.location.state?.userGroupId,
+  );
 
-  const { provider: searchManualProvider, getValues: getManualValues } = useSearchBox(searchManualConfig());
+  const { provider: searchManualProvider, getValues: getManualValues } =
+    useSearchBox(searchManualConfig());
   const { config: gManualConfig, gridFetch: gridManualFetch } = useGridBox(
     gridManualConfig,
     getManualValues,
@@ -85,12 +79,12 @@ function RouteComponent() {
   };
 
   useEffect(() => {
-    if(userGroupData) {
-      console.log('#### userGroupData {} => ', userGroupData)
+    if (userGroupData) {
+      console.log('#### userGroupData {} => ', userGroupData);
 
-      updateFormData({...userGroupData})
+      updateFormData({ ...userGroupData });
     }
-  }, [userGroupData])
+  }, [userGroupData]);
 
   return (
     <PageContainer>

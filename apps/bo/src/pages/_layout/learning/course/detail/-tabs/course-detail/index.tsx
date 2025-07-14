@@ -84,7 +84,7 @@ const CourseDetailComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
         <SplitPanel size={['auto', 440]} divider>
           <div>
             {/*기본정보*/}
-            <FormSubTitle label={t('기본정보')} underLine />
+            <FormSubTitle label={t('기본정보')} />
             {/*유형, 채널*/}
             <ContentsRow>
               {/*유형*/}

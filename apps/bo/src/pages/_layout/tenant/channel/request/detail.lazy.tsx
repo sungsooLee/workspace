@@ -1,22 +1,21 @@
-import React, { FC, useEffect, useState } from 'react';
-import { t } from 'i18next';
-import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
+import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import {
   Button,
   ContentsRow,
-  useModal,
+  FormSubTitle,
   Input,
   RadioGroupFormField,
   TextareaFormField,
 } from '@learnway/ui';
-import { useDynamicForm, DynamicFormConfig, CODE_GROUP } from '@learnway/hooks';
-import { FormSubTitle, FormRow } from '@shared/ui';
+import { FormRow } from '@shared/ui';
+import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
+import { t } from 'i18next';
+import { useEffect } from 'react';
 
-import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import { useGetRequestChannelDetail } from '@entities/channel/service/request-channel.hook';
-import { MainContents, PageContainer, LinkBox, ContentsButtons } from '@shared/ui';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
+import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui';
 
 export const Route = createLazyFileRoute('/_layout/tenant/channel/request/detail')({
   component: RouteComponent,

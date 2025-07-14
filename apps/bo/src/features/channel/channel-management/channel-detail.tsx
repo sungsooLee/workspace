@@ -1,40 +1,31 @@
-import { useRef, useEffect, useImperativeHandle, forwardRef } from 'react';
-import { t } from 'i18next';
-import { useTranslation } from 'react-i18next';
+import { DuplicateCheckInputFormField, DuplicateState, FormDisplay } from '@features/form';
+import { CODE_GROUP, DynamicFormConfig, S3_PATH, useDynamicForm } from '@learnway/hooks';
 import {
   Button,
   ChipListModalSelectorFormField,
   ContentsRow,
   Input,
-  TextareaFormField,
   RadioGroupFormField,
-} from '@learnway/ui';
-import { cn } from '@learnway/shared';
-import {
+  TextareaFormField,
   FormSubTitle,
-  ThumbnailListFormField,
+} from '@learnway/ui';
+import {
   ChipListFormField,
   ContentsHistoryInfoFormField,
-  TenantChoiceModal,
-  UserChoiceModal,
-  FormRow,
   FormItem,
+  FormRow,
   TenantShuttleModal,
+  UserChoiceModal,
 } from '@shared/ui';
-import { EnGlobalConst, EnFormMode } from '@types';
-import {
-  DuplicateCheckInputFormField,
-  DuplicateState,
-  FormDisplay,
-  InputFormField,
-} from '@features/form';
-import { DynamicFormConfig, useDynamicForm, CODE_GROUP, S3_PATH } from '@learnway/hooks';
-import { useGetRequestChannelDetail } from '@entities/channel/service/request-channel.hook';
+import { EnFormMode } from '@types';
+import { t } from 'i18next';
+import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
-import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import ChannelService from '@entities/channel/api/channel';
-import { useWatch } from 'react-hook-form';
 import { useFetchAuthUser } from '@learnway/auth/entities';
+import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+import { useWatch } from 'react-hook-form';
 
 export enum EnChannelRegisterMethod {
   REQUEST = 'REQUEST',

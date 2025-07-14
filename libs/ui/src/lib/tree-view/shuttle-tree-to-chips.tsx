@@ -207,7 +207,6 @@ export const ShuttleTreeToChips = ({
               </Button>
             </>
           }
-          underLine={true}
         />
         <div className={styles.data_wrap}>
           {actualSelectedItems.length === 0 ? (
