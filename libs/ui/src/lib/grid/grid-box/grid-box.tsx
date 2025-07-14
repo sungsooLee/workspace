@@ -48,6 +48,7 @@ const GridBoxComponent = <T extends object>(
     showAdd,
     showRemove,
     copyButton,
+    saveButton,
     titleCustomNode,
     customButtonNode,
     guideText,
@@ -381,6 +382,15 @@ const GridBoxComponent = <T extends object>(
               size="sm"
               label={copyButton.label || t('LABEL.grid.header.copy', '복사')}
               icon={<IcoCopy width={16} height={16} stroke={'#131C30'} />}
+            />
+          )}
+          {/* 저장 */}
+          {saveButton && (
+            <Button
+              {...saveButton}
+              variant="save"
+              size="sm"
+              label={saveButton.label || t('LABEL.grid.header.save', '저장')}
             />
           )}
         </div>
