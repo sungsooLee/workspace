@@ -1296,19 +1296,18 @@ export class BoService {
     /**
      * 문항가져오기 문항 등록
      * 문항가져오기 팝업에서 선택한 문항을 등록한다.
-     * @param reqDto
+     * @param requestBody
      * @returns any OK
      * @throws ApiError
      */
     public static saveQuestionFromQuestionPoolList(
-        reqDto: com_ever_edu_cms_exam_dto_req_ExamQuestionSaveCopiedReqDto,
+        requestBody: com_ever_edu_cms_exam_dto_req_ExamQuestionSaveCopiedReqDto,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/admin/api/v1/exam/questions/pool',
-            query: {
-                'reqDto': reqDto,
-            },
+            body: requestBody,
+            mediaType: 'application/json',
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,
@@ -1345,8 +1344,8 @@ export class BoService {
         });
     }
     /**
-     * 문제은행 정보 수정
-     * 문제은행 정보를 수정한다.
+     * 문제은행 정보 복사
+     * 문제은행 정보를 복사한다.
      * @param contentUuid
      * @returns string Created
      * @throws ApiError
@@ -1495,8 +1494,8 @@ export class BoService {
         });
     }
     /**
-     * 공유 팝업 콘텐츠 공유 저장
-     * 공유 팝업 콘텐츠 공유 저장
+     * 공유 팝업 콘텐츠 선택 목록 저장
+     * 공유 팝업에서 선택한 콘텐츠 목록을 저장한다.<br>저장 시 기존 목록 삭재 후 리스트 신규 등록한다.
      * @param requestBody
      * @returns com_ever_edu_cms_content_dto_res_SharedBoxContentResDto OK
      * @throws ApiError
@@ -1525,7 +1524,7 @@ export class BoService {
      * @returns com_ever_edu_cms_content_dto_res_ContentProgressListResDto OK
      * @throws ApiError
      */
-    public static getContentsProgress1(
+    public static getMultiContentProgress1(
         requestBody: com_ever_edu_cms_content_dto_req_ContentProgressListReqDto,
     ): CancelablePromise<com_ever_edu_cms_content_dto_res_ContentProgressListResDto> {
         return __request(OpenAPI, {
@@ -1562,30 +1561,6 @@ export class BoService {
                 401: `Unauthorized`,
                 404: `Not Found`,
                 405: `Method Not Allowed`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 콘텐츠 일괄 설정
-     * 콘텐츠 일괄 설정하는 api입니다.
-     * @param requestBody
-     * @returns com_ever_edu_cms_content_dto_res_BatchSettingsResDto OK
-     * @throws ApiError
-     */
-    public static multiContentSettings(
-        requestBody: com_ever_edu_cms_content_dto_req_BatchSettingsReqDto,
-    ): CancelablePromise<com_ever_edu_cms_content_dto_res_BatchSettingsResDto> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/admin/api/v1/content/{contentUuid}/settings',
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
                 422: `Unprocessable Entity`,
                 500: `Internal Server Error`,
             },
@@ -1636,6 +1611,30 @@ export class BoService {
             path: {
                 'contentUuid': contentUuid,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 콘텐츠 일괄 설정
+     * 콘텐츠 일괄 설정하는 api입니다.
+     * @param requestBody
+     * @returns com_ever_edu_cms_content_dto_res_BatchSettingsResDto OK
+     * @throws ApiError
+     */
+    public static multiContentSettings(
+        requestBody: com_ever_edu_cms_content_dto_req_BatchSettingsReqDto,
+    ): CancelablePromise<com_ever_edu_cms_content_dto_res_BatchSettingsResDto> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/content/settings',
+            body: requestBody,
+            mediaType: 'application/json',
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,
@@ -1801,7 +1800,7 @@ export class BoService {
      * @returns com_ever_edu_cms_video_dto_res_VideoResourceResDto OK
      * @throws ApiError
      */
-    public static getContentResource5(
+    public static getContentResource4(
         contentUuid: string,
     ): CancelablePromise<com_ever_edu_cms_video_dto_res_VideoResourceResDto> {
         return __request(OpenAPI, {
@@ -1926,7 +1925,7 @@ export class BoService {
      * @returns com_ever_edu_cms_image_dto_res_ImageResourceListResDto OK
      * @throws ApiError
      */
-    public static getContentResource7(
+    public static getContentResource6(
         contentUuid: string,
     ): CancelablePromise<com_ever_edu_cms_image_dto_res_ImageResourceListResDto> {
         return __request(OpenAPI, {
@@ -2026,7 +2025,7 @@ export class BoService {
      * @returns com_ever_edu_cms_etc_dto_res_EtcContentResourceResDto OK
      * @throws ApiError
      */
-    public static getContentResource9(
+    public static getContentResource8(
         contentUuid: string,
     ): CancelablePromise<com_ever_edu_cms_etc_dto_res_EtcContentResourceResDto> {
         return __request(OpenAPI, {
@@ -2157,7 +2156,7 @@ export class BoService {
      * @returns com_ever_edu_cms_curriculum_dto_res_LessonResDto OK
      * @throws ApiError
      */
-    public static getLessonInfo(
+    public static getLessonInfo1(
         moduleId: number,
         lessonId: number,
     ): CancelablePromise<com_ever_edu_cms_curriculum_dto_res_LessonResDto> {
@@ -2178,8 +2177,8 @@ export class BoService {
         });
     }
     /**
-     * 나의 학습자원 조회
-     * 내 채널 주관인 학습자원을 조회한다.<br>검색 조건에 일치하는 콘텐츠의 그룹콘텐츠 아이디로 콘텐츠 목록(원본 + 공유/번역 콘텐츠)을 조회하여 반환한다.<br><br>콘텐츠 유형 목록은 다건 유형을 ","로 연결하여 전달한다.<br><br><b>페이징 정보</b>: 정렬 컬럼은 groupContentId 내림차순 고정 사용<br> - totalElements: 쿼리 결과물의 전체 데이터 갯수 <br> - totalPages: 페이징하였을 때 나오는 총 페이지의 갯수 <br> - size: 페이지 당 데이터 수 설정 값(rows per page) <br> - numberOfElements: 페이지에 존재하는 요소의 갯수(최대 size와 동일) <br> - number: 요소를 가져온 페이지의 번호. 0 ~
+     * 학습자원 목록 조회
+     * 학습자원 목록을 검색 조회한다.<br>검색 조건에 일치하는 콘텐츠의 그룹콘텐츠 아이디로 콘텐츠 목록(원본 + 공유/번역 콘텐츠)을 조회하여 반환한다.<br><br>콘텐츠 유형 목록은 다건 유형을 ","로 연결하여 전달한다.<br><br><b>페이징 정보</b>: 정렬 컬럼은 groupContentId 내림차순 고정 사용<br> - totalElements: 쿼리 결과물의 전체 데이터 갯수 <br> - totalPages: 페이징하였을 때 나오는 총 페이지의 갯수 <br> - size: 페이지 당 데이터 수 설정 값(rows per page) <br> - numberOfElements: 페이지에 존재하는 요소의 갯수(최대 size와 동일) <br> - number: 요소를 가져온 페이지의 번호. 0 ~
      * @param tenantId
      * @param channelUuid
      * @param contentTypes
@@ -2239,8 +2238,8 @@ export class BoService {
         });
     }
     /**
-     * 공유 팝업 테넌트-채널 코드 목록
-     * 공유 팝업 테넌트-채널 목록을 조회한다.
+     * 공유 팝업 좌측 테넌트-채널 코드 목록
+     * 공유 팝업의 좌측 테넌트-채널 목록을 조회한다.
      * @param contentUuid Content uuid
      * @param tenantId Tenant Id
      * @param channelName Channel Name, Like 검색
@@ -2273,7 +2272,7 @@ export class BoService {
     }
     /**
      * 공유 팝업 테넌트 코드 목록
-     * 공유 팝업 상담 테넌트 검색 조건 코드 목록을 조회한다.
+     * 공유 팝업 상담 테넌트 검색 조건 코드 목록을 조회한다.<br>- 학습자원 소속 채널이 유니버셜 채널인 경우 모든 테넌트 목록<br>- 학습자원 소속 채널이 일반 채널인 경우 학습자원 소속 채널의 테넌트만 노출
      * @param contentUuid Content uuid
      * @returns com_ever_edu_cms_content_dto_res_TenantCodeResDto OK
      * @throws ApiError

@@ -161,6 +161,7 @@ export type { com_ever_edu_cms_video_dto_req_WatchLogSaveReqDto } from './models
 export type { com_ever_edu_cms_video_dto_req_WatchLogSearchDto } from './models/com_ever_edu_cms_video_dto_req_WatchLogSearchDto';
 export type { com_ever_edu_cms_video_dto_res_EncodedVideoResponseDto } from './models/com_ever_edu_cms_video_dto_res_EncodedVideoResponseDto';
 export { com_ever_edu_cms_video_dto_res_VideoChangeStatusResDto } from './models/com_ever_edu_cms_video_dto_res_VideoChangeStatusResDto';
+export { com_ever_edu_cms_video_dto_res_VideoContentInfoResDto } from './models/com_ever_edu_cms_video_dto_res_VideoContentInfoResDto';
 export type { com_ever_edu_cms_video_dto_res_VideoDraftListResDto } from './models/com_ever_edu_cms_video_dto_res_VideoDraftListResDto';
 export { com_ever_edu_cms_video_dto_res_VideoResDto } from './models/com_ever_edu_cms_video_dto_res_VideoResDto';
 export { com_ever_edu_cms_video_dto_res_VideoResourceResDto } from './models/com_ever_edu_cms_video_dto_res_VideoResourceResDto';

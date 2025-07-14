@@ -4,6 +4,7 @@
 /* eslint-disable */
 import type { com_ever_edu_cms_curriculum_dto_res_LessonResDto } from './com_ever_edu_cms_curriculum_dto_res_LessonResDto';
 export type com_ever_edu_cms_curriculum_dto_res_ModuleResDto = {
+    mappingCurriculumType?: com_ever_edu_cms_curriculum_dto_res_ModuleResDto.mappingCurriculumType;
     moduleId?: number;
     moduleName?: string;
     description?: string;
@@ -17,6 +18,11 @@ export type com_ever_edu_cms_curriculum_dto_res_ModuleResDto = {
     lessonList?: Array<com_ever_edu_cms_curriculum_dto_res_LessonResDto>;
 };
 export namespace com_ever_edu_cms_curriculum_dto_res_ModuleResDto {
+    export enum mappingCurriculumType {
+        LESSON = 'LESSON',
+        MODULE = 'MODULE',
+        CURRICULUM = 'CURRICULUM',
+    }
     export enum moduleType {
         GENERAL = 'GENERAL',
         FIXED = 'FIXED',

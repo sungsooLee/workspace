@@ -94,7 +94,7 @@ export class BoEBookService {
      * @returns com_ever_edu_cms_ebook_dto_res_EbookResourceResDto OK
      * @throws ApiError
      */
-    public static getContentResource10(
+    public static getContentResource9(
         contentUuid: string,
     ): CancelablePromise<com_ever_edu_cms_ebook_dto_res_EbookResourceResDto> {
         return __request(OpenAPI, {

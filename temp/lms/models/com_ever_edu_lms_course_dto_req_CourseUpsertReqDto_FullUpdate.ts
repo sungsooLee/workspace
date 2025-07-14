@@ -2,111 +2,441 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { com_ever_edu_cms_content_dto_res_ThumbnailFileResDto } from './com_ever_edu_cms_content_dto_res_ThumbnailFileResDto';
-import type { com_ever_edu_cms_tag_dto_res_TagResDto } from './com_ever_edu_cms_tag_dto_res_TagResDto';
-export type com_ever_edu_cms_etc_dto_res_EtcContentResDto = {
-    contentUuid?: string;
-    contentName?: string;
-    langCountryCode?: com_ever_edu_cms_etc_dto_res_EtcContentResDto.langCountryCode;
-    createType?: com_ever_edu_cms_etc_dto_res_EtcContentResDto.createType;
-    contentType?: com_ever_edu_cms_etc_dto_res_EtcContentResDto.contentType;
-    contentStatusCode?: com_ever_edu_cms_etc_dto_res_EtcContentResDto.contentStatusCode;
-    channelUuid?: string;
-    channelName?: string;
-    tenantId?: number;
-    tenantName?: string;
-    description?: string;
-    coordinatorUuid?: string;
-    coordinatorName?: string;
-    coordinatorTelCountryCode?: com_ever_edu_cms_etc_dto_res_EtcContentResDto.coordinatorTelCountryCode;
-    coordinatorTelNo?: string;
-    isUnlimited?: boolean;
-    contentUseStartDate?: string;
-    contentUseEndDate?: string;
-    isVendored?: boolean;
-    vendorName?: string;
-    vendorCoordinatorUuid?: string;
-    vendorCoordinatorName?: string;
-    vendorTelCountryCode?: com_ever_edu_cms_etc_dto_res_EtcContentResDto.vendorTelCountryCode;
-    vendorTelNo?: string;
-    contentThumbnailFileGroupUuid?: string;
-    thumbnailFiles?: Array<com_ever_edu_cms_content_dto_res_ThumbnailFileResDto>;
-    selectedContentThumbnailFileUuid?: string;
-    isCourseUsed?: boolean;
-    isInspected?: boolean;
-    isCopyrighted?: boolean;
-    contentAddInfoType?: com_ever_edu_cms_etc_dto_res_EtcContentResDto.contentAddInfoType;
-    contentAddInfo?: number;
-    isSecured?: boolean;
-    isDeleted?: boolean;
-    isOpened?: boolean;
-    isDrafted?: boolean;
-    tags?: Array<com_ever_edu_cms_tag_dto_res_TagResDto>;
-    aiSummary?: string;
-    aiKeyword?: string;
-    createdBy?: string;
-    creatorName?: string;
-    createdDate?: string;
-    lastModifiedBy?: string;
-    modifyerName?: string;
-    modifiedDate?: string;
+import type { com_ever_edu_lms_course_dto_req_CourseTargetAudienceReqDto_FullUpdate } from './com_ever_edu_lms_course_dto_req_CourseTargetAudienceReqDto_FullUpdate';
+import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TagNameWrapper_FullUpdate } from './com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TagNameWrapper_FullUpdate';
+export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate = {
     /**
-     * ETC 콘텐츠 파일 아이디
+     * 과정 생성/수정 마법사 타입 (lms.course.WizardStep)
      */
-    fileUuid?: string;
+    wizardStep: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate.wizardStep;
+    /**
+     * 테넌트 ID 배열
+     */
+    tenantIds: Array<number>;
+    /**
+     * 대표 카테고리 id
+     */
+    primaryCategoryId: number;
+    /**
+     * 카테고리 ID 배열
+     */
+    categoryIds: Array<number>;
+    /**
+     * 학습대상-유저그룹
+     */
+    targetList?: Array<com_ever_edu_lms_course_dto_req_CourseTargetAudienceReqDto_FullUpdate>;
+    /**
+     * 언어 설정
+     */
+    language: string;
+    /**
+     * 과정명
+     */
+    courseName: string;
+    /**
+     * 과정요약
+     */
+    courseSummary: string;
+    /**
+     * 과정내용
+     */
+    courseContent: string;
+    /**
+     * 난이도 (lms.course.TrainingLevelType)
+     */
+    trainingLevelType: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate.trainingLevelType;
+    /**
+     * (lms.course.LearningSpaceType)
+     */
+    learningSpaceType: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate.learningSpaceType;
+    /**
+     * 교육 장소 ID
+     */
+    learningSpaceId?: number;
+    /**
+     * 교육 장소(선택입력)
+     */
+    learningSpaceName?: string;
+    /**
+     * 교육 장소 직접입력
+     */
+    learningSpaceNameKeyIn?: string;
+    /**
+     * 담당자 UUID
+     */
+    coordinatorUuid: string;
+    /**
+     * 담당자 이름
+     */
+    coordinatorName: string;
+    /**
+     * 부서이름
+     */
+    coordinatorDeptName: string;
+    /**
+     * 담당자 연락처 국가코드
+     */
+    coordinatorTelCountryCode: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate.coordinatorTelCountryCode;
+    /**
+     * 담당자 연락처
+     */
+    coordinatorTelNo: string;
+    /**
+     * 담당자 이메일
+     */
+    coordinatorEmail: string;
+    /**
+     * 운영자 UUID
+     */
+    operatorUuid: string;
+    /**
+     * 운영자 이름
+     */
+    operatorName: string;
+    /**
+     * 운영자 부서이름
+     */
+    operatorDeptName: string;
+    /**
+     * 운영자 연락처 국가코드
+     */
+    operatorTelCountryCode: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate.operatorTelCountryCode;
+    /**
+     * 운영자 연락처
+     */
+    operatorTelNo: string;
+    /**
+     * 운영자 이메일
+     */
+    operatorEmail: string;
+    /**
+     * 수강신청 결재 라인 (pms.course.ApprovalLineType)
+     */
+    approvalLineType?: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate.approvalLineType;
+    /**
+     * 수강 신청 정원 제한 여부
+     */
+    isMaxEnrollQuotaRestricted?: boolean;
+    /**
+     * 수강 신청 정원
+     */
+    maxEnrollQuota?: number;
+    /**
+     * 수강 신청 대기 (lms.course.WaitListPickMethodType)
+     */
+    waitListPickMethodType?: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate.waitListPickMethodType;
+    /**
+     * 최대 대기 인원
+     */
+    maxWaitlistQuota?: number;
+    /**
+     * 차수 중복수강
+     */
+    isDuplicateEnrollAllowed?: boolean;
+    /**
+     * 학습 환경 설정 여부
+     */
+    isLearnEnvEnabled?: boolean;
+    /**
+     * 기기 제한
+     */
+    deviceRestrictType?: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate.deviceRestrictType;
+    /**
+     * 네트워크 제한(사내망 제어 여부)
+     */
+    isIntranetRestricted: boolean;
+    /**
+     * (lms.course.LearningRestrictTimeType)
+     */
+    learningRestrictTimeType: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate.learningRestrictTimeType;
+    /**
+     * 복습 제한 여부
+     */
+    isReviewRestricted: boolean;
+    /**
+     * 복습 가능 기간(개월)
+     */
+    maxReviewPeriodMonths?: number;
+    /**
+     * 캡처 방지 여부
+     */
+    isCaptureBlockEnabled: boolean;
+    /**
+     * 보안 서약 여부
+     */
+    isSecurityAgreementEnable: boolean;
+    /**
+     * 학습 제어 설정 여부
+     */
+    isLearnControlEnabled?: boolean;
+    /**
+     * 1일 진도 제한
+     */
+    isDailyLearningProgressRestricted: boolean;
+    /**
+     * 1일 진도 제한(%)
+     */
+    maxDailyLearningProgress?: number;
+    /**
+     * 진도 초기화 여부
+     */
+    isProgressResetEnabled: boolean;
+    /**
+     * 커리큘럼 순차 학습 적용 여부
+     */
+    isSequentialLearningRequired: boolean;
+    /**
+     * 동영상 탐색바 제한 여부
+     */
+    isPlayerControlRestricted: boolean;
+    /**
+     * (cms.video.PlayBackRate)
+     */
+    maxPlayBackRate?: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate.maxPlayBackRate;
+    /**
+     * 이수기준 설정 여부
+     */
+    isUsePassOption?: boolean;
+    /**
+     * (lms.course.PassMethodType)
+     */
+    passMethodType: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate.passMethodType;
+    /**
+     * 수료증 제공 여부
+     */
+    isCertificateProvided?: boolean;
+    /**
+     * 항목별 이수 기준 (진도)
+     */
+    progressMinPassScore: number;
+    /**
+     * 항목별 이수 기준 (출석)
+     */
+    attendanceMinPassScore: number;
+    /**
+     * 항목별 이수 기준 (평가)
+     */
+    examMinPassScore: number;
+    /**
+     * 항목별 이수 기준 (과제)
+     */
+    asgmtMinPassScore: number;
+    /**
+     * 항목별 이수 기준 (총점)
+     */
+    totalMinPassScore: number;
+    /**
+     * 반영 비율 (진도)
+     */
+    progressWeights?: number;
+    /**
+     * 반영 비율 (출석)
+     */
+    attendanceWeights?: number;
+    /**
+     * 반영 비율 (시험)
+     */
+    examWeights?: number;
+    /**
+     * 반영 비율 (과제)
+     */
+    asgmtWeights?: number;
+    /**
+     * (lms.course.RecognizedStudyMinType)
+     */
+    recognizedStudyMinType?: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate.recognizedStudyMinType;
+    /**
+     * 인정 학습 횟수
+     */
+    recognizedStudyCycles?: number;
+    /**
+     * 인정학습시간(분)
+     */
+    recognizedStudyMinutes?: number;
+    /**
+     * 학습포인트 여부
+     */
+    isRecognizedStudyPoint?: boolean;
+    /**
+     * 인정학습점수(학습포인트)
+     */
+    recognizedStudyPoint?: number;
+    /**
+     * 커뮤니티[공지/자료실/커뮤니티/공유] 설정 여부
+     */
+    isCommunicationToolEnabled: boolean;
+    /**
+     * 커뮤니티[공지/자료실/커뮤니티/공유] 설정 내용
+     */
+    communityList?: Array<'NOTICE' | 'QNA' | 'MARTIAL' | 'COMMUNITY'>;
+    /**
+     * 과정을 학습자가 공유할 수 있는지?
+     */
+    isSharingAllowed: boolean;
+    /**
+     * 강사 설정 여부
+     */
+    isInstructorAssigned: boolean;
+    /**
+     * (lms.course.InstructorAssignType)
+     */
+    instructorAssignType: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate.instructorAssignType;
+    /**
+     * 강사ID
+     */
+    instructorId?: number;
+    /**
+     * 강사 직접입력
+     */
+    instructorName?: string;
+    /**
+     * 교재 설정 여부
+     */
+    isTextbookProvided: boolean;
+    /**
+     * 교재명
+     */
+    textbookName?: string;
+    /**
+     * 교재비
+     */
+    textbookFee?: number;
+    /**
+     * 사전/연관 학습 설정 여부
+     */
+    isRelatedPrerequisiteCourseExisted: boolean;
+    /**
+     * 사전 학습
+     */
+    preRequisiteCourseIds?: Array<number>;
+    /**
+     * 연관 학습
+     */
+    relatedCourseIds?: Array<number>;
+    /**
+     * HMG 과정 데이터 표준 분류 > 대분류
+     */
+    hmgStandardMainCategory?: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate.hmgStandardMainCategory;
+    /**
+     * HMG 과정 데이터 표준 분류 > 중분류
+     */
+    hmgStandardSubCategory?: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate.hmgStandardSubCategory;
+    /**
+     * 1인당 교육비 사용
+     */
+    isUseTrainingCostPerPerson?: boolean;
+    /**
+     * 1인당 교육비(원)
+     */
+    trainingCostPerPerson?: number;
+    /**
+     * 고용보험 환급 사용
+     */
+    isUseEmploymentInsuranceRefund?: boolean;
+    /**
+     * 고용보험 환급비(원)
+     */
+    employmentInsuranceRefund?: number;
+    /**
+     * 숙박 여부
+     */
+    isStayed?: boolean;
+    /**
+     * 오토에버 위탁 전용 설정 여부
+     */
+    isUseOutsourcing?: boolean;
+    /**
+     * 수강신청 단계에서 레벨테스트 수집 여부
+     */
+    isPreLevelTestRequired?: boolean;
+    /**
+     * 수강신청 단계에서 배송지 수집 여부
+     */
+    isBookDeliveryInfoRequired?: boolean;
+    /**
+     * 튜터id
+     */
+    tutorId?: number;
+    /**
+     * 튜터 이름
+     */
+    tutorName?: string;
+    /**
+     * 위탁 소유 회사 ID
+     */
+    outsourcingCompanyId?: number;
+    /**
+     * 위탁 소유 회사 이름
+     */
+    outsourcingCompanyName?: string;
+    /**
+     * 사용 여부
+     */
+    isUsed: boolean;
+    /**
+     * 과정 노출 시작일
+     */
+    courseValidityStartDate: string;
+    /**
+     * 과정 노출 시작 시각
+     */
+    courseValidityStartHour: number;
+    /**
+     * 과정 노출 종료일
+     */
+    courseValidityEndDate: string;
+    /**
+     * 과정 노출 종료 시각
+     */
+    courseValidityEndHour: number;
+    /**
+     * 썸네일 이미지 Group UUID
+     */
+    thumbnailFileGroupUuid: string;
+    /**
+     * 대표 썸네일 이미지 UUID
+     */
+    primaryThumbnailFileUuid: string;
+    /**
+     * 태그 이름 목록
+     */
+    tagNames: Array<com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TagNameWrapper_FullUpdate>;
+    learningSpaceNameValid?: boolean;
 };
-export namespace com_ever_edu_cms_etc_dto_res_EtcContentResDto {
-    export enum langCountryCode {
-        KO = 'KO',
-        EN = 'EN',
-        ES = 'ES',
-        AR = 'AR',
-        RU = 'RU',
-        FR = 'FR',
-        PT = 'PT',
-        ID = 'ID',
-        ZH = 'ZH',
-        VI = 'VI',
-        TR = 'TR',
-        TH = 'TH',
-        DE = 'DE',
-        HE = 'HE',
-        NE = 'NE',
-        FA = 'FA',
-        HI = 'HI',
-        JA = 'JA',
-        MS = 'MS',
-        IT = 'IT',
-        SK = 'SK',
-        RO = 'RO',
-        HR = 'HR',
-        ET = 'ET',
+export namespace com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate {
+    /**
+     * 과정 생성/수정 마법사 타입 (lms.course.WizardStep)
+     */
+    export enum wizardStep {
+        STEP1 = 'STEP1',
+        STEP2 = 'STEP2',
+        STEP3 = 'STEP3',
+        STEP4 = 'STEP4',
+        STEP5 = 'STEP5',
+        FULL_UPDATE = 'FULL_UPDATE',
     }
-    export enum createType {
+    /**
+     * 난이도 (lms.course.TrainingLevelType)
+     */
+    export enum trainingLevelType {
+        NONE = 'NONE',
+        BEGINNER = 'BEGINNER',
+        BASIC = 'BASIC',
+        INTERMEDIATE = 'INTERMEDIATE',
+        ADVANCED = 'ADVANCED',
+        EXPERT = 'EXPERT',
+    }
+    /**
+     * (lms.course.LearningSpaceType)
+     */
+    export enum learningSpaceType {
+        LEARNING_WAY = 'LEARNING_WAY',
+        REGISTERED = 'REGISTERED',
         MANUAL = 'MANUAL',
-        SHARED = 'SHARED',
-        TRASLATE = 'TRASLATE',
     }
-    export enum contentType {
-        VIDEO = 'VIDEO',
-        EBOOK = 'EBOOK',
-        SCORM = 'SCORM',
-        HTML5_VIDEO = 'HTML5_VIDEO',
-        IMAGE = 'IMAGE',
-        EXTERNAL_LINK = 'EXTERNAL_LINK',
-        EXTERNAL_AGENCY = 'EXTERNAL_AGENCY',
-        BLOG = 'BLOG',
-        EXAM = 'EXAM',
-        EXAM_POOL = 'EXAM_POOL',
-        ASSIGNMENT = 'ASSIGNMENT',
-        SURVEY = 'SURVEY',
-        ETC = 'ETC',
-    }
-    export enum contentStatusCode {
-        TEMPORARY_SAVE = 'TEMPORARY_SAVE',
-        SAVE = 'SAVE',
-        DELETE = 'DELETE',
-    }
+    /**
+     * 담당자 연락처 국가코드
+     */
     export enum coordinatorTelCountryCode {
         KOR_82 = 'KOR_82',
         AFG_93 = 'AFG_93',
@@ -355,7 +685,10 @@ export namespace com_ever_edu_cms_etc_dto_res_EtcContentResDto {
         ZMB_260 = 'ZMB_260',
         ZWE_263 = 'ZWE_263',
     }
-    export enum vendorTelCountryCode {
+    /**
+     * 운영자 연락처 국가코드
+     */
+    export enum operatorTelCountryCode {
         KOR_82 = 'KOR_82',
         AFG_93 = 'AFG_93',
         ALB_355 = 'ALB_355',
@@ -603,10 +936,95 @@ export namespace com_ever_edu_cms_etc_dto_res_EtcContentResDto {
         ZMB_260 = 'ZMB_260',
         ZWE_263 = 'ZWE_263',
     }
-    export enum contentAddInfoType {
-        VIDEO_ADD_INFO = 'VIDEO_ADD_INFO',
-        EXAM_ADD_INFO = 'EXAM_ADD_INFO',
-        EXAM_POOL_ADD_INFO = 'EXAM_POOL_ADD_INFO',
+    /**
+     * 수강신청 결재 라인 (pms.course.ApprovalLineType)
+     */
+    export enum approvalLineType {
+        NONE = 'NONE',
+        LEADER = 'LEADER',
+        OPERATOR = 'OPERATOR',
+        LEADER_OPERATOR = 'LEADER_OPERATOR',
+        DEPEND_COMPANY = 'DEPEND_COMPANY',
+    }
+    /**
+     * 수강 신청 대기 (lms.course.WaitListPickMethodType)
+     */
+    export enum waitListPickMethodType {
+        NONE = 'NONE',
+        AUTO = 'AUTO',
+        MANUAL = 'MANUAL',
+    }
+    /**
+     * 기기 제한
+     */
+    export enum deviceRestrictType {
+        NONE = 'NONE',
+        PC = 'PC',
+        MOBILE = 'MOBILE',
+    }
+    /**
+     * (lms.course.LearningRestrictTimeType)
+     */
+    export enum learningRestrictTimeType {
+        NONE = 'NONE',
+        WORK_HOURS = 'WORK_HOURS',
+        OFF_HOURS = 'OFF_HOURS',
+    }
+    /**
+     * (cms.video.PlayBackRate)
+     */
+    export enum maxPlayBackRate {
+        X1 = 'X1',
+        X1_25 = 'X1_25',
+        X1_5 = 'X1_5',
+        X1_75 = 'X1_75',
+        X2 = 'X2',
+    }
+    /**
+     * (lms.course.PassMethodType)
+     */
+    export enum passMethodType {
+        AUTO = 'AUTO',
+        MANUAL = 'MANUAL',
+    }
+    /**
+     * (lms.course.RecognizedStudyMinType)
+     */
+    export enum recognizedStudyMinType {
+        TIME = 'TIME',
+        COUNT_TIME = 'COUNT_TIME',
+    }
+    /**
+     * (lms.course.InstructorAssignType)
+     */
+    export enum instructorAssignType {
+        REGISTERED = 'REGISTERED',
+        MANUAL = 'MANUAL',
+    }
+    /**
+     * HMG 과정 데이터 표준 분류 > 대분류
+     */
+    export enum hmgStandardMainCategory {
+        COMM_ON_BOARD = 'COMM_ON_BOARD',
+        COMM_ROLE = 'COMM_ROLE',
+        COMM_GLOBAL = 'COMM_GLOBAL',
+        COMM_ETC = 'COMM_ETC',
+        ROLE_LITERACY = 'ROLE_LITERACY',
+        ROLE_BASE = 'ROLE_BASE',
+        ROLE_ADVANCED = 'ROLE_ADVANCED',
+        LEADER = 'LEADER',
+    }
+    /**
+     * HMG 과정 데이터 표준 분류 > 중분류
+     */
+    export enum hmgStandardSubCategory {
+        SOFTWARE = 'SOFTWARE',
+        AI_DS = 'AI_DS',
+        ELECTRIFICATION = 'ELECTRIFICATION',
+        FUTURE_MOBILITY = 'FUTURE_MOBILITY',
+        ENERGY = 'ENERGY',
+        START_CITY = 'START_CITY',
+        ETC = 'ETC',
     }
 }
 

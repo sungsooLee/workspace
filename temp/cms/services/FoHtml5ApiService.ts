@@ -41,7 +41,7 @@ export class FoHtml5ApiService {
      * @returns com_ever_edu_cms_html5_dto_res_Html5ResourceResDto OK
      * @throws ApiError
      */
-    public static getContentResource3(
+    public static getContentResource2(
         contentUuid: string,
     ): CancelablePromise<com_ever_edu_cms_html5_dto_res_Html5ResourceResDto> {
         return __request(OpenAPI, {

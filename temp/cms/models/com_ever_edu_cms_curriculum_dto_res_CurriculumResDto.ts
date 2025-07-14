@@ -4,7 +4,7 @@
 /* eslint-disable */
 import type { com_ever_edu_cms_curriculum_dto_res_ModuleResDto } from './com_ever_edu_cms_curriculum_dto_res_ModuleResDto';
 export type com_ever_edu_cms_curriculum_dto_res_CurriculumResDto = {
-    type?: com_ever_edu_cms_curriculum_dto_res_CurriculumResDto.type;
+    mappingCurriculumType?: com_ever_edu_cms_curriculum_dto_res_CurriculumResDto.mappingCurriculumType;
     curriculumId?: number;
     curriculumName?: string;
     curriculumDescription?: string;
@@ -35,7 +35,7 @@ export type com_ever_edu_cms_curriculum_dto_res_CurriculumResDto = {
     moduleList?: Array<com_ever_edu_cms_curriculum_dto_res_ModuleResDto>;
 };
 export namespace com_ever_edu_cms_curriculum_dto_res_CurriculumResDto {
-    export enum type {
+    export enum mappingCurriculumType {
         LESSON = 'LESSON',
         MODULE = 'MODULE',
         CURRICULUM = 'CURRICULUM',

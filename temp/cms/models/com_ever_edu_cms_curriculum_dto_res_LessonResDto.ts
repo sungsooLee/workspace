@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type com_ever_edu_cms_curriculum_dto_res_LessonResDto = {
+    mappingCurriculumType?: com_ever_edu_cms_curriculum_dto_res_LessonResDto.mappingCurriculumType;
     lessonId?: number;
     lessonName?: string;
     description?: string;
@@ -12,6 +13,11 @@ export type com_ever_edu_cms_curriculum_dto_res_LessonResDto = {
     learningTime?: number;
 };
 export namespace com_ever_edu_cms_curriculum_dto_res_LessonResDto {
+    export enum mappingCurriculumType {
+        LESSON = 'LESSON',
+        MODULE = 'MODULE',
+        CURRICULUM = 'CURRICULUM',
+    }
     export enum lessonType {
         TOC = 'TOC',
         RESOURCES = 'RESOURCES',

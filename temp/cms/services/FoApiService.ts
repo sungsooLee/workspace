@@ -39,7 +39,7 @@ export class FoApiService {
      * @returns com_ever_edu_cms_image_dto_res_ImageResourceListResDto OK
      * @throws ApiError
      */
-    public static getContentResource2(
+    public static getContentResource1(
         contentUuid: string,
     ): CancelablePromise<com_ever_edu_cms_image_dto_res_ImageResourceListResDto> {
         return __request(OpenAPI, {

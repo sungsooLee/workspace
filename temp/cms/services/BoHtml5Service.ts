@@ -119,7 +119,7 @@ export class BoHtml5Service {
      * @returns com_ever_edu_cms_html5_dto_res_Html5ResourceResDto OK
      * @throws ApiError
      */
-    public static getContentResource8(
+    public static getContentResource7(
         contentUuid: string,
     ): CancelablePromise<com_ever_edu_cms_html5_dto_res_Html5ResourceResDto> {
         return __request(OpenAPI, {

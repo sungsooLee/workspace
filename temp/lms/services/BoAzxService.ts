@@ -44,7 +44,7 @@ export class BoAzxService {
      * @returns number OK
      * @throws ApiError
      */
-    public static update5(
+    public static update6(
         azxId: number,
         requestBody: com_ever_edu_lms_azx_dto_req_AzxUpdateDto,
     ): CancelablePromise<number> {

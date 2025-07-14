@@ -3,6 +3,26 @@
 /* tslint:disable */
 /* eslint-disable */
 export type com_ever_edu_cms_content_dto_res_ContentProgressResDto = {
+    /**
+     * 과정차수Id
+     */
+    courseSequenceId?: number;
+    /**
+     * 과정Id
+     */
+    courseId?: number;
+    /**
+     * 커리큘럼Id
+     */
+    curriculumId?: number;
+    /**
+     * 콘텐츠 모듈/스콤-Orgn Id
+     */
+    moduleId?: number;
+    /**
+     * 레슨/스콤-Item ID
+     */
+    lessonId?: number;
     contentUuid?: string;
     contentType?: com_ever_edu_cms_content_dto_res_ContentProgressResDto.contentType;
     progress?: number;

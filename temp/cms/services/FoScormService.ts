@@ -14,7 +14,7 @@ export class FoScormService {
      * @returns com_ever_edu_cms_scorm_dto_res_ScormResourceResDto OK
      * @throws ApiError
      */
-    public static getContentResource1(
+    public static getContentResource(
         contentUuid: string,
     ): CancelablePromise<com_ever_edu_cms_scorm_dto_res_ScormResourceResDto> {
         return __request(OpenAPI, {

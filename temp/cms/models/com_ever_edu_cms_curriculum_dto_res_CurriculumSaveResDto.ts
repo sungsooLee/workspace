@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type com_ever_edu_cms_curriculum_dto_res_CurriculumSaveResDto = {
+    mappingCurriculumType?: com_ever_edu_cms_curriculum_dto_res_CurriculumSaveResDto.mappingCurriculumType;
     curriculumId?: number;
     tenantId?: number;
     channelUuid?: string;
@@ -26,6 +27,11 @@ export type com_ever_edu_cms_curriculum_dto_res_CurriculumSaveResDto = {
     openingYear?: number;
 };
 export namespace com_ever_edu_cms_curriculum_dto_res_CurriculumSaveResDto {
+    export enum mappingCurriculumType {
+        LESSON = 'LESSON',
+        MODULE = 'MODULE',
+        CURRICULUM = 'CURRICULUM',
+    }
     export enum curriculumType {
         GENERAL = 'GENERAL',
         ASSESSMENT = 'ASSESSMENT',

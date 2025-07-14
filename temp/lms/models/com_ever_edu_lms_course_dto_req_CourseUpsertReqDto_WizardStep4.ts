@@ -2,7 +2,6 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { com_ever_edu_lms_course_dto_CourseCommunityDto_WizardStep4 } from './com_ever_edu_lms_course_dto_CourseCommunityDto_WizardStep4';
 export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4 = {
     /**
      * 과정 생성/수정 마법사 타입 (lms.course.WizardStep)
@@ -143,7 +142,7 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4 = {
     /**
      * 커뮤니티[공지/자료실/커뮤니티/공유] 설정 내용
      */
-    communityList?: Array<com_ever_edu_lms_course_dto_CourseCommunityDto_WizardStep4>;
+    communityList?: Array<'NOTICE' | 'QNA' | 'MARTIAL' | 'COMMUNITY'>;
     /**
      * 과정을 학습자가 공유할 수 있는지?
      */

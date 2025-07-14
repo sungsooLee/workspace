@@ -13,11 +13,12 @@ import type { com_ever_edu_cms_content_dto_res_ContentProgressListResDto } from 
 import type { com_ever_edu_cms_content_dto_res_ContentProgressResDto } from '../models/com_ever_edu_cms_content_dto_res_ContentProgressResDto';
 import type { com_ever_edu_cms_content_dto_res_ContentResDto } from '../models/com_ever_edu_cms_content_dto_res_ContentResDto';
 import type { com_ever_edu_cms_curriculum_dto_res_CurriculumResDto } from '../models/com_ever_edu_cms_curriculum_dto_res_CurriculumResDto';
+import type { com_ever_edu_cms_curriculum_dto_res_LessonResDto } from '../models/com_ever_edu_cms_curriculum_dto_res_LessonResDto';
 import type { com_ever_edu_cms_curriculum_dto_res_ModuleResDto } from '../models/com_ever_edu_cms_curriculum_dto_res_ModuleResDto';
 import type { com_ever_edu_cms_etc_dto_res_EtcContentResourceResDto } from '../models/com_ever_edu_cms_etc_dto_res_EtcContentResourceResDto';
 import type { com_ever_edu_cms_video_dto_req_WatchLogSaveReqDto } from '../models/com_ever_edu_cms_video_dto_req_WatchLogSaveReqDto';
 import type { com_ever_edu_cms_video_dto_req_WatchLogSearchDto } from '../models/com_ever_edu_cms_video_dto_req_WatchLogSearchDto';
-import type { com_ever_edu_cms_video_dto_res_VideoResourceResDto } from '../models/com_ever_edu_cms_video_dto_res_VideoResourceResDto';
+import type { com_ever_edu_cms_video_dto_res_VideoContentInfoResDto } from '../models/com_ever_edu_cms_video_dto_res_VideoContentInfoResDto';
 import type { com_ever_edu_cms_video_dto_res_WatchSummaryResDto } from '../models/com_ever_edu_cms_video_dto_res_WatchSummaryResDto';
 import type { org_springdoc_core_converters_models_Pageable } from '../models/org_springdoc_core_converters_models_Pageable';
 import type { org_springframework_data_domain_PageCom_ever_edu_cms_asgmt_dto_res_AsgmtResDto$ListOnUser } from '../models/org_springframework_data_domain_PageCom_ever_edu_cms_asgmt_dto_res_AsgmtResDto$ListOnUser';
@@ -147,12 +148,12 @@ export class FoService {
      * @returns com_ever_edu_cms_content_dto_res_ContentProgressListResDto OK
      * @throws ApiError
      */
-    public static getContentsProgress(
+    public static getMultiContentProgress(
         requestBody: com_ever_edu_cms_content_dto_req_ContentProgressListReqDto,
     ): CancelablePromise<com_ever_edu_cms_content_dto_res_ContentProgressListResDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/user/api/v1/contents/progress',
+            url: '/user/api/v1/content/progress/multi',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -214,20 +215,40 @@ export class FoService {
         });
     }
     /**
-     * 비디오 콘텐츠 리소스 조회
-     * SCORM 콘텐츠 리소스를 조회한다.
+     * 비디오 학습자원 리소스 및 시청이력 조회
+     * 비디오 학습자원 리소스 및 시청이력을 조회한다.<br>비디오 학습창을 호출하기 전에 호출해야한다.
      * @param contentUuid SCORM 콘텐츠 UUID
-     * @returns com_ever_edu_cms_video_dto_res_VideoResourceResDto OK
+     * @param sequenceId 과정차수Id
+     * @param courseId 과정Id
+     * @param curriculumId 커리큘럼Id
+     * @param moduleId 모듈 ID
+     * @param lessonId 레슨 ID
+     * @param scoId item element id(SCOID)
+     * @returns com_ever_edu_cms_video_dto_res_VideoContentInfoResDto OK
      * @throws ApiError
      */
-    public static getContentResource(
+    public static getVideoContentInfo(
         contentUuid: string,
-    ): CancelablePromise<com_ever_edu_cms_video_dto_res_VideoResourceResDto> {
+        sequenceId: any,
+        courseId: any,
+        curriculumId: any,
+        moduleId: any,
+        lessonId: any,
+        scoId: any,
+    ): CancelablePromise<com_ever_edu_cms_video_dto_res_VideoContentInfoResDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/user/api/v1/video/{contentUuid}/resource',
+            url: '/user/api/v1/video/{contentUuid}/watch/initialize',
             path: {
                 'contentUuid': contentUuid,
+            },
+            query: {
+                'sequenceId': sequenceId,
+                'courseId': courseId,
+                'curriculumId': curriculumId,
+                'moduleId': moduleId,
+                'lessonId': lessonId,
+                'scoId': scoId,
             },
             errors: {
                 400: `Bad Request`,
@@ -245,7 +266,7 @@ export class FoService {
      * @returns com_ever_edu_cms_etc_dto_res_EtcContentResourceResDto OK
      * @throws ApiError
      */
-    public static getContentResource4(
+    public static getContentResource3(
         contentUuid: string,
     ): CancelablePromise<com_ever_edu_cms_etc_dto_res_EtcContentResourceResDto> {
         return __request(OpenAPI, {
@@ -319,8 +340,8 @@ export class FoService {
         });
     }
     /**
-     * 커리큘럼의 ID를 통해 내부 레슨/모듈 구조를 조회한다
-     * 단건 커리큘럼 ID를 통해 커리큘럼 내부의 레슨과 모듈의 구조를 조회한다.<br><br>매핑 콘텐츠 분류에 따른 구성 데이터 구분 : <br><GENERAL 모듈인 경우> <br>- 레슨 정보: contentId(Long) <br><br><FIXED 모듈인 경우>  <br>- 모듈 정보: contentId(Long), orgnId(Long) <br>- 레슨 정보: itemId(Long), scoId(itemElementId, String)
+     * 커리큘럼 상세정보 조회
+     * 커리큘럼 상세 정보와 모듈(레슨 목록 포함) 상세 목록을 조회한다.<br><br>매핑 콘텐츠 분류에 따른 구성 데이터 구분 : <br><GENERAL 모듈인 경우> <br>- 레슨 정보: contentUuid(String), learningTime(Long) <br><br><FIXED 모듈인 경우>  <br>- 모듈 정보: contentUuid(String), orgnId(Long) <br>- 레슨 정보: orgnId(Long), itemId(Long), scoId(itemElementId, String)
      * @param curriculumId
      * @returns com_ever_edu_cms_curriculum_dto_res_CurriculumResDto OK
      * @throws ApiError
@@ -345,7 +366,7 @@ export class FoService {
     }
     /**
      * 커리큘럼 모듈정보 조회
-     * 커리큘럼 모듈의 상세 구조를 조회한다.<br><br>매핑 콘텐츠 분류에 따른 구성 데이터 구분 : <br><GENERAL 모듈인 경우> <br>- 레슨 정보: contentId(Long) <br><br><FIXED 모듈인 경우>  <br>- 모듈 정보: contentId(Long), orgnId(Long) <br>- 레슨 정보: itemId(Long), scoId(itemElementId, String)
+     * 커리큘럼 모듈과 레슨 목록을 조회한다.<br><br>매핑 콘텐츠 분류에 따른 구성 데이터 구분 : <br><GENERAL 모듈인 경우> <br>- 레슨 정보: contentUuid(String), learningTime(Long) <br><br><FIXED 모듈인 경우>  <br>- 모듈 정보: contentUuid(String), orgnId(Long) <br>- 레슨 정보: orgnId(Long), itemId(Long), scoId(itemElementId, String)
      * @param moduleId
      * @returns com_ever_edu_cms_curriculum_dto_res_ModuleResDto OK
      * @throws ApiError
@@ -358,6 +379,34 @@ export class FoService {
             url: '/user/api/v1/curriculum/module/{moduleId}',
             path: {
                 'moduleId': moduleId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 레슨 상세 정보 조회
+     * 레슨 상세 정보를 조회한다.<br><br>매핑 콘텐츠 분류에 따른 구성 데이터 구분 : <br>- lessonId(Long), lessonName(String), description(String), lessonType(LessonType), sortOrder(Long), contentUuid(String), contentType(ContentType) <br><br><GENERAL 레슨인 경우> <br>- learningTime(Long) <br><br><FIXED 레슨인 경우>  <br>- orgnId(Long), itemId(Long), scoId(itemElementId, String)
+     * @param moduleId 모듈 ID
+     * @param lessonId 레슨 ID
+     * @returns com_ever_edu_cms_curriculum_dto_res_LessonResDto OK
+     * @throws ApiError
+     */
+    public static getLessonInfo(
+        moduleId: number,
+        lessonId: number,
+    ): CancelablePromise<com_ever_edu_cms_curriculum_dto_res_LessonResDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/user/api/v1/curriculum/module/{moduleId}/lesson/{lessonId}',
+            path: {
+                'moduleId': moduleId,
+                'lessonId': lessonId,
             },
             errors: {
                 400: `Bad Request`,
