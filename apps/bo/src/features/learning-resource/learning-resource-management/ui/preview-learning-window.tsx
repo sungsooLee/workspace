@@ -29,6 +29,7 @@ const PreviewLearningWindowComponent: FC<any> = ({
     setScormInfo,
     setFuncInfo,
     setCurriculum,
+    clearInfo,
   } = useLearningWindow();
 
   const { data, error: fetchError } = useQuery(
@@ -69,7 +70,7 @@ const PreviewLearningWindowComponent: FC<any> = ({
         module.lessonList = lessonList;
       });
     });
-    const retval = { moduleList: moduleList };
+    const retval = { moduleList };
 
     return retval;
   };
@@ -132,6 +133,10 @@ const PreviewLearningWindowComponent: FC<any> = ({
       },
     });
   }, [data]);
+
+  useEffect(() => {
+    clearInfo();
+  }, []);
 
   return <LearnwayLearningWindowLayout />;
 };

@@ -32,6 +32,7 @@ import { useWatch } from 'react-hook-form';
 import { useQueryClient } from '@tanstack/react-query';
 import { GridExcelDownloadButton } from '@shared/ui';
 import { CMSApiPrefix, LEARNING_TYPE } from '@learnway/config';
+import { PreviewLearningWindow } from './preview-learning-window';
 
 function LearningResourceTableComponent() {
   const {
@@ -265,6 +266,10 @@ function LearningResourceTableComponent() {
               className="link"
               onClick={(e) => {
                 e.stopPropagation();
+                openModal({
+                  width: 'full',
+                  content: <PreviewLearningWindow contentUuid={_.row.original.contentUuid} />,
+                });
               }}
             >
               {t('LABEL.grid.column.preview', '미리보기')}
