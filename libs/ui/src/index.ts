@@ -147,7 +147,6 @@ export * from './lib/learning-window/player/service/scorm-data-manager';
 export * from './lib/learning-window/player/service/scorm-error-manager';
 export * from './lib/learning-window/player/service/scorm-handler';
 export * from './lib/learning-window/player/service/scorm-rte-client';
-export * from './lib/learning-window/player/service/scorm-xml-http-request';
 export * from './lib/learning-window/player/ui/learning-window-blog-player';
 export * from './lib/learning-window/player/ui/learning-window-ebook-player';
 export * from './lib/learning-window/player/ui/learning-window-gallery-player';
