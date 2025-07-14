@@ -40,7 +40,7 @@ cimSchema.set('cmi.location', new CimElementInfo(true));
 "logout" : 로그아웃을 통해 종료할 때. 
 "normal" : 정상적으로 SCO를 종료할 때. 
 "" : 종료 조건이 정의되지 않았을 때. */
-cimSchema.set('cmi.exit', new CimElementInfo());
+cimSchema.set('cmi.exit', new CimElementInfo(true));
 /* 임시정보 */
 cimSchema.set('cmi.suspend_data', new CimElementInfo(true));
 /* 총 학습시간 */
