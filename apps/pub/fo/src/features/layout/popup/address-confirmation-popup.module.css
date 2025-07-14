@@ -1,7 +1,7 @@
 .start {
   &.confirmation {
     p {
-      @apply title_bo_4_b text-[var(--gray9)];
+      @apply !title4-b text-[var(--gray10)];
     }
     .box {
       @apply mt-[8px];
@@ -9,7 +9,7 @@
         @apply leading-[20px];
         dt,
         dd {
-          @apply button_3_r inline text-[var(--gray8)];
+          @apply body-md inline text-[var(--gray35)];
         }
         dd {
           @apply ml-[4px];

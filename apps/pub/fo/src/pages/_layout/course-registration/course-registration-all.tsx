@@ -26,7 +26,6 @@ import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.cs
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-form.module.css';
 import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic.form.module.css';
-import definitionListStyles from '../../../pages/_layout/course-introduction/definition-list.module.css';
 import educationStyles from '../../../features/layout/ui/education.module.css';
 import styles from './course-registration-all.module.css';
 export const Route = createFileRoute('/_layout/course-registration/course-registration-all')({
@@ -67,7 +66,7 @@ function RouteComponent() {
   // 상세주소 입력 전 [신청] 클릭 시
   const AddressAlert = () => {
     openAlert({
-      title: <>상세 주소를 입력해주세요</>,
+      title: '상세 주소를 입력해주세요',
       content: (
         <>
           교재 배송이 원할하게 될 수 있도록
@@ -81,7 +80,7 @@ function RouteComponent() {
   // 주소 입력 전 [신청] 클릭 시
   const AddressAlert2 = () => {
     openAlert({
-      title: <>배송지 주소를 입력해주세요</>,
+      title: '배송지 주소를 입력해주세요',
       content: (
         <>
           교재 배송이 원할하게 될 수 있도록
@@ -95,7 +94,7 @@ function RouteComponent() {
   // [취소] 클릭 시
   const CourseCancelConfirm = () => {
     openConfirm({
-      title: <>수강 신청을 취소하시겠습니까?</>,
+      title: '수강 신청을 취소하시겠습니까?',
       content: (
         <>
           지금 취소하실 경우
@@ -103,7 +102,7 @@ function RouteComponent() {
           입력한 내용은 저장되지 않습니다
         </>
       ),
-      okButtonLabel: '취소하기',
+      okButtonLabel: '확인',
       cancelButtonLabel: '아니요',
     });
   };
@@ -137,6 +136,7 @@ function RouteComponent() {
                   493 / 500 (잔여 <em>7</em>)
                 </span>
               </li>
+              {/* 시간이 없을 시 클래스 educationStyles.full 추가 */}
               <li>
                 <IcoLocation width={20} height={20} stroke="#4d525c" />
                 <span>온라인 비대면</span>
@@ -324,10 +324,16 @@ function RouteComponent() {
                     {/* pc */}
                     <BrowserView>
                       <div className={dynamicFormStyles.flex_plus}>
-                        <Input id="addr" type="text" placeholder="주소를 입력해주세요" value="" />
+                        <Input
+                          id="addr"
+                          type="text"
+                          placeholder="주소를 입력해주세요"
+                          className="lg"
+                          value=""
+                        />
                         <Button
                           variant="gray"
-                          size="lg"
+                          size="lx"
                           onClick={() =>
                             openModal({
                               width: 's',
@@ -342,12 +348,14 @@ function RouteComponent() {
                         id="addr2"
                         type="text"
                         placeholder="상세주소를 입력해주세요"
+                        className="lg"
                         value=""
                       />
                       <Input
                         id="addr3"
                         type="text"
                         placeholder="상세주소를 입력해주세요"
+                        className="lg"
                         value=""
                       />
                     </BrowserView>
@@ -488,7 +496,7 @@ function RouteComponent() {
             size="xl"
             onClick={() =>
               openModal({
-                width: 's',
+                width: 'sm',
                 content: <AddressConfirmationPopup />,
                 hideCloseButton: true,
               })
@@ -510,7 +518,7 @@ function RouteComponent() {
               size="xl"
               onClick={() =>
                 openModal({
-                  width: 's',
+                  width: 'sm',
                   content: <AddressConfirmationPopup />,
                   hideCloseButton: true,
                 })
