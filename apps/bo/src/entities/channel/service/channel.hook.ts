@@ -25,7 +25,7 @@ export const useFetchChannelByRoleId = <T = ChannelByRoleId[]>(
   roleId: number,
   options?: UseQueryOptions<T, Error>,
 ): UseQueryResult<T, Error> => {
-  return useQuery({ ...queryOptions.channelByRoleId<T>(roleId), ...options });
+  return useQuery({ ...queryOptions.channelByRoleId<T>(roleId), ...options, staleTime: Infinity });
 };
 
 export function useCreateChannel(options: any) {

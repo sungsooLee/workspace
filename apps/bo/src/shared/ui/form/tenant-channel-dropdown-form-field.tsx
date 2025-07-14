@@ -3,7 +3,7 @@ import { useFetchAuthUser } from '@learnway/auth/entities';
 import { AuthUser } from '@learnway/auth/types';
 import { BaseFormFieldProps } from '@learnway/hooks';
 import { t } from 'i18next';
-import { forwardRef, useEffect, useMemo } from 'react';
+import { forwardRef, useEffect, useMemo, useRef } from 'react';
 import { DropdownFormField } from '../../../features/form/ui/dropdown-form-field';
 import { useWatch } from 'react-hook-form';
 import { ChannelByRoleId, TenantList } from '@types';
@@ -58,6 +58,12 @@ const TenantChannelDropdownFormFieldComponent = forwardRef<
   useEffect(() => {
     if (options && options.length === 1) {
       onChange(options[0].value);
+      return;
+    }
+
+    const findOption = options.find((o) => o.value === value);
+    if (findOption) {
+      onChange(findOption.value);
       return;
     }
     onChange('');
