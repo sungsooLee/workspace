@@ -1,39 +1,38 @@
-import { useState, useEffect, useRef, MouseEvent } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
-import { createColumnHelper, ColumnDef } from '@tanstack/react-table';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 
 import {
-  Input,
-  ContentsRow,
   Button,
+  ChipListModalSelectorFormField,
+  ContentsRow,
+  FormSubTitle,
   GridBox,
-  useGridBox, ChipListModalSelectorFormField,
+  Input,
+  useGridBox,
 } from '@learnway/ui';
 import {
-  DynamicFormConfig,
-  useDynamicForm,
   CODE_GROUP,
+  DynamicFormConfig,
+  SearchBoxConfig,
+  useDynamicForm,
   useSearchBox,
-  SearchBoxConfig, getCodeLabel, useCodeStore,
 } from '@learnway/hooks';
 
 import {
-  FormRow,
-  FormSubTitle,
-  LinkBox,
+  ChannelListChoiceModal,
   ContentsButtons,
-  ChannelListChoiceModal, UserChoiceModal,
+  FormRow,
+  GridExcelUploadButton,
+  LinkBox,
+  MainContents,
+  PageContainer,
+  UserChoiceModal,
 } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
-
-import {
-  GridExcelUploadButton,
-} from '@shared/ui';
-
-import { MainContents, PageContainer } from '@shared/ui';
 import { useFetchUserGroupDetail } from '@entities/user-group';
 import { FormDisplay } from '@features/form';
 import { useFetchAuthUser } from '@learnway/auth/entities';
@@ -57,7 +56,9 @@ function RouteComponent() {
 
   const { data: loginUser } = useFetchAuthUser();
   // 상세
-  const { data: userGroupData, refetch } = useFetchUserGroupDetail(routerState.location.state?.userGroupId);
+  const { data: userGroupData, refetch } = useFetchUserGroupDetail(
+    routerState.location.state?.userGroupId,
+  );
 
   const [tenantInfo, setTenantInfo] = useState<Tenant>();
 
@@ -106,15 +107,18 @@ function RouteComponent() {
 
   const handleOnSubmit = async (formData: any) => {
     console.log('data {} => ', formData);
-    console.log('userList {} => ', getManualValues())
+    console.log('userList {} => ', getManualValues());
     const payload = {
       userGroupOriginType: formData.userGroupOriginType,
-      userGroupOriginMappingId: formData.userGroupOriginType === 'PERSONAL' ? formData.personName[0].uuid : formData.channelName[0].channelUuid,
+      userGroupOriginMappingId:
+        formData.userGroupOriginType === 'PERSONAL'
+          ? formData.personName[0].uuid
+          : formData.channelName[0].channelUuid,
       userGroupName: formData.userGroupName,
       tenantId: tenantInfo?.tenantId,
       isUsed: formData.isUsed,
       assignmentType: formData.assignmentType,
-      userList: "유저목록"
+      userList: '유저목록',
     };
     console.log('payload {} => ', payload);
   };
@@ -133,12 +137,12 @@ function RouteComponent() {
   }, [userGroupData]);
 
   useEffect(() => {
-    console.log('### loginUser', loginUser)
-    if( loginUser ) {
-      setTenantInfo(loginUser.activeTenant)
+    console.log('### loginUser', loginUser);
+    if (loginUser) {
+      setTenantInfo(loginUser.activeTenant);
       setValue('tenantName', loginUser.activeTenant?.tenantName);
     }
-  }, [loginUser])
+  }, [loginUser]);
 
   return (
     <PageContainer>
@@ -172,7 +176,10 @@ function RouteComponent() {
             />
           </ContentsRow>
 
-          <FormDisplay provider={provider} dependencies={[{ name: 'userGroupOriginType', value: 'CHANNEL' }]}>
+          <FormDisplay
+            provider={provider}
+            dependencies={[{ name: 'userGroupOriginType', value: 'CHANNEL' }]}
+          >
             <ContentsRow>
               <FormRow
                 provider={provider}
@@ -195,7 +202,10 @@ function RouteComponent() {
               />
             </ContentsRow>
           </FormDisplay>
-          <FormDisplay provider={provider} dependencies={[{ name: 'userGroupOriginType', value: 'PERSONAL' }]}>
+          <FormDisplay
+            provider={provider}
+            dependencies={[{ name: 'userGroupOriginType', value: 'PERSONAL' }]}
+          >
             <ContentsRow>
               <FormRow
                 provider={provider}
@@ -230,8 +240,10 @@ function RouteComponent() {
         <GridBox
           showAdd
           showRemove
-          excelButtons={ (userGroupData && userGroupData.assignmentType === 'DIRECT_USER_BASED')
-            && <GridExcelUploadButton />}
+          excelButtons={
+            userGroupData &&
+            userGroupData.assignmentType === 'DIRECT_USER_BASED' && <GridExcelUploadButton />
+          }
           config={gManualConfig}
           columns={manualColumns}
         />
@@ -314,7 +326,7 @@ const formConfig: DynamicFormConfig = {
           },
           message: t('LABEL.form.validation.needInput', { code: t('유저그룹명') }),
         },
-      ]
+      ],
     },
     assignmentType: {
       format: 'string',
@@ -325,7 +337,7 @@ const formConfig: DynamicFormConfig = {
     },
     personName: {
       required: (values) => values.userGroupOriginType === 'PERSONAL',
-    }
+    },
   },
 };
 
@@ -340,7 +352,7 @@ const searchManualConfig = (): SearchBoxConfig => ({
         format: 'object',
         presetOptionLabel: t('LABEL.form.label.select'),
         optionsConfig: {
-            codeGroup: CODE_GROUP['manual.company.companyCode'],
+          codeGroup: CODE_GROUP['manual.company.companyCode'],
         },
         dropdownConfig: {
           onchange: () => {
@@ -375,7 +387,7 @@ const gridManualConfig = {
     page: 0,
     size: 10,
     sort: [],
-  }
+  },
 };
 
 const columnHelper = createColumnHelper<any>();
@@ -405,9 +417,9 @@ const manualColumns = [
         case 'ACTIVE':
           return t('재직');
         case 'SUSPENDED':
-          return t('정직')
+          return t('정직');
         default:
-          return t('휴직')
+          return t('휴직');
       }
     },
     header: t('제직여부'),
@@ -424,9 +436,9 @@ const manualColumns = [
         case 'WAIT':
           return t('대기');
         case 'DORMANT':
-          return t('휴면')
+          return t('휴면');
         default:
-          return t('잠김')
+          return t('잠김');
       }
     },
     header: t('계정상태'),
