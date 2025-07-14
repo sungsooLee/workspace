@@ -88,6 +88,16 @@
           @apply fill-[#131416];
         }
       }
+      &:disabled {
+        @apply bg-[var(--gray1)];
+        .file_title,
+        .file_guide {
+          @apply text-[var(--gray5)];
+        }
+        .icon_upload path {
+          @apply fill-[var(--gray5)];
+        }
+      }
     }
     .input_file {
       @apply absolute left-0 top-0 h-full w-full cursor-pointer bg-transparent opacity-0;

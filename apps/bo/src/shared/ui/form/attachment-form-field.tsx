@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 // IA011 / NLP_BO_PMS_1100_5
 import { forwardRef, useEffect, useState } from 'react';
 import { Attachment } from '@learnway/ui'; // @learnway/ui에서 Attachment 컴포넌트 import
