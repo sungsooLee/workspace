@@ -93,13 +93,9 @@ const ThumbnailImageUploadV2Component = forwardRef<HTMLDivElement, ThumbnailImag
       fileInputRef?.current && fileInputRef.current.click();
     };
 
-    /**
-     * 파일 입력 필드의 `onChange` 이벤트 발생 시 호출되는 핸들러입니다.
-     */
     const handleFilesChange = () => {
       const files = fileInputRef.current?.files;
       if (files?.length) {
-        // setThumbnailFiles(Array.from(files));
         const thumbnailFiles = Array.from(files);
 
         upload(thumbnailFiles);

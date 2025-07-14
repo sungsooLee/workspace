@@ -1,7 +1,6 @@
-import React, { forwardRef, useEffect } from 'react';
-import { ImageOption, ThumbnailImageUploadV2 } from '@learnway/ui'; // @learnway/ui에서 ThumbnailImageUpload 컴포넌트 import
-import { BaseFormFieldProps, FileInfo, S3_PATH_TYPE } from '@learnway/hooks'; // @learnway/hooks에서 폼 필드 기본 props 타입 import
-import { last } from 'lodash';
+import { forwardRef } from 'react';
+import { ThumbnailImageUploadV2 } from '@learnway/ui'; // @learnway/ui에서 ThumbnailImageUpload 컴포넌트 import
+import { BaseFormFieldProps, S3_PATH_TYPE } from '@learnway/hooks'; // @learnway/hooks에서 폼 필드 기본 props 타입 import
 
 /**
  * ThumbnailImageUploadFormField 컴포넌트의 props 인터페이스
