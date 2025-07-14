@@ -42,6 +42,9 @@ const CompanyListComponent = () => {
       cell: (info) =>
         t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.company.CompanyType.${info.getValue()}`),
       enableGrouping: false,
+      meta: {
+        size: 'auto',
+      },
     }),
     columnHelper.accessor('name', {
       header: t('회사명'),
@@ -58,6 +61,9 @@ const CompanyListComponent = () => {
         </Link>
       ),
       enableGrouping: false,
+      meta: {
+        size: 'auto',
+      },
     }),
     columnHelper.accessor('isUsed', {
       header: t('사용여부'),
@@ -65,6 +71,7 @@ const CompanyListComponent = () => {
       enableGrouping: false,
       meta: {
         cellAlign: 'center',
+        size: 'auto',
       },
     }),
     columnHelper.accessor('lastModifiedBy', {
@@ -72,6 +79,9 @@ const CompanyListComponent = () => {
       cell: (info) =>
         info.row.original.isUseLinkageSystem ? '시스템' : info.row.original.lastModifiedBy,
       enableGrouping: false,
+      meta: {
+        size: 'auto',
+      },
     }),
     columnHelper.accessor('modifiedDate', {
       header: t('수정일'),
@@ -85,6 +95,7 @@ const CompanyListComponent = () => {
       enableGrouping: false,
       meta: {
         cellAlign: 'center',
+        size: 'auto',
       },
     }),
   ] as ColumnDef<any, unknown>[];
