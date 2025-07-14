@@ -2,7 +2,7 @@
 
 .start {
   &.footer {
-    @apply body_3_r relative pb-[80px] pt-[48px] text-left text-[var(--gray7)];
+    @apply body_3_r relative bg-[--primary1] pb-[56px] pt-[56px] text-left text-[var(--gray7)];
     .footer_area {
       @apply relative m-auto w-[1440px] px-[40px];
 
@@ -10,38 +10,25 @@
         @apply flex-col;
       }
       .footer_info {
+        @apply flex;
         .logo {
-          @apply block;
+          @apply absolute bottom-[0] right-[0];
           img {
             @apply inline-block h-[30px] w-auto;
           }
         }
         .info_area {
-          @apply mt-[24px];
           .info_menu ul {
-            @apply flex gap-[12px];
+            @apply flex gap-[28px];
             > li {
-              @apply label-xl-b relative pl-[12px] text-[var(--gray35)];
-              &::before {
-                @apply absolute left-[0] top-[0] block h-[16px] w-[1px] bg-[var(--gray75)];
-                content: '';
-              }
-              &:first-child {
-                @apply pl-[0];
-                &::before {
-                  @apply hidden;
-                }
-              }
+              @apply text-[var(--gray5)];
             }
           }
           .info_box {
-            @apply mt-[12px];
-            .info {
-              @apply label-lg text-[var(--gray35)];
-            }
+            @apply mt-[24px];
 
             .space {
-              @apply mr-[20px];
+              @apply mr-[10px];
             }
 
             .address {
@@ -50,7 +37,7 @@
               }
             }
             .copyright {
-              @apply label-lg mt-[12px] text-[var(--gray65)];
+              @apply mt-[8px];
             }
           }
         }

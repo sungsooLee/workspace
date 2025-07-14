@@ -165,6 +165,9 @@ const columns = [
     header: t('그룹'),
     cell: (info) =>
       t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.company.CompanyType.${info.getValue()}`),
+    meta: {
+      size: 'auto',
+    },
   }),
   columnHelper.accessor('name', {
     header: t('회사명'),
@@ -179,6 +182,9 @@ const columns = [
         {info.row.original.name}
       </Link>
     ),
+    meta: {
+      size: 'auto',
+    },
   }),
   columnHelper.accessor('isUsed', {
     header: t('회사정보 사용'),
@@ -188,6 +194,9 @@ const columns = [
     header: t('수정자'),
     cell: (info) =>
       info.row.original.isUseLinkageSystem ? '시스템' : info.row.original.lastModifiedBy,
+    meta: {
+      size: 'auto',
+    },
   }),
   columnHelper.accessor('modifiedDate', {
     header: t('수정일'),
@@ -195,5 +204,8 @@ const columns = [
       info.getValue() === null
         ? ''
         : getDateToString(new Date(info.row.original.modifiedDate), DATE_TIME_FORMAT.DATETIME_SEC),
+    meta: {
+      size: 'auto',
+    },
   }),
 ] as ColumnDef<any, unknown>[];

@@ -11,6 +11,9 @@
     &:focus {
       @apply !border-transparent !outline-none;
     }
+    &[class*='lg'] {
+      @apply !h-[44px] !min-h-[44px];
+    }
   }
 
   .clear {

@@ -69,6 +69,12 @@
             &:nth-child(n + 3) {
               @apply mt-[8px];
             }
+            &.full {
+              @apply w-full;
+              & + li {
+                @apply ml-0;
+              }
+            }
           }
         }
       }
