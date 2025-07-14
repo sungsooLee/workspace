@@ -11,7 +11,7 @@ import {
   InputModalSelectorFormField,
   useModal,
 } from '@learnway/ui';
-import { HtmlVideoDetailRes, HtmlVideoMetadataRes, ProcessingStatus, type Tag } from '@types';
+import { HtmlVideoDetailRes, HtmlVideoMetadataRes, ProcessingStatus, Tag } from '@types';
 import { useUpdateHTML5Metadata } from '@entities/learning-resource';
 import {
   ChannelListChoiceModal,

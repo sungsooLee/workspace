@@ -188,15 +188,7 @@ export interface HtmlVideoMetadataRes extends HtmlVideoMetadataReq {
   resource?: Resource;
 }
 
-export interface HtmlVideoDetailRes extends GetContentDetailRes {
-  startFile: string;
-  startFileUrl: string;
-  resource?: {
-    resourceId: number;
-    startFile: string;
-    startFileUrl: string;
-  };
-}
+export type HtmlVideoDetailRes = GetContentDetailRes;
 
 export interface HtmlVideoFileChangeReq {
   contentUuid: string;

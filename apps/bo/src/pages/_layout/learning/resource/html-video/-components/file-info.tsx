@@ -9,6 +9,7 @@ import { useChangeHTML5VideoFile } from '@entities/learning-resource';
 import defaultImage from '@assets/images/thumb/img_thumb_default.jpg';
 import { ChannelChoiceModal } from '@shared/ui';
 import { LearningResourceFileUploadModal } from '@features/learning-resource';
+import { PreviewLearningWindow } from '@features/learning-resource/learning-resource-management/ui/preview-learning-window';
 
 import movieStyles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
 import styles from '../html-detail.module.css';
@@ -84,6 +85,13 @@ const FileInfoComponent = ({ contentUuid, uuid, mode }: FileInfoProps) => {
     changeFile({ contentUuid, fileUuid: uploadedFileUuid });
   };
 
+  const openHTMLVideoPreviewPopup = useCallback(() => {
+    openModal({
+      width: 'full',
+      content: <PreviewLearningWindow contentUuid={contentUuid} />,
+    });
+  }, [contentUuid]);
+
   useEffect(() => {
     (async () => await initOrRenewFileInfo())();
   }, [fileUuid]);
@@ -108,7 +116,11 @@ const FileInfoComponent = ({ contentUuid, uuid, mode }: FileInfoProps) => {
         </li>
         {mode === 'complete' && (
           <li>
-            <Button className={movieStyles.btn_text} label={t('미리보기')} />
+            <Button
+              className={movieStyles.btn_text}
+              label={t('미리보기')}
+              onClick={openHTMLVideoPreviewPopup}
+            />
           </li>
         )}
       </ul>
