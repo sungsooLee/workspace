@@ -62,37 +62,34 @@ const imageFileUrl =
   'https://images.pexels.com/photos/842711/pexels-photo-842711.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2';
 
 function RouteComponent() {
-  const { open: openModal } = useModal();
+  const { alert, open: openModal, confirm: openConfirm } = useModal();
   const [organizations, setOrganizations] = useState<any>([]);
   const { provider, onSubmit, control, getValues, updateFormData, onFormChange, watch } =
     useDynamicForm(formConfig);
 
   const handleLabelUpdate = async () => {
+    const confirmOk = await openConfirm('i18n-resource-ko.json 파일을 label에 추가 하겠습니까?');
+    if (!confirmOk) return;
+
     const langPath = jsonToPaths(langCodes.LABEL);
-    const data: any[] = [];
-    let rowNum = 1;
+    let insertCount = 0;
     for (const item of langPath) {
-      const result = await TranslationService.fetchTranslationExists({
-        keyTypeCode: 'LABEL',
-        messageCode: item.path,
-      });
-      if (!result) {
-        const row = [rowNum.toString(), 'LABEL', item.path, item.value, item.value];
-        data.push(row);
-        rowNum++;
+      const labelPostData = {
+        labelMessageMultilingulKey: item.path,
+        labelMessageType: 'LABEL',
+        labelMessageName: item.value,
+        labelMessageDesc: item.value,
+        isUsed: true,
+        isDeleted: false,
+      };
+      const data = await LabelMessagesService.fetchAll(labelPostData);
+
+      if (data.numberOfElements === 0) {
+        insertCount++;
+        await LabelMessagesService.create(labelPostData);
       }
     }
-    const csvContent = data
-      .map((row) => row.map((item: string) => `"${item.replace(/\n/gi, '\\n')}"`).join(','))
-      .join('\n');
-    const blob = new Blob([csvContent], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'data.csv';
-    link.click();
-    URL.revokeObjectURL(url);
-    link.remove();
+    await alert(`LABEL 하위 코드 ${insertCount}개를 추가 하였습니다.`);
   };
 
   const selectedThumbnail1 = watch('selectedThumbnail1');
