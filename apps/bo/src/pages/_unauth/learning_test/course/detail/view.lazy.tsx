@@ -130,7 +130,7 @@ function RouteComponent() {
 
   return (
     <form>
-      <PageContainer>
+      <PageContainer hideOutLine={true}>
         <ContentsButtons>
           <ToggleButtonGroup
             options={[
@@ -187,17 +187,18 @@ function RouteComponent() {
             type="button"
             variant="primary"
             size="sm"
-            label={'저장'}
+            label={'저장2'}
             onClick={handleSaveClick}
           />
         </ContentsButtons>
         <MainContents>
           <Tabs
-            type={'progress'}
+            type={'fill'}
             size={'sm'}
             items={tabItems}
             onTabChange={handleTabChange}
             selectedTabKey={activeTab}
+            showContentBorder={true}
           />
         </MainContents>
       </PageContainer>

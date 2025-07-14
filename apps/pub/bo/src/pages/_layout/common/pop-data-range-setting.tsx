@@ -15,9 +15,9 @@ import {
   Switch,
   Tooltip,
   useModal,
+  FormSubTitle,
 } from '@learnway/ui';
 import { IcoAlertCircle, IcoFormRequired } from '@learnway/icons';
-import { FormSubTitle } from '../../../../../../bo/src/shared/ui';
 
 /* style */
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form module css

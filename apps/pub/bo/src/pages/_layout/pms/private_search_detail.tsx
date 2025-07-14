@@ -2,12 +2,19 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import { Input, RadioGroup, ContentsRow, PhoneNumber, Textarea, ChipList } from '@learnway/ui';
+import {
+  Input,
+  RadioGroup,
+  ContentsRow,
+  PhoneNumber,
+  Textarea,
+  ChipList,
+  FormSubTitle,
+} from '@learnway/ui';
 
 /* style */
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import { FormSubTitle } from '../../../../../../bo/src/shared/ui';
 import { ContentsHistoryInfoFormField } from '../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
 
 export const Route = createFileRoute('/_layout/pms/private_search_detail')({

@@ -2,7 +2,6 @@
 import { FC, useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import { FormSubTitle } from '../../../../../../bo/src/shared/ui/form';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import {
   Button,
@@ -25,6 +24,7 @@ import {
   ThumbnailImageUpload,
   ImageOption,
   ChipList,
+  FormSubTitle,
 } from '@learnway/ui';
 
 import { IcoAlertCircle, IcoFormRequired, IcoRefresh02, IcoSearch } from '@learnway/icons';
@@ -897,7 +897,7 @@ function RouteComponent() {
         <hr className={styles.vertical_line} />
         {/* sub_contents */}
         <div className={styles.sub_contents}>
-          <FormSubTitle label={'시험지'} />
+          <FormSubTitle label={'시험지'} lineType={'light'} />
           {/* btn_list */}
           <ul className={movieInfoStyles.btn_list}>
             {buttons.map((btn, index) => (

@@ -1,7 +1,7 @@
+/* eslint-disable no-restricted-imports */
 /* eslint-disable @nx/enforce-module-boundaries */
 import { FC, useState } from 'react';
 import { cn } from '@learnway/shared';
-import { FormSubTitle } from '../../../../../../../bo/src/shared/ui/form';
 import {
   Button,
   ContentsRow,
@@ -16,6 +16,7 @@ import {
   ModalFooter,
   Dropdown,
   useModal,
+  FormSubTitle,
 } from '@learnway/ui';
 import { ContentsHistoryInfoFormField } from '../../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
 import { IcoFormRequired, IcoRefresh02, IcoSearch } from '@learnway/icons';

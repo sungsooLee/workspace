@@ -111,7 +111,7 @@ const ThumbnailPublicUploadComponent = forwardRef<HTMLDivElement, ThumbnailImage
           const { ext } = splitFileName(file.name);
           const serverFileName = ext ? fileUuid + '.' + ext : fileUuid;
           formData.append('multipartFile', file);
-          formData.append('reposType', 'S3'); // S3 || HMG
+          formData.append('storageType', 'S3'); // S3 || HMG
           formData.append('filePath', `${s3Path}${detailPath}/${serverFileName}`); // file Path: 파일경로: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명) ex public/board/thumbnail/2025/06/02/thumbnail.jpg
           const thumbnailImageInfo = await uploadImageFile(formData);
           return {

@@ -45,6 +45,7 @@ import {
   ThumbnailImageUpload,
   Tooltip,
   useModal,
+  FormSubTitle,
 } from '@learnway/ui';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import {
@@ -57,7 +58,6 @@ import {
   IcoDelete04,
   IcoLoading,
 } from '@learnway/icons';
-import { FormSubTitle } from '../../../../../../bo/src/shared/ui/form';
 
 /* images */
 import mediaImg from '../../../assets/images/temp/img_temp_media.jpg';

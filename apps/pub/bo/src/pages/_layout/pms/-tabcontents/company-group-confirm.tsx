@@ -13,9 +13,9 @@ import {
   Button,
   Divider,
   GridBox,
+  FormSubTitle,
 } from '@learnway/ui';
 import { SectionLayout } from '../../-components/section-layout';
-import { FormSubTitle } from '../../../../../../../bo/src/shared/ui/form';
 
 /* style */
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
