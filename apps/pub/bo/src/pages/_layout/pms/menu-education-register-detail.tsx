@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-imports */
 /* eslint-disable @nx/enforce-module-boundaries */
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
@@ -5,7 +6,6 @@ import { cn } from '@learnway/shared';
 import { IcoRefresh02, IcoSearch, IcoFormRequired, IcoTrash03, IcoPpt } from '@learnway/icons';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { ContentsHistoryInfoFormField } from '../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
-import { FormSubTitle } from '../../../../../../bo/src/shared/ui/form';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
@@ -29,6 +29,7 @@ import {
   Textarea,
   RadioGroupFormField,
   Divider,
+  FormSubTitle,
 } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
