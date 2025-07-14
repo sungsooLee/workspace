@@ -162,7 +162,7 @@ function RouteComponent() {
       </ContentsButtons>
       <MainContents>
         <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
-          <FormSubTitle label={t('유저그룹 기본 정보')} lineType="dark" />
+          <FormSubTitle label={t('유저그룹 기본 정보')} />
           <ContentsRow>
             <FormRow provider={provider} name={'userGroupOriginType'} />
           </ContentsRow>
