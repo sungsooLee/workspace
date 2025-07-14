@@ -12,7 +12,6 @@ import {
 } from '@learnway/icons';
 import { EducationPlacePopup } from '../../../features/layout';
 
-import definitionListStyles from '../../../pages/_layout/course-introduction/definition-list.module.css';
 import bulletStyles from '../../../shared/ui/list/bullet.module.css';
 import styles from './education.module.css';
 

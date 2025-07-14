@@ -1,20 +1,16 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 
 import { cn, formatDate, formatPhoneNumber } from '@learnway/shared';
-import { FormSubTitle } from '@shared/ui/form';
-import { Avatar } from '@learnway/ui';
+import { Avatar, FormSubTitle } from '@learnway/ui';
 
 import { useFetchAuthUser, useUserDetail } from '@learnway/auth/entities';
-import { useFetchUser } from '@entities/users/service/users.hook';
 import { useCreation } from 'ahooks';
 
-import imgLogo from '@assets/images/temp/img_temp_company_logo.png';
-
 /* style */
+import { IcoBuilding01 } from '@learnway/icons';
 import contentsStyles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
 import styles from './my-page.module.css';
-import { IcoBuilding01 } from '@learnway/icons';
 
 export const AvataFallback = ({ name }: { name?: string }) => {
   const firstUnit = useCreation(() => {

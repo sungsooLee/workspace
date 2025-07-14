@@ -1,34 +1,34 @@
-import React, { useRef, useState, useImperativeHandle, forwardRef, useEffect } from 'react';
-import { useWatch } from 'react-hook-form';
-import { useRouter, useRouterState } from '@tanstack/react-router';
-import { t } from 'i18next';
-import { queryOptions, mutateOptions } from '@entities/instructor/service/instructor.queries';
-import { useQueryClient } from '@tanstack/react-query';
-import dayjs from 'dayjs';
 import {
+  useCreateInstructor,
   useCreateTutor,
   useCreateUser,
-  useCreateInstructor,
-  useUpdateInstructor,
   useDeleteInstructor,
+  useUpdateInstructor,
 } from '@entities/instructor/service/instructor.hook';
+import { queryOptions } from '@entities/instructor/service/instructor.queries';
+import { useQueryClient } from '@tanstack/react-query';
+import { useRouter, useRouterState } from '@tanstack/react-router';
+import dayjs from 'dayjs';
+import { t } from 'i18next';
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { useWatch } from 'react-hook-form';
 
+import { CODE_GROUP, DynamicFormConfig, S3_PATH, useDynamicForm } from '@learnway/hooks';
 import {
   ContentsRow,
-  useModal,
-  RadioGroupFormField,
-  Input,
   DatePicker,
+  FormSubTitle,
+  Input,
   InputModalSelectorFormField,
-  TextareaFormField,
   PhoneNumberFormField,
+  RadioGroupFormField,
+  TextareaFormField,
+  useModal,
 } from '@learnway/ui';
-import { DynamicFormConfig, useDynamicForm, CODE_GROUP, S3_PATH } from '@learnway/hooks';
 
-import { FormRow, FormSubTitle, AttachmentFormField, DateRangeFormField } from '@shared/ui';
-import { FormDisplay } from '@features/form/ui/form-display';
 import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
-import { UserChoiceModal } from '@shared/ui';
+import { FormDisplay } from '@features/form/ui/form-display';
+import { AttachmentFormField, DateRangeFormField, FormRow, UserChoiceModal } from '@shared/ui';
 
 import { SingleAttachmentFormField } from '@shared/ui/form/single-attachment-form-field';
 import { EnFormMode, EnPageMode } from '@types';

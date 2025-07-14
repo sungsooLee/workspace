@@ -1,9 +1,9 @@
-import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import { ContentsRow, ChipListModalSelectorFormField, Input } from '@learnway/ui';
-import { FormRow, FormSubTitle } from '@shared/ui';
-import { DynamicFormConfig, useDynamicForm, useSearchBox, SearchBoxConfig } from '@learnway/hooks';
-import { FormDisplay } from '@features/form/ui/form-display';
 import { formUtils } from '@entities/form-utils';
+import { FormDisplay } from '@features/form/ui/form-display';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { cn } from '@learnway/shared';
+import { ChipListModalSelectorFormField, ContentsRow, FormSubTitle, Input } from '@learnway/ui';
+import { FormRow } from '@shared/ui';
 import { t } from 'i18next';
 
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form

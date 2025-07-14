@@ -1,0 +1,16 @@
+/* segment-button.module.css */
+.start {
+  @apply mx-[16px] inline-flex overflow-hidden rounded-full border border-solid border-[var(--primary3)] bg-white;
+  .btn {
+    @apply inline-flex h-[32px] items-center bg-white px-[16px] text-[var(--primary3)];
+    &.active {
+      @apply !bg-[var(--primary3)] !text-white;
+    }
+    &:nth-child(1) {
+      @apply rounded-r-full;
+    }
+    &:nth-last-child(1) {
+      @apply rounded-l-full;
+    }
+  }
+}

@@ -1,20 +1,10 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
-import { t } from 'i18next';
-import { useTranslation } from 'react-i18next';
 import { useRouterState } from '@tanstack/react-router';
+import { t } from 'i18next';
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 
-import {
-  Button,
-  CheckboxGroupFormField,
-  ChipListModalSelectorFormField,
-  ContentsRow,
-  Switch,
-  TextareaFormField,
-  Tooltip,
-  useModal,
-} from '@learnway/ui';
 import {
   CODE_GROUP,
   DynamicFormConfig,
@@ -22,19 +12,30 @@ import {
   useCodeStore,
   useDynamicForm,
 } from '@learnway/hooks';
+import {
+  Button,
+  CheckboxGroupFormField,
+  ChipListModalSelectorFormField,
+  ContentsRow,
+  FormSubTitle,
+  Switch,
+  TextareaFormField,
+  Tooltip,
+  useModal,
+} from '@learnway/ui';
 
-import { FormSubTitle, FormRow } from '@shared/ui';
+import { FormRow } from '@shared/ui';
 
-import { isEqual } from 'lodash';
-import { CompanyChoiceModal, UserChoiceModal } from '@shared/ui';
-import { DuplicateCheckInputFormField, DuplicateState, FormDisplay } from '@features/form';
 import { useFetchTenant, useUpdateTenant } from '@entities/tenant';
 import TenantService from '@entities/tenant/api/tenant';
-import { EnDeviceType, EnUseCategory } from '@types';
-import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
+import { DuplicateCheckInputFormField, DuplicateState, FormDisplay } from '@features/form';
 import { IcoAlertCircle } from '@learnway/icons';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { cn } from '@learnway/shared';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
+import { CompanyChoiceModal, UserChoiceModal } from '@shared/ui';
+import { EnDeviceType, EnUseCategory } from '@types';
+import { isEqual } from 'lodash';
 
 /**
  * 화면번호: NLP_BO_TMS_1002 (테넌트기본 정보)

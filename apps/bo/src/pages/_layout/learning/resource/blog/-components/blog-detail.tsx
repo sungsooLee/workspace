@@ -1,4 +1,4 @@
-import React, { Dispatch, forwardRef, SetStateAction, useCallback, useEffect } from 'react';
+import React, { Dispatch, forwardRef, SetStateAction, useEffect, useMemo } from 'react';
 import { useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import dayjs from 'dayjs';
@@ -13,11 +13,8 @@ import {
 import { Company, User } from '@learnway/types';
 import { cn, isEmptyData } from '@learnway/shared';
 import {
-  CODE_GROUP,
   DynamicFormConfig,
   DynamicFormValues,
-  ThumbnailFileValue,
-  useCodeStore,
   useDynamicForm,
   useFileManager,
 } from '@learnway/hooks';
@@ -27,7 +24,6 @@ import type { BlogDetailRes, BlogPostRes, BlogUpdateReq, Tag } from '@types';
 import {
   ChannelListChoiceModal,
   CompanyChoiceModal,
-  ContentsHistoryInfoFormField,
   FormGroup,
   FormRow,
   FormRow2,
@@ -37,11 +33,12 @@ import {
 import { FormDisplay } from '@features/form';
 import { DateRangePickerFormField, DurationTimeFormField } from '@features/form/ui';
 import { useCreateBlogContent, useUpdateBlogContent } from '@entities/learning-resource';
-import { getHourValueFromTime } from '../../-common/common';
+import { getHourValueFromTime, useRoleInfo } from '../../-common/common';
 import { mediaContentFormConfig } from '../../-common/content-form-config';
 import { getPayloadFromBlogSubmit } from '../-common/form-submit';
 
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import { ContentsHistoryInfo } from '@features/learning-resource/learning-resource-management/ui/contents-history-info';
 
 type BlogDetailProps = {
   tenantId: number;
@@ -93,7 +90,7 @@ const BlogDetailComponent = forwardRef<HTMLFormElement, BlogDetailProps>(
       },
     });
 
-    const dynamicFormConfig = formConfig(hasMapping);
+    const dynamicFormConfig = useMemo(() => formConfig(hasMapping), [hasMapping]);
 
     const handleOnSubmit = async (
       data: DynamicFormValues<typeof dynamicFormConfig>,
@@ -119,23 +116,11 @@ const BlogDetailComponent = forwardRef<HTMLFormElement, BlogDetailProps>(
       }
     };
 
-    const codeStore = useCodeStore();
     const { data: loginUser } = useFetchAuthUser();
 
-    const initRoleInfo = useCallback(async () => {
-      const myActiveRoleType = loginUser?.activeRole?.roleType;
-
-      const roleTypes = await codeStore.getCode(CODE_GROUP['pms.role.RoleType']);
-      const channelMemberRoleTypes = roleTypes
-        .map((role) => role.cdId)
-        .filter((cdId: string) => ['CHANNEL_OWNER', 'CHANNEL_MEMBER'].includes(cdId));
-      // const myChannelAuths = loginUser?.myRoles?.map((item: RoleInfo) => item.channelScope) || [];
-
-      // 등록자가 채널소유자 or 채널구성원일 경우 default로 등록자 정보 입력
-      if (
-        !isEmptyData(loginUser?.activeRole) &&
-        channelMemberRoleTypes.includes(myActiveRoleType)
-      ) {
+    const { initRoleInfo } = useRoleInfo({
+      loginUser,
+      onChannelMemberCallback: () => {
         updateFormData({
           ...getValues(),
           coordinatorUuid: loginUser?.uuid,
@@ -143,8 +128,8 @@ const BlogDetailComponent = forwardRef<HTMLFormElement, BlogDetailProps>(
           coordinatorTelCountryCode: loginUser?.phoneNumberNationCode,
           coordinatorTelNo: loginUser?.phoneNumber,
         });
-      }
-    }, [codeStore]);
+      },
+    });
 
     useEffect(() => {
       (async () => {
@@ -154,8 +139,6 @@ const BlogDetailComponent = forwardRef<HTMLFormElement, BlogDetailProps>(
 
     useEffect(() => {
       if (mode === 'update' && !isEmptyData(blogInfo)) {
-        console.log(blogInfo);
-
         updateFormData({
           ...getValues(),
           contentName: blogInfo.contentName,
@@ -402,7 +385,7 @@ const BlogDetailComponent = forwardRef<HTMLFormElement, BlogDetailProps>(
         {/* 이력정보 */}
         {mode === 'update' && (
           <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
-            <ContentsHistoryInfoFormField />
+            <ContentsHistoryInfo detail={blogInfo ?? {}} />
           </ContentsRow>
         )}
       </form>

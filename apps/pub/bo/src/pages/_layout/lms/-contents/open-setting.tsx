@@ -2,7 +2,6 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import { FC } from 'react';
 import { cn } from '@learnway/shared';
-import { FormSubTitle } from '../../../../../../../bo/src/shared/ui';
 import {
   ContentsRow,
   DatePicker,
@@ -12,6 +11,7 @@ import {
   Tooltip,
   ChipList,
   SelectOption,
+  FormSubTitle,
 } from '@learnway/ui';
 import { IcoAlertCircle, IcoFormRequired } from '@learnway/icons';
 

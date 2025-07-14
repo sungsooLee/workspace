@@ -241,6 +241,12 @@
       }
       & > [role='tabpanel'] {
         @apply min-h-[calc(100vh-312px)] rounded-[8px] border border-solid border-[var(--gray4)] bg-white px-[32px] pb-[40px] pt-[24px];
+        [class*='nlp-stats-summary'] {
+          @apply mt-[8px];
+          & + [class*='split_panel'] {
+            @apply mt-[32px];
+          }
+        }
       }
     }
     .count {

@@ -8,6 +8,7 @@ import type { com_ever_edu_pms_channel_dto_req_ChannelRequestApprovalRejectReqDt
 import type { com_ever_edu_pms_channel_dto_req_ChannelSaveReqDto } from '../models/com_ever_edu_pms_channel_dto_req_ChannelSaveReqDto';
 import type { com_ever_edu_pms_channel_dto_res_ChannelDetailResDto } from '../models/com_ever_edu_pms_channel_dto_res_ChannelDetailResDto';
 import type { com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto } from '../models/com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto';
+import type { com_ever_edu_pms_channel_dto_res_ChannelResDto } from '../models/com_ever_edu_pms_channel_dto_res_ChannelResDto';
 import type { com_ever_edu_pms_company_dto_req_CompanyCreateReqDto } from '../models/com_ever_edu_pms_company_dto_req_CompanyCreateReqDto';
 import type { com_ever_edu_pms_company_dto_req_CompanyDeptDeleteReqDto } from '../models/com_ever_edu_pms_company_dto_req_CompanyDeptDeleteReqDto';
 import type { com_ever_edu_pms_company_dto_req_CompanyDeptDndReqDto } from '../models/com_ever_edu_pms_company_dto_req_CompanyDeptDndReqDto';
@@ -74,6 +75,7 @@ import type { com_ever_edu_pms_tenant_dto_req_TenantCreateReqDto } from '../mode
 import type { com_ever_edu_pms_tenant_dto_req_TenantPropertiesUpdateReqDto } from '../models/com_ever_edu_pms_tenant_dto_req_TenantPropertiesUpdateReqDto';
 import type { com_ever_edu_pms_tenant_dto_req_TenantUpdateReqDto } from '../models/com_ever_edu_pms_tenant_dto_req_TenantUpdateReqDto';
 import type { com_ever_edu_pms_tenant_dto_res_TenantResDto$DetailOnAdmin } from '../models/com_ever_edu_pms_tenant_dto_res_TenantResDto$DetailOnAdmin';
+import type { com_ever_edu_pms_tenant_dto_res_TenantResDto$ListOnAdmin } from '../models/com_ever_edu_pms_tenant_dto_res_TenantResDto$ListOnAdmin';
 import type { com_ever_edu_pms_tenant_dto_res_TenantResDto$PropertiesResDto } from '../models/com_ever_edu_pms_tenant_dto_res_TenantResDto$PropertiesResDto';
 import type { com_ever_edu_pms_tenant_dto_res_TenantResDto$SimpleList } from '../models/com_ever_edu_pms_tenant_dto_res_TenantResDto$SimpleList';
 import type { com_ever_edu_pms_terms_dto_req_TermsSaveReqDto$TermsDto } from '../models/com_ever_edu_pms_terms_dto_req_TermsSaveReqDto$TermsDto';
@@ -2096,8 +2098,8 @@ export class BoService {
         });
     }
     /**
-     * 채널신청 정보 결재(반려) 처리
-     * 채널신청 정보를 반려 처리한다.
+     * 채널신청 정보 반려 처리
+     * 채널신청 정보를 반려 처리한다. 채널 개설 불가
      * @param requestBody
      * @returns number OK
      * @throws ApiError
@@ -2121,8 +2123,8 @@ export class BoService {
         });
     }
     /**
-     * 채널신청 정보 결재(승인/접수) 처리
-     * 채널신청 정보를 승인(접수) 처리한다.
+     * 채널신청 정보 접수 처리
+     * 채널신청 정보 접수 처리한다. 채널 개설이 가능한 상태
      * @param requestBody
      * @returns number OK
      * @throws ApiError
@@ -3538,6 +3540,31 @@ export class BoService {
         });
     }
     /**
+     * 유저그룹 사용자정의 트리 조회
+     * 유저그룹 사용자정의 트리 조회
+     * @param userGroupName
+     * @returns com_ever_edu_pms_user_dto_res_UserGroupTreeDto OK
+     * @throws ApiError
+     */
+    public static getCustomGroupTree(
+        userGroupName?: string,
+    ): CancelablePromise<com_ever_edu_pms_user_dto_res_UserGroupTreeDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/userGroup/custom-groups-tree',
+            query: {
+                'userGroupName': userGroupName,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
      * 회사별 유저그룹검색 팝업 조회 - 직군/직무/호칭/보직
      * 회사별 유저그룹검색 팝업 조회 - 직군/직무/호칭/보직
      * @param userGroupType
@@ -3671,28 +3698,17 @@ export class BoService {
      * 테넌트 목록 조회 (역활 기준)
      * 테넌트 목록 조회 (역활 기준)
      * @param roleId
-     * @param page Zero-based page index (0..N)
-     * @param size The size of the page to be returned
-     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-     * @returns org_springframework_data_domain_PageCom_ever_edu_pms_tenant_dto_res_TenantResDto$ListOnAdmin OK
+     * @returns com_ever_edu_pms_tenant_dto_res_TenantResDto$ListOnAdmin OK
      * @throws ApiError
      */
     public static getTenantListRole(
         roleId: number,
-        page?: number,
-        size: number = 10,
-        sort?: Array<string>,
-    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_tenant_dto_res_TenantResDto$ListOnAdmin> {
+    ): CancelablePromise<Array<com_ever_edu_pms_tenant_dto_res_TenantResDto$ListOnAdmin>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/tenants/role/{roleId}',
             path: {
                 'roleId': roleId,
-            },
-            query: {
-                'page': page,
-                'size': size,
-                'sort': sort,
             },
             errors: {
                 400: `Bad Request`,
@@ -4163,8 +4179,8 @@ export class BoService {
         });
     }
     /**
-     * 채널신청 목록 조회(popup)
-     * 채널신청 목록 정보를 조회한다.
+     * 채널신청 개설대상 목록 조회(popup)
+     * 채널 신청 후 승인완료되었지만 개설되지 않은 채널신청 목록.
      * @param page Zero-based page index (0..N)
      * @param size The size of the page to be returned
      * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -5104,28 +5120,17 @@ export class BoService {
      * 테넌트 목록 조회 (역활 기준)
      * 테넌트 목록 조회 (역활 기준)
      * @param roleId
-     * @param page Zero-based page index (0..N)
-     * @param size The size of the page to be returned
-     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-     * @returns org_springframework_data_domain_PageCom_ever_edu_pms_channel_dto_res_ChannelResDto OK
+     * @returns com_ever_edu_pms_channel_dto_res_ChannelResDto OK
      * @throws ApiError
      */
     public static selectChannelListRole(
         roleId: number,
-        page?: number,
-        size: number = 10,
-        sort?: Array<string>,
-    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_channel_dto_res_ChannelResDto> {
+    ): CancelablePromise<Array<com_ever_edu_pms_channel_dto_res_ChannelResDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/channel/role/{roleId}',
             path: {
                 'roleId': roleId,
-            },
-            query: {
-                'page': page,
-                'size': size,
-                'sort': sort,
             },
             errors: {
                 400: `Bad Request`,

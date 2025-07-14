@@ -7,6 +7,7 @@ import type { com_ever_edu_global_excel_dto_res_ExcelDownloadReasonResDto } from
 import type { com_ever_edu_pms_file_dto_req_FileCopyInternalReqDto } from '../models/com_ever_edu_pms_file_dto_req_FileCopyInternalReqDto';
 import type { com_ever_edu_pms_file_dto_req_FileGroupCopyInternalReqDto } from '../models/com_ever_edu_pms_file_dto_req_FileGroupCopyInternalReqDto';
 import type { com_ever_edu_pms_file_dto_req_FileGroupInfoReqDto } from '../models/com_ever_edu_pms_file_dto_req_FileGroupInfoReqDto';
+import type { com_ever_edu_pms_file_dto_req_FileGroupSoftCopyInternalReqDto } from '../models/com_ever_edu_pms_file_dto_req_FileGroupSoftCopyInternalReqDto';
 import type { com_ever_edu_pms_file_dto_req_FileInfoListReqDto } from '../models/com_ever_edu_pms_file_dto_req_FileInfoListReqDto';
 import type { com_ever_edu_pms_file_dto_res_FileGroupCopyInternalResDto } from '../models/com_ever_edu_pms_file_dto_res_FileGroupCopyInternalResDto';
 import type { com_ever_edu_pms_file_dto_res_FileInfoInternalResDto } from '../models/com_ever_edu_pms_file_dto_res_FileInfoInternalResDto';
@@ -130,6 +131,38 @@ export class BoFileInternalApiService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/internal/api/v1/file/group/copy',
+            query: {
+                'userUuid': userUuid,
+                'companyId': companyId,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 파일 그룹 복사(파일메타) - Internal API
+     * 파일 그룹을 복사(파일메타)한다.<br>대상 파일그룹 UUID를 지정하지 않으면 신규 그룹을 생성한 후 파일을 복사한다.<BR>
+     * @param userUuid 사용자 UUID
+     * @param companyId 회사번호
+     * @param requestBody
+     * @returns com_ever_edu_pms_file_dto_res_FileGroupCopyInternalResDto OK
+     * @throws ApiError
+     */
+    public static softCopyFileGroup(
+        userUuid: string,
+        companyId: number,
+        requestBody: com_ever_edu_pms_file_dto_req_FileGroupSoftCopyInternalReqDto,
+    ): CancelablePromise<com_ever_edu_pms_file_dto_res_FileGroupCopyInternalResDto> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/internal/api/v1/file/group/copy/soft',
             query: {
                 'userUuid': userUuid,
                 'companyId': companyId,

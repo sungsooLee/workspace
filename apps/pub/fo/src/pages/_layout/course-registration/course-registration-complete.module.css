@@ -1,9 +1,13 @@
 .start {
   &.complete {
-    @apply mx-auto mt-[56px] w-[440px];
-    .success_info {
-      svg {
-        @apply h-[56px] w-[56px];
+    @apply mx-auto mt-[56px] w-[600px];
+    .btn_box {
+      @apply mt-[60px] flex items-start justify-center;
+      button {
+        @apply w-[294px];
+        & + button {
+          @apply ml-[12px];
+        }
       }
     }
   }

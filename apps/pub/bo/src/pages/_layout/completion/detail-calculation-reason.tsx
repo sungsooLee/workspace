@@ -11,11 +11,10 @@ import {
   Input,
   Switch,
   Checkbox,
-  TreeContainer,
+  FormSubTitle,
   SplitPanel,
 } from '@learnway/ui';
 import { MainContents } from '../../../../../../bo/src/shared/ui/layout/slot/main-contents';
-import { FormSubTitle } from '../../../../../../bo/src/shared/ui/form';
 import { IcoMinus, IcoPlus } from '@learnway/icons';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 

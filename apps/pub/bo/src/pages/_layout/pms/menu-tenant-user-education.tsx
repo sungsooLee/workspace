@@ -2,8 +2,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { cn } from '@learnway/shared';
-import { FormSubTitle } from '../../../../../../bo/src/shared/ui/form';
-import { Tabs } from '@learnway/ui';
+import { Tabs, FormSubTitle } from '@learnway/ui';
 
 /* styles */
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';

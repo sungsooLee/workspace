@@ -7,7 +7,6 @@ export const getPayloadFromHtmlMetadataSubmit = (options: {
   // mode: 'draft' | 'complete';
   contentUuid: string;
 }) => {
-  console.log('get payload', options.tenantId, options.contentUuid);
   const contentTime = getTimeValueFromHour(options.data.contentDuration);
 
   const payload: HtmlVideoMetadataReq = {

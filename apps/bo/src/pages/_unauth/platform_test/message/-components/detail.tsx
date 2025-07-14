@@ -1,31 +1,26 @@
-import { useTranslation } from 'react-i18next';
 import {
   Button,
   ContentsRow,
-  DynamicFormField,
+  FormSubTitle,
   RadioGroupFormField,
   TextareaFormField,
   useModal,
 } from '@learnway/ui';
-import React, { useEffect } from 'react';
 import { useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
+import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
-import {
-  DuplicateCheckInputFormField,
-  FormRow,
-  FormSubTitle,
-  SwitchFormField,
-} from '@shared/ui/form';
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
-import { FormInfoArea } from '@shared/ui/form/components/form-info-area';
 import {
   queryOptions,
   useCreateLabelMessage,
   useFetchLabelMessage,
   useUpdateLabelMessage,
 } from '@entities/label-messages';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
+import { DuplicateCheckInputFormField, FormRow, SwitchFormField } from '@shared/ui/form';
+import { FormInfoArea } from '@shared/ui/form/components/form-info-area';
 
 interface MessageDetailProps {
   /**

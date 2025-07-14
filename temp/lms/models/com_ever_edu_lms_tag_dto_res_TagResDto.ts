@@ -5,4 +5,14 @@
 /**
  * 태그 이름 목록
  */
-export type com_ever_edu_lms_tag_dto_res_TagResDto = Record<string, any>;
+export type com_ever_edu_lms_tag_dto_res_TagResDto = {
+    /**
+     * 태그 ID
+     */
+    tagId?: number;
+    /**
+     * 태그
+     */
+    tagName?: string;
+};
+

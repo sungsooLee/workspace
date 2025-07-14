@@ -31,7 +31,7 @@ const NoticeBoxComponent: FC<NoticeComponentProps> = ({
       {/* 📢 아이콘 영역 */}
       {iconVisible && (
         <div className={styles.icon_wrap}>
-          <IcoAnnouncement03 width="32" height="32" stroke="#07287E" />
+          <IcoAnnouncement03 className={styles.icon_announcement} />
         </div>
       )}
 

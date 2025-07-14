@@ -15,10 +15,10 @@ import {
   ModalTitle,
   useModal,
   GridBox,
+  FormSubTitle,
 } from '@learnway/ui';
 import { IcoMinus } from '@learnway/icons';
 import { IcoFormRequired } from '@learnway/icons';
-import { FormSubTitle } from '../../../../../../../bo/src/shared/ui';
 
 /* style */
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';

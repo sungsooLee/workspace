@@ -1,8 +1,7 @@
-import { FC, useState } from 'react';
 import { cn, getRandomId } from '@learnway/shared';
+import { FC, useState } from 'react';
 
-import { FormSubTitle } from '@shared/ui/form';
-import { Button, List } from '@learnway/ui';
+import { Button, FormSubTitle, List } from '@learnway/ui';
 import styles from './banner-list.module.css';
 
 const menuLength = 15;

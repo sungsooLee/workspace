@@ -1,10 +1,9 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { Avatar } from '@learnway/ui';
+import { Avatar, FormSubTitle } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import { FormSubTitle } from '../../../../../../bo/src/shared/ui/form';
 
 /* style */
 import contentsStyles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';

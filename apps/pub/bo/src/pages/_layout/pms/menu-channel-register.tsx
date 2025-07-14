@@ -4,7 +4,6 @@ import { createFileRoute } from '@tanstack/react-router';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { IcoFormRequired } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { FormSubTitle } from '../../../../../../bo/src/shared/ui/form';
 import {
   ContentsRow,
   Button,
@@ -13,6 +12,7 @@ import {
   RadioGroupFormField,
   Switch,
   Tabs,
+  FormSubTitle,
 } from '@learnway/ui';
 import { ContentsHistoryInfoFormField } from '../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
 

@@ -1,14 +1,14 @@
-import { Button, TreeBox, TreeNode } from '@learnway/ui';
-import { ContentsRow, FormRow, FormSubTitle, SectionLayout } from '@shared/ui';
-import { FORM_MODE, FROM_STATUS } from '@shared/const';
+import { IcoMinus } from '@learnway/icons';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
-import { IcoMinus, IcoPlus } from '@learnway/icons';
+import { Button, FormSubTitle, TreeBox, TreeNode } from '@learnway/ui';
+import { FORM_MODE, FROM_STATUS } from '@shared/const';
+import { SectionLayout } from '@shared/ui';
 import { t } from 'i18next';
 import { useState } from 'react';
-import { FormState, NODE_TYPE } from '../types/form.types';
 import { FormRenderer } from '../components/form-renderer';
-import { useTreeButtons } from '../hooks/use-tree-buttons';
 import { useCurriculumForm } from '../hooks/use-curriculum-form';
+import { useTreeButtons } from '../hooks/use-tree-buttons';
+import { FormState, NODE_TYPE } from '../types/form.types';
 
 interface CurriculumDetailProps {
   mode: FORM_MODE;

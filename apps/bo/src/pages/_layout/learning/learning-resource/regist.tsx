@@ -165,7 +165,6 @@ function RouteComponent() {
       // HTML 동영상
       case LEARNING_TYPE.HTML5_VIDEO: {
         uploadHTML5();
-        // router.navigate({ to: '/learning/resource/html-video/regist', replace: true });
         break;
       }
       // 이미지

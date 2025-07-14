@@ -1,8 +1,6 @@
 import { FC } from 'react';
 import { cn } from '@learnway/shared';
-// eslint-disable-next-line @nx/enforce-module-boundaries
-import { FormSubTitle } from '../../../../../../../bo/src/shared/ui/form';
-import { Button, ContentsRow } from '@learnway/ui';
+import { Button, ContentsRow, FormSubTitle } from '@learnway/ui';
 /* style */
 import styles from './banner-info.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';

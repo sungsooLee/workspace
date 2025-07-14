@@ -20,7 +20,6 @@ export * from './ui/form/checkbox-form-field';
 export * from './ui/form/chip-list-form-field';
 export * from './ui/form/components/form-guide-text';
 export * from './ui/form/components/form-info-area';
-export * from './ui/form/components/form-sub-title';
 export * from './ui/form/contents-history-info-form-field';
 export * from './ui/form/custom-form-field';
 export * from './ui/form/duplicate-check-input-form-field';

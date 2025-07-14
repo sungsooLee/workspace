@@ -10,7 +10,7 @@
             @apply !min-w-auto button_bo_4_r !h-[20px] !text-[1.2rem];
           }
           [class*='nlp--checkbox'] {
-            @apply mt-[6px];
+            @apply mt-[5px];
             button {
               &:read-only,
               &:disabled {

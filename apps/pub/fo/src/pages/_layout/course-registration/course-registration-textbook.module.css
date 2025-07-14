@@ -1,16 +1,20 @@
 .start {
   &.course {
-    @apply m-auto w-[780px];
+    @apply m-auto mt-[60px] w-[880px];
     h2 {
-      @apply title_4_b mb-[16px] mt-[24px] text-[var(--gray9)];
+      @apply headline3-b mb-[24px] text-[var(--gray10)];
+    }
+
+    .education {
+      @apply border-[var(--blue50)] pb-[32px];
     }
 
     .input_wrap {
-      @apply mt-[32px] rounded-[16px] border-[1px] border-solid border-[var(--gray4)] p-[24px];
+      @apply mt-[40px] rounded-[16px] border-[1px] border-solid border-[var(--gray90)] p-[32px];
       .input_area {
         .tit_box {
           strong {
-            @apply title_6_b text-[var(--gray8)];
+            @apply headline1-b text-[var(--gray10)];
           }
         }
         .box {
@@ -21,7 +25,7 @@
               @apply pb-0;
             }
             & + div {
-              @apply mt-[16px];
+              @apply mt-[32px];
             }
           }
           .input_box {
@@ -44,9 +48,10 @@
       }
     }
     .notice {
-      @apply mt-[32px] rounded-[16px];
+      @apply mt-[40px] rounded-[12px];
       dd {
         button {
+          @apply label-lg ml-[12px] text-[var(--blue50)] underline;
         }
       }
     }

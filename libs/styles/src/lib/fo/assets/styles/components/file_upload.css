@@ -1,5 +1,4 @@
 /* file_upload.css */
-/* file_upload.css */
 .attach_wrap {
   [class*='info_wrap'] {
     @apply !mb-[8px];
@@ -37,6 +36,20 @@
     }
     [class*='file_title'] {
       @apply !text-[var(--gray10)];
+    }
+  }
+  [class*='attach_area'] {
+    [class*='btn_file'] {
+      &:disabled {
+        @apply !bg-[var(--primary1)];
+        .file_title,
+        .file_guide {
+          @apply !text-[var(--gray75)];
+        }
+        .icon_upload path {
+          @apply fill-[var(--gray75)];
+        }
+      }
     }
   }
 }

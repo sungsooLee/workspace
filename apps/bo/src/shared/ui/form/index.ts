@@ -18,5 +18,4 @@ export * from './form-translation-box';
 // components
 export { FormGuideText } from './components/form-guide-text';
 export { FormInfoArea } from './components/form-info-area';
-export * from './components/form-sub-title';
 export * from './components/form-item';

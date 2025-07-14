@@ -15,9 +15,12 @@ import {
   LearningWindowBaseInfo,
 } from '@learnway/ui';
 import { ScormRteService } from '@entities/learning-resource/api/scorm-rte';
+import { Html5Service } from '@entities/learning-resource/api/html5';
+import { ImageService } from '@entities/learning-resource/api/image';
 import { useVideoWatchLog } from '@entities/learning-resource/service/video.hook';
 import { useGetBlogResource } from '@entities/learning-resource/service/blog.hook';
 import { useGetHtml5Resource } from '@entities/learning-resource/service/html5.hook';
+import { useGetImageResource } from '@entities/learning-resource/service/image.hook';
 
 export const Route = createFileRoute('/_learning/learning-window')({
   component: RouteComponent,
@@ -33,6 +36,7 @@ function RouteComponent() {
   const [videoStart, setVideoStart] = useState<number>(0);
   const [blogConfig, setBlogConfig] = useState<any>();
   const [htmlConfig, setHtmlConfig] = useState<any>();
+  const [imageConfig, setImageConfig] = useState<any>();
 
   const {
     baseInfo,
@@ -42,6 +46,7 @@ function RouteComponent() {
     setBlogInfo,
     setHtmlInfo,
     setEbookInfo,
+    setGalleryInfo,
     setBaseInfo,
     setCurriculum,
     clearInfo,
@@ -53,6 +58,7 @@ function RouteComponent() {
   const { data: videoInfo } = useGetContentDetail(videoConfig?.contentUuid);
   const { data: blogInfo } = useGetBlogResource(blogConfig?.contentUuid);
   const { data: htmlInfo } = useGetHtml5Resource(htmlConfig?.contentUuid);
+  const { data: imageInfo } = useGetImageResource(imageConfig?.contentUuid);
 
   const { watchLog } = useVideoWatchLog();
 
@@ -95,6 +101,11 @@ function RouteComponent() {
     if (!htmlInfo) return;
     setHtmlInfo(htmlInfo);
   }, [htmlInfo]);
+
+  useEffect(() => {
+    if (!imageInfo) return;
+    setGalleryInfo(imageInfo);
+  }, [imageInfo]);
 
   useEffect(() => {
     if (!htmlInfo) return;
@@ -162,6 +173,8 @@ function RouteComponent() {
       },
       scormInitialize: ScormRteService.initialize,
       scormCommit: ScormRteService.commit,
+      html5LearningHistory: Html5Service.saveHtml5Learning,
+      galleryLearningHistory: ImageService.saveImageLearning,
       videoOnProgress: handleVideoProgress,
     });
   }, []);
