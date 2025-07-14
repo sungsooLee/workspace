@@ -11,13 +11,13 @@ import {
   useModal,
 } from '@learnway/ui';
 import { cn } from '@learnway/shared';
-import { IcoCaution } from '@learnway/icons';
+import { IcoCaution, IcoLocation, IcoCalendar01, IcoAvatar02, IcoTime } from '@learnway/icons';
 import { MobileView, BrowserView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
 import { isMobile } from 'react-device-detect';
 import {
   AddressPopup,
-  EducationPlacePopup,
+  EducationPlacePopup, // 약도보기
   AddressConfirmationPopup,
   AcceptingPopup,
 } from '../../../features/layout';
@@ -26,8 +26,8 @@ import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.cs
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-form.module.css';
 import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic.form.module.css';
-import definitionListStyles from '../course-introduction/definition-list.module.css';
-import lectureStyles from '../course-introduction/lecture.module.css';
+import definitionListStyles from '../../../pages/_layout/course-introduction/definition-list.module.css';
+import educationStyles from '../../../features/layout/ui/education.module.css';
 import styles from './course-registration-all.module.css';
 export const Route = createFileRoute('/_layout/course-registration/course-registration-all')({
   component: RouteComponent,
@@ -113,53 +113,51 @@ function RouteComponent() {
       <h2>수강신청</h2>
 
       {/* 수간신청 정보 */}
-      <div className={`${lectureStyles.start} ${lectureStyles.course_information}`}>
-        <div className={lectureStyles.box}>
-          <p className={lectureStyles.date}>
-            <span>2026-01-01 ~ 2026-01-31</span>
-            <span>1차교육</span>
-          </p>
-          <strong className={lectureStyles.tit}>
-            스마트제조를 위한 스마트공장 구축 및 추진실무 - MES 구축
-          </strong>
-        </div>
-        {isMobile ? (
-          ''
-        ) : (
-          <div className={lectureStyles.box}>
-            {/* definition list */}
-            <div className={`${definitionListStyles.start} ${definitionListStyles.list}`}>
-              <dl>
-                <dt>신청기간</dt>
-                <dd>26-01-15 10:00 ~ 26-01-14 23:59</dd>
-              </dl>
-              <dl>
-                <dt>수강인원</dt>
-                <dd>
-                  494 / 500명 (잔여석 <em>6</em>명)
-                </dd>
-              </dl>
-              <dl>
-                <dt>교육장소</dt>
-                <dd>
-                  마북캠퍼스 (경기도 용인시 기흥구 마북로240번길 17-4)
-                  <Button
-                    variant="gray2"
-                    size="xs"
-                    onClick={() =>
-                      openModal({
-                        width: 'md',
-                        content: <EducationPlacePopup />,
-                      })
-                    }
-                  >
-                    약도보기
-                  </Button>
-                </dd>
-              </dl>
+      <div className={`${educationStyles.start} ${educationStyles.education} ${styles.education}`}>
+        <div className={educationStyles.info_box}>
+          <div className={educationStyles.txt_box}>
+            <div className={educationStyles.box}>
+              <span className={educationStyles.date}>2026-01-01 ~ 2026-01-31</span>
+            </div>
+            <div className={educationStyles.box}>
+              <p>스마트제조를 위한 스마트공장 구축 및 추진실무 - MES 구축</p>
             </div>
           </div>
-        )}
+        </div>
+        <div className={educationStyles.info_box}>
+          <div className={educationStyles.list}>
+            <ul>
+              <li>
+                <IcoCalendar01 width={20} height={20} stroke="#4d525c" />
+                <span>26-01-15 10:00 ~ 26-01-14 23:59</span>
+              </li>
+              <li>
+                <IcoAvatar02 width={20} height={20} viewBox="0 0 24 24" fill="#4d525c" />
+                <span>
+                  493 / 500 (잔여 <em>7</em>)
+                </span>
+              </li>
+              <li>
+                <IcoLocation width={20} height={20} stroke="#4d525c" />
+                <span>온라인 비대면</span>
+                <Button
+                  onClick={() =>
+                    openModal({
+                      width: isMobile ? 'm_full' : 'md',
+                      content: <EducationPlacePopup />,
+                    })
+                  }
+                >
+                  약도보기
+                </Button>
+              </li>
+              <li>
+                <IcoTime width={20} height={20} fill="#4d525c" />
+                <span>2시간 33분</span>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
 
       {/* 입력정보 */}
@@ -178,27 +176,14 @@ function RouteComponent() {
                 </label>
                 <div className={cn(formStyles.input_box, styles.input_box)}>
                   <div>
-                    <Input
-                      id="name1"
-                      type="text"
-                      value="text"
-                      placeholder="Frist name"
-                      className="lg"
-                      error
-                    />
+                    <Input id="name1" type="text" value="Hun" className="lg" error />
                     {/* error message */}
                     <p className={cn(formStyles.guide_text, formStyles.error)}>
                       영문 이름을 입력해주세요
                     </p>
                   </div>
                   <div>
-                    <Input
-                      id="name2"
-                      type="text"
-                      value="text"
-                      placeholder="Family name"
-                      className="lg"
-                    />
+                    <Input id="name2" type="text" value="Kim" size={44} />
                     {/* error message */}
                     {/* <p className={cn(formStyles.guide_text, formStyles.error)}>영문 성을 입력해주세요</p> */}
                   </div>
@@ -470,26 +455,6 @@ function RouteComponent() {
                 </div>
               </div>
             </ContentsRow>
-            {/* 교육팀장 */}
-            <ContentsRow>
-              <div className={formStyles.form_item}>
-                <label htmlFor="name5" className={formStyles.form_label}>
-                  <span className={formStyles.form_text}>교육팀장</span>
-                </label>
-                <div className={cn(formStyles.input_box, styles.input_box)}>
-                  <Input
-                    id="name5"
-                    type="text"
-                    value="시트연구기획팀 박희찬 책임연구원"
-                    className="lg"
-                    readOnly
-                  />
-                  <Button variant="gray" size="lg">
-                    결재자 변경
-                  </Button>
-                </div>
-              </div>
-            </ContentsRow>
           </div>
         </div>
       </div>
@@ -498,7 +463,7 @@ function RouteComponent() {
       <div className={`${noticeBoxStyles.start} ${styles.notice}`}>
         <dl className={noticeBoxStyles.check_point}>
           <dt>
-            <IcoCaution width={16} height={16} stroke="#6F798B" />
+            <IcoCaution width={24} height={24} stroke="#4d525c" />
             안내사항
           </dt>
           <dd>강사배정은 상황에 따라 변동될 수 있습니다.</dd>

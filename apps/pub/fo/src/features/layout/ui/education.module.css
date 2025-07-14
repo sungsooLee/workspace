@@ -61,7 +61,7 @@
               }
             }
             button {
-              @apply body-md ml-[12px] !px-0 leading-[28px] text-[var(--gray50)] underline underline-offset-[4px];
+              @apply body-md ml-[12px] whitespace-nowrap !px-0 leading-[28px] text-[var(--gray50)] underline underline-offset-[4px];
             }
             &:nth-child(2n) {
               @apply ml-[16px];
