@@ -1,4 +1,4 @@
-import { Button, Divider, Tabs, useModal } from '@learnway/ui';
+import { Button, Divider, Tabs, useModal, ToggleButtonGroup } from '@learnway/ui';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { useCallback, useEffect, useMemo } from 'react';
@@ -132,6 +132,13 @@ function RouteComponent() {
     <form>
       <PageContainer>
         <ContentsButtons>
+          <ToggleButtonGroup
+            options={[
+              { label: '과정관리', value: '과정관리value' },
+              { label: '수강관리', value: '수강관리value' },
+            ]}
+            onChange={(value) => console.log('ToggleButtonGroup.onChange', value)}
+          />
           <Button
             type="button"
             variant="point"

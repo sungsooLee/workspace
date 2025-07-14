@@ -187,7 +187,7 @@ function RouteComponent() {
             type="button"
             variant="primary"
             size="sm"
-            label={'저장'}
+            label={'저장2'}
             onClick={handleSaveClick}
           />
         </ContentsButtons>
