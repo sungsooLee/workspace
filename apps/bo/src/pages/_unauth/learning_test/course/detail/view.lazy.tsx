@@ -130,7 +130,7 @@ function RouteComponent() {
 
   return (
     <form>
-      <PageContainer>
+      <PageContainer hideOutLine={true}>
         <ContentsButtons>
           <ToggleButtonGroup
             options={[
@@ -193,11 +193,12 @@ function RouteComponent() {
         </ContentsButtons>
         <MainContents>
           <Tabs
-            type={'progress'}
+            type={'fill'}
             size={'sm'}
             items={tabItems}
             onTabChange={handleTabChange}
             selectedTabKey={activeTab}
+            showContentBorder={true}
           />
         </MainContents>
       </PageContainer>

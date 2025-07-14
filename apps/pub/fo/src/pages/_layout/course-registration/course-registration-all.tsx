@@ -239,11 +239,11 @@ function RouteComponent() {
               </div>
             </ContentsRow>
             {/* 퍼블수정 20250409 : 추가 s */}
-            {/* 사전 레벨테스트 시간(2개 선택) */}
+            {/* 사전 레벨테스트 가능 시간(2개 선택) */}
             <ContentsRow>
               <div className={formStyles.form_item}>
                 <div className={formStyles.form_label}>
-                  <span className={formStyles.form_text}>사전 레벨테스트 시간(2개 선택)</span>
+                  <span className={formStyles.form_text}>사전 레벨테스트 가능 시간(2개 선택)</span>
                 </div>
                 <div className={formStyles.input_box}>
                   <div className={styles.input_date}>
@@ -446,7 +446,7 @@ function RouteComponent() {
                     className="lg"
                     readOnly
                   />
-                  <Button variant="gray" size="lg">
+                  <Button variant="gray" size="lx">
                     결재자 변경
                   </Button>
                 </div>
@@ -498,7 +498,6 @@ function RouteComponent() {
               openModal({
                 width: 'sm',
                 content: <AddressConfirmationPopup />,
-                hideCloseButton: true,
               })
             }
           >
@@ -520,7 +519,6 @@ function RouteComponent() {
                 openModal({
                   width: 'sm',
                   content: <AddressConfirmationPopup />,
-                  hideCloseButton: true,
                 })
               }
             >

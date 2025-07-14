@@ -2,9 +2,15 @@
 import { FC } from 'react';
 import { Link } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import { FormSubTitle } from '../../../../../../../bo/src/shared/ui/form';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { ContentsRow, Tabs, TableBox, Input, RadioGroupFormField } from '@learnway/ui';
+import {
+  ContentsRow,
+  Tabs,
+  TableBox,
+  Input,
+  RadioGroupFormField,
+  FormSubTitle,
+} from '@learnway/ui';
 import { IcoMenu01, IcoFormRequired } from '@learnway/icons';
 
 /* styles */

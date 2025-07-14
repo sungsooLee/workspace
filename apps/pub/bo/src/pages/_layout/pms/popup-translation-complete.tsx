@@ -14,9 +14,9 @@ import {
   ModalTitle,
   GridBox,
   Tooltip,
+  FormSubTitle,
 } from '@learnway/ui';
 import { IcoAlertCircle } from '@learnway/icons';
-import { FormSubTitle } from '../../../../../../bo/src/shared/ui/form';
 
 /** style */
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';

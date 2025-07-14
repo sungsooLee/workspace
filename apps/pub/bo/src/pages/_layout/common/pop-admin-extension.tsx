@@ -12,8 +12,8 @@ import {
   Textarea,
   Input,
   DatePicker,
+  FormSubTitle,
 } from '@learnway/ui';
-import { FormSubTitle } from '../../../../../../bo/src/shared/ui';
 import { cn } from '@learnway/shared';
 import { IcoRefresh02, IcoFormRequired } from '@learnway/icons';
 
