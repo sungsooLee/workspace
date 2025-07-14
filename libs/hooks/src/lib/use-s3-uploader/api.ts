@@ -127,7 +127,7 @@ export const abortMultiPartUpload = async (uploadId: string, key: string) => {
  */
 export const createFileGroup = async (groupData: {
   affairsType: 'PMS' | 'CMS' | 'LMS';
-  reposType: 'S3';
+  storageType: 'S3';
   basicPath: string;
   languageCode: string;
 }): Promise<{ groupUuid: string } | undefined> => {
