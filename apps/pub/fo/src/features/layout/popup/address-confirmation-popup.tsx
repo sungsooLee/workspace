@@ -35,8 +35,8 @@ const AddressConfirmationPopupComponent = () => {
         </div>
       </ModalBody>
       <ModalFooter>
-        <Button label={'수정'} variant="gray" size="lg"></Button>
-        <Button label={'확인'} variant={'primary'} size={'lg'}></Button>
+        <Button label={'수정'} variant="gray" size="xl"></Button>
+        <Button label={'확인'} variant={'primary'} size={'xl'}></Button>
       </ModalFooter>
     </ModalContainer>
   );
