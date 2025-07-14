@@ -364,7 +364,7 @@ const TenantCompanyOrganizationTreeComponent = ({
 
   const renderTreeCustomButtonNode = (node: TreeNode, level: number) => {
     if (level === 0) return;
-
+    console.log('<>>>>> node', node);
     if (showType === EnOrganizationShowType.origin) {
       return (
         <div className={'gap-10px flex'}>
@@ -386,18 +386,22 @@ const TenantCompanyOrganizationTreeComponent = ({
       return (
         <div className={'gap-10px flex'}>
           <div className={'flex items-center'}>
-            <Button
-              label={t('하위 조직 추가')}
-              variant={
-                node?.key === selectedNode?.key && formMode === EnFormMode.ADD ? 'primary' : 'gray2'
-              }
-              size="xs"
-              type="button"
-              stopPropagation
-              onClick={(e) => {
-                handleAppendSubOrganization(node, level);
-              }}
-            />
+            {node.hrInfoManageType !== 'AUTO_MANAGE' && (
+              <Button
+                label={t('하위 조직 추가')}
+                variant={
+                  node?.key === selectedNode?.key && formMode === EnFormMode.ADD
+                    ? 'primary'
+                    : 'gray2'
+                }
+                size="xs"
+                type="button"
+                stopPropagation
+                onClick={(e) => {
+                  handleAppendSubOrganization(node, level);
+                }}
+              />
+            )}
             <Button
               label={t('선택')}
               variant={
