@@ -154,6 +154,7 @@ export enum ContentCreateType {
 export enum ContentAddInfoType {
   VIDEO_ADD_INFO = 'VIDEO_ADD_INFO', // 초
   EXAM_ADD_INFO = 'EXAM_ADD_INFO', // 건수
+  EXAM_POOL_ADD_INFO = 'EXAM_POOL_ADD_INFO',
 }
 
 /**
