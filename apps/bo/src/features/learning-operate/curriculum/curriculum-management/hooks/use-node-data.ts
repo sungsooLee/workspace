@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { TreeNode } from '@learnway/ui';
 import {
   useGetCurriculumDetail,
+  useGetModuleDetail,
   // useGetModuleDetail,
   // useGetLessonDetail
 } from '@entities/curriculum';
@@ -33,12 +34,12 @@ export const useNodeData = ({ selectedNode, curriculumId }: UseNodeDataProps) =>
   } = useGetCurriculumDetail(shouldFetchCurriculum ? curriculumId : 0);
 
   // 모듈 상세 조회
-  // const moduleId = shouldFetchModule ? selectedNode?.data?.moduleId : 0;
-  // const {
-  //   data: moduleData,
-  //   isLoading: isModuleLoading,
-  //   error: moduleError
-  // } = useGetModuleDetail(moduleId);
+  const moduleId = shouldFetchModule ? selectedNode?.data?.moduleId : 0;
+  const {
+    data: moduleData,
+    isLoading: isModuleLoading,
+    error: moduleError,
+  } = useGetModuleDetail(moduleId);
 
   // 레슨 상세 조회
   // const lessonId = shouldFetchLesson ? selectedNode?.data?.lessonId : 0;
@@ -64,11 +65,11 @@ export const useNodeData = ({ selectedNode, curriculumId }: UseNodeDataProps) =>
         setError(curriculumError ? '커리큘럼 데이터 로드 실패' : null);
         break;
 
-      // case NODE_TYPE.MODULE:
-      //   setCurrentData(moduleData);
-      //   setIsLoading(isModuleLoading);
-      //   setError(moduleError ? '모듈 데이터 로드 실패' : null);
-      //   break;
+      case MAPPING_CURRICULUM_TYPE.MODULE:
+        setCurrentData(moduleData);
+        setIsLoading(isModuleLoading);
+        setError(moduleError ? '모듈 데이터 로드 실패' : null);
+        break;
 
       // case NODE_TYPE.LESSON:
       //   setCurrentData(lessonData);
@@ -86,7 +87,9 @@ export const useNodeData = ({ selectedNode, curriculumId }: UseNodeDataProps) =>
     curriculumData,
     isCurriculumLoading,
     curriculumError,
-    // moduleData, isModuleLoading, moduleError,
+    moduleData,
+    isModuleLoading,
+    moduleError,
     // lessonData, isLessonLoading, lessonError
   ]);
 

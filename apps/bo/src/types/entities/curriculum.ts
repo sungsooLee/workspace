@@ -1,3 +1,5 @@
+import { S } from '@faker-js/faker/dist/airline-BUL6NtOJ';
+
 export type CurriculumCreateRequest = {
   tenantId: number;
   channelUuid: string;
@@ -35,6 +37,21 @@ export type CurriculumDetailResponse = CurriculumResponse & {
   curriculumType: CURRICULUM_TYPE;
 };
 
+export type ModuleDetailResponse = {
+  mappingCurriculumType: MAPPING_CURRICULUM_TYPE;
+  moduleId: number;
+  moduleName: string;
+  description: string;
+  moduleType: MODULE_TYPE;
+  sortOrder: number;
+  isDummy: boolean;
+  createdBy: string;
+  lastModifiedBy: string;
+  createdDate: string;
+  modifiedDate: string;
+  lessonList: LessonResponse[];
+};
+
 export type ModuleListResponse = {
   mappingCurriculumType: MAPPING_CURRICULUM_TYPE;
   moduleId: number;
@@ -55,6 +72,10 @@ export type LessonResponse = {
   lessonId: number;
   lessonName: string;
   description: string;
+  lessonType: LESSON_TYPE;
+  sortOrder: number;
+  contentType: CONTENT_TYPE;
+  learningTime: number;
 };
 export type Curriculum = CurriculumResponse;
 
@@ -67,6 +88,36 @@ export type CurriculumSearchParams = {
   page?: number;
   size?: number;
   sort?: string;
+};
+
+export type GeneralModuleSaveParams = {
+  curriculumId: number;
+  moduleName: string;
+  moduleType: MODULE_TYPE.GENERAL;
+  description?: string;
+};
+
+export type GeneralModuleUpdateParams = {
+  moduleId: number;
+  moduleName?: string;
+  description?: string;
+};
+
+export type FixedModuleSaveParams = {
+  curriculumId: number;
+  moduleName: string;
+  moduleType: MODULE_TYPE.FIXED;
+  contentUuid: string;
+  description?: string;
+  orgnId: number;
+  totalTime: number;
+};
+
+export type FixedModuleUpdateParams = {
+  moduleId: number;
+  moduleName: string;
+  description?: string;
+  totalTime: number;
 };
 
 export enum LESSON_TYPE {

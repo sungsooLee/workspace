@@ -49,6 +49,10 @@ export class TreeDataService {
         id: `module-${module.moduleId}`,
         key: `module-${module.moduleId}`,
         name: module.moduleName || `모듈 ${index + 1}`,
+        title: module.moduleName,
+        mappingCurriculumType: module.mappingCurriculumType, // 모듈 , 레슨 타입 정보
+        type: module.isDummy ? 'LESSON' : 'MODULE',
+        moduleType: module.moduleType,
         level: 1,
         parentId: curriculumNode.id,
         data: {
@@ -111,7 +115,7 @@ export class TreeDataService {
    */
   static findParentNode(nodes: TreeNode[], parentId: string | null): TreeNode | null {
     if (!parentId) return null;
-    return this.findNodeById(nodes, parentId);
+    return TreeDataService.findNodeById(nodes, parentId);
   }
 
   /**

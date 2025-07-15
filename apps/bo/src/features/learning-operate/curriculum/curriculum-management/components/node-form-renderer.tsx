@@ -75,7 +75,13 @@ export const NodeFormRenderer: React.FC<NodeFormRendererProps> = ({
     case MAPPING_CURRICULUM_TYPE.MODULE:
       return (
         <AutoFormProvider value={autoFormContext}>
-          <ModuleForm watch={watch} />
+          <ModuleForm 
+            watch={watch}
+            setValue={setValue}
+            loadFormData={loadFormData}
+            isEditing={isEditing}
+            initialData={selectedNodeData}
+          />
         </AutoFormProvider>
       );
 

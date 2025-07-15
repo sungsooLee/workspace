@@ -4,15 +4,29 @@ import { FormState } from '../types/form.types';
 import { NodeFormRenderer } from '../components/node-form-renderer';
 import { useNodeData } from '../hooks/use-node-data';
 import { useTreeButtons } from '../hooks/use-tree-buttons';
-import { useCreateCurriculum, useGetCurriculumDetail } from '@entities/curriculum';
+import {
+  useCreateCurriculum,
+  useCreateFixedModule,
+  useCreateGeneralModule,
+  useGetCurriculumDetail,
+  useUpdateFixedModule,
+  useUpdateGeneralModule,
+} from '@entities/curriculum';
 import { useDynamicForm3 } from '@learnway/hooks';
-import { CurriculumResponse, MAPPING_CURRICULUM_TYPE } from '@types';
+import {
+  CurriculumResponse,
+  FixedModuleSaveParams,
+  GeneralModuleSaveParams,
+  MAPPING_CURRICULUM_TYPE,
+  MODULE_TYPE,
+} from '@types';
 import { buildTreeFromCurriculumData, findParentNode } from '../services';
 import { FORM_MODE, FROM_STATUS } from '@shared/const';
-import { Button, FormSubTitle, TreeBox, TreeNode } from '@learnway/ui';
+import { Button, FormSubTitle, TreeBox, TreeContainer, TreeNode } from '@learnway/ui';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
 import { IcoMinus } from '@learnway/icons';
 import { SectionLayout } from '@shared/ui';
+import { DndContext } from '@dnd-kit/core';
 
 interface CurriculumDetailProps {
   mode: FORM_MODE;
@@ -41,6 +55,10 @@ const CurriculumDetailComponent = ({
   );
 
   const { create: createCurriculum } = useCreateCurriculum({});
+  const { create: createCurriculumFixedModule } = useCreateFixedModule({});
+  const { create: createCurriculumGeneralModule } = useCreateGeneralModule({});
+  const { update: updateCurriculumFixedModule } = useUpdateFixedModule({});
+  const { update: updateCurriculumGeneralModule } = useUpdateGeneralModule({});
 
   const { getValues, onSubmit, autoFormContext, handleSubmit, watch, setValue, loadFormData } =
     useDynamicForm3();
@@ -67,10 +85,51 @@ const CurriculumDetailComponent = ({
     }
   }, [curriculumDetail, mode]);
 
+  // 모듈 생성 전략 (GENERAL, FIXED 모듈에 따라 다르게 처리)
+  const moduleCreateStrategy = {
+    [MODULE_TYPE.GENERAL]: (data: GeneralModuleSaveParams, onSuccess: (response: any) => void) => {
+      return createCurriculumGeneralModule(
+        {
+          ...data,
+          curriculumId,
+        },
+        { onSuccess },
+      );
+    },
+    [MODULE_TYPE.FIXED]: (data: FixedModuleSaveParams, onSuccess: (response: any) => void) => {
+      return createCurriculumFixedModule(
+        {
+          ...data,
+          curriculumId,
+        },
+        { onSuccess },
+      );
+    },
+  };
+  // 모듈 업데이트
+  const moduleUpdateStrategy = {
+    [MODULE_TYPE.GENERAL]: (data: GeneralModuleSaveParams, onSuccess: (response: any) => void) => {
+      return updateCurriculumGeneralModule(
+        {
+          ...data,
+        },
+        { onSuccess },
+      );
+    },
+    [MODULE_TYPE.FIXED]: (data: FixedModuleSaveParams, onSuccess: (response: any) => void) => {
+      return updateCurriculumFixedModule(
+        {
+          ...data,
+        },
+        { onSuccess },
+      );
+    },
+  };
+
   const handleAddNode = (nodeType: MAPPING_CURRICULUM_TYPE, parentNode: TreeNode | null) => {
     setFormState({
       activeFormType: nodeType,
-      selectedNode: null,
+      selectedNode: parentNode,
       parentNode,
       isEditing: false,
     });
@@ -112,14 +171,41 @@ const CurriculumDetailComponent = ({
         }
         break;
 
-      case MAPPING_CURRICULUM_TYPE.MODULE:
+      case MAPPING_CURRICULUM_TYPE.MODULE: {
+        const moduleType = data.moduleType;
         if (isEditing && formState.selectedNode) {
-          console.log('모듈 수정 로직!');
+          const updateModuleFn = moduleUpdateStrategy[moduleType as MODULE_TYPE];
+          if (updateModuleFn) {
+            updateModuleFn(data, (updateModule: any) => {
+              const updatedNode: TreeNode = {
+                id: updateModule.moduleId,
+                key: `module-${updateModule.moduleId}`,
+                type: MAPPING_CURRICULUM_TYPE.MODULE,
+                parentId: parentNode?.id || null,
+                children: [],
+              };
+
+              handleNodeSelect(updatedNode);
+            });
+          }
         } else {
-          console.log('모듈 생성 로직!');
+          const createModuleFn = moduleCreateStrategy[moduleType as MODULE_TYPE];
+          if (createModuleFn) {
+            createModuleFn(data, (createdModuleId: number) => {
+              const newNode: TreeNode = {
+                id: createdModuleId,
+                key: `module-${createdModuleId}`,
+                type: MAPPING_CURRICULUM_TYPE.MODULE,
+                parentId: parentNode?.id || null,
+                children: [],
+              };
+
+              handleNodeSelect(newNode);
+            });
+          }
         }
         break;
-
+      }
       case MAPPING_CURRICULUM_TYPE.LESSON:
         if (isEditing && formState.selectedNode) {
           console.log('레슨 수정 로직!');
@@ -195,24 +281,25 @@ const CurriculumDetailComponent = ({
   };
   return (
     <SectionLayout contentsRatio="half">
-      <TreeBox
-        treeId={'curriculum-tree'}
-        data={treeData}
-        selectedNode={formState.selectedNode}
-        customButtonNode={customTreeRenderButton()}
-        renderNodeButtons={renderNodeButtons}
-        handleSelectedNodeChange={handleNodeSelect}
-        type="DEFAULT"
-        title="목차"
-        emptyMessage={
-          mode === FORM_MODE.create
-            ? "'신규등록'버튼을 클릭하여 커리큘럼을 추가해주세요."
-            : isLoadingDetail
-              ? '로딩 중...'
-              : '데이터가 없습니다.'
-        }
-      />
-
+      <TreeContainer>
+        <TreeBox
+          treeId={'curriculum-tree'}
+          data={treeData}
+          selectedNode={formState.selectedNode}
+          customButtonNode={customTreeRenderButton()}
+          renderNodeButtons={renderNodeButtons}
+          handleSelectedNodeChange={handleNodeSelect}
+          type="DRAG_DROP"
+          title="목차"
+          emptyMessage={
+            mode === FORM_MODE.create
+              ? "'신규등록'버튼을 클릭하여 커리큘럼을 추가해주세요."
+              : isLoadingDetail
+                ? '로딩 중...'
+                : '데이터가 없습니다.'
+          }
+        />
+      </TreeContainer>
       <div className={layoutStyles.inner}>
         <FormSubTitle label={'상세 정보'} lineType="dark" actionNode={customFormActionButton()} />
         <form ref={formRef} onSubmit={onSubmit(handleFormSubmit)}>
