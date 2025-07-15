@@ -51,12 +51,17 @@ const handleConditions = (
 
 // 동적으로 Zod 스키마 생성 함수
 export const buildJodObject = (validator: ValidatorConfig): ZodSchema => {
-  if (validator === undefined) return z.object({});
+  console.log('🔍 buildJodObject validator:', validator);
+  if (validator === undefined) {
+    return z.object({});
+  }
   const schemaShape: Record<string, any> = {};
   const requiredSuperRefine: any[] = [];
   let conditionsSuperRefine: any[] = [];
+
   for (const key in validator) {
     const config = validator[key];
+    console.log(`🔍 buildJodObject processing field: ${key}`, config);
 
     let schema: any;
 
@@ -81,7 +86,7 @@ export const buildJodObject = (validator: ValidatorConfig): ZodSchema => {
         schema = z.string();
         const emailRegx = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
         conditionsSuperRefine.push({
-          key: key,
+          key,
           config: {
             fn: (values: Record<string, any>) => values[key] !== '' && !emailRegx.test(values[key]),
             path: key,
@@ -107,11 +112,18 @@ export const buildJodObject = (validator: ValidatorConfig): ZodSchema => {
         schema = z.array(z.string());
         break;
       default:
-        console.log('🚀 ~ buildJodObject ~ config:', config);
-        throw new Error(`Unsupported type: ${config.format}`);
+        schema = z.string();
+      // console.log('🚀 ~ buildJodObject ~ config:', config);
+      // throw new Error(`Unsupported type: ${config.format}`);
     }
+
     if ('default' in config) {
       schema = schema.optional().default(config.default);
+      console.log(`🔍 buildJodObject field ${key}: added default`);
+    } else {
+      // 모든 필드를 optional로 설정 (required validation은 superRefine에서 처리)
+      schema = schema.optional();
+      console.log(`🔍 buildJodObject field ${key}: made optional`);
     }
     // 필수 값 처리 함수
     if (config.required) {

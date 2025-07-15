@@ -4,6 +4,7 @@ import {
   ManagerListModal,
   TeacherListModal,
 } from '@features/learning-operate/course/course-management';
+import { useDynamicForm2 } from '@learnway/hooks';
 import {
   Button,
   CheckboxGroupFormField,
@@ -18,12 +19,16 @@ import {
   TextareaFormField,
   useModal,
 } from '@learnway/ui';
-import { ChipListFormField, FormRow2, ThumbnailListFormField } from '@shared/ui';
+import {
+  ChipListFormField,
+  ContentsButtons,
+  FormRow2,
+  MainContents,
+  PageContainer,
+} from '@shared/ui';
 import { createFileRoute } from '@tanstack/react-router';
-import { MainContents, PageContainer, ContentsButtons } from '@shared/ui';
 import { t } from 'i18next';
 import LabelMessagesService from '../../../../entities/label-messages-mock/api/label-messages';
-import { useDynamicForm2 } from '@learnway/hooks';
 
 export const Route = createFileRoute('/_unauth/sample/form-field-sample/')({
   component: RouteComponent,
@@ -31,7 +36,7 @@ export const Route = createFileRoute('/_unauth/sample/form-field-sample/')({
 
 function RouteComponent() {
   const { open: openModal, saveConfirm } = useModal();
-  const { provider, onSubmit, getValues, watch } = useDynamicForm2();
+  const { provider, onSubmit, getValues, watch, onFormValid } = useDynamicForm2();
 
   // DropdownCodeGroup 필드 값 감시
   const dropdownCodeGroup = watch('DropdownCodeGroup');
@@ -49,6 +54,12 @@ function RouteComponent() {
   const handleOnSubmit = async (data: any) => {
     console.log('data {} => ', data);
     await saveConfirm();
+  };
+
+  const handleValidate = async () => {
+    const result = await onFormValid();
+    const errors = provider.formState.errors;
+    console.log('validate => ', { result, errors });
   };
 
   const handleFormData = () => {
@@ -74,12 +85,13 @@ function RouteComponent() {
             onClick={handleFormData}
           />
           <Button
-            type={'submit'}
+            type={'button'}
             variant="point"
             size="sm"
-            label={'Form submit'}
-            onClick={handleOnSubmit}
+            label={'validate'}
+            onClick={handleValidate}
           />
+          <Button type={'submit'} variant="point" size="sm" label={'Form submit'} />
         </ContentsButtons>
         <MainContents>
           {/* 라디오 api*/}
@@ -90,7 +102,6 @@ function RouteComponent() {
               label={t('라디오 - api')}
               validation={{
                 required: true,
-                format: 'array',
               }}
               element={
                 <RadioGroupFormField
@@ -326,13 +337,13 @@ function RouteComponent() {
               value={[]}
               validation={{
                 required: true,
-                format: 'array',
-                conditions: [
-                  {
-                    fn: (values: any) => values.강사 && values.강사.length > 0,
-                    message: '최소 1명 이상의 강사를 선택해주세요.',
-                  },
-                ],
+                // format: 'array',
+                // conditions: [
+                //   {
+                //     fn: (values: any) => values.강사 && values.강사.length > 0,
+                //     message: '최소 1명 이상의 강사를 선택해주세요.',
+                //   },
+                // ],
               }}
               element={
                 <ChipListModalSelectorFormField
