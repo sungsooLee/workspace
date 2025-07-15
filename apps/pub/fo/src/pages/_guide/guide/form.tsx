@@ -717,7 +717,7 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
               <span className={formStyles.form_text}>로그인 Case</span>
             </label>
             <div className={formStyles.input_box}>
-              <Input id="name5" type="text" value="text" placeholder="입력" className="lg" />
+              <Input id="name5" type="text" value="text" placeholder="입력" inputSize={'lg'} />
             </div>
             <p className={cn(formStyles.guide_text)}>기본 메시지</p>
           </div>
@@ -734,7 +734,7 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
                 type="text"
                 value="text"
                 placeholder="입력"
-                className="lg"
+                inputSize={'lg'}
                 showSearchIcon
                 disabled
               />

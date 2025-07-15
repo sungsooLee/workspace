@@ -16,10 +16,10 @@ import { MobileView, BrowserView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
 import { isMobile } from 'react-device-detect';
 import {
-  AddressPopup,
+  AddressPopup, // 주소찾기
   EducationPlacePopup, // 약도보기
-  AddressConfirmationPopup,
-  AcceptingPopup,
+  AddressConfirmationPopup, // 배송지 확인
+  AcceptingPopup, // 접수중
 } from '../../../features/layout';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
@@ -178,14 +178,14 @@ function RouteComponent() {
                 </label>
                 <div className={cn(formStyles.input_box, styles.input_box)}>
                   <div>
-                    <Input id="name1" type="text" value="Hun" className="lg" error />
+                    <Input id="name1" type="text" value="Hun" inputSize={'lg'} error />
                     {/* error message */}
                     <p className={cn(formStyles.guide_text, formStyles.error)}>
                       영문 이름을 입력해주세요
                     </p>
                   </div>
                   <div>
-                    <Input id="name2" type="text" value="Kim" className="lg" />
+                    <Input id="name2" type="text" value="Kim" inputSize={'lg'} />
                     {/* error message */}
                     {/* <p className={cn(formStyles.guide_text, formStyles.error)}>영문 성을 입력해주세요</p> */}
                   </div>
@@ -291,7 +291,7 @@ function RouteComponent() {
                     type="text"
                     value="text"
                     placeholder="이름을 입력해주세요"
-                    className="lg"
+                    inputSize={'lg'}
                     readOnly
                   />
                 </div>
@@ -330,7 +330,7 @@ function RouteComponent() {
                           id="addr"
                           type="text"
                           placeholder="주소를 입력해주세요"
-                          className="lg"
+                          inputSize={'lg'}
                           value=""
                         />
                         <Button
@@ -350,14 +350,14 @@ function RouteComponent() {
                         id="addr2"
                         type="text"
                         placeholder="상세주소를 입력해주세요"
-                        className="lg"
+                        inputSize={'lg'}
                         value=""
                       />
                       <Input
                         id="addr3"
                         type="text"
                         placeholder="상세주소를 입력해주세요"
-                        className="lg"
+                        inputSize={'lg'}
                         value=""
                       />
                     </BrowserView>
@@ -367,14 +367,14 @@ function RouteComponent() {
                         id="addr4"
                         type="text"
                         placeholder="주소를 입력해주세요"
-                        className="lg"
+                        inputSize={'lg'}
                         value=""
                       />
                       <Input
                         id="addr5"
                         type="text"
                         placeholder="주소를 입력해주세요"
-                        className="lg"
+                        inputSize={'lg'}
                         value=""
                       />
                       <Button
@@ -457,7 +457,7 @@ function RouteComponent() {
                     id="name3"
                     type="text"
                     value="전기차구동설계팀 김원 책임연구원"
-                    className="lg"
+                    inputSize={'lg'}
                     readOnly
                   />
                   <Button variant="gray" size="lx">
@@ -473,7 +473,7 @@ function RouteComponent() {
                   <span className={formStyles.form_text}>교육 담당자</span>
                 </label>
                 <div className={cn(formStyles.input_box, styles.input_box)}>
-                  <Input id="name4" type="text" value="오창영" className="lg" readOnly />
+                  <Input id="name4" type="text" value="오창영" inputSize={'lg'} readOnly />
                 </div>
               </div>
             </ContentsRow>

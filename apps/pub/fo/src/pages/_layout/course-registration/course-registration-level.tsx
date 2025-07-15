@@ -131,7 +131,7 @@ function RouteComponent() {
                       type="text"
                       value="text"
                       placeholder="Frist name"
-                      className="lg"
+                      inputSize={'lg'}
                       error
                     />
                     {/* error message */}
@@ -145,7 +145,7 @@ function RouteComponent() {
                       type="text"
                       value="text"
                       placeholder="Family name"
-                      className="lg"
+                      inputSize={'lg'}
                     />
                     {/* error message */}
                     {/* <p className={cn(formStyles.guide_text, formStyles.error)}>영문 성을 입력해주세요</p> */}

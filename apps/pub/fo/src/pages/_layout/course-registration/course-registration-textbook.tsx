@@ -95,7 +95,7 @@ function RouteComponent() {
                     type="text"
                     value="text"
                     placeholder="이름을 입력해주세요"
-                    className="lg"
+                    inputSize={'lg'}
                     readOnly
                   />
                 </div>
@@ -134,7 +134,7 @@ function RouteComponent() {
                           id="addr"
                           type="text"
                           placeholder="주소를 입력해주세요"
-                          className="lg"
+                          inputSize={'lg'}
                           value=""
                         />
                         <Button
@@ -154,14 +154,14 @@ function RouteComponent() {
                         id="addr2"
                         type="text"
                         placeholder="상세주소를 입력해주세요"
-                        className="lg"
+                        inputSize={'lg'}
                         value=""
                       />
                       <Input
                         id="addr3"
                         type="text"
                         placeholder="상세주소를 입력해주세요"
-                        className="lg"
+                        inputSize={'lg'}
                         value=""
                       />
                     </BrowserView>
@@ -171,14 +171,14 @@ function RouteComponent() {
                         id="addr4"
                         type="text"
                         placeholder="주소를 입력해주세요"
-                        className="lg"
+                        inputSize={'lg'}
                         value=""
                       />
                       <Input
                         id="addr5"
                         type="text"
                         placeholder="주소를 입력해주세요"
-                        className="lg"
+                        inputSize={'lg'}
                         value=""
                       />
                       <Button
