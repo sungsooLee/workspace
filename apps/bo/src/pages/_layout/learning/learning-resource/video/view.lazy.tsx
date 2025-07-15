@@ -1,4 +1,4 @@
-//  IA105 / NLP_BO_CMS_1016 / 학습자원조회_나의 학습자원_등록_동영상(자체)
+//  IA105 / NLP_BO_CMS_1016, NLP_BO_CMS_1002 / 학습자원조회_나의 학습자원_등록_동영상(자체)
 
 import { createLazyFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
