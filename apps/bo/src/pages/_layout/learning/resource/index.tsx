@@ -87,17 +87,16 @@ function RouteComponent() {
         break;
       }
       // 설문
-
       case LEARNING_TYPE.SURVEY: {
         router.navigate({ to: '/learning/resource/survey/view' });
         break;
       }
-      // 설문
+      // 시험지
       case LEARNING_TYPE.TEST_PAGER: {
         router.navigate({ to: '/learning/resource/test-paper/view' });
         break;
       }
-      // 설문
+      // 과제
       case LEARNING_TYPE.ASSIGNMENT: {
         router.navigate({ to: '/learning/resource/assignment/view' });
         break;
