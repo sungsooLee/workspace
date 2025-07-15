@@ -1,17 +1,31 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import { useWatch } from 'react-hook-form';
 import { t } from 'i18next';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { Button, Divider, GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
+import { Button, Divider, GridBox, useGridBox, useGridBoxConfig, useModal } from '@learnway/ui';
 import { useQueryClient } from '@tanstack/react-query';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
-import { formUtils } from '@entities/form-utils';
 import { EnGlobalConst } from '@types';
 import { queryOptions as companysQueryOptions } from '@entities/companies/service/companies.queries';
 import { MainContents, PageContainer } from '@shared/ui';
+import { usersQueryOptions } from '@entities/users/service/users.queries';
+import { getUserStatus } from '@features/platform-management/company/company-user-management/service/company-user.service';
+import dayjs from 'dayjs';
+
+const _global = {
+  unlockClick: (row: any) => {
+    return;
+  },
+  loginClick: (row: any) => {
+    return;
+  },
+  getTenantId: (): number | undefined => {
+    return undefined;
+  },
+};
 
 export const Route = createFileRoute('/_layout/platform/company/user/')({
   component: RouteComponent,
@@ -21,18 +35,28 @@ function RouteComponent() {
   const router = useRouter();
   const queryClient = useQueryClient();
 
+  const { alert } = useModal();
   const { provider: searchProvider, getValues, setValue, setOptions } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
+  const [tenantId, setTenantId] = useState(undefined);
 
   const tenantIdWatch = useWatch({ control: searchProvider.control, name: 'tenantId' });
 
-  useEffect(() => {
-    gridFetch();
-  }, []);
-
   const handleOnSearch = useCallback((data: any) => {
-    console.log('search', data);
-    gridFetch(data);
+    setTenantId(data.tenantId);
+    const createdDateFrom = data.createdDate.from
+      ? dayjs(new Date(data.createdDate.from)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSS')
+      : '';
+    const createdDateTo = data.createdDate.to
+      ? dayjs(new Date(data.createdDate.to)).endOf('day').format('YYYY-MM-DDTHH:mm:ss.SSS')
+      : '';
+    const searchData = {
+      ...data,
+      createdDateFrom,
+      createdDateTo,
+    };
+    console.log('searchData', searchData);
+    gridFetch(searchData);
   }, []);
 
   useEffect(() => {
@@ -53,12 +77,22 @@ function RouteComponent() {
     }
   }, [tenantIdWatch]);
 
+  _global.unlockClick = (row: any) => {
+    alert({ title: '준비중입니다.' });
+  };
+  _global.loginClick = (row: any) => {
+    alert({ title: '준비중입니다.' });
+  };
+  _global.getTenantId = () => {
+    return tenantId;
+  };
+
   return (
     <PageContainer>
       <MainContents>
         <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
         <Divider />
-        <GridBox config={gConfig} columns={columns} title="유저 목록" />
+        <GridBox config={gConfig} columns={columns} title="유저 목록" disabledSelectionToggle />
       </MainContents>
     </PageContainer>
   );
@@ -68,7 +102,6 @@ const searchConfig: SearchBoxConfig = {
   builders: [
     [
       {
-        required: true,
         name: 'tenantId',
         type: 'dropdown',
         format: 'number',
@@ -89,7 +122,7 @@ const searchConfig: SearchBoxConfig = {
         options: [],
       },
       {
-        name: 'sabun',
+        name: 'employeeNumber',
         type: 'text',
         label: t('사번'),
         value: '',
@@ -120,7 +153,7 @@ const searchConfig: SearchBoxConfig = {
         presetOptionLabel: t('전체'),
       },
       {
-        name: 'regStrDate',
+        name: 'createdDate',
         type: 'date-range',
         label: t('회원가입 기간'),
         value: {
@@ -130,10 +163,29 @@ const searchConfig: SearchBoxConfig = {
       },
     ],
   ],
+  validator: {
+    tenantId: true,
+    createdDate: {
+      conditions: [
+        {
+          fn: (values: any) => !values.createdDate?.from && values.createdDate?.to,
+          message: t('시작 날짜를 선택하세요'),
+        },
+        {
+          fn: (values: any) => values.createdDate?.from && !values.createdDate?.to,
+          message: t('종료 날짜를 선택하세요.'),
+        },
+        {
+          fn: (values: any) => values.createdDate.from > values.createdDate.to,
+          message: t('시작 날짜는 종료 날짜 보다 이전일 이어야 합니다.'),
+        },
+      ],
+    },
+  },
 };
 
 const gridConfig: useGridBoxConfig = {
-  query: '',
+  query: usersQueryOptions.list,
   columns: [
     {
       name: 'no1',
@@ -141,20 +193,12 @@ const gridConfig: useGridBoxConfig = {
       type: 'numbering',
     },
   ],
-  data: [
-    {
-      tenant: '테넌트',
-      companyType: 'CAR',
-      companyName: '회사명',
-      deptName: '부서명',
-      name: '홍길동',
-    },
-  ],
+  data: [],
 
-  pagination: {
-    pageSize: 10,
-    pageIndex: 0,
-    totalRows: 0,
+  gridState: {
+    page: 0,
+    size: 10,
+    sort: [],
   },
 };
 
@@ -163,74 +207,150 @@ const columnHelper = createColumnHelper<any>();
 const columns = [
   columnHelper.accessor('tenant', {
     header: t('테넌트'),
-    cell: (info) => info.getValue(),
+    cell: (info) => {
+      const found = info.row.original.tenants.find((tenant: any) => {
+        return tenant.tenantId === _global.getTenantId();
+      });
+
+      if (found) {
+        return found.tenantName;
+      }
+      return _global.getTenantId();
+    },
     enableGrouping: false,
+    enableSorting: false,
+    size: 120,
   }),
-  columnHelper.accessor('companyType', {
+  columnHelper.accessor('companyEntity.companyType', {
     header: t('그룹'),
-    cell: (info) => t('pms.company.CompanyType.' + info.getValue()),
+    cell: (info) =>
+      t(
+        `${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.company.CompanyType.${info.row.original.company.companyType}`,
+      ),
     enableGrouping: false,
+    size: 120,
   }),
-  columnHelper.accessor('companyName', {
+  columnHelper.accessor('companyEntity.name', {
     header: t('회사'),
-    cell: (info) => info.getValue(),
+    cell: (info) => info.row.original.company.name,
     enableGrouping: false,
+    size: 120,
   }),
-  columnHelper.accessor('deptName', {
+  columnHelper.accessor('deptEntity.deptName', {
     header: t('소속'),
-    cell: (info) => info.getValue(),
+    cell: (info) => info.row.original.dept?.deptName,
     enableGrouping: false,
+    size: 120,
   }),
-  columnHelper.accessor('c1', {
+  columnHelper.accessor('positionName', {
     header: t('호칭(직위)'),
     cell: (info) => info.getValue(),
     enableGrouping: false,
+    size: 120,
+    meta: {
+      cellAlign: 'center',
+    },
   }),
   columnHelper.accessor('employeeNumber', {
     header: t('사번'),
     cell: (info) => info.getValue(),
     enableGrouping: false,
+    size: 120,
+    meta: {
+      cellAlign: 'center',
+    },
   }),
   columnHelper.accessor('name', {
     header: t('이름'),
     cell: (info) => (
       <Link
         to="/platform/company/user/detail"
-        // state={{
-        //   companyCode: info.row.original.companyCode,
-        // }}
+        state={{
+          userUuid: info.row.original.uuid,
+        }}
         className="link"
       >
         {info.row.original.name}
       </Link>
     ),
     enableGrouping: false,
+    size: 120,
   }),
-  columnHelper.accessor('c2', {
+  columnHelper.accessor('roleName', {
     header: t('학습자 역할'),
-    cell: (info) => info.getValue(),
+    cell: (info) => (info.row.original.isLeader ? t('조직장') : t('조직원')),
     enableGrouping: false,
+    enableSorting: false,
+    size: 88,
   }),
+  // 재직, 정직, 휴직 : deletedDate, isOnLeave, isSuspended, retireDate이 null인지 여부로 확인
   columnHelper.accessor('userStatus', {
-    cell: (info) => t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.user.Status.${info.getValue()}`),
+    cell: (info) => {
+      const status = getUserStatus(info.row.original);
+      if (status) return t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.user.Status.${status}`);
+      return t('-');
+    },
     header: t('재직여부'),
-    size: 60,
+    size: 88,
+    meta: {
+      cellAlign: 'center',
+    },
+    enableSorting: false,
   }),
+  // enabledDate, lockedDate, dormantDate, deletedDate이 null인지 여부로 판단
+  // 대기(회원가입 승인 전), 정상, 휴면(1년 미로그인), 잠김(비밀번호 5회 오류)
   columnHelper.accessor('accountStatus', {
-    cell: (info) =>
-      t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.user.AccountStatus.${info.getValue()}`),
+    cell: (info) => {
+      if (info.row.original.enabledDate === null)
+        return t('대기'); // 계정활성화일시
+      else if (info.row.original.lockedDate !== null)
+        return t('잠김'); // 계정잠김일시
+      else if (info.row.original.dormantDate !== null) return t('휴면'); // 휴면계정전환일시
+      return t('정상');
+    },
     header: t('계정상태'),
-    size: 60,
+    size: 88,
+    meta: {
+      cellAlign: 'center',
+    },
+    enableSorting: false,
   }),
   columnHelper.accessor('unlock', {
     header: t('잠김해제'),
-    cell: (info) => <Button variant="gray" label={t('잠김해제')} />,
+    cell: (info) => (
+      <Button
+        variant="gray"
+        label={t('잠김해제')}
+        disabled={info.row.original.lockedDate === null}
+        onClick={() => {
+          _global.unlockClick(info.row.original);
+        }}
+      />
+    ),
     enableGrouping: false,
+    meta: {
+      cellAlign: 'center',
+    },
+    size: 88,
+    enableSorting: false,
   }),
   columnHelper.accessor('login', {
     header: t('로그인'),
-    cell: (info) => <Button variant="gray" label={t('로그인')} />,
+    cell: (info) => (
+      <Button
+        variant="gray"
+        label={t('로그인')}
+        onClick={() => {
+          _global.loginClick(info.row.original);
+        }}
+      />
+    ),
     enableGrouping: false,
+    meta: {
+      cellAlign: 'center',
+    },
+    enableSorting: false,
+    size: 88,
   }),
   columnHelper.accessor('createdDate', {
     header: t('회원가입일'),
@@ -242,5 +362,6 @@ const columns = [
     meta: {
       cellAlign: 'center',
     },
+    size: 120,
   }),
 ] as ColumnDef<any, unknown>[];

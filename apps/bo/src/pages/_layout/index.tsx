@@ -389,9 +389,9 @@ export const munu = [
     pageId: 'platform/company/organization',
     screenId: 'NLP_BO_TMS_1301',
     pageType: 'Page',
-    completionDate: '-',
-    memo: '작업 중',
-    end: false,
+    completionDate: '2025-07-10',
+    memo: '작업 완료',
+    end: true,
   },
   {
     screenName: '회사 유저 관리',
