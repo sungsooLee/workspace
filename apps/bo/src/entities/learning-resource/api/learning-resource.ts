@@ -5,6 +5,8 @@ import {
   BlogCreateReq,
   BlogUpdateReq,
   ContentBaseInfo,
+  ContentCourseMappingParams,
+  ContentCourseMappingRes,
   CourseMappingStatusRes,
   GetContentDetailRes,
   HtmlVideoFileChangeReq,
@@ -34,6 +36,13 @@ export default class LearningResourceService {
 
   static fetchContent(contentUuid: string): Promise<GetContentDetailRes> {
     return httpService.get(`${CMSApiPrefix()}/content/${contentUuid}`);
+  }
+
+  static fetchContentCourseMapping(
+    contentUuid: string,
+    params: ContentCourseMappingParams,
+  ): Promise<ContentCourseMappingRes> {
+    return httpService.get(`${CMSApiPrefix()}/content/course-mapping/${contentUuid}`, params);
   }
 
   static deleteContent(contentUuid: string): Promise<any> {

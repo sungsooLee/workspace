@@ -2,6 +2,7 @@ import {
   BlogCreateReq,
   BlogUpdateReq,
   ContentBaseInfo,
+  ContentCourseMappingParams,
   HtmlVideoFileChangeReq,
   HtmlVideoMetadataReq,
   PostDraftHtmlVideoParams,
@@ -14,6 +15,7 @@ export const queryKeys = {
   userByUuid: ['user-by-uuid'] as const,
   contents: ['contents'] as const,
   contentDetail: ['content-detail'] as const,
+  contentCourseMapping: ['content-course-mapping'] as const,
   deleteContent: ['delete-content'] as const,
   createDraftVideo: ['create-draft-video'] as const,
   s3FileDownload: ['file-s3-download'] as const,
@@ -54,6 +56,10 @@ export const learningResourceQueryOptions = {
   getContent: (contentUuid: string) => ({
     queryKey: queryKeys.contentDetail,
     queryFn: () => LearningResourceService.fetchContent(contentUuid),
+  }),
+  getContentCourseMapping: (contentUuid: string, params: ContentCourseMappingParams) => ({
+    queryKey: queryKeys.contentCourseMapping,
+    queryFn: () => LearningResourceService.fetchContentCourseMapping(contentUuid, params),
   }),
   postDraftVideos: (params: PostDraftVideosParams) => ({
     queryKey: queryKeys.createDraftVideo,

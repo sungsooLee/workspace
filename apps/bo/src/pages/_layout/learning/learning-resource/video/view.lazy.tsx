@@ -55,7 +55,12 @@ function RouteComponent() {
 
   const handleCourseMapping = useCallback(() => {
     openModal({
-      content: <ContentCourseMappingModal channelUuid={data?.channelUuid || ''} />,
+      content: (
+        <ContentCourseMappingModal
+          contentUuid={contentUuid}
+          channelUuid={data?.channelUuid || ''}
+        />
+      ),
       width: 'lg',
     });
   }, [data]);
