@@ -1,4 +1,4 @@
-import { forwardRef, useEffect } from 'react';
+import { forwardRef, useEffect, useMemo } from 'react';
 import { useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { cloneDeepWith } from 'lodash-es';
@@ -11,12 +11,11 @@ import {
   InputModalSelectorFormField,
   useModal,
 } from '@learnway/ui';
-import { HtmlVideoDetailRes, HtmlVideoMetadataRes, ProcessingStatus, type Tag } from '@types';
+import { HtmlVideoDetailRes, HtmlVideoMetadataRes, ProcessingStatus, Tag } from '@types';
 import { useUpdateHTML5Metadata } from '@entities/learning-resource';
 import {
   ChannelListChoiceModal,
   CompanyChoiceModal,
-  ContentsHistoryInfoFormField,
   FormGroup,
   FormRow,
   FormRow2,
@@ -30,7 +29,9 @@ import { getPayloadFromHtmlMetadataSubmit } from '../-common/form-submit';
 
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import dayjs from 'dayjs';
-import { getHourValueFromTime } from '@pages/_layout/learning/resource/-common/common';
+import { getHourValueFromTime, useRoleInfo } from '@pages/_layout/learning/resource/-common/common';
+import { useFetchAuthUser } from '@learnway/auth/entities';
+import { ContentsHistoryInfo } from '@features/learning-resource/learning-resource-management/ui/contents-history-info';
 
 type HtmlDetailProps = {
   mode: 'draft' | 'complete';
@@ -49,7 +50,27 @@ const HtmlDetailComponent = forwardRef<HTMLFormElement, HtmlDetailProps>(
       onFormChange: handleFormChange,
       watch,
     } = useDynamicForm(formConfig(hasMapping));
-    console.log(formConfig(hasMapping));
+
+    const { data: loginUser } = useFetchAuthUser();
+
+    const { initRoleInfo } = useRoleInfo({
+      loginUser,
+      onChannelMemberCallback: () => {
+        updateFormData({
+          ...getValues(),
+          coordinatorUuid: loginUser?.uuid,
+          coordinatorName: loginUser?.name,
+          coordinatorTelCountryCode: loginUser?.phoneNumberNationCode,
+          coordinatorTelNo: loginUser?.phoneNumber,
+        });
+      },
+    });
+
+    useEffect(() => {
+      (async () => {
+        await initRoleInfo();
+      })();
+    }, [loginUser]);
 
     useEffect(() => {
       if (!isEmptyData(data)) {
@@ -82,7 +103,7 @@ const HtmlDetailComponent = forwardRef<HTMLFormElement, HtmlDetailProps>(
           ),
           aiSummary: data.aiSummary ?? '',
           aiKeyword: data.aiKeyword ?? '',
-          // resource: ??
+          resource: data.resource ?? {},
         });
       }
     }, [data]);
@@ -109,12 +130,11 @@ const HtmlDetailComponent = forwardRef<HTMLFormElement, HtmlDetailProps>(
       },
     });
 
-    const dynamicFormConfig = formConfig(hasMapping);
+    const dynamicFormConfig = useMemo(() => formConfig(hasMapping), [hasMapping]);
 
     const handleSubmit = async (
       formData: DynamicFormValues<typeof dynamicFormConfig>,
     ): Promise<void> => {
-      console.log('formData', formData);
       const { payload } = getPayloadFromHtmlMetadataSubmit({
         data: formData,
         tenantId,
@@ -315,7 +335,7 @@ const HtmlDetailComponent = forwardRef<HTMLFormElement, HtmlDetailProps>(
 
         {/* 이력정보 */}
         <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
-          <ContentsHistoryInfoFormField />
+          <ContentsHistoryInfo detail={data ?? {}} />
         </ContentsRow>
       </form>
     );

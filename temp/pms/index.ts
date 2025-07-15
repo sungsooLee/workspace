@@ -49,7 +49,6 @@ export { com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto } from './m
 export { com_ever_edu_pms_channel_dto_res_ChannelRequestListResDto } from './models/com_ever_edu_pms_channel_dto_res_ChannelRequestListResDto';
 export { com_ever_edu_pms_channel_dto_res_ChannelResDto } from './models/com_ever_edu_pms_channel_dto_res_ChannelResDto';
 export type { com_ever_edu_pms_channel_dto_res_ChannelTagResDto } from './models/com_ever_edu_pms_channel_dto_res_ChannelTagResDto';
-export { com_ever_edu_pms_channel_entity_ChannelRequestEntity } from './models/com_ever_edu_pms_channel_entity_ChannelRequestEntity';
 export { com_ever_edu_pms_company_dto_req_CompanyCreateReqDto } from './models/com_ever_edu_pms_company_dto_req_CompanyCreateReqDto';
 export type { com_ever_edu_pms_company_dto_req_CompanyDeptDeleteReqDto } from './models/com_ever_edu_pms_company_dto_req_CompanyDeptDeleteReqDto';
 export type { com_ever_edu_pms_company_dto_req_CompanyDeptDndReqDto } from './models/com_ever_edu_pms_company_dto_req_CompanyDeptDndReqDto';
@@ -72,6 +71,7 @@ export { com_ever_edu_pms_file_dto_req_FileCopyInternalReqDto$FileGroupReqDto } 
 export { com_ever_edu_pms_file_dto_req_FileGroupAndFilesReqDto } from './models/com_ever_edu_pms_file_dto_req_FileGroupAndFilesReqDto';
 export type { com_ever_edu_pms_file_dto_req_FileGroupCopyInternalReqDto } from './models/com_ever_edu_pms_file_dto_req_FileGroupCopyInternalReqDto';
 export { com_ever_edu_pms_file_dto_req_FileGroupInfoReqDto } from './models/com_ever_edu_pms_file_dto_req_FileGroupInfoReqDto';
+export type { com_ever_edu_pms_file_dto_req_FileGroupSoftCopyInternalReqDto } from './models/com_ever_edu_pms_file_dto_req_FileGroupSoftCopyInternalReqDto';
 export type { com_ever_edu_pms_file_dto_req_FileInfoListReqDto } from './models/com_ever_edu_pms_file_dto_req_FileInfoListReqDto';
 export { com_ever_edu_pms_file_dto_req_FileInfoReqDto } from './models/com_ever_edu_pms_file_dto_req_FileInfoReqDto';
 export type { com_ever_edu_pms_file_dto_req_FileUploadCompleteReqDto } from './models/com_ever_edu_pms_file_dto_req_FileUploadCompleteReqDto';

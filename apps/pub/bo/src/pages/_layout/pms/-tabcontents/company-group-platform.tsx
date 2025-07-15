@@ -20,9 +20,9 @@ import {
   Divider,
   Dropdown,
   GridBox,
+  FormSubTitle,
 } from '@learnway/ui';
 import { SectionLayout } from '../../-components/section-layout';
-import { FormSubTitle } from '../../../../../../../bo/src/shared/ui/form';
 import { ContentsHistoryInfoFormField } from '../../../../../../../bo/src/shared/ui/form';
 
 /* style */

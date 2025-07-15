@@ -171,4 +171,5 @@ export enum ContentType {
   BLOG = 'BLOG',
   SCORM = 'SCORM',
   DEFAULT = 'DEFAULT',
+  IMAGE = 'IMAGE',
 }

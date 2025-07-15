@@ -1,6 +1,6 @@
 export type UPLOAD_TYPE = 'CONTENTS' | 'ATTACH';
 export type AFFAIRS_TYPE = 'PMS' | 'CMS' | 'LMS';
-export type REPOS_TYPE = 'S3';
+export type STORAGE_TYPE = 'S3';
 
 // 공통 파일 속성
 export interface BaseFileInfo {
@@ -14,7 +14,7 @@ export interface BaseFileInfo {
 export interface BaseGroupInfo {
   uploadType: UPLOAD_TYPE;
   affairsType: AFFAIRS_TYPE;
-  reposType: REPOS_TYPE;
+  storageType: STORAGE_TYPE;
   basicPath: string;
   languageCode: string;
 }
@@ -39,7 +39,7 @@ export interface FileGroupInfo {
   groupUuid: string;
   uploadType: string;
   affairsType: AFFAIRS_TYPE;
-  reposType: string;
+  storageType: string;
   basicPath: string;
   languageCode: string;
   isDeleted: boolean;
@@ -48,7 +48,7 @@ export interface FileGroupInfo {
 }
 
 export interface ImageInfo {
-  reposType: string;
+  storageType: string;
   originalFileName: string;
   filePath: string;
   fileSize: number;

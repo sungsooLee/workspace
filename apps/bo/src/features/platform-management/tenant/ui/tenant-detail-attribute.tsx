@@ -1,25 +1,26 @@
-import { useState, useEffect, forwardRef, useRef, useImperativeHandle } from 'react';
+import { cn } from '@learnway/shared';
 import { useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
-import { cn } from '@learnway/shared';
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 
-import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 
+import { CODE_GROUP, DynamicFormConfig, useCodeStore, useDynamicForm } from '@learnway/hooks';
 import {
   Button,
-  ContentsRow,
-  Input,
-  useModal,
   CheckboxGroupFormField,
-  Tooltip,
-  Switch,
+  ContentsRow,
+  FormSubTitle,
+  Input,
   RadioGroupFormField,
+  Switch,
+  Tooltip,
+  useModal,
 } from '@learnway/ui';
-import { CODE_GROUP, DynamicFormConfig, useCodeStore, useDynamicForm } from '@learnway/hooks';
 
-import { FormRow, FormSubTitle } from '@shared/ui';
+import { FormRow } from '@shared/ui';
 
 import { EnDeviceType, EnUseCategory } from '@types';
 
@@ -28,8 +29,8 @@ import {
   useTenantAttributeCompany,
   useUpdateTenantAttributeCompany,
 } from '@entities/tenant/service/tenant-attribute.hook';
-import { IcoAlertCircle } from '@learnway/icons';
 import { FormDisplay } from '@features/form';
+import { IcoAlertCircle } from '@learnway/icons';
 
 /**
  * 화면번호: NLP_BO_TMS_1003_00_04 (과정등록 연관 설정 figma: NLP_BO_TMS_1003_00-04)
@@ -111,10 +112,12 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
         isUseAdminDataOption: tenantInfo.flatformProperties.isUseAdminDataOption,
         isUseCarTenantCustomOption: tenantInfo.flatformProperties.isUseCarTenantCustomOption,
         isUseRotemTenantCustomOption: tenantInfo.flatformProperties.isUseRotemTenantCustomOption,
-        isUseOutsourcingTenantCustomOption: tenantInfo.flatformProperties.isUseOutsourcingTenantCustomOption,
+        isUseOutsourcingTenantCustomOption:
+          tenantInfo.flatformProperties.isUseOutsourcingTenantCustomOption,
         isUseWiaTenantCustomOption: tenantInfo.flatformProperties.isUseWiaTenantCustomOption,
-        isUseAutoeverTenantCustomOption: tenantInfo.flatformProperties.isUseAutoeverTenantCustomOption,
-      }
+        isUseAutoeverTenantCustomOption:
+          tenantInfo.flatformProperties.isUseAutoeverTenantCustomOption,
+      };
       setPlatformProperties(properties);
 
       fetchBaseData({ ...tenantInfo, device, useCategory });
@@ -143,20 +146,58 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
 
   function initProperties(info: any) {
     const tenantInfo = info.tenantInfo;
-    info.isEnrollOption = tenantInfo.properties.isEnrollOption === null ? false : tenantInfo.properties.isEnrollOption;
-    info.isTextBookOption = tenantInfo.properties.isTextBookOption === null ? false : tenantInfo.properties.isTextBookOption;
-    info.isInstructorOption = tenantInfo.properties.isInstructorOption === null ? false : tenantInfo.properties.isInstructorOption;
-    info.isPassOption = tenantInfo.properties.isPassOption === null ? false : tenantInfo.properties.isPassOption;
-    info.isCommunicationOption = tenantInfo.properties.isCommunicationOption === null ? false : tenantInfo.properties.isCommunicationOption;
-    info.isLearningEnvOption = tenantInfo.properties.isLearningEnvOption === null ? false : tenantInfo.properties.isLearningEnvOption;
-    info.isLearningControlOption = tenantInfo.properties.isLearningControlOption === null ? false : tenantInfo.properties.isLearningControlOption;
-    info.isRelatedCourseOption = tenantInfo.properties.isRelatedCourseOption === null ? false : tenantInfo.properties.isRelatedCourseOption;
-    info.isAdminDataOption = tenantInfo.properties.isAdminDataOption === null ? false : tenantInfo.properties.isAdminDataOption;
-    info.isCarTenantCustomOption = tenantInfo.properties.isCarTenantCustomOption === null ? false : tenantInfo.properties.isCarTenantCustomOption;
-    info.isRotemTenantCustomOption = tenantInfo.properties.isRotemTenantCustomOption === null ? false : tenantInfo.properties.isRotemTenantCustomOption;
-    info.isOutsourcingTenantCustomOption = tenantInfo.properties.isOutsourcingTenantCustomOption === null ? false : tenantInfo.properties.isOutsourcingTenantCustomOption;
-    info.isWiaTenantCustomOption = tenantInfo.properties.isWiaTenantCustomOption === null ? false : tenantInfo.properties.isWiaTenantCustomOption;
-    info.isAutoeverTenantCustomOption = tenantInfo.properties.isAutoeverTenantCustomOption === null ? false : tenantInfo.properties.isAutoeverTenantCustomOption;
+    info.isEnrollOption =
+      tenantInfo.properties.isEnrollOption === null ? false : tenantInfo.properties.isEnrollOption;
+    info.isTextBookOption =
+      tenantInfo.properties.isTextBookOption === null
+        ? false
+        : tenantInfo.properties.isTextBookOption;
+    info.isInstructorOption =
+      tenantInfo.properties.isInstructorOption === null
+        ? false
+        : tenantInfo.properties.isInstructorOption;
+    info.isPassOption =
+      tenantInfo.properties.isPassOption === null ? false : tenantInfo.properties.isPassOption;
+    info.isCommunicationOption =
+      tenantInfo.properties.isCommunicationOption === null
+        ? false
+        : tenantInfo.properties.isCommunicationOption;
+    info.isLearningEnvOption =
+      tenantInfo.properties.isLearningEnvOption === null
+        ? false
+        : tenantInfo.properties.isLearningEnvOption;
+    info.isLearningControlOption =
+      tenantInfo.properties.isLearningControlOption === null
+        ? false
+        : tenantInfo.properties.isLearningControlOption;
+    info.isRelatedCourseOption =
+      tenantInfo.properties.isRelatedCourseOption === null
+        ? false
+        : tenantInfo.properties.isRelatedCourseOption;
+    info.isAdminDataOption =
+      tenantInfo.properties.isAdminDataOption === null
+        ? false
+        : tenantInfo.properties.isAdminDataOption;
+    info.isCarTenantCustomOption =
+      tenantInfo.properties.isCarTenantCustomOption === null
+        ? false
+        : tenantInfo.properties.isCarTenantCustomOption;
+    info.isRotemTenantCustomOption =
+      tenantInfo.properties.isRotemTenantCustomOption === null
+        ? false
+        : tenantInfo.properties.isRotemTenantCustomOption;
+    info.isOutsourcingTenantCustomOption =
+      tenantInfo.properties.isOutsourcingTenantCustomOption === null
+        ? false
+        : tenantInfo.properties.isOutsourcingTenantCustomOption;
+    info.isWiaTenantCustomOption =
+      tenantInfo.properties.isWiaTenantCustomOption === null
+        ? false
+        : tenantInfo.properties.isWiaTenantCustomOption;
+    info.isAutoeverTenantCustomOption =
+      tenantInfo.properties.isAutoeverTenantCustomOption === null
+        ? false
+        : tenantInfo.properties.isAutoeverTenantCustomOption;
   }
 
   return (
@@ -236,7 +277,7 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
               element={
                 <>
                   {t('사용')}
-                  <Switch disabled={true} checked={true}/>
+                  <Switch disabled={true} checked={true} />
                 </>
               }
             />
@@ -295,8 +336,8 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
           </ContentsRow>
         </FormDisplay>
 
-        {
-          ( platformProperties && platformProperties.isUseTextBookOption ) && <>
+        {platformProperties && platformProperties.isUseTextBookOption && (
+          <>
             <FormSubTitle
               label={t('교재')}
               lineType={'dark'}
@@ -314,7 +355,10 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
               }
               actionNode={<FormRow provider={provider} name={'isTextBookOption'} />}
             />
-            <FormDisplay provider={provider} dependencies={[{ name: 'isTextBookOption', value: true }]}>
+            <FormDisplay
+              provider={provider}
+              dependencies={[{ name: 'isTextBookOption', value: true }]}
+            >
               <ContentsRow>
                 <div className={formStyles.form_item}>
                   <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
@@ -332,21 +376,19 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
               </ContentsRow>
             </FormDisplay>
           </>
-        }
+        )}
 
-        {
-          (platformProperties && platformProperties.isUseInstructorOption) && <>
+        {platformProperties && platformProperties.isUseInstructorOption && (
+          <>
             <FormSubTitle
               label={t('강사')}
               lineType={'dark'}
               titleNode={
                 <Tooltip
                   className={styles.tooltip}
-                  content={
-                    t(
-                      '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다. ',
-                    )
-                  }
+                  content={t(
+                    '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다. ',
+                  )}
                 >
                   <Button onlyIcon>
                     <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
@@ -380,7 +422,7 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
               </ContentsRow>
             </FormDisplay>
           </>
-        }
+        )}
 
         <FormSubTitle
           label={t('이수 기준')}
@@ -402,7 +444,7 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
               element={
                 <>
                   {t('사용')}
-                  <Switch disabled={true} checked={true}/>
+                  <Switch disabled={true} checked={true} />
                 </>
               }
             />
@@ -447,19 +489,17 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
           </ContentsRow>
         </FormDisplay>
 
-        {
-          (platformProperties && platformProperties.isUseCommunicationOption) && <>
+        {platformProperties && platformProperties.isUseCommunicationOption && (
+          <>
             <FormSubTitle
               label={t('커뮤니티')}
               lineType={'dark'}
               titleNode={
                 <Tooltip
                   className={styles.tooltip}
-                  content={
-                    t(
-                      '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다. ',
-                    )
-                  }
+                  content={t(
+                    '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다. ',
+                  )}
                 >
                   <Button onlyIcon>
                     <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
@@ -486,21 +526,19 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
               </ContentsRow>
             </FormDisplay>
           </>
-        }
+        )}
 
-        {
-          (platformProperties && platformProperties.isUseLearningEnvOption) && <>
+        {platformProperties && platformProperties.isUseLearningEnvOption && (
+          <>
             <FormSubTitle
               label={t('학습환경')}
               lineType={'dark'}
               titleNode={
                 <Tooltip
                   className={styles.tooltip}
-                  content={
-                    t(
-                      '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다.',
-                    )
-                  }
+                  content={t(
+                    '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다.',
+                  )}
                 >
                   <Button onlyIcon>
                     <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
@@ -558,15 +596,17 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
                   <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
                     <span className={styles.form_text}> {t('학습전 보안 서약')}</span>
                   </label>
-                  <p className={formStyles.guide_text}>{t('학습전 보안 서약 여부를 설정합니다 ')}</p>
+                  <p className={formStyles.guide_text}>
+                    {t('학습전 보안 서약 여부를 설정합니다 ')}
+                  </p>
                 </div>
               </ContentsRow>
             </FormDisplay>
           </>
-        }
+        )}
 
-        {
-          (platformProperties && platformProperties.isUseLearningControlOption) && <>
+        {platformProperties && platformProperties.isUseLearningControlOption && (
+          <>
             <FormSubTitle
               label={t('학습제어')}
               lineType={'dark'}
@@ -575,10 +615,10 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
                   className={styles.tooltip}
                   content={
                     <pre>
-                  {t(
-                    '테넌트 상세 설정이 채널 개설 시 기본 출력되며,\n 채널에서 최종 사용 여부를 설정할 수 있습니다.',
-                  )}
-                </pre>
+                      {t(
+                        '테넌트 상세 설정이 채널 개설 시 기본 출력되며,\n 채널에서 최종 사용 여부를 설정할 수 있습니다.',
+                      )}
+                    </pre>
                   }
                 >
                   <Button onlyIcon>
@@ -637,21 +677,19 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
               </ContentsRow>
             </FormDisplay>
           </>
-        }
+        )}
 
-        {
-          (platformProperties && platformProperties.isUseRelatedCourseOption) && <>
+        {platformProperties && platformProperties.isUseRelatedCourseOption && (
+          <>
             <FormSubTitle
               label={t('사전/연관학습')}
               lineType={'dark'}
               titleNode={
                 <Tooltip
                   className={styles.tooltip}
-                  content={
-                    t(
-                      '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다.',
-                    )
-                  }
+                  content={t(
+                    '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다.',
+                  )}
                 >
                   <Button onlyIcon>
                     <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
@@ -685,28 +723,26 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
               </ContentsRow>
             </FormDisplay>
           </>
-        }
+        )}
 
-        {
-          (platformProperties && platformProperties.isUseAdminDataOption) && <>
+        {platformProperties && platformProperties.isUseAdminDataOption && (
+          <>
             <FormSubTitle
               label={t('행정 항목')}
               lineType={'dark'}
               titleNode={
                 <Tooltip
                   className={styles.tooltip}
-                  content={
-                    t(
-                      '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다.',
-                    )
-                  }
+                  content={t(
+                    '테넌트 상세 설정이 채널 개설 시 기본 출력되며, 채널에서 최종 사용 여부를 설정할 수 있습니다.',
+                  )}
                 >
                   <Button onlyIcon>
                     <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
                   </Button>
                 </Tooltip>
               }
-              actionNode={<FormRow provider={provider} name={'isAdminDataOption'}/>}
+              actionNode={<FormRow provider={provider} name={'isAdminDataOption'} />}
             />
             <FormDisplay
               provider={provider}
@@ -723,7 +759,9 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
                   <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
                     <span className={styles.form_text}> {t('1인당 교육비 ')}</span>
                   </label>
-                  <p className={formStyles.guide_text}>{t('1인당 교육비 사용 금액을 설정합니다.')}</p>
+                  <p className={formStyles.guide_text}>
+                    {t('1인당 교육비 사용 금액을 설정합니다.')}
+                  </p>
                 </div>
                 <div className={formStyles.form_item}>
                   <label className={cn(styles.form_label, 'dynamic-form-field-label', 'flex')}>
@@ -746,21 +784,19 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
               </ContentsRow>
             </FormDisplay>
           </>
-        }
+        )}
 
-        {
-          (platformProperties && platformProperties.isUseCarTenantCustomOption) && <>
+        {platformProperties && platformProperties.isUseCarTenantCustomOption && (
+          <>
             <FormSubTitle
               label={t('완성차 테넌트 전용 항목')}
               lineType={'dark'}
               titleNode={
                 <Tooltip
                   className={styles.tooltip}
-                  content={
-                    t(
-                      '완성차 테넌트의 전용 항목의 허용 여부를 설정합니다. 비허용 시 테넌트에서 사용할 수 없습니다.',
-                    )
-                  }
+                  content={t(
+                    '완성차 테넌트의 전용 항목의 허용 여부를 설정합니다. 비허용 시 테넌트에서 사용할 수 없습니다.',
+                  )}
                 >
                   <Button onlyIcon>
                     <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
@@ -795,21 +831,19 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
               </ContentsRow>
             </FormDisplay>
           </>
-        }
+        )}
 
-        {
-          (platformProperties && platformProperties.isUseRotemTenantCustomOption ) && <>
+        {platformProperties && platformProperties.isUseRotemTenantCustomOption && (
+          <>
             <FormSubTitle
               label={t('로템 테넌트 전용 항목')}
               lineType={'dark'}
               titleNode={
                 <Tooltip
                   className={styles.tooltip}
-                  content={
-                    t(
-                      '로템 테넌트의 전용 항목의 허용 여부를 설정합니다. 비허용 시 테넌트에서 사용할 수 없습니다.',
-                    )
-                  }
+                  content={t(
+                    '로템 테넌트의 전용 항목의 허용 여부를 설정합니다. 비허용 시 테넌트에서 사용할 수 없습니다.',
+                  )}
                 >
                   <Button onlyIcon>
                     <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
@@ -844,21 +878,19 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
               </ContentsRow>
             </FormDisplay>
           </>
-        }
+        )}
 
-        {
-          (platformProperties && platformProperties.isUseOutsourcingTenantCustomOption) && <>
+        {platformProperties && platformProperties.isUseOutsourcingTenantCustomOption && (
+          <>
             <FormSubTitle
               label={t('위탁 테넌트 전용 항목')}
               lineType={'dark'}
               titleNode={
                 <Tooltip
                   className={styles.tooltip}
-                  content={
-                    t(
-                      '위탁 테넌트의 전용 항목의 허용 여부를 설정합니다. 비허용 시 테넌트에서 사용할 수 없습니다.',
-                    )
-                  }
+                  content={t(
+                    '위탁 테넌트의 전용 항목의 허용 여부를 설정합니다. 비허용 시 테넌트에서 사용할 수 없습니다.',
+                  )}
                 >
                   <Button onlyIcon>
                     <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
@@ -893,21 +925,19 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
               </ContentsRow>
             </FormDisplay>
           </>
-        }
+        )}
 
-        {
-          (platformProperties && platformProperties.isUseWiaTenantCustomOption) && <>
+        {platformProperties && platformProperties.isUseWiaTenantCustomOption && (
+          <>
             <FormSubTitle
               label={t('위아 테넌트 전용 항목')}
               lineType={'dark'}
               titleNode={
                 <Tooltip
                   className={styles.tooltip}
-                  content={
-                    t(
-                      '위아 테넌트의 전용 항목의 허용 여부를 설정합니다. 비허용 시 테넌트에서 사용할 수 없습니다.',
-                    )
-                  }
+                  content={t(
+                    '위아 테넌트의 전용 항목의 허용 여부를 설정합니다. 비허용 시 테넌트에서 사용할 수 없습니다.',
+                  )}
                 >
                   <Button onlyIcon>
                     <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
@@ -942,21 +972,19 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
               </ContentsRow>
             </FormDisplay>
           </>
-        }
+        )}
 
-        {
-          (platformProperties && platformProperties.isUseAutoeverTenantCustomOption) && <>
+        {platformProperties && platformProperties.isUseAutoeverTenantCustomOption && (
+          <>
             <FormSubTitle
               label={t('오토에버 테넌트 전용 항목')}
               lineType={'dark'}
               titleNode={
                 <Tooltip
                   className={styles.tooltip}
-                  content={
-                    t(
-                      '오토에버 테넌트의 전용 항목의 허용 여부를 설정합니다. 비허용 시 테넌트에서 사용할 수 없습니다.',
-                    )
-                  }
+                  content={t(
+                    '오토에버 테넌트의 전용 항목의 허용 여부를 설정합니다. 비허용 시 테넌트에서 사용할 수 없습니다.',
+                  )}
                 >
                   <Button onlyIcon>
                     <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
@@ -991,7 +1019,7 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
               </ContentsRow>
             </FormDisplay>
           </>
-        }
+        )}
       </form>
     </>
   );

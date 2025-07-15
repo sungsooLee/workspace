@@ -17,10 +17,10 @@ import {
   TableBox,
   Checkbox,
   Dropdown,
+  FormSubTitle,
 } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { cn } from '@learnway/shared';
-import { FormSubTitle } from '../../../../../../bo/src/shared/ui/form';
 import { IcoFormRequired, IcoMenu01 } from '@learnway/icons';
 
 /* style */

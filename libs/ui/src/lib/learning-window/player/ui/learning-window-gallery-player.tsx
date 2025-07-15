@@ -1,17 +1,14 @@
-import { FC, useState, useRef } from 'react';
+import { FC, useState, useRef, useEffect } from 'react';
 import { isMobile } from 'react-device-detect';
 
 import stylesWeb from '@learnway/styles/fo/pages/_learning/learning.module.css';
 import stylesMobile from '@learnway/styles/fo/pages/_learning/learning-m.module.css';
+import backImage from '@learnway/styles/fo/assets/images/temp/img_gallery_back.jpg';
 
 import { IcoArrowBackward } from '@learnway/icons';
 
-// 예시 이미지
-import bnrImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
-import bnrImage2 from '@learnway/styles/fo/assets/images/temp/img_discrimination.png';
-import backImage from '@learnway/styles/fo/assets/images/temp/img_gallery_back.jpg';
-import { Button } from '../../../button/button';
-import { Carousel } from '../../../carousel/carousel';
+import { Carousel, Button, useLearningWindow } from '@learnway/ui';
+import { CmsImageItem } from '@learnway/types';
 
 const styles = isMobile ? stylesMobile : stylesWeb;
 
@@ -21,77 +18,28 @@ const LearningWindowGalleryPlayerComponent: FC<any> = () => {
 
   // swiper slide 개수
   const [swiperCount, setSwiperCount] = useState<number>(0);
-
   // 메인 사진 이미지 넘버
   const [mainImgIndex, setMainImgIndex] = useState<number>(0);
 
-  // 사진 순서
-  const photoArray = [
-    bnrImage1,
-    bnrImage2,
-    bnrImage1,
-    bnrImage2,
-    bnrImage1,
-    bnrImage2,
-    bnrImage1,
-    bnrImage2,
-    bnrImage1,
-    bnrImage2,
-    bnrImage1,
-    bnrImage2,
-    bnrImage1,
-    bnrImage2,
-  ];
+  const [imageList, setImageList] = useState<CmsImageItem[]>([]);
 
-  // 사진 스와이퍼
-  const items = [
-    <Button>
-      <img src={bnrImage1} alt="" />
-    </Button>,
-    <Button>
-      <img src={bnrImage2} alt="" />
-    </Button>,
-    <Button>
-      <img src={bnrImage1} alt="" />
-    </Button>,
-    <Button>
-      <img src={bnrImage2} alt="" />
-    </Button>,
-    <Button>
-      <img src={bnrImage1} alt="" />
-    </Button>,
-    <Button>
-      <img src={bnrImage2} alt="" />
-    </Button>,
-    <Button>
-      <img src={bnrImage1} alt="" />
-    </Button>,
-    <Button>
-      <img src={bnrImage2} alt="" />
-    </Button>,
-    <Button>
-      <img src={bnrImage1} alt="" />
-    </Button>,
-    <Button>
-      <img src={bnrImage2} alt="" />
-    </Button>,
-    <Button>
-      <img src={bnrImage1} alt="" />
-    </Button>,
-    <Button>
-      <img src={bnrImage2} alt="" />
-    </Button>,
-    <Button>
-      <img src={bnrImage1} alt="" />
-    </Button>,
-    <Button>
-      <img src={bnrImage2} alt="" />
-    </Button>,
-  ];
+  const { playInfo, galleryInfo, funcInfo } = useLearningWindow();
 
   // 스와이퍼 체인지 시 index 값 변경
   const handlePhothChange = (realIndex: number) => {
     setMainImgIndex(realIndex);
+
+    const payload = {
+      courseSequenceId: playInfo?.sequenceId,
+      courseId: playInfo?.courseId,
+      curriculumId: playInfo?.curriculumId,
+      moduleId: playInfo?.moduleId,
+      lessonId: playInfo?.lessonId,
+      contentUuid: playInfo?.contentUuid,
+      resourceId: imageList[realIndex].resourceId,
+      fileUuid: imageList[realIndex].fileUuid,
+    };
+    funcInfo?.galleryLearningHistory(payload);
   };
 
   // 스와이퍼 사진 클릭
@@ -116,6 +64,33 @@ const LearningWindowGalleryPlayerComponent: FC<any> = () => {
     }
   };
 
+  useEffect(() => {
+    if (!galleryInfo) return;
+    const newImageList: CmsImageItem[] = [];
+    for (const item of galleryInfo.images) {
+      let itemUrl = item.itemUrl;
+      if ((window as any).__ENV__?.APP_ENV === 'local') {
+        const url = new URL(itemUrl);
+        itemUrl = url.pathname;
+      }
+      newImageList.push({ ...item, itemUrl });
+    }
+    setImageList(newImageList);
+
+    setTimeout(() => {
+      const payload = {
+        courseSequenceId: playInfo?.sequenceId,
+        courseId: playInfo?.courseId,
+        curriculumId: playInfo?.curriculumId,
+        moduleId: playInfo?.moduleId,
+        lessonId: playInfo?.lessonId,
+        contentUuid: playInfo?.contentUuid,
+        playRate: 100,
+      };
+      funcInfo?.html5LearningHistory(payload);
+    }, 5000);
+  }, [galleryInfo]);
+
   return (
     <div className={`${styles.start} ${styles.gallery_wrap}`}>
       {!isMobile && (
@@ -128,7 +103,7 @@ const LearningWindowGalleryPlayerComponent: FC<any> = () => {
       <div className={styles.photo_wrap}>
         <div className={styles.photo}>
           <Button className={styles.img}>
-            <img src={photoArray[mainImgIndex]} alt="" />
+            <img src={imageList[mainImgIndex].itemUrl} alt="" />
           </Button>
           {/* prev, next button */}
           <Button className={styles.btn_prev} onClick={() => handlePrevClick()}>
@@ -142,7 +117,13 @@ const LearningWindowGalleryPlayerComponent: FC<any> = () => {
         <div className={styles.swiper}>
           <Carousel
             ref={swiperRef}
-            items={items}
+            items={imageList.map((item) => {
+              return (
+                <Button>
+                  <img src={item.itemUrl} alt="" />
+                </Button>
+              );
+            })}
             className={`${styles.photo_swiper}`}
             spaceBetween={8}
             slidesPerView="auto"

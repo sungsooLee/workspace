@@ -22,12 +22,19 @@ import {
   Button,
   ChipListModalSelectorFormField,
   ContentsRow,
+  FormSubTitle,
   GridBox,
   RadioGroupFormField,
   useGridBox,
   useModal,
 } from '@learnway/ui';
-import { ContentsHistoryInfoFormField, FormRow, FormSubTitle } from '@shared/ui';
+import {
+  ContentsButtons,
+  ContentsHistoryInfoFormField,
+  FormRow,
+  MainContents,
+  PageContainer,
+} from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { CellContext, createColumnHelper } from '@tanstack/react-table';
 import {
@@ -37,7 +44,6 @@ import {
   EnTenantScope,
   RoleApplication,
 } from '@types';
-import { MainContents, PageContainer, ContentsButtons } from '@shared/ui';
 
 export const Route = createLazyFileRoute('/_layout/my-page/role/detail')({
   component: RouteComponent,

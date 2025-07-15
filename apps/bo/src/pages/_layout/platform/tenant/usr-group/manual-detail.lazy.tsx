@@ -1,35 +1,43 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
-import { createColumnHelper, ColumnDef } from '@tanstack/react-table';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 
 import {
-  Input,
-  ContentsRow,
   Button,
+  ChipListModalSelectorFormField,
+  ContentsRow,
+  FormSubTitle,
   GridBox,
+  Input,
   useGridBox,
 } from '@learnway/ui';
 import {
-  DynamicFormConfig,
-  useDynamicForm,
   CODE_GROUP,
-  useSearchBox,
+  DynamicFormConfig,
   SearchBoxConfig,
+  useDynamicForm,
+  useSearchBox,
 } from '@learnway/hooks';
 
-import { FormRow, FormSubTitle, LinkBox, ContentsButtons } from '@shared/ui';
-import { SearchBox } from '@shared/ui/search-box';
-
 import {
+  ChannelListChoiceModal,
+  ContentsButtons,
+  FormRow,
   GridExcelUploadButton,
+  LinkBox,
+  MainContents,
+  PageContainer,
+  UserChoiceModal,
 } from '@shared/ui';
-
-import { EnTenantDetailTabKey } from '@types';
-import { MainContents, PageContainer } from '@shared/ui';
+import { SearchBox } from '@shared/ui/search-box';
 import { useFetchUserGroupDetail } from '@entities/user-group';
+import { FormDisplay } from '@features/form';
+import { useFetchAuthUser } from '@learnway/auth/entities';
+import { queryOptions } from '@entities/user-group/service/user-group.queries';
+import { Tenant } from '@learnway/auth/types';
 
 export const Route = createLazyFileRoute('/_layout/platform/tenant/usr-group/manual-detail')({
   component: RouteComponent,
@@ -44,9 +52,23 @@ function RouteComponent() {
   const router = useRouter();
   const routerState = useRouterState();
 
-  const { data: userGroupData, refetch } = useFetchUserGroupDetail(routerState.location.state?.userGroupId);
+  const formRef = useRef<HTMLFormElement>(null);
 
-  const { provider: searchManualProvider, getValues: getManualValues } = useSearchBox(searchManualConfig());
+  const { data: loginUser } = useFetchAuthUser();
+  // 상세
+  const { data: userGroupData, refetch } = useFetchUserGroupDetail(
+    routerState.location.state?.userGroupId,
+  );
+
+  const [tenantInfo, setTenantInfo] = useState<Tenant>();
+
+  const {
+    provider: searchManualProvider,
+    getValues: getManualValues,
+    onFormChange: manualFormChange,
+    onFormValid: manualFormValid,
+    setValue: setManualValue,
+  } = useSearchBox(searchManualConfig());
   const { config: gManualConfig, gridFetch: gridManualFetch } = useGridBox(
     gridManualConfig,
     getManualValues,
@@ -60,6 +82,7 @@ function RouteComponent() {
     setFormError,
     clearFormError,
     getValues,
+    setValue,
   } = useDynamicForm(formConfig);
 
   const handleListButtonClick = () => {
@@ -72,25 +95,54 @@ function RouteComponent() {
   };
 
   const handleResetButtonClick = () => {
-    console.log('reset');
+    onFormChange();
   };
-  const handleModifyButtonClick = () => {
-    console.log('save');
+
+  const handleModifyButtonClick = async () => {
+    const form = formRef.current;
+    if (form) {
+      form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+    }
   };
-  const handleOnSubmit = (formData: any) => {
-    console.log('save', formData);
+
+  const handleOnSubmit = async (formData: any) => {
+    console.log('data {} => ', formData);
+    console.log('userList {} => ', getManualValues());
+    const payload = {
+      userGroupOriginType: formData.userGroupOriginType,
+      userGroupOriginMappingId:
+        formData.userGroupOriginType === 'PERSONAL'
+          ? formData.personName[0].uuid
+          : formData.channelName[0].channelUuid,
+      userGroupName: formData.userGroupName,
+      tenantId: tenantInfo?.tenantId,
+      isUsed: formData.isUsed,
+      assignmentType: formData.assignmentType,
+      userList: '유저목록',
+    };
+    console.log('payload {} => ', payload);
   };
+
   const handleOnSearchManual = (searchData: any) => {
     console.log('search', searchData);
+    gridManualFetch(searchData);
   };
 
   useEffect(() => {
-    if(userGroupData) {
-      console.log('#### userGroupData {} => ', userGroupData)
+    if (userGroupData) {
+      console.log('#### userGroupData {} => ', userGroupData);
 
-      updateFormData({...userGroupData})
+      updateFormData({ ...userGroupData });
     }
-  }, [userGroupData])
+  }, [userGroupData]);
+
+  useEffect(() => {
+    console.log('### loginUser', loginUser);
+    if (loginUser) {
+      setTenantInfo(loginUser.activeTenant);
+      setValue('tenantName', loginUser.activeTenant?.tenantName);
+    }
+  }, [loginUser]);
 
   return (
     <PageContainer>
@@ -109,8 +161,8 @@ function RouteComponent() {
         </Button>
       </ContentsButtons>
       <MainContents>
-        <form onSubmit={onSubmit(handleOnSubmit)}>
-          <FormSubTitle label={t('유저그룹 기본 정보')} lineType="dark" />
+        <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
+          <FormSubTitle label={t('유저그룹 기본 정보')} />
           <ContentsRow>
             <FormRow provider={provider} name={'userGroupOriginType'} />
           </ContentsRow>
@@ -123,19 +175,78 @@ function RouteComponent() {
               className={dynamicFormStyles.form_item_horizontal}
             />
           </ContentsRow>
+
+          <FormDisplay
+            provider={provider}
+            dependencies={[{ name: 'userGroupOriginType', value: 'CHANNEL' }]}
+          >
+            <ContentsRow>
+              <FormRow
+                provider={provider}
+                name="channelName"
+                element={
+                  <ChipListModalSelectorFormField
+                    modalConfig={{
+                      content: <ChannelListChoiceModal />,
+                      title: '',
+                      width: 'xl',
+                    }}
+                    chipList={{
+                      labelField: 'channelName',
+                      valueField: 'channelUuid',
+                      hideBorder: true,
+                    }}
+                    selectOnlyOne={true}
+                  />
+                }
+              />
+            </ContentsRow>
+          </FormDisplay>
+          <FormDisplay
+            provider={provider}
+            dependencies={[{ name: 'userGroupOriginType', value: 'PERSONAL' }]}
+          >
+            <ContentsRow>
+              <FormRow
+                provider={provider}
+                name="personName"
+                element={
+                  <ChipListModalSelectorFormField
+                    modalConfig={{
+                      content: <UserChoiceModal />,
+                      title: '',
+                      width: 'xl',
+                    }}
+                    chipList={{
+                      labelField: 'name',
+                      valueField: 'uuid',
+                      hideBorder: true,
+                    }}
+                    selectOnlyOne={true}
+                  />
+                }
+              />
+            </ContentsRow>
+          </FormDisplay>
+
           <FormSubTitle label={t('유저그룹 대상자 정보')} lineType="dark" />
           <ContentsRow>
             <FormRow provider={provider} name={'assignmentType'} />
           </ContentsRow>
-          <SearchBox provider={searchManualProvider} onSearch={handleOnSearchManual} />
-          <GridBox
-            showAdd
-            showRemove
-            excelButtons={<GridExcelUploadButton />}
-            config={gManualConfig}
-            columns={manualColumns}
-          />
         </form>
+      </MainContents>
+      <MainContents>
+        <SearchBox provider={searchManualProvider} onSearch={handleOnSearchManual} />
+        <GridBox
+          showAdd
+          showRemove
+          excelButtons={
+            userGroupData &&
+            userGroupData.assignmentType === 'DIRECT_USER_BASED' && <GridExcelUploadButton />
+          }
+          config={gManualConfig}
+          columns={manualColumns}
+        />
       </MainContents>
     </PageContainer>
   );
@@ -147,7 +258,7 @@ const formConfig: DynamicFormConfig = {
       name: 'userGroupOriginType',
       type: 'radio-group',
       label: t('유저그룹 유형'),
-      value: 'tenant',
+      value: 'TENANT',
       options: [
         { label: t('테넌트 유저그룹'), value: 'TENANT' },
         { label: t('채널 유저그룹'), value: 'CHANNEL' },
@@ -177,10 +288,24 @@ const formConfig: DynamicFormConfig = {
       guideText: t('사용상태인 경우 유저그룹에서 조회 할 수 있습니다.'),
     },
     {
+      name: 'channelName',
+      type: 'custom',
+      label: t('채널'),
+      format: 'array',
+      value: [],
+    },
+    {
+      name: 'personName',
+      type: 'custom',
+      label: t('개인'),
+      format: 'array',
+      value: [],
+    },
+    {
       name: 'assignmentType',
       type: 'radio-group',
       label: t('유저그룹 대상자 설정'),
-      value: '',
+      value: 'USER_GROUP_BASED',
       options: [
         { label: t('유저그룹 설정'), value: 'USER_GROUP_BASED' },
         { label: t('직접 설정'), value: 'DIRECT_USER_BASED' },
@@ -189,9 +314,30 @@ const formConfig: DynamicFormConfig = {
     },
   ],
   validator: {
-    c3: true,
-    c5: true,
-    c6: true,
+    userGroupName: {
+      format: 'string',
+      required: true,
+      conditions: [
+        {
+          fn: (values) => {
+            const fieldValue = values.userGroupName.fieldValue;
+            if (fieldValue === '') return true;
+            return false;
+          },
+          message: t('LABEL.form.validation.needInput', { code: t('유저그룹명') }),
+        },
+      ],
+    },
+    assignmentType: {
+      format: 'string',
+      required: true,
+    },
+    channelName: {
+      required: (values) => values.userGroupOriginType === 'CHANNEL',
+    },
+    personName: {
+      required: (values) => values.userGroupOriginType === 'PERSONAL',
+    },
   },
 };
 
@@ -223,7 +369,7 @@ const searchManualConfig = (): SearchBoxConfig => ({
         value: '',
       },
       {
-        name: 'tenantManagerName',
+        name: 'userName',
         type: 'text',
         label: t('이름'),
         value: '',
@@ -233,48 +379,72 @@ const searchManualConfig = (): SearchBoxConfig => ({
 });
 
 const gridManualConfig = {
-  query: '',
+  title: '유저그룹 설정 목록',
+  query: queryOptions.userGroupSubDirectoryList,
   columns: [],
   data: [],
-
-  pagination: {
-    pageSize: 20,
-    pageIndex: 0,
-    totalRows: 0,
+  gridState: {
+    page: 0,
+    size: 10,
+    sort: [],
   },
 };
 
 const columnHelper = createColumnHelper<any>();
 const manualColumns = [
-  columnHelper.accessor('tenantName', {
+  columnHelper.accessor('companyName', {
     cell: (info) => info.getValue(),
     header: t('회사'),
     size: 152,
   }),
-  columnHelper.accessor('companyTenantList', {
+  columnHelper.accessor('deptName', {
     cell: (info) => info.getValue(),
     header: t('소속'),
     size: 200,
   }),
-  columnHelper.accessor('tenantRoleList', {
+  columnHelper.accessor('employeeNumber', {
     cell: (info) => info.getValue(),
     header: t('사번'),
     size: 120,
   }),
-  columnHelper.accessor('createdBy', {
+  columnHelper.accessor('userName', {
     header: t('이름'),
     size: 104,
   }),
-  columnHelper.accessor('createdDate', {
-    cell: (info) => info.getValue(),
+  columnHelper.accessor('userStatus', {
+    cell: (info: any) => {
+      switch (info.getValue()) {
+        case 'ACTIVE':
+          return t('재직');
+        case 'SUSPENDED':
+          return t('정직');
+        default:
+          return t('휴직');
+      }
+    },
     header: t('제직여부'),
+    meta: {
+      cellAlign: 'center',
+    },
     size: 152,
   }),
-  columnHelper.accessor('isUsed', {
-    cell: (info) => {
-      return info.row.original.isUsed ? t('사용') : t('미사용');
+  columnHelper.accessor('accountStatus', {
+    cell: (info: any) => {
+      switch (info.getValue()) {
+        case 'NORMAL':
+          return t('정상');
+        case 'WAIT':
+          return t('대기');
+        case 'DORMANT':
+          return t('휴면');
+        default:
+          return t('잠김');
+      }
     },
     header: t('계정상태'),
+    meta: {
+      cellAlign: 'center',
+    },
     size: 104,
   }),
 ] as ColumnDef<any, unknown>[];

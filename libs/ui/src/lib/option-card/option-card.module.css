@@ -5,7 +5,7 @@
       @apply flex flex-wrap;
     }
     .card_item {
-      @apply button_3_r relative m-0 flex min-h-[40px] flex-col items-center justify-center rounded-[8px] border border-solid border-[#d6dae1] bg-[var(--white)] text-[#4c515e];
+      @apply button_3_r relative m-0 flex min-h-[44px] flex-col items-center justify-center rounded-[8px] border border-solid border-[#d6dae1] bg-[var(--white)] text-[#4c515e];
       .label {
         @apply body_3_b block text-center text-[var(--gray9)];
       }

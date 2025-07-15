@@ -4,7 +4,6 @@
 /* eslint-disable */
 import type { com_ever_edu_external_tenant_dto_res_TenantResDto } from './com_ever_edu_external_tenant_dto_res_TenantResDto';
 import type { com_ever_edu_lms_category_dto_res_CourseCategoryFlatDto } from './com_ever_edu_lms_category_dto_res_CourseCategoryFlatDto';
-import type { com_ever_edu_lms_course_dto_CourseCommunityDto } from './com_ever_edu_lms_course_dto_CourseCommunityDto';
 import type { com_ever_edu_lms_course_dto_res_CourseResDto$SimpleCourseDto } from './com_ever_edu_lms_course_dto_res_CourseResDto$SimpleCourseDto';
 import type { com_ever_edu_lms_course_dto_res_CourseTargetAudienceResDto } from './com_ever_edu_lms_course_dto_res_CourseTargetAudienceResDto';
 import type { com_ever_edu_lms_tag_dto_res_TagResDto } from './com_ever_edu_lms_tag_dto_res_TagResDto';
@@ -235,7 +234,7 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
     /**
      * 커뮤니티 사용 설정 내용
      */
-    communityList?: Array<com_ever_edu_lms_course_dto_CourseCommunityDto>;
+    communityList?: Array<'NOTICE' | 'QNA' | 'MARTIAL' | 'COMMUNITY'>;
     /**
      * 강사 설정 여부
      */

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import {
   Carousel,
@@ -12,6 +13,7 @@ import {
   Editor,
   Badge,
 } from '@learnway/ui';
+import { cn } from '@learnway/shared';
 import { Navigation } from 'swiper/modules';
 import { IcoHeart } from '@learnway/icons';
 
@@ -19,6 +21,10 @@ import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.cs
 
 /* images */
 import thumbnailImg from '../../../assets/images/thumb/thumbnail_image.jpg';
+
+// import styles from './count-list.module.css';
+// import btnStyles from './segment-button.module.css';
+import listStyles from './order-list.module.css';
 
 export const Route = createFileRoute('/_guide/guide/test')({
   component: RouteComponent,
@@ -46,6 +52,38 @@ const items: CarouselItemInfo[] = [
     badges: [
       { id: '1', name: '태그 라벨1' },
       { id: '2', name: '태그 라벨2' },
+    ],
+  },
+];
+
+interface ListInfo {
+  title: string;
+  status?: string;
+  list?: {
+    label: string;
+    time?: string;
+  }[];
+}
+
+const data: ListInfo[] = [
+  {
+    title: '안전교육 | 강사 이승훈(현대오토에버 L&D플랫폼팀) ',
+    status: '완료',
+    list: [
+      { label: '산업안전보건/공정안전관리/산업보건관리/물질안전보건/일반안전관리', time: '8시간' },
+      { label: '산업안전보건/공정안전관리/산업보건관리/물질안전보건/일반안전관리', time: '4시간' },
+    ],
+  },
+  {
+    title: '사업장 교육 1 (강사 김지선)',
+    list: [
+      { label: '산업안전보건/공정안전관리/산업보건관리/물질안전보건/일반안전관리', time: '8시간' },
+    ],
+  },
+  {
+    title: '사업장 교육 2 (강사 : 이승훈 ) ',
+    list: [
+      { label: '산업안전보건/공정안전관리/산업보건관리/물질안전보건/일반안전관리', time: '8시간' },
     ],
   },
 ];
@@ -96,6 +134,9 @@ function RouteComponent() {
       </div>
     </div>
   ));
+
+  const buttonLabels = ['버튼1', '버튼2'];
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(0);
   return (
     <div>
       Hello "/_guide/guide/test"!
@@ -121,6 +162,77 @@ function RouteComponent() {
         showNavigation={true}
         loop={false}
       />
+      <br />
+      <br />
+      <br />
+      {/* count list */}
+      {/* <div className={styles.start}>
+        <div className={styles.item}>
+          <span className={styles.label}>{'조회'}</span>
+          <strong className={styles.num}>
+            {'000,000'} 
+          </strong>
+        </div>
+        <div className={styles.item}>
+          <span className={styles.label}>{'조회'}</span>
+          <strong className={styles.num}>
+            {'000,000'} 
+          </strong>
+        </div>
+        <div className={styles.item}>
+          <span className={styles.label}>{'조회'}</span>
+          <strong className={styles.num}>
+            {'000,000'} 
+          </strong>
+        </div>
+        <div className={styles.item}>
+          <span className={styles.label}>{'조회'}</span>
+          <strong className={styles.num}>
+            {'000,000'} 
+          </strong>
+        </div>
+      </div> */}
+      {/* segment button */}
+      {/* <div className={btnStyles.start}>
+        {buttonLabels.map((label, index) => {
+          const isActive = selectedIndex === index;
+
+          return (
+            <Button
+              key={index}
+              variant="text"
+              size="sm"
+              label={label}
+              onClick={() => setSelectedIndex(index)}
+              className={cn(btnStyles.btn, isActive && btnStyles.active)}
+              aria-selected={isActive ? 'true' : undefined}
+            />
+          );
+        })}
+      </div> */}
+      {/* order list */}
+      <div className={cn(listStyles.start, listStyles.procedure_wrap)}>
+        {data.map((item, index) => (
+          <div className={listStyles.item} key={index}>
+            <div className={listStyles.title_wrap}>
+              <strong className={listStyles.title}>
+                <span className={listStyles.index}>{`${index + 1}.`}</span> {item.title}
+              </strong>
+              {item.status && <span className={listStyles.status}>{item.status}</span>}
+            </div>
+            {item.list && (
+              <ul className={listStyles.list}>
+                {item.list.map((child, index) => (
+                  <li key={index}>
+                    <p className={listStyles.label}>{child.label}</p>
+                    {child.time && <span className={listStyles.time}>{child.time}</span>}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

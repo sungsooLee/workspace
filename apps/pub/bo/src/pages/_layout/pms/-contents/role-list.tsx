@@ -1,8 +1,14 @@
 import { FC, useState } from 'react';
 import { cn } from '@learnway/shared';
-// eslint-disable-next-line @nx/enforce-module-boundaries
-import { FormSubTitle } from '../../../../../../../bo/src/shared/ui/form';
-import { Button, TreeView, TreeNode, Input, TreeContainer, DndTreeView } from '@learnway/ui';
+import {
+  Button,
+  TreeView,
+  TreeNode,
+  Input,
+  TreeContainer,
+  DndTreeView,
+  FormSubTitle,
+} from '@learnway/ui';
 /* style */
 import styles from './role-list.module.css';
 

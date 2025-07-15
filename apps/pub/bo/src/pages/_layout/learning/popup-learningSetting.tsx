@@ -22,10 +22,10 @@ import {
   Switch,
   Tooltip,
   useModal,
+  FormSubTitle,
 } from '@learnway/ui';
 import { IcoAlertCircle, IcoFormRequired, IcoRefresh02, IcoSearch } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { FormSubTitle } from '../../../../../../bo/src/shared/ui';
 
 /* CSS */
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form module css
@@ -213,22 +213,20 @@ function RouteComponent() {
         <ModalTitle>{'학습자원 일괄설정'}</ModalTitle>
         <ModalBody>
           <SplitPanel size={['276px', 'auto']} divider>
-            <>
-              <GridBox
-                data={data}
-                columns={columns}
-                title="일괄설정 항목"
-                showColumnSettings={false}
-                multiple={true}
-                showTotalCount={false}
-                className={styles.grid}
-                customButtonNode={
-                  <p className="grid_info">
-                    대상동영상 <span className="num">10</span>건
-                  </p>
-                }
-              />
-            </>
+            <GridBox
+              data={data}
+              columns={columns}
+              title="일괄설정 항목"
+              showColumnSettings={false}
+              multiple={true}
+              showTotalCount={false}
+              className={styles.grid}
+              customButtonNode={
+                <p className="grid_info">
+                  대상동영상 <span className="num">10</span>건
+                </p>
+              }
+            />
             <>
               <FormSubTitle label={'타이틀'} />
               <ContentsRow>

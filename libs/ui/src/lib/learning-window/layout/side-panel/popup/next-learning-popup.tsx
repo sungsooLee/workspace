@@ -8,7 +8,7 @@ import {
   Button,
   useLearningWindow,
   useModal,
-} from '../../../../../';
+} from '@learnway/ui';
 import { IcoRefresh02, IcoPrevNext } from '@learnway/icons';
 
 const NextLearningPopupComponent: FC<any> = ({ isNext }) => {

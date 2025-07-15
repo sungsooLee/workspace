@@ -12,21 +12,20 @@ import {
   useGridBoxConfig,
   useModal,
 } from '@learnway/ui';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-
-import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
-
+import { ColumnDef, createColumnHelper, Table } from '@tanstack/react-table';
 import { SearchBox } from '@shared/ui/search-box';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { queryOptions as requestChannelQueryOptions } from '@entities/channel/service/request-channel.queries';
-import { formUtils } from '@entities/form-utils';
-import { RejectModal } from '@shared/ui';
-import {
-  useApproveRequestChannel,
-  useRejectRequestChannel,
-} from '@entities/channel/service/request-channel.hook';
 import { EnGlobalConst } from '@types';
-import { MainContents, PageContainer } from '@shared/ui';
+import {
+  MainContents,
+  PageContainer,
+  RejectModal,
+  TenantByRoleDropdownFormField,
+} from '@shared/ui';
+import { useChannelApplication } from '@features/channel/channel-application/service/channel-application.service';
+
+import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
 
 export const Route = createFileRoute('/_layout/tenant/channel/request/')({
   component: RouteComponent,
@@ -36,134 +35,72 @@ const _global = {
   linkClick: (uuid: string) => {
     return;
   },
+  openChannelClick: (uuid: string) => {
+    return;
+  },
+  channelDetailClick: (uuid: string) => {
+    return;
+  },
 };
 
 function RouteComponent() {
   const router = useRouter();
 
-  const { open: openModal, confirm: openConfirm, alert } = useModal();
   const { provider: sProvider, getValues } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
 
-  const [selectedRows, setSelectedRows] = useState([]);
+  const [tableInstance, setTableInstance] = useState<Table<any>>();
+  const [approvalButtonDisabled, setApprovalButtonDisabled] = useState(true);
 
-  const { approve: approveRequestChannel } = useApproveRequestChannel({});
-  const { reject: rejectRequestChannel } = useRejectRequestChannel({});
+  const { accept: acceptRequestChannel, reject: rejectRequestChannel } = useChannelApplication();
 
   const handleOnSearch = useCallback((data: any) => {
-    gridFetch(data);
+    const searchData = {
+      ...data,
+      regStrDate: data.regDate.from ? getDateToString(new Date(data.regDate.from), 'YYYYMMDD') : '',
+      regEndDate: data.regDate.to ? getDateToString(new Date(data.regDate.to), 'YYYYMMDD') : '',
+      approvalStrDate: data.approvalDate.from
+        ? getDateToString(new Date(data.approvalDate.from), 'YYYYMMDD')
+        : '',
+      approvalEndDate: data.approvalDate.to
+        ? getDateToString(new Date(data.approvalDate.to), 'YYYYMMDD')
+        : '',
+    };
+    gridFetch(searchData);
   }, []);
+
+  const handleOnSelect = () => {
+    const rows = tableInstance?.getSelectedRowModel().rows;
+    if (rows && rows.length > 0) setApprovalButtonDisabled(false);
+    else setApprovalButtonDisabled(true);
+  };
 
   useEffect(() => {
     gridFetch();
   }, []);
 
-  const handleGridRowsSelect = (rows: any) => {
-    setSelectedRows(rows);
-  };
-
   const handleAcceptClick = (e: any) => {
-    if (selectedRows.length > 0) {
-      openConfirm({
-        title: t('접수 하시겠습니까?'),
-        content: <p>{t('채널 개설 신청을 접수한 후에 채널을 개설해야 합니다.')}</p>,
-        onClose: (value: boolean) => {
-          if (value) {
-            approveRequests();
-          }
-        },
-      });
-    }
-  };
-
-  const approveRequests = () => {
-    if (selectedRows.length > 0) {
-      const payload = {
-        channelRequestUuid: selectedRows.map((row: any) => row.channelRequestUuid),
-        rejectedReasonContent: '',
-      };
-      console.log('payload', payload);
-      approveRequestChannel(payload, {
-        onSuccess: (data: any) => {
-          gridFetch();
-          alert({
-            title: t('접수가 완료되었습니다.'),
-            content: (
-              <p>
-                {t(
-                  '채널을 개설해야 채널 신청이 왼료됩니다.목록에서 접수 처리한 채널을 개설해 주세요.',
-                )}
-              </p>
-            ),
-          });
-        },
+    const rows = tableInstance?.getSelectedRowModel().rows;
+    if (rows && rows.length > 0) {
+      const channelRequestUuids = rows.map((row: any) => row.original.channelRequestUuid);
+      acceptRequestChannel(channelRequestUuids, () => {
+        gridFetch();
       });
     }
   };
 
   const handleRejectClick = (e: any) => {
-    if (selectedRows.length > 0) {
-      openModal({
-        width: 'sm',
-        content: <RejectModal />,
-        onClose(data: any) {
-          console.log('reason', data);
-          if (data) {
-            setTimeout(() => reject(data.rejectReason), 0);
-          }
-        },
-      });
-    }
-  };
-
-  const reject = (reason: any) => {
-    console.log('reason', reason);
-    openConfirm({
-      title: t('반려 하시겠습니까?'),
-      content: (
-        <p>
-          {t(
-            '채널 개설 신청을 반려하면 해당 신청 건으로 채널 개설을 할 수 없습니다. 반려 처리 시 반려 안내 메일이 발송됩니다.',
-          )}
-        </p>
-      ),
-      onClose: (value: boolean) => {
-        if (value) {
-          rejectRequests(reason);
-        }
-      },
-    });
-  };
-
-  const rejectRequests = (reason: any) => {
-    console.log('rejectRequests', selectedRows.length);
-    if (selectedRows.length > 0) {
-      const payload = {
-        channelRequestUuid: selectedRows.map((row: any) => row.channelRequestUuid),
-        rejectedReasonContent: reason,
-      };
-      console.log('payload', payload);
-      rejectRequestChannel(payload, {
-        onSuccess: (data: any) => {
-          gridFetch();
-          /*
-          alert({
-            title: t('접수가 완료되었습니다.'),
-            content: (
-              <p>
-                {t(
-                  '채널을 개설해야 채널 신청이 왼료됩니다.목록에서 접수 처리한 채널을 개설해 주세요.',
-                )}
-              </p>
-            ),
-          });*/
-        },
+    const rows = tableInstance?.getSelectedRowModel().rows;
+    if (rows && rows.length > 0) {
+      const channelRequestUuids = rows.map((row: any) => row.original.channelRequestUuid);
+      rejectRequestChannel(channelRequestUuids, () => {
+        gridFetch();
       });
     }
   };
 
   const handleOnSelectable = (row: any) => {
-    const disabled = row.approvalStatusTypecd !== 'PENDING';
+    const disabled = row.approvalStatusType !== 'PENDING';
     return !disabled;
   };
 
@@ -172,6 +109,22 @@ function RouteComponent() {
       to: '/tenant/channel/request/detail',
       state: {
         channelRequestUuid: uuid,
+      },
+    });
+  };
+  _global.openChannelClick = (uuid: string) => {
+    router.navigate({
+      to: '/tenant/channel/management/regist',
+      state: {
+        requestUuid: uuid,
+      },
+    });
+  };
+  _global.channelDetailClick = (uuid: string) => {
+    router.navigate({
+      to: '/tenant/channel/management/detail',
+      state: {
+        channelUuid: uuid,
       },
     });
   };
@@ -185,9 +138,7 @@ function RouteComponent() {
           config={gConfig}
           columns={columns}
           multiple
-          showColumnSettings={false}
           hideRowSelectionCheckBox={true}
-          onRowsSelect={handleGridRowsSelect}
           title={t('채널 개설 신청 목록')}
           customButtonNode={
             <>
@@ -195,7 +146,7 @@ function RouteComponent() {
                 variant="text"
                 size="sm"
                 className={layoutStyles.btn_text}
-                disabled={selectedRows.length === 0}
+                disabled={approvalButtonDisabled}
                 label={t('접수')}
                 stopPropagation
                 onClick={handleAcceptClick}
@@ -204,14 +155,16 @@ function RouteComponent() {
                 variant="text"
                 size="sm"
                 className={layoutStyles.btn_text}
-                disabled={selectedRows.length === 0}
+                disabled={approvalButtonDisabled}
                 label={t('반려')}
                 stopPropagation
                 onClick={handleRejectClick}
               />
             </>
           }
+          onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
           isRowSelectable={handleOnSelectable}
+          onRowSelect={handleOnSelect}
         />
       </MainContents>
     </PageContainer>
@@ -222,20 +175,12 @@ const searchConfig: SearchBoxConfig = {
   builders: [
     [
       {
-        name: 'tenant',
-        type: 'dropdown',
-        label: t('테넌트'),
+        name: 'tenantId',
+        type: 'custom',
+        label: t('LABEL.form.label.tenant', '테넌트'),
         value: '',
-        optionsConfig: {
-          codeGroup: CODE_GROUP['manual.bo.my.tenant.tenantId'],
-        },
-        dropdownConfig: {
-          onChange: () => {
-            return '';
-          },
-          isSearchable: true,
-          placeholder: '입력 또는 선택',
-        },
+        format: 'object',
+        element: <TenantByRoleDropdownFormField />,
       },
       {
         name: 'channelName',
@@ -245,7 +190,7 @@ const searchConfig: SearchBoxConfig = {
         placeholder: '입력',
       },
       {
-        name: 'requesterName',
+        name: 'requesterEmployeeNumber',
         type: 'text',
         label: t('신청자 사번'),
         value: '',
@@ -254,7 +199,7 @@ const searchConfig: SearchBoxConfig = {
     ],
     [
       {
-        name: 'approvalStatusTypecd',
+        name: 'approvalStatusType',
         type: 'dropdown',
         label: t('신청상태'),
         value: '',
@@ -264,12 +209,12 @@ const searchConfig: SearchBoxConfig = {
         },
       },
       {
-        name: 'requestDate',
+        name: 'regDate',
         label: '신청일',
         type: 'date-range',
         value: {
-          from: formUtils.nowDate({ unit: 'day', offset: -30 }),
-          to: formUtils.nowDate(),
+          from: undefined,
+          to: undefined,
         },
       },
       {
@@ -277,8 +222,8 @@ const searchConfig: SearchBoxConfig = {
         label: '접수/반려일',
         type: 'date-range',
         value: {
-          from: formUtils.nowDate({ unit: 'day', offset: -30 }),
-          to: formUtils.nowDate(),
+          from: undefined,
+          to: undefined,
         },
       },
     ],
@@ -288,10 +233,11 @@ const searchConfig: SearchBoxConfig = {
 const gridConfig: useGridBoxConfig = {
   query: requestChannelQueryOptions.list,
   columns: [],
-  pagination: {
-    pageSize: 10,
-    pageIndex: 0,
-    totalRows: 0,
+  data: [],
+  gridState: {
+    page: 0,
+    size: 10,
+    sort: [],
   },
 };
 
@@ -321,7 +267,7 @@ const columns = [
       </div>
     ),
     cell: ({ row }) => {
-      const disabled = row.original.approvalStatusTypecd !== 'PENDING';
+      const disabled = row.original.approvalStatusType !== 'PENDING';
       return (
         <div style={{ width: '100%', textAlign: 'center', paddingRight: 0 }}>
           <Checkbox
@@ -347,124 +293,124 @@ const columns = [
         {info.row.original.channelRequestId}
       </Button>
     ),
-    header: '신청ID',
+    header: t('신청 ID'),
     enableGrouping: false,
-    size: 200,
+    size: 160,
   }),
   columnHelper.accessor('tenantName', {
     cell: (info) => info.getValue(),
-    header: '테넌트',
-    size: 200,
+    header: t('테넌트'),
+    size: 160,
     enableGrouping: false,
   }),
   columnHelper.accessor('channelName', {
     cell: (info) => info.getValue(),
-    header: '채널명',
-    size: 180,
+    header: t('채널명'),
+    size: 160,
     enableGrouping: false,
   }),
 
-  columnHelper.accessor('channelId', {
+  columnHelper.accessor('channelMainId', {
     cell: (info) => info.getValue(),
-    header: '채널 핸들',
-    size: 120,
+    header: t('채널 핸들'),
+    size: 100,
     enableGrouping: false,
   }),
-  columnHelper.accessor('type', {
-    cell: (info) => info.getValue(),
-    header: '채널유형',
-    size: 120,
+  columnHelper.accessor('channelTenatMappingType', {
+    cell: (info) =>
+      t(
+        `${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.channel.ChannelTenatMappingType.${info.getValue()}`,
+      ),
+    header: t('채널 유형'),
+    size: 80,
     enableGrouping: false,
   }),
-  columnHelper.accessor('division', {
-    cell: (info) => info.getValue(),
-    header: '채널구분',
+  columnHelper.accessor('channelSecretType', {
+    cell: (info) =>
+      t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.channel.ChannelSecretType.${info.getValue()}`),
+    header: t('채널 구분'),
     size: 80,
     enableGrouping: false,
   }),
   columnHelper.accessor('companyName', {
     cell: (info) => info.getValue(),
-    header: '회사',
+    header: t('회사'),
     enableGrouping: false,
-    size: 156,
+    size: 120,
   }),
-  columnHelper.accessor('companySabun', {
+  columnHelper.accessor('reqeusterEmployeeNumber', {
     cell: (info) => info.getValue(),
-    header: '사번',
+    header: t('사번'),
     enableGrouping: false,
-    size: 130,
+    size: 100,
   }),
   columnHelper.accessor('reqeusterName', {
     cell: (info) => info.getValue(),
-    header: '이름',
+    header: t('이름'),
     enableGrouping: false,
     size: 100,
   }),
   columnHelper.accessor('requestDate', {
     cell: (info) =>
       getDateToString(new Date(info.row.original.requestDate), DATE_TIME_FORMAT.DATETIME_SEC),
-    header: '신청일',
-    size: 200,
+    header: t('신청일'),
+    size: 160,
     enableGrouping: false,
   }),
-  columnHelper.accessor('approvalStatusTypecd', {
+  columnHelper.accessor('approvalStatusType', {
     cell: (info) =>
       t(
         `${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.channel.ChannelApprovalStatusType.${info.getValue()}`,
       ),
-    header: '신청 상태',
+    header: t('신청 상태'),
     enableGrouping: false,
-    size: 100,
+    size: 90,
   }),
   columnHelper.accessor('approverName', {
     cell: (info) => info.getValue(),
-    header: '결제자',
+    header: t('결재자'),
     enableGrouping: false,
-    size: 100,
+    size: 90,
   }),
   columnHelper.accessor('approvalDate', {
     cell: (info) =>
       info.getValue() === null
         ? ''
         : getDateToString(new Date(info.row.original.approvalDate), DATE_TIME_FORMAT.DATETIME_SEC),
-    header: '접수/반려일',
-    size: 200,
+    header: t('접수/반려일'),
+    size: 160,
     enableGrouping: false,
   }),
   columnHelper.accessor('channelOpen', {
     cell: (info) => {
-      if (info.row.original.approvalStatusTypecd === 'PENDING')
+      if (info.row.original.approvalStatusType === 'ACCEPTED')
         return (
           <Button
             size={'xs'}
-            variant="text"
-            className="link"
+            variant="gray"
             stopPropagation
             onClick={(e) => {
-              //
+              _global.openChannelClick(info.row.original.channelRequestUuid);
             }}
-          >
-            채널 개설
-          </Button>
+            label={t('채널 개설')}
+          />
         );
-      else if (info.row.original.approvalStatusTypecd === 'APPROVED')
+      else if (info.row.original.approvalStatusType === 'APPROVED')
         return (
           <Button
             size={'xs'}
-            variant="text"
-            className="link"
+            variant="gray"
             stopPropagation
             onClick={(e) => {
-              //
+              _global.channelDetailClick(info.row.original.channelInfoChannelUuid);
             }}
-          >
-            채널 상세
-          </Button>
+            label={t('채널 상세')}
+          />
         );
       return '';
     },
-    header: '채널 확인',
-    size: 200,
+    header: t('채널 확인'),
+    size: 80,
     enableGrouping: false,
   }),
 ] as ColumnDef<any, unknown>[];

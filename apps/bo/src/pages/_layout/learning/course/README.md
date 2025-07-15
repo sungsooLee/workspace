@@ -1,279 +1,118 @@
-// new
-{
-"courseType": "ELEARNING2",
-"channelUuid": "67bbca16-4180-4982-a4e0-d192212dd7c8",
-"tenantIds": [1, 3],
-"primaryCategoryId": 1,
-"categoryIds": [1],
-"targetList": [
-{
-"combiners": [
-{
-"combineType": "JOB_ROLE",
-"combineValue": "3",
-},
-{
-"combineType": "JOB_ROLE",
-"combineValue": "4",
-"combineName": "4",
-},
-{
-"combineType": "JOB_ROLE",
-"combineValue": "5",
-}
-]
-}
-],
-"language": "ko",
-"courseName": "과정명입니다.",
-"courseSummary": "과정 요약명입니다.",
-"courseContent": "{\"root\":{\"children\":[{\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"교육 내용\",\"type\":\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1,\"textFormat\":0,\"textStyle\":\"\"}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"root\",\"version\":1}}",
-"trainingLevelType": "BEGINNER",
-"learningSpaceType": "LEARNING_WAY",
-"spaceId": "",
-"spaceName": "",
-"coordinatorUuid": "c39280c3-3f6d-11f0-9435-0218a74d52f7",
-"coordinatorName": "홍길동",
-"coordinatorDeptName": "담당자 부서",
-"coordinatorTelCountryCode": "KOR_82",
-"coordinatorTelNo": "01000000000",
-"coordinatorEmail": "hong@test.com",
-"operatorUuid": "c3929798-3f6d-11f0-9435-0218a74d5224",
-"operatorName": "김운영",
-"operatorDeptName": "운영자 부서",
-"operatorTelCountryCode": "KOR_82",
-"operatorTelNo": "01000000000",
-"operatorEmail": "kim@test.com"
-}
+# 과정 관리 페이지 (Course Management)
 
-// step 1
-{
-"wizardStep": "STEP1",
-"channelUuid": "67bbca16-4180-4982-a4e0-d192212dd7c8",
-"tenantIds": [1, 3],
-"primaryCategoryId": 2,
-"categoryIds": [10, 12],
-"targetList": [
-{
-"groupId": 6,
-"values": "34",
-"combiners": [
-{
-"combineType": "JOB_ROLE",
-"combineValue": 3
-},
-{
-"combineType": "JOB_ROLE",
-"combineValue": 4
-}
-]
-},
-{
-"combiners": [
-{
-"combineType": "JOB_TITLE",
-"combineValue": 5
-}
-]
-}
-],
-"language": "ko",
-"courseName": "과정명입니다.",
-"courseSummary": "과정 요약명입니다.",
-"courseContent": "과정 내용입니다.",
-"trainingLevelType": "BEGINNER",
-"learningSpaceType": "LEARNING_WAY",
-"spaceId": "",
-"spaceName": "",
-"coordinatorUuid": "c39280c3-3f6d-11f0-9435-0218a74d52f7",
-"coordinatorName": "홍길동",
-"coordinatorDeptName": "담당자 부서",
-"coordinatorTelCountryCode": "KOR_82",
-"coordinatorTelNo": "01000000000",
-"coordinatorEmail": "hong@test.com",
-"operatorUuid": "c3929798-3f6d-11f0-9435-0218a74d5224",
-"operatorName": "김운영",
-"operatorDeptName": "운영자 부서",
-"operatorTelCountryCode": "KOR_82",
-"operatorTelNo": "01000000000",
-"operatorEmail": "kim@test.com"
-}
+이 디렉토리는 학습 과정 관리 페이지의 리팩토링된 구조를 포함합니다.
 
-// step 2
-{
-"wizardStep": "STEP2",
-"isEnrollRequired": true,
-"approvalLineType": "LEADER",
-"isMaxEnrollQuotaRestricted": true,
-"maxEnrollQuota": 15,
-"waitListPickMethodType": "NONE",
-"maxWaitlistQuota": 0,
-"isDuplicateEnrollAllowed": false,
-"isBookDeliveryInfoRequired": false,
-"isPreLevelTestRequired": false
-}
+## 📁 폴더 구조
 
-// detail
-{
-"wizardStep": "STEP1",
-"courseId": 5,
-"courseType": "ELEARNING1",
-"channelUuid": "67bbca16-4180-4982-a4e0-d192212dd7c2",
-"tenantList": null,
-"primaryCategoryId": null,
-"categories": [
-{
-"categoryId": 11,
-"name": "1-1",
-"categoryCode": "category11",
-"categoryContent": "",
-"categoryPath": "ROOT>한글명-CATE00011>1-1",
-"isPrimary": false,
-"tenantIds": [
-2
-]
-},
-{
-"categoryId": 22,
-"name": "법정 안전교육",
-"categoryCode": "1101",
-"categoryContent": "법정 안전교육",
-"categoryPath": "ROOT>필수교육>법정 안전교육",
-"isPrimary": false,
-"tenantIds": [
-2
-]
-},
-{
-"categoryId": 33,
-"name": "고등학교6학년",
-"categoryCode": "common_category_e7a3acd2-3f75-4296-802e-4bfc7bb5ddb4",
-"categoryContent": "고등학교6학년 카테고리 내용입니다.",
-"categoryPath": "ROOT>고등학교>고등학교6학년",
-"isPrimary": false,
-"tenantIds": [
-2
-]
-}
-],
-"whiteList": null,
-"language": "KO",
-"courseName": "과정명...",
-"courseSummary": "과장 요약",
-"courseContent": "{\"root\":{\"children\":[{\"children\":[{\"detail\":0,\"format\":0,\"mode\":\"normal\",\"style\":\"\",\"text\":\"교육 내용\",\"type\":\"text\",\"version\":1}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"paragraph\",\"version\":1,\"textFormat\":0,\"textStyle\":\"\"}],\"direction\":\"ltr\",\"format\":\"\",\"indent\":0,\"type\":\"root\",\"version\":1}}",
-"trainingLevelType": "BASIC",
-"learningSpaceType": null,
-"learningSpaceId": null,
-"learningSpaceName": null,
-"learningSpaceNameKeyIn": null,
-"coordinatorUuid": "c3929798-3f6d-11f0-9435-0218a74d5224",
-"coordinatorName": null,
-"coordinatorDeptName": null,
-"coordinatorTelCountryCode": null,
-"coordinatorTelNo": "이현주/개발팀",
-"coordinatorEmail": null,
-"operatorUuid": "c39280c3-3f6d-11f0-9435-0218a74d52f7",
-"operatorName": null,
-"operatorDeptName": null,
-"operatorTelCountryCode": null,
-"operatorTelNo": "44445555",
-"operatorEmail": null,
-"isEnrollRequired": null,
-"approvalLineType": null,
-"isMaxEnrollQuotaRestricted": null,
-"maxEnrollQuota": null,
-"waitListPickMethodType": null,
-"maxWaitlistQuota": null,
-"isDuplicateEnrollAllowed": null,
-"primaryCurriculumId": null,
-"isLearnEnvEnabled": null,
-"deviceRestrictType": null,
-"isIntranetRestricted": null,
-"learningRestrictTimeType": null,
-"isReviewRestricted": null,
-"maxReviewPeriodMonths": null,
-"isCaptureBlockEnabled": null,
-"isSecurityAgreementEnable": null,
-"isLearnControlEnabled": null,
-"isDailyLearningProgressRestricted": null,
-"maxDailyLearningProgress": null,
-"isProgressResetEnabled": null,
-"isSequentialLearningRequired": null,
-"isPlayerControlRestricted": null,
-"maxPlayBackRate": null,
-"isUsePassOption": null,
-"passMethodType": null,
-"isCertificateProvided": null,
-"progressMinPassScore": null,
-"attendanceMinPassScore": null,
-"examMinPassScore": null,
-"asgmtMinPassScore": null,
-"totalMinPassScore": null,
-"progressWeights": null,
-"attendanceWeights": null,
-"examWeights": null,
-"asgmtWeights": null,
-"recognizedStudyMinType": null,
-"recognizedStudyCycles": null,
-"recognizedStudyMinutes": null,
-"isRecognizedStudyPoint": null,
-"recognizedStudyPoint": null,
-"isCommunicationToolEnabled": null,
-"isNoticeEnabled": null,
-"isQnaBoardEnabled": null,
-"isMartialBoardEnabled": null,
-"isCommunityEnabled": null,
-"isSharingAllowed": null,
-"isInstructorAssigned": null,
-"instructorAssignType": null,
-"instructorId": null,
-"instructorName": null,
-"isTextbookProvided": null,
-"textbookName": null,
-"textbookFee": null,
-"isRelatedPrerequisiteCourseExisted": null,
-"preRequisiteCourseList": null,
-"relatedCourseList": null,
-"hmgStandardMainCategory": null,
-"hmgStandardSubCategory": null,
-"isUseTrainingCostPerPerson": null,
-"trainingCostPerPerson": null,
-"isUseEmploymentInsuranceRefund": null,
-"employmentInsuranceRefund": null,
-"isUseOutsourcing": null,
-"isPreLevelTestRequired": null,
-"isBookDeliveryInfoRequired": null,
-"tutorId": null,
-"tutorName": null,
-"outsourcingCompanyId": null,
-"outsourcingCompanyName": null,
-"isUsed": null,
-"courseValidityStartDate": null,
-"courseValidityStartHour": null,
-"courseValidityEndDate": null,
-"courseValidityEndHour": null,
-"thumbnailFileGroupUuid": null,
-"primaryThumbnailFileUuid": null,
-"tagNames": null
-}
+```
+course/
+├── -components/         # UI 컴포넌트들
+│   ├── CourseActionButtons.tsx   # 상단 액션 버튼들
+│   ├── CourseGrid.tsx           # 과정 목록 그리드
+│   ├── CourseSearchForm.tsx     # 검색 폼
+│   └── index.ts                 # 컴포넌트 export
+├── -common/             # 공통 정의
+│   ├── constants.ts             # 상수 정의
+│   └── type.ts                  # 타입 정의
+├── -hooks/              # 커스텀 훅들
+│   └── useCourseManagement.tsx  # 과정 관리 비즈니스 로직
+├── utils/               # 유틸리티 함수들
+│   └── gridConfig.tsx           # 그리드 설정 생성 함수
+├── index.tsx           # 메인 컴포넌트
+└── README.md           # 이 파일
+```
 
-//
-//
-//
-/{
-"enrollOption": "IMPOSSIBLE",
-"learningEnvOption": "OPTIONAL",
-"learningControlOption": "OPTIONAL",
-"passOption": "MANDATORY",
-"communicationOption": "OPTIONAL",
-"instructorOption": "OPTIONAL",
-"textBookOption": "OPTIONAL",
-"relatedCourseOption": "OPTIONAL",
-"adminDataOption": "OPTIONAL",
-"allowedContentTypes": [
-"VIDEO",
-"EXAM",
-"ASSIGNMENT"
-],
-"fileStorageType": "AWS_INTERNAL"
+## 🔧 주요 개선사항
+
+### 1. **컴포넌트 분리**
+
+- 302줄의 큰 컴포넌트를 기능별로 분리
+- 각 컴포넌트는 단일 책임 원칙을 따름
+- 재사용 가능한 컴포넌트 구조
+
+### 2. **비즈니스 로직 분리**
+
+- `useCourseManagement` 훅으로 상태 관리 로직 분리
+- 테스트하기 쉬운 구조
+- 컴포넌트와 로직의 명확한 분리
+
+### 3. **타입 안정성**
+
+- 명확한 타입 정의로 개발 시 오류 방지
+- any 타입 사용 최소화
+- 인터페이스 기반 컴포넌트 props 정의
+
+### 4. **상수 관리**
+
+- 하드코딩된 값들을 상수로 분리
+- 유지보수성 향상
+- 매직 넘버 제거
+
+### 5. **GridConfig 문제 해결**
+
+- 컴포넌트 외부에서 t() 함수 사용하던 문제 해결
+- 런타임에 그리드 설정을 생성하는 함수로 변경
+
+## 🎯 사용법
+
+### 메인 컴포넌트
+
+```tsx
+import { CourseManagementPage } from './course';
+
+// 라우터에서 사용
+export const Route = createFileRoute('/_layout/learning/course/')({
+  component: CourseManagementPage,
+});
+```
+
+### 개별 컴포넌트 사용
+
+```tsx
+import { CourseSearchForm, CourseGrid } from './course/-components';
+
+// 필요한 곳에서 개별적으로 사용 가능
+```
+
+### 커스텀 훅 사용
+
+```tsx
+import { useCourseManagement } from './course/-hooks/useCourseManagement';
+
+function MyComponent() {
+  const { selectedRows, buttonState, handleOnSearch } = useCourseManagement();
+  // ...
 }
+```
+
+## 🚀 향후 개선 계획
+
+1. **테스트 코드 추가**
+
+   - 각 컴포넌트와 훅에 대한 단위 테스트
+   - 통합 테스트 작성
+
+2. **성능 최적화**
+
+   - React.memo() 적용
+   - useMemo, useCallback 최적화
+
+3. **접근성 개선**
+
+   - ARIA 라벨 추가
+   - 키보드 네비게이션 지원
+
+4. **에러 처리 강화**
+   - Error Boundary 추가
+   - 사용자 친화적 에러 메시지
+
+## 📋 개발 가이드라인
+
+- 새로운 기능 추가 시 해당하는 컴포넌트나 훅에 추가
+- 공통으로 사용되는 로직은 별도 훅으로 분리
+- 상수는 `-common/constants.ts`에 정의
+- 타입은 `-common/type.ts`에 정의
+- 각 컴포넌트는 단일 파일로 관리
+- UI 컴포넌트는 `-components` 폴더에서 관리
+- 커스텀 훅은 `-hooks` 폴더에서 관리
+- 공통 설정과 타입은 `-common` 폴더에서 중앙 관리

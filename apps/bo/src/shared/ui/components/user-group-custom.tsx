@@ -7,21 +7,16 @@ import {
 import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { useEffect, useMemo } from 'react';
 import { cn } from '@learnway/shared';
-import { useFetchOrganizationTree } from '@entities/user-group';
 import { CombineUserGroup } from '@types';
+import { useFetchCustomGroupsTree } from '@entities/user-group';
 
 type UserGroupCustomComponentProps = {
-  tenantIds: number[];
   option: CombineUserGroup[];
   handleSetOption: (data: CombineUserGroup[]) => void;
 };
 
-const UserGroupCustomComponent = ({
-  tenantIds,
-  option,
-  handleSetOption,
-}: UserGroupCustomComponentProps) => {
-  const { data } = useFetchOrganizationTree(tenantIds);
+const UserGroupCustomComponent = ({ option, handleSetOption }: UserGroupCustomComponentProps) => {
+  const { data } = useFetchCustomGroupsTree();
 
   const treeData = useMemo(() => (data ? transformApiDataToTreeData(data) : []), [data]);
   const initValue = useMemo<TreeData[]>(
@@ -54,7 +49,7 @@ const UserGroupCustomComponent = ({
     <div className={styles.wrap}>
       <div className={cn(styles.pop_contents, 'h-full')}>
         <ShuttleTreeToChipsV2
-          sourceTitle="유저그룹 - 조직"
+          sourceTitle="유저그룹 - 사용자 정의"
           targetTitle="선택 유저그룹 목록"
           treeData={treeData}
           selectedItems={selectedItems}

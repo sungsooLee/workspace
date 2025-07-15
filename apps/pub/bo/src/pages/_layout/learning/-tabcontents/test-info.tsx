@@ -1,7 +1,7 @@
+/* eslint-disable no-restricted-imports */
 /* eslint-disable @nx/enforce-module-boundaries */
 import { FC, useState } from 'react';
 import { cn } from '@learnway/shared';
-import { FormSubTitle } from '../../../../../../../bo/src/shared/ui/form';
 import { NoticeBox } from '../../../../../../../bo/src/shared/ui';
 import {
   Button,
@@ -25,6 +25,7 @@ import {
   ImageOption,
   ChipList,
   SplitPanel,
+  FormSubTitle,
 } from '@learnway/ui';
 import { IcoAlertCircle, IcoFormRequired, IcoRefresh02, IcoSearch } from '@learnway/icons';
 
@@ -540,13 +541,13 @@ const TestInfoComponent: FC<{}> = ({}) => {
                 </span>
               </label>
               <div className={formStyles.input_box}>
-                <ThumbnailImageUpload
-                  options={[{ id: '1', path: selectedImg }]}
+                {/* <ThumbnailImageUpload
+                  // options={[{ id: '1', path: selectedImg }]}
                   onChange={(options: ImageOption[]) => console.log('onChange', options)}
                   onCheckedChange={(options: ImageOption[]) =>
                     console.log('onCheckedChange', options)
                   }
-                />
+                /> */}
               </div>
               <p className={cn(formStyles.guide_text)}>
                 학습자원을 표현하는 썸네일을 선택하거나 업로드 하세요. (미선택 시 자동 선택)

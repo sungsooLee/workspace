@@ -32,10 +32,6 @@ export type com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto = {
      */
     channelMainId?: string;
     /**
-     * 채널메인링크내용
-     */
-    channelMainLinkContent?: string;
-    /**
      * 채널학습내용
      */
     channelLearningContent?: string;
@@ -44,9 +40,9 @@ export type com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto = {
      */
     channelPurposeContent?: string;
     /**
-     * 신청자Id
+     * 신청자 uuid
      */
-    reqeusterId?: number;
+    reqeusterUuid?: string;
     /**
      * 신청자 사원번호
      */
@@ -68,13 +64,17 @@ export type com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto = {
      */
     approvalStatusType?: com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto.approvalStatusType;
     /**
+     * 반려사유내용
+     */
+    rejectedReasonContent?: string;
+    /**
      * 메일발송여부
      */
     isChannelCreationMailSend?: boolean;
     /**
      * 결재자(승인자)ID
      */
-    approverId?: number;
+    approverUuid?: string;
     /**
      * 결재자(승인자
      */
@@ -92,21 +92,21 @@ export type com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto = {
      */
     channelRequestUuid?: string;
     /**
-     * 채널ID
+     * 채널정보_채널Uuid
      */
-    channelId?: number;
+    channelInfoChannelUuid?: string;
     /**
-     * 채널 활성화여부
+     * 채널정보_활성화여부
      */
-    isActivedChannel?: boolean;
+    channelInfoIsDisplay?: boolean;
     /**
-     * 채널 사용여부
+     * 채널정보_사용여부
      */
-    isUsedChannel?: boolean;
+    channelInfoIsUsedChannel?: boolean;
     /**
-     * 채널 개설일
+     * 채널정보_개설일
      */
-    createdDateChannel?: string;
+    channelInfoCreatedDate?: string;
 };
 export namespace com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto {
     /**
@@ -128,6 +128,7 @@ export namespace com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto {
      */
     export enum approvalStatusType {
         PENDING = 'PENDING',
+        ACCEPTED = 'ACCEPTED',
         APPROVED = 'APPROVED',
         REJECTED = 'REJECTED',
     }

@@ -10,18 +10,23 @@ interface FormSubTitleProps {
   variant?: 'text' | 'primary';
   /** 크기 변형 (예: 폰트 크기, 패딩 등) */
   size?: 'sm' | 'md' | 'lg' | 'xl';
-  /** 하단 밑줄 표시 여부 */
-  underLine?: boolean;
+  /** 하단 스타일 선택 */
+  lineType?: 'light' | 'dark';
+  /** 하단 라인 삭제 */
+  noLine?: boolean;
   /** 외부에서 추가할 CSS 클래스 이름 */
   className?: string;
   /** action node */
   actionNode?: ReactNode;
+  titleNode?: ReactNode;
 }
 
 const FormSubTitleComponent = ({
+  titleNode,
   actionNode,
   label,
-  underLine,
+  lineType = 'dark',
+  noLine = false,
   variant = 'text', // 기본값 설정
   size = 'md', // 기본값 설정
   className,
@@ -32,13 +37,16 @@ const FormSubTitleComponent = ({
         styles.root,
         styles.title_wrap,
         'title_wrap',
-        underLine && styles.line,
+        lineType && styles[lineType],
+        noLine && styles.no_line,
+        size && styles[size],
         className,
       )}
     >
       {/* Label */}
       <div className={styles.title_area}>
         <strong className={styles.title}>{label}</strong>
+        {titleNode && <div className={styles.custom_area}>{titleNode}</div>}
       </div>
       {/* Action Node */}
       {actionNode && <div className={styles.input_area}>{actionNode}</div>}

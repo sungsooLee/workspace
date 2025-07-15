@@ -6,18 +6,13 @@ import { initialConfig as editorConfig } from '../../../editor/config/editor.con
 
 import stylesWeb from '@learnway/styles/fo/pages/_learning/learning.module.css';
 import stylesMobile from '@learnway/styles/fo/pages/_learning/learning-m.module.css';
-import { HtmlContent } from '@learnway/ui';
+import { HtmlContent, useLearningWindow } from '@learnway/ui';
 
 const styles = isMobile ? stylesMobile : stylesWeb;
 
-const LearningWindowBlogPlayerComponent: FC<any> = ({
-  playInfo,
-  blogInfo,
-}: {
-  playInfo: any;
-  blogInfo: any;
-}) => {
+const LearningWindowBlogPlayerComponent: FC<any> = () => {
   const [htmlString, setHtmlString] = useState<string>('');
+  const { playInfo, blogInfo } = useLearningWindow();
 
   useEffect(() => {
     if (!blogInfo) return;
@@ -41,7 +36,6 @@ const LearningWindowBlogPlayerComponent: FC<any> = ({
       <div className={styles.container}>
         <HtmlContent>{htmlString}</HtmlContent>
       </div>
-      {/* {htmlContent && $generateHtmlFromNodes(jsonInfo, null)} */}
     </div>
   );
 };

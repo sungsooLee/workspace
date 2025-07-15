@@ -1,8 +1,16 @@
+/* eslint-disable no-restricted-imports */
 /* eslint-disable @nx/enforce-module-boundaries */
 import { FC, useState } from 'react';
 import { cn } from '@learnway/shared';
-import { FormSubTitle } from '../../../../../../../bo/src/shared/ui/form';
-import { Button, ContentsRow, Input, Dropdown, GridBox, ChipList } from '@learnway/ui';
+import {
+  Button,
+  ContentsRow,
+  Input,
+  Dropdown,
+  GridBox,
+  ChipList,
+  FormSubTitle,
+} from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { ContentsHistoryInfoFormField } from '../../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
 import { IcoFormRequired, IcoRefresh02, IcoSearch, IcoPlus, IcoMinus } from '@learnway/icons';

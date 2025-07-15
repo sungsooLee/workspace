@@ -101,7 +101,7 @@ export const ShuttleTreeToChipsV2 = ({
           selectedItems={treeBoxSelectedItems}
           renderNodeButtons={(node) => {
             const isAlreadySelected = selectedItems.some((item) => item.key === node.key);
-            if (node.title !== 'ROOT')
+            if (node.id)
               return (
                 <Button
                   onClick={(e) => {
@@ -158,7 +158,6 @@ export const ShuttleTreeToChipsV2 = ({
               </Button>
             </>
           }
-          underLine={true}
         />
         <div className={styles.data_wrap}>
           {selectedItems.length === 0 ? (

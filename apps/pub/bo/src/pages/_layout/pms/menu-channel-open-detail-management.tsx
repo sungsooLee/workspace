@@ -2,11 +2,10 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { cn } from '@learnway/shared';
-import { FormSubTitle } from '../../../../../../bo/src/shared/ui/form';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
-import { Textarea, Button, Tooltip } from '@learnway/ui';
+import { Textarea, Button, Tooltip, FormSubTitle } from '@learnway/ui';
 
 export const Route = createFileRoute('/_layout/pms/menu-channel-open-detail-management')({
   component: RouteComponent,

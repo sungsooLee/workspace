@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import { FormSubTitle } from '../../../../../bo/src/shared/ui/form';
 import {
   Button,
   ModalBody,
@@ -12,6 +11,7 @@ import {
   ModalTitle,
   OptionCard,
   OptionCardItem,
+  FormSubTitle,
 } from '@learnway/ui';
 
 import styles from './admin-auth-step4.module.css';
@@ -66,7 +66,7 @@ const Contents = () => {
             setTenantValues(option.value);
           }}
         />
-        <FormSubTitle label={'역할 선택'} size={'sm'} />
+        <FormSubTitle label={'역할 선택'} size={'sm'} noLine />
         <OptionCard
           value={rolevalues}
           cols={2}

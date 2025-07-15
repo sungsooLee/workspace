@@ -3,6 +3,7 @@ import { learningResourceQueryOptions, mutateOptions } from './learning-resource
 import {
   BlogCreateReq,
   BlogUpdateReq,
+  HtmlVideoFileChangeReq,
   HtmlVideoMetadataReq,
   PostDraftHtmlVideoParams,
   PostDraftVideosParams,
@@ -41,6 +42,20 @@ export function useUpdateHTML5Metadata(options?: any) {
 
   return {
     update: (payload: HtmlVideoMetadataReq) => mutation.mutate(payload as any),
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
+}
+
+export function useChangeHTML5VideoFile(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.updateHTML5FileChange(),
+    ...options,
+  });
+
+  return {
+    change: (payload: HtmlVideoFileChangeReq) => mutation.mutate(payload as any),
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
     data: mutation.data,
