@@ -53,6 +53,7 @@ export * from './modal/channel-request-choice-modal';
 export * from './modal/channel-shuttle-modal';
 export * from './modal/company-choice-modal';
 export * from './modal/company-shuttle-modal';
+export * from './modal/content-course-mapping-modal';
 export * from './modal/excel-download-reason-modal';
 export * from './modal/excel-upload-modal';
 export * from './modal/image-preview-modal';

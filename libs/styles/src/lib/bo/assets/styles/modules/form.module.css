@@ -437,10 +437,6 @@ hr.divider {
   }
 }
 
-[class*='lnb-open'] .input_box {
-  @apply !max-w-[calc(100vw-420px)];
-}
-
 [class*='nlp--modal-content'] .input_box {
   @apply !max-w-none;
 }

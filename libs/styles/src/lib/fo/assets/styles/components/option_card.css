@@ -1,0 +1,17 @@
+/* option_card.css */
+.nlp--option-card {
+  & > button {
+    &[class*='md'] {
+      @apply !border-[var(--gray75)];
+      span {
+        @apply !label-xl !text-[var(--gray35)];
+      }
+      &[class*='active'] {
+        @apply !border-[var(--blue50)];
+        span {
+          @apply !label-xl-b !text-[var(--blue50)];
+        }
+      }
+    }
+  }
+}

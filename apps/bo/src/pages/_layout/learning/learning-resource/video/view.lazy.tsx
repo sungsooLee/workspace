@@ -3,7 +3,14 @@
 import { createLazyFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { Button, ContentsRow, InputModalSelectorFormField, useModal } from '@learnway/ui';
-import { PageContainer, MainContents, ContentsButtons, LinkBox, SubContents } from '@shared/ui';
+import {
+  PageContainer,
+  MainContents,
+  ContentsButtons,
+  LinkBox,
+  SubContents,
+  ContentCourseMappingModal,
+} from '@shared/ui';
 import { ChannelChoiceModal, ManagerChoiceModal } from '@shared/ui';
 import { DateRangePickerFormField } from '@features/form/ui';
 import {
@@ -20,7 +27,6 @@ import { learningResourceQueryOptions } from '@entities/learning-resource';
 import { NotFound } from '@features/layout';
 import { useCallback, useEffect } from 'react';
 import { MovieInfo } from '@features/learning-resource';
-import { ContentCourseMappingModal } from '@shared/ui/modal/content-course-mapping-modal';
 
 export const Route = createLazyFileRoute('/_layout/learning/learning-resource/video/view')({
   component: RouteComponent,
