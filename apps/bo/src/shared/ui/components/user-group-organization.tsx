@@ -28,13 +28,14 @@ const UserGroupOrganizationComponent = ({
   }, [data]);
 
   const initialSelectedItems = useMemo<TreeData[]>(() => {
-    return option.map(({ combiners, pathKey, pathValue }) => {
+    return option.map(({ combiners, pathKey, pathValue, groupId }) => {
       const [combiner] = combiners;
       return {
         key: pathKey,
         id: combiner.combineValue,
         title: combiner.combineName,
         fullPath: pathValue,
+        groupId,
       };
     });
   }, [option]);
@@ -45,18 +46,20 @@ const UserGroupOrganizationComponent = ({
   useEffect(() => {
     if (selectedItems.length === 0) return;
 
-    const updatedOption: CombineUserGroup[] = selectedItems.map(({ key, id, title, fullPath }) => ({
-      groupId: id,
-      pathKey: key,
-      pathValue: fullPath,
-      combiners: [
-        {
-          combineType: 'USER_GROUP',
-          combineValue: id,
-          combineName: title,
-        },
-      ],
-    }));
+    const updatedOption: CombineUserGroup[] = selectedItems.map(
+      ({ key, id, title, fullPath, groupId }) => ({
+        pathKey: key,
+        groupId,
+        pathValue: fullPath,
+        combiners: [
+          {
+            combineType: 'USER_GROUP',
+            combineValue: id,
+            combineName: title,
+          },
+        ],
+      }),
+    );
 
     handleSetOption(updatedOption);
   }, [selectedItems, handleSetOption]);
