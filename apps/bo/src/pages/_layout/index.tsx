@@ -452,7 +452,7 @@ export const munu = [
 export const guide = [
   {
     screenName: '폼 샘플',
-    pageId: 'sample/form-filed-sample',
+    pageId: 'sample/form-field-sample',
     pageType: 'Page',
     memo: '', // 비고
   },

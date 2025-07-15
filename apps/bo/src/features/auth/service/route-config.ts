@@ -7,7 +7,7 @@ import { ZodSchema } from 'zod';
 
 import { authUserQueryKeys } from '@learnway/auth/entities';
 import type { AuthUser } from '@learnway/auth/types';
-import { ERROR } from '@learnway/config';
+import { ERROR, tokenService } from '@learnway/config';
 import { buildJodObject, dateDiff } from '@learnway/shared';
 import type { PageRouteConfig } from '@learnway/shared';
 
@@ -22,18 +22,48 @@ const defaultPageRouteConfig: PageRouteConfig<PageMeta> = {
   },
 };
 
+export const decodeJwt = (token: string | null) => {
+  if (!token) {
+    console.error('### Invalid token:');
+    return null;
+  }
+  console.log('### Encode Token : ', token);
+
+  try {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split('')
+        .map(function (c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join(''),
+    );
+
+    return JSON.parse(jsonPayload);
+  } catch (error) {
+    return null;
+  }
+};
+
 // 사용자의 권한 여부를 확인
 async function authorization({ location, context }: { location: ParsedLocation; context: any }) {
   const queryClient = context.queryClient;
-  const authUser = (await queryClient.getQueryData(authUserQueryKeys.authUser)) as AuthUser;
+  const authUser = queryClient.getQueryData(authUserQueryKeys.authUser) as AuthUser;
 
+  const token = decodeJwt(tokenService.accessToken);
+  // const refresh = decodeJwt(tokenService.refreshToken);
+
+  console.log('### Decode Token', token);
   console.log('### authorization', authUser);
-  if (authUser === undefined) {
+
+  if (token === null || authUser === undefined) {
     throw ERROR.AUTHORIZATION;
   }
 
   // 패스워드 만료 시 패스워드 변경 페이지로 라우팅
-  const diff = dateDiff(authUser!.passwordExpireDate, new Date(), 'd');
+  const diff = dateDiff(token!.passwordExpireDate, new Date(), 'd');
   if (location.pathname !== '/change-password' && diff !== undefined && 0 >= diff) {
     throw ERROR.PASSWORD_EXPIRE;
   }
