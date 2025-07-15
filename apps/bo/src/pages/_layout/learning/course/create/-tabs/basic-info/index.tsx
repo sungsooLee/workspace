@@ -36,7 +36,14 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
     const channelUuid = watch('channelUuid');
     const courseType = watch('courseType');
 
-    console.log('----- basic', { formData, courseConfig, channelUuid, courseType, isSaved });
+    console.log('----- basic', {
+      formData,
+      courseConfig,
+      channelUuid,
+      courseType,
+      isSaved,
+      values: getValues(),
+    });
 
     // 부모 컴포넌트에서 호출할 수 있는 유효성 검사 메서드
     useImperativeHandle(ref, () => ({
@@ -110,6 +117,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
             provider={provider}
             name={'tenantIds'}
             label={'테넌트'}
+            format={'array'}
             element={<TenantByRoleChannelCheckboxFormField channelUuid={getValues().channelUuid} />}
           />
         </ContentsRow>
@@ -119,6 +127,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
             provider={provider}
             name={'categories'}
             label={'카테고리'}
+            format={'object'}
             element={
               <ListModalSelectorFormField
                 deletable
@@ -129,7 +138,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
                 transformModalData={(modalData: any[]) => {
                   return modalData?.map((d: any) => ({
                     categoryId: d.id,
-                    categoryPath: d.path,
+                    categoryPath: d.fullPath,
                   }));
                 }}
                 list={{
@@ -147,6 +156,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
           <FormRow2
             provider={provider}
             name={'targetList'}
+            format={'object'}
             label={'학습대상(유저그룹)'}
             element={
               <ChipListModalSelectorFormField
@@ -379,7 +389,7 @@ const responseDataToFormData = (d: Course): Course => {
     ...d,
     // primaryCategoryId: 1, // 서버에서 받으면 삭제
     // categoryIds: d?.categories?.map((d: any) => d.categoryId), // 카테고리 아이디
-    // tenantIds: d?.tenantList?.map((d: any) => d.tenantId), // 테넌트 아이디
+    tenantIds: d?.tenantList?.map((d: any) => d.tenantId), // 테넌트 아이디
     targetList: d?.targetList?.map((d: any) => ({
       ...d,
       name: d?.combiners?.[0]?.combineValue,
