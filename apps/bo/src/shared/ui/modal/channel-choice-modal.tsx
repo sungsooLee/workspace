@@ -36,8 +36,11 @@ const ChannelChoicePopupComponent = () => {
     return ({ tenantId, channelName }: { tenantId: number; channelName: string }) => {
       const channels = chain(channel)
         .filter((c) => Boolean(c.tenantList.find((t) => t.tenantId === tenantId))) // tenant 필터
-        .filter((c) => c.channelName.toLowerCase().includes(channelName.toLowerCase())) // 이름 필터
-        .toArray();
+        .filter(
+          (c) => !channelName || c.channelName.toLowerCase().includes(channelName.toLowerCase()),
+        ) // 이름 필터
+        .value();
+      console.log('🚀 ~ return ~ channels:', channels);
       return {
         data: channels,
       };
@@ -67,7 +70,7 @@ const ChannelChoicePopupComponent = () => {
 
   const { provider: sProvider, getValues } = useSearchBox(searchConfig());
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
-  const [selectedRow, setSelectedRow] = useState<Channel | null>(null);
+  const [selectedRow, setSelectedRow] = useState<Channel | undefined>();
 
   const handleOnSearch = (query: Record<string, any>) => {
     gridFetch(query);
