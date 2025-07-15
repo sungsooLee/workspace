@@ -1,9 +1,9 @@
-import { FC, useState, useEffect, useCallback } from 'react';
+import React, { FC, useState, useEffect, useCallback } from 'react';
 import { useRouter, useRouterState, Link } from '@tanstack/react-router';
 import { createColumnHelper, ColumnDef } from '@tanstack/react-table';
 import { t } from 'i18next';
 
-import { Button, Divider, GridBox, useGridBox } from '@learnway/ui';
+import { Button, Divider, GridBox, useGridBox, useModal } from '@learnway/ui';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 
@@ -13,6 +13,8 @@ import { SearchBox } from '@shared/ui/search-box';
 import { useCreation } from 'ahooks';
 import { queryOptions as userGroupManualOptions } from '@entities/user-group/service/user-group.queries';
 import { EnGlobalConst } from '@types';
+import { UserGroupChoiceModal, UserGroupOrganizationShuttleModal } from '@shared/ui';
+import { useFetchUserGroupDetail } from '@entities/user-group';
 
 const _global = {
   linkClick: (userGroupId: number) => {
@@ -30,6 +32,8 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
   const routerState = useRouterState();
 
   const { data: loginUser } = useFetchAuthUser();
+
+  const { open: openModal } = useModal();
 
   _global.linkClick = (userGroupId: number) => {
     router.navigate({
@@ -58,10 +62,20 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
           size: 163
         },
         {
-          name: 'opt2', label: t('채널'), size: 106
+          name: 'opt2', label: t('채널'), size: 106, render: (row: any) => {
+            if( row.row.original.userGroupOriginType === 'CHANNEL' ) {
+              return row.row.original.originName;
+            }
+            return row.getValue();
+          }
         },
         {
-          name: 'opt3', label: t('개인'), size: 101
+          name: 'opt3', label: t('개인'), size: 101, render: (row: any) => {
+            if( row.row.original.userGroupOriginType === 'PERSONAL' ) {
+              return row.row.original.originName;
+            }
+            return row.getValue();
+          }
         },
         {
           name: 'userGroupName', label: t('유저그룹명'), render: (row: any) => {
@@ -79,7 +93,9 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
           size: 207
         },
         {
-          name: 'userCount', label: t('대상자'),
+          name: 'userCount', label: t('대상자'), render: (row: any) => {
+            return `${row.getValue().toLocaleString('ko-KR')}명`;
+          },
           meta: {
             cellAlign: 'right',
           },
@@ -89,9 +105,13 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
           name: 'userGroupId', label: t('대상자 확인'), render: (row: any) => {
             return <Button
               variant="gray2" size="xs"
-              // onClick={() =>
-              //   openPopup();
-              // }
+              onClick={(e) => {
+                e.stopPropagation();
+                openModal({
+                  width: 'xl',
+                  content: <UserGroupChoiceModal />,
+                });
+              }}
             >
               {t('대상자')}
             </Button>
@@ -220,13 +240,13 @@ const searchConfig = (): SearchBoxConfig => ({
         },
       },
       {
-        name: 'channelName',
+        name: 'originName',
         type: 'text',
         label: t('채널'),
         value: '',
       },
       {
-        name: 'personName',
+        name: 'originName',
         type: 'text',
         label: t('개인'),
         value: '',

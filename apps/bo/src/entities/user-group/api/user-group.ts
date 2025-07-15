@@ -5,7 +5,7 @@ import {
   UserGroupsParam,
   UsersByIdsParam,
   OrganizationTreeResponse,
-  PageableContent,
+  PageableContent, Tenant,
 } from '@types';
 
 export default class UserGroupService {
@@ -59,5 +59,14 @@ export default class UserGroupService {
       `${PMSApiPrefix()}/userGroup/subdirectory/users`,
       params,
     );
+  }
+
+  static createUserGroupManual(payload: any) {
+    return httpService.post<any>(`${PMSApiPrefix()}/userGroup`, payload);
+  }
+
+  static updateUserGroupManual(payload: any) {
+    const userGroupId = payload.userGroupId;
+    return httpService.put<any>(`${PMSApiPrefix()}/userGroup/${userGroupId}`, payload);
   }
 }

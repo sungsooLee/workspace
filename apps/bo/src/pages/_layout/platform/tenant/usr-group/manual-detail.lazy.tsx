@@ -1,43 +1,45 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { createColumnHelper, ColumnDef, Table } from '@tanstack/react-table';
 import { t } from 'i18next';
 
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 
 import {
-  Button,
-  ChipListModalSelectorFormField,
-  ContentsRow,
-  FormSubTitle,
-  GridBox,
   Input,
-  useGridBox,
+  ContentsRow,
+  Button,
+  GridBox,
+  useGridBox, ChipListModalSelectorFormField, useModal, FormSubTitle, Checkbox,
 } from '@learnway/ui';
 import {
-  CODE_GROUP,
   DynamicFormConfig,
-  SearchBoxConfig,
   useDynamicForm,
+  CODE_GROUP,
   useSearchBox,
+  SearchBoxConfig,
 } from '@learnway/hooks';
 
 import {
-  ChannelListChoiceModal,
-  ContentsButtons,
   FormRow,
-  GridExcelUploadButton,
   LinkBox,
-  MainContents,
-  PageContainer,
-  UserChoiceModal,
+  ContentsButtons,
+  ChannelListChoiceModal, UserChoiceModal, UserGroupOrganizationShuttleModal,
 } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
-import { useFetchUserGroupDetail } from '@entities/user-group';
+
+import {
+  GridExcelUploadButton,
+} from '@shared/ui';
+
+import { MainContents, PageContainer } from '@shared/ui';
+import { useCreateUserGroupManual, useFetchUserGroupDetail, useUpdateUserGroupManual } from '@entities/user-group';
 import { FormDisplay } from '@features/form';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { queryOptions } from '@entities/user-group/service/user-group.queries';
 import { Tenant } from '@learnway/auth/types';
+import { useGetChannelDetail } from '@entities/channel/service/channel.hook';
+import { useQuery } from '@tanstack/react-query';
 
 export const Route = createLazyFileRoute('/_layout/platform/tenant/usr-group/manual-detail')({
   component: RouteComponent,
@@ -56,11 +58,24 @@ function RouteComponent() {
 
   const { data: loginUser } = useFetchAuthUser();
   // 상세
-  const { data: userGroupData, refetch } = useFetchUserGroupDetail(
-    routerState.location.state?.userGroupId,
-  );
+  const { data: userGroupData, refetch } = useFetchUserGroupDetail(routerState.location.state?.userGroupId);
 
+  const { open: openModal, confirm: openConfirm, alert: openAlert } = useModal();
   const [tenantInfo, setTenantInfo] = useState<Tenant>();
+  const [modalUserGroups, setModalUserGroups] = useState<any>(null);
+  const [tableInstance, setTableInstance] = useState<Table<any>>();
+  const [userGroupSettings, setUserGroupSettings] = useState<any>();
+
+  const { create } = useCreateUserGroupManual({
+    onSuccess: async () => {
+      router.navigate({ to: '/platform/tenant/usr-group/manual' });
+    },
+  });
+  const { update } = useUpdateUserGroupManual({
+    onSuccess: () => {
+      refetch();
+    },
+  });
 
   const {
     provider: searchManualProvider,
@@ -68,8 +83,9 @@ function RouteComponent() {
     onFormChange: manualFormChange,
     onFormValid: manualFormValid,
     setValue: setManualValue,
+    formState: manualFormState,
   } = useSearchBox(searchManualConfig());
-  const { config: gManualConfig, gridFetch: gridManualFetch } = useGridBox(
+  const { config: gManualConfig, gridFetch: gridManualFetch, data: gridManualData } = useGridBox(
     gridManualConfig,
     getManualValues,
   );
@@ -107,42 +123,149 @@ function RouteComponent() {
 
   const handleOnSubmit = async (formData: any) => {
     console.log('data {} => ', formData);
-    console.log('userList {} => ', getManualValues());
     const payload = {
+      userGroupId: routerState.location.state?.userGroupId,
       userGroupOriginType: formData.userGroupOriginType,
-      userGroupOriginMappingId:
-        formData.userGroupOriginType === 'PERSONAL'
-          ? formData.personName[0].uuid
-          : formData.channelName[0].channelUuid,
+      userGroupOriginMappingId: null,
       userGroupName: formData.userGroupName,
       tenantId: tenantInfo?.tenantId,
       isUsed: formData.isUsed,
       assignmentType: formData.assignmentType,
-      userList: '유저목록',
+      userList: []
     };
-    console.log('payload {} => ', payload);
+    if( formData.userGroupOriginType !== "TENANT" ) {
+      payload.userGroupOriginMappingId =
+        formData.userGroupOriginType === 'PERSONAL' ? formData.personName[0].uuid : formData.channelName[0].channelUuid;
+    }
+
+    if( userGroupData ) {
+      if( !userGroupSettings || userGroupSettings.length === 0 ) {
+        openAlert({
+          title: t('유저그룹 대상자를 설정해 주세요.'),
+          content: t('유저그룹 대상자는 최소 1명 이상 대상자가 있어야 등록이 가능합니다.'),
+          type: 'complete',
+        });
+        return false;
+      }
+      payload.userList = userGroupSettings.map((row: any) => {
+        return {userUuid: row.userUuid, userName: row.userName}
+      })
+      console.log('payload {} => ', payload);
+      if (await openConfirm('저장 하시겠습니까?')) {
+        update(payload);
+      }
+    } else {
+      const tableRow = gridManualData.content;
+      if( !tableRow || tableRow.length === 0 ) {
+        openAlert({
+          title: t('유저그룹 대상자를 설정해 주세요.'),
+          content: t('유저그룹 대상자는 최소 1명 이상 대상자가 있어야 등록이 가능합니다.'),
+          type: 'complete',
+        });
+        return false;
+      }
+      payload.userList = tableRow.map((row: any) => {
+        return {userUuid: row.userUuid}
+      })
+
+      console.log('payload {} => ', payload);
+      if (await openConfirm('저장 하시겠습니까?')) {
+        create(payload);
+      }
+    }
   };
 
+  // 유저 그룹 설정 목록에서 추가된 데이터 기반으로 검색하는 기능
   const handleOnSearchManual = (searchData: any) => {
-    console.log('search', searchData);
+    if (modalUserGroups) {
+      searchData = { ...searchData, groups: [{combiners: modalUserGroups}] };
+    }
     gridManualFetch(searchData);
   };
+
+  const openUserGroupModal = () => {
+    if(tenantInfo) {
+      openModal({
+        width: 'xl',
+        content: <UserGroupOrganizationShuttleModal tenantIds={[tenantInfo.tenantId]} />,
+        onClose(data: any) {
+          if( data ) {
+            console.log('Modal {} => ', data)
+            const combiners= data.flatMap( (g: any) => g.combiners)
+              .map(({combineName, ...rest}: any) => rest);
+            const saveValues = getManualValues();
+            saveValues['groups'] = [
+              {
+                combiners
+              }
+            ]
+            setModalUserGroups(combiners);
+            gridManualFetch(saveValues);
+          }
+        },
+      })
+    }
+  }
+
+  const removeUserGroupData = () => {
+    const tableRow = tableInstance?.getSelectedRowModel().rows;
+    if( tableRow ) {
+      const userUuids = tableRow.map( row => {
+        console.log(row.original)
+        return row.original.userUuid
+      });
+      if( userGroupData ) {
+        const newUserGroupSettings = userGroupSettings.filter( (data: any) => !userUuids.includes(data.userUuid) )
+        setUserGroupSettings(newUserGroupSettings)
+      } else {
+        if( gManualConfig.gridData?.content ) {
+          const newGridContent: any[] = gridManualData.content.filter( (data: any) => !userUuids.includes(data.userUuid) );
+          gManualConfig.onDataChange(newGridContent)
+        }
+      }
+    }
+  }
 
   useEffect(() => {
     if (userGroupData) {
       console.log('#### userGroupData {} => ', userGroupData);
 
-      updateFormData({ ...userGroupData });
+      setUserGroupSettings(userGroupData.userList);
+      if( userGroupData.userGroupOriginType ) {
+        if(userGroupData.userGroupOriginType === 'CHANNEL') {
+          updateFormData({
+            ...userGroupData,
+            channelName: [
+              {
+                channelUuid: userGroupData.userGroupOriginMappingId,
+                channelName: userGroupData.originName,
+              }
+            ]
+          });
+        } else if( userGroupData.userGroupOriginType === 'PERSONAL' ) {
+          updateFormData({
+            ...userGroupData,
+            personName: [
+              {
+                uuid: userGroupData.userGroupOriginMappingId,
+                name: userGroupData.originName,
+              }
+            ]
+          });
+        } else {
+          updateFormData({ ...userGroupData });
+        }
+      }
     }
   }, [userGroupData]);
 
   useEffect(() => {
-    console.log('### loginUser', loginUser);
-    if (loginUser) {
-      setTenantInfo(loginUser.activeTenant);
+    console.log('### loginUser', loginUser)
+    if( loginUser ) {
+      setTenantInfo(loginUser.activeTenant)
       setValue('tenantName', loginUser.activeTenant?.tenantName);
     }
-  }, [loginUser]);
+  }, [loginUser])
 
   return (
     <PageContainer>
@@ -162,7 +285,7 @@ function RouteComponent() {
       </ContentsButtons>
       <MainContents>
         <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
-          <FormSubTitle label={t('유저그룹 기본 정보')} />
+          <FormSubTitle label={t('유저그룹 기본 정보')} lineType="dark" />
           <ContentsRow>
             <FormRow provider={provider} name={'userGroupOriginType'} />
           </ContentsRow>
@@ -176,10 +299,7 @@ function RouteComponent() {
             />
           </ContentsRow>
 
-          <FormDisplay
-            provider={provider}
-            dependencies={[{ name: 'userGroupOriginType', value: 'CHANNEL' }]}
-          >
+          <FormDisplay provider={provider} dependencies={[{ name: 'userGroupOriginType', value: 'CHANNEL' }]}>
             <ContentsRow>
               <FormRow
                 provider={provider}
@@ -202,10 +322,7 @@ function RouteComponent() {
               />
             </ContentsRow>
           </FormDisplay>
-          <FormDisplay
-            provider={provider}
-            dependencies={[{ name: 'userGroupOriginType', value: 'PERSONAL' }]}
-          >
+          <FormDisplay provider={provider} dependencies={[{ name: 'userGroupOriginType', value: 'PERSONAL' }]}>
             <ContentsRow>
               <FormRow
                 provider={provider}
@@ -239,11 +356,16 @@ function RouteComponent() {
         <SearchBox provider={searchManualProvider} onSearch={handleOnSearchManual} />
         <GridBox
           showAdd
+          onAddClick={openUserGroupModal}
           showRemove
-          excelButtons={
-            userGroupData &&
-            userGroupData.assignmentType === 'DIRECT_USER_BASED' && <GridExcelUploadButton />
-          }
+          onRemoveClick={removeUserGroupData}
+          excelButtons={ (userGroupData && userGroupData.assignmentType === 'DIRECT_USER_BASED')
+            && <GridExcelUploadButton />}
+          multiple
+          showColumnSettings={false}
+          hideRowSelectionCheckBox={true}
+          onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
+          data={userGroupSettings}
           config={gManualConfig}
           columns={manualColumns}
         />
@@ -326,7 +448,7 @@ const formConfig: DynamicFormConfig = {
           },
           message: t('LABEL.form.validation.needInput', { code: t('유저그룹명') }),
         },
-      ],
+      ]
     },
     assignmentType: {
       format: 'string',
@@ -337,7 +459,7 @@ const formConfig: DynamicFormConfig = {
     },
     personName: {
       required: (values) => values.userGroupOriginType === 'PERSONAL',
-    },
+    }
   },
 };
 
@@ -345,14 +467,14 @@ const searchManualConfig = (): SearchBoxConfig => ({
   builders: [
     [
       {
-        name: 'companyCode',
+        name: 'companyId',
         type: 'dropdown',
         label: t('회사'),
         value: '',
         format: 'object',
         presetOptionLabel: t('LABEL.form.label.select'),
         optionsConfig: {
-          codeGroup: CODE_GROUP['manual.company.companyCode'],
+          codeGroup: CODE_GROUP['manual.company.companyId'],
         },
         dropdownConfig: {
           onchange: () => {
@@ -380,7 +502,7 @@ const searchManualConfig = (): SearchBoxConfig => ({
 
 const gridManualConfig = {
   title: '유저그룹 설정 목록',
-  query: queryOptions.userGroupSubDirectoryList,
+  query: queryOptions.blackwhiteUsers,
   columns: [],
   data: [],
   gridState: {
@@ -392,6 +514,44 @@ const gridManualConfig = {
 
 const columnHelper = createColumnHelper<any>();
 const manualColumns = [
+  columnHelper.accessor('select-check', {
+    id: 'select-check',
+    size: 32,
+    maxSize: 32,
+    minSize: 32,
+    meta: {
+      align: 'center',
+      headerAlign: 'center',
+      cellAlign: 'center',
+    },
+    enableSorting: false,
+    header: ({ table }) => {
+      return (
+        <div style={{ width: '100%', textAlign: 'center' }}>
+          <Checkbox
+            checked={table.getIsAllRowsSelected()}
+            onCheckedChange={(checked) => {
+              table.toggleAllRowsSelected(!!checked);
+            }}
+          />
+        </div>
+      );
+    },
+    cell: ({ row }) => {
+      return (
+        <div style={{ width: '100%', textAlign: 'center', paddingRight: 0 }}>
+          <Checkbox
+            checked={row.getIsSelected()}
+            onCheckedChange={() => {
+              if (!row.getIsGrouped()) {
+                row.getToggleSelectedHandler();
+              }
+            }}
+          />
+        </div>
+      );
+    },
+  }),
   columnHelper.accessor('companyName', {
     cell: (info) => info.getValue(),
     header: t('회사'),
@@ -417,9 +577,9 @@ const manualColumns = [
         case 'ACTIVE':
           return t('재직');
         case 'SUSPENDED':
-          return t('정직');
+          return t('정직')
         default:
-          return t('휴직');
+          return t('휴직')
       }
     },
     header: t('제직여부'),
@@ -436,9 +596,9 @@ const manualColumns = [
         case 'WAIT':
           return t('대기');
         case 'DORMANT':
-          return t('휴면');
+          return t('휴면')
         default:
-          return t('잠김');
+          return t('잠김')
       }
     },
     header: t('계정상태'),
