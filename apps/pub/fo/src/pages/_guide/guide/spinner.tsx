@@ -54,13 +54,13 @@ function RouteComponent() {
         <h3 className="guide_tit3">Spinner (Dot 타입)</h3>
         <div className="flex_box">
           <div className="desc">
-            <Spinner isLoading={true} iconType={'dots'} showBackdrop={true} />
+            <Spinner isLoading={true} showBackdrop={true} iconType={'dots'} />
           </div>
         </div>
 
         <div className="code_example">
           <pre className="code_block">
-            <code>{`<Spinner isLoading={true} iconType={'dots'} showBackdrop={true} />`}</code>
+            <code>{`<Spinner isLoading={true} showBackdrop={true} iconType={'dots'} />`}</code>
           </pre>
         </div>
       </div>
