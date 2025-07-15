@@ -16,10 +16,10 @@ import { MobileView, BrowserView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
 import { isMobile } from 'react-device-detect';
 import {
-  AddressPopup,
+  AddressPopup, // 주소찾기
   EducationPlacePopup, // 약도보기
-  AddressConfirmationPopup,
-  AcceptingPopup,
+  AddressConfirmationPopup, // 배송지 확인
+  AcceptingPopup, // 접수중
 } from '../../../features/layout';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';

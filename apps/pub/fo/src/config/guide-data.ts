@@ -996,9 +996,8 @@ export const guideData = [
     pageId: 'course-registration/course-registration-all',
     pageType: 'Page',
     completionDate: '2025-03-31',
-    lastUpdateDate: '2025-04-09',
-    remarks:
-      '- course-registration-all.tsx\n- 상세주소 입력 전 (AddressAlert)\n- 주소 입력 전 (AddressAlert2)\n- 취소 (CourseCancelConfirm)',
+    lastUpdateDate: '2025-07-15',
+    remarks: '- course-registration-all.tsx',
   },
   {
     screenId: 'NLP_FO_LEC_1007',
@@ -1007,7 +1006,7 @@ export const guideData = [
     pageId: 'course-registration/course-registration-level',
     pageType: 'Page',
     completionDate: '2025-03-31',
-    lastUpdateDate: '2025-04-09',
+    lastUpdateDate: '2025-07-15',
     remarks: '- course-registration-level.tsx',
   },
   {
@@ -1017,7 +1016,7 @@ export const guideData = [
     pageId: 'course-registration/course-registration-textbook',
     pageType: 'Page',
     completionDate: '2025-03-31',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-15',
     remarks: '- course-registration-textbook.tsx',
   },
   {
@@ -1087,7 +1086,7 @@ export const guideData = [
     pageId: 'course-registration/course-registration-complete',
     pageType: 'Page',
     completionDate: '2025-03-31',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-15',
     remarks: '- course-registration-complete',
   },
   {
