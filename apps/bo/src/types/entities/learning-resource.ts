@@ -28,8 +28,8 @@ export interface MediaContentSaveReq {
   vendorCoordinatorName: string;
   vendorTelCountryCode: string;
   vendorTelNo: string;
-  contentThumbnailFileGroupUuid: string;
-  selectedContentThumbnailFileUuid: string;
+  contentThumbnailFileGroupUuid?: string;
+  selectedContentThumbnailFileUuid?: string;
   isCourseUsed: boolean;
   isContentSecured: boolean;
   isInspected: boolean;

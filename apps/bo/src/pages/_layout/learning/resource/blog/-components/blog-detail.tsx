@@ -12,14 +12,8 @@ import {
 } from '@learnway/ui';
 import { Company, User } from '@learnway/types';
 import { cn, isEmptyData } from '@learnway/shared';
-import {
-  DynamicFormConfig,
-  DynamicFormValues,
-  useDynamicForm,
-  useFileManager,
-} from '@learnway/hooks';
+import { DynamicFormConfig, DynamicFormValues, useDynamicForm } from '@learnway/hooks';
 import { useFetchAuthUser } from '@learnway/auth/entities';
-import defaultImage from '@assets/images/thumb/img_thumb_default.jpg';
 import type { BlogDetailRes, BlogPostRes, BlogUpdateReq, Tag } from '@types';
 import {
   ChannelListChoiceModal,
@@ -27,7 +21,6 @@ import {
   FormGroup,
   FormRow,
   FormRow2,
-  ThumbnailListFormField,
   UserChoiceModal,
 } from '@shared/ui';
 import { FormDisplay } from '@features/form';
@@ -44,12 +37,11 @@ type BlogDetailProps = {
   tenantId: number;
   mode: 'create' | 'update';
   blogInfo?: Partial<BlogDetailRes>;
-  setThumbnailImage?: Dispatch<SetStateAction<string>>;
   hasMapping?: boolean;
 };
 
 const BlogDetailComponent = forwardRef<HTMLFormElement, BlogDetailProps>(
-  ({ tenantId, mode, blogInfo = {}, setThumbnailImage, hasMapping = false }, ref) => {
+  ({ tenantId, mode, blogInfo = {}, hasMapping = false }, ref) => {
     const router = useRouter();
     const { confirm: openConfirm } = useModal();
 
@@ -161,7 +153,6 @@ const BlogDetailComponent = forwardRef<HTMLFormElement, BlogDetailProps>(
           vendorName: blogInfo.vendorName ?? '',
           vendorCoordinatorName: blogInfo.vendorCoordinatorName ?? '',
           vendorTelNo: blogInfo.vendorTelNo ?? '',
-          contentThumbnailFileGroupUuid: blogInfo.contentThumbnailFileGroupUuid,
           isCourseUsed: blogInfo.isCourseUsed,
           isContentSecured: blogInfo.isSecured,
           isInspected: blogInfo.isInspected,
@@ -175,25 +166,6 @@ const BlogDetailComponent = forwardRef<HTMLFormElement, BlogDetailProps>(
         });
       }
     }, [blogInfo]);
-
-    const selectedContentThumbnailFileUuid = watch('selectedContentThumbnailFileUuid');
-    const contentThumbnailFileGroupUuid = watch('contentThumbnailFileGroupUuid');
-    const { getGroupInfo } = useFileManager();
-
-    const handleThumbnailSelected = async (selectedContentThumbnailFileUuid: string) => {
-      handleFormChange({ selectedContentThumbnailFileUuid });
-
-      const groupInfo = await getGroupInfo(contentThumbnailFileGroupUuid);
-
-      const files = groupInfo?.files ?? [];
-      if (setThumbnailImage) {
-        if (files.length > 0) {
-          setThumbnailImage(files[0]?.fileUrl ?? '');
-        } else {
-          setThumbnailImage(defaultImage);
-        }
-      }
-    };
 
     return (
       <form ref={ref} onSubmit={onSubmit(handleOnSubmit)}>
@@ -330,20 +302,6 @@ const BlogDetailComponent = forwardRef<HTMLFormElement, BlogDetailProps>(
         {/* 학습 시간 */}
         <ContentsRow>
           <FormRow provider={provider} name="contentDuration" element={<DurationTimeFormField />} />
-        </ContentsRow>
-
-        {/* 썸네일 */}
-        <ContentsRow>
-          <FormRow
-            provider={provider}
-            name="contentThumbnailFileGroupUuid"
-            element={
-              <ThumbnailListFormField
-                selected={selectedContentThumbnailFileUuid}
-                onSelected={handleThumbnailSelected}
-              />
-            }
-          />
         </ContentsRow>
 
         {/* 태그 */}

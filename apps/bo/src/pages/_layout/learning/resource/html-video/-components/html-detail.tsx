@@ -1,6 +1,7 @@
 import { forwardRef, useEffect, useMemo } from 'react';
 import { useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
+import dayjs from 'dayjs';
 import { cloneDeepWith } from 'lodash-es';
 import { Company, User } from '@learnway/types';
 import { DynamicFormConfig, DynamicFormValues, useDynamicForm } from '@learnway/hooks';
@@ -19,19 +20,17 @@ import {
   FormGroup,
   FormRow,
   FormRow2,
-  ThumbnailListFormField,
   UserChoiceModal,
 } from '@shared/ui';
 import { FormDisplay } from '@features/form';
 import { DateRangePickerFormField, DurationTimeFormField } from '@features/form/ui';
+import { getHourValueFromTime, useRoleInfo } from '@pages/_layout/learning/resource/-common/common';
+import { useFetchAuthUser } from '@learnway/auth/entities';
+import { ContentsHistoryInfo } from '@features/learning-resource/learning-resource-management/ui/contents-history-info';
 import { mediaContentFormConfig } from '../../-common/content-form-config';
 import { getPayloadFromHtmlMetadataSubmit } from '../-common/form-submit';
 
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import dayjs from 'dayjs';
-import { getHourValueFromTime, useRoleInfo } from '@pages/_layout/learning/resource/-common/common';
-import { useFetchAuthUser } from '@learnway/auth/entities';
-import { ContentsHistoryInfo } from '@features/learning-resource/learning-resource-management/ui/contents-history-info';
 
 type HtmlDetailProps = {
   mode: 'draft' | 'complete';
@@ -93,7 +92,6 @@ const HtmlDetailComponent = forwardRef<HTMLFormElement, HtmlDetailProps>(
           vendorName: data.vendorName ?? '',
           vendorCoordinatorName: data.vendorCoordinatorName ?? '',
           vendorTelNo: data.vendorTelNo ?? '',
-          contentThumbnailFileGroupUuid: data.contentThumbnailFileGroupUuid,
           isCourseUsed: data.isCourseUsed,
           isContentSecured: data.isSecured,
           isInspected: data.isInspected,
@@ -107,11 +105,6 @@ const HtmlDetailComponent = forwardRef<HTMLFormElement, HtmlDetailProps>(
         });
       }
     }, [data]);
-
-    const selectedContentThumbnailFileUuid = watch('selectedContentThumbnailFileUuid');
-
-    const handleThumbnailSelected = (selectedContentThumbnailFileUuid: string) =>
-      handleFormChange({ selectedContentThumbnailFileUuid });
 
     const router = useRouter();
     const { confirm: openConfirm } = useModal();
@@ -281,20 +274,6 @@ const HtmlDetailComponent = forwardRef<HTMLFormElement, HtmlDetailProps>(
         {/* 학습 시간 */}
         <ContentsRow>
           <FormRow provider={provider} name="contentDuration" element={<DurationTimeFormField />} />
-        </ContentsRow>
-
-        {/* 썸네일 */}
-        <ContentsRow>
-          <FormRow
-            provider={provider}
-            name="contentThumbnailFileGroupUuid"
-            element={
-              <ThumbnailListFormField
-                selected={selectedContentThumbnailFileUuid}
-                onSelected={handleThumbnailSelected}
-              />
-            }
-          />
         </ContentsRow>
 
         {/* 태그 */}

@@ -3,16 +3,15 @@ import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { useQuery } from '@tanstack/react-query';
 import { t } from 'i18next';
+import { useFetchAuthUser } from '@learnway/auth/entities';
 import { Button, Divider, useModal } from '@learnway/ui';
-import { isEmptyData } from '@learnway/shared';
 import defaultImage from '@assets/images/thumb/img_thumb_default.jpg';
-import { MainContents, PageContainer, ContentsButtons, SubContents } from '@shared/ui';
+import { ContentsButtons, MainContents, PageContainer, SubContents } from '@shared/ui';
 import { learningResourceQueryOptions, useDeleteContent } from '@entities/learning-resource';
 import { PreviewLearningWindow } from '@features/learning-resource/learning-resource-management/ui/preview-learning-window';
 
 import { BlogDetail } from './-components/blog-detail';
 import styles from './blog-detail.module.css';
-import { useFetchAuthUser } from '@learnway/auth/entities';
 
 export const Route = createLazyFileRoute('/_layout/learning/resource/blog/view')({
   component: RouteComponent,
@@ -34,11 +33,6 @@ function RouteComponent() {
   const { data: mappingData } = useQuery(
     learningResourceQueryOptions.getCoursesMapping(routerState.location.state?.contentUuid),
   );
-
-  const thumbnailUrl = !isEmptyData(data?.thumbnailFiles)
-    ? data?.thumbnailFiles[0].imageUrl
-    : defaultImage;
-  const [thumbnailImage, setThumbnailImage] = useState<string>(thumbnailUrl as string);
 
   const { open: openModal, alert: openAlert, confirm: openConfirm } = useModal();
 
@@ -146,7 +140,6 @@ function RouteComponent() {
           tenantId={tenantId}
           mode="update"
           blogInfo={data}
-          setThumbnailImage={setThumbnailImage}
           hasMapping={mappingData?.hasMapping}
         />
       </MainContents>
@@ -159,7 +152,7 @@ function RouteComponent() {
           </p>
         </div>
         <div className={styles.thumbnail_container}>
-          <img width="100%" src={thumbnailImage} alt="" />
+          <img width="100%" src={defaultImage} alt="" />
         </div>
       </SubContents>
     </PageContainer>
