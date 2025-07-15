@@ -130,7 +130,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
       console.log('#### tenantData {} => ', tenantData);
       const device = [];
       const useCategory = [];
-      const logoImageUrl = [`${window.location.hostname}/${tenantData.logoImageUrl}`];
+      const logoImageUrl = [tenantData.logoImageUrl];
       if( tenantData.logoImageUrl.includes('/upload/content/image') ) {
         const imageUrl = tenantData.logoImageUrl.substring(
           tenantData.logoImageUrl.indexOf('/upload/content/image') + 1
