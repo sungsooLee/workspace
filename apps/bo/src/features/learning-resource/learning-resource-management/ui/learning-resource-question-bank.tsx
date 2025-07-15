@@ -5,6 +5,7 @@ import { Tabs } from '@learnway/ui';
 
 import { LearningResourceQuestionBankDetail } from './learning-resource-question-bank-detail';
 import { EnFormMode } from '@types';
+import { LearningResourceQuestionBankQuestion } from './learning-resource-question-bank-question';
 
 enum QuestionTab {
   QUESTION_BASE = 'QUESTION_BASE',
@@ -33,7 +34,7 @@ const LearningResourceQuestionBankComponent = () => {
     {
       title: '문항추가',
       key: QuestionTab.QUESTION_ITEM,
-      content: '문항 추가',
+      content: <LearningResourceQuestionBankQuestion />,
     },
   ];
 
