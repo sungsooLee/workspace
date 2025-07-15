@@ -13,12 +13,6 @@ import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.cs
 import styles from './address-popup.module.css';
 
 const AddressPopupComponent = () => {
-  // pagenation
-  const [page, setPage] = React.useState(1);
-  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
-    setPage(value);
-  };
-
   return (
     <ModalContainer>
       <ModalTitle>{'주소 찾기'}</ModalTitle>
@@ -26,13 +20,16 @@ const AddressPopupComponent = () => {
         <div className={`${styles.start} ${styles.address}`}>
           <div className={styles.input_box}>
             <ContentsRow>
-              <div className={formStyles.form_item}>
-                <div className={formStyles.input_box}>
-                  <Input id="email" type="text" placeholder="도로명, 지번, 건물명 검색" />
-                  <Button variant="primary" size="lg">
-                    검색
-                  </Button>
-                </div>
+              <div className={formStyles.input_box}>
+                <Input
+                  id="email"
+                  type="text"
+                  placeholder="도로명, 지번, 건물명 검색"
+                  inputSize={'lg'}
+                />
+                <Button variant="primary" size="lx">
+                  검색
+                </Button>
               </div>
             </ContentsRow>
           </div>
@@ -78,9 +75,12 @@ const AddressPopupComponent = () => {
 
             <Pagination
               className={styles.pagenation}
-              count={3}
-              page={page}
-              onChange={handlePageChange}
+              pageNumber={0}
+              totalPages={100}
+              hidePageSizeOptions={true}
+              hidePageInfo={true}
+              showFirstButton={false}
+              showLastButton={false}
             />
           </div>
         </div>
