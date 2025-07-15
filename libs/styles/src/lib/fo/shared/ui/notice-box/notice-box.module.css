@@ -1,5 +1,5 @@
 .start {
-  @apply rounded-[8px] bg-[var(--gray1)] p-[16px];
+  @apply rounded-[12px] bg-[var(--gray98)] p-[16px];
   .check_point {
     @apply body_4_r text-left text-[var(--gray35)];
     dt {
@@ -21,5 +21,24 @@
   .link {
     @apply ml-[12px] !p-0 text-[var(--blud50)] underline;
     text-underline-offset: 4px;
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      @apply p-[24px];
+      .check_point {
+        dt {
+          @apply body-md;
+        }
+        dd {
+          @apply body-sm pl-[10px] leading-[21px];
+          &::before {
+            @apply top-[7px] h-[3px] w-[3px];
+          }
+        }
+      }
+    }
   }
 }
