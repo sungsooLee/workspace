@@ -10,7 +10,7 @@ function RouteComponent() {
     <div>
       <h2 className="guide_tit2">Spinner Component Guide</h2>
       <p className="loc react">/libs/ui/src/lib/spinner/spinner.tsx</p>
-      <p className="info">로딩시 호출</p>
+      <p className="info">로딩 애니메이션</p>
       <div className="code_example">
         <pre className="code_block">
           <code>
