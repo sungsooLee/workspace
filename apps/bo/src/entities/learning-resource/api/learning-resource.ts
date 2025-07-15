@@ -45,16 +45,12 @@ export default class LearningResourceService {
     return httpService.get(`${CMSApiPrefix()}/content/course-mapping/${contentUuid}`, params);
   }
 
-  static deleteContent(contentUuid: string): Promise<any> {
+  static deleteContent(contentUuid: string): Promise<number> {
     return httpService.delete(`${CMSApiPrefix()}/content/${contentUuid}`);
   }
 
   static fetchCurriculumMapping(contentUuid: string): Promise<boolean> {
     return httpService.get(`${CMSApiPrefix()}/content/curriculum-mapping/${contentUuid}`);
-  }
-
-  static fetchCourseMapping(contentUuid: string): Promise<CourseMappingStatusRes> {
-    return httpService.get(`${CMSApiPrefix()}/content/course-mapping/${contentUuid}`);
   }
 
   static postDraftVideos(params: PostDraftVideosParams): Promise<PostDraftVideosRes> {
