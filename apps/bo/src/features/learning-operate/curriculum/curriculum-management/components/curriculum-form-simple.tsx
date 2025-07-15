@@ -14,6 +14,8 @@ import {
 } from '@shared/ui';
 import { Input, Button } from '@learnway/ui';
 import { DropdownFormField } from '@features/form';
+import { useFetchAuthUser } from '@learnway/auth/entities';
+import { useIsManager } from '../hooks/use-role-info';
 
 interface CurriculumFormSimpleProps {
   parentNode: TreeNode | null;
@@ -38,6 +40,10 @@ export const CurriculumFormSimple: React.FC<CurriculumFormSimpleProps> = ({
   loadFormData,
   initialData,
 }) => {
+  const { data: loginUser } = useFetchAuthUser();
+
+  const isManager = useIsManager({ loginUser });
+
   // React Hook Form의 watch를 사용해서 폼 값 감시
   const isVendored = watch('isVendored') || false;
 
@@ -59,7 +65,7 @@ export const CurriculumFormSimple: React.FC<CurriculumFormSimpleProps> = ({
             <InputModalSelectorFormField
               placeholder="채널을 선택하세요"
               modalConfig={{ content: <ChannelChoiceModal /> }}
-              disabled={isEditing}
+              disabled={!isManager || isEditing}
               transformModalData={(data: any) => {
                 console.log('선택된 채널:', data);
 
@@ -123,16 +129,8 @@ export const CurriculumFormSimple: React.FC<CurriculumFormSimpleProps> = ({
         <FormRow3 name="curriculumDescription" label="설명" element={<TextareaFormField />} />
       </ContentsRow>
       <ContentsRow>
-        <FormRow3
-          name="coordinatorName"
-          label="담당자"
-          element={<Input />}
-        />
-        <FormRow3
-          name="coordinatorTelNo"
-          label="연락처"
-          element={<PhoneNumberFormFieldSimple />}
-        />
+        <FormRow3 name="coordinatorName" label="담당자" element={<Input />} />
+        <FormRow3 name="coordinatorTelNo" label="연락처" element={<PhoneNumberFormFieldSimple />} />
       </ContentsRow>
       <ContentsRow type={'horizontal'}>
         <FormRow3 name="isVendored" label="외주개발업체 정보" element={<SwitchFormFieldSimple />} />
@@ -178,11 +176,7 @@ export const CurriculumFormSimple: React.FC<CurriculumFormSimpleProps> = ({
               label="외주개발업체 담당자명"
               element={<Input />}
             />
-            <FormRow3
-              name="vendorTelNo"
-              label="외주개발업체 연락처"
-              element={<Input />}
-            />
+            <FormRow3 name="vendorTelNo" label="외주개발업체 연락처" element={<Input />} />
           </ContentsRow>
         </>
       )}
