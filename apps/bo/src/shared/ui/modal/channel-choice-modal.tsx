@@ -36,7 +36,7 @@ const ChannelChoicePopupComponent = () => {
     return ({ tenantId, channelName }: { tenantId: number; channelName: string }) => {
       const channels = channel
         ?.filter((c) => c.tenantList.find((t) => t.tenantId === tenantId)) // tenant 필터
-        ?.filter((c) => c.channelName.includes(channelName)); // 이름 필터
+        ?.filter((c) => c.channelName.toLowerCase().includes(channelName.toLowerCase())); // 이름 필터
       return {
         data: channels,
       };
