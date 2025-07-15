@@ -67,7 +67,7 @@ const ChannelChoicePopupComponent = () => {
 
   const { provider: sProvider, getValues } = useSearchBox(searchConfig());
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
-  const [selectedRow, setSelectedRow] = useState<Channel | null>(null);
+  const [selectedRow, setSelectedRow] = useState<Channel | undefined>();
 
   const handleOnSearch = (query: Record<string, any>) => {
     gridFetch(query);
