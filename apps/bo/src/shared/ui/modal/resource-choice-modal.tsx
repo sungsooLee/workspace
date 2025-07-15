@@ -22,15 +22,24 @@ import { TenantByRoleDropdownFormField, TenantChannelDropdownFormField } from '.
 import { queryOptions } from '@entities/contents';
 import { useEffect, useState } from 'react';
 import { SearchBox } from '../search-box';
-import { TenantChannelDropdownFormField2 } from '../form/tenant-channel-dropdown-form-field2';
 
 interface Props {
   tenantId?: number;
   channelUuid?: number;
   courseType?: string;
+  initialTenantId?: number;
+  initialChannelUuid?: string;
+  initialContentType?: string;
 }
 
-const ResourceChoiceModalComponent = ({ tenantId, channelUuid, courseType }: Props) => {
+const ResourceChoiceModalComponent = ({
+  tenantId,
+  channelUuid,
+  courseType,
+  initialTenantId,
+  initialChannelUuid,
+  initialContentType,
+}: Props) => {
   const { close } = useModal();
   const { getLanguageName } = useLanguageMap();
   const { getContentsTypeName } = useContentsMap();
@@ -43,7 +52,7 @@ const ResourceChoiceModalComponent = ({ tenantId, channelUuid, courseType }: Pro
           name: 'tenantId',
           type: 'custom',
           label: t('테넌트'),
-          value: '',
+          value: initialTenantId || '',
           format: 'object',
           element: <TenantByRoleDropdownFormField />,
           readOnly: true,
@@ -52,7 +61,7 @@ const ResourceChoiceModalComponent = ({ tenantId, channelUuid, courseType }: Pro
           name: 'channelUuid',
           type: 'custom',
           label: t('채널'),
-          value: '',
+          value: initialChannelUuid || '',
           format: 'object',
           element: <TenantChannelDropdownFormField />,
         },
@@ -60,7 +69,7 @@ const ResourceChoiceModalComponent = ({ tenantId, channelUuid, courseType }: Pro
           name: 'contentTypes',
           type: 'dropdown',
           label: t('유형'),
-          value: '',
+          value: 'SCORM',
           variant: 'text',
           format: 'string',
           presetOptionLabel: t('LABEL.form.label.all', '전체'),
@@ -142,6 +151,26 @@ const ResourceChoiceModalComponent = ({ tenantId, channelUuid, courseType }: Pro
     onFormChange({ channelUuid });
   }, [channelUuid, onFormChange]);
 
+  useEffect(() => {
+    const initialValues: any = {};
+
+    if (initialTenantId) {
+      initialValues.tenantId = initialTenantId;
+    }
+
+    if (initialChannelUuid) {
+      initialValues.channelUuid = initialChannelUuid;
+    }
+
+    if (initialContentType) {
+      initialValues.contentTypes = initialContentType;
+    }
+
+    if (Object.keys(initialValues).length > 0) {
+      onFormChange(initialValues);
+    }
+  }, [initialTenantId, initialChannelUuid, initialContentType, onFormChange]);
+
   return (
     <ModalContainer>
       <ModalTitle>{t('학습자원 선택')}</ModalTitle>
@@ -157,4 +186,4 @@ const ResourceChoiceModalComponent = ({ tenantId, channelUuid, courseType }: Pro
   );
 };
 
-export const ResourceChocieModal = ResourceChoiceModalComponent;
+export const ResourceChoiceModal = ResourceChoiceModalComponent;

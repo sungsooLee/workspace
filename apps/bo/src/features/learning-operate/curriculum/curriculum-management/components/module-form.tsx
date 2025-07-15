@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { ContentsRow, Input, RadioGroupFormField, Textarea } from '@learnway/ui';
-import { FormRow3, ResourceChocieModal } from '@shared/ui';
+import { FormRow3, ResourceChoiceModal } from '@shared/ui';
 import { MODULE_TYPE } from '@types';
 import { t } from 'i18next';
-import { InputModalSelectorFormField } from './input-modal-selector-form-field';
+import { ContentChoiceModalSelector } from './input-modal-selector-form-field';
 
 interface ModuleFormProps {
   watch: any;
@@ -11,6 +11,11 @@ interface ModuleFormProps {
   loadFormData?: (data: Record<string, any>, options?: any) => void;
   isEditing?: boolean;
   initialData?: any;
+  curriculumData?: {
+    tenantId?: number;
+    channelUuid?: string;
+    contentType?: string;
+  };
 }
 
 export const ModuleForm: React.FC<ModuleFormProps> = ({
@@ -19,6 +24,7 @@ export const ModuleForm: React.FC<ModuleFormProps> = ({
   loadFormData,
   isEditing,
   initialData,
+  curriculumData,
 }) => {
   const moduleType = watch('moduleType') || MODULE_TYPE.GENERAL;
 
@@ -77,8 +83,16 @@ export const ModuleForm: React.FC<ModuleFormProps> = ({
             name="moduleOrder"
             label={t('학습자원')}
             element={
-              <InputModalSelectorFormField
-                modalConfig={{ content: <ResourceChocieModal /> }}
+              <ContentChoiceModalSelector
+                modalConfig={{ 
+                  content: (
+                    <ResourceChoiceModal 
+                      initialTenantId={curriculumData?.tenantId}
+                      initialChannelUuid={curriculumData?.channelUuid}
+                      initialContentType={curriculumData?.contentType}
+                    />
+                  )
+                }}
                 transformModalData={(data: any) => {
                   console.log(data);
                 }}

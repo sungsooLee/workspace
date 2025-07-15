@@ -318,6 +318,11 @@ const CurriculumDetailComponent = ({
             loadFormData={loadFormData}
             selectedNodeData={selectedNodeData}
             isLoading={isNodeDataLoading}
+            curriculumData={{
+              tenantId: curriculumDetail?.tenantId || loginUser?.activeTenant?.tenantId,
+              channelUuid: curriculumDetail?.channelUuid,
+              contentType: undefined,
+            }}
           />
         </form>
       </div>

@@ -56,18 +56,18 @@ const TenantChannelDropdownFormFieldComponent = forwardRef<
   }, [channel, tenantId]);
 
   useEffect(() => {
+    // 이미 value가 설정되어 있는 경우 해당 값으로 세팅
+    if (value && options?.find((o) => o.value === value)) {
+      return;
+    }
+
     if (options && options.length === 1) {
       onChange(options[0].value);
       return;
     }
 
-    const findOption = options.find((o) => o.value === value);
-    if (findOption) {
-      onChange(findOption.value);
-      return;
-    }
     onChange('');
-  }, [options]);
+  }, [options, value]);
 
   return (
     <DropdownFormField

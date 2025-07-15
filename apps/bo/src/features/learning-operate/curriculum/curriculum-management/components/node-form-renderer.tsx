@@ -14,6 +14,11 @@ interface NodeFormRendererProps {
   loadFormData: (data: Record<string, any>, options?: any) => void;
   selectedNodeData?: any;
   isLoading?: boolean;
+  curriculumData?: {
+    tenantId?: number;
+    channelUuid?: string;
+    contentType?: string;
+  };
 }
 
 export const NodeFormRenderer: React.FC<NodeFormRendererProps> = ({
@@ -26,6 +31,7 @@ export const NodeFormRenderer: React.FC<NodeFormRendererProps> = ({
   loadFormData,
   selectedNodeData,
   isLoading,
+  curriculumData,
 }) => {
   const { activeFormType, selectedNode, parentNode, isEditing } = formState;
 
@@ -81,6 +87,7 @@ export const NodeFormRenderer: React.FC<NodeFormRendererProps> = ({
             loadFormData={loadFormData}
             isEditing={isEditing}
             initialData={selectedNodeData}
+            curriculumData={curriculumData}
           />
         </AutoFormProvider>
       );
