@@ -16,10 +16,10 @@ const AcceptingPopupComponent = () => {
           <p>잠시만 기다려주세요.</p>
         </div>
       </ModalBody>
-      {/* <ModalFooter>
-        <Button label={'기다리기'} variant={'gray'} size={'lg'}></Button>
-        <Button label={'나의 학습'} variant={'primary'} size={'lg'} />
-      </ModalFooter> */}
+      <ModalFooter>
+        <Button label={'기다리기'} variant={'gray'} size={'xl'}></Button>
+        <Button label={'나의 학습'} variant={'primary'} size={'xl'} />
+      </ModalFooter>
     </ModalContainer>
   );
 };

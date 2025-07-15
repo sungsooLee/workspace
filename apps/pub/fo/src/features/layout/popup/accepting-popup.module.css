@@ -1,11 +1,11 @@
 .start {
   &.accepting_wrap {
-    @apply flex flex-col items-center;
+    @apply flex flex-col items-start;
     strong {
-      @apply title_5_b mt-[16px] block text-center text-[var(--gray9)];
+      @apply title4-b mt-[16px] block text-center text-[var(--gray10)];
     }
     p {
-      @apply body_3_r mt-[8px] text-center text-[var(--gray7)];
+      @apply body-md mt-[8px] text-center text-[var(--gray35)];
     }
   }
 }
