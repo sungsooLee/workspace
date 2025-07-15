@@ -36,41 +36,43 @@ function RouteComponent() {
             </div>
           </div>
         </div>
-        <div className={educationStyles.info_box}>
-          <div className={educationStyles.list}>
-            <ul>
-              <li>
-                <IcoCalendar01 width={20} height={20} stroke="#4d525c" />
-                <span>26-01-15 10:00 ~ 26-01-14 23:59</span>
-              </li>
-              <li>
-                <IcoAvatar02 width={20} height={20} viewBox="0 0 24 24" fill="#4d525c" />
-                <span>
-                  493 / 500 (잔여 <em>7</em>)
-                </span>
-              </li>
-              {/* 시간이 없을 시 클래스 educationStyles.full 추가 */}
-              <li>
-                <IcoLocation width={20} height={20} stroke="#4d525c" />
-                <span>온라인 비대면</span>
-                <Button
-                  onClick={() =>
-                    openModal({
-                      width: isMobile ? 'm_full' : 'md',
-                      content: <EducationPlacePopup />,
-                    })
-                  }
-                >
-                  약도보기
-                </Button>
-              </li>
-              <li>
-                <IcoTime width={20} height={20} fill="#4d525c" />
-                <span>2시간 33분</span>
-              </li>
-            </ul>
+        {isMobile || (
+          <div className={educationStyles.info_box}>
+            <div className={educationStyles.list}>
+              <ul>
+                <li>
+                  <IcoCalendar01 width={20} height={20} stroke="#4d525c" />
+                  <span>26-01-15 10:00 ~ 26-01-14 23:59</span>
+                </li>
+                <li>
+                  <IcoAvatar02 width={20} height={20} viewBox="0 0 24 24" fill="#4d525c" />
+                  <span>
+                    493 / 500 (잔여 <em>7</em>)
+                  </span>
+                </li>
+                {/* 시간이 없을 시 클래스 educationStyles.full 추가 */}
+                <li>
+                  <IcoLocation width={20} height={20} stroke="#4d525c" />
+                  <span>온라인 비대면</span>
+                  <Button
+                    onClick={() =>
+                      openModal({
+                        width: isMobile ? 'm_full' : 'md',
+                        content: <EducationPlacePopup />,
+                      })
+                    }
+                  >
+                    약도보기
+                  </Button>
+                </li>
+                <li>
+                  <IcoTime width={20} height={20} fill="#4d525c" />
+                  <span>2시간 33분</span>
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       {/* 입력정보 */}
@@ -93,7 +95,7 @@ function RouteComponent() {
                     type="text"
                     value="text"
                     placeholder="이름을 입력해주세요"
-                    className="lg"
+                    inputSize={'lg'}
                     readOnly
                   />
                 </div>
@@ -132,7 +134,7 @@ function RouteComponent() {
                           id="addr"
                           type="text"
                           placeholder="주소를 입력해주세요"
-                          className="lg"
+                          inputSize={'lg'}
                           value=""
                         />
                         <Button
@@ -152,24 +154,36 @@ function RouteComponent() {
                         id="addr2"
                         type="text"
                         placeholder="상세주소를 입력해주세요"
-                        className="lg"
+                        inputSize={'lg'}
                         value=""
                       />
                       <Input
                         id="addr3"
                         type="text"
                         placeholder="상세주소를 입력해주세요"
-                        className="lg"
+                        inputSize={'lg'}
                         value=""
                       />
                     </BrowserView>
                     {/* mo */}
                     <MobileView>
-                      <Input id="addr4" type="text" placeholder="주소를 입력해주세요" value="" />
-                      <Input id="addr5" type="text" placeholder="주소를 입력해주세요" value="" />
+                      <Input
+                        id="addr4"
+                        type="text"
+                        placeholder="주소를 입력해주세요"
+                        inputSize={'lg'}
+                        value=""
+                      />
+                      <Input
+                        id="addr5"
+                        type="text"
+                        placeholder="주소를 입력해주세요"
+                        inputSize={'lg'}
+                        value=""
+                      />
                       <Button
                         variant="gray"
-                        size="lg"
+                        size="lx"
                         onClick={() =>
                           openModal({
                             width: 'm_full',

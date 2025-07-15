@@ -8,18 +8,35 @@ import { cn } from '@learnway/shared';
 export interface SpinnerProps {
   isLoading?: boolean;
   className?: string;
-  iconType?: 'mint' | 'blue';
+  iconType?: 'mint' | 'blue' | 'dots';
   showBackdrop?: boolean;
 }
 
 const SpinnerComponent = forwardRef<HTMLDivElement, SpinnerProps>(
   ({ className, isLoading, showBackdrop, iconType = 'mint' }, ref) => {
-    const SpinnerIcon = iconType === 'mint' ? IcoSpinner : IcoSpinnerBlue;
+    const renderSpinnerByType = (type: SpinnerProps['iconType']) => {
+      if (type === 'dots') {
+        return (
+          <div className={styles.dots_spinner}>
+            {[...Array(3)].map((_, i) => (
+              <span key={i} className={styles.dot} />
+            ))}
+          </div>
+        );
+      }
+
+      const IconComponent = type === 'blue' ? IcoSpinnerBlue : IcoSpinner;
+      return <IconComponent className={styles.spinner} />;
+    };
 
     return (
-      <div ref={ref} className={className}>
-        {isLoading && <SpinnerIcon className={cn(styles.spinner, className, 'nlp--spinner')} />}
-        {isLoading && showBackdrop && <BackDrop />}
+      <div ref={ref} className={cn(className, 'nlp--spinner')}>
+        {isLoading && (
+          <>
+            {renderSpinnerByType(iconType)}
+            {showBackdrop && <BackDrop />}
+          </>
+        )}
       </div>
     );
   },

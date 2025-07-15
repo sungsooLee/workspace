@@ -71,41 +71,43 @@ function RouteComponent() {
             </div>
           </div>
         </div>
-        <div className={educationStyles.info_box}>
-          <div className={educationStyles.list}>
-            <ul>
-              <li>
-                <IcoCalendar01 width={20} height={20} stroke="#4d525c" />
-                <span>26-01-15 10:00 ~ 26-01-14 23:59</span>
-              </li>
-              <li>
-                <IcoAvatar02 width={20} height={20} viewBox="0 0 24 24" fill="#4d525c" />
-                <span>
-                  493 / 500 (잔여 <em>7</em>)
-                </span>
-              </li>
-              {/* 시간이 없을 시 클래스 educationStyles.full 추가 */}
-              <li>
-                <IcoLocation width={20} height={20} stroke="#4d525c" />
-                <span>온라인 비대면</span>
-                <Button
-                  onClick={() =>
-                    openModal({
-                      width: isMobile ? 'm_full' : 'md',
-                      content: <EducationPlacePopup />,
-                    })
-                  }
-                >
-                  약도보기
-                </Button>
-              </li>
-              <li>
-                <IcoTime width={20} height={20} fill="#4d525c" />
-                <span>2시간 33분</span>
-              </li>
-            </ul>
+        {isMobile || (
+          <div className={educationStyles.info_box}>
+            <div className={educationStyles.list}>
+              <ul>
+                <li>
+                  <IcoCalendar01 width={20} height={20} stroke="#4d525c" />
+                  <span>26-01-15 10:00 ~ 26-01-14 23:59</span>
+                </li>
+                <li>
+                  <IcoAvatar02 width={20} height={20} viewBox="0 0 24 24" fill="#4d525c" />
+                  <span>
+                    493 / 500 (잔여 <em>7</em>)
+                  </span>
+                </li>
+                {/* 시간이 없을 시 클래스 educationStyles.full 추가 */}
+                <li>
+                  <IcoLocation width={20} height={20} stroke="#4d525c" />
+                  <span>온라인 비대면</span>
+                  <Button
+                    onClick={() =>
+                      openModal({
+                        width: isMobile ? 'm_full' : 'md',
+                        content: <EducationPlacePopup />,
+                      })
+                    }
+                  >
+                    약도보기
+                  </Button>
+                </li>
+                <li>
+                  <IcoTime width={20} height={20} fill="#4d525c" />
+                  <span>2시간 33분</span>
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       {/* 입력정보 */}
@@ -129,7 +131,7 @@ function RouteComponent() {
                       type="text"
                       value="text"
                       placeholder="Frist name"
-                      className="lg"
+                      inputSize={'lg'}
                       error
                     />
                     {/* error message */}
@@ -143,7 +145,7 @@ function RouteComponent() {
                       type="text"
                       value="text"
                       placeholder="Family name"
-                      className="lg"
+                      inputSize={'lg'}
                     />
                     {/* error message */}
                     {/* <p className={cn(formStyles.guide_text, formStyles.error)}>영문 성을 입력해주세요</p> */}

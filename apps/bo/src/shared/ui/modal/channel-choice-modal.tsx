@@ -18,7 +18,7 @@ import { SearchBox, TenantByRoleDropdownFormField } from '@shared/ui';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { AuthUser } from '@learnway/auth/types';
 import { useMemo, useState } from 'react';
-import { get } from 'lodash';
+import { chain, get } from 'lodash';
 import { useFetchChannelByRoleId } from '@entities/channel/service/channel.hook';
 
 interface Channel {
@@ -34,9 +34,10 @@ const ChannelChoicePopupComponent = () => {
 
   const getChannels = useMemo(() => {
     return ({ tenantId, channelName }: { tenantId: number; channelName: string }) => {
-      const channels = channel
-        ?.filter((c) => c.tenantList.find((t) => t.tenantId === tenantId)) // tenant 필터
-        ?.filter((c) => c.channelName.includes(channelName)); // 이름 필터
+      const channels = chain(channel)
+        .filter((c) => Boolean(c.tenantList.find((t) => t.tenantId === tenantId))) // tenant 필터
+        .filter((c) => c.channelName.toLowerCase().includes(channelName.toLowerCase())) // 이름 필터
+        .toArray();
       return {
         data: channels,
       };

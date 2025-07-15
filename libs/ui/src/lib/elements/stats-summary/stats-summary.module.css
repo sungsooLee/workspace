@@ -1,19 +1,22 @@
 .start {
   &.summary_wrap {
-    @apply flex h-[74px] w-full rounded-[8px] bg-[var(--gray1)];
+    @apply flex h-[74px] w-full items-center rounded-[8px] bg-[var(--gray1)];
     .item {
-      @apply relative flex flex-1 items-center justify-center pl-[32px];
+      @apply relative flex flex-1 flex-col items-center justify-center px-[12px];
       .label {
         @apply body_bo_2_r shrink-0 text-[var(--gray8)];
       }
-      .num {
-        @apply ml-[12px] flex-1;
-        .value {
-          @apply body_bo_2_b w-full max-w-[100px] bg-transparent text-left text-[1.6rem] text-[#009ABC];
+      .value {
+        @apply ml-[12px] flex flex-1 items-center;
+        .num {
+          @apply body_bo_2_b text-[1.6rem] text-[#009ABC];
+        }
+        .unit {
+          @apply body_bo_2_r ml-[3px] text-[var(--gray8)];
         }
       }
       &:not(:first-child)::before {
-        @apply absolute left-0 top-[24px] h-[26px] w-[1px] bg-[#D6DAE1] content-[''];
+        @apply absolute left-0 top-0 h-[48px] w-[1px] bg-[#D6DAE1] content-[''];
       }
     }
   }

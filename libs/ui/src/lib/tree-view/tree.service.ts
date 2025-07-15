@@ -525,10 +525,10 @@ export const transformApiDataToTreeData = <T extends Record<string, any>>(
   } = options || {};
 
   const transformNode = (node: T, parent?: TreeData): TreeData => {
-    const id = node[idKey] ?? undefined;
+    const id = node[idKey] ?? 0;
     const title = node[titleKey] ?? '';
-    const key = parent ? `${parent.key}-${id}` : `${id}`;
-    const fullPath = parent ? `${parent.fullPath} ${pathJoinText} ${title}` : title;
+    const key = parent?.key ? `${parent.key}-${id}` : id ? id.toString() : '';
+    const fullPath = parent?.fullPath ? `${parent.fullPath} ${pathJoinText} ${title}` : title || '';
 
     const transformed: TreeData = {
       key,

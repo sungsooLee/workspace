@@ -12,6 +12,9 @@
     .input_wrap {
       @apply mt-[40px] rounded-[16px] border-[1px] border-solid border-[var(--gray90)] p-[32px];
       .input_area {
+        & + .input_area {
+          @apply mt-[48px] border-t-[1px] border-solid border-[var(--gray92)] pt-[48px];
+        }
         .tit_box {
           strong {
             @apply headline1-b text-[var(--gray10)];
@@ -65,9 +68,6 @@
             }
           }
         }
-        & + .input_area {
-          @apply mt-[48px] border-t-[1px] border-solid border-[var(--gray92)] pt-[48px];
-        }
       }
     }
     .notice {
@@ -89,11 +89,27 @@
         & > h2 {
           @apply hidden;
         }
+        .education {
+          @apply p-[20px];
+        }
         .input_wrap {
-          @apply mt-[32px] border-none px-0 py-0;
+          @apply mt-[40px] border-none px-0 py-0;
           .input_area {
             & + .input_area {
-              @apply mt-[24px] pt-[24px];
+              @apply mt-[32px] pt-[32px];
+            }
+            .tit_box {
+              string {
+                @apply title5-b;
+              }
+            }
+            .box {
+              @apply mt-[16px];
+              & > div {
+                & + div {
+                  @apply mt-[24px];
+                }
+              }
             }
             .item_col_full {
               & > div {
@@ -110,7 +126,7 @@
           }
         }
         .notice {
-          @apply mt-[24px];
+          @apply mt-[40px];
           dd {
             @apply grid;
             button {

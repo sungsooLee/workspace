@@ -3,7 +3,6 @@ import { cn } from '@learnway/shared';
 import boStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import foStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import { IcoAlertCircle, IcoFormRequired } from '@learnway/icons';
-import { Button, DynamicFormField, Tooltip } from '@learnway/ui';
 import {
   DynamicFormContextProvider,
   FormConfig,
@@ -13,7 +12,9 @@ import {
 } from '@learnway/hooks';
 import { FormGuideText } from './form-guide-text';
 import { useTranslation } from 'react-i18next';
-import { log } from 'console';
+import { Button } from '../button/button';
+import { Tooltip } from '../tooltip/tooltip';
+import { DynamicFormField } from '../dynamic-form-field/dynamic-form-field';
 
 /**
  * FormRowComponent
@@ -83,7 +84,6 @@ const DynamicFormContainer: FC<FormRowProps> = ({
     fieldConfig as FormConfig | undefined,
   );
   const { guideText, infoArea, onChangeInfoArea, onChangeGuideText } = useDynamicFormContext();
-  const FormConfigComponent = formFieldConfig[formConfig.type as keyof typeof formFieldConfig];
 
   /**
    * form row 특정 아이템 추출
@@ -196,7 +196,7 @@ const DynamicFormContainer: FC<FormRowProps> = ({
           {...provider}
           error={error.isError}
           name={name}
-          component={element || FormConfigComponent}
+          component={element as any}
         />
         {children}
       </div>

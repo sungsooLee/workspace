@@ -30,8 +30,6 @@ export const getPayloadFromBlogSubmit = (options: {
     vendorCoordinatorName: options.data.vendorCoordinatorName,
     vendorTelCountryCode: options.data.vendorTelCountryCode,
     vendorTelNo: options.data.vendorTelNo,
-    contentThumbnailFileGroupUuid: options.data.contentThumbnailFileGroupUuid,
-    selectedContentThumbnailFileUuid: options.data.selectedContentThumbnailFileUuid,
     isCourseUsed: options.data.isCourseUsed,
     isContentSecured: options.data.isContentSecured,
     isInspected: options.data.isInspected,

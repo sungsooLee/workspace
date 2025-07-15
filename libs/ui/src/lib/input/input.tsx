@@ -1,3 +1,4 @@
+/* eslint-disable object-shorthand */
 import { forwardRef, useMemo, useState, useRef } from 'react';
 import { NumericFormat, PatternFormat } from 'react-number-format';
 import { NumericFormatProps } from 'react-number-format/types/types';
@@ -42,6 +43,7 @@ export interface InputProps extends Omit<NumericFormatProps, 'type'> {
   hiddenPlaceholder?: boolean;
   validation?: InputValidationConfig; // 검증 관련 설정
   multiple?: boolean;
+  inputSize?: 'md' | 'lg'; // input size 클래스
 }
 
 const InputComponent = forwardRef<HTMLInputElement, InputProps>(
@@ -75,6 +77,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
       hiddenPlaceholder,
       validation,
       multiple,
+      inputSize,
       ...props
     },
     ref,
@@ -210,6 +213,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
           disabled && styles.disabled,
           readOnly && styles.read_only,
           error || hasValidationError ? styles.error : '',
+          inputSize && styles[inputSize],
           'nlp--input',
         )}
       >

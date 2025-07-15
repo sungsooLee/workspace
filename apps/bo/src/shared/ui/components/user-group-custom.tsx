@@ -18,32 +18,43 @@ type UserGroupCustomComponentProps = {
 const UserGroupCustomComponent = ({ option, handleSetOption }: UserGroupCustomComponentProps) => {
   const { data } = useFetchCustomGroupsTree();
 
-  const treeData = useMemo(() => (data ? transformApiDataToTreeData(data) : []), [data]);
-  const initValue = useMemo<TreeData[]>(
-    () =>
-      option.map(({ combiners, key, fullPath }) => ({
-        key,
-        id: combiners[0].combineValue,
-        title: combiners[0].combineName,
-        fullPath,
-      })),
-    [option],
-  );
+  const treeData = useMemo(() => {
+    return data ? transformApiDataToTreeData(data) : [];
+  }, [data]);
+
+  const initialSelectedItems = useMemo<TreeData[]>(() => {
+    return option.map(({ combiners, pathKey, pathValue }) => {
+      const [combiner] = combiners;
+      return {
+        key: pathKey,
+        id: combiner.combineValue,
+        title: combiner.combineName,
+        fullPath: pathValue,
+      };
+    });
+  }, [option]);
 
   const { selectedItems, handleSelectItem, cancelSelectItem, cancelAll } =
-    useShuttleTreeToChips(initValue);
+    useShuttleTreeToChips(initialSelectedItems);
 
   useEffect(() => {
-    if (selectedItems.length > 0) {
-      const newOption: CombineUserGroup[] = selectedItems.map(({ key, id, title, fullPath }) => ({
-        combiners: [{ combineType: 'USER_GROUP', combineValue: id, combineName: title }],
-        fullPath,
-        key,
-      }));
+    if (selectedItems.length === 0) return;
 
-      handleSetOption(newOption);
-    }
-  }, [selectedItems]);
+    const updatedOption: CombineUserGroup[] = selectedItems.map(({ key, id, title, fullPath }) => ({
+      groupId: id,
+      pathKey: key,
+      pathValue: fullPath,
+      combiners: [
+        {
+          combineType: 'USER_GROUP',
+          combineValue: id,
+          combineName: title,
+        },
+      ],
+    }));
+
+    handleSetOption(updatedOption);
+  }, [selectedItems, handleSetOption]);
 
   return (
     <div className={styles.wrap}>
