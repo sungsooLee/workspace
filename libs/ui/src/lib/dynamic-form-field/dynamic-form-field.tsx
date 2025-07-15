@@ -13,16 +13,13 @@ const DynamicFormFieldComponent: FC<DynamicFormFieldProps> = ({
   ...props
 }) => {
   if (!control || !name || !component) return;
-  if (!isValidElement(component)) {
-    console.error('🚀 ~ render ~ component 1111111', component);
-  }
   return (
     <Controller
       control={control}
       name={name}
       render={({ field: { onChange, onBlur, value, ref } }) => {
         if (isValidElement(component)) {
-          console.log('🚀 ~ render ~ component 1111111', component);
+          // console.log('🚀 ~ render ~ component 1111111', component);
           return cloneElement(component, {
             ...props,
             ...(component.props || {}), // 컴포넌트 props
@@ -35,7 +32,7 @@ const DynamicFormFieldComponent: FC<DynamicFormFieldProps> = ({
           } as any);
         }
         const Component = component as ComponentType<any>;
-        console.log('🚀 ~ render ~ component 2222222', component);
+        // console.log('🚀 ~ render ~ component 2222222', component);
         return (
           <Component
             {...props}

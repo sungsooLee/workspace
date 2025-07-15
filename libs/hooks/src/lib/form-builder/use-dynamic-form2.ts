@@ -32,13 +32,13 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
   // 원본 값 상태 설정
   const [originalValues, setOriginalValues] = useState(defaultValues);
 
-  console.log('🚀 ~ useDynamicForm2 ~', {
-    finalConfig,
-    dynamicBuilders,
-    dynamicValidator,
-    defaultValues,
-    originalValues,
-  });
+  // console.log('🚀 ~ useDynamicForm2 ~', {
+  //   finalConfig,
+  //   dynamicBuilders,
+  //   dynamicValidator,
+  //   defaultValues,
+  //   originalValues,
+  // });
 
   /**
    * Dynamic Config 에서는 좀더 편하게 쓰기 위해 약간의 타입이 달라서 buildJodObject 에 맞게 수정 한다.
