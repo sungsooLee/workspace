@@ -105,45 +105,106 @@ export interface ContentFileInfo {
   imageUrl: string;
 }
 
-export interface ContentInformation {
-  contentUuid: string; //	콘텐츠 UUID[...]
-  contentName: string; //	학습자원명[...]
+/**
+ * 컨텐츠 기본 정보
+ */
+export interface ContentBaseInfo {
+  /** 학습자원명 */
+  contentName: string;
+  /** 국가 언어 코드 */
+  languageCountryCode: string;
+  /** 테넌트 ID */
+  tenantId?: number;
+  /** 채널 UUID */
+  channelUuid: string;
+  /** 학습자원 설명 */
+  description?: string;
+  /** 담당자 UUID */
+  coordinatorUuid: string;
+  /** 담당자명 */
+  coordinatorName: string;
+  /** 담당자 연락처 국가코드 */
+  coordinatorTelCountryCode: string;
+  /** 담당자 연락처 */
+  coordinatorTelNo: string;
+  /** 콘텐츠시간(분) */
+  contentTime?: number;
+
+  /** 사용기한 무기한 여부 */
+  isUnlimited: boolean;
+  /** 사용기한 시작일 */
+  contentUseStartDate?: string | Date;
+  /** 사용기한 종료일 */
+  contentUseEndDate?: string | Date;
+  /** 외주 개발 여부 */
+  isVendored: boolean;
+  /** 벤더사 코드 */
+  vendorCode?: string | number;
+  /** 외주 개발 업체명 */
+  vendorName: string;
+  /** 외주 개발 업체 담당자 UUID명 */
+  vendorCoordinatorUuid: string;
+  /** 외주 개발 업체 담당자명 */
+  vendorCoordinatorName: string;
+  /** 외주 개발 업체 연락처 국가코드 */
+  vendorTelCountryCode: string;
+  /** 외주 개발 업체 연락처 */
+  vendorTelNo: string;
+  /** 썸네일 파일그룹 UUID */
+  contentThumbnailFileGroupUuid?: string;
+  /** 대표 썸네일 파일 UUID */
+  selectedContentThumbnailFileUuid?: string;
+  /** 교육자원 활용 여부 */
+  isCourseUsed: boolean;
+  /** 보안콘텐츠 여부 */
+  isContentSecured: boolean;
+  /** 검수 확인 여부 */
+  isInspected: boolean;
+  /** 저작권 확인 여부 */
+  isCopyrighted: boolean;
+  /** 콘텐츠 추가정보 코드 */
+  contentAddInfoType?: ContentAddInfoType | string;
+  /** 콘텐츠 추가 정보 */
+  contentAddInfo?: string | number;
+  /** 보안 확인 여부 */
+  isSecured: boolean;
+  /** 삭제 여부 */
+  isDeleted: boolean;
+  /** 공개 여부 */
+  isOpened: boolean;
+  /** 태그 리스트 */
+  tags: string[] | Tag[];
+}
+
+export interface ContentInformation extends ContentBaseInfo {
+  /** 콘텐츠 UUID*/
+  contentUuid: string;
+  /** 국가 언어 코드 */
   langCountryCode: string; //	국가 언어 코드[...]
-  createType: ContentCreateType; //	콘텐츠 생성 유형, MANUAL|TRASLATE|SHARED[...]
-  contentType: ContentType; //	콘텐츠 분류 코드 Enum(ContentType) - VIDEO|EXAM|SURVEY|ASSIGNMENT|HTML5|YOUTUBE|BLOG|SCORM|DEFAULT[...]
-  contentStatusCode?: ContentStatusCode; //	콘텐츠 상태 코드 Enum(ContentStatusCode) - TEMPORARY_SAVE|SAVED|DELETED[...]
-  channelUuid: string; //	채널 UUID[...]
-  channelName: string; //	채널명[...]
-  tenantId?: string; //	테넌트 ID[...]
-  tenantName?: string; //	테넌트 이름[...]
-  description?: string; //	학습자원 설명[...]
-  coordinatorUuid: string; //	담당자 UUID[...]
-  coordinatorName: string; //	담당자명[...]
-  coordinatorTelNo: string; //	담당자 연락처[...]
-  isUnlimited: boolean; //	사용기한 무기한 여부[...]
-  contentUseStartDate?: string; //	사용기한 시작일[...]
-  contentUseEndDate?: string; //	사용기한 종료일[...]
-  isVendored: string; //	외주 개발 여부[...]
-  vendorName: string; //	외주 개발 업체명[...]
-  vendorCoordinatorUuid: string; //	외주 개발 업체 담당자 UUID[...]
-  vendorCoordinatorName: string; //	외주 개발 업체 담당자명[...]
-  vendorTelNo: string; //	외주 개발 업체 연락처[...]
-  contentThumbnailFileGroupUuid: string; //	썸네일 파일그룹 UUID[...]
-  thumbnailFiles: ContentFileInfo[]; //	썸네일 파일 목록[...]
-  selectedContentThumbnailFileUuid?: string; //	대표 썸네일 파일 UUID[...]
-  fileUuid?: string; // 파일 UUID[...]
-  isCourseUsed: boolean; //	교육자원 활용 여부[...]
-  isInspected: boolean; //	검수 확인 여부[...]
-  isCopyrighted: boolean; //	저작권 확인 여부[...]
-  contentAddInfoType?: ContentAddInfoType; //	콘텐츠 추가정보 코드 Enum(ContentAddInfoType) - VIDEO_ADD_INFO(초)|EXAM_ADD_INFO(건수)[...]
-  contentAddInfo?: string | number; //	콘텐츠 추가 정보, 콘텐츠 추가정보 코드 별 초/건수 값[...]
-  isSecured: boolean; //	보안 확인 여부[...]
-  isDeleted: boolean; //	삭제 여부[...]
-  isOpened: boolean; //	공개 여부[...]
-  isDrafted: boolean; //	임시저장 여부[...]
-  tags: string[] | Tag[]; //	태그 리스트[...]
-  aiSummary?: string; //	학습자원 개요 (AI자동추출)[...]
-  aiKeyword?: string; //	키워드 (AI자동추출)[...]
+  /** 콘텐츠 생성 유형  */
+  createType: ContentCreateType; //	, MANUAL|TRASLATE|SHARED[...]
+  /** 콘텐츠 분류 코드 */
+  contentType: ContentType; //	 Enum(ContentType) - VIDEO|EXAM|SURVEY|ASSIGNMENT|HTML5|YOUTUBE|BLOG|SCORM|DEFAULT[...]
+  /** 콘텐츠 상태 코드 */
+  contentStatusCode?: ContentStatusCode; //	 Enum(ContentStatusCode) - TEMPORARY_SAVE|SAVED|DELETED[...]
+  /** 채널명 */
+  channelName: string;
+  /** 테넌트 이름 */
+  tenantName?: string;
+
+  /** 썸네일 파일 목록 */
+  thumbnailFiles: ContentFileInfo[];
+
+  /** 파일 UUID */
+  fileUuid?: string;
+
+  /** 임시저장 여부 */
+  isDrafted: boolean;
+
+  /** 학습자원 개요 (AI자동추출) */
+  aiSummary?: string;
+  /** 키워드 (AI자동추출) */
+  aiKeyword?: string;
   children: any[];
   resource?: Resource;
   createdBy?: string;
