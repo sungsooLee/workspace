@@ -22,8 +22,8 @@ import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.cs
 /* images */
 import thumbnailImg from '../../../assets/images/thumb/thumbnail_image.jpg';
 
-import styles from './count-list.module.css';
-import btnStyles from './segment-button.module.css';
+// import styles from './count-list.module.css';
+// import btnStyles from './segment-button.module.css';
 import listStyles from './order-list.module.css';
 
 export const Route = createFileRoute('/_guide/guide/test')({
@@ -166,34 +166,34 @@ function RouteComponent() {
       <br />
       <br />
       {/* count list */}
-      <div className={styles.start}>
+      {/* <div className={styles.start}>
         <div className={styles.item}>
           <span className={styles.label}>{'조회'}</span>
           <strong className={styles.num}>
-            {'000,000'} {/* <em className={styles.unit}>{'건'}</em> */}
+            {'000,000'} 
           </strong>
         </div>
         <div className={styles.item}>
           <span className={styles.label}>{'조회'}</span>
           <strong className={styles.num}>
-            {'000,000'} {/* <em className={styles.unit}>{'건'}</em> */}
+            {'000,000'} 
           </strong>
         </div>
         <div className={styles.item}>
           <span className={styles.label}>{'조회'}</span>
           <strong className={styles.num}>
-            {'000,000'} {/* <em className={styles.unit}>{'건'}</em> */}
+            {'000,000'} 
           </strong>
         </div>
         <div className={styles.item}>
           <span className={styles.label}>{'조회'}</span>
           <strong className={styles.num}>
-            {'000,000'} {/* <em className={styles.unit}>{'건'}</em> */}
+            {'000,000'} 
           </strong>
         </div>
-      </div>
+      </div> */}
       {/* segment button */}
-      <div className={btnStyles.start}>
+      {/* <div className={btnStyles.start}>
         {buttonLabels.map((label, index) => {
           const isActive = selectedIndex === index;
 
@@ -209,7 +209,7 @@ function RouteComponent() {
             />
           );
         })}
-      </div>
+      </div> */}
       {/* order list */}
       <div className={cn(listStyles.start, listStyles.procedure_wrap)}>
         {data.map((item, index) => (

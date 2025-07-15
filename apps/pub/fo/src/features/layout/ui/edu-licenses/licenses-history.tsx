@@ -161,7 +161,7 @@ const LicensesHistoryComponent = () => {
                     type="text"
                     value=""
                     placeholder="입력"
-                    className="lg"
+                    inputSize={'lg'}
                     showSearchIcon
                   />
                 </div>

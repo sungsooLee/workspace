@@ -16,10 +16,10 @@ import { MobileView, BrowserView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
 import { isMobile } from 'react-device-detect';
 import {
-  AddressPopup,
+  AddressPopup, // 주소찾기
   EducationPlacePopup, // 약도보기
-  AddressConfirmationPopup,
-  AcceptingPopup,
+  AddressConfirmationPopup, // 배송지 확인
+  AcceptingPopup, // 접수중
 } from '../../../features/layout';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
@@ -123,41 +123,43 @@ function RouteComponent() {
             </div>
           </div>
         </div>
-        <div className={educationStyles.info_box}>
-          <div className={educationStyles.list}>
-            <ul>
-              <li>
-                <IcoCalendar01 width={20} height={20} stroke="#4d525c" />
-                <span>26-01-15 10:00 ~ 26-01-14 23:59</span>
-              </li>
-              <li>
-                <IcoAvatar02 width={20} height={20} viewBox="0 0 24 24" fill="#4d525c" />
-                <span>
-                  493 / 500 (잔여 <em>7</em>)
-                </span>
-              </li>
-              {/* 시간이 없을 시 클래스 educationStyles.full 추가 */}
-              <li>
-                <IcoLocation width={20} height={20} stroke="#4d525c" />
-                <span>온라인 비대면</span>
-                <Button
-                  onClick={() =>
-                    openModal({
-                      width: isMobile ? 'm_full' : 'md',
-                      content: <EducationPlacePopup />,
-                    })
-                  }
-                >
-                  약도보기
-                </Button>
-              </li>
-              <li>
-                <IcoTime width={20} height={20} fill="#4d525c" />
-                <span>2시간 33분</span>
-              </li>
-            </ul>
+        {isMobile || (
+          <div className={educationStyles.info_box}>
+            <div className={educationStyles.list}>
+              <ul>
+                <li>
+                  <IcoCalendar01 width={20} height={20} stroke="#4d525c" />
+                  <span>26-01-15 10:00 ~ 26-01-14 23:59</span>
+                </li>
+                <li>
+                  <IcoAvatar02 width={20} height={20} viewBox="0 0 24 24" fill="#4d525c" />
+                  <span>
+                    493 / 500 (잔여 <em>7</em>)
+                  </span>
+                </li>
+                {/* 시간이 없을 시 클래스 educationStyles.full 추가 */}
+                <li>
+                  <IcoLocation width={20} height={20} stroke="#4d525c" />
+                  <span>온라인 비대면</span>
+                  <Button
+                    onClick={() =>
+                      openModal({
+                        width: isMobile ? 'm_full' : 'md',
+                        content: <EducationPlacePopup />,
+                      })
+                    }
+                  >
+                    약도보기
+                  </Button>
+                </li>
+                <li>
+                  <IcoTime width={20} height={20} fill="#4d525c" />
+                  <span>2시간 33분</span>
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       {/* 입력정보 */}
@@ -176,14 +178,14 @@ function RouteComponent() {
                 </label>
                 <div className={cn(formStyles.input_box, styles.input_box)}>
                   <div>
-                    <Input id="name1" type="text" value="Hun" className="lg" error />
+                    <Input id="name1" type="text" value="Hun" inputSize={'lg'} error />
                     {/* error message */}
                     <p className={cn(formStyles.guide_text, formStyles.error)}>
                       영문 이름을 입력해주세요
                     </p>
                   </div>
                   <div>
-                    <Input id="name2" type="text" value="Kim" className="lg" />
+                    <Input id="name2" type="text" value="Kim" inputSize={'lg'} />
                     {/* error message */}
                     {/* <p className={cn(formStyles.guide_text, formStyles.error)}>영문 성을 입력해주세요</p> */}
                   </div>
@@ -289,7 +291,7 @@ function RouteComponent() {
                     type="text"
                     value="text"
                     placeholder="이름을 입력해주세요"
-                    className="lg"
+                    inputSize={'lg'}
                     readOnly
                   />
                 </div>
@@ -328,7 +330,7 @@ function RouteComponent() {
                           id="addr"
                           type="text"
                           placeholder="주소를 입력해주세요"
-                          className="lg"
+                          inputSize={'lg'}
                           value=""
                         />
                         <Button
@@ -348,24 +350,36 @@ function RouteComponent() {
                         id="addr2"
                         type="text"
                         placeholder="상세주소를 입력해주세요"
-                        className="lg"
+                        inputSize={'lg'}
                         value=""
                       />
                       <Input
                         id="addr3"
                         type="text"
                         placeholder="상세주소를 입력해주세요"
-                        className="lg"
+                        inputSize={'lg'}
                         value=""
                       />
                     </BrowserView>
                     {/* mo */}
                     <MobileView>
-                      <Input id="addr4" type="text" placeholder="주소를 입력해주세요" value="" />
-                      <Input id="addr5" type="text" placeholder="주소를 입력해주세요" value="" />
+                      <Input
+                        id="addr4"
+                        type="text"
+                        placeholder="주소를 입력해주세요"
+                        inputSize={'lg'}
+                        value=""
+                      />
+                      <Input
+                        id="addr5"
+                        type="text"
+                        placeholder="주소를 입력해주세요"
+                        inputSize={'lg'}
+                        value=""
+                      />
                       <Button
                         variant="gray"
-                        size="lg"
+                        size="lx"
                         onClick={() =>
                           openModal({
                             width: 'm_full',
@@ -443,7 +457,7 @@ function RouteComponent() {
                     id="name3"
                     type="text"
                     value="전기차구동설계팀 김원 책임연구원"
-                    className="lg"
+                    inputSize={'lg'}
                     readOnly
                   />
                   <Button variant="gray" size="lx">
@@ -459,7 +473,7 @@ function RouteComponent() {
                   <span className={formStyles.form_text}>교육 담당자</span>
                 </label>
                 <div className={cn(formStyles.input_box, styles.input_box)}>
-                  <Input id="name4" type="text" value="오창영" className="lg" readOnly />
+                  <Input id="name4" type="text" value="오창영" inputSize={'lg'} readOnly />
                 </div>
               </div>
             </ContentsRow>
@@ -496,8 +510,9 @@ function RouteComponent() {
             size="xl"
             onClick={() =>
               openModal({
-                width: 'sm',
-                content: <AddressConfirmationPopup />,
+                width: 's',
+                content: <AcceptingPopup />,
+                hideCloseButton: true,
               })
             }
           >

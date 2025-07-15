@@ -1,13 +1,14 @@
-/* eslint-disable no-restricted-imports */
 /* eslint-disable @nx/enforce-module-boundaries */
 import { FC, useState } from 'react';
 import { cn } from '@learnway/shared';
-import { NoticeBox } from '../../../../../../../bo/src/shared/ui';
+import { NoticeBox } from '@shared/ui';
 import {
   Button,
   CheckboxGroupFormField,
+  ChipList,
   ContentsRow,
   Dropdown,
+  FormSubTitle,
   Input,
   InputModalSelectorFormField,
   List,
@@ -16,16 +17,12 @@ import {
   ModalFooter,
   PhoneNumber,
   RadioGroupFormField,
+  SplitPanel,
   Switch,
   Tabs,
   Textarea,
   Tooltip,
   useModal,
-  ThumbnailImageUpload,
-  ImageOption,
-  ChipList,
-  SplitPanel,
-  FormSubTitle,
 } from '@learnway/ui';
 import { IcoAlertCircle, IcoFormRequired, IcoRefresh02, IcoSearch } from '@learnway/icons';
 
@@ -39,8 +36,7 @@ import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-content
 import popSearchStyles from '@learnway/styles/bo/assets/styles/modules/popup-search.module.css';
 
 /* images */
-import previewImg from '../../../../assets/images/temp/img_exam_basic.jpg';
-import selectedImg from '../../../../assets/images/thumb/img_thumb_hyundai.jpg';
+import previewImg from '@assets/images/temp/img_exam_basic.jpg';
 
 const TestInfoComponent: FC<{}> = ({}) => {
   const { close: closeModal } = useModal();
@@ -529,31 +525,6 @@ const TestInfoComponent: FC<{}> = ({}) => {
               </ContentsRow>
             </div>
           )}
-          {/* 퍼블수정 20250613 썸네일 추가 */}
-          <ContentsRow>
-            {/* form_item */}
-            <div className={formStyles.form_item}>
-              <label htmlFor="name-tenantLog" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>{'썸네일'}</span>
-                {/* 필수 케이스 */}
-                <span className={cn(dynamicFormStyles.status, dynamicFormStyles.required)}>
-                  <IcoFormRequired width={12} height={12} />
-                </span>
-              </label>
-              <div className={formStyles.input_box}>
-                {/* <ThumbnailImageUpload
-                  // options={[{ id: '1', path: selectedImg }]}
-                  onChange={(options: ImageOption[]) => console.log('onChange', options)}
-                  onCheckedChange={(options: ImageOption[]) =>
-                    console.log('onCheckedChange', options)
-                  }
-                /> */}
-              </div>
-              <p className={cn(formStyles.guide_text)}>
-                학습자원을 표현하는 썸네일을 선택하거나 업로드 하세요. (미선택 시 자동 선택)
-              </p>
-            </div>
-          </ContentsRow>
           {/* 퍼블수정 20250613 태그 추가 */}
           <ContentsRow>
             {/* form_item */}

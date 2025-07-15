@@ -2,13 +2,13 @@
 import { MouseEvent, useEffect, useRef, useState } from 'react';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
+import { useFetchAuthUser } from '@learnway/auth/entities';
 import { Button, Divider, useModal } from '@learnway/ui';
 import defaultImage from '@assets/images/thumb/img_thumb_default.jpg';
 import { ContentsButtons, MainContents, PageContainer, SubContents } from '@shared/ui';
 import { BlogDetail } from './-components/blog-detail';
 
 import styles from './blog-detail.module.css';
-import { useFetchAuthUser } from '@learnway/auth/entities';
 
 export const Route = createLazyFileRoute('/_layout/learning/resource/blog/regist')({
   component: RouteComponent,
@@ -16,7 +16,6 @@ export const Route = createLazyFileRoute('/_layout/learning/resource/blog/regist
 
 function RouteComponent() {
   const formRef = useRef<HTMLFormElement>(null);
-  const [thumbnailImage, setThumbnailImage] = useState<string>(defaultImage);
 
   const { confirm: openConfirm } = useModal();
   const router = useRouter();
@@ -72,12 +71,7 @@ function RouteComponent() {
       </ContentsButtons>
 
       <MainContents>
-        <BlogDetail
-          ref={formRef}
-          tenantId={tenantId}
-          mode="create"
-          setThumbnailImage={setThumbnailImage}
-        />
+        <BlogDetail ref={formRef} tenantId={tenantId} mode="create" />
       </MainContents>
 
       {/* 썸네일 영역 */}
@@ -86,7 +80,7 @@ function RouteComponent() {
           <strong className={styles.title}>{t('블로그')}</strong>
         </div>
         <div className={styles.thumbnail_container}>
-          <img width="100%" src={thumbnailImage} alt="" />
+          <img width="100%" src={defaultImage} alt="" />
         </div>
       </SubContents>
     </PageContainer>

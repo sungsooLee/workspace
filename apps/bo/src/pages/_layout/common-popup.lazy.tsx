@@ -474,7 +474,22 @@ function RouteComponent() {
                 e.stopPropagation();
                 openModal({
                   width: 'xl',
-                  content: <UserGroupTabsChoiceModal initialTab="ORGANIZATION" />,
+                  content: (
+                    <UserGroupTabsChoiceModal
+                      initialTab="ORGANIZATION"
+                      tenantIds={[1, 2, 3]}
+                      option={[
+                        {
+                          pathKey: '1',
+                          pathValue: '현대제철',
+                          groupId: 1,
+                          combiners: [
+                            { combineName: '현대제철', combineType: 'USER_GROUP', combineValue: 1 },
+                          ],
+                        },
+                      ]}
+                    />
+                  ),
                 });
               }}
             >
