@@ -123,11 +123,12 @@ const LearningResourceBaseFormComponent = ({
         <FormRow2
           provider={provider}
           label={t('사용기한')}
-          name="isLimitExist"
+          name="isUnlimited"
           tooltip={t('사용기한 내 콘텐츠 공유/교육자원활용이 가능합니다.')}
-          value={false}
+          value={true}
           element={
             <SwitchFormField
+              invert={true}
               switchConfig={{
                 label: (value: boolean) => (value ? '기간설정' : '무기한'),
               }}
@@ -136,7 +137,7 @@ const LearningResourceBaseFormComponent = ({
         />
       </ContentsRow>
       {/* 사용기한 상세 */}
-      <FormDisplay provider={provider} dependencies={[{ name: 'isLimitExist', value: true }]}>
+      <FormDisplay provider={provider} dependencies={[{ name: 'isUnlimited', value: false }]}>
         <ContentsRow className="pt-0">
           <FormRow2
             provider={provider}
