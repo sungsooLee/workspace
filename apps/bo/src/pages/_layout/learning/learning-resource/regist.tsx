@@ -162,6 +162,16 @@ function RouteComponent() {
         uploadVideo();
         break;
       }
+      // 이북
+      case LEARNING_TYPE.E_BOOK: {
+        router.navigate({ to: '/learning/resource/e-book/view', replace: true });
+        break;
+      }
+      // 스콤
+      case LEARNING_TYPE.SCORM: {
+        router.navigate({ to: '/learning/resource/scorm/view', replace: true });
+        break;
+      }
       // HTML 동영상
       case LEARNING_TYPE.HTML5_VIDEO: {
         uploadHTML5();
@@ -172,11 +182,8 @@ function RouteComponent() {
         router.navigate({ to: '/learning/resource/image/view', replace: true });
         break;
       }
-      // 기타
-      case LEARNING_TYPE.ETC: {
-        router.navigate({ to: '/learning/resource/etc/view', replace: true });
-        break;
-      }
+
+      //line 2
       // 외부링크
       case LEARNING_TYPE.EXTERNAL_LINK: {
         router.navigate({ to: '/learning/resource/external-link/view', replace: true });
@@ -192,30 +199,31 @@ function RouteComponent() {
         router.navigate({ to: '/learning/resource/blog/regist', replace: true });
         break;
       }
-      // 이북
-      case LEARNING_TYPE.E_BOOK: {
-        router.navigate({ to: '/learning/resource/e-book/view', replace: true });
-        break;
-      }
-      // 스콤
-      case LEARNING_TYPE.SCORM: {
-        router.navigate({ to: '/learning/resource/scorm/view', replace: true });
-        break;
-      }
       // 설문
-
       case LEARNING_TYPE.SURVEY: {
         router.navigate({ to: '/learning/resource/survey/view', replace: true });
         break;
       }
-      // 설문
+      // 시험지
       case LEARNING_TYPE.TEST_PAGER: {
         router.navigate({ to: '/learning/resource/test-paper/view', replace: true });
         break;
       }
-      // 설문
+      // 문제은행
+      case LEARNING_TYPE.QUESTION_BANK: {
+        router.navigate({ to: '/learning/resource/question-bank/regist' });
+        break;
+      }
+
+      // line 3
+      // 과제
       case LEARNING_TYPE.ASSIGNMENT: {
         router.navigate({ to: '/learning/resource/assignment/view', replace: true });
+        break;
+      }
+      // 기타
+      case LEARNING_TYPE.ETC: {
+        router.navigate({ to: '/learning/resource/etc/view', replace: true });
         break;
       }
     }
