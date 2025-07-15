@@ -1,14 +1,15 @@
 import { Button, Divider, Tabs, useModal } from '@learnway/ui';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { useCallback, useEffect, useMemo } from 'react';
-import { useCourseForm } from '../-hooks/use-course-form';
 import { MainContents, PageContainer, ContentsButtons } from '@shared/ui';
-import { CourseTab, TabFormRef } from '../-common/type';
-import { BasicInfo } from './-tabs/basic-info';
-import { CourseRegistration } from './-tabs/course-registration';
-import { Curriculum } from './-tabs/curriculum';
-import { DetailInfo } from './-tabs/detail-info';
-import { PublishCourse } from './-tabs/publish-course';
+import { PublishCourse } from '@pages/_layout/learning/course/create/-tabs/publish-course';
+import { useCourseForm } from '@pages/_layout/learning/course/-hooks/use-course-form';
+import { CourseTab } from '@pages/_layout/learning/course/-common/type';
+import { BasicInfo } from '@pages/_layout/learning/course/create/-tabs/basic-info';
+import { CourseRegistration } from '@pages/_layout/learning/course/create/-tabs/course-registration';
+import { Curriculum } from '@pages/_layout/learning/course/create/-tabs/curriculum';
+import { DetailInfo } from '@pages/_layout/learning/course/create/-tabs/detail-info';
+import { TabFormRef } from '@pages/_layout/learning/course/-common/type';
 
 export const Route = createLazyFileRoute('/_unauth/learning_test/course/create/view')({
   component: RouteComponent,
