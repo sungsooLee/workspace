@@ -40,16 +40,13 @@
     @apply pointer-events-none hidden cursor-auto opacity-0;
   }
 }
-[class*='grid'],
-[class*='table'] {
-  & + .root {
-    @apply mt-[8px];
-    .page_num {
-      .btn_number:not(:has(svg)) {
-        @apply title_bo_4_r text-[var(--gray7)];
-        &[class*='selected'] {
-          @apply rounded-[4px] bg-[#747D91] text-white;
-        }
+div + .root {
+  @apply mt-[8px];
+  .page_num {
+    .btn_number:not(:has(svg)) {
+      @apply title_bo_4_r text-[var(--gray7)];
+      &[class*='selected'] {
+        @apply rounded-[4px] bg-[#747D91] text-white;
       }
     }
   }

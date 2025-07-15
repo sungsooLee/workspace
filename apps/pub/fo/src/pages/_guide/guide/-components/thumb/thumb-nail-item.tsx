@@ -43,6 +43,7 @@ const ThumbnailItem: React.FC<ThumbnailItemProps> = ({
             status="primary"
             size="xs"
             option={{ label: 'New', value: `${getRandomId()}` }}
+            className={styles.new_badge}
           />
         )}
         {data.showTimeText && <span className={styles.time}>{data.showTimeText}</span>}

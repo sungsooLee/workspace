@@ -1,9 +1,23 @@
 /* thumb-nail-item.module.css */
-.tag_list {
-  & > span:not(:first-child) {
-    @apply ml-[4px];
+.start {
+  &.thumbnail_item {
+    @apply w-[242px];
+    .thumbnail_view {
+      @apply relative aspect-[16/9] overflow-hidden rounded-[8px];
+      .thumbnail_image {
+        @apply w-full object-cover;
+      }
+      .new_badge {
+        @apply absolute left-[8px] top-[8px];
+      }
+    }
+    .tag_list {
+      & > span:not(:first-child) {
+        @apply ml-[4px];
+      }
+    }
+    .thumbnail_title {
+      @apply title3-b text-[#232326];
+    }
   }
-}
-.thumbnail_title {
-  @apply title3-b text-[#232326];
 }
