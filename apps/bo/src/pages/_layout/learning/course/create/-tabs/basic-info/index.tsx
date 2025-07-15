@@ -169,8 +169,8 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
                   ),
                 })}
                 chipList={{
-                  labelField: 'name',
-                  valueField: 'name',
+                  labelField: 'pathValue',
+                  valueField: 'pathKey',
                   wordwrap: true,
                 }}
                 showAddButton
@@ -390,11 +390,11 @@ const responseDataToFormData = (d: Course): Course => {
     // primaryCategoryId: 1, // 서버에서 받으면 삭제
     // categoryIds: d?.categories?.map((d: any) => d.categoryId), // 카테고리 아이디
     tenantIds: d?.tenantList?.map((d: any) => d.tenantId), // 테넌트 아이디
-    targetList: d?.targetList?.map((d: any) => ({
-      ...d,
-      name: d?.combiners?.[0]?.combineValue,
-    })),
-    // 카테고리 팝업 에러나서 임시 설정
+    // targetList: d?.targetList?.map((d: any) => ({
+    //   ...d,
+    //   name: d?.combiners?.[0]?.combineValue,
+    // })),
+    // 카테고리 팝업 에러나서 임시 설정targetList
     // categories: [
     //   {
     //     categoryId: 11,
