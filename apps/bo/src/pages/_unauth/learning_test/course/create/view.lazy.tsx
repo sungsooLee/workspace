@@ -1,14 +1,14 @@
 import { Button, Divider, Tabs, useModal } from '@learnway/ui';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
-import { useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
+import { useCourseForm } from '../-hooks/use-course-form';
 import { MainContents, PageContainer, ContentsButtons } from '@shared/ui';
-import { useCourseForm } from '@pages/_layout/learning/course/-hooks/use-course-form';
-import { CourseTab } from '@pages/_layout/learning/course/-common/type';
-import { BasicInfo } from '@pages/_layout/learning/course/create/-tabs/basic-info';
-import { CourseRegistration } from '@pages/_layout/learning/course/create/-tabs/course-registration';
-import { Curriculum } from '@pages/_layout/learning/course/create/-tabs/curriculum';
-import { DetailInfo } from '@pages/_layout/learning/course/create/-tabs/detail-info';
-import { PublishCourse } from '@pages/_layout/learning/course/create/-tabs/publish-course';
+import { CourseTab, TabFormRef } from '../-common/type';
+import { BasicInfo } from './-tabs/basic-info';
+import { CourseRegistration } from './-tabs/course-registration';
+import { Curriculum } from './-tabs/curriculum';
+import { DetailInfo } from './-tabs/detail-info';
+import { PublishCourse } from './-tabs/publish-course';
 
 export const Route = createLazyFileRoute('/_unauth/learning_test/course/create/view')({
   component: RouteComponent,
@@ -16,7 +16,7 @@ export const Route = createLazyFileRoute('/_unauth/learning_test/course/create/v
 
 function RouteComponent() {
   const router = useRouter();
-  const { showSaveComplete } = useModal();
+  const { showSaveComplete, showDeleteComplete, deleteConfirm, saveConfirm } = useModal();
 
   // 라우터 state에서 courseId 가져오기
   const { courseId, courseType } = router.state.location.state;
@@ -27,10 +27,12 @@ function RouteComponent() {
     activeTab,
     setTabRef,
     loadCourseData,
+    loadCourseConfig,
     saveCurrentTab,
     changeTab,
     loadMockData,
     getTabValues,
+    deleteCourseData,
   } = useCourseForm(courseType);
 
   // 최초 데이터 로드
@@ -42,7 +44,7 @@ function RouteComponent() {
 
   const moveListPage = () => {
     router.navigate({
-      to: '/learning_test/course',
+      to: '/learning/course',
     });
   };
 
@@ -51,16 +53,29 @@ function RouteComponent() {
     moveListPage();
   };
 
-  const handleDeleteClick = () => {
-    console.log('handleImportCourse');
+  const handleSaveClick = async () => {
+    try {
+      if (await saveConfirm()) {
+        await saveCurrentTab();
+        await showSaveComplete();
+        moveListPage();
+      }
+    } catch (e) {
+      // 에러는 상위에서 처리하거나, 필요시 여기서 처리
+      console.error('저장 중 에러:', e);
+    }
   };
 
-  const handleSaveClick = async () => {
-    console.log('data {} => ');
-    const result = await saveCurrentTab();
-    if (result.success) {
-      await showSaveComplete();
-      moveListPage();
+  const handleDeleteClick = async () => {
+    try {
+      if (await deleteConfirm()) {
+        await deleteCourseData(courseId);
+        await showDeleteComplete();
+        moveListPage();
+      }
+    } catch (e) {
+      // 에러는 상위에서 처리하거나, 필요시 여기서 처리
+      console.error('삭제 중 에러:', e);
     }
   };
 
@@ -69,32 +84,58 @@ function RouteComponent() {
     changeTab(activeKey as CourseTab);
   };
 
+  // 기본정보 설정 컴포넌트에서 유형과 채널이 변경되었을 때 호출되는 함수
+  const handleConfigPropChange = useCallback(
+    (config: { courseType: string; channelUuid: string }) => {
+      console.log('handleConfigPropChange', config);
+      loadCourseConfig(config.courseType, config.channelUuid);
+    },
+    [loadCourseConfig],
+  );
+
   const tabItems = useMemo(
     () => [
       {
         title: '기본정보 설정',
-        key: 'STEP1',
-        content: <BasicInfo ref={(ref) => setTabRef('STEP1', ref)} data={data} />,
+        key: CourseTab.STEP1,
+        content: (
+          <BasicInfo
+            ref={(ref: TabFormRef) => setTabRef(CourseTab.STEP1, ref)}
+            data={data}
+            onConfigPropChange={handleConfigPropChange}
+          />
+        ),
       },
       {
         title: '수강신청 설정',
-        key: 'STEP2',
-        content: <CourseRegistration ref={(ref) => setTabRef('STEP2', ref)} data={data} />,
+        key: CourseTab.STEP2,
+        content: (
+          <CourseRegistration
+            ref={(ref: TabFormRef) => setTabRef(CourseTab.STEP2, ref)}
+            data={data}
+          />
+        ),
       },
       {
         title: '커리큘럼 설정',
-        key: 'STEP3',
-        content: <Curriculum ref={(ref) => setTabRef('STEP3', ref)} data={data} />,
+        key: CourseTab.STEP3,
+        content: (
+          <Curriculum ref={(ref: TabFormRef) => setTabRef(CourseTab.STEP3, ref)} data={data} />
+        ),
       },
       {
         title: '상세 설정',
-        key: 'STEP4',
-        content: <DetailInfo ref={(ref) => setTabRef('STEP4', ref)} data={data} />,
+        key: CourseTab.STEP4,
+        content: (
+          <DetailInfo ref={(ref: TabFormRef) => setTabRef(CourseTab.STEP4, ref)} data={data} />
+        ),
       },
       {
         title: '게시 설정',
-        key: 'STEP5',
-        content: <PublishCourse ref={(ref) => setTabRef('STEP5', ref)} data={data} />,
+        key: CourseTab.STEP5,
+        content: (
+          <PublishCourse ref={(ref: TabFormRef) => setTabRef(CourseTab.STEP5, ref)} data={data} />
+        ),
       },
     ],
     [data, setTabRef],
@@ -118,7 +159,7 @@ function RouteComponent() {
             variant="point"
             size="sm"
             label={'SET'}
-            onClick={() => loadMockData(1)}
+            onClick={() => loadMockData(4)}
           />
           <Button
             type="button"
