@@ -11,28 +11,12 @@ enum QuestionTab {
   QUESTION_ITEM = 'QUESTION_ITEM',
 }
 
-const LearningResourceQuestionBankComponent = (props: any, ref: any) => {
-  const { contentUuid } = props;
+const LearningResourceQuestionBankComponent = () => {
   const [selectedTabKey, setSelectedTabKey] = useState<string>(QuestionTab.QUESTION_BASE);
   const [formMode, setFormMode] = useState<EnFormMode>(EnFormMode.ADD);
 
   const formBaseRef = useRef(1);
   const formQuestionRef = useRef(2);
-
-  useImperativeHandle(ref, () => ({
-    saveData() {
-      const form: any = formBaseRef.current;
-      if (form) {
-        form.saveData();
-      }
-    },
-    clearForm() {
-      const form: any = formBaseRef.current;
-      if (form) {
-        form.clearForm();
-      }
-    },
-  }));
 
   const handleTabChange = (tabKey: string) => {
     if (tabKey !== selectedTabKey) {
@@ -44,7 +28,7 @@ const LearningResourceQuestionBankComponent = (props: any, ref: any) => {
     {
       title: '문제은행 정보',
       key: QuestionTab.QUESTION_BASE,
-      content: <LearningResourceQuestionBankDetail ref={formBaseRef} />,
+      content: <LearningResourceQuestionBankDetail />,
     },
     {
       title: '문항추가',
@@ -52,11 +36,6 @@ const LearningResourceQuestionBankComponent = (props: any, ref: any) => {
       content: '문항 추가',
     },
   ];
-
-  useEffect(() => {
-    if (!contentUuid) return;
-    //setFormContentUuid(contentUuid);
-  }, [contentUuid]);
 
   return (
     <Tabs
