@@ -805,7 +805,7 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
               }
             />
             {/* 튜터 ID */}
-            <FormRow2 provider={provider} name={'tutorId'} format={'string'} type={'hidden'} />
+            <FormRow2 provider={provider} name={'tutorId'} format={'number'} type={'hidden'} />
             {/* 위탁 소유회사 */}
             <FormRow2
               provider={provider}
@@ -829,7 +829,7 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
             <FormRow2
               provider={provider}
               name={'outsourcingCompanyId'}
-              format={'string'}
+              format={'number'}
               type={'hidden'}
             />
           </ContentsRow>
