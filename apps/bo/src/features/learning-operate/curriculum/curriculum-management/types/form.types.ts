@@ -1,13 +1,17 @@
 import { TreeNode } from '@learnway/ui';
+import { MAPPING_CURRICULUM_TYPE } from '@types';
 
-export enum NODE_TYPE {
-  CURRICULUM = 'curriculum',
-  MODULE = 'module',
-  LESSON = 'lesson',
-}
+export const NODE_CHILDREN_MAP = {
+  [MAPPING_CURRICULUM_TYPE.CURRICULUM]: [
+    MAPPING_CURRICULUM_TYPE.MODULE,
+    MAPPING_CURRICULUM_TYPE.LESSON,
+  ],
+  [MAPPING_CURRICULUM_TYPE.MODULE]: [MAPPING_CURRICULUM_TYPE.LESSON],
+  [MAPPING_CURRICULUM_TYPE.LESSON]: [], // 자식 노드 추가 불가
+} as const;
 
 export interface FormState {
-  activeFormType: NODE_TYPE | null;
+  activeFormType: MAPPING_CURRICULUM_TYPE | null;
   selectedNode: TreeNode | null;
   parentNode: TreeNode | null;
   isEditing: boolean;

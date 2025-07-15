@@ -47,7 +47,7 @@ const InputModalSelectorFormFieldComponent = forwardRef<
       modalConfig,
       value,
       readOnly = false,
-      disabled = true,
+      disabled = false,
       placeholder = t('LABEL.form.input.select'),
       onChange,
       onFormChange,
@@ -152,6 +152,7 @@ const InputModalSelectorFormFieldComponent = forwardRef<
               handleClear();
             }
           }}
+          disabled={disabled}
         />
       </div>
     );
