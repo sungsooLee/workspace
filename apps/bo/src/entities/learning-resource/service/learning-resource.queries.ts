@@ -1,6 +1,7 @@
 import {
   BlogCreateReq,
   BlogUpdateReq,
+  ContentBaseInfo,
   HtmlVideoFileChangeReq,
   HtmlVideoMetadataReq,
   PostDraftHtmlVideoParams,
@@ -145,5 +146,9 @@ export const mutateOptions = {
   }),
   deleteContent: () => ({
     mutationFn: (contentUuid: string) => LearningResourceService.deleteContent(contentUuid),
+  }),
+  createQuestionBankContent: () => ({
+    mutationFn: (params: ContentBaseInfo) =>
+      LearningResourceService.createQuestionBankContent(params),
   }),
 };

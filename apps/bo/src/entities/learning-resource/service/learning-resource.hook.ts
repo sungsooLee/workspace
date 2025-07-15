@@ -3,6 +3,7 @@ import { learningResourceQueryOptions, mutateOptions } from './learning-resource
 import {
   BlogCreateReq,
   BlogUpdateReq,
+  ContentBaseInfo,
   HtmlVideoFileChangeReq,
   HtmlVideoMetadataReq,
   PostDraftHtmlVideoParams,
@@ -109,5 +110,19 @@ export function useDeleteContent(options?: any) {
   return {
     ...mutation,
     delete: (contentUuid: string) => mutation.mutate(contentUuid as any),
+  };
+}
+
+export function useCreateQuestionBankContent(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.createQuestionBankContent(),
+    ...options,
+  });
+
+  return {
+    create: (payload: ContentBaseInfo, options?: any) => mutation.mutate(payload as any, options),
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
   };
 }

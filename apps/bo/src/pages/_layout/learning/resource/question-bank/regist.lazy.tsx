@@ -1,4 +1,5 @@
 import { MovieInfo } from '@features/learning-resource';
+import { useLearningResourceQuestionDetailForm } from '@features/learning-resource/learning-resource-management/service/learning-resource-question-detail-from.hook';
 import { LearningResourceQuestionBank } from '@features/learning-resource/learning-resource-management/ui/learning-resource-question-bank';
 import { LearningResourceQuestionBankDetail } from '@features/learning-resource/learning-resource-management/ui/learning-resource-question-bank-detail';
 import { Button, Tabs } from '@learnway/ui';
@@ -11,6 +12,7 @@ export const Route = createLazyFileRoute('/_layout/learning/resource/question-ba
 });
 
 function RouteComponent() {
+  const { saveButtonClick } = useLearningResourceQuestionDetailForm();
   return (
     <PageContainer>
       <ContentsButtons>
@@ -20,10 +22,7 @@ function RouteComponent() {
           </Button>
         </LinkBox>
 
-        <Button variant="point" size="sm">
-          삭제
-        </Button>
-        <Button type="submit" variant="primary" size="sm">
+        <Button type="submit" variant="primary" size="sm" onClick={() => saveButtonClick()}>
           저장
         </Button>
       </ContentsButtons>

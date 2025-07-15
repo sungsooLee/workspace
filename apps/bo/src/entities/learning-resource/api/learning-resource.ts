@@ -4,6 +4,7 @@ import { CMSApiPrefix, PMSApiPrefix } from '@learnway/config';
 import {
   BlogCreateReq,
   BlogUpdateReq,
+  ContentBaseInfo,
   CourseMappingStatusRes,
   GetContentDetailRes,
   HtmlVideoFileChangeReq,
@@ -163,5 +164,10 @@ export default class LearningResourceService {
   // 단건 블로그 컨텐츠 수정
   static updateBlogContent(body: BlogUpdateReq) {
     return httpService.put(`${CMSApiPrefix()}/blog/update`, body);
+  }
+
+  // 문제은행 기본정보 저장
+  static createQuestionBankContent(body: ContentBaseInfo) {
+    return httpService.post<any>(`${CMSApiPrefix()}/exam/pool`, body);
   }
 }

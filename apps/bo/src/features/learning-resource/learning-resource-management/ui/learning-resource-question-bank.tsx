@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { t } from 'i18next';
 
 import { Tabs } from '@learnway/ui';
@@ -11,21 +11,40 @@ enum QuestionTab {
   QUESTION_ITEM = 'QUESTION_ITEM',
 }
 
-const LearningResourceQuestionBankComponent: FC<any> = ({ contentUuid }) => {
+const LearningResourceQuestionBankComponent = (props: any, ref: any) => {
+  const { contentUuid } = props;
   const [selectedTabKey, setSelectedTabKey] = useState<string>(QuestionTab.QUESTION_BASE);
   const [formMode, setFormMode] = useState<EnFormMode>(EnFormMode.ADD);
-  const [formContentUuid, setFormContentUuid] = useState<string>();
+
+  const formBaseRef = useRef(1);
+  const formQuestionRef = useRef(2);
+
+  useImperativeHandle(ref, () => ({
+    saveData() {
+      const form: any = formBaseRef.current;
+      if (form) {
+        form.saveData();
+      }
+    },
+    clearForm() {
+      const form: any = formBaseRef.current;
+      if (form) {
+        form.clearForm();
+      }
+    },
+  }));
 
   const handleTabChange = (tabKey: string) => {
     if (tabKey !== selectedTabKey) {
       setSelectedTabKey(tabKey);
     }
   };
+
   const items = [
     {
       title: '문제은행 정보',
       key: QuestionTab.QUESTION_BASE,
-      content: <LearningResourceQuestionBankDetail />,
+      content: <LearningResourceQuestionBankDetail ref={formBaseRef} />,
     },
     {
       title: '문항추가',
@@ -34,10 +53,9 @@ const LearningResourceQuestionBankComponent: FC<any> = ({ contentUuid }) => {
     },
   ];
 
-  useEffect(() => {}, []);
   useEffect(() => {
     if (!contentUuid) return;
-    setFormContentUuid(contentUuid);
+    //setFormContentUuid(contentUuid);
   }, [contentUuid]);
 
   return (
@@ -51,4 +69,4 @@ const LearningResourceQuestionBankComponent: FC<any> = ({ contentUuid }) => {
   );
 };
 
-export const LearningResourceQuestionBank = LearningResourceQuestionBankComponent;
+export const LearningResourceQuestionBank = forwardRef(LearningResourceQuestionBankComponent);
