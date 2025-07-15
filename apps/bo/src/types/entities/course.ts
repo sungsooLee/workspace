@@ -598,6 +598,11 @@ export interface Course {
    * 이수기준
    */
   passOption?: PassCriteriaData;
+
+  /**
+   * 과정 유효 기간
+   */
+  courseValidityRange?: any;
 }
 
 /**
@@ -772,6 +777,10 @@ export interface CoursePopupListItem {
    * 과정 유효 종료일
    */
   courseValidityEndDate?: string;
+  /**
+   * 과정 생성/수정 마법사 타입 (lms.course.WizardStep)
+   */
+  wizardStep?: string; // 'STEP1' | 'STEP2' | 'STEP3' | 'STEP4' | 'STEP5' | 'FULL_UPDATE';
 }
 
 /**
