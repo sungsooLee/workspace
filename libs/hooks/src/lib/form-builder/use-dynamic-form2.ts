@@ -32,6 +32,14 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
   // 원본 값 상태 설정
   const [originalValues, setOriginalValues] = useState(defaultValues);
 
+  console.log('🚀 ~ useDynamicForm2 ~', {
+    finalConfig,
+    dynamicBuilders,
+    dynamicValidator,
+    defaultValues,
+    originalValues,
+  });
+
   /**
    * Dynamic Config 에서는 좀더 편하게 쓰기 위해 약간의 타입이 달라서 buildJodObject 에 맞게 수정 한다.
    */
@@ -45,11 +53,6 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
       const existingValidator = validatorData[key] as any;
       if (existingValidator && existingValidator.format) {
         format = existingValidator.format;
-      }
-
-      // validator 가 없으면 넘어간다.
-      if (!existingValidator) {
-        return acc;
       }
 
       acc[key] = {
@@ -99,16 +102,25 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
 
   // react-hook-form 훅 초기화
   const methods = useForm({
-    mode: 'onSubmit',
+    mode: 'onChange', // 입력 변경 시에도 validation 실행
     defaultValues,
     resolver: zodResolver(schema),
   });
 
-  // schema가 변경될 때마다 resolver 업데이트
+  // schema가 변경될 때마다 form 재초기화
   useEffect(() => {
     methods.clearErrors(); // 기존 에러 클리어
-    // resolver를 동적으로 업데이트하는 것은 react-hook-form에서 직접 지원하지 않음
-    // 대신 form을 재초기화하거나 manual validation을 사용해야 함
+    // 새로운 resolver로 form 재초기화
+    const currentValues = methods.getValues();
+    methods.reset(currentValues, {
+      keepValues: true,
+      keepErrors: false,
+      keepDirty: false,
+      keepIsSubmitted: false,
+      keepTouched: false,
+      keepIsValid: false,
+      keepSubmitCount: false,
+    });
   }, [schema, methods]);
 
   // 각 필드의 DOM 노드를 저장할 ref 객체
@@ -128,68 +140,35 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
     trigger,
     watch,
   } = methods;
-  /**
-   * 폼 제출 핸들러를 생성하는 함수.
-   *
-   * @param onValid - 유효성 검사 통과 시 호출할 콜백 함수
-   * @returns 폼 제출 이벤트 핸들러
-   */
-  const formSubmit = (onValid: (data: Record<string, any>) => void) => {
-    return (event: FormEvent<HTMLFormElement>) => {
-      event.preventDefault();
-      handleSubmit(
-        (data) => {
-          const objectParams: Record<string, any> = {};
-          dynamicBuilders.forEach((prop) => {
-            const value = data[prop.name];
-            // TODO date-range 에 대한 form data set 변경이 필요한경우 여기에 작성
-            objectParams[prop.name] = value ?? '';
-          });
 
-          onValid(objectParams);
-        },
-        (errors) => {
-          console.log('Validation Errors:', errors);
-          // 첫 번째 에러 필드의 키를 추출
-          const firstErrorKey = Object.keys(errors)[0];
-          if (firstErrorKey) {
-            const errorFieldRef = fieldRefs.current[firstErrorKey] as HTMLDivElement | null;
-            // 에러가 있는 필드로 스크롤 및 포커스 이동
-            if (errorFieldRef) {
-              errorFieldRef.scrollIntoView({ behavior: 'smooth', block: 'center' });
-              errorFieldRef.focus();
-            }
-            setFocus(firstErrorKey);
-          }
-        },
-      )();
-    };
-  };
   /**
    * 필수값 확인 함수
    * @param fieldName
    */
-  const isFieldRequired = (fieldName: string): boolean => {
-    // 기본 validator에서 확인
-    const config = validator[fieldName];
-    if (config && typeof config.required === 'object' && config.required !== null) {
-      if (config.required.required) return true;
-    }
+  const isFieldRequired = useCallback(
+    (fieldName: string): boolean => {
+      // 기본 validator에서 확인
+      const config = validator[fieldName];
+      if (config && typeof config.required === 'object' && config.required !== null) {
+        if (config.required.required) return true;
+      }
 
-    // 동적으로 추가된 validator에서도 확인
-    const dynamicConfig = dynamicValidator[fieldName];
-    if (dynamicConfig) {
-      if (typeof dynamicConfig === 'boolean') return dynamicConfig;
-      if (typeof dynamicConfig === 'object' && dynamicConfig.required) {
-        if (typeof dynamicConfig.required === 'boolean') return dynamicConfig.required;
-        if (typeof dynamicConfig.required === 'object' && dynamicConfig.required.required) {
-          return dynamicConfig.required.required;
+      // 동적으로 추가된 validator에서도 확인
+      const dynamicConfig = dynamicValidator[fieldName];
+      if (dynamicConfig) {
+        if (typeof dynamicConfig === 'boolean') return dynamicConfig;
+        if (typeof dynamicConfig === 'object' && dynamicConfig.required) {
+          if (typeof dynamicConfig.required === 'boolean') return dynamicConfig.required;
+          if (typeof dynamicConfig.required === 'object' && dynamicConfig.required.required) {
+            return dynamicConfig.required.required;
+          }
         }
       }
-    }
 
-    return false;
-  };
+      return false;
+    },
+    [validator, dynamicValidator],
+  );
 
   /**
    * 필드 포커스를 설정하는 함수.
@@ -218,12 +197,14 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
       if (values) {
         Object.entries(values).forEach(([key, value]) => {
           setValue(key, value);
+          // 값 변경 시 해당 필드의 에러 클리어
+          clearErrors(key);
         });
       } else {
         reset(originalValues);
       }
     },
-    [setValue, reset, originalValues],
+    [setValue, reset, originalValues, clearErrors],
   );
 
   /**
@@ -314,6 +295,15 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
     return initData;
   };
 
+  // 커스텀 setValue (값 설정 시 에러 클리어)
+  const customSetValue = useCallback(
+    (name: string, value: any, options?: any) => {
+      setValue(name, value, options);
+      clearErrors(name); // 값 변경 시 해당 필드의 에러 클리어
+    },
+    [setValue, clearErrors],
+  );
+
   // provider 객체를 useMemo로 메모이제이션
   const provider = useMemo(
     () => ({
@@ -323,7 +313,7 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
       formState,
       onFormChange,
       getValues,
-      setValue,
+      setValue: customSetValue,
       onFormFocus: handleFocus,
       originalValues,
       clearFormError: clearErrors,
@@ -339,24 +329,98 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
       handleFocus,
       registerField,
       addValidator,
+      customSetValue,
     ],
+  );
+
+  // 커스텀 onFormValid 함수 (최신 schema로 validation 수행)
+  const customOnFormValid = useCallback(async () => {
+    try {
+      const currentValues = getValues();
+      schema.parse(currentValues);
+      clearErrors(); // 기존 에러 클리어
+      return true;
+    } catch (error: any) {
+      console.log('Custom validation errors:', error);
+      clearErrors(); // 기존 에러 클리어
+
+      // Zod 에러를 react-hook-form 에러로 변환
+      if (error && error.issues) {
+        error.issues.forEach((issue: any) => {
+          if (issue.path && issue.path.length > 0) {
+            setError(issue.path[0], {
+              type: 'custom',
+              message: issue.message,
+            });
+          }
+        });
+      }
+      return false;
+    }
+  }, [schema, getValues, setError, clearErrors]);
+
+  /**
+   * 폼 제출 핸들러를 생성하는 함수.
+   *
+   * @param onValid - 유효성 검사 통과 시 호출할 콜백 함수
+   * @returns 폼 제출 이벤트 핸들러
+   */
+  const formSubmit = useCallback(
+    (onValid: (data: Record<string, any>) => void) => {
+      return async (event: FormEvent<HTMLFormElement>) => {
+        console.log('🚀 formSubmit called');
+        event.preventDefault();
+
+        // 먼저 커스텀 validation 실행
+        const isValid = await customOnFormValid();
+        console.log('🚀 validation result:', isValid);
+
+        if (!isValid) {
+          console.log('Form validation failed, submit canceled');
+          // 첫 번째 에러 필드로 포커스 이동
+          const errors = formState.errors;
+          const firstErrorKey = Object.keys(errors)[0];
+          if (firstErrorKey) {
+            const errorFieldRef = fieldRefs.current[firstErrorKey] as HTMLDivElement | null;
+            if (errorFieldRef) {
+              errorFieldRef.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              errorFieldRef.focus();
+            }
+            setFocus(firstErrorKey);
+          }
+          return; // validation 실패 시 submit 중단
+        }
+
+        // validation 통과 시에만 실행
+        const data = getValues();
+        const objectParams: Record<string, any> = {};
+        dynamicBuilders.forEach((prop) => {
+          const value = data[prop.name];
+          // TODO date-range 에 대한 form data set 변경이 필요한경우 여기에 작성
+          objectParams[prop.name] = value ?? '';
+        });
+
+        onValid(objectParams);
+      };
+    },
+    [customOnFormValid, formState.errors, dynamicBuilders, getValues, setFocus],
   );
 
   // provider 객체 반환
   return {
     provider,
-    onFormValid: trigger,
-    updateFormData: updateFormData,
+    onFormValid: customOnFormValid,
+    updateFormData,
     onSubmit: formSubmit,
     setFormError,
     getValues,
-    setValue,
+    setValue: customSetValue,
     clearFormError: clearErrors,
     formState,
     onFormChange,
     onFormFocus: handleFocus,
     control: extendedControl,
     watch,
-    getInitByBuilders: getInitByBuilders,
+    getInitByBuilders,
   };
 };
