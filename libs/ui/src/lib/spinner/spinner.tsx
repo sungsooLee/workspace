@@ -8,7 +8,7 @@ import { cn } from '@learnway/shared';
 export interface SpinnerProps {
   isLoading?: boolean;
   className?: string;
-  iconType?: 'mint' | 'blue' | 'dots'; // 확장을 고려한 구조
+  iconType?: 'mint' | 'blue' | 'dots';
   showBackdrop?: boolean;
 }
 
@@ -25,13 +25,12 @@ const SpinnerComponent = forwardRef<HTMLDivElement, SpinnerProps>(
         );
       }
 
-      const commonClassName = cn(styles.spinner, className, 'nlp--spinner');
       const IconComponent = type === 'blue' ? IcoSpinnerBlue : IcoSpinner;
-      return <IconComponent className={commonClassName} />;
+      return <IconComponent className={styles.spinner} />;
     };
 
     return (
-      <div ref={ref} className={className}>
+      <div ref={ref} className={cn(className, 'nlp--spinner')}>
         {isLoading && (
           <>
             {renderSpinnerByType(iconType)}
