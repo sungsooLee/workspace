@@ -99,7 +99,6 @@ function RouteComponent() {
         <span>
           <img src={thumbnailImg} alt="이미지" />
         </span>
-        <span>{}</span>
       </div>
 
       {item.badges && (

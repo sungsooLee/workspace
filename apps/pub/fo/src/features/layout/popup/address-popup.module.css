@@ -1,51 +1,56 @@
 .start {
   &.address {
     .example_box {
+      @apply mt-[32px];
       & > p {
-        @apply body_3_r text-[var(--secondary3)];
+        @apply title3-b text-[var(--gray10)];
       }
       .box {
-        @apply mt-[8px];
+        @apply mt-[12px];
         dl {
-          @apply relative mb-[16px] pl-[18px];
+          @apply relative pl-[12px];
+          & + dl {
+            @apply mt-[12px];
+          }
           &::before {
-            @apply absolute left-[8px] top-[6px] h-[3px] w-[3px] rounded-[50%] bg-[var(--gray8)] content-[''];
+            @apply absolute left-0 top-[6px] h-[4px] w-[4px] rounded-[50%] bg-[var(--gray50)] content-[''];
           }
           dt {
-            @apply body_bo_3_b text-[var(--gray8)];
+            @apply body-md text-[var(--gray35)];
           }
           dd {
-            @apply body_bo_3_r text-[var(--gray7)];
+            @apply body-sm mt-[8px] text-[var(--gray35)];
           }
         }
       }
     }
     .address_list {
+      @apply mt-[24px];
       ul {
         @apply w-full;
         li {
           button {
-            @apply flex w-full items-center justify-between;
+            @apply flex w-full items-center justify-between !px-0;
             p {
               @apply flex-1 text-left;
               strong {
-                @apply body_bo_3_b block leading-[20px] text-[var(--gray8)];
+                @apply title3-b mb-[8px] block leading-[22px] text-[var(--gray10)];
               }
               span {
-                @apply body_bo_3_r block leading-[20px] text-[var(--gray7)];
+                @apply body-md block leading-[24px] text-[var(--gray35)];
               }
             }
             > span {
-              @apply button_5_r inline-block rounded-[4px] border-[1px] border-solid border-[var(--gray6)] px-[8px] py-[4px] text-[var(--gray8)];
+              @apply label-sm-b inline-block rounded-[6px] border-[1px] border-solid border-[var(--gray75)] p-[10px] text-[var(--gray35)];
             }
           }
           & + li {
-            @apply mt-[16px];
+            @apply mt-[24px];
           }
         }
       }
       .pagenation {
-        @apply mt-[16px];
+        @apply mt-[24px];
       }
     }
   }

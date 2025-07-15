@@ -1,0 +1,9 @@
+/* thumb-nail-item.module.css */
+.tag_list {
+  & > span:not(:first-child) {
+    @apply ml-[4px];
+  }
+}
+.thumbnail_title {
+  @apply title3-b text-[#232326];
+}

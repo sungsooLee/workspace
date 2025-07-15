@@ -338,7 +338,7 @@ function RouteComponent() {
                           size="lx"
                           onClick={() =>
                             openModal({
-                              width: 's',
+                              width: 'sm',
                               content: <AddressPopup />,
                             })
                           }

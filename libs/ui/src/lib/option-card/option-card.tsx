@@ -52,7 +52,7 @@ const OptionCardComponent = function ({
   options,
   value,
   cols,
-  size,
+  size = 'md',
   multiple,
   itemRenderer,
   onOptionSelect,

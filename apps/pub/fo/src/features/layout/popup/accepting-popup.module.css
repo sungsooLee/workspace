@@ -1,6 +1,6 @@
 .start {
   &.accepting_wrap {
-    @apply flex flex-col items-start;
+    @apply flex flex-col items-start p-[8px] pb-[16px];
     strong {
       @apply title4-b mt-[16px] block text-center text-[var(--gray10)];
     }
@@ -8,6 +8,9 @@
       @apply body-md mt-[8px] text-center text-[var(--gray35)];
     }
   }
+}
+.btn_box {
+  @apply -mt-[16px];
 }
 
 :global(body.mobile) {
