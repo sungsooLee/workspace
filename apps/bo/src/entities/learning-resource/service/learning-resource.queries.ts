@@ -56,6 +56,9 @@ export const learningResourceQueryOptions = {
   getContent: (contentUuid: string) => ({
     queryKey: queryKeys.contentDetail,
     queryFn: () => LearningResourceService.fetchContent(contentUuid),
+    cacheTime: 0,
+    staleTime: 0,
+    enabled: !!contentUuid,
   }),
   getContentCourseMapping: (contentUuid: string, params: ContentCourseMappingParams) => ({
     queryKey: queryKeys.contentCourseMapping,
@@ -82,13 +85,7 @@ export const learningResourceQueryOptions = {
   getCurriculumsMapping: (contentUuid: string) => ({
     queryKey: queryKeys.curriculumMapping,
     queryFn: () => LearningResourceService.fetchCurriculumMapping(contentUuid),
-  }),
-  getCoursesMapping: (contentUuid: string) => ({
-    queryKey: queryKeys.mappingCourses,
-    queryFn: () => LearningResourceService.fetchCourseMapping(contentUuid),
-    cacheTime: 0,
-    staleTime: 0,
-    enabled: true,
+    enabled: !!contentUuid,
   }),
   getSharedHistories: (params: any) => ({
     queryKey: queryKeys.sharedHistories,
