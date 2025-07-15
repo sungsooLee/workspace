@@ -2,7 +2,7 @@
 
 import { createLazyFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
-import { Button, ContentsRow, InputModalSelectorFormField } from '@learnway/ui';
+import { Button, ContentsRow, InputModalSelectorFormField, useModal } from '@learnway/ui';
 import { PageContainer, MainContents, ContentsButtons, LinkBox, SubContents } from '@shared/ui';
 import { ChannelChoiceModal, ManagerChoiceModal } from '@shared/ui';
 import { DateRangePickerFormField } from '@features/form/ui';
@@ -18,14 +18,16 @@ import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '@shared/ui';
 import { useQuery } from '@tanstack/react-query';
 import { learningResourceQueryOptions } from '@entities/learning-resource';
 import { NotFound } from '@features/layout';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { MovieInfo } from '@features/learning-resource';
+import { ContentCourseMappingModal } from '@shared/ui/modal/content-course-mapping-modal';
 
 export const Route = createLazyFileRoute('/_layout/learning/learning-resource/video/view')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const { open: openModal } = useModal();
   const {
     state: { contentUuid },
   } = useCurrentRoute();
@@ -45,6 +47,13 @@ function RouteComponent() {
     console.log(data);
   };
 
+  const handleCourseMapping = useCallback(() => {
+    openModal({
+      content: <ContentCourseMappingModal channelUuid={data?.channelUuid || ''} />,
+      width: 'lg',
+    });
+  }, [data]);
+
   const permission = 'READ' as string; //user permission 정보 가져와야 함
 
   if (fetchError) {
@@ -57,9 +66,6 @@ function RouteComponent() {
   }
   console.log('🚀 ~ RouteComponent ~ data:', data);
 
-  const openModal = () => {
-    // 모달 다으면 oncofmr(value)
-  };
   return (
     <form onSubmit={onSubmit(handleFormSubmit)}>
       <PageContainer>
@@ -82,14 +88,14 @@ function RouteComponent() {
           </LinkBox>
           {permission === 'READ' && (
             <>
+              <Button variant="point" size="sm" onClick={handleCourseMapping}>
+                매핑과정 보기
+              </Button>
               <Button
                 variant="point"
                 size="sm"
                 onClick={() => console.log('🚀 ~ RouteComponent ~ getValues:', getValues())}
               >
-                매핑과정 보기
-              </Button>
-              <Button variant="point" size="sm">
                 공유이력 보기
               </Button>
             </>
