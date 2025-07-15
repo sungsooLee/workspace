@@ -27,6 +27,7 @@ import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inn
 import { IcoMinus } from '@learnway/icons';
 import { SectionLayout } from '@shared/ui';
 import { DndContext } from '@dnd-kit/core';
+import { useFetchAuthUser } from '@learnway/auth/entities';
 
 interface CurriculumDetailProps {
   mode: FORM_MODE;
@@ -39,6 +40,7 @@ const CurriculumDetailComponent = ({
   curriculumId,
   onCurriculumCreated,
 }: CurriculumDetailProps) => {
+  const { data: loginUser } = useFetchAuthUser();
   const [formStatus, setFormStatus] = useState<FROM_STATUS>(FROM_STATUS.NONE);
   const [treeData, setTreeData] = useState<TreeNode[]>([]);
   const [formState, setFormState] = useState<FormState>({
@@ -138,10 +140,15 @@ const CurriculumDetailComponent = ({
 
   const handleFormSubmit = (data: any) => {
     const { activeFormType, parentNode, isEditing } = formState;
+    console.log(data);
+    console.log(loginUser);
+    // console.log()
     const curriculumData = {
       ...data,
-      channelUuid: '1', // TODO: 실제 채널 UUID로 교체
-      tenantId: 1, // TODO: 실제 테넌트 ID로 교체
+      // channelUuid: '1', // TODO: 실제 채널 UUID로 교체
+      // tenantId: 1, // TODO: 실제 테넌트 ID로 교체
+      channelUuid: data.channelUuid,
+      tenantId: loginUser?.activeTenant?.tenantId,
     };
     switch (activeFormType) {
       case MAPPING_CURRICULUM_TYPE.CURRICULUM:
@@ -154,7 +161,6 @@ const CurriculumDetailComponent = ({
               if (createdCurriculum.curriculumId && onCurriculumCreated) {
                 onCurriculumCreated(createdCurriculum.curriculumId);
               }
-
               const newNode: TreeNode = {
                 id: createdCurriculum.curriculumId,
                 key: `curriculum-${createdCurriculum.curriculumId}`,
@@ -164,7 +170,6 @@ const CurriculumDetailComponent = ({
                 children: [],
                 data: createdCurriculum,
               };
-
               handleNodeSelect(newNode);
             },
           });

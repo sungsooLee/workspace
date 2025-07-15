@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import { ContentsRow, Input, RadioGroupFormField, Textarea } from '@learnway/ui';
-import { FormRow3 } from '@shared/ui';
+import { FormRow3, ResourceChocieModal } from '@shared/ui';
 import { MODULE_TYPE } from '@types';
 import { t } from 'i18next';
+import { InputModalSelectorFormField } from './input-modal-selector-form-field';
 
 interface ModuleFormProps {
   watch: any;
@@ -72,7 +73,18 @@ export const ModuleForm: React.FC<ModuleFormProps> = ({
 
       {moduleType === MODULE_TYPE.FIXED && (
         <ContentsRow>
-          <FormRow3 name="moduleOrder" label={t('moduleOrder')} />
+          <FormRow3
+            name="moduleOrder"
+            label={t('학습자원')}
+            element={
+              <InputModalSelectorFormField
+                modalConfig={{ content: <ResourceChocieModal /> }}
+                transformModalData={(data: any) => {
+                  console.log(data);
+                }}
+              />
+            }
+          />
         </ContentsRow>
       )}
       <ContentsRow>

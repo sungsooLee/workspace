@@ -73,6 +73,7 @@ export * from './modal/user-group-choice-modal';
 export * from './modal/user-group-organization-shuttle-modal';
 export * from './modal/user-group-tab-choice-modal';
 export * from './modal/user-shuttle-modal';
+export * from './modal/resource-choice-modal';
 export * from './notice-box/notice-box';
 export * from './search-box/date-form-field';
 export * from './search-box/date-range-form-field';
