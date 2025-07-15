@@ -38,7 +38,7 @@ import { Input } from '@learnway/ui';
         <div className="flex_box">
           <div className="desc w-full">
             <div className={formStyles.input_box}>
-              <Input id="name" type="text" placeholder="입력하세요." value="" size="lg" />
+              <Input id="name" type="text" placeholder="입력하세요." value="" inputSize={'lg'} />
             </div>
           </div>
         </div>

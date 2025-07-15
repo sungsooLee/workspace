@@ -69,7 +69,12 @@ const PasswordVerifyPopupComponent = () => {
                 <span className={formStyles.form_text}>비밀번호</span>
               </label>
               <div className={cn(formStyles.input_box, styles.input_box)}>
-                <Input id="name4" type="text" placeholder="비밀번호를 입력하세요." className="lg" />
+                <Input
+                  id="name4"
+                  type="text"
+                  placeholder="비밀번호를 입력하세요."
+                  inputSize={'lg'}
+                />
               </div>
             </div>
           </ContentsRow>
