@@ -20,13 +20,15 @@ import {
 } from '@shared/ui';
 import { CODE_GROUP, getCodeLabel, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { useEffect } from 'react';
+import { useRouter } from '@tanstack/react-router';
 
 interface Props {
   channelUuid: string;
 }
 
 const ContentCourseMappingModalComponent = ({ channelUuid }: Props) => {
-  const { close } = useModal();
+  const router = useRouter();
+  const { close, confirm } = useModal();
 
   const searchBoxConfig = (): SearchBoxConfig => ({
     builders: [
@@ -90,10 +92,31 @@ const ContentCourseMappingModalComponent = ({ channelUuid }: Props) => {
         width: 104,
         name: 'courseType',
         label: t('유형'),
+        render: (_: any) => getCodeLabel(CODE_GROUP['lms.course.CourseType'], _.getValue()),
       },
       { width: 571, name: 'courseName', label: t('과정명') },
       { width: 104, name: 'language', label: t('언어') },
-      { width: 118, label: t('과정상세보기') },
+      {
+        width: 118,
+        label: t('과정상세보기'),
+        render: ({ row }: any) => (
+          <Button
+            className="link"
+            label={t('광정상세보기')}
+            onClick={async () => {
+              const confirmed = await confirm({
+                title: t('이동하시겠습니까?'),
+                content: t('입력중인 항목이 초기화됩니다.'),
+              });
+              if (confirmed)
+                router.navigate({
+                  to: '/learning/course/detail/view',
+                  state: { courseId: row.original.courseId },
+                });
+            }}
+          />
+        ),
+      },
     ],
   };
 
@@ -121,15 +144,15 @@ const ContentCourseMappingModalComponent = ({ channelUuid }: Props) => {
 
 export const ContentCourseMappingModal = ContentCourseMappingModalComponent;
 
-const returnExample = {
+const returnExample: returnSchema = {
   hasMapping: true,
   courses: [
     {
-      courseId: 1,
+      courseId: 5,
       courseUuid: '5677fa3a-39fb-43c2-888d-4232e718d9f6',
       courseName: 'string',
-      courseType: 'ELEARNING',
-      courseContent: 'string',
+      courseType: 'ELEARNING1',
+      courseContent: '예제',
       channelId: 0,
       channelUuid: '2b946c7f-abd1-4aef-a440-5d7670e4db75',
       channelName: 'string',
