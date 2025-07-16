@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { Button, GridBox, Tooltip, Checkbox } from '@learnway/ui';
+import { Button, GridBox, Tooltip, Checkbox, DatePicker } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { useState } from 'react';
 import {
@@ -56,19 +56,7 @@ function RouteComponent() {
           <IcoInfoCircle width={16} height={16} stroke={'#4C515E'} fill={'none'} />
         </Button>
       ),
-      dataRange: (
-        <>
-          <Button size={'xs'} className="btn_table" variant={'gray2'}>
-            {'회사'}
-          </Button>
-          <Button size={'xs'} className="btn_table" variant={'gray2'}>
-            {'채널'}
-          </Button>
-          <Button size={'xs'} className="btn_table" variant={'gray2'}>
-            {'팀'}
-          </Button>
-        </>
-      ),
+      dataRange: <DatePicker displayType={'year'} size={'md'} />,
     },
     {
       firstName: 'tandy',

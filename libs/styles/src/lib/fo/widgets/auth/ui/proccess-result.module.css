@@ -38,15 +38,15 @@
         .ico2 {
           @apply h-[32px] w-[32px];
         }
-        + h3.title {
-        }
       }
       h3.title {
-        @apply body_3_b mt-[12px];
+        @apply title5-b;
       }
       .noti {
+        @apply body-sm mt-[8px] text-[var(--gray35)];
       }
       .noti_box {
+        @apply mt-[24px];
       }
     }
   }

@@ -1,13 +1,25 @@
 .start {
   &.learning_header {
-    @apply fixed left-[0] top-[0] z-[1] h-[112px] w-full;
+    @apply fixed left-[0] top-[0] z-[1] h-[80px] w-full bg-white;
     .header_area {
-      @apply flex items-center px-[40px] pt-[24px];
-      .btn_back {
-        @apply mr-[8px];
-      }
-      h1 {
-        @apply title_3_b text-white;
+      @apply flex items-center justify-between px-[24px] py-[20px];
+      .header_info {
+        @apply flex items-center;
+        .btn_back {
+          @apply mr-[16px] !px-0;
+          img {
+            @apply h-[40px] w-[40px];
+          }
+        }
+        .btn_title {
+          @apply ml-0 flex items-center !px-0;
+          h1 {
+            @apply title4-b text-[#232326];
+          }
+        }
+        .btn_learning {
+          @apply label-lg-b rounded-[8px] border-[1px] border-solid border-[var(--gray75)] p-[12px] text-[var(--gray35)];
+        }
       }
     }
   }

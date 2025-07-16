@@ -90,7 +90,13 @@
     }
   }
   &.video {
-    @apply h-[100dvh] w-full;
+    @apply flex h-[calc(100dvh-80px)] w-full items-center bg-black;
+    .video_box {
+      @apply flex h-auto max-h-[calc(100dvh-80px)] w-full items-center justify-center;
+      & > * {
+        @apply h-auto max-h-[calc(100dvh-80px)] w-auto max-w-full;
+      }
+    }
   }
 }
 

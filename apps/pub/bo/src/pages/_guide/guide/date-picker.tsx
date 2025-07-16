@@ -31,21 +31,21 @@ import { DatePicker } from '@learnway/ui'; // 사용할 icon 함수명 호출
       </div>
       <div className="group">
         <h3 className="guide_tit3">day</h3>
-        <DatePicker displayType={'day'} size={'lg'} />
+        <DatePicker displayType={'day'} size={'md'} />
         <h3 className="guide_tit3">year</h3>
-        <DatePicker displayType={'year'} size={'lg'} />
+        <DatePicker displayType={'year'} size={'md'} />
         <h3 className="guide_tit3">month</h3>
-        <DatePicker displayType={'month'} size={'lg'} />
+        <DatePicker displayType={'month'} size={'md'} />
         {/* <h3 className="guide_tit3">from-to</h3>
         <DatePicker displayType={'from-to'} numberOfMonths={2} size={'lg'} /> */}
         <h3 className="guide_tit3">time</h3>
-        <DatePicker displayType={'time'} size={'lg'} />
+        <DatePicker displayType={'time'} size={'md'} />
         <h3 className="guide_tit3">time-hm</h3>
-        <DatePicker displayType={'time-hm'} size={'lg'} />
+        <DatePicker displayType={'time-hm'} size={'md'} />
         <h3 className="guide_tit3">day-time</h3>
-        <DatePicker displayType={'day-time'} size={'lg'} />
+        <DatePicker displayType={'day-time'} size={'md'} />
         <h3 className="guide_tit3">day-time-hm</h3>
-        <DatePicker displayType={'day-time-hm'} size={'lg'} />
+        <DatePicker displayType={'day-time-hm'} size={'md'} />
       </div>
     </div>
   );
