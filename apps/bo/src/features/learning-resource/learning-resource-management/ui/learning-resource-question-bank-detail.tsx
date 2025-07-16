@@ -4,32 +4,39 @@ import { t } from 'i18next';
 import movieInfoStyles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
 import previewImg from '@assets/images/temp/img_exam_basic.jpg';
 
-import { FormSubTitle, SplitPanel } from '@learnway/ui';
+import { FormSubTitle, SplitPanel, useModal } from '@learnway/ui';
 import { CODE_GROUP, DynamicFormConfig, useDynamicForm2 } from '@learnway/hooks';
 
 import { LearningResourceBaseForm } from './learning-resource-base-form';
 import { useLearningResourceQuestionDetailForm } from '../service/learning-resource-question-detail-from.hook';
 
 const LearningResourceQuestionBankDetailComponent = (props: any, ref: any) => {
+  const { alert, open: openModal, confirm: openConfirm } = useModal();
   const { baseInfo, formMode, setFuncInfo, createQuestionBank } =
     useLearningResourceQuestionDetailForm();
 
   const { provider, getValues, onFormValid, onSubmit } = useDynamicForm2();
   const formRef = useRef<HTMLFormElement>(null);
 
-  const handleOnSubmit = (data: any) => {
-    console.log('aaaaaaaaaaaaaa', data);
-    const payload = getValues();
-    console.log('formSave', payload);
-    createQuestionBank(
-      payload,
-      (data: any) => {
-        console.log('success data', data);
-      },
-      (error: any) => {
-        console.log('error data', error);
-      },
-    );
+  const handleOnSubmit = async (data: any) => {
+    if (
+      await openConfirm({
+        title: '저장 하시겠습니까?',
+        content: '입력한 정보로 저장합니다.',
+      })
+    ) {
+      const payload = getValues();
+      console.log('formSave', payload);
+      createQuestionBank(
+        payload,
+        (data: any) => {
+          console.log('success data', data);
+        },
+        (error: any) => {
+          console.log('error data', error);
+        },
+      );
+    }
   };
   const handleFormSave = async () => {
     const form = formRef.current;
