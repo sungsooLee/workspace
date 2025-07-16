@@ -159,3 +159,11 @@ export interface PaginationResponse<T> {
     // totalPages: number; // <GridBox pagination={data?.pageable} /> 에러나서 임시로 넣음..
   };
 }
+
+export type SelectedChip = {
+  key: string;
+  id: number;
+  groupId?: number;
+  title: string;
+  fullPath: string;
+};
