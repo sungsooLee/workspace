@@ -1,14 +1,13 @@
-import { Button, Divider, Tabs, useModal, ToggleButtonGroup } from '@learnway/ui';
+import { Button, Divider, Tabs, ToggleButtonGroup, useModal } from '@learnway/ui';
+import { CourseDetailTab } from '@pages/_layout/learning/course/-common/type';
+import { useCourseDetailForm } from '@pages/_layout/learning/course/-hooks/use-course-detail-form';
+import { Community } from '@pages/_layout/learning/course/detail/-tabs/community';
+import { CourseDetail } from '@pages/_layout/learning/course/detail/-tabs/course-detail';
+import { Curriculum } from '@pages/_layout/learning/course/detail/-tabs/curriculum';
+import { Sequence } from '@pages/_layout/learning/course/detail/-tabs/sequence';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { useCallback, useEffect, useMemo } from 'react';
-import { CourseDetailTab, CourseTab } from '../-common/type';
-import { useCourseForm } from '../-hooks/use-course-form';
-import { Community } from './-tabs/community';
-import { Curriculum } from './-tabs/curriculum';
-import { CourseDetail } from './-tabs/course-detail';
-import { Sequence } from './-tabs/sequence';
-import { useCourseDetailForm } from '@pages/_layout/learning/course/-hooks/use-course-detail-form';
 
 export const Route = createLazyFileRoute('/_layout/learning/course/detail/view')({
   component: RouteComponent,
@@ -131,14 +130,15 @@ function RouteComponent() {
 
   return (
     <form>
-      <PageContainer>
+      <PageContainer hideOutLine={true}>
         <ContentsButtons>
           <ToggleButtonGroup
+            defaultValue={'수강관리value'}
             options={[
               { label: '과정관리', value: '과정관리value' },
               { label: '수강관리', value: '수강관리value' },
             ]}
-            onChange={(value) => console.log('ToggleButtonGroup.onChange', value)}
+            onClick={(value) => console.log('ToggleButtonGroup.onClick', value)}
           />
           <Button
             type="button"
@@ -194,11 +194,13 @@ function RouteComponent() {
         </ContentsButtons>
         <MainContents>
           <Tabs
-            type={'progress'}
+            type={'fill'}
             size={'sm'}
             items={tabItems}
             onTabChange={handleTabChange}
             selectedTabKey={activeTab}
+            showContentBorder={true}
+            // onBeforeTabChange={async (currentTabKey, nextTabKey) => await saveConfirm()}
           />
         </MainContents>
       </PageContainer>

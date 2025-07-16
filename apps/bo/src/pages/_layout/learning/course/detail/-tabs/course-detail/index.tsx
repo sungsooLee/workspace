@@ -91,7 +91,7 @@ const CourseDetailComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
         {/* 과정 통계 요약 CourseStatsSummary*/}
         <CourseStatsSummary courseId={formData.courseId} />
 
-        <SplitPanel size={['auto', 140]} divider>
+        <SplitPanel size={['auto', 40]} divider>
           <div>
             {/*기본정보*/}
             <FormSubTitle label={t('기본정보')} />
