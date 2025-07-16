@@ -10,6 +10,7 @@ import { IcoDownload, IcoEye, IcoTrash03 } from '@learnway/icons';
 import styles from './thumbnail.module.css';
 import { useModal } from '../modal/modal.hook';
 import { PreviewImage } from '../preview-image/preview-image';
+import { ImageFallBack } from '../image-fallback/image-fallback';
 
 export interface ThumbnailProps {
   /** variant */
@@ -173,7 +174,12 @@ const ThumbnailComponent = forwardRef<HTMLDivElement, ThumbnailProps>(
             </>
           )}
         </div>
-        <img src={path} className={styles.thumbnail_image} alt="Thumbnail" />
+        <ImageFallBack
+          imageUrl={path}
+          imageClassName={styles.thumbnail_image}
+          fallbackClassName={styles.not_found_image}
+        />
+        {/* <img src={path} className={styles.thumbnail_image} alt="Thumbnail" /> */}
         {/* 시스템에서 제공하는 기본이미지인 경우 styles.default_image 클래스 추가 필요 */}
       </div>
     );
