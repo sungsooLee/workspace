@@ -200,6 +200,7 @@ function RouteComponent() {
             onTabChange={handleTabChange}
             selectedTabKey={activeTab}
             showContentBorder={true}
+            onBeforeTabChange={async (currentTabKey, nextTabKey) => await saveConfirm()}
           />
         </MainContents>
       </PageContainer>
