@@ -126,6 +126,9 @@ export const learningResourceQueryOptions = {
 };
 
 export const mutateOptions = {
+  postContentCopy: () => ({
+    mutationFn: (contentUuid: string) => LearningResourceService.postContentCopy(contentUuid),
+  }),
   postDraftVideos: () => ({
     mutationFn: (params: PostDraftVideosParams) => LearningResourceService.postDraftVideos(params),
   }),
