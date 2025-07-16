@@ -8,7 +8,7 @@ import {
   FileType,
   ProcessingStatus,
 } from './enum';
-import { PaginationResponse } from '@learnway/ui';
+import { PaginationRequest, PaginationResponse } from '@learnway/ui';
 
 export interface MediaContentSaveReq {
   contentName: string;
@@ -221,7 +221,7 @@ export type GetContentDetailRes = ContentInformation;
 
 export type PostContentCopyRes = ContentInformation;
 
-export interface GetContentsParams {
+export interface GetContentsParams extends PaginationRequest {
   tenantId: string;
   channelUuid: string;
   contentTypes?: string[];
@@ -232,9 +232,6 @@ export interface GetContentsParams {
   coordinatorName?: string;
   langCountryCode?: string;
   // isMockUp?:boolean;
-  page?: number;
-  size?: number;
-  sort?: string[];
 }
 
 export interface ContentInfo {
@@ -327,12 +324,9 @@ export type CourseMappingStatusRes = {
   courses: MappedCourseItem[] | null;
 };
 
-export interface ContentCourseMappingParams {
+export interface ContentCourseMappingParams extends PaginationRequest {
   courseType?: CourseType;
   courseName?: string;
-  page?: number;
-  size?: number;
-  sort?: string[];
 }
 
 export interface Content {
