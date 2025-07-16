@@ -3,10 +3,6 @@ import { createFileRoute, useRouter, useRouterState } from '@tanstack/react-rout
 
 import { t } from 'i18next';
 
-import { useGetCurriculumnDetail } from '@entities/curriculum';
-import { useGetScormRteScoInfo } from '@entities/learning-resource/service/scorm-rte.hook';
-import { useGetContentDetail } from '@entities/learning-resource/service/content.hook';
-
 import {
   EnContentType,
   LearnwayLearningWindowLayout,
@@ -14,13 +10,22 @@ import {
   ScormPlayerConfigProperties,
   LearningWindowBaseInfo,
 } from '@learnway/ui';
-import { ScormRteService } from '@entities/learning-resource/api/scorm-rte';
-import { Html5Service } from '@entities/learning-resource/api/html5';
-import { ImageService } from '@entities/learning-resource/api/image';
-import { useVideoWatchLog } from '@entities/learning-resource/service/video.hook';
-import { useGetBlogResource } from '@entities/learning-resource/service/blog.hook';
-import { useGetHtml5Resource } from '@entities/learning-resource/service/html5.hook';
-import { useGetImageResource } from '@entities/learning-resource/service/image.hook';
+import {
+  useVideoWatchInitialize,
+  useVideoWatchLog,
+} from '@entities/learning-resource/service/video.hook';
+import { useGetCurriculumnDetail } from '@entities/curriculum';
+
+import {
+  ScormRteService,
+  Html5Service,
+  ImageService,
+  ContentService,
+  useGetScormRteScoInfo,
+  useGetBlogResource,
+  useGetHtml5Resource,
+  useGetImageResource,
+} from '@entities/learning-resource';
 
 export const Route = createFileRoute('/_learning/learning-window')({
   component: RouteComponent,
@@ -55,7 +60,7 @@ function RouteComponent() {
   const { data: scormInfo } = useGetScormRteScoInfo(scormConfig);
   const { data: ebookInfo } = useGetScormRteScoInfo(ebookConfig);
   const { data: curriculum } = useGetCurriculumnDetail(baseInfo?.curriculumId);
-  const { data: videoInfo } = useGetContentDetail(videoConfig?.contentUuid);
+  const { data: videoInfo } = useVideoWatchInitialize(videoConfig);
   const { data: blogInfo } = useGetBlogResource(blogConfig?.contentUuid);
   const { data: htmlInfo } = useGetHtml5Resource(htmlConfig?.contentUuid);
   const { data: imageInfo } = useGetImageResource(imageConfig?.contentUuid);
@@ -91,11 +96,13 @@ function RouteComponent() {
     console.log('vidoeInfo', videoInfo);
     setVideoStart(0);
     setVideoInfo(videoInfo);
+    setVideoConfig(undefined);
   }, [videoInfo]);
 
   useEffect(() => {
     if (!blogInfo) return;
     setBlogInfo(blogInfo);
+    setBlogConfig(undefined);
   }, [blogInfo]);
   useEffect(() => {
     if (!htmlInfo) return;
@@ -112,10 +119,21 @@ function RouteComponent() {
     setEbookInfo(htmlInfo);
   }, [ebookInfo]);
 
+  const clearConfig = () => {
+    setScormConfig(undefined);
+    setEbookConfig(undefined);
+    setVideoConfig(undefined);
+    setBlogConfig(undefined);
+    setHtmlConfig(undefined);
+    setImageConfig(undefined);
+  };
+
   useEffect(() => {
     if (!playInfo) return;
     console.log('playInfo config', playInfo);
+    console.log('video config', videoConfig);
     clearInfo();
+    clearConfig();
     switch (playInfo.contentType) {
       case EnContentType.EBOOK:
         setEbookConfig({
@@ -140,6 +158,11 @@ function RouteComponent() {
       case EnContentType.VIDEO:
         setVideoConfig({
           contentUuid: playInfo.contentUuid,
+          sequenceId: playInfo.sequenceId,
+          courseId: playInfo.courseId,
+          curriculumId: playInfo.curriculumId,
+          moduleId: playInfo.moduleId,
+          lessonId: playInfo.lessonId,
         });
         break;
       case EnContentType.BLOG:
@@ -168,9 +191,7 @@ function RouteComponent() {
     }
 
     setFuncInfo({
-      lessonProgress: (payload: any) => {
-        console.log(payload);
-      },
+      lessonProgress: ContentService.getProgressMulti,
       scormInitialize: ScormRteService.initialize,
       scormCommit: ScormRteService.commit,
       html5LearningHistory: Html5Service.saveHtml5Learning,

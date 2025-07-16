@@ -85,6 +85,16 @@ export const useVideoPlayer = ({ onProgressCallback }: UseVideoPlayer = {}) => {
     return `${m}:${s}`;
   };
 
+  const setFraction = (progress: number) => {
+    const current = playerRef.current;
+    if (progress < 0 || progress > 1) {
+      console.error('progress 0 ~ 1');
+      return;
+    }
+    if (current) {
+      current.seekTo(progress, 'fraction');
+    }
+  };
   // ⏮ 10초 되감기
   const handleRewind = () => {
     const current = playerRef.current;
@@ -174,6 +184,7 @@ export const useVideoPlayer = ({ onProgressCallback }: UseVideoPlayer = {}) => {
     muted,
     isFullscreen,
     subtitlesVisible,
+    setFraction,
     toggleFullscreen,
     toggleSubtitles,
     formatTime,
