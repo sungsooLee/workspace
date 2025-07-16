@@ -18,7 +18,7 @@ import {
   useGridBoxConfig,
   useModal,
 } from '@learnway/ui';
-import { IcoClock01, IcoCopy, IcoDownload, IcoAlertCircle } from '@learnway/icons';
+import { IcoClock01, IcoCopy, IcoDownload, IcoAlertCircle, IcoDownArrow } from '@learnway/icons';
 import { t } from 'i18next';
 import { useEffect, useState } from 'react';
 import { learningResourceQueryOptions, usePostContentCopy } from '@entities/learning-resource';
@@ -193,24 +193,25 @@ function LearningResourceTableComponent() {
           size: 'auto',
         },
         render: (_: any) => (
-          <Button
-            className="link"
-            onClick={(e) => {
-              e.stopPropagation();
-
-              const detailPath = getDetailPathByContentType(_.row.original.contentType);
-
-              // 유형별 상세 화면으로 이동해야 함
-              router.navigate({
-                to: detailPath,
-                state: {
-                  contentUuid: _.row.original.contentUuid,
-                },
-              });
-            }}
-          >
-            {_.getValue()}
-          </Button>
+          <span className="flex">
+            {_.row.original.createType === ContentCreateType.TRANSLATE && (
+              <IcoDownArrow width={16} height={16} stroke="#4C515E" />
+            )}
+            <Button
+              className="link"
+              onClick={(e) => {
+                e.stopPropagation();
+                router.navigate({
+                  to: getDetailPathByContentType(_.row.original.contentType),
+                  state: {
+                    contentUuid: _.row.original.contentUuid,
+                  },
+                });
+              }}
+            >
+              {_.getValue()}
+            </Button>
+          </span>
         ),
       },
       {
@@ -430,9 +431,7 @@ function LearningResourceTableComponent() {
               label={t('LABEL.grid.header.share', '공유')}
               disabled={
                 selectedRows.length !== 1 ||
-                !data?.content?.find(
-                  (_) => _.contentUuid === get(first(selectedRows), 'contentUuid'),
-                ) // child
+                get(first(selectedRows), 'createType') !== ContentCreateType.MANUAL // 원본만 공유 가능
               }
               onClick={handleShare}
             />
@@ -478,9 +477,7 @@ function LearningResourceTableComponent() {
               icon={<IcoCopy width={16} height={16} stroke="#4C515E" />}
               disabled={
                 selectedRows.length !== 1 ||
-                !data?.content?.find(
-                  (_) => _.contentUuid === get(first(selectedRows), 'contentUuid'),
-                ) // child
+                get(first(selectedRows), 'createType') === ContentCreateType.TRANSLATE // 원본과 공유본만 복사 가능
               }
               onClick={handleCopy}
             />
