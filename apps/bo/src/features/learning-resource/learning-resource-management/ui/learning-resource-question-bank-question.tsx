@@ -12,6 +12,7 @@ import previewImg from '@assets/images/temp/img_exam_basic.jpg';
 
 import { cn } from '@learnway/shared';
 import {
+  Button,
   ContentsRow,
   FormSubTitle,
   GridBox,
@@ -25,9 +26,9 @@ import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 
 import { LearningResourceBaseForm } from './learning-resource-base-form';
 import { useLearningResourceQuestionDetailForm } from '../service/learning-resource-question-detail-from.hook';
-import { FormRow2 } from '@shared/ui';
+import { FormRow2, GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
 import { Link } from 'lucide-react';
-import { IcoFormRequired, IcoMenu01 } from '@learnway/icons';
+import { IcoCopy, IcoFormRequired, IcoMenu01, IcoMinus, IcoPlus } from '@learnway/icons';
 
 const LearningResourceQuestionBankQuestionComponent = () => {
   const { baseInfo } = useLearningResourceQuestionDetailForm();
@@ -88,6 +89,7 @@ const LearningResourceQuestionBankQuestionComponent = () => {
       meta: {
         headerAlign: 'center', // 헤더 정렬
         cellAlign: 'left', // 셀 정렬
+        cellClass: 'title',
       },
     }),
     columnHelper.accessor('levelHigh', {
@@ -160,6 +162,7 @@ const LearningResourceQuestionBankQuestionComponent = () => {
       meta: {
         headerAlign: 'center', // 헤더 정렬
         cellAlign: 'left', // 셀 정렬
+        cellClass: 'title',
       },
     }),
     columnHelper.accessor('level', {
@@ -257,10 +260,13 @@ const LearningResourceQuestionBankQuestionComponent = () => {
           guideText={'문항현황은 문항목록에서 문항추가/삭제 시 자동 업데이트 됩니다.'}
           showGuideTextNextLine={true}
         />
-        <TableBox
+        <GridBox
+          title=" "
+          showTotalCount={false}
+          disabledSelectionToggle
+          tableMode
           data={data2}
           columns={columns2}
-          tableMode={true}
           multiple
           showNumberingColumn
           hideRowSelectionCheckBox={false}
@@ -271,8 +277,29 @@ const LearningResourceQuestionBankQuestionComponent = () => {
               <span className="count_info">{'5'}</span>
             </div>
           }
-          showExcelDownload
           className={styles.list_table}
+          customButtonNode={
+            <>
+              <Button variant="text" label={'불러오기'} />
+              <GridExcelUploadButton />
+              <GridExcelDownloadButton />
+              <Button
+                variant="text"
+                label={'추가'}
+                icon={<IcoPlus width={16} height={16} stroke={'#4C515E'} />}
+              />
+              <Button
+                variant="text"
+                label={t('LABEL.grid.header.copy', '복사')}
+                icon={<IcoCopy width={16} height={16} stroke="#4C515E" />}
+              />
+              <Button
+                variant="text"
+                label={'삭제'}
+                icon={<IcoMinus width={16} height={16} stroke={'#131C30'} />}
+              />
+            </>
+          }
         />
       </div>
     </div>

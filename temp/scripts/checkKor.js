@@ -26,13 +26,13 @@ translate.apiKey = 'AIzaSyCNcA8QFSQsnVNb_ZJdm6izBLQJi8BPKYM';
 
 const mutilingualToKor = false; // true 인 경우 무조건 다국어 원복 처리 함. <-- 가장 우선시 함.
 const appendJson = false; // true : jsonFileName 파일만 update, false: 한글을 multilinual key 로 변경
-const onlyJsonData = false; // true 인 경우 jsonFileName 에 필드 추가 하지 않고 등록된 한글만 다국어 key로 변경 appendJson 이 false 여야 함.
+const onlyJsonData = true; // true 인 경우 jsonFileName 에 필드 추가 하지 않고 등록된 한글만 다국어 key로 변경 appendJson 이 false 여야 함.
 const jsonFileName = '/Working/git/fe/apps/bo/src/entities/mock/i18n-resource-ko.json';
 /** 추가될 json path  */
 const jsonRoot = 'LABEL.tenant.page';
 
 const rootPath =
-  '/Working/git/fe/apps/bo/src/features/learning-resource/learning-resource-management/ui/learning-resource-table.tsx';
+  '/Working/git/fe/apps/bo/src/features/learning-resource/learning-resource-management/ui/learning-resource-question-bank-question.tsx';
 //  "/Working/git/fe/apps/bo/src/features/learning-resource/learning-resource-management/ui/learning-resource-table.tsx";
 
 /** 설정 종료 */
@@ -59,7 +59,7 @@ const valueMap = new Map(
 const traverse = tr.default;
 
 const fileexts = ['.tsx', '.js'];
-let firstworking = true;
+// let firstworking = true;
 
 await fileCheckAndCall(rootPath, labelCods);
 
@@ -102,11 +102,11 @@ async function replaceJavascript(filePath, changeList) {
         outData.push(data.substring(cuData.start, cuData.end));
       }
     } else {
+      const upvalue = checkMap.has(cuData.value) ? checkMap.get(cuData.value) : cuData.value;
       if (cuData.ptype == 'JSXElement' || cuData.ptype == 'JSXAttribute') {
-        let upvalue = checkMap.has(cuData.value) ? checkMap.get(cuData.value) : cuData.value;
         outData.push(`{t('${upvalue}')}`);
       } else {
-        outData.push(`t('${cuData.value}')`);
+        outData.push(`t('${upvalue}')`);
       }
     }
   }
@@ -169,8 +169,8 @@ async function processDataAndFileLang(filePath) {
 function getFileLangPosition(filePath) {
   // 파일 읽기
   const fileContent = fs.readFileSync(filePath, 'utf8');
-  const fileName = path.basename(filePath);
-  const targetFunctionName = 't';
+  // const fileName = path.basename(filePath);
+  // const targetFunctionName = "t";
   // 코드 파싱하여 AST 생성
   const ast = parser.parse(fileContent, {
     sourceType: 'module',
@@ -341,6 +341,7 @@ function jsonToPaths(obj, parentPath = '') {
   const result = [];
 
   for (const key in obj) {
+    // eslint-disable-next-line no-prototype-builtins
     if (obj.hasOwnProperty(key)) {
       const currentPath = parentPath ? `${parentPath}.${key}` : key;
 
