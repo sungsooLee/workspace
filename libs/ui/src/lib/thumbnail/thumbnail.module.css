@@ -1,7 +1,7 @@
 .start {
   @apply relative;
   &.thumbnail {
-    @apply max-w-[128px] overflow-hidden rounded-[4px];
+    @apply overflow-hidden rounded-[4px];
     /* &:nth-last-child(1) {
       img {
         @apply filter-none;
@@ -43,7 +43,7 @@
   }
 
   .thumbnail_image {
-    @apply h-[84px] w-[128px] brightness-[80%] filter;
+    @apply brightness-[80%] filter;
     &.default_image {
       @apply brightness-[100%];
     }
