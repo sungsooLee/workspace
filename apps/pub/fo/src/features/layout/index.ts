@@ -1,6 +1,7 @@
 export * from './ui/logo';
 export * from './ui/user-avatar';
 export * from './ui/notification';
+export * from './ui/history';
 export * from './ui/language';
 export * from './ui/user-name';
 export * from './ui/navigate';
@@ -56,3 +57,4 @@ export * from './ui/edu-licenses/licenses-history';
 export * from './popup/course-cancel-reason-popup';
 export * from './ui/package-card';
 export * from './ui/package-card-list';
+export * from './ui/history-contents';

@@ -91,7 +91,7 @@ function RouteComponent() {
     }
 
     currentGridStateRef.current = newState;
-    if (tableInstance) selectFirstRow(data, tableInstance);
+    if (tableInstance) selectFirstRow(data.content, tableInstance);
   };
 
   const selectFirstRow = useCallback((dataContent: any[], tableInstance: Table<any>) => {

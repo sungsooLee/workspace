@@ -19,6 +19,7 @@ import { CustomDatePickerHeader } from './custom-date-picker-header';
 import { ko, enUS } from 'date-fns/locale';
 import { useTranslation } from 'react-i18next';
 import { Locale } from 'react-datepicker/dist/date_utils';
+import ReactDOM from 'react-dom';
 
 export const convertDateFormatToFnsWithSlash = (format: string): string => {
   return format.replace(/-/g, '/');
@@ -333,6 +334,8 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
           locale={currentLocale}
           timeIntervals={minuteStep}
           timeCaption=""
+          popperPlacement="bottom-start"
+          popperContainer={(props) => ReactDOM.createPortal(props.children, document.body)}
         />
       </div>
     );
@@ -374,6 +377,8 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
           }}
           selected={selectedDate}
           placeholderText={getPlaceholderByType('year', currentLocale)}
+          popperPlacement="bottom-start"
+          popperContainer={(props) => ReactDOM.createPortal(props.children, document.body)}
         />
         {/* <CustomYearPicker selectedDate={selectedDate} onChange={handleChange} /> */}
       </div>
@@ -407,6 +412,8 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
           renderCustomHeader={(headerProps: any) => (
             <CustomDatePickerHeader {...headerProps} locale={currentLocale} type={'year'} />
           )}
+          popperPlacement="bottom-start"
+          popperContainer={(props) => ReactDOM.createPortal(props.children, document.body)}
         />
       </div>
     );
@@ -445,6 +452,8 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
               <CustomDatePickerHeader {...headerProps} locale={currentLocale} />
             )}
             locale={currentLocale}
+            popperPlacement="bottom-start"
+            popperContainer={(props) => ReactDOM.createPortal(props.children, document.body)}
           />
         </div>
 
@@ -493,6 +502,8 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
           <CustomDatePickerHeader {...headerProps} locale={currentLocale} />
         )}
         locale={currentLocale}
+        popperPlacement="bottom-start"
+        popperContainer={(props) => ReactDOM.createPortal(props.children, document.body)}
         // placeholderText={dynamicPlaceholder}
       />
     </div>

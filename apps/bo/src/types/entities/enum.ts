@@ -143,7 +143,7 @@ export enum ContentStatusCode {
  */
 export enum ContentCreateType {
   MANUAL = 'MANUAL',
-  TRASLATE = 'TRASLATE',
+  TRANSLATE = 'TRANSLATE',
   SHARED = 'SHARED',
 }
 
@@ -164,13 +164,16 @@ export enum ContentAddInfoType {
  */
 export enum ContentType {
   VIDEO = 'VIDEO',
-  EXAM = 'EXAM',
-  SURVEY = 'SURVEY',
-  ASSIGNMENT = 'ASSIGNMENT',
-  HTML5_VIDEO = 'HTML5_VIDEO',
-  YOUTUBE = 'YOUTUBE',
-  BLOG = 'BLOG',
+  EBOOK = 'EBOOK',
   SCORM = 'SCORM',
-  DEFAULT = 'DEFAULT',
+  HTML5_VIDEO = 'HTML5_VIDEO',
   IMAGE = 'IMAGE',
+  EXTERNAL_LINK = 'EXTERNAL_LINK',
+  EXTERNAL_AGENCY = 'EXTERNAL_AGENCY',
+  BLOG = 'BLOG',
+  EXAM = 'EXAM',
+  EXAM_POOL = 'EXAM_POOL',
+  ASSIGNMENT = 'ASSIGNMENT',
+  SURVEY = 'SURVEY',
+  ETC = 'ETC',
 }

@@ -429,6 +429,8 @@ const GridBoxComponent = <T extends object>(
     </div>
   );
 };
-export const GridBox = forwardRef(GridBoxComponent);
+export const GridBox = forwardRef(GridBoxComponent) as <T extends object>(
+  props: GridBoxProps<T> & { ref?: React.Ref<GridImperative> },
+) => React.ReactElement;
 
 export const DEFAULT_GRID_BOX_STATE: GridBoxState = { page: 0, size: 20, sort: [] };

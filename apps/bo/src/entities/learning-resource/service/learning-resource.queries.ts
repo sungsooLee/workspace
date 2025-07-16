@@ -3,10 +3,12 @@ import {
   BlogUpdateReq,
   ContentBaseInfo,
   ContentCourseMappingParams,
+  GetContentsParams,
   HtmlVideoFileChangeReq,
   HtmlVideoMetadataReq,
   PostDraftHtmlVideoParams,
   PostDraftVideosParams,
+  TestPaperBasicInfoSaveReq,
 } from '@types';
 import LearningResourceService from '../api/learning-resource';
 
@@ -46,7 +48,7 @@ export const learningResourceQueryOptions = {
     staleTime: 0,
     enabled: true,
   }),
-  getContents: (params: any) => ({
+  getContents: (params: GetContentsParams) => ({
     queryKey: queryKeys.contents,
     queryFn: () => LearningResourceService.fetchContents(params),
     cacheTime: 0,
@@ -152,6 +154,10 @@ export const mutateOptions = {
   }),
   deleteContent: () => ({
     mutationFn: (contentUuid: string) => LearningResourceService.deleteContent(contentUuid),
+  }),
+  createExamPaperContent: () => ({
+    mutationFn: (params: TestPaperBasicInfoSaveReq) =>
+      LearningResourceService.createExamPaperContent(params),
   }),
   createQuestionBankContent: () => ({
     mutationFn: (params: ContentBaseInfo) =>

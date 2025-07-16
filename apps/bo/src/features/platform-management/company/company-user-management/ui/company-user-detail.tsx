@@ -90,9 +90,13 @@ const CompanyUserDetailComponent = ({ formRef }: { formRef: any }) => {
             <tr>
               <th scope={'row'}>{t('회원가입일')}</th>
               <td>
-                {user?.joinDate
-                  ? getDateToString(new Date(user.joinDate), DATE_TIME_FORMAT.DATETIME_SEC)
-                  : '-'}
+                {user?.linkageSystem === null
+                  ? user?.createdDate
+                    ? getDateToString(new Date(user?.createdDate), DATE_TIME_FORMAT.DATETIME_SEC)
+                    : '-'
+                  : user?.joinDate
+                    ? getDateToString(new Date(user?.joinDate), DATE_TIME_FORMAT.DATETIME_SEC)
+                    : '-'}
               </td>
               <th scope={'row'}>{t('최근 접속일')}</th>
               <td>

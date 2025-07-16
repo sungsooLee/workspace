@@ -8,7 +8,7 @@ import {
   FileType,
   ProcessingStatus,
 } from './enum';
-import { PaginationResponse } from '@learnway/ui';
+import { PaginationRequest, PaginationResponse } from '@learnway/ui';
 
 export interface MediaContentSaveReq {
   contentName: string;
@@ -65,15 +65,6 @@ export interface BlogPostRes extends BlogCreateReq {
   aiSummary: string;
   aiKeyword: string;
 }
-
-export type BlogWatchLogReq = {
-  courseSequenceId: number;
-  curriculumId: number;
-  // 임시로 ? 추가 (화면 개발 중 제거 가능)
-  moduleId?: number;
-  lessonId?: number;
-  contentUuid: string;
-};
 
 export interface PostDraftVideosParams {
   languageCountryCode: string;
@@ -221,6 +212,46 @@ export type GetContentDetailRes = ContentInformation;
 
 export type PostContentCopyRes = ContentInformation;
 
+export interface GetContentsParams extends PaginationRequest {
+  tenantId: string;
+  channelUuid: string;
+  contentTypes?: string[];
+  contentName?: string;
+  isVendored?: boolean;
+  isContentEnabled?: boolean;
+  isCourseUsed?: boolean;
+  coordinatorName?: string;
+  langCountryCode?: string;
+  // isMockUp?:boolean;
+}
+
+export interface ContentInfo {
+  tenantId: string; // 테넌트 id
+  tenantName: string; //	테넌트 이름[...]
+  channelUuid: string; //	채널 UUID[...]
+  channelName: string; //	채널명[...]
+  contentUuid: string; //	콘텐츠 uuid[...]
+  contentName: string; //	학습자원명[...]
+  contentType: ContentType; //	콘텐츠 분류 코드 Enum(ContentType) - VIDEO|EXAM|SURVEY|ASSIGNMENT|HTML5|YOUTUBE|BLOG|SCORM|DEFAULT[...]
+  groupContentId: string; //	학습자원 그룹ID[...]
+  createType: ContentCreateType; //	콘텐츠 생성 유형, MANUAL|TRANSLATE|SHARED[...]
+  contentStatusCode: ContentStatusCode; //	콘텐츠 상태 코드 Enum(ContentStatusCode) - TEMPORARY_SAVE|SAVED|DELETED[...]
+  isContentEnabled: string; //	사용 가능 여부[...]
+  coordinatorUuid: string; //	담당자 ID[...]
+  coordinatorName: string; //	담당자명[...]
+  contentAddInfoType: ContentAddInfoType; //	콘텐츠 추가정보 코드 Enum(ContentAddInfoType) - VIDEO_ADD_INFO(초)|EXAM_ADD_INFO(건수)[...]
+  contentAddInfo: string; //	콘텐츠 추가 정보, 콘텐츠 추가정보 코드 별 초/건수 값[...]
+  langCountryCode: string; //	국가 언어 코드[...]
+  createdBy: string; //	최초등록자아이디[...]
+  createdDate: string; //	최초등록타임스탬프[...]
+  lastModifiedBy: string; //	최종수정자아이디[...]
+  modifiedDate: string; //	최종수정타임스탬프[...]
+  creatorName: string; //	최초등록자명[...]
+  modifyerName: string; //	최종수정자명[...]
+}
+
+export type GetContentsRes = PaginationResponse<ContentInfo>;
+
 export interface PostDraftVideosRes {
   fileUuids: string[];
   contents: {
@@ -284,12 +315,9 @@ export type CourseMappingStatusRes = {
   courses: MappedCourseItem[] | null;
 };
 
-export interface ContentCourseMappingParams {
+export interface ContentCourseMappingParams extends PaginationRequest {
   courseType?: CourseType;
   courseName?: string;
-  page?: number;
-  size?: number;
-  sort?: string;
 }
 
 export interface Content {
@@ -307,3 +335,79 @@ export interface Content {
 }
 
 export type ContentCourseMappingRes = PaginationResponse<Content>;
+
+export interface TestPaperBasicInfoSaveReq extends MediaContentSaveReq {
+  contentUuid?: string;
+  examTemplateType: ExamTemplateType;
+  questionCount: number;
+  questionCountPerPage: number;
+  examLimitTime: number;
+  maxAttemptCount: number;
+  isMoveQuestion: boolean;
+  isShowResult: boolean;
+  isShowTotalScore: boolean;
+  isShowQuestion: boolean;
+  isShowScore: boolean;
+  isShowCorrectAnswer: boolean;
+  isShowAnswerExplain: boolean;
+  resultVisibleTime: ExamResultVisibleMoment;
+  isDisableWrongRetry: boolean;
+  isAutoSubmit: boolean;
+  isExamEndNotice: boolean;
+  examEndNoticeOffsetMinutes: number;
+  examEndNoticeMessage: string;
+  examType: ExamType;
+  questionGenType?: ExamQuestionGenType;
+}
+
+export interface TestPaperBasicInfoSaveRes {
+  examUuid: string;
+  examPoolUuid: string;
+}
+
+export interface TestPaperBasicInfoDetail extends GetContentDetailRes {
+  examTemplateType: ExamTemplateType;
+  questionCount: number;
+  questionCountPerPage: number;
+  examLimitTime: number;
+  maxAttemptCount: number;
+  isMoveQuestion: boolean;
+  isShowResult: boolean;
+  isShowTotalScore: boolean;
+  isShowQuestion: boolean;
+  isShowScore: boolean;
+  isShowCorrectAnswer: boolean;
+  isShowAnswerExplain: boolean;
+  resultVisibleTime: ExamResultVisibleMoment;
+  isDisableWrongRetry: boolean;
+  isAutoSubmit: boolean;
+  isExamEndNotice: boolean;
+  examEndNoticeOffsetMinutes: number;
+  examEndNoticeMessage: string;
+  questionGenType?: ExamQuestionGenType;
+  examPoolUuid?: string;
+}
+
+export enum ExamTemplateType {
+  EXAM = 'EXAM',
+  OMR = 'OMR',
+  QUIZ = 'QUIZ',
+}
+
+export enum ExamResultVisibleMoment {
+  ON_EXAM_END = 'ON_EXAM_END',
+  ON_SUBMIT = 'ON_SUBMIT',
+}
+
+export enum ExamQuestionGenType {
+  FIXED = 'FIXED',
+  RANDOM = 'RANDOM',
+}
+
+export enum ExamType {
+  PRE_TEST = 'PRE_TEST',
+  PROGRESS_TEST = 'PROGRESS_TEST',
+  POST_TEST = 'POST_TEST',
+}
+
+export type TestPaperDetailRes = GetContentDetailRes;

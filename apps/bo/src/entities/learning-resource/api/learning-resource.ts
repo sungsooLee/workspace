@@ -8,6 +8,8 @@ import {
   ContentCourseMappingParams,
   ContentCourseMappingRes,
   GetContentDetailRes,
+  GetContentsParams,
+  GetContentsRes,
   HtmlVideoFileChangeReq,
   HtmlVideoMetadataReq,
   HtmlVideoStatus,
@@ -15,6 +17,7 @@ import {
   PostDraftHtmlVideoParams,
   PostDraftVideosParams,
   PostDraftVideosRes,
+  TestPaperBasicInfoSaveReq,
 } from '@types';
 
 export default class LearningResourceService {
@@ -30,7 +33,7 @@ export default class LearningResourceService {
     return httpService.get(`${PMSApiPrefix()}/users/` + uuid);
   }
 
-  static fetchContents(params: any): Promise<any> {
+  static fetchContents(params: GetContentsParams): Promise<GetContentsRes> {
     return httpService.get(`${CMSApiPrefix()}/contents`, params);
   }
 
@@ -173,6 +176,11 @@ export default class LearningResourceService {
   // 단건 블로그 컨텐츠 수정
   static updateBlogContent(body: BlogUpdateReq) {
     return httpService.put(`${CMSApiPrefix()}/blog/update`, body);
+  }
+
+  // 시험지 컨텐츠 단건 등록 (기본정보)
+  static createExamPaperContent(body: TestPaperBasicInfoSaveReq) {
+    return httpService.post(`${CMSApiPrefix()}/exam`, body);
   }
 
   // 문제은행 기본정보 저장
