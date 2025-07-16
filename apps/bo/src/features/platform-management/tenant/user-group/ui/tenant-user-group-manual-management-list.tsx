@@ -12,7 +12,7 @@ import { useFetchAuthUser } from '@learnway/auth/entities';
 import { SearchBox } from '@shared/ui/search-box';
 import { useCreation } from 'ahooks';
 import { queryOptions as userGroupManualOptions } from '@entities/user-group/service/user-group.queries';
-import { EnGlobalConst } from '@types';
+import { CombineUserGroup, EnGlobalConst, UserGroupType } from '@types';
 import { UserGroupChoiceModal, UserGroupOrganizationShuttleModal } from '@shared/ui';
 import { useFetchUserGroupDetail } from '@entities/user-group';
 
@@ -103,13 +103,25 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
         },
         {
           name: 'userGroupId', label: t('대상자 확인'), render: (info: any) => {
+            const data = info.row.original;
+            const combiners: CombineUserGroup[] = [{
+              // groupId: 0,
+              pathKey: '',
+              pathValue: '',
+              combiners: [{
+                combineType: 'USER_GROUP',
+                combineValue: data.userGroupId,
+                combineName: '',
+              }],
+            }];
+
             return <Button
               variant="gray2" size="xs"
               onClick={(e) => {
                 e.stopPropagation();
                 openModal({
                   width: 'xl',
-                  content: <UserGroupChoiceModal />,
+                  content: <UserGroupChoiceModal groups={combiners}/>,
                 });
               }}
             >
