@@ -320,7 +320,11 @@ const GridBoxComponent = <T extends object>(
           {titleCustomNode && <div className={styles.custom_node}>{titleCustomNode}</div>}
 
           {/* 가이드 텍스트 */}
-          {guideText && <p className={styles.guide_text}>{guideText}</p>}
+          {guideText && (
+            <p className={cn(styles.guide_text, showGuideTextNextLine && styles.next_line)}>
+              {guideText}
+            </p>
+          )}
         </div>
 
         <div className={styles.button_info}>
