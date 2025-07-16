@@ -76,12 +76,8 @@ export function initAxios(extendConfig?: axiosConfig) {
       },
       // response rejected 상태가 401인 경우 reissue
       onRejected: async (error: any) => {
-        console.log('- onRejected', error);
         const { config, response: errorResponse } = error;
-
-        console.log('|  config ', config);
-        console.log('|  config.url ', config.url);
-        console.log('|  check url ', config.url.includes('/token-reissue'));
+        console.log('- onRejected', { error, config });
 
         // 로그인/토큰갱신이 아닌 상황에서 401 오류시 토큰갱신 수행
         if (

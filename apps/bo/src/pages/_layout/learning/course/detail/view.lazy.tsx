@@ -8,6 +8,7 @@ import { Community } from './-tabs/community';
 import { Curriculum } from './-tabs/curriculum';
 import { CourseDetail } from './-tabs/course-detail';
 import { Sequence } from './-tabs/sequence';
+import { useCourseDetailForm } from '@pages/_layout/learning/course/-hooks/use-course-detail-form';
 
 export const Route = createLazyFileRoute('/_layout/learning/course/detail/view')({
   component: RouteComponent,
@@ -32,7 +33,7 @@ function RouteComponent() {
     loadMockData,
     getTabValues,
     deleteCourseData,
-  } = useCourseForm(courseType);
+  } = useCourseDetailForm(courseType);
 
   // 최초 데이터 로드
   useEffect(() => {
@@ -80,7 +81,7 @@ function RouteComponent() {
 
   const handleTabChange = (activeKey: string) => {
     console.log('activeKey', activeKey);
-    changeTab(activeKey as CourseTab);
+    changeTab(activeKey as CourseDetailTab);
   };
 
   // 기본정보 설정 컴포넌트에서 유형과 채널이 변경되었을 때 호출되는 함수
