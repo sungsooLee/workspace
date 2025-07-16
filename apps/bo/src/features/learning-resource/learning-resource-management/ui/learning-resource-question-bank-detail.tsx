@@ -5,7 +5,7 @@ import movieInfoStyles from '@learnway/styles/bo/assets/styles/modules/movie-inf
 import previewImg from '@assets/images/temp/img_exam_basic.jpg';
 
 import { FormSubTitle, SplitPanel } from '@learnway/ui';
-import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
+import { CODE_GROUP, DynamicFormConfig, useDynamicForm2 } from '@learnway/hooks';
 
 import { LearningResourceBaseForm } from './learning-resource-base-form';
 import { useLearningResourceQuestionDetailForm } from '../service/learning-resource-question-detail-from.hook';
@@ -14,22 +14,27 @@ const LearningResourceQuestionBankDetailComponent = (props: any, ref: any) => {
   const { baseInfo, formMode, setFuncInfo, createQuestionBank } =
     useLearningResourceQuestionDetailForm();
 
-  const { provider, getValues, onFormValid } = useDynamicForm2();
+  const { provider, getValues, onFormValid, onSubmit } = useDynamicForm2();
+  const formRef = useRef<HTMLFormElement>(null);
 
+  const handleOnSubmit = (data: any) => {
+    console.log('aaaaaaaaaaaaaa', data);
+    const payload = getValues();
+    console.log('formSave', payload);
+    createQuestionBank(
+      payload,
+      (data: any) => {
+        console.log('success data', data);
+      },
+      (error: any) => {
+        console.log('error data', error);
+      },
+    );
+  };
   const handleFormSave = async () => {
-    const valid = await onFormValid();
-    if (valid) {
-      const payload = getValues();
-      console.log('formSave', payload);
-      createQuestionBank(
-        payload,
-        (data: any) => {
-          console.log('success data', data);
-        },
-        (error: any) => {
-          console.log('error data', error);
-        },
-      );
+    const form = formRef.current;
+    if (form) {
+      form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
     }
   };
   useEffect(() => {
@@ -44,7 +49,9 @@ const LearningResourceQuestionBankDetailComponent = (props: any, ref: any) => {
   return (
     <SplitPanel size={['auto', 416]} divider>
       <div>
-        <LearningResourceBaseForm provider={provider} formMode={formMode} />
+        <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
+          <LearningResourceBaseForm provider={provider} formMode={formMode} />
+        </form>
       </div>
       <div>
         <FormSubTitle noLine label={'문제은행'} />
