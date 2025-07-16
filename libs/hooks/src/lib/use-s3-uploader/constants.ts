@@ -9,6 +9,7 @@ export const S3_PATH = {
   'public/image/logo': 'public/image/logo', // 로고 이미지
   'public/image/thumbnail': 'public/image/thumbnail', // 썸네일 이미지
   'public/i18n': 'public/i18n', // 다국어 JSON
+  'upload/course/thumbnail': 'upload/course/thumbnail', // 과정 썸네일
 };
 
 export type S3_PATH_TYPE = (typeof S3_PATH)[keyof typeof S3_PATH];
