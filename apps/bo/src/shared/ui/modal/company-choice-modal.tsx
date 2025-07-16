@@ -29,6 +29,81 @@ import { EnGlobalConst } from '@types';
  * 화면 번호: NLP_BO_TMS_1001_19 or 화면번호 NLP_BO_PMS_1107
  */
 const CompanyModalComponent = forwardRef((props, ref) => {
+  const searchConfig: SearchBoxConfig = {
+    builders: [
+      [
+        {
+          name: 'companyType',
+          type: 'dropdown',
+          label: t('그룹'),
+          value: '',
+          optionsConfig: {
+            options: [{ label: t('전체'), value: '' }],
+            codeGroup: CODE_GROUP['pms.company.CompanyType'],
+          },
+        },
+        {
+          name: 'companyCode',
+          type: 'dropdown',
+          label: t('회사'),
+          value: '',
+          format: 'object',
+          presetOptionLabel: t('LABEL.form.label.all'),
+          optionsConfig: {
+            codeGroup: CODE_GROUP['manual.company.companyCode'],
+          },
+          dropdownConfig: {
+            onchange: () => {
+              return '';
+            },
+            isSearchable: true,
+            placeholder: '입력 또는 선택',
+          },
+        },
+      ],
+    ],
+  };
+
+  const gridConfig: useGridBoxConfig = {
+    query: companyQueryOptions.listPopup,
+    columns: [],
+    data: [],
+  };
+
+  const columnHelper = createColumnHelper<any>();
+  const columns = [
+    columnHelper.accessor('companyType', {
+      cell: (info) =>
+        t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.company.CompanyType.${info.getValue()}`),
+      header: t('그룹'),
+      size: 210,
+    }),
+    columnHelper.accessor('name', {
+      cell: (info) => info.getValue(),
+      header: t('회사'),
+      size: 210,
+    }),
+    columnHelper.accessor('rpsntrName', {
+      cell: (info) => info.getValue(),
+      header: t('대표자'),
+      size: 210,
+    }),
+    columnHelper.accessor('brn', {
+      cell: (info) => info.getValue(),
+      header: t('사업자 등록번호'),
+      size: 220,
+    }),
+    columnHelper.accessor('managerPhone', {
+      cell: (info) => info.getValue(),
+      header: t('대표 전화'),
+      size: 210,
+    }),
+    columnHelper.accessor('managerEmail', {
+      cell: (info) => info.getValue(),
+      header: t('대표 이메일'),
+      size: 210,
+    }),
+  ] as ColumnDef<any, unknown>[];
   const { close: closeModal } = useModal();
   const { provider: sProvider, getValues } = useSearchBox(searchConfig);
   const { config, gridFetch } = useGridBox(gridConfig, getValues);
@@ -83,79 +158,3 @@ const CompanyModalComponent = forwardRef((props, ref) => {
 });
 
 export const CompanyChoiceModal = CompanyModalComponent;
-
-const searchConfig: SearchBoxConfig = {
-  builders: [
-    [
-      {
-        name: 'companyType',
-        type: 'dropdown',
-        label: t('그룹'),
-        value: '',
-        optionsConfig: {
-          options: [{ label: t('전체'), value: '' }],
-          codeGroup: CODE_GROUP['pms.company.CompanyType'],
-        },
-      },
-      {
-        name: 'companyCode',
-        type: 'dropdown',
-        label: t('회사'),
-        value: '',
-        format: 'object',
-        presetOptionLabel: t('LABEL.form.label.all'),
-        optionsConfig: {
-          codeGroup: CODE_GROUP['manual.company.companyCode'],
-        },
-        dropdownConfig: {
-          onchange: () => {
-            return '';
-          },
-          isSearchable: true,
-          placeholder: '입력 또는 선택',
-        },
-      },
-    ],
-  ],
-};
-
-const gridConfig: useGridBoxConfig = {
-  query: companyQueryOptions.listPopup,
-  columns: [],
-  data: [],
-};
-
-const columnHelper = createColumnHelper<any>();
-const columns = [
-  columnHelper.accessor('companyType', {
-    cell: (info) =>
-      t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.company.CompanyType.${info.getValue()}`),
-    header: t('그룹'),
-    size: 210,
-  }),
-  columnHelper.accessor('name', {
-    cell: (info) => info.getValue(),
-    header: t('회사'),
-    size: 210,
-  }),
-  columnHelper.accessor('rpsntrName', {
-    cell: (info) => info.getValue(),
-    header: t('대표자'),
-    size: 210,
-  }),
-  columnHelper.accessor('brn', {
-    cell: (info) => info.getValue(),
-    header: t('사업자 등록번호'),
-    size: 220,
-  }),
-  columnHelper.accessor('managerPhone', {
-    cell: (info) => info.getValue(),
-    header: t('대표 전화'),
-    size: 210,
-  }),
-  columnHelper.accessor('managerEmail', {
-    cell: (info) => info.getValue(),
-    header: t('대표 이메일'),
-    size: 210,
-  }),
-] as ColumnDef<any, unknown>[];
