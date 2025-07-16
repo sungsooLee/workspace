@@ -158,7 +158,7 @@ function RouteComponent() {
       case EnContentType.VIDEO:
         setVideoConfig({
           contentUuid: playInfo.contentUuid,
-          sequenceId: playInfo.sequenceId,
+          courseSequenceId: playInfo.sequenceId,
           courseId: playInfo.courseId,
           curriculumId: playInfo.curriculumId,
           moduleId: playInfo.moduleId,
