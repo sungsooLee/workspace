@@ -69,7 +69,7 @@ declare module '@tanstack/react-table' {
      * 컬럼에 커스텀 className 추가시 사용
      * cell class
      */
-    cellClass?: '';
+    cellClass?: string;
 
     /**
      * 컬럼 정렬 key 값 설정시 사용

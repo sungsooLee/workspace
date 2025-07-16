@@ -18,12 +18,18 @@
       }
     }
     .chip_list {
-      @apply pl-[12px];
+      @apply w-full pl-[12px];
       [class*='nlp--chips'] {
         @apply !h-[24px] !min-h-[24px];
       }
+      [class*='nlp--input'] input {
+        @apply !pl-[6px];
+      }
       &.disabled {
         @apply w-full;
+      }
+      &:has([class*='nlp--input']) {
+        @apply p-[8px];
       }
     }
     &:has(.btn_search) {

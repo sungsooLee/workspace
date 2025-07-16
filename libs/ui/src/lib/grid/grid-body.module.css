@@ -62,9 +62,6 @@
               @apply mr-[6px];
             }
           }
-          &[class*='title'] {
-            @apply body_bo_2_b bg-[var(--gray1)] text-[var(--gray9)];
-          }
           &.show_icon {
             @apply relative pl-[30px];
             .depth_icon {
@@ -139,6 +136,9 @@
     @apply !border-[var(--gray4)];
     & + td {
       @apply !border-[var(--gray4)];
+    }
+    &[class*='title'] {
+      @apply body_bo_2_b bg-[var(--gray1)] text-[var(--gray9)];
     }
   }
 }
