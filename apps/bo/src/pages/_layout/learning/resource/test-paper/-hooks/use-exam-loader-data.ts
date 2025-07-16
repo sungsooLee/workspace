@@ -1,9 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
+import { useFetchAuthUser } from '@learnway/auth/entities';
 import { useCurrentRoute } from '@learnway/hooks';
 import { learningResourceQueryOptions } from '@entities/learning-resource';
 import { PageMode } from '../-common/type';
 
 const useExamLoaderData = () => {
+  const { data: loginUser } = useFetchAuthUser();
+
+  const tenantId = loginUser?.activeTenant?.tenantId ?? -1;
+
   const {
     state: { mode = PageMode.CREATE, contentUuid = '' },
   } = useCurrentRoute();
@@ -15,7 +20,7 @@ const useExamLoaderData = () => {
     learningResourceQueryOptions.getCurriculumsMapping(contentUuid),
   );
 
-  return { contentUuid, data, hasMapping };
+  return { mode, tenantId, contentUuid, data, hasMapping };
 };
 
 export { useExamLoaderData };

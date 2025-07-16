@@ -63,11 +63,11 @@ function RouteComponent() {
     });
   }, [data]);
 
-  const handleClickSaveButton = async () => {
+  const handleClickSaveButton = useCallback(() => {
     if (formRef.current) {
       formRef.current?.requestSubmit();
     }
-  };
+  }, []);
 
   const handleClickGoListButton = useCallback(async () => {
     if (

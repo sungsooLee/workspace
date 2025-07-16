@@ -3,28 +3,25 @@ import { useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import dayjs from 'dayjs';
 import { cloneDeepWith } from 'lodash-es';
-import {
-  ChipListModalSelectorFormField,
-  ContentsRow,
-  EditorFormField,
-  InputModalSelectorFormField,
-  useModal,
-} from '@learnway/ui';
+import { ContentsRow, EditorFormField, InputModalSelectorFormField, useModal } from '@learnway/ui';
 import { Company, User } from '@learnway/types';
 import { cn, isEmptyData } from '@learnway/shared';
 import { DynamicFormConfig, DynamicFormValues, useDynamicForm } from '@learnway/hooks';
 import { useFetchAuthUser } from '@learnway/auth/entities';
-import type { BlogDetailRes, BlogPostRes, BlogUpdateReq, Tag } from '@types';
+import { BlogDetailRes, BlogPostRes, BlogUpdateReq, ChannelByRoleId, Tag } from '@types';
 import {
   ChannelChoiceModal,
   CompanyChoiceModal,
-  FormGroup,
   FormRow,
   FormRow2,
   UserChoiceModal,
 } from '@shared/ui';
 import { FormDisplay } from '@features/form';
-import { DateRangePickerFormField, DurationTimeFormField } from '@features/form/ui';
+import {
+  DateRangePickerFormField,
+  DurationTimeFormField,
+  MediaContentRequiredCheckFormField,
+} from '@features/form/ui';
 import { useCreateBlogContent, useUpdateBlogContent } from '@entities/learning-resource';
 import { getHourValueFromTime, useRoleInfo } from '../../-common/common';
 import { mediaContentFormConfig } from '../../-common/content-form-config';
@@ -134,8 +131,9 @@ const BlogDetailComponent = forwardRef<HTMLFormElement, BlogDetailProps>(
         updateFormData({
           ...getValues(),
           contentName: blogInfo.contentName,
-          langCountryCode: blogInfo.langCountryCode,
-          channelUuid: [{ channelUuid: blogInfo.channelUuid, channelName: blogInfo.channelName }],
+          languageCountryCode: blogInfo.langCountryCode,
+          channelUuid: blogInfo.channelUuid,
+          channelName: blogInfo.channelName,
           description: blogInfo.description,
           coordinatorUuid: blogInfo.coordinatorUuid,
           coordinatorName: (blogInfo.coordinatorName ?? '').split('/')[0],
@@ -173,16 +171,26 @@ const BlogDetailComponent = forwardRef<HTMLFormElement, BlogDetailProps>(
         <ContentsRow>
           <FormRow
             provider={provider}
-            name="channelUuid"
+            name="channelName"
             element={
-              <ChipListModalSelectorFormField
-                chipList={{
-                  labelField: 'channelName',
-                  valueField: 'channelUuid',
-                  hideBorder: true,
-                }}
+              <InputModalSelectorFormField
                 modalConfig={{
                   content: <ChannelChoiceModal />,
+                }}
+                transformModalData={(data: ChannelByRoleId) => ({
+                  channelUuid: data.channelUuid,
+                  channelName: data.channelName,
+                })}
+                onFormChange={(
+                  values: Record<
+                    string,
+                    {
+                      channelUuid: string;
+                      channelName: string;
+                    }
+                  >,
+                ) => {
+                  updateFormData({ ...getValues(), ...values });
                 }}
                 disabled={hasMapping}
               />
@@ -323,20 +331,7 @@ const BlogDetailComponent = forwardRef<HTMLFormElement, BlogDetailProps>(
         </ContentsRow>
 
         {/* 필수 확인 영역 */}
-        <FormGroup title="최종확인" required>
-          {/* 검수 확인 */}
-          <ContentsRow>
-            <FormRow provider={provider} name="isInspected" />
-          </ContentsRow>
-          {/* 저작권 확인 */}
-          <ContentsRow>
-            <FormRow provider={provider} name="isCopyrighted" />
-          </ContentsRow>
-          {/* 보안 확인 */}
-          <ContentsRow>
-            <FormRow provider={provider} name="isContentSecured" />
-          </ContentsRow>
-        </FormGroup>
+        <MediaContentRequiredCheckFormField provider={provider} />
 
         {/* 이력정보 */}
         {mode === 'update' && (
