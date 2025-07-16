@@ -92,7 +92,7 @@ const formConfig: DynamicFormConfig = {
       value: '',
       optionsConfig: {
         options: [{ value: '', label: '전체' }],
-        codeGroup: CODE_GROUP['vps.video.FfmpegTaskType'],
+        codeGroup: CODE_GROUP['manual.vps.video.FfmpegTaskType'],
       },
     },
     {
