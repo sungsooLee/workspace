@@ -7,10 +7,13 @@ import {
   IcoLearning02,
   IcoLearning03,
   IcoLearning04,
+  IcoLearning05,
+  IcoLearning06,
   IcoPrevPlay,
   IcoPrevNext,
   IcoXclose,
   IcoLinkblank,
+  IcoArrowUp,
 } from '@learnway/icons';
 import { CurriculumPopup } from './popup/curriculum-popup';
 import { NextLearningPopup } from './popup/next-learning-popup';
@@ -37,6 +40,7 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
   const [menuSelected, setMenuSelected] = useState(false); // content 영역 show/hide
   const [menuContents, setMenuContents] = useState([false, false, false, false]); // 각 메뉴 컨텐츠 영역 show/hide
   const [menuNumber, setMenuNumber] = useState<number>(-1); // -1 : 닫기, 1 ~ n : content 순서
+  const [panelState, setPanelState] = useState<boolean>(true); // 퍼블수정 20250716 panel open/close 기능
 
   const getProgressNumber = (moduleId: number, lessonId: number) => {
     if (progressInfo) {
@@ -76,11 +80,20 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
     setMenuContents(newContents);
   };
 
+  // 퍼블수정 20250716 panel open/close 기능 추가
+  const handlePanelOpenClose = (panelState: boolean) => {
+    setMenuSelected(false);
+    sendValueToParent(-1);
+    setPanelState(!panelState);
+  };
+
   const menu = [
     { tit: '커리큘럼', icon: IcoLearning01 },
-    { tit: '내노트', icon: IcoLearning02 },
-    { tit: '커뮤니티', icon: IcoLearning03 },
-    { tit: 'FAQ', icon: IcoLearning04 },
+    { tit: 'AI 요약', icon: IcoLearning02 },
+    { tit: '내노트', icon: IcoLearning03 },
+    { tit: '댓글', icon: IcoLearning04 },
+    { tit: '질문답변', icon: IcoLearning05 },
+    { tit: '후기', icon: IcoLearning06, New: true },
   ];
 
   return (
@@ -178,51 +191,64 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
       )}
 
       <div className={styles.panel}>
+        {/* 퍼블수정 20250716 전체 수정 */}
         <div className={styles.menu}>
-          {menu.map((item, index) => (
+          <Button
+            className={`${styles.btn_sh} ${panelState && styles.active}`}
+            onClick={() => handlePanelOpenClose(panelState)}
+          >
+            <IcoArrowUp width={20} height={20} stroke="#4d525c" />
+          </Button>
+          {panelState && (
+            <div>
+              {menu.map((item, index) => (
+                <Button
+                  key={index}
+                  onClick={() =>
+                    isMobile
+                      ? openModal({
+                          width: 'm_full',
+                          content: <CurriculumPopup />,
+                        })
+                      : sendValueToParent(index)
+                  }
+                  className={`${menuNumber === index ? styles.active : ''} ${item.New && styles.new}`}
+                >
+                  <item.icon width={isMobile ? 24 : 32} height={isMobile ? 24 : 32} />
+                  <span>{item.tit}</span>
+                </Button>
+              ))}
+            </div>
+          )}
+        </div>
+        {panelState && (
+          <div className={styles.control}>
             <Button
-              key={index}
+              disabled={!(playIndex !== 0 && playList && playIndex < playList.length)}
               onClick={() =>
-                isMobile
-                  ? openModal({
-                      width: 'm_full',
-                      content: <CurriculumPopup />,
-                    })
-                  : sendValueToParent(index)
+                openModal({
+                  width: 's',
+                  content: <NextLearningPopup />,
+                })
               }
-              className={menuNumber === index ? styles.active : ''}
             >
-              <item.icon width={isMobile ? 24 : 32} height={isMobile ? 24 : 32} />
-              <span>{item.tit}</span>
+              <IcoPrevPlay width={isMobile ? 20 : 32} height={isMobile ? 20 : 32} />
+              <span>이전</span>
             </Button>
-          ))}
-        </div>
-        <div className={styles.control}>
-          <Button
-            disabled={!(playIndex !== 0 && playList && playIndex < playList.length)}
-            onClick={() =>
-              openModal({
-                width: 's',
-                content: <NextLearningPopup />,
-              })
-            }
-          >
-            <IcoPrevPlay width={isMobile ? 20 : 32} height={isMobile ? 20 : 32} />
-            <span>이전</span>
-          </Button>
-          <Button
-            disabled={!(playList && playList.length > playIndex + 1)}
-            onClick={() =>
-              openModal({
-                width: 's',
-                content: <NextLearningPopup isNext={true} />,
-              })
-            }
-          >
-            <IcoPrevNext width={isMobile ? 20 : 32} height={isMobile ? 20 : 32} />
-            <span>다음</span>
-          </Button>
-        </div>
+            <Button
+              disabled={!(playList && playList.length > playIndex + 1)}
+              onClick={() =>
+                openModal({
+                  width: 's',
+                  content: <NextLearningPopup isNext={true} />,
+                })
+              }
+            >
+              <IcoPrevNext width={isMobile ? 20 : 32} height={isMobile ? 20 : 32} />
+              <span>다음</span>
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );
