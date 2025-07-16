@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Button, Popover } from '@learnway/ui';
 import styles from './language.module.css';
-import { IcoArrowDown } from '@learnway/icons';
+import { IcoArrowDown, IcoLang } from '@learnway/icons';
 
 const PopoverContent = () => {
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
@@ -36,7 +36,8 @@ const PopoverContent = () => {
               <Button
                 key={idx}
                 className={`${styles.btn} ${activeIdx === idx ? styles.active : ''}`}
-                onClick={() => handleClick(idx)}>
+                onClick={() => handleClick(idx)}
+              >
                 {langs}
               </Button>
             </li>
@@ -58,6 +59,7 @@ const LanguageComponent = ({ className }: LanguageComponentProp) => {
       {/* 퍼블수정 20250321 : 언어 분기처리 (pc,mobile) */}
       {isMobile ? (
         <Link to="/setting/setting-language_m" className={`${styles.btn_language} ${className}`}>
+          <IcoLang className={styles.ic_lang} />
           <span className={styles.select}>{'KR'}</span>
           <IcoArrowDown width={16} height={16} stroke="#131C30" />
         </Link>
@@ -67,7 +69,9 @@ const LanguageComponent = ({ className }: LanguageComponentProp) => {
           className={`${styles.btn_language} ${className}`}
           side="bottom"
           align="end"
-          sideOffset={5}>
+          sideOffset={5}
+        >
+          <IcoLang className={styles.ic_lang} />
           <span className={styles.select}>{'KR'}</span>
           <IcoArrowDown width={16} height={16} stroke="#131C30" />
         </Popover>

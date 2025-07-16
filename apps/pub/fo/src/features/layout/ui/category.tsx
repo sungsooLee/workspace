@@ -1,6 +1,6 @@
 import { memo, useState, useEffect } from 'react';
 import { Link, useRouter } from '@tanstack/react-router';
-import { IcoMenu01, IcoXclose, IcoArrowDown, IcoArrowForward } from '@learnway/icons';
+import { IcoMenu02, IcoXclose, IcoArrowDown, IcoArrowForward } from '@learnway/icons';
 import { Button, Popover } from '@learnway/ui';
 import styles from './category.module.css';
 import { RecentVisits } from './recent-visits';
@@ -152,7 +152,8 @@ const PopoverContent = () => {
               </h2>
               <Button
                 onClick={categoryAll}
-                className={`${styles.btn_cate} ${isAllOpen ? styles.active : ''}`}>
+                className={`${styles.btn_cate} ${isAllOpen ? styles.active : ''}`}
+              >
                 <IcoArrowDown width={16} height={16} stroke="#07287E" />
               </Button>
             </div>
@@ -167,7 +168,8 @@ const PopoverContent = () => {
                     </h3>
                     <Button
                       className={`${styles.btn_cate} ${openStates[index] ? styles.active : ''}`}
-                      onClick={() => categoryDepth(index)}>
+                      onClick={() => categoryDepth(index)}
+                    >
                       <IcoArrowDown width={16} height={16} stroke="#A9AFB8" />
                     </Button>
                   </div>
@@ -212,11 +214,12 @@ const CategoryCompoment = ({ onOpenChange, isOpen }: CategoryPopoverProps) => {
         className={`${styles.btn_category} ${isOpen ? styles.active : ''}`}
         side="bottom"
         align="start"
-        sideOffset={15}>
+        sideOffset={15}
+      >
         {isOpen ? (
-          <IcoXclose width={24} height={24} stroke="#ffffff" />
+          <IcoMenu02 width={32} height={32} fill="#131416" />
         ) : (
-          <IcoMenu01 width={24} height={24} stroke="#131C30" />
+          <IcoMenu02 width={32} height={32} fill="#131416" />
         )}
       </Popover>
     </div>

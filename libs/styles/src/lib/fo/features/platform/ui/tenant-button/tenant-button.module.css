@@ -72,7 +72,15 @@
     transition: all 0.1s linear;
   }
   .select {
-    @apply mr-[2px] inline-block;
+    @apply inline-block h-[40px] w-[80px] overflow-hidden text-ellipsis whitespace-nowrap align-middle leading-[40px];
+  }
+
+  .ico {
+    @apply ml-[20px] inline-flex h-[28px] w-[28px] items-center justify-center rounded-[6px] bg-[var(--gray98)];
+    svg {
+      @apply h-[16px] w-[16px];
+      stroke: var(--gray10);
+    }
   }
 }
 

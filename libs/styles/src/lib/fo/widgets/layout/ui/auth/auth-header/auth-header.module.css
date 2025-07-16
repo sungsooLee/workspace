@@ -1,19 +1,28 @@
-/* auth_header.module.css */
 .start {
   &.auth_header {
-    @apply w-full min-w-[600px] border-b border-solid border-[var(--gray4)] bg-[var(--white)];
+    @apply relative items-center;
 
     .header_area {
-      @apply flex h-[64px] items-center justify-between pl-[32px] pr-[8px];
+      @apply relative m-auto flex h-[80px] w-[1360px] items-center;
 
-      h1 {
-        img {
-          @apply h-[40px] w-auto;
+      .top_area {
+        @apply relative z-[1] flex w-full items-center justify-between;
+
+        .logo_inner {
+          @apply flex min-w-[278px] max-w-[278px] items-center;
+          h1 {
+            img {
+              @apply h-[40px] w-auto;
+            }
+          }
+          .util {
+            @apply ml-[20px] flex items-center gap-[12px];
+          }
         }
       }
     }
     .auth {
-      @apply !text-[var(--gray7)];
+      @apply !text-[var(--gray10)];
     }
   }
 }
