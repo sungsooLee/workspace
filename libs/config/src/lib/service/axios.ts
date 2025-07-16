@@ -1,4 +1,4 @@
-// import { useActiveMenuDepthState } from '../../../../auth/src/lib/entities/menu';
+import { useActiveMenuDepthState } from '../../../../auth/src/lib/entities/menu';
 import type { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import axios from 'axios';
 import { isFunction, last } from 'lodash';
@@ -57,21 +57,21 @@ export function initAxios(extendConfig?: axiosConfig) {
   const interceptors = {
     request: {
       // request 시 accessToken을 header로 전송
-      onFulfilled: function (config: InternalAxiosRequestConfig<any>) {
+      onFulfilled: (config: InternalAxiosRequestConfig<any>) => {
         const accessToken = tokenService.accessToken;
-        // const state = useActiveMenuDepthState.getState().activeMenuDepthMenu;
+        const state = useActiveMenuDepthState.getState().activeMenuDepthMenu;
         if (accessToken) {
           config.headers['Authorization'] = `Bearer ${accessToken}`;
         }
-        // if (state) {
-        //   config.headers['Menu-Id'] = last(state)?.menuId;
-        // }
+        if (state) {
+          config.headers['Menu-Id'] = last(state)?.menuId;
+        }
         return config;
       },
       onRejected: undefined,
     },
     response: {
-      onFulfilled: function (config: AxiosResponse<any, any>) {
+      onFulfilled: (config: AxiosResponse<any, any>) => {
         return config;
       },
       // response rejected 상태가 401인 경우 reissue
@@ -82,7 +82,8 @@ export function initAxios(extendConfig?: axiosConfig) {
         console.log('|  config ', config);
         console.log('|  config.url ', config.url);
         console.log('|  check url ', config.url.includes('/token-reissue'));
-        // error
+
+        // 로그인/토큰갱신이 아닌 상황에서 401 오류시 토큰갱신 수행
         if (
           errorResponse?.status === 401 &&
           !config.url.includes('/token-reissue') &&
@@ -91,7 +92,11 @@ export function initAxios(extendConfig?: axiosConfig) {
           return await reissueProccess(error);
         }
 
-        if (errorResponse?.status === 412 && config.url.includes('/token-reissue')) {
+        // 토큰 갱신 실패시 로직 수행
+        if (
+          (errorResponse?.status === 412 || errorResponse?.status === 401) &&
+          config.url.includes('/token-reissue')
+        ) {
           tokenService.clear();
 
           if (typeof window !== 'undefined') {

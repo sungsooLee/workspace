@@ -25,7 +25,6 @@ export type com_ever_edu_cms_content_dto_res_FindContentResDto = {
     modifiedDate?: string;
     creatorName?: string;
     modifyerName?: string;
-    children?: Array<com_ever_edu_cms_content_dto_res_FindContentResDto>;
 };
 export namespace com_ever_edu_cms_content_dto_res_FindContentResDto {
     export enum contentType {
@@ -56,7 +55,6 @@ export namespace com_ever_edu_cms_content_dto_res_FindContentResDto {
     export enum contentAddInfoType {
         VIDEO_ADD_INFO = 'VIDEO_ADD_INFO',
         EXAM_ADD_INFO = 'EXAM_ADD_INFO',
-        EXAM_POOL_ADD_INFO = 'EXAM_POOL_ADD_INFO',
     }
     export enum langCountryCode {
         KO = 'KO',

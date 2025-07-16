@@ -1,8 +1,8 @@
-import { cn, getDateToString, DATE_TIME_FORMAT } from '@learnway/shared';
+import { forwardRef, useRef, useEffect, useState, useImperativeHandle } from 'react';
+import { getDateToString, DATE_TIME_FORMAT } from '@learnway/shared';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import { ColumnDef, createColumnHelper, CellContext } from '@tanstack/react-table';
 import { t } from 'i18next';
-import { FC, useEffect, useState } from 'react';
 import { useWatch } from 'react-hook-form';
 import { EnGlobalConst } from '@types';
 import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
@@ -17,17 +17,23 @@ import {
   GridFormField,
   EditDropdownCell,
   EditSwitchCell,
+  DatePicker,
 } from '@learnway/ui';
 import { ContentsHistoryInfoFormField, FormItem, FormRow } from '@shared/ui';
-import { FormDisplay } from '@features/form';
-
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
+import { DuplicateCheckInputFormField, DuplicateState, FormDisplay } from '@features/form';
 import { getUserStatus } from '../service/company-user.service';
+import UsersService from '@entities/users/api/users';
 
-const CompanyUserDetailBaseComponent: FC<any> = ({ userInfo }) => {
-  const { provider, control, updateFormData, onSubmit, setFormError, clearFormError, getValues } =
+interface CompanyUserDetailBaseProps {
+  userInfo: any;
+}
+
+const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: any) => {
+  const { provider, control, updateFormData, onSubmit, onFormChange, clearFormError, getValues } =
     useDynamicForm(formConfig());
   const [roleData, setRoleData] = useState<any[]>([]);
+
+  const formRef = useRef<HTMLFormElement>(null);
 
   const watchedValues = useWatch({
     control,
@@ -35,33 +41,38 @@ const CompanyUserDetailBaseComponent: FC<any> = ({ userInfo }) => {
   });
 
   useEffect(() => {
-    if (userInfo) {
+    if (props.userInfo) {
       const initialData = {
-        ...userInfo,
-        companyName: userInfo.company.name,
-        deptName: userInfo.dept?.deptName,
+        ...props.userInfo,
+        companyName: props.userInfo.company.name,
+        deptName: props.userInfo.dept?.deptName,
+        email: {
+          fieldValue: props.userInfo.email,
+          checkState: DuplicateState.okStart,
+        },
         gender:
-          userInfo.gender &&
-          t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.user.Gender.${userInfo.gender}`),
-        area: userInfo.nationCd?.displayName,
-        joinDate: userInfo.joinDate
-          ? getDateToString(new Date(userInfo.joinDate), DATE_TIME_FORMAT.DATETIME_SEC)
+          props.userInfo.gender &&
+          t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.user.Gender.${props.userInfo.gender}`),
+        area: props.userInfo.locale?.displayCountry,
+        birthday: props.userInfo.birthday ? new Date(props.userInfo.birthday) : '',
+        joinDate: props.userInfo.joinDate
+          ? getDateToString(new Date(props.userInfo.joinDate), DATE_TIME_FORMAT.DATETIME_SEC)
           : '-',
-        retireDate: userInfo.retireDate
-          ? getDateToString(new Date(userInfo.retireDate), DATE_TIME_FORMAT.DATETIME_SEC)
+        retireDate: props.userInfo.retireDate
+          ? getDateToString(new Date(props.userInfo.retireDate), DATE_TIME_FORMAT.DATETIME_SEC)
           : '-',
-        userStatus: getUserStatus(userInfo),
-        promotionDate: userInfo.promotionDate
-          ? getDateToString(new Date(userInfo.promotionDate), DATE_TIME_FORMAT.DATETIME_SEC)
+        userStatus: getUserStatus(props.userInfo),
+        promotionDate: props.userInfo.promotionDate
+          ? getDateToString(new Date(props.userInfo.promotionDate), DATE_TIME_FORMAT.DATETIME_SEC)
           : '-',
-        dormantDate: userInfo.dormantDate
-          ? getDateToString(new Date(userInfo.dormantDate), DATE_TIME_FORMAT.DATETIME_SEC)
+        dormantDate: props.userInfo.dormantDate
+          ? getDateToString(new Date(props.userInfo.dormantDate), DATE_TIME_FORMAT.DATETIME_SEC)
           : '-',
-        tenantList: userInfo.tenants,
+        tenantList: props.userInfo.tenants,
       };
       updateFormData(initialData);
     }
-  }, [userInfo]);
+  }, [props.userInfo]);
 
   const jobGroupColumns = [
     {
@@ -108,18 +119,46 @@ const CompanyUserDetailBaseComponent: FC<any> = ({ userInfo }) => {
     },
   ];
 
+  useImperativeHandle(ref, () => ({
+    saveData() {
+      const form = formRef.current;
+      if (form) {
+        form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+      }
+    },
+    clearForm() {
+      onFormChange();
+    },
+  }));
+
+  const duplicateEmailCheck = async (email: string) => {
+    const payload = { email };
+    const result = await UsersService.existsEmail(payload);
+    console.log('### duplicateEmailCheck', result);
+    if (result.isEmailExists === true) return DuplicateState.duplicated;
+    else return DuplicateState.ok;
+  };
+
+  const handleOnSubmit = async (data: any) => {
+    console.log('#### handleOnSubmit', data);
+  };
+
   return (
-    <>
+    <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
       <FormSubTitle label={t('개인 정보')} lineType={'dark'} />
       <ContentsRow>
-        <FormRow provider={provider} name={'name'} element={<Input readOnly={true} />} />
-        <FormRow provider={provider} name={'engName'} element={<Input readOnly={true} />} />
-        <FormRow provider={provider} name={'employeeNumber'} element={<Input readOnly={true} />} />
+        <FormRow provider={provider} name={'name'} />
+        <FormRow provider={provider} name={'engName'} />
+        <FormRow provider={provider} name={'employeeNumber'} />
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider} name={'email'} element={<Input readOnly={true} />} />
-        <FormRow provider={provider} name={'birthday'} element={<Input readOnly={true} />} />
-        <FormRow provider={provider} name={'gender'} element={<Input readOnly={true} />} />
+        <FormRow
+          provider={provider}
+          name={'email'}
+          element={<DuplicateCheckInputFormField onDuplicationCheck={duplicateEmailCheck} />}
+        />
+        <FormRow provider={provider} name={'birthday'} element={<DatePicker displayType="day" />} />
+        <FormRow provider={provider} name={'gender'} />
       </ContentsRow>
       <ContentsRow>
         <FormRow provider={provider} name={'area'} element={<Input readOnly={true} />} />
@@ -265,11 +304,11 @@ const CompanyUserDetailBaseComponent: FC<any> = ({ userInfo }) => {
         />
       </ContentsRow>
       <ContentsHistoryInfoFormField />
-    </>
+    </form>
   );
 };
 
-export const CompanyUserDetailBase = CompanyUserDetailBaseComponent;
+export const CompanyUserDetailBase = forwardRef(CompanyUserDetailBaseComponent);
 
 const formConfig = (): DynamicFormConfig => ({
   builders: [
@@ -296,24 +335,27 @@ const formConfig = (): DynamicFormConfig => ({
     },
     {
       name: 'email',
-      type: 'text',
+      type: 'custom',
       label: t('아이디 (이메일)'),
-      value: '',
+      value: { fieldValue: '', checkState: DuplicateState.needInput },
+      format: 'object',
       placeholder: ' ',
     },
     {
       name: 'birthday',
       type: 'text',
       label: t('생년월일'),
-      value: '',
-      placeholder: ' ',
+      format: 'object',
+      value: undefined,
     },
     {
       name: 'gender',
-      type: 'text',
+      type: 'dropdown',
       label: t('성별'),
       value: '',
-      placeholder: ' ',
+      optionsConfig: {
+        codeGroup: CODE_GROUP['pms.user.Gender'],
+      },
     },
     {
       name: 'area',
@@ -576,6 +618,34 @@ const formConfig = (): DynamicFormConfig => ({
       value: [],
     },
   ],
+  validator: {
+    name: true,
+    email: {
+      format: 'object',
+      required: true,
+      conditions: [
+        {
+          fn: (values) => {
+            const fieldValue = values.email.fieldValue;
+            if (fieldValue === '') return true;
+            return false;
+          },
+          message: t('LABEL.form.validation.needInput', { code: t('이메일') }),
+        },
+        {
+          fn: (values: Record<string, any>) =>
+            values.email.checkState === DuplicateState.check ||
+            values.email.checkState === DuplicateState.needInput,
+          message: t('LABEL.form.validation.check', { code: t('이메일') }),
+        },
+        {
+          fn: (values: Record<string, any>) =>
+            values.email.checkState === DuplicateState.duplicated,
+          message: t('LABEL.form.validation.duplicated', { code: t('이메일') }),
+        },
+      ],
+    },
+  },
 });
 
 const textBookData: any[] = [

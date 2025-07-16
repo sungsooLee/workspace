@@ -568,7 +568,6 @@ export namespace com_ever_edu_cms_video_dto_req_VideoUpdateReqDto {
     export enum contentAddInfoType {
         VIDEO_ADD_INFO = 'VIDEO_ADD_INFO',
         EXAM_ADD_INFO = 'EXAM_ADD_INFO',
-        EXAM_POOL_ADD_INFO = 'EXAM_POOL_ADD_INFO',
     }
 }
 

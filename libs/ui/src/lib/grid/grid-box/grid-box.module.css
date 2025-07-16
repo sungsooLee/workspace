@@ -5,9 +5,12 @@
   .table_info {
     @apply flex w-full items-center justify-between;
     .title_info {
-      @apply mb-[8px] flex min-h-[32px] items-center;
+      @apply mb-[8px] flex min-h-[32px] flex-wrap items-center;
       .guide_text {
         @apply ml-[16px] text-[1.4rem] font-normal leading-[1.4rem] text-[var(--gray7)];
+        &.next_line {
+          @apply ml-0 mt-[4px] w-full flex-none text-[1.2rem] leading-[1.6rem] text-[var(--gray6)];
+        }
       }
       .custom_node {
         @apply text-[1.4rem] font-normal leading-[1.4rem] text-[var(--gray7)];

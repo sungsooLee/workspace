@@ -34,7 +34,7 @@ const ThumbnailPublicUploadComponent = forwardRef<HTMLDivElement, ThumbnailImage
     {
       className,
       description,
-      max = 0,
+      max = 1,
       s3Path = S3_PATH['public/image/thumbnail'],
       value,
       onChange,
@@ -85,7 +85,11 @@ const ThumbnailPublicUploadComponent = forwardRef<HTMLDivElement, ThumbnailImage
 
     const { uploadImageFile, deleteImageFile } = useFileManager();
 
-    const disabled = useMemo(() => max <= files.length, [files, max]);
+    const disabled = useMemo(() => {
+      console.log('🚀 ~ files:', files, max, files.length, max <= files.length);
+      return max <= files.length;
+    }, [files, max]);
+    console.log('🚀 ~ disabled:', disabled, files);
 
     const multiple = useMemo(() => max > 1, [max]);
 

@@ -1,7 +1,7 @@
 .start {
   @apply relative;
   &.thumbnail {
-    @apply max-w-[128px] overflow-hidden rounded-[4px];
+    @apply rounded-[4px];
     /* &:nth-last-child(1) {
       img {
         @apply filter-none;
@@ -25,6 +25,10 @@
     &.default_thumbnail {
       @apply h-[84px] min-w-[128px] bg-[url(../../assets/images/thumb/img_thumb_default.jpg)] bg-cover bg-center bg-no-repeat;
     }
+    &.lg {
+    }
+    &.md {
+    }
   }
 
   .checkbox {
@@ -43,13 +47,23 @@
   }
 
   .thumbnail_image {
-    @apply h-[84px] w-[128px] brightness-[80%] filter;
+    @apply brightness-[80%] filter;
     &.default_image {
       @apply brightness-[100%];
     }
   }
+  .not_found_image {
+    @apply flex h-[84px] w-[128px] items-center justify-center bg-[#eaf1fa] text-[12px] font-normal leading-[1rem] text-[var(--gray7)];
+  }
 
   .btn_delete {
     @apply cursor-pointer bg-transparent;
+  }
+
+  .image_wrap {
+    @apply relative;
+    & > span {
+      @apply flex overflow-hidden;
+    }
   }
 }

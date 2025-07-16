@@ -638,7 +638,6 @@ export namespace com_ever_edu_cms_exam_dto_req_ExamSaveReqDto {
     export enum contentAddInfoType {
         VIDEO_ADD_INFO = 'VIDEO_ADD_INFO',
         EXAM_ADD_INFO = 'EXAM_ADD_INFO',
-        EXAM_POOL_ADD_INFO = 'EXAM_POOL_ADD_INFO',
     }
     /**
      * 시험지 유형

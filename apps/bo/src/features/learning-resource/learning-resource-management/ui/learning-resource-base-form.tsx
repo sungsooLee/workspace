@@ -244,6 +244,7 @@ const LearningResourceBaseFormComponent = ({
       <ContentsRow type="horizontal" className="inactive">
         <FormRow2
           provider={provider}
+          label="교육지원활용"
           name="isCourseUsed"
           format="boolean"
           element={<SwitchFormField />}

@@ -33,4 +33,5 @@ export const usersQueryOptions = {
 
 export const mutateOptions = {
   create: () => ({ mutationFn: (payload: any) => UsersService.createUser(payload) }),
+  unlock: () => ({ mutationFn: (uuid: string) => UsersService.unlockUser(uuid) }),
 };

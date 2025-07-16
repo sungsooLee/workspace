@@ -6,8 +6,8 @@ import type { com_ever_edu_cms_asgmt_dto_res_AsgmtGroupResDto$DetailOnAdmin } fr
 import type { org_springdoc_core_converters_models_SortObject } from './org_springdoc_core_converters_models_SortObject';
 import type { PageableObject } from './PageableObject';
 export type org_springframework_data_domain_PageCom_ever_edu_cms_asgmt_dto_res_AsgmtGroupResDto$DetailOnAdmin = {
-    totalPages?: number;
     totalElements?: number;
+    totalPages?: number;
     size?: number;
     content?: Array<com_ever_edu_cms_asgmt_dto_res_AsgmtGroupResDto$DetailOnAdmin>;
     number?: number;

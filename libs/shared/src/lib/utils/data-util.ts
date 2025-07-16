@@ -286,3 +286,10 @@ export function isEmptyData(value: unknown): boolean {
 //
 //   return convert(dataArray);
 // };
+
+export const getFullImagePath = (imagePath: string | null | undefined) => {
+  if (imagePath === null || imagePath === undefined) return '';
+  const host = import.meta.env.VITE_AXIOS_S3_URL + '/';
+  const cleanedImagePath = imagePath.startsWith('/') ? imagePath.substring(1) : imagePath;
+  return `${host}${cleanedImagePath}`;
+};

@@ -17,3 +17,4 @@ export * from './company-organization-management/ui/company-organization';
 export * from './company-user-management/ui/company-user-detail-base';
 export * from './company-user-management/ui/company-user-detail-learning-history';
 export * from './company-user-management/ui/company-user-detail';
+export * from './company-user-management/ui/company-user-list';

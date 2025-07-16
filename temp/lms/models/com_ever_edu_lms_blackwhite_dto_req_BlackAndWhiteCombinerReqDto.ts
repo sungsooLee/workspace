@@ -2,6 +2,9 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+/**
+ * 유저 그룹 조합
+ */
 export type com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto = {
     combineType: com_ever_edu_lms_blackwhite_dto_req_BlackAndWhiteCombinerReqDto.combineType;
     combineValue?: number;

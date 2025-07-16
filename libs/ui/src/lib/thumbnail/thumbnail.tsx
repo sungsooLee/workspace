@@ -10,12 +10,13 @@ import { IcoDownload, IcoEye, IcoTrash03 } from '@learnway/icons';
 import styles from './thumbnail.module.css';
 import { useModal } from '../modal/modal.hook';
 import { PreviewImage } from '../preview-image/preview-image';
+import { ImageFallBack } from '../image-fallback/image-fallback';
 
 export interface ThumbnailProps {
   /** variant */
   variant?: 'primary' | 'secondary';
   /** size */
-  size?: 'xs' | 'sm' | 'md' | 'lg'; // xs(28) , sm(32) , md(36), lg(40)
+  size?: 'xs' | 'sm' | 'md' | 'lg'; // lg(660), md:basic(325)
   /** className */
   className?: string;
   /** 가로 사이즈 */
@@ -40,6 +41,8 @@ export interface ThumbnailProps {
   selected?: boolean;
   /** 카운트 체크 여부 */
   count?: boolean;
+  /** 썸네일 겹침 여부 */
+  stacked?: boolean;
   /** 삭제 클릭 이벤트 */
   onRemoveClick?: () => void;
   /** 체크 변경 이벤트 */
@@ -68,6 +71,7 @@ const ThumbnailComponent = forwardRef<HTMLDivElement, ThumbnailProps>(
       showDeleteBtn,
       showPreviewBtn,
       selected,
+      stacked,
       onRemoveClick,
       onCheckedChange,
       ...props
@@ -112,9 +116,10 @@ const ThumbnailComponent = forwardRef<HTMLDivElement, ThumbnailProps>(
         {...props}
         ref={ref}
         style={{ width: width ? `${width}px` : '', height: height ? `${height}px` : '' }}
-        className={cn(styles.start, styles.thumbnail, 'nlp--thumbnail', {
+        className={cn(styles.start, styles.thumbnail, size && styles[size], 'nlp--thumbnail', {
           [styles.active]: isHovered,
           [styles.selected]: selected,
+          [styles.stacked]: stacked,
         })}
         onMouseEnter={() => handleHover(true)} // 마우스 오버 시
         onMouseLeave={() => handleHover(false)}
@@ -125,8 +130,8 @@ const ThumbnailComponent = forwardRef<HTMLDivElement, ThumbnailProps>(
         {sizeText && <span className={styles.sizeText}>{sizeText}</span>}
         {/* 마우스 호버시 노출 */}
         <div
-          style={{ width }}
-          className="absolute z-10 flex h-full w-full items-center justify-center gap-3"
+        // style={{ width }}
+        // className="absolute z-[2] flex h-full w-full items-center justify-center gap-3"
         >
           {/* 체크박스 */}
           {showCheckbox && (
@@ -173,7 +178,15 @@ const ThumbnailComponent = forwardRef<HTMLDivElement, ThumbnailProps>(
             </>
           )}
         </div>
-        <img src={path} className={styles.thumbnail_image} alt="Thumbnail" />
+        <div className={styles.image_wrap}>
+          <ImageFallBack
+            imageUrl={path}
+            imageClassName={styles.thumbnail_image}
+            fallbackClassName={styles.not_found_image}
+          />
+        </div>
+
+        {/* <img src={path} className={styles.thumbnail_image} alt="Thumbnail" /> */}
         {/* 시스템에서 제공하는 기본이미지인 경우 styles.default_image 클래스 추가 필요 */}
       </div>
     );

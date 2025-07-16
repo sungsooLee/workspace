@@ -26,6 +26,74 @@ const UserShuttleComponent = () => {
   const [gridData, setGrideData] = useState<any[]>([]);
 
   const { close } = useModal();
+  const searchConfig: SearchBoxConfig = {
+    builders: [
+      [
+        {
+          required: true,
+          name: 'companyId',
+          type: 'dropdown',
+          label: t('회사'),
+          value: undefined,
+          optionsConfig: {
+            codeGroup: CODE_GROUP['manual.company.companyId'],
+          },
+          format: 'number',
+          isSearchable: true,
+          isClearable: true,
+          placeholder: '입력 선택',
+        },
+        {
+          name: 'deptId',
+          type: 'dropdown',
+          label: t('소속'),
+          value: '',
+          presetOptionLabel: t('LABEL.form.label.select', '선택'),
+          options: [],
+          format: 'object',
+          isSearchable: true,
+          isClearable: true,
+        },
+        {
+          name: 'userNo',
+          type: 'text',
+          label: t('사번'),
+          value: '',
+        },
+        {
+          name: 'userName',
+          type: 'text',
+          label: t('이름'),
+          value: '',
+        },
+      ],
+    ],
+    validator: { companyId: { required: true } },
+  };
+
+  const columnHelper = createColumnHelper<any>();
+  const columns = [
+    columnHelper.accessor('company', {
+      header: t('회사'),
+      size: 132,
+      cell: (info) => info.row.original.company.name,
+    }),
+    columnHelper.accessor('dept', {
+      header: t('소속'),
+      size: 132,
+      cell: (info) => info.row.original.dept.deptName,
+    }),
+    columnHelper.accessor('employeeNumber', {
+      header: t('사번'),
+      size: 132,
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor('name', {
+      header: t('이름'),
+      size: 132,
+      cell: (info) => info.getValue(),
+    }),
+  ] as ColumnDef<any, unknown>[];
 
   const queryClient = useQueryClient();
   const { provider: sProvider, setValue, setOptions } = useSearchBox(searchConfig);
@@ -100,72 +168,3 @@ const UserShuttleComponent = () => {
 };
 
 export const UserShuttleModal = UserShuttleComponent;
-
-const searchConfig: SearchBoxConfig = {
-  builders: [
-    [
-      {
-        required: true,
-        name: 'companyId',
-        type: 'dropdown',
-        label: t('회사'),
-        value: undefined,
-        optionsConfig: {
-          codeGroup: CODE_GROUP['manual.company.companyId'],
-        },
-        format: 'number',
-        isSearchable: true,
-        isClearable: true,
-        placeholder: '입력 선택',
-      },
-      {
-        name: 'deptId',
-        type: 'dropdown',
-        label: t('소속'),
-        value: '',
-        presetOptionLabel: t('LABEL.form.label.select', '선택'),
-        options: [],
-        format: 'object',
-        isSearchable: true,
-        isClearable: true,
-      },
-      {
-        name: 'userNo',
-        type: 'text',
-        label: t('사번'),
-        value: '',
-      },
-      {
-        name: 'userName',
-        type: 'text',
-        label: t('이름'),
-        value: '',
-      },
-    ],
-  ],
-  validator: { companyId: { required: true } },
-};
-
-const columnHelper = createColumnHelper<any>();
-const columns = [
-  columnHelper.accessor('company', {
-    header: t('회사'),
-    size: 132,
-    cell: (info) => info.row.original.company.name,
-  }),
-  columnHelper.accessor('dept', {
-    header: t('소속'),
-    size: 132,
-    cell: (info) => info.row.original.dept.deptName,
-  }),
-  columnHelper.accessor('employeeNumber', {
-    header: t('사번'),
-    size: 132,
-    cell: (info) => info.getValue(),
-  }),
-  columnHelper.accessor('name', {
-    header: t('이름'),
-    size: 132,
-    cell: (info) => info.getValue(),
-  }),
-] as ColumnDef<any, unknown>[];

@@ -2,6 +2,7 @@ import { PageContainer } from '@shared/ui';
 // IA105 / NLP_BO_CMS_1058 // IA105 / NLP_BO_CMS_1017 // IA106 / NLP_BO_CMS_1060
 import { usePostDraftHTMLVideo, usePostDraftVideos } from '@entities/learning-resource';
 import {
+  getDetailPathByContentType,
   LearningResourceFileUploadModal,
   LearningTypeChoiceModal,
 } from '@features/learning-resource';
@@ -32,7 +33,7 @@ function RouteComponent() {
     onSuccess: (result: PostDraftVideosRes) => {
       if (result.contents.length === 1) {
         return router.navigate({
-          to: '/learning/learning-resource/video/view',
+          to: getDetailPathByContentType(LEARNING_TYPE.VIDEO),
           state: {
             contentUuid: result.contents[0].contentUuid,
           },
@@ -57,7 +58,7 @@ function RouteComponent() {
     onSuccess: (result: PostDraftHtmlVideoRes) => {
       if (result.contentUuid) {
         return router.navigate({
-          to: '/learning/resource/html-video/view',
+          to: getDetailPathByContentType(LEARNING_TYPE.HTML5_VIDEO),
           state: {
             contentUuid: result.contentUuid,
           },

@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { PageContainer, MainContents, LinkBox, ContentsButtons } from '@shared/ui';
@@ -11,6 +12,15 @@ export const Route = createLazyFileRoute('/_layout/platform/company/user/detail'
 function RouteComponent() {
   const router = useRouter();
 
+  const formRef = useRef<HTMLFormElement>(null);
+  const handleOnSave = () => {
+    if (formRef.current?.saveData) formRef.current.saveData();
+  };
+
+  const handleOnReset = () => {
+    if (formRef.current?.clearForm) formRef.current.clearForm();
+  };
+
   return (
     <PageContainer>
       <ContentsButtons>
@@ -23,15 +33,15 @@ function RouteComponent() {
             {t('LABEL.button.list')}
           </Button>
         </LinkBox>
-        <Button variant="point" size="sm">
+        <Button variant="point" size="sm" onClick={handleOnReset}>
           {t('LABEL.button.reset')}
         </Button>
-        <Button type="submit" variant="primary" size="sm">
+        <Button variant="primary" size="sm" onClick={handleOnSave}>
           {t('LABEL.button.save')}
         </Button>
       </ContentsButtons>
       <MainContents>
-        <CompanyUserDetail />
+        <CompanyUserDetail formRef={formRef} />
       </MainContents>
     </PageContainer>
   );

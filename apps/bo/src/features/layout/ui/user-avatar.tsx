@@ -7,7 +7,7 @@ import { useCreation } from 'ahooks';
 
 import { Avatar, Popover, Button, useModal } from '@learnway/ui';
 import { IcLogOut01, IcoBuilding01 } from '@learnway/icons';
-import { cn } from '@learnway/shared';
+import { cn, getFullImagePath } from '@learnway/shared';
 
 import styles from './user-avatar.module.css';
 import { useFetchAuthUser, useLogoutUser, useUserDetail } from '@learnway/auth/entities';
@@ -47,13 +47,13 @@ export const PopoverContent = () => {
       <div className={styles.profile_info}>
         <div className={styles.avata_img}>
           <Avatar
-            imageUrl={authUser?.avataImage}
+            imageUrl={getFullImagePath(authUser?.avataImage)}
             className={styles.info_avata}
             fallback={<AvataFallback name={user?.name} />}
           />
           <span className={styles.logo_wrap}>
             <Avatar
-              imageUrl={authUser?.activeTenant?.logoImageUrl}
+              imageUrl={getFullImagePath(authUser?.activeTenant?.logoImageUrl)}
               className={styles.info_avata}
               fallbackClassName={'bg-[var(--gray3)]'}
               fallback={

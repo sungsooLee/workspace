@@ -57,24 +57,24 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath, roleInfo }) => {
       query: tenantQueryOptions.list,
       columns: [
         {
-          name:  'tenantName', label: t('LABEL.grid.column.tenantName'), render: (row: any) => {
+          name:  'tenantName', label: t('LABEL.grid.column.tenantName'), render: (info: any) => {
             return (
               <Button
                 className="link"
                 onClick={() =>
-                  _global.linkClick(row.row.original.tenantId, row.row.original.tenantName)
+                  _global.linkClick(info.row.original.tenantId, info.row.original.tenantName)
                 }
               >
-                {row.getValue()}
+                {info.getValue()}
               </Button>
             );
           },
           size: 192
         },
         {
-          name: 'companyTenantList', label: t('LABEL.grid.column.company'), render: (row: any) => {
-            return row.getValue() &&
-            row
+          name: 'companyTenantList', label: t('LABEL.grid.column.company'), render: (info: any) => {
+            return info.getValue() &&
+            info
               .getValue()
               .map((item: any) => item.companyName)
               .join(',')
@@ -82,9 +82,9 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath, roleInfo }) => {
           size: 200
         },
         {
-          name: 'tenantUserList', label: t('LABEL.grid.column.tenantManager'), render: (row: any) => {
-            return row.getValue() &&
-            row
+          name: 'tenantUserList', label: t('LABEL.grid.column.tenantManager'), render: (info: any) => {
+            return info.getValue() &&
+            info
               .getValue()
               .map((item: any) => item.userName)
               .join(',')
@@ -92,8 +92,8 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath, roleInfo }) => {
           size: 120
         },
         {
-          name: 'isUsed', label: t('사용여부'), render: (row: any) => {
-            return row.row.original.isUsed ? t('LABEL.common.enable') : t('미사용');
+          name: 'isUsed', label: t('사용여부'), render: (info: any) => {
+            return info.row.original.isUsed ? t('LABEL.common.enable') : t('미사용');
           },
           size: 104
         },
@@ -101,8 +101,8 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath, roleInfo }) => {
           name: 'createdBy', label: t('등록자'), size: 104
         },
         {
-          name: 'createdDate', label: t('등록일시'), render: (row: any) => {
-            return getDateToString(new Date(row.getValue()), DATE_TIME_FORMAT.DATETIME_SEC);
+          name: 'createdDate', label: t('등록일시'), render: (info: any) => {
+            return getDateToString(new Date(info.getValue()), DATE_TIME_FORMAT.DATETIME_SEC);
           }, meta: {
             cellAlign: 'center',
           },
@@ -112,8 +112,8 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath, roleInfo }) => {
           name: 'lastModifiedBy', label: t('수정자'), size: 104
         },
         {
-          name: 'modifiedDate', label: t('수정일시'), render: (row: any) => {
-            return getDateToString(new Date(row.getValue()), DATE_TIME_FORMAT.DATETIME_SEC);
+          name: 'modifiedDate', label: t('수정일시'), render: (info: any) => {
+            return getDateToString(new Date(info.getValue()), DATE_TIME_FORMAT.DATETIME_SEC);
           }, meta: {
             cellAlign: 'center',
           },

@@ -1,7 +1,7 @@
 import { DateRangePickerFormField } from '@features/form/ui';
-import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
+import { CODE_GROUP, S3_PATH, useDynamicForm2 } from '@learnway/hooks';
 import { ContentsRow, FormSubTitle, RadioGroupFormField, TextareaFormField } from '@learnway/ui';
-import { ChipListFormField, FormRow2 } from '@shared/ui';
+import { ChipListFormField, FormRow2, ThumbnailListFormField } from '@shared/ui';
 import { Course } from '@types';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -70,14 +70,26 @@ const PublishCourseComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
           />
         </ContentsRow>
         {/*썸네일*/}
-        {/* <ContentsRow>
+        <ContentsRow>
           <FormRow2
             provider={provider}
-            name={'thumbnailFileGroupUuid'}
-            label={'썸네일'}
-            element={<ThumbnailListFormField />}
+            name={'썸네일'}
+            label={t('thumbnailFileGroupUuid')}
+            format={'string'}
+            element={
+              <ThumbnailListFormField
+                isLoading={true}
+                uuidType={'group'}
+                uploadConfig={{
+                  affairType: 'LMS',
+                  s3Path: S3_PATH['upload/course/thumbnail'],
+                }}
+                // selected={selectedThumbnail1}
+                // onSelected={handleSelected}
+              />
+            }
           />
-        </ContentsRow> */}
+        </ContentsRow>
         {/*태그*/}
         <ContentsRow>
           <FormRow2

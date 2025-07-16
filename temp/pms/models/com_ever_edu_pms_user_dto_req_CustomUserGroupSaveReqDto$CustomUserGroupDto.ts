@@ -9,9 +9,9 @@ export type com_ever_edu_pms_user_dto_req_CustomUserGroupSaveReqDto$CustomUserGr
      */
     userGroupOriginType?: com_ever_edu_pms_user_dto_req_CustomUserGroupSaveReqDto$CustomUserGroupDto.userGroupOriginType | null;
     /**
-     * 유저그룹 수동관리 유형 맵핑 ID
+     * 유저그룹 수동관리 유형 맵핑 UUID
      */
-    userGroupOriginMappingId?: number | null;
+    userGroupOriginMappingId?: string | null;
     /**
      * 유저그룹 수동관리명
      */

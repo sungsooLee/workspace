@@ -100,7 +100,7 @@ interface FunctionInfomation {
   /** galleary 학습 이력 저장 */
   galleryLearningHistory: (payload: any) => void;
   /** 커리큘럼의 모든 lesson의 진척 조회 함수 */
-  lessonProgress: (payload: any) => void;
+  lessonProgress: (payload: any) => Promise<any>;
 }
 
 interface LearningWindowStoreData {
@@ -109,10 +109,12 @@ interface LearningWindowStoreData {
   curriculum?: Curriculum;
   playInfo?: LearningWindowPlayInfo;
   playList?: PlayListItem[];
+  progressInfo: Map<string, any>;
   setBaseInfo: (v?: LearningWindowBaseInfo) => void;
   setPlayInfo: (v?: LearningWindowPlayInfo) => void;
   setCurriculum: (v?: Curriculum) => void;
   setPlayList: (v?: PlayListItem[]) => void;
+  setProgressInfo: (v: Map<string, any>) => void;
   clearInfo: () => void;
 
   scormInfo: any;
@@ -146,6 +148,7 @@ const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
   htmlInfo: undefined,
   ebookInfo: undefined,
   funcInfo: undefined,
+  progressInfo: new Map(),
 
   setPlayInfo(playInfo?: LearningWindowPlayInfo) {
     if (!playInfo) {
@@ -165,7 +168,9 @@ const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
   setBaseInfo(baseInfo?: LearningWindowBaseInfo) {
     set((state) => ({ baseInfo }));
   },
-
+  setProgressInfo(progressInfo: Map<string, any>) {
+    set((state) => ({ progressInfo }));
+  },
   setCurriculum(curriculum?: Curriculum) {
     set((state) => ({ curriculum }));
   },
@@ -234,7 +239,9 @@ export const useLearningWindow = () => {
     baseInfo: _baseInfo,
     curriculum: _curriculum,
     playInfo: _playInfo,
+    progressInfo,
     setBaseInfo,
+    setProgressInfo,
     setPlayInfo,
     setCurriculum,
     setPlayList,
@@ -249,6 +256,46 @@ export const useLearningWindow = () => {
     clearInfo,
   } = useLearningWindowStore((state) => state);
 
+  const readAllLessonProgress = async (curriculum: any) => {
+    //_baseInfo
+    const contents: any[] = [];
+    if (curriculum.moduleList) {
+      curriculum.moduleList.forEach((module: any) => {
+        if (module.lessonList) {
+          module.lessonList.forEach((lesson: any) => {
+            contents.push({
+              courseSequenceId: _baseInfo?.sequenceId,
+              courseId: _baseInfo?.courseId,
+              curriculumId: _baseInfo?.curriculumId,
+              moduleId: module.moduleId,
+              lessonId: lesson.lessonId,
+              contentUuid: lesson.contentUuid,
+            });
+          });
+        }
+      });
+    }
+    if (contents.length > 0) {
+      const payload: any = { contents };
+      const data = await funcInfo?.lessonProgress(payload);
+      console.log('lesson Progress', data);
+      if (data && data.progressList) {
+        const progressMap = new Map();
+        data.progressList.forEach((item: any) => {
+          progressMap.set(`${item.moduleId}_${item.lessonId}`, item);
+        });
+      }
+    }
+  };
+
+  /**
+   * moduleId와 lessonId 가 없는 경우 학습창 처음 lesson으로 playInfo를 만듬
+   * @param nowBaseInfo
+   * @param nowCurriculum
+   * @param moduleId
+   * @param lessonId
+   * @returns
+   */
   const genPlayInfoByCurriculum = (
     nowBaseInfo: any,
     nowCurriculum: any,
@@ -315,6 +362,8 @@ export const useLearningWindow = () => {
         const playInfo = genPlayInfoByCurriculum(_baseInfo, curriculum);
         setPlayInfo(playInfo);
       }
+      //lesson Progress 정보 처리
+      readAllLessonProgress(curriculum);
     }
   };
 
@@ -355,6 +404,8 @@ export const useLearningWindow = () => {
     baseInfo: _baseInfo,
     curriculum: _curriculum,
     playInfo: _playInfo,
+    progressInfo,
+
     setBaseInfo,
     scormInfo,
     setScormInfo,

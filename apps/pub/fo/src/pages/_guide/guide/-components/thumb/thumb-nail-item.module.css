@@ -1,9 +1,28 @@
 /* thumb-nail-item.module.css */
-.tag_list {
-  & > span:not(:first-child) {
-    @apply ml-[4px];
+.start {
+  &.thumbnail_item {
+    @apply w-[242px];
+    .thumbnail_view {
+      @apply relative aspect-[16/9] rounded-[8px];
+      [class*='nlp--thumbnail'] {
+        span img {
+          @apply w-full object-cover;
+        }
+      }
+      .new_badge {
+        @apply absolute left-[8px] top-[8px];
+      }
+      .time {
+        @apply label-xs absolute bottom-[8px] right-[8px] inline-flex h-[18px] items-center justify-center overflow-hidden rounded-[4px] bg-[var(--gray10)] px-[4px] pt-[4px] text-center text-white;
+      }
+    }
+    .tag_list {
+      & > span:not(:first-child) {
+        @apply ml-[4px];
+      }
+    }
+    .thumbnail_title {
+      @apply title3-b line-clamp-2 text-[#232326];
+    }
   }
-}
-.thumbnail_title {
-  @apply title3-b text-[#232326];
 }

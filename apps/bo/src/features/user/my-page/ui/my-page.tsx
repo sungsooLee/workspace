@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { cn, formatDate, formatPhoneNumber } from '@learnway/shared';
+import { cn, formatDate, formatPhoneNumber, getFullImagePath } from '@learnway/shared';
 import { Avatar, FormSubTitle } from '@learnway/ui';
 
 import { useFetchAuthUser, useUserDetail } from '@learnway/auth/entities';
@@ -35,27 +35,22 @@ export function MyPage() {
     return `(${user?.company?.postNo}) ${user?.company?.basicAddress}`;
   }, [user]);
 
-  console.log('authUser', authUser);
-  console.log('user', user);
   return (
     <div className={contentsStyles.main_contents}>
       <div className={styles.start}>
         <div className={styles.profile_wrap}>
           <div className={styles.avata_wrap}>
             <Avatar
-              imageUrl={authUser?.avataImage}
-              // imageUrl="https://github.com/shadcn.png"
+              imageUrl={getFullImagePath(authUser?.avataImage)}
               className={styles.info_avata}
               fallback={<AvataFallback name={authUser?.name} />}
             />
             <span className={styles.logo_wrap}>
               <Avatar
-                imageUrl={authUser?.activeTenant?.logoImageUrl}
-                // imageUrl="https://github.com/shadcn.png"
+                imageUrl={getFullImagePath(authUser?.activeTenant?.logoImageUrl)}
                 className={styles.info_avata}
                 fallbackClassName={'bg-[var(--gray3)]'}
                 fallback={
-                  // <img src={'https://github.com/shadcn.png'} alt="" className={styles.logo_img} />
                   <span className={styles.ico_area}>
                     <IcoBuilding01 width={64} height={64} className={styles.logo_ico} />
                   </span>

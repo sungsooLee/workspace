@@ -615,7 +615,6 @@ export namespace com_ever_edu_cms_scorm_dto_res_ScormResDto {
     export enum contentAddInfoType {
         VIDEO_ADD_INFO = 'VIDEO_ADD_INFO',
         EXAM_ADD_INFO = 'EXAM_ADD_INFO',
-        EXAM_POOL_ADD_INFO = 'EXAM_POOL_ADD_INFO',
     }
     /**
      * SCORM 처리 상태 코드. Enum(cms.scorm.ScormProcessingStatus) - FAIL|COMPLETE|STARTED|PARSING|UPLOADING

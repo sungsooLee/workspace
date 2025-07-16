@@ -45,6 +45,8 @@ export namespace com_ever_edu_cms_video_dto_res_VideoStatusResDto {
         FAIL = 'FAIL',
         COMPLETE = 'COMPLETE',
         STARTED = 'STARTED',
+        THUMBNAIL = 'THUMBNAIL',
+        AUDIO = 'AUDIO',
         ENCODING = 'ENCODING',
         UPLOADING = 'UPLOADING',
     }

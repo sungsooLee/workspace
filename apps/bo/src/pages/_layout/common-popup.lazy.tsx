@@ -52,7 +52,6 @@ import { EnFormMode } from '@types';
 
 import { useDeployTranslation } from '@entities/translation/service/translation.hook';
 import { PreviewLearningWindow } from '@features/learning-resource/learning-resource-management/ui/preview-learning-window';
-import { ThumbnailPublicFormField } from '@shared/ui/form/thumbnail-public-form-field';
 
 export const Route = createLazyFileRoute('/_layout/common-popup')({
   component: RouteComponent,

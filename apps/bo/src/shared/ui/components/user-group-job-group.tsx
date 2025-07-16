@@ -1,5 +1,10 @@
-import { ShuttleGridToChips, ShuttleGridToChipsImperative } from '@learnway/ui';
-import { useMemo, useRef, useState } from 'react';
+import {
+  SelectedChip,
+  ShuttleGridToChips,
+  ShuttleGridToChipsImperative,
+  useShuttleGridToChips,
+} from '@learnway/ui';
+import { useEffect, useMemo, useRef } from 'react';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { useFetchUserGroups } from '@entities/user-group';
@@ -18,9 +23,6 @@ const UserGroupJobGroupComponent = ({
 }: UserGroupJobGroupComponentProps) => {
   const ref = useRef<ShuttleGridToChipsImperative>(null);
   const { data = [] } = useFetchUserGroups(tenantIds, { userGroupType: 'JOB_GROUP' });
-
-  const [selectedItems, setSelectedItems] = useState<{ id: number; name: string }[]>([]);
-
   const columnHelper = createColumnHelper();
   const columns = [
     columnHelper.accessor('tenantName', {
@@ -41,21 +43,54 @@ const UserGroupJobGroupComponent = ({
     }),
   ] as ColumnDef<any, unknown>[];
 
-  const handleSelecteItems = (newItems: { id: number; name: string }[]) => {
-    // setSelectedItems(newItems);
-  };
+  const initialSelectedItems = useMemo<SelectedChip[]>(() => {
+    return option.map(({ combiners, pathKey, pathValue, groupId }) => {
+      const [combiner] = combiners;
+      return {
+        key: pathKey,
+        id: combiner.combineValue,
+        title: combiner.combineName,
+        fullPath: pathValue,
+        groupId,
+      };
+    });
+  }, [option]);
+
+  const { selectedItems, handleSelectItem, cancelSelectItem, cancelAll } =
+    useShuttleGridToChips(initialSelectedItems);
+
+  useEffect(() => {
+    if (selectedItems.length === 0) return;
+
+    const updatedOption: CombineUserGroup[] = selectedItems.map(
+      ({ key, id, title, fullPath, groupId }) => ({
+        pathKey: key,
+        groupId,
+        pathValue: fullPath,
+        combiners: [
+          {
+            combineType: 'USER_GROUP',
+            combineValue: id,
+            combineName: title,
+          },
+        ],
+      }),
+    );
+
+    handleSetOption(updatedOption);
+  }, [selectedItems, handleSetOption]);
 
   return (
     <ShuttleGridToChips
       ref={ref}
-      selectedItems={[...selectedItems]}
-      onSelectedChange={handleSelecteItems}
-      showNumberingColumn={false}
-      gridData={data}
+      selectedItems={selectedItems}
+      handleSelectItem={handleSelectItem}
+      cancelSelectItem={cancelSelectItem}
+      cancelAll={cancelAll}
       columns={columns}
-      rowKey={'userGroupId'}
-      leftTitle={t('유저그룹 - 직군')}
-      rightTitle={t('선택 유저그룹 목록')}
+      gridData={data}
+      sourceTitle={t('유저그룹 - 직군')}
+      targetTitle={t('선택 유저그룹 목록')}
     />
   );
 };

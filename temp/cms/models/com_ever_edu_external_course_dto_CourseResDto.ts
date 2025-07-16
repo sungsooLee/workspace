@@ -6,6 +6,7 @@ export type com_ever_edu_external_course_dto_CourseResDto = {
     courseId?: number;
     courseUuid?: string;
     courseName?: string;
+    language?: string;
     courseType?: com_ever_edu_external_course_dto_CourseResDto.courseType;
     courseContent?: string;
     channelId?: number;

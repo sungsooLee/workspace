@@ -39,9 +39,9 @@ function RouteComponent() {
       <div className={`${proccessResultStyles.start} ${styles.success_info}`}>
         <i className={proccessResultStyles.ico}>
           {/* 완료 */}
-          <IcoSucess03 width={80} height={80} />
+          <IcoSucess03 width={isMobile ? 56 : 80} height={isMobile ? 56 : 80} />
           {/* 마감 안내 */}
-          {/* <IcoError02 width={80} height={80} /> */}
+          {/* <IcoError02 width={isMobile ? 56 : 80} height={isMobile ? 56 : 80} /> */}
         </i>
 
         {/* 완료 */}

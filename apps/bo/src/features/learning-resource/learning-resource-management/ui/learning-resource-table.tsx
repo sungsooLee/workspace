@@ -21,7 +21,7 @@ import {
 import { IcoClock01, IcoCopy, IcoDownload, IcoAlertCircle } from '@learnway/icons';
 import { t } from 'i18next';
 import { useEffect, useState } from 'react';
-import { learningResourceQueryOptions } from '@entities/learning-resource';
+import { learningResourceQueryOptions, usePostContentCopy } from '@entities/learning-resource';
 import { ModifierInfoModal } from './learning-resource-modifier-info-modal';
 import { ProgramGuideModal } from './learning-resource-program-guide-modal';
 import { BatchSettingModal } from './learning-resource-batch-setting-modal';
@@ -33,8 +33,10 @@ import {
   TenantByRoleDropdownFormField,
   TenantChannelDropdownFormField,
 } from '@shared/ui';
-import { CMSApiPrefix, LEARNING_TYPE } from '@learnway/config';
+import { CMSApiPrefix } from '@learnway/config';
 import { PreviewLearningWindow } from './preview-learning-window';
+import { getDetailPathByContentType } from '@features/learning-resource';
+import { ContentInformation } from '@types';
 
 function LearningResourceTableComponent() {
   const {
@@ -43,6 +45,21 @@ function LearningResourceTableComponent() {
 
   const router = useRouter();
   const { open: openModal, alert } = useModal();
+
+  const { create: postContentCopy } = usePostContentCopy({
+    onSuccess: (result: ContentInformation) => {
+      router.navigate({
+        to: getDetailPathByContentType(result.contentType),
+        state: {
+          contentUuid: result.contentUuid,
+        },
+      });
+    },
+    onError: (error: any) => {
+      console.error(error);
+      // 에러 얼럿?
+    },
+  });
 
   const searchConfig: any = {
     builders: [
@@ -158,23 +175,6 @@ function LearningResourceTableComponent() {
       tenantId: true,
       channelUuid: true,
     },
-  };
-
-  const getDetailPathByContentType = (contentType: string) => {
-    let path = '';
-    switch (contentType) {
-      case LEARNING_TYPE.VIDEO:
-        path = '/learning/learning-resource/video/view';
-        break;
-      case LEARNING_TYPE.BLOG:
-        path = '/learning/resource/blog/view';
-        break;
-      case LEARNING_TYPE.HTML5_VIDEO:
-        path = '/learning/resource/html-video/view';
-        break;
-      // TODO: 유형 추가
-    }
-    return path;
   };
 
   const gridConfig: useGridBoxConfig = {
@@ -329,8 +329,6 @@ function LearningResourceTableComponent() {
     provider: searchProvider,
     getValues,
     getValuesWithLabel,
-    setOptions,
-    setValue,
     onFormChange,
     onFormValid,
   } = useSearchBox(searchConfig);
@@ -406,11 +404,12 @@ function LearningResourceTableComponent() {
       });
     }
 
-    openModal({
-      width: 's',
-      hideCloseButton: true,
-      content: <CopyModal />,
-    });
+    postContentCopy(selectedRows[0].contentUuid);
+    // openModal({
+    //   width: 's',
+    //   hideCloseButton: true,
+    //   content: <CopyModal />,
+    // });
   }
 
   return (

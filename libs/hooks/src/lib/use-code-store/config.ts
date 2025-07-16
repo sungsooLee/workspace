@@ -11,7 +11,7 @@ import { PMSApiPrefix, queryConfig } from '@learnway/config';
  * * 초기 구성계획은 조회 후 filter 를 사용하려 했으나. API 정의가 어떻게 될지 몰라 사용하지 못했다.
  */
 export const codeOptions: CodeApiConfig = {
-  [CODE_GROUP['vps.video.FfmpegTaskType']]: {
+  [CODE_GROUP['manual.vps.video.FfmpegTaskType']]: {
     api: 'default',
     options: [
       {

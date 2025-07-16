@@ -7,7 +7,7 @@ export type com_ever_edu_cms_image_dto_req_ImagesDraftReqDto = {
     tenantName: string;
     channelUuid: string;
     languageCountryCode: com_ever_edu_cms_image_dto_req_ImagesDraftReqDto.languageCountryCode;
-    reposType: com_ever_edu_cms_image_dto_req_ImagesDraftReqDto.reposType;
+    storageType: com_ever_edu_cms_image_dto_req_ImagesDraftReqDto.storageType;
     /**
      * 파일 UUID 목록
      */
@@ -40,7 +40,7 @@ export namespace com_ever_edu_cms_image_dto_req_ImagesDraftReqDto {
         HR = 'HR',
         ET = 'ET',
     }
-    export enum reposType {
+    export enum storageType {
         S3 = 'S3',
         HMG = 'HMG',
     }

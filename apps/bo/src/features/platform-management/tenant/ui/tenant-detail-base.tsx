@@ -68,7 +68,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
     getValues,
     clearFormError,
     setFormError,
-  } = useDynamicForm(formConfig);
+  } = useDynamicForm(formConfig());
 
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -549,7 +549,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
 
 export const TenantDetailBase = forwardRef(TenantDetailBaseComponent);
 
-const formConfig: DynamicFormConfig = {
+const formConfig = (): DynamicFormConfig => ({
   builders: [
     {
       name: 'tenantName',
@@ -919,4 +919,4 @@ const formConfig: DynamicFormConfig = {
       },
     },
   },
-};
+});

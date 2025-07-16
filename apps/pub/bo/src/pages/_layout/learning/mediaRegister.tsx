@@ -1679,7 +1679,7 @@ function RouteComponent() {
                         width={84}
                         height={55}
                         path={option.path}
-                        indexNumber={index}
+                        indexNumber={index + 1}
                         sizeText={'100MB'}
                       />
                       <span className={fileInfoStyles.name}>{option.name}</span>

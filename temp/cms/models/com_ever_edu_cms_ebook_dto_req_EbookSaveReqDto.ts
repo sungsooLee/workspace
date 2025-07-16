@@ -562,7 +562,6 @@ export namespace com_ever_edu_cms_ebook_dto_req_EbookSaveReqDto {
     export enum contentAddInfoType {
         VIDEO_ADD_INFO = 'VIDEO_ADD_INFO',
         EXAM_ADD_INFO = 'EXAM_ADD_INFO',
-        EXAM_POOL_ADD_INFO = 'EXAM_POOL_ADD_INFO',
     }
 }
 

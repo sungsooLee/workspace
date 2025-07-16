@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { com_ever_edu_pms_role_dto_res_RoleResDto } from '../models/com_ever_edu_pms_role_dto_res_RoleResDto';
 import type { com_ever_edu_pms_user_dto_req_UserSearchReqDto } from '../models/com_ever_edu_pms_user_dto_req_UserSearchReqDto';
 import type { com_ever_edu_pms_user_dto_res_UserResDto } from '../models/com_ever_edu_pms_user_dto_res_UserResDto';
 import type { org_springdoc_core_converters_models_Pageable } from '../models/org_springdoc_core_converters_models_Pageable';
@@ -103,6 +104,31 @@ export class InternalService {
             url: '/internal/api/v1/users/email/{email}',
             path: {
                 'email': email,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 역할 조회(단건)
+     * 역할을 조회한다.
+     * @param roleId
+     * @returns com_ever_edu_pms_role_dto_res_RoleResDto OK
+     * @throws ApiError
+     */
+    public static getRole(
+        roleId: number,
+    ): CancelablePromise<com_ever_edu_pms_role_dto_res_RoleResDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/internal/api/v1/roles/{roleId}',
+            path: {
+                'roleId': roleId,
             },
             errors: {
                 400: `Bad Request`,

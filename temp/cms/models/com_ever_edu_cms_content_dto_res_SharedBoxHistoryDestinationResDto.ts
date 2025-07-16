@@ -31,6 +31,14 @@ export type com_ever_edu_cms_content_dto_res_SharedBoxHistoryDestinationResDto =
      */
     destChannelName?: string;
     /**
+     * 도착지 콘텐츠 국가 언어 코드
+     */
+    langCountryCode?: com_ever_edu_cms_content_dto_res_SharedBoxHistoryDestinationResDto.langCountryCode;
+    /**
+     * 도착지 콘텐츠 국가 언어 코드
+     */
+    langCountryCodeName?: string;
+    /**
      * 수신자 UUID
      */
     recieverUuid?: string;
@@ -40,4 +48,35 @@ export type com_ever_edu_cms_content_dto_res_SharedBoxHistoryDestinationResDto =
     recieverName?: string;
     recievedDate?: string;
 };
+export namespace com_ever_edu_cms_content_dto_res_SharedBoxHistoryDestinationResDto {
+    /**
+     * 도착지 콘텐츠 국가 언어 코드
+     */
+    export enum langCountryCode {
+        KO = 'KO',
+        EN = 'EN',
+        ES = 'ES',
+        AR = 'AR',
+        RU = 'RU',
+        FR = 'FR',
+        PT = 'PT',
+        ID = 'ID',
+        ZH = 'ZH',
+        VI = 'VI',
+        TR = 'TR',
+        TH = 'TH',
+        DE = 'DE',
+        HE = 'HE',
+        NE = 'NE',
+        FA = 'FA',
+        HI = 'HI',
+        JA = 'JA',
+        MS = 'MS',
+        IT = 'IT',
+        SK = 'SK',
+        RO = 'RO',
+        HR = 'HR',
+        ET = 'ET',
+    }
+}
 

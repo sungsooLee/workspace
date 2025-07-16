@@ -1,10 +1,11 @@
-import React, { forwardRef, useEffect } from 'react';
+import React, { forwardRef, useEffect, useMemo } from 'react';
 import { cn } from '@learnway/shared';
 
 import * as Primitive from '@radix-ui/react-tabs';
 
 import styles from './tabs.module.css';
 import { Badge } from '../badge/badge';
+import { useDebounce } from '../editor/hooks/use-de-bounce';
 
 export interface TabItemProps {
   /** 탭에 표시될 제목 */
@@ -86,10 +87,9 @@ export const TabsComponent = forwardRef<
     }, [selectedTabKey]);
 
     /**
-     * 탭 변경을 처리하는 핸들러
-     * Radix의 onValueChange에 바인딩됨
+     * 실제 탭 변경을 처리하는 내부 함수
      */
-    const handleValueChange = async (nextValue: string) => {
+    const handleTabChangeInternal = async (nextValue: string) => {
       // 현재 탭이 없거나 동일한 탭 클릭 시 무시
       if (!value || value === nextValue) return;
 
@@ -99,7 +99,9 @@ export const TabsComponent = forwardRef<
       }
 
       // 탭 변경 가능 여부 확인 (비동기 가능) 설정 안하면 무조건 true, 결과가 false면 탭 작동 안함
-      if (!(await (onBeforeTabChange?.(value, nextValue) ?? true))) {
+      const canChange = await (onBeforeTabChange?.(value, nextValue) ?? true);
+
+      if (!canChange) {
         return;
       }
 
@@ -107,6 +109,16 @@ export const TabsComponent = forwardRef<
       setValue(nextValue);
       onTabChange?.(nextValue);
     };
+
+    /**
+     * debounce가 적용된 탭 변경 핸들러
+     * 100ms 내의 중복 호출을 방지하고, 최대 200ms 후에는 무조건 실행
+     */
+    const debouncedHandleValueChange = useDebounce(
+      handleTabChangeInternal,
+      100, // 100ms debounce
+      200, // 최대 200ms 후 강제 실행
+    );
 
     return (
       <Primitive.Root
@@ -124,7 +136,7 @@ export const TabsComponent = forwardRef<
         )}
         value={value}
         ref={ref}
-        onValueChange={handleValueChange}
+        onValueChange={debouncedHandleValueChange}
       >
         {/* 탭 버튼 목록 */}
         <Primitive.List className={styles.list} aria-label={ariaLabel}>

@@ -117,7 +117,7 @@ const PreviewLearningWindowComponent: FC<any> = ({
         break;
     }
     setFuncInfo({
-      lessonProgress: (payload) => {
+      lessonProgress: async (payload) => {
         console.log('lessonProgress called', payload);
       },
       scormInitialize: async (payload) => {

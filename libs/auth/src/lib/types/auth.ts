@@ -69,8 +69,16 @@ export interface Tenant {
 export interface Role {
   roleId: number;
   roleName: string;
+  siteScope: 'BO' | 'FO' | 'EX';
   roleType: string;
+  tenantScope: string;
+  companyScope: string;
+  deptScope: string;
+  channelScope: string;
   tenantId: number;
+  companyIds: any[];
+  deptIds: any[];
+  channelUuids: any[];
 }
 
 export type AUTH_TOOL_TYPE = 'PHONE' | 'EMAIL';

@@ -17,9 +17,9 @@ export type com_ever_edu_pms_file_dto_res_FileGroupCopyInternalResDto = {
      */
     affairsType?: com_ever_edu_pms_file_dto_res_FileGroupCopyInternalResDto.affairsType;
     /**
-     * 저정소유형코드. 코드그룹(pms.file.RepositoryType) - S3|HMG
+     * 저정소유형코드. 코드그룹(pms.file.StorageType) - S3|HMG
      */
-    reposType?: com_ever_edu_pms_file_dto_res_FileGroupCopyInternalResDto.reposType;
+    storageType?: com_ever_edu_pms_file_dto_res_FileGroupCopyInternalResDto.storageType;
     /**
      * 복사 대상 파일 수
      */
@@ -43,9 +43,9 @@ export namespace com_ever_edu_pms_file_dto_res_FileGroupCopyInternalResDto {
         CMS = 'CMS',
     }
     /**
-     * 저정소유형코드. 코드그룹(pms.file.RepositoryType) - S3|HMG
+     * 저정소유형코드. 코드그룹(pms.file.StorageType) - S3|HMG
      */
-    export enum reposType {
+    export enum storageType {
         S3 = 'S3',
         HMG = 'HMG',
     }

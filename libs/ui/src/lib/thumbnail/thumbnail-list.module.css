@@ -1,5 +1,10 @@
 .start {
-  .thumbnail_carousel > div > div {
-    @apply !w-auto;
+  .thumbnail_carousel {
+    [class*='swiper-slide'] {
+      @apply w-[128px];
+      [class*='thumbnail_image'] {
+        @apply h-[84px] w-full;
+      }
+    }
   }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './thumb-nail-item.module.css';
 import { cn, getRandomId } from '@learnway/shared';
-import { Badge } from '@learnway/ui';
+import { Badge, Thumbnail } from '@learnway/ui';
 import ToggleButton from '../toggle-button/toggle-button';
 
 export interface ThumbnailData {
@@ -36,13 +36,14 @@ const ThumbnailItem: React.FC<ThumbnailItemProps> = ({
       )}
     >
       <div className={styles.thumbnail_view}>
-        <img src={data.imageUrl} alt={data.title} className={styles.thumbnail_image} />
+        <Thumbnail path={data.imageUrl} className={styles.thumbnail_image} />
         {data.showNewLabel && (
           <Badge
             variant="text"
             status="primary"
             size="xs"
             option={{ label: 'New', value: `${getRandomId()}` }}
+            className={styles.new_badge}
           />
         )}
         {data.showTimeText && <span className={styles.time}>{data.showTimeText}</span>}
