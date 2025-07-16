@@ -230,7 +230,7 @@ const LearningResourceQuestionBankQuestionComponent = () => {
             </tr>
             <tr>
               <th scope={'row'}>{'문제은행 언어'}</th>
-              <td>{baseInfo?.languageCountryCode}</td>
+              <td colSpan={3}>{baseInfo?.languageCountryCode}</td>
             </tr>
           </tbody>
         </table>
@@ -248,9 +248,9 @@ const LearningResourceQuestionBankQuestionComponent = () => {
           columns={columns}
           titleCustomNode={
             <div className="custom_info_wrap">
-              <strong className="table_tit font-normal">{'문항현황'}</strong>
-              <strong className="table_tit font-normal">{'문제은행 문항수'}</strong>
-              <span className="count_info">{'100'}</span>
+              <strong className="table_tit text-[1.4rem] font-normal">{'문항현황'}</strong>
+              <strong className="table_tit text-[1.4rem] font-normal">{'문제은행 문항수'}</strong>
+              <span className="count_info text-[1.4rem]">{'100'}</span>
             </div>
           }
           className={styles.info_table}
