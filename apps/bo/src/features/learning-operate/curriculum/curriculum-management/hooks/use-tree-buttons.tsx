@@ -14,13 +14,20 @@ export const useTreeButtons = ({ onAddNode, formState }: UseTreeButtonsProps) =>
   const renderNodeButtons = (node: TreeNode, level: number): React.ReactNode => {
     const nodeType = node.type as MAPPING_CURRICULUM_TYPE;
     const allowedChildren = NODE_CHILDREN_MAP[nodeType] || [];
+
+    const isCurrentParentNode = formState.parentNode?.id === node.id;
+    const isInCreateMode = !formState.isEditing;
+
     return (
       <div className="flex flex-row gap-2">
         {allowedChildren.map((childType) => (
           <Button
             key={childType}
-            variant={formState.activeFormType === childType ? 'primary' : 'gray2'}
-            //선택된 버튼 primary로 표시
+            variant={
+              isCurrentParentNode && isInCreateMode && formState.activeFormType === childType
+                ? 'primary'
+                : 'gray2'
+            }
             size="xs"
             className={layoutStyles.btn_text}
             onClick={(e) => {

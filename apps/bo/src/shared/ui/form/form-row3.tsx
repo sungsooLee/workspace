@@ -13,6 +13,7 @@ interface FormRow3Props {
     minLength?: number;
     maxLength?: number;
     pattern?: RegExp;
+    validate?: (value: any, formValues?: any) => boolean | string;
   };
   placeholder?: string;
   guideText?: string;

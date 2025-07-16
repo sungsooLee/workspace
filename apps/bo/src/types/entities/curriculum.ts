@@ -1,3 +1,5 @@
+import { S } from '@faker-js/faker/dist/airline-BUL6NtOJ';
+
 export type CurriculumCreateRequest = {
   tenantId: number;
   channelUuid: string;
@@ -17,6 +19,10 @@ export type CurriculumCreateRequest = {
   vendorTelCountryCode: string;
   vendorTelNo: string;
 };
+export type CurriculumUpdateRequest = CurriculumCreateRequest & {
+  curriculumId: number;
+  isUsed?: boolean;
+};
 
 export type CurriculumResponse = CurriculumCreateRequest & {
   curriculumId: number;
@@ -33,6 +39,21 @@ export type CurriculumDetailResponse = CurriculumResponse & {
   createdDate: string;
   modifiedDate: string;
   curriculumType: CURRICULUM_TYPE;
+};
+
+export type ModuleDetailResponse = {
+  mappingCurriculumType: MAPPING_CURRICULUM_TYPE;
+  moduleId: number;
+  moduleName: string;
+  description: string;
+  moduleType: MODULE_TYPE;
+  sortOrder: number;
+  isDummy: boolean;
+  createdBy: string;
+  lastModifiedBy: string;
+  createdDate: string;
+  modifiedDate: string;
+  lessonList: LessonResponse[];
 };
 
 export type ModuleListResponse = {
@@ -55,6 +76,10 @@ export type LessonResponse = {
   lessonId: number;
   lessonName: string;
   description: string;
+  lessonType: LESSON_TYPE;
+  sortOrder: number;
+  contentType: CONTENT_TYPE;
+  learningTime: number;
 };
 export type Curriculum = CurriculumResponse;
 
@@ -69,9 +94,57 @@ export type CurriculumSearchParams = {
   sort?: string;
 };
 
+export type GeneralModuleSaveParams = {
+  curriculumId: number;
+  moduleName: string;
+  moduleType: MODULE_TYPE.GENERAL;
+  description?: string;
+};
+
+export type GeneralModuleUpdateParams = {
+  moduleId: number;
+  moduleName?: string;
+  description?: string;
+};
+
+export type FixedModuleSaveParams = {
+  curriculumId: number;
+  moduleName: string;
+  moduleType: MODULE_TYPE.FIXED;
+  contentUuid: string;
+  description?: string;
+  orgnId: number;
+  totalTime: number;
+};
+
+export type FixedModuleUpdateParams = {
+  moduleId: number;
+  moduleName: string;
+  description?: string;
+  totalTime: number;
+};
+
+export type GeneralLessonSaveParams = {
+  curriculumId: number;
+  moduleId: number;
+  lessonType: LESSON_TYPE.GENERAL | LESSON_TYPE.RESOURCE;
+  lessonName: string;
+  learningTime?: number;
+  description?: string;
+  contentUuid?: string;
+  contentName?: string;
+};
+
+export type LessonUpdateParams = {
+  lessonId: number;
+  lessonName: string;
+  description?: string;
+  learningTime?: number;
+};
+
 export enum LESSON_TYPE {
-  TOC = 'TOC',
-  RESOURCES = 'RESOURCES',
+  GENERAL = 'GENERAL',
+  RESOURCE = 'RESOURCE',
 }
 
 export enum MAPPING_CURRICULUM_TYPE {

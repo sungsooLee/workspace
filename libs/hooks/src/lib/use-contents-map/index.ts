@@ -1,0 +1,1 @@
+export {useContentsMap} from './use-contents-map'

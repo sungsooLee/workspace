@@ -4,15 +4,38 @@ import { FormState } from '../types/form.types';
 import { NodeFormRenderer } from '../components/node-form-renderer';
 import { useNodeData } from '../hooks/use-node-data';
 import { useTreeButtons } from '../hooks/use-tree-buttons';
-import { useCreateCurriculum, useGetCurriculumDetail } from '@entities/curriculum';
+import {
+  useCreateCurriculum,
+  useCreateFixedModule,
+  useCreateGeneralModule,
+  useCreateLessonByCurriculum,
+  useCreateLessonByModule,
+  useGetCurriculumDetail,
+  useUpdateCurriculum,
+  useUpdateFixedModule,
+  useUpdateGeneralModule,
+} from '@entities/curriculum';
 import { useDynamicForm3 } from '@learnway/hooks';
-import { CurriculumResponse, MAPPING_CURRICULUM_TYPE } from '@types';
+import {
+  CurriculumResponse,
+  FixedModuleSaveParams,
+  FixedModuleUpdateParams,
+  GeneralModuleSaveParams,
+  GeneralModuleUpdateParams,
+  MAPPING_CURRICULUM_TYPE,
+  MODULE_TYPE,
+} from '@types';
 import { buildTreeFromCurriculumData, findParentNode } from '../services';
 import { FORM_MODE, FROM_STATUS } from '@shared/const';
-import { Button, FormSubTitle, TreeBox, TreeNode } from '@learnway/ui';
+import { Button, FormSubTitle, TreeBox, TreeContainer, TreeNode } from '@learnway/ui';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
 import { IcoMinus } from '@learnway/icons';
 import { SectionLayout } from '@shared/ui';
+import { DndContext } from '@dnd-kit/core';
+import { useFetchAuthUser } from '@learnway/auth/entities';
+import { getTimeValueFromHour } from '@learnway/shared';
+import { verify } from 'crypto';
+import { update } from 'lodash';
 
 interface CurriculumDetailProps {
   mode: FORM_MODE;
@@ -25,8 +48,10 @@ const CurriculumDetailComponent = ({
   curriculumId,
   onCurriculumCreated,
 }: CurriculumDetailProps) => {
+  const { data: loginUser } = useFetchAuthUser();
   const [formStatus, setFormStatus] = useState<FROM_STATUS>(FROM_STATUS.NONE);
   const [treeData, setTreeData] = useState<TreeNode[]>([]);
+  const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
   const [formState, setFormState] = useState<FormState>({
     activeFormType: null,
     selectedNode: null,
@@ -34,19 +59,24 @@ const CurriculumDetailComponent = ({
     isEditing: false,
   });
 
-  // 커리큘럼 상세 조회 (mode가 detail이고 curriculumId가 유효할 때만)
   const shouldFetchDetail = mode === FORM_MODE.detail && curriculumId > 0;
   const { data: curriculumDetail, isLoading: isLoadingDetail } = useGetCurriculumDetail(
     shouldFetchDetail ? curriculumId : 0,
   );
 
   const { create: createCurriculum } = useCreateCurriculum({});
+  const { update: updateCurriculum } = useUpdateCurriculum({});
+  const { create: createCurriculumFixedModule } = useCreateFixedModule({});
+  const { create: createCurriculumGeneralModule } = useCreateGeneralModule({});
+  const { create: createLessonByCurriculum } = useCreateLessonByCurriculum({});
+  const { create: createLessonByModule } = useCreateLessonByModule({});
+  const { update: updateCurriculumFixedModule } = useUpdateFixedModule({});
+  const { update: updateCurriculumGeneralModule } = useUpdateGeneralModule({});
 
   const { getValues, onSubmit, autoFormContext, handleSubmit, watch, setValue, loadFormData } =
     useDynamicForm3();
   const formRef = useRef<HTMLFormElement>(null);
 
-  // 선택된 노드의 상세 데이터 조회
   const {
     data: selectedNodeData,
     isLoading: isNodeDataLoading,
@@ -54,6 +84,7 @@ const CurriculumDetailComponent = ({
   } = useNodeData({
     selectedNode: formState.selectedNode,
     curriculumId,
+    isEditing: formState.isEditing,
   });
 
   // 커리큘럼 데이터가 변경될 때마다 트리 데이터 업데이트
@@ -61,41 +92,159 @@ const CurriculumDetailComponent = ({
     if (curriculumDetail) {
       const treeNodes = buildTreeFromCurriculumData(curriculumDetail);
       setTreeData(treeNodes);
+
+      // if (treeNodes.length > 0) {
+      //   setExpandedKeys([treeNodes[0].key]);
+      // }
     } else if (mode === FORM_MODE.create) {
-      // 생성 모드일 때는 빈 트리
       setTreeData([]);
+      setExpandedKeys([]);
     }
   }, [curriculumDetail, mode]);
 
-  const handleAddNode = (nodeType: MAPPING_CURRICULUM_TYPE, parentNode: TreeNode | null) => {
-    setFormState({
-      activeFormType: nodeType,
-      selectedNode: null,
-      parentNode,
-      isEditing: false,
+  const expandParentNodes = (parentNode: TreeNode | null) => {
+    if (!parentNode) return;
+
+    const getParentKeys = (node: TreeNode | null): string[] => {
+      if (!node) return [];
+      const parentKeys = getParentKeys(findParentNode(treeData, node.parentId));
+      return [...parentKeys, node.key];
+    };
+
+    const parentKeys = getParentKeys(parentNode);
+    setExpandedKeys((prevKeys) => {
+      const newKeys = [...new Set([...prevKeys, ...parentKeys])];
+      return newKeys;
     });
-    setFormStatus(FROM_STATUS.CREATE);
+  };
+
+  // 모듈 생성 전략 (GENERAL, FIXED 모듈에 따라 다르게 처리)
+  const moduleCreateStrategy = {
+    [MODULE_TYPE.GENERAL]: (data: any, onSuccess: (response: any) => void) => {
+      return createCurriculumGeneralModule(
+        {
+          ...data,
+          curriculumId,
+        },
+        { onSuccess },
+      );
+    },
+    [MODULE_TYPE.FIXED]: (data: any, onSuccess: (response: any) => void) => {
+      return createCurriculumFixedModule(
+        {
+          ...data,
+          curriculumId,
+        },
+        { onSuccess },
+      );
+    },
+  };
+  // 모듈 업데이트
+  const moduleUpdateStrategy = {
+    [MODULE_TYPE.GENERAL]: (data: any, onSuccess: (response: any) => void) => {
+      const updateData: GeneralModuleUpdateParams = {
+        moduleId: data.moduleId,
+        moduleName: data.moduleName,
+        description: data.description,
+      };
+      return updateCurriculumGeneralModule(
+        {
+          ...updateData,
+        },
+        { onSuccess },
+      );
+    },
+    [MODULE_TYPE.FIXED]: (data: any, onSuccess: (response: any) => void) => {
+      const updateData: FixedModuleUpdateParams = {
+        moduleId: data.moduleId,
+        moduleName: data.moduleName,
+        description: data.description,
+        totalTime: getTimeValueFromHour(data.contentDuration),
+      };
+      return updateCurriculumFixedModule(
+        {
+          ...updateData,
+        },
+        { onSuccess },
+      );
+    },
+  };
+
+  const handleAddNode = (nodeType: MAPPING_CURRICULUM_TYPE, parentNode: TreeNode | null) => {
+    // 폼 전환 시 기존 데이터 완전 초기화
+    if (autoFormContext?.methods) {
+      autoFormContext.methods.reset({});
+      autoFormContext.methods.clearErrors();
+    }
+
+    // 약간의 지연을 두고 폼 상태 설정
+    setTimeout(() => {
+      setFormState({
+        activeFormType: nodeType,
+        selectedNode: parentNode,
+        parentNode,
+        isEditing: false,
+      });
+      setFormStatus(FROM_STATUS.CREATE);
+    }, 0);
   };
 
   const handleFormSubmit = (data: any) => {
     const { activeFormType, parentNode, isEditing } = formState;
-    const curriculumData = {
-      ...data,
-      channelUuid: '1', // TODO: 실제 채널 UUID로 교체
-      tenantId: 1, // TODO: 실제 테넌트 ID로 교체
-    };
     switch (activeFormType) {
-      case MAPPING_CURRICULUM_TYPE.CURRICULUM:
-        if (isEditing && formState.selectedNode) {
-          console.log('수정 로직!');
-          // 수정 로직
+      case MAPPING_CURRICULUM_TYPE.CURRICULUM: {
+        const curriculumData = {
+          tenantId: loginUser?.activeTenant?.tenantId,
+          channelUuid: data.channelUuid,
+          curriculumType: data.curriculumType,
+          languageCountryCode: data.languageCountryCode,
+          curriculumName: data.curriculumName,
+          curriculumDescription: data.curriculumDescription,
+          coordinatorName: data.coordinatorName,
+          coordinatorUuid: data.coordinatorUuid,
+          coordinatorTelCountryCode: data.coordinatorTelNo.nationCode,
+          coordinatorTelNo: data.coordinatorTelNo.number,
+          isVendored: data.isVendored,
+          ...(data.isVendored && {
+            vendorCode: data.vendorCode,
+            vendorName: data.vendorName,
+            vendorTelCountryCode: data.vendorTelNo.nationCode,
+            vendorTelNo: data.vendorTelNo.number,
+            vendorCoordinatorUuid: data.vendorCoordinatorUuid,
+            vendorCoordinatorName: data.vendorCoordinatorName,
+          }),
+        };
+        if (isEditing && formState.selectedNode && curriculumDetail) {
+          const updateData = {
+            ...curriculumData,
+            curriculumId: curriculumDetail.curriculumId,
+          };
+          updateCurriculum(updateData, {
+            onSuccess: (updatedCurriculum: CurriculumResponse) => {
+              const newNode: TreeNode = {
+                id: updatedCurriculum.curriculumId,
+                key: `curriculum-${updatedCurriculum.curriculumId}`,
+                name: updatedCurriculum.curriculumName || data.curriculumName,
+                type: MAPPING_CURRICULUM_TYPE.CURRICULUM,
+                parentId: parentNode?.id || null,
+                children: [],
+                data: updatedCurriculum,
+              };
+              handleNodeSelect(newNode);
+            },
+          });
         } else {
           createCurriculum(curriculumData, {
             onSuccess: (createdCurriculum: CurriculumResponse) => {
+              // 폼 데이터 완전 초기화
+              if (autoFormContext?.methods) {
+                autoFormContext.methods.reset({});
+                autoFormContext.methods.clearErrors();
+              }
+
               if (createdCurriculum.curriculumId && onCurriculumCreated) {
                 onCurriculumCreated(createdCurriculum.curriculumId);
               }
-
               const newNode: TreeNode = {
                 id: createdCurriculum.curriculumId,
                 key: `curriculum-${createdCurriculum.curriculumId}`,
@@ -105,32 +254,231 @@ const CurriculumDetailComponent = ({
                 children: [],
                 data: createdCurriculum,
               };
-
               handleNodeSelect(newNode);
             },
           });
         }
         break;
-
-      case MAPPING_CURRICULUM_TYPE.MODULE:
+      }
+      case MAPPING_CURRICULUM_TYPE.MODULE: {
+        const moduleType = data.moduleType;
         if (isEditing && formState.selectedNode) {
-          console.log('모듈 수정 로직!');
+          const updateModuleFn = moduleUpdateStrategy[moduleType as MODULE_TYPE];
+          if (updateModuleFn) {
+            updateModuleFn(data, (updateModule: any) => {
+              const updatedNode: TreeNode = {
+                id: updateModule.moduleId,
+                key: `module-${updateModule.moduleId}`,
+                type: MAPPING_CURRICULUM_TYPE.MODULE,
+                parentId: parentNode?.id || null,
+                children: [],
+              };
+
+              handleNodeSelect(updatedNode);
+            });
+          }
         } else {
-          console.log('모듈 생성 로직!');
+          const moduleData = {
+            moduleName: data.moduleName,
+            moduleType: data.moduleType,
+            description: data.description,
+            curriculumId,
+            ...(data.moduleType === MODULE_TYPE.FIXED && {
+              contentUuid: data.contentUuid,
+              contentDuration: data.contentDuration,
+            }),
+          };
+
+          const createModuleFn = moduleCreateStrategy[moduleType as MODULE_TYPE];
+          if (createModuleFn) {
+            createModuleFn(moduleData, (createdModuleId: number) => {
+              // 폼 데이터 완전 초기화
+              if (autoFormContext?.methods) {
+                autoFormContext.methods.reset({});
+                autoFormContext.methods.clearErrors();
+              }
+
+              // 새로운 모듈 노드 생성
+              const newNode: TreeNode = {
+                id: createdModuleId,
+                key: `module-${createdModuleId}`,
+                name: data.moduleName,
+                type: MAPPING_CURRICULUM_TYPE.MODULE,
+                parentId: parentNode?.id || null,
+                children: [],
+                data: {
+                  moduleId: createdModuleId,
+                  moduleName: data.moduleName,
+                  moduleType: data.moduleType,
+                  description: data.description,
+                },
+              };
+
+              expandParentNodes(parentNode);
+
+              setTimeout(() => {
+                handleNodeSelect(newNode);
+              }, 50);
+            });
+          }
         }
         break;
-
+      }
       case MAPPING_CURRICULUM_TYPE.LESSON:
         if (isEditing && formState.selectedNode) {
-          console.log('레슨 수정 로직!');
+          //PARENT NODE가 CURRICULUM, GENERAL MODULE 이면 GENERAL UPDATE
+          //PARENT NODE가 FIXED MODULE 이면 FIXED UPDATE
+          const isParentCurriculum = parentNode?.type === MAPPING_CURRICULUM_TYPE.CURRICULUM;
+          const isParentFixedModule =
+            parentNode?.type === MAPPING_CURRICULUM_TYPE.MODULE &&
+            parentNode?.data.moduleType === MODULE_TYPE.FIXED;
+          const isParentGeneralModule =
+            parentNode?.type === MAPPING_CURRICULUM_TYPE.MODULE &&
+            parentNode?.data.moduleType === MODULE_TYPE.GENERAL;
+
+          if (isParentCurriculum || isParentGeneralModule) {
+            console.log('general update');
+          } else if (isParentFixedModule) {
+            console.log('fixed update');
+          }
         } else {
-          console.log('레슨 생성 로직!');
+          const lessonData = {
+            curriculumId: curriculumDetail?.curriculumId,
+            lessonName: data.lessonName,
+            description: data.description,
+            lessonType: data.lessonType || 'TOC',
+            learningTime: getTimeValueFromHour(
+              data.learningTime as {
+                hour: number;
+                minute: number;
+                second: number;
+              },
+            ),
+          };
+
+          const lessonDataCurriculum = {
+            ...lessonData,
+            contentUuid: data.contentUuid,
+            contentName: data.contentName,
+          };
+
+          // 부모 노드 타입에 따라 다른 API 호출
+          const isParentCurriculum = parentNode?.type === MAPPING_CURRICULUM_TYPE.CURRICULUM;
+
+          if (isParentCurriculum) {
+            // 커리큘럼에 레슨 추가
+            createLessonByCurriculum(
+              {
+                ...lessonDataCurriculum,
+                curriculumId,
+              },
+              {
+                onSuccess: (createdLessonId: any) => {
+                  // 폼 데이터 완전 초기화
+                  if (autoFormContext?.methods) {
+                    autoFormContext.methods.reset({});
+                    autoFormContext.methods.clearErrors();
+                  }
+
+                  // 새로운 레슨 노드 생성
+                  const newNode: TreeNode = {
+                    id: createdLessonId,
+                    key: `lesson-${createdLessonId}`,
+                    name: data.lessonName,
+                    type: MAPPING_CURRICULUM_TYPE.LESSON,
+                    parentId: parentNode?.id || null,
+                    children: [],
+                    data: {
+                      lessonId: createdLessonId,
+                      lessonName: data.lessonName,
+                      lessonType: data.lessonType || 'TOC',
+                      description: data.description,
+                      learningTime: getTimeValueFromHour(data.learningTime),
+                    },
+                  };
+
+                  // 부모 노드들을 펼치기
+                  expandParentNodes(parentNode);
+
+                  handleNodeSelect(newNode);
+                },
+              },
+            );
+          } else {
+            // 모듈에 레슨 추가
+            createLessonByModule(
+              {
+                ...lessonData,
+                moduleId: parentNode?.data.moduleId,
+              },
+              {
+                onSuccess: (createdLessonId: number) => {
+                  // 폼 데이터 완전 초기화
+                  if (autoFormContext?.methods) {
+                    autoFormContext.methods.reset({});
+                    autoFormContext.methods.clearErrors();
+                  }
+
+                  // 새로운 레슨 노드 생성
+                  const newNode: TreeNode = {
+                    id: createdLessonId,
+                    key: `lesson-${createdLessonId}`,
+                    name: data.lessonName,
+                    type: MAPPING_CURRICULUM_TYPE.LESSON,
+                    parentId: parentNode?.id || null,
+                    children: [],
+                    data: {
+                      lessonId: createdLessonId,
+                      lessonName: data.lessonName,
+                      lessonType: data.lessonType || 'TOC',
+                      description: data.description,
+                      learningTime: getTimeValueFromHour(data.learningTime),
+                      moduleId: parentNode?.data.moduleId,
+                    },
+                  };
+
+                  // 트리 데이터 업데이트
+                  setTreeData((prevTreeData) => {
+                    const updateTree = (nodes: TreeNode[]): TreeNode[] => {
+                      return nodes.map((node) => {
+                        if (node.id === parentNode?.id) {
+                          return {
+                            ...node,
+                            children: [...(node.children || []), newNode],
+                          };
+                        }
+                        if (node.children) {
+                          return {
+                            ...node,
+                            children: updateTree(node.children),
+                          };
+                        }
+                        return node;
+                      });
+                    };
+
+                    return updateTree(prevTreeData);
+                  });
+
+                  expandParentNodes(parentNode);
+
+                  handleNodeSelect(newNode);
+                },
+              },
+            );
+          }
         }
         break;
     }
   };
 
   const handleFormCancel = () => {
+    // 폼 취소 시 데이터 완전 초기화
+    if (autoFormContext?.methods) {
+      autoFormContext.methods.reset({});
+      autoFormContext.methods.clearErrors();
+    }
+
     setFormState({
       activeFormType: null,
       selectedNode: null,
@@ -143,13 +491,28 @@ const CurriculumDetailComponent = ({
   // 트리 노드 선택 핸들러
   const handleNodeSelect = (node: TreeNode) => {
     console.log(node);
-    setFormState({
-      activeFormType: node.type as MAPPING_CURRICULUM_TYPE,
-      selectedNode: node,
-      parentNode: findParentNode(treeData, node.parentId),
-      isEditing: true,
-    });
-    setFormStatus(FROM_STATUS.EDIT);
+
+    // 같은 노드를 다시 클릭한 경우 초기화하지 않음
+    const isSameNode =
+      formState.selectedNode?.id === node.id && formState.selectedNode?.type === node.type;
+
+    if (!isSameNode) {
+      // 다른 노드 선택 시에만 기존 폼 데이터 완전 초기화
+      if (autoFormContext?.methods) {
+        autoFormContext.methods.reset({});
+        autoFormContext.methods.clearErrors();
+      }
+    }
+
+    setTimeout(() => {
+      setFormState({
+        activeFormType: node.type as MAPPING_CURRICULUM_TYPE,
+        selectedNode: node,
+        parentNode: findParentNode(treeData, node.parentId),
+        isEditing: true,
+      });
+      setFormStatus(FROM_STATUS.EDIT);
+    }, 0);
   };
 
   const { renderNodeButtons, renderCustomTreeButtons } = useTreeButtons({
@@ -195,24 +558,27 @@ const CurriculumDetailComponent = ({
   };
   return (
     <SectionLayout contentsRatio="half">
-      <TreeBox
-        treeId={'curriculum-tree'}
-        data={treeData}
-        selectedNode={formState.selectedNode}
-        customButtonNode={customTreeRenderButton()}
-        renderNodeButtons={renderNodeButtons}
-        handleSelectedNodeChange={handleNodeSelect}
-        type="DEFAULT"
-        title="목차"
-        emptyMessage={
-          mode === FORM_MODE.create
-            ? "'신규등록'버튼을 클릭하여 커리큘럼을 추가해주세요."
-            : isLoadingDetail
-              ? '로딩 중...'
-              : '데이터가 없습니다.'
-        }
-      />
-
+      <TreeContainer>
+        <TreeBox
+          treeId={'curriculum-tree'}
+          data={treeData}
+          selectedNode={formState.selectedNode}
+          customButtonNode={customTreeRenderButton()}
+          renderNodeButtons={renderNodeButtons}
+          handleSelectedNodeChange={handleNodeSelect}
+          type="DRAG_DROP"
+          title="목차"
+          expandedKeys={expandedKeys}
+          onExpandedKeysChange={setExpandedKeys}
+          emptyMessage={
+            mode === FORM_MODE.create
+              ? "'신규등록'버튼을 클릭하여 커리큘럼을 추가해주세요."
+              : isLoadingDetail
+                ? '로딩 중...'
+                : '데이터가 없습니다.'
+          }
+        />
+      </TreeContainer>
       <div className={layoutStyles.inner}>
         <FormSubTitle label={'상세 정보'} lineType="dark" actionNode={customFormActionButton()} />
         <form ref={formRef} onSubmit={onSubmit(handleFormSubmit)}>
@@ -226,6 +592,11 @@ const CurriculumDetailComponent = ({
             loadFormData={loadFormData}
             selectedNodeData={selectedNodeData}
             isLoading={isNodeDataLoading}
+            curriculumData={{
+              tenantId: curriculumDetail?.tenantId || loginUser?.activeTenant?.tenantId,
+              channelUuid: curriculumDetail?.channelUuid,
+              contentType: undefined,
+            }}
           />
         </form>
       </div>

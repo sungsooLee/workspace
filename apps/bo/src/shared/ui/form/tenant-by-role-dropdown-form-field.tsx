@@ -22,6 +22,11 @@ const TenantByRoleDropdownFormFieldComponent = forwardRef<
   }, [data?.activeRole, tenant]);
 
   useEffect(() => {
+    // 이미 value가 설정되어 있는 경우 해당 값 으로 세팅
+    if (value && options?.find((o) => o.value === value)) {
+      return;
+    }
+
     // 테넌트 선택 동기화 로직
     const id = localStorage.getItem('TENANT_ID');
     if (id && options?.find((o) => o.value === parseInt(id))) {
@@ -34,7 +39,7 @@ const TenantByRoleDropdownFormFieldComponent = forwardRef<
       return;
     }
     onChange('');
-  }, [options]);
+  }, [options, value]);
 
   return (
     <DropdownFormField
