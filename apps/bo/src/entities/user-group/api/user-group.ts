@@ -67,6 +67,7 @@ export default class UserGroupService {
 
   static updateUserGroupManual(payload: any) {
     const userGroupId = payload.userGroupId;
+    delete payload.userGroupId;
     return httpService.put<any>(`${PMSApiPrefix()}/userGroup/${userGroupId}`, payload);
   }
 }

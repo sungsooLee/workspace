@@ -40,6 +40,7 @@ import { queryOptions } from '@entities/user-group/service/user-group.queries';
 import { Tenant } from '@learnway/auth/types';
 import { useGetChannelDetail } from '@entities/channel/service/channel.hook';
 import { useQuery } from '@tanstack/react-query';
+import { useWatch } from 'react-hook-form';
 
 export const Route = createLazyFileRoute('/_layout/platform/tenant/usr-group/manual-detail')({
   component: RouteComponent,
@@ -99,7 +100,9 @@ function RouteComponent() {
     clearFormError,
     getValues,
     setValue,
+    formState,
   } = useDynamicForm(formConfig);
+  const assignmentTypeWatch = useWatch({ control: provider.control, name: 'assignmentType' });
 
   const handleListButtonClick = () => {
     const listParam = routerState.location.state?.listParam;
@@ -267,6 +270,14 @@ function RouteComponent() {
     }
   }, [loginUser])
 
+  const [assignmentTypeOptions, setAssignmentTypeOptions] = useState<any>();
+
+  useEffect(() => {
+    if( assignmentTypeWatch ) {
+      setAssignmentTypeOptions(assignmentTypeWatch)
+    }
+  }, [assignmentTypeWatch])
+
   return (
     <PageContainer>
       <ContentsButtons>
@@ -359,8 +370,8 @@ function RouteComponent() {
           onAddClick={openUserGroupModal}
           showRemove
           onRemoveClick={removeUserGroupData}
-          excelButtons={ (userGroupData && userGroupData.assignmentType === 'DIRECT_USER_BASED')
-            && <GridExcelUploadButton />}
+          // excelButtons={ (assignmentTypeOptions === 'DIRECT_USER_BASED')
+          //   && <GridExcelUploadButton onUpload={} />}
           multiple
           showColumnSettings={false}
           hideRowSelectionCheckBox={true}
