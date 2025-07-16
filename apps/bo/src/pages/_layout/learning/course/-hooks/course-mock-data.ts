@@ -56,6 +56,8 @@ export const getDummyCourse = () => {
     operatorDeptName: '김지훈/개발팀',
     primaryCategoryId: 11,
     operatorTelCountryCode: 'KOR_82',
+
+    DetailInfoComponent: false,
   };
 };
 

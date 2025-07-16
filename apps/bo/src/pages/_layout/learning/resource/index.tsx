@@ -46,36 +46,6 @@ function RouteComponent() {
         });
         break;
       }
-      // HTML 동영상
-      case LEARNING_TYPE.HTML5_VIDEO: {
-        router.navigate({ to: '/learning/resource/html-video/view' });
-        break;
-      }
-      // 이미지
-      case LEARNING_TYPE.IMAGE: {
-        router.navigate({ to: '/learning/resource/image/view' });
-        break;
-      }
-      // 기타
-      case LEARNING_TYPE.ETC: {
-        router.navigate({ to: '/learning/resource/etc/view' });
-        break;
-      }
-      // 외부링크
-      case LEARNING_TYPE.EXTERNAL_LINK: {
-        router.navigate({ to: '/learning/resource/external-link/view' });
-        break;
-      }
-      // 외부위탁
-      case LEARNING_TYPE.EXTERNAL_CONSIGNMENT: {
-        router.navigate({ to: '/learning/resource/external_consignment/view' });
-        break;
-      }
-      // 블로그
-      case LEARNING_TYPE.BLOG: {
-        router.navigate({ to: '/learning/resource/blog/view' });
-        break;
-      }
       // 이북
       case LEARNING_TYPE.E_BOOK: {
         router.navigate({ to: '/learning/resource/e-book/view' });
@@ -86,19 +56,58 @@ function RouteComponent() {
         router.navigate({ to: '/learning/resource/scorm/view' });
         break;
       }
+      // HTML 동영상
+      case LEARNING_TYPE.HTML5_VIDEO: {
+        router.navigate({ to: '/learning/resource/html-video/view' });
+        break;
+      }
+      // 이미지
+      case LEARNING_TYPE.IMAGE: {
+        router.navigate({ to: '/learning/resource/image/view' });
+        break;
+      }
+
+      // line 2
+      // 외부링크
+      case LEARNING_TYPE.EXTERNAL_LINK: {
+        router.navigate({ to: '/learning/resource/external-link/view' });
+        break;
+      }
+
+      // 외부위탁
+      case LEARNING_TYPE.EXTERNAL_CONSIGNMENT: {
+        router.navigate({ to: '/learning/resource/external_consignment/view' });
+        break;
+      }
+      // 블로그
+      case LEARNING_TYPE.BLOG: {
+        router.navigate({ to: '/learning/resource/blog/view' });
+        break;
+      }
       // 설문
       case LEARNING_TYPE.SURVEY: {
-        router.navigate({ to: '/learning/resource/survey/view' });
+        router.navigate({ to: '/learning/resource/blog/regist' });
         break;
       }
       // 시험지
-      case LEARNING_TYPE.TEST_PAGER: {
-        router.navigate({ to: '/learning/resource/test-paper/view' });
+      case LEARNING_TYPE.TEST_PAPER: {
+        router.navigate({ to: '/learning/resource/test-paper/view', state: { mode: 'CREATE' } });
         break;
       }
+      // 문제은행
+      case LEARNING_TYPE.QUESTION_BANK: {
+        router.navigate({ to: '/learning/resource/question-bank/regist' });
+        break;
+      }
+
       // 과제
       case LEARNING_TYPE.ASSIGNMENT: {
         router.navigate({ to: '/learning/resource/assignment/view' });
+        break;
+      }
+      // 기타
+      case LEARNING_TYPE.ETC: {
+        router.navigate({ to: '/learning/resource/etc/view' });
         break;
       }
     }

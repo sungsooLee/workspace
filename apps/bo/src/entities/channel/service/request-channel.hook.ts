@@ -34,3 +34,16 @@ export function useRejectRequestChannel(options: any) {
     ...mutation,
   };
 }
+
+export function useUpdateRequestChannel(options: any) {
+  const mutation = useMutation({
+    ...mutateOptions.update(),
+    ...options,
+  });
+  return {
+    update: (payload: any, callback?: any) => {
+      mutation.mutate(payload, callback);
+    },
+    ...mutation,
+  };
+}

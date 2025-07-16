@@ -112,7 +112,7 @@ function RouteComponent() {
     {
       title: '테넌트 역할 관리',
       key: EnTenantDetailTabKey.learningRole,
-      content: <TenantDetailLearningRole />,
+      content: <TenantDetailLearningRole roleInfo={'TENANT'}/>,
     },
     {
       title: '테넌트 위젯 관리',

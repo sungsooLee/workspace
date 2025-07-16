@@ -75,7 +75,7 @@ const TenantUserListComponent: FC<any> = ({ rootPath }) => {
           size: 120
         },
         {
-          name: 'opt4', label: t('지위'), render: (row: any) => {
+          name: 'opt4', label: t('직위'), render: (row: any) => {
             return (
               <Link to={row.row.original.tenantSite} className="link">
                 {row.row.original.tenantId}

@@ -6,7 +6,13 @@ import { t } from 'i18next';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { Button, Divider, useModal } from '@learnway/ui';
 import defaultImage from '@assets/images/thumb/img_thumb_default.jpg';
-import { ContentsButtons, MainContents, PageContainer, SubContents } from '@shared/ui';
+import {
+  ContentCourseMappingModal,
+  ContentsButtons,
+  MainContents,
+  PageContainer,
+  SubContents,
+} from '@shared/ui';
 import { learningResourceQueryOptions, useDeleteContent } from '@entities/learning-resource';
 import { PreviewLearningWindow } from '@features/learning-resource/learning-resource-management/ui/preview-learning-window';
 
@@ -30,8 +36,8 @@ function RouteComponent() {
     learningResourceQueryOptions.getContent(routerState.location.state?.contentUuid),
   );
 
-  const { data: mappingData } = useQuery(
-    learningResourceQueryOptions.getCoursesMapping(routerState.location.state?.contentUuid),
+  const { data: hasMapping } = useQuery(
+    learningResourceQueryOptions.getCurriculumsMapping(routerState.location.state?.contentUuid),
   );
 
   const { open: openModal, alert: openAlert, confirm: openConfirm } = useModal();
@@ -42,6 +48,21 @@ function RouteComponent() {
       content: <PreviewLearningWindow contentUuid={data?.contentUuid} />,
     });
   }, [data?.contentUuid]);
+
+  const handleClickCourseMapping = useCallback(async () => {
+    if (!routerState.location.state?.contentUuid) {
+      return;
+    }
+    await openModal({
+      content: (
+        <ContentCourseMappingModal
+          channelUuid={data?.channelUuid ?? ''}
+          contentUuid={routerState.location.state.contentUuid}
+        />
+      ),
+      width: 'lg',
+    });
+  }, [data]);
 
   const handleClickGoListButton = useCallback(async () => {
     if (
@@ -55,14 +76,14 @@ function RouteComponent() {
   }, []);
 
   const { delete: deleteBlogContent } = useDeleteContent({
-    onSuccess: (result: unknown) => {
+    onSuccess: (result: number) => {
       console.log('delete success', result);
       return router.navigate({ to: '/learning/learning-resource', replace: true });
     },
   });
 
   const handleClickDeleteButton = async () => {
-    console.log('mappingData', mappingData);
+    console.log('hasMapping', hasMapping);
 
     if (
       await openConfirm({
@@ -106,7 +127,13 @@ function RouteComponent() {
           label={t('과정개설')}
           onClick={handleClickCourseButton}
         />
-        <Button type="button" variant="point" size="sm" label={t('매핑과정')} />
+        <Button
+          type="button"
+          variant="point"
+          size="sm"
+          label={t('매핑과정')}
+          onClick={handleClickCourseMapping}
+        />
         <Button type="button" variant="point" size="sm" label={t('번역현황')} />
         <Button
           type="button"
@@ -122,7 +149,7 @@ function RouteComponent() {
           size="sm"
           label={t('LABEL.button.delete')}
           onClick={handleClickDeleteButton}
-          disabled={!!mappingData?.hasMapping}
+          disabled={hasMapping}
         />
         <Button type="button" variant="point" size="sm" label={t('LABEL.button.translate')} />
         <Button
@@ -140,7 +167,7 @@ function RouteComponent() {
           tenantId={tenantId}
           mode="update"
           blogInfo={data}
-          hasMapping={mappingData?.hasMapping}
+          hasMapping={hasMapping}
         />
       </MainContents>
 

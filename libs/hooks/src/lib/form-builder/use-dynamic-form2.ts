@@ -257,7 +257,8 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
       });
 
       // react-hook-form에 필드 기본값 설정
-      if (!getValues()[fieldConfig.name]) {
+      const currentValue = getValues()[fieldConfig.name];
+      if (currentValue === undefined) {
         setValue(fieldConfig.name, fieldConfig.value);
       }
     },

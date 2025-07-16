@@ -1,10 +1,10 @@
-import { cn } from '@learnway/shared';
+import { cn, getDateToString, DATE_TIME_FORMAT } from '@learnway/shared';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { ColumnDef, createColumnHelper, CellContext } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { FC, useEffect, useState } from 'react';
 import { useWatch } from 'react-hook-form';
-
+import { EnGlobalConst } from '@types';
 import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import {
   ChipListModalSelectorFormField,
@@ -13,11 +13,16 @@ import {
   FormSubTitle,
   Input,
   RadioGroupFormField,
-  TableBox,
+  GridBox,
+  GridFormField,
+  EditDropdownCell,
+  EditSwitchCell,
 } from '@learnway/ui';
-import { ContentsHistoryInfoFormField, FormRow } from '@shared/ui';
+import { ContentsHistoryInfoFormField, FormItem, FormRow } from '@shared/ui';
+import { FormDisplay } from '@features/form';
 
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
+import { getUserStatus } from '../service/company-user.service';
 
 const CompanyUserDetailBaseComponent: FC<any> = ({ userInfo }) => {
   const { provider, control, updateFormData, onSubmit, setFormError, clearFormError, getValues } =
@@ -31,103 +36,185 @@ const CompanyUserDetailBaseComponent: FC<any> = ({ userInfo }) => {
 
   useEffect(() => {
     if (userInfo) {
-      const value = {
+      const initialData = {
         ...userInfo,
         companyName: userInfo.company.name,
-        deptName: userInfo.dept.deptName,
+        deptName: userInfo.dept?.deptName,
+        gender:
+          userInfo.gender &&
+          t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.user.Gender.${userInfo.gender}`),
+        area: userInfo.nationCd?.displayName,
+        joinDate: userInfo.joinDate
+          ? getDateToString(new Date(userInfo.joinDate), DATE_TIME_FORMAT.DATETIME_SEC)
+          : '-',
+        retireDate: userInfo.retireDate
+          ? getDateToString(new Date(userInfo.retireDate), DATE_TIME_FORMAT.DATETIME_SEC)
+          : '-',
+        userStatus: getUserStatus(userInfo),
+        promotionDate: userInfo.promotionDate
+          ? getDateToString(new Date(userInfo.promotionDate), DATE_TIME_FORMAT.DATETIME_SEC)
+          : '-',
+        dormantDate: userInfo.dormantDate
+          ? getDateToString(new Date(userInfo.dormantDate), DATE_TIME_FORMAT.DATETIME_SEC)
+          : '-',
+        tenantList: userInfo.tenants,
       };
-      updateFormData(value);
+      updateFormData(initialData);
     }
   }, [userInfo]);
+
+  const jobGroupColumns = [
+    {
+      header: '직군',
+      accessorKey: 'role1',
+      cell: (info: CellContext<any, string>) => (
+        <EditDropdownCell
+          info={info}
+          dropdown={{
+            options: [{ label: 'TEST', value: 'TEST' }],
+          }}
+        />
+      ),
+      meta: {
+        headerAlign: 'center',
+        cellAlign: 'center',
+      },
+    },
+    {
+      header: '직무',
+      accessorKey: 'role2',
+      cell: (info: CellContext<any, string>) => (
+        <EditDropdownCell
+          info={info}
+          dropdown={{
+            options: [{ label: 'TEST', value: 'TEST' }],
+          }}
+        />
+      ),
+      meta: {
+        headerAlign: 'center',
+        cellAlign: 'center',
+      },
+    },
+    {
+      header: '정/부',
+      accessorKey: 'isMain',
+      size: 170,
+      cell: (info: CellContext<any, boolean>) => <EditSwitchCell info={info} />,
+      meta: {
+        headerAlign: 'center',
+        cellAlign: 'center',
+      },
+    },
+  ];
+
   return (
     <>
       <FormSubTitle label={t('개인 정보')} lineType={'dark'} />
       <ContentsRow>
-        <FormRow provider={provider} name={'name'} element={<Input disabled={true} />} />
-        <FormRow provider={provider} name={'engName'} element={<Input disabled={true} />} />
-        <FormRow provider={provider} name={'employeeNumber'} element={<Input disabled={true} />} />
+        <FormRow provider={provider} name={'name'} element={<Input readOnly={true} />} />
+        <FormRow provider={provider} name={'engName'} element={<Input readOnly={true} />} />
+        <FormRow provider={provider} name={'employeeNumber'} element={<Input readOnly={true} />} />
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider} name={'email'} element={<Input disabled={true} />} />
-        <FormRow provider={provider} name={'birthday'} element={<Input disabled={true} />} />
-        <FormRow provider={provider} name={'gender'} element={<Input disabled={true} />} />
+        <FormRow provider={provider} name={'email'} element={<Input readOnly={true} />} />
+        <FormRow provider={provider} name={'birthday'} element={<Input readOnly={true} />} />
+        <FormRow provider={provider} name={'gender'} element={<Input readOnly={true} />} />
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider} name={'area'} element={<Input disabled={true} />} />
+        <FormRow provider={provider} name={'area'} element={<Input readOnly={true} />} />
         <FormRow provider={provider} name={'phoneNumber'} />
-        <FormRow provider={provider} name={'officePhone'} />
+        <FormRow provider={provider} name={'companyPhoneNumber'} />
       </ContentsRow>
 
       <FormSubTitle label={t('교재 배송 주소 및 교재 신청 내역')} lineType={'dark'} />
-      <TableBox data={textBookData} columns={textBookColumns} tableMode={true} />
+      <GridBox
+        data={textBookData}
+        columns={textBookColumns}
+        title={t('교재 신청 내역')}
+        guideText={t('과정 수강 시 교재 신청 내역입니다.')}
+        showTotalCount={false}
+        visibleRowCount={3}
+      />
 
       <FormSubTitle label={t('회사/조직 정보')} lineType={'dark'} />
       <ContentsRow>
-        <FormRow provider={provider} name={'companyName'} element={<Input disabled={true} />} />
-        <FormRow provider={provider} name={'room'} element={<Input disabled={true} />} />
-        <FormRow provider={provider} name={'deptName'} element={<Input disabled={true} />} />
+        <FormRow provider={provider} name={'companyName'} element={<Input readOnly={true} />} />
+        <FormRow provider={provider} name={'room'} element={<Input readOnly={true} />} />
+        <FormRow provider={provider} name={'deptName'} element={<Input readOnly={true} />} />
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider} name={'position'} element={<Input disabled={true} />} />
-        <FormRow provider={provider} name={'spot'} element={<Input disabled={true} />} />
-        <FormRow provider={provider} name={'occupation'} element={<Input disabled={true} />} />
+        <FormRow provider={provider} name={'position'} element={<Input readOnly={true} />} />
+        <FormRow provider={provider} name={'spot'} element={<Input readOnly={true} />} />
+        <FormRow provider={provider} name={'occupation'} element={<Input readOnly={true} />} />
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider} name={'joinDate'} element={<Input disabled={true} />} />
-        <FormRow provider={provider} name={'quitDate'} element={<Input disabled={true} />} />
-        <FormRow
-          provider={provider}
-          name={'lastPromotionDate'}
-          element={<Input disabled={true} />}
-        />
+        <FormRow provider={provider} name={'joinDate'} element={<Input readOnly={true} />} />
+        <FormRow provider={provider} name={'retireDate'} element={<Input readOnly={true} />} />
+        <FormRow provider={provider} name={'promotionDate'} element={<Input readOnly={true} />} />
       </ContentsRow>
       <ContentsRow>
         <FormRow provider={provider} name={'userStatus'} />
-        <FormRow
-          provider={provider}
-          name={'employmentStatusUpdateDate'}
-          element={<Input disabled={true} />}
-        />
-        <div className={cn(formStyles.form_item)}></div>
+        <FormItem />
+        <FormItem />
       </ContentsRow>
 
       <FormSubTitle label={t('직군/직무 정보')} lineType={'dark'} />
-      <TableBox
-        data={roleData}
-        columns={roleColumns}
-        tableMode={true}
-        multiple
-        showAdd
-        showRemove
-        height={110}
-      />
+      <ContentsRow>
+        <FormRow
+          provider={provider}
+          name={'jobGroups'}
+          element={
+            <GridFormField
+              gridProps={{
+                multiple: true,
+                showAdd: true,
+                showRemove: true,
+                showTotalCount: false,
+                columns: jobGroupColumns,
+                title: t('직군/직무 관리'),
+                visibleRowCount: 3,
+              }}
+            />
+          }
+        />
+      </ContentsRow>
 
       <FormSubTitle label={t('계정 정보')} lineType={'dark'} />
       <ContentsRow>
-        <FormRow provider={provider} name={'humanResourceManagementMethod'} />
+        <FormRow provider={provider} name={'hrInfoManageType'} />
       </ContentsRow>
-      <ContentsRow>
-        <FormRow provider={provider} name={'registerType'} />
-      </ContentsRow>
+      <FormDisplay
+        provider={provider}
+        dependencies={[{ name: 'hrInfoManageType', value: 'MANUAL_MANAGE' }]}
+      >
+        <ContentsRow>
+          <FormRow provider={provider} name={'companyMemberJoinTypeList'} />
+        </ContentsRow>
+      </FormDisplay>
+      <FormDisplay
+        provider={provider}
+        dependencies={[{ name: 'hrInfoManageType', value: 'AUTO_MANAGE' }]}
+      >
+        <ContentsRow>
+          <FormRow provider={provider} name={'linkageSystem'} />
+        </ContentsRow>
+      </FormDisplay>
       <ContentsRow>
         <FormRow provider={provider} name={'accountStatus'} />
         <FormRow
           provider={provider}
           name={'lastAccountStatusUpdateDate'}
-          element={<Input disabled={true} />}
+          element={<Input readOnly={true} />}
         />
-        <FormRow
-          provider={provider}
-          name={'lastDormantStatusUpdateDate'}
-          element={<Input disabled={true} />}
-        />
+        <FormRow provider={provider} name={'dormantDate'} element={<Input readOnly={true} />} />
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider} name={'approvalStatus'} element={<Input disabled={true} />} />
+        <FormRow provider={provider} name={'approvalStatus'} element={<Input readOnly={true} />} />
         <FormRow
           provider={provider}
           name={'lastApprovalStatusUpdateDate'}
-          element={<Input disabled={true} />}
+          element={<Input readOnly={true} />}
         />
       </ContentsRow>
       <ContentsRow>
@@ -142,7 +229,6 @@ const CompanyUserDetailBaseComponent: FC<any> = ({ userInfo }) => {
                 hideBorder: true,
               }}
               disabled={true}
-              height={120}
             />
           }
         />
@@ -159,12 +245,12 @@ const CompanyUserDetailBaseComponent: FC<any> = ({ userInfo }) => {
 
           <FormRow
             provider={provider}
-            name={'ssoLoginType'}
+            name={'ssoType'}
             element={<RadioGroupFormField disabled={!watchedValues[0]} />}
           />
         </ContentsRowItem>
         <ContentsRowItem>
-          <FormRow provider={provider} name={'passwordAuthType'} />
+          <FormRow provider={provider} name={'authType'} />
         </ContentsRowItem>
       </ContentsRow>
       <ContentsRow>
@@ -192,49 +278,49 @@ const formConfig = (): DynamicFormConfig => ({
       type: 'text',
       label: t('이름'),
       value: '',
-      placeholder: '',
+      placeholder: ' ',
     },
     {
       name: 'engName',
       type: 'text',
       label: t('영문 이름'),
       value: '',
-      placeholder: '',
+      placeholder: ' ',
     },
     {
       name: 'employeeNumber',
       type: 'text',
       label: t('사번'),
       value: '',
-      placeholder: '',
+      placeholder: ' ',
     },
     {
       name: 'email',
       type: 'text',
       label: t('아이디 (이메일)'),
       value: '',
-      placeholder: '',
+      placeholder: ' ',
     },
     {
       name: 'birthday',
       type: 'text',
       label: t('생년월일'),
       value: '',
-      placeholder: '',
+      placeholder: ' ',
     },
     {
       name: 'gender',
       type: 'text',
       label: t('성별'),
       value: '',
-      placeholder: '',
+      placeholder: ' ',
     },
     {
       name: 'area',
       type: 'text',
       label: t('지역'),
       value: '',
-      placeholder: '',
+      placeholder: ' ',
     },
     {
       label: t('휴대폰 번호'),
@@ -243,33 +329,33 @@ const formConfig = (): DynamicFormConfig => ({
       format: 'string',
       value: '',
       fields: {
-        nationCode: '휴대폰nationCode',
-        number: 'cellular',
+        nationCode: 'phoneNationNumber',
+        number: 'phoneNumber',
       },
-      placeholder: '010-1234-1234',
+      placeholder: '',
     },
     {
       label: '',
-      name: '휴대폰nationCode',
+      name: 'phoneNationNumber',
       type: 'hidden',
       format: 'string',
       value: 'KOR_82',
     },
     {
       label: t('연락처 (사무실)'),
-      name: 'officePhone',
+      name: 'companyPhoneNumber',
       type: 'phone-number',
       format: 'string',
       value: '',
       fields: {
-        nationCode: '연락처nationCode',
-        number: 'officePhone',
+        nationCode: 'companyPhoneNationNumber',
+        number: 'companyPhoneNumber',
       },
-      placeholder: '2-1234-1234',
+      placeholder: '',
     },
     {
       label: '',
-      name: '연락처nationCode',
+      name: 'companyPhoneNationNumber',
       type: 'hidden',
       format: 'string',
       value: 'KOR_82',
@@ -324,14 +410,14 @@ const formConfig = (): DynamicFormConfig => ({
       placeholder: '',
     },
     {
-      name: 'quitDate',
+      name: 'retireDate',
       type: 'text',
       label: t('퇴사일'),
       value: '',
       placeholder: '',
     },
     {
-      name: 'lastPromotionDate',
+      name: 'promotionDate',
       type: 'text',
       label: t('최근 승진일'),
       value: '',
@@ -347,26 +433,29 @@ const formConfig = (): DynamicFormConfig => ({
       },
     },
     {
-      name: 'employmentStatusUpdateDate',
-      type: 'text',
-      label: t('재직 상태 변경일'),
-      value: '',
-      placeholder: '',
-    },
-    {
-      name: 'humanResourceManagementMethod',
+      name: 'hrInfoManageType',
       type: 'radio-group',
       label: t('인사 데이터 관리 방식'),
-      value: 'opt1',
+      value: '',
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.HrInfoManageType'],
       },
     },
     {
-      name: 'registerType',
+      name: 'companyMemberJoinTypeList',
+      type: 'checkbox-group',
+      label: t('회원 가입 유형'),
+      value: [],
+      optionsConfig: {
+        codeGroup: CODE_GROUP['pms.company.CompanyMemberJoinType'],
+      },
+      guideText: t('수동 관리는 다수 선택할 수 있으며, 자동 관리는 하나만 선택할 수 있습니다.'),
+    },
+    {
+      name: 'linkageSystem',
       type: 'radio-group',
       label: t('회원 가입 유형'),
-      value: 'GIM',
+      value: '',
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.LinkageSystem'],
       },
@@ -389,7 +478,7 @@ const formConfig = (): DynamicFormConfig => ({
       placeholder: '',
     },
     {
-      name: 'lastDormantStatusUpdateDate',
+      name: 'dormantDate',
       type: 'text',
       label: t('휴면 상태 변경일'),
       value: '',
@@ -413,14 +502,7 @@ const formConfig = (): DynamicFormConfig => ({
       name: 'tenantList',
       type: 'custom',
       label: t('테넌트'),
-      value: [
-        { tenantId: 10, tenantName: '완성차 테넌트' },
-        { tenantId: 1, tenantName: '테넌트' },
-        { tenantId: 2, tenantName: '테넌트' },
-        { tenantId: 3, tenantName: '테넌트' },
-        { tenantId: 4, tenantName: '테넌트' },
-        { tenantId: 5, tenantName: '테넌트' },
-      ],
+      value: [],
       format: 'array',
     },
     {
@@ -433,20 +515,20 @@ const formConfig = (): DynamicFormConfig => ({
       },
     },
     {
-      name: 'ssoLoginType',
+      name: 'ssoType',
       type: 'radio-group',
       label: '',
-      value: 'AES_Link',
+      value: '',
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.SsoType'],
       },
       guideText: t('SSO 로그인 사용 여부를 설정합니다.'),
     },
     {
-      name: 'passwordAuthType',
+      name: 'authType',
       type: 'radio-group',
       label: t('비밀번호 인증 유형'),
-      value: 'PLATFORM',
+      value: '',
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.PasswordAuthType'],
       },
@@ -486,6 +568,12 @@ const formConfig = (): DynamicFormConfig => ({
         { label: '제한 없음', value: 'opt3' },
       ],
       guideText: t('로그인 시간 제한 선택 시 회사관리 제한 시간에는 로그인할 수 없습니다.'),
+    },
+    {
+      name: 'jobGroups',
+      type: 'custom',
+      label: '',
+      value: [],
     },
   ],
 });
@@ -565,24 +653,5 @@ const textBookColumns = [
     meta: {
       cellAlign: 'center',
     },
-  }),
-] as ColumnDef<any, unknown>[];
-
-const roleColumns = [
-  columnHelper.accessor('occupation', {
-    header: '직군',
-    size: 570,
-  }),
-  columnHelper.accessor('job', {
-    header: '직무',
-    size: 570,
-  }),
-  columnHelper.accessor('main', {
-    header: '정',
-    size: 146,
-  }),
-  columnHelper.accessor('deputy', {
-    header: '부',
-    size: 146,
   }),
 ] as ColumnDef<any, unknown>[];

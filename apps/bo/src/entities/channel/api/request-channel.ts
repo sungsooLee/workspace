@@ -21,4 +21,10 @@ export default class RequestChannelService {
   static async getRequestChannelAcceptsList(params: any) {
     return httpService.get<any>(`${PMSApiPrefix()}/request/channel/accepts`, params);
   }
+
+  static async putRequestChannel(payload: any) {
+    return httpService.put<any>(`${PMSApiPrefix()}/request/channel/${payload.channelRequestUuid}`, {
+      channelSecretType: payload.channelSecretType,
+    });
+  }
 }

@@ -47,6 +47,7 @@ const PublishCourseComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
             provider={provider}
             name={'isUsed'}
             label={'과정 사용'}
+            format={'boolean'}
             element={
               <RadioGroupFormField
                 optionsConfig={{
@@ -54,15 +55,18 @@ const PublishCourseComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
                 }}
               />
             }
+            validation={{ required: true }}
           />
         </ContentsRow>
         {/*노출 기간*/}
         <ContentsRow>
           <FormRow2
             provider={provider}
-            name={'courseValidityStartHour'}
+            name={'courseValidityRange'}
             label={'노출 기간'}
+            format={'object'}
             element={<DateRangePickerFormField />}
+            validation={{ required: true }}
           />
         </ContentsRow>
         {/*썸네일*/}
@@ -80,6 +84,7 @@ const PublishCourseComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
             provider={provider}
             name={'tagNames'}
             label={'태그'}
+            format={'array'}
             element={
               <ChipListFormField
                 chipListConfig={{
@@ -88,6 +93,7 @@ const PublishCourseComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
                 }}
               />
             }
+            validation={{ required: true }}
           />
         </ContentsRow>
         {/*AI 과정 요약(AI 자동추출)*/}
@@ -96,6 +102,7 @@ const PublishCourseComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
             provider={provider}
             name={'courseSummary'}
             label={'AI 과정 요약(AI 자동추출)'}
+            format={'array'}
             element={<TextareaFormField maxLength={500} />}
           />
         </ContentsRow>
@@ -109,9 +116,15 @@ export const PublishCourse = PublishCourseComponent;
 /**
  * 응답 데이터를 폼 데이터로 변환
  */
-const responseDataToFormData = (response: Course): Course => {
+const responseDataToFormData = (d: Course): Course => {
   // 리턴
-  return response;
+  return {
+    ...d,
+    courseValidityRange: {
+      from: d.courseValidityStartHour, // 과정 유효 시작일
+      to: d.courseValidityEndDate, // 과정 유효 종료일
+    },
+  };
 };
 
 /**
@@ -125,5 +138,7 @@ const responseDataToFormData = (response: Course): Course => {
 export const formDataToRequestData = (d: Course) => {
   return {
     ...d,
+    courseValidityStartHour: d.courseValidityRange?.from, // 과정 유효 시작일
+    courseValidityEndDate: d.courseValidityRange?.to, // 과정 유효 종료일
   };
 };

@@ -15,12 +15,14 @@ import {
   ManagerChoiceModal,
   PhoneNumberFormField,
   SwitchFormField,
+  UserChoiceModal,
 } from '@shared/ui';
 
 import { EnFormMode } from '@types';
 
 import { DropdownFormField, FormDisplay } from '@features/form';
 import { DateRangePickerFormField } from '@features/form/ui';
+import { User } from '@learnway/types';
 
 const LearningResourceBaseFormComponent = ({
   provider,
@@ -47,15 +49,23 @@ const LearningResourceBaseFormComponent = ({
                 width: 'md',
                 content: <ChannelChoiceModal />,
               }}
+              transformModalData={(modalData: any) => {
+                return {
+                  channelName: modalData.channelName,
+                  channelUuid: modalData.channelUuid,
+                  tenantId: modalData.tenantId,
+                };
+              }}
             />
           }
         />
         {/*언어*/}
         <FormRow2
           provider={provider}
-          name="langCountryCode"
+          name="languageCountryCode"
           label={'언어'}
           format="object"
+          validation={{ required: true }}
           element={
             <DropdownFormField
               optionsConfig={{
@@ -65,18 +75,19 @@ const LearningResourceBaseFormComponent = ({
           }
         />
       </ContentsRow>
+      {/*학습자원명*/}
       <ContentsRow>
-        {/*학습자원명*/}
         <FormRow2
           provider={provider}
           name="contentName"
           label={'학습자원명'}
           value=""
+          validation={{ required: true }}
           element={<Input maxLength={150} />}
         />
       </ContentsRow>
+      {/*학습자원 설명*/}
       <ContentsRow>
-        {/*학습자원 설명*/}
         <FormRow2
           provider={provider}
           name="description"
@@ -85,29 +96,36 @@ const LearningResourceBaseFormComponent = ({
           element={<TextareaFormField maxLength={2000} />}
         />
       </ContentsRow>
+      {/*담당자*/}
       <ContentsRow>
-        {/*담당자*/}
         <FormRow2
           provider={provider}
+          label="담당자"
           name="coordinatorName"
-          label={t('LABEL.form.label.coordinator')}
-          format="object"
+          validation={{ required: true }}
           element={
             <InputModalSelectorFormField
               modalConfig={{
                 title: '',
                 width: 'md',
-                content: <ManagerChoiceModal />,
+                content: <UserChoiceModal title="담당자" />,
               }}
+              transformModalData={(data: User) => ({
+                coordinatorUuid: data.uuid,
+                coordinatorName: `${data.name}/${data?.dept?.deptName}/${data?.company?.name}`,
+                coordinatorTelNo: data.phoneNumber,
+              })}
             />
           }
         />
+        <FormRow2 provider={provider} type="hidden" name="coordinatorUuid" />
         {/*연락처*/}
         <FormRow2
           provider={provider}
           name="coordinatorTelNo"
           label={t('연락처')}
           format="object"
+          validation={{ required: true }}
           element={
             <PhoneNumberFormField
               fields={{ nationCode: 'coordinatorTelCountryCode', number: 'coordinatorTelNo' }}
@@ -123,24 +141,27 @@ const LearningResourceBaseFormComponent = ({
         <FormRow2
           provider={provider}
           label={t('사용기한')}
-          name="isLimitExist"
+          name="isUnlimited"
           tooltip={t('사용기한 내 콘텐츠 공유/교육자원활용이 가능합니다.')}
-          value={false}
+          format="boolean"
+          value={true}
           element={
             <SwitchFormField
+              invert
               switchConfig={{
-                label: (value: boolean) => (value ? '기간설정' : '무기한'),
+                label: (value: boolean) => (value ? '무기한' : '기간설정'),
               }}
             />
           }
         />
       </ContentsRow>
       {/* 사용기한 상세 */}
-      <FormDisplay provider={provider} dependencies={[{ name: 'isLimitExist', value: true }]}>
+      <FormDisplay provider={provider} dependencies={[{ name: 'isUnlimited', value: false }]}>
         <ContentsRow className="pt-0">
           <FormRow2
             provider={provider}
             name="contentUseDate"
+            format="object"
             element={<DateRangePickerFormField />}
           />
         </ContentsRow>
@@ -167,6 +188,7 @@ const LearningResourceBaseFormComponent = ({
             provider={provider}
             name="vendorName"
             label={t('외주개발업체')}
+            format="object"
             element={
               <InputModalSelectorFormField
                 modalConfig={{
@@ -185,6 +207,7 @@ const LearningResourceBaseFormComponent = ({
             provider={provider}
             label={t('외주개발업체 담당자')}
             name="vendorCoordinatorName"
+            value=""
             element={<Input />}
           />
           {/*외주개발업체 연락처*/}
@@ -192,7 +215,7 @@ const LearningResourceBaseFormComponent = ({
             provider={provider}
             label={t('외주개발업체 연락처')}
             name="vendorTelNo"
-            type="phone-number"
+            value=""
             element={<PhoneNumberFormField />}
             fields={{
               nationCode: 'vendorNationCode',
@@ -201,11 +224,13 @@ const LearningResourceBaseFormComponent = ({
           />
         </ContentsRow>
       </FormDisplay>
+      {/*태그*/}
       <ContentsRow>
-        {/*태그*/}
         <FormRow2
           provider={provider}
+          label="태그"
           name="tags"
+          value={[]}
           element={<ChipListFormField />}
           placeholder="한글, 영문, 숫자 포함 9자 이하 태그를 입력하세요."
           limitPlaceholder="여러개의 태그는 쉼표로 구분"
@@ -215,12 +240,11 @@ const LearningResourceBaseFormComponent = ({
           }}
         />
       </ContentsRow>
+      {/* 교육지원활용 여부 */}
       <ContentsRow type="horizontal" className="inactive">
-        {/* 교육지원활용 여부 */}
         <FormRow2
           provider={provider}
           name="isCourseUsed"
-          type="switch"
           format="boolean"
           element={<SwitchFormField />}
           switchConfig={{
