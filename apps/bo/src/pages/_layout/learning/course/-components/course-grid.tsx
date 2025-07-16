@@ -38,10 +38,6 @@ export const CourseGrid: React.FC<CourseGridProps> = ({
       config={config}
       multiple
       showNumberingColumn
-      getRowClassName={(row: CourseListItem) => {
-        // if (row == child) return 'bg-[--secondary9]';
-        return '';
-      }}
       copyButton={{
         disabled: !buttonState.copy,
         onClick: handleCopyClick,
