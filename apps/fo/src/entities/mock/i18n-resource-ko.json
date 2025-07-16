@@ -1,7 +1,7 @@
 {
   "MESSAGE": {},
   "LABEL": {
-    "message": {
+    "messages": {
       "searchAccountNotice": "본인 명의의 인증 수단 정보를 정확히 입력해 주세요.",
       "searchAccountResult": "입력하신 정보로 가입된 아이디는\n 아래와 같습니다.",
       "changePasswordSuccess": "비밀번호가 변경되었습니다.",

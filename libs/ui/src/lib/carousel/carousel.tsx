@@ -15,10 +15,11 @@ export interface CarouselComponentProps extends SwiperProps {
   items: Array<React.ReactNode>;
   className?: string;
   showNavigation?: boolean;
+  itemClassName?: string | ((item: React.ReactNode, index: number) => string);
 }
 
 const CarouselComponent = forwardRef<React.ElementRef<typeof Swiper>, CarouselComponentProps>(
-  ({ className, items, showNavigation = false, ...props }, ref) => {
+  ({ className, items, showNavigation = false, itemClassName, ...props }, ref) => {
     const prevRef = useRef<HTMLButtonElement>(null);
     const nextRef = useRef<HTMLButtonElement>(null);
 
@@ -38,10 +39,9 @@ const CarouselComponent = forwardRef<React.ElementRef<typeof Swiper>, CarouselCo
           ref={ref}
           className={cn(styles.swiper, className, 'nlp-carousel')}
           modules={[FreeMode, Pagination, Navigation, Autoplay]}
-          // loop={items.length > 1} // 슬라이드 1개일 경우 루프 off
-          allowTouchMove={items.length > 1} // 슬라이드 1개일 경우 스와이프 off
-          pagination={items.length > 1 ? props.pagination : false} // 1개일때는 페이지 숨김
-          navigation={false} // 초기에는 false로 설정
+          allowTouchMove={items.length > 1}
+          pagination={items.length > 1 ? props.pagination : false}
+          navigation={false}
           onInit={(swiper) => {
             if (items.length > 1 && showNavigation && swiper.params.navigation) {
               const navigation = swiper.params.navigation as NavigationOptions;
@@ -52,11 +52,16 @@ const CarouselComponent = forwardRef<React.ElementRef<typeof Swiper>, CarouselCo
             }
           }}
         >
-          {items.map((item, index) => (
-            <SwiperSlide key={index} className={cn(styles.swiper_slide)}>
-              {item}
-            </SwiperSlide>
-          ))}
+          {items.map((item, index) => {
+            const computedClassName =
+              typeof itemClassName === 'function' ? itemClassName(item, index) : itemClassName;
+
+            return (
+              <SwiperSlide key={index} className={cn(styles.swiper_slide, computedClassName)}>
+                {item}
+              </SwiperSlide>
+            );
+          })}
         </Swiper>
       </div>
     );

@@ -45,53 +45,53 @@ const CompanyOrganizationListComponent = ({
       query: companyQueryOptions.list,
       columns: [
         {
-          name:  'companyType', label: t('그룹'), render: (row: any) => {
-            return t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.company.CompanyType.${row.getValue()}`);
+          name:  'companyType', label: t('그룹'), render: (info: any) => {
+            return t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.company.CompanyType.${info.getValue()}`);
           }
         },
         {
-          name: 'isUseLinkageSystem', label: t('데이터 관리 방식'), render: (row: any) => {
-            return row.getValue() ? '자동 관리' : '수동 관리';
+          name: 'isUseLinkageSystem', label: t('데이터 관리 방식'), render: (info: any) => {
+            return info.getValue() ? '자동 관리' : '수동 관리';
           }
         },
         {
-          name: 'name', label: t('회사명'), render: (row: any) => {
+          name: 'name', label: t('회사명'), render: (info: any) => {
             return <Button
               className="link"
               onClick={() => {
-                _global.linkClick(row.row.original);
+                _global.linkClick(info.row.original);
               }}
-              label={row.getValue() as string}
+              label={info.getValue() as string}
             />
           }
         },
         {
-          name: 'useYn', label: t('회사정보 사용'), render: (row: any) => {
-            return (row.getValue() ? t('사용') : t('미사용'))
+          name: 'useYn', label: t('회사정보 사용'), render: (info: any) => {
+            return (info.getValue() ? t('사용') : t('미사용'))
           }
         },
         {
-          name: 'createdBy', label: t('등록자'), render: (row: any) => {
-            return (row.row.original.isUseLinkageSystem ? '시스템' : row.row.original.createdBy)
+          name: 'createdBy', label: t('등록자'), render: (info: any) => {
+            return (info.row.original.isUseLinkageSystem ? '시스템' : info.row.original.createdBy)
           }
         },
         {
-          name: 'createdDate', label: t('등록일'), render: (row: any) => {
-            return row.getValue() === null
+          name: 'createdDate', label: t('등록일'), render: (info: any) => {
+            return info.getValue() === null
               ? ''
-              : getDateToString(new Date(row.getValue() as string), DATE_TIME_FORMAT.DATETIME_SEC)
+              : getDateToString(new Date(info.getValue() as string), DATE_TIME_FORMAT.DATETIME_SEC)
           }
         },
         {
-          name: 'lastModifiedBy', label: t('수정자'), render: (row: any) => {
-            return row.row.original.isUseLinkageSystem ? '시스템' : row.row.original.lastModifiedBy
+          name: 'lastModifiedBy', label: t('수정자'), render: (info: any) => {
+            return info.row.original.isUseLinkageSystem ? '시스템' : info.row.original.lastModifiedBy
           }
         },
         {
-          name: 'modifiedDate', label: t('수정일'), render: (row: any) => {
-            return row.getValue() === null
+          name: 'modifiedDate', label: t('수정일'), render: (info: any) => {
+            return info.getValue() === null
               ? ''
-              : getDateToString(new Date(row.getValue() as string), DATE_TIME_FORMAT.DATETIME_SEC)
+              : getDateToString(new Date(info.getValue() as string), DATE_TIME_FORMAT.DATETIME_SEC)
           }
         },
       ],

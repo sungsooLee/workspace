@@ -20,6 +20,7 @@ interface FormRow3Props {
     minLength?: number;
     maxLength?: number;
     pattern?: RegExp;
+    validate?: (value: any, formValues?: any) => boolean | string;
   };
   placeholder?: string;
   style?: 'bo' | 'fo';
@@ -109,6 +110,16 @@ const BaseFormRow3Component: FC<FormRow3Props> = ({
       validationRules.pattern = {
         value: validation.pattern,
         message: `${label || name} 형식이 올바르지 않습니다.`,
+      };
+    }
+
+    if (validation.validate) {
+      validationRules.validate = (value: any, formValues: any) => {
+        const result = validation.validate!(value, formValues);
+        if (result === false || typeof result === 'string') {
+          return typeof result === 'string' ? result : `${label || name} 값이 유효하지 않습니다.`;
+        }
+        return true;
       };
     }
 

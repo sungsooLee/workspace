@@ -14,6 +14,7 @@ import { usersQueryOptions } from '@entities/users/service/users.queries';
 import { getUserStatus } from '@features/platform-management/company/company-user-management/service/company-user.service';
 import dayjs from 'dayjs';
 import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
+import { useUnlockUser } from '@entities/users/service/users.hook';
 
 const _global = {
   unlockClick: (row: any) => {
@@ -35,19 +36,16 @@ const CompanyUserListComponent = () => {
 
   const queryClient = useQueryClient();
 
-  const { alert } = useModal();
+  const { alert, confirm: openConfirm } = useModal();
   const {
     provider: searchProvider,
     getValues,
     setValue,
     setOptions,
   } = useSearchBox(searchConfig());
-  const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
-  const [tenantId, setTenantId] = useState(undefined);
 
-  const tenantIdWatch = useWatch({ control: searchProvider.control, name: 'tenantId' });
-
-  const handleOnSearch = useCallback((data: any) => {
+  const searchParam = () => {
+    const data = getValues();
     setTenantId(data.tenantId);
     const createdDateFrom = data.createdDate.from
       ? dayjs(new Date(data.createdDate.from)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSS')
@@ -61,7 +59,17 @@ const CompanyUserListComponent = () => {
       createdDateTo,
     };
     console.log('searchData', searchData);
-    gridFetch(searchData);
+    return searchData;
+  };
+
+  const { config: gConfig, gridFetch } = useGridBox(gridConfig, searchParam);
+  const [tenantId, setTenantId] = useState(undefined);
+
+  const tenantIdWatch = useWatch({ control: searchProvider.control, name: 'tenantId' });
+  const { unlock } = useUnlockUser({});
+
+  const handleOnSearch = useCallback((data: any) => {
+    gridFetch(searchParam());
   }, []);
 
   useEffect(() => {
@@ -82,8 +90,31 @@ const CompanyUserListComponent = () => {
     }
   }, [tenantIdWatch]);
 
-  _global.unlockClick = (row: any) => {
-    alert({ title: '준비중입니다.' });
+  _global.unlockClick = async (row: any) => {
+    const message =
+      row.authType === 'PLATFORM' ? (
+        <>
+          {t('계정 잠김을 해제하면 임시비밀번호를 사용자 메일로 발송합니다.')}
+          <br />
+          {t(
+            '사용자가 임시비밀번호로 로그인 후 비밀번호를 변경해야 계정 상태가 ‘잠김’ → ‘정상’으로 변경됩니다. ',
+          )}
+        </>
+      ) : (
+        t('계정 잠김을 해제하면 계정 상태가 ‘잠김’ → ‘정상’으로 변경됩니다.')
+      );
+    if (
+      await openConfirm({
+        title: t('계정 잠김을 해제하시겠습니까?'),
+        content: message,
+      })
+    ) {
+      unlock(row.uuid, {
+        onSuccess: () => {
+          gridFetch(searchParam());
+        },
+      });
+    }
   };
   _global.loginClick = (row: any) => {
     alert({ title: '준비중입니다.' });
@@ -359,16 +390,24 @@ const columns = () =>
       enableSorting: false,
       size: 88,
     }),
+    // linkageSystem값이 null이면 직접 가입, 아니면 I/F
     columnHelper.accessor('createdDate', {
       header: t('회원가입일'),
       cell: (info) =>
-        info.getValue() === null
-          ? ''
-          : getDateToString(new Date(info.row.original.createdDate), DATE_TIME_FORMAT.DATETIME_SEC),
+        info.row.original.linkageSystem === null
+          ? info.row.original.createdDate
+            ? getDateToString(
+                new Date(info.row.original.createdDate),
+                DATE_TIME_FORMAT.DATETIME_SEC,
+              )
+            : ''
+          : info.row.original.joinDate
+            ? getDateToString(new Date(info.row.original.joinDate), DATE_TIME_FORMAT.DATETIME_SEC)
+            : '',
       enableGrouping: false,
       meta: {
         cellAlign: 'center',
       },
-      size: 120,
+      size: 160,
     }),
   ] as ColumnDef<any, unknown>[];

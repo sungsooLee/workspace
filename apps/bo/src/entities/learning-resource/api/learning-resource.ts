@@ -7,11 +7,13 @@ import {
   ContentBaseInfo,
   ContentCourseMappingParams,
   ContentCourseMappingRes,
-  CourseMappingStatusRes,
   GetContentDetailRes,
+  GetContentsParams,
+  GetContentsRes,
   HtmlVideoFileChangeReq,
   HtmlVideoMetadataReq,
   HtmlVideoStatus,
+  PostContentCopyRes,
   PostDraftHtmlVideoParams,
   PostDraftVideosParams,
   PostDraftVideosRes,
@@ -30,7 +32,7 @@ export default class LearningResourceService {
     return httpService.get(`${PMSApiPrefix()}/users/` + uuid);
   }
 
-  static fetchContents(params: any): Promise<any> {
+  static fetchContents(params: GetContentsParams): Promise<GetContentsRes> {
     return httpService.get(`${CMSApiPrefix()}/contents`, params);
   }
 
@@ -51,6 +53,10 @@ export default class LearningResourceService {
 
   static fetchCurriculumMapping(contentUuid: string): Promise<boolean> {
     return httpService.get(`${CMSApiPrefix()}/content/curriculum-mapping/${contentUuid}`);
+  }
+
+  static postContentCopy(contentUuid: string): Promise<PostContentCopyRes> {
+    return httpService.post(`${CMSApiPrefix()}/content/${contentUuid}/copy`, {});
   }
 
   static postDraftVideos(params: PostDraftVideosParams): Promise<PostDraftVideosRes> {

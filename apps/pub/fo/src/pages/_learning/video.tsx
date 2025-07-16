@@ -3,7 +3,7 @@ import { cn } from '@learnway/shared';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useModal, Button } from '@learnway/ui';
 
-import styles from './learning.module.css';
+import styles from '@learnway/styles/fo/pages/_learning/learning.module.css';
 
 import bnrImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 
@@ -54,9 +54,12 @@ function RouteComponent() {
   };
 
   return (
-    <div className={styles.start}>
-      {/* 예시 이미지 */}
-      <img src={bnrImage1} alt="" />
+    // 퍼블수정 20250716 마크업 수정
+    <div className={`${styles.start} ${styles.video}`}>
+      <div className={styles.video_box}>
+        {/* 비디오 영역 */}
+        <img src={bnrImage1} alt="" />
+      </div>
     </div>
   );
 }

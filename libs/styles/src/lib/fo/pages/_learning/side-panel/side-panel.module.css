@@ -1,28 +1,36 @@
 .start {
-  @apply fixed right-[45px] top-1/2 flex -translate-y-1/2;
+  @apply fixed right-[24px] top-[160px] flex;
   &.active {
-    @apply relative right-[inherit] top-[inherit] h-full min-h-[100dvh] -translate-y-0 bg-white;
+    @apply relative right-[inherit] top-[inherit] h-full min-h-[calc(100dvh-80px)] -translate-y-0 bg-white;
     .panel {
-      @apply flex flex-col justify-between;
-      .menu {
-        @apply p-[16px] shadow-none;
-      }
-      .control {
-        @apply shadow-none;
+      @apply flex flex-col justify-between rounded-none;
+    }
+    .control {
+      &::before {
+        @apply hidden;
       }
     }
   }
   .panel {
+    @apply rounded-[16px] bg-white px-[8px] pb-[12px] pt-[8px] shadow-[0px_2px_6px_rgba(0,0,0,0.1)];
     .menu,
     .control {
-      @apply rounded-[16px] bg-white px-[20px] py-[24px] text-center shadow-[0px_2px_6px_rgba(0,0,0,0.1)];
+      @apply text-center;
       button {
-        @apply !mx-auto flex flex-col;
+        @apply !mx-auto flex w-[64px] flex-col !px-0 py-[5px];
         span {
           @apply body_3_r mt-[8px] block whitespace-nowrap text-center text-[var(--gray7)];
         }
+        svg {
+          @apply mx-0;
+        }
+        svg,
+        path,
+        circle {
+          @apply fill-[var(--gray35)];
+        }
         & + button {
-          @apply mt-[24px];
+          @apply mt-[8px];
         }
         &:disabled {
           @apply opacity-50;
@@ -31,16 +39,74 @@
           svg,
           path,
           circle {
-            @apply stroke-[var(--secondary3)];
+            @apply fill-[var(--blue50)];
           }
           span {
-            @apply body_3_b text-[var(--secondary3)];
+            @apply body_3_b text-[var(--blue50)];
+          }
+        }
+        &.new {
+          @apply relative;
+          svg {
+            @apply mr-[5px];
+          }
+          &::before {
+            @apply absolute right-[13px] top-[7px] h-[5px] w-[5px] rounded-[50%] bg-[var(--red50)] content-[''];
+          }
+        }
+        &.btn_sh {
+          @apply flex h-[32px] items-center justify-center;
+          svg {
+            @apply rotate-180;
+          }
+          &.active {
+            svg {
+              @apply rotate-0;
+            }
           }
         }
       }
     }
+    .menu {
+      & > div {
+        @apply mt-[8px];
+        button {
+          &:nth-child(1) {
+            svg,
+            path,
+            circle {
+              @apply !stroke-[var(--gray35)];
+            }
+            &.active {
+              svg,
+              path,
+              circle {
+                @apply !stroke-[var(--blue50)];
+              }
+            }
+          }
+        }
+      }
+      & > button {
+        svg,
+        path,
+        circle {
+          @apply !fill-none !stroke-[var(--gray35)];
+        }
+      }
+    }
     .control {
-      @apply mt-[24px];
+      @apply relative mt-[16px] pt-[16px];
+      button {
+        svg,
+        path,
+        circle {
+          @apply fill-none !stroke-[var(--gray35)];
+        }
+      }
+      &::before {
+        @apply absolute left-1/2 top-0 h-px w-[54px] -translate-x-1/2 bg-[var(--gray5)] content-[''];
+      }
     }
   }
 

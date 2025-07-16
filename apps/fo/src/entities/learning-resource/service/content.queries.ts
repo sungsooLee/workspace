@@ -1,11 +1,12 @@
 import { getQuerySkipToken, convertHierarchyNode, getRandomId } from '@learnway/shared';
 import { isMobile } from 'react-device-detect';
 
-import ContentService from '../api/content';
+import { ContentService } from '../api/content';
 
 export const contentQueryKeys = {
   all: ['content'] as const,
   detail: (contentUuid: string) => [...contentQueryKeys.all, contentUuid] as const,
+  progressMulti: (payload: any) => [...contentQueryKeys.all, ...Object.values(payload)],
 };
 
 export const contentQueryOptions = {
@@ -17,8 +18,11 @@ export const contentQueryOptions = {
         }
       : getQuerySkipToken<any>(),
 
-  // detail: (menuId: number) => ({
-  //   queryKey: scormRteQueryKeys.detail(menuId),
-  //   queryFn: () => MenuService.getMenu(menuId),
-  // }),
+  progressMulti: (payload: any) =>
+    payload
+      ? {
+          queryKey: contentQueryKeys.progressMulti(payload),
+          queryFn: () => ContentService.getProgressMulti(payload),
+        }
+      : getQuerySkipToken<any>(),
 };

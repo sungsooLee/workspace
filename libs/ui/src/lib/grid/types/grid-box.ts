@@ -63,7 +63,7 @@ export interface useGridBoxConfig {
 export interface UseGridBoxReturn<T = any> {
   config: GridBoxConfig<T>;
   gridFetch: (condition?: Record<string, any>, state?: GridBoxState) => Promise<void>;
-  data: any;
+  data?: PaginationResponse<T>;
 }
 
 /**

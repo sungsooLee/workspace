@@ -1,6 +1,7 @@
 .start {
+  @apply flex flex-col;
   .description {
-    @apply mb-[12px] block text-[12px] font-normal leading-[1rem] text-[var(--gray7)];
+    @apply mt-[8px] block text-[12px] font-normal leading-[1rem] text-[var(--gray6)];
     &:empty {
       @apply hidden;
     }

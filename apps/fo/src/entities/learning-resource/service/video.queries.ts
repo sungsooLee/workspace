@@ -5,21 +5,21 @@ import { VideoService } from '../api/video';
 
 export const videoQueryKeys = {
   all: ['video'] as const,
-  scoUrl: (param: any) => [...videoQueryKeys.all, ...Object.values(param)] as const,
+  watchInitialize: (param: any) => [...videoQueryKeys.all, ...Object.values(param)] as const,
 };
 
-export const scormRteQueryOptions = {
-  // scoInfo: (param?: any) =>
-  //   param
-  //     ? {
-  //         queryKey: videoQueryKeys.scoUrl(param),
-  //         queryFn: () => VideoService.getScoInfo(param),
-  //       }
-  //     : getQuerySkipToken<any>(),
+export const vidoeQueryOptions = {
+  watchInitialize: (param?: any) =>
+    param
+      ? {
+          queryKey: videoQueryKeys.watchInitialize(param),
+          queryFn: () => VideoService.watchInitialize(param),
+        }
+      : getQuerySkipToken<any>(),
 };
 
 export const videoMutateOptions = {
   watchLog: () => ({
-    mutationFn: (payload: any) => VideoService.watichLog(payload),
+    mutationFn: (payload: any) => VideoService.watchLog(payload),
   }),
 };

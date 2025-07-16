@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { TreeData } from '../tree-view/type';
+import { SelectedChip } from '../type';
 
-const useShuttleTreeToChips = (initValue: TreeData[] = []) => {
-  const [selectedItems, setSelectedItems] = useState<TreeData[]>(initValue);
+const useShuttleTreeToChips = (initValue: SelectedChip[] = []) => {
+  const [selectedItems, setSelectedItems] = useState<SelectedChip[]>(initValue);
 
   // 단일 선택
-  const handleSelectItem = (value: TreeData) => {
+  const handleSelectItem = (value: SelectedChip) => {
     // if (value.isCombined) {
     //   setSelectedItems((prev) =>
     //     prev.some(({ key }) => key === value.key) ? prev : [value, ...prev],
@@ -35,8 +35,8 @@ const useShuttleTreeToChips = (initValue: TreeData[] = []) => {
   //   setSelectedItems([...selectedItems, ...filteredNodesToAdd]);
   // };
 
-  const cancelSelectItem = (value: TreeData) => {
-    setSelectedItems((prev) => prev.filter((v) => v !== value));
+  const cancelSelectItem = ({ key }: SelectedChip) => {
+    setSelectedItems((prev) => prev.filter(({ key: previousKey }) => previousKey !== key));
   };
 
   const cancelAll = () => {
@@ -46,7 +46,6 @@ const useShuttleTreeToChips = (initValue: TreeData[] = []) => {
   return {
     selectedItems,
     handleSelectItem,
-    // handleSelectItemWithChildren,
     cancelSelectItem,
     cancelAll,
   };

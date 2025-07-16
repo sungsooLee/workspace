@@ -13,3 +13,15 @@ export interface CmsImageItem {
   fileSize: number;
   itemUrl: string;
 }
+
+export interface CmsVideoContent {
+  contentUuid: string;
+  contentName: string;
+  langCountryCode: string;
+  masterVideo: string;
+  encodedVideos: any[];
+  videoDuration: number;
+  lastVideoEndTime: number;
+  progress: number;
+  videoSubtitles: any[];
+}

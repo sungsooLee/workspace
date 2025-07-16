@@ -78,7 +78,6 @@ const ThumbnailImageUploadFormFieldComponent = forwardRef<
     }
 
     useEffect(() => {
-      console.log('🚀 ~ uuidType, value:', uuidType, value);
       if (uuidType === 'group') {
         if (value) fetchGroupInfo(value as string);
         return;

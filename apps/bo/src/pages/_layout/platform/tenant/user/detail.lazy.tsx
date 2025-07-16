@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef } from 'react';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 
@@ -6,16 +6,7 @@ import { PageContainer, MainContents, ContentsButtons, LinkBox } from '@shared/u
 
 import { Tabs, Button } from '@learnway/ui';
 
-import {
-  TenantUserRegist,
-  TenantUserList,
-  TenantUserRegistApplicationList,
-} from '@features/platform-management/tenant';
-import {
-  CompanyUserDetail,
-  CompanyUserDetailBase,
-  CompanyUserDetailLearningHistory,
-} from '@features/platform-management/company';
+import { CompanyUserDetail } from '@features/platform-management/company';
 
 export const Route = createLazyFileRoute('/_layout/platform/tenant/user/detail')({
   component: RouteComponent,
@@ -23,6 +14,15 @@ export const Route = createLazyFileRoute('/_layout/platform/tenant/user/detail')
 
 function RouteComponent() {
   const router = useRouter();
+
+  const formRef = useRef<HTMLFormElement>(null);
+  const handleOnSave = () => {
+    if (formRef.current?.saveData) formRef.current.saveData();
+  };
+
+  const handleOnReset = () => {
+    if (formRef.current?.clearForm) formRef.current.clearForm();
+  };
 
   return (
     <PageContainer>
@@ -35,21 +35,11 @@ function RouteComponent() {
             onClick={() => router.navigate({ to: '/platform/tenant/user' })}
           />
         </LinkBox>
-        <Button
-          label={t('LABEL.button.reset')}
-          variant="gray2"
-          size="sm"
-          //onClick={() => router.navigate({ to: '/platform/tenant/management/regist' })}
-        />
-        <Button
-          label={t('LABEL.button.save')}
-          variant="primary"
-          size="sm"
-          //onClick={() => router.navigate({ to: '/platform/tenant/management/regist' })}
-        />
+        <Button label={t('LABEL.button.reset')} variant="gray2" size="sm" onClick={handleOnReset} />
+        <Button label={t('LABEL.button.save')} variant="primary" size="sm" onClick={handleOnSave} />
       </ContentsButtons>
       <MainContents>
-        <CompanyUserDetail />
+        <CompanyUserDetail formRef={formRef} />
       </MainContents>
     </PageContainer>
   );

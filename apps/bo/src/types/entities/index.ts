@@ -23,3 +23,4 @@ export * from './tenant-category';
 export * from './tenant';
 export * from './user-group';
 export * from './widgets';
+export * from './contents';

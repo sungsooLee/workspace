@@ -3,6 +3,7 @@ import {
   BlogUpdateReq,
   ContentBaseInfo,
   ContentCourseMappingParams,
+  GetContentsParams,
   HtmlVideoFileChangeReq,
   HtmlVideoMetadataReq,
   PostDraftHtmlVideoParams,
@@ -46,7 +47,7 @@ export const learningResourceQueryOptions = {
     staleTime: 0,
     enabled: true,
   }),
-  getContents: (params: any) => ({
+  getContents: (params: GetContentsParams) => ({
     queryKey: queryKeys.contents,
     queryFn: () => LearningResourceService.fetchContents(params),
     cacheTime: 0,
@@ -126,6 +127,9 @@ export const learningResourceQueryOptions = {
 };
 
 export const mutateOptions = {
+  postContentCopy: () => ({
+    mutationFn: (contentUuid: string) => LearningResourceService.postContentCopy(contentUuid),
+  }),
   postDraftVideos: () => ({
     mutationFn: (params: PostDraftVideosParams) => LearningResourceService.postDraftVideos(params),
   }),

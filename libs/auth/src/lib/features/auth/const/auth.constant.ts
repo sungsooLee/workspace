@@ -15,6 +15,20 @@ export const SESSION_TIMEOUT_EXTENSION_ALERT_DURATION = 1000 * 60 * 5; // 경과
 // | PASSWORD_EXPIRED             |              401 | A008       | 11,12   |
 // | ACCESS_DENIED                |              403 | A020       |         |
 // |------------------------------+------------------+------------+---------|
+
+// UNAUTHORIZED(401, "A001", "err.unauthorized"),
+// INVALID_USERNAME_OR_PASSWORD(401, "A002", "err.invalid.username.or.password"),
+// JWT_EXPIRED(401, "A003", "err.jwt.expired"),
+// RTJWT_EXPIRED(401, "A004", "err.rtjwt.expired"),
+// USER_LOCKED(401, "A005", "err.user.locked"),
+// USER_DISABLED(401, "A006", "err.user.disabled"),
+// USER_DORMANT(401, "A007", "err.user.dormant"),
+// SSO_LOCKED(401, "A008", "err.sso.locked"),
+// PASSWORD_EXPIRED(401, "A009", "err.password.expired"),
+// COMPANY_DISABLED(401, "A010", "err.company.disabled"),
+// ACCESS_DENIED(403, "A020", "err.access.denied"),
+// USER_DATA_NOT_FOUND(404, "A021", "err.user.not.found"),
+
 // NLP_BO_LOG_1000 / 로그인 / 로그인 > 로그인 > 관리자 로그인 얼럿
 export const AUTH_ERROR_CODE = {
   FAIL_ID_PASSWORD: 'A002', // 아이디 없음, 패스워드 실패  1, 2
@@ -24,7 +38,7 @@ export const AUTH_ERROR_CODE = {
   APPROVAL_ADMIN_REJECT: '8', // 어드민 승인 반려  8
   APPROVAL_CP_PENDING: 'A007', // CP 승인 대기  9
   APPROVAL_CP_REJECT: '10', // CP 승인 반려  10
-  PASSWORD_CHANGE_PASSWORD_USE: 'A008', // 패스워드 변경 안내 - 패스워드 사용자  11
+  PASSWORD_CHANGE_PASSWORD_USE: 'A009', // 패스워드 변경 안내 - 패스워드 사용자  11
   PASSWORD_CHANGE_PASSWORD_NOT_USE: 'A008', // 패스워드 변경 안내 - 패스워드 미사용자  12
   TENANT_PENDING: '13', // 테넌트 개설 대기중  13
   IN_WORKING_TIME: '14', // 근무시간에만 로그인 14

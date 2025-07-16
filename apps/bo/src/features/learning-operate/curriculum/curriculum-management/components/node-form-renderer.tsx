@@ -4,6 +4,7 @@ import { FormState } from '../types/form.types';
 import { CurriculumFormSimple } from './curriculum-form-simple';
 import { MAPPING_CURRICULUM_TYPE } from '@types';
 import { ModuleForm } from './module-form';
+import { LessonForm } from './lesson-form';
 interface NodeFormRendererProps {
   formState: FormState;
   onFormSubmit: (data: any) => void;
@@ -14,6 +15,11 @@ interface NodeFormRendererProps {
   loadFormData: (data: Record<string, any>, options?: any) => void;
   selectedNodeData?: any;
   isLoading?: boolean;
+  curriculumData?: {
+    tenantId?: number;
+    channelUuid?: string;
+    contentType?: string;
+  };
 }
 
 export const NodeFormRenderer: React.FC<NodeFormRendererProps> = ({
@@ -26,6 +32,7 @@ export const NodeFormRenderer: React.FC<NodeFormRendererProps> = ({
   loadFormData,
   selectedNodeData,
   isLoading,
+  curriculumData,
 }) => {
   const { activeFormType, selectedNode, parentNode, isEditing } = formState;
 
@@ -75,11 +82,29 @@ export const NodeFormRenderer: React.FC<NodeFormRendererProps> = ({
     case MAPPING_CURRICULUM_TYPE.MODULE:
       return (
         <AutoFormProvider value={autoFormContext}>
-          <ModuleForm watch={watch} />
+          <ModuleForm
+            watch={watch}
+            setValue={setValue}
+            loadFormData={loadFormData}
+            isEditing={isEditing}
+            initialData={selectedNodeData}
+            curriculumData={curriculumData}
+          />
         </AutoFormProvider>
       );
 
     case MAPPING_CURRICULUM_TYPE.LESSON:
-      return <div style={{ padding: '20px' }}></div>;
+      return (
+        <AutoFormProvider value={autoFormContext}>
+          <LessonForm
+            watch={watch}
+            setValue={setValue}
+            loadFormData={loadFormData}
+            isEditing={isEditing}
+            initialData={selectedNodeData}
+            curriculumData={curriculumData}
+          />
+        </AutoFormProvider>
+      );
   }
 };

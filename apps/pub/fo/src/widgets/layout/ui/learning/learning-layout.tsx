@@ -5,7 +5,8 @@ import { cn } from '@learnway/shared';
 
 import { LearningHeader } from './learning-header/learning-header';
 import { LearningContainer } from './learning-container/learning-container';
-import styles from './learning-layout.module.css';
+
+import styles from '@learnway/styles/fo/pages/_learning/learning-layout.module.css';
 
 import { MobileView, BrowserView } from 'react-device-detect';
 

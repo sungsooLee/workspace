@@ -1,5 +1,4 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import type { MutateOptions } from '@tanstack/react-query';
 
 import { queryKeys, usersQueryOptions as queryOptions, mutateOptions } from './users.queries';
 
@@ -28,5 +27,26 @@ export function useCreateUser(options: any) {
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
     data: mutation.data,
+  };
+}
+
+export function useUnlockUser(options: any) {
+  const { mutate, isSuccess, isError } = useMutation({
+    ...mutateOptions.unlock(),
+    onSuccess: async (data, variables, context) => {
+      if (options.onSuccess) {
+        options.onSuccess(data, variables, context);
+      }
+    },
+    ...mutateOptions,
+  });
+
+  return {
+    unlock: (payload: any, callback?: any) => {
+      mutate(payload, callback);
+      options?.onSuccess?.(false);
+    },
+    isSuccess,
+    isError,
   };
 }

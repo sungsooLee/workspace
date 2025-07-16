@@ -51,9 +51,16 @@
             }
           }
           [class*='nlp--datepicker-time'] {
-            @apply mt-[4px] !h-[24px];
-            [class*='datepicker_input'] {
+            @apply !h-[24px];
+            [class*='datepicker_input'],
+            [class*='datepicker_wrap'] {
               @apply !h-[24px];
+            }
+            [class*='react-datepicker__input-container'] input {
+              @apply min-h-[24px] py-0;
+            }
+            [class*='input_time'] {
+              @apply min-h-[24px];
             }
           }
           [class*='icon_wrap'] {

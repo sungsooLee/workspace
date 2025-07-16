@@ -11,7 +11,7 @@
         @apply border-t-0;
       }
       .inner {
-        @apply relative pb-[16px];
+        @apply relative pb-[24px];
         label {
           & > span {
             @apply text-[12px] text-[var(--gray8)];
@@ -37,7 +37,7 @@
       }
     }
     .btn_box {
-      @apply flex w-auto shrink-0 items-end justify-end pb-[16px] pl-[40px];
+      @apply flex w-auto shrink-0 items-end justify-end pb-[24px] pl-[40px];
     }
     .item_row {
       @apply flex w-full flex-col flex-wrap;
@@ -45,6 +45,25 @@
         @apply w-full flex-1;
         .inner + .inner {
           @apply ml-[32px];
+        }
+      }
+      [class*='nlp--contents-row'] {
+        [class*='form_item'] {
+          @apply pb-[24px];
+          label {
+            [class*='form_text'] {
+              @apply text-[1.2rem] text-[var(--gray8)];
+            }
+            & + [class*='input_box'] {
+              @apply mt-[4px];
+              & + [class*='guide_text'] {
+                @apply absolute bottom-[4px] left-0 w-full;
+              }
+            }
+          }
+        }
+        & + [class*='nlp--contents-row'] {
+          @apply pt-0;
         }
       }
       &.item_auto {
@@ -119,7 +138,7 @@
 }
 
 .guide_text {
-  @apply absolute bottom-0 left-0 text-[1.2rem] font-normal leading-[1.4rem] text-[var(--gray6)];
+  @apply absolute bottom-[4px] left-0 text-[1.2rem] font-normal leading-[1.4rem] text-[var(--gray6)];
   &:empty {
     @apply hidden;
   }

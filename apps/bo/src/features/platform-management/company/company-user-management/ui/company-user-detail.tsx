@@ -20,7 +20,7 @@ enum EnCompanyUserTab {
   loginHistory = 'loginHistory',
 }
 
-const CompanyUserDetailComponent: FC<any> = () => {
+const CompanyUserDetailComponent = ({ formRef }: { formRef: any }) => {
   const routerState = useRouterState();
 
   const userUuid = routerState.location.state.userUuid;
@@ -39,7 +39,7 @@ const CompanyUserDetailComponent: FC<any> = () => {
     {
       title: t('유저 정보'),
       key: EnCompanyUserTab.userInfo,
-      content: <CompanyUserDetailBase userInfo={user} />,
+      content: <CompanyUserDetailBase ref={formRef} userInfo={user} />,
     },
     {
       title: t('교육 이력'),
@@ -65,21 +65,22 @@ const CompanyUserDetailComponent: FC<any> = () => {
         <table>
           <caption>{t('유저정보')}</caption>
           <colgroup>
-            <col style={{ width: '240px' }} />
             <col />
-            <col style={{ width: '240px' }} />
             <col />
-            <col style={{ width: '240px' }} />
+            <col />
+            <col />
+            <col />
             <col />
           </colgroup>
           <tbody>
             <tr>
               <th scope="row">{t('회원 유형')}</th>
               <td>
-                {user?.linkageSystem &&
-                  t(
-                    `${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.company.LinkageSystem.${user.linkageSystem}`,
-                  )}
+                {user?.linkageSystem
+                  ? t(
+                      `${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.company.LinkageSystem.${user.linkageSystem}`,
+                    )
+                  : '-'}
               </td>
               <th scope="row">{t('이름')}</th>
               <td>{user?.name}</td>
@@ -89,16 +90,22 @@ const CompanyUserDetailComponent: FC<any> = () => {
             <tr>
               <th scope={'row'}>{t('회원가입일')}</th>
               <td>
-                {user?.joinDate
-                  ? getDateToString(new Date(user.joinDate), DATE_TIME_FORMAT.DATETIME_SEC)
-                  : '-'}
+                {user?.linkageSystem === null
+                  ? user?.createdDate
+                    ? getDateToString(new Date(user?.createdDate), DATE_TIME_FORMAT.DATETIME_SEC)
+                    : '-'
+                  : user?.joinDate
+                    ? getDateToString(new Date(user?.joinDate), DATE_TIME_FORMAT.DATETIME_SEC)
+                    : '-'}
               </td>
               <th scope={'row'}>{t('최근 접속일')}</th>
-              <td colSpan={3}>
+              <td>
                 {user?.lastLoginDate
                   ? getDateToString(new Date(user.lastLoginDate), DATE_TIME_FORMAT.DATETIME_SEC)
                   : '-'}
               </td>
+              <td></td>
+              <td></td>
             </tr>
           </tbody>
         </table>

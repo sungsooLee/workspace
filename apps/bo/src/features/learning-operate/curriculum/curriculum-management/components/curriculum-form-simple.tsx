@@ -14,6 +14,8 @@ import {
 } from '@shared/ui';
 import { Input, Button } from '@learnway/ui';
 import { DropdownFormField } from '@features/form';
+import { useFetchAuthUser } from '@learnway/auth/entities';
+import { useIsManager } from '../hooks/use-role-info';
 
 interface CurriculumFormSimpleProps {
   parentNode: TreeNode | null;
@@ -38,16 +40,30 @@ export const CurriculumFormSimple: React.FC<CurriculumFormSimpleProps> = ({
   loadFormData,
   initialData,
 }) => {
+  const { data: loginUser } = useFetchAuthUser();
+
+  const isManager = useIsManager({ loginUser });
+
   // React Hook Form의 watch를 사용해서 폼 값 감시
   const isVendored = watch('isVendored') || false;
 
-  // 초기 데이터가 변경될 때 폼에 데이터 로드 (useDynamicForm3의 loadFormData 사용)
   useEffect(() => {
     if (initialData && isEditing && loadFormData) {
-      console.log('폼 데이터 로딩:', initialData);
-      loadFormData(initialData);
+      const formData = {
+        ...initialData,
+        coordinatorTelNo: {
+          nationCode: initialData.coordinatorTelCountryCode || '',
+          number: initialData.coordinatorTelNo || '',
+        },
+        vendorTelNo: {
+          nationCode: initialData.vendorTelCountryCode || '',
+          number: initialData.vendorTelNo || '',
+        },
+      };
+      loadFormData(formData);
     }
-  }, [initialData, isEditing, loadFormData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialData, isEditing]);
 
   const formContent = (
     <>
@@ -59,7 +75,7 @@ export const CurriculumFormSimple: React.FC<CurriculumFormSimpleProps> = ({
             <InputModalSelectorFormField
               placeholder="채널을 선택하세요"
               modalConfig={{ content: <ChannelChoiceModal /> }}
-              disabled={isEditing}
+              disabled={!isManager || isEditing}
               transformModalData={(data: any) => {
                 console.log('선택된 채널:', data);
 
@@ -123,16 +139,8 @@ export const CurriculumFormSimple: React.FC<CurriculumFormSimpleProps> = ({
         <FormRow3 name="curriculumDescription" label="설명" element={<TextareaFormField />} />
       </ContentsRow>
       <ContentsRow>
-        <FormRow3
-          name="coordinatorName"
-          label="담당자"
-          element={<Input />}
-        />
-        <FormRow3
-          name="coordinatorTelNo"
-          label="연락처"
-          element={<PhoneNumberFormFieldSimple />}
-        />
+        <FormRow3 name="coordinatorName" label="담당자" element={<Input />} />
+        <FormRow3 name="coordinatorTelNo" label="연락처" element={<PhoneNumberFormFieldSimple />} />
       </ContentsRow>
       <ContentsRow type={'horizontal'}>
         <FormRow3 name="isVendored" label="외주개발업체 정보" element={<SwitchFormFieldSimple />} />
@@ -181,7 +189,7 @@ export const CurriculumFormSimple: React.FC<CurriculumFormSimpleProps> = ({
             <FormRow3
               name="vendorTelNo"
               label="외주개발업체 연락처"
-              element={<Input />}
+              element={<PhoneNumberFormFieldSimple />}
             />
           </ContentsRow>
         </>

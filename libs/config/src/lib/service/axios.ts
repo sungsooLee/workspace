@@ -60,12 +60,13 @@ export function initAxios(extendConfig?: axiosConfig) {
       onFulfilled: (config: InternalAxiosRequestConfig<any>) => {
         const accessToken = tokenService.accessToken;
         // const state = useActiveMenuDepthState.getState().activeMenuDepthMenu;
+        const state = localStorage.getItem('last');
         if (accessToken) {
           config.headers['Authorization'] = `Bearer ${accessToken}`;
         }
-        // if (state) {
-        //   config.headers['Menu-Id'] = last(state)?.menuId;
-        // }
+        if (state) {
+          config.headers['Menu-Id'] = state;
+        }
         return config;
       },
       onRejected: undefined,

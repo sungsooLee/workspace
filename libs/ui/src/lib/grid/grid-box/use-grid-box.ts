@@ -12,7 +12,7 @@ import { DEFAULT_GRID_BOX_STATE } from './grid-box';
 export const useGridBox = <T = any>(
   initialConfig: useGridBoxConfig,
   getParams?: () => void,
-): UseGridBoxReturn => {
+): UseGridBoxReturn<T> => {
   const queryClient = useQueryClient();
 
   // Grid에 표시할 데이터를 저장

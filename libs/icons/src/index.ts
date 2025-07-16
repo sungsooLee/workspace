@@ -33,6 +33,7 @@ export { ReactComponent as IcoChevronRightDisabled } from './lib/ic_chevron_righ
 export { ReactComponent as IcoChevronRightDoubleDisabled } from './lib/ic_chevron_right_double_disabled.svg'; // grid paging btn
 export { ReactComponent as IcoArrowBackward } from './lib/ic_arrow_backward.svg'; // grid paging btn
 export { ReactComponent as IcoMenu01 } from './lib/ic_menu-01.svg'; // catagory menu
+export { ReactComponent as IcoMenu02 } from './lib/ic_menu-02.svg';
 export { ReactComponent as IcoConfirm } from './lib/ic_success_alt.svg'; // confirm Icon
 export { ReactComponent as IcoModify } from './lib/ic_pencil_fill.svg';
 export { ReactComponent as IcoTrash } from './lib/ic_trash.svg';
@@ -143,6 +144,8 @@ export { ReactComponent as IcoLearning01 } from './lib/ic_learning_01.svg'; // l
 export { ReactComponent as IcoLearning02 } from './lib/ic_learning_02.svg'; // learning 2
 export { ReactComponent as IcoLearning03 } from './lib/ic_learning_03.svg'; // learning 3
 export { ReactComponent as IcoLearning04 } from './lib/ic_learning_04.svg'; // learning 4
+export { ReactComponent as IcoLearning05 } from './lib/ic_learning_05.svg'; // learning 5
+export { ReactComponent as IcoLearning06 } from './lib/ic_learning_06.svg'; // learning 6
 export { ReactComponent as IcoPrevPlay } from './lib/ic_prev_play.svg'; // learning prev
 export { ReactComponent as IcoPrevNext } from './lib/ic_next_play.svg'; // learning next
 export { ReactComponent as IcoArrowDownFilled } from './lib/ic_arrow_down_filled.svg'; // date picker
@@ -179,6 +182,8 @@ export { ReactComponent as IcoTranslation } from './lib/ic_translation.svg';
 export { ReactComponent as IcoImport } from './lib/ic_import.svg';
 export { ReactComponent as IcoSucess03 } from './lib/ic_sucess_03.svg';
 export { ReactComponent as IcoError02 } from './lib/ic_error_02.svg';
+export { ReactComponent as IcoHistory } from './lib/ic_history.svg';
+export { ReactComponent as IcoLang } from './lib/ic_lang.svg';
 //export Default as Information from './lib/information.svg?react';
 
 //import Information from './lib/information.svg';

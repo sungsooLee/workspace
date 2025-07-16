@@ -2,7 +2,7 @@ import {
   transformApiDataToTreeData,
   ShuttleTreeToChipsV2,
   useShuttleTreeToChips,
-  TreeData,
+  SelectedChip,
 } from '@learnway/ui';
 import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { useEffect, useMemo } from 'react';
@@ -27,7 +27,7 @@ const UserGroupOrganizationComponent = ({
     return data ? transformApiDataToTreeData(data) : [];
   }, [data]);
 
-  const initialSelectedItems = useMemo<TreeData[]>(() => {
+  const initialSelectedItems = useMemo<SelectedChip[]>(() => {
     return option.map(({ combiners, pathKey, pathValue, groupId }) => {
       const [combiner] = combiners;
       return {

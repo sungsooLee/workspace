@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { createFileRoute, useRouter, Link } from '@tanstack/react-router';
 import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 import { isEmpty } from 'lodash';
 
 import { Button, ContentsRow, Input, useModal } from '@learnway/ui';
@@ -38,6 +39,7 @@ export const Route = createFileRoute('/_auth/login')({
 });
 
 function RouteComponent() {
+  const { t } = useTranslation();
   const router = useRouter();
   const search = Route.useSearch();
   const { reset } = useExpStore();

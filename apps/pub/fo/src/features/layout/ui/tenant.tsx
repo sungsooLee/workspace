@@ -98,7 +98,8 @@ const TenantModal = () => {
                   <Button
                     key={idx}
                     className={`${styles.btn} ${activeIdx === idx ? styles.active : ''}`}
-                    onClick={() => RepresentativeConfirm(idx)}>
+                    onClick={() => RepresentativeConfirm(idx)}
+                  >
                     <span className={styles.label}>
                       <i>
                         <IcoCheck width={16} height={16} stroke="#6f798b"></IcoCheck>
@@ -118,7 +119,8 @@ const TenantModal = () => {
                   <Button
                     key={idx}
                     className={styles.btn_refresh}
-                    onClick={() => TenantConfirm(idx)}>
+                    onClick={() => TenantConfirm(idx)}
+                  >
                     {/* 퍼블수정 20250320 : 아이콘 mobile, pc 분기처리 */}
                     <span className={styles.txt}>
                       {tenants}
@@ -127,7 +129,8 @@ const TenantModal = () => {
                           <IcoArrowForward
                             width={20}
                             height={20}
-                            stroke="#6f798b"></IcoArrowForward>
+                            stroke="#6f798b"
+                          ></IcoArrowForward>
                         </i>
                       ) : null}
                     </span>
@@ -156,9 +159,12 @@ const TenantComponent = () => {
           width: isMobile ? 'm_full' : 'sm',
           content: <TenantModal />,
         })
-      }>
+      }
+    >
       <span className={styles.select}>{'현대 오토에버'}</span>
-      <IcoArrowDown width={16} height={16} stroke="#131C30" />
+      <span className={styles.ico}>
+        <IcoArrowDown />
+      </span>
     </Button>
   );
 };

@@ -62,7 +62,7 @@
   @screen mobile {
     .start {
       &.course {
-        @apply m-auto w-full px-[20px] pb-[80px] pt-[16px];
+        @apply m-auto w-full px-[20px] pb-[120px] pt-[16px];
         & > h2 {
           @apply hidden;
         }
@@ -76,7 +76,7 @@
               @apply mt-[32px] pt-[32px];
             }
             .tit_box {
-              string {
+              strong {
                 @apply title5-b;
               }
             }

@@ -15,6 +15,106 @@ type Props = {
 };
 
 const UserChoiceComponent = ({ handleRowSelect }: Props) => {
+  const searchConfig: SearchBoxConfig = {
+    builders: [
+      [
+        {
+          required: true,
+          name: 'companyId',
+          type: 'dropdown',
+          label: '회사',
+          value: undefined,
+          optionsConfig: {
+            codeGroup: CODE_GROUP['manual.company.companyId'],
+          },
+          format: 'number',
+          isSearchable: true,
+          isClearable: true,
+          placeholder: '입력 선택',
+        },
+        {
+          name: 'deptId',
+          type: 'dropdown',
+          label: '소속',
+          value: '',
+          presetOptionLabel: t('LABEL.form.label.select', '선택'),
+          options: [],
+          format: 'object',
+          isSearchable: true,
+          isClearable: true,
+        },
+      ],
+      [
+        {
+          name: 'employeeNumber',
+          type: 'text',
+          label: '사번',
+          value: '',
+        },
+        {
+          name: 'userName',
+          type: 'text',
+          label: '이름',
+          value: '',
+        },
+      ],
+    ],
+    validator: { companyId: { required: true } },
+  };
+
+  const gridConfig = {
+    query: usersQueryOptions.list,
+    columns: [],
+    data: [],
+    pagination: {
+      pageSize: 10,
+      pageIndex: 1,
+      totalRows: 2,
+    },
+  };
+
+  const columnHelper = createColumnHelper<any>();
+  const columns = [
+    columnHelper.accessor('company', {
+      id: 'company',
+      cell: (info) => info.row.original.company.name,
+      header: '회사',
+      enableGrouping: false,
+      size: 210,
+    }),
+    columnHelper.accessor('dept', {
+      id: 'dept',
+      cell: (info) => info.row.original.dept.deptName,
+      header: '소속',
+      size: 150,
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('employeeNumber', {
+      id: 'employeeNumber',
+      cell: (info) => info.getValue(),
+      header: '사번',
+      size: 220,
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('name', {
+      id: 'name',
+      cell: (info) => info.getValue(),
+      header: '이름',
+      size: 220,
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('employmentStatus', {
+      cell: (info) => info.getValue(),
+      header: '재직여부',
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('accountType', {
+      cell: (info) => info.getValue(),
+      header: '계정상태',
+      enableGrouping: false,
+    }),
+  ] as ColumnDef<any, unknown>[];
+
   const { provider: sProvider, getValues, setOptions, setValue } = useSearchBox(searchConfig);
   const { config, gridFetch } = useGridBox(gridConfig, getValues);
   const queryClient = useQueryClient();
@@ -50,103 +150,3 @@ const UserChoiceComponent = ({ handleRowSelect }: Props) => {
 };
 
 export const UserChoice = UserChoiceComponent;
-
-const searchConfig: SearchBoxConfig = {
-  builders: [
-    [
-      {
-        required: true,
-        name: 'companyId',
-        type: 'dropdown',
-        label: '회사',
-        value: undefined,
-        optionsConfig: {
-          codeGroup: CODE_GROUP['manual.company.companyId'],
-        },
-        format: 'number',
-        isSearchable: true,
-        isClearable: true,
-        placeholder: '입력 선택',
-      },
-      {
-        name: 'deptId',
-        type: 'dropdown',
-        label: '소속',
-        value: '',
-        presetOptionLabel: t('LABEL.form.label.select', '선택'),
-        options: [],
-        format: 'object',
-        isSearchable: true,
-        isClearable: true,
-      },
-    ],
-    [
-      {
-        name: 'employeeNumber',
-        type: 'text',
-        label: '사번',
-        value: '',
-      },
-      {
-        name: 'userName',
-        type: 'text',
-        label: '이름',
-        value: '',
-      },
-    ],
-  ],
-  validator: { companyId: { required: true } },
-};
-
-const gridConfig = {
-  query: usersQueryOptions.list,
-  columns: [],
-  data: [],
-  pagination: {
-    pageSize: 10,
-    pageIndex: 1,
-    totalRows: 2,
-  },
-};
-
-const columnHelper = createColumnHelper<any>();
-const columns = [
-  columnHelper.accessor('company', {
-    id: 'company',
-    cell: (info) => info.row.original.company.name,
-    header: '회사',
-    enableGrouping: false,
-    size: 210,
-  }),
-  columnHelper.accessor('dept', {
-    id: 'dept',
-    cell: (info) => info.row.original.dept.deptName,
-    header: '소속',
-    size: 150,
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('employeeNumber', {
-    id: 'employeeNumber',
-    cell: (info) => info.getValue(),
-    header: '사번',
-    size: 220,
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('name', {
-    id: 'name',
-    cell: (info) => info.getValue(),
-    header: '이름',
-    size: 220,
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('employmentStatus', {
-    cell: (info) => info.getValue(),
-    header: '재직여부',
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('accountType', {
-    cell: (info) => info.getValue(),
-    header: '계정상태',
-    enableGrouping: false,
-  }),
-] as ColumnDef<any, unknown>[];
