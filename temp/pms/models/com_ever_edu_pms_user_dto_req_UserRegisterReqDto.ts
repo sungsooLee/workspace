@@ -4,15 +4,35 @@
 /* eslint-disable */
 export type com_ever_edu_pms_user_dto_req_UserRegisterReqDto = {
     /**
-     * 이름
+     * 사번
+     */
+    employeeNumber?: string;
+    /**
+     * GUCC ID
+     */
+    guccId?: string;
+    /**
+     * 연동시스템
+     */
+    linkageSystem?: com_ever_edu_pms_user_dto_req_UserRegisterReqDto.linkageSystem;
+    /**
+     * 성명
      */
     name: string;
     /**
+     * 영문성명
+     */
+    engName?: string;
+    /**
      * 생년월일
      */
-    birthday: string;
+    birthday?: string;
     /**
-     * Email 주소
+     * 성별
+     */
+    gender?: com_ever_edu_pms_user_dto_req_UserRegisterReqDto.gender;
+    /**
+     * 이메일
      */
     email: string;
     /**
@@ -20,15 +40,47 @@ export type com_ever_edu_pms_user_dto_req_UserRegisterReqDto = {
      */
     password: string;
     /**
-     * 사번
+     * 휴대폰 국가번호
      */
-    employeeNumber?: string;
+    phoneNationNumber?: string;
     /**
-     * 휴대전화번호
+     * 휴대폰 번호
      */
-    phoneNumber: string;
+    phoneNumber?: string;
     /**
-     * 회원기본언어셋코드
+     * 직장전화 국가번호
+     */
+    companyPhoneNationNumber?: string;
+    /**
+     * 직장전화 번호
+     */
+    companyPhoneNumber?: string;
+    /**
+     * 회사 ID
+     */
+    companyId: number;
+    /**
+     * 부서 ID
+     */
+    deptId?: number;
+    /**
+     * 보직 여부
+     */
+    isLeader?: boolean;
+    /**
+     * 직군
+     */
+    jobDomain?: string;
+    /**
+     * 직무
+     */
+    jobRole?: string;
+    /**
+     * 호칭
+     */
+    positionName?: string;
+    /**
+     * 언어코드
      */
     locale?: {
         language?: string;
@@ -47,12 +99,67 @@ export type com_ever_edu_pms_user_dto_req_UserRegisterReqDto = {
         iso3Country?: string;
     };
     /**
-     * 사용자구분 (GIM : USER_TYPE, U01 : 임직원, U07 : 외부사용자
+     * 입사일자
      */
-    accountType?: string;
+    joinDate?: string;
     /**
-     * 회사 ID
+     * 현직급승진일자
      */
-    companyId: number;
+    promotionDate?: string;
+    /**
+     * 휴직여부
+     */
+    isOnLeave?: boolean;
+    /**
+     * 정직여부
+     */
+    isSuspended?: boolean;
+    /**
+     * SSO 유형
+     */
+    ssoType?: com_ever_edu_pms_user_dto_req_UserRegisterReqDto.ssoType;
+    /**
+     * 비밀번호 인증 유형
+     */
+    authType?: com_ever_edu_pms_user_dto_req_UserRegisterReqDto.authType;
 };
+export namespace com_ever_edu_pms_user_dto_req_UserRegisterReqDto {
+    /**
+     * 연동시스템
+     */
+    export enum linkageSystem {
+        GIM = 'GIM',
+        HSW = 'HSW',
+        KSW = 'KSW',
+        DMSSH = 'DMSSH',
+        DMSSK = 'DMSSK',
+        DDMSH = 'DDMSH',
+        DDMSK = 'DDMSK',
+        VAATZ = 'VAATZ',
+        GETIS = 'GETIS',
+    }
+    /**
+     * 성별
+     */
+    export enum gender {
+        MALE = 'MALE',
+        FEMALE = 'FEMALE',
+    }
+    /**
+     * SSO 유형
+     */
+    export enum ssoType {
+        HMG_SSO = 'HMG_SSO',
+        AUTOWAY = 'AUTOWAY',
+        AES_LINK = 'AES_Link',
+    }
+    /**
+     * 비밀번호 인증 유형
+     */
+    export enum authType {
+        PLATFORM = 'PLATFORM',
+        HMG_SSO = 'HMG_SSO',
+        AUTOWAY = 'AUTOWAY',
+    }
+}
 

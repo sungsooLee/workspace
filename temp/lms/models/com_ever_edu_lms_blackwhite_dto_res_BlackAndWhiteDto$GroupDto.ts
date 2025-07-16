@@ -21,6 +21,8 @@ export namespace com_ever_edu_lms_blackwhite_dto_res_BlackAndWhiteDto$GroupDto {
         SEQUENCE = 'SEQUENCE',
         CATEGORY = 'CATEGORY',
         CHANNEL = 'CHANNEL',
+        ROLE = 'ROLE',
+        COMPANY_RESTRICTION = 'COMPANY_RESTRICTION',
     }
     export enum combineOperator {
         AND = 'AND',

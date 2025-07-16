@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { com_ever_edu_cms_curriculum_dto_res_CurriculumResDto } from '../models/com_ever_edu_cms_curriculum_dto_res_CurriculumResDto';
+import type { com_ever_edu_cms_curriculum_dto_res_TotalContentDurationResDto } from '../models/com_ever_edu_cms_curriculum_dto_res_TotalContentDurationResDto';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
@@ -20,6 +21,31 @@ export class BoCurriculumInternalApiService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/internal/api/v1/curriculum/{curriculumId}',
+            path: {
+                'curriculumId': curriculumId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 커리큘럼의 동영상 콘텐츠 총 재생시간을 합산하여 반환한다.
+     * 커리큘럼에 동영상 콘텐츠만 있는 경우 콘텐츠의 총 재생시간을 합산하여 반환한다.
+     * @param curriculumId
+     * @returns com_ever_edu_cms_curriculum_dto_res_TotalContentDurationResDto OK
+     * @throws ApiError
+     */
+    public static getTotalContentDuration(
+        curriculumId: number,
+    ): CancelablePromise<com_ever_edu_cms_curriculum_dto_res_TotalContentDurationResDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/internal/api/v1/curriculum/{curriculumId}/duration',
             path: {
                 'curriculumId': curriculumId,
             },

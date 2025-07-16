@@ -3,6 +3,12 @@
 /* tslint:disable */
 /* eslint-disable */
 export type com_ever_edu_cms_curriculum_dto_res_LessonResDto = {
+    createdBy?: string;
+    createdDate?: string;
+    lastModifiedBy?: string;
+    modifiedDate?: string;
+    creatorName?: string;
+    modifyerName?: string;
     mappingCurriculumType?: com_ever_edu_cms_curriculum_dto_res_LessonResDto.mappingCurriculumType;
     lessonId?: number;
     lessonName?: string;

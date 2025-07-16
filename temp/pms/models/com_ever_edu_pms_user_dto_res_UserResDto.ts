@@ -6,6 +6,9 @@ import type { com_ever_edu_pms_company_dto_res_CompanyDeptResDto } from './com_e
 import type { com_ever_edu_pms_company_dto_res_CompanyResDto } from './com_ever_edu_pms_company_dto_res_CompanyResDto';
 import type { com_ever_edu_pms_user_dto_res_UserResDto$UserRoleDto } from './com_ever_edu_pms_user_dto_res_UserResDto$UserRoleDto';
 import type { com_ever_edu_pms_user_dto_res_UserResDto$UserTenantDto } from './com_ever_edu_pms_user_dto_res_UserResDto$UserTenantDto';
+/**
+ * 승인자
+ */
 export type com_ever_edu_pms_user_dto_res_UserResDto = {
     /**
      * UUID
@@ -62,24 +65,21 @@ export type com_ever_edu_pms_user_dto_res_UserResDto = {
     company?: com_ever_edu_pms_company_dto_res_CompanyResDto;
     dept?: com_ever_edu_pms_company_dto_res_CompanyDeptResDto;
     /**
-     * 국가코드
+     * 보직 여부
      */
-    nationCd?: {
-        language?: string;
-        script?: string;
-        variant?: string;
-        displayName?: string;
-        country?: string;
-        unicodeLocaleAttributes?: Array<string>;
-        unicodeLocaleKeys?: Array<string>;
-        displayLanguage?: string;
-        displayScript?: string;
-        displayCountry?: string;
-        displayVariant?: string;
-        extensionKeys?: Array<string>;
-        iso3Language?: string;
-        iso3Country?: string;
-    };
+    isLeader?: boolean;
+    /**
+     * 직군
+     */
+    jobDomain?: string;
+    /**
+     * 직무
+     */
+    jobRole?: string;
+    /**
+     * 호칭
+     */
+    positionName?: string;
     /**
      * 언어코드
      */

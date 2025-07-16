@@ -612,7 +612,6 @@ export namespace com_ever_edu_cms_html5_dto_res_Html5ResDto {
     export enum contentAddInfoType {
         VIDEO_ADD_INFO = 'VIDEO_ADD_INFO',
         EXAM_ADD_INFO = 'EXAM_ADD_INFO',
-        EXAM_POOL_ADD_INFO = 'EXAM_POOL_ADD_INFO',
     }
     /**
      * SCORM 처리 상태 코드 Enum(cms.html5.Html5ProcessingStatus) - FAIL|COMPLETE|STARTED|UNZIPPING|UPLOADING

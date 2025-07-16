@@ -574,7 +574,6 @@ export namespace com_ever_edu_cms_asgmt_dto_req_AsgmtGroupSaveReqDto {
     export enum contentAddInfoType {
         VIDEO_ADD_INFO = 'VIDEO_ADD_INFO',
         EXAM_ADD_INFO = 'EXAM_ADD_INFO',
-        EXAM_POOL_ADD_INFO = 'EXAM_POOL_ADD_INFO',
     }
     /**
      * 제출 기한 유형

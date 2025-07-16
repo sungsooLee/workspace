@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type com_ever_edu_lms_course_dto_res_CourseListAdminResDto = {
+    wizardStep?: com_ever_edu_lms_course_dto_res_CourseListAdminResDto.wizardStep;
     tenantName?: string;
     channelName?: string;
     courseId?: number;
@@ -22,6 +23,14 @@ export type com_ever_edu_lms_course_dto_res_CourseListAdminResDto = {
     operatorName?: string;
 };
 export namespace com_ever_edu_lms_course_dto_res_CourseListAdminResDto {
+    export enum wizardStep {
+        STEP1 = 'STEP1',
+        STEP2 = 'STEP2',
+        STEP3 = 'STEP3',
+        STEP4 = 'STEP4',
+        STEP5 = 'STEP5',
+        FULL_UPDATE = 'FULL_UPDATE',
+    }
     export enum courseType {
         ELEARNING1 = 'ELEARNING1',
         ELEARNING2 = 'ELEARNING2',

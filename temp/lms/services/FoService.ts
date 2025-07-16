@@ -8,6 +8,8 @@ import type { com_ever_edu_lms_course_dto_res_SequenceResDto$onUser } from '../m
 import type { com_ever_edu_lms_enroll_dto_req_EnrollCancelReqDto$ByUser } from '../models/com_ever_edu_lms_enroll_dto_req_EnrollCancelReqDto$ByUser';
 import type { com_ever_edu_lms_enroll_dto_req_EnrollReqDto$ByUser } from '../models/com_ever_edu_lms_enroll_dto_req_EnrollReqDto$ByUser';
 import type { com_ever_edu_lms_enroll_dto_req_EnrollSearchDto$SearchByUser } from '../models/com_ever_edu_lms_enroll_dto_req_EnrollSearchDto$SearchByUser';
+import type { com_ever_edu_lms_enroll_dto_res_EnrollQueueDto$EnrollQueue } from '../models/com_ever_edu_lms_enroll_dto_res_EnrollQueueDto$EnrollQueue';
+import type { com_ever_edu_lms_enroll_dto_res_EnrollResDto$DeliveryAccessOnUser } from '../models/com_ever_edu_lms_enroll_dto_res_EnrollResDto$DeliveryAccessOnUser';
 import type { com_ever_edu_lms_enroll_dto_res_EnrollResDto$DetailOnUser } from '../models/com_ever_edu_lms_enroll_dto_res_EnrollResDto$DetailOnUser';
 import type { com_ever_edu_lms_search_course_dto_req_CourseSearchReqDto$OnUser } from '../models/com_ever_edu_lms_search_course_dto_req_CourseSearchReqDto$OnUser';
 import type { com_ever_edu_lms_search_course_dto_res_CourseSearchResDto$OnUser } from '../models/com_ever_edu_lms_search_course_dto_res_CourseSearchResDto$OnUser';
@@ -313,6 +315,75 @@ export class FoService {
                 'params': params,
                 'pageable': pageable,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 수강신청 상태 조회
+     * 과정 차수 ID로 수강 신청 상태를 조회한다
+     * @param courseSequenceId
+     * @returns com_ever_edu_lms_enroll_dto_res_EnrollQueueDto$EnrollQueue OK
+     * @throws ApiError
+     */
+    public static findEnrollQueueState(
+        courseSequenceId: number,
+    ): CancelablePromise<com_ever_edu_lms_enroll_dto_res_EnrollQueueDto$EnrollQueue> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/user/api/v1/enroll/queue/state',
+            query: {
+                'courseSequenceId': courseSequenceId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 수강신청 상태 조회
+     * 수강 신청 대기 ID로 수강 신청 상태를 조회한다
+     * @param enrollQueueId
+     * @returns com_ever_edu_lms_enroll_dto_res_EnrollQueueDto$EnrollQueue OK
+     * @throws ApiError
+     */
+    public static findEnrollQueueStateByQueueId(
+        enrollQueueId: number,
+    ): CancelablePromise<com_ever_edu_lms_enroll_dto_res_EnrollQueueDto$EnrollQueue> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/user/api/v1/enroll/queue/state/id',
+            query: {
+                'enrollQueueId': enrollQueueId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 수강신청 최근 배송지 조회
+     * 수강신청 최근 교재 배송지를 조회한다
+     * @returns com_ever_edu_lms_enroll_dto_res_EnrollResDto$DeliveryAccessOnUser OK
+     * @throws ApiError
+     */
+    public static findEnrollDeliveryByUserid(): CancelablePromise<com_ever_edu_lms_enroll_dto_res_EnrollResDto$DeliveryAccessOnUser> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/user/api/v1/enroll/delivery/address',
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,

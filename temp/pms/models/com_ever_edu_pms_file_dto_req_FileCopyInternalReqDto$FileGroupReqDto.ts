@@ -11,9 +11,9 @@ export type com_ever_edu_pms_file_dto_req_FileCopyInternalReqDto$FileGroupReqDto
      */
     affairsType: com_ever_edu_pms_file_dto_req_FileCopyInternalReqDto$FileGroupReqDto.affairsType;
     /**
-     * 저정소유형코드, 코드그룹(pms.file.RepositoryType) - S3|HMG
+     * 저정소유형코드, 코드그룹(pms.file.StorageType) - S3|HMG
      */
-    reposType: com_ever_edu_pms_file_dto_req_FileCopyInternalReqDto$FileGroupReqDto.reposType;
+    storageType: com_ever_edu_pms_file_dto_req_FileCopyInternalReqDto$FileGroupReqDto.storageType;
     /**
      * 기본경로. 1-2Depth 경로<br>경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)<br> Ex&gt; upload/community/board/2025/01/02/file.ppt -&gt; upload/community/board
      */
@@ -33,9 +33,9 @@ export namespace com_ever_edu_pms_file_dto_req_FileCopyInternalReqDto$FileGroupR
         CMS = 'CMS',
     }
     /**
-     * 저정소유형코드, 코드그룹(pms.file.RepositoryType) - S3|HMG
+     * 저정소유형코드, 코드그룹(pms.file.StorageType) - S3|HMG
      */
-    export enum reposType {
+    export enum storageType {
         S3 = 'S3',
         HMG = 'HMG',
     }

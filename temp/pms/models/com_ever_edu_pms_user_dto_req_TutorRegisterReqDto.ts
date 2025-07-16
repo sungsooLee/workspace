@@ -27,24 +27,5 @@ export type com_ever_edu_pms_user_dto_req_TutorRegisterReqDto = {
      * 휴대폰 번호
      */
     phoneNumber: string;
-    /**
-     * 국가코드
-     */
-    nationCd: {
-        language?: string;
-        script?: string;
-        variant?: string;
-        displayName?: string;
-        country?: string;
-        unicodeLocaleAttributes?: Array<string>;
-        unicodeLocaleKeys?: Array<string>;
-        displayLanguage?: string;
-        displayScript?: string;
-        displayCountry?: string;
-        displayVariant?: string;
-        extensionKeys?: Array<string>;
-        iso3Language?: string;
-        iso3Country?: string;
-    };
 };
 

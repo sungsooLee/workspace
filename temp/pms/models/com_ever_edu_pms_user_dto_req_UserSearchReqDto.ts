@@ -35,6 +35,14 @@ export type com_ever_edu_pms_user_dto_req_UserSearchReqDto = {
      * 계정상태
      */
     userState?: com_ever_edu_pms_user_dto_req_UserSearchReqDto.userState;
+    /**
+     * 회원가입 기간 시작일
+     */
+    createdDateFrom?: string;
+    /**
+     * 회원가입 기간 종료일
+     */
+    createdDateTo?: string;
 };
 export namespace com_ever_edu_pms_user_dto_req_UserSearchReqDto {
     /**

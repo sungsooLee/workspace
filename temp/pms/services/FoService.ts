@@ -33,7 +33,6 @@ import type { com_ever_edu_pms_user_dto_req_ConfirmPasswordReqDto } from '../mod
 import type { com_ever_edu_pms_user_dto_req_ExtendPasswordChangeDateReqDto } from '../models/com_ever_edu_pms_user_dto_req_ExtendPasswordChangeDateReqDto';
 import type { com_ever_edu_pms_user_dto_req_SendVerifyEmailReqDto } from '../models/com_ever_edu_pms_user_dto_req_SendVerifyEmailReqDto';
 import type { com_ever_edu_pms_user_dto_req_SendVerifyPhoneNumberReqDto } from '../models/com_ever_edu_pms_user_dto_req_SendVerifyPhoneNumberReqDto';
-import type { com_ever_edu_pms_user_dto_req_UserRegisterReqDto } from '../models/com_ever_edu_pms_user_dto_req_UserRegisterReqDto';
 import type { com_ever_edu_pms_user_dto_req_VerifyEmailReqDto } from '../models/com_ever_edu_pms_user_dto_req_VerifyEmailReqDto';
 import type { com_ever_edu_pms_user_dto_req_VerifyPhoneNumberReqDto } from '../models/com_ever_edu_pms_user_dto_req_VerifyPhoneNumberReqDto';
 import type { com_ever_edu_pms_user_dto_req_VisitTenantAndRoleReqDto } from '../models/com_ever_edu_pms_user_dto_req_VisitTenantAndRoleReqDto';
@@ -407,30 +406,6 @@ export class FoService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/user/api/v1/users/verifications/send-verify-email',
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 회원가입
-     * 신규 사용자를 등록한다.
-     * @param requestBody
-     * @returns com_ever_edu_pms_user_dto_res_UserResDto OK
-     * @throws ApiError
-     */
-    public static registerUser(
-        requestBody: com_ever_edu_pms_user_dto_req_UserRegisterReqDto,
-    ): CancelablePromise<com_ever_edu_pms_user_dto_res_UserResDto> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/user/api/v1/users/register',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
