@@ -104,7 +104,7 @@ export const useGridBox = <T = any>(
   return {
     config,
     gridFetch: fetchGridData,
-    data: gridData,
+    data: gridData!,
   };
 };
 

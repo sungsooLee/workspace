@@ -8,6 +8,7 @@ import {
   HtmlVideoMetadataReq,
   PostDraftHtmlVideoParams,
   PostDraftVideosParams,
+  TestPaperBasicInfoSaveReq,
 } from '@types';
 
 export function usePostContentCopy(options?: any) {
@@ -124,6 +125,20 @@ export function useDeleteContent(options?: any) {
   return {
     ...mutation,
     delete: (contentUuid: string) => mutation.mutate(contentUuid as any),
+  };
+}
+
+export function useCreateExamPaperContent(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.createExamPaperContent(),
+    ...options,
+  });
+
+  return {
+    create: (payload: TestPaperBasicInfoSaveReq) => mutation.mutate(payload as any),
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
   };
 }
 

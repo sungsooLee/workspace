@@ -10,9 +10,10 @@ import { Tabs, Button } from '@learnway/ui';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 
 import {
-  TenantUserList,
   TenantUserRegistApplicationList,
 } from '@features/platform-management/tenant';
+
+import { CompanyUserList } from '@features/platform-management/company';
 
 import { tenantQueryOptions } from '@entities/tenant';
 
@@ -31,7 +32,6 @@ function RouteComponent() {
   const queryClient = useQueryClient();
 
   const [companyCodes, setCompanyCodes] = useState<string[]>([]);
-
   const [selectedTabKey, setSelectedTabKey] = useState<string>('t1');
 
   const handleTabChange = (tabKey: string) => {
@@ -59,7 +59,8 @@ function RouteComponent() {
     {
       title: '유저',
       key: 't1',
-      content: <TenantUserList rootPath="/platform" />,
+      // content: <TenantUserList rootPath="/platform" />,
+      content: <CompanyUserList />,
     },
     {
       title: '회원가입 신청',
@@ -71,19 +72,23 @@ function RouteComponent() {
   return (
     <PageContainer hideOutLine={true}>
       <ContentsButtons>
-        <Button
-          label={t('LABEL.button.regist')}
-          variant="primary"
-          size="sm"
-          onClick={() => {
-            if (companyCodes && companyCodes.length > 0) {
-              router.navigate({
-                to: '/platform/tenant/user/user-regist',
-                state: { companyCodes },
-              });
-            }
-          }}
-        />
+        {
+          (selectedTabKey && selectedTabKey === 't1') && (
+            <Button
+              label={t('LABEL.button.regist')}
+              variant="primary"
+              size="sm"
+              onClick={() => {
+                if (companyCodes && companyCodes.length > 0) {
+                  router.navigate({
+                    to: '/platform/tenant/user/user-regist',
+                    state: { companyCodes },
+                  });
+                }
+              }}
+            />
+          )
+        }
       </ContentsButtons>
       <MainContents>
         <Tabs
