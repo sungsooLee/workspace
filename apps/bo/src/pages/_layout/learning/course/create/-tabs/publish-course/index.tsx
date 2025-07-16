@@ -73,8 +73,8 @@ const PublishCourseComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
         <ContentsRow>
           <FormRow2
             provider={provider}
-            name={'썸네일'}
-            label={t('thumbnailFileGroupUuid')}
+            name={'thumbnailFileGroupUuid'}
+            label={t('대표 이미지')}
             format={'string'}
             element={
               <ThumbnailListFormField
