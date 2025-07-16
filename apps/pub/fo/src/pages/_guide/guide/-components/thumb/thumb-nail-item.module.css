@@ -10,6 +10,9 @@
       .new_badge {
         @apply absolute left-[8px] top-[8px];
       }
+      .time {
+        @apply label-xs absolute bottom-[8px] right-[8px] inline-flex h-[18px] items-center justify-center overflow-hidden rounded-[4px] bg-[var(--gray10)] px-[4px] pt-[4px] text-center text-white;
+      }
     }
     .tag_list {
       & > span:not(:first-child) {

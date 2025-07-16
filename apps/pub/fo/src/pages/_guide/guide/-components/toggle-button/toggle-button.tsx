@@ -14,6 +14,7 @@ interface ToggleButtonProps {
 const ToggleButton: React.FC<ToggleButtonProps> = ({
   label,
   icon,
+  variant,
   defaultChecked = false,
   onToggle,
 }) => {
