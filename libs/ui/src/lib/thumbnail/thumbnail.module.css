@@ -48,6 +48,9 @@
       @apply brightness-[100%];
     }
   }
+  .not_found_image {
+    @apply flex h-[84px] w-[128px] items-center justify-center bg-[#eaf1fa] text-[12px] font-normal leading-[1rem] text-[var(--gray7)];
+  }
 
   .btn_delete {
     @apply cursor-pointer bg-transparent;
