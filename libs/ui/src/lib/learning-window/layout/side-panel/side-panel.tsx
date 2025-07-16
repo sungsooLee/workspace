@@ -30,12 +30,26 @@ interface SidePanelProps {
 }
 
 const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
-  const { curriculum, playInfo, playList, playIndex, setPlayInfo } = useLearningWindow();
+  const { curriculum, playInfo, playList, playIndex, progressInfo, setPlayInfo } =
+    useLearningWindow();
   const { open: openModal } = useModal();
 
   const [menuSelected, setMenuSelected] = useState(false); // content 영역 show/hide
   const [menuContents, setMenuContents] = useState([false, false, false, false]); // 각 메뉴 컨텐츠 영역 show/hide
   const [menuNumber, setMenuNumber] = useState<number>(-1); // -1 : 닫기, 1 ~ n : content 순서
+
+  const getProgressNumber = (moduleId: number, lessonId: number) => {
+    if (progressInfo) {
+      const key = `${moduleId}_${lessonId}`;
+      if (progressInfo.has(key)) {
+        const item = progressInfo.get(key);
+        console.log('---- ', item.progress);
+        return item.progress;
+      }
+    }
+
+    return 0;
+  };
 
   const sendValueToParent = (index: number) => {
     if (menuNumber === index || index === -1) {
@@ -118,7 +132,12 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
                                           }}
                                         >
                                           <div className={styles.step_box}>
-                                            <ProgressCheck progress={50} />
+                                            <ProgressCheck
+                                              progress={getProgressNumber(
+                                                module.moduleId,
+                                                lesson.lessonId,
+                                              )}
+                                            />
                                             <p>{lesson.lessonName}</p>
                                             {lesson.learningTime && (
                                               <span>

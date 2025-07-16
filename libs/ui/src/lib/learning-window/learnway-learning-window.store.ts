@@ -270,6 +270,8 @@ export const useLearningWindow = () => {
               moduleId: module.moduleId,
               lessonId: lesson.lessonId,
               contentUuid: lesson.contentUuid,
+              orgnId: lesson.orgnId,
+              itemId: lesson.itemId,
             });
           });
         }
@@ -284,6 +286,7 @@ export const useLearningWindow = () => {
         data.progressList.forEach((item: any) => {
           progressMap.set(`${item.moduleId}_${item.lessonId}`, item);
         });
+        setProgressInfo(progressMap);
       }
     }
   };
