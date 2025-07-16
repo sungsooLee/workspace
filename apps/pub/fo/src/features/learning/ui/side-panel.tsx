@@ -70,13 +70,14 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
     setPanelState(!panelState);
   };
 
+  // 퍼블수정 20250716 옵션 new 추가
   const menu = [
     { tit: '커리큘럼', icon: IcoLearning01 },
     { tit: 'AI 요약', icon: IcoLearning02 },
     { tit: '내노트', icon: IcoLearning03 },
     { tit: '댓글', icon: IcoLearning04 },
     { tit: '질문답변', icon: IcoLearning05 },
-    { tit: '후기', icon: IcoLearning06 },
+    { tit: '후기', icon: IcoLearning06, New: true },
   ];
 
   return (
@@ -210,7 +211,7 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
                         })
                       : sendValueToParent(index)
                   }
-                  className={menuNumber === index ? styles.active : ''}
+                  className={`${menuNumber === index ? styles.active : ''} ${item.New && styles.new}`}
                 >
                   <item.icon width={isMobile ? 24 : 32} height={isMobile ? 24 : 32} />
                   <span>{item.tit}</span>
