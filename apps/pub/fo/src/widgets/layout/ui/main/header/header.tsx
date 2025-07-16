@@ -12,6 +12,7 @@ import {
   Category,
   Tenant,
   Search,
+  History,
 } from '../../../../../features/layout';
 import styles from './header.module.css';
 
@@ -61,6 +62,7 @@ function HeaderComponent() {
 
           <div className={styles.util}>
             <Notification />
+            <History />
             <UserAvatar />
           </div>
         </div>

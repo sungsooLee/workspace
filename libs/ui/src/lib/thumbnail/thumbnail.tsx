@@ -127,7 +127,7 @@ const ThumbnailComponent = forwardRef<HTMLDivElement, ThumbnailProps>(
         {/* 마우스 호버시 노출 */}
         <div
           style={{ width }}
-          className="absolute z-10 flex h-full w-full items-center justify-center gap-3"
+          // className="absolute z-10 flex h-full w-full items-center justify-center gap-3"
         >
           {/* 체크박스 */}
           {showCheckbox && (

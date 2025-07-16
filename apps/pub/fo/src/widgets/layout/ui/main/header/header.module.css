@@ -27,14 +27,7 @@
           @apply ml-auto;
         }
         .util {
-          @apply ml-auto flex items-center;
-          & > div,
-          & > button {
-            & + div,
-            & + button {
-              @apply ml-[24px];
-            }
-          }
+          @apply ml-[20px] flex items-center gap-[12px];
         }
       }
     }

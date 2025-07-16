@@ -1,8 +1,9 @@
+import { cn } from '@learnway/shared';
 import { memo, useRef, useEffect, useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import styles from './navigate.module.css';
 import { IcoArrowForward } from '@learnway/icons';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Carousel } from '@learnway/ui';
 import { Navigation } from 'swiper/modules';
 
 interface NavigateComponentProps {
@@ -11,36 +12,14 @@ interface NavigateComponentProps {
 }
 
 function NavigateComponent({ onMouseEnter, onMouseLeave }: NavigateComponentProps) {
-  const gnb = [
-    { name: '기술인증', link: '/', isLabel: false, hasDivision: false },
-    { name: '수강신청', link: '/', isLabel: true, hasDivision: true },
-    { name: '교육제도', link: '/', isLabel: false, hasDivision: false },
-    { name: '학습계획', link: '/', isLabel: false, hasDivision: false },
-    { name: '채널', link: '/', isLabel: false, hasDivision: false },
-    { name: 'HMCP', link: '/', isLabel: false, hasDivision: false },
-    { name: '나의학습', link: '/', isLabel: false, hasDivision: false },
-    { name: '커뮤니티', link: '/', isLabel: false, hasDivision: false },
-    { name: '팀학습현황', link: '/', isLabel: false, hasDivision: false },
-    { name: '교육지원', link: '/', isLabel: false, hasDivision: false },
-    { name: '나의학습', link: '/', isLabel: false, hasDivision: false },
-    { name: '커뮤니티', link: '/', isLabel: false, hasDivision: false },
-    { name: '팀학습현황', link: '/', isLabel: false, hasDivision: false },
-    { name: '교육지원', link: '/', isLabel: false, hasDivision: false },
+  const gnblItems = [
+    { name: '채널', link: '/', isLabel: false, hasEvent: false },
+    { name: '교육제도', link: '/', isLabel: false, hasEvent: false },
+    { name: '커뮤니티', link: '/', isLabel: false, hasEvent: false },
+    { name: '대시보드', link: '/', isLabel: false, hasEvent: false },
+    { name: '수강신청', link: '/', isLabel: false, hasEvent: true },
+    { name: '기술인증', link: '/', isLabel: false, hasEvent: true },
   ];
-
-  const prevRef = useRef<HTMLDivElement | null>(null);
-  const nextRef = useRef<HTMLDivElement | null>(null);
-  const swiperRef = useRef<any>(null);
-
-  useEffect(() => {
-    if (swiperRef.current && prevRef.current && nextRef.current) {
-      const swiperInstance = swiperRef.current.swiper;
-      swiperInstance.params.navigation.prevEl = prevRef.current;
-      swiperInstance.params.navigation.nextEl = nextRef.current;
-      swiperInstance.navigation.init();
-      swiperInstance.navigation.update();
-    }
-  }, []);
 
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 1024);
 
@@ -56,39 +35,31 @@ function NavigateComponent({ onMouseEnter, onMouseLeave }: NavigateComponentProp
   return (
     <div className={`${styles.start} ${styles.navigate}`}>
       <nav className={styles.nav} onMouseLeave={onMouseLeave}>
-        <Swiper
-          ref={swiperRef}
+        <Carousel
+          itemClassName={(item, index) => {
+            const typedItem = gnblItems[index]; // 원본 데이터 기준으로 판단
+            return cn('slide', {
+              [styles.event_menu]: typedItem.hasEvent,
+              [styles.label_item]: typedItem.isLabel,
+            });
+          }}
+          items={gnblItems.map((item, index) => (
+            <div key={index}>
+              <Link to={item.link} onMouseEnter={onMouseEnter}>
+                <span>{item.name}</span>
+              </Link>
+              {item.isLabel && <span className={`${styles.label} ${styles.color1}`}>마감임박</span>}
+            </div>
+          ))}
           slidesPerView="auto"
+          spaceBetween={32}
           loop={false}
           modules={[Navigation]}
           simulateTouch={isMobile}
           allowTouchMove={isMobile}
+          showNavigation={true}
           className={styles.gnb_swiper}
-        >
-          {gnb.map((gnb, index) => (
-            <SwiperSlide
-              key={index}
-              className={`${styles.slide} ${gnb.hasDivision ? styles.division : ''}`}
-            >
-              <Link to={gnb.link} onMouseEnter={onMouseEnter}>
-                <span>{gnb.name}</span>
-              </Link>
-              {/* 라벨 표시 */}
-              {gnb.isLabel && <span className={`${styles.label} ${styles.color1}`}>마감임박</span>}
-            </SwiperSlide>
-          ))}
-        </Swiper>
-
-        <div ref={prevRef} className={styles.gnb_button_prev}>
-          <div className={styles.btn}>
-            <IcoArrowForward width={16} height={16} stroke="#6F798B" />
-          </div>
-        </div>
-        <div ref={nextRef} className={styles.gnb_button_next}>
-          <div className={styles.btn}>
-            <IcoArrowForward width={16} height={16} stroke="#6F798B" />
-          </div>
-        </div>
+        />
       </nav>
     </div>
   );
