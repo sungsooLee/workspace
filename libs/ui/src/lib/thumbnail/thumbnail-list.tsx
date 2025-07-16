@@ -9,7 +9,6 @@ import { Carousel } from '../carousel/carousel';
 import styles from './thumbnail-list.module.css';
 import { FileInfo } from '@learnway/hooks';
 import { DefaultThumbnail } from './default-thumbnail';
-import { Button } from '@learnway/ui';
 import { sortBy } from 'lodash';
 
 export interface ThumbnailListComponentProps

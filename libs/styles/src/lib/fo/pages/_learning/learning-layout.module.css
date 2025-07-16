@@ -1,6 +1,7 @@
 .start {
   @apply w-full;
   &.container {
+    @apply mt-[80px];
   }
 }
 
