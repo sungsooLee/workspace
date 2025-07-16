@@ -14,4 +14,12 @@ export default class UsersService {
   static createUser(payload: any) {
     return httpService.post<any>(`${PMSApiPrefix()}/users`, payload);
   }
+
+  static existsEmail(params: any) {
+    return httpService.get<any>(`${PMSApiPrefix()}/users/is-email-exists`, params);
+  }
+
+  static unlockUser(userUuid: string) {
+    return httpService.post<any>(`${PMSApiPrefix()}/users/${userUuid}/unlock-account`, {});
+  }
 }
