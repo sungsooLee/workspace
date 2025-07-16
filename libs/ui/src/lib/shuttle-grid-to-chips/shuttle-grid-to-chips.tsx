@@ -1,6 +1,5 @@
 import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 import { cn } from '@learnway/shared';
-import { GridBoxProps } from '../grid/types';
 import styles from './shuttle-grid-to-chips.module.css';
 import { Button } from '../button/button';
 import { ColumnDef, Table } from '@tanstack/react-table';
@@ -10,84 +9,47 @@ import { GridImperative } from '../grid/types';
 import { useTranslation } from 'react-i18next';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
+import { SelectedChip } from '../type';
 
-export interface ShuttleGridToChipsProps<T>
-  extends Pick<GridBoxProps, 'hideRowSelectionCheckBox' | 'showNumberingColumn'> {
-  /**
-   * 그리드 컬럼 정의 배열
-   */
+interface ShuttleGridToChipsProps {
   columns: ColumnDef<any, unknown>[];
-  /**
-   * 좌측 그리드에 표시될 원본 데이터
-   */
-  gridData: T[];
-  /**
-   * 각 행을 고유하게 식별할 수 있는 키 (데이터 객체의 속성 이름)
-   */
-  rowKey: string;
-  /**
-   * 컴포넌트에 추가될 CSS 클래스 이름
-   */
-  className?: string;
-  /**
-   * 좌측 그리드의 제목
-   */
-  leftTitle?: string;
-  /**
-   * 우측 그리드의 제목
-   */
-  rightTitle?: string;
-  selectedItems?: { id: number; name: string }[];
-  onSelectedChange: (newSelected: { id: number; name: string }[]) => void;
+  gridData: any[];
+  selectedItems: SelectedChip[];
+  handleSelectItem: (nodes: SelectedChip[]) => void;
+  cancelSelectItem: (node: SelectedChip) => void;
+  cancelAll: () => void;
+  sourceTitle: string;
+  targetTitle: string;
 }
 
-/**
- * 컴포넌트의 외부에서 호출 가능한 명령형 메서드를 정의하는 인터페이스입니다.
- */
 export interface ShuttleGridToChipsImperative {
-  /**
-   * 선택 상태를 초기화하는 메서드입니다.
-   */
   resetSelection: () => void;
 }
 
-/**
- * Shuttle Grid To Grid
- * - 그리드는 페이지네이션 타입을 기본으로 하나, 셔틀 화면은 업무에 맞게 페이지네이션 또는 스크롤 타입을 제공
- * - 그리드 스크롤 타입을 제공할 경우, 필수 조회 항목 설정하여 조회 결과가 소팅되어 목록에 노출될 수 있도록 함
- */
-const ShuttleGridToChipsComponent = <T,>(
+const ShuttleGridToChipsComponent = (
   {
-    hideRowSelectionCheckBox = true,
-    showNumberingColumn = false,
-    gridData = [],
     columns,
-    rowKey,
-    className,
-    leftTitle,
-    rightTitle,
-    selectedItems = [],
-    onSelectedChange,
-  }: ShuttleGridToChipsProps<T>,
+    gridData,
+    selectedItems,
+    handleSelectItem,
+    cancelSelectItem,
+    cancelAll,
+    sourceTitle,
+    targetTitle,
+  }: ShuttleGridToChipsProps,
   ref: React.Ref<ShuttleGridToChipsImperative>,
 ) => {
   const { t } = useTranslation();
   const leftGridRef = useRef<GridImperative>(null);
 
   const [leftTableInstance, setLeftTableInstance] = useState<Table<any>>();
-  // const [selectedItems, setSelectedItems] = useState<{ id: string; name: string }[]>([]);
 
   useImperativeHandle(ref, () => ({
     resetSelection: () => {
-      // 좌측 그리드 전체 행 선택 해제, 로직 실행하면 handleLeftGridRowsSelect 실행됨
       leftTableInstance?.setRowSelection({});
     },
   }));
 
-  /**
-   * 좌측 그리드의 컬럼 정의
-   * 기존 컬럼에 '선택' 버튼 컬럼을 추가합니다.
-   */
   const leftGridColumns: ColumnDef<any, unknown>[] = [
     ...columns,
     {
@@ -98,77 +60,66 @@ const ShuttleGridToChipsComponent = <T,>(
         headerAlign: 'left',
         cellAlign: 'center',
       },
-      cell: ({ row }) => (
-        <div className={styles.btn_select}>
-          <Button
-            label={t('선택')}
-            variant={
-              selectedItems.find(({ id }) => id === row?.original?.[rowKey]) ? 'primary' : 'gray2'
-            }
-            className={
-              selectedItems.find(({ id }) => id === row?.original?.[rowKey]) ? styles.active : ''
-            }
-            size={'xs'}
-            onClick={() => {
-              row.toggleSelected();
-            }}
-          />
-        </div>
-      ),
+      cell: ({ row }) => {
+        console.log(row?.original, 'row?.original::');
+        const rowId = row?.original?.id;
+        return (
+          <div className={styles.btn_select}>
+            <Button
+              label={t('선택')}
+              variant={selectedItems.find(({ id }) => id === rowId) ? 'primary' : 'gray2'}
+              className={selectedItems.find(({ id }) => id === rowId) ? styles.active : ''}
+              size={'xs'}
+              onClick={() => {
+                row.toggleSelected();
+              }}
+            />
+          </div>
+        );
+      },
     },
   ];
 
-  /**
-   * 좌측 그리드에서 행을 선택/해제할 때 호출되는 핸들러.
-   * 선탯 버튼 누르거나 전체선택 버튼 누를때 실행됨
-   * 선택된 행을 우측 그리드 데이터에 추가하거나 삭제합니다.
-   * @param selectedRows - 선택된 (또는 선택 해제된) 행의 원본 데이터
-   */
-  const handleLeftGridRowsSelect = (selectedRows: any[]) => {
-    console.log(selectedRows);
-    onSelectedChange(selectedRows.map((row) => ({ id: row[rowKey], name: row.fullName })));
+  const onRowsSelect = (selectedRows: any[]) => {
+    // console.log(selectedRows, 'selectedRows');
+    handleSelectItem(selectedRows);
     // setRightGridData(selectedRows);
   };
 
-  // 항목 제거 핸들러
-  const handleRemoveItem = (deleteId: number) => {
-    const newItems = selectedItems.filter(({ id }) => id !== deleteId);
-    onSelectedChange(newItems);
+  const handleRemoveItem = (node: SelectedChip) => {
+    cancelSelectItem(node);
+    // const newItems = selectedItems.filter(({ id }) => id !== deleteId);
+
+    // handleSelectItem();
   };
 
-  /**
-   * 우측 그리드의 '전체 삭제' 버튼 클릭 시 호출되는 핸들러.
-   * 우측 그리드의 모든 데이터를 비웁니다.
-   */
   const removeAll = () => {
     // 좌측 그리드 전체 행 선택 해제, 로직 실행하면 handleLeftGridRowsSelect 실행됨
     leftTableInstance?.setRowSelection({});
+    cancelAll();
   };
 
   return (
-    <div className={cn(styles.start, styles.transfer_grid, className, 'nlp--shuttle-grid-to-grid')}>
-      {/* 좌측 그리드 컨테이너 */}
+    <div className={cn(styles.start, styles.transfer_grid, 'nlp--shuttle-grid-to-grid')}>
       <div className={styles.grid_wrap}>
         <GridBox
           ref={leftGridRef} // 좌측 그리드의 명령형 메서드에 접근하기 위한 Ref 연결
-          title={leftTitle} // 좌측 그리드 제목
-          data={gridData as any} // 좌측 그리드 데이터
+          title={sourceTitle} // 좌측 그리드 제목
+          data={gridData} // 좌측 그리드 데이터
           columns={leftGridColumns} // 좌측 그리드 컬럼 정의
           multiple // 다중 선택 가능
           disabledSelectionToggle // 선택 체크박스 비활성화 (버튼으로 선택 제어)
-          hideRowSelectionCheckBox={hideRowSelectionCheckBox} // 행 선택 체크박스 숨김 여부
-          showNumberingColumn={showNumberingColumn} // 번호 매김 컬럼 표시 여부
-          onRowsSelect={handleLeftGridRowsSelect} // 행 선택 시 호출되는 핸들러
+          hideRowSelectionCheckBox={true} // 행 선택 체크박스 숨김 여부
+          onRowsSelect={onRowsSelect} // 행 선택 시 호출되는 핸들러
           onTableInstanceChange={(table: Table<any>) => setLeftTableInstance(table)}
         />
       </div>
-      {/* 그리드 사이의 구분 및 이동 아이콘 */}
       <div className={styles.icon_arrow}>
         <IcoNarrowRight width={24} height={24} stroke={'#B5C2D7'} />
       </div>
       <div className={styles.grid_wrap}>
         <div className={titleStyles.title_wrap}>
-          <h3 className={titleStyles.title}>{rightTitle}</h3>
+          <h3 className={titleStyles.title}>{targetTitle}</h3>
           <div className={layoutStyles.btn_wrap}>
             <Button variant="text" size="sm" className={layoutStyles.btn_text} onClick={removeAll}>
               {'전체삭제'}
@@ -179,13 +130,12 @@ const ShuttleGridToChipsComponent = <T,>(
           {selectedItems.length === 0 ? (
             <div className={styles.no_data}>{'선택한 데이터가 없습니다.'}</div>
           ) : (
-            selectedItems.map(({ id, name }) => (
-              <div key={id} className={styles.selected_item}>
+            selectedItems.map((selectedItem) => (
+              <div key={selectedItem.key} className={styles.selected_item}>
                 <div>
-                  {/* fullPath 대신 특정 속성? 값을 갖고오는 로직 추가 필요한 것 같음. */}
-                  <span className={styles.selected_text}>{name}</span>
+                  <span className={styles.selected_text}>{selectedItem.fullPath}</span>
                 </div>
-                <Button onClick={() => handleRemoveItem(id)} className={styles.btn_close}>
+                <Button onClick={() => handleRemoveItem(selectedItem)} className={styles.btn_close}>
                   <IcoXclose width={20} height={20} stroke="#131C30" />
                 </Button>
               </div>

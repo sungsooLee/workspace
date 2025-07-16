@@ -9,17 +9,17 @@ import { t } from 'i18next';
 import { FormSubTitle } from '../base-form/form-sub-title';
 import { TreeBox } from '../tree-view/tree-box';
 import { TreeData, TreeNode } from '../tree-view/type';
+import { SelectedChip } from '../type';
 
 type ShuttleTreeToChipsV2Props = {
   treeData: TreeData[];
-  selectedItems: TreeData[];
-  handleSelectItem: (node: TreeData) => void;
-  cancelSelectItem: (node: TreeData) => void;
+  selectedItems: SelectedChip[];
+  handleSelectItem: (node: SelectedChip) => void;
+  cancelSelectItem: (node: SelectedChip) => void;
   cancelAll: () => void;
   sourceTitle: string;
   targetTitle: string;
   isShowConditionSettingsMode?: boolean;
-  renderText?: (item: TreeData) => JSX.Element;
 };
 
 export const ShuttleTreeToChipsV2 = ({
@@ -31,7 +31,6 @@ export const ShuttleTreeToChipsV2 = ({
   sourceTitle,
   targetTitle,
   isShowConditionSettingsMode: isShowConditionSettingsModeProp = false,
-  renderText,
 }: ShuttleTreeToChipsV2Props) => {
   const isShowConditionSettingsMode = useMemo(() => {
     if (!isShowConditionSettingsModeProp) return false;

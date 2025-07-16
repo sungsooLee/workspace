@@ -1,7 +1,7 @@
 import {
+  SelectedChip,
   ShuttleTreeToChipsV2,
   transformApiDataToTreeData,
-  TreeData,
   useShuttleTreeToChips,
 } from '@learnway/ui';
 import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
@@ -22,14 +22,15 @@ const UserGroupCustomComponent = ({ option, handleSetOption }: UserGroupCustomCo
     return data ? transformApiDataToTreeData(data) : [];
   }, [data]);
 
-  const initialSelectedItems = useMemo<TreeData[]>(() => {
-    return option.map(({ combiners, pathKey, pathValue }) => {
+  const initialSelectedItems = useMemo<SelectedChip[]>(() => {
+    return option.map(({ combiners, pathKey, pathValue, groupId }) => {
       const [combiner] = combiners;
       return {
         key: pathKey,
         id: combiner.combineValue,
         title: combiner.combineName,
         fullPath: pathValue,
+        groupId,
       };
     });
   }, [option]);
@@ -40,18 +41,20 @@ const UserGroupCustomComponent = ({ option, handleSetOption }: UserGroupCustomCo
   useEffect(() => {
     if (selectedItems.length === 0) return;
 
-    const updatedOption: CombineUserGroup[] = selectedItems.map(({ key, id, title, fullPath }) => ({
-      groupId: id,
-      pathKey: key,
-      pathValue: fullPath,
-      combiners: [
-        {
-          combineType: 'USER_GROUP',
-          combineValue: id,
-          combineName: title,
-        },
-      ],
-    }));
+    const updatedOption: CombineUserGroup[] = selectedItems.map(
+      ({ key, id, title, fullPath, groupId }) => ({
+        pathKey: key,
+        groupId,
+        pathValue: fullPath,
+        combiners: [
+          {
+            combineType: 'USER_GROUP',
+            combineValue: id,
+            combineName: title,
+          },
+        ],
+      }),
+    );
 
     handleSetOption(updatedOption);
   }, [selectedItems, handleSetOption]);

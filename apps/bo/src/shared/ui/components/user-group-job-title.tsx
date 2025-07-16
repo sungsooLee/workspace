@@ -1,23 +1,27 @@
-import { ShuttleGridToChips, ShuttleGridToChipsImperative } from '@learnway/ui';
-import { useEffect, useRef, useState } from 'react';
+import {
+  SelectedChip,
+  ShuttleGridToChips,
+  ShuttleGridToChipsImperative,
+  useShuttleGridToChips,
+} from '@learnway/ui';
+import { useEffect, useMemo, useRef } from 'react';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { useFetchUserGroups } from '@entities/user-group';
+import { CombineUserGroup } from '@types';
 
 type UserGroupJobTitleComponentProps = {
   tenantIds: number[];
-  handleSetOption: (data: any) => void;
+  option: CombineUserGroup[];
+  handleSetOption: (data: CombineUserGroup[]) => void;
 };
 
 const UserGroupJobTitleComponent = ({
   tenantIds,
+  option,
   handleSetOption,
 }: UserGroupJobTitleComponentProps) => {
   const ref = useRef<ShuttleGridToChipsImperative>(null);
-  const { data = [] } = useFetchUserGroups(tenantIds, { userGroupType: 'JOB_TITLE' });
-
-  const [option, setOption] = useState<{ id: number; name: string }[]>([]);
-
   const columnHelper = createColumnHelper();
   const columns = [
     columnHelper.accessor('tenantName', {
@@ -37,22 +41,56 @@ const UserGroupJobTitleComponent = ({
       cell: (info) => info.getValue(),
     }),
   ] as ColumnDef<any, unknown>[];
+  const { data = [] } = useFetchUserGroups(tenantIds, { userGroupType: 'JOB_TITLE' });
+
+  const initialSelectedItems = useMemo<SelectedChip[]>(() => {
+    return option.map(({ combiners, pathKey, pathValue, groupId }) => {
+      const [combiner] = combiners;
+      return {
+        key: pathKey,
+        id: combiner.combineValue,
+        title: combiner.combineName,
+        fullPath: pathValue,
+        groupId,
+      };
+    });
+  }, [option]);
+
+  const { selectedItems, handleSelectItem, cancelSelectItem, cancelAll } =
+    useShuttleGridToChips(initialSelectedItems);
 
   useEffect(() => {
-    if (option.length > 0) handleSetOption(option);
-  }, [option]);
+    if (selectedItems.length === 0) return;
+
+    const updatedOption: CombineUserGroup[] = selectedItems.map(
+      ({ key, id, title, fullPath, groupId }) => ({
+        pathKey: key,
+        groupId,
+        pathValue: fullPath,
+        combiners: [
+          {
+            combineType: 'USER_GROUP',
+            combineValue: id,
+            combineName: title,
+          },
+        ],
+      }),
+    );
+
+    handleSetOption(updatedOption);
+  }, [selectedItems, handleSetOption]);
 
   return (
     <ShuttleGridToChips
       ref={ref}
-      selectedItems={option}
-      onSelectedChange={setOption}
-      showNumberingColumn={false}
-      gridData={data}
+      selectedItems={selectedItems}
+      handleSelectItem={handleSelectItem}
+      cancelSelectItem={cancelSelectItem}
+      cancelAll={cancelAll}
       columns={columns}
-      rowKey={'userGroupId'}
-      leftTitle={t('유저그룹 - 호칭')}
-      rightTitle={t('선택 유저그룹 목록')}
+      gridData={data}
+      sourceTitle={t('유저그룹 - 호칭')}
+      targetTitle={t('선택 유저그룹 목록')}
     />
   );
 };
