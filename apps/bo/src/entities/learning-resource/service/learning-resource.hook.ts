@@ -10,6 +10,20 @@ import {
   PostDraftVideosParams,
 } from '@types';
 
+export function usePostContentCopy(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.postContentCopy(),
+    ...options,
+  });
+
+  return {
+    create: (contentUuid: string) => mutation.mutate(contentUuid as any),
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
+}
+
 export function usePostDraftVideos(options?: any) {
   const mutation = useMutation({
     ...mutateOptions.postDraftVideos(),

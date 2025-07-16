@@ -219,6 +219,8 @@ export interface ContentInformation extends ContentBaseInfo {
 
 export type GetContentDetailRes = ContentInformation;
 
+export type PostContentCopyRes = ContentInformation;
+
 export interface PostDraftVideosRes {
   fileUuids: string[];
   contents: {
