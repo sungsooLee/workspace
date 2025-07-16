@@ -52,6 +52,7 @@ const GridBoxComponent = <T extends object>(
     titleCustomNode,
     customButtonNode,
     guideText,
+    showGuideTextNextLine,
     onTableInstanceChange,
     onAddClick,
     onRemoveClick,

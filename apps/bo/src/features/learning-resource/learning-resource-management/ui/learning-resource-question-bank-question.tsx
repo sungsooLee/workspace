@@ -14,6 +14,7 @@ import { cn } from '@learnway/shared';
 import {
   ContentsRow,
   FormSubTitle,
+  GridBox,
   Input,
   RadioGroupFormField,
   SplitPanel,
@@ -29,6 +30,7 @@ import { Link } from 'lucide-react';
 import { IcoFormRequired, IcoMenu01 } from '@learnway/icons';
 
 const LearningResourceQuestionBankQuestionComponent = () => {
+  const { baseInfo } = useLearningResourceQuestionDetailForm();
   const items = [
     {
       title: '선택형 문항',
@@ -210,75 +212,44 @@ const LearningResourceQuestionBankQuestionComponent = () => {
           <tbody>
             <tr>
               <th scope={'row'}>{'테넌트'}</th>
-              <td>{'테넌트명'}</td>
+              <td>{baseInfo?.tenantName}</td>
               <th scope={'row'}>{'채널'}</th>
-              <td>{'채널명'}</td>
+              <td>{baseInfo?.channeName}</td>
             </tr>
             <tr>
               <th scope={'row'}>{'유형'}</th>
-              <td>{'시험지'}</td>
+              <td>{'문제은행'}</td>
               <th scope={'row'}>{'학습자원명'}</th>
-              <td>{'학습자원명'}</td>
+              <td>{baseInfo?.contentName}</td>
+            </tr>
+            <tr>
+              <th scope={'row'}>{'문제은행 언어'}</th>
+              <td>{baseInfo?.languageCountryCode}</td>
             </tr>
           </tbody>
         </table>
       </div>
       {/* 퍼블수정 20250613 : lineType 추가 */}
       <FormSubTitle label={'문항정보'} lineType={'dark'} />
-      <ContentsRow>
-        {/* form_item */}
-        <div className={formStyles.form_item}>
-          <label htmlFor="name-type" className={formStyles.form_label}>
-            <span className={formStyles.form_text}>문항 출제유형</span>
-          </label>
-          <div className={formStyles.input_box}>
-            <div className={dynamicFormStyles.segment_wrap}>
-              <Tabs
-                items={items}
-                type="segment"
-                size="sm"
-                selectedTabKey={'option01'}
-                className={styles.tab_select}
-              />
-            </div>
-          </div>
-        </div>
-      </ContentsRow>
-      {/* 퍼블수정 20250619 페이지별 문항수 추가 */}
-      <ContentsRow>
-        {/* form_item */}
-        <div className={formStyles.form_item}>
-          <label htmlFor="name-type" className={formStyles.form_label}>
-            <span className={formStyles.form_text}>페이지별 문항수</span>
-            {/* 필수 케이스 */}
-            <span className={cn(formStyles.status, formStyles.required)}>
-              <IcoFormRequired width={12} height={12} />
-            </span>
-          </label>
-          <div className={formStyles.input_box}>
-            <Input type="text" suffixText={'개'} value={'5'} className={formStyles.input_time} />
-          </div>
-        </div>
-        <div className={formStyles.form_item}></div>
-        <div className={formStyles.form_item}></div>
-      </ContentsRow>
+
       <div className={styles.table_wrap}>
-        <TableBox
+        <div></div>
+        <GridBox
+          title=" "
+          showTotalCount={false}
+          disabledSelectionToggle
+          tableMode
           data={data}
           columns={columns}
-          tableMode={true}
           titleCustomNode={
             <div className="custom_info_wrap">
               <strong className="table_tit font-normal">{'문항현황'}</strong>
-              <strong className="table_tit font-normal">{'시험지 문항수'}</strong>
-              <span className="count_info">{'5'}</span>
-              <strong className="table_tit font-normal">{'선택 문항수'}</strong>
-              <span className="count_info point">{'5'}</span>
-              <strong className="table_tit font-normal">{'문항 당 배점'}</strong>
-              <span className="count_info">{'5'}</span>
+              <strong className="table_tit font-normal">{'문제은행 문항수'}</strong>
+              <span className="count_info">{'100'}</span>
             </div>
           }
           className={styles.info_table}
+          guideText={'문항현황은 문항목록에서 문항추가/삭제 시 자동 업데이트 됩니다.'}
         />
         <TableBox
           data={data2}
