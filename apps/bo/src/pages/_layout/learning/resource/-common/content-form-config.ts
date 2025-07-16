@@ -6,15 +6,21 @@ export const mediaContentFormConfig = (options: { hasMapping: boolean }): Dynami
   builders: [
     {
       label: t('LABEL.form.label.channel'),
-      name: 'channelUuid',
+      name: 'channelName',
       type: 'text',
-      format: 'array',
-      value: [],
+      format: 'string',
+      value: '',
       placeholder: t('LABEL.form.input.placeholder3', {
         field: t('채널명'),
         inputType: t('LABEL.form.input.select'),
       }),
       description: '',
+    },
+    {
+      name: 'channelUuid',
+      type: 'hidden',
+      format: 'string',
+      value: '',
     },
     {
       label: t('LABEL.form.label.langCountryCode'),
@@ -270,6 +276,7 @@ export const mediaContentFormConfig = (options: { hasMapping: boolean }): Dynami
   ],
   validator: {
     channelUuid: true,
+    channelName: true,
     languageCountryCode: true,
     contentName: true,
     coordinatorName: true,

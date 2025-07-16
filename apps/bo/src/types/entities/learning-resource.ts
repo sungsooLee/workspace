@@ -66,15 +66,6 @@ export interface BlogPostRes extends BlogCreateReq {
   aiKeyword: string;
 }
 
-export type BlogWatchLogReq = {
-  courseSequenceId: number;
-  curriculumId: number;
-  // 임시로 ? 추가 (화면 개발 중 제거 가능)
-  moduleId?: number;
-  lessonId?: number;
-  contentUuid: string;
-};
-
 export interface PostDraftVideosParams {
   languageCountryCode: string;
   tenantId: string;
@@ -344,3 +335,79 @@ export interface Content {
 }
 
 export type ContentCourseMappingRes = PaginationResponse<Content>;
+
+export interface TestPaperBasicInfoSaveReq extends MediaContentSaveReq {
+  contentUuid?: string;
+  examTemplateType: ExamTemplateType;
+  questionCount: number;
+  questionCountPerPage: number;
+  examLimitTime: number;
+  maxAttemptCount: number;
+  isMoveQuestion: boolean;
+  isShowResult: boolean;
+  isShowTotalScore: boolean;
+  isShowQuestion: boolean;
+  isShowScore: boolean;
+  isShowCorrectAnswer: boolean;
+  isShowAnswerExplain: boolean;
+  resultVisibleTime: ExamResultVisibleMoment;
+  isDisableWrongRetry: boolean;
+  isAutoSubmit: boolean;
+  isExamEndNotice: boolean;
+  examEndNoticeOffsetMinutes: number;
+  examEndNoticeMessage: string;
+  examType: ExamType;
+  questionGenType?: ExamQuestionGenType;
+}
+
+export interface TestPaperBasicInfoSaveRes {
+  examUuid: string;
+  examPoolUuid: string;
+}
+
+export interface TestPaperBasicInfoDetail extends GetContentDetailRes {
+  examTemplateType: ExamTemplateType;
+  questionCount: number;
+  questionCountPerPage: number;
+  examLimitTime: number;
+  maxAttemptCount: number;
+  isMoveQuestion: boolean;
+  isShowResult: boolean;
+  isShowTotalScore: boolean;
+  isShowQuestion: boolean;
+  isShowScore: boolean;
+  isShowCorrectAnswer: boolean;
+  isShowAnswerExplain: boolean;
+  resultVisibleTime: ExamResultVisibleMoment;
+  isDisableWrongRetry: boolean;
+  isAutoSubmit: boolean;
+  isExamEndNotice: boolean;
+  examEndNoticeOffsetMinutes: number;
+  examEndNoticeMessage: string;
+  questionGenType?: ExamQuestionGenType;
+  examPoolUuid?: string;
+}
+
+export enum ExamTemplateType {
+  EXAM = 'EXAM',
+  OMR = 'OMR',
+  QUIZ = 'QUIZ',
+}
+
+export enum ExamResultVisibleMoment {
+  ON_EXAM_END = 'ON_EXAM_END',
+  ON_SUBMIT = 'ON_SUBMIT',
+}
+
+export enum ExamQuestionGenType {
+  FIXED = 'FIXED',
+  RANDOM = 'RANDOM',
+}
+
+export enum ExamType {
+  PRE_TEST = 'PRE_TEST',
+  PROGRESS_TEST = 'PROGRESS_TEST',
+  POST_TEST = 'POST_TEST',
+}
+
+export type TestPaperDetailRes = GetContentDetailRes;

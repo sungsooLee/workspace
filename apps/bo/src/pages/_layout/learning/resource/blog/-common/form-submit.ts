@@ -14,7 +14,7 @@ export const getPayloadFromBlogSubmit = (options: {
     tenantId: options.tenantId,
     contentName: options.data.contentName,
     languageCountryCode: options.data.languageCountryCode,
-    channelUuid: options.data.channelUuid?.[0].channelUuid,
+    channelUuid: options.data.channelUuid,
     description: options.data.description,
     coordinatorUuid: options.data.coordinatorUuid,
     coordinatorName: options.data.coordinatorName,
