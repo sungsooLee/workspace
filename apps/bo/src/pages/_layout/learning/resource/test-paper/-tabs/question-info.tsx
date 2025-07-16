@@ -1,25 +1,25 @@
-/* eslint-disable @nx/enforce-module-boundaries */
-import { FC } from 'react';
+import { forwardRef } from 'react';
+import { t } from 'i18next';
 import { Link } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import {
   ContentsRow,
-  Tabs,
-  TableBox,
+  FormSubTitle,
   Input,
   RadioGroupFormField,
-  FormSubTitle,
+  TableBox,
+  Tabs,
 } from '@learnway/ui';
-import { IcoMenu01, IcoFormRequired } from '@learnway/icons';
+import { IcoFormRequired, IcoMenu01 } from '@learnway/icons';
 
 /* styles */
-import styles from './test-detail.module.css';
+import styles from '@learnway/styles/bo/pages/_layout/learning/test-detail.module.css';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 
-const QuestionInfoComponent: FC<{}> = ({}) => {
+const QuestionInfoComponent = forwardRef<HTMLFormElement, any>(({}, ref) => {
   const items = [
     {
       title: '선택형 문항',
@@ -186,112 +186,115 @@ const QuestionInfoComponent: FC<{}> = ({}) => {
       },
     }),
   ] as ColumnDef<any, unknown>[];
+
   return (
-    <div className={styles.wrap}>
-      <FormSubTitle label={'기본정보'} noLine />
-      <div className={cn(tableStyles.start, tableStyles.wrap)}>
-        <table>
-          <caption>{'기본정보'}</caption>
-          <colgroup>
-            <col style={{ width: '240px' }} />
-            <col />
-            <col style={{ width: '240px' }} />
-            <col />
-          </colgroup>
-          <tbody>
-            <tr>
-              <th scope={'row'}>{'테넌트'}</th>
-              <td>{'테넌트명'}</td>
-              <th scope={'row'}>{'채널'}</th>
-              <td>{'채널명'}</td>
-            </tr>
-            <tr>
-              <th scope={'row'}>{'유형'}</th>
-              <td>{'시험지'}</td>
-              <th scope={'row'}>{'학습자원명'}</th>
-              <td>{'학습자원명'}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      {/* 퍼블수정 20250613 : lineType 추가 */}
-      <FormSubTitle label={'문항정보'} lineType={'dark'} />
-      <ContentsRow>
-        {/* form_item */}
-        <div className={formStyles.form_item}>
-          <label htmlFor="name-type" className={formStyles.form_label}>
-            <span className={formStyles.form_text}>문항 출제유형</span>
-          </label>
-          <div className={formStyles.input_box}>
-            <div className={dynamicFormStyles.segment_wrap}>
-              <Tabs
-                items={items}
-                type="segment"
-                size="sm"
-                selectedTabKey={'option01'}
-                className={styles.tab_select}
-              />
+    <form ref={ref}>
+      <div className={styles.wrap}>
+        <FormSubTitle label={t('기본 정보')} lineType="dark" />
+        <div className={cn(tableStyles.start, tableStyles.wrap)}>
+          <table>
+            <caption>{t('기본 정보')}</caption>
+            <colgroup>
+              <col style={{ width: '240px' }} />
+              <col />
+              <col style={{ width: '240px' }} />
+              <col />
+            </colgroup>
+            <tbody>
+              <tr>
+                <th scope="row">{t('테넌트')}</th>
+                <td>{t('테넌트명')}</td>
+                <th scope="row">{t('채널')}</th>
+                <td>{t('채널명')}</td>
+              </tr>
+              <tr>
+                <th scope="row">{t('유형')}</th>
+                <td>{t('시험지')}</td>
+                <th scope="row">{t('학습자원명')}</th>
+                <td>{t('학습자원명')}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <FormSubTitle label={t('문항 정보')} lineType="dark" />
+        <ContentsRow>
+          {/* form_item */}
+          <div className={formStyles.form_item}>
+            <label htmlFor="name-type" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>문항 출제유형</span>
+            </label>
+            <div className={formStyles.input_box}>
+              <div className={dynamicFormStyles.segment_wrap}>
+                <Tabs
+                  items={items}
+                  type="segment"
+                  size="sm"
+                  selectedTabKey={'option01'}
+                  className={styles.tab_select}
+                />
+              </div>
             </div>
           </div>
-        </div>
-      </ContentsRow>
-      {/* 퍼블수정 20250619 페이지별 문항수 추가 */}
-      <ContentsRow>
-        {/* form_item */}
-        <div className={formStyles.form_item}>
-          <label htmlFor="name-type" className={formStyles.form_label}>
-            <span className={formStyles.form_text}>페이지별 문항수</span>
-            {/* 필수 케이스 */}
-            <span className={cn(formStyles.status, formStyles.required)}>
-              <IcoFormRequired width={12} height={12} />
-            </span>
-          </label>
-          <div className={formStyles.input_box}>
-            <Input type="text" suffixText={'개'} value={'5'} className={formStyles.input_time} />
+        </ContentsRow>
+        {/* 퍼블수정 20250619 페이지별 문항수 추가 */}
+        <ContentsRow>
+          {/* form_item */}
+          <div className={formStyles.form_item}>
+            <label htmlFor="name-type" className={formStyles.form_label}>
+              <span className={formStyles.form_text}>페이지별 문항수</span>
+              {/* 필수 케이스 */}
+              <span className={cn(formStyles.status, formStyles.required)}>
+                <IcoFormRequired width={12} height={12} />
+              </span>
+            </label>
+            <div className={formStyles.input_box}>
+              <Input type="text" suffixText={'개'} value={'5'} className={formStyles.input_time} />
+            </div>
           </div>
+          <div className={formStyles.form_item}></div>
+          <div className={formStyles.form_item}></div>
+        </ContentsRow>
+        <div className={styles.table_wrap}>
+          <TableBox
+            data={data}
+            columns={columns}
+            tableMode={true}
+            titleCustomNode={
+              <div className="custom_info_wrap">
+                <strong className="table_tit font-normal">{'문항현황'}</strong>
+                <strong className="table_tit font-normal">{'시험지 문항수'}</strong>
+                <span className="count_info">{'5'}</span>
+                <strong className="table_tit font-normal">{'선택 문항수'}</strong>
+                <span className="count_info point">{'5'}</span>
+                <strong className="table_tit font-normal">{'문항 당 배점'}</strong>
+                <span className="count_info">{'5'}</span>
+              </div>
+            }
+            className={styles.info_table}
+          />
+          <TableBox
+            data={data2}
+            columns={columns2}
+            tableMode={true}
+            multiple
+            showNumberingColumn
+            hideRowSelectionCheckBox={false}
+            titleCustomNode={
+              <div className="custom_info_wrap">
+                <strong className="table_tit font-normal">{'문항목록'}</strong>
+                <strong className="table_tit font-normal">{'전체'}</strong>
+                <span className="count_info">{'5'}</span>
+              </div>
+            }
+            showExcelDownload
+            className={styles.list_table}
+          />
         </div>
-        <div className={formStyles.form_item}></div>
-        <div className={formStyles.form_item}></div>
-      </ContentsRow>
-      <div className={styles.table_wrap}>
-        <TableBox
-          data={data}
-          columns={columns}
-          tableMode={true}
-          titleCustomNode={
-            <div className="custom_info_wrap">
-              <strong className="table_tit font-normal">{'문항현황'}</strong>
-              <strong className="table_tit font-normal">{'시험지 문항수'}</strong>
-              <span className="count_info">{'5'}</span>
-              <strong className="table_tit font-normal">{'선택 문항수'}</strong>
-              <span className="count_info point">{'5'}</span>
-              <strong className="table_tit font-normal">{'문항 당 배점'}</strong>
-              <span className="count_info">{'5'}</span>
-            </div>
-          }
-          className={styles.info_table}
-        />
-        <TableBox
-          data={data2}
-          columns={columns2}
-          tableMode={true}
-          multiple
-          showNumberingColumn
-          hideRowSelectionCheckBox={false}
-          titleCustomNode={
-            <div className="custom_info_wrap">
-              <strong className="table_tit font-normal">{'문항목록'}</strong>
-              <strong className="table_tit font-normal">{'전체'}</strong>
-              <span className="count_info">{'5'}</span>
-            </div>
-          }
-          showExcelDownload
-          className={styles.list_table}
-        />
       </div>
-    </div>
+    </form>
   );
-};
+});
 
 QuestionInfoComponent.displayName = 'QuestionInfo';
 export const QuestionInfo = QuestionInfoComponent;

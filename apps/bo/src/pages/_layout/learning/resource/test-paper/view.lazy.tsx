@@ -1,4 +1,5 @@
-import { useCallback, useMemo, useState } from 'react';
+/* IA118 / NLP_BO_CMS_1203 - 나의 학습자원 > 시험지 등록 및 상세 */
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { Button, Divider, Tabs, useModal } from '@learnway/ui';
@@ -9,7 +10,7 @@ import {
   PageContainer,
   SubContents,
 } from '@shared/ui';
-import { ExamTab } from './-common/type';
+import { ExamTab, TabFormRef } from './-common/type';
 import { useExamLoaderData } from './-hooks/use-exam-loader-data';
 import { TestPaperInfo } from './-tabs/test-paper-info';
 import { QuestionInfo } from './-tabs/question-info';
@@ -22,17 +23,27 @@ export const Route = createLazyFileRoute('/_layout/learning/resource/test-paper/
 
 function RouteComponent() {
   const router = useRouter();
-  const { contentUuid, data, hasMapping } = useExamLoaderData();
+  const { mode, tenantId, contentUuid, data, hasMapping } = useExamLoaderData();
   console.log('data by router state', data, hasMapping);
 
-  const { open: openModal, confirm: openConfirm } = useModal();
+  const { alert, open: openModal, confirm: openConfirm } = useModal();
+
+  const basicInfoRef = useRef<TabFormRef>(null);
 
   const tabItems = useMemo(
     () => [
       {
         title: t('시험지 정보(OMR 시험지)'),
         key: ExamTab.PAPER,
-        content: <TestPaperInfo />,
+        content: (
+          <TestPaperInfo
+            ref={basicInfoRef}
+            tenantId={tenantId}
+            mode={mode}
+            data={data}
+            hasMapping={hasMapping}
+          />
+        ),
       },
       {
         title: t('문항 추가(랜덤형)'),
@@ -45,9 +56,25 @@ function RouteComponent() {
 
   const [selectedTabKey, setSelectedTabKey] = useState<string>(ExamTab.PAPER);
 
-  const handleTabChange = (tabKey: string) => {
+  const handleTabChange = useCallback((tabKey: string) => {
     setSelectedTabKey(tabKey);
-  };
+  }, []);
+
+  const [saved, setSaved] = useState<boolean>(false);
+
+  const handleBeforeTabChange = useCallback(
+    async (currentTabKey: string, nextTabKey: string) => {
+      if (nextTabKey === ExamTab.QUESTION && !saved) {
+        await alert({
+          title: t('입력한 정보를 저장하세요.'),
+          content: t('저장된 적 없는 경우 다음 단계로 이동할 수 없습니다.'),
+        });
+        return false;
+      }
+      return true;
+    },
+    [saved],
+  );
 
   // 매핑과정 버튼 클릭 시 팝업 오픈
   const handleClickCourseMapping = useCallback(async () => {
@@ -77,23 +104,18 @@ function RouteComponent() {
     }
   }, []);
 
-  const [saved, setSaved] = useState<boolean>(false);
+  const handleClickSaveButton = useCallback(() => {
+    if (basicInfoRef.current) {
+      basicInfoRef.current?.save();
+    }
+  }, []);
 
-  const handleClickSaveButton = async () => {
-    if (
-      await openConfirm({
-        title: t('LABEL.confirm.save.title'),
-        content: t('입력한 정보로 저장합니다.'),
-      })
-    ) {
-      // router.navigate({
-      //   to: '/learning/resource/test-paper/view',
-      //   state: { mode: 'UPDATE', contentUuid: '1234' },
-      //   replace: true
-      // });
+  useEffect(() => {
+    console.log('contentUuid ===>', contentUuid);
+    if (contentUuid) {
       setSaved(true);
     }
-  };
+  }, [contentUuid]);
 
   return (
     <PageContainer>
@@ -102,7 +124,7 @@ function RouteComponent() {
           type="button"
           variant="point"
           size="sm"
-          label={t('목록')}
+          label={t('LABEL.button.list')}
           onClick={handleClickGoListButton}
         />
         <Divider orientation="vertical" />
@@ -124,7 +146,7 @@ function RouteComponent() {
               selectedTabKey={selectedTabKey}
               items={tabItems}
               onTabChange={handleTabChange}
-              clickDisabled={!saved}
+              onBeforeTabChange={handleBeforeTabChange}
             />
           </div>
         </form>
