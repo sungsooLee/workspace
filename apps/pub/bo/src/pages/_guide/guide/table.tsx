@@ -31,6 +31,7 @@ function RouteComponent() {
         headerAlign: 'left', // 헤더 정렬
         cellAlign: 'left', // 셀 정렬
         size: 'auto',
+        cellClass: 'title',
       },
     }),
     columnHelper.accessor('name2', {
@@ -109,7 +110,7 @@ const columns = [
       </div>
       <div className="group">
         <h3 className="guide_tit3">Table basic</h3>
-        <TableBox data={data} columns={columns} tableMode={true} multiple />
+        <TableBox data={data} columns={columns} tableMode={true} />
       </div>
     </div>
   );

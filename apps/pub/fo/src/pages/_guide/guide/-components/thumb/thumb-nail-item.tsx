@@ -36,7 +36,6 @@ const ThumbnailItem: React.FC<ThumbnailItemProps> = ({
       )}
     >
       <div className={styles.thumbnail_view}>
-        {/* <img src={data.imageUrl} alt={data.title}  /> */}
         <Thumbnail path={data.imageUrl} className={styles.thumbnail_image} />
         {data.showNewLabel && (
           <Badge
