@@ -18,11 +18,14 @@ import {
   EditDropdownCell,
   EditSwitchCell,
   DatePicker,
+  CheckboxGroupFormField,
 } from '@learnway/ui';
 import { ContentsHistoryInfoFormField, FormItem, FormRow } from '@shared/ui';
 import { DuplicateCheckInputFormField, DuplicateState, FormDisplay } from '@features/form';
 import { getUserStatus } from '../service/company-user.service';
 import UsersService from '@entities/users/api/users';
+import { CompanyUserDetailPersonal } from './company-user-detail-personal';
+import { CompanyUserDetailJob } from './company-user-detail-job';
 
 interface CompanyUserDetailBaseProps {
   userInfo: any;
@@ -35,89 +38,41 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
 
   const formRef = useRef<HTMLFormElement>(null);
 
-  const watchedValues = useWatch({
-    control,
-    name: ['useSsoLogin', 'isUseTwoFactorAuth', 'twoFactorAuthPlatformTypeList'],
-  });
-
   useEffect(() => {
     if (props.userInfo) {
+      const user = props.userInfo;
       const initialData = {
-        ...props.userInfo,
-        companyName: props.userInfo.company.name,
-        deptName: props.userInfo.dept?.deptName,
+        ...user,
+        companyName: user.company.name,
+        deptName: user.dept?.deptName,
         email: {
-          fieldValue: props.userInfo.email,
+          fieldValue: user.email,
           checkState: DuplicateState.okStart,
         },
         gender:
-          props.userInfo.gender &&
-          t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.user.Gender.${props.userInfo.gender}`),
-        area: props.userInfo.locale?.displayCountry,
-        birthday: props.userInfo.birthday ? new Date(props.userInfo.birthday) : '',
-        joinDate: props.userInfo.joinDate
-          ? getDateToString(new Date(props.userInfo.joinDate), DATE_TIME_FORMAT.DATETIME_SEC)
+          user.gender && t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.user.Gender.${user.gender}`),
+        area: user.locale?.displayCountry,
+        birthday: user.birthday ? new Date(user.birthday) : '',
+        position: user.isLeader ? t('조직장') : t('조직원'),
+        joinDate: user.joinDate
+          ? getDateToString(new Date(user.joinDate), DATE_TIME_FORMAT.DATETIME_SEC)
           : '-',
-        retireDate: props.userInfo.retireDate
-          ? getDateToString(new Date(props.userInfo.retireDate), DATE_TIME_FORMAT.DATETIME_SEC)
+        retireDate: user.retireDate
+          ? getDateToString(new Date(user.retireDate), DATE_TIME_FORMAT.DATETIME_SEC)
           : '-',
-        userStatus: getUserStatus(props.userInfo),
-        promotionDate: props.userInfo.promotionDate
-          ? getDateToString(new Date(props.userInfo.promotionDate), DATE_TIME_FORMAT.DATETIME_SEC)
+        userStatus: getUserStatus(user),
+        promotionDate: user.promotionDate
+          ? getDateToString(new Date(user.promotionDate), DATE_TIME_FORMAT.DATETIME_SEC)
           : '-',
-        dormantDate: props.userInfo.dormantDate
-          ? getDateToString(new Date(props.userInfo.dormantDate), DATE_TIME_FORMAT.DATETIME_SEC)
+        dormantDate: user.dormantDate
+          ? getDateToString(new Date(user.dormantDate), DATE_TIME_FORMAT.DATETIME_SEC)
           : '-',
-        tenantList: props.userInfo.tenants,
+        tenantList: user.tenants,
+        isUseSso: true,
       };
       updateFormData(initialData);
     }
   }, [props.userInfo]);
-
-  const jobGroupColumns = [
-    {
-      header: '직군',
-      accessorKey: 'role1',
-      cell: (info: CellContext<any, string>) => (
-        <EditDropdownCell
-          info={info}
-          dropdown={{
-            options: [{ label: 'TEST', value: 'TEST' }],
-          }}
-        />
-      ),
-      meta: {
-        headerAlign: 'center',
-        cellAlign: 'center',
-      },
-    },
-    {
-      header: '직무',
-      accessorKey: 'role2',
-      cell: (info: CellContext<any, string>) => (
-        <EditDropdownCell
-          info={info}
-          dropdown={{
-            options: [{ label: 'TEST', value: 'TEST' }],
-          }}
-        />
-      ),
-      meta: {
-        headerAlign: 'center',
-        cellAlign: 'center',
-      },
-    },
-    {
-      header: '정/부',
-      accessorKey: 'isMain',
-      size: 170,
-      cell: (info: CellContext<any, boolean>) => <EditSwitchCell info={info} />,
-      meta: {
-        headerAlign: 'center',
-        cellAlign: 'center',
-      },
-    },
-  ];
 
   useImperativeHandle(ref, () => ({
     saveData() {
@@ -131,41 +86,13 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
     },
   }));
 
-  const duplicateEmailCheck = async (email: string) => {
-    const payload = { email };
-    const result = await UsersService.existsEmail(payload);
-    console.log('### duplicateEmailCheck', result);
-    if (result.isEmailExists === true) return DuplicateState.duplicated;
-    else return DuplicateState.ok;
-  };
-
   const handleOnSubmit = async (data: any) => {
     console.log('#### handleOnSubmit', data);
   };
 
   return (
     <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
-      <FormSubTitle label={t('개인 정보')} lineType={'dark'} />
-      <ContentsRow>
-        <FormRow provider={provider} name={'name'} />
-        <FormRow provider={provider} name={'engName'} />
-        <FormRow provider={provider} name={'employeeNumber'} />
-      </ContentsRow>
-      <ContentsRow>
-        <FormRow
-          provider={provider}
-          name={'email'}
-          element={<DuplicateCheckInputFormField onDuplicationCheck={duplicateEmailCheck} />}
-        />
-        <FormRow provider={provider} name={'birthday'} element={<DatePicker displayType="day" />} />
-        <FormRow provider={provider} name={'gender'} />
-      </ContentsRow>
-      <ContentsRow>
-        <FormRow provider={provider} name={'area'} element={<Input readOnly={true} />} />
-        <FormRow provider={provider} name={'phoneNumber'} />
-        <FormRow provider={provider} name={'companyPhoneNumber'} />
-      </ContentsRow>
-
+      <CompanyUserDetailPersonal provider={provider} />
       <FormSubTitle label={t('교재 배송 주소 및 교재 신청 내역')} lineType={'dark'} />
       <GridBox
         data={textBookData}
@@ -179,45 +106,21 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
       <FormSubTitle label={t('회사/조직 정보')} lineType={'dark'} />
       <ContentsRow>
         <FormRow provider={provider} name={'companyName'} element={<Input readOnly={true} />} />
-        <FormRow provider={provider} name={'room'} element={<Input readOnly={true} />} />
         <FormRow provider={provider} name={'deptName'} element={<Input readOnly={true} />} />
-      </ContentsRow>
-      <ContentsRow>
         <FormRow provider={provider} name={'position'} element={<Input readOnly={true} />} />
-        <FormRow provider={provider} name={'spot'} element={<Input readOnly={true} />} />
-        <FormRow provider={provider} name={'occupation'} element={<Input readOnly={true} />} />
       </ContentsRow>
       <ContentsRow>
+        <FormRow provider={provider} name={'positionName'} element={<Input readOnly={true} />} />
+        <FormRow provider={provider} name={'jobDomain'} element={<Input readOnly={true} />} />
         <FormRow provider={provider} name={'joinDate'} element={<Input readOnly={true} />} />
+      </ContentsRow>
+      <ContentsRow>
         <FormRow provider={provider} name={'retireDate'} element={<Input readOnly={true} />} />
         <FormRow provider={provider} name={'promotionDate'} element={<Input readOnly={true} />} />
-      </ContentsRow>
-      <ContentsRow>
         <FormRow provider={provider} name={'userStatus'} />
-        <FormItem />
-        <FormItem />
       </ContentsRow>
 
-      <FormSubTitle label={t('직군/직무 정보')} lineType={'dark'} />
-      <ContentsRow>
-        <FormRow
-          provider={provider}
-          name={'jobGroups'}
-          element={
-            <GridFormField
-              gridProps={{
-                multiple: true,
-                showAdd: true,
-                showRemove: true,
-                showTotalCount: false,
-                columns: jobGroupColumns,
-                title: t('직군/직무 관리'),
-                visibleRowCount: 3,
-              }}
-            />
-          }
-        />
-      </ContentsRow>
+      <CompanyUserDetailJob provider={provider} />
 
       <FormSubTitle label={t('계정 정보')} lineType={'dark'} />
       <ContentsRow>
@@ -278,22 +181,39 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
         <ContentsRowItem>
           <FormRow
             provider={provider}
-            name={'useSsoLogin'}
+            name="isUseSso"
             className={dynamicFormStyles.form_item_horizontal}
           />
-
-          <FormRow
-            provider={provider}
-            name={'ssoType'}
-            element={<RadioGroupFormField disabled={!watchedValues[0]} />}
-          />
+          <FormDisplay provider={provider} dependencies={[{ name: 'isUseSso', value: true }]}>
+            <FormRow provider={provider} name="ssoTypeList" element={<RadioGroupFormField />} />
+          </FormDisplay>
+          <FormItem guideText={t('SSO 로그인 사용 여부를 설정합니다.')} />
         </ContentsRowItem>
         <ContentsRowItem>
           <FormRow provider={provider} name={'authType'} />
         </ContentsRowItem>
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider} name={'use2FA'} />
+        <ContentsRowItem>
+          <FormRow
+            provider={provider}
+            name="isUseTwoFactorAuth"
+            className={dynamicFormStyles.form_item_horizontal}
+          ></FormRow>
+          <FormDisplay
+            provider={provider}
+            dependencies={[{ name: 'isUseTwoFactorAuth', value: true }]}
+          >
+            <FormRow
+              provider={provider}
+              name="twoFactorAuthPlatformTypeList"
+              element={<CheckboxGroupFormField />}
+            />
+          </FormDisplay>
+          <FormItem guideText={t('2차 로그인 인증 여부를 설정할 수 있습니다.')} />
+        </ContentsRowItem>
+      </ContentsRow>
+      <ContentsRow>
         <FormRow provider={provider} name={'2FAType'} />
       </ContentsRow>
       <ContentsRow>
@@ -410,13 +330,6 @@ const formConfig = (): DynamicFormConfig => ({
       placeholder: '',
     },
     {
-      name: 'room',
-      type: 'text',
-      label: t('실'),
-      value: '',
-      placeholder: '',
-    },
-    {
       name: 'deptName',
       type: 'text',
       label: t('소속'),
@@ -431,14 +344,14 @@ const formConfig = (): DynamicFormConfig => ({
       placeholder: '',
     },
     {
-      name: 'spot',
+      name: 'positionName',
       type: 'text',
       label: t('호칭(직위)'),
       value: '',
       placeholder: '',
     },
     {
-      name: 'occupation',
+      name: 'jobDomain',
       type: 'text',
       label: t('직군'),
       value: '',
@@ -548,23 +461,22 @@ const formConfig = (): DynamicFormConfig => ({
       format: 'array',
     },
     {
-      name: 'useSsoLogin',
+      name: 'isUseSso',
       type: 'switch',
-      label: t('SSO 로그인 사용'),
+      label: t('SSO 로그인 사용 및 SSO 로그인 유형'),
       value: true,
       switchConfig: {
-        label: (value: boolean) => (value ? '사용' : '미사용'),
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
       },
     },
     {
-      name: 'ssoType',
+      name: 'ssoTypeList',
       type: 'radio-group',
       label: '',
       value: '',
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.SsoType'],
       },
-      guideText: t('SSO 로그인 사용 여부를 설정합니다.'),
     },
     {
       name: 'authType',
@@ -579,12 +491,19 @@ const formConfig = (): DynamicFormConfig => ({
       ),
     },
     {
-      name: 'use2FA',
-      type: 'checkbox-group',
+      name: 'isUseTwoFactorAuth',
+      type: 'switch',
       label: t('로그인 2차 인증 사용'),
-      format: 'array',
-      value: [],
-      guideText: t('2차 로그인 인증 여부를 설정할 수 있습니다.'),
+      value: true,
+      switchConfig: {
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+    },
+    {
+      name: 'twoFactorAuthPlatformTypeList',
+      type: 'checkbox-group',
+      label: '',
+      value: ['FO_PLATFORM', 'BO_PLATFORM'],
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.TwoFactorAuthPlatformType'],
       },
@@ -612,7 +531,7 @@ const formConfig = (): DynamicFormConfig => ({
       guideText: t('로그인 시간 제한 선택 시 회사관리 제한 시간에는 로그인할 수 없습니다.'),
     },
     {
-      name: 'jobGroups',
+      name: 'jobDomains',
       type: 'custom',
       label: '',
       value: [],
