@@ -36,7 +36,7 @@ export const CourseSearchForm: React.FC<CourseSearchFormProps> = ({
           format={'number'}
           element={<TenantByRoleDropdownFormField />}
           validation={{
-            required: true,
+            required: false,
           }}
         />
         {/* 채널 */}
@@ -46,7 +46,7 @@ export const CourseSearchForm: React.FC<CourseSearchFormProps> = ({
           label={t('LABEL.form.label.channel')}
           element={<TenantChannelDropdownFormField enableFilter={true} />}
           validation={{
-            required: true,
+            required: false,
           }}
         />
         {/* 개설년도 */}
@@ -60,6 +60,9 @@ export const CourseSearchForm: React.FC<CourseSearchFormProps> = ({
               presetOptionLabel={t('LABEL.form.label.all')}
             />
           }
+          validation={{
+            required: true,
+          }}
         />
         {/* 과정유형 */}
         <FormRow2
@@ -111,6 +114,9 @@ export const CourseSearchForm: React.FC<CourseSearchFormProps> = ({
           name="courseName"
           label={t('LABEL.form.label.courseName')}
           element={<Input />}
+          validation={{
+            required: true,
+          }}
         />
       </ContentsRow>
     </SearchBoxForm>

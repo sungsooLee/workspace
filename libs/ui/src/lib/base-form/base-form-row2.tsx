@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '../button/button';
 import { Tooltip } from '../tooltip/tooltip';
 import { DynamicFormField } from '../dynamic-form-field/dynamic-form-field';
+import { DynamicFormField2 } from '../dynamic-form-field/dynamic-form-field2';
 
 /**
  * FormRowComponent
@@ -191,12 +192,16 @@ const DynamicFormContainer: FC<FormRowProps> = ({
       )}
       {/* 입력 영역: children을 순회하며 필요한 변환(renderChild) 적용 */}
       <div className={styles.input_box}>
-        <DynamicFormField
+        <DynamicFormField2
           {...formConfig}
           {...provider}
           error={error.isError}
           name={name}
           component={element as any}
+          clearFormError={provider.clearFormError}
+          isFieldRequired={provider.control.isFieldRequired}
+          trigger={provider.trigger}
+          formState={provider.formState}
         />
         {children}
       </div>

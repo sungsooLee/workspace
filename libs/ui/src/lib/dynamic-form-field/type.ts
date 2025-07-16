@@ -5,5 +5,9 @@ export interface DynamicFormFieldProps {
   name?: string;
   component: ComponentType<any> | ReactElement;
   children?: ReactNode;
+  clearFormError?: (field: string) => void;
+  isFieldRequired?: (fieldName: string) => boolean;
+  trigger?: UseFormReturn['trigger'];
+  formState?: UseFormReturn['formState'];
   [key: string]: any;
 }

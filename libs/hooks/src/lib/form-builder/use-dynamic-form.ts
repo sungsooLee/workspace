@@ -75,7 +75,8 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
   const schema = buildJodObject(validator);
   // react-hook-form 훅 초기화
   const methods = useForm({
-    mode: 'onSubmit',
+    mode: config.mode || 'onSubmit', // config에서 mode를 받아오고, 기본값은 'onSubmit'
+    reValidateMode: config.reValidateMode || 'onChange', // 에러 발생 후에는 onChange로 재검증
     defaultValues,
     resolver: zodResolver(schema),
   });
@@ -247,6 +248,7 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
       onFormFocus: handleFocus,
       originalValues,
       clearFormError: clearErrors,
+      trigger,
       registerField: () => null,
       addValidator: () => null,
     },
