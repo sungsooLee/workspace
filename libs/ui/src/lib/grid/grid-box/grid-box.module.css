@@ -9,7 +9,7 @@
       .guide_text {
         @apply ml-[16px] text-[1.4rem] font-normal leading-[1.4rem] text-[var(--gray7)];
         &.next_line {
-          @apply ml-0 w-full flex-none text-[1.2rem] leading-[1.6rem] text-[var(--gray6)];
+          @apply ml-0 mt-[4px] w-full flex-none text-[1.2rem] leading-[1.6rem] text-[var(--gray6)];
         }
       }
       .custom_node {
