@@ -26,7 +26,6 @@ import { ModifierInfoModal } from './learning-resource-modifier-info-modal';
 import { ProgramGuideModal } from './learning-resource-program-guide-modal';
 import { BatchSettingModal } from './learning-resource-batch-setting-modal';
 import { first, get, map, some, uniq } from 'lodash';
-import { CopyModal } from './learning-resource-copy-modal';
 import { useRouter } from '@tanstack/react-router';
 import {
   GridExcelDownloadButton,
@@ -36,7 +35,7 @@ import {
 import { CMSApiPrefix } from '@learnway/config';
 import { PreviewLearningWindow } from './preview-learning-window';
 import { getDetailPathByContentType } from '@features/learning-resource';
-import { ContentInformation } from '@types';
+import { ContentCreateType, ContentInfo, ContentInformation } from '@types';
 
 function LearningResourceTableComponent() {
   const {
@@ -332,10 +331,10 @@ function LearningResourceTableComponent() {
     onFormChange,
     onFormValid,
   } = useSearchBox(searchConfig);
-  const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
+  const { config: gConfig, gridFetch, data } = useGridBox<ContentInfo>(gridConfig, getValues);
   const [params, setParams] = useState<Record<string, any>>({});
   const [valuesWithLabel, setValuesWithLabel] = useState<Record<string, SelectOption>>({});
-  const [selectedRows, setSelectedRows] = useState<any[]>([]);
+  const [selectedRows, setSelectedRows] = useState<ContentInfo[]>([]);
 
   function handleSearch(rawQuery: Record<string, any>) {
     const processedQuery = compactValues(rawQuery);
@@ -347,7 +346,6 @@ function LearningResourceTableComponent() {
 
   useEffect(() => {
     if (!listParam) return;
-    console.log('🚀 ~ useEffect ~ listParam:', listParam);
     onFormChange(listParam);
 
     (async () => {
@@ -416,13 +414,13 @@ function LearningResourceTableComponent() {
     <>
       <SearchBox provider={searchProvider} onSearch={handleSearch} />
       <Divider />
-      <GridBox
+      <GridBox<ContentInfo>
         config={gConfig}
         showNumberingColumn
         multiple
         onRowsSelect={setSelectedRows}
         getRowClassName={(row) => {
-          // if (row == child) return 'bg-[--secondary9]';
+          if (row.createType === ContentCreateType.TRANSLATE) return 'bg-[--secondary9]';
           return '';
         }}
         customButtonNode={
@@ -433,7 +431,7 @@ function LearningResourceTableComponent() {
               disabled={
                 selectedRows.length !== 1 ||
                 !data?.content?.find(
-                  (_: any) => _.contentUuid === get(first(selectedRows), 'contentUuid'),
+                  (_) => _.contentUuid === get(first(selectedRows), 'contentUuid'),
                 ) // child
               }
               onClick={handleShare}
@@ -481,7 +479,7 @@ function LearningResourceTableComponent() {
               disabled={
                 selectedRows.length !== 1 ||
                 !data?.content?.find(
-                  (_: any) => _.contentUuid === get(first(selectedRows), 'contentUuid'),
+                  (_) => _.contentUuid === get(first(selectedRows), 'contentUuid'),
                 ) // child
               }
               onClick={handleCopy}
