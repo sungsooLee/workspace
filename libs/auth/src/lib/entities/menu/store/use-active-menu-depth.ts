@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { Menu } from '../../../types';
+import { isArray, last } from 'lodash';
 
 type ActiveMenuDepth = {
   activeMenuDepthMenu: Menu[] | null;
@@ -11,7 +12,13 @@ type ActiveMenuDepth = {
  */
 export const useActiveMenuDepthState = create<ActiveMenuDepth>((set) => ({
   activeMenuDepthMenu: null,
-  setActiveMenuDepthMenu: (value) => set({ activeMenuDepthMenu: value }),
+  setActiveMenuDepthMenu: (value: Menu[]) => {
+    if (value) {
+      const lastMenuId = last(value)?.menuId;
+      localStorage.setItem('last', String(lastMenuId));
+    }
+    set({ activeMenuDepthMenu: value });
+  },
 }));
 
 // import { atom, useAtom } from 'jotai';
