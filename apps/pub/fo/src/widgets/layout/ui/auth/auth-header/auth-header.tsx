@@ -17,11 +17,17 @@ function AuthHeaderComponent() {
   return (
     <div className={`${styles.start} ${styles.auth_header}`}>
       <header className={styles.header_area}>
-        <h1>
-          <Logo />
-        </h1>
+        <div className={styles.top_area}>
+          <div className={styles.logo_inner}>
+            <h1>
+              <Logo />
+            </h1>
+          </div>
 
-        <Language className={styles.auth} />
+          <div className={styles.util}>
+            <Language className={styles.auth} />
+          </div>
+        </div>
       </header>
     </div>
   );
