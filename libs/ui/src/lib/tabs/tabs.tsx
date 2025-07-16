@@ -90,8 +90,6 @@ export const TabsComponent = forwardRef<
      * 실제 탭 변경을 처리하는 내부 함수
      */
     const handleTabChangeInternal = async (nextValue: string) => {
-      console.log('handleTabChangeInternal', value, nextValue);
-
       // 현재 탭이 없거나 동일한 탭 클릭 시 무시
       if (!value || value === nextValue) return;
 
