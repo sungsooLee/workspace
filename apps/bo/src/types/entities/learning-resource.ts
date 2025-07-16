@@ -1,3 +1,4 @@
+import { CourseType } from '@pages/_layout/learning/course/-common/type';
 import {
   ContentAddInfoType,
   ContentCreateType,
@@ -7,6 +8,7 @@ import {
   FileType,
   ProcessingStatus,
 } from './enum';
+import { PaginationResponse } from '@learnway/ui';
 
 export interface MediaContentSaveReq {
   contentName: string;
@@ -279,3 +281,27 @@ export type CourseMappingStatusRes = {
   hasMapping: boolean;
   courses: MappedCourseItem[] | null;
 };
+
+export interface ContentCourseMappingParams {
+  courseType?: CourseType;
+  courseName?: string;
+  page?: number;
+  size?: number;
+  sort?: string;
+}
+
+export interface Content {
+  courseId: number; //	과정 ID integer($int64)
+  courseUuid: string; //	과정 UUID string
+  courseName: string; //	과정명 string
+  courseType: CourseType; //	과정 타입 string enum ELEARNING, ELEARNING1, ELEARNING2, CLASS, LIVE, EXAM, SURVEY
+  courseContent: string; //	과정내용 string
+  channelId: number; //	채널Id integer($int64)
+  channelUuid: string; //	채널 UUID string
+  channelName: string; //	채널명 string
+  openingYear: number; //	개설년도 integer($int32)
+  courseValidityStartDate: string; //	노출기간 시작일 string($date-time)
+  courseValidityEndDate: string; //	노출기간 종료일 string($date-time)
+}
+
+export type ContentCourseMappingRes = PaginationResponse<Content>;

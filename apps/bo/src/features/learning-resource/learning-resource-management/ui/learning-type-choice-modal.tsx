@@ -127,7 +127,7 @@ const learningTypes = [
   },
   {
     label: '시험지',
-    value: LEARNING_TYPE.TEST_PAGER,
+    value: LEARNING_TYPE.TEST_PAPER,
     icon: <IcoExam />,
     description: '설명문구2줄설명',
   },

@@ -15,7 +15,7 @@ import {
 import { HtmlVideoDetailRes, HtmlVideoMetadataRes, ProcessingStatus, Tag } from '@types';
 import { useUpdateHTML5Metadata } from '@entities/learning-resource';
 import {
-  ChannelListChoiceModal,
+  ChannelChoiceModal,
   CompanyChoiceModal,
   FormGroup,
   FormRow,
@@ -159,9 +159,7 @@ const HtmlDetailComponent = forwardRef<HTMLFormElement, HtmlDetailProps>(
                   hideBorder: true,
                 }}
                 modalConfig={{
-                  title: '',
-                  width: 'xl',
-                  content: <ChannelListChoiceModal />,
+                  content: <ChannelChoiceModal />,
                 }}
                 disabled={hasMapping}
               />

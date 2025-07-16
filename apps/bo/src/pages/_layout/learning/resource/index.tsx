@@ -90,8 +90,8 @@ function RouteComponent() {
         break;
       }
       // 시험지
-      case LEARNING_TYPE.TEST_PAGER: {
-        router.navigate({ to: '/learning/resource/test-paper/view' });
+      case LEARNING_TYPE.TEST_PAPER: {
+        router.navigate({ to: '/learning/resource/test-paper/view', state: { mode: 'CREATE' } });
         break;
       }
       // 문제은행

@@ -177,7 +177,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
   const handleDeleteButtonClick = () => {
     setFormMode(EnFormMode.NONE);
     setSelectedRoleNode(null);
-    deleteRole(selectedRoleNode.roleCode);
+    deleteRole(selectedRoleNode.roleId);
   };
 
   useEffect(() => {
