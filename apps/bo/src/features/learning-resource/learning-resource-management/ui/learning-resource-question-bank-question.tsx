@@ -149,12 +149,14 @@ const LearningResourceQuestionBankQuestionComponent = () => {
       meta: {
         headerAlign: 'center', // 헤더 정렬
         cellAlign: 'left', // 셀 정렬
+        size: 'auto',
       },
     }),
     columnHelper.accessor('questionType', {
       cell: (info) => info.getValue(),
       header: '문항유형',
       enableGrouping: false,
+      size: 216,
       meta: {
         headerAlign: 'center', // 헤더 정렬
         cellAlign: 'left', // 셀 정렬
@@ -164,6 +166,7 @@ const LearningResourceQuestionBankQuestionComponent = () => {
       cell: (info) => info.getValue(),
       header: '난이도',
       enableGrouping: false,
+      size: 104,
       meta: {
         headerAlign: 'center', // 헤더 정렬
         cellAlign: 'center', // 셀 정렬
@@ -172,6 +175,7 @@ const LearningResourceQuestionBankQuestionComponent = () => {
     columnHelper.accessor('number', {
       cell: (info) => info.getValue(),
       header: '보기수',
+      size: 104,
       enableGrouping: false,
       meta: {
         headerAlign: 'center', // 헤더 정렬
@@ -181,6 +185,7 @@ const LearningResourceQuestionBankQuestionComponent = () => {
     columnHelper.accessor('useable', {
       cell: (info) => info.getValue(),
       header: '사용',
+      size: 240,
       enableGrouping: false,
       meta: {
         headerAlign: 'center', // 헤더 정렬
@@ -190,6 +195,7 @@ const LearningResourceQuestionBankQuestionComponent = () => {
     columnHelper.accessor('orderChange', {
       cell: (info) => info.getValue(),
       header: '순서변경',
+      size: 104,
       enableGrouping: false,
       meta: {
         headerAlign: 'center', // 헤더 정렬
@@ -233,7 +239,6 @@ const LearningResourceQuestionBankQuestionComponent = () => {
       <FormSubTitle label={'문항정보'} lineType={'dark'} />
 
       <div className={styles.table_wrap}>
-        <div></div>
         <GridBox
           title=" "
           showTotalCount={false}
@@ -250,6 +255,7 @@ const LearningResourceQuestionBankQuestionComponent = () => {
           }
           className={styles.info_table}
           guideText={'문항현황은 문항목록에서 문항추가/삭제 시 자동 업데이트 됩니다.'}
+          showGuideTextNextLine={true}
         />
         <TableBox
           data={data2}
