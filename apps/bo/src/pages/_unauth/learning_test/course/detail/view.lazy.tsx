@@ -133,11 +133,12 @@ function RouteComponent() {
       <PageContainer hideOutLine={true}>
         <ContentsButtons>
           <ToggleButtonGroup
+            defaultValue={'수강관리value'}
             options={[
               { label: '과정관리', value: '과정관리value' },
               { label: '수강관리', value: '수강관리value' },
             ]}
-            onChange={(value) => console.log('ToggleButtonGroup.onChange', value)}
+            onClick={(value) => console.log('ToggleButtonGroup.onClick', value)}
           />
           <Button
             type="button"
@@ -187,7 +188,7 @@ function RouteComponent() {
             type="button"
             variant="primary"
             size="sm"
-            label={'저장2'}
+            label={'저장'}
             onClick={handleSaveClick}
           />
         </ContentsButtons>
