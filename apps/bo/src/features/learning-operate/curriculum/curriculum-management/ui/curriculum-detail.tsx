@@ -478,12 +478,11 @@ const CurriculumDetailComponent = ({
 
   // 트리 노드 선택 핸들러
   const handleNodeSelect = (node: TreeNode) => {
-    console.log(node);
-
     // 같은 노드를 다시 클릭한 경우 초기화하지 않음
     const isSameNode =
       formState.selectedNode?.id === node.id && formState.selectedNode?.type === node.type;
 
+    // 다른 노드를 선택한 경우 항상 폼 초기화
     if (!isSameNode) {
       clearFormFields({ clearAll: true });
     }

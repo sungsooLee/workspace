@@ -43,22 +43,25 @@ export const LessonForm: React.FC<LessonFormProps> = ({
   useEffect(() => {
     if (loadFormData) {
       if (isEditing && initialData) {
-        loadFormData({
+        // 편집 모드: 완전 초기화 후 새 데이터 로드
+        const formData = {
           ...initialData,
           learningTime: { ...getHourValueFromTime(initialData.learningTime) },
           contentUuid: initialData.contentUuid || '',
           contentName: '', // 초기값은 빈 문자열, contentDetail 로드 후 설정됨
-        });
+        };
+        loadFormData(formData, { clearBeforeLoad: true });
       } else if (!isEditing) {
         // 생성 모드일 때는 기본값으로 초기화
-        loadFormData({
+        const formData = {
           lessonType: LESSON_TYPE.GENERAL,
           lessonName: '',
           description: '',
           learningTime: { hour: 0, minute: 0, second: 0 },
           contentUuid: '',
           contentName: '',
-        });
+        };
+        loadFormData(formData, { clearBeforeLoad: true });
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -121,7 +124,7 @@ export const LessonForm: React.FC<LessonFormProps> = ({
           </ContentsRow>
           <ContentsRow>
             <FormRow3
-              name="conentName"
+              name="contentName"
               label={t('학습자원')}
               validation={{ required: true }}
               element={
@@ -142,8 +145,15 @@ export const LessonForm: React.FC<LessonFormProps> = ({
                     const { contentUuid, contentName } = data;
                     if (data) {
                       console.log(contentUuid, contentName);
-                      setValue('contentUuid', contentUuid);
-                      setValue('contentName', contentName);
+                      setValue('contentUuid', contentUuid, {
+                        shouldValidate: true,
+                        shouldDirty: true,
+                      });
+                      setValue('contentName', contentName, {
+                        shouldValidate: true,
+                        shouldDirty: true,
+                      });
+
                       return contentName;
                     }
                     return contentName;

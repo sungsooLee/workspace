@@ -139,8 +139,8 @@ export function useDynamicForm3<T extends FieldValues = FieldValues>(): UseDynam
 
   // react-hook-form 훅 초기화
   const methods = useForm<T>({
-    mode: 'onSubmit',  // 폼 제출 시에만 검증
-    reValidateMode: 'onSubmit',  // 재검증도 제출 시에만 실행
+    mode: 'onSubmit', // 폼 제출 시에만 검증
+    reValidateMode: 'onSubmit', // 재검증도 제출 시에만 실행
     defaultValues: resolvedDefaultValues as DefaultValues<T>,
   });
 
@@ -320,9 +320,12 @@ export function useDynamicForm3<T extends FieldValues = FieldValues>(): UseDynam
         // 필드 맵과 초기화 상태 리셋
         setFields(new Map());
         setIsInitialized(false);
-        
+
         // 모든 에러 상태 완전 클리어
         methods.clearErrors();
+
+        // 폼을 빈 상태로 리셋
+        methods.reset({} as DefaultValues<T>);
       } else if (unregisterFields.length > 0) {
         // 특정 필드들만 완전 제거
         unregisterFields.forEach((fieldName) => {
