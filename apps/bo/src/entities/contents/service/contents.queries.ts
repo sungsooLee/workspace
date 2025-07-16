@@ -10,4 +10,9 @@ export const queryOptions = {
     queryKey: queryKeys.all,
     queryFn: () => ContentsService.getContentsList(param),
   }),
+  scormDetail: (contentUuid?: string) => ({
+    queryKey: ['scorm-detail', contentUuid],
+    queryFn: () => ContentsService.getScormDetail(contentUuid),
+    enabled: false,
+  }),
 };

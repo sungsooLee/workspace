@@ -313,19 +313,19 @@ export function useDynamicForm3<T extends FieldValues = FieldValues>(): UseDynam
       // 모든 필드 완전 제거
       if (clearAll) {
         // 현재 등록된 모든 필드를 unregister
-        fields.forEach((fieldInfo, fieldName) => {
-          methods.unregister(fieldName as any);
-        });
+        // fields.forEach((fieldInfo, fieldName) => {
+        //   methods.unregister(fieldName as any);
+        // });
 
-        // 필드 맵과 초기화 상태 리셋
-        setFields(new Map());
-        setIsInitialized(false);
+        // // 필드 맵과 초기화 상태 리셋
+        // setFields(new Map());
+        // setIsInitialized(false);
 
         // 모든 에러 상태 완전 클리어
         methods.clearErrors();
 
         // 폼을 빈 상태로 리셋
-        methods.reset({} as DefaultValues<T>);
+        // methods.reset({} as DefaultValues<T>);
       } else if (unregisterFields.length > 0) {
         // 특정 필드들만 완전 제거
         unregisterFields.forEach((fieldName) => {

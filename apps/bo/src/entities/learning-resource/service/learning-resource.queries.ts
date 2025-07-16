@@ -53,7 +53,7 @@ export const learningResourceQueryOptions = {
     staleTime: 0,
     enabled: true,
   }),
-  getContent: (contentUuid: string) => ({
+  getContent: (contentUuid?: string) => ({
     queryKey: queryKeys.contentDetail,
     queryFn: () => LearningResourceService.fetchContent(contentUuid),
     cacheTime: 0,

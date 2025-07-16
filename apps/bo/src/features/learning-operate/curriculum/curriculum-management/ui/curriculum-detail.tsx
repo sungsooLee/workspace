@@ -37,6 +37,7 @@ import { useFetchAuthUser } from '@learnway/auth/entities';
 import { getTimeValueFromHour } from '@learnway/shared';
 import { verify } from 'crypto';
 import { update } from 'lodash';
+import { QueryClient } from '@tanstack/react-query';
 
 interface CurriculumDetailProps {
   mode: FORM_MODE;
@@ -267,7 +268,11 @@ const CurriculumDetailComponent = ({
         if (isEditing && formState.selectedNode) {
           const updateModuleFn = moduleUpdateStrategy[moduleType as MODULE_TYPE];
           if (updateModuleFn) {
+            const rq = new QueryClient();
             updateModuleFn(data, (updateModule: any) => {
+              console.log(updateModule);
+
+              // rq.invalidateQueries()
               const updatedNode: TreeNode = {
                 id: updateModule.moduleId,
                 key: `module-${updateModule.moduleId}`,
@@ -286,6 +291,7 @@ const CurriculumDetailComponent = ({
             description: data.description,
             curriculumId,
             ...(data.moduleType === MODULE_TYPE.FIXED && {
+              orgnId: data.orgnId,
               contentUuid: data.contentUuid,
               contentDuration: data.contentDuration,
             }),
@@ -429,29 +435,6 @@ const CurriculumDetailComponent = ({
                     },
                   };
 
-                  // 트리 데이터 업데이트
-                  setTreeData((prevTreeData) => {
-                    const updateTree = (nodes: TreeNode[]): TreeNode[] => {
-                      return nodes.map((node) => {
-                        if (node.id === parentNode?.id) {
-                          return {
-                            ...node,
-                            children: [...(node.children || []), newNode],
-                          };
-                        }
-                        if (node.children) {
-                          return {
-                            ...node,
-                            children: updateTree(node.children),
-                          };
-                        }
-                        return node;
-                      });
-                    };
-
-                    return updateTree(prevTreeData);
-                  });
-
                   expandParentNodes(parentNode);
 
                   handleNodeSelect(newNode);
@@ -478,24 +461,25 @@ const CurriculumDetailComponent = ({
 
   // 트리 노드 선택 핸들러
   const handleNodeSelect = (node: TreeNode) => {
+    console.log(node);
     // 같은 노드를 다시 클릭한 경우 초기화하지 않음
-    const isSameNode =
-      formState.selectedNode?.id === node.id && formState.selectedNode?.type === node.type;
+    // const isSameNode =
+    //   formState.selectedNode?.id === node.id && formState.selectedNode?.type === node.type;
 
-    // 다른 노드를 선택한 경우 항상 폼 초기화
-    if (!isSameNode) {
-      clearFormFields({ clearAll: true });
-    }
+    // // 다른 노드를 선택한 경우 항상 폼 초기화
+    // if (!isSameNode) {
+    clearFormFields({ clearAll: true });
+    // }
 
-    setTimeout(() => {
-      setFormState({
-        activeFormType: node.type as MAPPING_CURRICULUM_TYPE,
-        selectedNode: node,
-        parentNode: findParentNode(treeData, node.parentId),
-        isEditing: true,
-      });
-      setFormStatus(FROM_STATUS.EDIT);
-    }, 0);
+    // setTimeout(() => {
+    setFormState({
+      activeFormType: node.type as MAPPING_CURRICULUM_TYPE,
+      selectedNode: node,
+      parentNode: findParentNode(treeData, node.parentId),
+      isEditing: true,
+    });
+    setFormStatus(FROM_STATUS.EDIT);
+    // }, 0);
   };
 
   const { renderNodeButtons, renderCustomTreeButtons } = useTreeButtons({

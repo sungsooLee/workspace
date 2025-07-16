@@ -46,7 +46,7 @@ export const LessonForm: React.FC<LessonFormProps> = ({
         // 편집 모드: 완전 초기화 후 새 데이터 로드
         const formData = {
           ...initialData,
-          learningTime: { ...getHourValueFromTime(initialData.learningTime) },
+          learningTime: getHourValueFromTime(initialData.learningTime),
           contentUuid: initialData.contentUuid || '',
           contentName: '', // 초기값은 빈 문자열, contentDetail 로드 후 설정됨
         };
@@ -65,17 +65,17 @@ export const LessonForm: React.FC<LessonFormProps> = ({
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isEditing, initialData]);
+  }, [isEditing, initialData, loadFormData]);
 
-  useEffect(() => {
-    // if(autoCon)
-  }, [lessonType]);
+  // useEffect(() => {
+  //   // if(autoCon)
+  // }, [lessonType]);
 
-  useEffect(() => {
-    if (isEditing && contentDetail && setValue) {
-      setValue('contentName', contentDetail.contentName);
-    }
-  }, [isEditing, contentDetail, setValue]);
+  // useEffect(() => {
+  //   if (isEditing && contentDetail && setValue) {
+  //     setValue('contentName', contentDetail.contentName);
+  //   }
+  // }, [isEditing, contentDetail, setValue]);
 
   const formContent = (
     <>
@@ -141,10 +141,8 @@ export const LessonForm: React.FC<LessonFormProps> = ({
                     ),
                   }}
                   transformModalData={(data: any) => {
-                    console.log(data);
                     const { contentUuid, contentName } = data;
                     if (data) {
-                      console.log(contentUuid, contentName);
                       setValue('contentUuid', contentUuid, {
                         shouldValidate: true,
                         shouldDirty: true,
