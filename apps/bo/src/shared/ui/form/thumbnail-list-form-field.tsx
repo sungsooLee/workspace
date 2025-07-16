@@ -43,7 +43,7 @@ const ThumbnailImageUploadFormFieldComponent = forwardRef<
   (
     {
       // imageStorageType = 'public',
-      value = {}, // 폼 필드의 현재 값 (string[] 타입, 이미지 경로 배열)
+      value, // 폼 필드의 현재 값 (string[] 타입, 이미지 경로 배열)
       onChange, // 폼 필드 값이 변경될 때 호출되는 콜백 함수
       uploadConfig,
       uuidType = 'group',
@@ -78,6 +78,7 @@ const ThumbnailImageUploadFormFieldComponent = forwardRef<
     }
 
     useEffect(() => {
+      console.log('🚀 ~ uuidType, value:', uuidType, value);
       if (uuidType === 'group') {
         if (value) fetchGroupInfo(value as string);
         return;
