@@ -10,7 +10,11 @@ import {
   ContentsRow,
   Button,
   GridBox,
-  useGridBox, ChipListModalSelectorFormField, useModal, FormSubTitle, Checkbox,
+  useGridBox,
+  ChipListModalSelectorFormField,
+  useModal,
+  FormSubTitle,
+  Checkbox,
 } from '@learnway/ui';
 import {
   DynamicFormConfig,
@@ -24,16 +28,20 @@ import {
   FormRow,
   LinkBox,
   ContentsButtons,
-  ChannelListChoiceModal, UserChoiceModal, UserGroupOrganizationShuttleModal,
+  ChannelListChoiceModal,
+  UserChoiceModal,
+  UserGroupOrganizationShuttleModal,
 } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
 
-import {
-  GridExcelUploadButton,
-} from '@shared/ui';
+import { GridExcelUploadButton } from '@shared/ui';
 
 import { MainContents, PageContainer } from '@shared/ui';
-import { useCreateUserGroupManual, useFetchUserGroupDetail, useUpdateUserGroupManual } from '@entities/user-group';
+import {
+  useCreateUserGroupManual,
+  useFetchUserGroupDetail,
+  useUpdateUserGroupManual,
+} from '@entities/user-group';
 import { FormDisplay } from '@features/form';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { queryOptions } from '@entities/user-group/service/user-group.queries';
@@ -59,7 +67,9 @@ function RouteComponent() {
 
   const { data: loginUser } = useFetchAuthUser();
   // 상세
-  const { data: userGroupData, refetch } = useFetchUserGroupDetail(routerState.location.state?.userGroupId);
+  const { data: userGroupData, refetch } = useFetchUserGroupDetail(
+    routerState.location.state?.userGroupId,
+  );
 
   const { open: openModal, confirm: openConfirm, alert: openAlert } = useModal();
   const [tenantInfo, setTenantInfo] = useState<Tenant>();
@@ -86,10 +96,11 @@ function RouteComponent() {
     setValue: setManualValue,
     formState: manualFormState,
   } = useSearchBox(searchManualConfig());
-  const { config: gManualConfig, gridFetch: gridManualFetch, data: gridManualData } = useGridBox(
-    gridManualConfig,
-    getManualValues,
-  );
+  const {
+    config: gManualConfig,
+    gridFetch: gridManualFetch,
+    data: gridManualData,
+  } = useGridBox(gridManualConfig, getManualValues);
 
   const {
     provider,
@@ -134,15 +145,17 @@ function RouteComponent() {
       tenantId: tenantInfo?.tenantId,
       isUsed: formData.isUsed,
       assignmentType: formData.assignmentType,
-      userList: []
+      userList: [] as any,
     };
-    if( formData.userGroupOriginType !== "TENANT" ) {
+    if (formData.userGroupOriginType !== 'TENANT') {
       payload.userGroupOriginMappingId =
-        formData.userGroupOriginType === 'PERSONAL' ? formData.personName[0].uuid : formData.channelName[0].channelUuid;
+        formData.userGroupOriginType === 'PERSONAL'
+          ? formData.personName[0].uuid
+          : formData.channelName[0].channelUuid;
     }
 
-    if( userGroupData ) {
-      if( !userGroupSettings || userGroupSettings.length === 0 ) {
+    if (userGroupData) {
+      if (!userGroupSettings || userGroupSettings.length === 0) {
         openAlert({
           title: t('유저그룹 대상자를 설정해 주세요.'),
           content: t('유저그룹 대상자는 최소 1명 이상 대상자가 있어야 등록이 가능합니다.'),
@@ -151,15 +164,15 @@ function RouteComponent() {
         return false;
       }
       payload.userList = userGroupSettings.map((row: any) => {
-        return {userUuid: row.userUuid, userName: row.userName}
-      })
+        return { userUuid: row.userUuid, userName: row.userName };
+      });
       console.log('payload {} => ', payload);
       if (await openConfirm('저장 하시겠습니까?')) {
         update(payload);
       }
     } else {
       const tableRow = gridManualData.content;
-      if( !tableRow || tableRow.length === 0 ) {
+      if (!tableRow || tableRow.length === 0) {
         openAlert({
           title: t('유저그룹 대상자를 설정해 주세요.'),
           content: t('유저그룹 대상자는 최소 1명 이상 대상자가 있어야 등록이 가능합니다.'),
@@ -168,8 +181,8 @@ function RouteComponent() {
         return false;
       }
       payload.userList = tableRow.map((row: any) => {
-        return {userUuid: row.userUuid}
-      })
+        return { userUuid: row.userUuid };
+      });
 
       console.log('payload {} => ', payload);
       if (await openConfirm('저장 하시겠습니까?')) {
@@ -181,79 +194,84 @@ function RouteComponent() {
   // 유저 그룹 설정 목록에서 추가된 데이터 기반으로 검색하는 기능
   const handleOnSearchManual = (searchData: any) => {
     if (modalUserGroups) {
-      searchData = { ...searchData, groups: [{combiners: modalUserGroups}] };
+      searchData = { ...searchData, groups: [{ combiners: modalUserGroups }] };
     }
     gridManualFetch(searchData);
   };
 
   const openUserGroupModal = () => {
-    if(tenantInfo) {
+    if (tenantInfo) {
       openModal({
         width: 'xl',
         content: <UserGroupOrganizationShuttleModal tenantIds={[tenantInfo.tenantId]} />,
         onClose(data: any) {
-          if( data ) {
-            console.log('Modal {} => ', data)
-            const combiners= data.flatMap( (g: any) => g.combiners)
-              .map(({combineName, ...rest}: any) => rest);
+          if (data) {
+            console.log('Modal {} => ', data);
+            const combiners = data
+              .flatMap((g: any) => g.combiners)
+              .map(({ combineName, ...rest }: any) => rest);
             const saveValues = getManualValues();
             saveValues['groups'] = [
               {
-                combiners
-              }
-            ]
+                combiners,
+              },
+            ];
             setModalUserGroups(combiners);
             gridManualFetch(saveValues);
           }
         },
-      })
+      });
     }
-  }
+  };
 
   const removeUserGroupData = () => {
     const tableRow = tableInstance?.getSelectedRowModel().rows;
-    if( tableRow ) {
-      const userUuids = tableRow.map( row => {
-        console.log(row.original)
-        return row.original.userUuid
+    if (tableRow) {
+      const userUuids = tableRow.map((row) => {
+        console.log(row.original);
+        return row.original.userUuid;
       });
-      if( userGroupData ) {
-        const newUserGroupSettings = userGroupSettings.filter( (data: any) => !userUuids.includes(data.userUuid) )
-        setUserGroupSettings(newUserGroupSettings)
+      if (userGroupData) {
+        const newUserGroupSettings = userGroupSettings.filter(
+          (data: any) => !userUuids.includes(data.userUuid),
+        );
+        setUserGroupSettings(newUserGroupSettings);
       } else {
-        if( gManualConfig.gridData?.content ) {
-          const newGridContent: any[] = gridManualData.content.filter( (data: any) => !userUuids.includes(data.userUuid) );
-          gManualConfig.onDataChange(newGridContent)
+        if (gManualConfig.gridData?.content) {
+          const newGridContent: any[] = gridManualData.content.filter(
+            (data: any) => !userUuids.includes(data.userUuid),
+          );
+          gManualConfig.onDataChange(newGridContent);
         }
       }
     }
-  }
+  };
 
   useEffect(() => {
     if (userGroupData) {
       console.log('#### userGroupData {} => ', userGroupData);
 
       setUserGroupSettings(userGroupData.userList);
-      if( userGroupData.userGroupOriginType ) {
-        if(userGroupData.userGroupOriginType === 'CHANNEL') {
+      if (userGroupData.userGroupOriginType) {
+        if (userGroupData.userGroupOriginType === 'CHANNEL') {
           updateFormData({
             ...userGroupData,
             channelName: [
               {
                 channelUuid: userGroupData.userGroupOriginMappingId,
                 channelName: userGroupData.originName,
-              }
-            ]
+              },
+            ],
           });
-        } else if( userGroupData.userGroupOriginType === 'PERSONAL' ) {
+        } else if (userGroupData.userGroupOriginType === 'PERSONAL') {
           updateFormData({
             ...userGroupData,
             personName: [
               {
                 uuid: userGroupData.userGroupOriginMappingId,
                 name: userGroupData.originName,
-              }
-            ]
+              },
+            ],
           });
         } else {
           updateFormData({ ...userGroupData });
@@ -263,20 +281,20 @@ function RouteComponent() {
   }, [userGroupData]);
 
   useEffect(() => {
-    console.log('### loginUser', loginUser)
-    if( loginUser ) {
-      setTenantInfo(loginUser.activeTenant)
+    console.log('### loginUser', loginUser);
+    if (loginUser) {
+      setTenantInfo(loginUser.activeTenant);
       setValue('tenantName', loginUser.activeTenant?.tenantName);
     }
-  }, [loginUser])
+  }, [loginUser]);
 
   const [assignmentTypeOptions, setAssignmentTypeOptions] = useState<any>();
 
   useEffect(() => {
-    if( assignmentTypeWatch ) {
-      setAssignmentTypeOptions(assignmentTypeWatch)
+    if (assignmentTypeWatch) {
+      setAssignmentTypeOptions(assignmentTypeWatch);
     }
-  }, [assignmentTypeWatch])
+  }, [assignmentTypeWatch]);
 
   return (
     <PageContainer>
@@ -310,7 +328,10 @@ function RouteComponent() {
             />
           </ContentsRow>
 
-          <FormDisplay provider={provider} dependencies={[{ name: 'userGroupOriginType', value: 'CHANNEL' }]}>
+          <FormDisplay
+            provider={provider}
+            dependencies={[{ name: 'userGroupOriginType', value: 'CHANNEL' }]}
+          >
             <ContentsRow>
               <FormRow
                 provider={provider}
@@ -333,7 +354,10 @@ function RouteComponent() {
               />
             </ContentsRow>
           </FormDisplay>
-          <FormDisplay provider={provider} dependencies={[{ name: 'userGroupOriginType', value: 'PERSONAL' }]}>
+          <FormDisplay
+            provider={provider}
+            dependencies={[{ name: 'userGroupOriginType', value: 'PERSONAL' }]}
+          >
             <ContentsRow>
               <FormRow
                 provider={provider}
@@ -459,7 +483,7 @@ const formConfig: DynamicFormConfig = {
           },
           message: t('LABEL.form.validation.needInput', { code: t('유저그룹명') }),
         },
-      ]
+      ],
     },
     assignmentType: {
       format: 'string',
@@ -470,7 +494,7 @@ const formConfig: DynamicFormConfig = {
     },
     personName: {
       required: (values) => values.userGroupOriginType === 'PERSONAL',
-    }
+    },
   },
 };
 
@@ -588,9 +612,9 @@ const manualColumns = [
         case 'ACTIVE':
           return t('재직');
         case 'SUSPENDED':
-          return t('정직')
+          return t('정직');
         default:
-          return t('휴직')
+          return t('휴직');
       }
     },
     header: t('제직여부'),
@@ -607,9 +631,9 @@ const manualColumns = [
         case 'WAIT':
           return t('대기');
         case 'DORMANT':
-          return t('휴면')
+          return t('휴면');
         default:
-          return t('잠김')
+          return t('잠김');
       }
     },
     header: t('계정상태'),
