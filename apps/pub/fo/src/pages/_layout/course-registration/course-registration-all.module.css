@@ -99,7 +99,7 @@
               @apply mt-[32px] pt-[32px];
             }
             .tit_box {
-              string {
+              strong {
                 @apply title5-b;
               }
             }

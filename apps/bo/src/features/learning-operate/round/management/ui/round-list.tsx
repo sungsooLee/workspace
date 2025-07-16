@@ -191,7 +191,13 @@ const RoundListComponent = () => {
       columnHelper.accessor('regStartDate', {
         header: t('수강신청 시작일'),
         cell: (info) => {
-          return <DatePicker displayType="day-time-hm" value={info.row.original.regStartDate} />;
+          return (
+            <DatePicker
+              displayType="day-time-hm"
+              value={info.row.original.regStartDate}
+              size={'md'}
+            />
+          );
         },
         enableGrouping: false,
         size: 300,
@@ -199,7 +205,13 @@ const RoundListComponent = () => {
       columnHelper.accessor('regEndDate', {
         header: t('수강신청 종료일'),
         cell: (info) => {
-          return <DatePicker displayType="day-time-hm" value={info.row.original.regEndDate} />;
+          return (
+            <DatePicker
+              displayType="day-time-hm"
+              value={info.row.original.regEndDate}
+              size={'md'}
+            />
+          );
         },
         enableGrouping: false,
         size: 300,
@@ -213,7 +225,13 @@ const RoundListComponent = () => {
         cell: (info) => {
           if (info.row.original.status === '학습중') return '수강신청 승인일로 부터';
           else
-            return <DatePicker displayType="day-time-hm" value={info.row.original.eduStartDate} />;
+            return (
+              <DatePicker
+                displayType="day-time-hm"
+                value={info.row.original.eduStartDate}
+                size={'md'}
+              />
+            );
         },
         enableGrouping: false,
         size: 300,
@@ -224,7 +242,13 @@ const RoundListComponent = () => {
           if (info.row.original.status === '학습중') {
             return <EditInputCell info={info} input={{ suffixText: '일' }} />;
           } else {
-            return <DatePicker displayType="day-time-hm" value={info.row.original.eduEndDate} />;
+            return (
+              <DatePicker
+                displayType="day-time-hm"
+                value={info.row.original.eduEndDate}
+                size={'md'}
+              />
+            );
           }
         },
         enableGrouping: false,
