@@ -115,7 +115,7 @@ export const ModuleForm: React.FC<ModuleFormProps> = ({
                       <ResourceChoiceModal
                         initialTenantId={curriculumData?.tenantId}
                         initialChannelUuid={curriculumData?.channelUuid}
-                        initialContentType={curriculumData?.contentType}
+                        initialContentType={curriculumData?.contentType || 'SCORM'}
                       />
                     ),
                   }}

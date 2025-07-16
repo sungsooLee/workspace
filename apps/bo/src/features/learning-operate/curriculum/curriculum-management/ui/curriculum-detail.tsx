@@ -22,6 +22,7 @@ import {
   FixedModuleUpdateParams,
   GeneralModuleSaveParams,
   GeneralModuleUpdateParams,
+  LESSON_TYPE,
   MAPPING_CURRICULUM_TYPE,
   MODULE_TYPE,
 } from '@types';
@@ -316,9 +317,7 @@ const CurriculumDetailComponent = ({
 
               expandParentNodes(parentNode);
 
-              setTimeout(() => {
-                handleNodeSelect(newNode);
-              }, 50);
+              handleNodeSelect(newNode);
             });
           }
         }
@@ -342,11 +341,12 @@ const CurriculumDetailComponent = ({
             console.log('fixed update');
           }
         } else {
+          console.log(data);
           const lessonData = {
             curriculumId: curriculumDetail?.curriculumId,
             lessonName: data.lessonName,
             description: data.description,
-            lessonType: data.lessonType || 'TOC',
+            lessonType: data.lessonType || 'GENERAL',
             learningTime: getTimeValueFromHour(
               data.learningTime as {
                 hour: number;
@@ -362,6 +362,9 @@ const CurriculumDetailComponent = ({
             contentName: data.contentName,
           };
 
+          const saveLessonData =
+            data.lessonType === LESSON_TYPE.GENERAL ? lessonData : lessonDataCurriculum;
+
           // 부모 노드 타입에 따라 다른 API 호출
           const isParentCurriculum = parentNode?.type === MAPPING_CURRICULUM_TYPE.CURRICULUM;
 
@@ -369,7 +372,7 @@ const CurriculumDetailComponent = ({
             // 커리큘럼에 레슨 추가
             createLessonByCurriculum(
               {
-                ...lessonDataCurriculum,
+                ...saveLessonData,
                 curriculumId,
               },
               {
@@ -408,7 +411,7 @@ const CurriculumDetailComponent = ({
             // 모듈에 레슨 추가
             createLessonByModule(
               {
-                ...lessonData,
+                ...saveLessonData,
                 moduleId: parentNode?.data.moduleId,
               },
               {

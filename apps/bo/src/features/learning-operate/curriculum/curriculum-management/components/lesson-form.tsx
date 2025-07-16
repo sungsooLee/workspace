@@ -56,10 +56,11 @@ export const LessonForm: React.FC<LessonFormProps> = ({
           lessonName: '',
           description: '',
           learningTime: '',
+          contentUuid: '',
+          contentName: '',
         });
       }
     }
-    // loadFormData를 의존성에서 제거하여 무한 루프 방지
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEditing, initialData]);
 
@@ -120,7 +121,7 @@ export const LessonForm: React.FC<LessonFormProps> = ({
           </ContentsRow>
           <ContentsRow>
             <FormRow3
-              name="contentUuid"
+              name="conentName"
               label={t('학습자원')}
               validation={{ required: true }}
               element={
@@ -132,21 +133,20 @@ export const LessonForm: React.FC<LessonFormProps> = ({
                       <ResourceChoiceModal
                         initialTenantId={curriculumData?.tenantId}
                         initialChannelUuid={curriculumData?.channelUuid}
-                        initialContentType={curriculumData?.contentType}
+                        // initialContentType={curriculumData?.contentType}
                       />
                     ),
                   }}
                   transformModalData={(data: any) => {
-                    if (data && data.contentUuid) {
-                      return {
-                        contentUuid: data.contentUuid,
-                        contentName: data.contentName,
-                      };
+                    console.log(data);
+                    const { contentUuid, contentName } = data;
+                    if (data) {
+                      console.log(contentUuid, contentName);
+                      setValue('conentUuid', contentUuid);
+                      setValue('conentName', contentName);
+                      return contentName;
                     }
-                    return {
-                      contentUuid: '',
-                      contentName: '',
-                    };
+                    return contentName;
                   }}
                 />
               }
