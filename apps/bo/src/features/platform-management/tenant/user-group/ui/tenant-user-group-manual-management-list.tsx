@@ -56,45 +56,45 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
           name: 'tenantName', label: t('테넌트명'), size: 159
         },
         {
-          name: 'userGroupOriginType', label: t('유저그룹유형'), render: (row: any) => {
-            return t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.user.UserGroupOriginType.${row.getValue()}`);
+          name: 'userGroupOriginType', label: t('유저그룹유형'), render: (info: any) => {
+            return t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.user.UserGroupOriginType.${info.getValue()}`);
           },
           size: 163
         },
         {
-          name: 'opt2', label: t('채널'), size: 106, render: (row: any) => {
-            if( row.row.original.userGroupOriginType === 'CHANNEL' ) {
-              return row.row.original.originName;
+          name: 'opt2', label: t('채널'), size: 106, render: (info: any) => {
+            if( info.row.original.userGroupOriginType === 'CHANNEL' ) {
+              return info.row.original.originName;
             }
-            return row.getValue();
+            return info.getValue();
           }
         },
         {
-          name: 'opt3', label: t('개인'), size: 101, render: (row: any) => {
-            if( row.row.original.userGroupOriginType === 'PERSONAL' ) {
-              return row.row.original.originName;
+          name: 'opt3', label: t('개인'), size: 101, render: (info: any) => {
+            if( info.row.original.userGroupOriginType === 'PERSONAL' ) {
+              return info.row.original.originName;
             }
-            return row.getValue();
+            return info.getValue();
           }
         },
         {
-          name: 'userGroupName', label: t('유저그룹명'), render: (row: any) => {
+          name: 'userGroupName', label: t('유저그룹명'), render: (info: any) => {
             return (
               <Button
                 className="link"
                 onClick={() =>
-                  _global.linkClick(row.row.original.userGroupId)
+                  _global.linkClick(info.row.original.userGroupId)
                 }
               >
-                {row.getValue()}
+                {info.getValue()}
               </Button>
             )
           },
           size: 207
         },
         {
-          name: 'userCount', label: t('대상자'), render: (row: any) => {
-            return `${row.getValue().toLocaleString('ko-KR')}명`;
+          name: 'userCount', label: t('대상자'), render: (info: any) => {
+            return `${info.getValue().toLocaleString('ko-KR')}명`;
           },
           meta: {
             cellAlign: 'right',
@@ -102,7 +102,7 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
           size: 127
         },
         {
-          name: 'userGroupId', label: t('대상자 확인'), render: (row: any) => {
+          name: 'userGroupId', label: t('대상자 확인'), render: (info: any) => {
             return <Button
               variant="gray2" size="xs"
               onClick={(e) => {
@@ -122,8 +122,8 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
           size: 96
         },
         {
-          name: 'isUsed', label: t('사용여부'), render: (row: any) => {
-            return row.row.original.isUsed ? t('사용') : t('미사용');
+          name: 'isUsed', label: t('사용여부'), render: (info: any) => {
+            return info.row.original.isUsed ? t('사용') : t('미사용');
           },
           meta: {
             cellAlign: 'center',
@@ -131,9 +131,9 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
           size: 88
         },
         {
-          name: 'createdDate', label: t('등록일'), render: (row: any) => {
+          name: 'createdDate', label: t('등록일'), render: (info: any) => {
             return getDateToString(
-              new Date(row.row.original.createdDate),
+              new Date(info.row.original.createdDate),
               DATE_TIME_FORMAT.DATETIME_SEC,
             );
           },
@@ -143,9 +143,9 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
           size: 194
         },
         {
-          name: 'modifiedDate', label: t('수정일'), render: (row: any) => {
+          name: 'modifiedDate', label: t('수정일'), render: (info: any) => {
             return getDateToString(
-              new Date(row.row.original.modifiedDate),
+              new Date(info.row.original.modifiedDate),
               DATE_TIME_FORMAT.DATETIME_SEC,
             );
           },
