@@ -3,7 +3,9 @@ import { ContentsRow, Input, RadioGroupFormField, Textarea } from '@learnway/ui'
 import { FormRow3, ResourceChoiceModal } from '@shared/ui';
 import { MODULE_TYPE } from '@types';
 import { t } from 'i18next';
-import { ContentChoiceModalSelector } from './input-modal-selector-form-field';
+import { ContentChoiceModalSelector } from './content-choice-selector';
+import { DurationTimeFormField } from '@features/form/ui';
+import { getHourValueFromTime } from '@pages/_layout/learning/resource/-common/common';
 
 interface ModuleFormProps {
   watch: any;
@@ -32,12 +34,12 @@ export const ModuleForm: React.FC<ModuleFormProps> = ({
   useEffect(() => {
     if (loadFormData) {
       if (isEditing && initialData) {
-        console.log(initialData);
         loadFormData({
+          ...initialData,
           moduleName: initialData.moduleName,
           moduleType: initialData.moduleType || MODULE_TYPE.GENERAL,
           description: initialData.description,
-          ...(initialData.moduleOrder && { moduleOrder: initialData.moduleOrder }),
+          contentDuration: { ...getHourValueFromTime(initialData.totalTime) },
         });
       } else if (!isEditing) {
         // 생성 모드일 때는 기본값으로 초기화
@@ -78,28 +80,39 @@ export const ModuleForm: React.FC<ModuleFormProps> = ({
       </ContentsRow>
 
       {moduleType === MODULE_TYPE.FIXED && (
-        <ContentsRow>
-          <FormRow3
-            name="moduleOrder"
-            label={t('학습자원')}
-            element={
-              <ContentChoiceModalSelector
-                modalConfig={{ 
-                  content: (
-                    <ResourceChoiceModal 
-                      initialTenantId={curriculumData?.tenantId}
-                      initialChannelUuid={curriculumData?.channelUuid}
-                      initialContentType={curriculumData?.contentType}
-                    />
-                  )
-                }}
-                transformModalData={(data: any) => {
-                  console.log(data);
-                }}
-              />
-            }
-          />
-        </ContentsRow>
+        <>
+          <ContentsRow>
+            <FormRow3
+              name="moduleOrder"
+              label={t('학습자원')}
+              validation={{ required: true }}
+              element={
+                <ContentChoiceModalSelector
+                  modalConfig={{
+                    content: (
+                      <ResourceChoiceModal
+                        initialTenantId={curriculumData?.tenantId}
+                        initialChannelUuid={curriculumData?.channelUuid}
+                        initialContentType={curriculumData?.contentType}
+                      />
+                    ),
+                  }}
+                  transformModalData={(data: any) => {
+                    console.log(data);
+                  }}
+                />
+              }
+            />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow3
+              name="contentDuration"
+              label={t('학습시간')}
+              validation={{ required: true }}
+              element={<DurationTimeFormField />}
+            />
+          </ContentsRow>
+        </>
       )}
       <ContentsRow>
         <FormRow3 name="description" label="설명" element={<Textarea maxLength={100} />} />

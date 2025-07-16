@@ -63,7 +63,7 @@ const ResourceChoiceModalComponent = ({
           label: t('채널'),
           value: initialChannelUuid || '',
           format: 'object',
-          element: <TenantChannelDropdownFormField />,
+          element: <TenantChannelDropdownFormField readOnly />,
         },
         {
           name: 'contentTypes',
@@ -72,6 +72,7 @@ const ResourceChoiceModalComponent = ({
           value: 'SCORM',
           variant: 'text',
           format: 'string',
+          readOnly: true,
           presetOptionLabel: t('LABEL.form.label.all', '전체'),
           optionsConfig: {
             codeGroup: CODE_GROUP['cms.content.ContentType'],
@@ -170,6 +171,10 @@ const ResourceChoiceModalComponent = ({
       onFormChange(initialValues);
     }
   }, [initialTenantId, initialChannelUuid, initialContentType, onFormChange]);
+
+  useEffect(() => {
+    gridFetch(getValues());
+  }, []);
 
   return (
     <ModalContainer>

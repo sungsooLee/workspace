@@ -15,7 +15,7 @@ interface TenantChannelDropdownFormFieldProps extends BaseFormFieldProps<string>
 const TenantChannelDropdownFormFieldComponent = forwardRef<
   HTMLDivElement,
   TenantChannelDropdownFormFieldProps
->(({ control, value, onChange, enableFilter = false, ...props }, ref) => {
+>(({ control, value, onChange, enableFilter = false, readOnly, ...props }, ref) => {
   const { data } = useFetchAuthUser<AuthUser>();
   const { data: channel } = useFetchChannelByRoleId(data?.activeRole?.roleId as number);
 
@@ -77,6 +77,7 @@ const TenantChannelDropdownFormFieldComponent = forwardRef<
       value={value}
       presetOptionLabel={t('LABEL.form.label.select')}
       onChange={onChange}
+      readOnly={readOnly}
     />
   );
 });
