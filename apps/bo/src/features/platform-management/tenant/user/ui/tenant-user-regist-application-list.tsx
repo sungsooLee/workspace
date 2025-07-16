@@ -262,6 +262,11 @@ const searchConfig = (): SearchBoxConfig => ({
         format: 'object',
         value: { from: undefined, to: undefined },
       },
+      {
+        name: '',
+        type:'hidden',
+        value: '',
+      }
     ],
   ],
   validator: {

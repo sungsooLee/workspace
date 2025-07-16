@@ -33,10 +33,10 @@ export const CourseSearchForm: React.FC<CourseSearchFormProps> = ({
           provider={provider}
           name="tenantId"
           label="테넌트"
+          format={'number'}
           element={<TenantByRoleDropdownFormField />}
           validation={{
             required: true,
-            format: 'object',
           }}
         />
         {/* 채널 */}
@@ -47,7 +47,6 @@ export const CourseSearchForm: React.FC<CourseSearchFormProps> = ({
           element={<TenantChannelDropdownFormField enableFilter={true} />}
           validation={{
             required: true,
-            format: 'object',
           }}
         />
         {/* 개설년도 */}

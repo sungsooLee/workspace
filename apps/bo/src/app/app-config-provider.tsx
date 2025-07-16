@@ -6,17 +6,16 @@ import {
   initZod,
   initAxios,
   tokenService,
-  getDefaultLang,
+  // getDefaultLang,
   setConfig,
 } from '@learnway/config';
-import { Spinner, useModal } from '@learnway/ui';
+import { Spinner } from '@learnway/ui';
 
 import { useFetchI18nResource, useFetchCodeGroups } from '../entities/platform';
 import { useAuthSignin } from '../features/auth';
 
 import '../styles.css';
-import { QueryClient } from '@tanstack/react-query';
-import { queryOptions } from '../entities/platform/service/i18n-resource.queries';
+import { useFetchAuthUser } from '@learnway/auth/entities';
 
 declare global {
   interface Window {
@@ -36,8 +35,7 @@ export function AppConfigProvider({ children }: AppConfigProviderProps) {
   const { data: codeGroupData } = useFetchCodeGroups();
   const { data: i18nData } = useFetchI18nResource();
   const { reissue } = useAuthSignin();
-  const { alert } = useModal();
-  const queryClient = new QueryClient();
+  const { data: authUser } = useFetchAuthUser();
 
   useMount(async () => {
     setConfig('APP_INFO', 'BO');
@@ -75,12 +73,18 @@ export function AppConfigProvider({ children }: AppConfigProviderProps) {
   }, [i18nData]);
 
   useEffect(() => {
-    if (!codeGroupData || !i18nData) {
+    console.log('### authUser', authUser);
+
+    // codeGroupData, i18n 로딩
+    if (!codeGroupData || !i18nData) return;
+
+    // reissue 체크
+    if (!authUser && tokenService.refreshToken) {
       return;
     }
 
     setIsLoading(false);
-  }, [codeGroupData, i18nData]);
+  }, [codeGroupData, i18nData, authUser]);
 
   // useEffect(() => {
   //   const supportedLanguages = ['ko', 'en'];

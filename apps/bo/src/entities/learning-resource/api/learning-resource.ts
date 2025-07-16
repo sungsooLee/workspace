@@ -4,6 +4,9 @@ import { CMSApiPrefix, PMSApiPrefix } from '@learnway/config';
 import {
   BlogCreateReq,
   BlogUpdateReq,
+  ContentBaseInfo,
+  ContentCourseMappingParams,
+  ContentCourseMappingRes,
   CourseMappingStatusRes,
   GetContentDetailRes,
   HtmlVideoFileChangeReq,
@@ -35,16 +38,19 @@ export default class LearningResourceService {
     return httpService.get(`${CMSApiPrefix()}/content/${contentUuid}`);
   }
 
-  static deleteContent(contentUuid: string): Promise<any> {
+  static fetchContentCourseMapping(
+    contentUuid: string,
+    params: ContentCourseMappingParams,
+  ): Promise<ContentCourseMappingRes> {
+    return httpService.get(`${CMSApiPrefix()}/content/course-mapping/${contentUuid}`, params);
+  }
+
+  static deleteContent(contentUuid: string): Promise<number> {
     return httpService.delete(`${CMSApiPrefix()}/content/${contentUuid}`);
   }
 
   static fetchCurriculumMapping(contentUuid: string): Promise<boolean> {
     return httpService.get(`${CMSApiPrefix()}/content/curriculum-mapping/${contentUuid}`);
-  }
-
-  static fetchCourseMapping(contentUuid: string): Promise<CourseMappingStatusRes> {
-    return httpService.get(`${CMSApiPrefix()}/content/course-mapping/${contentUuid}`);
   }
 
   static postDraftVideos(params: PostDraftVideosParams): Promise<PostDraftVideosRes> {
@@ -163,5 +169,10 @@ export default class LearningResourceService {
   // 단건 블로그 컨텐츠 수정
   static updateBlogContent(body: BlogUpdateReq) {
     return httpService.put(`${CMSApiPrefix()}/blog/update`, body);
+  }
+
+  // 문제은행 기본정보 저장
+  static createQuestionBankContent(body: ContentBaseInfo) {
+    return httpService.post<any>(`${CMSApiPrefix()}/exam/pool`, body);
   }
 }

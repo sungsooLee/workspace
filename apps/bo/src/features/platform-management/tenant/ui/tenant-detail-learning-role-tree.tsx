@@ -1,4 +1,3 @@
-import { SectionLayout } from '@shared/ui';
 import { useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
@@ -20,9 +19,6 @@ import {
   TreeContainer,
   TreeNode,
 } from '@learnway/ui';
-
-import { FormRow, SwitchFormField } from '@shared/ui';
-
 import {
   useFetchRole,
   useFetchRoleTree,
@@ -35,7 +31,14 @@ import {
   moveRoleCheck,
   transformRoleApiDataToTreeData,
 } from '@features/platform-management/tenant/service/tenant-detail-tree.service';
-import { ChannelListChoiceModal, CompanyShuttleModal, UserGroupChoiceModal } from '@shared/ui';
+import {
+  FormRow,
+  SwitchFormField,
+  ChannelListChoiceModal,
+  CompanyShuttleModal,
+  UserGroupChoiceModal,
+  SectionLayout,
+} from '@shared/ui';
 import { EnChannelScope, EnCompanyScope, EnDeptScope, EnFormMode, EnTenantScope } from '@types';
 
 /**
@@ -55,7 +58,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
   const tenantId = routerState.location.state?.tenantId;
   const tenantName = routerState.location.state?.tenantName;
 
-  const formConfig = { ...formBaseConfig };
+  const formConfig = { ...formBaseConfig() };
 
   formConfig.builders.push({
     name: 'tenantScope',
@@ -174,7 +177,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
   const handleDeleteButtonClick = () => {
     setFormMode(EnFormMode.NONE);
     setSelectedRoleNode(null);
-    deleteRole(selectedRoleNode.roleCode);
+    deleteRole(selectedRoleNode.roleId);
   };
 
   useEffect(() => {
@@ -443,7 +446,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
 
 export const TenantDetailLearningRoleTree = forwardRef(TenantDetailLearningRoleTreeComponent);
 
-const formBaseConfig: DynamicFormConfig = {
+const formBaseConfig = (): DynamicFormConfig => ({
   builders: [
     {
       name: 'tenantScope',
@@ -595,4 +598,4 @@ const formBaseConfig: DynamicFormConfig = {
       },
     },
   },
-};
+});

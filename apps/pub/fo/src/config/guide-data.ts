@@ -1026,7 +1026,7 @@ export const guideData = [
     pageId: 'course-registration/course-registration-textbook',
     pageType: 'Pop-up',
     completionDate: '2025-03-31',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-15',
     remarks: '- address-popup.tsx',
   },
   {
@@ -1036,7 +1036,7 @@ export const guideData = [
     pageId: 'course-registration/course-registration-all',
     pageType: 'Pop-up',
     completionDate: '2025-04-14',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-15',
     remarks: '- address-confirmation-popup.tsx',
   },
   {
@@ -1076,8 +1076,8 @@ export const guideData = [
     pageId: 'course-registration/course-registration-all',
     pageType: 'Pop-up',
     completionDate: '2025-04-17',
-    lastUpdateDate: '',
-    remarks: '- accepting-popup.tsx\n- svg progress 미결정',
+    lastUpdateDate: '2025-07-15',
+    remarks: '- accepting-popup.tsx',
   },
   {
     screenId: 'NLP_FO_LEC_1010',

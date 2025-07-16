@@ -1,6 +1,8 @@
 import {
   BlogCreateReq,
   BlogUpdateReq,
+  ContentBaseInfo,
+  ContentCourseMappingParams,
   HtmlVideoFileChangeReq,
   HtmlVideoMetadataReq,
   PostDraftHtmlVideoParams,
@@ -13,6 +15,7 @@ export const queryKeys = {
   userByUuid: ['user-by-uuid'] as const,
   contents: ['contents'] as const,
   contentDetail: ['content-detail'] as const,
+  contentCourseMapping: ['content-course-mapping'] as const,
   deleteContent: ['delete-content'] as const,
   createDraftVideo: ['create-draft-video'] as const,
   s3FileDownload: ['file-s3-download'] as const,
@@ -53,6 +56,13 @@ export const learningResourceQueryOptions = {
   getContent: (contentUuid: string) => ({
     queryKey: queryKeys.contentDetail,
     queryFn: () => LearningResourceService.fetchContent(contentUuid),
+    cacheTime: 0,
+    staleTime: 0,
+    enabled: !!contentUuid,
+  }),
+  getContentCourseMapping: (contentUuid: string, params: ContentCourseMappingParams) => ({
+    queryKey: queryKeys.contentCourseMapping,
+    queryFn: () => LearningResourceService.fetchContentCourseMapping(contentUuid, params),
   }),
   postDraftVideos: (params: PostDraftVideosParams) => ({
     queryKey: queryKeys.createDraftVideo,
@@ -75,13 +85,7 @@ export const learningResourceQueryOptions = {
   getCurriculumsMapping: (contentUuid: string) => ({
     queryKey: queryKeys.curriculumMapping,
     queryFn: () => LearningResourceService.fetchCurriculumMapping(contentUuid),
-  }),
-  getCoursesMapping: (contentUuid: string) => ({
-    queryKey: queryKeys.mappingCourses,
-    queryFn: () => LearningResourceService.fetchCourseMapping(contentUuid),
-    cacheTime: 0,
-    staleTime: 0,
-    enabled: true,
+    enabled: !!contentUuid,
   }),
   getSharedHistories: (params: any) => ({
     queryKey: queryKeys.sharedHistories,
@@ -145,5 +149,9 @@ export const mutateOptions = {
   }),
   deleteContent: () => ({
     mutationFn: (contentUuid: string) => LearningResourceService.deleteContent(contentUuid),
+  }),
+  createQuestionBankContent: () => ({
+    mutationFn: (params: ContentBaseInfo) =>
+      LearningResourceService.createQuestionBankContent(params),
   }),
 };

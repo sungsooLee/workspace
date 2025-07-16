@@ -2,6 +2,9 @@ import { FC, useEffect, useState } from 'react';
 import { DatePicker } from '@learnway/ui';
 import styles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 
+/**
+ * @description Date Range Picker (YYYY-MM-DD ~ YYYY-MM-DD)
+ */
 const DateRangePickerFormFieldComponent: FC<any> = ({
   value,
   onChange,
@@ -13,12 +16,12 @@ const DateRangePickerFormFieldComponent: FC<any> = ({
   const [from, setFrom] = useState(value?.from ?? undefined);
   const [to, setTo] = useState(value?.to ?? undefined);
   const handleFromDate = (value: any) => {
-    onChange({ from: value, to: to });
+    onChange({ from: value, to });
     setFrom(value);
   };
 
   const handleToDate = (value: any) => {
-    onChange({ from: from, to: value });
+    onChange({ from, to: value });
     setTo(value);
   };
 

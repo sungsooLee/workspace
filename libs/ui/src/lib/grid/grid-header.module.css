@@ -89,6 +89,9 @@
         @apply !border-[var(--gray4)];
         &.text_center {
           @apply px-[8px];
+          & > div {
+            @apply !justify-center;
+          }
         }
         &.sortable {
           @apply relative cursor-pointer select-none;

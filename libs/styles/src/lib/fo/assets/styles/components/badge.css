@@ -1,8 +1,8 @@
 .nlp--badge {
   &.xs {
-    @apply h-[2.2rem];
+    @apply h-[2.2rem] !p-0;
     .nlp--button {
-      @apply label-sm !px-[8px];
+      @apply label-sm !px-[6px] !font-semibold !leading-normal;
     }
   }
   &.sm {
@@ -30,5 +30,8 @@
     &[class*='primary'] {
       @apply !bg-[var(--blue75)];
     }
+  }
+  &[class*='primary'] {
+    @apply !bg-[var(--blue50)];
   }
 }

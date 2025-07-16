@@ -163,6 +163,11 @@ export interface GridBoxProps<T extends object = object>
   guideText?: string;
 
   /**
+   * 가이드 텍스트 하위 노출 여부
+   */
+  showGuideTextNextLine?: boolean;
+
+  /**
    * 전체 행 개수 표시 여부를 나타내는 boolean 값입니다.
    * `true`로 설정하면 전체 행 개수가 표시됩니다.
    */

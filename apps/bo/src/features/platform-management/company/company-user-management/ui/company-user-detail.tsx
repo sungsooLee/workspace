@@ -2,16 +2,16 @@ import { FC, useState } from 'react';
 import { useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { FormSubTitle, Tabs } from '@learnway/ui';
-import { cn } from '@learnway/shared';
-
-import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
-import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
-
+import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import {
   CompanyUserDetailLearningHistory,
   CompanyUserDetailBase,
 } from '@features/platform-management/company';
 import { useFetchUser } from '@entities/users/service/users.hook';
+import { EnGlobalConst } from '@types';
+
+import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
+import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
 
 enum EnCompanyUserTab {
   userInfo = 'usrInfo',
@@ -24,7 +24,8 @@ const CompanyUserDetailComponent: FC<any> = () => {
   const routerState = useRouterState();
 
   const userUuid = routerState.location.state.userUuid;
-  const { data: userInfo } = useFetchUser(userUuid);
+  const { data: user } = useFetchUser(userUuid);
+  console.log('### user', user);
 
   const [selectedTabKey, setSelectedTabKey] = useState<string>(EnCompanyUserTab.userInfo);
 
@@ -38,7 +39,7 @@ const CompanyUserDetailComponent: FC<any> = () => {
     {
       title: t('유저 정보'),
       key: EnCompanyUserTab.userInfo,
-      content: <CompanyUserDetailBase userInfo={userInfo} />,
+      content: <CompanyUserDetailBase userInfo={user} />,
     },
     {
       title: t('교육 이력'),
@@ -74,17 +75,30 @@ const CompanyUserDetailComponent: FC<any> = () => {
           <tbody>
             <tr>
               <th scope="row">{t('회원 유형')}</th>
-              <td>{userInfo?.accountType}</td>
+              <td>
+                {user?.linkageSystem &&
+                  t(
+                    `${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.company.LinkageSystem.${user.linkageSystem}`,
+                  )}
+              </td>
               <th scope="row">{t('이름')}</th>
-              <td>{userInfo?.name}</td>
+              <td>{user?.name}</td>
               <th scope="row">{t('사번')}</th>
-              <td>{userInfo?.employeeNumber}</td>
+              <td>{user?.employeeNumber}</td>
             </tr>
             <tr>
               <th scope={'row'}>{t('회원가입일')}</th>
-              <td>{userInfo?.createdDate}</td>
+              <td>
+                {user?.joinDate
+                  ? getDateToString(new Date(user.joinDate), DATE_TIME_FORMAT.DATETIME_SEC)
+                  : '-'}
+              </td>
               <th scope={'row'}>{t('최근 접속일')}</th>
-              <td colSpan={3}>{userInfo?.lastLoginDate}</td>
+              <td colSpan={3}>
+                {user?.lastLoginDate
+                  ? getDateToString(new Date(user.lastLoginDate), DATE_TIME_FORMAT.DATETIME_SEC)
+                  : '-'}
+              </td>
             </tr>
           </tbody>
         </table>

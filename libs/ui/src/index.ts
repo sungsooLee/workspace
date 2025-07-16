@@ -131,6 +131,7 @@ export * from './lib/grid/types/grid-box';
 export * from './lib/grid/types/grid';
 export * from './lib/grid/use-grid-table';
 export * from './lib/html-content/html-content';
+export * from './lib/image-fallback/image-fallback';
 export * from './lib/input/input-timer';
 export * from './lib/input/input';
 export * from './lib/input/search-input';

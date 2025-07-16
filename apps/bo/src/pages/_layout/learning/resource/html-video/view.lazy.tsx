@@ -6,10 +6,16 @@ import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { Button, Divider, useModal } from '@learnway/ui';
 import { learningResourceQueryOptions, useDeleteContent } from '@entities/learning-resource';
-import { ContentsButtons, MainContents, PageContainer, SubContents } from '@shared/ui';
-import { HtmlDetail } from './-components/html-detail';
+import {
+  ContentCourseMappingModal,
+  ContentsButtons,
+  MainContents,
+  PageContainer,
+  SubContents,
+} from '@shared/ui';
 import { ProcessingStatus } from '@types';
-import { FileInfo } from '@pages/_layout/learning/resource/html-video/-components/file-info';
+import { FileInfo } from './-components/file-info';
+import { HtmlDetail } from './-components/html-detail';
 
 export const Route = createLazyFileRoute('/_layout/learning/resource/html-video/view')({
   component: RouteComponent,
@@ -28,8 +34,8 @@ function RouteComponent() {
     learningResourceQueryOptions.getContent(routerState.location.state?.contentUuid),
   );
 
-  const { data: mappingData } = useQuery(
-    learningResourceQueryOptions.getCoursesMapping(routerState.location.state?.contentUuid),
+  const { data: hasMapping } = useQuery(
+    learningResourceQueryOptions.getCurriculumsMapping(routerState.location.state?.contentUuid),
   );
 
   const { data: htmlStatus } = useQuery(
@@ -40,6 +46,22 @@ function RouteComponent() {
   const [mode, setMode] = useState<'draft' | 'complete'>('draft');
 
   const { open: openModal, confirm: openConfirm } = useModal();
+
+  const handleClickCourseMapping = useCallback(async () => {
+    if (!routerState.location.state?.contentUuid) {
+      return;
+    }
+
+    await openModal({
+      content: (
+        <ContentCourseMappingModal
+          channelUuid={data?.channelUuid ?? ''}
+          contentUuid={routerState.location.state.contentUuid}
+        />
+      ),
+      width: 'lg',
+    });
+  }, [data]);
 
   const handleClickSaveButton = async () => {
     if (formRef.current) {
@@ -59,7 +81,7 @@ function RouteComponent() {
   }, []);
 
   const { delete: deleteBlogContent } = useDeleteContent({
-    onSuccess: (result: unknown) => {
+    onSuccess: (result: number) => {
       console.log('delete success', result);
       return router.navigate({ to: '/learning/learning-resource', replace: true });
     },
@@ -76,11 +98,11 @@ function RouteComponent() {
     }
   }, [data?.contentUuid]);
 
-  const handleClickCourseButton = () => {
+  const handleClickCourseButton = useCallback(() => {
     router.navigate({
       to: '/learning/course/create/view',
     });
-  };
+  }, []);
 
   useEffect(() => {
     if (!routerState.location.state?.contentUuid) {
@@ -121,7 +143,13 @@ function RouteComponent() {
               label={t('과정개설')}
               onClick={handleClickCourseButton}
             />
-            <Button type="button" variant="point" size="sm" label={t('매핑과정')} />
+            <Button
+              type="button"
+              variant="point"
+              size="sm"
+              label={t('매핑과정')}
+              onClick={handleClickCourseMapping}
+            />
             <Button type="button" variant="point" size="sm" label={t('번역현황')} />
             <Button type="button" variant="point" size="sm" label={t('공유이력')} />
           </>
@@ -140,7 +168,7 @@ function RouteComponent() {
           size="sm"
           label={t('LABEL.button.delete')}
           onClick={handleClickDeleteButton}
-          disabled={!!mappingData?.hasMapping}
+          disabled={hasMapping}
         />
         <Button type="button" variant="point" size="sm" label={t('LABEL.button.translate')} />
         <Button
@@ -158,7 +186,7 @@ function RouteComponent() {
           mode={mode}
           tenantId={tenantId}
           data={data}
-          hasMapping={mappingData?.hasMapping}
+          hasMapping={hasMapping}
         />
       </MainContents>
 

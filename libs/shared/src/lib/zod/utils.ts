@@ -51,7 +51,7 @@ const handleConditions = (
 
 // 동적으로 Zod 스키마 생성 함수
 export const buildJodObject = (validator: ValidatorConfig): ZodSchema => {
-  console.log('🔍 buildJodObject validator:', validator);
+  // console.log('🔍 buildJodObject validator:', validator);
   if (validator === undefined) {
     return z.object({});
   }
@@ -61,7 +61,7 @@ export const buildJodObject = (validator: ValidatorConfig): ZodSchema => {
 
   for (const key in validator) {
     const config = validator[key];
-    console.log(`🔍 buildJodObject processing field: ${key}`, config);
+    // console.log(`🔍 buildJodObject processing field: ${key}`, config);
 
     let schema: any;
 
@@ -119,11 +119,11 @@ export const buildJodObject = (validator: ValidatorConfig): ZodSchema => {
 
     if ('default' in config) {
       schema = schema.optional().default(config.default);
-      console.log(`🔍 buildJodObject field ${key}: added default`);
+      // console.log(`🔍 buildJodObject field ${key}: added default`);
     } else {
       // 모든 필드를 optional로 설정 (required validation은 superRefine에서 처리)
       schema = schema.optional();
-      console.log(`🔍 buildJodObject field ${key}: made optional`);
+      // console.log(`🔍 buildJodObject field ${key}: made optional`);
     }
     // 필수 값 처리 함수
     if (config.required) {
