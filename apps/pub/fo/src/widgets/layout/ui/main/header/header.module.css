@@ -4,24 +4,30 @@
     @apply relative items-center;
 
     .header_area {
-      @apply relative m-auto w-[1180px];
+      @apply relative m-auto flex h-[80px] w-[1360px] items-center;
 
       .top_area {
-        @apply relative z-[1] flex justify-between;
+        @apply relative z-[1] flex w-full items-center justify-between;
 
         .logo_inner {
-          @apply flex items-center;
-        }
-        h1 {
-          img {
-            @apply h-[40px] w-auto;
+          @apply flex min-w-[278px] max-w-[278px] items-center;
+          h1 {
+            img {
+              @apply h-[40px] w-auto;
+            }
+          }
+          .tenant {
+            &::before {
+              @apply relative top-[6px] ml-[20px] mr-[10px] inline-block h-[20px] w-[1px] bg-[var(--gray75)] content-[''];
+            }
           }
         }
+
         .search_form {
-          @apply flex-1 pt-[10px];
+          @apply ml-auto;
         }
         .util {
-          @apply flex items-center;
+          @apply ml-auto flex items-center;
           & > div,
           & > button {
             & + div,

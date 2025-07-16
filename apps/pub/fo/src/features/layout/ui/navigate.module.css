@@ -1,7 +1,7 @@
 /* navigate.module.css */
 .start {
   &.navigate {
-    @apply relative;
+    @apply relative w-[610px] overflow-hidden;
     .nav {
       @apply relative z-[0];
       .gnb_swiper {

@@ -126,6 +126,8 @@ import {
   IcoTooltipArrow02,
   IcoPdf,
   IcoLock,
+  IcoTime,
+  IcoHistory,
 } from '@learnway/icons';
 
 export const Route = createFileRoute('/_guide/guide/icon')({
@@ -298,6 +300,8 @@ import { IcoAlertCircleGray } from '@learnway/icons'; // 사용할 icon 함수�
             <IcoTooltipArrow02 width={12} height={8} fill="#4D525C" />
             <IcoPdf width={24} height={24} fill="#4D525C" />
             <IcoLock width={24} height={24} fill="#4D525C" />
+            <IcoTime width={24} height={24} fill="#131416" />
+            <IcoHistory width={24} height={24} fill="#131416" />
           </div>
         </div>
       </div>

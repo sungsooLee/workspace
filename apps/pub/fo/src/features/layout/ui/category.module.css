@@ -1,12 +1,11 @@
 /* category.module.css */
 .start {
   .btn_category {
-    @apply mr-[32px] inline-block h-[40px] w-[40px] rounded-[8px] border border-solid border-[var(--gray5)];
+    @apply mr-[32px] flex h-[32px] w-[32px] items-center justify-center;
     svg {
       @apply m-auto;
     }
     &.active {
-      @apply border-[var(--primary2)] bg-[var(--primary2)];
     }
   }
   &.category_area {

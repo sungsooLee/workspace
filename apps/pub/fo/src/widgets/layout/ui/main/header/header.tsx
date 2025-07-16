@@ -42,7 +42,17 @@ function HeaderComponent() {
             <h1>
               <Logo />
             </h1>
-            <Tenant />
+            <div className={styles.tenant}>
+              <Tenant />
+            </div>
+          </div>
+
+          <div className={styles.nav_container} onMouseLeave={handleMouseLeave}>
+            <div className={styles.nav_area}>
+              <Category onOpenChange={handleCategoryOpen} isOpen={isCategoryOpen} />
+              <Navigate onMouseEnter={handleMouseEnter} />
+            </div>
+            {isHoverNavigate && <NavigateHover isOpen={isHoverNavigate} />}
           </div>
 
           <div className={styles.search_form}>
@@ -50,19 +60,9 @@ function HeaderComponent() {
           </div>
 
           <div className={styles.util}>
-            <UserName />
-            <Language />
             <Notification />
             <UserAvatar />
           </div>
-        </div>
-
-        <div className={styles.nav_container} onMouseLeave={handleMouseLeave}>
-          <div className={styles.nav_area}>
-            <Category onOpenChange={handleCategoryOpen} isOpen={isCategoryOpen} />
-            <Navigate onMouseEnter={handleMouseEnter} />
-          </div>
-          {isHoverNavigate && <NavigateHover isOpen={isHoverNavigate} />}
         </div>
       </header>
     </div>

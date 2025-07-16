@@ -63,11 +63,13 @@ function NavigateComponent({ onMouseEnter, onMouseLeave }: NavigateComponentProp
           modules={[Navigation]}
           simulateTouch={isMobile}
           allowTouchMove={isMobile}
-          className={styles.gnb_swiper}>
+          className={styles.gnb_swiper}
+        >
           {gnb.map((gnb, index) => (
             <SwiperSlide
               key={index}
-              className={`${styles.slide} ${gnb.hasDivision ? styles.division : ''}`}>
+              className={`${styles.slide} ${gnb.hasDivision ? styles.division : ''}`}
+            >
               <Link to={gnb.link} onMouseEnter={onMouseEnter}>
                 <span>{gnb.name}</span>
               </Link>
