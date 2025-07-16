@@ -28,3 +28,4 @@ export * from './lib/utils/string-util';
 export * from './lib/zod/utils';
 export * from './lib/zod/validator';
 export * from './lib/zod/zod';
+export * from './lib/utils/time-util';

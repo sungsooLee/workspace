@@ -19,6 +19,10 @@ export type CurriculumCreateRequest = {
   vendorTelCountryCode: string;
   vendorTelNo: string;
 };
+export type CurriculumUpdateRequest = CurriculumCreateRequest & {
+  curriculumId: number;
+  isUsed?: boolean;
+};
 
 export type CurriculumResponse = CurriculumCreateRequest & {
   curriculumId: number;
@@ -120,9 +124,27 @@ export type FixedModuleUpdateParams = {
   totalTime: number;
 };
 
+export type GeneralLessonSaveParams = {
+  curriculumId: number;
+  moduleId: number;
+  lessonType: LESSON_TYPE.GENERAL | LESSON_TYPE.RESOURCE;
+  lessonName: string;
+  learningTime?: number;
+  description?: string;
+  contentUuid?: string;
+  contentName?: string;
+};
+
+export type LessonUpdateParams = {
+  lessonId: number;
+  lessonName: string;
+  description?: string;
+  learningTime?: number;
+};
+
 export enum LESSON_TYPE {
-  TOC = 'TOC',
-  RESOURCES = 'RESOURCES',
+  GENERAL = 'GENERAL',
+  RESOURCE = 'RESOURCE',
 }
 
 export enum MAPPING_CURRICULUM_TYPE {

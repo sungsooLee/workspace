@@ -70,6 +70,7 @@ export class TreeDataService {
               id: `lesson-${lesson.lessonId}`,
               key: `lesson-${lesson.lessonId}`,
               name: lesson.lessonName || `레슨 ${lessonIndex + 1}`,
+              title: lesson.lessonName,
               type: 'LESSON',
               level: 2,
               parentId: `module-${module.moduleId}`,

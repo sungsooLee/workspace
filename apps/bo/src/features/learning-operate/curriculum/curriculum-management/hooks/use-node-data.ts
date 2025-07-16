@@ -2,29 +2,29 @@ import { useState, useEffect } from 'react';
 import { TreeNode } from '@learnway/ui';
 import {
   useGetCurriculumDetail,
+  useGetLessonDetail,
   useGetModuleDetail,
-  // useGetModuleDetail,
-  // useGetLessonDetail
 } from '@entities/curriculum';
 import { MAPPING_CURRICULUM_TYPE } from '@types';
 
 interface UseNodeDataProps {
   selectedNode: TreeNode | null;
   curriculumId: number;
+  isEditing?: boolean;
 }
 
 /**
  * 선택된 노드 타입에 따라 적절한 API를 호출하여 상세 데이터를 가져오는 Hook
  */
-export const useNodeData = ({ selectedNode, curriculumId }: UseNodeDataProps) => {
+export const useNodeData = ({ selectedNode, curriculumId, isEditing = true }: UseNodeDataProps) => {
   const [currentData, setCurrentData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // 각 타입별 API Hook들 (조건부 호출)
-  const shouldFetchCurriculum = selectedNode?.type === MAPPING_CURRICULUM_TYPE.CURRICULUM;
-  const shouldFetchModule = selectedNode?.type === MAPPING_CURRICULUM_TYPE.MODULE;
-  const shouldFetchLesson = selectedNode?.type === MAPPING_CURRICULUM_TYPE.LESSON;
+  const shouldFetchCurriculum =
+    isEditing && selectedNode?.type === MAPPING_CURRICULUM_TYPE.CURRICULUM;
+  const shouldFetchModule = isEditing && selectedNode?.type === MAPPING_CURRICULUM_TYPE.MODULE;
+  const shouldFetchLesson = isEditing && selectedNode?.type === MAPPING_CURRICULUM_TYPE.LESSON;
 
   // 커리큘럼 상세 조회
   const {
@@ -41,17 +41,31 @@ export const useNodeData = ({ selectedNode, curriculumId }: UseNodeDataProps) =>
     error: moduleError,
   } = useGetModuleDetail(moduleId);
 
-  // 레슨 상세 조회
-  // const lessonId = shouldFetchLesson ? selectedNode?.data?.lessonId : 0;
-  // const {
-  //   data: lessonData,
-  //   isLoading: isLessonLoading,
-  //   error: lessonError
-  // } = useGetLessonDetail(lessonId);
+  // 레슨 상세 조회 (레슨이 선택되고 lessonId가 유효할 때만)
+  const lessonId = shouldFetchLesson ? selectedNode?.data?.lessonId || selectedNode?.id : 0;
+  const tmpModuleId = shouldFetchLesson
+    ? Number(selectedNode?.parentId?.toString().split('-')[1]) || 0
+    : 0;
+  const shouldCallLessonDetail = shouldFetchLesson && lessonId > 0 && tmpModuleId > 0;
 
-  // 선택된 노드에 따라 데이터와 로딩 상태 결정
+  const {
+    data: lessonData,
+    isLoading: isLessonLoading,
+    error: lessonError,
+  } = useGetLessonDetail(
+    shouldCallLessonDetail ? { lessonId, moduleId: tmpModuleId } : { lessonId: 0, moduleId: 0 },
+  );
+
   useEffect(() => {
     if (!selectedNode) {
+      setCurrentData(null);
+      setIsLoading(false);
+      setError(null);
+      return;
+    }
+
+    // 생성 모드일 때는 데이터를 로드하지 않음
+    if (!isEditing) {
       setCurrentData(null);
       setIsLoading(false);
       setError(null);
@@ -71,11 +85,11 @@ export const useNodeData = ({ selectedNode, curriculumId }: UseNodeDataProps) =>
         setError(moduleError ? '모듈 데이터 로드 실패' : null);
         break;
 
-      // case NODE_TYPE.LESSON:
-      //   setCurrentData(lessonData);
-      //   setIsLoading(isLessonLoading);
-      //   setError(lessonError ? '레슨 데이터 로드 실패' : null);
-      //   break;
+      case MAPPING_CURRICULUM_TYPE.LESSON:
+        setCurrentData(lessonData);
+        setIsLoading(isLessonLoading);
+        setError(lessonError ? '레슨 데이터 로드 실패' : null);
+        break;
 
       default:
         setCurrentData(null);
@@ -84,13 +98,16 @@ export const useNodeData = ({ selectedNode, curriculumId }: UseNodeDataProps) =>
     }
   }, [
     selectedNode,
+    isEditing,
     curriculumData,
     isCurriculumLoading,
     curriculumError,
     moduleData,
     isModuleLoading,
     moduleError,
-    // lessonData, isLessonLoading, lessonError
+    lessonData,
+    isLessonLoading,
+    lessonError,
   ]);
 
   return {
@@ -101,9 +118,7 @@ export const useNodeData = ({ selectedNode, curriculumId }: UseNodeDataProps) =>
   };
 };
 
-// 각 노드 타입별 생성/수정 Hook
 export const useNodeActions = (nodeType: MAPPING_CURRICULUM_TYPE | null) => {
-  // 타입별 액션 함수들 반환
   const getCreateAction = () => {
     switch (nodeType) {
       case MAPPING_CURRICULUM_TYPE.CURRICULUM:

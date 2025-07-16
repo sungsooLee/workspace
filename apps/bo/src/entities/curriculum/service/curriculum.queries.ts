@@ -1,10 +1,13 @@
 import {
   CurriculumCreateRequest,
   CurriculumSearchParams,
+  CurriculumUpdateRequest,
   FixedModuleSaveParams,
   FixedModuleUpdateParams,
+  GeneralLessonSaveParams,
   GeneralModuleSaveParams,
   GeneralModuleUpdateParams,
+  LessonUpdateParams,
 } from '@types';
 import { CurriculumService } from '../api/curriculum';
 import { Mutation } from '@tanstack/react-query';
@@ -28,11 +31,18 @@ export const queryOptions = {
     queryFn: () => CurriculumService.getModuleDetail(moduleId),
     enabled: !!moduleId,
   }),
+  lessonDetail: (data: { lessonId: number; moduleId: number }) => ({
+    queryKey: [...queryKeys.all, 'lesson', data.lessonId],
+    queryFn: () => CurriculumService.getLessonDetail(data),
+  }),
 };
 
 export const mutateOptions = {
   create: () => ({
     mutationFn: (payload: CurriculumCreateRequest) => CurriculumService.createCurriculum(payload),
+  }),
+  updateCurriculum: () => ({
+    mutationFn: (payload: CurriculumUpdateRequest) => CurriculumService.updateCurriculum(payload),
   }),
   createGeneralModule: () => ({
     mutationFn: (payload: GeneralModuleSaveParams) =>
@@ -49,5 +59,19 @@ export const mutateOptions = {
   updateFixedModule: () => ({
     mutationFn: (payload: FixedModuleUpdateParams) =>
       CurriculumService.updateCurriculumFixedModule(payload),
+  }),
+  createLessonByModule: () => ({
+    mutationFn: (payload: GeneralLessonSaveParams) =>
+      CurriculumService.createGeneralLesson(payload),
+  }),
+  createLessonByCurriculum: () => ({
+    mutationFn: (payload: GeneralLessonSaveParams) =>
+      CurriculumService.createCurriculumLesson(payload),
+  }),
+  updateLessonByGeneral: () => ({
+    mutationFn: (payload: LessonUpdateParams) => CurriculumService.updateGeneralLesson(payload),
+  }),
+  updateLessonByFixed: () => ({
+    mutationFn: (payload: LessonUpdateParams) => CurriculumService.updateFixedLesson(payload),
   }),
 };

@@ -1,15 +1,15 @@
 import { useEffect } from 'react';
 import { ContentsRow, Input, RadioGroupFormField, Textarea } from '@learnway/ui';
 import { FormRow3, ResourceChoiceModal } from '@shared/ui';
-import { MODULE_TYPE } from '@types';
+import { LESSON_TYPE, MODULE_TYPE } from '@types';
 import { t } from 'i18next';
 import { ContentChoiceModalSelector } from './content-choice-selector';
-import { DurationTimeFormField } from '@features/form/ui';
+import { DropdownFormField, DurationTimeFormField } from '@features/form/ui';
 import { getHourValueFromTime } from '@pages/_layout/learning/resource/-common/common';
 import { learningResourceQueryOptions } from '@entities/learning-resource';
 import { useQuery } from '@tanstack/react-query';
 
-interface ModuleFormProps {
+interface LessonFormProps {
   watch: any;
   setValue?: any;
   loadFormData?: (data: Record<string, any>, options?: any) => void;
@@ -22,7 +22,7 @@ interface ModuleFormProps {
   };
 }
 
-export const ModuleForm: React.FC<ModuleFormProps> = ({
+export const LessonForm: React.FC<LessonFormProps> = ({
   watch,
   setValue,
   loadFormData,
@@ -30,7 +30,7 @@ export const ModuleForm: React.FC<ModuleFormProps> = ({
   initialData,
   curriculumData,
 }) => {
-  const moduleType = watch('moduleType') || MODULE_TYPE.GENERAL;
+  const lessonType = watch('lessonType') || LESSON_TYPE.GENERAL;
   const contentUuid = watch('contentUuid');
   const contentName = watch('contentName');
 
@@ -45,25 +45,27 @@ export const ModuleForm: React.FC<ModuleFormProps> = ({
       if (isEditing && initialData) {
         loadFormData({
           ...initialData,
-          moduleName: initialData.moduleName,
-          moduleType: initialData.moduleType || MODULE_TYPE.GENERAL,
-          description: initialData.description,
-          contentDuration: { ...getHourValueFromTime(initialData.totalTime) },
+          learningTime: { ...getHourValueFromTime(initialData.learningTime) },
           contentUuid: initialData.contentUuid || '',
           contentName: '', // 초기값은 빈 문자열, contentDetail 로드 후 설정됨
         });
       } else if (!isEditing) {
         // 생성 모드일 때는 기본값으로 초기화
         loadFormData({
-          moduleType: MODULE_TYPE.GENERAL,
-          moduleName: '',
+          lessonType: LESSON_TYPE.GENERAL,
+          lessonName: '',
           description: '',
+          learningTime: '',
         });
       }
     }
     // loadFormData를 의존성에서 제거하여 무한 루프 방지
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEditing, initialData]);
+
+  useEffect(() => {
+    // if(autoCon)
+  }, [lessonType]);
 
   useEffect(() => {
     if (isEditing && contentDetail && setValue) {
@@ -75,16 +77,16 @@ export const ModuleForm: React.FC<ModuleFormProps> = ({
     <>
       <ContentsRow>
         <FormRow3
-          name="moduleType"
-          label="모듈유형"
+          name="lessonType"
+          label="레슨유형"
           validation={{ required: true }}
-          defaultValue={MODULE_TYPE.GENERAL}
+          defaultValue={LESSON_TYPE.GENERAL}
           element={
             <RadioGroupFormField
               disabled={isEditing}
               options={[
-                { label: '목차', value: MODULE_TYPE.GENERAL },
-                { label: '스콤', value: MODULE_TYPE.FIXED },
+                { label: '목차', value: LESSON_TYPE.GENERAL },
+                { label: '자원', value: LESSON_TYPE.RESOURCE },
               ]}
             />
           }
@@ -92,15 +94,30 @@ export const ModuleForm: React.FC<ModuleFormProps> = ({
       </ContentsRow>
       <ContentsRow>
         <FormRow3
-          name="moduleName"
-          label={'모듈명'}
+          name="lessonName"
+          label={'레슨명'}
           validation={{ required: true }}
           element={<Input type="text" maxLength={40} />}
         />
       </ContentsRow>
 
-      {moduleType === MODULE_TYPE.FIXED && (
+      {lessonType === LESSON_TYPE.RESOURCE && (
         <>
+          <ContentsRow>
+            <FormRow3
+              name="contentType"
+              label={t('학습자원 유형')}
+              validation={{ required: true }}
+              element={
+                <DropdownFormField
+                  presetOptionLabel={t('LABEL.form.label.select', '선택')}
+                  optionsConfig={{
+                    codeGroup: 'cms.content.ContentType',
+                  }}
+                />
+              }
+            />
+          </ContentsRow>
           <ContentsRow>
             <FormRow3
               name="contentUuid"
@@ -135,26 +152,26 @@ export const ModuleForm: React.FC<ModuleFormProps> = ({
               }
             />
           </ContentsRow>
-          <ContentsRow>
-            <FormRow3
-              name="contentDuration"
-              label={t('학습시간')}
-              validation={{
-                required: true,
-                validate: (value: { hour: number; minute: number; second: number }) => {
-                  if (!value) return t('학습시간을 입력해주세요.');
-                  const { hour = 0, minute = 0, second = 0 } = value;
-                  if (!(hour > 0 || minute > 0 || second > 0)) {
-                    return t('학습시간은 1초 이상으로 설정하여야 합니다.');
-                  }
-                  return true;
-                },
-              }}
-              element={<DurationTimeFormField />}
-            />
-          </ContentsRow>
         </>
       )}
+      <ContentsRow>
+        <FormRow3
+          name="learningTime"
+          label={t('학습시간')}
+          validation={{
+            required: true,
+            validate: (value: { hour: number; minute: number; second: number }) => {
+              if (!value) return t('학습시간을 입력해주세요.');
+              const { hour = 0, minute = 0, second = 0 } = value;
+              if (!(hour > 0 || minute > 0 || second > 0)) {
+                return t('학습시간은 1초 이상으로 설정하여야 합니다.');
+              }
+              return true;
+            },
+          }}
+          element={<DurationTimeFormField />}
+        />
+      </ContentsRow>
       <ContentsRow>
         <FormRow3 name="description" label="설명" element={<Textarea maxLength={100} />} />
       </ContentsRow>

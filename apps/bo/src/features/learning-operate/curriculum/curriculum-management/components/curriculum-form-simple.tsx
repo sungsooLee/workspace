@@ -47,13 +47,23 @@ export const CurriculumFormSimple: React.FC<CurriculumFormSimpleProps> = ({
   // React Hook Form의 watch를 사용해서 폼 값 감시
   const isVendored = watch('isVendored') || false;
 
-  // 초기 데이터가 변경될 때 폼에 데이터 로드 (useDynamicForm3의 loadFormData 사용)
   useEffect(() => {
     if (initialData && isEditing && loadFormData) {
-      console.log('폼 데이터 로딩:', initialData);
-      loadFormData(initialData);
+      const formData = {
+        ...initialData,
+        coordinatorTelNo: {
+          nationCode: initialData.coordinatorTelCountryCode || '',
+          number: initialData.coordinatorTelNo || '',
+        },
+        vendorTelNo: {
+          nationCode: initialData.vendorTelCountryCode || '',
+          number: initialData.vendorTelNo || '',
+        },
+      };
+      loadFormData(formData);
     }
-  }, [initialData, isEditing, loadFormData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialData, isEditing]);
 
   const formContent = (
     <>
@@ -176,7 +186,11 @@ export const CurriculumFormSimple: React.FC<CurriculumFormSimpleProps> = ({
               label="외주개발업체 담당자명"
               element={<Input />}
             />
-            <FormRow3 name="vendorTelNo" label="외주개발업체 연락처" element={<Input />} />
+            <FormRow3
+              name="vendorTelNo"
+              label="외주개발업체 연락처"
+              element={<PhoneNumberFormFieldSimple />}
+            />
           </ContentsRow>
         </>
       )}

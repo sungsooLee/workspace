@@ -64,18 +64,27 @@ const PhoneNumberComponent = function ({
       return;
     }
     onChange?.(editionValue);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editionValue]);
 
   useEffect(() => {
-    if (!value || isEqual(value, editionValue)) {
+    if (!value) {
       return;
     }
-    setEditionValue(
-      !value?.nationCode
-        ? { ...value, nationCode: getNationCodeFromBrowser(telephoneCountryCodes) }
-        : value,
-    );
-  }, [value]);
+
+    const stableNationCode =
+      value?.nationCode ||
+      (telephoneCountryCodes.length > 0 ? getNationCodeFromBrowser(telephoneCountryCodes) : '');
+
+    const newEditionValue = {
+      ...value,
+      nationCode: stableNationCode,
+    };
+
+    if (!isEqual(newEditionValue, editionValue)) {
+      setEditionValue(newEditionValue);
+    }
+  }, [value, telephoneCountryCodes]);
 
   const handleSelect = (option: any) => {
     setEditionValue({ ...editionValue, nationCode: option });
