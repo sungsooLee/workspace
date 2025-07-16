@@ -1,23 +1,25 @@
 import { useEffect, useState } from 'react';
-import { MovieInfo } from '@features/learning-resource';
+import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
+
+import { Button } from '@learnway/ui';
+import { ContentsButtons, LinkBox, MainContents, PageContainer, SubContents } from '@shared/ui';
+
 import { useLearningResourceQuestionDetailForm } from '@features/learning-resource/learning-resource-management/service/learning-resource-question-detail-from.hook';
 import { LearningResourceQuestionBank } from '@features/learning-resource/learning-resource-management/ui/learning-resource-question-bank';
-import { LearningResourceQuestionBankDetail } from '@features/learning-resource/learning-resource-management/ui/learning-resource-question-bank-detail';
-import { Button, Tabs } from '@learnway/ui';
-import { ContentsButtons, LinkBox, MainContents, PageContainer, SubContents } from '@shared/ui';
-import { createLazyFileRoute } from '@tanstack/react-router';
 
-export const Route = createLazyFileRoute('/_layout/learning/resource/question-bank/regist')({
+export const Route = createLazyFileRoute('/_layout/learning/resource/question-bank/view')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const router = useRouter();
+  const routerState = useRouterState();
+
   const { saveButtonClick, setBaseInfo } = useLearningResourceQuestionDetailForm();
-
   useEffect(() => {
-    setBaseInfo(undefined);
-  }, []);
-
+    if (!routerState.location.state?.contentUuid) return;
+    setBaseInfo(routerState.location.state?.contentUuid);
+  }, [routerState.location.state]);
   return (
     <PageContainer>
       <ContentsButtons>

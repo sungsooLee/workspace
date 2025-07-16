@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { t } from 'i18next';
 
 import { Tabs } from '@learnway/ui';
@@ -11,16 +11,19 @@ enum QuestionTab {
   QUESTION_ITEM = 'QUESTION_ITEM',
 }
 
-const LearningResourceQuestionBankComponent: FC<any> = ({ contentUuid }) => {
+const LearningResourceQuestionBankComponent = () => {
   const [selectedTabKey, setSelectedTabKey] = useState<string>(QuestionTab.QUESTION_BASE);
   const [formMode, setFormMode] = useState<EnFormMode>(EnFormMode.ADD);
-  const [formContentUuid, setFormContentUuid] = useState<string>();
+
+  const formBaseRef = useRef(1);
+  const formQuestionRef = useRef(2);
 
   const handleTabChange = (tabKey: string) => {
     if (tabKey !== selectedTabKey) {
       setSelectedTabKey(tabKey);
     }
   };
+
   const items = [
     {
       title: '문제은행 정보',
@@ -34,12 +37,6 @@ const LearningResourceQuestionBankComponent: FC<any> = ({ contentUuid }) => {
     },
   ];
 
-  useEffect(() => {}, []);
-  useEffect(() => {
-    if (!contentUuid) return;
-    setFormContentUuid(contentUuid);
-  }, [contentUuid]);
-
   return (
     <Tabs
       selectedTabKey={selectedTabKey}
@@ -51,4 +48,4 @@ const LearningResourceQuestionBankComponent: FC<any> = ({ contentUuid }) => {
   );
 };
 
-export const LearningResourceQuestionBank = LearningResourceQuestionBankComponent;
+export const LearningResourceQuestionBank = forwardRef(LearningResourceQuestionBankComponent);

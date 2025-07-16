@@ -9,9 +9,13 @@ import {
   Input,
   RadioGroupFormField,
   TextareaFormField,
+  useModal,
 } from '@learnway/ui';
 import { useDynamicForm, DynamicFormConfig, CODE_GROUP } from '@learnway/hooks';
-import { useGetRequestChannelDetail } from '@entities/channel/service/request-channel.hook';
+import {
+  useGetRequestChannelDetail,
+  useUpdateRequestChannel,
+} from '@entities/channel/service/request-channel.hook';
 import { EnGlobalConst } from '@types';
 import {
   FormRow,
@@ -32,8 +36,19 @@ function RouteComponent() {
   const routerState = useRouterState();
   const channelRequestUuid = routerState.location.state?.channelRequestUuid;
 
+  const { open: openModal, confirm: openConfirm, alert: openAlert } = useModal();
   const { data, refetch } = useGetRequestChannelDetail(channelRequestUuid);
   const { accept: acceptRequestChannel, reject: rejectRequestChannel } = useChannelApplication();
+  const { update } = useUpdateRequestChannel({
+    onSuccess: () => {
+      openAlert({
+        title: t('저장되었습니다.'),
+        onClose: () => {
+          refetch();
+        },
+      });
+    },
+  });
 
   const { provider, updateFormData, onSubmit, getValues, onFormChange } =
     useDynamicForm(formConfig);
@@ -120,6 +135,15 @@ function RouteComponent() {
     });
   };
 
+  const handleOnSave = () => {
+    const values = getValues();
+    const payload = {
+      channelRequestUuid,
+      channelSecretType: values.channelSecretType,
+    };
+    update(payload);
+  };
+
   return (
     <PageContainer>
       <ContentsButtons>
@@ -169,7 +193,13 @@ function RouteComponent() {
           />
         )}
         {data && data.approvalStatusType !== 'PENDING' && (
-          <Button type="submit" variant="primary" size="sm" stopPropagation label={t('저장')} />
+          <Button
+            variant="primary"
+            size="sm"
+            stopPropagation
+            label={t('저장')}
+            onClick={handleOnSave}
+          />
         )}
       </ContentsButtons>
       <MainContents>
@@ -193,7 +223,9 @@ function RouteComponent() {
           <FormRow
             provider={provider}
             name={'channelSecretType'}
-            element={<RadioGroupFormField disabled={true} />}
+            element={
+              <RadioGroupFormField disabled={data && data.approvalStatusType === 'PENDING'} />
+            }
           />
         </ContentsRow>
         <ContentsRow>

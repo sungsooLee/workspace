@@ -51,6 +51,7 @@ const CourseRegistrationComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
             provider={provider}
             name={'isEnrollRequired'}
             label={'수강신청'}
+            format={'boolean'}
             element={<SwitchFormField disabled={courseConfig.enrollOption === 'IMPOSSIBLE'} />}
           />
         </ContentsRow>
@@ -75,6 +76,7 @@ const CourseRegistrationComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
               provider={provider}
               name={'isMaxEnrollQuotaRestricted'}
               label={'정원'}
+              format={'boolean'}
               element={
                 <RadioGroupFormField
                   optionsConfig={{
@@ -132,6 +134,7 @@ const CourseRegistrationComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
               provider={provider}
               name={'isDuplicateEnrollAllowed'}
               label={'차수 중복수강'}
+              format={'boolean'}
               element={
                 <RadioGroupFormField
                   optionsConfig={{
@@ -148,6 +151,7 @@ const CourseRegistrationComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
               provider={provider}
               name={'isPreEnrollQuestionAllowed'}
               label={'수강전 문의'}
+              format={'boolean'}
               element={
                 <RadioGroupFormField
                   optionsConfig={{

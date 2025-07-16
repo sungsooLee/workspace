@@ -24,4 +24,7 @@ export const mutateOptions = {
   approve: () => ({
     mutationFn: (payload: any) => RequestChannelService.postApprovalApproved(payload),
   }),
+  update: () => ({
+    mutationFn: (payload: any) => RequestChannelService.putRequestChannel(payload),
+  }),
 };

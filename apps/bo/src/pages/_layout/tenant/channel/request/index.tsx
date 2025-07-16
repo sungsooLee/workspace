@@ -412,5 +412,6 @@ const columns = [
     header: t('채널 확인'),
     size: 80,
     enableGrouping: false,
+    enableSorting: false,
   }),
 ] as ColumnDef<any, unknown>[];

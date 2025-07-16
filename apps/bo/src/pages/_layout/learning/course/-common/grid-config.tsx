@@ -49,15 +49,18 @@ export const createGridConfig = () => {
       name: 'courseName',
       label: () => t('LABEL.grid.column.courseName'),
       size: 300,
-      render: ({ row }: any) => (
-        <Link
-          to={'/learning/course/detail/view'}
-          state={{ courseId: row.original.courseId }}
-          className="link"
-        >
-          {row.original.courseName}
-        </Link>
-      ),
+      render: ({ row }: any) => {
+        const { courseId, wizardStep, courseName } = row.original || {};
+        const url =
+          wizardStep === 'FULL_UPDATE'
+            ? '/learning/course/detail/view' // 상세 페이지 (5단계 저장 이후)
+            : '/learning/course/create/view'; // 상세 상세 (5단계 저장 이전)
+        return (
+          <Link to={url} state={{ courseId }} className="link">
+            {courseName}
+          </Link>
+        );
+      },
     },
     // 사용
     {

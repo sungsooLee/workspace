@@ -1,6 +1,7 @@
-import { UserGroupManual, UserGroupsParam } from '@types';
+import { Tenant, UserGroupManual, UserGroupsParam } from '@types';
 import UserGroupsService from '../api/user-group';
 import { getQuerySkipToken } from '@learnway/shared';
+import TenantService from '@entities/tenant/api/tenant';
 
 export const queryKeys = {
   usergroups: ['user-groups'] as const,
@@ -57,3 +58,12 @@ export const queryOptions = {
     staleTime: 0,
   }),
 };
+
+export const userGroupManualOptions = {
+  create: () => ({
+    mutationFn: (payload: any) => UserGroupsService.createUserGroupManual(payload),
+  }),
+  update: () => ({
+    mutationFn: (payload: any) => UserGroupsService.updateUserGroupManual(payload),
+  }),
+}

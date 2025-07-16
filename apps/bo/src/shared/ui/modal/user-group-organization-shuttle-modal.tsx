@@ -9,13 +9,10 @@ type Props = {
   option?: CombineUserGroup[];
 };
 
-const UserGroupOrganizationShuttleModalComponent = ({
-  tenantIds,
-  option: optionProp = [],
-}: Props) => {
+const UserGroupOrganizationShuttleModalComponent = ({ tenantIds, option: optionProp }: Props) => {
   const { close: closeModal } = useModal();
 
-  const [option, setOption] = useState<CombineUserGroup[]>(optionProp);
+  const [option, setOption] = useState<CombineUserGroup[]>(optionProp ?? []);
 
   const handleOnClose = () => {
     closeModal();

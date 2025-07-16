@@ -16,7 +16,9 @@ export const queryOptions = {
   authUser: () => ({
     queryKey: queryKeys.authUser,
     queryFn: async () => new Promise((resolve) => resolve(null)),
-    ...queryConfig.cacheOptions(),
+    // ...queryConfig.cacheOptions(),
+    staleTime: Infinity,
+    cacheTime: Infinity,
   }),
   healthcheck: (comanyCode: string) => ({
     queryKey: queryKeys.authSSO,

@@ -25,22 +25,19 @@ type UserGroupTabModalProps = {
 };
 
 const UserGroupTabModalComponent = forwardRef(
-  ({
-    initialTab = 'ORGANIZATION',
-    tenantIds = [],
-    option: optionProp = [],
-  }: UserGroupTabModalProps) => {
+  ({ initialTab = 'ORGANIZATION', tenantIds = [], option: optionProp }: UserGroupTabModalProps) => {
     const { close: closeModal } = useModal();
 
     const [selectedTabKey, setSelectedTabKey] = useState<UserGroupType>(initialTab);
 
-    const [option, setOption] = useState<CombineUserGroup[]>(optionProp);
+    const [option, setOption] = useState<CombineUserGroup[]>(optionProp ?? []);
 
     const handleOnClose = () => {
       closeModal();
     };
 
     const handleOnConfirm = () => {
+      // console.log(option, 'option');
       closeModal(option);
     };
 

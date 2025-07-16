@@ -1,4 +1,4 @@
-import React, { Dispatch, forwardRef, SetStateAction, useEffect, useMemo } from 'react';
+import React, { forwardRef, useEffect, useMemo } from 'react';
 import { useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import dayjs from 'dayjs';
@@ -16,7 +16,7 @@ import { DynamicFormConfig, DynamicFormValues, useDynamicForm } from '@learnway/
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import type { BlogDetailRes, BlogPostRes, BlogUpdateReq, Tag } from '@types';
 import {
-  ChannelListChoiceModal,
+  ChannelChoiceModal,
   CompanyChoiceModal,
   FormGroup,
   FormRow,
@@ -182,9 +182,7 @@ const BlogDetailComponent = forwardRef<HTMLFormElement, BlogDetailProps>(
                   hideBorder: true,
                 }}
                 modalConfig={{
-                  title: '',
-                  width: 'xl',
-                  content: <ChannelListChoiceModal />,
+                  content: <ChannelChoiceModal />,
                 }}
                 disabled={hasMapping}
               />

@@ -115,6 +115,7 @@ export interface TreeNode {
 export type TreeData = {
   key: string;
   id: number;
+  groupId?: number;
   title: string;
   fullPath: string;
   children?: TreeData[];
