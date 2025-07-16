@@ -87,7 +87,7 @@
             }
           }
           .tit_box {
-            string {
+            strong {
               @apply title5-b;
             }
           }
