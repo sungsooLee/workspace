@@ -18,7 +18,7 @@ import {
   useGridBoxConfig,
   useModal,
 } from '@learnway/ui';
-import { IcoClock01, IcoCopy, IcoDownload, IcoAlertCircle } from '@learnway/icons';
+import { IcoClock01, IcoCopy, IcoDownload, IcoAlertCircle, IcoDownArrow } from '@learnway/icons';
 import { t } from 'i18next';
 import { useEffect, useState } from 'react';
 import { learningResourceQueryOptions, usePostContentCopy } from '@entities/learning-resource';
@@ -26,7 +26,6 @@ import { ModifierInfoModal } from './learning-resource-modifier-info-modal';
 import { ProgramGuideModal } from './learning-resource-program-guide-modal';
 import { BatchSettingModal } from './learning-resource-batch-setting-modal';
 import { first, get, map, some, uniq } from 'lodash';
-import { CopyModal } from './learning-resource-copy-modal';
 import { useRouter } from '@tanstack/react-router';
 import {
   GridExcelDownloadButton,
@@ -36,7 +35,7 @@ import {
 import { CMSApiPrefix } from '@learnway/config';
 import { PreviewLearningWindow } from './preview-learning-window';
 import { getDetailPathByContentType } from '@features/learning-resource';
-import { ContentInformation } from '@types';
+import { ContentCreateType, ContentInfo, ContentInformation } from '@types';
 
 function LearningResourceTableComponent() {
   const {
@@ -194,24 +193,25 @@ function LearningResourceTableComponent() {
           size: 'auto',
         },
         render: (_: any) => (
-          <Button
-            className="link"
-            onClick={(e) => {
-              e.stopPropagation();
-
-              const detailPath = getDetailPathByContentType(_.row.original.contentType);
-
-              // 유형별 상세 화면으로 이동해야 함
-              router.navigate({
-                to: detailPath,
-                state: {
-                  contentUuid: _.row.original.contentUuid,
-                },
-              });
-            }}
-          >
-            {_.getValue()}
-          </Button>
+          <span className="flex">
+            {_.row.original.createType === ContentCreateType.TRANSLATE && (
+              <IcoDownArrow width={16} height={16} stroke="#4C515E" />
+            )}
+            <Button
+              className="link"
+              onClick={(e) => {
+                e.stopPropagation();
+                router.navigate({
+                  to: getDetailPathByContentType(_.row.original.contentType),
+                  state: {
+                    contentUuid: _.row.original.contentUuid,
+                  },
+                });
+              }}
+            >
+              {_.getValue()}
+            </Button>
+          </span>
         ),
       },
       {
@@ -332,10 +332,10 @@ function LearningResourceTableComponent() {
     onFormChange,
     onFormValid,
   } = useSearchBox(searchConfig);
-  const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
+  const { config: gConfig, gridFetch, data } = useGridBox<ContentInfo>(gridConfig, getValues);
   const [params, setParams] = useState<Record<string, any>>({});
   const [valuesWithLabel, setValuesWithLabel] = useState<Record<string, SelectOption>>({});
-  const [selectedRows, setSelectedRows] = useState<any[]>([]);
+  const [selectedRows, setSelectedRows] = useState<ContentInfo[]>([]);
 
   function handleSearch(rawQuery: Record<string, any>) {
     const processedQuery = compactValues(rawQuery);
@@ -347,7 +347,6 @@ function LearningResourceTableComponent() {
 
   useEffect(() => {
     if (!listParam) return;
-    console.log('🚀 ~ useEffect ~ listParam:', listParam);
     onFormChange(listParam);
 
     (async () => {
@@ -416,13 +415,13 @@ function LearningResourceTableComponent() {
     <>
       <SearchBox provider={searchProvider} onSearch={handleSearch} />
       <Divider />
-      <GridBox
+      <GridBox<ContentInfo>
         config={gConfig}
         showNumberingColumn
         multiple
         onRowsSelect={setSelectedRows}
         getRowClassName={(row) => {
-          // if (row == child) return 'bg-[--secondary9]';
+          if (row.createType === ContentCreateType.TRANSLATE) return 'bg-[--secondary9]';
           return '';
         }}
         customButtonNode={
@@ -432,9 +431,7 @@ function LearningResourceTableComponent() {
               label={t('LABEL.grid.header.share', '공유')}
               disabled={
                 selectedRows.length !== 1 ||
-                !data?.content?.find(
-                  (_: any) => _.contentUuid === get(first(selectedRows), 'contentUuid'),
-                ) // child
+                get(first(selectedRows), 'createType') !== ContentCreateType.MANUAL // 원본만 공유 가능
               }
               onClick={handleShare}
             />
@@ -480,9 +477,7 @@ function LearningResourceTableComponent() {
               icon={<IcoCopy width={16} height={16} stroke="#4C515E" />}
               disabled={
                 selectedRows.length !== 1 ||
-                !data?.content?.find(
-                  (_: any) => _.contentUuid === get(first(selectedRows), 'contentUuid'),
-                ) // child
+                get(first(selectedRows), 'createType') === ContentCreateType.TRANSLATE // 원본과 공유본만 복사 가능
               }
               onClick={handleCopy}
             />

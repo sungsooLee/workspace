@@ -8,6 +8,8 @@ import {
   ContentCourseMappingParams,
   ContentCourseMappingRes,
   GetContentDetailRes,
+  GetContentsParams,
+  GetContentsRes,
   HtmlVideoFileChangeReq,
   HtmlVideoMetadataReq,
   HtmlVideoStatus,
@@ -30,7 +32,7 @@ export default class LearningResourceService {
     return httpService.get(`${PMSApiPrefix()}/users/` + uuid);
   }
 
-  static fetchContents(params: any): Promise<any> {
+  static fetchContents(params: GetContentsParams): Promise<GetContentsRes> {
     return httpService.get(`${CMSApiPrefix()}/contents`, params);
   }
 
