@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { com_ever_edu_lms_course_dto_req_CourseTargetAudienceReqDto_WizardStepNew } from './com_ever_edu_lms_course_dto_req_CourseTargetAudienceReqDto_WizardStepNew';
+import type { com_ever_edu_lms_blackwhite_dto_req_WhiteGroupReqDto_WizardStepNew } from './com_ever_edu_lms_blackwhite_dto_req_WhiteGroupReqDto_WizardStepNew';
 export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew = {
     /**
      * 과정타입 (lms.course.CourseType)
@@ -27,7 +27,7 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew = {
     /**
      * 학습대상-유저그룹
      */
-    targetList?: Array<com_ever_edu_lms_course_dto_req_CourseTargetAudienceReqDto_WizardStepNew>;
+    targetList?: Array<com_ever_edu_lms_blackwhite_dto_req_WhiteGroupReqDto_WizardStepNew>;
     /**
      * 언어 설정
      */
@@ -36,10 +36,6 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew = {
      * 과정명
      */
     courseName: string;
-    /**
-     * 과정요약
-     */
-    courseSummary: string;
     /**
      * 과정내용
      */

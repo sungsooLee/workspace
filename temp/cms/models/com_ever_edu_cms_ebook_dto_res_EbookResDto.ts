@@ -611,7 +611,6 @@ export namespace com_ever_edu_cms_ebook_dto_res_EbookResDto {
     export enum contentAddInfoType {
         VIDEO_ADD_INFO = 'VIDEO_ADD_INFO',
         EXAM_ADD_INFO = 'EXAM_ADD_INFO',
-        EXAM_POOL_ADD_INFO = 'EXAM_POOL_ADD_INFO',
     }
     /**
      * E-Book 처리 상태 코드 Enum(cms.ebook.EbookProcessingStatus) - FAIL|COMPLETE|STARTED|UPLOADING|PARSING

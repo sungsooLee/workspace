@@ -23,9 +23,9 @@ export type com_ever_edu_pms_file_dto_res_FileInfoInternalResDto = {
      */
     fileName?: string;
     /**
-     * 저정소유형. Enum(FileUploadStatus) - S3|HMG
+     * 저정소유형. Enum(StorageType) - S3|HMG
      */
-    reposType?: com_ever_edu_pms_file_dto_res_FileInfoInternalResDto.reposType;
+    storageType?: com_ever_edu_pms_file_dto_res_FileInfoInternalResDto.storageType;
     /**
      * 버킷명(S3 Bucket 개념의 최상위 저장소 구분)
      */
@@ -49,9 +49,9 @@ export type com_ever_edu_pms_file_dto_res_FileInfoInternalResDto = {
 };
 export namespace com_ever_edu_pms_file_dto_res_FileInfoInternalResDto {
     /**
-     * 저정소유형. Enum(FileUploadStatus) - S3|HMG
+     * 저정소유형. Enum(StorageType) - S3|HMG
      */
-    export enum reposType {
+    export enum storageType {
         S3 = 'S3',
         HMG = 'HMG',
     }

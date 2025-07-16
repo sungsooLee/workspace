@@ -29,8 +29,10 @@ export type com_ever_edu_cms_curriculum_dto_res_CurriculumResDto = {
     isUsed?: boolean;
     openingYear?: number;
     createdBy?: string;
-    lastModifiedBy?: string;
+    creatorName?: string;
     createdDate?: string;
+    lastModifiedBy?: string;
+    modifyerName?: string;
     modifiedDate?: string;
     moduleList?: Array<com_ever_edu_cms_curriculum_dto_res_ModuleResDto>;
 };

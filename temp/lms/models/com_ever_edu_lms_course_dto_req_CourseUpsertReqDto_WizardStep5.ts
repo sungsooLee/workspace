@@ -45,6 +45,10 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep5 = {
      */
     primaryThumbnailFileUuid: string;
     /**
+     * AI 과정요약
+     */
+    courseSummary: string;
+    /**
      * 태그 이름 목록
      */
     tagNames: Array<com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TagNameWrapper_WizardStep5>;

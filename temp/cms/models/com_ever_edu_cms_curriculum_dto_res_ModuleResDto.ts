@@ -12,8 +12,10 @@ export type com_ever_edu_cms_curriculum_dto_res_ModuleResDto = {
     sortOrder?: number;
     isDummy?: boolean;
     createdBy?: string;
-    lastModifiedBy?: string;
+    creatorName?: string;
     createdDate?: string;
+    lastModifiedBy?: string;
+    modifyerName?: string;
     modifiedDate?: string;
     lessonList?: Array<com_ever_edu_cms_curriculum_dto_res_LessonResDto>;
 };

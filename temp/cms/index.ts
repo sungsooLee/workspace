@@ -42,17 +42,18 @@ export type { com_ever_edu_cms_content_dto_res_BatchSettingsResDto } from './mod
 export type { com_ever_edu_cms_content_dto_res_ContentProgressListResDto } from './models/com_ever_edu_cms_content_dto_res_ContentProgressListResDto';
 export { com_ever_edu_cms_content_dto_res_ContentProgressResDto } from './models/com_ever_edu_cms_content_dto_res_ContentProgressResDto';
 export { com_ever_edu_cms_content_dto_res_ContentResDto } from './models/com_ever_edu_cms_content_dto_res_ContentResDto';
+export { com_ever_edu_cms_content_dto_res_ContentTranslationResDto } from './models/com_ever_edu_cms_content_dto_res_ContentTranslationResDto';
 export type { com_ever_edu_cms_content_dto_res_FindContentExportResDto } from './models/com_ever_edu_cms_content_dto_res_FindContentExportResDto';
 export { com_ever_edu_cms_content_dto_res_FindContentResDto } from './models/com_ever_edu_cms_content_dto_res_FindContentResDto';
-export type { com_ever_edu_cms_content_dto_res_FindMappingCourseResDto } from './models/com_ever_edu_cms_content_dto_res_FindMappingCourseResDto';
-export type { com_ever_edu_cms_content_dto_res_SearchSharedBoxHistoryResDto } from './models/com_ever_edu_cms_content_dto_res_SearchSharedBoxHistoryResDto';
+export { com_ever_edu_cms_content_dto_res_SearchSharedBoxHistoryResDto } from './models/com_ever_edu_cms_content_dto_res_SearchSharedBoxHistoryResDto';
+export type { com_ever_edu_cms_content_dto_res_ShareChannelCodeResDto } from './models/com_ever_edu_cms_content_dto_res_ShareChannelCodeResDto';
 export type { com_ever_edu_cms_content_dto_res_ShareContentResDto } from './models/com_ever_edu_cms_content_dto_res_ShareContentResDto';
 export type { com_ever_edu_cms_content_dto_res_SharedBoxContentResDto } from './models/com_ever_edu_cms_content_dto_res_SharedBoxContentResDto';
 export type { com_ever_edu_cms_content_dto_res_SharedBoxContentResDto$ShareDestinationResDto } from './models/com_ever_edu_cms_content_dto_res_SharedBoxContentResDto$ShareDestinationResDto';
-export type { com_ever_edu_cms_content_dto_res_SharedBoxHistoryDestinationResDto } from './models/com_ever_edu_cms_content_dto_res_SharedBoxHistoryDestinationResDto';
+export { com_ever_edu_cms_content_dto_res_SharedBoxHistoryDestinationResDto } from './models/com_ever_edu_cms_content_dto_res_SharedBoxHistoryDestinationResDto';
 export { com_ever_edu_cms_content_dto_res_SharedBoxResDto } from './models/com_ever_edu_cms_content_dto_res_SharedBoxResDto';
-export type { com_ever_edu_cms_content_dto_res_TenantChannelCodeResDto } from './models/com_ever_edu_cms_content_dto_res_TenantChannelCodeResDto';
-export type { com_ever_edu_cms_content_dto_res_TenantCodeResDto } from './models/com_ever_edu_cms_content_dto_res_TenantCodeResDto';
+export type { com_ever_edu_cms_content_dto_res_ShareTenantChannelCodeResDto } from './models/com_ever_edu_cms_content_dto_res_ShareTenantChannelCodeResDto';
+export type { com_ever_edu_cms_content_dto_res_ShareTenantCodeResDto } from './models/com_ever_edu_cms_content_dto_res_ShareTenantCodeResDto';
 export type { com_ever_edu_cms_content_dto_res_ThumbnailFileResDto } from './models/com_ever_edu_cms_content_dto_res_ThumbnailFileResDto';
 export { com_ever_edu_cms_curriculum_dto_req_CurriculumSaveReqDto } from './models/com_ever_edu_cms_curriculum_dto_req_CurriculumSaveReqDto';
 export { com_ever_edu_cms_curriculum_dto_req_CurriculumUpdateReqDto } from './models/com_ever_edu_cms_curriculum_dto_req_CurriculumUpdateReqDto';
@@ -66,10 +67,10 @@ export { com_ever_edu_cms_curriculum_dto_req_GeneralModuleSaveReqDto } from './m
 export type { com_ever_edu_cms_curriculum_dto_req_ModuleUpdateReqDto } from './models/com_ever_edu_cms_curriculum_dto_req_ModuleUpdateReqDto';
 export { com_ever_edu_cms_curriculum_dto_req_UpdateDnDReqDto } from './models/com_ever_edu_cms_curriculum_dto_req_UpdateDnDReqDto';
 export { com_ever_edu_cms_curriculum_dto_res_CurriculumResDto } from './models/com_ever_edu_cms_curriculum_dto_res_CurriculumResDto';
-export { com_ever_edu_cms_curriculum_dto_res_CurriculumSaveResDto } from './models/com_ever_edu_cms_curriculum_dto_res_CurriculumSaveResDto';
 export { com_ever_edu_cms_curriculum_dto_res_CurriculumSearchResDto } from './models/com_ever_edu_cms_curriculum_dto_res_CurriculumSearchResDto';
 export { com_ever_edu_cms_curriculum_dto_res_LessonResDto } from './models/com_ever_edu_cms_curriculum_dto_res_LessonResDto';
 export { com_ever_edu_cms_curriculum_dto_res_ModuleResDto } from './models/com_ever_edu_cms_curriculum_dto_res_ModuleResDto';
+export type { com_ever_edu_cms_curriculum_dto_res_TotalContentDurationResDto } from './models/com_ever_edu_cms_curriculum_dto_res_TotalContentDurationResDto';
 export { com_ever_edu_cms_ebook_dto_req_EbookSaveReqDto } from './models/com_ever_edu_cms_ebook_dto_req_EbookSaveReqDto';
 export { com_ever_edu_cms_ebook_dto_res_EbookChangeStatusResDto } from './models/com_ever_edu_cms_ebook_dto_res_EbookChangeStatusResDto';
 export type { com_ever_edu_cms_ebook_dto_res_EbookItemResDto } from './models/com_ever_edu_cms_ebook_dto_res_EbookItemResDto';
@@ -184,6 +185,7 @@ export type { org_springframework_data_domain_PageCom_ever_edu_cms_content_dto_r
 export type { org_springframework_data_domain_PageCom_ever_edu_cms_content_dto_res_SharedBoxResDto } from './models/org_springframework_data_domain_PageCom_ever_edu_cms_content_dto_res_SharedBoxResDto';
 export type { org_springframework_data_domain_PageCom_ever_edu_cms_curriculum_dto_res_CurriculumSearchResDto } from './models/org_springframework_data_domain_PageCom_ever_edu_cms_curriculum_dto_res_CurriculumSearchResDto';
 export type { org_springframework_data_domain_PageCom_ever_edu_cms_survey_dto_res_SurveyResDto$ListOnAdmin } from './models/org_springframework_data_domain_PageCom_ever_edu_cms_survey_dto_res_SurveyResDto$ListOnAdmin';
+export type { org_springframework_data_domain_PageCom_ever_edu_external_course_dto_CourseResDto } from './models/org_springframework_data_domain_PageCom_ever_edu_external_course_dto_CourseResDto';
 export type { PageableObject } from './models/PageableObject';
 
 export { BoService } from './services/BoService';

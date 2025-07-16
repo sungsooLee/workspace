@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { com_ever_edu_lms_course_dto_req_CourseTargetAudienceReqDto_FullUpdate } from './com_ever_edu_lms_course_dto_req_CourseTargetAudienceReqDto_FullUpdate';
+import type { com_ever_edu_lms_blackwhite_dto_req_WhiteGroupReqDto_FullUpdate } from './com_ever_edu_lms_blackwhite_dto_req_WhiteGroupReqDto_FullUpdate';
 import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TagNameWrapper_FullUpdate } from './com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TagNameWrapper_FullUpdate';
 export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate = {
     /**
@@ -24,7 +24,7 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate = {
     /**
      * 학습대상-유저그룹
      */
-    targetList?: Array<com_ever_edu_lms_course_dto_req_CourseTargetAudienceReqDto_FullUpdate>;
+    targetList?: Array<com_ever_edu_lms_blackwhite_dto_req_WhiteGroupReqDto_FullUpdate>;
     /**
      * 언어 설정
      */
@@ -33,10 +33,6 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate = {
      * 과정명
      */
     courseName: string;
-    /**
-     * 과정요약
-     */
-    courseSummary: string;
     /**
      * 과정내용
      */
@@ -397,6 +393,10 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate = {
      * 대표 썸네일 이미지 UUID
      */
     primaryThumbnailFileUuid: string;
+    /**
+     * AI 과정요약
+     */
+    courseSummary: string;
     /**
      * 태그 이름 목록
      */
@@ -940,11 +940,8 @@ export namespace com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate {
      * 수강신청 결재 라인 (pms.course.ApprovalLineType)
      */
     export enum approvalLineType {
-        NONE = 'NONE',
-        LEADER = 'LEADER',
-        OPERATOR = 'OPERATOR',
-        LEADER_OPERATOR = 'LEADER_OPERATOR',
-        DEPEND_COMPANY = 'DEPEND_COMPANY',
+        GROUP_APPROVAL_LINE = 'GROUP_APPROVAL_LINE',
+        INDIVIDUAL_APPROVAL_LINE = 'INDIVIDUAL_APPROVAL_LINE',
     }
     /**
      * 수강 신청 대기 (lms.course.WaitListPickMethodType)

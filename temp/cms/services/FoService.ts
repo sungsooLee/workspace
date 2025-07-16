@@ -223,7 +223,6 @@ export class FoService {
      * @param curriculumId 커리큘럼Id
      * @param moduleId 모듈 ID
      * @param lessonId 레슨 ID
-     * @param scoId item element id(SCOID)
      * @returns com_ever_edu_cms_video_dto_res_VideoContentInfoResDto OK
      * @throws ApiError
      */
@@ -234,7 +233,6 @@ export class FoService {
         curriculumId: any,
         moduleId: any,
         lessonId: any,
-        scoId: any,
     ): CancelablePromise<com_ever_edu_cms_video_dto_res_VideoContentInfoResDto> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -248,7 +246,6 @@ export class FoService {
                 'curriculumId': curriculumId,
                 'moduleId': moduleId,
                 'lessonId': lessonId,
-                'scoId': scoId,
             },
             errors: {
                 400: `Bad Request`,

@@ -3,9 +3,9 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { com_ever_edu_external_tenant_dto_res_TenantResDto } from './com_ever_edu_external_tenant_dto_res_TenantResDto';
+import type { com_ever_edu_lms_blackwhite_dto_res_WhiteGroupResDto } from './com_ever_edu_lms_blackwhite_dto_res_WhiteGroupResDto';
 import type { com_ever_edu_lms_category_dto_res_CourseCategoryFlatDto } from './com_ever_edu_lms_category_dto_res_CourseCategoryFlatDto';
 import type { com_ever_edu_lms_course_dto_res_CourseResDto$SimpleCourseDto } from './com_ever_edu_lms_course_dto_res_CourseResDto$SimpleCourseDto';
-import type { com_ever_edu_lms_course_dto_res_CourseTargetAudienceResDto } from './com_ever_edu_lms_course_dto_res_CourseTargetAudienceResDto';
 import type { com_ever_edu_lms_tag_dto_res_TagResDto } from './com_ever_edu_lms_tag_dto_res_TagResDto';
 export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
     wizardStep?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin.wizardStep;
@@ -21,7 +21,7 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
      * 카테고리 목록
      */
     categories?: Array<com_ever_edu_lms_category_dto_res_CourseCategoryFlatDto>;
-    targetList?: Array<com_ever_edu_lms_course_dto_res_CourseTargetAudienceResDto>;
+    targetList?: Array<com_ever_edu_lms_blackwhite_dto_res_WhiteGroupResDto>;
     language?: string;
     courseName?: string;
     courseSummary?: string;
@@ -894,11 +894,8 @@ export namespace com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin {
      * 수강신청 결재 라인 (pms.course.ApprovalLineType)
      */
     export enum approvalLineType {
-        NONE = 'NONE',
-        LEADER = 'LEADER',
-        OPERATOR = 'OPERATOR',
-        LEADER_OPERATOR = 'LEADER_OPERATOR',
-        DEPEND_COMPANY = 'DEPEND_COMPANY',
+        GROUP_APPROVAL_LINE = 'GROUP_APPROVAL_LINE',
+        INDIVIDUAL_APPROVAL_LINE = 'INDIVIDUAL_APPROVAL_LINE',
     }
     /**
      * 수강 신청 대기 (lms.course.WaitListPickMethodType)

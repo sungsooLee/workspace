@@ -8,7 +8,7 @@ export type com_ever_edu_pms_user_dto_res_CustomUserGroupResDto$DetailOnAdmin = 
     tenantId?: number;
     tenantName?: string;
     userGroupOriginType?: com_ever_edu_pms_user_dto_res_CustomUserGroupResDto$DetailOnAdmin.userGroupOriginType;
-    userGroupOriginMappingId?: number;
+    userGroupOriginMappingId?: string;
     originName?: string;
     userGroupName?: string;
     assignmentType?: com_ever_edu_pms_user_dto_res_CustomUserGroupResDto$DetailOnAdmin.assignmentType;

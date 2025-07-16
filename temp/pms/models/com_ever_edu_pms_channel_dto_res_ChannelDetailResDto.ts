@@ -79,9 +79,9 @@ export type com_ever_edu_pms_channel_dto_res_ChannelDetailResDto = {
     channelTargetUserSettingType?: com_ever_edu_pms_channel_dto_res_ChannelDetailResDto.channelTargetUserSettingType;
     channelProperties?: com_ever_edu_pms_channel_dto_res_ChannelPropertiesResDto;
     /**
-     * 채널신청ID
+     * 채널신청Uuid
      */
-    channelRequestId?: number;
+    channelRequestUuid?: string;
     mainTenantInfo?: com_ever_edu_pms_tenant_dto_res_TenantResDto$DetailOnAdmin;
     createdBy?: string;
     lastModifiedBy?: string;

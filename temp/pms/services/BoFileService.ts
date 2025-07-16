@@ -45,7 +45,7 @@ export class BoFileService {
     }
     /**
      * 이미지 업로드 요청
-     * 이미지 업로드한다.<br>- reposType: 저정소유형. Enum(FileUploadStatus) - S3|HMG<br>- filePath: 파일경로: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명) ex> public/image/board/2025/06/02/thumbnail.jpg
+     * 이미지 업로드한다.<br>- storageType: 저정소유형. Enum(StorageType) - S3|HMG<br>- filePath: 파일경로: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명) ex> public/image/board/2025/06/02/thumbnail.jpg
      * @param formData
      * @returns com_ever_edu_pms_file_dto_res_ImageResDto OK
      * @throws ApiError
@@ -53,7 +53,7 @@ export class BoFileService {
     public static uploadImageFile(
         formData?: {
             multipartFile?: Blob;
-            reposType: string;
+            storageType: string;
             filePath: string;
         },
     ): CancelablePromise<com_ever_edu_pms_file_dto_res_ImageResDto> {

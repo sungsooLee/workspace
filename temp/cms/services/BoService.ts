@@ -29,12 +29,13 @@ import type { com_ever_edu_cms_content_dto_res_BatchSettingsResDto } from '../mo
 import type { com_ever_edu_cms_content_dto_res_ContentProgressListResDto } from '../models/com_ever_edu_cms_content_dto_res_ContentProgressListResDto';
 import type { com_ever_edu_cms_content_dto_res_ContentProgressResDto } from '../models/com_ever_edu_cms_content_dto_res_ContentProgressResDto';
 import type { com_ever_edu_cms_content_dto_res_ContentResDto } from '../models/com_ever_edu_cms_content_dto_res_ContentResDto';
-import type { com_ever_edu_cms_content_dto_res_FindMappingCourseResDto } from '../models/com_ever_edu_cms_content_dto_res_FindMappingCourseResDto';
+import type { com_ever_edu_cms_content_dto_res_ContentTranslationResDto } from '../models/com_ever_edu_cms_content_dto_res_ContentTranslationResDto';
 import type { com_ever_edu_cms_content_dto_res_SearchSharedBoxHistoryResDto } from '../models/com_ever_edu_cms_content_dto_res_SearchSharedBoxHistoryResDto';
+import type { com_ever_edu_cms_content_dto_res_ShareChannelCodeResDto } from '../models/com_ever_edu_cms_content_dto_res_ShareChannelCodeResDto';
 import type { com_ever_edu_cms_content_dto_res_ShareContentResDto } from '../models/com_ever_edu_cms_content_dto_res_ShareContentResDto';
 import type { com_ever_edu_cms_content_dto_res_SharedBoxContentResDto } from '../models/com_ever_edu_cms_content_dto_res_SharedBoxContentResDto';
-import type { com_ever_edu_cms_content_dto_res_TenantChannelCodeResDto } from '../models/com_ever_edu_cms_content_dto_res_TenantChannelCodeResDto';
-import type { com_ever_edu_cms_content_dto_res_TenantCodeResDto } from '../models/com_ever_edu_cms_content_dto_res_TenantCodeResDto';
+import type { com_ever_edu_cms_content_dto_res_ShareTenantChannelCodeResDto } from '../models/com_ever_edu_cms_content_dto_res_ShareTenantChannelCodeResDto';
+import type { com_ever_edu_cms_content_dto_res_ShareTenantCodeResDto } from '../models/com_ever_edu_cms_content_dto_res_ShareTenantCodeResDto';
 import type { com_ever_edu_cms_curriculum_dto_req_CurriculumSaveReqDto } from '../models/com_ever_edu_cms_curriculum_dto_req_CurriculumSaveReqDto';
 import type { com_ever_edu_cms_curriculum_dto_req_CurriculumUpdateReqDto } from '../models/com_ever_edu_cms_curriculum_dto_req_CurriculumUpdateReqDto';
 import type { com_ever_edu_cms_curriculum_dto_req_FixedLessonUpdateReqDto } from '../models/com_ever_edu_cms_curriculum_dto_req_FixedLessonUpdateReqDto';
@@ -47,7 +48,6 @@ import type { com_ever_edu_cms_curriculum_dto_req_GeneralModuleSaveReqDto } from
 import type { com_ever_edu_cms_curriculum_dto_req_ModuleUpdateReqDto } from '../models/com_ever_edu_cms_curriculum_dto_req_ModuleUpdateReqDto';
 import type { com_ever_edu_cms_curriculum_dto_req_UpdateDnDReqDto } from '../models/com_ever_edu_cms_curriculum_dto_req_UpdateDnDReqDto';
 import type { com_ever_edu_cms_curriculum_dto_res_CurriculumResDto } from '../models/com_ever_edu_cms_curriculum_dto_res_CurriculumResDto';
-import type { com_ever_edu_cms_curriculum_dto_res_CurriculumSaveResDto } from '../models/com_ever_edu_cms_curriculum_dto_res_CurriculumSaveResDto';
 import type { com_ever_edu_cms_curriculum_dto_res_LessonResDto } from '../models/com_ever_edu_cms_curriculum_dto_res_LessonResDto';
 import type { com_ever_edu_cms_curriculum_dto_res_ModuleResDto } from '../models/com_ever_edu_cms_curriculum_dto_res_ModuleResDto';
 import type { com_ever_edu_cms_etc_dto_req_EtcContentDraftReqDto } from '../models/com_ever_edu_cms_etc_dto_req_EtcContentDraftReqDto';
@@ -105,6 +105,7 @@ import type { org_springframework_data_domain_PageCom_ever_edu_cms_content_dto_r
 import type { org_springframework_data_domain_PageCom_ever_edu_cms_content_dto_res_SharedBoxResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_cms_content_dto_res_SharedBoxResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_cms_curriculum_dto_res_CurriculumSearchResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_cms_curriculum_dto_res_CurriculumSearchResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_cms_survey_dto_res_SurveyResDto$ListOnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_cms_survey_dto_res_SurveyResDto$ListOnAdmin';
+import type { org_springframework_data_domain_PageCom_ever_edu_external_course_dto_CourseResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_external_course_dto_CourseResDto';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
@@ -638,12 +639,12 @@ export class BoService {
      * 커리큘럼 수정
      * 커리큘럼 정보를 수정 한다.
      * @param requestBody
-     * @returns com_ever_edu_cms_curriculum_dto_res_CurriculumSaveResDto OK
+     * @returns com_ever_edu_cms_curriculum_dto_res_CurriculumResDto OK
      * @throws ApiError
      */
     public static updateCurriculum(
         requestBody: com_ever_edu_cms_curriculum_dto_req_CurriculumUpdateReqDto,
-    ): CancelablePromise<com_ever_edu_cms_curriculum_dto_res_CurriculumSaveResDto> {
+    ): CancelablePromise<com_ever_edu_cms_curriculum_dto_res_CurriculumResDto> {
         return __request(OpenAPI, {
             method: 'PUT',
             url: '/admin/api/v1/curriculum',
@@ -662,12 +663,12 @@ export class BoService {
      * 커리큘럼 생성
      * 커리큘럼을 생성한다.
      * @param requestBody
-     * @returns com_ever_edu_cms_curriculum_dto_res_CurriculumSaveResDto OK
+     * @returns com_ever_edu_cms_curriculum_dto_res_CurriculumResDto OK
      * @throws ApiError
      */
     public static saveCurriculum(
         requestBody: com_ever_edu_cms_curriculum_dto_req_CurriculumSaveReqDto,
-    ): CancelablePromise<com_ever_edu_cms_curriculum_dto_res_CurriculumSaveResDto> {
+    ): CancelablePromise<com_ever_edu_cms_curriculum_dto_res_CurriculumResDto> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/admin/api/v1/curriculum',
@@ -1567,8 +1568,8 @@ export class BoService {
         });
     }
     /**
-     * 콘텐츠 내보내기
-     * 콘텐츠 내보내기하는 api입니다.
+     * 콘텐츠 내보내기(번역/공유)
+     * 콘텐츠를 내보내기(번역/공유)한다.<br>콘텐츠 내보내기 시 리소스 메타 데이터까지 복사하고 리소스 파일은 복사하지 않는다.
      * @param contentUuid 콘텐츠 UUID
      * @param requestBody
      * @returns com_ever_edu_cms_content_dto_res_ContentResDto OK
@@ -1597,7 +1598,7 @@ export class BoService {
     }
     /**
      * 콘텐츠 복사
-     * 콘텐츠 복사하는 api입니다.
+     * 콘텐츠를 복사한다.<br>콘텐츠 복사 시 메타 데이터만 복사 하고 리소스 파일은 복사하지 않는다.
      * @param contentUuid 콘텐츠 Uuid
      * @returns com_ever_edu_cms_content_dto_res_ContentResDto OK
      * @throws ApiError
@@ -2243,14 +2244,14 @@ export class BoService {
      * @param contentUuid Content uuid
      * @param tenantId Tenant Id
      * @param channelName Channel Name, Like 검색
-     * @returns com_ever_edu_cms_content_dto_res_TenantChannelCodeResDto OK
+     * @returns com_ever_edu_cms_content_dto_res_ShareTenantChannelCodeResDto OK
      * @throws ApiError
      */
     public static getShareTenantChannelList(
         contentUuid: string,
         tenantId: number,
         channelName: string,
-    ): CancelablePromise<Array<com_ever_edu_cms_content_dto_res_TenantChannelCodeResDto>> {
+    ): CancelablePromise<Array<com_ever_edu_cms_content_dto_res_ShareTenantChannelCodeResDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/contents/share/{contentUuid}/tenants/{tenantId}/channels',
@@ -2274,12 +2275,12 @@ export class BoService {
      * 공유 팝업 테넌트 코드 목록
      * 공유 팝업 상담 테넌트 검색 조건 코드 목록을 조회한다.<br>- 학습자원 소속 채널이 유니버셜 채널인 경우 모든 테넌트 목록<br>- 학습자원 소속 채널이 일반 채널인 경우 학습자원 소속 채널의 테넌트만 노출
      * @param contentUuid Content uuid
-     * @returns com_ever_edu_cms_content_dto_res_TenantCodeResDto OK
+     * @returns com_ever_edu_cms_content_dto_res_ShareTenantCodeResDto OK
      * @throws ApiError
      */
     public static getShareTenantCodes(
         contentUuid: string,
-    ): CancelablePromise<Array<com_ever_edu_cms_content_dto_res_TenantCodeResDto>> {
+    ): CancelablePromise<Array<com_ever_edu_cms_content_dto_res_ShareTenantCodeResDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/contents/share/{contentUuid}/tenant/codes',
@@ -2298,6 +2299,7 @@ export class BoService {
     /**
      * 공유함에 있는 학습자원 조회
      * 공유함에 있는 학습자원을 조회한다.<br>검색 조건에 일치하는 공유받은 콘텐츠의 그룹콘텐츠 아이디로 콘텐츠 목록(원본 + 번역 콘텐츠)을 조회하여 반환한다.<br><br>콘텐츠 유형 목록과 도착지 채널 UUID 목록은 ","로 다건을 연결하여 전달한다.<br><br><b>페이징 정보</b>: 정렬 컬럼은 groupContentId 고정 고정<br> - totalElements: 쿼리 결과물의 전체 데이터 갯수 <br> - totalPages: 페이징하였을 때 나오는 총 페이지의 갯수 <br> - size: 페이지 당 데이터 수 설정 값(rows per page) <br> - numberOfElements: 페이지에 존재하는 요소의 갯수(최대 size와 동일) <br> - number: 요소를 가져온 페이지의 번호. 0 ~
+     * @param lastVisitedBoRoleId 사용자가 선택한 롤 ID
      * @param sourceTenantId 출발지 테넌트 Id
      * @param sourceChannelUuid 출발지 채널 UUID
      * @param contentTypes 콘텐츠 유형 목록, ","로 다건 유형 전달
@@ -2305,7 +2307,6 @@ export class BoService {
      * @param isContentEnabled 콘텐츠 사용가능 여부
      * @param sharedDateStart 공유일 검색 시작
      * @param sharedDateEnd 공유일 검색 종료
-     * @param destChannelUuids 도착지 채널 UUID 목록, ","로 다건 UUID 전달
      * @param page Zero-based page index (0..N)
      * @param size The size of the page to be returned
      * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -2313,6 +2314,7 @@ export class BoService {
      * @throws ApiError
      */
     public static findSharedBoxContent(
+        lastVisitedBoRoleId?: string,
         sourceTenantId?: string,
         sourceChannelUuid?: string,
         contentTypes?: string,
@@ -2320,7 +2322,6 @@ export class BoService {
         isContentEnabled?: string,
         sharedDateStart?: string,
         sharedDateEnd?: string,
-        destChannelUuids?: string,
         page?: number,
         size: number = 10,
         sort?: Array<string>,
@@ -2329,6 +2330,7 @@ export class BoService {
             method: 'GET',
             url: '/admin/api/v1/contents/share/sharedBox',
             query: {
+                'lastVisitedBoRoleId': lastVisitedBoRoleId,
                 'sourceTenantId': sourceTenantId,
                 'sourceChannelUuid': sourceChannelUuid,
                 'contentTypes': contentTypes,
@@ -2336,7 +2338,6 @@ export class BoService {
                 'isContentEnabled': isContentEnabled,
                 'sharedDateStart': sharedDateStart,
                 'sharedDateEnd': sharedDateEnd,
-                'destChannelUuids': destChannelUuids,
                 'page': page,
                 'size': size,
                 'sort': sort,
@@ -2362,9 +2363,102 @@ export class BoService {
     ): CancelablePromise<com_ever_edu_cms_content_dto_res_SearchSharedBoxHistoryResDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/admin/api/v1/contents/share/sharedBox/history',
-            query: {
+            url: '/admin/api/v1/contents/share/sharedBox/{contentUuid}/history',
+            path: {
                 'contentUuid': contentUuid,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 공유함 출발지 테넌트 코드 목록 조회
+     * 공유함 출발지 테넌트 코드 목록을 조회한다.<br>- 채널구성원, 채널소유자,채널게스트인 경우 : 공유 받은 채널(1개만 존재)의 출발지 채널이 소속된 테넌트 목록<br>- 테넌트 답당자, 플랫폼 담당자인 경우 : 공유 받은 채널들(여러개 가능)의 출발지 채널이 소속된 테넌트 목록
+     * @param lastVisitedBoRoleId 사용자가 선택한 롤 ID
+     * @returns com_ever_edu_cms_content_dto_res_ShareTenantCodeResDto OK
+     * @throws ApiError
+     */
+    public static getShareBoxSrcTenantCodes(
+        lastVisitedBoRoleId: number,
+    ): CancelablePromise<Array<com_ever_edu_cms_content_dto_res_ShareTenantCodeResDto>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/contents/share/sharedBox/tenant/codes',
+            query: {
+                'lastVisitedBoRoleId': lastVisitedBoRoleId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 공유함 출발지 채널 코드 목록 조회
+     * 공유함 출발지 채널 목록을 조회한다.
+     * @param srcTenantId 출발지 테넌트 ID
+     * @returns com_ever_edu_cms_content_dto_res_ShareChannelCodeResDto OK
+     * @throws ApiError
+     */
+    public static getShareBoxSrcChannelCodes(
+        srcTenantId: number,
+    ): CancelablePromise<Array<com_ever_edu_cms_content_dto_res_ShareChannelCodeResDto>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/contents/share/sharedBox/tenant/channel/codes',
+            query: {
+                'srcTenantId': srcTenantId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 학습 자원 현지화(내보내기) 목록 조회
+     * 학습 자원 현지화(내보내기) 목록을 조회한다.<br><br><b>페이징 정보</b>: <br> - totalElements: 쿼리 결과물의 전체 데이터 갯수 <br> - totalPages: 페이징하였을 때 나오는 총 페이지의 갯수 <br> - size: 페이지 당 데이터 수 설정 값(rows per page) <br> - numberOfElements: 페이지에 존재하는 요소의 갯수(최대 size와 동일) <br> - number: 요소를 가져온 페이지의 번호. 0 ~
+     * @param tenantId
+     * @param channelName
+     * @param langCountryCode
+     * @param isMockUp
+     * @param page Zero-based page index (0..N)
+     * @param size The size of the page to be returned
+     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @returns org_springframework_data_domain_PageCom_ever_edu_cms_content_dto_res_FindContentExportResDto OK
+     * @throws ApiError
+     */
+    public static findContentExportList(
+        tenantId?: string,
+        channelName?: string,
+        langCountryCode?: string,
+        isMockUp?: boolean,
+        page?: number,
+        size: number = 10,
+        sort?: Array<string>,
+    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_cms_content_dto_res_FindContentExportResDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/contents/export',
+            query: {
+                'tenantId': tenantId,
+                'channelName': channelName,
+                'langCountryCode': langCountryCode,
+                'isMockUp': isMockUp,
+                'page': page,
+                'size': size,
+                'sort': sort,
             },
             errors: {
                 400: `Bad Request`,
@@ -2426,11 +2520,36 @@ export class BoService {
         });
     }
     /**
+     * 학습 자원 번역 현황 목록
+     * 학습 자원 번역 현황 목록을 조회한다.
+     * @param contentUuid 콘텐츠 UUID
+     * @returns com_ever_edu_cms_content_dto_res_ContentTranslationResDto OK
+     * @throws ApiError
+     */
+    public static getTranslationList(
+        contentUuid: string,
+    ): CancelablePromise<Array<com_ever_edu_cms_content_dto_res_ContentTranslationResDto>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/content/{contentUuid}/translation/list',
+            path: {
+                'contentUuid': contentUuid,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
      * 콘텐츠 타 채널 공유 가능여부
      * 콘텐츠 타 채널 공유 가능여부를 반환 api입니다.
-     * @param contentUuid 콘텐츠 UUID
-     * @param tenantId 테넌트 ID
-     * @param channelUUid 채널 UUID
+     * @param contentUuid 출발지 콘텐츠 UUID
+     * @param tenantId 도착지 콘텐츠의 테넌트 ID
+     * @param channelUUid 도착지 콘텐츠의 채널 UUID
      * @returns boolean OK
      * @throws ApiError
      */
@@ -2441,7 +2560,7 @@ export class BoService {
     ): CancelablePromise<boolean> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/admin/api/v1/content/{contentUuid}/sharing',
+            url: '/admin/api/v1/content/{contentUuid}/channel/sharing',
             path: {
                 'contentUuid': contentUuid,
             },
@@ -2502,51 +2621,8 @@ export class BoService {
         });
     }
     /**
-     * 학습 자원 현지화(내보내기) 목록 조회
-     * 학습 자원 현지화(내보내기) 목록을 조회한다.<br><br><b>페이징 정보</b>: <br> - totalElements: 쿼리 결과물의 전체 데이터 갯수 <br> - totalPages: 페이징하였을 때 나오는 총 페이지의 갯수 <br> - size: 페이지 당 데이터 수 설정 값(rows per page) <br> - numberOfElements: 페이지에 존재하는 요소의 갯수(최대 size와 동일) <br> - number: 요소를 가져온 페이지의 번호. 0 ~
-     * @param tenantId
-     * @param channelName
-     * @param langCountryCode
-     * @param isMockUp
-     * @param page Zero-based page index (0..N)
-     * @param size The size of the page to be returned
-     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-     * @returns org_springframework_data_domain_PageCom_ever_edu_cms_content_dto_res_FindContentExportResDto OK
-     * @throws ApiError
-     */
-    public static findContentExportList(
-        tenantId?: string,
-        channelName?: string,
-        langCountryCode?: string,
-        isMockUp?: boolean,
-        page?: number,
-        size: number = 10,
-        sort?: Array<string>,
-    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_cms_content_dto_res_FindContentExportResDto> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/content/export',
-            query: {
-                'tenantId': tenantId,
-                'channelName': channelName,
-                'langCountryCode': langCountryCode,
-                'isMockUp': isMockUp,
-                'page': page,
-                'size': size,
-                'sort': sort,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 콘텐츠 과정 매핑 조회
-     * 콘텐츠의 과정 매핑 여부를 조회하는 api입니다.
+     * 커리큘럼 매핑 여부 조회
+     * 커리큘럼 매핑 여부를 조회하는 api입니다.
      * @param contentUuid Content uuid
      * @returns boolean OK
      * @throws ApiError
@@ -2570,20 +2646,37 @@ export class BoService {
         });
     }
     /**
-     * 콘텐츠 과정 매핑 조회
-     * 콘텐츠의 과정 매핑 여부를 조회하는 api입니다.
-     * @param contentUuid Content uuid
-     * @returns com_ever_edu_cms_content_dto_res_FindMappingCourseResDto OK
+     * 과정 매핑 콘텐츠 목록 조회
+     * 과정에 매핑된 콘텐츠 목록 조회하는 api입니다.
+     * @param contentUuid 콘텐츠 UUID
+     * @param courseType 과정유형
+     * @param courseName 과정명(Like 검색)
+     * @param page Zero-based page index (0..N)
+     * @param size The size of the page to be returned
+     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @returns org_springframework_data_domain_PageCom_ever_edu_external_course_dto_CourseResDto OK
      * @throws ApiError
      */
     public static getsCourseMappingByContentUuid(
         contentUuid: string,
-    ): CancelablePromise<com_ever_edu_cms_content_dto_res_FindMappingCourseResDto> {
+        courseType?: 'ELEARNING1' | 'ELEARNING2' | 'CLASS' | 'LIVE' | 'EXAM' | 'SURVEY',
+        courseName?: string,
+        page?: number,
+        size: number = 20,
+        sort?: Array<string>,
+    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_external_course_dto_CourseResDto> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/content/course-mapping/{contentUuid}',
             path: {
                 'contentUuid': contentUuid,
+            },
+            query: {
+                'courseType': courseType,
+                'courseName': courseName,
+                'page': page,
+                'size': size,
+                'sort': sort,
             },
             errors: {
                 400: `Bad Request`,
