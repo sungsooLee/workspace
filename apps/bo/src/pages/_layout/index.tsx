@@ -447,6 +447,15 @@ export const munu = [
     memo: '작업 완료',
     end: true,
   },
+  {
+    screenName: '차수 관리',
+    pageId: 'learning-operate/round',
+    screenId: 'NLP_BO_LMS_0031',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: '작업 중',
+    end: false,
+  },
 ];
 
 export const guide = [
