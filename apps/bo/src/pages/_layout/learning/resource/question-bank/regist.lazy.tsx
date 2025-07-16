@@ -1,18 +1,37 @@
 import { useEffect, useState } from 'react';
-import { MovieInfo } from '@features/learning-resource';
+import { t } from 'i18next';
+
 import { useLearningResourceQuestionDetailForm } from '@features/learning-resource/learning-resource-management/service/learning-resource-question-detail-from.hook';
 import { LearningResourceQuestionBank } from '@features/learning-resource/learning-resource-management/ui/learning-resource-question-bank';
-import { LearningResourceQuestionBankDetail } from '@features/learning-resource/learning-resource-management/ui/learning-resource-question-bank-detail';
-import { Button, Tabs } from '@learnway/ui';
-import { ContentsButtons, LinkBox, MainContents, PageContainer, SubContents } from '@shared/ui';
-import { createLazyFileRoute } from '@tanstack/react-router';
+import { Button, useModal } from '@learnway/ui';
+import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui';
+import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
+import { EnFormMode } from '@types';
 
 export const Route = createLazyFileRoute('/_layout/learning/resource/question-bank/regist')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { saveButtonClick, setBaseInfo } = useLearningResourceQuestionDetailForm();
+  const router = useRouter();
+
+  const { confirm: openConfirm } = useModal();
+  const { formMode, saveButtonClick, setBaseInfo } = useLearningResourceQuestionDetailForm();
+
+  const handleListButtonClick = async () => {
+    if (formMode === EnFormMode.ADD) {
+      router.navigate({ to: '/learning/learning-resource' });
+      return;
+    }
+    if (
+      await openConfirm({
+        title: t('이동 하시겠습니까?'),
+        content: t('입력 중인 항목이 초기화됩니다.'),
+      })
+    ) {
+      router.navigate({ to: '/learning/learning-resource' });
+    }
+  };
 
   useEffect(() => {
     setBaseInfo(undefined);
@@ -22,14 +41,10 @@ function RouteComponent() {
     <PageContainer>
       <ContentsButtons>
         <LinkBox>
-          <Button variant="point" size="sm">
-            목록
-          </Button>
+          <Button label="목록" variant="point" size="sm" onClick={handleListButtonClick} />
         </LinkBox>
 
-        <Button type="submit" variant="primary" size="sm" onClick={() => saveButtonClick()}>
-          저장
-        </Button>
+        <Button label="저장" variant="primary" size="sm" onClick={() => saveButtonClick()} />
       </ContentsButtons>
       <MainContents>
         <LearningResourceQuestionBank />

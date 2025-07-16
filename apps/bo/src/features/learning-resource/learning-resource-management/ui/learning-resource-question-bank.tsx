@@ -1,11 +1,12 @@
 import { FC, forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { t } from 'i18next';
 
-import { Tabs } from '@learnway/ui';
+import { Tabs, useModal } from '@learnway/ui';
 
 import { LearningResourceQuestionBankDetail } from './learning-resource-question-bank-detail';
 import { EnFormMode } from '@types';
 import { LearningResourceQuestionBankQuestion } from './learning-resource-question-bank-question';
+import { useLearningResourceQuestionDetailForm } from '../service/learning-resource-question-detail-from.hook';
 
 enum QuestionTab {
   QUESTION_BASE = 'QUESTION_BASE',
@@ -13,16 +14,22 @@ enum QuestionTab {
 }
 
 const LearningResourceQuestionBankComponent = () => {
+  const { alert, open: openModal } = useModal();
   const [selectedTabKey, setSelectedTabKey] = useState<string>(QuestionTab.QUESTION_BASE);
-  const [formMode, setFormMode] = useState<EnFormMode>(EnFormMode.ADD);
-
-  const formBaseRef = useRef(1);
-  const formQuestionRef = useRef(2);
+  const { formMode } = useLearningResourceQuestionDetailForm();
 
   const handleTabChange = (tabKey: string) => {
-    if (tabKey !== selectedTabKey) {
-      setSelectedTabKey(tabKey);
+    setSelectedTabKey(tabKey);
+  };
+  const handleBeforTabChange = async (currentTabKey: string, nextTabKey: string) => {
+    if (nextTabKey === QuestionTab.QUESTION_ITEM && formMode === EnFormMode.ADD) {
+      alert({
+        title: '입력한 정보를 저장하세요.',
+        content: '저장된적 없는 경우 다음단계로 이동할수 없습니다.',
+      });
+      return false;
     }
+    return true;
   };
 
   const items = [
@@ -45,6 +52,7 @@ const LearningResourceQuestionBankComponent = () => {
       type="progress"
       size="sm"
       onTabChange={handleTabChange}
+      onBeforeTabChange={handleBeforTabChange}
     />
   );
 };
