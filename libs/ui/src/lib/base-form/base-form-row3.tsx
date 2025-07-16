@@ -5,8 +5,9 @@ import boStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'
 import foStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import { IcoFormRequired } from '@learnway/icons';
 import { useTranslation } from 'react-i18next';
-import { useAutoFormContext } from '@learnway/hooks';
 import { Input } from '../input/input';
+import { useAutoFormContext } from '@learnway/hooks';
+// import { useAutoFormContext } from '../../../../hooks/src/use-auto-form-context';
 
 interface FormRow3Props {
   className?: string;
@@ -203,12 +204,6 @@ const BaseFormRow3Component: FC<FormRow3Props> = ({
                 if (autoFormContext?.methods) {
                   // 즉시 에러 클리어
                   autoFormContext.methods.clearErrors(name);
-
-                  if (finalValue && finalValue !== '') {
-                    setTimeout(() => {
-                      autoFormContext.methods?.trigger(name);
-                    }, 10);
-                  }
                 }
               };
 

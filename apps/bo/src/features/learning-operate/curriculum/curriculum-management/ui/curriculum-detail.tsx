@@ -74,8 +74,17 @@ const CurriculumDetailComponent = ({
   const { update: updateCurriculumFixedModule } = useUpdateFixedModule({});
   const { update: updateCurriculumGeneralModule } = useUpdateGeneralModule({});
 
-  const { getValues, onSubmit, autoFormContext, handleSubmit, watch, setValue, loadFormData } =
-    useDynamicForm3();
+  const {
+    getValues,
+    onSubmit,
+    autoFormContext,
+    handleSubmit,
+    watch,
+    setValue,
+    loadFormData,
+    clearFormFields,
+    switchFormType,
+  } = useDynamicForm3();
   const formRef = useRef<HTMLFormElement>(null);
 
   const {
@@ -172,11 +181,7 @@ const CurriculumDetailComponent = ({
   };
 
   const handleAddNode = (nodeType: MAPPING_CURRICULUM_TYPE, parentNode: TreeNode | null) => {
-    // 폼 전환 시 기존 데이터 완전 초기화
-    if (autoFormContext?.methods) {
-      autoFormContext.methods.reset({});
-      autoFormContext.methods.clearErrors();
-    }
+    clearFormFields({ clearAll: true });
 
     // 약간의 지연을 두고 폼 상태 설정
     setTimeout(() => {
@@ -237,11 +242,7 @@ const CurriculumDetailComponent = ({
         } else {
           createCurriculum(curriculumData, {
             onSuccess: (createdCurriculum: CurriculumResponse) => {
-              // 폼 데이터 완전 초기화
-              if (autoFormContext?.methods) {
-                autoFormContext.methods.reset({});
-                autoFormContext.methods.clearErrors();
-              }
+              clearFormFields({ clearAll: true });
 
               if (createdCurriculum.curriculumId && onCurriculumCreated) {
                 onCurriculumCreated(createdCurriculum.curriculumId);
@@ -293,11 +294,7 @@ const CurriculumDetailComponent = ({
           const createModuleFn = moduleCreateStrategy[moduleType as MODULE_TYPE];
           if (createModuleFn) {
             createModuleFn(moduleData, (createdModuleId: number) => {
-              // 폼 데이터 완전 초기화
-              if (autoFormContext?.methods) {
-                autoFormContext.methods.reset({});
-                autoFormContext.methods.clearErrors();
-              }
+              clearFormFields({ clearAll: true });
 
               // 새로운 모듈 노드 생성
               const newNode: TreeNode = {
@@ -377,11 +374,7 @@ const CurriculumDetailComponent = ({
               },
               {
                 onSuccess: (createdLessonId: any) => {
-                  // 폼 데이터 완전 초기화
-                  if (autoFormContext?.methods) {
-                    autoFormContext.methods.reset({});
-                    autoFormContext.methods.clearErrors();
-                  }
+                  clearFormFields({ clearAll: true });
 
                   // 새로운 레슨 노드 생성
                   const newNode: TreeNode = {
@@ -416,11 +409,7 @@ const CurriculumDetailComponent = ({
               },
               {
                 onSuccess: (createdLessonId: number) => {
-                  // 폼 데이터 완전 초기화
-                  if (autoFormContext?.methods) {
-                    autoFormContext.methods.reset({});
-                    autoFormContext.methods.clearErrors();
-                  }
+                  clearFormFields({ clearAll: true });
 
                   // 새로운 레슨 노드 생성
                   const newNode: TreeNode = {
@@ -476,11 +465,7 @@ const CurriculumDetailComponent = ({
   };
 
   const handleFormCancel = () => {
-    // 폼 취소 시 데이터 완전 초기화
-    if (autoFormContext?.methods) {
-      autoFormContext.methods.reset({});
-      autoFormContext.methods.clearErrors();
-    }
+    clearFormFields({ clearAll: true });
 
     setFormState({
       activeFormType: null,
@@ -500,11 +485,7 @@ const CurriculumDetailComponent = ({
       formState.selectedNode?.id === node.id && formState.selectedNode?.type === node.type;
 
     if (!isSameNode) {
-      // 다른 노드 선택 시에만 기존 폼 데이터 완전 초기화
-      if (autoFormContext?.methods) {
-        autoFormContext.methods.reset({});
-        autoFormContext.methods.clearErrors();
-      }
+      clearFormFields({ clearAll: true });
     }
 
     setTimeout(() => {

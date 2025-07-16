@@ -58,6 +58,7 @@ export const ModuleForm: React.FC<ModuleFormProps> = ({
           moduleType: MODULE_TYPE.GENERAL,
           moduleName: '',
           description: '',
+          contentDuration: { hour: 0, minute: 0, second: 0 },
         });
       }
     }

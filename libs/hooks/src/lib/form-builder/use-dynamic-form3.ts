@@ -27,6 +27,20 @@ export interface DynamicFormProvider3<T extends FieldValues = FieldValues> {
   setError: UseFormReturn<T>['setError'];
 }
 
+export interface ClearFormFieldsOptions {
+  resetToDefaults?: boolean;
+  clearErrors?: boolean;
+  resetValidation?: boolean;
+  unregisterFields?: string[];
+  clearAll?: boolean;
+}
+
+export interface SwitchFormTypeOptions {
+  preserveFields?: string[];
+  clearAll?: boolean;
+  resetToDefaults?: boolean;
+}
+
 export interface UseDynamicFormResult3<T extends FieldValues = FieldValues> {
   provider: DynamicFormProvider3<T>;
   control: Control<T>;
@@ -50,6 +64,10 @@ export interface UseDynamicFormResult3<T extends FieldValues = FieldValues> {
   loadFormData: (data: Record<string, any>, options?: LoadFormDataOptions) => void;
   clearFormData: () => void;
   updateFormField: (fieldName: string, value: any) => void;
+
+  clearFormFields: (options?: ClearFormFieldsOptions) => void;
+  switchFormType: (options?: SwitchFormTypeOptions) => void;
+  safeReset: (newValues?: Partial<T>) => void;
 }
 
 export interface LoadFormDataOptions {
@@ -68,7 +86,7 @@ export function useDynamicForm3<T extends FieldValues = FieldValues>(): UseDynam
   const [autoDefaultValues, setAutoDefaultValues] = useState<DefaultValues<T>>(
     {} as DefaultValues<T>,
   );
-  
+
   // 대기 중인 로드 데이터
   const [pendingLoadData, setPendingLoadData] = useState<{
     data: Record<string, any>;
@@ -121,8 +139,8 @@ export function useDynamicForm3<T extends FieldValues = FieldValues>(): UseDynam
 
   // react-hook-form 훅 초기화
   const methods = useForm<T>({
-    mode: 'onSubmit',
-    reValidateMode: 'onChange',
+    mode: 'onSubmit',  // 폼 제출 시에만 검증
+    reValidateMode: 'onSubmit',  // 재검증도 제출 시에만 실행
     defaultValues: resolvedDefaultValues as DefaultValues<T>,
   });
 
@@ -140,31 +158,30 @@ export function useDynamicForm3<T extends FieldValues = FieldValues>(): UseDynam
   useEffect(() => {
     if (isInitialized && pendingLoadData) {
       const { data, options } = pendingLoadData;
-      
+
       // 실제 데이터 로드 로직 실행
-      const {
-        excludeFields = [],
-        includeOnlyFields,
-        clearBeforeLoad = false,
-      } = options;
+      const { excludeFields = [], includeOnlyFields, clearBeforeLoad = false } = options;
 
       // 필터링된 데이터 준비
-      const filteredData = Object.entries(data).reduce((acc, [key, value]) => {
-        if (excludeFields.includes(key)) {
+      const filteredData = Object.entries(data).reduce(
+        (acc, [key, value]) => {
+          if (excludeFields.includes(key)) {
+            return acc;
+          }
+
+          // 포함 필드만 처리하는 경우
+          if (includeOnlyFields && !includeOnlyFields.includes(key)) {
+            return acc;
+          }
+
+          if (value !== null && value !== undefined) {
+            acc[key] = value;
+          }
+
           return acc;
-        }
-
-        // 포함 필드만 처리하는 경우
-        if (includeOnlyFields && !includeOnlyFields.includes(key)) {
-          return acc;
-        }
-
-        if (value !== null && value !== undefined) {
-          acc[key] = value;
-        }
-
-        return acc;
-      }, {} as Record<string, any>);
+        },
+        {} as Record<string, any>,
+      );
 
       if (clearBeforeLoad) {
         // 완전 초기화 후 새 데이터로 리셋
@@ -229,29 +246,28 @@ export function useDynamicForm3<T extends FieldValues = FieldValues>(): UseDynam
       }
 
       // 이미 초기화가 완료된 경우 즉시 로드
-      const {
-        excludeFields = [],
-        includeOnlyFields,
-        clearBeforeLoad = false,
-      } = options;
+      const { excludeFields = [], includeOnlyFields, clearBeforeLoad = false } = options;
 
       // 필터링된 데이터 준비
-      const filteredData = Object.entries(data).reduce((acc, [key, value]) => {
-        if (excludeFields.includes(key)) {
+      const filteredData = Object.entries(data).reduce(
+        (acc, [key, value]) => {
+          if (excludeFields.includes(key)) {
+            return acc;
+          }
+
+          // 포함 필드만 처리하는 경우
+          if (includeOnlyFields && !includeOnlyFields.includes(key)) {
+            return acc;
+          }
+
+          if (value !== null && value !== undefined) {
+            acc[key] = value;
+          }
+
           return acc;
-        }
-
-        // 포함 필드만 처리하는 경우
-        if (includeOnlyFields && !includeOnlyFields.includes(key)) {
-          return acc;
-        }
-
-        if (value !== null && value !== undefined) {
-          acc[key] = value;
-        }
-
-        return acc;
-      }, {} as Record<string, any>);
+        },
+        {} as Record<string, any>,
+      );
 
       if (clearBeforeLoad) {
         // 완전 초기화 후 새 데이터로 리셋
@@ -274,12 +290,123 @@ export function useDynamicForm3<T extends FieldValues = FieldValues>(): UseDynam
     (fieldName: string, value: any) => {
       setValue(fieldName as any, value);
 
-      // 해당 필드 검증
-      setTimeout(() => {
-        methods.trigger(fieldName as any);
-      }, 10);
+      // mode가 'onSubmit'이 아닐 때만 검증 실행
+      // onSubmit 모드에서는 제출 시에만 검증하도록 함
+      // setTimeout(() => {
+      //   methods.trigger(fieldName as any);
+      // }, 10);
     },
     [setValue, methods],
+  );
+
+  // 폼 필드 정리 메서드
+  const clearFormFields = useCallback(
+    (options: ClearFormFieldsOptions = {}) => {
+      const {
+        resetToDefaults = false,
+        clearErrors = true,
+        resetValidation = true,
+        unregisterFields = [],
+        clearAll = false,
+      } = options;
+
+      // 모든 필드 완전 제거
+      if (clearAll) {
+        // 현재 등록된 모든 필드를 unregister
+        fields.forEach((fieldInfo, fieldName) => {
+          methods.unregister(fieldName as any);
+        });
+
+        // 필드 맵과 초기화 상태 리셋
+        setFields(new Map());
+        setIsInitialized(false);
+        
+        // 모든 에러 상태 완전 클리어
+        methods.clearErrors();
+      } else if (unregisterFields.length > 0) {
+        // 특정 필드들만 완전 제거
+        unregisterFields.forEach((fieldName) => {
+          methods.unregister(fieldName as any);
+        });
+      }
+
+      // 기본값으로 리셋 또는 빈 값으로 리셋
+      if (resetToDefaults) {
+        const defaultValues = generateAutoDefaultValues();
+        methods.reset(defaultValues);
+      } else {
+        methods.reset({} as DefaultValues<T>);
+      }
+
+      // 에러 클리어
+      if (clearErrors) {
+        methods.clearErrors();
+      }
+
+      // 검증 상태 초기화
+      if (resetValidation) {
+        // 모든 필드의 터치 상태 초기화
+        Object.keys(methods.formState.touchedFields).forEach((fieldName) => {
+          methods.resetField(fieldName as any);
+        });
+      }
+    },
+    [methods, generateAutoDefaultValues, fields, setFields, setIsInitialized],
+  );
+
+  // 폼 타입 전환 메서드
+  const switchFormType = useCallback(
+    (options: SwitchFormTypeOptions = {}) => {
+      const { preserveFields = [], clearAll = true, resetToDefaults = false } = options;
+
+      if (clearAll) {
+        // 모든 필드 클리어
+        if (resetToDefaults) {
+          const defaultValues = generateAutoDefaultValues();
+          methods.reset(defaultValues);
+        } else {
+          methods.reset({} as DefaultValues<T>);
+        }
+        methods.clearErrors();
+      } else if (preserveFields.length > 0) {
+        // 특정 필드만 보존하고 나머지 클리어
+        const currentValues = methods.getValues();
+        const preservedValues = preserveFields.reduce((acc, field) => {
+          if (currentValues[field] !== undefined) {
+            acc[field] = currentValues[field];
+          }
+          return acc;
+        }, {} as any);
+
+        methods.reset(preservedValues);
+        methods.clearErrors();
+      }
+
+      // 필드 등록 상태 초기화하여 새로운 폼 구조 수용
+      setIsInitialized(false);
+    },
+    [methods, generateAutoDefaultValues, setIsInitialized],
+  );
+
+  // 안전한 리셋 메서드 (에러 처리 포함)
+  const safeReset = useCallback(
+    (newValues?: Partial<T>) => {
+      try {
+        if (newValues) {
+          methods.reset(newValues as DefaultValues<T>);
+        } else {
+          const defaultValues = generateAutoDefaultValues();
+          methods.reset(defaultValues);
+        }
+        methods.clearErrors();
+      } catch (error) {
+        console.warn('Form reset failed:', error);
+        // 폴백: 빈 객체로 리셋
+        methods.reset({} as DefaultValues<T>);
+        methods.clearErrors();
+      }
+    },
+    [methods, generateAutoDefaultValues],
   );
 
   // provider 객체를 useMemo로 메모이제이션
@@ -369,9 +496,14 @@ export function useDynamicForm3<T extends FieldValues = FieldValues>(): UseDynam
     onSubmit: formSubmit,
     autoFormContext,
 
-    // 새로 추가된 데이터 로딩 함수들
+    // 기존 데이터 로딩 함수들
     loadFormData,
     clearFormData,
     updateFormField,
+
+    // 새로 추가된 폼 정리 메서드들
+    clearFormFields,
+    switchFormType,
+    safeReset,
   };
 }

@@ -55,7 +55,7 @@ export const LessonForm: React.FC<LessonFormProps> = ({
           lessonType: LESSON_TYPE.GENERAL,
           lessonName: '',
           description: '',
-          learningTime: '',
+          learningTime: { hour: 0, minute: 0, second: 0 },
           contentUuid: '',
           contentName: '',
         });
@@ -142,8 +142,8 @@ export const LessonForm: React.FC<LessonFormProps> = ({
                     const { contentUuid, contentName } = data;
                     if (data) {
                       console.log(contentUuid, contentName);
-                      setValue('conentUuid', contentUuid);
-                      setValue('conentName', contentName);
+                      setValue('contentUuid', contentUuid);
+                      setValue('contentName', contentName);
                       return contentName;
                     }
                     return contentName;
