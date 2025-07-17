@@ -1,11 +1,11 @@
 import { createFileRoute } from '@tanstack/react-router';
-import ThumbnailList from './-components/thumb/thumb-nail-list';
-import { IcoHeart } from '@learnway/icons';
+import ThumbnailList from '../../-components/thumb/thumb-nail-list';
 
 // 이미지
 import bannerImg from '@learnway/styles/fo/assets/images/banner/img_banner_sample.jpg';
 import { Badge } from '@learnway/ui';
 import { getRandomId } from '@learnway/shared';
+import { IcoPlay } from '@learnway/icons';
 
 export const Route = createFileRoute('/_guide/guide/test')({
   component: RouteComponent,
@@ -38,13 +38,14 @@ function RouteComponent() {
           option={{ label: 'D-7', value: `${getRandomId()}` }}
         />,
       ],
-      toggleBtnLabel: '153',
-      toggleBtnIcon: <IcoHeart width={20} height={20} stroke="#f58b75" fill="#f58b75" />,
+      infoCustomNode: [
+        <span>{'이러닝'}</span>,
+        <span>
+          <IcoPlay width={16} height={16} stroke="#4C515E" />
+          {'05:00'}
+        </span>,
+      ],
     },
   ];
-  return (
-    <div>
-      <ThumbnailList stacked={true} items={item} />
-    </div>
-  );
+  return <ThumbnailList stacked={true} items={item} />;
 }
