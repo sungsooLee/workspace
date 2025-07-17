@@ -3,7 +3,7 @@ import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { useCallback, useEffect, useMemo } from 'react';
 import { useCourseForm } from '../-hooks/use-course-form';
 import { MainContents, PageContainer, ContentsButtons } from '@shared/ui';
-import { CourseTab, TabFormRef } from '../-common/type';
+import { CourseTab, CourseTabFormRef } from '../-common/type';
 import { BasicInfo } from './-tabs/basic-info';
 import { CourseRegistration } from './-tabs/course-registration';
 import { Curriculum } from './-tabs/curriculum';
@@ -100,7 +100,7 @@ function RouteComponent() {
         key: CourseTab.STEP1,
         content: (
           <BasicInfo
-            ref={(ref: TabFormRef) => setTabRef(CourseTab.STEP1, ref)}
+            ref={(ref: CourseTabFormRef) => setTabRef(CourseTab.STEP1, ref)}
             data={data}
             onConfigPropChange={handleConfigPropChange}
           />
@@ -111,7 +111,7 @@ function RouteComponent() {
         key: CourseTab.STEP2,
         content: (
           <CourseRegistration
-            ref={(ref: TabFormRef) => setTabRef(CourseTab.STEP2, ref)}
+            ref={(ref: CourseTabFormRef) => setTabRef(CourseTab.STEP2, ref)}
             data={data}
           />
         ),
@@ -120,21 +120,30 @@ function RouteComponent() {
         title: '커리큘럼 설정',
         key: CourseTab.STEP3,
         content: (
-          <Curriculum ref={(ref: TabFormRef) => setTabRef(CourseTab.STEP3, ref)} data={data} />
+          <Curriculum
+            ref={(ref: CourseTabFormRef) => setTabRef(CourseTab.STEP3, ref)}
+            data={data}
+          />
         ),
       },
       {
         title: '상세 설정',
         key: CourseTab.STEP4,
         content: (
-          <DetailInfo ref={(ref: TabFormRef) => setTabRef(CourseTab.STEP4, ref)} data={data} />
+          <DetailInfo
+            ref={(ref: CourseTabFormRef) => setTabRef(CourseTab.STEP4, ref)}
+            data={data}
+          />
         ),
       },
       {
         title: '게시 설정',
         key: CourseTab.STEP5,
         content: (
-          <PublishCourse ref={(ref: TabFormRef) => setTabRef(CourseTab.STEP5, ref)} data={data} />
+          <PublishCourse
+            ref={(ref: CourseTabFormRef) => setTabRef(CourseTab.STEP5, ref)}
+            data={data}
+          />
         ),
       },
     ],
