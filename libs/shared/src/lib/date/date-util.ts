@@ -24,6 +24,12 @@ second	    s	  Second
 millisecond	ms	Millisecond
 */
 type DateShorthandUnit = 'd' | 'w' | 'Q' | 'M' | 'y' | 'h' | 'm' | 's' | 'ms';
+
+export type TimeValueType = {
+  hour: number;
+  minute: number;
+  second: number;
+};
 /**
  *  Date 형식을 지정된 format 형태의 문자열로 반환
  * @param date date 객체
@@ -88,6 +94,32 @@ export const formatDate = (value: Date | string | number, format = DATE_TIME_FOR
  */
 export const duration = (seconds: number, format?: string) => {
   return dayjs.duration(seconds, 'seconds').format(getDateTimeFormat(format));
+};
+
+/**
+ * 초를 입력받아서 duration 연산후 TimeValueType 으로 리턴 한다.
+ * format 이 없으면 Date type 리턴
+ * @param seconds 초
+ * @param format 변환 포맷
+ * @return string
+ */
+export const changeSecoundToTimeValue = (seconds: number): TimeValueType => {
+  const changeTime = dayjs.duration(seconds, 'seconds');
+
+  return {
+    hour: Math.floor(changeTime.asHours()),
+    minute: changeTime.minutes(),
+    second: changeTime.seconds(),
+  };
+};
+
+/**
+ * TimeValueType을 받아 초로 변환
+ * @param timeData
+ * @returns
+ */
+export const changeTimeValueToSecound = (timeData: TimeValueType) => {
+  return timeData.hour * 60 * 60 + timeData.minute * 60 + timeData.second;
 };
 
 /**
