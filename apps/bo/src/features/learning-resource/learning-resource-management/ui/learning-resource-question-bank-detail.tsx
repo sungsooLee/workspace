@@ -57,6 +57,7 @@ const LearningResourceQuestionBankDetailComponent = (props: any, ref: any) => {
     <SplitPanel size={['auto', 416]} divider>
       <div>
         <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
+          <FormSubTitle label={t('기본정보')} />
           <LearningResourceBaseForm provider={provider} formMode={formMode} />
         </form>
       </div>
