@@ -20,7 +20,7 @@ import {
 
 import { EnFormMode } from '@types';
 
-import { DropdownFormField, FormDisplay, InputFormField } from '@features/form';
+import { DropdownFormField, FormDisplay, SecondDurationTimeFormField } from '@features/form';
 import { DateRangePickerFormField } from '@features/form/ui';
 import { User } from '@learnway/types';
 
@@ -228,7 +228,7 @@ const LearningResourceBaseFormComponent = ({
             name="contentAddInfo"
             label={'학습 시간'}
             value=""
-            element={<Input disabled />}
+            element={<SecondDurationTimeFormField />}
           />
         </ContentsRow>
       )}
