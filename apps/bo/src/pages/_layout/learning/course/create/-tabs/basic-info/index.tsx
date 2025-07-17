@@ -215,6 +215,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
             element={<EditorFormField />}
           />
         </ContentsRow>
+        {/* 난이도 */}
         <ContentsRow>
           <FormRow2
             provider={provider}
@@ -228,6 +229,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
               />
             }
           />
+          {/* 교육공간 */}
           <FormRow2
             provider={provider}
             name={'learningSpaceType'}

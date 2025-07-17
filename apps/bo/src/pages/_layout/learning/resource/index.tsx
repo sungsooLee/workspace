@@ -90,12 +90,12 @@ function RouteComponent() {
         break;
       }
       // 시험지
-      case LEARNING_TYPE.TEST_PAPER: {
+      case LEARNING_TYPE.EXAM: {
         router.navigate({ to: '/learning/resource/test-paper/view', state: { mode: 'CREATE' } });
         break;
       }
       // 문제은행
-      case LEARNING_TYPE.QUESTION_BANK: {
+      case LEARNING_TYPE.EXAM_POOL: {
         router.navigate({ to: '/learning/resource/question-bank/regist' });
         break;
       }

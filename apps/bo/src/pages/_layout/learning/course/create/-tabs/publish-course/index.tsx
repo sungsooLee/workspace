@@ -1,4 +1,4 @@
-import { DateRangePickerFormField } from '@features/form/ui';
+import { DateRangePickerFormField, DateTimeRangePickerFormField } from '@features/form/ui';
 import { CODE_GROUP, S3_PATH, useDynamicForm2 } from '@learnway/hooks';
 import { ContentsRow, FormSubTitle, RadioGroupFormField, TextareaFormField } from '@learnway/ui';
 import { ChipListFormField, FormRow2, ThumbnailListFormField } from '@shared/ui';
@@ -65,7 +65,7 @@ const PublishCourseComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
             name={'courseValidityRange'}
             label={'노출 기간'}
             format={'object'}
-            element={<DateRangePickerFormField />}
+            element={<DateTimeRangePickerFormField />}
             validation={{ required: true }}
           />
         </ContentsRow>
@@ -73,8 +73,8 @@ const PublishCourseComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
         <ContentsRow>
           <FormRow2
             provider={provider}
-            name={'썸네일'}
-            label={t('thumbnailFileGroupUuid')}
+            name={'thumbnailFileGroupUuid'}
+            label={t('대표 이미지')}
             format={'string'}
             element={
               <ThumbnailListFormField

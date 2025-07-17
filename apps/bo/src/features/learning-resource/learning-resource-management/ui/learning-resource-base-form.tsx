@@ -20,20 +20,25 @@ import {
 
 import { EnFormMode } from '@types';
 
-import { DropdownFormField, FormDisplay } from '@features/form';
+import { DropdownFormField, FormDisplay, InputFormField } from '@features/form';
 import { DateRangePickerFormField } from '@features/form/ui';
 import { User } from '@learnway/types';
 
 const LearningResourceBaseFormComponent = ({
   provider,
-  formMode,
+  formMode = EnFormMode.NONE,
+  showAiInfo = false,
+  showLessonTime = false,
 }: {
   provider: DynamicFormProvider;
-  formMode: EnFormMode;
+  formMode?: EnFormMode;
+  /** AI 관련 필드 노출 여부  */
+  showAiInfo?: boolean;
+  /** 학습 시간 노출 여부 */
+  showLessonTime?: boolean;
 }) => {
   return (
     <>
-      <FormSubTitle label={t('기본정보')} />
       <ContentsRow>
         {/*채널 */}
         <FormRow2
@@ -83,7 +88,7 @@ const LearningResourceBaseFormComponent = ({
           label={'학습자원명'}
           value=""
           validation={{ required: true }}
-          element={<Input maxLength={150} />}
+          element={<Input type="text" maxLength={150} />}
         />
       </ContentsRow>
       {/*학습자원 설명*/}
@@ -224,6 +229,18 @@ const LearningResourceBaseFormComponent = ({
           />
         </ContentsRow>
       </FormDisplay>
+      {/*학습 시간*/}
+      {showLessonTime && (
+        <ContentsRow>
+          <FormRow2
+            provider={provider}
+            name="contentAddInfo"
+            label={'학습 시간'}
+            value=""
+            element={<Input disabled />}
+          />
+        </ContentsRow>
+      )}
       {/*태그*/}
       <ContentsRow>
         <FormRow2
@@ -240,6 +257,30 @@ const LearningResourceBaseFormComponent = ({
           }}
         />
       </ContentsRow>
+      {/*학습자원 개요 (AI 자동추출), 키워드 (AI 자동 추출)*/}
+      {showAiInfo && (
+        <>
+          <ContentsRow>
+            <FormRow2
+              provider={provider}
+              name="aiSummary"
+              label="학습자원 개요 (AI 자동 추출)"
+              value=""
+              element={<TextareaFormField maxLength={2000} />}
+            />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow2
+              provider={provider}
+              name="aiKeyword"
+              label="키워드 (AI 자동 추출)"
+              value=""
+              element={<TextareaFormField maxLength={2000} />}
+            />
+          </ContentsRow>
+        </>
+      )}
+
       {/* 교육지원활용 여부 */}
       <ContentsRow type="horizontal" className="inactive">
         <FormRow2

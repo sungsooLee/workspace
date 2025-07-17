@@ -206,6 +206,10 @@ export type DynamicFormConfig = {
   builders: FormConfig[];
   /** 유효성 검사 스키마 (zod 기반) */
   validator?: FormValidatorConfig;
+  /** react-hook-form의 validation 모드 설정 */
+  mode?: 'onChange' | 'onBlur' | 'onSubmit' | 'onTouched' | 'all';
+  /** 에러 발생 후 재검증 모드 설정 */
+  reValidateMode?: 'onChange' | 'onBlur' | 'onSubmit';
 };
 
 /**
@@ -235,6 +239,8 @@ export type DynamicFormProvider = {
   originalValues: Record<string, any>;
   /** 필드 에러 제거 */
   clearFormError: (field: string) => void;
+  /** 필드 validation 실행 */
+  trigger: UseFormReturn['trigger'];
   /** 동적으로 필드를 등록하는 함수 */
   registerField: (fieldConfig: FormConfig) => void;
   /** 동적으로 validator를 추가하는 함수 */

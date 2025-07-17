@@ -15,7 +15,11 @@ import { createGridConfig } from '../-common/grid-config';
 export const useCourseManagement = (): CourseManagementHookResult => {
   const router = useRouter();
   const { open: openModal } = useModal();
-  const { provider, getValues, onSubmit } = useDynamicForm2();
+  const { provider, getValues, onSubmit } = useDynamicForm2({
+    builders: [],
+    mode: 'onSubmit', // 서브밋할 때만 validation 실행
+    reValidateMode: 'onChange', // 에러 발생 후에는 값 변경시 즉시 재검증
+  });
   const { config: gConfig, gridFetch } = useGridBox(createGridConfig(), getValues);
   const [selectedRows, setSelectedRows] = useState<CourseListItem[]>([]);
 
