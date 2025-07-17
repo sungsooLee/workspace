@@ -14,7 +14,7 @@ import {
 type TimeChangeKeyType = 'hour' | 'minute' | 'second';
 
 const SecondDurationTimeFormFieldComponent = forwardRef<HTMLDivElement, BaseFormFieldProps<number>>(
-  ({ value, onChange }, ref) => {
+  ({ value, onChange, ...props }, ref) => {
     const [durationTime, setDurationTime] = useState<TimeValueType>({
       hour: 0,
       minute: 0,
@@ -60,6 +60,7 @@ const SecondDurationTimeFormFieldComponent = forwardRef<HTMLDivElement, BaseForm
         <div className={formStyles.form_item}>
           <div className={dynamicFormStyles.form_auto}>
             <Input
+              {...props}
               type="number"
               className={formStyles.input_time}
               value={durationTime.hour}
@@ -69,6 +70,7 @@ const SecondDurationTimeFormFieldComponent = forwardRef<HTMLDivElement, BaseForm
             />
             <p>&nbsp;:&nbsp;</p>
             <Input
+              {...props}
               type="number"
               className={formStyles.input_time}
               value={durationTime.minute}
@@ -79,6 +81,7 @@ const SecondDurationTimeFormFieldComponent = forwardRef<HTMLDivElement, BaseForm
             />
             <p>&nbsp;:&nbsp;</p>
             <Input
+              {...props}
               type="number"
               className={formStyles.input_time}
               value={durationTime.second}
