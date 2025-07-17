@@ -9,5 +9,5 @@ export type VideoPlayerProps = {
 
   onProgress: (state: { played: number; playedSeconds: number }) => void;
   onDuration: (d: number) => void;
-  onEnded: () => void;
+  onEnded?: () => void;
 };
