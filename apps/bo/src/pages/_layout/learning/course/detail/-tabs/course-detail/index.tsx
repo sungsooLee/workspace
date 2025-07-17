@@ -345,19 +345,19 @@ const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTab
                 }
               />
               {/*연락처*/}
-              <FormRow2
-                provider={provider}
-                name={'coordinatorTelNo'}
-                label={'연락처'}
-                element={
-                  <PhoneNumberFormField
-                    fields={{ nationCode: 'coordinatorTelCountryCode', number: 'coordinatorTelNo' }}
-                    phoneNumberConfig={{
-                      options: [{ value: 'KOR_82', label: '+82' }],
-                    }}
-                  />
-                }
-              />
+              {/*<FormRow2*/}
+              {/*  provider={provider}*/}
+              {/*  name={'coordinatorTelNo'}*/}
+              {/*  label={'연락처'}*/}
+              {/*  element={*/}
+              {/*    <PhoneNumberFormField*/}
+              {/*      fields={{ nationCode: 'coordinatorTelCountryCode', number: 'coordinatorTelNo' }}*/}
+              {/*      phoneNumberConfig={{*/}
+              {/*        options: [{ value: 'KOR_82', label: '+82' }],*/}
+              {/*      }}*/}
+              {/*    />*/}
+              {/*  }*/}
+              {/*/>*/}
               {/*이메일*/}
               <FormRow2
                 provider={provider}
@@ -389,19 +389,19 @@ const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTab
                 }
               />
               {/*연락처*/}
-              <FormRow2
-                provider={provider}
-                name={'operatorTelNo'}
-                label={'연락처'}
-                element={
-                  <PhoneNumberFormField
-                    fields={{ nationCode: 'operatorTelCountryCode', number: 'operatorTelNo' }}
-                    phoneNumberConfig={{
-                      options: [{ value: 'KOR_82', label: '+82' }],
-                    }}
-                  />
-                }
-              />
+              {/*<FormRow2*/}
+              {/*  provider={provider}*/}
+              {/*  name={'operatorTelNo'}*/}
+              {/*  label={'연락처'}*/}
+              {/*  element={*/}
+              {/*    <PhoneNumberFormField*/}
+              {/*      fields={{ nationCode: 'operatorTelCountryCode', number: 'operatorTelNo' }}*/}
+              {/*      phoneNumberConfig={{*/}
+              {/*        options: [{ value: 'KOR_82', label: '+82' }],*/}
+              {/*      }}*/}
+              {/*    />*/}
+              {/*  }*/}
+              {/*/>*/}
               {/*이메일*/}
               <FormRow2
                 provider={provider}
