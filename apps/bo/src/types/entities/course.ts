@@ -603,6 +603,10 @@ export interface Course {
    * 과정 유효 기간
    */
   courseValidityRange?: any;
+  /**
+   * 태그 이름 목록
+   */
+  tagNameArray: Array<string>;
 }
 
 /**
