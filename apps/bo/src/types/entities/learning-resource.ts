@@ -365,7 +365,7 @@ export interface TestPaperBasicInfoSaveRes {
 }
 
 export interface TestPaperBasicInfoDetail extends GetContentDetailRes {
-  examTemplate: ExamTemplateType;
+  examTemplateType: ExamTemplateType;
   questionCount: number;
   questionCountPerPage: number;
   examLimitTime: number;

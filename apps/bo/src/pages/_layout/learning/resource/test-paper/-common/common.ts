@@ -1,8 +1,9 @@
 import { FieldValues } from 'react-hook-form';
 import dayjs from 'dayjs';
+import { formatPlainPhoneNumber } from '@learnway/shared';
 import {
+  ContentAddInfoType,
   ExamQuestionGenType,
-  ExamType,
   Tag,
   TestPaperBasicInfoDetail,
   TestPaperBasicInfoSaveReq,
@@ -36,7 +37,8 @@ export const getExamSaveRequestDataFromFormData = (options: {
     isExamEndNotice: options.values.isExamEndNotice,
     examEndNoticeOffsetMinutes: Number(options.values.examEndNoticeOffsetMinutes ?? '0'),
     examEndNoticeMessage: options.values.examEndNoticeMessage,
-    examType: ExamType.PRE_TEST, // 임시 세팅(?)
+    contentAddInfoType: ContentAddInfoType.EXAM_ADD_INFO,
+    contentAddInfo: Number(options.values.questionCount ?? '0'),
   };
 
   if (options.mode === PageMode.UPDATE) {
@@ -54,7 +56,7 @@ export const getExamSaveRequestDataFromFormData = (options: {
 };
 
 export const convertDetailInfoToFormData = (
-  data: TestPaperBasicInfoDetail,
+  data: Partial<TestPaperBasicInfoDetail>,
   values: FieldValues,
   updateFormData: (data?: Record<string, any>) => void,
 ) => {
@@ -68,7 +70,7 @@ export const convertDetailInfoToFormData = (
     description: data.description,
     coordinatorUuid: data.coordinatorUuid,
     coordinatorName: data.coordinatorName,
-    coordinatorTelNo: data.coordinatorTelNo,
+    coordinatorTelNo: formatPlainPhoneNumber(data.coordinatorTelNo),
     contentUseDate: {
       from: data.contentUseStartDate ? dayjs(data.contentUseStartDate).toDate() : undefined,
       to: data.contentUseEndDate ? dayjs(data.contentUseEndDate).toDate() : undefined,
@@ -77,7 +79,7 @@ export const convertDetailInfoToFormData = (
     isVendored: data.isVendored,
     vendorName: data.vendorName ?? '',
     vendorCoordinatorName: data.vendorCoordinatorName ?? '',
-    vendorTelNo: data.vendorTelNo ?? '',
+    vendorTelNo: formatPlainPhoneNumber(data.vendorTelNo) ?? '',
     isCourseUsed: data.isCourseUsed,
     isContentSecured: data.isSecured,
     isInspected: data.isInspected,
