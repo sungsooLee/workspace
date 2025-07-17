@@ -345,6 +345,27 @@ const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTab
                 }
               />
               {/*연락처*/}
+              <FormRow2
+                provider={provider}
+                name={'연락처1'}
+                label={'연락처'}
+                element={
+                  <>
+                    <FormRow2
+                      provider={provider}
+                      name={'coordinatorTelCountryCode'}
+                      element={
+                        <DropdownFormField
+                          optionsConfig={{
+                            codeGroup: CODE_GROUP['cmmon.TelCountryCode'],
+                          }}
+                        />
+                      }
+                    />
+                    <FormRow2 provider={provider} name={'coordinatorTelNo'} element={<Input />} />
+                  </>
+                }
+              />
               {/*<FormRow2*/}
               {/*  provider={provider}*/}
               {/*  name={'coordinatorTelNo'}*/}
@@ -389,6 +410,27 @@ const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTab
                 }
               />
               {/*연락처*/}
+              <FormRow2
+                provider={provider}
+                name={'연락처2'}
+                label={'연락처'}
+                element={
+                  <>
+                    <FormRow2
+                      provider={provider}
+                      name={'operatorTelCountryCode'}
+                      element={
+                        <DropdownFormField
+                          optionsConfig={{
+                            codeGroup: CODE_GROUP['cmmon.TelCountryCode'],
+                          }}
+                        />
+                      }
+                    />
+                    <FormRow2 provider={provider} name={'operatorTelNo'} element={<Input />} />
+                  </>
+                }
+              />
               {/*<FormRow2*/}
               {/*  provider={provider}*/}
               {/*  name={'operatorTelNo'}*/}
