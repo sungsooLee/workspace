@@ -20,7 +20,10 @@ export const useCourseManagement = (): CourseManagementHookResult => {
     mode: 'onSubmit', // 서브밋할 때만 validation 실행
     reValidateMode: 'onChange', // 에러 발생 후에는 값 변경시 즉시 재검증
   });
-  const { config: gConfig, gridFetch } = useGridBox(createGridConfig(), getValues);
+  const { config: gConfig, gridFetch } = useGridBox(
+    createGridConfig(handleFavoriteClick),
+    getValues,
+  );
   const [selectedRows, setSelectedRows] = useState<CourseListItem[]>([]);
 
   // 버튼 활성화/비활성화 상태 관리
@@ -57,6 +60,13 @@ export const useCourseManagement = (): CourseManagementHookResult => {
   const handleBatchUploadClick = useCallback(() => {
     console.log('handleBatchUploadClick');
     // TODO: 일괄업로드 로직 구현
+  }, []);
+
+  /**
+   * 찜 핸들러
+   */
+  const handleFavoriteClick = useCallback((value: boolean) => {
+    console.log('handleFavoriteClick.value => ', value);
   }, []);
 
   /**

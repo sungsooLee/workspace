@@ -45,6 +45,15 @@ export default class CourseService {
   }
 
   /**
+   * 과정을 복사합니다.
+   * @param payload - 복사할 과정 정보.
+   * @returns 복사된 과정 정보 Promise.
+   */
+  static async copy(id: number): Promise<Course> {
+    return httpService.post<Course>(`${LMSApiPrefix()}/course/${id}/copy`, null);
+  }
+
+  /**
    * 기존 과정을 수정합니다.
    * @param payload - 수정할 과정 정보 (ID 포함 필수).
    * @returns 수정된 과정 정보 Promise.
@@ -127,5 +136,15 @@ export default class CourseService {
     queryParams: CoursePopupQueryParams,
   ): Promise<PaginationResponse<T>> {
     return httpService.get<PaginationResponse<T>>(`${LMSApiPrefix()}/course/popup`, queryParams);
+  }
+
+  /**
+   * 과정 찜 여부 변경
+   * @param id - 찜 여부를 변경할 과정 ID.
+   * @param payload - 찜 여부 변경 정보.
+   * @returns 찜 여부 변경 결과 Promise.
+   */
+  static async updateFavorite(payload: { id: number; isBookmarks: boolean }): Promise<any> {
+    return httpService.put<any>(`${LMSApiPrefix()}/course/${payload.id}/favorite`, payload);
   }
 }

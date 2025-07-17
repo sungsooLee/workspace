@@ -49,6 +49,10 @@ export const mutateOptions = {
   create: () => ({
     mutationFn: (payload: Course) => CourseService.create(payload),
   }),
+  // 과정 복사
+  copy: () => ({
+    mutationFn: (id: number) => CourseService.copy(id),
+  }),
   // 과정 수정
   update: () => ({
     mutationFn: (payload: Course) => CourseService.update(payload),
@@ -76,5 +80,10 @@ export const mutateOptions = {
   // 과정 수정 step5
   updateWizard5: () => ({
     mutationFn: (payload: Course) => CourseService.updateWizard5(payload),
+  }),
+  // 과정 찜 여부 변경
+  updateFavorite: () => ({
+    mutationFn: (payload: { id: number; isBookmarks: boolean }) =>
+      CourseService.updateFavorite(payload),
   }),
 };
