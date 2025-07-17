@@ -15,7 +15,7 @@ export interface CarouselComponentProps extends SwiperProps {
   items: Array<React.ReactNode>;
   className?: string;
   showNavigation?: boolean;
-  itemClassName?: string | ((item: React.ReactNode, index: number) => string);
+  itemClassName?: string;
 }
 
 const CarouselComponent = forwardRef<React.ElementRef<typeof Swiper>, CarouselComponentProps>(
@@ -52,16 +52,11 @@ const CarouselComponent = forwardRef<React.ElementRef<typeof Swiper>, CarouselCo
             }
           }}
         >
-          {items.map((item, index) => {
-            const computedClassName =
-              typeof itemClassName === 'function' ? itemClassName(item, index) : itemClassName;
-
-            return (
-              <SwiperSlide key={index} className={cn(styles.swiper_slide, computedClassName)}>
-                {item}
-              </SwiperSlide>
-            );
-          })}
+          {items.map((item, index) => (
+            <SwiperSlide key={index} className={cn(styles.swiper_slide, itemClassName)}>
+              {item}
+            </SwiperSlide>
+          ))}
         </Swiper>
       </div>
     );
