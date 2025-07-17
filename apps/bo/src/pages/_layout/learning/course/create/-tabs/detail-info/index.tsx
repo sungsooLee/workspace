@@ -936,7 +936,7 @@ export const formDataToRequestData = (d: Course) => {
   return {
     ...d,
     ...d.passOption, // 이수기준 설정
-    preRequisiteCourseIds,
-    relatedCourseIds,
+    preRequisiteCourseIds, //사전 필수과정
+    relatedCourseIds, //연관 과정
   };
 };
