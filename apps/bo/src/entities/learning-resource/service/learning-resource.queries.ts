@@ -3,6 +3,7 @@ import {
   BlogUpdateReq,
   ContentBaseInfo,
   ContentCourseMappingParams,
+  GetContentDetailRes,
   GetContentsParams,
   HtmlVideoFileChangeReq,
   HtmlVideoMetadataReq,
@@ -55,9 +56,9 @@ export const learningResourceQueryOptions = {
     staleTime: 0,
     enabled: true,
   }),
-  getContent: (contentUuid: string) => ({
+  getContent: <T = GetContentDetailRes>(contentUuid: string) => ({
     queryKey: queryKeys.contentDetail,
-    queryFn: () => LearningResourceService.fetchContent(contentUuid),
+    queryFn: () => LearningResourceService.fetchContent(contentUuid) as T,
     cacheTime: 0,
     staleTime: 0,
     enabled: !!contentUuid,
