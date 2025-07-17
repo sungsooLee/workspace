@@ -56,9 +56,9 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
 
   const { getCode } = useCodeStore();
   const { provider, updateFormData, onSubmit, onFormChange, getValues } =
-    useDynamicForm(formConfig);
-  const { provider: pBase, updateFormData: fetchBaseData } = useDynamicForm(formBaseConfig);
-  const { provider: pTerms, updateFormData: fetchTermsData } = useDynamicForm(formTermsConfig);
+    useDynamicForm(formConfig());
+  const { provider: pBase, updateFormData: fetchBaseData } = useDynamicForm(formBaseConfig());
+  const { provider: pTerms, updateFormData: fetchTermsData } = useDynamicForm(formTermsConfig());
 
   const { update } = useUpdateTenantAttributeCompany(tenantId, {
     onSuccess: (data: any) => {
@@ -1027,7 +1027,7 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
 
 export const TenantDetailAttribute = forwardRef(TenantDetailAttributeComponent);
 
-const formBaseConfig: DynamicFormConfig = {
+const formBaseConfig = (): DynamicFormConfig => ({
   builders: [
     {
       name: 'tenantName',
@@ -1129,9 +1129,9 @@ const formBaseConfig: DynamicFormConfig = {
     fileStorageTypeChannelList: true,
     fileStorageTypeBase: true,
   },
-};
+});
 
-const formTermsConfig: DynamicFormConfig = {
+const formTermsConfig = (): DynamicFormConfig => ({
   builders: [
     {
       name: 'terms',
@@ -1146,9 +1146,9 @@ const formTermsConfig: DynamicFormConfig = {
       ],
     },
   ],
-};
+});
 
-const formConfig: DynamicFormConfig = {
+const formConfig = (): DynamicFormConfig => ({
   builders: [
     { name: 'tenantId', type: 'hidden', format: 'number', value: 0 },
     {
@@ -1278,4 +1278,4 @@ const formConfig: DynamicFormConfig = {
       },
     },
   ],
-};
+});
