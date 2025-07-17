@@ -87,8 +87,8 @@ export const useLearningResourceQuestionDetailForm = () => {
       const data = await queryClient.fetchQuery(
         learningResourceQueryOptions.getContent(contentUuid),
       );
-      const { langCountryCode, ...removeLangCountryCode } = data;
-      setBaseInfo({ ...removeLangCountryCode, languageCountryCode: langCountryCode });
+
+      setBaseInfo(data);
     } else {
       setBaseInfo(undefined);
     }
