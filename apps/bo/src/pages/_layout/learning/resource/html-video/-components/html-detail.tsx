@@ -6,24 +6,28 @@ import { cloneDeepWith } from 'lodash-es';
 import { Company, User } from '@learnway/types';
 import { DynamicFormConfig, DynamicFormValues, useDynamicForm } from '@learnway/hooks';
 import { cn, isEmptyData } from '@learnway/shared';
+import { ContentsRow, InputModalSelectorFormField, useModal } from '@learnway/ui';
 import {
-  ChipListModalSelectorFormField,
-  ContentsRow,
-  InputModalSelectorFormField,
-  useModal,
-} from '@learnway/ui';
-import { HtmlVideoDetailRes, HtmlVideoMetadataRes, ProcessingStatus, Tag } from '@types';
+  ChannelByRoleId,
+  HtmlVideoDetailRes,
+  HtmlVideoMetadataRes,
+  ProcessingStatus,
+  Tag,
+} from '@types';
 import { useUpdateHTML5Metadata } from '@entities/learning-resource';
 import {
   ChannelChoiceModal,
   CompanyChoiceModal,
-  FormGroup,
   FormRow,
   FormRow2,
   UserChoiceModal,
 } from '@shared/ui';
 import { FormDisplay } from '@features/form';
-import { DateRangePickerFormField, DurationTimeFormField } from '@features/form/ui';
+import {
+  DateRangePickerFormField,
+  DurationTimeFormField,
+  MediaContentRequiredCheckFormField,
+} from '@features/form/ui';
 import { getHourValueFromTime, useRoleInfo } from '@pages/_layout/learning/resource/-common/common';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { ContentsHistoryInfo } from '@features/learning-resource/learning-resource-management/ui/contents-history-info';
@@ -76,8 +80,9 @@ const HtmlDetailComponent = forwardRef<HTMLFormElement, HtmlDetailProps>(
         updateFormData({
           ...getValues(),
           contentName: data.contentName,
-          langCountryCode: data.langCountryCode,
-          channelUuid: [{ channelUuid: data.channelUuid, channelName: data.channelName }],
+          languageCountryCode: data.langCountryCode,
+          channelUuid: data.channelUuid,
+          channelName: data.channelName,
           description: data.description,
           coordinatorUuid: data.coordinatorUuid,
           coordinatorName: (data.coordinatorName ?? '').split('/')[0],
@@ -145,28 +150,38 @@ const HtmlDetailComponent = forwardRef<HTMLFormElement, HtmlDetailProps>(
     };
 
     return (
-      <form ref={ref} onSubmit={onSubmit(handleSubmit)}>
+      <form ref={ref} method="post" onSubmit={onSubmit(handleSubmit)}>
         <ContentsRow>
           {/* 채널 */}
           <FormRow
             provider={provider}
-            name="channelUuid"
+            name="channelName"
             element={
-              <ChipListModalSelectorFormField
-                chipList={{
-                  labelField: 'channelName',
-                  valueField: 'channelUuid',
-                  hideBorder: true,
-                }}
+              <InputModalSelectorFormField
                 modalConfig={{
                   content: <ChannelChoiceModal />,
+                }}
+                transformModalData={(data: ChannelByRoleId) => ({
+                  channelUuid: data.channelUuid,
+                  channelName: data.channelName,
+                })}
+                onFormChange={(
+                  values: Record<
+                    string,
+                    {
+                      channelUuid: string;
+                      channelName: string;
+                    }
+                  >,
+                ) => {
+                  updateFormData({ ...getValues(), ...values });
                 }}
                 disabled={hasMapping}
               />
             }
           />
           {/* 언어 */}
-          <FormRow provider={provider} name="langCountryCode" />
+          <FormRow provider={provider} name="languageCountryCode" />
         </ContentsRow>
 
         {/* 학습자원명 */}
@@ -295,20 +310,7 @@ const HtmlDetailComponent = forwardRef<HTMLFormElement, HtmlDetailProps>(
         </ContentsRow>
 
         {/* 필수 확인 영역 */}
-        <FormGroup title="최종확인" required>
-          {/* 검수 확인 */}
-          <ContentsRow>
-            <FormRow provider={provider} name="isInspected" />
-          </ContentsRow>
-          {/* 저작권 확인 */}
-          <ContentsRow>
-            <FormRow provider={provider} name="isCopyrighted" />
-          </ContentsRow>
-          {/* 보안 확인 */}
-          <ContentsRow>
-            <FormRow provider={provider} name="isContentSecured" />
-          </ContentsRow>
-        </FormGroup>
+        <MediaContentRequiredCheckFormField provider={provider} />
 
         {/* 이력정보 */}
         <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>

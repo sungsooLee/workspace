@@ -390,12 +390,20 @@ const columns = () =>
       enableSorting: false,
       size: 88,
     }),
+    // linkageSystem값이 null이면 직접 가입, 아니면 I/F
     columnHelper.accessor('createdDate', {
       header: t('회원가입일'),
       cell: (info) =>
-        info.getValue() === null
-          ? ''
-          : getDateToString(new Date(info.row.original.createdDate), DATE_TIME_FORMAT.DATETIME_SEC),
+        info.row.original.linkageSystem === null
+          ? info.row.original.createdDate
+            ? getDateToString(
+                new Date(info.row.original.createdDate),
+                DATE_TIME_FORMAT.DATETIME_SEC,
+              )
+            : ''
+          : info.row.original.joinDate
+            ? getDateToString(new Date(info.row.original.joinDate), DATE_TIME_FORMAT.DATETIME_SEC)
+            : '',
       enableGrouping: false,
       meta: {
         cellAlign: 'center',

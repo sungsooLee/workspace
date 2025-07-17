@@ -16,18 +16,31 @@ export interface CarouselComponentProps extends SwiperProps {
   className?: string;
   showNavigation?: boolean;
   itemClassName?: string;
+  prevIcon?: React.ReactNode;
+  nextIcon?: React.ReactNode;
 }
 
 const CarouselComponent = forwardRef<React.ElementRef<typeof Swiper>, CarouselComponentProps>(
-  ({ className, items, showNavigation = false, itemClassName, ...props }, ref) => {
+  (
+    { className, items, showNavigation = false, itemClassName, prevIcon, nextIcon, ...props },
+    ref,
+  ) => {
     const prevRef = useRef<HTMLButtonElement>(null);
     const nextRef = useRef<HTMLButtonElement>(null);
 
     // Navigation Buttons
     const renderNavigationButtons = () => (
       <>
-        <Button ref={prevRef} className={cn(styles.navigation_btn, styles.prev_btn, 'prev_btn')} />
-        <Button ref={nextRef} className={cn(styles.navigation_btn, styles.next_btn, 'next_btn')} />
+        <Button
+          ref={prevRef}
+          className={cn(styles.navigation_btn, styles.prev_btn, 'prev_btn')}
+          icon={prevIcon && prevIcon}
+        />
+        <Button
+          ref={nextRef}
+          className={cn(styles.navigation_btn, styles.next_btn, 'next_btn')}
+          icon={nextIcon && nextIcon}
+        />
       </>
     );
 

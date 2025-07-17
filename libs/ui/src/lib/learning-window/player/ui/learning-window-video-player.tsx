@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 
 import stylesWeb from '@learnway/styles/fo/pages/_learning/learning.module.css';
@@ -12,17 +12,36 @@ import { useLearningWindow } from '../../learnway-learning-window.store';
 const styles = isMobile ? stylesMobile : stylesWeb;
 
 const LearningWindowVideoPlayerComponent: FC<any> = () => {
-  const { videoInfo, funcInfo } = useLearningWindow();
+  const { baseInfo, playInfo, videoInfo, funcInfo } = useLearningWindow();
+  const [videoStart, setVideoStart] = useState<number>(0);
 
   const handleOnProgress = (state: any) => {
-    funcInfo?.videoOnProgress(state);
+    console.log(`date check ; ${videoStart} -> ${state.playedSeconds}`, playInfo);
+    const payload = {
+      courseSequenceId: baseInfo?.sequenceId,
+      courseId: baseInfo?.courseId,
+      curriculumId: baseInfo?.curriculumId,
+      moduleId: playInfo?.moduleId,
+      lessonId: playInfo?.lessonId,
+      contentUuid: playInfo?.contentUuid,
+      videoStartTime: videoStart,
+      videoEndTime: state.playedSeconds,
+      speed: state.speed,
+    };
+    setVideoStart(state.playedSeconds);
+
+    funcInfo?.videoOnProgress(payload);
   };
+
   const player = useVideoPlayer({ onProgressCallback: handleOnProgress });
 
   useEffect(() => {
     console.log('videoInfo', videoInfo);
-    player.setFraction(videoInfo.progress);
-    player.togglePlay();
+    setTimeout(() => {
+      player.togglePlay();
+      player.setSeconds(videoInfo.lastVideoEndTime);
+      setVideoStart(videoInfo.lastVideoEndTime);
+    }, 500);
   }, [videoInfo]);
 
   return (

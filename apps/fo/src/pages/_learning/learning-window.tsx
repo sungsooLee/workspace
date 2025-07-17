@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { createFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 
 import { t } from 'i18next';
@@ -67,23 +67,9 @@ function RouteComponent() {
 
   const { watchLog } = useVideoWatchLog();
 
-  const handleVideoProgress = (state: any) => {
-    if (playInfo?.contentType === EnContentType.VIDEO) {
-      const payload = {
-        courseSequenceId: baseInfo?.sequenceId,
-        courseId: baseInfo?.courseId,
-        curriculumId: baseInfo?.curriculumId,
-        moduleId: playInfo?.moduleId,
-        lessonId: playInfo?.lessonId,
-        contentUuid: playInfo?.contentUuid,
-        videoStartTime: videoStart,
-        videoEndTime: state.playedSeconds,
-        speed: state.speed,
-      };
-      setVideoStart(state.playedSeconds);
-      console.log('handleVideo', payload);
-      watchLog(payload);
-    }
+  const handleVideoProgress = (payload: any) => {
+    console.log('handleVideo', payload);
+    watchLog(payload);
   };
 
   useEffect(() => {
@@ -94,15 +80,13 @@ function RouteComponent() {
   useEffect(() => {
     if (!videoInfo) return;
     console.log('vidoeInfo', videoInfo);
-    setVideoStart(0);
+    setVideoStart(videoInfo.lastVideoEndTime);
     setVideoInfo(videoInfo);
-    setVideoConfig(undefined);
   }, [videoInfo]);
 
   useEffect(() => {
     if (!blogInfo) return;
     setBlogInfo(blogInfo);
-    setBlogConfig(undefined);
   }, [blogInfo]);
   useEffect(() => {
     if (!htmlInfo) return;
@@ -131,7 +115,6 @@ function RouteComponent() {
   useEffect(() => {
     if (!playInfo) return;
     console.log('playInfo config', playInfo);
-    console.log('video config', videoConfig);
     clearInfo();
     clearConfig();
     switch (playInfo.contentType) {

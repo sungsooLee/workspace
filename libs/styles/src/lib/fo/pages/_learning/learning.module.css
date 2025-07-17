@@ -1,28 +1,28 @@
 .start {
   &.blog {
-    .header_color {
-      @apply absolute left-0 top-0 -z-[1] h-[112px] w-full bg-gradient-to-t from-[#131c30]/0 to-[#131c30];
+    @apply mb-[80px] mt-[80px] w-full;
+    .blog_contents {
+      @apply mx-auto w-full max-w-[880px];
     }
-    .container {
-      @apply mx-auto max-w-[880px];
-    }
-    @apply mx-auto mb-[120px] mt-[150px] w-[1180px];
   }
   &.ebook {
     @apply w-full;
   }
   &.file {
-    @apply relative h-[100dvh] w-full overflow-hidden bg-black;
+    @apply relative h-[calc(100dvh-80px)] w-full overflow-hidden bg-black;
     .file_box {
-      @apply absolute left-1/2 top-1/2 flex w-[780px] -translate-x-1/2 -translate-y-1/2 items-center rounded-[8px] border-[1px] border-solid border-[var(--gray5)] bg-white px-[16px] py-[20px];
+      @apply absolute left-1/2 top-1/2 flex w-[880px] -translate-x-1/2 -translate-y-1/2 items-center rounded-[8px] border-[1px] border-solid border-[var(--gray5)] bg-white px-[24px] py-[30px];
       p {
-        @apply body_2_r flex-1 text-[var(--gray8)];
+        @apply label-xl flex flex-1 items-center gap-[4px] leading-[24px] text-[var(--gray35)];
+        img {
+          @apply h-[24px] w-[24px];
+        }
       }
       span {
-        @apply body_3_r ml-[24px] inline-block text-[var(--gray8)];
+        @apply body-md ml-[24px] inline-block text-[var(--gray35)];
       }
       button {
-        @apply ml-[24px];
+        @apply ml-[16px];
       }
     }
   }
@@ -81,7 +81,10 @@
     }
   }
   &.html {
-    @apply flex min-h-[100dvh] items-center bg-[var(--gray9)];
+    @apply flex h-[calc(100dvh-80px)] items-center justify-center bg-[var(--gray9)];
+    .html_contents > * {
+      @apply h-auto max-h-[calc(100dvh-80px)] w-auto max-w-full;
+    }
   }
   &.iframe {
     @apply flex min-h-[100dvh] items-center bg-[var(--gray9)];
@@ -91,10 +94,19 @@
   }
   &.video {
     @apply flex h-[calc(100dvh-80px)] w-full items-center bg-black;
-    .video_box {
-      @apply flex h-auto max-h-[calc(100dvh-80px)] w-full items-center justify-center;
-      & > * {
-        @apply h-auto max-h-[calc(100dvh-80px)] w-auto max-w-full;
+    .video_wrap {
+      @apply relative flex h-auto max-h-[calc(100dvh-80px)] w-full items-center justify-center;
+      .video_area {
+        @apply relative;
+        .header_lesson {
+          @apply absolute left-0 right-0 top-0 px-[40px] pt-[24px];
+          strong {
+            @apply title5-b text-white;
+          }
+        }
+        .video_contents > * {
+          @apply h-auto max-h-[calc(100dvh-80px)] w-auto max-w-full;
+        }
       }
     }
   }

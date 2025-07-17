@@ -12,8 +12,11 @@ export const Route = createFileRoute('/_learning/html')({
 function RouteComponent() {
   return (
     <div className={`${styles.start} ${styles.html}`}>
-      {/* 예시 이미지 */}
-      <img src={webImg} alt="" />
+      {/* 퍼블수정 20250717 전체 수정 */}
+      <div className={styles.html_contents}>
+        {/* html 영역 */}
+        <img src={webImg} alt="" />
+      </div>
     </div>
   );
 }

@@ -54,11 +54,19 @@ function RouteComponent() {
   };
 
   return (
-    // 퍼블수정 20250716 마크업 수정
+    // 퍼블수정 20250717 마크업 수정
     <div className={`${styles.start} ${styles.video}`}>
-      <div className={styles.video_box}>
-        {/* 비디오 영역 */}
-        <img src={bnrImage1} alt="" />
+      <div className={styles.video_wrap}>
+        <div className={styles.video_area}>
+          <div className={styles.header_lesson}>
+            <strong>레슨명</strong>
+          </div>
+
+          <div className={styles.video_contents}>
+            {/* 비디오 영역 */}
+            <img src={bnrImage1} alt="" />
+          </div>
+        </div>
       </div>
     </div>
   );

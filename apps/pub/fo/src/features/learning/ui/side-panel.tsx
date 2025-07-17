@@ -149,10 +149,11 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
                               <li>
                                 <div className={styles.step_box}>
                                   <ProgressCheck progress={50} />
+                                  {/* 퍼블수정 20250717 아이콘 사이즈 수정 */}
                                   <p>
                                     스콤아이템
                                     <Link to="">
-                                      <IcoLinkblank width={16} height={16} stroke="#4c515e" />
+                                      <IcoLinkblank width={24} height={24} stroke="#131416" />
                                     </Link>
                                   </p>
                                   <span>4:11</span>

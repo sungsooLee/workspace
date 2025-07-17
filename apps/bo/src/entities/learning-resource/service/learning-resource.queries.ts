@@ -8,6 +8,7 @@ import {
   HtmlVideoMetadataReq,
   PostDraftHtmlVideoParams,
   PostDraftVideosParams,
+  TestPaperBasicInfoSaveReq,
 } from '@types';
 import LearningResourceService from '../api/learning-resource';
 
@@ -153,6 +154,10 @@ export const mutateOptions = {
   }),
   deleteContent: () => ({
     mutationFn: (contentUuid: string) => LearningResourceService.deleteContent(contentUuid),
+  }),
+  createExamPaperContent: () => ({
+    mutationFn: (params: TestPaperBasicInfoSaveReq) =>
+      LearningResourceService.createExamPaperContent(params),
   }),
   createQuestionBankContent: () => ({
     mutationFn: (params: ContentBaseInfo) =>

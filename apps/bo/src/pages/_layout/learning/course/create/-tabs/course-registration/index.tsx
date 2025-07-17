@@ -45,7 +45,6 @@ const CourseRegistrationComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
     return (
       <div>
         {/*수강신청*/}
-        {/* <FormSubTitle label={t('수강신청')} /> */}
         <ContentsRow type={'horizontal'} titleMode>
           <FormRow2
             provider={provider}
@@ -58,11 +57,11 @@ const CourseRegistrationComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
         {/*승인 결재 라인, 정원*/}
         <FormDisplay provider={provider} dependencies={[{ name: 'isEnrollRequired', value: true }]}>
           <ContentsRow>
-            {/*승인 결재 라인*/}
+            {/*승인*/}
             <FormRow2
               provider={provider}
               name={'approvalLineType'}
-              label={'승인 결재 라인'}
+              label={'승인'}
               element={
                 <DropdownFormField
                   optionsConfig={{

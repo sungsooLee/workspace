@@ -1,7 +1,4 @@
-export interface ExamPageState {
-  mode: PageMode;
-  contentUuid?: string;
-}
+import { ExamQuestionGenType, TestPaperBasicInfoSaveReq, TestPaperDetailRes } from '@types';
 
 export enum PageMode {
   CREATE = 'CREATE',
@@ -13,8 +10,22 @@ export enum ExamTab {
   QUESTION = 'QUESTION',
 }
 
-export enum ExamTemplateType {
-  EXAM = 'EXAM',
-  OMR = 'OMR',
-  QUIZ = 'QUIZ',
+export interface TabFormRef {
+  save: () => Promise<void> | void;
+  getValues?: () => any;
+}
+
+export interface ExamBasicInfoProps {
+  tenantId: number;
+  mode: PageMode;
+  data?: Partial<TestPaperDetailRes>;
+  hasMapping?: boolean;
+}
+
+export interface ExamQuestionInfoProps extends ExamBasicInfoProps {
+  questionGenType: ExamQuestionGenType;
+}
+
+export interface TestPaperBasicInfoFormData extends TestPaperBasicInfoSaveReq {
+  contentUseDate?: { from: Date | undefined; to: Date | undefined };
 }

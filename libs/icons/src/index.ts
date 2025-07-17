@@ -184,6 +184,7 @@ export { ReactComponent as IcoSucess03 } from './lib/ic_sucess_03.svg';
 export { ReactComponent as IcoError02 } from './lib/ic_error_02.svg';
 export { ReactComponent as IcoHistory } from './lib/ic_history.svg';
 export { ReactComponent as IcoLang } from './lib/ic_lang.svg';
+export { ReactComponent as IcoLink } from './lib/ic_link.svg';
 //export Default as Information from './lib/information.svg?react';
 
 //import Information from './lib/information.svg';
