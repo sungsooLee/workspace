@@ -365,7 +365,9 @@ export interface TestPaperBasicInfoSaveRes {
 }
 
 export interface TestPaperBasicInfoDetail extends GetContentDetailRes {
-  examTemplateType: ExamTemplateType;
+  // examTemplateType으로 통일 필요 (임시 설정)
+  examTemplateType?: ExamTemplateType;
+  examTemplate?: ExamTemplateType;
   questionCount: number;
   questionCountPerPage: number;
   examLimitTime: number;
@@ -401,12 +403,6 @@ export enum ExamResultVisibleMoment {
 export enum ExamQuestionGenType {
   FIXED = 'FIXED',
   RANDOM = 'RANDOM',
-}
-
-export enum ExamType {
-  PRE_TEST = 'PRE_TEST',
-  PROGRESS_TEST = 'PROGRESS_TEST',
-  POST_TEST = 'POST_TEST',
 }
 
 export type TestPaperDetailRes = GetContentDetailRes;
