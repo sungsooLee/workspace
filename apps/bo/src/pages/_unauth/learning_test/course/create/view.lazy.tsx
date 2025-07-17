@@ -9,7 +9,7 @@ import { BasicInfo } from '@pages/_layout/learning/course/create/-tabs/basic-inf
 import { CourseRegistration } from '@pages/_layout/learning/course/create/-tabs/course-registration';
 import { Curriculum } from '@pages/_layout/learning/course/create/-tabs/curriculum';
 import { DetailInfo } from '@pages/_layout/learning/course/create/-tabs/detail-info';
-import { TabFormRef } from '@pages/_layout/learning/course/-common/type';
+import { CourseTabFormRef } from '@pages/_layout/learning/course/-common/type';
 
 export const Route = createLazyFileRoute('/_unauth/learning_test/course/create/view')({
   component: RouteComponent,
@@ -101,7 +101,7 @@ function RouteComponent() {
         key: CourseTab.STEP1,
         content: (
           <BasicInfo
-            ref={(ref: TabFormRef) => setTabRef(CourseTab.STEP1, ref)}
+            ref={(ref: CourseTabFormRef) => setTabRef(CourseTab.STEP1, ref)}
             data={data}
             onConfigPropChange={handleConfigPropChange}
           />
@@ -112,7 +112,7 @@ function RouteComponent() {
         key: CourseTab.STEP2,
         content: (
           <CourseRegistration
-            ref={(ref: TabFormRef) => setTabRef(CourseTab.STEP2, ref)}
+            ref={(ref: CourseTabFormRef) => setTabRef(CourseTab.STEP2, ref)}
             data={data}
           />
         ),
@@ -121,21 +121,30 @@ function RouteComponent() {
         title: '커리큘럼 설정',
         key: CourseTab.STEP3,
         content: (
-          <Curriculum ref={(ref: TabFormRef) => setTabRef(CourseTab.STEP3, ref)} data={data} />
+          <Curriculum
+            ref={(ref: CourseTabFormRef) => setTabRef(CourseTab.STEP3, ref)}
+            data={data}
+          />
         ),
       },
       {
         title: '상세 설정',
         key: CourseTab.STEP4,
         content: (
-          <DetailInfo ref={(ref: TabFormRef) => setTabRef(CourseTab.STEP4, ref)} data={data} />
+          <DetailInfo
+            ref={(ref: CourseTabFormRef) => setTabRef(CourseTab.STEP4, ref)}
+            data={data}
+          />
         ),
       },
       {
         title: '게시 설정',
         key: CourseTab.STEP5,
         content: (
-          <PublishCourse ref={(ref: TabFormRef) => setTabRef(CourseTab.STEP5, ref)} data={data} />
+          <PublishCourse
+            ref={(ref: CourseTabFormRef) => setTabRef(CourseTab.STEP5, ref)}
+            data={data}
+          />
         ),
       },
     ],

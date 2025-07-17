@@ -1,8 +1,16 @@
-import { forwardRef } from 'react';
-import { CourseTabBaseProps, TabFormRef } from '../../../-common/type';
+import { forwardRef, useImperativeHandle } from 'react';
+import { CourseDetailTabBaseProps, CourseDetailTabFormRef } from '../../../-common/type';
 
-const CommunityComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
-  ({ onSave, onConfigPropChange, data: { formData, courseConfig, isSaved } }, ref) => {
+const CommunityComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBaseProps>(
+  ({ courseId }, ref) => {
+    // 부모 컴포넌트에서 호출할 수 있는 메서드
+    useImperativeHandle(ref, () => ({
+      getValues: () => console.log('getValues'),
+      save: async () => {
+        console.log('save');
+        return true;
+      },
+    }));
     return <>Community</>;
   },
 );

@@ -4,16 +4,16 @@ import { Button, FormSubTitle, SplitPanel, TreeBox, TreeContainer } from '@learn
 import { Course } from '@types';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CourseTabBaseProps, TabFormRef } from '../../../-common/type';
+import { CourseTabBaseProps, CourseTabFormRef } from '../../../-common/type';
 
-const CurriculumComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
+const CurriculumComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>(
   ({ onSave, data: { formData, courseConfig } }, ref) => {
     const { t } = useTranslation();
     // const { provider, getValues, fetchData } = dynamicForm;
     const { provider, getValues, onSubmit, onFormValid, formState, updateFormData } =
       useDynamicForm2();
 
-    // 부모 컴포넌트에서 호출할 수 있는 유효성 검사 메서드
+    // 부모 컴포넌트에서 호출할 수 있는 메서드
     useImperativeHandle(ref, () => ({
       validate: async () => {
         // 모든 필드에 대해 유효성 검사 수행
