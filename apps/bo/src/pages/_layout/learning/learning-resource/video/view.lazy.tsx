@@ -12,7 +12,7 @@ import {
   ContentCourseMappingModal,
 } from '@shared/ui';
 import { ChannelChoiceModal, ManagerChoiceModal } from '@shared/ui';
-import { DateRangePickerFormField } from '@features/form/ui';
+import { DateRangePickerFormField, MediaContentRequiredCheckFormField } from '@features/form/ui';
 import {
   CODE_GROUP,
   DynamicFormConfig,
@@ -75,13 +75,21 @@ function RouteComponent() {
   if (!data) {
     return <PageContainer />;
   }
-  console.log('🚀 ~ RouteComponent ~ data:', data);
+  const debug = true;
 
   return (
     <form onSubmit={onSubmit(handleFormSubmit)}>
       <PageContainer>
         <ContentsButtons>
           <LinkBox>
+            {debug && (
+              <Button
+                variant="point"
+                onClick={() => console.log('🚀 ~ data & Form values:', data, getValues())}
+              >
+                폼 데이터 확인 for debug
+              </Button>
+            )}
             {permission === 'READ' && (
               <>
                 <Link to={'/'}>상시 학습 개설</Link>
@@ -230,17 +238,7 @@ function RouteComponent() {
               <FormRow provider={provider} name={'subtitles'} element={<SubTitlesFormField />} />
             </ContentsRow>
           </FormDisplay>
-          <FormGroup title={'최종확인'} required={true}>
-            <ContentsRow>
-              <FormRow provider={provider} name={'isInspected'} />
-            </ContentsRow>
-            <ContentsRow>
-              <FormRow provider={provider} name={'isCopyrighted'} />
-            </ContentsRow>
-            <ContentsRow>
-              <FormRow provider={provider} name={'isSecured'} />
-            </ContentsRow>
-          </FormGroup>
+          <MediaContentRequiredCheckFormField provider={provider} />
           <ContentsHistoryInfoFormField />
         </MainContents>
         <SubContents>
