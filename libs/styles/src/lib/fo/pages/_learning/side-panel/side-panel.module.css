@@ -113,9 +113,15 @@
   .menu_contents {
     @apply h-full w-[460px] border-r-[1px] border-solid border-[var(--gray4)];
     .title_box {
-      @apply flex items-center justify-between px-[16px] py-[14px];
+      @apply flex items-center justify-between p-[20px];
       strong {
-        @apply title_5_b text-[var(--gray9)];
+        @apply title4-b text-[#232326];
+      }
+      button {
+        @apply !px-0;
+        svg {
+          @apply !mx-0;
+        }
       }
     }
     .contents_box {
@@ -124,30 +130,30 @@
         .box {
           @apply border-t-[1px] border-solid border-[var(--gray5)];
           .header {
-            @apply flex items-center bg-[var(--gray1)] p-[16px];
+            @apply flex items-center bg-[var(--gray1)] p-[20px];
             strong {
-              @apply body_3_b flex-1 text-[var(--gray8)];
+              @apply title4-b flex-1 text-[var(--gray35)];
             }
             span {
-              @apply body_3_r ml-[8px] text-[var(--gray7)];
+              @apply body-md ml-[8px] text-[var(--gray35)];
             }
           }
           .contents {
             .step {
               li {
-                @apply cursor-pointer px-[16px] py-[12px];
+                @apply cursor-pointer px-[20px] py-[16px];
                 &.active {
-                  @apply pointer-events-none bg-[var(--secondary6)];
+                  @apply pointer-events-none bg-[var(--blue95)];
                 }
                 .step_box {
                   @apply flex items-center;
                   svg {
-                    @apply mr-[8px];
+                    @apply mr-[16px];
                   }
                   p {
-                    @apply body_3_r flex flex-1 items-center text-[var(--gray7)];
+                    @apply body-md flex flex-1 items-center leading-[24px] text-[var(--gray35)];
                     svg {
-                      @apply ml-[8px];
+                      @apply ml-[4px];
                     }
                   }
                   span {

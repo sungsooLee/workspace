@@ -2,13 +2,13 @@ import { isMobile } from 'react-device-detect';
 import { cn } from '@learnway/shared';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { Button } from '@learnway/ui';
+import { IcoLink } from '@learnway/icons';
 
 import styles from '@learnway/styles/fo/pages/_learning/learning.module.css';
 
-import pdfImage from '@learnway/styles/fo/assets/images/common/img_live.png';
-import lockImage from '@learnway/styles/fo/assets/images/common/img_lock.png';
+import liveImage from '@learnway/styles/fo/assets/images/common/img_live.png';
 
-export const Route = createFileRoute('/_learning/file')({
+export const Route = createFileRoute('/_learning/live')({
   component: RouteComponent,
 });
 
@@ -18,11 +18,10 @@ function RouteComponent() {
       <div className={styles.file_box}>
         {/* 퍼블수정 20250717 마크업 수정 */}
         <p>
-          <img src={pdfImage} alt="" />
+          <img src={liveImage} alt="" />
           비즈니스 영어 단어&숙어집 Part 2.pdf
-          <img src={lockImage} alt="" />
+          <IcoLink width={24} height={24} stroke="131416" />
         </p>
-        <span>200MB</span>
         {/* 퍼블수정 20250717 size 수정 */}
         <Button variant="line" size="md">
           다운로드

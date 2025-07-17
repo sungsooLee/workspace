@@ -1569,7 +1569,7 @@ export const guideData = [
     remarks: '- ebook.tsx\n- 개발화면 확인 필요',
   },
   {
-    screenId: 'NLP_FO_CLA_1045',
+    screenId: 'NLP_FO_CLA_1031',
     screenName: '강의실_학습창_파일',
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'file',
@@ -1620,25 +1620,23 @@ export const guideData = [
   },
   {
     screenId: 'NLP_FO_CLA_1030',
-    screenName: '강의실_학습창_웹_위키',
+    screenName: '강의실_학습창_라이브',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'live',
+    pageType: 'Page',
+    completionDate: '2025-07-17',
     lastUpdateDate: '',
-    remarks: '',
-    cancel: true,
+    remarks: '- live.tsx',
   },
   {
     screenId: 'NLP_FO_CLA_1031',
-    screenName: '강의실_학습창_스트리밍',
+    screenName: '강의실_학습창_링크',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'link',
+    pageType: 'Page',
+    completionDate: '2025-07-17',
     lastUpdateDate: '',
-    remarks: '',
-    cancel: true,
+    remarks: '- link.tsx',
   },
 
   {

@@ -12,9 +12,12 @@ export const Route = createFileRoute('/_learning/blog')({
 function RouteComponent() {
   return (
     <div className={`${styles.start} ${styles.blog}`}>
-      <div className={styles.header_color}></div>
-      {/* 예시 이미지 */}
-      <img src={blogImg} alt="" />
+      {/* 퍼블수정 20250717 전체수정 */}
+
+      <div className={styles.blog_contents}>
+        {/* 블로그 영역 */}
+        <img src={blogImg} alt="" />
+      </div>
     </div>
   );
 }
