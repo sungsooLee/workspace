@@ -18,6 +18,7 @@ interface LessonFormProps {
   isEditing?: boolean;
   lessonId?: number;
   moduleId?: number;
+  clearAllValidators?: () => void;
   curriculumData?: {
     tenantId?: number;
     channelUuid?: string;
@@ -32,6 +33,7 @@ export const LessonForm: React.FC<LessonFormProps> = ({
   isEditing,
   lessonId,
   moduleId,
+  clearAllValidators,
   curriculumData,
 }) => {
   const lessonType = watch('lessonType') || LESSON_TYPE.GENERAL;
@@ -43,7 +45,7 @@ export const LessonForm: React.FC<LessonFormProps> = ({
   );
 
   const { data: contentDetail, refetch: refetchContentDetail } = useQuery({
-    ...learningResourceQueryOptions.getContent(contentUuid),
+    ...learningResourceQueryOptions.getContent(contentUuid || ''),
     enabled: false,
   });
 
@@ -60,11 +62,13 @@ export const LessonForm: React.FC<LessonFormProps> = ({
           contentName: lessonData.contentName || '',
         });
 
-        if (lessonData.contentUuid) {
+        if (lessonData.contentUuid && lessonData.contentUuid.trim() !== '') {
           refetchContentDetail().then((res) => {
             const { data } = res;
-            provider.setValue('contentName', data?.contentName);
-            provider.setValue('contentUuid', data?.contentUuid);
+            if (data) {
+              provider.setValue('contentName', data?.contentName);
+              provider.setValue('contentUuid', data?.contentUuid);
+            }
           });
         }
       } else if (!isEditing) {
@@ -89,7 +93,7 @@ export const LessonForm: React.FC<LessonFormProps> = ({
           name="lessonType"
           label="레슨유형"
           format="string"
-          value={LESSON_TYPE.GENERAL}
+          value={lessonType}
           validation={{ required: true }}
           element={
             <RadioGroupFormField
@@ -206,7 +210,6 @@ export const LessonForm: React.FC<LessonFormProps> = ({
         />
       </ContentsRow>
 
-      {/* 숨겨진 필드들 */}
       <FormRow2
         provider={provider}
         name="contentUuid"

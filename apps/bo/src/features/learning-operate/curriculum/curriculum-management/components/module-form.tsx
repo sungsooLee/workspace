@@ -39,12 +39,12 @@ export const ModuleForm: React.FC<ModuleFormProps> = ({
   const { data: moduleData } = useGetModuleDetail(moduleId || 0);
 
   const { data: contentDetail, refetch: refetchContentDetail } = useQuery({
-    ...learningResourceQueryOptions.getContent(uuid),
+    ...learningResourceQueryOptions.getContent(uuid || ''),
     enabled: false,
   });
 
   const [refetchContentUuid, setRefetchContentUuid] = useState(undefined);
-  const { data, refetch } = useGetScormDetail(refetchContentUuid);
+  const { data, refetch } = useGetScormDetail(refetchContentUuid || '');
 
   useEffect(() => {
     if (updateFormData) {
@@ -58,12 +58,14 @@ export const ModuleForm: React.FC<ModuleFormProps> = ({
           contentUuid: moduleData.contentUuid || '',
         });
 
-        if (moduleData.contentUuid) {
+        if (moduleData.contentUuid && moduleData.contentUuid.trim() !== '') {
           setUuid(moduleData.contentUuid);
           refetchContentDetail().then((res) => {
             const { data } = res;
-            provider.setValue('contentName', data?.contentName);
-            provider.setValue('contentUuid', data?.contentUuid);
+            if (data) {
+              provider.setValue('contentName', data?.contentName);
+              provider.setValue('contentUuid', data?.contentUuid);
+            }
           });
         }
       } else if (!isEditing) {

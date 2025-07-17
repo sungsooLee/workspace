@@ -14,6 +14,7 @@ interface NodeFormRendererProps {
   watch: any;
   selectedNodeData?: any;
   isLoading?: boolean;
+  clearAllValidators?: () => void;
   curriculumData?: {
     tenantId?: number;
     channelUuid?: string;
@@ -30,6 +31,7 @@ export const NodeFormRenderer: React.FC<NodeFormRendererProps> = ({
   watch,
   selectedNodeData,
   isLoading,
+  clearAllValidators,
   curriculumData,
 }) => {
   const { activeFormType, selectedNode, parentNode, isEditing } = formState;
@@ -99,12 +101,14 @@ export const NodeFormRenderer: React.FC<NodeFormRendererProps> = ({
 
       return (
         <LessonForm
+          key={`lesson-${lessonId || 'new'}`}
           provider={provider}
           updateFormData={updateFormData}
           watch={watch}
           isEditing={isEditing}
           lessonId={lessonId}
           moduleId={moduleId}
+          clearAllValidators={clearAllValidators}
           curriculumData={curriculumData}
         />
       );

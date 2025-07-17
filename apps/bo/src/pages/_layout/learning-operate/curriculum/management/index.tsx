@@ -19,8 +19,8 @@ function RouteComponent() {
   //   loginUser,
   // });
   // 초기 curriculumId (router state 또는 URL params에서 가져옴)
-  const initialCurriculumId = router.state.location.state?.curriculumId;
-  // const initialCurriculumId = 19; //11
+  // const initialCurriculumId = router.state.location.state?.curriculumId;
+  const initialCurriculumId = 19; //11
 
   // 현재 커리큘럼 ID 상태 관리 (undefined = 생성 모드, number = 상세 모드)
   const [currentCurriculumId, setCurrentCurriculumId] = useState<number | undefined>(

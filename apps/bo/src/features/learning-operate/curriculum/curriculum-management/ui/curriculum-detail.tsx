@@ -54,6 +54,7 @@ const CurriculumDetailComponent = ({
   const [formStatus, setFormStatus] = useState<FROM_STATUS>(FROM_STATUS.NONE);
   const [treeData, setTreeData] = useState<TreeNode[]>([]);
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
+  const [formKey, setFormKey] = useState(0); // 폼 리마운트를 위한 카운터
   const [formState, setFormState] = useState<FormState>({
     activeFormType: null,
     selectedNode: null,
@@ -188,13 +189,16 @@ const CurriculumDetailComponent = ({
     // 이전 폼의 모든 validator와 필드를 완전히 초기화
     clearAllValidators();
 
-    setFormState({
-      activeFormType: nodeType,
-      selectedNode: parentNode,
-      parentNode,
-      isEditing: false,
-    });
-    setFormStatus(FROM_STATUS.CREATE);
+    setTimeout(() => {
+      setFormState({
+        activeFormType: nodeType,
+        selectedNode: parentNode,
+        parentNode,
+        isEditing: false,
+      });
+      setFormStatus(FROM_STATUS.CREATE);
+      setFormKey((prev) => prev + 1); // 폼 리마운트를 위해 키 증가
+    }, 10);
   };
 
   const handleFormSubmit = (data: any) => {
@@ -531,6 +535,7 @@ const CurriculumDetailComponent = ({
       isEditing: false,
     });
     setFormStatus(FROM_STATUS.NONE);
+    setFormKey((prev) => prev + 1); // 폼 리마운트를 위해 키 증가
   };
 
   // 트리 노드 선택 핸들러
@@ -545,6 +550,7 @@ const CurriculumDetailComponent = ({
         isEditing: true,
       });
       setFormStatus(FROM_STATUS.EDIT);
+      setFormKey((prev) => prev + 1); // 폼 리마운트를 위해 키 증가
     }, 100);
   };
 
@@ -620,7 +626,7 @@ const CurriculumDetailComponent = ({
         <FormSubTitle label={'상세 정보'} lineType="dark" actionNode={customFormActionButton()} />
         <form ref={formRef}>
           <NodeFormRenderer
-            key={`${formState.activeFormType}-${formState.isEditing ? 'edit' : 'create'}-${formState.selectedNode?.id || 'new'}`}
+            key={`${formState.activeFormType}-${formState.isEditing ? 'edit' : 'create'}-${formState.selectedNode?.id || 'new'}-${formKey}`}
             formState={formState}
             onFormSubmit={handleFormSubmit}
             onFormCancel={handleFormCancel}
@@ -629,6 +635,7 @@ const CurriculumDetailComponent = ({
             watch={watch}
             selectedNodeData={selectedNodeData}
             isLoading={isNodeDataLoading}
+            clearAllValidators={clearAllValidators}
             curriculumData={{
               tenantId: curriculumDetail?.tenantId || loginUser?.activeTenant?.tenantId,
               channelUuid: curriculumDetail?.channelUuid,
