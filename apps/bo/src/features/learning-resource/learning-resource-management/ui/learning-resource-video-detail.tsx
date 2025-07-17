@@ -24,7 +24,7 @@ const LearningResourceVideoDetailComponent = ({ provider }: Props) => {
           name="isSubtitles"
           switchConfig={{
             label: (value: boolean, getValues: UseFormGetValues<FieldValues>) =>
-              value ? `자막 ${getValues().subtitles.length}개` : '자막 없음',
+              value ? `자막 ${getValues().subtitles?.length || 0}개` : '자막 없음',
             labelTarget: 'subtitles',
           }}
           element={<SwitchFormField />}
