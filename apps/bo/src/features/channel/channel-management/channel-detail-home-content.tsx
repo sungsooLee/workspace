@@ -50,7 +50,7 @@ const ChannelDetailHomeContentComponent = ({
 
   const { provider, control } = useDynamicForm(formConfig);
   const watchSetting = useWatch({
-    control: control,
+    control,
     name: ['settings'],
   });
   const [setting, setSetting] = useState<string>(SettingTypes.CUSTOM);

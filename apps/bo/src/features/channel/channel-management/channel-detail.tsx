@@ -4,14 +4,13 @@ import {
   Button,
   ChipListModalSelectorFormField,
   ContentsRow,
+  FormSubTitle,
   Input,
   RadioGroupFormField,
   TextareaFormField,
-  FormSubTitle,
 } from '@learnway/ui';
 import {
   ChipListFormField,
-  ContentsHistoryInfoFormField,
   FormItem,
   FormRow,
   TenantShuttleModal,
@@ -25,6 +24,7 @@ import { useTranslation } from 'react-i18next';
 import ChannelService from '@entities/channel/api/channel';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+import { EnButtonLayout } from '@pages/_layout/tenant/channel/management/detail.lazy';
 import { useWatch } from 'react-hook-form';
 
 export enum EnChannelRegisterMethod {
@@ -36,6 +36,7 @@ interface ChannelDetailProps {
   mode: EnFormMode;
   method?: EnChannelRegisterMethod;
   requestId?: string;
+  onButtonLayoutChange?: (layout: EnButtonLayout) => void;
 }
 
 const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
@@ -55,6 +56,7 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
   });
 
   useEffect(() => {
+    props.onButtonLayoutChange && props.onButtonLayoutChange(EnButtonLayout.RESET_AND_SAVE);
     if (!loginUser) return;
     const tenantList: any[] = [];
     // TODO. ChipList 수정되면 대표 테넌트는 삭제되지 않도록 수정
@@ -599,7 +601,7 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
         </ContentsRow>
       </FormDisplay>
 
-      {props.mode === EnFormMode.VIEW && <ContentsHistoryInfoFormField />}
+      {/* {props.mode === EnFormMode.VIEW && <ContentsHistoryInfoFormField />} */}
     </form>
   );
 };
