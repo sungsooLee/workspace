@@ -70,9 +70,9 @@ const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTab
       console.log('CourseDetailComponent init');
       // 초기 데이터가 있으면 설정
       if (formData) {
-        updateFormData(responseDataToFormData(formData));
+        updateFormData(responseDataToFormData(formData, courseConfig));
       }
-    }, [formData]);
+    }, [formData, courseConfig]);
 
     return (
       <>
@@ -1360,7 +1360,7 @@ export const CourseDetail = CourseDetailComponent;
 /**
  * 응답 데이터를 폼 데이터로 변환
  */
-const responseDataToFormData = (d: Course, c: CourseConfig): Course => {
+const responseDataToFormData = (d: Course, c: CourseConfig = {} as CourseConfig): Course => {
   return {
     ...d,
     tenantIds: d?.tenantList?.map((d: any) => d.tenantId), // 테넌트 아이디

@@ -21,7 +21,7 @@ export const useCourseManagement = (): CourseManagementHookResult => {
     reValidateMode: 'onChange', // 에러 발생 후에는 값 변경시 즉시 재검증
   });
   const { config: gConfig, gridFetch } = useGridBox(
-    createGridConfig(handleFavoriteClick),
+    createGridConfig((value: boolean) => handleFavoriteClick(value)),
     getValues,
   );
   const [selectedRows, setSelectedRows] = useState<CourseListItem[]>([]);
@@ -30,8 +30,8 @@ export const useCourseManagement = (): CourseManagementHookResult => {
   const buttonState: CourseButtonState = useMemo(() => {
     const hasSelection = selectedRows.length > 0;
     return {
-      copy: hasSelection,
-      share: hasSelection,
+      copy: selectedRows?.length === 1,
+      share: selectedRows?.length === 1,
     };
   }, [selectedRows]);
 
