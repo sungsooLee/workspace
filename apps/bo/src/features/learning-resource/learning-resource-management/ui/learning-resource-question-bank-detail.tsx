@@ -4,18 +4,19 @@ import { t } from 'i18next';
 import movieInfoStyles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
 import previewImg from '@assets/images/temp/img_exam_basic.jpg';
 
-import { FormSubTitle, SplitPanel, useModal } from '@learnway/ui';
+import { Button, FormSubTitle, SplitPanel, useModal } from '@learnway/ui';
 import { CODE_GROUP, DynamicFormConfig, useDynamicForm2 } from '@learnway/hooks';
 
 import { LearningResourceBaseForm } from './learning-resource-base-form';
 import { useLearningResourceQuestionDetailForm } from '../service/learning-resource-question-detail-from.hook';
+import { ContentBaseInfo } from '@types';
 
 const LearningResourceQuestionBankDetailComponent = (props: any, ref: any) => {
   const { alert, open: openModal, confirm: openConfirm } = useModal();
   const { baseInfo, formMode, setFuncInfo, createQuestionBank } =
     useLearningResourceQuestionDetailForm();
 
-  const { provider, getValues, onFormValid, onSubmit } = useDynamicForm2();
+  const { provider, getValues, onFormValid, onSubmit, updateFormData } = useDynamicForm2();
   const formRef = useRef<HTMLFormElement>(null);
 
   const handleOnSubmit = async (data: any) => {
@@ -27,15 +28,7 @@ const LearningResourceQuestionBankDetailComponent = (props: any, ref: any) => {
     ) {
       const payload = getValues();
       console.log('formSave', payload);
-      createQuestionBank(
-        payload,
-        (data: any) => {
-          console.log('success data', data);
-        },
-        (error: any) => {
-          console.log('error data', error);
-        },
-      );
+      createQuestionBank(payload as ContentBaseInfo);
     }
   };
   const handleFormSave = async () => {
@@ -46,6 +39,8 @@ const LearningResourceQuestionBankDetailComponent = (props: any, ref: any) => {
   };
   useEffect(() => {
     if (!baseInfo) return;
+    console.log('baseInfo', baseInfo);
+    updateFormData(baseInfo);
   }, [baseInfo]);
 
   useEffect(() => {
@@ -56,6 +51,12 @@ const LearningResourceQuestionBankDetailComponent = (props: any, ref: any) => {
   return (
     <SplitPanel size={['auto', 416]} divider>
       <div>
+        <Button
+          label="test"
+          onClick={() => {
+            console.log(getValues());
+          }}
+        />
         <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
           <FormSubTitle label={t('기본정보')} />
           <LearningResourceBaseForm provider={provider} formMode={formMode} />
