@@ -36,15 +36,8 @@ function NavigateComponent({ onMouseEnter, onMouseLeave }: NavigateComponentProp
     <div className={`${styles.start} ${styles.navigate}`}>
       <nav className={styles.nav} onMouseLeave={onMouseLeave}>
         <Carousel
-          itemClassName={(item, index) => {
-            const typedItem = gnblItems[index]; // 원본 데이터 기준으로 판단
-            return cn('slide', {
-              [styles.event_menu]: typedItem.hasEvent,
-              [styles.label_item]: typedItem.isLabel,
-            });
-          }}
           items={gnblItems.map((item, index) => (
-            <div key={index}>
+            <div key={index} className={item.hasEvent ? styles.event_menu : ''}>
               <Link to={item.link} onMouseEnter={onMouseEnter}>
                 <span>{item.name}</span>
               </Link>
