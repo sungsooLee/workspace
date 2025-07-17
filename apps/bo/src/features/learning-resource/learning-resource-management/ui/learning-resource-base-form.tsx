@@ -1,6 +1,7 @@
 import { t } from 'i18next';
 import {
   ContentsRow,
+  EditorFormField,
   FormSubTitle,
   Input,
   InputModalSelectorFormField,
@@ -30,6 +31,7 @@ const LearningResourceBaseFormComponent = ({
   showAiInfo = false,
   showLessonTime = false,
   readOnlyLessonTime = false,
+  showBlogEditor = false,
 }: {
   provider: DynamicFormProvider;
   formMode?: EnFormMode;
@@ -38,6 +40,8 @@ const LearningResourceBaseFormComponent = ({
   /** 학습 시간 노출 여부 */
   showLessonTime?: boolean;
   readOnlyLessonTime?: boolean;
+  /** 블로그 에디터 노출 여부 */
+  showBlogEditor?: boolean;
 }) => {
   return (
     <>
@@ -222,6 +226,21 @@ const LearningResourceBaseFormComponent = ({
           />
         </ContentsRow>
       </FormDisplay>
+
+      {/* 블로그 에디터 */}
+      {showBlogEditor && (
+        <ContentsRow>
+          <FormRow2
+            provider={provider}
+            name="blogContent"
+            label={t('블로그 내용')}
+            format="object"
+            value={{}}
+            element={<EditorFormField />}
+          />
+        </ContentsRow>
+      )}
+
       {/*학습 시간*/}
       {showLessonTime && (
         <ContentsRow>
