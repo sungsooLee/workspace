@@ -1,14 +1,18 @@
-import styles from './movie-info.module.scss';
-import { FC } from 'react';
 import { Button, Spinner } from '@learnway/ui';
 import { IcoStatusFail } from '@learnway/icons';
 import style from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
+import { DynamicFormProvider } from '@learnway/hooks';
+import { ProcessingStatus } from '@types';
 
 interface MovieInfoProps {
-  status: 'loading' | 'fail' | 'success';
+  provider: DynamicFormProvider;
 }
 
-const MovieInfoComponent: FC<any> = ({ status }) => {
+const MovieInfoComponent = ({ provider }: MovieInfoProps) => {
+  const { watch } = provider;
+
+  const processingStatus = watch('processingStatus');
+
   // media info_list
   const infoList = [
     { title: '파일명', text: '파일명이 들어갑니다' },
@@ -44,13 +48,24 @@ const MovieInfoComponent: FC<any> = ({ status }) => {
     },
   ];
 
+  if (!processingStatus) return null;
+
   return (
     <>
       <strong className={style.title}>업로드 파일</strong>
-      {(status === 'loading' || status === 'fail') && (
+      {[
+        ProcessingStatus.STARTED,
+        ProcessingStatus.UPLOADING,
+        ProcessingStatus.ENCODING,
+        ProcessingStatus.FAIL,
+      ].includes(processingStatus) && (
         <div className={style.status_wrap}>
           {/* 인코딩 진행 중 */}
-          {status === 'loading' && (
+          {[
+            ProcessingStatus.STARTED,
+            ProcessingStatus.UPLOADING,
+            ProcessingStatus.ENCODING,
+          ].includes(processingStatus) && (
             <>
               <Spinner isLoading={true} showBackdrop className={style.loading} />
               <p className={style.text}>
@@ -60,7 +75,7 @@ const MovieInfoComponent: FC<any> = ({ status }) => {
             </>
           )}
           {/* 인코딩 실패 */}
-          {status === 'fail' && (
+          {processingStatus === ProcessingStatus.FAIL && (
             <>
               <IcoStatusFail className={style.fail} />
               <p className={style.text}>
@@ -80,7 +95,7 @@ const MovieInfoComponent: FC<any> = ({ status }) => {
         </div>
       )}
 
-      {status === 'success' && (
+      {processingStatus === ProcessingStatus.COMPLETE && (
         <>
           <ul className={style.btn_list}>
             {buttons.map((btn, index) => (
