@@ -20,7 +20,7 @@ import {
 
 import { EnFormMode } from '@types';
 
-import { DropdownFormField, FormDisplay, InputFormField } from '@features/form';
+import { DropdownFormField, FormDisplay, SecondDurationTimeFormField } from '@features/form';
 import { DateRangePickerFormField } from '@features/form/ui';
 import { User } from '@learnway/types';
 
@@ -129,16 +129,10 @@ const LearningResourceBaseFormComponent = ({
           provider={provider}
           name="coordinatorTelNo"
           label={t('연락처')}
-          format="object"
+          format="text"
           validation={{ required: true }}
-          element={
-            <PhoneNumberFormField
-              fields={{ nationCode: 'coordinatorTelCountryCode', number: 'coordinatorTelNo' }}
-              phoneNumberConfig={{
-                options: [{ value: 'KOR_82', label: '+82' }],
-              }}
-            />
-          }
+          value=""
+          element={<Input />}
         />
       </ContentsRow>
       {/* 사용기한 */}
@@ -220,12 +214,9 @@ const LearningResourceBaseFormComponent = ({
             provider={provider}
             label={t('외주개발업체 연락처')}
             name="vendorTelNo"
+            format="text"
             value=""
-            element={<PhoneNumberFormField />}
-            fields={{
-              nationCode: 'vendorNationCode',
-              number: 'vendorTelNo',
-            }}
+            element={<Input />}
           />
         </ContentsRow>
       </FormDisplay>
@@ -237,7 +228,7 @@ const LearningResourceBaseFormComponent = ({
             name="contentAddInfo"
             label={'학습 시간'}
             value=""
-            element={<Input disabled />}
+            element={<SecondDurationTimeFormField />}
           />
         </ContentsRow>
       )}
