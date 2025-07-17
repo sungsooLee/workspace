@@ -6,7 +6,7 @@ import { vidoeQueryOptions, videoMutateOptions } from './video.queries';
 export function useVideoWatchLog(mutationOptions = {}) {
   const queryClient = useQueryClient();
 
-  const { mutate, isSuccess, isError } = useMutation({
+  const watch = useMutation({
     ...videoMutateOptions.watchLog(),
     onSuccess: async (data: any, variables, context) => {
       // 공통 메세지 처리 등...
@@ -15,12 +15,17 @@ export function useVideoWatchLog(mutationOptions = {}) {
     ...mutationOptions,
   });
 
+  const statics = useMutation({ ...videoMutateOptions.watchLogStatistics(), ...mutationOptions });
+
   return {
-    watchLog: (payload: any, callback?: MutateOptions<unknown, unknown, any>) => {
-      mutate(payload, callback);
+    watch,
+    statics,
+    watchLog: (payload: any, options?: MutateOptions<unknown, unknown, any>) => {
+      watch.mutate(payload, options);
     },
-    isSuccess,
-    isError,
+    watchLogStatistics: (payload: any, options?: MutateOptions<unknown, unknown, any>) => {
+      statics.mutate(payload, options);
+    },
   };
 }
 

@@ -356,7 +356,6 @@ export interface TestPaperBasicInfoSaveReq extends MediaContentSaveReq {
   isExamEndNotice: boolean;
   examEndNoticeOffsetMinutes: number;
   examEndNoticeMessage: string;
-  examType: ExamType;
   questionGenType?: ExamQuestionGenType;
 }
 
@@ -366,7 +365,7 @@ export interface TestPaperBasicInfoSaveRes {
 }
 
 export interface TestPaperBasicInfoDetail extends GetContentDetailRes {
-  examTemplateType: ExamTemplateType;
+  examTemplate: ExamTemplateType;
   questionCount: number;
   questionCountPerPage: number;
   examLimitTime: number;

@@ -36,7 +36,7 @@ import { useTranslation } from 'react-i18next';
 import { CourseDetailTabBaseProps, CourseDetailTabFormRef } from '../../../-common/type';
 import { CourseStatsSummary } from '../../../-components/course-stats-summary/course-stats-summary';
 import { PassOptionFormField } from '../../../-components/pass-option-form-field/pass-option-form-field';
-import { InstructorListPopup } from '@features/platform/instructor/management/modal/instructor-list-modal';
+import { InstructorListPopup } from '@features/learning-operate-support/instructor-tutor/instructor-management/modal/instructor-list-modal';
 import { useFetchCourse, useFetchCourseConfig } from '@entities/course';
 
 const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBaseProps>(

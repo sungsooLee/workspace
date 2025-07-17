@@ -24,21 +24,19 @@
               }
             }
           }
-          &.event_menu {
+          &:has(.event_menu) {
             @apply pl-[20px];
+            a span {
+              @apply text-[var(--blue65)];
+            }
             &::before {
               @apply absolute left-0 top-1/2 inline-block h-[20px] w-[1px] -translate-y-1/2 bg-[var(--gray75)] content-[''];
             }
-
-            ~ .event_menu {
+            & + [class*='swiper-slide'] {
               @apply pl-0;
               &::before {
-                @apply hidden;
+                @apply !hidden;
               }
-            }
-
-            a {
-              @apply text-[var(--blue65)];
             }
           }
 

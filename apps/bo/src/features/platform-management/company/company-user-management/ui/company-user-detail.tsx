@@ -1,14 +1,14 @@
-import { FC, useState } from 'react';
-import { useRouterState } from '@tanstack/react-router';
-import { t } from 'i18next';
-import { FormSubTitle, Tabs } from '@learnway/ui';
-import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import {
-  CompanyUserDetailLearningHistory,
-  CompanyUserDetailBase,
-} from '@features/platform-management/company';
 import { useFetchUser } from '@entities/users/service/users.hook';
+import {
+  CompanyUserDetailBase,
+  CompanyUserDetailLearningHistory,
+} from '@features/platform-management/company';
+import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
+import { FormSubTitle, Tabs } from '@learnway/ui';
+import { useRouterState } from '@tanstack/react-router';
 import { EnGlobalConst } from '@types';
+import { t } from 'i18next';
+import { useState } from 'react';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
