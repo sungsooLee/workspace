@@ -127,13 +127,13 @@ const learningTypes = [
   },
   {
     label: '시험지',
-    value: LEARNING_TYPE.TEST_PAPER,
+    value: LEARNING_TYPE.EXAM,
     icon: <IcoExam />,
     description: '설명문구2줄설명',
   },
   {
     label: '문제은행',
-    value: LEARNING_TYPE.QUESTION_BANK,
+    value: LEARNING_TYPE.EXAM_POOL,
     icon: <IcoQuestionBank />,
     description: '설명문구2줄설명',
   },

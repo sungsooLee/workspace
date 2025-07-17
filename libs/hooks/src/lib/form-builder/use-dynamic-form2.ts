@@ -102,7 +102,8 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
 
   // react-hook-form 훅 초기화
   const methods = useForm({
-    mode: 'onChange', // 입력 변경 시에도 validation 실행
+    mode: finalConfig.mode || 'onSubmit', // config에서 mode를 받아오고, 기본값은 'onSubmit'
+    reValidateMode: finalConfig.reValidateMode || 'onChange', // 에러 발생 후에는 onChange로 재검증
     defaultValues,
     resolver: zodResolver(schema),
   });
@@ -318,6 +319,7 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
       onFormFocus: handleFocus,
       originalValues,
       clearFormError: clearErrors,
+      trigger,
       registerField,
       addValidator,
     }),
@@ -331,6 +333,7 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
       registerField,
       addValidator,
       customSetValue,
+      trigger,
     ],
   );
 

@@ -1,30 +1,19 @@
-import { forwardRef, useRef, useEffect, useState, useImperativeHandle } from 'react';
-import { getDateToString, DATE_TIME_FORMAT } from '@learnway/shared';
-import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
-import { ColumnDef, createColumnHelper, CellContext } from '@tanstack/react-table';
-import { t } from 'i18next';
-import { useWatch } from 'react-hook-form';
-import { EnGlobalConst } from '@types';
-import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import {
-  ChipListModalSelectorFormField,
   ContentsRow,
-  ContentsRowItem,
-  FormSubTitle,
-  Input,
-  RadioGroupFormField,
-  GridBox,
-  GridFormField,
   EditDropdownCell,
   EditSwitchCell,
-  DatePicker,
+  FormSubTitle,
+  GridFormField,
 } from '@learnway/ui';
-import { ContentsHistoryInfoFormField, FormItem, FormRow } from '@shared/ui';
-import { DuplicateCheckInputFormField, DuplicateState, FormDisplay } from '@features/form';
-import { getUserStatus } from '../service/company-user.service';
-import UsersService from '@entities/users/api/users';
-import { CompanyUserDetailPersonal } from './company-user-detail-personal';
+import { FormRow } from '@shared/ui';
+import { CellContext } from '@tanstack/react-table';
+import { t } from 'i18next';
 
+/**
+ * 회사 유저 상세 - 직군/직무 정보
+ * @param param0
+ * @returns
+ */
 const CompanyUserDetailJobComponent = ({ provider }: { provider: any }) => {
   const jobGroupColumns = [
     {

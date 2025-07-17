@@ -173,6 +173,7 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
             />
           </ContentsRow>
         </FormDisplay>
+
         {/*학습제어*/}
         <ContentsRow type={'horizontal'} titleMode>
           <FormRow2
@@ -287,6 +288,7 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
             <FormRow provider={provider} name={''} />
           </ContentsRow>
         </FormDisplay>
+
         {/*이수기준*/}
         <ContentsRow type={'horizontal'} titleMode>
           <FormRow2
@@ -407,6 +409,7 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
             <FormRow provider={provider} name={''} />
           </ContentsRow>
         </FormDisplay>
+
         {/*커뮤니티 및 공유설정*/}
         <ContentsRow type={'horizontal'} titleMode>
           <FormRow2
@@ -484,6 +487,7 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
             />
           </ContentsRow>
         </FormDisplay>
+
         {/*강사*/}
         <ContentsRow type={'horizontal'} titleMode>
           <FormRow2
@@ -528,6 +532,7 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
             />
           </ContentsRow>
         </FormDisplay>
+
         {/*교재*/}
         <ContentsRow type={'horizontal'} titleMode>
           <FormRow2
@@ -561,6 +566,7 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
             />
           </ContentsRow>
         </FormDisplay>
+
         {/*사전/연관학습*/}
         <ContentsRow type={'horizontal'} titleMode>
           <FormRow2
@@ -632,6 +638,7 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
             />
           </ContentsRow>
         </FormDisplay>
+
         {/*행정항목*/}
         <FormSubTitle label={t('행정항목')} />
         {/*HMG 과정 데이터 표준 대분류, 중분류*/}
@@ -741,6 +748,7 @@ const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
           {/* 추가예정 항목 */}
           <FormRow2 provider={provider} name={''} />
         </ContentsRow>
+
         {/*오토에버 위탁 전용*/}
         <ContentsRow type={'horizontal'} titleMode>
           <FormRow2
