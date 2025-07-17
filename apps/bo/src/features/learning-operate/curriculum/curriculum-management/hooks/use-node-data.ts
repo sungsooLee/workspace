@@ -42,7 +42,12 @@ export const useNodeData = ({ selectedNode, curriculumId, isEditing = true }: Us
   } = useGetModuleDetail(moduleId);
 
   // 레슨 상세 조회 (레슨이 선택되고 lessonId가 유효할 때만)
-  const lessonId = shouldFetchLesson ? selectedNode?.data?.lessonId || selectedNode?.id : 0;
+  const rawLessonId = shouldFetchLesson ? selectedNode?.data?.lessonId || selectedNode?.id : 0;
+  const lessonId = shouldFetchLesson 
+    ? typeof rawLessonId === 'string' 
+      ? parseInt(rawLessonId.toString().replace('lesson-', ''))
+      : rawLessonId
+    : 0;
   const tmpModuleId = shouldFetchLesson
     ? Number(selectedNode?.parentId?.toString().split('-')[1]) || 0
     : 0;
@@ -80,6 +85,8 @@ export const useNodeData = ({ selectedNode, curriculumId, isEditing = true }: Us
   useEffect(() => {
     if (selectedNode?.type === MAPPING_CURRICULUM_TYPE.LESSON && isEditing) {
       console.log('useNodeData - Setting lesson data:', lessonData);
+      console.log('useNodeData - lessonId:', lessonId, 'moduleId:', tmpModuleId);
+      console.log('useNodeData - shouldCallLessonDetail:', shouldCallLessonDetail);
       setCurrentData(lessonData);
       setIsLoading(isLessonLoading);
       setError(lessonError ? '레슨 데이터 로드 실패' : null);

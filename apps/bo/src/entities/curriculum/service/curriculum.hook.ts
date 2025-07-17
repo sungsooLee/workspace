@@ -14,10 +14,10 @@ export function useGetModuleDetail(moduleId: number) {
   return useQuery(queryOptions.moduleDetail(moduleId));
 }
 
-export function useGetLessonDetail(data: { moduleId: number; lessonId: number }) {
+export function useGetLessonDetail(data: { moduleId?: number; lessonId?: number }) {
   return useQuery({
     ...queryOptions.lessonDetail(data),
-    enabled: data.moduleId > 0 && data.lessonId > 0,
+    enabled: !!(data.lessonId && data.lessonId > 0 && data.moduleId && data.moduleId > 0),
   });
 }
 

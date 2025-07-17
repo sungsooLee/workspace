@@ -31,9 +31,10 @@ export const queryOptions = {
     queryFn: () => CurriculumService.getModuleDetail(moduleId),
     enabled: !!moduleId,
   }),
-  lessonDetail: (data: { lessonId: number; moduleId: number }) => ({
-    queryKey: [...queryKeys.all, 'lesson', data.lessonId],
-    queryFn: () => CurriculumService.getLessonDetail(data),
+  lessonDetail: (data: { lessonId?: number; moduleId?: number }) => ({
+    queryKey: [...queryKeys.all, 'lesson', data.lessonId, data.moduleId],
+    queryFn: () =>
+      CurriculumService.getLessonDetail(data as { moduleId: number; lessonId: number }),
   }),
 };
 

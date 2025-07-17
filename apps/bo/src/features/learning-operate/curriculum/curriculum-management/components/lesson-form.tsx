@@ -9,7 +9,7 @@ import { DropdownFormField, DurationTimeFormField } from '@features/form/ui';
 import { getHourValueFromTime } from '@pages/_layout/learning/resource/-common/common';
 import { learningResourceQueryOptions } from '@entities/learning-resource';
 import { useQuery } from '@tanstack/react-query';
-import { useGetLessonDetail } from '@entities/curriculum';
+import { useGetLessonDetail } from '../../../../../entities/curriculum';
 
 interface LessonFormProps {
   provider: DynamicFormProvider;
@@ -24,6 +24,7 @@ interface LessonFormProps {
     channelUuid?: string;
     contentType?: string;
   };
+  selectedNodeData?: any;
 }
 
 export const LessonForm: React.FC<LessonFormProps> = ({
@@ -39,9 +40,7 @@ export const LessonForm: React.FC<LessonFormProps> = ({
   const lessonType = watch('lessonType') || LESSON_TYPE.GENERAL;
   const contentName = watch('contentName');
 
-  const { data: lessonData } = useGetLessonDetail(
-    isEditing && lessonId && moduleId ? { lessonId, moduleId } : { lessonId: 0, moduleId: 0 },
-  );
+  const { data: lessonData } = useGetLessonDetail({ lessonId, moduleId });
 
   // contentUuid가 있을 때만 쿼리 실행
   const { data: contentDetail, refetch: refetchContentDetail } = useQuery({
@@ -53,14 +52,13 @@ export const LessonForm: React.FC<LessonFormProps> = ({
   const initialDataSetRef = useRef(false);
 
   useEffect(() => {
-    // if (updateFormData) {
     if (isEditing && lessonData && !initialDataSetRef.current) {
       setTimeout(() => {
         const initialData = {
           ...lessonData,
           lessonName: lessonData.lessonName,
           lessonType: lessonData.lessonType || LESSON_TYPE.GENERAL,
-          description: lessonData.description,
+          lessonDescription: lessonData.lessonDescription,
           learningTime: getHourValueFromTime(lessonData.learningTime),
           contentUuid: lessonData.contentUuid || '',
           contentName: lessonData.contentName || '',
@@ -76,7 +74,7 @@ export const LessonForm: React.FC<LessonFormProps> = ({
       const defaultData = {
         lessonType: LESSON_TYPE.GENERAL,
         lessonName: '',
-        description: '',
+        lessonDescription: '',
         learningTime: { hour: 0, minute: 0, second: 0 },
         contentUuid: '',
         contentName: '',
@@ -223,7 +221,7 @@ export const LessonForm: React.FC<LessonFormProps> = ({
       <ContentsRow>
         <FormRow2
           provider={provider}
-          name="description"
+          name="lessonDescription"
           label="설명"
           format="string"
           element={<Textarea maxLength={100} />}

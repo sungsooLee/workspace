@@ -12,8 +12,6 @@ interface NodeFormRendererProps {
   provider: DynamicFormProvider;
   updateFormData: (data: Record<string, any>) => void;
   watch: any;
-  selectedNodeData?: any;
-  isLoading?: boolean;
   clearAllValidators?: () => void;
   curriculumData?: {
     tenantId?: number;
@@ -29,8 +27,6 @@ export const NodeFormRenderer: React.FC<NodeFormRendererProps> = ({
   provider,
   updateFormData,
   watch,
-  selectedNodeData,
-  isLoading,
   clearAllValidators,
   curriculumData,
 }) => {

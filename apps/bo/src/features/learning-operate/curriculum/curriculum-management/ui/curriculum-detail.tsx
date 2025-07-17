@@ -2,7 +2,6 @@ import { t } from 'i18next';
 import { useRef, useState, useEffect } from 'react';
 import { FormState } from '../types/form.types';
 import { NodeFormRenderer } from '../components/node-form-renderer';
-import { useNodeData } from '../hooks/use-node-data';
 import { useTreeButtons } from '../hooks/use-tree-buttons';
 import {
   useCreateCurriculum,
@@ -20,9 +19,7 @@ import {
 import { useDynamicForm2 } from '@learnway/hooks';
 import {
   CurriculumResponse,
-  FixedModuleSaveParams,
   FixedModuleUpdateParams,
-  GeneralModuleSaveParams,
   GeneralModuleUpdateParams,
   LESSON_TYPE,
   MAPPING_CURRICULUM_TYPE,
@@ -36,7 +33,6 @@ import { IcoMinus } from '@learnway/icons';
 import { SectionLayout } from '@shared/ui';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { getTimeValueFromHour } from '@learnway/shared';
-import { useQueryClient } from '@tanstack/react-query';
 
 interface CurriculumDetailProps {
   mode: FORM_MODE;
@@ -50,17 +46,19 @@ const CurriculumDetailComponent = ({
   onCurriculumCreated,
 }: CurriculumDetailProps) => {
   const { data: loginUser } = useFetchAuthUser();
-  const queryClient = useQueryClient();
   const [formStatus, setFormStatus] = useState<FROM_STATUS>(FROM_STATUS.NONE);
   const [treeData, setTreeData] = useState<TreeNode[]>([]);
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
-  const [formKey, setFormKey] = useState(0); // 폼 리마운트를 위한 카운터
+  const [formKey, setFormKey] = useState(0);
   const [formState, setFormState] = useState<FormState>({
     activeFormType: null,
     selectedNode: null,
     parentNode: null,
     isEditing: false,
   });
+
+  // 이전 선택 노드 추적용 ref
+  const prevSelectedNodeRef = useRef<TreeNode | null>(null);
 
   const shouldFetchDetail = mode === FORM_MODE.detail && curriculumId > 0;
   const { data: curriculumDetail, isLoading: isLoadingDetail } = useGetCurriculumDetail(
@@ -88,16 +86,6 @@ const CurriculumDetailComponent = ({
     clearAllValidators,
   } = useDynamicForm2();
   const formRef = useRef<HTMLFormElement>(null);
-
-  const {
-    data: selectedNodeData,
-    isLoading: isNodeDataLoading,
-    error: nodeDataError,
-  } = useNodeData({
-    selectedNode: formState.selectedNode,
-    curriculumId,
-    isEditing: formState.isEditing,
-  });
 
   useEffect(() => {
     if (curriculumDetail) {
@@ -151,7 +139,7 @@ const CurriculumDetailComponent = ({
       const updateData: GeneralModuleUpdateParams = {
         moduleId: data.moduleId,
         moduleName: data.moduleName,
-        description: data.description,
+        moduleDescription: data.moduleDescription,
       };
       return updateCurriculumGeneralModule(
         {
@@ -164,7 +152,7 @@ const CurriculumDetailComponent = ({
       const updateData: FixedModuleUpdateParams = {
         moduleId: data.moduleId,
         moduleName: data.moduleName,
-        description: data.description,
+        moduleDescription: data.moduleDescription,
         totalTime: getTimeValueFromHour(data.contentDuration),
       };
       return updateCurriculumFixedModule(
@@ -202,7 +190,6 @@ const CurriculumDetailComponent = ({
   };
 
   const handleFormSubmit = (data: any) => {
-    console.log('🚀 handleFormSubmit called with data:', data);
     const { activeFormType, parentNode, isEditing } = formState;
     switch (activeFormType) {
       case MAPPING_CURRICULUM_TYPE.CURRICULUM: {
@@ -275,10 +262,6 @@ const CurriculumDetailComponent = ({
           const updateModuleFn = moduleUpdateStrategy[moduleType as MODULE_TYPE];
           if (updateModuleFn) {
             updateModuleFn(data, async (updateModule: any) => {
-              // await queryClient.invalidateQueries({
-              //   queryKey: ['curriculum-all', 'module', updateModule.moduleId],
-              // });
-
               const updatedNode: TreeNode = {
                 id: updateModule.moduleId,
                 key: `module-${updateModule.moduleId}`,
@@ -291,14 +274,14 @@ const CurriculumDetailComponent = ({
                 },
               };
 
-              handleNodeSelect(updatedNode);
+              handleNodeSelect(updatedNode, true); // 수정 완료 후 강제 새로고침
             });
           }
         } else {
           const moduleData = {
             moduleName: data.moduleName,
             moduleType: data.moduleType,
-            description: data.description,
+            moduleDescription: data.moduleDescription,
             curriculumId,
             ...(data.moduleType === MODULE_TYPE.FIXED && {
               orgnId: data.orgnId,
@@ -312,10 +295,6 @@ const CurriculumDetailComponent = ({
             createModuleFn(moduleData, async (createdModuleId: number) => {
               onFormChange();
 
-              await queryClient.invalidateQueries({
-                queryKey: ['curriculum-all', 'detail', curriculumId],
-              });
-
               const newNode: TreeNode = {
                 id: createdModuleId,
                 key: `module-${createdModuleId}`,
@@ -327,7 +306,7 @@ const CurriculumDetailComponent = ({
                   moduleId: createdModuleId,
                   moduleName: data.moduleName,
                   moduleType: data.moduleType,
-                  description: data.description,
+                  moduleDescription: data.moduleDescription,
                 },
               };
 
@@ -349,10 +328,17 @@ const CurriculumDetailComponent = ({
           const isParentGeneralModule =
             parentNode?.type === MAPPING_CURRICULUM_TYPE.MODULE &&
             parentNode?.data.moduleType === MODULE_TYPE.GENERAL;
+          // lessonId 추출 (formState.selectedNode.id가 "lesson-123" 형태일 수 있음)
+          const extractedLessonId = formState.selectedNode?.id
+            ? typeof formState.selectedNode.id === 'string'
+              ? parseInt(formState.selectedNode.id.replace('lesson-', ''))
+              : formState.selectedNode.id
+            : data.lessonId;
+
           const lessonData = {
-            lessonId: data.lessonId,
+            lessonId: extractedLessonId,
             lessonName: data.lessonName,
-            description: data.description,
+            lessonDescription: data.lessonDescription,
             learningTime: getTimeValueFromHour(
               data.learningTime as {
                 hour: number;
@@ -376,17 +362,17 @@ const CurriculumDetailComponent = ({
                     lessonId: updatedLessonId,
                     lessonName: data.lessonName,
                     lessonType: data.lessonType || 'TOC',
-                    description: data.description,
+                    lessonDescription: data.lessonDescription,
                     learningTime: getTimeValueFromHour(data.learningTime),
                   },
                 };
                 expandParentNodes(parentNode);
-                handleNodeSelect(updatedNode);
+                handleNodeSelect(updatedNode, true); // 수정 완료 후 강제 새로고침
               },
             });
           } else if (isParentFixedModule) {
             updateLessonByFixed(
-              { lessonId: data.lessonId, lessonName: data.lessonName },
+              { lessonId: extractedLessonId, lessonName: data.lessonName },
               {
                 onSUccess: async (updatedLessonId: number) => {
                   onFormChange();
@@ -401,13 +387,13 @@ const CurriculumDetailComponent = ({
                       lessonId: updatedLessonId,
                       lessonName: data.lessonName,
                       lessonType: data.lessonType || 'TOC',
-                      description: data.description,
+                      lessonDescription: data.lessonDescription,
                       learningTime: getTimeValueFromHour(data.learningTime),
                       moduleId: parentNode?.data.moduleId,
                     },
                   };
                   expandParentNodes(parentNode);
-                  handleNodeSelect(updatedNode);
+                  handleNodeSelect(updatedNode, true); // 수정 완료 후 강제 새로고침
                 },
               },
             );
@@ -416,7 +402,7 @@ const CurriculumDetailComponent = ({
           const lessonData = {
             curriculumId: curriculumDetail?.curriculumId,
             lessonName: data.lessonName,
-            description: data.description,
+            lessonDescription: data.lessonDescription,
             lessonType: data.lessonType || 'GENERAL',
             learningTime: getTimeValueFromHour(
               data.learningTime as {
@@ -448,15 +434,8 @@ const CurriculumDetailComponent = ({
               },
               {
                 onSuccess: async (createdLessonId: any) => {
-                  console.log('Lesson created successfully:', createdLessonId);
                   onFormChange();
 
-                  // React Query 캐시 무효화하여 최신 커리큘럼 데이터 가져오기
-                  await queryClient.invalidateQueries({
-                    queryKey: ['curriculum-all', 'detail', curriculumId],
-                  });
-
-                  // 약간의 지연을 두고 새 노드 선택 (API 데이터 로딩 대기)
                   const newNode: TreeNode = {
                     id: createdLessonId,
                     key: `lesson-${createdLessonId}`,
@@ -467,13 +446,12 @@ const CurriculumDetailComponent = ({
                     data: {
                       lessonId: createdLessonId,
                       lessonName: data.lessonName,
-                      lessonType: data.lessonType || 'TOC',
-                      description: data.description,
+                      lessonType: data.lessonType || 'GENERAL',
+                      lessonDescription: data.lessonDescription,
                       learningTime: getTimeValueFromHour(data.learningTime),
                     },
                   };
 
-                  // 부모 노드들을 펼치기
                   expandParentNodes(parentNode);
                   handleNodeSelect(newNode);
                 },
@@ -488,13 +466,7 @@ const CurriculumDetailComponent = ({
               },
               {
                 onSuccess: async (createdLessonId: number) => {
-                  console.log('Lesson created successfully (by module):', createdLessonId);
                   onFormChange();
-
-                  // React Query 캐시 무효화하여 최신 커리큘럼 데이터 가져오기
-                  await queryClient.invalidateQueries({
-                    queryKey: ['curriculum-all', 'detail', curriculumId],
-                  });
 
                   const newNode: TreeNode = {
                     id: createdLessonId,
@@ -507,7 +479,7 @@ const CurriculumDetailComponent = ({
                       lessonId: createdLessonId,
                       lessonName: data.lessonName,
                       lessonType: data.lessonType || 'TOC',
-                      description: data.description,
+                      lessonDescription: data.lessonDescription,
                       learningTime: getTimeValueFromHour(data.learningTime),
                       moduleId: parentNode?.data.moduleId,
                     },
@@ -540,7 +512,13 @@ const CurriculumDetailComponent = ({
   };
 
   // 트리 노드 선택 핸들러
-  const handleNodeSelect = (node: TreeNode) => {
+  const handleNodeSelect = (node: TreeNode, forceRefresh = false) => {
+    // 같은 노드를 다시 클릭한 경우 처리하지 않음 (강제 새로고침이 아닌 경우)
+    if (!forceRefresh && prevSelectedNodeRef.current?.id === node.id) {
+      return;
+    }
+
+    prevSelectedNodeRef.current = node;
     clearAllValidators();
 
     setFormState({
@@ -632,8 +610,6 @@ const CurriculumDetailComponent = ({
             provider={provider}
             updateFormData={updateFormData}
             watch={watch}
-            selectedNodeData={selectedNodeData}
-            isLoading={isNodeDataLoading}
             clearAllValidators={clearAllValidators}
             curriculumData={{
               tenantId: curriculumDetail?.tenantId || loginUser?.activeTenant?.tenantId,

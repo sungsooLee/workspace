@@ -58,7 +58,7 @@ export const ModuleForm: React.FC<ModuleFormProps> = ({
           ...moduleData,
           moduleName: moduleData.moduleName,
           moduleType: moduleData.moduleType || MODULE_TYPE.GENERAL,
-          description: moduleData.description,
+          moduleDescription: moduleData.moduleDescription,
           contentDuration: getHourValueFromTime(moduleData.totalTime),
           contentUuid: moduleData.contentUuid || '',
           contentName: moduleData.contentName || '',
@@ -74,7 +74,7 @@ export const ModuleForm: React.FC<ModuleFormProps> = ({
       const defaultData = {
         moduleType: MODULE_TYPE.GENERAL,
         moduleName: '',
-        description: '',
+        moduleDescription: '',
         contentDuration: { hour: 0, minute: 0, second: 0 },
         contentUuid: '',
         contentName: '',
@@ -218,7 +218,7 @@ export const ModuleForm: React.FC<ModuleFormProps> = ({
       <ContentsRow>
         <FormRow2
           provider={provider}
-          name="description"
+          name="moduleDescription"
           label="설명"
           format="string"
           element={<Textarea maxLength={100} />}
