@@ -33,38 +33,37 @@ import {
 import { Course } from '@types';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CourseTabBaseProps, TabFormRef } from '../../../-common/type';
+import { CourseDetailTabBaseProps, CourseDetailTabFormRef } from '../../../-common/type';
 import { CourseStatsSummary } from '../../../-components/course-stats-summary/course-stats-summary';
 import { PassOptionFormField } from '../../../-components/pass-option-form-field/pass-option-form-field';
 import { InstructorListPopup } from '@features/platform/instructor/management/modal/instructor-list-modal';
+import { useFetchCourse, useFetchCourseConfig } from '@entities/course';
 
-const CourseDetailComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
-  ({ onSave, onConfigPropChange, data: { formData, courseConfig, isSaved } }, ref) => {
+const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBaseProps>(
+  ({ courseId }, ref) => {
     const { t } = useTranslation();
 
-    const { provider, getValues, updateFormData, onFormValid, formState, watch } =
-      useDynamicForm2();
+    const { provider, getValues, updateFormData } = useDynamicForm2();
 
-    const channelUuid = watch('channelUuid');
-    const courseType = watch('courseType');
+    const { data: formData } = useFetchCourse(courseId);
+    const { data: courseConfig } = useFetchCourseConfig({
+      courseType: formData?.courseType,
+      channelUuid: formData?.channelUuid,
+    });
 
-    console.log('----- basic', { formData, courseConfig, channelUuid, courseType, isSaved });
+    console.log('----- course-detail', { courseId });
 
-    // 부모 컴포넌트에서 호출할 수 있는 유효성 검사 메서드
+    // 부모 컴포넌트에서 호출할 수 있는 메서드
     useImperativeHandle(ref, () => ({
-      validate: async () => {
-        // 모든 필드에 대해 유효성 검사 수행
-        const isValid = await onFormValid();
-        const data = formDataToRequestData(getValues() as Course);
-        const errors = formState.errors;
-
-        return {
-          isValid,
-          data,
-          errors,
-        };
-      },
       getValues: () => formDataToRequestData(getValues() as Course),
+      save: async () => {
+        console.log('save');
+        return true;
+      },
+      delete: async () => {
+        console.log('delete');
+        return true;
+      },
     }));
 
     useEffect(() => {
@@ -75,21 +74,10 @@ const CourseDetailComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
       }
     }, [formData]);
 
-    // 유형과 채널이 모두 변경되었을 때 상위 컴포넌트에 알림
-    useEffect(() => {
-      const hasProp = courseType && channelUuid;
-      const isChanged = formData.courseType !== courseType || formData.channelUuid !== channelUuid;
-      if (hasProp && isChanged) {
-        console.log('유형과 채널 변경됨:', { courseType, channelUuid });
-        // 상위 컴포넌트에 변경 알림
-        onConfigPropChange?.({ courseType, channelUuid });
-      }
-    }, [courseType, channelUuid, onConfigPropChange]);
-
     return (
       <>
         {/* 과정 통계 요약 CourseStatsSummary*/}
-        <CourseStatsSummary courseId={formData.courseId} />
+        <CourseStatsSummary courseId={formData?.courseId} />
 
         <SplitPanel size={['auto', 40]} divider>
           <div>
@@ -357,19 +345,19 @@ const CourseDetailComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
                 }
               />
               {/*연락처*/}
-              <FormRow2
-                provider={provider}
-                name={'coordinatorTelNo'}
-                label={'연락처'}
-                element={
-                  <PhoneNumberFormField
-                    fields={{ nationCode: 'coordinatorTelCountryCode', number: 'coordinatorTelNo' }}
-                    phoneNumberConfig={{
-                      options: [{ value: 'KOR_82', label: '+82' }],
-                    }}
-                  />
-                }
-              />
+              {/*<FormRow2*/}
+              {/*  provider={provider}*/}
+              {/*  name={'coordinatorTelNo'}*/}
+              {/*  label={'연락처'}*/}
+              {/*  element={*/}
+              {/*    <PhoneNumberFormField*/}
+              {/*      fields={{ nationCode: 'coordinatorTelCountryCode', number: 'coordinatorTelNo' }}*/}
+              {/*      phoneNumberConfig={{*/}
+              {/*        options: [{ value: 'KOR_82', label: '+82' }],*/}
+              {/*      }}*/}
+              {/*    />*/}
+              {/*  }*/}
+              {/*/>*/}
               {/*이메일*/}
               <FormRow2
                 provider={provider}
@@ -401,19 +389,19 @@ const CourseDetailComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
                 }
               />
               {/*연락처*/}
-              <FormRow2
-                provider={provider}
-                name={'operatorTelNo'}
-                label={'연락처'}
-                element={
-                  <PhoneNumberFormField
-                    fields={{ nationCode: 'operatorTelCountryCode', number: 'operatorTelNo' }}
-                    phoneNumberConfig={{
-                      options: [{ value: 'KOR_82', label: '+82' }],
-                    }}
-                  />
-                }
-              />
+              {/*<FormRow2*/}
+              {/*  provider={provider}*/}
+              {/*  name={'operatorTelNo'}*/}
+              {/*  label={'연락처'}*/}
+              {/*  element={*/}
+              {/*    <PhoneNumberFormField*/}
+              {/*      fields={{ nationCode: 'operatorTelCountryCode', number: 'operatorTelNo' }}*/}
+              {/*      phoneNumberConfig={{*/}
+              {/*        options: [{ value: 'KOR_82', label: '+82' }],*/}
+              {/*      }}*/}
+              {/*    />*/}
+              {/*  }*/}
+              {/*/>*/}
               {/*이메일*/}
               <FormRow2
                 provider={provider}
@@ -474,7 +462,7 @@ const CourseDetailComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
                 name={'isEnrollRequired'}
                 label={'수강신청'}
                 format={'boolean'}
-                element={<SwitchFormField disabled={courseConfig.enrollOption === 'IMPOSSIBLE'} />}
+                element={<SwitchFormField disabled={courseConfig?.enrollOption === 'IMPOSSIBLE'} />}
               />
             </ContentsRow>
             {/*승인 결재 라인, 정원*/}
@@ -597,7 +585,7 @@ const CourseDetailComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
                 name={'isUsePassOption'}
                 label={'이수기준'}
                 format={'boolean'}
-                element={<SwitchFormField disabled={courseConfig.passOption === 'IMPOSSIBLE'} />}
+                element={<SwitchFormField disabled={courseConfig?.passOption === 'IMPOSSIBLE'} />}
               />
             </ContentsRow>
             <FormDisplay
@@ -718,7 +706,7 @@ const CourseDetailComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
                 label={'학습환경'}
                 format={'boolean'}
                 element={
-                  <SwitchFormField disabled={courseConfig.learningEnvOption === 'IMPOSSIBLE'} />
+                  <SwitchFormField disabled={courseConfig?.learningEnvOption === 'IMPOSSIBLE'} />
                 }
               />
             </ContentsRow>
@@ -844,7 +832,9 @@ const CourseDetailComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
                 format={'boolean'}
                 label={'학습제어'}
                 element={
-                  <SwitchFormField disabled={courseConfig.learningControlOption === 'IMPOSSIBLE'} />
+                  <SwitchFormField
+                    disabled={courseConfig?.learningControlOption === 'IMPOSSIBLE'}
+                  />
                 }
               />
             </ContentsRow>
@@ -959,7 +949,7 @@ const CourseDetailComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
                 label={'강사'}
                 format={'boolean'}
                 element={
-                  <SwitchFormField disabled={courseConfig.instructorOption === 'IMPOSSIBLE'} />
+                  <SwitchFormField disabled={courseConfig?.instructorOption === 'IMPOSSIBLE'} />
                 }
               />
             </ContentsRow>
@@ -1006,7 +996,7 @@ const CourseDetailComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
                 label={'교재'}
                 format={'boolean'}
                 element={
-                  <SwitchFormField disabled={courseConfig.textBookOption === 'IMPOSSIBLE'} />
+                  <SwitchFormField disabled={courseConfig?.textBookOption === 'IMPOSSIBLE'} />
                 }
               />
             </ContentsRow>
@@ -1042,7 +1032,7 @@ const CourseDetailComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
                 label={'사전/연관학습'}
                 format={'boolean'}
                 element={
-                  <SwitchFormField disabled={courseConfig.relatedCourseOption === 'IMPOSSIBLE'} />
+                  <SwitchFormField disabled={courseConfig?.relatedCourseOption === 'IMPOSSIBLE'} />
                 }
               />
             </ContentsRow>

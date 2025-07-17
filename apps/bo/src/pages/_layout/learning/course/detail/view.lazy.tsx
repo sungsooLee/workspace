@@ -7,7 +7,7 @@ import { Curriculum } from '@pages/_layout/learning/course/detail/-tabs/curricul
 import { Sequence } from '@pages/_layout/learning/course/detail/-tabs/sequence';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 
 export const Route = createLazyFileRoute('/_layout/learning/course/detail/view')({
   component: RouteComponent,
@@ -21,25 +21,8 @@ function RouteComponent() {
   const { courseId, courseType } = router.state.location.state;
 
   // 커스텀 훅 사용
-  const {
-    data,
-    activeTab,
-    setTabRef,
-    loadCourseData,
-    loadCourseConfig,
-    saveCurrentTab,
-    changeTab,
-    loadMockData,
-    getTabValues,
-    deleteCourseData,
-  } = useCourseDetailForm(courseType);
-
-  // 최초 데이터 로드
-  useEffect(() => {
-    if (courseId) {
-      loadCourseData(courseId);
-    }
-  }, [courseId]);
+  const { activeTab, setTabRef, saveTabData, changeTab, getTabValues, deleteTabData } =
+    useCourseDetailForm(courseType);
 
   const moveListPage = () => {
     router.navigate({
@@ -55,12 +38,11 @@ function RouteComponent() {
   const handleSaveClick = async () => {
     try {
       if (await saveConfirm()) {
-        await saveCurrentTab();
+        await saveTabData();
         await showSaveComplete();
         moveListPage();
       }
     } catch (e) {
-      // 에러는 상위에서 처리하거나, 필요시 여기서 처리
       console.error('저장 중 에러:', e);
     }
   };
@@ -68,7 +50,7 @@ function RouteComponent() {
   const handleDeleteClick = async () => {
     try {
       if (await deleteConfirm()) {
-        await deleteCourseData(courseId);
+        await deleteTabData();
         await showDeleteComplete();
         moveListPage();
       }
@@ -83,15 +65,6 @@ function RouteComponent() {
     changeTab(activeKey as CourseDetailTab);
   };
 
-  // 기본정보 설정 컴포넌트에서 유형과 채널이 변경되었을 때 호출되는 함수
-  const handleConfigPropChange = useCallback(
-    (config: { courseType: string; channelUuid: string }) => {
-      console.log('handleConfigPropChange', config);
-      loadCourseConfig(config.courseType, config.channelUuid);
-    },
-    [loadCourseConfig],
-  );
-
   const tabItems = useMemo(
     () => [
       {
@@ -100,8 +73,7 @@ function RouteComponent() {
         content: (
           <CourseDetail
             ref={(ref) => setTabRef(CourseDetailTab.COURSE_DETAIL, ref)}
-            data={data}
-            onConfigPropChange={handleConfigPropChange}
+            courseId={courseId}
           />
         ),
       },
@@ -109,21 +81,28 @@ function RouteComponent() {
         title: '커리큘럼',
         key: CourseDetailTab.CURRICULUM,
         content: (
-          <Curriculum ref={(ref) => setTabRef(CourseDetailTab.CURRICULUM, ref)} data={data} />
+          <Curriculum
+            ref={(ref) => setTabRef(CourseDetailTab.CURRICULUM, ref)}
+            courseId={courseId}
+          />
         ),
       },
       {
         title: '차수',
         key: CourseDetailTab.SEQUENCE,
-        content: <Sequence ref={(ref) => setTabRef(CourseDetailTab.SEQUENCE, ref)} data={data} />,
+        content: (
+          <Sequence ref={(ref) => setTabRef(CourseDetailTab.SEQUENCE, ref)} courseId={courseId} />
+        ),
       },
       {
         title: '커뮤니티',
         key: CourseDetailTab.COMMUNITY,
-        content: <Community ref={(ref) => setTabRef(CourseDetailTab.COMMUNITY, ref)} data={data} />,
+        content: (
+          <Community ref={(ref) => setTabRef(CourseDetailTab.COMMUNITY, ref)} courseId={courseId} />
+        ),
       },
     ],
-    [data, setTabRef],
+    [setTabRef],
   );
 
   console.log('------- view.lazy page...');
@@ -133,7 +112,7 @@ function RouteComponent() {
       <PageContainer hideOutLine={true}>
         <ContentsButtons>
           <ToggleButtonGroup
-            defaultValue={'수강관리value'}
+            defaultValue={'과정관리value'}
             options={[
               { label: '과정관리', value: '과정관리value' },
               { label: '수강관리', value: '수강관리value' },
@@ -152,7 +131,7 @@ function RouteComponent() {
             variant="point"
             size="sm"
             label={'SET'}
-            onClick={() => loadMockData(4)}
+            // onClick={() => loadMockData(4)}
           />
           <Button
             type="button"
