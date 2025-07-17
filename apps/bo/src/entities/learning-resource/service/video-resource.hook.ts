@@ -16,11 +16,15 @@ const useVideoResourceHook = (provider: DynamicFormProvider) => {
     onFormChange(status);
   };
 
+  const fetchVideo = async () => {
+    //
+  };
+
   useEffect(() => {
     if (!processingStatus || processingStatus === ProcessingStatus.NONE) return;
 
-    if ([ProcessingStatus.COMPLETE, ProcessingStatus.FAIL].includes(processingStatus)) {
-      if (intervalRef.current) {
+    if (intervalRef.current) {
+      if ([ProcessingStatus.COMPLETE, ProcessingStatus.FAIL].includes(processingStatus)) {
         clearInterval(intervalRef.current);
         intervalRef.current = undefined;
       }
@@ -30,6 +34,10 @@ const useVideoResourceHook = (provider: DynamicFormProvider) => {
       )
     ) {
       intervalRef.current = setInterval(fetchStatus, 2 * 1000);
+    }
+
+    if (processingStatus === ProcessingStatus.COMPLETE) {
+      fetchVideo();
     }
 
     return () => intervalRef.current && clearInterval(intervalRef.current);
