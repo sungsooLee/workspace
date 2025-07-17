@@ -129,7 +129,7 @@ const LearningResourceVideoDetailComponent = ({ provider }: Props) => {
         </ContentsRow>
       </FormDisplay>
       <MediaContentRequiredCheckFormField provider={provider} />
-      <ContentsHistoryInfoFormField />
+      <ContentsHistoryInfoFormField provider={provider} />
     </>
   );
 };
