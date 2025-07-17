@@ -9,11 +9,13 @@ import { SearchBox } from '@shared/ui/search-box';
 import { useQueryClient } from '@tanstack/react-query';
 import { Link, useLocation } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { EnGlobalConst } from '@types';
+import { EnGlobalConst, RoleInfo } from '@types';
 import dayjs from 'dayjs';
 import { t } from 'i18next';
 import { useCallback, useEffect, useState } from 'react';
 import { useWatch } from 'react-hook-form';
+import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
+import { useFetchAuthUser } from '@learnway/auth/entities';
 
 const _global = {
   unlockClick: (row: any) => {
@@ -33,6 +35,7 @@ const _global = {
 const CompanyUserListComponent = () => {
   const location = useLocation();
 
+  const { data: loginUser } = useFetchAuthUser();
   const queryClient = useQueryClient();
 
   const { alert, confirm: openConfirm } = useModal();
@@ -89,6 +92,18 @@ const CompanyUserListComponent = () => {
     }
   }, [tenantIdWatch]);
 
+  useEffect(() => {
+    if (!loginUser) return;
+
+    const tenantIdOptions = loginUser.tenants.map((tenant) => ({
+      value: tenant.tenantId,
+      label: tenant.tenantName,
+    }));
+
+    setOptions('tenantId', tenantIdOptions);
+    if (loginUser.activeTenant) setValue('tenantId', loginUser.activeTenant.tenantId ?? '');
+  }, [loginUser]);
+
   _global.unlockClick = async (row: any) => {
     const message =
       row.authType === 'PLATFORM' ? (
@@ -126,13 +141,20 @@ const CompanyUserListComponent = () => {
   };
 
   const customExcelButtons = () => {
-    // TODO. 테넌트 관리자의 경우 엑셀 업로드/다운로드
-    // return (
-    //   <>
-    //     <GridExcelUploadButton />
-    //     <GridExcelDownloadButton />
-    //   </>
-    // );
+    // TODO 테넌트 관리자의 경우 엑셀 업로드/다운로드(추후 platform 메니져는 조건은 삭제)
+    const myRoleTypes = loginUser?.myRoles?.filter((item: RoleInfo) => {
+      if (item.roleType === 'TENANT_MANAGER' || item.roleType === 'PLATFORM_MANAGER') {
+        return item.roleType;
+      }
+    });
+    if (myRoleTypes && myRoleTypes.length !== 0) {
+      return (
+        <>
+          <GridExcelUploadButton />
+          <GridExcelDownloadButton />
+        </>
+      );
+    }
     return '';
   };
 
