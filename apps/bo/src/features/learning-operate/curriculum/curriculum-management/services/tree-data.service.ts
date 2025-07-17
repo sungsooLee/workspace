@@ -101,6 +101,7 @@ export class TreeDataService {
                 type: 'LESSON',
                 level: 1, // 커리큘럼 바로 아래 레슨
                 parentId: curriculumNode.id,
+                moduleId: item.moduleId,
                 data: {
                   lessonId: item.lessonId,
                   lessonName: item.lessonName,

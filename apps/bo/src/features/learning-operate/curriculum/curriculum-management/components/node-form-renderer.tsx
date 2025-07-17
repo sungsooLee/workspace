@@ -89,14 +89,17 @@ export const NodeFormRenderer: React.FC<NodeFormRendererProps> = ({
             : selectedNode.id
           : undefined;
 
-      // 부모 모듈 ID 추출
+      // 부모 모듈 ID 추출 (커리큘럼에 바로 붙어있는 레슨의 경우에는 선택한 노드에서 모듈ID 추출)
       const moduleId =
-        isEditing && selectedNode?.parentId
-          ? typeof selectedNode.parentId === 'string'
-            ? parseInt(selectedNode.parentId.toString().replace('module-', ''))
-            : selectedNode.parentId
-          : undefined;
-
+        isEditing && selectedNode?.moduleId
+          ? selectedNode.moduleId
+          : isEditing && selectedNode?.parentId
+            ? typeof selectedNode.parentId === 'string'
+              ? parseInt(selectedNode.parentId.toString().replace('module-', ''))
+              : selectedNode.parentId
+            : undefined;
+      console.log(selectedNode);
+      console.log(lessonId, moduleId);
       return (
         <LessonForm
           key={`lesson-${lessonId || 'new'}`}

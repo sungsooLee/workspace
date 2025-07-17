@@ -265,6 +265,7 @@ const CurriculumDetailComponent = ({
               const updatedNode: TreeNode = {
                 id: updateModule.moduleId,
                 key: `module-${updateModule.moduleId}`,
+                name: updateModule.moduleName,
                 type: MAPPING_CURRICULUM_TYPE.MODULE,
                 parentId: parentNode?.id || null,
                 children: [],
@@ -274,7 +275,9 @@ const CurriculumDetailComponent = ({
                 },
               };
 
-              handleNodeSelect(updatedNode, true); // 수정 완료 후 강제 새로고침
+              setTimeout(() => {
+                handleNodeSelect(updatedNode, true); // 수정 완료 후 강제 새로고침
+              }, 200);
             });
           }
         } else {
@@ -367,7 +370,9 @@ const CurriculumDetailComponent = ({
                   },
                 };
                 expandParentNodes(parentNode);
-                handleNodeSelect(updatedNode, true); // 수정 완료 후 강제 새로고침
+                setTimeout(() => {
+                  handleNodeSelect(updatedNode, true); // 수정 완료 후 강제 새로고침
+                }, 200);
               },
             });
           } else if (isParentFixedModule) {
@@ -393,7 +398,9 @@ const CurriculumDetailComponent = ({
                     },
                   };
                   expandParentNodes(parentNode);
-                  handleNodeSelect(updatedNode, true); // 수정 완료 후 강제 새로고침
+                  setTimeout(() => {
+                    handleNodeSelect(updatedNode, true); // 수정 완료 후 강제 새로고침
+                  }, 200);
                 },
               },
             );
