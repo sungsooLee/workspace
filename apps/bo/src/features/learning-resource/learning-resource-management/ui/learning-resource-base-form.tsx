@@ -29,6 +29,7 @@ const LearningResourceBaseFormComponent = ({
   formMode = EnFormMode.NONE,
   showAiInfo = false,
   showLessonTime = false,
+  readOnlyLessonTime = false,
 }: {
   provider: DynamicFormProvider;
   formMode?: EnFormMode;
@@ -36,6 +37,7 @@ const LearningResourceBaseFormComponent = ({
   showAiInfo?: boolean;
   /** 학습 시간 노출 여부 */
   showLessonTime?: boolean;
+  readOnlyLessonTime?: boolean;
 }) => {
   return (
     <>
@@ -228,7 +230,7 @@ const LearningResourceBaseFormComponent = ({
             name="contentAddInfo"
             label={'학습 시간'}
             value=""
-            element={<SecondDurationTimeFormField />}
+            element={<SecondDurationTimeFormField readOnly={readOnlyLessonTime} />}
           />
         </ContentsRow>
       )}

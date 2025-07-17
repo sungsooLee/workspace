@@ -13,7 +13,7 @@ interface Props {
 const LearningResourceVideoDetailComponent = ({ provider }: Props) => {
   return (
     <>
-      <LearningResourceBaseForm provider={provider} showAiInfo showLessonTime />
+      <LearningResourceBaseForm provider={provider} showAiInfo showLessonTime readOnlyLessonTime />
       <ContentsRow type="horizontal" className="inactive">
         {/* 자막 여부 */}
         <FormRow provider={provider} name={'isSubtitles'} />
