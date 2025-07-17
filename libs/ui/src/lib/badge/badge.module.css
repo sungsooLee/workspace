@@ -71,6 +71,12 @@
           @apply text-white;
         }
       }
+      &.caution {
+        @apply bg-[var(--red65)];
+        .label {
+          @apply text-white;
+        }
+      }
       &.fill {
         @apply border border-solid border-[var(--secondary6)] bg-[var(--secondary6)];
         .label {

@@ -1,1 +1,9 @@
 /* thumb-nail-list.module.css */
+.start {
+  &.thumbnail_list {
+    @apply flex;
+    .thumbnail_item {
+      @apply max-w-[660px] flex-1 shrink-0;
+    }
+  }
+}

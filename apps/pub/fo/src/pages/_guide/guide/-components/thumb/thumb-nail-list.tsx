@@ -6,18 +6,26 @@ import { cn } from '@learnway/shared';
 interface ThumbnailListProps {
   items: ThumbnailData[];
   direction?: 'horizontal' | 'vertical';
+  stacked?: boolean;
   className?: string;
 }
 
 const ThumbnailList: React.FC<ThumbnailListProps> = ({
   items,
   direction = 'vertical',
+  stacked = false,
   className,
 }) => {
   return (
-    <div className={cn(styles.thumbnail_list, className, 'thumbnail_list')}>
+    <div className={cn(styles.start, styles.thumbnail_list, className, 'thumbnail_list')}>
       {items.map((item, index) => (
-        <ThumbnailItem key={index} data={item} direction={direction} />
+        <ThumbnailItem
+          stacked={stacked}
+          key={index}
+          data={item}
+          direction={direction}
+          className={styles.thumbnail_item}
+        />
       ))}
     </div>
   );
