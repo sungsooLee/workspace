@@ -48,6 +48,7 @@ export const NodeFormRenderer: React.FC<NodeFormRendererProps> = ({
 
       return (
         <CurriculumFormSimple
+          key={`curriculum-${curriculumId || 'new'}-${isEditing ? 'edit' : 'create'}`}
           parentNode={parentNode}
           selectedNode={selectedNode}
           isEditing={isEditing}
@@ -72,6 +73,7 @@ export const NodeFormRenderer: React.FC<NodeFormRendererProps> = ({
 
       return (
         <ModuleForm
+          key={`module-${moduleId || 'new'}-${isEditing ? 'edit' : 'create'}`}
           provider={provider}
           updateFormData={updateFormData}
           watch={watch}

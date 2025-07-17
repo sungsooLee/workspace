@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   InputModalSelectorFormField,
   TreeNode,
@@ -51,10 +51,13 @@ export const CurriculumFormSimple: React.FC<CurriculumFormSimpleProps> = ({
 
   const isVendored = watch('isVendored') || false;
 
+  // 초기 데이터 설정을 한 번만 수행하기 위한 ref
+  const initialDataSetRef = useRef(false);
+
   useEffect(() => {
-    if (updateFormData) {
-      if (isEditing && curriculumData) {
-        updateFormData({
+    if (isEditing && curriculumData && !initialDataSetRef.current) {
+      setTimeout(() => {
+        const initialData = {
           ...curriculumData,
           coordinatorTelNo: {
             nationCode: curriculumData.coordinatorTelCountryCode || '',
@@ -64,20 +67,44 @@ export const CurriculumFormSimple: React.FC<CurriculumFormSimpleProps> = ({
             nationCode: curriculumData.vendorTelCountryCode || '',
             number: curriculumData.vendorTelNo || '',
           },
+        };
+
+        Object.entries(initialData).forEach(([key, value]) => {
+          provider.setValue(key, value);
         });
-      } else if (!isEditing) {
-        updateFormData({
-          curriculumName: '',
-          curriculumDescription: '',
-          coordinatorName: '',
-          coordinatorTelNo: { nationCode: '', number: '' },
-          vendorTelNo: { nationCode: '', number: '' },
-          isVendored: false,
-        });
-      }
+
+        initialDataSetRef.current = true;
+      }, 50);
+    } else if (!isEditing && !initialDataSetRef.current) {
+      // 생성 모드일 때는 기본값으로 초기화
+      const defaultData = {
+        curriculumName: '',
+        curriculumDescription: '',
+        coordinatorName: '',
+        coordinatorTelNo: { nationCode: '', number: '' },
+        vendorTelNo: { nationCode: '', number: '' },
+        isVendored: false,
+      };
+
+      Object.entries(defaultData).forEach(([key, value]) => {
+        provider.setValue(key, value);
+      });
+
+      initialDataSetRef.current = true;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [curriculumData]);
+  }, [curriculumData, isEditing, provider]);
+
+  // 컴포넌트 언마운트 시 초기화
+  useEffect(() => {
+    return () => {
+      initialDataSetRef.current = false;
+    };
+  }, []);
+
+  // curriculumId나 isEditing이 변경될 때 초기화
+  useEffect(() => {
+    initialDataSetRef.current = false;
+  }, [curriculumId, isEditing]);
 
   const formContent = (
     <>

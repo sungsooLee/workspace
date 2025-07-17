@@ -202,6 +202,7 @@ const CurriculumDetailComponent = ({
   };
 
   const handleFormSubmit = (data: any) => {
+    console.log('🚀 handleFormSubmit called with data:', data);
     const { activeFormType, parentNode, isEditing } = formState;
     switch (activeFormType) {
       case MAPPING_CURRICULUM_TYPE.CURRICULUM: {
@@ -274,9 +275,9 @@ const CurriculumDetailComponent = ({
           const updateModuleFn = moduleUpdateStrategy[moduleType as MODULE_TYPE];
           if (updateModuleFn) {
             updateModuleFn(data, async (updateModule: any) => {
-              await queryClient.invalidateQueries({
-                queryKey: ['curriculum-all', 'module', updateModule.moduleId],
-              });
+              // await queryClient.invalidateQueries({
+              //   queryKey: ['curriculum-all', 'module', updateModule.moduleId],
+              // });
 
               const updatedNode: TreeNode = {
                 id: updateModule.moduleId,
@@ -542,16 +543,14 @@ const CurriculumDetailComponent = ({
   const handleNodeSelect = (node: TreeNode) => {
     clearAllValidators();
 
-    setTimeout(() => {
-      setFormState({
-        activeFormType: node.type as MAPPING_CURRICULUM_TYPE,
-        selectedNode: node,
-        parentNode: findParentNode(treeData, node.parentId),
-        isEditing: true,
-      });
-      setFormStatus(FROM_STATUS.EDIT);
-      setFormKey((prev) => prev + 1); // 폼 리마운트를 위해 키 증가
-    }, 100);
+    setFormState({
+      activeFormType: node.type as MAPPING_CURRICULUM_TYPE,
+      selectedNode: node,
+      parentNode: findParentNode(treeData, node.parentId),
+      isEditing: true,
+    });
+    setFormStatus(FROM_STATUS.EDIT);
+    setFormKey((prev) => prev + 1); // 폼 리마운트를 위해 키 증가
   };
 
   const { renderNodeButtons, renderCustomTreeButtons } = useTreeButtons({
@@ -587,7 +586,7 @@ const CurriculumDetailComponent = ({
             onClick={async () => {
               const isValid = await onFormValid();
               if (isValid) {
-                const formData = getValues();
+                const formData = watch();
                 handleFormSubmit(formData);
               }
             }}
