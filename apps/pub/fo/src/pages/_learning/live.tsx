@@ -20,7 +20,7 @@ function RouteComponent() {
         <p>
           <img src={liveImage} alt="" />
           비즈니스 영어 단어&숙어집 Part 2.pdf
-          <IcoLink width={24} height={24} stroke="131416" />
+          <IcoLink width={24} height={24} fill="#4d525c" />
         </p>
         {/* 퍼블수정 20250717 size 수정 */}
         <Button variant="line" size="md">

@@ -29,11 +29,16 @@
   @screen mobile {
     .start {
       &.learning_header {
-        @apply h-[56px];
+        @apply h-[56px] px-[12px];
         .header_area {
-          @apply px-[14px] py-[16px];
+          button {
+            @apply mr-[8px] !px-0;
+            svg {
+              @apply !mx-0;
+            }
+          }
           h1 {
-            @apply body_2_b leading-[24px] text-[var(--gray9)];
+            @apply title3-b ellipsis flex-1 leading-[22px] text-[var(--gray10)];
           }
         }
       }

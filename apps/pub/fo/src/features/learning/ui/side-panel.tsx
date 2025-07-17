@@ -12,7 +12,7 @@ import {
   IcoPrevPlay,
   IcoPrevNext,
   IcoXclose,
-  IcoLinkblank,
+  IcoLink,
   IcoArrowUp,
 } from '@learnway/icons';
 import { CurriculumPopup, NextLearningPopup } from '../../../features/learning';
@@ -36,7 +36,7 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
   const [menuSelected, setMenuSelected] = useState(false); // content 영역 show/hide
   const [menuContents, setMenuContents] = useState([false, false, false, false]); // 각 메뉴 컨텐츠 영역 show/hide
   const [menuNumber, setMenuNumber] = useState<number>(-1); // -1 : 닫기, 1 ~ n : content 순서
-  const [panelState, setPanelState] = useState<boolean>(true); // 퍼블수정 20250716 panel open/close 기능
+  const [panelState, setPanelState] = useState<boolean>(true); // 퍼블수정 20250717 panel open/close 기능
 
   const sendValueToParent = (index: number) => {
     if (menuNumber === index || index === -1) {
@@ -63,14 +63,14 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
     setMenuContents(newContents);
   };
 
-  // 퍼블수정 20250716 panel open/close 기능 추가
+  // 퍼블수정 20250717 panel open/close 기능 추가
   const handlePanelOpenClose = (panelState: boolean) => {
     setMenuSelected(false);
     sendValueToParent(-1);
     setPanelState(!panelState);
   };
 
-  // 퍼블수정 20250716 옵션 new 추가
+  // 퍼블수정 20250717 옵션 new 추가
   const menu = [
     { tit: '커리큘럼', icon: IcoLearning01 },
     { tit: 'AI 요약', icon: IcoLearning02 },
@@ -79,6 +79,17 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
     { tit: '질문답변', icon: IcoLearning05 },
     { tit: '후기', icon: IcoLearning06, New: true },
   ];
+
+  // 퍼블수정 20250717 confirm 추가
+  const { confirm: openConfirm } = useModal();
+  const NextLearningConfirm = () => {
+    openConfirm({
+      title: '레슨 2 이북 (다음 레슨 제목이 옵니다) ',
+      content: '삭제버튼을 누르면 선택하신 항목이 모두 저장되며, 복구할 수 없습니다.',
+      okButtonLabel: '다음 강의',
+      cancelButtonLabel: '다시보기',
+    });
+  };
 
   return (
     <div className={`${styles.start} ${menuSelected ? styles.active : ''}`}>
@@ -153,7 +164,7 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
                                   <p>
                                     스콤아이템
                                     <Link to="">
-                                      <IcoLinkblank width={24} height={24} stroke="#131416" />
+                                      <IcoLink width={24} height={24} fill="#131416" />
                                     </Link>
                                   </p>
                                   <span>4:11</span>
@@ -191,14 +202,17 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
       )}
 
       <div className={styles.panel}>
-        {/* 퍼블수정 20250716 전체 수정 */}
+        {/* 퍼블수정 20250717 전체 수정 */}
         <div className={styles.menu}>
-          <Button
-            className={`${styles.btn_sh} ${panelState && styles.active}`}
-            onClick={() => handlePanelOpenClose(panelState)}
-          >
-            <IcoArrowUp width={20} height={20} stroke="#4d525c" />
-          </Button>
+          {isMobile || (
+            <Button
+              className={`${styles.btn_sh} ${panelState && styles.active}`}
+              onClick={() => handlePanelOpenClose(panelState)}
+            >
+              <IcoArrowUp width={20} height={20} stroke="#4d525c" />
+            </Button>
+          )}
+
           {panelState && (
             <div>
               {menu.map((item, index) => (
@@ -214,7 +228,7 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
                   }
                   className={`${menuNumber === index ? styles.active : ''} ${item.New && styles.new}`}
                 >
-                  <item.icon width={isMobile ? 24 : 32} height={isMobile ? 24 : 32} />
+                  <item.icon width={24} height={24} />
                   <span>{item.tit}</span>
                 </Button>
               ))}
@@ -224,18 +238,12 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
         {panelState && (
           <div className={styles.control}>
             <Button disabled>
-              <IcoPrevPlay width={isMobile ? 20 : 32} height={isMobile ? 20 : 32} />
+              <IcoPrevPlay width={isMobile ? 20 : 24} height={isMobile ? 20 : 24} />
               <span>이전</span>
             </Button>
-            <Button
-              onClick={() =>
-                openModal({
-                  width: 's',
-                  content: <NextLearningPopup />,
-                })
-              }
-            >
-              <IcoPrevNext width={isMobile ? 20 : 32} height={isMobile ? 20 : 32} />
+            {/* 퍼블수정 20250717 modal -> confirm으로 변경 */}
+            <Button onClick={() => NextLearningConfirm()}>
+              <IcoPrevNext width={isMobile ? 20 : 24} height={isMobile ? 20 : 24} />
               <span>다음</span>
             </Button>
           </div>
