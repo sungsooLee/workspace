@@ -1,6 +1,6 @@
 .start {
   &.auth_header {
-    @apply relative items-center;
+    @apply absolute left-1/2 z-10 -translate-x-1/2 items-center;
 
     .header_area {
       @apply relative m-auto flex h-[80px] w-[1360px] items-center;

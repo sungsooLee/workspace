@@ -14,6 +14,7 @@
               @apply relative leading-[64px];
             }
             &:hover {
+              @apply text-[var(--blue65)];
               span {
                 &::before {
                   /* @apply absolute bottom-[-1px] left-[0] block h-[3px] w-full bg-[var(--secondary1)] content-['']; */
@@ -45,16 +46,12 @@
           }
         }
       }
-      [class*='gnb_button'] {
-        @apply absolute top-1/2 z-[3] flex translate-y-[-32px];
-        .btn {
-          @apply absolute top-[16px] z-[3] flex h-[28px] w-[28px] cursor-pointer items-center justify-center rounded-full border border-solid border-[var(--gray4)] bg-[var(--white)] text-center shadow-[0px_2px_4px_rgba(0,0,0,0.08)];
-        }
-        &::before {
-          background: url(../../../assets/images/common/bg_swipe_gnb_shadow.png) no-repeat;
-          @apply pointer-events-none absolute top-[0] z-[-1] inline-block h-[64px] w-[60px] bg-[length:60px_64px] bg-no-repeat content-[''];
-        }
+
+      [class*='prev_btn'],
+      [class*='next_btn'] {
+        @apply !m-[0] !w-[60px] !p-[0] !shadow-none;
       }
+
       .gnb_button_next {
         @apply right-[28px];
 

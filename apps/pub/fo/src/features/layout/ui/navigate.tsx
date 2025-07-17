@@ -17,6 +17,9 @@ function NavigateComponent({ onMouseEnter, onMouseLeave }: NavigateComponentProp
     { name: '교육제도', link: '/', isLabel: false, hasEvent: false },
     { name: '커뮤니티', link: '/', isLabel: false, hasEvent: false },
     { name: '대시보드', link: '/', isLabel: false, hasEvent: false },
+    { name: '대시보드', link: '/', isLabel: false, hasEvent: false },
+    { name: '대시보드', link: '/', isLabel: false, hasEvent: false },
+    { name: '대시보드', link: '/', isLabel: false, hasEvent: false },
     { name: '수강신청', link: '/', isLabel: false, hasEvent: true },
     { name: '기술인증', link: '/', isLabel: false, hasEvent: true },
   ];

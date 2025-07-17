@@ -70,7 +70,7 @@ export const guideData = [
     pageId: '/',
     pageType: 'Page',
     completionDate: '2025-01-23',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-16',
     remarks: '- 레이아웃',
   },
   {
@@ -80,7 +80,7 @@ export const guideData = [
     pageId: '/',
     pageType: 'Page',
     completionDate: '2025-01-23',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-16',
     remarks: '- 레이아웃',
   },
   {
@@ -211,7 +211,7 @@ export const guideData = [
     pageId: '',
     pageType: 'Page',
     completionDate: '2025-03-27',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-16',
     remarks: '',
   },
   {
@@ -1766,7 +1766,7 @@ export const guideData = [
     pageId: 'login',
     pageType: 'Page',
     completionDate: '2025-02-24',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-17',
     remarks: '',
   },
   {

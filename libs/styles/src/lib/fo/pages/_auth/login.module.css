@@ -9,15 +9,9 @@
     .login_info {
       @apply flex items-center justify-between;
       .id_save {
-        label {
-          @apply text-[1.4rem] text-[var(--gray8)];
-        }
       }
       .info {
-        @apply body_3_r flex gap-[24px] text-[var(--gray7)];
-        a {
-          @apply underline;
-        }
+        @apply label-lg flex gap-[24px] text-[var(--gray35)];
       }
     }
     .btn_box {
