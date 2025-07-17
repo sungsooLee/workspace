@@ -2,7 +2,7 @@
 
 import { createLazyFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
-import { Button, ContentsRow, InputModalSelectorFormField, useModal } from '@learnway/ui';
+import { Button, useModal } from '@learnway/ui';
 import {
   PageContainer,
   MainContents,
@@ -11,8 +11,6 @@ import {
   SubContents,
   ContentCourseMappingModal,
 } from '@shared/ui';
-import { ChannelChoiceModal, ManagerChoiceModal } from '@shared/ui';
-import { DateRangePickerFormField, MediaContentRequiredCheckFormField } from '@features/form/ui';
 import {
   CODE_GROUP,
   DynamicFormConfig,
@@ -20,13 +18,11 @@ import {
   useCurrentRoute,
   useDynamicForm,
 } from '@learnway/hooks';
-import { FormDisplay, SubTitlesFormField } from '@features/form';
-import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '@shared/ui';
 import { useQuery } from '@tanstack/react-query';
 import { learningResourceQueryOptions } from '@entities/learning-resource';
 import { NotFound } from '@features/layout';
 import { useCallback, useEffect } from 'react';
-import { MovieInfo } from '@features/learning-resource';
+import { LearningResourceVideoDetail, MovieInfo } from '@features/learning-resource';
 
 export const Route = createLazyFileRoute('/_layout/learning/learning-resource/video/view')({
   component: RouteComponent,
@@ -127,119 +123,7 @@ function RouteComponent() {
           </Button>
         </ContentsButtons>
         <MainContents>
-          <ContentsRow>
-            {/*채널*/}
-            <FormRow
-              provider={provider}
-              name="channelName"
-              element={
-                <InputModalSelectorFormField
-                  modalConfig={{
-                    title: '',
-                    width: 'md',
-                    content: <ChannelChoiceModal />,
-                  }}
-                />
-              }
-            />
-            <FormRow provider={provider} name="langCountryCode" />
-          </ContentsRow>
-          <ContentsRow>
-            {/*학습자원명*/}
-            <FormRow provider={provider} name="contentName" />
-          </ContentsRow>
-          <ContentsRow>
-            {/*학습자원 설명*/}
-            <FormRow provider={provider} name="description" />
-          </ContentsRow>
-          <ContentsRow>
-            {/*담당자*/}
-            <FormRow
-              provider={provider}
-              name="coordinatorName"
-              element={
-                <InputModalSelectorFormField
-                  modalConfig={{
-                    title: '',
-                    width: 'md',
-                    content: <ManagerChoiceModal />,
-                  }}
-                />
-              }
-            />
-            {/*연락처*/}
-            <FormRow provider={provider} name="coordinatorTelNo" />
-          </ContentsRow>
-          <ContentsRow type="horizontal">
-            {/*사용기한*/}
-            <FormRow provider={provider} name="isUnlimited" />
-          </ContentsRow>
-          <FormDisplay provider={provider} dependencies={[{ name: 'isUnlimited', value: false }]}>
-            <ContentsRow>
-              <FormRow
-                provider={provider}
-                name="contentUseDate"
-                element={<DateRangePickerFormField />}
-              />
-            </ContentsRow>
-          </FormDisplay>
-          {/*외주개발업체 정보*/}
-          <ContentsRow type="horizontal" className="inactive">
-            <FormRow provider={provider} name="isVendored" />
-          </ContentsRow>
-          {/*외주개발업체 상세*/}
-          <FormDisplay provider={provider} dependencies={[{ name: 'isVendored', value: true }]}>
-            <ContentsRow>
-              {/*외부개발업체*/}
-              <FormRow
-                provider={provider}
-                name="vendorName"
-                element={
-                  <InputModalSelectorFormField
-                    modalConfig={{
-                      title: '',
-                      width: 'md',
-                      content: <ManagerChoiceModal />,
-                    }}
-                  />
-                }
-              />
-            </ContentsRow>
-            <ContentsRow>
-              {/*외주개발업체 담당자*/}
-              <FormRow provider={provider} name="vendorCoordinatorName" />
-              {/*외주개발업체 연락처*/}
-              <FormRow provider={provider} name="vendorTelNo" />
-            </ContentsRow>
-          </FormDisplay>
-          <ContentsRow>
-            {/*태그*/}
-            <FormRow provider={provider} name="tags" />
-          </ContentsRow>
-          <ContentsRow>
-            {/*학습자원개요*/}
-            <FormRow provider={provider} name="aiSummary" />
-          </ContentsRow>
-          <ContentsRow>
-            {/* 키워드 */}
-            <FormRow provider={provider} name="aiKeyword" />
-          </ContentsRow>
-          <ContentsRow type="horizontal" className="inactive">
-            {/* 교육지원활용 여부 */}
-            <FormRow provider={provider} name="isCourseUsed" />
-          </ContentsRow>
-          <ContentsRow type="horizontal" className="inactive">
-            {/* 자막 여부 */}
-            <FormRow provider={provider} name={'isSubtitles'} />
-          </ContentsRow>
-          <FormDisplay provider={provider} dependencies={[{ name: 'isSubtitles', value: true }]}>
-            <ContentsRow>
-              {/*자막 목록*/}
-              <FormRow provider={provider} name={'subtitles'} element={<SubTitlesFormField />} />
-            </ContentsRow>
-          </FormDisplay>
-          <MediaContentRequiredCheckFormField provider={provider} />
-          <ContentsHistoryInfoFormField />
+          <LearningResourceVideoDetail provider={provider} />
         </MainContents>
         <SubContents>
           <MovieInfo status={'loading'} />
