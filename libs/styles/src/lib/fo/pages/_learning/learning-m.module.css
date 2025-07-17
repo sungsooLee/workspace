@@ -1,12 +1,12 @@
 .start {
   &.blog {
     .blog_contents {
-      @apply overflow-y-auto px-[16px] pb-[200px] pt-[16px];
+      @apply overflow-y-auto px-[16px] pb-[150px] pt-[16px];
     }
   }
   &.ebook {
     .ebook_contents {
-      @apply overflow-y-auto pb-[200px];
+      @apply overflow-y-auto pb-[150px];
     }
   }
   &.file {
