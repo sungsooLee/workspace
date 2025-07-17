@@ -21,4 +21,12 @@
       @apply bg-[url(../../assets/images/icon/ic_arrow_forward.png)];
     }
   }
+  &.btn_hidden {
+    .navigation_btn {
+      @apply !shadow-none;
+      &::after {
+        @apply !hidden;
+      }
+    }
+  }
 }

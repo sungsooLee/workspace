@@ -3,15 +3,20 @@ import styles from './thumb-nail-item.module.css';
 import { Link } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import { Badge, Thumbnail } from '@learnway/ui';
-import { IcoHeart, IcoStar, IcoEye } from '@learnway/icons';
+import { infoIcons } from './info-icon';
 
 export interface ThumbnailData {
+  linkUrl?: string;
   imageUrl: string;
   title: string;
   labelCustomNode?: React.ReactNode[];
   tagLabels?: string[];
   infoCustomNode?: React.ReactNode[];
-  iconType?: IconType;
+  infoList?: iconData;
+}
+
+export interface iconData {
+  iconType?: 'star' | 'heart' | 'eye';
   infoText?: string;
 }
 
@@ -21,14 +26,6 @@ interface ThumbnailItemProps {
   className?: string;
   stacked?: boolean;
 }
-
-type IconType = 'alert' | 'check' | 'info';
-
-const iconMap: Record<IconType, JSX.Element> = {
-  alert: <IcoStar />,
-  check: <IcoHeart />,
-  info: <IcoEye />,
-};
 
 const ThumbnailItem: React.FC<ThumbnailItemProps> = ({
   data,
@@ -47,7 +44,7 @@ const ThumbnailItem: React.FC<ThumbnailItemProps> = ({
         'thumbnail_item',
       )}
     >
-      <Link to={'/'} className={styles.thumbnail_link}>
+      <Link to={data.linkUrl} className={styles.thumbnail_link}>
         <div className={styles.thumbnail_view}>
           <Thumbnail
             stacked={stacked}
@@ -75,12 +72,16 @@ const ThumbnailItem: React.FC<ThumbnailItemProps> = ({
             </div>
           )}
           <p className={styles.thumbnail_title}>{data.title}</p>
-          <p className={styles.info}>
-            <span></span>
-            <IcoStar width={16} height={16} stroke="#0056ff" fill="#0056ff" />
-            <IcoHeart width={16} height={16} stroke="#f58b75" fill="#f58b75" />
-            <IcoEye width={16} height={16} stroke="#0056ff" />
-          </p>
+          <div className={styles.info_icon}>
+            {/* {data.infoList && data.infoList.length > 0 && (
+              <div className={styles.info_list}>
+                {data.infoList.map((item, index) => (
+                 <span className={styles.type_icon}>{item.iconType}</span>
+                 <span className={styles.info_text}>{item.infoText}</span>
+                ))}
+              </div>
+            )} */}
+          </div>
         </div>
       </Link>
     </div>
