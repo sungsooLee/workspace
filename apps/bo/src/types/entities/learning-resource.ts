@@ -410,3 +410,12 @@ export enum ExamType {
 }
 
 export type TestPaperDetailRes = GetContentDetailRes;
+
+export interface GetVideoStatusRes {
+  contentUuid: string;
+  fileUUid: string;
+  contentType: ContentType;
+  contentStatusCode: ContentStatusCode;
+  processingStatus: ProcessingStatus;
+  isDrafted: boolean;
+}

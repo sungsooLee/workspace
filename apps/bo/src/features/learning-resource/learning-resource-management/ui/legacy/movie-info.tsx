@@ -1,17 +1,18 @@
+//  IA105 / NLP_BO_CMS_1016, NLP_BO_CMS_1002
+
 import { Button, Spinner } from '@learnway/ui';
 import { IcoStatusFail } from '@learnway/icons';
 import style from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
 import { DynamicFormProvider } from '@learnway/hooks';
 import { ProcessingStatus } from '@types';
+import { useVideoResource } from '@entities/learning-resource';
 
 interface MovieInfoProps {
   provider: DynamicFormProvider;
 }
 
 const MovieInfoComponent = ({ provider }: MovieInfoProps) => {
-  const { watch } = provider;
-
-  const processingStatus = watch('processingStatus');
+  const { processingStatus } = useVideoResource(provider);
 
   // media info_list
   const infoList = [
