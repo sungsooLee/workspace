@@ -278,6 +278,18 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
     }));
   }, []);
 
+  /**
+   * 모든 validator를 초기화하는 함수
+   */
+  const clearAllValidators = useCallback(() => {
+    console.log('clearAllValidators called');
+    setDynamicValidator({});
+    setDynamicBuilders([]);
+    // 폼 데이터도 완전히 초기화
+    reset({});
+    clearErrors();
+  }, [reset, clearErrors]);
+
   // control 확장: 기본 control에 isFieldRequired 메서드 추가
   const extendedControl: DynamicFormProvider['control'] = useMemo(
     () => ({
@@ -320,6 +332,7 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
       clearFormError: clearErrors,
       registerField,
       addValidator,
+      clearAllValidators,
     }),
     [
       extendedControl,
@@ -330,6 +343,7 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
       handleFocus,
       registerField,
       addValidator,
+      clearAllValidators,
       customSetValue,
     ],
   );
@@ -338,7 +352,19 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
   const customOnFormValid = useCallback(async () => {
     try {
       const currentValues = getValues();
-      schema.parse(currentValues);
+      
+      // 현재 등록된 필드들만 검증 대상으로 필터링
+      const filteredValues: Record<string, any> = {};
+      dynamicBuilders.forEach((builder) => {
+        if (currentValues[builder.name] !== undefined) {
+          filteredValues[builder.name] = currentValues[builder.name];
+        }
+      });
+      
+      console.log('Validating fields:', Object.keys(filteredValues));
+      console.log('Current builders:', dynamicBuilders.map(b => b.name));
+      
+      schema.parse(filteredValues);
       clearErrors(); // 기존 에러 클리어
       return true;
     } catch (error: any) {
@@ -349,16 +375,20 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
       if (error && error.issues) {
         error.issues.forEach((issue: any) => {
           if (issue.path && issue.path.length > 0) {
-            setError(issue.path[0], {
-              type: 'custom',
-              message: issue.message,
-            });
+            // 현재 등록된 필드인지 확인
+            const fieldExists = dynamicBuilders.some(builder => builder.name === issue.path[0]);
+            if (fieldExists) {
+              setError(issue.path[0], {
+                type: 'custom',
+                message: issue.message,
+              });
+            }
           }
         });
       }
       return false;
     }
-  }, [schema, getValues, setError, clearErrors]);
+  }, [schema, getValues, setError, clearErrors, dynamicBuilders]);
 
   /**
    * 폼 제출 핸들러를 생성하는 함수.
@@ -423,5 +453,6 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
     control: extendedControl,
     watch,
     getInitByBuilders,
+    clearAllValidators,
   };
 };

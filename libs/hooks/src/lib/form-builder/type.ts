@@ -239,6 +239,8 @@ export type DynamicFormProvider = {
   registerField: (fieldConfig: FormConfig) => void;
   /** 동적으로 validator를 추가하는 함수 */
   addValidator: (fieldName: string, validation: any) => void;
+  /** 모든 validator를 초기화하는 함수 */
+  clearAllValidators: () => void;
 };
 
 /**
@@ -279,6 +281,9 @@ export type UseDynamicFormResult = {
 
   /**   builders에  설정된 필드에 clearFormError 호출 과 value 값에 해당 하는 object를 리턴함 */
   getInitByBuilders: () => any;
+
+  /** 모든 validator를 초기화하는 함수 */
+  clearAllValidators: () => void;
 };
 
 // dynamic form config value 추적을 위한 타입 정의

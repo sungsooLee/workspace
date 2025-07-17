@@ -56,59 +56,44 @@ export const useNodeData = ({ selectedNode, curriculumId, isEditing = true }: Us
     shouldCallLessonDetail ? { lessonId, moduleId: tmpModuleId } : { lessonId: 0, moduleId: 0 },
   );
 
+  // 커리큘럼 데이터 처리
   useEffect(() => {
-    if (!selectedNode) {
+    if (selectedNode?.type === MAPPING_CURRICULUM_TYPE.CURRICULUM && isEditing) {
+      console.log('useNodeData - Setting curriculum data:', curriculumData);
+      setCurrentData(curriculumData);
+      setIsLoading(isCurriculumLoading);
+      setError(curriculumError ? '커리큘럼 데이터 로드 실패' : null);
+    }
+  }, [curriculumData, isCurriculumLoading, curriculumError, selectedNode?.type, isEditing]);
+
+  // 모듈 데이터 처리
+  useEffect(() => {
+    if (selectedNode?.type === MAPPING_CURRICULUM_TYPE.MODULE && isEditing) {
+      console.log('useNodeData - Setting module data:', moduleData, 'moduleId:', moduleId);
+      setCurrentData(moduleData);
+      setIsLoading(isModuleLoading);
+      setError(moduleError ? '모듈 데이터 로드 실패' : null);
+    }
+  }, [moduleData, isModuleLoading, moduleError, selectedNode?.type, isEditing]);
+
+  // 레슨 데이터 처리
+  useEffect(() => {
+    if (selectedNode?.type === MAPPING_CURRICULUM_TYPE.LESSON && isEditing) {
+      console.log('useNodeData - Setting lesson data:', lessonData);
+      setCurrentData(lessonData);
+      setIsLoading(isLessonLoading);
+      setError(lessonError ? '레슨 데이터 로드 실패' : null);
+    }
+  }, [lessonData, isLessonLoading, lessonError, selectedNode?.type, isEditing]);
+
+  // 노드 선택이 없거나 생성 모드일 때 초기화
+  useEffect(() => {
+    if (!selectedNode || !isEditing) {
       setCurrentData(null);
       setIsLoading(false);
       setError(null);
-      return;
     }
-
-    // 생성 모드일 때는 데이터를 로드하지 않음
-    if (!isEditing) {
-      setCurrentData(null);
-      setIsLoading(false);
-      setError(null);
-      return;
-    }
-
-    switch (selectedNode.type) {
-      case MAPPING_CURRICULUM_TYPE.CURRICULUM:
-        setCurrentData(curriculumData);
-        setIsLoading(isCurriculumLoading);
-        setError(curriculumError ? '커리큘럼 데이터 로드 실패' : null);
-        break;
-
-      case MAPPING_CURRICULUM_TYPE.MODULE:
-        setCurrentData(moduleData);
-        setIsLoading(isModuleLoading);
-        setError(moduleError ? '모듈 데이터 로드 실패' : null);
-        break;
-
-      case MAPPING_CURRICULUM_TYPE.LESSON:
-        setCurrentData(lessonData);
-        setIsLoading(isLessonLoading);
-        setError(lessonError ? '레슨 데이터 로드 실패' : null);
-        break;
-
-      default:
-        setCurrentData(null);
-        setIsLoading(false);
-        setError(null);
-    }
-  }, [
-    selectedNode,
-    isEditing,
-    curriculumData,
-    isCurriculumLoading,
-    curriculumError,
-    moduleData,
-    isModuleLoading,
-    moduleError,
-    lessonData,
-    isLessonLoading,
-    lessonError,
-  ]);
+  }, [selectedNode, isEditing]);
 
   return {
     data: currentData,

@@ -52,6 +52,7 @@ const FormRowComponent: FC<FormRowProps> = ({
 
   // 간단한 fieldConfig 구성
   const fieldConfig: FormRowFieldConfig = {
+    name: name || '', // name 필드 추가
     type: type || 'custom',
     label,
     value,

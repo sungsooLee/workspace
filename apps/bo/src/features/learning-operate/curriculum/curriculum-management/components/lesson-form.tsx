@@ -1,20 +1,23 @@
 import { useEffect } from 'react';
 import { ContentsRow, Input, RadioGroupFormField, Textarea } from '@learnway/ui';
-import { FormRow3, ResourceChoiceModal } from '@shared/ui';
-import { LESSON_TYPE, MODULE_TYPE } from '@types';
+import { FormRow2, ResourceChoiceModal } from '@shared/ui';
+import { DynamicFormProvider } from '@learnway/hooks';
+import { LESSON_TYPE } from '@types';
 import { t } from 'i18next';
 import { ContentChoiceModalSelector } from './content-choice-selector';
 import { DropdownFormField, DurationTimeFormField } from '@features/form/ui';
 import { getHourValueFromTime } from '@pages/_layout/learning/resource/-common/common';
 import { learningResourceQueryOptions } from '@entities/learning-resource';
 import { useQuery } from '@tanstack/react-query';
+import { useGetLessonDetail } from '@entities/curriculum';
 
 interface LessonFormProps {
+  provider: DynamicFormProvider;
+  updateFormData: (data: Record<string, any>) => void;
   watch: any;
-  setValue?: any;
-  loadFormData?: (data: Record<string, any>, options?: any) => void;
   isEditing?: boolean;
-  initialData?: any;
+  lessonId?: number;
+  moduleId?: number;
   curriculumData?: {
     tenantId?: number;
     channelUuid?: string;
@@ -23,68 +26,71 @@ interface LessonFormProps {
 }
 
 export const LessonForm: React.FC<LessonFormProps> = ({
+  provider,
+  updateFormData,
   watch,
-  setValue,
-  loadFormData,
   isEditing,
-  initialData,
+  lessonId,
+  moduleId,
   curriculumData,
 }) => {
   const lessonType = watch('lessonType') || LESSON_TYPE.GENERAL;
   const contentUuid = watch('contentUuid');
   const contentName = watch('contentName');
 
-  const { data: contentDetail } = useQuery({
+  const { data: lessonData } = useGetLessonDetail(
+    isEditing && lessonId && moduleId ? { lessonId, moduleId } : { lessonId: 0, moduleId: 0 },
+  );
+
+  const { data: contentDetail, refetch: refetchContentDetail } = useQuery({
     ...learningResourceQueryOptions.getContent(contentUuid),
-    enabled: isEditing && !!contentUuid,
+    enabled: false,
   });
 
-  // 편집 모드일 때 초기 데이터 로드, 생성 모드일 때는 기본값으로 초기화
   useEffect(() => {
-    if (loadFormData) {
-      if (isEditing && initialData) {
-        // 편집 모드: 완전 초기화 후 새 데이터 로드
-        const formData = {
-          ...initialData,
-          learningTime: getHourValueFromTime(initialData.learningTime),
-          contentUuid: initialData.contentUuid || '',
-          contentName: '', // 초기값은 빈 문자열, contentDetail 로드 후 설정됨
-        };
-        loadFormData(formData, { clearBeforeLoad: true });
+    if (updateFormData) {
+      if (isEditing && lessonData) {
+        updateFormData({
+          ...lessonData,
+          lessonName: lessonData.lessonName,
+          lessonType: lessonData.lessonType || LESSON_TYPE.GENERAL,
+          description: lessonData.description,
+          learningTime: getHourValueFromTime(lessonData.learningTime),
+          contentUuid: lessonData.contentUuid || '',
+          contentName: lessonData.contentName || '',
+        });
+
+        if (lessonData.contentUuid) {
+          refetchContentDetail().then((res) => {
+            const { data } = res;
+            provider.setValue('contentName', data?.contentName);
+            provider.setValue('contentUuid', data?.contentUuid);
+          });
+        }
       } else if (!isEditing) {
         // 생성 모드일 때는 기본값으로 초기화
-        const formData = {
+        updateFormData({
           lessonType: LESSON_TYPE.GENERAL,
           lessonName: '',
           description: '',
           learningTime: { hour: 0, minute: 0, second: 0 },
           contentUuid: '',
           contentName: '',
-        };
-        loadFormData(formData, { clearBeforeLoad: true });
+        });
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isEditing, initialData, loadFormData]);
-
-  // useEffect(() => {
-  //   // if(autoCon)
-  // }, [lessonType]);
-
-  // useEffect(() => {
-  //   if (isEditing && contentDetail && setValue) {
-  //     setValue('contentName', contentDetail.contentName);
-  //   }
-  // }, [isEditing, contentDetail, setValue]);
+  }, [lessonData]);
 
   const formContent = (
     <>
       <ContentsRow>
-        <FormRow3
+        <FormRow2
+          provider={provider}
           name="lessonType"
           label="레슨유형"
+          format="string"
+          value={LESSON_TYPE.GENERAL}
           validation={{ required: true }}
-          defaultValue={LESSON_TYPE.GENERAL}
           element={
             <RadioGroupFormField
               disabled={isEditing}
@@ -97,9 +103,12 @@ export const LessonForm: React.FC<LessonFormProps> = ({
         />
       </ContentsRow>
       <ContentsRow>
-        <FormRow3
+        <FormRow2
+          provider={provider}
           name="lessonName"
           label={'레슨명'}
+          format="string"
+          value=""
           validation={{ required: true }}
           element={<Input type="text" maxLength={40} />}
         />
@@ -108,9 +117,12 @@ export const LessonForm: React.FC<LessonFormProps> = ({
       {lessonType === LESSON_TYPE.RESOURCE && (
         <>
           <ContentsRow>
-            <FormRow3
+            <FormRow2
+              provider={provider}
               name="contentType"
               label={t('학습자원 유형')}
+              format="string"
+              value=""
               validation={{ required: true }}
               element={
                 <DropdownFormField
@@ -123,9 +135,12 @@ export const LessonForm: React.FC<LessonFormProps> = ({
             />
           </ContentsRow>
           <ContentsRow>
-            <FormRow3
+            <FormRow2
+              provider={provider}
               name="contentName"
               label={t('학습자원')}
+              format="string"
+              value=""
               validation={{ required: true }}
               element={
                 <ContentChoiceModalSelector
@@ -143,14 +158,8 @@ export const LessonForm: React.FC<LessonFormProps> = ({
                   transformModalData={(data: any) => {
                     const { contentUuid, contentName } = data;
                     if (data) {
-                      setValue('contentUuid', contentUuid, {
-                        shouldValidate: true,
-                        shouldDirty: true,
-                      });
-                      setValue('contentName', contentName, {
-                        shouldValidate: true,
-                        shouldDirty: true,
-                      });
+                      provider.setValue('contentUuid', contentUuid);
+                      provider.setValue('contentName', contentName);
 
                       return contentName;
                     }
@@ -163,26 +172,48 @@ export const LessonForm: React.FC<LessonFormProps> = ({
         </>
       )}
       <ContentsRow>
-        <FormRow3
+        <FormRow2
+          provider={provider}
           name="learningTime"
           label={t('학습시간')}
+          format="object"
+          value={{ hour: 0, minute: 0, second: 0 }}
           validation={{
             required: true,
-            validate: (value: { hour: number; minute: number; second: number }) => {
-              if (!value) return t('학습시간을 입력해주세요.');
-              const { hour = 0, minute = 0, second = 0 } = value;
-              if (!(hour > 0 || minute > 0 || second > 0)) {
-                return t('학습시간은 1초 이상으로 설정하여야 합니다.');
-              }
-              return true;
-            },
+            conditions: [
+              {
+                fn: (values: Record<string, any>) => {
+                  const value = values.learningTime;
+                  if (!value) return true; // 값이 없으면 에러
+                  const { hour = 0, minute = 0, second = 0 } = value;
+                  return !(hour > 0 || minute > 0 || second > 0); // 모든 값이 0이면 에러
+                },
+                message: t('학습시간은 1초 이상으로 설정하여야 합니다.'),
+              },
+            ],
           }}
           element={<DurationTimeFormField />}
         />
       </ContentsRow>
       <ContentsRow>
-        <FormRow3 name="description" label="설명" element={<Textarea maxLength={100} />} />
+        <FormRow2
+          provider={provider}
+          name="description"
+          label="설명"
+          format="string"
+          value=""
+          element={<Textarea maxLength={100} />}
+        />
       </ContentsRow>
+
+      {/* 숨겨진 필드들 */}
+      <FormRow2
+        provider={provider}
+        name="contentUuid"
+        format="string"
+        value=""
+        element={<input type="hidden" />}
+      />
     </>
   );
   return formContent;

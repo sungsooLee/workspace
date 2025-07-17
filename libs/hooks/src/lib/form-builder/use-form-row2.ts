@@ -1,4 +1,4 @@
-import { Children, isValidElement, ReactNode, useEffect, useState } from 'react';
+import { Children, isValidElement, ReactNode, useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DynamicFormProvider, ErrorState, FormConfig } from './type';
 
@@ -88,11 +88,44 @@ export const useFormRow2 = (
   name: string,
   fieldConfig?: FormConfig,
 ) => {
-  const { control, builders, formState, fieldRefs, ...providerProps } = provider;
+  const { control, builders, formState, fieldRefs, registerField, addValidator, ...providerProps } = provider;
   const { t } = useTranslation();
+  
+  // 이 인스턴스에서 등록된 필드를 추적하는 ref
+  const registeredRef = useRef(false);
 
   // fieldConfig가 제공되면 우선 사용, 그렇지 않으면 기존 방식대로 builders에서 찾기
   const formConfig = fieldConfig || getBuilderConfig(provider.builders, name);
+
+  // fieldConfig가 있고 name이 있으면 필드를 등록 (한 번만)
+  useEffect(() => {
+    if (fieldConfig && name && fieldConfig.name && !registeredRef.current) {
+      console.log(`Registering field: ${name}`);
+      
+      // 등록 플래그 설정
+      registeredRef.current = true;
+      
+      // FormConfig 형태로 변환하여 등록
+      const configToRegister: FormConfig = {
+        ...fieldConfig,
+        name: fieldConfig.name, // name을 명시적으로 설정
+      } as FormConfig;
+      
+      registerField(configToRegister);
+      
+      // validation이 있으면 validator도 등록
+      if (fieldConfig.validation) {
+        addValidator(name, fieldConfig.validation);
+      }
+    }
+  }, [fieldConfig?.name, name, registerField, addValidator]);
+  
+  // 컴포넌트 언마운트 시 등록 플래그 리셋
+  useEffect(() => {
+    return () => {
+      registeredRef.current = false;
+    };
+  }, []);
 
   // 필드가 필수인지 확인
   const isRequired = control.isFieldRequired(name);

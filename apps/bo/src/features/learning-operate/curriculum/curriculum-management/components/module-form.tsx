@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { ContentsRow, Input, RadioGroupFormField, Textarea } from '@learnway/ui';
-import { FormRow3, ResourceChoiceModal } from '@shared/ui';
+import { FormRow2, ResourceChoiceModal } from '@shared/ui';
+import { DynamicFormProvider } from '@learnway/hooks';
 import { MODULE_TYPE } from '@types';
 import { t } from 'i18next';
 import { ContentChoiceModalSelector } from './content-choice-selector';
@@ -9,13 +10,14 @@ import { getHourValueFromTime } from '@pages/_layout/learning/resource/-common/c
 import { learningResourceQueryOptions } from '@entities/learning-resource';
 import { useQuery } from '@tanstack/react-query';
 import { useGetScormDetail } from '@entities/contents';
+import { useGetModuleDetail } from '@entities/curriculum';
 
 interface ModuleFormProps {
+  provider: DynamicFormProvider;
+  updateFormData: (data: Record<string, any>) => void;
   watch: any;
-  setValue?: any;
-  loadFormData?: (data: Record<string, any>, options?: any) => void;
   isEditing?: boolean;
-  initialData?: any;
+  moduleId?: number;
   curriculumData?: {
     tenantId?: number;
     channelUuid?: string;
@@ -24,17 +26,17 @@ interface ModuleFormProps {
 }
 
 export const ModuleForm: React.FC<ModuleFormProps> = ({
+  provider,
+  updateFormData,
   watch,
-  setValue,
-  loadFormData,
   isEditing,
-  initialData,
+  moduleId,
   curriculumData,
 }) => {
   const moduleType = watch('moduleType') || MODULE_TYPE.GENERAL;
-  // const contentUuid = watch('contentUuid');
-  // const contentName = watch('contentName');
   const [uuid, setUuid] = useState(undefined);
+
+  const { data: moduleData } = useGetModuleDetail(moduleId || 0);
 
   const { data: contentDetail, refetch: refetchContentDetail } = useQuery({
     ...learningResourceQueryOptions.getContent(uuid),
@@ -44,38 +46,29 @@ export const ModuleForm: React.FC<ModuleFormProps> = ({
   const [refetchContentUuid, setRefetchContentUuid] = useState(undefined);
   const { data, refetch } = useGetScormDetail(refetchContentUuid);
 
-  // 편집 모드일 때 초기 데이터 로드, 생성 모드일 때는 기본값으로 초기화
   useEffect(() => {
-    if (loadFormData) {
-      if (isEditing && initialData) {
-        console.log(initialData);
-        loadFormData({
-          ...initialData,
-          moduleName: initialData.moduleName,
-          moduleType: initialData.moduleType || MODULE_TYPE.GENERAL,
-          description: initialData.description,
-          contentDuration: { ...getHourValueFromTime(initialData.totalTime) },
-          contentUuid: initialData.contentUuid || '',
-          // contentName: '',
+    if (updateFormData) {
+      if (isEditing && moduleData) {
+        updateFormData({
+          ...moduleData,
+          moduleName: moduleData.moduleName,
+          moduleType: moduleData.moduleType || MODULE_TYPE.GENERAL,
+          description: moduleData.description,
+          contentDuration: { ...getHourValueFromTime(moduleData.totalTime) },
+          contentUuid: moduleData.contentUuid || '',
         });
-        if (initialData.contentUuid) {
-          setUuid(initialData.contentUuid);
-          // setTimeout(() => {
+
+        if (moduleData.contentUuid) {
+          setUuid(moduleData.contentUuid);
           refetchContentDetail().then((res) => {
             const { data } = res;
-            setValue('contentName', data?.contentName);
-            setValue('contentUuid', data?.contentUuid);
+            provider.setValue('contentName', data?.contentName);
+            provider.setValue('contentUuid', data?.contentUuid);
           });
-          // }, 0);
-          // console.log(initialData.contentUuid);
-          // refetchContentDetail(initialData.contetnUuid).then((data) => {
-          //   console.log(data);
-          // });
         }
       } else if (!isEditing) {
-        console.log('???');
         // 생성 모드일 때는 기본값으로 초기화
-        loadFormData({
+        updateFormData({
           moduleType: MODULE_TYPE.GENERAL,
           moduleName: '',
           description: '',
@@ -83,24 +76,18 @@ export const ModuleForm: React.FC<ModuleFormProps> = ({
         });
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isEditing, initialData]);
-
-  // useEffect(() => {
-  //   if (isEditing && contentDetail && setValue) {
-  //     console.log(contentDetail.contentName);
-  //     setValue('contentName', contentDetail.contentName);
-  //   }
-  // }, [isEditing, contentDetail, setValue]);
+  }, [moduleData]);
 
   const formContent = (
     <>
       <ContentsRow>
-        <FormRow3
+        <FormRow2
+          provider={provider}
           name="moduleType"
           label="모듈유형"
+          format="string"
+          value={MODULE_TYPE.GENERAL}
           validation={{ required: true }}
-          defaultValue={MODULE_TYPE.GENERAL}
           element={
             <RadioGroupFormField
               disabled={isEditing}
@@ -113,9 +100,12 @@ export const ModuleForm: React.FC<ModuleFormProps> = ({
         />
       </ContentsRow>
       <ContentsRow>
-        <FormRow3
+        <FormRow2
+          provider={provider}
           name="moduleName"
           label={'모듈명'}
+          format="string"
+          value=""
           validation={{ required: true }}
           element={<Input type="text" maxLength={40} />}
         />
@@ -124,9 +114,12 @@ export const ModuleForm: React.FC<ModuleFormProps> = ({
       {moduleType === MODULE_TYPE.FIXED && (
         <>
           <ContentsRow>
-            <FormRow3
+            <FormRow2
+              provider={provider}
               name="contentName"
               label={t('학습자원')}
+              format="string"
+              value=""
               validation={{ required: true }}
               element={
                 <ContentChoiceModalSelector
@@ -151,12 +144,12 @@ export const ModuleForm: React.FC<ModuleFormProps> = ({
                           const { data } = res;
                           if (data && data.children) {
                             const orgnId = data.children[0].orgnId;
-                            if (orgnId) setValue('orgnId', orgnId);
+                            if (orgnId) provider.setValue('orgnId', orgnId);
                           }
                         });
                       }, 0);
-                      setValue('contentName', contentName);
-                      setValue('contentUuid', contentUuid);
+                      provider.setValue('contentName', contentName);
+                      provider.setValue('contentUuid', contentUuid);
                       return contentName;
                     }
                   }}
@@ -165,19 +158,25 @@ export const ModuleForm: React.FC<ModuleFormProps> = ({
             />
           </ContentsRow>
           <ContentsRow>
-            <FormRow3
+            <FormRow2
+              provider={provider}
               name="contentDuration"
               label={t('학습시간')}
+              format="object"
+              value={{ hour: 0, minute: 0, second: 0 }}
               validation={{
                 required: true,
-                validate: (value: { hour: number; minute: number; second: number }) => {
-                  if (!value) return t('학습시간을 입력해주세요.');
-                  const { hour = 0, minute = 0, second = 0 } = value;
-                  if (!(hour > 0 || minute > 0 || second > 0)) {
-                    return t('학습시간은 1초 이상으로 설정하여야 합니다.');
-                  }
-                  return true;
-                },
+                conditions: [
+                  {
+                    fn: (values: Record<string, any>) => {
+                      const value = values.contentDuration;
+                      if (!value) return true; // 값이 없으면 에러
+                      const { hour = 0, minute = 0, second = 0 } = value;
+                      return !(hour > 0 || minute > 0 || second > 0); // 모든 값이 0이면 에러
+                    },
+                    message: t('학습시간은 1초 이상으로 설정하여야 합니다.'),
+                  },
+                ],
               }}
               element={<DurationTimeFormField />}
             />
@@ -185,8 +184,31 @@ export const ModuleForm: React.FC<ModuleFormProps> = ({
         </>
       )}
       <ContentsRow>
-        <FormRow3 name="description" label="설명" element={<Textarea maxLength={100} />} />
+        <FormRow2
+          provider={provider}
+          name="description"
+          label="설명"
+          format="string"
+          value=""
+          element={<Textarea maxLength={100} />}
+        />
       </ContentsRow>
+
+      {/* 숨겨진 필드들 */}
+      <FormRow2
+        provider={provider}
+        name="contentUuid"
+        format="string"
+        value=""
+        element={<input type="hidden" />}
+      />
+      <FormRow2
+        provider={provider}
+        name="orgnId"
+        format="number"
+        value={0}
+        element={<input type="hidden" />}
+      />
     </>
   );
   return formContent;
