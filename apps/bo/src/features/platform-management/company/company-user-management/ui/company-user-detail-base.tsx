@@ -1,31 +1,17 @@
-import { forwardRef, useRef, useEffect, useState, useImperativeHandle } from 'react';
-import { getDateToString, DATE_TIME_FORMAT } from '@learnway/shared';
-import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
-import { ColumnDef, createColumnHelper, CellContext } from '@tanstack/react-table';
-import { t } from 'i18next';
-import { useWatch } from 'react-hook-form';
-import { EnGlobalConst } from '@types';
+import { DuplicateState } from '@features/form';
 import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import {
-  ChipListModalSelectorFormField,
-  ContentsRow,
-  ContentsRowItem,
-  FormSubTitle,
-  Input,
-  RadioGroupFormField,
-  GridBox,
-  GridFormField,
-  EditDropdownCell,
-  EditSwitchCell,
-  DatePicker,
-  CheckboxGroupFormField,
-} from '@learnway/ui';
-import { ContentsHistoryInfoFormField, FormItem, FormRow } from '@shared/ui';
-import { DuplicateCheckInputFormField, DuplicateState, FormDisplay } from '@features/form';
+import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
+import { ContentsRow, FormSubTitle, GridBox, Input } from '@learnway/ui';
+import { ContentsHistoryInfoFormField, FormRow } from '@shared/ui';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { EnGlobalConst } from '@types';
+import { t } from 'i18next';
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { getUserStatus } from '../service/company-user.service';
-import UsersService from '@entities/users/api/users';
-import { CompanyUserDetailPersonal } from './company-user-detail-personal';
+import { CompanyUserDetailAccount } from './company-user-detail-account';
+import { CompanyUserDetailAuthentication } from './company-user-detail-auth';
 import { CompanyUserDetailJob } from './company-user-detail-job';
+import { CompanyUserDetailPersonal } from './company-user-detail-personal';
 
 interface CompanyUserDetailBaseProps {
   userInfo: any;
@@ -92,6 +78,7 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
 
   return (
     <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
+      {/* 개인 정보 */}
       <CompanyUserDetailPersonal provider={provider} />
       <FormSubTitle label={t('교재 배송 주소 및 교재 신청 내역')} lineType={'dark'} />
       <GridBox
@@ -119,110 +106,12 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
         <FormRow provider={provider} name={'promotionDate'} element={<Input readOnly={true} />} />
         <FormRow provider={provider} name={'userStatus'} />
       </ContentsRow>
-
+      {/* 직군/직무 정보 */}
       <CompanyUserDetailJob provider={provider} />
-
-      <FormSubTitle label={t('계정 정보')} lineType={'dark'} />
-      <ContentsRow>
-        <FormRow provider={provider} name={'hrInfoManageType'} />
-      </ContentsRow>
-      <FormDisplay
-        provider={provider}
-        dependencies={[{ name: 'hrInfoManageType', value: 'MANUAL_MANAGE' }]}
-      >
-        <ContentsRow>
-          <FormRow provider={provider} name={'companyMemberJoinTypeList'} />
-        </ContentsRow>
-      </FormDisplay>
-      <FormDisplay
-        provider={provider}
-        dependencies={[{ name: 'hrInfoManageType', value: 'AUTO_MANAGE' }]}
-      >
-        <ContentsRow>
-          <FormRow provider={provider} name={'linkageSystem'} />
-        </ContentsRow>
-      </FormDisplay>
-      <ContentsRow>
-        <FormRow provider={provider} name={'accountStatus'} />
-        <FormRow
-          provider={provider}
-          name={'lastAccountStatusUpdateDate'}
-          element={<Input readOnly={true} />}
-        />
-        <FormRow provider={provider} name={'dormantDate'} element={<Input readOnly={true} />} />
-      </ContentsRow>
-      <ContentsRow>
-        <FormRow provider={provider} name={'approvalStatus'} element={<Input readOnly={true} />} />
-        <FormRow
-          provider={provider}
-          name={'lastApprovalStatusUpdateDate'}
-          element={<Input readOnly={true} />}
-        />
-      </ContentsRow>
-      <ContentsRow>
-        <FormRow
-          provider={provider}
-          name={'tenantList'}
-          element={
-            <ChipListModalSelectorFormField
-              chipList={{
-                labelField: 'tenantName',
-                valueField: 'tenantId',
-                hideBorder: true,
-              }}
-              disabled={true}
-            />
-          }
-        />
-      </ContentsRow>
-
-      <FormSubTitle label={t('로그인 및 인증 설정 정보')} lineType={'dark'} />
-      <ContentsRow>
-        <ContentsRowItem>
-          <FormRow
-            provider={provider}
-            name="isUseSso"
-            className={dynamicFormStyles.form_item_horizontal}
-          />
-          <FormDisplay provider={provider} dependencies={[{ name: 'isUseSso', value: true }]}>
-            <FormRow provider={provider} name="ssoTypeList" element={<RadioGroupFormField />} />
-          </FormDisplay>
-          <FormItem guideText={t('SSO 로그인 사용 여부를 설정합니다.')} />
-        </ContentsRowItem>
-        <ContentsRowItem>
-          <FormRow provider={provider} name={'authType'} />
-        </ContentsRowItem>
-      </ContentsRow>
-      <ContentsRow>
-        <ContentsRowItem>
-          <FormRow
-            provider={provider}
-            name="isUseTwoFactorAuth"
-            className={dynamicFormStyles.form_item_horizontal}
-          ></FormRow>
-          <FormDisplay
-            provider={provider}
-            dependencies={[{ name: 'isUseTwoFactorAuth', value: true }]}
-          >
-            <FormRow
-              provider={provider}
-              name="twoFactorAuthPlatformTypeList"
-              element={<CheckboxGroupFormField />}
-            />
-          </FormDisplay>
-          <FormItem guideText={t('2차 로그인 인증 여부를 설정할 수 있습니다.')} />
-        </ContentsRowItem>
-      </ContentsRow>
-      <ContentsRow>
-        <FormRow provider={provider} name={'2FAType'} />
-      </ContentsRow>
-      <ContentsRow>
-        <FormRow
-          provider={provider}
-          name={'limitLogin'}
-          element={<RadioGroupFormField disabled={true} />}
-        />
-      </ContentsRow>
+      {/* 계정 정보 */}
+      <CompanyUserDetailAccount provider={provider} />
+      {/* 로그인 및 인증 설정 정보 */}
+      <CompanyUserDetailAuthentication provider={provider} />
       <ContentsHistoryInfoFormField />
     </form>
   );
