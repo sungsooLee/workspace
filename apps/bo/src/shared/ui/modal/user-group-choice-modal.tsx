@@ -22,15 +22,82 @@ import { queryOptions as departmentQueryOptions } from '@entities/department';
 import { BlackwhiteUsersParam } from '@types';
 
 const UserGroupModalComponent = ({ groups }: Pick<BlackwhiteUsersParam, 'groups'>) => {
+  const searchConfig: SearchBoxConfig = {
+    builders: [
+      [
+        {
+          name: 'companyId',
+          type: 'dropdown',
+          label: t('회사'),
+          format: 'object',
+          value: '',
+          presetOptionLabel: t('LABEL.form.label.all'),
+          optionsConfig: {
+            codeGroup: CODE_GROUP['manual.company.companyId'],
+          },
+          isSearchable: true,
+          isClearable: true,
+          placeholder: '입력 선택',
+        },
+        {
+          name: 'deptId',
+          type: 'dropdown',
+          label: t('소속'),
+          value: '',
+          presetOptionLabel: t('LABEL.form.label.select', '선택'),
+          options: [],
+          format: 'object',
+          isSearchable: true,
+          isClearable: true,
+        },
+        {
+          name: 'employeeNumber',
+          type: 'text',
+          label: t('사번'),
+          value: '',
+        },
+      ],
+      [
+        {
+          name: 'userName',
+          type: 'text',
+          label: t('이름'),
+          value: '',
+        },
+      ],
+    ],
+  };
+  const columnHelper = createColumnHelper<any>();
+  const columns = [
+    columnHelper.accessor('companyName', {
+      cell: (info) => info.getValue(),
+      header: '회사',
+    }),
+    columnHelper.accessor('deptName', {
+      cell: (info) => info.getValue(),
+      header: '소속',
+    }),
+    columnHelper.accessor('employeeNumber', {
+      cell: (info) => info.getValue(),
+      header: '사번',
+    }),
+    columnHelper.accessor('userName', {
+      cell: (info) => info.getValue(),
+      header: '이름',
+    }),
+    columnHelper.accessor('status', {
+      cell: (info) => info.getValue(),
+      header: '재직여부',
+    }),
+    columnHelper.accessor('accountStatus', {
+      cell: (info) => info.getValue(),
+      header: '계정상태',
+    }),
+  ] as ColumnDef<any, unknown>[];
   const gridConfig = {
     query: (data: any) => queryOptions.blackwhiteUsers({ ...data, groups }),
     columns: [],
     data: [],
-    pagination: {
-      pageSize: 10,
-      pageIndex: 1,
-      totalRows: 2,
-    },
   };
 
   const { close: closeModal } = useModal();
@@ -75,10 +142,11 @@ const UserGroupModalComponent = ({ groups }: Pick<BlackwhiteUsersParam, 'groups'
           <SearchBox provider={sProvider} onSearch={gridFetch} />
           <Divider />
           <GridBox
+            visibleRowCount={7}
+            showNumberingColumn
             onRowSelect={handleRowSelect}
             config={config}
             columns={columns}
-            showColumnSettings={false}
             title={t('유저그룹목록')}
           />
         </div>
@@ -94,103 +162,3 @@ const UserGroupModalComponent = ({ groups }: Pick<BlackwhiteUsersParam, 'groups'
 };
 
 export const UserGroupChoiceModal = UserGroupModalComponent;
-
-const searchConfig: SearchBoxConfig = {
-  builders: [
-    [
-      {
-        name: 'companyId',
-        type: 'dropdown',
-        label: t('회사'),
-        format: 'object',
-        value: '',
-        presetOptionLabel: t('LABEL.form.label.all'),
-        optionsConfig: {
-          codeGroup: CODE_GROUP['manual.company.companyId'],
-        },
-        isSearchable: true,
-        isClearable: true,
-        placeholder: '입력 선택',
-      },
-      {
-        name: 'companyCode',
-        type: 'text',
-        label: t('실'),
-        value: '',
-      },
-      {
-        name: 'deptId',
-        type: 'dropdown',
-        label: t('소속'),
-        value: '',
-        presetOptionLabel: t('LABEL.form.label.select', '선택'),
-        options: [],
-        format: 'object',
-        isSearchable: true,
-        isClearable: true,
-      },
-    ],
-    [
-      {
-        name: 'employeeNumber',
-        type: 'text',
-        label: t('사번'),
-        value: '',
-      },
-      {
-        name: 'userName',
-        type: 'text',
-        label: t('이름'),
-        value: '',
-      },
-    ],
-  ],
-};
-const columnHelper = createColumnHelper<any>();
-const columns = [
-  columnHelper.accessor('companyName', {
-    id: 'companyName',
-    cell: (info) => info.getValue(),
-    header: '회사',
-    enableGrouping: false,
-    size: 210,
-  }),
-  columnHelper.accessor('managerName', {
-    id: 'managerName',
-    cell: (info) => info.getValue(),
-    header: '실',
-    size: 210,
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('deptName', {
-    id: 'deptName',
-    cell: (info) => info.getValue(),
-    header: '소속',
-    size: 150,
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('employeeNumber', {
-    id: 'employeeNumber',
-    cell: (info) => info.getValue(),
-    header: '사번',
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('userName', {
-    id: 'userName',
-    cell: (info) => info.getValue(),
-    header: '이름',
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('status', {
-    id: 'status',
-    cell: (info) => info.getValue(),
-    header: '재직여부',
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('accountStatus', {
-    id: 'accountStatus',
-    cell: (info) => info.getValue(),
-    header: '계정상태',
-    enableGrouping: false,
-  }),
-] as ColumnDef<any, unknown>[];
