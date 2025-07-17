@@ -1,12 +1,12 @@
 .start {
   &.blog {
     .blog_contents {
-      @apply overflow-y-auto px-[16px] pb-[150px] pt-[16px];
+      @apply h-[calc(100dvh-56px-150px)] overflow-y-auto p-[16px];
     }
   }
   &.ebook {
     .ebook_contents {
-      @apply overflow-y-auto pb-[150px];
+      @apply h-[calc(100dvh-56px-150px)] overflow-y-auto;
     }
   }
   &.file {
@@ -68,10 +68,12 @@
     }
   }
   &.html {
-    @apply flex min-h-[calc(100dvh-56px)] items-center bg-[rgba(0,0,0,.8)] pb-[150px];
+    .html_contents {
+      @apply flex h-[calc(100dvh-56px-150px)] items-center bg-[rgba(0,0,0,.8)];
+    }
   }
   &.iframe {
-    @apply flex min-h-[calc(100dvh-56px)] items-center bg-white pb-[150px];
+    @apply flex h-full w-full items-center bg-white;
     .iframe_contents {
       @apply h-[calc(100dvh-56px-150px)] w-full;
       .iframe {
