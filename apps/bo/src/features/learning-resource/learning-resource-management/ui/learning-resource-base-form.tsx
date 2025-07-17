@@ -20,7 +20,7 @@ import {
 
 import { EnFormMode } from '@types';
 
-import { DropdownFormField, FormDisplay } from '@features/form';
+import { DropdownFormField, FormDisplay, InputFormField } from '@features/form';
 import { DateRangePickerFormField } from '@features/form/ui';
 import { User } from '@learnway/types';
 
@@ -83,7 +83,7 @@ const LearningResourceBaseFormComponent = ({
           label={'학습자원명'}
           value=""
           validation={{ required: true }}
-          element={<Input maxLength={150} />}
+          element={<Input type="text" maxLength={150} />}
         />
       </ContentsRow>
       {/*학습자원 설명*/}
