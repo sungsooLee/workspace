@@ -129,16 +129,10 @@ const LearningResourceBaseFormComponent = ({
           provider={provider}
           name="coordinatorTelNo"
           label={t('연락처')}
-          format="object"
+          format="text"
           validation={{ required: true }}
-          element={
-            <PhoneNumberFormField
-              fields={{ nationCode: 'coordinatorTelCountryCode', number: 'coordinatorTelNo' }}
-              phoneNumberConfig={{
-                options: [{ value: 'KOR_82', label: '+82' }],
-              }}
-            />
-          }
+          value=""
+          element={<Input />}
         />
       </ContentsRow>
       {/* 사용기한 */}
@@ -220,12 +214,9 @@ const LearningResourceBaseFormComponent = ({
             provider={provider}
             label={t('외주개발업체 연락처')}
             name="vendorTelNo"
+            format="text"
             value=""
-            element={<PhoneNumberFormField />}
-            fields={{
-              nationCode: 'vendorNationCode',
-              number: 'vendorTelNo',
-            }}
+            element={<Input />}
           />
         </ContentsRow>
       </FormDisplay>
