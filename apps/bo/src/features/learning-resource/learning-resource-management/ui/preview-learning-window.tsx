@@ -99,8 +99,9 @@ const PreviewLearningWindowComponent: FC<any> = ({
   }, [curriculum, playList]);
 
   useEffect(() => {
+    clearInfo();
     if (!data) return;
-    console.log('content data', data);
+    console.log('🚀 ~ useEffect ~ data:', data);
     switch (data.contentType) {
       case ContentType.SCORM:
         setCurriculum(genCuliculumInfo(data));
@@ -142,10 +143,6 @@ const PreviewLearningWindowComponent: FC<any> = ({
       },
     });
   }, [data]);
-
-  useEffect(() => {
-    clearInfo();
-  }, []);
 
   return <LearnwayLearningWindowLayout />;
 };

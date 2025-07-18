@@ -48,6 +48,7 @@ import { EnrollmentWait } from './enrollment-wait';
 import { EnrollmentCancel } from './enrollment-cancel';
 
 import { queryOptions as companysQueryOptions } from '@entities/companies/service/companies.queries';
+import { SequenceTabDetail } from '@pages/_layout/learning/learning-sequence/-common/type';
 
 // type EnrollmentComponentProps = {
 
@@ -60,7 +61,7 @@ import { queryOptions as companysQueryOptions } from '@entities/companies/servic
 const EnrollmentComponent = () => {
   const router = useRouter();
   const [openYear, setOpenYear] = useState<object[]>();
-  const [selectedTabKey, setSelectedTabKey] = useState<string>('t1');
+  const [selectedTabKey, setSelectedTabKey] = useState<string>(SequenceTabDetail.ENROLLMENT_REGIST);
 
   const handleTabChange = (tabKey: string) => {
     if (tabKey !== selectedTabKey) {
@@ -187,7 +188,7 @@ const EnrollmentComponent = () => {
   const tabItems = [
     {
       title: '수강신청',
-      key: 't1',
+      key: SequenceTabDetail.ENROLLMENT_REGIST,
       content: (
         <EnrollmentRegist
           searchProvider={searchProvider}
@@ -199,7 +200,7 @@ const EnrollmentComponent = () => {
     },
     {
       title: '수강신청 대기',
-      key: 't2',
+      key: SequenceTabDetail.ENROLLMENT_WAIT,
       content: (
         <EnrollmentWait
           searchProvider={searchProvider}
@@ -211,7 +212,7 @@ const EnrollmentComponent = () => {
     },
     {
       title: '수강취소/반려',
-      key: 't3',
+      key: SequenceTabDetail.ENROLLMENT_CANCEL,
       content: (
         <EnrollmentCancel
           searchProvider={searchProvider}

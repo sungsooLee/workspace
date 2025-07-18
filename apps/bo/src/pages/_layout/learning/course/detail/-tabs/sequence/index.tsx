@@ -1,4 +1,4 @@
-import { forwardRef, useState, useImperativeHandle } from 'react';
+import { forwardRef, useState, useImperativeHandle, useEffect } from 'react';
 import { CourseDetailTabBaseProps, CourseDetailTabFormRef } from '../../../-common/type';
 import {
   SequenceDetail,
@@ -19,14 +19,10 @@ const SequenceComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBase
       },
     }));
 
-    return (
-      <>
-        {mode === 'MAIN' ? (
-          <SequenceList setMode={setMode} setSequenceId={setSequenceId} courseId={1} />
-        ) : (
-          <SequenceDetail setMode={setMode} courseId={1} sequenceId={sequenceId} />
-        )}
-      </>
+    return mode === 'MAIN' ? (
+      <SequenceList setMode={setMode} setSequenceId={setSequenceId} courseId={courseId} />
+    ) : (
+      <SequenceDetail setMode={setMode} courseId={courseId} sequenceId={sequenceId} />
     );
   },
 );

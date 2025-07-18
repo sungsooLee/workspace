@@ -8,42 +8,29 @@ import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { useState } from 'react';
+import { Mode } from '../-common/type';
 
+/**
+ * [NLP_BO_LMS_0031] 차수 관리
+ */
 export const Route = createFileRoute('/_layout/learning/learning-sequence/sequence-management/')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const [mode, setMode] = useState<string>('MAIN');
-  const [sequenceId, setSequenceId] = useState<number>(0);
+  const router = useRouter();
+
+  // 페이지 모드, 과정ID, 차수ID
+  const { pMode, pCourseId, pSequenceId } = router.state.location.state;
+  const [mode, setMode] = useState<string>(!pMode ? Mode.MAIN : pMode);
+  const [sequenceId, setSequenceId] = useState<number>(pSequenceId);
   return (
     <PageContainer>
-      {/* <ContentsButtons>
-        <ToggleButtonGroup
-          defaultValue={'edu'}
-          options={[
-            { label: '과정관리', value: 'course' },
-            { label: '수강관리', value: 'edu' },
-          ]}
-          onChange={(value) => setBtnState(value)}
-        />
-        <Divider orientation="vertical" />
-        {btnState === 'course' && (
-          <>
-            <Button variant="point" size="sm" label={t('목록')} />
-            <Divider orientation="vertical" />
-            <Button variant="point" size="sm" label={t('삭제')} />
-            <Button variant="primary" size="sm">
-              {t('저장')}
-            </Button>
-          </>
-        )}
-      </ContentsButtons> */}
       <MainContents>
-        {mode === 'MAIN' ? (
-          <SequenceList setMode={setMode} setSequenceId={setSequenceId} courseId={1} />
+        {mode === Mode.MAIN ? (
+          <SequenceList setMode={setMode} setSequenceId={setSequenceId} />
         ) : (
-          <SequenceDetail setMode={setMode} courseId={1} sequenceId={sequenceId} />
+          <SequenceDetail setMode={setMode} courseId={pCourseId} sequenceId={sequenceId} />
         )}
       </MainContents>
     </PageContainer>

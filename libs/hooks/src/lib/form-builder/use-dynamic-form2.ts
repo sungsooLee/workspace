@@ -140,6 +140,7 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
     setValue,
     trigger,
     watch,
+    unregister,
   } = methods;
 
   /**
@@ -279,6 +280,34 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
     }));
   }, []);
 
+  /**
+   * 모든 validator를 초기화하는 함수
+   */
+  // const clearAllValidators = useCallback(() => {
+  //   setDynamicValidator({});
+  //   setDynamicBuilders([]);
+  //   // 폼 데이터도 완전히 초기화
+  //   reset({});
+  //   clearErrors();
+  //   // fieldRefs도 초기화
+  //   fieldRefs.current = {};
+  // }, [reset, clearErrors]);
+  const clearAllValidators = useCallback(() => {
+    // 등록된 모든 필드 이름 가져오기
+    const fieldNames = Object.keys(getValues());
+
+    // 모든 필드를 unregister로 완전 제거
+    fieldNames.forEach((fieldName) => {
+      unregister(fieldName);
+    });
+
+    // 나머지 상태 초기화
+    setDynamicValidator({});
+    setDynamicBuilders([]);
+    clearErrors();
+    fieldRefs.current = {};
+  }, [getValues, unregister, clearErrors]);
+
   // control 확장: 기본 control에 isFieldRequired 메서드 추가
   const extendedControl: DynamicFormProvider['control'] = useMemo(
     () => ({
@@ -323,6 +352,7 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
       registerField,
       addValidator,
       watch,
+      clearAllValidators,
     }),
     [
       extendedControl,
@@ -333,6 +363,7 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
       handleFocus,
       registerField,
       addValidator,
+      clearAllValidators,
       customSetValue,
       trigger,
     ],
@@ -342,27 +373,56 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
   const customOnFormValid = useCallback(async () => {
     try {
       const currentValues = getValues();
-      schema.parse(currentValues);
+
+      // DOM에 실제로 렌더링된 필드들만 검증 대상으로 필터링
+      const filteredValues: Record<string, any> = {};
+      const renderedFields: string[] = [];
+
+      // fieldRefs에 등록된 필드들만 현재 렌더링된 필드로 간주
+      Object.keys(fieldRefs.current).forEach((fieldName) => {
+        const fieldElement = fieldRefs.current[fieldName];
+        if (fieldElement && fieldElement.isConnected) {
+          renderedFields.push(fieldName);
+          if (currentValues[fieldName] !== undefined) {
+            filteredValues[fieldName] = currentValues[fieldName];
+          }
+        }
+      });
+
+      // 렌더링된 필드들에 대해서만 스키마 검증
+      const filteredSchema = Object.keys(validator).reduce((acc, key) => {
+        if (renderedFields.includes(key)) {
+          acc[key] = validator[key];
+        }
+        return acc;
+      }, {} as ValidatorConfig);
+
+      const validationSchema = buildJodObject(filteredSchema);
+      validationSchema.parse(filteredValues);
       clearErrors(); // 기존 에러 클리어
       return true;
     } catch (error: any) {
-      console.log('Custom validation errors:', error);
       clearErrors(); // 기존 에러 클리어
 
       // Zod 에러를 react-hook-form 에러로 변환
       if (error && error.issues) {
         error.issues.forEach((issue: any) => {
           if (issue.path && issue.path.length > 0) {
-            setError(issue.path[0], {
-              type: 'custom',
-              message: issue.message,
-            });
+            // 현재 렌더링된 필드인지 확인
+            const fieldName = issue.path[0];
+            const fieldElement = fieldRefs.current[fieldName];
+            if (fieldElement && fieldElement.isConnected) {
+              setError(fieldName, {
+                type: 'custom',
+                message: issue.message,
+              });
+            }
           }
         });
       }
       return false;
     }
-  }, [schema, getValues, setError, clearErrors]);
+  }, [validator, getValues, setError, clearErrors, fieldRefs]);
 
   /**
    * 폼 제출 핸들러를 생성하는 함수.
@@ -432,5 +492,6 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
     control: extendedControl,
     watch,
     getInitByBuilders,
+    clearAllValidators,
   };
 };

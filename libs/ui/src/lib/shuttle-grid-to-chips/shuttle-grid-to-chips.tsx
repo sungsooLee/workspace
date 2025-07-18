@@ -15,7 +15,7 @@ interface ShuttleGridToChipsProps {
   columns: ColumnDef<any, unknown>[];
   gridData: any[];
   selectedItems: SelectedChip[];
-  handleSelectItem: (nodes: SelectedChip[]) => void;
+  handleSelectItem: (node: SelectedChip) => void;
   cancelSelectItem: (node: SelectedChip) => void;
   cancelAll: () => void;
   sourceTitle: string;
@@ -61,16 +61,21 @@ const ShuttleGridToChipsComponent = (
         cellAlign: 'center',
       },
       cell: ({ row }) => {
-        console.log(row?.original, 'row?.original::');
-        const rowId = row?.original?.id;
+        // console.log(row?.original, 'row?.original::');
+        const { id, key, fullPath } = row?.original || {};
         return (
           <div className={styles.btn_select}>
             <Button
               label={t('선택')}
-              variant={selectedItems.find(({ id }) => id === rowId) ? 'primary' : 'gray2'}
-              className={selectedItems.find(({ id }) => id === rowId) ? styles.active : ''}
+              variant={
+                selectedItems.find(({ id: selectedId }) => selectedId === id) ? 'primary' : 'gray2'
+              }
+              className={
+                selectedItems.find(({ id: selectedId }) => selectedId === id) ? styles.active : ''
+              }
               size={'xs'}
               onClick={() => {
+                handleSelectItem({ id, key, fullPath });
                 row.toggleSelected();
               }}
             />
@@ -82,7 +87,7 @@ const ShuttleGridToChipsComponent = (
 
   const onRowsSelect = (selectedRows: any[]) => {
     // console.log(selectedRows, 'selectedRows');
-    handleSelectItem(selectedRows);
+    // handleSelectItem(selectedRows);
     // setRightGridData(selectedRows);
   };
 
@@ -103,15 +108,15 @@ const ShuttleGridToChipsComponent = (
     <div className={cn(styles.start, styles.transfer_grid, 'nlp--shuttle-grid-to-grid')}>
       <div className={styles.grid_wrap}>
         <GridBox
-          ref={leftGridRef} // 좌측 그리드의 명령형 메서드에 접근하기 위한 Ref 연결
-          title={sourceTitle} // 좌측 그리드 제목
-          data={gridData} // 좌측 그리드 데이터
-          columns={leftGridColumns} // 좌측 그리드 컬럼 정의
-          multiple // 다중 선택 가능
-          disabledSelectionToggle // 선택 체크박스 비활성화 (버튼으로 선택 제어)
-          hideRowSelectionCheckBox={true} // 행 선택 체크박스 숨김 여부
-          onRowsSelect={onRowsSelect} // 행 선택 시 호출되는 핸들러
-          onTableInstanceChange={(table: Table<any>) => setLeftTableInstance(table)}
+          ref={leftGridRef}
+          title={sourceTitle}
+          data={gridData}
+          columns={leftGridColumns}
+          multiple
+          disabledSelectionToggle
+          hideRowSelectionCheckBox={true}
+          onRowsSelect={onRowsSelect}
+          onTableInstanceChange={(table) => setLeftTableInstance(table)}
         />
       </div>
       <div className={styles.icon_arrow}>

@@ -69,10 +69,10 @@ const ResourceChoiceModalComponent = ({
           name: 'contentTypes',
           type: 'dropdown',
           label: t('유형'),
-          value: 'SCORM',
+          value: initialContentType ?? '',
           variant: 'text',
           format: 'string',
-          readOnly: true,
+          readOnly: initialContentType ? true : false,
           presetOptionLabel: t('LABEL.form.label.all', '전체'),
           optionsConfig: {
             codeGroup: CODE_GROUP['cms.content.ContentType'],

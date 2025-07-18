@@ -244,16 +244,12 @@ const CompanyDetailComponent = (props: any, ref: any) => {
       onClose(data: any) {
         console.log('### selectedUserGroups', data);
         if (data) {
-          const userGroups = data.map((group: any) => ({
-            userGroupId: group.key,
-            isUsed: true,
-          }));
           console.log('## tempLoginRestrictTimeSetting', tempLoginRestrictTimeSetting.current);
           const newSetting = JSON.parse(JSON.stringify(tempLoginRestrictTimeSetting.current));
           tempLoginRestrictTimeSetting.current = null;
           setLoginRestrictTimeSettings([
             ...loginRestrictTimeSettings,
-            { ...newSetting, companyLoginRestrictionUserGroupList: userGroups },
+            { ...newSetting, companyLoginRestrictionWhiteUserGroupList: data },
           ]);
         } else tempLoginRestrictTimeSetting.current = null;
       },
@@ -261,12 +257,17 @@ const CompanyDetailComponent = (props: any, ref: any) => {
   };
 
   const changeUserGroup = (info: any) => {
+    console.log('### info', info);
     openModal({
       width: 'xl',
-      content: <UserGroupTabsChoiceModal tenantIds={[]} />,
+      content: (
+        <UserGroupTabsChoiceModal
+          tenantIds={[]}
+          option={info.original.companyLoginRestrictionWhiteUserGroupList}
+        />
+      ),
       onClose(data: any) {
         console.log('### selectedUserGroups', data);
-        console.log('### info', info);
         if (data) {
           const userGroups = data.map((group: any) => ({
             userGroupId: group.key,
@@ -276,7 +277,7 @@ const CompanyDetailComponent = (props: any, ref: any) => {
             const newSettings = [...prev];
             newSettings[data.index] = {
               ...newSettings[data.index],
-              companyLoginRestrictionUserGroupList: userGroups,
+              companyLoginRestrictionWhiteUserGroupList: data,
             };
             return newSettings;
           });
@@ -285,10 +286,12 @@ const CompanyDetailComponent = (props: any, ref: any) => {
     });
   };
 
-  const handleUserGroupMemberView = () => {
+  const handleUserGroupMemberView = (info: any) => {
     openModal({
       width: 'xl',
-      content: <UserGroupChoiceModal />,
+      content: (
+        <UserGroupChoiceModal groups={info.original.companyLoginRestrictionWhiteUserGroupList} />
+      ),
     });
   };
 
@@ -395,7 +398,7 @@ const CompanyDetailComponent = (props: any, ref: any) => {
             variant={'gray'}
             size={'md'}
             stopPropagation
-            onClick={() => handleUserGroupMemberView()}
+            onClick={() => handleUserGroupMemberView(info.row)}
           />
         );
       },
@@ -518,24 +521,26 @@ const CompanyDetailComponent = (props: any, ref: any) => {
       <FormSubTitle label={t('로그인 및 인증 설정 정보')} lineType="dark" />
       <LoginAuthenticationSettingInformation provider={provider} />
 
-      <div className="grid_wrap py-10">
-        <GridBox
-          columns={columns}
-          data={loginRestrictTimeSettings}
-          multiple
-          showAdd
-          showRemove
-          showTotalCount={false}
-          onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
-          onAddClick={handleAddClick}
-          onRemoveClick={handleRemoveClick}
-          disabledSelectionToggle={true}
-          title={t('로그인 제한 시간 설정')}
-          guideText={t(
-            '사용자가 학습자 사이트에 로그인 가능한 시간을 설정할 수 있으며, 회사의 유저그룹을 기준으로 로그인 제한 시간을 설정할 수 있습니다.',
-          )}
-        />
-      </div>
+      {props.mode === EnFormMode.VIEW && (
+        <div className="grid_wrap py-10">
+          <GridBox
+            columns={columns}
+            data={loginRestrictTimeSettings}
+            multiple
+            showAdd
+            showRemove
+            showTotalCount={false}
+            onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
+            onAddClick={handleAddClick}
+            onRemoveClick={handleRemoveClick}
+            disabledSelectionToggle={true}
+            title={t('로그인 제한 시간 설정')}
+            guideText={t(
+              '사용자가 학습자 사이트에 로그인 가능한 시간을 설정할 수 있으며, 회사의 유저그룹을 기준으로 로그인 제한 시간을 설정할 수 있습니다.',
+            )}
+          />
+        </div>
+      )}
 
       <FormSubTitle label={t('보안 설정 정보')} lineType="dark" />
       <ContentsRow>
@@ -619,24 +624,6 @@ const CompanyDetailComponent = (props: any, ref: any) => {
         <FormRow provider={provider} name={'ipAccessControlTypeBo'} />
       </ContentsRow>
 
-      {/* <FormSubTitle label={'결재라인 설정 정보'} lineType="dark" />
-      <ContentsRow>
-        <FormRow provider={provider} name={'enrollApprovalMatrix'} />
-      </ContentsRow>
-      <ContentsRow>
-        <FormRow provider={provider} name={'channelApprovalMatrix'} />
-      </ContentsRow>
-      <ContentsRow>
-        <FormRow provider={provider} name={'externalEnrollApplicationProcess'} />
-      </ContentsRow>
-
-      <ContentsRow>
-        <FormRow provider={provider} name={'자격증 응시료 지원 신청 결재라인'} />
-      </ContentsRow>
-      <ContentsRow>
-        <FormRow provider={provider} name={'languageApprovalMatrix'} />
-      </ContentsRow>
-*/}
       <FormSubTitle label={t('회사 사용 설정')} lineType="dark" />
       <ContentsRow type={'horizontal'}>
         <FormRow provider={provider} name={'isUsed'} />
@@ -974,58 +961,6 @@ const formConfig = (): DynamicFormConfig => ({
       },
       guideText: t('HRD 센터의 IP 접근 제한을 설정합니다.'),
     },
-
-    // {
-    //   name: 'enrollApprovalMatrix',
-    //   type: 'radio-group',
-    //   label: t('과정 수강 신청 결재라인'),
-    //   value: '',
-    //   optionsConfig: {
-    //     codeGroup: CODE_GROUP['pms.company.ApprovalMatrix'],
-    //   },
-    //   guideText: '사용자 과정 수강 신청 시에 수강신청 결재라인을 설정할 수 있습니다.',
-    // },
-    // {
-    //   name: 'channelApprovalMatrix',
-    //   type: 'radio-group',
-    //   label: t('채널 신청 결재라인'),
-    //   value: '',
-    //   optionsConfig: {
-    //     codeGroup: CODE_GROUP['pms.company.ApprovalMatrix'],
-    //   },
-    //   guideText: '사외과정 신청 시에 수강신청 결재라인을 설정할 수 있습니다.',
-    // },
-    // {
-    //   name: 'externalEnrollApplicationProcess',
-    //   type: 'radio-group',
-    //   label: t('사외과정 지원 신청 절차'),
-    //   value: '',
-    //   optionsConfig: {
-    //     codeGroup: CODE_GROUP['pms.company.ApplicationProcess'],
-    //   },
-    //   guideText: '사외과정 지원 신청 절차를 설정할 수 있습니다.',
-    // },
-    // {
-    //   name: '자격증 응시료 지원 신청 결재라인',
-    //   type: 'radio-group',
-    //   label: t('자격증 응시료 지원 신청 결재라인'),
-    //   value: '',
-    //   optionsConfig: {
-    //     codeGroup: CODE_GROUP['pms.company.ApprovalMatrix'],
-    //   },
-    //   guideText: '자격증 응시료 지원 신청 결재라인을 설정할 수 있습니다.',
-    // },
-    // {
-    //   name: 'languageApprovalMatrix',
-    //   type: 'radio-group',
-    //   label: t('어학 이력 결재라인'),
-    //   value: '',
-    //   optionsConfig: {
-    //     codeGroup: CODE_GROUP['pms.company.ApprovalMatrix'],
-    //   },
-    //   guideText: '어학 이력 결재라인을 설정할 수 있습니다.',
-    //   tooltip: 'EMPTY',
-    // },
     {
       name: 'isUsed',
       type: 'switch',

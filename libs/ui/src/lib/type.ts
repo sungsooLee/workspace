@@ -162,8 +162,9 @@ export interface PaginationResponse<T> {
 
 export type SelectedChip = {
   key: string;
-  id: number;
+  id?: number;
+  ids?: number[];
   groupId?: number;
-  title: string;
+  // title: string;
   fullPath: string;
 };

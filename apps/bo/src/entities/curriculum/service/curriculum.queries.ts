@@ -1,5 +1,6 @@
 import {
   CurriculumCreateRequest,
+  CurriculumDndParams,
   CurriculumSearchParams,
   CurriculumUpdateRequest,
   FixedModuleSaveParams,
@@ -10,10 +11,13 @@ import {
   LessonUpdateParams,
 } from '@types';
 import { CurriculumService } from '../api/curriculum';
-import { Mutation } from '@tanstack/react-query';
 
 export const queryKeys = {
   all: ['curriculum-all'] as const,
+  detail: (curriculumId: number) => [...queryKeys.all, curriculumId] as const,
+  moduleDetail: (moduleId: number) => [...queryKeys.all, 'module', moduleId] as const,
+  lessonDetail: (data: { lessonId?: number; moduleId?: number }) =>
+    [...queryKeys.all, 'lesson', data.lessonId, data.moduleId] as const,
 };
 
 export const queryOptions = {
@@ -22,18 +26,20 @@ export const queryOptions = {
     queryFn: () => CurriculumService.getCurriculumList(param),
   }),
   detail: (curriculumId: number) => ({
-    queryKey: [...queryKeys.all, curriculumId],
+    queryKey: queryKeys.detail(curriculumId),
     queryFn: () => CurriculumService.getCurriculumDetail(curriculumId),
     enabled: !!curriculumId,
   }),
   moduleDetail: (moduleId: number) => ({
-    queryKey: [...queryKeys.all, 'module', moduleId],
+    queryKey: queryKeys.moduleDetail(moduleId),
     queryFn: () => CurriculumService.getModuleDetail(moduleId),
     enabled: !!moduleId,
   }),
-  lessonDetail: (data: { lessonId: number; moduleId: number }) => ({
-    queryKey: [...queryKeys.all, 'lesson', data.lessonId],
-    queryFn: () => CurriculumService.getLessonDetail(data),
+  lessonDetail: (data: { lessonId?: number; moduleId?: number }) => ({
+    queryKey: queryKeys.lessonDetail(data),
+    queryFn: () =>
+      CurriculumService.getLessonDetail(data as { moduleId: number; lessonId: number }),
+    enabled: !!data.moduleId && !!data.lessonId,
   }),
 };
 
@@ -73,5 +79,8 @@ export const mutateOptions = {
   }),
   updateLessonByFixed: () => ({
     mutationFn: (payload: LessonUpdateParams) => CurriculumService.updateFixedLesson(payload),
+  }),
+  dndCurriculumTree: () => ({
+    mutationFn: (data: CurriculumDndParams) => CurriculumService.updateDndCurriculumTree(data),
   }),
 };

@@ -1,7 +1,7 @@
 import { useRouter, useRouterState } from '@tanstack/react-router';
 import { CellContext } from '@tanstack/react-table';
 import { t } from 'i18next';
-import { forwardRef, useImperativeHandle, useRef } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 
@@ -20,8 +20,20 @@ import {
 } from '@learnway/ui';
 
 import { FormDisplay } from '@features/form/ui/form-display';
-import { FormRow, OrganizationChoiceTreeModal } from '@shared/ui';
-import { EMAIL_REGEX } from '@types';
+import { ContentsHistoryInfoFormField, FormRow, OrganizationChoiceTreeModal } from '@shared/ui';
+import { EMAIL_REGEX, EnGlobalConst } from '@types';
+import { useFetchUser } from '@entities/users/service/users.hook';
+import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
+import {
+  getUserStatus
+} from '@features/platform-management/company/company-user-management/service/company-user.service';
+import {
+  CompanyUserDetailJob
+} from '@features/platform-management/company/company-user-management/ui/company-user-detail-job';
+
+interface userDetailProps {
+  userData: any;
+}
 
 /**
  *
@@ -29,7 +41,7 @@ import { EMAIL_REGEX } from '@types';
  * @param ref
  * @returns
  */
-const TenantUserApplicationDetailComponent = (props: any, ref: any) => {
+const TenantUserApplicationDetailComponent = (props: userDetailProps, ref: any) => {
   const router = useRouter();
   const routerState = useRouterState();
 
@@ -37,10 +49,8 @@ const TenantUserApplicationDetailComponent = (props: any, ref: any) => {
 
   const formRef = useRef<HTMLFormElement>(null);
 
-  const companyCodes = routerState.location.state?.companyCodes;
-
   const { provider, updateFormData, onSubmit, onFormChange, getValues, control } =
-    useDynamicForm(formConfig);
+    useDynamicForm(formConfig());
 
   useImperativeHandle(ref, () => ({
     saveData() {
@@ -56,65 +66,81 @@ const TenantUserApplicationDetailComponent = (props: any, ref: any) => {
     },
   }));
 
-  const handleCompanySearchButtonClick = async () => {
-    const organization = await openModal({
-      width: 'md',
-      content: <OrganizationChoiceTreeModal companyCodes={companyCodes} />,
-    });
-
-    const changeData = {
-      companyId: organization.companyId,
-      companyName: organization.companyName,
-      lastDept: organization.deptName,
-      deptId: organization.deptId,
-      firstDept: '',
-    };
-
-    if (organization.allTreePath.length > 3) {
-      changeData.firstDept = organization.allTreePath[2].deptName;
-    }
-    onFormChange(changeData);
-  };
-
   const handleOnSubmit = async (data: any) => {
     console.log('#### handleOnSubmit', data);
   };
+
+  useEffect(() => {
+    if( props.userData ) {
+      const userData = props.userData;
+      console.log('#### userData {} => ', userData)
+
+      const data = {
+        ...userData,
+        phoneNumber: userData.phoneNumber && formatPhoneNumber(userData.phoneNumber),
+        companyNumber: userData.companyPhoneNumber && formatPhoneNumber(userData.companyPhoneNumber),
+        companyName: userData.company.name,
+        deptName: userData.dept?.deptName,
+        userPosition: userData.isLeader ? t('조직장') : t('조직원'),
+        gender: userData.gender && t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.user.Gender.${userData.gender}`),
+        userState: getUserStatus(userData),
+        approvalStatus: userData.enabledDate !== null ? '승인' : '대기',
+        hrInfoManageType: userData.hrInfoManageType ? userData.hrInfoManageType : 'MANUAL_MANAGE',
+        companyMemberJoinTypeList: userData.companyMemberJoinTypeList ? userData.companyMemberJoinTypeList : ['BO_JOIN_MANAGER'],
+
+        lastApprovalStatusUpdateDate: userData.enabledDate
+          && getDateToString(new Date(userData.enabledDate), DATE_TIME_FORMAT.DATETIME_SEC),
+        createdDate: userData.createdDate
+          && getDateToString(new Date(userData.createdDate), DATE_TIME_FORMAT.DATETIME_SEC),
+        joinDate: userData.joinDate
+          && getDateToString(new Date(userData.joinDate), DATE_TIME_FORMAT.DATETIME_SEC),
+        retireDate: userData.retireDate
+          && getDateToString(new Date(userData.retireDate), DATE_TIME_FORMAT.DATETIME_SEC),
+        promotionDate: userData.promotionDate
+          && getDateToString(new Date(userData.promotionDate), DATE_TIME_FORMAT.DATETIME_SEC),
+        dormantDate: userData.dormantDate
+          && getDateToString(new Date(userData.dormantDate), DATE_TIME_FORMAT.DATETIME_SEC),
+        tenant: userData.tenants,
+      }
+
+      updateFormData(data)
+    }
+  }, [props.userData]);
 
   return (
     <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
       <FormSubTitle label={t('개인 정보')} lineType="dark" />
       <ContentsRow>
         <FormRow provider={provider} name="name" element={<Input disabled />} />
+        <FormRow provider={provider} name="engName" element={<Input disabled />} />
         <FormRow provider={provider} name="employeeNumber" element={<Input disabled />} />
-
-        <FormRow provider={provider} name="email" element={<Input disabled />} />
       </ContentsRow>
       <ContentsRow>
+        <FormRow provider={provider} name="email" element={<Input disabled />} />
         <FormRow provider={provider} name="birthday" element={<Input disabled />} />
-        <FormRow provider={provider} name="userGender" element={<Input disabled />} />
-        <FormRow provider={provider} name="region" element={<Input disabled />} />
+        <FormRow provider={provider} name="gender" element={<Input disabled />} />
       </ContentsRow>
       <ContentsRow>
         <FormRow provider={provider} name="phoneNumber" />
         <FormRow provider={provider} name="companyNumber" />
-        <FormRow provider={provider} name="joinDate" element={<Input disabled />} />
+        <FormRow provider={provider} name="createdDate" element={<Input disabled />} />
       </ContentsRow>
 
       <FormSubTitle label={t('회사/조직 정보')} lineType="dark" />
       <ContentsRow>
         <FormRow provider={provider} name="companyName" element={<Input disabled />} />
         <FormRow provider={provider} name="firstDept" element={<Input disabled />} />
-        <FormRow provider={provider} name="lastDept" element={<Input disabled />} />
+        <FormRow provider={provider} name="deptName" element={<Input disabled />} />
       </ContentsRow>
       <ContentsRow>
         <FormRow provider={provider} name="userPosition" element={<Input disabled />} />
-        <FormRow provider={provider} name="userTitle" element={<Input disabled />} />
-        <FormRow provider={provider} name="userGroupType" element={<Input disabled />} />
+        <FormRow provider={provider} name="positionName" element={<Input disabled />} />
+        <FormRow provider={provider} name="jobDomain" element={<Input disabled />} />
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider} name={'userJoining'} element={<Input disabled />} />
-        <FormRow provider={provider} name={'userResignation'} element={<Input disabled />} />
-        <FormRow provider={provider} name={'userPromotion'} element={<Input disabled />} />
+        <FormRow provider={provider} name={'joinDate'} element={<Input disabled />} />
+        <FormRow provider={provider} name={'retireDate'} element={<Input disabled />} />
+        <FormRow provider={provider} name={'promotionDate'} element={<Input disabled />} />
       </ContentsRow>
       <ContentsRow>
         <FormRow provider={provider} name="userState" />
@@ -122,26 +148,8 @@ const TenantUserApplicationDetailComponent = (props: any, ref: any) => {
         <div className={formStyles.form_item}></div>
       </ContentsRow>
 
-      <FormSubTitle label={t('직군/직무 정보')} lineType="dark" />
-      <ContentsRow>
-        <FormRow
-          provider={provider}
-          name="jobManagement"
-          element={
-            <GridFormField
-              gridProps={{
-                multiple: true,
-                showAdd: true,
-                showRemove: true,
-                showTotalCount: false,
-                columns: columns(),
-                title: t('직군/직무 관리'),
-                visibleRowCount: 3,
-              }}
-            />
-          }
-        />
-      </ContentsRow>
+      {/* 직군/직무 정보 */}
+      <CompanyUserDetailJob provider={provider} />
 
       <FormSubTitle label={t('계정 정보')} lineType="dark" />
       <ContentsRow>
@@ -149,8 +157,7 @@ const TenantUserApplicationDetailComponent = (props: any, ref: any) => {
       </ContentsRow>
       <FormDisplay
         provider={provider}
-        dependencies={[{ name: 'hrInfoManageType', value: 'MANUAL_MANAGE' }]}
-      >
+        dependencies={[{ name: 'hrInfoManageType', value: 'MANUAL_MANAGE' }]}>
         <ContentsRow>
           <FormRow provider={provider} name="companyMemberJoinTypeList" />
         </ContentsRow>
@@ -173,13 +180,13 @@ const TenantUserApplicationDetailComponent = (props: any, ref: any) => {
         <FormRow provider={provider} name="accountLastUpdateDate" element={<Input disabled />} />
         <FormRow
           provider={provider}
-          name="accountDormancyUpdateDate"
+          name="dormantDate"
           element={<Input disabled />}
         />
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider} name="approvalStat" element={<Input disabled />} />
-        <FormRow provider={provider} name="approvalStateDate" element={<Input disabled />} />
+        <FormRow provider={provider} name="approvalStatus" element={<Input disabled />} />
+        <FormRow provider={provider} name="lastApprovalStatusUpdateDate" element={<Input disabled />} />
         <div className={formStyles.form_item}></div>
       </ContentsRow>
       <ContentsRow>
@@ -189,8 +196,8 @@ const TenantUserApplicationDetailComponent = (props: any, ref: any) => {
           element={
             <ChipListModalSelectorFormField
               chipList={{
-                labelField: 'name',
-                valueField: 'value',
+                labelField: 'tenantName',
+                valueField: 'tenantId',
                 wordwrap: true,
               }}
               disabled
@@ -198,9 +205,34 @@ const TenantUserApplicationDetailComponent = (props: any, ref: any) => {
           }
         />
       </ContentsRow>
+      <ContentsHistoryInfoFormField />
     </form>
   );
 };
+
+function formatPhoneNumber(phone: string): string {
+  const cleaned = phone.replace(/\D/g, ''); // 숫자만 남기기
+
+  if (cleaned.startsWith('02')) {
+    // 서울번호 (지역번호 2자리)
+    if (cleaned.length === 9) {
+      return cleaned.replace(/(02)(\d{3})(\d{4})/, '$1-$2-$3'); // 02-123-4567
+    }
+    if (cleaned.length === 10) {
+      return cleaned.replace(/(02)(\d{4})(\d{4})/, '$1-$2-$3'); // 02-1234-5678
+    }
+  } else if (/^0\d{2}/.test(cleaned)) {
+    // 지방번호 (지역번호 3자리: 031, 051 등)
+    if (cleaned.length === 10) {
+      return cleaned.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3'); // 031-123-4567
+    }
+    if (cleaned.length === 11) {
+      return cleaned.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'); // 031-1234-5678 or 010-1234-5678
+    }
+  }
+
+  return phone; // 조건에 맞지 않으면 원본 반환
+}
 
 export const TenantUserApplicationDetail = forwardRef(TenantUserApplicationDetailComponent);
 const columns = () => [
@@ -250,105 +282,21 @@ const columns = () => [
   },
 ];
 
-const formConfig: DynamicFormConfig = {
+const formConfig = (): DynamicFormConfig => ({
   builders: [
-    { name: 'companyId', type: 'hidden', label: '', value: '' },
-    {
-      name: 'companyName',
-      type: 'text',
-      label: t('회사'),
-      value: '',
-    },
-    {
-      name: 'firstDept',
-      type: 'text',
-      label: t('본부'),
-      value: '',
-    },
-    { name: 'deptId', type: 'hidden', label: '', value: '' },
-    {
-      name: 'lastDept',
-      type: 'text',
-      label: t('소속'),
-      value: '',
-    },
-    {
-      name: 'userPosition',
-      type: 'dropdown',
-      label: t('보직'),
-      value: '',
-      presetOptionLabel: t('LABEL.form.label.select'),
-      optionsConfig: {
-        codeGroup: CODE_GROUP['pms.user.UserGroupType'],
-      },
-    },
-    {
-      name: 'userTitle',
-      type: 'dropdown',
-      label: t('호칭(지위)'),
-      value: '',
-      presetOptionLabel: t('LABEL.form.label.select'),
-      optionsConfig: {
-        codeGroup: CODE_GROUP['pms.user.UserGroupType'],
-      },
-    },
-    {
-      name: 'userGroupType',
-      type: 'dropdown',
-      label: t('직군'),
-      value: '',
-      presetOptionLabel: t('LABEL.form.label.select'),
-      optionsConfig: {
-        codeGroup: CODE_GROUP['pms.user.UserGroupType'],
-      },
-    },
-    {
-      name: 'userJoining',
-      type: 'text',
-      label: t('입사일'),
-      format: 'object',
-      value: undefined,
-    },
-    {
-      name: 'userResignation',
-      type: 'text',
-      label: t('퇴사일'),
-      format: 'object',
-      value: undefined,
-    },
-    {
-      name: 'userPromotion',
-      type: 'text',
-      label: t('최근 승진일'),
-      format: 'object',
-      value: undefined,
-    },
-
-    {
-      name: 'userState',
-      type: 'radio-group',
-      label: t('재직 상태'),
-      value: '1',
-      options: [
-        { label: '재직', value: '1' },
-        { label: '정직', value: '2' },
-        { label: '휴직', value: '3' },
-        { label: '퇴사', value: '4' },
-      ],
-    },
-    {
-      name: 'userModifyDate',
-      type: 'text',
-      label: t('재직 상태 변경일'),
-      value: '',
-      placeholder: ' ',
-    },
-
+    // 개인 정보
     {
       name: 'name',
       type: 'text',
       label: t('이름'),
       value: '',
+    },
+    {
+      name: 'engName',
+      type: 'text',
+      label: t('영문 이름'),
+      value: null,
+      placeholder: ' ',
     },
     {
       name: 'employeeNumber',
@@ -366,44 +314,21 @@ const formConfig: DynamicFormConfig = {
       name: 'birthday',
       type: 'text',
       label: t('생년월일'),
-      format: 'object',
-      value: undefined,
-    },
-    {
-      name: 'userGender',
-      type: 'dropdown',
-      label: t('성별'),
-      value: 'MALE',
-      format: 'object',
-      optionsConfig: {
-        codeGroup: CODE_GROUP['pms.user.Gender'],
-      },
-    },
-    {
-      name: 'region',
-      type: 'text',
-      label: t('지역'),
       value: '',
       placeholder: ' ',
     },
-
+    {
+      name: 'gender',
+      type: 'text',
+      label: t('성별'),
+      value: '',
+      placeholder: ' ',
+    },
     {
       label: t('휴대폰 번호'),
       name: 'phoneNumber',
-      type: 'phone-number',
-      format: 'string',
+      type: 'text',
       value: '',
-      fields: {
-        nationCode: 'phoneNumberCountryCode',
-        number: 'phoneNumber',
-      },
-    },
-    {
-      label: '',
-      name: 'phoneNumberCountryCode',
-      type: 'hidden',
-      format: 'string',
-      value: 'KOR_82',
     },
     {
       label: t('연락처(사무실)'),
@@ -425,17 +350,102 @@ const formConfig: DynamicFormConfig = {
     },
     {
       label: t('회원가입일'),
-      name: 'joinDate',
-      type: 'hidden',
+      name: 'createdDate',
+      type: 'text',
       format: 'string',
       value: '',
     },
+    // 회사 조직 정보
+    { name: 'companyId', type: 'hidden', label: '', value: '' },
+    {
+      name: 'companyName',
+      type: 'text',
+      label: t('회사'),
+      value: '',
+    },
+    {
+      name: 'firstDept',
+      type: 'text',
+      label: t('실'),
+      value: '',
+      placeholder: ' ',
+    },
+    { name: 'deptId', type: 'hidden', label: '', value: '' },
+    {
+      name: 'deptName',
+      type: 'text',
+      label: t('소속'),
+      value: '',
+    },
+    {
+      name: 'userPosition',
+      type: 'text',
+      label: t('보직'),
+      value: '',
+      placeholder: ' ',
+    },
+    {
+      name: 'positionName',
+      type: 'text',
+      label: t('호칭(지위)'),
+      value: '',
+      placeholder: ' ',
+    },
+    {
+      name: 'jobDomain',
+      type: 'text',
+      label: t('직군'),
+      value: '',
+      placeholder: ' ',
+    },
+    {
+      name: 'joinDate',
+      type: 'text',
+      label: t('입사일'),
+      format: 'object',
+      value: undefined,
+      placeholder: ' ',
+    },
+    {
+      name: 'retireDate',
+      type: 'text',
+      label: t('퇴사일'),
+      format: 'object',
+      value: undefined,
+      placeholder: ' ',
+    },
+    {
+      name: 'promotionDate',
+      type: 'text',
+      label: t('최근 승진일'),
+      format: 'object',
+      value: undefined,
+      placeholder: ' ',
+    },
+    {
+      name: 'userState',
+      type: 'radio-group',
+      label: t('재직 상태'),
+      value: '',
+      optionsConfig: {
+        codeGroup: CODE_GROUP['pms.user.Status'],
+      },
+    },
+    {
+      name: 'userModifyDate',
+      type: 'text',
+      label: t('재직 상태 변경일'),
+      value: '',
+      placeholder: ' ',
+    },
+    // 직군/직무 정보
     {
       label: '',
       name: 'jobManagement',
       type: 'custom',
       value: [],
     },
+    // 계정 정보
     {
       name: 'hrInfoManageType',
       type: 'radio-group',
@@ -449,17 +459,7 @@ const formConfig: DynamicFormConfig = {
       name: 'companyMemberJoinTypeList',
       type: 'checkbox-group',
       label: t('회원 가입 유형'),
-      value: ['FO_JOIN_DEALER'],
-      optionsConfig: {
-        codeGroup: CODE_GROUP['pms.company.CompanyMemberJoinType'],
-      },
-      guideText: t('수동 관리는 다수 선택할 수 있으며, 자동 관리는 하나만 선택할 수 있습니다.'),
-    },
-    {
-      name: 'companyMemberJoinType',
-      type: 'checkbox-group',
-      label: t('회원 가입 유형'),
-      value: 'GIM',
+      value: ['BO_JOIN_MANAGER'],
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.CompanyMemberJoinType'],
       },
@@ -487,21 +487,21 @@ const formConfig: DynamicFormConfig = {
       placeholder: ' ',
     },
     {
-      name: 'accountDormancyUpdateDate',
+      name: 'dormantDate',
       type: 'text',
       label: t('휴면 상태 변경일'),
       value: '',
       placeholder: ' ',
     },
     {
-      name: 'approvalStat',
+      name: 'approvalStatus',
       type: 'text',
       label: t('승인상태'),
       value: '',
       placeholder: ' ',
     },
     {
-      name: 'approvalStateDate',
+      name: 'lastApprovalStatusUpdateDate',
       type: 'text',
       label: t('승인상태 최종 변경일'),
       value: '',
@@ -590,27 +590,4 @@ const formConfig: DynamicFormConfig = {
       guideText: t('로그인 시간 제한 선택 시 회사관리 제한 시간에는 로그인할 수 없습니다.'),
     },
   ],
-  validator: {
-    companyName: true,
-    lastDept: true,
-
-    name: true,
-    employeeNumber: true,
-
-    serviceTypeList: true,
-    userGender: true,
-    email: {
-      required: true,
-      conditions: [
-        {
-          fn: (values) => {
-            if (values.email.trim().length === 0) return false;
-            const pattern = new RegExp(EMAIL_REGEX, 'i');
-            return !pattern.test(values.email.trim());
-          },
-          message: t('이메일 형식에 맞게 입력해 주세요.'),
-        },
-      ],
-    },
-  },
-};
+});

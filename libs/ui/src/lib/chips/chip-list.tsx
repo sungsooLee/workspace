@@ -1,11 +1,11 @@
 import React, { ChangeEvent, forwardRef, KeyboardEvent, useState } from 'react';
 
 import { cn } from '@learnway/shared';
-import { Chip, ChipComponentProps } from './chip';
+import { t } from 'i18next';
 import { Button } from '../button/button';
 import { Input } from '../input/input';
 import { Popover } from '../popover/popover';
-import { t } from 'i18next';
+import { Chip, ChipComponentProps } from './chip';
 
 import styles from './chip-list.module.css';
 
@@ -142,6 +142,7 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
                 className={cn(styles.btn_chips, size && styles[size], type && styles[type])}
                 onClick={onChipClick && handleChipClick}
                 onDelete={handleChipDelete}
+                hideCloseButton={option.isFixed} // option.isFixed=true인 경우, 삭제 불가
               />
             ))}
             {/* 최대 표시 개수 초과 했을때 */}

@@ -113,13 +113,13 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
       positionName: data.positionName, // 호칭(직위),
       isOnLeave: false, // 재직 상태: (휴직)
       isSuspended: false, // 재직 상태: (정직)
+      isLeader: data.userPosition === '1',
       // 개인 정보
       name: data.name, // 이름
       password: 'Asdf@1234', // 임시 비밀 번호 : 대문자/소문자/특수문자/숫자 8자리 이상
       employeeNumber: data.employeeNumber, // 사번
       birthday: data.birthday, // 생년월일
       email: data.email.fieldValue, // 아이디(이메일)
-      phoneNationNumber: '+82', // 추후 없어 질 예정
       phoneNumber: data.phoneNumber, // 휴대폰 번호
       engName: data.engName, // 영문 이름
       gender: data.userGender, // 성별
@@ -128,7 +128,9 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
 
     if( data.userState === '2' ) {
       payload.isOnLeave = true;
+      payload.isSuspended = false;
     } else if( data.userState === '3' ) {
+      payload.isOnLeave = false;
       payload.isSuspended = true;
     }
     console.log('payload: {} => ', payload);
@@ -370,7 +372,7 @@ const formConfig = (): DynamicFormConfig => ({
       name: 'companyName',
       type: 'text',
       label: t('회사'),
-      value: '',
+      value: '현대오토에버',
     },
     {
       name: 'firstDept',
@@ -382,7 +384,7 @@ const formConfig = (): DynamicFormConfig => ({
       name: 'lastDept',
       type: 'text',
       label: t('소속'),
-      value: '',
+      value: '개발본부',
     },
     { name: 'deptId', type: 'hidden', label: '', value: '', format: 'number' },
     {
@@ -391,9 +393,10 @@ const formConfig = (): DynamicFormConfig => ({
       label: t('보직'),
       value: '',
       presetOptionLabel: t('LABEL.form.label.select'),
-      optionsConfig: {
-        codeGroup: CODE_GROUP['pms.user.UserGroupType'],
-      },
+      options: [
+        { value: '1', label: t('조직장') },
+        { value: '2', label: t('조직원') },
+      ]
     },
     {
       name: 'positionName',
@@ -513,14 +516,14 @@ const formConfig = (): DynamicFormConfig => ({
       label: t('휴대폰 번호'),
       name: 'phoneNumber',
       type: 'text',
-      format: 'string',
+      format: 'number',
       value: '',
     },
     {
       label: t('연락처(사무실)'),
       name: 'companyNumber',
       type: 'phone-number',
-      format: 'string',
+      format: 'number',
       value: '',
       fields: {
         nationCode: 'companyNumberCountryCode',

@@ -52,7 +52,7 @@ type CombineType = 'USER_GROUP';
 type Combiner = {
   combineType: CombineType;
   combineValue: number;
-  combineName: string;
+  combineName?: string;
 };
 
 export type CombineUserGroup = {

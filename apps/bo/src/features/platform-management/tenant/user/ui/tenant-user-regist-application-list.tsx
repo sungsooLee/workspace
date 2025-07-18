@@ -70,17 +70,13 @@ const TenantUserRegistApplicationListComponent: FC<any> = ({ rootPath }) => {
   const tenantIdWatch = useWatch({ control: searchProvider.control, name: 'tenantId' });
 
   const handleOnSearch = (data: any) => {
-    console.log('search', data);
-    const searchData = {
-      ...data,
-      enabledDate: data.enabledDate ? data.enabledDate : null,
-    }
-    gridFetch(searchData);
+    console.log('searchData : () => ', data);
+    gridFetch(data);
   };
 
   const openChangeUserEnableModal = (isApproval: boolean) => {
     const selectedRow = tableInstance?.getSelectedRowModel().rows;
-    const checkTarget = selectedRow?.map( (row: any) => row.original.enabledDate !== null)
+    const checkTarget = selectedRow?.filter( (row: any) => row.original.enabledDate !== null)
     if( checkTarget?.length !== 0 ) {
       alert({
         title: isApproval ? '승인 확인' : '반려 확인',
@@ -96,19 +92,21 @@ const TenantUserRegistApplicationListComponent: FC<any> = ({ rootPath }) => {
       onClose: (value: boolean) => {
         if( value ) {
           // 선택한 계정 상태 변경(대기 -> 정상),
-          const targetUUIDs = selectedRow?.map( (row: any) => row.original.uuid)
+          const uuids = selectedRow?.map((row: any) => row.original.uuid);
           if( isApproval ) { // 승인
-            approve( targetUUIDs, {
+            approve({ uuids }, {
               onSuccess: () => {
                 gridFetch(getValues())
               }
             });
           } else { // 반려
-            reject( targetUUIDs, {
-              onSuccess: () => {
-                gridFetch(getValues())
-              }
-            });
+            reject(
+              { uuids }, {
+                onSuccess: () => {
+                  gridFetch(getValues());
+                },
+              },
+            );
           }
         }
       },
@@ -242,19 +240,20 @@ const searchConfig = (): SearchBoxConfig => ({
     ],
     [
       {
-        name: 'tenantManagerName',
+        name: 'employeeNumber',
         type: 'text',
         label: t('사번'),
         value: '',
       },
       {
-        name: 'enabledDate',
+        name: 'userState',
         type: 'dropdown',
-        label: t('승인상태'),
-        value: 'false',
+        label: t('승인 상태'),
+        value: 'WAIT',
         options: [
-          { value: 'false', label: t('대기') },
-          { value: 'true', label: t('승인') },
+          { value: 'WAIT', label: t('대기') },
+          { value: '', label: t('전체') },
+          { value: 'NORMAL', label: t('승인') },
         ],
       },
       {

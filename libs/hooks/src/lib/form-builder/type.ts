@@ -247,6 +247,8 @@ export type DynamicFormProvider = {
   addValidator: (fieldName: string, validation: any) => void;
   /** 필드 값 변화를 감시하는 함수 */
   watch: UseFormReturn['watch'];
+  /** 모든 validator를 초기화하는 함수 */
+  clearAllValidators: () => void;
 };
 
 /**
@@ -289,6 +291,9 @@ export type UseDynamicFormResult = {
 
   /**   builders에  설정된 필드에 clearFormError 호출 과 value 값에 해당 하는 object를 리턴함 */
   getInitByBuilders: () => any;
+
+  /** 모든 validator를 초기화하는 함수 */
+  clearAllValidators?: any;
 };
 
 // dynamic form config value 추적을 위한 타입 정의

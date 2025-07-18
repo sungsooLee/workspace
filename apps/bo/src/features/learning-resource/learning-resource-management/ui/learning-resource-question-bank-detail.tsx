@@ -50,7 +50,7 @@ const LearningResourceQuestionBankDetailComponent = (props: any, ref: any) => {
 
   return (
     <SplitPanel size={['auto', 416]} divider>
-      <div>
+      <div key="base1">
         <Button
           label="test"
           onClick={() => {
@@ -62,7 +62,7 @@ const LearningResourceQuestionBankDetailComponent = (props: any, ref: any) => {
           <LearningResourceBaseForm provider={provider} formMode={formMode} />
         </form>
       </div>
-      <div>
+      <div key="base2">
         <FormSubTitle noLine label={'문제은행'} />
         {/* btn_list */}
         {/* <ul className={movieInfoStyles.btn_list}>

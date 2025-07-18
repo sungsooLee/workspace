@@ -1,50 +1,61 @@
 import { DynamicFormProvider } from '@learnway/hooks';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import LearningResourceService from '../api/learning-resource';
-import { ProcessingStatus } from '@types';
+import { isProcessing, isProcessingCompleted, isProcessingNone } from './util';
+import { GetVideoResourceRes } from '@types';
+import { pick } from 'lodash';
+import { DATE_TIME_FORMAT, duration } from '@learnway/shared';
 
 const useVideoResourceHook = (provider: DynamicFormProvider) => {
   const { watch, onFormChange } = provider;
   const intervalRef = useRef<NodeJS.Timer>();
 
+  const isDrafted = watch('isDrafted');
+  const status = watch('processingStatus');
+  const playTime = duration(watch('contentAddInfo'), DATE_TIME_FORMAT.HOUR_MIN_SEC);
   const contentUuid = watch('contentUuid');
-  const processingStatus = watch('processingStatus');
+
+  const [videoResource, setVideoResource] = useState<GetVideoResourceRes | null>(null);
 
   const fetchStatus = async () => {
-    const status = await LearningResourceService.getVideoStatus(contentUuid);
-    console.log('🚀 ~ Video status:', status);
-    onFormChange(status);
+    const statusInfo = await LearningResourceService.getVideoStatus(contentUuid);
+    console.log('🚀 ~ statusInfo:', statusInfo);
+    onFormChange(statusInfo);
   };
 
-  const fetchVideo = async () => {
-    //
+  const fetchVideoContent = async () => {
+    const contentDetail = await LearningResourceService.fetchContent(contentUuid);
+    const videoResource = await LearningResourceService.getVideoResource(contentUuid);
+    onFormChange(pick(contentDetail, 'contentAddInfo'));
+    setVideoResource(videoResource);
   };
 
   useEffect(() => {
-    if (!processingStatus || processingStatus === ProcessingStatus.NONE) return;
+    console.log('🚀 ~ ProcessingStatus:', status);
+    if (isProcessingNone(status)) return;
 
-    if (intervalRef.current) {
-      if ([ProcessingStatus.COMPLETE, ProcessingStatus.FAIL].includes(processingStatus)) {
-        clearInterval(intervalRef.current);
-        intervalRef.current = undefined;
-      }
-    } else if (
-      [ProcessingStatus.STARTED, ProcessingStatus.UPLOADING, ProcessingStatus.ENCODING].includes(
-        processingStatus,
-      )
-    ) {
+    if (intervalRef.current && !isProcessing(status)) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = undefined;
+    }
+
+    if (!intervalRef.current && isProcessing(status)) {
       intervalRef.current = setInterval(fetchStatus, 2 * 1000);
     }
 
-    if (processingStatus === ProcessingStatus.COMPLETE) {
-      fetchVideo();
+    if (isProcessingCompleted(status)) {
+      fetchVideoContent();
     }
 
     return () => intervalRef.current && clearInterval(intervalRef.current);
-  }, [processingStatus]);
+  }, [status]);
 
   return {
-    processingStatus,
+    contentUuid,
+    isDrafted,
+    processingStatus: status,
+    playTime,
+    videoResource,
   };
 };
 

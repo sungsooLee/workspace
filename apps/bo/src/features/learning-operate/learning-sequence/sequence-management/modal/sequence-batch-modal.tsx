@@ -31,49 +31,24 @@ import { cn, SelectOption } from '@learnway/shared';
 
 import { DateTimeRangePickerFormField } from '@features/form';
 
+export interface SequenceBatchModalComponentProps {
+  selectedItems: object[];
+}
+
 /**
  * 화면 번호 NLP_BO_LMS0032 : 차수관리 > 일괄관리(팝업)
  */
-const SequenceBatchModalComponent = () => {
-  const { close: closeModal, alert: openAlert } = useModal();
+const SequenceBatchModalComponent = ({ selectedItems }: SequenceBatchModalComponentProps) => {
+  const { close: closeModal, confirm: openConfirm, alert: openAlert } = useModal();
   const [columns, setColumns] = useState() as any;
   const [gridData, setGridData] = useState<any[]>([]);
   const [selectedRowsKey, setSelectedRowsKey] = useState<string[]>([]);
   const formRef = useRef<HTMLFormElement>(null);
-
   const listGridRef = useRef<GridImperative>(null);
 
   useEffect(() => {
+    console.log('##selectedItems=>', selectedItems);
     const columns = [
-      columnHelper.accessor('select-check', {
-        id: 'select-check',
-        size: 40,
-        maxSize: 40,
-        minSize: 40,
-        meta: {
-          align: 'center',
-          headerAlign: 'center',
-          cellAlign: 'center',
-        },
-        enableSorting: false,
-        header: ({ table }) => (
-          <div style={{ width: '100%', textAlign: 'center' }}>
-            <Checkbox
-              checked={table.getIsAllRowsSelected()}
-              onCheckedChange={(checked) => {
-                table.toggleAllRowsSelected(!!checked);
-              }}
-            />
-          </div>
-        ),
-        cell: ({ row }) => {
-          return (
-            <div style={{ width: '100%', textAlign: 'center', paddingRight: 0 }}>
-              <Checkbox checked={row.getIsSelected()} />
-            </div>
-          );
-        },
-      }),
       columnHelper.accessor('name', {
         header: t('전체'),
         cell: (info) => info.getValue(),
@@ -95,6 +70,9 @@ const SequenceBatchModalComponent = () => {
     ];
 
     setGridData(data);
+    setTimeout(() => {
+      listGridRef.current?.toggleAllRowsSelected(true);
+    }, 300);
   }, []);
 
   const formConfig: DynamicFormConfig = {
@@ -115,7 +93,6 @@ const SequenceBatchModalComponent = () => {
         format: 'object',
         label: () => t('수강신청 기간'),
         value: { from: undefined, to: undefined },
-        placeholder: '',
       },
       {
         name: 'eduDate',
@@ -137,7 +114,7 @@ const SequenceBatchModalComponent = () => {
       },
       {
         name: 'capacity',
-        type: 'object',
+        type: 'boolean',
         format: 'object',
         label: () => t('정원'),
         value: false,
@@ -150,8 +127,37 @@ const SequenceBatchModalComponent = () => {
     ],
     validator: {
       isUsed: true,
-      regDate: true,
-      capacity: true,
+      regDate: {
+        required: true,
+        conditions: [
+          {
+            fn: (values) => {
+              return !values.regDate[0] || !values.regDate[1];
+            },
+            message: t('시작 및 종료 날짜를 선택하세요'),
+          },
+          {
+            fn: (values) => {
+              return values.regDate[0] > values.regDate[1];
+            },
+            message: t('시작 날짜는 종료 날짜 보다 이전일 이어야 합니다.'),
+          },
+        ],
+      },
+      capacity: {
+        required: true,
+        conditions: [
+          {
+            fn: (values) => {
+              if (values.capacity) {
+                if (!values.capacity1) return true;
+              }
+              return false;
+            },
+            message: t('정원을 입력해주세요.'),
+          },
+        ],
+      },
     },
   };
   const {
@@ -181,11 +187,22 @@ const SequenceBatchModalComponent = () => {
       });
       return;
     }
+
+    const confirm = await openConfirm(t('일괄설정 하시겠습니까?'));
+    if (!confirm) return;
+
+    const payload = {
+      isUsed: formData.isUsed,
+    };
+
+    // TODO: API연결
     // const payload = {
     //   isUsed: selectedRowsKey.includes('isUsed'),
     // };
     // selectedRowsKey.includes;
-    // closeModal(selectedItem);
+
+    await openAlert(t('완료 되었습니다.'));
+    closeModal();
   };
 
   const columnHelper = createColumnHelper<any>();
@@ -200,7 +217,7 @@ const SequenceBatchModalComponent = () => {
               data={gridData}
               columns={columns}
               multiple
-              hideRowSelectionCheckBox
+              // hideRowSelectionCheckBox
               showNumberingColumn={false}
               clientSideSorting={true}
               title={t('항목')}

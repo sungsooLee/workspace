@@ -2,6 +2,7 @@ import { SearchBoxConfig, SearchBoxProvider, useSearchBox } from '@learnway/hook
 import {
   Button,
   Divider,
+  Dropdown,
   GridBox,
   StatsSummary,
   StatsSummaryData,
@@ -18,6 +19,7 @@ import { FieldValues, UseFormGetValues, UseFormSetValue } from 'react-hook-form'
 import { DATE_TIME_FORMAT, getDateToString, SelectOption } from '@learnway/shared';
 import dayjs from 'dayjs';
 import { useRouter } from '@tanstack/react-router';
+import { Mode } from '@pages/_layout/learning/learning-sequence/-common/type';
 
 const _global = {
   linkClickSequenceName: (payload: any) => {
@@ -66,9 +68,9 @@ const EnrollmentRegistComponent = ({
     router.navigate({
       to: '/learning/learning-sequence/sequence-management',
       state: {
-        setMode: 'DETAIL',
-        courseId: 1,
-        sequenceId: 1,
+        pMode: Mode.DETAIL,
+        pCourseId: 1,
+        pSequenceId: 1,
       },
     });
   };
@@ -249,6 +251,8 @@ const EnrollmentRegistComponent = ({
               onClick={(e) => console.log('test')}
             />
             <Button variant="text" label={t('메시지발송')} onClick={(e) => console.log('test')} />
+
+            {/* <Dropdown options={[{ label: '1', value: '1' }]} value={'1'} /> */}
             <Button variant="text" label={t('일괄승인')} onClick={(e) => console.log('test')} />
             <Button variant="text" label={t('강제승인')} onClick={(e) => console.log('test')} />
             <Button variant="text" label={t('반려')} onClick={(e) => console.log('test')} />

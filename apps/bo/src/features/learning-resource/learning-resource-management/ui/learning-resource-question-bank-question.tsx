@@ -31,23 +31,31 @@ import { FormRow2, GridExcelDownloadButton, GridExcelUploadButton } from '@share
 import { Link } from 'lucide-react';
 import { IcoCopy, IcoFormRequired, IcoMenu01, IcoMinus, IcoPlus } from '@learnway/icons';
 import { LearningResourceTestItemModal } from './learning-resource-test-item-modal';
+import { useCreateQuestionItem } from '@entities/learning-resource';
 
 const LearningResourceQuestionBankQuestionComponent = () => {
   const { alert, open: openModal, confirm: openConfirm } = useModal();
 
   const { baseInfo } = useLearningResourceQuestionDetailForm();
-  const items = [
-    {
-      title: '선택형 문항',
-      key: 'option01',
-      content: '',
-    },
-    {
-      title: '랜덤형 문항',
-      key: 'option02',
-      content: '',
-    },
-  ];
+  const { create: createQuestionItem } = useCreateQuestionItem();
+
+  const handleAddQuestionButtonClick = async () => {
+    if (baseInfo) {
+      const questionItem = await openModal({
+        width: 'xl',
+        content: <LearningResourceTestItemModal contentInfo={baseInfo} />,
+      });
+      console.log('questionItem', questionItem);
+      createQuestionItem(questionItem, {
+        onSuccess: (data: any) => {
+          console.log('ok ', data);
+        },
+        onError: (error: any) => {
+          console.log('error', error);
+        },
+      });
+    }
+  };
 
   // Table
   const columnHelper = createColumnHelper<any>();
@@ -290,14 +298,7 @@ const LearningResourceQuestionBankQuestionComponent = () => {
               <Button
                 variant="text"
                 label={'추가'}
-                onClick={() => {
-                  if (baseInfo) {
-                    openModal({
-                      width: 'xl',
-                      content: <LearningResourceTestItemModal contentInfo={baseInfo} />,
-                    });
-                  }
-                }}
+                onClick={handleAddQuestionButtonClick}
                 icon={<IcoPlus width={16} height={16} stroke={'#4C515E'} />}
               />
               <Button

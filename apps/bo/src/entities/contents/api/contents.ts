@@ -14,4 +14,11 @@ export class ContentsService {
       param,
     );
   }
+
+  /**
+   * SCORM 콘텐츠 리소스 조회
+   */
+  static getScormDetail(contentUuid?: string): Promise<any> {
+    return httpService.get<any>(`${CMSApiPrefix()}/scorm/${contentUuid}/resource`);
+  }
 }

@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { mutateOptions, queryKeys, queryOptions } from './curriculum.queries';
-import { CurriculumSearchParams } from '@types';
+import { CurriculumDndParams, CurriculumSearchParams } from '@types';
 
 export function useGetCurriculumList(param: CurriculumSearchParams) {
   return useQuery(queryOptions.list(param));
@@ -14,10 +14,10 @@ export function useGetModuleDetail(moduleId: number) {
   return useQuery(queryOptions.moduleDetail(moduleId));
 }
 
-export function useGetLessonDetail(data: { moduleId: number; lessonId: number }) {
+export function useGetLessonDetail(data: { moduleId?: number; lessonId?: number }) {
   return useQuery({
     ...queryOptions.lessonDetail(data),
-    enabled: data.moduleId > 0 && data.lessonId > 0,
+    enabled: !!(data.lessonId && data.lessonId > 0 && data.moduleId && data.moduleId > 0),
   });
 }
 
@@ -257,4 +257,30 @@ export function useUpdateLessonByGeneral(options: any) {
     isError: mutation.isError,
     data: mutation.data,
   };
+}
+
+export function useDndCurriculumTree(curriculumId?: number, options?: any): any {
+  const queryClient = useQueryClient();
+
+  return useMutation<any, Error, CurriculumDndParams, any>({
+    ...mutateOptions.dndCurriculumTree(),
+    ...options,
+    onSuccess: async (data: any, variables: CurriculumDndParams, context: any) => {
+      await queryClient.invalidateQueries({ queryKey: queryKeys.all });
+
+      if (options?.onSuccess) {
+        await options.onSuccess(data, variables, context?.userContext);
+      }
+    },
+    onError: (error: Error, variables: CurriculumDndParams, context: any) => {
+      if (options?.onError) {
+        options.onError(error, variables, context?.userContext);
+      }
+    },
+    onSettled: (data: any, error: Error | null, variables: CurriculumDndParams, context: any) => {
+      if (options?.onSettled) {
+        options.onSettled(data, error, variables, context?.userContext);
+      }
+    },
+  });
 }

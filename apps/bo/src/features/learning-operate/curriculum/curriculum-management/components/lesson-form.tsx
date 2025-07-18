@@ -1,86 +1,105 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { ContentsRow, Input, RadioGroupFormField, Textarea } from '@learnway/ui';
-import { FormRow3, ResourceChoiceModal } from '@shared/ui';
-import { LESSON_TYPE, MODULE_TYPE } from '@types';
+import { FormRow2, ResourceChoiceModal } from '@shared/ui';
+import { DynamicFormProvider } from '@learnway/hooks';
+import { LESSON_TYPE } from '@types';
 import { t } from 'i18next';
 import { ContentChoiceModalSelector } from './content-choice-selector';
 import { DropdownFormField, DurationTimeFormField } from '@features/form/ui';
 import { getHourValueFromTime } from '@pages/_layout/learning/resource/-common/common';
 import { learningResourceQueryOptions } from '@entities/learning-resource';
 import { useQuery } from '@tanstack/react-query';
+import { useGetLessonDetail } from '../../../../../entities/curriculum';
 
 interface LessonFormProps {
+  provider: DynamicFormProvider;
+  updateFormData: (data: Record<string, any>) => void;
   watch: any;
-  setValue?: any;
-  loadFormData?: (data: Record<string, any>, options?: any) => void;
   isEditing?: boolean;
-  initialData?: any;
+  lessonId?: number;
+  moduleId?: number;
+  clearAllValidators?: () => void;
   curriculumData?: {
     tenantId?: number;
     channelUuid?: string;
     contentType?: string;
   };
+  selectedNodeData?: any;
 }
 
 export const LessonForm: React.FC<LessonFormProps> = ({
+  provider,
+  updateFormData,
   watch,
-  setValue,
-  loadFormData,
   isEditing,
-  initialData,
+  lessonId,
+  moduleId,
+  clearAllValidators,
   curriculumData,
 }) => {
   const lessonType = watch('lessonType') || LESSON_TYPE.GENERAL;
-  const contentUuid = watch('contentUuid');
   const contentName = watch('contentName');
 
-  const { data: contentDetail } = useQuery({
-    ...learningResourceQueryOptions.getContent(contentUuid),
-    enabled: isEditing && !!contentUuid,
+  const { data: lessonData, isLoading: isLoadingLesson } = useGetLessonDetail({
+    lessonId,
+    moduleId,
   });
 
-  // 편집 모드일 때 초기 데이터 로드, 생성 모드일 때는 기본값으로 초기화
-  useEffect(() => {
-    if (loadFormData) {
-      if (isEditing && initialData) {
-        loadFormData({
-          ...initialData,
-          learningTime: { ...getHourValueFromTime(initialData.learningTime) },
-          contentUuid: initialData.contentUuid || '',
-          contentName: '', // 초기값은 빈 문자열, contentDetail 로드 후 설정됨
-        });
-      } else if (!isEditing) {
-        // 생성 모드일 때는 기본값으로 초기화
-        loadFormData({
-          lessonType: LESSON_TYPE.GENERAL,
-          lessonName: '',
-          description: '',
-          learningTime: '',
-        });
-      }
-    }
-    // loadFormData를 의존성에서 제거하여 무한 루프 방지
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isEditing, initialData]);
+  // contentUuid가 있을 때만 쿼리 실행
+  const { data: contentDetail, isLoading: isLoadingContent } = useQuery({
+    ...learningResourceQueryOptions.getContent(lessonData?.contentUuid || ''),
+    enabled: !!(isEditing && lessonData?.contentUuid && lessonData.contentUuid.trim() !== ''),
+  });
 
   useEffect(() => {
-    // if(autoCon)
-  }, [lessonType]);
+    if (isEditing && lessonData) {
+      console.log({ ...getHourValueFromTime(lessonData.learningTime) });
+      const initialData = {
+        ...lessonData,
+        lessonName: lessonData.lessonName,
+        lessonType: lessonData.lessonType || LESSON_TYPE.GENERAL,
+        lessonDescription: lessonData.lessonDescription,
+        learningTime: { ...getHourValueFromTime(lessonData.learningTime) },
+        contentUuid: lessonData.contentUuid || '',
+        contentName: contentDetail?.contentName || lessonData.contentName || '',
+      };
+
+      Object.entries(initialData).forEach(([key, value]) => {
+        provider.setValue(key, value);
+      });
+    } else if (!isEditing) {
+      const defaultData = {
+        lessonType: LESSON_TYPE.GENERAL,
+        lessonName: '',
+        lessonDescription: '',
+        learningTime: { hour: 0, minute: 0, second: 0 },
+        contentUuid: '',
+        contentName: '',
+      };
+
+      Object.entries(defaultData).forEach(([key, value]) => {
+        provider.setValue(key, value);
+      });
+    }
+    // }
+  }, [lessonData]);
 
   useEffect(() => {
-    if (isEditing && contentDetail && setValue) {
-      setValue('contentName', contentDetail.contentName);
+    if (isEditing && contentDetail && contentDetail.contentName && !isLoadingContent) {
+      provider.setValue('contentName', contentDetail.contentName);
+      provider.setValue('contentUuid', contentDetail.contentUuid);
     }
-  }, [isEditing, contentDetail, setValue]);
+  }, [contentDetail, isEditing, isLoadingContent]);
 
   const formContent = (
     <>
       <ContentsRow>
-        <FormRow3
+        <FormRow2
+          provider={provider}
           name="lessonType"
           label="레슨유형"
+          format="string"
           validation={{ required: true }}
-          defaultValue={LESSON_TYPE.GENERAL}
           element={
             <RadioGroupFormField
               disabled={isEditing}
@@ -93,9 +112,11 @@ export const LessonForm: React.FC<LessonFormProps> = ({
         />
       </ContentsRow>
       <ContentsRow>
-        <FormRow3
+        <FormRow2
+          provider={provider}
           name="lessonName"
           label={'레슨명'}
+          format="string"
           validation={{ required: true }}
           element={<Input type="text" maxLength={40} />}
         />
@@ -104,9 +125,11 @@ export const LessonForm: React.FC<LessonFormProps> = ({
       {lessonType === LESSON_TYPE.RESOURCE && (
         <>
           <ContentsRow>
-            <FormRow3
+            <FormRow2
+              provider={provider}
               name="contentType"
               label={t('학습자원 유형')}
+              format="string"
               validation={{ required: true }}
               element={
                 <DropdownFormField
@@ -119,9 +142,11 @@ export const LessonForm: React.FC<LessonFormProps> = ({
             />
           </ContentsRow>
           <ContentsRow>
-            <FormRow3
-              name="contentUuid"
+            <FormRow2
+              provider={provider}
+              name="contentName"
               label={t('학습자원')}
+              format="string"
               validation={{ required: true }}
               element={
                 <ContentChoiceModalSelector
@@ -132,21 +157,18 @@ export const LessonForm: React.FC<LessonFormProps> = ({
                       <ResourceChoiceModal
                         initialTenantId={curriculumData?.tenantId}
                         initialChannelUuid={curriculumData?.channelUuid}
-                        initialContentType={curriculumData?.contentType}
+                        // initialContentType={curriculumData?.contentType}
                       />
                     ),
                   }}
                   transformModalData={(data: any) => {
-                    if (data && data.contentUuid) {
-                      return {
-                        contentUuid: data.contentUuid,
-                        contentName: data.contentName,
-                      };
+                    const { contentUuid, contentName } = data;
+                    if (data && contentUuid && contentName) {
+                      provider.setValue('contentUuid', contentUuid);
+                      provider.setValue('contentName', contentName);
+                      return contentName;
                     }
-                    return {
-                      contentUuid: '',
-                      contentName: '',
-                    };
+                    return '';
                   }}
                 />
               }
@@ -155,26 +177,44 @@ export const LessonForm: React.FC<LessonFormProps> = ({
         </>
       )}
       <ContentsRow>
-        <FormRow3
+        <FormRow2
+          provider={provider}
           name="learningTime"
           label={t('학습시간')}
+          format="object"
           validation={{
             required: true,
-            validate: (value: { hour: number; minute: number; second: number }) => {
-              if (!value) return t('학습시간을 입력해주세요.');
-              const { hour = 0, minute = 0, second = 0 } = value;
-              if (!(hour > 0 || minute > 0 || second > 0)) {
-                return t('학습시간은 1초 이상으로 설정하여야 합니다.');
-              }
-              return true;
-            },
+            conditions: [
+              {
+                fn: (values: Record<string, any>) => {
+                  const value = values.learningTime;
+                  if (!value) return true; // 값이 없으면 에러
+                  const { hour = 0, minute = 0, second = 0 } = value;
+                  return !(hour > 0 || minute > 0 || second > 0); // 모든 값이 0이면 에러
+                },
+                message: t('학습시간은 1초 이상으로 설정하여야 합니다.'),
+              },
+            ],
           }}
           element={<DurationTimeFormField />}
         />
       </ContentsRow>
       <ContentsRow>
-        <FormRow3 name="description" label="설명" element={<Textarea maxLength={100} />} />
+        <FormRow2
+          provider={provider}
+          name="lessonDescription"
+          label="설명"
+          format="string"
+          element={<Textarea maxLength={100} />}
+        />
       </ContentsRow>
+
+      <FormRow2
+        provider={provider}
+        name="contentUuid"
+        format="string"
+        element={<input type="hidden" />}
+      />
     </>
   );
   return formContent;

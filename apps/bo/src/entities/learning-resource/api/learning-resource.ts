@@ -10,6 +10,7 @@ import {
   GetContentDetailRes,
   GetContentsParams,
   GetContentsRes,
+  GetVideoResourceRes,
   GetVideoStatusRes,
   HtmlVideoFileChangeReq,
   HtmlVideoMetadataReq,
@@ -18,6 +19,7 @@ import {
   PostDraftHtmlVideoParams,
   PostDraftVideosParams,
   PostDraftVideosRes,
+  QuestionItem,
   TestPaperBasicInfoSaveReq,
   TestPaperBasicInfoSaveRes,
 } from '@types';
@@ -39,7 +41,7 @@ export default class LearningResourceService {
     return httpService.get(`${CMSApiPrefix()}/contents`, params);
   }
 
-  static fetchContent(contentUuid: string): Promise<GetContentDetailRes> {
+  static fetchContent(contentUuid?: string): Promise<GetContentDetailRes> {
     return httpService.get(`${CMSApiPrefix()}/content/${contentUuid}`);
   }
 
@@ -185,6 +187,11 @@ export default class LearningResourceService {
     return httpService.post(`${CMSApiPrefix()}/exam`, body);
   }
 
+  // 시험지 컨텐츠 단건 수정 (기본정보)
+  static updateExamPaperContent(body: TestPaperBasicInfoSaveReq) {
+    return httpService.put(`${CMSApiPrefix()}/exam`, body);
+  }
+
   /**
    * 문제은행 기본 정보 저장
    * @param body
@@ -199,6 +206,14 @@ export default class LearningResourceService {
   }
 
   /**
+   * 시험, 문제은행 문항 등록
+   * @param body
+   * @returns
+   */
+  static createQuestionItem(body: QuestionItem) {
+    return httpService.post<any>(`${CMSApiPrefix()}/exam/question`, body);
+  }
+  /**
    * 문제은행 or 시험지의 문항 목록 조회
    * @param contentUuid
    * @returns
@@ -212,5 +227,12 @@ export default class LearningResourceService {
    */
   static getVideoStatus(contentUuid: string) {
     return httpService.get<GetVideoStatusRes>(`${CMSApiPrefix()}/video/${contentUuid}/status`);
+  }
+
+  /**
+   * 동영상 학습자원 상세 조회
+   */
+  static getVideoResource(contentUuid: string) {
+    return httpService.get<GetVideoResourceRes>(`${CMSApiPrefix()}/video/${contentUuid}/resource`);
   }
 }

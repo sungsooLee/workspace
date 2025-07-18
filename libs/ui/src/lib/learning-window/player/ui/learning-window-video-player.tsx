@@ -49,11 +49,13 @@ const LearningWindowVideoPlayerComponent: FC<any> = () => {
 
   useEffect(() => {
     console.log('videoInfo', videoInfo);
-    setTimeout(() => {
-      player.togglePlay();
-      player.setSeconds(videoInfo.lastVideoEndTime);
-      setVideoStart(videoInfo.lastVideoEndTime);
-    }, 500);
+    if (videoInfo.lastVideoEndTime) {
+      setTimeout(() => {
+        player.togglePlay();
+        player.setSeconds(videoInfo.lastVideoEndTime);
+        setVideoStart(videoInfo.lastVideoEndTime);
+      }, 500);
+    }
   }, [videoInfo]);
   useEffect(() => {
     console.log('end video');

@@ -118,7 +118,15 @@ function RouteComponent() {
               { label: '과정관리', value: '과정관리value' },
               { label: '수강관리', value: '수강관리value' },
             ]}
-            onClick={(value) => console.log('ToggleButtonGroup.onClick', value)}
+            onClick={(value) =>
+              router.navigate({
+                to: `/learning/learning-sequence/enrollment-application`,
+                state: {
+                  // courseId: '',
+                  // courseName: ''
+                },
+              })
+            }
           />
           <Button
             type="button"

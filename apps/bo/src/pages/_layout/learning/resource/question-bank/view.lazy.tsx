@@ -16,15 +16,23 @@ function RouteComponent() {
   const routerState = useRouterState();
 
   const { saveButtonClick, setBaseInfo } = useLearningResourceQuestionDetailForm();
+
+  const handleListButtonClick = async () => {
+    router.navigate({ to: '/learning/learning-resource' });
+  };
+
+  const contentUuid = routerState.location.state?.contentUuid;
+
   useEffect(() => {
-    if (!routerState.location.state?.contentUuid) return;
-    setBaseInfo(routerState.location.state?.contentUuid);
-  }, [routerState.location.state]);
+    if (!contentUuid) return;
+    setBaseInfo(contentUuid);
+  }, [contentUuid]);
+
   return (
     <PageContainer>
       <ContentsButtons>
         <LinkBox>
-          <Button variant="point" size="sm">
+          <Button variant="point" size="sm" onClick={handleListButtonClick}>
             목록
           </Button>
         </LinkBox>
