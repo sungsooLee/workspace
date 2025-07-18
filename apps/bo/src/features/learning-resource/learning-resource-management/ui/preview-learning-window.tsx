@@ -99,6 +99,7 @@ const PreviewLearningWindowComponent: FC<any> = ({
   }, [curriculum, playList]);
 
   useEffect(() => {
+    clearInfo();
     if (!data) return;
     console.log('🚀 ~ useEffect ~ data:', data);
     switch (data.contentType) {
@@ -142,10 +143,6 @@ const PreviewLearningWindowComponent: FC<any> = ({
       },
     });
   }, [data]);
-
-  useEffect(() => {
-    clearInfo();
-  }, []);
 
   return <LearnwayLearningWindowLayout />;
 };
