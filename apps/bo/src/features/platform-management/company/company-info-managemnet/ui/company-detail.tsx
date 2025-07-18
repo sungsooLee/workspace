@@ -244,27 +244,12 @@ const CompanyDetailComponent = (props: any, ref: any) => {
       onClose(data: any) {
         console.log('### selectedUserGroups', data);
         if (data) {
-          const userGroups = data.map((group: any) => ({
-            userGroupId: group.key,
-            isUsed: true,
-          }));
-          // {
-          //   "groupId": 0,
-          //   "pathKey": "1-3-13",
-          //   "pathValue": "ROOT > 현대카드",
-          //   "combiners": [
-          //     {
-          //       "combineType": "USER_GROUP",
-          //       "combineValue": 1
-          //     }
-          //   ]
-          // }
           console.log('## tempLoginRestrictTimeSetting', tempLoginRestrictTimeSetting.current);
           const newSetting = JSON.parse(JSON.stringify(tempLoginRestrictTimeSetting.current));
           tempLoginRestrictTimeSetting.current = null;
           setLoginRestrictTimeSettings([
             ...loginRestrictTimeSettings,
-            { ...newSetting, companyLoginRestrictionWhiteUserGroupList: userGroups },
+            { ...newSetting, companyLoginRestrictionWhiteUserGroupList: data },
           ]);
         } else tempLoginRestrictTimeSetting.current = null;
       },
@@ -272,12 +257,17 @@ const CompanyDetailComponent = (props: any, ref: any) => {
   };
 
   const changeUserGroup = (info: any) => {
+    console.log('### info', info);
     openModal({
       width: 'xl',
-      content: <UserGroupTabsChoiceModal tenantIds={[]} />,
+      content: (
+        <UserGroupTabsChoiceModal
+          tenantIds={[]}
+          option={info.original.companyLoginRestrictionWhiteUserGroupList}
+        />
+      ),
       onClose(data: any) {
         console.log('### selectedUserGroups', data);
-        console.log('### info', info);
         if (data) {
           const userGroups = data.map((group: any) => ({
             userGroupId: group.key,
@@ -287,7 +277,7 @@ const CompanyDetailComponent = (props: any, ref: any) => {
             const newSettings = [...prev];
             newSettings[data.index] = {
               ...newSettings[data.index],
-              companyLoginRestrictionUserGroupList: userGroups,
+              companyLoginRestrictionWhiteUserGroupList: data,
             };
             return newSettings;
           });
@@ -296,10 +286,12 @@ const CompanyDetailComponent = (props: any, ref: any) => {
     });
   };
 
-  const handleUserGroupMemberView = () => {
+  const handleUserGroupMemberView = (info: any) => {
     openModal({
       width: 'xl',
-      content: <UserGroupChoiceModal />,
+      content: (
+        <UserGroupChoiceModal groups={info.original.companyLoginRestrictionWhiteUserGroupList} />
+      ),
     });
   };
 
@@ -406,7 +398,7 @@ const CompanyDetailComponent = (props: any, ref: any) => {
             variant={'gray'}
             size={'md'}
             stopPropagation
-            onClick={() => handleUserGroupMemberView()}
+            onClick={() => handleUserGroupMemberView(info.row)}
           />
         );
       },
