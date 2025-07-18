@@ -99,8 +99,8 @@ export const DndTreeNode: React.FC<DndTreeNodeProps> = ({
     (position: NodeMovePositionType) => {
       if (!effectiveDraggedNode) return true;
 
-      // 같은 트리에서 자기 자신으로는 드롭할 수 없음
-      if (effectiveDraggedNode.key === node.key) {
+      // 같은 트리에서 자기 자신의 BEFORE/INSIDE로는 드롭할 수 없음 (AFTER는 허용)
+      if (effectiveDraggedNode.key === node.key && position !== 'AFTER') {
         return false;
       }
 
@@ -594,7 +594,7 @@ export const DndTreeNode: React.FC<DndTreeNodeProps> = ({
       if (adjustForChildren && hasChildren && isExpanded) {
         return '8px';
       }
-      return '0px';
+      return '4px';
     };
 
     return (
@@ -848,7 +848,6 @@ export const DndTreeNode: React.FC<DndTreeNodeProps> = ({
       {/* AFTER 드롭 영역 - 일반 트리 타입 */}
       {treeType !== 'SAME_LEVEL_ONLY' &&
         (isGlobalDragging || effectiveDraggedNode) &&
-        effectiveDraggedNodeKey !== node.key &&
         !isDescendantOfDraggedNode &&
         !shouldCollapseForSameLevel &&
         renderAfterDropZone()}
