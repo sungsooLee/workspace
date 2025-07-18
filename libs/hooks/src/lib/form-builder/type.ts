@@ -291,7 +291,7 @@ export type UseDynamicFormResult = {
   getInitByBuilders: () => any;
 
   /** 모든 validator를 초기화하는 함수 */
-  clearAllValidators: () => void;
+  clearAllValidators?: any;
 };
 
 // dynamic form config value 추적을 위한 타입 정의
