@@ -3,7 +3,7 @@
 import { Button, Spinner, useModal } from '@learnway/ui';
 import { IcoStatusFail } from '@learnway/icons';
 import style from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
-import { DynamicFormProvider } from '@learnway/hooks';
+import { DynamicFormProvider, useFileManager } from '@learnway/hooks';
 import {
   isProcessing,
   isProcessingCompleted,
@@ -12,7 +12,7 @@ import {
   useVideoResource,
 } from '@entities/learning-resource';
 import { formatBytes } from '@learnway/shared';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { max } from 'lodash';
 import { PreviewLearningWindow } from '../preview-learning-window';
 import ReactPlayer from 'react-player';
@@ -23,6 +23,7 @@ interface MovieInfoProps {
 
 const MovieInfoComponent = ({ provider }: MovieInfoProps) => {
   const { open: openModal } = useModal();
+  const { fileDownload } = useFileManager();
   const {
     contentUuid,
     isDrafted,
@@ -41,6 +42,17 @@ const MovieInfoComponent = ({ provider }: MovieInfoProps) => {
     [videoResource],
   );
 
+  const fileUuid = useMemo(() => videoResource?.fileInfo.fileUuid, [videoResource]);
+  const downloadOriginal = useCallback(() => {
+    if (fileUuid) fileDownload(fileUuid);
+  }, [fileUuid]);
+
+  const preview = useCallback(() => {
+    openModal({
+      width: 'full',
+      content: <PreviewLearningWindow contentUuid={contentUuid} />,
+    });
+  }, [contentUuid]);
   // media info_list
   const infoList = [
     { title: '파일명', text: videoResource?.fileInfo.fileName },
@@ -60,7 +72,7 @@ const MovieInfoComponent = ({ provider }: MovieInfoProps) => {
   const buttons = [
     {
       label: '원본 다운로드',
-      onClick: () => console.log('btn 1'),
+      onClick: downloadOriginal,
     },
     {
       label: '동영상 변경',
@@ -72,12 +84,7 @@ const MovieInfoComponent = ({ provider }: MovieInfoProps) => {
     },
     {
       label: '미리보기',
-      onClick: () => {
-        openModal({
-          width: 'full',
-          content: <PreviewLearningWindow contentUuid={contentUuid} />,
-        });
-      },
+      onClick: preview,
     },
   ];
 
