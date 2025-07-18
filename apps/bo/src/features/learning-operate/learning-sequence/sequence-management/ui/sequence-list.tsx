@@ -86,7 +86,6 @@ const SequenceListComponent = ({
   const { open: openModal, confirm: openConfirm, alert: openAlert } = useModal();
   const [columns, setColumns] = useState() as any;
   const [openYear, setOpenYear] = useState<object[]>();
-  const selectedRowsRef = useRef<any[]>([]);
   const [selectedItems, setSelectedItems] = useState<any[]>([]);
 
   _global.linkClick = (payload: any) => {
@@ -350,12 +349,12 @@ const SequenceListComponent = ({
     });
     if (!confirmRes) return;
 
-    const lastSeq = selectedRowsRef.current.reduce((max, row) => Math.max(max, row.sequence), 0);
+    const lastSeq = selectedItems.reduce((max, row) => Math.max(max, row.sequence), 0);
     let seqCounter = lastSeq;
 
     const clonedRows: any[] = [];
 
-    for (const row of selectedRowsRef.current) {
+    for (const row of selectedItems) {
       for (let i = 0; i < inputCopy; i++) {
         seqCounter += 1;
         clonedRows.push({
@@ -374,13 +373,28 @@ const SequenceListComponent = ({
   const onBatch = async () => {
     openModal({
       width: 'lg',
-      content: <SequenceBatchModal />,
+      content: <SequenceBatchModal selectedItems={selectedItems} />,
     });
   };
 
   const handleRemoveRows = async () => {
-    //TODO: 사용중인 학습자가 있을경우 삭제불가 처리
-    if (selectedRowsRef.current.length === 0) return;
+    const validate = ['수강신청중', '학습전', '학습중'];
+    console.log('selectedItems=>', selectedItems);
+    if (selectedItems.length === 0) return;
+
+    //TODO: flag로 구분해서 수강신청중 부터 이후 시점부터 삭제 불가하도록 수정
+    const hasActiveEnrollment = selectedItems.some((item) => validate.includes(item.status));
+
+    if (hasActiveEnrollment) {
+      openAlert({
+        title: t('차수를 삭제 할 수 없습니다.'),
+        content: t(
+          '차수에 사용 중인 학습자가 있습니다.\n차수를 사용중인 학습자가 있을 경우 삭제를 할 수 없습니다.',
+        ),
+      });
+      return;
+    }
+
     const confirmRes = await openConfirm({
       title: t('차수를 삭제하시겠습니까?'),
       content: t('해당 차수를 삭제하시겠습니까?'),

@@ -41,6 +41,23 @@ export default class LearningSequenceService {
         student: 3,
         graduateStudent: 4,
       },
+      {
+        openYear: 2025,
+        sequence: 3,
+        courseSequenceCd: 1118,
+        courseSequenceName: '테스트',
+        regStartDate: new Date(),
+        regEndDate: new Date(),
+        eduStartDate: new Date(),
+        eduEndDate: new Date(),
+        eduEndDay: null,
+        status: '수강신청중',
+        isUsed: '사용',
+        capacity: 1,
+        enroll: 2,
+        student: 3,
+        graduateStudent: 4,
+      },
     ];
   }
 
