@@ -25,7 +25,13 @@ import {
 } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 
-import { ContentInformation, EnFormMode, QuestionItem } from '@types';
+import {
+  ContentInformation,
+  EnFormMode,
+  EnQuestionLevel,
+  EnQuestionType,
+  QuestionItem,
+} from '@types';
 import { FormRow2, SingleAttachmentFormField, SwitchFormField } from '@shared/ui';
 import { CODE_GROUP, S3_PATH, useDynamicForm2 } from '@learnway/hooks';
 import { FormDisplay } from '@features/form';
@@ -33,14 +39,6 @@ import { IcoMenu01 } from '@learnway/icons';
 
 import { EditSingleAttachmentCell } from '@features/form/ui/edit-single-attachment-cell';
 import { useWatch } from 'react-hook-form';
-
-enum EnQuestionType {
-  SINGLE = 'SINGLE',
-  MULTIPLE = 'MULTIPLE',
-  OX = 'OX',
-  SHORT_ANSWER = 'SHORT_ANSWER',
-  ESSAY = 'ESSAY',
-}
 
 const LearningResourceTestItemModalComponent = ({
   contentInfo,
@@ -294,9 +292,9 @@ const LearningResourceTestItemModalComponent = ({
                 element={
                   <RadioGroupFormField
                     options={[
-                      { label: '상', value: 'HARD' },
-                      { label: '중', value: 'MEDIUM' },
-                      { label: '하', value: 'EASY' },
+                      { label: '상', value: EnQuestionLevel.HARD },
+                      { label: '중', value: EnQuestionLevel.MEDIUM },
+                      { label: '하', value: EnQuestionLevel.EASY },
                     ]}
                   />
                 }

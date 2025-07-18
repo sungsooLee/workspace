@@ -214,8 +214,8 @@ export default class LearningResourceService {
    * @param contentUuid
    * @returns
    */
-  static getQuestionList(contentUuid: string) {
-    return httpService.get<any>(`${CMSApiPrefix()}/exam/questions/${contentUuid}`);
+  static getQuestionItemList(contentUuid: string) {
+    return httpService.get<QuestionItem[]>(`${CMSApiPrefix()}/exam/questions/${contentUuid}`);
   }
 
   /**

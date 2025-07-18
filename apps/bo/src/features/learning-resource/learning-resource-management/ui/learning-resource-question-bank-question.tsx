@@ -1,4 +1,4 @@
-import { FC, useEffect, useImperativeHandle, useRef } from 'react';
+import { FC, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 
@@ -31,13 +31,30 @@ import { FormRow2, GridExcelDownloadButton, GridExcelUploadButton } from '@share
 import { Link } from 'lucide-react';
 import { IcoCopy, IcoFormRequired, IcoMenu01, IcoMinus, IcoPlus } from '@learnway/icons';
 import { LearningResourceTestItemModal } from './learning-resource-test-item-modal';
-import { useCreateQuestionItem } from '@entities/learning-resource';
+import { useCreateQuestionItem, useGetQuestionItemList } from '@entities/learning-resource';
+import { QuestionInfo } from '@pages/_layout/learning/resource/test-paper/-tabs/question-info';
+import { EnQuestionLevel, EnQuestionType, QuestionItem, QuestionItemGridRow } from '@types';
 
+type QuestionStatisticRow = {
+  title: string;
+  hard: number;
+  medium: number;
+  easy: number;
+};
+const initStatisticRow: QuestionStatisticRow[] = [
+  { title: '객관식', hard: 0, medium: 0, easy: 0 },
+  { title: 'OX', hard: 0, medium: 0, easy: 0 },
+  { title: '다답식', hard: 0, medium: 0, easy: 0 },
+  { title: '단답식', hard: 0, medium: 0, easy: 0 },
+  { title: '주관식', hard: 0, medium: 0, easy: 0 },
+];
 const LearningResourceQuestionBankQuestionComponent = () => {
   const { alert, open: openModal, confirm: openConfirm } = useModal();
+  const [statistic, setStatistic] = useState<QuestionStatisticRow[]>(initStatisticRow);
 
   const { baseInfo } = useLearningResourceQuestionDetailForm();
   const { create: createQuestionItem } = useCreateQuestionItem();
+  const { data: questionItemList } = useGetQuestionItemList(baseInfo?.contentUuid);
 
   const handleAddQuestionButtonClick = async () => {
     if (baseInfo) {
@@ -57,167 +74,196 @@ const LearningResourceQuestionBankQuestionComponent = () => {
     }
   };
 
+  const data: any[] = useMemo(
+    () => [
+      {
+        type: <strong>객관식</strong>,
+        levelHigh: <Input value={'0'} disabled />,
+        levelMiddle: <Input value={'0'} disabled />,
+        levelLow: <Input value={'0'} disabled />,
+      },
+      {
+        type: <strong>OX</strong>,
+        levelHigh: <Input value={'0'} disabled />,
+        levelMiddle: <Input value={'0'} disabled />,
+        levelLow: <Input value={'0'} disabled />,
+      },
+      {
+        type: <strong>다답식</strong>,
+        levelHigh: <Input value={'0'} disabled />,
+        levelMiddle: <Input value={'0'} disabled />,
+        levelLow: <Input value={'0'} disabled />,
+      },
+      {
+        type: <strong>단답식</strong>,
+        levelHigh: <Input value={'0'} disabled />,
+        levelMiddle: <Input value={'0'} disabled />,
+        levelLow: <Input value={'0'} disabled />,
+      },
+      {
+        type: <strong>주관식</strong>,
+        levelHigh: <Input value={'0'} disabled />,
+        levelMiddle: <Input value={'0'} disabled />,
+        levelLow: <Input value={'0'} disabled />,
+      },
+    ],
+    [questionItemList],
+  );
+
+  const columns = useMemo<ColumnDef<QuestionStatisticRow, any>[]>(() => {
+    // Table
+    const columnHelper = createColumnHelper<QuestionStatisticRow>();
+    return [
+      columnHelper.accessor('title', {
+        cell: (info) => info.getValue(),
+        header: '문항유형',
+        enableGrouping: false,
+        size: 100,
+        meta: {
+          headerAlign: 'center', // 헤더 정렬
+          cellAlign: 'left', // 셀 정렬
+          cellClass: 'title',
+        },
+      }),
+      columnHelper.accessor('hard', {
+        cell: (info) => <Input value={`${info.getValue()}`} disabled />,
+        header: '문항수(난이도 상)',
+        enableGrouping: false,
+        meta: {
+          headerAlign: 'center', // 헤더 정렬
+          cellAlign: 'left', // 셀 정렬
+        },
+      }),
+      columnHelper.accessor('medium', {
+        cell: (info) => <Input value={`${info.getValue()}`} disabled />,
+        header: '문항수(난이도 중)',
+        enableGrouping: false,
+        meta: {
+          headerAlign: 'center', // 헤더 정렬
+          cellAlign: 'left', // 셀 정렬
+        },
+      }),
+      columnHelper.accessor('easy', {
+        cell: (info) => <Input value={`${info.getValue()}`} disabled />,
+        header: '문항수(난이도 하)',
+        enableGrouping: false,
+        meta: {
+          headerAlign: 'center', // 헤더 정렬
+          cellAlign: 'left', // 셀 정렬
+        },
+      }),
+    ];
+  }, []);
+
   // Table
-  const columnHelper = createColumnHelper<any>();
-  const data: any[] = [
-    {
-      type: <strong>객관식</strong>,
-      levelHigh: <Input value={'0'} disabled />,
-      levelMiddle: <Input value={'0'} disabled />,
-      levelLow: <Input value={'0'} disabled />,
-    },
-    {
-      type: <strong>OX</strong>,
-      levelHigh: <Input value={'0'} disabled />,
-      levelMiddle: <Input value={'0'} disabled />,
-      levelLow: <Input value={'0'} disabled />,
-    },
-    {
-      type: <strong>다답식</strong>,
-      levelHigh: <Input value={'0'} disabled />,
-      levelMiddle: <Input value={'0'} disabled />,
-      levelLow: <Input value={'0'} disabled />,
-    },
-    {
-      type: <strong>단답식</strong>,
-      levelHigh: <Input value={'0'} disabled />,
-      levelMiddle: <Input value={'0'} disabled />,
-      levelLow: <Input value={'0'} disabled />,
-    },
-    {
-      type: <strong>주관식</strong>,
-      levelHigh: <Input value={'0'} disabled />,
-      levelMiddle: <Input value={'0'} disabled />,
-      levelLow: <Input value={'0'} disabled />,
-    },
-  ];
+  const columns2 = useMemo(() => {
+    const columnHelper = createColumnHelper<QuestionItemGridRow>();
+    return [
+      columnHelper.accessor('questionText', {
+        cell: (info) => info.getValue(),
+        header: '문항',
+        enableGrouping: false,
+        meta: {
+          headerAlign: 'center', // 헤더 정렬
+          cellAlign: 'left', // 셀 정렬
+          size: 'auto',
+        },
+      }),
+      columnHelper.accessor('questionType', {
+        cell: (info) => info.getValue(),
+        header: '문항유형',
+        enableGrouping: false,
+        size: 216,
+        meta: {
+          headerAlign: 'center', // 헤더 정렬
+          cellAlign: 'left', // 셀 정렬
+          cellClass: 'title',
+        },
+      }),
+      columnHelper.accessor('questionLevel', {
+        cell: (info) => info.getValue(),
+        header: '난이도',
+        enableGrouping: false,
+        size: 104,
+        meta: {
+          headerAlign: 'center', // 헤더 정렬
+          cellAlign: 'center', // 셀 정렬
+        },
+      }),
+      columnHelper.accessor('optionCount', {
+        cell: (info) => info.getValue(),
+        header: '보기수',
+        size: 104,
+        enableGrouping: false,
+        meta: {
+          headerAlign: 'center', // 헤더 정렬
+          cellAlign: 'center', // 셀 정렬
+        },
+      }),
+      columnHelper.accessor('isUsed', {
+        cell: (info) => (
+          <RadioGroupFormField
+            value={`${info.getValue()}`}
+            options={[
+              { value: 'true', label: '사용' },
+              { value: 'false', label: '미사용' },
+            ]}
+          />
+        ),
+        header: '사용',
+        size: 240,
+        enableGrouping: false,
+        meta: {
+          headerAlign: 'center', // 헤더 정렬
+          cellAlign: 'left', // 셀 정렬
+        },
+      }),
+      columnHelper.accessor('orderChange', {
+        cell: (info) => <IcoMenu01 width={24} height={24} fill="#A9AFB8" stroke="#4c515e" />,
+        header: '순서변경',
+        size: 104,
+        enableGrouping: false,
+        meta: {
+          headerAlign: 'center', // 헤더 정렬
+          cellAlign: 'center', // 셀 정렬
+        },
+      }),
+    ];
+  }, []);
 
-  const columns = [
-    columnHelper.accessor('type', {
-      cell: (info) => info.getValue(),
-      header: '문항유형',
-      enableGrouping: false,
-      size: 100,
-      meta: {
-        headerAlign: 'center', // 헤더 정렬
-        cellAlign: 'left', // 셀 정렬
-        cellClass: 'title',
-      },
-    }),
-    columnHelper.accessor('levelHigh', {
-      cell: (info) => info.getValue(),
-      header: '문항수(난이도 상)',
-      enableGrouping: false,
-      meta: {
-        headerAlign: 'center', // 헤더 정렬
-        cellAlign: 'left', // 셀 정렬
-      },
-    }),
-    columnHelper.accessor('levelMiddle', {
-      cell: (info) => info.getValue(),
-      header: '문항수(난이도 중)',
-      enableGrouping: false,
-      meta: {
-        headerAlign: 'center', // 헤더 정렬
-        cellAlign: 'left', // 셀 정렬
-      },
-    }),
-    columnHelper.accessor('levelLow', {
-      cell: (info) => info.getValue(),
-      header: '문항수(난이도 하)',
-      enableGrouping: false,
-      meta: {
-        headerAlign: 'center', // 헤더 정렬
-        cellAlign: 'left', // 셀 정렬
-      },
-    }),
-  ] as ColumnDef<any, unknown>[];
+  useEffect(() => {
+    console.log('questionItemList', questionItemList);
+    if (!questionItemList) return;
+    const newStatistic: QuestionStatisticRow[] = [
+      { title: '객관식', hard: 0, medium: 0, easy: 0 },
+      { title: 'OX', hard: 0, medium: 0, easy: 0 },
+      { title: '다답식', hard: 0, medium: 0, easy: 0 },
+      { title: '단답식', hard: 0, medium: 0, easy: 0 },
+      { title: '주관식', hard: 0, medium: 0, easy: 0 },
+    ];
 
-  const data2: any[] = [
-    {
-      question: (
-        <Link to={'/'} className="link">
-          문항내용
-        </Link>
-      ),
-      questionType: '객관식',
-      level: '상',
-      number: '3',
-      useable: (
-        <RadioGroupFormField
-          options={[
-            { value: 'option01', label: '사용' },
-            { value: 'option02', label: '미사용' },
-          ]}
-        />
-      ),
-      orderChange: <IcoMenu01 width={24} height={24} fill="#A9AFB8" stroke="#4c515e" />,
-    },
-  ];
+    questionItemList.forEach((item) => {
+      switch (item.questionType) {
+        case EnQuestionType.SINGLE:
+          increaseQuestionLavel(newStatistic[0], item.questionLevel);
+          break;
+        case EnQuestionType.OX:
+          increaseQuestionLavel(newStatistic[1], item.questionLevel);
+          break;
+        case EnQuestionType.MULTIPLE:
+          increaseQuestionLavel(newStatistic[2], item.questionLevel);
+          break;
+        case EnQuestionType.SHORT_ANSWER:
+          increaseQuestionLavel(newStatistic[3], item.questionLevel);
+          break;
 
-  const columns2 = [
-    columnHelper.accessor('question', {
-      cell: (info) => info.getValue(),
-      header: '문항',
-      enableGrouping: false,
-      meta: {
-        headerAlign: 'center', // 헤더 정렬
-        cellAlign: 'left', // 셀 정렬
-        size: 'auto',
-      },
-    }),
-    columnHelper.accessor('questionType', {
-      cell: (info) => info.getValue(),
-      header: '문항유형',
-      enableGrouping: false,
-      size: 216,
-      meta: {
-        headerAlign: 'center', // 헤더 정렬
-        cellAlign: 'left', // 셀 정렬
-        cellClass: 'title',
-      },
-    }),
-    columnHelper.accessor('level', {
-      cell: (info) => info.getValue(),
-      header: '난이도',
-      enableGrouping: false,
-      size: 104,
-      meta: {
-        headerAlign: 'center', // 헤더 정렬
-        cellAlign: 'center', // 셀 정렬
-      },
-    }),
-    columnHelper.accessor('number', {
-      cell: (info) => info.getValue(),
-      header: '보기수',
-      size: 104,
-      enableGrouping: false,
-      meta: {
-        headerAlign: 'center', // 헤더 정렬
-        cellAlign: 'center', // 셀 정렬
-      },
-    }),
-    columnHelper.accessor('useable', {
-      cell: (info) => info.getValue(),
-      header: '사용',
-      size: 240,
-      enableGrouping: false,
-      meta: {
-        headerAlign: 'center', // 헤더 정렬
-        cellAlign: 'left', // 셀 정렬
-      },
-    }),
-    columnHelper.accessor('orderChange', {
-      cell: (info) => info.getValue(),
-      header: '순서변경',
-      size: 104,
-      enableGrouping: false,
-      meta: {
-        headerAlign: 'center', // 헤더 정렬
-        cellAlign: 'center', // 셀 정렬
-      },
-    }),
-  ] as ColumnDef<any, unknown>[];
+        case EnQuestionType.ESSAY:
+          increaseQuestionLavel(newStatistic[4], item.questionLevel);
+          break;
+      }
+    });
+    setStatistic(newStatistic);
+  }, [questionItemList]);
   return (
     <div className={styles.wrap}>
       <FormSubTitle label={'기본정보'} noLine />
@@ -259,13 +305,13 @@ const LearningResourceQuestionBankQuestionComponent = () => {
           showTotalCount={false}
           disabledSelectionToggle
           tableMode
-          data={data}
+          data={statistic}
           columns={columns}
           titleCustomNode={
             <div className="custom_info_wrap">
               <strong className="table_tit text-[1.4rem] font-normal">{'문항현황'}</strong>
               <strong className="table_tit text-[1.4rem] font-normal">{'문제은행 문항수'}</strong>
-              <span className="count_info text-[1.4rem]">{'100'}</span>
+              <span className="count_info text-[1.4rem]">{questionItemList?.length ?? 0}</span>
             </div>
           }
           className={styles.info_table}
@@ -277,7 +323,7 @@ const LearningResourceQuestionBankQuestionComponent = () => {
           showTotalCount={false}
           disabledSelectionToggle
           tableMode
-          data={data2}
+          data={questionItemList}
           columns={columns2}
           multiple
           showNumberingColumn
@@ -320,3 +366,17 @@ const LearningResourceQuestionBankQuestionComponent = () => {
 };
 
 export const LearningResourceQuestionBankQuestion = LearningResourceQuestionBankQuestionComponent;
+
+function increaseQuestionLavel(item: QuestionStatisticRow, questionLevel: EnQuestionLevel) {
+  switch (questionLevel) {
+    case EnQuestionLevel.HARD:
+      item.hard++;
+      break;
+    case EnQuestionLevel.MEDIUM:
+      item.medium++;
+      break;
+    case EnQuestionLevel.EASY:
+      item.easy++;
+      break;
+  }
+}

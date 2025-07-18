@@ -461,19 +461,35 @@ export interface GetVideoResourceRes {
   videoSubtitles: VideoSubtitles[];
 }
 
+export enum EnQuestionType {
+  SINGLE = 'SINGLE',
+  MULTIPLE = 'MULTIPLE',
+  OX = 'OX',
+  SHORT_ANSWER = 'SHORT_ANSWER',
+  ESSAY = 'ESSAY',
+}
+
+export enum EnQuestionLevel {
+  HARD = 'HARD',
+  MEDIUM = 'MEDIUM',
+  EASY = 'EASY',
+}
 export interface QuestionItem {
   sortSeq: number;
   examQuestionUuid: string;
   questionText: string;
-  questionType: string;
+  questionType: EnQuestionType;
   explainText: string;
-  questionLevel: string;
+  questionLevel: EnQuestionLevel;
   fileUuid: string;
   optionCount: number;
   isUsed: boolean;
   options: QuestionItemOption[];
 }
 
+export interface QuestionItemGridRow extends QuestionItem {
+  orderChange: string;
+}
 export interface QuestionItemOption {
   sortSeq: number;
   examOptionText: string;
