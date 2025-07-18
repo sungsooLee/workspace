@@ -1,5 +1,5 @@
 import { DynamicFormProvider } from '@learnway/hooks';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import LearningResourceService from '../api/learning-resource';
 import { isProcessing, isProcessingCompleted, isProcessingNone } from './util';
 import { GetVideoResourceRes } from '@types';
@@ -17,17 +17,16 @@ const useVideoResourceHook = (provider: DynamicFormProvider) => {
 
   const [videoResource, setVideoResource] = useState<GetVideoResourceRes | null>(null);
 
-  const fetchStatus = async () => {
+  const fetchStatus = useCallback(async () => {
     const statusInfo = await LearningResourceService.getVideoStatus(contentUuid);
-    console.log('🚀 ~ statusInfo:', statusInfo);
     onFormChange(statusInfo);
-  };
+  }, [contentUuid]);
 
-  const fetchVideoContent = async () => {
+  const fetchVideoContent = useCallback(async () => {
     const videoResource = await LearningResourceService.getVideoResource(contentUuid);
     onFormChange(pick(videoResource, 'contentAddInfo'));
     setVideoResource(videoResource);
-  };
+  }, [contentUuid]);
 
   useEffect(() => {
     console.log('🚀 ~ ProcessingStatus:', status);
@@ -48,10 +47,10 @@ const useVideoResourceHook = (provider: DynamicFormProvider) => {
 
     return () => {
       if (intervalRef.current && !isProcessing(status)) {
-        console.log('🚀 ~ useEffect ~ interval Stop!: > isProcessing? ', isProcessing(status));
+        clearInterval(intervalRef.current);
       }
     };
-  }, [status]);
+  }, [contentUuid, status]);
 
   return {
     contentUuid,
