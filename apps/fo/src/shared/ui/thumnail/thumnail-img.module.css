@@ -1,0 +1,23 @@
+.start {
+  &.img_box {
+    @apply relative;
+    .img {
+      @apply relative overflow-hidden rounded-[8px];
+    }
+    .label {
+      @apply absolute left-[8px] top-[8px] z-[1] flex;
+      li {
+        @apply label_3_r mr-0 inline-block w-auto whitespace-nowrap rounded-[4px] p-[4.5px] pl-[6px] pr-[6px] text-white;
+        & + li {
+          @apply ml-[4px];
+        }
+      }
+    }
+    .heart {
+      @apply absolute bottom-[16px] right-[16px] z-[2] h-[24px] w-[24px] text-[0];
+      button {
+        @apply !p-0;
+      }
+    }
+  }
+}

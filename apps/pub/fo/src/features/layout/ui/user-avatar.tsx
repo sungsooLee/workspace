@@ -16,7 +16,7 @@ const PopoverContent = () => {
   const handleClickAlert1 = () => {
     openConfirm({
       title: <></>,
-      description: <>로그아웃 하시겠습니까?</>,
+      content: <>로그아웃 하시겠습니까?</>,
     });
   };
 
@@ -89,7 +89,7 @@ const PopoverContent = () => {
         </li>
         {/* 퍼블수정 20250328 : 로그인 설정 추가 */}
         <li>
-          <Link to="/my/setting-sns">SNS 로그인 설정</Link>
+          <Link to="">SNS 로그인 설정</Link>
         </li>
       </ul>
       <Button className={styles.btn_log} variant="text" onClick={() => handleClickAlert2()}>
