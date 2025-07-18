@@ -41,7 +41,7 @@ function RouteComponent() {
       </ContentsButtons> */}
       <MainContents>
         {mode === 'MAIN' ? (
-          <SequenceList setMode={setMode} setSequenceId={setSequenceId} courseId={1} />
+          <SequenceList setMode={setMode} setSequenceId={setSequenceId} />
         ) : (
           <SequenceDetail setMode={setMode} courseId={1} sequenceId={sequenceId} />
         )}
