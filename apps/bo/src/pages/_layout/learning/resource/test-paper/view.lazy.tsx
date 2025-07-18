@@ -89,7 +89,7 @@ function RouteComponent() {
         content: (
           <QuestionInfo
             ref={questionInfoRef}
-            basicInfoForm={{ provider, getValues, updateFormDataByKey, onSubmit }}
+            basicInfoForm={{ provider, getValues, updateFormDataByKey, saveBasicInfo }}
             contentUuid={contentUuid}
             tenantId={tenantId}
             mode={mode}
@@ -120,6 +120,12 @@ function RouteComponent() {
           content: t('저장된 적 없는 경우 다음 단계로 이동할 수 없습니다.'),
         });
         return false;
+      } else if (saved) {
+        const result = await openConfirm({
+          title: t('이동 하시겠습니까?'),
+          content: t('입력 중인 항목이 초기화됩니다.'),
+        });
+        return result;
       }
       return true;
     },
@@ -146,7 +152,7 @@ function RouteComponent() {
   const handleClickGoListButton = useCallback(async () => {
     if (
       await openConfirm({
-        title: t('LABEL.confirm.goList.title'),
+        title: t('이동 하시겠습니까?'),
         content: t('LABEL.confirm.goList.message'),
       })
     ) {
