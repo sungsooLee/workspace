@@ -134,7 +134,7 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
               <Chip
                 {...props}
                 size={size}
-                key={option[valueField]}
+                key={option?.[valueField]}
                 option={option}
                 labelField={labelField}
                 valueField={valueField}

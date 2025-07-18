@@ -1,4 +1,4 @@
-import { useFetchCourse, useFetchCourseConfig } from '@entities/course';
+import { useFetchCourse, useFetchCourseConfig, useUpdateCourse } from '@entities/course';
 import { DateRangePickerFormField, DropdownFormField, FormDisplay } from '@features/form';
 import { InstructorListPopup } from '@features/learning-operate-support/instructor-tutor/instructor-management/modal/instructor-list-modal';
 import {
@@ -18,6 +18,7 @@ import {
   RadioGroupFormField,
   SplitPanel,
   TextareaFormField,
+  useModal,
 } from '@learnway/ui';
 import {
   ChipListFormField,
@@ -41,13 +42,22 @@ import { PassOptionFormField } from '../../../-components/pass-option-form-field
 const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBaseProps>(
   ({ courseId }, ref) => {
     const { t } = useTranslation();
-
+    const { showSaveComplete } = useModal();
     const { provider, getValues, updateFormData, formValues, onSubmit } = useDynamicForm2();
 
     const { data: formData } = useFetchCourse(courseId);
     const { data: courseConfig } = useFetchCourseConfig({
       courseType: formData?.courseType,
       channelUuid: formData?.channelUuid,
+    });
+    const { mutate: updateCourse } = useUpdateCourse({
+      onSuccess: async (response: any) => {
+        console.log('useUpdateCourse :: onSuccess', response);
+        await showSaveComplete();
+        // router.navigate({
+        //   to: '/learning/course',
+        // });
+      },
     });
 
     console.log('----- course-detail', { courseId });
@@ -78,7 +88,7 @@ const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTab
       // onSubmit은 폼 제출 핸들러를 생성하는 함수입니다
       const submitHandler = onSubmit((data) => {
         console.log('수동 제출 성공:', data);
-        // 여기서 성공 처리 로직을 작성
+        updateCourse(data as Course);
       });
 
       // 가짜 이벤트 객체를 생성해서 수동으로 호출
@@ -257,7 +267,6 @@ const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTab
                 provider={provider}
                 name={'courseSummary'}
                 label={'AI 과정 요약(AI 자동추출)'}
-                format={'array'}
                 element={<TextareaFormField maxLength={500} />}
               />
             </ContentsRow>
@@ -485,7 +494,6 @@ const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTab
                 format={'string'}
                 element={
                   <ThumbnailListFormField
-                    isLoading={true}
                     uuidType={'group'}
                     uploadConfig={{
                       affairType: 'LMS',
@@ -508,6 +516,8 @@ const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTab
                   <ChipListFormField
                     chipListConfig={{
                       showInput: true,
+                      labelField: 'tagName',
+                      valueField: 'tagId',
                       wordwrap: true,
                     }}
                   />
@@ -1361,6 +1371,8 @@ const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTab
                   format={'number'}
                   type={'hidden'}
                 />
+                {/* 과정아이디 */}
+                <FormRow2 provider={provider} name={'courseId'} type={'hidden'} format={'number'} />
               </ContentsRow>
             </FormDisplay>
           </div>
@@ -1407,7 +1419,7 @@ const responseDataToFormData = (d: Course, c: CourseConfig = {} as CourseConfig)
       d.courseValidityStartDate, // 과정 유효 시작일
       d.courseValidityEndDate, // 과정 유효 종료일
     ],
-    tagNameArray: d.tagNames?.map((item) => item.value), // 태그
+    // tagNameArray: d.tagNames?.map((item) => item.value), // 태그
   };
 };
 
@@ -1444,8 +1456,8 @@ export const formDataToRequestData = (d: Course) => {
   d.targetListIds = d.targetList?.map((d: any) => d.id);
 
   // 담당자, 운영자 연락처 국가코드
-  d.coordinatorTelCountryCode = 'KOR_82';
-  d.operatorTelCountryCode = 'KOR_82';
+  // d.coordinatorTelCountryCode = 'KOR_82';
+  // d.operatorTelCountryCode = 'KOR_82';
 
   //사전 필수과정
   const preRequisiteCourseIds = d.preRequisiteCourseList
@@ -1502,8 +1514,8 @@ export const formDataToRequestData = (d: Course) => {
     courseValidityEndDate: d.courseValidityRange?.[1], // 과정 유효 종료일
     courseValidityStartHour: 0, // 과정 노출 시작 시각 (삭제 후 courseValidityStartDate에 통합 예정)
     courseValidityEndHour: 23, // 과정 노출 종료 시각 (삭제 후 courseValidityEndDate에 통합 예정)
-    thumbnailFileGroupUuid: '1', // 썸네일 이미지 Group UUID
+    // thumbnailFileGroupUuid: '1', // 썸네일 이미지 Group UUID
     primaryThumbnailFileUuid: '1', // 대표 썸네일 이미지 UUID
-    tagNames: d.tagNameArray?.map((item) => ({ value: item })), // 태그
+    // tagNames: d.tagNameArray?.map((item) => ({ value: item })), // 태그
   };
 };

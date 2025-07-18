@@ -31,9 +31,9 @@ const PublishCourseComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>(
     }));
 
     useEffect(() => {
-      console.log('PuComponent init');
       // 초기 데이터가 있으면 설정
       if (formData) {
+        console.log('updateFormData init', formData);
         updateFormData(responseDataToFormData(formData));
       }
     }, [formData]);
@@ -79,7 +79,6 @@ const PublishCourseComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>(
             format={'string'}
             element={
               <ThumbnailListFormField
-                isLoading={true}
                 uuidType={'group'}
                 uploadConfig={{
                   affairType: 'LMS',
@@ -103,6 +102,8 @@ const PublishCourseComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>(
                 chipListConfig={{
                   showInput: true,
                   wordwrap: true,
+                  labelField: 'tagName',
+                  valueField: 'tagId',
                 }}
               />
             }
@@ -115,7 +116,6 @@ const PublishCourseComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>(
             provider={provider}
             name={'courseSummary'}
             label={'AI 과정 요약(AI 자동추출)'}
-            format={'array'}
             element={<TextareaFormField maxLength={500} />}
           />
         </ContentsRow>
@@ -137,7 +137,7 @@ const responseDataToFormData = (d: Course): Course => {
       d.courseValidityStartDate, // 과정 유효 시작일
       d.courseValidityEndDate, // 과정 유효 종료일
     ],
-    tagNameArray: d.tagNames?.map((item) => item.value), // 태그
+    // tagNameArray: d.tagNames?.map((item) => item.value), // 태그
   };
 };
 
@@ -156,8 +156,8 @@ export const formDataToRequestData = (d: Course) => {
     courseValidityEndDate: d.courseValidityRange?.[1], // 과정 유효 종료일
     courseValidityStartHour: 0, // 과정 노출 시작 시각 (삭제 후 courseValidityStartDate에 통합 예정)
     courseValidityEndHour: 23, // 과정 노출 종료 시각 (삭제 후 courseValidityEndDate에 통합 예정)
-    thumbnailFileGroupUuid: '1', // 썸네일 이미지 Group UUID
+    // thumbnailFileGroupUuid: '1', // 썸네일 이미지 Group UUID
     primaryThumbnailFileUuid: '1', // 대표 썸네일 이미지 UUID
-    tagNames: d.tagNameArray?.map((item) => ({ value: item })), // 태그
+    tagNames: d.tagNames?.map((item: any) => ({ value: item?.tagName })), // 태그
   };
 };

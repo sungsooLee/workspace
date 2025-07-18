@@ -1,5 +1,5 @@
-import { FC, useEffect, useState } from 'react';
 import { RangeDatePicker, RangeDatePickerProps } from '@learnway/ui';
+import { FC, useMemo } from 'react';
 // import styles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 
 /**
@@ -13,18 +13,21 @@ const DateTimeRangePickerFormFieldComponent: FC<RangeDatePickerProps> = ({
   maxDate,
   ...props
 }) => {
-  const [from, setFrom] = useState<Date | null>(value?.[0] ?? null);
-  const [to, setTo] = useState<Date | null>(value?.[1] ?? null);
+  // const [from, setFrom] = useState<Date | null>(value?.[0] ?? null);
+  // const [to, setTo] = useState<Date | null>(value?.[1] ?? null);
 
-  const handleFromDate = (value: Date | undefined) => {
-    onChange?.([value ? value : null, to ? to : null]);
+  const pickerValue: [Date | null, Date | null] = useMemo(() => {
+    return [value?.[0] ?? null, value?.[1] ?? null];
+  }, [value]);
 
-    setFrom(value ? value : null);
+  const handleFromDate = (fromDate: Date | undefined) => {
+    onChange?.([fromDate ?? null, value?.[1] ?? null]);
+    // setFrom(value ? value : null);
   };
 
-  const handleToDate = (value: Date | undefined) => {
-    onChange?.([from, value ? value : null]);
-    setTo(value ? value : null);
+  const handleToDate = (toDate: Date | undefined) => {
+    onChange?.([value?.[0] ?? null, toDate ?? null]);
+    // setTo(value ? value : null);
   };
 
   return (
@@ -34,7 +37,7 @@ const DateTimeRangePickerFormFieldComponent: FC<RangeDatePickerProps> = ({
       onChange={onChange}
       onChangeStart={handleFromDate}
       onChangeEnd={handleToDate}
-      value={[from, to]}
+      value={pickerValue}
       minDate={minDate}
       maxDate={maxDate}
     />
