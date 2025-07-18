@@ -1,19 +1,34 @@
-import {
-  useMutation,
-  useQuery,
-  useQueryClient,
-  UseQueryOptions,
-  UseQueryResult,
-} from '@tanstack/react-query';
-import { queryKeys, mutateOptions, queryOptions } from './channel.queries';
-import { ChannelByRoleId, PaginationResponse } from '@types';
+import { useMutation, useQuery, UseQueryOptions, UseQueryResult } from '@tanstack/react-query';
+import { ChannelByRoleId } from '@types';
+import { mutateOptions, queryOptions } from './channel.queries';
 
 export function useGetChannelList(params: any) {
   return useQuery(queryOptions.list(params));
 }
 
-export function useGetChannelDetail(channeId: number) {
-  return useQuery(queryOptions.detail(channeId));
+export function useGetChannelDetail(channelUuid: string) {
+  return useQuery(queryOptions.detail(channelUuid));
+}
+
+export function useUpdateChannelDetail(options: any) {
+  const mutation = useMutation({
+    ...mutateOptions.update(),
+    onSuccess: async (data: any, variables, context) => {
+      if (options.onSuccess) {
+        options.onSuccess(data, variables, context);
+      }
+    },
+    ...options,
+  });
+
+  return {
+    update: (payload: any, callback?: any) => {
+      mutation.mutate(payload, callback);
+    },
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
 }
 
 /**

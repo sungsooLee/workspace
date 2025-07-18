@@ -1,11 +1,11 @@
-import { ChannelByRoleId, PaginationResponse } from '@types';
-import ChannelService from '../api/channel';
 import { UseQueryOptions } from '@tanstack/react-query';
+import { ChannelByRoleId } from '@types';
+import ChannelService from '../api/channel';
 
 export const queryKeys = {
   all: ['channel'] as const,
   list: (params: any) => [...queryKeys.all, 'list', params] as const,
-  detail: (channelId: number) => [...queryKeys.all, 'detail', channelId] as const,
+  detail: (channelUuid: string) => [...queryKeys.all, 'detail', channelUuid] as const,
   channelByRoleId: (channelId: number) => ['channel-by-role-id', channelId] as const,
 };
 
@@ -14,9 +14,9 @@ export const queryOptions = {
     queryKey: queryKeys.list(params),
     queryFn: () => ChannelService.getChannelList(params),
   }),
-  detail: (channeId: number) => ({
-    queryKey: queryKeys.detail(channeId),
-    queryFn: () => ChannelService.getChannelDetail(channeId),
+  detail: (channelUuid: string) => ({
+    queryKey: queryKeys.detail(channelUuid),
+    queryFn: () => ChannelService.getChannelDetail(channelUuid),
   }),
   channelByRoleId: <T = ChannelByRoleId[]>(roleId: number): UseQueryOptions<T> => ({
     queryKey: queryKeys.channelByRoleId(roleId),
@@ -25,9 +25,10 @@ export const queryOptions = {
 };
 
 export const mutateOptions = {
-  create: () => (payload: any) => ChannelService.createChannel(payload),
+  create: () => ({
+    mutationFn: (payload: any) => ChannelService.createChannel(payload),
+  }),
   update: () => ({
-    mutationFn: ({ channelId, body }: { channelId: number; body: any }) =>
-      ChannelService.updateChannelDetail(channelId, body),
+    mutationFn: (payload: any) => ChannelService.updateChannelDetail(payload),
   }),
 };
