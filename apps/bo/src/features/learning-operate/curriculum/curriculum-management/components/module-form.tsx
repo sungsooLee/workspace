@@ -39,7 +39,7 @@ export const ModuleForm: React.FC<ModuleFormProps> = ({
   const { data: moduleData } = useGetModuleDetail(moduleId || 0);
 
   // contentUuid가 있을 때만 쿼리 실행
-  const { data: contentDetail } = useQuery({
+  const { data: contentDetail, isLoading } = useQuery({
     ...learningResourceQueryOptions.getContent(moduleData?.contentUuid || ''),
     enabled: !!(isEditing && moduleData?.contentUuid && moduleData.contentUuid.trim() !== ''),
   });
@@ -48,29 +48,23 @@ export const ModuleForm: React.FC<ModuleFormProps> = ({
   const { data, refetch } = useGetScormDetail(refetchContentUuid || '');
 
   // 초기 데이터 설정을 한 번만 수행하기 위한 ref
-  const initialDataSetRef = useRef(false);
 
   useEffect(() => {
-    // if (updateFormData) {
-    if (isEditing && moduleData && !initialDataSetRef.current) {
-      setTimeout(() => {
-        const initialData = {
-          ...moduleData,
-          moduleName: moduleData.moduleName,
-          moduleType: moduleData.moduleType || MODULE_TYPE.GENERAL,
-          moduleDescription: moduleData.moduleDescription,
-          contentDuration: getHourValueFromTime(moduleData.totalTime),
-          contentUuid: moduleData.contentUuid || '',
-          contentName: moduleData.contentName || '',
-        };
+    if (isEditing && moduleData) {
+      const initialData = {
+        ...moduleData,
+        moduleName: moduleData.moduleName,
+        moduleType: moduleData.moduleType || MODULE_TYPE.GENERAL,
+        moduleDescription: moduleData.moduleDescription,
+        contentDuration: { ...getHourValueFromTime(moduleData.totalTime) },
+        contentUuid: moduleData.contentUuid || '',
+        contentName: moduleData.contentName || '',
+      };
 
-        Object.entries(initialData).forEach(([key, value]) => {
-          provider.setValue(key, value);
-        });
-
-        initialDataSetRef.current = true;
-      }, 50);
-    } else if (!isEditing && !initialDataSetRef.current) {
+      Object.entries(initialData).forEach(([key, value]) => {
+        provider.setValue(key, value);
+      });
+    } else if (!isEditing) {
       const defaultData = {
         moduleType: MODULE_TYPE.GENERAL,
         moduleName: '',
@@ -83,31 +77,17 @@ export const ModuleForm: React.FC<ModuleFormProps> = ({
       Object.entries(defaultData).forEach(([key, value]) => {
         provider.setValue(key, value);
       });
-
-      initialDataSetRef.current = true;
     }
-    // }
-  }, [moduleData, isEditing, provider]);
-
-  // 컴포넌트 언마운트 시 초기화
-  useEffect(() => {
-    return () => {
-      initialDataSetRef.current = false;
-    };
-  }, []);
-
-  // moduleId나 isEditing이 변경될 때 초기화
-  useEffect(() => {
-    initialDataSetRef.current = false;
-  }, [moduleId, isEditing]);
+  }, [moduleData]);
 
   // contentDetail이 로드되면 contentName 설정 (편집 모드에서만)
   useEffect(() => {
     if (isEditing && contentDetail && contentDetail.contentName) {
+      console.log(contentDetail.contentName);
       provider.setValue('contentName', contentDetail.contentName);
       provider.setValue('contentUuid', contentDetail.contentUuid);
     }
-  }, [contentDetail, provider, isEditing]);
+  }, [contentDetail, isEditing]);
 
   const formContent = (
     <>
@@ -206,11 +186,7 @@ export const ModuleForm: React.FC<ModuleFormProps> = ({
                   },
                 ],
               }}
-              element={
-                <DurationTimeFormField
-                  key={`contentDuration-${moduleId || 'new'}-${isEditing ? 'edit' : 'create'}`}
-                />
-              }
+              element={<DurationTimeFormField />}
             />
           </ContentsRow>
         </>

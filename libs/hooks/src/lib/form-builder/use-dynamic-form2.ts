@@ -140,6 +140,7 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
     setValue,
     trigger,
     watch,
+    unregister,
   } = methods;
 
   /**
@@ -282,15 +283,30 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
   /**
    * 모든 validator를 초기화하는 함수
    */
+  // const clearAllValidators = useCallback(() => {
+  //   setDynamicValidator({});
+  //   setDynamicBuilders([]);
+  //   // 폼 데이터도 완전히 초기화
+  //   reset({});
+  //   clearErrors();
+  //   // fieldRefs도 초기화
+  //   fieldRefs.current = {};
+  // }, [reset, clearErrors]);
   const clearAllValidators = useCallback(() => {
+    // 등록된 모든 필드 이름 가져오기
+    const fieldNames = Object.keys(getValues());
+
+    // 모든 필드를 unregister로 완전 제거
+    fieldNames.forEach((fieldName) => {
+      unregister(fieldName);
+    });
+
+    // 나머지 상태 초기화
     setDynamicValidator({});
     setDynamicBuilders([]);
-    // 폼 데이터도 완전히 초기화
-    reset({});
     clearErrors();
-    // fieldRefs도 초기화
     fieldRefs.current = {};
-  }, [reset, clearErrors]);
+  }, [getValues, unregister, clearErrors]);
 
   // control 확장: 기본 control에 isFieldRequired 메서드 추가
   const extendedControl: DynamicFormProvider['control'] = useMemo(

@@ -48,29 +48,23 @@ export const LessonForm: React.FC<LessonFormProps> = ({
     enabled: !!(isEditing && lessonData?.contentUuid && lessonData.contentUuid.trim() !== ''),
   });
 
-  // 초기 데이터 설정을 한 번만 수행하기 위한 ref
-  const initialDataSetRef = useRef(false);
-
   useEffect(() => {
-    if (isEditing && lessonData && !initialDataSetRef.current) {
-      setTimeout(() => {
-        const initialData = {
-          ...lessonData,
-          lessonName: lessonData.lessonName,
-          lessonType: lessonData.lessonType || LESSON_TYPE.GENERAL,
-          lessonDescription: lessonData.lessonDescription,
-          learningTime: getHourValueFromTime(lessonData.learningTime),
-          contentUuid: lessonData.contentUuid || '',
-          contentName: lessonData.contentName || '',
-        };
+    if (isEditing && lessonData) {
+      console.log({ ...getHourValueFromTime(lessonData.learningTime) });
+      const initialData = {
+        ...lessonData,
+        lessonName: lessonData.lessonName,
+        lessonType: lessonData.lessonType || LESSON_TYPE.GENERAL,
+        lessonDescription: lessonData.lessonDescription,
+        learningTime: { ...getHourValueFromTime(lessonData.learningTime) },
+        contentUuid: lessonData.contentUuid || '',
+        contentName: lessonData.contentName || '',
+      };
 
-        Object.entries(initialData).forEach(([key, value]) => {
-          provider.setValue(key, value);
-        });
-
-        initialDataSetRef.current = true;
-      }, 50);
-    } else if (!isEditing && !initialDataSetRef.current) {
+      Object.entries(initialData).forEach(([key, value]) => {
+        provider.setValue(key, value);
+      });
+    } else if (!isEditing) {
       const defaultData = {
         lessonType: LESSON_TYPE.GENERAL,
         lessonName: '',
@@ -83,28 +77,16 @@ export const LessonForm: React.FC<LessonFormProps> = ({
       Object.entries(defaultData).forEach(([key, value]) => {
         provider.setValue(key, value);
       });
-
-      initialDataSetRef.current = true;
     }
     // }
-  }, [lessonData, isEditing, provider]);
-
-  useEffect(() => {
-    return () => {
-      initialDataSetRef.current = false;
-    };
-  }, []);
-
-  useEffect(() => {
-    initialDataSetRef.current = false;
-  }, [lessonId, isEditing]);
+  }, [lessonData]);
 
   useEffect(() => {
     if (isEditing && contentDetail && contentDetail.contentName) {
       provider.setValue('contentName', contentDetail.contentName);
       provider.setValue('contentUuid', contentDetail.contentUuid);
     }
-  }, [contentDetail, provider, isEditing]);
+  }, [contentDetail, isEditing]);
 
   const formContent = (
     <>
@@ -211,11 +193,7 @@ export const LessonForm: React.FC<LessonFormProps> = ({
               },
             ],
           }}
-          element={
-            <DurationTimeFormField
-              key={`learningTime-${lessonId || 'new'}-${isEditing ? 'edit' : 'create'}`}
-            />
-          }
+          element={<DurationTimeFormField />}
         />
       </ContentsRow>
       <ContentsRow>
