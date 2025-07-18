@@ -850,8 +850,6 @@ const CurriculumDetailComponent = ({
           onExpandedKeysChange={setExpandedKeys}
           onAction={handleTreeAction}
           customDropValidator={customDropValidator}
-          clientTree={true}
-          disableOptimisticUpdate={false}
           renderNodeDragHandle={(node: TreeNode) => {
             // FIXED 모듈 하위 레슨은 드래그 핸들 숨김
             const parentNode = findParentNode(treeData, node.parentId);

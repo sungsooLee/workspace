@@ -61,7 +61,7 @@ export const LessonForm: React.FC<LessonFormProps> = ({
         lessonDescription: lessonData.lessonDescription,
         learningTime: { ...getHourValueFromTime(lessonData.learningTime) },
         contentUuid: lessonData.contentUuid || '',
-        contentName: lessonData.contentName || '',
+        contentName: contentDetail?.contentName || lessonData.contentName || '',
       };
 
       Object.entries(initialData).forEach(([key, value]) => {

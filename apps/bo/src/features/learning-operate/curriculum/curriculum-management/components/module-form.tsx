@@ -58,7 +58,7 @@ export const ModuleForm: React.FC<ModuleFormProps> = ({
         moduleDescription: moduleData.moduleDescription,
         contentDuration: { ...getHourValueFromTime(moduleData.totalTime) },
         contentUuid: moduleData.contentUuid || '',
-        contentName: moduleData.contentName || '',
+        contentName: contentDetail?.contentName || moduleData.contentName || '',
       };
 
       Object.entries(initialData).forEach(([key, value]) => {
