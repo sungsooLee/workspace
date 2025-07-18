@@ -467,6 +467,7 @@ export interface QuestionItem {
   questionType: string;
   explainText: string;
   questionLevel: string;
+  fileUuid: string;
   optionCount: number;
   isUsed: boolean;
   options: QuestionItemOption[];
