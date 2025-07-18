@@ -20,9 +20,11 @@ const PasswordChangePopupComponent = () => {
   const { alert: openAlert } = useModal();
 
   // 비밀번호 변경 alert
+  // 퍼블수정 20250718 수정
   const passwordChangeAlert = () => {
     openAlert({
-      content: <>비밀번호가 변경되었습니다.</>,
+      title: '비밀번호가 변경되었습니다.',
+      content: '새로운 비밀번호로 변경되었습니다.',
     });
   };
 
@@ -31,6 +33,7 @@ const PasswordChangePopupComponent = () => {
       <ModalTitle>{'비밀번호 변경'}</ModalTitle>
       <ModalBody>
         <div className={`${styles.start} ${styles.pw_change}`}>
+          {/* 퍼블수정 20250718 input에 inputSize 옵션 추가 */}
           <div className={styles.input_box}>
             {/* 현재 비밀번호 */}
             <ContentsRow>
@@ -42,7 +45,7 @@ const PasswordChangePopupComponent = () => {
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
-                  <Input id="password" type="password" placeholder="비밀번호" />
+                  <Input id="password" type="password" placeholder="비밀번호" inputSize="lg" />
                 </div>
               </div>
             </ContentsRow>
@@ -61,6 +64,7 @@ const PasswordChangePopupComponent = () => {
                     id="password2"
                     type="password"
                     placeholder="비밀번호(영문자, 숫자, 특수문자 3가지 조합 8자리 이상)"
+                    inputSize="lg"
                   />
                 </div>
               </div>
@@ -80,6 +84,7 @@ const PasswordChangePopupComponent = () => {
                     id="password3"
                     type="password"
                     placeholder="새로운 비밀번호 재입력"
+                    inputSize="lg"
                     error
                   />
                 </div>
@@ -93,13 +98,14 @@ const PasswordChangePopupComponent = () => {
 
           {/* 유의사항 */}
           <div className={`${noticeBoxStyles.start} ${styles.notice}`}>
+            {/* 퍼블수정 20250718 아이콘 수정 및 문구 수정 */}
             <dl className={noticeBoxStyles.check_point}>
               <dt>
-                <IcoCaution width={16} height={16} stroke="#6F798B" />
+                <IcoCaution width={24} height={24} stroke="#4d525c" />
                 유의사항
               </dt>
               <dd>
-                영문 대/소문자, 숫자, 특수문자 중 3가지 이상을 조합하여 8-20자리로 입력해 주세요.
+                영문자, 숫자, 특수문자 3가지 조합 8자리 이상 또는 2가지 조합 10자리 이상 입력하세요.
               </dd>
               <dd>직전에 사용한 비밀번호는 사용하실 수 없습니다.</dd>
               <dd>아이디와 동일한 비밀번호는 사용하실 수 없습니다.</dd>
@@ -115,11 +121,12 @@ const PasswordChangePopupComponent = () => {
         </div>
       </ModalBody>
       <ModalFooter>
-        <Button label={'취소'} variant="gray" size="lg"></Button>
+        {/* 퍼블수정 20250718 사이즈 수정 */}
+        <Button label={'취소'} variant="gray" size="xl"></Button>
         <Button
           label={'변경'}
           variant={'primary'}
-          size={'lg'}
+          size={'xl'}
           onClick={() => passwordChangeAlert()}
         />
       </ModalFooter>

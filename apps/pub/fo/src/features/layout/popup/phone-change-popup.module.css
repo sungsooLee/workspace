@@ -3,6 +3,17 @@
     .input_box {
       & > div {
         @apply border-none pt-0;
+        & > div {
+          @apply pb-0;
+        }
+        & + div {
+          @apply mt-[24px];
+        }
+      }
+      .phone_box {
+        button {
+          @apply !h-[44px];
+        }
       }
     }
   }
