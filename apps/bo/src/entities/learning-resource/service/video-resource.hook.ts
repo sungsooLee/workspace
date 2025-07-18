@@ -51,6 +51,7 @@ const useVideoResourceHook = (provider: DynamicFormProvider) => {
   }, [status]);
 
   return {
+    contentUuid,
     isDrafted,
     processingStatus: status,
     playTime,
