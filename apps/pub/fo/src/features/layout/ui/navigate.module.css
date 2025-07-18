@@ -9,9 +9,9 @@
         [class*='swiper-slide'] {
           @apply title4-b relative flex !w-auto items-center justify-start whitespace-nowrap;
           a {
-            @apply title4-b relative flex h-[64px] items-center;
+            @apply title4-b relative flex h-[80px] items-center;
             span {
-              @apply relative leading-[64px];
+              @apply relative leading-[80px];
             }
             &:hover,
             &.active {
@@ -50,19 +50,30 @@
 
       [class*='prev_btn'],
       [class*='next_btn'] {
-        @apply !m-[0] !w-[60px] !p-[0] !shadow-none;
+        @apply !m-[0] !w-[30px] !rounded-none !p-[0] !shadow-none;
       }
       [class*='prev_btn']::before,
       [class*='next_btn']::before {
         content: '';
         @apply pointer-events-none absolute top-0 h-full w-[60px];
-        background: linear-gradient(to right, white, transparent);
       }
       [class*='prev_btn']::before {
-        @apply left-0;
+        @apply left-[80%];
+        background: linear-gradient(to right, white, transparent);
       }
       [class*='next_btn']::before {
-        @apply right-0;
+        @apply right-[80%];
+        background: linear-gradient(to right, transparent, white);
+      }
+
+      .ico {
+        @apply h-[16px] w-[16px];
+        fill: var(--gray50);
+        &.prev {
+        }
+        &.next {
+          @apply rotate-180;
+        }
       }
 
       .gnb_button_next {

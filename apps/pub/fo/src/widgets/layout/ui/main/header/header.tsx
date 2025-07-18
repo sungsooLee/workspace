@@ -1,12 +1,9 @@
 import { memo, useState } from 'react';
-import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import {
   Logo,
   UserAvatar,
   Notification,
-  Language,
-  UserName,
   Navigate,
   NavigateHover,
   Category,
@@ -19,21 +16,23 @@ import styles from './header.module.css';
 function HeaderComponent() {
   const { t } = useTranslation();
 
-  const handleMouseEnter = () => {
-    setIsHoverNavigate(true);
+  const [hoverIndex, setHoverIndex] = useState<number | null>(null);
+  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
+
+  const handleMouseEnter = (index: number | null) => {
+    setHoverIndex(index);
   };
-  const handleMouseLeave = () => {
-    setIsHoverNavigate(false);
+
+  const handleMouseLeaveAll = () => {
+    setHoverIndex(null);
   };
+
   const handleCategoryOpen = (isOpen: boolean) => {
-    if (isOpen && isHoverNavigate) {
-      setIsHoverNavigate(false);
+    if (isOpen) {
+      setHoverIndex(null);
     }
     setIsCategoryOpen(isOpen);
   };
-
-  const [isHoverNavigate, setIsHoverNavigate] = useState(false);
-  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
 
   return (
     <div className={`${styles.start} ${styles.header}`}>
@@ -48,13 +47,15 @@ function HeaderComponent() {
             </div>
           </div>
 
-          <div className={styles.nav_container} onMouseLeave={handleMouseLeave}>
+          <div className={styles.nav_container} onMouseLeave={handleMouseLeaveAll}>
             <div className={styles.nav_area}>
               <Category onOpenChange={handleCategoryOpen} isOpen={isCategoryOpen} />
-              <Navigate onMouseEnter={handleMouseEnter} />
+              <Navigate onHoverIndexChange={handleMouseEnter} hoverIndex={hoverIndex} />
             </div>
-            {/* {isHoverNavigate && <NavigateHover isOpen={isHoverNavigate} />} */}
-            <NavigateHover isOpen={true} />
+
+            {hoverIndex !== null && (
+              <NavigateHover hoverIndex={hoverIndex} onMouseLeave={handleMouseLeaveAll} />
+            )}
           </div>
 
           <div className={styles.search_form}>

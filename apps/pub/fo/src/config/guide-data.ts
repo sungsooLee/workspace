@@ -70,7 +70,7 @@ export const guideData = [
     pageId: '/',
     pageType: 'Page',
     completionDate: '2025-01-23',
-    lastUpdateDate: '2025-07-16',
+    lastUpdateDate: '2025-07-18',
     remarks: '- 레이아웃',
   },
   {
@@ -80,7 +80,7 @@ export const guideData = [
     pageId: '/',
     pageType: 'Page',
     completionDate: '2025-01-23',
-    lastUpdateDate: '2025-07-16',
+    lastUpdateDate: '2025-07-17',
     remarks: '- 레이아웃',
   },
   {

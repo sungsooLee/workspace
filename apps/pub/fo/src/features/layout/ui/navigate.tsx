@@ -1,47 +1,43 @@
-import { cn } from '@learnway/shared';
-import { memo, useRef, useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import styles from './navigate.module.css';
-import { IcoArrowForward } from '@learnway/icons';
+import { IcoArrow } from '@learnway/icons';
 import { Carousel } from '@learnway/ui';
 import { Navigation } from 'swiper/modules';
+import { menuData } from '../../platform/service/menuData';
 
 interface NavigateComponentProps {
-  onMouseEnter?: () => void;
-  onMouseLeave?: () => void;
+  onHoverIndexChange?: (index: number | null) => void;
+  hoverIndex: number | null;
 }
 
-function NavigateComponent({ onMouseEnter, onMouseLeave }: NavigateComponentProps) {
-  const gnblItems = [
-    { name: '채널', link: '/', isLabel: false, hasEvent: false },
-    { name: '교육제도', link: '/', isLabel: false, hasEvent: false },
-    { name: '커뮤니티', link: '/', isLabel: false, hasEvent: false },
-    { name: '대시보드', link: '/', isLabel: false, hasEvent: false },
-    { name: '대시보드', link: '/', isLabel: false, hasEvent: false },
-    { name: '대시보드', link: '/', isLabel: false, hasEvent: false },
-    { name: '대시보드', link: '/', isLabel: false, hasEvent: false },
-    { name: '수강신청', link: '/', isLabel: false, hasEvent: true },
-    { name: '기술인증', link: '/', isLabel: false, hasEvent: true },
-  ];
-
+function NavigateComponent({ onHoverIndexChange, hoverIndex }: NavigateComponentProps) {
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 1024);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 600); // 600px 미만이면 모바일로 인식
+      setIsMobile(window.innerWidth < 600);
     };
-
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  const handleEnter = (index: number) => {
+    const hasSub = menuData[index]?.subMenus?.length > 0;
+    onHoverIndexChange?.(hasSub ? index : null);
+  };
+
   return (
     <div className={`${styles.start} ${styles.navigate}`}>
-      <nav className={styles.nav} onMouseLeave={onMouseLeave}>
+      <nav className={styles.nav}>
         <Carousel
-          items={gnblItems.map((item, index) => (
+          items={menuData.map((item, index) => (
             <div key={index} className={item.hasEvent ? styles.event_menu : ''}>
-              <Link to={item.link} onMouseEnter={onMouseEnter}>
+              <Link
+                to={item.link}
+                onMouseEnter={() => handleEnter(index)}
+                className={hoverIndex === index ? styles.active : ''}
+              >
                 <span>{item.name}</span>
               </Link>
               {item.isLabel && <span className={`${styles.label} ${styles.color1}`}>마감임박</span>}
@@ -55,8 +51,8 @@ function NavigateComponent({ onMouseEnter, onMouseLeave }: NavigateComponentProp
           allowTouchMove={isMobile}
           showNavigation={true}
           className={styles.gnb_swiper}
-          prevIcon={<IcoArrowForward width={20} height={20} fill="#000" />}
-          nextIcon={<IcoArrowForward width={20} height={20} fill="#000" />}
+          prevIcon={<IcoArrow className={`${styles.ico} ${styles.prev}`} />}
+          nextIcon={<IcoArrow className={`${styles.ico} ${styles.next}`} />}
         />
       </nav>
     </div>
