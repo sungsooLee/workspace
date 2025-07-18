@@ -90,7 +90,7 @@ export const useGridBox = <T = any>(
     () => ({
       ...initialConfig,
       gridData,
-      getParams: getParams,
+      getParams,
       onStateChange: handleGridStateChange,
       onDataChange: (newData: T[]) => {
         if (gridData) {

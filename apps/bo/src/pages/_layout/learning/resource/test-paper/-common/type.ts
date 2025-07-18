@@ -47,3 +47,10 @@ export interface ExamQuestionInfoProps extends ExamBasicInfoProps {
 export interface TestPaperBasicInfoFormData extends TestPaperBasicInfoSaveReq {
   contentUseDate?: { from: Date | undefined; to: Date | undefined };
 }
+
+export type QuestionStatisticRow = {
+  title: string;
+  hard: number;
+  medium: number;
+  easy: number;
+};

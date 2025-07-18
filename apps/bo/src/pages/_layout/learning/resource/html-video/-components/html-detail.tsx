@@ -12,7 +12,6 @@ import {
   HtmlVideoDetailRes,
   HtmlVideoMetadataRes,
   ProcessingStatus,
-  Tag,
 } from '@types';
 import { useUpdateHTML5Metadata } from '@entities/learning-resource';
 import {
@@ -101,9 +100,7 @@ const HtmlDetailComponent = forwardRef<HTMLFormElement, HtmlDetailProps>(
           isContentSecured: data.isSecured,
           isInspected: data.isInspected,
           isCopyrighted: data.isCopyrighted,
-          tags: data.tags?.map((tag: string | Tag) =>
-            typeof tag === 'string' ? tag : tag.tagName,
-          ),
+          tags: data.tags,
           aiSummary: data.aiSummary ?? '',
           aiKeyword: data.aiKeyword ?? '',
           resource: data.resource ?? {},

@@ -86,12 +86,6 @@ export interface Resource {
   startFileUrl: string;
 }
 
-export interface Tag {
-  tagId: string;
-  tagName: string;
-  contentUuid: string;
-}
-
 export interface ContentFileInfo {
   groupUuid: string;
   fileUuid: string;
@@ -166,7 +160,7 @@ export interface ContentBaseInfo {
   /** 공개 여부 */
   isOpened: boolean;
   /** 태그 리스트 */
-  tags: string[] | Tag[];
+  tags: string[];
 }
 
 export interface ContentInformation extends ContentBaseInfo {

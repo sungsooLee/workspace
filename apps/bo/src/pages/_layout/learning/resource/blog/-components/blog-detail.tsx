@@ -8,7 +8,7 @@ import { Company, User } from '@learnway/types';
 import { cn, isEmptyData } from '@learnway/shared';
 import { DynamicFormConfig, DynamicFormValues, useDynamicForm } from '@learnway/hooks';
 import { useFetchAuthUser } from '@learnway/auth/entities';
-import { BlogDetailRes, BlogPostRes, BlogUpdateReq, ChannelByRoleId, Tag } from '@types';
+import { BlogDetailRes, BlogPostRes, BlogUpdateReq, ChannelByRoleId } from '@types';
 import {
   ChannelChoiceModal,
   CompanyChoiceModal,
@@ -155,9 +155,7 @@ const BlogDetailComponent = forwardRef<HTMLFormElement, BlogDetailProps>(
           isContentSecured: blogInfo.isSecured,
           isInspected: blogInfo.isInspected,
           isCopyrighted: blogInfo.isCopyrighted,
-          tags: blogInfo.tags?.map((tag: string | Tag) =>
-            typeof tag === 'string' ? tag : tag.tagName,
-          ),
+          tags: blogInfo.tags,
           blogContent: JSON.stringify(blogInfo.blogContent ?? {}),
           aiSummary: blogInfo.aiSummary ?? '',
           aiKeyword: blogInfo.aiKeyword ?? '',

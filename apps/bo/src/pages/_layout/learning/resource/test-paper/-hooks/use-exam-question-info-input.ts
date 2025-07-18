@@ -4,10 +4,10 @@ import { TestPaperBasicInfoDetail } from '@types';
 import { learningResourceQueryOptions, useCreateQuestionItem } from '@entities/learning-resource';
 
 export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) => {
-  const { contentUuid, questionGenType, questionCount } = basicInfo;
+  const { contentUuid, examPoolUuid, questionGenType, questionCount } = basicInfo;
 
   const { data: questionList } = useQuery(
-    learningResourceQueryOptions.getQuestionList(contentUuid),
+    learningResourceQueryOptions.getQuestionItemList(examPoolUuid),
   );
   console.log(questionList);
 
@@ -24,5 +24,5 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
 
   const scorePerQuestion = getScorePerQuestion(questionCount);
 
-  return { selectedQuestions, scorePerQuestion, createQuestionItem };
+  return { questionList, selectedQuestions, scorePerQuestion, createQuestionItem };
 };

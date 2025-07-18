@@ -1,6 +1,5 @@
 import { forwardRef, useCallback, useImperativeHandle, useMemo } from 'react';
 import { t } from 'i18next';
-import { Link } from '@tanstack/react-router';
 import { cn, isEmptyData } from '@learnway/shared';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import {
@@ -13,19 +12,27 @@ import {
   useModal,
 } from '@learnway/ui';
 import { IcoCopy, IcoMenu01, IcoMinus, IcoPlus } from '@learnway/icons';
-import { ContentInformation, ExamQuestionGenType, TestPaperBasicInfoDetail } from '@types';
+import {
+  ContentInformation,
+  ExamQuestionGenType,
+  QuestionItem,
+  QuestionItemGridRow,
+  TestPaperBasicInfoDetail,
+} from '@types';
 import { FormRow2, GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
 import { SegmentedControlFormField } from '@features/form/ui/segmented-control-form-field';
-// import { LearningResourceTestItemModal } from '@features/learning-resource/learning-resource-management/ui/learning-resource-test-item-modal';
+import { LearningResourceTestItemModal } from '@features/learning-resource/learning-resource-management/ui/learning-resource-test-item-modal';
+import {
+  QUESTION_LEVELS,
+  QUESTION_TYPES,
+} from '@features/learning-resource/learning-resource-management/service/exam-util';
 import { getExamTemplateTextByType } from '../-common/common';
-import { ExamQuestionInfoProps, TabFormRef } from '../-common/type';
+import { ExamQuestionInfoProps, QuestionStatisticRow, TabFormRef } from '../-common/type';
+import { useExamQuestionInfoInput } from '../-hooks/use-exam-question-info-input';
 
 /* styles */
 import styles from '@learnway/styles/bo/pages/_layout/learning/test-detail.module.css';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
-import { useExamQuestionInfoInput } from '@pages/_layout/learning/resource/test-paper/-hooks/use-exam-question-info-input';
-import { LearningResourceTestItemModal } from '@features/learning-resource/learning-resource-management/ui/learning-resource-test-item-modal';
-import { useCreateQuestionItem } from '@entities/learning-resource';
 
 const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
   (
@@ -43,9 +50,8 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
   ) => {
     const { provider: basicInfoProvider, getValues, saveBasicInfo } = basicInfoForm;
 
-    const { selectedQuestions, scorePerQuestion, createQuestionItem } = useExamQuestionInfoInput(
-      data as TestPaperBasicInfoDetail,
-    );
+    const { questionList, selectedQuestions, scorePerQuestion, createQuestionItem } =
+      useExamQuestionInfoInput(data as TestPaperBasicInfoDetail);
 
     const questionGenTypeOptions = useMemo(
       () => [
@@ -80,159 +86,155 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
       }
     }, [data]);
 
-    // Table
-    const columnHelper = createColumnHelper<any>();
     const arr: any[] = [
       {
-        type: <strong>객관식</strong>,
-        levelHigh: <Input value={'0'} disabled />,
-        levelMiddle: <Input value={'0'} disabled />,
-        levelLow: <Input value={'0'} disabled />,
+        title: <strong>객관식</strong>,
+        hard: <Input value={'0'} readOnly />,
+        medium: <Input value={'0'} readOnly />,
+        easy: <Input value={'0'} readOnly />,
       },
       {
-        type: <strong>OX</strong>,
-        levelHigh: <Input value={'0'} disabled />,
-        levelMiddle: <Input value={'0'} disabled />,
-        levelLow: <Input value={'0'} disabled />,
+        title: <strong>OX</strong>,
+        hard: <Input value={'0'} readOnly />,
+        medium: <Input value={'0'} readOnly />,
+        easy: <Input value={'0'} readOnly />,
       },
       {
-        type: <strong>다답식</strong>,
-        levelHigh: <Input value={'0'} disabled />,
-        levelMiddle: <Input value={'0'} disabled />,
-        levelLow: <Input value={'0'} disabled />,
+        title: <strong>다답식</strong>,
+        hard: <Input value={'0'} readOnly />,
+        medium: <Input value={'0'} readOnly />,
+        easy: <Input value={'0'} readOnly />,
       },
       {
-        type: <strong>단답식</strong>,
-        levelHigh: <Input value={'0'} disabled />,
-        levelMiddle: <Input value={'0'} disabled />,
-        levelLow: <Input value={'0'} disabled />,
+        title: <strong>단답식</strong>,
+        hard: <Input value={'0'} readOnly />,
+        medium: <Input value={'0'} readOnly />,
+        easy: <Input value={'0'} readOnly />,
       },
       {
-        type: <strong>주관식</strong>,
-        levelHigh: <Input value={'0'} disabled />,
-        levelMiddle: <Input value={'0'} disabled />,
-        levelLow: <Input value={'0'} disabled />,
+        title: <strong>주관식</strong>,
+        hard: <Input value={'0'} readOnly />,
+        medium: <Input value={'0'} readOnly />,
+        easy: <Input value={'0'} readOnly />,
       },
     ];
 
-    const columns = [
-      columnHelper.accessor('type', {
-        cell: (info) => info.getValue(),
-        header: '문항유형',
-        enableGrouping: false,
-        size: 100,
-        meta: {
-          headerAlign: 'center', // 헤더 정렬
-          cellAlign: 'left', // 셀 정렬
-        },
-      }),
-      columnHelper.accessor('levelHigh', {
-        cell: (info) => info.getValue(),
-        header: '문항수(난이도 상)',
-        enableGrouping: false,
-        meta: {
-          headerAlign: 'center', // 헤더 정렬
-          cellAlign: 'left', // 셀 정렬
-        },
-      }),
-      columnHelper.accessor('levelMiddle', {
-        cell: (info) => info.getValue(),
-        header: '문항수(난이도 중)',
-        enableGrouping: false,
-        meta: {
-          headerAlign: 'center', // 헤더 정렬
-          cellAlign: 'left', // 셀 정렬
-        },
-      }),
-      columnHelper.accessor('levelLow', {
-        cell: (info) => info.getValue(),
-        header: '문항수(난이도 하)',
-        enableGrouping: false,
-        meta: {
-          headerAlign: 'center', // 헤더 정렬
-          cellAlign: 'left', // 셀 정렬
-        },
-      }),
-    ] as ColumnDef<any, unknown>[];
+    const questionSummaryColumns = useMemo(() => {
+      const columnHelper = createColumnHelper<QuestionStatisticRow>();
+      return [
+        columnHelper.accessor('title', {
+          cell: (info) => info.getValue(),
+          header: '문항유형',
+          enableGrouping: false,
+          size: 100,
+          meta: {
+            headerAlign: 'center',
+            cellAlign: 'left',
+          },
+        }),
+        columnHelper.accessor('hard', {
+          cell: (info) => info.getValue(),
+          header: '문항수(난이도 상)',
+          enableGrouping: false,
+          meta: {
+            headerAlign: 'center',
+            cellAlign: 'left',
+          },
+        }),
+        columnHelper.accessor('medium', {
+          cell: (info) => info.getValue(),
+          header: '문항수(난이도 중)',
+          enableGrouping: false,
+          meta: {
+            headerAlign: 'center',
+            cellAlign: 'left',
+          },
+        }),
+        columnHelper.accessor('easy', {
+          cell: (info) => info.getValue(),
+          header: '문항수(난이도 하)',
+          enableGrouping: false,
+          meta: {
+            headerAlign: 'center',
+            cellAlign: 'left',
+          },
+        }),
+      ];
+    }, []);
 
-    const data2: any[] = [
-      {
-        question: (
-          <Link to={'/'} className="link">
-            문항내용
-          </Link>
-        ),
-        questionType: '객관식',
-        level: '상',
-        number: '3',
-        useable: (
-          <RadioGroupFormField
-            options={[
-              { value: 'option01', label: '사용' },
-              { value: 'option02', label: '미사용' },
-            ]}
-          />
-        ),
-        orderChange: <IcoMenu01 width={24} height={24} fill="#A9AFB8" stroke="#4c515e" />,
-      },
-    ];
+    const questionListColumns = useMemo(() => {
+      const columnHelper = createColumnHelper<QuestionItemGridRow>();
 
-    const columns2 = [
-      columnHelper.accessor('question', {
-        cell: (info) => info.getValue(),
-        header: '문항',
-        enableGrouping: false,
-        meta: {
-          headerAlign: 'center', // 헤더 정렬
-          cellAlign: 'left', // 셀 정렬
-        },
-      }),
-      columnHelper.accessor('questionType', {
-        cell: (info) => info.getValue(),
-        header: '문항유형',
-        enableGrouping: false,
-        meta: {
-          headerAlign: 'center', // 헤더 정렬
-          cellAlign: 'left', // 셀 정렬
-        },
-      }),
-      columnHelper.accessor('level', {
-        cell: (info) => info.getValue(),
-        header: '난이도',
-        enableGrouping: false,
-        meta: {
-          headerAlign: 'center', // 헤더 정렬
-          cellAlign: 'center', // 셀 정렬
-        },
-      }),
-      columnHelper.accessor('number', {
-        cell: (info) => info.getValue(),
-        header: '보기수',
-        enableGrouping: false,
-        meta: {
-          headerAlign: 'center', // 헤더 정렬
-          cellAlign: 'center', // 셀 정렬
-        },
-      }),
-      columnHelper.accessor('useable', {
-        cell: (info) => info.getValue(),
-        header: '사용',
-        enableGrouping: false,
-        meta: {
-          headerAlign: 'center', // 헤더 정렬
-          cellAlign: 'left', // 셀 정렬
-        },
-      }),
-      columnHelper.accessor('orderChange', {
-        cell: (info) => info.getValue(),
-        header: '순서변경',
-        enableGrouping: false,
-        meta: {
-          headerAlign: 'center', // 헤더 정렬
-          cellAlign: 'center', // 셀 정렬
-        },
-      }),
-    ] as ColumnDef<any, unknown>[];
+      return [
+        columnHelper.accessor('questionText', {
+          cell: (info) => (
+            <span className="cursor-pointer text-[var(--gray8)] underline">{info.getValue()}</span>
+          ),
+          header: t('문항'),
+          enableGrouping: false,
+          meta: {
+            headerAlign: 'center',
+            cellAlign: 'left',
+            size: 'auto',
+          },
+        }),
+        columnHelper.accessor('questionType', {
+          cell: (info) => QUESTION_TYPES[info.getValue()],
+          header: t('문항유형'),
+          enableGrouping: false,
+          meta: {
+            headerAlign: 'center',
+            cellAlign: 'left',
+          },
+        }),
+        columnHelper.accessor('questionLevel', {
+          cell: (info) => QUESTION_LEVELS[info.getValue()],
+          header: t('난이도'),
+          enableGrouping: false,
+          meta: {
+            headerAlign: 'center',
+            cellAlign: 'center',
+          },
+        }),
+        columnHelper.accessor('optionCount', {
+          cell: (info) => info.getValue(),
+          header: t('보기수'),
+          enableGrouping: false,
+          meta: {
+            headerAlign: 'center',
+            cellAlign: 'center',
+          },
+        }),
+        columnHelper.accessor('isUsed', {
+          cell: (info) => (
+            <RadioGroupFormField
+              defaultValue={String(info.getValue())}
+              options={[
+                { value: 'true', label: t('LABEL.common.enable') },
+                { value: 'false', label: t('LABEL.common.disable') },
+              ]}
+            />
+          ),
+          header: t('LABEL.common.isUsed'),
+          enableGrouping: false,
+          enableSorting: false,
+          meta: {
+            headerAlign: 'center',
+            cellAlign: 'left',
+          },
+        }),
+        columnHelper.accessor('orderChange', {
+          cell: (info) => <IcoMenu01 width={24} height={24} fill="#A9AFB8" stroke="#4c515e" />,
+          header: t('순서변경'),
+          enableGrouping: false,
+          enableSorting: false,
+          meta: {
+            headerAlign: 'center',
+            cellAlign: 'center',
+          },
+        }),
+      ] as ColumnDef<any, QuestionItem>[];
+    }, []);
 
     useImperativeHandle(
       ref,
@@ -295,7 +297,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
               <GridBox
                 title=" "
                 data={arr}
-                columns={columns}
+                columns={questionSummaryColumns}
                 showTotalCount={false}
                 disabledSelectionToggle
                 tableMode
@@ -330,8 +332,8 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
                 showTotalCount={false}
                 disabledSelectionToggle
                 tableMode
-                data={data2}
-                columns={columns2}
+                data={questionList}
+                columns={questionListColumns}
                 multiple
                 showNumberingColumn
                 hideRowSelectionCheckBox={false}
