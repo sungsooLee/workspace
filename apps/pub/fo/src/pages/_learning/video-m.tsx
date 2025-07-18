@@ -11,9 +11,19 @@ export const Route = createFileRoute('/_learning/video-m')({
 
 function RouteComponent() {
   return (
+    // 퍼블수정 20250717 마크업 수정
     <div className={`${styles.start} ${styles.video}`}>
-      {/* 예시 이미지 */}
-      <img src={bnrImage1} alt="" />
+      <div className={styles.video_wrap}>
+        <div className={styles.video_area}>
+          <div className={styles.video_contents}>
+            {/* 비디오 영역 */}
+            <img src={bnrImage1} alt="" />
+          </div>
+          <div className={styles.detail_lesson}>
+            <strong>레슨명</strong>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

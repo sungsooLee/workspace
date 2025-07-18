@@ -12,8 +12,12 @@ export const Route = createFileRoute('/_learning/ebook')({
 function RouteComponent() {
   return (
     <div className={`${styles.start} ${styles.ebook}`}>
-      {/* 예시 이미지 */}
-      <img src={ebookImg} alt="" />
+      {/* 퍼블수정 20250717 전체수정 */}
+
+      <div className={styles.ebook_contents}>
+        {/* 블로그 영역 */}
+        <img src={ebookImg} alt="" />
+      </div>
     </div>
   );
 }

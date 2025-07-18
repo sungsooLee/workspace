@@ -96,21 +96,3 @@
     }
   }
 }
-
-/* 아랍어 */
-[dir='rtl'] {
-  .start {
-    &.footer {
-      .footer_area {
-        .footer_info {
-          .logo {
-            @apply left-[0] right-auto;
-          }
-        }
-        .family_site_info {
-          @apply left-[0] right-auto;
-        }
-      }
-    }
-  }
-}

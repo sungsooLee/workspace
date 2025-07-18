@@ -41,12 +41,14 @@ export interface ThumbnailProps {
   selected?: boolean;
   /** 카운트 체크 여부 */
   count?: boolean;
-  /** 썸네일 겹침 여부 */
+  /** 썸네일 겹침 표시 여부 */
   stacked?: boolean;
   /** 삭제 클릭 이벤트 */
   onRemoveClick?: () => void;
   /** 체크 변경 이벤트 */
   onCheckedChange?: (checked: CheckedState) => void;
+  /** hover 이벤트 제어 여부 */
+  enableHover?: boolean;
 }
 
 /**
@@ -71,9 +73,10 @@ const ThumbnailComponent = forwardRef<HTMLDivElement, ThumbnailProps>(
       showDeleteBtn,
       showPreviewBtn,
       selected,
-      stacked,
+      stacked = false,
       onRemoveClick,
       onCheckedChange,
+      enableHover = true,
       ...props
     },
     ref,
@@ -116,13 +119,19 @@ const ThumbnailComponent = forwardRef<HTMLDivElement, ThumbnailProps>(
         {...props}
         ref={ref}
         style={{ width: width ? `${width}px` : '', height: height ? `${height}px` : '' }}
-        className={cn(styles.start, styles.thumbnail, size && styles[size], 'nlp--thumbnail', {
-          [styles.active]: isHovered,
-          [styles.selected]: selected,
-          [styles.stacked]: stacked,
-        })}
-        onMouseEnter={() => handleHover(true)} // 마우스 오버 시
-        onMouseLeave={() => handleHover(false)}
+        className={cn(
+          styles.start,
+          styles.thumbnail,
+          'nlp--thumbnail',
+          {
+            [styles.active]: isHovered,
+            [styles.selected]: selected,
+            [styles.stacked]: stacked,
+          },
+          size && styles[size],
+        )}
+        onMouseEnter={enableHover ? () => handleHover(true) : undefined}
+        onMouseLeave={enableHover ? () => handleHover(false) : undefined}
       >
         {/* index 번호 */}
         {indexNumber !== null && <span className={styles.indexNumber}>{indexNumber}</span>}

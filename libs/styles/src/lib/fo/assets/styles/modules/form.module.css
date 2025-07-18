@@ -36,7 +36,7 @@
 }
 
 .form_item {
-  @apply relative w-full flex-1 pb-[16px] text-left;
+  @apply relative w-full flex-1 pb-[24px] text-left;
   &.pd_none {
     @apply pb-[0];
   }

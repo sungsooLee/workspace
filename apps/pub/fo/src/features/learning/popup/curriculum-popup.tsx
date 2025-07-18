@@ -1,8 +1,7 @@
 import { useState, memo } from 'react';
 import { Link } from '@tanstack/react-router';
 import { ModalBody, ModalContainer, ModalTitle, ProgressCheck } from '@learnway/ui';
-import { SidePanel } from '../../../features/learning';
-import { IcoLinkblank } from '@learnway/icons';
+import { IcoLink } from '@learnway/icons';
 
 import styles from '@learnway/styles/fo/pages/_learning/side-panel/popup/curriculum-popup.module.css';
 
@@ -11,11 +10,6 @@ interface ChildData {
 }
 
 const CurriculumPopupComponent = () => {
-  const [childInfo, setChildInfo] = useState<boolean>();
-  const handleChildData = (data: ChildData) => {
-    setChildInfo(data.panelState);
-  };
-
   return (
     <ModalContainer>
       <ModalTitle>{'커리큘럼'}</ModalTitle>
@@ -77,7 +71,8 @@ const CurriculumPopupComponent = () => {
                         <p>
                           스콤아이템
                           <Link to="">
-                            <IcoLinkblank width={16} height={16} stroke="#4c515e" />
+                            {/* 퍼블수정 20250717 아이콘 수정 */}
+                            <IcoLink width={20} height={20} fill="#131416" />
                           </Link>
                         </p>
                         <span>4:11</span>

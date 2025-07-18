@@ -1,28 +1,44 @@
 /* thumb-nail-item.module.css */
 .start {
   &.thumbnail_item {
-    @apply w-[242px];
+    .thumbnail_link {
+      @apply relative block;
+    }
     .thumbnail_view {
-      @apply relative aspect-[16/9] rounded-[8px];
+      @apply relative;
       [class*='nlp--thumbnail'] {
         span img {
           @apply w-full object-cover;
         }
       }
-      .new_badge {
-        @apply absolute left-[8px] top-[8px];
-      }
-      .time {
-        @apply label-xs absolute bottom-[8px] right-[8px] inline-flex h-[18px] items-center justify-center overflow-hidden rounded-[4px] bg-[var(--gray10)] px-[4px] pt-[4px] text-center text-white;
+      .custom_node {
+        @apply absolute left-[12px] top-[12px] z-[3];
+        & > span {
+          @apply align-top;
+          &:not(:first-child) {
+            @apply ml-[4px];
+          }
+        }
       }
     }
+    .thumbnail_info {
+      @apply mt-[16px];
+    }
     .tag_list {
-      & > span:not(:first-child) {
-        @apply ml-[4px];
+      & > span {
+        @apply align-top;
+        &:not(:first-child) {
+          @apply ml-[4px];
+        }
       }
     }
     .thumbnail_title {
       @apply title3-b line-clamp-2 text-[#232326];
+    }
+    &.stacked_item {
+      .custom_node {
+        @apply top-[28px];
+      }
     }
   }
 }

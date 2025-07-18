@@ -36,7 +36,7 @@ export type ButtonVariantType =
 
 /**
  * 버튼의 크기 타입
- * ts(24), xs(28), sm(32), md(36), lg(40), lx(44), xl(48) 픽셀 높이에 해당
+ * ts(24), xs(28), sm(32), md(36), lg(40), lx(44), xl(48), xl2(52) 픽셀 높이에 해당
  */
 export type ButtonSizeType = 'ts' | 'xs' | 'sm' | 'md' | 'lg' | 'lx' | 'xl' | 'xl2';
 

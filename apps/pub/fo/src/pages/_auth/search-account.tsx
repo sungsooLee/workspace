@@ -3,7 +3,7 @@ import { MobileView, BrowserView } from 'react-device-detect';
 import { useState } from 'react';
 import { cn } from '@learnway/shared';
 import { IcoCaution, IcoFormRequired, IcoMail, IcoPhone02 } from '@learnway/icons';
-
+import { AuthTitle } from '../../features/auth';
 import styles from '@learnway/styles/fo/pages/_auth/search-account/search-account.module.css'; // 페이지모듈
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css'; // 폼모듈
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css'; // 유의사항
@@ -429,6 +429,7 @@ function RouteComponent() {
     <form className="form_row">
       <div className={`${styles.start} ${styles.auth_wrap} ${styles.search_account}`}>
         <div className={cn(styles.auth_box, 'auth--box')}>
+          <AuthTitle />
           <Tabs selectedTabKey={selectedTabKey} items={items} type="fill" variant="primary" />
           {/* 영문 시 : 이름,이메일,인증폼만 노출 */}
         </div>

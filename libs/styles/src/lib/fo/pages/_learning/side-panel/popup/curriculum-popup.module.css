@@ -4,12 +4,12 @@
     .box {
       @apply border-t-[1px] border-solid border-[var(--gray5)];
       .header {
-        @apply flex items-center bg-[var(--gray1)] p-[16px];
+        @apply flex items-center bg-[var(--gray98)] p-[16px];
         strong {
-          @apply body_3_b flex-1 text-[var(--gray8)];
+          @apply title4-b flex-1 text-[var(--gray35)];
         }
         span {
-          @apply body_3_r ml-[8px] text-[var(--gray7)];
+          @apply body-sm ml-[12px] text-[var(--gray35)];
         }
       }
       .contents {
@@ -17,7 +17,7 @@
           li {
             @apply px-[16px] py-[12px];
             &.active {
-              @apply bg-[var(--secondary6)];
+              @apply bg-[var(--blue95)];
             }
             .step_box {
               @apply flex items-center;
@@ -25,13 +25,13 @@
                 @apply mr-[8px];
               }
               p {
-                @apply body_3_r flex flex-1 items-center text-[var(--gray7)];
+                @apply body-sm flex flex-1 items-center leading-[20px] text-[var(--gray35)];
                 svg {
                   @apply ml-[8px];
                 }
               }
               span {
-                @apply body_3_r ml-[16px] text-[var(--gray7)];
+                @apply body-sm ml-[8px] text-[var(--gray35)];
               }
             }
           }

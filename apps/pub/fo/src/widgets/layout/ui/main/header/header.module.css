@@ -7,7 +7,7 @@
       @apply relative m-auto flex h-[80px] w-[1360px] items-center;
 
       .top_area {
-        @apply relative z-[1] flex w-full items-center justify-between;
+        @apply relative z-[1] flex h-full w-full items-center justify-between;
 
         .logo_inner {
           @apply flex min-w-[278px] max-w-[278px] items-center;

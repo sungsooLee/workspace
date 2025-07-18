@@ -18,6 +18,10 @@ import { Route as AuthImport } from './pages/_auth'
 import { Route as LayoutIndexImport } from './pages/_layout/index'
 import { Route as LearningVideoMImport } from './pages/_learning/video-m'
 import { Route as LearningVideoImport } from './pages/_learning/video'
+import { Route as LearningLiveMImport } from './pages/_learning/live-m'
+import { Route as LearningLiveImport } from './pages/_learning/live'
+import { Route as LearningLinkMImport } from './pages/_learning/link-m'
+import { Route as LearningLinkImport } from './pages/_learning/link'
 import { Route as LearningIframeMImport } from './pages/_learning/iframe-m'
 import { Route as LearningIframeImport } from './pages/_learning/iframe'
 import { Route as LearningHtmlMImport } from './pages/_learning/html-m'
@@ -166,6 +170,30 @@ const LearningVideoMRoute = LearningVideoMImport.update({
 const LearningVideoRoute = LearningVideoImport.update({
   id: '/video',
   path: '/video',
+  getParentRoute: () => LearningRoute,
+} as any)
+
+const LearningLiveMRoute = LearningLiveMImport.update({
+  id: '/live-m',
+  path: '/live-m',
+  getParentRoute: () => LearningRoute,
+} as any)
+
+const LearningLiveRoute = LearningLiveImport.update({
+  id: '/live',
+  path: '/live',
+  getParentRoute: () => LearningRoute,
+} as any)
+
+const LearningLinkMRoute = LearningLinkMImport.update({
+  id: '/link-m',
+  path: '/link-m',
+  getParentRoute: () => LearningRoute,
+} as any)
+
+const LearningLinkRoute = LearningLinkImport.update({
+  id: '/link',
+  path: '/link',
   getParentRoute: () => LearningRoute,
 } as any)
 
@@ -1112,6 +1140,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LearningIframeMImport
       parentRoute: typeof LearningImport
     }
+    '/_learning/link': {
+      id: '/_learning/link'
+      path: '/link'
+      fullPath: '/link'
+      preLoaderRoute: typeof LearningLinkImport
+      parentRoute: typeof LearningImport
+    }
+    '/_learning/link-m': {
+      id: '/_learning/link-m'
+      path: '/link-m'
+      fullPath: '/link-m'
+      preLoaderRoute: typeof LearningLinkMImport
+      parentRoute: typeof LearningImport
+    }
+    '/_learning/live': {
+      id: '/_learning/live'
+      path: '/live'
+      fullPath: '/live'
+      preLoaderRoute: typeof LearningLiveImport
+      parentRoute: typeof LearningImport
+    }
+    '/_learning/live-m': {
+      id: '/_learning/live-m'
+      path: '/live-m'
+      fullPath: '/live-m'
+      preLoaderRoute: typeof LearningLiveMImport
+      parentRoute: typeof LearningImport
+    }
     '/_learning/video': {
       id: '/_learning/video'
       path: '/video'
@@ -1922,6 +1978,10 @@ interface LearningRouteChildren {
   LearningHtmlMRoute: typeof LearningHtmlMRoute
   LearningIframeRoute: typeof LearningIframeRoute
   LearningIframeMRoute: typeof LearningIframeMRoute
+  LearningLinkRoute: typeof LearningLinkRoute
+  LearningLinkMRoute: typeof LearningLinkMRoute
+  LearningLiveRoute: typeof LearningLiveRoute
+  LearningLiveMRoute: typeof LearningLiveMRoute
   LearningVideoRoute: typeof LearningVideoRoute
   LearningVideoMRoute: typeof LearningVideoMRoute
 }
@@ -1939,6 +1999,10 @@ const LearningRouteChildren: LearningRouteChildren = {
   LearningHtmlMRoute: LearningHtmlMRoute,
   LearningIframeRoute: LearningIframeRoute,
   LearningIframeMRoute: LearningIframeMRoute,
+  LearningLinkRoute: LearningLinkRoute,
+  LearningLinkMRoute: LearningLinkMRoute,
+  LearningLiveRoute: LearningLiveRoute,
+  LearningLiveMRoute: LearningLiveMRoute,
   LearningVideoRoute: LearningVideoRoute,
   LearningVideoMRoute: LearningVideoMRoute,
 }
@@ -1982,6 +2046,10 @@ export interface FileRoutesByFullPath {
   '/html-m': typeof LearningHtmlMRoute
   '/iframe': typeof LearningIframeRoute
   '/iframe-m': typeof LearningIframeMRoute
+  '/link': typeof LearningLinkRoute
+  '/link-m': typeof LearningLinkMRoute
+  '/live': typeof LearningLiveRoute
+  '/live-m': typeof LearningLiveMRoute
   '/video': typeof LearningVideoRoute
   '/video-m': typeof LearningVideoMRoute
   '/': typeof LayoutIndexRoute
@@ -2099,6 +2167,10 @@ export interface FileRoutesByTo {
   '/html-m': typeof LearningHtmlMRoute
   '/iframe': typeof LearningIframeRoute
   '/iframe-m': typeof LearningIframeMRoute
+  '/link': typeof LearningLinkRoute
+  '/link-m': typeof LearningLinkMRoute
+  '/live': typeof LearningLiveRoute
+  '/live-m': typeof LearningLiveMRoute
   '/video': typeof LearningVideoRoute
   '/video-m': typeof LearningVideoMRoute
   '/': typeof LayoutIndexRoute
@@ -2220,6 +2292,10 @@ export interface FileRoutesById {
   '/_learning/html-m': typeof LearningHtmlMRoute
   '/_learning/iframe': typeof LearningIframeRoute
   '/_learning/iframe-m': typeof LearningIframeMRoute
+  '/_learning/link': typeof LearningLinkRoute
+  '/_learning/link-m': typeof LearningLinkMRoute
+  '/_learning/live': typeof LearningLiveRoute
+  '/_learning/live-m': typeof LearningLiveMRoute
   '/_learning/video': typeof LearningVideoRoute
   '/_learning/video-m': typeof LearningVideoMRoute
   '/_layout/': typeof LayoutIndexRoute
@@ -2339,6 +2415,10 @@ export interface FileRouteTypes {
     | '/html-m'
     | '/iframe'
     | '/iframe-m'
+    | '/link'
+    | '/link-m'
+    | '/live'
+    | '/live-m'
     | '/video'
     | '/video-m'
     | '/'
@@ -2455,6 +2535,10 @@ export interface FileRouteTypes {
     | '/html-m'
     | '/iframe'
     | '/iframe-m'
+    | '/link'
+    | '/link-m'
+    | '/live'
+    | '/live-m'
     | '/video'
     | '/video-m'
     | '/'
@@ -2574,6 +2658,10 @@ export interface FileRouteTypes {
     | '/_learning/html-m'
     | '/_learning/iframe'
     | '/_learning/iframe-m'
+    | '/_learning/link'
+    | '/_learning/link-m'
+    | '/_learning/live'
+    | '/_learning/live-m'
     | '/_learning/video'
     | '/_learning/video-m'
     | '/_layout/'
@@ -2816,6 +2904,10 @@ export const routeTree = rootRoute
         "/_learning/html-m",
         "/_learning/iframe",
         "/_learning/iframe-m",
+        "/_learning/link",
+        "/_learning/link-m",
+        "/_learning/live",
+        "/_learning/live-m",
         "/_learning/video",
         "/_learning/video-m"
       ]
@@ -2950,6 +3042,22 @@ export const routeTree = rootRoute
     },
     "/_learning/iframe-m": {
       "filePath": "_learning/iframe-m.tsx",
+      "parent": "/_learning"
+    },
+    "/_learning/link": {
+      "filePath": "_learning/link.tsx",
+      "parent": "/_learning"
+    },
+    "/_learning/link-m": {
+      "filePath": "_learning/link-m.tsx",
+      "parent": "/_learning"
+    },
+    "/_learning/live": {
+      "filePath": "_learning/live.tsx",
+      "parent": "/_learning"
+    },
+    "/_learning/live-m": {
+      "filePath": "_learning/live-m.tsx",
       "parent": "/_learning"
     },
     "/_learning/video": {

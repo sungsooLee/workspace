@@ -1,7 +1,7 @@
 /* 페이지 관련 css */
 /* 회원가입 */
 .auth--box {
-  @apply px-[40px] py-[48px];
+  @apply p-[60px];
   .nlp--input input {
     @apply !min-h-[40px] !rounded-[8px] px-[16px];
   }
