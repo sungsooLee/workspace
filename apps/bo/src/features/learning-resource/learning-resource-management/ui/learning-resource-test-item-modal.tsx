@@ -72,7 +72,7 @@ const LearningResourceTestItemModalComponent = ({
   };
   const handleSubmit = async (data: any) => {
     const { fileAttacted, ...removeData } = data;
-    close(removeData);
+    close({ ...removeData, contentUuid: contentInfo.contentUuid });
   };
   const updateisCorrectAnswerRadio = useCallback(
     (index: number) => {
@@ -290,10 +290,16 @@ const LearningResourceTestItemModalComponent = ({
                 provider={provider}
                 name="questionLevel"
                 label="난이도"
-                element={<RadioGroupFormField />}
-                optionsConfig={{
-                  codeGroup: CODE_GROUP['pms.channel.ChannelCreationType'],
-                }}
+                value="HARD"
+                element={
+                  <RadioGroupFormField
+                    options={[
+                      { label: '상', value: 'HARD' },
+                      { label: '중', value: 'MEDIUM' },
+                      { label: '하', value: 'EASY' },
+                    ]}
+                  />
+                }
               />
             </ContentsRow>
             <ContentsRow>
