@@ -240,7 +240,7 @@ const searchConfig = (): SearchBoxConfig => ({
     ],
     [
       {
-        name: 'tenantManagerName',
+        name: 'employeeNumber',
         type: 'text',
         label: t('사번'),
         value: '',
