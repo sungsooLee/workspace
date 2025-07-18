@@ -252,7 +252,8 @@ const LearningResourceBaseFormComponent = ({
             provider={provider}
             name="contentAddInfo"
             label={'학습 시간'}
-            value=""
+            format="number"
+            value={0}
             element={<SecondDurationTimeFormField readOnly={readOnlyLessonTime} />}
           />
         </ContentsRow>
