@@ -24,9 +24,8 @@ const useVideoResourceHook = (provider: DynamicFormProvider) => {
   };
 
   const fetchVideoContent = async () => {
-    const contentDetail = await LearningResourceService.fetchContent(contentUuid);
     const videoResource = await LearningResourceService.getVideoResource(contentUuid);
-    onFormChange(pick(contentDetail, 'contentAddInfo'));
+    onFormChange(pick(videoResource, 'contentAddInfo'));
     setVideoResource(videoResource);
   };
 
@@ -47,7 +46,11 @@ const useVideoResourceHook = (provider: DynamicFormProvider) => {
       fetchVideoContent();
     }
 
-    return () => intervalRef.current && clearInterval(intervalRef.current);
+    return () => {
+      if (intervalRef.current && !isProcessing(status)) {
+        console.log('🚀 ~ useEffect ~ interval Stop!: > isProcessing? ', isProcessing(status));
+      }
+    };
   }, [status]);
 
   return {

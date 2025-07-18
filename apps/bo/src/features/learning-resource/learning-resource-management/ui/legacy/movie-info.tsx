@@ -15,6 +15,7 @@ import { formatBytes } from '@learnway/shared';
 import { useMemo } from 'react';
 import { max } from 'lodash';
 import { PreviewLearningWindow } from '../preview-learning-window';
+import ReactPlayer from 'react-player';
 
 interface MovieInfoProps {
   provider: DynamicFormProvider;
@@ -30,12 +31,16 @@ const MovieInfoComponent = ({ provider }: MovieInfoProps) => {
     videoResource,
   } = useVideoResource(provider);
 
-  const height = useMemo(() => {
-    return max(videoResource?.encodedVideos?.map((_) => _.height)) || 0;
-  }, [videoResource]);
-  const width = useMemo(() => {
-    return max(videoResource?.encodedVideos?.map((_) => _.width)) || 0;
-  }, [videoResource]);
+  const url = useMemo(() => videoResource?.masterVideo, [videoResource]);
+  const height = useMemo(
+    () => max(videoResource?.encodedVideos?.map((_) => _.height)) || 0,
+    [videoResource],
+  );
+  const width = useMemo(
+    () => max(videoResource?.encodedVideos?.map((_) => _.width)) || 0,
+    [videoResource],
+  );
+
   // media info_list
   const infoList = [
     { title: '파일명', text: videoResource?.fileInfo.fileName },
@@ -121,9 +126,12 @@ const MovieInfoComponent = ({ provider }: MovieInfoProps) => {
             ))}
           </ul>
           {/* media(비디오 영역) */}
-          <div className={style.media}>
-            <img src={'https://picsum.photos/200'} width="100%" alt="" />
-          </div>
+          {url && (
+            <div className={style.media}>
+              <ReactPlayer url={url} playing controls width={416} />
+              {/* <img src={'https://picsum.photos/200'} width="100%" alt="" /> */}
+            </div>
+          )}
           {/* info_list */}
           <ul className={style.info_list}>
             {infoList.map((item, index) => (

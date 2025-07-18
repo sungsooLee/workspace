@@ -455,6 +455,7 @@ export interface GetVideoResourceRes {
   contentStatusCode: ContentStatusCode;
   fileInfo: VideoFileInfo;
   masterVideo: string | null;
+  contentAddInfo: number;
   encodedVideos: EncodedVideo[] | null;
   encodedAudios: EncodedAudio[] | null;
   videoSubtitles: VideoSubtitles[];
