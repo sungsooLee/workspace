@@ -68,10 +68,6 @@ export default class LearningResourceService {
     return httpService.post(`${CMSApiPrefix()}/videos/draft`, params);
   }
 
-  static async fetchS3FileDownload(key: string, fileName: string): Promise<void> {
-    return fileDownload({ url: `${PMSApiPrefix()}/file/s3/download`, params: { key, fileName } });
-  }
-
   static fetchLearningResources(params: any) {
     return new Promise((resolve) => {
       const learnings = Array.from({ length: 10 }, (_, id) => ({

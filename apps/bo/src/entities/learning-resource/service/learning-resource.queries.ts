@@ -23,7 +23,6 @@ export const queryKeys = {
   contentCourseMapping: ['content-course-mapping'] as const,
   deleteContent: ['delete-content'] as const,
   createDraftVideo: ['create-draft-video'] as const,
-  s3FileDownload: ['file-s3-download'] as const,
   learningResources: ['learning-resources'] as const,
   curriculumMapping: ['mapping-curriculum'] as const,
   mappingCourses: ['mapping-courses'] as const,
@@ -73,13 +72,6 @@ export const learningResourceQueryOptions = {
   postDraftVideos: (params: PostDraftVideosParams) => ({
     queryKey: queryKeys.createDraftVideo,
     queryFn: () => LearningResourceService.postDraftVideos(params),
-  }),
-  getS3FileDownload: (key: string, fileName: string) => ({
-    queryKey: queryKeys.s3FileDownload,
-    queryFn: () => LearningResourceService.fetchS3FileDownload(key, fileName),
-    cacheTime: 1000 * 60 * 60,
-    staleTime: 0,
-    enabled: true,
   }),
   getLearningResources: (params: any) => ({
     queryKey: queryKeys.learningResources,

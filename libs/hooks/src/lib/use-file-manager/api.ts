@@ -41,6 +41,10 @@ export default class FileManagerService {
   static getFileInfo(fileUuid: string): Promise<FileInfo> {
     return httpService.get(`${prefixUrl}/${fileUuid}`);
   }
+  // s3 파일 다운로드
+  static s3FileDownload(key: string, fileName: string): Promise<void> {
+    return fileDownload({ url: `${prefixUrl}/s3/download`, params: { key, fileName } });
+  }
   // 파일 다운로드
   static fileDownload(fileUuid: string) {
     return fileDownload({ url: `${prefixUrl}/${fileUuid}/download` });

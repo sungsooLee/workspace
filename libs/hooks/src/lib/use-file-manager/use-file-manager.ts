@@ -43,6 +43,10 @@ const useFileManagerHook = () => {
   const getFileInfo = async (fileUuid: string): Promise<FileInfo> => {
     return await FileManagerService.getFileInfo(fileUuid);
   };
+  // s3 파일 다운로드
+  const s3FileDownload = async (key: string, fileName: string): Promise<void> => {
+    return FileManagerService.s3FileDownload(key, fileName);
+  };
   // 파일 다운로드
   const fileDownload = async (fileUuid: string): Promise<void> => {
     await FileManagerService.fileDownload(fileUuid);
@@ -62,6 +66,7 @@ const useFileManagerHook = () => {
     createFileGroupFiles,
     deleteFileInfo,
     getFileInfo,
+    s3FileDownload,
     fileDownload,
     filesDownload,
     getGroupInfo,
