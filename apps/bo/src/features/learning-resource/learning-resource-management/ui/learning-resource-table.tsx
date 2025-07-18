@@ -34,7 +34,7 @@ import {
 } from '@shared/ui';
 import { CMSApiPrefix } from '@learnway/config';
 import { PreviewLearningWindow } from './preview-learning-window';
-import { getDetailPathByContentType } from '@features/learning-resource';
+import { getDetailPathByContentType, getDetailRouterState } from '@features/learning-resource';
 import { ContentCreateType, ContentInfo, ContentInformation } from '@types';
 
 function LearningResourceTableComponent() {
@@ -203,9 +203,10 @@ function LearningResourceTableComponent() {
                 e.stopPropagation();
                 router.navigate({
                   to: getDetailPathByContentType(_.row.original.contentType),
-                  state: {
-                    contentUuid: _.row.original.contentUuid,
-                  },
+                  state: getDetailRouterState(
+                    _.row.original.contentUuid,
+                    _.row.original.contentType,
+                  ),
                 });
               }}
             >

@@ -51,7 +51,7 @@ export function convertToAuthUser(data: AxiosResponse): AuthUser {
   return {
     ...user,
     roles,
-    activeTenant: tenant ? tenant : user.tenants?.length > 0 ? tenants?.[0] : undefined,
+    activeTenant: tenant ? tenant : tenants?.length > 0 ? tenants?.[0] : undefined,
     activeRole: role ? role : roles?.length > 0 ? roles?.[0] : undefined,
     phoneNumberNationCode: user?.phoneNumberNationCode ?? 'KR',
     exp: data.headers['refresh-token-exp'],

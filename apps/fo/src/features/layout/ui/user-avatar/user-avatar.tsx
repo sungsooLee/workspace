@@ -9,7 +9,7 @@ import { PasswordVerifyModal } from '@learnway/auth/features';
 import { cn } from '@learnway/shared';
 import { IcLogOut01 } from '@learnway/icons';
 
-import styles from './user-avatar.module.css';
+import styles from '@learnway/styles/fo/features/layout/ui/user-avatar/user-avatar.module.css';
 
 //import { useLoginTimeout } from '../../../feature/platform/service/loginTimeout.hooks';
 

@@ -1,0 +1,11 @@
+.fallback {
+  &.name {
+    @apply flex h-full w-full items-center justify-center rounded-[50%] bg-[#00afd5];
+    .text {
+      @apply title_3_b text-white;
+    }
+    & + .info_avata {
+      @apply ml-[12px];
+    }
+  }
+}

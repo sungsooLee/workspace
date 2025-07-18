@@ -137,6 +137,7 @@ const responseDataToFormData = (d: Course): Course => {
       d.courseValidityStartDate, // 과정 유효 시작일
       d.courseValidityEndDate, // 과정 유효 종료일
     ],
+    tagNameArray: d.tagNames?.map((item) => item.value), // 태그
   };
 };
 
@@ -155,5 +156,8 @@ export const formDataToRequestData = (d: Course) => {
     courseValidityEndDate: d.courseValidityRange?.[1], // 과정 유효 종료일
     courseValidityStartHour: 0, // 과정 노출 시작 시각 (삭제 후 courseValidityStartDate에 통합 예정)
     courseValidityEndHour: 23, // 과정 노출 종료 시각 (삭제 후 courseValidityEndDate에 통합 예정)
+    thumbnailFileGroupUuid: '1', // 썸네일 이미지 Group UUID
+    primaryThumbnailFileUuid: '1', // 대표 썸네일 이미지 UUID
+    tagNames: d.tagNameArray?.map((item) => ({ value: item })), // 태그
   };
 };

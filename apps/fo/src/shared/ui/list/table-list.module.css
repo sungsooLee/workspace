@@ -1,0 +1,36 @@
+/* 테이블 리스트는 모바일에서만 사용됨 */
+.start {
+  &.table_list {
+    @apply w-full border-t border-solid border-[var(--gray7)];
+    .row {
+      @apply flex justify-between pt-[0];
+      + .row {
+        @apply mt-[8px] pt-[8px];
+      }
+      &.col {
+        @apply flex-col pt-[16px];
+
+        .dd {
+          @apply mt-[8px] border-b border-solid border-[var(--gray5)] pb-[16px] text-left leading-[1.6];
+        }
+      }
+    }
+
+    .dt {
+      @apply body_3_r shrink-0 basis-[70%] overflow-hidden text-ellipsis whitespace-nowrap pr-[20px] text-[var(--gray9)];
+      + .dd {
+        @apply flex items-center whitespace-pre text-right text-[var(--gray7)];
+      }
+    }
+    .dt,
+    .dd {
+      @apply body_3_r;
+    }
+    .tit {
+      @apply body_3_b mb-[8px] block text-[1.4rem] text-[var(--gray9)];
+    }
+    .list_row {
+      @apply border-b border-solid border-[var(--gray3)] py-[16px];
+    }
+  }
+}

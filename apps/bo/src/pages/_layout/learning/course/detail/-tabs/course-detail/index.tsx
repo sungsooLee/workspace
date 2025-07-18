@@ -36,7 +36,7 @@ import { useTranslation } from 'react-i18next';
 import { CourseDetailTabBaseProps, CourseDetailTabFormRef } from '../../../-common/type';
 import { CourseStatsSummary } from '../../../-components/course-stats-summary/course-stats-summary';
 import { PassOptionFormField } from '../../../-components/pass-option-form-field/pass-option-form-field';
-import { InstructorListPopup } from '@features/platform/instructor/management/modal/instructor-list-modal';
+import { InstructorListPopup } from '@features/learning-operate-support/instructor-tutor/instructor-management/modal/instructor-list-modal';
 import { useFetchCourse, useFetchCourseConfig } from '@entities/course';
 
 const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBaseProps>(
@@ -1388,6 +1388,7 @@ const responseDataToFormData = (d: Course, c: CourseConfig = {} as CourseConfig)
       d.courseValidityStartDate, // 과정 유효 시작일
       d.courseValidityEndDate, // 과정 유효 종료일
     ],
+    tagNameArray: d.tagNames?.map((item) => item.value), // 태그
   };
 };
 
@@ -1482,5 +1483,8 @@ export const formDataToRequestData = (d: Course) => {
     courseValidityEndDate: d.courseValidityRange?.[1], // 과정 유효 종료일
     courseValidityStartHour: 0, // 과정 노출 시작 시각 (삭제 후 courseValidityStartDate에 통합 예정)
     courseValidityEndHour: 23, // 과정 노출 종료 시각 (삭제 후 courseValidityEndDate에 통합 예정)
+    thumbnailFileGroupUuid: '1', // 썸네일 이미지 Group UUID
+    primaryThumbnailFileUuid: '1', // 대표 썸네일 이미지 UUID
+    tagNames: d.tagNameArray?.map((item) => ({ value: item })), // 태그
   };
 };

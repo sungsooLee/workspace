@@ -128,8 +128,11 @@ const PreviewLearningWindowComponent: FC<any> = ({
         console.log('scormCommit called', payload);
         return 'true';
       },
-      videoOnProgress: (payload) => {
+      videoOnProgress: async (payload) => {
         console.log('videoOnProgress called', payload);
+      },
+      videoWatchStatistics: async (payload) => {
+        console.log('videoWatchStatistics', payload);
       },
       html5LearningHistory: (payload) => {
         console.log('html5LearningHistory called', payload);

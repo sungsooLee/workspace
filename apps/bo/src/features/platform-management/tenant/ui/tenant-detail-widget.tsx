@@ -73,7 +73,7 @@ const TenantDetailWidgetComponent: FC<any> = () => {
 
   const { open: openModal, confirm: openConfirm } = useModal();
 
-  const { provider, updateFormData, getValues, onFormChange } = useDynamicForm(formConfig);
+  const { provider, updateFormData, getValues, onFormChange } = useDynamicForm(formConfig());
 
   // data hook
   const { data: widgetsData, refetch } = useAllTenantWidget(tenantId);
@@ -350,7 +350,7 @@ const TenantDetailWidgetComponent: FC<any> = () => {
             <div className={styles.table_wrap}>
               <TableBox
                 data={tableData}
-                columns={columns}
+                columns={columns()}
                 tableMode={true}
                 title={t('컴포넌트 ID')}
               />
@@ -375,7 +375,7 @@ const WidgetNameAndButton = forwardRef<HTMLDivElement, BaseFormFieldProps<string
   },
 );
 
-const formConfig: DynamicFormConfig = {
+const formConfig = (): DynamicFormConfig => ({
   builders: [
     {
       name: 'widgetName',
@@ -450,12 +450,12 @@ const formConfig: DynamicFormConfig = {
     isRequired: { required: true },
     isSecureContent: { required: true },
   },
-};
+});
 
 //Column Helper 정의
 const columnHelper = createColumnHelper<any>();
 
-const columns = [
+const columns = () => [
   columnHelper.accessor('c1', {
     id: 'c1',
     cell: (prop: any) => {

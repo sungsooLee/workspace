@@ -251,6 +251,7 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
       trigger,
       registerField: () => null,
       addValidator: () => null,
+      watch,
     },
     onFormValid: trigger,
     updateFormData,

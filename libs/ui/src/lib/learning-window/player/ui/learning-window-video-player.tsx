@@ -15,6 +15,18 @@ const LearningWindowVideoPlayerComponent: FC<any> = () => {
   const { baseInfo, playInfo, videoInfo, funcInfo } = useLearningWindow();
   const [videoStart, setVideoStart] = useState<number>(0);
 
+  const handleVideoEnd = () => {
+    const payload = {
+      courseSequenceId: baseInfo?.sequenceId,
+      courseId: baseInfo?.courseId,
+      curriculumId: baseInfo?.curriculumId,
+      moduleId: playInfo?.moduleId,
+      lessonId: playInfo?.lessonId,
+      contentUuid: playInfo?.contentUuid,
+    };
+    funcInfo?.videoWatchStatistics(payload);
+  };
+
   const handleOnProgress = (state: any) => {
     console.log(`date check ; ${videoStart} -> ${state.playedSeconds}`, playInfo);
     const payload = {
@@ -43,6 +55,12 @@ const LearningWindowVideoPlayerComponent: FC<any> = () => {
       setVideoStart(videoInfo.lastVideoEndTime);
     }, 500);
   }, [videoInfo]);
+  useEffect(() => {
+    console.log('end video');
+    return () => {
+      handleVideoEnd();
+    };
+  }, []);
 
   return (
     <div className={styles.start}>
@@ -57,6 +75,7 @@ const LearningWindowVideoPlayerComponent: FC<any> = () => {
           progressInterval={1000 * 10}
           onProgress={player.onProgress}
           onDuration={player.onDuration}
+          onEnded={handleVideoEnd}
           url={videoInfo.masterVideo}
         />
       </VideoPlayerContainer>

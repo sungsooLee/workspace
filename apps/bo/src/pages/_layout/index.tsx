@@ -440,7 +440,7 @@ export const munu = [
   },
   {
     screenName: '강사/튜터 관리',
-    pageId: 'platform/instructor/management',
+    pageId: 'learning-operate-support/instructor/management',
     screenId: 'NLP_BO_LMS_0027',
     pageType: 'Page',
     completionDate: '2025-07-11',
@@ -449,8 +449,17 @@ export const munu = [
   },
   {
     screenName: '차수 관리',
-    pageId: 'learning-operate/round',
+    pageId: 'learning/learning-sequence/sequence-management',
     screenId: 'NLP_BO_LMS_0031',
+    pageType: 'Page',
+    completionDate: '-',
+    memo: '작업 중',
+    end: false,
+  },
+  {
+    screenName: '수강신청 목록 조회',
+    pageId: 'learning/learning-sequence/enrollment-application',
+    screenId: 'NLP_BO_LMS_0035',
     pageType: 'Page',
     completionDate: '-',
     memo: '작업 중',

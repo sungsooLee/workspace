@@ -94,7 +94,9 @@ interface FunctionInfomation {
   /** 스콤 Commit 호출 함수 */
   scormCommit: (payload: any) => void;
   /** 비디오 Progress 호출 함수 */
-  videoOnProgress: (payload: any) => void;
+  videoOnProgress: (payload: any) => Promise<any>;
+  /** 비디오 이력 정제 처리 호출 */
+  videoWatchStatistics: (payload: any) => Promise<any>;
   /** Html5 학습 이력 저장 */
   html5LearningHistory: (payload: any) => void;
   /** galleary 학습 이력 저장 */

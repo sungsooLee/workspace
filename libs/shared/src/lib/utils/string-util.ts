@@ -21,3 +21,11 @@ export function formatPhoneNumber(t?: string | number): string {
     return text;
   }
 }
+
+export function formatPlainPhoneNumber(t?: string): string {
+  if (!t) {
+    return '';
+  }
+
+  return t.replace(/^\+(\d{2})/, '0$1').replace(/-/g, '');
+}

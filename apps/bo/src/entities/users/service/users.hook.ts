@@ -50,3 +50,45 @@ export function useUnlockUser(options: any) {
     isError,
   };
 }
+
+export function useApproveAccountUser(options: any) {
+  const { mutate, isSuccess, isError } = useMutation({
+    ...mutateOptions.approve(),
+    onSuccess: async (data, variables, context) => {
+      if (options.onSuccess) {
+        options.onSuccess(data, variables, context);
+      }
+    },
+    ...mutateOptions
+  });
+
+  return {
+    approve: (payload: any, callback?: any) => {
+      mutate(payload, callback);
+      options?.onSuccess?.(false);
+    },
+    isSuccess,
+    isError,
+  }
+}
+
+export function useRejectAccountUser(options: any) {
+  const { mutate, isSuccess, isError } = useMutation({
+    ...mutateOptions.reject(),
+    onSuccess: async (data, variables, context) => {
+      if (options.onSuccess) {
+        options.onSuccess(data, variables, context);
+      }
+    },
+    ...mutateOptions
+  });
+
+  return {
+    reject: (payload: any, callback?: any) => {
+      mutate(payload, callback);
+      options?.onSuccess?.(false);
+    },
+    isSuccess,
+    isError,
+  }
+}

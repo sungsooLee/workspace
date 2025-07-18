@@ -114,10 +114,10 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
     setFormError,
     clearFormError,
     getValues,
-  } = useDynamicForm(formConfig);
+  } = useDynamicForm(formConfig());
 
   const clearAllFormErrors = () => {
-    formConfig.builders.forEach((item) => clearFormError(item.name));
+    formConfig().builders.forEach((item) => clearFormError(item.name));
   };
 
   const duplicateCheck = async (tenantName: string) => {
@@ -151,7 +151,7 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
     clearAllFormErrors();
     setSelectedNode(null);
     const initData: { [key: string]: any } = {};
-    formConfig.builders.forEach((item) => {
+    formConfig().builders.forEach((item) => {
       initData[item.name] = item.value;
     });
     initData.isUsed = true;
@@ -605,7 +605,7 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
 
 export const TenantDetailCategory = TenantDetailCategoryComponent;
 
-const formConfig: DynamicFormConfig = {
+const formConfig = (): DynamicFormConfig => ({
   builders: [
     {
       name: 'location',
@@ -712,4 +712,4 @@ const formConfig: DynamicFormConfig = {
       ],
     },
   },
-};
+});

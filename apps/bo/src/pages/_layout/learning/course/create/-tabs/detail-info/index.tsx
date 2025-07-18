@@ -1,6 +1,6 @@
 import { DropdownFormField, FormDisplay } from '@features/form';
 import { CourseChoiceModal } from '@features/learning-operate/course/course-management';
-import { InstructorListPopup } from '@features/platform/instructor/management/modal/instructor-list-modal';
+import { InstructorListPopup } from '@features/learning-operate-support/instructor-tutor/instructor-management/modal/instructor-list-modal';
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import {
   CheckboxGroupFormField,

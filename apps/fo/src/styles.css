@@ -14,6 +14,8 @@
 */
 @import '../../../libs/styles/src/lib/fo/assets/styles/components/index.css';
 @import '../../../libs/styles/src/lib/fo/assets/styles/global.css';
+/* @import '../../../libs/ui/src/lib/chips/chip-list.module.css';
+@import '../../../libs/ui/src/lib/chips/chip.module.css'; */
 
 @layer base {
 }
