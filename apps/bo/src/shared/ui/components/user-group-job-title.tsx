@@ -45,11 +45,12 @@ const UserGroupJobTitleComponent = ({
 
   const initialSelectedItems = useMemo<SelectedChip[]>(() => {
     return option.map(({ combiners, pathKey, pathValue, groupId }) => {
+      const isCombined = combiners.length > 1;
       const [combiner] = combiners;
       return {
         key: pathKey,
-        id: combiner.combineValue,
-        title: combiner.combineName,
+        id: isCombined ? undefined : combiner.combineValue,
+        ids: isCombined ? combiners.map(({ combineValue }) => combineValue) : undefined,
         fullPath: pathValue,
         groupId,
       };
@@ -60,20 +61,21 @@ const UserGroupJobTitleComponent = ({
     useShuttleGridToChips(initialSelectedItems);
 
   useEffect(() => {
-    if (selectedItems.length === 0) return;
+    if (selectedItems.length === 0) return handleSetOption([]);
 
     const updatedOption: CombineUserGroup[] = selectedItems.map(
-      ({ key, id, title, fullPath, groupId }) => ({
+      ({ key, id, ids, fullPath, groupId }) => ({
         pathKey: key,
         groupId,
         pathValue: fullPath,
-        combiners: [
-          {
-            combineType: 'USER_GROUP',
-            combineValue: id,
-            combineName: title,
-          },
-        ],
+        combiners: ids
+          ? ids.map((id) => ({ combineType: 'USER_GROUP', combineValue: id }))
+          : [
+              {
+                combineType: 'USER_GROUP',
+                combineValue: id!,
+              },
+            ],
       }),
     );
 

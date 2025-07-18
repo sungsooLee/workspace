@@ -15,12 +15,14 @@ type ShuttleTreeToChipsV2Props = {
   treeData: TreeData[];
   selectedItems: SelectedChip[];
   handleSelectItem: (node: SelectedChip) => void;
-  cancelSelectItem: (node: SelectedChip) => void;
+  cancelSelectItem: (deleteKey: string) => void;
   cancelAll: () => void;
   sourceTitle: string;
   targetTitle: string;
   isShowConditionSettingsMode?: boolean;
 };
+
+const COMBINED_KEY = '&&';
 
 export const ShuttleTreeToChipsV2 = ({
   treeData,
@@ -32,30 +34,35 @@ export const ShuttleTreeToChipsV2 = ({
   targetTitle,
   isShowConditionSettingsMode: isShowConditionSettingsModeProp = false,
 }: ShuttleTreeToChipsV2Props) => {
-  const isShowConditionSettingsMode = useMemo(() => {
+  const isShowConditionSettingsMode = useMemo<boolean>(() => {
     if (!isShowConditionSettingsModeProp) return false;
-    // return selectedItems.filter(({ isCombined }) => !isCombined).length > 1;
+    return (
+      selectedItems.reduce((acc, { key }) => acc + (key.includes(COMBINED_KEY) ? 0 : 1), 0) > 1
+    );
   }, [selectedItems, isShowConditionSettingsModeProp]);
 
   const treeBoxSelectedItems = useMemo(() => selectedItems.map(({ key }) => key), [selectedItems]);
 
   const [isConditionSettingsMode, setIsConditionSettingsMode] = useState<boolean>(false);
 
-  // const isCombinedNodeKeys = useMemo<string[][]>(
-  //   () => selectedItems.filter(({ isCombined }) => isCombined).map(({ keys }) => keys),
-  //   [selectedItems],
-  // );
+  const isCombinedNodeKeys = useMemo<string[]>(
+    () =>
+      selectedItems
+        .filter(({ key }) => key.includes(COMBINED_KEY))
+        .reduce((acc, { key }) => acc.concat(key.split(COMBINED_KEY)), [] as string[]),
+    [selectedItems],
+  );
 
-  const [checkedValues, setCheckedValues] = useState<TreeNode[]>([]);
+  const [checkedValues, setCheckedValues] = useState<SelectedChip[]>([]);
 
-  const on = (newValue: TreeNode) => {
+  const on = (newValue: SelectedChip) => {
     setCheckedValues((prev) =>
       prev.some(({ key }) => key === newValue.key) ? prev : [...prev, newValue],
     );
   };
 
-  const off = (newValue: TreeNode) => {
-    setCheckedValues((prev) => prev.filter(({ key }) => key !== newValue.key));
+  const off = (deleteKey: string) => {
+    setCheckedValues((prev) => prev.filter(({ key }) => key !== deleteKey));
   };
 
   const handleSetIsConditionSettingsMode = (value: boolean) => {
@@ -67,23 +74,21 @@ export const ShuttleTreeToChipsV2 = ({
   };
 
   const applyConditionSetting = () => {
-    // if (checkedValues.length > 1) {
-    //   const newKey = {
-    //     isCombined: true,
-    //     // ids: checkedValues.map(({ id }) => id),
-    //     key: checkedValues.map(({ key }) => key).join('&&'),
-    //     // keys: checkedValues.map(({ key }) => key),
-    //     fullPath: checkedValues.map(({ fullPath }) => fullPath).join(' & '),
-    //   };
-    //   handleSelectItem(newKey);
-    //   checkedValues.forEach((checkedValue) => handleSelectItem(checkedValue));
-    // }
-    // handleSetIsConditionSettingsMode(false);
+    if (checkedValues.length > 1) {
+      const newKey: SelectedChip = {
+        key: checkedValues.map(({ key }) => key).join(COMBINED_KEY),
+        fullPath: checkedValues.map(({ fullPath }) => fullPath).join(' & '),
+        ids: checkedValues.map(({ id }) => id!),
+      };
+      handleSelectItem(newKey);
+      checkedValues.forEach(({ key: deleteKey }) => cancelSelectItem(deleteKey));
+    }
+    handleSetIsConditionSettingsMode(false);
   };
 
-  const handleCancel = (deleteItem: TreeData) => {
-    off(deleteItem);
-    cancelSelectItem(deleteItem);
+  const handleCancel = (deleteKey: string) => {
+    off(deleteKey);
+    cancelSelectItem(deleteKey);
   };
 
   return (
@@ -107,7 +112,7 @@ export const ShuttleTreeToChipsV2 = ({
                     e.stopPropagation();
                     handleSelectItem(node as TreeData);
                   }}
-                  // disabled={isCombinedNodeKeys.some((keys) => keys.includes(node.key))}
+                  disabled={isCombinedNodeKeys.some((key) => key === node.key)}
                   variant={isAlreadySelected ? 'primary' : 'gray2'}
                   size={'ts'}
                   type={'button'}
@@ -169,9 +174,9 @@ export const ShuttleTreeToChipsV2 = ({
                     <Checkbox
                       checked={checkedValues.some(({ key }) => key === item.key)}
                       onCheckedChange={(checked) => {
-                        checked ? on(item) : off(item);
+                        checked ? on(item) : off(item.key);
                       }}
-                      // disabled={item?.isCombined}
+                      disabled={item?.key.includes(COMBINED_KEY)}
                     />
                   )}
                   <HighlightAmpersand text={item.fullPath} />
@@ -181,7 +186,7 @@ export const ShuttleTreeToChipsV2 = ({
                     width={20}
                     height={20}
                     stroke="#131C30"
-                    onClick={() => handleCancel(item)}
+                    onClick={() => handleCancel(item.key)}
                   />
                 </Button>
               </div>
