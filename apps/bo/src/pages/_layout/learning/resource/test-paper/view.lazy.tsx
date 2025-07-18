@@ -1,5 +1,5 @@
 /* IA118 / NLP_BO_CMS_1203 - 나의 학습자원 > 시험지 등록 및 상세 */
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { Button, Divider, Tabs, useModal } from '@learnway/ui';
@@ -8,10 +8,13 @@ import {
   ContentsButtons,
   MainContents,
   PageContainer,
-  SubContents,
 } from '@shared/ui';
-import { ExamTab, TabFormRef } from './-common/type';
+import { TestPaperBasicInfoSaveRes } from '@types';
+import { getExamTemplateTextByType } from './-common/common';
+import { ExamTab, PageMode } from './-common/type';
 import { useExamLoaderData } from './-hooks/use-exam-loader-data';
+import { useExamPaperForm } from './-hooks/use-exam-paper-form';
+import { useExamBasicInfoForm } from './-hooks/use-exam-basic-info-form';
 import { TestPaperInfo } from './-tabs/test-paper-info';
 import { QuestionInfo } from './-tabs/question-info';
 
@@ -24,20 +27,55 @@ export const Route = createLazyFileRoute('/_layout/learning/resource/test-paper/
 function RouteComponent() {
   const router = useRouter();
   const { mode, tenantId, contentUuid, data, hasMapping } = useExamLoaderData();
-  console.log('data by router state', data, hasMapping);
 
   const { alert, open: openModal, confirm: openConfirm } = useModal();
 
-  const basicInfoRef = useRef<TabFormRef>(null);
+  const { basicInfoRef, questionInfoRef, questionGenType, setQuestionGenType } =
+    useExamPaperForm(data);
+
+  const {
+    basicInfoProvider: provider,
+    getBasicInfoValues: getValues,
+    updateBasicInfoFormData: updateFormData,
+    updateFormDataByKey,
+    onSubmit,
+    saveBasicInfo,
+  } = useExamBasicInfoForm({
+    mode,
+    contentUuid,
+    onSaveSuccess: (result?: TestPaperBasicInfoSaveRes) => {
+      if (!result) {
+        return;
+      }
+      if (result?.examUuid) {
+        router.navigate({
+          to: '/learning/resource/test-paper/view',
+          state: { mode: 'UPDATE', contentUuid: result.examUuid },
+          replace: true,
+        });
+      }
+    },
+    onUpdateSuccess: (result?: unknown) => {
+      router.navigate({
+        to: '/learning/resource/test-paper/view',
+        state: { mode: 'UPDATE', contentUuid: result },
+        replace: true,
+      });
+    },
+  });
 
   const tabItems = useMemo(
     () => [
       {
-        title: t('시험지 정보(OMR 시험지)'),
+        title: t(
+          `시험지 정보${mode === PageMode.UPDATE ? `(${getExamTemplateTextByType(data?.examTemplateType)})` : ''}`,
+        ),
         key: ExamTab.PAPER,
         content: (
           <TestPaperInfo
             ref={basicInfoRef}
+            basicInfoForm={{ provider, getValues, updateFormData, onSubmit, saveBasicInfo }}
+            contentUuid={contentUuid}
             tenantId={tenantId}
             mode={mode}
             data={data}
@@ -46,12 +84,24 @@ function RouteComponent() {
         ),
       },
       {
-        title: t('문항 추가(랜덤형)'),
+        title: t('문항 관리'),
         key: ExamTab.QUESTION,
-        content: <QuestionInfo />,
+        content: (
+          <QuestionInfo
+            ref={questionInfoRef}
+            basicInfoForm={{ provider, getValues, updateFormDataByKey, onSubmit }}
+            contentUuid={contentUuid}
+            tenantId={tenantId}
+            mode={mode}
+            data={data}
+            hasMapping={hasMapping}
+            questionGenType={questionGenType}
+            setQuestionGenType={setQuestionGenType}
+          />
+        ),
       },
     ],
-    [],
+    [provider, data],
   );
 
   const [selectedTabKey, setSelectedTabKey] = useState<string>(ExamTab.PAPER);
@@ -104,11 +154,13 @@ function RouteComponent() {
     }
   }, []);
 
-  const handleClickSaveButton = useCallback(() => {
+  const handleClickSaveButton = () => {
     if (basicInfoRef.current) {
-      basicInfoRef.current?.save();
+      basicInfoRef.current?.save?.();
+    } else if (questionInfoRef.current) {
+      questionInfoRef.current?.update?.();
     }
-  }, []);
+  };
 
   useEffect(() => {
     console.log('contentUuid ===>', contentUuid);
@@ -138,7 +190,7 @@ function RouteComponent() {
       </ContentsButtons>
 
       <MainContents>
-        <form className="form_row">
+        <div className="form_row">
           <div className={styles.main_contents}>
             <Tabs
               type="progress"
@@ -149,16 +201,8 @@ function RouteComponent() {
               onBeforeTabChange={handleBeforeTabChange}
             />
           </div>
-        </form>
+        </div>
       </MainContents>
-
-      {selectedTabKey === ExamTab.PAPER && (
-        <SubContents>
-          <div>
-            <strong className={styles.title}>{t('cms.content.ContentType.EXAM')}</strong>
-          </div>
-        </SubContents>
-      )}
     </PageContainer>
   );
 }

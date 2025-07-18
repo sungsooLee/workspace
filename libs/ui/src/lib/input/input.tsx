@@ -1,5 +1,5 @@
 /* eslint-disable object-shorthand */
-import { forwardRef, useMemo, useState, useRef } from 'react';
+import { forwardRef, useMemo, useState } from 'react';
 import { NumericFormat, PatternFormat } from 'react-number-format';
 import { NumericFormatProps } from 'react-number-format/types/types';
 import { Button } from '../button/button';
@@ -162,6 +162,15 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
       onKeyDown?.(event);
     };
 
+    const handleNumericInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        onEnterKeyDown?.();
+      }
+
+      onKeyDown?.(event);
+    };
+
     const handleInputChange = (value: any) => {
       const changeEvent = {
         target: {
@@ -235,6 +244,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputProps>(
             onValueChange={(values) => {
               handleInputChange(values.value);
             }}
+            onKeyDown={handleNumericInputKeyDown}
             disabled={disabled}
             maxLength={maxLength}
           />

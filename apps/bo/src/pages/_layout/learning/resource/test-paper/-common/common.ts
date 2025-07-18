@@ -1,9 +1,11 @@
 import { FieldValues } from 'react-hook-form';
+import { t } from 'i18next';
 import dayjs from 'dayjs';
 import { formatPlainPhoneNumber } from '@learnway/shared';
 import {
   ContentAddInfoType,
   ExamQuestionGenType,
+  ExamTemplateType,
   Tag,
   TestPaperBasicInfoDetail,
   TestPaperBasicInfoSaveReq,
@@ -39,6 +41,7 @@ export const getExamSaveRequestDataFromFormData = (options: {
     examEndNoticeMessage: options.values.examEndNoticeMessage,
     contentAddInfoType: ContentAddInfoType.EXAM_ADD_INFO,
     contentAddInfo: Number(options.values.questionCount ?? '0'),
+    questionGenType: ExamQuestionGenType.FIXED,
   };
 
   if (options.mode === PageMode.UPDATE) {
@@ -56,7 +59,7 @@ export const getExamSaveRequestDataFromFormData = (options: {
 };
 
 export const convertDetailInfoToFormData = (
-  data: Partial<TestPaperBasicInfoDetail>,
+  data: Partial<TestPaperBasicInfoDetail> = {},
   values: FieldValues,
   updateFormData: (data?: Record<string, any>) => void,
 ) => {
@@ -66,7 +69,7 @@ export const convertDetailInfoToFormData = (
     contentName: data.contentName,
     channelUuid: data.channelUuid,
     channelName: data.channelName,
-    languageCountryCode: data.langCountryCode,
+    languageCountryCode: data.languageCountryCode,
     description: data.description,
     coordinatorUuid: data.coordinatorUuid,
     coordinatorName: data.coordinatorName,
@@ -105,4 +108,18 @@ export const convertDetailInfoToFormData = (
     examEndNoticeMessage: data.examEndNoticeMessage,
     questionGenType: data.questionGenType ?? ExamQuestionGenType.FIXED,
   });
+};
+
+export const EXAM_TEMPLATE_TYPES = Object.freeze({
+  [ExamTemplateType.EXAM]: t('일반 시험지'),
+  [ExamTemplateType.OMR]: t('OMR 시험지'),
+  [ExamTemplateType.QUIZ]: t('OX 퀴즈'),
+});
+
+export const getExamTemplateTextByType = (type?: ExamTemplateType): string => {
+  if (!type) {
+    return '';
+  }
+
+  return EXAM_TEMPLATE_TYPES[type];
 };

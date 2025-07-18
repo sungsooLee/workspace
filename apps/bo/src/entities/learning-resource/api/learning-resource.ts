@@ -185,6 +185,11 @@ export default class LearningResourceService {
     return httpService.post(`${CMSApiPrefix()}/exam`, body);
   }
 
+  // 시험지 컨텐츠 단건 수정 (기본정보)
+  static updateExamPaperContent(body: TestPaperBasicInfoSaveReq) {
+    return httpService.put(`${CMSApiPrefix()}/exam`, body);
+  }
+
   /**
    * 문제은행 기본 정보 저장
    * @param body

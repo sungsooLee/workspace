@@ -403,12 +403,6 @@ export enum ExamQuestionGenType {
   RANDOM = 'RANDOM',
 }
 
-export enum ExamType {
-  PRE_TEST = 'PRE_TEST',
-  PROGRESS_TEST = 'PROGRESS_TEST',
-  POST_TEST = 'POST_TEST',
-}
-
 export type TestPaperDetailRes = GetContentDetailRes;
 
 export interface GetVideoStatusRes {
