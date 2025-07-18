@@ -84,7 +84,7 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
       width: 'md',
       // 현재 25-07-17 : 회사 코드 전체를 보내면 400 error 발생
       // content: <OrganizationChoiceTreeModal companyCodes={companyCodes} />,
-      content: <OrganizationChoiceTreeModal companyCodes={['H199', 'H103']} />,
+      content: <OrganizationChoiceTreeModal companyCodes={['H199', 'H103',]} />,
     });
 
     const company = await queryClient.fetchQuery(CompanyService.detail(organization.companyCode));
@@ -115,7 +115,7 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
       isSuspended: false, // 재직 상태: (정직)
       // 개인 정보
       name: data.name, // 이름
-      password: 'Asdf@123', // 임시 비밀 번호 : 대문자/소문자/특수문자/숫자 8자리 이상
+      password: 'Asdf@1234', // 임시 비밀 번호 : 대문자/소문자/특수문자/숫자 8자리 이상
       employeeNumber: data.employeeNumber, // 사번
       birthday: data.birthday, // 생년월일
       email: data.email.fieldValue, // 아이디(이메일)
