@@ -1,18 +1,16 @@
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { CellContext } from '@tanstack/react-table';
 import { t } from 'i18next';
+
 import styles from '@learnway/styles/bo/pages/_layout/learning/popup-question-detail.module.css';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
-import uploadStyles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css'; // 파일 업로드
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 
-import { useTranslation } from 'react-i18next';
 import {
   Button,
-  Checkbox,
   ContentsRow,
   EditCheckboxCell,
-  EditRadioCell,
+  EditInputCell,
   EditTextareaCell,
   FormSubTitle,
   GridFormField,
@@ -22,28 +20,17 @@ import {
   ModalFooter,
   ModalTitle,
   RadioGroupFormField,
-  Spinner,
   TextareaFormField,
   useModal,
 } from '@learnway/ui';
-import { memo, useCallback, useEffect, useMemo, useState } from 'react';
-import { cn, getRandomId } from '@learnway/shared';
-import { usePostContentCopy } from '@entities/learning-resource';
-import { useRouter } from '@tanstack/react-router';
-import { getDetailPathByContentType } from '@features/learning-resource';
-import { ContentInformation } from '@types';
-import { FormRow, FormRow2, SingleAttachmentFormField, SwitchFormField } from '@shared/ui';
-import {
-  CODE_GROUP,
-  DynamicFormConfig,
-  S3_PATH,
-  useDynamicForm,
-  useDynamicForm2,
-} from '@learnway/hooks';
+import { cn } from '@learnway/shared';
+
+import { ContentInformation, EnFormMode, QuestionItem } from '@types';
+import { FormRow2, SingleAttachmentFormField, SwitchFormField } from '@shared/ui';
+import { CODE_GROUP, S3_PATH, useDynamicForm2 } from '@learnway/hooks';
 import { FormDisplay } from '@features/form';
-import { CellContext } from '@tanstack/react-table';
-import { IcoCopy, IcoMenu01, IcoMinus, IcoPlus } from '@learnway/icons';
-import { Radio } from 'lucide-react';
+import { IcoMenu01 } from '@learnway/icons';
+
 import { EditSingleAttachmentCell } from '@features/form/ui/edit-single-attachment-cell';
 import { useWatch } from 'react-hook-form';
 
@@ -54,127 +41,192 @@ enum EnQuestionType {
   SHORT_ANSWER = 'SHORT_ANSWER',
   ESSAY = 'ESSAY',
 }
-const rowId = 'id';
 
 const LearningResourceTestItemModalComponent = ({
   contentInfo,
+  questionItem,
 }: {
   contentInfo: ContentInformation;
+  questionItem?: QuestionItem;
 }) => {
   const { close } = useModal();
   const [disabledButton, setDisabledButton] = useState(false);
+  const [otherOptions, setOtherOptions] = useState<any[]>();
+  const [formMode, setFormMode] = useState<EnFormMode>(
+    questionItem ? EnFormMode.VIEW : EnFormMode.ADD,
+  );
 
-  const { provider, getValues, onFormChange } = useDynamicForm2();
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const { provider, getValues, updateFormData, onFormChange, onSubmit } = useDynamicForm2();
 
   const imageTypeWatch = useWatch({ control: provider.control, name: 'imageType' });
   const attachImageWatch = useWatch({ control: provider.control, name: 'fileUuid' });
+  const questionTypeWatch = useWatch({ control: provider.control, name: 'questionType' });
 
+  const handleSaveButtonClick = () => {
+    const form = formRef.current;
+    if (form) {
+      form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+    }
+  };
+  const handleSubmit = async (data: any) => {
+    const { fileAttacted, ...removeData } = data;
+    close(removeData);
+  };
   const updateisCorrectAnswerRadio = useCallback(
     (index: number) => {
       const options = getValues('options');
       options.forEach((item: any, i: number) => {
         if (index === i) {
           item.isCorrectAnswer = true;
-        } else {
+        } else if (questionTypeWatch === EnQuestionType.SINGLE) {
           item.isCorrectAnswer = false;
         }
       });
       onFormChange({ options });
     },
-    [getValues, onFormChange],
+    [getValues, onFormChange, questionTypeWatch],
   );
 
-  const handleAddClick = () => {
-    const value = getValues('options');
-    console.log('values', value);
-    const options = [...value, { [rowId]: getRandomId() }];
-    onFormChange({ options });
-  };
-
-  const gridSingleColumn = useMemo(() => {
-    return [
-      {
-        header: 'NO.',
-        accessorKey: 'sortSeq',
-        cell: (info: CellContext<any, number>) => {
-          return <>{info.row.index + 1}</>;
-        },
-        size: 10,
+  const gridColumn = useMemo(() => {
+    const retval = [];
+    retval.push({
+      header: 'NO.',
+      accessorKey: 'sortSeq',
+      cell: (info: CellContext<any, number>) => {
+        return <>{info.row.index + 1}</>;
       },
-      {
-        header: '보기',
-        accessorKey: 'examOptionText',
-        size: 300,
-        cell: (info: CellContext<any, string>) => (
-          <EditTextareaCell info={info} textarea={{ size: 'sm', maxLength: 2000 }} />
-        ),
-        meta: {
-          headerAlign: 'center',
-          cellAlign: 'center',
-        },
-      },
-      {
-        header: '첨부파일',
-        accessorKey: 'file',
-        size: 250,
-        cell: (info: CellContext<any, string>) => (
-          <EditSingleAttachmentCell
-            info={info}
-            singleAttahment={{
-              showGuidText: false,
-              uploadConfig: {
-                affairsType: 'CMS',
-                s3Path: S3_PATH['upload/content/image'],
-                acceptFiles: ['JPEG', 'JPG', 'PNG', 'GIF'],
-              },
-            }}
-          />
-        ),
-        meta: {
-          headerAlign: 'center',
-          cellAlign: 'center',
-        },
-      },
-      {
-        header: '정답',
-        accessorKey: 'isCorrectAnswer',
-        size: 20,
-        cell: (info: CellContext<any, boolean>) => (
-          <div>
-            <EditCheckboxCell
+      size: 10,
+    });
+    switch (questionTypeWatch) {
+      case EnQuestionType.SINGLE:
+      case EnQuestionType.MULTIPLE:
+      case EnQuestionType.OX:
+        retval.push({
+          header: '보기',
+          accessorKey: 'examOptionText',
+          size: 350,
+          cell: (info: CellContext<any, string>) =>
+            questionTypeWatch === EnQuestionType.OX ? (
+              <EditInputCell info={info} input={{ disabled: true }} />
+            ) : (
+              <EditTextareaCell info={info} textarea={{ size: 'sm', maxLength: 2000 }} />
+            ),
+          meta: {
+            headerAlign: 'center',
+            cellAlign: 'center',
+          },
+        });
+        retval.push({
+          header: '첨부파일',
+          accessorKey: 'file',
+          size: 350,
+          cell: (info: CellContext<any, string>) => (
+            <EditSingleAttachmentCell
               info={info}
-              checkbox={{ variant: 'round', label: '정답' }}
-              onCheckedChange={(event) => {
-                updateisCorrectAnswerRadio(info.row.index);
+              singleAttahment={{
+                showGuidText: false,
+                uploadConfig: {
+                  affairsType: 'CMS',
+                  s3Path: S3_PATH['upload/content/image'],
+                  acceptFiles: ['JPEG', 'JPG', 'PNG', 'GIF'],
+                },
               }}
             />
-          </div>
-        ),
-        meta: {
-          headerAlign: 'center',
-          cellAlign: 'center',
-        },
-      },
-      {
-        header: '순서변경',
-        accessorKey: 'sqlOrder',
-        size: 20,
-        cell: (info: CellContext<any, string>) => (
-          <IcoMenu01 width={24} height={24} fill="#A9AFB8" stroke="#4c515e" />
-        ),
-        meta: {
-          headerAlign: 'center',
-          cellAlign: 'center',
-        },
-      },
-    ];
-  }, [updateisCorrectAnswerRadio]);
+          ),
+          meta: {
+            headerAlign: 'center',
+            cellAlign: 'center',
+          },
+        });
+        retval.push({
+          header: '정답',
+          accessorKey: 'isCorrectAnswer',
+          size: 80,
+          cell: (info: CellContext<any, boolean>) => (
+            <div>
+              <EditCheckboxCell
+                info={info}
+                checkbox={{ variant: 'round', label: '정답' }}
+                onCheckedChange={(event) => {
+                  updateisCorrectAnswerRadio(info.row.index);
+                }}
+              />
+            </div>
+          ),
+          meta: {
+            headerAlign: 'center',
+            cellAlign: 'center',
+          },
+        });
+        if (questionTypeWatch !== EnQuestionType.OX) {
+          retval.push({
+            header: '순서변경',
+            accessorKey: 'sqlOrder',
+            size: 50,
+            cell: (info: CellContext<any, string>) => (
+              <IcoMenu01 width={24} height={24} fill="#A9AFB8" stroke="#4c515e" />
+            ),
+            meta: {
+              headerAlign: 'center',
+              cellAlign: 'center',
+            },
+          });
+        }
+        break;
+      case EnQuestionType.SHORT_ANSWER:
+        retval.push({
+          header: '정답',
+          accessorKey: 'examOptionText',
+          size: 1200,
+          cell: (info: CellContext<any, string>) => (
+            <EditTextareaCell info={info} textarea={{ size: 'sm', maxLength: 2000 }} />
+          ),
+          meta: {
+            headerAlign: 'center',
+            cellAlign: 'center',
+          },
+        });
+        break;
+    }
+    return retval;
+  }, [updateisCorrectAnswerRadio, questionTypeWatch]);
+
+  useEffect(() => {
+    if (questionTypeWatch === EnQuestionType.OX) {
+      const data = getValues('options');
+      console.log(otherOptions, data);
+      if (data && data.length > 0) {
+        setOtherOptions(data);
+      }
+      const options = [
+        { sortSeq: 1, examOptionText: 'O' },
+        { sortSeq: 2, examOptionText: 'X' },
+      ];
+      onFormChange({ options });
+    } else {
+      let options = [];
+      if (otherOptions && otherOptions.length > 0) {
+        options = otherOptions;
+      }
+      onFormChange({ options });
+    }
+  }, [questionTypeWatch]);
+
+  useEffect(() => {
+    if (!questionItem) return;
+    updateFormData({
+      ...questionItem,
+      fileAttacted: questionItem.fileUuid && questionItem.fileUuid.length > 0,
+    });
+  }, [questionItem]);
 
   return (
     <ModalContainer>
       <ModalTitle>{'문항상세'}</ModalTitle>
       <ModalBody>
-        <form>
+        <form ref={formRef} onSubmit={onSubmit(handleSubmit)}>
           <div className={cn(popupStyles.wrap, styles.start)}>
             <FormSubTitle label="문제은행 정보" noLine />
             <div className={cn(tableStyles.start, tableStyles.wrap)}>
@@ -208,9 +260,9 @@ const LearningResourceTestItemModalComponent = ({
                 provider={provider}
                 name="questionType"
                 label="문항유형"
-                format="array"
+                format="string"
                 type="custom"
-                value={[]}
+                value={EnQuestionType.SINGLE}
                 element={
                   <RadioGroupFormField
                     options={[
@@ -273,7 +325,8 @@ const LearningResourceTestItemModalComponent = ({
                 label="첨부파일"
                 format="boolean"
                 value={false}
-                placeholder="내용입력"
+                tooltip="내용입력"
+                validation={{ required: true }}
                 element={<SwitchFormField />}
                 switchConfig={{
                   label: (value: boolean) => (value ? '파일1개' : '파일없음'),
@@ -284,8 +337,10 @@ const LearningResourceTestItemModalComponent = ({
               <ContentsRow>
                 <FormRow2
                   provider={provider}
+                  label="첨부유형"
                   name="imageType"
                   value="image"
+                  validation={{ required: true }}
                   element={
                     <RadioGroupFormField
                       options={[
@@ -301,6 +356,8 @@ const LearningResourceTestItemModalComponent = ({
                 <FormRow2
                   provider={provider}
                   name="fileUuid"
+                  label="파일"
+                  validation={{ required: true }}
                   element={
                     imageTypeWatch === 'image' ? (
                       <SingleAttachmentFormField
@@ -322,29 +379,44 @@ const LearningResourceTestItemModalComponent = ({
                 />
               </ContentsRow>
             </FormDisplay>
-            {/* 객관식 문제 노출 시작 */}
-            <ContentsRow>
-              <FormRow2
-                provider={provider}
-                name="options"
-                value={[]}
-                element={
-                  <GridFormField
-                    maxRow={10}
-                    gridProps={{
-                      title: '보기목록',
-                      guideText: '보기의 첨부파일은 최대1개, 이미지파일만 가능합니다.',
-                      multiple: true,
-                      showAdd: true,
-                      showRemove: true,
-                      showTotalCount: true,
-                      columns: gridSingleColumn,
-                    }}
-                  />
-                }
-              />
-            </ContentsRow>
-            {/* 객관식 문제 노출 끝 */}
+            <FormDisplay
+              provider={provider}
+              condition="or"
+              dependencies={[
+                { name: 'questionType', value: EnQuestionType.SINGLE },
+                { name: 'questionType', value: EnQuestionType.MULTIPLE },
+                { name: 'questionType', value: EnQuestionType.SHORT_ANSWER },
+                { name: 'questionType', value: EnQuestionType.OX },
+              ]}
+            >
+              {/* 객관식 문제 노출 시작 */}
+              <ContentsRow>
+                <FormRow2
+                  provider={provider}
+                  name="options"
+                  value={[]}
+                  element={
+                    <GridFormField
+                      maxRow={10}
+                      gridProps={{
+                        title: '보기목록',
+                        guideText: '보기의 첨부파일은 최대1개, 이미지파일만 가능합니다.',
+                        multiple: true,
+                        showAdd: true,
+                        showRemove: true,
+                        showTotalCount: true,
+                        columns: gridColumn,
+                        isRowSelected: (row: object) => {
+                          if (questionTypeWatch === EnQuestionType.OX) return false;
+                          return true;
+                        },
+                      }}
+                    />
+                  }
+                />
+              </ContentsRow>
+              {/* 객관식 문제 노출 끝 */}
+            </FormDisplay>
           </div>
         </form>
       </ModalBody>
@@ -357,19 +429,7 @@ const LearningResourceTestItemModalComponent = ({
             close();
           }}
         />
-        <Button
-          label={t('저장')}
-          variant="primary"
-          size="lg"
-          onClick={() => {
-            const data = getValues();
-            const options = data.options;
-            options[0].isCorrectAnswer = undefined;
-            console.log(data);
-
-            onFormChange({ options });
-          }}
-        />
+        <Button label={t('저장')} variant="primary" size="lg" onClick={handleSaveButtonClick} />
       </ModalFooter>
     </ModalContainer>
   );

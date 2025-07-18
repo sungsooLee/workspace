@@ -10,6 +10,7 @@ import {
   HtmlVideoMetadataReq,
   PostDraftHtmlVideoParams,
   PostDraftVideosParams,
+  QuestionItem,
   TestPaperBasicInfoSaveReq,
 } from '@types';
 import LearningResourceService from '../api/learning-resource';
@@ -181,5 +182,8 @@ export const mutateOptions = {
   updateQuestionBankContent: () => ({
     mutationFn: (params: ContentBaseInfo) =>
       LearningResourceService.updateQuestionBankContent(params),
+  }),
+  createQuestionItem: () => ({
+    mutationFn: (params: QuestionItem) => LearningResourceService.createQuestionItem(params),
   }),
 };

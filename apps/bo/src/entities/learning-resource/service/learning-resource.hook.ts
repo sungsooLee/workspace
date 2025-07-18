@@ -8,6 +8,7 @@ import {
   HtmlVideoMetadataReq,
   PostDraftHtmlVideoParams,
   PostDraftVideosParams,
+  QuestionItem,
   TestPaperBasicInfoSaveReq,
 } from '@types';
 
@@ -184,6 +185,19 @@ export function useUpdateQuestionBankContent(options?: any) {
   };
 }
 
+export function useCreateQuestionItem(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.createQuestionItem(),
+    ...options,
+  });
+
+  return {
+    create: (payload: QuestionItem, options?: any) => mutation.mutate(payload as any, options),
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
+}
 export function useGetContent(contentUuid: string, options?: any) {
   return useQuery({ ...learningResourceQueryOptions.getContent(contentUuid), ...options });
 }
