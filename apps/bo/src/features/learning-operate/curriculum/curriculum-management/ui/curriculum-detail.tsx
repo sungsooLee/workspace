@@ -1,14 +1,16 @@
 import { t } from 'i18next';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import { FormState } from '../types/form.types';
 import { NodeFormRenderer } from '../components/node-form-renderer';
 import { useTreeButtons } from '../hooks/use-tree-buttons';
 import {
+  queryKeys,
   useCreateCurriculum,
   useCreateFixedModule,
   useCreateGeneralModule,
   useCreateLessonByCurriculum,
   useCreateLessonByModule,
+  useDndCurriculumTree,
   useGetCurriculumDetail,
   useUpdateCurriculum,
   useUpdateFixedModule,
@@ -33,6 +35,7 @@ import { IcoMinus } from '@learnway/icons';
 import { SectionLayout } from '@shared/ui';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { getTimeValueFromHour } from '@learnway/shared';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface CurriculumDetailProps {
   mode: FORM_MODE;
@@ -59,6 +62,7 @@ const CurriculumDetailComponent = ({
 
   // 이전 선택 노드 추적용 ref
   const prevSelectedNodeRef = useRef<TreeNode | null>(null);
+  const queryClient = useQueryClient();
 
   const shouldFetchDetail = mode === FORM_MODE.detail && curriculumId > 0;
   const { data: curriculumDetail, isLoading: isLoadingDetail } = useGetCurriculumDetail(
@@ -76,6 +80,8 @@ const CurriculumDetailComponent = ({
   const { update: updateLessonByGeneral } = useUpdateLessonByGeneral({});
   const { update: updateLessonByFixed } = useUpdateLessonByFixed({});
 
+  const dndCurriculumMutation = useDndCurriculumTree(curriculumId, {});
+
   const {
     provider,
     getValues,
@@ -91,11 +97,8 @@ const CurriculumDetailComponent = ({
     if (curriculumDetail) {
       const treeNodes = buildTreeFromCurriculumData(curriculumDetail);
       setTreeData(treeNodes);
-    } else if (mode === FORM_MODE.create) {
-      setTreeData([]);
-      setExpandedKeys([]);
     }
-  }, [curriculumDetail, mode]);
+  }, [curriculumDetail]);
 
   const expandParentNodes = (parentNode: TreeNode | null) => {
     if (!parentNode) return;
@@ -165,7 +168,7 @@ const CurriculumDetailComponent = ({
   };
 
   const handleAddNode = (nodeType: MAPPING_CURRICULUM_TYPE, parentNode: TreeNode | null) => {
-    // 먼저 상태를 클리어하여 이전 폼을 언마운트
+    // 이전 폼을 언마운트
     setFormState({
       activeFormType: null,
       selectedNode: null,
@@ -174,19 +177,16 @@ const CurriculumDetailComponent = ({
     });
     setFormStatus(FROM_STATUS.NONE);
 
-    // 이전 폼의 모든 validator와 필드를 완전히 초기화
     clearAllValidators();
 
-    setTimeout(() => {
-      setFormState({
-        activeFormType: nodeType,
-        selectedNode: parentNode,
-        parentNode,
-        isEditing: false,
-      });
-      setFormStatus(FROM_STATUS.CREATE);
-      setFormKey((prev) => prev + 1); // 폼 리마운트를 위해 키 증가
-    }, 10);
+    setFormState({
+      activeFormType: nodeType,
+      selectedNode: parentNode,
+      parentNode,
+      isEditing: false,
+    });
+    setFormStatus(FROM_STATUS.CREATE);
+    setFormKey((prev) => prev + 1); // 폼 리마운트를 위해 키 증가
   };
 
   const handleFormSubmit = (data: any) => {
@@ -274,10 +274,8 @@ const CurriculumDetailComponent = ({
                   ...updateModule,
                 },
               };
-
-              setTimeout(() => {
-                handleNodeSelect(updatedNode, true); // 수정 완료 후 강제 새로고침
-              }, 200);
+              clearAllValidators();
+              handleNodeSelect(updatedNode, true); // 수정 완료 후 강제 새로고침
             });
           }
         } else {
@@ -370,9 +368,7 @@ const CurriculumDetailComponent = ({
                   },
                 };
                 expandParentNodes(parentNode);
-                setTimeout(() => {
-                  handleNodeSelect(updatedNode, true); // 수정 완료 후 강제 새로고침
-                }, 200);
+                handleNodeSelect(updatedNode, true);
               },
             });
           } else if (isParentFixedModule) {
@@ -398,9 +394,7 @@ const CurriculumDetailComponent = ({
                     },
                   };
                   expandParentNodes(parentNode);
-                  setTimeout(() => {
-                    handleNodeSelect(updatedNode, true); // 수정 완료 후 강제 새로고침
-                  }, 200);
+                  handleNodeSelect(updatedNode, true);
                 },
               },
             );
@@ -504,7 +498,6 @@ const CurriculumDetailComponent = ({
   };
 
   const handleFormCancel = () => {
-    // 이전 폼의 모든 validator와 필드를 완전히 초기화
     clearAllValidators();
     onFormChange();
 
@@ -520,7 +513,6 @@ const CurriculumDetailComponent = ({
 
   // 트리 노드 선택 핸들러
   const handleNodeSelect = (node: TreeNode, forceRefresh = false) => {
-    // 같은 노드를 다시 클릭한 경우 처리하지 않음 (강제 새로고침이 아닌 경우)
     if (!forceRefresh && prevSelectedNodeRef.current?.id === node.id) {
       return;
     }
@@ -536,6 +528,265 @@ const CurriculumDetailComponent = ({
     });
     setFormStatus(FROM_STATUS.EDIT);
     setFormKey((prev) => prev + 1); // 폼 리마운트를 위해 키 증가
+  };
+
+  // DND 드롭 유효성 검증
+  const customDropValidator = useCallback<any>(
+    ({ sourceNode, targetNode, dropPosition }: any) => {
+      // FIXED 모듈 하위 레슨은 이동 불가
+      const sourceParent = findParentNode(treeData, sourceNode.parentId);
+      if (
+        sourceParent?.type === MAPPING_CURRICULUM_TYPE.MODULE &&
+        sourceParent?.data?.moduleType === MODULE_TYPE.FIXED
+      ) {
+        return false;
+      }
+
+      if (dropPosition === 'INSIDE') {
+        // 커리큘럼 안으로는 레슨과 모듈 모두 가능 (항상 허용)
+        if (targetNode.type === MAPPING_CURRICULUM_TYPE.CURRICULUM) {
+          return true;
+        }
+
+        // FIXED 모듈 안으로는 아무것도 올 수 없음
+        if (
+          targetNode.type === MAPPING_CURRICULUM_TYPE.MODULE &&
+          targetNode.data?.moduleType === MODULE_TYPE.FIXED
+        ) {
+          return false;
+        }
+
+        // GENERAL 모듈 안으로는 레슨만 가능
+        if (
+          targetNode.type === MAPPING_CURRICULUM_TYPE.MODULE &&
+          targetNode.data?.moduleType === MODULE_TYPE.GENERAL
+        ) {
+          return sourceNode.type === MAPPING_CURRICULUM_TYPE.LESSON;
+        }
+
+        // 레슨 안으로는 아무것도 올 수 없음
+        if (targetNode.type === MAPPING_CURRICULUM_TYPE.LESSON) {
+          return false;
+        }
+      }
+
+      // BEFORE/AFTER 드롭의 경우
+      const targetParent = findParentNode(treeData, targetNode.parentId);
+
+      // 레슨은 커리큘럼 하위 또는 GENERAL 모듈 하위로만 이동 가능
+      if (sourceNode.type === MAPPING_CURRICULUM_TYPE.LESSON) {
+        if (!targetParent) return false;
+
+        if (targetParent.type === MAPPING_CURRICULUM_TYPE.CURRICULUM) {
+          return true;
+        }
+
+        if (
+          targetParent.type === MAPPING_CURRICULUM_TYPE.MODULE &&
+          targetParent.data?.moduleType === MODULE_TYPE.GENERAL
+        ) {
+          return true;
+        }
+
+        return false;
+      }
+
+      // 모듈은 커리큘럼 하위로만 이동 가능
+      if (sourceNode.type === MAPPING_CURRICULUM_TYPE.MODULE) {
+        return targetParent?.type === MAPPING_CURRICULUM_TYPE.CURRICULUM;
+      }
+
+      return false;
+    },
+    [treeData],
+  );
+
+  // ID에서 타입 prefix 제거
+  const extractIdFromNodeId = (nodeId: string | number): number => {
+    const idStr = nodeId.toString();
+    if (idStr.includes('-')) {
+      return parseInt(idStr.split('-')[1]);
+    }
+    return parseInt(idStr);
+  };
+
+  const calculateSortOrder = (nodeInfo: any) => {
+    if (nodeInfo.position === 'INSIDE') {
+      // 타겟 노드의 자식으로 이동 - 항상 첫 번째 자식이 되도록
+      return 1;
+    }
+
+    const sourceNode = nodeInfo.sourceNode;
+    const targetNode = nodeInfo.targetNode;
+
+    if (!targetNode || !targetNode.sortOrder) {
+      // targetNode의 sortOrder가 없으면 targetIndex 기반으로 계산
+      return nodeInfo.position === 'BEFORE' ? nodeInfo.targetIndex + 1 : nodeInfo.targetIndex + 2;
+    }
+
+    // 같은 부모 내에서 이동하는 경우, 소스와 타겟의 sortOrder 관계를 고려
+    const sourceSortOrder = sourceNode.sortOrder || 0;
+    const targetSortOrder = targetNode.sortOrder;
+    const sameParent = sourceNode.parentId === targetNode.parentId;
+
+    if (nodeInfo.position === 'BEFORE') {
+      // 타겟 노드 앞에 삽입
+      if (sameParent && sourceSortOrder < targetSortOrder) {
+        // 낮은 순서 -> 높은 순서로 이동: 소스가 제거되므로 -1 보정
+        return targetSortOrder - 1;
+      }
+      return targetSortOrder;
+    } else {
+      // 타겟 노드 뒤에 삽입 (AFTER)
+      if (sameParent && sourceSortOrder < targetSortOrder) {
+        // 낮은 순서 -> 높은 순서로 이동: 소스가 제거되므로 보정 없이 타겟 순서 사용
+        return targetSortOrder;
+      }
+      return targetSortOrder + 1;
+    }
+  };
+
+  const handleTreeAction = (event: any) => {
+    if (event.type === 'NODE_MOVE') {
+      const { sourceNode, targetNode, position } = event;
+
+      const sortOrder = calculateSortOrder({ sourceNode, targetNode, position });
+
+      let toParentMappingType: string;
+      let toParentMappingId: number;
+
+      if (position === 'INSIDE') {
+        toParentMappingType = targetNode.type;
+        toParentMappingId = extractIdFromNodeId(targetNode.id);
+      } else {
+        const targetParent = findParentNode(treeData, targetNode.parentId);
+        if (targetParent) {
+          toParentMappingType = targetParent.type;
+          toParentMappingId = extractIdFromNodeId(targetParent.id);
+        } else {
+          toParentMappingType = MAPPING_CURRICULUM_TYPE.CURRICULUM;
+          toParentMappingId = curriculumId;
+        }
+      }
+
+      const payload = {
+        fromMappingType: sourceNode.type,
+        fromMappingId: extractIdFromNodeId(sourceNode.id),
+        toParentMappingType,
+        toParentMappingId,
+        sortOrder,
+        // position 정보는 useDndCurriculumTree에서 처리
+      };
+
+      // (중복 API 호출 방지)
+      if (
+        formState.selectedNode &&
+        extractIdFromNodeId(formState.selectedNode.id) === payload.fromMappingId
+      ) {
+        setFormState({
+          activeFormType: null,
+          selectedNode: null,
+          parentNode: null,
+          isEditing: false,
+        });
+        clearAllValidators();
+        setFormKey((prev) => prev + 1);
+      }
+
+      dndCurriculumMutation.mutate(payload, {
+        onSuccess: async (data: any) => {
+          onFormChange();
+
+          if (payload.fromMappingType === 'MODULE') {
+            const moduleId = extractIdFromNodeId(payload.fromMappingId);
+            await queryClient.invalidateQueries({
+              queryKey: queryKeys.moduleDetail(moduleId),
+            });
+
+            const updatedTreeData = buildTreeFromCurriculumData(data);
+            const findModuleNode = (nodes: TreeNode[]): TreeNode | null => {
+              for (const node of nodes) {
+                if (
+                  node.type === 'MODULE' &&
+                  extractIdFromNodeId(node.id) === payload.fromMappingId
+                ) {
+                  return node;
+                }
+                if (node.children) {
+                  const found = findModuleNode(node.children);
+                  if (found) return found;
+                }
+              }
+              return null;
+            };
+
+            const updatedModuleNode = findModuleNode(updatedTreeData);
+
+            if (updatedModuleNode) {
+              const newParentNode = findParentNode(updatedTreeData, updatedModuleNode.parentId);
+
+              setFormState({
+                activeFormType: MAPPING_CURRICULUM_TYPE.MODULE,
+                selectedNode: updatedModuleNode,
+                parentNode: newParentNode,
+                isEditing: true,
+              });
+              setFormKey((prev) => prev + 1); // 폼 리마운트
+            }
+          }
+
+          if (payload.fromMappingType === 'LESSON') {
+            const updatedTreeData = buildTreeFromCurriculumData(data);
+            const findLessonNode = (nodes: TreeNode[]): TreeNode | null => {
+              for (const node of nodes) {
+                if (
+                  node.type === 'LESSON' &&
+                  extractIdFromNodeId(node.id) === payload.fromMappingId
+                ) {
+                  return node;
+                }
+                if (node.children) {
+                  const found = findLessonNode(node.children);
+                  if (found) return found;
+                }
+              }
+              return null;
+            };
+
+            const updatedLessonNode = findLessonNode(updatedTreeData);
+
+            if (updatedLessonNode) {
+              const newParentNode = findParentNode(updatedTreeData, updatedLessonNode.parentId);
+
+              let newModuleId = 0;
+
+              if (newParentNode?.type === MAPPING_CURRICULUM_TYPE.CURRICULUM) {
+                newModuleId = updatedLessonNode.data?.moduleId || updatedLessonNode.moduleId || 0;
+              } else if (newParentNode?.type === MAPPING_CURRICULUM_TYPE.MODULE) {
+                newModuleId = newParentNode.data?.moduleId || extractIdFromNodeId(newParentNode.id);
+              }
+
+              const updatedLessonNodeWithModuleId = {
+                ...updatedLessonNode,
+                moduleId: newModuleId,
+                data: {
+                  ...updatedLessonNode.data,
+                  moduleId: newModuleId,
+                },
+              };
+
+              setFormState({
+                activeFormType: MAPPING_CURRICULUM_TYPE.LESSON,
+                selectedNode: updatedLessonNodeWithModuleId,
+                parentNode: newParentNode,
+                isEditing: true,
+              });
+              setFormKey((prev) => prev + 1); // 폼 리마운트
+            }
+          }
+        },
+      });
+    }
   };
 
   const { renderNodeButtons, renderCustomTreeButtons } = useTreeButtons({
@@ -597,6 +848,22 @@ const CurriculumDetailComponent = ({
           title="목차"
           expandedKeys={expandedKeys}
           onExpandedKeysChange={setExpandedKeys}
+          onAction={handleTreeAction}
+          customDropValidator={customDropValidator}
+          clientTree={true}
+          disableOptimisticUpdate={false}
+          renderNodeDragHandle={(node: TreeNode) => {
+            // FIXED 모듈 하위 레슨은 드래그 핸들 숨김
+            const parentNode = findParentNode(treeData, node.parentId);
+            if (
+              parentNode?.type === MAPPING_CURRICULUM_TYPE.MODULE &&
+              parentNode?.data?.moduleType === MODULE_TYPE.FIXED &&
+              node.type === MAPPING_CURRICULUM_TYPE.LESSON
+            ) {
+              return false;
+            }
+            return true;
+          }}
           emptyMessage={
             mode === FORM_MODE.create
               ? "'신규등록'버튼을 클릭하여 커리큘럼을 추가해주세요."

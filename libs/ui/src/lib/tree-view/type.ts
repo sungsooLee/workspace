@@ -158,6 +158,7 @@ export interface TreeProps {
   skeletonNodeCount?: number; // 스켈레톤 노드 개수 (기본값: 5)
   emptyMessage?: string; // 데이터가 없을 때 표시할 메시지
   disableOptimisticUpdate?: boolean; // 낙관적 업데이트 플래그
+  renderNodeDragHandle?: (node: TreeNode) => boolean; // 노드별 드래그 핸들 표시 여부
 }
 // 드랍 위치 감지를 위한 타입
 export interface IndicatorPosition {
@@ -249,6 +250,7 @@ export interface TreeBoxProps extends Omit<TreeProps, 'expandedKeys' | 'onExpand
   // 확장된 키 관리 (외부에서 제어할 때만 사용)
   expandedKeys?: string[];
   onExpandedKeysChange?: (keys: string[]) => void;
+  renderNodeDragHandle?: (node: TreeNode) => boolean; // 노드별 드래그 핸들 표시 여부
 }
 
 export type CustomDropValidator = (params: {
@@ -305,4 +307,5 @@ export interface DndTreeNodeProps {
   minDraggableLevel?: number;
   moveIcon?: boolean;
   isFirstSibling?: boolean;
+  renderNodeDragHandle?: (node: TreeNode) => boolean;
 }

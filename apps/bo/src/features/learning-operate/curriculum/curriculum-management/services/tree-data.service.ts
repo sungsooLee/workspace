@@ -60,6 +60,7 @@ export class TreeDataService {
                 moduleType: item.moduleType,
                 level: 1,
                 parentId: curriculumNode.id,
+                sortOrder: item.sortOrder || index + 1,
                 data: {
                   moduleId: item.moduleId,
                   moduleName: item.moduleName,
@@ -79,11 +80,14 @@ export class TreeDataService {
                       type: 'LESSON',
                       level: 2,
                       parentId: `module-${item.moduleId}`,
+                      sortOrder: lesson.sortOrder || lessonIndex + 1,
                       data: {
                         lessonId: lesson.lessonId,
                         lessonName: lesson.lessonName,
                         description: lesson.lessonDescription,
                         mappingCurriculumType: lesson.mappingCurriculumType,
+                        moduleType: item.moduleType,
+                        sortOrder: lesson.sortOrder || lessonIndex + 1,
                       },
                       children: [],
                     }))
@@ -102,6 +106,7 @@ export class TreeDataService {
                 level: 1, // 커리큘럼 바로 아래 레슨
                 parentId: curriculumNode.id,
                 moduleId: item.moduleId,
+                sortOrder: item.sortOrder || index + 1,
                 data: {
                   lessonId: item.lessonId,
                   lessonName: item.lessonName,
@@ -129,6 +134,7 @@ export class TreeDataService {
                 moduleType: item.moduleType,
                 level: 1,
                 parentId: curriculumNode.id,
+                sortOrder: item.sortOrder || index + 1,
                 data: {
                   moduleId: item.moduleId,
                   moduleName: item.moduleName,
@@ -148,11 +154,14 @@ export class TreeDataService {
                       type: 'LESSON',
                       level: 2,
                       parentId: `module-${item.moduleId}`,
+                      sortOrder: lesson.sortOrder || lessonIndex + 1,
                       data: {
                         lessonId: lesson.lessonId,
                         lessonName: lesson.lessonName,
                         description: lesson.lessonDescription,
                         mappingCurriculumType: lesson.mappingCurriculumType,
+                        moduleType: item.moduleType,
+                        sortOrder: lesson.sortOrder || lessonIndex + 1,
                       },
                       children: [],
                     }))
@@ -252,6 +261,26 @@ export class TreeDataService {
       errors,
     };
   }
+
+  /**
+   * TreeNode 배열에서 특정 ID의 노드를 찾고 드래그 관련 정보를 추출
+   * @param treeNodes - TreeNode 배열
+   * @param nodeId - 찾을 노드 ID
+   * @returns 노드와 드랍 위치 정보
+   */
+  static findNodeForDnd(
+    treeNodes: TreeNode[],
+    nodeId: string | number,
+  ): { node: TreeNode; dropPosition: 'BEFORE' | 'AFTER' | 'INSIDE' } | null {
+    const node = TreeDataService.findNodeById(treeNodes, nodeId.toString());
+    if (!node) return null;
+
+    // 기본적으로 INSIDE로 설정 (필요시 로직 수정 가능)
+    return {
+      node,
+      dropPosition: 'INSIDE',
+    };
+  }
 }
 
 // 편의를 위한 함수 export
@@ -260,3 +289,4 @@ export const findNodeById = TreeDataService.findNodeById;
 export const findParentNode = TreeDataService.findParentNode;
 export const generateDefaultNodeName = TreeDataService.generateDefaultNodeName;
 export const validateTreeStructure = TreeDataService.validateTreeStructure;
+export const findNodeForDnd = TreeDataService.findNodeForDnd;

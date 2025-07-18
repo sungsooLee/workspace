@@ -36,6 +36,7 @@ export const DndTreeView: React.FC<TreeProps> = ({
   skeletonNodeCount = 5,
   emptyMessage = '노드를 추가해주세요.',
   disableOptimisticUpdate = true,
+  renderNodeDragHandle,
 }) => {
   const [internalSelectedNode, setInternalSelectedNode] = useState<TreeNode | null>(null);
   const [internalExpandedKeys, setInternalExpandedKeys] = useState<string[]>(initExpandedKeys);
@@ -217,6 +218,7 @@ export const DndTreeView: React.FC<TreeProps> = ({
               minDraggableLevel={minDraggableLevel}
               moveIcon={moveIcon}
               isFirstSibling={index === 0}
+              renderNodeDragHandle={renderNodeDragHandle}
             />
           ))
         ) : (

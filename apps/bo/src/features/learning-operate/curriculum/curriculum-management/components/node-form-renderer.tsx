@@ -98,8 +98,6 @@ export const NodeFormRenderer: React.FC<NodeFormRendererProps> = ({
               ? parseInt(selectedNode.parentId.toString().replace('module-', ''))
               : selectedNode.parentId
             : undefined;
-      console.log(selectedNode);
-      console.log(lessonId, moduleId);
       return (
         <LessonForm
           key={`lesson-${lessonId || 'new'}`}

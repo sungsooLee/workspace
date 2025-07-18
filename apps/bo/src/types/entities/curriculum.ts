@@ -150,6 +150,14 @@ export type LessonUpdateParams = {
   learningTime?: number;
 };
 
+export type CurriculumDndParams = {
+  fromMappingType: MAPPING_CURRICULUM_TYPE;
+  fromMappingId: number;
+  toParentMappingType: MAPPING_CURRICULUM_TYPE;
+  toParentMappingId: number;
+  sortOrder: number;
+};
+
 export enum LESSON_TYPE {
   GENERAL = 'GENERAL',
   RESOURCE = 'RESOURCE',

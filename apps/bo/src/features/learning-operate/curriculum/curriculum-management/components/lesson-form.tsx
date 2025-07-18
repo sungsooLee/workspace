@@ -40,10 +40,13 @@ export const LessonForm: React.FC<LessonFormProps> = ({
   const lessonType = watch('lessonType') || LESSON_TYPE.GENERAL;
   const contentName = watch('contentName');
 
-  const { data: lessonData } = useGetLessonDetail({ lessonId, moduleId });
+  const { data: lessonData, isLoading: isLoadingLesson } = useGetLessonDetail({
+    lessonId,
+    moduleId,
+  });
 
   // contentUuid가 있을 때만 쿼리 실행
-  const { data: contentDetail, refetch: refetchContentDetail } = useQuery({
+  const { data: contentDetail, isLoading: isLoadingContent } = useQuery({
     ...learningResourceQueryOptions.getContent(lessonData?.contentUuid || ''),
     enabled: !!(isEditing && lessonData?.contentUuid && lessonData.contentUuid.trim() !== ''),
   });
@@ -82,11 +85,11 @@ export const LessonForm: React.FC<LessonFormProps> = ({
   }, [lessonData]);
 
   useEffect(() => {
-    if (isEditing && contentDetail && contentDetail.contentName) {
+    if (isEditing && contentDetail && contentDetail.contentName && !isLoadingContent) {
       provider.setValue('contentName', contentDetail.contentName);
       provider.setValue('contentUuid', contentDetail.contentUuid);
     }
-  }, [contentDetail, isEditing]);
+  }, [contentDetail, isEditing, isLoadingContent]);
 
   const formContent = (
     <>

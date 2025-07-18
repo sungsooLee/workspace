@@ -46,6 +46,7 @@ export const DndTreeNode: React.FC<DndTreeNodeProps> = ({
   minDraggableLevel,
   moveIcon,
   isFirstSibling = false,
+  renderNodeDragHandle,
 }) => {
   const [dropPosition, setDropPosition] = useState<NodeMovePositionType | null>(null);
   const [isHovered, setIsHovered] = useState<boolean>(false);
@@ -524,6 +525,11 @@ export const DndTreeNode: React.FC<DndTreeNodeProps> = ({
   const renderDragIcon = () => {
     if (level < 1) return null;
     if (minDraggableLevel && level < minDraggableLevel) return null;
+    
+    // renderNodeDragHandle이 제공된 경우 해당 함수의 결과에 따라 드래그 핸들 표시 여부 결정
+    if (renderNodeDragHandle && !renderNodeDragHandle(node)) {
+      return null;
+    }
 
     const dragIconStyle = isDragDisabled ? 'cursor-not-allowed opacity-50' : 'cursor-grab';
 
@@ -855,6 +861,7 @@ export const DndTreeNode: React.FC<DndTreeNodeProps> = ({
               minDraggableLevel={minDraggableLevel}
               moveIcon={moveIcon}
               isFirstSibling={index === 0}
+              renderNodeDragHandle={renderNodeDragHandle}
             />
           ))}
         </div>

@@ -51,31 +51,24 @@ export const CurriculumFormSimple: React.FC<CurriculumFormSimpleProps> = ({
 
   const isVendored = watch('isVendored') || false;
 
-  // 초기 데이터 설정을 한 번만 수행하기 위한 ref
-  const initialDataSetRef = useRef(false);
-
   useEffect(() => {
-    if (isEditing && curriculumData && !initialDataSetRef.current) {
-      setTimeout(() => {
-        const initialData = {
-          ...curriculumData,
-          coordinatorTelNo: {
-            nationCode: curriculumData.coordinatorTelCountryCode || '',
-            number: curriculumData.coordinatorTelNo || '',
-          },
-          vendorTelNo: {
-            nationCode: curriculumData.vendorTelCountryCode || '',
-            number: curriculumData.vendorTelNo || '',
-          },
-        };
+    if (isEditing && curriculumData) {
+      const initialData = {
+        ...curriculumData,
+        coordinatorTelNo: {
+          nationCode: curriculumData.coordinatorTelCountryCode || '',
+          number: curriculumData.coordinatorTelNo || '',
+        },
+        vendorTelNo: {
+          nationCode: curriculumData.vendorTelCountryCode || '',
+          number: curriculumData.vendorTelNo || '',
+        },
+      };
 
-        Object.entries(initialData).forEach(([key, value]) => {
-          provider.setValue(key, value);
-        });
-
-        initialDataSetRef.current = true;
-      }, 50);
-    } else if (!isEditing && !initialDataSetRef.current) {
+      Object.entries(initialData).forEach(([key, value]) => {
+        provider.setValue(key, value);
+      });
+    } else if (!isEditing) {
       // 생성 모드일 때는 기본값으로 초기화
       const defaultData = {
         curriculumName: '',
@@ -89,22 +82,8 @@ export const CurriculumFormSimple: React.FC<CurriculumFormSimpleProps> = ({
       Object.entries(defaultData).forEach(([key, value]) => {
         provider.setValue(key, value);
       });
-
-      initialDataSetRef.current = true;
     }
-  }, [curriculumData, isEditing, provider]);
-
-  // 컴포넌트 언마운트 시 초기화
-  useEffect(() => {
-    return () => {
-      initialDataSetRef.current = false;
-    };
-  }, []);
-
-  // curriculumId나 isEditing이 변경될 때 초기화
-  useEffect(() => {
-    initialDataSetRef.current = false;
-  }, [curriculumId, isEditing]);
+  }, [curriculumData]);
 
   const formContent = (
     <>

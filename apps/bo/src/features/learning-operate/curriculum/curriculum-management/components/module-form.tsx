@@ -39,7 +39,7 @@ export const ModuleForm: React.FC<ModuleFormProps> = ({
   const { data: moduleData } = useGetModuleDetail(moduleId || 0);
 
   // contentUuid가 있을 때만 쿼리 실행
-  const { data: contentDetail, isLoading } = useQuery({
+  const { data: contentDetail, isLoading: isLoadingContent } = useQuery({
     ...learningResourceQueryOptions.getContent(moduleData?.contentUuid || ''),
     enabled: !!(isEditing && moduleData?.contentUuid && moduleData.contentUuid.trim() !== ''),
   });
@@ -82,12 +82,12 @@ export const ModuleForm: React.FC<ModuleFormProps> = ({
 
   // contentDetail이 로드되면 contentName 설정 (편집 모드에서만)
   useEffect(() => {
-    if (isEditing && contentDetail && contentDetail.contentName) {
+    if (isEditing && contentDetail && contentDetail.contentName && !isLoadingContent) {
       console.log(contentDetail.contentName);
       provider.setValue('contentName', contentDetail.contentName);
       provider.setValue('contentUuid', contentDetail.contentUuid);
     }
-  }, [contentDetail, isEditing]);
+  }, [contentDetail, isEditing, isLoadingContent]);
 
   const formContent = (
     <>
