@@ -1,0 +1,50 @@
+.start {
+  &.review_wrap {
+    .info_box {
+      & + .info_box {
+        @apply mt-[24px];
+      }
+      .rating_box {
+        @apply rounded-[12px] bg-[var(--blue98)] px-[30px] py-[40px];
+        p {
+          @apply title3 text-center text-[var(--gray35)];
+        }
+        .rating {
+          @apply mt-[8px] flex items-center justify-center;
+          button {
+            @apply h-[40px] w-[40px];
+            & + button {
+              @apply ml-0;
+            }
+          }
+        }
+      }
+      .detail {
+        & > div {
+          & > div {
+            @apply pb-0;
+            label {
+              span {
+                @apply label-lg-b block leading-[20px] text-[var(--gray35)];
+              }
+              & + div {
+                @apply mt-[8px];
+              }
+            }
+          }
+        }
+      }
+      .list {
+        @apply mt-[24px];
+        ul {
+          li {
+            @apply body-md leading-[24px] text-[var(--gray35)];
+            & + li {
+              @apply mt-[8px];
+            }
+          }
+        }
+      }
+    }
+  }
+}

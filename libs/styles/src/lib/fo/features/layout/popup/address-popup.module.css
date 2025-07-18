@@ -1,0 +1,52 @@
+.start {
+  &.address {
+    .example_box {
+      & > p {
+        @apply body_3_r text-[var(--secondary3)];
+      }
+      .box {
+        @apply mt-[8px];
+        dl {
+          @apply relative mb-[16px] pl-[18px];
+          &::before {
+            @apply absolute left-[8px] top-[6px] h-[3px] w-[3px] rounded-[50%] bg-[var(--gray8)] content-[''];
+          }
+          dt {
+            @apply body_bo_3_b text-[var(--gray8)];
+          }
+          dd {
+            @apply body_bo_3_r text-[var(--gray7)];
+          }
+        }
+      }
+    }
+    .address_list {
+      ul {
+        @apply w-full;
+        li {
+          button {
+            @apply flex w-full items-center justify-between;
+            p {
+              @apply flex-1 text-left;
+              strong {
+                @apply body_bo_3_b block leading-[20px] text-[var(--gray8)];
+              }
+              span {
+                @apply body_bo_3_r block leading-[20px] text-[var(--gray7)];
+              }
+            }
+            > span {
+              @apply button_5_r inline-block rounded-[4px] border-[1px] border-solid border-[var(--gray6)] px-[8px] py-[4px] text-[var(--gray8)];
+            }
+          }
+          & + li {
+            @apply mt-[16px];
+          }
+        }
+      }
+      .pagenation {
+        @apply mt-[16px];
+      }
+    }
+  }
+}

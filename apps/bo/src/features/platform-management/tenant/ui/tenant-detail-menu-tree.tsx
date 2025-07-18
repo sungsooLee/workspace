@@ -72,7 +72,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
   const tenantId = routerState.location.state?.tenantId;
 
   const { provider, updateFormData, onSubmit, onFormChange, getValues, clearFormError, control } =
-    useDynamicForm(formConfig);
+    useDynamicForm(formConfig());
   const prevDataRef = React.useRef(null);
   const { alert, open: openModal, confirm: openConfirm } = useModal();
 
@@ -209,7 +209,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
     }
   }, [detailData]);
 
-  const columns = [
+  const columns = () => [
     columnHelper.accessor('apiName', {
       id: 'apiName',
       cell: (info: any) => {
@@ -427,7 +427,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
               element={
                 <GridBox
                   data={getValues('apiMappingMenuList') || []}
-                  columns={columns}
+                  columns={columns()}
                   showTotalCount={true}
                   title={t('API')}
                 />
@@ -443,7 +443,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
 export const TenantDetailMenuTree = TenantDetailMenuTreeComponent;
 
 // Form 구조 정의
-const formConfig: DynamicFormConfig = {
+const formConfig = (): DynamicFormConfig => ({
   builders: [
     {
       name: 'location',
@@ -554,4 +554,4 @@ const formConfig: DynamicFormConfig = {
     menuCode: { required: true },
     deviceNames: { required: true },
   },
-};
+});

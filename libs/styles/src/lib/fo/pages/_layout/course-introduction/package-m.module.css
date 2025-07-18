@@ -1,0 +1,99 @@
+.start {
+  &.package_wrap {
+    @apply px-[16px] pb-[80px];
+    .thumbnail_img {
+      img {
+        @apply w-full overflow-hidden rounded-[16px];
+      }
+    }
+    .package_txt_box {
+      @apply mt-[48px];
+      strong {
+        @apply headline1-b block text-[var(--gray10)];
+      }
+      p {
+        @apply body-sm mt-[20px] text-[var(--gray35)];
+      }
+    }
+    .package_box {
+      @apply mt-[20px];
+      .img_box {
+        img {
+          @apply w-full overflow-hidden rounded-[8px];
+        }
+      }
+      .chip_box {
+        @apply mt-[20px];
+        & > div {
+          @apply border-none p-0;
+          & > div {
+            @apply gap-x-[4px] gap-y-[6px];
+            span {
+              @apply !h-auto !min-h-min rounded-[24px] bg-[var(--gray95)] px-[12px] py-[6px] text-[var(--label-lg)];
+            }
+            button {
+              @apply !h-auto !min-h-min !px-0 leading-[20px] text-[var(--gray10)];
+            }
+          }
+        }
+      }
+    }
+    .sub_package {
+      @apply mt-[40px];
+      & > div {
+        @apply relative;
+        &::before {
+          @apply absolute left-[15px] top-[13px] h-[calc(100%-13px)] w-[2px] bg-[var(--gray95)] content-[''];
+        }
+        & > div {
+          @apply pb-[40px];
+          &:last-child {
+            @apply pb-0;
+          }
+          & > button {
+            @apply max-h-none;
+            & > span {
+              @apply pl-0;
+            }
+            & + div {
+              @apply bg-inherit;
+            }
+            svg {
+              @apply absolute right-0 top-[2px] m-0 h-[20px] w-[20px];
+            }
+            strong {
+              @apply leading-[26px];
+            }
+          }
+        }
+      }
+      .sub_package_title {
+        @apply relative pl-[40px];
+        .number {
+          @apply body-lg-b absolute left-0 top-[3px] flex h-[32px] w-[32px] items-center justify-center rounded-[50%] bg-[var(--blue50)] leading-[24px] text-white;
+        }
+        strong {
+          @apply title5-b block leading-[28px] text-[var(--gray10)];
+          em {
+            @apply title5-b ml-[8px] inline-block text-[var(--blue50)];
+          }
+        }
+        p {
+          @apply body-sm mt-[8px] text-[var(--gray35)];
+        }
+      }
+      .sub_package_content {
+        @apply mt-[24px] pl-[40px];
+      }
+    }
+    .operator_box {
+      @apply mt-[40px];
+      & > strong {
+        @apply title5-b mb-[16px] block text-[var(--gray10)];
+      }
+    }
+    .sub_box {
+      @apply relative mt-[24px];
+    }
+  }
+}

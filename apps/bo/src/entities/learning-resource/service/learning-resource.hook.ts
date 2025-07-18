@@ -155,3 +155,21 @@ export function useCreateQuestionBankContent(options?: any) {
     data: mutation.data,
   };
 }
+
+export function useUpdateQuestionBankContent(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.updateQuestionBankContent(),
+    ...options,
+  });
+
+  return {
+    update: (payload: ContentBaseInfo, options?: any) => mutation.mutate(payload as any, options),
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
+}
+
+export function useGetContent(contentUuid: string, options?: any) {
+  return useQuery({ ...learningResourceQueryOptions.getContent(contentUuid), ...options });
+}

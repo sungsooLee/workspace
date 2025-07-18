@@ -1,3 +1,4 @@
+import { getQuerySkipToken } from '@learnway/shared';
 import {
   BlogCreateReq,
   BlogUpdateReq,
@@ -32,6 +33,7 @@ export const queryKeys = {
   html5Resource: ['html5-resource'] as const,
   html5Status: ['html5-status'] as const,
   blogResource: ['blog-resource'] as const,
+  questionBankQustionList: ['question-bank-qustion-list'] as const,
 };
 
 export const learningResourceQueryOptions = {
@@ -126,6 +128,13 @@ export const learningResourceQueryOptions = {
     staleTime: 0,
     enabled: true,
   }),
+  getQuestionList: (param: any) =>
+    param
+      ? {
+          queryKey: queryKeys.questionBankQustionList,
+          queryFn: () => LearningResourceService.getQuestionList(param),
+        }
+      : getQuerySkipToken<any>(),
 };
 
 export const mutateOptions = {
@@ -163,5 +172,10 @@ export const mutateOptions = {
   createQuestionBankContent: () => ({
     mutationFn: (params: ContentBaseInfo) =>
       LearningResourceService.createQuestionBankContent(params),
+  }),
+
+  updateQuestionBankContent: () => ({
+    mutationFn: (params: ContentBaseInfo) =>
+      LearningResourceService.updateQuestionBankContent(params),
   }),
 };

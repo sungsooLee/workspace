@@ -1,0 +1,9 @@
+.start {
+  &.phone_change {
+    .input_box {
+      & > div {
+        @apply border-none pt-0;
+      }
+    }
+  }
+}

@@ -1,0 +1,90 @@
+.start {
+  &.education_wrap {
+    h2 {
+      @apply headline3-b mb-[24px] text-[var(--gray10)];
+    }
+    .filter_wrap {
+      @apply flex items-center justify-between;
+      .date {
+        @apply label-xl-b text-[var(--gray10)];
+      }
+      .drop_btn {
+        @apply relative flex min-h-min items-center;
+        span {
+          @apply label-xl-b leading-[36px] text-[var(--gray10)];
+        }
+        /* &::before {
+            @apply absolute left-0 top-1/2 h-[12px] w-px -translate-y-1/2 bg-[var(--gray4)] content-[''];
+          } */
+      }
+    }
+    .education_box {
+      @apply mt-[16px];
+      & > ul {
+        & > li {
+          & + li {
+            @apply mt-[16px];
+          }
+        }
+      }
+
+      .btn_more {
+        @apply relative z-[1] mt-[32px] flex items-center justify-center;
+        button {
+          @apply label-lg-b rounded-[8px] border-[1px] border-solid border-[var(--gray75)] bg-white p-[12px] leading-[20px] text-[var(--gray35)];
+          &.active {
+            svg {
+              @apply rotate-180;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.education_wrap {
+        h2 {
+          @apply headline1-b inline-block leading-[31px];
+        }
+        .filter_wrap {
+          .date {
+            @apply body-lg-b leading-[27px] text-[var(--gray10)];
+          }
+          .filter {
+            .array {
+              button {
+                @apply !body_4_r;
+                &[class*='active'] {
+                  @apply !body_4_b;
+                }
+              }
+            }
+          }
+        }
+        .date_drop {
+          @apply mt-[10px];
+        }
+        .education_box {
+          @apply mt-[16px];
+          ul {
+            li {
+              & + li {
+                @apply mt-[30px];
+              }
+            }
+          }
+
+          .btn_more {
+            button {
+              @apply flex h-[44px] w-full justify-center;
+            }
+          }
+        }
+      }
+    }
+  }
+}

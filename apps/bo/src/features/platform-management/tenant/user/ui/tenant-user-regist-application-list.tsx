@@ -16,6 +16,7 @@ import {
 } from '@features/platform-management/company/company-user-management/service/company-user.service';
 import { TenantByRoleDropdownFormField } from '@shared/ui';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
+import { useApproveAccountUser, useRejectAccountUser } from '@entities/users/service/users.hook';
 
 const _global = {
   linkClick: (userUuid: string) => {
@@ -37,6 +38,8 @@ const TenantUserRegistApplicationListComponent: FC<any> = ({ rootPath }) => {
 
   const { data: loginUser } = useFetchAuthUser();
   const queryClient = useQueryClient();
+  const { approve } = useApproveAccountUser({});
+  const { reject } = useRejectAccountUser({});
 
   const {open: openModal, confirm: confirmModal, alert } = useModal();
   const [companyCodes, setCompanyCodes] = useState<string[]>([]);
@@ -68,7 +71,11 @@ const TenantUserRegistApplicationListComponent: FC<any> = ({ rootPath }) => {
 
   const handleOnSearch = (data: any) => {
     console.log('search', data);
-    gridFetch(data);
+    const searchData = {
+      ...data,
+      enabledDate: data.enabledDate ? data.enabledDate : null,
+    }
+    gridFetch(searchData);
   };
 
   const openChangeUserEnableModal = (isApproval: boolean) => {
@@ -90,7 +97,19 @@ const TenantUserRegistApplicationListComponent: FC<any> = ({ rootPath }) => {
         if( value ) {
           // 선택한 계정 상태 변경(대기 -> 정상),
           const targetUUIDs = selectedRow?.map( (row: any) => row.original.uuid)
-          console.log('targetUUIDs', targetUUIDs);
+          if( isApproval ) { // 승인
+            approve( targetUUIDs, {
+              onSuccess: () => {
+                gridFetch(getValues())
+              }
+            });
+          } else { // 반려
+            reject( targetUUIDs, {
+              onSuccess: () => {
+                gridFetch(getValues())
+              }
+            });
+          }
         }
       },
     })
@@ -229,10 +248,14 @@ const searchConfig = (): SearchBoxConfig => ({
         value: '',
       },
       {
-        name: 'opt2',
-        type: 'text',
+        name: 'enabledDate',
+        type: 'dropdown',
         label: t('승인상태'),
-        value: '',
+        value: 'false',
+        options: [
+          { value: 'false', label: t('대기') },
+          { value: 'true', label: t('승인') },
+        ],
       },
       {
         name: 'dateRange',
@@ -378,7 +401,7 @@ const columns = () => [
       }
       return t('대기');
     },
-    header: t('승인 여부'),
+    header: t('승인 상태'),
     meta: {
       cellAlign: 'center',
     },

@@ -365,7 +365,7 @@ export interface TestPaperBasicInfoSaveRes {
 }
 
 export interface TestPaperBasicInfoDetail extends GetContentDetailRes {
-  examTemplate: ExamTemplateType;
+  examTemplateType: ExamTemplateType;
   questionCount: number;
   questionCountPerPage: number;
   examLimitTime: number;
@@ -410,3 +410,12 @@ export enum ExamType {
 }
 
 export type TestPaperDetailRes = GetContentDetailRes;
+
+export interface GetVideoStatusRes {
+  contentUuid: string;
+  fileUUid: string;
+  contentType: ContentType;
+  contentStatusCode: ContentStatusCode;
+  processingStatus: ProcessingStatus;
+  isDrafted: boolean;
+}

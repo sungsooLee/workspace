@@ -1,0 +1,69 @@
+.start {
+  &.procedure {
+    .list {
+      @apply mt-[24px];
+      .list_box > li {
+        @apply mr-[20px] inline-block align-top;
+      }
+      .list_box > li:nth-child(4n) {
+        @apply mr-0;
+      }
+      .list_box > li:nth-child(n + 5) {
+        @apply mt-[40px];
+      }
+      .list_box.horizontal {
+        & > li {
+          @apply w-full;
+          & + li {
+            @apply mt-[24px] border-t-[1px] border-solid border-[var(--gray5)] pt-[24px];
+          }
+        }
+      }
+    }
+    .empty {
+      @apply mt-[80px];
+    }
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.procedure {
+        .list {
+          @apply mt-0;
+          .list_box > li {
+            @apply m-0 w-[calc((100%/2)-8px)];
+          }
+          .list_box > li:nth-child(2n) {
+            @apply ml-[16px];
+          }
+          .list_box > li:nth-child(n + 3) {
+            @apply mt-[32px];
+          }
+          .list_box.horizontal > li {
+            @apply m-0 mt-[24px] w-full border-none pt-0;
+            & > div {
+              & > div {
+                & > div:nth-child(1) {
+                  @apply w-[120px];
+                }
+              }
+            }
+          }
+        }
+        .empty {
+          @apply mt-[16px] rounded-[8px] border-[1px] border-solid border-[var(--gray4)] pb-[24px];
+          & > div {
+            & > div {
+              @apply mt-[12px];
+              button {
+                @apply px-[12px] py-[6px] leading-[20px];
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

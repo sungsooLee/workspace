@@ -3,14 +3,17 @@ import { Button } from '@learnway/ui';
 import style from '@learnway/styles/bo/assets/styles/modules/contents-history-info.module.css';
 import { t } from 'i18next';
 import { DynamicFormProvider } from '@learnway/hooks';
+import { FieldValues, UseFormWatch } from 'react-hook-form';
 
 interface ContentsHistoryInfoFormFieldComponentProp {
-  provider: DynamicFormProvider;
+  provider?: DynamicFormProvider; // dynamic form provider가 필요합니다.
   type?: string;
 }
 
 const ContentsHistoryInfoFormFieldComponent = ({
-  provider,
+  provider = {
+    watch: ((name: string) => 'provider missed') as UseFormWatch<FieldValues>,
+  } as DynamicFormProvider,
   type, // column
 }: ContentsHistoryInfoFormFieldComponentProp) => {
   const { watch } = provider;
