@@ -19,6 +19,7 @@ import {
   PostDraftHtmlVideoParams,
   PostDraftVideosParams,
   PostDraftVideosRes,
+  QuestionItem,
   TestPaperBasicInfoSaveReq,
   TestPaperBasicInfoSaveRes,
 } from '@types';
@@ -204,6 +205,14 @@ export default class LearningResourceService {
     return httpService.put<TestPaperBasicInfoSaveRes>(`${CMSApiPrefix()}/exam/pool`, body);
   }
 
+  /**
+   * 시험, 문제은행 문항 등록
+   * @param body
+   * @returns
+   */
+  static createQuestionItem(body: QuestionItem) {
+    return httpService.post<any>(`${CMSApiPrefix()}/exam/question`, body);
+  }
   /**
    * 문제은행 or 시험지의 문항 목록 조회
    * @param contentUuid

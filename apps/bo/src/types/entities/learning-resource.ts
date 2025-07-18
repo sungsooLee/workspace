@@ -459,3 +459,22 @@ export interface GetVideoResourceRes {
   encodedAudios: EncodedAudio[] | null;
   videoSubtitles: VideoSubtitles[];
 }
+
+export interface QuestionItem {
+  sortSeq: number;
+  examQuestionUuid: string;
+  questionText: string;
+  questionType: string;
+  explainText: string;
+  questionLevel: string;
+  optionCount: number;
+  isUsed: boolean;
+  options: QuestionItemOption[];
+}
+
+export interface QuestionItemOption {
+  sortSeq: number;
+  examOptionText: string;
+  isCorrectAnswer: boolean;
+  fileUuid: string;
+}
