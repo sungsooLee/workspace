@@ -1,0 +1,16 @@
+.start {
+  &.review_option {
+    @apply rounded-[6px] border-[1px] border-solid border-[var(--blue50)] bg-white p-[8px] shadow-[0_2px_6px_rgba(0,0,0,.2)];
+    ul {
+      @apply min-w-[92px];
+      li {
+        button {
+          @apply label-md w-full p-[10px] text-left text-[var(--gray35)];
+          &:hover {
+            @apply label-md-b bg-[var(--blue95)] text-[var(--gray10)];
+          }
+        }
+      }
+    }
+  }
+}

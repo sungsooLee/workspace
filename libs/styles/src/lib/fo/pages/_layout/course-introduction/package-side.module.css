@@ -1,0 +1,78 @@
+/* 사이드 패키지 */
+
+.start {
+  &.package {
+    .package_box {
+      .acc_package {
+        & > div {
+          @apply rounded-[12px] border-[1px] border-solid border-[var(--gray90)] !p-[32px];
+          & > button {
+            @apply relative max-h-none py-0 pr-[30px];
+            & > span {
+              @apply !min-h-[inherit] px-0;
+            }
+            & + div {
+              @apply bg-inherit;
+            }
+            svg {
+              @apply absolute right-0 top-[2px] mr-0 mt-0 h-[20px] w-[20px] stroke-[var(--gray7)];
+            }
+            &[data-state='open'] {
+              svg {
+                @apply rotate-180;
+              }
+            }
+          }
+          & + div {
+            @apply mt-[16px] border-t-[1px] border-solid border-[var(--gray3)] pt-[16px];
+          }
+        }
+        .sub_package_title {
+          p {
+            @apply title4-b leading-[24px] text-[var(--gray10)];
+          }
+        }
+        .sub_package_content {
+          @apply mt-[20px];
+          & > div {
+            & + div {
+              @apply mt-[12px];
+            }
+            & > div {
+              & > div {
+                @apply !w-[120px];
+              }
+              & > div {
+                @apply flex items-center;
+                & > p {
+                  @apply body-md !line-clamp-3 !max-h-none !whitespace-normal break-words !leading-[24px] text-[var(--gray35)];
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.package {
+        .package_box {
+          .acc_package {
+            & > div {
+              @apply !p-[24px];
+            }
+            .sub_package_title {
+              p {
+                @apply title3-b leading-[22px] text-[var(--gray10)];
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

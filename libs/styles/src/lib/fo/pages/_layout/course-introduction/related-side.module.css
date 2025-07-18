@@ -1,0 +1,21 @@
+/* 사이드 연관과정 */
+.start {
+  &.related {
+    .procedure_box {
+      li {
+        & > div {
+          & > div {
+            & > div:nth-child(1) {
+              @apply !w-[120px];
+            }
+            & > div {
+              & > p {
+                @apply !body_3_r !line-clamp-2 !whitespace-normal;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

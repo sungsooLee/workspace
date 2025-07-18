@@ -16,6 +16,7 @@ import {
 } from '@features/platform-management/company/company-user-management/service/company-user.service';
 import { TenantByRoleDropdownFormField } from '@shared/ui';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
+import { useApproveAccountUser, useRejectAccountUser } from '@entities/users/service/users.hook';
 
 const _global = {
   linkClick: (userUuid: string) => {
@@ -37,6 +38,8 @@ const TenantUserRegistApplicationListComponent: FC<any> = ({ rootPath }) => {
 
   const { data: loginUser } = useFetchAuthUser();
   const queryClient = useQueryClient();
+  const { approve } = useApproveAccountUser({});
+  const { reject } = useRejectAccountUser({});
 
   const {open: openModal, confirm: confirmModal, alert } = useModal();
   const [companyCodes, setCompanyCodes] = useState<string[]>([]);
@@ -67,13 +70,13 @@ const TenantUserRegistApplicationListComponent: FC<any> = ({ rootPath }) => {
   const tenantIdWatch = useWatch({ control: searchProvider.control, name: 'tenantId' });
 
   const handleOnSearch = (data: any) => {
-    console.log('search', data);
+    console.log('searchData : () => ', data);
     gridFetch(data);
   };
 
   const openChangeUserEnableModal = (isApproval: boolean) => {
     const selectedRow = tableInstance?.getSelectedRowModel().rows;
-    const checkTarget = selectedRow?.map( (row: any) => row.original.enabledDate !== null)
+    const checkTarget = selectedRow?.filter( (row: any) => row.original.enabledDate !== null)
     if( checkTarget?.length !== 0 ) {
       alert({
         title: isApproval ? '승인 확인' : '반려 확인',
@@ -89,8 +92,22 @@ const TenantUserRegistApplicationListComponent: FC<any> = ({ rootPath }) => {
       onClose: (value: boolean) => {
         if( value ) {
           // 선택한 계정 상태 변경(대기 -> 정상),
-          const targetUUIDs = selectedRow?.map( (row: any) => row.original.uuid)
-          console.log('targetUUIDs', targetUUIDs);
+          const uuids = selectedRow?.map((row: any) => row.original.uuid);
+          if( isApproval ) { // 승인
+            approve({ uuids }, {
+              onSuccess: () => {
+                gridFetch(getValues())
+              }
+            });
+          } else { // 반려
+            reject(
+              { uuids }, {
+                onSuccess: () => {
+                  gridFetch(getValues());
+                },
+              },
+            );
+          }
         }
       },
     })
@@ -223,16 +240,21 @@ const searchConfig = (): SearchBoxConfig => ({
     ],
     [
       {
-        name: 'tenantManagerName',
+        name: 'employeeNumber',
         type: 'text',
         label: t('사번'),
         value: '',
       },
       {
-        name: 'opt2',
-        type: 'text',
-        label: t('승인상태'),
-        value: '',
+        name: 'userState',
+        type: 'dropdown',
+        label: t('승인 상태'),
+        value: 'WAIT',
+        options: [
+          { value: 'WAIT', label: t('대기') },
+          { value: '', label: t('전체') },
+          { value: 'NORMAL', label: t('승인') },
+        ],
       },
       {
         name: 'dateRange',
@@ -378,7 +400,7 @@ const columns = () => [
       }
       return t('대기');
     },
-    header: t('승인 여부'),
+    header: t('승인 상태'),
     meta: {
       cellAlign: 'center',
     },

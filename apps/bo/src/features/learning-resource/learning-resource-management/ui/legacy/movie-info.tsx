@@ -5,14 +5,20 @@ import { IcoStatusFail } from '@learnway/icons';
 import style from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
 import { DynamicFormProvider } from '@learnway/hooks';
 import { ProcessingStatus } from '@types';
-import { useVideoResource } from '@entities/learning-resource';
+import {
+  isProcessing,
+  isProcessingCompleted,
+  isProcessingFailed,
+  isProcessingNone,
+  useVideoResource,
+} from '@entities/learning-resource';
 
 interface MovieInfoProps {
   provider: DynamicFormProvider;
 }
 
 const MovieInfoComponent = ({ provider }: MovieInfoProps) => {
-  const { processingStatus } = useVideoResource(provider);
+  const { processingStatus: status } = useVideoResource(provider);
 
   // media info_list
   const infoList = [
@@ -49,54 +55,40 @@ const MovieInfoComponent = ({ provider }: MovieInfoProps) => {
     },
   ];
 
-  if (!processingStatus) return null;
+  if (isProcessingNone(status)) return null;
 
   return (
     <>
       <strong className={style.title}>업로드 파일</strong>
-      {[
-        ProcessingStatus.STARTED,
-        ProcessingStatus.UPLOADING,
-        ProcessingStatus.ENCODING,
-        ProcessingStatus.FAIL,
-      ].includes(processingStatus) && (
+      {/* 인코딩 진행 중 */}
+      {isProcessing(status) && (
         <div className={style.status_wrap}>
-          {/* 인코딩 진행 중 */}
-          {[
-            ProcessingStatus.STARTED,
-            ProcessingStatus.UPLOADING,
-            ProcessingStatus.ENCODING,
-          ].includes(processingStatus) && (
-            <>
-              <Spinner isLoading={true} showBackdrop className={style.loading} />
-              <p className={style.text}>
-                <strong>인코딩 진행 중입니다.</strong>
-                인코딩 대기 및 영상 길이에 따라 인코딩 시간이 오래 걸릴수도 있습니다.
-              </p>
-            </>
-          )}
-          {/* 인코딩 실패 */}
-          {processingStatus === ProcessingStatus.FAIL && (
-            <>
-              <IcoStatusFail className={style.fail} />
-              <p className={style.text}>
-                <strong>인코딩이 실패되었습니다.</strong>
-                다시 시도해 주세요.
-              </p>
-              <div className={style.btn_box}>
-                <Button className={style.btn} variant="gray" size="sm">
-                  재시도
-                </Button>
-                <Button className={style.btn} variant="primary" size="sm">
-                  동영상 변경
-                </Button>
-              </div>
-            </>
-          )}
+          <Spinner isLoading={true} showBackdrop className={style.loading} />
+          <p className={style.text}>
+            <strong>인코딩 진행 중입니다.</strong>
+            인코딩 대기 및 영상 길이에 따라 인코딩 시간이 오래 걸릴수도 있습니다.
+          </p>
         </div>
       )}
-
-      {processingStatus === ProcessingStatus.COMPLETE && (
+      {/* 인코딩 실패 */}
+      {isProcessingFailed(status) && (
+        <div className={style.status_wrap}>
+          <IcoStatusFail className={style.fail} />
+          <p className={style.text}>
+            <strong>인코딩이 실패되었습니다.</strong>
+            다시 시도해 주세요.
+          </p>
+          <div className={style.btn_box}>
+            <Button className={style.btn} variant="gray" size="sm">
+              재시도
+            </Button>
+            <Button className={style.btn} variant="primary" size="sm">
+              동영상 변경
+            </Button>
+          </div>
+        </div>
+      )}
+      {isProcessingCompleted(status) && (
         <>
           <ul className={style.btn_list}>
             {buttons.map((btn, index) => (

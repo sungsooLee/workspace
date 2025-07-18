@@ -1,0 +1,20 @@
+/* family-site.module.css */
+.family_site {
+  @apply mt-[5px] w-[250px];
+  .btn_wrap {
+    @apply input_3_r block flex w-full flex-col overflow-hidden text-ellipsis whitespace-nowrap rounded-[8px] border-[1px] border-solid border-[var(--gray5)] bg-[var(--white)] py-[5px];
+    > button {
+      @apply w-full px-[16px] py-[5px] text-left;
+    }
+    &.active {
+      @apply font-bold;
+    }
+  }
+}
+
+.btn_site {
+  @apply input_3_r relative flex h-[40px] w-[250px] items-center justify-between rounded-[8px] border-[1px] border-solid border-[var(--gray5)] bg-[var(--white)] pl-[16px] pr-[14px] text-left text-[var(--gray6)];
+  .select {
+    @apply inline-block w-[calc(100%-16px)] overflow-hidden text-ellipsis whitespace-nowrap pr-[10px];
+  }
+}

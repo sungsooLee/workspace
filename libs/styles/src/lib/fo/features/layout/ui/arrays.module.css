@@ -1,0 +1,17 @@
+.start {
+  &.array {
+    @apply flex items-center;
+    button {
+      @apply !body_3_r whitespace-nowrap !p-0 text-[var(--gray8)];
+      &.active {
+        @apply !body_3_b;
+      }
+      & + button {
+        @apply relative ml-[8px] !pl-[8px];
+        &::after {
+          @apply absolute left-0 top-[50%] h-[12px] w-px -translate-x-1/2 -translate-y-1/2 rounded-[50%] bg-[var(--gray90)] content-[''];
+        }
+      }
+    }
+  }
+}

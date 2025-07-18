@@ -1,0 +1,12 @@
+.start {
+  &.course_selection {
+    & > div {
+      & > div {
+        @apply !min-h-min !p-0;
+        .box {
+          @apply mt-[12px];
+        }
+      }
+    }
+  }
+}
