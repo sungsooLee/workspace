@@ -1,10 +1,9 @@
 //  IA105 / NLP_BO_CMS_1016, NLP_BO_CMS_1002
 
-import { Button, Spinner } from '@learnway/ui';
+import { Button, Spinner, useModal } from '@learnway/ui';
 import { IcoStatusFail } from '@learnway/icons';
 import style from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
 import { DynamicFormProvider } from '@learnway/hooks';
-import { ProcessingStatus } from '@types';
 import {
   isProcessing,
   isProcessingCompleted,
@@ -15,13 +14,16 @@ import {
 import { formatBytes } from '@learnway/shared';
 import { useMemo } from 'react';
 import { max } from 'lodash';
+import { PreviewLearningWindow } from '../preview-learning-window';
 
 interface MovieInfoProps {
   provider: DynamicFormProvider;
 }
 
 const MovieInfoComponent = ({ provider }: MovieInfoProps) => {
+  const { open: openModal } = useModal();
   const {
+    contentUuid,
     isDrafted,
     processingStatus: status,
     playTime,
@@ -65,7 +67,12 @@ const MovieInfoComponent = ({ provider }: MovieInfoProps) => {
     },
     {
       label: '미리보기',
-      onClick: () => console.log('btn 4'),
+      onClick: () => {
+        openModal({
+          width: 'full',
+          content: <PreviewLearningWindow contentUuid={contentUuid} />,
+        });
+      },
     },
   ];
 
