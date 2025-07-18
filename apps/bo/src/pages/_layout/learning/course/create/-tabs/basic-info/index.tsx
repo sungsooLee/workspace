@@ -311,15 +311,23 @@ const BasicInfoComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>(
           {/*연락처*/}
           <FormRow2
             provider={provider}
-            name={'coordinatorTelNo'}
+            name={'연락처1'}
             label={'연락처'}
             element={
-              <PhoneNumberFormField
-                fields={{ nationCode: 'coordinatorTelCountryCode', number: 'coordinatorTelNo' }}
-                phoneNumberConfig={{
-                  options: [{ value: 'KOR_82', label: '+82' }],
-                }}
-              />
+              <>
+                <FormRow2
+                  provider={provider}
+                  name={'coordinatorTelCountryCode'}
+                  element={
+                    <DropdownFormField
+                      optionsConfig={{
+                        codeGroup: CODE_GROUP['cmmon.TelCountryCode'],
+                      }}
+                    />
+                  }
+                />
+                <FormRow2 provider={provider} name={'coordinatorTelNo'} element={<Input />} />
+              </>
             }
           />
           {/*이메일*/}
@@ -355,15 +363,23 @@ const BasicInfoComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>(
           {/*연락처*/}
           <FormRow2
             provider={provider}
-            name={'operatorTelNo'}
+            name={'연락처2'}
             label={'연락처'}
             element={
-              <PhoneNumberFormField
-                fields={{ nationCode: 'operatorTelCountryCode', number: 'operatorTelNo' }}
-                phoneNumberConfig={{
-                  options: [{ value: 'KOR_82', label: '+82' }],
-                }}
-              />
+              <>
+                <FormRow2
+                  provider={provider}
+                  name={'operatorTelCountryCode'}
+                  element={
+                    <DropdownFormField
+                      optionsConfig={{
+                        codeGroup: CODE_GROUP['cmmon.TelCountryCode'],
+                      }}
+                    />
+                  }
+                />
+                <FormRow2 provider={provider} name={'operatorTelNo'} element={<Input />} />
+              </>
             }
           />
           {/*이메일*/}
