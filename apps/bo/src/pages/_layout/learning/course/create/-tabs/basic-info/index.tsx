@@ -30,7 +30,7 @@ const BasicInfoComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>(
   ({ onSave, onConfigPropChange, data: { formData, courseConfig, isSaved } }, ref) => {
     const { t } = useTranslation();
 
-    const { provider, getValues, updateFormData, onFormValid, formState, watch } =
+    const { provider, getValues, updateFormData, onFormValid, formState, watch, formValues } =
       useDynamicForm2();
 
     const channelUuid = watch('channelUuid');
@@ -50,7 +50,7 @@ const BasicInfoComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>(
       validate: async () => {
         // 모든 필드에 대해 유효성 검사 수행
         const isValid = await onFormValid();
-        const data = formDataToRequestData(getValues() as Course);
+        const data = formDataToRequestData(formValues as Course);
         const errors = formState.errors;
 
         return {
@@ -59,7 +59,7 @@ const BasicInfoComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>(
           errors,
         };
       },
-      getValues: () => formDataToRequestData(getValues() as Course),
+      getValues: () => formDataToRequestData(formValues as Course),
     }));
 
     useEffect(() => {
@@ -311,15 +311,23 @@ const BasicInfoComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>(
           {/*연락처*/}
           <FormRow2
             provider={provider}
-            name={'coordinatorTelNo'}
+            name={'연락처1'}
             label={'연락처'}
             element={
-              <PhoneNumberFormField
-                fields={{ nationCode: 'coordinatorTelCountryCode', number: 'coordinatorTelNo' }}
-                phoneNumberConfig={{
-                  options: [{ value: 'KOR_82', label: '+82' }],
-                }}
-              />
+              <>
+                <FormRow2
+                  provider={provider}
+                  name={'coordinatorTelCountryCode'}
+                  element={
+                    <DropdownFormField
+                      optionsConfig={{
+                        codeGroup: CODE_GROUP['cmmon.TelCountryCode'],
+                      }}
+                    />
+                  }
+                />
+                <FormRow2 provider={provider} name={'coordinatorTelNo'} element={<Input />} />
+              </>
             }
           />
           {/*이메일*/}
@@ -355,15 +363,23 @@ const BasicInfoComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>(
           {/*연락처*/}
           <FormRow2
             provider={provider}
-            name={'operatorTelNo'}
+            name={'연락처2'}
             label={'연락처'}
             element={
-              <PhoneNumberFormField
-                fields={{ nationCode: 'operatorTelCountryCode', number: 'operatorTelNo' }}
-                phoneNumberConfig={{
-                  options: [{ value: 'KOR_82', label: '+82' }],
-                }}
-              />
+              <>
+                <FormRow2
+                  provider={provider}
+                  name={'operatorTelCountryCode'}
+                  element={
+                    <DropdownFormField
+                      optionsConfig={{
+                        codeGroup: CODE_GROUP['cmmon.TelCountryCode'],
+                      }}
+                    />
+                  }
+                />
+                <FormRow2 provider={provider} name={'operatorTelNo'} element={<Input />} />
+              </>
             }
           />
           {/*이메일*/}
@@ -389,25 +405,7 @@ export const BasicInfo = BasicInfoComponent;
 const responseDataToFormData = (d: Course): Course => {
   return {
     ...d,
-    // primaryCategoryId: 1, // 서버에서 받으면 삭제
-    // categoryIds: d?.categories?.map((d: any) => d.categoryId), // 카테고리 아이디
     tenantIds: d?.tenantList?.map((d: any) => d.tenantId), // 테넌트 아이디
-    // targetList: d?.targetList?.map((d: any) => ({
-    //   ...d,
-    //   name: d?.combiners?.[0]?.combineValue,
-    // })),
-    // 카테고리 팝업 에러나서 임시 설정targetList
-    // categories: [
-    //   {
-    //     categoryId: 11,
-    //     name: '1-1',
-    //     categoryCode: 'category11',
-    //     categoryContent: '',
-    //     categoryPath: 'ROOT>한글명-CATE00011>1-1',
-    //     isPrimary: false,
-    //     tenantIds: [2],
-    //   },
-    // ],
   };
 };
 

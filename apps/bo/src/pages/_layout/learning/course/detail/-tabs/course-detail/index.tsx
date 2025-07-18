@@ -1,4 +1,6 @@
+import { useFetchCourse, useFetchCourseConfig, useUpdateCourse } from '@entities/course';
 import { DateRangePickerFormField, DropdownFormField, FormDisplay } from '@features/form';
+import { InstructorListPopup } from '@features/learning-operate-support/instructor-tutor/instructor-management/modal/instructor-list-modal';
 import {
   CategoryChoiceModal,
   CourseChoiceModal,
@@ -13,10 +15,10 @@ import {
   Input,
   InputModalSelectorFormField,
   ListModalSelectorFormField,
-  PhoneNumberFormField,
   RadioGroupFormField,
   SplitPanel,
   TextareaFormField,
+  useModal,
 } from '@learnway/ui';
 import {
   ChipListFormField,
@@ -30,34 +32,43 @@ import {
   UserChoiceModal,
   UserGroupTabsChoiceModal,
 } from '@shared/ui';
-import { Course } from '@types';
+import { Course, CourseConfig } from '@types';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CourseDetailTabBaseProps, CourseDetailTabFormRef } from '../../../-common/type';
 import { CourseStatsSummary } from '../../../-components/course-stats-summary/course-stats-summary';
 import { PassOptionFormField } from '../../../-components/pass-option-form-field/pass-option-form-field';
-import { InstructorListPopup } from '@features/learning-operate-support/instructor-tutor/instructor-management/modal/instructor-list-modal';
-import { useFetchCourse, useFetchCourseConfig } from '@entities/course';
 
 const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBaseProps>(
   ({ courseId }, ref) => {
     const { t } = useTranslation();
-
-    const { provider, getValues, updateFormData } = useDynamicForm2();
+    const { showSaveComplete } = useModal();
+    const { provider, getValues, updateFormData, formValues, onSubmit, onFormChange } =
+      useDynamicForm2();
 
     const { data: formData } = useFetchCourse(courseId);
     const { data: courseConfig } = useFetchCourseConfig({
       courseType: formData?.courseType,
       channelUuid: formData?.channelUuid,
     });
+    const { mutate: updateCourse } = useUpdateCourse({
+      onSuccess: async (response: any) => {
+        console.log('useUpdateCourse :: onSuccess', response);
+        await showSaveComplete();
+        // router.navigate({
+        //   to: '/learning/course',
+        // });
+      },
+    });
 
     console.log('----- course-detail', { courseId });
 
     // 부모 컴포넌트에서 호출할 수 있는 메서드
     useImperativeHandle(ref, () => ({
-      getValues: () => formDataToRequestData(getValues() as Course),
+      getValues: () => formDataToRequestData(formValues as Course),
       save: async () => {
         console.log('save');
+        handleManualSubmit();
         return true;
       },
       delete: async () => {
@@ -70,12 +81,31 @@ const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTab
       console.log('CourseDetailComponent init');
       // 초기 데이터가 있으면 설정
       if (formData) {
-        updateFormData(responseDataToFormData(formData));
+        updateFormData(responseDataToFormData(formData, courseConfig));
       }
-    }, [formData]);
+    }, [formData, courseConfig]);
+
+    const handleManualSubmit = () => {
+      // onSubmit은 폼 제출 핸들러를 생성하는 함수입니다
+      const submitHandler = onSubmit((data) => {
+        console.log('수동 제출 성공:', data);
+        updateCourse(data as Course);
+      });
+
+      // 가짜 이벤트 객체를 생성해서 수동으로 호출
+      const fakeEvent = {
+        preventDefault: () => null,
+      } as any;
+
+      submitHandler(fakeEvent);
+    };
+
+    const handleSubmit = async (formData: any) => {
+      console.log('handleSubmit', formData);
+    };
 
     return (
-      <>
+      <form>
         {/* 과정 통계 요약 CourseStatsSummary*/}
         <CourseStatsSummary courseId={formData?.courseId} />
 
@@ -238,7 +268,6 @@ const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTab
                 provider={provider}
                 name={'courseSummary'}
                 label={'AI 과정 요약(AI 자동추출)'}
-                format={'array'}
                 element={<TextareaFormField maxLength={500} />}
               />
             </ContentsRow>
@@ -345,6 +374,27 @@ const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTab
                 }
               />
               {/*연락처*/}
+              <FormRow2
+                provider={provider}
+                name={'연락처1'}
+                label={'연락처'}
+                element={
+                  <>
+                    <FormRow2
+                      provider={provider}
+                      name={'coordinatorTelCountryCode'}
+                      element={
+                        <DropdownFormField
+                          optionsConfig={{
+                            codeGroup: CODE_GROUP['cmmon.TelCountryCode'],
+                          }}
+                        />
+                      }
+                    />
+                    <FormRow2 provider={provider} name={'coordinatorTelNo'} element={<Input />} />
+                  </>
+                }
+              />
               {/*<FormRow2*/}
               {/*  provider={provider}*/}
               {/*  name={'coordinatorTelNo'}*/}
@@ -389,6 +439,27 @@ const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTab
                 }
               />
               {/*연락처*/}
+              <FormRow2
+                provider={provider}
+                name={'연락처2'}
+                label={'연락처'}
+                element={
+                  <>
+                    <FormRow2
+                      provider={provider}
+                      name={'operatorTelCountryCode'}
+                      element={
+                        <DropdownFormField
+                          optionsConfig={{
+                            codeGroup: CODE_GROUP['cmmon.TelCountryCode'],
+                          }}
+                        />
+                      }
+                    />
+                    <FormRow2 provider={provider} name={'operatorTelNo'} element={<Input />} />
+                  </>
+                }
+              />
               {/*<FormRow2*/}
               {/*  provider={provider}*/}
               {/*  name={'operatorTelNo'}*/}
@@ -424,12 +495,15 @@ const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTab
                 format={'string'}
                 element={
                   <ThumbnailListFormField
-                    isLoading={true}
                     uuidType={'group'}
                     uploadConfig={{
                       affairType: 'LMS',
                       s3Path: S3_PATH['upload/course/thumbnail'],
                     }}
+                    selected={getValues()?.primaryThumbnailFileUuid}
+                    onSelected={(selectedThumbnail1: string) =>
+                      onFormChange({ primaryThumbnailFileUuid: selectedThumbnail1 })
+                    }
                     // selected={selectedThumbnail1}
                     // onSelected={handleSelected}
                   />
@@ -447,6 +521,8 @@ const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTab
                   <ChipListFormField
                     chipListConfig={{
                       showInput: true,
+                      labelField: 'tagName',
+                      valueField: 'tagId',
                       wordwrap: true,
                     }}
                   />
@@ -1300,6 +1376,15 @@ const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTab
                   format={'number'}
                   type={'hidden'}
                 />
+                {/* 과정아이디 - hidden */}
+                <FormRow2 provider={provider} name={'courseId'} type={'hidden'} format={'number'} />
+                {/* 대표 썸네일 이미지 UUID - hidden */}
+                <FormRow2
+                  provider={provider}
+                  name={'primaryThumbnailFileUuid'}
+                  type={'hidden'}
+                  format={'string'}
+                />
               </ContentsRow>
             </FormDisplay>
           </div>
@@ -1308,7 +1393,7 @@ const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTab
             <h2>커리큘럼</h2>
           </div>
         </SplitPanel>
-      </>
+      </form>
     );
   },
 );
@@ -1318,28 +1403,35 @@ export const CourseDetail = CourseDetailComponent;
 /**
  * 응답 데이터를 폼 데이터로 변환
  */
-const responseDataToFormData = (d: Course): Course => {
+const responseDataToFormData = (d: Course, c: CourseConfig = {} as CourseConfig): Course => {
   return {
     ...d,
-    // primaryCategoryId: 1, // 서버에서 받으면 삭제
-    // categoryIds: d?.categories?.map((d: any) => d.categoryId), // 카테고리 아이디
-    // tenantIds: d?.tenantList?.map((d: any) => d.tenantId), // 테넌트 아이디
-    targetList: d?.targetList?.map((d: any) => ({
-      ...d,
-      name: d?.combiners?.[0]?.combineValue,
-    })),
-    // 카테고리 팝업 에러나서 임시 설정
-    // categories: [
-    //   {
-    //     categoryId: 11,
-    //     name: '1-1',
-    //     categoryCode: 'category11',
-    //     categoryContent: '',
-    //     categoryPath: 'ROOT>한글명-CATE00011>1-1',
-    //     isPrimary: false,
-    //     tenantIds: [2],
-    //   },
-    // ],
+    tenantIds: d?.tenantList?.map((d: any) => d.tenantId), // 테넌트 아이디
+    isLearnEnvEnabled: c.learningEnvOption !== 'IMPOSSIBLE', // 학습환경 설정 사용 여부
+    isLearnControlEnabled: c.learningControlOption !== 'IMPOSSIBLE', // 학습제어 설정 사용 여부
+    isUsePassOption: c.passOption !== 'IMPOSSIBLE', // 이수기준 설정 사용 여부
+    isCommunicationToolEnabled: c.communicationOption !== 'IMPOSSIBLE', // 커뮤니티 및 공유설정 사용 여부
+    isInstructorAssigned: c.instructorOption !== 'IMPOSSIBLE', // 강사 설정 사용 여부
+    isTextbookProvided: c.textBookOption !== 'IMPOSSIBLE', // 교재 설정 사용 여부
+    isRelatedPrerequisiteCourseExisted: c.relatedCourseOption !== 'IMPOSSIBLE', // 사전/연관학습 설정 사용 여부
+    isUseOutsourcing: true, // 오토에버 위탁 전용 설정 여부 (CourseConfig 에 관리안함)
+    // 이수기준 설정
+    passOption: {
+      progressMinPassScore: d.progressMinPassScore, // 진도 최소 이수 점수
+      attendanceMinPassScore: d.attendanceMinPassScore, // 출석 최소 이수 점수
+      examMinPassScore: d.examMinPassScore, // 평가 최소 이수 점수
+      asgmtMinPassScore: d.asgmtMinPassScore, // 과제 최소 이수 점수
+      totalMinPassScore: d.totalMinPassScore, // 총점 최소 이수 점수
+      progressWeights: d.progressWeights, // 진도 반영 비율
+      attendanceWeights: d.attendanceWeights, // 출석 반영 비율
+      examWeights: d.examWeights, // 평가 반영 비율
+      asgmtWeights: d.asgmtWeights, // 과제 반영 비율
+    },
+    courseValidityRange: [
+      d.courseValidityStartDate, // 과정 유효 시작일
+      d.courseValidityEndDate, // 과정 유효 종료일
+    ],
+    // tagNameArray: d.tagNames?.map((item) => item.value), // 태그
   };
 };
 
@@ -1350,7 +1442,6 @@ const responseDataToFormData = (d: Course): Course => {
  * @param {Course} d - 과정 기본 정보 폼 데이터
  * @returns {Course} 과정 기본 정보 요청 데이터
  */
-
 export const formDataToRequestData = (d: Course) => {
   // 교육공간 라디오 선택에 따라 값 변경 관련 처리 (교육공간=learningSpaceType)
   // 교육공간 > 차세데 학습학습 플랫폼
@@ -1377,8 +1468,66 @@ export const formDataToRequestData = (d: Course) => {
   d.targetListIds = d.targetList?.map((d: any) => d.id);
 
   // 담당자, 운영자 연락처 국가코드
-  d.coordinatorTelCountryCode = 'KOR_82';
-  d.operatorTelCountryCode = 'KOR_82';
+  // d.coordinatorTelCountryCode = 'KOR_82';
+  // d.operatorTelCountryCode = 'KOR_82';
 
-  return d;
+  //사전 필수과정
+  const preRequisiteCourseIds = d.preRequisiteCourseList
+    ?.map((d) => d.courseId)
+    ?.filter((id): id is number => id !== undefined);
+  //연관 과정
+  const relatedCourseIds = d.relatedCourseList
+    ?.map((d) => d.courseId)
+    ?.filter((id): id is number => id !== undefined);
+
+  // 라디오 옵션 null 처리
+  // 복습 제한 > 미사용
+  if (d.isReviewRestricted === false) {
+    d.maxReviewPeriodMonths = undefined; // 복습 제한 기간(개월)
+  }
+
+  // 1일 진도제한 > 미사용
+  if (d.isDailyLearningProgressRestricted === false) {
+    d.maxDailyLearningProgress = undefined; // 1일 진도제한(분)
+  }
+
+  // 인정 학습시간 > 학습시간
+  if (d.recognizedStudyMinType === 'TIME') {
+    d.recognizedStudyCycles = undefined; // 인정 학습 횟수
+    d.recognizedStudyMinutes = undefined; // 인정 학습시간(분)
+  }
+
+  // 학습포인트 > 미사용
+  if (d.isRecognizedStudyPoint === false) {
+    d.recognizedStudyPoint = undefined; // 인정학습점수(학습포인트)
+  }
+
+  // 강사 > 강사선택
+  if (d.instructorAssignType === 'REGISTERED') {
+    d.instructorName = undefined; // 강사 직접입력
+  }
+
+  // 1인당 교육비 > 미사용
+  if (d.isUseTrainingCostPerPerson === false) {
+    d.trainingCostPerPerson = undefined; // 1인당 교육비(원)
+  }
+
+  // 고용보험 환급비용 > 미사용
+  if (d.isUseEmploymentInsuranceRefund === false) {
+    d.employmentInsuranceRefund = undefined; // 고용보험 환급비(원)
+  }
+
+  return {
+    ...d,
+    ...d.passOption, // 이수기준 설정
+    preRequisiteCourseIds,
+    relatedCourseIds,
+    courseValidityStartDate: d.courseValidityRange?.[0], // 과정 유효 시작일
+    courseValidityEndDate: d.courseValidityRange?.[1], // 과정 유효 종료일
+    courseValidityStartHour: 0, // 과정 노출 시작 시각 (삭제 후 courseValidityStartDate에 통합 예정)
+    courseValidityEndHour: 23, // 과정 노출 종료 시각 (삭제 후 courseValidityEndDate에 통합 예정)
+    // thumbnailFileGroupUuid: '1', // 썸네일 이미지 Group UUID
+    // primaryThumbnailFileUuid: '1', // 대표 썸네일 이미지 UUID
+    // tagNames: d.tagNameArray?.map((item) => ({ value: item })), // 태그
+  };
 };

@@ -51,6 +51,19 @@ export const useCreateCourse = (
 };
 
 /**
+ * 과정을 복사하는 뮤테이션 훅.
+ * 성공 시 'showSaveComplete' 모달을 표시합니다.
+ * @param [options] - 추가 뮤테이션 설정 옵션.
+ */
+export const useCopyCourse = (
+  options?: MutationHookOptions<Course, Error, number, unknown>,
+): UseMutationResult<Course, Error, number, unknown> => {
+  return useMutation({
+    ...mutateOptions.copy(),
+    ...options,
+  });
+};
+/**
  * 기존 코스 정보를 업데이트하는 뮤테이션 훅.
  * 성공 시 'showUpdateComplete' 모달을 표시합니다.
  * @param [options] - 추가 뮤테이션 설정 옵션.
@@ -171,4 +184,14 @@ export const useFetchCoursePopup = <T = CoursePopupListItem>(
   options?: UseQueryOptions<PaginationResponse<T>, Error>,
 ): UseQueryResult<PaginationResponse<T>, Error> => {
   return useQuery({ ...queryOptions.getCoursePopup<T>(params), ...options });
+};
+
+// 과정 찜 여부 변경
+export const useUpdateFavorite = (
+  options?: MutationHookOptions<any, Error, { id: number; isBookmarks: boolean }, unknown>,
+): UseMutationResult<any, Error, { id: number; isBookmarks: boolean }, unknown> => {
+  return useMutation({
+    ...mutateOptions.updateFavorite(),
+    ...options,
+  });
 };

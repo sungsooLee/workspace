@@ -471,6 +471,10 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
     [customOnFormValid, formState.errors, dynamicBuilders, getValues, setFocus],
   );
 
+  const formValues = useMemo(() => {
+    return (formState as any).values;
+  }, [formState]);
+
   // provider 객체 반환
   return {
     provider,
@@ -482,6 +486,7 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
     setValue: customSetValue,
     clearFormError: clearErrors,
     formState,
+    formValues,
     onFormChange,
     onFormFocus: handleFocus,
     control: extendedControl,

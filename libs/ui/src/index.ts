@@ -108,6 +108,7 @@ export * from './lib/grid/components/custom-cell';
 export * from './lib/grid/components/edit-check-cell';
 export * from './lib/grid/components/edit-date-picker-cell';
 export * from './lib/grid/components/edit-dropdown-cell';
+export * from './lib/grid/components/edit-favorite';
 export * from './lib/grid/components/edit-input-cell';
 export * from './lib/grid/components/edit-radio-cell';
 export * from './lib/grid/components/edit-switch-cell';

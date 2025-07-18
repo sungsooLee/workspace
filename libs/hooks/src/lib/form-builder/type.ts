@@ -269,6 +269,8 @@ export type UseDynamicFormResult = {
   onFormFocus: (fieldName: string) => void;
   /** 현재 폼 상태 */
   formState: UseFormReturn['formState'];
+  /** 현재 폼 상태 */
+  formValues: any;
   /** 현재 폼 데이터 가져오기 */
   getValues: UseFormReturn['getValues'];
   /** 필드 값 변경 */

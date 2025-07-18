@@ -10,14 +10,22 @@ import { CourseTabBaseProps, CourseTabFormRef } from '../../../-common/type';
 const PublishCourseComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>(
   ({ onSave, data: { formData, courseConfig } }, ref) => {
     const { t } = useTranslation();
-    const { provider, getValues, onFormValid, formState, updateFormData } = useDynamicForm2();
+    const {
+      provider,
+      getValues,
+      onFormValid,
+      formState,
+      updateFormData,
+      formValues,
+      onFormChange,
+    } = useDynamicForm2();
 
     // 부모 컴포넌트에서 호출할 수 있는 메서드
     useImperativeHandle(ref, () => ({
       validate: async () => {
         // 모든 필드에 대해 유효성 검사 수행
         const isValid = await onFormValid();
-        const data = formDataToRequestData(getValues() as Course);
+        const data = formDataToRequestData(formValues as Course);
         const errors = formState.errors;
 
         return {
@@ -26,13 +34,13 @@ const PublishCourseComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>(
           errors,
         };
       },
-      getValues: () => formDataToRequestData(getValues() as Course),
+      getValues: () => formDataToRequestData(formValues as Course),
     }));
 
     useEffect(() => {
-      console.log('PuComponent init');
       // 초기 데이터가 있으면 설정
       if (formData) {
+        console.log('updateFormData init', formData);
         updateFormData(responseDataToFormData(formData));
       }
     }, [formData]);
@@ -78,12 +86,15 @@ const PublishCourseComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>(
             format={'string'}
             element={
               <ThumbnailListFormField
-                isLoading={true}
                 uuidType={'group'}
                 uploadConfig={{
                   affairType: 'LMS',
                   s3Path: S3_PATH['upload/course/thumbnail'],
                 }}
+                selected={getValues()?.primaryThumbnailFileUuid}
+                onSelected={(selectedThumbnail1: string) =>
+                  onFormChange({ primaryThumbnailFileUuid: selectedThumbnail1 })
+                }
                 // selected={selectedThumbnail1}
                 // onSelected={handleSelected}
               />
@@ -102,6 +113,8 @@ const PublishCourseComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>(
                 chipListConfig={{
                   showInput: true,
                   wordwrap: true,
+                  labelField: 'tagName',
+                  valueField: 'tagId',
                 }}
               />
             }
@@ -114,7 +127,6 @@ const PublishCourseComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>(
             provider={provider}
             name={'courseSummary'}
             label={'AI 과정 요약(AI 자동추출)'}
-            format={'array'}
             element={<TextareaFormField maxLength={500} />}
           />
         </ContentsRow>
@@ -136,6 +148,7 @@ const responseDataToFormData = (d: Course): Course => {
       d.courseValidityStartDate, // 과정 유효 시작일
       d.courseValidityEndDate, // 과정 유효 종료일
     ],
+    // tagNameArray: d.tagNames?.map((item) => item.value), // 태그
   };
 };
 
@@ -154,5 +167,8 @@ export const formDataToRequestData = (d: Course) => {
     courseValidityEndDate: d.courseValidityRange?.[1], // 과정 유효 종료일
     courseValidityStartHour: 0, // 과정 노출 시작 시각 (삭제 후 courseValidityStartDate에 통합 예정)
     courseValidityEndHour: 23, // 과정 노출 종료 시각 (삭제 후 courseValidityEndDate에 통합 예정)
+    // thumbnailFileGroupUuid: '1', // 썸네일 이미지 Group UUID
+    // primaryThumbnailFileUuid: '1', // 대표 썸네일 이미지 UUID
+    tagNames: d.tagNames?.map((item: any) => ({ value: item?.tagName })), // 태그
   };
 };

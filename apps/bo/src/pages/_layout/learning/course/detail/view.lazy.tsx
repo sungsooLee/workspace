@@ -36,15 +36,16 @@ function RouteComponent() {
   };
 
   const handleSaveClick = async () => {
-    try {
-      if (await saveConfirm()) {
-        await saveTabData();
-        await showSaveComplete();
-        moveListPage();
-      }
-    } catch (e) {
-      console.error('저장 중 에러:', e);
-    }
+    saveTabData();
+    // try {
+    //   if (await saveConfirm()) {
+    //     await saveTabData();
+    //     await showSaveComplete();
+    //     moveListPage();
+    //   }
+    // } catch (e) {
+    //   console.error('저장 중 에러:', e);
+    // }
   };
 
   const handleDeleteClick = async () => {
