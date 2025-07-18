@@ -10,8 +10,15 @@ import { CourseTabBaseProps, CourseTabFormRef } from '../../../-common/type';
 const PublishCourseComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>(
   ({ onSave, data: { formData, courseConfig } }, ref) => {
     const { t } = useTranslation();
-    const { provider, getValues, onFormValid, formState, updateFormData, formValues } =
-      useDynamicForm2();
+    const {
+      provider,
+      getValues,
+      onFormValid,
+      formState,
+      updateFormData,
+      formValues,
+      onFormChange,
+    } = useDynamicForm2();
 
     // 부모 컴포넌트에서 호출할 수 있는 메서드
     useImperativeHandle(ref, () => ({
@@ -84,6 +91,10 @@ const PublishCourseComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>(
                   affairType: 'LMS',
                   s3Path: S3_PATH['upload/course/thumbnail'],
                 }}
+                selected={getValues()?.primaryThumbnailFileUuid}
+                onSelected={(selectedThumbnail1: string) =>
+                  onFormChange({ primaryThumbnailFileUuid: selectedThumbnail1 })
+                }
                 // selected={selectedThumbnail1}
                 // onSelected={handleSelected}
               />
@@ -157,7 +168,7 @@ export const formDataToRequestData = (d: Course) => {
     courseValidityStartHour: 0, // 과정 노출 시작 시각 (삭제 후 courseValidityStartDate에 통합 예정)
     courseValidityEndHour: 23, // 과정 노출 종료 시각 (삭제 후 courseValidityEndDate에 통합 예정)
     // thumbnailFileGroupUuid: '1', // 썸네일 이미지 Group UUID
-    primaryThumbnailFileUuid: '1', // 대표 썸네일 이미지 UUID
+    // primaryThumbnailFileUuid: '1', // 대표 썸네일 이미지 UUID
     tagNames: d.tagNames?.map((item: any) => ({ value: item?.tagName })), // 태그
   };
 };
