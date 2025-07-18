@@ -1,20 +1,16 @@
-import { useState, useCallback, useEffect } from 'react';
-import { t } from 'i18next';
-import { createFileRoute, useRouter, Link } from '@tanstack/react-router';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { Button, GridBox, useModal, useGridBox, useGridBoxConfig, Divider } from '@learnway/ui';
-import { SearchBox } from '@shared/ui/search-box';
-import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 import { queryOptions } from '@entities/channel/service/channel.queries';
-import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import {
-  MainContents,
-  PageContainer,
-  ContentsButtons,
-  ChannelRequestChoiceModal,
-} from '@shared/ui';
-import { EnGlobalConst } from '@types';
 import { getChannelUrl } from '@features/channel/channel-application/service/channel-application.service';
+import { useFetchAuthUser } from '@learnway/auth/entities';
+import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
+import { getDateToString } from '@learnway/shared';
+import { Button, Divider, GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
+import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
+import { SearchBox } from '@shared/ui/search-box';
+import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
+import { createColumnHelper } from '@tanstack/react-table';
+import { EnGlobalConst } from '@types';
+import { t } from 'i18next';
+import { useCallback, useEffect } from 'react';
 
 export const Route = createFileRoute('/_layout/tenant/channel/management/')({
   component: RouteComponent,
@@ -22,12 +18,13 @@ export const Route = createFileRoute('/_layout/tenant/channel/management/')({
 
 function RouteComponent() {
   const router = useRouter();
-  const { open: openModal } = useModal();
 
+  const { data: loginUser } = useFetchAuthUser();
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
 
   useEffect(() => {
+    console.log('### loginUser', loginUser);
     gridFetch();
   }, []);
 
@@ -45,26 +42,6 @@ function RouteComponent() {
   return (
     <PageContainer>
       <ContentsButtons>
-        {/* <Button
-          variant="point"
-          size="sm"
-          onClick={() =>
-            openModal({
-              width: 'xl',
-              content: <ChannelRequestChoiceModal />,
-              onClose(data: any) {
-                if (data) {
-                  router.navigate({
-                    to: '/tenant/channel/management/regist',
-                    state: { method: 'request', channelRequestUuid: data.channelRequestUuid },
-                  });
-                }
-              },
-            })
-          }
-        >
-          {t('채널 신청 개설')}
-        </Button> */}
         <Button
           variant="primary"
           size="sm"

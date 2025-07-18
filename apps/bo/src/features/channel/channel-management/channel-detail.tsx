@@ -82,10 +82,21 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
     const tenantList: any[] = [];
     // TODO. ChipList 수정되면 대표 테넌트는 삭제되지 않도록 수정
     if (loginUser.activeTenant) {
-      tenantList.push({ ...loginUser.activeTenant });
+      tenantList.push({
+        ...loginUser.activeTenant,
+        isFixed: true,
+        isMainTenant: true,
+        tenantName: t('{{name}} (대표)', { name: loginUser.activeTenant.tenantName }),
+      });
     } else {
       if (loginUser.tenants && loginUser.tenants.length > 0) {
-        tenantList.push(loginUser.tenants[0]);
+        const tenant = loginUser.tenants[0];
+        tenantList.push({
+          tenant,
+          isFixed: true,
+          isMainTenant: true,
+          tenantName: t('{{name}} (대표)', { name: tenant.tenantName }),
+        });
       }
     }
 
@@ -150,12 +161,15 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
         tenantList: channelData.tenantList.map((tenant: any) => ({
           ...tenant,
           isFixed: tenant.isMainTenant,
+          tenantName: tenant.isMainTenant
+            ? t('{{name}} (대표)', { name: tenant.tenantName })
+            : tenant.tenantName,
         })),
         channelOwnerUserList: channelData.channelOwnerUserList.map((user: any) => ({
           uuid: user.userUuid,
           name: user.userName,
         })),
-        isEnrollOption: channelData.channelProperties.isEnrollOption,
+        isEnrollOption: false,
         isTextBookOption: false,
         isInstructorOption: false,
         isPassOption: false,
