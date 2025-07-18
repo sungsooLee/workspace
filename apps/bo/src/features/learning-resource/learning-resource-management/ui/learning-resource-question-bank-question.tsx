@@ -21,6 +21,7 @@ import {
   SplitPanel,
   TableBox,
   Tabs,
+  useModal,
 } from '@learnway/ui';
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 
@@ -29,8 +30,11 @@ import { useLearningResourceQuestionDetailForm } from '../service/learning-resou
 import { FormRow2, GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
 import { Link } from 'lucide-react';
 import { IcoCopy, IcoFormRequired, IcoMenu01, IcoMinus, IcoPlus } from '@learnway/icons';
+import { LearningResourceTestItemModal } from './learning-resource-test-item-modal';
 
 const LearningResourceQuestionBankQuestionComponent = () => {
+  const { alert, open: openModal, confirm: openConfirm } = useModal();
+
   const { baseInfo } = useLearningResourceQuestionDetailForm();
   const items = [
     {
@@ -223,7 +227,7 @@ const LearningResourceQuestionBankQuestionComponent = () => {
               <th scope={'row'}>{'테넌트'}</th>
               <td>{baseInfo?.tenantName}</td>
               <th scope={'row'}>{'채널'}</th>
-              <td>{baseInfo?.channeName}</td>
+              <td>{baseInfo?.channelName}</td>
             </tr>
             <tr>
               <th scope={'row'}>{'유형'}</th>
@@ -286,6 +290,14 @@ const LearningResourceQuestionBankQuestionComponent = () => {
               <Button
                 variant="text"
                 label={'추가'}
+                onClick={() => {
+                  if (baseInfo) {
+                    openModal({
+                      width: 'xl',
+                      content: <LearningResourceTestItemModal contentInfo={baseInfo} />,
+                    });
+                  }
+                }}
                 icon={<IcoPlus width={16} height={16} stroke={'#4C515E'} />}
               />
               <Button

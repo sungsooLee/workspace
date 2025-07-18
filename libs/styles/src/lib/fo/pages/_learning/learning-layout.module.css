@@ -9,7 +9,7 @@
   @screen mobile {
     .start {
       &.container {
-        @apply pt-[56px];
+        @apply mt-[56px];
       }
     }
   }

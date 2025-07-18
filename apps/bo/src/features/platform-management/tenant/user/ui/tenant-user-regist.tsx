@@ -24,6 +24,10 @@ import { FormDisplay } from '@features/form/ui/form-display';
 import { FormRow, OrganizationChoiceTreeModal } from '@shared/ui';
 
 import { LoginAuthenticationSettingInformation } from '@features/platform-management/company';
+import UsersService from '@entities/users/api/users';
+import { queryOptions as CompanyService } from '@entities/companies/service/companies.queries';
+import { useQueryClient } from '@tanstack/react-query';
+import { useCreateUser } from '@entities/users/service/users.hook';
 
 const EMAIL_REGEX =
   /(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/;
@@ -35,12 +39,6 @@ const duplicateCheckEmployeeNumber = async (companyCode: string) => {
   else return DuplicateState.ok;
 };
 
-const duplicateCheckEmail = async (companyCode: string) => {
-  const result = false;
-
-  if (result) return DuplicateState.duplicated;
-  else return DuplicateState.ok;
-};
 /**
  * 화면번호: NLP_BO_TMS_1111_09
  * @param props
@@ -50,15 +48,22 @@ const duplicateCheckEmail = async (companyCode: string) => {
 const TenantUserRegistComponent = (props: any, ref: any) => {
   const router = useRouter();
   const routerState = useRouterState();
+  const queryClient = useQueryClient();
 
   const { open: openModal, confirm: openConfirm, alert: openAlert } = useModal();
 
   const formRef = useRef<HTMLFormElement>(null);
 
+  const { create } = useCreateUser({
+    onSuccess: async () => {
+      router.navigate({to: '/platform/tenant/user'})
+    }
+  })
+
   const companyCodes = routerState.location.state?.companyCodes;
 
-  const { provider, updateFormData, onSubmit, onFormChange, getValues, control } =
-    useDynamicForm(formConfig);
+  const { provider, updateFormData, onSubmit, onFormChange, getValues, control, clearFormError, setFormError } =
+    useDynamicForm(formConfig());
 
   useImperativeHandle(ref, () => ({
     saveData() {
@@ -77,25 +82,66 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
   const handleCompanySearchButtonClick = async () => {
     const organization = await openModal({
       width: 'md',
-      content: <OrganizationChoiceTreeModal companyCodes={companyCodes} />,
+      // 현재 25-07-17 : 회사 코드 전체를 보내면 400 error 발생
+      // content: <OrganizationChoiceTreeModal companyCodes={companyCodes} />,
+      content: <OrganizationChoiceTreeModal companyCodes={['H199', 'H103']} />,
     });
 
+    const company = await queryClient.fetchQuery(CompanyService.detail(organization.companyCode));
     const changeData = {
-      companyId: organization.companyId,
+      ...getValues(),
+      companyId: company.companyId,
       companyName: organization.companyName,
       lastDept: organization.deptName,
       deptId: organization.deptId,
       firstDept: '',
     };
 
-    if (organization.allTreePath.length > 3) {
-      changeData.firstDept = organization.allTreePath[2].deptName;
+    if (organization.depth > 2) {
+      changeData.firstDept = organization.allTreePath[0].deptName;
     }
     onFormChange(changeData);
   };
 
   const handleOnSubmit = async (data: any) => {
     console.log('#### handleOnSubmit', data);
+
+    const payload = {
+      // 회사/조직 정보
+      companyId: data.companyId, //회사 id
+      deptId: data.deptId, // 부서 id
+      positionName: data.positionName, // 호칭(직위),
+      isOnLeave: false, // 재직 상태: (휴직)
+      isSuspended: false, // 재직 상태: (정직)
+      // 개인 정보
+      name: data.name, // 이름
+      password: 'Asdf@123', // 임시 비밀 번호 : 대문자/소문자/특수문자/숫자 8자리 이상
+      employeeNumber: data.employeeNumber, // 사번
+      birthday: data.birthday, // 생년월일
+      email: data.email.fieldValue, // 아이디(이메일)
+      phoneNationNumber: '+82', // 추후 없어 질 예정
+      phoneNumber: data.phoneNumber, // 휴대폰 번호
+      engName: data.engName, // 영문 이름
+      gender: data.userGender, // 성별
+      companyPhoneNumber: data.companyNumber, // 연락처(사무실)
+    }
+
+    if( data.userState === '2' ) {
+      payload.isOnLeave = true;
+    } else if( data.userState === '3' ) {
+      payload.isSuspended = true;
+    }
+    console.log('payload: {} => ', payload);
+    if (await openConfirm('저장 하시겠습니까?')) {
+      create(payload);
+    }
+  };
+
+  const duplicateCheckEmail = async (email: string) => {
+    const payload = { email };
+    const result = await UsersService.existsEmail(payload);
+    if (result.isEmailExists) return DuplicateState.duplicated;
+    else return DuplicateState.ok;
   };
 
   return (
@@ -116,7 +162,7 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
       </ContentsRow>
       <ContentsRow>
         <FormRow provider={provider} name="userPosition" />
-        <FormRow provider={provider} name="userTitle" />
+        <FormRow provider={provider} name="positionName" />
         <FormRow provider={provider} name="userGroupType" />
       </ContentsRow>
       <ContentsRow>
@@ -145,29 +191,37 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
       <FormSubTitle label={t('개인 정보')} lineType="dark" />
       <ContentsRow>
         <FormRow provider={provider} name="name" />
+        <FormRow provider={provider} name="engName" />
         <FormRow
           provider={provider}
           name="employeeNumber"
-          element={
-            <DuplicateCheckInputFormField onDuplicationCheck={duplicateCheckEmployeeNumber} />
-          }
+          // element={
+          //   <DuplicateCheckInputFormField onDuplicationCheck={duplicateCheckEmployeeNumber} />
+          // }
         />
-
+      </ContentsRow>
+      <ContentsRow>
         <FormRow
           provider={provider}
           name="email"
-          element={<DuplicateCheckInputFormField onDuplicationCheck={duplicateCheckEmail} />}
+          element={
+            <DuplicateCheckInputFormField
+              onDuplicationCheck={duplicateCheckEmail}
+              type={'text'}
+              validation={{
+                onError: (msg: string) => setFormError('code', msg),
+                onSuccess: () => clearFormError('code'),
+              }}
+            />
+          }
         />
-      </ContentsRow>
-      <ContentsRow>
         <FormRow provider={provider} name="birthday" element={<DatePicker displayType="day" />} />
         <FormRow provider={provider} name="userGender" />
-        <FormRow provider={provider} name="region" element={<Input disabled={true} />} />
       </ContentsRow>
       <ContentsRow>
+        <FormRow provider={provider} name="region" element={<Input disabled={true} />} />
         <FormRow provider={provider} name="phoneNumber" />
         <FormRow provider={provider} name="companyNumber" />
-        <div className={formStyles.form_item}></div>
       </ContentsRow>
 
       <FormSubTitle label={t('직군/직무 정보')} lineType="dark" />
@@ -182,7 +236,7 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
                 showAdd: true,
                 showRemove: true,
                 showTotalCount: false,
-                columns: columns,
+                columns: columns(),
                 title: t('직군/직무 관리'),
                 visibleRowCount: 3,
               }}
@@ -257,7 +311,7 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
 
 export const TenantUserRegist = forwardRef(TenantUserRegistComponent);
 
-const columns = [
+const columns = () => [
   {
     header: '직군',
     accessorKey: 'opt1',
@@ -309,9 +363,9 @@ const columns = [
   },
 ];
 
-const formConfig: DynamicFormConfig = {
+const formConfig = (): DynamicFormConfig => ({
   builders: [
-    { name: 'companyId', type: 'hidden', label: '', value: '' },
+    { name: 'companyId', type: 'hidden', label: '', value: '', format: 'number' },
     {
       name: 'companyName',
       type: 'text',
@@ -324,13 +378,13 @@ const formConfig: DynamicFormConfig = {
       label: t('본부'),
       value: '',
     },
-    { name: 'deptId', type: 'hidden', label: '', value: '' },
     {
       name: 'lastDept',
       type: 'text',
       label: t('소속'),
       value: '',
     },
+    { name: 'deptId', type: 'hidden', label: '', value: '', format: 'number' },
     {
       name: 'userPosition',
       type: 'dropdown',
@@ -342,7 +396,7 @@ const formConfig: DynamicFormConfig = {
       },
     },
     {
-      name: 'userTitle',
+      name: 'positionName',
       type: 'dropdown',
       label: t('호칭(지위)'),
       value: '',
@@ -410,16 +464,25 @@ const formConfig: DynamicFormConfig = {
       value: '',
     },
     {
+      name: 'engName',
+      type: 'text',
+      label: t('영문 이름'),
+      value: '',
+    },
+    {
       name: 'employeeNumber',
       type: 'text',
       label: t('사번'),
       value: '',
+      format: 'number',
+      maxLength: 7
     },
     {
       name: 'email',
-      type: 'text',
+      type: 'custom',
       label: t('아이디(이메일)'),
-      value: '',
+      format: 'object',
+      value: { fieldValue: '', checkState: DuplicateState.needInput },
     },
     {
       name: 'birthday',
@@ -449,20 +512,9 @@ const formConfig: DynamicFormConfig = {
     {
       label: t('휴대폰 번호'),
       name: 'phoneNumber',
-      type: 'phone-number',
+      type: 'text',
       format: 'string',
       value: '',
-      fields: {
-        nationCode: 'phoneNumberCountryCode',
-        number: 'phoneNumber',
-      },
-    },
-    {
-      label: '',
-      name: 'phoneNumberCountryCode',
-      type: 'hidden',
-      format: 'string',
-      value: 'KOR_82',
     },
     {
       label: t('연락처(사무실)'),
@@ -501,28 +553,17 @@ const formConfig: DynamicFormConfig = {
       name: 'companyMemberJoinTypeList',
       type: 'checkbox-group',
       label: t('회원 가입 유형'),
-      value: ['FO_JOIN_DEALER'],
+      value: ['BO_JOIN_MANAGER'],
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.CompanyMemberJoinType'],
       },
       guideText: t('수동 관리는 다수 선택할 수 있으며, 자동 관리는 하나만 선택할 수 있습니다.'),
     },
-    {
-      name: 'companyMemberJoinType',
-      type: 'checkbox-group',
-      label: t('회원 가입 유형'),
-      value: 'GIM',
-      optionsConfig: {
-        codeGroup: CODE_GROUP['pms.company.CompanyMemberJoinType'],
-      },
-      guideText: t('수동 관리는 다수 선택할 수 있으며, 자동 관리는 하나만 선택할 수 있습니다.'),
-    },
-
     {
       name: 'accountState',
       type: 'radio-group',
       label: t('계정상태'),
-      value: '',
+      value: '1',
       options: [
         { label: '정상', value: '1' },
         { label: '잠김', value: '2' },
@@ -631,7 +672,7 @@ const formConfig: DynamicFormConfig = {
       name: 'loginRestriction',
       type: 'radio-group',
       label: t('로그인 제한'),
-      value: 'BASIS_COMPANY',
+      value: '3',
       options: [
         { label: '로그인 제한 시간 설정', value: '1' },
         { label: '근테 연동 로그인 제한', value: '2' },
@@ -644,23 +685,46 @@ const formConfig: DynamicFormConfig = {
     companyName: true,
     lastDept: true,
 
-    name: true,
-    employeeNumber: true,
+    name: { required: true },
+    // birthday: { required: true },
+    employeeNumber: { required: true },
 
-    serviceTypeList: true,
-    userGender: true,
+    userGender: { required: true },
     email: {
       required: true,
       conditions: [
         {
           fn: (values) => {
-            if (values.email.trim().length === 0) return false;
+            const value =
+              typeof values.email === 'string'
+                ? values.email
+                : values.email.fieldValue;
+            if( !value || value.trim().length === 0) return false;
             const pattern = new RegExp(EMAIL_REGEX, 'i');
-            return !pattern.test(values.email.trim());
+            return !pattern.test(value.trim());
           },
           message: t('이메일 형식에 맞게 입력해 주세요.'),
+        },
+        {
+          fn: (values) => {
+            const fieldValue = values.email.fieldValue;
+            if (fieldValue === '') return true;
+            return false;
+          },
+          message: t('LABEL.form.validation.needInput', { code: t('아이디(이메일)') }),
+        },
+        {
+          fn: (values: Record<string, any>) =>
+            values.email.checkState === DuplicateState.check ||
+            values.email.checkState === DuplicateState.needInput,
+          message: t('LABEL.form.validation.check', { code: t('아이디(이메일)') }),
+        },
+        {
+          fn: (values: Record<string, any>) =>
+            values.email.checkState === DuplicateState.duplicated,
+          message: t('LABEL.form.validation.duplicated', { code: t('아이디(이메일)') }),
         },
       ],
     },
   },
-};
+});

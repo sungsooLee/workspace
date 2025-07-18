@@ -8,6 +8,7 @@ import { Button } from '@learnway/ui';
 import {
   TenantUserRegist,
 } from '@features/platform-management/tenant';
+import { useRef } from 'react';
 
 export const Route = createLazyFileRoute('/_layout/platform/tenant/user/user-regist')({
   component: RouteComponent,
@@ -15,6 +16,15 @@ export const Route = createLazyFileRoute('/_layout/platform/tenant/user/user-reg
 
 function RouteComponent() {
   const router = useRouter();
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const handleOnSave = () => {
+    if (formRef.current?.saveData) formRef.current.saveData();
+  };
+
+  const handleOnReset = () => {
+    if (formRef.current?.clearForm) formRef.current.clearForm();
+  };
 
   return (
     <PageContainer>
@@ -27,21 +37,15 @@ function RouteComponent() {
             onClick={() => router.navigate({ to: '/platform/tenant/user' })}
           />
         </LinkBox>
-        <Button
-          label={t('LABEL.button.reset')}
-          variant="gray2"
-          size="sm"
-          //onClick={() => router.navigate({ to: '/platform/tenant/management/regist' })}
-        />
-        <Button
-          label={t('LABEL.button.save')}
-          variant="primary"
-          size="sm"
-          //onClick={() => router.navigate({ to: '/platform/tenant/management/regist' })}
-        />
+        <Button variant="gray2" size="sm" onClick={handleOnReset}>
+          {t('LABEL.button.reset')}
+        </Button>
+        <Button variant="primary" size="sm" onClick={handleOnSave}>
+          {t('LABEL.button.save')}
+        </Button>
       </ContentsButtons>
       <MainContents>
-        <TenantUserRegist />
+        <TenantUserRegist ref={formRef} />
       </MainContents>
     </PageContainer>
   );

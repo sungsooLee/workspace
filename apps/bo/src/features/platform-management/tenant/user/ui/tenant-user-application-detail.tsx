@@ -134,7 +134,7 @@ const TenantUserApplicationDetailComponent = (props: any, ref: any) => {
                 showAdd: true,
                 showRemove: true,
                 showTotalCount: false,
-                columns: columns,
+                columns: columns(),
                 title: t('직군/직무 관리'),
                 visibleRowCount: 3,
               }}
@@ -183,9 +183,6 @@ const TenantUserApplicationDetailComponent = (props: any, ref: any) => {
         <div className={formStyles.form_item}></div>
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider} name="rejectReason" element={<TextareaFormField disabled />} />
-      </ContentsRow>
-      <ContentsRow>
         <FormRow
           provider={provider}
           name="tenant"
@@ -206,7 +203,7 @@ const TenantUserApplicationDetailComponent = (props: any, ref: any) => {
 };
 
 export const TenantUserApplicationDetail = forwardRef(TenantUserApplicationDetailComponent);
-const columns = [
+const columns = () => [
   {
     header: '직군',
     accessorKey: 'opt1',
@@ -509,12 +506,6 @@ const formConfig: DynamicFormConfig = {
       label: t('승인상태 최종 변경일'),
       value: '',
       placeholder: ' ',
-    },
-    {
-      name: 'rejectReason',
-      type: 'text-area',
-      label: t('반려 사유'),
-      value: '',
     },
     {
       name: 'tenant',

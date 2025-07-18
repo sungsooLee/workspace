@@ -1,5 +1,5 @@
-import { Panel, FormSubTitle } from '@learnway/ui';
-import { ContentsHistoryInfoFormField, NoticeBox } from '@shared/ui';
+import { Panel } from '@learnway/ui';
+import { NoticeBox } from '@shared/ui';
 import { useRouter, useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { ChannelDetailHomeContent } from './channel-detail-home-content';
@@ -40,9 +40,7 @@ const ChannelDetailHomeComponent = () => {
           max={12}
         />
         <ChannelDetailHomeContent title={t('숏츠')} tableTitle={t('숏츠 목록')} max={12} />
-        <div className="pt-10">
-          <ContentsHistoryInfoFormField />
-        </div>
+        <div className="pt-10">{/* <ContentsHistoryInfoFormField /> */}</div>
       </div>
     </div>
   );

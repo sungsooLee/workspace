@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from 'react';
-import { CourseTab, CourseTabData, TabFormRef } from '../-common/type';
+import { CourseTab, CourseTabData, CourseTabFormRef } from '../-common/type';
 
 import { useCreateCourse, useDeleteCourse } from '@entities/course';
 import { queryOptions } from '@entities/course/service/course.queries';
@@ -25,7 +25,7 @@ export const useCourseForm = (courseType?: string) => {
   const deleteCourse = useDeleteCourse();
 
   // 각 탭의 ref 관리
-  const tabRefs = useRef<Record<string, TabFormRef | null>>({
+  const tabRefs = useRef<Record<string, CourseTabFormRef | null>>({
     [CourseTab.STEP1]: null, // BasicInfo
     [CourseTab.STEP2]: null, // CourseRegistration
     [CourseTab.STEP3]: null, // Curriculum
@@ -43,7 +43,7 @@ export const useCourseForm = (courseType?: string) => {
   });
 
   // ref 설정 함수들
-  const setTabRef = useCallback((tabKey: string, ref: TabFormRef | null) => {
+  const setTabRef = useCallback((tabKey: string, ref: CourseTabFormRef | null) => {
     tabRefs.current[tabKey] = ref;
   }, []);
 

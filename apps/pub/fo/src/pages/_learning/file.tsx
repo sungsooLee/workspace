@@ -5,7 +5,7 @@ import { Button } from '@learnway/ui';
 
 import styles from '@learnway/styles/fo/pages/_learning/learning.module.css';
 
-import pdfImage from '@learnway/styles/fo/assets/images/common/img_live.png';
+import pdfImage from '@learnway/styles/fo/assets/images/common/img_pdf.png';
 import lockImage from '@learnway/styles/fo/assets/images/common/img_lock.png';
 
 export const Route = createFileRoute('/_learning/file')({

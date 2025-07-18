@@ -1514,8 +1514,8 @@ export const guideData = [
     pageId: 'video',
     pageType: 'Page',
     completionDate: '2025-05-12',
-    lastUpdateDate: '2025-07-03',
-    remarks: '- video.tsx\n- 다음 강의(modal) next-learning-popup.tsx',
+    lastUpdateDate: '2025-07-17',
+    remarks: '- video.tsx',
   },
   {
     screenId: 'NLP_FO_CLA_1041',
@@ -1565,18 +1565,8 @@ export const guideData = [
     pageId: 'ebook',
     pageType: 'Page',
     completionDate: '2025-05-12',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-17',
     remarks: '- ebook.tsx\n- 개발화면 확인 필요',
-  },
-  {
-    screenId: 'NLP_FO_CLA_1031',
-    screenName: '강의실_학습창_파일',
-    layoutType: '', // 자동 분리됨 작성x
-    pageId: 'file',
-    pageType: 'Page',
-    completionDate: '2025-05-12',
-    lastUpdateDate: '',
-    remarks: '- file.tsx',
   },
   {
     screenId: 'NLP_FO_CLA_1027',
@@ -1615,7 +1605,7 @@ export const guideData = [
     pageId: 'iframe',
     pageType: 'Page',
     completionDate: '2025-06-30',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-17',
     remarks: '- iframe.tsx\n- 개발화면 확인 필요',
   },
   {
@@ -1630,6 +1620,16 @@ export const guideData = [
   },
   {
     screenId: 'NLP_FO_CLA_1031',
+    screenName: '강의실_학습창_파일',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: 'file',
+    pageType: 'Page',
+    completionDate: '2025-05-12',
+    lastUpdateDate: '2025-07-17',
+    remarks: '- file.tsx',
+  },
+  {
+    screenId: 'NLP_FO_CLA_1032',
     screenName: '강의실_학습창_링크',
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'link',
@@ -1646,7 +1646,7 @@ export const guideData = [
     pageId: 'video-m',
     pageType: 'Page',
     completionDate: '2025-05-13',
-    lastUpdateDate: '2025-07-03',
+    lastUpdateDate: '2025-07-17',
     remarks: '- video-m.tsx',
   },
 
@@ -1657,20 +1657,9 @@ export const guideData = [
     pageId: 'ebook-m',
     pageType: 'Page',
     completionDate: '2025-05-14',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-17',
     remarks: '- ebook-m.tsx',
   },
-  {
-    screenId: 'NLP_FO_CLA_MA_1045',
-    screenName: 'M_강의실_학습창_파일',
-    layoutType: '', // 자동 분리됨 작성x
-    pageId: 'file-m',
-    pageType: 'Page',
-    completionDate: '2025-05-14',
-    lastUpdateDate: '',
-    remarks: '- file-m.tsx',
-  },
-
   {
     screenId: 'NLP_FO_CLA_MA_1027',
     screenName: 'M_강의실_학습창_웹_갤러리',
@@ -1689,7 +1678,7 @@ export const guideData = [
     pageId: 'blog-m',
     pageType: 'Page',
     completionDate: '2025-05-15',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-17',
     remarks: '- blog-m.tsx\n- 개발화면 확인 필요',
   },
 
@@ -1700,7 +1689,7 @@ export const guideData = [
     pageId: 'html-m',
     pageType: 'Page',
     completionDate: '2025-05-15',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-17',
     remarks: '- html-m.tsx',
   },
   {
@@ -1710,31 +1699,38 @@ export const guideData = [
     pageId: 'iframe-m',
     pageType: 'Page',
     completionDate: '2025-06-30',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-17',
     remarks: '- iframe-m.tsx',
   },
   {
     screenId: 'NLP_FO_CLA_MA_1030',
-    screenName: 'M_강의실_학습창_웹_위키',
+    screenName: 'M_강의실_학습창_라이브',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: 'Pop-up',
-    completionDate: '',
+    pageId: 'live-m',
+    pageType: 'Page',
+    completionDate: '2025-07-17',
     lastUpdateDate: '',
-    remarks: '',
-    cancel: true,
+    remarks: '- live-m.tsx',
   },
-
   {
     screenId: 'NLP_FO_CLA_MA_1031',
-    screenName: 'M_강의실_학습창_웹_라이브',
+    screenName: 'M_강의실_학습창_파일',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: 'Pop-up',
-    completionDate: '',
+    pageId: 'file-m',
+    pageType: 'Page',
+    completionDate: '2025-05-14',
+    lastUpdateDate: '2025-07-17',
+    remarks: '- file-m.tsx',
+  },
+  {
+    screenId: 'NLP_FO_CLA_MA_1032',
+    screenName: 'M_강의실_학습창_링크',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: 'link-m',
+    pageType: 'Page',
+    completionDate: '2025-07-17',
     lastUpdateDate: '',
-    remarks: '',
-    cancel: true,
+    remarks: '- link-m.tsx',
   },
 
   {

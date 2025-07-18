@@ -5,17 +5,17 @@ import { FormRow2, SwitchFormField } from '@shared/ui';
 import { useTranslation } from 'react-i18next';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { FormDisplay } from '@features/form/ui/form-display';
-import { CourseTabBaseProps, TabFormRef } from '../../../-common/type';
+import { CourseTabBaseProps, CourseTabFormRef } from '../../../-common/type';
 import { Course, CourseConfig } from '@types';
 
-const CourseRegistrationComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
+const CourseRegistrationComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>(
   ({ onSave, data: { formData, courseConfig } }, ref) => {
     const { t } = useTranslation();
     const { provider, getValues, updateFormData, onFormValid, formState } = useDynamicForm2({
       builders: [],
     });
 
-    // 부모 컴포넌트에서 호출할 수 있는 유효성 검사 메서드
+    // 부모 컴포넌트에서 호출할 수 있는 메서드
     useImperativeHandle(ref, () => ({
       validate: async () => {
         // 모든 필드에 대해 유효성 검사 수행

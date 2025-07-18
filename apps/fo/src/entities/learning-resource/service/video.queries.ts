@@ -22,4 +22,8 @@ export const videoMutateOptions = {
   watchLog: () => ({
     mutationFn: (payload: any) => VideoService.watchLog(payload),
   }),
+
+  watchLogStatistics: () => ({
+    mutationFn: (payload: any) => VideoService.watchLogStatistics(payload),
+  }),
 };
