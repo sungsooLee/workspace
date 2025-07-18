@@ -24,9 +24,9 @@ import {
 import { Course } from '@types';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CourseTabBaseProps, TabFormRef } from '../../../-common/type';
+import { CourseTabBaseProps, CourseTabFormRef } from '../../../-common/type';
 
-const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
+const BasicInfoComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>(
   ({ onSave, onConfigPropChange, data: { formData, courseConfig, isSaved } }, ref) => {
     const { t } = useTranslation();
 
@@ -45,7 +45,7 @@ const BasicInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
       values: getValues(),
     });
 
-    // 부모 컴포넌트에서 호출할 수 있는 유효성 검사 메서드
+    // 부모 컴포넌트에서 호출할 수 있는 메서드
     useImperativeHandle(ref, () => ({
       validate: async () => {
         // 모든 필드에 대해 유효성 검사 수행

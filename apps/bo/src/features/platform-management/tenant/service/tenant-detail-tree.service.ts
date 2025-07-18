@@ -103,6 +103,9 @@ export const getAllParent = (nodes: TreeNode[], key: string | number): TreeNode[
       const item = map.get(parentKey);
       retval.unshift(map.get(parentKey));
       parentKey = item.parentKey;
+    } else {
+      console.log(`parentKey not found '${parentKey}'`);
+      break;
     }
   }
   return retval;

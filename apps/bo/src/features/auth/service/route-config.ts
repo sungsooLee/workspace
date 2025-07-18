@@ -58,7 +58,7 @@ async function authorization({ location, context }: { location: ParsedLocation; 
   console.log('### Decode Token', token);
   console.log('### authorization', authUser);
 
-  if (token === null || authUser === undefined) {
+  if (token === null) {
     throw ERROR.AUTHORIZATION;
   }
 
@@ -68,12 +68,12 @@ async function authorization({ location, context }: { location: ParsedLocation; 
     throw ERROR.PASSWORD_EXPIRE;
   }
 
-  if (location.pathname === '/' || !authUser?.menus) {
-    if (authUser === undefined) {
-      throw ERROR.AUTHORIZATION;
-    }
-    return;
-  }
+  // if (location.pathname === '/' || !authUser?.menus) {
+  //   if (authUser === undefined) {
+  //     throw ERROR.AUTHORIZATION;
+  //   }
+  //   return;
+  // }
   /* 메뉴별 접근 권한에 대한 설계 필요
   const unauthScreen = authUser?.menus.some((menu: any) => menu.path === location.pathname);
   if (!unauthScreen) {

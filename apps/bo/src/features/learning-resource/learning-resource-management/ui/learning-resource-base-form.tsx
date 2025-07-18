@@ -1,6 +1,7 @@
 import { t } from 'i18next';
 import {
   ContentsRow,
+  EditorFormField,
   FormSubTitle,
   Input,
   InputModalSelectorFormField,
@@ -20,20 +21,30 @@ import {
 
 import { EnFormMode } from '@types';
 
-import { DropdownFormField, FormDisplay } from '@features/form';
+import { DropdownFormField, FormDisplay, SecondDurationTimeFormField } from '@features/form';
 import { DateRangePickerFormField } from '@features/form/ui';
 import { User } from '@learnway/types';
 
 const LearningResourceBaseFormComponent = ({
   provider,
-  formMode,
+  formMode = EnFormMode.NONE,
+  showAiInfo = false,
+  showLessonTime = false,
+  readOnlyLessonTime = false,
+  showBlogEditor = false,
 }: {
   provider: DynamicFormProvider;
-  formMode: EnFormMode;
+  formMode?: EnFormMode;
+  /** AI 관련 필드 노출 여부  */
+  showAiInfo?: boolean;
+  /** 학습 시간 노출 여부 */
+  showLessonTime?: boolean;
+  readOnlyLessonTime?: boolean;
+  /** 블로그 에디터 노출 여부 */
+  showBlogEditor?: boolean;
 }) => {
   return (
     <>
-      <FormSubTitle label={t('기본정보')} />
       <ContentsRow>
         {/*채널 */}
         <FormRow2
@@ -83,7 +94,7 @@ const LearningResourceBaseFormComponent = ({
           label={'학습자원명'}
           value=""
           validation={{ required: true }}
-          element={<Input maxLength={150} />}
+          element={<Input type="text" maxLength={150} />}
         />
       </ContentsRow>
       {/*학습자원 설명*/}
@@ -124,16 +135,10 @@ const LearningResourceBaseFormComponent = ({
           provider={provider}
           name="coordinatorTelNo"
           label={t('연락처')}
-          format="object"
+          format="text"
           validation={{ required: true }}
-          element={
-            <PhoneNumberFormField
-              fields={{ nationCode: 'coordinatorTelCountryCode', number: 'coordinatorTelNo' }}
-              phoneNumberConfig={{
-                options: [{ value: 'KOR_82', label: '+82' }],
-              }}
-            />
-          }
+          value=""
+          element={<Input />}
         />
       </ContentsRow>
       {/* 사용기한 */}
@@ -215,15 +220,39 @@ const LearningResourceBaseFormComponent = ({
             provider={provider}
             label={t('외주개발업체 연락처')}
             name="vendorTelNo"
+            format="text"
             value=""
-            element={<PhoneNumberFormField />}
-            fields={{
-              nationCode: 'vendorNationCode',
-              number: 'vendorTelNo',
-            }}
+            element={<Input />}
           />
         </ContentsRow>
       </FormDisplay>
+
+      {/* 블로그 에디터 */}
+      {showBlogEditor && (
+        <ContentsRow>
+          <FormRow2
+            provider={provider}
+            name="blogContent"
+            label={t('블로그 내용')}
+            format="object"
+            value={{}}
+            element={<EditorFormField />}
+          />
+        </ContentsRow>
+      )}
+
+      {/*학습 시간*/}
+      {showLessonTime && (
+        <ContentsRow>
+          <FormRow2
+            provider={provider}
+            name="contentAddInfo"
+            label={'학습 시간'}
+            value=""
+            element={<SecondDurationTimeFormField readOnly={readOnlyLessonTime} />}
+          />
+        </ContentsRow>
+      )}
       {/*태그*/}
       <ContentsRow>
         <FormRow2
@@ -240,6 +269,30 @@ const LearningResourceBaseFormComponent = ({
           }}
         />
       </ContentsRow>
+      {/*학습자원 개요 (AI 자동추출), 키워드 (AI 자동 추출)*/}
+      {showAiInfo && (
+        <>
+          <ContentsRow>
+            <FormRow2
+              provider={provider}
+              name="aiSummary"
+              label="학습자원 개요 (AI 자동 추출)"
+              value=""
+              element={<TextareaFormField maxLength={2000} />}
+            />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow2
+              provider={provider}
+              name="aiKeyword"
+              label="키워드 (AI 자동 추출)"
+              value=""
+              element={<TextareaFormField maxLength={2000} />}
+            />
+          </ContentsRow>
+        </>
+      )}
+
       {/* 교육지원활용 여부 */}
       <ContentsRow type="horizontal" className="inactive">
         <FormRow2

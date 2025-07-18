@@ -61,7 +61,7 @@ export const transformDepartmentApiDataToTreeData = (apiData: any, rootName = 'R
         parentKey: node.parentDeptId?.toString() || '',
         children: node.childList || [],
         _nodeType: 'D',
-        depth: depth,
+        depth,
       };
 
       if (!node.deptId && !node.parentDeptId) {

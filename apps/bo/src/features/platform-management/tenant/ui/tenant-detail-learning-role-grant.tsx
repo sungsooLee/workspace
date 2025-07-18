@@ -76,7 +76,7 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
 
   // const { provider: sProvider, getValues } = useSearchBox(searchConfig);
   const { provider, onSubmit, clearFormError, updateFormData, onFormChange } =
-    useDynamicForm(formConfig);
+    useDynamicForm(formConfig());
   const { config, gridFetch } = useGridBox(gridConfig, getGridParams);
 
   const { data: roleData } = useFetchRoleTree(tenantId, siteScope);
@@ -190,7 +190,7 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
             </label>
             <GridBox
               config={config}
-              columns={columns}
+              columns={columns()}
               title={t('사용자 목록')}
               showTotalCount
               multiple
@@ -269,7 +269,7 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
   );
 };
 export const TenantDetailLearningRoleGrant = forwardRef(TenantDetailLearningRoleGrantComponent);
-const formConfig: DynamicFormConfig = {
+const formConfig = (): DynamicFormConfig => ({
   builders: [
     {
       name: 'userGroup',
@@ -280,7 +280,7 @@ const formConfig: DynamicFormConfig = {
     },
   ],
   validator: {},
-};
+});
 
 // 셀렉박스의 경우에 공통 코드 ?? 아니면 선택할 수 있는 셀렉 박스?
 // const searchConfig: any = {
@@ -326,7 +326,7 @@ const gridConfig = {
 const columnHelper = createColumnHelper<any>();
 
 // 속성명 변경 필요
-const columns = [
+const columns = () => [
   columnHelper.accessor('companyName', {
     // id: 'companyName',
     cell: (info) => info.getValue(),

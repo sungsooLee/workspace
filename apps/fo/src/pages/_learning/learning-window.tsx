@@ -65,11 +65,15 @@ function RouteComponent() {
   const { data: htmlInfo } = useGetHtml5Resource(htmlConfig?.contentUuid);
   const { data: imageInfo } = useGetImageResource(imageConfig?.contentUuid);
 
-  const { watchLog } = useVideoWatchLog();
+  const { watchLog, watchLogStatistics } = useVideoWatchLog();
 
-  const handleVideoProgress = (payload: any) => {
+  const handleVideoProgress = async (payload: any) => {
     console.log('handleVideo', payload);
     watchLog(payload);
+  };
+  const handelVideoWatchStatistics = async (payload: any) => {
+    console.log('handelVideoWatchStatistics', payload);
+    watchLogStatistics(payload);
   };
 
   useEffect(() => {
@@ -180,6 +184,7 @@ function RouteComponent() {
       html5LearningHistory: Html5Service.saveHtml5Learning,
       galleryLearningHistory: ImageService.saveImageLearning,
       videoOnProgress: handleVideoProgress,
+      videoWatchStatistics: handelVideoWatchStatistics,
     });
   }, []);
 

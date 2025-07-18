@@ -1,6 +1,6 @@
 import { DropdownFormField, FormDisplay } from '@features/form';
 import { CourseChoiceModal } from '@features/learning-operate/course/course-management';
-import { InstructorListPopup } from '@features/platform/instructor/management/modal/instructor-list-modal';
+import { InstructorListPopup } from '@features/learning-operate-support/instructor-tutor/instructor-management/modal/instructor-list-modal';
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import {
   CheckboxGroupFormField,
@@ -16,14 +16,14 @@ import { Course, CourseConfig } from '@types';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PassOptionFormField } from '../../../-components/pass-option-form-field/pass-option-form-field';
-import { CourseTabBaseProps, TabFormRef } from '../../../-common/type';
+import { CourseTabBaseProps, CourseTabFormRef } from '../../../-common/type';
 
-const DetailInfoComponent = forwardRef<TabFormRef, CourseTabBaseProps>(
+const DetailInfoComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>(
   ({ onSave, data: { formData, courseConfig } }, ref) => {
     const { t } = useTranslation();
     const { provider, getValues, onFormValid, formState, updateFormData } = useDynamicForm2();
 
-    // 부모 컴포넌트에서 호출할 수 있는 유효성 검사 메서드
+    // 부모 컴포넌트에서 호출할 수 있는 메서드
     useImperativeHandle(ref, () => ({
       validate: async () => {
         // 모든 필드에 대해 유효성 검사 수행

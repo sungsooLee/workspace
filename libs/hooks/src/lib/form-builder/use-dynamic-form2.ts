@@ -322,6 +322,7 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
       trigger,
       registerField,
       addValidator,
+      watch,
     }),
     [
       extendedControl,
