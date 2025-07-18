@@ -22,4 +22,13 @@ export default class UsersService {
   static unlockUser(userUuid: string) {
     return httpService.post<any>(`${PMSApiPrefix()}/users/${userUuid}/unlock-account`, {});
   }
+
+  static approveAccountUser(userUuids: string[]) {
+    return httpService.post<any>(`${PMSApiPrefix()}/users/approve-account`, userUuids);
+  }
+
+  static rejectAccountUser(userUuids: string[]) {
+    return httpService.post<any>(`${PMSApiPrefix()}/users/reject-account`, userUuids);
+
+  }
 }
