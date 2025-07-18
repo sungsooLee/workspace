@@ -1,25 +1,25 @@
-import { useEffect, useState } from 'react';
-import { t } from 'i18next';
+import { queryOptions as departmentQueryOptions } from '@entities/department';
+import { queryOptions } from '@entities/user-group/service/user-group.queries';
+import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
+import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import {
   Button,
+  Divider,
+  GridBox,
   ModalBody,
   ModalContainer,
   ModalFooter,
   ModalTitle,
-  GridBox,
-  useModal,
   useGridBox,
-  Divider,
+  useModal,
 } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
-import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
-import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { queryOptions } from '@entities/user-group/service/user-group.queries';
 import { useQueryClient } from '@tanstack/react-query';
-import { useWatch } from 'react-hook-form';
-import { queryOptions as departmentQueryOptions } from '@entities/department';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { BlackwhiteUsersParam } from '@types';
+import { t } from 'i18next';
+import { useEffect, useState } from 'react';
+import { useWatch } from 'react-hook-form';
 
 const UserGroupModalComponent = ({ groups }: Pick<BlackwhiteUsersParam, 'groups'>) => {
   const searchConfig: SearchBoxConfig = {
@@ -105,6 +105,10 @@ const UserGroupModalComponent = ({ groups }: Pick<BlackwhiteUsersParam, 'groups'
   const { config, gridFetch } = useGridBox(gridConfig, getValues);
   const queryClient = useQueryClient();
   const companyId = useWatch({ control: sProvider.control, name: 'companyId' });
+
+  useEffect(() => {
+    gridFetch();
+  }, []);
 
   useEffect(() => {
     if (!companyId && companyId !== 0) return;
