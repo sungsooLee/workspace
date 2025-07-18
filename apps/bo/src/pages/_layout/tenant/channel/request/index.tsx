@@ -1,29 +1,16 @@
-import { useCallback, useEffect, useState } from 'react';
+import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
-import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
+import { useCallback, useEffect, useState } from 'react';
 
-import {
-  Button,
-  Checkbox,
-  Divider,
-  GridBox,
-  useGridBox,
-  useGridBoxConfig,
-  useModal,
-} from '@learnway/ui';
-import { ColumnDef, createColumnHelper, Table } from '@tanstack/react-table';
-import { SearchBox } from '@shared/ui/search-box';
-import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { queryOptions as requestChannelQueryOptions } from '@entities/channel/service/request-channel.queries';
-import { EnGlobalConst } from '@types';
-import {
-  MainContents,
-  PageContainer,
-  RejectModal,
-  TenantByRoleDropdownFormField,
-} from '@shared/ui';
 import { useChannelApplication } from '@features/channel/channel-application/service/channel-application.service';
+import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
+import { Button, Checkbox, Divider, GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
+import { MainContents, PageContainer, TenantByRoleDropdownFormField } from '@shared/ui';
+import { SearchBox } from '@shared/ui/search-box';
+import { ColumnDef, createColumnHelper, Table } from '@tanstack/react-table';
+import { EnGlobalConst } from '@types';
 
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
 

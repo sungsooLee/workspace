@@ -29,6 +29,6 @@ export const mutateOptions = {
     mutationFn: (payload: any) => ChannelService.createChannel(payload),
   }),
   update: () => ({
-    mutationFn: (payload: any) => ChannelService.updateChannelDetail(payload),
+    mutationFn: (payload: any) => ChannelService.updateChannel(payload),
   }),
 };

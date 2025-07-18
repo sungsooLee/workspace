@@ -10,7 +10,7 @@ export function useGetChannelDetail(channelUuid: string) {
   return useQuery(queryOptions.detail(channelUuid));
 }
 
-export function useUpdateChannelDetail(options: any) {
+export function useUpdateChannel(options: any) {
   const mutation = useMutation({
     ...mutateOptions.update(),
     onSuccess: async (data: any, variables, context) => {

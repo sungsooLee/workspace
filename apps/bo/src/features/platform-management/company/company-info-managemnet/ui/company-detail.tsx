@@ -269,10 +269,6 @@ const CompanyDetailComponent = (props: any, ref: any) => {
       onClose(data: any) {
         console.log('### selectedUserGroups', data);
         if (data) {
-          const userGroups = data.map((group: any) => ({
-            userGroupId: group.key,
-            isUsed: true,
-          }));
           setLoginRestrictTimeSettings((prev) => {
             const newSettings = [...prev];
             newSettings[data.index] = {
