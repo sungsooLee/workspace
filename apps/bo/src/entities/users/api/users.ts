@@ -1,5 +1,5 @@
-import { httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
+import { httpService } from '@learnway/shared';
 import { PageableContent } from '@types';
 
 export default class UsersService {
@@ -19,8 +19,8 @@ export default class UsersService {
     return httpService.get<any>(`${PMSApiPrefix()}/users/is-email-exists`, params);
   }
 
-  static unlockUser(userUuid: string) {
-    return httpService.post<any>(`${PMSApiPrefix()}/users/${userUuid}/unlock-account`, {});
+  static unlockUser(payload: any) {
+    return httpService.post<any>(`${PMSApiPrefix()}/users/unlock-account`, payload);
   }
 
   static approveAccountUser(userUuids: string[]) {
@@ -29,6 +29,5 @@ export default class UsersService {
 
   static rejectAccountUser(userUuids: string[]) {
     return httpService.post<any>(`${PMSApiPrefix()}/users/reject-account`, userUuids);
-
   }
 }
