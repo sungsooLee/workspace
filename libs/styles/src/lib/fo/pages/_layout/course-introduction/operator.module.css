@@ -1,0 +1,84 @@
+.start {
+  &.operator {
+    @apply flex w-full items-center justify-between rounded-[12px] border-[1px] border-solid border-[var(--gray90)] px-[32px] py-[40px];
+    .avatar {
+      @apply mr-[16px];
+    }
+    .txt_box {
+      @apply flex flex-1 items-center;
+      .profile {
+        @apply w-1/2;
+        strong {
+          @apply title4-b block text-[var(--gray10)];
+        }
+        & > div {
+          @apply mt-[8px] leading-[22px];
+          & > span {
+            @apply body-md inline-block align-top leading-[24px] text-[var(--gray35)];
+            & + span {
+              @apply relative ml-[12px] pl-[12px];
+              &::before {
+                @apply absolute left-0 top-1/2 h-[12px] w-px -translate-y-1/2 bg-[var(--gray75)] content-[''];
+              }
+            }
+          }
+        }
+      }
+      .definition_list {
+        @apply w-1/2;
+        .txt {
+          @apply body-md block leading-[24px] text-[var(--gray35)];
+          & + .txt {
+            @apply mt-[8px];
+          }
+        }
+      }
+    }
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.operator {
+        @apply relative p-[24px];
+        .avatar {
+          @apply absolute left-[24px] top-[24px];
+        }
+        .txt_box {
+          @apply flex-col;
+          .profile {
+            @apply flex min-h-[56px] w-full flex-col justify-center pl-[72px];
+            strong {
+              @apply title3-b leading-[22px];
+            }
+            & > div {
+              @apply mt-[2px] text-[0];
+              span {
+                @apply body-sm leading-[22px];
+              }
+            }
+          }
+          .definition_list {
+            @apply relative mt-[12px] w-full pt-[12px];
+            &::before {
+              @apply absolute left-0 top-0 h-px w-full bg-[#0d0e11] opacity-[.14] content-[''];
+            }
+            .txt {
+              @apply body-sm;
+              & + .txt {
+                @apply mt-[4px];
+              }
+            }
+            & > div {
+              dl,
+              dt {
+                @apply body-sm leading-[21px];
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

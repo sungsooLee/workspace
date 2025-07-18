@@ -100,7 +100,7 @@ const LicensesHistoryComponent = () => {
   ] as ColumnDef<any, unknown>[];
 
   const [page, setPage] = React.useState(1);
-  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+  const handlePageChange = (value: number) => {
     setPage(value);
   };
   return (
@@ -189,8 +189,8 @@ const LicensesHistoryComponent = () => {
           className={styles.table}
         />
         <Pagination
-          count={100}
-          page={page}
+          totalPages={100}
+          pageNumber={page}
           onChange={handlePageChange}
           className={styles.pagenation}
         />
