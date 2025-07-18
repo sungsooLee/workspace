@@ -24,9 +24,8 @@ const useVideoResourceHook = (provider: DynamicFormProvider) => {
   };
 
   const fetchVideoContent = async () => {
-    const contentDetail = await LearningResourceService.fetchContent(contentUuid);
     const videoResource = await LearningResourceService.getVideoResource(contentUuid);
-    onFormChange(pick(contentDetail, 'contentAddInfo'));
+    onFormChange(pick(videoResource, 'contentAddInfo'));
     setVideoResource(videoResource);
   };
 
