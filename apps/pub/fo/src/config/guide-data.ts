@@ -261,7 +261,7 @@ export const guideData = [
     pageId: 'my/information-change',
     pageType: 'Pop-up',
     completionDate: '2025-03-26',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-18',
     remarks: '- password-change-popup.tsx',
   },
   {
@@ -281,7 +281,7 @@ export const guideData = [
     pageId: 'my/information-change',
     pageType: 'Pop-up',
     completionDate: '2025-03-27',
-    lastUpdateDate: '2025-05-08',
+    lastUpdateDate: '2025-07-18',
     remarks: '- phone-change-popup.tsx',
   },
   {
