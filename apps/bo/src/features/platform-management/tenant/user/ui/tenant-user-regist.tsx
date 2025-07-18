@@ -1,7 +1,7 @@
 import { useRouter, useRouterState } from '@tanstack/react-router';
 import { CellContext } from '@tanstack/react-table';
 import { t } from 'i18next';
-import { forwardRef, useImperativeHandle, useRef } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 
@@ -28,6 +28,8 @@ import UsersService from '@entities/users/api/users';
 import { queryOptions as CompanyService } from '@entities/companies/service/companies.queries';
 import { useQueryClient } from '@tanstack/react-query';
 import { useCreateUser } from '@entities/users/service/users.hook';
+import { useCodesByCodeGroup } from '@entities/platform';
+import { useSystemCodeDetail } from '@entities/common-code';
 
 const EMAIL_REGEX =
   /(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/;
@@ -51,6 +53,7 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
   const queryClient = useQueryClient();
 
   const { open: openModal, confirm: openConfirm, alert: openAlert } = useModal();
+  const { data: codeGroupData } = useSystemCodeDetail('cmmon.TelCountryCode');
 
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -110,10 +113,14 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
       // 회사/조직 정보
       companyId: data.companyId, //회사 id
       deptId: data.deptId, // 부서 id
+      isLeader: data.userPosition === '1',
       positionName: data.positionName, // 호칭(직위),
+      jobDomain: data.jobDomain,
+      joinDate: data.userJoining, // 입사일
+      // 퇴사일
+      promotionDate: data.userPromotion, // 최근 승진일
       isOnLeave: false, // 재직 상태: (휴직)
       isSuspended: false, // 재직 상태: (정직)
-      isLeader: data.userPosition === '1',
       // 개인 정보
       name: data.name, // 이름
       password: 'Asdf@1234', // 임시 비밀 번호 : 대문자/소문자/특수문자/숫자 8자리 이상
@@ -123,8 +130,16 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
       phoneNumber: data.phoneNumber, // 휴대폰 번호
       engName: data.engName, // 영문 이름
       gender: data.userGender, // 성별
+      companyPhoneNationNumber: data.companyNumberCountryCode, // 연락처(사무실)-국가번호
       companyPhoneNumber: data.companyNumber, // 연락처(사무실)
-    }
+      // 직군/직무: 직군 선택에 따른 직무
+
+      // 계정 정보
+
+      // 로그인 및 인증 설정 정보
+      ssoType: '',
+      authType: data.passwordAuthType,
+    };
 
     if( data.userState === '2' ) {
       payload.isOnLeave = true;
@@ -133,9 +148,27 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
       payload.isOnLeave = false;
       payload.isSuspended = true;
     }
-    console.log('payload: {} => ', payload);
+
+    if( codeGroupData ) {
+      Object.keys(codeGroupData[0]).forEach(key => {
+        const items = codeGroupData[0][key];
+        const target = items.filter((v: any) => v.cdId === data.companyNumberCountryCode);
+        if( target ) {
+          payload.companyPhoneNationNumber = target.map((row: any) => row.cdContent).join(',');
+        }
+      })
+    }
+
+    // 로그인 및 인증 설정 정보
+    if( data.isUseSso ) payload.ssoType = data.ssoTypeList;
+
+
+    const filteredPayload = Object.fromEntries(
+      Object.entries(payload).filter(([_, value]) => value !== null && value !== undefined && value !== '')
+    )
+    console.log('payload: {} => ', filteredPayload);
     if (await openConfirm('저장 하시겠습니까?')) {
-      create(payload);
+      create(filteredPayload);
     }
   };
 
@@ -165,7 +198,7 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
       <ContentsRow>
         <FormRow provider={provider} name="userPosition" />
         <FormRow provider={provider} name="positionName" />
-        <FormRow provider={provider} name="userGroupType" />
+        <FormRow provider={provider} name="jobDomain" />
       </ContentsRow>
       <ContentsRow>
         <FormRow
@@ -240,7 +273,7 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
                 showTotalCount: false,
                 columns: columns(),
                 title: t('직군/직무 관리'),
-                visibleRowCount: 3,
+                visibleRowCount: 1,
               }}
             />
           }
@@ -327,7 +360,6 @@ const columns = () => [
       />
     ),
     meta: {
-      headerAlign: 'center',
       cellAlign: 'center',
     },
   },
@@ -344,7 +376,6 @@ const columns = () => [
       />
     ),
     meta: {
-      headerAlign: 'center',
       cellAlign: 'center',
     },
   },
@@ -359,7 +390,6 @@ const columns = () => [
       />
     ),
     meta: {
-      headerAlign: 'center',
       cellAlign: 'center',
     },
   },
@@ -409,7 +439,7 @@ const formConfig = (): DynamicFormConfig => ({
       },
     },
     {
-      name: 'userGroupType',
+      name: 'jobDomain',
       type: 'dropdown',
       label: t('직군'),
       value: '',
@@ -523,7 +553,7 @@ const formConfig = (): DynamicFormConfig => ({
       label: t('연락처(사무실)'),
       name: 'companyNumber',
       type: 'phone-number',
-      format: 'number',
+      format: 'string',
       value: '',
       fields: {
         nationCode: 'companyNumberCountryCode',
@@ -622,9 +652,9 @@ const formConfig = (): DynamicFormConfig => ({
     },
     {
       name: 'ssoTypeList',
-      type: 'checkbox-group',
+      type: 'radio-group',
       label: '',
-      value: ['AES_Link'],
+      value: 'AES_Link',
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.SsoType'],
       },
