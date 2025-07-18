@@ -6,7 +6,6 @@ import {
   ContentAddInfoType,
   ExamQuestionGenType,
   ExamTemplateType,
-  Tag,
   TestPaperBasicInfoDetail,
   TestPaperBasicInfoSaveReq,
 } from '@types';
@@ -87,7 +86,7 @@ export const convertDetailInfoToFormData = (
     isContentSecured: data.isSecured,
     isInspected: data.isInspected,
     isCopyrighted: data.isCopyrighted,
-    tags: data.tags?.map((tag: string | Tag) => (typeof tag === 'string' ? tag : tag.tagName)),
+    tags: data.tags,
     examTemplateType: data.examTemplateType,
     questionCount: data.questionCount,
     questionCountPerPage: data.questionCountPerPage,
