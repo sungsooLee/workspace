@@ -21,7 +21,7 @@ function RouteComponent() {
   const { courseId, courseType } = router.state.location.state;
 
   // 커스텀 훅 사용
-  const { activeTab, setTabRef, saveTabData, changeTab, getTabValues, deleteTabData } =
+  const { activeTab, setTabRef, saveCurrentTab, changeTab, getTabValues, deleteTabData } =
     useCourseDetailForm(courseType);
 
   const moveListPage = () => {
@@ -38,9 +38,10 @@ function RouteComponent() {
   const handleSaveClick = async () => {
     try {
       if (await saveConfirm()) {
-        await saveTabData();
-        await showSaveComplete();
-        moveListPage();
+        saveCurrentTab();
+        // await saveTabData();
+        // await showSaveComplete();
+        // moveListPage();
       }
     } catch (e) {
       console.error('저장 중 에러:', e);

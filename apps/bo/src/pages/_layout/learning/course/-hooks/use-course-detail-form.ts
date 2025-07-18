@@ -1,21 +1,8 @@
 import { useCallback, useRef, useState } from 'react';
-import {
-  CourseDetailTab,
-  CourseDetailTabFormRef,
-  CourseTabData,
-  CourseTabFormRef,
-} from '../-common/type';
+import { CourseDetailTab, CourseDetailTabFormRef } from '../-common/type';
 
-import { useCreateCourse, useDeleteCourse, useUpdateCourse } from '@entities/course';
-import { queryOptions } from '@entities/course/service/course.queries';
-import { useQueryClient } from '@tanstack/react-query';
-import { Course, CourseConfig } from '@types';
-import {
-  getDummyCourse,
-  getDummyCourse2,
-  getDummyCourse4,
-  getDummyCourseConfig,
-} from './course-mock-data';
+import { useDeleteCourse } from '@entities/course';
+import { Course } from '@types';
 
 export const useCourseDetailForm = (courseType?: string) => {
   // 현재 활성 탭
@@ -78,6 +65,14 @@ export const useCourseDetailForm = (courseType?: string) => {
     }
   }, [activeTab]);
 
+  const saveCurrentTab = useCallback(async () => {
+    const currentRef = tabRefs.current[activeTab];
+    if (!currentRef || !currentRef.save) {
+      throw new Error('탭 데이터가 존재하지 않거나 저장 메서드가 없습니다.');
+    }
+    return await currentRef.save();
+  }, [activeTab]);
+
   // 탭 변경
   const changeTab = useCallback((tabKey: CourseDetailTab) => {
     setActiveTab(tabKey);
@@ -91,6 +86,7 @@ export const useCourseDetailForm = (courseType?: string) => {
     setTabRef,
     saveTabData,
     deleteTabData,
+    saveCurrentTab,
     changeTab,
     getTabValues: () => tabRefs.current[activeTab]?.getValues?.() ?? null,
   };

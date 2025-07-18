@@ -1,4 +1,6 @@
+import { useFetchCourse, useFetchCourseConfig } from '@entities/course';
 import { DateRangePickerFormField, DropdownFormField, FormDisplay } from '@features/form';
+import { InstructorListPopup } from '@features/learning-operate-support/instructor-tutor/instructor-management/modal/instructor-list-modal';
 import {
   CategoryChoiceModal,
   CourseChoiceModal,
@@ -13,7 +15,6 @@ import {
   Input,
   InputModalSelectorFormField,
   ListModalSelectorFormField,
-  PhoneNumberFormField,
   RadioGroupFormField,
   SplitPanel,
   TextareaFormField,
@@ -36,14 +37,12 @@ import { useTranslation } from 'react-i18next';
 import { CourseDetailTabBaseProps, CourseDetailTabFormRef } from '../../../-common/type';
 import { CourseStatsSummary } from '../../../-components/course-stats-summary/course-stats-summary';
 import { PassOptionFormField } from '../../../-components/pass-option-form-field/pass-option-form-field';
-import { InstructorListPopup } from '@features/learning-operate-support/instructor-tutor/instructor-management/modal/instructor-list-modal';
-import { useFetchCourse, useFetchCourseConfig } from '@entities/course';
 
 const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBaseProps>(
   ({ courseId }, ref) => {
     const { t } = useTranslation();
 
-    const { provider, getValues, updateFormData, formValues } = useDynamicForm2();
+    const { provider, getValues, updateFormData, formValues, onSubmit } = useDynamicForm2();
 
     const { data: formData } = useFetchCourse(courseId);
     const { data: courseConfig } = useFetchCourseConfig({
@@ -58,6 +57,7 @@ const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTab
       getValues: () => formDataToRequestData(formValues as Course),
       save: async () => {
         console.log('save');
+        handleManualSubmit();
         return true;
       },
       delete: async () => {
@@ -74,8 +74,27 @@ const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTab
       }
     }, [formData, courseConfig]);
 
+    const handleManualSubmit = () => {
+      // onSubmit은 폼 제출 핸들러를 생성하는 함수입니다
+      const submitHandler = onSubmit((data) => {
+        console.log('수동 제출 성공:', data);
+        // 여기서 성공 처리 로직을 작성
+      });
+
+      // 가짜 이벤트 객체를 생성해서 수동으로 호출
+      const fakeEvent = {
+        preventDefault: () => null,
+      } as any;
+
+      submitHandler(fakeEvent);
+    };
+
+    const handleSubmit = async (formData: any) => {
+      console.log('handleSubmit', formData);
+    };
+
     return (
-      <>
+      <form>
         {/* 과정 통계 요약 CourseStatsSummary*/}
         <CourseStatsSummary courseId={formData?.courseId} />
 
@@ -1350,7 +1369,7 @@ const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTab
             <h2>커리큘럼</h2>
           </div>
         </SplitPanel>
-      </>
+      </form>
     );
   },
 );

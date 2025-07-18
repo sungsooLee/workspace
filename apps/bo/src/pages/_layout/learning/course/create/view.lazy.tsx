@@ -153,57 +153,49 @@ function RouteComponent() {
   console.log('------- view.lazy page...');
 
   return (
-    <form>
-      <PageContainer>
-        <ContentsButtons>
-          <Button
-            type="button"
-            variant="point"
-            size="sm"
-            label={'Tab Values'}
-            onClick={() => console.log('getTabValues', getTabValues())}
-          />
-          <Button
-            type="button"
-            variant="point"
-            size="sm"
-            label={'SET'}
-            onClick={() => loadMockData(4)}
-          />
-          <Button
-            type="button"
-            variant="point"
-            size="sm"
-            label={'목록'}
-            onClick={handleListClick}
-          />
-          <Divider orientation={'vertical'} />
-          <Button
-            type="button"
-            variant="point"
-            size="sm"
-            label={'삭제'}
-            onClick={handleDeleteClick}
-            disabled={!courseId}
-          />
-          <Button
-            type="button"
-            variant="primary"
-            size="sm"
-            label={'저장'}
-            onClick={handleSaveClick}
-          />
-        </ContentsButtons>
-        <MainContents>
-          <Tabs
-            type={'progress'}
-            size={'sm'}
-            items={tabItems}
-            onTabChange={handleTabChange}
-            selectedTabKey={activeTab}
-          />
-        </MainContents>
-      </PageContainer>
-    </form>
+    <PageContainer>
+      <ContentsButtons>
+        <Button
+          type="button"
+          variant="point"
+          size="sm"
+          label={'Tab Values'}
+          onClick={() => console.log('getTabValues', getTabValues())}
+        />
+        <Button
+          type="button"
+          variant="point"
+          size="sm"
+          label={'SET'}
+          onClick={() => loadMockData(4)}
+        />
+        <Button type="button" variant="point" size="sm" label={'목록'} onClick={handleListClick} />
+        <Divider orientation={'vertical'} />
+        <Button
+          type="button"
+          variant="point"
+          size="sm"
+          label={'삭제'}
+          onClick={handleDeleteClick}
+          disabled={!courseId}
+        />
+        <Button
+          type="button"
+          variant="primary"
+          size="sm"
+          label={'저장'}
+          onClick={handleSaveClick}
+        />
+      </ContentsButtons>
+      <MainContents>
+        <Tabs
+          type={'progress'}
+          size={'sm'}
+          items={tabItems}
+          onTabChange={handleTabChange}
+          selectedTabKey={activeTab}
+        />
+      </MainContents>
+    </PageContainer>
   );
 }
