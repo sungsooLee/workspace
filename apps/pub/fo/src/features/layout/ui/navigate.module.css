@@ -13,7 +13,8 @@
             span {
               @apply relative leading-[64px];
             }
-            &:hover {
+            &:hover,
+            &.active {
               @apply text-[var(--blue65)];
               span {
                 &::before {
@@ -50,6 +51,18 @@
       [class*='prev_btn'],
       [class*='next_btn'] {
         @apply !m-[0] !w-[60px] !p-[0] !shadow-none;
+      }
+      [class*='prev_btn']::before,
+      [class*='next_btn']::before {
+        content: '';
+        @apply pointer-events-none absolute top-0 h-full w-[60px];
+        background: linear-gradient(to right, white, transparent);
+      }
+      [class*='prev_btn']::before {
+        @apply left-0;
+      }
+      [class*='next_btn']::before {
+        @apply right-0;
       }
 
       .gnb_button_next {

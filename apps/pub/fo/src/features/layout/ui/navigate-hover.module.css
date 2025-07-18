@@ -7,11 +7,11 @@
     }
 
     .menu_inner {
-      @apply m-[auto] flex w-[1180px] border-l-[1px] border-r-[1px] border-solid border-[var(--gray4)];
+      @apply m-[auto] flex w-[1360px];
       border-top: 0;
       border-bottom: 0;
       .menu_div {
-        @apply flex-1 border-l-[1px] border-solid border-[var(--gray4)] px-[16px] pb-[16px] pt-[0];
+        @apply flex-1 px-[16px] pb-[16px] pt-[0];
         &:first-child {
           @apply border-l-[0];
         }

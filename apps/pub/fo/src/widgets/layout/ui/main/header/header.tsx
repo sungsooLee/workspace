@@ -53,7 +53,8 @@ function HeaderComponent() {
               <Category onOpenChange={handleCategoryOpen} isOpen={isCategoryOpen} />
               <Navigate onMouseEnter={handleMouseEnter} />
             </div>
-            {isHoverNavigate && <NavigateHover isOpen={isHoverNavigate} />}
+            {/* {isHoverNavigate && <NavigateHover isOpen={isHoverNavigate} />} */}
+            <NavigateHover isOpen={true} />
           </div>
 
           <div className={styles.search_form}>

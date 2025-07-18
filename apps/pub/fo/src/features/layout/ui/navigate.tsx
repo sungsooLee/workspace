@@ -55,6 +55,8 @@ function NavigateComponent({ onMouseEnter, onMouseLeave }: NavigateComponentProp
           allowTouchMove={isMobile}
           showNavigation={true}
           className={styles.gnb_swiper}
+          prevIcon={<IcoArrowForward width={20} height={20} fill="#000" />}
+          nextIcon={<IcoArrowForward width={20} height={20} fill="#000" />}
         />
       </nav>
     </div>
