@@ -1,7 +1,7 @@
-import { ChannelDetail } from '@features/channel';
+import { ChannelDetail, EnChannelRegisterMethod } from '@features/channel';
 import { Button } from '@learnway/ui';
 import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui';
-import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
+import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { EnFormMode } from '@types';
 import { t } from 'i18next';
 import { useRef } from 'react';
@@ -12,6 +12,8 @@ export const Route = createLazyFileRoute('/_layout/tenant/channel/management/reg
 
 function RouteComponent() {
   const router = useRouter();
+  const routerState = useRouterState();
+  const requestUuid = routerState.location.state?.requestUuid;
 
   const formRef = useRef<HTMLFormElement>(null);
   const handleOnSave = () => {
@@ -42,7 +44,12 @@ function RouteComponent() {
         </Button>
       </ContentsButtons>
       <MainContents>
-        <ChannelDetail ref={formRef} mode={EnFormMode.ADD} />
+        <ChannelDetail
+          ref={formRef}
+          mode={EnFormMode.ADD}
+          method={requestUuid ? EnChannelRegisterMethod.REQUEST : EnChannelRegisterMethod.MANUAL}
+          requestId={requestUuid}
+        />
       </MainContents>
     </PageContainer>
   );

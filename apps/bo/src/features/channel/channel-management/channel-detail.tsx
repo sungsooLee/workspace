@@ -1,7 +1,7 @@
 import { DuplicateCheckInputFormField, DuplicateState, FormDisplay } from '@features/form';
 import { CODE_GROUP, DynamicFormConfig, S3_PATH, useDynamicForm } from '@learnway/hooks';
+import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import {
-  Button,
   ChipListModalSelectorFormField,
   ContentsRow,
   FormSubTitle,
@@ -20,14 +20,12 @@ import {
 } from '@shared/ui';
 import { EnFormMode } from '@types';
 import { t } from 'i18next';
-import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import ChannelService from '@entities/channel/api/channel';
-import {
-  useGetChannelDetail,
-  useUpdateChannelDetail,
-} from '@entities/channel/service/channel.hook';
+import RequestChannelService from '@entities/channel/api/request-channel';
+import { useCreateChannel, useUpdateChannel } from '@entities/channel/service/channel.hook';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import { EnButtonLayout } from '@pages/_layout/tenant/channel/management/detail.lazy';
@@ -59,14 +57,24 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
   const formRef = useRef<HTMLFormElement>(null);
 
   const routerState = useRouterState();
-  const channelUuid = routerState.location.state?.channelUuid;
 
-  const { data: channelData, refetch } = useGetChannelDetail(channelUuid);
+  const [channelUuid, setChannelUuid] = useState(routerState.location.state?.channelUuid);
+  const [channelData, setChannelData] = useState<any>({});
+  const [requestChannelData, setRequestChannelData] = useState<any>({});
+  //const { data: channelData, refetch } = useGetChannelDetail(channelUuid);
 
   //const { data: request } = useGetRequestChannelDetail(props.requestId);
-  const { update: updateChannel } = useUpdateChannelDetail({
-    onSuccess: () => {
-      refetch();
+  const { update: updateChannel } = useUpdateChannel({
+    onSuccess: (data: any) => {
+      openToast({ title: '저장 하였습니다.', type: 'success' });
+      setChannelUuid(data.channelUuid);
+    },
+  });
+
+  const { create: createChannel } = useCreateChannel({
+    onSuccess: (data: any) => {
+      openToast({ title: '저장 하였습니다.', type: 'success' });
+      setChannelUuid(data.channelUuid);
     },
   });
 
@@ -76,6 +84,24 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
   });
 
   useEffect(() => {
+    if (props.mode === EnFormMode.ADD && props.method === EnChannelRegisterMethod.REQUEST) {
+      (async () => {
+        if (props.requestId)
+          setRequestChannelData(
+            await RequestChannelService.getRequestChannelDetail(props.requestId),
+          );
+      })();
+    }
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      if (channelUuid) setChannelData(await ChannelService.getChannelDetail(channelUuid));
+    })();
+  }, [channelUuid]);
+
+  useEffect(() => {
+    console.log('### props.method', props.method);
     props.onButtonLayoutChange && props.onButtonLayoutChange(EnButtonLayout.RESET_AND_SAVE);
 
     if (!loginUser) return;
@@ -143,8 +169,33 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
         isWiaTenantCustomOption: false,
         isAutoeverTenantCustomOption: false,
       };
-      updateFormData(initialData);
-    } else if (props.mode === EnFormMode.VIEW && channelData) {
+      if (
+        props.method === EnChannelRegisterMethod.REQUEST &&
+        Object.keys(requestChannelData).length > 0
+      ) {
+        console.log('####>>>> requestChannelData', requestChannelData);
+        const requestedData = {
+          ...initialData,
+          ...requestChannelData,
+          requestDate: getDateToString(
+            new Date(requestChannelData.createdDate),
+            DATE_TIME_FORMAT.DATETIME_SEC,
+          ),
+          channelMainId: {
+            fieldValue: requestChannelData.channelMainId,
+            checkState: 'needInput',
+          },
+          channelUrl: getChannelUrl(requestChannelData.channelMainId),
+        };
+        updateFormData(requestedData);
+        //TODO. 신청 개설의 설정 요건 확인
+        //TODO. 채널 핸들 변경 시 URL도 변경
+      } else updateFormData(initialData);
+    } else if (
+      props.mode === EnFormMode.VIEW &&
+      channelData &&
+      Object.keys(channelData).length > 0
+    ) {
       console.log('#### channelData', channelData);
       const initialData = {
         ...channelData,
@@ -189,7 +240,7 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
       });
       updateFormData(initialData);
     }
-  }, [props, channelData]);
+  }, [props, channelData, requestChannelData]);
 
   useImperativeHandle(ref, () => ({
     saveData() {
@@ -211,7 +262,7 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
 
   const handleOnSubmit = async (data: any) => {
     console.log('#### handleOnSubmit', data);
-    const payload = {
+    const commonPayload = {
       ...data,
       channelMainId: data.channelMainId.fieldValue,
       tenantList: data.tenantList, // 추가된 테넌트의 isMainTenant 필요
@@ -239,22 +290,26 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
         isAutoeverTenantCustomOption: data.isAutoeverTenantCustomOption,
       },
     };
+    console.log('### commonPayload', commonPayload);
+    console.log('### props.mode', props.mode);
+    console.log('### props.method', props.method);
 
+    let payload = {};
     if (props.mode === EnFormMode.ADD) {
-      const payloadForAdd = { ...payload, channelRequestUuid: props.requestId };
-      console.log('#### payload', payloadForAdd);
-    } else if (props.mode === EnFormMode.VIEW) {
-      const payloadForView = { ...payload, channelUuid };
-      console.log('#### payload', payloadForView);
-      if (
-        await openConfirm({
-          title: t('저장 하시겠습니까?'),
-          content: t('입력한 정보로 저장합니다.'),
-        })
-      ) {
-        updateChannel(payloadForView);
-        openToast({ title: '저장 하였습니다.', type: 'success' });
-      }
+      if (props.method === EnChannelRegisterMethod.MANUAL) payload = { ...commonPayload };
+      else if (props.method === EnChannelRegisterMethod.REQUEST)
+        payload = { ...commonPayload, channelRequestUuid: props.requestId };
+    } else if (props.mode === EnFormMode.VIEW) payload = { ...commonPayload, channelUuid };
+    console.log('#### payload', payload);
+
+    if (
+      await openConfirm({
+        title: t('저장 하시겠습니까?'),
+        content: t('입력한 정보로 저장합니다.'),
+      })
+    ) {
+      if (props.mode === EnFormMode.ADD) createChannel(payload);
+      else if (props.mode === EnFormMode.VIEW) updateChannel(payload);
     }
   };
 
@@ -267,27 +322,27 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
             <FormRow
               provider={provider}
               name={'channelRequestId'}
-              element={<Input disabled={true} />}
+              element={<Input readOnly={true} />}
             >
-              <Button className={dynamicFormStyles.btn_find} variant={'gray'} size={'sm'}>
+              {/* <Button className={dynamicFormStyles.btn_find} variant={'gray'} size={'sm'}>
                 {t('조회')}
-              </Button>
+              </Button> */}
             </FormRow>
-            <FormRow provider={provider} name={'tenantName'} element={<Input disabled={true} />} />
-            <FormRow provider={provider} name={'requestDate'} element={<Input disabled={true} />} />
+            <FormRow provider={provider} name={'tenantName'} element={<Input readOnly={true} />} />
+            <FormRow provider={provider} name={'requestDate'} element={<Input readOnly={true} />} />
           </ContentsRow>
           <ContentsRow>
             <FormRow
               provider={provider}
               name={'channelLearningContent'}
-              element={<TextareaFormField disabled={true} resize={'none'} />}
+              element={<TextareaFormField readOnly={true} resize={'none'} />}
             />
           </ContentsRow>
           <ContentsRow>
             <FormRow
               provider={provider}
               name={'channelPurposeContent'}
-              element={<TextareaFormField disabled={true} resize={'none'} />}
+              element={<TextareaFormField readOnly={true} resize={'none'} />}
             />
           </ContentsRow>
         </>
@@ -312,14 +367,12 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
         />
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider} name={'channelUrl'} element={<Input disabled={true} />} />
+        <FormRow provider={provider} name={'channelUrl'} element={<Input readOnly={true} />} />
         <FormRow
           provider={provider}
           name={'channelTenatMappingType'}
           element={<RadioGroupFormField disabled={true} />}
         />
-        {/* 직접 개설인 경우에는 일반 채널만 가능 
-        //TODO. 유니버설의 경우 대표 테넌트 자동 선택(readOnly or disabled), 업로드 파일 저장소(채널), 과정 연관 설정(수강신청 ~ 행정항목), 테넌트 전용항목은 대표 테넌트의 설정 값을 가져온다 */}
         <FormRow provider={provider} name={'channelSecretType'} />
       </ContentsRow>
       <ContentsRow>

@@ -15,7 +15,7 @@ export default class ChannelService {
     return httpService.post<any>(`${PMSApiPrefix()}/channel`, payload);
   }
 
-  static async updateChannelDetail(payload: any) {
+  static async updateChannel(payload: any) {
     return httpService.put<any>(`${PMSApiPrefix()}/channel/${payload.channelUuid}`, payload);
   }
 
