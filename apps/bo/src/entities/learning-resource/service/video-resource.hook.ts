@@ -46,7 +46,11 @@ const useVideoResourceHook = (provider: DynamicFormProvider) => {
       fetchVideoContent();
     }
 
-    return () => intervalRef.current && clearInterval(intervalRef.current);
+    return () => {
+      if (intervalRef.current && !isProcessing(status)) {
+        console.log('🚀 ~ useEffect ~ interval Stop!: > isProcessing? ', isProcessing(status));
+      }
+    };
   }, [status]);
 
   return {
