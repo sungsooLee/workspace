@@ -10,7 +10,7 @@ const CurriculumComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>(
   ({ onSave, data: { formData, courseConfig } }, ref) => {
     const { t } = useTranslation();
     // const { provider, getValues, fetchData } = dynamicForm;
-    const { provider, getValues, onSubmit, onFormValid, formState, updateFormData } =
+    const { provider, getValues, onSubmit, onFormValid, formState, updateFormData, formValues } =
       useDynamicForm2();
 
     // 부모 컴포넌트에서 호출할 수 있는 메서드
@@ -18,7 +18,7 @@ const CurriculumComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>(
       validate: async () => {
         // 모든 필드에 대해 유효성 검사 수행
         const isValid = await onFormValid();
-        const data = formDataToRequestData(getValues() as Course);
+        const data = formDataToRequestData(formValues as Course);
         const errors = formState.errors;
 
         return {
@@ -27,7 +27,7 @@ const CurriculumComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>(
           errors,
         };
       },
-      getValues: () => formDataToRequestData(getValues() as Course),
+      getValues: () => formDataToRequestData(formValues as Course),
     }));
 
     useEffect(() => {

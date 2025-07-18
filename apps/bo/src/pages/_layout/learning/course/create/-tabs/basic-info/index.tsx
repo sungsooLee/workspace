@@ -30,7 +30,7 @@ const BasicInfoComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>(
   ({ onSave, onConfigPropChange, data: { formData, courseConfig, isSaved } }, ref) => {
     const { t } = useTranslation();
 
-    const { provider, getValues, updateFormData, onFormValid, formState, watch } =
+    const { provider, getValues, updateFormData, onFormValid, formState, watch, formValues } =
       useDynamicForm2();
 
     const channelUuid = watch('channelUuid');
@@ -50,7 +50,7 @@ const BasicInfoComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>(
       validate: async () => {
         // 모든 필드에 대해 유효성 검사 수행
         const isValid = await onFormValid();
-        const data = formDataToRequestData(getValues() as Course);
+        const data = formDataToRequestData(formValues as Course);
         const errors = formState.errors;
 
         return {
@@ -59,7 +59,7 @@ const BasicInfoComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>(
           errors,
         };
       },
-      getValues: () => formDataToRequestData(getValues() as Course),
+      getValues: () => formDataToRequestData(formValues as Course),
     }));
 
     useEffect(() => {

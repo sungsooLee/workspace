@@ -43,7 +43,7 @@ const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTab
   ({ courseId }, ref) => {
     const { t } = useTranslation();
 
-    const { provider, getValues, updateFormData } = useDynamicForm2();
+    const { provider, getValues, updateFormData, formValues } = useDynamicForm2();
 
     const { data: formData } = useFetchCourse(courseId);
     const { data: courseConfig } = useFetchCourseConfig({
@@ -55,7 +55,7 @@ const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTab
 
     // 부모 컴포넌트에서 호출할 수 있는 메서드
     useImperativeHandle(ref, () => ({
-      getValues: () => formDataToRequestData(getValues() as Course),
+      getValues: () => formDataToRequestData(formValues as Course),
       save: async () => {
         console.log('save');
         return true;
