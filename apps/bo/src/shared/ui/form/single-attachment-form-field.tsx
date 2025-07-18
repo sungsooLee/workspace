@@ -18,6 +18,7 @@ import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.cs
 interface AttachmentFormFieldProps extends BaseFormFieldProps<string> {
   uploadConfig: S3UploaderConfig;
   uuidType: 'files' | 'group';
+  showGuidText?: boolean;
 }
 
 /**
@@ -34,6 +35,7 @@ const SingleAttachmentFormFieldComponent = forwardRef<
   (
     {
       uploadConfig,
+      showGuidText = true,
       name,
       value,
       onChange,
@@ -171,9 +173,11 @@ const SingleAttachmentFormFieldComponent = forwardRef<
             {...props}
           />
         </div>
-        <p className={formStyles.guide_text}>
-          {`${'확장자'} ${acceptFiles.join(', ')} / ${'업로드 가능'} ${maxFileCount} ${'개'} / ${'파일용량 최대'} ${formatFileSize(maxFileSize)}`}
-        </p>
+        {showGuidText && (
+          <p className={formStyles.guide_text}>
+            {`${'확장자'} ${acceptFiles.join(', ')} / ${'업로드 가능'} ${maxFileCount} ${'개'} / ${'파일용량 최대'} ${formatFileSize(maxFileSize)}`}
+          </p>
+        )}
       </div>
     );
   },

@@ -7,14 +7,18 @@ import { GridBox, GridBoxProps, TableBox } from '@learnway/ui';
 interface GridFormFieldComponentProps extends BaseFormFieldProps<any[]> {
   /** grid box Props */
   gridProps?: GridBoxProps;
+  /** 최대로 추가 되는 경우  */
+  maxRow?: number;
 }
 
 const GridFormFieldComponent = forwardRef<HTMLInputElement, GridFormFieldComponentProps>(
-  ({ value, onChange, gridProps = {} }, ref) => {
+  ({ value, onChange, maxRow, gridProps = {} }, ref) => {
     const [selectedRows, setSelectedRows] = useState<any[]>([]);
     const { columns, rowId = 'id' } = gridProps;
 
     const handleAddClick = () => {
+      console.log(maxRow, value);
+      if (maxRow !== undefined && value.length >= maxRow) return;
       const newValue = [...value, { [rowId]: getRandomId() }];
       onChange?.(newValue);
     };
