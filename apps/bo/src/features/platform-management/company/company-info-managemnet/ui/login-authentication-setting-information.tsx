@@ -1,19 +1,19 @@
-import React, { FC, useRef, useState, useImperativeHandle, forwardRef, useEffect } from 'react';
-import { t } from 'i18next';
 import { cn } from '@learnway/shared';
 import {
-  ContentsRow,
-  RadioGroupFormField,
-  ContentsRowItem,
   CheckboxGroupFormField,
+  ContentsRow,
+  ContentsRowItem,
   FormGuideText,
+  RadioGroupFormField,
 } from '@learnway/ui';
+import { t } from 'i18next';
+import { FC } from 'react';
 
-import { FormRow } from '@shared/ui';
 import { FormDisplay } from '@features/form/ui/form-display';
+import { FormItem, FormRow } from '@shared/ui';
 
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 
 const LoginAuthenticationSettingInformationComponent: FC<any> = ({
   provider,
@@ -62,6 +62,7 @@ const LoginAuthenticationSettingInformationComponent: FC<any> = ({
             <FormGuideText>{t('2차 로그인 인증 여부를 설정할 수 있습니다.')}</FormGuideText>
           </div>
         </ContentsRowItem>
+        <FormItem />
       </ContentsRow>
       <FormDisplay provider={provider} dependencies={[{ name: 'isUseTwoFactorAuth', value: true }]}>
         <ContentsRow>
