@@ -80,7 +80,7 @@ const HtmlDetailComponent = forwardRef<HTMLFormElement, HtmlDetailProps>(
         updateFormData({
           ...getValues(),
           contentName: data.contentName,
-          languageCountryCode: data.langCountryCode,
+          languageCountryCode: data.languageCountryCode,
           channelUuid: data.channelUuid,
           channelName: data.channelName,
           description: data.description,

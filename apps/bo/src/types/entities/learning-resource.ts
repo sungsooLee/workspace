@@ -356,7 +356,6 @@ export interface TestPaperBasicInfoSaveReq extends MediaContentSaveReq {
   isExamEndNotice: boolean;
   examEndNoticeOffsetMinutes: number;
   examEndNoticeMessage: string;
-  examType: ExamType;
   questionGenType?: ExamQuestionGenType;
 }
 
@@ -404,10 +403,59 @@ export enum ExamQuestionGenType {
   RANDOM = 'RANDOM',
 }
 
-export enum ExamType {
-  PRE_TEST = 'PRE_TEST',
-  PROGRESS_TEST = 'PROGRESS_TEST',
-  POST_TEST = 'POST_TEST',
+export type TestPaperDetailRes = GetContentDetailRes;
+
+export interface GetVideoStatusRes {
+  contentUuid: string;
+  fileUUid: string;
+  contentType: ContentType;
+  contentStatusCode: ContentStatusCode;
+  processingStatus: ProcessingStatus;
+  isDrafted: boolean;
 }
 
-export type TestPaperDetailRes = GetContentDetailRes;
+interface VideoFileInfo {
+  groupUuid: string;
+  fileId: number;
+  fileUuid: string;
+  fileName: string;
+  storageType: 'S3' | 'HMG';
+  bucket: string;
+  filePath: string;
+  fileSize: number;
+  extType: string;
+  uploadStatus: FileStatus;
+}
+
+interface EncodedVideo {
+  contentUuid: string;
+  m3u8Url: string;
+  height: number;
+  width: number;
+  filePath: string;
+}
+
+interface EncodedAudio {
+  contentUuid: string;
+  fileUrl: string;
+  filePath: string;
+}
+
+interface VideoSubtitles {
+  subtitleFileUuid: string;
+  languageCode: string;
+  subtitleName: string;
+  subtitleUrl?: string;
+}
+
+export interface GetVideoResourceRes {
+  contentUuid: string;
+  contentName: string;
+  languageCountryCode: string;
+  contentStatusCode: ContentStatusCode;
+  fileInfo: VideoFileInfo;
+  masterVideo: string | null;
+  encodedVideos: EncodedVideo[] | null;
+  encodedAudios: EncodedAudio[] | null;
+  videoSubtitles: VideoSubtitles[];
+}

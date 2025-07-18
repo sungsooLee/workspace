@@ -23,6 +23,19 @@ const UserGroupJobGroupComponent = ({
 }: UserGroupJobGroupComponentProps) => {
   const ref = useRef<ShuttleGridToChipsImperative>(null);
   const { data = [] } = useFetchUserGroups(tenantIds, { userGroupType: 'JOB_GROUP' });
+
+  const gridData = useMemo<any[]>(
+    () =>
+      data.map(({ fullName, userGroupId, userGroupName, ...others }) => ({
+        key: `${userGroupId}`,
+        id: userGroupId,
+        fullPath: fullName,
+        title: userGroupName,
+        userGroupName,
+        ...others,
+      })),
+    [data],
+  );
   const columnHelper = createColumnHelper();
   const columns = [
     columnHelper.accessor('tenantName', {
@@ -45,11 +58,12 @@ const UserGroupJobGroupComponent = ({
 
   const initialSelectedItems = useMemo<SelectedChip[]>(() => {
     return option.map(({ combiners, pathKey, pathValue, groupId }) => {
+      const isCombined = combiners.length > 1;
       const [combiner] = combiners;
       return {
         key: pathKey,
-        id: combiner.combineValue,
-        title: combiner.combineName,
+        id: isCombined ? undefined : combiner.combineValue,
+        ids: isCombined ? combiners.map(({ combineValue }) => combineValue) : undefined,
         fullPath: pathValue,
         groupId,
       };
@@ -60,20 +74,21 @@ const UserGroupJobGroupComponent = ({
     useShuttleGridToChips(initialSelectedItems);
 
   useEffect(() => {
-    if (selectedItems.length === 0) return;
+    if (selectedItems.length === 0) return handleSetOption([]);
 
     const updatedOption: CombineUserGroup[] = selectedItems.map(
-      ({ key, id, title, fullPath, groupId }) => ({
+      ({ key, id, ids, fullPath, groupId }) => ({
         pathKey: key,
         groupId,
         pathValue: fullPath,
-        combiners: [
-          {
-            combineType: 'USER_GROUP',
-            combineValue: id,
-            combineName: title,
-          },
-        ],
+        combiners: ids
+          ? ids.map((id) => ({ combineType: 'USER_GROUP', combineValue: id }))
+          : [
+              {
+                combineType: 'USER_GROUP',
+                combineValue: id!,
+              },
+            ],
       }),
     );
 
@@ -88,7 +103,7 @@ const UserGroupJobGroupComponent = ({
       cancelSelectItem={cancelSelectItem}
       cancelAll={cancelAll}
       columns={columns}
-      gridData={data}
+      gridData={gridData}
       sourceTitle={t('유저그룹 - 직군')}
       targetTitle={t('선택 유저그룹 목록')}
     />

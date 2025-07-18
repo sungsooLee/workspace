@@ -1,5 +1,3 @@
-import { skipToken } from '@tanstack/react-query';
-
 import { getQuerySkipToken } from '@learnway/shared';
 
 import UsersService from '../api/users';
@@ -33,5 +31,7 @@ export const usersQueryOptions = {
 
 export const mutateOptions = {
   create: () => ({ mutationFn: (payload: any) => UsersService.createUser(payload) }),
-  unlock: () => ({ mutationFn: (uuid: string) => UsersService.unlockUser(uuid) }),
+  unlock: () => ({ mutationFn: (payload: any) => UsersService.unlockUser(payload) }),
+  approve: () => ({ mutationFn: (uuids: string[]) => UsersService.approveAccountUser(uuids) }),
+  reject: () => ({ mutationFn: (uuids: string[]) => UsersService.rejectAccountUser(uuids) }),
 };

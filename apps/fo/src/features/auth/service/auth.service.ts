@@ -5,6 +5,7 @@ import {
   useAsycFetchMenus,
 } from '@learnway/auth/entities';
 import type { AuthUser } from '@learnway/auth/types';
+import { getConfig } from '@learnway/config';
 import { cookieService, MutateCallback } from '@learnway/shared';
 import { useModal } from '@learnway/ui';
 
@@ -29,7 +30,12 @@ export function useAuthSignin() {
       return await login(payload, {
         ...callback,
         onSuccess: async (data, variables, context) => {
-          const menus = await asyncMenus(data.activeTenant?.tenantId, data.activeRole?.roleId);
+          const menus = await asyncMenus(
+            data.activeTenant?.tenantId,
+            getConfig().APP_INFO === 'BO'
+              ? data.activeRole?.roleId
+              : data.roles?.map((role: any) => role.roleId).join(','),
+          );
 
           if (payload.saveId) {
             cookieService.set('SAVED_USER_ID', payload.username);

@@ -479,11 +479,13 @@ function RouteComponent() {
                       tenantIds={[1, 2, 3]}
                       option={[
                         {
-                          pathKey: '1',
-                          pathValue: '현대제철',
-                          groupId: 1,
+                          pathKey: '2-54-9-10&&2-54&&3-1678',
+                          pathValue:
+                            'ROOT > 현대카드👨‍💻🔥💯🚀 > 현대오토에버 > 개발본부 > 개발팀 & ROOT > 현대카드👨‍💻🔥💯🚀 > 현대오토에버 & ROOT > 현대오토에버Здравствуй > 사외강사가상회사',
                           combiners: [
-                            { combineName: '현대제철', combineType: 'USER_GROUP', combineValue: 1 },
+                            { combineType: 'USER_GROUP', combineValue: 10 },
+                            { combineType: 'USER_GROUP', combineValue: 54 },
+                            { combineType: 'USER_GROUP', combineValue: 1678 },
                           ],
                         },
                       ]}

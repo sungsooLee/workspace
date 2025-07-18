@@ -16,12 +16,13 @@ enum QuestionTab {
 const LearningResourceQuestionBankComponent = () => {
   const { alert, open: openModal } = useModal();
   const [selectedTabKey, setSelectedTabKey] = useState<string>(QuestionTab.QUESTION_BASE);
-  const { formMode } = useLearningResourceQuestionDetailForm();
+  const { baseInfo, formMode } = useLearningResourceQuestionDetailForm();
 
   const handleTabChange = (tabKey: string) => {
     setSelectedTabKey(tabKey);
   };
   const handleBeforTabChange = async (currentTabKey: string, nextTabKey: string) => {
+    console.log('formMode', formMode, baseInfo);
     if (nextTabKey === QuestionTab.QUESTION_ITEM && formMode === EnFormMode.ADD) {
       alert({
         title: '입력한 정보를 저장하세요.',

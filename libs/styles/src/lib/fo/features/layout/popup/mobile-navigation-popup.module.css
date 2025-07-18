@@ -1,0 +1,65 @@
+.start {
+  .profile_info {
+    @apply flex items-start justify-between pb-[20px];
+    .profile {
+      @apply flex-1;
+      .name {
+        @apply body_1_b block leading-[30px] text-[var(--gray9)];
+      }
+      .tenant {
+        @apply body_3_r block text-[var(--gray7)];
+      }
+      .team {
+        @apply body_3_r block text-[var(--gray7)];
+      }
+      .link {
+        @apply label_12_500 mt-[16px] inline-block text-[var(--gray7)] underline underline-offset-[4px];
+      }
+    }
+    .avata_img {
+      @apply mt-[10px] flex items-center;
+      .info_avata {
+        @apply h-[56px] w-[56px] rounded-[50%];
+        & + .info_avata {
+          @apply -ml-[8px];
+        }
+      }
+      span.info_avata {
+        @apply title_4_b flex items-center justify-center bg-[#00afd5] text-white;
+      }
+    }
+  }
+  .gnb {
+    @apply -mx-[20px] w-[calc(100%+40px)] border-t-[12px] border-solid border-[var(--gray2)];
+    & > li {
+      .gnb_list {
+        & > li {
+          & + li {
+            @apply border-t-[1px] border-solid border-[var(--gray3)];
+          }
+          a {
+            @apply body_3_r block flex items-center px-[20px] py-[17px] text-[var(--gray9)];
+            svg {
+              @apply mr-[8px];
+            }
+          }
+        }
+      }
+      .gnb_title {
+        @apply bg-[var(--gray2)] px-[20px] pb-[8px] pt-[16px];
+        strong {
+          @apply body_4_r text-[var(--gray8)];
+        }
+      }
+    }
+  }
+}
+
+.header {
+  @apply flex w-full items-center justify-end pr-[40px];
+  & > a {
+    & + a {
+      @apply ml-[16px];
+    }
+  }
+}

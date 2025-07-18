@@ -1,0 +1,48 @@
+.start {
+  &.list {
+    ul {
+      li {
+        @apply body-md relative pl-[12px] leading-[22px] text-[var(--gray35)];
+        &::before {
+          @apply absolute left-0 top-[9px] h-[4px] w-[4px] rounded-[50%] bg-[var(--gray50)] content-[''];
+        }
+        & + li {
+          @apply mt-[8px];
+        }
+        a {
+          @apply text-[var(--secondary2)] underline underline-offset-[2px];
+        }
+      }
+    }
+  }
+  &.list_number {
+    ol {
+      li {
+        @apply body-md ml-[14px] list-decimal leading-[22px] text-[var(--gray7)];
+        &::marker {
+          @apply left-0;
+        }
+        & + li {
+          @apply mt-[8px];
+        }
+      }
+    }
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.list {
+        ul {
+          li {
+            @apply body-sm pl-[10px];
+            &::before {
+              @apply top-[6px] h-[3px] w-[3px];
+            }
+          }
+        }
+      }
+    }
+  }
+}

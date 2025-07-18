@@ -1,0 +1,225 @@
+.start {
+  &.education {
+    @apply rounded-[16px] border-[1px] border-solid border-[var(--gray3)] px-[32px] pt-[32px];
+    &.disabled {
+      .info_box {
+        .txt_box {
+          .box {
+            .state,
+            .date {
+              @apply whitespace-nowrap text-[var(--gray6)];
+            }
+            .state {
+              &::before {
+                @apply bg-[var(--gray6)];
+              }
+            }
+          }
+        }
+      }
+    }
+    .info_box {
+      @apply flex items-center justify-between;
+      & + .info_box {
+        @apply mt-[20px] border-t-[1px] border-solid border-[var(--gray3)] pt-[20px];
+      }
+      .txt_box {
+        @apply flex-1;
+        .box {
+          @apply flex items-center;
+          .state,
+          .date {
+            @apply title3 text-[var(--blue50)];
+          }
+          .state {
+            @apply relative ml-[8px] pl-[8px];
+            &::before {
+              @apply absolute left-0 top-1/2 h-[12px] w-px -translate-y-1/2 bg-[var(--secondary3)] content-[''];
+            }
+          }
+          .label {
+            @apply label-sm-b ml-[8px] inline-block rounded-[24px] bg-[var(--gray95)] px-[8px] py-[3px] leading-[17px] text-[var(--gray10)];
+          }
+          p {
+            @apply title5-b mt-[6px] text-[var(--gray10)];
+          }
+        }
+      }
+      .list {
+        @apply flex w-full flex-wrap;
+        ul {
+          @apply contents w-full;
+          li {
+            @apply flex w-[calc(50%-8px)] items-center align-top;
+            svg {
+              @apply mr-[12px];
+            }
+            span {
+              @apply body-md inline-block leading-[24px] text-[var(--gray35)];
+              em {
+                @apply text-[var(--blue50)];
+              }
+            }
+            button {
+              @apply body-md ml-[12px] whitespace-nowrap !px-0 leading-[28px] text-[var(--gray50)] underline underline-offset-[4px];
+            }
+            &:nth-child(2n) {
+              @apply ml-[16px];
+            }
+            &:nth-child(n + 3) {
+              @apply mt-[8px];
+            }
+            &.full {
+              @apply w-full;
+              & + li {
+                @apply ml-0;
+              }
+            }
+          }
+        }
+      }
+      .more_list {
+        @apply flex w-full flex-wrap;
+        & > ul {
+          & > li {
+            @apply mt-[8px];
+          }
+        }
+        .full {
+          @apply !mt-[24px] w-full;
+          dt {
+            @apply body-md-b text-[var(--gray10)];
+          }
+          dd {
+            @apply mt-[12px] p-0;
+            &::before {
+              @apply hidden;
+            }
+          }
+        }
+        .evaluation_box {
+          & > ul {
+            @apply flex w-full items-start;
+            li {
+              @apply m-0 inline-block flex-1 rounded-[40px] bg-[var(--blue98)] py-[12px] align-top;
+              span {
+                @apply title1-b block w-full text-center text-[var(--gray10)];
+              }
+              strong {
+                @apply title4-b mt-[4px] block w-full text-center leading-[24px] text-[var(--blue50)];
+              }
+              & + li {
+                @apply ml-[8px];
+              }
+            }
+          }
+          & > div {
+            @apply mt-[24px];
+            ul {
+              li {
+                @apply ml-0 w-full;
+                & + li {
+                  @apply mt-[4px];
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .btn_action {
+      @apply -mx-[32px] mt-[32px] w-[calc(100%+64px)] border-t-[1px] border-solid border-[var(--gray3)];
+      button {
+        @apply flex h-[56px] w-full items-center justify-center;
+        span {
+          @apply label-xl text-[var(--gray8)];
+        }
+        svg {
+          @apply ml-[3px];
+        }
+        &.active {
+          svg {
+            @apply rotate-180;
+          }
+        }
+      }
+    }
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.education {
+        @apply px-[24px] pt-[24px];
+        .info_box {
+          @apply block;
+          .txt_box {
+            .box {
+              .date {
+                @apply title2;
+              }
+              p {
+                @apply title4-b;
+              }
+              & + .box {
+                @apply mt-[6px];
+              }
+            }
+          }
+          .btn_box {
+            @apply mt-[12px];
+            button {
+              @apply !m-0 w-full;
+            }
+          }
+          .list {
+            @apply block;
+            ul {
+              li {
+                @apply !ml-0 flex w-full items-start;
+                span {
+                  @apply body-sm leading-[20px];
+                }
+                button {
+                  @apply label-lg leading-[20px] text-[var(--gray35)];
+                }
+                & + li {
+                  @apply !mt-[8px];
+                }
+              }
+            }
+          }
+          .more_list {
+            .evaluation_box {
+              ul {
+                @apply block;
+                li {
+                  @apply block;
+                  & + li {
+                    @apply !mt-[16px] ml-0;
+                  }
+                  span {
+                    @apply title1-b;
+                  }
+                  storng {
+                    @apply title4-b;
+                  }
+                }
+              }
+            }
+          }
+        }
+        .btn_action {
+          @apply -mx-[24px] mt-[24px];
+          button {
+            @apply h-[48px];
+            span {
+              @apply label-lg;
+            }
+          }
+        }
+      }
+    }
+  }
+}

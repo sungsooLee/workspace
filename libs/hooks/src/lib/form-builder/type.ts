@@ -245,6 +245,8 @@ export type DynamicFormProvider = {
   registerField: (fieldConfig: FormConfig) => void;
   /** 동적으로 validator를 추가하는 함수 */
   addValidator: (fieldName: string, validation: any) => void;
+  /** 필드 값 변화를 감시하는 함수 */
+  watch: UseFormReturn['watch'];
   /** 모든 validator를 초기화하는 함수 */
   clearAllValidators: () => void;
 };

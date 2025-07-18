@@ -1,0 +1,114 @@
+.start {
+  &.information {
+    .tit {
+      @apply headline1-b block text-[var(--gray10)];
+    }
+    .count_box {
+      @apply mt-[8px] flex flex-wrap;
+      .box {
+        @apply flex items-center;
+        & + .box {
+          @apply relative ml-[8px] pl-[8px];
+          &::before {
+            @apply absolute left-0 top-1/2 h-[14px] w-px -translate-y-1/2 bg-[var(--gray5)] content-[''];
+          }
+        }
+        span {
+          @apply label-lg ml-[4px] leading-[16px] text-[var(--gray7)];
+        }
+      }
+    }
+    .subscribe_box {
+      @apply mt-[16px] flex items-center border-t-[1px] border-solid border-[var(--gray3)] py-[12px];
+      .channel_name {
+        @apply title3 flex-1 text-[var(--gray7)];
+      }
+      button {
+        @apply label-lg ml-[8px];
+      }
+    }
+    .list_box {
+      @apply border-t-[1px] border-solid border-[var(--gray3)] pt-[16px];
+      ul {
+        li {
+          @apply relative pl-[32px] pr-[28px];
+          & + li {
+            @apply mt-[8px];
+          }
+          &.open {
+            p {
+              @apply whitespace-normal;
+            }
+            button {
+              svg {
+                @apply rotate-180;
+              }
+            }
+          }
+          p {
+            @apply body-md overflow-hidden text-ellipsis whitespace-nowrap leading-[24px] text-[var(--gray35)];
+          }
+          svg {
+            @apply absolute left-0 top-[2px];
+          }
+          button {
+            @apply absolute right-0 top-[2px] m-0 h-[20px] w-[20px] p-0;
+            svg {
+              @apply mx-0;
+            }
+          }
+        }
+      }
+    }
+    .lecture_wrap {
+      @apply mt-[16px];
+      & > div {
+        & + div {
+          @apply mt-[12px];
+        }
+        & > div,
+        & > button {
+          @apply !p-[24px];
+        }
+        .box {
+          & + .box {
+            @apply mt-[12px] border-none pt-0;
+          }
+        }
+      }
+    }
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.information {
+        @apply z-[1];
+        .count_box {
+          @apply relative pb-[16px];
+          .btn_acc {
+            @apply body_3_r absolute bottom-[16px] right-0 flex items-center text-[var(--gray8)];
+            svg {
+              @apply ml-[2px];
+            }
+            &.active {
+              svg {
+                @apply rotate-180;
+              }
+            }
+          }
+        }
+        .list_box {
+          @apply hidden pb-[16px];
+          &.active {
+            @apply block;
+          }
+        }
+        .subscribe_box {
+          @apply mt-0;
+        }
+      }
+    }
+  }
+}

@@ -1,22 +1,22 @@
-import { httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
-import { ChannelByRoleId, PaginationResponse } from '@types';
+import { httpService } from '@learnway/shared';
+import { ChannelByRoleId } from '@types';
 
 export default class ChannelService {
   static async getChannelList(params: any) {
     return httpService.get<any>(`${PMSApiPrefix()}/channel`, params);
   }
 
-  static async getChannelDetail(channelId: number) {
-    return httpService.get(`${PMSApiPrefix()}/channel/${channelId}`);
+  static async getChannelDetail(channelUuid: string) {
+    return httpService.get<any>(`${PMSApiPrefix()}/channel/${channelUuid}`);
   }
 
   static async createChannel(payload: any) {
     return httpService.post<any>(`${PMSApiPrefix()}/channel`, payload);
   }
 
-  static async updateChannelDetail(channelId: number, body: any) {
-    return httpService.put<any>(`${PMSApiPrefix()}/channel/${channelId}`, body);
+  static async updateChannelDetail(payload: any) {
+    return httpService.put<any>(`${PMSApiPrefix()}/channel/${payload.channelUuid}`, payload);
   }
 
   static async deleteChannel(channelId: number) {

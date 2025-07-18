@@ -4,14 +4,15 @@ import {
   Button,
   ChipListModalSelectorFormField,
   ContentsRow,
+  FormSubTitle,
   Input,
   RadioGroupFormField,
   TextareaFormField,
-  FormSubTitle,
+  useModal,
+  useToast,
 } from '@learnway/ui';
 import {
   ChipListFormField,
-  ContentsHistoryInfoFormField,
   FormItem,
   FormRow,
   TenantShuttleModal,
@@ -23,9 +24,16 @@ import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import ChannelService from '@entities/channel/api/channel';
+import {
+  useGetChannelDetail,
+  useUpdateChannelDetail,
+} from '@entities/channel/service/channel.hook';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+import { EnButtonLayout } from '@pages/_layout/tenant/channel/management/detail.lazy';
+import { useRouterState } from '@tanstack/react-router';
 import { useWatch } from 'react-hook-form';
+import { getChannelUrl } from '../channel-application/service/channel-application.service';
 
 export enum EnChannelRegisterMethod {
   REQUEST = 'REQUEST',
@@ -36,18 +44,31 @@ interface ChannelDetailProps {
   mode: EnFormMode;
   method?: EnChannelRegisterMethod;
   requestId?: string;
+  onButtonLayoutChange?: (layout: EnButtonLayout) => void;
 }
 
 const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
   const { t } = useTranslation();
   const { data: loginUser } = useFetchAuthUser();
+  const { confirm: openConfirm } = useModal();
+  const { open: openToast } = useToast();
 
   const { provider, control, updateFormData, onSubmit, onFormChange, getValues } =
     useDynamicForm(formConfig());
 
   const formRef = useRef<HTMLFormElement>(null);
 
+  const routerState = useRouterState();
+  const channelUuid = routerState.location.state?.channelUuid;
+
+  const { data: channelData, refetch } = useGetChannelDetail(channelUuid);
+
   //const { data: request } = useGetRequestChannelDetail(props.requestId);
+  const { update: updateChannel } = useUpdateChannelDetail({
+    onSuccess: () => {
+      refetch();
+    },
+  });
 
   const watchedChannelTenatMappingType = useWatch({
     control,
@@ -55,14 +76,27 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
   });
 
   useEffect(() => {
+    props.onButtonLayoutChange && props.onButtonLayoutChange(EnButtonLayout.RESET_AND_SAVE);
+
     if (!loginUser) return;
     const tenantList: any[] = [];
     // TODO. ChipList 수정되면 대표 테넌트는 삭제되지 않도록 수정
     if (loginUser.activeTenant) {
-      tenantList.push({ ...loginUser.activeTenant });
+      tenantList.push({
+        ...loginUser.activeTenant,
+        isFixed: true,
+        isMainTenant: true,
+        tenantName: t('{{name}} (대표)', { name: loginUser.activeTenant.tenantName }),
+      });
     } else {
       if (loginUser.tenants && loginUser.tenants.length > 0) {
-        tenantList.push(loginUser.tenants[0]);
+        const tenant = loginUser.tenants[0];
+        tenantList.push({
+          tenant,
+          isFixed: true,
+          isMainTenant: true,
+          tenantName: t('{{name}} (대표)', { name: tenant.tenantName }),
+        });
       }
     }
 
@@ -90,8 +124,8 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
         fileStorageType: 'AWS_INTERNAL',
         isUsed: false,
         isDisplay: false,
-        channelProfileImageFile: [],
-        channelHomeImageFile: [],
+        channelProfileImageFileGroupUuid: '',
+        channelHomeImageFileGroupUuid: '',
         channelDesc: '',
         channelTagList: [],
         isEnrollOption: false,
@@ -110,16 +144,52 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
         isAutoeverTenantCustomOption: false,
       };
       updateFormData(initialData);
-    } else if (props.mode === EnFormMode.VIEW) {
-      // TODO
+    } else if (props.mode === EnFormMode.VIEW && channelData) {
+      console.log('#### channelData', channelData);
       const initialData = {
+        ...channelData,
+        channelRequestId: '',
+        tenantName: '',
+        requestDate: '',
+        channelLearningContent: '',
+        channelPurposeContent: '',
         channelMainId: {
-          fieldValue: 'detailData.learningSpaceCode',
+          fieldValue: channelData.channelMainId,
           checkState: DuplicateState.okStart,
         },
+        channelUrl: getChannelUrl(channelData.channelMainId),
+        tenantList: channelData.tenantList.map((tenant: any) => ({
+          ...tenant,
+          isFixed: tenant.isMainTenant,
+          tenantName: tenant.isMainTenant
+            ? t('{{name}} (대표)', { name: tenant.tenantName })
+            : tenant.tenantName,
+        })),
+        channelOwnerUserList: channelData.channelOwnerUserList.map((user: any) => ({
+          uuid: user.userUuid,
+          name: user.userName,
+        })),
+        isEnrollOption: false,
+        isTextBookOption: false,
+        isInstructorOption: false,
+        isPassOption: false,
+        isCommunicationOption: false,
+        isLearningEnvOption: false,
+        isLearningControlOption: false,
+        isRelatedCourseOption: false,
+        isAdminDataOption: false,
+        isCarTenantCustomOption: false,
+        isRotemTenantCustomOption: false,
+        isOutsourcingTenantCustomOption: false,
+        isWiaTenantCustomOption: false,
+        isAutoeverTenantCustomOption: false,
       };
+      Object.keys(channelData.channelProperties).forEach((key) => {
+        initialData[key] = channelData.channelProperties[key] ?? false;
+      });
+      updateFormData(initialData);
     }
-  }, [props]);
+  }, [props, channelData]);
 
   useImperativeHandle(ref, () => ({
     saveData() {
@@ -141,12 +211,50 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
 
   const handleOnSubmit = async (data: any) => {
     console.log('#### handleOnSubmit', data);
+    const payload = {
+      ...data,
+      channelMainId: data.channelMainId.fieldValue,
+      tenantList: data.tenantList, // 추가된 테넌트의 isMainTenant 필요
+      channelOwnerUserList: data.channelOwnerUserList.map((user: any) => ({
+        userUuid: user.uuid,
+        userName: user.name,
+      })),
+      channelTagList: data.channelTagList.map((tag: any) =>
+        typeof tag === 'string' ? { tagName: tag } : tag,
+      ),
+      channelProperties: {
+        isEnrollOption: data.isEnrollOption,
+        isTextBookOption: data.isTextBookOption,
+        isInstructorOption: data.isInstructorOption,
+        isPassOption: data.isPassOption,
+        isCommunicationOption: data.isCommunicationOption,
+        isLearningEnvOption: data.isLearningEnvOption,
+        isLearningControlOption: data.isLearningControlOption,
+        isRelatedCourseOption: data.isRelatedCourseOption,
+        isAdminDataOption: data.isAdminDataOption,
+        isCarTenantCustomOption: data.isCarTenantCustomOption,
+        isRotemTenantCustomOption: data.isRotemTenantCustomOption,
+        isOutsourcingTenantCustomOption: data.isOutsourcingTenantCustomOption,
+        isWiaTenantCustomOption: data.isWiaTenantCustomOption,
+        isAutoeverTenantCustomOption: data.isAutoeverTenantCustomOption,
+      },
+    };
 
     if (props.mode === EnFormMode.ADD) {
-      const payload = { ...data };
-      console.log('#### payload', payload);
+      const payloadForAdd = { ...payload, channelRequestUuid: props.requestId };
+      console.log('#### payload', payloadForAdd);
     } else if (props.mode === EnFormMode.VIEW) {
-      //
+      const payloadForView = { ...payload, channelUuid };
+      console.log('#### payload', payloadForView);
+      if (
+        await openConfirm({
+          title: t('저장 하시겠습니까?'),
+          content: t('입력한 정보로 저장합니다.'),
+        })
+      ) {
+        updateChannel(payloadForView);
+        openToast({ title: '저장 하였습니다.', type: 'success' });
+      }
     }
   };
 
@@ -233,7 +341,9 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
                 width: 'xl',
                 content: <TenantShuttleModal />,
               }}
-              disabled={watchedChannelTenatMappingType === 'MAPPING_TENANT'}
+              disabled={
+                watchedChannelTenatMappingType === 'MAPPING_TENANT' || props.mode === EnFormMode.ADD
+              }
             />
           }
         />
@@ -246,7 +356,7 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
             <ChipListModalSelectorFormField
               chipList={{
                 labelField: 'name',
-                valueField: 'userId',
+                valueField: 'uuid',
                 hideBorder: true,
               }}
               modalConfig={{
@@ -274,10 +384,10 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
 
       <FormSubTitle label={'채널 홈 정보'} />
       <ContentsRow>
-        <FormRow provider={provider} name="channelProfileImageFile" />
+        <FormRow provider={provider} name="channelProfileImageFileGroupUuid" />
       </ContentsRow>
       <ContentsRow>
-        <FormRow provider={provider} name="channelHomeImageFile" />
+        <FormRow provider={provider} name="channelHomeImageFileGroupUuid" />
       </ContentsRow>
       <ContentsRow>
         <FormRow
@@ -294,8 +404,8 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
             <ChipListFormField
               chipListConfig={{
                 showInput: true,
-                labelField: 'label',
-                valueField: 'value',
+                labelField: 'tagName',
+                valueField: 'tagName',
                 wordwrap: true,
               }}
               limitSize={20}
@@ -599,7 +709,7 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
         </ContentsRow>
       </FormDisplay>
 
-      {props.mode === EnFormMode.VIEW && <ContentsHistoryInfoFormField />}
+      {/* {props.mode === EnFormMode.VIEW && <ContentsHistoryInfoFormField />} */}
     </form>
   );
 };
@@ -756,16 +866,16 @@ const formConfig = (): DynamicFormConfig => ({
     //// 채널 홈 정보
     {
       label: t('프로필'),
-      name: 'channelProfileImageFile',
+      name: 'channelProfileImageFileGroupUuid',
       type: 'thumbnail-list',
-      format: 'array',
-      value: [],
+      max: 1,
+      value: '',
+      uuidType: 'group',
       uploadConfig: {
-        affairsType: 'PMS',
-        s3Path: S3_PATH['upload/channel/profileimg'],
+        affairType: 'PMS',
+        s3Path: S3_PATH['public/image/channel/profile'],
         acceptFiles: ['JPEG', 'JPG', 'PNG', 'GIF'],
         maxFileSize: 50 * 1024 * 1024,
-        maxFileCount: 1,
       },
       guideText: t(
         '파일 사이즈 000 x 000 / 확장자 JPEG, JPG, PNG, GIF / 업로드 가능 1개 / 파일용량 최대 50 MB',
@@ -773,16 +883,16 @@ const formConfig = (): DynamicFormConfig => ({
     },
     {
       label: t('이미지'),
-      name: 'channelHomeImageFile',
+      name: 'channelHomeImageFileGroupUuid',
       type: 'thumbnail-list',
-      format: 'array',
-      value: [],
+      max: 1,
+      value: '',
+      uuidType: 'group',
       uploadConfig: {
         affairsType: 'PMS',
-        s3Path: S3_PATH['upload/channel/mainimg'],
+        s3Path: S3_PATH['public/image/channel/main'],
         acceptFiles: ['JPEG', 'JPG', 'PNG', 'GIF'],
         maxFileSize: 50 * 1024 * 1024,
-        maxFileCount: 1,
       },
       guideText: t(
         '파일 사이즈 000 x 000 / 확장자 JPEG, JPG, PNG, GIF / 업로드 가능 1개 / 파일용량 최대 50 MB',
@@ -986,8 +1096,8 @@ const formConfig = (): DynamicFormConfig => ({
       ],
     },
     tenantList: true,
-    channelProfileImageFile: true,
-    channelHomeImageFile: true,
+    channelProfileImageFileGroupUuid: true,
+    channelHomeImageFileGroupUuid: true,
     channelDesc: true,
     channelTagList: true,
   },

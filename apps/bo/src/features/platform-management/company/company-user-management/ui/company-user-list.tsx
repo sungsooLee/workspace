@@ -2,9 +2,11 @@ import { queryOptions as companysQueryOptions } from '@entities/companies/servic
 import { useUnlockUser } from '@entities/users/service/users.hook';
 import { usersQueryOptions } from '@entities/users/service/users.queries';
 import { getUserStatus } from '@features/platform-management/company/company-user-management/service/company-user.service';
+import { useFetchAuthUser } from '@learnway/auth/entities';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { Button, Divider, GridBox, useGridBox, useGridBoxConfig, useModal } from '@learnway/ui';
+import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { useQueryClient } from '@tanstack/react-query';
 import { Link, useLocation } from '@tanstack/react-router';
@@ -14,8 +16,6 @@ import dayjs from 'dayjs';
 import { t } from 'i18next';
 import { useCallback, useEffect, useState } from 'react';
 import { useWatch } from 'react-hook-form';
-import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
-import { useFetchAuthUser } from '@learnway/auth/entities';
 
 const _global = {
   unlockClick: (row: any) => {
@@ -123,7 +123,10 @@ const CompanyUserListComponent = () => {
         content: message,
       })
     ) {
-      unlock(row.uuid, {
+      const payload = {
+        uuids: [row.uuid],
+      };
+      unlock(payload, {
         onSuccess: () => {
           gridFetch(searchParam());
         },

@@ -35,8 +35,8 @@ const useShuttleTreeToChips = (initValue: SelectedChip[] = []) => {
   //   setSelectedItems([...selectedItems, ...filteredNodesToAdd]);
   // };
 
-  const cancelSelectItem = ({ key }: SelectedChip) => {
-    setSelectedItems((prev) => prev.filter(({ key: previousKey }) => previousKey !== key));
+  const cancelSelectItem = (deleteKey: string) => {
+    setSelectedItems((prev) => prev.filter(({ key }) => key !== deleteKey));
   };
 
   const cancelAll = () => {

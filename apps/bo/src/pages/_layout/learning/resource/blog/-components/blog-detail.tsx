@@ -131,7 +131,7 @@ const BlogDetailComponent = forwardRef<HTMLFormElement, BlogDetailProps>(
         updateFormData({
           ...getValues(),
           contentName: blogInfo.contentName,
-          languageCountryCode: blogInfo.langCountryCode,
+          languageCountryCode: blogInfo.languageCountryCode,
           channelUuid: blogInfo.channelUuid,
           channelName: blogInfo.channelName,
           description: blogInfo.description,

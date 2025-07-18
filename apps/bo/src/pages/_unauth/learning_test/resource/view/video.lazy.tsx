@@ -195,9 +195,7 @@ function RouteComponent() {
           <ContentsHistoryInfoFormField />
         </MainContents>
         <SubContents>
-          <MovieInfo status={'loading'} />
-          <MovieInfo status={'fail'} />
-          <MovieInfo status={'success'} />
+          <MovieInfo provider={provider} />
         </SubContents>
       </PageContainer>
     </form>

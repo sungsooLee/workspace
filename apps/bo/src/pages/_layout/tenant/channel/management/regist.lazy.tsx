@@ -1,10 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
-import { t } from 'i18next';
-import { createLazyFileRoute, useRouterState, useRouter } from '@tanstack/react-router';
+import { ChannelDetail } from '@features/channel';
 import { Button } from '@learnway/ui';
-import { ChannelDetail } from '@features/channel/channel-management/channel-detail';
-import { MainContents, PageContainer, LinkBox, ContentsButtons } from '@shared/ui';
+import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui';
+import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { EnFormMode } from '@types';
+import { t } from 'i18next';
+import { useRef } from 'react';
 
 export const Route = createLazyFileRoute('/_layout/tenant/channel/management/regist')({
   component: RouteComponent,
@@ -12,9 +12,6 @@ export const Route = createLazyFileRoute('/_layout/tenant/channel/management/reg
 
 function RouteComponent() {
   const router = useRouter();
-  const routerState = useRouterState();
-  //const method = routerState.location.state?.method;
-  //const channelUuid = routerState.location.state?.channelUuid;
 
   const formRef = useRef<HTMLFormElement>(null);
   const handleOnSave = () => {

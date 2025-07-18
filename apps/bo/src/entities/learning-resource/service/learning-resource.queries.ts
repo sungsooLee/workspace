@@ -1,8 +1,10 @@
+import { getQuerySkipToken } from '@learnway/shared';
 import {
   BlogCreateReq,
   BlogUpdateReq,
   ContentBaseInfo,
   ContentCourseMappingParams,
+  GetContentDetailRes,
   GetContentsParams,
   HtmlVideoFileChangeReq,
   HtmlVideoMetadataReq,
@@ -31,6 +33,7 @@ export const queryKeys = {
   html5Resource: ['html5-resource'] as const,
   html5Status: ['html5-status'] as const,
   blogResource: ['blog-resource'] as const,
+  questionBankQustionList: ['question-bank-qustion-list'] as const,
 };
 
 export const learningResourceQueryOptions = {
@@ -55,9 +58,9 @@ export const learningResourceQueryOptions = {
     staleTime: 0,
     enabled: true,
   }),
-  getContent: (contentUuid?: string) => ({
+  getContent: <T = GetContentDetailRes>(contentUuid: string) => ({
     queryKey: queryKeys.contentDetail,
-    queryFn: () => LearningResourceService.fetchContent(contentUuid),
+    queryFn: () => LearningResourceService.fetchContent(contentUuid) as T,
     cacheTime: 0,
     staleTime: 0,
     enabled: !!contentUuid,
@@ -125,6 +128,13 @@ export const learningResourceQueryOptions = {
     staleTime: 0,
     enabled: true,
   }),
+  getQuestionList: (param: any) =>
+    param
+      ? {
+          queryKey: queryKeys.questionBankQustionList,
+          queryFn: () => LearningResourceService.getQuestionList(param),
+        }
+      : getQuerySkipToken<any>(),
 };
 
 export const mutateOptions = {
@@ -159,8 +169,17 @@ export const mutateOptions = {
     mutationFn: (params: TestPaperBasicInfoSaveReq) =>
       LearningResourceService.createExamPaperContent(params),
   }),
+  updateExamPaperContent: () => ({
+    mutationFn: (params: TestPaperBasicInfoSaveReq) =>
+      LearningResourceService.updateExamPaperContent(params),
+  }),
   createQuestionBankContent: () => ({
     mutationFn: (params: ContentBaseInfo) =>
       LearningResourceService.createQuestionBankContent(params),
+  }),
+
+  updateQuestionBankContent: () => ({
+    mutationFn: (params: ContentBaseInfo) =>
+      LearningResourceService.updateQuestionBankContent(params),
   }),
 };

@@ -1,7 +1,7 @@
 import React, { FC, useState, useEffect } from 'react';
 import { useWatch } from 'react-hook-form';
 import { useRouter, useRouterState, Link } from '@tanstack/react-router';
-import { createColumnHelper, ColumnDef } from '@tanstack/react-table';
+import { createColumnHelper, ColumnDef, Table } from '@tanstack/react-table';
 import { useQueryClient } from '@tanstack/react-query';
 import { t } from 'i18next';
 import { Button, Checkbox, Divider, GridBox, useGridBox, useModal } from '@learnway/ui';
@@ -16,6 +16,7 @@ import {
 } from '@features/platform-management/company/company-user-management/service/company-user.service';
 import { TenantByRoleDropdownFormField } from '@shared/ui';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
+import { useApproveAccountUser, useRejectAccountUser } from '@entities/users/service/users.hook';
 
 const _global = {
   linkClick: (userUuid: string) => {
@@ -37,11 +38,14 @@ const TenantUserRegistApplicationListComponent: FC<any> = ({ rootPath }) => {
 
   const { data: loginUser } = useFetchAuthUser();
   const queryClient = useQueryClient();
+  const { approve } = useApproveAccountUser({});
+  const { reject } = useRejectAccountUser({});
 
-  const {open: openModal, confirm: confirmModal } = useModal();
+  const {open: openModal, confirm: confirmModal, alert } = useModal();
   const [companyCodes, setCompanyCodes] = useState<string[]>([]);
   const [tenantId, setTenantId] = useState<number | undefined>(undefined);
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
+  const [tableInstance, setTableInstance] = useState<Table<any>>()
 
   _global.linkClick = (userUuid: string) => {
     router.navigate({
@@ -66,29 +70,44 @@ const TenantUserRegistApplicationListComponent: FC<any> = ({ rootPath }) => {
   const tenantIdWatch = useWatch({ control: searchProvider.control, name: 'tenantId' });
 
   const handleOnSearch = (data: any) => {
-    console.log('search', data);
+    console.log('searchData : () => ', data);
     gridFetch(data);
   };
 
-  const openApprovalModal = () => {
+  const openChangeUserEnableModal = (isApproval: boolean) => {
+    const selectedRow = tableInstance?.getSelectedRowModel().rows;
+    const checkTarget = selectedRow?.filter( (row: any) => row.original.enabledDate !== null)
+    if( checkTarget?.length !== 0 ) {
+      alert({
+        title: isApproval ? '승인 확인' : '반려 확인',
+        content: '선택한 대상 중 이미 승인된 대상이 있습니다. 확인 후 다시 시도해주세요.'
+      })
+      return;
+    }
     confirmModal({
-      title: t('승인 하시겠습니까?'),
-      content: <p>{t('회원가입 신청을 승인하면 로그인 및 정상적인 서비스 이용을 할 수 있습니다.')}</p>,
+      title: isApproval ? t('승인 하시겠습니까?') : t('반려 하시겠습니까?'),
+      content: isApproval ?
+        <p>{t('회원가입 신청을 승인하면 로그인 및 정상적인 서비스 이용을 할 수 있습니다.')}</p>
+      : <p>{t('회원가입 신청을 반려하면 정상적으로 서비스 이용을 할 수 없습니다.')}</p>,
       onClose: (value: boolean) => {
         if( value ) {
           // 선택한 계정 상태 변경(대기 -> 정상),
-        }
-      },
-    })
-  }
-
-  const openDeniedModal = () => {
-    confirmModal({
-      title: t('반려 하시겠습니까?'),
-      content: <p>{t('회원가입 신청을 반려하면 정상적으로 서비스 이용을 할 수 없습니다.')}</p>,
-      onClose: (value: boolean) => {
-        if( value ) {
-          // 선택한 계정 데이터 삭제 및 반려 메일 발송
+          const uuids = selectedRow?.map((row: any) => row.original.uuid);
+          if( isApproval ) { // 승인
+            approve({ uuids }, {
+              onSuccess: () => {
+                gridFetch(getValues())
+              }
+            });
+          } else { // 반려
+            reject(
+              { uuids }, {
+                onSuccess: () => {
+                  gridFetch(getValues());
+                },
+              },
+            );
+          }
         }
       },
     })
@@ -159,6 +178,7 @@ const TenantUserRegistApplicationListComponent: FC<any> = ({ rootPath }) => {
         multiple
         showColumnSettings={false}
         hideRowSelectionCheckBox={true}
+        onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
         onRowSelect={(row) => {
           if( row ) {
             setIsDisabled(true)
@@ -173,14 +193,14 @@ const TenantUserRegistApplicationListComponent: FC<any> = ({ rootPath }) => {
               size="sm"
               label={t('승인')}
               disabled={!isDisabled}
-              onClick={openApprovalModal}
+              onClick={(e) => openChangeUserEnableModal(true)}
             />
             <Button
               variant="outline"
               size="sm"
               label={t('반려')}
               disabled={!isDisabled}
-              onClick={openDeniedModal}
+              onClick={(e) => openChangeUserEnableModal(false)}
             />
           </>
         }
@@ -220,16 +240,21 @@ const searchConfig = (): SearchBoxConfig => ({
     ],
     [
       {
-        name: 'tenantManagerName',
+        name: 'employeeNumber',
         type: 'text',
         label: t('사번'),
         value: '',
       },
       {
-        name: 'opt2',
-        type: 'text',
-        label: t('승인상태'),
-        value: '',
+        name: 'userState',
+        type: 'dropdown',
+        label: t('승인 상태'),
+        value: 'WAIT',
+        options: [
+          { value: 'WAIT', label: t('대기') },
+          { value: '', label: t('전체') },
+          { value: 'NORMAL', label: t('승인') },
+        ],
       },
       {
         name: 'dateRange',
@@ -375,7 +400,7 @@ const columns = () => [
       }
       return t('대기');
     },
-    header: t('승인 여부'),
+    header: t('승인 상태'),
     meta: {
       cellAlign: 'center',
     },

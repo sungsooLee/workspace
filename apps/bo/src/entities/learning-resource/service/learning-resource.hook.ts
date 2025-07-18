@@ -142,6 +142,20 @@ export function useCreateExamPaperContent(options?: any) {
   };
 }
 
+export function useUpdateExamPaperContent(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.updateExamPaperContent(),
+    ...options,
+  });
+
+  return {
+    update: (payload: TestPaperBasicInfoSaveReq) => mutation.mutate(payload as any),
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
+}
+
 export function useCreateQuestionBankContent(options?: any) {
   const mutation = useMutation({
     ...mutateOptions.createQuestionBankContent(),
@@ -154,4 +168,22 @@ export function useCreateQuestionBankContent(options?: any) {
     isError: mutation.isError,
     data: mutation.data,
   };
+}
+
+export function useUpdateQuestionBankContent(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.updateQuestionBankContent(),
+    ...options,
+  });
+
+  return {
+    update: (payload: ContentBaseInfo, options?: any) => mutation.mutate(payload as any, options),
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
+}
+
+export function useGetContent(contentUuid: string, options?: any) {
+  return useQuery({ ...learningResourceQueryOptions.getContent(contentUuid), ...options });
 }

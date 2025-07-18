@@ -1,27 +1,54 @@
-import styles from './movie-info.module.scss';
-import { FC } from 'react';
-import { Button, Spinner } from '@learnway/ui';
+//  IA105 / NLP_BO_CMS_1016, NLP_BO_CMS_1002
+
+import { Button, Spinner, useModal } from '@learnway/ui';
 import { IcoStatusFail } from '@learnway/icons';
 import style from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
+import { DynamicFormProvider } from '@learnway/hooks';
+import {
+  isProcessing,
+  isProcessingCompleted,
+  isProcessingFailed,
+  isProcessingNone,
+  useVideoResource,
+} from '@entities/learning-resource';
+import { formatBytes } from '@learnway/shared';
+import { useMemo } from 'react';
+import { max } from 'lodash';
+import { PreviewLearningWindow } from '../preview-learning-window';
 
 interface MovieInfoProps {
-  status: 'loading' | 'fail' | 'success';
+  provider: DynamicFormProvider;
 }
 
-const MovieInfoComponent: FC<any> = ({ status }) => {
+const MovieInfoComponent = ({ provider }: MovieInfoProps) => {
+  const { open: openModal } = useModal();
+  const {
+    contentUuid,
+    isDrafted,
+    processingStatus: status,
+    playTime,
+    videoResource,
+  } = useVideoResource(provider);
+
+  const height = useMemo(() => {
+    return max(videoResource?.encodedVideos?.map((_) => _.height)) || 0;
+  }, [videoResource]);
+  const width = useMemo(() => {
+    return max(videoResource?.encodedVideos?.map((_) => _.width)) || 0;
+  }, [videoResource]);
   // media info_list
   const infoList = [
-    { title: '파일명', text: '파일명이 들어갑니다' },
-    { title: '재생시간', text: '1시간' },
-    { title: '원본용량', text: '2GB' },
-    { title: '720P  용량', text: '1.6GB' },
-    { title: '480P 용량', text: '900MB' },
-    { title: '해상도', text: '1902 X 968' },
-    { title: '파일형식', text: 'MOV' },
-    { title: '비디오 코덱', text: 'H264' },
-    { title: '비디오 프레임레이트', text: '' },
-    { title: '오디오 코덱', text: '' },
-    { title: '오디오 샘플레이트', text: '' },
+    { title: '파일명', text: videoResource?.fileInfo.fileName },
+    { title: '재생시간', text: playTime },
+    { title: '원본용량', text: formatBytes(videoResource?.fileInfo.fileSize || 0) },
+    // { title: '720P  용량', text: '1.6GB' },
+    // { title: '480P 용량', text: '900MB' },
+    { title: '해상도', text: `${width} X ${height}` },
+    { title: '파일형식', text: videoResource?.fileInfo.extType?.toLocaleUpperCase() },
+    // { title: '비디오 코덱', text: 'H264' },
+    // { title: '비디오 프레임레이트', text: '' },
+    // { title: '오디오 코덱', text: '' },
+    // { title: '오디오 샘플레이트', text: '' },
   ];
 
   // media btn list
@@ -40,47 +67,49 @@ const MovieInfoComponent: FC<any> = ({ status }) => {
     },
     {
       label: '미리보기',
-      onClick: () => console.log('btn 4'),
+      onClick: () => {
+        openModal({
+          width: 'full',
+          content: <PreviewLearningWindow contentUuid={contentUuid} />,
+        });
+      },
     },
   ];
+
+  if (isProcessingNone(status)) return null;
 
   return (
     <>
       <strong className={style.title}>업로드 파일</strong>
-      {(status === 'loading' || status === 'fail') && (
+      {/* 인코딩 진행 중 */}
+      {isProcessing(status) && (
         <div className={style.status_wrap}>
-          {/* 인코딩 진행 중 */}
-          {status === 'loading' && (
-            <>
-              <Spinner isLoading={true} showBackdrop className={style.loading} />
-              <p className={style.text}>
-                <strong>인코딩 진행 중입니다.</strong>
-                인코딩 대기 및 영상 길이에 따라 인코딩 시간이 오래 걸릴수도 있습니다.
-              </p>
-            </>
-          )}
-          {/* 인코딩 실패 */}
-          {status === 'fail' && (
-            <>
-              <IcoStatusFail className={style.fail} />
-              <p className={style.text}>
-                <strong>인코딩이 실패되었습니다.</strong>
-                다시 시도해 주세요.
-              </p>
-              <div className={style.btn_box}>
-                <Button className={style.btn} variant="gray" size="sm">
-                  재시도
-                </Button>
-                <Button className={style.btn} variant="primary" size="sm">
-                  동영상 변경
-                </Button>
-              </div>
-            </>
-          )}
+          <Spinner isLoading={true} showBackdrop className={style.loading} />
+          <p className={style.text}>
+            <strong>인코딩 진행 중입니다.</strong>
+            인코딩 대기 및 영상 길이에 따라 인코딩 시간이 오래 걸릴수도 있습니다.
+          </p>
         </div>
       )}
-
-      {status === 'success' && (
+      {/* 인코딩 실패 */}
+      {isProcessingFailed(status) && (
+        <div className={style.status_wrap}>
+          <IcoStatusFail className={style.fail} />
+          <p className={style.text}>
+            <strong>인코딩이 실패되었습니다.</strong>
+            다시 시도해 주세요.
+          </p>
+          <div className={style.btn_box}>
+            <Button className={style.btn} variant="gray" size="sm">
+              재시도
+            </Button>
+            <Button className={style.btn} variant="primary" size="sm">
+              동영상 변경
+            </Button>
+          </div>
+        </div>
+      )}
+      {isProcessingCompleted(status) && (
         <>
           <ul className={style.btn_list}>
             {buttons.map((btn, index) => (

@@ -54,6 +54,7 @@ const CompanyUserDetailAuthenticationComponent = ({ provider }: { provider: any 
           </FormDisplay>
           <FormItem guideText={t('2차 로그인 인증 여부를 설정할 수 있습니다.')} />
         </ContentsRowItem>
+        <FormItem />
       </ContentsRow>
       <ContentsRow>
         <FormRow provider={provider} name={'2FAType'} />
