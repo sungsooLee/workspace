@@ -241,7 +241,7 @@ export const guideData = [
     pageId: 'my/information-change',
     pageType: 'Page',
     completionDate: '2025-03-26',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-18',
     remarks: '- information-change.tsx',
   },
   {

@@ -1,7 +1,7 @@
 .start {
   &.btn {
     @apply box-border inline-flex items-center justify-start leading-[1rem];
-    /* Size ( 24 |28 | 32 | 36 | 40 | 44 | 48 ) */
+    /* Size ( 24 | 28 | 32 | 36 | 40 | 44 | 48 | 52 ) */
     &.ts {
       @apply button_bo_3_r !h-[24px] min-w-[50px] justify-center rounded-[4px] px-[6px];
     }
@@ -23,13 +23,17 @@
     &.xl {
       @apply button_2_b !h-[48px] min-w-[80px] justify-center px-[12px];
     }
+    &.xl2 {
+      @apply button_2_b !h-[52px] min-w-[80px] justify-center px-[12px];
+    }
     &.ts,
     &.xs,
     &.sm,
     &.md,
     &.lg,
     &.lx,
-    &.xl {
+    &.xl,
+    &.xl2 {
       &:has(svg) {
         @apply px-[8px];
       }
