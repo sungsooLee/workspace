@@ -16,6 +16,8 @@ import { useCallback, useMemo } from 'react';
 import { max } from 'lodash';
 import { PreviewLearningWindow } from '../preview-learning-window';
 import ReactPlayer from 'react-player';
+import { LearningResourceFileUploadModal } from '../learning-resource-file-upload-modal';
+import { LEARNING_TYPE } from '@learnway/config';
 
 interface MovieInfoProps {
   provider: DynamicFormProvider;
@@ -24,6 +26,7 @@ interface MovieInfoProps {
 const MovieInfoComponent = ({ provider }: MovieInfoProps) => {
   const { open: openModal } = useModal();
   const { fileDownload } = useFileManager();
+  const { watch } = provider;
   const {
     contentUuid,
     isDrafted,
@@ -46,6 +49,23 @@ const MovieInfoComponent = ({ provider }: MovieInfoProps) => {
   const downloadOriginal = useCallback(() => {
     if (fileUuid) fileDownload(fileUuid);
   }, [fileUuid]);
+
+  const tenantId = watch('tenantId');
+  const channelUuid = watch('channelUuid');
+  const channelName = watch('channelName');
+  const changeFile = useCallback(async () => {
+    const fileUuids = await openModal({
+      width: 'lg',
+      content: (
+        <LearningResourceFileUploadModal
+          channel={{ channelUuid, channelName, tenantId }}
+          type={LEARNING_TYPE.VIDEO}
+          maxFileCount={1}
+        />
+      ),
+    });
+    console.log('🚀 ~ changeFile ~ fileUuids:', fileUuids);
+  }, [tenantId, channelUuid, channelName]);
 
   const preview = useCallback(() => {
     openModal({
@@ -76,7 +96,7 @@ const MovieInfoComponent = ({ provider }: MovieInfoProps) => {
     },
     {
       label: '동영상 변경',
-      onClick: () => console.log('btn 2'),
+      onClick: changeFile,
     },
     {
       label: '콘텐츠 URL보기',

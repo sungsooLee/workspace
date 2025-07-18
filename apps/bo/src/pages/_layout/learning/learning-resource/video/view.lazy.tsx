@@ -117,11 +117,7 @@ function RouteComponent() {
               <Button variant="point" size="sm" onClick={handleCourseMapping}>
                 매핑과정 보기
               </Button>
-              <Button
-                variant="point"
-                size="sm"
-                onClick={() => console.log('🚀 ~ RouteComponent ~ getValues:', getValues())}
-              >
+              <Button variant="point" size="sm">
                 공유이력 보기
               </Button>
             </>
