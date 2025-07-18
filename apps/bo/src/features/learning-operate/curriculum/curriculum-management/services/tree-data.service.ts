@@ -43,47 +43,133 @@ export class TreeDataService {
     // CurriculumDetailResponse인지 확인 (moduleList 속성이 있는지)
     const detailResponse = curriculum as CurriculumDetailResponse;
 
-    // moduleList가 있으면 모듈들을 children으로 추가 (상세조회 응답인 경우)
+    // moduleList가 있으면 mappingCurriculumType에 따라 처리 (상세조회 응답인 경우)
     if (detailResponse.moduleList && detailResponse.moduleList.length > 0) {
-      curriculumNode.children = detailResponse.moduleList.map((module, index: number) => ({
-        id: `module-${module.moduleId}`,
-        key: `module-${module.moduleId}`,
-        name: module.moduleName || `모듈 ${index + 1}`,
-        title: module.moduleName,
-        mappingCurriculumType: module.mappingCurriculumType, // 모듈 , 레슨 타입 정보
-        type: module.isDummy ? 'LESSON' : 'MODULE',
-        moduleType: module.moduleType,
-        level: 1,
-        parentId: curriculumNode.id,
-        data: {
-          moduleId: module.moduleId,
-          moduleName: module.moduleName,
-          description: module.description,
-          moduleType: module.moduleType,
-          sortOrder: module.sortOrder,
-          isDummy: module.isDummy,
-          mappingCurriculumType: module.mappingCurriculumType,
-          moduleIndex: index,
-        },
-        children: module.lessonList
-          ? module.lessonList.map((lesson, lessonIndex: number) => ({
-              id: `lesson-${lesson.lessonId}`,
-              key: `lesson-${lesson.lessonId}`,
-              name: lesson.lessonName || `레슨 ${lessonIndex + 1}`,
-              title: lesson.lessonName,
-              type: 'LESSON',
-              level: 2,
-              parentId: `module-${module.moduleId}`,
-              data: {
-                lessonId: lesson.lessonId,
-                lessonName: lesson.lessonName,
-                description: lesson.description,
-                mappingCurriculumType: lesson.mappingCurriculumType,
-              },
-              children: [],
-            }))
-          : [],
-      }));
+      curriculumNode.children = detailResponse.moduleList
+        .map((item, index: number) => {
+          // mappingCurriculumType에 따른 분기 처리
+          switch (item.mappingCurriculumType) {
+            case 'MODULE':
+              return {
+                id: `module-${item.moduleId}`,
+                key: `module-${item.moduleId}`,
+                name: item.moduleName || `모듈 ${index + 1}`,
+                title: item.moduleName,
+                mappingCurriculumType: item.mappingCurriculumType,
+                type: 'MODULE',
+                moduleType: item.moduleType,
+                level: 1,
+                parentId: curriculumNode.id,
+                sortOrder: item.sortOrder || index + 1,
+                data: {
+                  moduleId: item.moduleId,
+                  moduleName: item.moduleName,
+                  description: item.description,
+                  moduleType: item.moduleType,
+                  sortOrder: item.sortOrder,
+                  isDummy: item.isDummy,
+                  mappingCurriculumType: item.mappingCurriculumType,
+                  moduleIndex: index,
+                },
+                children: item.lessonList
+                  ? item.lessonList.map((lesson, lessonIndex: number) => ({
+                      id: `lesson-${lesson.lessonId}`,
+                      key: `lesson-${lesson.lessonId}`,
+                      name: lesson.lessonName || `레슨 ${lessonIndex + 1}`,
+                      title: lesson.lessonName,
+                      type: 'LESSON',
+                      level: 2,
+                      parentId: `module-${item.moduleId}`,
+                      sortOrder: lesson.sortOrder || lessonIndex + 1,
+                      data: {
+                        lessonId: lesson.lessonId,
+                        lessonName: lesson.lessonName,
+                        description: lesson.lessonDescription,
+                        mappingCurriculumType: lesson.mappingCurriculumType,
+                        moduleType: item.moduleType,
+                        sortOrder: lesson.sortOrder || lessonIndex + 1,
+                      },
+                      children: [],
+                    }))
+                  : [],
+              };
+
+            case 'LESSON':
+              // moduleList에 있지만 실제로는 레슨인 경우 (커리큘럼 바로 아래 레슨)
+              return {
+                id: `lesson-${item.lessonId}`,
+                key: `lesson-${item.lessonId}`,
+                name: item.lessonName || `레슨 ${index + 1}`,
+                title: item.lessonName,
+                mappingCurriculumType: item.mappingCurriculumType,
+                type: 'LESSON',
+                level: 1, // 커리큘럼 바로 아래 레슨
+                parentId: curriculumNode.id,
+                moduleId: item.moduleId,
+                sortOrder: item.sortOrder || index + 1,
+                data: {
+                  lessonId: item.lessonId,
+                  lessonName: item.lessonName,
+                  lessonType: item.lessonType,
+                  contentType: item.contentType,
+                  contentUuid: item.contentUuid,
+                  learningTime: item.learningTime,
+                  description: item.lessonDescription,
+                  mappingCurriculumType: item.mappingCurriculumType,
+                  sortOrder: item.sortOrder,
+                },
+                children: [],
+              };
+
+            default:
+              console.warn(`Unknown mappingCurriculumType: ${item.mappingCurriculumType}`);
+              // 기본값으로 기존 로직 사용
+              return {
+                id: `module-${item.moduleId}`,
+                key: `module-${item.moduleId}`,
+                name: item.moduleName || `모듈 ${index + 1}`,
+                title: item.moduleName,
+                mappingCurriculumType: item.mappingCurriculumType,
+                type: item.isDummy ? 'LESSON' : 'MODULE',
+                moduleType: item.moduleType,
+                level: 1,
+                parentId: curriculumNode.id,
+                sortOrder: item.sortOrder || index + 1,
+                data: {
+                  moduleId: item.moduleId,
+                  moduleName: item.moduleName,
+                  description: item.description,
+                  moduleType: item.moduleType,
+                  sortOrder: item.sortOrder,
+                  isDummy: item.isDummy,
+                  mappingCurriculumType: item.mappingCurriculumType,
+                  moduleIndex: index,
+                },
+                children: item.lessonList
+                  ? item.lessonList.map((lesson, lessonIndex: number) => ({
+                      id: `lesson-${lesson.lessonId}`,
+                      key: `lesson-${lesson.lessonId}`,
+                      name: lesson.lessonName || `레슨 ${lessonIndex + 1}`,
+                      title: lesson.lessonName,
+                      type: 'LESSON',
+                      level: 2,
+                      parentId: `module-${item.moduleId}`,
+                      sortOrder: lesson.sortOrder || lessonIndex + 1,
+                      data: {
+                        lessonId: lesson.lessonId,
+                        lessonName: lesson.lessonName,
+                        description: lesson.lessonDescription,
+                        mappingCurriculumType: lesson.mappingCurriculumType,
+                        moduleType: item.moduleType,
+                        sortOrder: lesson.sortOrder || lessonIndex + 1,
+                      },
+                      children: [],
+                    }))
+                  : [],
+              };
+          }
+        })
+        .filter(Boolean); // null/undefined 항목 제거
     }
 
     return [curriculumNode];
@@ -175,6 +261,26 @@ export class TreeDataService {
       errors,
     };
   }
+
+  /**
+   * TreeNode 배열에서 특정 ID의 노드를 찾고 드래그 관련 정보를 추출
+   * @param treeNodes - TreeNode 배열
+   * @param nodeId - 찾을 노드 ID
+   * @returns 노드와 드랍 위치 정보
+   */
+  static findNodeForDnd(
+    treeNodes: TreeNode[],
+    nodeId: string | number,
+  ): { node: TreeNode; dropPosition: 'BEFORE' | 'AFTER' | 'INSIDE' } | null {
+    const node = TreeDataService.findNodeById(treeNodes, nodeId.toString());
+    if (!node) return null;
+
+    // 기본적으로 INSIDE로 설정 (필요시 로직 수정 가능)
+    return {
+      node,
+      dropPosition: 'INSIDE',
+    };
+  }
 }
 
 // 편의를 위한 함수 export
@@ -183,3 +289,4 @@ export const findNodeById = TreeDataService.findNodeById;
 export const findParentNode = TreeDataService.findParentNode;
 export const generateDefaultNodeName = TreeDataService.generateDefaultNodeName;
 export const validateTreeStructure = TreeDataService.validateTreeStructure;
+export const findNodeForDnd = TreeDataService.findNodeForDnd;

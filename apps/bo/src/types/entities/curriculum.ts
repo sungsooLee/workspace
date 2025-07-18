@@ -45,7 +45,7 @@ export type ModuleDetailResponse = {
   mappingCurriculumType: MAPPING_CURRICULUM_TYPE;
   moduleId: number;
   moduleName: string;
-  description: string;
+  moduleDescription: string;
   moduleType: MODULE_TYPE;
   sortOrder: number;
   isDummy: boolean;
@@ -69,13 +69,21 @@ export type ModuleListResponse = {
   createdDate: string;
   modifiedDate: string;
   lessonList: LessonResponse[];
+  lessonId?: number;
+  lessonName?: string;
+  lessonType?: LESSON_TYPE;
+  contentUuid?: string;
+  contentType?: CONTENT_TYPE;
+  contentName?: string;
+  learningTime?: number;
+  lessonDescription?: string;
 };
 
 export type LessonResponse = {
   mappingCurriculumType: MAPPING_CURRICULUM_TYPE;
   lessonId: number;
   lessonName: string;
-  description: string;
+  lessonDescription: string;
   lessonType: LESSON_TYPE;
   sortOrder: number;
   contentType: CONTENT_TYPE;
@@ -98,13 +106,13 @@ export type GeneralModuleSaveParams = {
   curriculumId: number;
   moduleName: string;
   moduleType: MODULE_TYPE.GENERAL;
-  description?: string;
+  moduleDescription?: string;
 };
 
 export type GeneralModuleUpdateParams = {
   moduleId: number;
   moduleName?: string;
-  description?: string;
+  moduleDescription?: string;
 };
 
 export type FixedModuleSaveParams = {
@@ -112,7 +120,7 @@ export type FixedModuleSaveParams = {
   moduleName: string;
   moduleType: MODULE_TYPE.FIXED;
   contentUuid: string;
-  description?: string;
+  moduleDescription?: string;
   orgnId: number;
   totalTime: number;
 };
@@ -120,7 +128,7 @@ export type FixedModuleSaveParams = {
 export type FixedModuleUpdateParams = {
   moduleId: number;
   moduleName: string;
-  description?: string;
+  moduleDescription?: string;
   totalTime: number;
 };
 
@@ -130,7 +138,7 @@ export type GeneralLessonSaveParams = {
   lessonType: LESSON_TYPE.GENERAL | LESSON_TYPE.RESOURCE;
   lessonName: string;
   learningTime?: number;
-  description?: string;
+  lessonDescription?: string;
   contentUuid?: string;
   contentName?: string;
 };
@@ -138,8 +146,16 @@ export type GeneralLessonSaveParams = {
 export type LessonUpdateParams = {
   lessonId: number;
   lessonName: string;
-  description?: string;
+  lessonDescription?: string;
   learningTime?: number;
+};
+
+export type CurriculumDndParams = {
+  fromMappingType: MAPPING_CURRICULUM_TYPE;
+  fromMappingId: number;
+  toParentMappingType: MAPPING_CURRICULUM_TYPE;
+  toParentMappingId: number;
+  sortOrder: number;
 };
 
 export enum LESSON_TYPE {

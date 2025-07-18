@@ -46,6 +46,7 @@ export const DndTreeNode: React.FC<DndTreeNodeProps> = ({
   minDraggableLevel,
   moveIcon,
   isFirstSibling = false,
+  renderNodeDragHandle,
 }) => {
   const [dropPosition, setDropPosition] = useState<NodeMovePositionType | null>(null);
   const [isHovered, setIsHovered] = useState<boolean>(false);
@@ -98,8 +99,8 @@ export const DndTreeNode: React.FC<DndTreeNodeProps> = ({
     (position: NodeMovePositionType) => {
       if (!effectiveDraggedNode) return true;
 
-      // 같은 트리에서 자기 자신으로는 드롭할 수 없음
-      if (effectiveDraggedNode.key === node.key) {
+      // 같은 트리에서 자기 자신의 BEFORE/INSIDE로는 드롭할 수 없음 (AFTER는 허용)
+      if (effectiveDraggedNode.key === node.key && position !== 'AFTER') {
         return false;
       }
 
@@ -300,6 +301,25 @@ export const DndTreeNode: React.FC<DndTreeNodeProps> = ({
 
     return isDescendant(effectiveDraggedNode, node.key);
   }, [effectiveDraggedNode, node.key, globalSourceTreeId, treeId]);
+
+  // 중복 BEFORE 인디케이터 방지를 위한 로직
+  const shouldRenderBefore = useMemo(() => {
+    if (!(isGlobalDragging || effectiveDraggedNode)) return false;
+    if (effectiveDraggedNodeKey === node.key) return false;
+    if (isDescendantOfDraggedNode) return false;
+    if (shouldCollapseForSameLevel) return false;
+
+    // 첫 번째 형제가 아닌 경우 BEFORE 렌더링 (이전 형제의 AFTER와 중복 방지)
+    return isFirstSibling;
+  }, [
+    isGlobalDragging,
+    effectiveDraggedNode,
+    effectiveDraggedNodeKey,
+    node.key,
+    isDescendantOfDraggedNode,
+    shouldCollapseForSameLevel,
+    isFirstSibling,
+  ]);
 
   const nodeStyle = useMemo(() => {
     const styles = [];
@@ -525,6 +545,11 @@ export const DndTreeNode: React.FC<DndTreeNodeProps> = ({
     if (level < 1) return null;
     if (minDraggableLevel && level < minDraggableLevel) return null;
 
+    // renderNodeDragHandle이 제공된 경우 해당 함수의 결과에 따라 드래그 핸들 표시 여부 결정
+    if (renderNodeDragHandle && !renderNodeDragHandle(node)) {
+      return null;
+    }
+
     const dragIconStyle = isDragDisabled ? 'cursor-not-allowed opacity-50' : 'cursor-grab';
 
     return (
@@ -555,7 +580,7 @@ export const DndTreeNode: React.FC<DndTreeNodeProps> = ({
     );
   };
 
-  const renderAfterDropZone = () => {
+  const renderAfterDropZone = (adjustForChildren = false) => {
     const isDropZoneHovered = isOverAfter || (isDraggedFromOtherTree && dropPosition === 'AFTER');
     const isValidDrop = isValidDropTargetForPosition('AFTER');
 
@@ -563,6 +588,13 @@ export const DndTreeNode: React.FC<DndTreeNodeProps> = ({
       if (!(isGlobalDragging || effectiveDraggedNode)) return '0px';
       if (isDropZoneHovered) return '20px';
       return '12px';
+    };
+
+    const getMarginTop = () => {
+      if (adjustForChildren && hasChildren && isExpanded) {
+        return '8px';
+      }
+      return '4px';
     };
 
     return (
@@ -576,7 +608,7 @@ export const DndTreeNode: React.FC<DndTreeNodeProps> = ({
             if (isDropZoneHovered && !isValidDrop) return 'rgba(239, 68, 68, 0.15)';
             return 'transparent';
           })(),
-          marginTop: '0px',
+          marginTop: getMarginTop(),
           marginLeft: `${level * 28}px`,
           borderRadius: '4px',
           transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -598,60 +630,57 @@ export const DndTreeNode: React.FC<DndTreeNodeProps> = ({
 
   return (
     <div className={styles.tree_item}>
-      {/* BEFORE 드롭 영역 */}
-      {(isGlobalDragging || effectiveDraggedNode) &&
-        effectiveDraggedNodeKey !== node.key &&
-        !isDescendantOfDraggedNode &&
-        !shouldCollapseForSameLevel && (
-          <div
-            ref={setDropBeforeRef}
-            style={{
-              position: 'relative',
-              height: (() => {
-                const isDropZoneHovered =
-                  isOverBefore || (isDraggedFromOtherTree && dropPosition === 'BEFORE');
-                if (!(isGlobalDragging || effectiveDraggedNode)) return '0px';
-                if (isDropZoneHovered) return '20px';
-                return isFirstSibling ? '12px' : '8px';
-              })(),
-              backgroundColor: (() => {
-                const isDropZoneHovered =
-                  isOverBefore || (isDraggedFromOtherTree && dropPosition === 'BEFORE');
-                const isValidDrop = isValidDropTargetForPosition('BEFORE');
-                if (isDropZoneHovered && isValidDrop) return 'rgba(33, 150, 243, 0.15)';
-                if (isDropZoneHovered && !isValidDrop) return 'rgba(239, 68, 68, 0.15)';
-                return 'transparent';
-              })(),
-              marginBottom: '0px',
-              marginLeft: `${level * 28}px`,
-              borderRadius: '4px',
-              transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-              border: (() => {
-                const isDropZoneHovered =
-                  isOverBefore || (isDraggedFromOtherTree && dropPosition === 'BEFORE');
-                const isValidDrop = isValidDropTargetForPosition('BEFORE');
-                if (isDropZoneHovered && isValidDrop) return '2px dashed #2196f3';
-                if (isDropZoneHovered && !isValidDrop) return '2px dashed #ef4444';
-                return '1px dashed transparent';
-              })(),
-              cursor:
-                (isOverBefore || (isDraggedFromOtherTree && dropPosition === 'BEFORE')) &&
-                isValidDropTargetForPosition('BEFORE')
-                  ? 'copy'
-                  : 'default',
-              opacity: isGlobalDragging || effectiveDraggedNode ? 1 : 0,
-              transform: (() => {
-                const isDropZoneHovered =
-                  isOverBefore || (isDraggedFromOtherTree && dropPosition === 'BEFORE');
-                const isValidDrop = isValidDropTargetForPosition('BEFORE');
-                return isDropZoneHovered && isValidDrop ? 'scaleY(1.2)' : 'scaleY(1)';
-              })(),
-              zIndex: 20,
-            }}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-          ></div>
-        )}
+      {/* BEFORE 드롭 영역 - 중복 방지를 위해 첫 번째 형제만 렌더링 */}
+      {shouldRenderBefore && (
+        <div
+          ref={setDropBeforeRef}
+          style={{
+            position: 'relative',
+            height: (() => {
+              const isDropZoneHovered =
+                isOverBefore || (isDraggedFromOtherTree && dropPosition === 'BEFORE');
+              if (!(isGlobalDragging || effectiveDraggedNode)) return '0px';
+              if (isDropZoneHovered) return '20px';
+              return isFirstSibling ? '12px' : '8px';
+            })(),
+            backgroundColor: (() => {
+              const isDropZoneHovered =
+                isOverBefore || (isDraggedFromOtherTree && dropPosition === 'BEFORE');
+              const isValidDrop = isValidDropTargetForPosition('BEFORE');
+              if (isDropZoneHovered && isValidDrop) return 'rgba(33, 150, 243, 0.15)';
+              if (isDropZoneHovered && !isValidDrop) return 'rgba(239, 68, 68, 0.15)';
+              return 'transparent';
+            })(),
+            marginBottom: '0px',
+            marginLeft: `${level * 28}px`,
+            borderRadius: '4px',
+            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+            border: (() => {
+              const isDropZoneHovered =
+                isOverBefore || (isDraggedFromOtherTree && dropPosition === 'BEFORE');
+              const isValidDrop = isValidDropTargetForPosition('BEFORE');
+              if (isDropZoneHovered && isValidDrop) return '2px dashed #2196f3';
+              if (isDropZoneHovered && !isValidDrop) return '2px dashed #ef4444';
+              return '1px dashed transparent';
+            })(),
+            cursor:
+              (isOverBefore || (isDraggedFromOtherTree && dropPosition === 'BEFORE')) &&
+              isValidDropTargetForPosition('BEFORE')
+                ? 'copy'
+                : 'default',
+            opacity: isGlobalDragging || effectiveDraggedNode ? 1 : 0,
+            transform: (() => {
+              const isDropZoneHovered =
+                isOverBefore || (isDraggedFromOtherTree && dropPosition === 'BEFORE');
+              const isValidDrop = isValidDropTargetForPosition('BEFORE');
+              return isDropZoneHovered && isValidDrop ? 'scaleY(1.2)' : 'scaleY(1)';
+            })(),
+            zIndex: 20,
+          }}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        ></div>
+      )}
 
       {/* 노드 콘텐츠 */}
       <div
@@ -819,7 +848,6 @@ export const DndTreeNode: React.FC<DndTreeNodeProps> = ({
       {/* AFTER 드롭 영역 - 일반 트리 타입 */}
       {treeType !== 'SAME_LEVEL_ONLY' &&
         (isGlobalDragging || effectiveDraggedNode) &&
-        effectiveDraggedNodeKey !== node.key &&
         !isDescendantOfDraggedNode &&
         !shouldCollapseForSameLevel &&
         renderAfterDropZone()}
@@ -855,6 +883,7 @@ export const DndTreeNode: React.FC<DndTreeNodeProps> = ({
               minDraggableLevel={minDraggableLevel}
               moveIcon={moveIcon}
               isFirstSibling={index === 0}
+              renderNodeDragHandle={renderNodeDragHandle}
             />
           ))}
         </div>

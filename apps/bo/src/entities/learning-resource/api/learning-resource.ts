@@ -41,7 +41,7 @@ export default class LearningResourceService {
     return httpService.get(`${CMSApiPrefix()}/contents`, params);
   }
 
-  static fetchContent(contentUuid: string): Promise<GetContentDetailRes> {
+  static fetchContent(contentUuid?: string): Promise<GetContentDetailRes> {
     return httpService.get(`${CMSApiPrefix()}/content/${contentUuid}`);
   }
 

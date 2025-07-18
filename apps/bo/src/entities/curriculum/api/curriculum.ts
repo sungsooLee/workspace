@@ -14,6 +14,7 @@ import {
   GeneralLessonSaveParams,
   LessonUpdateParams,
   CurriculumUpdateRequest,
+  CurriculumDndParams,
 } from '@types';
 
 export class CurriculumService {
@@ -125,5 +126,12 @@ export class CurriculumService {
     return httpService.get(
       `${CMSApiPrefix()}/curriculum/module/${data.moduleId}/lesson/${data.lessonId}`,
     );
+  }
+
+  /**
+   * 커리큘럼 트리 dnd
+   */
+  static updateDndCurriculumTree(data: CurriculumDndParams): Promise<any> {
+    return httpService.post(`${CMSApiPrefix()}/curriculum/dnd`, data);
   }
 }
