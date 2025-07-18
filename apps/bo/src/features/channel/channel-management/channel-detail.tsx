@@ -341,8 +341,9 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
                 width: 'xl',
                 content: <TenantShuttleModal />,
               }}
-              // 채널상세이고 직접개설인 경우에만 수정 가능한게 맞는지 기획 확인
-              disabled={watchedChannelTenatMappingType === 'MAPPING_TENANT'}
+              disabled={
+                watchedChannelTenatMappingType === 'MAPPING_TENANT' || props.mode === EnFormMode.ADD
+              }
             />
           }
         />
