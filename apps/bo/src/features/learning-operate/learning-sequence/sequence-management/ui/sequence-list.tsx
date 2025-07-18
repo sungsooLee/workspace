@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import { forwardRef, useMemo } from 'react';
 // import { CourseTabBaseProps, TabFormRef } from '../../../-common/type';
 import { useEffect, useCallback, useState, useRef } from 'react';
 import { useLocation } from '@tanstack/react-router';
@@ -12,6 +12,7 @@ import {
   ContentsRow,
   DatePicker,
   Divider,
+  EditDatePickerCell,
   EditDropdownCell,
   EditInputCell,
   EditTimeRangeCell,
@@ -44,11 +45,13 @@ import dayjs from 'dayjs';
 import { getRandomId } from '@learnway/shared';
 import { SequenceBatchModal } from '@features/learning-operate/learning-sequence/sequence-management';
 import { DateTimeRangePickerFormField } from '@features/form';
+import { EditInputDateCell } from '../component/edit-input-date-cell';
+import { CopyBatchButtons } from '../component/copy-batch-buttons';
 
 type SequenceListComponentProps = {
   setMode: (value: string) => void;
   setSequenceId: (value: number) => void;
-  courseId: number;
+  courseId?: number;
 };
 
 /**
@@ -59,6 +62,18 @@ const _global = {
   linkClick: (payload: any) => {
     return;
   },
+  checkedLength: 0,
+};
+
+const gridConfig: useGridBoxConfig = {
+  query: queryOptions.sequenceList,
+  columns: [],
+  data: [],
+  gridState: {
+    // page: 0,
+    // size: 10,
+    sort: [],
+  },
 };
 
 const SequenceListComponent = ({
@@ -66,13 +81,13 @@ const SequenceListComponent = ({
   setSequenceId,
   courseId,
 }: SequenceListComponentProps) => {
+  console.log('## courseId:', courseId);
   const router = useRouter();
   const { open: openModal, confirm: openConfirm, alert: openAlert } = useModal();
   const [columns, setColumns] = useState() as any;
   const [openYear, setOpenYear] = useState<object[]>();
   const selectedRowsRef = useRef<any[]>([]);
-
-  const { provider, control, onSubmit, updateFormData } = useDynamicForm2();
+  const [selectedItems, setSelectedItems] = useState<any[]>([]);
 
   _global.linkClick = (payload: any) => {
     setMode('DETAIL');
@@ -124,17 +139,6 @@ const SequenceListComponent = ({
     validator: {},
   };
 
-  const gridConfig: useGridBoxConfig = {
-    query: queryOptions.sequenceList,
-    columns: [],
-    data: [],
-    gridState: {
-      // page: 0,
-      // size: 10,
-      sort: [],
-    },
-  };
-
   const {
     provider: searchProvider,
     getValues,
@@ -143,51 +147,11 @@ const SequenceListComponent = ({
     setValue,
   } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
-  const [gridData, setGridData] = useState<any[]>([]);
   const [params, setParams] = useState<Record<string, any>>({});
   const [valuesWithLabel, setValuesWithLabel] = useState<Record<string, SelectOption>>({});
 
   useEffect(() => {
     const columns = [
-      // columnHelper.accessor('checkbox', {
-      //   // 상태에 따른 checkbox disabled를 위해 checkbox 따로 구현
-      //   id: 'select-check',
-      //   size: 50,
-      //   maxSize: 50,
-      //   minSize: 50,
-      //   meta: {
-      //     align: 'center',
-      //     headerAlign: 'center',
-      //     cellAlign: 'center',
-      //   },
-      //   enableSorting: false,
-      //   header: ({ table }) => (
-      //     <div style={{ width: '100%', textAlign: 'center' }}>
-      //       <Checkbox
-      //         checked={table.getIsAllRowsSelected()}
-      //         onCheckedChange={(checked) => {
-      //           table.toggleAllRowsSelected(!!checked);
-      //         }}
-      //       />
-      //     </div>
-      //   ),
-      //   cell: ({ row }) => {
-      //     return (
-      //       <div style={{ width: '100%', textAlign: 'center', paddingRight: 0 }}>
-      //         <Checkbox
-      //           checked={row.getIsSelected()}
-      //           // disabled={row.getIsGrouped() || disabled}
-      //           onCheckedChange={() => {
-      //             // row.getToggleSelectedHandler();
-      //             if (!row.getIsGrouped()) {
-      //               row.getToggleSelectedHandler();
-      //             }
-      //           }}
-      //         />
-      //       </div>
-      //     );
-      //   },
-      // }),
       columnHelper.accessor('openYear', {
         header: t('개설'),
         cell: (info) => info.getValue(),
@@ -231,13 +195,7 @@ const SequenceListComponent = ({
       columnHelper.accessor('regStartDate', {
         header: t('수강신청 시작일'),
         cell: (info) => {
-          return (
-            <DatePicker
-              displayType="day-time-hm"
-              value={info.row.original.regStartDate}
-              size={'md'}
-            />
-          );
+          return <EditDatePickerCell info={info} dateOptions={{ displayType: 'day-time-hm' }} />;
         },
         enableGrouping: false,
         size: 300,
@@ -245,13 +203,7 @@ const SequenceListComponent = ({
       columnHelper.accessor('regEndDate', {
         header: t('수강신청 종료일'),
         cell: (info) => {
-          return (
-            <DatePicker
-              displayType="day-time-hm"
-              value={info.row.original.regEndDate}
-              size={'md'}
-            />
-          );
+          return <EditDatePickerCell info={info} dateOptions={{ displayType: 'day-time-hm' }} />;
         },
         enableGrouping: false,
         size: 300,
@@ -265,31 +217,15 @@ const SequenceListComponent = ({
         cell: (info) => {
           if (info.row.original.status === '학습중') return '수강신청 승인일로 부터';
           else
-            return (
-              <DatePicker
-                displayType="day-time-hm"
-                value={info.row.original.eduStartDate}
-                size={'md'}
-              />
-            );
+            return <EditDatePickerCell info={info} dateOptions={{ displayType: 'day-time-hm' }} />;
         },
         enableGrouping: false,
         size: 300,
       }),
-      columnHelper.accessor('eduEndDate', {
+      columnHelper.accessor('aa', {
         header: t('학습 종료일'),
         cell: (info: CellContext<any, string>) => {
-          if (info.row.original.status === '학습중') {
-            return <EditInputCell info={info} input={{ suffixText: '일' }} />;
-          } else {
-            return (
-              <DatePicker
-                displayType="day-time-hm"
-                value={info.row.original.eduEndDate}
-                size={'md'}
-              />
-            );
-          }
+          return <EditInputDateCell info={info} input={{ suffixText: '일' }} />;
         },
         enableGrouping: false,
         size: 300,
@@ -336,50 +272,51 @@ const SequenceListComponent = ({
     gridFetch();
   }, []);
 
-  const handleOnSearch = useCallback((data: any) => {
-    console.log('##data', data);
-    const searchData = {
-      eduYear: data.eduYear,
-      isUsed: data.isUsed,
-      courseId: data.courseId,
-    };
+  //   const handleOnSearch = useCallback((data: any) => {
+  // e.preventDefault(); // 이게 없으면 새로고침됩니다
+  // console.log('##data', data);
+  // const searchData = {
+  //   eduYear: data.eduYear,
+  //   isUsed: data.isUsed,
+  //   courseId: data.courseId,
+  // };
+  // const searchData = {};
 
-    // const excelParam = {
-    //   downloadReason: {
-    //     userUuid: user?.uuid,
-    //     menuPath: activeMenuDepthMenu?.map((menu) => menu.menuName).join(' > '),
-    //     dataCount: 1500,
-    //     requestParameter: 'string',
-    //     downloadReasonType: 'AFFAIRS',
-    //     downloadDetailReasonType: 'AFFAIRS01',
-    //     downloadDetailReason: 'string',
-    //   },
-    // };
-    // setParams({
-    //   ...searchData,
-    //   ...excelParam,
-    // });
-    // setValuesWithLabel(getValuesWithLabel());
-    // const result = gridFetch(searchData);
-    // console.log('result=>', result);
-    // result.then((data) => {
-    //   console.log('data=>', data);
-    //   setGridData(data?.content);
-    // });
-    // console.log('sampleData=>', sampleData);
-    // setGridData(sampleData);
-    gridFetch(searchData);
+  // const excelParam = {
+  //   downloadReason: {
+  //     userUuid: user?.uuid,
+  //     menuPath: activeMenuDepthMenu?.map((menu) => menu.menuName).join(' > '),
+  //     dataCount: 1500,
+  //     requestParameter: 'string',
+  //     downloadReasonType: 'AFFAIRS',
+  //     downloadDetailReasonType: 'AFFAIRS01',
+  //     downloadDetailReason: 'string',
+  //   },
+  // };
+  // setParams({
+  //   ...searchData,
+  //   ...excelParam,
+  // });
+  // setValuesWithLabel(getValuesWithLabel());
+  // const result = gridFetch(searchData);
+  // console.log('result=>', result);
+  // result.then((data) => {
+  //   console.log('data=>', data);
+  //   setGridData(data?.content);
+  // });
+  // console.log('sampleData=>', sampleData);
+  // setGridData(sampleData);
+  // gridFetch();
+  //   }, []);
+
+  const handleOnSearch = async (data: any) => {
+    console.log('##test');
+    return;
+  };
+
+  const handleRowsSelect = useCallback((rows: any[]) => {
+    setSelectedItems(rows);
   }, []);
-
-  const refreshOnSearch = () => {
-    handleOnSearch(getValues);
-  };
-
-  const handleRowsSelect = async (rows: any) => {
-    console.log('##rows:', rows);
-    // setSelectedRows([...rows]);
-    selectedRowsRef.current = rows;
-  };
 
   const [inputAdd, setInputAdd] = useState<number>();
   const [inputCopy, setInputCopy] = useState<number>();
@@ -401,7 +338,7 @@ const SequenceListComponent = ({
     }));
     console.log('##addRows=>', addRows);
     const newData = [...gridData, ...addRows];
-    setGridData(newData);
+    // setGridData(newData);
     // gConfig.gridFetch();
   };
 
@@ -430,8 +367,8 @@ const SequenceListComponent = ({
       }
     }
 
-    const newData = [...gridData, ...clonedRows];
-    setGridData(newData);
+    // const newData = [...gridData, ...clonedRows];
+    // setGridData(newData);
   };
 
   const onBatch = async () => {
@@ -469,10 +406,8 @@ const SequenceListComponent = ({
       <Divider />
       <GridBox
         config={gConfig}
-        // data={gridData}
         columns={columns}
         multiple={true}
-        // hideRowSelectionCheckBox={true}
         disabledSelectionToggle
         title={t('차수 목록')}
         onRowsSelect={handleRowsSelect}
@@ -496,14 +431,11 @@ const SequenceListComponent = ({
               value={inputCopy}
               onChange={(e) => setInputCopy(parseInt(e.target.value))}
             />
-            <Button
-              variant="text"
-              size="xs"
-              label={t('LABEL.grid.header.copy', '복사')}
-              disabled={selectedRowsRef.current.length === 0}
-              onClick={onCopyRow}
+            <CopyBatchButtons
+              disabled={selectedItems.length > 0 ? false : true}
+              onCopyRow={onCopyRow}
+              onBatch={onBatch}
             />
-            <Button variant="text" label={t('일괄설정')} onClick={onBatch} />
           </>
         }
         excelButtons={
