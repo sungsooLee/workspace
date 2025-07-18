@@ -70,12 +70,8 @@ const TenantUserRegistApplicationListComponent: FC<any> = ({ rootPath }) => {
   const tenantIdWatch = useWatch({ control: searchProvider.control, name: 'tenantId' });
 
   const handleOnSearch = (data: any) => {
-    console.log('search', data);
-    const searchData = {
-      ...data,
-      enabledDate: data.enabledDate ? data.enabledDate : null,
-    }
-    gridFetch(searchData);
+    console.log('searchData : () => ', data);
+    gridFetch(data);
   };
 
   const openChangeUserEnableModal = (isApproval: boolean) => {
@@ -250,13 +246,14 @@ const searchConfig = (): SearchBoxConfig => ({
         value: '',
       },
       {
-        name: 'enabledDate',
+        name: 'userState',
         type: 'dropdown',
-        label: t('승인상태'),
-        value: 'false',
+        label: t('승인 상태'),
+        value: 'WAIT',
         options: [
-          { value: 'false', label: t('대기') },
-          { value: 'true', label: t('승인') },
+          { value: 'WAIT', label: t('대기') },
+          { value: '', label: t('전체') },
+          { value: 'NORMAL', label: t('승인') },
         ],
       },
       {
