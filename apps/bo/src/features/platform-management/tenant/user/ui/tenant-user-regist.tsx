@@ -137,9 +137,13 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
       // 계정 정보
 
       // 로그인 및 인증 설정 정보
-      ssoType: '',
-      authType: data.passwordAuthType,
+      // ssoType: '',
+      // authType: data.passwordAuthType,
     };
+
+    // 현재 회사(조직)조회 팝업에 데이터가 없어 임시로 테스트하기 위해 넣음: 추후 삭제
+    payload.companyId = 54;
+    payload.deptId = 2;
 
     if( data.userState === '2' ) {
       payload.isOnLeave = true;
@@ -160,8 +164,7 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
     }
 
     // 로그인 및 인증 설정 정보
-    if( data.isUseSso ) payload.ssoType = data.ssoTypeList;
-
+    // if( data.isUseSso ) payload.ssoType = data.ssoTypeList;
 
     const filteredPayload = Object.fromEntries(
       Object.entries(payload).filter(([_, value]) => value !== null && value !== undefined && value !== '')
