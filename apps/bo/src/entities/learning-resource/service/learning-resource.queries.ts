@@ -169,6 +169,10 @@ export const mutateOptions = {
     mutationFn: (params: TestPaperBasicInfoSaveReq) =>
       LearningResourceService.createExamPaperContent(params),
   }),
+  updateExamPaperContent: () => ({
+    mutationFn: (params: TestPaperBasicInfoSaveReq) =>
+      LearningResourceService.updateExamPaperContent(params),
+  }),
   createQuestionBankContent: () => ({
     mutationFn: (params: ContentBaseInfo) =>
       LearningResourceService.createQuestionBankContent(params),

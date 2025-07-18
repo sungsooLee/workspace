@@ -22,7 +22,6 @@ const useExamLoaderData = () => {
   const { data: hasMapping } = useQuery(
     learningResourceQueryOptions.getCurriculumsMapping(contentUuid),
   );
-  console.log('use exam loader data', data, hasMapping);
 
   return { mode, tenantId, contentUuid, data, hasMapping };
 };

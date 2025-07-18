@@ -365,9 +365,7 @@ export interface TestPaperBasicInfoSaveRes {
 }
 
 export interface TestPaperBasicInfoDetail extends GetContentDetailRes {
-  // examTemplateType으로 통일 필요 (임시 설정)
-  examTemplateType?: ExamTemplateType;
-  examTemplate?: ExamTemplateType;
+  examTemplateType: ExamTemplateType;
   questionCount: number;
   questionCountPerPage: number;
   examLimitTime: number;

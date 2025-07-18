@@ -2,19 +2,16 @@ import { t } from 'i18next';
 import {
   ContentsRow,
   EditorFormField,
-  FormSubTitle,
   Input,
   InputModalSelectorFormField,
-  Switch,
   TextareaFormField,
 } from '@learnway/ui';
-import { CODE_GROUP, DynamicFormProvider, useDynamicForm2 } from '@learnway/hooks';
+import { CODE_GROUP, DynamicFormProvider } from '@learnway/hooks';
 import {
   ChannelChoiceModal,
   ChipListFormField,
   FormRow2,
   ManagerChoiceModal,
-  PhoneNumberFormField,
   SwitchFormField,
   UserChoiceModal,
 } from '@shared/ui';
@@ -32,6 +29,7 @@ const LearningResourceBaseFormComponent = ({
   showLessonTime = false,
   readOnlyLessonTime = false,
   showBlogEditor = false,
+  contentNameMaxLength = 150,
 }: {
   provider: DynamicFormProvider;
   formMode?: EnFormMode;
@@ -42,7 +40,12 @@ const LearningResourceBaseFormComponent = ({
   readOnlyLessonTime?: boolean;
   /** 블로그 에디터 노출 여부 */
   showBlogEditor?: boolean;
+  /** 학습자원명 입력 가능한 글자수 (기본 최대 150자이나 다른 경우 존재함) */
+  contentNameMaxLength?: number;
 }) => {
+  const { watch } = provider;
+  const isCourseUsed = watch('isCourseUsed');
+
   return (
     <>
       <ContentsRow>
@@ -94,7 +97,7 @@ const LearningResourceBaseFormComponent = ({
           label={'학습자원명'}
           value=""
           validation={{ required: true }}
-          element={<Input type="text" maxLength={150} />}
+          element={<Input type="text" maxLength={contentNameMaxLength} />}
         />
       </ContentsRow>
       {/*학습자원 설명*/}
@@ -236,6 +239,7 @@ const LearningResourceBaseFormComponent = ({
             label={t('블로그 내용')}
             format="object"
             value={{}}
+            validation={{ required: true }}
             element={<EditorFormField />}
           />
         </ContentsRow>
@@ -260,6 +264,7 @@ const LearningResourceBaseFormComponent = ({
           label="태그"
           name="tags"
           value={[]}
+          validation={{ required: true }}
           element={<ChipListFormField />}
           placeholder="한글, 영문, 숫자 포함 9자 이하 태그를 입력하세요."
           limitPlaceholder="여러개의 태그는 쉼표로 구분"
@@ -278,7 +283,8 @@ const LearningResourceBaseFormComponent = ({
               name="aiSummary"
               label="학습자원 개요 (AI 자동 추출)"
               value=""
-              element={<TextareaFormField maxLength={2000} />}
+              element={<TextareaFormField maxLength={2000} readOnly />}
+              placeholder={t('키워드는 AI 자동 추출되어 표기됩니다.')}
             />
           </ContentsRow>
           <ContentsRow>
@@ -287,24 +293,27 @@ const LearningResourceBaseFormComponent = ({
               name="aiKeyword"
               label="키워드 (AI 자동 추출)"
               value=""
-              element={<TextareaFormField maxLength={2000} />}
+              element={<TextareaFormField maxLength={2000} readOnly />}
+              placeholder={t('키워드는 AI 자동 추출되어 표기됩니다.')}
             />
           </ContentsRow>
         </>
       )}
 
-      {/* 교육지원활용 여부 */}
+      {/* 교육자원활용 여부 */}
       <ContentsRow type="horizontal" className="inactive">
         <FormRow2
           provider={provider}
-          label="교육지원활용"
+          label="교육자원활용"
           name="isCourseUsed"
           format="boolean"
           element={<SwitchFormField />}
           switchConfig={{
             label: (value: boolean) => (value ? '활용가능' : '활용불가'),
           }}
-          guideText="해당 학습자원으로 교육 과정을 개설할 수 없습니다."
+          guideText={t(
+            `해당 학습자원으로 교육 과정을 개설할 수 ${isCourseUsed ? '있습니다' : '없습니다'}.`,
+          )}
           value={true}
         />
       </ContentsRow>

@@ -41,6 +41,7 @@ export const getExamSaveRequestDataFromFormData = (options: {
     examEndNoticeMessage: options.values.examEndNoticeMessage,
     contentAddInfoType: ContentAddInfoType.EXAM_ADD_INFO,
     contentAddInfo: Number(options.values.questionCount ?? '0'),
+    questionGenType: ExamQuestionGenType.FIXED,
   };
 
   if (options.mode === PageMode.UPDATE) {
@@ -87,7 +88,7 @@ export const convertDetailInfoToFormData = (
     isInspected: data.isInspected,
     isCopyrighted: data.isCopyrighted,
     tags: data.tags?.map((tag: string | Tag) => (typeof tag === 'string' ? tag : tag.tagName)),
-    examTemplateType: data.examTemplateType ?? data.examTemplate, // 임시 설정!
+    examTemplateType: data.examTemplateType,
     questionCount: data.questionCount,
     questionCountPerPage: data.questionCountPerPage,
     examLimitTime: data.examLimitTime,

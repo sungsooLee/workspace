@@ -142,6 +142,20 @@ export function useCreateExamPaperContent(options?: any) {
   };
 }
 
+export function useUpdateExamPaperContent(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.updateExamPaperContent(),
+    ...options,
+  });
+
+  return {
+    update: (payload: TestPaperBasicInfoSaveReq) => mutation.mutate(payload as any),
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
+}
+
 export function useCreateQuestionBankContent(options?: any) {
   const mutation = useMutation({
     ...mutateOptions.createQuestionBankContent(),

@@ -8,15 +8,15 @@ import {
   ContentsButtons,
   MainContents,
   PageContainer,
-  SubContents,
 } from '@shared/ui';
-import { ExamTab, PageMode, TabFormRef } from './-common/type';
+import { TestPaperBasicInfoSaveRes } from '@types';
+import { getExamTemplateTextByType } from './-common/common';
+import { ExamTab, PageMode } from './-common/type';
 import { useExamLoaderData } from './-hooks/use-exam-loader-data';
+import { useExamPaperForm } from './-hooks/use-exam-paper-form';
+import { useExamBasicInfoForm } from './-hooks/use-exam-basic-info-form';
 import { TestPaperInfo } from './-tabs/test-paper-info';
 import { QuestionInfo } from './-tabs/question-info';
-
-import { getExamTemplateTextByType } from './-common/common';
-import { useExamPaperForm } from './-hooks/use-exam-paper-form';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 
@@ -27,22 +27,54 @@ export const Route = createLazyFileRoute('/_layout/learning/resource/test-paper/
 function RouteComponent() {
   const router = useRouter();
   const { mode, tenantId, contentUuid, data, hasMapping } = useExamLoaderData();
-  console.log('data by router state', data, hasMapping);
 
   const { alert, open: openModal, confirm: openConfirm } = useModal();
 
-  const { tabRefs, setTabRef, questionGenType, setQuestionGenType } = useExamPaperForm(data);
+  const { basicInfoRef, questionInfoRef, questionGenType, setQuestionGenType } =
+    useExamPaperForm(data);
+
+  const {
+    basicInfoProvider: provider,
+    getBasicInfoValues: getValues,
+    updateBasicInfoFormData: updateFormData,
+    updateFormDataByKey,
+    onSubmit,
+    saveBasicInfo,
+  } = useExamBasicInfoForm({
+    mode,
+    contentUuid,
+    onSaveSuccess: (result?: TestPaperBasicInfoSaveRes) => {
+      if (!result) {
+        return;
+      }
+      if (result?.examUuid) {
+        router.navigate({
+          to: '/learning/resource/test-paper/view',
+          state: { mode: 'UPDATE', contentUuid: result.examUuid },
+          replace: true,
+        });
+      }
+    },
+    onUpdateSuccess: (result?: unknown) => {
+      router.navigate({
+        to: '/learning/resource/test-paper/view',
+        state: { mode: 'UPDATE', contentUuid: result },
+        replace: true,
+      });
+    },
+  });
 
   const tabItems = useMemo(
     () => [
       {
         title: t(
-          `시험지 정보${mode === PageMode.UPDATE ? `(${getExamTemplateTextByType(data?.examTemplate)})` : ''}`,
+          `시험지 정보${mode === PageMode.UPDATE ? `(${getExamTemplateTextByType(data?.examTemplateType)})` : ''}`,
         ),
         key: ExamTab.PAPER,
         content: (
           <TestPaperInfo
-            ref={(ref: TabFormRef) => setTabRef(ExamTab.PAPER, ref)}
+            ref={basicInfoRef}
+            basicInfoForm={{ provider, getValues, updateFormData, onSubmit, saveBasicInfo }}
             contentUuid={contentUuid}
             tenantId={tenantId}
             mode={mode}
@@ -56,7 +88,8 @@ function RouteComponent() {
         key: ExamTab.QUESTION,
         content: (
           <QuestionInfo
-            ref={(ref: TabFormRef) => setTabRef(ExamTab.QUESTION, ref)}
+            ref={questionInfoRef}
+            basicInfoForm={{ provider, getValues, updateFormDataByKey, onSubmit }}
             contentUuid={contentUuid}
             tenantId={tenantId}
             mode={mode}
@@ -68,7 +101,7 @@ function RouteComponent() {
         ),
       },
     ],
-    [data],
+    [provider, data],
   );
 
   const [selectedTabKey, setSelectedTabKey] = useState<string>(ExamTab.PAPER);
@@ -122,8 +155,10 @@ function RouteComponent() {
   }, []);
 
   const handleClickSaveButton = () => {
-    if (tabRefs.current?.[ExamTab.PAPER]) {
-      tabRefs.current?.[ExamTab.PAPER]?.save();
+    if (basicInfoRef.current) {
+      basicInfoRef.current?.save?.();
+    } else if (questionInfoRef.current) {
+      questionInfoRef.current?.update?.();
     }
   };
 
@@ -168,14 +203,6 @@ function RouteComponent() {
           </div>
         </div>
       </MainContents>
-
-      {selectedTabKey === ExamTab.PAPER && (
-        <SubContents>
-          <div>
-            <strong className={styles.title}>{t('cms.content.ContentType.EXAM')}</strong>
-          </div>
-        </SubContents>
-      )}
     </PageContainer>
   );
 }

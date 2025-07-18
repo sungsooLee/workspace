@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useMemo, useState } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from 'react';
 import { t } from 'i18next';
 import { Link } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
@@ -25,6 +25,7 @@ import { getExamTemplateTextByType } from '@pages/_layout/learning/resource/test
 const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
   (
     {
+      basicInfoForm,
       contentUuid = '',
       tenantId,
       mode,
@@ -35,6 +36,9 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
     },
     ref,
   ) => {
+    const { provider, getValues, updateFormData, updateFormDataByKey, onSubmit, saveBasicInfo } =
+      basicInfoForm;
+
     const questionGenTypeOptions = useMemo(
       () => [
         {
@@ -205,6 +209,20 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
       }),
     ] as ColumnDef<any, unknown>[];
 
+    useImperativeHandle(
+      ref,
+      () => ({
+        update: () => saveBasicInfo?.(getValues()),
+      }),
+      [],
+    );
+
+    useEffect(() => {
+      updateFormDataByKey?.('questionGenType', questionGenType);
+
+      console.log(getValues());
+    }, [questionGenType]);
+
     return (
       <form>
         <div className={styles.wrap}>
@@ -227,7 +245,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
                 </tr>
                 <tr>
                   <th scope="row">{t('유형')}</th>
-                  <td>{getExamTemplateTextByType(data?.examTemplateType ?? data?.examTemplate)}</td>
+                  <td>{getExamTemplateTextByType(data?.examTemplateType)}</td>
                   <th scope="row">{t('학습자원명')}</th>
                   <td>{data?.contentName}</td>
                 </tr>
