@@ -47,6 +47,7 @@ import { SequenceBatchModal } from '@features/learning-operate/learning-sequence
 import { DateTimeRangePickerFormField } from '@features/form';
 import { EditInputDateCell } from '../component/edit-input-date-cell';
 import { CopyBatchButtons } from '../component/copy-batch-buttons';
+import { Mode } from '@pages/_layout/learning/learning-sequence/-common/type';
 
 type SequenceListComponentProps = {
   setMode: (value: string) => void;
@@ -89,7 +90,7 @@ const SequenceListComponent = ({
   const [selectedItems, setSelectedItems] = useState<any[]>([]);
 
   _global.linkClick = (payload: any) => {
-    setMode('DETAIL');
+    setMode(Mode.DETAIL);
     setSequenceId(parseInt(payload.sequenceId));
   };
 
