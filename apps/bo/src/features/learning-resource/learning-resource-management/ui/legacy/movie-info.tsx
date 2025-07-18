@@ -12,27 +12,41 @@ import {
   isProcessingNone,
   useVideoResource,
 } from '@entities/learning-resource';
+import { formatBytes } from '@learnway/shared';
+import { useMemo } from 'react';
+import { max } from 'lodash';
 
 interface MovieInfoProps {
   provider: DynamicFormProvider;
 }
 
 const MovieInfoComponent = ({ provider }: MovieInfoProps) => {
-  const { processingStatus: status } = useVideoResource(provider);
+  const {
+    isDrafted,
+    processingStatus: status,
+    playTime,
+    videoResource,
+  } = useVideoResource(provider);
 
+  const height = useMemo(() => {
+    return max(videoResource?.encodedVideos?.map((_) => _.height)) || 0;
+  }, [videoResource]);
+  const width = useMemo(() => {
+    return max(videoResource?.encodedVideos?.map((_) => _.width)) || 0;
+  }, [videoResource]);
   // media info_list
   const infoList = [
-    { title: '파일명', text: '파일명이 들어갑니다' },
-    { title: '재생시간', text: '1시간' },
-    { title: '원본용량', text: '2GB' },
-    { title: '720P  용량', text: '1.6GB' },
-    { title: '480P 용량', text: '900MB' },
-    { title: '해상도', text: '1902 X 968' },
-    { title: '파일형식', text: 'MOV' },
-    { title: '비디오 코덱', text: 'H264' },
-    { title: '비디오 프레임레이트', text: '' },
-    { title: '오디오 코덱', text: '' },
-    { title: '오디오 샘플레이트', text: '' },
+    { title: '파일명', text: videoResource?.fileInfo.fileName },
+    { title: '재생시간', text: playTime },
+    { title: '원본용량', text: formatBytes(videoResource?.fileInfo.fileSize || 0) },
+    // { title: '720P  용량', text: '1.6GB' },
+    // { title: '480P 용량', text: '900MB' },
+    { title: '해상도', text: `${width} X ${height}` },
+    { title: '파일형식', text: videoResource?.fileInfo.extType?.toLocaleUpperCase() },
+    // { title: '비디오 코덱', text: 'H264' },
+    // { title: '비디오 프레임레이트', text: '' },
+    // { title: '오디오 코덱', text: '' },
+    // { title: '오디오 샘플레이트', text: '' },
   ];
 
   // media btn list
