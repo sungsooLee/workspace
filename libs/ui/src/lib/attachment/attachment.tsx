@@ -11,7 +11,7 @@ import {
   IcoTrash03,
   IcoFileUpload,
 } from '@learnway/icons';
-import { cn } from '@learnway/shared';
+import { cn, formatBytes } from '@learnway/shared';
 import { UploadFile, useFileManager } from '@learnway/hooks';
 import { useDropzone } from 'react-dropzone';
 import { AttachmentProps } from './types';
@@ -23,19 +23,6 @@ import { Button } from '../button/button';
 import { Checkbox } from '../checkbox/checkbox';
 import { useModal } from '../modal/modal.hook';
 import { compact, first, get, map, sum } from 'lodash';
-
-function formatBytes(bytes: number, decimals = 2): string {
-  if (bytes === 0) return '0 Bytes';
-
-  const k = 1024;
-  const dm = decimals < 0 ? 0 : decimals;
-  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB'];
-
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-  const formatted = parseFloat((bytes / Math.pow(k, i)).toFixed(dm));
-
-  return `${formatted} ${sizes[i]}`;
-}
 
 const AttachmentComponent = ({
   files,

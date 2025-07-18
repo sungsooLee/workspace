@@ -1,15 +1,21 @@
 import { DynamicFormProvider } from '@learnway/hooks';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import LearningResourceService from '../api/learning-resource';
-import { ProcessingStatus } from '@types';
 import { isProcessing, isProcessingCompleted, isProcessingNone } from './util';
+import { GetVideoResourceRes } from '@types';
+import { pick } from 'lodash';
+import { DATE_TIME_FORMAT, duration } from '@learnway/shared';
 
 const useVideoResourceHook = (provider: DynamicFormProvider) => {
   const { watch, onFormChange } = provider;
   const intervalRef = useRef<NodeJS.Timer>();
 
-  const contentUuid = watch('contentUuid');
+  const isDrafted = watch('isDrafted');
   const status = watch('processingStatus');
+  const playTime = duration(watch('contentAddInfo'), DATE_TIME_FORMAT.HOUR_MIN_SEC);
+  const contentUuid = watch('contentUuid');
+
+  const [videoResource, setVideoResource] = useState<GetVideoResourceRes | null>(null);
 
   const fetchStatus = async () => {
     const statusInfo = await LearningResourceService.getVideoStatus(contentUuid);
@@ -17,8 +23,11 @@ const useVideoResourceHook = (provider: DynamicFormProvider) => {
     onFormChange(statusInfo);
   };
 
-  const fetchVideo = async () => {
-    //
+  const fetchVideoContent = async () => {
+    const contentDetail = await LearningResourceService.fetchContent(contentUuid);
+    const videoResource = await LearningResourceService.getVideoResource(contentUuid);
+    onFormChange(pick(contentDetail, 'contentAddInfo'));
+    setVideoResource(videoResource);
   };
 
   useEffect(() => {
@@ -35,14 +44,17 @@ const useVideoResourceHook = (provider: DynamicFormProvider) => {
     }
 
     if (isProcessingCompleted(status)) {
-      fetchVideo();
+      fetchVideoContent();
     }
 
     return () => intervalRef.current && clearInterval(intervalRef.current);
   }, [status]);
 
   return {
+    isDrafted,
     processingStatus: status,
+    playTime,
+    videoResource,
   };
 };
 

@@ -413,3 +413,49 @@ export interface GetVideoStatusRes {
   processingStatus: ProcessingStatus;
   isDrafted: boolean;
 }
+
+interface VideoFileInfo {
+  groupUuid: string;
+  fileId: number;
+  fileUuid: string;
+  fileName: string;
+  storageType: 'S3' | 'HMG';
+  bucket: string;
+  filePath: string;
+  fileSize: number;
+  extType: string;
+  uploadStatus: FileStatus;
+}
+
+interface EncodedVideo {
+  contentUuid: string;
+  m3u8Url: string;
+  height: number;
+  width: number;
+  filePath: string;
+}
+
+interface EncodedAudio {
+  contentUuid: string;
+  fileUrl: string;
+  filePath: string;
+}
+
+interface VideoSubtitles {
+  subtitleFileUuid: string;
+  languageCode: string;
+  subtitleName: string;
+  subtitleUrl?: string;
+}
+
+export interface GetVideoResourceRes {
+  contentUuid: string;
+  contentName: string;
+  languageCountryCode: string;
+  contentStatusCode: ContentStatusCode;
+  fileInfo: VideoFileInfo;
+  masterVideo: string | null;
+  encodedVideos: EncodedVideo[] | null;
+  encodedAudios: EncodedAudio[] | null;
+  videoSubtitles: VideoSubtitles[];
+}
