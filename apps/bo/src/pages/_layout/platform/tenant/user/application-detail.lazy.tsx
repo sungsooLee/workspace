@@ -34,13 +34,13 @@ function RouteComponent() {
       onClose: (value: boolean) => {
         if( value ) {
           if( isApproval ) { // 승인
-            approve({ userUuid }, {
+            approve({ uuids: [userUuid] }, {
               onSuccess: () => {
                 router.navigate({ to: '/platform/tenant/user' })
               }
             });
           } else { // 반려
-            reject({ userUuid }, {
+            reject({ uuids: [userUuid] }, {
                 onSuccess: () => {
                   router.navigate({ to: '/platform/tenant/user' })
                 },
