@@ -18,9 +18,14 @@ export const useTreeButtons = ({ onAddNode, formState }: UseTreeButtonsProps) =>
     const isCurrentParentNode = formState.parentNode?.id === node.id;
     const isInCreateMode = !formState.isEditing;
 
+    // FIXED 모듈인 경우 레슨 추가 버튼을 필터링
+    const filteredChildren = node.data?.moduleType === 'FIXED' 
+      ? allowedChildren.filter(childType => childType !== MAPPING_CURRICULUM_TYPE.LESSON)
+      : allowedChildren;
+
     return (
       <div className="flex flex-row gap-2">
-        {allowedChildren.map((childType) => (
+        {filteredChildren.map((childType) => (
           <Button
             key={childType}
             variant={
@@ -56,7 +61,7 @@ export const useTreeButtons = ({ onAddNode, formState }: UseTreeButtonsProps) =>
     }
   };
 
-  const renderCustomTreeButtons = (onAddCurriculum: () => void): React.ReactNode => {
+  const renderCustomTreeButtons = (onAddCurriculum: () => void, onlyLoadButton: boolean = false): React.ReactNode => {
     return (
       <>
         <Button
@@ -69,15 +74,17 @@ export const useTreeButtons = ({ onAddNode, formState }: UseTreeButtonsProps) =>
         >
           불러오기
         </Button>
-        <Button
-          variant="text"
-          size="sm"
-          className={layoutStyles.btn_text}
-          onClick={onAddCurriculum}
-          icon={<IcoPlus width={16} height={16} stroke="#131C30" />}
-        >
-          신규등록
-        </Button>
+        {!onlyLoadButton && (
+          <Button
+            variant="text"
+            size="sm"
+            className={layoutStyles.btn_text}
+            onClick={onAddCurriculum}
+            icon={<IcoPlus width={16} height={16} stroke="#131C30" />}
+          >
+            신규등록
+          </Button>
+        )}
       </>
     );
   };

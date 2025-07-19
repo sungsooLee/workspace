@@ -284,3 +284,50 @@ export function useDndCurriculumTree(curriculumId?: number, options?: any): any 
     },
   });
 }
+
+export function useDeleteCurriculumModule(options?: any) {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    ...mutateOptions.deleteCurriculumModule(),
+    ...options,
+    onSuccess: async (data: any, variables, context) => {
+      await queryClient.invalidateQueries({ queryKey: queryKeys.all });
+      if (options?.onSuccess) {
+        await options.onSuccess(data, variables, context);
+      }
+    },
+  });
+  return {
+    delete: (payload: any, callback?: any) => {
+      mutation.mutate(payload, callback);
+    },
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
+}
+
+export function useDeleteCurriculumLesson(options?: any) {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    ...mutateOptions.deleteCurriculumLesson(),
+    ...options,
+    onSuccess: async (data: any, variables, context) => {
+      await queryClient.invalidateQueries({ queryKey: queryKeys.all });
+      if (options?.onSuccess) {
+        await options.onSuccess(data, variables, context);
+      }
+    },
+  });
+
+  return {
+    delete: (payload: any, callback?: any) => {
+      mutation.mutate(payload, callback);
+    },
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
+}

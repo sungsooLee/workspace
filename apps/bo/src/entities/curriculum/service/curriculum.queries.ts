@@ -83,4 +83,12 @@ export const mutateOptions = {
   dndCurriculumTree: () => ({
     mutationFn: (data: CurriculumDndParams) => CurriculumService.updateDndCurriculumTree(data),
   }),
+  deleteCurriculumModule: () => ({
+    mutationFn: (data: { curriculumId: number; moduleId: number }) =>
+      CurriculumService.deleteCurriculumModule(data),
+  }),
+  deleteCurriculumLesson: () => ({
+    mutationFn: (data: { moduleId: number; lessonId: number }) =>
+      CurriculumService.deleteCurriculumLesson(data),
+  }),
 };
