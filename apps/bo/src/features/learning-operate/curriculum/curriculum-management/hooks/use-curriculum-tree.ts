@@ -81,12 +81,12 @@ export const useCurriculumTree = ({
         ) {
           return false;
         }
-        // GENERAL 모듈 안으로는 레슨만 가능 (커리큘럼에 있는 레슨은 이동 불가능)
+        // GENERAL 모듈 안으로는 레슨만 가능
         if (
           targetNode.type === MAPPING_CURRICULUM_TYPE.MODULE &&
           targetNode.data?.moduleType === MODULE_TYPE.GENERAL
         ) {
-          return sourceNode.type === MAPPING_CURRICULUM_TYPE.LESSON && sourceNode.level !== 1;
+          return sourceNode.type === MAPPING_CURRICULUM_TYPE.LESSON;
         }
 
         // 레슨 안으로는 아무것도 올 수 없음

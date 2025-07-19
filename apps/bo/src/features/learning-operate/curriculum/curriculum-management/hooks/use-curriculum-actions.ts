@@ -1,13 +1,6 @@
 import { useCallback } from 'react';
 import { TreeNode } from '@learnway/ui';
-import {
-  CurriculumResponse,
-  MAPPING_CURRICULUM_TYPE,
-  MODULE_TYPE,
-  LESSON_TYPE,
-  FixedModuleUpdateParams,
-  GeneralModuleUpdateParams,
-} from '@types';
+import { CurriculumResponse, MAPPING_CURRICULUM_TYPE, MODULE_TYPE, LESSON_TYPE } from '@types';
 import { getTimeValueFromHour } from '@learnway/shared';
 import { findParentNode, buildTreeFromCurriculumData } from '../services';
 import { useQueryClient } from '@tanstack/react-query';
@@ -310,44 +303,36 @@ export const useCurriculumActions = ({
                     ? createdLessonResponse.lessonId || createdLessonResponse.id
                     : createdLessonResponse;
 
-                try {
-                  const refreshedData = await refetchCurriculumDetail();
-                  const updatedCurriculumDetail = refreshedData.data;
+                const refreshedData = await refetchCurriculumDetail();
+                const updatedCurriculumDetail = refreshedData.data;
 
-                  if (updatedCurriculumDetail) {
-                    // 새로 조회된 데이터로 트리 빌드
-                    const updatedTreeData = buildTreeFromCurriculumData(updatedCurriculumDetail);
+                if (updatedCurriculumDetail) {
+                  // 새로 조회된 데이터로 트리 빌드
+                  const updatedTreeData = buildTreeFromCurriculumData(updatedCurriculumDetail);
 
-                    // 새로 생성된 레슨 찾기
-                    const findCreatedLesson = (nodes: TreeNode[]): TreeNode | null => {
-                      for (const node of nodes) {
-                        if (
-                          node.type === MAPPING_CURRICULUM_TYPE.LESSON &&
-                          api.extractIdFromNodeId(node.id) === lessonId
-                        ) {
-                          return node;
-                        }
-                        if (node.children) {
-                          const found = findCreatedLesson(node.children);
-                          if (found) return found;
-                        }
+                  // 새로 생성된 레슨 찾기
+                  const findCreatedLesson = (nodes: TreeNode[]): TreeNode | null => {
+                    for (const node of nodes) {
+                      if (
+                        node.type === MAPPING_CURRICULUM_TYPE.LESSON &&
+                        api.extractIdFromNodeId(node.id) === lessonId
+                      ) {
+                        return node;
                       }
-                      return null;
-                    };
-
-                    const createdLessonNode = findCreatedLesson(updatedTreeData);
-
-                    if (createdLessonNode) {
-                      expandParentNodes(
-                        findParentNode(updatedTreeData, createdLessonNode.parentId),
-                      );
-                      setTimeout(() => {
-                        handleNodeSelect(createdLessonNode, true);
-                      }, 100);
+                      if (node.children) {
+                        const found = findCreatedLesson(node.children);
+                        if (found) return found;
+                      }
                     }
+                    return null;
+                  };
+
+                  const createdLessonNode = findCreatedLesson(updatedTreeData);
+
+                  if (createdLessonNode) {
+                    expandParentNodes(findParentNode(updatedTreeData, createdLessonNode.parentId));
+                    handleNodeSelect(createdLessonNode, true);
                   }
-                } catch (error) {
-                  console.error('Failed to refetch curriculum detail:', error);
                 }
               },
             },
