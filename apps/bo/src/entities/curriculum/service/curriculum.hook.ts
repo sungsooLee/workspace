@@ -194,7 +194,6 @@ export function useCreateLessonByCurriculum(options: any) {
   const mutation = useMutation({
     ...mutateOptions.createLessonByCurriculum(),
     onSuccess: async (data: any, variables, context) => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.all });
       if (options.onSuccess) {
         options.onSuccess(data, variables, context);
       }

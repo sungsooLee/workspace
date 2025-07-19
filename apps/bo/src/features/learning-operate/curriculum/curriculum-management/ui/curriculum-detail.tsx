@@ -43,7 +43,7 @@ const CurriculumDetailComponent = ({
 
   // Curriculum Detail 조회
   const shouldFetchDetail = mode === FORM_MODE.detail && curriculumId > 0;
-  const { data: curriculumDetail, isLoading: isLoadingDetail } = useGetCurriculumDetail(
+  const { data: curriculumDetail, isLoading: isLoadingDetail, refetch: refetchCurriculumDetail } = useGetCurriculumDetail(
     shouldFetchDetail ? curriculumId : 0,
   );
 
@@ -88,6 +88,8 @@ const CurriculumDetailComponent = ({
     clearAllValidators,
     setFormKey,
     treeData,
+    refetchCurriculumDetail,
+    formState,
   });
 
   const handleSave = async () => {
