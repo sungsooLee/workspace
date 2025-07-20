@@ -1,11 +1,8 @@
 import { createFileRoute, useRouter, useNavigate, Link } from '@tanstack/react-router';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
 import { Button } from '@learnway/ui';
-import { t } from 'i18next';
 import { FORM_MODE } from '../../../../../shared';
-import { useState, useEffect } from 'react';
-import { useFetchAuthUser } from '@learnway/auth/entities';
-import { useIsManager } from '@features/learning-operate/curriculum/curriculum-management/hooks/use-role-info';
+import { useState } from 'react';
 import { CurriculumDetail } from '../../../../../features/learning-operate/curriculum';
 
 export const Route = createFileRoute('/_layout/learning-operate/curriculum/management/')({
@@ -33,6 +30,9 @@ function RouteComponent() {
 
   // 목록으로 이동
   const handleGoToList = () => {
+    router.navigate({
+      to: '/learning-operate/curriculum',
+    });
     //
   };
 
