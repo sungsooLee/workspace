@@ -481,6 +481,12 @@ export interface QuestionItem {
   options: QuestionItemOption[];
 }
 
+export interface QuestionItemDeleteParam {
+  contentUuid: string;
+  contentType: string;
+  questionUuidList: string[];
+}
+
 export interface QuestionItemGridRow extends QuestionItem {
   orderChange: string;
 }
