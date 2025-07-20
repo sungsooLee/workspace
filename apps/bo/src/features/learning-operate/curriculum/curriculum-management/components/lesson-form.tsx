@@ -133,6 +133,7 @@ export const LessonForm: React.FC<LessonFormProps> = ({
               validation={{ required: true }}
               element={
                 <DropdownFormField
+                  disabled={isEditing}
                   presetOptionLabel={t('LABEL.form.label.select', '선택')}
                   optionsConfig={{
                     codeGroup: 'cms.content.ContentType',
@@ -147,6 +148,7 @@ export const LessonForm: React.FC<LessonFormProps> = ({
               name="contentName"
               label={t('학습자원')}
               format="string"
+              disabled={isEditing}
               validation={{ required: true }}
               element={
                 <ContentChoiceModalSelector

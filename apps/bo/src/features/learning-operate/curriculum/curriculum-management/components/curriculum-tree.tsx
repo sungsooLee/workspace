@@ -19,6 +19,8 @@ interface CurriculumTreeProps {
   onTreeAction: (event: any) => void;
   customDropValidator: (params: any) => boolean;
   renderNodeDragHandle: (node: TreeNode) => boolean;
+  curriculumDetail?: any;
+  onCurriculumLoad?: (curriculumId: number) => void;
 }
 
 export const CurriculumTree: React.FC<CurriculumTreeProps> = ({
@@ -35,10 +37,14 @@ export const CurriculumTree: React.FC<CurriculumTreeProps> = ({
   onTreeAction,
   customDropValidator,
   renderNodeDragHandle,
+  curriculumDetail,
+  onCurriculumLoad,
 }) => {
   const { renderNodeButtons, renderCustomTreeButtons } = useTreeButtons({
     onAddNode,
     formState,
+    curriculumDetail,
+    onCurriculumLoad,
   });
 
   const customTreeRenderButton = () => {

@@ -23,7 +23,21 @@ export const queryKeys = {
 export const queryOptions = {
   list: (param: CurriculumSearchParams) => ({
     queryKey: queryKeys.all,
-    queryFn: () => CurriculumService.getCurriculumList(param),
+    queryFn: () => {
+      // 빈 값 필터링
+      const filteredParams = Object.keys(param).reduce(
+        (acc, key) => {
+          const value = param[key as keyof CurriculumSearchParams];
+          if (value !== null && value !== undefined && value !== '') {
+            acc[key] = value;
+          }
+          return acc;
+        },
+        {} as Record<string, unknown>,
+      );
+
+      return CurriculumService.getCurriculumList(filteredParams as CurriculumSearchParams);
+    },
   }),
   detail: (curriculumId: number) => ({
     queryKey: queryKeys.detail(curriculumId),

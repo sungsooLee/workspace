@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { FormSubTitle } from '@learnway/ui';
+import { FormSubTitle, useModal } from '@learnway/ui';
 import { SectionLayout } from '@shared/ui';
 import { FORM_MODE } from '@shared/const';
 import { useGetCurriculumDetail } from '@entities/curriculum';
 import { useDynamicForm2 } from '@learnway/hooks';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
+import { t } from 'i18next';
 
 import { NodeFormRenderer } from '../components/node-form-renderer';
 import { CurriculumTree } from '../components/curriculum-tree';
@@ -29,6 +30,8 @@ const CurriculumDetailComponent = ({
 }: CurriculumDetailProps) => {
   const { data: loginUser } = useFetchAuthUser();
   const [formKey, setFormKey] = useState(0);
+  const { confirm: openConfirm } = useModal();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Dynamic Form Hook
   const {
@@ -43,9 +46,11 @@ const CurriculumDetailComponent = ({
 
   // Curriculum Detail 조회
   const shouldFetchDetail = mode === FORM_MODE.detail && curriculumId > 0;
-  const { data: curriculumDetail, isLoading: isLoadingDetail, refetch: refetchCurriculumDetail } = useGetCurriculumDetail(
-    shouldFetchDetail ? curriculumId : 0,
-  );
+  const {
+    data: curriculumDetail,
+    isLoading: isLoadingDetail,
+    refetch: refetchCurriculumDetail,
+  } = useGetCurriculumDetail(shouldFetchDetail ? curriculumId : 0);
 
   // Custom 훅
   const {
@@ -93,16 +98,41 @@ const CurriculumDetailComponent = ({
   });
 
   const handleSave = async () => {
+    if (isSubmitting) return;
+
     const isValid = await onFormValid();
     if (isValid) {
       const formData = watch();
-      handleFormSubmit(formData, formState);
+      setIsSubmitting(true);
+
+      openConfirm({
+        title: formState.isEditing
+          ? t('LABEL.confirm.modify.title')
+          : t('LABEL.confirm.save.title'),
+        content: formState.isEditing
+          ? t('LABEL.confirm.modify.message')
+          : t('LABEL.confirm.save.message'),
+        onClose: (value: boolean) => {
+          if (value) {
+            handleFormSubmit(formData, formState);
+          }
+          setIsSubmitting(false);
+        },
+      });
     }
   };
 
   const handleDelete = () => {
     if (formState.selectedNode) {
-      handleDeleteNode(formState);
+      openConfirm({
+        title: t('LABEL.confirm.delete.title'),
+        content: t('LABEL.confirm.delete.message', { type: t('LABEL.common.code.curriculum') }),
+        onClose: (value: boolean) => {
+          if (value) {
+            handleDeleteNode(formState);
+          }
+        },
+      });
     }
   };
 
@@ -122,6 +152,10 @@ const CurriculumDetailComponent = ({
         onTreeAction={handleTreeAction}
         customDropValidator={customDropValidator}
         renderNodeDragHandle={renderNodeDragHandle}
+        curriculumDetail={curriculumDetail}
+        onCurriculumLoad={(selectedCurriculumId) => {
+          console.log('선택된 커리큘럼:', selectedCurriculumId);
+        }}
       />
 
       <div className={layoutStyles.inner}>

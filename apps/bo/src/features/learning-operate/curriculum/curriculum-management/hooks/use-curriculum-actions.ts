@@ -471,6 +471,20 @@ export const useCurriculumActions = ({
           onSuccess: async (data: any) => {
             onFormChange();
 
+            // DND 후 이동된 노드의 부모 노드를 펼치기
+            const updatedTreeData = buildTreeFromCurriculumData(data);
+            let targetParentNode: TreeNode | null = null;
+            
+            if (position === 'INSIDE') {
+              targetParentNode = targetNode;
+            } else {
+              targetParentNode = findParentNode(updatedTreeData, targetNode.parentId);
+            }
+            
+            if (targetParentNode) {
+              expandParentNodes(targetParentNode);
+            }
+
             if (payload.fromMappingType === 'MODULE') {
               const moduleId = api.extractIdFromNodeId(payload.fromMappingId);
               await queryClient.invalidateQueries({

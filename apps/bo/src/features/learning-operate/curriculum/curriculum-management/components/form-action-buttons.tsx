@@ -21,10 +21,10 @@ export const FormActionButtons: React.FC<FormActionButtonsProps> = ({
   onDelete,
   onSave,
 }) => {
-  if (
-    formStatus !== FROM_STATUS.NONE &&
-    (mode === FORM_MODE.create || mode === FORM_MODE.detail)
-  ) {
+  if (formStatus !== FROM_STATUS.NONE && (mode === FORM_MODE.create || mode === FORM_MODE.detail)) {
+    // FIXED모듈 하위의 레슨일 경우에는 disabled 처리
+    const isLessonUnderFixedModule =
+      formState.selectedNode?.type === 'FIXED' && formState.activeFormType === 'LESSON';
     return (
       <>
         <Button
@@ -33,15 +33,11 @@ export const FormActionButtons: React.FC<FormActionButtonsProps> = ({
           className={layoutStyles.btn_text}
           icon={<IcoMinus width={16} height={16} stroke={'#4C515E'} />}
           onClick={onDelete}
+          disabled={isLessonUnderFixedModule}
         >
           {t('LABEL.button.delete')}
         </Button>
-        <Button
-          type="button"
-          variant="save"
-          size="sm"
-          onClick={onSave}
-        >
+        <Button type="button" variant="save" size="sm" onClick={onSave}>
           {t('LABEL.button.save')}
         </Button>
       </>
