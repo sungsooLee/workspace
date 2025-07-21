@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { ContentsRow, Input, RadioGroupFormField, Textarea } from '@learnway/ui';
+import { Button, ContentsRow, Input, RadioGroupFormField, Textarea } from '@learnway/ui';
 import { FormRow2, ResourceChoiceModal } from '@shared/ui';
 import { DynamicFormProvider } from '@learnway/hooks';
 import { LESSON_TYPE } from '@types';
@@ -10,6 +10,9 @@ import { getHourValueFromTime } from '@pages/_layout/learning/resource/-common/c
 import { learningResourceQueryOptions } from '@entities/learning-resource';
 import { useQuery } from '@tanstack/react-query';
 import { useGetLessonDetail } from '../../../../../entities/curriculum';
+import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
+import subTitleStyles from '@learnway/styles/bo/assets/styles/modules/form-sub-title.module.css';
+import { IcoPlus } from '@learnway/icons';
 
 interface LessonFormProps {
   provider: DynamicFormProvider;
@@ -91,6 +94,27 @@ export const LessonForm: React.FC<LessonFormProps> = ({
     }
   }, [contentDetail, isEditing, isLoadingContent]);
 
+  const renderResourceButtons = () => {
+    return (
+      <div className={subTitleStyles.input_area}>
+        <Button variant="text" size="sm" className={subTitleStyles.btn_text}>
+          정보보기
+        </Button>
+        <Button variant="text" size="sm" className={subTitleStyles.btn_text}>
+          미리보기
+        </Button>
+        <Button
+          variant="text"
+          size="sm"
+          className={subTitleStyles.btn_text}
+          icon={<IcoPlus width={16} height={16} stroke={'#4C515E'} />}
+        >
+          자원등록
+        </Button>
+      </div>
+    );
+  };
+
   const formContent = (
     <>
       <ContentsRow>
@@ -150,6 +174,7 @@ export const LessonForm: React.FC<LessonFormProps> = ({
               format="string"
               disabled={isEditing}
               validation={{ required: true }}
+              infoNode={renderResourceButtons()}
               element={
                 <ContentChoiceModalSelector
                   value={contentName || ''}

@@ -221,23 +221,37 @@ export const useCurriculumActions = ({
           api.updateLessonByGeneral(lessonData, {
             onSuccess: async (updatedLessonId: number) => {
               onFormChange();
-              const updatedNode: TreeNode = {
-                id: updatedLessonId,
-                key: `lesson-${updatedLessonId}`,
-                name: data.lessonName,
-                type: MAPPING_CURRICULUM_TYPE.LESSON,
-                parentId: parentNode?.id || null,
-                children: [],
-                data: {
-                  lessonId: updatedLessonId,
-                  lessonName: data.lessonName,
-                  lessonType: data.lessonType || 'TOC',
-                  lessonDescription: data.lessonDescription,
-                  learningTime: getTimeValueFromHour(data.learningTime),
-                },
-              };
-              expandParentNodes(parentNode);
-              handleNodeSelect(updatedNode, true);
+
+              const refreshedData = await refetchCurriculumDetail();
+              const updatedCurriculumDetail = refreshedData.data;
+
+              if (updatedCurriculumDetail) {
+                const updatedTreeData = buildTreeFromCurriculumData(updatedCurriculumDetail);
+
+                // 수정된 레슨 찾기
+                const findUpdatedLesson = (nodes: TreeNode[]): TreeNode | null => {
+                  for (const node of nodes) {
+                    if (
+                      node.type === MAPPING_CURRICULUM_TYPE.LESSON &&
+                      api.extractIdFromNodeId(node.id) === updatedLessonId
+                    ) {
+                      return node;
+                    }
+                    if (node.children) {
+                      const found = findUpdatedLesson(node.children);
+                      if (found) return found;
+                    }
+                  }
+                  return null;
+                };
+
+                const updatedLessonNode = findUpdatedLesson(updatedTreeData);
+
+                if (updatedLessonNode) {
+                  expandParentNodes(findParentNode(updatedTreeData, updatedLessonNode.parentId));
+                  handleNodeSelect(updatedLessonNode, true);
+                }
+              }
             },
           });
         } else if (isParentFixedModule) {
@@ -246,6 +260,17 @@ export const useCurriculumActions = ({
             {
               onSuccess: async (updatedLessonId: number) => {
                 onFormChange();
+
+                // 레슨 상세 정보 캐시 무효화
+                await queryClient.invalidateQueries({
+                  queryKey: [
+                    'curriculum-all',
+                    'lesson',
+                    extractedLessonId,
+                    parentNode?.data.moduleId,
+                  ],
+                });
+
                 const updatedNode: TreeNode = {
                   id: updatedLessonId,
                   key: `lesson-${updatedLessonId}`,
@@ -474,13 +499,13 @@ export const useCurriculumActions = ({
             // DND 후 이동된 노드의 부모 노드를 펼치기
             const updatedTreeData = buildTreeFromCurriculumData(data);
             let targetParentNode: TreeNode | null = null;
-            
+
             if (position === 'INSIDE') {
               targetParentNode = targetNode;
             } else {
               targetParentNode = findParentNode(updatedTreeData, targetNode.parentId);
             }
-            
+
             if (targetParentNode) {
               expandParentNodes(targetParentNode);
             }

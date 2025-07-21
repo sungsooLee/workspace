@@ -4,6 +4,7 @@ import { IcoMinus } from '@learnway/icons';
 import { t } from 'i18next';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
 import { FROM_STATUS, FORM_MODE } from '@shared/const';
+import { MAPPING_CURRICULUM_TYPE, MODULE_TYPE } from '@types';
 import { FormState } from '../types/form.types';
 
 interface FormActionButtonsProps {
@@ -24,7 +25,10 @@ export const FormActionButtons: React.FC<FormActionButtonsProps> = ({
   if (formStatus !== FROM_STATUS.NONE && (mode === FORM_MODE.create || mode === FORM_MODE.detail)) {
     // FIXED모듈 하위의 레슨일 경우에는 disabled 처리
     const isLessonUnderFixedModule =
-      formState.selectedNode?.type === 'FIXED' && formState.activeFormType === 'LESSON';
+      formState.activeFormType === MAPPING_CURRICULUM_TYPE.LESSON &&
+      formState.selectedNode?.type === MAPPING_CURRICULUM_TYPE.LESSON &&
+      formState.parentNode?.type === MAPPING_CURRICULUM_TYPE.MODULE &&
+      formState.parentNode?.data?.moduleType === MODULE_TYPE.FIXED;
     return (
       <>
         <Button
@@ -33,7 +37,7 @@ export const FormActionButtons: React.FC<FormActionButtonsProps> = ({
           className={layoutStyles.btn_text}
           icon={<IcoMinus width={16} height={16} stroke={'#4C515E'} />}
           onClick={onDelete}
-          disabled={isLessonUnderFixedModule}
+          disabled={!formState.isEditing || isLessonUnderFixedModule}
         >
           {t('LABEL.button.delete')}
         </Button>
