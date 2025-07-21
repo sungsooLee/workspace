@@ -297,18 +297,13 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
   };
 
   const handleOnSubmit = (formData: any) => {
-    const userGroups = formData.userGroups.map((n: { value: number }) => ({
-      combineType: 'USER_GROUP',
-      combineValue: n.value,
-    }));
-
     if (mode === EnFormMode.VIEW) {
       const body: TenantCategoryUpdate = {
-        name: formData.categoryName,
+        categoryName: formData.categoryName,
         categoryCode: formData.code.fieldValue,
-        categoryContent: formData.categoryContent,
+        categoryContent: formData.categoryContent === '' ? null : formData.categoryContent,
         isUsed: formData.tenantIsUsed,
-        whiteList: userGroups,
+        whiteList: formData.userGroups,
       };
       handleUpdate({
         tenantId,
@@ -318,13 +313,13 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
       return;
     } else if (mode === EnFormMode.ADD) {
       const body: TenantCategoryCreate = {
-        name: formData.categoryName,
+        categoryName: formData.categoryName,
         categoryCode: formData.code.fieldValue,
-        categoryContent: formData.categoryContent,
+        categoryContent: formData.categoryContent === '' ? null : formData.categoryContent,
         categoryType: EnCategoryType.TENANT,
         sortSeq: formData.sortSeq,
         parentId: formData.parentKey,
-        whiteList: userGroups,
+        whiteList: formData.userGroups,
         isUsed: formData.tenantIsUsed,
       };
       handleSave({
@@ -366,7 +361,7 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
         location,
         code: { fieldValue: categoryDetail.categoryCode, checkState: DuplicateState.okStart },
         sortSeq: (selectedNode?.children?.length ?? 0) + 1,
-        userGroups: mappedUserGroups,
+        userGroups: categoryDetail.whiteList,
         key: selectedNode.key,
         parentKey: selectedNode.parentKey,
         parentCategoryName: selectedNode.parentMenuName,
@@ -582,7 +577,7 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
                   <ChipListModalSelectorFormField
                     disabled={mode === EnFormMode.NONE}
                     modalConfig={{
-                      content: <UserGroupTabsChoiceModal tenantIds={[]} />,
+                      content: <UserGroupTabsChoiceModal tenantIds={[tenantId]} />,
                       title: '',
                       width: 'xl',
                       height: 'fix',
@@ -590,8 +585,8 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
                     showAddButton
                     chipList={{
                       showInput: false,
-                      labelField: 'label',
-                      valueField: 'value',
+                      labelField: 'pathValue',
+                      valueField: 'pathKey',
                       wordwrap: true,
                     }}
                   />
