@@ -424,9 +424,9 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
                   </div>
                 }
                 className={styles.info_table}
-                showGuideTextNextLine={data?.questionCount !== selectedQuestions.length}
+                showGuideTextNextLine
                 guideText={t('문항현황은 문항목록에서 문항추가/삭제 시 자동 업데이트 됩니다.')}
-                showErrorMessageBesideGuideText
+                showErrorMessageBesideGuideText={data?.questionCount !== selectedQuestions.length}
                 errorMessageBesideGuideText={t('시험지 문항수와 선택 문항수는 동일해야 합니다.')}
               />
             </div>
