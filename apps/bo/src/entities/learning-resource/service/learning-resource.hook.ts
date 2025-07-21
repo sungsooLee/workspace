@@ -199,6 +199,12 @@ export function useCreateQuestionItem(options?: any) {
     data: mutation.data,
   };
 }
+export function useGetQuestionItem(examQuestionUuid?: string, options?: any) {
+  return useQuery<QuestionItem, any>({
+    ...learningResourceQueryOptions.getQuestionItem(examQuestionUuid),
+    ...options,
+  });
+}
 export function useGetContent(contentUuid: string, options?: any) {
   return useQuery({ ...learningResourceQueryOptions.getContent(contentUuid), ...options });
 }

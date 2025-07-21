@@ -219,6 +219,20 @@ export default class LearningResourceService {
     return httpService.get<QuestionItem[]>(`${CMSApiPrefix()}/exam/questions/${contentUuid}`);
   }
 
+  /**
+   * 문항 상세 정보 조회
+   * @param questionUuid
+   * @returns
+   */
+  static getQuestionItem(questionUuid: string) {
+    return httpService.get<QuestionItem>(`${CMSApiPrefix()}/exam/question/${questionUuid}`);
+  }
+
+  /**
+   * 문제은행 or 시험지의 문항 삭제
+   * @param param
+   * @returns
+   */
   static deleteQuestionItemList(param: QuestionItemDeleteParam) {
     return httpService.delete<any>(`${CMSApiPrefix()}/exam/question`, param);
   }

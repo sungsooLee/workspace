@@ -130,6 +130,14 @@ export const learningResourceQueryOptions = {
           enabled: !!examPoolUuid,
         }
       : getQuerySkipToken<QuestionItem[]>(),
+
+  getQuestionItem: (examQuestionUuid?: string) =>
+    examQuestionUuid
+      ? {
+          queryKey: queryKeys.questionBankQustionList,
+          queryFn: () => LearningResourceService.getQuestionItem(examQuestionUuid),
+        }
+      : getQuerySkipToken<QuestionItem>(),
 };
 
 export const mutateOptions = {
