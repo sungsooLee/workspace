@@ -6,64 +6,12 @@ import { PMSApiPrefix, LMSApiPrefix } from '@learnway/config';
 export default class LearningSequenceService {
   static fetchSequenceList(params: any) {
     console.log('### fetchSequenceList', params);
-    // return httpService.get<PageableContent<Instructors>>(`${LMSApiPrefix()}/instructor`, params);
-    return [
-      {
-        openYear: 2025,
-        sequence: 1,
-        courseSequenceCd: 1116,
-        courseSequenceName: '테스트',
-        regStartDate: new Date(),
-        regEndDate: new Date(),
-        eduStartDate: new Date(),
-        eduEndDate: new Date(),
-        eduEndDay: null,
-        status: '수강신청 전',
-        isUsed: '사용',
-        capacity: 1,
-        enroll: 2,
-        student: 3,
-        graduateStudent: 4,
-      },
-      {
-        openYear: 2025,
-        sequence: 2,
-        courseSequenceCd: 1117,
-        courseSequenceName: '테스트',
-        regStartDate: new Date(),
-        regEndDate: new Date(),
-        eduStartDate: new Date(),
-        eduEndDate: null,
-        eduEndDay: 5,
-        status: '학습중',
-        isUsed: '사용',
-        capacity: 1,
-        enroll: 2,
-        student: 3,
-        graduateStudent: 4,
-      },
-      {
-        openYear: 2025,
-        sequence: 3,
-        courseSequenceCd: 1118,
-        courseSequenceName: '테스트',
-        regStartDate: new Date(),
-        regEndDate: new Date(),
-        eduStartDate: new Date(),
-        eduEndDate: new Date(),
-        eduEndDay: null,
-        status: '수강신청중',
-        isUsed: '사용',
-        capacity: 1,
-        enroll: 2,
-        student: 3,
-        graduateStudent: 4,
-      },
-    ];
+    return httpService.get<any[]>(`${LMSApiPrefix()}/sequences`, params);
   }
 
-  static fetchSequenceOne(params: any) {
-    return null;
+  static fetchSequenceOne(sequenceId: number) {
+    console.log('## sequenceId:', sequenceId);
+    return httpService.get<any>(`${LMSApiPrefix()}/sequence/${sequenceId}`);
   }
 
   static createSequence(params: any) {

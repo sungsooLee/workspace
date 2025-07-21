@@ -1,0 +1,21 @@
+.start {
+  &.control {
+    @apply flex items-center gap-[54px];
+    .btn_control {
+      @apply flex h-[80px] w-[80px] items-center justify-center rounded-[50%] bg-[rgba(255,255,255,.5)];
+    }
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.control {
+        @apply gap-[40px];
+        .btn_control {
+          @apply h-[56px] w-[56px];
+        }
+      }
+    }
+  }
+}
