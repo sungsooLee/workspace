@@ -123,6 +123,14 @@
         }
       }
     }
+    [class*='nlp--button'] {
+      &[aria-label='Close'] {
+        @apply right-[16px] top-[16px];
+        svg {
+          @apply !mx-0;
+        }
+      }
+    }
   }
   /* mobile bottom sheet */
   &.m_bottom_sheet {
@@ -136,14 +144,6 @@
     [class*='footer'] {
       [class*='nlp--button'] {
         @apply rounded-[8px];
-      }
-    }
-    [class*='nlp--button'] {
-      &[aria-label='Close'] {
-        @apply right-[16px] top-[16px];
-        svg {
-          @apply !mx-0;
-        }
       }
     }
   }
