@@ -37,7 +37,8 @@ export const queryKeys = {
   html5Resource: ['html5-resource'] as const,
   html5Status: ['html5-status'] as const,
   blogResource: ['blog-resource'] as const,
-  questionBankQustionList: ['question-bank-qustion-list'] as const,
+  questionBankQuestionList: ['question-bank-question-list'] as const,
+  questionBankQuestionItem: ['question-bank-question-item'] as const,
 };
 
 export const learningResourceQueryOptions = {
@@ -124,7 +125,7 @@ export const learningResourceQueryOptions = {
   getQuestionItemList: (examPoolUuid?: string) =>
     examPoolUuid
       ? {
-          queryKey: queryKeys.questionBankQustionList,
+          queryKey: queryKeys.questionBankQuestionList,
           queryFn: () => LearningResourceService.getQuestionItemList(examPoolUuid),
           enabled: !!examPoolUuid,
         }
@@ -133,8 +134,9 @@ export const learningResourceQueryOptions = {
   getQuestionItem: (examQuestionUuid?: string) =>
     examQuestionUuid
       ? {
-          queryKey: queryKeys.questionBankQustionList,
+          queryKey: queryKeys.questionBankQuestionItem,
           queryFn: () => LearningResourceService.getQuestionItem(examQuestionUuid),
+          enabled: !!examQuestionUuid,
         }
       : getQuerySkipToken<QuestionItem>(),
 };
