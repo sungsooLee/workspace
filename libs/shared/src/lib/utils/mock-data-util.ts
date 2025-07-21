@@ -63,7 +63,7 @@ export const getMockCourseType = (key?: string) => {
   ];
 };
 
-export const getMockOption = (codeGroup: string) => {
+export const getMockCodeGroupOption = (codeGroup: string) => {
   // 테스트
   if (codeGroup === 'test') {
     return [
@@ -104,4 +104,11 @@ export const getMockOption = (codeGroup: string) => {
   }
   // default
   return [];
+};
+
+export const getMockOption = (size = 5, labelField = 'label', valueField = 'value') => {
+  return Array.from({ length: size }, (d, i) => ({
+    [valueField]: `value${i}`,
+    [labelField]: `label${i}`,
+  }));
 };

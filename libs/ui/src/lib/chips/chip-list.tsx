@@ -1,6 +1,6 @@
 import React, { ChangeEvent, forwardRef, KeyboardEvent, useState } from 'react';
 
-import { cn } from '@learnway/shared';
+import { cn, getRandomId } from '@learnway/shared';
 import { t } from 'i18next';
 import { Button } from '../button/button';
 import { Input } from '../input/input';
@@ -31,12 +31,18 @@ export interface ChipListComponentProps extends Omit<ChipComponentProps, 'option
   readOnly?: boolean;
   /** disabled 여부 */
   disabled?: boolean;
+  /** 옵션의 닫기 버튼 표시를 조건에 맞게 감추는 함수 (option) => boolean */
+  isOptionHideCloseButton?: (option: any) => boolean;
+  /** 옵션을 조건에 맞게 비활성화 하기 위한 함수 (option) => boolean */
+  isOptionDisabled?: (option: any) => boolean;
+  /** 옵션이 유효하지 않은 항목을 에러 표시하기 위한 함수 (option) => boolean */
+  isOptionInvalid?: (option: any) => boolean;
   /** chip 클릭시 호출 */
   onChipClick?: (option: any) => void;
   /** chip 삭제 버튼 클릭시 호출 */
   onChipDeleteClick?: (option: any) => void;
   /** 추가할 chip input 에서 엔터 눌렀을때 호출 */
-  onAddInputEnterKeyDown?: (text: string) => void;
+  onAddInputEnterKeyDown?: (option: any) => void;
   /** ... */
   onChipListClick?: () => void;
 }
@@ -59,6 +65,9 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
       wordwrap = false,
       labelField = 'label',
       valueField = 'value',
+      isOptionDisabled,
+      isOptionInvalid,
+      isOptionHideCloseButton,
       onChipClick,
       onChipDeleteClick,
       onChipListClick,
@@ -81,7 +90,10 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
       const value = (event.target as HTMLInputElement).value?.trim();
       if ((event.key === 'Enter' || event.key === ',') && value) {
         setInputValue('');
-        onAddInputEnterKeyDown?.(value);
+        onAddInputEnterKeyDown?.({
+          [valueField]: getRandomId(),
+          [labelField]: value,
+        });
       }
     };
 
@@ -138,11 +150,12 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
                 option={option}
                 labelField={labelField}
                 valueField={valueField}
-                disabled={disabled}
+                disabled={disabled || isOptionDisabled?.(option)}
+                invalid={isOptionInvalid?.(option)}
+                hideCloseButton={option.isFixed || isOptionHideCloseButton?.(option)} // option.isFixed=true인 경우, 삭제 불가 (isOptionHideCloseButton 사용되면 fiexed 삭제 예정)
                 className={cn(styles.btn_chips, size && styles[size], type && styles[type])}
                 onClick={onChipClick && handleChipClick}
                 onDelete={handleChipDelete}
-                hideCloseButton={option.isFixed} // option.isFixed=true인 경우, 삭제 불가
               />
             ))}
             {/* 최대 표시 개수 초과 했을때 */}

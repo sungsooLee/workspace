@@ -73,7 +73,7 @@ export const TemplateCheckable: any = (args: any) => {
         checkable
         deletable
         selectedNodeBeforeLabel={
-          <Badge option={{ label: '선택됨', value: '' }} variant={'text'} status="fill" />
+          <Badge option={{ label: '대표', value: '' }} variant={'text'} status="fill" />
         }
         onOptionSelect={(option) => setValue(option.value)}
       />
