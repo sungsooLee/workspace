@@ -894,8 +894,11 @@ export namespace com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin {
      * 수강신청 결재 라인 (pms.course.ApprovalLineType)
      */
     export enum approvalLineType {
-        GROUP_APPROVAL_LINE = 'GROUP_APPROVAL_LINE',
-        INDIVIDUAL_APPROVAL_LINE = 'INDIVIDUAL_APPROVAL_LINE',
+        NONE = 'NONE',
+        LEADER = 'LEADER',
+        OPERATOR = 'OPERATOR',
+        LEADER_OPERATOR = 'LEADER_OPERATOR',
+        DEPEND_COMPANY = 'DEPEND_COMPANY',
     }
     /**
      * 수강 신청 대기 (lms.course.WaitListPickMethodType)

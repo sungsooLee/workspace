@@ -3,7 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin } from './com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin';
-export type com_ever_edu_lms_course_dto_res_SequenceResDto$onAdmin = {
+export type com_ever_edu_lms_sequence_dto_res_SequenceResDto$onAdmin = {
     courseSequenceId?: number;
     enrollmentStartDate?: string;
     enrollmentEndDate?: string;

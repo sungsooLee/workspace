@@ -4,6 +4,7 @@
 /* eslint-disable */
 import type { com_ever_edu_lms_blackwhite_dto_req_WhiteGroupReqDto_FullUpdate } from './com_ever_edu_lms_blackwhite_dto_req_WhiteGroupReqDto_FullUpdate';
 import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TagNameWrapper_FullUpdate } from './com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TagNameWrapper_FullUpdate';
+import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TenantCustom_FullUpdate } from './com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TenantCustom_FullUpdate';
 export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate = {
     /**
      * 과정 생성/수정 마법사 타입 (lms.course.WizardStep)
@@ -338,33 +339,29 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate = {
      */
     isStayed?: boolean;
     /**
+     * 완성차 테넌트 전용 항목 설정 여부
+     */
+    isCarTenantCustomOption?: boolean;
+    /**
+     * 로템 테넌트 전용 항목 설정 여부
+     */
+    isRotemTenantCustomOption?: boolean;
+    /**
+     * 위탁 테넌트 전용 항목 설정 여부
+     */
+    isOutsourcingTenantCustomOption?: boolean;
+    /**
+     * 위아 테넌트 전용 항목 설정 여부
+     */
+    isWiaTenantCustomOption?: boolean;
+    /**
      * 오토에버 위탁 전용 설정 여부
      */
-    isUseOutsourcing?: boolean;
+    isAutoeverTenantCustomOption?: boolean;
     /**
-     * 수강신청 단계에서 레벨테스트 수집 여부
+     * 오토에버 위탁 전용 설정 여부
      */
-    isPreLevelTestRequired?: boolean;
-    /**
-     * 수강신청 단계에서 배송지 수집 여부
-     */
-    isBookDeliveryInfoRequired?: boolean;
-    /**
-     * 튜터id
-     */
-    tutorId?: number;
-    /**
-     * 튜터 이름
-     */
-    tutorName?: string;
-    /**
-     * 위탁 소유 회사 ID
-     */
-    outsourcingCompanyId?: number;
-    /**
-     * 위탁 소유 회사 이름
-     */
-    outsourcingCompanyName?: string;
+    tenantCustoms?: Array<com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TenantCustom_FullUpdate>;
     /**
      * 사용 여부
      */
@@ -940,8 +937,11 @@ export namespace com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate {
      * 수강신청 결재 라인 (pms.course.ApprovalLineType)
      */
     export enum approvalLineType {
-        GROUP_APPROVAL_LINE = 'GROUP_APPROVAL_LINE',
-        INDIVIDUAL_APPROVAL_LINE = 'INDIVIDUAL_APPROVAL_LINE',
+        NONE = 'NONE',
+        LEADER = 'LEADER',
+        OPERATOR = 'OPERATOR',
+        LEADER_OPERATOR = 'LEADER_OPERATOR',
+        DEPEND_COMPANY = 'DEPEND_COMPANY',
     }
     /**
      * 수강 신청 대기 (lms.course.WaitListPickMethodType)

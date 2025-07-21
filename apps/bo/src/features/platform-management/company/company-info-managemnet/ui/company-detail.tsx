@@ -14,6 +14,7 @@ import {
   RadioGroupFormField,
   Switch,
   useModal,
+  useToast,
 } from '@learnway/ui';
 import { FormRow, UserGroupChoiceModal, UserGroupTabsChoiceModal } from '@shared/ui';
 import { LoginRestrictTimeSettingModal } from '@shared/ui/modal/login-restrict-time-setting-modal';
@@ -39,6 +40,8 @@ const CompanyDetailComponent = (props: any, ref: any) => {
   const { data: detailData, refetch } = useFetchCompany(companyCode);
 
   const { open: openModal, confirm: openConfirm, alert: openAlert } = useModal();
+  const { open: openToast } = useToast();
+
   const [tableInstance, setTableInstance] = useState<Table<any>>();
   const { provider, updateFormData, onSubmit, onFormChange, getValues, control } =
     useDynamicForm(formConfig());
@@ -123,22 +126,14 @@ const CompanyDetailComponent = (props: any, ref: any) => {
 
   const { create } = useCreateCompany({
     onSuccess: () => {
-      openAlert({
-        title: t('저장되었습니다.'),
-        onClose: () => {
-          router.navigate({ to: '/platform/company/management' });
-        },
-      });
+      openToast({ title: '저장 하였습니다.', type: 'success' });
+      router.navigate({ to: '/platform/company/management' });
     },
   });
   const { update } = useUpdateCompany({
     onSuccess: () => {
-      openAlert({
-        title: t('저장되었습니다.'),
-        onClose: () => {
-          refetch();
-        },
-      });
+      openToast({ title: '저장 하였습니다.', type: 'success' });
+      refetch();
     },
   });
 
@@ -175,14 +170,14 @@ const CompanyDetailComponent = (props: any, ref: any) => {
     };
     console.log('mode', props.mode);
     console.log('payload', payload);
-    if (props.mode === EnFormMode.ADD) {
-      if (await openConfirm('저장 하시겠습니까?')) {
-        create(payload);
-      }
-    } else if (props.mode === EnFormMode.VIEW) {
-      if (await openConfirm('수정 하시겠습니까?')) {
-        update(payload);
-      }
+    if (
+      await openConfirm({
+        title: t('저장 하시겠습니까?'),
+        content: t('입력한 정보로 저장합니다.'),
+      })
+    ) {
+      if (props.mode === EnFormMode.ADD) create(payload);
+      else if (props.mode === EnFormMode.VIEW) update(payload);
     }
   };
 

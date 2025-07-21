@@ -23,7 +23,7 @@ export interface CheckboxComponentProps extends React.ComponentProps<typeof Prim
   /**
    * 체크박스 스타일
    */
-  variant?: 'round' | 'default'; // round style
+  variant?: 'round' | 'default' | 'radio'; // round style
 }
 
 const CheckboxComponent = forwardRef<

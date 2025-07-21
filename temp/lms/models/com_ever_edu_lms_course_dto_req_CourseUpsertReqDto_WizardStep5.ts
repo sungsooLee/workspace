@@ -9,14 +9,6 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep5 = {
      */
     wizardStep: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep5.wizardStep;
     /**
-     * 위탁 소유 회사 ID
-     */
-    outsourcingCompanyId?: number;
-    /**
-     * 위탁 소유 회사 이름
-     */
-    outsourcingCompanyName?: string;
-    /**
      * 사용 여부
      */
     isUsed: boolean;

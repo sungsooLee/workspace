@@ -30,6 +30,10 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useCreateUser } from '@entities/users/service/users.hook';
 import { useCodesByCodeGroup } from '@entities/platform';
 import { useSystemCodeDetail } from '@entities/common-code';
+import {
+  CompanyUserDetailAccount
+} from '@features/platform-management/company/company-user-management/ui/company-user-detail-account';
+import { EnFormMode } from '@types';
 
 const EMAIL_REGEX =
   /(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/;
@@ -132,9 +136,9 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
       gender: data.userGender, // 성별
       companyPhoneNationNumber: data.companyNumberCountryCode, // 연락처(사무실)-국가번호
       companyPhoneNumber: data.companyNumber, // 연락처(사무실)
-      // 직군/직무: 직군 선택에 따른 직무
+      // 직군/직무: 직군 선택에 따른 직무 - 현재 공통 코드로만 존재할지 아니면 따로 관리를 할지를 협의해야한다고 해서 구현 못 함.
 
-      // 계정 정보
+      // 계정 정보 - 해당 정보는 현재 페이지가 관리자 등록이라 고정 값임.
 
       // 로그인 및 인증 설정 정보
       // ssoType: '',
@@ -283,45 +287,7 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
         />
       </ContentsRow>
 
-      <FormSubTitle label={t('계정 정보')} lineType="dark" />
-      <ContentsRow>
-        <FormRow provider={provider} name="hrInfoManageType" />
-      </ContentsRow>
-      <FormDisplay
-        provider={provider}
-        dependencies={[{ name: 'hrInfoManageType', value: 'MANUAL_MANAGE' }]}
-      >
-        <ContentsRow>
-          <FormRow provider={provider} name="companyMemberJoinTypeList" />
-        </ContentsRow>
-      </FormDisplay>
-      <FormDisplay
-        provider={provider}
-        dependencies={[{ name: 'hrInfoManageType', value: 'AUTO_MANAGE' }]}
-      >
-        <ContentsRow>
-          <FormRow provider={provider} name="linkageSystem" />
-        </ContentsRow>
-      </FormDisplay>
-
-      <ContentsRow>
-        <FormRow provider={provider} name="accountState" />
-        <FormRow
-          provider={provider}
-          name="accountLastUpdateDate"
-          element={<Input disabled={true} />}
-        />
-        <FormRow
-          provider={provider}
-          name="accountDormancyUpdateDate"
-          element={<Input disabled={true} />}
-        />
-      </ContentsRow>
-      <ContentsRow>
-        <FormRow provider={provider} name="approvalStat" element={<Input disabled={true} />} />
-        <FormRow provider={provider} name="approvalStateDate" element={<Input disabled={true} />} />
-        <div className={formStyles.form_item}></div>
-      </ContentsRow>
+      <CompanyUserDetailAccount provider={provider} formMode={EnFormMode.ADD}/>
       <ContentsRow>
         <FormRow
           provider={provider}
@@ -584,6 +550,7 @@ const formConfig = (): DynamicFormConfig => ({
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.HrInfoManageType'],
       },
+      disabled: true
     },
     {
       name: 'companyMemberJoinTypeList',
@@ -594,9 +561,10 @@ const formConfig = (): DynamicFormConfig => ({
         codeGroup: CODE_GROUP['pms.company.CompanyMemberJoinType'],
       },
       guideText: t('수동 관리는 다수 선택할 수 있으며, 자동 관리는 하나만 선택할 수 있습니다.'),
+      disabled: true
     },
     {
-      name: 'accountState',
+      name: 'accountStatus',
       type: 'radio-group',
       label: t('계정상태'),
       value: '1',
@@ -606,31 +574,32 @@ const formConfig = (): DynamicFormConfig => ({
         { label: '휴면(정상)', value: '3' },
         { label: '휴면(잠김)', value: '4' },
       ],
+      disabled: true
     },
 
     {
-      name: 'accountLastUpdateDate',
+      name: 'lastAccountStatusUpdateDate',
       type: 'text',
       label: t('계정 상태 최종 변경일'),
       value: '',
       placeholder: ' ',
     },
     {
-      name: 'accountDormancyUpdateDate',
+      name: 'dormantDate',
       type: 'text',
       label: t('휴면 상태 변경일'),
       value: '',
       placeholder: ' ',
     },
     {
-      name: 'approvalStat',
+      name: 'approvalStatus',
       type: 'text',
       label: t('승인상태'),
       value: '',
       placeholder: ' ',
     },
     {
-      name: 'approvalStateDate',
+      name: 'lastApprovalStatusUpdateDate',
       type: 'text',
       label: t('승인상태 최종 변경일'),
       value: '',
@@ -673,6 +642,7 @@ const formConfig = (): DynamicFormConfig => ({
       guideText: t(
         '플랫폼은 플랫폼에서 비밀번호를 관리하고, 그외의 유형은 각 시스템에서 비밀번호를 관리합니다.',
       ),
+      disabled: true
     },
     {
       name: 'isUseTwoFactorAuth',
@@ -697,7 +667,7 @@ const formConfig = (): DynamicFormConfig => ({
       name: 'twoFactorAuthPlatformTypeList',
       type: 'checkbox-group',
       label: '',
-      value: ['FO_PLATFORM', 'BO_PLATFORM'],
+      value: ['BO_PLATFORM'],
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.TwoFactorAuthPlatformType'],
       },
@@ -722,7 +692,6 @@ const formConfig = (): DynamicFormConfig => ({
     lastDept: true,
 
     name: { required: true },
-    // birthday: { required: true },
     employeeNumber: { required: true },
 
     userGender: { required: true },

@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type com_ever_edu_lms_course_dto_req_SequenceUpdateReqDto = {
+export type com_ever_edu_lms_sequence_dto_req_SequenceUpdateReqDto = {
     /**
      * 사용 여부
      */
@@ -14,7 +14,7 @@ export type com_ever_edu_lms_course_dto_req_SequenceUpdateReqDto = {
     courseSequenceName: string;
     enrollStartDate?: string;
     enrollEndDate?: string;
-    learningStartType?: com_ever_edu_lms_course_dto_req_SequenceUpdateReqDto.learningStartType;
+    learningStartType?: com_ever_edu_lms_sequence_dto_req_SequenceUpdateReqDto.learningStartType;
     learningStartDate?: string;
     learningEndDate?: string;
     learningStartDays?: number;
@@ -23,11 +23,11 @@ export type com_ever_edu_lms_course_dto_req_SequenceUpdateReqDto = {
     isEnrollCancelDeadLineActivated?: boolean;
     enrollCancelDeadLineDays?: number;
     primaryCurriculumId: number;
-    deviceRestrictType?: com_ever_edu_lms_course_dto_req_SequenceUpdateReqDto.deviceRestrictType;
+    deviceRestrictType?: com_ever_edu_lms_sequence_dto_req_SequenceUpdateReqDto.deviceRestrictType;
     /**
      * (lms.course.LearningRestrictTimeType)
      */
-    learningRestrictTimeType?: com_ever_edu_lms_course_dto_req_SequenceUpdateReqDto.learningRestrictTimeType;
+    learningRestrictTimeType?: com_ever_edu_lms_sequence_dto_req_SequenceUpdateReqDto.learningRestrictTimeType;
     /**
      * 1일 진도 제한
      */
@@ -48,7 +48,7 @@ export type com_ever_edu_lms_course_dto_req_SequenceUpdateReqDto = {
     /**
      * (cms.video.PlayBackRate)
      */
-    maxPlayBackRate?: com_ever_edu_lms_course_dto_req_SequenceUpdateReqDto.maxPlayBackRate;
+    maxPlayBackRate?: com_ever_edu_lms_sequence_dto_req_SequenceUpdateReqDto.maxPlayBackRate;
     /**
      * 복습 제한 여부
      */
@@ -69,11 +69,11 @@ export type com_ever_edu_lms_course_dto_req_SequenceUpdateReqDto = {
     /**
      * (lms.course.LearningSpaceType)
      */
-    learningSpaceType?: com_ever_edu_lms_course_dto_req_SequenceUpdateReqDto.learningSpaceType;
+    learningSpaceType?: com_ever_edu_lms_sequence_dto_req_SequenceUpdateReqDto.learningSpaceType;
     /**
      * (lms.course.PassMethodType)
      */
-    passMethodType?: com_ever_edu_lms_course_dto_req_SequenceUpdateReqDto.passMethodType;
+    passMethodType?: com_ever_edu_lms_sequence_dto_req_SequenceUpdateReqDto.passMethodType;
     attendanceMinPassScore?: number;
     progressMinPassScore?: number;
     examMinPassScore?: number;
@@ -96,10 +96,10 @@ export type com_ever_edu_lms_course_dto_req_SequenceUpdateReqDto = {
     contentPurchaseCost?: number;
     contentPurchaseAllocationRatio?: number;
 };
-export namespace com_ever_edu_lms_course_dto_req_SequenceUpdateReqDto {
+export namespace com_ever_edu_lms_sequence_dto_req_SequenceUpdateReqDto {
     export enum learningStartType {
-        FIXED_DATE = 'FIXED_DATE',
         DAYS_AFTER_ENROLL = 'DAYS_AFTER_ENROLL',
+        FIXED_DATE = 'FIXED_DATE',
     }
     export enum deviceRestrictType {
         NONE = 'NONE',

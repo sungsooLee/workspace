@@ -1,14 +1,21 @@
 import { FormDisplay } from '@features/form';
 import { ChipListModalSelectorFormField, ContentsRow, FormSubTitle, Input } from '@learnway/ui';
-import { FormRow } from '@shared/ui';
+import { FormItem, FormRow } from '@shared/ui';
 import { t } from 'i18next';
+import { EnFormMode } from '@types';
 
 /**
  * 회사 유저 상세 - 계정 정보
  * @param param0
  * @returns
  */
-const CompanyUserDetailAccountComponent = ({ provider }: { provider: any }) => {
+const CompanyUserDetailAccountComponent = ({
+  provider,
+  formMode,
+}: {
+  provider: any;
+  formMode: EnFormMode;
+}) => {
   return (
     <>
       <FormSubTitle label={t('계정 정보')} lineType={'dark'} />
@@ -47,23 +54,28 @@ const CompanyUserDetailAccountComponent = ({ provider }: { provider: any }) => {
           name={'lastApprovalStatusUpdateDate'}
           element={<Input readOnly={true} />}
         />
+        <FormItem />
       </ContentsRow>
-      <ContentsRow>
-        <FormRow
-          provider={provider}
-          name={'tenantList'}
-          element={
-            <ChipListModalSelectorFormField
-              chipList={{
-                labelField: 'tenantName',
-                valueField: 'tenantId',
-                hideBorder: true,
-              }}
-              disabled={true}
+      {
+        formMode !== EnFormMode.ADD && (
+          <ContentsRow>
+            <FormRow
+              provider={provider}
+              name={'tenantList'}
+              element={
+                <ChipListModalSelectorFormField
+                  chipList={{
+                    labelField: 'tenantName',
+                    valueField: 'tenantId',
+                    hideBorder: true,
+                  }}
+                  disabled={true}
+                />
+              }
             />
-          }
-        />
-      </ContentsRow>
+          </ContentsRow>
+        )
+      }
     </>
   );
 };

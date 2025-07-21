@@ -7,7 +7,7 @@
  */
 export type com_ever_edu_lms_category_dto_res_CourseCategoryFlatDto = {
     categoryId?: number;
-    name?: string;
+    categoryName?: string;
     categoryCode?: string;
     categoryContent?: string;
     categoryPath?: string;
