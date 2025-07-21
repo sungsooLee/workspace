@@ -139,7 +139,7 @@
       @apply title3-b absolute left-0 right-0 top-0 flex !h-[44px] items-start pt-[17px] text-[var(--gray10)];
     }
     [class*='modal-content'] {
-      @apply !max-h-[calc(100dvh-60px)] pt-[44px];
+      @apply !max-h-[calc(100dvh-60px)] px-[16px] pt-[44px];
     }
     [class*='footer'] {
       [class*='nlp--button'] {
