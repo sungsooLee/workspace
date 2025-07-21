@@ -1,6 +1,6 @@
 import React, { ChangeEvent, forwardRef, KeyboardEvent, useState } from 'react';
 
-import { cn, getRandomId } from '@learnway/shared';
+import { cn, getRandomNumber } from '@learnway/shared';
 import { t } from 'i18next';
 import { Button } from '../button/button';
 import { Input } from '../input/input';
@@ -91,7 +91,7 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
       if ((event.key === 'Enter' || event.key === ',') && value) {
         setInputValue('');
         onAddInputEnterKeyDown?.({
-          [valueField]: getRandomId(),
+          [valueField]: getRandomNumber(1000),
           [labelField]: value,
         });
       }
