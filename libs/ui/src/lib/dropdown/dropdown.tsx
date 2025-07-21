@@ -303,7 +303,7 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
       ) {
         onChange(map(optionsWithPreset, 'value'));
       }
-    }, [value]);
+    }, [value, optionsWithPreset]);
 
     // value를 react-select 형식으로 변환
     const selectedOptions = useCreation(() => {
