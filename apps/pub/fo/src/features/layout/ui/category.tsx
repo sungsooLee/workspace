@@ -217,7 +217,7 @@ const CategoryCompoment = ({ onOpenChange, isOpen }: CategoryPopoverProps) => {
         sideOffset={15}
       >
         {isOpen ? (
-          <IcoMenu02 width={32} height={32} fill="#131416" />
+          <IcoMenu02 width={32} height={32} fill="#4D88FF" />
         ) : (
           <IcoMenu02 width={32} height={32} fill="#131416" />
         )}

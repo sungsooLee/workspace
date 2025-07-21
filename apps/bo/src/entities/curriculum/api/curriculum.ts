@@ -134,4 +134,22 @@ export class CurriculumService {
   static updateDndCurriculumTree(data: CurriculumDndParams): Promise<any> {
     return httpService.post(`${CMSApiPrefix()}/curriculum/dnd`, data);
   }
+
+  /**
+   * 모듈 삭제 (커리큘럼 내 레슨도 마찬가지임)
+   */
+  static deleteCurriculumModule(data: { curriculumId: number; moduleId: number }): Promise<any> {
+    return httpService.delete(
+      `${CMSApiPrefix()}/curriculum/${data.curriculumId}/module/${data.moduleId}`,
+    );
+  }
+
+  /**
+   * 모듈 내에 레슨 삭제
+   */
+  static deleteCurriculumLesson(data: { moduleId: number; lessonId: number }): Promise<any> {
+    return httpService.delete(
+      `${CMSApiPrefix()}/curriculum/general-module/${data.moduleId}/lesson/${data.lessonId}`,
+    );
+  }
 }

@@ -78,13 +78,20 @@ function FooterComponent() {
             </div>
 
             <div className={styles.info_box}>
-              <span className={styles.info}>
+              <div className={styles.info}>
                 <span className={styles.space}>문의 전화번호 : 080-224-9696</span>{' '}
                 <span className={styles.space}>문의 이메일 : 7023688@hyundai-autoever.com</span>{' '}
                 <span className={styles.space}>
                   평일 09:00 ~18:00 (점심시간 12:00 ~ 13:00 제외)
                 </span>
-              </span>
+              </div>
+              <div className={styles.address}>
+                <span className={styles.space}>주소 : 서울시 강남구 테헤란로 510</span>{' '}
+                <span className={styles.space}>호스팅 서비스 제공 : 현대오토에버(주)</span>{' '}
+                <span className={styles.space}>사업자등록번호 : 123-33-55345</span>
+                <span className={styles.space}>통신판매업신고번호 : 제 1233-서울강남</span>
+                <span className={styles.space}>대표이사 : 현오토</span>
+              </div>
               <div className={styles.copyright}>
                 COPYRIGHT 2025 HYUNDAI AUTOEVER. ALL RIGHTS RESERVED
               </div>

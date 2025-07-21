@@ -4,7 +4,7 @@
 /* eslint-disable */
 export type com_ever_edu_lms_category_dto_res_CategoryMasterDto = {
     categoryId?: number;
-    name?: string;
+    categoryName?: string;
     categoryCode?: string;
     categoryContent?: string;
     categoryPath?: string;

@@ -39,7 +39,7 @@
     @apply absolute right-[2px] top-[2px] flex h-[20px] w-[24px] items-center justify-center rounded-[10px] bg-[#ff4646] text-[12px] font-medium text-[var(--white)];
   }
   .noti {
-    @apply absolute right-[22px] top-[10px] flex h-[4px] w-[4px] items-center justify-center rounded-[10px] bg-[#ff4646] text-[12px];
+    @apply absolute right-[0] top-[8px] flex h-[4px] w-[4px] items-center justify-center rounded-[10px] bg-[#ff4646] text-[12px];
   }
   .text {
     @apply body_3_r absolute -bottom-[40px] -left-[9px] whitespace-nowrap rounded-[4px] bg-[var(--primary1)] px-[16px] py-[8px] text-white;

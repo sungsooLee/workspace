@@ -16,17 +16,28 @@ function LearningHeaderComponent() {
     <div className={`${styles.start} ${styles.learning_header}`}>
       <header className={styles.header_area}>
         {/* 퍼블수정 20250716 : 마크업 수정 */}
-        <div className={styles.header_info}>
-          <Button className={styles.btn_back}>
-            <img src={logo} alt="" />
-          </Button>
-          <Button className={styles.btn_title}>
-            <h1>레슨명</h1>
-          </Button>
-        </div>
-        <div className={styles.header_info}>
-          <Button className={styles.btn_learning}>나의 학습</Button>
-        </div>
+        {isMobile ? (
+          <>
+            <Button>
+              <IcoArrowBackward width={24} height={24} stroke="#131416" />
+            </Button>
+            <h1>과정명과정명과정명과정명과정명과정명과정명과정명과정명과정명</h1>
+          </>
+        ) : (
+          <>
+            <div className={styles.header_info}>
+              <Button className={styles.btn_back}>
+                <img src={logo} alt="" />
+              </Button>
+              <Button className={styles.btn_title}>
+                <h1>레슨명</h1>
+              </Button>
+            </div>
+            <div className={styles.header_info}>
+              <Button className={styles.btn_learning}>나의 학습</Button>
+            </div>
+          </>
+        )}
       </header>
     </div>
   );

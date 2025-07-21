@@ -43,7 +43,8 @@ const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTab
   ({ courseId }, ref) => {
     const { t } = useTranslation();
     const { showSaveComplete } = useModal();
-    const { provider, getValues, updateFormData, formValues, onSubmit } = useDynamicForm2();
+    const { provider, getValues, updateFormData, formValues, onSubmit, onFormChange } =
+      useDynamicForm2();
 
     const { data: formData } = useFetchCourse(courseId);
     const { data: courseConfig } = useFetchCourseConfig({
@@ -499,6 +500,10 @@ const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTab
                       affairType: 'LMS',
                       s3Path: S3_PATH['upload/course/thumbnail'],
                     }}
+                    selected={getValues()?.primaryThumbnailFileUuid}
+                    onSelected={(selectedThumbnail1: string) =>
+                      onFormChange({ primaryThumbnailFileUuid: selectedThumbnail1 })
+                    }
                     // selected={selectedThumbnail1}
                     // onSelected={handleSelected}
                   />
@@ -1371,8 +1376,15 @@ const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTab
                   format={'number'}
                   type={'hidden'}
                 />
-                {/* 과정아이디 */}
+                {/* 과정아이디 - hidden */}
                 <FormRow2 provider={provider} name={'courseId'} type={'hidden'} format={'number'} />
+                {/* 대표 썸네일 이미지 UUID - hidden */}
+                <FormRow2
+                  provider={provider}
+                  name={'primaryThumbnailFileUuid'}
+                  type={'hidden'}
+                  format={'string'}
+                />
               </ContentsRow>
             </FormDisplay>
           </div>
@@ -1515,7 +1527,7 @@ export const formDataToRequestData = (d: Course) => {
     courseValidityStartHour: 0, // 과정 노출 시작 시각 (삭제 후 courseValidityStartDate에 통합 예정)
     courseValidityEndHour: 23, // 과정 노출 종료 시각 (삭제 후 courseValidityEndDate에 통합 예정)
     // thumbnailFileGroupUuid: '1', // 썸네일 이미지 Group UUID
-    primaryThumbnailFileUuid: '1', // 대표 썸네일 이미지 UUID
+    // primaryThumbnailFileUuid: '1', // 대표 썸네일 이미지 UUID
     // tagNames: d.tagNameArray?.map((item) => ({ value: item })), // 태그
   };
 };

@@ -1,26 +1,38 @@
-import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from 'react';
+import { forwardRef, useCallback, useImperativeHandle, useMemo } from 'react';
 import { t } from 'i18next';
-import { Link } from '@tanstack/react-router';
-import { cn } from '@learnway/shared';
+import { cn, isEmptyData } from '@learnway/shared';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import {
+  Button,
   ContentsRow,
   FormSubTitle,
+  GridBox,
   Input,
   RadioGroupFormField,
-  TableBox,
-  Tabs,
+  useModal,
 } from '@learnway/ui';
-import { IcoFormRequired, IcoMenu01 } from '@learnway/icons';
-import { ExamQuestionGenType } from '@types';
-import { ExamQuestionInfoProps, TabFormRef } from '../-common/type';
+import { IcoCopy, IcoMenu01, IcoMinus, IcoPlus } from '@learnway/icons';
+import {
+  ContentInformation,
+  ExamQuestionGenType,
+  QuestionItem,
+  QuestionItemGridRow,
+  TestPaperBasicInfoDetail,
+} from '@types';
+import { FormRow2, GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
+import { SegmentedControlFormField } from '@features/form/ui/segmented-control-form-field';
+import { LearningResourceTestItemModal } from '@features/learning-resource/learning-resource-management/ui/learning-resource-test-item-modal';
+import {
+  QUESTION_LEVELS,
+  QUESTION_TYPES,
+} from '@features/learning-resource/learning-resource-management/service/exam-util';
+import { getExamTemplateTextByType } from '../-common/common';
+import { ExamQuestionInfoProps, QuestionStatisticRow, TabFormRef } from '../-common/type';
+import { useExamQuestionInfoInput } from '../-hooks/use-exam-question-info-input';
 
 /* styles */
 import styles from '@learnway/styles/bo/pages/_layout/learning/test-detail.module.css';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
-import { getExamTemplateTextByType } from '@pages/_layout/learning/resource/test-paper/-common/common';
 
 const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
   (
@@ -36,8 +48,10 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
     },
     ref,
   ) => {
-    const { provider, getValues, updateFormData, updateFormDataByKey, onSubmit, saveBasicInfo } =
-      basicInfoForm;
+    const { provider: basicInfoProvider, getValues, saveBasicInfo } = basicInfoForm;
+
+    const { questionList, selectedQuestions, scorePerQuestion, createQuestionItem } =
+      useExamQuestionInfoInput(data as TestPaperBasicInfoDetail);
 
     const questionGenTypeOptions = useMemo(
       () => [
@@ -55,159 +69,172 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
       [],
     );
 
-    // Table
-    const columnHelper = createColumnHelper<any>();
+    const { open: openModal } = useModal();
+
+    const handleClickAddQuestionButton = useCallback(async () => {
+      if (isEmptyData(data)) {
+        return;
+      }
+
+      const payload = await openModal({
+        width: 'xl',
+        content: <LearningResourceTestItemModal contentInfo={data as ContentInformation} />,
+      });
+
+      if (payload) {
+        createQuestionItem(payload);
+      }
+    }, [data]);
+
     const arr: any[] = [
       {
-        type: <strong>객관식</strong>,
-        levelHigh: <Input value={'0'} disabled />,
-        levelMiddle: <Input value={'0'} disabled />,
-        levelLow: <Input value={'0'} disabled />,
+        title: <strong>객관식</strong>,
+        hard: <Input value={'0'} readOnly />,
+        medium: <Input value={'0'} readOnly />,
+        easy: <Input value={'0'} readOnly />,
       },
       {
-        type: <strong>OX</strong>,
-        levelHigh: <Input value={'0'} disabled />,
-        levelMiddle: <Input value={'0'} disabled />,
-        levelLow: <Input value={'0'} disabled />,
+        title: <strong>OX</strong>,
+        hard: <Input value={'0'} readOnly />,
+        medium: <Input value={'0'} readOnly />,
+        easy: <Input value={'0'} readOnly />,
       },
       {
-        type: <strong>다답식</strong>,
-        levelHigh: <Input value={'0'} disabled />,
-        levelMiddle: <Input value={'0'} disabled />,
-        levelLow: <Input value={'0'} disabled />,
+        title: <strong>다답식</strong>,
+        hard: <Input value={'0'} readOnly />,
+        medium: <Input value={'0'} readOnly />,
+        easy: <Input value={'0'} readOnly />,
       },
       {
-        type: <strong>단답식</strong>,
-        levelHigh: <Input value={'0'} disabled />,
-        levelMiddle: <Input value={'0'} disabled />,
-        levelLow: <Input value={'0'} disabled />,
+        title: <strong>단답식</strong>,
+        hard: <Input value={'0'} readOnly />,
+        medium: <Input value={'0'} readOnly />,
+        easy: <Input value={'0'} readOnly />,
       },
       {
-        type: <strong>주관식</strong>,
-        levelHigh: <Input value={'0'} disabled />,
-        levelMiddle: <Input value={'0'} disabled />,
-        levelLow: <Input value={'0'} disabled />,
+        title: <strong>주관식</strong>,
+        hard: <Input value={'0'} readOnly />,
+        medium: <Input value={'0'} readOnly />,
+        easy: <Input value={'0'} readOnly />,
       },
     ];
 
-    const columns = [
-      columnHelper.accessor('type', {
-        cell: (info) => info.getValue(),
-        header: '문항유형',
-        enableGrouping: false,
-        size: 100,
-        meta: {
-          headerAlign: 'center', // 헤더 정렬
-          cellAlign: 'left', // 셀 정렬
-        },
-      }),
-      columnHelper.accessor('levelHigh', {
-        cell: (info) => info.getValue(),
-        header: '문항수(난이도 상)',
-        enableGrouping: false,
-        meta: {
-          headerAlign: 'center', // 헤더 정렬
-          cellAlign: 'left', // 셀 정렬
-        },
-      }),
-      columnHelper.accessor('levelMiddle', {
-        cell: (info) => info.getValue(),
-        header: '문항수(난이도 중)',
-        enableGrouping: false,
-        meta: {
-          headerAlign: 'center', // 헤더 정렬
-          cellAlign: 'left', // 셀 정렬
-        },
-      }),
-      columnHelper.accessor('levelLow', {
-        cell: (info) => info.getValue(),
-        header: '문항수(난이도 하)',
-        enableGrouping: false,
-        meta: {
-          headerAlign: 'center', // 헤더 정렬
-          cellAlign: 'left', // 셀 정렬
-        },
-      }),
-    ] as ColumnDef<any, unknown>[];
+    const questionSummaryColumns = useMemo(() => {
+      const columnHelper = createColumnHelper<QuestionStatisticRow>();
+      return [
+        columnHelper.accessor('title', {
+          cell: (info) => info.getValue(),
+          header: '문항유형',
+          enableGrouping: false,
+          size: 100,
+          meta: {
+            headerAlign: 'center',
+            cellAlign: 'left',
+          },
+        }),
+        columnHelper.accessor('hard', {
+          cell: (info) => info.getValue(),
+          header: '문항수(난이도 상)',
+          enableGrouping: false,
+          meta: {
+            headerAlign: 'center',
+            cellAlign: 'left',
+          },
+        }),
+        columnHelper.accessor('medium', {
+          cell: (info) => info.getValue(),
+          header: '문항수(난이도 중)',
+          enableGrouping: false,
+          meta: {
+            headerAlign: 'center',
+            cellAlign: 'left',
+          },
+        }),
+        columnHelper.accessor('easy', {
+          cell: (info) => info.getValue(),
+          header: '문항수(난이도 하)',
+          enableGrouping: false,
+          meta: {
+            headerAlign: 'center',
+            cellAlign: 'left',
+          },
+        }),
+      ];
+    }, []);
 
-    const data2: any[] = [
-      {
-        question: (
-          <Link to={'/'} className="link">
-            문항내용
-          </Link>
-        ),
-        questionType: '객관식',
-        level: '상',
-        number: '3',
-        useable: (
-          <RadioGroupFormField
-            options={[
-              { value: 'option01', label: '사용' },
-              { value: 'option02', label: '미사용' },
-            ]}
-          />
-        ),
-        orderChange: <IcoMenu01 width={24} height={24} fill="#A9AFB8" stroke="#4c515e" />,
-      },
-    ];
+    const questionListColumns = useMemo(() => {
+      const columnHelper = createColumnHelper<QuestionItemGridRow>();
 
-    const columns2 = [
-      columnHelper.accessor('question', {
-        cell: (info) => info.getValue(),
-        header: '문항',
-        enableGrouping: false,
-        meta: {
-          headerAlign: 'center', // 헤더 정렬
-          cellAlign: 'left', // 셀 정렬
-        },
-      }),
-      columnHelper.accessor('questionType', {
-        cell: (info) => info.getValue(),
-        header: '문항유형',
-        enableGrouping: false,
-        meta: {
-          headerAlign: 'center', // 헤더 정렬
-          cellAlign: 'left', // 셀 정렬
-        },
-      }),
-      columnHelper.accessor('level', {
-        cell: (info) => info.getValue(),
-        header: '난이도',
-        enableGrouping: false,
-        meta: {
-          headerAlign: 'center', // 헤더 정렬
-          cellAlign: 'center', // 셀 정렬
-        },
-      }),
-      columnHelper.accessor('number', {
-        cell: (info) => info.getValue(),
-        header: '보기수',
-        enableGrouping: false,
-        meta: {
-          headerAlign: 'center', // 헤더 정렬
-          cellAlign: 'center', // 셀 정렬
-        },
-      }),
-      columnHelper.accessor('useable', {
-        cell: (info) => info.getValue(),
-        header: '사용',
-        enableGrouping: false,
-        meta: {
-          headerAlign: 'center', // 헤더 정렬
-          cellAlign: 'left', // 셀 정렬
-        },
-      }),
-      columnHelper.accessor('orderChange', {
-        cell: (info) => info.getValue(),
-        header: '순서변경',
-        enableGrouping: false,
-        meta: {
-          headerAlign: 'center', // 헤더 정렬
-          cellAlign: 'center', // 셀 정렬
-        },
-      }),
-    ] as ColumnDef<any, unknown>[];
+      return [
+        columnHelper.accessor('questionText', {
+          cell: (info) => (
+            <span className="cursor-pointer text-[var(--gray8)] underline">{info.getValue()}</span>
+          ),
+          header: t('문항'),
+          enableGrouping: false,
+          meta: {
+            headerAlign: 'center',
+            cellAlign: 'left',
+            size: 'auto',
+          },
+        }),
+        columnHelper.accessor('questionType', {
+          cell: (info) => QUESTION_TYPES[info.getValue()],
+          header: t('문항유형'),
+          enableGrouping: false,
+          meta: {
+            headerAlign: 'center',
+            cellAlign: 'left',
+          },
+        }),
+        columnHelper.accessor('questionLevel', {
+          cell: (info) => QUESTION_LEVELS[info.getValue()],
+          header: t('난이도'),
+          enableGrouping: false,
+          meta: {
+            headerAlign: 'center',
+            cellAlign: 'center',
+          },
+        }),
+        columnHelper.accessor('optionCount', {
+          cell: (info) => info.getValue(),
+          header: t('보기수'),
+          enableGrouping: false,
+          meta: {
+            headerAlign: 'center',
+            cellAlign: 'center',
+          },
+        }),
+        columnHelper.accessor('isUsed', {
+          cell: (info) => (
+            <RadioGroupFormField
+              defaultValue={String(info.getValue())}
+              options={[
+                { value: 'true', label: t('LABEL.common.enable') },
+                { value: 'false', label: t('LABEL.common.disable') },
+              ]}
+            />
+          ),
+          header: t('LABEL.common.isUsed'),
+          enableGrouping: false,
+          enableSorting: false,
+          meta: {
+            headerAlign: 'center',
+            cellAlign: 'left',
+          },
+        }),
+        columnHelper.accessor('orderChange', {
+          cell: (info) => <IcoMenu01 width={24} height={24} fill="#A9AFB8" stroke="#4c515e" />,
+          header: t('순서변경'),
+          enableGrouping: false,
+          enableSorting: false,
+          meta: {
+            headerAlign: 'center',
+            cellAlign: 'center',
+          },
+        }),
+      ] as ColumnDef<any, QuestionItem>[];
+    }, []);
 
     useImperativeHandle(
       ref,
@@ -216,12 +243,6 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
       }),
       [],
     );
-
-    useEffect(() => {
-      updateFormDataByKey?.('questionGenType', questionGenType);
-
-      console.log(getValues());
-    }, [questionGenType]);
 
     return (
       <form>
@@ -255,86 +276,101 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
 
           <FormSubTitle label={t('문항 정보')} lineType="dark" />
           <ContentsRow>
-            {/* form_item */}
-            <div className={formStyles.form_item}>
-              <label htmlFor="name-type" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>{t('문항 출제유형')}</span>
-              </label>
-              <div className={formStyles.input_box}>
-                <div className={dynamicFormStyles.segment_wrap}>
-                  <Tabs
-                    items={questionGenTypeOptions}
-                    type="segment"
-                    size="sm"
-                    className={styles.tab_select}
-                    selectedTabKey={questionGenType}
-                    onTabChange={(tabKey: string) =>
-                      setQuestionGenType(tabKey as ExamQuestionGenType)
-                    }
-                  />
-                </div>
-              </div>
-            </div>
-          </ContentsRow>
-          {/* 퍼블수정 20250619 페이지별 문항수 추가 */}
-          <ContentsRow>
-            {/* form_item */}
-            <div className={formStyles.form_item}>
-              <label htmlFor="name-type" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>페이지별 문항수</span>
-                {/* 필수 케이스 */}
-                <span className={cn(formStyles.status, formStyles.required)}>
-                  <IcoFormRequired width={12} height={12} />
-                </span>
-              </label>
-              <div className={formStyles.input_box}>
-                <Input
-                  type="text"
-                  suffixText={'개'}
-                  value={'5'}
-                  className={formStyles.input_time}
+            <FormRow2
+              provider={basicInfoProvider}
+              name="questionGenType"
+              label={t('문항 출제유형')}
+              format="string"
+              value={questionGenType}
+              validation={{ required: true }}
+              element={
+                <SegmentedControlFormField
+                  items={questionGenTypeOptions}
+                  onChange={(tabKey: ExamQuestionGenType) => setQuestionGenType(tabKey)}
                 />
-              </div>
-            </div>
-            <div className={formStyles.form_item}></div>
-            <div className={formStyles.form_item}></div>
+              }
+            />
           </ContentsRow>
-          <div className={styles.table_wrap}>
-            <TableBox
-              data={arr}
-              columns={columns}
-              tableMode={true}
-              titleCustomNode={
-                <div className="custom_info_wrap">
-                  <strong className="table_tit font-normal">{'문항현황'}</strong>
-                  <strong className="table_tit font-normal">{'시험지 문항수'}</strong>
-                  <span className="count_info">{'5'}</span>
-                  <strong className="table_tit font-normal">{'선택 문항수'}</strong>
-                  <span className="count_info point">{'5'}</span>
-                  <strong className="table_tit font-normal">{'문항 당 배점'}</strong>
-                  <span className="count_info">{'5'}</span>
-                </div>
-              }
-              className={styles.info_table}
-            />
-            <TableBox
-              data={data2}
-              columns={columns2}
-              tableMode={true}
-              multiple
-              showNumberingColumn
-              hideRowSelectionCheckBox={false}
-              titleCustomNode={
-                <div className="custom_info_wrap">
-                  <strong className="table_tit font-normal">{'문항목록'}</strong>
-                  <strong className="table_tit font-normal">{'전체'}</strong>
-                  <span className="count_info">{'5'}</span>
-                </div>
-              }
-              showExcelDownload
-              className={styles.list_table}
-            />
-          </div>
+
+          <ContentsRow>
+            <div className={styles.table_wrap}>
+              <GridBox
+                title=" "
+                data={arr}
+                columns={questionSummaryColumns}
+                showTotalCount={false}
+                disabledSelectionToggle
+                tableMode
+                titleCustomNode={
+                  <div className="custom_info_wrap">
+                    <strong className="table_tit text-[1.4rem] font-normal">{t('문항현황')}</strong>
+                    <strong className="table_tit text-[1.4rem] font-normal">
+                      {t('시험지 문항수')}
+                    </strong>
+                    <span className="count_info text-[1.4rem]">{data?.questionCount}</span>
+                    <strong className="table_tit text-[1.4rem] font-normal">
+                      {t('선택 문항수')}
+                    </strong>
+                    <span className="count_info text-[1.4rem]">{selectedQuestions.length}</span>
+                    <strong className="table_tit text-[1.4rem] font-normal">
+                      {t('문항 당 배점')}
+                    </strong>
+                    <span className="count_info text-[1.4rem]">{scorePerQuestion}</span>
+                  </div>
+                }
+                className={styles.info_table}
+                showGuideTextNextLine
+                guideText={t('문항현황은 문항목록에서 문항추가/삭제 시 자동 업데이트 됩니다.')}
+              />
+            </div>
+          </ContentsRow>
+
+          <ContentsRow>
+            <div className={styles.table_wrap}>
+              <GridBox
+                title=" "
+                showTotalCount={false}
+                disabledSelectionToggle
+                tableMode
+                data={questionList}
+                columns={questionListColumns}
+                multiple
+                showNumberingColumn
+                hideRowSelectionCheckBox={false}
+                titleCustomNode={
+                  <div className="custom_info_wrap pt-[1.2rem]">
+                    <strong className="table_tit text-[1.4rem] font-normal">{'문항목록'}</strong>
+                    <strong className="table_tit text-[1.4rem] font-normal">{'전체'}</strong>
+                    <span className="count_info">{'5'}</span>
+                  </div>
+                }
+                className={styles.list_table}
+                customButtonNode={
+                  <>
+                    <Button variant="text" label={'불러오기'} />
+                    <GridExcelUploadButton />
+                    <GridExcelDownloadButton />
+                    <Button
+                      variant="text"
+                      label={t('LABEL.grid.header.add')}
+                      onClick={handleClickAddQuestionButton}
+                      icon={<IcoPlus width={16} height={16} stroke={'#4C515E'} />}
+                    />
+                    <Button
+                      variant="text"
+                      label={t('LABEL.grid.header.copy', '복사')}
+                      icon={<IcoCopy width={16} height={16} stroke="#4C515E" />}
+                    />
+                    <Button
+                      variant="text"
+                      label={'삭제'}
+                      icon={<IcoMinus width={16} height={16} stroke={'#131C30'} />}
+                    />
+                  </>
+                }
+              />
+            </div>
+          </ContentsRow>
         </div>
       </form>
     );

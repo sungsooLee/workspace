@@ -1,16 +1,25 @@
 import React from 'react';
-import { TreeNode, Button } from '@learnway/ui';
+import { TreeNode, Button, useModal } from '@learnway/ui';
 import { FormState, NODE_CHILDREN_MAP } from '../types/form.types';
 import { IcoPlus } from '@learnway/icons';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
 import { MAPPING_CURRICULUM_TYPE } from '@types';
+import { CurriculumChoiceModal } from '@shared/ui/modal/curriculum-choice-modal';
 
 interface UseTreeButtonsProps {
   onAddNode: (nodeType: MAPPING_CURRICULUM_TYPE, parentNode: TreeNode | null) => void;
   formState: FormState;
+  curriculumDetail?: any;
+  onCurriculumLoad?: (curriculumId: number) => void;
 }
 
-export const useTreeButtons = ({ onAddNode, formState }: UseTreeButtonsProps) => {
+export const useTreeButtons = ({
+  onAddNode,
+  formState,
+  curriculumDetail,
+  onCurriculumLoad,
+}: UseTreeButtonsProps) => {
+  const { open } = useModal();
   const renderNodeButtons = (node: TreeNode, level: number): React.ReactNode => {
     const nodeType = node.type as MAPPING_CURRICULUM_TYPE;
     const allowedChildren = NODE_CHILDREN_MAP[nodeType] || [];
@@ -18,9 +27,15 @@ export const useTreeButtons = ({ onAddNode, formState }: UseTreeButtonsProps) =>
     const isCurrentParentNode = formState.parentNode?.id === node.id;
     const isInCreateMode = !formState.isEditing;
 
+    // FIXED 모듈인 경우 레슨 추가 버튼을 필터링
+    const filteredChildren =
+      node.data?.moduleType === 'FIXED'
+        ? allowedChildren.filter((childType) => childType !== MAPPING_CURRICULUM_TYPE.LESSON)
+        : allowedChildren;
+
     return (
       <div className="flex flex-row gap-2">
-        {allowedChildren.map((childType) => (
+        {filteredChildren.map((childType) => (
           <Button
             key={childType}
             variant={
@@ -56,28 +71,48 @@ export const useTreeButtons = ({ onAddNode, formState }: UseTreeButtonsProps) =>
     }
   };
 
-  const renderCustomTreeButtons = (onAddCurriculum: () => void): React.ReactNode => {
+  const handleLoadButtonClick = () => {
+    open({
+      content: (
+        <CurriculumChoiceModal
+          initialTenantId={curriculumDetail?.tenantId}
+          initialChannelUuid={curriculumDetail?.channelUuid}
+        />
+      ),
+      width: 'xl',
+      onClose: (selectedCurriculum: any) => {
+        if (selectedCurriculum && onCurriculumLoad) {
+          onCurriculumLoad(selectedCurriculum.curriculumId);
+        }
+      },
+    });
+  };
+
+  const renderCustomTreeButtons = (
+    onAddCurriculum: () => void,
+    onlyLoadButton = false,
+  ): React.ReactNode => {
     return (
       <>
         <Button
           variant="text"
           size="sm"
           className={layoutStyles.btn_text}
-          onClick={() => {
-            // 불러오기 기능 - 추후 구현
-          }}
+          onClick={handleLoadButtonClick}
         >
           불러오기
         </Button>
-        <Button
-          variant="text"
-          size="sm"
-          className={layoutStyles.btn_text}
-          onClick={onAddCurriculum}
-          icon={<IcoPlus width={16} height={16} stroke="#131C30" />}
-        >
-          신규등록
-        </Button>
+        {!onlyLoadButton && (
+          <Button
+            variant="text"
+            size="sm"
+            className={layoutStyles.btn_text}
+            onClick={onAddCurriculum}
+            icon={<IcoPlus width={16} height={16} stroke="#131C30" />}
+          >
+            신규등록
+          </Button>
+        )}
       </>
     );
   };

@@ -2,37 +2,32 @@
 .start {
   /* 이용약관, 개인정보취급방침 레이아웃 */
   &.container {
-    @apply bg-[#fff];
+    @apply bg-[var-(--white)];
     .inner {
       @apply m-auto w-[1180px] pb-[80px] pt-[40px] text-left;
     }
   }
   /* //이용약관, 개인정보취급방침 레이아웃 */
   &.auth_container {
-    @apply relative bg-[var(--gray1)] pt-[40px];
+    @apply relative h-full min-h-[100dvh] bg-[var(--gray95)] pt-[140px];
     &.login {
       @apply bg-cover bg-center;
-      background-image: url(../../../../../assets/images/common/bg_login.png);
+      background: linear-gradient(
+        135deg,
+        var(--blue85) 0%,
+        var(--blue95) 30%,
+        var(--red95) 60%,
+        var(--blue92) 100%
+      );
     }
 
     .auth_area {
-      @apply m-auto mb-[40px] w-[680px];
-      h2 {
-        @apply title_3_b flex items-center justify-center whitespace-pre px-[31px] pb-[32px] text-center;
-
-        &.title_login {
-          @apply title_3_b mt-[40px] h-[160px] flex-col rounded-tl-[16px] rounded-tr-[16px] bg-cover bg-center pb-[0] text-[var(--white)];
-          background-image: url(../../../../../assets/images/common/bg_login_tit.png);
-        }
-        .tit {
-          @apply block;
-        }
-      }
+      @apply m-auto mb-[40px] w-[670px];
 
       .auth_inner {
-        @apply rounded-[16px] border border-solid border-[var(--gray4)] bg-[var(--white)];
+        @apply rounded-[16px] bg-[var(--white)];
+        filter: drop-shadow(8px 9px 16px rgba(0, 0, 0, 0.04));
         &.login {
-          @apply rounded-tl-none rounded-tr-none;
         }
       }
       &.none {

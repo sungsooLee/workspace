@@ -3,8 +3,6 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { com_ever_edu_lms_category_dto_res_TenantCategoryTreeDto } from '../models/com_ever_edu_lms_category_dto_res_TenantCategoryTreeDto';
-import type { com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser } from '../models/com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser';
-import type { com_ever_edu_lms_course_dto_res_SequenceResDto$onUser } from '../models/com_ever_edu_lms_course_dto_res_SequenceResDto$onUser';
 import type { com_ever_edu_lms_enroll_dto_req_EnrollCancelReqDto$ByUser } from '../models/com_ever_edu_lms_enroll_dto_req_EnrollCancelReqDto$ByUser';
 import type { com_ever_edu_lms_enroll_dto_req_EnrollReqDto$ByUser } from '../models/com_ever_edu_lms_enroll_dto_req_EnrollReqDto$ByUser';
 import type { com_ever_edu_lms_enroll_dto_req_EnrollSearchDto$SearchByUser } from '../models/com_ever_edu_lms_enroll_dto_req_EnrollSearchDto$SearchByUser';
@@ -16,6 +14,8 @@ import type { com_ever_edu_lms_search_course_dto_res_CourseSearchResDto$OnUser }
 import type { com_ever_edu_lms_search_keyword_dto_req_SearchKeywordRequestDto } from '../models/com_ever_edu_lms_search_keyword_dto_req_SearchKeywordRequestDto';
 import type { com_ever_edu_lms_search_keyword_dto_res_SearchKeywordPopularResponseDto } from '../models/com_ever_edu_lms_search_keyword_dto_res_SearchKeywordPopularResponseDto';
 import type { com_ever_edu_lms_search_keyword_dto_res_SearchKeywordResponseDto } from '../models/com_ever_edu_lms_search_keyword_dto_res_SearchKeywordResponseDto';
+import type { com_ever_edu_lms_sequence_dto_res_SequenceListResDto$OnUser } from '../models/com_ever_edu_lms_sequence_dto_res_SequenceListResDto$OnUser';
+import type { com_ever_edu_lms_sequence_dto_res_SequenceResDto$onUser } from '../models/com_ever_edu_lms_sequence_dto_res_SequenceResDto$onUser';
 import type { com_ever_edu_lms_student_dto_req_StudentSearchDto$SearchByUser } from '../models/com_ever_edu_lms_student_dto_req_StudentSearchDto$SearchByUser';
 import type { org_springdoc_core_converters_models_Pageable } from '../models/org_springdoc_core_converters_models_Pageable';
 import type { org_springframework_data_domain_PageCom_ever_edu_lms_enroll_dto_res_EnrollResDto$onUserList } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_enroll_dto_res_EnrollResDto$onUserList';
@@ -201,18 +201,18 @@ export class FoService {
     /**
      * 차수 단건 조회
      * 차수를 조회한다.
-     * @param courseSequenceUuid
-     * @returns com_ever_edu_lms_course_dto_res_SequenceResDto$onUser OK
+     * @param courseSequenceId
+     * @returns com_ever_edu_lms_sequence_dto_res_SequenceResDto$onUser OK
      * @throws ApiError
      */
     public static findBySequenceNo(
-        courseSequenceUuid: string,
-    ): CancelablePromise<com_ever_edu_lms_course_dto_res_SequenceResDto$onUser> {
+        courseSequenceId: number,
+    ): CancelablePromise<com_ever_edu_lms_sequence_dto_res_SequenceResDto$onUser> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/user/api/v1/sequence/{courseSequenceUuid}',
+            url: '/user/api/v1/sequence/{courseSequenceId}',
             path: {
-                'courseSequenceUuid': courseSequenceUuid,
+                'courseSequenceId': courseSequenceId,
             },
             errors: {
                 400: `Bad Request`,
@@ -397,12 +397,12 @@ export class FoService {
      * 차수 목록 조회
      * 과정 id를 통해 차수 목록을 조회한다.
      * @param courseUuid
-     * @returns com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser OK
+     * @returns com_ever_edu_lms_sequence_dto_res_SequenceListResDto$OnUser OK
      * @throws ApiError
      */
     public static findPage2(
-        courseUuid: string,
-    ): CancelablePromise<Array<com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser>> {
+        courseUuid: number,
+    ): CancelablePromise<Array<com_ever_edu_lms_sequence_dto_res_SequenceListResDto$OnUser>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/user/api/v1/course/{courseUuid}/sequences',

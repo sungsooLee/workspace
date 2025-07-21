@@ -1,7 +1,7 @@
 .start {
-  @apply mx-[auto] w-[780px] pb-[80px] pt-[16px];
+  @apply mx-[auto] mt-[48px] w-[880px];
   h2 {
-    @apply title_4_b mt-[24px] text-[var(--gray9)];
+    @apply headline3-b text-[var(--gray10)];
   }
 }
 

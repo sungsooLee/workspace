@@ -9,7 +9,6 @@ import {
   Button,
   ContentsRow,
   Input,
-  PhoneNumber,
   InputTimer,
 } from '@learnway/ui';
 
@@ -21,10 +20,12 @@ import styles from './phone-change-popup.module.css';
 const PhoneChangePopupComponent = () => {
   const { alert: openAlert } = useModal();
 
-  // 이메일 아이디 변경 alert
+  // 휴대폰번호 변경 alert
+  // 퍼블수정 20250718 수정
   const phoneChangeAlert = () => {
     openAlert({
-      content: <>휴대폰 번호가 변경되었습니다.</>,
+      title: '휴대폰 번호가 변경되었습니다.',
+      content: '새로운 번호로 변경되었습니다.',
     });
   };
 
@@ -33,15 +34,16 @@ const PhoneChangePopupComponent = () => {
       <ModalTitle>{'휴대폰 번호 변경'}</ModalTitle>
       <ModalBody>
         <div className={`${styles.start} ${styles.phone_change}`}>
+          {/* 퍼블수정 20250718 input 수정 */}
           <div className={styles.input_box}>
             {/* 현재 휴대폰 번호 */}
             <ContentsRow>
               <div className={formStyles.form_item}>
                 <div className={formStyles.form_label}>
-                  <span className={formStyles.form_text}>현재 휴대폰 번호</span>
+                  <span className={formStyles.form_text}>현재휴대폰 번호</span>
                 </div>
-                <div className={`${formStyles.input_box} ${styles.phone_box}`}>
-                  <PhoneNumber options={[{ value: 'type1', label: '+82' }]} size="lg" readOnly />
+                <div className={`${formStyles.input_box}`}>
+                  <Input type="text" placeholder="" value="01012341234" inputSize="lg" readOnly />
                 </div>
               </div>
             </ContentsRow>
@@ -55,13 +57,8 @@ const PhoneChangePopupComponent = () => {
                     <IcoFormRequired width={10} height={10} />
                   </span>
                 </div>
-                <div className={`${formStyles.input_box} ${styles.phone_box}`}>
-                  <PhoneNumber
-                    options={[{ value: 'type1', label: '+82' }]}
-                    size="lg"
-                    placeholder="-없이 휴대폰 번호입력"
-                    error
-                  />
+                <div className={`${formStyles.input_box}`}>
+                  <Input type="text" placeholder="" value="01012341234" inputSize="lg" readOnly />
                 </div>
                 {/* error 문구 */}
                 <p className={cn(formStyles.guide_text, formStyles.error)}>
@@ -71,7 +68,6 @@ const PhoneChangePopupComponent = () => {
             </ContentsRow>
 
             {/* 인증번호 */}
-            {/* 퍼블수정 20250508 : 인증번호 추가 */}
             <ContentsRow>
               <div className={formStyles.form_item}>
                 <div className={formStyles.form_label}>
@@ -84,7 +80,8 @@ const PhoneChangePopupComponent = () => {
                   <InputTimer
                     startTimer={1}
                     initialTime={180}
-                    placeholder={'인증번호입력'}
+                    placeholder={'인증번호 입력'}
+                    inputSize="lg"
                     resetLabel={'재전송'}
                   />
                 </div>
@@ -94,8 +91,14 @@ const PhoneChangePopupComponent = () => {
         </div>
       </ModalBody>
       <ModalFooter>
-        <Button label={'취소'} variant="gray" size="lg"></Button>
-        <Button label={'변경'} variant={'primary'} size={'lg'} onClick={() => phoneChangeAlert()} />
+        {/* 퍼블수정 20250718 사이즈 및 문구 수정 */}
+        <Button label={'취소'} variant="gray" size="xl"></Button>
+        <Button
+          label={'인증번호 확인'}
+          variant={'primary'}
+          size={'xl'}
+          onClick={() => phoneChangeAlert()}
+        />
       </ModalFooter>
     </ModalContainer>
   );

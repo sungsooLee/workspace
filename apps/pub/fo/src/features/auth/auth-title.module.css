@@ -1,0 +1,11 @@
+.start {
+  h2 {
+    @apply flex-col items-center justify-center whitespace-pre pb-[60px] text-center;
+    .title {
+      @apply display1-b block text-[var(--gray10)];
+    }
+    .info {
+      @apply title4 mt-[4px] block text-[var(--gray50)];
+    }
+  }
+}

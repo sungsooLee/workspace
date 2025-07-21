@@ -57,7 +57,7 @@
   &.lg {
     @apply rounded-[8px] border-[var(--gray90)];
     .input {
-      @apply !h-[44px] !min-h-[44px] px-[16px];
+      @apply !h-[42px] !min-h-[42px] px-[16px];
     }
   }
   &.bd_none {

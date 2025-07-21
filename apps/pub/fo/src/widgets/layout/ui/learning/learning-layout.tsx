@@ -1,4 +1,5 @@
 import { memo, ReactNode } from 'react';
+import { isMobile } from 'react-device-detect';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';

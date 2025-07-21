@@ -20,6 +20,7 @@ import {
   PostDraftVideosParams,
   PostDraftVideosRes,
   QuestionItem,
+  QuestionItemDeleteParam,
   TestPaperBasicInfoSaveReq,
   TestPaperBasicInfoSaveRes,
 } from '@types';
@@ -66,10 +67,6 @@ export default class LearningResourceService {
 
   static postDraftVideos(params: PostDraftVideosParams): Promise<PostDraftVideosRes> {
     return httpService.post(`${CMSApiPrefix()}/videos/draft`, params);
-  }
-
-  static async fetchS3FileDownload(key: string, fileName: string): Promise<void> {
-    return fileDownload({ url: `${PMSApiPrefix()}/file/s3/download`, params: { key, fileName } });
   }
 
   static fetchLearningResources(params: any) {
@@ -218,8 +215,12 @@ export default class LearningResourceService {
    * @param contentUuid
    * @returns
    */
-  static getQuestionList(contentUuid: string) {
-    return httpService.get<any>(`${CMSApiPrefix()}/exam/questions/${contentUuid}`);
+  static getQuestionItemList(contentUuid: string) {
+    return httpService.get<QuestionItem[]>(`${CMSApiPrefix()}/exam/questions/${contentUuid}`);
+  }
+
+  static deleteQuestionItemList(param: QuestionItemDeleteParam) {
+    return httpService.delete<any>(`${CMSApiPrefix()}/exam/question`, param);
   }
 
   /**

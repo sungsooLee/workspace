@@ -108,14 +108,6 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew = {
      * 운영자 이메일
      */
     operatorEmail: string;
-    /**
-     * 위탁 소유 회사 ID
-     */
-    outsourcingCompanyId?: number;
-    /**
-     * 위탁 소유 회사 이름
-     */
-    outsourcingCompanyName?: string;
     learningSpaceNameValid?: boolean;
 };
 export namespace com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew {

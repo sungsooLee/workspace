@@ -13,13 +13,16 @@
     .file_box {
       @apply absolute left-1/2 top-1/2 flex w-[780px] -translate-x-1/2 -translate-y-1/2 items-center rounded-[8px] border-[1px] border-solid border-[var(--gray5)] bg-white px-[16px] py-[20px];
       p {
-        @apply body_2_r flex-1 text-[var(--gray8)];
+        @apply label-xl flex flex-1 items-center gap-[4px] text-[var(--gray35)];
+        img {
+          @apply width-[24px] height-[24px];
+        }
       }
       span {
-        @apply body_3_r ml-[24px] inline-block text-[var(--gray8)];
+        @apply body-md ml-[24px] inline-block text-[var(--gray35)];
       }
       button {
-        @apply ml-[24px];
+        @apply ml-[16px];
       }
     }
   }
@@ -88,6 +91,12 @@
   }
   &.video {
     @apply h-[100dvh] w-full;
+    .header_lesson {
+      @apply px-[40px] pt-[24px];
+      strong {
+        @apply title5-b text-white;
+      }
+    }
   }
 }
 

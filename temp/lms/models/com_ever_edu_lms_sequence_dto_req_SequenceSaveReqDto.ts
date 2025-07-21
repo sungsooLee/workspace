@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type com_ever_edu_lms_course_dto_req_SequenceSaveReqDto = {
+export type com_ever_edu_lms_sequence_dto_req_SequenceSaveReqDto = {
     courseId?: number;
     addQuantity?: number;
 };

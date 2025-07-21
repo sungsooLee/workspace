@@ -5,7 +5,7 @@
 import type { com_ever_edu_lms_category_dto_res_TreeBaseDto } from './com_ever_edu_lms_category_dto_res_TreeBaseDto';
 export type com_ever_edu_lms_category_dto_res_TenantCategoryTreeDto = {
     id?: number;
-    name?: string;
+    categoryName?: string;
     categoryType?: com_ever_edu_lms_category_dto_res_TenantCategoryTreeDto.categoryType;
     sortSeq?: number;
     depth?: number;

@@ -12,13 +12,16 @@ export const Route = createFileRoute('/_learning/iframe-m')({
 function RouteComponent() {
   return (
     <div className={`${styles.start} ${styles.iframe}`}>
-      {/* 예시 아이프레임 */}
-      <iframe
-        src="https://www.hyundai.com/"
-        title="example Page"
-        loading="lazy"
-        className={styles.iframe}
-      ></iframe>
+      {/* 퍼블수정 20250717 전체수정 */}
+      <div className={styles.iframe_contents}>
+        {/* 예시 아이프레임 */}
+        <iframe
+          src="https://www.hyundai.com/"
+          title="example Page"
+          loading="lazy"
+          className={styles.iframe}
+        ></iframe>
+      </div>
     </div>
   );
 }

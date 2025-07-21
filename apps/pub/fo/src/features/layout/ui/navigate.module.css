@@ -9,11 +9,13 @@
         [class*='swiper-slide'] {
           @apply title4-b relative flex !w-auto items-center justify-start whitespace-nowrap;
           a {
-            @apply title4-b relative flex h-[64px] items-center;
+            @apply title4-b relative flex h-[80px] items-center;
             span {
-              @apply relative leading-[64px];
+              @apply relative leading-[80px];
             }
-            &:hover {
+            &:hover,
+            &.active {
+              @apply text-[var(--blue65)];
               span {
                 &::before {
                   /* @apply absolute bottom-[-1px] left-[0] block h-[3px] w-full bg-[var(--secondary1)] content-['']; */
@@ -45,16 +47,35 @@
           }
         }
       }
-      [class*='gnb_button'] {
-        @apply absolute top-1/2 z-[3] flex translate-y-[-32px];
-        .btn {
-          @apply absolute top-[16px] z-[3] flex h-[28px] w-[28px] cursor-pointer items-center justify-center rounded-full border border-solid border-[var(--gray4)] bg-[var(--white)] text-center shadow-[0px_2px_4px_rgba(0,0,0,0.08)];
+
+      [class*='prev_btn'],
+      [class*='next_btn'] {
+        @apply !m-[0] !w-[30px] !rounded-none !p-[0] !shadow-none;
+      }
+      [class*='prev_btn']::before,
+      [class*='next_btn']::before {
+        content: '';
+        @apply pointer-events-none absolute top-0 h-full w-[60px];
+      }
+      [class*='prev_btn']::before {
+        @apply left-[80%];
+        background: linear-gradient(to right, white, transparent);
+      }
+      [class*='next_btn']::before {
+        @apply right-[80%];
+        background: linear-gradient(to right, transparent, white);
+      }
+
+      .ico {
+        @apply h-[16px] w-[16px];
+        fill: var(--gray50);
+        &.prev {
         }
-        &::before {
-          background: url(../../../assets/images/common/bg_swipe_gnb_shadow.png) no-repeat;
-          @apply pointer-events-none absolute top-[0] z-[-1] inline-block h-[64px] w-[60px] bg-[length:60px_64px] bg-no-repeat content-[''];
+        &.next {
+          @apply rotate-180;
         }
       }
+
       .gnb_button_next {
         @apply right-[28px];
 

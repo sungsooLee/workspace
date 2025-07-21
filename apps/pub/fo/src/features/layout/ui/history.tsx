@@ -24,6 +24,7 @@ const HistoryComponent = () => {
       <Popover popoverContent={<PopoverContent />} side="bottom" align="end" sideOffset={5}>
         <span className={styles.alarm_info}>
           <IcoHistory width={24} height={24} fill="#131416" />
+          <em className={styles.noti}></em>
         </span>
       </Popover>
     </div>

@@ -11,16 +11,9 @@ import {
   SubContents,
   ContentCourseMappingModal,
 } from '@shared/ui';
-import {
-  CODE_GROUP,
-  DynamicFormConfig,
-  DynamicFormValues,
-  useCurrentRoute,
-  useDynamicForm,
-  useDynamicForm2,
-} from '@learnway/hooks';
+import { useCurrentRoute, useDynamicForm2 } from '@learnway/hooks';
 import { useQuery } from '@tanstack/react-query';
-import { learningResourceQueryOptions } from '@entities/learning-resource';
+import { learningResourceQueryOptions, useDeleteContent } from '@entities/learning-resource';
 import { NotFound } from '@features/layout';
 import { useCallback, useEffect } from 'react';
 import { LearningResourceVideoDetail, MovieInfo } from '@features/learning-resource';
@@ -30,7 +23,7 @@ export const Route = createLazyFileRoute('/_layout/learning/learning-resource/vi
 });
 
 function RouteComponent() {
-  const { open: openModal } = useModal();
+  const { open: openModal, confirm: openConfirm } = useModal();
   const {
     state: { contentUuid },
   } = useCurrentRoute();
@@ -44,6 +37,24 @@ function RouteComponent() {
   useEffect(() => {
     if (data) onFormChange(data);
   }, [data]);
+
+  const { delete: deleteVideoContent } = useDeleteContent({
+    onSuccess: (result: number) => {
+      console.log('delete success', result);
+      return router.navigate({ to: '/learning/learning-resource', replace: true });
+    },
+  });
+
+  const handleDelete = useCallback(async () => {
+    if (
+      await openConfirm({
+        title: t('삭제 하시겠습니까?'),
+        content: t('삭제 후 목록으로 이동합니다.'),
+      })
+    ) {
+      deleteVideoContent(data?.contentUuid as string);
+    }
+  }, [data?.contentUuid]);
 
   const handleFormSubmit = (data: any) => {
     console.log(data);
@@ -106,16 +117,12 @@ function RouteComponent() {
               <Button variant="point" size="sm" onClick={handleCourseMapping}>
                 매핑과정 보기
               </Button>
-              <Button
-                variant="point"
-                size="sm"
-                onClick={() => console.log('🚀 ~ RouteComponent ~ getValues:', getValues())}
-              >
+              <Button variant="point" size="sm">
                 공유이력 보기
               </Button>
             </>
           )}
-          <Button variant="point" size="sm">
+          <Button variant="point" size="sm" onClick={handleDelete}>
             삭제
           </Button>
           <Button type="submit" variant="primary" size="sm">

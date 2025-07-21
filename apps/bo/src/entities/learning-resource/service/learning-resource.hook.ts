@@ -9,6 +9,7 @@ import {
   PostDraftHtmlVideoParams,
   PostDraftVideosParams,
   QuestionItem,
+  QuestionItemDeleteParam,
   TestPaperBasicInfoSaveReq,
 } from '@types';
 
@@ -200,4 +201,23 @@ export function useCreateQuestionItem(options?: any) {
 }
 export function useGetContent(contentUuid: string, options?: any) {
   return useQuery({ ...learningResourceQueryOptions.getContent(contentUuid), ...options });
+}
+
+export function useGetQuestionItemList(examPoolUuid?: string, options?: any) {
+  return useQuery<QuestionItem[], any>({
+    ...learningResourceQueryOptions.getQuestionItemList(examPoolUuid),
+    ...options,
+  });
+}
+
+export function useDeleteQuestionItemList(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.deleteQuestionItemList(),
+    ...options,
+  });
+
+  return {
+    ...mutation,
+    delete: (param: QuestionItemDeleteParam) => mutation.mutate(param as any),
+  };
 }

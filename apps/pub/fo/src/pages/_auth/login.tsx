@@ -2,6 +2,7 @@ import { isMobile } from 'react-device-detect';
 import { cn } from '@learnway/shared';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { Input, Checkbox, Button } from '@learnway/ui';
+import { AuthTitle } from '../../features/auth';
 //import styles from './login.module.css';
 import styles from '@learnway/styles/fo/pages/_auth/login.module.css';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
@@ -17,6 +18,7 @@ function RouteComponent() {
   return (
     <div className={`${styles.start} ${styles.auth_wrap} ${styles.login}`}>
       <div className={cn(styles.auth_box, 'auth--box')}>
+        <AuthTitle />
         <div className={formStyles.form_row}>
           <div className={formStyles.row}>
             <div className={formStyles.form_item}>
@@ -54,7 +56,7 @@ function RouteComponent() {
         </div>
 
         <div className={styles.login_info}>
-          <Checkbox label="아이디 저장" className={styles.id_save} />
+          <Checkbox label="아이디 저장" className={styles.id_save} size="md" />
           <div className={styles.info}>
             <Link to="/search-account">아이디/비밀번호찾기</Link>{' '}
             <Link to="/search-account">아이디/비밀번호찾기</Link>
@@ -67,37 +69,12 @@ function RouteComponent() {
           </Button>
         </div>
 
-        <div className={styles.sns_login}>
-          <h3 className={styles.tit_sns}>소셜 로그인</h3>
-          <ul className={styles.list}>
-            <li>
-              <Button>
-                <img src={snsNaverImage} alt="naver" />
-              </Button>
-            </li>
-            <li>
-              <Button>
-                <img src={snskakaoImage} alt="kakao" />
-              </Button>
-            </li>
-            {/* 영문 시 : 구글로그인만 출력 */}
-            <li>
-              <Button>
-                <img src={snsGoogleImage} alt="google" />
-              </Button>
-            </li>
-          </ul>
-          <div className={styles.noti}>
-            회사 메일로 회원가입 이후 SNS 간편회원으로 로그인 할 수 있습니다.
-          </div>
+        <div className={styles.login_guide}>
+          <span>
+            <Link to="/progress-status-cert">회원 가입 현황</Link>
+            <Link to="/signup-step1">회원가입</Link>
+          </span>
         </div>
-      </div>
-
-      <div className={styles.login_guide}>
-        <span>
-          <Link to="/progress-status-cert">회원 가입 현황</Link>
-          <Link to="/signup-step1">회원가입</Link>
-        </span>
       </div>
     </div>
   );

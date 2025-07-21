@@ -25,28 +25,27 @@ import {
 } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 
-import { ContentInformation, EnFormMode, QuestionItem } from '@types';
+import {
+  ContentInformation,
+  ContentType,
+  EnFormMode,
+  EnQuestionLevel,
+  EnQuestionType,
+  QuestionItem,
+} from '@types';
 import { FormRow2, SingleAttachmentFormField, SwitchFormField } from '@shared/ui';
-import { CODE_GROUP, S3_PATH, useDynamicForm2 } from '@learnway/hooks';
+import { S3_PATH, useDynamicForm2 } from '@learnway/hooks';
 import { FormDisplay } from '@features/form';
 import { IcoMenu01 } from '@learnway/icons';
 
 import { EditSingleAttachmentCell } from '@features/form/ui/edit-single-attachment-cell';
 import { useWatch } from 'react-hook-form';
 
-enum EnQuestionType {
-  SINGLE = 'SINGLE',
-  MULTIPLE = 'MULTIPLE',
-  OX = 'OX',
-  SHORT_ANSWER = 'SHORT_ANSWER',
-  ESSAY = 'ESSAY',
-}
-
 const LearningResourceTestItemModalComponent = ({
   contentInfo,
   questionItem,
 }: {
-  contentInfo: ContentInformation;
+  contentInfo: ContentInformation & { examPoolUuid?: string };
   questionItem?: QuestionItem;
 }) => {
   const { close } = useModal();
@@ -72,7 +71,14 @@ const LearningResourceTestItemModalComponent = ({
   };
   const handleSubmit = async (data: any) => {
     const { fileAttacted, ...removeData } = data;
-    close({ ...removeData, contentUuid: contentInfo.contentUuid });
+
+    // 시험지의 경우 매핑된 문제은행 uuid를 넘겨줘야 한다.
+    const paramUuid =
+      contentInfo.contentType === ContentType.EXAM
+        ? contentInfo?.examPoolUuid
+        : contentInfo.contentUuid;
+
+    close({ ...removeData, contentUuid: paramUuid });
   };
   const updateisCorrectAnswerRadio = useCallback(
     (index: number) => {
@@ -294,9 +300,9 @@ const LearningResourceTestItemModalComponent = ({
                 element={
                   <RadioGroupFormField
                     options={[
-                      { label: '상', value: 'HARD' },
-                      { label: '중', value: 'MEDIUM' },
-                      { label: '하', value: 'EASY' },
+                      { label: '상', value: EnQuestionLevel.HARD },
+                      { label: '중', value: EnQuestionLevel.MEDIUM },
+                      { label: '하', value: EnQuestionLevel.EASY },
                     ]}
                   />
                 }

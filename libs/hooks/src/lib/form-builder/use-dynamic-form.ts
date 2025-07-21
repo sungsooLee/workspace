@@ -235,6 +235,10 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
     return initData;
   };
 
+  const formValues = useMemo(() => {
+    return (formState as any).values;
+  }, [formState]);
+
   // provider 객체 반환
   return {
     provider: {
@@ -262,7 +266,7 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
     setValue,
     clearFormError: clearErrors,
     formState,
-    formValues: getValues(),
+    formValues,
     onFormChange,
     onFormFocus: handleFocus,
     control: extendedControl,
