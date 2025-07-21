@@ -1,5 +1,13 @@
 import { useEffect, useRef } from 'react';
-import { Button, ContentsRow, Input, RadioGroupFormField, Textarea } from '@learnway/ui';
+import {
+  Button,
+  ContentsRow,
+  DropdownOption,
+  Input,
+  RadioGroupFormField,
+  Textarea,
+  useModal,
+} from '@learnway/ui';
 import { FormRow2, ResourceChoiceModal } from '@shared/ui';
 import { DynamicFormProvider } from '@learnway/hooks';
 import { LESSON_TYPE } from '@types';
@@ -13,6 +21,7 @@ import { useGetLessonDetail } from '../../../../../entities/curriculum';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
 import subTitleStyles from '@learnway/styles/bo/assets/styles/modules/form-sub-title.module.css';
 import { IcoPlus } from '@learnway/icons';
+import { PreviewLearningWindow } from '@features/learning-resource/learning-resource-management/ui/preview-learning-window';
 
 interface LessonFormProps {
   provider: DynamicFormProvider;
@@ -40,6 +49,7 @@ export const LessonForm: React.FC<LessonFormProps> = ({
   clearAllValidators,
   curriculumData,
 }) => {
+  const { open: openModal } = useModal();
   const lessonType = watch('lessonType') || LESSON_TYPE.GENERAL;
   const contentName = watch('contentName');
 
@@ -100,14 +110,27 @@ export const LessonForm: React.FC<LessonFormProps> = ({
         <Button variant="text" size="sm" className={subTitleStyles.btn_text}>
           정보보기
         </Button>
-        <Button variant="text" size="sm" className={subTitleStyles.btn_text}>
+        <Button
+          variant="text"
+          size="sm"
+          className={subTitleStyles.btn_text}
+          onClick={() => {
+            const contentUuid = provider.getValues('contentUuid');
+            if (contentUuid)
+              openModal({
+                width: 'lg',
+                content: <PreviewLearningWindow contentUuid={contentUuid} />,
+              });
+          }}
+        >
           미리보기
         </Button>
         <Button
           variant="text"
           size="sm"
           className={subTitleStyles.btn_text}
-          icon={<IcoPlus width={16} height={16} stroke={'#4C515E'} />}
+          icon={<IcoPlus stroke={'#4C515E'} />}
+          disabled={isEditing}
         >
           자원등록
         </Button>
@@ -161,6 +184,8 @@ export const LessonForm: React.FC<LessonFormProps> = ({
                   presetOptionLabel={t('LABEL.form.label.select', '선택')}
                   optionsConfig={{
                     codeGroup: 'cms.content.ContentType',
+                    transformOptions: (options: any) =>
+                      options.filter((opt: DropdownOption) => opt.value !== 'SCORM'),
                   }}
                 />
               }

@@ -94,6 +94,7 @@ export const CurriculumFormSimple: React.FC<CurriculumFormSimpleProps> = ({
           label="채널"
           format="string"
           value=""
+          validation={{ required: true }}
           element={
             <InputModalSelectorFormField
               placeholder="채널을 선택하세요"
