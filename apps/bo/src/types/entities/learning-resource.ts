@@ -442,7 +442,7 @@ interface EncodedAudio {
   filePath: string;
 }
 
-interface VideoSubtitles {
+export interface VideoSubtitles {
   subtitleFileUuid: string;
   languageCode: string;
   subtitleName: string;

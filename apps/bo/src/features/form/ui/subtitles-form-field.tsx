@@ -1,126 +1,117 @@
-import React, { forwardRef, InputHTMLAttributes, useRef, useState } from 'react';
-import { BaseFormFieldProps } from '@learnway/hooks';
-import { useFieldArray } from 'react-hook-form';
+import { forwardRef, useEffect, useState } from 'react';
+import {
+  BaseFormFieldProps,
+  CODE_GROUP,
+  S3UploaderConfig,
+  useFormOptions,
+  useS3Uploader,
+} from '@learnway/hooks';
 import { Button, ContentsRow, Dropdown, DropdownOption, Input } from '@learnway/ui';
-import { LOCALES } from '@learnway/config';
 import { t } from 'i18next';
 import { IcoDelete04 } from '@learnway/icons';
-import style from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
-import { ActionMeta, MultiValue, SingleValue } from 'react-select';
+import { VideoSubtitles } from '@types';
 
-type Field = {
-  locale: string;
-  subtitles: string;
-};
-const initBase: Field = {
-  locale: 'ko',
-  subtitles: '',
-};
-const SubTitlesFormFieldComponent = forwardRef<HTMLDivElement, BaseFormFieldProps<Field[]>>(
-  ({ control, name, value, onChange, options, optionsConfig }, ref) => {
-    const fileRef = useRef<HTMLInputElement | null>(null);
-    const [base, setBase] = useState<Field>(initBase);
+interface SubtitlesFormFieldProps extends BaseFormFieldProps<VideoSubtitles[]> {
+  uploadConfig: S3UploaderConfig;
+}
 
-    const { fields, append, update } = useFieldArray({ control, name });
-    const localeOptions = Object.entries(LOCALES).map(([_, value]) => ({
-      value: value,
-      label: t(value),
-    }));
+const SubTitlesFormFieldComponent = forwardRef<HTMLDivElement, SubtitlesFormFieldProps>(
+  ({ value, onChange, uploadConfig }, ref) => {
+    const {
+      s3Path,
+      affairsType,
+      languageCode,
+      groupMode = 'batch',
+      auto = true,
+      async = true,
+      acceptFiles = [],
+      maxFileCount = 10,
+      maxFileSize = 5 * 1024 * 1024,
+    } = uploadConfig;
 
-    const handleBaseLocalChange = (newValue: string) => {
-      if (newValue) {
-        setBase({ ...base, locale: newValue });
-      }
+    const { groupUuid, files, addFiles, onFetch, onRemove } = useS3Uploader({
+      s3Path,
+      affairsType,
+      languageCode,
+      groupMode,
+      auto,
+      async,
+      acceptFiles,
+      maxFileCount,
+      maxFileSize,
+    });
+
+    const options = useFormOptions(undefined, {
+      codeGroup: CODE_GROUP['pms.multilingual.LangCountryCode'],
+    });
+
+    const [newSubtitle, setNewSubtitle] = useState<any>({});
+
+    useEffect(() => {
+      //value로 onFetch, groupUuid초기화
+    }, []);
+
+    const handleLanguageCodeChange = (index: number, code: string) => {
+      console.log('languageCode:', code);
     };
 
-    const handleFileChangeClick = () => {
-      if (!fileRef.current) return;
-      fileRef.current.onchange = handleFileChange;
-      fileRef.current.click();
+    const handleSubtitleChange = (index: number) => {
+      // input file 띄워서 addFiles에 추가 후 index에 해당하는 fileUuid 삭제 및 새로운 uuid로 대체, 변경 결과를 onChange에 반영
     };
 
-    const handleFileChange = () => {
-      const file = fileRef.current?.files?.[0];
-      if (file) {
-        append({ locale: base.locale, subtitles: file.name });
-        setBase(initBase);
-        if (fileRef.current) {
-          fileRef.current.value = '';
-        }
-      }
-    };
-
-    const handleFieldLocaleChange = (
-      index: number,
-      field: Record<string, any>,
-      newValue: SingleValue<DropdownOption> | MultiValue<DropdownOption>,
-    ) => {
-      const singleValue = newValue as SingleValue<DropdownOption>;
-      if (singleValue) {
-        update(index, { ...field, locale: singleValue.value });
-      }
-    };
-
-    const handleFieldSubtitleChange = () => {
-      if (!fileRef.current) return;
-      fileRef.current.onchange = handleFileChange;
+    const handleSubtitleAdd = () => {
+      // input file 띄워서 addFiles에 추가 후 files 변경 결과를 onChange에 반영
     };
 
     return (
       <div className={dynamicFormStyles.multiple_row}>
         <div ref={ref}>
-          {fields.map((field: Record<string, any>, index: number) => (
-            <ContentsRow className={dynamicFormStyles.row_inner} key={field.id}>
+          {value?.map((subtitle, index: number) => (
+            <ContentsRow className={dynamicFormStyles.row_inner} key={subtitle.subtitleFileUuid}>
               <Dropdown
                 className={dynamicFormStyles.short}
-                options={localeOptions}
-                value={{ value: field.locale, label: field.locale }}
-                onChange={(newValue) => handleFieldLocaleChange(index, field, newValue)}
+                options={options}
+                value={subtitle.languageCode}
+                onChange={(code) => handleLanguageCodeChange(index, code)}
               />
-              <Input
-                id="name-1-14"
-                type="text"
-                placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
-                value={field.subtitles}
-              />
+              <Input type="text" value={subtitle.subtitleName} />
               <Button
                 variant="gray"
                 size="sm"
                 className={dynamicFormStyles.btn_edit}
-                /*onClick={() => handleFieldSubtitleChange(index, field)}*/
+                onClick={() => handleSubtitleChange(index)}
               >
                 자막 변경
               </Button>
               <Button
                 onlyIcon
                 className={dynamicFormStyles.btn_delete}
-                icon={<IcoDelete04 width={20} height={20} fill={'none'} stroke={'#4C515E'} />}
+                icon={<IcoDelete04 width={20} height={20} fill="none" stroke="#4C515E" />}
               />
             </ContentsRow>
           ))}
           <ContentsRow className={dynamicFormStyles.row_inner}>
             <Dropdown
               className={dynamicFormStyles.short}
-              options={localeOptions}
-              value={{ value: base.locale, label: base.locale }}
-              onChange={handleBaseLocalChange}
+              options={options}
+              value={newSubtitle.languageCode}
+              onChange={(code) => setNewSubtitle((prev: any) => ({ ...prev, languageCode: code }))}
             />
             <Input
-              id="name-1-14"
               type="text"
+              readOnly
               placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
-              value={base.subtitles}
             />
             <Button
               variant="gray"
               size="sm"
               className={dynamicFormStyles.btn_edit}
-              onClick={handleFileChangeClick}
+              onClick={handleSubtitleAdd}
             >
               자막 추가
             </Button>
-            <input type="file" className={'hidden'} ref={fileRef} />
+            {/* <input type="file" className={'hidden'} ref={fileRef} /> */}
           </ContentsRow>
         </div>
       </div>
