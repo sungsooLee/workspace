@@ -31,14 +31,14 @@ export interface ListProps extends CommonReactElementProps {
   hideBorder?: boolean;
   /** 리스트 아이템 테두리 숨김 여부 */
   showItemBorder?: boolean;
-  /** 아이템 렌더링 함수
-   * @param option 현재 아이템 데이터
-   * @param index 현재 아이템 인덱스
-   * @returns 렌더링할 ReactElement
-   */
+  /** 아이템 렌더링 함수 */
   itemRenderer?: (option: any, index: number) => ReactElement;
   /** 아이템 드래그 가능 여부 */
   draggable?: boolean;
+  /** 옵션이 유효하지 않은 항목을 에러 표시하기 위한 함수 (option) => boolean */
+  isOptionInvalid?: (option: any) => boolean;
+  /** 선택된 항목의 label 앞에 표시될 노드 */
+  selectedNodeBeforeLabel?: ReactElement;
   /** 옵션 삭제 콜백 */
   onOptionDeleteClick?: (option: any) => void;
   /** 싱글 선택 콜백 */
@@ -61,16 +61,13 @@ const ListComponent = function ({
   valueField = 'value',
   disabledActive = false,
   multiple,
-  checkable,
-  deletable,
   hideBorder,
   showItemBorder,
-  itemRenderer,
-  draggable,
   onOptionDeleteClick,
   onOptionSelect,
   onOptionsSelect,
   onOptionsOrderChange,
+  ...props
 }: ListProps) {
   // 선택된 옵션들을 valueField를 기준으로 필터링하여 가져옴
   const selectedOptions = getMatchingItemsByKey(options, value, valueField);
@@ -139,20 +136,15 @@ const ListComponent = function ({
         >
           {options?.map((d: any, i: number) => (
             <SortableItem
+              {...props}
               key={d[valueField]}
               item={d}
               index={i}
               showItemBorder={showItemBorder}
-              itemRenderer={itemRenderer}
+              disabledActive={disabledActive}
               valueField={valueField}
               labelField={labelField}
-              isSelected={
-                !disabledActive &&
-                selectedOptions?.find((x: any) => x[valueField] === d[valueField])
-              }
-              checkable={checkable}
-              deletable={deletable}
-              draggable={draggable}
+              isSelected={selectedOptions?.find((x: any) => x[valueField] === d[valueField])}
               onClick={handleOptionSelect}
               onDelete={handleOptionDelete}
             />
@@ -172,7 +164,6 @@ interface SortableItemProps extends Partial<ListProps> {
   index: number;
   className?: string;
   isSelected?: boolean;
-  invalid?: boolean;
   onDelete?: (event: React.MouseEvent, item: any) => void;
   onClick?: (event: React.MouseEvent, item: any) => void;
 }
@@ -188,7 +179,9 @@ const SortableItem = ({
   valueField = '',
   labelField = '',
   isSelected,
-  invalid,
+  disabledActive,
+  isOptionInvalid,
+  selectedNodeBeforeLabel,
   onDelete,
   onClick,
 }: SortableItemProps) => {
@@ -213,13 +206,21 @@ const SortableItem = ({
       style={style}
       className={cn(
         styles.item,
-        isSelected && styles.active, // selected row style
-        item.invalid && styles.invalid, // invalid style
+        !disabledActive && isSelected && styles.active, // selected row style
+        isOptionInvalid?.(item) && styles.invalid, // invalid style
       )}
       onClick={(event: React.MouseEvent) => onClick?.(event, item)}
     >
       <div className={cn(styles.inner, showItemBorder && styles.line)}>
-        {checkable ? <Checkbox label={textContent} /> : textContent}
+        {checkable ? <Checkbox variant="radio" checked={isSelected} /> : null}
+
+        {/* selectedNodeBeforeLabel */}
+        {isSelected && selectedNodeBeforeLabel}
+
+        {/* label */}
+        {textContent}
+
+        {/* delete */}
         {deletable && (
           <Button
             type="button"

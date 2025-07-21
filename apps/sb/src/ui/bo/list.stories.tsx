@@ -1,7 +1,7 @@
 // BaseForm.stories.tsx
 import React, { useState } from 'react';
 import type { Meta } from '@storybook/react';
-import { Button, List, Thumbnail } from '@learnway/ui';
+import { Badge, Button, List, Thumbnail } from '@learnway/ui';
 import { addOrRemoveItemByKey, getRandomId } from '@learnway/shared';
 
 const dummyOptions = Array(5)
@@ -57,6 +57,30 @@ export const TemplateMultiple: any = (args: any) => {
   );
 };
 TemplateMultiple.storyName = 'List (Multiple)';
+
+// List
+export const TemplateCheckable: any = (args: any) => {
+  const [value, setValue] = useState<string>('value0');
+  return (
+    <div className="space-y-5">
+      <Button label={'선택 초기화'} variant={'point'} size={'sm'} onClick={() => setValue('')} />
+      <List
+        {...args}
+        options={dummyOptions}
+        value={value}
+        disabledActive
+        isOptionInvalid={(option) => option.value === 'value2'}
+        checkable
+        deletable
+        selectedNodeBeforeLabel={
+          <Badge option={{ label: '선택됨', value: '' }} variant={'text'} status="fill" />
+        }
+        onOptionSelect={(option) => setValue(option.value)}
+      />
+    </div>
+  );
+};
+TemplateCheckable.storyName = 'List (Checkable)';
 
 // Delete Option
 export const TemplateOptionDelete: any = (args: any) => {

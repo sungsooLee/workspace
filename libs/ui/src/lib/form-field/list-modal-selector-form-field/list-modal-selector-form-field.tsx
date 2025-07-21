@@ -17,7 +17,7 @@ export interface ListModalSelectorFormFieldProps extends BaseFormFieldProps<any[
   /** 버튼 컴포넌트에 전달할 props */
   button?: ButtonComponentProps;
   /** 리스트 컴포넌트에 전달할 props */
-  list?: Partial<ListProps>;
+  listConfig?: Partial<ListProps>;
   /** 모달에서 받은 데이터를 조작하는 함수 (onFormChange 시 사용) */
   transformModalData?: (modalData?: any) => void;
 }
@@ -40,24 +40,23 @@ const ListModalSelectorFormFieldComponent = forwardRef<
       onChange: ownerOnChange,
       button: buttonProps,
       transformModalData,
-      list: listProps = {
-        labelField: 'label',
-        valueField: 'value',
-        invalid: false,
-      },
+      listConfig,
       control,
     },
     ref,
   ) => {
-    const { t } = useTranslation();
     const { open: openModal } = useModal();
+
+    const valueField = listConfig?.valueField || 'value';
 
     // 새로운 옵션을 기존 value에 중복 없이 추가하는 함수
     const appendSelectedChipOptions = (newOption: any) => {
-      const key = listProps?.valueField || 'value';
       const newOptions = Array.isArray(newOption) ? newOption : [newOption];
-      const existingKeys = new Set(value.map((item) => item[key]));
-      const merged = [...value, ...newOptions.filter((option) => !existingKeys.has(option[key]))];
+      const existingKeys = new Set(value.map((item) => item[valueField]));
+      const merged = [
+        ...value,
+        ...newOptions.filter((option) => !existingKeys.has(option[valueField])),
+      ];
 
       ownerOnChange(merged);
     };
@@ -73,7 +72,7 @@ const ListModalSelectorFormFieldComponent = forwardRef<
 
     // 리스트의 항목 삭제 버튼 클릭 시 value에서 해당 항목 제거
     const handleOptionDeleteClick = (option: any) => {
-      const newValue = addOrRemoveItemByKey(value, option, listProps?.valueField);
+      const newValue = addOrRemoveItemByKey(value, option, valueField);
       ownerOnChange(newValue);
     };
 
@@ -101,9 +100,7 @@ const ListModalSelectorFormFieldComponent = forwardRef<
 
         {/* 선택된 항목 리스트 영역 */}
         <List
-          {...listProps}
-          checkable
-          deletable
+          {...listConfig}
           className={styles.list}
           options={value}
           onOptionDeleteClick={handleOptionDeleteClick}
