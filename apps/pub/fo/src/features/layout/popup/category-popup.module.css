@@ -53,18 +53,12 @@
         }
         li {
           button {
-            @apply relative w-full !rounded-none !px-0;
-            span {
-              @apply label-lg-b relative block w-full px-[16px] py-[18px] text-left text-[var(--gray35)];
-            }
+            @apply label-lg-b relative w-full !rounded-none px-[16px] py-[18px] text-left text-[var(--gray35)];
             .ico_arrow {
               @apply absolute right-[8px] top-[50%] -translate-y-1/2;
             }
             &.active {
-              @apply !bg-[var(--blue95)];
-              span {
-                @apply text-[var(--blue50)];
-              }
+              @apply !bg-[var(--blue95)] text-[var(--blue50)];
               .ico_arrow {
                 @apply stroke-[var(--blue50)];
               }

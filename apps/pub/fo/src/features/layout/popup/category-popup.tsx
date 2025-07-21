@@ -65,74 +65,55 @@ const CategoryPopupComponent = () => {
                 <ul className={styles.menu_list}>
                   <li>
                     {/* 버튼 활성화 시 active 추가 */}
-                    <Button className={styles.active}>
-                      <span>기업경영</span>
-                      <IcoArrowForward
-                        className={styles.ico_arrow}
-                        width={16}
-                        height={16}
-                        stroke="#07287E"
-                      />
-                    </Button>
+                    <Button
+                      className={styles.active}
+                      label={'기업경영'}
+                      icon={
+                        <IcoArrowForward
+                          className={styles.ico_arrow}
+                          width={16}
+                          height={16}
+                          stroke="#07287E"
+                        />
+                      }
+                    />
                   </li>
                   <li>
-                    <Button>
-                      <span>리더십/비즈스킬</span>
-                    </Button>
+                    <Button label={'리더십/비즈스킬'} />
                   </li>
                   <li>
-                    <Button>
-                      <span>어학</span>
-                    </Button>
+                    <Button label={'어학'} />
                   </li>
                   <li>
-                    <Button>
-                      <span>IT</span>
-                    </Button>
+                    <Button label={'IT'} />
                   </li>
                   <li>
-                    <Button>
-                      <span>HR/총무</span>
-                    </Button>
+                    <Button label={'HR/총무'} />
                   </li>
                 </ul>
                 <ul className={styles.menu_list}>
                   <li>
-                    <Button>
-                      <span>경영/기획</span>
-                    </Button>
+                    <Button label={'경영/기획'} />
                   </li>
                   <li>
-                    <Button>
-                      <span>고객 서비스</span>
-                    </Button>
+                    <Button label={'고객 서비스'} />
                   </li>
                   <li>
-                    <Button>
-                      <span>마케팅 및 세일즈</span>
-                    </Button>
+                    <Button label={'마케팅 및 세일즈'} />
                   </li>
                   <li>
-                    <Button>
-                      <span>법무/보안</span>
-                    </Button>
+                    <Button label={'법무/보안'} />
                   </li>
                   <li>
-                    <Button>
-                      <span>생산</span>
-                    </Button>
+                    <Button label={'생산'} />
                   </li>
                 </ul>
                 <ul className={styles.menu_list}>
                   <li>
-                    <Button>
-                      <span>서비스</span>
-                    </Button>
+                    <Button label={'서비스'} />
                   </li>
                   <li>
-                    <Button>
-                      <span>연구개발</span>
-                    </Button>
+                    <Button label={'연구개발'} />
                   </li>
                 </ul>
               </div>
