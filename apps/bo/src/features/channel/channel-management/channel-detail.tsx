@@ -67,10 +67,7 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
   const { update: updateChannel } = useUpdateChannel({
     onSuccess: (data: any) => {
       openToast({ title: '저장 하였습니다.', type: 'success' });
-      router.navigate({
-        to: '/tenant/channel/management/detail',
-        state: { channelUuid: data.channelUuid },
-      });
+      setChannelUuid(data.channelUuid);
     },
   });
 
@@ -117,7 +114,6 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
     if (loginUser.activeTenant) {
       tenantList.push({
         ...loginUser.activeTenant,
-        isFixed: true,
         isMainTenant: true,
         tenantName: t('{{name}} (대표)', { name: loginUser.activeTenant.tenantName }),
       });
@@ -126,7 +122,6 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
         const tenant = loginUser.tenants[0];
         tenantList.push({
           tenant,
-          isFixed: true,
           isMainTenant: true,
           tenantName: t('{{name}} (대표)', { name: tenant.tenantName }),
         });
@@ -219,7 +214,7 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
         channelUrl: getChannelUrl(channelData.channelMainId),
         tenantList: channelData.tenantList.map((tenant: any) => ({
           ...tenant,
-          isFixed: tenant.isMainTenant,
+          isMainTenant: tenant.isMainTenant,
           tenantName: tenant.isMainTenant
             ? t('{{name}} (대표)', { name: tenant.tenantName })
             : tenant.tenantName,
@@ -276,7 +271,11 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
     const commonPayload = {
       ...data,
       channelMainId: data.channelMainId.fieldValue,
-      tenantList: data.tenantList, // 추가된 테넌트의 isMainTenant 필요
+      tenantList: data.tenantList.map((tenant: any) => ({
+        tenantId: tenant.tenantId,
+        tenantName: tenant.tenantName,
+        isMainTenant: tenant.isMainTenant ?? false,
+      })),
       channelOwnerUserList: data.channelOwnerUserList.map((user: any) => ({
         userUuid: user.uuid,
         userName: user.name,
@@ -406,6 +405,7 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
                 labelField: 'tenantName',
                 valueField: 'tenantId',
                 hideBorder: true,
+                isOptionHideCloseButton: (option: any) => option.isMainTenant === true,
               }}
               modalConfig={{
                 title: '',
