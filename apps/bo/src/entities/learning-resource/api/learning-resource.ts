@@ -19,6 +19,8 @@ import {
   PostDraftHtmlVideoParams,
   PostDraftVideosParams,
   PostDraftVideosRes,
+  PutVideoChangeParams,
+  PutVideoChangeRes,
   QuestionItem,
   QuestionItemDeleteParam,
   QuestionStatusUpdateReq,
@@ -68,6 +70,10 @@ export default class LearningResourceService {
 
   static postDraftVideos(params: PostDraftVideosParams): Promise<PostDraftVideosRes> {
     return httpService.post(`${CMSApiPrefix()}/videos/draft`, params);
+  }
+
+  static putVideoChange(params: PutVideoChangeParams) {
+    return httpService.put<PutVideoChangeRes>(`${CMSApiPrefix()}/video/file/change`, params);
   }
 
   static fetchLearningResources(params: any) {

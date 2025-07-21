@@ -33,6 +33,7 @@ const MovieInfoComponent = ({ provider }: MovieInfoProps) => {
     processingStatus: status,
     playTime,
     videoResource,
+    handleChangeVideo,
   } = useVideoResource(provider);
 
   const url = useMemo(() => videoResource?.masterVideo, [videoResource]);
@@ -54,7 +55,7 @@ const MovieInfoComponent = ({ provider }: MovieInfoProps) => {
   const channelUuid = watch('channelUuid');
   const channelName = watch('channelName');
   const changeFile = useCallback(async () => {
-    const fileUuids = await openModal({
+    const fileUuid = await openModal({
       width: 'lg',
       content: (
         <LearningResourceFileUploadModal
@@ -64,7 +65,9 @@ const MovieInfoComponent = ({ provider }: MovieInfoProps) => {
         />
       ),
     });
-    console.log('🚀 ~ changeFile ~ fileUuids:', fileUuids);
+    if (!fileUuid) return;
+
+    handleChangeVideo(fileUuid);
   }, [tenantId, channelUuid, channelName]);
 
   const preview = useCallback(() => {

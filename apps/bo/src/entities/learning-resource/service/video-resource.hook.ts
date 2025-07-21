@@ -2,9 +2,10 @@ import { DynamicFormProvider } from '@learnway/hooks';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import LearningResourceService from '../api/learning-resource';
 import { isProcessing, isProcessingCompleted, isProcessingNone } from './util';
-import { GetVideoResourceRes } from '@types';
-import { pick } from 'lodash';
+import { GetVideoResourceRes, PutVideoChangeRes } from '@types';
+import { omit, pick } from 'lodash';
 import { DATE_TIME_FORMAT, duration } from '@learnway/shared';
+import { usePutVideoChange } from './learning-resource.hook';
 
 const useVideoResourceHook = (provider: DynamicFormProvider) => {
   const { watch, onFormChange } = provider;
@@ -14,6 +15,18 @@ const useVideoResourceHook = (provider: DynamicFormProvider) => {
   const status = watch('processingStatus');
   const playTime = duration(watch('contentAddInfo'), DATE_TIME_FORMAT.HOUR_MIN_SEC);
   const contentUuid = watch('contentUuid');
+
+  const { update: changeVideo } = usePutVideoChange({
+    onSuccess: (result: PutVideoChangeRes) => {
+      onFormChange(omit(result, 'resourceId'));
+    },
+    onError: (error: any) => {
+      console.error(error);
+      // 에러 얼럿?
+    },
+  });
+
+  const handleChangeVideo = (fileUuid: string) => changeVideo({ contentUuid, fileUuid });
 
   const [videoResource, setVideoResource] = useState<GetVideoResourceRes | null>(null);
 
@@ -58,6 +71,7 @@ const useVideoResourceHook = (provider: DynamicFormProvider) => {
     processingStatus: status,
     playTime,
     videoResource,
+    handleChangeVideo,
   };
 };
 

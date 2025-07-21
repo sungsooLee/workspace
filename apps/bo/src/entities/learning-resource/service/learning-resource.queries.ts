@@ -10,6 +10,7 @@ import {
   HtmlVideoMetadataReq,
   PostDraftHtmlVideoParams,
   PostDraftVideosParams,
+  PutVideoChangeParams,
   QuestionItem,
   QuestionItemDeleteParam,
   QuestionStatusUpdateReq,
@@ -25,6 +26,7 @@ export const queryKeys = {
   contentCourseMapping: ['content-course-mapping'] as const,
   deleteContent: ['delete-content'] as const,
   createDraftVideo: ['create-draft-video'] as const,
+  videoChange: ['video-change'] as const,
   learningResources: ['learning-resources'] as const,
   curriculumMapping: ['mapping-curriculum'] as const,
   mappingCourses: ['mapping-courses'] as const,
@@ -70,10 +72,6 @@ export const learningResourceQueryOptions = {
   getContentCourseMapping: (contentUuid: string, params: ContentCourseMappingParams) => ({
     queryKey: queryKeys.contentCourseMapping,
     queryFn: () => LearningResourceService.fetchContentCourseMapping(contentUuid, params),
-  }),
-  postDraftVideos: (params: PostDraftVideosParams) => ({
-    queryKey: queryKeys.createDraftVideo,
-    queryFn: () => LearningResourceService.postDraftVideos(params),
   }),
   getLearningResources: (params: any) => ({
     queryKey: queryKeys.learningResources,
@@ -147,6 +145,9 @@ export const mutateOptions = {
   }),
   postDraftVideos: () => ({
     mutationFn: (params: PostDraftVideosParams) => LearningResourceService.postDraftVideos(params),
+  }),
+  putVideoChange: () => ({
+    mutationFn: (params: PutVideoChangeParams) => LearningResourceService.putVideoChange(params),
   }),
   postDraftHTML5: () => ({
     mutationFn: (params: PostDraftHtmlVideoParams) =>

@@ -8,6 +8,7 @@ import {
   HtmlVideoMetadataReq,
   PostDraftHtmlVideoParams,
   PostDraftVideosParams,
+  PutVideoChangeParams,
   QuestionItem,
   QuestionItemDeleteParam,
   QuestionStatusUpdateReq,
@@ -36,6 +37,20 @@ export function usePostDraftVideos(options?: any) {
 
   return {
     create: (payload: PostDraftVideosParams) => mutation.mutate(payload as any),
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
+}
+
+export function usePutVideoChange(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.putVideoChange(),
+    ...options,
+  });
+
+  return {
+    update: (payload: PutVideoChangeParams) => mutation.mutate(payload as any),
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
     data: mutation.data,
