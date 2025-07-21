@@ -1,10 +1,11 @@
 import { ChannelDetail, EnChannelRegisterMethod } from '@features/channel';
+import { useFetchAuthUser } from '@learnway/auth/entities';
 import { Button } from '@learnway/ui';
 import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui';
 import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { EnFormMode } from '@types';
 import { t } from 'i18next';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 export const Route = createLazyFileRoute('/_layout/tenant/channel/management/regist')({
   component: RouteComponent,
@@ -14,6 +15,17 @@ function RouteComponent() {
   const router = useRouter();
   const routerState = useRouterState();
   const requestUuid = routerState.location.state?.requestUuid;
+
+  const { data: loginUser } = useFetchAuthUser();
+
+  useEffect(() => {
+    if (!loginUser) return;
+    if (
+      loginUser.activeRole?.roleType !== 'PLATFORM_MANAGER' &&
+      loginUser.activeRole?.roleType !== 'TENANT_MANAGER'
+    )
+      router.navigate({ to: '/tenant/channel/management' });
+  }, [loginUser]);
 
   const formRef = useRef<HTMLFormElement>(null);
   const handleOnSave = () => {

@@ -10,7 +10,7 @@ import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { createColumnHelper } from '@tanstack/react-table';
 import { EnGlobalConst } from '@types';
 import { t } from 'i18next';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 export const Route = createFileRoute('/_layout/tenant/channel/management/')({
   component: RouteComponent,
@@ -22,11 +22,20 @@ function RouteComponent() {
   const { data: loginUser } = useFetchAuthUser();
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
+  const [registButtonEnabled, setRegistButtonEnabled] = useState(true);
 
   useEffect(() => {
     console.log('### loginUser', loginUser);
     gridFetch();
   }, []);
+
+  useEffect(() => {
+    if (loginUser)
+      setRegistButtonEnabled(
+        loginUser.activeRole?.roleType === 'PLATFORM_MANAGER' ||
+          loginUser.activeRole?.roleType === 'TENANT_MANAGER',
+      );
+  }, [loginUser]);
 
   const handleOnSearch = useCallback((data: any) => {
     const searchData = {
@@ -41,20 +50,21 @@ function RouteComponent() {
 
   return (
     <PageContainer>
-      <ContentsButtons>
-        <Button
-          variant="primary"
-          size="sm"
-          onClick={() =>
-            router.navigate({
-              to: '/tenant/channel/management/regist',
-              state: { method: 'direct' },
-            })
-          }
-        >
-          {t('채널 직접 개설')}
-        </Button>
-      </ContentsButtons>
+      {registButtonEnabled && (
+        <ContentsButtons>
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={() =>
+              router.navigate({
+                to: '/tenant/channel/management/regist',
+                state: { method: 'direct' },
+              })
+            }
+            label={t('채널 직접 개설')}
+          />
+        </ContentsButtons>
+      )}
       <MainContents>
         <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
         <Divider />

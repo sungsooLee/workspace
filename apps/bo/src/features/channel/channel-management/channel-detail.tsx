@@ -16,7 +16,7 @@ import {
   FormItem,
   FormRow,
   TenantShuttleModal,
-  UserChoiceModal,
+  UserShuttleModal,
 } from '@shared/ui';
 import { EnFormMode } from '@types';
 import { t } from 'i18next';
@@ -29,7 +29,7 @@ import { useCreateChannel, useUpdateChannel } from '@entities/channel/service/ch
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import { EnButtonLayout } from '@pages/_layout/tenant/channel/management/detail.lazy';
-import { useRouterState } from '@tanstack/react-router';
+import { useRouter, useRouterState } from '@tanstack/react-router';
 import { useWatch } from 'react-hook-form';
 import { getChannelUrl } from '../channel-application/service/channel-application.service';
 
@@ -47,11 +47,13 @@ interface ChannelDetailProps {
 
 const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
   const { t } = useTranslation();
+  const router = useRouter();
+
   const { data: loginUser } = useFetchAuthUser();
   const { confirm: openConfirm } = useModal();
   const { open: openToast } = useToast();
 
-  const { provider, control, updateFormData, onSubmit, onFormChange, getValues } =
+  const { provider, control, updateFormData, onSubmit, onFormChange, getValues, setValue } =
     useDynamicForm(formConfig());
 
   const formRef = useRef<HTMLFormElement>(null);
@@ -61,20 +63,24 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
   const [channelUuid, setChannelUuid] = useState(routerState.location.state?.channelUuid);
   const [channelData, setChannelData] = useState<any>({});
   const [requestChannelData, setRequestChannelData] = useState<any>({});
-  //const { data: channelData, refetch } = useGetChannelDetail(channelUuid);
 
-  //const { data: request } = useGetRequestChannelDetail(props.requestId);
   const { update: updateChannel } = useUpdateChannel({
     onSuccess: (data: any) => {
       openToast({ title: '저장 하였습니다.', type: 'success' });
-      setChannelUuid(data.channelUuid);
+      router.navigate({
+        to: '/tenant/channel/management/detail',
+        state: { channelUuid: data.channelUuid },
+      });
     },
   });
 
   const { create: createChannel } = useCreateChannel({
     onSuccess: (data: any) => {
       openToast({ title: '저장 하였습니다.', type: 'success' });
-      setChannelUuid(data.channelUuid);
+      router.navigate({
+        to: '/tenant/channel/management/detail',
+        state: { channelUuid: data.channelUuid },
+      });
     },
   });
 
@@ -105,8 +111,9 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
     props.onButtonLayoutChange && props.onButtonLayoutChange(EnButtonLayout.RESET_AND_SAVE);
 
     if (!loginUser) return;
+    console.log('### loginUser', loginUser);
+
     const tenantList: any[] = [];
-    // TODO. ChipList 수정되면 대표 테넌트는 삭제되지 않도록 수정
     if (loginUser.activeTenant) {
       tenantList.push({
         ...loginUser.activeTenant,
@@ -177,6 +184,7 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
         const requestedData = {
           ...initialData,
           ...requestChannelData,
+          channelRequestId: String(requestChannelData.channelRequestId),
           requestDate: getDateToString(
             new Date(requestChannelData.createdDate),
             DATE_TIME_FORMAT.DATETIME_SEC,
@@ -257,7 +265,10 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
   const duplicateCheck = async (channelMainId: string) => {
     const result: boolean = await ChannelService.existsChannelMainId(channelMainId);
     if (result) return DuplicateState.duplicated;
-    else return DuplicateState.ok;
+    else {
+      setValue('channelUrl', getChannelUrl(channelMainId));
+      return DuplicateState.ok;
+    }
   };
 
   const handleOnSubmit = async (data: any) => {
@@ -371,7 +382,14 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
         <FormRow
           provider={provider}
           name={'channelTenatMappingType'}
-          element={<RadioGroupFormField disabled={true} />}
+          element={
+            <RadioGroupFormField
+              disabled={
+                props.method === EnChannelRegisterMethod.REQUEST ||
+                loginUser?.activeRole?.roleType !== 'PLATFORM_MANAGER'
+              }
+            />
+          }
         />
         <FormRow provider={provider} name={'channelSecretType'} />
       </ContentsRow>
@@ -394,9 +412,7 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
                 width: 'xl',
                 content: <TenantShuttleModal />,
               }}
-              disabled={
-                watchedChannelTenatMappingType === 'MAPPING_TENANT' || props.mode === EnFormMode.ADD
-              }
+              disabled={watchedChannelTenatMappingType === 'MAPPING_TENANT'}
             />
           }
         />
@@ -415,7 +431,7 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
               modalConfig={{
                 title: '',
                 width: 'xl',
-                content: <UserChoiceModal />,
+                content: <UserShuttleModal />,
               }}
             />
           }
