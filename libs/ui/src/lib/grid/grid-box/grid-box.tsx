@@ -325,7 +325,9 @@ const GridBoxComponent = <T extends object>(
           {guideText && (
             <p className={cn(styles.guide_text, showGuideTextNextLine && styles.next_line)}>
               {guideText}
-              {showErrorMessageBesideGuideText && <span>{errorMessageBesideGuideText}</span>}
+              {showErrorMessageBesideGuideText && (
+                <span className={styles.error_text}>{errorMessageBesideGuideText}</span>
+              )}
             </p>
           )}
         </div>
