@@ -25,7 +25,7 @@ export const Route = createLazyFileRoute('/_layout/learning/learning-resource/vi
 function RouteComponent() {
   const { open: openModal, confirm: openConfirm } = useModal();
   const {
-    state: { contentUuid },
+    state: { contentUuid, listParam },
   } = useCurrentRoute();
   const { data, error: fetchError } = useQuery(
     learningResourceQueryOptions.getContent(contentUuid),
@@ -107,7 +107,9 @@ function RouteComponent() {
             <Button
               variant="point"
               size="sm"
-              onClick={() => router.navigate({ to: '/learning/learning-resource' })}
+              onClick={() =>
+                router.navigate({ to: '/learning/learning-resource', state: { listParam } })
+              }
             >
               목록
             </Button>
