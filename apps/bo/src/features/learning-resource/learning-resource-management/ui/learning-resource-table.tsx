@@ -203,10 +203,10 @@ function LearningResourceTableComponent() {
                 e.stopPropagation();
                 router.navigate({
                   to: getDetailPathByContentType(_.row.original.contentType),
-                  state: getDetailRouterState(
-                    _.row.original.contentUuid,
-                    _.row.original.contentType,
-                  ),
+                  state: {
+                    ...getDetailRouterState(_.row.original.contentUuid, _.row.original.contentType),
+                    listParam: params,
+                  },
                 });
               }}
             >
