@@ -11,12 +11,12 @@ export class InternalApiService {
      * 카프카 쓰지 않고 바로 입과
      * 바로 입과 테스트
      * @param requestBody
-     * @returns number OK
+     * @returns string OK
      * @throws ApiError
      */
     public static enrollTest(
         requestBody: com_ever_edu_lms_enroll_dto_event_EnrollQueueEvent,
-    ): CancelablePromise<number> {
+    ): CancelablePromise<'QUEUE' | 'PROCESSED' | 'WAITING' | 'EXPIRED_WAITING' | 'MAIL_SEND' | 'ERROR' | 'QUOTA_EXCEED' | 'QUOTA_WAITING_EXCEED' | 'INVALID_COURSE' | 'ACCESS_DENIED' | 'DUPLICATE_ENROLL'> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/internal/api/v1/enroll-no-kafka-test',

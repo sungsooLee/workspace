@@ -11,14 +11,6 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep3 = {
      * 대표 커리큘럼id
      */
     primaryCurriculumId: number;
-    /**
-     * 위탁 소유 회사 ID
-     */
-    outsourcingCompanyId?: number;
-    /**
-     * 위탁 소유 회사 이름
-     */
-    outsourcingCompanyName?: string;
     learningSpaceNameValid?: boolean;
 };
 export namespace com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep3 {
