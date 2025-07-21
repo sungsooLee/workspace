@@ -1,7 +1,8 @@
 /* IA110 / NLP_BO_CMS_1031 - 나의 학습자원 > 블로그 등록 */
-import { MouseEvent, useEffect, useRef, useState } from 'react';
+import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
+import { useCurrentRoute } from '@learnway/hooks';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { Button, Divider, useModal } from '@learnway/ui';
 import defaultImage from '@assets/images/thumb/img_thumb_default.jpg';
@@ -19,26 +20,30 @@ function RouteComponent() {
 
   const { confirm: openConfirm } = useModal();
   const router = useRouter();
+  const { state } = useCurrentRoute();
 
   const { data: loginUser } = useFetchAuthUser();
   const [tenantId, setTenantId] = useState<number>(-1);
 
   const handleClickSubmitButton = (e: MouseEvent<HTMLButtonElement>) => {
     if (formRef.current) {
-      formRef.current?.requestSubmit();
+      formRef.current?.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
     }
   };
 
-  const handleClickGoListButton = async () => {
+  const handleClickGoListButton = useCallback(async () => {
     if (
       await openConfirm({
         title: t('LABEL.confirm.goList.title'),
         content: t('LABEL.confirm.goList.message'),
       })
     ) {
-      router.navigate({ to: '/learning/learning-resource' });
+      router.navigate({
+        to: '/learning/learning-resource',
+        state: { listParam: state?.listParam },
+      });
     }
-  };
+  }, [state]);
 
   useEffect(() => {
     if (loginUser?.activeTenant) {

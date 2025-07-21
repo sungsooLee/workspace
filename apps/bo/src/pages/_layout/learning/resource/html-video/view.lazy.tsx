@@ -2,7 +2,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { t } from 'i18next';
 import { useQuery } from '@tanstack/react-query';
-import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
+import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
+import { useCurrentRoute } from '@learnway/hooks';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { Button, Divider, useModal } from '@learnway/ui';
 import { learningResourceQueryOptions, useDeleteContent } from '@entities/learning-resource';
@@ -25,21 +26,21 @@ function RouteComponent() {
   const formRef = useRef<HTMLFormElement>(null);
 
   const router = useRouter();
-  const routerState = useRouterState();
+  const { state } = useCurrentRoute();
 
   const { data: loginUser } = useFetchAuthUser();
   const [tenantId, setTenantId] = useState<number>(-1);
 
   const { data, error: fetchError } = useQuery(
-    learningResourceQueryOptions.getContent(routerState.location.state?.contentUuid),
+    learningResourceQueryOptions.getContent(state?.contentUuid),
   );
 
   const { data: hasMapping } = useQuery(
-    learningResourceQueryOptions.getCurriculumsMapping(routerState.location.state?.contentUuid),
+    learningResourceQueryOptions.getCurriculumsMapping(state?.contentUuid),
   );
 
   const { data: htmlStatus } = useQuery(
-    learningResourceQueryOptions.getHTML5Status(routerState.location.state?.contentUuid),
+    learningResourceQueryOptions.getHTML5Status(state?.contentUuid),
   );
 
   // draft: 임시저장 상태 / complete: 한 번이라도 저장 버튼을 눌러 저장한 상태
@@ -48,7 +49,7 @@ function RouteComponent() {
   const { open: openModal, confirm: openConfirm } = useModal();
 
   const handleClickCourseMapping = useCallback(async () => {
-    if (!routerState.location.state?.contentUuid) {
+    if (!state?.contentUuid) {
       return;
     }
 
@@ -56,7 +57,7 @@ function RouteComponent() {
       content: (
         <ContentCourseMappingModal
           channelUuid={data?.channelUuid ?? ''}
-          contentUuid={routerState.location.state.contentUuid}
+          contentUuid={state.contentUuid}
         />
       ),
       width: 'lg',
@@ -65,7 +66,7 @@ function RouteComponent() {
 
   const handleClickSaveButton = useCallback(() => {
     if (formRef.current) {
-      formRef.current?.requestSubmit();
+      formRef.current?.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
     }
   }, []);
 
@@ -76,9 +77,12 @@ function RouteComponent() {
         content: t('LABEL.confirm.goList.message'),
       })
     ) {
-      router.navigate({ to: '/learning/learning-resource' });
+      router.navigate({
+        to: '/learning/learning-resource',
+        state: { listParam: state?.listParam },
+      });
     }
-  }, []);
+  }, [state]);
 
   const { delete: deleteBlogContent } = useDeleteContent({
     onSuccess: (result: number) => {
@@ -105,13 +109,13 @@ function RouteComponent() {
   }, []);
 
   useEffect(() => {
-    if (!routerState.location.state?.contentUuid) {
+    if (!state?.contentUuid) {
       router.navigate({
         to: '/learning/learning-resource',
         replace: true,
       });
     }
-  }, [routerState.location.state]);
+  }, [state]);
 
   useEffect(() => {
     if (loginUser?.activeTenant) {

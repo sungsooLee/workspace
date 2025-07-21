@@ -26,7 +26,7 @@ export const Route = createLazyFileRoute('/_layout/learning/resource/test-paper/
 
 function RouteComponent() {
   const router = useRouter();
-  const { mode, tenantId, contentUuid, data, hasMapping } = useExamLoaderData();
+  const { mode, tenantId, contentUuid, data, hasMapping, listParam } = useExamLoaderData();
 
   const { alert, open: openModal, confirm: openConfirm } = useModal();
 
@@ -38,6 +38,7 @@ function RouteComponent() {
     getBasicInfoValues: getValues,
     updateBasicInfoFormData: updateFormData,
     updateFormDataByKey,
+    onBasicInfoFormChange: onFormChange,
     onSubmit,
     saveBasicInfo,
   } = useExamBasicInfoForm({
@@ -74,7 +75,14 @@ function RouteComponent() {
         content: (
           <TestPaperInfo
             ref={basicInfoRef}
-            basicInfoForm={{ provider, getValues, updateFormData, onSubmit, saveBasicInfo }}
+            basicInfoForm={{
+              provider,
+              getValues,
+              updateFormData,
+              onFormChange,
+              onSubmit,
+              saveBasicInfo,
+            }}
             contentUuid={contentUuid}
             tenantId={tenantId}
             mode={mode}
@@ -156,9 +164,9 @@ function RouteComponent() {
         content: t('LABEL.confirm.goList.message'),
       })
     ) {
-      router.navigate({ to: '/learning/learning-resource' });
+      router.navigate({ to: '/learning/learning-resource', state: { listParam } });
     }
-  }, []);
+  }, [listParam]);
 
   const handleClickSaveButton = () => {
     if (basicInfoRef.current) {

@@ -11,9 +11,8 @@ const useExamLoaderData = () => {
   const tenantId = loginUser?.activeTenant?.tenantId ?? -1;
 
   const {
-    state: { mode = PageMode.CREATE, contentUuid = '' },
+    state: { mode = PageMode.CREATE, contentUuid = '', listParam },
   } = useCurrentRoute();
-  console.log('test paper route state', mode, contentUuid);
 
   const { data } = useQuery(
     learningResourceQueryOptions.getContent<TestPaperBasicInfoDetail>(contentUuid),
@@ -23,7 +22,7 @@ const useExamLoaderData = () => {
     learningResourceQueryOptions.getCurriculumsMapping(contentUuid),
   );
 
-  return { mode, tenantId, contentUuid, data, hasMapping };
+  return { mode, tenantId, contentUuid, data, hasMapping, listParam };
 };
 
 export { useExamLoaderData };

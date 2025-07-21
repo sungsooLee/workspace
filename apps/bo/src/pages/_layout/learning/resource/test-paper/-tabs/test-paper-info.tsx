@@ -1,5 +1,4 @@
 import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
-import { useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import {
   ContentsRow,
@@ -24,9 +23,8 @@ import { ExamBasicInfoProps, PageMode, TabFormRef } from '../-common/type';
 
 const TestPaperInfoComponent = forwardRef<TabFormRef, ExamBasicInfoProps>(
   ({ basicInfoForm, contentUuid = '', tenantId, mode, data = {}, hasMapping = false }, ref) => {
-    const router = useRouter();
-
-    const { provider, getValues, updateFormData, onSubmit, saveBasicInfo } = basicInfoForm;
+    const { provider, getValues, updateFormData, onFormChange, onSubmit, saveBasicInfo } =
+      basicInfoForm;
 
     const examTemplateTypeOptions = useMemo(
       () => [
@@ -47,22 +45,18 @@ const TestPaperInfoComponent = forwardRef<TabFormRef, ExamBasicInfoProps>(
 
     const formRef = useRef<HTMLFormElement>(null);
 
-    useImperativeHandle(
-      ref,
-      () => ({
-        save: () => {
-          if (formRef.current !== null) {
-            formRef.current.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
-          }
-        },
-      }),
-      [],
-    );
+    useImperativeHandle(ref, () => ({
+      save: () => {
+        if (formRef.current !== null) {
+          formRef.current.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+        }
+      },
+    }));
 
     useEffect(() => {
       // 상세 설정
-      if (mode === PageMode.UPDATE && !isEmptyData(data) && updateFormData) {
-        convertDetailInfoToFormData(data, getValues(), updateFormData);
+      if (mode === PageMode.UPDATE && !isEmptyData(data) && onFormChange) {
+        convertDetailInfoToFormData(data, onFormChange);
       }
     }, [data]);
 

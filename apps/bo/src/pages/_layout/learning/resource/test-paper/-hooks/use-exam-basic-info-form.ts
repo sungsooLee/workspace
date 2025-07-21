@@ -18,9 +18,9 @@ export const useExamBasicInfoForm = (options: {
     provider: basicInfoProvider,
     getValues: getBasicInfoValues,
     updateFormData: updateBasicInfoFormData,
+    onFormChange: onBasicInfoFormChange,
     onFormValid,
     formState,
-    watch,
     onSubmit,
   } = useDynamicForm2();
 
@@ -79,6 +79,7 @@ export const useExamBasicInfoForm = (options: {
     getBasicInfoValues,
     updateBasicInfoFormData,
     updateFormDataByKey,
+    onBasicInfoFormChange,
     saveBasicInfo,
     onSubmit,
     onFormValid,
