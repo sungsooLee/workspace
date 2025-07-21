@@ -590,7 +590,7 @@ export interface Course {
   /**
    * 태그 이름 목록
    */
-  tagNames: Array<{ value: string }>;
+  tagNames: Array<{ tagName: string; tagId: string }>;
 
   // 추가 필드 //////////////////////////////////////////////////////////////////////////////////////////
 
@@ -603,10 +603,6 @@ export interface Course {
    * 과정 유효 기간
    */
   courseValidityRange?: any;
-  /**
-   * 태그 이름 목록
-   */
-  tagNameArray: Array<string>;
 }
 
 /**

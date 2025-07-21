@@ -335,6 +335,5 @@ export const getDummyCourse4 = (): Course => {
     tutorName: '김규원',
     outsourcingCompanyId: 9,
     outsourcingCompanyName: '신민제',
-    tagNameArray: [],
   };
 };
