@@ -1,6 +1,12 @@
 import { Dispatch, FormEventHandler, SetStateAction } from 'react';
 import { FieldValues, UseFormGetValues } from 'react-hook-form';
-import { ExamQuestionGenType, TestPaperBasicInfoDetail, TestPaperBasicInfoSaveReq } from '@types';
+import {
+  EnQuestionLevel,
+  EnQuestionType,
+  ExamQuestionGenType,
+  TestPaperBasicInfoDetail,
+  TestPaperBasicInfoSaveReq,
+} from '@types';
 import { DynamicFormProvider } from '@learnway/hooks';
 
 export enum PageMode {
@@ -54,3 +60,8 @@ export type QuestionStatisticRow = {
   medium: number;
   easy: number;
 };
+
+export type SelectedQuestionState = Record<
+  EnQuestionType,
+  Partial<Record<EnQuestionLevel, number | `${number}`>>
+>;

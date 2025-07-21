@@ -10,6 +10,7 @@ import {
   PostDraftVideosParams,
   QuestionItem,
   QuestionItemDeleteParam,
+  QuestionStatusUpdateReq,
   TestPaperBasicInfoSaveReq,
 } from '@types';
 
@@ -225,5 +226,18 @@ export function useDeleteQuestionItemList(options?: any) {
   return {
     ...mutation,
     delete: (param: QuestionItemDeleteParam) => mutation.mutate(param as any),
+  };
+}
+
+export function useUpdateQuestionStatus(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.updateQuestionStatus(),
+    ...options,
+  });
+
+  return {
+    update: (params: QuestionStatusUpdateReq) => mutation.mutate(params as any),
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
   };
 }
