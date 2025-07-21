@@ -19,7 +19,7 @@ export interface MediaContentSaveReq {
   description: string;
   coordinatorUuid: string;
   coordinatorName: string;
-  coordinatorTelCountryCode: string;
+  coordinatorTelCountryCode?: string;
   coordinatorTelNo: string;
   contentTime: number;
   isUnlimited: boolean;
@@ -29,7 +29,7 @@ export interface MediaContentSaveReq {
   vendorCode: string | number;
   vendorName: string;
   vendorCoordinatorName: string;
-  vendorTelCountryCode: string;
+  vendorTelCountryCode?: string;
   vendorTelNo: string;
   contentThumbnailFileGroupUuid?: string;
   selectedContentThumbnailFileUuid?: string;
@@ -40,7 +40,7 @@ export interface MediaContentSaveReq {
   isSecured: boolean;
   isDeleted: boolean;
   isOpened: boolean;
-  tags: string[];
+  tags: Tag[] | string[];
   contentAddInfoType: string;
   contentAddInfo: number;
 }
@@ -91,6 +91,11 @@ export interface ContentFileInfo {
   groupUuid: string;
   fileUuid: string;
   imageUrl: string;
+}
+
+export interface Tag {
+  tagId?: number;
+  tagName: string;
 }
 
 /**
@@ -161,7 +166,7 @@ export interface ContentBaseInfo {
   /** 공개 여부 */
   isOpened: boolean;
   /** 태그 리스트 */
-  tags: string[];
+  tags: Tag[] | string[];
 }
 
 export interface ContentInformation extends ContentBaseInfo {

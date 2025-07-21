@@ -62,8 +62,8 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
   );
 
   const getQuestionCountByLevel = useCallback(
-    (list: QuestionItem[] = [], type: EnQuestionLevel): `${number}` => {
-      return `${list.filter((q) => q.questionLevel === type).length}`;
+    (list: QuestionItem[] = [], type: EnQuestionLevel): number => {
+      return list.filter((q) => q.questionLevel === type).length;
     },
     [],
   );

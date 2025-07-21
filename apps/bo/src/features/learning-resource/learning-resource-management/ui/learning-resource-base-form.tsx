@@ -25,6 +25,7 @@ import { User } from '@learnway/types';
 const LearningResourceBaseFormComponent = ({
   provider,
   formMode = EnFormMode.NONE,
+  hasMapping = false,
   showAiInfo = false,
   showLessonTime = false,
   readOnlyLessonTime = false,
@@ -33,6 +34,8 @@ const LearningResourceBaseFormComponent = ({
 }: {
   provider: DynamicFormProvider;
   formMode?: EnFormMode;
+  /** 과정 매핑 여부 */
+  hasMapping?: boolean;
   /** AI 관련 필드 노출 여부  */
   showAiInfo?: boolean;
   /** 학습 시간 노출 여부 */
@@ -49,7 +52,10 @@ const LearningResourceBaseFormComponent = ({
   return (
     <>
       <ContentsRow>
+        {/* 테넌트 ID */}
+        <FormRow2 provider={provider} name="tenantId" type="hidden" format="string" />
         {/*채널 */}
+        <FormRow2 provider={provider} name="channelUuid" type="hidden" format="string" />
         <FormRow2
           provider={provider}
           name="channelName"
@@ -70,6 +76,7 @@ const LearningResourceBaseFormComponent = ({
                   tenantId: modalData.tenantId,
                 };
               }}
+              disabled={hasMapping}
             />
           }
         />
@@ -97,7 +104,7 @@ const LearningResourceBaseFormComponent = ({
           label={'학습자원명'}
           value=""
           validation={{ required: true }}
-          element={<Input type="text" maxLength={contentNameMaxLength} />}
+          element={<Input type="text" maxLength={contentNameMaxLength} readOnly={hasMapping} />}
         />
       </ContentsRow>
       {/*학습자원 설명*/}

@@ -1,4 +1,4 @@
-import { forwardRef, ReactNode, useCallback, useImperativeHandle, useMemo } from 'react';
+import { forwardRef, useCallback, useImperativeHandle, useMemo } from 'react';
 import { t } from 'i18next';
 import { cn, isEmptyData } from '@learnway/shared';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
@@ -52,12 +52,22 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
   ) => {
     const { provider: basicInfoProvider, getValues, saveBasicInfo } = basicInfoForm;
 
+    const { watch } = basicInfoProvider;
+    const questionGenTypeByForm = watch('questionGenType');
+
+    const questionStatusGuideText =
+      questionGenTypeByForm === ExamQuestionGenType.RANDOM
+        ? t(
+            '유형 별, 난이도 별로 시험지에 출제할 문항수를 직접 입력하세요. 입력된 문항 수 기준으로 문항목록에서 문항이 랜덤추출됩니다.',
+          )
+        : t('문항현황은 문항목록에서 문항추가/삭제 시 자동 업데이트 됩니다.');
+
     const {
       questionList,
       selectedQuestions,
       questionState,
       scorePerQuestion,
-      createQuestionItem,
+      // createQuestionItem,
       updateQuestionStatus,
     } = useExamQuestionInfoInput(data as TestPaperBasicInfoDetail);
 
@@ -88,123 +98,39 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
         width: 'xl',
         content: <LearningResourceTestItemModal contentInfo={data as ContentInformation} />,
       });
-
-      if (payload) {
-        createQuestionItem(payload);
-      }
     }, [data]);
 
-    const questionStates: {
-      title: ReactNode;
-      hard: ReactNode;
-      medium: ReactNode;
-      easy: ReactNode;
-    }[] = useMemo(
+    const questionStates: QuestionStatisticRow[] = useMemo(
       () => [
         {
-          title: <strong>객관식</strong>,
-          hard: (
-            <Input
-              value={questionState[EnQuestionType.SINGLE]?.[EnQuestionLevel.HARD] ?? '0'}
-              readOnly
-            />
-          ),
-          medium: (
-            <Input
-              value={questionState[EnQuestionType.SINGLE]?.[EnQuestionLevel.MEDIUM] ?? '0'}
-              readOnly
-            />
-          ),
-          easy: (
-            <Input
-              value={questionState[EnQuestionType.SINGLE]?.[EnQuestionLevel.EASY] ?? '0'}
-              readOnly
-            />
-          ),
+          title: QUESTION_TYPES[EnQuestionType.SINGLE],
+          hard: questionState[EnQuestionType.SINGLE]?.[EnQuestionLevel.HARD] ?? 0,
+          medium: questionState[EnQuestionType.SINGLE]?.[EnQuestionLevel.MEDIUM] ?? 0,
+          easy: questionState[EnQuestionType.SINGLE]?.[EnQuestionLevel.EASY] ?? 0,
         },
         {
-          title: <strong>OX</strong>,
-          hard: (
-            <Input
-              value={questionState[EnQuestionType.OX]?.[EnQuestionLevel.HARD] ?? '0'}
-              readOnly
-            />
-          ),
-          medium: (
-            <Input
-              value={questionState[EnQuestionType.OX]?.[EnQuestionLevel.MEDIUM] ?? '0'}
-              readOnly
-            />
-          ),
-          easy: (
-            <Input
-              value={questionState[EnQuestionType.OX]?.[EnQuestionLevel.EASY] ?? '0'}
-              readOnly
-            />
-          ),
+          title: QUESTION_TYPES[EnQuestionType.OX],
+          hard: questionState[EnQuestionType.OX]?.[EnQuestionLevel.HARD] ?? 0,
+          medium: questionState[EnQuestionType.OX]?.[EnQuestionLevel.MEDIUM] ?? 0,
+          easy: questionState[EnQuestionType.OX]?.[EnQuestionLevel.EASY] ?? 0,
         },
         {
-          title: <strong>다답식</strong>,
-          hard: (
-            <Input
-              value={questionState[EnQuestionType.MULTIPLE]?.[EnQuestionLevel.HARD] ?? '0'}
-              readOnly
-            />
-          ),
-          medium: (
-            <Input
-              value={questionState[EnQuestionType.MULTIPLE]?.[EnQuestionLevel.MEDIUM] ?? '0'}
-              readOnly
-            />
-          ),
-          easy: (
-            <Input
-              value={questionState[EnQuestionType.MULTIPLE]?.[EnQuestionLevel.EASY] ?? '0'}
-              readOnly
-            />
-          ),
+          title: QUESTION_TYPES[EnQuestionType.MULTIPLE],
+          hard: questionState[EnQuestionType.MULTIPLE]?.[EnQuestionLevel.HARD] ?? 0,
+          medium: questionState[EnQuestionType.MULTIPLE]?.[EnQuestionLevel.MEDIUM] ?? 0,
+          easy: questionState[EnQuestionType.MULTIPLE]?.[EnQuestionLevel.EASY] ?? 0,
         },
         {
-          title: <strong>단답식</strong>,
-          hard: (
-            <Input
-              value={questionState[EnQuestionType.SHORT_ANSWER]?.[EnQuestionLevel.HARD] ?? '0'}
-              readOnly
-            />
-          ),
-          medium: (
-            <Input
-              value={questionState[EnQuestionType.SHORT_ANSWER]?.[EnQuestionLevel.MEDIUM] ?? '0'}
-              readOnly
-            />
-          ),
-          easy: (
-            <Input
-              value={questionState[EnQuestionType.SHORT_ANSWER]?.[EnQuestionLevel.EASY] ?? '0'}
-              readOnly
-            />
-          ),
+          title: QUESTION_TYPES[EnQuestionType.SHORT_ANSWER],
+          hard: questionState[EnQuestionType.SHORT_ANSWER]?.[EnQuestionLevel.HARD] ?? 0,
+          medium: questionState[EnQuestionType.SHORT_ANSWER]?.[EnQuestionLevel.MEDIUM] ?? 0,
+          easy: questionState[EnQuestionType.SHORT_ANSWER]?.[EnQuestionLevel.EASY] ?? 0,
         },
         {
-          title: <strong>주관식</strong>,
-          hard: (
-            <Input
-              value={questionState[EnQuestionType.ESSAY]?.[EnQuestionLevel.HARD] ?? '0'}
-              readOnly
-            />
-          ),
-          medium: (
-            <Input
-              value={questionState[EnQuestionType.ESSAY]?.[EnQuestionLevel.MEDIUM] ?? '0'}
-              readOnly
-            />
-          ),
-          easy: (
-            <Input
-              value={questionState[EnQuestionType.ESSAY]?.[EnQuestionLevel.EASY] ?? '0'}
-              readOnly
-            />
-          ),
+          title: QUESTION_TYPES[EnQuestionType.ESSAY],
+          hard: questionState[EnQuestionType.ESSAY]?.[EnQuestionLevel.HARD] ?? 0,
+          medium: questionState[EnQuestionType.ESSAY]?.[EnQuestionLevel.MEDIUM] ?? 0,
+          easy: questionState[EnQuestionType.ESSAY]?.[EnQuestionLevel.EASY] ?? 0,
         },
       ],
       [questionState],
@@ -214,7 +140,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
       const columnHelper = createColumnHelper<QuestionStatisticRow>();
       return [
         columnHelper.accessor('title', {
-          cell: (info) => info.getValue(),
+          cell: (info) => <strong>{info.getValue()}</strong>,
           header: '문항유형',
           enableGrouping: false,
           size: 100,
@@ -224,7 +150,15 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
           },
         }),
         columnHelper.accessor('hard', {
-          cell: (info) => info.getValue(),
+          cell: (info) => (
+            <Input
+              type="number"
+              value={info.getValue()}
+              readOnly={questionGenTypeByForm === ExamQuestionGenType.FIXED}
+              suffixText={questionGenTypeByForm === ExamQuestionGenType.RANDOM ? '/ 0' : ''}
+              placeholder={'0'}
+            />
+          ),
           header: '문항수(난이도 상)',
           enableGrouping: false,
           meta: {
@@ -233,7 +167,15 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
           },
         }),
         columnHelper.accessor('medium', {
-          cell: (info) => info.getValue(),
+          cell: (info) => (
+            <Input
+              type="number"
+              value={info.getValue()}
+              readOnly={questionGenTypeByForm === ExamQuestionGenType.FIXED}
+              suffixText={questionGenTypeByForm === ExamQuestionGenType.RANDOM ? '/ 0' : ''}
+              placeholder={'0'}
+            />
+          ),
           header: '문항수(난이도 중)',
           enableGrouping: false,
           meta: {
@@ -242,7 +184,15 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
           },
         }),
         columnHelper.accessor('easy', {
-          cell: (info) => info.getValue(),
+          cell: (info) => (
+            <Input
+              type="number"
+              value={info.getValue()}
+              readOnly={questionGenTypeByForm === ExamQuestionGenType.FIXED}
+              suffixText={questionGenTypeByForm === ExamQuestionGenType.RANDOM ? '/ 0' : ''}
+              placeholder={'0'}
+            />
+          ),
           header: '문항수(난이도 하)',
           enableGrouping: false,
           meta: {
@@ -251,7 +201,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
           },
         }),
       ];
-    }, []);
+    }, [questionGenTypeByForm]);
 
     const questionListColumns = useMemo(() => {
       const columnHelper = createColumnHelper<QuestionItemGridRow>();
@@ -334,13 +284,14 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
       ] as ColumnDef<any, QuestionItem>[];
     }, []);
 
-    useImperativeHandle(
-      ref,
-      () => ({
-        update: () => saveBasicInfo?.(getValues()),
-      }),
-      [],
-    );
+    const handleQuestionGenTypeChange = (tabKey: ExamQuestionGenType) => {
+      setQuestionGenType(tabKey);
+      saveBasicInfo?.(getValues());
+    };
+
+    useImperativeHandle(ref, () => ({
+      update: () => saveBasicInfo?.(getValues()),
+    }));
 
     return (
       <form>
@@ -384,7 +335,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
               element={
                 <SegmentedControlFormField
                   items={questionGenTypeOptions}
-                  onChange={(tabKey: ExamQuestionGenType) => setQuestionGenType(tabKey)}
+                  onChange={handleQuestionGenTypeChange}
                 />
               }
             />
@@ -425,7 +376,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
                 }
                 className={styles.info_table}
                 showGuideTextNextLine
-                guideText={t('문항현황은 문항목록에서 문항추가/삭제 시 자동 업데이트 됩니다.')}
+                guideText={questionStatusGuideText}
                 showErrorMessageBesideGuideText={data?.questionCount !== selectedQuestions.length}
                 errorMessageBesideGuideText={t('시험지 문항수와 선택 문항수는 동일해야 합니다.')}
               />

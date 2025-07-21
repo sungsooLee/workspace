@@ -1,36 +1,17 @@
-import { forwardRef, useEffect, useMemo } from 'react';
+import React, { forwardRef, useEffect } from 'react';
 import { useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import dayjs from 'dayjs';
-import { cloneDeepWith } from 'lodash-es';
-import { Company, User } from '@learnway/types';
-import { DynamicFormConfig, DynamicFormValues, useDynamicForm } from '@learnway/hooks';
+import { useDynamicForm2 } from '@learnway/hooks';
 import { cn, isEmptyData } from '@learnway/shared';
-import { ContentsRow, InputModalSelectorFormField, useModal } from '@learnway/ui';
-import {
-  ChannelByRoleId,
-  HtmlVideoDetailRes,
-  HtmlVideoMetadataRes,
-  ProcessingStatus,
-} from '@types';
-import { useUpdateHTML5Metadata } from '@entities/learning-resource';
-import {
-  ChannelChoiceModal,
-  CompanyChoiceModal,
-  FormRow,
-  FormRow2,
-  UserChoiceModal,
-} from '@shared/ui';
-import { FormDisplay } from '@features/form';
-import {
-  DateRangePickerFormField,
-  DurationTimeFormField,
-  MediaContentRequiredCheckFormField,
-} from '@features/form/ui';
-import { getHourValueFromTime, useRoleInfo } from '@pages/_layout/learning/resource/-common/common';
+import { ContentsRow, useModal } from '@learnway/ui';
 import { useFetchAuthUser } from '@learnway/auth/entities';
-import { ContentsHistoryInfo } from '@features/learning-resource/learning-resource-management/ui/contents-history-info';
-import { mediaContentFormConfig } from '../../-common/content-form-config';
+import { HtmlVideoDetailRes, HtmlVideoMetadataRes, ProcessingStatus } from '@types';
+import { useUpdateHTML5Metadata } from '@entities/learning-resource';
+import { ContentsHistoryInfoFormField } from '@shared/ui';
+import { MediaContentRequiredCheckFormField } from '@features/form/ui';
+import { LearningResourceBaseForm } from '@features/learning-resource/learning-resource-management/ui/learning-resource-base-form';
+import { useRoleInfo } from '../../-common/common';
 import { getPayloadFromHtmlMetadataSubmit } from '../-common/form-submit';
 
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
@@ -44,14 +25,7 @@ type HtmlDetailProps = {
 
 const HtmlDetailComponent = forwardRef<HTMLFormElement, HtmlDetailProps>(
   ({ mode, tenantId, data = {}, hasMapping = false }, ref) => {
-    const {
-      provider,
-      onSubmit,
-      getValues,
-      updateFormData,
-      onFormChange: handleFormChange,
-      watch,
-    } = useDynamicForm(formConfig(hasMapping));
+    const { provider, onSubmit, getValues, updateFormData, onFormChange } = useDynamicForm2();
 
     const { data: loginUser } = useFetchAuthUser();
 
@@ -76,31 +50,12 @@ const HtmlDetailComponent = forwardRef<HTMLFormElement, HtmlDetailProps>(
 
     useEffect(() => {
       if (!isEmptyData(data)) {
-        updateFormData({
-          ...getValues(),
-          contentName: data.contentName,
-          languageCountryCode: data.languageCountryCode,
-          channelUuid: data.channelUuid,
-          channelName: data.channelName,
-          description: data.description,
-          coordinatorUuid: data.coordinatorUuid,
-          coordinatorName: (data.coordinatorName ?? '').split('/')[0],
-          coordinatorTelNo: data.coordinatorTelNo,
+        onFormChange({
+          ...data,
           contentUseDate: {
             from: data.contentUseStartDate ? dayjs(data.contentUseStartDate).toDate() : undefined,
             to: data.contentUseEndDate ? dayjs(data.contentUseEndDate).toDate() : undefined,
           },
-          isLimitExist: !data.isUnlimited,
-          contentDuration: { ...getHourValueFromTime(data.contentAddInfo) },
-          isVendored: data.isVendored,
-          vendorName: data.vendorName ?? '',
-          vendorCoordinatorName: data.vendorCoordinatorName ?? '',
-          vendorTelNo: data.vendorTelNo ?? '',
-          isCourseUsed: data.isCourseUsed,
-          isContentSecured: data.isSecured,
-          isInspected: data.isInspected,
-          isCopyrighted: data.isCopyrighted,
-          tags: data.tags,
           aiSummary: data.aiSummary ?? '',
           aiKeyword: data.aiKeyword ?? '',
           resource: data.resource ?? {},
@@ -125,11 +80,7 @@ const HtmlDetailComponent = forwardRef<HTMLFormElement, HtmlDetailProps>(
       },
     });
 
-    const dynamicFormConfig = useMemo(() => formConfig(hasMapping), [hasMapping]);
-
-    const handleSubmit = async (
-      formData: DynamicFormValues<typeof dynamicFormConfig>,
-    ): Promise<void> => {
+    const handleSubmit = async (formData: any): Promise<void> => {
       const { payload } = getPayloadFromHtmlMetadataSubmit({
         data: formData,
         tenantId,
@@ -148,170 +99,19 @@ const HtmlDetailComponent = forwardRef<HTMLFormElement, HtmlDetailProps>(
 
     return (
       <form ref={ref} method="post" onSubmit={onSubmit(handleSubmit)}>
-        <ContentsRow>
-          {/* 채널 */}
-          <FormRow
-            provider={provider}
-            name="channelName"
-            element={
-              <InputModalSelectorFormField
-                modalConfig={{
-                  content: <ChannelChoiceModal />,
-                }}
-                transformModalData={(data: ChannelByRoleId) => ({
-                  channelUuid: data.channelUuid,
-                  channelName: data.channelName,
-                })}
-                onFormChange={(
-                  values: Record<
-                    string,
-                    {
-                      channelUuid: string;
-                      channelName: string;
-                    }
-                  >,
-                ) => {
-                  updateFormData({ ...getValues(), ...values });
-                }}
-                disabled={hasMapping}
-              />
-            }
-          />
-          {/* 언어 */}
-          <FormRow provider={provider} name="languageCountryCode" />
-        </ContentsRow>
-
-        {/* 학습자원명 */}
-        <ContentsRow>
-          <FormRow provider={provider} name="contentName" />
-        </ContentsRow>
-
-        {/* 학습자원 설명 */}
-        <ContentsRow>
-          <FormRow provider={provider} name="description" />
-        </ContentsRow>
-
-        {/* 담당자 */}
-        <ContentsRow>
-          <FormRow
-            provider={provider}
-            name="coordinatorName"
-            element={
-              <InputModalSelectorFormField
-                modalConfig={{
-                  title: '',
-                  width: 'md',
-                  content: <UserChoiceModal title="담당자" />,
-                }}
-                transformModalData={(data: User) => ({
-                  coordinatorUuid: data.uuid,
-                  coordinatorName: `${data.name}/${data?.dept?.deptName}/${data?.company?.name}`,
-                  coordinatorTelNo: data.phoneNumber,
-                })}
-                onFormChange={(
-                  values: Record<
-                    string,
-                    {
-                      coordinatorUuid: string;
-                      coordinatorName: string;
-                      coordinatorTelNo: string;
-                    }
-                  >,
-                ) => {
-                  handleFormChange(values);
-                }}
-              />
-            }
-          />
-          <FormRow2 provider={provider} type="hidden" name="coordinatorUuid" />
-          {/* 담당자 연락처 */}
-          <FormRow provider={provider} name="coordinatorTelNo" />
-        </ContentsRow>
-
-        {/* 사용기한 */}
-        <ContentsRow type="horizontal" className="inactive">
-          <FormRow provider={provider} name="isLimitExist" />
-        </ContentsRow>
-        {/* 사용기한 상세 */}
-        <FormDisplay provider={provider} dependencies={[{ name: 'isLimitExist', value: true }]}>
-          <ContentsRow className="pt-0">
-            <FormRow
-              provider={provider}
-              name="contentUseDate"
-              element={<DateRangePickerFormField />}
-            />
-          </ContentsRow>
-        </FormDisplay>
-
-        {/* 외주개발업체 정보 */}
-        <ContentsRow type="horizontal" className="inactive">
-          <FormRow provider={provider} name="isVendored" />
-        </ContentsRow>
-        {/* 외주개발업체 정보 입력 상세 */}
-        <FormDisplay provider={provider} dependencies={[{ name: 'isVendored', value: true }]}>
-          <ContentsRow className="pt-0">
-            <FormRow
-              provider={provider}
-              name="vendorName"
-              element={
-                <InputModalSelectorFormField
-                  modalConfig={{
-                    title: '',
-                    width: 'md',
-                    content: <CompanyChoiceModal />,
-                  }}
-                  transformModalData={(data: Company) => ({
-                    vendorCode: data.companyId,
-                    vendorName: data.name,
-                  })}
-                  onFormChange={(
-                    values: Record<string, { vendorCode: number; vendorName: string }>,
-                  ) => {
-                    handleFormChange(values);
-                  }}
-                />
-              }
-            />
-            <FormRow2 provider={provider} type="hidden" name="vendorCode" />
-          </ContentsRow>
-          <ContentsRow>
-            <FormRow provider={provider} name="vendorCoordinatorName" />
-            {/*<FormRow2 provider={provider} type="hidden" name="vendorCoordinatorUuid" />*/}
-            <FormRow provider={provider} name="vendorTelNo" />
-          </ContentsRow>
-        </FormDisplay>
-
-        {/* 학습 시간 */}
-        <ContentsRow>
-          <FormRow provider={provider} name="contentDuration" element={<DurationTimeFormField />} />
-        </ContentsRow>
-
-        {/* 태그 */}
-        <ContentsRow>
-          <FormRow provider={provider} name="tags" />
-        </ContentsRow>
-
-        {/* 학습자원 개요 */}
-        <ContentsRow>
-          <FormRow provider={provider} name="aiSummary" />
-        </ContentsRow>
-
-        {/* 키워드 개요 */}
-        <ContentsRow>
-          <FormRow provider={provider} name="aiKeyword" />
-        </ContentsRow>
-
-        {/* 교육자원활용 여부 */}
-        <ContentsRow type="horizontal" className="inactive">
-          <FormRow provider={provider} name="isCourseUsed" />
-        </ContentsRow>
+        <LearningResourceBaseForm
+          provider={provider}
+          showAiInfo
+          showLessonTime
+          hasMapping={hasMapping}
+        />
 
         {/* 필수 확인 영역 */}
         <MediaContentRequiredCheckFormField provider={provider} />
 
         {/* 이력정보 */}
         <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
-          <ContentsHistoryInfo detail={data ?? {}} />
+          <ContentsHistoryInfoFormField provider={provider} />
         </ContentsRow>
       </form>
     );
@@ -322,5 +122,5 @@ HtmlDetailComponent.displayName = 'HtmlDetail';
 
 export const HtmlDetail = HtmlDetailComponent;
 
-const formConfig = (hasMapping: boolean): DynamicFormConfig =>
-  cloneDeepWith(mediaContentFormConfig({ hasMapping }));
+// const formConfig = (hasMapping: boolean): DynamicFormConfig =>
+//   cloneDeepWith(mediaContentFormConfig({ hasMapping }));

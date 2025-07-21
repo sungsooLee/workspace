@@ -1,6 +1,5 @@
 import { getParsedDataFromString } from '@learnway/shared';
-import { BlogCreateReq, BlogUpdateReq, ContentAddInfoType } from '@types';
-import { getTimeValueFromHour } from '../../-common/common';
+import { BlogCreateReq, BlogUpdateReq, ContentAddInfoType, Tag } from '@types';
 
 export const getPayloadFromBlogSubmit = (options: {
   data: any;
@@ -8,10 +7,9 @@ export const getPayloadFromBlogSubmit = (options: {
   mode: 'create' | 'update';
   contentUuid?: string;
 }) => {
-  const contentTime = getTimeValueFromHour(options.data.contentDuration);
-
+  console.log(options.data);
   const payload: BlogCreateReq = {
-    tenantId: options.tenantId,
+    tenantId: options.data.tenantId,
     contentName: options.data.contentName,
     languageCountryCode: options.data.languageCountryCode,
     channelUuid: options.data.channelUuid,
@@ -23,7 +21,7 @@ export const getPayloadFromBlogSubmit = (options: {
     contentUseStartDate: options.data.contentUseDate?.from,
     contentUseEndDate: options.data.contentUseDate?.to,
     isUnlimited: !options.data.isLimitExist,
-    contentTime,
+    contentTime: options.data.contentAddInfo,
     isVendored: options.data.isVendored,
     vendorCode: options.data.vendorCode,
     vendorName: options.data.vendorName,
@@ -37,10 +35,12 @@ export const getPayloadFromBlogSubmit = (options: {
     isSecured: true,
     isDeleted: false,
     isOpened: true,
-    tags: options.data.tags,
+    tags: options.data.tags.map((tag: Tag | string) => ({
+      tagName: typeof tag === 'string' ? tag : tag.tagName,
+    })),
     blogContent: getParsedDataFromString(options.data.blogContent),
     contentAddInfoType: ContentAddInfoType.VIDEO_ADD_INFO, // 블로그(초)
-    contentAddInfo: contentTime,
+    contentAddInfo: options.data.contentAddInfo,
   };
 
   if (options.mode === 'update') {
