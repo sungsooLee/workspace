@@ -315,6 +315,7 @@ export const getDummyCourse4 = (): Course => {
     thumbnailFileGroupUuid: '',
     primaryThumbnailFileUuid: '',
     tagNames: [],
+    tagNameArray: [],
     passOption: {
       progressMinPassScore: 70,
       attendanceMinPassScore: 60,
