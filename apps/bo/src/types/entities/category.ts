@@ -1,6 +1,6 @@
 export interface Category {
   id: number;
-  name: string;
+  categoryName: string;
   categoryType: string;
   sortSeq: number;
   depth: number;
@@ -9,7 +9,7 @@ export interface Category {
 
 export interface Children {
   id: number;
-  name: string;
+  categoryName: string;
   categoryType: string;
   sortSeq: number;
   depth: number;
@@ -17,7 +17,7 @@ export interface Children {
 }
 
 export interface CategoryDetail {
-  name: string;
+  categoryName: string;
   categoryCode: string;
   categoryContent: string;
   categoryPath: string;
@@ -26,7 +26,7 @@ export interface CategoryDetail {
 }
 
 export interface CategoryCreate {
-  name: string;
+  categoryName: string;
   sortSeq: number;
   parentId: number;
   categoryCode: string;
@@ -35,7 +35,7 @@ export interface CategoryCreate {
 }
 
 export interface CategoryUpdate {
-  name: string;
+  categoryName: string;
   categoryCode: string;
   categoryContent: string;
   id: string;

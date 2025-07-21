@@ -145,7 +145,7 @@ export const CategoryManage = () => {
           key: selectedNode.key,
           parentKey: selectedNode.parentKey,
           parentMenuName: detailData.parentCategoryName || selectedNode.parentMenuName,
-          name: detailData.name,
+          categoryName: detailData.categoryName,
           code: { fieldValue: detailData.categoryCode, checkState: DuplicateState.okStart },
           categoryContent: detailData.categoryContent,
           categoryType: 'COMMON',
@@ -182,7 +182,7 @@ export const CategoryManage = () => {
     updateFormData({
       ...initData,
       parentKey: node.menuId,
-      parentMenuName: node.name,
+      parentMenuName: node.categoryName,
       location,
       code: { fieldValue: '', checkState: DuplicateState.okStart },
       categoryType: 'COMMON',
@@ -308,8 +308,9 @@ export const CategoryManage = () => {
 
   const handleOnSubmit = (data: any) => {
     if (formMode === FORM_MODE.VIEW) {
+      console.log(data);
       const body = {
-        name: data.name,
+        categoryName: data.categoryName,
         categoryCode: data.code.fieldValue,
         categoryContent: data.categoryContent,
         id: data.key,
@@ -319,7 +320,7 @@ export const CategoryManage = () => {
       return;
     } else if (formMode === FORM_MODE.ADD) {
       const body = {
-        name: data.name,
+        categoryName: data.categoryName,
         categoryCode: data.code.fieldValue,
         categoryContent: data.categoryContent,
         categoryType: 'COMMON',
@@ -525,7 +526,7 @@ export const CategoryManage = () => {
             <ContentsRow>
               <FormRow
                 provider={provider}
-                name={'name'}
+                name={'categoryName'}
                 element={
                   <Input
                     disabled={formMode === FORM_MODE.NONE}
@@ -598,7 +599,7 @@ const formConfig: DynamicFormConfig = {
     },
     {
       label: () => t('LABEL.form.input.categoryCodeName'),
-      name: 'name',
+      name: 'categoryName',
       type: 'text',
       maxLength: 20,
       value: '',

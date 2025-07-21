@@ -22,9 +22,15 @@ export default class CategoryService {
     return httpService.post<any>(`${LMSApiPrefix()}/category/save`, category);
   }
 
-  static updateCategory({ name, categoryCode, categoryContent, id, isUsed }: CategoryUpdate) {
+  static updateCategory({
+    categoryName,
+    categoryCode,
+    categoryContent,
+    id,
+    isUsed,
+  }: CategoryUpdate) {
     const body = {
-      name,
+      categoryName,
       categoryCode,
       categoryContent,
       isUsed,

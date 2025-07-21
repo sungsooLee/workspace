@@ -22,7 +22,7 @@ export const transformApiDataToTreeData = (apiData: any) => {
         ...node,
         // 필수 트리 속성
         key: node.id?.toString(),
-        title: node.name,
+        title: node.name || node.categoryName,
         children: node.children || [],
         isUsed: true, // TODO
         menuId: node.id?.toString(),
