@@ -338,7 +338,7 @@ function RouteComponent() {
                           size="lx"
                           onClick={() =>
                             openModal({
-                              width: 'sm',
+                              width: isMobile ? 'm_full' : 'sm',
                               content: <AddressPopup />,
                             })
                           }
@@ -532,7 +532,7 @@ function RouteComponent() {
               size="xl"
               onClick={() =>
                 openModal({
-                  width: 'sm',
+                  width: isMobile ? 'm_bottom_sheet' : 'sm',
                   content: <AddressConfirmationPopup />,
                 })
               }

@@ -19,8 +19,26 @@ const CategoryPopupComponent = () => {
     <Chip option={{ label: '경영/기획', value: 'e' }} />,
   ];
 
+  type MainItem = { id: number; label: string };
   type SubItem = { id: number; label: string; link: string };
   type MenuItem = { id: number; label: string; subItems?: SubItem[]; link: string };
+
+  const mainData: MainItem[] = [
+    { id: 1, label: '기업경영' },
+    { id: 2, label: '리더십/비즈스킬' },
+    { id: 3, label: '어학' },
+    { id: 4, label: 'HR/총무' },
+    { id: 5, label: '경영/기획' },
+    { id: 6, label: '고객서비스' },
+    { id: 7, label: '마케팅 및 세일즈' },
+    { id: 8, label: '법무/보안' },
+    { id: 9, label: '생산' },
+    { id: 10, label: '서비스' },
+    { id: 11, label: '연구개발' },
+    { id: 12, label: '품질' },
+    { id: 13, label: '안전' },
+    { id: 14, label: '기타' },
+  ];
 
   const menuData: MenuItem[] = [
     {
@@ -44,6 +62,12 @@ const CategoryPopupComponent = () => {
     },
   ];
 
+  const [activeId, setActiveId] = useState<number>(mainData[0].id);
+
+  const menuHandleClick = (id: number) => {
+    setActiveId(id);
+  };
+
   const firstMenuWithSub = menuData.find((item) => item.subItems)?.id ?? null;
   const [openId, setOpenId] = useState<number | null>(firstMenuWithSub);
 
@@ -63,58 +87,25 @@ const CategoryPopupComponent = () => {
             <div className={styles.menu_list_wrap}>
               <div className={styles.scroll_box}>
                 <ul className={styles.menu_list}>
-                  <li>
-                    {/* 버튼 활성화 시 active 추가 */}
-                    <Button
-                      className={styles.active}
-                      label={'기업경영'}
-                      icon={
-                        <IcoArrowForward
-                          className={styles.ico_arrow}
-                          width={16}
-                          height={16}
-                          stroke="#07287E"
-                        />
-                      }
-                    />
-                  </li>
-                  <li>
-                    <Button label={'리더십/비즈스킬'} />
-                  </li>
-                  <li>
-                    <Button label={'어학'} />
-                  </li>
-                  <li>
-                    <Button label={'IT'} />
-                  </li>
-                  <li>
-                    <Button label={'HR/총무'} />
-                  </li>
-                </ul>
-                <ul className={styles.menu_list}>
-                  <li>
-                    <Button label={'경영/기획'} />
-                  </li>
-                  <li>
-                    <Button label={'고객 서비스'} />
-                  </li>
-                  <li>
-                    <Button label={'마케팅 및 세일즈'} />
-                  </li>
-                  <li>
-                    <Button label={'법무/보안'} />
-                  </li>
-                  <li>
-                    <Button label={'생산'} />
-                  </li>
-                </ul>
-                <ul className={styles.menu_list}>
-                  <li>
-                    <Button label={'서비스'} />
-                  </li>
-                  <li>
-                    <Button label={'연구개발'} />
-                  </li>
+                  {mainData.map((item) => (
+                    <li key={item.id}>
+                      <Button
+                        className={activeId === item.id ? styles.active : ''}
+                        label={item.label}
+                        icon={
+                          activeId === item.id && (
+                            <IcoArrowForward
+                              className={styles.ico_arrow}
+                              width={16}
+                              height={16}
+                              stroke="#07287E"
+                            />
+                          )
+                        }
+                        onClick={() => menuHandleClick(item.id)}
+                      />
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>
