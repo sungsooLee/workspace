@@ -262,6 +262,7 @@ export const useDynamicForm = <T extends DynamicFormConfig>(config: T): UseDynam
     setValue,
     clearFormError: clearErrors,
     formState,
+    formValues: getValues(),
     onFormChange,
     onFormFocus: handleFocus,
     control: extendedControl,
