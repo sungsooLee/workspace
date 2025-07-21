@@ -32,13 +32,14 @@ const ChipListFormFieldComponent = forwardRef<HTMLDivElement, ChipListFormFieldP
      * 입력된 텍스트가 기존 값 배열에 중복되지 않는 경우, 새로운 칩을 추가하고 `onChange` 콜백 함수를 호출합니다.
      * value 가 Array<string> 형태만 해당 함수 사용 해야함
      * @function handleAddInputEnterKeyDown
-     * @param {string} text - 입력된 텍스트 값
+     * @param {any} option - 입력된 option 객체
      * @returns {void}
      */
-    const handleAddInputEnterKeyDown = (text: string) => {
-      // 중복 아닌 경우
-      if (!value?.includes(text)) {
-        const newValue = [...value, text];
+    const handleAddInputEnterKeyDown = (option: any) => {
+      const labelField = chipListConfig?.labelField || 'label';
+      const isExist = value?.some((d: any) => d[labelField] === option[labelField]);
+      if (!isExist) {
+        const newValue = [...value, option];
         onChange(newValue);
       }
     };
