@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useState } from 'react';
 
 import { Button, ButtonComponentProps } from '../../button/button';
 import { useModal } from '../../modal/modal.hook';
@@ -20,6 +20,9 @@ export interface ListModalSelectorFormFieldProps extends BaseFormFieldProps<any[
   listConfig?: Partial<ListProps>;
   /** 모달에서 받은 데이터를 조작하는 함수 (onFormChange 시 사용) */
   transformModalData?: (modalData?: any) => void;
+  /** 선택 option 항목을 표시하기위해 */
+  selectedValue: string | number;
+  onSelected: (option: any) => void;
 }
 
 /**
@@ -41,11 +44,15 @@ const ListModalSelectorFormFieldComponent = forwardRef<
       button: buttonProps,
       transformModalData,
       listConfig,
+      selectedValue,
       control,
+      onSelected,
     },
     ref,
   ) => {
     const { open: openModal } = useModal();
+
+    // const [selectedValue, setSelectedValue] = useState<any>();
 
     const valueField = listConfig?.valueField || 'value';
 
@@ -68,6 +75,12 @@ const ListModalSelectorFormFieldComponent = forwardRef<
       const transformData = transformModalData && data ? transformModalData(data) : data;
       console.log(transformData);
       transformData && appendSelectedChipOptions(transformData);
+    };
+
+    // 리스트 항목 선택시 selectedValue 스테디트 저장
+    const handleOptionSelect = (option: any) => {
+      // setSelectedValue((state: any) => option[valueField]);
+      onSelected?.(option);
     };
 
     // 리스트의 항목 삭제 버튼 클릭 시 value에서 해당 항목 제거
@@ -103,6 +116,8 @@ const ListModalSelectorFormFieldComponent = forwardRef<
           {...listConfig}
           className={styles.list}
           options={value}
+          value={selectedValue}
+          onOptionSelect={handleOptionSelect}
           onOptionDeleteClick={handleOptionDeleteClick}
         />
       </div>

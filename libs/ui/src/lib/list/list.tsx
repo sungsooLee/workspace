@@ -215,7 +215,7 @@ const SortableItem = ({
       onClick={(event: React.MouseEvent) => onClick?.(event, item)}
     >
       <div className={cn(styles.inner, showItemBorder && styles.line)}>
-        {checkable ? <Checkbox variant="radio" checked={isSelected} /> : null}
+        {checkable ? <Checkbox variant="radio" checked={!!isSelected} /> : null}
 
         {/* selectedNodeBeforeLabel */}
         {isSelected && selectedNodeBeforeLabel}
