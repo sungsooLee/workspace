@@ -52,7 +52,10 @@ export const CurriculumTree: React.FC<CurriculumTreeProps> = ({
       return renderCustomTreeButtons(() => onAddNode(MAPPING_CURRICULUM_TYPE.CURRICULUM, null));
     } else if (mode === FORM_MODE.detail && curriculumId > 0) {
       // curriculumId가 있는 경우 불러오기 버튼만 표시
-      return renderCustomTreeButtons(() => onAddNode(MAPPING_CURRICULUM_TYPE.CURRICULUM, null), true);
+      return renderCustomTreeButtons(
+        () => onAddNode(MAPPING_CURRICULUM_TYPE.CURRICULUM, null),
+        true,
+      );
     }
   };
 
@@ -79,6 +82,7 @@ export const CurriculumTree: React.FC<CurriculumTreeProps> = ({
               ? '로딩 중...'
               : '데이터가 없습니다.'
         }
+        isBasicInfo={mode === FORM_MODE.detail}
       />
     </TreeContainer>
   );

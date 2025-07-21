@@ -33,7 +33,6 @@ const ContentChoiceModalSelectorComponent = forwardRef<
       onChange,
       onFormChange,
       transformModalData,
-      transformComplexData,
       ...props
     },
     ref,
@@ -43,20 +42,12 @@ const ContentChoiceModalSelectorComponent = forwardRef<
     const handleModalOpen = async () => {
       const data = await openModal(modalConfig);
       const transformData = transformModalData ? transformModalData(data) : data;
-      console.log('modal data', data, transformData);
       onFormChange?.(transformData);
-      // 복합 서치일 경우에
-      if (transformComplexData) transformComplexData?.(transformData);
     };
 
     const handleClear = () => {
-      console.log('clear ----------------------', value);
-      // 값 초기화시 transformModalData 함수 호출 - 모달 선택시 transformModalData 통해 추가 설정한 데이터를 모두 초기화 하기 위해
       const transformData = transformModalData ? transformModalData({}) : { [props.name]: '' };
       onFormChange?.(transformData);
-
-      // const clearEvent = { target: { value: '' } } as any;
-      // onChange?.(clearEvent);
     };
 
     return (

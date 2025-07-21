@@ -245,6 +245,7 @@ export interface TreeBoxProps extends Omit<TreeProps, 'expandedKeys' | 'onExpand
   renderNodeButtons?: (node: TreeNode, level: number) => React.ReactNode;
   handleSelectedNodeChange?: (node: TreeNode) => void;
   customButtonNode?: React.ReactNode;
+  isBasicInfo?: boolean; // 트리 기본 정보 표시 여부
   showTotalCount?: boolean;
 
   // 확장된 키 관리 (외부에서 제어할 때만 사용)

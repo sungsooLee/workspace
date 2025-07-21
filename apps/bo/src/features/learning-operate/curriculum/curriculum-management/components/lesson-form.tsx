@@ -209,7 +209,7 @@ export const LessonForm: React.FC<LessonFormProps> = ({
                       <ResourceChoiceModal
                         initialTenantId={curriculumData?.tenantId}
                         initialChannelUuid={curriculumData?.channelUuid}
-                        // initialContentType={curriculumData?.contentType}
+                        initialContentType={provider.getValues('contentType') || ''}
                       />
                     ),
                   }}

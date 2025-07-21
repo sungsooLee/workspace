@@ -45,12 +45,12 @@ const TreeBoxComponent: React.FC<TreeBoxProps> = ({
   emptyMessage,
   disableOptimisticUpdate,
   renderNodeDragHandle,
+  isBasicInfo = false,
 }) => {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [internalExpandedKeys, setInternalExpandedKeys] = useState<string[]>([]);
 
   const hasExternalKeys = externalExpandedKeys !== undefined && externalExpandedKeys !== null;
-  const treeDataLength = getAllKeysByTree(data);
 
   // 실제 사용할 expandedKeys 결정
   const expandedKeys = hasExternalKeys ? externalExpandedKeys : internalExpandedKeys;
@@ -76,7 +76,6 @@ const TreeBoxComponent: React.FC<TreeBoxProps> = ({
 
     if (data && Array.isArray(data) && data.length > 0 && initLevel !== undefined) {
       const initialExpandedKeys = getKeysByLevel(data, initLevel);
-      console.log(initialExpandedKeys);
       if (initialExpandedKeys && initialExpandedKeys.length > 0) {
         // 외부 제어 모드
         if (hasExternalKeys) {
@@ -106,6 +105,34 @@ const TreeBoxComponent: React.FC<TreeBoxProps> = ({
     handleExpandedKeysChange(closeLevelKeys || []);
   };
 
+  const handleTreeBasic = () => {
+    return (
+      <>
+        <Button
+          variant="text"
+          size="sm"
+          className={'btn_text'}
+          onClick={() => {
+            if (data) {
+              handleExpandAll();
+            }
+          }}
+        >
+          {t('LABEL.tree.expand')}
+        </Button>
+        <Button
+          variant="text"
+          size="sm"
+          className={'btn_text'}
+          onClick={() => {
+            handleCollapseToLevel();
+          }}
+        >
+          {t('LABEL.tree.closed')}
+        </Button>
+      </>
+    );
+  };
   return (
     <div className={cn(styles.auth_wrap)}>
       <div
@@ -127,7 +154,10 @@ const TreeBoxComponent: React.FC<TreeBoxProps> = ({
         </div>
         <div className={subTitleStyles.input_area}>
           {customButtonNode ? (
-            <>{customButtonNode}</>
+            <>
+              {customButtonNode}
+              {isBasicInfo && handleTreeBasic()}
+            </>
           ) : (
             <>
               {showSearchKeyword && (
@@ -148,28 +178,7 @@ const TreeBoxComponent: React.FC<TreeBoxProps> = ({
                   />
                 </>
               )}
-              <Button
-                variant="text"
-                size="sm"
-                className={'btn_text'}
-                onClick={() => {
-                  if (data) {
-                    handleExpandAll();
-                  }
-                }}
-              >
-                {t('LABEL.tree.expand')}
-              </Button>
-              <Button
-                variant="text"
-                size="sm"
-                className={'btn_text'}
-                onClick={() => {
-                  handleCollapseToLevel();
-                }}
-              >
-                {t('LABEL.tree.closed')}
-              </Button>
+              {handleTreeBasic()}
             </>
           )}
         </div>

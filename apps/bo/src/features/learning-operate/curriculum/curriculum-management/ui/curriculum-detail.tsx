@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FormSubTitle, useModal } from '@learnway/ui';
 import { SectionLayout } from '@shared/ui';
 import { FORM_MODE } from '@shared/const';
@@ -135,6 +135,18 @@ const CurriculumDetailComponent = ({
       });
     }
   };
+
+  useEffect(() => {
+    if (mode === FORM_MODE.detail && curriculumId > 0 && curriculumDetail && treeData.length > 0) {
+      const curriculumNode = treeData.find(
+        (node) => node.parentId === null || node.parentId === undefined,
+      );
+
+      if (curriculumNode && !formState.selectedNode) {
+        handleNodeSelect(curriculumNode);
+      }
+    }
+  }, [mode, curriculumId, curriculumDetail, treeData, formState.selectedNode, handleNodeSelect]);
 
   return (
     <SectionLayout contentsRatio="half">
