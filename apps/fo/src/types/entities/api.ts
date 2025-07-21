@@ -1,3 +1,11 @@
+export interface SortRequest {
+  direction: string;
+  nullHandling: string;
+  ascending: boolean;
+  property: string;
+  ignoreCase: boolean;
+}
+
 export interface SortResponse {
   empty: boolean;
   sorted: boolean;
