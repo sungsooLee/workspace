@@ -148,8 +148,8 @@ const MovieInfoComponent = ({ provider }: MovieInfoProps) => {
         <>
           <ul className={style.btn_list}>
             {buttons.map((btn, index) => (
-              <li>
-                <Button key={index} onClick={btn.onClick} className={style.btn_text}>
+              <li key={index}>
+                <Button onClick={btn.onClick} className={style.btn_text}>
                   {btn.label}
                 </Button>
               </li>
