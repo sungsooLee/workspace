@@ -1,4 +1,4 @@
-import { forwardRef, useCallback, useImperativeHandle, useMemo } from 'react';
+import { forwardRef, ReactNode, useCallback, useImperativeHandle, useMemo } from 'react';
 import { t } from 'i18next';
 import { cn, isEmptyData } from '@learnway/shared';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
@@ -14,6 +14,8 @@ import {
 import { IcoCopy, IcoMenu01, IcoMinus, IcoPlus } from '@learnway/icons';
 import {
   ContentInformation,
+  EnQuestionLevel,
+  EnQuestionType,
   ExamQuestionGenType,
   QuestionItem,
   QuestionItemGridRow,
@@ -50,7 +52,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
   ) => {
     const { provider: basicInfoProvider, getValues, saveBasicInfo } = basicInfoForm;
 
-    const { questionList, selectedQuestions, scorePerQuestion, createQuestionItem } =
+    const { questionList, selectedQuestions, questionState, scorePerQuestion, createQuestionItem } =
       useExamQuestionInfoInput(data as TestPaperBasicInfoDetail);
 
     const questionGenTypeOptions = useMemo(
@@ -86,38 +88,121 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
       }
     }, [data]);
 
-    const arr: any[] = [
-      {
-        title: <strong>객관식</strong>,
-        hard: <Input value={'0'} readOnly />,
-        medium: <Input value={'0'} readOnly />,
-        easy: <Input value={'0'} readOnly />,
-      },
-      {
-        title: <strong>OX</strong>,
-        hard: <Input value={'0'} readOnly />,
-        medium: <Input value={'0'} readOnly />,
-        easy: <Input value={'0'} readOnly />,
-      },
-      {
-        title: <strong>다답식</strong>,
-        hard: <Input value={'0'} readOnly />,
-        medium: <Input value={'0'} readOnly />,
-        easy: <Input value={'0'} readOnly />,
-      },
-      {
-        title: <strong>단답식</strong>,
-        hard: <Input value={'0'} readOnly />,
-        medium: <Input value={'0'} readOnly />,
-        easy: <Input value={'0'} readOnly />,
-      },
-      {
-        title: <strong>주관식</strong>,
-        hard: <Input value={'0'} readOnly />,
-        medium: <Input value={'0'} readOnly />,
-        easy: <Input value={'0'} readOnly />,
-      },
-    ];
+    const questionStates: {
+      title: ReactNode;
+      hard: ReactNode;
+      medium: ReactNode;
+      easy: ReactNode;
+    }[] = useMemo(
+      () => [
+        {
+          title: <strong>객관식</strong>,
+          hard: (
+            <Input
+              value={questionState[EnQuestionType.SINGLE]?.[EnQuestionLevel.HARD] ?? '0'}
+              readOnly
+            />
+          ),
+          medium: (
+            <Input
+              value={questionState[EnQuestionType.SINGLE]?.[EnQuestionLevel.MEDIUM] ?? '0'}
+              readOnly
+            />
+          ),
+          easy: (
+            <Input
+              value={questionState[EnQuestionType.SINGLE]?.[EnQuestionLevel.EASY] ?? '0'}
+              readOnly
+            />
+          ),
+        },
+        {
+          title: <strong>OX</strong>,
+          hard: (
+            <Input
+              value={questionState[EnQuestionType.OX]?.[EnQuestionLevel.HARD] ?? '0'}
+              readOnly
+            />
+          ),
+          medium: (
+            <Input
+              value={questionState[EnQuestionType.OX]?.[EnQuestionLevel.MEDIUM] ?? '0'}
+              readOnly
+            />
+          ),
+          easy: (
+            <Input
+              value={questionState[EnQuestionType.OX]?.[EnQuestionLevel.EASY] ?? '0'}
+              readOnly
+            />
+          ),
+        },
+        {
+          title: <strong>다답식</strong>,
+          hard: (
+            <Input
+              value={questionState[EnQuestionType.MULTIPLE]?.[EnQuestionLevel.HARD] ?? '0'}
+              readOnly
+            />
+          ),
+          medium: (
+            <Input
+              value={questionState[EnQuestionType.MULTIPLE]?.[EnQuestionLevel.MEDIUM] ?? '0'}
+              readOnly
+            />
+          ),
+          easy: (
+            <Input
+              value={questionState[EnQuestionType.MULTIPLE]?.[EnQuestionLevel.EASY] ?? '0'}
+              readOnly
+            />
+          ),
+        },
+        {
+          title: <strong>단답식</strong>,
+          hard: (
+            <Input
+              value={questionState[EnQuestionType.SHORT_ANSWER]?.[EnQuestionLevel.HARD] ?? '0'}
+              readOnly
+            />
+          ),
+          medium: (
+            <Input
+              value={questionState[EnQuestionType.SHORT_ANSWER]?.[EnQuestionLevel.MEDIUM] ?? '0'}
+              readOnly
+            />
+          ),
+          easy: (
+            <Input
+              value={questionState[EnQuestionType.SHORT_ANSWER]?.[EnQuestionLevel.EASY] ?? '0'}
+              readOnly
+            />
+          ),
+        },
+        {
+          title: <strong>주관식</strong>,
+          hard: (
+            <Input
+              value={questionState[EnQuestionType.ESSAY]?.[EnQuestionLevel.HARD] ?? '0'}
+              readOnly
+            />
+          ),
+          medium: (
+            <Input
+              value={questionState[EnQuestionType.ESSAY]?.[EnQuestionLevel.MEDIUM] ?? '0'}
+              readOnly
+            />
+          ),
+          easy: (
+            <Input
+              value={questionState[EnQuestionType.ESSAY]?.[EnQuestionLevel.EASY] ?? '0'}
+              readOnly
+            />
+          ),
+        },
+      ],
+      [questionState],
+    );
 
     const questionSummaryColumns = useMemo(() => {
       const columnHelper = createColumnHelper<QuestionStatisticRow>();
@@ -296,7 +381,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
             <div className={styles.table_wrap}>
               <GridBox
                 title=" "
-                data={arr}
+                data={questionStates}
                 columns={questionSummaryColumns}
                 showTotalCount={false}
                 disabledSelectionToggle
