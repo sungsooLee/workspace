@@ -109,89 +109,81 @@ function RouteComponent() {
   console.log('------- view.lazy page...');
 
   return (
-    <form>
-      <PageContainer hideOutLine={true}>
-        <ContentsButtons>
-          <ToggleButtonGroup
-            defaultValue={'과정관리value'}
-            options={[
-              { label: '과정관리', value: '과정관리value' },
-              { label: '수강관리', value: '수강관리value' },
-            ]}
-            onClick={(value) =>
-              router.navigate({
-                to: `/learning/learning-sequence/enrollment-application`,
-                state: {
-                  // courseId: '',
-                  // courseName: ''
-                },
-              })
-            }
-          />
-          <Button
-            type="button"
-            variant="point"
-            size="sm"
-            label={'Tab Values'}
-            onClick={() => console.log('getTabValues', getTabValues())}
-          />
-          <Button
-            type="button"
-            variant="point"
-            size="sm"
-            label={'SET'}
-            // onClick={() => loadMockData(4)}
-          />
-          <Button
-            type="button"
-            variant="point"
-            size="sm"
-            label={'과정 번역'}
-            onClick={() => console.log('과정 번역')}
-          />
-          <Button
-            type="button"
-            variant="point"
-            size="sm"
-            label={'과정 복사'}
-            onClick={() => console.log('과정 복사')}
-          />
-          <Button
-            type="button"
-            variant="point"
-            size="sm"
-            label={'목록'}
-            onClick={handleListClick}
-          />
-          <Divider orientation={'vertical'} />
-          <Button
-            type="button"
-            variant="point"
-            size="sm"
-            label={'삭제'}
-            onClick={handleDeleteClick}
-            disabled={!courseId}
-          />
-          <Button
-            type="button"
-            variant="primary"
-            size="sm"
-            label={'저장'}
-            onClick={handleSaveClick}
-          />
-        </ContentsButtons>
-        <MainContents>
-          <Tabs
-            type={'fill'}
-            size={'sm'}
-            items={tabItems}
-            onTabChange={handleTabChange}
-            selectedTabKey={activeTab}
-            showContentBorder={true}
-            // onBeforeTabChange={async (currentTabKey, nextTabKey) => await saveConfirm()}
-          />
-        </MainContents>
-      </PageContainer>
-    </form>
+    <PageContainer hideOutLine={true}>
+      <ContentsButtons>
+        <ToggleButtonGroup
+          defaultValue={'과정관리value'}
+          options={[
+            { label: '과정관리', value: '과정관리value' },
+            { label: '수강관리', value: '수강관리value' },
+          ]}
+          onClick={(value) =>
+            router.navigate({
+              to: `/learning/learning-sequence/enrollment-application`,
+              state: {
+                // courseId: '',
+                // courseName: ''
+              },
+            })
+          }
+        />
+        <Button
+          type="button"
+          variant="point"
+          size="sm"
+          label={'Tab Values'}
+          onClick={() => console.log('getTabValues', getTabValues())}
+        />
+        <Button
+          type="button"
+          variant="point"
+          size="sm"
+          label={'SET'}
+          // onClick={() => loadMockData(4)}
+        />
+        <Button
+          type="button"
+          variant="point"
+          size="sm"
+          label={'과정 번역'}
+          onClick={() => console.log('과정 번역')}
+        />
+        <Button
+          type="button"
+          variant="point"
+          size="sm"
+          label={'과정 복사'}
+          onClick={() => console.log('과정 복사')}
+        />
+        <Button type="button" variant="point" size="sm" label={'목록'} onClick={handleListClick} />
+        <Divider orientation={'vertical'} />
+        <Button
+          type="button"
+          variant="point"
+          size="sm"
+          label={'삭제'}
+          onClick={handleDeleteClick}
+          disabled={!courseId}
+        />
+        <Button
+          type="button"
+          variant="primary"
+          size="sm"
+          label={'저장'}
+          onClick={handleSaveClick}
+        />
+      </ContentsButtons>
+      <MainContents>
+        <Tabs
+          type={'fill'}
+          size={'sm'}
+          items={tabItems}
+          onTabChange={handleTabChange}
+          selectedTabKey={activeTab}
+          showContentBorder={true}
+          // onBeforeTabChange={async (currentTabKey, nextTabKey) => await saveConfirm()}
+        />
+      </MainContents>
+    </PageContainer>
   );
 }
