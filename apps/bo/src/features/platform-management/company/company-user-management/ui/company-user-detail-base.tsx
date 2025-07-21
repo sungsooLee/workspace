@@ -2,7 +2,7 @@ import { DuplicateState } from '@features/form';
 import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { ContentsRow, FormSubTitle, GridBox, Input } from '@learnway/ui';
-import { ContentsHistoryInfoFormField, FormRow } from '@shared/ui';
+import { ContentsHistoryInfoFormField, FormItem, FormRow } from '@shared/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { EnFormMode, EnGlobalConst } from '@types';
 import { t } from 'i18next';
@@ -12,6 +12,7 @@ import { CompanyUserDetailAccount } from './company-user-detail-account';
 import { CompanyUserDetailAuthentication } from './company-user-detail-auth';
 import { CompanyUserDetailJob } from './company-user-detail-job';
 import { CompanyUserDetailPersonal } from './company-user-detail-personal';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 
 interface CompanyUserDetailBaseProps {
   userInfo: any;
@@ -54,8 +55,14 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
           ? getDateToString(new Date(user.dormantDate), DATE_TIME_FORMAT.DATETIME_SEC)
           : '-',
         tenantList: user.tenants,
+        hrInfoManageType: user.hrInfoManageType ? user.hrInfoManageType : 'MANUAL_MANAGE',
+        companyMemberJoinTypeList: user.companyMemberJoinTypeList ? user.companyMemberJoinTypeList : ['BO_JOIN_MANAGER'],
         isUseSso: true,
+        ssoTypeList: user.ssoTypeList ? user.ssoTypeList : 'AES_Link',
+        isUseTwoFactorAuth: user.isUseTwoFactorAuth ? user.isUseTwoFactorAuth : true,
+        twoFactorAuthPlatformTypeList: user.twoFactorAuthPlatformTypeList ? user.twoFactorAuthPlatformTypeList : ['BO_PLATFORM'],
       };
+
       updateFormData(initialData);
     }
   }, [props.userInfo]);
@@ -94,17 +101,22 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
       <ContentsRow>
         <FormRow provider={provider} name={'companyName'} element={<Input readOnly={true} />} />
         <FormRow provider={provider} name={'deptName'} element={<Input readOnly={true} />} />
-        <FormRow provider={provider} name={'position'} element={<Input readOnly={true} />} />
+        <FormItem />
       </ContentsRow>
       <ContentsRow>
+        <FormRow provider={provider} name={'position'} element={<Input readOnly={true} />} />
         <FormRow provider={provider} name={'positionName'} element={<Input readOnly={true} />} />
         <FormRow provider={provider} name={'jobDomain'} element={<Input readOnly={true} />} />
-        <FormRow provider={provider} name={'joinDate'} element={<Input readOnly={true} />} />
       </ContentsRow>
       <ContentsRow>
+        <FormRow provider={provider} name={'joinDate'} element={<Input readOnly={true} />} />
         <FormRow provider={provider} name={'retireDate'} element={<Input readOnly={true} />} />
         <FormRow provider={provider} name={'promotionDate'} element={<Input readOnly={true} />} />
+      </ContentsRow>
+      <ContentsRow>
         <FormRow provider={provider} name={'userStatus'} />
+        <FormRow provider={provider} name={'userModifyDate'} element={<Input disabled={true} />} />
+        <FormItem />
       </ContentsRow>
       {/* 직군/직무 정보 */}
       <CompanyUserDetailJob provider={provider} />
@@ -149,6 +161,7 @@ const formConfig = (): DynamicFormConfig => ({
       value: { fieldValue: '', checkState: DuplicateState.needInput },
       format: 'object',
       placeholder: ' ',
+      disabled: true
     },
     {
       name: 'birthday',
@@ -176,21 +189,9 @@ const formConfig = (): DynamicFormConfig => ({
     {
       label: t('휴대폰 번호'),
       name: 'phoneNumber',
-      type: 'phone-number',
-      format: 'string',
+      type: 'text',
+      format: 'number',
       value: '',
-      fields: {
-        nationCode: 'phoneNationNumber',
-        number: 'phoneNumber',
-      },
-      placeholder: '',
-    },
-    {
-      label: '',
-      name: 'phoneNationNumber',
-      type: 'hidden',
-      format: 'string',
-      value: 'KOR_82',
     },
     {
       label: t('연락처 (사무실)'),
@@ -275,6 +276,13 @@ const formConfig = (): DynamicFormConfig => ({
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.user.Status'],
       },
+    },
+    {
+      name: 'userModifyDate',
+      type: 'text',
+      label: t('재직 상태 변경일'),
+      value: '',
+      placeholder: ' ',
     },
     {
       name: 'hrInfoManageType',
