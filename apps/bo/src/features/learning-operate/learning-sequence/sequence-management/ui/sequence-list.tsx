@@ -45,7 +45,7 @@ import { useActiveMenuDepthState, useFetchAuthUser } from '@learnway/auth/entiti
 import dayjs from 'dayjs';
 import { getRandomId } from '@learnway/shared';
 import { SequenceBatchModal } from '@features/learning-operate/learning-sequence/sequence-management';
-import { DateTimeRangePickerFormField, DropdownFormField } from '@features/form';
+import { DateRangePickerFormField, DropdownFormField } from '@features/form';
 import { EditInputDateCell } from '../component/edit-input-date-cell';
 import { CopyBatchButtons } from '../component/copy-batch-buttons';
 import { Mode } from '@pages/_layout/learning/learning-sequence/-common/type';

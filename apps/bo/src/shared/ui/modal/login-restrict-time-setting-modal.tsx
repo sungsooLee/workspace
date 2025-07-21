@@ -16,7 +16,7 @@ import {
   GridFormField,
   DateRange,
 } from '@learnway/ui';
-import { DateRangeFormField } from '@shared/ui/search-box';
+
 import { CellContext } from '@tanstack/react-table';
 import { useDynamicForm, DynamicFormConfig, useCodeStore, CODE_GROUP } from '@learnway/hooks';
 import { FormRow } from '@shared/ui';
@@ -24,6 +24,7 @@ import { formUtils } from '@entities/form-utils';
 import { EnFormMode } from '@types';
 
 import dayjs from 'dayjs';
+import { DateRangePickerFormField } from '@features/form';
 
 const LoginRestrictTimeSettingModalComponent: FC<any> = ({
   mode = EnFormMode.ADD,
@@ -191,7 +192,7 @@ const LoginRestrictTimeSettingModalComponent: FC<any> = ({
             <FormRow
               provider={provider}
               name={'restrictionDate'}
-              element={<DateRangeFormField />}
+              element={<DateRangePickerFormField />}
             />
           </ContentsRow>
           <ContentsRow>

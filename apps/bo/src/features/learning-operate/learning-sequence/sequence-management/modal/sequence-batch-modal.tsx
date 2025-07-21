@@ -23,13 +23,13 @@ import {
 import { EnPageMode } from '@types';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { DateRangeFormField, FormRow, FormRow2, SwitchFormField } from '@shared/ui';
+import { FormRow, FormRow2, SwitchFormField } from '@shared/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 
 import { cn, SelectOption } from '@learnway/shared';
 
-import { DateTimeRangePickerFormField } from '@features/form';
+import { DateRangePickerFormField } from '@features/form';
 
 export interface SequenceBatchModalComponentProps {
   selectedItems: object[];
@@ -241,7 +241,7 @@ const SequenceBatchModalComponent = ({ selectedItems }: SequenceBatchModalCompon
                   <FormRow
                     provider={provider}
                     name="regDate"
-                    element={<DateTimeRangePickerFormField />}
+                    element={<DateRangePickerFormField />}
                   />
                 </ContentsRow>
               )}
@@ -262,7 +262,7 @@ const SequenceBatchModalComponent = ({ selectedItems }: SequenceBatchModalCompon
                                 provider={provider}
                                 name={'eduDate1'}
                                 value={''}
-                                element={<DateTimeRangePickerFormField />}
+                                element={<DateRangePickerFormField />}
                               />
                             ),
                           },
