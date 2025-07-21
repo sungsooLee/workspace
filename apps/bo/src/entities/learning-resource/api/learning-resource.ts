@@ -10,6 +10,7 @@ import {
   GetContentDetailRes,
   GetContentsParams,
   GetContentsRes,
+  GetVideoFileChangeRes,
   GetVideoResourceRes,
   GetVideoStatusRes,
   HtmlVideoFileChangeReq,
@@ -19,6 +20,8 @@ import {
   PostDraftHtmlVideoParams,
   PostDraftVideosParams,
   PostDraftVideosRes,
+  PutVideoChangeParams,
+  PutVideoChangeRes,
   QuestionItem,
   QuestionItemDeleteParam,
   QuestionStatusUpdateReq,
@@ -68,6 +71,10 @@ export default class LearningResourceService {
 
   static postDraftVideos(params: PostDraftVideosParams): Promise<PostDraftVideosRes> {
     return httpService.post(`${CMSApiPrefix()}/videos/draft`, params);
+  }
+
+  static putVideoChange(params: PutVideoChangeParams) {
+    return httpService.put<PutVideoChangeRes>(`${CMSApiPrefix()}/video/file/change`, params);
   }
 
   static fetchLearningResources(params: any) {
@@ -251,6 +258,15 @@ export default class LearningResourceService {
    */
   static getVideoStatus(contentUuid: string) {
     return httpService.get<GetVideoStatusRes>(`${CMSApiPrefix()}/video/${contentUuid}/status`);
+  }
+
+  /**
+   * 비디오 파일변경 상태 조회
+   */
+  static getVideoFileChange(resourceId: number) {
+    return httpService.get<GetVideoFileChangeRes>(
+      `${CMSApiPrefix()}/video/file/change/${resourceId}`,
+    );
   }
 
   /**

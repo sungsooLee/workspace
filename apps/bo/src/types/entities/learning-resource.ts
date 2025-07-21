@@ -455,6 +455,20 @@ export interface GetVideoResourceRes {
   videoSubtitles: VideoSubtitles[];
 }
 
+export interface PutVideoChangeParams {
+  contentUuid: string;
+  fileUuid: string;
+}
+
+export interface PutVideoChangeRes {
+  resourceId: number;
+  contentUuid: string;
+  fileUuid: string;
+  processingStatus: ProcessingStatus;
+}
+
+export type GetVideoFileChangeRes = PutVideoChangeRes;
+
 export enum EnQuestionType {
   SINGLE = 'SINGLE',
   MULTIPLE = 'MULTIPLE',
