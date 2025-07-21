@@ -3,6 +3,9 @@ import { forwardRef, useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import LessonTitle from './components/lesson-title';
 import BottomProgressBar from './components/bottom-progress-bar';
+import CentralControlButton from './components/central-control-button';
+
+import styles from './video-player-container.module.css';
 
 const AUTO_HIDE_DELAY = 3000; // 3
 
@@ -37,10 +40,10 @@ const VideoPlayerContainerComponent = forwardRef<HTMLDivElement, VideoPlayerCont
     }, []);
 
     return (
-      <div className={`flex flex-row`}>
+      <div className={`${styles.start} ${styles.video_player}`}>
         <div
           ref={ref}
-          className={`flex h-screen w-full bg-black`}
+          className={styles.container}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
@@ -49,14 +52,9 @@ const VideoPlayerContainerComponent = forwardRef<HTMLDivElement, VideoPlayerCont
           {/* 상단 왼쪽 */}
 
           {/* 중앙 제어 버튼 */}
-          {/* <div
-            className={clsx({
-              'opacity-100': isHovered,
-              'opacity-0': !isHovered,
-            })}
-          >
+          <div className={`${styles.central_control} ${isHovered || styles.hide}`}>
             <CentralControlButton {...props} />
-          </div> */}
+          </div>
 
           {/* 오른쪽 사이드 버튼 */}
           {/* {!showCurriculumSection && (
@@ -71,7 +69,7 @@ const VideoPlayerContainerComponent = forwardRef<HTMLDivElement, VideoPlayerCont
           )} */}
 
           {/* 하단 진행바 */}
-          <div>
+          <div className={styles.progress_bar}>
             <BottomProgressBar {...props} />
           </div>
         </div>

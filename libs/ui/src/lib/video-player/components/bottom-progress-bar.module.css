@@ -1,8 +1,8 @@
 .start {
   &.progress_bar {
-    @apply absolute bottom-0 left-0 right-0 px-[40px] pb-[24px];
+    @apply px-[40px] pb-[24px];
     .progress_box {
-      @apply h-[6px] rounded-[100px] bg-white/30;
+      @apply h-[6px] overflow-hidden rounded-[100px] bg-white/30;
       .progress {
         @apply h-full bg-[var(--blue50)];
       }
@@ -16,17 +16,66 @@
           .form_volume {
             @apply h-[4px] w-[160px] cursor-pointer appearance-none rounded-[100px] bg-transparent accent-white;
             &::-webkit-slider-thumb {
-              @apply -mt-[6px] h-[8px] w-[12px] cursor-pointer rounded-full bg-white/30;
+              @apply -mt-[6px] h-[4px] cursor-pointer rounded-full bg-white/30;
             }
             &::-webkit-slider-runnable-track {
               @apply h-[4px] rounded-full bg-white/30;
             }
             &::-moz-range-thumb {
-              @apply h-[8px] w-[12px] cursor-pointer rounded-full border-none bg-white/30;
+              @apply h-[4px] cursor-pointer rounded-full border-none bg-white/30;
             }
             &::-moz-range-track {
               @apply h-[4px] rounded-full bg-white/30;
             }
+          }
+        }
+        .time {
+          @apply flex items-center;
+          span {
+            @apply body-lg text-white;
+          }
+        }
+      }
+      .right {
+        @apply flex items-center gap-[24px];
+        svg {
+          @apply cursor-pointer;
+        }
+      }
+    }
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.progress_bar {
+        @apply px-[16px] pb-[16px];
+        .option {
+          @apply px-0 pt-[12px];
+          .left {
+            @apply gap-[16px];
+            .volume {
+              @apply gap-[8px];
+              .form_volume {
+                @apply h-[2px] w-[80px];
+                &::-webkit-slider-thumb {
+                  @apply -mt-[6px] h-[2px];
+                }
+                &::-webkit-slider-runnable-track {
+                  @apply h-[2px];
+                }
+                &::-moz-range-thumb {
+                  @apply h-[2px];
+                }
+                &::-moz-range-track {
+                  @apply h-[2px];
+                }
+              }
+            }
+          }
+          .right {
+            @apply gap-[16px];
           }
         }
       }

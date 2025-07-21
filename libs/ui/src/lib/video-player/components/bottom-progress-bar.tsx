@@ -1,5 +1,6 @@
 import { Volume2, VolumeX } from 'lucide-react';
 import { VideoPlayerContainerProps } from '../types';
+import { isMobile } from 'react-device-detect';
 import {
   IcoExpand,
   IcoVideoPlay,
@@ -10,6 +11,8 @@ import {
   IcoNextPlayFill,
   IcoPrevPlayFill,
   IcoSpeakerFill,
+  IcoSettingsFill,
+  IcoSpeakerOffFill,
 } from '@learnway/icons';
 import { useState } from 'react';
 import SettingsPopover from './settings-popover';
@@ -75,25 +78,33 @@ const BottomProgressBar = ({
       <div className={styles.option}>
         <div className={styles.left}>
           <button>
-            <IcoPrevPlayFill width={24} height={24} />
+            <IcoPrevPlayFill width={isMobile ? 16 : 24} height={isMobile ? 16 : 24} />
           </button>
           <button onClick={togglePlay}>
             {playing ? (
-              <IcoVideoStop width={24} height={24} fill="#fff" />
+              <IcoVideoStop width={isMobile ? 16 : 24} height={isMobile ? 16 : 24} fill="#fff" />
             ) : (
-              <IcoVideoPlay width={24} height={24} fill="#fff" />
+              <IcoVideoPlay width={isMobile ? 16 : 24} height={isMobile ? 16 : 24} fill="#fff" />
             )}
           </button>
           <button>
-            <IcoNextPlayFill width={24} height={24} />
+            <IcoNextPlayFill width={isMobile ? 16 : 24} height={isMobile ? 16 : 24} />
           </button>
           {/* 왼쪽: 볼륨 */}
           <div className={styles.volume}>
             <button onClick={toggleMute}>
               {muted || volume === 0 ? (
-                <VolumeX width={24} height={24} stroke="#fff" />
+                <IcoSpeakerOffFill
+                  width={isMobile ? 16 : 24}
+                  height={isMobile ? 16 : 24}
+                  fill="#fff"
+                />
               ) : (
-                <IcoSpeakerFill width={24} height={24} fill="#fff" />
+                <IcoSpeakerFill
+                  width={isMobile ? 16 : 24}
+                  height={isMobile ? 16 : 24}
+                  fill="#fff"
+                />
               )}
             </button>
             <input
@@ -106,25 +117,30 @@ const BottomProgressBar = ({
               step={0.01}
               value={muted ? 0 : volume}
               onChange={handleVolumeChange}
-              // className="[&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:bg-white [&::-moz-range-track]:bg-transparent [&::-webkit-slider-runnable-track]:rounded-full [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:shadow"
               className={styles.form_volume}
             />
           </div>
-          <div className="mb-1 flex justify-between text-sm">
+          <div className={styles.time}>
             <span>{formatTime(currentTime)}/</span>
             <span>{formatTime(duration)}</span>
           </div>
         </div>
 
         {/* 오른쪽: 설정, 전체화면 */}
-        <div className="flex gap-4">
+        <div className={styles.right}>
           <IcoSubtitles
-            className={`h-6 w-6 cursor-pointer ${subtitlesVisible ? 'fill-[#00AFD5]' : 'fill-white'}`}
+            className={styles.sub_title}
+            width={isMobile ? 16 : 24}
+            height={isMobile ? 16 : 24}
+            fill={subtitlesVisible ? '#80aaff' : '#fff'}
             onClick={toggleSubtitles}
           />
           <div className="relative">
-            <IcoPlayerSetting
-              className={`h-6 w-6 cursor-pointer ${showSettings ? 'fill-[#00AFD5]' : 'fill-white'}`}
+            <IcoSettingsFill
+              className={styles.setting}
+              width={isMobile ? 16 : 24}
+              height={isMobile ? 16 : 24}
+              fill={showSettings ? '#80aaff' : '#fff'}
               onClick={toggleSettings}
             />
 
@@ -132,9 +148,9 @@ const BottomProgressBar = ({
           </div>
           <button onClick={toggleFullscreen}>
             {isFullscreen ? (
-              <IcoReduce className="h-6 w-6 cursor-pointer" />
+              <IcoReduce width={isMobile ? 16 : 24} height={isMobile ? 16 : 24} />
             ) : (
-              <IcoExpand className="h-6 w-6 cursor-pointer" />
+              <IcoExpand width={isMobile ? 16 : 24} height={isMobile ? 16 : 24} />
             )}
           </button>
         </div>
