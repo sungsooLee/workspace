@@ -3,9 +3,11 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import LearningResourceService from '../api/learning-resource';
 import { isProcessing, isProcessingCompleted, isProcessingNone } from './util';
 import { GetVideoResourceRes, PutVideoChangeRes } from '@types';
-import { omit, pick } from 'lodash';
+import { get, omit, pick } from 'lodash';
 import { DATE_TIME_FORMAT, duration } from '@learnway/shared';
 import { usePutVideoChange } from './learning-resource.hook';
+
+const videoChangeKey = 'videoChangeResource';
 
 const useVideoResourceHook = (provider: DynamicFormProvider) => {
   const { watch, onFormChange } = provider;
@@ -16,9 +18,17 @@ const useVideoResourceHook = (provider: DynamicFormProvider) => {
   const playTime = duration(watch('contentAddInfo'), DATE_TIME_FORMAT.HOUR_MIN_SEC);
   const contentUuid = watch('contentUuid');
 
+  const [videoChangeResourceId, setVideoChangeResourceId] = useState<number | undefined>();
+
   const { update: changeVideo } = usePutVideoChange({
     onSuccess: (result: PutVideoChangeRes) => {
+      const resourceId = get(result, 'resourceId');
+      setVideoChangeResourceId(resourceId);
       onFormChange(omit(result, 'resourceId'));
+      localStorage.setItem(
+        `${videoChangeKey}${contentUuid}`,
+        JSON.stringify({ contentUuid, resourceId }),
+      );
     },
     onError: (error: any) => {
       console.error(error);
@@ -31,9 +41,11 @@ const useVideoResourceHook = (provider: DynamicFormProvider) => {
   const [videoResource, setVideoResource] = useState<GetVideoResourceRes | null>(null);
 
   const fetchStatus = useCallback(async () => {
-    const statusInfo = await LearningResourceService.getVideoStatus(contentUuid);
-    onFormChange(statusInfo);
-  }, [contentUuid]);
+    const statusInfo = await (videoChangeResourceId
+      ? LearningResourceService.getVideoFileChange(videoChangeResourceId)
+      : LearningResourceService.getVideoStatus(contentUuid));
+    onFormChange(omit(statusInfo, 'resourceId'));
+  }, [contentUuid, videoChangeResourceId]);
 
   const fetchVideoContent = useCallback(async () => {
     const videoResource = await LearningResourceService.getVideoResource(contentUuid);
@@ -43,11 +55,30 @@ const useVideoResourceHook = (provider: DynamicFormProvider) => {
 
   useEffect(() => {
     console.log('🚀 ~ ProcessingStatus:', status);
+
+    const videoChangeResource = localStorage.getItem(`${videoChangeKey}${contentUuid}`);
+    console.log(
+      '🚀 ~ useEffect ~ videoChangeResource:',
+      videoChangeResource,
+      videoChangeResourceId,
+    );
+    if (videoChangeResource) {
+      if (!videoChangeResourceId) {
+        setVideoChangeResourceId(JSON.parse(videoChangeResource).resourceId);
+        return;
+      }
+    }
+
     if (isProcessingNone(status)) return;
 
+    console.log('🚀 ~ useEffect ~ intervalRef.current:', intervalRef.current);
     if (intervalRef.current && !isProcessing(status)) {
       clearInterval(intervalRef.current);
       intervalRef.current = undefined;
+      if (videoChangeResource && videoChangeResourceId) {
+        setVideoChangeResourceId(undefined);
+        localStorage.removeItem(`${videoChangeKey}${contentUuid}`);
+      }
     }
 
     if (!intervalRef.current && isProcessing(status)) {
@@ -59,11 +90,11 @@ const useVideoResourceHook = (provider: DynamicFormProvider) => {
     }
 
     return () => {
-      if (intervalRef.current && !isProcessing(status)) {
+      if (intervalRef.current) {
         clearInterval(intervalRef.current);
       }
     };
-  }, [contentUuid, status]);
+  }, [contentUuid, status, videoChangeResourceId]);
 
   return {
     contentUuid,

@@ -467,6 +467,8 @@ export interface PutVideoChangeRes {
   processingStatus: ProcessingStatus;
 }
 
+export type GetVideoFileChangeRes = PutVideoChangeRes;
+
 export enum EnQuestionType {
   SINGLE = 'SINGLE',
   MULTIPLE = 'MULTIPLE',

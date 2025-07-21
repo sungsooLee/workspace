@@ -10,6 +10,7 @@ import {
   GetContentDetailRes,
   GetContentsParams,
   GetContentsRes,
+  GetVideoFileChangeRes,
   GetVideoResourceRes,
   GetVideoStatusRes,
   HtmlVideoFileChangeReq,
@@ -257,6 +258,15 @@ export default class LearningResourceService {
    */
   static getVideoStatus(contentUuid: string) {
     return httpService.get<GetVideoStatusRes>(`${CMSApiPrefix()}/video/${contentUuid}/status`);
+  }
+
+  /**
+   * 비디오 파일변경 상태 조회
+   */
+  static getVideoFileChange(resourceId: number) {
+    return httpService.get<GetVideoFileChangeRes>(
+      `${CMSApiPrefix()}/video/file/change/${resourceId}`,
+    );
   }
 
   /**
