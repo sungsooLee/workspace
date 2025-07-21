@@ -70,6 +70,7 @@ export type com_ever_edu_lms_course_dto_res_CourseConfigResDto = {
      * 파일 저장소 유형
      */
     fileStorageType?: com_ever_edu_lms_course_dto_res_CourseConfigResDto.fileStorageType;
+    config?: com_ever_edu_lms_course_dto_res_CourseConfigResDto.config;
 };
 export namespace com_ever_edu_lms_course_dto_res_CourseConfigResDto {
     /**
@@ -219,6 +220,14 @@ export namespace com_ever_edu_lms_course_dto_res_CourseConfigResDto {
         AWS_INTERNAL = 'AWS_INTERNAL',
         AWS_EXTERNAL = 'AWS_EXTERNAL',
         HMG_CLOUD = 'HMG_CLOUD',
+    }
+    export enum config {
+        ELEARNING1 = 'ELEARNING1',
+        ELEARNING2 = 'ELEARNING2',
+        CLASS = 'CLASS',
+        LIVE = 'LIVE',
+        EXAM = 'EXAM',
+        SURVEY = 'SURVEY',
     }
 }
 

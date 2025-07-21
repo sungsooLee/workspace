@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TenantCustom_WizardStep4 } from './com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TenantCustom_WizardStep4';
+import type { com_ever_edu_lms_course_dto_TenantCustomDto_WizardStep4 } from './com_ever_edu_lms_course_dto_TenantCustomDto_WizardStep4';
 export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4 = {
     /**
      * 과정 생성/수정 마법사 타입 (lms.course.WizardStep)
@@ -137,13 +137,21 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4 = {
      */
     recognizedStudyPoint?: number;
     /**
+     * 공지사항
+     */
+    isNoticeEnabled?: boolean;
+    /**
+     * 학습창댓글
+     */
+    isReplyEnabled?: boolean;
+    /**
      * 커뮤니티[공지/자료실/커뮤니티/공유] 설정 여부
      */
     isCommunicationToolEnabled: boolean;
     /**
      * 커뮤니티[공지/자료실/커뮤니티/공유] 설정 내용
      */
-    communityList?: Array<'NOTICE' | 'QNA' | 'MARTIAL' | 'COMMUNITY'>;
+    communityList?: Array<'QNA' | 'FAQ' | 'BOARD' | 'MARTIAL'>;
     /**
      * 과정을 학습자가 공유할 수 있는지?
      */
@@ -184,6 +192,10 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4 = {
      * 연관 학습
      */
     relatedCourseIds?: Array<number>;
+    /**
+     * 행정항목
+     */
+    isAdminDataEnabled?: boolean;
     /**
      * HMG 과정 데이터 표준 분류 > 대분류
      */
@@ -233,9 +245,9 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4 = {
      */
     isAutoeverTenantCustomOption?: boolean;
     /**
-     * 오토에버 위탁 전용 설정 여부
+     * 테넌트 전용 설정 내용
      */
-    tenantCustoms?: Array<com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TenantCustom_WizardStep4>;
+    tenantCustoms?: Array<com_ever_edu_lms_course_dto_TenantCustomDto_WizardStep4>;
     learningSpaceNameValid?: boolean;
 };
 export namespace com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4 {

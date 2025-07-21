@@ -5,8 +5,8 @@
 /**
  * 테넌트 전용 항목
  */
-export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TenantCustom_FullUpdate = {
-    tenantCustomType?: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TenantCustom_FullUpdate.tenantCustomType;
+export type com_ever_edu_lms_course_dto_TenantCustomDto = {
+    tenantCustomType?: com_ever_edu_lms_course_dto_TenantCustomDto.tenantCustomType;
     /**
      * 수강신청 단계에서 레벨테스트 수집 여부
      */
@@ -32,7 +32,7 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TenantCustom_Full
      */
     outsourcingCompanyName?: string;
 };
-export namespace com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TenantCustom_FullUpdate {
+export namespace com_ever_edu_lms_course_dto_TenantCustomDto {
     export enum tenantCustomType {
         CAR = 'CAR',
         ROTEM = 'ROTEM',

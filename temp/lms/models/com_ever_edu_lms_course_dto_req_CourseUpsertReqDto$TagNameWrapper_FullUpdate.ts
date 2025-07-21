@@ -6,6 +6,6 @@
  * tagName
  */
 export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TagNameWrapper_FullUpdate = {
-    value?: string;
+    tagName?: string;
 };
 
