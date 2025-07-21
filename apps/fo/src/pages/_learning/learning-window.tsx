@@ -159,6 +159,9 @@ function RouteComponent() {
           contentUuid: playInfo.contentUuid,
         });
         break;
+      case EnContentType.IMAGE:
+        setImageConfig({ contentUuid: playInfo.contentUuid });
+        break;
       default:
     }
   }, [playInfo]);

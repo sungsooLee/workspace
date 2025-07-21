@@ -5,6 +5,7 @@ import { LearnwayLearningWindowLayout, useLearningWindow } from '@learnway/ui';
 
 import { learningResourceQueryOptions, useFetchBlogContent } from '@entities/learning-resource';
 import { ContentType } from '@types';
+import { CmsImageContent, CmsImageItem } from '@learnway/types';
 
 /**
  *
@@ -27,6 +28,7 @@ const PreviewLearningWindowComponent: FC<any> = ({
     setHtmlInfo,
     setPlayInfo,
     setScormInfo,
+    setGalleryInfo,
     setFuncInfo,
     setCurriculum,
     clearInfo,
@@ -115,6 +117,13 @@ const PreviewLearningWindowComponent: FC<any> = ({
         break;
       case ContentType.HTML5_VIDEO:
         setHtmlInfo(data.resource);
+        break;
+      case ContentType.IMAGE:
+        setGalleryInfo({
+          contentType: data.contentType,
+          contentUuid: data.contentUuid,
+          images: data.images as CmsImageItem[],
+        });
         break;
     }
     setFuncInfo({

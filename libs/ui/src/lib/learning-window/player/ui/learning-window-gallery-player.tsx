@@ -30,7 +30,7 @@ const LearningWindowGalleryPlayerComponent: FC<any> = () => {
   // 스와이퍼 체인지 시 index 값 변경
   const handlePhothChange = (realIndex: number) => {
     setMainImgIndex(realIndex);
-
+    console.log('imageChange', imageList[0]);
     const payload = {
       courseSequenceId: playInfo?.sequenceId,
       courseId: playInfo?.courseId,
@@ -52,6 +52,7 @@ const LearningWindowGalleryPlayerComponent: FC<any> = () => {
 
   // 스와이퍼 prev 클릭
   const handlePrevClick = () => {
+    console.log('handlePrevClick');
     if (mainImgIndex - 1 >= 0) {
       setMainImgIndex(mainImgIndex - 1);
       swiperRef.current.slideTo(mainImgIndex - 1);
@@ -60,39 +61,28 @@ const LearningWindowGalleryPlayerComponent: FC<any> = () => {
 
   // 스와이퍼 next 클릭
   const handleNextClick = () => {
+    console.log('handleNextClick');
     if (mainImgIndex + 1 < swiperCount) {
       setMainImgIndex(mainImgIndex + 1);
       swiperRef.current.slideTo(mainImgIndex + 1);
     }
   };
+  useEffect(() => {
+    if (!imageList || imageList.length == 0) return;
+    handlePhothChange(0);
+  }, [imageList]);
 
   useEffect(() => {
     if (!galleryInfo) return;
     const newImageList: CmsImageItem[] = [];
     for (const item of galleryInfo.images) {
-      let itemUrl = item.itemUrl;
-      if ((window as any).__ENV__?.APP_ENV === 'local') {
-        const url = new URL(itemUrl);
-        itemUrl = url.pathname;
-      }
-      newImageList.push({ ...item, itemUrl });
+      newImageList.push(item);
     }
     setImageList(newImageList);
-
-    setTimeout(() => {
-      const payload = {
-        courseSequenceId: playInfo?.sequenceId,
-        courseId: playInfo?.courseId,
-        curriculumId: playInfo?.curriculumId,
-        moduleId: playInfo?.moduleId,
-        lessonId: playInfo?.lessonId,
-        contentUuid: playInfo?.contentUuid,
-        playRate: 100,
-      };
-      funcInfo?.html5LearningHistory(payload);
-    }, 5000);
+    setSwiperCount(galleryInfo.images.length);
   }, [galleryInfo]);
 
+  console.log(mainImgIndex);
   return (
     <div className={`${styles.start} ${styles.gallery_wrap}`}>
       {!isMobile && (
@@ -105,7 +95,10 @@ const LearningWindowGalleryPlayerComponent: FC<any> = () => {
       <div className={styles.photo_wrap}>
         <div className={styles.photo}>
           <Button className={styles.img}>
-            <img src={imageList[mainImgIndex].itemUrl} alt="" />
+            <img
+              src={imageList && imageList.length > 0 ? imageList[mainImgIndex].itemUrl : ''}
+              alt=""
+            />
           </Button>
           {/* prev, next button */}
           <Button className={styles.btn_prev} onClick={() => handlePrevClick()}>
@@ -130,6 +123,8 @@ const LearningWindowGalleryPlayerComponent: FC<any> = () => {
             spaceBetween={8}
             slidesPerView="auto"
             centeredSlides={true}
+            prevDisabled={true}
+            nextDisabled={mainImgIndex + 1 >= swiperCount}
             onSwiper={(swiper) => {
               setSwiperCount(swiper.slides.length);
               swiperRef.current = swiper;

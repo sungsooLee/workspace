@@ -22,6 +22,7 @@ import styles from '@learnway/styles/fo/pages/_learning/side-panel/side-panel.mo
 
 import { useLearningWindow } from '../../learnway-learning-window.store';
 import { DATE_TIME_FORMAT, duration } from '@learnway/shared';
+import { convertUploadFilesToFileInfos } from '@learnway/hooks';
 
 interface ChildData {
   className?: string;
@@ -33,14 +34,41 @@ interface SidePanelProps {
 }
 
 const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
-  const { curriculum, playInfo, playList, playIndex, progressInfo, setPlayInfo } =
-    useLearningWindow();
-  const { open: openModal } = useModal();
+  const {
+    curriculum,
+    playInfo,
+    playList,
+    playIndex,
+    progressInfo,
+    setPlayInfo,
+    gotoBeforeLesson,
+    gotoNextLesson,
+  } = useLearningWindow();
+  const { open: openModal, confirm: openConfirm } = useModal();
 
   const [menuSelected, setMenuSelected] = useState(false); // content 영역 show/hide
   const [menuContents, setMenuContents] = useState([false, false, false, false]); // 각 메뉴 컨텐츠 영역 show/hide
   const [menuNumber, setMenuNumber] = useState<number>(-1); // -1 : 닫기, 1 ~ n : content 순서
   const [panelState, setPanelState] = useState<boolean>(true); // 퍼블수정 20250716 panel open/close 기능
+
+  const handlePriveNextClick = async (isNext: boolean) => {
+    const addValue = isNext ? 1 : -1;
+    const moduleName = playList ? playList[playIndex + addValue].moduleName : '';
+    const lessonName = playList ? playList[playIndex + addValue].lessonName : '';
+    const result = await openConfirm({
+      title: `${moduleName} (${lessonName})`,
+      content: '삭제버튼을 누르면 선택하신 항목이 모두 저장되며, 복구할 수 없습니다.',
+      okButtonLabel: isNext ? '다음 강의' : '이전 강의',
+      cancelButtonLabel: '다시보기',
+    });
+    if (result) {
+      if (isNext) {
+        gotoNextLesson();
+      } else {
+        gotoBeforeLesson();
+      }
+    }
+  };
 
   const getProgressNumber = (moduleId: number, lessonId: number) => {
     if (progressInfo) {

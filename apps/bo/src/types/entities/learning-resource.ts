@@ -9,6 +9,7 @@ import {
   ProcessingStatus,
 } from './enum';
 import { PaginationRequest, PaginationResponse } from '@learnway/ui';
+import { CmsImageItem } from '@learnway/types';
 
 export interface MediaContentSaveReq {
   contentName: string;
@@ -200,6 +201,7 @@ export interface ContentInformation extends ContentBaseInfo {
   lastModifiedBy?: string;
   modifyerName?: string;
   modifiedDate?: Date | undefined;
+  images?: any[];
 }
 
 export type GetContentDetailRes = ContentInformation;

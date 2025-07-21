@@ -662,8 +662,9 @@ function RouteComponent() {
                       // 스콤: b9e38f8f-32d2-4ecf-bffc-9650f92ae37b
                       // 스콤: 2f17e8a6-a160-4768-8bd0-0f5f74b2acdc
                       // 스콤: item 미리보기 호출 시 scoId를 추가하여 호출
+                      // 2d2e6260-3c9d-4ada-9c0f-43b57cc745b9
 
-                      <PreviewLearningWindow contentUuid="67a4c504-613a-4fdd-b83d-6db77015d2d2" />
+                      <PreviewLearningWindow contentUuid="2d2e6260-3c9d-4ada-9c0f-43b57cc745b9" />
                     ),
                     onClose(data: any) {
                       console.log('컨텐츠 미리 보기 팝업', data);
