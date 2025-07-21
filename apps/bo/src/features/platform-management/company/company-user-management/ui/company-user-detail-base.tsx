@@ -18,6 +18,14 @@ interface CompanyUserDetailBaseProps {
   userInfo: any;
 }
 
+function compareLatestDate(dates: string[]) {
+  const validDates = dates.filter((d): d is string => d! == null);
+
+  return validDates.length > 0
+    ? validDates.reduce((latest, current) => new Date(current) > new Date(latest) ? current : latest)
+    : '-';
+}
+
 const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: any) => {
   const { provider, control, updateFormData, onSubmit, onFormChange, clearFormError, getValues } =
     useDynamicForm(formConfig());
@@ -28,6 +36,10 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
   useEffect(() => {
     if (props.userInfo) {
       const user = props.userInfo;
+      const dates = [user.lockedDate, user.dormantDate, user.deletedDate];
+      const latestDate = compareLatestDate(dates);
+      console.log('latestDate', latestDate);
+
       const initialData = {
         ...user,
         companyName: user.company.name,
@@ -54,14 +66,38 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
         dormantDate: user.dormantDate
           ? getDateToString(new Date(user.dormantDate), DATE_TIME_FORMAT.DATETIME_SEC)
           : '-',
-        tenantList: user.tenants,
-        hrInfoManageType: user.hrInfoManageType ? user.hrInfoManageType : 'MANUAL_MANAGE',
+
+        // 계정 정보 데이터 관리 방식
+        hrInfoManageType: user.linkageSystem ? user.linkageSystem : 'MANUAL_MANAGE',
+        // 이형주 수석님이 규원 책임님께 확인 후 전달 준다고 함.
         companyMemberJoinTypeList: user.companyMemberJoinTypeList ? user.companyMemberJoinTypeList : ['BO_JOIN_MANAGER'],
-        isUseSso: true,
+        accountStatus: 'NORMAL',
+        approvalStatus: user.enabledDate !== null? '승인' : '반려',
+        lastApprovalStatusUpdateDate: user.enabledDate
+          ? getDateToString(new Date(user.enabledDate), DATE_TIME_FORMAT.DATETIME_SEC)
+          : '-',
+        // lockedDate, dormantDate, deletedDate 중 가장 최근 일자
+        lastAccountStatusUpdateDate: latestDate ? getDateToString(new Date(latestDate), DATE_TIME_FORMAT.DATETIME_SEC) : '-',
+        tenantList: user.tenants,
+
+        // 로그인 및 인증 설정 정보
+        isUseSso: user.ssoType !== null ? user.ssoType : false,
         ssoTypeList: user.ssoTypeList ? user.ssoTypeList : 'AES_Link',
-        isUseTwoFactorAuth: user.isUseTwoFactorAuth ? user.isUseTwoFactorAuth : true,
-        twoFactorAuthPlatformTypeList: user.twoFactorAuthPlatformTypeList ? user.twoFactorAuthPlatformTypeList : ['BO_PLATFORM'],
+        isUseTwoFactorAuth: user.company.twoFactorAuthPlatformTypeList !== null,
+        twoFactorAuthPlatformTypeList: user.company.twoFactorAuthPlatformTypeList !== null ? user.company.twoFactorAuthPlatformTypeList : [],
+        '2FAType': user.company.twoFactorAuthType !== null ? user.company.twoFactorAuthType : ''
       };
+      if( user.lockedDate === null ) {
+        if( user.dormantDate !== null ) {
+          initialData.accountStatus = 'INACTIVE_LOCK';
+        }
+      } else {
+        if( user.dormantDate === null ) {
+          initialData.accountStatus = 'INACTIVE';
+        } else {
+          initialData.accountStatus = 'LOCK';
+        }
+      }
 
       updateFormData(initialData);
     }
@@ -318,9 +354,15 @@ const formConfig = (): DynamicFormConfig => ({
       type: 'radio-group',
       label: t('계정 상태'),
       value: '',
-      optionsConfig: {
-        codeGroup: CODE_GROUP['pms.user.AccountStatus'],
-      },
+      // optionsConfig: {
+      //   codeGroup: CODE_GROUP['pms.user.AccountStatus'],
+      // },
+      options: [
+        {value: 'NORMAL', label: '정상'},
+        {value: 'LOCK', label: '잠김'},
+        {value: 'INACTIVE', label: '휴면(정상)'},
+        {value: 'INACTIVE_LOCK', label: '휴면(잠김)'},
+      ]
     },
     {
       name: 'lastAccountStatusUpdateDate',
