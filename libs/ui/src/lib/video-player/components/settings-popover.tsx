@@ -1,5 +1,8 @@
 import { useState } from 'react';
+import { IcoChevronLeft, IcoCheck } from '@learnway/icons';
 import { VideoPlayerContainerProps } from '../types';
+
+import styles from './settings-popover.module.css';
 
 const MENU = {
   ROOT: 'root',
@@ -96,11 +99,11 @@ const SettingsPopover = ({
         );
       default:
         return (
-          <div className="w-60 rounded-xl bg-[#1C1C1E] p-4 text-sm text-white shadow-xl">
-            <div className="mb-3 flex items-center justify-between">
-              <span className="text-white">설정</span>
+          <div className={`${styles.start} ${styles.settings}`}>
+            <div className={styles.title}>
+              <span>설정</span>
             </div>
-            <div className="space-y-3">
+            <div className={styles.option}>
               <MenuItem
                 label="재생속도"
                 value={selected.speed}
@@ -127,7 +130,7 @@ const SettingsPopover = ({
     }
   };
 
-  return <div className="absolute bottom-10 right-0 z-50">{renderMenu()}</div>;
+  return <div className={styles.setting_popup}>{renderMenu()}</div>;
 };
 
 function MenuItem({
@@ -143,14 +146,16 @@ function MenuItem({
 }) {
   return (
     <div
-      className={`flex cursor-pointer items-center justify-between text-white/80 hover:text-white ${
-        active ? 'font-semibold text-white' : ''
-      }`}
+      className={`${styles.start} ${styles.menu_items} ${value && styles.main_setting}`}
       onClick={onClick}
     >
-      <span className="text-sm">{label}</span>
-      {value && <span className="truncate text-right">{value}</span>}
-      {active && !value && <span className="text-white">✓</span>}
+      <span>{label}</span>
+      {value && <span>{value}</span>}
+      {active && !value && (
+        <span className={styles.selected}>
+          <IcoCheck width={20} height={20} stroke="#fff" />
+        </span>
+      )}
     </div>
   );
 }
@@ -167,14 +172,14 @@ function SubMenu({
   children: React.ReactNode;
 }) {
   return (
-    <div className="w-64 rounded-xl bg-[#1C1C1E] p-4 text-sm text-white shadow-xl">
-      <div className="mb-3 flex items-center">
-        <button className="text-white/70 hover:text-white" onClick={onBack}>
-          ←
+    <div className={`${styles.start} ${styles.menu}`}>
+      <div className={styles.title}>
+        <button onClick={onBack}>
+          <IcoChevronLeft width={20} height={20} stroke="#fff" />
         </button>
-        <span className="text-base">{title}</span>
+        <span>{title}</span>
       </div>
-      <div className="max-h-[315px] space-y-2 overflow-auto pr-1">{children}</div>
+      <div className={styles.label}>{children}</div>
     </div>
   );
 }
