@@ -1,20 +1,15 @@
 import { FC } from 'react';
 import { RangeDatePicker, RangeDatePickerProps } from '@learnway/ui';
 
-// interface DateRangePickerFormFieldProps extends Omit<RangeDatePickerProps> {
-//   value?: { from?: Date; to?: Date };
-//   onChange?: (value: { from?: Date; to?: Date }) => void;
-// }
-
 /**
  * @description Date Range Picker 시작일~종료일 선택 (YYYY-MM-DD HH:mm:ss ~ YYYY-MM-DD HH:mm:ss)
  */
-const DateRangePickerFormFieldComponent: FC<RangeDatePickerProps> = ({
+const DateRangeSearchFieldComponent: FC<RangeDatePickerProps> = ({
+  displayType = 'day',
   value,
   onChange,
   minDate,
   maxDate,
-  displayType = 'day',
   ...props
 }) => {
   return (
@@ -29,4 +24,4 @@ const DateRangePickerFormFieldComponent: FC<RangeDatePickerProps> = ({
   );
 };
 
-export const DateRangePickerFormField = DateRangePickerFormFieldComponent;
+export const DateRangeSearchField = DateRangeSearchFieldComponent;

@@ -24,7 +24,7 @@ import {
 
 import { useSaveUsers } from '@entities/role/service/role-manage.hook';
 import { FormRow } from '@shared/ui';
-import { DateRangeFormField } from '@shared/ui/search-box';
+import { DateRangePickerFormField } from '@features/form';
 
 /**
  * 화면번호: NLP_BO_PMS_1111 (데이터접근범위 일괄적용)
@@ -71,7 +71,7 @@ const TenantDetailLearningRoleGrantRangeModalComponent = ({
       isUsed: activeIndex === 0 ? isUsed : item.isUsed,
     }));
 
-    const payload = { roleId: roleId, body: { addUserUuids: addUsers } };
+    const payload = { roleId, body: { addUserUuids: addUsers } };
     console.log('getValues----', payload, userList);
     const result = await new Promise((resolve) => {
       saveRoleUsers(payload, { onSuccess: resolve });
@@ -169,7 +169,7 @@ const TenantDetailLearningRoleGrantRangeModalComponent = ({
                     <FormRow
                       provider={provider}
                       name="dateRange"
-                      element={<DateRangeFormField />}
+                      element={<DateRangePickerFormField />}
                     />
                   </ContentsRow>
                 )}

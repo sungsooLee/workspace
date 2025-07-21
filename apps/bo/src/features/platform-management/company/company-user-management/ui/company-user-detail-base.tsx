@@ -38,7 +38,6 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
       const user = props.userInfo;
       const dates = [user.lockedDate, user.dormantDate, user.deletedDate];
       const latestDate = compareLatestDate(dates);
-      console.log('latestDate', latestDate);
 
       const initialData = {
         ...user,
@@ -69,10 +68,10 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
 
         // 계정 정보 데이터 관리 방식
         hrInfoManageType: user.linkageSystem ? user.linkageSystem : 'MANUAL_MANAGE',
-        // 이형주 수석님이 규원 책임님께 확인 후 전달 준다고 함.
+        // 회원가입 유형 : 이형주 수석님이 규원 책임님께 확인 후 전달 준다고 함.
         companyMemberJoinTypeList: user.companyMemberJoinTypeList ? user.companyMemberJoinTypeList : ['BO_JOIN_MANAGER'],
         accountStatus: 'NORMAL',
-        approvalStatus: user.enabledDate !== null? '승인' : '반려',
+        approvalStatus: user.enabledDate !== null? '승인' : '대기',
         lastApprovalStatusUpdateDate: user.enabledDate
           ? getDateToString(new Date(user.enabledDate), DATE_TIME_FORMAT.DATETIME_SEC)
           : '-',

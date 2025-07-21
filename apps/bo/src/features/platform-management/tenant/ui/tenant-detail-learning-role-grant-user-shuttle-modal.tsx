@@ -26,12 +26,11 @@ import {
 } from '@learnway/hooks';
 
 import { FormRow, ThumbnailListFormField } from '@shared/ui';
-import { DateRangeFormField } from '@shared/ui/search-box/date-range-form-field';
-
 import { SearchBox } from '@shared/ui/search-box';
 import { usersQueryOptions } from '@entities/users/service/users.queries';
 import { useSaveUsers } from '@entities/role/service/role-manage.hook';
 import { queryOptions as departmentQuery } from '@entities/department';
+import { DateRangePickerFormField } from '@features/form';
 /**
  * 화면번호: NLP_BO_PMS_1110
  *
@@ -147,7 +146,7 @@ const TenantDetailLearningRoleGrantUserShuttleModalComponent = ({ roleId }: { ro
         />
         <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)} style={{ marginTop: '20px' }}>
           <ContentsRow>
-            <FormRow provider={provider} name="dateRange" element={<DateRangeFormField />} />
+            <FormRow provider={provider} name="dateRange" element={<DateRangePickerFormField />} />
             <FormRow provider={provider} name="---" />
           </ContentsRow>
         </form>

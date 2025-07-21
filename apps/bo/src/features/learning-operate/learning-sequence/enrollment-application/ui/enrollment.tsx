@@ -42,7 +42,7 @@ import { useActiveMenuDepthState, useFetchAuthUser } from '@learnway/auth/entiti
 import dayjs from 'dayjs';
 import { getRandomId } from '@learnway/shared';
 // import { RoundBatchModal } from '../modal/round-batch-modal';
-import { DateTimeRangePickerFormField } from '@features/form';
+import { DateRangePickerFormField } from '@features/form';
 import { EnrollmentRegist } from './enrollment-regist';
 import { EnrollmentWait } from './enrollment-wait';
 import { EnrollmentCancel } from './enrollment-cancel';

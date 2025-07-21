@@ -48,7 +48,7 @@ import {
   UserGroupTabsChoiceModal,
 } from '@shared/ui';
 import dayjs from 'dayjs';
-import { DateTimeRangePickerFormField, DropdownFormField, FormDisplay } from '@features/form';
+import { DateRangePickerFormField, DropdownFormField, FormDisplay } from '@features/form';
 import { InstructorListPopup } from '@features/learning-operate-support/instructor-tutor/instructor-management/modal/instructor-list-modal';
 import { PassOptionFormField } from '@pages/_layout/learning/course/-components/pass-option-form-field/pass-option-form-field';
 import { Content } from '@radix-ui/react-accordion';
@@ -182,7 +182,7 @@ const SequenceDetailComponent = ({
               provider={provider}
               name={'regDate'}
               label={'수강신청 기간'}
-              element={<DateTimeRangePickerFormField />}
+              element={<DateRangePickerFormField />}
             />
           </ContentsRow>
           <ContentsRow>
@@ -202,7 +202,7 @@ const SequenceDetailComponent = ({
                           provider={provider}
                           name={'eduDate1'}
                           value={''}
-                          element={<DateTimeRangePickerFormField />}
+                          element={<DateRangePickerFormField />}
                         />
                       ),
                     },
@@ -246,7 +246,7 @@ const SequenceDetailComponent = ({
                             provider={provider}
                             name={'cancelDate'}
                             value={''}
-                            element={<DateTimeRangePickerFormField />}
+                            element={<DateRangePickerFormField />}
                           />
                         ),
                       },

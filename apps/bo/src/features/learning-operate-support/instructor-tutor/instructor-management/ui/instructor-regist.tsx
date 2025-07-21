@@ -26,9 +26,13 @@ import {
   useModal,
 } from '@learnway/ui';
 
-import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
+import {
+  DateRangePickerFormField,
+  DuplicateCheckInputFormField,
+  DuplicateState,
+} from '@features/form';
 import { FormDisplay } from '@features/form/ui/form-display';
-import { AttachmentFormField, DateRangeFormField, FormRow, UserChoiceModal } from '@shared/ui';
+import { AttachmentFormField, FormRow, UserChoiceModal } from '@shared/ui';
 
 import { SingleAttachmentFormField } from '@shared/ui/form/single-attachment-form-field';
 import { EnFormMode, EnPageMode } from '@types';
@@ -635,7 +639,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
       </ContentsRow>
       <ContentsRow>
         <FormRow provider={provider} name="roleId" />
-        <FormRow provider={provider} name="dateRange" element={<DateRangeFormField />} />
+        <FormRow provider={provider} name="dateRange" element={<DateRangePickerFormField />} />
       </ContentsRow>
 
       <FormSubTitle label={t('강사 정보')} lineType="dark" />

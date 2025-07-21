@@ -344,6 +344,7 @@ export function getDatePickerPlaceholder(
     | 'month'
     | 'day'
     | 'time'
+    | 'time-h'
     | 'time-hm'
     | 'time-step'
     | 'day-time'
@@ -369,6 +370,9 @@ export function getDatePickerPlaceholder(
 
     case 'time-hm':
       return dayjs(now).format('HH:mm');
+
+    case 'time-h':
+      return dayjs(now).format('HH');
 
     case 'time-step': {
       const hours = now.getHours();

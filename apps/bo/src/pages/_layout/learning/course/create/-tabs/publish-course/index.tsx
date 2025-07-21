@@ -1,4 +1,4 @@
-import { DateTimeRangePickerFormField } from '@features/form/ui';
+import { DateRangePickerFormField } from '@features/form/ui';
 import { CODE_GROUP, S3_PATH, useDynamicForm2 } from '@learnway/hooks';
 import { ContentsRow, FormSubTitle, RadioGroupFormField, TextareaFormField } from '@learnway/ui';
 import { ChipListFormField, FormRow2, ThumbnailListFormField } from '@shared/ui';
@@ -73,7 +73,7 @@ const PublishCourseComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>(
             name={'courseValidityRange'}
             label={'노출 기간'}
             format={'object'}
-            element={<DateTimeRangePickerFormField />}
+            element={<DateRangePickerFormField />}
             validation={{ required: true }}
           />
         </ContentsRow>
@@ -148,7 +148,6 @@ const responseDataToFormData = (d: Course): Course => {
       d.courseValidityStartDate, // 과정 유효 시작일
       d.courseValidityEndDate, // 과정 유효 종료일
     ],
-    // tagNameArray: d.tagNames?.map((item) => item.value), // 태그
   };
 };
 
@@ -169,6 +168,6 @@ export const formDataToRequestData = (d: Course) => {
     courseValidityEndHour: 23, // 과정 노출 종료 시각 (삭제 후 courseValidityEndDate에 통합 예정)
     // thumbnailFileGroupUuid: '1', // 썸네일 이미지 Group UUID
     // primaryThumbnailFileUuid: '1', // 대표 썸네일 이미지 UUID
-    tagNames: d.tagNames?.map((item: any) => ({ value: item?.tagName })), // 태그
+    // tagNames: d.tagNames?.map((item: any) => ({ value: item?.tagName })), // 태그
   };
 };

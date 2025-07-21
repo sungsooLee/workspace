@@ -20,13 +20,15 @@ import { ko, enUS } from 'date-fns/locale';
 import { useTranslation } from 'react-i18next';
 import { Locale } from 'react-datepicker/dist/date_utils';
 import ReactDOM from 'react-dom';
+import { useModalStore } from '../stores/useModalStore';
+import { PopoverHourInput } from './custom-hour-picker';
 
 export const convertDateFormatToFnsWithSlash = (format: string): string => {
   return format.replace(/-/g, '/');
 };
 const dayjsToDateFnsLocaleMap: Record<string, any> = {
   // 한국어
-  ko: ko,
+  ko,
   // 영어
   en: enUS,
 };
@@ -39,6 +41,7 @@ export type DatePickerType =
   | 'time'
   | 'time-hm'
   | 'day-time'
+  | 'day-time-h'
   | 'day-time-hm'
   | 'day-time-hms'; // 팝오버 스타일의 시간 선택기 컴포넌트
 
@@ -90,6 +93,7 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
   ref,
 ) => {
   const { i18n } = useTranslation(); // 추가
+  const { modals } = useModalStore();
 
   // currentLocale 상태 관리 수정
   const [currentLocale, setCurrentLocale] = useState<Locale>(() => {
@@ -335,7 +339,11 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
           timeIntervals={minuteStep}
           timeCaption=""
           popperPlacement="bottom-start"
-          popperContainer={(props) => ReactDOM.createPortal(props.children, document.body)}
+          popperContainer={
+            modals.length
+              ? undefined
+              : (props) => ReactDOM.createPortal(props.children, document.body)
+          }
         />
       </div>
     );
@@ -378,7 +386,11 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
           selected={selectedDate}
           placeholderText={getPlaceholderByType('year', currentLocale)}
           popperPlacement="bottom-start"
-          popperContainer={(props) => ReactDOM.createPortal(props.children, document.body)}
+          popperContainer={
+            modals.length
+              ? undefined
+              : (props) => ReactDOM.createPortal(props.children, document.body)
+          }
         />
         {/* <CustomYearPicker selectedDate={selectedDate} onChange={handleChange} /> */}
       </div>
@@ -413,7 +425,11 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
             <CustomDatePickerHeader {...headerProps} locale={currentLocale} type={'year'} />
           )}
           popperPlacement="bottom-start"
-          popperContainer={(props) => ReactDOM.createPortal(props.children, document.body)}
+          popperContainer={
+            modals.length
+              ? undefined
+              : (props) => ReactDOM.createPortal(props.children, document.body)
+          }
         />
       </div>
     );
@@ -453,7 +469,11 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
             )}
             locale={currentLocale}
             popperPlacement="bottom-start"
-            popperContainer={(props) => ReactDOM.createPortal(props.children, document.body)}
+            popperContainer={
+              modals.length
+                ? undefined
+                : (props) => ReactDOM.createPortal(props.children, document.body)
+            }
           />
         </div>
 
@@ -470,6 +490,70 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
                 ? getPlaceholderByType('time', currentLocale)
                 : getPlaceholderByType('time-hm', currentLocale)
             }
+          />
+        </div>
+        {showTimePicker && (
+          <div className="nlp--datepicker-time">
+            <PopoverTimeInput
+              value={selectedDate}
+              onChange={handleChange}
+              minuteStep={minuteStep}
+              secondStep={secondStep}
+              showSeconds={showSeconds}
+              placeholder={
+                showSeconds
+                  ? getPlaceholderByType('time', currentLocale)
+                  : getPlaceholderByType('time-hm', currentLocale)
+              }
+            />
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // 시간 선택
+  if (displayType === 'day-time-h') {
+    return (
+      <div className={cn('nlp--datepicker-time-wrap', size)} ref={ref}>
+        {/* Date component */}
+        <div className="nlp--datepicker-calendar">
+          <Primitive
+            showIcon
+            toggleCalendarOnIconClick
+            dateFormat="yyyy-MM-dd"
+            shouldCloseOnSelect
+            readOnly={readOnly}
+            disabled={disabled}
+            minDate={minDate}
+            maxDate={maxDate}
+            selected={selectedDate}
+            placeholderText={getPlaceholderByType('day', currentLocale)}
+            icon={<IcoCalendar01 width={16} height={16} stroke="#4C515E" fill="none" />}
+            isClearable={true}
+            monthsShown={numberOfMonths}
+            wrapperClassName={'datepicker_wrap'}
+            onChange={handleChange}
+            excludeDates={disabledDates}
+            renderCustomHeader={(headerProps: any) => (
+              <CustomDatePickerHeader {...headerProps} locale={currentLocale} />
+            )}
+            locale={currentLocale}
+            popperPlacement="bottom-start"
+            popperContainer={
+              modals.length
+                ? undefined
+                : (props) => ReactDOM.createPortal(props.children, document.body)
+            }
+          />
+        </div>
+
+        <div className="nlp--datepicker-time">
+          <PopoverHourInput
+            value={selectedDate}
+            onChange={handleChange}
+            placeholder={getPlaceholderByType('time-h', currentLocale)}
+            locale={currentLocale}
           />
         </div>
       </div>
@@ -503,7 +587,11 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
         )}
         locale={currentLocale}
         popperPlacement="bottom-start"
-        popperContainer={(props) => ReactDOM.createPortal(props.children, document.body)}
+        popperContainer={
+          modals.length
+            ? undefined
+            : (props) => ReactDOM.createPortal(props.children, document.body)
+        }
         // placeholderText={dynamicPlaceholder}
       />
     </div>

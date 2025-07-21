@@ -7,17 +7,20 @@ import { cn, getDatePickerPlaceholder, getDefaultLang } from '@learnway/shared';
 import { BaseFieldProps } from '../type';
 import { CustomDatePickerHeader } from './custom-date-picker-header';
 import { PopoverTimeInput } from './custom-time-picker';
+import { PopoverHourInput } from './custom-hour-picker';
 import { ko, enUS } from 'date-fns/locale';
 import { useTranslation } from 'react-i18next';
 import { Locale } from 'react-datepicker/dist/date_utils';
 import { DatePickerType } from './date-picker';
+import { useModalStore } from '../stores/useModalStore';
+import ReactDOM from 'react-dom';
 
 const dayjsToDateFnsLocaleMap: Record<string, any> = {
-  ko: ko,
+  ko,
   en: enUS,
 };
 
-export interface RangeDatePickerProps extends BaseFieldProps<[Date | null, Date | null]> {
+export interface RangeDatePickerProps extends BaseFieldProps<{ from?: Date; to?: Date }> {
   minDate?: Date;
   maxDate?: Date;
   disabledDates?: Date[];
@@ -25,7 +28,7 @@ export interface RangeDatePickerProps extends BaseFieldProps<[Date | null, Date 
   readOnly?: boolean;
   disabled?: boolean;
   size?: 'md' | 'lg';
-  onChange?: (dateRange: [Date | null, Date | null]) => void;
+  onChange?: (value: { from?: Date; to?: Date }) => void;
   onChangeStart?: (date: Date | undefined) => void;
   onChangeEnd?: (date: Date | undefined) => void;
   placeholderStart?: string;
@@ -57,6 +60,7 @@ const RangeDatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, RangeDa
   ref,
 ) => {
   const { i18n } = useTranslation();
+  const { modals } = useModalStore();
 
   const [currentLocale, setCurrentLocale] = useState<Locale>(() => {
     const targetLocale = locale || i18n.language || getDefaultLang();
@@ -85,12 +89,8 @@ const RangeDatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, RangeDa
     }
   }, [i18n, locale]);
 
-  const [startDate, setStartDate] = useState<Date | null>(() => {
-    return Array.isArray(value) ? value[0] : null;
-  });
-  const [endDate, setEndDate] = useState<Date | null>(() => {
-    return Array.isArray(value) ? value[1] : null;
-  });
+  const [startDate, setStartDate] = useState<Date | undefined>(value?.from ?? undefined);
+  const [endDate, setEndDate] = useState<Date | undefined>(value?.to ?? undefined);
 
   const [isKeyboardInput, setIsKeyboardInput] = useState(false);
 
@@ -98,10 +98,8 @@ const RangeDatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, RangeDa
   const endPickerRef = useRef<any>(null);
 
   useEffect(() => {
-    if (Array.isArray(value)) {
-      setStartDate(value[0]);
-      setEndDate(value[1]);
-    }
+    setStartDate(value?.from);
+    setEndDate(value?.to);
   }, [value]);
 
   const getPlaceholderByType = (type: any, locale: any) => {
@@ -111,17 +109,20 @@ const RangeDatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, RangeDa
 
   // 시작일 변경 핸들러
   const handleStartDateChange = (date: Date | null) => {
+    if (readOnly || disabled) return;
     if (!date) {
-      setStartDate(null);
-      setEndDate(null);
-      onChange?.([null, null]);
+      setStartDate(undefined);
+      setEndDate(undefined);
+      onChange?.({ from: undefined, to: undefined });
+      onChangeStart?.(undefined);
+      onChangeEnd?.(undefined);
       return;
     }
 
     if (!endDate || date > endDate) {
       setStartDate(date);
-      setEndDate(null);
-      onChange?.([date, null]);
+      setEndDate(undefined);
+      onChange?.({ from: date, to: undefined });
 
       if (!isKeyboardInput && !isTimeOnlyMode) {
         setTimeout(() => {
@@ -130,7 +131,7 @@ const RangeDatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, RangeDa
       }
     } else {
       setStartDate(date);
-      onChange?.([date, endDate]);
+      onChange?.({ from: date, to: endDate });
     }
 
     onChangeStart?.(date || undefined);
@@ -139,16 +140,18 @@ const RangeDatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, RangeDa
 
   // 종료일 변경 핸들러
   const handleEndDateChange = (date: Date | null) => {
+    if (readOnly || disabled) return;
     if (!date) {
-      setEndDate(null);
-      onChange?.([startDate ?? null, null]);
+      setEndDate(undefined);
+      onChange?.({ from: startDate, to: undefined });
+      onChangeEnd?.(undefined);
       return;
     }
 
     if (!startDate || date < startDate) {
       setStartDate(date);
-      setEndDate(null);
-      onChange?.([date, null]);
+      setEndDate(undefined);
+      onChange?.({ from: startDate, to: undefined });
 
       if (!isKeyboardInput && !isTimeOnlyMode) {
         setTimeout(() => {
@@ -157,7 +160,7 @@ const RangeDatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, RangeDa
       }
     } else {
       setEndDate(date);
-      onChange?.([startDate, date]);
+      onChange?.({ from: startDate, to: date });
     }
 
     onChangeEnd?.(date || undefined);
@@ -188,6 +191,7 @@ const RangeDatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, RangeDa
   };
 
   const dateFormat = currentLocale === ko ? 'yyyy-MM-dd' : 'MM-dd-yyyy';
+  const showHourPicker = displayType === 'day-time-h';
   const showTimePicker =
     displayType === 'time' ||
     displayType === 'time-hm' ||
@@ -195,7 +199,7 @@ const RangeDatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, RangeDa
     displayType === 'day-time-hm' ||
     displayType === 'day-time-hms';
   const showTimeStep = displayType === 'time-step';
-  const isTimeOnlyMode = showTimePicker || showTimeStep;
+  const isTimeOnlyMode = showHourPicker || showTimePicker || showTimeStep;
   const showSeconds = displayType === 'day-time-hms' || displayType === 'time';
 
   return (
@@ -230,7 +234,27 @@ const RangeDatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, RangeDa
               <CustomDatePickerHeader {...headerProps} locale={currentLocale} />
             )}
             locale={currentLocale}
+            popperPlacement="bottom-start"
+            popperContainer={
+              modals.length
+                ? undefined
+                : (props) => ReactDOM.createPortal(props.children, document.body)
+            }
           />
+          {showHourPicker && (
+            <div className="nlp--datepicker-time">
+              <PopoverHourInput
+                value={startDate}
+                onChange={(date: Date | undefined) => {
+                  if (date) {
+                    handleStartDateChange(date);
+                  }
+                }}
+                placeholder={getPlaceholderByType('time-h', currentLocale)}
+                locale={currentLocale}
+              />
+            </div>
+          )}
           {showTimePicker && (
             <div className="nlp--datepicker-time">
               <PopoverTimeInput
@@ -270,6 +294,12 @@ const RangeDatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, RangeDa
                 locale={currentLocale}
                 timeIntervals={minuteStep}
                 timeCaption=""
+                popperPlacement="bottom-start"
+                popperContainer={
+                  modals.length
+                    ? undefined
+                    : (props) => ReactDOM.createPortal(props.children, document.body)
+                }
               />
             </div>
           )}
@@ -304,7 +334,27 @@ const RangeDatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, RangeDa
               <CustomDatePickerHeader {...headerProps} locale={currentLocale} />
             )}
             locale={currentLocale}
+            popperPlacement="bottom-start"
+            popperContainer={
+              modals.length
+                ? undefined
+                : (props) => ReactDOM.createPortal(props.children, document.body)
+            }
           />
+          {showHourPicker && (
+            <div className="nlp--datepicker-time">
+              <PopoverHourInput
+                value={startDate}
+                onChange={(date: Date | undefined) => {
+                  if (date) {
+                    handleEndDateChange(date);
+                  }
+                }}
+                placeholder={getPlaceholderByType('time-h', currentLocale)}
+                locale={currentLocale}
+              />
+            </div>
+          )}
           {showTimePicker && (
             <div className="nlp--datepicker-time">
               <PopoverTimeInput
@@ -344,6 +394,12 @@ const RangeDatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, RangeDa
                 locale={currentLocale}
                 timeIntervals={minuteStep}
                 timeCaption=""
+                popperPlacement="bottom-start"
+                popperContainer={
+                  modals.length
+                    ? undefined
+                    : (props) => ReactDOM.createPortal(props.children, document.body)
+                }
               />
             </div>
           )}

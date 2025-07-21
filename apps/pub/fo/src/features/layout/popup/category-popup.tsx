@@ -1,13 +1,11 @@
 import React, { memo, useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import { Carousel } from '@learnway/ui';
+import { cn } from '@learnway/shared';
 import { Button, Chip, ModalBody, ModalContainer, ModalTitle, useModal } from '@learnway/ui';
 import { Navigation } from 'swiper/modules';
 
-import { IcoArrowDown, IcoArrowForward, IcoArrowBackward } from '@learnway/icons';
-
-import bnrImage1 from '@learnway/styles/fo/assets/images/banner/banner_cate1.png';
-import bnrImage2 from '@learnway/styles/fo/assets/images/banner/banner_cate2.png';
+import { IcoArrowUp, IcoArrowForward, IcoArrowBackward } from '@learnway/icons';
 
 import styles from './category-popup.module.css';
 
@@ -21,38 +19,37 @@ const CategoryPopupComponent = () => {
     <Chip option={{ label: '경영/기획', value: 'e' }} />,
   ];
 
-  const categories = [
+  type SubItem = { id: number; label: string; link: string };
+  type MenuItem = { id: number; label: string; subItems?: SubItem[]; link: string };
+
+  const menuData: MenuItem[] = [
     {
-      title: '경영전략',
-      link: '', // 타이틀 링크 추가
-      subCategories: [
-        { name: '3dpth Category', link: '' },
-        { name: '3dpth Category', link: '' },
-        { name: '3dpth Category', link: '' },
-        { name: '3dpth Category', link: '' },
+      id: 1,
+      label: '경영전략 1',
+      link: '',
+      subItems: [
+        { id: 101, label: '3Depth', link: '' },
+        { id: 102, label: '3Depth-1', link: '' },
       ],
     },
+    { id: 2, label: '경영전략 2', link: '' }, // 3depth 없음
     {
-      title: '경영전략',
-      link: '', // 타이틀 링크 추가
-      subCategories: [{ name: '3dpth Category', link: '' }],
+      id: 3,
+      label: '경영전략 3',
+      link: '',
+      subItems: [
+        { id: 301, label: '3Depth', link: '' },
+        { id: 302, label: '3Depth-1', link: '' },
+      ],
     },
   ];
 
-  // 각 카테고리의 열림/닫힘 상태를 배열로 관리
-  const [openStates, setOpenStates] = useState(categories.map(() => false));
+  const firstMenuWithSub = menuData.find((item) => item.subItems)?.id ?? null;
+  const [openId, setOpenId] = useState<number | null>(firstMenuWithSub);
 
-  // 모든 카테고리가 열려있는지 확인
-  const isAllOpen = openStates.every((state) => state);
-
-  // 전체 열기/닫기
-  const categoryAll = () => {
-    setOpenStates(categories.map(() => !isAllOpen));
-  };
-
-  // 개별 열기/닫기
-  const categoryDepth = (index: number) => {
-    setOpenStates((prev) => prev.map((state, i) => (i === index ? !state : state)));
+  const handleClick = (id: number, hasSub: boolean) => {
+    if (!hasSub) return;
+    setOpenId((prev) => (prev === id ? null : id));
   };
 
   return (
@@ -65,8 +62,7 @@ const CategoryPopupComponent = () => {
             {/* 카테고리 영역 - 좌측메뉴 */}
             <div className={styles.menu_list_wrap}>
               <div className={styles.scroll_box}>
-                {/* list 1 */}
-                <ul className={`${styles.menu_list} ${styles.sec1}`}>
+                <ul className={styles.menu_list}>
                   <li>
                     {/* 버튼 활성화 시 active 추가 */}
                     <Button className={styles.active}>
@@ -100,9 +96,7 @@ const CategoryPopupComponent = () => {
                     </Button>
                   </li>
                 </ul>
-
-                {/* list 2 */}
-                <ul className={`${styles.menu_list} ${styles.sec2}`}>
+                <ul className={styles.menu_list}>
                   <li>
                     <Button>
                       <span>경영/기획</span>
@@ -129,9 +123,7 @@ const CategoryPopupComponent = () => {
                     </Button>
                   </li>
                 </ul>
-
-                {/* list 3 */}
-                <ul className={`${styles.menu_list} ${styles.sec3}`}>
+                <ul className={styles.menu_list}>
                   <li>
                     <Button>
                       <span>서비스</span>
@@ -149,60 +141,36 @@ const CategoryPopupComponent = () => {
             {/* 카테고리 영역 - 뎁스영역 */}
             <div className={styles.category_inner}>
               <div className={styles.scroll_box}>
-                <div className={styles.tit_head}>
-                  <h2>
-                    <Link to="" className={styles.tit}>
-                      기업경영
-                    </Link>
-                    <Button
-                      onClick={categoryAll}
-                      className={`${styles.btn_cate} ${isAllOpen ? styles.active : ''}`}
-                    >
-                      <IcoArrowDown width={16} height={16} stroke="#07287E" />
-                    </Button>
-                  </h2>
-                </div>
-
                 <div className={styles.depth_area}>
-                  {/* 3dapth */}
-                  {categories.map((category, index) => (
-                    <div key={index} className={styles.depth_wrap}>
-                      <div className={styles.tit}>
-                        <h3>
-                          <Link to={category.link}>{category.title}</Link>
-                        </h3>
-                        <Button
-                          className={`${styles.btn_cate} ${openStates[index] ? styles.active : ''}`}
-                          onClick={() => categoryDepth(index)}
-                        >
-                          <IcoArrowDown width={16} height={16} stroke="#A9AFB8" />
-                        </Button>
+                  {menuData.map(({ id, label, subItems, link }) => (
+                    <div key={id} className={styles.menu_item}>
+                      <div
+                        className={cn(
+                          styles.menu_title,
+                          subItems && openId === id ? styles.active : '',
+                        )}
+                      >
+                        <Link to={link}>{label}</Link>
+                        {subItems && (
+                          <Button
+                            className={styles.btn_cate}
+                            onClick={() => handleClick(id, !!subItems)}
+                            icon={<IcoArrowUp />}
+                          />
+                        )}
                       </div>
 
-                      {!openStates[index] && (
-                        <div className={styles.depth_info}>
-                          <ul className={styles.list}>
-                            {category.subCategories.map((sub, subIndex) => (
-                              <li key={subIndex}>
-                                <Link className={styles.txt} to={sub.link}>
-                                  {sub.name}
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
+                      {subItems && openId === id && (
+                        <div className={styles.sub_menu}>
+                          {subItems.map((sub) => (
+                            <div key={sub.id} className={styles.sub_menu_item}>
+                              <Link to={sub.link}>{sub.label}</Link>
+                            </div>
+                          ))}
                         </div>
                       )}
                     </div>
                   ))}
-                </div>
-
-                <div className={styles.banner_box}>
-                  <Link to="" className={styles.banner_link}>
-                    <img src={bnrImage1} />
-                  </Link>
-                  <Link to="" className={styles.banner_link}>
-                    <img src={bnrImage2} />
-                  </Link>
                 </div>
               </div>
             </div>
