@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TenantCustom_WizardStep4 } from './com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TenantCustom_WizardStep4';
 export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4 = {
     /**
      * 과정 생성/수정 마법사 타입 (lms.course.WizardStep)
@@ -212,33 +213,29 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4 = {
      */
     isStayed?: boolean;
     /**
+     * 완성차 테넌트 전용 항목 설정 여부
+     */
+    isCarTenantCustomOption?: boolean;
+    /**
+     * 로템 테넌트 전용 항목 설정 여부
+     */
+    isRotemTenantCustomOption?: boolean;
+    /**
+     * 위탁 테넌트 전용 항목 설정 여부
+     */
+    isOutsourcingTenantCustomOption?: boolean;
+    /**
+     * 위아 테넌트 전용 항목 설정 여부
+     */
+    isWiaTenantCustomOption?: boolean;
+    /**
      * 오토에버 위탁 전용 설정 여부
      */
-    isUseOutsourcing?: boolean;
+    isAutoeverTenantCustomOption?: boolean;
     /**
-     * 수강신청 단계에서 레벨테스트 수집 여부
+     * 오토에버 위탁 전용 설정 여부
      */
-    isPreLevelTestRequired?: boolean;
-    /**
-     * 수강신청 단계에서 배송지 수집 여부
-     */
-    isBookDeliveryInfoRequired?: boolean;
-    /**
-     * 튜터id
-     */
-    tutorId?: number;
-    /**
-     * 튜터 이름
-     */
-    tutorName?: string;
-    /**
-     * 위탁 소유 회사 ID
-     */
-    outsourcingCompanyId?: number;
-    /**
-     * 위탁 소유 회사 이름
-     */
-    outsourcingCompanyName?: string;
+    tenantCustoms?: Array<com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TenantCustom_WizardStep4>;
     learningSpaceNameValid?: boolean;
 };
 export namespace com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4 {

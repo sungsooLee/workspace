@@ -11,6 +11,7 @@ import {
   PostDraftHtmlVideoParams,
   PostDraftVideosParams,
   QuestionItem,
+  QuestionItemDeleteParam,
   TestPaperBasicInfoSaveReq,
 } from '@types';
 import LearningResourceService from '../api/learning-resource';
@@ -126,6 +127,7 @@ export const learningResourceQueryOptions = {
       ? {
           queryKey: queryKeys.questionBankQustionList,
           queryFn: () => LearningResourceService.getQuestionItemList(examPoolUuid),
+          enabled: !!examPoolUuid,
         }
       : getQuerySkipToken<QuestionItem[]>(),
 };
@@ -177,5 +179,9 @@ export const mutateOptions = {
   }),
   createQuestionItem: () => ({
     mutationFn: (params: QuestionItem) => LearningResourceService.createQuestionItem(params),
+  }),
+  deleteQuestionItemList: () => ({
+    mutationFn: (param: QuestionItemDeleteParam) =>
+      LearningResourceService.deleteQuestionItemList(param),
   }),
 };

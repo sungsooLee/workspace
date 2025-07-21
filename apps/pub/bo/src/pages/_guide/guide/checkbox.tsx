@@ -54,6 +54,19 @@ import { Checkbox } from '@learnway/ui';
             <code>{`<Checkbox label="disabled" disabled />`}</code>
           </pre>
         </div>
+
+        <h3 className="guide_tit3">Radio 타입</h3>
+        <div className="flex_box">
+          <div className="desc">
+            <Checkbox label="label" variant="radio" />
+          </div>
+        </div>
+
+        <div className="code_example">
+          <pre className="code_block">
+            <code>{`<Checkbox label="label" variant='radio' />`}</code>
+          </pre>
+        </div>
       </div>
     </div>
   );

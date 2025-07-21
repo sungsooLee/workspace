@@ -3,7 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type com_ever_edu_lms_category_dto_req_CategoryMasterSaveRequestDto = {
-    name: string;
+    categoryName: string;
     categoryCode: string;
     categoryContent?: string;
     categoryType: com_ever_edu_lms_category_dto_req_CategoryMasterSaveRequestDto.categoryType;

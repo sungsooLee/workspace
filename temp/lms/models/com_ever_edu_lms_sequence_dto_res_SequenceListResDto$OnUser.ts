@@ -2,16 +2,16 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser = {
-    courseType?: com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser.courseType;
+export type com_ever_edu_lms_sequence_dto_res_SequenceListResDto$OnUser = {
+    courseType?: com_ever_edu_lms_sequence_dto_res_SequenceListResDto$OnUser.courseType;
     isDuplicateEnrollAllowed?: boolean;
     courseSequenceName?: string;
     courseSequenceUuid?: string;
     enrollQueueId?: number;
     studentId?: number;
-    enrollQueueStatus?: com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser.enrollQueueStatus;
-    enrollStatus?: com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser.enrollStatus;
-    learningStartType?: com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser.learningStartType;
+    enrollQueueStatus?: com_ever_edu_lms_sequence_dto_res_SequenceListResDto$OnUser.enrollQueueStatus;
+    enrollStatus?: com_ever_edu_lms_sequence_dto_res_SequenceListResDto$OnUser.enrollStatus;
+    learningStartType?: com_ever_edu_lms_sequence_dto_res_SequenceListResDto$OnUser.learningStartType;
     enrollStartDate?: string;
     enrollEndDate?: string;
     learningStartDate?: string;
@@ -25,12 +25,12 @@ export type com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser = {
     currentWaitlistCount?: number;
     isEnrollClosed?: boolean;
     preRequisiteCourseIds?: Array<number>;
-    waitListPickMethodType?: com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser.waitListPickMethodType;
+    waitListPickMethodType?: com_ever_edu_lms_sequence_dto_res_SequenceListResDto$OnUser.waitListPickMethodType;
     enrollmentDenyReasons?: Array<'IS_BLACKLIST' | 'IS_NOT_WHITELIST' | 'DELETED_COURSE' | 'EXCEEDED_QUOTA' | 'DUPLICATE_ENROLL' | 'IS_NOT_ENROLL_PERIOD' | 'CONFLICT_SCHEDULE' | 'IS_ENROLL_CLOSED' | 'DEFAULT_CONSTRAINT' | 'NEED_PREREQUISITE_COURSE' | 'LIMIT_MONTH_INDIVIDUAL_PER_CATEGORY' | 'LIMIT_YEAR_INDIVIDUAL_PER_CATEGORY' | 'LIMIT_MONTH_COMPANY_PER_CATEGORY' | 'LIMIT_YEAR_COMPANY_PER_CATEGORY'>;
-    enrollButtonState?: com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser.enrollButtonState;
+    enrollButtonState?: com_ever_edu_lms_sequence_dto_res_SequenceListResDto$OnUser.enrollButtonState;
     hide?: boolean;
 };
-export namespace com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser {
+export namespace com_ever_edu_lms_sequence_dto_res_SequenceListResDto$OnUser {
     export enum courseType {
         ELEARNING1 = 'ELEARNING1',
         ELEARNING2 = 'ELEARNING2',
@@ -58,8 +58,8 @@ export namespace com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser {
         CANCEL_DONE = 'CANCEL_DONE',
     }
     export enum learningStartType {
-        FIXED_DATE = 'FIXED_DATE',
         DAYS_AFTER_ENROLL = 'DAYS_AFTER_ENROLL',
+        FIXED_DATE = 'FIXED_DATE',
     }
     export enum waitListPickMethodType {
         NONE = 'NONE',

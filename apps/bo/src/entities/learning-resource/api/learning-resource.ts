@@ -20,6 +20,7 @@ import {
   PostDraftVideosParams,
   PostDraftVideosRes,
   QuestionItem,
+  QuestionItemDeleteParam,
   TestPaperBasicInfoSaveReq,
   TestPaperBasicInfoSaveRes,
 } from '@types';
@@ -216,6 +217,10 @@ export default class LearningResourceService {
    */
   static getQuestionItemList(contentUuid: string) {
     return httpService.get<QuestionItem[]>(`${CMSApiPrefix()}/exam/questions/${contentUuid}`);
+  }
+
+  static deleteQuestionItemList(param: QuestionItemDeleteParam) {
+    return httpService.delete<any>(`${CMSApiPrefix()}/exam/question`, param);
   }
 
   /**

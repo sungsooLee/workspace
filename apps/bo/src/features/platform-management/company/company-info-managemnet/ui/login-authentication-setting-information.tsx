@@ -62,18 +62,19 @@ const LoginAuthenticationSettingInformationComponent: FC<any> = ({
             <FormGuideText>{t('2차 로그인 인증 여부를 설정할 수 있습니다.')}</FormGuideText>
           </div>
         </ContentsRowItem>
-        <FormItem />
+        <ContentsRowItem>
+          <FormDisplay provider={provider} dependencies={[{ name: 'isUseTwoFactorAuth', value: true }]}>
+            <ContentsRow>
+              <FormRow
+                className={dynamicFormStyles.w_half}
+                provider={provider}
+                name="twoFactorAuthType"
+                element={<RadioGroupFormField />}
+              />
+            </ContentsRow>
+          </FormDisplay>
+        </ContentsRowItem>
       </ContentsRow>
-      <FormDisplay provider={provider} dependencies={[{ name: 'isUseTwoFactorAuth', value: true }]}>
-        <ContentsRow>
-          <FormRow
-            className={dynamicFormStyles.w_half}
-            provider={provider}
-            name="twoFactorAuthType"
-            element={<RadioGroupFormField />}
-          />
-        </ContentsRow>
-      </FormDisplay>
     </>
   );
 };

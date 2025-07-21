@@ -2,12 +2,12 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { com_ever_edu_lms_blackwhite_dto_req_SimpleWhiteListReqDto } from './com_ever_edu_lms_blackwhite_dto_req_SimpleWhiteListReqDto';
+import type { com_ever_edu_lms_blackwhitecall_dto_req_WhiteGroupReqDto } from './com_ever_edu_lms_blackwhitecall_dto_req_WhiteGroupReqDto';
 export type com_ever_edu_lms_category_dto_req_TenantCategoryUpdateRequestDto = {
-    name?: string;
+    categoryName?: string;
     categoryCode?: string;
     categoryContent?: string;
     isUsed?: boolean;
-    whiteList?: Array<com_ever_edu_lms_blackwhite_dto_req_SimpleWhiteListReqDto>;
+    whiteList?: Array<com_ever_edu_lms_blackwhitecall_dto_req_WhiteGroupReqDto>;
 };
 

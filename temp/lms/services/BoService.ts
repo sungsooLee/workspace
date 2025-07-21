@@ -34,14 +34,8 @@ import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep3 } f
 import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4 } from '../models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4';
 import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep5 } from '../models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep5';
 import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew } from '../models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew';
-import type { com_ever_edu_lms_course_dto_req_SequenceDeleteReqDto } from '../models/com_ever_edu_lms_course_dto_req_SequenceDeleteReqDto';
-import type { com_ever_edu_lms_course_dto_req_SequenceSaveReqDto } from '../models/com_ever_edu_lms_course_dto_req_SequenceSaveReqDto';
-import type { com_ever_edu_lms_course_dto_req_SequenceSearchReqDto$ByAdmin } from '../models/com_ever_edu_lms_course_dto_req_SequenceSearchReqDto$ByAdmin';
-import type { com_ever_edu_lms_course_dto_req_SequenceUpdateEnrollConfDto } from '../models/com_ever_edu_lms_course_dto_req_SequenceUpdateEnrollConfDto';
-import type { com_ever_edu_lms_course_dto_req_SequenceUpdateReqDto } from '../models/com_ever_edu_lms_course_dto_req_SequenceUpdateReqDto';
 import type { com_ever_edu_lms_course_dto_res_CourseConfigResDto } from '../models/com_ever_edu_lms_course_dto_res_CourseConfigResDto';
 import type { com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin } from '../models/com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin';
-import type { com_ever_edu_lms_course_dto_res_SequenceResDto$onAdmin } from '../models/com_ever_edu_lms_course_dto_res_SequenceResDto$onAdmin';
 import type { com_ever_edu_lms_enroll_dto_event_EnrollQueueEvent } from '../models/com_ever_edu_lms_enroll_dto_event_EnrollQueueEvent';
 import type { com_ever_edu_lms_enroll_dto_req_EnrollCancelReqDto$ByAdmin } from '../models/com_ever_edu_lms_enroll_dto_req_EnrollCancelReqDto$ByAdmin';
 import type { com_ever_edu_lms_instructor_dto_req_InstructorEmailCheckReqDto } from '../models/com_ever_edu_lms_instructor_dto_req_InstructorEmailCheckReqDto';
@@ -51,6 +45,12 @@ import type { com_ever_edu_lms_instructor_dto_req_InstructorSaveReqDto } from '.
 import type { com_ever_edu_lms_instructor_dto_req_InstructorSearchReqDto } from '../models/com_ever_edu_lms_instructor_dto_req_InstructorSearchReqDto';
 import type { com_ever_edu_lms_instructor_dto_req_InstructorUpdateReqDto } from '../models/com_ever_edu_lms_instructor_dto_req_InstructorUpdateReqDto';
 import type { com_ever_edu_lms_instructor_dto_res_InstructorResDto } from '../models/com_ever_edu_lms_instructor_dto_res_InstructorResDto';
+import type { com_ever_edu_lms_sequence_dto_req_SequenceDeleteReqDto } from '../models/com_ever_edu_lms_sequence_dto_req_SequenceDeleteReqDto';
+import type { com_ever_edu_lms_sequence_dto_req_SequenceSaveReqDto } from '../models/com_ever_edu_lms_sequence_dto_req_SequenceSaveReqDto';
+import type { com_ever_edu_lms_sequence_dto_req_SequenceSearchReqDto$ByAdmin } from '../models/com_ever_edu_lms_sequence_dto_req_SequenceSearchReqDto$ByAdmin';
+import type { com_ever_edu_lms_sequence_dto_req_SequenceUpdateEnrollConfDto } from '../models/com_ever_edu_lms_sequence_dto_req_SequenceUpdateEnrollConfDto';
+import type { com_ever_edu_lms_sequence_dto_req_SequenceUpdateReqDto } from '../models/com_ever_edu_lms_sequence_dto_req_SequenceUpdateReqDto';
+import type { com_ever_edu_lms_sequence_dto_res_SequenceResDto$onAdmin } from '../models/com_ever_edu_lms_sequence_dto_res_SequenceResDto$onAdmin';
 import type { com_ever_edu_lms_space_dto_req_LearningSpaceListReqDto } from '../models/com_ever_edu_lms_space_dto_req_LearningSpaceListReqDto';
 import type { com_ever_edu_lms_space_dto_req_LearningSpaceSaveReqDto } from '../models/com_ever_edu_lms_space_dto_req_LearningSpaceSaveReqDto';
 import type { com_ever_edu_lms_space_dto_req_LearningSpaceUpdateReqDto } from '../models/com_ever_edu_lms_space_dto_req_LearningSpaceUpdateReqDto';
@@ -61,9 +61,9 @@ import type { org_springframework_data_domain_PageCom_ever_edu_lms_badge_dto_res
 import type { org_springframework_data_domain_PageCom_ever_edu_lms_badge_dto_res_BadgeListResDto$OnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_badge_dto_res_BadgeListResDto$OnAdmin';
 import type { org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_CourseListAdminResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_CourseListAdminResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_CoursePopSearchResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_CoursePopSearchResDto';
-import type { org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_SequenceListResDto$OnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_SequenceListResDto$OnAdmin';
 import type { org_springframework_data_domain_PageCom_ever_edu_lms_instructor_dto_res_InstructorHistorySearchResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_instructor_dto_res_InstructorHistorySearchResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_lms_instructor_dto_res_InstructorSearchResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_instructor_dto_res_InstructorSearchResDto';
+import type { org_springframework_data_domain_PageCom_ever_edu_lms_sequence_dto_res_SequenceListResDto$OnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_sequence_dto_res_SequenceListResDto$OnAdmin';
 import type { org_springframework_data_domain_PageCom_ever_edu_lms_space_dto_res_LearningSpaceListAdminResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_space_dto_res_LearningSpaceListAdminResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_lms_student_dto_res_StudentHistoryDto$OnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_student_dto_res_StudentHistoryDto$OnAdmin';
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -219,12 +219,12 @@ export class BoService {
      * 차수 단건 조회
      * 차수를 조회한다.
      * @param sequenceId
-     * @returns com_ever_edu_lms_course_dto_res_SequenceResDto$onAdmin OK
+     * @returns com_ever_edu_lms_sequence_dto_res_SequenceResDto$onAdmin OK
      * @throws ApiError
      */
     public static findBySequenceNo1(
         sequenceId: number,
-    ): CancelablePromise<com_ever_edu_lms_course_dto_res_SequenceResDto$onAdmin> {
+    ): CancelablePromise<com_ever_edu_lms_sequence_dto_res_SequenceResDto$onAdmin> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/sequence/{sequenceId}',
@@ -250,7 +250,7 @@ export class BoService {
      */
     public static updateSequence(
         sequenceId: number,
-        requestBody: com_ever_edu_lms_course_dto_req_SequenceUpdateReqDto,
+        requestBody: com_ever_edu_lms_sequence_dto_req_SequenceUpdateReqDto,
     ): CancelablePromise<number> {
         return __request(OpenAPI, {
             method: 'PUT',
@@ -302,7 +302,7 @@ export class BoService {
      * @throws ApiError
      */
     public static listUpdate(
-        requestBody: Array<com_ever_edu_lms_course_dto_req_SequenceUpdateEnrollConfDto>,
+        requestBody: Array<com_ever_edu_lms_sequence_dto_req_SequenceUpdateEnrollConfDto>,
     ): CancelablePromise<number> {
         return __request(OpenAPI, {
             method: 'PUT',
@@ -952,7 +952,7 @@ export class BoService {
      * @throws ApiError
      */
     public static saveSequence(
-        requestBody: com_ever_edu_lms_course_dto_req_SequenceSaveReqDto,
+        requestBody: com_ever_edu_lms_sequence_dto_req_SequenceSaveReqDto,
     ): CancelablePromise<number> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -1101,12 +1101,12 @@ export class BoService {
      * 카프카 쓰지 않고 바로 입과
      * 바로 입과 테스트
      * @param requestBody
-     * @returns number OK
+     * @returns string OK
      * @throws ApiError
      */
     public static enrollTest1(
         requestBody: com_ever_edu_lms_enroll_dto_event_EnrollQueueEvent,
-    ): CancelablePromise<number> {
+    ): CancelablePromise<'QUEUE' | 'PROCESSED' | 'WAITING' | 'EXPIRED_WAITING' | 'MAIL_SEND' | 'ERROR' | 'QUOTA_EXCEED' | 'QUOTA_WAITING_EXCEED' | 'INVALID_COURSE' | 'ACCESS_DENIED' | 'DUPLICATE_ENROLL'> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/admin/api/v1/enroll-test',
@@ -1513,13 +1513,13 @@ export class BoService {
      * 과정 id를 통해 차수 목록을 조회한다.
      * @param pageable
      * @param params
-     * @returns org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_SequenceListResDto$OnAdmin OK
+     * @returns org_springframework_data_domain_PageCom_ever_edu_lms_sequence_dto_res_SequenceListResDto$OnAdmin OK
      * @throws ApiError
      */
     public static findPage5(
         pageable: org_springdoc_core_converters_models_Pageable,
-        params: com_ever_edu_lms_course_dto_req_SequenceSearchReqDto$ByAdmin,
-    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_SequenceListResDto$OnAdmin> {
+        params: com_ever_edu_lms_sequence_dto_req_SequenceSearchReqDto$ByAdmin,
+    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_lms_sequence_dto_res_SequenceListResDto$OnAdmin> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/sequences',
@@ -1809,7 +1809,7 @@ export class BoService {
      * @throws ApiError
      */
     public static deleteSeqList1(
-        requestBody: Array<com_ever_edu_lms_course_dto_req_SequenceDeleteReqDto>,
+        requestBody: Array<com_ever_edu_lms_sequence_dto_req_SequenceDeleteReqDto>,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',

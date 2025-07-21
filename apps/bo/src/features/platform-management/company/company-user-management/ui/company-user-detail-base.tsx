@@ -4,7 +4,7 @@ import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { ContentsRow, FormSubTitle, GridBox, Input } from '@learnway/ui';
 import { ContentsHistoryInfoFormField, FormRow } from '@shared/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { EnGlobalConst } from '@types';
+import { EnFormMode, EnGlobalConst } from '@types';
 import { t } from 'i18next';
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { getUserStatus } from '../service/company-user.service';
@@ -109,7 +109,7 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
       {/* 직군/직무 정보 */}
       <CompanyUserDetailJob provider={provider} />
       {/* 계정 정보 */}
-      <CompanyUserDetailAccount provider={provider} />
+      <CompanyUserDetailAccount provider={provider} formMode={EnFormMode.VIEW} />
       {/* 로그인 및 인증 설정 정보 */}
       <CompanyUserDetailAuthentication provider={provider} />
       <ContentsHistoryInfoFormField />

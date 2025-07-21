@@ -4,8 +4,8 @@
 /* eslint-disable */
 import type { com_ever_edu_lms_course_dto_res_CourseResDto$SimpleCourseDto } from './com_ever_edu_lms_course_dto_res_CourseResDto$SimpleCourseDto';
 import type { com_ever_edu_lms_course_dto_res_CourseResDto$TagNameWrapper } from './com_ever_edu_lms_course_dto_res_CourseResDto$TagNameWrapper';
-import type { com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser } from './com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser';
 import type { com_ever_edu_lms_curriculum_dto_CurriculumInfoDto } from './com_ever_edu_lms_curriculum_dto_CurriculumInfoDto';
+import type { com_ever_edu_lms_sequence_dto_res_SequenceListResDto$OnUser } from './com_ever_edu_lms_sequence_dto_res_SequenceListResDto$OnUser';
 export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseIntroductionOnUser = {
     courseUUID?: string;
     thumbnailUrl?: string;
@@ -37,7 +37,7 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseIntroductionOnUse
     progressWeights?: number;
     examWeights?: number;
     asgmtWeights?: number;
-    sequenceListOnUser?: Array<com_ever_edu_lms_course_dto_res_SequenceListResDto$OnUser>;
+    sequenceListOnUser?: Array<com_ever_edu_lms_sequence_dto_res_SequenceListResDto$OnUser>;
     operatorId?: number;
     operatorTelNo?: string;
     isEnrollRequired?: boolean;

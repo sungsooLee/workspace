@@ -43,6 +43,26 @@ export type com_ever_edu_lms_course_dto_res_CourseConfigResDto = {
      */
     adminDataOption?: com_ever_edu_lms_course_dto_res_CourseConfigResDto.adminDataOption;
     /**
+     * 완성차 테넌트 전용 항목 설정 여부
+     */
+    carTenantCustomOption?: com_ever_edu_lms_course_dto_res_CourseConfigResDto.carTenantCustomOption;
+    /**
+     * 로템 테넌트 전용 항목 설정 여부
+     */
+    rotemTenantCustomOption?: com_ever_edu_lms_course_dto_res_CourseConfigResDto.rotemTenantCustomOption;
+    /**
+     * 위탁 테넌트 전용 항목 설정 여부
+     */
+    outsourcingTenantCustomOption?: com_ever_edu_lms_course_dto_res_CourseConfigResDto.outsourcingTenantCustomOption;
+    /**
+     * 위아 테넌트 전용 항목 설정 여부
+     */
+    wiaTenantCustomOption?: com_ever_edu_lms_course_dto_res_CourseConfigResDto.wiaTenantCustomOption;
+    /**
+     * 오토에버 테넌트 전용 항목 설정 여부
+     */
+    autoeverTenantCustomOption?: com_ever_edu_lms_course_dto_res_CourseConfigResDto.autoeverTenantCustomOption;
+    /**
      * 사용가능 컨텐츠 설정
      */
     allowedContentTypes?: Array<'VIDEO' | 'EBOOK' | 'SCORM' | 'HTML5_VIDEO' | 'IMAGE' | 'EXTERNAL_LINK' | 'EXTERNAL_AGENCY' | 'BLOG' | 'EXAM' | 'EXAM_POOL' | 'ASSIGNMENT' | 'SURVEY' | 'ETC'>;
@@ -136,6 +156,56 @@ export namespace com_ever_edu_lms_course_dto_res_CourseConfigResDto {
      * 행정항목 설정
      */
     export enum adminDataOption {
+        IMPOSSIBLE = 'IMPOSSIBLE',
+        MANDATORY = 'MANDATORY',
+        OPTIONAL = 'OPTIONAL',
+        OPTION_USE = 'OPTION_USE',
+        OPTION_NOT_USE = 'OPTION_NOT_USE',
+    }
+    /**
+     * 완성차 테넌트 전용 항목 설정 여부
+     */
+    export enum carTenantCustomOption {
+        IMPOSSIBLE = 'IMPOSSIBLE',
+        MANDATORY = 'MANDATORY',
+        OPTIONAL = 'OPTIONAL',
+        OPTION_USE = 'OPTION_USE',
+        OPTION_NOT_USE = 'OPTION_NOT_USE',
+    }
+    /**
+     * 로템 테넌트 전용 항목 설정 여부
+     */
+    export enum rotemTenantCustomOption {
+        IMPOSSIBLE = 'IMPOSSIBLE',
+        MANDATORY = 'MANDATORY',
+        OPTIONAL = 'OPTIONAL',
+        OPTION_USE = 'OPTION_USE',
+        OPTION_NOT_USE = 'OPTION_NOT_USE',
+    }
+    /**
+     * 위탁 테넌트 전용 항목 설정 여부
+     */
+    export enum outsourcingTenantCustomOption {
+        IMPOSSIBLE = 'IMPOSSIBLE',
+        MANDATORY = 'MANDATORY',
+        OPTIONAL = 'OPTIONAL',
+        OPTION_USE = 'OPTION_USE',
+        OPTION_NOT_USE = 'OPTION_NOT_USE',
+    }
+    /**
+     * 위아 테넌트 전용 항목 설정 여부
+     */
+    export enum wiaTenantCustomOption {
+        IMPOSSIBLE = 'IMPOSSIBLE',
+        MANDATORY = 'MANDATORY',
+        OPTIONAL = 'OPTIONAL',
+        OPTION_USE = 'OPTION_USE',
+        OPTION_NOT_USE = 'OPTION_NOT_USE',
+    }
+    /**
+     * 오토에버 테넌트 전용 항목 설정 여부
+     */
+    export enum autoeverTenantCustomOption {
         IMPOSSIBLE = 'IMPOSSIBLE',
         MANDATORY = 'MANDATORY',
         OPTIONAL = 'OPTIONAL',

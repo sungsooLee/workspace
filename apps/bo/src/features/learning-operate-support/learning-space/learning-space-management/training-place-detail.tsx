@@ -1,18 +1,26 @@
-import React, { useRef, useImperativeHandle, forwardRef, useEffect, useState } from 'react';
-import { t } from 'i18next';
-import { useRouter } from '@tanstack/react-router';
-import { useModal, ContentsRow, TextareaFormField, Input, RadioGroupFormField, FormSubTitle } from '@learnway/ui';
-import { FormDisplay } from '@features/form/ui/form-display';
-import { DuplicateCheckInputFormField, DuplicateState, DropdownFormField } from '@features/form';
-import { FormRow } from '@shared/ui';
-import { DynamicFormConfig, useDynamicForm, CODE_GROUP, S3_PATH } from '@learnway/hooks';
-import { AddressSearchModal } from '@shared/ui/modal/address-search-modal';
 import { useSpaceMutation } from '@entities/training-place';
-import { EnFormMode, EnPageMode } from '@types';
 import SpaceService from '@entities/training-place/api/space';
-import { SingleAttachmentFormField } from '@shared/ui/form/single-attachment-form-field';
-import { Space } from 'src/types/entities/space';
+import { DropdownFormField, DuplicateCheckInputFormField, DuplicateState } from '@features/form';
+import { FormDisplay } from '@features/form/ui/form-display';
+import { CODE_GROUP, DynamicFormConfig, S3_PATH, useDynamicForm } from '@learnway/hooks';
+import {
+  ContentsRow,
+  FormSubTitle,
+  Input,
+  RadioGroupFormField,
+  TextareaFormField,
+  useModal,
+  useToast,
+} from '@learnway/ui';
+import { FormRow } from '@shared/ui';
 import { AddressSearchFormField } from '@shared/ui/form/address-search-form-field';
+import { SingleAttachmentFormField } from '@shared/ui/form/single-attachment-form-field';
+import { AddressSearchModal } from '@shared/ui/modal/address-search-modal';
+import { useRouter } from '@tanstack/react-router';
+import { EnFormMode, EnPageMode } from '@types';
+import { t } from 'i18next';
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { Space } from 'src/types/entities/space';
 
 const URL_REGEX =
   /((https?:\/\/(www\.)?)|(www\.))[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)(?<![-.+():%])/;
@@ -27,6 +35,7 @@ interface TrainingPlaceDetailProps {
 const TrainingPlaceDetailComponent = (props: TrainingPlaceDetailProps, ref: any) => {
   const router = useRouter();
   const { open: openModal, alert: openAlert, confirm: openConfirm, close: closeModal } = useModal();
+  const { open: openToast } = useToast();
   const [savedId, setSavedId] = useState(undefined);
   const { provider, updateFormData, onSubmit, onFormChange, getValues } =
     useDynamicForm(formConfig());
@@ -83,26 +92,22 @@ const TrainingPlaceDetailComponent = (props: TrainingPlaceDetailProps, ref: any)
   }));
 
   const mutationHandler = (data: any, title: string) => {
-    openAlert({
-      title,
-      onClose: () => {
-        if (props.pageMode === EnPageMode.MODAL && data) {
-          setSavedId(data);
-        } else router.navigate({ to: '/learning/training-place' });
-      },
-    });
+    openToast({ title, type: 'success' });
+    if (props.pageMode === EnPageMode.MODAL && data) {
+      setSavedId(data);
+    } else router.navigate({ to: '/learning/training-place' });
   };
 
   const { mutate: createSpace } = useSpaceMutation('create', {
-    onSuccess: (data: any) => mutationHandler(data, t('저장되었습니다.')),
+    onSuccess: (data: any) => mutationHandler(data, t('저장 하였습니다.')),
   });
 
   const { mutate: updateSpace } = useSpaceMutation('update', {
-    onSuccess: () => mutationHandler(undefined, t('저장되었습니다.')),
+    onSuccess: () => mutationHandler(undefined, t('저장 하였습니다.')),
   });
 
   const { mutate: deleteSpace } = useSpaceMutation('delete', {
-    onSuccess: () => mutationHandler(undefined, t('삭제되었습니다.')),
+    onSuccess: () => mutationHandler(undefined, t('삭제 하였습니다.')),
   });
 
   const duplicateCheck = async (learningSpaceCode: string) => {
