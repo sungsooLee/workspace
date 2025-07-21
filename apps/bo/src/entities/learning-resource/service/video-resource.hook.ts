@@ -43,8 +43,8 @@ const useVideoResourceHook = (provider: DynamicFormProvider) => {
   const fetchStatus = useCallback(
     async (resourceId?: number) => {
       const statusInfo = await (resourceId
-        ? LearningResourceService.getVideoFileChange(resourceId)
-        : LearningResourceService.getVideoStatus(contentUuid));
+        ? LearningResourceService.getVideoFileChange(resourceId) // 비디오 변경시
+        : LearningResourceService.getVideoStatus(contentUuid)); // 비디오 최초 등록시
       setVideoChangeResourceId(resourceId);
       onFormChange(omit(statusInfo, 'resourceId'));
     },
@@ -60,6 +60,7 @@ const useVideoResourceHook = (provider: DynamicFormProvider) => {
   useEffect(() => {
     if (isProcessingNone(status)) return;
 
+    // 기존에 비디오 변경중이던 내역이 있다면 변경상태 조회 시작
     const videoChangeResource = localStorage.getItem(videoChangeKey(contentUuid));
     if (videoChangeResource) {
       if (!videoChangeResourceId) {
@@ -97,7 +98,7 @@ const useVideoResourceHook = (provider: DynamicFormProvider) => {
   useEffect(() => {
     return () => {
       if (intervalRef.current) {
-        // Unmountnd interval 중지
+        // Unmount시 interval 중지
         clearInterval(intervalRef.current);
       }
     };
