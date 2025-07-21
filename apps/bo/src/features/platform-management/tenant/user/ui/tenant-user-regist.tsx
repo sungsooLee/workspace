@@ -141,8 +141,9 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
       // 계정 정보 - 해당 정보는 현재 페이지가 관리자 등록이라 고정 값임.
 
       // 로그인 및 인증 설정 정보
-      // ssoType: '',
-      // authType: data.passwordAuthType,
+      ssoType: data.isUseSso ? true : null,
+      ssoTypeList: data.isUseSso ? data.ssoTypeList : null,
+      authType: data.passwordAuthType,
     };
 
     // 현재 회사(조직)조회 팝업에 데이터가 없어 임시로 테스트하기 위해 넣음: 추후 삭제
@@ -642,7 +643,6 @@ const formConfig = (): DynamicFormConfig => ({
       guideText: t(
         '플랫폼은 플랫폼에서 비밀번호를 관리하고, 그외의 유형은 각 시스템에서 비밀번호를 관리합니다.',
       ),
-      disabled: true
     },
     {
       name: 'isUseTwoFactorAuth',
@@ -678,13 +678,14 @@ const formConfig = (): DynamicFormConfig => ({
       name: 'loginRestriction',
       type: 'radio-group',
       label: t('로그인 제한'),
-      value: '3',
+      value: '2',
       options: [
         { label: '로그인 제한 시간 설정', value: '1' },
         { label: '근테 연동 로그인 제한', value: '2' },
         { label: '제한 없음', value: '3' },
       ],
       guideText: t('로그인 시간 제한 선택 시 회사관리 제한 시간에는 로그인할 수 없습니다.'),
+      disabled: true,
     },
   ],
   validator: {
