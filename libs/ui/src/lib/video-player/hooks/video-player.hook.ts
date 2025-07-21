@@ -118,7 +118,7 @@ export const useVideoPlayer = ({ onProgressCallback }: UseVideoPlayer = {}) => {
   const onProgress = (state: { played: number; playedSeconds: number }) => {
     setPlayed(state.played);
     setCurrentTime(state.playedSeconds);
-    updateSubtitles(state.playedSeconds);
+    //updateSubtitles(state.playedSeconds);
     onProgressCallback &&
       onProgressCallback({
         ...state,
