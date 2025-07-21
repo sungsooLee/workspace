@@ -35,6 +35,14 @@ interface userDetailProps {
   userData: any;
 }
 
+function compareLatestDate(dates: string[]) {
+  const validDates = dates.filter((d): d is string => d! == null);
+
+  return validDates.length > 0
+    ? validDates.reduce((latest, current) => new Date(current) > new Date(latest) ? current : latest)
+    : '-';
+}
+
 /**
  *
  * @param props
@@ -74,6 +82,8 @@ const TenantUserApplicationDetailComponent = (props: userDetailProps, ref: any) 
     if( props.userData ) {
       const userData = props.userData;
       console.log('#### userData {} => ', userData)
+      const dates = [userData.lockedDate, userData.dormantDate, userData.deletedDate];
+      const latestDate = compareLatestDate(dates);
 
       const data = {
         ...userData,
@@ -84,12 +94,7 @@ const TenantUserApplicationDetailComponent = (props: userDetailProps, ref: any) 
         userPosition: userData.isLeader ? t('조직장') : t('조직원'),
         gender: userData.gender && t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.user.Gender.${userData.gender}`),
         userState: getUserStatus(userData),
-        approvalStatus: userData.enabledDate !== null ? '승인' : '대기',
-        hrInfoManageType: userData.hrInfoManageType ? userData.hrInfoManageType : 'MANUAL_MANAGE',
-        companyMemberJoinTypeList: userData.companyMemberJoinTypeList ? userData.companyMemberJoinTypeList : ['BO_JOIN_MANAGER'],
 
-        lastApprovalStatusUpdateDate: userData.enabledDate
-          && getDateToString(new Date(userData.enabledDate), DATE_TIME_FORMAT.DATETIME_SEC),
         createdDate: userData.createdDate
           && getDateToString(new Date(userData.createdDate), DATE_TIME_FORMAT.DATETIME_SEC),
         joinDate: userData.joinDate
@@ -100,7 +105,28 @@ const TenantUserApplicationDetailComponent = (props: userDetailProps, ref: any) 
           && getDateToString(new Date(userData.promotionDate), DATE_TIME_FORMAT.DATETIME_SEC),
         dormantDate: userData.dormantDate
           && getDateToString(new Date(userData.dormantDate), DATE_TIME_FORMAT.DATETIME_SEC),
+
+        // 계정 정보 데이터 관리 방식
+        hrInfoManageType: userData.linkageSystem ? userData.linkageSystem : 'MANUAL_MANAGE',
+        // 회원가입 유형 : 이형주 수석님이 규원 책임님께 확인 후 전달 준다고 함.
+        companyMemberJoinTypeList: userData.companyMemberJoinTypeList ? userData.companyMemberJoinTypeList : ['BO_JOIN_MANAGER'],
+        accountStatus: 'NORMAL',
+        approvalStatus: userData.enabledDate !== null ? '승인' : '대기',
+        lastApprovalStatusUpdateDate: userData.enabledDate
+          && getDateToString(new Date(userData.enabledDate), DATE_TIME_FORMAT.DATETIME_SEC),
+        accountLastUpdateDate: latestDate ? getDateToString(new Date(latestDate), DATE_TIME_FORMAT.DATETIME_SEC) : '-',
         tenant: userData.tenants,
+      }
+      if( userData.lockedDate === null ) {
+        if( userData.dormantDate !== null ) {
+          data.accountStatus = 'INACTIVE_LOCK';
+        }
+      } else {
+        if( userData.dormantDate === null ) {
+          data.accountStatus = 'INACTIVE';
+        } else {
+          data.accountStatus = 'LOCK';
+        }
       }
 
       updateFormData(data)
