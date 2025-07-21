@@ -18,6 +18,7 @@ import { FieldValues, UseFormGetValues, UseFormSetValue } from 'react-hook-form'
 import { DATE_TIME_FORMAT, getDateToString, SelectOption } from '@learnway/shared';
 import dayjs from 'dayjs';
 import { useRouter } from '@tanstack/react-router';
+import { Mode } from '@pages/_layout/learning/learning-sequence/-common/type';
 
 const _global = {
   linkClickSequenceName: (payload: any) => {
@@ -66,7 +67,7 @@ const EnrollmentWaitComponent = ({
     router.navigate({
       to: '/learning/learning-sequence/sequence-management',
       state: {
-        setMode: 'DETAIL',
+        setMode: Mode.DETAIL,
         courseId: 1,
         sequenceId: 1,
       },

@@ -9,12 +9,14 @@ export const queryKeys = {
 };
 
 export const queryOptions = {
+  // 차수 목록 조회
   sequenceList: (params: any) => ({
     queryKey: queryKeys.sequenceList,
     queryFn: () => LearningSequenceService.fetchSequenceList(params),
     cacheTime: 0,
     staleTime: 0,
   }),
+  // 차수 단건 조회
   sequenceDetail: (params: number) => ({
     queryKey: queryKeys.sequenceDetail,
     queryFn: () => LearningSequenceService.fetchSequenceOne(params),
@@ -39,4 +41,40 @@ export const queryOptions = {
   }),
 };
 
-export const mutateOptions = {};
+export const mutateOptions = {
+  // 차수 생성
+  createSequence: () => ({
+    mutationFn: (payload: any) => LearningSequenceService.createSequence(payload),
+  }),
+  // 차수 수정 (리스트)
+  updateSequenceList: () => ({
+    mutationFn: (payload: any) => LearningSequenceService.updateSequenceList(payload),
+  }),
+  // 차수 수정 (단건)
+  updateSequence: () => ({
+    mutationFn: (payload: any) => {
+      const sequenceId = payload.sequenceId;
+      delete payload.sequenceId;
+      return LearningSequenceService.updateSequence(sequenceId, payload);
+    },
+  }),
+  // 차수 삭제 (리스트)
+  deleteSequenceList: () => ({
+    mutationFn: (payload: any) => LearningSequenceService.deleteSequenceList(payload),
+  }),
+  // 차수 삭제 (단건)
+  deleteSequence: () => ({
+    mutationFn: (payload: any) => {
+      const sequenceId = payload.sequenceId;
+      return LearningSequenceService.deleteSequence(sequenceId);
+    },
+  }),
+  // 차수 복사
+  copySequence: () => ({
+    mutationFn: (payload: any) => {
+      const sequenceId = payload.sequenceId;
+      delete payload.sequenceId;
+      return LearningSequenceService.copySequence(sequenceId, payload);
+    },
+  }),
+};

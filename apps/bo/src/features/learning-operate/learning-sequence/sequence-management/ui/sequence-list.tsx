@@ -12,6 +12,7 @@ import {
   ContentsRow,
   DatePicker,
   Divider,
+  Dropdown,
   EditDatePickerCell,
   EditDropdownCell,
   EditInputCell,
@@ -24,7 +25,7 @@ import {
   useGridBoxConfig,
   useModal,
 } from '@learnway/ui';
-import { SearchBox } from '@shared/ui/search-box';
+import { SearchBox, SearchBoxForm } from '@shared/ui/search-box';
 import {
   useSearchBox,
   SearchBoxConfig,
@@ -36,7 +37,7 @@ import {
 } from '@learnway/hooks';
 import { queryOptions } from '@entities/learning-sequence/service/learning-sequence.queries';
 import { useQueryClient } from '@tanstack/react-query';
-import { FormRow, GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
+import { FormRow, FormRow2, GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
 import { LMSApiPrefix } from '@learnway/config';
 import { EnPageMode } from '@types';
 import { IcoPlus } from '@learnway/icons';
@@ -44,7 +45,7 @@ import { useActiveMenuDepthState, useFetchAuthUser } from '@learnway/auth/entiti
 import dayjs from 'dayjs';
 import { getRandomId } from '@learnway/shared';
 import { SequenceBatchModal } from '@features/learning-operate/learning-sequence/sequence-management';
-import { DateTimeRangePickerFormField } from '@features/form';
+import { DateTimeRangePickerFormField, DropdownFormField } from '@features/form';
 import { EditInputDateCell } from '../component/edit-input-date-cell';
 import { CopyBatchButtons } from '../component/copy-batch-buttons';
 import { Mode } from '@pages/_layout/learning/learning-sequence/-common/type';
@@ -86,7 +87,7 @@ const SequenceListComponent = ({
   const router = useRouter();
   const { open: openModal, confirm: openConfirm, alert: openAlert } = useModal();
   const [columns, setColumns] = useState() as any;
-  const [openYear, setOpenYear] = useState<object[]>();
+  const [openYear, setOpenYear] = useState<any[]>();
   const [selectedItems, setSelectedItems] = useState<any[]>([]);
 
   _global.linkClick = (payload: any) => {
@@ -139,13 +140,18 @@ const SequenceListComponent = ({
     validator: {},
   };
 
-  const {
-    provider: searchProvider,
-    getValues,
-    getValuesWithLabel,
-    setOptions,
-    setValue,
-  } = useSearchBox(searchConfig);
+  // const {
+  //   provider: searchProvider,
+  //   getValues,
+  //   getValuesWithLabel,
+  //   setOptions,
+  //   setValue,
+  // } = useSearchBox(searchConfig);
+  const { provider, getValues, onSubmit } = useDynamicForm2({
+    builders: [],
+    mode: 'onSubmit', // 서브밋할 때만 validation 실행
+    reValidateMode: 'onChange', // 에러 발생 후에는 값 변경시 즉시 재검증
+  });
   const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
   const [params, setParams] = useState<Record<string, any>>({});
   const [valuesWithLabel, setValuesWithLabel] = useState<Record<string, SelectOption>>({});
@@ -309,10 +315,12 @@ const SequenceListComponent = ({
   // gridFetch();
   //   }, []);
 
-  const handleOnSearch = async (data: any) => {
-    console.log('##test');
-    return;
-  };
+  const handleOnSearch = useCallback(
+    (data: any) => {
+      gridFetch(data);
+    },
+    [gridFetch],
+  );
 
   const handleRowsSelect = useCallback((rows: any[]) => {
     setSelectedItems(rows);
@@ -417,7 +425,52 @@ const SequenceListComponent = ({
   const columnHelper = createColumnHelper<any>();
   return (
     <>
-      <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
+      {/* <SearchBox
+        provider={searchProvider}
+        onSearch={(e) => {
+          e.preventDefault();
+          handleOnSearch(getValues());
+        }}
+      /> */}
+      <SearchBoxForm onSearch={onSubmit(handleOnSearch)}>
+        <ContentsRow>
+          {/* 개설연도 */}
+          <FormRow2
+            provider={provider}
+            name="openYear"
+            label="개설연도"
+            //  format={'number'}
+            element={<DropdownFormField options={openYear ? openYear : []} />}
+            validation={{
+              required: false,
+            }}
+          />
+          {/* 사용여부 */}
+          <FormRow2
+            provider={provider}
+            name="useYn"
+            label={t('LABEL.form.label.useYn')}
+            element={
+              <DropdownFormField
+                presetOptionLabel={t('LABEL.form.label.all')}
+                optionsConfig={{
+                  codeGroup: CODE_GROUP['mock.options.use'],
+                }}
+              />
+            }
+            validation={{
+              required: false,
+            }}
+          />
+          {/* 차수명 */}
+          <FormRow2
+            provider={provider}
+            name="sequenceName"
+            label={t('LABEL.form.label.sequenceName')}
+            element={<Input />}
+          />
+        </ContentsRow>
+      </SearchBoxForm>
       <Divider />
       <GridBox
         config={gConfig}
