@@ -127,6 +127,7 @@ export const learningResourceQueryOptions = {
       ? {
           queryKey: queryKeys.questionBankQustionList,
           queryFn: () => LearningResourceService.getQuestionItemList(examPoolUuid),
+          enabled: !!examPoolUuid,
         }
       : getQuerySkipToken<QuestionItem[]>(),
 };
