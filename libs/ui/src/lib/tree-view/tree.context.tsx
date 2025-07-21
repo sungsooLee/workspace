@@ -20,7 +20,8 @@ import {
   useSensors,
   UniqueIdentifier,
 } from '@dnd-kit/core';
-import { snapCenterToCursor } from '@dnd-kit/modifiers';
+import { restrictToVerticalAxis, snapCenterToCursor } from '@dnd-kit/modifiers';
+// import { restrictToTreeContainer } from './dnd-modifiers';
 import { IcoFile01, IcoFolder } from '@learnway/icons';
 import styles from './tree.module.css'; // Tree module CSS
 
@@ -28,6 +29,7 @@ interface DragState {
   node: TreeNode | null;
   sourceTreeId: string | null;
   isDragging: boolean;
+  isShuttleMode?: boolean; // 셔틀 모드인지 여부 (트리 간 이동이 아닌 경우)
   currentDropTarget?: {
     node: TreeNode;
     position?: NodeMovePositionType;
@@ -39,6 +41,7 @@ const defaultDragState: DragState = {
   node: null,
   sourceTreeId: null,
   isDragging: false,
+  isShuttleMode: false,
   currentDropTarget: null,
 };
 
@@ -79,6 +82,11 @@ export const TreeProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [dragState, setDragStateInternal] = useState<DragState>(defaultDragState);
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
   const treeCallbacksRef = useRef<Map<string, any>>(new Map());
+
+  // 셔틀 모드일 때 추가적으로 제한 modifier를 적용
+  const modifiers = dragState.isShuttleMode
+    ? [snapCenterToCursor, restrictToVerticalAxis]
+    : [snapCenterToCursor];
 
   const setDragState = useCallback((newState: Partial<DragState>) => {
     setDragStateInternal((prev) => ({ ...prev, ...newState }));
@@ -242,7 +250,7 @@ export const TreeProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         onDragStart={handleDragStart}
         onDragOver={handleDragOver}
         onDragEnd={handleDragEnd}
-        modifiers={[snapCenterToCursor]}
+        modifiers={modifiers}
       >
         {children}
         {/* 드래그 오버레이 */}
@@ -252,22 +260,22 @@ export const TreeProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '8px',
-                padding: '8px 12px',
+                gap: '4px',
+                padding: '4px 8px',
                 backgroundColor: 'white',
-                border: '2px solid #2196f3',
-                borderRadius: '8px',
+                border: '1px solid #2196f3',
+                borderRadius: '4px',
                 boxShadow: '0 8px 25px rgba(0,0,0,0.15)',
-                fontSize: '14px',
-                fontWeight: '500',
+                fontSize: '12px',
+                fontWeight: '400',
                 color: '#333',
                 maxWidth: '250px',
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
                 cursor: 'grabbing',
-                transform: 'rotate(2deg)',
-                transition: 'transform 0.2s ease',
+                // transform: 'rotate(2deg)',
+                // transition: 'transform 0.2s ease',
               }}
             >
               <span style={{ flexShrink: 0, display: 'flex', alignItems: 'center' }}>

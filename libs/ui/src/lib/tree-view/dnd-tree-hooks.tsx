@@ -67,16 +67,21 @@ export const useDndTreeLogic = (
       if (dragData && isDragFromThisTree) {
         setDraggedNode(dragData.node);
         setDraggedNodeKey(dragData.node.key);
+
+        // 셔틀 모드 여부 판단 (SHUTTLE_LIST 타입이거나 트리 간 이동이 아닌 경우)
+        const isShuttleMode = type === 'SHUTTLE_LIST' || type !== 'TREE_TO_TREE';
+
         if (treeContext && treeContext.setDragState) {
           treeContext.setDragState({
             node: JSON.parse(JSON.stringify(dragData.node)),
             sourceTreeId: treeId,
             isDragging: true,
+            isShuttleMode,
           });
         }
       }
     },
-    [treeData, treeId, treeContext],
+    [treeData, treeId, treeContext, type],
   );
 
   // 드롭 핸들러

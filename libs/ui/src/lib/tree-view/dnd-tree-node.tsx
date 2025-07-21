@@ -84,6 +84,7 @@ export const DndTreeNode: React.FC<DndTreeNodeProps> = ({
     listeners: dragListeners,
     setNodeRef: setDragNodeRef,
     isDragging,
+    transform,
   } = useDraggable({
     id: `${treeId}-drag-${node.key}`,
     data: {
@@ -308,6 +309,8 @@ export const DndTreeNode: React.FC<DndTreeNodeProps> = ({
     if (effectiveDraggedNodeKey === node.key) return false;
     if (isDescendantOfDraggedNode) return false;
     if (shouldCollapseForSameLevel) return false;
+    // 현재 드래그 중인 노드인 경우 BEFORE 표시하지 않음
+    if (isThisNodeBeingDragged) return false;
 
     // 첫 번째 형제가 아닌 경우 BEFORE 렌더링 (이전 형제의 AFTER와 중복 방지)
     return isFirstSibling;
@@ -319,6 +322,7 @@ export const DndTreeNode: React.FC<DndTreeNodeProps> = ({
     isDescendantOfDraggedNode,
     shouldCollapseForSameLevel,
     isFirstSibling,
+    isThisNodeBeingDragged,
   ]);
 
   const nodeStyle = useMemo(() => {
@@ -467,6 +471,7 @@ export const DndTreeNode: React.FC<DndTreeNodeProps> = ({
       effectiveDraggedNodeKey !== node.key &&
       !isDescendantOfDraggedNode &&
       !shouldCollapseForSameLevel &&
+      !isThisNodeBeingDragged &&
       isValidDropTargetForPosition('AFTER')
     );
   }, [
@@ -479,6 +484,7 @@ export const DndTreeNode: React.FC<DndTreeNodeProps> = ({
     node.key,
     isDescendantOfDraggedNode,
     shouldCollapseForSameLevel,
+    isThisNodeBeingDragged,
     isValidDropTargetForPosition,
   ]);
 
@@ -850,6 +856,7 @@ export const DndTreeNode: React.FC<DndTreeNodeProps> = ({
         (isGlobalDragging || effectiveDraggedNode) &&
         !isDescendantOfDraggedNode &&
         !shouldCollapseForSameLevel &&
+        !isThisNodeBeingDragged &&
         renderAfterDropZone()}
 
       {/* AFTER 드롭 영역 - SAME_LEVEL_ONLY (자식이 없거나 확장되지 않은 노드) */}
@@ -898,6 +905,7 @@ export const DndTreeNode: React.FC<DndTreeNodeProps> = ({
         effectiveDraggedNodeKey !== node.key &&
         !isDescendantOfDraggedNode &&
         !shouldCollapseForSameLevel &&
+        !isThisNodeBeingDragged &&
         isValidDropTargetForPosition('AFTER') &&
         renderAfterDropZone()}
     </div>
