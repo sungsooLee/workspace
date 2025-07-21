@@ -1,10 +1,10 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import { isMobile } from 'react-device-detect';
-import { ContentsRow, Input, Button, Textarea, PhoneNumber, useModal } from '@learnway/ui';
-import { PasswordChangePopup, IdChangePopup, PhoneChangePopup } from '../../../features/layout';
+import { ContentsRow, Input, Button, useModal } from '@learnway/ui';
+import { PasswordChangePopup, PhoneChangePopup } from '../../../features/layout';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
-import { IcoCaution, IcoFormRequired } from '@learnway/icons';
+import { IcoCaution } from '@learnway/icons';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 //import styles from './information-change.module.css';

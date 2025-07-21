@@ -1,0 +1,35 @@
+.start {
+  &.progress_bar {
+    @apply absolute bottom-0 left-0 right-0 px-[40px] pb-[24px];
+    .progress_box {
+      @apply h-[6px] rounded-[100px] bg-white/30;
+      .progress {
+        @apply h-full bg-[var(--blue50)];
+      }
+    }
+    .option {
+      @apply flex items-center justify-between px-[16px] pt-[18px];
+      .left {
+        @apply flex items-center gap-[24px];
+        .volume {
+          @apply flex items-center gap-[16px];
+          .form_volume {
+            @apply h-[4px] w-[160px] cursor-pointer appearance-none rounded-[100px] bg-transparent accent-white;
+            &::-webkit-slider-thumb {
+              @apply -mt-[6px] h-[8px] w-[12px] cursor-pointer rounded-full bg-white/30;
+            }
+            &::-webkit-slider-runnable-track {
+              @apply h-[4px] rounded-full bg-white/30;
+            }
+            &::-moz-range-thumb {
+              @apply h-[8px] w-[12px] cursor-pointer rounded-full border-none bg-white/30;
+            }
+            &::-moz-range-track {
+              @apply h-[4px] rounded-full bg-white/30;
+            }
+          }
+        }
+      }
+    }
+  }
+}
