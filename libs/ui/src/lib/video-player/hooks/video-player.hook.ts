@@ -155,18 +155,6 @@ export const useVideoPlayer = ({ onProgressCallback }: UseVideoPlayer = {}) => {
     playerRef.current.seekTo(percentage, 'fraction');
   };
 
-  // 🎞️ 자막 불러오기 (간단한 .vtt 파싱 시뮬레이션)
-  const subtitleCues = [
-    { start: 2, end: 5, text: 'Welcome to the lesson!' },
-    { start: 6, end: 10, text: "Let's get started with the video." },
-    { start: 11, end: 15, text: 'Notice the details on this car.' },
-  ];
-
-  const updateSubtitles = (time: number) => {
-    const cue = subtitleCues.find((c) => time >= c.start && time <= c.end);
-    setSubtitles(cue ? cue.text : '');
-  };
-
   return {
     showCurriculumSection,
     playerContainerRef,
@@ -190,7 +178,6 @@ export const useVideoPlayer = ({ onProgressCallback }: UseVideoPlayer = {}) => {
     toggleMute,
     handleVolumeChange,
     handleSeek,
-    updateSubtitles,
     togglePlay,
     onProgress,
     changePlaybackRate,

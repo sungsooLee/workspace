@@ -1,9 +1,8 @@
-import ReactPlayer from 'react-player';
+import ReactPlayer, { ReactPlayerProps } from 'react-player';
 import { forwardRef } from 'react';
-import type { VideoPlayerProps } from './types';
 import './video-player.module.css';
 
-const VideoPlayerComponent = forwardRef<ReactPlayer, VideoPlayerProps>(
+const VideoPlayerComponent = forwardRef<ReactPlayer, ReactPlayerProps>(
   ({ url, playing, onProgress, onDuration, ...props }, ref) => {
     // 초기 설정
     const initialConfig = {

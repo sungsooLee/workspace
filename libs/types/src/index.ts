@@ -2,5 +2,6 @@ export * from './lib/entities/cms/learning-resource';
 export * from './lib/entities/company';
 export * from './lib/entities/companyDept';
 export * from './lib/entities/companyLoginRestriction';
+export * from './lib/entities/enum';
 export * from './lib/entities/user';
 export * from './lib/types';

@@ -48,15 +48,9 @@ const LearningWindowScormPlayerComponent: FC<any> = () => {
 
   return (
     <div className={`${styles.start} ${styles.iframe}`}>
-      <iframe
-        //src="http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com/public/8807/resources/01/index.html"
-        //src="/public/8807/resources/01/index.html"
-        //src="/html/hkscorm/index_lms.html"
-        // src="/html/lf_new_model/resources/01/index.html"
-        src={iframeUrl}
-        title="SCORM Content"
-        className={styles.iframe}
-      />
+      <div className={styles.iframe_contents}>
+        <iframe src={iframeUrl} title="SCORM Content" className={styles.iframe} />
+      </div>
     </div>
   );
 };

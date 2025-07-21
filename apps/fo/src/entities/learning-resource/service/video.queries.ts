@@ -2,6 +2,7 @@ import { getQuerySkipToken, convertHierarchyNode, getRandomId } from '@learnway/
 import { isMobile } from 'react-device-detect';
 
 import { VideoService } from '../api/video';
+import { CmsVideoContentInfoResDto } from '@learnway/types';
 
 export const videoQueryKeys = {
   all: ['video'] as const,
@@ -15,7 +16,7 @@ export const vidoeQueryOptions = {
           queryKey: videoQueryKeys.watchInitialize(param),
           queryFn: () => VideoService.watchInitialize(param),
         }
-      : getQuerySkipToken<any>(),
+      : getQuerySkipToken<CmsVideoContentInfoResDto>(),
 };
 
 export const videoMutateOptions = {

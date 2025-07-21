@@ -52,7 +52,9 @@ const LearningWindowEbookPlayerComponent: FC<any> = () => {
 
   return (
     <div className={`${styles.start} ${styles.iframe}`}>
-      <iframe src={iframeUrl} title="EBOOK Content" className={styles.iframe} />
+      <div className={styles.iframe_contents}>
+        <iframe src={iframeUrl} title="EBOOK Content" className={styles.iframe} />
+      </div>
     </div>
   );
 };

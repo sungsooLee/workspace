@@ -1,19 +1,33 @@
 import { FC, useCallback, useEffect, useState } from 'react';
+import { t } from 'i18next';
 import { isMobile } from 'react-device-detect';
 
 import stylesWeb from '@learnway/styles/fo/pages/_learning/learning.module.css';
 import stylesMobile from '@learnway/styles/fo/pages/_learning/learning-m.module.css';
 
 import { useVideoPlayer } from '../../../video-player/hooks/video-player.hook';
-import { VideoPlayer } from '../../../video-player/video-player';
 import { VideoPlayerContainer } from '../../../video-player/video-player-container';
 import { useLearningWindow } from '../../learnway-learning-window.store';
+import ReactPlayer, { Config } from 'react-player';
+import { EnLibGlobalConst } from '@learnway/types';
+import { TrackProps } from 'react-player/file';
+import { VideoPlayer } from '../../../video-player/video-player';
 
 const styles = isMobile ? stylesMobile : stylesWeb;
 
+enum EnVideoQualityState {
+  AUTO = -1,
+  Q1080P = 1080,
+  Q720P = 720,
+  Q480P = 480,
+}
+
 const LearningWindowVideoPlayerComponent: FC<any> = () => {
   const { baseInfo, playInfo, videoInfo, funcInfo } = useLearningWindow();
+  const [videoUrl, setVideoUrl] = useState();
   const [videoStart, setVideoStart] = useState<number>(0);
+  const [qualityState, setQualityState] = useState<EnVideoQualityState>(EnVideoQualityState.AUTO);
+  const [playConfig, setPlayConfig] = useState<Config>();
 
   const handleVideoEnd = () => {
     const payload = {
@@ -25,6 +39,13 @@ const LearningWindowVideoPlayerComponent: FC<any> = () => {
       contentUuid: playInfo?.contentUuid,
     };
     funcInfo?.videoWatchStatistics(payload);
+  };
+  const handleOnBuffer = () => {
+    console.log('handleOnBuffer');
+  };
+  const handleOnReady = () => {
+    player.setSeconds(videoInfo.lastVideoEndTime);
+    setVideoStart(videoInfo.lastVideoEndTime);
   };
 
   const handleOnProgress = (state: any) => {
@@ -48,13 +69,21 @@ const LearningWindowVideoPlayerComponent: FC<any> = () => {
   const player = useVideoPlayer({ onProgressCallback: handleOnProgress });
 
   useEffect(() => {
+    if (!videoInfo) return;
     console.log('videoInfo', videoInfo);
-    if (videoInfo.lastVideoEndTime) {
-      setTimeout(() => {
-        player.togglePlay();
-        player.setSeconds(videoInfo.lastVideoEndTime);
-        setVideoStart(videoInfo.lastVideoEndTime);
-      }, 500);
+    setVideoUrl(videoInfo.masterVideo);
+    if (videoInfo.videoSubtitles && videoInfo.videoSubtitles.length > 0) {
+      const subtitleTracks: TrackProps[] = [];
+      videoInfo.videoSubtitles.forEach((item: any) => {
+        subtitleTracks.push({
+          kind: 'subtitles',
+          src: item.subtitleUrl,
+          srcLang: item.languageCode,
+          default: false,
+          label: t(`${EnLibGlobalConst.SYSTEM_COMMON_CODE}.${item.languageCode}`),
+        });
+      });
+      setPlayConfig({ file: { tracks: subtitleTracks } } as Config);
     }
   }, [videoInfo]);
   useEffect(() => {
@@ -66,19 +95,19 @@ const LearningWindowVideoPlayerComponent: FC<any> = () => {
 
   return (
     <div className={styles.start}>
-      <VideoPlayerContainer
-        ref={player.playerContainerRef}
-        {...player}
-        showCurriculumSection={false}
-      >
+      <VideoPlayerContainer ref={player.playerContainerRef} {...player}>
         <VideoPlayer
+          {...player}
+          url={videoUrl}
           ref={player.playerRef}
           playing={player.playing}
           progressInterval={1000 * 10}
           onProgress={player.onProgress}
           onDuration={player.onDuration}
           onEnded={handleVideoEnd}
-          url={videoInfo.masterVideo}
+          onReady={handleOnReady}
+          onBuffer={handleOnBuffer}
+          config={playConfig}
         />
       </VideoPlayerContainer>
     </div>

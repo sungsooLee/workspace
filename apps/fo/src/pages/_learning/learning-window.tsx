@@ -38,7 +38,6 @@ function RouteComponent() {
   const [scormConfig, setScormConfig] = useState<ScormPlayerConfigProperties>();
   const [ebookConfig, setEbookConfig] = useState<ScormPlayerConfigProperties>();
   const [videoConfig, setVideoConfig] = useState<any>();
-  const [videoStart, setVideoStart] = useState<number>(0);
   const [blogConfig, setBlogConfig] = useState<any>();
   const [htmlConfig, setHtmlConfig] = useState<any>();
   const [imageConfig, setImageConfig] = useState<any>();
@@ -83,8 +82,6 @@ function RouteComponent() {
 
   useEffect(() => {
     if (!videoInfo) return;
-    console.log('vidoeInfo', videoInfo);
-    setVideoStart(videoInfo.lastVideoEndTime);
     setVideoInfo(videoInfo);
   }, [videoInfo]);
 
