@@ -186,6 +186,11 @@ export { ReactComponent as IcoHistory } from './lib/ic_history.svg';
 export { ReactComponent as IcoLang } from './lib/ic_lang.svg';
 export { ReactComponent as IcoLink } from './lib/ic_link.svg';
 export { ReactComponent as IcoArrow } from './lib/ic_arrow.svg';
+export { ReactComponent as IcoSpeakerFill } from './lib/ic_speaker_fill.svg';
+export { ReactComponent as IcoNextPlayFill } from './lib/ic_nextplay_fill.svg';
+export { ReactComponent as IcoPrevPlayFill } from './lib/ic_prevplay_fill.svg';
+export { ReactComponent as IcoVideoPlay } from './lib/ic_video_play.svg';
+export { ReactComponent as IcoVideoStop } from './lib/ic_video_stop.svg';
 //export Default as Information from './lib/information.svg?react';
 
 //import Information from './lib/information.svg';

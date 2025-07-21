@@ -2,14 +2,19 @@ import { Volume2, VolumeX } from 'lucide-react';
 import { VideoPlayerContainerProps } from '../types';
 import {
   IcoExpand,
-  IcoPlayerPause,
-  IcoPlayerPlay,
+  IcoVideoPlay,
+  IcoVideoStop,
   IcoPlayerSetting,
   IcoReduce,
   IcoSubtitles,
+  IcoNextPlayFill,
+  IcoPrevPlayFill,
+  IcoSpeakerFill,
 } from '@learnway/icons';
 import { useState } from 'react';
 import SettingsPopover from './settings-popover';
+
+import styles from './bottom-progress-bar.module.css';
 
 const BottomProgressBar = ({
   isFullscreen,
@@ -63,26 +68,32 @@ const BottomProgressBar = ({
   };
 
   return (
-    <div className="absolute bottom-0 left-0 w-full px-4 pb-6 text-white">
-      <div className="relative h-2 w-full cursor-pointer rounded bg-white/30" onClick={handleSeek}>
-        <div className="h-full rounded bg-[#00AFD5]" style={{ width: `${played * 100}%` }} />
+    <div className={`${styles.start} ${styles.progress_bar}`}>
+      <div className={styles.progress_box} onClick={handleSeek}>
+        <div className={styles.progress} style={{ width: `${played * 100}%` }} />
       </div>
-      <div className="mt-5 flex items-center justify-between">
-        <div className="flex flex-row items-center gap-6">
+      <div className={styles.option}>
+        <div className={styles.left}>
+          <button>
+            <IcoPrevPlayFill width={24} height={24} />
+          </button>
           <button onClick={togglePlay}>
             {playing ? (
-              <IcoPlayerPause className="h-6 w-6 text-white" />
+              <IcoVideoStop width={24} height={24} fill="#fff" />
             ) : (
-              <IcoPlayerPlay className="h-6 w-6 text-white" />
+              <IcoVideoPlay width={24} height={24} fill="#fff" />
             )}
           </button>
+          <button>
+            <IcoNextPlayFill width={24} height={24} />
+          </button>
           {/* 왼쪽: 볼륨 */}
-          <div className="flex items-center gap-2">
+          <div className={styles.volume}>
             <button onClick={toggleMute}>
               {muted || volume === 0 ? (
-                <VolumeX className="h-6 w-6" />
+                <VolumeX width={24} height={24} stroke="#fff" />
               ) : (
-                <Volume2 className="h-6 w-6 fill-white" />
+                <IcoSpeakerFill width={24} height={24} fill="#fff" />
               )}
             </button>
             <input
@@ -95,7 +106,8 @@ const BottomProgressBar = ({
               step={0.01}
               value={muted ? 0 : volume}
               onChange={handleVolumeChange}
-              className="h-1 w-24 cursor-pointer appearance-none rounded-full bg-transparent [&::-moz-range-thumb]:h-3 [&::-moz-range-thumb]:w-3 [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:bg-white [&::-moz-range-track]:bg-transparent [&::-webkit-slider-runnable-track]:rounded-full [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:shadow"
+              // className="[&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:bg-white [&::-moz-range-track]:bg-transparent [&::-webkit-slider-runnable-track]:rounded-full [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:shadow"
+              className={styles.form_volume}
             />
           </div>
           <div className="mb-1 flex justify-between text-sm">

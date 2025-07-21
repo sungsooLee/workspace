@@ -1,11 +1,20 @@
+import { useState, useEffect } from 'react';
 import { isMobile } from 'react-device-detect';
 import { cn } from '@learnway/shared';
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { useModal, Button } from '@learnway/ui';
+import {
+  useModal,
+  Button,
+  VideoPlayer,
+  VideoPlayerContainer,
+  useLearningWindow,
+  useVideoPlayer,
+} from '@learnway/ui';
 
 import styles from '@learnway/styles/fo/pages/_learning/learning.module.css';
 
 import bnrImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
+import video from '@learnway/styles/fo/assets/images/temp/video.mp4';
 
 export const Route = createFileRoute('/_learning/video')({
   component: RouteComponent,
@@ -53,18 +62,78 @@ function RouteComponent() {
     });
   };
 
+  const handleVideoEnd = () => {
+    const payload = {
+      courseSequenceId: baseInfo?.sequenceId,
+      courseId: baseInfo?.courseId,
+      curriculumId: baseInfo?.curriculumId,
+      moduleId: playInfo?.moduleId,
+      lessonId: playInfo?.lessonId,
+      contentUuid: playInfo?.contentUuid,
+    };
+    funcInfo?.videoWatchStatistics(payload);
+  };
+
+  const { baseInfo, playInfo, videoInfo, funcInfo } = useLearningWindow();
+  const [videoStart, setVideoStart] = useState<number>(0);
+
+  const handleOnProgress = (state: any) => {
+    console.log(`date check ; ${videoStart} -> ${state.playedSeconds}`, playInfo);
+    const payload = {
+      courseSequenceId: baseInfo?.sequenceId,
+      courseId: baseInfo?.courseId,
+      curriculumId: baseInfo?.curriculumId,
+      moduleId: playInfo?.moduleId,
+      lessonId: playInfo?.lessonId,
+      contentUuid: playInfo?.contentUuid,
+      videoStartTime: videoStart,
+      videoEndTime: state.playedSeconds,
+      speed: state.speed,
+    };
+    setVideoStart(state.playedSeconds);
+
+    funcInfo?.videoOnProgress(payload);
+  };
+
+  const player = useVideoPlayer({ onProgressCallback: handleOnProgress });
+
+  useEffect(() => {
+    console.log('videoInfo', videoInfo);
+    setTimeout(() => {
+      player.togglePlay();
+      player.setSeconds(videoInfo.lastVideoEndTime);
+      setVideoStart(videoInfo.lastVideoEndTime);
+    }, 500);
+  }, [videoInfo]);
+  useEffect(() => {
+    console.log('end video');
+    return () => {
+      handleVideoEnd();
+    };
+  }, []);
+
   return (
     // 퍼블수정 20250717 마크업 수정
     <div className={`${styles.start} ${styles.video}`}>
       <div className={styles.video_wrap}>
         <div className={styles.video_area}>
-          <div className={styles.header_lesson}>
-            <strong>레슨명</strong>
-          </div>
-
           <div className={styles.video_contents}>
             {/* 비디오 영역 */}
-            <img src={bnrImage1} alt="" />
+            <VideoPlayerContainer
+              ref={player.playerContainerRef}
+              {...player}
+              showCurriculumSection={false}
+            >
+              <VideoPlayer
+                ref={player.playerRef}
+                playing={player.playing}
+                progressInterval={1000 * 10}
+                onProgress={player.onProgress}
+                onDuration={player.onDuration}
+                onEnded={handleVideoEnd}
+                url={video}
+              />
+            </VideoPlayerContainer>
           </div>
         </div>
       </div>
