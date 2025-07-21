@@ -119,7 +119,7 @@
       & > div {
         @apply h-full;
         & > div {
-          @apply h-[calc(100%-65px)] max-h-none !py-[16px] px-[16px];
+          @apply h-[calc(100%-65px)] !max-h-none px-0 py-0 !pb-0;
         }
       }
     }

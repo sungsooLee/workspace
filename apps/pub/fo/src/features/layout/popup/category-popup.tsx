@@ -4,7 +4,7 @@ import { Carousel } from '@learnway/ui';
 import { Button, Chip, ModalBody, ModalContainer, ModalTitle, useModal } from '@learnway/ui';
 import { Navigation } from 'swiper/modules';
 
-import { IcoArrowDown, IcoArrowForward } from '@learnway/icons';
+import { IcoArrowDown, IcoArrowForward, IcoArrowBackward } from '@learnway/icons';
 
 import bnrImage1 from '@learnway/styles/fo/assets/images/banner/banner_cate1.png';
 import bnrImage2 from '@learnway/styles/fo/assets/images/banner/banner_cate2.png';
@@ -57,20 +57,9 @@ const CategoryPopupComponent = () => {
 
   return (
     <ModalContainer>
-      <ModalTitle>{'카테고리'}</ModalTitle>
+      <ModalTitle>{'학습테마'}</ModalTitle>
       <ModalBody>
         <div className={styles.start}>
-          <div className={styles.swiper}>
-            <Carousel
-              items={items}
-              slidesPerView={'auto'}
-              className={styles.category_carousel}
-              spaceBetween={8}
-              modules={[Navigation]}
-              navigation={true}
-            />
-          </div>
-
           {/* 카테고리 영역 */}
           <div className={styles.category_wrap}>
             {/* 카테고리 영역 - 좌측메뉴 */}
@@ -167,7 +156,8 @@ const CategoryPopupComponent = () => {
                     </Link>
                     <Button
                       onClick={categoryAll}
-                      className={`${styles.btn_cate} ${isAllOpen ? styles.active : ''}`}>
+                      className={`${styles.btn_cate} ${isAllOpen ? styles.active : ''}`}
+                    >
                       <IcoArrowDown width={16} height={16} stroke="#07287E" />
                     </Button>
                   </h2>
@@ -183,7 +173,8 @@ const CategoryPopupComponent = () => {
                         </h3>
                         <Button
                           className={`${styles.btn_cate} ${openStates[index] ? styles.active : ''}`}
-                          onClick={() => categoryDepth(index)}>
+                          onClick={() => categoryDepth(index)}
+                        >
                           <IcoArrowDown width={16} height={16} stroke="#A9AFB8" />
                         </Button>
                       </div>
@@ -216,7 +207,19 @@ const CategoryPopupComponent = () => {
               </div>
             </div>
           </div>
-        </div>{' '}
+          <div className={styles.swiper}>
+            <Carousel
+              items={items}
+              slidesPerView={'auto'}
+              className={styles.category_carousel}
+              spaceBetween={8}
+              modules={[Navigation]}
+              showNavigation={true}
+              prevIcon={<IcoArrowBackward />}
+              nextIcon={<IcoArrowForward />}
+            />
+          </div>
+        </div>
       </ModalBody>
     </ModalContainer>
   );

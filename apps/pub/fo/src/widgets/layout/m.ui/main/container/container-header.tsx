@@ -51,7 +51,7 @@ function ContainerHeaderComponent() {
             </Button>
             <h2>{title}</h2>
           </div>
-          {categoryPage && <CategoryButton></CategoryButton>}
+          {categoryPage && <CategoryButton />}
         </>
       )}
 
