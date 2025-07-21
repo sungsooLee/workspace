@@ -70,7 +70,7 @@ function RouteComponent() {
     console.log('handleVideo', payload);
     watchLog(payload);
   };
-  const handelVideoWatchStatistics = async (payload: any) => {
+  const handleVideoWatchStatistics = async (payload: any) => {
     console.log('handelVideoWatchStatistics', payload);
     watchLogStatistics(payload);
   };
@@ -159,6 +159,7 @@ function RouteComponent() {
           contentUuid: playInfo.contentUuid,
         });
         break;
+      default:
     }
   }, [playInfo]);
 
@@ -181,7 +182,7 @@ function RouteComponent() {
       html5LearningHistory: Html5Service.saveHtml5Learning,
       galleryLearningHistory: ImageService.saveImageLearning,
       videoOnProgress: handleVideoProgress,
-      videoWatchStatistics: handelVideoWatchStatistics,
+      videoWatchStatistics: handleVideoWatchStatistics,
     });
   }, []);
 

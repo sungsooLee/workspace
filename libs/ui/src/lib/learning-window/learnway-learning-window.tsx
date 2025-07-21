@@ -11,9 +11,10 @@ import { LearningWindowHtmlPlayer } from './player/ui/learning-window-html-playe
 import { LearningWindowEbookPlayer } from './player/ui/learning-window-ebook-player';
 
 import { EnContentType, useLearningWindow } from './learnway-learning-window.store';
+import { LearningWindowOthersPlayer } from './player/ui/learning-window-others-player';
 
 const LearningWindowComponent: FC<any> = () => {
-  const { scormInfo, videoInfo, galleryInfo, blogInfo, htmlInfo, ebookInfo, playInfo } =
+  const { scormInfo, videoInfo, galleryInfo, blogInfo, htmlInfo, ebookInfo, otherInfo, playInfo } =
     useLearningWindow();
 
   return (
@@ -24,6 +25,7 @@ const LearningWindowComponent: FC<any> = () => {
       {blogInfo && <LearningWindowBlogPlayer />}
       {htmlInfo && <LearningWindowHtmlPlayer />}
       {ebookInfo && <LearningWindowEbookPlayer />}
+      {otherInfo && <LearningWindowOthersPlayer />}
     </>
   );
 };

@@ -7,8 +7,10 @@ import backImage from '@learnway/styles/fo/assets/images/temp/img_gallery_back.j
 
 import { IcoArrowBackward } from '@learnway/icons';
 
-import { Carousel, Button, useLearningWindow } from '@learnway/ui';
 import { CmsImageItem } from '@learnway/types';
+import { useLearningWindow } from '../../learnway-learning-window.store';
+import { Button } from '../../../button/button';
+import { Carousel } from '../../../carousel/carousel';
 
 const styles = isMobile ? stylesMobile : stylesWeb;
 
