@@ -45,7 +45,7 @@ function RouteComponent() {
       <ContentsButtons>
         {mode === FORM_MODE.create ? (
           <>
-            <Button variant="point" size="sm">
+            <Button variant="point" size="sm" disabled>
               미리보기
             </Button>
             <Button variant="point" size="sm" onClick={handleGoToList}>

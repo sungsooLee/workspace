@@ -126,7 +126,7 @@ const CurriculumDetailComponent = ({
     if (formState.selectedNode) {
       openConfirm({
         title: t('LABEL.confirm.delete.title'),
-        content: t('LABEL.confirm.delete.message', { type: t('LABEL.common.code.curriculum') }),
+        content: t('LABEL.confirm.delete.message', { type: t('레슨') }),
         onClose: (value: boolean) => {
           if (value) {
             handleDeleteNode(formState);
