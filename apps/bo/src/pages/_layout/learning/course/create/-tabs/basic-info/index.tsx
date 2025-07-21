@@ -2,6 +2,7 @@ import { DropdownFormField } from '@features/form';
 import { CategoryChoiceModal } from '@features/learning-operate/course/course-management';
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import {
+  Badge,
   Button,
   ChipListModalSelectorFormField,
   ContentsRow,
@@ -30,8 +31,16 @@ const BasicInfoComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>(
   ({ onSave, onConfigPropChange, data: { formData, courseConfig, isSaved } }, ref) => {
     const { t } = useTranslation();
 
-    const { provider, getValues, updateFormData, onFormValid, formState, watch, formValues } =
-      useDynamicForm2();
+    const {
+      provider,
+      getValues,
+      updateFormData,
+      onFormValid,
+      formState,
+      watch,
+      formValues,
+      onFormChange,
+    } = useDynamicForm2();
 
     const channelUuid = watch('channelUuid');
     const courseType = watch('courseType');
@@ -141,10 +150,18 @@ const BasicInfoComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>(
                     categoryPath: d.fullPath,
                   }));
                 }}
-                list={{
+                listConfig={{
+                  checkable: true,
+                  deletable: true,
+                  disabledActive: true,
                   labelField: 'categoryPath',
                   valueField: 'categoryId',
+                  selectedNodeBeforeLabel: (
+                    <Badge option={{ label: '대표', value: '' }} variant={'text'} status="fill" />
+                  ),
                 }}
+                selectedValue={getValues()?.primaryCategoryId}
+                onSelected={(option: any) => onFormChange({ primaryCategoryId: option.categoryId })}
                 actionNode={<Button variant="text" size="sm" label={t('추가')} />}
               />
             }
@@ -438,7 +455,7 @@ export const formDataToRequestData = (d: Course) => {
   // 카테고리 아이디 배열
   d.categoryIds = d.categories?.map((d: any) => d.categoryId);
   // 대표 카테고리
-  d.primaryCategoryId = d.categories?.[0]?.categoryId;
+  // d.primaryCategoryId = d.categories?.[0]?.categoryId;
   // 학습대상-ID 배열
   d.targetListIds = d.targetList?.map((d: any) => d.id);
 

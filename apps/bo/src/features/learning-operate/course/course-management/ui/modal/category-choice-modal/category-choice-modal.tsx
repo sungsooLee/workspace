@@ -31,7 +31,18 @@ const CategoryChoiceModalComponent = forwardRef<HTMLDivElement, CategoryChoiceMo
     const { t } = useTranslation();
     const { close: closeModal } = useModal();
     const { data } = useFetchTenantCategoryTreePopup(tenantIds);
-    const treeData = useMemo(() => (data ? transformApiDataToTreeData(data) : []), [data]);
+    const treeData = useMemo(
+      () =>
+        data
+          ? transformApiDataToTreeData(data, {
+              idKey: 'id',
+              titleKey: 'path',
+              childrenKey: 'children',
+              pathJoinText: '>',
+            })
+          : [],
+      [data],
+    );
     const { selectedItems, handleSelectItem, cancelSelectItem, cancelAll } =
       useShuttleTreeToChips();
 

@@ -16,6 +16,7 @@ export interface ChipComponentProps extends PropsWithChildren {
   labelField?: string;
   valueField?: string;
   disabled?: boolean; // disabled 상태 유무
+  invalid?: boolean; // invalid 상태 유무
   onClick?: (option: any) => void;
   onDelete?: (option: any) => void;
 }
@@ -31,6 +32,7 @@ const ChipComponent = forwardRef<HTMLElement, ChipComponentProps>(
       valueField = 'value',
       option,
       disabled = false,
+      invalid = false,
       onClick,
       onDelete,
       hideCloseButton,
@@ -61,6 +63,7 @@ const ChipComponent = forwardRef<HTMLElement, ChipComponentProps>(
           variant && styles[variant],
           size && styles[size],
           disabled && styles.disabled,
+          invalid && styles.invalid,
           className,
           'nlp--chips',
         )}
@@ -71,7 +74,7 @@ const ChipComponent = forwardRef<HTMLElement, ChipComponentProps>(
 
         {/* label */}
         <Button className={cn(styles.label, isButtonMode && styles.button_mode)}>
-          {option?.[labelField] || option}
+          {option?.[labelField]}
         </Button>
 
         {/* close button */}

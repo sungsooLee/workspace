@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useCodeStore } from '../use-code-store/use-code-store';
 import { OptionsConfig, SelectOption } from './type';
 import { CODE_GROUP } from '../use-code-store/constants';
-import { getMockOption } from '@learnway/shared';
+import { getMockCodeGroupOption } from '@learnway/shared';
 
 /**
  * Form 에서 CodeGroup에 대한 로딩을 위한 커스텀 훅
@@ -67,7 +67,7 @@ const useFormOptionsHook = (
         codeGroup,
       )
     ) {
-      const mockOptions = getMockOption(codeGroup);
+      const mockOptions = getMockCodeGroupOption(codeGroup);
       return applyFieldMapping(mockOptions);
     }
 

@@ -64,7 +64,7 @@ export const getMatchingItemsByKey = <T>(
   if (!list || !item || !key) return [];
 
   // item is string
-  if (checkType(item) === 'string') {
+  if (checkType(item) === 'string' || checkType(item) === 'number') {
     return list?.filter((d: any) => d[key] === item);
   }
 
@@ -84,14 +84,17 @@ export const getMatchingItemsByKey = <T>(
 /**
  * 주어진 값의 타입을 확인하는 함수
  * @param value - 확인할 값
- * @returns "array" | "string" | "object" | "other"
+ * @returns "array" | "string" | "number" | "object" | "other"
  */
-export const checkType = (value: unknown): 'array' | 'string' | 'object' | 'other' => {
+export const checkType = (value: unknown): 'array' | 'string' | 'number' | 'object' | 'other' => {
   if (Array.isArray(value)) {
     return 'array'; // 배열인 경우
   }
   if (typeof value === 'string') {
     return 'string'; // 문자열인 경우
+  }
+  if (typeof value === 'number') {
+    return 'number'; // 숫자 경우
   }
   if (typeof value === 'object' && value !== null) {
     return 'object'; // 객체인 경우 (null 제외)
@@ -167,7 +170,7 @@ export const flattenHierarchicalData = (items: any[], depth = 0): any[] => {
   const result: any[] = [];
 
   items.forEach((item) => {
-    const flatItem = { ...item, depth: depth };
+    const flatItem = { ...item, depth };
     result.push(flatItem);
 
     const children = item.children || item.subRows;
@@ -187,8 +190,8 @@ export const flattenHierarchicalData = (items: any[], depth = 0): any[] => {
 export const getParsedDataFromString = (value: string): object => {
   try {
     return JSON.parse(value);
-  } catch (e) {
-    return {};
+  } catch (e: any) {
+    return { e };
   }
 };
 
@@ -289,7 +292,7 @@ export function isEmptyData(value: unknown): boolean {
 
 export const getFullImagePath = (imagePath: string | null | undefined) => {
   if (imagePath === null || imagePath === undefined) return '';
-  const host = import.meta.env.VITE_AXIOS_S3_URL + '/';
+  const host = `${import.meta.env['VITE_AXIOS_S3_URL']}/`;
   const cleanedImagePath = imagePath.startsWith('/') ? imagePath.substring(1) : imagePath;
   return `${host}${cleanedImagePath}`;
 };
