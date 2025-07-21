@@ -25,7 +25,7 @@ export interface TenantCategoryDetail {
 }
 
 export interface TenantCategoryCreate {
-  name: string;
+  categoryName: string;
   categoryCode: string;
   categoryContent: string;
   categoryType: string;
@@ -36,7 +36,7 @@ export interface TenantCategoryCreate {
 }
 
 export interface TenantCategoryUpdate {
-  name: string;
+  categoryName: string;
   categoryCode: string;
   categoryContent: string;
   isUsed: boolean;

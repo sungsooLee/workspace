@@ -6,10 +6,10 @@ import {
 } from '@features/channel';
 import { Button, Tabs } from '@learnway/ui';
 import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui';
-import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
+import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { EnFormMode } from '@types';
 import { t } from 'i18next';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 // 등록 / 초기화,저장 / 구독 해지
 export enum EnButtonLayout {
@@ -35,7 +35,13 @@ export const Route = createLazyFileRoute('/_layout/tenant/channel/management/det
 
 function RouteComponent() {
   const router = useRouter();
+  const routerState = useRouterState();
+  const channelUuid = routerState.location.state?.channelUuid;
   const [currentTab, setCurrentTab] = useState(EnTabKeys.BASE);
+
+  useEffect(() => {
+    if (!channelUuid) router.navigate({ to: '/tenant/channel/management' });
+  }, [channelUuid, router]);
 
   const baseFormRef = useRef<HTMLFormElement>(null);
   const userFormRef = useRef<HTMLFormElement>(null);

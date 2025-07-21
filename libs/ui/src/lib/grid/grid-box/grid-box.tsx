@@ -52,6 +52,8 @@ const GridBoxComponent = <T extends object>(
     titleCustomNode,
     customButtonNode,
     guideText,
+    showErrorMessageBesideGuideText,
+    errorMessageBesideGuideText,
     showGuideTextNextLine,
     onTableInstanceChange,
     onAddClick,
@@ -323,6 +325,7 @@ const GridBoxComponent = <T extends object>(
           {guideText && (
             <p className={cn(styles.guide_text, showGuideTextNextLine && styles.next_line)}>
               {guideText}
+              {showErrorMessageBesideGuideText && <span>{errorMessageBesideGuideText}</span>}
             </p>
           )}
         </div>

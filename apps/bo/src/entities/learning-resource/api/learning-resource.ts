@@ -10,6 +10,7 @@ import {
   GetContentDetailRes,
   GetContentsParams,
   GetContentsRes,
+  GetVideoFileChangeRes,
   GetVideoResourceRes,
   GetVideoStatusRes,
   HtmlVideoFileChangeReq,
@@ -19,8 +20,11 @@ import {
   PostDraftHtmlVideoParams,
   PostDraftVideosParams,
   PostDraftVideosRes,
+  PutVideoChangeParams,
+  PutVideoChangeRes,
   QuestionItem,
   QuestionItemDeleteParam,
+  QuestionStatusUpdateReq,
   TestPaperBasicInfoSaveReq,
   TestPaperBasicInfoSaveRes,
 } from '@types';
@@ -67,6 +71,10 @@ export default class LearningResourceService {
 
   static postDraftVideos(params: PostDraftVideosParams): Promise<PostDraftVideosRes> {
     return httpService.post(`${CMSApiPrefix()}/videos/draft`, params);
+  }
+
+  static putVideoChange(params: PutVideoChangeParams) {
+    return httpService.put<PutVideoChangeRes>(`${CMSApiPrefix()}/video/file/change`, params);
   }
 
   static fetchLearningResources(params: any) {
@@ -219,8 +227,30 @@ export default class LearningResourceService {
     return httpService.get<QuestionItem[]>(`${CMSApiPrefix()}/exam/questions/${contentUuid}`);
   }
 
+  /**
+   * 문항 상세 정보 조회
+   * @param questionUuid
+   * @returns
+   */
+  static getQuestionItem(questionUuid: string) {
+    return httpService.get<QuestionItem>(`${CMSApiPrefix()}/exam/question/${questionUuid}`);
+  }
+
+  /**
+   * 문제은행 or 시험지의 문항 삭제
+   * @param param
+   * @returns
+   */
   static deleteQuestionItemList(param: QuestionItemDeleteParam) {
     return httpService.delete<any>(`${CMSApiPrefix()}/exam/question`, param);
+  }
+
+  /**
+   * 각 문항의 사용 여부 변경
+   * @param body
+   */
+  static updateQuestionStatus(body: QuestionStatusUpdateReq) {
+    return httpService.put(`${CMSApiPrefix()}/exam/question/status`, body);
   }
 
   /**
@@ -228,6 +258,15 @@ export default class LearningResourceService {
    */
   static getVideoStatus(contentUuid: string) {
     return httpService.get<GetVideoStatusRes>(`${CMSApiPrefix()}/video/${contentUuid}/status`);
+  }
+
+  /**
+   * 비디오 파일변경 상태 조회
+   */
+  static getVideoFileChange(resourceId: number) {
+    return httpService.get<GetVideoFileChangeRes>(
+      `${CMSApiPrefix()}/video/file/change/${resourceId}`,
+    );
   }
 
   /**

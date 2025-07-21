@@ -5,6 +5,7 @@ import { PMSApiPrefix, LMSApiPrefix } from '@learnway/config';
 
 export default class LearningSequenceService {
   static fetchSequenceList(params: any) {
+    console.log('### fetchSequenceList', params);
     // return httpService.get<PageableContent<Instructors>>(`${LMSApiPrefix()}/instructor`, params);
     return [
       {
@@ -63,6 +64,30 @@ export default class LearningSequenceService {
 
   static fetchSequenceOne(params: any) {
     return null;
+  }
+
+  static createSequence(params: any) {
+    return httpService.post(`${LMSApiPrefix()}/sequence`, params);
+  }
+
+  static updateSequenceList(params: any) {
+    return httpService.put(`${LMSApiPrefix()}/sequence/list-update`, params);
+  }
+
+  static updateSequence(sequenceId: number, params: any) {
+    return httpService.put(`${LMSApiPrefix()}/sequence/${sequenceId}`, params);
+  }
+
+  static deleteSequenceList(params: any) {
+    return httpService.delete(`${LMSApiPrefix()}/sequence/list-delete`, params);
+  }
+
+  static deleteSequence(sequenceId: number) {
+    return httpService.delete(`${LMSApiPrefix()}/sequence/${sequenceId}`);
+  }
+
+  static copySequence(sequenceId: number, params: any) {
+    return httpService.post(`${LMSApiPrefix()}/sequence/${sequenceId}`, {});
   }
 
   static fetchEnrollmentRegistList(params: any) {

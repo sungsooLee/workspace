@@ -18,12 +18,12 @@ import {
   useGridBox,
   useModal,
 } from '@learnway/ui';
-import { FormRow, SectionLayout } from '@shared/ui';
+import { FormRow, SectionLayout, UserGroupTabsChoiceModal } from '@shared/ui';
 import { useRouterState } from '@tanstack/react-router';
 import { createColumnHelper, Table } from '@tanstack/react-table';
 import { EnFormMode } from '@types';
 import { t } from 'i18next';
-import { forwardRef, useEffect, useState } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import { FieldValues } from 'react-hook-form';
 import { TenantDetailLearningRoleGrantRangeModal } from './tenant-detail-learning-role-grant-range-modal';
 import { TenantDetailLearningRoleGrantUserShuttleModal } from './tenant-detail-learning-role-grant-user-shuttle-modal';
@@ -246,14 +246,16 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
                       <ChipListModalSelectorFormField
                         showAddButton
                         chipList={{
-                          labelField: 'name',
-                          valueField: 'value',
+                          showInput: false,
+                          labelField: 'pathValue',
+                          valueField: 'pathKey',
                           wordwrap: true,
                         }}
                         modalConfig={{
                           title: '',
                           width: 'xl',
-                          content: '유저그룹 팝업 필요',
+                          height: 'fix',
+                          content: <UserGroupTabsChoiceModal tenantIds={[tenantId]} />,
                         }}
                         actionNode={<Button variant="text" label={t('대상자')} />}
                       />

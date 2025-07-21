@@ -10,8 +10,10 @@ import {
   HtmlVideoMetadataReq,
   PostDraftHtmlVideoParams,
   PostDraftVideosParams,
+  PutVideoChangeParams,
   QuestionItem,
   QuestionItemDeleteParam,
+  QuestionStatusUpdateReq,
   TestPaperBasicInfoSaveReq,
 } from '@types';
 import LearningResourceService from '../api/learning-resource';
@@ -24,6 +26,7 @@ export const queryKeys = {
   contentCourseMapping: ['content-course-mapping'] as const,
   deleteContent: ['delete-content'] as const,
   createDraftVideo: ['create-draft-video'] as const,
+  videoChange: ['video-change'] as const,
   learningResources: ['learning-resources'] as const,
   curriculumMapping: ['mapping-curriculum'] as const,
   mappingCourses: ['mapping-courses'] as const,
@@ -69,10 +72,6 @@ export const learningResourceQueryOptions = {
   getContentCourseMapping: (contentUuid: string, params: ContentCourseMappingParams) => ({
     queryKey: queryKeys.contentCourseMapping,
     queryFn: () => LearningResourceService.fetchContentCourseMapping(contentUuid, params),
-  }),
-  postDraftVideos: (params: PostDraftVideosParams) => ({
-    queryKey: queryKeys.createDraftVideo,
-    queryFn: () => LearningResourceService.postDraftVideos(params),
   }),
   getLearningResources: (params: any) => ({
     queryKey: queryKeys.learningResources,
@@ -130,6 +129,14 @@ export const learningResourceQueryOptions = {
           enabled: !!examPoolUuid,
         }
       : getQuerySkipToken<QuestionItem[]>(),
+
+  getQuestionItem: (examQuestionUuid?: string) =>
+    examQuestionUuid
+      ? {
+          queryKey: queryKeys.questionBankQustionList,
+          queryFn: () => LearningResourceService.getQuestionItem(examQuestionUuid),
+        }
+      : getQuerySkipToken<QuestionItem>(),
 };
 
 export const mutateOptions = {
@@ -138,6 +145,9 @@ export const mutateOptions = {
   }),
   postDraftVideos: () => ({
     mutationFn: (params: PostDraftVideosParams) => LearningResourceService.postDraftVideos(params),
+  }),
+  putVideoChange: () => ({
+    mutationFn: (params: PutVideoChangeParams) => LearningResourceService.putVideoChange(params),
   }),
   postDraftHTML5: () => ({
     mutationFn: (params: PostDraftHtmlVideoParams) =>
@@ -183,5 +193,9 @@ export const mutateOptions = {
   deleteQuestionItemList: () => ({
     mutationFn: (param: QuestionItemDeleteParam) =>
       LearningResourceService.deleteQuestionItemList(param),
+  }),
+  updateQuestionStatus: () => ({
+    mutationFn: (params: QuestionStatusUpdateReq) =>
+      LearningResourceService.updateQuestionStatus(params),
   }),
 };

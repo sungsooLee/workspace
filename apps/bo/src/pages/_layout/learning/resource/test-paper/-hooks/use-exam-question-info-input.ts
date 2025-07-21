@@ -2,14 +2,13 @@ import { useCallback, useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { t } from 'i18next';
 import { useModal } from '@learnway/ui';
+import { EnQuestionLevel, EnQuestionType, QuestionItem, TestPaperBasicInfoDetail } from '@types';
 import {
-  EnQuestionLevel,
-  EnQuestionType,
-  QuestionItem,
-  SelectedQuestionState,
-  TestPaperBasicInfoDetail,
-} from '@types';
-import { learningResourceQueryOptions, useCreateQuestionItem } from '@entities/learning-resource';
+  learningResourceQueryOptions,
+  useCreateQuestionItem,
+  useUpdateQuestionStatus,
+} from '@entities/learning-resource';
+import { SelectedQuestionState } from '../-common/type';
 
 export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) => {
   const { contentUuid, examPoolUuid, questionGenType, questionCount } = basicInfo;
@@ -34,6 +33,15 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
     },
   });
 
+  const { update: updateQuestionStatus } = useUpdateQuestionStatus({
+    onSuccess: async (result: any) => {
+      if (result) {
+        const { data: refetchResult } = await refetch();
+        setSelectedQuestions(refetchResult?.filter((q) => q.isUsed) as QuestionItem[]);
+      }
+    },
+  });
+
   const [selectedQuestions, setSelectedQuestions] = useState<QuestionItem[]>(
     questionList?.filter((q) => q.isUsed) || [],
   );
@@ -48,9 +56,9 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
 
   const getQuestionStateByType = useCallback(
     (type: EnQuestionType): QuestionItem[] => {
-      return questionList?.filter((q) => q.questionType === type) || [];
+      return selectedQuestions?.filter((q) => q.questionType === type) || [];
     },
-    [questionList],
+    [selectedQuestions],
   );
 
   const getQuestionCountByLevel = useCallback(
@@ -112,7 +120,7 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
         [EnQuestionLevel.HARD]: getQuestionCountByLevel(essayQuestionState, EnQuestionLevel.HARD),
       },
     });
-  }, [questionList]);
+  }, [selectedQuestions]);
 
   const getScorePerQuestion = useCallback((count?: number): number => {
     if (!count || isNaN(count) || Number(count) === 0) {
@@ -123,5 +131,12 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
 
   const scorePerQuestion = getScorePerQuestion(questionCount);
 
-  return { questionList, selectedQuestions, questionState, scorePerQuestion, createQuestionItem };
+  return {
+    questionList,
+    selectedQuestions,
+    questionState,
+    scorePerQuestion,
+    createQuestionItem,
+    updateQuestionStatus,
+  };
 };

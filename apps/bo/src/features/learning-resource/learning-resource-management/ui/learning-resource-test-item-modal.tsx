@@ -32,6 +32,7 @@ import {
   EnQuestionLevel,
   EnQuestionType,
   QuestionItem,
+  QuestionItemGridRow,
 } from '@types';
 import { FormRow2, SingleAttachmentFormField, SwitchFormField } from '@shared/ui';
 import { S3_PATH, useDynamicForm2 } from '@learnway/hooks';
@@ -40,28 +41,37 @@ import { IcoMenu01 } from '@learnway/icons';
 
 import { EditSingleAttachmentCell } from '@features/form/ui/edit-single-attachment-cell';
 import { useWatch } from 'react-hook-form';
+import { useCreateQuestionItem, useGetQuestionItem } from '@entities/learning-resource';
 
 const LearningResourceTestItemModalComponent = ({
   contentInfo,
-  questionItem,
+  questionItemGridRow,
 }: {
   contentInfo: ContentInformation & { examPoolUuid?: string };
-  questionItem?: QuestionItem;
+  questionItemGridRow?: QuestionItemGridRow;
 }) => {
-  const { close } = useModal();
+  const { close, confirm: openConfirm } = useModal();
   const [disabledButton, setDisabledButton] = useState(false);
   const [otherOptions, setOtherOptions] = useState<any[]>();
   const [formMode, setFormMode] = useState<EnFormMode>(
-    questionItem ? EnFormMode.VIEW : EnFormMode.ADD,
+    questionItemGridRow ? EnFormMode.VIEW : EnFormMode.ADD,
   );
+  const [questionItem, setQuestionItem] = useState<QuestionItem>();
 
   const formRef = useRef<HTMLFormElement>(null);
 
   const { provider, getValues, updateFormData, onFormChange, onSubmit } = useDynamicForm2();
+  const { data: rowData } = useGetQuestionItem(questionItemGridRow?.examQuestionUuid);
+  const { create: createQuestionItem } = useCreateQuestionItem();
 
+  console.log('questionItemGridRow', questionItemGridRow);
   const imageTypeWatch = useWatch({ control: provider.control, name: 'imageType' });
   const attachImageWatch = useWatch({ control: provider.control, name: 'fileUuid' });
   const questionTypeWatch = useWatch({ control: provider.control, name: 'questionType' });
+
+  const handleDelteButtonClick = () => {
+    console.log('delete button click');
+  };
 
   const handleSaveButtonClick = () => {
     const form = formRef.current;
@@ -71,14 +81,27 @@ const LearningResourceTestItemModalComponent = ({
   };
   const handleSubmit = async (data: any) => {
     const { fileAttacted, ...removeData } = data;
-
-    // 시험지의 경우 매핑된 문제은행 uuid를 넘겨줘야 한다.
-    const paramUuid =
-      contentInfo.contentType === ContentType.EXAM
-        ? contentInfo?.examPoolUuid
-        : contentInfo.contentUuid;
-
-    close({ ...removeData, contentUuid: paramUuid });
+    const result = await openConfirm({
+      title: t('저장 하시겠습니까?'),
+      content: <p>{t('입력한 정보로 저장합니다.')}</p>,
+    });
+    if (result) {
+      // 시험지의 경우 매핑된 문제은행 uuid를 넘겨줘야 한다.
+      const paramUuid =
+        contentInfo.contentType === ContentType.EXAM
+          ? contentInfo?.examPoolUuid
+          : contentInfo.contentUuid;
+      const questionItem = { ...removeData, contentUuid: paramUuid };
+      createQuestionItem(questionItem, {
+        onSuccess: (data: any) => {
+          console.log('ok ', data);
+          close();
+        },
+        onError: (error: any) => {
+          console.log('error', error);
+        },
+      });
+    }
   };
   const updateisCorrectAnswerRadio = useCallback(
     (index: number) => {
@@ -154,7 +177,10 @@ const LearningResourceTestItemModalComponent = ({
             <div>
               <EditCheckboxCell
                 info={info}
-                checkbox={{ variant: 'round', label: '정답' }}
+                checkbox={{
+                  variant: EnQuestionType.SINGLE === questionTypeWatch ? 'radio' : 'default',
+                  label: '정답',
+                }}
                 onCheckedChange={(event) => {
                   updateisCorrectAnswerRadio(info.row.index);
                 }}
@@ -200,6 +226,7 @@ const LearningResourceTestItemModalComponent = ({
   }, [updateisCorrectAnswerRadio, questionTypeWatch]);
 
   useEffect(() => {
+    if (formMode !== EnFormMode.ADD) return;
     if (questionTypeWatch === EnQuestionType.OX) {
       const data = getValues('options');
       console.log(otherOptions, data);
@@ -226,7 +253,14 @@ const LearningResourceTestItemModalComponent = ({
       ...questionItem,
       fileAttacted: questionItem.fileUuid && questionItem.fileUuid.length > 0,
     });
+    setOtherOptions(questionItem.options);
   }, [questionItem]);
+
+  useEffect(() => {
+    if (!rowData) return;
+    console.log('rowData', rowData);
+    setQuestionItem(rowData);
+  }, [rowData]);
 
   return (
     <ModalContainer>
@@ -441,6 +475,9 @@ const LearningResourceTestItemModalComponent = ({
             close();
           }}
         />
+        {formMode === EnFormMode.VIEW && (
+          <Button label={t('삭제')} variant="gray" size="lg" onClick={handleDelteButtonClick} />
+        )}
         <Button label={t('저장')} variant="primary" size="lg" onClick={handleSaveButtonClick} />
       </ModalFooter>
     </ModalContainer>

@@ -34,26 +34,18 @@ import { LearningResourceTestItemModal } from './learning-resource-test-item-mod
 import { useCreateQuestionItem, useGetQuestionItemList } from '@entities/learning-resource';
 import { QuestionInfo } from '@pages/_layout/learning/resource/test-paper/-tabs/question-info';
 import { EnQuestionLevel, EnQuestionType, QuestionItem, QuestionItemGridRow } from '@types';
+import {
+  initStatisticRow,
+  QuestionStatisticRow,
+  updateNewStatistics,
+} from '../service/learning-resource-question-service';
 
-type QuestionStatisticRow = {
-  title: string;
-  hard: number;
-  medium: number;
-  easy: number;
-};
-const initStatisticRow: QuestionStatisticRow[] = [
-  { title: '객관식', hard: 0, medium: 0, easy: 0 },
-  { title: 'OX', hard: 0, medium: 0, easy: 0 },
-  { title: '다답식', hard: 0, medium: 0, easy: 0 },
-  { title: '단답식', hard: 0, medium: 0, easy: 0 },
-  { title: '주관식', hard: 0, medium: 0, easy: 0 },
-];
 const LearningResourceQuestionBankQuestionComponent = () => {
   const { alert, open: openModal, confirm: openConfirm } = useModal();
   const [statistic, setStatistic] = useState<QuestionStatisticRow[]>(initStatisticRow);
 
   const { baseInfo } = useLearningResourceQuestionDetailForm();
-  const { create: createQuestionItem } = useCreateQuestionItem();
+
   const { data: questionItemList } = useGetQuestionItemList(baseInfo?.contentUuid);
 
   const handleAddQuestionButtonClick = async () => {
@@ -62,55 +54,24 @@ const LearningResourceQuestionBankQuestionComponent = () => {
         width: 'xl',
         content: <LearningResourceTestItemModal contentInfo={baseInfo} />,
       });
-      console.log('questionItem', questionItem);
-      createQuestionItem(questionItem, {
-        onSuccess: (data: any) => {
-          console.log('ok ', data);
-        },
-        onError: (error: any) => {
-          console.log('error', error);
-        },
+    }
+  };
+
+  const handleViewQuestionButtonClick = async (questionItemRow: QuestionItemGridRow) => {
+    if (baseInfo) {
+      openModal({
+        width: 'xl',
+        content: (
+          <LearningResourceTestItemModal
+            contentInfo={baseInfo}
+            questionItemGridRow={questionItemRow}
+          />
+        ),
       });
     }
   };
 
-  const data: any[] = useMemo(
-    () => [
-      {
-        type: <strong>객관식</strong>,
-        levelHigh: <Input value={'0'} disabled />,
-        levelMiddle: <Input value={'0'} disabled />,
-        levelLow: <Input value={'0'} disabled />,
-      },
-      {
-        type: <strong>OX</strong>,
-        levelHigh: <Input value={'0'} disabled />,
-        levelMiddle: <Input value={'0'} disabled />,
-        levelLow: <Input value={'0'} disabled />,
-      },
-      {
-        type: <strong>다답식</strong>,
-        levelHigh: <Input value={'0'} disabled />,
-        levelMiddle: <Input value={'0'} disabled />,
-        levelLow: <Input value={'0'} disabled />,
-      },
-      {
-        type: <strong>단답식</strong>,
-        levelHigh: <Input value={'0'} disabled />,
-        levelMiddle: <Input value={'0'} disabled />,
-        levelLow: <Input value={'0'} disabled />,
-      },
-      {
-        type: <strong>주관식</strong>,
-        levelHigh: <Input value={'0'} disabled />,
-        levelMiddle: <Input value={'0'} disabled />,
-        levelLow: <Input value={'0'} disabled />,
-      },
-    ],
-    [questionItemList],
-  );
-
-  const columns = useMemo<ColumnDef<QuestionStatisticRow, any>[]>(() => {
+  const statisticColumn = useMemo<ColumnDef<QuestionStatisticRow, any>[]>(() => {
     // Table
     const columnHelper = createColumnHelper<QuestionStatisticRow>();
     return [
@@ -160,7 +121,18 @@ const LearningResourceQuestionBankQuestionComponent = () => {
     const columnHelper = createColumnHelper<QuestionItemGridRow>();
     return [
       columnHelper.accessor('questionText', {
-        cell: (info) => info.getValue(),
+        cell: (info) => {
+          return (
+            <Button
+              className="link"
+              onClick={() => {
+                handleViewQuestionButtonClick(info.row.original);
+              }}
+            >
+              {info.getValue()}
+            </Button>
+          );
+        },
         header: '문항',
         enableGrouping: false,
         meta: {
@@ -234,33 +206,10 @@ const LearningResourceQuestionBankQuestionComponent = () => {
   useEffect(() => {
     console.log('questionItemList', questionItemList);
     if (!questionItemList) return;
-    const newStatistic: QuestionStatisticRow[] = [
-      { title: '객관식', hard: 0, medium: 0, easy: 0 },
-      { title: 'OX', hard: 0, medium: 0, easy: 0 },
-      { title: '다답식', hard: 0, medium: 0, easy: 0 },
-      { title: '단답식', hard: 0, medium: 0, easy: 0 },
-      { title: '주관식', hard: 0, medium: 0, easy: 0 },
-    ];
+    const newStatistic: QuestionStatisticRow[] = [...initStatisticRow];
 
     questionItemList.forEach((item) => {
-      switch (item.questionType) {
-        case EnQuestionType.SINGLE:
-          increaseQuestionLavel(newStatistic[0], item.questionLevel);
-          break;
-        case EnQuestionType.OX:
-          increaseQuestionLavel(newStatistic[1], item.questionLevel);
-          break;
-        case EnQuestionType.MULTIPLE:
-          increaseQuestionLavel(newStatistic[2], item.questionLevel);
-          break;
-        case EnQuestionType.SHORT_ANSWER:
-          increaseQuestionLavel(newStatistic[3], item.questionLevel);
-          break;
-
-        case EnQuestionType.ESSAY:
-          increaseQuestionLavel(newStatistic[4], item.questionLevel);
-          break;
-      }
+      updateNewStatistics(item, newStatistic);
     });
     setStatistic(newStatistic);
   }, [questionItemList]);
@@ -306,7 +255,7 @@ const LearningResourceQuestionBankQuestionComponent = () => {
           disabledSelectionToggle
           tableMode
           data={statistic}
-          columns={columns}
+          columns={statisticColumn}
           titleCustomNode={
             <div className="custom_info_wrap">
               <strong className="table_tit text-[1.4rem] font-normal">{'문항현황'}</strong>
@@ -366,17 +315,3 @@ const LearningResourceQuestionBankQuestionComponent = () => {
 };
 
 export const LearningResourceQuestionBankQuestion = LearningResourceQuestionBankQuestionComponent;
-
-function increaseQuestionLavel(item: QuestionStatisticRow, questionLevel: EnQuestionLevel) {
-  switch (questionLevel) {
-    case EnQuestionLevel.HARD:
-      item.hard++;
-      break;
-    case EnQuestionLevel.MEDIUM:
-      item.medium++;
-      break;
-    case EnQuestionLevel.EASY:
-      item.easy++;
-      break;
-  }
-}

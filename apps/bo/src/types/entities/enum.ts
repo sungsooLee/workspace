@@ -122,6 +122,7 @@ export enum ProcessingStatus {
   FAIL = 'FAIL',
   COMPLETE = 'COMPLETE',
   STARTED = 'STARTED',
+  THUMBNAIL = 'THUMBNAIL',
   ENCODING = 'ENCODING',
   UPLOADING = 'UPLOADING',
 }

@@ -89,6 +89,32 @@ const EnrollmentComponent = () => {
     setOptions('companyId', companyIdOptions);
   };
 
+  const getStatusOptions = () => {
+    switch (selectedTabKey) {
+      case SequenceTabDetail.ENROLLMENT_REGIST:
+        return [
+          { label: '승인대기', value: '1' },
+          { label: '조직장결재완료', value: '2' },
+          { label: '운영자승인완료', value: '3' },
+          { label: '결재', value: '4' },
+          { label: '승인 완료', value: '5' },
+        ];
+      case SequenceTabDetail.ENROLLMENT_WAIT:
+        return [
+          { label: '대기중', value: '1' },
+          { label: '링크 발송', value: '2' },
+          { label: '링크 완료', value: '3' },
+        ];
+      case SequenceTabDetail.ENROLLMENT_CANCEL:
+        return [
+          { label: '반려', value: '1' },
+          { label: '승인', value: '2' },
+        ];
+      default:
+        return []; // fallback: 옵션 없을 때 빈 배열
+    }
+  };
+
   const searchConfig: SearchBoxConfig = {
     builders: [
       [
@@ -115,13 +141,14 @@ const EnrollmentComponent = () => {
           label: t('LABEL.form.label.sequence', '상태'),
           value: '',
           presetOptionLabel: t('전체'),
-          options: [
-            { label: '승인대기', value: '1' },
-            { label: '조직장결재완료', value: '2' },
-            { label: '운영자승인완료', value: '3' },
-            { label: '결재', value: '4' },
-            { label: '승인 완료', value: '5' },
-          ],
+          //   options: [
+          //     { label: '승인대기', value: '1' },
+          //     { label: '조직장결재완료', value: '2' },
+          //     { label: '운영자승인완료', value: '3' },
+          //     { label: '결재', value: '4' },
+          //     { label: '승인 완료', value: '5' },
+          //   ],
+          options: getStatusOptions(),
         },
         {
           name: 'eduDate',

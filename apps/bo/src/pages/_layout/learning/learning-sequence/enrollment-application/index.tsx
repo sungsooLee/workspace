@@ -97,7 +97,7 @@ function RouteComponent() {
   );
 
   return (
-    <PageContainer>
+    <PageContainer hideOutLine={true}>
       <ContentsButtons>
         <ToggleButtonGroup
           defaultValue={'edu'}
@@ -105,7 +105,15 @@ function RouteComponent() {
             { label: '과정관리', value: 'course' },
             { label: '수강관리', value: 'edu' },
           ]}
-          onChange={(value) => setBtnState(value)}
+          onClick={(value) =>
+            router.navigate({
+              to: `/learning/course`,
+              state: {
+                // courseId: '',
+                // courseName: ''
+              },
+            })
+          }
         />
         <Divider orientation="vertical" />
         <>

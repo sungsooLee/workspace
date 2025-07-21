@@ -52,8 +52,14 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
   ) => {
     const { provider: basicInfoProvider, getValues, saveBasicInfo } = basicInfoForm;
 
-    const { questionList, selectedQuestions, questionState, scorePerQuestion, createQuestionItem } =
-      useExamQuestionInfoInput(data as TestPaperBasicInfoDetail);
+    const {
+      questionList,
+      selectedQuestions,
+      questionState,
+      scorePerQuestion,
+      createQuestionItem,
+      updateQuestionStatus,
+    } = useExamQuestionInfoInput(data as TestPaperBasicInfoDetail);
 
     const questionGenTypeOptions = useMemo(
       () => [
@@ -293,6 +299,13 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
         columnHelper.accessor('isUsed', {
           cell: (info) => (
             <RadioGroupFormField
+              onChange={(value: boolean) =>
+                updateQuestionStatus({
+                  contentUuid: data?.examPoolUuid ?? '',
+                  examQuestionUuid: info.row.original.examQuestionUuid,
+                  isUsed: value,
+                })
+              }
               defaultValue={String(info.getValue())}
               options={[
                 { value: 'true', label: t('LABEL.common.enable') },
@@ -396,7 +409,14 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
                     <strong className="table_tit text-[1.4rem] font-normal">
                       {t('선택 문항수')}
                     </strong>
-                    <span className="count_info text-[1.4rem]">{selectedQuestions.length}</span>
+                    <span
+                      className={cn(
+                        'count_info text-[1.4rem]',
+                        data?.questionCount !== selectedQuestions.length ? 'point' : '',
+                      )}
+                    >
+                      {selectedQuestions.length}
+                    </span>
                     <strong className="table_tit text-[1.4rem] font-normal">
                       {t('문항 당 배점')}
                     </strong>
@@ -406,6 +426,8 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
                 className={styles.info_table}
                 showGuideTextNextLine
                 guideText={t('문항현황은 문항목록에서 문항추가/삭제 시 자동 업데이트 됩니다.')}
+                showErrorMessageBesideGuideText={data?.questionCount !== selectedQuestions.length}
+                errorMessageBesideGuideText={t('시험지 문항수와 선택 문항수는 동일해야 합니다.')}
               />
             </div>
           </ContentsRow>

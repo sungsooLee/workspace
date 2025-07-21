@@ -8,8 +8,10 @@ import {
   HtmlVideoMetadataReq,
   PostDraftHtmlVideoParams,
   PostDraftVideosParams,
+  PutVideoChangeParams,
   QuestionItem,
   QuestionItemDeleteParam,
+  QuestionStatusUpdateReq,
   TestPaperBasicInfoSaveReq,
 } from '@types';
 
@@ -35,6 +37,20 @@ export function usePostDraftVideos(options?: any) {
 
   return {
     create: (payload: PostDraftVideosParams) => mutation.mutate(payload as any),
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
+}
+
+export function usePutVideoChange(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.putVideoChange(),
+    ...options,
+  });
+
+  return {
+    update: (payload: PutVideoChangeParams) => mutation.mutate(payload as any),
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
     data: mutation.data,
@@ -199,6 +215,12 @@ export function useCreateQuestionItem(options?: any) {
     data: mutation.data,
   };
 }
+export function useGetQuestionItem(examQuestionUuid?: string, options?: any) {
+  return useQuery<QuestionItem, any>({
+    ...learningResourceQueryOptions.getQuestionItem(examQuestionUuid),
+    ...options,
+  });
+}
 export function useGetContent(contentUuid: string, options?: any) {
   return useQuery({ ...learningResourceQueryOptions.getContent(contentUuid), ...options });
 }
@@ -219,5 +241,18 @@ export function useDeleteQuestionItemList(options?: any) {
   return {
     ...mutation,
     delete: (param: QuestionItemDeleteParam) => mutation.mutate(param as any),
+  };
+}
+
+export function useUpdateQuestionStatus(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.updateQuestionStatus(),
+    ...options,
+  });
+
+  return {
+    update: (params: QuestionStatusUpdateReq) => mutation.mutate(params as any),
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
   };
 }

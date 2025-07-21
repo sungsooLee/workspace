@@ -141,7 +141,7 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
       sortSeq: sortSeq + 1,
     };
     moveTenantCategory({
-      tenantId: tenantId,
+      tenantId,
       categoryId: id,
       data: payload,
     });
@@ -160,7 +160,7 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
     const location = findMenuPathById(treeData, node?.menuId);
     const fdat = {
       ...initData,
-      location: location,
+      location,
       parentKey: node.key,
       parentCategoryName: node.title,
       sortSeq: (selectedNode?.children?.length ?? 0) + 1,
@@ -251,11 +251,13 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
             ? nodeInfo.targetNode?.key
             : nodeInfo.targetNode?.parentKey;
         if (nodeInfo.sourceNode.depth !== targetDepth) {
-          alert(t('LABEL.alert.movableSameLevel'));
+          openAlert(
+            t('LABEL.alert.movableSameLevel')
+          );
           return false;
         }
         if (nodeInfo.sourceNode.parentKey !== parentKey) {
-          alert(t('LABEL.alert.movableSameParent', { type: t('LABEL.common.category') }));
+          openAlert(t('LABEL.alert.movableSameParent', { type: t('LABEL.common.category') }));
           return false;
         }
         if (nodeInfo.position === 'INSIDE') {
@@ -295,38 +297,33 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
   };
 
   const handleOnSubmit = (formData: any) => {
-    const userGroups = formData.userGroups.map((n: { value: number }) => ({
-      combineType: 'USER_GROUP',
-      combineValue: n.value,
-    }));
-
     if (mode === EnFormMode.VIEW) {
       const body: TenantCategoryUpdate = {
-        name: formData.categoryName,
+        categoryName: formData.categoryName,
         categoryCode: formData.code.fieldValue,
-        categoryContent: formData.categoryContent,
+        categoryContent: formData.categoryContent === '' ? null : formData.categoryContent,
         isUsed: formData.tenantIsUsed,
-        whiteList: userGroups,
+        whiteList: formData.userGroups,
       };
       handleUpdate({
-        tenantId: tenantId,
+        tenantId,
         categoryId: categoryDetail?.categoryId,
         data: body,
       });
       return;
     } else if (mode === EnFormMode.ADD) {
       const body: TenantCategoryCreate = {
-        name: formData.categoryName,
+        categoryName: formData.categoryName,
         categoryCode: formData.code.fieldValue,
-        categoryContent: formData.categoryContent,
+        categoryContent: formData.categoryContent === '' ? null : formData.categoryContent,
         categoryType: EnCategoryType.TENANT,
         sortSeq: formData.sortSeq,
         parentId: formData.parentKey,
-        whiteList: userGroups,
+        whiteList: formData.userGroups,
         isUsed: formData.tenantIsUsed,
       };
       handleSave({
-        tenantId: tenantId,
+        tenantId,
         data: body,
       });
     }
@@ -361,10 +358,10 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
       const location = findMenuPathById(treeData, selectedNode?.menuId);
       updateFormData({
         ...categoryDetail,
-        location: location,
+        location,
         code: { fieldValue: categoryDetail.categoryCode, checkState: DuplicateState.okStart },
         sortSeq: (selectedNode?.children?.length ?? 0) + 1,
-        userGroups: mappedUserGroups,
+        userGroups: categoryDetail.whiteList,
         key: selectedNode.key,
         parentKey: selectedNode.parentKey,
         parentCategoryName: selectedNode.parentMenuName,
@@ -580,7 +577,7 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
                   <ChipListModalSelectorFormField
                     disabled={mode === EnFormMode.NONE}
                     modalConfig={{
-                      content: <UserGroupTabsChoiceModal tenantIds={[]} />,
+                      content: <UserGroupTabsChoiceModal tenantIds={[tenantId]} />,
                       title: '',
                       width: 'xl',
                       height: 'fix',
@@ -588,8 +585,8 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
                     showAddButton
                     chipList={{
                       showInput: false,
-                      labelField: 'label',
-                      valueField: 'value',
+                      labelField: 'pathValue',
+                      valueField: 'pathKey',
                       wordwrap: true,
                     }}
                   />
