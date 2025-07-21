@@ -55,6 +55,7 @@ const ListModalSelectorFormFieldComponent = forwardRef<
     // const [selectedValue, setSelectedValue] = useState<any>();
 
     const valueField = listConfig?.valueField || 'value';
+    const labelField = listConfig?.labelField || 'label';
 
     // 새로운 옵션을 기존 value에 중복 없이 추가하는 함수
     const appendSelectedChipOptions = (newOption: any) => {
@@ -89,6 +90,7 @@ const ListModalSelectorFormFieldComponent = forwardRef<
       ownerOnChange(newValue);
     };
 
+    console.log('3333 ', value);
     return (
       <div
         ref={ref}
@@ -114,6 +116,8 @@ const ListModalSelectorFormFieldComponent = forwardRef<
         {/* 선택된 항목 리스트 영역 */}
         <List
           {...listConfig}
+          valueField={valueField}
+          labelField={labelField}
           className={styles.list}
           options={value}
           value={selectedValue}

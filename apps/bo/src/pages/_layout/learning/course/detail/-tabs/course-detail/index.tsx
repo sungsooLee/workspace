@@ -7,6 +7,7 @@ import {
 } from '@features/learning-operate/course/course-management';
 import { CODE_GROUP, S3_PATH, useDynamicForm2 } from '@learnway/hooks';
 import {
+  Badge,
   Button,
   ChipListModalSelectorFormField,
   ContentsRow,
@@ -199,10 +200,24 @@ const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTab
                         categoryPath: d.fullPath,
                       }));
                     }}
-                    list={{
+                    listConfig={{
+                      checkable: true,
+                      deletable: true,
+                      disabledActive: true,
                       labelField: 'categoryPath',
                       valueField: 'categoryId',
+                      selectedNodeBeforeLabel: (
+                        <Badge
+                          option={{ label: '대표', value: '' }}
+                          variant={'text'}
+                          status="fill"
+                        />
+                      ),
                     }}
+                    selectedValue={getValues()?.primaryCategoryId}
+                    onSelected={(option: any) =>
+                      onFormChange({ primaryCategoryId: option.categoryId })
+                    }
                     actionNode={<Button variant="text" size="sm" label={t('추가')} />}
                   />
                 }
@@ -1463,7 +1478,7 @@ export const formDataToRequestData = (d: Course) => {
   // 카테고리 아이디 배열
   d.categoryIds = d.categories?.map((d: any) => d.categoryId);
   // 대표 카테고리
-  d.primaryCategoryId = d.categories?.[0]?.categoryId;
+  // d.primaryCategoryId = d.categories?.[0]?.categoryId;
   // 학습대상-ID 배열
   d.targetListIds = d.targetList?.map((d: any) => d.id);
 

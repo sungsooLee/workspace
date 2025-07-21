@@ -203,6 +203,7 @@ const SortableItem = ({
     ? itemRenderer(item, index)
     : item[labelField];
 
+  console.log(4444, { textContent, labelField });
   return (
     <li
       ref={setNodeRef}
