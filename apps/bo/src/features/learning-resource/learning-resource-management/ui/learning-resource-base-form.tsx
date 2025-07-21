@@ -272,6 +272,8 @@ const LearningResourceBaseFormComponent = ({
           tooltip="태그는 학습자원 검색 시 활용되고, 학습자에게는 10개까지만 보여집니다."
           chipListConfig={{
             showInput: true,
+            labelField: 'tagName',
+            valueField: 'tagId',
           }}
         />
       </ContentsRow>
