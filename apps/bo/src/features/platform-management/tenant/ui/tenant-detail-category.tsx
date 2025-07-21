@@ -141,7 +141,7 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
       sortSeq: sortSeq + 1,
     };
     moveTenantCategory({
-      tenantId: tenantId,
+      tenantId,
       categoryId: id,
       data: payload,
     });
@@ -160,7 +160,7 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
     const location = findMenuPathById(treeData, node?.menuId);
     const fdat = {
       ...initData,
-      location: location,
+      location,
       parentKey: node.key,
       parentCategoryName: node.title,
       sortSeq: (selectedNode?.children?.length ?? 0) + 1,
@@ -251,11 +251,13 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
             ? nodeInfo.targetNode?.key
             : nodeInfo.targetNode?.parentKey;
         if (nodeInfo.sourceNode.depth !== targetDepth) {
-          alert(t('LABEL.alert.movableSameLevel'));
+          openAlert(
+            t('LABEL.alert.movableSameLevel')
+          );
           return false;
         }
         if (nodeInfo.sourceNode.parentKey !== parentKey) {
-          alert(t('LABEL.alert.movableSameParent', { type: t('LABEL.common.category') }));
+          openAlert(t('LABEL.alert.movableSameParent', { type: t('LABEL.common.category') }));
           return false;
         }
         if (nodeInfo.position === 'INSIDE') {
@@ -309,7 +311,7 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
         whiteList: userGroups,
       };
       handleUpdate({
-        tenantId: tenantId,
+        tenantId,
         categoryId: categoryDetail?.categoryId,
         data: body,
       });
@@ -326,7 +328,7 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
         isUsed: formData.tenantIsUsed,
       };
       handleSave({
-        tenantId: tenantId,
+        tenantId,
         data: body,
       });
     }
@@ -361,7 +363,7 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
       const location = findMenuPathById(treeData, selectedNode?.menuId);
       updateFormData({
         ...categoryDetail,
-        location: location,
+        location,
         code: { fieldValue: categoryDetail.categoryCode, checkState: DuplicateState.okStart },
         sortSeq: (selectedNode?.children?.length ?? 0) + 1,
         userGroups: mappedUserGroups,
