@@ -21,6 +21,7 @@ import {
   PostDraftVideosRes,
   QuestionItem,
   QuestionItemDeleteParam,
+  QuestionStatusUpdateReq,
   TestPaperBasicInfoSaveReq,
   TestPaperBasicInfoSaveRes,
 } from '@types';
@@ -235,6 +236,14 @@ export default class LearningResourceService {
    */
   static deleteQuestionItemList(param: QuestionItemDeleteParam) {
     return httpService.delete<any>(`${CMSApiPrefix()}/exam/question`, param);
+  }
+
+  /**
+   * 각 문항의 사용 여부 변경
+   * @param body
+   */
+  static updateQuestionStatus(body: QuestionStatusUpdateReq) {
+    return httpService.put(`${CMSApiPrefix()}/exam/question/status`, body);
   }
 
   /**

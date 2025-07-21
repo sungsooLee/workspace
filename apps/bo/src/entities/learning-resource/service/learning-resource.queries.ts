@@ -12,6 +12,7 @@ import {
   PostDraftVideosParams,
   QuestionItem,
   QuestionItemDeleteParam,
+  QuestionStatusUpdateReq,
   TestPaperBasicInfoSaveReq,
 } from '@types';
 import LearningResourceService from '../api/learning-resource';
@@ -191,5 +192,9 @@ export const mutateOptions = {
   deleteQuestionItemList: () => ({
     mutationFn: (param: QuestionItemDeleteParam) =>
       LearningResourceService.deleteQuestionItemList(param),
+  }),
+  updateQuestionStatus: () => ({
+    mutationFn: (params: QuestionStatusUpdateReq) =>
+      LearningResourceService.updateQuestionStatus(params),
   }),
 };

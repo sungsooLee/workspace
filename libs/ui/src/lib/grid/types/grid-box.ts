@@ -163,6 +163,16 @@ export interface GridBoxProps<T extends object = object>
   guideText?: string;
 
   /**
+   * 가이드 텍스트 옆 에러성 문구 노출 여부
+   */
+  showErrorMessageBesideGuideText?: boolean;
+
+  /**
+   * 가이드 텍스트 옆 에러성 문구 내용
+   */
+  errorMessageBesideGuideText?: string;
+
+  /**
    * 가이드 텍스트 하위 노출 여부
    */
   showGuideTextNextLine?: boolean;

@@ -497,7 +497,8 @@ export interface QuestionItemOption {
   fileUuid: string;
 }
 
-export type SelectedQuestionState = Record<
-  EnQuestionType,
-  Partial<Record<EnQuestionLevel, number | `${number}`>>
->;
+export interface QuestionStatusUpdateReq {
+  contentUuid: string;
+  examQuestionUuid: string;
+  isUsed: boolean;
+}
