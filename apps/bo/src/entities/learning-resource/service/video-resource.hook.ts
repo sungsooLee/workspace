@@ -7,7 +7,7 @@ import { get, omit, pick } from 'lodash';
 import { DATE_TIME_FORMAT, duration } from '@learnway/shared';
 import { usePutVideoChange } from './learning-resource.hook';
 
-const videoChangeKey = 'videoChangeResource';
+const videoChangeKey = (contentUuid: string) => `videoChangeResource${contentUuid}`;
 
 const useVideoResourceHook = (provider: DynamicFormProvider) => {
   const { watch, onFormChange } = provider;
@@ -26,7 +26,7 @@ const useVideoResourceHook = (provider: DynamicFormProvider) => {
       setVideoChangeResourceId(resourceId);
       onFormChange(omit(result, 'resourceId'));
       localStorage.setItem(
-        `${videoChangeKey}${contentUuid}`,
+        videoChangeKey(contentUuid),
         JSON.stringify({ contentUuid, resourceId }),
       );
     },
@@ -40,12 +40,16 @@ const useVideoResourceHook = (provider: DynamicFormProvider) => {
 
   const [videoResource, setVideoResource] = useState<GetVideoResourceRes | null>(null);
 
-  const fetchStatus = useCallback(async () => {
-    const statusInfo = await (videoChangeResourceId
-      ? LearningResourceService.getVideoFileChange(videoChangeResourceId)
-      : LearningResourceService.getVideoStatus(contentUuid));
-    onFormChange(omit(statusInfo, 'resourceId'));
-  }, [contentUuid, videoChangeResourceId]);
+  const fetchStatus = useCallback(
+    async (resourceId?: number) => {
+      const statusInfo = await (resourceId
+        ? LearningResourceService.getVideoFileChange(resourceId)
+        : LearningResourceService.getVideoStatus(contentUuid));
+      setVideoChangeResourceId(resourceId);
+      onFormChange(omit(statusInfo, 'resourceId'));
+    },
+    [contentUuid],
+  );
 
   const fetchVideoContent = useCallback(async () => {
     const videoResource = await LearningResourceService.getVideoResource(contentUuid);
@@ -54,47 +58,50 @@ const useVideoResourceHook = (provider: DynamicFormProvider) => {
   }, [contentUuid]);
 
   useEffect(() => {
-    console.log('🚀 ~ ProcessingStatus:', status);
+    if (isProcessingNone(status)) return;
 
-    const videoChangeResource = localStorage.getItem(`${videoChangeKey}${contentUuid}`);
-    console.log(
-      '🚀 ~ useEffect ~ videoChangeResource:',
-      videoChangeResource,
-      videoChangeResourceId,
-    );
+    const videoChangeResource = localStorage.getItem(videoChangeKey(contentUuid));
     if (videoChangeResource) {
       if (!videoChangeResourceId) {
-        setVideoChangeResourceId(JSON.parse(videoChangeResource).resourceId);
+        const resourceId = JSON.parse(videoChangeResource).resourceId;
+        fetchStatus(resourceId);
         return;
       }
     }
 
-    if (isProcessingNone(status)) return;
+    // 처리 중이 아닌 경우 interval 정리
+    if (!isProcessing(status)) {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = undefined;
+      }
 
-    console.log('🚀 ~ useEffect ~ intervalRef.current:', intervalRef.current);
-    if (intervalRef.current && !isProcessing(status)) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = undefined;
+      // 비디오 변경 작업이 완료된 경우 정리
       if (videoChangeResource && videoChangeResourceId) {
         setVideoChangeResourceId(undefined);
-        localStorage.removeItem(`${videoChangeKey}${contentUuid}`);
+        localStorage.removeItem(videoChangeKey(contentUuid));
       }
     }
 
-    if (!intervalRef.current && isProcessing(status)) {
-      intervalRef.current = setInterval(fetchStatus, 2 * 1000);
+    // 처리 중이고 interval이 없는 경우 시작
+    if (isProcessing(status) && !intervalRef.current) {
+      intervalRef.current = setInterval(() => fetchStatus(videoChangeResourceId), 2 * 1000);
     }
 
+    // 처리 완료된 경우 비디오 컨텐츠 업데이트
     if (isProcessingCompleted(status)) {
       fetchVideoContent();
     }
+  }, [contentUuid, status, videoChangeResourceId]);
 
+  useEffect(() => {
     return () => {
       if (intervalRef.current) {
+        // Unmountnd interval 중지
         clearInterval(intervalRef.current);
       }
     };
-  }, [contentUuid, status, videoChangeResourceId]);
+  }, []);
 
   return {
     contentUuid,
