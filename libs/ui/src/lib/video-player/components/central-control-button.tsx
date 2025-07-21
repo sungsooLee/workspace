@@ -1,5 +1,8 @@
 import { VideoPlayerContainerProps } from '../types';
-import { IcoClock10Back, IcoClock10Forward, IcoPlayerPause, IcoPlayerPlay } from '@learnway/icons';
+import { IcoClock10Back, IcoClock10Forward, IcoVideoStop, IcoVideoPlay } from '@learnway/icons';
+import { isMobile } from 'react-device-detect';
+
+import styles from './central-control-button.module.css';
 
 const CentralControlButton = ({
   playing,
@@ -11,19 +14,19 @@ const CentralControlButton = ({
   'playing' | 'handleRewind' | 'togglePlay' | 'handleForward'
 >) => {
   return (
-    <div className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center gap-6">
+    <div className={`${styles.start} ${styles.control}`}>
       <button onClick={handleRewind}>
-        <IcoClock10Back className="h-[72px] w-[72px] text-white" />
+        <IcoClock10Back width={isMobile ? 32 : 44} height={isMobile ? 32 : 44} />
       </button>
-      <button onClick={togglePlay}>
+      <button className={styles.btn_control} onClick={togglePlay}>
         {playing ? (
-          <IcoPlayerPause className="h-[72px] w-[72px] text-white" />
+          <IcoVideoStop width={isMobile ? 32 : 44} height={isMobile ? 32 : 44} />
         ) : (
-          <IcoPlayerPlay className="h-[72px] w-[72px] text-white" />
+          <IcoVideoPlay width={isMobile ? 32 : 44} height={isMobile ? 32 : 44} />
         )}
       </button>
       <button onClick={handleForward}>
-        <IcoClock10Forward className="h-[72px] w-[72px] text-white" />
+        <IcoClock10Forward width={isMobile ? 32 : 44} height={isMobile ? 32 : 44} />
       </button>
     </div>
   );
