@@ -61,6 +61,7 @@ const ListComponent = function ({
   valueField = 'value',
   disabledActive = false,
   multiple,
+  checkable,
   hideBorder,
   showItemBorder,
   onOptionDeleteClick,
@@ -130,6 +131,7 @@ const ListComponent = function ({
             className,
             'nlp--list',
             styles.start,
+            checkable && styles.checkable,
             hideBorder && styles.border_none,
             showItemBorder && styles.type_full,
           )}
@@ -141,6 +143,7 @@ const ListComponent = function ({
               item={d}
               index={i}
               showItemBorder={showItemBorder}
+              checkable={checkable}
               disabledActive={disabledActive}
               valueField={valueField}
               labelField={labelField}
