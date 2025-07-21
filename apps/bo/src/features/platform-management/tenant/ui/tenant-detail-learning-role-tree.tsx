@@ -37,7 +37,7 @@ import {
   ChannelListChoiceModal,
   CompanyShuttleModal,
   UserGroupChoiceModal,
-  SectionLayout,
+  SectionLayout, OrganizationChoiceTreeModal,
 } from '@shared/ui';
 import { EnChannelScope, EnCompanyScope, EnDeptScope, EnFormMode, EnTenantScope } from '@types';
 
@@ -57,6 +57,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
 
   const tenantId = routerState.location.state?.tenantId;
   const tenantName = routerState.location.state?.tenantName;
+  const companyCodes = routerState.location.state?.companyCodes;
 
   const formConfig = { ...formBaseConfig() };
 
@@ -210,7 +211,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
   }, [roleDetail]);
 
   const renderNodeButtons = (node: TreeNode, level: number) => {
-    if (roleInfo)
+    if (roleInfo === 'PLATFORM')
       return (
         <div className="gap-10px flex">
           <div className="flex items-center">
@@ -227,12 +228,12 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
               size={'xs'}
               type={'button'}
             >
-              {level === 0 ? '역할 추가' : '하위 역할 추가'}
+              {level === 0 ? t('역할 추가') : t('하위 역할 추가')}
             </Button>
           </div>
         </div>
       );
-    return '';
+    return ''
   };
 
   return (
@@ -388,7 +389,8 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
                         modalConfig={{
                           title: '',
                           width: 'xl',
-                          content: <UserGroupChoiceModal />,
+                          // content: <OrganizationChoiceTreeModal companyCodes={companyCodes} />,
+                          content: <OrganizationChoiceTreeModal companyCodes={['H199', 'H103',]} />,
                         }}
                       />
                     }
