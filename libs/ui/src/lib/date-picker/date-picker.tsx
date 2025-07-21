@@ -485,6 +485,7 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
             minuteStep={minuteStep}
             secondStep={secondStep}
             showSeconds={showSeconds}
+            locale={currentLocale}
             placeholder={
               showSeconds
                 ? getPlaceholderByType('time', currentLocale)
@@ -500,6 +501,7 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
               minuteStep={minuteStep}
               secondStep={secondStep}
               showSeconds={showSeconds}
+              locale={currentLocale}
               placeholder={
                 showSeconds
                   ? getPlaceholderByType('time', currentLocale)
@@ -552,8 +554,8 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
           <PopoverHourInput
             value={selectedDate}
             onChange={handleChange}
-            placeholder={getPlaceholderByType('time-h', currentLocale)}
             locale={currentLocale}
+            placeholder={getPlaceholderByType('time-h', currentLocale)}
           />
         </div>
       </div>

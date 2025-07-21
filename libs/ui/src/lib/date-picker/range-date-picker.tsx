@@ -344,7 +344,7 @@ const RangeDatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, RangeDa
           {showHourPicker && (
             <div className="nlp--datepicker-time">
               <PopoverHourInput
-                value={startDate}
+                value={endDate}
                 onChange={(date: Date | undefined) => {
                   if (date) {
                     handleEndDateChange(date);
