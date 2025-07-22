@@ -14,7 +14,6 @@ import { VideoSettingPopup, VideoSubsettingPopup } from '../../features/learning
 
 import styles from '@learnway/styles/fo/pages/_learning/learning.module.css';
 
-import bnrImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 import video from '@learnway/styles/fo/assets/images/temp/video.mp4';
 
 export const Route = createFileRoute('/_learning/video')({
@@ -134,6 +133,7 @@ function RouteComponent() {
                 url={video}
               />
             </VideoPlayerContainer>
+            {/* 퍼블 임시 확인 */}
             <Button
               onClick={() =>
                 openModal({
