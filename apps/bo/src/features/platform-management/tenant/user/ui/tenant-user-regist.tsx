@@ -141,9 +141,11 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
       // 계정 정보 - 해당 정보는 현재 페이지가 관리자 등록이라 고정 값임.
 
       // 로그인 및 인증 설정 정보
-      ssoType: data.isUseSso ? true : null,
-      ssoTypeList: data.isUseSso ? data.ssoTypeList : null,
+      ssoType: data.isUseSso ? data.ssoTypeList : null,
       authType: data.passwordAuthType,
+      twoFactorAuthType: data.twoFactorAuthType,
+      foTwoFactorAuthEnabled: data.twoFactorAuthPlatformTypeList.includes('FO_PLATFORM'),
+      boTwoFactorAuthEnabled: data.twoFactorAuthPlatformTypeList.includes('BO_PLATFORM'),
     };
 
     // 현재 회사(조직)조회 팝업에 데이터가 없어 임시로 테스트하기 위해 넣음: 추후 삭제

@@ -149,9 +149,11 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
       // 계정 정보 - 해당 정보는 현재 페이지가 관리자 등록이라 고정 값임.
 
       // 로그인 및 인증 설정 정보
-      ssoType: data.isUseSso ? true : null,
-      ssoTypeList: data.isUseSso ? data.ssoTypeList : null,
+      ssoType: data.isUseSso ? data.ssoTypeList : null,
       authType: data.authType,
+      twoFactorAuthType: data['2FAType'],
+      foTwoFactorAuthEnabled: false,
+      boTwoFactorAuthEnabled: false,
     };
 
     if( data.userState === '2' ) {
@@ -160,6 +162,11 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
     } else if( data.userState === '3' ) {
       payload.isOnLeave = false;
       payload.isSuspended = true;
+    }
+
+    if( data.isUseTwoFactorAuth ) {
+      payload.foTwoFactorAuthEnabled = data.twoFactorAuthPlatformTypeList.includes('FO_PLATFORM');
+      payload.boTwoFactorAuthEnabled = data.twoFactorAuthPlatformTypeList.includes('BO_PLATFORM');
     }
 
     if( codeGroupData ) {
