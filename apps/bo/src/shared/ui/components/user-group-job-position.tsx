@@ -105,6 +105,7 @@ const UserGroupJobPositionComponent = ({
       gridData={gridData}
       sourceTitle={t('유저그룹 - 보직')}
       targetTitle={t('선택 유저그룹 목록')}
+      isShowConditionSettingsMode
     />
   );
 };
