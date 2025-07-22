@@ -1,8 +1,5 @@
 import { httpService, objectToQueryString } from '@learnway/shared';
-import {
-  Course,
-  PassCriteriaData
-} from '../../../types';
+import { Course, PassCriteriaData } from '../../../types';
 import { LMSApiPrefix, PMSApiPrefix } from '@learnway/config';
 
 // export class TreeService {
@@ -14,7 +11,6 @@ import { LMSApiPrefix, PMSApiPrefix } from '@learnway/config';
 //       return httpService.get<any>(url);
 //   }
 // }
-
 
 export default class CourseService {
   static async fetch(id: number) {
@@ -65,7 +61,7 @@ export default class CourseService {
         {
           classId: 'C0003',
           className: '클래스 이름 클래스 이름 클래스 이름 클래스 이름 클래스 이름 클래스 이름',
-          classType: 'class',  // 정상 차수
+          classType: 'class', // 정상 차수
           classStartDate: '2023-01-01',
           classEndDate: '2023-12-31',
           classDday: 30,
@@ -76,10 +72,10 @@ export default class CourseService {
         {
           classId: 'C0004',
           className: '클래스 이름 클래스 이름 클래스 이름 클래스 이름 클래스 이름 클래스 이름',
-          classType: 'class',  // 정상 차수
+          classType: 'class', // 정상 차수
           classStartDate: '2023-01-01',
           classEndDate: '2023-12-31',
-          classDday:              0,
+          classDday: 0,
           classNumber: 2,
           classLocation: '온라인',
           classRemainingSeats: 10,
@@ -87,7 +83,7 @@ export default class CourseService {
         {
           classId: 'C0005',
           className: '클래스 이름 클래스 이름 클래스 이름 클래스 이름 클래스 이름 클래스 이름',
-          classType: 'class',  // 정상 차수
+          classType: 'class', // 정상 차수
           classStartDate: '2023-01-01',
           classEndDate: '2023-12-31',
           classDday: 0,
@@ -185,104 +181,93 @@ export default class CourseService {
         },
       ],
       introduction: {
-        aiSummary: '과정 소개 내용입니다. 과정 소개 내용입니다. 과정 소개 내용입니다. 과정 소개 내용입니다. 과정 소개 내용입니다.',
+        aiSummary:
+          '과정 소개 내용입니다. 과정 소개 내용입니다. 과정 소개 내용입니다. 과정 소개 내용입니다. 과정 소개 내용입니다.',
         tags: [
           { value: 'tag1', label: '태그1' },
           { value: 'tag2', label: '태그2' },
           { value: 'tag3', label: '태그3' },
         ],
-        goal: [
-          {text: '과정 목표1'},
-          {text: '과정 목표2'},
-          {text: '과정 목표3'},
-        ],
-        contentsSummary: [
-          {text: '과정 내용1'},
-          {text: '과정 내용2'},
-          {text: '과정 내용3'},
-        ],
+        goal: [{ text: '과정 목표1' }, { text: '과정 목표2' }, { text: '과정 목표3' }],
+        contentsSummary: [{ text: '과정 내용1' }, { text: '과정 내용2' }, { text: '과정 내용3' }],
         content: {
           contentTitle: '과정 소개',
-          contentText: '과정 소개 내용입니다. 과정 소개 내용입니다. 과정 소개 내용입니다. 과정 소개 내용입니다. 과정 소개 내용입니다.',
+          contentText:
+            '과정 소개 내용입니다. 과정 소개 내용입니다. 과정 소개 내용입니다. 과정 소개 내용입니다. 과정 소개 내용입니다.',
           contentImage: 'https://cdn.learnway.io/course/introduction.png',
-
         },
-        recommand: [
-          {text: '추천 대상1'},
-          {text: '추천 대상2'},
-          {text: '추천 대상3'},
-        ],
+        recommand: [{ text: '추천 대상1' }, { text: '추천 대상2' }, { text: '추천 대상3' }],
         curriculum: [
-          { 
-            curriculumId: 'c1', 
+          {
+            curriculumId: 'c1',
             curriculumName: '커리큘럼1',
             curriculumTotalTime: '10시간',
             course: [
-              { 
-                courseId: 'A100020', 
-                courseName: '과정1', 
+              {
+                courseId: 'A100020',
+                courseName: '과정1',
                 courseType: '이북',
                 duration: '2시간',
               },
-              { 
-                courseId: 'A100021', 
-                courseName: '과정2', 
+              {
+                courseId: 'A100021',
+                courseName: '과정2',
                 courseType: '이북',
                 duration: '2시간',
               },
-              { 
-                courseId: 'A100022', 
-                courseName: '과정3', 
+              {
+                courseId: 'A100022',
+                courseName: '과정3',
                 courseType: '이북',
                 duration: '2시간',
               },
             ],
           },
-          { 
-            curriculumId: 'c2', 
+          {
+            curriculumId: 'c2',
             curriculumName: '커리큘럼2',
             curriculumTotalTime: '10시간',
             course: [
-              { 
-                courseId: 'A100020', 
-                courseName: '과정1', 
+              {
+                courseId: 'A100020',
+                courseName: '과정1',
                 courseType: '이북',
                 duration: '2시간',
               },
-              { 
-                courseId: 'A100021', 
-                courseName: '과정2', 
+              {
+                courseId: 'A100021',
+                courseName: '과정2',
                 courseType: '이북',
                 duration: '2시간',
               },
-              { 
-                courseId: 'A100022', 
-                courseName: '과정3', 
+              {
+                courseId: 'A100022',
+                courseName: '과정3',
                 courseType: '이북',
                 duration: '2시간',
               },
             ],
           },
-          { 
-            curriculumId: 'c3', 
+          {
+            curriculumId: 'c3',
             curriculumName: '커리큘럼3',
             curriculumTotalTime: '10시간',
             course: [
-              { 
-                courseId: 'A100020', 
-                courseName: '과정1', 
+              {
+                courseId: 'A100020',
+                courseName: '과정1',
                 courseType: '이북',
                 duration: '2시간',
               },
-              { 
-                courseId: 'A100021', 
-                courseName: '과정2', 
+              {
+                courseId: 'A100021',
+                courseName: '과정2',
                 courseType: '이북',
                 duration: '2시간',
               },
-              { 
-                courseId: 'A100022', 
-                courseName: '과정3', 
+              {
+                courseId: 'A100022',
+                courseName: '과정3',
                 courseType: '이북',
                 duration: '2시간',
               },
@@ -291,38 +276,40 @@ export default class CourseService {
         ],
         completionCriteria: {
           scores: [
-            { 
+            {
               title: '총점(100%)',
-              attendance: '80점 이상', 
+              attendance: '80점 이상',
             },
-            { 
+            {
               title: '총점(100%)',
-              attendance: '90점 이상', 
+              attendance: '90점 이상',
             },
-            { 
+            {
               title: '총점(100%)',
-              attendance: '80점 이상', 
+              attendance: '80점 이상',
             },
-            { 
+            {
               title: '총점(100%)',
-              attendance: '90점 이상', 
+              attendance: '90점 이상',
             },
           ],
           description: [
-            {text: '과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다.'},
-            {text: '과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다.'},
-            {text: '과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다.'},
+            {
+              text: '과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다.',
+            },
+            {
+              text: '과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다.',
+            },
+            {
+              text: '과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다.',
+            },
           ],
         },
         teachers: [
           {
             teacherId: 't1',
             teacherName: '강사1',
-            historys: [
-              {text: '강사1 이력1'},
-              {text: '강사1 이력2'},
-              {text: '강사1 이력3'},
-            ],
+            historys: [{ text: '강사1 이력1' }, { text: '강사1 이력2' }, { text: '강사1 이력3' }],
           },
           {
             teacherId: 't2',
@@ -330,11 +317,7 @@ export default class CourseService {
             teacherProfileImage: 'https://cdn.learnway.io/teacher/profile2.png',
             teacherDescription: '강사2 소개입니다. 강사2 소개입니다. 강사2 소개입니다.',
             email: 'abcde@google.com',
-            historys: [
-              {text: '강사1 이력1'},
-              {text: '강사1 이력2'},
-              {text: '강사1 이력3'},
-            ],
+            historys: [{ text: '강사1 이력1' }, { text: '강사1 이력2' }, { text: '강사1 이력3' }],
           },
         ],
         operators: [
@@ -391,19 +374,25 @@ export default class CourseService {
             },
             completionCriteria: {
               scores: [
-                { 
+                {
                   title: '총점(100%)',
-                  attendance: '80점 이상', 
+                  attendance: '80점 이상',
                 },
-                { 
+                {
                   title: '총점(100%)',
-                  attendance: '90점 이상', 
+                  attendance: '90점 이상',
                 },
               ],
               description: [
-                {text: '과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다.'},
-                {text: '과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다.'},
-                {text: '과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다.'},
+                {
+                  text: '과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다.',
+                },
+                {
+                  text: '과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다.',
+                },
+                {
+                  text: '과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다.',
+                },
               ],
             },
           },
@@ -430,19 +419,25 @@ export default class CourseService {
             },
             completionCriteria: {
               scores: [
-                { 
+                {
                   title: '총점(100%)',
-                  attendance: '80점 이상', 
+                  attendance: '80점 이상',
                 },
-                { 
+                {
                   title: '총점(100%)',
-                  attendance: '90점 이상', 
+                  attendance: '90점 이상',
                 },
               ],
               description: [
-                {text: '과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다.'},
-                {text: '과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다.'},
-                {text: '과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다.'},
+                {
+                  text: '과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다.',
+                },
+                {
+                  text: '과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다.',
+                },
+                {
+                  text: '과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다.',
+                },
               ],
             },
           },
@@ -473,10 +468,13 @@ export default class CourseService {
     };
     return httpService.get(`${LMSApiPrefix()}/course/${id}`);
   }
-  
+
   static async fetchSequnces(courseUuid: string): Promise<any> {
     return httpService.get<any>(`${LMSApiPrefix()}/course/${courseUuid}/sequences`);
   }
+
+  static fetchCourse(courseId: number) {
+    // /user/api/v1/course/{courseId}/sequences
+    return httpService.get<any>(`${LMSApiPrefix()}/course/${courseId}`);
+  }
 }
-
-

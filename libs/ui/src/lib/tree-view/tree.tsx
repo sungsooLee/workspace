@@ -348,7 +348,7 @@ const TreeNodeComponent = ({
       // 노드 데이터 준비
       const nodeData = {
         ...enhanceNode,
-        level: level,
+        level,
       };
 
       // dataTransfer에 데이터 저장
@@ -445,7 +445,7 @@ const TreeNodeComponent = ({
     if (isValid) {
       onDrop?.({
         targetNode: { ...enhanceNode, level },
-        dropPosition: dropPosition,
+        dropPosition,
         sourceNode: droppedNode,
       });
     }
@@ -943,8 +943,8 @@ const TreeView = ({
       if (actionType === 'NODE_MOVE') {
         const movePayload: MoveEventPayload = {
           type: 'NODE_MOVE',
-          sourceNode: sourceNode,
-          targetNode: targetNode,
+          sourceNode,
+          targetNode,
           position: dropPosition,
           treeId,
           targetIndex,
@@ -953,8 +953,8 @@ const TreeView = ({
       } else {
         const copyPayload: CopyEventPayload = {
           type: 'NODE_COPY',
-          sourceNode: sourceNode,
-          targetNode: targetNode,
+          sourceNode,
+          targetNode,
           position: dropPosition,
           treeId,
           targetIndex,
@@ -1020,7 +1020,7 @@ const TreeView = ({
     setInternalSelectedNode(node);
     onSelectedNodeChange?.(node);
     if (onAction && node) {
-      onAction({ type: 'NODE_SELECT', node: node } as SelectEventPayload);
+      onAction({ type: 'NODE_SELECT', node } as SelectEventPayload);
     }
   };
 

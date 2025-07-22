@@ -1,17 +1,17 @@
 import { httpService } from '@learnway/shared';
 import { PageableContent } from '@types';
 import { PMSApiPrefix, LMSApiPrefix } from '@learnway/config';
-// import { InstructorHistory, Instructor, Instructors } from 'src/types/entities/round';
+import { LearningSequence, LearningSequences } from 'src/types/entities/learning-sequence';
 
 export default class LearningSequenceService {
   static fetchSequenceList(params: any) {
     console.log('### fetchSequenceList', params);
-    return httpService.get<any[]>(`${LMSApiPrefix()}/sequences`, params);
+    return httpService.get<LearningSequences[]>(`${LMSApiPrefix()}/sequences`, params);
   }
 
   static fetchSequenceOne(sequenceId: number) {
     console.log('## sequenceId:', sequenceId);
-    return httpService.get<any>(`${LMSApiPrefix()}/sequence/${sequenceId}`);
+    return httpService.get<LearningSequence>(`${LMSApiPrefix()}/sequence/${sequenceId}`);
   }
 
   static createSequence(params: any) {
@@ -39,20 +39,24 @@ export default class LearningSequenceService {
   }
 
   static fetchEnrollmentRegistList(params: any) {
-    return [
-      {
-        openYear: 2025,
-        sequenceName: '테스트',
-        eduStartDate: new Date(),
-        eduEndDate: new Date(),
-        status: '조직장 대기중',
-        company: '현대오토에버',
-        department: 'L&D플랫폼',
-        employeeId: 99999,
-        employeeName: '김현대',
-        regDate: new Date(),
-      },
-    ];
+    // return [
+    //   {
+    //     openYear: 2025,
+    //     sequenceName: '테스트',
+    //     eduStartDate: new Date(),
+    //     eduEndDate: new Date(),
+    //     status: '조직장 대기중',
+    //     company: '현대오토에버',
+    //     department: 'L&D플랫폼',
+    //     employeeId: 99999,
+    //     employeeName: '김현대',
+    //     regDate: new Date(),
+    //   },
+    // ];
+    return httpService.get<any[]>(`${LMSApiPrefix()}/enrolls`, params);
+  }
+  static fetchEnrollmentRegistCount(params: any) {
+    return httpService.get<any>(`${LMSApiPrefix()}/enrolls/count`, params);
   }
   static fetchEnrollmentWaitList(params: any) {
     return null;

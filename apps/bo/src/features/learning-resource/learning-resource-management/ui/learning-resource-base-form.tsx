@@ -52,6 +52,7 @@ const LearningResourceBaseFormComponent = ({
   return (
     <>
       <ContentsRow>
+        <FormRow2 provider={provider} name="contentUuid" type="hidden" format="string" />
         {/* 테넌트 ID */}
         <FormRow2 provider={provider} name="tenantId" type="hidden" format="string" />
         {/*채널 */}

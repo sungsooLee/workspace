@@ -276,9 +276,8 @@ const columns = [
         className="link"
         stopPropagation
         onClick={(e) => _global.linkClick(info.row.original.channelRequestUuid)}
-      >
-        {info.row.original.channelRequestId}
-      </Button>
+        label={info.row.original.channelRequestId}
+      />
     ),
     header: t('신청 ID'),
     enableGrouping: false,

@@ -1,4 +1,4 @@
-import { forwardRef, useCallback, useImperativeHandle, useMemo } from 'react';
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
 import { t } from 'i18next';
 import { cn, isEmptyData } from '@learnway/shared';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
@@ -35,6 +35,7 @@ import { useExamQuestionInfoInput } from '../-hooks/use-exam-question-info-input
 /* styles */
 import styles from '@learnway/styles/bo/pages/_layout/learning/test-detail.module.css';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
+import { CMSApiPrefix } from '@learnway/config';
 
 const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
   (
@@ -55,12 +56,24 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
     const { watch } = basicInfoProvider;
     const questionGenTypeByForm = watch('questionGenType');
 
+    const isMount = useRef<boolean>(false);
+
     const questionStatusGuideText =
       questionGenTypeByForm === ExamQuestionGenType.RANDOM
         ? t(
             '유형 별, 난이도 별로 시험지에 출제할 문항수를 직접 입력하세요. 입력된 문항 수 기준으로 문항목록에서 문항이 랜덤추출됩니다.',
           )
         : t('문항현황은 문항목록에서 문항추가/삭제 시 자동 업데이트 됩니다.');
+
+    useEffect(() => {
+      if (isMount.current) {
+        if (questionGenTypeByForm === ExamQuestionGenType.RANDOM) {
+          saveBasicInfo?.(getValues(), true);
+        }
+      } else {
+        isMount.current = true;
+      }
+    }, [questionGenTypeByForm]);
 
     const {
       questionList,
@@ -69,7 +82,13 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
       scorePerQuestion,
       // createQuestionItem,
       updateQuestionStatus,
+      randomCountUpdateData,
+      setRandomCountUpdateData,
+      handleCountInputChange,
+      updateQuestionRandomCount,
     } = useExamQuestionInfoInput(data as TestPaperBasicInfoDetail);
+
+    const questionFormRef = useRef<HTMLFormElement>(null);
 
     const questionGenTypeOptions = useMemo(
       () => [
@@ -94,11 +113,30 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
         return;
       }
 
-      const payload = await openModal({
+      await openModal({
         width: 'xl',
         content: <LearningResourceTestItemModal contentInfo={data as ContentInformation} />,
       });
     }, [data]);
+
+    const handleViewQuestionButtonClick = useCallback(
+      async (item: QuestionItemGridRow) => {
+        if (isEmptyData(data)) {
+          return;
+        }
+
+        await openModal({
+          width: 'xl',
+          content: (
+            <LearningResourceTestItemModal
+              contentInfo={data as ContentInformation}
+              questionItemGridRow={item}
+            />
+          ),
+        });
+      },
+      [data],
+    );
 
     const questionStates: QuestionStatisticRow[] = useMemo(
       () => [
@@ -107,30 +145,35 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
           hard: questionState[EnQuestionType.SINGLE]?.[EnQuestionLevel.HARD] ?? 0,
           medium: questionState[EnQuestionType.SINGLE]?.[EnQuestionLevel.MEDIUM] ?? 0,
           easy: questionState[EnQuestionType.SINGLE]?.[EnQuestionLevel.EASY] ?? 0,
+          type: EnQuestionType.SINGLE,
         },
         {
           title: QUESTION_TYPES[EnQuestionType.OX],
           hard: questionState[EnQuestionType.OX]?.[EnQuestionLevel.HARD] ?? 0,
           medium: questionState[EnQuestionType.OX]?.[EnQuestionLevel.MEDIUM] ?? 0,
           easy: questionState[EnQuestionType.OX]?.[EnQuestionLevel.EASY] ?? 0,
+          type: EnQuestionType.OX,
         },
         {
           title: QUESTION_TYPES[EnQuestionType.MULTIPLE],
           hard: questionState[EnQuestionType.MULTIPLE]?.[EnQuestionLevel.HARD] ?? 0,
           medium: questionState[EnQuestionType.MULTIPLE]?.[EnQuestionLevel.MEDIUM] ?? 0,
           easy: questionState[EnQuestionType.MULTIPLE]?.[EnQuestionLevel.EASY] ?? 0,
+          type: EnQuestionType.MULTIPLE,
         },
         {
           title: QUESTION_TYPES[EnQuestionType.SHORT_ANSWER],
           hard: questionState[EnQuestionType.SHORT_ANSWER]?.[EnQuestionLevel.HARD] ?? 0,
           medium: questionState[EnQuestionType.SHORT_ANSWER]?.[EnQuestionLevel.MEDIUM] ?? 0,
           easy: questionState[EnQuestionType.SHORT_ANSWER]?.[EnQuestionLevel.EASY] ?? 0,
+          type: EnQuestionType.SHORT_ANSWER,
         },
         {
           title: QUESTION_TYPES[EnQuestionType.ESSAY],
           hard: questionState[EnQuestionType.ESSAY]?.[EnQuestionLevel.HARD] ?? 0,
           medium: questionState[EnQuestionType.ESSAY]?.[EnQuestionLevel.MEDIUM] ?? 0,
           easy: questionState[EnQuestionType.ESSAY]?.[EnQuestionLevel.EASY] ?? 0,
+          type: EnQuestionType.ESSAY,
         },
       ],
       [questionState],
@@ -153,10 +196,17 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
           cell: (info) => (
             <Input
               type="number"
-              value={info.getValue()}
+              value={
+                questionGenTypeByForm === ExamQuestionGenType.RANDOM
+                  ? randomCountUpdateData[info.row.original.type].hardLevelCount
+                  : info.getValue()
+              }
               readOnly={questionGenTypeByForm === ExamQuestionGenType.FIXED}
-              suffixText={questionGenTypeByForm === ExamQuestionGenType.RANDOM ? '/ 0' : ''}
-              placeholder={'0'}
+              suffixText={
+                questionGenTypeByForm === ExamQuestionGenType.RANDOM ? `/ ${info.getValue()}` : ''
+              }
+              onChange={(e) => handleCountInputChange(e, info.row.original, 'hard')}
+              placeholder="0"
             />
           ),
           header: '문항수(난이도 상)',
@@ -170,10 +220,17 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
           cell: (info) => (
             <Input
               type="number"
-              value={info.getValue()}
+              value={
+                questionGenTypeByForm === ExamQuestionGenType.RANDOM
+                  ? randomCountUpdateData[info.row.original.type].mediumLevelCount
+                  : info.getValue()
+              }
               readOnly={questionGenTypeByForm === ExamQuestionGenType.FIXED}
-              suffixText={questionGenTypeByForm === ExamQuestionGenType.RANDOM ? '/ 0' : ''}
-              placeholder={'0'}
+              suffixText={
+                questionGenTypeByForm === ExamQuestionGenType.RANDOM ? `/ ${info.getValue()}` : ''
+              }
+              onChange={(e) => handleCountInputChange(e, info.row.original, 'medium')}
+              placeholder="0"
             />
           ),
           header: '문항수(난이도 중)',
@@ -187,10 +244,17 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
           cell: (info) => (
             <Input
               type="number"
-              value={info.getValue()}
+              value={
+                questionGenTypeByForm === ExamQuestionGenType.RANDOM
+                  ? randomCountUpdateData[info.row.original.type].easyLevelCount
+                  : info.getValue()
+              }
               readOnly={questionGenTypeByForm === ExamQuestionGenType.FIXED}
-              suffixText={questionGenTypeByForm === ExamQuestionGenType.RANDOM ? '/ 0' : ''}
-              placeholder={'0'}
+              suffixText={
+                questionGenTypeByForm === ExamQuestionGenType.RANDOM ? `/ ${info.getValue()}` : ''
+              }
+              onChange={(e) => handleCountInputChange(e, info.row.original, 'easy')}
+              placeholder="0"
             />
           ),
           header: '문항수(난이도 하)',
@@ -209,7 +273,12 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
       return [
         columnHelper.accessor('questionText', {
           cell: (info) => (
-            <span className="cursor-pointer text-[var(--gray8)] underline">{info.getValue()}</span>
+            <span
+              className="cursor-pointer text-[var(--gray8)] underline"
+              onClick={() => handleViewQuestionButtonClick(info.row.original)}
+            >
+              {info.getValue()}
+            </span>
           ),
           header: t('문항'),
           enableGrouping: false,
@@ -284,64 +353,71 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
       ] as ColumnDef<any, QuestionItem>[];
     }, []);
 
-    const handleQuestionGenTypeChange = (tabKey: ExamQuestionGenType) => {
-      setQuestionGenType(tabKey);
-      saveBasicInfo?.(getValues());
-    };
-
     useImperativeHandle(ref, () => ({
-      update: () => saveBasicInfo?.(getValues()),
+      // 문항
+      update: () => {
+        if (questionGenTypeByForm === ExamQuestionGenType.RANDOM) {
+          //
+          // updateQuestionRandomCount({
+          //   contentUuid: data?.examPoolUuid ?? '',
+          //   questionGenType: questionGenTypeByForm,
+          //
+          // })
+        } else {
+          saveBasicInfo?.(getValues());
+        }
+      },
     }));
 
     return (
-      <form>
-        <div className={styles.wrap}>
-          <FormSubTitle label={t('기본 정보')} noLine />
-          <div className={cn(tableStyles.start, tableStyles.wrap)}>
-            <table>
-              <caption>{t('기본 정보')}</caption>
-              <colgroup>
-                <col style={{ width: '240px' }} />
-                <col />
-                <col style={{ width: '240px' }} />
-                <col />
-              </colgroup>
-              <tbody>
-                <tr>
-                  <th scope="row">{t('테넌트')}</th>
-                  <td>{data?.tenantName}</td>
-                  <th scope="row">{t('채널')}</th>
-                  <td>{data?.channelName}</td>
-                </tr>
-                <tr>
-                  <th scope="row">{t('유형')}</th>
-                  <td>{getExamTemplateTextByType(data?.examTemplateType)}</td>
-                  <th scope="row">{t('학습자원명')}</th>
-                  <td>{data?.contentName}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+      <div className={styles.wrap}>
+        <FormSubTitle label={t('기본 정보')} noLine />
+        <div className={cn(tableStyles.start, tableStyles.wrap)}>
+          <table>
+            <caption>{t('기본 정보')}</caption>
+            <colgroup>
+              <col style={{ width: '240px' }} />
+              <col />
+              <col style={{ width: '240px' }} />
+              <col />
+            </colgroup>
+            <tbody>
+              <tr>
+                <th scope="row">{t('테넌트')}</th>
+                <td>{data?.tenantName}</td>
+                <th scope="row">{t('채널')}</th>
+                <td>{data?.channelName}</td>
+              </tr>
+              <tr>
+                <th scope="row">{t('유형')}</th>
+                <td>{getExamTemplateTextByType(data?.examTemplateType)}</td>
+                <th scope="row">{t('학습자원명')}</th>
+                <td>{data?.contentName}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-          <FormSubTitle label={t('문항 정보')} lineType="dark" />
-          <ContentsRow>
-            <FormRow2
-              provider={basicInfoProvider}
-              name="questionGenType"
-              label={t('문항 출제유형')}
-              format="string"
-              value={questionGenType}
-              validation={{ required: true }}
-              element={
-                <SegmentedControlFormField
-                  items={questionGenTypeOptions}
-                  onChange={handleQuestionGenTypeChange}
-                />
-              }
-            />
-          </ContentsRow>
+        <FormSubTitle label={t('문항 정보')} lineType="dark" />
+        <ContentsRow>
+          <FormRow2
+            provider={basicInfoProvider}
+            name="questionGenType"
+            label={t('문항 출제유형')}
+            format="string"
+            value={questionGenType}
+            validation={{ required: true }}
+            element={
+              <SegmentedControlFormField
+                items={questionGenTypeOptions}
+                onChange={(tabKey: ExamQuestionGenType) => setQuestionGenType(tabKey)}
+              />
+            }
+          />
+        </ContentsRow>
 
-          <ContentsRow>
+        <ContentsRow>
+          <form ref={questionFormRef}>
             <div className={styles.table_wrap}>
               <GridBox
                 title=" "
@@ -381,56 +457,62 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
                 errorMessageBesideGuideText={t('시험지 문항수와 선택 문항수는 동일해야 합니다.')}
               />
             </div>
-          </ContentsRow>
+          </form>
+        </ContentsRow>
 
-          <ContentsRow>
-            <div className={styles.table_wrap}>
-              <GridBox
-                title=" "
-                showTotalCount={false}
-                disabledSelectionToggle
-                tableMode
-                data={questionList}
-                columns={questionListColumns}
-                multiple
-                showNumberingColumn
-                hideRowSelectionCheckBox={false}
-                titleCustomNode={
-                  <div className="custom_info_wrap pt-[1.2rem]">
-                    <strong className="table_tit text-[1.4rem] font-normal">{'문항목록'}</strong>
-                    <strong className="table_tit text-[1.4rem] font-normal">{'전체'}</strong>
-                    <span className="count_info">{'5'}</span>
-                  </div>
-                }
-                className={styles.list_table}
-                customButtonNode={
-                  <>
-                    <Button variant="text" label={'불러오기'} />
-                    <GridExcelUploadButton />
-                    <GridExcelDownloadButton />
-                    <Button
-                      variant="text"
-                      label={t('LABEL.grid.header.add')}
-                      onClick={handleClickAddQuestionButton}
-                      icon={<IcoPlus width={16} height={16} stroke={'#4C515E'} />}
-                    />
-                    <Button
-                      variant="text"
-                      label={t('LABEL.grid.header.copy', '복사')}
-                      icon={<IcoCopy width={16} height={16} stroke="#4C515E" />}
-                    />
-                    <Button
-                      variant="text"
-                      label={'삭제'}
-                      icon={<IcoMinus width={16} height={16} stroke={'#131C30'} />}
-                    />
-                  </>
-                }
-              />
-            </div>
-          </ContentsRow>
-        </div>
-      </form>
+        <ContentsRow>
+          <div className={styles.table_wrap}>
+            <GridBox
+              title=" "
+              showTotalCount={false}
+              disabledSelectionToggle
+              tableMode
+              data={questionList}
+              columns={questionListColumns}
+              multiple
+              showNumberingColumn
+              hideRowSelectionCheckBox={false}
+              titleCustomNode={
+                <div className="custom_info_wrap pt-[1.2rem]">
+                  <strong className="table_tit text-[1.4rem] font-normal">{'문항목록'}</strong>
+                  <strong className="table_tit text-[1.4rem] font-normal">{'전체'}</strong>
+                  <span className="count_info">{'5'}</span>
+                </div>
+              }
+              className={styles.list_table}
+              customButtonNode={
+                <>
+                  <Button variant="text" label={'불러오기'} />
+                  <GridExcelUploadButton
+                    validateUrl={`/exam/questions/${data?.examPoolUuid}/upload`}
+                    affairsType="CMS"
+                  />
+                  <GridExcelDownloadButton
+                    method="post"
+                    url={`${CMSApiPrefix()}/exam/questions/${data?.examPoolUuid}/download`}
+                  />
+                  <Button
+                    variant="text"
+                    label={t('LABEL.grid.header.add')}
+                    onClick={handleClickAddQuestionButton}
+                    icon={<IcoPlus width={16} height={16} stroke={'#4C515E'} />}
+                  />
+                  <Button
+                    variant="text"
+                    label={t('LABEL.grid.header.copy', '복사')}
+                    icon={<IcoCopy width={16} height={16} stroke="#4C515E" />}
+                  />
+                  <Button
+                    variant="text"
+                    label={'삭제'}
+                    icon={<IcoMinus width={16} height={16} stroke={'#131C30'} />}
+                  />
+                </>
+              }
+            />
+          </div>
+        </ContentsRow>
+      </div>
     );
   },
 );

@@ -13,10 +13,15 @@ import {
 } from '@shared/ui';
 import { useCurrentRoute, useDynamicForm2 } from '@learnway/hooks';
 import { useQuery } from '@tanstack/react-query';
-import { learningResourceQueryOptions, useDeleteContent } from '@entities/learning-resource';
+import {
+  learningResourceQueryOptions,
+  useDeleteContent,
+  usePutVideoUpdate,
+} from '@entities/learning-resource';
 import { NotFound } from '@features/layout';
 import { useCallback, useEffect } from 'react';
 import { LearningResourceVideoDetail, MovieInfo } from '@features/learning-resource';
+import { PutVideoUpdateRes } from '@types';
 
 export const Route = createLazyFileRoute('/_layout/learning/learning-resource/video/view')({
   component: RouteComponent,
@@ -41,7 +46,18 @@ function RouteComponent() {
   const { delete: deleteVideoContent } = useDeleteContent({
     onSuccess: (result: number) => {
       console.log('delete success', result);
-      return router.navigate({ to: '/learning/learning-resource', replace: true });
+      return router.navigate({
+        to: '/learning/learning-resource',
+        state: { listParam },
+        replace: true,
+      });
+    },
+  });
+
+  const { update: updateVideoContent } = usePutVideoUpdate({
+    onSuccess: (result: PutVideoUpdateRes) => {
+      console.log('update success', result);
+      onFormChange(result);
     },
   });
 
@@ -57,7 +73,7 @@ function RouteComponent() {
   }, [data?.contentUuid]);
 
   const handleFormSubmit = (data: any) => {
-    console.log(data);
+    updateVideoContent(data);
   };
 
   const handleCourseMapping = useCallback(() => {

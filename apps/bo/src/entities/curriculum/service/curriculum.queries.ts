@@ -64,6 +64,12 @@ export const mutateOptions = {
   updateCurriculum: () => ({
     mutationFn: (payload: CurriculumUpdateRequest) => CurriculumService.updateCurriculum(payload),
   }),
+  deleteCurriculum: () => ({
+    mutationFn: (payload: { curriculumId: number }) => CurriculumService.deleteCurriculum(payload),
+  }),
+  copyCurriculum: () => ({
+    mutationFn: (payload: { curriculumId: number }) => CurriculumService.copyCurriculum(payload),
+  }),
   createGeneralModule: () => ({
     mutationFn: (payload: GeneralModuleSaveParams) =>
       CurriculumService.createCurriculumModule(payload),

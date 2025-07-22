@@ -5,11 +5,9 @@ import { Button } from '../button/button';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import styles from './tree.module.css'; // Tree module CSS
 import { cn } from '@learnway/shared';
-import { TreeView } from './tree';
 import { IcoXclose, IcoNarrowRight } from '@learnway/icons';
 import { TreeBox } from './tree-box';
 import { Checkbox } from '../checkbox/checkbox';
-import { CountText } from '../elements/count-text/count-text';
 import { t } from 'i18next';
 import { FormSubTitle } from '../base-form/form-sub-title';
 

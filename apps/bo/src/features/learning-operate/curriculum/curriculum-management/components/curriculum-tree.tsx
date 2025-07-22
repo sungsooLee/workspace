@@ -70,6 +70,7 @@ export const CurriculumTree: React.FC<CurriculumTreeProps> = ({
         handleSelectedNodeChange={onNodeSelect}
         type="DRAG_DROP"
         title="목차"
+        initLevel={1}
         expandedKeys={expandedKeys}
         onExpandedKeysChange={onExpandedKeysChange}
         onAction={onTreeAction}

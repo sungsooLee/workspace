@@ -343,7 +343,7 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
         method: 'PUT',
         body: file.file,
         headers: {
-          'Content-Type': file.file.type,
+          'Content-Type': presignedRes.contentType,
         },
         signal: controller.signal,
       });
@@ -665,8 +665,8 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
         return;
       }
 
-      // 파일 찾기
-      const file = files.find((f) => f.id === id);
+      // 파일 찾기 - id 외에 fileUuid로도 삭제가능하도록 함
+      const file = files.find((f) => f.id === id || f.fileUuid === id);
       if (!file) {
         console.error('onRemove ~ file not found:', id);
         return;
@@ -702,7 +702,7 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
       }
 
       // 파일 목록에서 제거
-      setFiles((prev) => prev.filter((f) => f.id !== id));
+      setFiles((prev) => prev.filter((f) => f.id !== id && f.fileUuid !== id));
     },
     [files],
   );

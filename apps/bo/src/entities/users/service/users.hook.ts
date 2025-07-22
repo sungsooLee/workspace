@@ -92,3 +92,24 @@ export function useRejectAccountUser(options: any) {
     isError,
   }
 }
+
+export function useUpdateUser(options: any) {
+  const mutation = useMutation({
+    ...mutateOptions.update(),
+    onSuccess: async (data, variables, context) => {
+      if (options.onSuccess) {
+        options.onSuccess(data, variables, context);
+      }
+    },
+    ...options,
+  });
+
+  return {
+    update: (payload: any, callback?: any) => {
+      mutation.mutate(payload, callback);
+    },
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
+}

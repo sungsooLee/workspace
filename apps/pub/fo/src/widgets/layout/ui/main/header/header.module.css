@@ -4,7 +4,7 @@
     @apply relative items-center;
 
     .header_area {
-      @apply relative m-auto flex h-[80px] w-[1360px] items-center;
+      @apply relative m-auto flex h-[80px] w-[1440px] items-center px-[40px];
 
       .top_area {
         @apply relative z-[1] flex h-full w-full items-center justify-between;

@@ -4,7 +4,7 @@
       li {
         & > a,
         & > button {
-          @apply flex items-center justify-between px-[20px] py-[17px];
+          @apply flex w-full items-center justify-between !px-[20px] py-[17px] text-left;
           strong {
             @apply body_3_r flex-1 text-[var(--gray9)];
           }

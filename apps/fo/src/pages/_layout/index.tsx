@@ -1,4 +1,5 @@
 import { createFileRoute, useRouter } from '@tanstack/react-router';
+import { useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 
 import { pageRouteConfig } from '@features/auth';
@@ -6,6 +7,7 @@ import { pageRouteConfig } from '@features/auth';
 import { Button, ContentsRow } from '@learnway/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { FormRow } from '@shared/ui';
+import { queryOptions } from '@entities/course';
 
 export const Route = createFileRoute('/_layout/')({
   component: HomeComponent,
@@ -17,9 +19,24 @@ export const Route = createFileRoute('/_layout/')({
 function HomeComponent() {
   const router = useRouter();
   const { t, i18n } = useTranslation();
+  const queryClient = useQueryClient();
 
   const { provider, getValues, control } = useDynamicForm(formConfig);
-
+  const handleLearningWindow = (values: any, courseData: any) => {
+    router.navigate({
+      to: `/learning-window`,
+      state: {
+        learningInfo: {
+          courseName: courseData?.courseName,
+          courseId: values.courseId,
+          sequenceId: values.sequenceId,
+          curriculumId: values.curriculumId,
+          moduleId: values.moduleId ? parseInt(values.moduleId) : undefined,
+          lessonId: values.lessonId ? parseInt(values.lessonId) : undefined,
+        },
+      },
+    });
+  };
   return (
     <div className="flex flex-col gap-10 p-2">
       <h3>Welcome Home!</h3>
@@ -37,20 +54,20 @@ function HomeComponent() {
           type="button"
           size="lg"
           preventDefault
-          onClick={() => {
+          onClick={async () => {
             const values = getValues();
-            router.navigate({
-              to: `/learning-window`,
-              state: {
-                learningInfo: {
-                  courseId: values.courseId,
-                  sequenceId: values.sequenceId,
-                  curriculumId: values.curriculumId,
-                  moduleId: values.moduleId ? parseInt(values.moduleId) : undefined,
-                  lessonId: values.lessonId ? parseInt(values.lessonId) : undefined,
-                },
-              },
-            });
+
+            const coursePromeis = queryClient.fetchQuery(
+              queryOptions.courseDetail(values.courseId),
+            );
+            console.log(coursePromeis);
+            coursePromeis
+              .then((courseData) => {
+                handleLearningWindow(values, courseData);
+              })
+              .catch((r) => {
+                handleLearningWindow(values, { courseName: '과정명 없음' });
+              });
           }}
         />
       </ContentsRow>

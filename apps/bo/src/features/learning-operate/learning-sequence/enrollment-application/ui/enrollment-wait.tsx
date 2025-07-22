@@ -37,6 +37,8 @@ const _global = {
  * @returns
  */
 type EnrollmentWaitComponentProps = {
+  courseId?: number;
+  courseSequenceId?: number;
   searchProvider: SearchBoxProvider;
   getValues: UseFormGetValues<FieldValues>;
   setValue: UseFormSetValue<FieldValues>;
@@ -44,6 +46,7 @@ type EnrollmentWaitComponentProps = {
 };
 
 const EnrollmentWaitComponent = ({
+  courseSequenceId,
   searchProvider,
   getValues,
   setValue,

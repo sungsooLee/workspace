@@ -69,6 +69,48 @@ export function useUpdateCurriculum(options: any) {
   };
 }
 
+export function useDeleteCurriculum(options: any) {
+  const mutation = useMutation({
+    ...mutateOptions.deleteCurriculum(),
+    onSuccess: async (data: any, variables, context) => {
+      if (options.onSuccess) {
+        options.onSuccess(data, variables, context);
+      }
+    },
+    ...options,
+  });
+
+  return {
+    delete: (payload: any, callback?: any) => {
+      mutation.mutate(payload, callback);
+    },
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
+}
+
+export function useCopyCurriculum(options: any) {
+  const mutation = useMutation({
+    ...mutateOptions.copyCurriculum(),
+    onSuccess: async (data: any, variables, context) => {
+      if (options.onSuccess) {
+        options.onSuccess(data, variables, context);
+      }
+    },
+    ...options,
+  });
+
+  return {
+    copy: (payload: any, callback?: any) => {
+      mutation.mutate(payload, callback);
+    },
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
+}
+
 export function useCreateGeneralModule(options: any) {
   const queryClient = useQueryClient();
 

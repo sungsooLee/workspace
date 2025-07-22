@@ -10,7 +10,7 @@ import {
 } from '@learnway/ui';
 import { FormRow2, ResourceChoiceModal } from '@shared/ui';
 import { DynamicFormProvider } from '@learnway/hooks';
-import { LESSON_TYPE } from '@types';
+import { LESSON_TYPE, MODULE_TYPE } from '@types';
 import { t } from 'i18next';
 import { ContentChoiceModalSelector } from './content-choice-selector';
 import { DropdownFormField, DurationTimeFormField } from '@features/form/ui';
@@ -37,6 +37,7 @@ interface LessonFormProps {
     contentType?: string;
   };
   selectedNodeData?: any;
+  parentNode?: any;
 }
 
 export const LessonForm: React.FC<LessonFormProps> = ({
@@ -48,10 +49,14 @@ export const LessonForm: React.FC<LessonFormProps> = ({
   moduleId,
   clearAllValidators,
   curriculumData,
+  parentNode,
 }) => {
   const { open: openModal } = useModal();
   const lessonType = watch('lessonType') || LESSON_TYPE.GENERAL;
   const contentName = watch('contentName');
+
+  // FIXED 모듈의 하위 레슨인지 확인
+  const isFixedModuleLesson = parentNode?.data?.moduleType === MODULE_TYPE.FIXED;
 
   const { data: lessonData, isLoading: isLoadingLesson } = useGetLessonDetail({
     lessonId,
@@ -67,6 +72,7 @@ export const LessonForm: React.FC<LessonFormProps> = ({
   useEffect(() => {
     if (isEditing && lessonData) {
       console.log({ ...getHourValueFromTime(lessonData.learningTime) });
+      console.log(lessonData);
       const initialData = {
         ...lessonData,
         lessonName: lessonData.lessonName,
@@ -191,75 +197,81 @@ export const LessonForm: React.FC<LessonFormProps> = ({
               }
             />
           </ContentsRow>
-          <ContentsRow>
-            <FormRow2
-              provider={provider}
-              name="contentName"
-              label={t('학습자원')}
-              format="string"
-              disabled={isEditing}
-              validation={{ required: true }}
-              infoNode={renderResourceButtons()}
-              element={
-                <ContentChoiceModalSelector
-                  value={contentName || ''}
-                  disabled={isEditing}
-                  modalConfig={{
-                    content: (
-                      <ResourceChoiceModal
-                        initialTenantId={curriculumData?.tenantId}
-                        initialChannelUuid={curriculumData?.channelUuid}
-                        initialContentType={provider.getValues('contentType') || ''}
-                      />
-                    ),
-                  }}
-                  transformModalData={(data: any) => {
-                    const { contentUuid, contentName } = data;
-                    if (data && contentUuid && contentName) {
-                      provider.setValue('contentUuid', contentUuid);
-                      provider.setValue('contentName', contentName);
-                      return contentName;
-                    }
-                    return '';
-                  }}
-                />
-              }
-            />
-          </ContentsRow>
+          {!isFixedModuleLesson && (
+            <ContentsRow>
+              <FormRow2
+                provider={provider}
+                name="contentName"
+                label={t('학습자원')}
+                format="string"
+                disabled={isEditing}
+                validation={{ required: true }}
+                infoNode={renderResourceButtons()}
+                element={
+                  <ContentChoiceModalSelector
+                    value={contentName || ''}
+                    disabled={isEditing}
+                    modalConfig={{
+                      content: (
+                        <ResourceChoiceModal
+                          initialTenantId={curriculumData?.tenantId}
+                          initialChannelUuid={curriculumData?.channelUuid}
+                          initialContentType={provider.getValues('contentType') || ''}
+                        />
+                      ),
+                    }}
+                    transformModalData={(data: any) => {
+                      const { contentUuid, contentName } = data;
+                      if (data && contentUuid && contentName) {
+                        provider.setValue('contentUuid', contentUuid);
+                        provider.setValue('contentName', contentName);
+                        return contentName;
+                      }
+                      return '';
+                    }}
+                  />
+                }
+              />
+            </ContentsRow>
+          )}
         </>
       )}
-      <ContentsRow>
-        <FormRow2
-          provider={provider}
-          name="learningTime"
-          label={t('학습시간')}
-          format="object"
-          validation={{
-            required: true,
-            conditions: [
-              {
-                fn: (values: Record<string, any>) => {
-                  const value = values.learningTime;
-                  if (!value) return true; // 값이 없으면 에러
-                  const { hour = 0, minute = 0, second = 0 } = value;
-                  return !(hour > 0 || minute > 0 || second > 0); // 모든 값이 0이면 에러
+      {!isFixedModuleLesson && (
+        <ContentsRow>
+          <FormRow2
+            provider={provider}
+            name="learningTime"
+            label={t('학습시간')}
+            format="object"
+            validation={{
+              required: true,
+              conditions: [
+                {
+                  fn: (values: Record<string, any>) => {
+                    const value = values.learningTime;
+                    if (!value) return true; // 값이 없으면 에러
+                    const { hour = 0, minute = 0, second = 0 } = value;
+                    return !(hour > 0 || minute > 0 || second > 0); // 모든 값이 0이면 에러
+                  },
+                  message: t('학습시간은 1초 이상으로 설정하여야 합니다.'),
                 },
-                message: t('학습시간은 1초 이상으로 설정하여야 합니다.'),
-              },
-            ],
-          }}
-          element={<DurationTimeFormField />}
-        />
-      </ContentsRow>
-      <ContentsRow>
-        <FormRow2
-          provider={provider}
-          name="lessonDescription"
-          label="설명"
-          format="string"
-          element={<Textarea maxLength={100} />}
-        />
-      </ContentsRow>
+              ],
+            }}
+            element={<DurationTimeFormField />}
+          />
+        </ContentsRow>
+      )}
+      {!isFixedModuleLesson && (
+        <ContentsRow>
+          <FormRow2
+            provider={provider}
+            name="lessonDescription"
+            label="설명"
+            format="string"
+            element={<Textarea maxLength={100} />}
+          />
+        </ContentsRow>
+      )}
 
       <FormRow2
         provider={provider}

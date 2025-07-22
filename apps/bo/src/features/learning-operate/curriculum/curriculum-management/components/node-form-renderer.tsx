@@ -109,6 +109,7 @@ export const NodeFormRenderer: React.FC<NodeFormRendererProps> = ({
           moduleId={moduleId}
           clearAllValidators={clearAllValidators}
           curriculumData={curriculumData}
+          parentNode={parentNode}
         />
       );
     }

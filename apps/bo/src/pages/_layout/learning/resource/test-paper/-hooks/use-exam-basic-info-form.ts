@@ -10,7 +10,7 @@ export const useExamBasicInfoForm = (options: {
   mode: PageMode;
   contentUuid: string;
   onSaveSuccess?: (result?: TestPaperBasicInfoSaveRes) => void;
-  onUpdateSuccess?: (result?: unknown) => void;
+  onUpdateSuccess?: (result?: unknown) => void | Promise<void>;
 }) => {
   const { confirm } = useModal();
 
@@ -51,7 +51,7 @@ export const useExamBasicInfoForm = (options: {
     },
   });
 
-  const saveBasicInfo = async (data?: any) => {
+  const saveBasicInfo = async (data?: any, isOnGenTypeChange?: boolean) => {
     const requestData = getExamSaveRequestDataFromFormData({
       values: getBasicInfoValues() as TestPaperBasicInfoFormData,
       mode: options.mode,
@@ -60,12 +60,14 @@ export const useExamBasicInfoForm = (options: {
 
     console.log('submit', options.mode, requestData);
 
-    if (
-      await confirm({
-        title: t('LABEL.confirm.save.title'),
-        content: t('입력한 정보로 저장합니다.'),
-      })
-    ) {
+    const result = isOnGenTypeChange
+      ? true
+      : await confirm({
+          title: t('LABEL.confirm.save.title'),
+          content: t('LABEL.confirm.save.message'),
+        });
+
+    if (result) {
       if (options.mode === PageMode.CREATE) {
         createExamBasicInfo(requestData);
       } else if (options.mode === PageMode.UPDATE) {
