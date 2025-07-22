@@ -52,7 +52,7 @@
       }
     }
     &.text {
-      @apply label_3_r rounded-[4px] px-[6px] py-[4px];
+      @apply rounded-[4px] px-[6px] py-[4px];
       &.new {
         @apply bg-[#ffeded];
         .label {
@@ -90,7 +90,7 @@
         }
       }
       button {
-        @apply !h-auto leading-[11px];
+        @apply label_3_r !h-auto leading-[11px];
       }
     }
     &.rounded_full {
