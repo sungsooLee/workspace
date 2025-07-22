@@ -11,7 +11,6 @@ import {
   Input,
   InputModalSelectorFormField,
   ListModalSelectorFormField,
-  PhoneNumberFormField,
   RadioGroupFormField,
 } from '@learnway/ui';
 import {
