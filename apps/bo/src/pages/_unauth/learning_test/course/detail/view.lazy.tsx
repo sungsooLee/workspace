@@ -5,6 +5,11 @@ import { Community } from '@pages/_layout/learning/course/detail/-tabs/community
 import { CourseDetail } from '@pages/_layout/learning/course/detail/-tabs/course-detail';
 import { Curriculum } from '@pages/_layout/learning/course/detail/-tabs/curriculum';
 import { Sequence } from '@pages/_layout/learning/course/detail/-tabs/sequence';
+import {
+  TriggerKey,
+  useCourseActions,
+  useCourseStore,
+} from '@pages/_layout/learning/course/-store/use-course-store';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { useMemo } from 'react';
@@ -16,6 +21,9 @@ export const Route = createLazyFileRoute('/_unauth/learning_test/course/detail/v
 function RouteComponent() {
   const router = useRouter();
   const { showSaveComplete, showDeleteComplete, deleteConfirm, saveConfirm } = useModal();
+
+  const saveStatus = useCourseStore((state) => state.saveStatus);
+  const { trigger } = useCourseActions();
 
   // 라우터 state에서 courseId 가져오기
   const { courseId, courseType } = router.state.location.state;
@@ -36,16 +44,17 @@ function RouteComponent() {
   };
 
   const handleSaveClick = async () => {
-    try {
-      if (await saveConfirm()) {
-        saveCurrentTab();
-        // await saveTabData();
-        // await showSaveComplete();
-        // moveListPage();
-      }
-    } catch (e) {
-      console.error('저장 중 에러:', e);
-    }
+    // save();
+    // try {
+    //   if (await saveConfirm()) {
+    //     saveCurrentTab();
+    //     // await saveTabData();
+    //     // await showSaveComplete();
+    //     // moveListPage();
+    //   }
+    // } catch (e) {
+    //   console.error('저장 중 에러:', e);
+    // }
   };
 
   const handleDeleteClick = async () => {
@@ -153,7 +162,7 @@ function RouteComponent() {
             variant="point"
             size="sm"
             label={'목록'}
-            onClick={handleListClick}
+            onClick={() => trigger(TriggerKey.LIST)}
           />
           <Divider orientation={'vertical'} />
           <Button
@@ -161,7 +170,7 @@ function RouteComponent() {
             variant="point"
             size="sm"
             label={'삭제'}
-            onClick={handleDeleteClick}
+            onClick={() => trigger(TriggerKey.DELETE)}
             disabled={!courseId}
           />
           <Button
@@ -169,7 +178,7 @@ function RouteComponent() {
             variant="primary"
             size="sm"
             label={'저장'}
-            onClick={handleSaveClick}
+            onClick={() => trigger(TriggerKey.SAVE)}
           />
         </ContentsButtons>
         <MainContents>
