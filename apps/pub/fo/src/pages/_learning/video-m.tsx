@@ -78,18 +78,17 @@ function RouteComponent() {
         <div className={styles.video_area}>
           <div className={styles.video_contents}>
             {/* 비디오 영역 */}
-            <VideoPlayerContainer
-              ref={player.playerContainerRef}
-              {...player}
-              showCurriculumSection={false}
-            >
+            <VideoPlayerContainer ref={player.playerContainerRef} player={player}>
               <VideoPlayer
                 ref={player.playerRef}
                 playing={player.playing}
+                volume={player.volume}
+                muted={player.muted}
                 progressInterval={1000 * 10}
                 onProgress={player.onProgress}
                 onDuration={player.onDuration}
                 onEnded={handleVideoEnd}
+                onBuffer={player.onBuffer}
                 url={video}
               />
             </VideoPlayerContainer>
