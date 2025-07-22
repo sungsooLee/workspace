@@ -189,9 +189,15 @@ export const DndTreeView: React.FC<TreeProps> = ({
 
   return (
     <div className={cn(styles.tree_wrap, 'tree_wrap')}>
-      <div className={styles.tree}>
+      <div
+        className={styles.tree}
+        role="tree"
+        aria-label={`트리 뷰: ${data.length}개의 루트 항목`}
+        aria-multiselectable="false"
+        aria-describedby="tree-instructions"
+      >
         {treeData.length > 0 && hasVisibleNodes ? (
-          treeData.map((node, index) => (
+          treeData.map((node, index, array) => (
             <DndTreeNode
               key={node.key}
               node={node}
@@ -228,7 +234,6 @@ export const DndTreeView: React.FC<TreeProps> = ({
           </div>
         )}
 
-        {/* 트리 하단 글로벌 드롭 존 */}
         {(isGlobalDragging || currentDraggedNode) &&
           (type !== 'SAME_LEVEL_ONLY' ||
             (currentDraggedNode &&
@@ -236,32 +241,51 @@ export const DndTreeView: React.FC<TreeProps> = ({
             <div
               ref={setBottomDropRef}
               style={{
-                height: isOverBottom ? '64px' : '32px',
-                backgroundColor: isOverBottom ? 'rgba(33, 150, 243, 0.1)' : 'transparent',
-                borderRadius: '6px',
-                margin: '8px 0',
-                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                height: isOverBottom ? '72px' : '40px',
+                background: isOverBottom
+                  ? 'linear-gradient(135deg, rgba(33, 150, 243, 0.08), rgba(33, 150, 243, 0.15), rgba(33, 150, 243, 0.08))'
+                  : 'linear-gradient(135deg, rgba(148, 163, 184, 0.05), rgba(148, 163, 184, 0.1), rgba(148, 163, 184, 0.05))',
+                borderRadius: '12px',
+                margin: '12px 0',
+                transition: 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
                 position: 'relative',
-                border: isOverBottom ? '2px dashed #2196f3' : '2px dashed transparent',
+                border: isOverBottom ? '3px dashed #2196f3' : '2px dashed rgba(148, 163, 184, 0.3)',
+                transform: isOverBottom ? 'scale(1.02) translateY(-2px)' : 'scale(1)',
+                boxShadow: isOverBottom
+                  ? '0 8px 25px rgba(33, 150, 243, 0.2), 0 4px 15px rgba(33, 150, 243, 0.1)'
+                  : '0 2px 8px rgba(148, 163, 184, 0.1)',
+                willChange: 'transform, background, box-shadow',
+                backdropFilter: 'blur(4px)',
               }}
             >
+              {/* 배경 애니메이션 */}
               {isOverBottom && (
                 <div
                   style={{
                     position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    fontSize: '12px',
-                    color: '#2196f3',
-                    fontWeight: '600',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '4px',
+                    inset: 0,
+                    background:
+                      'linear-gradient(90deg, transparent, rgba(33, 150, 243, 0.1), transparent)',
+                    borderRadius: '10px',
+                    animation: 'successWave 2s ease-in-out infinite',
                   }}
-                >
-                  <span>루트의 마지막 자식으로 추가</span>
-                </div>
+                />
+              )}
+
+              {/* 드롭존 인디케이터 라인들 */}
+              {isOverBottom && (
+                <div
+                  style={{
+                    position: 'absolute',
+                    bottom: '8px',
+                    left: '20px',
+                    right: '20px',
+                    height: '3px',
+                    background: 'linear-gradient(90deg, transparent, #2196f3, transparent)',
+                    borderRadius: '2px',
+                    animation: 'dropLinePulse 1.5s ease-in-out infinite',
+                  }}
+                />
               )}
             </div>
           )}

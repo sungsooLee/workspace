@@ -63,6 +63,13 @@ export class CurriculumService {
   }
 
   /**
+   * 커리큘럼 삭제
+   */
+  static deleteCurriculum(curriculumId: number): Promise<void> {
+    return httpService.delete(`${CMSApiPrefix()}/curriculum/${curriculumId}`);
+  }
+
+  /**
    * 커리큘럼 내 목차 모듈 생성
    */
   static createCurriculumModule(data: GeneralModuleSaveParams): Promise<any> {

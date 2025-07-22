@@ -4,6 +4,56 @@ export const generateKey = (): string => {
   return Math.random().toString(36).substr(2, 9);
 };
 
+// 레벨별 들여쓰기 상수
+export const LEVEL_INDENT = 28;
+
+/**
+ * 트리에서 최적의 멀티레벨 존 위치를 찾음 (가장 깊은 레벨의 마지막 형제)
+ * @param nodes 트리 노드 배열
+ * @param treeId 트리 ID
+ * @returns 최적의 멀티레벨 존 위치 정보 또는 null
+ */
+export const findOptimalMultiLevelZone = (
+  nodes: TreeNode[],
+  treeId: string,
+): { nodeKey: string; level: number; treeId: string } | null => {
+  let maxLevel = -1;
+  let targetNodeKey = '';
+
+  const findDeepestLastSibling = (nodeArray: TreeNode[], currentLevel = 0): void => {
+    if (nodeArray.length === 0) return;
+
+    // 현재 레벨의 마지막 형제 확인
+    const lastSibling = nodeArray[nodeArray.length - 1];
+
+    // 현재 레벨이 더 깊거나 같은 경우 업데이트 (같은 레벨에서 마지막 노드 선택)
+    if (currentLevel >= maxLevel) {
+      maxLevel = currentLevel;
+      targetNodeKey = lastSibling.key;
+    }
+
+    // 각 노드의 자식들을 재귀적으로 확인
+    for (const node of nodeArray) {
+      if (node.children && node.children.length > 0) {
+        findDeepestLastSibling(node.children, currentLevel + 1);
+      }
+    }
+  };
+
+  findDeepestLastSibling(nodes);
+
+  // level 0 (루트 레벨)은 멀티레벨 존이 의미없으므로 제외
+  if (maxLevel > 0 && targetNodeKey) {
+    return {
+      nodeKey: targetNodeKey,
+      level: maxLevel,
+      treeId,
+    };
+  }
+
+  return null;
+};
+
 /**
  * 트리에서 특정 키를 가진 노드를 찾아서 반환.
  * @param nodes 검색할 노드 배열

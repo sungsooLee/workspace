@@ -30,6 +30,12 @@ interface DragState {
   sourceTreeId: string | null;
   isDragging: boolean;
   isShuttleMode?: boolean; // 셔틀 모드인지 여부 (트리 간 이동이 아닌 경우)
+
+  activeMultiLevelZone?: {
+    nodeKey: string;
+    level: number;
+    treeId: string;
+  } | null; // 현재 활성화된 멀티레벨 존
   currentDropTarget?: {
     node: TreeNode;
     position?: NodeMovePositionType;
@@ -42,6 +48,7 @@ const defaultDragState: DragState = {
   sourceTreeId: null,
   isDragging: false,
   isShuttleMode: false,
+  activeMultiLevelZone: null,
   currentDropTarget: null,
 };
 
@@ -257,37 +264,104 @@ export const TreeProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         <DragOverlay>
           {activeId && dragState.node ? (
             <div
+              className="drag-node-image"
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '4px',
-                padding: '4px 8px',
-                backgroundColor: 'white',
-                border: '1px solid #2196f3',
-                borderRadius: '4px',
-                boxShadow: '0 8px 25px rgba(0,0,0,0.15)',
+                gap: '6px',
+                padding: '8px 12px',
+                background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
+                border: '2px solid #2196f3',
+                borderRadius: '8px',
+                boxShadow:
+                  '0 12px 40px rgba(33, 150, 243, 0.2), ' +
+                  '0 8px 25px rgba(0, 0, 0, 0.1), ' +
+                  'inset 0 1px 0 rgba(255, 255, 255, 0.9)',
                 fontSize: '12px',
-                fontWeight: '400',
-                color: '#333',
-                maxWidth: '250px',
+                fontWeight: '300',
+                color: '#1e293b',
+                maxWidth: '200px',
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
                 cursor: 'grabbing',
-                // transform: 'rotate(2deg)',
-                // transition: 'transform 0.2s ease',
+                opacity: '0.8',
+                // transform: 'rotate(3deg) scale(1.05)',
+                transition: 'all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                backdropFilter: 'blur(8px)',
+                willChange: 'transform',
+                zIndex: 10000,
               }}
             >
-              <span style={{ flexShrink: 0, display: 'flex', alignItems: 'center' }}>
+              {/* 드래그 인디케이터 */}
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '-2px',
+                  left: '-2px',
+                  right: '-2px',
+                  height: '2px',
+                  background: 'linear-gradient(90deg, transparent, #2196f3, transparent)',
+                  borderRadius: '2px',
+                  animation: 'dropLinePulse 1.5s ease-in-out infinite',
+                }}
+              />
+
+              <span
+                style={{
+                  flexShrink: 0,
+                  display: 'flex',
+                  alignItems: 'center',
+                  padding: '2px',
+                  borderRadius: '4px',
+                  background: 'rgba(33, 150, 243, 0.08)',
+                }}
+              >
                 {dragState.node.children && dragState.node.children.length > 0 ? (
-                  <IcoFolder stroke="#131C30" className={styles.icon_folder} />
+                  <IcoFolder
+                    stroke="#2196f3"
+                    className={styles.icon_folder}
+                    style={{ filter: 'drop-shadow(0 1px 2px rgba(33, 150, 243, 0.2))' }}
+                  />
                 ) : (
-                  <IcoFile01 width={'16'} height={'16'} stroke={'#131C30'} fill={'none'} />
+                  <IcoFile01
+                    width={'16'}
+                    height={'16'}
+                    stroke={'#2196f3'}
+                    fill={'none'}
+                    style={{ filter: 'drop-shadow(0 1px 2px rgba(33, 150, 243, 0.2))' }}
+                  />
                 )}
               </span>
-              <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' }}>
+
+              <span
+                style={{
+                  minWidth: 0,
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  background: 'linear-gradient(135deg, #2196f3, #1976d2)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  fontWeight: '600',
+                }}
+              >
                 {dragState.node.title}
               </span>
+
+              {/* 우하단 코너 그라데이션 */}
+              <div
+                style={{
+                  position: 'absolute',
+                  bottom: '0',
+                  right: '0',
+                  width: '20px',
+                  height: '20px',
+                  background: 'linear-gradient(135deg, transparent 60%, rgba(33, 150, 243, 0.1))',
+                  borderBottomRightRadius: '6px',
+                  pointerEvents: 'none',
+                }}
+              />
             </div>
           ) : null}
         </DragOverlay>
