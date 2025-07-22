@@ -5,12 +5,15 @@
       @apply relative flex h-full w-full bg-black;
       .progress_bar {
         @apply absolute bottom-0 left-0 right-0;
+        /* &.hide {
+          @apply hidden;
+        } */
       }
       .central_control {
         @apply absolute left-1/2 top-[calc(50%-36px)] -translate-x-1/2 -translate-y-1/2;
-        &.hide {
+        /* &.hide {
           @apply hidden;
-        }
+        } */
       }
     }
   }

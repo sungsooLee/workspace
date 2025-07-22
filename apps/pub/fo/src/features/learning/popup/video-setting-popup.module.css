@@ -1,0 +1,23 @@
+.start {
+  &.video_setting {
+    ul {
+      li {
+        button {
+          @apply flex w-full items-center justify-between py-[18px];
+          strong {
+            @apply title2 text-[var(--gray35)];
+          }
+          span {
+            @apply label-lg flex items-center text-[var(--gray35)];
+            svg {
+              @apply ml-[2px];
+            }
+          }
+        }
+        & + li {
+          @apply border-t-[1px] border-solid border-[var(--gray92)];
+        }
+      }
+    }
+  }
+}
