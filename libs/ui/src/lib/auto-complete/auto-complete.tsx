@@ -16,6 +16,7 @@ import styles from './auto-complete.module.css';
 export interface PrimitiveComponentProps extends Omit<ReactSelectComponentProps, 'options'> {
   loadOptions: (inputValue: string) => Promise<DropdownOption[]>;
   defaultOptions?: boolean | DropdownOption[];
+  options?: DropdownOption[];
   cacheOptions?: boolean;
   noOptionsMessage?: string;
   loadingMessage?: string;
@@ -93,6 +94,7 @@ const PrimitiveComponent = forwardRef<any, PrimitiveComponentProps>(
       name,
       onBlur,
       defaultOptions = true,
+      options,
       cacheOptions = true,
       noOptionsMessage = '검색결과가 없습니다',
       loadingMessage = '검색 중...',
@@ -152,6 +154,7 @@ const PrimitiveComponent = forwardRef<any, PrimitiveComponentProps>(
           closeMenuOnSelect={!isMulti}
           hideSelectedOptions={false}
           defaultOptions={defaultOptions}
+          options={options}
           cacheOptions={cacheOptions}
           components={{
             DropdownIndicator: dropdownIndicator,
@@ -161,6 +164,7 @@ const PrimitiveComponent = forwardRef<any, PrimitiveComponentProps>(
           noOptionsMessage={messageCallbacks.noOptionsMessage}
           loadingMessage={messageCallbacks.loadingMessage}
           {...customProps}
+          // menuIsOpen={true}
         />
       </div>
     );
@@ -209,6 +213,9 @@ const AutoCompleteDropdownComponent = forwardRef<any, AutoCompleteDropdownCompon
         }));
       }
 
+      if (typeof value === 'object' && 'value' in value && 'label' in value) {
+        return { ...value };
+      }
       return { value, label: value.toString() };
     }, [value, isMulti]);
 

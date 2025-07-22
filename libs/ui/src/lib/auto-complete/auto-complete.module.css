@@ -49,7 +49,7 @@
           @apply !body_bo_2_r h-[32px] !truncate !px-[8px] !py-[5px] text-[var(--gray8)];
           &[class*='nlp-select__option--is-focused'],
           &:hover {
-            @apply !bg-[#EDFCFF];
+            @apply !border-[#6F798B] bg-[var(--white)] !shadow-none;
           }
         }
       }

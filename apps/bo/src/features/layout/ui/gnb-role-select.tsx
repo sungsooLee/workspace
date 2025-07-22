@@ -22,27 +22,12 @@ interface Props {
  */
 const GnbRoleSelectComponent = ({ className }: Props) => {
   const router = useRouter();
-
   const { setActiveMenuDepthMenu } = useActiveMenuDepthState();
 
   const { data: authUser } = useFetchAuthUser();
   const { asyncMenus } = useAsycFetchMenusForceRefatch();
   const { updateMenu, updateActiveTenant, updateActiveRole } = useUpdateUser();
   const { update: updateTenantRole } = useUpdateTenantRoleLastSelect();
-
-  const [selectedTenant, setSelectedTenant] = useState<any | null>(null);
-  const [selectedRole, setSelectedRole] = useState<any | null>(null);
-
-  useEffect(() => {
-    setSelectedTenant(authUser?.activeTenant);
-    setSelectedRole(authUser?.activeRole);
-  }, []);
-
-  useEffect(() => {
-    if (authUser?.activeTenant?.tenantId !== authUser?.activeRole?.tenantId) {
-      setSelectedRole(null);
-    }
-  }, [authUser?.activeTenant, authUser?.activeRole]);
 
   // 테넌트 목록
   const tenantList = useMemo(() => {
@@ -65,6 +50,40 @@ const GnbRoleSelectComponent = ({ className }: Props) => {
       ?.filter((role) => role.tenantId === authUser?.activeTenant?.tenantId);
   }, [authUser?.activeTenant?.tenantId, authUser?.roles]);
 
+  const [filteredTenantOptions, setFilteredTenantOptions] = useState(tenantList);
+  const [filteredRoleOptions, setFilteredRoleOptions] = useState(roleList);
+
+  const [selectedTenant, setSelectedTenant] = useState<any | null>({
+    label: authUser?.activeTenant?.tenantName,
+    value: authUser?.activeTenant?.tenantId,
+  });
+  const [selectedRole, setSelectedRole] = useState<any | null>({
+    label: authUser?.activeRole?.roleName,
+    value: authUser?.activeRole?.roleId,
+  });
+
+  useEffect(() => {
+    if (authUser?.activeTenant?.tenantId !== authUser?.activeRole?.tenantId) {
+      setSelectedRole(null);
+    }
+  }, [authUser?.activeTenant, authUser?.activeRole]);
+
+  // 초기 셀렉트 셋팅
+  useEffect(() => {
+    const matched = filteredRoleOptions?.find((r) => r.roleId === selectedRole?.value);
+    if (matched) {
+      setSelectedRole(matched);
+    }
+  }, [filteredRoleOptions, selectedRole]);
+
+  // 초기 셀렉트 셋팅
+  useEffect(() => {
+    const matched = filteredTenantOptions?.find((r) => r.tenantId === selectedTenant?.value);
+    if (matched) {
+      setSelectedTenant(matched);
+    }
+  }, [filteredTenantOptions, selectedTenant]);
+
   // 롤 변경
   const handleRoleChange = async (newValue: any | null) => {
     setSelectedRole(newValue);
@@ -73,7 +92,8 @@ const GnbRoleSelectComponent = ({ className }: Props) => {
     // 기존 선택값 체크
     if (newValue.roleId === authUser?.activeRole?.roleId) return;
 
-    updateActiveRole(newValue);
+    // updateTenantRole 에서 유저정보 업데이트 하므로 주석
+    // updateActiveRole(newValue);
     await updateTenantRole({
       lastVisitedBoRoleId: newValue?.roleId,
       lastVisitedBoTenantId: authUser?.activeTenant?.tenantId,
@@ -87,14 +107,16 @@ const GnbRoleSelectComponent = ({ className }: Props) => {
     }
   };
 
-  const handleRoleLoadOptions = async (searchText: string): Promise<any[]> => {
+  const handleRoleLoadOptions = async (searchText: string, callback?: any): Promise<any[]> => {
     const reg = new RegExp(searchText, 'i'); // 대소문자 구분 없이 검색하려면 'i' 옵션 추가
     const filteredList = roleList?.filter((role) => reg.test(role.roleName));
 
     if (filteredList) {
-      return filteredList;
+      setFilteredRoleOptions(filteredList);
+      callback?.(filteredList);
     } else if (roleList) {
-      return roleList;
+      setFilteredRoleOptions(roleList);
+      callback?.(roleList);
     }
     return [];
   };
@@ -107,27 +129,23 @@ const GnbRoleSelectComponent = ({ className }: Props) => {
 
     // 기존 선택값 체크
     if (newValue.tenantId === authUser?.activeTenant?.tenantId) return;
-
+    // updateTenantRole 에서 유저정보 업데이트 하므로 주석
     // updateActiveTenant(newValue);
     await updateTenantRole({
       lastVisitedBoTenantId: newValue.tenantId,
     });
-
-    // TODO 역할 완료후 제거 필요
-    // const menus = await asyncMenus(newValue.tenantId);
-    // updateMenu(menus);
-    // setActiveMenuDepthMenu([]);
-    // router.navigate({ to: '/' });
   };
 
-  const handleTenantLoadOptions = async (searchText: string): Promise<any[]> => {
+  const handleTenantLoadOptions = async (searchText: string, callback?: any): Promise<any[]> => {
     const reg = new RegExp(searchText, 'i'); // 대소문자 구분 없이 검색하려면 'i' 옵션 추가
     const filteredList = tenantList?.filter((tenant) => reg.test(tenant.tenantName));
 
     if (filteredList) {
-      return filteredList;
+      setFilteredTenantOptions(filteredList);
+      callback?.(filteredList);
     } else if (tenantList) {
-      return tenantList;
+      setFilteredTenantOptions(tenantList);
+      callback?.(tenantList);
     }
     return [];
   };
@@ -135,32 +153,34 @@ const GnbRoleSelectComponent = ({ className }: Props) => {
   return (
     <>
       <AutoCompleteDropdown
-        cacheOptions={false}
         className={'min-w-[180px]'}
         variant="text"
         size="md"
         backgroundType={'blue'}
-        value={selectedTenant?.tenantName}
+        value={selectedTenant}
         onChange={(value) => {
           const option = tenantList?.find((tenant) => tenant.value === value);
           handleTenantChange(option);
         }}
+        defaultOptions={tenantList}
+        options={filteredTenantOptions}
         loadOptions={handleTenantLoadOptions}
         placeholder="테넌트를 선택해 주세요."
         noOptionsMessage="검색 결과가 없습니다"
         loadingMessage="검색 중..."
       />
       <AutoCompleteDropdown
-        defaultOptions={roleList}
         className={'min-w-[180px]'}
         variant="text"
         size="md"
         backgroundType={'blue'}
-        value={selectedRole?.roleName}
+        value={selectedRole}
         onChange={(value) => {
           const option = roleList?.find((role) => role.value === value);
           handleRoleChange(option);
         }}
+        defaultOptions={roleList}
+        options={filteredRoleOptions}
         loadOptions={handleRoleLoadOptions}
         placeholder="역할을 선택해 주세요. "
         noOptionsMessage="검색 결과가 없습니다"
