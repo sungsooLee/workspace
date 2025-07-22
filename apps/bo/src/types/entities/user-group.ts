@@ -8,6 +8,8 @@ export type UserGroupType =
 
 export interface UserGroupsResponse {
   userGroupId: number;
+  companyId: number;
+  tenantId: number;
   userGroupName: string;
   userGroupSubName: string;
   tenantName: string;

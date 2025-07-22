@@ -26,8 +26,8 @@ const UserGroupJobGroupComponent = ({
 
   const gridData = useMemo<any[]>(
     () =>
-      data.map(({ fullName, userGroupId, userGroupName, ...others }) => ({
-        key: `${userGroupId}`,
+      data.map(({ fullName, companyId, tenantId, userGroupId, userGroupName, ...others }) => ({
+        key: `${tenantId}-${companyId}-${userGroupId}`,
         id: userGroupId,
         fullPath: fullName,
         title: userGroupName,

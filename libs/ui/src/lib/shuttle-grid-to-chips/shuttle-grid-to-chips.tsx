@@ -61,23 +61,23 @@ const ShuttleGridToChipsComponent = (
         cellAlign: 'center',
       },
       cell: ({ row }) => {
-        // console.log(row?.original, 'row?.original::');
         const { id, key, fullPath } = row?.original || {};
         return (
           <div className={styles.btn_select}>
             <Button
               label={t('선택')}
               variant={
-                selectedItems.find(({ id: selectedId }) => selectedId === id) ? 'primary' : 'gray2'
+                selectedItems.find(({ key: selectedKey }) => selectedKey === key)
+                  ? 'primary'
+                  : 'gray2'
               }
               className={
-                selectedItems.find(({ id: selectedId }) => selectedId === id) ? styles.active : ''
+                selectedItems.find(({ key: selectedKey }) => selectedKey === key)
+                  ? styles.active
+                  : ''
               }
               size={'xs'}
-              onClick={() => {
-                handleSelectItem({ id, key, fullPath });
-                row.toggleSelected();
-              }}
+              onClick={() => handleSelectItem({ id, key, fullPath })}
             />
           </div>
         );
@@ -85,21 +85,12 @@ const ShuttleGridToChipsComponent = (
     },
   ];
 
-  const onRowsSelect = (selectedRows: any[]) => {
-    // console.log(selectedRows, 'selectedRows');
-    // handleSelectItem(selectedRows);
-    // setRightGridData(selectedRows);
-  };
-
   const handleRemoveItem = (node: SelectedChip) => {
     cancelSelectItem(node);
-    // const newItems = selectedItems.filter(({ id }) => id !== deleteId);
-
-    // handleSelectItem();
+    leftTableInstance?.setRowSelection({});
   };
 
   const removeAll = () => {
-    // 좌측 그리드 전체 행 선택 해제, 로직 실행하면 handleLeftGridRowsSelect 실행됨
     leftTableInstance?.setRowSelection({});
     cancelAll();
   };
@@ -115,7 +106,6 @@ const ShuttleGridToChipsComponent = (
           multiple
           disabledSelectionToggle
           hideRowSelectionCheckBox={true}
-          onRowsSelect={onRowsSelect}
           onTableInstanceChange={(table) => setLeftTableInstance(table)}
         />
       </div>
