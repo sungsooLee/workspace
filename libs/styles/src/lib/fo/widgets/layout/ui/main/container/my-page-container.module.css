@@ -2,6 +2,9 @@
   @apply mx-[auto] mt-[48px] w-[880px];
   h2 {
     @apply headline3-b text-[var(--gray10)];
+    &.text_center {
+      @apply mx-auto pt-[40px] text-center;
+    }
   }
 }
 

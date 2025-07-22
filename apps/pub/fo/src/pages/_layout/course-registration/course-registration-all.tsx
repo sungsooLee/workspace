@@ -338,7 +338,7 @@ function RouteComponent() {
                           size="lx"
                           onClick={() =>
                             openModal({
-                              width: isMobile ? 'm_full' : 'sm',
+                              width: 'sm',
                               content: <AddressPopup />,
                             })
                           }
@@ -527,12 +527,13 @@ function RouteComponent() {
             <Button variant="gray" size="xl" className="min">
               취소
             </Button>
+            {/* 퍼블수정 20250722 주소확인 popup mobile에서 m_bottom_sheet, pc에서 sm 사이즈로 수정 */}
             <Button
               variant="primary"
               size="xl"
               onClick={() =>
                 openModal({
-                  width: isMobile ? 'm_bottom_sheet' : 'sm',
+                  width: 'm_bottom_sheet',
                   content: <AddressConfirmationPopup />,
                 })
               }
