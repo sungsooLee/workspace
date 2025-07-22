@@ -1,36 +1,41 @@
-import { forwardRef, useEffect, useState } from 'react';
+import { forwardRef, useEffect, useRef, useState } from 'react';
 import {
   BaseFormFieldProps,
   CODE_GROUP,
+  S3_PATH,
   S3UploaderConfig,
   useFormOptions,
   useS3Uploader,
 } from '@learnway/hooks';
-import { Button, ContentsRow, Dropdown, DropdownOption, Input } from '@learnway/ui';
+import { Button, ContentsRow, Dropdown, Input } from '@learnway/ui';
 import { t } from 'i18next';
 import { IcoDelete04 } from '@learnway/icons';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import { VideoSubtitles } from '@types';
+import { map } from 'lodash';
+import { getDefaultLang } from '@learnway/shared';
 
 interface SubtitlesFormFieldProps extends BaseFormFieldProps<VideoSubtitles[]> {
-  uploadConfig: S3UploaderConfig;
+  uploadConfig?: S3UploaderConfig;
 }
 
 const SubTitlesFormFieldComponent = forwardRef<HTMLDivElement, SubtitlesFormFieldProps>(
-  ({ value, onChange, uploadConfig }, ref) => {
+  ({ value = [], onChange, uploadConfig = {} as S3UploaderConfig }, ref) => {
+    const inputFileRef = useRef<HTMLInputElement | null>(null);
+
     const {
-      s3Path,
-      affairsType,
-      languageCode,
+      s3Path = S3_PATH['upload/content/original'],
+      affairsType = 'CMS',
+      languageCode = getDefaultLang().toUpperCase(),
       groupMode = 'batch',
       auto = true,
       async = true,
-      acceptFiles = [],
-      maxFileCount = 10,
+      acceptFiles = ['vtt'],
+      maxFileCount = 200,
       maxFileSize = 5 * 1024 * 1024,
     } = uploadConfig;
 
-    const { groupUuid, files, addFiles, onFetch, onRemove } = useS3Uploader({
+    const { groupUuid, files, addFiles, onFetch, onRemove, inputAccept } = useS3Uploader({
       s3Path,
       affairsType,
       languageCode,
@@ -46,74 +51,132 @@ const SubTitlesFormFieldComponent = forwardRef<HTMLDivElement, SubtitlesFormFiel
       codeGroup: CODE_GROUP['pms.multilingual.LangCountryCode'],
     });
 
-    const [newSubtitle, setNewSubtitle] = useState<any>({});
+    const [newLang, setNewLang] = useState<string>(getDefaultLang().toUpperCase());
 
     useEffect(() => {
       //value로 onFetch, groupUuid초기화
     }, []);
 
-    const handleLanguageCodeChange = (index: number, code: string) => {
-      console.log('languageCode:', code);
+    const clickedSubtitleRef = useRef<string>('');
+
+    useEffect(() => {
+      const valueFileUuids = map(value, 'subtitleFileUuid');
+      const newFiles = files.filter(
+        ({ status, fileUuid }) =>
+          ['fetched', 'completed'].includes(status) && !valueFileUuids.includes(fileUuid!),
+      );
+      if (newFiles.length !== 1) return;
+      const newSubtitle = newFiles[0];
+      if (!clickedSubtitleRef.current) {
+        onChange([
+          ...value,
+          {
+            languageCode: newLang,
+            subtitleFileUuid: newSubtitle.fileUuid!,
+            subtitleName: newSubtitle.fileName,
+          },
+        ]);
+        setNewLang(getDefaultLang().toUpperCase());
+      } else {
+        onChange(
+          value.map((subtitle) =>
+            subtitle.subtitleFileUuid === clickedSubtitleRef.current
+              ? {
+                  ...subtitle,
+                  subtitleFileUuid: newSubtitle.fileUuid!,
+                  subtitleName: newSubtitle.fileName,
+                }
+              : subtitle,
+          ),
+        );
+        clickedSubtitleRef.current = '';
+      }
+    }, [files]);
+
+    const handleLanguageCodeChange = (uuid: string, languageCode: string) => {
+      onChange(
+        value.map((subtitle) =>
+          subtitle.subtitleFileUuid === uuid ? { ...subtitle, languageCode } : subtitle,
+        ),
+      );
     };
 
-    const handleSubtitleChange = (index: number) => {
-      // input file 띄워서 addFiles에 추가 후 index에 해당하는 fileUuid 삭제 및 새로운 uuid로 대체, 변경 결과를 onChange에 반영
+    const handleSubtitleChange = (uuid: string) => {
+      clickedSubtitleRef.current = uuid;
+      inputFileRef?.current?.click();
     };
 
     const handleSubtitleAdd = () => {
-      // input file 띄워서 addFiles에 추가 후 files 변경 결과를 onChange에 반영
+      clickedSubtitleRef.current = '';
+      inputFileRef?.current?.click();
+    };
+
+    const handleFilesChange = async () => {
+      if (!inputFileRef.current) return;
+      const files = inputFileRef.current.files;
+      if (files && files.length) {
+        if (clickedSubtitleRef.current) await onRemove(clickedSubtitleRef.current);
+        await addFiles(Array.from(files));
+        inputFileRef.current.value = '';
+      }
+    };
+
+    const handleSubtitleDelete = async (uuid: string) => {
+      await onRemove(uuid);
+      onChange(value.filter(({ subtitleFileUuid }) => subtitleFileUuid !== uuid));
     };
 
     return (
-      <div className={dynamicFormStyles.multiple_row}>
-        <div ref={ref}>
-          {value?.map((subtitle, index: number) => (
-            <ContentsRow className={dynamicFormStyles.row_inner} key={subtitle.subtitleFileUuid}>
-              <Dropdown
-                className={dynamicFormStyles.short}
-                options={options}
-                value={subtitle.languageCode}
-                onChange={(code) => handleLanguageCodeChange(index, code)}
-              />
-              <Input type="text" value={subtitle.subtitleName} />
-              <Button
-                variant="gray"
-                size="sm"
-                className={dynamicFormStyles.btn_edit}
-                onClick={() => handleSubtitleChange(index)}
-              >
-                자막 변경
-              </Button>
-              <Button
-                onlyIcon
-                className={dynamicFormStyles.btn_delete}
-                icon={<IcoDelete04 width={20} height={20} fill="none" stroke="#4C515E" />}
-              />
-            </ContentsRow>
-          ))}
-          <ContentsRow className={dynamicFormStyles.row_inner}>
+      <div className={dynamicFormStyles.multiple_row} ref={ref}>
+        {value.map((subtitle) => (
+          <ContentsRow className={dynamicFormStyles.row_inner} key={subtitle.subtitleFileUuid}>
             <Dropdown
               className={dynamicFormStyles.short}
               options={options}
-              value={newSubtitle.languageCode}
-              onChange={(code) => setNewSubtitle((prev: any) => ({ ...prev, languageCode: code }))}
+              value={subtitle.languageCode}
+              onChange={(code) => handleLanguageCodeChange(subtitle.subtitleFileUuid, code)}
             />
-            <Input
-              type="text"
-              readOnly
-              placeholder="자막추가 버튼을 클릭하여 자막 파일을 등록하세요."
-            />
+            <Input type="text" value={subtitle.subtitleName} />
             <Button
               variant="gray"
               size="sm"
               className={dynamicFormStyles.btn_edit}
-              onClick={handleSubtitleAdd}
+              onClick={() => handleSubtitleChange(subtitle.subtitleFileUuid)}
             >
-              자막 추가
+              {t('자막 변경')}
             </Button>
-            {/* <input type="file" className={'hidden'} ref={fileRef} /> */}
+            <Button
+              onlyIcon
+              className={dynamicFormStyles.btn_delete}
+              icon={<IcoDelete04 width={20} height={20} fill="none" stroke="#4C515E" />}
+              onClick={() => handleSubtitleDelete(subtitle.subtitleFileUuid)}
+            />
           </ContentsRow>
-        </div>
+        ))}
+        <ContentsRow className={dynamicFormStyles.row_inner}>
+          <Dropdown
+            className={dynamicFormStyles.short}
+            options={options}
+            value={newLang}
+            onChange={(code) => setNewLang(code)}
+          />
+          <Input type="text" placeholder={t('자막추가 버튼을 클릭하여 자막 파일을 등록하세요.')} />
+          <Button
+            variant="gray"
+            size="sm"
+            className={dynamicFormStyles.btn_edit}
+            onClick={handleSubtitleAdd}
+          >
+            {t('자막 추가')}
+          </Button>
+          <input
+            type="file"
+            ref={inputFileRef}
+            className="hidden"
+            accept={inputAccept}
+            onChange={handleFilesChange}
+          />
+        </ContentsRow>
       </div>
     );
   },
