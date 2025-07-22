@@ -163,27 +163,27 @@ const ShuttleGridToChipsComponent = (
       <div className={styles.grid_wrap}>
         <div className={titleStyles.title_wrap}>
           <h3 className={titleStyles.title}>{targetTitle}</h3>
-          {isShowConditionSettingsMode &&
-            (isConditionSettingsMode ? (
-              <Button
-                variant="text"
-                size="sm"
-                className={layoutStyles.btn_text}
-                onClick={applyConditionSetting}
-              >
-                {'조건적용'}
-              </Button>
-            ) : (
-              <Button
-                variant="text"
-                size="sm"
-                className={layoutStyles.btn_text}
-                onClick={() => handleSetIsConditionSettingsMode(true)}
-              >
-                {'조건설정'}
-              </Button>
-            ))}
           <div className={layoutStyles.btn_wrap}>
+            {isShowConditionSettingsMode &&
+              (isConditionSettingsMode ? (
+                <Button
+                  variant="text"
+                  size="sm"
+                  className={layoutStyles.btn_text}
+                  onClick={applyConditionSetting}
+                >
+                  {'조건적용'}
+                </Button>
+              ) : (
+                <Button
+                  variant="text"
+                  size="sm"
+                  className={layoutStyles.btn_text}
+                  onClick={() => handleSetIsConditionSettingsMode(true)}
+                >
+                  {'조건설정'}
+                </Button>
+              ))}
             <Button variant="text" size="sm" className={layoutStyles.btn_text} onClick={removeAll}>
               {'전체삭제'}
             </Button>
