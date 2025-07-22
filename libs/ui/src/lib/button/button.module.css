@@ -76,7 +76,7 @@
     }
   }
   &.primary {
-    @apply justify-center rounded-[4px] bg-[var(--blue50)] !font-bold text-[white];
+    @apply justify-center rounded-[4px] bg-[var(--secondary1)] !font-bold text-[white];
     &:hover {
       @apply bg-[var(--secondary2)];
     }
