@@ -7,7 +7,7 @@ import { Curriculum } from '@pages/_layout/learning/course/detail/-tabs/curricul
 import { Sequence } from '@pages/_layout/learning/course/detail/-tabs/sequence';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 export const Route = createLazyFileRoute('/_layout/learning/course/detail/view')({
   component: RouteComponent,
@@ -19,6 +19,7 @@ function RouteComponent() {
 
   // 라우터 state에서 courseId 가져오기
   const { courseId, courseType } = router.state.location.state;
+  const [courseSequenceId, setCourseSequenceId] = useState<number>(0);
 
   // 커스텀 훅 사용
   const { activeTab, setTabRef, saveTabData, changeTab, getTabValues, deleteTabData } =
@@ -92,7 +93,12 @@ function RouteComponent() {
         title: '차수',
         key: CourseDetailTab.SEQUENCE,
         content: (
-          <Sequence ref={(ref) => setTabRef(CourseDetailTab.SEQUENCE, ref)} courseId={courseId} />
+          <Sequence
+            ref={(ref) => setTabRef(CourseDetailTab.SEQUENCE, ref)}
+            courseId={courseId}
+            courseSequenceId={courseSequenceId}
+            setCourseSequenceId={setCourseSequenceId}
+          />
         ),
       },
       {
@@ -105,6 +111,10 @@ function RouteComponent() {
     ],
     [setTabRef],
   );
+
+  useEffect(() => {
+    console.log('변경courseSequenceId=>', courseSequenceId);
+  }, [courseSequenceId]);
 
   console.log('------- view.lazy page...');
 
@@ -121,8 +131,8 @@ function RouteComponent() {
             router.navigate({
               to: `/learning/learning-sequence/enrollment-application`,
               state: {
-                // courseId: '',
-                // courseName: ''
+                courseIdKey: courseId,
+                courseSequenceIdKey: courseSequenceId, // 있는경우, 없는경우가 존재함
               },
             })
           }

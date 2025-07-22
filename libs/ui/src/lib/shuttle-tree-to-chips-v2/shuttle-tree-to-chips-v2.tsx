@@ -8,7 +8,7 @@ import { Checkbox } from '../checkbox/checkbox';
 import { t } from 'i18next';
 import { FormSubTitle } from '../base-form/form-sub-title';
 import { TreeBox } from '../tree-view/tree-box';
-import { TreeData, TreeNode } from '../tree-view/type';
+import { TreeData } from '../tree-view/type';
 import { SelectedChip } from '../type';
 
 type ShuttleTreeToChipsV2Props = {
@@ -40,10 +40,10 @@ export const ShuttleTreeToChipsV2 = ({
       selectedItems.reduce((acc, { key }) => acc + (key.includes(COMBINED_KEY) ? 0 : 1), 0) > 1
     );
   }, [selectedItems, isShowConditionSettingsModeProp]);
+  const [isConditionSettingsMode, setIsConditionSettingsMode] = useState<boolean>(false);
+  const [checkedValues, setCheckedValues] = useState<SelectedChip[]>([]);
 
   const treeBoxSelectedItems = useMemo(() => selectedItems.map(({ key }) => key), [selectedItems]);
-
-  const [isConditionSettingsMode, setIsConditionSettingsMode] = useState<boolean>(false);
 
   const isCombinedNodeKeys = useMemo<string[]>(
     () =>
@@ -52,8 +52,6 @@ export const ShuttleTreeToChipsV2 = ({
         .reduce((acc, { key }) => acc.concat(key.split(COMBINED_KEY)), [] as string[]),
     [selectedItems],
   );
-
-  const [checkedValues, setCheckedValues] = useState<SelectedChip[]>([]);
 
   const on = (newValue: SelectedChip) => {
     setCheckedValues((prev) =>

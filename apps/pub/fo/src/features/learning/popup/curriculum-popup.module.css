@@ -1,6 +1,6 @@
 .start {
   &.curriculum_wrap {
-    @apply -mx-[20px] -my-[16px] pb-[150px];
+    @apply pb-[150px];
     .box {
       @apply border-t-[1px] border-solid border-[var(--gray5)];
       .header {

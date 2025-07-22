@@ -39,20 +39,24 @@ export default class LearningSequenceService {
   }
 
   static fetchEnrollmentRegistList(params: any) {
-    return [
-      {
-        openYear: 2025,
-        sequenceName: '테스트',
-        eduStartDate: new Date(),
-        eduEndDate: new Date(),
-        status: '조직장 대기중',
-        company: '현대오토에버',
-        department: 'L&D플랫폼',
-        employeeId: 99999,
-        employeeName: '김현대',
-        regDate: new Date(),
-      },
-    ];
+    // return [
+    //   {
+    //     openYear: 2025,
+    //     sequenceName: '테스트',
+    //     eduStartDate: new Date(),
+    //     eduEndDate: new Date(),
+    //     status: '조직장 대기중',
+    //     company: '현대오토에버',
+    //     department: 'L&D플랫폼',
+    //     employeeId: 99999,
+    //     employeeName: '김현대',
+    //     regDate: new Date(),
+    //   },
+    // ];
+    return httpService.get<any[]>(`${LMSApiPrefix()}/enrolls`, params);
+  }
+  static fetchEnrollmentRegistCount(params: any) {
+    return httpService.get<any>(`${LMSApiPrefix()}/enrolls/count`, params);
   }
   static fetchEnrollmentWaitList(params: any) {
     return null;

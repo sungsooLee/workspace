@@ -4,6 +4,7 @@ export const queryKeys = {
   sequenceList: ['learning-sequence-management-list'] as const,
   sequenceDetail: ['learning-sequence-management-detail'] as const,
   enrollmentRegistList: ['learning-sequence-enrollment-regist-list'] as const,
+  enrollmentRegistCount: ['learning-sequence-enrollment-regist-count'] as const,
   enrollmentWaitList: ['learning-sequence-enrollment-wait-list'] as const,
   enrollmentCancelList: ['learning-sequence-enrollment-cancel-list'] as const,
 };
@@ -26,6 +27,12 @@ export const queryOptions = {
   enrollmentRegistList: (params: any) => ({
     queryKey: queryKeys.enrollmentRegistList,
     queryFn: () => LearningSequenceService.fetchEnrollmentRegistList(params),
+    cacheTime: 0,
+    staleTime: 0,
+  }),
+  enrollmentRegistCount: (params: any) => ({
+    queryKey: queryKeys.enrollmentRegistList,
+    queryFn: () => LearningSequenceService.fetchEnrollmentRegistCount(params),
     cacheTime: 0,
     staleTime: 0,
   }),

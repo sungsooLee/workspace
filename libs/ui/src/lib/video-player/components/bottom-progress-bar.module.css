@@ -1,10 +1,13 @@
 .start {
   &.progress_bar {
-    @apply px-[40px] pb-[24px];
+    @apply bg-gradient-to-t from-[rgba(0,0,0,.4)] to-transparent px-[40px] pb-[24px];
     .progress_box {
-      @apply h-[6px] overflow-hidden rounded-[100px] bg-white/30;
+      @apply h-[6px] cursor-pointer rounded-[100px] bg-white/30;
       .progress {
-        @apply h-full bg-[var(--blue50)];
+        @apply relative h-full rounded-[100px] bg-[var(--blue50)];
+        &::before {
+          @apply absolute right-0 top-1/2 h-[16px] w-[16px] -translate-y-1/2 rounded-full bg-white content-[''];
+        }
       }
     }
     .option {
@@ -60,16 +63,16 @@
               .form_volume {
                 @apply h-[2px] w-[80px];
                 &::-webkit-slider-thumb {
-                  @apply -mt-[6px] h-[2px];
+                  @apply -mt-[6px] h-[2px] bg-white/30;
                 }
                 &::-webkit-slider-runnable-track {
-                  @apply h-[2px];
+                  @apply h-[2px] bg-white/30;
                 }
                 &::-moz-range-thumb {
-                  @apply h-[2px];
+                  @apply h-[2px] bg-white/30;
                 }
                 &::-moz-range-track {
-                  @apply h-[2px];
+                  @apply h-[2px] bg-white/30;
                 }
               }
             }

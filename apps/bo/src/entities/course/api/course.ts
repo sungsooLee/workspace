@@ -145,6 +145,6 @@ export default class CourseService {
    * @returns 찜 여부 변경 결과 Promise.
    */
   static async updateFavorite(payload: { id: number; isBookmarks: boolean }): Promise<any> {
-    return httpService.put<any>(`${LMSApiPrefix()}/course/${payload.id}/favorite`, payload);
+    return httpService.put<any>(`${LMSApiPrefix()}/course/${payload.id}/bookmark`, payload);
   }
 }

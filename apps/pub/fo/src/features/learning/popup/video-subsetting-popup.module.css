@@ -1,0 +1,20 @@
+.start {
+  &.video_subsetting {
+    ul {
+      li {
+        button {
+          @apply flex w-full items-center justify-between py-[18px] pr-[32px];
+          strong {
+            @apply title2 text-[var(--gray35)];
+          }
+          svg {
+            @apply !mx-0;
+          }
+        }
+        & + li {
+          @apply border-t-[1px] border-solid border-[var(--gray92)];
+        }
+      }
+    }
+  }
+}

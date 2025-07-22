@@ -41,7 +41,11 @@ function RouteComponent() {
   const { delete: deleteVideoContent } = useDeleteContent({
     onSuccess: (result: number) => {
       console.log('delete success', result);
-      return router.navigate({ to: '/learning/learning-resource', replace: true });
+      return router.navigate({
+        to: '/learning/learning-resource',
+        state: { listParam },
+        replace: true,
+      });
     },
   });
 

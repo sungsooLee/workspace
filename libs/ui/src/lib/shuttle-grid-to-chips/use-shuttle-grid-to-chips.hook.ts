@@ -13,8 +13,8 @@ const useShuttleGridToChips = (initValue: SelectedChip[] = []) => {
     );
   };
 
-  const cancelSelectItem = ({ key }: SelectedChip) => {
-    setSelectedItems((prev) => prev.filter(({ key: previousKey }) => previousKey !== key));
+  const cancelSelectItem = (deleteKey: string) => {
+    setSelectedItems((prev) => prev.filter(({ key: previousKey }) => previousKey !== deleteKey));
   };
 
   const cancelAll = () => {

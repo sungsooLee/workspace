@@ -6,7 +6,7 @@ import { t } from 'i18next';
 import { CourseGridColumn } from './type';
 import { EditFavorite } from '@learnway/ui';
 
-export const createGridConfig = (handleFavoriteClick: (value: boolean) => void) => {
+export const createGridConfig = (handleFavoriteClick: (courseId: number) => void) => {
   const columns: CourseGridColumn[] = [
     // 테넌트
     {
@@ -44,7 +44,7 @@ export const createGridConfig = (handleFavoriteClick: (value: boolean) => void) 
       name: 'isBookmarks',
       label: () => t('LABEL.grid.column.favorite'),
       size: 40,
-      render: (info: any) => <EditFavorite info={info} onClick={handleFavoriteClick} />,
+      render: (info: any) => <EditFavorite info={info} onClick={() => console.log('info', info)} />,
     },
     // 과정명
     {
