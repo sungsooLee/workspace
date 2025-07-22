@@ -5,11 +5,8 @@ import {
   IcoExpand,
   IcoVideoPlay,
   IcoVideoStop,
-  IcoPlayerSetting,
   IcoReduce,
   IcoSubtitles,
-  IcoNextPlayFill,
-  IcoPrevPlayFill,
   IcoSpeakerFill,
   IcoSettingsFill,
   IcoSpeakerOffFill,
@@ -77,18 +74,12 @@ const BottomProgressBar = ({
       </div>
       <div className={styles.option}>
         <div className={styles.left}>
-          <button>
-            <IcoPrevPlayFill width={isMobile ? 16 : 24} height={isMobile ? 16 : 24} />
-          </button>
           <button onClick={togglePlay}>
             {playing ? (
               <IcoVideoStop width={isMobile ? 16 : 24} height={isMobile ? 16 : 24} fill="#fff" />
             ) : (
               <IcoVideoPlay width={isMobile ? 16 : 24} height={isMobile ? 16 : 24} fill="#fff" />
             )}
-          </button>
-          <button>
-            <IcoNextPlayFill width={isMobile ? 16 : 24} height={isMobile ? 16 : 24} />
           </button>
           {/* 왼쪽: 볼륨 */}
           <div className={styles.volume}>
@@ -120,10 +111,12 @@ const BottomProgressBar = ({
               className={styles.form_volume}
             />
           </div>
-          <div className={styles.time}>
-            <span>{formatTime(currentTime)}/</span>
-            <span>{formatTime(duration)}</span>
-          </div>
+          {isMobile || (
+            <div className={styles.time}>
+              <span>{formatTime(currentTime)}/</span>
+              <span>{formatTime(duration)}</span>
+            </div>
+          )}
         </div>
 
         {/* 오른쪽: 설정, 전체화면 */}
@@ -133,7 +126,7 @@ const BottomProgressBar = ({
             width={isMobile ? 16 : 24}
             height={isMobile ? 16 : 24}
             fill={subtitlesVisible ? '#80aaff' : '#fff'}
-            onClick={toggleSubtitles}
+            onClick={() => (isMobile ? '' : toggleSubtitles)}
           />
           <div className="relative">
             <IcoSettingsFill

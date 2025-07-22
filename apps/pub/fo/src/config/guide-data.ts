@@ -695,8 +695,8 @@ export const guideData = [
     pageId: 'category/detail_m',
     pageType: 'Pop-up',
     completionDate: '2025-03-14',
-    lastUpdateDate: '',
-    remarks: '- 공통 스와이퍼 버튼 대기중',
+    lastUpdateDate: '2025-07-22',
+    remarks: '모바일 모드로 변경 후 상단 전체메뉴 클릭',
   },
   {
     screenId: 'NLP_FO_CAT_M_1001',

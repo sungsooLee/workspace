@@ -2,23 +2,29 @@
   &.learning_header {
     @apply fixed left-[0] top-[0] z-[1] flex h-[80px] w-full items-center border-b-[1px] border-solid border-[var(--gray90)] bg-white px-[24px];
     .header_area {
-      @apply flex w-full items-center justify-between;
+      @apply flex w-full items-center;
       .header_info {
-        @apply flex items-center;
+        @apply flex w-full items-center;
         .btn_back {
           @apply mr-[16px] !px-0;
           img {
             @apply h-[40px] w-[40px];
           }
         }
-        .btn_title {
-          @apply ml-0 flex items-center !px-0;
+        .tit_box {
+          @apply flex items-center overflow-hidden;
+          button {
+            @apply flex items-center !px-0;
+          }
+          svg {
+            @apply mx-[8px];
+          }
           h1 {
             @apply title4-b text-[#232326];
           }
-        }
-        .btn_learning {
-          @apply label-lg-b rounded-[8px] border-[1px] border-solid border-[var(--gray75)] p-[12px] text-[var(--gray35)];
+          h2 {
+            @apply title4 text-[#232326];
+          }
         }
       }
     }
@@ -37,8 +43,14 @@
               @apply !mx-0;
             }
           }
+          .tit_box {
+            @apply flex-1;
+            button {
+              @apply w-full;
+            }
+          }
           h1 {
-            @apply title3-b ellipsis flex-1 leading-[22px] text-[var(--gray10)];
+            @apply title3-b ellipsis flex-1 text-left !leading-[22px] text-[var(--gray10)];
           }
         }
       }
