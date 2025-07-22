@@ -73,6 +73,7 @@ export const guideData = [
     lastUpdateDate: '2025-07-18',
     remarks: '- 레이아웃',
   },
+
   {
     screenId: 'NLP_FO_GNB_1001',
     screenName: 'GNB_타입B 템플릿',
@@ -171,7 +172,7 @@ export const guideData = [
     pageId: '',
     pageType: 'Pop-up',
     completionDate: '2025-03-27',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-21',
     remarks: '- 로그인 푸터 팝업과 동일\n- agreement-pop.tsx',
   },
   {
@@ -181,7 +182,7 @@ export const guideData = [
     pageId: '',
     pageType: 'Pop-up',
     completionDate: '2025-03-27',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-21',
     remarks: '- 로그인 푸터 팝업과 동일\n- privacy-pop.tsx',
   },
   {
@@ -211,7 +212,7 @@ export const guideData = [
     pageId: '',
     pageType: 'Page',
     completionDate: '2025-03-27',
-    lastUpdateDate: '2025-07-16',
+    lastUpdateDate: '2025-07-21',
     remarks: '',
   },
   {
@@ -694,8 +695,8 @@ export const guideData = [
     pageId: 'category/detail_m',
     pageType: 'Pop-up',
     completionDate: '2025-03-14',
-    lastUpdateDate: '',
-    remarks: '- 공통 스와이퍼 버튼 대기중',
+    lastUpdateDate: '2025-07-22',
+    remarks: '모바일 모드로 변경 후 상단 전체메뉴 클릭',
   },
   {
     screenId: 'NLP_FO_CAT_M_1001',
@@ -1761,6 +1762,26 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '2025-02-24',
     lastUpdateDate: '2025-07-17',
+    remarks: '',
+  },
+  {
+    screenId: 'NLP_FO_LOG_1000_1',
+    screenName: '테넌트 선택',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: '/',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '',
+  },
+  {
+    screenId: 'NLP_FO_LOG_1000_2',
+    screenName: '휴먼계정 안내',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: '/',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
     remarks: '',
   },
   {

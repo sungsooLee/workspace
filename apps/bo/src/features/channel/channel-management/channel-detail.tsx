@@ -66,14 +66,14 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
 
   const { update: updateChannel } = useUpdateChannel({
     onSuccess: (data: any) => {
-      openToast({ title: '저장 하였습니다.', type: 'success' });
+      openToast({ title: t('저장 하였습니다.'), type: 'success' });
       setChannelUuid(data.channelUuid);
     },
   });
 
   const { create: createChannel } = useCreateChannel({
     onSuccess: (data: any) => {
-      openToast({ title: '저장 하였습니다.', type: 'success' });
+      openToast({ title: t('저장 하였습니다.'), type: 'success' });
       router.navigate({
         to: '/tenant/channel/management/detail',
         state: { channelUuid: data.channelUuid },
@@ -327,7 +327,7 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
     <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
       {props.mode === EnFormMode.ADD && props.method === EnChannelRegisterMethod.REQUEST && (
         <>
-          <FormSubTitle label={'채널 신청 정보'} lineType={'light'} />
+          <FormSubTitle label={t('채널 신청 정보')} lineType={'light'} />
           <ContentsRow>
             <FormRow
               provider={provider}
@@ -357,7 +357,7 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
           </ContentsRow>
         </>
       )}
-      <FormSubTitle label={'채널 기본 정보'} lineType={'light'} />
+      <FormSubTitle label={t('채널 기본 정보')} lineType={'light'} />
       <ContentsRow>
         <FormRow
           provider={provider}
@@ -451,7 +451,7 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
         />
       </ContentsRow>
 
-      <FormSubTitle label={'채널 홈 정보'} />
+      <FormSubTitle label={t('채널 홈 정보')} />
       <ContentsRow>
         <FormRow provider={provider} name="channelProfileImageFileGroupUuid" />
       </ContentsRow>

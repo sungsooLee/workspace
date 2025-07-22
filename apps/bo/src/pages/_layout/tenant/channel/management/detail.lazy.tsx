@@ -4,6 +4,8 @@ import {
   ChannelDetailHome,
   ChannelDetailRole,
 } from '@features/channel';
+import { ChannelDetailSubscriber } from '@features/channel/channel-management/channel-detail-subscriber';
+import { ChannelDetailUser } from '@features/channel/channel-management/channel-detail-user';
 import { Button, Tabs } from '@learnway/ui';
 import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui';
 import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
@@ -48,7 +50,6 @@ function RouteComponent() {
   const homeFormRef = useRef<HTMLFormElement>(null);
   const boardFormRef = useRef<HTMLFormElement>(null);
   const subscriberFormRef = useRef<HTMLFormElement>(null);
-  const managerRoleFormRef = useRef<HTMLFormElement>(null);
   const userGroupFormRef = useRef<HTMLFormElement>(null);
 
   const getFormRef = () => {
@@ -63,31 +64,30 @@ function RouteComponent() {
         return boardFormRef;
       case EnTabKeys.SUBSCRIBER:
         return subscriberFormRef;
-      case EnTabKeys.MANAGER_ROLE:
-        return managerRoleFormRef;
       case EnTabKeys.USER_GROUP:
         return userGroupFormRef;
     }
+    return undefined;
   };
 
   const handleOnSave = () => {
     const formRef = getFormRef();
-    if (formRef.current?.saveData) formRef.current.saveData();
+    if (formRef?.current?.saveData) formRef.current.saveData();
   };
 
   const handleOnReset = () => {
     const formRef = getFormRef();
-    if (formRef.current?.clearForm) formRef.current.clearForm();
+    if (formRef?.current?.clearForm) formRef.current.clearForm();
   };
 
   const handleOnRegister = () => {
     const formRef = getFormRef();
-    if (formRef.current?.register) formRef.current.register();
+    if (formRef?.current?.register) formRef.current.register();
   };
 
   const handleOnCancelSubscribe = () => {
     const formRef = getFormRef();
-    if (formRef.current?.cancelSubscribe) formRef.current.cancelSubscribe();
+    if (formRef?.current?.cancelSubscribe) formRef.current.cancelSubscribe();
   };
 
   const [buttonLayout, setButtonLayout] = useState(EnButtonLayout.NONE);
@@ -116,27 +116,38 @@ function RouteComponent() {
     {
       title: t('사용자 관리'),
       key: EnTabKeys.USER,
-      content: '사용자 관리',
+      content: (
+        <ChannelDetailUser ref={userFormRef} onButtonLayoutChange={handleButtonLayoutChange} />
+      ),
     },
     {
       title: t('홈 설정'),
       key: EnTabKeys.HOME,
-      content: <ChannelDetailHome />,
+      content: (
+        <ChannelDetailHome ref={homeFormRef} onButtonLayoutChange={handleButtonLayoutChange} />
+      ),
     },
     {
       title: t('게시판 관리'),
       key: EnTabKeys.BOARD,
-      content: <ChannelDetailBoard />,
+      content: (
+        <ChannelDetailBoard ref={boardFormRef} onButtonLayoutChange={handleButtonLayoutChange} />
+      ),
     },
     {
       title: t('구독자 관리'),
       key: EnTabKeys.SUBSCRIBER,
-      content: '구독자 관리',
+      content: (
+        <ChannelDetailSubscriber
+          ref={subscriberFormRef}
+          onButtonLayoutChange={handleButtonLayoutChange}
+        />
+      ),
     },
     {
       title: t('담당자 역할 관리'),
       key: EnTabKeys.MANAGER_ROLE,
-      content: <ChannelDetailRole />,
+      content: <ChannelDetailRole onButtonLayoutChange={handleButtonLayoutChange} />,
     },
     {
       title: t('채널 유저 그룹'),

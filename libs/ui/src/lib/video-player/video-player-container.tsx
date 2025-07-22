@@ -60,7 +60,7 @@ const VideoPlayerContainerComponent = forwardRef<HTMLDivElement, VideoPlayerCont
           </div>
 
           {/* 하단 진행바 */}
-          <div className={styles.progress_bar}>
+          <div className={`${styles.progress_bar} ${isHovered || styles.hide}`}>
             <BottomProgressBar {...props.player} />
           </div>
         </div>

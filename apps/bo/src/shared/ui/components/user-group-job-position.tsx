@@ -22,6 +22,19 @@ const UserGroupJobPositionComponent = ({
   handleSetOption,
 }: UserGroupJobPositionComponentProps) => {
   const ref = useRef<ShuttleGridToChipsImperative>(null);
+  const { data = [] } = useFetchUserGroups(tenantIds, { userGroupType: 'JOB_POSITION' });
+  const gridData = useMemo<any[]>(
+    () =>
+      data.map(({ fullName, companyId, tenantId, userGroupId, userGroupName, ...others }) => ({
+        key: `${tenantId}-${companyId}-${userGroupId}`,
+        id: userGroupId,
+        fullPath: fullName,
+        title: userGroupName,
+        userGroupName,
+        ...others,
+      })),
+    [data],
+  );
   const columnHelper = createColumnHelper();
   const columns = [
     columnHelper.accessor('tenantName', {
@@ -41,7 +54,6 @@ const UserGroupJobPositionComponent = ({
       cell: (info) => info.getValue(),
     }),
   ] as ColumnDef<any, unknown>[];
-  const { data = [] } = useFetchUserGroups(tenantIds, { userGroupType: 'JOB_POSITION' });
 
   const initialSelectedItems = useMemo<SelectedChip[]>(() => {
     return option.map(({ combiners, pathKey, pathValue, groupId }) => {
@@ -90,9 +102,10 @@ const UserGroupJobPositionComponent = ({
       cancelSelectItem={cancelSelectItem}
       cancelAll={cancelAll}
       columns={columns}
-      gridData={data}
+      gridData={gridData}
       sourceTitle={t('유저그룹 - 보직')}
       targetTitle={t('선택 유저그룹 목록')}
+      isShowConditionSettingsMode
     />
   );
 };

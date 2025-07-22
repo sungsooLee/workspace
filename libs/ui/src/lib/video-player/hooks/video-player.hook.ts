@@ -1,12 +1,39 @@
 import { useEffect, useRef, useState } from 'react';
+import { t } from 'i18next';
 import ReactPlayer from 'react-player';
+import { EnLibGlobalConst } from '@learnway/types';
+import { VideoPlayerContainerProps } from '../types/video-player-container.type';
 type UseVideoPlayer = {
   onProgressCallback?: (state: { played: number; playedSeconds: number; speed: number }) => void;
+  gotoBeforeLesson?: () => void;
+  gotoNextLesson?: () => void;
 };
 
-export const useVideoPlayer = ({ onProgressCallback }: UseVideoPlayer = {}) => {
+export const VideoQuerites = {
+  auto: { label: 'Auto', height: 0 },
+  high: { label: '1080P', height: 1080 },
+  middle: { label: '720P', height: 720 },
+  low: { label: '360P', height: 360 },
+};
+
+const rightHeight = (item: any) => {
+  switch (item.height) {
+    case VideoQuerites.high.height:
+    case VideoQuerites.middle.height:
+    case VideoQuerites.low.height:
+      return true;
+  }
+  return false;
+};
+
+export const useVideoPlayer = ({
+  onProgressCallback,
+  gotoBeforeLesson,
+  gotoNextLesson,
+}: UseVideoPlayer = {}): VideoPlayerContainerProps => {
   const playerContainerRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<ReactPlayer>(null);
+  const [videoConfig, setVideoConfig] = useState<any>();
   const [videoSubtitles, setVideoSubtitles] = useState<any[] | undefined>();
   const [encodedVideos, setEncodedVideos] = useState<any[] | undefined>();
   const [videoInfo, setVideoInfo] = useState<any>();
@@ -18,16 +45,57 @@ export const useVideoPlayer = ({ onProgressCallback }: UseVideoPlayer = {}) => {
   const [muted, setMuted] = useState(false);
   const [playbackRate, setPlaybackRate] = useState(1.0); // 재생 속도 상태
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [subtitlesVisible, setSubtitlesVisible] = useState(true);
+  const [subtitlesVisible, setSubtitlesVisible] = useState(false);
+  const [playUrl, setPlayUrl] = useState<string>();
+  const [videoQuality, setVideoQuality] = useState<any>(VideoQuerites.auto);
+
+  //player 정보 전달을 위한 값
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
+  const [videoStart, setVideoStart] = useState<number>(0);
 
   useEffect(() => {
     if (videoInfo) {
       setVideoSubtitles(videoInfo.videoSubtitles);
-      setEncodedVideos(videoInfo.encodedVideos);
+
+      if (videoInfo.encodedVideos && videoInfo.encodedVideos.length > 0) {
+        const videoMap = new Map();
+        videoInfo.encodedVideos.forEach((item: any) => {
+          if (!videoMap.has(item.height)) {
+            if (rightHeight(item)) videoMap.set(item.height, item);
+          }
+        });
+        setEncodedVideos([...videoMap.values()]);
+      }
+      // subtitle 설정
+      const config = {
+        attributes: {
+          crossOrigin: 'anonymous',
+        },
+        file: {
+          tracks: [] as any[],
+        },
+      };
+
+      videoInfo.videoSubtitles.forEach((item: any) => {
+        config.file.tracks.push({
+          kind: 'subtitles',
+          src: item.subtitleUrl,
+          srcLang: item.languageCountryCode,
+          default: true,
+          label: t(
+            `${EnLibGlobalConst.SYSTEM_COMMON_CODE}.pms.multilingual.LangCountryCode.${item.languageCountryCode}`,
+          ),
+        });
+      });
+      if (videoInfo.videoSubtitles && videoInfo.videoSubtitles.length > 0) {
+        setVideoConfig(config);
+      }
+      setPlayUrl(videoInfo.masterVideo);
     } else {
       setVideoSubtitles(undefined);
       setEncodedVideos(undefined);
     }
+    setIsFirstLoad(true);
   }, [videoInfo]);
 
   // 재생 속도 설정 함수
@@ -140,6 +208,21 @@ export const useVideoPlayer = ({ onProgressCallback }: UseVideoPlayer = {}) => {
     setDuration(d);
   };
 
+  const onReady = (param: any) => {
+    console.log('onReady', param);
+
+    if (!isFirstLoad) {
+      setSeconds(currentTime);
+      return;
+    }
+    if (videoInfo) {
+      setCurrentTime(videoInfo.lastVideoEndTime);
+      setSeconds(videoInfo.lastVideoEndTime);
+      setVideoStart(videoInfo.lastVideoEndTime);
+    }
+    setIsFirstLoad(false);
+  };
+
   const toggleMute = () => {
     setMuted((prev) => !prev);
   };
@@ -163,9 +246,37 @@ export const useVideoPlayer = ({ onProgressCallback }: UseVideoPlayer = {}) => {
     playerRef.current.seekTo(percentage, 'fraction');
   };
 
+  const changeQuality = (v: any) => {
+    const selectedHeight = v.height;
+    const data = encodedVideos?.find((item: any) => {
+      return item.height === selectedHeight;
+    });
+
+    if (data) {
+      setPlayUrl(data.m3u8Url);
+      setVideoQuality(v);
+    } else if (v.label === VideoQuerites.auto.label) {
+      setPlayUrl(videoInfo.masterVideo);
+      setVideoQuality(v);
+    }
+    console.log('changeQuality', data);
+  };
+  const handleGoBeforeLesson = () => {
+    gotoBeforeLesson?.();
+  };
+  const handleGoNextLesson = () => {
+    gotoNextLesson?.();
+  };
+
   return {
+    playUrl,
+    setPlayUrl,
+    videoStart,
+    setVideoStart,
+    videoConfig,
     videoSubtitles,
     encodedVideos,
+    videoQuality,
     playerContainerRef,
     playerRef,
     playing,
@@ -191,5 +302,9 @@ export const useVideoPlayer = ({ onProgressCallback }: UseVideoPlayer = {}) => {
     onProgress,
     changePlaybackRate,
     onBuffer,
+    onReady,
+    changeQuality,
+    goBeforeLesson: handleGoBeforeLesson,
+    goNextLesson: handleGoNextLesson,
   };
 };

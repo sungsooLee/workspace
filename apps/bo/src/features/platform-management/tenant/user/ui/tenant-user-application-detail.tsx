@@ -108,7 +108,6 @@ const TenantUserApplicationDetailComponent = (props: userDetailProps, ref: any) 
 
         // 계정 정보 데이터 관리 방식
         hrInfoManageType: userData.linkageSystem ? userData.linkageSystem : 'MANUAL_MANAGE',
-        // 회원가입 유형 : 이형주 수석님이 규원 책임님께 확인 후 전달 준다고 함.
         companyMemberJoinTypeList: userData.companyMemberJoinTypeList ? userData.companyMemberJoinTypeList : ['BO_JOIN_MANAGER'],
         accountStatus: 'NORMAL',
         approvalStatus: userData.enabledDate !== null ? '승인' : '대기',

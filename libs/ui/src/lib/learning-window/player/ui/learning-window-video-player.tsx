@@ -15,39 +15,38 @@ import { VideoPlayer } from '../../../video-player/video-player';
 
 const styles = isMobile ? stylesMobile : stylesWeb;
 
-enum EnVideoQualityState {
-  AUTO = -1,
-  Q1080P = 1080,
-  Q720P = 720,
-  Q480P = 480,
-}
-
 const LearningWindowVideoPlayerComponent: FC<any> = () => {
-  const [videoUrl, setVideoUrl] = useState();
-  const [videoStart, setVideoStart] = useState<number>(0);
-  const [qualityState, setQualityState] = useState<EnVideoQualityState>(EnVideoQualityState.AUTO);
-  const [playConfig, setPlayConfig] = useState<Config>();
-  const { baseInfo, playInfo, videoInfo, funcInfo } = useLearningWindow();
+  const { baseInfo, playInfo, videoInfo, funcInfo, gotoBeforeLesson, gotoNextLesson } =
+    useLearningWindow();
 
   const handleOnProgress = (state: any) => {
-    console.log(`date check ; ${videoStart} -> ${state.playedSeconds}`, playInfo);
-    const payload = {
-      courseSequenceId: baseInfo?.sequenceId,
-      courseId: baseInfo?.courseId,
-      curriculumId: baseInfo?.curriculumId,
-      moduleId: playInfo?.moduleId,
-      lessonId: playInfo?.lessonId,
-      contentUuid: playInfo?.contentUuid,
-      videoStartTime: videoStart,
-      videoEndTime: state.playedSeconds,
-      speed: state.speed,
-    };
-    setVideoStart(state.playedSeconds);
+    if (state.playedSeconds - player.videoStart < 0) {
+      player.setVideoStart(state.playedSeconds);
+      return;
+    }
+    if (state.playedSeconds - player.videoStart >= 10) {
+      const payload = {
+        courseSequenceId: baseInfo?.sequenceId,
+        courseId: baseInfo?.courseId,
+        curriculumId: baseInfo?.curriculumId,
+        moduleId: playInfo?.moduleId,
+        lessonId: playInfo?.lessonId,
+        contentUuid: playInfo?.contentUuid,
+        videoStartTime: player.videoStart,
+        videoEndTime: state.playedSeconds,
+        speed: state.speed,
+      };
+      player.setVideoStart(state.playedSeconds);
 
-    funcInfo?.videoOnProgress(payload);
+      funcInfo?.videoOnProgress(payload);
+    }
   };
 
-  const player = useVideoPlayer({ onProgressCallback: handleOnProgress });
+  const player = useVideoPlayer({
+    onProgressCallback: handleOnProgress,
+    gotoBeforeLesson,
+    gotoNextLesson,
+  });
 
   const handleVideoEnd = () => {
     const payload = {
@@ -59,19 +58,13 @@ const LearningWindowVideoPlayerComponent: FC<any> = () => {
       contentUuid: playInfo?.contentUuid,
     };
     funcInfo?.videoWatchStatistics(payload);
-  };
-
-  const handleOnReady = () => {
-    console.log('handleOnReady');
-    player.setSeconds(videoInfo.lastVideoEndTime);
-    setVideoStart(videoInfo.lastVideoEndTime);
+    player.togglePlay();
   };
 
   useEffect(() => {
     if (!videoInfo) return;
     console.log('videoInfo', videoInfo);
     player.setVideoInfo(videoInfo);
-    setVideoUrl(videoInfo.masterVideo);
   }, [videoInfo]);
   useEffect(() => {
     return () => {
@@ -86,17 +79,18 @@ const LearningWindowVideoPlayerComponent: FC<any> = () => {
           <div className={styles.video_contents}>
             <VideoPlayerContainer ref={player.playerContainerRef} player={player}>
               <VideoPlayer
-                url={videoUrl}
+                url={player.playUrl}
                 ref={player.playerRef}
                 playing={player.playing}
                 volume={player.volume}
                 muted={player.muted}
-                progressInterval={1000 * 10}
+                progressInterval={100}
                 onProgress={player.onProgress}
                 onDuration={player.onDuration}
                 onEnded={handleVideoEnd}
-                onReady={handleOnReady}
+                onReady={player.onReady}
                 onBuffer={player.onBuffer}
+                config={player.videoConfig}
                 //config={playConfig}
               />
             </VideoPlayerContainer>

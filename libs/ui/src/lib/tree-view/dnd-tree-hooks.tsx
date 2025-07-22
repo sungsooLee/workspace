@@ -9,7 +9,13 @@ import {
   DragData,
   TreeType,
 } from './type';
-import { calculateTargetIndex, getNodeLevel, isValidDrop, removeNodeByKey } from './tree.service';
+import {
+  calculateTargetIndex,
+  getNodeLevel,
+  isValidDrop,
+  removeNodeByKey,
+  findOptimalMultiLevelZone,
+} from './tree.service';
 import { useTreeContext } from './tree.context';
 import { updateNodeVisibility } from './dnd-tree-utils';
 import { optimisticallyUpdateTree } from './tree-optimistic-update';
@@ -65,18 +71,38 @@ export const useDndTreeLogic = (
 
       const isDragFromThisTree = active.id && active.id.toString().startsWith(`${treeId}-drag-`);
       if (dragData && isDragFromThisTree) {
-        setDraggedNode(dragData.node);
-        setDraggedNodeKey(dragData.node.key);
+        // 노드 정보를 미리 저장하여 불필요한 참조 방지
+        const nodeData = dragData.node;
+        setDraggedNode(nodeData);
+        setDraggedNodeKey(nodeData.key);
+
+        const isShuttleMode = type === 'SHUTTLE_LIST' || type !== 'TREE_TO_TREE';
+
+        const optimalMultiLevelZone = !isShuttleMode
+          ? findOptimalMultiLevelZone(treeData, treeId)
+          : null;
+
         if (treeContext && treeContext.setDragState) {
           treeContext.setDragState({
-            node: JSON.parse(JSON.stringify(dragData.node)),
+            node: { ...nodeData },
             sourceTreeId: treeId,
             isDragging: true,
+            isShuttleMode,
+            activeMultiLevelZone: optimalMultiLevelZone,
           });
+        }
+
+        // 드래그 시작 시 부드러운 애니메이션을 위한 클래스 추가
+        const nodeElement = document.querySelector(`[data-node-key="${nodeData.key}"]`);
+        if (nodeElement) {
+          nodeElement.classList.add('drag-lift-start');
+          setTimeout(() => {
+            nodeElement.classList.remove('drag-lift-start');
+          }, 300);
         }
       }
     },
-    [treeData, treeId, treeContext],
+    [treeData, treeId, treeContext, type],
   );
 
   // 드롭 핸들러
@@ -113,6 +139,15 @@ export const useDndTreeLogic = (
 
         setTreeData(newTreeData);
         setInitialData(newInitialData);
+      }
+
+      // 성공 애니메이션 적용
+      const targetNodeElement = document.querySelector(`[data-node-key="${targetNode.key}"]`);
+      if (targetNodeElement) {
+        targetNodeElement.classList.add('enhanced-success-drop');
+        setTimeout(() => {
+          targetNodeElement.classList.remove('enhanced-success-drop');
+        }, 800);
       }
 
       // 액션 콜백 호출

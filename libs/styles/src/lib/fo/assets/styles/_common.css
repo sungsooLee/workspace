@@ -13,24 +13,23 @@
 }
 
 html {
-  font-size: 62.5%;
+  @apply text-[62.5%];
 }
 
 html {
-  font-family: var(--font-family) !important;
+  @apply font-[var(--font-family)] !important;
 }
 
 body {
-  font-size: 1.6rem;
-  font-weight: 400;
-  color: var(--gray10);
-  line-height: 160%;
-  overflow-x: hidden;
-  @apply scrollbar;
+  @apply scrollbar overflow-x-hidden text-[1.6rem] font-[400] leading-[160%] text-[var(--gray10)];
 }
 
 strong {
-  font-weight: 600;
+  @apply font-[600];
+}
+
+img {
+  @apply align-top;
 }
 
 /* 일반 */

@@ -3,6 +3,7 @@ import { IcoChevronLeft, IcoCheck } from '@learnway/icons';
 import { VideoPlayerContainerProps } from '../types';
 
 import styles from './settings-popover.module.css';
+import { VideoQuerites } from '../hooks/video-player.hook';
 
 const MENU = {
   ROOT: 'root',
@@ -14,9 +15,13 @@ const MENU = {
 
 type MenuType = (typeof MENU)[keyof typeof MENU];
 
-const SettingsPopover = ({
-  changePlaybackRate,
-}: Pick<VideoPlayerContainerProps, 'changePlaybackRate'>) => {
+const hasHeightValueEncodedVideo = (data: any[], height: number) => {
+  return !!data.find((item) => {
+    return item.height === height;
+  });
+};
+
+const SettingsPopover = (props: VideoPlayerContainerProps) => {
   const [activeMenu, setActiveMenu] = useState<MenuType>(MENU.ROOT);
   const [selected, setSelected] = useState({
     speed: '1x',
@@ -41,7 +46,7 @@ const SettingsPopover = ({
                 label={v}
                 active={selected.speed === v}
                 onClick={() => {
-                  changePlaybackRate(parseFloat(v.replace('x', '')));
+                  props.changePlaybackRate(parseFloat(v.replace('x', '')));
                   handleSelect('speed', v);
                 }}
               />
@@ -61,19 +66,32 @@ const SettingsPopover = ({
             ))}
           </SubMenu>
         );
-      case MENU.QUALITY:
+      case MENU.QUALITY: {
+        const listQuerites: any[] = [{ ...VideoQuerites.auto }];
+        if (props.encodedVideos) {
+          if (hasHeightValueEncodedVideo(props.encodedVideos, VideoQuerites.high.height))
+            listQuerites.push(VideoQuerites.high);
+          if (hasHeightValueEncodedVideo(props.encodedVideos, VideoQuerites.middle.height))
+            listQuerites.push(VideoQuerites.middle);
+          if (hasHeightValueEncodedVideo(props.encodedVideos, VideoQuerites.low.height))
+            listQuerites.push(VideoQuerites.low);
+        }
         return (
           <SubMenu title="품질" badge="9-4" onBack={() => setActiveMenu(MENU.ROOT)}>
-            {['Auto', '854×480, 1.1Mbps', '1280×720, 2.2Mbps', '1920×1080, 5.1Mbps'].map((v) => (
+            {listQuerites.map((v) => (
               <MenuItem
-                key={v}
-                label={v}
-                active={selected.quality === v}
-                onClick={() => handleSelect('quality', v)}
+                key={v.label}
+                label={v.label}
+                active={props.videoQuality.label === v.label}
+                onClick={() => {
+                  handleSelect('quality', v.label);
+                  props.changeQuality(v);
+                }}
               />
             ))}
           </SubMenu>
         );
+      }
       case MENU.SUBTITLE:
         return (
           <SubMenu title="자막" badge="9-5" onBack={() => setActiveMenu(MENU.ROOT)}>
@@ -110,20 +128,17 @@ const SettingsPopover = ({
                 onClick={() => setActiveMenu(MENU.SPEED)}
               />
               <MenuItem
-                label="소스"
-                value={selected.source}
-                onClick={() => setActiveMenu(MENU.SOURCE)}
-              />
-              <MenuItem
                 label="품질"
-                value={selected.quality}
+                value={props.videoQuality.label}
                 onClick={() => setActiveMenu(MENU.QUALITY)}
               />
-              <MenuItem
-                label="자막"
-                value={selected.subtitle}
-                onClick={() => setActiveMenu(MENU.SUBTITLE)}
-              />
+              {props.videoConfig && (
+                <MenuItem
+                  label="자막"
+                  value={selected.subtitle}
+                  onClick={() => setActiveMenu(MENU.SUBTITLE)}
+                />
+              )}
             </div>
           </div>
         );

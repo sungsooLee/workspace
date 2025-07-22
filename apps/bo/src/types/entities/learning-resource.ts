@@ -442,9 +442,9 @@ interface EncodedAudio {
   filePath: string;
 }
 
-interface VideoSubtitles {
+export interface VideoSubtitle {
   subtitleFileUuid: string;
-  languageCode: string;
+  languageCountryCode: string;
   subtitleName: string;
   subtitleUrl?: string;
 }
@@ -459,7 +459,7 @@ export interface GetVideoResourceRes {
   contentAddInfo: number;
   encodedVideos: EncodedVideo[] | null;
   encodedAudios: EncodedAudio[] | null;
-  videoSubtitles: VideoSubtitles[];
+  videoSubtitles: VideoSubtitle[];
 }
 
 export interface PutVideoChangeParams {
@@ -475,6 +475,19 @@ export interface PutVideoChangeRes {
 }
 
 export type GetVideoFileChangeRes = PutVideoChangeRes;
+
+export interface PutVideoUpdateParams extends ContentBaseInfo {
+  videoSubtitles?: VideoSubtitle[];
+}
+
+export interface PutVideoUpdateRes extends ContentInformation {
+  fileChangeId: number | null;
+  processingStatus: ProcessingStatus;
+  masterVideo: string | null;
+  encodedVideos: EncodedVideo[] | null;
+  encodedAudios: EncodedAudio[] | null;
+  videoSubtitles: VideoSubtitle[];
+}
 
 export enum EnQuestionType {
   SINGLE = 'SINGLE',
@@ -522,4 +535,18 @@ export interface QuestionStatusUpdateReq {
   contentUuid: string;
   examQuestionUuid: string;
   isUsed: boolean;
+}
+
+export interface RandomQuestionCountInfo {
+  questionType: EnQuestionType;
+  hardLevelCount: number;
+  mediumLevelCount: number;
+  easyLevelCount: number;
+}
+
+export interface RandomQuestionCountUpdateReq {
+  contentUuid: string;
+  questionGenType: ExamQuestionGenType;
+  questionTotalCount: number;
+  countList: RandomQuestionCountInfo[];
 }

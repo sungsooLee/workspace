@@ -1,10 +1,12 @@
 import { useCallback } from 'react';
 import {
+  useCopyCurriculum,
   useCreateCurriculum,
   useCreateFixedModule,
   useCreateGeneralModule,
   useCreateLessonByCurriculum,
   useCreateLessonByModule,
+  useDeleteCurriculum,
   useDeleteCurriculumLesson,
   useDeleteCurriculumModule,
   useDndCurriculumTree,
@@ -33,8 +35,11 @@ export const useCurriculumApi = ({ curriculumId, onFormChange }: UseCurriculumAp
   const { update: updateCurriculumGeneralModule } = useUpdateGeneralModule({});
   const { update: updateLessonByGeneral } = useUpdateLessonByGeneral({});
   const { update: updateLessonByFixed } = useUpdateLessonByFixed({});
+  const { delete: deleteCurriculum } = useDeleteCurriculum({});
   const { delete: deleteCurriculumModule } = useDeleteCurriculumModule({});
   const { delete: deleteCurriculumLesson } = useDeleteCurriculumLesson({});
+  const { copy: copyCurriculum } = useCopyCurriculum({});
+
   const dndCurriculumMutation = useDndCurriculumTree(curriculumId, {});
 
   const moduleCreateStrategy = useCallback(
@@ -133,6 +138,7 @@ export const useCurriculumApi = ({ curriculumId, onFormChange }: UseCurriculumAp
     // Curriculum API
     createCurriculum,
     updateCurriculum,
+    copyCurriculum,
 
     // Module API
     createCurriculumFixedModule,
@@ -149,6 +155,7 @@ export const useCurriculumApi = ({ curriculumId, onFormChange }: UseCurriculumAp
     updateLessonByFixed,
 
     // Delete API
+    deleteCurriculum,
     deleteCurriculumModule,
     deleteCurriculumLesson,
 

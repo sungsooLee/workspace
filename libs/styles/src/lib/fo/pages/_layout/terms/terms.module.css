@@ -3,7 +3,7 @@
   .title_box {
     @apply flex items-center justify-between;
     h2 {
-      @apply title_4_b text-[#131C30];
+      @apply headline3-b text-[var(--gray10)];
     }
     button {
       @apply w-[300px];
@@ -13,9 +13,9 @@
     }
   }
   .details {
-    @apply body_3_r mt-[32px] leading-[1.6] text-[#4C515E];
+    @apply body-md mt-[40px] leading-[1.5] text-[var(--gray10)];
     h3 {
-      @apply body_3_b;
+      @apply body-lg-b mb-[20px];
     }
   }
 }
