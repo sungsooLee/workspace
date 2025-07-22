@@ -523,3 +523,17 @@ export interface QuestionStatusUpdateReq {
   examQuestionUuid: string;
   isUsed: boolean;
 }
+
+export interface RandomQuestionCountInfo {
+  questionType: EnQuestionType;
+  hardLevelCount: number;
+  mediumLevelCount: number;
+  easyLevelCount: number;
+}
+
+export interface RandomQuestionCountUpdateReq {
+  contentUuid: string;
+  questionGenType: ExamQuestionGenType;
+  questionTotalCount: number;
+  countList: RandomQuestionCountInfo[];
+}
