@@ -3,14 +3,11 @@ import { t } from 'i18next';
 import {
   ModalBody,
   ModalContainer,
-  ModalFooter,
   ModalTitle,
   useModal,
   Button,
   TreeContainer,
-  TreeView,
   TreeNode,
-  TreeEventPayload,
   DndTreeView,
 } from '@learnway/ui';
 import { cn } from '@learnway/shared';
@@ -89,7 +86,7 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
 
           const rootMenu = getAllParentAndChildTreeById(baseMenuTreeData, sourceMenuId);
 
-          const payload = { tenantId: tenantId, menus: rootMenu.children };
+          const payload = { tenantId, menus: rootMenu.children };
           console.log(payload);
           tentantMenuCreate(payload);
         }
@@ -245,7 +242,7 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
                 <div className={layoutStyles.inner_contents}>
                   <DndTreeView
                     treeId="mapping-menu-tree"
-                    type={'DRAG_DROP'}
+                    type={'TREE_TO_TREE'}
                     data={baseMenuTreeData}
                     // nodeButtons={renderBaseSelectButtons}
                     // selectedNode={selectedNode}
