@@ -5,7 +5,7 @@ import { TestPaperBasicInfoDetail } from '@types';
 import { learningResourceQueryOptions } from '@entities/learning-resource';
 import { PageMode } from '../-common/type';
 
-const useExamLoaderData = () => {
+export const useExamLoaderData = () => {
   const { data: loginUser } = useFetchAuthUser();
 
   const tenantId = loginUser?.activeTenant?.tenantId ?? -1;
@@ -14,7 +14,7 @@ const useExamLoaderData = () => {
     state: { mode = PageMode.CREATE, contentUuid = '', listParam },
   } = useCurrentRoute();
 
-  const { data } = useQuery(
+  const { data, refetch: refetchContentDetail } = useQuery(
     learningResourceQueryOptions.getContent<TestPaperBasicInfoDetail>(contentUuid),
   );
 
@@ -22,7 +22,5 @@ const useExamLoaderData = () => {
     learningResourceQueryOptions.getCurriculumsMapping(contentUuid),
   );
 
-  return { mode, tenantId, contentUuid, data, hasMapping, listParam };
+  return { mode, tenantId, contentUuid, data, refetchContentDetail, hasMapping, listParam };
 };
-
-export { useExamLoaderData };

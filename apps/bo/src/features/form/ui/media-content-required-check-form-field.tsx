@@ -49,7 +49,7 @@ const MediaContentRequiredCheckFormFieldComponent = ({
             required: true,
             conditions: [
               {
-                fn: (values: Record<string, any>) => !values.isContentSecured,
+                fn: (values: Record<string, any>) => !values.isCopyrighted,
                 message: t("'저작권 확인' 체크하세요."),
               },
             ],
@@ -72,7 +72,7 @@ const MediaContentRequiredCheckFormFieldComponent = ({
             required: true,
             conditions: [
               {
-                fn: (values: Record<string, any>) => !values.isContentSecured,
+                fn: (values: Record<string, any>) => !values.isSecured,
                 message: t("'보안 확인' 체크하세요."),
               },
             ],
