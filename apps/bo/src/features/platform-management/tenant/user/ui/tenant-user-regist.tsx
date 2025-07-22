@@ -557,7 +557,7 @@ const formConfig = (): DynamicFormConfig => ({
       name: 'companyMemberJoinTypeList',
       type: 'checkbox-group',
       label: t('회원 가입 유형'),
-      value: ['BO_JOIN_MANAGER'],
+      value: [],
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.CompanyMemberJoinType'],
       },
