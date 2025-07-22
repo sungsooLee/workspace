@@ -17,7 +17,6 @@ export function initI18N(resources: any) {
     },
     resources,
   });
-  console.log('getBrowserLang()', getDefaultLang());
   dayjs.locale(getDefaultLang());
 }
 

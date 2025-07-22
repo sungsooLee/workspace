@@ -64,7 +64,7 @@ function RouteComponent() {
   }, []);
 
   const loginErrorAlert = (error: any) => {
-    console.log('loginErrorAlert :: ', error);
+    // console.log('loginErrorAlert :: ', error);
 
     // TODO 에러코드 정의시 처리 필요
     switch (error.code) {
@@ -196,7 +196,7 @@ function RouteComponent() {
   const handleExpireCheck = async (data: any) => {
     // if (dayjs(authData?.passwordExpireDate).diff(dayjs()) < 0) {
     const diff = dateDiff(data!.passwordExpireDate, new Date(), 'd');
-    console.log('### login date check', diff);
+    // console.log('### login date check', diff);
     if (diff !== undefined && 0 >= diff) {
       if (data?.authType === 'PLATFORM') {
         // 패스워드 사용자
@@ -224,7 +224,7 @@ function RouteComponent() {
   };
 
   const handleTenantCheck = async (data: any) => {
-    console.log(' ### handleTenantSelectCheck', data);
+    // console.log(' ### handleTenantSelectCheck', data);
 
     // TODO 테넌트/역할 구성 후 제외 필요
     // return true;

@@ -88,9 +88,10 @@ export const useFormRow2 = (
   name: string,
   fieldConfig?: FormConfig,
 ) => {
-  const { control, builders, formState, fieldRefs, registerField, addValidator, ...providerProps } = provider;
+  const { control, builders, formState, fieldRefs, registerField, addValidator, ...providerProps } =
+    provider;
   const { t } = useTranslation();
-  
+
   // 이 인스턴스에서 등록된 필드를 추적하는 ref
   const registeredRef = useRef(false);
 
@@ -100,26 +101,26 @@ export const useFormRow2 = (
   // fieldConfig가 있고 name이 있으면 필드를 등록 (한 번만)
   useEffect(() => {
     if (fieldConfig && name && fieldConfig.name && !registeredRef.current) {
-      console.log(`Registering field: ${name}`);
-      
+      // console.log(`Registering field: ${name}`);
+
       // 등록 플래그 설정
       registeredRef.current = true;
-      
+
       // FormConfig 형태로 변환하여 등록
       const configToRegister: FormConfig = {
         ...fieldConfig,
         name: fieldConfig.name, // name을 명시적으로 설정
       } as FormConfig;
-      
+
       registerField(configToRegister);
-      
+
       // validation이 있으면 validator도 등록
       if (fieldConfig.validation) {
         addValidator(name, fieldConfig.validation);
       }
     }
   }, [fieldConfig?.name, name, registerField, addValidator]);
-  
+
   // 컴포넌트 언마운트 시 등록 플래그 리셋
   useEffect(() => {
     return () => {
@@ -142,7 +143,8 @@ export const useFormRow2 = (
       errorMessage = message;
 
       if (errorMessage.indexOf('{{label}}') > -1 && formConfig.label) {
-        const labelText = typeof formConfig.label === 'function' ? formConfig.label() : formConfig.label;
+        const labelText =
+          typeof formConfig.label === 'function' ? formConfig.label() : formConfig.label;
         errorMessage = errorMessage.replace('{{label}}', t(labelText));
       }
     }
