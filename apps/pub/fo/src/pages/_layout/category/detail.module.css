@@ -27,25 +27,35 @@
   }
 
   .gray_box {
-    @apply overflow-hidden rounded-[8px] bg-[var(--gray1)] p-[20px];
+    @apply overflow-hidden rounded-[12px] bg-[var(--blue98)] p-[32px] pb-[24px];
   }
 
   .divisio_box {
     li {
       @apply block;
       & + li {
-        @apply mt-[32px] border-t-[1px] border-solid border-[var(--gray4)] pt-[12px];
+        @apply mt-[24px] border-t-[1px] border-solid border-[var(--gray92)] pt-[24px];
       }
     }
   }
 
   .search_division {
     @apply flex items-center;
-    .search_select {
-      @apply mr-[12px] w-[140px];
+    .search_area {
+      @apply flex w-[564px];
+      .search_select {
+        @apply mr-[12px] flex-1 shrink-0;
+      }
     }
-    .search {
-      @apply w-[240px];
+
+    .search_input {
+      @apply flex flex-1;
+      [class*='nlp--input'] {
+        @apply flex-1 border-[var(--gray75)] bg-white;
+      }
+      [class*='nlp--button'] {
+        @apply ml-[8px] w-[74px] shrink-0;
+      }
     }
   }
 

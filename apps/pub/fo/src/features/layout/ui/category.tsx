@@ -158,6 +158,7 @@ const CategoryCompoment = ({ isOpen }: CategoryPopupProps) => {
   return (
     <div className={styles.start}>
       <Button
+        className={styles.btn_category}
         onlyIcon={true}
         icon={
           isOpen ? (

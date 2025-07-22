@@ -1,5 +1,13 @@
 /* category.module.css */
 .start {
+  .btn_category {
+    @apply mr-[32px] flex h-[32px] w-[32px] items-center justify-center;
+    svg {
+      @apply m-auto;
+    }
+    &.active {
+    }
+  }
   .category_wrap {
     @apply flex;
     .menu_list_wrap {
