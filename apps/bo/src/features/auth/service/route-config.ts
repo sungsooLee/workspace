@@ -87,23 +87,23 @@ async function authorization({ location, context }: { location: ParsedLocation; 
 export function pageRouteConfig(routeConfig?: PageRouteConfig<PageMeta>) {
   return {
     beforeLoad: async ({ location, context, params, search, preload, route }: any) => {
-      // console.log('### beforeLoad start');
+      console.log('### beforeLoad start');
       // 인증 정보 확인
-      // if (routeConfig?.authorization) {
-      //   try {
-      //     await authorization({ location, context });
-      //   } catch (e) {
-      //     if (e === ERROR.PAGE_ACCESS_RIGHTS) {
-      //       throw redirect({ to: '/' });
-      //     } else if (e === ERROR.PASSWORD_EXPIRE) {
-      //       throw redirect({ to: '/change-password' });
-      //     } else {
-      //       throw redirect({ to: '/login', search: { redirect: location.pathname } });
-      //     }
-      //   }
-      // }
+      if (routeConfig?.authorization) {
+        try {
+          await authorization({ location, context });
+        } catch (e) {
+          if (e === ERROR.PAGE_ACCESS_RIGHTS) {
+            throw redirect({ to: '/' });
+          } else if (e === ERROR.PASSWORD_EXPIRE) {
+            throw redirect({ to: '/change-password' });
+          } else {
+            throw redirect({ to: '/login', search: { redirect: location.pathname } });
+          }
+        }
+      }
 
-      // return { ...context, state: location?.state };
+      return { ...context, state: location?.state };
     },
     loader: ({ location, context, params, search, preload, route, ...props }: any) => {
       // 기타 validation

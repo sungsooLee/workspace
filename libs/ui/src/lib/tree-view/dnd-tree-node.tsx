@@ -621,7 +621,7 @@ export const DndTreeNode: React.FC<DndTreeNodeProps> = ({
           minHeight: '40px',
           margin: shouldCollapseForSameLevel ? '0px 0' : '2px 0',
           opacity: isDragging ? 0.7 : 1,
-          cursor: isDraggable ? 'grab' : 'default',
+          cursor: isDraggable ? (isDragging ? 'grabbing' : 'grab') : 'default',
           border: getInsideDropBorder(
             isOverInside || (isDraggedFromOtherTree && dropPosition === 'INSIDE'),
             isValidDropTargetForPosition('INSIDE'),
@@ -706,7 +706,7 @@ export const DndTreeNode: React.FC<DndTreeNodeProps> = ({
             alignItems: 'center',
             position: 'relative',
             minHeight: '36px',
-            zIndex: 10,
+            zIndex: 1,
           }}
         >
           <InsideDropGuide

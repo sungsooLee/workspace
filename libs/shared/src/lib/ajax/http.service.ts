@@ -141,14 +141,14 @@ export class HttpService {
       this.options = options;
     }
 
-    // this.cancelTokenSource = axios.CancelToken.source();
-    this.httpClient = axios.create({ ...options });
-    // this.httpClient.interceptors.request.use(this.interceptors?.request.onFulfilled);
-    // this.httpClient.interceptors.response.use(
-    //   this.interceptors?.response.onFulfilled,
-    //   this.interceptors?.response.onRejected,
-    // );
-    // this.completed = false;
+    this.cancelTokenSource = axios.CancelToken.source();
+    this.httpClient = axios.create({ ...options, cancelToken: this.cancelTokenSource.token });
+    this.httpClient.interceptors.request.use(this.interceptors?.request.onFulfilled);
+    this.httpClient.interceptors.response.use(
+      this.interceptors?.response.onFulfilled,
+      this.interceptors?.response.onRejected,
+    );
+    this.completed = false;
   }
 
   private httpRequest<T>(args: RequestArgs): AxiosPromise<T> {
