@@ -103,10 +103,10 @@ function RouteComponent() {
       <div className={styles.swiper}>
         <Carousel
           items={items}
-          className={`${styles.recent_swiper} category_swiper`}
+          className={cn(styles.recent_swiper, 'category_swiper')}
           spaceBetween={20}
-          slidesPerView={2.2}
-          navigation={true}
+          slidesPerView={2.5}
+          showNavigation={true}
         />
       </div>
 
@@ -114,51 +114,55 @@ function RouteComponent() {
         <ul className={styles.divisio_box}>
           <li>
             <div className={styles.search_division}>
-              <Dropdown
-                className={styles.search_select}
-                size="lg"
-                options={[
-                  { value: 'a', label: '대분류' },
-                  { value: 'b', label: 'ST1' },
-                  { value: 'c', label: '아이오닉 6' },
-                  { value: 'd', label: '아이오닉 5' },
-                  { value: 'e', label: '코나' },
-                  { value: 'f', label: '넥쏘' },
-                  { value: 'g', label: '포터' },
-                  { value: 'h', label: '캐스퍼' },
-                ]}
-                value={searchValues01}
-                onChange={(selected) => setSearchValues01(selected)}
-              />
-              <Dropdown
-                className={styles.search_select}
-                size="lg"
-                options={[
-                  { value: 'a', label: '중분류' },
-                  { value: 'b', label: 'NE PE(2024)' },
-                  { value: 'c', label: 'NE(2021)' },
-                ]}
-                value={searchValues02}
-                onChange={(selected) => setSearchValues02(selected)}
-              />
-              <Dropdown
-                className={styles.search_select}
-                size="lg"
-                options={[
-                  { value: 'a', label: '소분류' },
-                  { value: 'b', label: '상품정보' },
-                  { value: 'c', label: '기술정보' },
-                ]}
-                value={searchValues03}
-                onChange={(selected) => setSearchValues03(selected)}
-              />
-              <ContentsRow className={styles.search}>
-                <Input id="" type="text" placeholder="과정명 검색" showSearchIcon={true} />
-              </ContentsRow>
+              <div className={styles.search_area}>
+                <Dropdown
+                  className={styles.search_select}
+                  size="lg"
+                  options={[
+                    { value: 'a', label: '대분류' },
+                    { value: 'b', label: 'ST1' },
+                    { value: 'c', label: '아이오닉 6' },
+                    { value: 'd', label: '아이오닉 5' },
+                    { value: 'e', label: '코나' },
+                    { value: 'f', label: '넥쏘' },
+                    { value: 'g', label: '포터' },
+                    { value: 'h', label: '캐스퍼' },
+                  ]}
+                  value={searchValues01}
+                  onChange={(selected) => setSearchValues01(selected)}
+                />
+                <Dropdown
+                  className={styles.search_select}
+                  size="lg"
+                  options={[
+                    { value: 'a', label: '중분류' },
+                    { value: 'b', label: 'NE PE(2024)' },
+                    { value: 'c', label: 'NE(2021)' },
+                  ]}
+                  value={searchValues02}
+                  onChange={(selected) => setSearchValues02(selected)}
+                />
+                <Dropdown
+                  className={styles.search_select}
+                  size="lg"
+                  options={[
+                    { value: 'a', label: '소분류' },
+                    { value: 'b', label: '상품정보' },
+                    { value: 'c', label: '기술정보' },
+                  ]}
+                  value={searchValues03}
+                  onChange={(selected) => setSearchValues03(selected)}
+                />
+              </div>
+
+              <div className={styles.search_input}>
+                <Input id="" type="text" placeholder="과정명 검색" inputSize={'lg'} />
+                <Button label={'검색'} variant={'primary'} size={'lx'} />
+              </div>
             </div>
           </li>
           <li>
-            <Filter></Filter>
+            <Filter />
           </li>
         </ul>
       </div>
@@ -609,9 +613,12 @@ function RouteComponent() {
           {/* pagination */}
           <Pagination
             className={cn(styles.pagenation, styles.paginationItem)}
-            count={3}
-            page={page}
-            onChange={handlePageChange}
+            pageNumber={0}
+            totalPages={5}
+            hidePageSizeOptions={true}
+            hidePageInfo={true}
+            showFirstButton={false}
+            showLastButton={false}
           />
         </div>
 
