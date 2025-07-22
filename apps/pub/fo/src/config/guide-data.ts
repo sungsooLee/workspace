@@ -248,11 +248,11 @@ export const guideData = [
     screenId: 'NLP_FO_MYP_1003',
     screenName: '비밀번호 확인(공통)',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '/',
-    pageType: 'Pop-up',
+    pageId: 'my/password-verify',
+    pageType: 'Page',
     completionDate: '2025-03-25',
-    lastUpdateDate: '',
-    remarks: '- password-verify-popup.tsx',
+    lastUpdateDate: '2025-07-22',
+    remarks: '- password-verify.tsx (팝업 -> 페이지로 변경)',
   },
   {
     screenId: 'NLP_FO_MYP_1006',
@@ -318,10 +318,10 @@ export const guideData = [
     screenId: 'NLP_FO_MYP_1010',
     screenName: 'My_비밀번호 확인_EN',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '/',
-    pageType: 'Pop-up',
+    pageId: 'my/password-verify',
+    pageType: 'Page',
     completionDate: '2025-03-25',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-22',
     remarks: '- EN',
   },
   {
@@ -996,7 +996,7 @@ export const guideData = [
     pageId: 'course-registration/course-registration-all',
     pageType: 'Page',
     completionDate: '2025-03-31',
-    lastUpdateDate: '2025-07-15',
+    lastUpdateDate: '2025-07-22',
     remarks: '- course-registration-all.tsx',
   },
   {

@@ -62,6 +62,7 @@ import { Route as LayoutSettingSettingSnsmImport } from './pages/_layout/setting
 import { Route as LayoutSettingSettingLicensemImport } from './pages/_layout/setting/setting-license_m'
 import { Route as LayoutSettingSettingLanguagemImport } from './pages/_layout/setting/setting-language_m'
 import { Route as LayoutMySettingSnsImport } from './pages/_layout/my/setting-sns'
+import { Route as LayoutMyPasswordVerifyImport } from './pages/_layout/my/password-verify'
 import { Route as LayoutMyMembershipSecessionImport } from './pages/_layout/my/membership-secession'
 import { Route as LayoutMyInformationChangeImport } from './pages/_layout/my/information-change'
 import { Route as LayoutIntegratedSearchIntegratedSearchmImport } from './pages/_layout/integrated-search/integrated-search_m'
@@ -438,6 +439,12 @@ const LayoutSettingSettingLanguagemRoute =
 const LayoutMySettingSnsRoute = LayoutMySettingSnsImport.update({
   id: '/my/setting-sns',
   path: '/my/setting-sns',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutMyPasswordVerifyRoute = LayoutMyPasswordVerifyImport.update({
+  id: '/my/password-verify',
+  path: '/my/password-verify',
   getParentRoute: () => LayoutRoute,
 } as any)
 
@@ -1679,6 +1686,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutMyMembershipSecessionImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/my/password-verify': {
+      id: '/_layout/my/password-verify'
+      path: '/my/password-verify'
+      fullPath: '/my/password-verify'
+      preLoaderRoute: typeof LayoutMyPasswordVerifyImport
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/my/setting-sns': {
       id: '/_layout/my/setting-sns'
       path: '/my/setting-sns'
@@ -1914,6 +1928,7 @@ interface LayoutRouteChildren {
   LayoutIntegratedSearchIntegratedSearchmRoute: typeof LayoutIntegratedSearchIntegratedSearchmRoute
   LayoutMyInformationChangeRoute: typeof LayoutMyInformationChangeRoute
   LayoutMyMembershipSecessionRoute: typeof LayoutMyMembershipSecessionRoute
+  LayoutMyPasswordVerifyRoute: typeof LayoutMyPasswordVerifyRoute
   LayoutMySettingSnsRoute: typeof LayoutMySettingSnsRoute
   LayoutSettingSettingLanguagemRoute: typeof LayoutSettingSettingLanguagemRoute
   LayoutSettingSettingLicensemRoute: typeof LayoutSettingSettingLicensemRoute
@@ -1954,6 +1969,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
     LayoutIntegratedSearchIntegratedSearchmRoute,
   LayoutMyInformationChangeRoute: LayoutMyInformationChangeRoute,
   LayoutMyMembershipSecessionRoute: LayoutMyMembershipSecessionRoute,
+  LayoutMyPasswordVerifyRoute: LayoutMyPasswordVerifyRoute,
   LayoutMySettingSnsRoute: LayoutMySettingSnsRoute,
   LayoutSettingSettingLanguagemRoute: LayoutSettingSettingLanguagemRoute,
   LayoutSettingSettingLicensemRoute: LayoutSettingSettingLicensemRoute,
@@ -2123,6 +2139,7 @@ export interface FileRoutesByFullPath {
   '/integrated-search/integrated-search_m': typeof LayoutIntegratedSearchIntegratedSearchmRoute
   '/my/information-change': typeof LayoutMyInformationChangeRoute
   '/my/membership-secession': typeof LayoutMyMembershipSecessionRoute
+  '/my/password-verify': typeof LayoutMyPasswordVerifyRoute
   '/my/setting-sns': typeof LayoutMySettingSnsRoute
   '/setting/setting-language_m': typeof LayoutSettingSettingLanguagemRoute
   '/setting/setting-license_m': typeof LayoutSettingSettingLicensemRoute
@@ -2244,6 +2261,7 @@ export interface FileRoutesByTo {
   '/integrated-search/integrated-search_m': typeof LayoutIntegratedSearchIntegratedSearchmRoute
   '/my/information-change': typeof LayoutMyInformationChangeRoute
   '/my/membership-secession': typeof LayoutMyMembershipSecessionRoute
+  '/my/password-verify': typeof LayoutMyPasswordVerifyRoute
   '/my/setting-sns': typeof LayoutMySettingSnsRoute
   '/setting/setting-language_m': typeof LayoutSettingSettingLanguagemRoute
   '/setting/setting-license_m': typeof LayoutSettingSettingLicensemRoute
@@ -2369,6 +2387,7 @@ export interface FileRoutesById {
   '/_layout/integrated-search/integrated-search_m': typeof LayoutIntegratedSearchIntegratedSearchmRoute
   '/_layout/my/information-change': typeof LayoutMyInformationChangeRoute
   '/_layout/my/membership-secession': typeof LayoutMyMembershipSecessionRoute
+  '/_layout/my/password-verify': typeof LayoutMyPasswordVerifyRoute
   '/_layout/my/setting-sns': typeof LayoutMySettingSnsRoute
   '/_layout/setting/setting-language_m': typeof LayoutSettingSettingLanguagemRoute
   '/_layout/setting/setting-license_m': typeof LayoutSettingSettingLicensemRoute
@@ -2492,6 +2511,7 @@ export interface FileRouteTypes {
     | '/integrated-search/integrated-search_m'
     | '/my/information-change'
     | '/my/membership-secession'
+    | '/my/password-verify'
     | '/my/setting-sns'
     | '/setting/setting-language_m'
     | '/setting/setting-license_m'
@@ -2612,6 +2632,7 @@ export interface FileRouteTypes {
     | '/integrated-search/integrated-search_m'
     | '/my/information-change'
     | '/my/membership-secession'
+    | '/my/password-verify'
     | '/my/setting-sns'
     | '/setting/setting-language_m'
     | '/setting/setting-license_m'
@@ -2735,6 +2756,7 @@ export interface FileRouteTypes {
     | '/_layout/integrated-search/integrated-search_m'
     | '/_layout/my/information-change'
     | '/_layout/my/membership-secession'
+    | '/_layout/my/password-verify'
     | '/_layout/my/setting-sns'
     | '/_layout/setting/setting-language_m'
     | '/_layout/setting/setting-license_m'
@@ -2881,6 +2903,7 @@ export const routeTree = rootRoute
         "/_layout/integrated-search/integrated-search_m",
         "/_layout/my/information-change",
         "/_layout/my/membership-secession",
+        "/_layout/my/password-verify",
         "/_layout/my/setting-sns",
         "/_layout/setting/setting-language_m",
         "/_layout/setting/setting-license_m",
@@ -3350,6 +3373,10 @@ export const routeTree = rootRoute
     },
     "/_layout/my/membership-secession": {
       "filePath": "_layout/my/membership-secession.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/my/password-verify": {
+      "filePath": "_layout/my/password-verify.tsx",
       "parent": "/_layout"
     },
     "/_layout/my/setting-sns": {
