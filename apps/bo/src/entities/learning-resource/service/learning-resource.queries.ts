@@ -11,6 +11,7 @@ import {
   PostDraftHtmlVideoParams,
   PostDraftVideosParams,
   PutVideoChangeParams,
+  PutVideoUpdateParams,
   QuestionItem,
   QuestionItemDeleteParam,
   QuestionStatusUpdateReq,
@@ -147,6 +148,9 @@ export const mutateOptions = {
   }),
   postDraftVideos: () => ({
     mutationFn: (params: PostDraftVideosParams) => LearningResourceService.postDraftVideos(params),
+  }),
+  putVideoUpdate: () => ({
+    mutationFn: (params: PutVideoUpdateParams) => LearningResourceService.putVideoUpdate(params),
   }),
   putVideoChange: () => ({
     mutationFn: (params: PutVideoChangeParams) => LearningResourceService.putVideoChange(params),
