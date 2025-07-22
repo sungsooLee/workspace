@@ -3,7 +3,7 @@ import { useLocation } from '@tanstack/react-router';
 import { MobileView, BrowserView } from 'react-device-detect';
 import { PAGE_META_BY_PATH, isSigninPage } from '../../features/platform';
 import { MobileAuthContainerHeader } from '../../widgets/layout/m.ui/auth/auth-container/auth-container-header';
-import styles from './auth-title.module.css';
+import styles from '@learnway/styles/fo/pages/_auth/auth-title.module.css';
 
 const AuthTitleCompoment = () => {
   const location = useLocation();
