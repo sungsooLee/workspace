@@ -27,6 +27,7 @@ import {
   QuestionItem,
   QuestionItemDeleteParam,
   QuestionStatusUpdateReq,
+  RandomQuestionCountUpdateReq,
   TestPaperBasicInfoSaveReq,
   TestPaperBasicInfoSaveRes,
 } from '@types';
@@ -201,6 +202,14 @@ export default class LearningResourceService {
   // 시험지 컨텐츠 단건 수정 (기본정보)
   static updateExamPaperContent(body: TestPaperBasicInfoSaveReq) {
     return httpService.put(`${CMSApiPrefix()}/exam`, body);
+  }
+
+  /**
+   * 시험지의 유형별/난이도별 문항수 수정 (랜덤으로 입력했을 경우)
+   * @param body
+   */
+  static updateExamPaperQuestionCountInfo(body: RandomQuestionCountUpdateReq) {
+    return httpService.put(`${CMSApiPrefix()}/exam/add`, body);
   }
 
   /**

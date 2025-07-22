@@ -3,7 +3,7 @@ import { IcoChevronLeft, IcoCheck } from '@learnway/icons';
 import { VideoPlayerContainerProps } from '../types';
 
 import styles from './settings-popover.module.css';
-import { VideoQuerites } from '../hooks/video-player.hook';
+import { getHeightValueEncodedVideo, VideoQualities } from '../hooks/video-player.hook';
 
 const MENU = {
   ROOT: 'root',
@@ -14,12 +14,6 @@ const MENU = {
 } as const;
 
 type MenuType = (typeof MENU)[keyof typeof MENU];
-
-const hasHeightValueEncodedVideo = (data: any[], height: number) => {
-  return !!data.find((item) => {
-    return item.height === height;
-  });
-};
 
 const SettingsPopover = (props: VideoPlayerContainerProps) => {
   const [activeMenu, setActiveMenu] = useState<MenuType>(MENU.ROOT);
@@ -67,14 +61,14 @@ const SettingsPopover = (props: VideoPlayerContainerProps) => {
           </SubMenu>
         );
       case MENU.QUALITY: {
-        const listQuerites: any[] = [{ ...VideoQuerites.auto }];
+        const listQuerites: any[] = [{ ...VideoQualities.auto }];
         if (props.encodedVideos) {
-          if (hasHeightValueEncodedVideo(props.encodedVideos, VideoQuerites.high.height))
-            listQuerites.push(VideoQuerites.high);
-          if (hasHeightValueEncodedVideo(props.encodedVideos, VideoQuerites.middle.height))
-            listQuerites.push(VideoQuerites.middle);
-          if (hasHeightValueEncodedVideo(props.encodedVideos, VideoQuerites.low.height))
-            listQuerites.push(VideoQuerites.low);
+          if (getHeightValueEncodedVideo(props.encodedVideos, VideoQualities.high.height))
+            listQuerites.push(VideoQualities.high);
+          if (getHeightValueEncodedVideo(props.encodedVideos, VideoQualities.middle.height))
+            listQuerites.push(VideoQualities.middle);
+          if (getHeightValueEncodedVideo(props.encodedVideos, VideoQualities.low.height))
+            listQuerites.push(VideoQualities.low);
         }
         return (
           <SubMenu title="품질" badge="9-4" onBack={() => setActiveMenu(MENU.ROOT)}>

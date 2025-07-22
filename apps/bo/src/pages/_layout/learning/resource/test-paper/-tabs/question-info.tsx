@@ -357,12 +357,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
       // 문항
       update: () => {
         if (questionGenTypeByForm === ExamQuestionGenType.RANDOM) {
-          //
-          // updateQuestionRandomCount({
-          //   contentUuid: data?.examPoolUuid ?? '',
-          //   questionGenType: questionGenTypeByForm,
-          //
-          // })
+          updateQuestionRandomCount();
         } else {
           saveBasicInfo?.(getValues());
         }
