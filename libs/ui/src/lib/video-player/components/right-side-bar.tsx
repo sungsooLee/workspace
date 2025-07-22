@@ -2,9 +2,7 @@ import { Pencil, MessageSquare, Headphones, SkipBack, SkipForward } from 'lucide
 import { VideoPlayerContainerProps } from '../types';
 import { IcoList } from '@learnway/icons';
 
-const RightSideBar = ({
-  toggleCurriculumSection,
-}: Pick<VideoPlayerContainerProps, 'toggleCurriculumSection'>) => {
+const RightSideBar = ({}) => {
   return (
     <aside className="flex h-screen flex-col justify-between bg-white p-4 text-[#111]">
       {/* 상단 메뉴 박스 */}
@@ -42,4 +40,7 @@ const RightSideBar = ({
   );
 };
 
+/**
+ * @deprecated
+ */
 export default RightSideBar;

@@ -1,5 +1,5 @@
 import type { VideoPlayerContainerProps } from './types';
-import { forwardRef, useEffect, useRef, useState } from 'react';
+import { forwardRef, PropsWithChildren, useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import LessonTitle from './components/lesson-title';
 import BottomProgressBar from './components/bottom-progress-bar';
@@ -8,9 +8,12 @@ import CentralControlButton from './components/central-control-button';
 import styles from './video-player-container.module.css';
 
 const AUTO_HIDE_DELAY = 3000; // 3
+type VideoPlayerContainerPlayerProps = {
+  player: VideoPlayerContainerProps;
+} & PropsWithChildren;
 
-const VideoPlayerContainerComponent = forwardRef<HTMLDivElement, VideoPlayerContainerProps>(
-  ({ children, showCurriculumSection, ...props }, ref) => {
+const VideoPlayerContainerComponent = forwardRef<HTMLDivElement, VideoPlayerContainerPlayerProps>(
+  ({ children, ...props }, ref) => {
     const [isHovered, setIsHovered] = useState(false);
 
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -53,28 +56,14 @@ const VideoPlayerContainerComponent = forwardRef<HTMLDivElement, VideoPlayerCont
 
           {/* 중앙 제어 버튼 */}
           <div className={`${styles.central_control} ${isHovered || styles.hide}`}>
-            <CentralControlButton {...props} />
+            <CentralControlButton {...props.player} />
           </div>
-
-          {/* 오른쪽 사이드 버튼 */}
-          {/* {!showCurriculumSection && (
-            <div
-              className={clsx({
-                'opacity-100': isHovered,
-                'opacity-0': !isHovered,
-              })}
-            >
-              <RightSideButtons {...props} />
-            </div>
-          )} */}
 
           {/* 하단 진행바 */}
           <div className={styles.progress_bar}>
-            <BottomProgressBar {...props} />
+            <BottomProgressBar {...props.player} />
           </div>
         </div>
-        {/* {showCurriculumSection && <CurriculumSidebar {...props} />}
-        {showCurriculumSection && <RightSideBar {...props} />} */}
       </div>
     );
   },

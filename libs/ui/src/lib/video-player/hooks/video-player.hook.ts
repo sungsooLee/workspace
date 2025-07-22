@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ReactPlayer from 'react-player';
 type UseVideoPlayer = {
   onProgressCallback?: (state: { played: number; playedSeconds: number; speed: number }) => void;
@@ -7,23 +7,28 @@ type UseVideoPlayer = {
 export const useVideoPlayer = ({ onProgressCallback }: UseVideoPlayer = {}) => {
   const playerContainerRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<ReactPlayer>(null);
+  const [videoSubtitles, setVideoSubtitles] = useState<any[] | undefined>();
+  const [encodedVideos, setEncodedVideos] = useState<any[] | undefined>();
+  const [videoInfo, setVideoInfo] = useState<any>();
   const [playing, setPlaying] = useState(false);
   const [played, setPlayed] = useState(0); // 0.0 ~ 1.0
   const [duration, setDuration] = useState(0);
-  const [subtitles, setSubtitles] = useState('');
   const [currentTime, setCurrentTime] = useState(0);
   const [volume, setVolume] = useState(0.8); // 기본 볼륨 80%
   const [muted, setMuted] = useState(false);
   const [playbackRate, setPlaybackRate] = useState(1.0); // 재생 속도 상태
-  const [showCurriculumSection, setShowCurriculumSection] = useState(false);
-
   const [isFullscreen, setIsFullscreen] = useState(false);
-
   const [subtitlesVisible, setSubtitlesVisible] = useState(true);
 
-  const toggleCurriculumSection = () => {
-    setShowCurriculumSection((prev) => !prev);
-  };
+  useEffect(() => {
+    if (videoInfo) {
+      setVideoSubtitles(videoInfo.videoSubtitles);
+      setEncodedVideos(videoInfo.encodedVideos);
+    } else {
+      setVideoSubtitles(undefined);
+      setEncodedVideos(undefined);
+    }
+  }, [videoInfo]);
 
   // 재생 속도 설정 함수
   const changePlaybackRate = (rate: number) => {
@@ -126,6 +131,9 @@ export const useVideoPlayer = ({ onProgressCallback }: UseVideoPlayer = {}) => {
         speed: playbackRate,
       });
   };
+  const onBuffer = () => {
+    console.log('onBuffer event');
+  };
 
   // 🧭 총 재생시간 설정
   const onDuration = (d: number) => {
@@ -156,18 +164,19 @@ export const useVideoPlayer = ({ onProgressCallback }: UseVideoPlayer = {}) => {
   };
 
   return {
-    showCurriculumSection,
+    videoSubtitles,
+    encodedVideos,
     playerContainerRef,
     playerRef,
     playing,
     played,
     duration,
-    subtitles,
     currentTime,
     volume,
     muted,
     isFullscreen,
     subtitlesVisible,
+    setVideoInfo,
     setSeconds,
     toggleFullscreen,
     toggleSubtitles,
@@ -181,6 +190,6 @@ export const useVideoPlayer = ({ onProgressCallback }: UseVideoPlayer = {}) => {
     togglePlay,
     onProgress,
     changePlaybackRate,
-    toggleCurriculumSection,
+    onBuffer,
   };
 };

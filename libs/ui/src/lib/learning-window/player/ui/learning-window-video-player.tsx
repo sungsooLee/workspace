@@ -23,30 +23,11 @@ enum EnVideoQualityState {
 }
 
 const LearningWindowVideoPlayerComponent: FC<any> = () => {
-  const { baseInfo, playInfo, videoInfo, funcInfo } = useLearningWindow();
   const [videoUrl, setVideoUrl] = useState();
   const [videoStart, setVideoStart] = useState<number>(0);
   const [qualityState, setQualityState] = useState<EnVideoQualityState>(EnVideoQualityState.AUTO);
   const [playConfig, setPlayConfig] = useState<Config>();
-
-  const handleVideoEnd = () => {
-    const payload = {
-      courseSequenceId: baseInfo?.sequenceId,
-      courseId: baseInfo?.courseId,
-      curriculumId: baseInfo?.curriculumId,
-      moduleId: playInfo?.moduleId,
-      lessonId: playInfo?.lessonId,
-      contentUuid: playInfo?.contentUuid,
-    };
-    funcInfo?.videoWatchStatistics(payload);
-  };
-  const handleOnBuffer = () => {
-    console.log('handleOnBuffer');
-  };
-  const handleOnReady = () => {
-    player.setSeconds(videoInfo.lastVideoEndTime);
-    setVideoStart(videoInfo.lastVideoEndTime);
-  };
+  const { baseInfo, playInfo, videoInfo, funcInfo } = useLearningWindow();
 
   const handleOnProgress = (state: any) => {
     console.log(`date check ; ${videoStart} -> ${state.playedSeconds}`, playInfo);
@@ -68,48 +49,60 @@ const LearningWindowVideoPlayerComponent: FC<any> = () => {
 
   const player = useVideoPlayer({ onProgressCallback: handleOnProgress });
 
+  const handleVideoEnd = () => {
+    const payload = {
+      courseSequenceId: baseInfo?.sequenceId,
+      courseId: baseInfo?.courseId,
+      curriculumId: baseInfo?.curriculumId,
+      moduleId: playInfo?.moduleId,
+      lessonId: playInfo?.lessonId,
+      contentUuid: playInfo?.contentUuid,
+    };
+    funcInfo?.videoWatchStatistics(payload);
+  };
+
+  const handleOnReady = () => {
+    console.log('handleOnReady');
+    player.setSeconds(videoInfo.lastVideoEndTime);
+    setVideoStart(videoInfo.lastVideoEndTime);
+  };
+
   useEffect(() => {
     if (!videoInfo) return;
     console.log('videoInfo', videoInfo);
+    player.setVideoInfo(videoInfo);
     setVideoUrl(videoInfo.masterVideo);
-    if (videoInfo.videoSubtitles && videoInfo.videoSubtitles.length > 0) {
-      const subtitleTracks: TrackProps[] = [];
-      videoInfo.videoSubtitles.forEach((item: any) => {
-        subtitleTracks.push({
-          kind: 'subtitles',
-          src: item.subtitleUrl,
-          srcLang: item.languageCode,
-          default: false,
-          label: t(`${EnLibGlobalConst.SYSTEM_COMMON_CODE}.${item.languageCode}`),
-        });
-      });
-      setPlayConfig({ file: { tracks: subtitleTracks } } as Config);
-    }
   }, [videoInfo]);
   useEffect(() => {
-    console.log('end video');
     return () => {
       handleVideoEnd();
     };
   }, []);
 
   return (
-    <div className={styles.start}>
-      <VideoPlayerContainer ref={player.playerContainerRef} {...player}>
-        <VideoPlayer
-          {...player}
-          url={videoUrl}
-          ref={player.playerRef}
-          playing={player.playing}
-          progressInterval={1000 * 10}
-          onProgress={player.onProgress}
-          onDuration={player.onDuration}
-          onEnded={handleVideoEnd}
-          onReady={handleOnReady}
-          onBuffer={handleOnBuffer}
-          config={playConfig}
-        />
-      </VideoPlayerContainer>
+    <div className={`${styles.start} ${styles.video}`}>
+      <div className={styles.video_wrap}>
+        <div className={styles.video_area}>
+          <div className={styles.video_contents}>
+            <VideoPlayerContainer ref={player.playerContainerRef} player={player}>
+              <VideoPlayer
+                url={videoUrl}
+                ref={player.playerRef}
+                playing={player.playing}
+                volume={player.volume}
+                muted={player.muted}
+                progressInterval={1000 * 10}
+                onProgress={player.onProgress}
+                onDuration={player.onDuration}
+                onEnded={handleVideoEnd}
+                onReady={handleOnReady}
+                onBuffer={player.onBuffer}
+                //config={playConfig}
+              />
+            </VideoPlayerContainer>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
