@@ -81,7 +81,7 @@ const SubTitlesFormFieldComponent = forwardRef<HTMLDivElement, SubtitlesFormFiel
         onChange([
           ...value,
           {
-            languageCode: newLangCode,
+            languageCountryCode: newLangCode,
             subtitleFileUuid: newSubtitle.fileUuid!,
             subtitleName: newSubtitle.fileName,
           },
@@ -103,10 +103,10 @@ const SubTitlesFormFieldComponent = forwardRef<HTMLDivElement, SubtitlesFormFiel
       }
     }, [files]);
 
-    const handleLanguageCodeChange = (uuid: string, languageCode: string) => {
+    const handleLanguageCodeChange = (uuid: string, languageCountryCode: string) => {
       onChange(
         value.map((subtitle) =>
-          subtitle.subtitleFileUuid === uuid ? { ...subtitle, languageCode } : subtitle,
+          subtitle.subtitleFileUuid === uuid ? { ...subtitle, languageCountryCode } : subtitle,
         ),
       );
     };
@@ -143,7 +143,7 @@ const SubTitlesFormFieldComponent = forwardRef<HTMLDivElement, SubtitlesFormFiel
             <Dropdown
               className={dynamicFormStyles.short}
               options={options}
-              value={subtitle.languageCode}
+              value={subtitle.languageCountryCode}
               onChange={(code) => handleLanguageCodeChange(subtitle.subtitleFileUuid, code)}
             />
             <Input type="text" value={subtitle.subtitleName} />

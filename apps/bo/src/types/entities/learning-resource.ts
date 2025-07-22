@@ -444,7 +444,7 @@ interface EncodedAudio {
 
 export interface VideoSubtitle {
   subtitleFileUuid: string;
-  languageCode: string;
+  languageCountryCode: string;
   subtitleName: string;
   subtitleUrl?: string;
 }
