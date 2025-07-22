@@ -21,10 +21,20 @@ const ChannelDetailSubscriberComponent = (props: ChannelDetailSubscriberProps, r
     setUserUuid(uuid);
   };
 
+  const handleOnUserUnsubscribe = () => {
+    setUserUuid(null);
+  };
+
   return (
     <>
       {!userUuid && <ChannelDetailSubscriberList onChange={handleOnUserChange} />}
-      {userUuid && <ChannelDetailSubscriberDetail ref={ref} userUuid={userUuid} />}
+      {userUuid && (
+        <ChannelDetailSubscriberDetail
+          ref={ref}
+          userUuid={userUuid}
+          onUnsubscribe={handleOnUserUnsubscribe}
+        />
+      )}
     </>
   );
 };

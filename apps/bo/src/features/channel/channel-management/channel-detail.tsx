@@ -66,14 +66,14 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
 
   const { update: updateChannel } = useUpdateChannel({
     onSuccess: (data: any) => {
-      openToast({ title: '저장 하였습니다.', type: 'success' });
+      openToast({ title: t('저장 하였습니다.'), type: 'success' });
       setChannelUuid(data.channelUuid);
     },
   });
 
   const { create: createChannel } = useCreateChannel({
     onSuccess: (data: any) => {
-      openToast({ title: '저장 하였습니다.', type: 'success' });
+      openToast({ title: t('저장 하였습니다.'), type: 'success' });
       router.navigate({
         to: '/tenant/channel/management/detail',
         state: { channelUuid: data.channelUuid },
