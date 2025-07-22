@@ -49,11 +49,14 @@ import { DateRangePickerFormField, DropdownFormField } from '@features/form';
 import { EditInputDateCell } from '../component/edit-input-date-cell';
 import { CopyBatchButtons } from '../component/copy-batch-buttons';
 import { Mode } from '@pages/_layout/learning/learning-sequence/-common/type';
+import { SequenceSearchForm } from '../component/sequence-search-form';
+import { CourseSequenceSearchForm } from '../component/course-sequence-search-form';
+import { useFetchCourseSequences } from '@entities/learning-sequence/service/learning-sequence.hook';
 
 type SequenceListComponentProps = {
   setMode: (value: string) => void;
   setSequenceId: (value: number) => void;
-  courseId?: number;
+  courseId?: number; // 과정key가 없다면 메뉴로 진입한 case
 };
 
 /**
@@ -73,7 +76,7 @@ const gridConfig: useGridBoxConfig = {
   data: [],
   gridState: {
     // page: 0,
-    // size: 10,
+    // size: 1,
     sort: [],
   },
 };
@@ -81,72 +84,19 @@ const gridConfig: useGridBoxConfig = {
 const SequenceListComponent = ({
   setMode,
   setSequenceId,
-  courseId,
+  courseId: courseIdProps,
 }: SequenceListComponentProps) => {
-  console.log('## courseId:', courseId);
+  console.log('## courseIdProps:', courseIdProps);
   const router = useRouter();
   const { open: openModal, confirm: openConfirm, alert: openAlert } = useModal();
   const [columns, setColumns] = useState() as any;
-  const [openYear, setOpenYear] = useState<any[]>();
   const [selectedItems, setSelectedItems] = useState<any[]>([]);
 
   _global.linkClick = (payload: any) => {
     setMode(Mode.DETAIL);
-    setSequenceId(parseInt(payload.sequenceId));
+    setSequenceId(payload.courseSequenceId);
   };
 
-  useEffect(() => {
-    const currentYear = dayjs().year(); // 현재 년도 (number)
-    const yearOptions = Array.from({ length: 11 }, (_, i) => {
-      const year = currentYear - i;
-      return { label: year, value: year };
-    });
-    setOpenYear(yearOptions);
-  }, []);
-
-  const queryClient = useQueryClient();
-
-  const searchConfig: SearchBoxConfig = {
-    builders: [
-      [
-        {
-          name: 'openYear',
-          type: 'dropdown',
-          label: t('LABEL.form.label.openYear', '개설연도'),
-          value: dayjs().year(),
-          format: 'number',
-          presetOptionLabel: t('LABEL.form.label.select', '선택'),
-          options: openYear,
-        },
-        {
-          name: 'isUsed',
-          type: 'dropdown',
-          label: t('LABEL.form.label.isUsed', '사용여부'),
-          value: '',
-          presetOptionLabel: t('LABEL.form.label.select', '선택'),
-          options: [
-            { label: '사용', value: '1' },
-            { label: '미사용', value: '2' },
-          ],
-        },
-        {
-          name: 'sequenceName',
-          type: 'text',
-          label: t('차수명'),
-          value: '',
-        },
-      ],
-    ],
-    validator: {},
-  };
-
-  // const {
-  //   provider: searchProvider,
-  //   getValues,
-  //   getValuesWithLabel,
-  //   setOptions,
-  //   setValue,
-  // } = useSearchBox(searchConfig);
   const { provider, getValues, onSubmit } = useDynamicForm2({
     builders: [],
     mode: 'onSubmit', // 서브밋할 때만 validation 실행
@@ -157,14 +107,17 @@ const SequenceListComponent = ({
   const [valuesWithLabel, setValuesWithLabel] = useState<Record<string, SelectOption>>({});
 
   useEffect(() => {
-    const columns = [
-      columnHelper.accessor('openYear', {
-        header: t('개설'),
+    const openYearColumn = [
+      columnHelper.accessor('openingYear', {
+        header: t('개설연도'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
         size: 58,
       }),
-      columnHelper.accessor('sequence', {
+    ] as ColumnDef<any, unknown>[];
+
+    const sequenceColumn = [
+      columnHelper.accessor('courseSequenceNo', {
         header: t('순서'),
         cell: (info: CellContext<any, string>) => {
           return (
@@ -178,7 +131,25 @@ const SequenceListComponent = ({
         },
         size: 90,
       }),
-      columnHelper.accessor('sequenceId', {
+    ] as ColumnDef<any, unknown>[];
+
+    const courseColumn = [
+      columnHelper.accessor('courseId', {
+        header: t('과정코드'),
+        cell: (info) => info.getValue(),
+        enableGrouping: false,
+        size: 80,
+      }),
+      columnHelper.accessor('courseName', {
+        header: t('과정명'),
+        cell: (info) => info.getValue(),
+        enableGrouping: false,
+        size: 240,
+      }),
+    ] as ColumnDef<any, unknown>[];
+
+    let columns = [
+      columnHelper.accessor('courseSequenceId', {
         header: t('차수코드'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
@@ -198,18 +169,18 @@ const SequenceListComponent = ({
         enableGrouping: false,
         size: 240,
       }),
-      columnHelper.accessor('regStartDate', {
+      columnHelper.accessor('enrollmentStartDateTime', {
         header: t('수강신청 시작일'),
         cell: (info) => {
-          return <EditDatePickerCell info={info} dateOptions={{ displayType: 'day-time-hm' }} />;
+          return <EditDatePickerCell info={info} dateOptions={{ displayType: 'day-time-h' }} />;
         },
         enableGrouping: false,
         size: 300,
       }),
-      columnHelper.accessor('regEndDate', {
+      columnHelper.accessor('enrollmentEndDateTime', {
         header: t('수강신청 종료일'),
         cell: (info) => {
-          return <EditDatePickerCell info={info} dateOptions={{ displayType: 'day-time-hm' }} />;
+          return <EditDatePickerCell info={info} dateOptions={{ displayType: 'day-time-h' }} />;
         },
         enableGrouping: false,
         size: 300,
@@ -218,17 +189,17 @@ const SequenceListComponent = ({
           align: 'center',
         },
       }),
-      columnHelper.accessor('eduStartDate', {
+      columnHelper.accessor('courseSequenceStartDateTime', {
         header: t('학습 시작일'),
         cell: (info) => {
           if (info.row.original.status === '학습중') return '수강신청 승인일로 부터';
           else
-            return <EditDatePickerCell info={info} dateOptions={{ displayType: 'day-time-hm' }} />;
+            return <EditDatePickerCell info={info} dateOptions={{ displayType: 'day-time-h' }} />;
         },
         enableGrouping: false,
         size: 300,
       }),
-      columnHelper.accessor('aa', {
+      columnHelper.accessor('courseSequenceEndDateTimeMerge', {
         header: t('학습 종료일'),
         cell: (info: CellContext<any, string>) => {
           return <EditInputDateCell info={info} input={{ suffixText: '일' }} />;
@@ -236,7 +207,7 @@ const SequenceListComponent = ({
         enableGrouping: false,
         size: 300,
       }),
-      columnHelper.accessor('status', {
+      columnHelper.accessor('learningStatusType', {
         header: t('상태'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
@@ -244,29 +215,29 @@ const SequenceListComponent = ({
       }),
       columnHelper.accessor('isUsed', {
         header: t('사용'),
-        cell: (info) => info.getValue(),
+        cell: (info) => (info.getValue() ? t('사용') : t('미사용')),
         enableGrouping: false,
         size: 60,
       }),
-      columnHelper.accessor('capacity', {
+      columnHelper.accessor('maxEnrollQuota', {
         header: t('정원'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
         size: 60,
       }),
-      columnHelper.accessor('enroll', {
+      columnHelper.accessor('currentEnrollCount', {
         header: t('신청'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
         size: 60,
       }),
-      columnHelper.accessor('student', {
+      columnHelper.accessor('enrolledStudentCount', {
         header: t('수강생'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
         size: 70,
       }),
-      columnHelper.accessor('graduateStudent', {
+      columnHelper.accessor('graduatedStudentCount', {
         header: t('수료생'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
@@ -274,53 +245,26 @@ const SequenceListComponent = ({
       }),
     ] as ColumnDef<any, unknown>[];
 
+    if (!courseIdProps) {
+      columns = [...openYearColumn, ...courseColumn, ...columns];
+    } else {
+      columns = [...openYearColumn, ...sequenceColumn, ...columns];
+    }
+
     setColumns(columns);
-    gridFetch();
   }, []);
 
-  //   const handleOnSearch = useCallback((data: any) => {
-  // e.preventDefault(); // 이게 없으면 새로고침됩니다
-  // console.log('##data', data);
-  // const searchData = {
-  //   eduYear: data.eduYear,
-  //   isUsed: data.isUsed,
-  //   courseId: data.courseId,
-  // };
-  // const searchData = {};
-
-  // const excelParam = {
-  //   downloadReason: {
-  //     userUuid: user?.uuid,
-  //     menuPath: activeMenuDepthMenu?.map((menu) => menu.menuName).join(' > '),
-  //     dataCount: 1500,
-  //     requestParameter: 'string',
-  //     downloadReasonType: 'AFFAIRS',
-  //     downloadDetailReasonType: 'AFFAIRS01',
-  //     downloadDetailReason: 'string',
-  //   },
-  // };
-  // setParams({
-  //   ...searchData,
-  //   ...excelParam,
-  // });
-  // setValuesWithLabel(getValuesWithLabel());
-  // const result = gridFetch(searchData);
-  // console.log('result=>', result);
-  // result.then((data) => {
-  //   console.log('data=>', data);
-  //   setGridData(data?.content);
-  // });
-  // console.log('sampleData=>', sampleData);
-  // setGridData(sampleData);
-  // gridFetch();
-  //   }, []);
-
-  const handleOnSearch = useCallback(
-    (data: any) => {
-      gridFetch(data);
-    },
-    [gridFetch],
-  );
+  const handleOnSearch = useCallback((data: any) => {
+    console.log('## search param:', data);
+    const payload = {
+      courseId: courseIdProps,
+      openingYear: parseInt(data.openingYear),
+      isUsed: data.isUsed === 'true',
+      courseSequenceName: data.courseSequenceName,
+    };
+    console.log('##payload:', payload);
+    gridFetch(payload);
+  }, []);
 
   const handleRowsSelect = useCallback((rows: any[]) => {
     setSelectedItems(rows);
@@ -425,52 +369,16 @@ const SequenceListComponent = ({
   const columnHelper = createColumnHelper<any>();
   return (
     <>
-      {/* <SearchBox
-        provider={searchProvider}
-        onSearch={(e) => {
-          e.preventDefault();
-          handleOnSearch(getValues());
-        }}
-      /> */}
-      <SearchBoxForm onSearch={onSubmit(handleOnSearch)}>
-        <ContentsRow>
-          {/* 개설연도 */}
-          <FormRow2
-            provider={provider}
-            name="openYear"
-            label="개설연도"
-            //  format={'number'}
-            element={<DropdownFormField options={openYear ? openYear : []} />}
-            validation={{
-              required: false,
-            }}
-          />
-          {/* 사용여부 */}
-          <FormRow2
-            provider={provider}
-            name="useYn"
-            label={t('LABEL.form.label.useYn')}
-            element={
-              <DropdownFormField
-                presetOptionLabel={t('LABEL.form.label.all')}
-                optionsConfig={{
-                  codeGroup: CODE_GROUP['mock.options.use'],
-                }}
-              />
-            }
-            validation={{
-              required: false,
-            }}
-          />
-          {/* 차수명 */}
-          <FormRow2
-            provider={provider}
-            name="sequenceName"
-            label={t('LABEL.form.label.sequenceName')}
-            element={<Input />}
-          />
-        </ContentsRow>
-      </SearchBoxForm>
+      {/* {!courseId ? (
+        <CourseSequenceSearchForm
+          provider={provider}
+          onSubmit={onSubmit}
+          onSearch={handleOnSearch}
+        />
+      ) : (
+        <SequenceSearchForm provider={provider} onSubmit={onSubmit} onSearch={handleOnSearch} />
+      )} */}
+      <SequenceSearchForm provider={provider} onSubmit={onSubmit} onSearch={handleOnSearch} />
       <Divider />
       <GridBox
         config={gConfig}

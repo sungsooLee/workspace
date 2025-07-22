@@ -2,9 +2,7 @@ import { CheckCircle, Circle, X } from 'lucide-react';
 import { useState } from 'react';
 import { VideoPlayerContainerProps } from '../types';
 
-const CurriculumSidebar = ({
-  toggleCurriculumSection,
-}: Pick<VideoPlayerContainerProps, 'toggleCurriculumSection'>) => {
+const CurriculumSidebar = ({}) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const sideMenu = [
@@ -58,7 +56,7 @@ const CurriculumSidebar = ({
       {/* Header */}
       <div className="flex items-center justify-between border-b px-4 py-4">
         <h2 className="text-lg font-semibold">커리큘럼</h2>
-        <X className="h-5 w-5 cursor-pointer" onClick={toggleCurriculumSection} />
+        <X className="h-5 w-5 cursor-pointer" />
       </div>
 
       {/* Content */}
@@ -98,4 +96,7 @@ const CurriculumSidebar = ({
   );
 };
 
+/**
+ * @deprecated
+ */
 export default CurriculumSidebar;

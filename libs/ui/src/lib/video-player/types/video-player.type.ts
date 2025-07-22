@@ -1,7 +1,7 @@
-import { Config } from 'react-player';
+import { Config, ReactPlayerProps } from 'react-player';
 import { SourceProps } from 'react-player/base';
 
-export type VideoPlayerProps = {
+export interface VideoPlayerProps extends ReactPlayerProps {
   url?: string | string[] | SourceProps[] | MediaStream;
   progressInterval?: number;
   playing: boolean;
@@ -10,4 +10,4 @@ export type VideoPlayerProps = {
   onProgress: (state: { played: number; playedSeconds: number }) => void;
   onDuration: (d: number) => void;
   onEnded?: () => void;
-};
+}

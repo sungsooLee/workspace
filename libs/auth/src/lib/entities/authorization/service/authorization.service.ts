@@ -27,13 +27,13 @@ export function removeToken() {
  * @returns AuthUser
  */
 export function convertToAuthUser(data: AxiosResponse): AuthUser {
-  console.log('### convertToAuthUser', data);
+  // console.log('### convertToAuthUser', data);
   const user = data.data as AuthUser;
   const { tenants, roles: rolesAll } = user;
 
   const APP_INFO = getConfig().APP_INFO;
 
-  console.log('### APP_INFO', APP_INFO);
+  // console.log('### APP_INFO', APP_INFO);
 
   // 마지막 저장된 테넌트, 롤 정보
   const tenantId = APP_INFO === 'BO' ? user.lastVisitedBoTenantId : user.lastVisitedFoTenantId;
@@ -42,8 +42,8 @@ export function convertToAuthUser(data: AxiosResponse): AuthUser {
   // 로그인 데이터 중 siteScope에 맞는 역할 필터링
   const roles = rolesAll?.filter((role) => role.siteScope === APP_INFO);
 
-  console.log('### LAST 테넌트 : ', tenantId);
-  console.log('### LAST 롤: ', roleId);
+  // // console.log('### LAST 테넌트 : ', tenantId);
+  // // console.log('### LAST 롤: ', roleId);
 
   const tenant = tenants?.find((tenant: { tenantId: any }) => tenant.tenantId === tenantId);
   const role = roles.find((role: { roleId: any }) => role.roleId === roleId);

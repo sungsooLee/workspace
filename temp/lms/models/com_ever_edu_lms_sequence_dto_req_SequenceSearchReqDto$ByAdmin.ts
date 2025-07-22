@@ -3,7 +3,21 @@
 /* tslint:disable */
 /* eslint-disable */
 export type com_ever_edu_lms_sequence_dto_req_SequenceSearchReqDto$ByAdmin = {
-    eduYear?: number;
-    courseId?: number;
+    /**
+     * 과정 ID
+     */
+    courseId: number;
+    /**
+     * 개설 연도
+     */
+    openingYear?: number;
+    /**
+     * 사용 여부
+     */
+    isUsed?: boolean;
+    /**
+     * 차수명
+     */
+    courseSequenceName?: string;
 };
 

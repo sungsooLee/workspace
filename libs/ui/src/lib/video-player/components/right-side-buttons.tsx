@@ -1,14 +1,12 @@
 import { List, Pencil, MessageSquare, Headphones, SkipBack, SkipForward } from 'lucide-react';
 import { VideoPlayerContainerProps } from '../types';
 
-const RightSideButtons = ({
-  toggleCurriculumSection,
-}: Pick<VideoPlayerContainerProps, 'toggleCurriculumSection'>) => {
+const RightSideButtons = () => {
   return (
     <div className="absolute right-4 top-1/4 flex flex-col items-center gap-6 text-gray-700">
       {/* 상단 메뉴 박스 */}
       <div className="flex flex-col items-center gap-6 rounded-[28px] bg-white/90 px-6 py-8 shadow-md">
-        <div className="flex flex-col items-center gap-2" onClick={toggleCurriculumSection}>
+        <div className="flex flex-col items-center gap-2">
           <List size={28} />
           <span className="text-sm font-medium">커리큘럼</span>
         </div>
@@ -41,4 +39,8 @@ const RightSideButtons = ({
   );
 };
 
+/**
+ * 사용하지 않음
+ * @deprecated
+ */
 export default RightSideButtons;

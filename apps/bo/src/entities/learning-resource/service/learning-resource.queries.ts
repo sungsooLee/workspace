@@ -22,7 +22,7 @@ export const queryKeys = {
   channelsByTenantId: ['channels-by-tenant-id'] as const,
   userByUuid: ['user-by-uuid'] as const,
   contents: ['contents'] as const,
-  contentDetail: ['content-detail'] as const,
+  contentDetail: (contentUuid: string) => ['content-detail', contentUuid] as const,
   contentCourseMapping: ['content-course-mapping'] as const,
   deleteContent: ['delete-content'] as const,
   createDraftVideo: ['create-draft-video'] as const,
@@ -64,7 +64,7 @@ export const learningResourceQueryOptions = {
     enabled: true,
   }),
   getContent: <T = GetContentDetailRes>(contentUuid: string) => ({
-    queryKey: queryKeys.contentDetail,
+    queryKey: queryKeys.contentDetail(contentUuid),
     queryFn: () => LearningResourceService.fetchContent(contentUuid) as T,
     cacheTime: 0,
     staleTime: 0,

@@ -5,12 +5,14 @@
 import type { com_ever_edu_external_tenant_dto_res_TenantResDto } from './com_ever_edu_external_tenant_dto_res_TenantResDto';
 import type { com_ever_edu_lms_blackwhite_dto_res_WhiteGroupResDto } from './com_ever_edu_lms_blackwhite_dto_res_WhiteGroupResDto';
 import type { com_ever_edu_lms_category_dto_res_CourseCategoryFlatDto } from './com_ever_edu_lms_category_dto_res_CourseCategoryFlatDto';
-import type { com_ever_edu_lms_course_dto_res_CourseResDto$SimpleCourseDto } from './com_ever_edu_lms_course_dto_res_CourseResDto$SimpleCourseDto';
+import type { com_ever_edu_lms_course_dto_res_CourseAdminResDto$SimpleCourseDto } from './com_ever_edu_lms_course_dto_res_CourseAdminResDto$SimpleCourseDto';
+import type { com_ever_edu_lms_course_dto_TenantCustomDto } from './com_ever_edu_lms_course_dto_TenantCustomDto';
 import type { com_ever_edu_lms_tag_dto_res_TagResDto } from './com_ever_edu_lms_tag_dto_res_TagResDto';
-export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
-    wizardStep?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin.wizardStep;
+export type com_ever_edu_lms_course_dto_res_CourseAdminResDto = {
+    wizardStep?: com_ever_edu_lms_course_dto_res_CourseAdminResDto.wizardStep;
     courseId?: number;
-    courseType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin.courseType;
+    isBookmarks?: boolean;
+    courseType?: com_ever_edu_lms_course_dto_res_CourseAdminResDto.courseType;
     channelUuid?: string;
     tenantList?: Array<com_ever_edu_external_tenant_dto_res_TenantResDto>;
     /**
@@ -26,8 +28,8 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
     courseName?: string;
     courseSummary?: string;
     courseContent?: string;
-    trainingLevelType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin.trainingLevelType;
-    learningSpaceType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin.learningSpaceType;
+    trainingLevelType?: com_ever_edu_lms_course_dto_res_CourseAdminResDto.trainingLevelType;
+    learningSpaceType?: com_ever_edu_lms_course_dto_res_CourseAdminResDto.learningSpaceType;
     learningSpaceId?: number;
     learningSpaceName?: string;
     learningSpaceNameKeyIn?: string;
@@ -43,7 +45,7 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
     /**
      * 담당자 연락처 국가코드
      */
-    coordinatorTelCountryCode?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin.coordinatorTelCountryCode;
+    coordinatorTelCountryCode?: com_ever_edu_lms_course_dto_res_CourseAdminResDto.coordinatorTelCountryCode;
     coordinatorTelNo?: string;
     /**
      * 담당자 이메일
@@ -61,7 +63,7 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
     /**
      * 운영자 연락처 국가코드
      */
-    operatorTelCountryCode?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin.operatorTelCountryCode;
+    operatorTelCountryCode?: com_ever_edu_lms_course_dto_res_CourseAdminResDto.operatorTelCountryCode;
     operatorTelNo?: string;
     /**
      * 운영자 이메일
@@ -74,7 +76,7 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
     /**
      * 수강신청 결재 라인 (pms.course.ApprovalLineType)
      */
-    approvalLineType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin.approvalLineType;
+    approvalLineType?: com_ever_edu_lms_course_dto_res_CourseAdminResDto.approvalLineType;
     /**
      * 수강 신청 정원 제한 여부
      */
@@ -86,7 +88,7 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
     /**
      * 수강 신청 대기 (lms.course.WaitListPickMethodType)
      */
-    waitListPickMethodType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin.waitListPickMethodType;
+    waitListPickMethodType?: com_ever_edu_lms_course_dto_res_CourseAdminResDto.waitListPickMethodType;
     /**
      * 최대 대기 인원
      */
@@ -106,7 +108,7 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
     /**
      * 기기 제한
      */
-    deviceRestrictType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin.deviceRestrictType;
+    deviceRestrictType?: com_ever_edu_lms_course_dto_res_CourseAdminResDto.deviceRestrictType;
     /**
      * 네트워크 제한(사내망 제어 여부)
      */
@@ -114,7 +116,7 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
     /**
      * (lms.course.LearningRestrictTimeType)
      */
-    learningRestrictTimeType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin.learningRestrictTimeType;
+    learningRestrictTimeType?: com_ever_edu_lms_course_dto_res_CourseAdminResDto.learningRestrictTimeType;
     /**
      * 복습 제한 여부
      */
@@ -158,7 +160,7 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
     /**
      * (cms.video.PlayBackRate)
      */
-    maxPlayBackRate?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin.maxPlayBackRate;
+    maxPlayBackRate?: com_ever_edu_lms_course_dto_res_CourseAdminResDto.maxPlayBackRate;
     /**
      * 이수기준 설정 여부
      */
@@ -166,7 +168,7 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
     /**
      * (lms.course.PassMethodType)
      */
-    passMethodType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin.passMethodType;
+    passMethodType?: com_ever_edu_lms_course_dto_res_CourseAdminResDto.passMethodType;
     /**
      * 수료증 제공 여부
      */
@@ -210,7 +212,7 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
     /**
      * (lms.course.RecognizedStudyMinType)
      */
-    recognizedStudyMinType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin.recognizedStudyMinType;
+    recognizedStudyMinType?: com_ever_edu_lms_course_dto_res_CourseAdminResDto.recognizedStudyMinType;
     /**
      * 인정 학습 횟수
      */
@@ -234,7 +236,19 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
     /**
      * 커뮤니티 사용 설정 내용
      */
-    communityList?: Array<'NOTICE' | 'QNA' | 'MARTIAL' | 'COMMUNITY'>;
+    communityList?: Array<'QNA' | 'FAQ' | 'BOARD' | 'MARTIAL'>;
+    /**
+     * 과정 공유 여부
+     */
+    isSharingAllowed?: boolean;
+    /**
+     * 공지사항
+     */
+    isNoticeEnabled?: boolean;
+    /**
+     * 학습창댓글
+     */
+    isReplyEnabled?: boolean;
     /**
      * 강사 설정 여부
      */
@@ -242,7 +256,7 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
     /**
      * (lms.course.InstructorAssignType)
      */
-    instructorAssignType?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin.instructorAssignType;
+    instructorAssignType?: com_ever_edu_lms_course_dto_res_CourseAdminResDto.instructorAssignType;
     /**
      * 강사ID
      */
@@ -267,16 +281,16 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
      * 사전/연관 학습 설정 여부
      */
     isRelatedPrerequisiteCourseExisted?: boolean;
-    preRequisiteCourseList?: Array<com_ever_edu_lms_course_dto_res_CourseResDto$SimpleCourseDto>;
-    relatedCourseList?: Array<com_ever_edu_lms_course_dto_res_CourseResDto$SimpleCourseDto>;
+    preRequisiteCourseList?: Array<com_ever_edu_lms_course_dto_res_CourseAdminResDto$SimpleCourseDto>;
+    relatedCourseList?: Array<com_ever_edu_lms_course_dto_res_CourseAdminResDto$SimpleCourseDto>;
     /**
      * HMG 과정 데이터 표준 분류 > 대분류
      */
-    hmgStandardMainCategory?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin.hmgStandardMainCategory;
+    hmgStandardMainCategory?: com_ever_edu_lms_course_dto_res_CourseAdminResDto.hmgStandardMainCategory;
     /**
      * HMG 과정 데이터 표준 분류 > 중분류
      */
-    hmgStandardSubCategory?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin.hmgStandardSubCategory;
+    hmgStandardSubCategory?: com_ever_edu_lms_course_dto_res_CourseAdminResDto.hmgStandardSubCategory;
     /**
      * 1인당 교육비 사용
      */
@@ -298,33 +312,29 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
      */
     isStayed?: boolean;
     /**
+     * 완성차 테넌트 전용 항목 설정 여부
+     */
+    isCarTenantCustomOption?: boolean;
+    /**
+     * 로템 테넌트 전용 항목 설정 여부
+     */
+    isRotemTenantCustomOption?: boolean;
+    /**
+     * 위탁 테넌트 전용 항목 설정 여부
+     */
+    isOutsourcingTenantCustomOption?: boolean;
+    /**
+     * 위아 테넌트 전용 항목 설정 여부
+     */
+    isWiaTenantCustomOption?: boolean;
+    /**
      * 오토에버 위탁 전용 설정 여부
      */
-    isUseOutsourcing?: boolean;
+    isAutoeverTenantCustomOption?: boolean;
     /**
-     * 수강신청 단계에서 레벨테스트 수집 여부
+     * 테넌트 전용 설정 내용
      */
-    isPreLevelTestRequired?: boolean;
-    /**
-     * 수강신청 단계에서 배송지 수집 여부
-     */
-    isBookDeliveryInfoRequired?: boolean;
-    /**
-     * 튜터id
-     */
-    tutorId?: number;
-    /**
-     * 튜터 이름
-     */
-    tutorName?: string;
-    /**
-     * 위탁 소유 회사 ID
-     */
-    outsourcingCompanyId?: number;
-    /**
-     * 위탁 소유 회사 이름
-     */
-    outsourcingCompanyName?: string;
+    tenantCustoms?: Array<com_ever_edu_lms_course_dto_TenantCustomDto>;
     /**
      * 사용 여부
      */
@@ -332,19 +342,11 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
     /**
      * 과정 노출 시작일
      */
-    courseValidityStartDate?: string;
-    /**
-     * 과정 노출 시작 시각
-     */
-    courseValidityStartHour?: number;
+    courseValidityStartDateTime?: string;
     /**
      * 과정 노출 종료일
      */
-    courseValidityEndDate?: string;
-    /**
-     * 과정 노출 종료 시각
-     */
-    courseValidityEndHour?: number;
+    courseValidityEndDateTime?: string;
     /**
      * 썸네일 이미지 Group UUID
      */
@@ -358,7 +360,7 @@ export type com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin = {
      */
     tagNames?: Array<com_ever_edu_lms_tag_dto_res_TagResDto>;
 };
-export namespace com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin {
+export namespace com_ever_edu_lms_course_dto_res_CourseAdminResDto {
     export enum wizardStep {
         STEP1 = 'STEP1',
         STEP2 = 'STEP2',

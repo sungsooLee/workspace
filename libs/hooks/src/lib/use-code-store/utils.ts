@@ -50,7 +50,6 @@ export const fetchCodeGroup = async <K extends CODE_GROUP_TYPE>(
       api = defaultFetchCodeGroup;
     }
   } else {
-    console.log('group => ', group);
     api = defaultFetchCodeGroup;
   }
 

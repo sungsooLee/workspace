@@ -55,7 +55,7 @@ const ThumbnailImageUploadFormFieldComponent = forwardRef<
 
     // keep value
     const [values, setValues] = useState<ThumbnailFileValue>({});
-    console.log('🚀 ~ ThumbnailImageUploadFormFieldComponent ~ values:', values);
+    // console.log('🚀 ~ ThumbnailImageUploadFormFieldComponent ~ values:', values);
 
     async function fetchFileInfo(uuids: string[]) {
       const fileInfos = await Promise.all(uuids.map(getFileInfo));

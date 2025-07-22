@@ -17,9 +17,11 @@ export const queryOptions = {
     staleTime: 0,
   }),
   // 차수 단건 조회
-  sequenceDetail: (params: number) => ({
+  sequenceDetail: (sequenceId: number) => ({
     queryKey: queryKeys.sequenceDetail,
-    queryFn: () => LearningSequenceService.fetchSequenceOne(params),
+    queryFn: () => LearningSequenceService.fetchSequenceOne(sequenceId),
+    cacheTime: 0,
+    staleTime: 1000 * 60 * 5,
   }),
   enrollmentRegistList: (params: any) => ({
     queryKey: queryKeys.enrollmentRegistList,

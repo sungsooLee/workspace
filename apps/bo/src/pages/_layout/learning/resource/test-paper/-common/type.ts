@@ -32,6 +32,7 @@ type ExamBasicInfoForm = {
   getValues: UseFormGetValues<FieldValues>;
   updateFormData?: (data?: Record<string, any>) => void;
   updateFormDataByKey?: (key: string, value: any) => void;
+  onFormChange?: (values?: Record<string, any>) => void;
   onSubmit?: (onValid: (data: Record<string, any>) => void) => FormEventHandler<HTMLFormElement>;
   saveBasicInfo?: (data: any) => Promise<void>;
 };
@@ -63,5 +64,5 @@ export type QuestionStatisticRow = {
 
 export type SelectedQuestionState = Record<
   EnQuestionType,
-  Partial<Record<EnQuestionLevel, number | `${number}`>>
+  Partial<Record<EnQuestionLevel, number>>
 >;

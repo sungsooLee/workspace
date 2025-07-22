@@ -84,7 +84,7 @@ function RouteComponent() {
   const handleExpireCheck = async (data: any) => {
     // if (dayjs(authData?.passwordExpireDate).diff(dayjs()) < 0) {
     const diff = dateDiff(data!.passwordExpireDate, new Date(), 'd');
-    console.log('### login date check', diff);
+    // console.log('### login date check', diff);
     if (diff !== undefined && 0 >= diff) {
       if (data?.authType === 'PLATFORM') {
         // 패스워드 사용자

@@ -45,6 +45,8 @@ export interface ScormPlayerConfigProperties {
 export interface LearningWindowBaseInfo {
   /** 과정 ID   */
   courseId: number;
+  /** 과정 이름 */
+  courseName: string;
   /** 과정 차수 ID */
   sequenceId: number;
   /** 커리큘럼Id */
@@ -133,6 +135,9 @@ interface LearningWindowStoreData {
   ebookInfo: any;
   setEbookInfo: (v: any) => void;
 
+  otherInfo: any;
+  setOtherInfo: (v: any) => void;
+
   funcInfo?: FunctionInfomation;
   setFuncInfo: (v: FunctionInfomation) => void;
 }
@@ -149,6 +154,7 @@ const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
   blogInfo: undefined,
   htmlInfo: undefined,
   ebookInfo: undefined,
+  otherInfo: undefined,
   funcInfo: undefined,
   progressInfo: new Map(),
 
@@ -209,6 +215,11 @@ const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
       ebookInfo,
     }));
   },
+  setOtherInfo(otherInfo: any) {
+    set((state) => ({
+      otherInfo,
+    }));
+  },
   setFuncInfo(funcInfo?: FunctionInfomation) {
     set((state) => ({
       funcInfo,
@@ -235,6 +246,7 @@ export const useLearningWindow = () => {
     blogInfo,
     htmlInfo,
     ebookInfo,
+    otherInfo,
     funcInfo,
     playIndex: _playIndex,
     playList: _playList,
@@ -254,6 +266,7 @@ export const useLearningWindow = () => {
     setBlogInfo,
     setHtmlInfo,
     setEbookInfo,
+    setOtherInfo,
     setFuncInfo,
     clearInfo,
   } = useLearningWindowStore((state) => state);
@@ -424,6 +437,8 @@ export const useLearningWindow = () => {
     setHtmlInfo,
     ebookInfo,
     setEbookInfo,
+    otherInfo,
+    setOtherInfo,
     funcInfo,
     setFuncInfo,
     setPlayInfo: handleSetPlayInfo,

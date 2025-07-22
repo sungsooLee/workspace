@@ -18,3 +18,23 @@
     }
   }
 }
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.confirmation {
+        p {
+          @apply !title3-b;
+        }
+        .box {
+          dl {
+            dt,
+            dd {
+              @apply body-sm;
+            }
+          }
+        }
+      }
+    }
+  }
+}

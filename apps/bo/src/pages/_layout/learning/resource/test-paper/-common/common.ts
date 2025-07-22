@@ -1,11 +1,10 @@
-import { FieldValues } from 'react-hook-form';
 import { t } from 'i18next';
 import dayjs from 'dayjs';
-import { formatPlainPhoneNumber } from '@learnway/shared';
 import {
   ContentAddInfoType,
   ExamQuestionGenType,
   ExamTemplateType,
+  Tag,
   TestPaperBasicInfoDetail,
   TestPaperBasicInfoSaveReq,
 } from '@types';
@@ -20,6 +19,9 @@ export const getExamSaveRequestDataFromFormData = (options: {
     ...options.values,
     contentUseStartDate: options.values.contentUseDate?.from,
     contentUseEndDate: options.values.contentUseDate?.to,
+    tags: options.values.tags.map((tag: Tag | string) => ({
+      tagName: typeof tag === 'string' ? tag : tag.tagName,
+    })),
     examTemplateType: options.values.examTemplateType,
     questionCount: Number(options.values.questionCount ?? '0'),
     questionCountPerPage: Number(options.values.questionCountPerPage ?? '0'),
@@ -59,52 +61,15 @@ export const getExamSaveRequestDataFromFormData = (options: {
 
 export const convertDetailInfoToFormData = (
   data: Partial<TestPaperBasicInfoDetail> = {},
-  values: FieldValues,
-  updateFormData: (data?: Record<string, any>) => void,
+  // values: FieldValues,
+  onFormChange: (data?: Record<string, any>) => void,
 ) => {
-  updateFormData({
-    ...values,
-    contentUuid: data.contentUuid,
-    contentName: data.contentName,
-    channelUuid: data.channelUuid,
-    channelName: data.channelName,
-    languageCountryCode: data.languageCountryCode,
-    description: data.description,
-    coordinatorUuid: data.coordinatorUuid,
-    coordinatorName: data.coordinatorName,
-    coordinatorTelNo: formatPlainPhoneNumber(data.coordinatorTelNo),
+  onFormChange({
+    ...data,
     contentUseDate: {
       from: data.contentUseStartDate ? dayjs(data.contentUseStartDate).toDate() : undefined,
       to: data.contentUseEndDate ? dayjs(data.contentUseEndDate).toDate() : undefined,
     },
-    isUnlimited: data.isUnlimited,
-    isVendored: data.isVendored,
-    vendorName: data.vendorName ?? '',
-    vendorCoordinatorName: data.vendorCoordinatorName ?? '',
-    vendorTelNo: formatPlainPhoneNumber(data.vendorTelNo) ?? '',
-    isCourseUsed: data.isCourseUsed,
-    isContentSecured: data.isSecured,
-    isInspected: data.isInspected,
-    isCopyrighted: data.isCopyrighted,
-    tags: data.tags,
-    examTemplateType: data.examTemplateType,
-    questionCount: data.questionCount,
-    questionCountPerPage: data.questionCountPerPage,
-    examLimitTime: data.examLimitTime,
-    maxAttemptCount: data.maxAttemptCount,
-    isMoveQuestion: data.isMoveQuestion,
-    isShowResult: data.isShowResult,
-    isShowTotalScore: data.isShowTotalScore,
-    isShowQuestion: data.isShowQuestion,
-    isShowScore: data.isShowScore,
-    isShowCorrectAnswer: data.isShowCorrectAnswer,
-    isShowAnswerExplain: data.isShowAnswerExplain,
-    resultVisibleTime: data.resultVisibleTime,
-    isDisableWrongRetry: data.isDisableWrongRetry,
-    isAutoSubmit: data.isAutoSubmit,
-    isExamEndNotice: data.isExamEndNotice,
-    examEndNoticeOffsetMinutes: data.examEndNoticeOffsetMinutes,
-    examEndNoticeMessage: data.examEndNoticeMessage,
     questionGenType: data.questionGenType ?? ExamQuestionGenType.FIXED,
   });
 };

@@ -42,7 +42,6 @@ class ReactQueryClient {
   };
 
   init(options: any) {
-    console.log('ReactQueryConfig init');
     this.queryClient = new QueryClient({
       defaultOptions: merge(this.based, options),
     });

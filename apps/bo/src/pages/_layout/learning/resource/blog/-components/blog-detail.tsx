@@ -1,34 +1,20 @@
-import React, { forwardRef, useEffect, useMemo } from 'react';
+import React, { forwardRef, useEffect } from 'react';
 import { useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import dayjs from 'dayjs';
-import { cloneDeepWith } from 'lodash-es';
-import { ContentsRow, EditorFormField, InputModalSelectorFormField, useModal } from '@learnway/ui';
-import { Company, User } from '@learnway/types';
+import { ContentsRow, useModal } from '@learnway/ui';
 import { cn, isEmptyData } from '@learnway/shared';
-import { DynamicFormConfig, DynamicFormValues, useDynamicForm } from '@learnway/hooks';
+import { useDynamicForm2 } from '@learnway/hooks';
 import { useFetchAuthUser } from '@learnway/auth/entities';
-import { BlogDetailRes, BlogPostRes, BlogUpdateReq, ChannelByRoleId } from '@types';
-import {
-  ChannelChoiceModal,
-  CompanyChoiceModal,
-  FormRow,
-  FormRow2,
-  UserChoiceModal,
-} from '@shared/ui';
-import { FormDisplay } from '@features/form';
-import {
-  DateRangePickerFormField,
-  DurationTimeFormField,
-  MediaContentRequiredCheckFormField,
-} from '@features/form/ui';
+import { BlogDetailRes, BlogPostRes, BlogUpdateReq } from '@types';
+import { MediaContentRequiredCheckFormField } from '@features/form/ui';
 import { useCreateBlogContent, useUpdateBlogContent } from '@entities/learning-resource';
-import { getHourValueFromTime, useRoleInfo } from '../../-common/common';
-import { mediaContentFormConfig } from '../../-common/content-form-config';
+import { LearningResourceBaseForm } from '@features/learning-resource/learning-resource-management/ui/learning-resource-base-form';
+import { useRoleInfo } from '../../-common/common';
 import { getPayloadFromBlogSubmit } from '../-common/form-submit';
 
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import { ContentsHistoryInfo } from '@features/learning-resource/learning-resource-management/ui/contents-history-info';
+import { ContentsHistoryInfoFormField } from '@shared/ui';
 
 type BlogDetailProps = {
   tenantId: number;
@@ -42,14 +28,7 @@ const BlogDetailComponent = forwardRef<HTMLFormElement, BlogDetailProps>(
     const router = useRouter();
     const { confirm: openConfirm } = useModal();
 
-    const {
-      provider,
-      onSubmit,
-      getValues,
-      updateFormData,
-      onFormChange: handleFormChange,
-      watch,
-    } = useDynamicForm(formConfig(hasMapping));
+    const { provider, onSubmit, getValues, updateFormData, onFormChange } = useDynamicForm2();
 
     const { create: createBlogContent } = useCreateBlogContent({
       onSuccess: (result: BlogPostRes) => {
@@ -79,11 +58,8 @@ const BlogDetailComponent = forwardRef<HTMLFormElement, BlogDetailProps>(
       },
     });
 
-    const dynamicFormConfig = useMemo(() => formConfig(hasMapping), [hasMapping]);
-
-    const handleOnSubmit = async (
-      data: DynamicFormValues<typeof dynamicFormConfig>,
-    ): Promise<void> => {
+    const handleOnSubmit = async (data: any): Promise<void> => {
+      console.log(data);
       const { payload } = getPayloadFromBlogSubmit({
         data,
         tenantId,
@@ -128,34 +104,14 @@ const BlogDetailComponent = forwardRef<HTMLFormElement, BlogDetailProps>(
 
     useEffect(() => {
       if (mode === 'update' && !isEmptyData(blogInfo)) {
-        updateFormData({
-          ...getValues(),
-          contentName: blogInfo.contentName,
-          languageCountryCode: blogInfo.languageCountryCode,
-          channelUuid: blogInfo.channelUuid,
-          channelName: blogInfo.channelName,
-          description: blogInfo.description,
-          coordinatorUuid: blogInfo.coordinatorUuid,
-          coordinatorName: (blogInfo.coordinatorName ?? '').split('/')[0],
-          coordinatorTelNo: blogInfo.coordinatorTelNo,
+        onFormChange({
+          ...blogInfo,
           contentUseDate: {
             from: blogInfo.contentUseStartDate
               ? dayjs(blogInfo.contentUseStartDate).toDate()
               : undefined,
             to: blogInfo.contentUseEndDate ? dayjs(blogInfo.contentUseEndDate).toDate() : undefined,
           },
-          isLimitExist: !blogInfo.isUnlimited,
-          contentDuration: { ...getHourValueFromTime(blogInfo.contentAddInfo) },
-          isVendored: blogInfo.isVendored,
-          // vendorCode: blogInfo.vendorCode,
-          vendorName: blogInfo.vendorName ?? '',
-          vendorCoordinatorName: blogInfo.vendorCoordinatorName ?? '',
-          vendorTelNo: blogInfo.vendorTelNo ?? '',
-          isCourseUsed: blogInfo.isCourseUsed,
-          isContentSecured: blogInfo.isSecured,
-          isInspected: blogInfo.isInspected,
-          isCopyrighted: blogInfo.isCopyrighted,
-          tags: blogInfo.tags,
           blogContent: JSON.stringify(blogInfo.blogContent ?? {}),
           aiSummary: blogInfo.aiSummary ?? '',
           aiKeyword: blogInfo.aiKeyword ?? '',
@@ -165,168 +121,13 @@ const BlogDetailComponent = forwardRef<HTMLFormElement, BlogDetailProps>(
 
     return (
       <form ref={ref} onSubmit={onSubmit(handleOnSubmit)}>
-        {/* 채널 */}
-        <ContentsRow>
-          <FormRow
-            provider={provider}
-            name="channelName"
-            element={
-              <InputModalSelectorFormField
-                modalConfig={{
-                  content: <ChannelChoiceModal />,
-                }}
-                transformModalData={(data: ChannelByRoleId) => ({
-                  channelUuid: data.channelUuid,
-                  channelName: data.channelName,
-                })}
-                onFormChange={(
-                  values: Record<
-                    string,
-                    {
-                      channelUuid: string;
-                      channelName: string;
-                    }
-                  >,
-                ) => {
-                  updateFormData({ ...getValues(), ...values });
-                }}
-                disabled={hasMapping}
-              />
-            }
-          />
-          {/* 언어 */}
-          <FormRow provider={provider} name="languageCountryCode" />
-        </ContentsRow>
-
-        {/* 학습자원명 */}
-        <ContentsRow>
-          <FormRow provider={provider} name="contentName" />
-        </ContentsRow>
-
-        {/* 학습자원 설명 */}
-        <ContentsRow>
-          <FormRow provider={provider} name="description" />
-        </ContentsRow>
-
-        {/* 담당자 */}
-        <ContentsRow>
-          <FormRow
-            provider={provider}
-            name="coordinatorName"
-            element={
-              <InputModalSelectorFormField
-                modalConfig={{
-                  title: '',
-                  width: 'md',
-                  content: <UserChoiceModal title="담당자" />,
-                }}
-                transformModalData={(data: User) => ({
-                  coordinatorUuid: data.uuid,
-                  coordinatorName: `${data.name}/${data?.dept?.deptName}/${data?.company?.name}`,
-                  coordinatorTelNo: data.phoneNumber,
-                })}
-                onFormChange={(
-                  values: Record<
-                    string,
-                    {
-                      coordinatorUuid: string;
-                      coordinatorName: string;
-                      coordinatorTelNo: string;
-                    }
-                  >,
-                ) => {
-                  handleFormChange(values);
-                }}
-              />
-            }
-          />
-          <FormRow2 provider={provider} type="hidden" name="coordinatorUuid" />
-          {/* 담당자 연락처 */}
-          <FormRow provider={provider} name="coordinatorTelNo" />
-        </ContentsRow>
-
-        {/* 사용기한 */}
-        <ContentsRow type="horizontal" className="inactive">
-          <FormRow provider={provider} name="isLimitExist" />
-        </ContentsRow>
-        {/* 사용기한 상세 */}
-        <FormDisplay provider={provider} dependencies={[{ name: 'isLimitExist', value: true }]}>
-          <ContentsRow className="pt-0">
-            <FormRow
-              provider={provider}
-              name="contentUseDate"
-              element={<DateRangePickerFormField />}
-            />
-          </ContentsRow>
-        </FormDisplay>
-
-        {/* 외주개발업체 정보 */}
-        <ContentsRow type="horizontal" className="inactive">
-          <FormRow provider={provider} name="isVendored" />
-        </ContentsRow>
-        {/* 외주개발업체 정보 입력 상세 */}
-        <FormDisplay provider={provider} dependencies={[{ name: 'isVendored', value: true }]}>
-          <ContentsRow className="pt-0">
-            <FormRow
-              provider={provider}
-              name="vendorName"
-              element={
-                <InputModalSelectorFormField
-                  modalConfig={{
-                    title: '',
-                    width: 'md',
-                    content: <CompanyChoiceModal />,
-                  }}
-                  transformModalData={(data: Company) => ({
-                    vendorCode: data.companyId,
-                    vendorName: data.name,
-                  })}
-                  onFormChange={(
-                    values: Record<string, { vendorCode: number; vendorName: string }>,
-                  ) => {
-                    handleFormChange(values);
-                  }}
-                />
-              }
-            />
-            <FormRow2 provider={provider} type="hidden" name="vendorCode" />
-          </ContentsRow>
-          <ContentsRow>
-            <FormRow provider={provider} name="vendorCoordinatorName" />
-            {/*<FormRow2 provider={provider} type="hidden" name="vendorCoordinatorUuid" />*/}
-            <FormRow provider={provider} name="vendorTelNo" />
-          </ContentsRow>
-        </FormDisplay>
-
-        {/* 블로그 내용 (에디터 팝업 호출) */}
-        <ContentsRow>
-          <FormRow provider={provider} name="blogContent" element={<EditorFormField />} />
-        </ContentsRow>
-
-        {/* 학습 시간 */}
-        <ContentsRow>
-          <FormRow provider={provider} name="contentDuration" element={<DurationTimeFormField />} />
-        </ContentsRow>
-
-        {/* 태그 */}
-        <ContentsRow>
-          <FormRow provider={provider} name="tags" />
-        </ContentsRow>
-
-        {/* 학습자원 개요 */}
-        <ContentsRow>
-          <FormRow provider={provider} name="aiSummary" />
-        </ContentsRow>
-
-        {/* 키워드 개요 */}
-        <ContentsRow>
-          <FormRow provider={provider} name="aiKeyword" />
-        </ContentsRow>
-
-        {/* 교육자원활용 여부 */}
-        <ContentsRow type="horizontal" className="inactive">
-          <FormRow provider={provider} name="isCourseUsed" />
-        </ContentsRow>
+        <LearningResourceBaseForm
+          provider={provider}
+          showAiInfo
+          showLessonTime
+          showBlogEditor
+          hasMapping={hasMapping}
+        />
 
         {/* 필수 확인 영역 */}
         <MediaContentRequiredCheckFormField provider={provider} />
@@ -334,7 +135,7 @@ const BlogDetailComponent = forwardRef<HTMLFormElement, BlogDetailProps>(
         {/* 이력정보 */}
         {mode === 'update' && (
           <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
-            <ContentsHistoryInfo detail={blogInfo ?? {}} />
+            <ContentsHistoryInfoFormField provider={provider} />
           </ContentsRow>
         )}
       </form>
@@ -346,23 +147,23 @@ BlogDetailComponent.displayName = 'BlogDetail';
 
 export const BlogDetail = BlogDetailComponent;
 
-const formConfig = (hasMapping: boolean): DynamicFormConfig => {
-  const commonMediaContentFormConfig = cloneDeepWith(mediaContentFormConfig({ hasMapping }));
-
-  return {
-    builders: [
-      ...commonMediaContentFormConfig.builders,
-      {
-        label: t('블로그 내용'),
-        name: 'blogContent',
-        type: 'custom',
-        format: 'string',
-        value: '',
-      },
-    ],
-    validator: {
-      ...commonMediaContentFormConfig.validator,
-      blogContent: true,
-    },
-  };
-};
+// const formConfig = (hasMapping: boolean): DynamicFormConfig => {
+//   const commonMediaContentFormConfig = cloneDeepWith(mediaContentFormConfig({ hasMapping }));
+//
+//   return {
+//     builders: [
+//       ...commonMediaContentFormConfig.builders,
+//       {
+//         label: t('블로그 내용'),
+//         name: 'blogContent',
+//         type: 'custom',
+//         format: 'string',
+//         value: '',
+//       },
+//     ],
+//     validator: {
+//       ...commonMediaContentFormConfig.validator,
+//       blogContent: true,
+//     },
+//   };
+// };

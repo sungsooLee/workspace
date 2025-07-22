@@ -9,7 +9,7 @@ function RouteComponent() {
   const player = useVideoPlayer();
 
   return (
-    <VideoPlayerContainer ref={player.playerContainerRef} {...player}>
+    <VideoPlayerContainer ref={player.playerContainerRef} player={player}>
       <VideoPlayer
         ref={player.playerRef}
         playing={player.playing}

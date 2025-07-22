@@ -39,9 +39,9 @@ export function AppConfigProvider({ children }: AppConfigProviderProps) {
 
   useMount(async () => {
     setConfig('APP_INFO', 'BO');
-    console.log('### useMount start');
+    // console.log('### useMount start');
     tokenService.refreshToken && (await reissue());
-    console.log('### useMount end');
+    // console.log('### useMount end');
   });
 
   useEffect(() => {
@@ -64,7 +64,6 @@ export function AppConfigProvider({ children }: AppConfigProviderProps) {
   }, []);
 
   useEffect(() => {
-    console.log(';i18nData', i18nData);
     if (!i18nData) {
       return;
     }
@@ -73,8 +72,6 @@ export function AppConfigProvider({ children }: AppConfigProviderProps) {
   }, [i18nData]);
 
   useEffect(() => {
-    console.log('### authUser', authUser);
-
     // codeGroupData, i18n 로딩
     if (!codeGroupData || !i18nData) return;
 

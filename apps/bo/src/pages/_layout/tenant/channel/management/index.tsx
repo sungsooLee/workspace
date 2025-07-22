@@ -25,27 +25,30 @@ function RouteComponent() {
   const [registButtonEnabled, setRegistButtonEnabled] = useState(true);
 
   useEffect(() => {
-    console.log('### loginUser', loginUser);
-    gridFetch();
-  }, []);
-
-  useEffect(() => {
-    if (loginUser)
+    if (loginUser) {
       setRegistButtonEnabled(
         loginUser.activeRole?.roleType === 'PLATFORM_MANAGER' ||
           loginUser.activeRole?.roleType === 'TENANT_MANAGER',
       );
+      gridFetch(searchParam());
+    }
   }, [loginUser]);
 
-  const handleOnSearch = useCallback((data: any) => {
+  const searchParam = () => {
+    const data = getValues();
     const searchData = {
       ...data,
       regStartDate: data.regDate.from
         ? getDateToString(new Date(data.regDate.from), 'YYYYMMDD')
         : '',
       regEndDate: data.regDate.to ? getDateToString(new Date(data.regDate.to), 'YYYYMMDD') : '',
+      roleId: loginUser?.activeRole?.roleId,
     };
-    gridFetch(searchData);
+    return searchData;
+  };
+
+  const handleOnSearch = useCallback((data: any) => {
+    gridFetch(searchParam());
   }, []);
 
   return (

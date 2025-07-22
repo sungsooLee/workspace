@@ -7,6 +7,7 @@ import {
 } from '@features/learning-operate/course/course-management';
 import { CODE_GROUP, S3_PATH, useDynamicForm2 } from '@learnway/hooks';
 import {
+  Badge,
   Button,
   ChipListModalSelectorFormField,
   ContentsRow,
@@ -88,8 +89,10 @@ const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTab
     const handleManualSubmit = () => {
       // onSubmit은 폼 제출 핸들러를 생성하는 함수입니다
       const submitHandler = onSubmit((data) => {
-        console.log('수동 제출 성공:', data);
-        updateCourse(data as Course);
+        console.log('수동 제출 성공:', { formValues, data });
+        const mergeData = { ...formValues, ...data };
+        const requestData = formDataToRequestData(mergeData);
+        updateCourse(requestData as Course);
       });
 
       // 가짜 이벤트 객체를 생성해서 수동으로 호출
@@ -160,7 +163,7 @@ const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTab
                 name={'courseValidityRange'}
                 label={'노출 기간'}
                 format={'object'}
-                element={<DateRangePickerFormField />}
+                element={<DateRangePickerFormField displayType={'day-time-h'} />}
                 validation={{ required: true }}
               />
             </ContentsRow>
@@ -199,10 +202,24 @@ const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTab
                         categoryPath: d.fullPath,
                       }));
                     }}
-                    list={{
+                    listConfig={{
+                      checkable: true,
+                      deletable: true,
+                      disabledActive: true,
                       labelField: 'categoryPath',
                       valueField: 'categoryId',
+                      selectedNodeBeforeLabel: (
+                        <Badge
+                          option={{ label: '대표', value: '' }}
+                          variant={'text'}
+                          status="fill"
+                        />
+                      ),
                     }}
+                    selectedValue={getValues()?.primaryCategoryId}
+                    onSelected={(option: any) =>
+                      onFormChange({ primaryCategoryId: option.categoryId })
+                    }
                     actionNode={<Button variant="text" size="sm" label={t('추가')} />}
                   />
                 }
@@ -721,6 +738,18 @@ const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTab
                         codeGroup: CODE_GROUP['lms.course.RecognizedStudyMinType'],
                         optionsNode: [
                           {
+                            value: 'TIME', // 학습시간
+                            node: (
+                              // 분
+                              <FormRow2
+                                provider={provider}
+                                name={'recognizedStudyMinutes'}
+                                format={'number'}
+                                element={<Input type={'number'} min={0} suffixText="분" />}
+                              />
+                            ),
+                          },
+                          {
                             value: 'COUNT_TIME', // 회수 및 학습시간
                             node: (
                               <>
@@ -728,12 +757,14 @@ const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTab
                                 <FormRow2
                                   provider={provider}
                                   name={'recognizedStudyCycles'}
+                                  format={'number'}
                                   element={<Input type={'number'} min={0} suffixText="회" />}
                                 />
                                 {/* // 인정학습시간(분) */}
                                 <FormRow2
                                   provider={provider}
                                   name={'recognizedStudyMinutes'}
+                                  format={'number'}
                                   element={<Input type={'number'} min={0} suffixText="분" />}
                                 />
                               </>
@@ -1427,10 +1458,10 @@ const responseDataToFormData = (d: Course, c: CourseConfig = {} as CourseConfig)
       examWeights: d.examWeights, // 평가 반영 비율
       asgmtWeights: d.asgmtWeights, // 과제 반영 비율
     },
-    courseValidityRange: [
-      d.courseValidityStartDate, // 과정 유효 시작일
-      d.courseValidityEndDate, // 과정 유효 종료일
-    ],
+    courseValidityRange: {
+      from: d.courseValidityStartDateTime, // 과정 유효 시작일
+      to: d.courseValidityEndDateTime, // 과정 유효 종료일
+    },
     // tagNameArray: d.tagNames?.map((item) => item.value), // 태그
   };
 };
@@ -1463,7 +1494,7 @@ export const formDataToRequestData = (d: Course) => {
   // 카테고리 아이디 배열
   d.categoryIds = d.categories?.map((d: any) => d.categoryId);
   // 대표 카테고리
-  d.primaryCategoryId = d.categories?.[0]?.categoryId;
+  // d.primaryCategoryId = d.categories?.[0]?.categoryId;
   // 학습대상-ID 배열
   d.targetListIds = d.targetList?.map((d: any) => d.id);
 
@@ -1494,7 +1525,6 @@ export const formDataToRequestData = (d: Course) => {
   // 인정 학습시간 > 학습시간
   if (d.recognizedStudyMinType === 'TIME') {
     d.recognizedStudyCycles = undefined; // 인정 학습 횟수
-    d.recognizedStudyMinutes = undefined; // 인정 학습시간(분)
   }
 
   // 학습포인트 > 미사용
@@ -1522,10 +1552,10 @@ export const formDataToRequestData = (d: Course) => {
     ...d.passOption, // 이수기준 설정
     preRequisiteCourseIds,
     relatedCourseIds,
-    courseValidityStartDate: d.courseValidityRange?.[0], // 과정 유효 시작일
-    courseValidityEndDate: d.courseValidityRange?.[1], // 과정 유효 종료일
-    courseValidityStartHour: 0, // 과정 노출 시작 시각 (삭제 후 courseValidityStartDate에 통합 예정)
-    courseValidityEndHour: 23, // 과정 노출 종료 시각 (삭제 후 courseValidityEndDate에 통합 예정)
+    courseValidityStartDateTime: d.courseValidityRange?.from, // 과정 유효 시작일
+    courseValidityEndDateTime: d.courseValidityRange?.to, // 과정 유효 종료일
+    // courseValidityStartHour: 0, // 과정 노출 시작 시각 (삭제 후 courseValidityStartDate에 통합 예정)
+    // courseValidityEndHour: 23, // 과정 노출 종료 시각 (삭제 후 courseValidityEndDate에 통합 예정)
     // thumbnailFileGroupUuid: '1', // 썸네일 이미지 Group UUID
     // primaryThumbnailFileUuid: '1', // 대표 썸네일 이미지 UUID
     // tagNames: d.tagNameArray?.map((item) => ({ value: item })), // 태그

@@ -183,7 +183,8 @@ const TenantUserApplicationDetailComponent = (props: userDetailProps, ref: any) 
       </ContentsRow>
       <FormDisplay
         provider={provider}
-        dependencies={[{ name: 'hrInfoManageType', value: 'MANUAL_MANAGE' }]}>
+        dependencies={[{ name: 'hrInfoManageType', value: 'MANUAL_MANAGE' }]}
+      >
         <ContentsRow>
           <FormRow provider={provider} name="companyMemberJoinTypeList" />
         </ContentsRow>
@@ -204,15 +205,15 @@ const TenantUserApplicationDetailComponent = (props: userDetailProps, ref: any) 
           element={<RadioGroupFormField disabled />}
         />
         <FormRow provider={provider} name="accountLastUpdateDate" element={<Input disabled />} />
-        <FormRow
-          provider={provider}
-          name="dormantDate"
-          element={<Input disabled />}
-        />
+        <FormRow provider={provider} name="dormantDate" element={<Input disabled />} />
       </ContentsRow>
       <ContentsRow>
         <FormRow provider={provider} name="approvalStatus" element={<Input disabled />} />
-        <FormRow provider={provider} name="lastApprovalStatusUpdateDate" element={<Input disabled />} />
+        <FormRow
+          provider={provider}
+          name="lastApprovalStatusUpdateDate"
+          element={<Input disabled />}
+        />
         <div className={formStyles.form_item}></div>
       </ContentsRow>
       <ContentsRow>
@@ -225,6 +226,8 @@ const TenantUserApplicationDetailComponent = (props: userDetailProps, ref: any) 
                 labelField: 'tenantName',
                 valueField: 'tenantId',
                 wordwrap: true,
+                hideBorder: true,
+                isOptionHideCloseButton: (option: any) => option,
               }}
               disabled
             />

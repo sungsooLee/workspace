@@ -27,6 +27,15 @@
       }
     }
   }
+  &.checkable {
+    @apply px-[4px] py-[12px];
+    [class*='nlp--checkbox'] {
+      @apply mr-[5px];
+    }
+    [class*='nlp--badge'] {
+      @apply mr-[5px];
+    }
+  }
   .item {
     @apply body_bo_2_r flex min-h-[40px] items-center justify-between overflow-hidden rounded-[2px] px-[8px] text-[var(--gray8)];
     .inner {
@@ -44,9 +53,9 @@
           @apply !font-normal;
         }
       }
-      & + .clear {
-        @apply ml-[4px];
-      }
+    }
+    .clear {
+      @apply ml-[4px];
     }
     &:has([class*='nlp--checkbox']) {
       @apply min-h-[24px];

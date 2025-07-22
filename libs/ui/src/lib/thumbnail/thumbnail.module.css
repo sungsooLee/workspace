@@ -1,5 +1,5 @@
 .start {
-  @apply relative;
+  @apply relative overflow-hidden;
   &.thumbnail {
     @apply rounded-[4px];
     &.active {

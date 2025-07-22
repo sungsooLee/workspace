@@ -68,6 +68,8 @@ const CompanyUserDetailAccountComponent = ({
                     labelField: 'tenantName',
                     valueField: 'tenantId',
                     hideBorder: true,
+                    wordwrap: true,
+                    isOptionHideCloseButton: (option: any) => option,
                   }}
                   disabled={true}
                 />

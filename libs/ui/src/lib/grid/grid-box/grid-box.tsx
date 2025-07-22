@@ -231,7 +231,6 @@ const GridBoxComponent = <T extends object>(
 
   // GridComponent로부터 table 인스턴스를 받았을 때 호출될 핸들러
   const handleTableInstanceChange = useCallback((table: Table<T>) => {
-    console.log('Table instance received:', table);
     setTableInstance(table);
     // onTableInstanceChange callback prop
     onTableInstanceChange?.(table);

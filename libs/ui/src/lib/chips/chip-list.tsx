@@ -8,6 +8,7 @@ import { Popover } from '../popover/popover';
 import { Chip, ChipComponentProps } from './chip';
 
 import styles from './chip-list.module.css';
+import { undefined } from 'zod';
 
 export interface ChipListComponentProps extends Omit<ChipComponentProps, 'option' | 'onClick'> {
   options: Array<any>;
@@ -91,7 +92,7 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
       if ((event.key === 'Enter' || event.key === ',') && value) {
         setInputValue('');
         onAddInputEnterKeyDown?.({
-          [valueField]: getRandomNumber(1000),
+          [valueField]: undefined,
           [labelField]: value,
         });
       }

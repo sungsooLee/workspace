@@ -17,7 +17,7 @@ export function useAsycFetchMenus(mutationOptions = {}) {
 
   return {
     asyncMenus: async (tenantId: number, roleId: number) => {
-      console.log('#### asyncMenus', tenantId, roleId);
+      // console.log('#### asyncMenus', tenantId, roleId);
 
       // TODO 롤 체크 추가 ( FO 로그인 정책 추가 후 )
       // tenantId, roleId 없을때 예외처리

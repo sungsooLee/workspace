@@ -6,23 +6,29 @@ import { initialConfig as editorConfig } from '../../../editor/config/editor.con
 
 import stylesWeb from '@learnway/styles/fo/pages/_learning/learning.module.css';
 import stylesMobile from '@learnway/styles/fo/pages/_learning/learning-m.module.css';
-import { Button } from '@learnway/ui';
+import { Button } from '../../../button/button';
+import { useLearningWindow } from '../../learnway-learning-window.store';
 
 const styles = isMobile ? stylesMobile : stylesWeb;
 
-const LearningWindowOthersPlayerComponent: FC<any> = ({ othersInfo }) => {
+const LearningWindowOthersPlayerComponent: FC<any> = () => {
+  const { otherInfo } = useLearningWindow();
+  const handleLinkClick = () => {
+    console.log('handleClick');
+  };
   useEffect(() => {
-    if (!othersInfo) return;
-    console.log('othersInfo', othersInfo);
-  }, [othersInfo]);
+    if (!otherInfo) return;
+    console.log('otherInfo', otherInfo);
+  }, [otherInfo]);
 
   return (
     <div className={`${styles.start} ${styles.file}`}>
       <div className={styles.file_box}>
-        <p>비즈니스 영어 단어&숙어집 Part 2.pdf</p>
-        {!isMobile && <span>200MB</span>}
-        <Button variant="line" size="sm">
-          다운로드
+        <p>otherInfo.label</p>
+        {!isMobile && otherInfo.fileSize && <span>{otherInfo.fileSize}</span>}
+        {!isMobile && otherInfo.lessonTime && <span>{otherInfo.lessonTime}</span>}
+        <Button variant="line" size="sm" onClick={handleLinkClick}>
+          {otherInfo.fileSize ? `다운로드` : `바로가기`}
         </Button>
       </div>
     </div>

@@ -125,6 +125,7 @@
       }
     }
     .contents_box {
+      @apply h-[calc(100dvh-80px-64px)] overflow-y-auto;
       /* 커리쿨럼 */
       .curriculum {
         .box {

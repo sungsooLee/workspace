@@ -1,8 +1,9 @@
 /* IA110 / NLP_BO_CMS_1013 - 나의 학습자원 > 블로그 삳세 */
 import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
-import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
+import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { useQuery } from '@tanstack/react-query';
 import { t } from 'i18next';
+import { useCurrentRoute } from '@learnway/hooks';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { Button, Divider, useModal } from '@learnway/ui';
 import defaultImage from '@assets/images/thumb/img_thumb_default.jpg';
@@ -25,7 +26,7 @@ export const Route = createLazyFileRoute('/_layout/learning/resource/blog/view')
 
 function RouteComponent() {
   const router = useRouter();
-  const routerState = useRouterState();
+  const { state } = useCurrentRoute();
 
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -33,11 +34,11 @@ function RouteComponent() {
   const [tenantId, setTenantId] = useState<number>(-1);
 
   const { data, error: fetchError } = useQuery(
-    learningResourceQueryOptions.getContent(routerState.location.state?.contentUuid),
+    learningResourceQueryOptions.getContent(state?.contentUuid),
   );
 
   const { data: hasMapping } = useQuery(
-    learningResourceQueryOptions.getCurriculumsMapping(routerState.location.state?.contentUuid),
+    learningResourceQueryOptions.getCurriculumsMapping(state?.contentUuid),
   );
 
   const { open: openModal, alert: openAlert, confirm: openConfirm } = useModal();
@@ -50,14 +51,14 @@ function RouteComponent() {
   }, [data?.contentUuid]);
 
   const handleClickCourseMapping = useCallback(async () => {
-    if (!routerState.location.state?.contentUuid) {
+    if (!state?.contentUuid) {
       return;
     }
     await openModal({
       content: (
         <ContentCourseMappingModal
           channelUuid={data?.channelUuid ?? ''}
-          contentUuid={routerState.location.state.contentUuid}
+          contentUuid={state.contentUuid}
         />
       ),
       width: 'lg',
@@ -71,9 +72,12 @@ function RouteComponent() {
         content: t('LABEL.confirm.goList.message'),
       })
     ) {
-      router.navigate({ to: '/learning/learning-resource' });
+      router.navigate({
+        to: '/learning/learning-resource',
+        state: { listParam: state?.listParam },
+      });
     }
-  }, []);
+  }, [state]);
 
   const { delete: deleteBlogContent } = useDeleteContent({
     onSuccess: (result: number) => {
@@ -97,7 +101,7 @@ function RouteComponent() {
 
   const handleClickSubmitButton = (e: MouseEvent<HTMLButtonElement>) => {
     if (formRef.current) {
-      formRef.current?.requestSubmit();
+      formRef.current?.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
     }
   };
 

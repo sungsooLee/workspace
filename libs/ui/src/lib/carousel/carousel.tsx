@@ -18,31 +18,29 @@ export interface CarouselComponentProps extends SwiperProps {
   itemClassName?: string;
   prevIcon?: React.ReactNode;
   nextIcon?: React.ReactNode;
+  prevDisabled?: boolean;
+  nextDisabled?: boolean;
 }
 
 const CarouselComponent = forwardRef<React.ElementRef<typeof Swiper>, CarouselComponentProps>(
   (
-    { className, items, showNavigation = false, itemClassName, prevIcon, nextIcon, ...props },
+    {
+      className,
+      items,
+      showNavigation = false,
+      itemClassName,
+      prevIcon,
+      nextIcon,
+      prevDisabled = false,
+      nextDisabled = false,
+      ...props
+    },
     ref,
   ) => {
     const prevRef = useRef<HTMLButtonElement>(null);
     const nextRef = useRef<HTMLButtonElement>(null);
 
     // Navigation Buttons
-    const renderNavigationButtons = () => (
-      <>
-        <Button
-          ref={prevRef}
-          className={cn(styles.navigation_btn, styles.prev_btn, 'prev_btn')}
-          icon={prevIcon && prevIcon}
-        />
-        <Button
-          ref={nextRef}
-          className={cn(styles.navigation_btn, styles.next_btn, 'next_btn')}
-          icon={nextIcon && nextIcon}
-        />
-      </>
-    );
 
     return (
       <div
@@ -52,7 +50,22 @@ const CarouselComponent = forwardRef<React.ElementRef<typeof Swiper>, CarouselCo
           'nlp--carousel-wrap',
         )}
       >
-        {showNavigation && items.length > 1 && renderNavigationButtons()}
+        {showNavigation && items.length > 1 && (
+          <>
+            <Button
+              ref={prevRef}
+              className={cn(styles.navigation_btn, styles.prev_btn, 'prev_btn')}
+              icon={prevIcon && prevIcon}
+              disabled={true}
+            />
+            <Button
+              ref={nextRef}
+              className={cn(styles.navigation_btn, styles.next_btn, 'next_btn')}
+              icon={nextIcon && nextIcon}
+              disabled={nextDisabled}
+            />
+          </>
+        )}
         <Swiper
           {...props}
           ref={ref}

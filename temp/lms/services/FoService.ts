@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { com_ever_edu_lms_category_dto_res_TenantCategoryTreeDto } from '../models/com_ever_edu_lms_category_dto_res_TenantCategoryTreeDto';
+import type { com_ever_edu_lms_course_dto_res_CourseUserResDto } from '../models/com_ever_edu_lms_course_dto_res_CourseUserResDto';
 import type { com_ever_edu_lms_enroll_dto_req_EnrollCancelReqDto$ByUser } from '../models/com_ever_edu_lms_enroll_dto_req_EnrollCancelReqDto$ByUser';
 import type { com_ever_edu_lms_enroll_dto_req_EnrollReqDto$ByUser } from '../models/com_ever_edu_lms_enroll_dto_req_EnrollReqDto$ByUser';
 import type { com_ever_edu_lms_enroll_dto_req_EnrollSearchDto$SearchByUser } from '../models/com_ever_edu_lms_enroll_dto_req_EnrollSearchDto$SearchByUser';
@@ -413,6 +414,32 @@ export class FoService {
                 400: `Bad Request`,
                 401: `Unauthorized`,
                 404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 과정 조회
+     * 과정 id를 통해 조회한다.
+     * @param courseId
+     * @returns com_ever_edu_lms_course_dto_res_CourseUserResDto OK
+     * @throws ApiError
+     */
+    public static findByCourseId(
+        courseId: number,
+    ): CancelablePromise<com_ever_edu_lms_course_dto_res_CourseUserResDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/user/api/v1/course/{courseId}',
+            path: {
+                'courseId': courseId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
                 422: `Unprocessable Entity`,
                 500: `Internal Server Error`,
             },

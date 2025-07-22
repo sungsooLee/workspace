@@ -6,7 +6,8 @@ import { initialConfig as editorConfig } from '../../../editor/config/editor.con
 
 import stylesWeb from '@learnway/styles/fo/pages/_learning/learning.module.css';
 import stylesMobile from '@learnway/styles/fo/pages/_learning/learning-m.module.css';
-import { HtmlContent, useLearningWindow } from '@learnway/ui';
+import { useLearningWindow } from '../../learnway-learning-window.store';
+import { HtmlContent } from '../../../html-content/html-content';
 
 const styles = isMobile ? stylesMobile : stylesWeb;
 

@@ -1,40 +1,43 @@
 .start {
   &.secession {
+    @apply mx-auto w-[670px] px-[60px] pb-[40px] pt-[60px];
     .box {
-      @apply mt-[16px] rounded-[16px] border-[1px] border-solid border-[var(--gray4)] pb-[24px] pt-[32px];
       .confirm {
         @apply mt-0;
         svg {
           @apply mx-auto;
-          & + p {
-            @apply mt-[12px];
-          }
         }
         p {
-          @apply title_6_r text-center text-[var(--status1)];
+          @apply body-lg-b mt-[40px] text-center text-[var(--red65)];
         }
       }
       .bullet_notice {
-        @apply mt-[32px] border-t-[1px] border-solid border-[var(--gray4)] px-[24px] pt-[24px];
+        @apply mt-[40px];
         ul {
-          @apply mb-[16px] border-b-[1px] border-solid border-[var(--gray3)] pb-[16px];
+          @apply rounded-[8px] bg-[var(--gray98)] p-[20px];
           li {
-            @apply body_3_r relative flex justify-between pl-[10px] leading-[19px] text-[var(--gray7)];
+            @apply body-sm relative pl-[10px] leading-[21px] text-[var(--gray35)];
             &::before {
-              @apply absolute left-0 top-[8px] h-[4px] w-[4px] rounded-[50%] bg-[var(--gray6)] content-[''];
+              @apply absolute left-0 top-[8px] h-[3px] w-[3px] rounded-[50%] bg-[var(--gray50)] content-[''];
             }
             & + li {
               @apply mt-[8px];
             }
           }
         }
-        label {
-          @apply body_bo_2_r ml-[8px] text-[var(--gray8)];
+        & > div {
+          @apply mt-[16px];
+          label {
+            @apply label-lg ml-[8px] !font-normal !leading-[20px] text-[var(--gray35)];
+          }
         }
       }
     }
     .btn_wrap {
-      @apply mx-auto mt-[48px] w-[400px];
+      @apply mx-auto mt-[60px] w-full gap-[12px];
+      button {
+        @apply m-0;
+      }
     }
   }
 }

@@ -15,6 +15,10 @@ export default class UsersService {
     return httpService.post<any>(`${PMSApiPrefix()}/users`, payload);
   }
 
+  static updateUser(payload: any) {
+    return httpService.put(`${PMSApiPrefix()}/users/${payload.userUuid}`, payload);
+  }
+
   static existsEmail(params: any) {
     return httpService.get<any>(`${PMSApiPrefix()}/users/is-email-exists`, params);
   }

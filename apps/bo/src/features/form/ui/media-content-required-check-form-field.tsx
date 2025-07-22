@@ -64,7 +64,7 @@ const MediaContentRequiredCheckFormFieldComponent = ({
       <ContentsRow>
         <FormRow2
           provider={provider}
-          name="isContentSecured"
+          name="isSecured"
           label={t('보안 확인')}
           format="boolean"
           value={false}
