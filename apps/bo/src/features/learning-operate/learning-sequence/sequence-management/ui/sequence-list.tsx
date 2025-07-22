@@ -51,6 +51,7 @@ import { CopyBatchButtons } from '../component/copy-batch-buttons';
 import { Mode } from '@pages/_layout/learning/learning-sequence/-common/type';
 import { SequenceSearchForm } from '../component/sequence-search-form';
 import { CourseSequenceSearchForm } from '../component/course-sequence-search-form';
+import { useFetchCourseSequences } from '@entities/learning-sequence/service/learning-sequence.hook';
 
 type SequenceListComponentProps = {
   setMode: (value: string) => void;
@@ -74,8 +75,8 @@ const gridConfig: useGridBoxConfig = {
   columns: [],
   data: [],
   gridState: {
-    page: 0,
-    size: 1,
+    // page: 0,
+    // size: 1,
     sort: [],
   },
 };
@@ -83,9 +84,9 @@ const gridConfig: useGridBoxConfig = {
 const SequenceListComponent = ({
   setMode,
   setSequenceId,
-  courseId,
+  courseId: courseIdProps,
 }: SequenceListComponentProps) => {
-  console.log('## courseId:', courseId);
+  console.log('## courseIdProps:', courseIdProps);
   const router = useRouter();
   const { open: openModal, confirm: openConfirm, alert: openAlert } = useModal();
   const [columns, setColumns] = useState() as any;
@@ -93,7 +94,7 @@ const SequenceListComponent = ({
 
   _global.linkClick = (payload: any) => {
     setMode(Mode.DETAIL);
-    setSequenceId(parseInt(payload.sequenceId));
+    setSequenceId(payload.courseSequenceId);
   };
 
   const { provider, getValues, onSubmit } = useDynamicForm2({
@@ -107,8 +108,8 @@ const SequenceListComponent = ({
 
   useEffect(() => {
     const openYearColumn = [
-      columnHelper.accessor('openYear', {
-        header: t('개설'),
+      columnHelper.accessor('openingYear', {
+        header: t('개설연도'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
         size: 58,
@@ -116,7 +117,7 @@ const SequenceListComponent = ({
     ] as ColumnDef<any, unknown>[];
 
     const sequenceColumn = [
-      columnHelper.accessor('sequence', {
+      columnHelper.accessor('courseSequenceNo', {
         header: t('순서'),
         cell: (info: CellContext<any, string>) => {
           return (
@@ -148,7 +149,7 @@ const SequenceListComponent = ({
     ] as ColumnDef<any, unknown>[];
 
     let columns = [
-      columnHelper.accessor('sequenceId', {
+      columnHelper.accessor('courseSequenceId', {
         header: t('차수코드'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
@@ -168,18 +169,18 @@ const SequenceListComponent = ({
         enableGrouping: false,
         size: 240,
       }),
-      columnHelper.accessor('regStartDate', {
+      columnHelper.accessor('enrollmentStartDateTime', {
         header: t('수강신청 시작일'),
         cell: (info) => {
-          return <EditDatePickerCell info={info} dateOptions={{ displayType: 'day-time-hm' }} />;
+          return <EditDatePickerCell info={info} dateOptions={{ displayType: 'day-time-h' }} />;
         },
         enableGrouping: false,
         size: 300,
       }),
-      columnHelper.accessor('regEndDate', {
+      columnHelper.accessor('enrollmentEndDateTime', {
         header: t('수강신청 종료일'),
         cell: (info) => {
-          return <EditDatePickerCell info={info} dateOptions={{ displayType: 'day-time-hm' }} />;
+          return <EditDatePickerCell info={info} dateOptions={{ displayType: 'day-time-h' }} />;
         },
         enableGrouping: false,
         size: 300,
@@ -188,17 +189,17 @@ const SequenceListComponent = ({
           align: 'center',
         },
       }),
-      columnHelper.accessor('eduStartDate', {
+      columnHelper.accessor('courseSequenceStartDateTime', {
         header: t('학습 시작일'),
         cell: (info) => {
           if (info.row.original.status === '학습중') return '수강신청 승인일로 부터';
           else
-            return <EditDatePickerCell info={info} dateOptions={{ displayType: 'day-time-hm' }} />;
+            return <EditDatePickerCell info={info} dateOptions={{ displayType: 'day-time-h' }} />;
         },
         enableGrouping: false,
         size: 300,
       }),
-      columnHelper.accessor('aa', {
+      columnHelper.accessor('courseSequenceEndDateTimeMerge', {
         header: t('학습 종료일'),
         cell: (info: CellContext<any, string>) => {
           return <EditInputDateCell info={info} input={{ suffixText: '일' }} />;
@@ -206,7 +207,7 @@ const SequenceListComponent = ({
         enableGrouping: false,
         size: 300,
       }),
-      columnHelper.accessor('status', {
+      columnHelper.accessor('learningStatusType', {
         header: t('상태'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
@@ -214,29 +215,29 @@ const SequenceListComponent = ({
       }),
       columnHelper.accessor('isUsed', {
         header: t('사용'),
-        cell: (info) => info.getValue(),
+        cell: (info) => (info.getValue() ? t('사용') : t('미사용')),
         enableGrouping: false,
         size: 60,
       }),
-      columnHelper.accessor('capacity', {
+      columnHelper.accessor('maxEnrollQuota', {
         header: t('정원'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
         size: 60,
       }),
-      columnHelper.accessor('enroll', {
+      columnHelper.accessor('currentEnrollCount', {
         header: t('신청'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
         size: 60,
       }),
-      columnHelper.accessor('student', {
+      columnHelper.accessor('enrolledStudentCount', {
         header: t('수강생'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
         size: 70,
       }),
-      columnHelper.accessor('graduateStudent', {
+      columnHelper.accessor('graduatedStudentCount', {
         header: t('수료생'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
@@ -244,7 +245,7 @@ const SequenceListComponent = ({
       }),
     ] as ColumnDef<any, unknown>[];
 
-    if (!courseId) {
+    if (!courseIdProps) {
       columns = [...openYearColumn, ...courseColumn, ...columns];
     } else {
       columns = [...openYearColumn, ...sequenceColumn, ...columns];
@@ -256,8 +257,10 @@ const SequenceListComponent = ({
   const handleOnSearch = useCallback((data: any) => {
     console.log('## search param:', data);
     const payload = {
-      ...data,
-      courseId: 1,
+      courseId: courseIdProps,
+      openingYear: parseInt(data.openingYear),
+      isUsed: data.isUsed === 'true',
+      courseSequenceName: data.courseSequenceName,
     };
     console.log('##payload:', payload);
     gridFetch(payload);

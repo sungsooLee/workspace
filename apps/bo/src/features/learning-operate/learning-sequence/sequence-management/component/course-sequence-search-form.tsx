@@ -87,7 +87,7 @@ export const CourseSequenceSearchForm: React.FC<CourseSequenceSearchFormProps> =
         <FormRow2
           provider={provider}
           name="courseSequenceName"
-          label={t('LABEL.form.label.sequenceName')}
+          label={t('LABEL.form.label.courseSequenceName')}
           element={<Input />}
         />
         {/* 상태 */}

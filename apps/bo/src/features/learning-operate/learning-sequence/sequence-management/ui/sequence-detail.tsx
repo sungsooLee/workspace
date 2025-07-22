@@ -52,6 +52,8 @@ import { DateRangePickerFormField, DropdownFormField, FormDisplay } from '@featu
 import { InstructorListPopup } from '@features/learning-operate-support/instructor-tutor/instructor-management/modal/instructor-list-modal';
 import { PassOptionFormField } from '@pages/_layout/learning/course/-components/pass-option-form-field/pass-option-form-field';
 import { Content } from '@radix-ui/react-accordion';
+import { useFetchCourseSequence } from '@entities/learning-sequence/service/learning-sequence.hook';
+import { queryOptions } from '@entities/learning-sequence/service/learning-sequence.queries';
 
 type SequenceDetailComponentProps = {
   setMode?: (value: any) => void;
@@ -71,6 +73,25 @@ const SequenceDetailComponent = ({
   console.log('##courseId=>', courseId);
   console.log('##sequenceId=>', sequenceId);
   const formRef = useRef<HTMLFormElement>(null);
+  // const { data: formData } = useFetchCourseSequence(sequenceId);
+  // courseId는 필요없나?
+  // const { data: formData } = useFetchCourseSequence(sequenceId);
+  // useEffect(() => {
+  //   initializeData();
+  // }, []);
+
+  const initializeData = async () => {
+    const result = await queryClient.fetchQuery(queryOptions.sequenceDetail(sequenceId));
+    console.log('@@@@@@@@@@@@@@@@@', result);
+    if (result) {
+      console.log('SequenceDetailComponent init');
+      updateFormData(responseDataToFormData(result));
+    }
+  };
+
+  useEffect(() => {
+    initializeData();
+  }, []);
 
   const {
     provider,
@@ -160,7 +181,7 @@ const SequenceDetailComponent = ({
           <ContentsRow>
             <FormRow2
               provider={provider}
-              name={'sequenceName'}
+              name={'courseSequenceName'}
               label={'차수명'}
               element={<Input type={'text'} maxLength={40} />}
             />
@@ -168,7 +189,7 @@ const SequenceDetailComponent = ({
           <ContentsRow>
             <FormRow2
               provider={provider}
-              name={'isSequenceUsed'}
+              name={'isUsed'}
               label={'차수 사용여부'}
               element={
                 <RadioGroupFormField
@@ -180,40 +201,44 @@ const SequenceDetailComponent = ({
             />
             <FormRow2
               provider={provider}
-              name={'regDate'}
+              name={'enrollmentStartDateTime'}
               label={'수강신청 기간'}
-              element={<DateRangePickerFormField />}
+              element={
+                // enrollmentStartDateTime 수강신청 시작일시
+                // enrollmentEndDateTime 수강신청 종료일시
+                <DateRangePickerFormField />
+              }
             />
           </ContentsRow>
           <ContentsRow>
             {/* 학습기간 유형 */}
             <FormRow2
               provider={provider}
-              name={'eduDateType'}
+              name={'learningStartType'}
               label={'학습기간 유형'}
               element={
                 <RadioGroupFormField
                   options={[
                     {
-                      value: false,
+                      value: 'DAYS_AFTER_ENROLL',
                       label: t('시작일 기준'),
                       node: (
                         <FormRow2
                           provider={provider}
-                          name={'eduDate1'}
-                          value={''}
+                          name={'learningStartDateTime'}
+                          // value={''}
                           element={<DateRangePickerFormField />}
                         />
                       ),
                     },
                     {
-                      value: true,
+                      value: 'FIXED_DATE',
                       label: t('기간 지정'),
                       node: (
                         <FormRow2
                           provider={provider}
-                          name={'eduDate2'}
-                          value={''}
+                          name={'learningStartDays'}
+                          // value={''}
                           element={
                             <Input type="number" prefixText="학습 가능일로부터" suffixText="일" />
                           }
@@ -229,7 +254,7 @@ const SequenceDetailComponent = ({
             {/* 수강취소 */}
             <FormRow2
               provider={provider}
-              name={'cancel'}
+              name={'isEnrollCancelDeadLineActivated'}
               label={'수강취소'}
               element={
                 <RadioGroupFormField
@@ -242,6 +267,8 @@ const SequenceDetailComponent = ({
                       {
                         value: true, // 수강취소 기간
                         node: (
+                          /* enrollCancelStartDateTime 수강취소가능시작일시
+                              enrollCancelEndDateTime	수강취소가능종료일시 */
                           <FormRow2
                             provider={provider}
                             name={'cancelDate'}
@@ -319,21 +346,33 @@ const SequenceDetailComponent = ({
             {/* 승인 */}
             <FormRow2
               provider={provider}
-              name={'approvalStat'}
+              name={'approvalLineType'}
               label={'승인'}
               element={
                 <DropdownFormField
-                  //   optionsConfig={{
-                  //     codeGroup: CODE_GROUP['lms.course.CourseType'],
-                  //   }}
+                  optionsConfig={{
+                    codeGroup: CODE_GROUP['lms.course.CourseType'],
+                  }}
                   options={[
                     {
-                      value: false,
-                      label: '반려',
+                      value: 'NONE',
+                      label: 'NONE',
                     },
                     {
-                      value: true,
-                      label: '승인',
+                      value: 'LEADER',
+                      label: 'LEADER',
+                    },
+                    {
+                      value: 'OPERATOR',
+                      label: 'OPERATOR',
+                    },
+                    {
+                      value: 'LEADER_OPERATOR',
+                      label: 'LEADER_OPERATOR',
+                    },
+                    {
+                      value: 'DEPEND_COMPANY',
+                      label: 'DEPEND_COMPANY',
                     },
                   ]}
                 />
@@ -1370,3 +1409,38 @@ const SequenceDetailComponent = ({
 };
 
 export const SequenceDetail = SequenceDetailComponent;
+
+/**
+ * 응답 데이터를 폼 데이터로 변환
+ */
+const responseDataToFormData = (d: any): any => {
+  return {
+    ...d,
+    tenantIds: d?.tenantList?.map((d: any) => d.tenantId), // 테넌트 아이디
+    // isLearnEnvEnabled: c.learningEnvOption !== 'IMPOSSIBLE', // 학습환경 설정 사용 여부
+    // isLearnControlEnabled: c.learningControlOption !== 'IMPOSSIBLE', // 학습제어 설정 사용 여부
+    // isUsePassOption: c.passOption !== 'IMPOSSIBLE', // 이수기준 설정 사용 여부
+    // isCommunicationToolEnabled: c.communicationOption !== 'IMPOSSIBLE', // 커뮤니티 및 공유설정 사용 여부
+    // isInstructorAssigned: c.instructorOption !== 'IMPOSSIBLE', // 강사 설정 사용 여부
+    // isTextbookProvided: c.textBookOption !== 'IMPOSSIBLE', // 교재 설정 사용 여부
+    // isRelatedPrerequisiteCourseExisted: c.relatedCourseOption !== 'IMPOSSIBLE', // 사전/연관학습 설정 사용 여부
+    // isUseOutsourcing: true, // 오토에버 위탁 전용 설정 여부 (CourseConfig 에 관리안함)
+    // 이수기준 설정
+    passOption: {
+      progressMinPassScore: d.progressMinPassScore, // 진도 최소 이수 점수
+      attendanceMinPassScore: d.attendanceMinPassScore, // 출석 최소 이수 점수
+      examMinPassScore: d.examMinPassScore, // 평가 최소 이수 점수
+      asgmtMinPassScore: d.asgmtMinPassScore, // 과제 최소 이수 점수
+      totalMinPassScore: d.totalMinPassScore, // 총점 최소 이수 점수
+      progressWeights: d.progressWeights, // 진도 반영 비율
+      attendanceWeights: d.attendanceWeights, // 출석 반영 비율
+      examWeights: d.examWeights, // 평가 반영 비율
+      asgmtWeights: d.asgmtWeights, // 과제 반영 비율
+    },
+    courseValidityRange: [
+      d.courseValidityStartDate, // 과정 유효 시작일
+      d.courseValidityEndDate, // 과정 유효 종료일
+    ],
+    // tagNameArray: d.tagNames?.map((item) => item.value), // 태그
+  };
+};

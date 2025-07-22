@@ -20,6 +20,8 @@ export const queryOptions = {
   sequenceDetail: (sequenceId: number) => ({
     queryKey: queryKeys.sequenceDetail,
     queryFn: () => LearningSequenceService.fetchSequenceOne(sequenceId),
+    cacheTime: 0,
+    staleTime: 1000 * 60 * 5,
   }),
   enrollmentRegistList: (params: any) => ({
     queryKey: queryKeys.enrollmentRegistList,
