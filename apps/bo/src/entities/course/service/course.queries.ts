@@ -3,6 +3,7 @@ import {
   Course,
   CourseConfig,
   CourseConfigQueryParams,
+  CourseCounts,
   CoursePopupListItem,
   CoursePopupQueryParams,
   CoursesQueryParams,
@@ -17,6 +18,7 @@ export const queryKeys = {
     ['course', 'config', queryParams] as const,
   getCoursePopup: (queryParams: CoursePopupQueryParams) =>
     ['course', 'popup', queryParams] as const,
+  getCourseCounts: (id: number) => ['course', 'counts', id] as const,
 };
 
 export const queryOptions = {
@@ -41,6 +43,12 @@ export const queryOptions = {
     queryKey: queryKeys.getCoursePopup(queryParams),
     queryFn: () => CourseService.fetchCoursePopup<T>(queryParams),
     enabled: !!queryParams.tenantIds && !!queryParams.channelUuid,
+  }),
+  // 과정 카운트 요약 정보 조회
+  getCourseCounts: <T = CourseCounts>(id: number) => ({
+    queryKey: queryKeys.getCourseCounts(id),
+    queryFn: () => CourseService.fetchCourseCounts<T>(id),
+    enabled: !!id,
   }),
 };
 

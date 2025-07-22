@@ -9,6 +9,7 @@ import {
   PaginationResponse,
   CoursePopupQueryParams,
   CoursePopupListItem,
+  CourseCounts,
 } from '../../../types';
 
 /**
@@ -127,6 +128,14 @@ export default class CourseService {
     return httpService.get<T>(`${LMSApiPrefix()}/course/config`, queryParams);
   }
 
+  /**
+   * 과정 카운트 요약 정보
+   * @param id - 조회할 과정 ID.
+   * @returns 과정 목록 페이지네이션 응답 Promise.
+   */
+  static async fetchCourseCounts<T = CourseCounts>(id: number): Promise<T> {
+    return httpService.get<T>(`${LMSApiPrefix()}/course-counts/${id}`);
+  }
   /**
    * 과정 조회 팝업
    * @param [params] - 조회 파라미터 (선택 사항).

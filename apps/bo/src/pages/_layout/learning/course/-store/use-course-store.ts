@@ -12,7 +12,6 @@ interface TriggerPayload {
 }
 
 interface TriggerState {
-  triggers: Record<TriggerKey, number>;
   lastTriggered: { key: TriggerKey; payload?: TriggerPayload } | null;
   saveStatus: SaveStatus;
   actions: {
@@ -22,13 +21,11 @@ interface TriggerState {
 }
 
 export const useCourseStore = create<TriggerState>((set) => ({
-  triggers: { save: 0, list: 0, delete: 0 },
   lastTriggered: null,
   saveStatus: 'idle',
   actions: {
     trigger: (key, payload) =>
       set((state) => ({
-        triggers: { ...state.triggers, [key]: state.triggers[key] + 1 },
         lastTriggered: { key, payload },
       })),
     setSaveStatus: (status) => set({ saveStatus: status }),

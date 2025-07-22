@@ -8,7 +8,6 @@ import { Sequence } from '@pages/_layout/learning/course/detail/-tabs/sequence';
 import {
   TriggerKey,
   useCourseActions,
-  useCourseStore,
 } from '@pages/_layout/learning/course/-store/use-course-store';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
@@ -20,9 +19,7 @@ export const Route = createLazyFileRoute('/_unauth/learning_test/course/detail/v
 
 function RouteComponent() {
   const router = useRouter();
-  const { showSaveComplete, showDeleteComplete, deleteConfirm, saveConfirm } = useModal();
 
-  const saveStatus = useCourseStore((state) => state.saveStatus);
   const { trigger } = useCourseActions();
 
   // 라우터 state에서 courseId 가져오기
@@ -31,44 +28,6 @@ function RouteComponent() {
   // 커스텀 훅 사용
   const { activeTab, setTabRef, saveCurrentTab, changeTab, getTabValues, deleteTabData } =
     useCourseDetailForm(courseType);
-
-  const moveListPage = () => {
-    router.navigate({
-      to: '/learning_test/course',
-    });
-  };
-
-  const handleListClick = () => {
-    console.log('handleListClick');
-    moveListPage();
-  };
-
-  const handleSaveClick = async () => {
-    // save();
-    // try {
-    //   if (await saveConfirm()) {
-    //     saveCurrentTab();
-    //     // await saveTabData();
-    //     // await showSaveComplete();
-    //     // moveListPage();
-    //   }
-    // } catch (e) {
-    //   console.error('저장 중 에러:', e);
-    // }
-  };
-
-  const handleDeleteClick = async () => {
-    try {
-      if (await deleteConfirm()) {
-        await deleteTabData();
-        await showDeleteComplete();
-        moveListPage();
-      }
-    } catch (e) {
-      // 에러는 상위에서 처리하거나, 필요시 여기서 처리
-      console.error('삭제 중 에러:', e);
-    }
-  };
 
   const handleTabChange = (activeKey: string) => {
     console.log('activeKey', activeKey);

@@ -1,4 +1,9 @@
-import { useFetchCourse, useFetchCourseConfig, useUpdateCourse } from '@entities/course';
+import {
+  useDeleteCourse,
+  useFetchCourse,
+  useFetchCourseConfig,
+  useUpdateCourse,
+} from '@entities/course';
 import { useDynamicForm2 } from '@learnway/hooks';
 import { useModal } from '@learnway/ui';
 import {
@@ -6,6 +11,7 @@ import {
   useCourseActions,
   useCourseStore,
 } from '@pages/_layout/learning/course/-store/use-course-store';
+import { goToCourseList } from '@shared/index';
 import { Course, CourseConfig } from '@types';
 import { useUpdateEffect } from 'ahooks';
 import { useEffect } from 'react';
@@ -26,6 +32,13 @@ export function useCourseDetail(courseId: number) {
     onSuccess: async (response: any) => {
       console.log('useUpdateCourse :: onSuccess', response);
       await showSaveComplete();
+    },
+  });
+  const { mutate: deleteCourse } = useDeleteCourse({
+    onSuccess: async (response: any) => {
+      console.log('useDeleteCourse :: onSuccess', response);
+      await showSaveComplete();
+      goToCourseList();
     },
   });
 
@@ -49,11 +62,10 @@ export function useCourseDetail(courseId: number) {
     if (!lastTriggered) return;
 
     switch (lastTriggered.key) {
+      case TriggerKey.LIST:
+        return goToCourseList();
       case TriggerKey.SAVE:
         return handleManualSubmit();
-      case TriggerKey.LIST:
-        // handleListAction(lastTriggered.payload);
-        return;
       case TriggerKey.DELETE:
         // handleDeleteAction(lastTriggered.payload);
         return;

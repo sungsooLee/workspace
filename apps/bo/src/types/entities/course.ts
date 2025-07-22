@@ -666,6 +666,37 @@ export interface CourseConfig {
   fileStorageType: 'AWS_INTERNAL' | 'AWS_EXTERNAL';
 }
 
+export interface CourseCounts {
+  /**
+   * 조회 수
+   */
+  viewCount: number;
+  /**
+   * 찜 수
+   */
+  bookmarkCount: number;
+  /**
+   * 공유 수
+   */
+  shareCount: number;
+  /**
+   * 후기 수
+   */
+  reviewCount: number;
+  /**
+   * 수강신청 수
+   */
+  enrollmentCount: number;
+  /**
+   * 수강생 수
+   */
+  studentCount: number;
+  /**
+   * 이수 수
+   */
+  completeCount: number;
+}
+
 /**
  * 학습대상
  */
