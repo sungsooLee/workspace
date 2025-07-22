@@ -26,10 +26,12 @@ export function getConfig(): LearnwayConfiguration {
 }
 
 export function PMSApiPrefix(): string {
-  return `/pms-module${getConfig()?.APP_API_URI || API_BO_URI}${API_FIXED_URI}`;
+  const baseUrl = import.meta.env.VITE_PMS_SERVICE_URL || import.meta.env.VITE_AXIOS_BASE_URL;
+  return `${baseUrl}/pms-module${getConfig()?.APP_API_URI || API_BO_URI}${API_FIXED_URI}`;
 }
 export function CMSApiPrefix(): string {
-  return `/cms-module${getConfig()?.APP_API_URI || API_BO_URI}${API_FIXED_URI}`;
+  const baseUrl = import.meta.env.VITE_CMS_SERVICE_URL || import.meta.env.VITE_AXIOS_BASE_URL;
+  return `${baseUrl}/cms-module${getConfig()?.APP_API_URI || API_BO_URI}${API_FIXED_URI}`;
 }
 export function LMSApiPrefix(): string {
   return `/lms-module${getConfig()?.APP_API_URI || API_BO_URI}${API_FIXED_URI}`;
