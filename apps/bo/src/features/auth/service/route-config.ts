@@ -27,7 +27,7 @@ export const decodeJwt = (token: string | null) => {
     console.error('### Invalid token:');
     return null;
   }
-  console.log('### Encode Token : ', token);
+  // // console.log('### Encode Token : ', token);
 
   try {
     const base64Url = token.split('.')[1];
@@ -55,8 +55,8 @@ async function authorization({ location, context }: { location: ParsedLocation; 
   const token = decodeJwt(tokenService.accessToken);
   // const refresh = decodeJwt(tokenService.refreshToken);
 
-  console.log('### Decode Token', token);
-  console.log('### authorization', authUser);
+  // console.log('### Decode Token', token);
+  // console.log('### authorization', authUser);
 
   if (token === null) {
     throw ERROR.AUTHORIZATION;
@@ -87,7 +87,7 @@ async function authorization({ location, context }: { location: ParsedLocation; 
 export function pageRouteConfig(routeConfig?: PageRouteConfig<PageMeta>) {
   return {
     beforeLoad: async ({ location, context, params, search, preload, route }: any) => {
-      console.log('### beforeLoad start');
+      // console.log('### beforeLoad start');
       // 인증 정보 확인
       if (routeConfig?.authorization) {
         try {
@@ -115,16 +115,16 @@ export function pageRouteConfig(routeConfig?: PageRouteConfig<PageMeta>) {
       /*
       context.setPageRouteState((state: any) => {
         if (!state) {
-          console.log('beforeLoad setPageRouteState init', state);
+          // console.log('beforeLoad setPageRouteState init', state);
           return {
             pathname: location.pathname,
             meta: route.options.staticData?.meta,
             route: route,
           };
         }
-        console.log('beforeLoad setPageRouteState', state);
+        // console.log('beforeLoad setPageRouteState', state);
         if (state?.pathname === location.pathname && route) {
-          console.log('matched', location.pathname, 'update route');
+          // console.log('matched', location.pathname, 'update route');
           state.route = route;
         }
         return state;
@@ -136,7 +136,7 @@ export function pageRouteConfig(routeConfig?: PageRouteConfig<PageMeta>) {
         try {
           schema.parse(location?.state);
         } catch (e) {
-          console.log('Error routeConfig.validateState', location?.state);
+          // console.log('Error routeConfig.validateState', location?.state);
           throw new Error(String(e));
         }
       }
@@ -147,14 +147,14 @@ export function pageRouteConfig(routeConfig?: PageRouteConfig<PageMeta>) {
         try {
           schema.parse(params);
         } catch (e) {
-          console.log('Error routeConfig.validateParam', params);
+          // console.log('Error routeConfig.validateParam', params);
           throw new Error(String(e));
         }
       }
     },
     errorComponent: ({ error }: any) => {
       // 공통 예외 처리
-      console.log('errorComponent', error);
+      // console.log('errorComponent', error);
       // Render an error message
       return createElement(ErrorComponent, { error });
     },

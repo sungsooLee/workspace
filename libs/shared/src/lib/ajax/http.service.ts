@@ -112,7 +112,7 @@ export class HttpService {
 
     return this.httpRequest<T>(args)
       .then((response: AxiosResponse) => {
-        console.log('axios.response', response);
+        // console.log('axios.response', response);
         return response;
       })
       .catch((error: AxiosError | Error) => {
@@ -129,7 +129,7 @@ export class HttpService {
         throw error;
       })
       .finally(() => {
-        console.log('axios.httpRequest finally');
+        // console.log('axios.httpRequest finally');
         this.completed = true;
       });
   }

@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { com_ever_edu_lms_course_dto_res_CourseResDto$CourseIntroductionOnUser } from './com_ever_edu_lms_course_dto_res_CourseResDto$CourseIntroductionOnUser';
+import type { com_ever_edu_lms_course_dto_res_CourseUserResDto } from './com_ever_edu_lms_course_dto_res_CourseUserResDto';
 export type com_ever_edu_lms_sequence_dto_res_SequenceResDto$onUser = {
     courseSequenceUuid?: string;
     enrollmentStartDate?: string;
@@ -12,7 +12,7 @@ export type com_ever_edu_lms_sequence_dto_res_SequenceResDto$onUser = {
     isDeleted?: boolean;
     maxQuota?: number;
     filledQuota?: number;
-    course?: com_ever_edu_lms_course_dto_res_CourseResDto$CourseIntroductionOnUser;
+    course?: com_ever_edu_lms_course_dto_res_CourseUserResDto;
     coordinatorUuid?: string;
 };
 

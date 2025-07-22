@@ -21,7 +21,7 @@ const SettingsPopover = ({
   const [selected, setSelected] = useState({
     speed: '1x',
     source: 'Auto',
-    quality: '1920×1080, 5.1Mbps',
+    quality: 'Auto',
     subtitle: 'Korean',
   });
 

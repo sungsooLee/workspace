@@ -10,7 +10,7 @@ export default class I18nResourceService {
 
   static deepMerge(target: Record<string, any>, source: Record<string, any>): Record<string, any> {
     const result = { ...target };
-    
+
     for (const key in source) {
       if (Object.prototype.hasOwnProperty.call(source, key)) {
         if (this.isValidObject(source[key]) && this.isValidObject(result[key])) {
@@ -20,7 +20,7 @@ export default class I18nResourceService {
         }
       }
     }
-    
+
     return result;
   }
   static async fetchResource(languageCode: string) {
@@ -48,7 +48,6 @@ export default class I18nResourceService {
       merged = this.deepMerge(merged, localResult.value);
     }
 
-    console.log(merged);
     return merged;
   }
 

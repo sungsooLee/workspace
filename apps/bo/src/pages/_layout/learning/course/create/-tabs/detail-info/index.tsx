@@ -10,6 +10,7 @@ import {
   Input,
   InputModalSelectorFormField,
   RadioGroupFormField,
+  SplitPanel,
 } from '@learnway/ui';
 import { FormRow, FormRow2, SwitchFormField } from '@shared/ui';
 import { Course, CourseConfig } from '@types';
@@ -381,22 +382,36 @@ const DetailInfoComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>(
                     codeGroup: CODE_GROUP['lms.course.RecognizedStudyMinType'],
                     optionsNode: [
                       {
+                        value: 'TIME', // 학습시간
+                        node: (
+                          // 분
+                          <FormRow2
+                            provider={provider}
+                            name={'recognizedStudyMinutes'}
+                            format={'number'}
+                            element={<Input type={'number'} min={0} suffixText="분" />}
+                          />
+                        ),
+                      },
+                      {
                         value: 'COUNT_TIME', // 회수 및 학습시간
                         node: (
-                          <>
-                            {/* // 인정 학습 횟수 */}
+                          <SplitPanel gap={10}>
+                            {/* 인정 학습 횟수 */}
                             <FormRow2
                               provider={provider}
                               name={'recognizedStudyCycles'}
+                              format={'number'}
                               element={<Input type={'number'} min={0} suffixText="회" />}
                             />
-                            {/* // 인정학습시간(분) */}
+                            {/* 인정학습시간(분) */}
                             <FormRow2
                               provider={provider}
                               name={'recognizedStudyMinutes'}
+                              format={'number'}
                               element={<Input type={'number'} min={0} suffixText="분" />}
                             />
-                          </>
+                          </SplitPanel>
                         ),
                       },
                     ],
@@ -404,10 +419,6 @@ const DetailInfoComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>(
                 />
               }
             />
-            {/* dummy */}
-            <FormRow provider={provider} name={''} />
-            {/* dummy */}
-            <FormRow provider={provider} name={''} />
           </ContentsRow>
         </FormDisplay>
 
@@ -447,7 +458,7 @@ const DetailInfoComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>(
             {/* 학습창 댓글 */}
             <FormRow2
               provider={provider}
-              name={'isQnaBoardEnabled'}
+              name={'isReplyEnabled'}
               label={'학습창 댓글'}
               format={'boolean'}
               element={
@@ -856,6 +867,7 @@ export const DetailInfo = DetailInfoComponent;
 const responseDataToFormData = (d: Course, c: CourseConfig): Course => {
   return {
     ...d,
+    tenantIds: d?.tenantList?.map((d: any) => d.tenantId), // 테넌트 아이디
     isLearnEnvEnabled: c.learningEnvOption !== 'IMPOSSIBLE', // 학습환경 설정 사용 여부
     isLearnControlEnabled: c.learningControlOption !== 'IMPOSSIBLE', // 학습제어 설정 사용 여부
     isUsePassOption: c.passOption !== 'IMPOSSIBLE', // 이수기준 설정 사용 여부
@@ -911,7 +923,6 @@ export const formDataToRequestData = (d: Course) => {
   // 인정 학습시간 > 학습시간
   if (d.recognizedStudyMinType === 'TIME') {
     d.recognizedStudyCycles = undefined; // 인정 학습 횟수
-    d.recognizedStudyMinutes = undefined; // 인정 학습시간(분)
   }
 
   // 학습포인트 > 미사용

@@ -15,19 +15,11 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep5 = {
     /**
      * 과정 노출 시작일
      */
-    courseValidityStartDate: string;
-    /**
-     * 과정 노출 시작 시각
-     */
-    courseValidityStartHour: number;
+    courseValidityStartDateTime: string;
     /**
      * 과정 노출 종료일
      */
-    courseValidityEndDate: string;
-    /**
-     * 과정 노출 종료 시각
-     */
-    courseValidityEndHour: number;
+    courseValidityEndDateTime: string;
     /**
      * 썸네일 이미지 Group UUID
      */

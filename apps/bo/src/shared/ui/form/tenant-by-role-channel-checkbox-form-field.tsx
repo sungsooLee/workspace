@@ -18,7 +18,7 @@ const TenantByRoleChannelCheckboxFormFieldComponent = forwardRef<
   const { data } = useFetchChannelByRoleId(roleId as number);
   const channel = data?.find((d: ChannelByRoleId) => d.channelUuid === channelUuid);
 
-  console.log('tenant-by >>>>> ', value);
+  // console.log('tenant-by >>>>> ', value);
 
   // console.log('### TenantByRoleChannelCheckboxFormFieldProps', { data, channel });
   const options = useMemo(() => {

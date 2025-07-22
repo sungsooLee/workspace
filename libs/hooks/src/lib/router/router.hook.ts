@@ -15,10 +15,7 @@ export function useGlobalRouterEvent(callback?: RouteEventCallback) {
     const unsubscribe = router.subscribe(
       'onBeforeLoad',
       ({ fromLocation, toLocation, ...p }: any) => {
-        console.log('onBeforeLoad', toLocation.pathname);
-
         isFunction(callback?.onBeforeLoad) && callback?.onBeforeLoad();
-
         setPageRouteState({
           pathname: toLocation.pathname,
           meta: toLocation?.state?.meta,

@@ -38,6 +38,9 @@ export const SequenceSearchForm: React.FC<SequenceSearchFormProps> = ({
               presetOptionLabel={t('LABEL.form.label.all')}
             />
           }
+          validation={{
+            required: true,
+          }}
         />
         {/* 사용여부 */}
         <FormRow2
@@ -52,12 +55,15 @@ export const SequenceSearchForm: React.FC<SequenceSearchFormProps> = ({
               ]}
             />
           }
+          validation={{
+            required: true,
+          }}
         />
         {/* 차수명 */}
         <FormRow2
           provider={provider}
           name="courseSequenceName"
-          label={t('LABEL.form.label.sequenceName')}
+          label={t('LABEL.form.label.courseSequenceName')}
           element={<Input />}
         />
       </ContentsRow>

@@ -34,10 +34,12 @@ import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep3 } f
 import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4 } from '../models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4';
 import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep5 } from '../models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep5';
 import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew } from '../models/com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew';
+import type { com_ever_edu_lms_course_dto_res_CourseAdminResDto } from '../models/com_ever_edu_lms_course_dto_res_CourseAdminResDto';
 import type { com_ever_edu_lms_course_dto_res_CourseConfigResDto } from '../models/com_ever_edu_lms_course_dto_res_CourseConfigResDto';
-import type { com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin } from '../models/com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin';
 import type { com_ever_edu_lms_enroll_dto_event_EnrollQueueEvent } from '../models/com_ever_edu_lms_enroll_dto_event_EnrollQueueEvent';
 import type { com_ever_edu_lms_enroll_dto_req_EnrollCancelReqDto$ByAdmin } from '../models/com_ever_edu_lms_enroll_dto_req_EnrollCancelReqDto$ByAdmin';
+import type { com_ever_edu_lms_enroll_dto_req_EnrollSearchDto$SearchByAdmin } from '../models/com_ever_edu_lms_enroll_dto_req_EnrollSearchDto$SearchByAdmin';
+import type { com_ever_edu_lms_enroll_dto_res_EnrollCountAdminResDto } from '../models/com_ever_edu_lms_enroll_dto_res_EnrollCountAdminResDto';
 import type { com_ever_edu_lms_instructor_dto_req_InstructorEmailCheckReqDto } from '../models/com_ever_edu_lms_instructor_dto_req_InstructorEmailCheckReqDto';
 import type { com_ever_edu_lms_instructor_dto_req_InstructorExcelExportReqDto } from '../models/com_ever_edu_lms_instructor_dto_req_InstructorExcelExportReqDto';
 import type { com_ever_edu_lms_instructor_dto_req_InstructorHistorySearchReqDto } from '../models/com_ever_edu_lms_instructor_dto_req_InstructorHistorySearchReqDto';
@@ -50,7 +52,7 @@ import type { com_ever_edu_lms_sequence_dto_req_SequenceSaveReqDto } from '../mo
 import type { com_ever_edu_lms_sequence_dto_req_SequenceSearchReqDto$ByAdmin } from '../models/com_ever_edu_lms_sequence_dto_req_SequenceSearchReqDto$ByAdmin';
 import type { com_ever_edu_lms_sequence_dto_req_SequenceUpdateEnrollConfDto } from '../models/com_ever_edu_lms_sequence_dto_req_SequenceUpdateEnrollConfDto';
 import type { com_ever_edu_lms_sequence_dto_req_SequenceUpdateReqDto } from '../models/com_ever_edu_lms_sequence_dto_req_SequenceUpdateReqDto';
-import type { com_ever_edu_lms_sequence_dto_res_SequenceResDto$onAdmin } from '../models/com_ever_edu_lms_sequence_dto_res_SequenceResDto$onAdmin';
+import type { com_ever_edu_lms_sequence_dto_res_SequenceResDto$OnAdmin } from '../models/com_ever_edu_lms_sequence_dto_res_SequenceResDto$OnAdmin';
 import type { com_ever_edu_lms_space_dto_req_LearningSpaceListReqDto } from '../models/com_ever_edu_lms_space_dto_req_LearningSpaceListReqDto';
 import type { com_ever_edu_lms_space_dto_req_LearningSpaceSaveReqDto } from '../models/com_ever_edu_lms_space_dto_req_LearningSpaceSaveReqDto';
 import type { com_ever_edu_lms_space_dto_req_LearningSpaceUpdateReqDto } from '../models/com_ever_edu_lms_space_dto_req_LearningSpaceUpdateReqDto';
@@ -61,6 +63,7 @@ import type { org_springframework_data_domain_PageCom_ever_edu_lms_badge_dto_res
 import type { org_springframework_data_domain_PageCom_ever_edu_lms_badge_dto_res_BadgeListResDto$OnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_badge_dto_res_BadgeListResDto$OnAdmin';
 import type { org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_CourseListAdminResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_CourseListAdminResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_CoursePopSearchResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_CoursePopSearchResDto';
+import type { org_springframework_data_domain_PageCom_ever_edu_lms_enroll_dto_res_EnrollListAdminResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_enroll_dto_res_EnrollListAdminResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_lms_instructor_dto_res_InstructorHistorySearchResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_instructor_dto_res_InstructorHistorySearchResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_lms_instructor_dto_res_InstructorSearchResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_instructor_dto_res_InstructorSearchResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_lms_sequence_dto_res_SequenceListResDto$OnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_lms_sequence_dto_res_SequenceListResDto$OnAdmin';
@@ -219,12 +222,12 @@ export class BoService {
      * 차수 단건 조회
      * 차수를 조회한다.
      * @param sequenceId
-     * @returns com_ever_edu_lms_sequence_dto_res_SequenceResDto$onAdmin OK
+     * @returns com_ever_edu_lms_sequence_dto_res_SequenceResDto$OnAdmin OK
      * @throws ApiError
      */
     public static findBySequenceNo1(
         sequenceId: number,
-    ): CancelablePromise<com_ever_edu_lms_sequence_dto_res_SequenceResDto$onAdmin> {
+    ): CancelablePromise<com_ever_edu_lms_sequence_dto_res_SequenceResDto$OnAdmin> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/sequence/{sequenceId}',
@@ -404,12 +407,12 @@ export class BoService {
      * 과정 조회
      * 과정 id를 통해 조회한다.
      * @param courseId
-     * @returns com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin OK
+     * @returns com_ever_edu_lms_course_dto_res_CourseAdminResDto OK
      * @throws ApiError
      */
-    public static findByCourseId(
+    public static findByCourseId1(
         courseId: number,
-    ): CancelablePromise<com_ever_edu_lms_course_dto_res_CourseResDto$CourseOnAdmin> {
+    ): CancelablePromise<com_ever_edu_lms_course_dto_res_CourseAdminResDto> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/course/{courseId}',
@@ -467,6 +470,31 @@ export class BoService {
         return __request(OpenAPI, {
             method: 'DELETE',
             url: '/admin/api/v1/course/{courseId}',
+            path: {
+                'courseId': courseId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 과정 찜
+     * 과정 찜 등록/삭제
+     * @param courseId
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static updateBookmark(
+        courseId: number,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/admin/api/v1/course/{courseId}/bookmark',
             path: {
                 'courseId': courseId,
             },
@@ -762,7 +790,7 @@ export class BoService {
      * @returns org_springframework_data_domain_PageCom_ever_edu_lms_badge_dto_res_BadgeListResDto$OnAdmin OK
      * @throws ApiError
      */
-    public static findPage8(
+    public static findPage9(
         params: com_ever_edu_lms_badge_dto_req_BadgeSearchReqDto$SearchByAdminDto,
         pageable: org_springdoc_core_converters_models_Pageable,
     ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_lms_badge_dto_res_BadgeListResDto$OnAdmin> {
@@ -1571,6 +1599,59 @@ export class BoService {
         });
     }
     /**
+     * 수강 신청 목록 조회
+     * 수강 신청 목록을 조회한다.
+     * @param pageable
+     * @param params
+     * @returns org_springframework_data_domain_PageCom_ever_edu_lms_enroll_dto_res_EnrollListAdminResDto OK
+     * @throws ApiError
+     */
+    public static findPage7(
+        pageable: org_springdoc_core_converters_models_Pageable,
+        params: com_ever_edu_lms_enroll_dto_req_EnrollSearchDto$SearchByAdmin,
+    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_lms_enroll_dto_res_EnrollListAdminResDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/enrolls',
+            query: {
+                'pageable': pageable,
+                'params': params,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 수강 신청 건수 조회
+     * 수강 신청 건수를 조회한다.
+     * @param params
+     * @returns com_ever_edu_lms_enroll_dto_res_EnrollCountAdminResDto OK
+     * @throws ApiError
+     */
+    public static findEnrollCount(
+        params: com_ever_edu_lms_enroll_dto_req_EnrollSearchDto$SearchByAdmin,
+    ): CancelablePromise<com_ever_edu_lms_enroll_dto_res_EnrollCountAdminResDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/enrolls/count',
+            query: {
+                'params': params,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
      * 과정 목록 조회
      * 과정 목록을 조회한다.
      * @param pageable
@@ -1578,7 +1659,7 @@ export class BoService {
      * @returns org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_CourseListAdminResDto OK
      * @throws ApiError
      */
-    public static findPage7(
+    public static findPage8(
         pageable: org_springdoc_core_converters_models_Pageable,
         params: com_ever_edu_lms_course_dto_req_CourseSearchReqDto$SearchByAdminDto,
     ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_CourseListAdminResDto> {

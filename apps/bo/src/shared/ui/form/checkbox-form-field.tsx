@@ -16,7 +16,6 @@ const CheckBoxFormFieldComponent = forwardRef<HTMLDivElement, CheckboxFormFieldP
     const handleOnCheckChange = (checked: boolean) => {
       onChange(checked);
     };
-    console.log('checkConfig => ', checkConfig);
     return (
       <Checkbox
         className={clsx(

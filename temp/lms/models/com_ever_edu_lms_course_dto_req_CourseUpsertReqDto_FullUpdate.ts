@@ -4,7 +4,7 @@
 /* eslint-disable */
 import type { com_ever_edu_lms_blackwhite_dto_req_WhiteGroupReqDto_FullUpdate } from './com_ever_edu_lms_blackwhite_dto_req_WhiteGroupReqDto_FullUpdate';
 import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TagNameWrapper_FullUpdate } from './com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TagNameWrapper_FullUpdate';
-import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TenantCustom_FullUpdate } from './com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TenantCustom_FullUpdate';
+import type { com_ever_edu_lms_course_dto_TenantCustomDto_FullUpdate } from './com_ever_edu_lms_course_dto_TenantCustomDto_FullUpdate';
 export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate = {
     /**
      * 과정 생성/수정 마법사 타입 (lms.course.WizardStep)
@@ -259,13 +259,21 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate = {
      */
     recognizedStudyPoint?: number;
     /**
+     * 공지사항
+     */
+    isNoticeEnabled?: boolean;
+    /**
+     * 학습창댓글
+     */
+    isReplyEnabled?: boolean;
+    /**
      * 커뮤니티[공지/자료실/커뮤니티/공유] 설정 여부
      */
     isCommunicationToolEnabled: boolean;
     /**
      * 커뮤니티[공지/자료실/커뮤니티/공유] 설정 내용
      */
-    communityList?: Array<'NOTICE' | 'QNA' | 'MARTIAL' | 'COMMUNITY'>;
+    communityList?: Array<'QNA' | 'FAQ' | 'BOARD' | 'MARTIAL'>;
     /**
      * 과정을 학습자가 공유할 수 있는지?
      */
@@ -310,6 +318,10 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate = {
      * 연관 학습
      */
     relatedCourseIds?: Array<number>;
+    /**
+     * 행정항목
+     */
+    isAdminDataEnabled?: boolean;
     /**
      * HMG 과정 데이터 표준 분류 > 대분류
      */
@@ -359,9 +371,9 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate = {
      */
     isAutoeverTenantCustomOption?: boolean;
     /**
-     * 오토에버 위탁 전용 설정 여부
+     * 테넌트 전용 설정 내용
      */
-    tenantCustoms?: Array<com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TenantCustom_FullUpdate>;
+    tenantCustoms?: Array<com_ever_edu_lms_course_dto_TenantCustomDto_FullUpdate>;
     /**
      * 사용 여부
      */
@@ -369,19 +381,11 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate = {
     /**
      * 과정 노출 시작일
      */
-    courseValidityStartDate: string;
-    /**
-     * 과정 노출 시작 시각
-     */
-    courseValidityStartHour: number;
+    courseValidityStartDateTime: string;
     /**
      * 과정 노출 종료일
      */
-    courseValidityEndDate: string;
-    /**
-     * 과정 노출 종료 시각
-     */
-    courseValidityEndHour: number;
+    courseValidityEndDateTime: string;
     /**
      * 썸네일 이미지 Group UUID
      */
