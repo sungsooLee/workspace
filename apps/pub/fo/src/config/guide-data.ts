@@ -73,6 +73,7 @@ export const guideData = [
     lastUpdateDate: '2025-07-18',
     remarks: '- 레이아웃',
   },
+
   {
     screenId: 'NLP_FO_GNB_1001',
     screenName: 'GNB_타입B 템플릿',
@@ -1761,6 +1762,26 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '2025-02-24',
     lastUpdateDate: '2025-07-17',
+    remarks: '',
+  },
+  {
+    screenId: 'NLP_FO_LOG_1000_1',
+    screenName: '테넌트 선택',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: '/',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '',
+  },
+  {
+    screenId: 'NLP_FO_LOG_1000_2',
+    screenName: '휴먼계정 안내',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: '/',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
     remarks: '',
   },
   {
