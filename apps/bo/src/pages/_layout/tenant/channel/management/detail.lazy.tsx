@@ -4,6 +4,7 @@ import {
   ChannelDetailHome,
   ChannelDetailRole,
 } from '@features/channel';
+import { ChannelDetailUser } from '@features/channel/channel-management/channel-detail-user';
 import { Button, Tabs } from '@learnway/ui';
 import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui';
 import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
@@ -116,7 +117,7 @@ function RouteComponent() {
     {
       title: t('사용자 관리'),
       key: EnTabKeys.USER,
-      content: '사용자 관리',
+      content: <ChannelDetailUser />,
     },
     {
       title: t('홈 설정'),

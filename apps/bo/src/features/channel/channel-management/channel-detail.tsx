@@ -327,7 +327,7 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
     <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
       {props.mode === EnFormMode.ADD && props.method === EnChannelRegisterMethod.REQUEST && (
         <>
-          <FormSubTitle label={'채널 신청 정보'} lineType={'light'} />
+          <FormSubTitle label={t('채널 신청 정보')} lineType={'light'} />
           <ContentsRow>
             <FormRow
               provider={provider}
@@ -357,7 +357,7 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
           </ContentsRow>
         </>
       )}
-      <FormSubTitle label={'채널 기본 정보'} lineType={'light'} />
+      <FormSubTitle label={t('채널 기본 정보')} lineType={'light'} />
       <ContentsRow>
         <FormRow
           provider={provider}
@@ -451,7 +451,7 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
         />
       </ContentsRow>
 
-      <FormSubTitle label={'채널 홈 정보'} />
+      <FormSubTitle label={t('채널 홈 정보')} />
       <ContentsRow>
         <FormRow provider={provider} name="channelProfileImageFileGroupUuid" />
       </ContentsRow>
