@@ -15,6 +15,7 @@ import {
   QuestionItem,
   QuestionItemDeleteParam,
   QuestionStatusUpdateReq,
+  RandomQuestionCountUpdateReq,
   TestPaperBasicInfoSaveReq,
 } from '@types';
 import LearningResourceService from '../api/learning-resource';
@@ -203,5 +204,9 @@ export const mutateOptions = {
   updateQuestionStatus: () => ({
     mutationFn: (params: QuestionStatusUpdateReq) =>
       LearningResourceService.updateQuestionStatus(params),
+  }),
+  updateExamPaperQuestionCountInfo: () => ({
+    mutationFn: (params: RandomQuestionCountUpdateReq) =>
+      LearningResourceService.updateExamPaperQuestionCountInfo(params),
   }),
 };

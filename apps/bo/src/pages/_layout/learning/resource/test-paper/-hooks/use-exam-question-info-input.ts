@@ -5,13 +5,16 @@ import { useModal, useToast } from '@learnway/ui';
 import {
   EnQuestionLevel,
   EnQuestionType,
+  ExamQuestionGenType,
   QuestionItem,
+  RandomQuestionCountInfo,
   RandomQuestionCountUpdateReq,
   TestPaperBasicInfoDetail,
 } from '@types';
 import {
   learningResourceQueryOptions,
   useCreateQuestionItem,
+  useUpdateExamPaperQuestionCount,
   useUpdateQuestionStatus,
 } from '@entities/learning-resource';
 import { QuestionStatisticRow, SelectedQuestionState } from '../-common/type';
@@ -19,7 +22,8 @@ import { QuestionStatisticRow, SelectedQuestionState } from '../-common/type';
 export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) => {
   const { contentUuid, examPoolUuid, questionGenType, questionCount } = basicInfo;
 
-  const { alert } = useModal();
+  const { confirm } = useModal();
+  const { open: openToast } = useToast();
 
   const { data: questionList = [], refetch } = useQuery(
     learningResourceQueryOptions.getQuestionItemList(examPoolUuid),
@@ -32,8 +36,11 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
         setSelectedQuestions(refetchResult?.filter((q) => q.isUsed) as QuestionItem[]);
       }
     },
-    onError: async (e: Error) => {
-      await alert(t('문항 등록 중 오류가 발생하였습니다.'));
+    onError: (e: Error) => {
+      openToast({
+        title: t('문항 등록 중 오류가 발생하였습니다.'),
+        type: 'error',
+      });
       return;
     },
   });
@@ -168,8 +175,6 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
     },
   });
 
-  const { open: openToast } = useToast();
-
   const handleCountInputChange = useCallback(
     (
       e: ChangeEvent<HTMLInputElement>,
@@ -203,9 +208,42 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
     [],
   );
 
-  const updateQuestionRandomCount = (data: RandomQuestionCountUpdateReq) => {
-    //
-    console.log('randomCountUpdateData', randomCountUpdateData);
+  const { update: updateQuestionCountInfo } = useUpdateExamPaperQuestionCount({
+    onSuccess: (result: any) => {
+      console.log(result);
+      openToast({
+        title: t('저장되었습니다.'),
+        type: 'success',
+      });
+    },
+  });
+
+  const updateQuestionRandomCount = async () => {
+    const countList = Object.entries(randomCountUpdateData).map(
+      ([key, obj]) =>
+        ({
+          questionType: key as EnQuestionType,
+          hardLevelCount: obj.hardLevelCount,
+          mediumLevelCount: obj.mediumLevelCount,
+          easyLevelCount: obj.easyLevelCount,
+        }) satisfies RandomQuestionCountInfo,
+    );
+
+    const payload: RandomQuestionCountUpdateReq = {
+      contentUuid,
+      questionGenType: questionGenType ?? ExamQuestionGenType.RANDOM,
+      questionTotalCount: questionCount,
+      countList,
+    };
+
+    if (
+      await confirm({
+        title: t('LABEL.confirm.save.title'),
+        content: t('LABEL.confirm.save.message'),
+      })
+    ) {
+      updateQuestionCountInfo(payload);
+    }
   };
 
   return {
