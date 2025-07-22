@@ -172,7 +172,7 @@ export const guideData = [
     pageId: '',
     pageType: 'Pop-up',
     completionDate: '2025-03-27',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-21',
     remarks: '- 로그인 푸터 팝업과 동일\n- agreement-pop.tsx',
   },
   {
@@ -182,7 +182,7 @@ export const guideData = [
     pageId: '',
     pageType: 'Pop-up',
     completionDate: '2025-03-27',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-21',
     remarks: '- 로그인 푸터 팝업과 동일\n- privacy-pop.tsx',
   },
   {
@@ -212,7 +212,7 @@ export const guideData = [
     pageId: '',
     pageType: 'Page',
     completionDate: '2025-03-27',
-    lastUpdateDate: '2025-07-16',
+    lastUpdateDate: '2025-07-21',
     remarks: '',
   },
   {
