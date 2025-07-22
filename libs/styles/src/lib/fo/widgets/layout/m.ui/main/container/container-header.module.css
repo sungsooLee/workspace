@@ -6,7 +6,10 @@
       @apply body_2_b;
     }
     & > button {
-      @apply mr-[8px];
+      @apply mr-[8px] !p-[0];
+      svg {
+        @apply !m-[0];
+      }
     }
   }
 }

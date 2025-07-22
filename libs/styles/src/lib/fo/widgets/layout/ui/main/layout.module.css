@@ -1,7 +1,6 @@
 /* layout.module.css */
 .start {
   &.container {
-    @apply border-[1px] border-solid border-[var(--gray4)];
     .inner {
       @apply relative m-auto w-[1440px] px-[40px];
     }

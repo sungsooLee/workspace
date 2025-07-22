@@ -2,7 +2,7 @@
 
 .start {
   &.footer {
-    @apply body_3_r relative pb-[80px] pt-[48px] text-left text-[var(--gray7)];
+    @apply relative border-t-[1px] border-solid border-[var(--gray90)] pb-[60px] pt-[48px] text-left text-[var(--gray7)];
     .footer_area {
       @apply relative m-auto w-[1440px] px-[40px];
 
@@ -32,6 +32,9 @@
                   @apply hidden;
                 }
               }
+              > button {
+                @apply !px-[0];
+              }
             }
           }
           .info_box {
@@ -41,7 +44,7 @@
             }
 
             .space {
-              @apply mr-[20px];
+              @apply mb-[6px] mr-[20px];
             }
 
             .address {
@@ -70,19 +73,17 @@
   @screen mobile {
     .start {
       &.footer {
-        @apply px-[20px] py-[24px];
+        @apply px-[20px] pb-[40px] pt-[32px];
         .footer_area {
-          @apply w-full;
+          @apply w-full px-[0];
           .footer_info {
             @apply pb-[54px];
-            .info_menu {
-              ul {
-                @apply gap-[16px];
-              }
-            }
+
             .info_box {
               @apply mt-[16px];
-              .info,
+              .space {
+                @apply mb-[10px] block;
+              }
               .address {
                 @apply hidden;
               }
