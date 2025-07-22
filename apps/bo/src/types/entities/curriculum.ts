@@ -1,5 +1,3 @@
-import { S } from '@faker-js/faker/dist/airline-BUL6NtOJ';
-
 export type CurriculumCreateRequest = {
   tenantId: number;
   channelUuid: string;

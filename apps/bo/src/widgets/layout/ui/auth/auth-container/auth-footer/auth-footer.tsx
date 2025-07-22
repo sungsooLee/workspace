@@ -10,13 +10,19 @@ function AuthFooterComponent() {
       <div className={styles.footer_area}>
         <ul className={styles.menu_list}>
           <li>
-            <Link to={''}>이용약관</Link>
+            <a href="#" onClick={(e) => e.preventDefault()}>
+              이용약관
+            </a>
           </li>
           <li>
-            <Link to={''}>개인정보처리 방침</Link>
+            <a href="#" onClick={(e) => e.preventDefault()}>
+              개인정보처리 방침
+            </a>
           </li>
           <li>
-            <Link to={''}>고객지원</Link>
+            <a href="#" onClick={(e) => e.preventDefault()}>
+              고객지원
+            </a>
           </li>
         </ul>
         <div className={styles.copyright}>

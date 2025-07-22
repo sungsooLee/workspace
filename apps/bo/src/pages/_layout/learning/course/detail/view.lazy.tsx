@@ -9,7 +9,7 @@ import { usePageState } from '@shared/lib/use-page-state';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
 import { createLazyFileRoute } from '@tanstack/react-router';
 import { useMemo } from 'react';
-import { TriggerKey, useCourseActions } from '../-store/use-course-store';
+import { ContentViewType, TriggerKey, useCourseActions } from '../-store/use-course-store';
 
 export const Route = createLazyFileRoute('/_layout/learning/course/detail/view')({
   component: RouteComponent,
