@@ -2,7 +2,7 @@ import { LMSApiPrefix } from '@learnway/config';
 import { Button, GridBox } from '@learnway/ui';
 import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
 import { CourseListItem } from '@types';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CourseButtonState } from '../-common/type';
 
@@ -33,6 +33,19 @@ export const CourseGrid: React.FC<CourseGridProps> = ({
     // TODO: 공유 로직 구현
   };
 
+  const customButtonNode = useMemo(
+    () => (
+      <Button
+        variant="text"
+        size="sm"
+        label={t('LABEL.grid.header.toShare')}
+        disabled={!buttonState.share}
+        onClick={handleShareClick}
+      />
+    ),
+    [buttonState.share],
+  );
+
   return (
     <GridBox
       config={config}
@@ -43,15 +56,7 @@ export const CourseGrid: React.FC<CourseGridProps> = ({
         onClick: handleCopyClick,
       }}
       onRowsSelect={onRowsSelect}
-      customButtonNode={
-        <Button
-          variant="text"
-          size="sm"
-          label={t('LABEL.grid.header.toShare')}
-          disabled={!buttonState.share}
-          onClick={handleShareClick}
-        />
-      }
+      customButtonNode={customButtonNode}
       excelButtons={
         <>
           <GridExcelUploadButton validateUrl={'/api/v1/course/validation/excel/upload'} />

@@ -1,3 +1,4 @@
+import { GridBoxConfig } from '@learnway/ui';
 import { Course, CourseConfig, CourseListItem, CoursesQueryParams } from '@types';
 
 // ===== 과정 관리 페이지 타입 =====
@@ -65,13 +66,15 @@ export interface CourseManagementHookResult {
   provider: any;
   getValues: () => any;
   onSubmit: any;
-  gConfig: any;
+  gConfig: GridBoxConfig;
   selectedRows: CourseListItem[];
   buttonState: CourseButtonState;
   handleOnSearch: (data: CourseSearchFormData) => void;
   handleGridRowsSelect: (rows: CourseListItem[]) => void;
   handleBatchUploadClick: () => void;
   handleCourseOpenClick: () => Promise<void>;
+  handleCopyClick: () => void;
+  handleShareClick: () => void;
 }
 
 /**
@@ -99,6 +102,8 @@ export interface CourseTabBaseProps {
  */
 export interface CourseDetailTabBaseProps {
   courseId: number;
+  courseSequenceId?: number;
+  setCourseSequenceId?: (data: number) => void;
 }
 
 /**

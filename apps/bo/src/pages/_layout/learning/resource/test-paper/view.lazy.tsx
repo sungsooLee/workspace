@@ -26,7 +26,8 @@ export const Route = createLazyFileRoute('/_layout/learning/resource/test-paper/
 
 function RouteComponent() {
   const router = useRouter();
-  const { mode, tenantId, contentUuid, data, hasMapping, listParam } = useExamLoaderData();
+  const { mode, tenantId, contentUuid, data, refetchContentDetail, hasMapping, listParam } =
+    useExamLoaderData();
 
   const { alert, open: openModal, confirm: openConfirm } = useModal();
 
@@ -56,12 +57,8 @@ function RouteComponent() {
         });
       }
     },
-    onUpdateSuccess: (result?: unknown) => {
-      router.navigate({
-        to: '/learning/resource/test-paper/view',
-        state: { mode: 'UPDATE', contentUuid: result },
-        replace: true,
-      });
+    onUpdateSuccess: async (result?: unknown) => {
+      await refetchContentDetail();
     },
   });
 

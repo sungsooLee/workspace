@@ -34,6 +34,8 @@ const _global = {
  * @returns
  */
 type EnrollmentCancelComponentProps = {
+  courseId?: number;
+  courseSequenceId?: number;
   searchProvider: SearchBoxProvider;
   getValues: UseFormGetValues<FieldValues>;
   setValue: UseFormSetValue<FieldValues>;
@@ -41,6 +43,7 @@ type EnrollmentCancelComponentProps = {
 };
 
 const EnrollmentCancelComponent = ({
+  courseSequenceId,
   searchProvider,
   getValues,
   setValue,

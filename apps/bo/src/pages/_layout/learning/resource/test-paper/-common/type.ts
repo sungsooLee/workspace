@@ -34,7 +34,7 @@ type ExamBasicInfoForm = {
   updateFormDataByKey?: (key: string, value: any) => void;
   onFormChange?: (values?: Record<string, any>) => void;
   onSubmit?: (onValid: (data: Record<string, any>) => void) => FormEventHandler<HTMLFormElement>;
-  saveBasicInfo?: (data: any) => Promise<void>;
+  saveBasicInfo?: (data: any, isOnGenTypeChange?: boolean) => Promise<void>;
 };
 
 export interface ExamBasicInfoProps {
@@ -60,6 +60,7 @@ export type QuestionStatisticRow = {
   hard: number;
   medium: number;
   easy: number;
+  type: EnQuestionType;
 };
 
 export type SelectedQuestionState = Record<

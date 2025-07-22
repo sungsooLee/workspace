@@ -442,7 +442,7 @@ interface EncodedAudio {
   filePath: string;
 }
 
-interface VideoSubtitles {
+export interface VideoSubtitles {
   subtitleFileUuid: string;
   languageCode: string;
   subtitleName: string;
@@ -522,4 +522,18 @@ export interface QuestionStatusUpdateReq {
   contentUuid: string;
   examQuestionUuid: string;
   isUsed: boolean;
+}
+
+export interface RandomQuestionCountInfo {
+  questionType: EnQuestionType;
+  hardLevelCount: number;
+  mediumLevelCount: number;
+  easyLevelCount: number;
+}
+
+export interface RandomQuestionCountUpdateReq {
+  contentUuid: string;
+  questionGenType: ExamQuestionGenType;
+  questionTotalCount: number;
+  countList: RandomQuestionCountInfo[];
 }

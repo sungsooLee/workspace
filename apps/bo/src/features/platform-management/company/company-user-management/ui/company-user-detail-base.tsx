@@ -1,7 +1,7 @@
 import { DuplicateState } from '@features/form';
 import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import { ContentsRow, FormSubTitle, GridBox, Input } from '@learnway/ui';
+import { ContentsRow, FormSubTitle, GridBox, Input, useModal, useToast } from '@learnway/ui';
 import { ContentsHistoryInfoFormField, FormItem, FormRow } from '@shared/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { EnFormMode, EnGlobalConst } from '@types';
@@ -12,7 +12,8 @@ import { CompanyUserDetailAccount } from './company-user-detail-account';
 import { CompanyUserDetailAuthentication } from './company-user-detail-auth';
 import { CompanyUserDetailJob } from './company-user-detail-job';
 import { CompanyUserDetailPersonal } from './company-user-detail-personal';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import { useUpdateUser } from '@entities/users/service/users.hook';
+import { useSystemCodeDetail } from '@entities/common-code';
 
 interface CompanyUserDetailBaseProps {
   userInfo: any;
@@ -29,8 +30,20 @@ function compareLatestDate(dates: string[]) {
 const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: any) => {
   const { provider, control, updateFormData, onSubmit, onFormChange, clearFormError, getValues } =
     useDynamicForm(formConfig());
-  const [roleData, setRoleData] = useState<any[]>([]);
 
+
+  const { confirm: openConfirm } = useModal();
+  const { open: openToast } = useToast();
+  const { data: codeGroupData } = useSystemCodeDetail('cmmon.TelCountryCode');
+
+  const { update } = useUpdateUser({
+    onSuccess: (data: any) => {
+      openToast({ title: '저장 하였습니다.', type: 'success' });
+      updateFormData(data);
+    }
+  })
+
+  const [roleData, setRoleData] = useState<any[]>([]);
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
@@ -68,7 +81,6 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
 
         // 계정 정보 데이터 관리 방식
         hrInfoManageType: user.linkageSystem ? user.linkageSystem : 'MANUAL_MANAGE',
-        // 회원가입 유형 : 이형주 수석님이 규원 책임님께 확인 후 전달 준다고 함.
         companyMemberJoinTypeList: user.companyMemberJoinTypeList ? user.companyMemberJoinTypeList : ['BO_JOIN_MANAGER'],
         accountStatus: 'NORMAL',
         approvalStatus: user.enabledDate !== null? '승인' : '대기',
@@ -81,10 +93,10 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
 
         // 로그인 및 인증 설정 정보
         isUseSso: user.ssoType !== null ? user.ssoType : false,
-        ssoTypeList: user.ssoTypeList ? user.ssoTypeList : 'AES_Link',
-        isUseTwoFactorAuth: user.company.twoFactorAuthPlatformTypeList !== null,
-        twoFactorAuthPlatformTypeList: user.company.twoFactorAuthPlatformTypeList !== null ? user.company.twoFactorAuthPlatformTypeList : [],
-        '2FAType': user.company.twoFactorAuthType !== null ? user.company.twoFactorAuthType : ''
+        ssoTypeList: user.ssoTypeList ? user.ssoTypeList : '',
+        isUseTwoFactorAuth: user.boTwoFactorAuthEnabled || user.foTwoFactorAuthEnabled,
+        twoFactorAuthPlatformTypeList: [user.boTwoFactorAuthEnabled && 'BO_PLATFORM', user.foTwoFactorAuthEnabled && 'FO_PLATFORM'],
+        '2FAType': user.twoFactorAuthType,
       };
       if( user.lockedDate === null ) {
         if( user.dormantDate !== null ) {
@@ -116,6 +128,64 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
 
   const handleOnSubmit = async (data: any) => {
     console.log('#### handleOnSubmit', data);
+    const payload = {
+      userUuid: props.userInfo.uuid,
+      companyId: props.userInfo.company.companyId, //회사 id
+      departmentId: props.userInfo.dept.deptId, // 부서 id
+      // 회사/조직 정보
+      isOnLeave: false, // 재직 상태: (휴직)
+      isSuspended: false, // 재직 상태: (정직)
+      // 개인 정보
+      name: data.name, // 이름
+      engName: data.engName, // 영문 이름
+      employeeNumber: data.employeeNumber, // 사번
+      birthday: data.birthday, // 생년월일
+      gender: data.gender, // 성별
+      phoneNumber: data.phoneNumber, // 휴대폰 번호
+      companyPhoneNationNumber: data.companyPhoneNationNumber, // 연락처(사무실)-국가번호
+      companyPhoneNumber: data.companyPhoneNumber, // 연락처(사무실)
+      // 직군/직무: 직군 선택에 따른 직무 - 현재 공통 코드로만 존재할지 아니면 따로 관리를 할지를 협의해야한다고 해서 구현 못 함.
+
+      // 계정 정보 - 해당 정보는 현재 페이지가 관리자 등록이라 고정 값임.
+
+      // 로그인 및 인증 설정 정보
+      ssoType: data.isUseSso ? data.ssoTypeList : null,
+      authType: data.authType,
+      twoFactorAuthType: data['2FAType'],
+      foTwoFactorAuthEnabled: false,
+      boTwoFactorAuthEnabled: false,
+    };
+
+    if( data.userState === '2' ) {
+      payload.isOnLeave = true;
+      payload.isSuspended = false;
+    } else if( data.userState === '3' ) {
+      payload.isOnLeave = false;
+      payload.isSuspended = true;
+    }
+
+    if( data.isUseTwoFactorAuth ) {
+      payload.foTwoFactorAuthEnabled = data.twoFactorAuthPlatformTypeList.includes('FO_PLATFORM');
+      payload.boTwoFactorAuthEnabled = data.twoFactorAuthPlatformTypeList.includes('BO_PLATFORM');
+    }
+
+    if( codeGroupData ) {
+      Object.keys(codeGroupData[0]).forEach(key => {
+        const items = codeGroupData[0][key];
+        const target = items.filter((v: any) => v.cdId === data.companyNumberCountryCode);
+        if( target ) {
+          payload.companyPhoneNationNumber = target.map((row: any) => row.cdContent).join(',');
+        }
+      })
+    }
+
+    const filteredPayload = Object.fromEntries(
+      Object.entries(payload).filter(([_, value]) => value !== null && value !== undefined && value !== '')
+    )
+    console.log('### payload', filteredPayload);
+    if (await openConfirm('저장 하시겠습니까?')) {
+      update(filteredPayload);
+    }
   };
 
   return (

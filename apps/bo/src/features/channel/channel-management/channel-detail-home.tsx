@@ -1,17 +1,26 @@
+import { cn } from '@learnway/shared';
+import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
 import { Panel } from '@learnway/ui';
+import { EnButtonLayout } from '@pages/_layout/tenant/channel/management/detail.lazy';
 import { NoticeBox } from '@shared/ui';
 import { useRouter, useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
+import { forwardRef, useEffect } from 'react';
+import styles from './channel-detail-base.module.css';
 import { ChannelDetailHomeContent } from './channel-detail-home-content';
 
-import { cn } from '@learnway/shared';
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
-import styles from './channel-detail-base.module.css';
+interface ChannelDetailHomeProps {
+  onButtonLayoutChange: (layout: EnButtonLayout) => void;
+}
 
-const ChannelDetailHomeComponent = () => {
+const ChannelDetailHomeComponent = (props: ChannelDetailHomeProps, ref: any) => {
   const router = useRouter();
   const routerState = useRouterState();
   const channelId = routerState.location.state?.channelId || 1;
+
+  useEffect(() => {
+    props.onButtonLayoutChange && props.onButtonLayoutChange(EnButtonLayout.NONE);
+  }, []);
 
   return (
     <div className={cn(styles.start, styles.wrap)}>
@@ -46,4 +55,4 @@ const ChannelDetailHomeComponent = () => {
   );
 };
 
-export const ChannelDetailHome = ChannelDetailHomeComponent;
+export const ChannelDetailHome = forwardRef(ChannelDetailHomeComponent);

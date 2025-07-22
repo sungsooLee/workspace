@@ -14,14 +14,15 @@ const CategoryLayerButton = () => {
   return (
     <div className={cn(styles.start, styles.category)}>
       <Button
+        icon={<IcoArray width={24} height={24} stroke="#131c30" fill="none" />}
+        onlyIcon={true}
         onClick={() =>
           openModal({
             width: 'm_full',
             content: <CategoryPopup />,
           })
-        }>
-        <IcoArray width={24} height={24} stroke="#131c30" fill="none"></IcoArray>
-      </Button>
+        }
+      ></Button>
     </div>
   );
 };
