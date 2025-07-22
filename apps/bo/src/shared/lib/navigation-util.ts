@@ -1,4 +1,4 @@
-import { router } from 'src/main';
+import { router } from '../../main';
 
 export const goTo = (path: string, params?: any) => {
   router.navigate({ to: path, params });

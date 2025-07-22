@@ -144,7 +144,7 @@ export default class CourseService {
   static async fetchCoursePopup<T = CoursePopupListItem>(
     queryParams: CoursePopupQueryParams,
   ): Promise<PaginationResponse<T>> {
-    return httpService.get<PaginationResponse<T>>(`${LMSApiPrefix()}/coursesPop`, queryParams);
+    return httpService.get<PaginationResponse<T>>(`${LMSApiPrefix()}/courses-popup`, queryParams);
   }
 
   /**
