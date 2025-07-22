@@ -1,17 +1,17 @@
 import { httpService } from '@learnway/shared';
 import { PageableContent } from '@types';
 import { PMSApiPrefix, LMSApiPrefix } from '@learnway/config';
-// import { InstructorHistory, Instructor, Instructors } from 'src/types/entities/round';
+import { LearningSequence, LearningSequences } from 'src/types/entities/learning-sequence';
 
 export default class LearningSequenceService {
   static fetchSequenceList(params: any) {
     console.log('### fetchSequenceList', params);
-    return httpService.get<any[]>(`${LMSApiPrefix()}/sequences`, params);
+    return httpService.get<LearningSequences[]>(`${LMSApiPrefix()}/sequences`, params);
   }
 
   static fetchSequenceOne(sequenceId: number) {
     console.log('## sequenceId:', sequenceId);
-    return httpService.get<any>(`${LMSApiPrefix()}/sequence/${sequenceId}`);
+    return httpService.get<LearningSequence>(`${LMSApiPrefix()}/sequence/${sequenceId}`);
   }
 
   static createSequence(params: any) {
