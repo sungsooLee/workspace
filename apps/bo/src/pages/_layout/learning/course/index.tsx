@@ -4,7 +4,7 @@ import { createFileRoute, Link } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { CourseGrid } from './-components/course-grid';
 import { CourseSearchForm } from './-components/course-search-form';
-import { useCourseManagement } from './-hooks/use-course-management';
+import { useCoursePage } from './-hooks/use-course-page';
 
 export const Route = createFileRoute('/_layout/learning/course/')({
   component: RouteComponent,
@@ -22,7 +22,7 @@ function RouteComponent() {
     handleGridRowsSelect,
     handleBatchUploadClick,
     handleCourseOpenClick,
-  } = useCourseManagement();
+  } = useCoursePage();
 
   return (
     <PageContainer>

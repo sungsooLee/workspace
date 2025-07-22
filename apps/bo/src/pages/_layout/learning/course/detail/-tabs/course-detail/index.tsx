@@ -87,6 +87,7 @@ const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTab
                 format={'boolean'}
                 element={
                   <RadioGroupFormField
+                    options={}
                     optionsConfig={{
                       codeGroup: CODE_GROUP['mock.options.use'],
                     }}

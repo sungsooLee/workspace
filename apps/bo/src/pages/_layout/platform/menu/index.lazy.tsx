@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { t } from 'i18next';
 import { Button, Tabs, useModal } from '@learnway/ui';
-import { createFileRoute, createLazyFileRoute, useRouter } from '@tanstack/react-router';
+import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import { MenuManage, MenuManageRef } from '@features/platform-management/platform/menu-managemnet';
 import { MainContents, PageContainer, SectionLayout, ContentsButtons } from '@shared/ui';

@@ -2,7 +2,7 @@ import { Button, Divider } from '@learnway/ui';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { t } from 'i18next';
-import { useCourseManagement } from '../../../_layout/learning/course/-hooks/use-course-management';
+import { useCoursePage } from '../../../_layout/learning/course/-hooks/use-course-page';
 import { CourseSearchForm } from '../../../_layout/learning/course/-components/course-search-form';
 import { CourseGrid } from '../../../_layout/learning/course/-components/course-grid';
 
@@ -22,7 +22,7 @@ function RouteComponent() {
     handleGridRowsSelect,
     handleBatchUploadClick,
     handleCourseOpenClick,
-  } = useCourseManagement();
+  } = useCoursePage();
 
   return (
     <PageContainer>

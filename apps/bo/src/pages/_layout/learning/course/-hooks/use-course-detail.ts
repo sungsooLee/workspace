@@ -1,4 +1,5 @@
 import {
+  useCopyCourse,
   useDeleteCourse,
   useFetchCourse,
   useFetchCourseConfig,
@@ -11,57 +12,75 @@ import { goToCourseList } from '@shared/index';
 import { Course, CourseConfig } from '@types';
 import { useUpdateEffect } from 'ahooks';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export function useCourseDetail(courseId: number) {
-  const { showSaveComplete } = useModal();
+  const { t } = useTranslation();
+  const { showSaveComplete, alert, saveConfirm, confirm } = useModal();
   const lastTriggered = useCourseStore((state) => state.lastTriggered);
 
   const { provider, getValues, updateFormData, formValues, onSubmit, onFormChange } =
     useDynamicForm2();
 
   const { data: formData } = useFetchCourse(courseId);
+
   const { data: courseConfig } = useFetchCourseConfig({
     courseType: formData?.courseType,
     channelUuid: formData?.channelUuid,
   });
+
   const { mutate: updateCourse } = useUpdateCourse({
     onSuccess: async (response: any) => {
-      console.log('useUpdateCourse :: onSuccess', response);
       await showSaveComplete();
     },
   });
+
   const { mutate: deleteCourse } = useDeleteCourse({
     onSuccess: async (response: any) => {
-      console.log('useDeleteCourse :: onSuccess', response);
       await showSaveComplete();
       goToCourseList();
     },
   });
 
-  const handleManualSubmit = () => {
-    const submitHandler = onSubmit((data) => {
+  const { mutate: copyCourse } = useCopyCourse({
+    onSuccess: async (response: any) => {
+      await alert(t('과정 복사 완료'));
+      goToCourseList();
+    },
+  });
+
+  const handleSave = () => {
+    const run = onSubmit(async (data) => {
       console.log('수동 제출 성공:', { formValues, data });
-      const mergeData = { ...formValues, ...data };
-      const requestData = formDataToRequestData(mergeData);
-      updateCourse(requestData);
+      if (await saveConfirm()) {
+        const mergeData = { ...formValues, ...data };
+        const requestData = formDataToRequestData(mergeData);
+        updateCourse(requestData);
+      }
     });
-
     // 가짜 이벤트 객체를 생성해서 수동으로 호출
-    const event = {
-      preventDefault: () => null,
-    } as any;
+    run({ preventDefault: () => null } as any);
+  };
 
-    submitHandler(event);
+  const handleCopy = () => {
+    const run = async () => {
+      if (await confirm(t('과정 복사 하시겠습니까?'))) {
+        copyCourse(courseId);
+      }
+    };
+    run();
   };
 
   useUpdateEffect(() => {
-    if (!lastTriggered) return;
-
-    switch (lastTriggered.key) {
+    switch (lastTriggered?.key) {
       case TriggerKey.LIST:
         return goToCourseList();
       case TriggerKey.SAVE:
-        return handleManualSubmit();
+        return handleSave();
+      case TriggerKey.COPY:
+        return handleCopy();
+      case TriggerKey.TRANSLATE:
+        return handleSave();
       case TriggerKey.DELETE:
         // handleDeleteAction(lastTriggered.payload);
         return;
@@ -83,7 +102,7 @@ export function useCourseDetail(courseId: number) {
     onFormChange,
     courseConfig,
     formData,
-    handleManualSubmit,
+    handleSave,
   };
 }
 
