@@ -6,11 +6,7 @@ import {
 } from '@entities/course';
 import { useDynamicForm2 } from '@learnway/hooks';
 import { useModal } from '@learnway/ui';
-import {
-  TriggerKey,
-  useCourseActions,
-  useCourseStore,
-} from '@pages/_layout/learning/course/-store/use-course-store';
+import { TriggerKey, useCourseStore } from '@pages/_layout/learning/course/-store/use-course-store';
 import { goToCourseList } from '@shared/index';
 import { Course, CourseConfig } from '@types';
 import { useUpdateEffect } from 'ahooks';

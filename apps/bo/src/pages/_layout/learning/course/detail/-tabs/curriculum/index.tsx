@@ -1,23 +1,34 @@
-import { forwardRef, useEffect } from 'react';
-import { CourseDetailTabBaseProps, CourseDetailTabFormRef } from '../../../-common/type';
-import { useCourseActions } from '@pages/_layout/learning/course/-store/use-course-store';
-import { useCourseStore } from '@pages/_layout/learning/course/-store/use-course-store';
+import { TriggerKey, useCourseStore } from '@pages/_layout/learning/course/-store/use-course-store';
+import { goToCourseList } from '@shared/index';
 import { useUpdateEffect } from 'ahooks';
+import { forwardRef } from 'react';
+import { CourseDetailTabBaseProps, CourseDetailTabFormRef } from '../../../-common/type';
 
 const CurriculumComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBaseProps>(
   ({ courseId }, ref) => {
-    const saveTrigger = useCourseStore((state) => state.saveTrigger);
-    const { setSaveStatus } = useCourseActions();
+    const lastTriggered = useCourseStore((state) => state.lastTriggered);
 
-    // 'saveTrigger' 값이 변경될 때마다 저장 로직 실행
     useUpdateEffect(() => {
-      saveFormData();
-    }, [saveTrigger]); // saveTrigger가 바뀔 때마다 실행
+      if (!lastTriggered) return;
 
-    // 폼 데이터 저장
-    const saveFormData = async () => {
+      switch (lastTriggered.key) {
+        case TriggerKey.LIST:
+          return goToCourseList();
+        case TriggerKey.SAVE:
+          return saveFormData();
+        case TriggerKey.DELETE:
+          return deleteFormData();
+      }
+    }, [lastTriggered]);
+
+    // 저장
+    const saveFormData = () => {
       console.log('👶 폼 데이터 저장');
-      setSaveStatus('success');
+    };
+
+    // 삭제
+    const deleteFormData = () => {
+      console.log('👶 폼 데�터 삭제');
     };
 
     return <>Curriculum</>;
