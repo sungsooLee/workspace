@@ -73,7 +73,7 @@ const PublishCourseComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>(
             name={'courseValidityRange'}
             label={'노출 기간'}
             format={'object'}
-            element={<DateRangePickerFormField />}
+            element={<DateRangePickerFormField displayType={'day-time-h'} />}
             validation={{ required: true }}
           />
         </ContentsRow>
@@ -144,10 +144,10 @@ const responseDataToFormData = (d: Course): Course => {
   // 리턴
   return {
     ...d,
-    courseValidityRange: [
-      d.courseValidityStartDate, // 과정 유효 시작일
-      d.courseValidityEndDate, // 과정 유효 종료일
-    ],
+    courseValidityRange: {
+      from: d.courseValidityStartDateTime, // 과정 유효 시작일
+      to: d.courseValidityEndDateTime, // 과정 유효 종료일
+    },
   };
 };
 
@@ -162,10 +162,10 @@ const responseDataToFormData = (d: Course): Course => {
 export const formDataToRequestData = (d: Course) => {
   return {
     ...d,
-    courseValidityStartDate: d.courseValidityRange?.[0], // 과정 유효 시작일
-    courseValidityEndDate: d.courseValidityRange?.[1], // 과정 유효 종료일
-    courseValidityStartHour: 0, // 과정 노출 시작 시각 (삭제 후 courseValidityStartDate에 통합 예정)
-    courseValidityEndHour: 23, // 과정 노출 종료 시각 (삭제 후 courseValidityEndDate에 통합 예정)
+    courseValidityStartDateTime: d.courseValidityRange?.from, // 과정 유효 시작일
+    courseValidityEndDateTime: d.courseValidityRange?.to, // 과정 유효 종료일
+    // courseValidityStartHour: 0, // 과정 노출 시작 시각 (삭제 후 courseValidityStartDate에 통합 예정)
+    // courseValidityEndHour: 23, // 과정 노출 종료 시각 (삭제 후 courseValidityEndDate에 통합 예정)
     // thumbnailFileGroupUuid: '1', // 썸네일 이미지 Group UUID
     // primaryThumbnailFileUuid: '1', // 대표 썸네일 이미지 UUID
     // tagNames: d.tagNames?.map((item: any) => ({ value: item?.tagName })), // 태그

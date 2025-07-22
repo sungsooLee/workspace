@@ -437,6 +437,9 @@ export interface Course {
    */
   isQnaBoardEnabled?: boolean;
   /**
+   *  isReplyEnabled
+   */
+  /**
    * 자료실 기능 사용 여부
    */
   isMartialBoardEnabled?: boolean;
@@ -564,21 +567,13 @@ export interface Course {
    */
   isUsed: boolean;
   /**
-   * 과정 노출 시작일
+   * 과정 유효 시작 시간
    */
-  courseValidityStartDate: string;
+  courseValidityStartDateTime?: string;
   /**
-   * 과정 노출 시작 시각
+   * 과정 유효 종료 시간
    */
-  courseValidityStartHour: number;
-  /**
-   * 과정 노출 종료일
-   */
-  courseValidityEndDate: string;
-  /**
-   * 과정 노출 종료 시각
-   */
-  courseValidityEndHour: number;
+  courseValidityEndDateTime?: string;
   /**
    * 썸네일 이미지 Group UUID
    */
