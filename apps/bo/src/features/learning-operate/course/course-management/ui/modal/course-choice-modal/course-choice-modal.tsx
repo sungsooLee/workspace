@@ -29,7 +29,7 @@ export interface CourseChoiceModalProps {
 }
 
 /**
- * 채널 리스트
+ * 과정 리스트
  * @param value
  * @param onChange
  * @param props
@@ -149,8 +149,6 @@ const CourseChoiceModalComponent = forwardRef<HTMLDivElement, CourseChoiceModalP
                   element={<DateRangePickerFormField />}
                 />
               </ContentsRow>
-              {/*테넌트*/}
-              <FormRow2 provider={provider} name={'tenantId'} type="hidden" value={tenantIds} />
               {/*채널*/}
               <FormRow2
                 provider={provider}
