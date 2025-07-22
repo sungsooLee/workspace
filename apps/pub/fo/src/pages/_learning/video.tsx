@@ -10,6 +10,7 @@ import {
   useLearningWindow,
   useVideoPlayer,
 } from '@learnway/ui';
+import { VideoSettingPopup, VideoSubsettingPopup } from '../../features/learning';
 
 import styles from '@learnway/styles/fo/pages/_learning/learning.module.css';
 
@@ -21,7 +22,7 @@ export const Route = createFileRoute('/_learning/video')({
 });
 
 function RouteComponent() {
-  const { alert: openAlert } = useModal();
+  const { alert: openAlert, open: openModal } = useModal();
 
   // 완료 alert
   const handleCompleteAlert = () => {
@@ -133,6 +134,16 @@ function RouteComponent() {
                 url={video}
               />
             </VideoPlayerContainer>
+            <Button
+              onClick={() =>
+                openModal({
+                  width: 'm_bottom_sheet',
+                  content: <VideoSubsettingPopup />,
+                })
+              }
+            >
+              팝업 예시
+            </Button>
           </div>
         </div>
       </div>
