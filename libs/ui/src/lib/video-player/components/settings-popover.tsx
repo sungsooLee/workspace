@@ -82,7 +82,7 @@ const SettingsPopover = (props: VideoPlayerContainerProps) => {
               <MenuItem
                 key={v.label}
                 label={v.label}
-                active={props.videoQuerity.label === v.label}
+                active={props.videoQuality.label === v.label}
                 onClick={() => {
                   handleSelect('quality', v.label);
                   props.changeQuality(v);
@@ -129,7 +129,7 @@ const SettingsPopover = (props: VideoPlayerContainerProps) => {
               />
               <MenuItem
                 label="품질"
-                value={props.videoQuerity.label}
+                value={props.videoQuality.label}
                 onClick={() => setActiveMenu(MENU.QUALITY)}
               />
               {props.videoConfig && (

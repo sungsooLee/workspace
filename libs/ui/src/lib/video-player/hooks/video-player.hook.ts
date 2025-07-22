@@ -47,7 +47,7 @@ export const useVideoPlayer = ({
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [subtitlesVisible, setSubtitlesVisible] = useState(false);
   const [playUrl, setPlayUrl] = useState<string>();
-  const [videoQuerity, setVideoQuerity] = useState<any>(VideoQuerites.auto);
+  const [videoQuality, setVideoQuality] = useState<any>(VideoQuerites.auto);
 
   //player 정보 전달을 위한 값
   const [isFirstLoad, setIsFirstLoad] = useState(true);
@@ -254,10 +254,10 @@ export const useVideoPlayer = ({
 
     if (data) {
       setPlayUrl(data.m3u8Url);
-      setVideoQuerity(v);
+      setVideoQuality(v);
     } else if (v.label === VideoQuerites.auto.label) {
       setPlayUrl(videoInfo.masterVideo);
-      setVideoQuerity(v);
+      setVideoQuality(v);
     }
     console.log('changeQuality', data);
   };
@@ -276,7 +276,7 @@ export const useVideoPlayer = ({
     videoConfig,
     videoSubtitles,
     encodedVideos,
-    videoQuerity,
+    videoQuality,
     playerContainerRef,
     playerRef,
     playing,

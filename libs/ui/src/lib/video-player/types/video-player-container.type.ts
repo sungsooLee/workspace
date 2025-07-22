@@ -45,7 +45,7 @@ export type VideoPlayerContainerProps = {
 
   subtitlesVisible: boolean;
 
-  videoQuerity: any;
+  videoQuality: any;
 
   toggleMute: () => void;
   handleVolumeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
