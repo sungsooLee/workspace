@@ -102,6 +102,8 @@ export interface CourseTabBaseProps {
  */
 export interface CourseDetailTabBaseProps {
   courseId: number;
+  courseSequenceId?: number;
+  setCourseSequenceId?: (data: number) => void;
 }
 
 /**

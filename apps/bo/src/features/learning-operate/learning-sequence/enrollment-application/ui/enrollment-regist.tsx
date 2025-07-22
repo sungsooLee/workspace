@@ -23,6 +23,7 @@ import { useRouter } from '@tanstack/react-router';
 import { Mode } from '@pages/_layout/learning/learning-sequence/-common/type';
 import { RegistPaymentModal } from '../modal/regist-payment-modal';
 import { ForceApprovalModal } from '../modal/force-approval-modal';
+import { useQueryClient } from '@tanstack/react-query';
 
 const _global = {
   linkClickSequenceName: (payload: any) => {
@@ -41,6 +42,8 @@ const _global = {
  * @returns
  */
 type EnrollmentRegistComponentProps = {
+  courseId?: number;
+  courseSequenceId?: number;
   searchProvider: SearchBoxProvider;
   getValues: UseFormGetValues<FieldValues>;
   setValue: UseFormSetValue<FieldValues>;
@@ -59,16 +62,25 @@ const gridConfig: useGridBoxConfig = {
 };
 
 const EnrollmentRegistComponent = ({
+  courseSequenceId,
   searchProvider,
   getValues,
   setValue,
   setOptions,
 }: EnrollmentRegistComponentProps) => {
+  console.log('## courseSequenceId:', courseSequenceId);
   const router = useRouter();
   const { open: openModal, confirm: openConfirm, alert } = useModal();
   const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
   const [columns, setColumns] = useState() as any;
   const [selectedRows, setSelectedRows] = useState<any[]>();
+  const [statsCount, setStatsCount] = useState<Array<StatsSummaryData>>([
+    { label: t('ENROLL_DONE'), value: 0 },
+    { label: t('ENROLL_REQUEST'), value: 0 },
+    { label: t('CANCEL_DONE'), value: 0 },
+    { label: t('REJECT_DONE'), value: 0 },
+  ]);
+  const queryClient = useQueryClient();
 
   _global.linkClickSequenceName = (payload: any) => {
     router.navigate({
@@ -94,13 +106,13 @@ const EnrollmentRegistComponent = ({
 
   useEffect(() => {
     const columns = [
-      columnHelper.accessor('openYear', {
+      columnHelper.accessor('openingYear', {
         header: t('개설'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
         size: 58,
       }),
-      columnHelper.accessor('sequenceName', {
+      columnHelper.accessor('courseSequenceName', {
         header: t('차수명'),
         cell: (info) => (
           <Button
@@ -114,7 +126,7 @@ const EnrollmentRegistComponent = ({
         enableGrouping: false,
         size: 207,
       }),
-      columnHelper.accessor('eduStartDate', {
+      columnHelper.accessor('learningStartDate', {
         header: t('학습 시작일'),
         cell: (info) => {
           const date = info.getValue() as Date;
@@ -123,7 +135,7 @@ const EnrollmentRegistComponent = ({
         enableGrouping: false,
         size: 160,
       }),
-      columnHelper.accessor('eduEndDate', {
+      columnHelper.accessor('learningEndDate', {
         header: t('학습 종료일'),
         cell: (info) => {
           const date = info.getValue() as Date;
@@ -132,37 +144,37 @@ const EnrollmentRegistComponent = ({
         enableGrouping: false,
         size: 160,
       }),
-      columnHelper.accessor('status', {
+      columnHelper.accessor('enrollStatusType', {
         header: t('상태'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
         size: 120,
       }),
-      columnHelper.accessor('company', {
+      columnHelper.accessor('companyName', {
         header: t('회사'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
         size: 130,
       }),
-      columnHelper.accessor('department', {
+      columnHelper.accessor('departmentName', {
         header: t('부서'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
         size: 130,
       }),
-      columnHelper.accessor('employeeId', {
+      columnHelper.accessor('employeeNumber', {
         header: t('사번'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
         size: 80,
       }),
-      columnHelper.accessor('employeeName', {
+      columnHelper.accessor('userName', {
         header: t('이름'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
         size: 70,
       }),
-      columnHelper.accessor('regDate', {
+      columnHelper.accessor('createdDate', {
         header: t('수강신청 신청일시'),
         cell: (info) => {
           const date = info.getValue() as Date;
@@ -202,8 +214,19 @@ const EnrollmentRegistComponent = ({
     ] as ColumnDef<any, unknown>[];
 
     setColumns(columns);
-    gridFetch();
+    // gridFetch();
   }, []);
+
+  const setStats = async (payload: any) => {
+    const result = await queryClient.fetchQuery(queryOptions.enrollmentRegistCount(payload));
+    console.log('## result =>', result);
+    if (result) {
+      const statsCount = result.map((x: any) => {
+        return { label: x.enrollStstusType, value: x.count };
+      });
+      setStatsCount(statsCount);
+    }
+  };
 
   const getStats = (): Array<StatsSummaryData> => [
     {
@@ -234,6 +257,35 @@ const EnrollmentRegistComponent = ({
 
   const handleOnSearch = useCallback((data: any) => {
     console.log('#search:', data);
+    // const payload = {
+    //   openingYear: data.openingYear || 0,
+    //   courseSequenceId: data.courseSequenceId || 0,
+    //   enrollStatusType: data.enrollStatusType || '',
+    //   learningStartDate: data.learningRange?.from || '',
+    //   learningEndDate: data.learningRange?.to || '',
+    //   companyId: data.company || 0,
+    //   deptId: data.deptId || 0,
+    //   employeeNumber: data.employeeNumber || '',
+    //   name: data.name || '',
+    // };
+    const payload = {
+      // openingYear: 0,
+      openingYear: 2025,
+      // courseSequenceId: 0,
+      courseSequenceId: 2,
+      enrollStatusType: 'ENROLL_DONE',
+      // learningStartDate: '2025-07-22T06:10:47.454Z',
+      // learningEndDate: '2025-07-22T06:10:47.454Z',
+      learningStartDate: '2025-06-10T07:39:56.18',
+      learningEndDate: '2025-07-23T07:39:56.18',
+      companyId: 0,
+      deptId: 0,
+      employeeNumber: 'string',
+      name: 'string',
+    };
+    console.log('## payload=>', payload);
+    setStats(payload);
+    gridFetch(payload);
   }, []);
 
   const handleBulkApproval = async () => {
@@ -271,7 +323,8 @@ const EnrollmentRegistComponent = ({
     <>
       <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
       <Divider />
-      <StatsSummary data={getStats()} />
+      {/* <StatsSummary data={getStats()} /> */}
+      <StatsSummary data={statsCount} />
       <GridBox
         config={gConfig}
         // data={gridData}

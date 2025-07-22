@@ -6,9 +6,14 @@ import {
 } from '@features/learning-operate/learning-sequence/sequence-management';
 
 const SequenceComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBaseProps>(
-  ({ courseId }, ref) => {
+  ({ courseId, courseSequenceId, setCourseSequenceId }, ref) => {
     const [mode, setMode] = useState<string>('MAIN');
     const [sequenceId, setSequenceId] = useState<number>(0);
+
+    useEffect(() => {
+      console.log('차수ID:', sequenceId);
+      if (setCourseSequenceId) setCourseSequenceId(sequenceId);
+    }, [sequenceId]);
 
     return mode === 'MAIN' ? (
       <SequenceList setMode={setMode} setSequenceId={setSequenceId} courseId={courseId} />
