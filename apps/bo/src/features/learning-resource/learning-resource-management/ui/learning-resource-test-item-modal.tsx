@@ -11,6 +11,7 @@ import {
   ContentsRow,
   EditCheckboxCell,
   EditInputCell,
+  EditRadioCell,
   EditTextareaCell,
   FormSubTitle,
   GridFormField,
@@ -173,18 +174,31 @@ const LearningResourceTestItemModalComponent = ({
           header: '정답',
           accessorKey: 'isCorrectAnswer',
           size: 80,
-          cell: (info: CellContext<any, boolean>) => (
+          cell: (info: CellContext<any, any>) => (
             <div>
-              <EditCheckboxCell
-                info={info}
-                checkbox={{
-                  variant: EnQuestionType.SINGLE === questionTypeWatch ? 'radio' : 'default',
-                  label: '정답',
-                }}
-                onCheckedChange={(event) => {
-                  updateisCorrectAnswerRadio(info.row.index);
-                }}
-              />
+              {questionTypeWatch === EnQuestionType.MULTIPLE && (
+                <EditCheckboxCell
+                  info={info}
+                  checkbox={{
+                    variant: EnQuestionType.SINGLE === questionTypeWatch ? 'radio' : 'default',
+                    label: '정답',
+                  }}
+                  onCheckedChange={(event) => {
+                    updateisCorrectAnswerRadio(info.row.index);
+                  }}
+                />
+              )}
+              {questionTypeWatch !== EnQuestionType.MULTIPLE && (
+                <EditRadioCell
+                  info={info}
+                  radio={{
+                    options: [{ label: '정답', value: true }],
+                  }}
+                  onValueChange={(event) => {
+                    updateisCorrectAnswerRadio(info.row.index);
+                  }}
+                />
+              )}
             </div>
           ),
           meta: {

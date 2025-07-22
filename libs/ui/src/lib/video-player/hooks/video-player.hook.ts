@@ -9,21 +9,34 @@ type UseVideoPlayer = {
   gotoNextLesson?: () => void;
 };
 
-export const VideoQuerites = {
+export const VideoQualities = {
   auto: { label: 'Auto', height: 0 },
   high: { label: '1080P', height: 1080 },
   middle: { label: '720P', height: 720 },
   low: { label: '360P', height: 360 },
 };
+const qualitesAutoStep = [VideoQualities.high, VideoQualities.middle, VideoQualities.low];
 
 const rightHeight = (item: any) => {
   switch (item.height) {
-    case VideoQuerites.high.height:
-    case VideoQuerites.middle.height:
-    case VideoQuerites.low.height:
+    case VideoQualities.high.height:
+    case VideoQualities.middle.height:
+    case VideoQualities.low.height:
       return true;
   }
   return false;
+};
+
+/**
+ * height 값을 가지고 있는 list를
+ * @param data
+ * @param height
+ * @returns
+ */
+export const getHeightValueEncodedVideo = (data: any[], height: number) => {
+  return data.find((item) => {
+    return item.height === height;
+  });
 };
 
 export const useVideoPlayer = ({
@@ -47,7 +60,8 @@ export const useVideoPlayer = ({
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [subtitlesVisible, setSubtitlesVisible] = useState(false);
   const [playUrl, setPlayUrl] = useState<string>();
-  const [videoQuality, setVideoQuality] = useState<any>(VideoQuerites.auto);
+  const [videoQuality, setVideoQuality] = useState<any>(VideoQualities.auto);
+  const [autoQualityStepPos, setAutoQualityStepPos] = useState<number>(0);
 
   //player 정보 전달을 위한 값
   const [isFirstLoad, setIsFirstLoad] = useState(true);
@@ -200,7 +214,20 @@ export const useVideoPlayer = ({
       });
   };
   const onBuffer = () => {
-    console.log('onBuffer event');
+    let pos = autoQualityStepPos + 1;
+    if (pos >= qualitesAutoStep.length) return;
+    do {
+      if (!encodedVideos) return;
+      const video = getHeightValueEncodedVideo(encodedVideos, qualitesAutoStep[pos].height);
+      if (video) {
+        setPlayUrl(video.m3u8Url);
+        setAutoQualityStepPos(pos);
+        return;
+      }
+      pos++;
+    } while (pos < qualitesAutoStep.length);
+    // 종료 처리
+    setAutoQualityStepPos(pos);
   };
 
   // 🧭 총 재생시간 설정
@@ -247,15 +274,14 @@ export const useVideoPlayer = ({
   };
 
   const changeQuality = (v: any) => {
+    if (!encodedVideos) return;
     const selectedHeight = v.height;
-    const data = encodedVideos?.find((item: any) => {
-      return item.height === selectedHeight;
-    });
+    const data = getHeightValueEncodedVideo(encodedVideos, selectedHeight);
 
     if (data) {
       setPlayUrl(data.m3u8Url);
       setVideoQuality(v);
-    } else if (v.label === VideoQuerites.auto.label) {
+    } else if (v.label === VideoQualities.auto.label) {
       setPlayUrl(videoInfo.masterVideo);
       setVideoQuality(v);
     }

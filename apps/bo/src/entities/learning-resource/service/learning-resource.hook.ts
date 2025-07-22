@@ -13,6 +13,7 @@ import {
   QuestionItem,
   QuestionItemDeleteParam,
   QuestionStatusUpdateReq,
+  RandomQuestionCountUpdateReq,
   TestPaperBasicInfoSaveReq,
 } from '@types';
 
@@ -267,6 +268,19 @@ export function useUpdateQuestionStatus(options?: any) {
 
   return {
     update: (params: QuestionStatusUpdateReq) => mutation.mutate(params as any),
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+  };
+}
+
+export function useUpdateExamPaperQuestionCount(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.updateExamPaperQuestionCountInfo(),
+    ...options,
+  });
+
+  return {
+    update: (params: RandomQuestionCountUpdateReq) => mutation.mutate(params as any),
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
   };

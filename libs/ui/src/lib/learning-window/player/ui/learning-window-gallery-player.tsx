@@ -131,7 +131,6 @@ const LearningWindowGalleryPlayerComponent: FC<any> = () => {
             spaceBetween={8}
             slidesPerView="auto"
             centeredSlides={true}
-            prevDisabled={true}
             onSwiper={(swiper) => {
               setSwiperCount(swiper.slides.length);
               swiperRef.current = swiper;
