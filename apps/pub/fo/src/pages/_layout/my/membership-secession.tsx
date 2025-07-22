@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Button, Checkbox } from '@learnway/ui';
-import { IcoCaution03 } from '@learnway/icons';
+import { IcoError02 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import { MobileView, BrowserView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
@@ -18,11 +18,12 @@ export const Route = createFileRoute('/_layout/my/membership-secession')({
 function RouteComponent() {
   return (
     <div className={myPageContainerStyles.start}>
-      <h2>회원탈퇴</h2>
+      {/* 퍼블수정 20250722 클래스 추가 및 아이콘 변경 */}
+      <h2 className={myPageContainerStyles.text_center}>회원탈퇴</h2>
       <div className={`${styles.start} ${styles.secession}`}>
         <div className={styles.box}>
           <div className={styles.confirm}>
-            <IcoCaution03 width={32} height={32} stroke="#ff4646"></IcoCaution03>
+            <IcoError02 width={80} height={80} />
             <p>
               회원탈퇴를 신청하기 전에
               <br />
@@ -42,17 +43,19 @@ function RouteComponent() {
           </div>
         </div>
 
+        {/* 퍼블수정 20250722 버튼 사이즈 수정 */}
         <BrowserView>
           <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
-            <Button variant="gray" size="xl">
+            <Button variant="gray" size="xl2">
               취소
             </Button>
-            <Button variant="primary" size="xl">
+            <Button variant="primary" size="xl2">
               회원탈퇴
             </Button>
           </div>
         </BrowserView>
 
+        {/* 모바일 아직 미작업 */}
         <MobileView>
           <MobileContainerFooter>
             <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
