@@ -4,6 +4,7 @@ import {
   ChannelDetailHome,
   ChannelDetailRole,
 } from '@features/channel';
+import { ChannelDetailSubscriber } from '@features/channel/channel-management/channel-detail-subscriber';
 import { ChannelDetailUser } from '@features/channel/channel-management/channel-detail-user';
 import { Button, Tabs } from '@learnway/ui';
 import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui';
@@ -117,27 +118,43 @@ function RouteComponent() {
     {
       title: t('사용자 관리'),
       key: EnTabKeys.USER,
-      content: <ChannelDetailUser />,
+      content: (
+        <ChannelDetailUser ref={userFormRef} onButtonLayoutChange={handleButtonLayoutChange} />
+      ),
     },
     {
       title: t('홈 설정'),
       key: EnTabKeys.HOME,
-      content: <ChannelDetailHome />,
+      content: (
+        <ChannelDetailHome ref={homeFormRef} onButtonLayoutChange={handleButtonLayoutChange} />
+      ),
     },
     {
       title: t('게시판 관리'),
       key: EnTabKeys.BOARD,
-      content: <ChannelDetailBoard />,
+      content: (
+        <ChannelDetailBoard ref={boardFormRef} onButtonLayoutChange={handleButtonLayoutChange} />
+      ),
     },
     {
       title: t('구독자 관리'),
       key: EnTabKeys.SUBSCRIBER,
-      content: '구독자 관리',
+      content: (
+        <ChannelDetailSubscriber
+          ref={subscriberFormRef}
+          onButtonLayoutChange={handleButtonLayoutChange}
+        />
+      ),
     },
     {
       title: t('담당자 역할 관리'),
       key: EnTabKeys.MANAGER_ROLE,
-      content: <ChannelDetailRole />,
+      content: (
+        <ChannelDetailRole
+          ref={managerRoleFormRef}
+          onButtonLayoutChange={handleButtonLayoutChange}
+        />
+      ),
     },
     {
       title: t('채널 유저 그룹'),

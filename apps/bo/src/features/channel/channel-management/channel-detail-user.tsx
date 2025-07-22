@@ -21,8 +21,7 @@ interface ChannelDetailUserProps {
 }
 
 const ChannelDetailUserComponent = (props: ChannelDetailUserProps, ref: any) => {
-  const { provider, control, updateFormData, onSubmit, onFormChange } =
-    useDynamicForm(formConfig());
+  const { provider, onSubmit, onFormChange } = useDynamicForm(formConfig());
   const { provider: userSearchProvider, getValues: getValuesForUser } = useSearchBox(searchConfig);
   const { provider: excludeUserSearchProvider, getValues: getValuesForExcludeUser } =
     useSearchBox(searchConfig);

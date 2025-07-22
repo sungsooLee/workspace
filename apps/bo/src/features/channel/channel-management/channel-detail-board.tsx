@@ -1,13 +1,20 @@
-import { useState, useEffect } from 'react';
-import { t } from 'i18next';
-import { Button, TableBox, Tabs } from '@learnway/ui';
+import { Tabs } from '@learnway/ui';
+import { forwardRef, useEffect, useState } from 'react';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
+import { EnButtonLayout } from '@pages/_layout/tenant/channel/management/detail.lazy';
 import { ChannelDetailBoardArticle } from './channel-detail-board-article';
-import { ChannelDetailBoardArticleDetail } from './channel-detail-board-article-detail';
 
-const ChannelDetailBoardComponent = () => {
+interface ChannelDetailBoardProps {
+  onButtonLayoutChange: (layout: EnButtonLayout) => void;
+}
+
+const ChannelDetailBoardComponent = (props: ChannelDetailBoardProps, ref: any) => {
   const [selectedTabKey, setSelectedTabKey] = useState<string>('manageArticle');
+
+  useEffect(() => {
+    props.onButtonLayoutChange && props.onButtonLayoutChange(EnButtonLayout.NONE);
+  }, []);
 
   const handleTabChange = (tabKey: string) => {
     if (tabKey !== selectedTabKey) {
@@ -40,4 +47,4 @@ const ChannelDetailBoardComponent = () => {
   );
 };
 
-export const ChannelDetailBoard = ChannelDetailBoardComponent;
+export const ChannelDetailBoard = forwardRef(ChannelDetailBoardComponent);
