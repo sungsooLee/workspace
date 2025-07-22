@@ -5,6 +5,7 @@ import { getTimeValueFromHour } from '@learnway/shared';
 import { findParentNode, buildTreeFromCurriculumData } from '../services';
 import { useQueryClient } from '@tanstack/react-query';
 import { queryKeys } from '@entities/curriculum';
+import { useRouter } from '@tanstack/react-router';
 
 interface UseCurriculumActionsProps {
   curriculumId: number;
@@ -21,6 +22,7 @@ interface UseCurriculumActionsProps {
   treeData: TreeNode[];
   refetchCurriculumDetail: () => Promise<any>;
   formState: any;
+  router: ReturnType<typeof useRouter>;
 }
 
 export const useCurriculumActions = ({
@@ -38,6 +40,7 @@ export const useCurriculumActions = ({
   treeData,
   refetchCurriculumDetail,
   formState,
+  router,
 }: UseCurriculumActionsProps) => {
   const queryClient = useQueryClient();
 
@@ -440,15 +443,30 @@ export const useCurriculumActions = ({
         });
         clearAllValidators();
         api.deleteCurriculumLesson({ moduleId, lessonId });
+      } else if (node.type === MAPPING_CURRICULUM_TYPE.CURRICULUM) {
+        const curriculumId = api.extractIdFromNodeId(node.id);
+        api.deleteCurriculum(
+          { curriculumId },
+          {
+            onSuccess: () => {
+              if (router)
+                router.navigate({
+                  to: '/learning-operate/curriculum',
+                });
+            },
+          },
+        );
       }
     },
-    [api, clearAllValidators, curriculumId, setFormState],
+    [api, clearAllValidators, curriculumId, setFormState, router],
   );
 
   const handleTreeAction = useCallback(
     (event: any) => {
       if (event.type === 'NODE_MOVE') {
         const { sourceNode, targetNode, position } = event;
+
+        handleNodeSelect(sourceNode);
 
         const sortOrder = api.calculateSortOrder({ sourceNode, targetNode, position });
 
@@ -477,21 +495,6 @@ export const useCurriculumActions = ({
           sortOrder,
         };
 
-        // 중복 API 호출 방지
-        if (
-          formState.selectedNode &&
-          api.extractIdFromNodeId(formState.selectedNode.id) === payload.fromMappingId
-        ) {
-          setFormState({
-            activeFormType: null,
-            selectedNode: null,
-            parentNode: null,
-            isEditing: false,
-          });
-          clearAllValidators();
-          setFormKey((prev: number) => prev + 1);
-        }
-
         api.dndCurriculumMutation.mutate(payload, {
           onSuccess: async (data: any) => {
             onFormChange();
@@ -511,92 +514,91 @@ export const useCurriculumActions = ({
             }
 
             if (payload.fromMappingType === 'MODULE') {
-              const moduleId = api.extractIdFromNodeId(payload.fromMappingId);
-              await queryClient.invalidateQueries({
-                queryKey: queryKeys.moduleDetail(moduleId),
-              });
+              // const moduleId = api.extractIdFromNodeId(payload.fromMappingId);
+              // await queryClient.invalidateQueries({
+              //   queryKey: queryKeys.moduleDetail(moduleId),
+              // });
+              // const updatedTreeData = buildTreeFromCurriculumData(data);
+              // const findModuleNode = (nodes: TreeNode[]): TreeNode | null => {
+              //   for (const node of nodes) {
+              //     if (
+              //       node.type === 'MODULE' &&
+              //       api.extractIdFromNodeId(node.id) === payload.fromMappingId
+              //     ) {
+              //       return node;
+              //     }
+              //     if (node.children) {
+              //       const found = findModuleNode(node.children);
+              //       if (found) return found;
+              //     }
+              //   }
+              //   return null;
+              // };
 
-              const updatedTreeData = buildTreeFromCurriculumData(data);
-              const findModuleNode = (nodes: TreeNode[]): TreeNode | null => {
-                for (const node of nodes) {
-                  if (
-                    node.type === 'MODULE' &&
-                    api.extractIdFromNodeId(node.id) === payload.fromMappingId
-                  ) {
-                    return node;
-                  }
-                  if (node.children) {
-                    const found = findModuleNode(node.children);
-                    if (found) return found;
-                  }
-                }
-                return null;
-              };
+              // const updatedModuleNode = findModuleNode(updatedTreeData);
 
-              const updatedModuleNode = findModuleNode(updatedTreeData);
+              // if (updatedModuleNode) {
+              // const newParentNode = findParentNode(updatedTreeData, updatedModuleNode.parentId);
 
-              if (updatedModuleNode) {
-                const newParentNode = findParentNode(updatedTreeData, updatedModuleNode.parentId);
-
-                setFormState({
-                  activeFormType: MAPPING_CURRICULUM_TYPE.MODULE,
-                  selectedNode: updatedModuleNode,
-                  parentNode: newParentNode,
-                  isEditing: true,
-                });
-                setFormKey((prev: number) => prev + 1);
-              }
+              // setFormState({
+              //   activeFormType: MAPPING_CURRICULUM_TYPE.MODULE,
+              //   selectedNode: updatedModuleNode,
+              //   parentNode: newParentNode,
+              //   isEditing: true,
+              // });
+              setFormKey((prev: number) => prev + 1);
+              // }
             }
 
             if (payload.fromMappingType === 'LESSON') {
-              const updatedTreeData = buildTreeFromCurriculumData(data);
-              const findLessonNode = (nodes: TreeNode[]): TreeNode | null => {
-                for (const node of nodes) {
-                  if (
-                    node.type === 'LESSON' &&
-                    api.extractIdFromNodeId(node.id) === payload.fromMappingId
-                  ) {
-                    return node;
-                  }
-                  if (node.children) {
-                    const found = findLessonNode(node.children);
-                    if (found) return found;
-                  }
-                }
-                return null;
-              };
+              // const updatedTreeData = buildTreeFromCurriculumData(data);
+              // const findLessonNode = (nodes: TreeNode[]): TreeNode | null => {
+              //   for (const node of nodes) {
+              //     if (
+              //       node.type === 'LESSON' &&
+              //       api.extractIdFromNodeId(node.id) === payload.fromMappingId
+              //     ) {
+              //       return node;
+              //     }
+              //     if (node.children) {
+              //       const found = findLessonNode(node.children);
+              //       if (found) return found;
+              //     }
+              //   }
+              //   return null;
+              // };
 
-              const updatedLessonNode = findLessonNode(updatedTreeData);
+              // const updatedLessonNode = findLessonNode(updatedTreeData);
 
-              if (updatedLessonNode) {
-                const newParentNode = findParentNode(updatedTreeData, updatedLessonNode.parentId);
+              // if (updatedLessonNode) {
+              // const newParentNode = findParentNode(updatedTreeData, updatedLessonNode.parentId);
 
-                let newModuleId = 0;
+              // let newModuleId = 0;
 
-                if (newParentNode?.type === MAPPING_CURRICULUM_TYPE.CURRICULUM) {
-                  newModuleId = updatedLessonNode.data?.moduleId || updatedLessonNode.moduleId || 0;
-                } else if (newParentNode?.type === MAPPING_CURRICULUM_TYPE.MODULE) {
-                  newModuleId =
-                    newParentNode.data?.moduleId || api.extractIdFromNodeId(newParentNode.id);
-                }
+              // if (newParentNode?.type === MAPPING_CURRICULUM_TYPE.CURRICULUM) {
+              //   newModuleId = updatedLessonNode.data?.moduleId || updatedLessonNode.moduleId || 0;
+              // } else if (newParentNode?.type === MAPPING_CURRICULUM_TYPE.MODULE) {
+              //   newModuleId =
+              //     newParentNode.data?.moduleId || api.extractIdFromNodeId(newParentNode.id);
+              // }
 
-                const updatedLessonNodeWithModuleId = {
-                  ...updatedLessonNode,
-                  moduleId: newModuleId,
-                  data: {
-                    ...updatedLessonNode.data,
-                    moduleId: newModuleId,
-                  },
-                };
+              // const updatedLessonNodeWithModuleId = {
+              //   ...updatedLessonNode,
+              //   moduleId: newModuleId,
+              //   data: {
+              //     ...updatedLessonNode.data,
+              //     moduleId: newModuleId,
+              //   },
+              // };
 
-                setFormState({
-                  activeFormType: MAPPING_CURRICULUM_TYPE.LESSON,
-                  selectedNode: updatedLessonNodeWithModuleId,
-                  parentNode: newParentNode,
-                  isEditing: true,
-                });
-                setFormKey((prev: number) => prev + 1);
-              }
+              // setFormState({
+              //   activeFormType: MAPPING_CURRICULUM_TYPE.LESSON,
+              //   selectedNode: updatedLessonNodeWithModuleId,
+              //   parentNode: newParentNode,
+              //   isEditing: true,
+              // });
+              setFormKey((prev: number) => prev + 1);
+              // }
             }
           },
         });

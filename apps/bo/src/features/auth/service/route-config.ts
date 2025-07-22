@@ -87,7 +87,7 @@ async function authorization({ location, context }: { location: ParsedLocation; 
 export function pageRouteConfig(routeConfig?: PageRouteConfig<PageMeta>) {
   return {
     beforeLoad: async ({ location, context, params, search, preload, route }: any) => {
-      // console.log('### beforeLoad start');
+      console.log('### beforeLoad start');
       // 인증 정보 확인
       if (routeConfig?.authorization) {
         try {

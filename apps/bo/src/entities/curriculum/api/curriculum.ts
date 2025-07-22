@@ -65,8 +65,15 @@ export class CurriculumService {
   /**
    * 커리큘럼 삭제
    */
-  static deleteCurriculum(curriculumId: number): Promise<void> {
-    return httpService.delete(`${CMSApiPrefix()}/curriculum/${curriculumId}`);
+  static deleteCurriculum(data: { curriculumId: number }): Promise<void> {
+    return httpService.delete(`${CMSApiPrefix()}/curriculum?curriculumId=${data.curriculumId}`);
+  }
+
+  /**
+   * 커리큘럼 복사
+   */
+  static copyCurriculum(data: { curriculumId: number }): Promise<CurriculumDetailResponse> {
+    return httpService.post(`${CMSApiPrefix()}/curriculum/${data.curriculumId}/copy`, data);
   }
 
   /**

@@ -92,7 +92,7 @@ const TenantDetailLearningRoleMenuMappingModalComponent: FC<any> = ({
             }
           }
           const payload = {
-            roleId: roleId,
+            roleId,
             body: {
               addTenantMappingMenuIds: [...contents],
               removeTenantMappingMenuIds: [],
@@ -131,7 +131,7 @@ const TenantDetailLearningRoleMenuMappingModalComponent: FC<any> = ({
           allChildren.push(node);
 
           const payload = {
-            roleId: roleId,
+            roleId,
             body: {
               addTenantMappingMenuIds: [],
               removeTenantMappingMenuIds: allChildren.map((item: any) => item.tenantMappingMenuId),
@@ -244,7 +244,7 @@ const TenantDetailLearningRoleMenuMappingModalComponent: FC<any> = ({
                 <div className={layoutStyles.inner_contents}>
                   <DndTreeView
                     treeId="mapping-menu-tree"
-                    type={'DRAG_DROP'}
+                    type={'TREE_TO_TREE'}
                     data={tenantMenuTree}
                     // nodeButtons={renderBaseSelectButtons}
                     // selectedNode={selectedNode}
