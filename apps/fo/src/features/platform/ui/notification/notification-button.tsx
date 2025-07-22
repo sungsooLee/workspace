@@ -120,7 +120,7 @@ const NotificationComponent = ({ userUUID }: any) => {
     <div className={styles.alarm_info}>
       <Popover popoverContent={<PopoverContent />} side="bottom" align="end" sideOffset={5}>
         <span className={styles.alarm_info22}>
-          <IcoBell02 width={20} height={20} stroke="#131C30" />
+          <IcoBell02 width={24} height={24} stroke="#131C30" />
           <em className={styles.noti}></em>
         </span>
       </Popover>

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useRouter } from '@tanstack/react-router';
 
 import { Popover } from '@learnway/ui';
-import { IcoMenu01, IcoXclose } from '@learnway/icons';
+import { IcoMenu02 } from '@learnway/icons';
 
 import { CategoryNavigationPopover } from '../category-navigation-popover/category-navigation-popover';
 
@@ -31,14 +31,13 @@ export const CategoryButton = ({ onOpenChange, isOpen }: CategoryPopoverProps) =
         popoverContent={<CategoryNavigationPopover isOpen={isOpen} />}
         side="bottom"
         align="start"
-        sideOffset={15}>
-        {/* <Button onlyIcon className={`${styles.btn_category} ${isOpen ? styles.active : ''}`}> */}
+        sideOffset={15}
+      >
         {isOpen ? (
-          <IcoXclose width={24} height={24} stroke="#ffffff" />
+          <IcoMenu02 width={32} height={32} fill="#4D88FF" />
         ) : (
-          <IcoMenu01 width={24} height={24} stroke="#131C30" />
+          <IcoMenu02 width={32} height={32} fill="#131416" />
         )}
-        {/* </Button> */}
       </Popover>
     </div>
   );

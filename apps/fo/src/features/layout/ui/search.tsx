@@ -7,16 +7,21 @@ import { IcoSearch } from '@learnway/icons';
 import { SearchPopover } from './search-popover';
 import { AutoCompletePopover } from './auto-complete-popover';
 
+import searchImage from '@learnway/styles/fo/assets/images/common/logo_symbol.png';
+
 const SearchCompoment = () => {
   const [searchPopover, setSearchPopover] = useState<boolean>(false);
   const [autoCompletePopover, setAutoCompletePopover] = useState<boolean>(false);
 
   return (
     <div className={`${styles.start} ${styles.search}`}>
+      <i>
+        <img src={searchImage} alt="" />
+      </i>
       <Input placeholder="검색어를 입력해주세요." type="text" />
-      <Button aria-label="search">
+      {/* <Button aria-label="search">
         <IcoSearch width={20} height={20} stroke="#131C30" />
-      </Button>
+      </Button> */}
 
       {/* 최근, 추천, 인기 popover */}
       {searchPopover && <SearchPopover className={styles.search_popover} />}
