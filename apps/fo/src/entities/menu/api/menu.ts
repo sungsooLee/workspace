@@ -1,11 +1,12 @@
 import { httpService, objectToQueryString } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
-import type { Menu } from '@learnway/auth/types';
+import type { Menu, Role } from '@learnway/auth/types';
 
 export default class MenuService {
-  static getMenus(tenantId: number, isMobile: boolean): Promise<any> {
+  static getMenus(tenantId: number, roles: Role[], isMobile: boolean): Promise<any> {
     const url = objectToQueryString(`${PMSApiPrefix()}/menus/tenantTree`, {
       tenantId,
+      roleIds: roles.map((r) => r.roleId).join(','),
       deviceType: isMobile ? 'mobile' : 'pc',
     });
     return httpService.get<Menu>(url);

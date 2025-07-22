@@ -2,7 +2,7 @@ import { getQuerySkipToken, convertHierarchyNode, getRandomId } from '@learnway/
 import { isMobile } from 'react-device-detect';
 
 import MenuService from '../api/menu';
-import { Menu } from '@learnway/auth/types';
+import { Menu, Role } from '@learnway/auth/types';
 
 export const queryKeys = {
   all: ['menus'] as const,
@@ -11,12 +11,15 @@ export const queryKeys = {
 };
 
 export const queryOptions = {
-  all: (tenantId?: number) =>
-    tenantId //&& params?.roleIds
+  all: (tenantId?: number, roles?: Role[]) =>
+    tenantId && roles
       ? {
           queryKey: queryKeys.all,
           queryFn: async () => {
-            const data = await MenuService.getMenus(tenantId, isMobile);
+            // 테넌트에 종속된 역할 ID 추출
+            const currentTenantRoles = roles.filter((r) => r.tenantId === tenantId);
+            if (!currentTenantRoles) return [];
+            const data = await MenuService.getMenus(tenantId, currentTenantRoles, isMobile);
 
             return convertHierarchyNode(
               data?.children,

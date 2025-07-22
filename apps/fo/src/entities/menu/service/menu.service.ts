@@ -12,7 +12,7 @@ import { HookData } from '../../../types';
  */
 export function useMenuHierarchy(): HookData<{ menus: Menu[]; eventMenus: Menu[] }> {
   const { data: authUser } = useFetchAuthUser();
-  const { data } = useFetchMenus(authUser?.activeTenant?.tenantId);
+  const { data } = useFetchMenus(authUser?.activeTenant?.tenantId, authUser?.roles);
 
   return {
     data: useCreation(() => {

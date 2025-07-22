@@ -3,9 +3,10 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { convertHierarchyToList } from '@learnway/shared';
 
 import { queryOptions } from './menu.queries';
+import { Role } from '@learnway/auth/types';
 
-export function useFetchMenus(tenantId?: number) {
-  return useQuery(queryOptions.all(tenantId));
+export function useFetchMenus(tenantId?: number, roles?: Role[]) {
+  return useQuery(queryOptions.all(tenantId, roles));
 }
 
 export function useFetchMenu({ menuId }: { menuId: number }) {

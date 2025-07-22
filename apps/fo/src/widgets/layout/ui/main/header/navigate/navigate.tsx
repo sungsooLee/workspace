@@ -7,7 +7,7 @@ import { Link, useRouterState } from '@tanstack/react-router';
 import { IcoArrow, IcoArrowForward } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 
-import { useMenuHierarchy } from '../../../../../../entities/menu';
+import { useMenuHierarchy } from '@entities/menu';
 
 import styles from './navigate.module.css';
 import { Carousel } from '@learnway/ui';
