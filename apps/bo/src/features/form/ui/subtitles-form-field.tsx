@@ -4,6 +4,7 @@ import {
   CODE_GROUP,
   S3_PATH,
   S3UploaderConfig,
+  useFileManager,
   useFormOptions,
   useS3Uploader,
 } from '@learnway/hooks';
@@ -46,16 +47,25 @@ const SubTitlesFormFieldComponent = forwardRef<HTMLDivElement, SubtitlesFormFiel
       maxFileCount,
       maxFileSize,
     });
+    const { getFileInfo } = useFileManager();
 
     const options = useFormOptions(undefined, {
       codeGroup: CODE_GROUP['pms.multilingual.LangCountryCode'],
     });
 
-    const [newLang, setNewLang] = useState<string>(getDefaultLang().toUpperCase());
+    const [newLangCode, setNewLangCode] = useState<string>(getDefaultLang().toUpperCase());
+
+    async function fetchFileInfo(uuid: string[]) {
+      const fileInfos = await Promise.all(uuid.map(getFileInfo));
+      onFetch(fileInfos);
+    }
 
     useEffect(() => {
-      //value로 onFetch, groupUuid초기화
-    }, []);
+      console.log('🚀 ~ SubTitlesFormFieldComponent ~ value:', value);
+      if (value.length > 0 && files.length === 0) {
+        fetchFileInfo(value.map(({ subtitleFileUuid }) => subtitleFileUuid));
+      }
+    }, [value]);
 
     const clickedSubtitleRef = useRef<string>('');
 
@@ -71,12 +81,12 @@ const SubTitlesFormFieldComponent = forwardRef<HTMLDivElement, SubtitlesFormFiel
         onChange([
           ...value,
           {
-            languageCode: newLang,
+            languageCode: newLangCode,
             subtitleFileUuid: newSubtitle.fileUuid!,
             subtitleName: newSubtitle.fileName,
           },
         ]);
-        setNewLang(getDefaultLang().toUpperCase());
+        setNewLangCode(getDefaultLang().toUpperCase());
       } else {
         onChange(
           value.map((subtitle) =>
@@ -157,8 +167,8 @@ const SubTitlesFormFieldComponent = forwardRef<HTMLDivElement, SubtitlesFormFiel
           <Dropdown
             className={dynamicFormStyles.short}
             options={options}
-            value={newLang}
-            onChange={(code) => setNewLang(code)}
+            value={newLangCode}
+            onChange={(code) => setNewLangCode(code)}
           />
           <Input type="text" placeholder={t('자막추가 버튼을 클릭하여 자막 파일을 등록하세요.')} />
           <Button
