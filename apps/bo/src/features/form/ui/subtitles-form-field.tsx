@@ -12,11 +12,11 @@ import { Button, ContentsRow, Dropdown, Input } from '@learnway/ui';
 import { t } from 'i18next';
 import { IcoDelete04 } from '@learnway/icons';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
-import { VideoSubtitles } from '@types';
+import { VideoSubtitle } from '@types';
 import { map } from 'lodash';
 import { getDefaultLang } from '@learnway/shared';
 
-interface SubtitlesFormFieldProps extends BaseFormFieldProps<VideoSubtitles[]> {
+interface SubtitlesFormFieldProps extends BaseFormFieldProps<VideoSubtitle[]> {
   uploadConfig?: S3UploaderConfig;
 }
 
