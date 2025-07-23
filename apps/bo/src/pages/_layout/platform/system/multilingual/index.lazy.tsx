@@ -103,24 +103,24 @@ function RouteComponent() {
   const gridStateRef = useRef<any>(null); // 그리드 상태 저장용
 
   // 커스텀 훅을 사용한 간단한 변경사항 확인
-  const { confirmChanges } = useUnsavedChangesConfirm(originalDataRef.current, data?.content, {
-    compareFields: ['targetLanguage'], // 비교할 필드 지정
-    deepCompare: false,
-    confirmFunction: confirm,
-    confirmOptions: {
-      title: t('LABEL.confirm.unsaved.title'),
-      content: t('LABEL.confirm.unsaved.message'),
-    },
-  });
+  // const { confirmChanges } = useUnsavedChangesConfirm(originalDataRef.current, data?.content, {
+  //   compareFields: ['targetLanguage'], // 비교할 필드 지정
+  //   deepCompare: false,
+  //   confirmFunction: confirm,
+  //   confirmOptions: {
+  //     title: t('LABEL.confirm.unsaved.title'),
+  //     content: t('LABEL.confirm.unsaved.message'),
+  //   },
+  // });
 
   const withUnsavedChangesCheck = useCallback(
     <T extends any[]>(action: (...args: T) => void | Promise<void>) => {
       return async (...args: T) => {
-        if (!(await confirmChanges())) return;
+        // if (!(await confirmChanges())) return;
         await action(...args);
       };
     },
-    [confirmChanges],
+    [],
   );
 
   const wrappedGridConfig = useMemo(() => {
@@ -128,19 +128,19 @@ function RouteComponent() {
     return {
       ...gConfig,
       onStateChange: async (state: any) => {
-        if (!(await confirmChanges())) return;
+        // if (!(await confirmChanges())) return;
         gridStateRef.current = state; // 그리드 상태 저장
         setShouldUpdateOriginalData(true); // 소트 후 새 데이터로 originalData 업데이트
         originalOnStateChange?.(state);
       },
     };
-  }, [gConfig, confirmChanges]);
+  }, [gConfig]);
 
   /**
    * @param data
    */
   const handleOnSearch = async (form: any) => {
-    if (!(await confirmChanges())) return;
+    // if (!(await confirmChanges())) return;
     setCurrentTargetLocale(getValues('targetLocale'));
     originalDataRef.current = null; // 검색 시 즉시 초기화
     setShouldUpdateOriginalData(true); // 검색 시 originalData 업데이트 허용
@@ -339,7 +339,7 @@ function RouteComponent() {
           <SearchBox
             provider={sProvider}
             onSearch={handleOnSearch}
-            onBeforeSubmit={confirmChanges}
+            // onBeforeSubmit={confirmChanges}
           />
           <Divider />
           <TableBox
