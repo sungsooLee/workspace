@@ -3,7 +3,7 @@
   &.avatar_area {
     @apply min-w-[360px] rounded-[8px] border border-solid border-[var(--gray3)] bg-[var(--white)] shadow-[0px_2px_10px_rgba(0,0,0,0.08)];
     .profile_info {
-      @apply pb-[32px] pt-[36px];
+      @apply p-[32px];
       .avatar_img {
         @apply m-auto text-center;
         .start {

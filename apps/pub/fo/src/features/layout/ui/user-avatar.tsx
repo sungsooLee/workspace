@@ -33,35 +33,12 @@ const PopoverContent = () => {
 
   return (
     <div className={`${styles.start} ${styles.avatar_area}`}>
-      <div className="title_area">
-        <h2>내정보</h2>
-        <Popover.Close asChild>
-          <Button
-            variant="ghost"
-            size="ts"
-            onlyIcon={true}
-            icon={<IcoXclose width={24} height={24} stroke="#131416" />}
-          />
-        </Popover.Close>
-      </div>
       <div className={styles.profile_info}>
         <div className={styles.avatar_img}>
-          {/* 퍼블수정 20250318 : 아바타 사진 수정 */}
-          {hasAvataImage ? (
-            <div className={styles.avatar_box}>
-              {/* <span className={cn(fallbackStyles.fallback, styles.name)}>
-                <em className={cn(fallbackStyles.fallback, styles.text)}>{'김'}</em>
-              </span> */}
-              <Avatar imageUrl="https://github.com/shadcn.png" className={styles.info_avata} />
-            </div>
-          ) : (
-            // 아바타 이미지 없는 경우 CASE
-            <div className={styles.avatar_box}>
-              <span className={cn(fallbackStyles.fallback, styles.name)}>
-                <em className={cn(fallbackStyles.fallback, styles.text)}>{'김'}</em>
-              </span>
-            </div>
-          )}
+          {/* 이미지일경우 */}
+          <Avatar imageUrl="https://github.com/shadcn.png" size="2xl" />
+          {/* 텍스트일경우 */}
+          {/* <Avatar fallback="AB" size="2xl" /> */}
         </div>
         <div className={styles.profile}>
           <span className={styles.name}>김현대</span>
