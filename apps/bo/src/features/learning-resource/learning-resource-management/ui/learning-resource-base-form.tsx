@@ -134,7 +134,7 @@ const LearningResourceBaseFormComponent = ({
               }}
               transformModalData={(data: User) => ({
                 coordinatorUuid: data.uuid,
-                coordinatorName: `${data.name}/${data?.dept?.deptName}/${data?.company?.name}`,
+                coordinatorName: data.name, // `${data.name}/${data?.dept?.deptName}/${data?.company?.name}`,
                 coordinatorTelNo: data.phoneNumber,
               })}
             />
