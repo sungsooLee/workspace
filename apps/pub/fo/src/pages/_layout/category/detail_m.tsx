@@ -55,12 +55,6 @@ function RouteComponent() {
   // 필터 선택된 값이 있으면 true 변경
   const [selectCheck, setSelectCheck] = useState(true);
 
-  // pagenation
-  const [page, setPage] = React.useState(1);
-  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
-    setPage(value);
-  };
-
   // 썸네일 list (가로형, 세로형) 변경
   const [direction, setDirection] = useState('vertical');
   const list_ui = () => {
@@ -380,9 +374,12 @@ function RouteComponent() {
           {/* pagination */}
           <Pagination
             className={cn(styles.pagenation, styles.paginationItem)}
-            count={3}
-            page={page}
-            onChange={handlePageChange}
+            pageNumber={0}
+            totalPages={5}
+            hidePageSizeOptions={true}
+            hidePageInfo={true}
+            showFirstButton={false}
+            showLastButton={false}
           />
         </div>
       </div>

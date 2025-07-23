@@ -82,6 +82,28 @@
         }
       }
     }
+    &:has([class*='learning_header']) {
+      .content_body {
+        @apply !pt-0;
+        [class*='header_area'] {
+          @apply pr-[40px];
+          [class*='header_info'] {
+            @apply w-auto;
+            & + [class*='header_info'] [class*='nlp--button'] {
+              @apply title4-b;
+            }
+          }
+        }
+      }
+      [class*='nlp--button'] {
+        &[aria-label='Close'] {
+          @apply top-[18px];
+          svg {
+            @apply !mx-0;
+          }
+        }
+      }
+    }
   }
   &.respon {
     @apply h-[calc(100dvh-40px)] w-[calc(100%-40px)] min-w-[1000px] max-w-[1656px] bg-[var(--secondary10)];

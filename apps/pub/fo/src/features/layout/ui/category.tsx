@@ -1,6 +1,6 @@
 import { memo, useState } from 'react';
 import { Link, useRouter } from '@tanstack/react-router';
-import { IcoMenu02, IcoXclose, IcoArrowDown, IcoArrowForward } from '@learnway/icons';
+import { IcoMenu02, IcoXclose, IcoArrowDown, IcoArrowForward, IcoArray } from '@learnway/icons';
 import { Button, useModal, ModalContainer, ModalTitle, ModalBody } from '@learnway/ui';
 import styles from './category.module.css';
 import { RecentVisits } from './recent-visits';
@@ -158,12 +158,13 @@ const CategoryCompoment = ({ isOpen }: CategoryPopupProps) => {
   return (
     <div className={styles.start}>
       <Button
+        className={styles.btn_category}
         onlyIcon={true}
         icon={
           isOpen ? (
-            <IcoMenu02 width={32} height={32} fill="#4D88FF" />
+            <IcoArray width={24} height={14} fill="#fff" stroke="#131416" />
           ) : (
-            <IcoMenu02 width={32} height={32} fill="#131416" />
+            <IcoArray width={24} height={24} fill="#fff" stroke="#131416" />
           )
         }
         onClick={() =>

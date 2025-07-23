@@ -32,9 +32,9 @@
     @apply !border-[var(--gray75)];
   }
   &[class*='focused'] {
-    @apply border-[var(--blue50)];
+    @apply !border-[var(--blue50)];
   }
   &[class*='error'] {
-    @apply border-[var(--red50)];
+    @apply !border-[var(--red50)];
   }
 }
