@@ -127,21 +127,24 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
       isSuspended: false, // 재직 상태: (정직)
       // 개인 정보
       name: data.name, // 이름
-      password: 'Asdf@1234', // 임시 비밀 번호 : 대문자/소문자/특수문자/숫자 8자리 이상
+      password: 'P@ssw0rd', // 임시 비밀 번호 : 대문자/소문자/특수문자/숫자 8자리 이상
       employeeNumber: data.employeeNumber, // 사번
       birthday: data.birthday, // 생년월일
       email: data.email.fieldValue, // 아이디(이메일)
       phoneNumber: data.phoneNumber, // 휴대폰 번호
       engName: data.engName, // 영문 이름
       gender: data.userGender, // 성별
-      companyPhoneNationNumber: data.companyNumberCountryCode, // 연락처(사무실)-국가번호
+      companyPhoneNationNumber: null, // 연락처(사무실)-국가번호
       companyPhoneNumber: data.companyNumber, // 연락처(사무실)
+
       // 직군/직무: 직군 선택에 따른 직무 - 현재 공통 코드로만 존재할지 아니면 따로 관리를 할지를 협의해야한다고 해서 구현 못 함.
 
-      // 계정 정보 - 해당 정보는 현재 페이지가 관리자 등록이라 고정 값임.
+      // 계정 정보
+      linkageSystem: data.hrInfoManageType !== 'MANUAL_MANAGE' ? data.hrInfoManageType : null,
+      accountStatus: null,
 
       // 로그인 및 인증 설정 정보
-      ssoType: data.isUseSso ? data.ssoTypeList : null,
+      ssoType: data.isUseSso ? data.ssoTypeList !== 'AES_Link' ? data.ssoTypeList : null : null,
       authType: data.passwordAuthType,
       twoFactorAuthType: data.twoFactorAuthType,
       foTwoFactorAuthEnabled: data.twoFactorAuthPlatformTypeList.includes('FO_PLATFORM'),
@@ -160,6 +163,10 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
       payload.isSuspended = true;
     }
 
+    if( data.hrInfoManageType === 'AUTO_MANAGE' ) {
+      payload.linkageSystem = data.linkageSystem;
+    }
+
     if( codeGroupData ) {
       Object.keys(codeGroupData[0]).forEach(key => {
         const items = codeGroupData[0][key];
@@ -169,9 +176,6 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
         }
       })
     }
-
-    // 로그인 및 인증 설정 정보
-    // if( data.isUseSso ) payload.ssoType = data.ssoTypeList;
 
     const filteredPayload = Object.fromEntries(
       Object.entries(payload).filter(([_, value]) => value !== null && value !== undefined && value !== '')
@@ -553,18 +557,26 @@ const formConfig = (): DynamicFormConfig => ({
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.HrInfoManageType'],
       },
-      disabled: true
     },
     {
       name: 'companyMemberJoinTypeList',
       type: 'checkbox-group',
       label: t('회원 가입 유형'),
-      value: [],
+      value: ['FO_PLATFORM', 'BO_PLATFORM'],
       optionsConfig: {
         codeGroup: CODE_GROUP['pms.company.CompanyMemberJoinType'],
       },
       guideText: t('수동 관리는 다수 선택할 수 있으며, 자동 관리는 하나만 선택할 수 있습니다.'),
-      disabled: true
+    },
+    {
+      name: 'linkageSystem',
+      type: 'radio-group',
+      label: t('회원 가입 유형'),
+      value: '',
+      optionsConfig: {
+        codeGroup: CODE_GROUP['pms.company.LinkageSystem'],
+      },
+      guideText: t('수동 관리는 다수 선택할 수 있으며, 자동 관리는 하나만 선택할 수 있습니다.'),
     },
     {
       name: 'accountStatus',
@@ -577,7 +589,6 @@ const formConfig = (): DynamicFormConfig => ({
         { label: '휴면(정상)', value: '3' },
         { label: '휴면(잠김)', value: '4' },
       ],
-      disabled: true
     },
 
     {

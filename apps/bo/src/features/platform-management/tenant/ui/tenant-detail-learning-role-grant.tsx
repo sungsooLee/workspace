@@ -1,4 +1,4 @@
-import { useSaveUsers } from '@entities/role';
+import { useSaveRoleUserGroups, useSaveUsers } from '@entities/role';
 import { useFetchRoleTree, useGetRoleUserGroups } from '@entities/role/service/role-manage.hook';
 import { roleManagerQueryOptions } from '@entities/role/service/role-manage.queries';
 import { transformRoleApiDataToTreeData } from '@features/platform-management/tenant/service/tenant-detail-tree.service';
@@ -16,12 +16,12 @@ import {
   TreeContainer,
   TreeNode,
   useGridBox,
-  useModal,
+  useModal, useToast,
 } from '@learnway/ui';
-import { FormRow, SectionLayout, UserGroupTabsChoiceModal } from '@shared/ui';
+import { FormRow, SectionLayout, UserGroupChoiceModal, UserGroupTabsChoiceModal } from '@shared/ui';
 import { useRouterState } from '@tanstack/react-router';
 import { createColumnHelper, Table } from '@tanstack/react-table';
-import { EnFormMode } from '@types';
+import { CombineUserGroup, EnFormMode } from '@types';
 import { t } from 'i18next';
 import React, { forwardRef, useEffect, useState } from 'react';
 import { FieldValues } from 'react-hook-form';
@@ -30,6 +30,8 @@ import { TenantDetailLearningRoleGrantUserShuttleModal } from './tenant-detail-l
 
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import styles from '@learnway/styles/bo/features/role/role-info.module.css';
+import { IcoMinus, IcoPlus } from '@learnway/icons';
+import RoleManagerService from '@entities/role/api/role-manager';
 
 /**
  * 화면번호:
@@ -41,15 +43,18 @@ import styles from '@learnway/styles/bo/features/role/role-info.module.css';
  */
 const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, ref: any) => {
   const routerState = useRouterState();
-  const { open: openModal, alert } = useModal();
+  const { open: openModal, alert, confirm: openConfirm } = useModal();
+  const { open: openToast } = useToast();
 
   const [roleTree, setRoleTree] = useState<any>(null);
   const [selectedRole, setSelectedRole] = useState<any>(null);
   const [formMode, setFormMode] = useState<EnFormMode>(EnFormMode.NONE);
   const [searchKeyword, setSearchKeyword] = useState('');
   const [searchColumn, setSearchColumn] = useState('');
-  const [roleGroup, setRoleGroup] = useState([]);
   const [tableInstance, setTableInstance] = useState<Table<any>>();
+  const [isDisabled, setIsDisabled] = useState<boolean>(false);
+  const [isRoleUserGroup, setIsRoleUserGroup] = useState<boolean>(true);
+  const [userGroup, setUserGroup] = useState<any>();
 
   const tenantId = routerState.location.state?.tenantId;
   const tenantName = routerState.location.state?.tenantName;
@@ -75,15 +80,13 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
   };
 
   // const { provider: sProvider, getValues } = useSearchBox(searchConfig);
-  const { provider, onSubmit, clearFormError, updateFormData, onFormChange } =
+  const { provider, onSubmit, clearFormError, updateFormData, onFormChange, getValues } =
     useDynamicForm(formConfig());
   const { config, gridFetch } = useGridBox(gridConfig, getGridParams);
 
   const { data: roleData } = useFetchRoleTree(tenantId, siteScope);
-  const { data: roleGroupData, refetch: roleGroupRefetch } = useGetRoleUserGroups(
-    selectedRole?.roleId,
-  );
   const { saveUsersRole: saveRoleUsers } = useSaveUsers({});
+  const { saveRoleUserGroups } = useSaveRoleUserGroups({})
 
   const handleOnSearch = () => {
     if (formMode === EnFormMode.VIEW) {
@@ -91,7 +94,7 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
     }
   };
 
-  const handleRoleSelect = (node: TreeNode) => {
+  const handleRoleSelect = async (node: TreeNode) => {
     if (node.key !== 'root') {
       setSelectedRole(node);
       //검색 영역 초기회
@@ -99,7 +102,9 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
       setSearchColumn('');
       gridFetch({ roleId: node.roleId });
       setFormMode(EnFormMode.VIEW);
-      roleGroupRefetch();
+
+      const userGroupData = await RoleManagerService.fetchRoleUserGroups(node.roleId);
+      setUserGroup(userGroupData);
     }
   };
   const handleUserAddButtonClick = async () => {
@@ -150,6 +155,21 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
       });
     }
   };
+
+  const handleAddUserGroupButtonClick = async (data: any) => {
+    const payload = {
+      roleId: selectedRole.roleId,
+      body: {
+        addUserGroupIds: data.flatMap((groups: any) => groups.combiners).map( (combiner: any) => combiner.combineValue),
+      }
+    }
+    saveRoleUserGroups(payload, {
+      onSuccess: () => {
+        openToast({ title: '유저그룸 역할부여 추가 했습니다.', type: 'success', });
+      }
+    })
+  }
+
   useEffect(() => {
     if (roleData) {
       const transformedData = transformRoleApiDataToTreeData(roleData);
@@ -158,11 +178,30 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
   }, [roleData]);
 
   useEffect(() => {
-    if (roleGroupData) {
-      console.log('roleGroupData', roleGroupData);
-      setRoleGroup(roleGroupData);
+    if( userGroup ) {
+      // 임시 설정
+      const groups: any[] = []
+      userGroup.forEach((group: any) => {
+        groups.push(
+          {
+            pathKey: `${tenantId}-${group.userGroupId}`,
+            pathValue: `ROOT > ${tenantName}`,
+            combiners: [
+              {
+                combineType: "USER_GROUP",
+                combineValue: group.userGroupId,
+                combineName: group.userGroupName,
+              }
+            ]
+          }
+        );
+      })
+
+      console.log(groups)
+      setIsRoleUserGroup(false)
+      updateFormData({userGroup: groups})
     }
-  }, [roleGroupData]);
+  }, [userGroup]);
 
   return (
     <SectionLayout contentsRatio={'thirty'}>
@@ -183,10 +222,6 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
           <div className={formStyles.form_item}>
             <label htmlFor="name-id" className={formStyles.form_label} style={{ marginBottom: 20 }}>
               <span className={formStyles.form_text}>{t('개별사용자 역할부여')}</span>
-              {/* 필수 케이스 */}
-              {/* <span className={cn(formStyles.status, formStyles.required)}>
-                <IcoFormRequired width={12} height={12} />
-              </span> */}
             </label>
             <GridBox
               config={config}
@@ -196,10 +231,13 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
               multiple
               showNumberingColumn
               onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
-              showAdd
-              onAddClick={handleUserAddButtonClick}
-              showRemove
-              onRemoveClick={handleDeleteButtonClick}
+              onRowSelect={(row) => {
+                if (row) {
+                  setIsDisabled(true);
+                } else {
+                  setIsDisabled(false);
+                }
+              }}
               customButtonNode={
                 <>
                   <Dropdown
@@ -233,6 +271,27 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
                     disabled={EnFormMode.NONE === formMode}
                     onClick={handleBatchClick}
                   />
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    icon={<IcoPlus width={16} height={16} stroke={'#4C515E'} />}
+                    label={t('LABEL.grid.header.add', '추가')}
+                    onClick={handleUserAddButtonClick}
+                  />
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    label={t('LABEL.grid.header.remove', '삭제')}
+                    icon={<IcoMinus width={16} height={16} stroke={'#131C30'} />}
+                    disabled={!isDisabled}
+                    onClick={(e) => {
+                      openConfirm({
+                        title: t('삭제'),
+                        content: t('선택한 정보는 삭제됩니다.'),
+                        onClose: handleDeleteButtonClick
+                      });
+                    }}
+                  />
                 </>
               }
             />
@@ -246,7 +305,6 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
                       <ChipListModalSelectorFormField
                         showAddButton
                         chipList={{
-                          showInput: false,
                           labelField: 'pathValue',
                           valueField: 'pathKey',
                           wordwrap: true,
@@ -256,8 +314,15 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
                           width: 'xl',
                           height: 'fix',
                           content: <UserGroupTabsChoiceModal tenantIds={[tenantId]} />,
+                          onClose: handleAddUserGroupButtonClick
                         }}
-                        actionNode={<Button variant="text" label={t('대상자')} />}
+                        actionNode={
+                          <Button
+                            variant="text"
+                            label={t('대상자')}
+                            disabled={isRoleUserGroup}
+                          />
+                        }
                       />
                     }
                   />
