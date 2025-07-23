@@ -118,7 +118,7 @@ function RouteComponent() {
             <div className={styles.proposal_txt}>
               <strong>제안</strong>
               <p>"파이씬" 로 검색한 결과입니다.</p>
-              <Link to="">'파이썬' 검색결과 보기</Link>
+              <Link to={'/'}>'파이썬' 검색결과 보기</Link>
             </div>
           </div>
         </div>

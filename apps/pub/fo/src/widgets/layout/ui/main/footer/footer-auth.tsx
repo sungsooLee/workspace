@@ -9,13 +9,13 @@ function FooterAuthComponent() {
       <div className={styles.footer_area}>
         <ul className={styles.menu_list}>
           <li>
-            <Link to={''}>이용약관</Link>
+            <Link to={'/'}>이용약관</Link>
           </li>
           <li>
-            <Link to={''}>개인정보처리 방침</Link>
+            <Link to={'/'}>개인정보처리 방침</Link>
           </li>
           <li>
-            <Link to={''}>고객지원</Link>
+            <Link to={'/'}>고객지원</Link>
           </li>
         </ul>
         <div className={styles.copyright}>

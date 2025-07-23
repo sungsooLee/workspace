@@ -37,7 +37,7 @@ function RouteComponent() {
           </p>
 
           <div className={styles.btn_txt}>
-            <Link to="">진행현황 확인</Link>
+            <Link to={'/'}>진행현황 확인</Link>
           </div>
           {/* 아이디 찾기 결과 일때 출력 */}
 

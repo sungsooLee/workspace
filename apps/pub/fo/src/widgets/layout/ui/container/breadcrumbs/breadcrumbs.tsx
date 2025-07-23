@@ -10,28 +10,28 @@ const PopoverContent1 = () => {
     <div className={`${styles.start} ${styles.hover_menu}`}>
       <ul className={styles.menu_list}>
         <li>
-          <Link to={''} className={styles.active}>
+          <Link to={'/'} className={styles.active}>
             {/* 선택시 active */}
             전기/전차 부품
           </Link>
         </li>
         <li>
-          <Link to={''}>서브메뉴1</Link>
+          <Link to={'/'}>서브메뉴1</Link>
         </li>
         <li>
-          <Link to={''}>서브메뉴1</Link>
+          <Link to={'/'}>서브메뉴1</Link>
         </li>
         <li>
-          <Link to={''}>서브메뉴1</Link>
+          <Link to={'/'}>서브메뉴1</Link>
         </li>
         <li>
-          <Link to={''}>서브메뉴1</Link>
+          <Link to={'/'}>서브메뉴1</Link>
         </li>
         <li>
-          <Link to={''}>서브메뉴1</Link>
+          <Link to={'/'}>서브메뉴1</Link>
         </li>
         <li>
-          <Link to={''}>서브메뉴1</Link>
+          <Link to={'/'}>서브메뉴1</Link>
         </li>
       </ul>
     </div>
@@ -43,7 +43,7 @@ const PopoverContent2 = () => {
     <div className={`${styles.start} ${styles.hover_menu}`}>
       <ul className={styles.menu_list}>
         <li>
-          <Link to={''}>서브메뉴2</Link>
+          <Link to={'/'}>서브메뉴2</Link>
         </li>
       </ul>
     </div>
@@ -55,7 +55,7 @@ const PopoverContent3 = () => {
     <div className={`${styles.start} ${styles.hover_menu}`}>
       <ul className={styles.menu_list}>
         <li>
-          <Link to={''}>서브메뉴3</Link>
+          <Link to={'/'}>서브메뉴3</Link>
         </li>
       </ul>
     </div>
@@ -73,7 +73,8 @@ function BreadcrumbsComponent() {
             className={styles.btn_menu}
             side="bottom"
             align="start"
-            sideOffset={10}>
+            sideOffset={10}
+          >
             <span className={styles.select}>{'서비스1'}</span>
             <i className={styles.stats}>
               <IcoArrowDown width={16} height={16} stroke="#6F798B" />
@@ -88,7 +89,8 @@ function BreadcrumbsComponent() {
             className={styles.btn_menu}
             side="bottom"
             align="start"
-            sideOffset={10}>
+            sideOffset={10}
+          >
             <span className={styles.select}>{'서비스2'}</span>
             <i className={styles.stats}>
               <IcoArrowDown width={16} height={16} stroke="#6F798B" />
@@ -103,7 +105,8 @@ function BreadcrumbsComponent() {
             className={styles.btn_menu}
             side="bottom"
             align="start"
-            sideOffset={10}>
+            sideOffset={10}
+          >
             <span className={styles.select}>{'서비스3'}</span>
             <i className={styles.stats}>
               <IcoArrowDown width={16} height={16} stroke="#6F798B" />

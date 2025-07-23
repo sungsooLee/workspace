@@ -58,7 +58,7 @@ const LanguageComponent = ({ className }: LanguageComponentProp) => {
     <>
       {/* 퍼블수정 20250321 : 언어 분기처리 (pc,mobile) */}
       {isMobile ? (
-        <Link to="" className={`${styles.btn_language} ${className}`}>
+        <Link to={'/'} className={`${styles.btn_language} ${className}`}>
           <IcoLang className={styles.ic_lang} />
           <span className={styles.select}>{'KR'}</span>
           <IcoArrowDown width={16} height={16} stroke="#131C30" />

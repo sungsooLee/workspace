@@ -82,14 +82,14 @@ const PopoverContent = () => {
           >
             개인정보 변경
           </Button>
-          {/* <Link to={''}>개인정보 변경</Link> */}
+          {/* <Link to={'/'}>개인정보 변경</Link> */}
         </li>
         <li>
-          <Link to={''}>프로필 작성</Link>
+          <Link to={'/'}>프로필 작성</Link>
         </li>
         {/* 퍼블수정 20250328 : 로그인 설정 추가 */}
         <li>
-          <Link to="">SNS 로그인 설정</Link>
+          <Link to={'/'}>SNS 로그인 설정</Link>
         </li>
       </ul>
       <Button className={styles.btn_log} variant="text" onClick={() => handleClickAlert2()}>

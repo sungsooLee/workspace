@@ -43,7 +43,7 @@ function RouteComponent() {
           </div>
 
           <div className={styles.btn_txt}>
-            <Link to="">비밀번호 찾기</Link>
+            <Link to={'/'}>비밀번호 찾기</Link>
           </div>
         </div>
         {/* 결과모듈 */}

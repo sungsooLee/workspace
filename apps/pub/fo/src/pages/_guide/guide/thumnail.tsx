@@ -49,7 +49,7 @@ function RouteComponent() {
               )}
             >
               {/* link (찜 기능과 겹침으로 따로 빠짐) */}
-              <Link to="" className={thumnailStyles.link}></Link>
+              <Link to={'/'} className={thumnailStyles.link}></Link>
 
               <div className={thumnailStyles.thumnail_box}>
                 {/* img */}
@@ -178,7 +178,7 @@ import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_
   )}
 >
   {/* link (찜 기능과 겹침으로 따로 빠짐) */}
-  <Link to="" className={thumnailStyles.link}></Link>
+  <Link to={'/'} className={thumnailStyles.link}></Link>
 
   <div className={thumnailStyles.thumnail_box}>
     {
@@ -295,7 +295,7 @@ import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_
               )}
             >
               {/* link (찜 기능과 겹침으로 따로 빠짐) */}
-              <Link to="" className={thumnailStyles.link}></Link>
+              <Link to={'/'} className={thumnailStyles.link}></Link>
 
               <div className={thumnailStyles.thumnail_box}>
                 {/* img */}
@@ -424,7 +424,7 @@ import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_
   )}
 >
   {/* link (찜 기능과 겹침으로 따로 빠짐) */}
-  <Link to="" className={thumnailStyles.link}></Link>
+  <Link to={'/'} className={thumnailStyles.link}></Link>
 
   <div className={thumnailStyles.thumnail_box}>
     {/* img */}

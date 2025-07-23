@@ -51,7 +51,7 @@ function RouteComponent() {
               <p>
                 "파이씬" 로 검색한 결과입니다.
                 <br />
-                <Link to="">'파이썬' 검색결과 보기</Link>
+                <Link to={'/'}>'파이썬' 검색결과 보기</Link>
               </p>
             </div>
           </div>
@@ -60,7 +60,7 @@ function RouteComponent() {
           <div className={styles.result_txt}>
             <p className={styles.txt}>"파이썬" 검색결과</p>
             <p className={styles.txt2}>"파이썬" 검색어를 찾으셨습니까?</p>
-            <Link to="">'파이썬'</Link>
+            <Link to={'/'}>'파이썬'</Link>
           </div>
         </div>
       </div>
@@ -70,7 +70,7 @@ function RouteComponent() {
         <div>
           <div className={styles.tit_box}>
             <strong>과정</strong>
-            <Link to="">
+            <Link to={'/'}>
               과정 더보기
               <IcoArrowForward width={16} height={16} stroke="#131c30" />
             </Link>
@@ -82,7 +82,7 @@ function RouteComponent() {
         <div>
           <div className={styles.tit_box}>
             <strong>숏츠</strong>
-            <Link to="">
+            <Link to={'/'}>
               숏츠 더보기
               <IcoArrowForward width={16} height={16} stroke="#131c30" />
             </Link>
@@ -94,7 +94,7 @@ function RouteComponent() {
         <div>
           <div className={styles.tit_box}>
             <strong>채널</strong>
-            <Link to="">
+            <Link to={'/'}>
               채널 더보기
               <IcoArrowForward width={16} height={16} stroke="#131c30" />
             </Link>
@@ -106,7 +106,7 @@ function RouteComponent() {
         <div>
           <div className={styles.tit_box}>
             <strong>러닝랩</strong>
-            <Link to="">
+            <Link to={'/'}>
               러닝랩 더보기
               <IcoArrowForward width={16} height={16} stroke="#131c30" />
             </Link>
@@ -118,7 +118,7 @@ function RouteComponent() {
         <div>
           <div className={styles.tit_box}>
             <strong>지식공유</strong>
-            <Link to="">
+            <Link to={'/'}>
               지식공유 더보기
               <IcoArrowForward width={16} height={16} stroke="#131c30" />
             </Link>
@@ -130,7 +130,7 @@ function RouteComponent() {
         <div>
           <div className={styles.tit_box}>
             <strong>코칭</strong>
-            <Link to="">
+            <Link to={'/'}>
               코칭 더보기
               <IcoArrowForward width={16} height={16} stroke="#131c30" />
             </Link>

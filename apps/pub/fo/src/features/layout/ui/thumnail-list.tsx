@@ -39,7 +39,7 @@ const ThumnailListCompoment = ({ direction }: ThumnailListProps) => {
   return (
     <div className={cn(styles.start, styles.thumbnail, direction && styles[direction])}>
       {/* link (찜 기능과 겹침으로 따로 빠짐) */}
-      <Link to="" className={styles.link}></Link>
+      <Link to={'/'} className={styles.link}></Link>
 
       <div className={styles.thumnail_box}>
         {/* img */}

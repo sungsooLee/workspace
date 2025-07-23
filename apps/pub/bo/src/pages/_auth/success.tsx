@@ -39,7 +39,7 @@ function RouteComponent() {
           </p>
 
           <div className={styles.btn_txt}>
-            <Link to="">진행현황 확인</Link>
+            <Link to={'/'}>진행현황 확인</Link>
           </div>
         </div>
         {/* 결과모듈 */}

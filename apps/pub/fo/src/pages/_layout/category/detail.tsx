@@ -41,13 +41,13 @@ export const Route = createFileRoute('/_layout/category/detail')({
 function RouteComponent() {
   // 상단 배너 스와이퍼
   const items = [
-    <Link to="">
+    <Link to={'/'}>
       <img src={bnrCImage1} alt="" />
     </Link>,
-    <Link to="">
+    <Link to={'/'}>
       <img src={bnrCImage2} alt="" />
     </Link>,
-    <Link to="">
+    <Link to={'/'}>
       <img src={bnrCImage1} alt="" />
     </Link>,
   ];
@@ -218,7 +218,7 @@ function RouteComponent() {
                 )}
               >
                 {/* link (찜 기능과 겹침으로 따로 빠짐) */}
-                <Link to="" className={thumnailStyles.link}></Link>
+                <Link to={'/'} className={thumnailStyles.link}></Link>
 
                 <div className={thumnailStyles.thumnail_box}>
                   {/* img */}
@@ -318,7 +318,7 @@ function RouteComponent() {
                 )}
               >
                 {/* link (찜 기능과 겹침으로 따로 빠짐) */}
-                <Link to="" className={thumnailStyles.link}></Link>
+                <Link to={'/'} className={thumnailStyles.link}></Link>
 
                 <div className={thumnailStyles.thumnail_box}>
                   {/* img */}
@@ -418,7 +418,7 @@ function RouteComponent() {
                 )}
               >
                 {/* link (찜 기능과 겹침으로 따로 빠짐) */}
-                <Link to="" className={thumnailStyles.link}></Link>
+                <Link to={'/'} className={thumnailStyles.link}></Link>
 
                 <div className={thumnailStyles.thumnail_box}>
                   {/* img */}
@@ -518,7 +518,7 @@ function RouteComponent() {
                 )}
               >
                 {/* link (찜 기능과 겹침으로 따로 빠짐) */}
-                <Link to="" className={thumnailStyles.link}></Link>
+                <Link to={'/'} className={thumnailStyles.link}></Link>
 
                 <div className={thumnailStyles.thumnail_box}>
                   {/* img */}

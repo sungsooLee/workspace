@@ -42,7 +42,7 @@ function RouteComponent() {
     <div className={`${styles.start} ${styles.setting_wrap}`}>
       <ul className={styles.list}>
         <li>
-          <Link to={''}>
+          <Link to={'/'}>
             <strong>언어 설정</strong>
             <span>
               Korean
@@ -51,7 +51,7 @@ function RouteComponent() {
           </Link>
         </li>
         <li>
-          <Link to={''}>
+          <Link to={'/'}>
             <strong>SNS 로그인 설정</strong>
             <span>네이버</span>
           </Link>
@@ -65,7 +65,7 @@ function RouteComponent() {
           </div>
         </li>
         <li>
-          <Link to={''}>
+          <Link to={'/'}>
             <strong>SNS 로그인 설정</strong>
             <span>
               네이버<IcoArrowForward width={16} height={16} stroke="#131c30"></IcoArrowForward>

@@ -44,13 +44,13 @@ const NavigationPopupMComponent = () => {
             <li>
               <ul className={styles.gnb_list}>
                 <li>
-                  <Link to={''}>
+                  <Link to={'/'}>
                     <IcoReview width={20} height={20} stroke="#131c30" />
                     H-Sence
                   </Link>
                 </li>
                 <li>
-                  <Link to={''}>
+                  <Link to={'/'}>
                     <IcoMybook width={20} height={20} stroke="#131c30" />
                     법정필수교육
                   </Link>
@@ -63,10 +63,10 @@ const NavigationPopupMComponent = () => {
               </div>
               <ul className={styles.gnb_list}>
                 <li>
-                  <Link to={''}>H-Sence</Link>
+                  <Link to={'/'}>H-Sence</Link>
                 </li>
                 <li>
-                  <Link to={''}>법정필수교육</Link>
+                  <Link to={'/'}>법정필수교육</Link>
                 </li>
               </ul>
             </li>
@@ -76,10 +76,10 @@ const NavigationPopupMComponent = () => {
               </div>
               <ul className={styles.gnb_list}>
                 <li>
-                  <Link to={''}>금융자격지원제도</Link>
+                  <Link to={'/'}>금융자격지원제도</Link>
                 </li>
                 <li>
-                  <Link to={''}>SPA 승진제도</Link>
+                  <Link to={'/'}>SPA 승진제도</Link>
                 </li>
               </ul>
             </li>
@@ -89,10 +89,10 @@ const NavigationPopupMComponent = () => {
               </div>
               <ul className={styles.gnb_list}>
                 <li>
-                  <Link to={''}>안내</Link>
+                  <Link to={'/'}>안내</Link>
                 </li>
                 <li>
-                  <Link to={''}>시험일정</Link>
+                  <Link to={'/'}>시험일정</Link>
                 </li>
               </ul>
             </li>

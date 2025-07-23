@@ -74,13 +74,13 @@ const PopoverContent = () => {
       </div>
       <ul className={styles.info_list}>
         <li>
-          <Link to={''}>나의 정보</Link>
+          <Link to={'/'}>나의 정보</Link>
         </li>
         <li>
-          <Link to={''}>나의 권한</Link>
+          <Link to={'/'}>나의 권한</Link>
         </li>
         <li>
-          <Link to={''}>문의하기 ITSM</Link>
+          <Link to={'/'}>문의하기 ITSM</Link>
         </li>
       </ul>
       <div className={styles.logout_wrap}>

@@ -50,7 +50,7 @@ function RouteComponent() {
               <p>
                 "파이씬" 로 검색한 결과입니다.
                 <br />
-                <Link to="">'파이썬' 검색결과 보기</Link>
+                <Link to={'/'}>'파이썬' 검색결과 보기</Link>
               </p>
             </div>
           </div>
@@ -59,7 +59,7 @@ function RouteComponent() {
           <div className={styles.result_txt}>
             <p className={styles.txt}>"파이썬" 검색결과</p>
             <p className={styles.txt2}>"파이썬" 검색어를 찾으셨습니까?</p>
-            <Link to="">'파이썬'</Link>
+            <Link to={'/'}>'파이썬'</Link>
           </div>
         </div>
       </div>

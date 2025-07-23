@@ -163,7 +163,7 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
                                   {/* 퍼블수정 20250717 아이콘 사이즈 수정 */}
                                   <p>
                                     스콤아이템
-                                    <Link to="">
+                                    <Link to={'/'}>
                                       <IcoLink width={24} height={24} fill="#131416" />
                                     </Link>
                                   </p>
