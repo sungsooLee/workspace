@@ -10,7 +10,7 @@ import {
   PageContainer,
 } from '@shared/ui';
 import { TestPaperBasicInfoSaveRes } from '@types';
-import { getExamTemplateTextByType } from './-common/common';
+import { getExamTemplateTextByType, getQuestionGenTypeText } from './-common/common';
 import { ExamTab, PageMode } from './-common/type';
 import { useExamLoaderData } from './-hooks/use-exam-loader-data';
 import { useExamPaperForm } from './-hooks/use-exam-paper-form';
@@ -65,9 +65,7 @@ function RouteComponent() {
   const tabItems = useMemo(
     () => [
       {
-        title: t(
-          `시험지 정보${mode === PageMode.UPDATE ? `(${getExamTemplateTextByType(data?.examTemplateType)})` : ''}`,
-        ),
+        title: `${t('시험지 정보')}${mode === PageMode.UPDATE ? `(${t(getExamTemplateTextByType(data?.examTemplateType))})` : ''}`,
         key: ExamTab.PAPER,
         content: (
           <TestPaperInfo
@@ -89,7 +87,7 @@ function RouteComponent() {
         ),
       },
       {
-        title: t('문항 관리'),
+        title: `${t('문항 관리')}${data?.questionGenType ? `(${t(getQuestionGenTypeText(data?.questionGenType))})` : ''}`,
         key: ExamTab.QUESTION,
         content: (
           <QuestionInfo
