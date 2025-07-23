@@ -4,6 +4,7 @@ import {
   BlogUpdateReq,
   ContentBaseInfo,
   ContentCourseMappingParams,
+  ExamQuestionGenType,
   GetContentDetailRes,
   GetContentsParams,
   HtmlVideoFileChangeReq,
@@ -41,6 +42,7 @@ export const queryKeys = {
   blogResource: ['blog-resource'] as const,
   questionBankQuestionList: ['question-bank-question-list'] as const,
   questionBankQuestionItem: ['question-bank-question-item'] as const,
+  randomQuestionCount: (examUuid: string) => ['random-question-count', examUuid] as const,
 };
 
 export const learningResourceQueryOptions = {
@@ -141,6 +143,14 @@ export const learningResourceQueryOptions = {
           enabled: !!examQuestionUuid,
         }
       : getQuerySkipToken<QuestionItem>(),
+
+  getExamRandomQuestionCount: (examUuid: string, questionGenType: ExamQuestionGenType) => ({
+    queryKey: queryKeys.randomQuestionCount(examUuid),
+    queryFn: () => LearningResourceService.fetchExamRandomQuestionCount(examUuid),
+    cacheTime: 0,
+    staleTime: 0,
+    enabled: !!examUuid || questionGenType === ExamQuestionGenType.FIXED,
+  }),
 };
 
 export const mutateOptions = {

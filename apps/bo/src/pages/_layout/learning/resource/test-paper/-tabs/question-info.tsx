@@ -80,15 +80,12 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
       selectedQuestions,
       questionState,
       scorePerQuestion,
-      // createQuestionItem,
+      questionCreateSuccessCallback,
       updateQuestionStatus,
       randomCountUpdateData,
-      setRandomCountUpdateData,
       handleCountInputChange,
       updateQuestionRandomCount,
     } = useExamQuestionInfoInput(data as TestPaperBasicInfoDetail);
-
-    const questionFormRef = useRef<HTMLFormElement>(null);
 
     const questionGenTypeOptions = useMemo(
       () => [
@@ -115,7 +112,12 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
 
       await openModal({
         width: 'xl',
-        content: <LearningResourceTestItemModal contentInfo={data as ContentInformation} />,
+        content: (
+          <LearningResourceTestItemModal
+            contentInfo={data as ContentInformation}
+            onSuccessCallback={questionCreateSuccessCallback}
+          />
+        ),
       });
     }, [data]);
 
@@ -198,10 +200,10 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
               type="number"
               value={
                 questionGenTypeByForm === ExamQuestionGenType.RANDOM
-                  ? randomCountUpdateData[info.row.original.type].hardLevelCount
+                  ? randomCountUpdateData[info.row.original.type]?.hardLevelCount
                   : info.getValue()
               }
-              readOnly={questionGenTypeByForm === ExamQuestionGenType.FIXED}
+              disabled={questionGenTypeByForm === ExamQuestionGenType.FIXED}
               suffixText={
                 questionGenTypeByForm === ExamQuestionGenType.RANDOM ? `/ ${info.getValue()}` : ''
               }
@@ -222,10 +224,10 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
               type="number"
               value={
                 questionGenTypeByForm === ExamQuestionGenType.RANDOM
-                  ? randomCountUpdateData[info.row.original.type].mediumLevelCount
+                  ? randomCountUpdateData[info.row.original.type]?.mediumLevelCount
                   : info.getValue()
               }
-              readOnly={questionGenTypeByForm === ExamQuestionGenType.FIXED}
+              disabled={questionGenTypeByForm === ExamQuestionGenType.FIXED}
               suffixText={
                 questionGenTypeByForm === ExamQuestionGenType.RANDOM ? `/ ${info.getValue()}` : ''
               }
@@ -246,10 +248,10 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
               type="number"
               value={
                 questionGenTypeByForm === ExamQuestionGenType.RANDOM
-                  ? randomCountUpdateData[info.row.original.type].easyLevelCount
+                  ? randomCountUpdateData[info.row.original.type]?.easyLevelCount
                   : info.getValue()
               }
-              readOnly={questionGenTypeByForm === ExamQuestionGenType.FIXED}
+              disabled={questionGenTypeByForm === ExamQuestionGenType.FIXED}
               suffixText={
                 questionGenTypeByForm === ExamQuestionGenType.RANDOM ? `/ ${info.getValue()}` : ''
               }
@@ -265,7 +267,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
           },
         }),
       ];
-    }, [questionGenTypeByForm]);
+    }, [questionGenTypeByForm, randomCountUpdateData]);
 
     const questionListColumns = useMemo(() => {
       const columnHelper = createColumnHelper<QuestionItemGridRow>();
@@ -412,47 +414,45 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
         </ContentsRow>
 
         <ContentsRow>
-          <form ref={questionFormRef}>
-            <div className={styles.table_wrap}>
-              <GridBox
-                title=" "
-                data={questionStates}
-                columns={questionSummaryColumns}
-                showTotalCount={false}
-                disabledSelectionToggle
-                tableMode
-                titleCustomNode={
-                  <div className="custom_info_wrap">
-                    <strong className="table_tit text-[1.4rem] font-normal">{t('문항현황')}</strong>
-                    <strong className="table_tit text-[1.4rem] font-normal">
-                      {t('시험지 문항수')}
-                    </strong>
-                    <span className="count_info text-[1.4rem]">{data?.questionCount}</span>
-                    <strong className="table_tit text-[1.4rem] font-normal">
-                      {t('선택 문항수')}
-                    </strong>
-                    <span
-                      className={cn(
-                        'count_info text-[1.4rem]',
-                        data?.questionCount !== selectedQuestions.length ? 'point' : '',
-                      )}
-                    >
-                      {selectedQuestions.length}
-                    </span>
-                    <strong className="table_tit text-[1.4rem] font-normal">
-                      {t('문항 당 배점')}
-                    </strong>
-                    <span className="count_info text-[1.4rem]">{scorePerQuestion}</span>
-                  </div>
-                }
-                className={styles.info_table}
-                showGuideTextNextLine
-                guideText={questionStatusGuideText}
-                showErrorMessageBesideGuideText={data?.questionCount !== selectedQuestions.length}
-                errorMessageBesideGuideText={t('시험지 문항수와 선택 문항수는 동일해야 합니다.')}
-              />
-            </div>
-          </form>
+          <div className={styles.table_wrap}>
+            <GridBox
+              title=" "
+              data={questionStates}
+              columns={questionSummaryColumns}
+              showTotalCount={false}
+              disabledSelectionToggle
+              tableMode
+              titleCustomNode={
+                <div className="custom_info_wrap">
+                  <strong className="table_tit text-[1.4rem] font-normal">{t('문항현황')}</strong>
+                  <strong className="table_tit text-[1.4rem] font-normal">
+                    {t('시험지 문항수')}
+                  </strong>
+                  <span className="count_info text-[1.4rem]">{data?.questionCount}</span>
+                  <strong className="table_tit text-[1.4rem] font-normal">
+                    {t('선택 문항수')}
+                  </strong>
+                  <span
+                    className={cn(
+                      'count_info text-[1.4rem]',
+                      data?.questionCount !== selectedQuestions.length ? 'point' : '',
+                    )}
+                  >
+                    {selectedQuestions.length}
+                  </span>
+                  <strong className="table_tit text-[1.4rem] font-normal">
+                    {t('문항 당 배점')}
+                  </strong>
+                  <span className="count_info text-[1.4rem]">{scorePerQuestion}</span>
+                </div>
+              }
+              className={styles.info_table}
+              showGuideTextNextLine
+              guideText={questionStatusGuideText}
+              showErrorMessageBesideGuideText={data?.questionCount !== selectedQuestions.length}
+              errorMessageBesideGuideText={t('시험지 문항수와 선택 문항수는 동일해야 합니다.')}
+            />
+          </div>
         </ContentsRow>
 
         <ContentsRow>
@@ -485,6 +485,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
                   <GridExcelDownloadButton
                     method="post"
                     url={`${CMSApiPrefix()}/exam/questions/${data?.examPoolUuid}/download`}
+                    params={{}}
                   />
                   <Button
                     variant="text"
