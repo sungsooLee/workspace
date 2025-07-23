@@ -111,3 +111,8 @@ export interface LearningSequence {
   isAutoeverTenantCustomOption: boolean;
   tenantCustoms: Array<any>;
 }
+
+export interface LearningSequenceCombo {
+  courseSequenceId: number;
+  courseSequenceName: string;
+}

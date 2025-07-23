@@ -47,9 +47,11 @@ import { useCreateQuestionItem, useGetQuestionItem } from '@entities/learning-re
 const LearningResourceTestItemModalComponent = ({
   contentInfo,
   questionItemGridRow,
+  onSuccessCallback,
 }: {
   contentInfo: ContentInformation & { examPoolUuid?: string };
   questionItemGridRow?: QuestionItemGridRow;
+  onSuccessCallback?: () => void | Promise<void>;
 }) => {
   const { close, confirm: openConfirm } = useModal();
   const [disabledButton, setDisabledButton] = useState(false);
@@ -65,12 +67,12 @@ const LearningResourceTestItemModalComponent = ({
   const { data: rowData } = useGetQuestionItem(questionItemGridRow?.examQuestionUuid);
   const { create: createQuestionItem } = useCreateQuestionItem();
 
-  console.log('questionItemGridRow', questionItemGridRow);
+  // console.log('questionItemGridRow', questionItemGridRow);
   const imageTypeWatch = useWatch({ control: provider.control, name: 'imageType' });
   const attachImageWatch = useWatch({ control: provider.control, name: 'fileUuid' });
   const questionTypeWatch = useWatch({ control: provider.control, name: 'questionType' });
 
-  const handleDelteButtonClick = () => {
+  const handleDeleteButtonClick = () => {
     console.log('delete button click');
   };
 
@@ -81,21 +83,41 @@ const LearningResourceTestItemModalComponent = ({
     }
   };
   const handleSubmit = async (data: any) => {
-    const { fileAttacted, ...removeData } = data;
+    const { fileAttached, ...restData } = data;
+
+    if (
+      questionTypeWatch === EnQuestionType.ESSAY &&
+      Object.keys(restData).includes('examOptionText')
+    ) {
+      delete restData.examOptionText;
+    }
+
+    for (const [i, option] of restData.options.entries()) {
+      option.sortSeq = i + 1;
+      if (questionTypeWatch === EnQuestionType.SHORT_ANSWER) {
+        option.isCorrectAnswer = true;
+      } else if (!option.isCorrectAnswer) {
+        option.isCorrectAnswer = false;
+      }
+    }
+
     const result = await openConfirm({
       title: t('저장 하시겠습니까?'),
       content: <p>{t('입력한 정보로 저장합니다.')}</p>,
     });
+
     if (result) {
       // 시험지의 경우 매핑된 문제은행 uuid를 넘겨줘야 한다.
       const paramUuid =
         contentInfo.contentType === ContentType.EXAM
           ? contentInfo?.examPoolUuid
           : contentInfo.contentUuid;
-      const questionItem = { ...removeData, contentUuid: paramUuid };
+      const questionItem = { ...restData, contentUuid: paramUuid };
       createQuestionItem(questionItem, {
         onSuccess: (data: any) => {
           console.log('ok ', data);
+
+          data && onSuccessCallback?.();
           close();
         },
         onError: (error: any) => {
@@ -104,7 +126,8 @@ const LearningResourceTestItemModalComponent = ({
       });
     }
   };
-  const updateisCorrectAnswerRadio = useCallback(
+
+  const updateIsCorrectAnswerRadio = useCallback(
     (index: number) => {
       const options = getValues('options');
       options.forEach((item: any, i: number) => {
@@ -150,7 +173,7 @@ const LearningResourceTestItemModalComponent = ({
         });
         retval.push({
           header: '첨부파일',
-          accessorKey: 'file',
+          accessorKey: 'fileUuid',
           size: 350,
           cell: (info: CellContext<any, string>) => (
             <EditSingleAttachmentCell
@@ -184,7 +207,7 @@ const LearningResourceTestItemModalComponent = ({
                     label: '정답',
                   }}
                   onCheckedChange={(event) => {
-                    updateisCorrectAnswerRadio(info.row.index);
+                    updateIsCorrectAnswerRadio(info.row.index);
                   }}
                 />
               )}
@@ -195,7 +218,7 @@ const LearningResourceTestItemModalComponent = ({
                     options: [{ label: '정답', value: true }],
                   }}
                   onValueChange={(event) => {
-                    updateisCorrectAnswerRadio(info.row.index);
+                    updateIsCorrectAnswerRadio(info.row.index);
                   }}
                 />
               )}
@@ -237,7 +260,7 @@ const LearningResourceTestItemModalComponent = ({
         break;
     }
     return retval;
-  }, [updateisCorrectAnswerRadio, questionTypeWatch]);
+  }, [updateIsCorrectAnswerRadio, questionTypeWatch]);
 
   useEffect(() => {
     if (formMode !== EnFormMode.ADD) return;
@@ -265,9 +288,15 @@ const LearningResourceTestItemModalComponent = ({
     if (!questionItem) return;
     updateFormData({
       ...questionItem,
-      fileAttacted: questionItem.fileUuid && questionItem.fileUuid.length > 0,
+      fileAttached: questionItem.fileUuid && questionItem.fileUuid.length > 0,
     });
     setOtherOptions(questionItem.options);
+
+    if (questionItem.questionType === EnQuestionType.ESSAY) {
+      onFormChange({
+        examOptionText: questionItem.options?.[0]?.examOptionText ?? '',
+      });
+    }
   }, [questionItem]);
 
   useEffect(() => {
@@ -381,7 +410,7 @@ const LearningResourceTestItemModalComponent = ({
             <ContentsRow type="horizontal" className="inactive">
               <FormRow2
                 provider={provider}
-                name="fileAttacted"
+                name="fileAttached"
                 label="첨부파일"
                 format="boolean"
                 value={false}
@@ -393,7 +422,7 @@ const LearningResourceTestItemModalComponent = ({
                 }}
               />
             </ContentsRow>
-            <FormDisplay provider={provider} dependencies={[{ name: 'fileAttacted', value: true }]}>
+            <FormDisplay provider={provider} dependencies={[{ name: 'fileAttached', value: true }]}>
               <ContentsRow>
                 <FormRow2
                   provider={provider}
@@ -477,6 +506,27 @@ const LearningResourceTestItemModalComponent = ({
               </ContentsRow>
               {/* 객관식 문제 노출 끝 */}
             </FormDisplay>
+            {/* 주관식 문제 정답 입력 영역 */}
+            <FormDisplay
+              provider={provider}
+              dependencies={[{ name: 'questionType', value: EnQuestionType.ESSAY }]}
+            >
+              <FormRow2
+                provider={provider}
+                name="examOptionText"
+                label={t('정답')}
+                element={
+                  <TextareaFormField
+                    maxLength={2000}
+                    onTransformInputValue={(value: string) => {
+                      onFormChange({
+                        options: [{ sortSeq: 1, examOptionText: value, isCorrectAnswer: true }],
+                      });
+                    }}
+                  />
+                }
+              />
+            </FormDisplay>
           </div>
         </form>
       </ModalBody>
@@ -490,7 +540,7 @@ const LearningResourceTestItemModalComponent = ({
           }}
         />
         {formMode === EnFormMode.VIEW && (
-          <Button label={t('삭제')} variant="gray" size="lg" onClick={handleDelteButtonClick} />
+          <Button label={t('삭제')} variant="gray" size="lg" onClick={handleDeleteButtonClick} />
         )}
         <Button label={t('저장')} variant="primary" size="lg" onClick={handleSaveButtonClick} />
       </ModalFooter>

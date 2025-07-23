@@ -1,19 +1,19 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { MainContents, PageContainer, ContentsButtons } from '@shared/ui';
 import {
   BaseFormFieldProps,
   DynamicFormConfig,
   useDynamicForm,
   useDynamicFormContext,
 } from '@learnway/hooks';
-import { Button, ContentsRow, Input } from '@learnway/ui';
-import { FormRow } from '../../../shared/ui/form';
-import { FormDisplay } from '../../../features/form/ui/form-display';
 import { buildJodObject, ValidatorConfig } from '@learnway/shared';
-import { SubTitlesFormField } from '../../../features/form/ui';
-import React, { forwardRef, useState } from 'react';
+import { Button, ContentsRow, Input } from '@learnway/ui';
+import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
 import { FormInfoArea } from '@shared/ui/form/components/form-info-area';
+import { createFileRoute } from '@tanstack/react-router';
 import { t } from 'i18next';
+import { forwardRef, useState } from 'react';
+import { SubTitlesFormField } from '../../../features/form/ui';
+import { FormDisplay } from '../../../features/form/ui/form-display';
+import { ChipListFormField, FormRow } from '../../../shared/ui/form';
 
 export const Route = createFileRoute('/_layout/menu/type5')({
   component: RouteComponent,
@@ -99,7 +99,7 @@ function RouteComponent() {
           </ContentsRow>
           <ContentsRow>
             {/*testChip*/}
-            <FormRow provider={provider} name={'testChip'} />
+            <FormRow provider={provider} name={'testChip'} element={<ChipListFormField />} />
           </ContentsRow>
         </MainContents>
       </PageContainer>

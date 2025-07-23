@@ -1,5 +1,6 @@
 import { forwardRef } from 'react';
 import { ChipList, ChipListComponentProps } from '@learnway/ui';
+import { cn } from '@learnway/shared';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { BaseFormFieldProps } from '@learnway/hooks';
 import { isString } from 'lodash';
@@ -24,7 +25,15 @@ export interface ChipListFormFieldProps extends BaseFormFieldProps<string[]> {
  */
 const ChipListFormFieldComponent = forwardRef<HTMLDivElement, ChipListFormFieldProps>(
   (
-    { value = [], onChange, placeholder, limitPlaceholder, limitSize = 200, chipListConfig },
+    {
+      value = [],
+      onChange,
+      placeholder,
+      limitPlaceholder,
+      limitSize = 200,
+      disabled,
+      chipListConfig,
+    },
     ref,
   ) => {
     /**
@@ -61,7 +70,7 @@ const ChipListFormFieldComponent = forwardRef<HTMLDivElement, ChipListFormFieldP
     };
 
     return (
-      <div ref={ref} className={formStyles.tag_wrap}>
+      <div ref={ref} className={cn(formStyles.tag_wrap, disabled && formStyles.disabled)}>
         <ChipList
           {...chipListConfig}
           className={formStyles.chips_wrap}

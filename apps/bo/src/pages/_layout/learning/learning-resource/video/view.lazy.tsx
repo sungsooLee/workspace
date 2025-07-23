@@ -2,7 +2,7 @@
 
 import { createLazyFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
-import { Button, useModal } from '@learnway/ui';
+import { Button, Divider, useModal } from '@learnway/ui';
 import {
   PageContainer,
   MainContents,
@@ -22,6 +22,7 @@ import { NotFound } from '@features/layout';
 import { useCallback, useEffect } from 'react';
 import { LearningResourceVideoDetail, MovieInfo } from '@features/learning-resource';
 import { PutVideoUpdateRes } from '@types';
+import { convertToForm, convertToSubmit } from './-common/util';
 
 export const Route = createLazyFileRoute('/_layout/learning/learning-resource/video/view')({
   component: RouteComponent,
@@ -37,10 +38,10 @@ function RouteComponent() {
   );
 
   const router = useRouter();
-  const { provider, onSubmit, onFormChange, getValues } = useDynamicForm2();
+  const { provider, onSubmit, onFormChange, getValues, watch } = useDynamicForm2();
 
   useEffect(() => {
-    if (data) onFormChange(data);
+    if (data) onFormChange(convertToForm(data));
   }, [data]);
 
   const { delete: deleteVideoContent } = useDeleteContent({
@@ -57,7 +58,7 @@ function RouteComponent() {
   const { update: updateVideoContent } = usePutVideoUpdate({
     onSuccess: (result: PutVideoUpdateRes) => {
       console.log('update success', result);
-      onFormChange(result);
+      onFormChange(convertToForm(result));
     },
   });
 
@@ -73,7 +74,7 @@ function RouteComponent() {
   }, [data?.contentUuid]);
 
   const handleFormSubmit = (data: any) => {
-    updateVideoContent(data);
+    updateVideoContent(convertToSubmit(data));
   };
 
   const handleCourseMapping = useCallback(() => {
@@ -88,7 +89,7 @@ function RouteComponent() {
     });
   }, [data]);
 
-  const permission = 'READ' as string; //user permission 정보 가져와야 함
+  const isDrafted = watch('isDrafted');
 
   if (fetchError) {
     console.log('🚀 ~ RouteComponent ~ fetchError:', fetchError);
@@ -104,47 +105,49 @@ function RouteComponent() {
     <form onSubmit={onSubmit(handleFormSubmit)}>
       <PageContainer>
         <ContentsButtons>
-          <LinkBox>
-            {debug && (
-              <Button
-                variant="point"
-                onClick={() => console.log('🚀 ~ data & Form values:', data, getValues())}
-              >
-                폼 데이터 확인 for debug
-              </Button>
-            )}
-            {permission === 'READ' && (
-              <>
-                <Link to={'/'}>상시 학습 개설</Link>
-                <Link to={'/'}>이러닝 개설</Link>
-                <Link to={'/'}>라이브개설</Link>
-              </>
-            )}
+          {debug && (
             <Button
               variant="point"
-              size="sm"
               onClick={() =>
-                router.navigate({ to: '/learning/learning-resource', state: { listParam } })
+                console.log('🚀 ~ data & Form values:', data, convertToSubmit(getValues()))
               }
             >
-              목록
+              폼 데이터 확인 for debug
             </Button>
-          </LinkBox>
-          {permission === 'READ' && (
+          )}
+          {!isDrafted && (
             <>
+              <Button variant="gray" size="sm">
+                {t('과정 개설')}
+              </Button>
               <Button variant="point" size="sm" onClick={handleCourseMapping}>
-                매핑과정 보기
+                {t('매핑과정')}
               </Button>
               <Button variant="point" size="sm">
-                공유이력 보기
+                {t('번역현황')}
               </Button>
             </>
           )}
-          <Button variant="point" size="sm" onClick={handleDelete}>
-            삭제
+          <Button
+            variant="point"
+            size="sm"
+            onClick={() =>
+              router.navigate({ to: '/learning/learning-resource', state: { listParam } })
+            }
+          >
+            {t('목록')}
           </Button>
+          <Divider orientation={'vertical'} />
+          <Button variant="point" size="sm" onClick={handleDelete}>
+            {t('삭제')}
+          </Button>
+          {!isDrafted && (
+            <Button variant="point" size="sm">
+              {t('번역')}
+            </Button>
+          )}
           <Button type="submit" variant="primary" size="sm">
-            {permission === 'WRITE' ? '저장' : '수정'}
+            {t('저장')}
           </Button>
         </ContentsButtons>
         <MainContents>

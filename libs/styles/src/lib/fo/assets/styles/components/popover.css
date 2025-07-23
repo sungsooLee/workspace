@@ -16,3 +16,6 @@
     }
   }
 }
+div[data-radix-popper-content-wrapper] {
+  @apply !z-[5];
+}

@@ -9,6 +9,7 @@ export interface TextareaFormFieldProps {
   readOnly?: boolean;
   maxLength?: number;
   size?: 'xs' | 'sm' | 'md'; // textarea 높이(basic : md)
+  onTransformInputValue?: (value: string) => void;
 }
 
 /**
@@ -19,8 +20,11 @@ export interface TextareaFormFieldProps {
  * @constructor
  */
 const TextareaFormFieldComponent = forwardRef<HTMLTextAreaElement, TextareaFormFieldProps>(
-  ({ onChange: ownerOnChange, ...props }, ref) => {
+  ({ onChange: ownerOnChange, onTransformInputValue, ...props }, ref) => {
     const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+      if (onTransformInputValue) {
+        onTransformInputValue(event.target.value);
+      }
       ownerOnChange?.(event.target.value);
     };
 

@@ -30,7 +30,12 @@ function RouteComponent() {
         {mode === Mode.MAIN ? (
           <SequenceList setMode={setMode} setSequenceId={setSequenceId} />
         ) : (
-          <SequenceDetail setMode={setMode} courseId={pCourseId} sequenceId={sequenceId} />
+          <SequenceDetail
+            mode={mode}
+            setMode={setMode}
+            courseId={pCourseId}
+            sequenceId={sequenceId}
+          />
         )}
       </MainContents>
     </PageContainer>

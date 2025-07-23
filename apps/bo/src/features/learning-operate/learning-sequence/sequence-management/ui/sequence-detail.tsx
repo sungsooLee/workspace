@@ -34,11 +34,15 @@ import { queryOptions } from '@entities/learning-sequence/service/learning-seque
 import { LearningSequence } from 'src/types/entities/learning-sequence';
 import { CourseDetailTabFormRef } from '@pages/_layout/learning/course/-common/type';
 import { useTranslation } from 'react-i18next';
+import { useUpdateEffect } from 'ahooks';
+import { TriggerKey } from '@pages/_layout/learning/course/-store/use-course-store';
 
 type SequenceDetailComponentProps = {
+  mode: string;
   setMode?: (value: any) => void;
-  courseId: number;
+  courseId?: number;
   sequenceId: number;
+  lastTriggered?: any;
 };
 
 /**
@@ -46,11 +50,11 @@ type SequenceDetailComponentProps = {
  * @returns
  */
 const SequenceDetailComponent = forwardRef<CourseDetailTabFormRef, SequenceDetailComponentProps>(
-  ({ setMode, courseId, sequenceId }, ref) => {
-    console.log('##courseId=>', courseId);
-    console.log('##sequenceId=>', sequenceId);
+  ({ mode, setMode, courseId: courseIdProps, sequenceId: sequenceIdProps, lastTriggered }, ref) => {
+    console.log('##courseIdProps=>', courseIdProps);
+    console.log('##sequenceIdProps=>', sequenceIdProps);
     const { t } = useTranslation();
-    const { showSaveComplete } = useModal();
+    const { confirm: openConfirm, showSaveComplete } = useModal();
     const formRef = useRef<HTMLFormElement>(null);
     const { updateSequence } = useUpdateSequence({
       onSuccess: async (response: any) => {
@@ -61,13 +65,41 @@ const SequenceDetailComponent = forwardRef<CourseDetailTabFormRef, SequenceDetai
     const { deleteSequence } = useDeleteSequence({
       onSuccess: async (response: any) => {
         console.log('useDeleteSequence :: onSuccess', response);
-        // await showSaveComplete();
-        // TODO: 차수 목록으로 화면 이동 해야함
+        await showSaveComplete();
+        if (setMode) setMode('MAIN');
       },
     });
 
+    useUpdateEffect(() => {
+      switch (lastTriggered?.key) {
+        case TriggerKey.LIST:
+          if (mode === 'DETAIL') if (setMode) setMode('MAIN');
+          break;
+        case TriggerKey.SAVE:
+          console.log('###저장');
+          handleUpdateSequence();
+          break;
+        case TriggerKey.DELETE:
+          console.log('###삭제');
+          handleDeleteSequence();
+          break;
+      }
+    }, [lastTriggered]);
+
+    const handleUpdateSequence = async () => {
+      const confirm = await openConfirm(t('수정 하시겠습니까?'));
+      if (!confirm) return;
+      updateSequence({ sequenceId: sequenceIdProps, ...formDataToRequestData(formValues) });
+    };
+
+    const handleDeleteSequence = async () => {
+      const confirm = await openConfirm(t('삭제 하시겠습니까?'));
+      if (!confirm) return;
+      deleteSequence({ sequenceId: sequenceIdProps });
+    };
+
     const initializeData = async () => {
-      const result = await queryClient.fetchQuery(queryOptions.sequenceDetail(sequenceId));
+      const result = await queryClient.fetchQuery(queryOptions.sequenceDetail(sequenceIdProps));
       console.log('## result', result);
       if (result) {
         console.log('SequenceDetailComponent init');
@@ -75,38 +107,9 @@ const SequenceDetailComponent = forwardRef<CourseDetailTabFormRef, SequenceDetai
       }
     };
 
-    const handleManualSubmit = () => {
-      // onSubmit은 폼 제출 핸들러를 생성하는 함수입니다
-      const submitHandler = onSubmit((data) => {
-        console.log('수동 제출 성공:', data);
-        updateSequence(data as LearningSequence);
-      });
-
-      // 가짜 이벤트 객체를 생성해서 수동으로 호출
-      const fakeEvent = {
-        preventDefault: () => null,
-      } as any;
-
-      submitHandler(fakeEvent);
-    };
-
     useEffect(() => {
       initializeData();
     }, []);
-
-    // 부모 컴포넌트에서 호출할 수 있는 메서드
-    useImperativeHandle(ref, () => ({
-      save: async () => {
-        console.log('save');
-        handleManualSubmit();
-        return true;
-      },
-      delete: async () => {
-        console.log('delete');
-        await deleteSequence(sequenceId);
-        return true;
-      },
-    }));
 
     const {
       provider,
@@ -118,13 +121,10 @@ const SequenceDetailComponent = forwardRef<CourseDetailTabFormRef, SequenceDetai
       setValue,
       formState,
       control,
+      formValues,
     } = useDynamicForm2();
 
     const queryClient = useQueryClient();
-
-    const handleOnSubmit = async (formData: any) => {
-      console.log('##formData:', formData);
-    };
 
     return (
       <form>

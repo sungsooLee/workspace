@@ -105,3 +105,7 @@ export function useCopySequence(options: any) {
     data,
   };
 }
+
+export function useFetchEnrollmentSequenceCombo(params: any) {
+  return useQuery(queryOptions.enrollmentSequenceCombo(params));
+}

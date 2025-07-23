@@ -121,12 +121,26 @@
         }
         .score_box {
           @apply headline3-b mt-[10px] flex flex-col items-center justify-center text-[var(--blue50)];
-
           .score {
-            @apply flex gap-[8px];
+            @apply flex items-center gap-[10px];
+            .deadline_box {
+              @apply relative;
+              .deadline {
+                @apply absolute -bottom-[12px] left-1/2 flex -translate-x-1/2 translate-y-full items-center gap-[6px] rounded-[6px] bg-[var(--gray35)] px-[16px] py-[8px] shadow-[0px_2px_6px_rgba(0,0,0,0.1)];
+                &::before {
+                  @apply absolute -top-[10px] left-1/2 -translate-x-1/2 rotate-[90deg] border-b-[10px] border-r-[15px] border-t-[10px] border-solid border-[var(--gray35)] border-b-transparent border-t-transparent content-[''];
+                }
+                p {
+                  @apply body-sm whitespace-nowrap leading-[21px] text-white;
+                }
+              }
+            }
           }
-          svg {
-            @apply mt-[8px];
+          button {
+            @apply flex items-center gap-[10px] border-none;
+            svg {
+              @apply mt-0;
+            }
           }
         }
         .default {

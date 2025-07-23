@@ -1,6 +1,7 @@
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { t } from 'i18next';
+import { isEmptyData } from '@learnway/shared';
 import { useModal, useToast } from '@learnway/ui';
 import {
   EnQuestionLevel,
@@ -13,11 +14,10 @@ import {
 } from '@types';
 import {
   learningResourceQueryOptions,
-  useCreateQuestionItem,
   useUpdateExamPaperQuestionCount,
   useUpdateQuestionStatus,
 } from '@entities/learning-resource';
-import { QuestionStatisticRow, SelectedQuestionState } from '../-common/type';
+import { LevelKey, QuestionStatisticRow, SelectedQuestionState } from '../-common/type';
 
 export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) => {
   const { contentUuid, examPoolUuid, questionGenType, questionCount } = basicInfo;
@@ -29,21 +29,22 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
     learningResourceQueryOptions.getQuestionItemList(examPoolUuid),
   );
 
-  const { create: createQuestionItem } = useCreateQuestionItem({
-    onSuccess: async (result: any) => {
-      if (result) {
-        const { data: refetchResult } = await refetch();
-        setSelectedQuestions(refetchResult?.filter((q) => q.isUsed) as QuestionItem[]);
-      }
-    },
-    onError: (e: Error) => {
-      openToast({
-        title: t('문항 등록 중 오류가 발생하였습니다.'),
-        type: 'error',
-      });
-      return;
-    },
-  });
+  const { data: randomQuestionInfo = [] } = useQuery(
+    learningResourceQueryOptions.getExamRandomQuestionCount(
+      contentUuid,
+      questionGenType as ExamQuestionGenType,
+    ),
+  );
+
+  const questionCreateSuccessCallback = useCallback(async () => {
+    openToast({
+      title: t('저장되었습니다.'),
+      type: 'success',
+    });
+
+    const { data: refetchResult } = await refetch();
+    setSelectedQuestions(refetchResult?.filter((q) => q.isUsed) as QuestionItem[]);
+  }, []);
 
   const { update: updateQuestionStatus } = useUpdateQuestionStatus({
     onSuccess: async (result: any) => {
@@ -78,64 +79,6 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
     [],
   );
 
-  useEffect(() => {
-    setSelectedQuestions(questionList.filter((q) => q.isUsed));
-  }, [questionList]);
-
-  useEffect(() => {
-    const singleQuestionState = getQuestionStateByType(EnQuestionType.SINGLE);
-    const multiQuestionState = getQuestionStateByType(EnQuestionType.MULTIPLE);
-    const oxQuestionState = getQuestionStateByType(EnQuestionType.OX);
-    const shortAnswerQuestionState = getQuestionStateByType(EnQuestionType.SHORT_ANSWER);
-    const essayQuestionState = getQuestionStateByType(EnQuestionType.ESSAY);
-
-    setQuestionState({
-      [EnQuestionType.SINGLE]: {
-        [EnQuestionLevel.EASY]: getQuestionCountByLevel(singleQuestionState, EnQuestionLevel.EASY),
-        [EnQuestionLevel.MEDIUM]: getQuestionCountByLevel(
-          singleQuestionState,
-          EnQuestionLevel.MEDIUM,
-        ),
-        [EnQuestionLevel.HARD]: getQuestionCountByLevel(singleQuestionState, EnQuestionLevel.HARD),
-      },
-      [EnQuestionType.MULTIPLE]: {
-        [EnQuestionLevel.EASY]: getQuestionCountByLevel(multiQuestionState, EnQuestionLevel.EASY),
-        [EnQuestionLevel.MEDIUM]: getQuestionCountByLevel(
-          multiQuestionState,
-          EnQuestionLevel.MEDIUM,
-        ),
-        [EnQuestionLevel.HARD]: getQuestionCountByLevel(multiQuestionState, EnQuestionLevel.HARD),
-      },
-      [EnQuestionType.OX]: {
-        [EnQuestionLevel.EASY]: getQuestionCountByLevel(oxQuestionState, EnQuestionLevel.EASY),
-        [EnQuestionLevel.MEDIUM]: getQuestionCountByLevel(oxQuestionState, EnQuestionLevel.MEDIUM),
-        [EnQuestionLevel.HARD]: getQuestionCountByLevel(oxQuestionState, EnQuestionLevel.HARD),
-      },
-      [EnQuestionType.SHORT_ANSWER]: {
-        [EnQuestionLevel.EASY]: getQuestionCountByLevel(
-          shortAnswerQuestionState,
-          EnQuestionLevel.EASY,
-        ),
-        [EnQuestionLevel.MEDIUM]: getQuestionCountByLevel(
-          shortAnswerQuestionState,
-          EnQuestionLevel.MEDIUM,
-        ),
-        [EnQuestionLevel.HARD]: getQuestionCountByLevel(
-          shortAnswerQuestionState,
-          EnQuestionLevel.HARD,
-        ),
-      },
-      [EnQuestionType.ESSAY]: {
-        [EnQuestionLevel.EASY]: getQuestionCountByLevel(essayQuestionState, EnQuestionLevel.EASY),
-        [EnQuestionLevel.MEDIUM]: getQuestionCountByLevel(
-          essayQuestionState,
-          EnQuestionLevel.MEDIUM,
-        ),
-        [EnQuestionLevel.HARD]: getQuestionCountByLevel(essayQuestionState, EnQuestionLevel.HARD),
-      },
-    });
-  }, [selectedQuestions]);
-
   const getScorePerQuestion = useCallback((count?: number): number => {
     if (!count || isNaN(count) || Number(count) === 0) {
       return 100;
@@ -144,6 +87,13 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
   }, []);
 
   const scorePerQuestion = getScorePerQuestion(questionCount);
+
+  const levelCountByQuestionTypeAndLevel = useCallback(
+    (type: EnQuestionType, key: LevelKey) => {
+      return randomQuestionInfo?.find((q) => q.questionType === type)?.[key] ?? 0;
+    },
+    [randomQuestionInfo],
+  );
 
   const [randomCountUpdateData, setRandomCountUpdateData] = useState<
     Record<EnQuestionType, Record<string, number>>
@@ -246,12 +196,126 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
     }
   };
 
+  useEffect(() => {
+    setSelectedQuestions(questionList.filter((q) => q.isUsed));
+  }, [questionList]);
+
+  useEffect(() => {
+    const singleQuestionState = getQuestionStateByType(EnQuestionType.SINGLE);
+    const multiQuestionState = getQuestionStateByType(EnQuestionType.MULTIPLE);
+    const oxQuestionState = getQuestionStateByType(EnQuestionType.OX);
+    const shortAnswerQuestionState = getQuestionStateByType(EnQuestionType.SHORT_ANSWER);
+    const essayQuestionState = getQuestionStateByType(EnQuestionType.ESSAY);
+
+    setQuestionState({
+      [EnQuestionType.SINGLE]: {
+        [EnQuestionLevel.EASY]: getQuestionCountByLevel(singleQuestionState, EnQuestionLevel.EASY),
+        [EnQuestionLevel.MEDIUM]: getQuestionCountByLevel(
+          singleQuestionState,
+          EnQuestionLevel.MEDIUM,
+        ),
+        [EnQuestionLevel.HARD]: getQuestionCountByLevel(singleQuestionState, EnQuestionLevel.HARD),
+      },
+      [EnQuestionType.MULTIPLE]: {
+        [EnQuestionLevel.EASY]: getQuestionCountByLevel(multiQuestionState, EnQuestionLevel.EASY),
+        [EnQuestionLevel.MEDIUM]: getQuestionCountByLevel(
+          multiQuestionState,
+          EnQuestionLevel.MEDIUM,
+        ),
+        [EnQuestionLevel.HARD]: getQuestionCountByLevel(multiQuestionState, EnQuestionLevel.HARD),
+      },
+      [EnQuestionType.OX]: {
+        [EnQuestionLevel.EASY]: getQuestionCountByLevel(oxQuestionState, EnQuestionLevel.EASY),
+        [EnQuestionLevel.MEDIUM]: getQuestionCountByLevel(oxQuestionState, EnQuestionLevel.MEDIUM),
+        [EnQuestionLevel.HARD]: getQuestionCountByLevel(oxQuestionState, EnQuestionLevel.HARD),
+      },
+      [EnQuestionType.SHORT_ANSWER]: {
+        [EnQuestionLevel.EASY]: getQuestionCountByLevel(
+          shortAnswerQuestionState,
+          EnQuestionLevel.EASY,
+        ),
+        [EnQuestionLevel.MEDIUM]: getQuestionCountByLevel(
+          shortAnswerQuestionState,
+          EnQuestionLevel.MEDIUM,
+        ),
+        [EnQuestionLevel.HARD]: getQuestionCountByLevel(
+          shortAnswerQuestionState,
+          EnQuestionLevel.HARD,
+        ),
+      },
+      [EnQuestionType.ESSAY]: {
+        [EnQuestionLevel.EASY]: getQuestionCountByLevel(essayQuestionState, EnQuestionLevel.EASY),
+        [EnQuestionLevel.MEDIUM]: getQuestionCountByLevel(
+          essayQuestionState,
+          EnQuestionLevel.MEDIUM,
+        ),
+        [EnQuestionLevel.HARD]: getQuestionCountByLevel(essayQuestionState, EnQuestionLevel.HARD),
+      },
+    });
+  }, [selectedQuestions]);
+
+  useEffect(() => {
+    if (!isEmptyData(randomQuestionInfo)) {
+      setRandomCountUpdateData({
+        [EnQuestionType.SINGLE]: {
+          hardLevelCount: levelCountByQuestionTypeAndLevel(EnQuestionType.SINGLE, 'hardLevelCount'),
+          mediumLevelCount: levelCountByQuestionTypeAndLevel(
+            EnQuestionType.SINGLE,
+            'mediumLevelCount',
+          ),
+          easyLevelCount: levelCountByQuestionTypeAndLevel(EnQuestionType.SINGLE, 'easyLevelCount'),
+        },
+        [EnQuestionType.OX]: {
+          hardLevelCount: levelCountByQuestionTypeAndLevel(EnQuestionType.OX, 'hardLevelCount'),
+          mediumLevelCount: levelCountByQuestionTypeAndLevel(EnQuestionType.OX, 'mediumLevelCount'),
+          easyLevelCount: levelCountByQuestionTypeAndLevel(EnQuestionType.OX, 'easyLevelCount'),
+        },
+        [EnQuestionType.MULTIPLE]: {
+          hardLevelCount: levelCountByQuestionTypeAndLevel(
+            EnQuestionType.MULTIPLE,
+            'hardLevelCount',
+          ),
+          mediumLevelCount: levelCountByQuestionTypeAndLevel(
+            EnQuestionType.MULTIPLE,
+            'mediumLevelCount',
+          ),
+          easyLevelCount: levelCountByQuestionTypeAndLevel(
+            EnQuestionType.MULTIPLE,
+            'easyLevelCount',
+          ),
+        },
+        [EnQuestionType.SHORT_ANSWER]: {
+          hardLevelCount: levelCountByQuestionTypeAndLevel(
+            EnQuestionType.SHORT_ANSWER,
+            'hardLevelCount',
+          ),
+          mediumLevelCount: levelCountByQuestionTypeAndLevel(
+            EnQuestionType.SHORT_ANSWER,
+            'mediumLevelCount',
+          ),
+          easyLevelCount: levelCountByQuestionTypeAndLevel(
+            EnQuestionType.SHORT_ANSWER,
+            'easyLevelCount',
+          ),
+        },
+        [EnQuestionType.ESSAY]: {
+          hardLevelCount: levelCountByQuestionTypeAndLevel(EnQuestionType.ESSAY, 'hardLevelCount'),
+          mediumLevelCount: levelCountByQuestionTypeAndLevel(
+            EnQuestionType.ESSAY,
+            'mediumLevelCount',
+          ),
+          easyLevelCount: levelCountByQuestionTypeAndLevel(EnQuestionType.ESSAY, 'easyLevelCount'),
+        },
+      });
+    }
+  }, [randomQuestionInfo]);
+
   return {
     questionList,
     selectedQuestions,
     questionState,
     scorePerQuestion,
-    createQuestionItem,
+    questionCreateSuccessCallback,
     updateQuestionStatus,
     randomCountUpdateData,
     setRandomCountUpdateData,

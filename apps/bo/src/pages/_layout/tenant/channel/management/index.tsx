@@ -20,9 +20,9 @@ function RouteComponent() {
   const router = useRouter();
 
   const { data: loginUser } = useFetchAuthUser();
-  const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
+  const { provider: searchProvider, getValues } = useSearchBox(searchConfig());
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
-  const [registButtonEnabled, setRegistButtonEnabled] = useState(true);
+  const [registButtonEnabled, setRegistButtonEnabled] = useState(false);
 
   useEffect(() => {
     if (loginUser) {
@@ -73,7 +73,7 @@ function RouteComponent() {
         <Divider />
         <GridBox
           config={gConfig}
-          columns={columns}
+          columns={columns()}
           showNumberingColumn
           title={t('채널 관리 목록')}
           disabledSelectionToggle
@@ -83,7 +83,7 @@ function RouteComponent() {
   );
 }
 
-const searchConfig: SearchBoxConfig = {
+const searchConfig = (): SearchBoxConfig => ({
   builders: [
     [
       {
@@ -172,7 +172,7 @@ const searchConfig: SearchBoxConfig = {
       },
     ],
   ],
-};
+});
 
 const gridConfig: useGridBoxConfig = {
   query: queryOptions.list,
@@ -187,7 +187,7 @@ const gridConfig: useGridBoxConfig = {
 
 const columnHelper = createColumnHelper<any>();
 
-const columns = [
+const columns = () => [
   columnHelper.accessor('channelCreationType', {
     cell: (info) =>
       t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.channel.ChannelCreationType.${info.getValue()}`),

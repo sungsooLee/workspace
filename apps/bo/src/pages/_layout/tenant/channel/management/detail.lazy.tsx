@@ -6,6 +6,7 @@ import {
 } from '@features/channel';
 import { ChannelDetailSubscriber } from '@features/channel/channel-management/channel-detail-subscriber';
 import { ChannelDetailUser } from '@features/channel/channel-management/channel-detail-user';
+import { ChannelDetailUserGroup } from '@features/channel/channel-management/channel-detail-user-group';
 import { Button, Tabs } from '@learnway/ui';
 import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui';
 import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
@@ -152,7 +153,12 @@ function RouteComponent() {
     {
       title: t('채널 유저 그룹'),
       key: EnTabKeys.USER_GROUP,
-      content: '채널 유저 그룹',
+      content: (
+        <ChannelDetailUserGroup
+          ref={userGroupFormRef}
+          onButtonLayoutChange={handleButtonLayoutChange}
+        />
+      ),
     },
   ];
 

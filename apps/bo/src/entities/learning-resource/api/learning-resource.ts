@@ -1,4 +1,4 @@
-import { fileDownload, httpService } from '@learnway/shared';
+import { httpService } from '@learnway/shared';
 import { faker } from '@faker-js/faker';
 import { CMSApiPrefix, PMSApiPrefix } from '@learnway/config';
 import {
@@ -27,6 +27,7 @@ import {
   QuestionItem,
   QuestionItemDeleteParam,
   QuestionStatusUpdateReq,
+  RandomQuestionCountInfo,
   RandomQuestionCountUpdateReq,
   TestPaperBasicInfoSaveReq,
   TestPaperBasicInfoSaveRes,
@@ -49,7 +50,7 @@ export default class LearningResourceService {
     return httpService.get(`${CMSApiPrefix()}/contents`, params);
   }
 
-  static fetchContent(contentUuid?: string): Promise<GetContentDetailRes> {
+  static fetchContent(contentUuid: string): Promise<GetContentDetailRes> {
     return httpService.get(`${CMSApiPrefix()}/content/${contentUuid}`);
   }
 
@@ -210,6 +211,14 @@ export default class LearningResourceService {
    */
   static updateExamPaperQuestionCountInfo(body: RandomQuestionCountUpdateReq) {
     return httpService.put(`${CMSApiPrefix()}/exam/add`, body);
+  }
+
+  /**
+   * 랜덤형 문항의 유형별 출제 문제수를 조회한다.
+   * @param examUuid
+   */
+  static fetchExamRandomQuestionCount(examUuid: string): Promise<RandomQuestionCountInfo[]> {
+    return httpService.get(`${CMSApiPrefix()}/exam/random/${examUuid}`);
   }
 
   /**

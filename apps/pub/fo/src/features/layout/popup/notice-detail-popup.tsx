@@ -27,6 +27,7 @@ const NoticeDetailPopupComponent = () => {
     },
   ];
 
+  // 퍼블수정 20250723 size 추가
   // Thead 정의
   const columns = [
     columnHelper.accessor('name1', {
@@ -35,6 +36,7 @@ const NoticeDetailPopupComponent = () => {
         headerAlign: 'center', // 헤더 정렬
         cellAlign: 'center', // 셀 정렬
       },
+      size: 80,
     }),
     columnHelper.accessor('name2', {
       header: '접속회수',
@@ -42,6 +44,7 @@ const NoticeDetailPopupComponent = () => {
         headerAlign: 'center', // 헤더 정렬
         cellAlign: 'center', // 셀 정렬
       },
+      size: 80,
     }),
     columnHelper.accessor('name3', {
       header: '접속로그',
@@ -49,6 +52,7 @@ const NoticeDetailPopupComponent = () => {
         headerAlign: 'center', // 헤더 정렬
         cellAlign: 'center', // 셀 정렬
       },
+      size: 370,
     }),
   ] as ColumnDef<any, unknown>[];
 
@@ -59,7 +63,15 @@ const NoticeDetailPopupComponent = () => {
         <div className={styles.start}>
           <div className={styles.table_wrap}>
             <BrowserView>
-              <TableBox data={data} columns={columns} tableMode={true} />
+              {/* 퍼블수정 class 추가 */}
+              <TableBox
+                className={styles.table}
+                data={data}
+                columns={columns}
+                tableMode={true}
+                showTotalCount={false}
+                title=" "
+              />
             </BrowserView>
 
             <MobileView>
@@ -93,10 +105,11 @@ const NoticeDetailPopupComponent = () => {
         </div>
       </ModalBody>
       <ModalFooter>
+        {/* 퍼블수정 20250723 버튼 사이즈 수정 */}
         <Button
           label={'확인'}
           variant={'primary'}
-          size={'lg'}
+          size={'xl'}
           onClick={() => closeModal()}
         ></Button>
       </ModalFooter>
