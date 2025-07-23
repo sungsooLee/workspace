@@ -1,9 +1,10 @@
 /* thumb-nail-list.module.css */
 .start {
   &.thumbnail_list {
-    @apply flex;
-    .thumbnail_item {
-      @apply max-w-[660px] flex-1 shrink-0;
+    @apply grid w-full gap-x-[20px] gap-y-[30px];
+    &.item_col3 {
+    }
+    &.item_col4 {
     }
   }
 }

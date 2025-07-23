@@ -18,7 +18,7 @@ interface ToggleButtonProps {
 const getIconByVariant = (variant: VariantType): React.ReactNode => {
   switch (variant) {
     case 'heart':
-      return <IcoHeart width={24} height={24} fill={'none'} stroke="#fff" />;
+      return <IcoHeart width={28} height={28} fill={'none'} stroke="#fff" />;
     default:
       return null;
   }

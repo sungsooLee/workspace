@@ -8,6 +8,7 @@ interface ThumbnailListProps {
   direction?: 'horizontal' | 'vertical';
   stacked?: boolean;
   className?: string;
+  cols?: number;
 }
 
 const ThumbnailList: React.FC<ThumbnailListProps> = ({
@@ -15,9 +16,19 @@ const ThumbnailList: React.FC<ThumbnailListProps> = ({
   direction = 'vertical',
   stacked = false,
   className,
+  cols,
 }) => {
   return (
-    <div className={cn(styles.start, styles.thumbnail_list, className, 'thumbnail_list')}>
+    <div
+      className={cn(
+        styles.start,
+        styles.thumbnail_list,
+        className,
+        cols && styles[`item_col${cols}`],
+        'thumbnail_list',
+      )}
+      style={cols ? { gridTemplateColumns: `repeat(${cols}, 1fr)` } : undefined}
+    >
       {items.map((item, index) => (
         <ThumbnailItem
           stacked={stacked}
