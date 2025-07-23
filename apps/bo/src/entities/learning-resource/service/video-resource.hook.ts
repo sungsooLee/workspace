@@ -25,7 +25,7 @@ const useVideoResourceHook = (provider: DynamicFormProvider) => {
       const resourceId = get(result, 'resourceId');
       setVideoChangeResourceId(resourceId);
       onFormChange(omit(result, 'resourceId'));
-      localStorage.setItem(
+      sessionStorage.setItem(
         videoChangeKey(contentUuid),
         JSON.stringify({ contentUuid, resourceId }),
       );
@@ -61,7 +61,7 @@ const useVideoResourceHook = (provider: DynamicFormProvider) => {
     if (isProcessingNone(status)) return;
 
     // 기존에 비디오 변경중이던 내역이 있다면 변경상태 조회 시작
-    const videoChangeResource = localStorage.getItem(videoChangeKey(contentUuid));
+    const videoChangeResource = sessionStorage.getItem(videoChangeKey(contentUuid));
     if (videoChangeResource) {
       if (!videoChangeResourceId) {
         const resourceId = JSON.parse(videoChangeResource).resourceId;
@@ -80,7 +80,7 @@ const useVideoResourceHook = (provider: DynamicFormProvider) => {
       // 비디오 변경 작업이 완료된 경우 정리
       if (videoChangeResource && videoChangeResourceId) {
         setVideoChangeResourceId(undefined);
-        localStorage.removeItem(videoChangeKey(contentUuid));
+        sessionStorage.removeItem(videoChangeKey(contentUuid));
       }
     }
 
