@@ -28,7 +28,9 @@ const TenantComponent = () => {
       }
     >
       <span className={styles.select}>{data?.activeTenant?.tenantName}</span>
-      <IcoArrowDown width={16} height={16} stroke="#131C30" />
+      <span className={styles.ico}>
+        <IcoArrowDown />
+      </span>
     </Button>
   );
 };

@@ -10,8 +10,12 @@
   svg {
     transition: all 0.1s linear;
   }
+  .ic_lang {
+    @apply h-[24px] w-[24px] !rotate-0;
+    fill: var(--gray10);
+  }
   .select {
-    @apply mr-[2px] inline-block;
+    @apply label-md-b ml-[6px] mr-[4px] inline-block text-[var(--gray10)];
   }
 }
 .language_content {
