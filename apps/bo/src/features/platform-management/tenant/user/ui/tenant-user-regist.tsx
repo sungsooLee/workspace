@@ -167,16 +167,6 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
       payload.linkageSystem = data.linkageSystem;
     }
 
-    if( codeGroupData ) {
-      Object.keys(codeGroupData[0]).forEach(key => {
-        const items = codeGroupData[0][key];
-        const target = items.filter((v: any) => v.cdId === data.companyNumberCountryCode);
-        if( target ) {
-          payload.companyPhoneNationNumber = target.map((row: any) => row.cdContent).join(',');
-        }
-      })
-    }
-
     const filteredPayload = Object.fromEntries(
       Object.entries(payload).filter(([_, value]) => value !== null && value !== undefined && value !== '')
     )
@@ -531,17 +521,6 @@ const formConfig = (): DynamicFormConfig => ({
       type: 'phone-number',
       format: 'string',
       value: '',
-      fields: {
-        nationCode: 'companyNumberCountryCode',
-        number: 'companyNumber',
-      },
-    },
-    {
-      label: '',
-      name: 'companyNumberCountryCode',
-      type: 'hidden',
-      format: 'string',
-      value: 'KOR_82',
     },
     {
       label: '',

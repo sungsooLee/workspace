@@ -15,6 +15,7 @@ import { CompanyUserDetailPersonal } from './company-user-detail-personal';
 import { useUpdateUser } from '@entities/users/service/users.hook';
 import { useSystemCodeDetail } from '@entities/common-code';
 import UsersService from '@entities/users/api/users';
+import UserService from '@learnway/auth/entities/user/api/users';
 
 interface CompanyUserDetailBaseProps {
   userInfo: any;
@@ -145,7 +146,6 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
       birthday: data.birthday, // 생년월일
       gender: data.gender, // 성별
       phoneNumber: data.phoneNumber, // 휴대폰 번호
-      companyPhoneNationNumber: data.companyPhoneNationNumber, // 연락처(사무실)-국가번호
       companyPhoneNumber: data.companyPhoneNumber, // 연락처(사무실)
       // 직군/직무: 직군 선택에 따른 직무 - 현재 공통 코드로만 존재할지 아니면 따로 관리를 할지를 협의해야한다고 해서 구현 못 함.
 
@@ -176,16 +176,6 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
     if( data.isUseTwoFactorAuth ) {
       payload.foTwoFactorAuthEnabled = data.twoFactorAuthPlatformTypeList.includes('FO_PLATFORM');
       payload.boTwoFactorAuthEnabled = data.twoFactorAuthPlatformTypeList.includes('BO_PLATFORM');
-    }
-
-    if( codeGroupData ) {
-      Object.keys(codeGroupData[0]).forEach(key => {
-        const items = codeGroupData[0][key];
-        const target = items.filter((v: any) => v.cdId === data.companyNumberCountryCode);
-        if( target ) {
-          payload.companyPhoneNationNumber = target.map((row: any) => row.cdContent).join(',');
-        }
-      })
     }
 
     const filteredPayload = Object.fromEntries(
@@ -306,6 +296,7 @@ const formConfig = (): DynamicFormConfig => ({
       type: 'text',
       format: 'number',
       value: '',
+      disabled: true,
     },
     {
       label: t('연락처 (사무실)'),
@@ -313,18 +304,7 @@ const formConfig = (): DynamicFormConfig => ({
       type: 'phone-number',
       format: 'string',
       value: '',
-      fields: {
-        nationCode: 'companyPhoneNationNumber',
-        number: 'companyPhoneNumber',
-      },
       placeholder: '',
-    },
-    {
-      label: '',
-      name: 'companyPhoneNationNumber',
-      type: 'hidden',
-      format: 'string',
-      value: 'KOR_82',
     },
     {
       name: 'companyName',
@@ -556,6 +536,7 @@ const formConfig = (): DynamicFormConfig => ({
   ],
   validator: {
     name: true,
+    birthday: true,
     email: {
       format: 'object',
       required: true,
