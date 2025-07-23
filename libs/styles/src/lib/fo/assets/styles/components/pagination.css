@@ -1,14 +1,17 @@
 .nlp--pagination {
-  [class*='btn_number'] {
-    @apply label-lg-b h-[36px] w-[36px] text-[var(--gray10)];
-    svg {
-      @apply fill-[var(--gray10)];
-    }
-    &[class*='selected'] {
-      @apply !rounded-full bg-[var(--gray10)] text-white;
-    }
-    &:disabled svg {
-      @apply !fill-[var(--gray75)];
+  [class*='page_num'] {
+    @apply !h-[36px] !px-0;
+    [class*='btn_number'] {
+      @apply !label-lg-b !mx-[4px] h-[36px] w-[36px] text-[var(--gray10)];
+      svg {
+        @apply fill-[var(--gray10)];
+      }
+      &[class*='selected'] {
+        @apply !rounded-full bg-[var(--gray10)] text-white;
+      }
+      &:disabled svg {
+        @apply !fill-[var(--gray75)];
+      }
     }
   }
 }

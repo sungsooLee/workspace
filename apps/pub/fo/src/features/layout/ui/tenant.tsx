@@ -77,9 +77,11 @@ const TenantComponent = () => {
       align="end"
       sideOffset={20}
     >
-      <span className={styles.select}>
-        {selectedTenant ? selectedTenant : <img src={logoImage} alt="Logo" />}
-      </span>
+      <div className={styles.select}>
+        <span className={styles.text}>
+          {selectedTenant ? selectedTenant : <img src={logoImage} alt="Logo" />}
+        </span>
+      </div>
       <span className={styles.ico}>
         <IcoArrowDown />
       </span>

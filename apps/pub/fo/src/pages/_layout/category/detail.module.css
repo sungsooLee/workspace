@@ -34,7 +34,7 @@
     li {
       @apply block;
       & + li {
-        @apply mt-[24px] border-t-[1px] border-solid border-[var(--gray92)] pt-[24px];
+        @apply mt-[24px] border-t-[1px] border-solid border-[var(--gray90)] pt-[24px];
       }
     }
   }
@@ -89,7 +89,7 @@
       @apply mt-[24px];
     }
     .align {
-      @apply mt-[8px] flex w-[100%] items-center justify-between;
+      @apply mb-[16px] mt-[8px] flex w-[100%] items-center justify-between;
       .left {
         span {
           @apply title2-b inline-block text-[var(--gray10)];
