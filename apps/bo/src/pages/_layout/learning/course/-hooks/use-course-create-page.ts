@@ -32,6 +32,6 @@ export const useCourseCreatePage = () => {
     trigger,
     changeTab: handleChangeTab,
     moveCourseListPage,
-    isCreate: !courseId,
+    isCreateMode: !courseId,
   };
 };

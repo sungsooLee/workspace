@@ -17,7 +17,7 @@ export const Route = createLazyFileRoute('/_unauth/learning_test/course/create/v
 
 function RouteComponent() {
   // 커스텀 훅 사용
-  const { changeTab, moveCourseListPage, activeTab, isCreate, trigger } = useCourseCreatePage();
+  const { changeTab, moveCourseListPage, activeTab, isCreateMode, trigger } = useCourseCreatePage();
 
   const handleTabChange = (activeKey: string) => {
     console.log('activeKey', activeKey);
@@ -98,7 +98,7 @@ function RouteComponent() {
           size="sm"
           label={'삭제'}
           onClick={() => trigger(TriggerKey.DELETE)}
-          disabled={isCreate}
+          disabled={isCreateMode}
         />
         <Button
           type="button"

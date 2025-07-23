@@ -44,25 +44,6 @@ const BasicInfoComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>((_, 
     values: getValues(),
   });
 
-  // useEffect(() => {
-  //   console.log('BasicInfoComponent init');
-  //   // 초기 데이터가 있으면 설정
-  //   if (formData) {
-  //     updateFormData(responseDataToFormData(formData));
-  //   }
-  // }, [formData]);
-
-  // 유형과 채널이 모두 변경되었을 때 상위 컴포넌트에 알림
-  // useEffect(() => {
-  //   const hasProp = courseType && channelUuid;
-  //   const isChanged = formData.courseType !== courseType || formData.channelUuid !== channelUuid;
-  //   if (hasProp && isChanged) {
-  //     console.log('유형과 채널 변경됨:', { courseType, channelUuid });
-  //     // 상위 컴포넌트에 변경 알림
-  //     onConfigPropChange?.({ courseType, channelUuid });
-  //   }
-  // }, [courseType, channelUuid, onConfigPropChange]);
-
   return (
     <form>
       {/*기본정보*/}

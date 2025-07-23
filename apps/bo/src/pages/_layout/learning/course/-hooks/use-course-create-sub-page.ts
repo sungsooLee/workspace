@@ -14,21 +14,14 @@ import {
 } from '@entities/course';
 import { useModal } from '@learnway/ui';
 import { Course, CourseConfig } from '@types';
-import {
-  getDummyCourse,
-  getDummyCourse2,
-  getDummyCourse4,
-  getDummyCourseConfig,
-} from './course-mock-data';
-import { useCourseSaveMutations } from './use-course-save-mutation';
+import { getDummyCourse, getDummyCourse2, getDummyCourse4 } from './course-mock-data';
 import { TriggerKey, useCourseStore } from '../-store/use-course-store';
 import { useNavigate } from '@tanstack/react-router';
 import { useUpdateEffect } from 'ahooks';
 import { UseDynamicFormResult } from '@learnway/hooks';
-import { Route as CourseListRoute } from '..';
 
 export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
-  const { showSaveComplete, saveConfirm } = useModal();
+  const { showSaveComplete, saveConfirm, showDeleteComplete } = useModal();
   const { lastTriggered, courseCreateInfo } = useCourseStore((state) => state);
   const navigate = useNavigate();
   const { updateFormData, formValues, onSubmit } = form;
@@ -56,48 +49,23 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
   });
 
   const { mutate: deleteCourse } = useDeleteCourse({
-    onSuccess: () => handleUpdateSuccess(),
+    onSuccess: () => {
+      showDeleteComplete();
+      moveCourseListPage();
+    },
   });
 
-  const { mutate: updateCourseWizard1 } = useUpdateCourseWizard1({
-    onSuccess: () => handleUpdateSuccess(),
-  });
-
-  const { mutate: updateCourseWizard2 } = useUpdateCourseWizard2({
-    onSuccess: () => handleUpdateSuccess(),
-  });
-
-  const { mutate: updateCourseWizard3 } = useUpdateCourseWizard3({
-    onSuccess: () => handleUpdateSuccess(),
-  });
-
-  const { mutate: updateCourseWizard4 } = useUpdateCourseWizard4({
-    onSuccess: () => handleUpdateSuccess(),
-  });
-
-  const { mutate: updateCourseWizard5 } = useUpdateCourseWizard5({
-    onSuccess: () => handleUpdateSuccess(),
-  });
-
-  const handleUpdateSuccess = () => {
+  const updateMutations = useUpdateCourseWizardMutations(() => {
     showSaveComplete();
-    // refetch();
-  };
-
-  const getUpdateMutate = useCallback((currentTab: CourseTab) => {
-    switch (currentTab) {
-      case CourseTab.STEP1:
-        return updateCourseWizard1;
-      case CourseTab.STEP2:
-        return updateCourseWizard2;
-      case CourseTab.STEP3:
-        return updateCourseWizard3;
-      case CourseTab.STEP4:
-        return updateCourseWizard4;
-      case CourseTab.STEP5:
-        return updateCourseWizard5;
+    if (courseCreateInfo.activeTab === CourseTab.STEP5) {
+      moveCourseDetailPage();
     }
-  }, []);
+  });
+
+  const getUpdateMutate = useCallback(
+    (currentTab: CourseTab) => updateMutations[currentTab],
+    [updateMutations],
+  );
 
   const handleSave = useCallback(async () => {
     const run = onSubmit(async (data) => {
@@ -144,7 +112,13 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
 
   const moveCourseListPage = () => {
     navigate({
-      to: CourseListRoute.to,
+      to: '/learning/course',
+    });
+  };
+
+  const moveCourseDetailPage = () => {
+    navigate({
+      to: '/learning/course/detail/view',
     });
   };
 
@@ -161,9 +135,12 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
 
   useEffect(() => {
     if (courseData) {
-      updateFormData(responseDataToFormData(courseData));
+      const selectedCourseType = courseCreateInfo.courseType; // 과정 유형 선택 모달에서 선택한 값
+      const formData = responseDataToFormData(courseData);
+      formData.courseType = formData.courseType ?? selectedCourseType; // 최초 등록시 과정 유형 선택 모달에서 선택한 값으로 설정
+      updateFormData(formData);
     }
-  }, [courseData]);
+  }, [courseData, courseCreateInfo.courseType]);
 
   return {
     isUpdateMode,
@@ -295,11 +272,6 @@ export const formDataToRequestData = (d: Course) => {
     relatedCourseIds,
     courseValidityStartDateTime: d.courseValidityRange?.from, // 과정 유효 시작일
     courseValidityEndDateTime: d.courseValidityRange?.to, // 과정 유효 종료일
-    // courseValidityStartHour: 0, // 과정 노출 시작 시각 (삭제 후 courseValidityStartDate에 통합 예정)
-    // courseValidityEndHour: 23, // 과정 노출 종료 시각 (삭제 후 courseValidityEndDate에 통합 예정)
-    // thumbnailFileGroupUuid: '1', // 썸네일 이미지 Group UUID
-    // primaryThumbnailFileUuid: '1', // 대표 썸네일 이미지 UUID
-    // tagNames: d.tagNameArray?.map((item) => ({ value: item })), // 태그
   };
 };
 
@@ -316,4 +288,20 @@ const getWizardStep = (activeTab: CourseTab) => {
     case CourseTab.STEP5:
       return 'STEP5';
   }
+};
+
+export const useUpdateCourseWizardMutations = (onSuccess: () => void) => {
+  const w1 = useUpdateCourseWizard1({ onSuccess });
+  const w2 = useUpdateCourseWizard2({ onSuccess });
+  const w3 = useUpdateCourseWizard3({ onSuccess });
+  const w4 = useUpdateCourseWizard4({ onSuccess });
+  const w5 = useUpdateCourseWizard5({ onSuccess });
+
+  return {
+    [CourseTab.STEP1]: w1.mutate,
+    [CourseTab.STEP2]: w2.mutate,
+    [CourseTab.STEP3]: w3.mutate,
+    [CourseTab.STEP4]: w4.mutate,
+    [CourseTab.STEP5]: w5.mutate,
+  };
 };

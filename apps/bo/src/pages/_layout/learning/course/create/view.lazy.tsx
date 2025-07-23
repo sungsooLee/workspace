@@ -17,7 +17,7 @@ export const Route = createLazyFileRoute('/_layout/learning/course/create/view')
 
 function RouteComponent() {
   // 커스텀 훅 사용
-  const { changeTab, moveCourseListPage, activeTab, isCreate, trigger } = useCourseCreatePage();
+  const { changeTab, moveCourseListPage, activeTab, isCreateMode, trigger } = useCourseCreatePage();
 
   const handleTabChange = (activeKey: string) => {
     console.log('activeKey', activeKey);
@@ -44,21 +44,25 @@ function RouteComponent() {
         title: '수강신청 설정',
         key: CourseTab.STEP2,
         content: <CourseRegistration />,
+        disabled: isCreateMode,
       },
       {
         title: '커리큘럼 설정',
         key: CourseTab.STEP3,
         content: <Curriculum />,
+        disabled: isCreateMode,
       },
       {
         title: '상세 설정',
         key: CourseTab.STEP4,
         content: <DetailInfo />,
+        disabled: isCreateMode,
       },
       {
         title: '게시 설정',
         key: CourseTab.STEP5,
         content: <PublishCourse />,
+        disabled: isCreateMode,
       },
     ],
     [],
@@ -98,7 +102,7 @@ function RouteComponent() {
           size="sm"
           label={'삭제'}
           onClick={() => trigger(TriggerKey.DELETE)}
-          disabled={isCreate}
+          disabled={isCreateMode}
         />
         <Button
           type="button"
