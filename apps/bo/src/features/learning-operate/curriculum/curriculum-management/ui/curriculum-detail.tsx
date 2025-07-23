@@ -7,6 +7,7 @@ import { useDynamicForm2 } from '@learnway/hooks';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
 import { t } from 'i18next';
+import { useQueryClient } from '@tanstack/react-query';
 
 import { NodeFormRenderer } from '../components/node-form-renderer';
 import { CurriculumTree } from '../components/curriculum-tree';
@@ -35,6 +36,7 @@ const CurriculumDetailComponent = ({
   const { confirm: openConfirm } = useModal();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
+  const queryClient = useQueryClient();
   // Dynamic Form Hook
   const {
     provider,
@@ -68,6 +70,7 @@ const CurriculumDetailComponent = ({
 
   const {
     treeData,
+    setTreeData,
     expandedKeys,
     setExpandedKeys,
     expandParentNodes,
@@ -143,18 +146,26 @@ const CurriculumDetailComponent = ({
       });
     }
   };
-
   useEffect(() => {
     if (mode === FORM_MODE.detail && curriculumId > 0 && curriculumDetail && treeData.length > 0) {
-      const curriculumNode = treeData.find(
+      const rootNode = treeData.find(
         (node) => node.parentId === null || node.parentId === undefined,
       );
 
-      if (curriculumNode && !formState.selectedNode) {
-        handleNodeSelect(curriculumNode);
+      if (rootNode && !formState.selectedNode) {
+        // 트리 확장
+        const keysToExpand: string[] = [rootNode.key];
+        treeData.forEach((node) => {
+          if (node.parentId === rootNode.id) {
+            keysToExpand.push(node.key);
+          }
+        });
+        setExpandedKeys(keysToExpand);
+
+        handleNodeSelect(rootNode);
       }
     }
-  }, [mode, curriculumId, curriculumDetail, treeData, formState.selectedNode, handleNodeSelect]);
+  }, [curriculumDetail, treeData]);
 
   const handleCopyCurriculum = (curriculumId: number) => {
     if (curriculumId > 0) {
@@ -162,6 +173,10 @@ const CurriculumDetailComponent = ({
         { curriculumId },
         {
           onSuccess: (data: CurriculumDetailResponse) => {
+            setTreeData([]);
+            resetFormState();
+            clearAllValidators();
+
             //응답받은 curriculumId로 상위로 올리기
             if (onCurriculumCreated) {
               onCurriculumCreated(data.curriculumId);

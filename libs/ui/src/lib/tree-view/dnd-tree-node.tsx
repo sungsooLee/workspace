@@ -23,7 +23,7 @@ import {
 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import { DropZone } from './components/drop-zone';
-import { InsideDropGuide } from './components/drop-zone-guide';
+// import { InsideDropGuide } from './components/drop-zone-guide';
 import {
   getInsideDropBackground,
   getInsideDropBorder,
@@ -709,11 +709,11 @@ export const DndTreeNode: React.FC<DndTreeNodeProps> = ({
             zIndex: 1,
           }}
         >
-          <InsideDropGuide
+          {/* <InsideDropGuide
             isHovered={isOverInside || (isDraggedFromOtherTree && dropPosition === 'INSIDE')}
             isValid={isValidDropTargetForPosition('INSIDE')}
             position="INSIDE"
-          />
+          /> */}
           {level === 0 ? (
             <span
               className={cn(hasChildren ? styles.has_children : '', styles.tree_menu)}
