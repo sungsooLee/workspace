@@ -1,38 +1,44 @@
-import { memo, useEffect, useRef, useState } from 'react';
+import { memo, useEffect, useMemo, useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import { useTranslation } from 'react-i18next';
 
 import { Link, useRouterState } from '@tanstack/react-router';
-import { IcoArrowForward } from '@learnway/icons';
+import { IcoArrow, IcoArrowForward } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 
-import { useMenuHierarchy } from '../../../../../../entities/menu';
+import { useMenuHierarchy } from '@entities/menu';
 
 import styles from './navigate.module.css';
+import { Carousel } from '@learnway/ui';
+import { Menu } from '@learnway/auth/types';
 
 interface NavigateComponentProps {
-  onMouseEnter?: () => void;
-  onMouseLeave?: () => void;
+  onMouseEnter?: (menu: Menu) => void;
+  hoverMenu: Menu | null;
 }
 
-function NavigateComponent({ onMouseEnter, onMouseLeave }: NavigateComponentProps) {
+interface GNBMenu extends Menu {
+  isEvent: boolean;
+}
+
+function NavigateComponent({ onMouseEnter, hoverMenu }: NavigateComponentProps) {
   const { t } = useTranslation();
   const { data } = useMenuHierarchy();
   const location = useRouterState();
-  const prevRef = useRef<HTMLDivElement | null>(null);
-  const nextRef = useRef<HTMLDivElement | null>(null);
-  const swiperRef = useRef<any>(null);
+  // const prevRef = useRef<HTMLDivElement | null>(null);
+  // const nextRef = useRef<HTMLDivElement | null>(null);
+  // const swiperRef = useRef<any>(null);
 
-  useEffect(() => {
-    if (swiperRef.current && prevRef.current && nextRef.current) {
-      const swiperInstance = swiperRef.current.swiper;
-      swiperInstance.params.navigation.prevEl = prevRef.current;
-      swiperInstance.params.navigation.nextEl = nextRef.current;
-      swiperInstance.navigation.init();
-      swiperInstance.navigation.update();
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (swiperRef.current && prevRef.current && nextRef.current) {
+  //     const swiperInstance = swiperRef.current.swiper;
+  //     swiperInstance.params.navigation.prevEl = prevRef.current;
+  //     swiperInstance.params.navigation.nextEl = nextRef.current;
+  //     swiperInstance.navigation.init();
+  //     swiperInstance.navigation.update();
+  //   }
+  // }, []);
 
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 1024);
 
@@ -45,67 +51,55 @@ function NavigateComponent({ onMouseEnter, onMouseLeave }: NavigateComponentProp
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  const handleEnter = (item: Menu) => {
+    onMouseEnter?.(item);
+  };
+
+  const menuList: GNBMenu[] = useMemo(() => {
+    const menu = data?.menus.map((item) => {
+      return {
+        ...item,
+        isEvent: false,
+      };
+    });
+    const eventMenu = data?.eventMenus?.map((item, index) => {
+      return {
+        ...item,
+        isEvent: true,
+      };
+    });
+    return [...menu, ...eventMenu];
+  }, [data]);
+
   return (
     <div className={`${styles.start} ${styles.navigate}`}>
-      <nav className={styles.nav} onMouseLeave={onMouseLeave}>
-        <Swiper
-          ref={swiperRef}
-          spaceBetween={48}
-          slidesPerView="auto"
-          loop={false}
-          modules={[Navigation]}
-          simulateTouch={isMobile}
-          allowTouchMove={isMobile}
-          className={styles.gnb_swiper}
-        >
-          {data.eventMenus.map(
-            (
-              menu,
-              index, //event menu
-            ) => (
-              <SwiperSlide
-                key={index}
-                className={cn(
-                  styles.slide,
-                  data.eventMenus.length - 1 === index ? styles.division : '',
-                )}
-              >
+      <nav className={styles.nav}>
+        {menuList && menuList.length > 0 && (
+          <Carousel
+            items={menuList.map((item, index) => (
+              <div key={index} className={item.isEvent ? styles.event_menu : ''}>
                 <Link
-                  to={menu.path}
-                  onMouseEnter={onMouseEnter}
-                  onClick={(e) => e.preventDefault()}
-                  preload={false}
+                  to={item.path}
+                  onMouseEnter={() => handleEnter(item)}
+                  className={hoverMenu?.menuId === item.menuId ? styles.active : ''}
                 >
-                  {t(`MENU.${menu.menuCode}`)}
+                  <span>{item.menuName}</span>
                 </Link>
-                {/* 라벨 표시 */}
-                {/* <span className={`${styles.label} ${styles.color1}`}>마감임박</span>} */}
-              </SwiperSlide>
-            ),
-          )}
-          {data.menus.map((menu, index) => (
-            <SwiperSlide key={index} className={`${styles.slide}`}>
-              <Link
-                to={menu.path}
-                onMouseEnter={onMouseEnter}
-                onClick={(e) => e.preventDefault()}
-                preload={false}
-              >
-                {t(`MENU.${menu.menuCode}`)}
-              </Link>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-        <div ref={prevRef} className={styles.gnb_button_prev}>
-          <div className={styles.btn}>
-            <IcoArrowForward width={16} height={16} stroke="#6F798B" />
-          </div>
-        </div>
-        <div ref={nextRef} className={styles.gnb_button_next}>
-          <div className={styles.btn}>
-            <IcoArrowForward width={16} height={16} stroke="#6F798B" />
-          </div>
-        </div>
+                {/* {item.isLabel && <span className={`${styles.label} ${styles.color1}`}>마감임박</span>} */}
+              </div>
+            ))}
+            slidesPerView="auto"
+            spaceBetween={32}
+            loop={false}
+            modules={[Navigation]}
+            simulateTouch={isMobile}
+            allowTouchMove={isMobile}
+            showNavigation={true}
+            className={styles.gnb_swiper}
+            prevIcon={<IcoArrow className={`${styles.ico} ${styles.prev}`} />}
+            nextIcon={<IcoArrow className={`${styles.ico} ${styles.next}`} />}
+          />
+        )}
       </nav>
     </div>
   );

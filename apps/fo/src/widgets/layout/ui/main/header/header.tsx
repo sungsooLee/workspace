@@ -3,14 +3,9 @@ import { memo, useCallback, useEffect, useState } from 'react';
 import { cookieService } from '@learnway/shared';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 
-import { Search, Logo, UserAvatar } from '../../../../../features/layout';
-import {
-  Language,
-  NotificationButton,
-  TenantButton,
-  AdminLink,
-} from '../../../../../features/platform';
-import { useFetchTenantByUser } from '../../../../../entities/tenant';
+import { Search, Logo, UserAvatar, History } from '@features/layout';
+import { Language, NotificationButton, TenantButton, AdminLink } from '@features/platform';
+import { useFetchTenantByUser } from '@entities/tenant';
 
 import { Tenant } from '../../../../../types';
 
@@ -20,10 +15,13 @@ import { SessionTimer } from '../../../../../features/platform/ui/sessionTimer';
 import { Navigate } from './navigate/navigate';
 import styles from './header.module.css';
 import { CategoryButton } from '../../../../../features/category';
+import { Menu } from '@learnway/auth/types';
 
 function HeaderComponent() {
   const { data: authUser } = useFetchAuthUser();
   const { data: tenants } = useFetchTenantByUser(authUser?.userId);
+
+  const [hoverMenu, setHoverMenu] = useState<Menu | null>(null);
   const [isHoverNavigate, setIsHoverNavigate] = useState(false);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
 
@@ -47,15 +45,23 @@ function HeaderComponent() {
     window.location.reload();
   }, []);
 */
-  const handleMouseEnter = () => {
+
+  // 마우스 오버시 메뉴 저장
+  const handleMouseEnter = (menu: Menu) => {
+    setHoverMenu(menu);
     if (isCategoryOpen) {
       setIsCategoryOpen(false);
     }
     setIsHoverNavigate(true);
   };
+
+  // 마우스 리브시 메뉴 삭제
   const handleMouseLeave = () => {
+    setHoverMenu(null);
     setIsHoverNavigate(false);
   };
+
+  // 카테고리 뷰 열림 설정
   const handleCategoryOpen = (isOpen: boolean) => {
     if (isOpen && isHoverNavigate) {
       setIsHoverNavigate(false);
@@ -77,8 +83,24 @@ function HeaderComponent() {
             <h1>
               <Logo activeTenant={activeTenant} />
             </h1>
+            <div className={styles.tenant}>
+              <TenantButton />
+            </div>
+          </div>
 
-            <TenantButton />
+          <div className={styles.nav_container} onMouseLeave={handleMouseLeave}>
+            <div className={styles.nav_area}>
+              <CategoryButton onOpenChange={handleCategoryOpen} isOpen={isCategoryOpen} />
+              <Navigate onMouseEnter={handleMouseEnter} hoverMenu={hoverMenu} />
+            </div>
+
+            {isHoverNavigate && hoverMenu && (
+              <NavigateHover
+                isOpen={isHoverNavigate}
+                onClose={handleNavigateHoverClose}
+                hoverMenu={hoverMenu}
+              />
+            )}
           </div>
 
           <div className={styles.search_form}>
@@ -86,21 +108,12 @@ function HeaderComponent() {
           </div>
 
           <div className={styles.util}>
-            <AdminLink />
-            <Language />
+            {/* <AdminLink /> */}
+            {/* <Language /> */}
             <NotificationButton userUUID={authUser?.userId} />
+            <History />
             <UserAvatar />
           </div>
-        </div>
-
-        <div className={styles.nav_container} onMouseLeave={handleMouseLeave}>
-          <div className={styles.nav_area}>
-            <CategoryButton onOpenChange={handleCategoryOpen} isOpen={isCategoryOpen} />
-            <Navigate onMouseEnter={handleMouseEnter} />
-          </div>
-          {isHoverNavigate && (
-            <NavigateHover isOpen={isHoverNavigate} onClose={handleNavigateHoverClose} />
-          )}
         </div>
       </header>
     </div>

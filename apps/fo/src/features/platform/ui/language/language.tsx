@@ -6,7 +6,7 @@ import { Link } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import { CODE_GROUP, getDefaultLang } from '@learnway/config';
 import { Popover, Button } from '@learnway/ui';
-import { IcoArrowDown } from '@learnway/icons';
+import { IcoArrowDown, IcoLang } from '@learnway/icons';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 
 import { useSetLanguage } from '../../service/i18n.hook';
@@ -86,6 +86,7 @@ const LanguageComponent = ({ className }: LanguageComponentProp) => {
     <>
       <MobileView>
         <Link to="/" className={`${styles.btn_language} ${className}`}>
+          <IcoLang className={styles.ic_lang} />
           <span className={styles.select}>{getDefaultLang().toUpperCase()}</span>
           <IcoArrowDown width={16} height={16} stroke="#131C30" />
         </Link>
@@ -94,10 +95,11 @@ const LanguageComponent = ({ className }: LanguageComponentProp) => {
         <Popover
           className={cn(styles.btn_language, className)}
           side="bottom"
-          align="center"
+          align="end"
           sideOffset={5}
           popoverContent={<PopoverContent data={languages} />}
         >
+          <IcoLang className={styles.ic_lang} />
           <span className={styles.select}>{getDefaultLang().toUpperCase()}</span>
           <IcoArrowDown width={16} height={16} stroke="#131C30" />
         </Popover>

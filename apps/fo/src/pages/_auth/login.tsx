@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { BrowserView, MobileView } from 'react-device-detect';
 import { createFileRoute, useRouter, Link } from '@tanstack/react-router';
 import { z } from 'zod';
 import { useTranslation } from 'react-i18next';
@@ -20,12 +21,15 @@ import { AUTH_CONTAINERS } from '@widgets/layout';
 
 import { FormRow } from '@shared/ui';
 import { AUTH_ERROR_CODE } from '@learnway/auth/features';
+import { CheckBoxFormField } from '@learnway/auth/shared';
 
 import snsNaverImage from '../../assets/images/common/logo_sns_naver.png';
 import snskakaoImage from '../../assets/images/common/logo_sns_kakao.png';
 import snsGoogleImage from '../../assets/images/common/logo_sns_google.png';
 
 import styles from '@learnway/styles/fo/pages/_auth/login.module.css';
+import authTitleStyle from '@learnway/styles/fo/pages/_auth/auth-title.module.css';
+import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 
 export const Route = createFileRoute('/_auth/login')({
   component: RouteComponent,
@@ -34,7 +38,7 @@ export const Route = createFileRoute('/_auth/login')({
       mobile: {
         showHeader: true,
       },
-      title: 'LABEL.common.loginWelcomeMessage',
+      title: '',
       container: AUTH_CONTAINERS.LOGIN,
     },
   }),
@@ -302,53 +306,69 @@ function RouteComponent() {
     <form onSubmit={onSubmit(handleOnSubmit)} className={'form_row'}>
       <div className={`${styles.start} ${styles.auth_wrap} ${styles.login}`}>
         <div className={cn(styles.auth_box, 'auth--box')}>
-          <div className="no_line col">
-            <ContentsRow>
-              <FormRow
-                provider={provider}
-                name={'username'}
-                element={
-                  <Input
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' || e.key === 'Tab') {
-                        e.preventDefault();
-                        onFormFocus('password');
-                      }
-                    }}
-                  />
-                }
-              />
-            </ContentsRow>
-            <ContentsRow>
-              <FormRow
-                provider={provider}
-                name={'password'}
-                element={
-                  <Input
-                    type="password"
-                    onKeyDown={async (e) => {
-                      if (e.key === 'Enter') {
-                        if (await onFormValid()) {
-                          handleOnSubmit(getValues());
-                        }
-                      }
-                    }}
-                  />
-                }
-              />
-            </ContentsRow>
+          <div className={authTitleStyle.start}>
+            <BrowserView>
+              <h2 className={authTitleStyle.title_login}>
+                <span className={authTitleStyle.title}>{'Welcome Back'}</span>
+                <span className={authTitleStyle.info}>{'Please enter your details to login.'}</span>
+              </h2>
+            </BrowserView>
+            <MobileView>
+              <h2 className={authTitleStyle.title_login}>
+                {/* 퍼블확인용 */}
+                <span className={authTitleStyle.title}>{'Welcome Back'}</span>
+                <span className={authTitleStyle.info}>{'Please enter your details to login.'}</span>
+              </h2>
+            </MobileView>
           </div>
+          <ContentsRow>
+            <FormRow
+              provider={provider}
+              name={'username'}
+              element={
+                <Input
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === 'Tab') {
+                      e.preventDefault();
+                      onFormFocus('password');
+                    }
+                  }}
+                />
+              }
+            />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow
+              provider={provider}
+              name={'password'}
+              element={
+                <Input
+                  className={formStyles.lg}
+                  type="password"
+                  onKeyDown={async (e) => {
+                    if (e.key === 'Enter') {
+                      if (await onFormValid()) {
+                        handleOnSubmit(getValues());
+                      }
+                    }
+                  }}
+                />
+              }
+            />
+          </ContentsRow>
 
-          <ContentsRow className={styles.login_info}>
-            <FormRow provider={provider} name={'saveId'} />
-            {/*<Link to="/progress-status">진행 현황</Link>*/}
+          <div className={cn(styles.login_info)}>
+            <FormRow
+              className="pb-0"
+              provider={provider}
+              name={'saveId'}
+              element={<CheckBoxFormField className={styles.id_save} size="md" />}
+            />
             <div className={styles.info}>
               <Link to="/search-account">{t('아이디 찾기')}</Link>
-            </div>
-            <div className={styles.info}>
               <Link to="/search-password">{t('비밀번호 찾기')}</Link>
             </div>
-          </ContentsRow>
+          </div>
 
           <div className={styles.btn_box}>
             <Button type="submit" size="xl" variant="primary" className={styles.btn}>
@@ -356,36 +376,13 @@ function RouteComponent() {
             </Button>
           </div>
 
-          {/* TODO M0 소셜로그인 제외 */}
-          {/* <div className={styles.sns_login}>
-            <h3 className={styles.tit_sns}>{t('LABEL.common.socialLogin')}</h3>
-            <ul className={styles.list}>
-              <li>
-                <Button>
-                  <img src={snsNaverImage} alt="naver" />
-                </Button>
-              </li>
-              <li>
-                <Button>
-                  <img src={snskakaoImage} alt="kakao" />
-                </Button>
-              </li>
-              <li>
-                <Button>
-                  <img src={snsGoogleImage} alt="google" />
-                </Button>
-              </li>
-            </ul>
-            <div className={styles.noti}>{t('LABEL.messages.loginGuide')}</div>
-          </div> */}
-        </div>
-
-        <div className={styles.login_guide}>
-          <span>
-            <Link to="/signup-progress">{t('LABEL.common.membershipStatus')}</Link>
-            {/*<Link to="/signup">{t('LABEL.common.joinTheMembership')}</Link>*/}
-            <Link to="/login">{t('LABEL.common.joinTheMembership')}</Link>
-          </span>
+          <div className={styles.login_guide}>
+            <span>
+              <Link to="/signup-progress">{t('LABEL.common.membershipStatus')}</Link>
+              {/*<Link to="/signup">{t('LABEL.common.joinTheMembership')}</Link>*/}
+              <Link to="/login">{t('LABEL.common.joinTheMembership')}</Link>
+            </span>
+          </div>
         </div>
       </div>
     </form>
