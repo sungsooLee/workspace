@@ -38,7 +38,7 @@ const BasicInfoComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>((_, 
   const channelUuid = watch('channelUuid');
   const courseType = watch('courseType');
 
-  console.log('----- basic', {
+  console.log('----- basic ..', {
     channelUuid,
     courseType,
     values: getValues(),
