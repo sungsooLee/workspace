@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { isMobile } from 'react-device-detect';
 import { Button, useModal, ProgressCheck } from '@learnway/ui';
 import styles from './curriculum-study.module.css';
-import { IcoArrowDown } from '@learnway/icons';
+import { IcoArrowDown, IcoCircleProgress, IcoProgressComplete } from '@learnway/icons';
 import { NoticeDetailPopup } from '../../../../features/layout';
 
 interface CurriculumStudyProps {
@@ -17,13 +17,14 @@ const CurriculumStudyComponent = ({ className }: CurriculumStudyProps) => {
         <li>
           <div className={styles.tit_box}>
             <strong>[리얼법전] 김정근, 이지애와 함께하는 직장 내 성희롱 예방교육</strong>
-            <span>1시간</span>
+            <span>(1시간)</span>
           </div>
           <div className={styles.txt_box}>
             <ul>
               <li>
                 <span className={styles.progress}>
-                  <ProgressCheck progress={30} />
+                  {/* 퍼블수정 20250723 학습완료 아이콘 */}
+                  <IcoProgressComplete width={32} height={32} />
                 </span>
                 <span className={styles.subject}>
                   1. (리얼법전) 김정근, 이지애와 함께하는 직장 내 성희롱 예방교육
@@ -42,8 +43,9 @@ const CurriculumStudyComponent = ({ className }: CurriculumStudyProps) => {
                       학습이력
                     </Button>
                   </span>
+                  {/* 퍼블수정 20250723 버튼 크기 전체 수정 */}
                   {/* 학습전 variant="line" 학습중 variant="primary" */}
-                  <Button variant="line" size={isMobile ? 'ts' : 'sm'} className={styles.btn}>
+                  <Button variant="line" size={isMobile ? 'ts' : 'md'} className={styles.btn}>
                     학습하기
                   </Button>
                 </div>
@@ -51,7 +53,8 @@ const CurriculumStudyComponent = ({ className }: CurriculumStudyProps) => {
               {/* 학습중 styles.ing */}
               <li className={styles.ing}>
                 <span className={styles.progress}>
-                  <ProgressCheck progress={100} />
+                  {/* 퍼블수정 20250723 학습중 아이콘 */}
+                  <IcoCircleProgress width={32} height={32} />
                 </span>
                 <span className={styles.subject}>2. (파악하기) 직장 내 성희롱, 판단 기준은?</span>
                 <div className={styles.stats_div}>
@@ -68,21 +71,22 @@ const CurriculumStudyComponent = ({ className }: CurriculumStudyProps) => {
                       학습이력
                     </Button>
                   </span>
-                  <Button variant="primary" size={isMobile ? 'ts' : 'sm'} className={styles.btn}>
+                  <Button variant="primary" size={isMobile ? 'ts' : 'md'} className={styles.btn}>
                     학습하기
                   </Button>
                 </div>
               </li>
               <li>
                 <span className={styles.progress}>
-                  <ProgressCheck progress={30} />
+                  {/* 퍼블수정 20250723 미학습 아이콘 */}
+                  <span className={styles.cricle}></span>
                 </span>
                 <span className={styles.subject}>3. (파악하기) 직장 내 성희롱, 판단 기준은?</span>
                 <div className={styles.stats_div}>
                   <span className={styles.stats}>
                     <em>학습전 (15분)</em>
                   </span>
-                  <Button variant="primary" size={isMobile ? 'ts' : 'sm'} className={styles.btn}>
+                  <Button variant="primary" size={isMobile ? 'ts' : 'md'} className={styles.btn}>
                     학습하기
                   </Button>
                 </div>
@@ -93,13 +97,13 @@ const CurriculumStudyComponent = ({ className }: CurriculumStudyProps) => {
         <li>
           <div className={styles.tit_box}>
             <strong>[리얼법전] 김정근, 이지애와 함께하는 직장 내 성희롱 예방교육</strong>
-            <span>1시간</span>
+            <span>(1시간)</span>
           </div>
           <div className={styles.txt_box}>
             <ul>
               <li>
                 <span className={styles.progress}>
-                  <ProgressCheck progress={80} />
+                  <IcoProgressComplete width={32} height={32} />
                 </span>
                 <span className={styles.subject}>
                   1. (리얼법전) 김정근, 이지애와 함께하는 직장 내 성희롱 예방교육
@@ -119,7 +123,7 @@ const CurriculumStudyComponent = ({ className }: CurriculumStudyProps) => {
                     </Button>
                   </span>
                   {/* 학습전 variant="line" 학습중 variant="primary" */}
-                  <Button variant="line" size={isMobile ? 'ts' : 'sm'} className={styles.btn}>
+                  <Button variant="line" size={isMobile ? 'ts' : 'md'} className={styles.btn}>
                     학습하기
                   </Button>
                 </div>
@@ -127,7 +131,7 @@ const CurriculumStudyComponent = ({ className }: CurriculumStudyProps) => {
               {/* 학습중 styles.ing */}
               <li className={styles.ing}>
                 <span className={styles.progress}>
-                  <ProgressCheck progress={50} />
+                  <IcoCircleProgress width={32} height={32} />
                 </span>
                 <span className={styles.subject}>2. (파악하기) 직장 내 성희롱, 판단 기준은?</span>
                 <div className={styles.stats_div}>
@@ -144,21 +148,23 @@ const CurriculumStudyComponent = ({ className }: CurriculumStudyProps) => {
                       학습이력
                     </Button>
                   </span>
-                  <Button variant="primary" size={isMobile ? 'ts' : 'sm'} className={styles.btn}>
+                  <Button variant="primary" size={isMobile ? 'ts' : 'md'} className={styles.btn}>
                     학습하기
                   </Button>
                 </div>
               </li>
               <li>
                 <span className={styles.progress}>
-                  <ProgressCheck progress={0} />
+                  <span className={styles.cricle}></span>
                 </span>
                 <span className={styles.subject}>3. (파악하기) 직장 내 성희롱, 판단 기준은?</span>
                 <div className={styles.stats_div}>
+                  {/* 퍼블수정 20250723 마크업 수정 */}
                   <span className={styles.stats}>
-                    <em>학습전 (15분)</em>
+                    <em>학습전</em>
+                    <em>(15분)</em>
                   </span>
-                  <Button variant="primary" size={isMobile ? 'ts' : 'sm'} className={styles.btn}>
+                  <Button variant="primary" size={isMobile ? 'ts' : 'md'} className={styles.btn}>
                     학습하기
                   </Button>
                 </div>
