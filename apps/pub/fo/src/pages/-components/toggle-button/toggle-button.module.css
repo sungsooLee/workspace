@@ -1,3 +1,11 @@
 /* toggle-button.module.css */
 .toggle_btn {
+  &.heart {
+    svg {
+      @apply fill-none stroke-[#fff];
+    }
+    &.checked svg {
+      @apply fill-[#fff];
+    }
+  }
 }

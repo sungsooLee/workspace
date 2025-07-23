@@ -1,6 +1,13 @@
 import { memo, useState } from 'react';
 import { BrowserView, isMobile, MobileView } from 'react-device-detect';
-import { IcoArrowDown, IcoCaution03, IcoDownload02, IcoLock, IcoPdf } from '@learnway/icons';
+import {
+  IcoArrowDown,
+  IcoCaution03,
+  IcoDownload02,
+  IcoLock,
+  IcoPdf,
+  IcoPlus,
+} from '@learnway/icons';
 import { Button, Panel, Popover, ProgressBar, TableBox, useModal } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import styles from './dashboard.module.css';
@@ -91,6 +98,8 @@ const CourseDashboardCompoment = () => {
           align="end"
           sideOffset={10}
         >
+          {/* 퍼블수정 20250723 아이콘 추가 */}
+          <IcoPlus width={16} height={16} stroke="#131C30" className={styles.plus} />
           <span>{'차수보기'}</span>
           <IcoArrowDown width={16} height={16} stroke="#131C30" />
         </Popover>
@@ -103,7 +112,7 @@ const CourseDashboardCompoment = () => {
         <Panel
           type="rounded"
           hideHeaderUnderline
-          className={`${statusStyles.panel_degreey} ${/* statusStyles.complete */ ''}`}
+          className={`${statusStyles.panel_degreey} $/*{statusStyles.incomplete} */`}
         >
           <div className={statusStyles.list}>
             <h3>학습중</h3>
@@ -114,7 +123,7 @@ const CourseDashboardCompoment = () => {
               </div>
               <div className={statusStyles.date_box}>
                 남은학습기간
-                <span className={`${statusStyles.date} ${statusStyles.time}`}>D-27</span>{' '}
+                <span className={`${statusStyles.date} ${statusStyles.time}`}>D-27</span>
                 {/* 남은기간 적을 시 className="time" */}
               </div>
             </div>
@@ -175,7 +184,15 @@ const CourseDashboardCompoment = () => {
           {detail === true ? (
             <div className={statusStyles.status_table}>
               <BrowserView>
-                <TableBox data={data} columns={columns} tableMode={true} showTotalCount={false} />
+                {/* 퍼블수정 20250723 클래스 추가 */}
+                <TableBox
+                  className={statusStyles.table}
+                  data={data}
+                  columns={columns}
+                  tableMode={false}
+                  showTotalCount={false}
+                  title=" "
+                />
               </BrowserView>
 
               <MobileView>
@@ -251,8 +268,15 @@ const CourseDashboardCompoment = () => {
               className={detail === true ? statusStyles.active : ''}
               onClick={() => (detail === true ? setDetail(false) : setDetail(true))}
             >
-              <span>{detail === true ? '성적 접기' : '성적 자세히'}</span>
-              <IcoArrowDown width={16} height={16} stroke="#131c30" />
+              {/* 퍼블수정 20250723 아이콘 추가 */}
+              <IcoPlus width={20} height={20} stroke="#4d525c" />
+              <span>{detail === true ? '접기' : '더보기'}</span>
+              <IcoArrowDown
+                width={20}
+                height={20}
+                stroke="#131416"
+                className={statusStyles.ico_arrow}
+              />
             </Button>
           </div>
         </Panel>

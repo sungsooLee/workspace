@@ -92,9 +92,9 @@
       @apply mt-[8px] flex w-[100%] items-center justify-between;
       .left {
         span {
-          @apply title_6_b inline-block text-[var(--gray9)];
+          @apply title2-b inline-block text-[var(--gray10)];
           em {
-            @apply text-[var(--secondary1)];
+            @apply title2-b text-[var(--blue50)];
           }
         }
       }
@@ -103,14 +103,38 @@
         .array,
         .box {
           & + .box {
-            @apply relative ml-[24px] flex items-center pl-[24px];
+            @apply relative ml-[16px] flex items-center pl-[16px];
             &::after {
-              @apply absolute left-[0] top-[50%] h-[12px] w-[1px] -translate-y-1/2 bg-[var(--gray4)] content-[''];
+              @apply absolute left-[0] top-[50%] h-[12px] w-[1px] -translate-y-1/2 bg-[var(--gray90)] content-[''];
             }
           }
           & > div {
             button {
               @apply border-0;
+            }
+          }
+        }
+        .btn_box {
+          @apply relative ml-[16px] flex h-[36px] items-center rounded-[4px] border border-solid border-[var(--gray90)];
+          &::before {
+            @apply absolute left-1/2 top-0 h-full w-[1px] bg-[var(--gray90)] content-[''];
+          }
+          .btn_order {
+            @apply h-[36px] w-[36px];
+            &:nth-last-child(1) {
+              @apply ml-[0.5px];
+            }
+            svg {
+              path {
+                @apply stroke-[#B7BBC3];
+              }
+            }
+            &.active {
+              svg {
+                path {
+                  @apply stroke-[#131416];
+                }
+              }
             }
           }
         }
