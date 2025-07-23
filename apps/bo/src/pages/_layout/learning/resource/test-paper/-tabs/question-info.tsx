@@ -2,6 +2,7 @@ import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRe
 import { t } from 'i18next';
 import { cn, isEmptyData } from '@learnway/shared';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { CMSApiPrefix } from '@learnway/config';
 import {
   Button,
   ContentsRow,
@@ -22,12 +23,13 @@ import {
   TestPaperBasicInfoDetail,
 } from '@types';
 import { FormRow2, GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
-import { SegmentedControlFormField } from '@features/form/ui/segmented-control-form-field';
-import { LearningResourceTestItemModal } from '@features/learning-resource/learning-resource-management/ui/learning-resource-test-item-modal';
 import {
   QUESTION_LEVELS,
   QUESTION_TYPES,
 } from '@features/learning-resource/learning-resource-management/service/exam-util';
+import { SegmentedControlFormField } from '@features/form/ui/segmented-control-form-field';
+import { LearningResourceTestItemModal } from '@features/learning-resource/learning-resource-management/ui/learning-resource-test-item-modal';
+import { LearningResourceQuestionShuttleModal } from '@features/learning-resource/learning-resource-management/ui/learning-resource-question-shuttle-modal';
 import { getExamTemplateTextByType } from '../-common/common';
 import { ExamQuestionInfoProps, QuestionStatisticRow, TabFormRef } from '../-common/type';
 import { useExamQuestionInfoInput } from '../-hooks/use-exam-question-info-input';
@@ -35,7 +37,6 @@ import { useExamQuestionInfoInput } from '../-hooks/use-exam-question-info-input
 /* styles */
 import styles from '@learnway/styles/bo/pages/_layout/learning/test-detail.module.css';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
-import { CMSApiPrefix } from '@learnway/config';
 
 const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
   (
@@ -104,6 +105,14 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
     );
 
     const { open: openModal } = useModal();
+
+    const handleClickRetrieveQuestionModal = useCallback(async () => {
+      await openModal({
+        width: 'xl',
+        height: 'fix',
+        content: <LearningResourceQuestionShuttleModal />,
+      });
+    }, []);
 
     const handleClickAddQuestionButton = useCallback(async () => {
       if (isEmptyData(data)) {
@@ -477,7 +486,12 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
               className={styles.list_table}
               customButtonNode={
                 <>
-                  <Button variant="text" label={'불러오기'} />
+                  <Button
+                    type="button"
+                    variant="text"
+                    label={t('불러오기')}
+                    onClick={handleClickRetrieveQuestionModal}
+                  />
                   <GridExcelUploadButton
                     validateUrl={`/exam/questions/${data?.examPoolUuid}/upload`}
                     affairsType="CMS"

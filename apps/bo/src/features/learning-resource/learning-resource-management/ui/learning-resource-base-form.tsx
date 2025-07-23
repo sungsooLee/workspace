@@ -324,6 +324,10 @@ const LearningResourceBaseFormComponent = ({
           value={true}
         />
       </ContentsRow>
+
+      {/* 삭제여부, 공개여부 (고정값) */}
+      <FormRow2 provider={provider} name="isDeleted" type="hidden" format="boolean" value={false} />
+      <FormRow2 provider={provider} name="isOpened" type="hidden" format="boolean" value={true} />
     </>
   );
 };

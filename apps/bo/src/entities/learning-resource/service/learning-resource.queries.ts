@@ -15,6 +15,7 @@ import {
   PutVideoUpdateParams,
   QuestionItem,
   QuestionItemDeleteParam,
+  QuestionListForRetrieveReq,
   QuestionStatusUpdateReq,
   RandomQuestionCountUpdateReq,
   TestPaperBasicInfoSaveReq,
@@ -43,6 +44,7 @@ export const queryKeys = {
   questionBankQuestionList: ['question-bank-question-list'] as const,
   questionBankQuestionItem: ['question-bank-question-item'] as const,
   randomQuestionCount: (examUuid: string) => ['random-question-count', examUuid] as const,
+  questionListForRetrieve: ['question-list-for-retrieve'] as const,
 };
 
 export const learningResourceQueryOptions = {
@@ -149,7 +151,15 @@ export const learningResourceQueryOptions = {
     queryFn: () => LearningResourceService.fetchExamRandomQuestionCount(examUuid),
     cacheTime: 0,
     staleTime: 0,
-    enabled: !!examUuid || questionGenType === ExamQuestionGenType.FIXED,
+    enabled: !!examUuid && questionGenType === ExamQuestionGenType.RANDOM,
+  }),
+
+  getQuestionListForRetrieve: (params: QuestionListForRetrieveReq) => ({
+    queryKey: queryKeys.questionListForRetrieve,
+    queryFn: () => LearningResourceService.fetchQuestionListForRetrieve(params),
+    cacheTime: 0,
+    staleTime: 0,
+    enabled: true,
   }),
 };
 
