@@ -649,7 +649,7 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
 
   // 파일 제거
   const onRemove = useCallback(
-    async (id?: string) => {
+    async (id?: string, dontDelete = false) => {
       if (!id) {
         // id가 없으면 모든 파일 제거
         // fileUuid가 있는 파일들 먼저 백엔드에서 삭제
@@ -693,7 +693,7 @@ const useS3UploaderHook = (config: S3UploaderConfig) => {
       }
 
       // fileUuid가 있으면 백엔드에서도 삭제
-      if (file.fileUuid) {
+      if (file.fileUuid && !dontDelete) {
         try {
           await deleteFileInfo(file.fileUuid);
         } catch (error) {
