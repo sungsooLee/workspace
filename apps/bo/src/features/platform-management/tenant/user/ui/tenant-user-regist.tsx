@@ -144,7 +144,7 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
       accountStatus: null,
 
       // 로그인 및 인증 설정 정보
-      // ssoType: data.isUseSso ? data.ssoTypeList : null,
+      ssoType: data.isUseSso ? data.ssoTypeList !== 'AES_Link' ? data.ssoTypeList : null : null,
       authType: data.passwordAuthType,
       twoFactorAuthType: data.twoFactorAuthType,
       foTwoFactorAuthEnabled: data.twoFactorAuthPlatformTypeList.includes('FO_PLATFORM'),
@@ -167,15 +167,15 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
       payload.linkageSystem = data.linkageSystem;
     }
 
-    // if( codeGroupData ) {
-    //   Object.keys(codeGroupData[0]).forEach(key => {
-    //     const items = codeGroupData[0][key];
-    //     const target = items.filter((v: any) => v.cdId === data.companyNumberCountryCode);
-    //     if( target ) {
-    //       payload.companyPhoneNationNumber = target.map((row: any) => row.cdContent).join(',');
-    //     }
-    //   })
-    // }
+    if( codeGroupData ) {
+      Object.keys(codeGroupData[0]).forEach(key => {
+        const items = codeGroupData[0][key];
+        const target = items.filter((v: any) => v.cdId === data.companyNumberCountryCode);
+        if( target ) {
+          payload.companyPhoneNationNumber = target.map((row: any) => row.cdContent).join(',');
+        }
+      })
+    }
 
     const filteredPayload = Object.fromEntries(
       Object.entries(payload).filter(([_, value]) => value !== null && value !== undefined && value !== '')
