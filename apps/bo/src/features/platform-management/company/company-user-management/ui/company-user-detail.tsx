@@ -8,7 +8,7 @@ import { FormSubTitle, Tabs } from '@learnway/ui';
 import { useRouterState } from '@tanstack/react-router';
 import { EnGlobalConst } from '@types';
 import { t } from 'i18next';
-import { useState } from 'react';
+import { forwardRef, useImperativeHandle, useState } from 'react';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
@@ -24,7 +24,7 @@ const CompanyUserDetailComponent = ({ formRef }: { formRef: any }) => {
   const routerState = useRouterState();
 
   const userUuid = routerState.location.state.userUuid;
-  const { data: user } = useFetchUser(userUuid);
+  const { data: user, refetch: userRefetch } = useFetchUser(userUuid);
   console.log('### user', user);
 
   const [selectedTabKey, setSelectedTabKey] = useState<string>(EnCompanyUserTab.userInfo);
@@ -39,7 +39,7 @@ const CompanyUserDetailComponent = ({ formRef }: { formRef: any }) => {
     {
       title: t('유저 정보'),
       key: EnCompanyUserTab.userInfo,
-      content: <CompanyUserDetailBase ref={formRef} userInfo={user} />,
+      content: <CompanyUserDetailBase ref={formRef} userInfo={user} userRefetch={userRefetch}/>,
     },
     {
       title: t('교육 이력'),

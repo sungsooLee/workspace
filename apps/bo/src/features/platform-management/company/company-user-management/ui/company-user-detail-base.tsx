@@ -14,9 +14,11 @@ import { CompanyUserDetailJob } from './company-user-detail-job';
 import { CompanyUserDetailPersonal } from './company-user-detail-personal';
 import { useUpdateUser } from '@entities/users/service/users.hook';
 import { useSystemCodeDetail } from '@entities/common-code';
+import UsersService from '@entities/users/api/users';
 
 interface CompanyUserDetailBaseProps {
   userInfo: any;
+  userRefetch: () => void;
 }
 
 function compareLatestDate(dates: string[]) {
@@ -39,6 +41,7 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
   const { update } = useUpdateUser({
     onSuccess: (data: any) => {
       openToast({ title: '저장 하였습니다.', type: 'success' });
+      props.userRefetch();
       updateFormData(data);
     }
   })
@@ -146,7 +149,9 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
       companyPhoneNumber: data.companyPhoneNumber, // 연락처(사무실)
       // 직군/직무: 직군 선택에 따른 직무 - 현재 공통 코드로만 존재할지 아니면 따로 관리를 할지를 협의해야한다고 해서 구현 못 함.
 
-      // 계정 정보 - 해당 정보는 현재 페이지가 관리자 등록이라 고정 값임.
+      // 계정 정보
+      linkageSystem: data.hrInfoManageType !== 'MANUAL_MANAGE' ? data.hrInfoManageType : null,
+      accountStatus: 'NORMAL',
 
       // 로그인 및 인증 설정 정보
       ssoType: data.isUseSso ? data.ssoTypeList : null,
@@ -162,6 +167,10 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
     } else if( data.userState === '3' ) {
       payload.isOnLeave = false;
       payload.isSuspended = true;
+    }
+
+    if( data.hrInfoManageType === 'AUTO_MANAGE' ) {
+      payload.linkageSystem = data.linkageSystem;
     }
 
     if( data.isUseTwoFactorAuth ) {
