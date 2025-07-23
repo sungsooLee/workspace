@@ -162,7 +162,7 @@ const CategoryCompoment = ({ isOpen }: CategoryPopupProps) => {
         onlyIcon={true}
         icon={
           isOpen ? (
-            <IcoArray width={24} height={14} fill="#fff" stroke="#131416" />
+            <IcoArray width={24} height={24} fill="#fff" stroke="#131416" />
           ) : (
             <IcoArray width={24} height={24} fill="#fff" stroke="#131416" />
           )

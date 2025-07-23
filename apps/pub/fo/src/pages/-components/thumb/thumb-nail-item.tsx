@@ -3,7 +3,7 @@ import styles from './thumb-nail-item.module.css';
 import { Link } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import { Badge, Thumbnail } from '@learnway/ui';
-import { infoIcons } from './info-icon';
+import ToggleButton from '../toggle-button/toggle-button';
 
 export interface ThumbnailData {
   linkUrl?: string;
@@ -12,12 +12,8 @@ export interface ThumbnailData {
   labelCustomNode?: React.ReactNode[];
   tagLabels?: string[];
   infoCustomNode?: React.ReactNode[];
-  infoList?: iconData;
-}
-
-export interface iconData {
-  iconType?: 'star' | 'heart' | 'eye';
-  infoText?: string;
+  toggleButton?: boolean;
+  countInfoNode?: React.ReactNode[];
 }
 
 interface ThumbnailItemProps {
@@ -45,6 +41,7 @@ const ThumbnailItem: React.FC<ThumbnailItemProps> = ({
       )}
     >
       <Link to={data.linkUrl} className={styles.thumbnail_link}>
+        {/* thumbnail , badge */}
         <div className={styles.thumbnail_view}>
           <Thumbnail
             stacked={stacked}
@@ -71,19 +68,13 @@ const ThumbnailItem: React.FC<ThumbnailItemProps> = ({
               ))}
             </div>
           )}
+          {/* title */}
           <p className={styles.thumbnail_title}>{data.title}</p>
-          <div className={styles.info_icon}>
-            {/* {data.infoList && data.infoList.length > 0 && (
-              <div className={styles.info_list}>
-                {data.infoList.map((item, index) => (
-                 <span className={styles.type_icon}>{item.iconType}</span>
-                 <span className={styles.info_text}>{item.infoText}</span>
-                ))}
-              </div>
-            )} */}
-          </div>
+          {/* icon info  */}
+          {data.countInfoNode && <div className={styles.count_info_node}>{data.countInfoNode}</div>}
         </div>
       </Link>
+      {data.toggleButton && <ToggleButton variant="heart" className={styles.toggle_btn} />}
     </div>
   );
 };
