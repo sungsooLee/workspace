@@ -1,6 +1,6 @@
 //  IA105 / NLP_BO_CMS_1016, NLP_BO_CMS_1002 / 학습자원조회_나의 학습자원_등록_동영상(자체)
 
-import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
+import { createLazyFileRoute, useBlocker, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { Button, Divider, useModal } from '@learnway/ui';
 import {
@@ -41,6 +41,16 @@ function RouteComponent() {
 
   const isDrafted = watch('isDrafted');
   const isCourseUsed = watch('isCourseUsed');
+
+  useBlocker({
+    shouldBlockFn: async () => {
+      if (!formState.isDirty) return false;
+      return !(await openConfirm({
+        title: t('이동 하시겠습니까?'),
+        content: t('입력 중인 항목이 초기화됩니다.'),
+      }));
+    },
+  });
 
   useEffect(() => {
     if (data) updateFormData(convertToForm(data));
