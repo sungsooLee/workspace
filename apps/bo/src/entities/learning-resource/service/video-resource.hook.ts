@@ -13,6 +13,8 @@ const useVideoResourceHook = (provider: DynamicFormProvider) => {
   const { watch, onFormChange } = provider;
   const intervalRef = useRef<NodeJS.Timer>();
 
+  const fileChangeId = watch('fileChangeId');
+  console.log('🚀 ~ useVideoResourceHook ~ fileChangeId:', fileChangeId);
   const isDrafted = watch('isDrafted');
   const status = watch('processingStatus');
   const playTime = duration(watch('contentAddInfo'), DATE_TIME_FORMAT.HOUR_MIN_SEC);
@@ -61,6 +63,11 @@ const useVideoResourceHook = (provider: DynamicFormProvider) => {
     if (isProcessingNone(status)) return;
 
     // 기존에 비디오 변경중이던 내역이 있다면 변경상태 조회 시작
+    if (fileChangeId && !sessionStorage.getItem(videoChangeKey(contentUuid)))
+      sessionStorage.setItem(
+        videoChangeKey(contentUuid),
+        JSON.stringify({ contentUuid, resourceId: fileChangeId }),
+      );
     const videoChangeResource = sessionStorage.getItem(videoChangeKey(contentUuid));
     if (videoChangeResource) {
       if (!videoChangeResourceId) {
@@ -80,6 +87,7 @@ const useVideoResourceHook = (provider: DynamicFormProvider) => {
       // 비디오 변경 작업이 완료된 경우 정리
       if (videoChangeResource && videoChangeResourceId) {
         setVideoChangeResourceId(undefined);
+        onFormChange({ fileChangeId: 0 });
         sessionStorage.removeItem(videoChangeKey(contentUuid));
       }
     }
@@ -93,7 +101,7 @@ const useVideoResourceHook = (provider: DynamicFormProvider) => {
     if (isProcessingCompleted(status)) {
       fetchVideoContent();
     }
-  }, [contentUuid, status, videoChangeResourceId]);
+  }, [contentUuid, status, fileChangeId, videoChangeResourceId]);
 
   useEffect(() => {
     return () => {
