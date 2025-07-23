@@ -9,9 +9,12 @@ import dayjs from 'dayjs';
 import { EnrollmentRegist } from './enrollment-regist';
 import { EnrollmentWait } from './enrollment-wait';
 import { EnrollmentCancel } from './enrollment-cancel';
-
+import { queryOptions as sequenceQueryOptions } from '@entities/learning-sequence/service/learning-sequence.queries';
 import { queryOptions as companysQueryOptions } from '@entities/companies/service/companies.queries';
 import { SequenceTabDetail } from '@pages/_layout/learning/learning-sequence/-common/type';
+import { generateYears } from '@learnway/shared';
+import { useFetchEnrollmentSequenceCombo } from '@entities/learning-sequence/service/learning-sequence.hook';
+import { useFetchAuthUser } from '@learnway/auth/entities';
 
 // type EnrollmentComponentProps = {
 
@@ -22,13 +25,13 @@ import { SequenceTabDetail } from '@pages/_layout/learning/learning-sequence/-co
  * @returns
  */
 const EnrollmentComponent = () => {
+  const { data: loginUser } = useFetchAuthUser();
   const router = useRouter();
   const routerState = useRouterState();
-  const courseId = routerState.location.state?.courseIdKey || 0; // 과정ID
-  const courseSequenceId = routerState.location.state?.courseSequenceIdKey || 0; // 차수ID(있는경우 검색조건 값 선택)
-  console.log('## courseId =>', courseId);
-  console.log('## courseSequenceId =>', courseSequenceId);
-  const [openYear, setOpenYear] = useState<object[]>();
+  const courseIdKey = routerState.location.state?.courseIdKey || 0; // 과정ID
+  const courseSequenceIdKey = routerState.location.state?.courseSequenceIdKey || 0; // 차수ID(있는경우 검색조건 값 선택)
+  console.log('## courseIdKey =>', courseIdKey);
+  console.log('## courseSequenceIdKey =>', courseSequenceIdKey);
   const [selectedTabKey, setSelectedTabKey] = useState<string>(SequenceTabDetail.ENROLLMENT_REGIST);
 
   const handleTabChange = (tabKey: string) => {
@@ -38,18 +41,43 @@ const EnrollmentComponent = () => {
   };
 
   useEffect(() => {
-    const currentYear = dayjs().year(); // 현재 년도 (number)
-    const yearOptions = Array.from({ length: 11 }, (_, i) => {
-      const year = currentYear - i;
-      return { label: year, value: year };
-    });
-    setOpenYear(yearOptions);
+    if (!loginUser) return;
+    if (loginUser.activeTenant?.tenantId) {
+      setCompanyOption(loginUser.activeTenant?.tenantId);
+    }
+  }, [selectedTabKey, loginUser]);
 
-    setCompanyOption();
-  }, []);
+  useEffect(() => {
+    setSequenceOption();
+  }, [selectedTabKey]);
 
-  const setCompanyOption = async () => {
-    const companys = await queryClient.fetchQuery(companysQueryOptions.tenantCompany(0));
+  const setSequenceOption = async () => {
+    console.log('### setSequenceOption');
+    const searchValues = getValues();
+    const payload = {
+      openingYear: searchValues.openingYear,
+      courseId: courseIdKey,
+    };
+    const result = await queryClient.fetchQuery(
+      sequenceQueryOptions.enrollmentSequenceCombo(payload),
+    );
+    setOptions('courseSequenceId', [
+      { label: '1', value: 1 },
+      { label: '2', value: 2 },
+    ]);
+    // if (result) {
+    //   console.log('result=>', result);
+    //   const sequenceIdOptions = result.map((item: any) => ({
+    //     label: item.courseSequenceName,
+    //     value: item.courseSequenceId,
+    //   }));
+    //   setOptions('courseSequenceId', sequenceIdOptions);
+    // }
+  };
+
+  const setCompanyOption = async (tenantId: number) => {
+    console.log('### setCompanyOption');
+    const companys = await queryClient.fetchQuery(companysQueryOptions.tenantCompany(tenantId));
     const companyIdOptions = companys.map((item) => ({
       label: item.name,
       value: item.companyId,
@@ -61,10 +89,10 @@ const EnrollmentComponent = () => {
     switch (selectedTabKey) {
       case SequenceTabDetail.ENROLLMENT_REGIST:
         return [
-          { label: t('ENROLL_DONE'), value: 'ENROLL_DONE' },
-          { label: t('ENROLL_REQUEST'), value: 'ENROLL_REQUEST' },
-          { label: t('CANCEL_DONE'), value: 'CANCEL_DONE' },
-          { label: t('REJECT_DONE'), value: 'REJECT_DONE' },
+          { label: t('결재/승인 완료'), value: 'ENROLL_DONE' },
+          { label: t('신청중'), value: 'ENROLL_REQUEST' },
+          { label: t('취소'), value: 'CANCEL_DONE' },
+          { label: t('반려'), value: 'REJECT_DONE' },
         ];
       case SequenceTabDetail.ENROLLMENT_WAIT:
         return [
@@ -92,12 +120,13 @@ const EnrollmentComponent = () => {
           value: dayjs().year(),
           format: 'number',
           presetOptionLabel: t('LABEL.form.label.select', '선택'),
-          options: openYear,
+          options: generateYears(10),
         },
         {
           name: 'courseSequenceId',
           type: 'dropdown',
           label: t('LABEL.form.label.sequence', '차수'),
+          format: 'number',
           value: '',
           presetOptionLabel: t('LABEL.form.label.select', '선택'),
           options: [],
@@ -163,15 +192,6 @@ const EnrollmentComponent = () => {
     },
   };
 
-  useEffect(() => {
-    const currentYear = dayjs().year(); // 현재 년도 (number)
-    const yearOptions = Array.from({ length: 11 }, (_, i) => {
-      const year = currentYear - i;
-      return { label: year, value: year };
-    });
-    setOpenYear(yearOptions);
-  }, []);
-
   const queryClient = useQueryClient();
   const { provider: searchProvider, getValues, setValue, setOptions } = useSearchBox(searchConfig);
 
@@ -181,8 +201,8 @@ const EnrollmentComponent = () => {
       key: SequenceTabDetail.ENROLLMENT_REGIST,
       content: (
         <EnrollmentRegist
-          courseId={courseId}
-          courseSequenceId={courseSequenceId}
+          courseId={courseIdKey}
+          courseSequenceId={courseSequenceIdKey}
           searchProvider={searchProvider}
           getValues={getValues}
           setValue={setValue}
@@ -195,8 +215,8 @@ const EnrollmentComponent = () => {
       key: SequenceTabDetail.ENROLLMENT_WAIT,
       content: (
         <EnrollmentWait
-          courseId={courseId}
-          courseSequenceId={courseSequenceId}
+          courseId={courseIdKey}
+          courseSequenceId={courseSequenceIdKey}
           searchProvider={searchProvider}
           getValues={getValues}
           setValue={setValue}
@@ -209,8 +229,8 @@ const EnrollmentComponent = () => {
       key: SequenceTabDetail.ENROLLMENT_CANCEL,
       content: (
         <EnrollmentCancel
-          courseId={courseId}
-          courseSequenceId={courseSequenceId}
+          courseId={courseIdKey}
+          courseSequenceId={courseSequenceIdKey}
           searchProvider={searchProvider}
           getValues={getValues}
           setValue={setValue}

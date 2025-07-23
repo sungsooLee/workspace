@@ -1,13 +1,7 @@
 import { DropdownFormField } from '@features/form/ui/dropdown-form-field';
-import { CODE_GROUP } from '@learnway/hooks';
 import { generateYears } from '@learnway/shared';
 import { ContentsRow, Input } from '@learnway/ui';
-import {
-  FormRow2,
-  SearchBoxForm,
-  TenantByRoleDropdownFormField,
-  TenantChannelDropdownFormField,
-} from '@shared/ui';
+import { FormRow2, SearchBoxForm } from '@shared/ui';
 import React, { FormEventHandler } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -32,10 +26,11 @@ export const SequenceSearchForm: React.FC<SequenceSearchFormProps> = ({
           provider={provider}
           name="openingYear"
           label={t('LABEL.form.label.openingDate')}
+          format="number"
           element={
             <DropdownFormField
               options={generateYears(10)}
-              presetOptionLabel={t('LABEL.form.label.all')}
+              presetOptionLabel={t('LABEL.form.label.select', '선택')}
             />
           }
           validation={{

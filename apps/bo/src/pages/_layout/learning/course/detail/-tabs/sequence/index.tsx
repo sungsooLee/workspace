@@ -26,12 +26,7 @@ const SequenceComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBase
     useUpdateEffect(() => {
       switch (lastTriggered?.key) {
         case TriggerKey.LIST:
-          navigate({ to: CourseRoute.to });
-          break;
-        case TriggerKey.SAVE:
-          break;
-        case TriggerKey.DELETE:
-          // handleDeleteAction(lastTriggered.payload);
+          if (mode === 'MAIN') navigate({ to: CourseRoute.to });
           break;
       }
     }, [lastTriggered]);
@@ -49,7 +44,14 @@ const SequenceComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBase
     return mode === 'MAIN' ? (
       <SequenceList setMode={setMode} setSequenceId={setSequenceId} courseId={courseId} />
     ) : (
-      <SequenceDetail ref={ref} setMode={setMode} courseId={courseId} sequenceId={sequenceId} />
+      <SequenceDetail
+        ref={ref}
+        mode={mode}
+        setMode={setMode}
+        courseId={courseId}
+        sequenceId={sequenceId}
+        lastTriggered={lastTriggered}
+      />
     );
   },
 );

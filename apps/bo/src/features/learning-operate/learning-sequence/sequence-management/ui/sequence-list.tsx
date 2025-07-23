@@ -51,7 +51,13 @@ import { CopyBatchButtons } from '../component/copy-batch-buttons';
 import { Mode } from '@pages/_layout/learning/learning-sequence/-common/type';
 import { SequenceSearchForm } from '../component/sequence-search-form';
 import { CourseSequenceSearchForm } from '../component/course-sequence-search-form';
-import { useFetchCourseSequences } from '@entities/learning-sequence/service/learning-sequence.hook';
+import {
+  useCopySequence,
+  useCreateSequence,
+  useDeleteSequenceList,
+  useFetchCourseSequences,
+  useUpdateSequenceList,
+} from '@entities/learning-sequence/service/learning-sequence.hook';
 
 type SequenceListComponentProps = {
   setMode: (value: string) => void;
@@ -88,9 +94,14 @@ const SequenceListComponent = ({
 }: SequenceListComponentProps) => {
   console.log('## courseIdProps:', courseIdProps);
   const router = useRouter();
-  const { open: openModal, confirm: openConfirm, alert: openAlert } = useModal();
+  const { open: openModal, confirm: openConfirm, alert: openAlert, showSaveComplete } = useModal();
   const [columns, setColumns] = useState() as any;
   const [selectedItems, setSelectedItems] = useState<any[]>([]);
+
+  const { createSequence } = useCreateSequence({});
+  const { updateSequenceList } = useUpdateSequenceList({});
+  const { deleteSequenceList } = useDeleteSequenceList({});
+  const { copySequence } = useCopySequence({});
 
   _global.linkClick = (payload: any) => {
     setMode(Mode.DETAIL);
@@ -254,6 +265,12 @@ const SequenceListComponent = ({
     setColumns(columns);
   }, []);
 
+  const handleOnRefresh = () => {
+    console.log('### handleOnRefresh');
+    const searchValues = getValues();
+    handleOnSearch(searchValues);
+  };
+
   const handleOnSearch = useCallback((data: any) => {
     console.log('## search param:', data);
     const payload = {
@@ -280,18 +297,20 @@ const SequenceListComponent = ({
       content: t('요청하신 개수로 차수가 추가됩니다.'),
     });
     if (!confirmRes) return;
-    const gridData: any[] = gConfig.gridData?.content ? gConfig.gridData?.content : [];
-    const lastId = gridData?.length === 0 ? 0 : gridData[gridData?.length - 1].sequence;
-
-    const addRows = Array.from({ length: inputAdd }, (_, i) => ({
-      sequence: lastId + i + 1,
-      sequenceId: lastId + i + 1,
-      courseSequenceName: 'TEST' + i + 1,
-    }));
-    console.log('##addRows=>', addRows);
-    const newData = [...gridData, ...addRows];
-    // setGridData(newData);
-    // gConfig.gridFetch();
+    const payload = {
+      courseId: courseIdProps,
+      addQuantity: inputAdd,
+    };
+    await createSequence(payload, {
+      onSuccess: async (data: any, variables: any, context: any) => {
+        console.log('onSuccess:', data);
+        await showSaveComplete();
+        handleOnRefresh();
+      },
+      onError: (data: any, variables: any, context: any) => {
+        console.log('onError:', data);
+      },
+    });
   };
 
   const onCopyRow = async () => {
@@ -331,12 +350,19 @@ const SequenceListComponent = ({
   };
 
   const handleRemoveRows = async () => {
-    const validate = ['수강신청중', '학습전', '학습중'];
+    const validate = [
+      'ENROLLMENT_IN_PROGRESS',
+      'LEARNING_NOT_STARTED',
+      'LEARNING_IN_PROGRESS',
+      'LEARNING_COMPLETED',
+    ];
     console.log('selectedItems=>', selectedItems);
     if (selectedItems.length === 0) return;
 
-    //TODO: flag로 구분해서 수강신청중 부터 이후 시점부터 삭제 불가하도록 수정
-    const hasActiveEnrollment = selectedItems.some((item) => validate.includes(item.status));
+    //  수강신청중 부터 이후 시점부터 삭제 불가하도록 수정
+    const hasActiveEnrollment = selectedItems.some((item) =>
+      validate.includes(item.learningStatusType),
+    );
 
     if (hasActiveEnrollment) {
       openAlert({
@@ -354,9 +380,19 @@ const SequenceListComponent = ({
     });
     if (!confirmRes) return;
 
-    openAlert({
-      title: t('완료되었습니다.'),
-      content: t('요청하신 작업이 정상적으로 완료되었습니다.'),
+    const payload = selectedItems.map((x: any) => {
+      return { courseSequenceId: x.courseSequenceId };
+    });
+    console.log('##payload: ', payload);
+    await deleteSequenceList(payload, {
+      onSuccess: async (data: any, variables: any, context: any) => {
+        console.log('onSuccess:', data);
+        await showSaveComplete();
+        handleOnRefresh();
+      },
+      onError: (data: any, variables: any, context: any) => {
+        console.log('onError:', data);
+      },
     });
   };
 
@@ -364,6 +400,17 @@ const SequenceListComponent = ({
     console.log('##save');
     console.log('gConfig:', gConfig);
     console.log('save:', gConfig.gridData);
+    // const payload = gConfig.gridData?.map((x: any) => {
+    //   return {
+    //     courseSequenceId: x.courseSequenceId,
+    //     learningStartType: x.learningStartType,
+    //     enrollStartDate: x.enrollStartDate,
+    //     enrollEndDate: x.enrollEndDate,
+    //     learningStartDate: x.learningStartDate,
+    //     learningEndDate: x.learningEndDate,
+    //     maxEnrollQuota: x.maxEnrollQuota,
+    //   };
+    // });
   };
 
   const columnHelper = createColumnHelper<any>();

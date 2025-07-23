@@ -1,8 +1,7 @@
-import { SearchBoxConfig, SearchBoxProvider, useSearchBox } from '@learnway/hooks';
+import { SearchBoxProvider } from '@learnway/hooks';
 import {
   Button,
   Divider,
-  Dropdown,
   GridBox,
   StatsSummary,
   StatsSummaryData,
@@ -18,12 +17,12 @@ import { t } from 'i18next';
 import { LMSApiPrefix } from '@learnway/config';
 import { FieldValues, UseFormGetValues, UseFormSetValue } from 'react-hook-form';
 import { DATE_TIME_FORMAT, getDateToString, SelectOption } from '@learnway/shared';
-import dayjs from 'dayjs';
 import { useRouter } from '@tanstack/react-router';
 import { Mode } from '@pages/_layout/learning/learning-sequence/-common/type';
 import { RegistPaymentModal } from '../modal/regist-payment-modal';
 import { ForceApprovalModal } from '../modal/force-approval-modal';
 import { useQueryClient } from '@tanstack/react-query';
+import { getEnrollStatusName } from '../constants/enroll-status';
 
 const _global = {
   linkClickSequenceName: (payload: any) => {
@@ -74,12 +73,7 @@ const EnrollmentRegistComponent = ({
   const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
   const [columns, setColumns] = useState() as any;
   const [selectedRows, setSelectedRows] = useState<any[]>();
-  const [statsCount, setStatsCount] = useState<Array<StatsSummaryData>>([
-    { label: t('ENROLL_DONE'), value: 0 },
-    { label: t('ENROLL_REQUEST'), value: 0 },
-    { label: t('CANCEL_DONE'), value: 0 },
-    { label: t('REJECT_DONE'), value: 0 },
-  ]);
+  const [statsCount, setStatsCount] = useState<Array<StatsSummaryData>>([]);
   const queryClient = useQueryClient();
 
   _global.linkClickSequenceName = (payload: any) => {
@@ -87,8 +81,8 @@ const EnrollmentRegistComponent = ({
       to: '/learning/learning-sequence/sequence-management',
       state: {
         pMode: Mode.DETAIL,
-        pCourseId: 1,
-        pSequenceId: 1,
+        // pCourseId: 1,
+        pSequenceId: payload.courseSequenceId,
       },
     });
   };
@@ -146,7 +140,7 @@ const EnrollmentRegistComponent = ({
       }),
       columnHelper.accessor('enrollStatusType', {
         header: t('상태'),
-        cell: (info) => info.getValue(),
+        cell: (info) => getEnrollStatusName(info.getValue()),
         enableGrouping: false,
         size: 120,
       }),
@@ -221,71 +215,41 @@ const EnrollmentRegistComponent = ({
     const result = await queryClient.fetchQuery(queryOptions.enrollmentRegistCount(payload));
     console.log('## result =>', result);
     if (result) {
-      const statsCount = result.map((x: any) => {
-        return { label: x.enrollStstusType, value: x.count };
+      const statsCount = result.countInfo.map((x: any) => {
+        return { label: getEnrollStatusName(x.enrollStstusType), value: x.count };
       });
       setStatsCount(statsCount);
     }
   };
 
-  const getStats = (): Array<StatsSummaryData> => [
-    {
-      label: '수강신청',
-      value: 1000,
-    },
-    {
-      label: '결재대기중',
-      value: 1000,
-    },
-    {
-      label: '운영자 승인대기중',
-      value: 1000,
-    },
-    {
-      label: '결재 완료',
-      value: 1000,
-    },
-    {
-      label: '수강취소',
-      value: 1000,
-    },
-    {
-      label: '반려',
-      value: 1000,
-    },
-  ];
-
   const handleOnSearch = useCallback((data: any) => {
-    console.log('#search:', data);
-    // const payload = {
-    //   openingYear: data.openingYear || 0,
-    //   courseSequenceId: data.courseSequenceId || 0,
-    //   enrollStatusType: data.enrollStatusType || '',
-    //   learningStartDate: data.learningRange?.from || '',
-    //   learningEndDate: data.learningRange?.to || '',
-    //   companyId: data.company || 0,
-    //   deptId: data.deptId || 0,
-    //   employeeNumber: data.employeeNumber || '',
-    //   name: data.name || '',
-    // };
     const payload = {
-      // openingYear: 0,
+      // openingYear: data.openingYear || null,
+      // courseSequenceId: data.courseSequenceId || null,
       openingYear: 2025,
-      // courseSequenceId: 0,
       courseSequenceId: 2,
-      enrollStatusType: 'ENROLL_DONE',
-      // learningStartDate: '2025-07-22T06:10:47.454Z',
-      // learningEndDate: '2025-07-22T06:10:47.454Z',
-      learningStartDate: '2025-06-10T07:39:56.18',
-      learningEndDate: '2025-07-23T07:39:56.18',
-      companyId: 0,
-      deptId: 0,
-      employeeNumber: 'string',
-      name: 'string',
+      enrollStatusType: data.enrollStatusType || '',
+      // learningStartDate: data.learningRange?.from
+      //   ? getDateToString(data.learningRange?.from, DATE_TIME_FORMAT.DATE)
+      //   : null,
+      // learningEndDate: data.learningRange?.to
+      //   ? getDateToString(data.learningRange?.to, DATE_TIME_FORMAT.DATE)
+      //   : null,
+      // companyId: data.company || null,
+      // deptId: data.deptId || null,
+      learningStartDate: '2025-06-22',
+      learningEndDate: '2025-08-22',
+      companyId: 54,
+      deptId: 1,
+      employeeNumber: data.employeeNumber || '',
+      name: data.name || '',
     };
+
     console.log('## payload=>', payload);
     setStats(payload);
+    console.log('setStats completed');
     gridFetch(payload);
+    console.log('gridFetch completed');
   }, []);
 
   const handleBulkApproval = async () => {

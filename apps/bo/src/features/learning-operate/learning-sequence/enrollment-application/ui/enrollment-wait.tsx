@@ -93,13 +93,13 @@ const EnrollmentWaitComponent = ({
         enableGrouping: false,
         size: 58,
       }),
-      columnHelper.accessor('openYear', {
+      columnHelper.accessor('openingYear', {
         header: t('개설'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
         size: 58,
       }),
-      columnHelper.accessor('sequenceName', {
+      columnHelper.accessor('courseSequenceName', {
         header: t('차수명'),
         cell: (info) => (
           <Button
