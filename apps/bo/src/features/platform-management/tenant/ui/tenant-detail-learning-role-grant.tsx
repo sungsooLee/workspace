@@ -18,10 +18,10 @@ import {
   useGridBox,
   useModal, useToast,
 } from '@learnway/ui';
-import { FormRow, SectionLayout, UserGroupTabsChoiceModal } from '@shared/ui';
+import { FormRow, SectionLayout, UserGroupChoiceModal, UserGroupTabsChoiceModal } from '@shared/ui';
 import { useRouterState } from '@tanstack/react-router';
 import { createColumnHelper, Table } from '@tanstack/react-table';
-import { EnFormMode } from '@types';
+import { BlackwhiteUsersParam, CombineUserGroup, EnFormMode } from '@types';
 import { t } from 'i18next';
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { FieldValues, useWatch } from 'react-hook-form';
@@ -160,6 +160,21 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
       });
     }
   };
+
+  const checkSubjectUserGroups = (e: any) => {
+    e.stopPropagation();
+
+    const combiners: any[] = []
+    userGroupWatch.forEach((items: any) => {
+      items.combiners.forEach((item: any) => combiners.push(item));
+    })
+    const payload: any = [{ combiners }]
+
+    openModal({
+      width: 'xl',
+      content: <UserGroupChoiceModal groups={payload}/>,
+    });
+  }
 
   useEffect(() => {
     if (roleData) {
@@ -309,6 +324,7 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
                             variant="text"
                             label={t('대상자')}
                             disabled={isRoleUserGroup}
+                            onClick={checkSubjectUserGroups}
                           />
                         }
                       />
