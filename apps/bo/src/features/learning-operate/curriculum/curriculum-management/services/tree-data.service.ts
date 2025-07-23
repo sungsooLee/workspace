@@ -88,6 +88,7 @@ export class TreeDataService {
                         mappingCurriculumType: lesson.mappingCurriculumType,
                         moduleType: item.moduleType,
                         sortOrder: lesson.sortOrder || lessonIndex + 1,
+                        moduleId: item.moduleId,
                       },
                       children: [],
                     }))
@@ -117,6 +118,7 @@ export class TreeDataService {
                   description: item.lessonDescription,
                   mappingCurriculumType: item.mappingCurriculumType,
                   sortOrder: item.sortOrder,
+                  moduleId: item.moduleId,
                 },
                 children: [],
               };
@@ -162,6 +164,7 @@ export class TreeDataService {
                         mappingCurriculumType: lesson.mappingCurriculumType,
                         moduleType: item.moduleType,
                         sortOrder: lesson.sortOrder || lessonIndex + 1,
+                        moduleId: item.moduleId,
                       },
                       children: [],
                     }))

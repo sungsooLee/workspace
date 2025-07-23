@@ -6,7 +6,7 @@ import { FormState } from '../types/form.types';
 
 interface UseCurriculumTreeProps {
   curriculumDetail: CurriculumResponse | undefined;
-  onNodeSelect: (node: TreeNode, treeData: TreeNode[]) => void;
+  onNodeSelect: (node: TreeNode | null, treeData: TreeNode[]) => void;
   formState: FormState;
   curriculumId?: number;
 }
@@ -49,7 +49,13 @@ export const useCurriculumTree = ({
   );
 
   const handleNodeSelect = useCallback(
-    (node: TreeNode, forceRefresh = false) => {
+    (node: TreeNode | null, forceRefresh = false) => {
+      if (!node) {
+        prevSelectedNodeRef.current = null;
+        onNodeSelect(null, treeData);
+        return;
+      }
+
       if (!forceRefresh && prevSelectedNodeRef.current?.id === node.id) {
         return;
       }

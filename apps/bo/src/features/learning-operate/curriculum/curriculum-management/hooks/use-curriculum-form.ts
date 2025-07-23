@@ -12,6 +12,7 @@ interface UseCurriculumFormProps {
 
 export const useCurriculumForm = ({ clearAllValidators, setFormKey }: UseCurriculumFormProps) => {
   const [formStatus, setFormStatus] = useState<FROM_STATUS>(FROM_STATUS.NONE);
+  const [isDndActive, setIsDndActive] = useState(false);
   const [formState, setFormState] = useState<FormState>({
     activeFormType: null,
     selectedNode: null,
@@ -60,8 +61,20 @@ export const useCurriculumForm = ({ clearAllValidators, setFormKey }: UseCurricu
   }, [clearAllValidators, setFormKey]);
 
   const updateFormStateForNode = useCallback(
-    (node: TreeNode, treeData: TreeNode[]) => {
+    (node: TreeNode | null, treeData: TreeNode[]) => {
       clearAllValidators();
+
+      if (!node) {
+        setFormState({
+          activeFormType: null,
+          selectedNode: null,
+          parentNode: null,
+          isEditing: false,
+        });
+        setFormStatus(FROM_STATUS.NONE);
+        setFormKey((prev) => prev + 1);
+        return;
+      }
 
       setFormState({
         activeFormType: node.type as MAPPING_CURRICULUM_TYPE,
@@ -96,5 +109,7 @@ export const useCurriculumForm = ({ clearAllValidators, setFormKey }: UseCurricu
     handleFormCancel,
     updateFormStateForNode,
     resetFormState,
+    isDndActive,
+    setIsDndActive,
   };
 };

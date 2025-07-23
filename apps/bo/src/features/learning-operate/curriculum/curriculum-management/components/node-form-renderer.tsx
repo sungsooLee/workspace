@@ -89,15 +89,25 @@ export const NodeFormRenderer: React.FC<NodeFormRendererProps> = ({
             : selectedNode.id
           : undefined;
 
-      // 부모 모듈 ID 추출 (커리큘럼에 바로 붙어있는 레슨의 경우에는 선택한 노드에서 모듈ID 추출)
+      // 부모 모듈 ID 추출 (DnD 후 변경된 정보를 우선 사용)
       const moduleId =
-        isEditing && selectedNode?.moduleId
-          ? selectedNode.moduleId
-          : isEditing && selectedNode?.parentId
-            ? typeof selectedNode.parentId === 'string'
-              ? parseInt(selectedNode.parentId.toString().replace('module-', ''))
-              : selectedNode.parentId
-            : undefined;
+        // 1. 현재 선택된 노드의 data.moduleId (DND 후 업데이트된 값)
+        isEditing && selectedNode?.data?.moduleId
+          ? selectedNode.data.moduleId
+          : // 2. 현재 선택된 노드의 moduleId 속성
+            isEditing && selectedNode?.moduleId
+            ? selectedNode.moduleId
+            : // 3. 부모 노드가 모듈인 경우 부모 노드의 ID
+              isEditing && parentNode?.type === MAPPING_CURRICULUM_TYPE.MODULE
+              ? typeof parentNode.id === 'string'
+                ? parseInt(parentNode.id.replace('module-', ''))
+                : parentNode.id
+              : // 4. 선택된 노드의 parentId (모듈인 경우)
+                isEditing && selectedNode?.parentId
+                ? typeof selectedNode.parentId === 'string'
+                  ? parseInt(selectedNode.parentId.toString().replace('module-', ''))
+                  : selectedNode.parentId
+                : undefined;
       return (
         <LessonForm
           key={`lesson-${lessonId || 'new'}`}

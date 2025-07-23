@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { FormSubTitle, useModal } from '@learnway/ui';
 import { SectionLayout } from '@shared/ui';
 import { FORM_MODE } from '@shared/const';
@@ -37,6 +37,7 @@ const CurriculumDetailComponent = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
   const queryClient = useQueryClient();
+  const prevCurriculumIdRef = useRef(0);
   // Dynamic Form Hook
   const {
     provider,
@@ -102,6 +103,8 @@ const CurriculumDetailComponent = ({
     refetchCurriculumDetail,
     formState,
     router,
+    expandedKeys,
+    setExpandedKeys,
   });
 
   const handleSave = async () => {
@@ -147,25 +150,29 @@ const CurriculumDetailComponent = ({
     }
   };
   useEffect(() => {
-    if (mode === FORM_MODE.detail && curriculumId > 0 && curriculumDetail && treeData.length > 0) {
-      const rootNode = treeData.find(
-        (node) => node.parentId === null || node.parentId === undefined,
-      );
+    if (curriculumId > 0) {
+      if (treeData.length > 0 && prevCurriculumIdRef.current !== curriculumId) {
+        prevCurriculumIdRef.current = curriculumId;
 
-      if (rootNode && !formState.selectedNode) {
-        // 트리 확장
-        const keysToExpand: string[] = [rootNode.key];
-        treeData.forEach((node) => {
-          if (node.parentId === rootNode.id) {
-            keysToExpand.push(node.key);
-          }
-        });
-        setExpandedKeys(keysToExpand);
+        const rootNode = treeData.find(
+          (node) => node.parentId === null || node.parentId === undefined,
+        );
 
-        handleNodeSelect(rootNode);
+        if (rootNode && !formState.selectedNode) {
+          // 트리 확장
+          const keysToExpand: string[] = [rootNode.key];
+          treeData.forEach((node) => {
+            if (node.parentId === rootNode.id) {
+              keysToExpand.push(node.key);
+            }
+          });
+          setExpandedKeys(keysToExpand);
+
+          handleNodeSelect(rootNode);
+        }
       }
     }
-  }, [curriculumDetail, treeData]);
+  }, [curriculumId, treeData]);
 
   const handleCopyCurriculum = (curriculumId: number) => {
     if (curriculumId > 0) {
