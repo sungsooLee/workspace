@@ -10,7 +10,7 @@ const FilterComponent = () => {
   // modal
   const { open: openModal } = useModal();
 
-  // 선택된 값이 있으면 true 변경
+  // filer 팝업에서 선택된 값이 있으면 true 변경 필요
   const [selectCheck, setSelectCheck] = useState(true);
 
   // 퍼블수정 20250331 : option card 컴포넌트 수정 value 값 추가
@@ -59,32 +59,34 @@ const FilterComponent = () => {
     { label: '이북', value: 'C3' },
   ];
 
+  const handleClick = () => {
+    openModal({
+      width: 'md',
+      content: <FilterPopup />,
+    });
+  };
+
   return (
-    <div className={`${styles.start} ${styles.filter_wrap}`}>
+    <div className={cn(styles.start, styles.filter_wrap)}>
       <div className={styles.filter_btn_box}>
         <Button
           className={cn(styles.filter_btn, selectCheck === true ? styles.selected : '')}
-          onClick={() =>
-            // 퍼블수정 20250314 : title 삭제
-            openModal({
-              width: 'md',
-              content: <FilterPopup />,
-            })
+          onClick={handleClick}
+          onlyIcon={true}
+          icon={
+            <IcoFilter
+              width={20}
+              height={20}
+              fill="none"
+              stroke={selectCheck === true ? '#fff' : '#131416'}
+            />
           }
-        >
-          <IcoFilter
-            width={20}
-            height={20}
-            fill="none"
-            stroke={selectCheck === true ? '#fff' : '#07287e'}
-          ></IcoFilter>
-        </Button>
+        ></Button>
       </div>
 
       <div className={styles.select_box}>
         {/* 퍼블수정 20250331 : 옵션 추가 */}
         <OptionCard
-          cols={8}
           options={filter}
           multiple
           className={styles.option_card}
