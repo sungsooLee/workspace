@@ -18,13 +18,13 @@ function RouteComponent() {
   // const { categoryId } = Route.useParams();
 
   const items = [
-    <Link to="">
+    <Link to={'/'}>
       <img src={bnrCImage1} alt="" />
     </Link>,
-    <Link to="">
+    <Link to={'/'}>
       <img src={bnrCImage2} alt="" />
     </Link>,
-    <Link to="">
+    <Link to={'/'}>
       <img src={bnrCImage1} alt="" />
     </Link>,
   ];

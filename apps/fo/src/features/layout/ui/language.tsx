@@ -36,7 +36,8 @@ const PopoverContent = () => {
               <Button
                 key={idx}
                 className={`${styles.btn} ${activeIdx === idx ? styles.active : ''}`}
-                onClick={() => handleClick(idx)}>
+                onClick={() => handleClick(idx)}
+              >
                 {langs}
               </Button>
             </li>
@@ -57,7 +58,7 @@ const LanguageComponent = ({ className }: LanguageComponentProp) => {
     <>
       {/* 퍼블수정 20250321 : 언어 분기처리 (pc,mobile) */}
       {isMobile ? (
-        <Link to="" className={`${styles.btn_language} ${className}`}>
+        <Link to={'/'} className={`${styles.btn_language} ${className}`}>
           <span className={styles.select}>{'KR'}</span>
           <IcoArrowDown width={16} height={16} stroke="#131C30" />
         </Link>
@@ -67,7 +68,8 @@ const LanguageComponent = ({ className }: LanguageComponentProp) => {
           className={`${styles.btn_language} ${className}`}
           side="bottom"
           align="end"
-          sideOffset={5}>
+          sideOffset={5}
+        >
           <span className={styles.select}>{'KR'}</span>
           <IcoArrowDown width={16} height={16} stroke="#131C30" />
         </Popover>

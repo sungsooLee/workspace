@@ -162,12 +162,13 @@ const CategoryPopupComponent = () => {
               <div className={styles.scroll_box}>
                 <div className={styles.tit_head}>
                   <h2>
-                    <Link to="" className={styles.tit}>
+                    <Link to={'/'} className={styles.tit}>
                       기업경영
                     </Link>
                     <Button
                       onClick={categoryAll}
-                      className={`${styles.btn_cate} ${isAllOpen ? styles.active : ''}`}>
+                      className={`${styles.btn_cate} ${isAllOpen ? styles.active : ''}`}
+                    >
                       <IcoArrowDown width={16} height={16} stroke="#07287E" />
                     </Button>
                   </h2>
@@ -183,7 +184,8 @@ const CategoryPopupComponent = () => {
                         </h3>
                         <Button
                           className={`${styles.btn_cate} ${openStates[index] ? styles.active : ''}`}
-                          onClick={() => categoryDepth(index)}>
+                          onClick={() => categoryDepth(index)}
+                        >
                           <IcoArrowDown width={16} height={16} stroke="#A9AFB8" />
                         </Button>
                       </div>
@@ -206,10 +208,10 @@ const CategoryPopupComponent = () => {
                 </div>
 
                 <div className={styles.banner_box}>
-                  <Link to="" className={styles.banner_link}>
+                  <Link to={'/'} className={styles.banner_link}>
                     <img src={bnrImage1} />
                   </Link>
-                  <Link to="" className={styles.banner_link}>
+                  <Link to={'/'} className={styles.banner_link}>
                     <img src={bnrImage2} />
                   </Link>
                 </div>

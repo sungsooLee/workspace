@@ -43,7 +43,7 @@ const IntegratedSearchProcedureComponent = () => {
                 )}
               >
                 {/* link (찜 기능과 겹침으로 따로 빠짐) */}
-                <Link to="" className={thumnailStyles.link}></Link>
+                <Link to={'/'} className={thumnailStyles.link}></Link>
 
                 <div className={thumnailStyles.thumnail_box}>
                   {/* img */}
@@ -143,7 +143,7 @@ const IntegratedSearchProcedureComponent = () => {
                 )}
               >
                 {/* link (찜 기능과 겹침으로 따로 빠짐) */}
-                <Link to="" className={thumnailStyles.link}></Link>
+                <Link to={'/'} className={thumnailStyles.link}></Link>
 
                 <div className={thumnailStyles.thumnail_box}>
                   {/* img */}
@@ -243,7 +243,7 @@ const IntegratedSearchProcedureComponent = () => {
                 )}
               >
                 {/* link (찜 기능과 겹침으로 따로 빠짐) */}
-                <Link to="" className={thumnailStyles.link}></Link>
+                <Link to={'/'} className={thumnailStyles.link}></Link>
 
                 <div className={thumnailStyles.thumnail_box}>
                   {/* img */}
@@ -343,7 +343,7 @@ const IntegratedSearchProcedureComponent = () => {
                 )}
               >
                 {/* link (찜 기능과 겹침으로 따로 빠짐) */}
-                <Link to="" className={thumnailStyles.link}></Link>
+                <Link to={'/'} className={thumnailStyles.link}></Link>
 
                 <div className={thumnailStyles.thumnail_box}>
                   {/* img */}
@@ -449,7 +449,7 @@ const IntegratedSearchProcedureComponent = () => {
                 )}
               >
                 {/* link (찜 기능과 겹침으로 따로 빠짐) */}
-                <Link to="" className={thumnailStyles.link}></Link>
+                <Link to={'/'} className={thumnailStyles.link}></Link>
 
                 <div className={thumnailStyles.thumnail_box}>
                   {/* img */}
@@ -488,7 +488,7 @@ const IntegratedSearchProcedureComponent = () => {
                 )}
               >
                 {/* link (찜 기능과 겹침으로 따로 빠짐) */}
-                <Link to="" className={thumnailStyles.link}></Link>
+                <Link to={'/'} className={thumnailStyles.link}></Link>
 
                 <div className={thumnailStyles.thumnail_box}>
                   {/* img */}

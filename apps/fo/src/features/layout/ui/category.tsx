@@ -133,10 +133,10 @@ const PopoverContent = () => {
                 </div>
 
                 <div className={styles.banner_list}>
-                  <Link to={''} className={styles.banner}>
+                  <Link to={'/'} className={styles.banner}>
                     <img src={bnrImage1} alt="" />
                   </Link>
-                  <Link to={''} className={styles.banner}>
+                  <Link to={'/'} className={styles.banner}>
                     <img src={bnrImage2} alt="" />
                   </Link>
                 </div>
@@ -148,11 +148,12 @@ const PopoverContent = () => {
           <div className={styles.category_inner}>
             <div className={styles.tit_head}>
               <h2>
-                <Link to={''}>기업경영</Link>
+                <Link to={'/'}>기업경영</Link>
               </h2>
               <Button
                 onClick={categoryAll}
-                className={`${styles.btn_cate} ${isAllOpen ? styles.active : ''}`}>
+                className={`${styles.btn_cate} ${isAllOpen ? styles.active : ''}`}
+              >
                 <IcoArrowDown width={16} height={16} stroke="#07287E" />
               </Button>
             </div>
@@ -167,7 +168,8 @@ const PopoverContent = () => {
                     </h3>
                     <Button
                       className={`${styles.btn_cate} ${openStates[index] ? styles.active : ''}`}
-                      onClick={() => categoryDepth(index)}>
+                      onClick={() => categoryDepth(index)}
+                    >
                       <IcoArrowDown width={16} height={16} stroke="#A9AFB8" />
                     </Button>
                   </div>
@@ -212,7 +214,8 @@ const CategoryCompoment = ({ onOpenChange, isOpen }: CategoryPopoverProps) => {
         className={`${styles.btn_category} ${isOpen ? styles.active : ''}`}
         side="bottom"
         align="start"
-        sideOffset={15}>
+        sideOffset={15}
+      >
         {isOpen ? (
           <IcoXclose width={24} height={24} stroke="#ffffff" />
         ) : (

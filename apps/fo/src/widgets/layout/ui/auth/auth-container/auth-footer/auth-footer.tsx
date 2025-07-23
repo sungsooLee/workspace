@@ -18,7 +18,7 @@ function AuthFooterComponent() {
             <TermsButton termsType="PRIVACY_POLICY" />
           </li>
           <li>
-            <Link to={''}>고객지원</Link>
+            <Link to={'/'}>고객지원</Link>
           </li>
         </ul>
         <div className={styles.copyright}>

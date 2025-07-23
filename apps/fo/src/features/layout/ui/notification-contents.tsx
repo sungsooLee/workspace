@@ -110,7 +110,7 @@ const NotificationContentsComponent = () => {
               </div>
               <div className={styles.message_wrap}>
                 {hasLink ? (
-                  <Link to={''} className={styles.link}>
+                  <Link to={'/'} className={styles.link}>
                     {message}
                   </Link>
                 ) : (

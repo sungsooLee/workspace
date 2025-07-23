@@ -23,7 +23,7 @@ function FooterComponent() {
       <div className={styles.fixed_menu}>
         <ul className={styles.menu_list}>
           <li>
-            <Link to={''}>
+            <Link to={'/'}>
               <IcoHome03 width={24} height={24} stroke="#131C30" />
               <span>홈</span>
             </Link>

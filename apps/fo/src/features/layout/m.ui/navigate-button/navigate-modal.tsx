@@ -61,7 +61,7 @@ const NavigateModalComponent = () => {
                     index, //event menu
                   ) => (
                     <li>
-                      <Link to={''}>
+                      <Link to={'/'}>
                         {/*<IcoReview width={20} height={20} stroke="#131c30"></IcoReview>*/}
                         {t(`MENU.${menu.menuCode}`)}
                       </Link>

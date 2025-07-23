@@ -45,8 +45,8 @@ function RootComponent() {
       {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       {import.meta.env.VITE_APP_ENV === 'local' && (
         <Suspense fallback={null}>
-          {/* <ReactQueryDevtools />
-          <TanStackRouterDevtools /> */}
+          <ReactQueryDevtools />
+          <TanStackRouterDevtools />
         </Suspense>
       )}
     </>

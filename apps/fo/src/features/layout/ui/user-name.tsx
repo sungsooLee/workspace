@@ -7,7 +7,7 @@ import styles from '@learnway/styles/fo/features/layout/ui/user-name.module.css'
 const UserNameCompoment = () => {
   return (
     <div className={`${styles.start} ${styles.user_name}`}>
-      <Link to={''}>
+      <Link to={'/'}>
         <div className={styles.user}>
           <span className={styles.name}>Admin</span>
           <IcoLinkblank width={16} height={16} stroke="#131C30" />

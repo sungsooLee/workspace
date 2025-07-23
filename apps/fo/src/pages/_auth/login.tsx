@@ -129,19 +129,9 @@ function RouteComponent() {
 
     // TODO 역할체크도 필요
     //  테넌트/역할 선택 - 최초 로그인 사용자
-    // if (!data?.lastVisitedBoRoleId || !data?.lastVisitedBoTenantId) {
-    // if (!data?.lastVisitedBoTenantId) {
-    //   await openModal({
-    //     content: <TenantRoleModal />,
-    //     height: 'lg',
-    //     width: 'sm',
-    //     hideCloseButton: true,
-    //     closeOnOutsideClick: false,
-    //     onClose: (data: any) => {
-    //       return data;
-    //     },
-    //   });
-    // }
+    if (!data?.lastVisitedFoTenantId) {
+      alert('테넌트를 선택해 주세요.');
+    }
     return true;
   };
 
