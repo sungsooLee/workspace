@@ -1,7 +1,7 @@
 import React from 'react';
 import { DynamicFormProvider } from '@learnway/hooks';
 import { FormState } from '../types/form.types';
-import { CurriculumFormSimple } from './curriculum-form-simple';
+import { CurriculumForm } from './curriculum-form-simple';
 import { MAPPING_CURRICULUM_TYPE } from '@types';
 import { ModuleForm } from './module-form';
 import { LessonForm } from './lesson-form';
@@ -43,7 +43,7 @@ export const NodeFormRenderer: React.FC<NodeFormRendererProps> = ({
           : undefined;
 
       return (
-        <CurriculumFormSimple
+        <CurriculumForm
           key={`curriculum-${curriculumId || 'new'}-${isEditing ? 'edit' : 'create'}`}
           parentNode={parentNode}
           selectedNode={selectedNode}

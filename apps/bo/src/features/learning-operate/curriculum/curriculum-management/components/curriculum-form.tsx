@@ -19,7 +19,7 @@ import { useFetchAuthUser } from '@learnway/auth/entities';
 import { useIsManager } from '../hooks/use-role-info';
 import { useGetCurriculumDetail } from '@entities/curriculum';
 
-interface CurriculumFormSimpleProps {
+interface CurriculumFormProps {
   parentNode: TreeNode | null;
   selectedNode: TreeNode | null;
   isEditing: boolean;
@@ -28,10 +28,10 @@ interface CurriculumFormSimpleProps {
   provider: DynamicFormProvider;
   updateFormData: (data: Record<string, any>) => void;
   watch: any;
-  curriculumId?: number; // 메뉴 관리 패턴 참고
+  curriculumId?: number;
 }
 
-export const CurriculumFormSimple: React.FC<CurriculumFormSimpleProps> = ({
+export const CurriculumForm: React.FC<CurriculumFormProps> = ({
   parentNode,
   selectedNode,
   isEditing,
@@ -43,14 +43,9 @@ export const CurriculumFormSimple: React.FC<CurriculumFormSimpleProps> = ({
   curriculumId,
 }) => {
   const { data: loginUser } = useFetchAuthUser();
-
-  // 메뉴 관리 패턴 참고: 직접 데이터 로딩
   const { data: curriculumData } = useGetCurriculumDetail(curriculumId || 0);
-
   const isManager = useIsManager({ loginUser });
-
   const isVendored = watch('isVendored') || false;
-
   useEffect(() => {
     if (isEditing && curriculumData) {
       const initialData = {
@@ -101,19 +96,12 @@ export const CurriculumFormSimple: React.FC<CurriculumFormSimpleProps> = ({
               modalConfig={{ content: <ChannelChoiceModal /> }}
               disabled={!isManager || isEditing}
               transformModalData={(data: any) => {
-                console.log('선택된 채널:', data);
-
-                // React Hook Form의 setValue를 사용해서 폼 값 설정
                 if (data?.channelUuid || data?.uuid) {
                   provider.setValue('channelUuid', data.channelUuid || data.uuid);
-
-                  // 추가로 다른 필드들도 설정 가능
                   if (data?.channelName) {
                     provider.setValue('channelName', data.channelName);
                   }
                 }
-
-                // 표시용으로는 이름이나 설명을 반환
                 return data?.channelName || data?.name || '';
               }}
             />
@@ -220,24 +208,15 @@ export const CurriculumFormSimple: React.FC<CurriculumFormSimpleProps> = ({
                   placeholder="외주개발업체를 선택하세요"
                   modalConfig={{ content: <ManagerChoiceModal /> }}
                   transformModalData={(data: any) => {
-                    console.log('선택된 매니저:', data);
-
-                    // React Hook Form의 setValue로 여러 필드 설정
                     if (data?.managerId || data?.uuid) {
                       provider.setValue('vendorCoordinatorUuid', data.managerId || data.uuid);
                     }
-
-                    // 매니저 이름도 자동으로 설정
                     if (data?.managerName || data?.name) {
                       provider.setValue('vendorCoordinatorName', data.managerName || data.name);
                     }
-
-                    // 연락처가 있으면 자동으로 설정
                     if (data?.phone || data?.tel) {
                       provider.setValue('vendorTelNo', data.phone || data.tel);
                     }
-
-                    // 표시용으로는 매니저 이름 반환
                     return data?.managerName || data?.name || '';
                   }}
                 />

@@ -18,7 +18,6 @@ import { getHourValueFromTime } from '@pages/_layout/learning/resource/-common/c
 import { learningResourceQueryOptions } from '@entities/learning-resource';
 import { useQuery } from '@tanstack/react-query';
 import { useGetLessonDetail } from '../../../../../entities/curriculum';
-import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
 import subTitleStyles from '@learnway/styles/bo/assets/styles/modules/form-sub-title.module.css';
 import { IcoPlus } from '@learnway/icons';
 import { PreviewLearningWindow } from '@features/learning-resource/learning-resource-management/ui/preview-learning-window';
@@ -71,8 +70,6 @@ export const LessonForm: React.FC<LessonFormProps> = ({
 
   useEffect(() => {
     if (isEditing && lessonData) {
-      console.log({ ...getHourValueFromTime(lessonData.learningTime) });
-      console.log(lessonData);
       const initialData = {
         ...lessonData,
         lessonName: lessonData.lessonName,
@@ -124,7 +121,7 @@ export const LessonForm: React.FC<LessonFormProps> = ({
             const contentUuid = provider.getValues('contentUuid');
             if (contentUuid)
               openModal({
-                width: 'lg',
+                width: 'full',
                 content: <PreviewLearningWindow contentUuid={contentUuid} />,
               });
           }}
