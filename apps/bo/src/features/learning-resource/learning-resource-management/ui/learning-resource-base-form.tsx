@@ -161,14 +161,10 @@ const LearningResourceBaseFormComponent = ({
           tooltip={t('사용기한 내 콘텐츠 공유/교육자원활용이 가능합니다.')}
           format="boolean"
           value={true}
-          element={
-            <SwitchFormField
-              invert
-              switchConfig={{
-                label: (value: boolean) => (value ? '무기한' : '기간설정'),
-              }}
-            />
-          }
+          switchConfig={{
+            label: (value: boolean) => (value ? '무기한' : '기간설정'),
+          }}
+          element={<SwitchFormField invert />}
         />
       </ContentsRow>
       {/* 사용기한 상세 */}

@@ -37,8 +37,7 @@ function RouteComponent() {
   );
 
   const router = useRouter();
-  const { provider, onSubmit, updateFormData, onFormChange, formState, getValues, watch } =
-    useDynamicForm2();
+  const { provider, onSubmit, updateFormData, formState, getValues, watch } = useDynamicForm2();
 
   const isDrafted = watch('isDrafted');
   const isCourseUsed = watch('isCourseUsed');
@@ -61,7 +60,7 @@ function RouteComponent() {
   const { update: updateVideoContent } = usePutVideoUpdate({
     onSuccess: (result: PutVideoUpdateRes) => {
       console.log('update success', result);
-      onFormChange(convertToForm(result));
+      updateFormData(convertToForm(result));
     },
   });
 

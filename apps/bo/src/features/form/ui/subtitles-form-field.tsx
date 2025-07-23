@@ -62,8 +62,7 @@ const SubTitlesFormFieldComponent = forwardRef<HTMLDivElement, SubtitlesFormFiel
 
     useEffect(() => {
       console.log('🚀 ~ SubTitlesFormFieldComponent ~ value:', value);
-      if (!value) onChange([]);
-      else if (value.length > 0 && files.length === 0) {
+      if (value && value.length > 0 && files.length === 0) {
         fetchFileInfo(value.map(({ subtitleFileUuid }) => subtitleFileUuid));
       }
     }, [value]);
