@@ -28,16 +28,8 @@
     .tit_box {
       h3 {
         @apply headline1-b;
-      }
-    }
-    &.pds {
-      .tit_box {
-        .btn {
-          @apply label-xl text-[var(--gray35)];
-          .ico {
-            @apply h-[20px] w-[20px];
-            fill: #131416;
-          }
+        em {
+          @apply ml-[8px] text-[var(--blue50)];
         }
       }
     }

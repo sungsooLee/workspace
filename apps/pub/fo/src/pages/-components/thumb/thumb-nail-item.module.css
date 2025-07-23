@@ -38,7 +38,7 @@
       @apply title3-b line-clamp-2 text-[#232326];
     }
     .custom_info_node {
-      @apply flex w-full;
+      @apply flex w-full flex-wrap;
       & > span {
         @apply label-lg inline-flex items-center text-[var(--gray50)];
         svg {
@@ -50,7 +50,7 @@
       }
     }
     .count_info_node {
-      @apply mt-[12px] flex;
+      @apply mt-[12px] flex flex-wrap;
       & > span {
         @apply flex items-center;
         em {
@@ -81,7 +81,7 @@
       .thumbnail_link {
         @apply flex-row;
         .thumbnail_view {
-          @apply w-[240px] shrink-0;
+          @apply w-[47%] shrink-0;
         }
         .thumbnail_info {
           @apply ml-[20px] mt-0 flex flex-1 flex-col;

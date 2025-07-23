@@ -37,6 +37,9 @@
         @apply w-auto;
       }
     }
+    & > div:has([class*='disabled']) {
+      @apply bg-[var(--gray1)];
+    }
   }
   &.type_wordwrap {
     .chips_modal_wrap {

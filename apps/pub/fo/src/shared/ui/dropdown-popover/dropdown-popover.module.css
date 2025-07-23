@@ -1,6 +1,6 @@
 .start {
   &.dropdown_wrap {
-    @apply flex flex-col rounded-[8px] border-[1px] border-solid border-[var(--gray6)] bg-white p-[8px] shadow-[0_2px_6px_rgba(0,0,0,.2)];
+    @apply z-[5] flex flex-col rounded-[8px] border-[1px] border-solid border-[var(--gray6)] bg-white p-[8px] shadow-[0_2px_6px_rgba(0,0,0,.2)];
     button {
       @apply body_3_r !m-0 px-[12px] py-[8px];
       &:hover {

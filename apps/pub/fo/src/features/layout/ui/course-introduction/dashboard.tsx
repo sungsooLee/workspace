@@ -1,13 +1,6 @@
 import { memo, useState } from 'react';
 import { BrowserView, isMobile, MobileView } from 'react-device-detect';
-import {
-  IcoArrowDown,
-  IcoCaution03,
-  IcoDownload02,
-  IcoLock,
-  IcoPdf,
-  IcoPlus,
-} from '@learnway/icons';
+import { IcoArrowDown, IcoCaution03, IcoLock, IcoPlus, IcoClose02 } from '@learnway/icons';
 import { Button, Panel, Popover, ProgressBar, TableBox, useModal } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import styles from './dashboard.module.css';
@@ -159,8 +152,15 @@ const CourseDashboardCompoment = () => {
             <div className={statusStyles.status_info}>
               <span className={statusStyles.tt}>과제 (30%)</span>
               <div className={statusStyles.score_box}>
+                {/* 퍼블수정 20250723 마감 추가 */}
                 <div className={statusStyles.score}>
-                  <IcoCaution03 width={18} height={18} stroke="#FF4646" /> -
+                  <div className={statusStyles.deadline_box}>
+                    <IcoCaution03 width={18} height={18} stroke="#FF4646" />
+                    <div className={statusStyles.deadline}>
+                      <p>마감 : 26-03-25 11:59pm</p>
+                    </div>
+                  </div>
+                  -
                 </div>
               </div>
             </div>
@@ -293,23 +293,27 @@ const CourseDashboardCompoment = () => {
 
         {/* 자료실 */}
         <div className={`${styles.info_box} ${styles.pds}`}>
+          {/* 퍼블수정 20250723 자료 개수 추가 및 버튼 수정 */}
           <div className={styles.tit_box}>
-            <h3>자료실</h3>
-            <Button variant="text" size={isMobile ? 'ts' : 'sm'} className={styles.btn}>
-              전체 다운로드 <IcoDownload02 className={styles.ico} />
+            <h3>
+              자료실<em>2</em>
+            </h3>
+            <Button variant="line" size={isMobile ? 'ts' : 'lx'} className={styles.btn}>
+              전체 다운로드
             </Button>
           </div>
-
           <div className={pdsStyles.start}>
             <Panel hideHeaderUnderline actions="" className="w_full" type="rounded">
               <div className={pdsStyles.pds_box}>
+                {/* 퍼블수정 20250723 pdf 아이콘 삭제 */}
                 <span className={pdsStyles.txt}>
-                  <IcoPdf className={styles.ico_pds} /> 비즈니스 영어 단어&숙어집.pdf
+                  비즈니스 영어 단어&숙어집.pdf
                   <IcoLock className={styles.ico_lock} />
                 </span>
                 <div className={pdsStyles.info}>
                   <span className={pdsStyles.size}>200MB</span>
-                  <Button variant="line" size={isMobile ? 'ts' : 'lg'} className={pdsStyles.btn}>
+                  {/* 퍼블수정 20250723 버튼 사이즈 수정 */}
+                  <Button variant="line" size={isMobile ? 'ts' : 'md'} className={pdsStyles.btn}>
                     다운로드
                   </Button>
                 </div>
@@ -319,12 +323,12 @@ const CourseDashboardCompoment = () => {
             <Panel hideHeaderUnderline actions="" className="w_full" type="rounded">
               <div className={pdsStyles.pds_box}>
                 <span className={pdsStyles.txt}>
-                  <IcoPdf className={styles.ico_pds} /> 비즈니스 영어 단어&숙어집.pdf
+                  비즈니스 영어 단어&숙어집.pdf
                   <IcoLock className={styles.ico_lock} />
                 </span>
                 <div className={pdsStyles.info}>
                   <span className={pdsStyles.size}>200MB</span>
-                  <Button variant="line" size={isMobile ? 'ts' : 'lg'} className={pdsStyles.btn}>
+                  <Button variant="line" size={isMobile ? 'ts' : 'md'} className={pdsStyles.btn}>
                     다운로드
                   </Button>
                 </div>

@@ -193,6 +193,7 @@ export { ReactComponent as IcoVideoPlay } from './lib/ic_video_play.svg';
 export { ReactComponent as IcoVideoStop } from './lib/ic_video_stop.svg';
 export { ReactComponent as IcoSettingsFill } from './lib/ic_settings_fill.svg';
 export { ReactComponent as IcoSpeakerOffFill } from './lib/ic_speaker_off_fill.svg';
+export { ReactComponent as IcoCircleProgress } from './lib/ic_circle_progress.svg';
 //export Default as Information from './lib/information.svg?react';
 
 //import Information from './lib/information.svg';

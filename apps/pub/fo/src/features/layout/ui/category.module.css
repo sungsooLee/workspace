@@ -13,7 +13,7 @@
     .menu_list_wrap {
       @apply relative w-[33.4%] shrink-0;
       .scroll_wrap {
-        @apply scrollbar max-h-[565px] overflow-y-auto py-[20px];
+        @apply scrollbar max-h-[565px] overflow-y-auto py-[12px];
       }
       &:not(:first-child) {
         @apply w-[33.3%];

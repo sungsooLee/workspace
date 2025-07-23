@@ -72,7 +72,7 @@
       .depth_area {
         .menu_item {
           .menu_title {
-            @apply mb-[8px] flex h-[56px] items-center justify-between border-b-[1px] border-solid border-[var(--gray90)];
+            @apply mb-[10px] flex h-[56px] items-center justify-between border-b-[1px] border-solid border-[var(--gray90)];
             & > a {
               @apply label-lg flex-1 pl-[16px] text-[var(--gray10)];
             }

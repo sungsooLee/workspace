@@ -420,9 +420,12 @@ hr.divider {
 
 /* 태그 */
 .tag_wrap {
-  @apply min-h-[32px] w-full rounded-[4px] border border-solid border-[var(--gray4)] px-[12px] pb-[12px] pt-[3px];
+  @apply min-h-[30px] w-full rounded-[4px] border border-solid border-[var(--gray4)] px-[12px];
   input {
     @apply !pl-0;
+  }
+  &.disabled {
+    @apply bg-[var(--gray1)];
   }
 }
 
