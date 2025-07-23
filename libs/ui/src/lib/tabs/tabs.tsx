@@ -20,6 +20,8 @@ export interface TabItemProps {
   alarm?: boolean;
   /** 탭 내용 */
   content?: React.ReactNode;
+  /** 탭 비활성화 여부 */
+  disabled?: boolean;
 }
 
 export interface TabsComponentProps extends React.ComponentProps<typeof Primitive.Root> {
@@ -165,7 +167,11 @@ export const TabsComponent = forwardRef<
 
         {/* 탭 콘텐츠 영역 */}
         {items.map((d: TabItemProps) => (
-          <Primitive.Content className={styles.content} value={d.key} key={d.key}>
+          <Primitive.Content
+            className={cn(styles.content, d.disabled && styles.disabled)}
+            value={d.key}
+            key={d.key}
+          >
             {d.content}
           </Primitive.Content>
         ))}

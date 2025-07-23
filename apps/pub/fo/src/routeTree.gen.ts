@@ -8,2029 +8,764 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-// Import Routes
+import { Route as rootRouteImport } from './pages/__root'
+import { Route as LearningRouteImport } from './pages/_learning'
+import { Route as LayoutRouteImport } from './pages/_layout'
+import { Route as GuideRouteImport } from './pages/_guide'
+import { Route as AuthRouteImport } from './pages/_auth'
+import { Route as LayoutIndexRouteImport } from './pages/_layout/index'
+import { Route as LearningVideoMRouteImport } from './pages/_learning/video-m'
+import { Route as LearningVideoRouteImport } from './pages/_learning/video'
+import { Route as LearningLiveMRouteImport } from './pages/_learning/live-m'
+import { Route as LearningLiveRouteImport } from './pages/_learning/live'
+import { Route as LearningLinkMRouteImport } from './pages/_learning/link-m'
+import { Route as LearningLinkRouteImport } from './pages/_learning/link'
+import { Route as LearningIframeMRouteImport } from './pages/_learning/iframe-m'
+import { Route as LearningIframeRouteImport } from './pages/_learning/iframe'
+import { Route as LearningHtmlMRouteImport } from './pages/_learning/html-m'
+import { Route as LearningHtmlRouteImport } from './pages/_learning/html'
+import { Route as LearningGalleryMRouteImport } from './pages/_learning/gallery-m'
+import { Route as LearningGalleryRouteImport } from './pages/_learning/gallery'
+import { Route as LearningFileMRouteImport } from './pages/_learning/file-m'
+import { Route as LearningFileRouteImport } from './pages/_learning/file'
+import { Route as LearningEbookMRouteImport } from './pages/_learning/ebook-m'
+import { Route as LearningEbookRouteImport } from './pages/_learning/ebook'
+import { Route as LearningBlogMRouteImport } from './pages/_learning/blog-m'
+import { Route as LearningBlogRouteImport } from './pages/_learning/blog'
+import { Route as AuthSuccessRouteImport } from './pages/_auth/success'
+import { Route as AuthSignupStep3EnRouteImport } from './pages/_auth/signup-step3-en'
+import { Route as AuthSignupStep3RouteImport } from './pages/_auth/signup-step3'
+import { Route as AuthSignupStep2EnRouteImport } from './pages/_auth/signup-step2-en'
+import { Route as AuthSignupStep2RouteImport } from './pages/_auth/signup-step2'
+import { Route as AuthSignupStep1RouteImport } from './pages/_auth/signup-step1'
+import { Route as AuthSearchIdSuccessRouteImport } from './pages/_auth/search-id-success'
+import { Route as AuthSearchAccountRouteImport } from './pages/_auth/search-account'
+import { Route as AuthProgressStatusResultEnRouteImport } from './pages/_auth/progress-status-result-en'
+import { Route as AuthProgressStatusResultRouteImport } from './pages/_auth/progress-status-result'
+import { Route as AuthProgressStatusEmailRouteImport } from './pages/_auth/progress-status-email'
+import { Route as AuthProgressStatusCertRouteImport } from './pages/_auth/progress-status-cert'
+import { Route as AuthPasswordSetRouteImport } from './pages/_auth/password-set'
+import { Route as AuthPasswordModifyRouteImport } from './pages/_auth/password-modify'
+import { Route as AuthPasswordInputRouteImport } from './pages/_auth/password-input'
+import { Route as AuthMpassCertRouteImport } from './pages/_auth/mpass-cert'
+import { Route as AuthLoginRouteImport } from './pages/_auth/login'
+import { Route as AuthGoogleCertRouteImport } from './pages/_auth/google-cert'
+import { Route as AuthDormantAccountRouteImport } from './pages/_auth/dormant-account'
+import { Route as AuthAgreement_checkRouteImport } from './pages/_auth/agreement_check'
+import { Route as AuthAgreementPrivacyRouteImport } from './pages/_auth/agreement-privacy'
+import { Route as LayoutMenu3IndexRouteImport } from './pages/_layout/menu3/index'
+import { Route as GuideGuideIndexRouteImport } from './pages/_guide/guide/index'
+import { Route as LayoutSettingSettingWeb_mRouteImport } from './pages/_layout/setting/setting-web_m'
+import { Route as LayoutSettingSettingSns_mRouteImport } from './pages/_layout/setting/setting-sns_m'
+import { Route as LayoutSettingSettingLicense_mRouteImport } from './pages/_layout/setting/setting-license_m'
+import { Route as LayoutSettingSettingLanguage_mRouteImport } from './pages/_layout/setting/setting-language_m'
+import { Route as LayoutMySettingSnsRouteImport } from './pages/_layout/my/setting-sns'
+import { Route as LayoutMyPasswordVerifyRouteImport } from './pages/_layout/my/password-verify'
+import { Route as LayoutMyMembershipSecessionRouteImport } from './pages/_layout/my/membership-secession'
+import { Route as LayoutMyInformationChangeRouteImport } from './pages/_layout/my/information-change'
+import { Route as LayoutIntegratedSearchIntegratedSearch_mRouteImport } from './pages/_layout/integrated-search/integrated-search_m'
+import { Route as LayoutIntegratedSearchIntegratedProcedureMRouteImport } from './pages/_layout/integrated-search/integrated-procedure-m'
+import { Route as LayoutIntegratedSearchIntegratedProcedureRouteImport } from './pages/_layout/integrated-search/integrated-procedure'
+import { Route as LayoutIntegratedSearchIntegratedAllMRouteImport } from './pages/_layout/integrated-search/integrated-all-m'
+import { Route as LayoutIntegratedSearchIntegratedAllRouteImport } from './pages/_layout/integrated-search/integrated-all'
+import { Route as LayoutFooterMenuPrivacyRouteImport } from './pages/_layout/footer-menu/privacy'
+import { Route as LayoutFooterMenuOpenLicenseRouteImport } from './pages/_layout/footer-menu/open-license'
+import { Route as LayoutFooterMenuAgreementRouteImport } from './pages/_layout/footer-menu/agreement'
+import { Route as LayoutEduSupportEduLicensesListRouteImport } from './pages/_layout/edu-support/edu-licenses-list'
+import { Route as LayoutCourseRegistrationCourseRegistrationTextbookRouteImport } from './pages/_layout/course-registration/course-registration-textbook'
+import { Route as LayoutCourseRegistrationCourseRegistrationLevelRouteImport } from './pages/_layout/course-registration/course-registration-level'
+import { Route as LayoutCourseRegistrationCourseRegistrationCompleteRouteImport } from './pages/_layout/course-registration/course-registration-complete'
+import { Route as LayoutCourseRegistrationCourseRegistrationAllRouteImport } from './pages/_layout/course-registration/course-registration-all'
+import { Route as LayoutCourseIntroductionPackageMRouteImport } from './pages/_layout/course-introduction/package-m'
+import { Route as LayoutCourseIntroductionPackageRouteImport } from './pages/_layout/course-introduction/package'
+import { Route as LayoutCourseIntroductionDetailMRouteImport } from './pages/_layout/course-introduction/detail-m'
+import { Route as LayoutCourseIntroductionDetailRouteImport } from './pages/_layout/course-introduction/detail'
+import { Route as LayoutCategoryDetail_mRouteImport } from './pages/_layout/category/detail_m'
+import { Route as LayoutCategoryDetailRouteImport } from './pages/_layout/category/detail'
+import { Route as GuideGuideTypographyRouteImport } from './pages/_guide/guide/typography'
+import { Route as GuideGuideTooltipRouteImport } from './pages/_guide/guide/tooltip'
+import { Route as GuideGuideToastRouteImport } from './pages/_guide/guide/toast'
+import { Route as GuideGuideThumnailRouteImport } from './pages/_guide/guide/thumnail'
+import { Route as GuideGuideTextareaRouteImport } from './pages/_guide/guide/textarea'
+import { Route as GuideGuideTestRouteImport } from './pages/_guide/guide/test'
+import { Route as GuideGuideTabsRouteImport } from './pages/_guide/guide/tabs'
+import { Route as GuideGuideTableRouteImport } from './pages/_guide/guide/table'
+import { Route as GuideGuideSwitchRouteImport } from './pages/_guide/guide/switch'
+import { Route as GuideGuideStepperRouteImport } from './pages/_guide/guide/stepper'
+import { Route as GuideGuideSpinnerRouteImport } from './pages/_guide/guide/spinner'
+import { Route as GuideGuideSelectRouteImport } from './pages/_guide/guide/select'
+import { Route as GuideGuideResultRouteImport } from './pages/_guide/guide/result'
+import { Route as GuideGuideRespondRouteImport } from './pages/_guide/guide/respond'
+import { Route as GuideGuideRadioRouteImport } from './pages/_guide/guide/radio'
+import { Route as GuideGuideProgressRouteImport } from './pages/_guide/guide/progress'
+import { Route as GuideGuidePopoverRouteImport } from './pages/_guide/guide/popover'
+import { Route as GuideGuidePhoneNumberRouteImport } from './pages/_guide/guide/phone-number'
+import { Route as GuideGuidePanelRouteImport } from './pages/_guide/guide/panel'
+import { Route as GuideGuidePaginationRouteImport } from './pages/_guide/guide/pagination'
+import { Route as GuideGuideOptionCardRouteImport } from './pages/_guide/guide/optionCard'
+import { Route as GuideGuideOperatorRouteImport } from './pages/_guide/guide/operator'
+import { Route as GuideGuideNoticeRouteImport } from './pages/_guide/guide/notice'
+import { Route as GuideGuideModalRouteImport } from './pages/_guide/guide/modal'
+import { Route as GuideGuideMobileRouteImport } from './pages/_guide/guide/mobile'
+import { Route as GuideGuideListRouteImport } from './pages/_guide/guide/list'
+import { Route as GuideGuideLayoutRouteImport } from './pages/_guide/guide/layout'
+import { Route as GuideGuideInputTimerRouteImport } from './pages/_guide/guide/input-timer'
+import { Route as GuideGuideInputRouteImport } from './pages/_guide/guide/input'
+import { Route as GuideGuideInfoRouteImport } from './pages/_guide/guide/info'
+import { Route as GuideGuideImageRouteImport } from './pages/_guide/guide/image'
+import { Route as GuideGuideIconRouteImport } from './pages/_guide/guide/icon'
+import { Route as GuideGuideGridRouteImport } from './pages/_guide/guide/grid'
+import { Route as GuideGuideFormRouteImport } from './pages/_guide/guide/form'
+import { Route as GuideGuideDropDownRouteImport } from './pages/_guide/guide/drop-down'
+import { Route as GuideGuideDividerRouteImport } from './pages/_guide/guide/divider'
+import { Route as GuideGuideDatePickerRouteImport } from './pages/_guide/guide/date-picker'
+import { Route as GuideGuideDataDisplayRouteImport } from './pages/_guide/guide/data-display'
+import { Route as GuideGuideCssRouteImport } from './pages/_guide/guide/css'
+import { Route as GuideGuideColorRouteImport } from './pages/_guide/guide/color'
+import { Route as GuideGuideChipsRouteImport } from './pages/_guide/guide/chips'
+import { Route as GuideGuideCheckboxRouteImport } from './pages/_guide/guide/checkbox'
+import { Route as GuideGuideCarouselRouteImport } from './pages/_guide/guide/carousel'
+import { Route as GuideGuideButtonsRouteImport } from './pages/_guide/guide/buttons'
+import { Route as GuideGuideBoxShadowRouteImport } from './pages/_guide/guide/box-shadow'
+import { Route as GuideGuideBannerRouteImport } from './pages/_guide/guide/banner'
+import { Route as GuideGuideBadgeRouteImport } from './pages/_guide/guide/badge'
+import { Route as GuideGuideAvatarRouteImport } from './pages/_guide/guide/avatar'
+import { Route as GuideGuideAlertRouteImport } from './pages/_guide/guide/alert'
 
-import { Route as rootRoute } from './pages/__root'
-import { Route as LearningImport } from './pages/_learning'
-import { Route as LayoutImport } from './pages/_layout'
-import { Route as GuideImport } from './pages/_guide'
-import { Route as AuthImport } from './pages/_auth'
-import { Route as LayoutIndexImport } from './pages/_layout/index'
-import { Route as LearningVideoMImport } from './pages/_learning/video-m'
-import { Route as LearningVideoImport } from './pages/_learning/video'
-import { Route as LearningLiveMImport } from './pages/_learning/live-m'
-import { Route as LearningLiveImport } from './pages/_learning/live'
-import { Route as LearningLinkMImport } from './pages/_learning/link-m'
-import { Route as LearningLinkImport } from './pages/_learning/link'
-import { Route as LearningIframeMImport } from './pages/_learning/iframe-m'
-import { Route as LearningIframeImport } from './pages/_learning/iframe'
-import { Route as LearningHtmlMImport } from './pages/_learning/html-m'
-import { Route as LearningHtmlImport } from './pages/_learning/html'
-import { Route as LearningGalleryMImport } from './pages/_learning/gallery-m'
-import { Route as LearningGalleryImport } from './pages/_learning/gallery'
-import { Route as LearningFileMImport } from './pages/_learning/file-m'
-import { Route as LearningFileImport } from './pages/_learning/file'
-import { Route as LearningEbookMImport } from './pages/_learning/ebook-m'
-import { Route as LearningEbookImport } from './pages/_learning/ebook'
-import { Route as LearningBlogMImport } from './pages/_learning/blog-m'
-import { Route as LearningBlogImport } from './pages/_learning/blog'
-import { Route as AuthSuccessImport } from './pages/_auth/success'
-import { Route as AuthSignupStep3EnImport } from './pages/_auth/signup-step3-en'
-import { Route as AuthSignupStep3Import } from './pages/_auth/signup-step3'
-import { Route as AuthSignupStep2EnImport } from './pages/_auth/signup-step2-en'
-import { Route as AuthSignupStep2Import } from './pages/_auth/signup-step2'
-import { Route as AuthSignupStep1Import } from './pages/_auth/signup-step1'
-import { Route as AuthSearchIdSuccessImport } from './pages/_auth/search-id-success'
-import { Route as AuthSearchAccountImport } from './pages/_auth/search-account'
-import { Route as AuthProgressStatusResultEnImport } from './pages/_auth/progress-status-result-en'
-import { Route as AuthProgressStatusResultImport } from './pages/_auth/progress-status-result'
-import { Route as AuthProgressStatusEmailImport } from './pages/_auth/progress-status-email'
-import { Route as AuthProgressStatusCertImport } from './pages/_auth/progress-status-cert'
-import { Route as AuthPasswordSetImport } from './pages/_auth/password-set'
-import { Route as AuthPasswordModifyImport } from './pages/_auth/password-modify'
-import { Route as AuthPasswordInputImport } from './pages/_auth/password-input'
-import { Route as AuthMpassCertImport } from './pages/_auth/mpass-cert'
-import { Route as AuthLoginImport } from './pages/_auth/login'
-import { Route as AuthGoogleCertImport } from './pages/_auth/google-cert'
-import { Route as AuthDormantAccountImport } from './pages/_auth/dormant-account'
-import { Route as AuthAgreementcheckImport } from './pages/_auth/agreement_check'
-import { Route as AuthAgreementPrivacyImport } from './pages/_auth/agreement-privacy'
-import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
-import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
-import { Route as LayoutSettingSettingWebmImport } from './pages/_layout/setting/setting-web_m'
-import { Route as LayoutSettingSettingSnsmImport } from './pages/_layout/setting/setting-sns_m'
-import { Route as LayoutSettingSettingLicensemImport } from './pages/_layout/setting/setting-license_m'
-import { Route as LayoutSettingSettingLanguagemImport } from './pages/_layout/setting/setting-language_m'
-import { Route as LayoutMySettingSnsImport } from './pages/_layout/my/setting-sns'
-import { Route as LayoutMyPasswordVerifyImport } from './pages/_layout/my/password-verify'
-import { Route as LayoutMyMembershipSecessionImport } from './pages/_layout/my/membership-secession'
-import { Route as LayoutMyInformationChangeImport } from './pages/_layout/my/information-change'
-import { Route as LayoutIntegratedSearchIntegratedSearchmImport } from './pages/_layout/integrated-search/integrated-search_m'
-import { Route as LayoutIntegratedSearchIntegratedProcedureMImport } from './pages/_layout/integrated-search/integrated-procedure-m'
-import { Route as LayoutIntegratedSearchIntegratedProcedureImport } from './pages/_layout/integrated-search/integrated-procedure'
-import { Route as LayoutIntegratedSearchIntegratedAllMImport } from './pages/_layout/integrated-search/integrated-all-m'
-import { Route as LayoutIntegratedSearchIntegratedAllImport } from './pages/_layout/integrated-search/integrated-all'
-import { Route as LayoutFooterMenuPrivacyImport } from './pages/_layout/footer-menu/privacy'
-import { Route as LayoutFooterMenuOpenLicenseImport } from './pages/_layout/footer-menu/open-license'
-import { Route as LayoutFooterMenuAgreementImport } from './pages/_layout/footer-menu/agreement'
-import { Route as LayoutEduSupportEduLicensesListImport } from './pages/_layout/edu-support/edu-licenses-list'
-import { Route as LayoutCourseRegistrationCourseRegistrationTextbookImport } from './pages/_layout/course-registration/course-registration-textbook'
-import { Route as LayoutCourseRegistrationCourseRegistrationLevelImport } from './pages/_layout/course-registration/course-registration-level'
-import { Route as LayoutCourseRegistrationCourseRegistrationCompleteImport } from './pages/_layout/course-registration/course-registration-complete'
-import { Route as LayoutCourseRegistrationCourseRegistrationAllImport } from './pages/_layout/course-registration/course-registration-all'
-import { Route as LayoutCourseIntroductionPackageMImport } from './pages/_layout/course-introduction/package-m'
-import { Route as LayoutCourseIntroductionPackageImport } from './pages/_layout/course-introduction/package'
-import { Route as LayoutCourseIntroductionDetailMImport } from './pages/_layout/course-introduction/detail-m'
-import { Route as LayoutCourseIntroductionDetailImport } from './pages/_layout/course-introduction/detail'
-import { Route as LayoutCategoryDetailmImport } from './pages/_layout/category/detail_m'
-import { Route as LayoutCategoryDetailImport } from './pages/_layout/category/detail'
-import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typography'
-import { Route as GuideGuideTooltipImport } from './pages/_guide/guide/tooltip'
-import { Route as GuideGuideToastImport } from './pages/_guide/guide/toast'
-import { Route as GuideGuideThumnailImport } from './pages/_guide/guide/thumnail'
-import { Route as GuideGuideTextareaImport } from './pages/_guide/guide/textarea'
-import { Route as GuideGuideTestImport } from './pages/_guide/guide/test'
-import { Route as GuideGuideTabsImport } from './pages/_guide/guide/tabs'
-import { Route as GuideGuideTableImport } from './pages/_guide/guide/table'
-import { Route as GuideGuideSwitchImport } from './pages/_guide/guide/switch'
-import { Route as GuideGuideStepperImport } from './pages/_guide/guide/stepper'
-import { Route as GuideGuideSpinnerImport } from './pages/_guide/guide/spinner'
-import { Route as GuideGuideSelectImport } from './pages/_guide/guide/select'
-import { Route as GuideGuideResultImport } from './pages/_guide/guide/result'
-import { Route as GuideGuideRespondImport } from './pages/_guide/guide/respond'
-import { Route as GuideGuideRadioImport } from './pages/_guide/guide/radio'
-import { Route as GuideGuideProgressImport } from './pages/_guide/guide/progress'
-import { Route as GuideGuidePopoverImport } from './pages/_guide/guide/popover'
-import { Route as GuideGuidePhoneNumberImport } from './pages/_guide/guide/phone-number'
-import { Route as GuideGuidePanelImport } from './pages/_guide/guide/panel'
-import { Route as GuideGuidePaginationImport } from './pages/_guide/guide/pagination'
-import { Route as GuideGuideOptionCardImport } from './pages/_guide/guide/optionCard'
-import { Route as GuideGuideOperatorImport } from './pages/_guide/guide/operator'
-import { Route as GuideGuideNoticeImport } from './pages/_guide/guide/notice'
-import { Route as GuideGuideModalImport } from './pages/_guide/guide/modal'
-import { Route as GuideGuideMobileImport } from './pages/_guide/guide/mobile'
-import { Route as GuideGuideListImport } from './pages/_guide/guide/list'
-import { Route as GuideGuideLayoutImport } from './pages/_guide/guide/layout'
-import { Route as GuideGuideInputTimerImport } from './pages/_guide/guide/input-timer'
-import { Route as GuideGuideInputImport } from './pages/_guide/guide/input'
-import { Route as GuideGuideInfoImport } from './pages/_guide/guide/info'
-import { Route as GuideGuideImageImport } from './pages/_guide/guide/image'
-import { Route as GuideGuideIconImport } from './pages/_guide/guide/icon'
-import { Route as GuideGuideGridImport } from './pages/_guide/guide/grid'
-import { Route as GuideGuideFormImport } from './pages/_guide/guide/form'
-import { Route as GuideGuideDropDownImport } from './pages/_guide/guide/drop-down'
-import { Route as GuideGuideDividerImport } from './pages/_guide/guide/divider'
-import { Route as GuideGuideDatePickerImport } from './pages/_guide/guide/date-picker'
-import { Route as GuideGuideDataDisplayImport } from './pages/_guide/guide/data-display'
-import { Route as GuideGuideCssImport } from './pages/_guide/guide/css'
-import { Route as GuideGuideColorImport } from './pages/_guide/guide/color'
-import { Route as GuideGuideChipsImport } from './pages/_guide/guide/chips'
-import { Route as GuideGuideCheckboxImport } from './pages/_guide/guide/checkbox'
-import { Route as GuideGuideCarouselImport } from './pages/_guide/guide/carousel'
-import { Route as GuideGuideButtonsImport } from './pages/_guide/guide/buttons'
-import { Route as GuideGuideBoxShadowImport } from './pages/_guide/guide/box-shadow'
-import { Route as GuideGuideBannerImport } from './pages/_guide/guide/banner'
-import { Route as GuideGuideBadgeImport } from './pages/_guide/guide/badge'
-import { Route as GuideGuideAvatarImport } from './pages/_guide/guide/avatar'
-import { Route as GuideGuideAlertImport } from './pages/_guide/guide/alert'
-
-// Create/Update Routes
-
-const LearningRoute = LearningImport.update({
+const LearningRoute = LearningRouteImport.update({
   id: '/_learning',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const LayoutRoute = LayoutImport.update({
+const LayoutRoute = LayoutRouteImport.update({
   id: '/_layout',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const GuideRoute = GuideImport.update({
+const GuideRoute = GuideRouteImport.update({
   id: '/_guide',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const AuthRoute = AuthImport.update({
+const AuthRoute = AuthRouteImport.update({
   id: '/_auth',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const LayoutIndexRoute = LayoutIndexImport.update({
+const LayoutIndexRoute = LayoutIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => LayoutRoute,
 } as any)
-
-const LearningVideoMRoute = LearningVideoMImport.update({
+const LearningVideoMRoute = LearningVideoMRouteImport.update({
   id: '/video-m',
   path: '/video-m',
   getParentRoute: () => LearningRoute,
 } as any)
-
-const LearningVideoRoute = LearningVideoImport.update({
+const LearningVideoRoute = LearningVideoRouteImport.update({
   id: '/video',
   path: '/video',
   getParentRoute: () => LearningRoute,
 } as any)
-
-const LearningLiveMRoute = LearningLiveMImport.update({
+const LearningLiveMRoute = LearningLiveMRouteImport.update({
   id: '/live-m',
   path: '/live-m',
   getParentRoute: () => LearningRoute,
 } as any)
-
-const LearningLiveRoute = LearningLiveImport.update({
+const LearningLiveRoute = LearningLiveRouteImport.update({
   id: '/live',
   path: '/live',
   getParentRoute: () => LearningRoute,
 } as any)
-
-const LearningLinkMRoute = LearningLinkMImport.update({
+const LearningLinkMRoute = LearningLinkMRouteImport.update({
   id: '/link-m',
   path: '/link-m',
   getParentRoute: () => LearningRoute,
 } as any)
-
-const LearningLinkRoute = LearningLinkImport.update({
+const LearningLinkRoute = LearningLinkRouteImport.update({
   id: '/link',
   path: '/link',
   getParentRoute: () => LearningRoute,
 } as any)
-
-const LearningIframeMRoute = LearningIframeMImport.update({
+const LearningIframeMRoute = LearningIframeMRouteImport.update({
   id: '/iframe-m',
   path: '/iframe-m',
   getParentRoute: () => LearningRoute,
 } as any)
-
-const LearningIframeRoute = LearningIframeImport.update({
+const LearningIframeRoute = LearningIframeRouteImport.update({
   id: '/iframe',
   path: '/iframe',
   getParentRoute: () => LearningRoute,
 } as any)
-
-const LearningHtmlMRoute = LearningHtmlMImport.update({
+const LearningHtmlMRoute = LearningHtmlMRouteImport.update({
   id: '/html-m',
   path: '/html-m',
   getParentRoute: () => LearningRoute,
 } as any)
-
-const LearningHtmlRoute = LearningHtmlImport.update({
+const LearningHtmlRoute = LearningHtmlRouteImport.update({
   id: '/html',
   path: '/html',
   getParentRoute: () => LearningRoute,
 } as any)
-
-const LearningGalleryMRoute = LearningGalleryMImport.update({
+const LearningGalleryMRoute = LearningGalleryMRouteImport.update({
   id: '/gallery-m',
   path: '/gallery-m',
   getParentRoute: () => LearningRoute,
 } as any)
-
-const LearningGalleryRoute = LearningGalleryImport.update({
+const LearningGalleryRoute = LearningGalleryRouteImport.update({
   id: '/gallery',
   path: '/gallery',
   getParentRoute: () => LearningRoute,
 } as any)
-
-const LearningFileMRoute = LearningFileMImport.update({
+const LearningFileMRoute = LearningFileMRouteImport.update({
   id: '/file-m',
   path: '/file-m',
   getParentRoute: () => LearningRoute,
 } as any)
-
-const LearningFileRoute = LearningFileImport.update({
+const LearningFileRoute = LearningFileRouteImport.update({
   id: '/file',
   path: '/file',
   getParentRoute: () => LearningRoute,
 } as any)
-
-const LearningEbookMRoute = LearningEbookMImport.update({
+const LearningEbookMRoute = LearningEbookMRouteImport.update({
   id: '/ebook-m',
   path: '/ebook-m',
   getParentRoute: () => LearningRoute,
 } as any)
-
-const LearningEbookRoute = LearningEbookImport.update({
+const LearningEbookRoute = LearningEbookRouteImport.update({
   id: '/ebook',
   path: '/ebook',
   getParentRoute: () => LearningRoute,
 } as any)
-
-const LearningBlogMRoute = LearningBlogMImport.update({
+const LearningBlogMRoute = LearningBlogMRouteImport.update({
   id: '/blog-m',
   path: '/blog-m',
   getParentRoute: () => LearningRoute,
 } as any)
-
-const LearningBlogRoute = LearningBlogImport.update({
+const LearningBlogRoute = LearningBlogRouteImport.update({
   id: '/blog',
   path: '/blog',
   getParentRoute: () => LearningRoute,
 } as any)
-
-const AuthSuccessRoute = AuthSuccessImport.update({
+const AuthSuccessRoute = AuthSuccessRouteImport.update({
   id: '/success',
   path: '/success',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthSignupStep3EnRoute = AuthSignupStep3EnImport.update({
+const AuthSignupStep3EnRoute = AuthSignupStep3EnRouteImport.update({
   id: '/signup-step3-en',
   path: '/signup-step3-en',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthSignupStep3Route = AuthSignupStep3Import.update({
+const AuthSignupStep3Route = AuthSignupStep3RouteImport.update({
   id: '/signup-step3',
   path: '/signup-step3',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthSignupStep2EnRoute = AuthSignupStep2EnImport.update({
+const AuthSignupStep2EnRoute = AuthSignupStep2EnRouteImport.update({
   id: '/signup-step2-en',
   path: '/signup-step2-en',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthSignupStep2Route = AuthSignupStep2Import.update({
+const AuthSignupStep2Route = AuthSignupStep2RouteImport.update({
   id: '/signup-step2',
   path: '/signup-step2',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthSignupStep1Route = AuthSignupStep1Import.update({
+const AuthSignupStep1Route = AuthSignupStep1RouteImport.update({
   id: '/signup-step1',
   path: '/signup-step1',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthSearchIdSuccessRoute = AuthSearchIdSuccessImport.update({
+const AuthSearchIdSuccessRoute = AuthSearchIdSuccessRouteImport.update({
   id: '/search-id-success',
   path: '/search-id-success',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthSearchAccountRoute = AuthSearchAccountImport.update({
+const AuthSearchAccountRoute = AuthSearchAccountRouteImport.update({
   id: '/search-account',
   path: '/search-account',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthProgressStatusResultEnRoute = AuthProgressStatusResultEnImport.update(
-  {
+const AuthProgressStatusResultEnRoute =
+  AuthProgressStatusResultEnRouteImport.update({
     id: '/progress-status-result-en',
     path: '/progress-status-result-en',
     getParentRoute: () => AuthRoute,
-  } as any,
-)
-
-const AuthProgressStatusResultRoute = AuthProgressStatusResultImport.update({
-  id: '/progress-status-result',
-  path: '/progress-status-result',
-  getParentRoute: () => AuthRoute,
-} as any)
-
-const AuthProgressStatusEmailRoute = AuthProgressStatusEmailImport.update({
+  } as any)
+const AuthProgressStatusResultRoute =
+  AuthProgressStatusResultRouteImport.update({
+    id: '/progress-status-result',
+    path: '/progress-status-result',
+    getParentRoute: () => AuthRoute,
+  } as any)
+const AuthProgressStatusEmailRoute = AuthProgressStatusEmailRouteImport.update({
   id: '/progress-status-email',
   path: '/progress-status-email',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthProgressStatusCertRoute = AuthProgressStatusCertImport.update({
+const AuthProgressStatusCertRoute = AuthProgressStatusCertRouteImport.update({
   id: '/progress-status-cert',
   path: '/progress-status-cert',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthPasswordSetRoute = AuthPasswordSetImport.update({
+const AuthPasswordSetRoute = AuthPasswordSetRouteImport.update({
   id: '/password-set',
   path: '/password-set',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthPasswordModifyRoute = AuthPasswordModifyImport.update({
+const AuthPasswordModifyRoute = AuthPasswordModifyRouteImport.update({
   id: '/password-modify',
   path: '/password-modify',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthPasswordInputRoute = AuthPasswordInputImport.update({
+const AuthPasswordInputRoute = AuthPasswordInputRouteImport.update({
   id: '/password-input',
   path: '/password-input',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthMpassCertRoute = AuthMpassCertImport.update({
+const AuthMpassCertRoute = AuthMpassCertRouteImport.update({
   id: '/mpass-cert',
   path: '/mpass-cert',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthLoginRoute = AuthLoginImport.update({
+const AuthLoginRoute = AuthLoginRouteImport.update({
   id: '/login',
   path: '/login',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthGoogleCertRoute = AuthGoogleCertImport.update({
+const AuthGoogleCertRoute = AuthGoogleCertRouteImport.update({
   id: '/google-cert',
   path: '/google-cert',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthDormantAccountRoute = AuthDormantAccountImport.update({
+const AuthDormantAccountRoute = AuthDormantAccountRouteImport.update({
   id: '/dormant-account',
   path: '/dormant-account',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthAgreementcheckRoute = AuthAgreementcheckImport.update({
+const AuthAgreement_checkRoute = AuthAgreement_checkRouteImport.update({
   id: '/agreement_check',
   path: '/agreement_check',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthAgreementPrivacyRoute = AuthAgreementPrivacyImport.update({
+const AuthAgreementPrivacyRoute = AuthAgreementPrivacyRouteImport.update({
   id: '/agreement-privacy',
   path: '/agreement-privacy',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const LayoutMenu3IndexRoute = LayoutMenu3IndexImport.update({
+const LayoutMenu3IndexRoute = LayoutMenu3IndexRouteImport.update({
   id: '/menu3/',
   path: '/menu3/',
   getParentRoute: () => LayoutRoute,
 } as any)
-
-const GuideGuideIndexRoute = GuideGuideIndexImport.update({
+const GuideGuideIndexRoute = GuideGuideIndexRouteImport.update({
   id: '/guide/',
   path: '/guide/',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const LayoutSettingSettingWebmRoute = LayoutSettingSettingWebmImport.update({
-  id: '/setting/setting-web_m',
-  path: '/setting/setting-web_m',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
-const LayoutSettingSettingSnsmRoute = LayoutSettingSettingSnsmImport.update({
-  id: '/setting/setting-sns_m',
-  path: '/setting/setting-sns_m',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
-const LayoutSettingSettingLicensemRoute =
-  LayoutSettingSettingLicensemImport.update({
+const LayoutSettingSettingWeb_mRoute =
+  LayoutSettingSettingWeb_mRouteImport.update({
+    id: '/setting/setting-web_m',
+    path: '/setting/setting-web_m',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+const LayoutSettingSettingSns_mRoute =
+  LayoutSettingSettingSns_mRouteImport.update({
+    id: '/setting/setting-sns_m',
+    path: '/setting/setting-sns_m',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+const LayoutSettingSettingLicense_mRoute =
+  LayoutSettingSettingLicense_mRouteImport.update({
     id: '/setting/setting-license_m',
     path: '/setting/setting-license_m',
     getParentRoute: () => LayoutRoute,
   } as any)
-
-const LayoutSettingSettingLanguagemRoute =
-  LayoutSettingSettingLanguagemImport.update({
+const LayoutSettingSettingLanguage_mRoute =
+  LayoutSettingSettingLanguage_mRouteImport.update({
     id: '/setting/setting-language_m',
     path: '/setting/setting-language_m',
     getParentRoute: () => LayoutRoute,
   } as any)
-
-const LayoutMySettingSnsRoute = LayoutMySettingSnsImport.update({
+const LayoutMySettingSnsRoute = LayoutMySettingSnsRouteImport.update({
   id: '/my/setting-sns',
   path: '/my/setting-sns',
   getParentRoute: () => LayoutRoute,
 } as any)
-
-const LayoutMyPasswordVerifyRoute = LayoutMyPasswordVerifyImport.update({
+const LayoutMyPasswordVerifyRoute = LayoutMyPasswordVerifyRouteImport.update({
   id: '/my/password-verify',
   path: '/my/password-verify',
   getParentRoute: () => LayoutRoute,
 } as any)
-
 const LayoutMyMembershipSecessionRoute =
-  LayoutMyMembershipSecessionImport.update({
+  LayoutMyMembershipSecessionRouteImport.update({
     id: '/my/membership-secession',
     path: '/my/membership-secession',
     getParentRoute: () => LayoutRoute,
   } as any)
-
-const LayoutMyInformationChangeRoute = LayoutMyInformationChangeImport.update({
-  id: '/my/information-change',
-  path: '/my/information-change',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
-const LayoutIntegratedSearchIntegratedSearchmRoute =
-  LayoutIntegratedSearchIntegratedSearchmImport.update({
+const LayoutMyInformationChangeRoute =
+  LayoutMyInformationChangeRouteImport.update({
+    id: '/my/information-change',
+    path: '/my/information-change',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+const LayoutIntegratedSearchIntegratedSearch_mRoute =
+  LayoutIntegratedSearchIntegratedSearch_mRouteImport.update({
     id: '/integrated-search/integrated-search_m',
     path: '/integrated-search/integrated-search_m',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutIntegratedSearchIntegratedProcedureMRoute =
-  LayoutIntegratedSearchIntegratedProcedureMImport.update({
+  LayoutIntegratedSearchIntegratedProcedureMRouteImport.update({
     id: '/integrated-search/integrated-procedure-m',
     path: '/integrated-search/integrated-procedure-m',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutIntegratedSearchIntegratedProcedureRoute =
-  LayoutIntegratedSearchIntegratedProcedureImport.update({
+  LayoutIntegratedSearchIntegratedProcedureRouteImport.update({
     id: '/integrated-search/integrated-procedure',
     path: '/integrated-search/integrated-procedure',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutIntegratedSearchIntegratedAllMRoute =
-  LayoutIntegratedSearchIntegratedAllMImport.update({
+  LayoutIntegratedSearchIntegratedAllMRouteImport.update({
     id: '/integrated-search/integrated-all-m',
     path: '/integrated-search/integrated-all-m',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutIntegratedSearchIntegratedAllRoute =
-  LayoutIntegratedSearchIntegratedAllImport.update({
+  LayoutIntegratedSearchIntegratedAllRouteImport.update({
     id: '/integrated-search/integrated-all',
     path: '/integrated-search/integrated-all',
     getParentRoute: () => LayoutRoute,
   } as any)
-
-const LayoutFooterMenuPrivacyRoute = LayoutFooterMenuPrivacyImport.update({
+const LayoutFooterMenuPrivacyRoute = LayoutFooterMenuPrivacyRouteImport.update({
   id: '/footer-menu/privacy',
   path: '/footer-menu/privacy',
   getParentRoute: () => LayoutRoute,
 } as any)
-
 const LayoutFooterMenuOpenLicenseRoute =
-  LayoutFooterMenuOpenLicenseImport.update({
+  LayoutFooterMenuOpenLicenseRouteImport.update({
     id: '/footer-menu/open-license',
     path: '/footer-menu/open-license',
     getParentRoute: () => LayoutRoute,
   } as any)
-
-const LayoutFooterMenuAgreementRoute = LayoutFooterMenuAgreementImport.update({
-  id: '/footer-menu/agreement',
-  path: '/footer-menu/agreement',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
+const LayoutFooterMenuAgreementRoute =
+  LayoutFooterMenuAgreementRouteImport.update({
+    id: '/footer-menu/agreement',
+    path: '/footer-menu/agreement',
+    getParentRoute: () => LayoutRoute,
+  } as any)
 const LayoutEduSupportEduLicensesListRoute =
-  LayoutEduSupportEduLicensesListImport.update({
+  LayoutEduSupportEduLicensesListRouteImport.update({
     id: '/edu-support/edu-licenses-list',
     path: '/edu-support/edu-licenses-list',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutCourseRegistrationCourseRegistrationTextbookRoute =
-  LayoutCourseRegistrationCourseRegistrationTextbookImport.update({
+  LayoutCourseRegistrationCourseRegistrationTextbookRouteImport.update({
     id: '/course-registration/course-registration-textbook',
     path: '/course-registration/course-registration-textbook',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutCourseRegistrationCourseRegistrationLevelRoute =
-  LayoutCourseRegistrationCourseRegistrationLevelImport.update({
+  LayoutCourseRegistrationCourseRegistrationLevelRouteImport.update({
     id: '/course-registration/course-registration-level',
     path: '/course-registration/course-registration-level',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutCourseRegistrationCourseRegistrationCompleteRoute =
-  LayoutCourseRegistrationCourseRegistrationCompleteImport.update({
+  LayoutCourseRegistrationCourseRegistrationCompleteRouteImport.update({
     id: '/course-registration/course-registration-complete',
     path: '/course-registration/course-registration-complete',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutCourseRegistrationCourseRegistrationAllRoute =
-  LayoutCourseRegistrationCourseRegistrationAllImport.update({
+  LayoutCourseRegistrationCourseRegistrationAllRouteImport.update({
     id: '/course-registration/course-registration-all',
     path: '/course-registration/course-registration-all',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutCourseIntroductionPackageMRoute =
-  LayoutCourseIntroductionPackageMImport.update({
+  LayoutCourseIntroductionPackageMRouteImport.update({
     id: '/course-introduction/package-m',
     path: '/course-introduction/package-m',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutCourseIntroductionPackageRoute =
-  LayoutCourseIntroductionPackageImport.update({
+  LayoutCourseIntroductionPackageRouteImport.update({
     id: '/course-introduction/package',
     path: '/course-introduction/package',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutCourseIntroductionDetailMRoute =
-  LayoutCourseIntroductionDetailMImport.update({
+  LayoutCourseIntroductionDetailMRouteImport.update({
     id: '/course-introduction/detail-m',
     path: '/course-introduction/detail-m',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutCourseIntroductionDetailRoute =
-  LayoutCourseIntroductionDetailImport.update({
+  LayoutCourseIntroductionDetailRouteImport.update({
     id: '/course-introduction/detail',
     path: '/course-introduction/detail',
     getParentRoute: () => LayoutRoute,
   } as any)
-
-const LayoutCategoryDetailmRoute = LayoutCategoryDetailmImport.update({
+const LayoutCategoryDetail_mRoute = LayoutCategoryDetail_mRouteImport.update({
   id: '/category/detail_m',
   path: '/category/detail_m',
   getParentRoute: () => LayoutRoute,
 } as any)
-
-const LayoutCategoryDetailRoute = LayoutCategoryDetailImport.update({
+const LayoutCategoryDetailRoute = LayoutCategoryDetailRouteImport.update({
   id: '/category/detail',
   path: '/category/detail',
   getParentRoute: () => LayoutRoute,
 } as any)
-
-const GuideGuideTypographyRoute = GuideGuideTypographyImport.update({
+const GuideGuideTypographyRoute = GuideGuideTypographyRouteImport.update({
   id: '/guide/typography',
   path: '/guide/typography',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideTooltipRoute = GuideGuideTooltipImport.update({
+const GuideGuideTooltipRoute = GuideGuideTooltipRouteImport.update({
   id: '/guide/tooltip',
   path: '/guide/tooltip',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideToastRoute = GuideGuideToastImport.update({
+const GuideGuideToastRoute = GuideGuideToastRouteImport.update({
   id: '/guide/toast',
   path: '/guide/toast',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideThumnailRoute = GuideGuideThumnailImport.update({
+const GuideGuideThumnailRoute = GuideGuideThumnailRouteImport.update({
   id: '/guide/thumnail',
   path: '/guide/thumnail',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideTextareaRoute = GuideGuideTextareaImport.update({
+const GuideGuideTextareaRoute = GuideGuideTextareaRouteImport.update({
   id: '/guide/textarea',
   path: '/guide/textarea',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideTestRoute = GuideGuideTestImport.update({
+const GuideGuideTestRoute = GuideGuideTestRouteImport.update({
   id: '/guide/test',
   path: '/guide/test',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideTabsRoute = GuideGuideTabsImport.update({
+const GuideGuideTabsRoute = GuideGuideTabsRouteImport.update({
   id: '/guide/tabs',
   path: '/guide/tabs',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideTableRoute = GuideGuideTableImport.update({
+const GuideGuideTableRoute = GuideGuideTableRouteImport.update({
   id: '/guide/table',
   path: '/guide/table',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideSwitchRoute = GuideGuideSwitchImport.update({
+const GuideGuideSwitchRoute = GuideGuideSwitchRouteImport.update({
   id: '/guide/switch',
   path: '/guide/switch',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideStepperRoute = GuideGuideStepperImport.update({
+const GuideGuideStepperRoute = GuideGuideStepperRouteImport.update({
   id: '/guide/stepper',
   path: '/guide/stepper',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideSpinnerRoute = GuideGuideSpinnerImport.update({
+const GuideGuideSpinnerRoute = GuideGuideSpinnerRouteImport.update({
   id: '/guide/spinner',
   path: '/guide/spinner',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideSelectRoute = GuideGuideSelectImport.update({
+const GuideGuideSelectRoute = GuideGuideSelectRouteImport.update({
   id: '/guide/select',
   path: '/guide/select',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideResultRoute = GuideGuideResultImport.update({
+const GuideGuideResultRoute = GuideGuideResultRouteImport.update({
   id: '/guide/result',
   path: '/guide/result',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideRespondRoute = GuideGuideRespondImport.update({
+const GuideGuideRespondRoute = GuideGuideRespondRouteImport.update({
   id: '/guide/respond',
   path: '/guide/respond',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideRadioRoute = GuideGuideRadioImport.update({
+const GuideGuideRadioRoute = GuideGuideRadioRouteImport.update({
   id: '/guide/radio',
   path: '/guide/radio',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideProgressRoute = GuideGuideProgressImport.update({
+const GuideGuideProgressRoute = GuideGuideProgressRouteImport.update({
   id: '/guide/progress',
   path: '/guide/progress',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuidePopoverRoute = GuideGuidePopoverImport.update({
+const GuideGuidePopoverRoute = GuideGuidePopoverRouteImport.update({
   id: '/guide/popover',
   path: '/guide/popover',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuidePhoneNumberRoute = GuideGuidePhoneNumberImport.update({
+const GuideGuidePhoneNumberRoute = GuideGuidePhoneNumberRouteImport.update({
   id: '/guide/phone-number',
   path: '/guide/phone-number',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuidePanelRoute = GuideGuidePanelImport.update({
+const GuideGuidePanelRoute = GuideGuidePanelRouteImport.update({
   id: '/guide/panel',
   path: '/guide/panel',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuidePaginationRoute = GuideGuidePaginationImport.update({
+const GuideGuidePaginationRoute = GuideGuidePaginationRouteImport.update({
   id: '/guide/pagination',
   path: '/guide/pagination',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideOptionCardRoute = GuideGuideOptionCardImport.update({
+const GuideGuideOptionCardRoute = GuideGuideOptionCardRouteImport.update({
   id: '/guide/optionCard',
   path: '/guide/optionCard',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideOperatorRoute = GuideGuideOperatorImport.update({
+const GuideGuideOperatorRoute = GuideGuideOperatorRouteImport.update({
   id: '/guide/operator',
   path: '/guide/operator',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideNoticeRoute = GuideGuideNoticeImport.update({
+const GuideGuideNoticeRoute = GuideGuideNoticeRouteImport.update({
   id: '/guide/notice',
   path: '/guide/notice',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideModalRoute = GuideGuideModalImport.update({
+const GuideGuideModalRoute = GuideGuideModalRouteImport.update({
   id: '/guide/modal',
   path: '/guide/modal',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideMobileRoute = GuideGuideMobileImport.update({
+const GuideGuideMobileRoute = GuideGuideMobileRouteImport.update({
   id: '/guide/mobile',
   path: '/guide/mobile',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideListRoute = GuideGuideListImport.update({
+const GuideGuideListRoute = GuideGuideListRouteImport.update({
   id: '/guide/list',
   path: '/guide/list',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideLayoutRoute = GuideGuideLayoutImport.update({
+const GuideGuideLayoutRoute = GuideGuideLayoutRouteImport.update({
   id: '/guide/layout',
   path: '/guide/layout',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideInputTimerRoute = GuideGuideInputTimerImport.update({
+const GuideGuideInputTimerRoute = GuideGuideInputTimerRouteImport.update({
   id: '/guide/input-timer',
   path: '/guide/input-timer',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideInputRoute = GuideGuideInputImport.update({
+const GuideGuideInputRoute = GuideGuideInputRouteImport.update({
   id: '/guide/input',
   path: '/guide/input',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideInfoRoute = GuideGuideInfoImport.update({
+const GuideGuideInfoRoute = GuideGuideInfoRouteImport.update({
   id: '/guide/info',
   path: '/guide/info',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideImageRoute = GuideGuideImageImport.update({
+const GuideGuideImageRoute = GuideGuideImageRouteImport.update({
   id: '/guide/image',
   path: '/guide/image',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideIconRoute = GuideGuideIconImport.update({
+const GuideGuideIconRoute = GuideGuideIconRouteImport.update({
   id: '/guide/icon',
   path: '/guide/icon',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideGridRoute = GuideGuideGridImport.update({
+const GuideGuideGridRoute = GuideGuideGridRouteImport.update({
   id: '/guide/grid',
   path: '/guide/grid',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideFormRoute = GuideGuideFormImport.update({
+const GuideGuideFormRoute = GuideGuideFormRouteImport.update({
   id: '/guide/form',
   path: '/guide/form',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideDropDownRoute = GuideGuideDropDownImport.update({
+const GuideGuideDropDownRoute = GuideGuideDropDownRouteImport.update({
   id: '/guide/drop-down',
   path: '/guide/drop-down',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideDividerRoute = GuideGuideDividerImport.update({
+const GuideGuideDividerRoute = GuideGuideDividerRouteImport.update({
   id: '/guide/divider',
   path: '/guide/divider',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideDatePickerRoute = GuideGuideDatePickerImport.update({
+const GuideGuideDatePickerRoute = GuideGuideDatePickerRouteImport.update({
   id: '/guide/date-picker',
   path: '/guide/date-picker',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideDataDisplayRoute = GuideGuideDataDisplayImport.update({
+const GuideGuideDataDisplayRoute = GuideGuideDataDisplayRouteImport.update({
   id: '/guide/data-display',
   path: '/guide/data-display',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideCssRoute = GuideGuideCssImport.update({
+const GuideGuideCssRoute = GuideGuideCssRouteImport.update({
   id: '/guide/css',
   path: '/guide/css',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideColorRoute = GuideGuideColorImport.update({
+const GuideGuideColorRoute = GuideGuideColorRouteImport.update({
   id: '/guide/color',
   path: '/guide/color',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideChipsRoute = GuideGuideChipsImport.update({
+const GuideGuideChipsRoute = GuideGuideChipsRouteImport.update({
   id: '/guide/chips',
   path: '/guide/chips',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideCheckboxRoute = GuideGuideCheckboxImport.update({
+const GuideGuideCheckboxRoute = GuideGuideCheckboxRouteImport.update({
   id: '/guide/checkbox',
   path: '/guide/checkbox',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideCarouselRoute = GuideGuideCarouselImport.update({
+const GuideGuideCarouselRoute = GuideGuideCarouselRouteImport.update({
   id: '/guide/carousel',
   path: '/guide/carousel',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideButtonsRoute = GuideGuideButtonsImport.update({
+const GuideGuideButtonsRoute = GuideGuideButtonsRouteImport.update({
   id: '/guide/buttons',
   path: '/guide/buttons',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideBoxShadowRoute = GuideGuideBoxShadowImport.update({
+const GuideGuideBoxShadowRoute = GuideGuideBoxShadowRouteImport.update({
   id: '/guide/box-shadow',
   path: '/guide/box-shadow',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideBannerRoute = GuideGuideBannerImport.update({
+const GuideGuideBannerRoute = GuideGuideBannerRouteImport.update({
   id: '/guide/banner',
   path: '/guide/banner',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideBadgeRoute = GuideGuideBadgeImport.update({
+const GuideGuideBadgeRoute = GuideGuideBadgeRouteImport.update({
   id: '/guide/badge',
   path: '/guide/badge',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideAvatarRoute = GuideGuideAvatarImport.update({
+const GuideGuideAvatarRoute = GuideGuideAvatarRouteImport.update({
   id: '/guide/avatar',
   path: '/guide/avatar',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideAlertRoute = GuideGuideAlertImport.update({
+const GuideGuideAlertRoute = GuideGuideAlertRouteImport.update({
   id: '/guide/alert',
   path: '/guide/alert',
   getParentRoute: () => GuideRoute,
 } as any)
 
-// Populate the FileRoutesByPath interface
-
-declare module '@tanstack/react-router' {
-  interface FileRoutesByPath {
-    '/_auth': {
-      id: '/_auth'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof AuthImport
-      parentRoute: typeof rootRoute
-    }
-    '/_guide': {
-      id: '/_guide'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof GuideImport
-      parentRoute: typeof rootRoute
-    }
-    '/_layout': {
-      id: '/_layout'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof LayoutImport
-      parentRoute: typeof rootRoute
-    }
-    '/_learning': {
-      id: '/_learning'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof LearningImport
-      parentRoute: typeof rootRoute
-    }
-    '/_auth/agreement-privacy': {
-      id: '/_auth/agreement-privacy'
-      path: '/agreement-privacy'
-      fullPath: '/agreement-privacy'
-      preLoaderRoute: typeof AuthAgreementPrivacyImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/agreement_check': {
-      id: '/_auth/agreement_check'
-      path: '/agreement_check'
-      fullPath: '/agreement_check'
-      preLoaderRoute: typeof AuthAgreementcheckImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/dormant-account': {
-      id: '/_auth/dormant-account'
-      path: '/dormant-account'
-      fullPath: '/dormant-account'
-      preLoaderRoute: typeof AuthDormantAccountImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/google-cert': {
-      id: '/_auth/google-cert'
-      path: '/google-cert'
-      fullPath: '/google-cert'
-      preLoaderRoute: typeof AuthGoogleCertImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/login': {
-      id: '/_auth/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof AuthLoginImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/mpass-cert': {
-      id: '/_auth/mpass-cert'
-      path: '/mpass-cert'
-      fullPath: '/mpass-cert'
-      preLoaderRoute: typeof AuthMpassCertImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/password-input': {
-      id: '/_auth/password-input'
-      path: '/password-input'
-      fullPath: '/password-input'
-      preLoaderRoute: typeof AuthPasswordInputImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/password-modify': {
-      id: '/_auth/password-modify'
-      path: '/password-modify'
-      fullPath: '/password-modify'
-      preLoaderRoute: typeof AuthPasswordModifyImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/password-set': {
-      id: '/_auth/password-set'
-      path: '/password-set'
-      fullPath: '/password-set'
-      preLoaderRoute: typeof AuthPasswordSetImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/progress-status-cert': {
-      id: '/_auth/progress-status-cert'
-      path: '/progress-status-cert'
-      fullPath: '/progress-status-cert'
-      preLoaderRoute: typeof AuthProgressStatusCertImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/progress-status-email': {
-      id: '/_auth/progress-status-email'
-      path: '/progress-status-email'
-      fullPath: '/progress-status-email'
-      preLoaderRoute: typeof AuthProgressStatusEmailImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/progress-status-result': {
-      id: '/_auth/progress-status-result'
-      path: '/progress-status-result'
-      fullPath: '/progress-status-result'
-      preLoaderRoute: typeof AuthProgressStatusResultImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/progress-status-result-en': {
-      id: '/_auth/progress-status-result-en'
-      path: '/progress-status-result-en'
-      fullPath: '/progress-status-result-en'
-      preLoaderRoute: typeof AuthProgressStatusResultEnImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/search-account': {
-      id: '/_auth/search-account'
-      path: '/search-account'
-      fullPath: '/search-account'
-      preLoaderRoute: typeof AuthSearchAccountImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/search-id-success': {
-      id: '/_auth/search-id-success'
-      path: '/search-id-success'
-      fullPath: '/search-id-success'
-      preLoaderRoute: typeof AuthSearchIdSuccessImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/signup-step1': {
-      id: '/_auth/signup-step1'
-      path: '/signup-step1'
-      fullPath: '/signup-step1'
-      preLoaderRoute: typeof AuthSignupStep1Import
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/signup-step2': {
-      id: '/_auth/signup-step2'
-      path: '/signup-step2'
-      fullPath: '/signup-step2'
-      preLoaderRoute: typeof AuthSignupStep2Import
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/signup-step2-en': {
-      id: '/_auth/signup-step2-en'
-      path: '/signup-step2-en'
-      fullPath: '/signup-step2-en'
-      preLoaderRoute: typeof AuthSignupStep2EnImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/signup-step3': {
-      id: '/_auth/signup-step3'
-      path: '/signup-step3'
-      fullPath: '/signup-step3'
-      preLoaderRoute: typeof AuthSignupStep3Import
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/signup-step3-en': {
-      id: '/_auth/signup-step3-en'
-      path: '/signup-step3-en'
-      fullPath: '/signup-step3-en'
-      preLoaderRoute: typeof AuthSignupStep3EnImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/success': {
-      id: '/_auth/success'
-      path: '/success'
-      fullPath: '/success'
-      preLoaderRoute: typeof AuthSuccessImport
-      parentRoute: typeof AuthImport
-    }
-    '/_learning/blog': {
-      id: '/_learning/blog'
-      path: '/blog'
-      fullPath: '/blog'
-      preLoaderRoute: typeof LearningBlogImport
-      parentRoute: typeof LearningImport
-    }
-    '/_learning/blog-m': {
-      id: '/_learning/blog-m'
-      path: '/blog-m'
-      fullPath: '/blog-m'
-      preLoaderRoute: typeof LearningBlogMImport
-      parentRoute: typeof LearningImport
-    }
-    '/_learning/ebook': {
-      id: '/_learning/ebook'
-      path: '/ebook'
-      fullPath: '/ebook'
-      preLoaderRoute: typeof LearningEbookImport
-      parentRoute: typeof LearningImport
-    }
-    '/_learning/ebook-m': {
-      id: '/_learning/ebook-m'
-      path: '/ebook-m'
-      fullPath: '/ebook-m'
-      preLoaderRoute: typeof LearningEbookMImport
-      parentRoute: typeof LearningImport
-    }
-    '/_learning/file': {
-      id: '/_learning/file'
-      path: '/file'
-      fullPath: '/file'
-      preLoaderRoute: typeof LearningFileImport
-      parentRoute: typeof LearningImport
-    }
-    '/_learning/file-m': {
-      id: '/_learning/file-m'
-      path: '/file-m'
-      fullPath: '/file-m'
-      preLoaderRoute: typeof LearningFileMImport
-      parentRoute: typeof LearningImport
-    }
-    '/_learning/gallery': {
-      id: '/_learning/gallery'
-      path: '/gallery'
-      fullPath: '/gallery'
-      preLoaderRoute: typeof LearningGalleryImport
-      parentRoute: typeof LearningImport
-    }
-    '/_learning/gallery-m': {
-      id: '/_learning/gallery-m'
-      path: '/gallery-m'
-      fullPath: '/gallery-m'
-      preLoaderRoute: typeof LearningGalleryMImport
-      parentRoute: typeof LearningImport
-    }
-    '/_learning/html': {
-      id: '/_learning/html'
-      path: '/html'
-      fullPath: '/html'
-      preLoaderRoute: typeof LearningHtmlImport
-      parentRoute: typeof LearningImport
-    }
-    '/_learning/html-m': {
-      id: '/_learning/html-m'
-      path: '/html-m'
-      fullPath: '/html-m'
-      preLoaderRoute: typeof LearningHtmlMImport
-      parentRoute: typeof LearningImport
-    }
-    '/_learning/iframe': {
-      id: '/_learning/iframe'
-      path: '/iframe'
-      fullPath: '/iframe'
-      preLoaderRoute: typeof LearningIframeImport
-      parentRoute: typeof LearningImport
-    }
-    '/_learning/iframe-m': {
-      id: '/_learning/iframe-m'
-      path: '/iframe-m'
-      fullPath: '/iframe-m'
-      preLoaderRoute: typeof LearningIframeMImport
-      parentRoute: typeof LearningImport
-    }
-    '/_learning/link': {
-      id: '/_learning/link'
-      path: '/link'
-      fullPath: '/link'
-      preLoaderRoute: typeof LearningLinkImport
-      parentRoute: typeof LearningImport
-    }
-    '/_learning/link-m': {
-      id: '/_learning/link-m'
-      path: '/link-m'
-      fullPath: '/link-m'
-      preLoaderRoute: typeof LearningLinkMImport
-      parentRoute: typeof LearningImport
-    }
-    '/_learning/live': {
-      id: '/_learning/live'
-      path: '/live'
-      fullPath: '/live'
-      preLoaderRoute: typeof LearningLiveImport
-      parentRoute: typeof LearningImport
-    }
-    '/_learning/live-m': {
-      id: '/_learning/live-m'
-      path: '/live-m'
-      fullPath: '/live-m'
-      preLoaderRoute: typeof LearningLiveMImport
-      parentRoute: typeof LearningImport
-    }
-    '/_learning/video': {
-      id: '/_learning/video'
-      path: '/video'
-      fullPath: '/video'
-      preLoaderRoute: typeof LearningVideoImport
-      parentRoute: typeof LearningImport
-    }
-    '/_learning/video-m': {
-      id: '/_learning/video-m'
-      path: '/video-m'
-      fullPath: '/video-m'
-      preLoaderRoute: typeof LearningVideoMImport
-      parentRoute: typeof LearningImport
-    }
-    '/_layout/': {
-      id: '/_layout/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof LayoutIndexImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_guide/guide/alert': {
-      id: '/_guide/guide/alert'
-      path: '/guide/alert'
-      fullPath: '/guide/alert'
-      preLoaderRoute: typeof GuideGuideAlertImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/avatar': {
-      id: '/_guide/guide/avatar'
-      path: '/guide/avatar'
-      fullPath: '/guide/avatar'
-      preLoaderRoute: typeof GuideGuideAvatarImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/badge': {
-      id: '/_guide/guide/badge'
-      path: '/guide/badge'
-      fullPath: '/guide/badge'
-      preLoaderRoute: typeof GuideGuideBadgeImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/banner': {
-      id: '/_guide/guide/banner'
-      path: '/guide/banner'
-      fullPath: '/guide/banner'
-      preLoaderRoute: typeof GuideGuideBannerImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/box-shadow': {
-      id: '/_guide/guide/box-shadow'
-      path: '/guide/box-shadow'
-      fullPath: '/guide/box-shadow'
-      preLoaderRoute: typeof GuideGuideBoxShadowImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/buttons': {
-      id: '/_guide/guide/buttons'
-      path: '/guide/buttons'
-      fullPath: '/guide/buttons'
-      preLoaderRoute: typeof GuideGuideButtonsImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/carousel': {
-      id: '/_guide/guide/carousel'
-      path: '/guide/carousel'
-      fullPath: '/guide/carousel'
-      preLoaderRoute: typeof GuideGuideCarouselImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/checkbox': {
-      id: '/_guide/guide/checkbox'
-      path: '/guide/checkbox'
-      fullPath: '/guide/checkbox'
-      preLoaderRoute: typeof GuideGuideCheckboxImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/chips': {
-      id: '/_guide/guide/chips'
-      path: '/guide/chips'
-      fullPath: '/guide/chips'
-      preLoaderRoute: typeof GuideGuideChipsImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/color': {
-      id: '/_guide/guide/color'
-      path: '/guide/color'
-      fullPath: '/guide/color'
-      preLoaderRoute: typeof GuideGuideColorImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/css': {
-      id: '/_guide/guide/css'
-      path: '/guide/css'
-      fullPath: '/guide/css'
-      preLoaderRoute: typeof GuideGuideCssImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/data-display': {
-      id: '/_guide/guide/data-display'
-      path: '/guide/data-display'
-      fullPath: '/guide/data-display'
-      preLoaderRoute: typeof GuideGuideDataDisplayImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/date-picker': {
-      id: '/_guide/guide/date-picker'
-      path: '/guide/date-picker'
-      fullPath: '/guide/date-picker'
-      preLoaderRoute: typeof GuideGuideDatePickerImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/divider': {
-      id: '/_guide/guide/divider'
-      path: '/guide/divider'
-      fullPath: '/guide/divider'
-      preLoaderRoute: typeof GuideGuideDividerImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/drop-down': {
-      id: '/_guide/guide/drop-down'
-      path: '/guide/drop-down'
-      fullPath: '/guide/drop-down'
-      preLoaderRoute: typeof GuideGuideDropDownImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/form': {
-      id: '/_guide/guide/form'
-      path: '/guide/form'
-      fullPath: '/guide/form'
-      preLoaderRoute: typeof GuideGuideFormImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/grid': {
-      id: '/_guide/guide/grid'
-      path: '/guide/grid'
-      fullPath: '/guide/grid'
-      preLoaderRoute: typeof GuideGuideGridImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/icon': {
-      id: '/_guide/guide/icon'
-      path: '/guide/icon'
-      fullPath: '/guide/icon'
-      preLoaderRoute: typeof GuideGuideIconImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/image': {
-      id: '/_guide/guide/image'
-      path: '/guide/image'
-      fullPath: '/guide/image'
-      preLoaderRoute: typeof GuideGuideImageImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/info': {
-      id: '/_guide/guide/info'
-      path: '/guide/info'
-      fullPath: '/guide/info'
-      preLoaderRoute: typeof GuideGuideInfoImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/input': {
-      id: '/_guide/guide/input'
-      path: '/guide/input'
-      fullPath: '/guide/input'
-      preLoaderRoute: typeof GuideGuideInputImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/input-timer': {
-      id: '/_guide/guide/input-timer'
-      path: '/guide/input-timer'
-      fullPath: '/guide/input-timer'
-      preLoaderRoute: typeof GuideGuideInputTimerImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/layout': {
-      id: '/_guide/guide/layout'
-      path: '/guide/layout'
-      fullPath: '/guide/layout'
-      preLoaderRoute: typeof GuideGuideLayoutImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/list': {
-      id: '/_guide/guide/list'
-      path: '/guide/list'
-      fullPath: '/guide/list'
-      preLoaderRoute: typeof GuideGuideListImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/mobile': {
-      id: '/_guide/guide/mobile'
-      path: '/guide/mobile'
-      fullPath: '/guide/mobile'
-      preLoaderRoute: typeof GuideGuideMobileImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/modal': {
-      id: '/_guide/guide/modal'
-      path: '/guide/modal'
-      fullPath: '/guide/modal'
-      preLoaderRoute: typeof GuideGuideModalImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/notice': {
-      id: '/_guide/guide/notice'
-      path: '/guide/notice'
-      fullPath: '/guide/notice'
-      preLoaderRoute: typeof GuideGuideNoticeImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/operator': {
-      id: '/_guide/guide/operator'
-      path: '/guide/operator'
-      fullPath: '/guide/operator'
-      preLoaderRoute: typeof GuideGuideOperatorImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/optionCard': {
-      id: '/_guide/guide/optionCard'
-      path: '/guide/optionCard'
-      fullPath: '/guide/optionCard'
-      preLoaderRoute: typeof GuideGuideOptionCardImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/pagination': {
-      id: '/_guide/guide/pagination'
-      path: '/guide/pagination'
-      fullPath: '/guide/pagination'
-      preLoaderRoute: typeof GuideGuidePaginationImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/panel': {
-      id: '/_guide/guide/panel'
-      path: '/guide/panel'
-      fullPath: '/guide/panel'
-      preLoaderRoute: typeof GuideGuidePanelImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/phone-number': {
-      id: '/_guide/guide/phone-number'
-      path: '/guide/phone-number'
-      fullPath: '/guide/phone-number'
-      preLoaderRoute: typeof GuideGuidePhoneNumberImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/popover': {
-      id: '/_guide/guide/popover'
-      path: '/guide/popover'
-      fullPath: '/guide/popover'
-      preLoaderRoute: typeof GuideGuidePopoverImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/progress': {
-      id: '/_guide/guide/progress'
-      path: '/guide/progress'
-      fullPath: '/guide/progress'
-      preLoaderRoute: typeof GuideGuideProgressImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/radio': {
-      id: '/_guide/guide/radio'
-      path: '/guide/radio'
-      fullPath: '/guide/radio'
-      preLoaderRoute: typeof GuideGuideRadioImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/respond': {
-      id: '/_guide/guide/respond'
-      path: '/guide/respond'
-      fullPath: '/guide/respond'
-      preLoaderRoute: typeof GuideGuideRespondImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/result': {
-      id: '/_guide/guide/result'
-      path: '/guide/result'
-      fullPath: '/guide/result'
-      preLoaderRoute: typeof GuideGuideResultImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/select': {
-      id: '/_guide/guide/select'
-      path: '/guide/select'
-      fullPath: '/guide/select'
-      preLoaderRoute: typeof GuideGuideSelectImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/spinner': {
-      id: '/_guide/guide/spinner'
-      path: '/guide/spinner'
-      fullPath: '/guide/spinner'
-      preLoaderRoute: typeof GuideGuideSpinnerImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/stepper': {
-      id: '/_guide/guide/stepper'
-      path: '/guide/stepper'
-      fullPath: '/guide/stepper'
-      preLoaderRoute: typeof GuideGuideStepperImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/switch': {
-      id: '/_guide/guide/switch'
-      path: '/guide/switch'
-      fullPath: '/guide/switch'
-      preLoaderRoute: typeof GuideGuideSwitchImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/table': {
-      id: '/_guide/guide/table'
-      path: '/guide/table'
-      fullPath: '/guide/table'
-      preLoaderRoute: typeof GuideGuideTableImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/tabs': {
-      id: '/_guide/guide/tabs'
-      path: '/guide/tabs'
-      fullPath: '/guide/tabs'
-      preLoaderRoute: typeof GuideGuideTabsImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/test': {
-      id: '/_guide/guide/test'
-      path: '/guide/test'
-      fullPath: '/guide/test'
-      preLoaderRoute: typeof GuideGuideTestImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/textarea': {
-      id: '/_guide/guide/textarea'
-      path: '/guide/textarea'
-      fullPath: '/guide/textarea'
-      preLoaderRoute: typeof GuideGuideTextareaImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/thumnail': {
-      id: '/_guide/guide/thumnail'
-      path: '/guide/thumnail'
-      fullPath: '/guide/thumnail'
-      preLoaderRoute: typeof GuideGuideThumnailImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/toast': {
-      id: '/_guide/guide/toast'
-      path: '/guide/toast'
-      fullPath: '/guide/toast'
-      preLoaderRoute: typeof GuideGuideToastImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/tooltip': {
-      id: '/_guide/guide/tooltip'
-      path: '/guide/tooltip'
-      fullPath: '/guide/tooltip'
-      preLoaderRoute: typeof GuideGuideTooltipImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/typography': {
-      id: '/_guide/guide/typography'
-      path: '/guide/typography'
-      fullPath: '/guide/typography'
-      preLoaderRoute: typeof GuideGuideTypographyImport
-      parentRoute: typeof GuideImport
-    }
-    '/_layout/category/detail': {
-      id: '/_layout/category/detail'
-      path: '/category/detail'
-      fullPath: '/category/detail'
-      preLoaderRoute: typeof LayoutCategoryDetailImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/category/detail_m': {
-      id: '/_layout/category/detail_m'
-      path: '/category/detail_m'
-      fullPath: '/category/detail_m'
-      preLoaderRoute: typeof LayoutCategoryDetailmImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/course-introduction/detail': {
-      id: '/_layout/course-introduction/detail'
-      path: '/course-introduction/detail'
-      fullPath: '/course-introduction/detail'
-      preLoaderRoute: typeof LayoutCourseIntroductionDetailImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/course-introduction/detail-m': {
-      id: '/_layout/course-introduction/detail-m'
-      path: '/course-introduction/detail-m'
-      fullPath: '/course-introduction/detail-m'
-      preLoaderRoute: typeof LayoutCourseIntroductionDetailMImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/course-introduction/package': {
-      id: '/_layout/course-introduction/package'
-      path: '/course-introduction/package'
-      fullPath: '/course-introduction/package'
-      preLoaderRoute: typeof LayoutCourseIntroductionPackageImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/course-introduction/package-m': {
-      id: '/_layout/course-introduction/package-m'
-      path: '/course-introduction/package-m'
-      fullPath: '/course-introduction/package-m'
-      preLoaderRoute: typeof LayoutCourseIntroductionPackageMImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/course-registration/course-registration-all': {
-      id: '/_layout/course-registration/course-registration-all'
-      path: '/course-registration/course-registration-all'
-      fullPath: '/course-registration/course-registration-all'
-      preLoaderRoute: typeof LayoutCourseRegistrationCourseRegistrationAllImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/course-registration/course-registration-complete': {
-      id: '/_layout/course-registration/course-registration-complete'
-      path: '/course-registration/course-registration-complete'
-      fullPath: '/course-registration/course-registration-complete'
-      preLoaderRoute: typeof LayoutCourseRegistrationCourseRegistrationCompleteImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/course-registration/course-registration-level': {
-      id: '/_layout/course-registration/course-registration-level'
-      path: '/course-registration/course-registration-level'
-      fullPath: '/course-registration/course-registration-level'
-      preLoaderRoute: typeof LayoutCourseRegistrationCourseRegistrationLevelImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/course-registration/course-registration-textbook': {
-      id: '/_layout/course-registration/course-registration-textbook'
-      path: '/course-registration/course-registration-textbook'
-      fullPath: '/course-registration/course-registration-textbook'
-      preLoaderRoute: typeof LayoutCourseRegistrationCourseRegistrationTextbookImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/edu-support/edu-licenses-list': {
-      id: '/_layout/edu-support/edu-licenses-list'
-      path: '/edu-support/edu-licenses-list'
-      fullPath: '/edu-support/edu-licenses-list'
-      preLoaderRoute: typeof LayoutEduSupportEduLicensesListImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/footer-menu/agreement': {
-      id: '/_layout/footer-menu/agreement'
-      path: '/footer-menu/agreement'
-      fullPath: '/footer-menu/agreement'
-      preLoaderRoute: typeof LayoutFooterMenuAgreementImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/footer-menu/open-license': {
-      id: '/_layout/footer-menu/open-license'
-      path: '/footer-menu/open-license'
-      fullPath: '/footer-menu/open-license'
-      preLoaderRoute: typeof LayoutFooterMenuOpenLicenseImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/footer-menu/privacy': {
-      id: '/_layout/footer-menu/privacy'
-      path: '/footer-menu/privacy'
-      fullPath: '/footer-menu/privacy'
-      preLoaderRoute: typeof LayoutFooterMenuPrivacyImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/integrated-search/integrated-all': {
-      id: '/_layout/integrated-search/integrated-all'
-      path: '/integrated-search/integrated-all'
-      fullPath: '/integrated-search/integrated-all'
-      preLoaderRoute: typeof LayoutIntegratedSearchIntegratedAllImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/integrated-search/integrated-all-m': {
-      id: '/_layout/integrated-search/integrated-all-m'
-      path: '/integrated-search/integrated-all-m'
-      fullPath: '/integrated-search/integrated-all-m'
-      preLoaderRoute: typeof LayoutIntegratedSearchIntegratedAllMImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/integrated-search/integrated-procedure': {
-      id: '/_layout/integrated-search/integrated-procedure'
-      path: '/integrated-search/integrated-procedure'
-      fullPath: '/integrated-search/integrated-procedure'
-      preLoaderRoute: typeof LayoutIntegratedSearchIntegratedProcedureImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/integrated-search/integrated-procedure-m': {
-      id: '/_layout/integrated-search/integrated-procedure-m'
-      path: '/integrated-search/integrated-procedure-m'
-      fullPath: '/integrated-search/integrated-procedure-m'
-      preLoaderRoute: typeof LayoutIntegratedSearchIntegratedProcedureMImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/integrated-search/integrated-search_m': {
-      id: '/_layout/integrated-search/integrated-search_m'
-      path: '/integrated-search/integrated-search_m'
-      fullPath: '/integrated-search/integrated-search_m'
-      preLoaderRoute: typeof LayoutIntegratedSearchIntegratedSearchmImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/my/information-change': {
-      id: '/_layout/my/information-change'
-      path: '/my/information-change'
-      fullPath: '/my/information-change'
-      preLoaderRoute: typeof LayoutMyInformationChangeImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/my/membership-secession': {
-      id: '/_layout/my/membership-secession'
-      path: '/my/membership-secession'
-      fullPath: '/my/membership-secession'
-      preLoaderRoute: typeof LayoutMyMembershipSecessionImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/my/password-verify': {
-      id: '/_layout/my/password-verify'
-      path: '/my/password-verify'
-      fullPath: '/my/password-verify'
-      preLoaderRoute: typeof LayoutMyPasswordVerifyImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/my/setting-sns': {
-      id: '/_layout/my/setting-sns'
-      path: '/my/setting-sns'
-      fullPath: '/my/setting-sns'
-      preLoaderRoute: typeof LayoutMySettingSnsImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/setting/setting-language_m': {
-      id: '/_layout/setting/setting-language_m'
-      path: '/setting/setting-language_m'
-      fullPath: '/setting/setting-language_m'
-      preLoaderRoute: typeof LayoutSettingSettingLanguagemImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/setting/setting-license_m': {
-      id: '/_layout/setting/setting-license_m'
-      path: '/setting/setting-license_m'
-      fullPath: '/setting/setting-license_m'
-      preLoaderRoute: typeof LayoutSettingSettingLicensemImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/setting/setting-sns_m': {
-      id: '/_layout/setting/setting-sns_m'
-      path: '/setting/setting-sns_m'
-      fullPath: '/setting/setting-sns_m'
-      preLoaderRoute: typeof LayoutSettingSettingSnsmImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/setting/setting-web_m': {
-      id: '/_layout/setting/setting-web_m'
-      path: '/setting/setting-web_m'
-      fullPath: '/setting/setting-web_m'
-      preLoaderRoute: typeof LayoutSettingSettingWebmImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_guide/guide/': {
-      id: '/_guide/guide/'
-      path: '/guide'
-      fullPath: '/guide'
-      preLoaderRoute: typeof GuideGuideIndexImport
-      parentRoute: typeof GuideImport
-    }
-    '/_layout/menu3/': {
-      id: '/_layout/menu3/'
-      path: '/menu3'
-      fullPath: '/menu3'
-      preLoaderRoute: typeof LayoutMenu3IndexImport
-      parentRoute: typeof LayoutImport
-    }
-  }
-}
-
-// Create and export the route tree
-
-interface AuthRouteChildren {
-  AuthAgreementPrivacyRoute: typeof AuthAgreementPrivacyRoute
-  AuthAgreementcheckRoute: typeof AuthAgreementcheckRoute
-  AuthDormantAccountRoute: typeof AuthDormantAccountRoute
-  AuthGoogleCertRoute: typeof AuthGoogleCertRoute
-  AuthLoginRoute: typeof AuthLoginRoute
-  AuthMpassCertRoute: typeof AuthMpassCertRoute
-  AuthPasswordInputRoute: typeof AuthPasswordInputRoute
-  AuthPasswordModifyRoute: typeof AuthPasswordModifyRoute
-  AuthPasswordSetRoute: typeof AuthPasswordSetRoute
-  AuthProgressStatusCertRoute: typeof AuthProgressStatusCertRoute
-  AuthProgressStatusEmailRoute: typeof AuthProgressStatusEmailRoute
-  AuthProgressStatusResultRoute: typeof AuthProgressStatusResultRoute
-  AuthProgressStatusResultEnRoute: typeof AuthProgressStatusResultEnRoute
-  AuthSearchAccountRoute: typeof AuthSearchAccountRoute
-  AuthSearchIdSuccessRoute: typeof AuthSearchIdSuccessRoute
-  AuthSignupStep1Route: typeof AuthSignupStep1Route
-  AuthSignupStep2Route: typeof AuthSignupStep2Route
-  AuthSignupStep2EnRoute: typeof AuthSignupStep2EnRoute
-  AuthSignupStep3Route: typeof AuthSignupStep3Route
-  AuthSignupStep3EnRoute: typeof AuthSignupStep3EnRoute
-  AuthSuccessRoute: typeof AuthSuccessRoute
-}
-
-const AuthRouteChildren: AuthRouteChildren = {
-  AuthAgreementPrivacyRoute: AuthAgreementPrivacyRoute,
-  AuthAgreementcheckRoute: AuthAgreementcheckRoute,
-  AuthDormantAccountRoute: AuthDormantAccountRoute,
-  AuthGoogleCertRoute: AuthGoogleCertRoute,
-  AuthLoginRoute: AuthLoginRoute,
-  AuthMpassCertRoute: AuthMpassCertRoute,
-  AuthPasswordInputRoute: AuthPasswordInputRoute,
-  AuthPasswordModifyRoute: AuthPasswordModifyRoute,
-  AuthPasswordSetRoute: AuthPasswordSetRoute,
-  AuthProgressStatusCertRoute: AuthProgressStatusCertRoute,
-  AuthProgressStatusEmailRoute: AuthProgressStatusEmailRoute,
-  AuthProgressStatusResultRoute: AuthProgressStatusResultRoute,
-  AuthProgressStatusResultEnRoute: AuthProgressStatusResultEnRoute,
-  AuthSearchAccountRoute: AuthSearchAccountRoute,
-  AuthSearchIdSuccessRoute: AuthSearchIdSuccessRoute,
-  AuthSignupStep1Route: AuthSignupStep1Route,
-  AuthSignupStep2Route: AuthSignupStep2Route,
-  AuthSignupStep2EnRoute: AuthSignupStep2EnRoute,
-  AuthSignupStep3Route: AuthSignupStep3Route,
-  AuthSignupStep3EnRoute: AuthSignupStep3EnRoute,
-  AuthSuccessRoute: AuthSuccessRoute,
-}
-
-const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
-
-interface GuideRouteChildren {
-  GuideGuideAlertRoute: typeof GuideGuideAlertRoute
-  GuideGuideAvatarRoute: typeof GuideGuideAvatarRoute
-  GuideGuideBadgeRoute: typeof GuideGuideBadgeRoute
-  GuideGuideBannerRoute: typeof GuideGuideBannerRoute
-  GuideGuideBoxShadowRoute: typeof GuideGuideBoxShadowRoute
-  GuideGuideButtonsRoute: typeof GuideGuideButtonsRoute
-  GuideGuideCarouselRoute: typeof GuideGuideCarouselRoute
-  GuideGuideCheckboxRoute: typeof GuideGuideCheckboxRoute
-  GuideGuideChipsRoute: typeof GuideGuideChipsRoute
-  GuideGuideColorRoute: typeof GuideGuideColorRoute
-  GuideGuideCssRoute: typeof GuideGuideCssRoute
-  GuideGuideDataDisplayRoute: typeof GuideGuideDataDisplayRoute
-  GuideGuideDatePickerRoute: typeof GuideGuideDatePickerRoute
-  GuideGuideDividerRoute: typeof GuideGuideDividerRoute
-  GuideGuideDropDownRoute: typeof GuideGuideDropDownRoute
-  GuideGuideFormRoute: typeof GuideGuideFormRoute
-  GuideGuideGridRoute: typeof GuideGuideGridRoute
-  GuideGuideIconRoute: typeof GuideGuideIconRoute
-  GuideGuideImageRoute: typeof GuideGuideImageRoute
-  GuideGuideInfoRoute: typeof GuideGuideInfoRoute
-  GuideGuideInputRoute: typeof GuideGuideInputRoute
-  GuideGuideInputTimerRoute: typeof GuideGuideInputTimerRoute
-  GuideGuideLayoutRoute: typeof GuideGuideLayoutRoute
-  GuideGuideListRoute: typeof GuideGuideListRoute
-  GuideGuideMobileRoute: typeof GuideGuideMobileRoute
-  GuideGuideModalRoute: typeof GuideGuideModalRoute
-  GuideGuideNoticeRoute: typeof GuideGuideNoticeRoute
-  GuideGuideOperatorRoute: typeof GuideGuideOperatorRoute
-  GuideGuideOptionCardRoute: typeof GuideGuideOptionCardRoute
-  GuideGuidePaginationRoute: typeof GuideGuidePaginationRoute
-  GuideGuidePanelRoute: typeof GuideGuidePanelRoute
-  GuideGuidePhoneNumberRoute: typeof GuideGuidePhoneNumberRoute
-  GuideGuidePopoverRoute: typeof GuideGuidePopoverRoute
-  GuideGuideProgressRoute: typeof GuideGuideProgressRoute
-  GuideGuideRadioRoute: typeof GuideGuideRadioRoute
-  GuideGuideRespondRoute: typeof GuideGuideRespondRoute
-  GuideGuideResultRoute: typeof GuideGuideResultRoute
-  GuideGuideSelectRoute: typeof GuideGuideSelectRoute
-  GuideGuideSpinnerRoute: typeof GuideGuideSpinnerRoute
-  GuideGuideStepperRoute: typeof GuideGuideStepperRoute
-  GuideGuideSwitchRoute: typeof GuideGuideSwitchRoute
-  GuideGuideTableRoute: typeof GuideGuideTableRoute
-  GuideGuideTabsRoute: typeof GuideGuideTabsRoute
-  GuideGuideTestRoute: typeof GuideGuideTestRoute
-  GuideGuideTextareaRoute: typeof GuideGuideTextareaRoute
-  GuideGuideThumnailRoute: typeof GuideGuideThumnailRoute
-  GuideGuideToastRoute: typeof GuideGuideToastRoute
-  GuideGuideTooltipRoute: typeof GuideGuideTooltipRoute
-  GuideGuideTypographyRoute: typeof GuideGuideTypographyRoute
-  GuideGuideIndexRoute: typeof GuideGuideIndexRoute
-}
-
-const GuideRouteChildren: GuideRouteChildren = {
-  GuideGuideAlertRoute: GuideGuideAlertRoute,
-  GuideGuideAvatarRoute: GuideGuideAvatarRoute,
-  GuideGuideBadgeRoute: GuideGuideBadgeRoute,
-  GuideGuideBannerRoute: GuideGuideBannerRoute,
-  GuideGuideBoxShadowRoute: GuideGuideBoxShadowRoute,
-  GuideGuideButtonsRoute: GuideGuideButtonsRoute,
-  GuideGuideCarouselRoute: GuideGuideCarouselRoute,
-  GuideGuideCheckboxRoute: GuideGuideCheckboxRoute,
-  GuideGuideChipsRoute: GuideGuideChipsRoute,
-  GuideGuideColorRoute: GuideGuideColorRoute,
-  GuideGuideCssRoute: GuideGuideCssRoute,
-  GuideGuideDataDisplayRoute: GuideGuideDataDisplayRoute,
-  GuideGuideDatePickerRoute: GuideGuideDatePickerRoute,
-  GuideGuideDividerRoute: GuideGuideDividerRoute,
-  GuideGuideDropDownRoute: GuideGuideDropDownRoute,
-  GuideGuideFormRoute: GuideGuideFormRoute,
-  GuideGuideGridRoute: GuideGuideGridRoute,
-  GuideGuideIconRoute: GuideGuideIconRoute,
-  GuideGuideImageRoute: GuideGuideImageRoute,
-  GuideGuideInfoRoute: GuideGuideInfoRoute,
-  GuideGuideInputRoute: GuideGuideInputRoute,
-  GuideGuideInputTimerRoute: GuideGuideInputTimerRoute,
-  GuideGuideLayoutRoute: GuideGuideLayoutRoute,
-  GuideGuideListRoute: GuideGuideListRoute,
-  GuideGuideMobileRoute: GuideGuideMobileRoute,
-  GuideGuideModalRoute: GuideGuideModalRoute,
-  GuideGuideNoticeRoute: GuideGuideNoticeRoute,
-  GuideGuideOperatorRoute: GuideGuideOperatorRoute,
-  GuideGuideOptionCardRoute: GuideGuideOptionCardRoute,
-  GuideGuidePaginationRoute: GuideGuidePaginationRoute,
-  GuideGuidePanelRoute: GuideGuidePanelRoute,
-  GuideGuidePhoneNumberRoute: GuideGuidePhoneNumberRoute,
-  GuideGuidePopoverRoute: GuideGuidePopoverRoute,
-  GuideGuideProgressRoute: GuideGuideProgressRoute,
-  GuideGuideRadioRoute: GuideGuideRadioRoute,
-  GuideGuideRespondRoute: GuideGuideRespondRoute,
-  GuideGuideResultRoute: GuideGuideResultRoute,
-  GuideGuideSelectRoute: GuideGuideSelectRoute,
-  GuideGuideSpinnerRoute: GuideGuideSpinnerRoute,
-  GuideGuideStepperRoute: GuideGuideStepperRoute,
-  GuideGuideSwitchRoute: GuideGuideSwitchRoute,
-  GuideGuideTableRoute: GuideGuideTableRoute,
-  GuideGuideTabsRoute: GuideGuideTabsRoute,
-  GuideGuideTestRoute: GuideGuideTestRoute,
-  GuideGuideTextareaRoute: GuideGuideTextareaRoute,
-  GuideGuideThumnailRoute: GuideGuideThumnailRoute,
-  GuideGuideToastRoute: GuideGuideToastRoute,
-  GuideGuideTooltipRoute: GuideGuideTooltipRoute,
-  GuideGuideTypographyRoute: GuideGuideTypographyRoute,
-  GuideGuideIndexRoute: GuideGuideIndexRoute,
-}
-
-const GuideRouteWithChildren = GuideRoute._addFileChildren(GuideRouteChildren)
-
-interface LayoutRouteChildren {
-  LayoutIndexRoute: typeof LayoutIndexRoute
-  LayoutCategoryDetailRoute: typeof LayoutCategoryDetailRoute
-  LayoutCategoryDetailmRoute: typeof LayoutCategoryDetailmRoute
-  LayoutCourseIntroductionDetailRoute: typeof LayoutCourseIntroductionDetailRoute
-  LayoutCourseIntroductionDetailMRoute: typeof LayoutCourseIntroductionDetailMRoute
-  LayoutCourseIntroductionPackageRoute: typeof LayoutCourseIntroductionPackageRoute
-  LayoutCourseIntroductionPackageMRoute: typeof LayoutCourseIntroductionPackageMRoute
-  LayoutCourseRegistrationCourseRegistrationAllRoute: typeof LayoutCourseRegistrationCourseRegistrationAllRoute
-  LayoutCourseRegistrationCourseRegistrationCompleteRoute: typeof LayoutCourseRegistrationCourseRegistrationCompleteRoute
-  LayoutCourseRegistrationCourseRegistrationLevelRoute: typeof LayoutCourseRegistrationCourseRegistrationLevelRoute
-  LayoutCourseRegistrationCourseRegistrationTextbookRoute: typeof LayoutCourseRegistrationCourseRegistrationTextbookRoute
-  LayoutEduSupportEduLicensesListRoute: typeof LayoutEduSupportEduLicensesListRoute
-  LayoutFooterMenuAgreementRoute: typeof LayoutFooterMenuAgreementRoute
-  LayoutFooterMenuOpenLicenseRoute: typeof LayoutFooterMenuOpenLicenseRoute
-  LayoutFooterMenuPrivacyRoute: typeof LayoutFooterMenuPrivacyRoute
-  LayoutIntegratedSearchIntegratedAllRoute: typeof LayoutIntegratedSearchIntegratedAllRoute
-  LayoutIntegratedSearchIntegratedAllMRoute: typeof LayoutIntegratedSearchIntegratedAllMRoute
-  LayoutIntegratedSearchIntegratedProcedureRoute: typeof LayoutIntegratedSearchIntegratedProcedureRoute
-  LayoutIntegratedSearchIntegratedProcedureMRoute: typeof LayoutIntegratedSearchIntegratedProcedureMRoute
-  LayoutIntegratedSearchIntegratedSearchmRoute: typeof LayoutIntegratedSearchIntegratedSearchmRoute
-  LayoutMyInformationChangeRoute: typeof LayoutMyInformationChangeRoute
-  LayoutMyMembershipSecessionRoute: typeof LayoutMyMembershipSecessionRoute
-  LayoutMyPasswordVerifyRoute: typeof LayoutMyPasswordVerifyRoute
-  LayoutMySettingSnsRoute: typeof LayoutMySettingSnsRoute
-  LayoutSettingSettingLanguagemRoute: typeof LayoutSettingSettingLanguagemRoute
-  LayoutSettingSettingLicensemRoute: typeof LayoutSettingSettingLicensemRoute
-  LayoutSettingSettingSnsmRoute: typeof LayoutSettingSettingSnsmRoute
-  LayoutSettingSettingWebmRoute: typeof LayoutSettingSettingWebmRoute
-  LayoutMenu3IndexRoute: typeof LayoutMenu3IndexRoute
-}
-
-const LayoutRouteChildren: LayoutRouteChildren = {
-  LayoutIndexRoute: LayoutIndexRoute,
-  LayoutCategoryDetailRoute: LayoutCategoryDetailRoute,
-  LayoutCategoryDetailmRoute: LayoutCategoryDetailmRoute,
-  LayoutCourseIntroductionDetailRoute: LayoutCourseIntroductionDetailRoute,
-  LayoutCourseIntroductionDetailMRoute: LayoutCourseIntroductionDetailMRoute,
-  LayoutCourseIntroductionPackageRoute: LayoutCourseIntroductionPackageRoute,
-  LayoutCourseIntroductionPackageMRoute: LayoutCourseIntroductionPackageMRoute,
-  LayoutCourseRegistrationCourseRegistrationAllRoute:
-    LayoutCourseRegistrationCourseRegistrationAllRoute,
-  LayoutCourseRegistrationCourseRegistrationCompleteRoute:
-    LayoutCourseRegistrationCourseRegistrationCompleteRoute,
-  LayoutCourseRegistrationCourseRegistrationLevelRoute:
-    LayoutCourseRegistrationCourseRegistrationLevelRoute,
-  LayoutCourseRegistrationCourseRegistrationTextbookRoute:
-    LayoutCourseRegistrationCourseRegistrationTextbookRoute,
-  LayoutEduSupportEduLicensesListRoute: LayoutEduSupportEduLicensesListRoute,
-  LayoutFooterMenuAgreementRoute: LayoutFooterMenuAgreementRoute,
-  LayoutFooterMenuOpenLicenseRoute: LayoutFooterMenuOpenLicenseRoute,
-  LayoutFooterMenuPrivacyRoute: LayoutFooterMenuPrivacyRoute,
-  LayoutIntegratedSearchIntegratedAllRoute:
-    LayoutIntegratedSearchIntegratedAllRoute,
-  LayoutIntegratedSearchIntegratedAllMRoute:
-    LayoutIntegratedSearchIntegratedAllMRoute,
-  LayoutIntegratedSearchIntegratedProcedureRoute:
-    LayoutIntegratedSearchIntegratedProcedureRoute,
-  LayoutIntegratedSearchIntegratedProcedureMRoute:
-    LayoutIntegratedSearchIntegratedProcedureMRoute,
-  LayoutIntegratedSearchIntegratedSearchmRoute:
-    LayoutIntegratedSearchIntegratedSearchmRoute,
-  LayoutMyInformationChangeRoute: LayoutMyInformationChangeRoute,
-  LayoutMyMembershipSecessionRoute: LayoutMyMembershipSecessionRoute,
-  LayoutMyPasswordVerifyRoute: LayoutMyPasswordVerifyRoute,
-  LayoutMySettingSnsRoute: LayoutMySettingSnsRoute,
-  LayoutSettingSettingLanguagemRoute: LayoutSettingSettingLanguagemRoute,
-  LayoutSettingSettingLicensemRoute: LayoutSettingSettingLicensemRoute,
-  LayoutSettingSettingSnsmRoute: LayoutSettingSettingSnsmRoute,
-  LayoutSettingSettingWebmRoute: LayoutSettingSettingWebmRoute,
-  LayoutMenu3IndexRoute: LayoutMenu3IndexRoute,
-}
-
-const LayoutRouteWithChildren =
-  LayoutRoute._addFileChildren(LayoutRouteChildren)
-
-interface LearningRouteChildren {
-  LearningBlogRoute: typeof LearningBlogRoute
-  LearningBlogMRoute: typeof LearningBlogMRoute
-  LearningEbookRoute: typeof LearningEbookRoute
-  LearningEbookMRoute: typeof LearningEbookMRoute
-  LearningFileRoute: typeof LearningFileRoute
-  LearningFileMRoute: typeof LearningFileMRoute
-  LearningGalleryRoute: typeof LearningGalleryRoute
-  LearningGalleryMRoute: typeof LearningGalleryMRoute
-  LearningHtmlRoute: typeof LearningHtmlRoute
-  LearningHtmlMRoute: typeof LearningHtmlMRoute
-  LearningIframeRoute: typeof LearningIframeRoute
-  LearningIframeMRoute: typeof LearningIframeMRoute
-  LearningLinkRoute: typeof LearningLinkRoute
-  LearningLinkMRoute: typeof LearningLinkMRoute
-  LearningLiveRoute: typeof LearningLiveRoute
-  LearningLiveMRoute: typeof LearningLiveMRoute
-  LearningVideoRoute: typeof LearningVideoRoute
-  LearningVideoMRoute: typeof LearningVideoMRoute
-}
-
-const LearningRouteChildren: LearningRouteChildren = {
-  LearningBlogRoute: LearningBlogRoute,
-  LearningBlogMRoute: LearningBlogMRoute,
-  LearningEbookRoute: LearningEbookRoute,
-  LearningEbookMRoute: LearningEbookMRoute,
-  LearningFileRoute: LearningFileRoute,
-  LearningFileMRoute: LearningFileMRoute,
-  LearningGalleryRoute: LearningGalleryRoute,
-  LearningGalleryMRoute: LearningGalleryMRoute,
-  LearningHtmlRoute: LearningHtmlRoute,
-  LearningHtmlMRoute: LearningHtmlMRoute,
-  LearningIframeRoute: LearningIframeRoute,
-  LearningIframeMRoute: LearningIframeMRoute,
-  LearningLinkRoute: LearningLinkRoute,
-  LearningLinkMRoute: LearningLinkMRoute,
-  LearningLiveRoute: LearningLiveRoute,
-  LearningLiveMRoute: LearningLiveMRoute,
-  LearningVideoRoute: LearningVideoRoute,
-  LearningVideoMRoute: LearningVideoMRoute,
-}
-
-const LearningRouteWithChildren = LearningRoute._addFileChildren(
-  LearningRouteChildren,
-)
-
 export interface FileRoutesByFullPath {
-  '': typeof LearningRouteWithChildren
   '/agreement-privacy': typeof AuthAgreementPrivacyRoute
-  '/agreement_check': typeof AuthAgreementcheckRoute
+  '/agreement_check': typeof AuthAgreement_checkRoute
   '/dormant-account': typeof AuthDormantAccountRoute
   '/google-cert': typeof AuthGoogleCertRoute
   '/login': typeof AuthLoginRoute
@@ -2119,7 +854,7 @@ export interface FileRoutesByFullPath {
   '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/category/detail': typeof LayoutCategoryDetailRoute
-  '/category/detail_m': typeof LayoutCategoryDetailmRoute
+  '/category/detail_m': typeof LayoutCategoryDetail_mRoute
   '/course-introduction/detail': typeof LayoutCourseIntroductionDetailRoute
   '/course-introduction/detail-m': typeof LayoutCourseIntroductionDetailMRoute
   '/course-introduction/package': typeof LayoutCourseIntroductionPackageRoute
@@ -2136,23 +871,21 @@ export interface FileRoutesByFullPath {
   '/integrated-search/integrated-all-m': typeof LayoutIntegratedSearchIntegratedAllMRoute
   '/integrated-search/integrated-procedure': typeof LayoutIntegratedSearchIntegratedProcedureRoute
   '/integrated-search/integrated-procedure-m': typeof LayoutIntegratedSearchIntegratedProcedureMRoute
-  '/integrated-search/integrated-search_m': typeof LayoutIntegratedSearchIntegratedSearchmRoute
+  '/integrated-search/integrated-search_m': typeof LayoutIntegratedSearchIntegratedSearch_mRoute
   '/my/information-change': typeof LayoutMyInformationChangeRoute
   '/my/membership-secession': typeof LayoutMyMembershipSecessionRoute
   '/my/password-verify': typeof LayoutMyPasswordVerifyRoute
   '/my/setting-sns': typeof LayoutMySettingSnsRoute
-  '/setting/setting-language_m': typeof LayoutSettingSettingLanguagemRoute
-  '/setting/setting-license_m': typeof LayoutSettingSettingLicensemRoute
-  '/setting/setting-sns_m': typeof LayoutSettingSettingSnsmRoute
-  '/setting/setting-web_m': typeof LayoutSettingSettingWebmRoute
+  '/setting/setting-language_m': typeof LayoutSettingSettingLanguage_mRoute
+  '/setting/setting-license_m': typeof LayoutSettingSettingLicense_mRoute
+  '/setting/setting-sns_m': typeof LayoutSettingSettingSns_mRoute
+  '/setting/setting-web_m': typeof LayoutSettingSettingWeb_mRoute
   '/guide': typeof GuideGuideIndexRoute
   '/menu3': typeof LayoutMenu3IndexRoute
 }
-
 export interface FileRoutesByTo {
-  '': typeof LearningRouteWithChildren
   '/agreement-privacy': typeof AuthAgreementPrivacyRoute
-  '/agreement_check': typeof AuthAgreementcheckRoute
+  '/agreement_check': typeof AuthAgreement_checkRoute
   '/dormant-account': typeof AuthDormantAccountRoute
   '/google-cert': typeof AuthGoogleCertRoute
   '/login': typeof AuthLoginRoute
@@ -2241,7 +974,7 @@ export interface FileRoutesByTo {
   '/guide/tooltip': typeof GuideGuideTooltipRoute
   '/guide/typography': typeof GuideGuideTypographyRoute
   '/category/detail': typeof LayoutCategoryDetailRoute
-  '/category/detail_m': typeof LayoutCategoryDetailmRoute
+  '/category/detail_m': typeof LayoutCategoryDetail_mRoute
   '/course-introduction/detail': typeof LayoutCourseIntroductionDetailRoute
   '/course-introduction/detail-m': typeof LayoutCourseIntroductionDetailMRoute
   '/course-introduction/package': typeof LayoutCourseIntroductionPackageRoute
@@ -2258,27 +991,26 @@ export interface FileRoutesByTo {
   '/integrated-search/integrated-all-m': typeof LayoutIntegratedSearchIntegratedAllMRoute
   '/integrated-search/integrated-procedure': typeof LayoutIntegratedSearchIntegratedProcedureRoute
   '/integrated-search/integrated-procedure-m': typeof LayoutIntegratedSearchIntegratedProcedureMRoute
-  '/integrated-search/integrated-search_m': typeof LayoutIntegratedSearchIntegratedSearchmRoute
+  '/integrated-search/integrated-search_m': typeof LayoutIntegratedSearchIntegratedSearch_mRoute
   '/my/information-change': typeof LayoutMyInformationChangeRoute
   '/my/membership-secession': typeof LayoutMyMembershipSecessionRoute
   '/my/password-verify': typeof LayoutMyPasswordVerifyRoute
   '/my/setting-sns': typeof LayoutMySettingSnsRoute
-  '/setting/setting-language_m': typeof LayoutSettingSettingLanguagemRoute
-  '/setting/setting-license_m': typeof LayoutSettingSettingLicensemRoute
-  '/setting/setting-sns_m': typeof LayoutSettingSettingSnsmRoute
-  '/setting/setting-web_m': typeof LayoutSettingSettingWebmRoute
+  '/setting/setting-language_m': typeof LayoutSettingSettingLanguage_mRoute
+  '/setting/setting-license_m': typeof LayoutSettingSettingLicense_mRoute
+  '/setting/setting-sns_m': typeof LayoutSettingSettingSns_mRoute
+  '/setting/setting-web_m': typeof LayoutSettingSettingWeb_mRoute
   '/guide': typeof GuideGuideIndexRoute
   '/menu3': typeof LayoutMenu3IndexRoute
 }
-
 export interface FileRoutesById {
-  __root__: typeof rootRoute
+  __root__: typeof rootRouteImport
   '/_auth': typeof AuthRouteWithChildren
   '/_guide': typeof GuideRouteWithChildren
   '/_layout': typeof LayoutRouteWithChildren
   '/_learning': typeof LearningRouteWithChildren
   '/_auth/agreement-privacy': typeof AuthAgreementPrivacyRoute
-  '/_auth/agreement_check': typeof AuthAgreementcheckRoute
+  '/_auth/agreement_check': typeof AuthAgreement_checkRoute
   '/_auth/dormant-account': typeof AuthDormantAccountRoute
   '/_auth/google-cert': typeof AuthGoogleCertRoute
   '/_auth/login': typeof AuthLoginRoute
@@ -2367,7 +1099,7 @@ export interface FileRoutesById {
   '/_guide/guide/tooltip': typeof GuideGuideTooltipRoute
   '/_guide/guide/typography': typeof GuideGuideTypographyRoute
   '/_layout/category/detail': typeof LayoutCategoryDetailRoute
-  '/_layout/category/detail_m': typeof LayoutCategoryDetailmRoute
+  '/_layout/category/detail_m': typeof LayoutCategoryDetail_mRoute
   '/_layout/course-introduction/detail': typeof LayoutCourseIntroductionDetailRoute
   '/_layout/course-introduction/detail-m': typeof LayoutCourseIntroductionDetailMRoute
   '/_layout/course-introduction/package': typeof LayoutCourseIntroductionPackageRoute
@@ -2384,23 +1116,21 @@ export interface FileRoutesById {
   '/_layout/integrated-search/integrated-all-m': typeof LayoutIntegratedSearchIntegratedAllMRoute
   '/_layout/integrated-search/integrated-procedure': typeof LayoutIntegratedSearchIntegratedProcedureRoute
   '/_layout/integrated-search/integrated-procedure-m': typeof LayoutIntegratedSearchIntegratedProcedureMRoute
-  '/_layout/integrated-search/integrated-search_m': typeof LayoutIntegratedSearchIntegratedSearchmRoute
+  '/_layout/integrated-search/integrated-search_m': typeof LayoutIntegratedSearchIntegratedSearch_mRoute
   '/_layout/my/information-change': typeof LayoutMyInformationChangeRoute
   '/_layout/my/membership-secession': typeof LayoutMyMembershipSecessionRoute
   '/_layout/my/password-verify': typeof LayoutMyPasswordVerifyRoute
   '/_layout/my/setting-sns': typeof LayoutMySettingSnsRoute
-  '/_layout/setting/setting-language_m': typeof LayoutSettingSettingLanguagemRoute
-  '/_layout/setting/setting-license_m': typeof LayoutSettingSettingLicensemRoute
-  '/_layout/setting/setting-sns_m': typeof LayoutSettingSettingSnsmRoute
-  '/_layout/setting/setting-web_m': typeof LayoutSettingSettingWebmRoute
+  '/_layout/setting/setting-language_m': typeof LayoutSettingSettingLanguage_mRoute
+  '/_layout/setting/setting-license_m': typeof LayoutSettingSettingLicense_mRoute
+  '/_layout/setting/setting-sns_m': typeof LayoutSettingSettingSns_mRoute
+  '/_layout/setting/setting-web_m': typeof LayoutSettingSettingWeb_mRoute
   '/_guide/guide/': typeof GuideGuideIndexRoute
   '/_layout/menu3/': typeof LayoutMenu3IndexRoute
 }
-
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | ''
     | '/agreement-privacy'
     | '/agreement_check'
     | '/dormant-account'
@@ -2521,7 +1251,6 @@ export interface FileRouteTypes {
     | '/menu3'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | ''
     | '/agreement-privacy'
     | '/agreement_check'
     | '/dormant-account'
@@ -2766,7 +1495,6 @@ export interface FileRouteTypes {
     | '/_layout/menu3/'
   fileRoutesById: FileRoutesById
 }
-
 export interface RootRouteChildren {
   AuthRoute: typeof AuthRouteWithChildren
   GuideRoute: typeof GuideRouteWithChildren
@@ -2774,639 +1502,1151 @@ export interface RootRouteChildren {
   LearningRoute: typeof LearningRouteWithChildren
 }
 
+declare module '@tanstack/react-router' {
+  interface FileRoutesByPath {
+    '/_learning': {
+      id: '/_learning'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof LearningRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_layout': {
+      id: '/_layout'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof LayoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_guide': {
+      id: '/_guide'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof GuideRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_layout/': {
+      id: '/_layout/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof LayoutIndexRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_learning/video-m': {
+      id: '/_learning/video-m'
+      path: '/video-m'
+      fullPath: '/video-m'
+      preLoaderRoute: typeof LearningVideoMRouteImport
+      parentRoute: typeof LearningRoute
+    }
+    '/_learning/video': {
+      id: '/_learning/video'
+      path: '/video'
+      fullPath: '/video'
+      preLoaderRoute: typeof LearningVideoRouteImport
+      parentRoute: typeof LearningRoute
+    }
+    '/_learning/live-m': {
+      id: '/_learning/live-m'
+      path: '/live-m'
+      fullPath: '/live-m'
+      preLoaderRoute: typeof LearningLiveMRouteImport
+      parentRoute: typeof LearningRoute
+    }
+    '/_learning/live': {
+      id: '/_learning/live'
+      path: '/live'
+      fullPath: '/live'
+      preLoaderRoute: typeof LearningLiveRouteImport
+      parentRoute: typeof LearningRoute
+    }
+    '/_learning/link-m': {
+      id: '/_learning/link-m'
+      path: '/link-m'
+      fullPath: '/link-m'
+      preLoaderRoute: typeof LearningLinkMRouteImport
+      parentRoute: typeof LearningRoute
+    }
+    '/_learning/link': {
+      id: '/_learning/link'
+      path: '/link'
+      fullPath: '/link'
+      preLoaderRoute: typeof LearningLinkRouteImport
+      parentRoute: typeof LearningRoute
+    }
+    '/_learning/iframe-m': {
+      id: '/_learning/iframe-m'
+      path: '/iframe-m'
+      fullPath: '/iframe-m'
+      preLoaderRoute: typeof LearningIframeMRouteImport
+      parentRoute: typeof LearningRoute
+    }
+    '/_learning/iframe': {
+      id: '/_learning/iframe'
+      path: '/iframe'
+      fullPath: '/iframe'
+      preLoaderRoute: typeof LearningIframeRouteImport
+      parentRoute: typeof LearningRoute
+    }
+    '/_learning/html-m': {
+      id: '/_learning/html-m'
+      path: '/html-m'
+      fullPath: '/html-m'
+      preLoaderRoute: typeof LearningHtmlMRouteImport
+      parentRoute: typeof LearningRoute
+    }
+    '/_learning/html': {
+      id: '/_learning/html'
+      path: '/html'
+      fullPath: '/html'
+      preLoaderRoute: typeof LearningHtmlRouteImport
+      parentRoute: typeof LearningRoute
+    }
+    '/_learning/gallery-m': {
+      id: '/_learning/gallery-m'
+      path: '/gallery-m'
+      fullPath: '/gallery-m'
+      preLoaderRoute: typeof LearningGalleryMRouteImport
+      parentRoute: typeof LearningRoute
+    }
+    '/_learning/gallery': {
+      id: '/_learning/gallery'
+      path: '/gallery'
+      fullPath: '/gallery'
+      preLoaderRoute: typeof LearningGalleryRouteImport
+      parentRoute: typeof LearningRoute
+    }
+    '/_learning/file-m': {
+      id: '/_learning/file-m'
+      path: '/file-m'
+      fullPath: '/file-m'
+      preLoaderRoute: typeof LearningFileMRouteImport
+      parentRoute: typeof LearningRoute
+    }
+    '/_learning/file': {
+      id: '/_learning/file'
+      path: '/file'
+      fullPath: '/file'
+      preLoaderRoute: typeof LearningFileRouteImport
+      parentRoute: typeof LearningRoute
+    }
+    '/_learning/ebook-m': {
+      id: '/_learning/ebook-m'
+      path: '/ebook-m'
+      fullPath: '/ebook-m'
+      preLoaderRoute: typeof LearningEbookMRouteImport
+      parentRoute: typeof LearningRoute
+    }
+    '/_learning/ebook': {
+      id: '/_learning/ebook'
+      path: '/ebook'
+      fullPath: '/ebook'
+      preLoaderRoute: typeof LearningEbookRouteImport
+      parentRoute: typeof LearningRoute
+    }
+    '/_learning/blog-m': {
+      id: '/_learning/blog-m'
+      path: '/blog-m'
+      fullPath: '/blog-m'
+      preLoaderRoute: typeof LearningBlogMRouteImport
+      parentRoute: typeof LearningRoute
+    }
+    '/_learning/blog': {
+      id: '/_learning/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof LearningBlogRouteImport
+      parentRoute: typeof LearningRoute
+    }
+    '/_auth/success': {
+      id: '/_auth/success'
+      path: '/success'
+      fullPath: '/success'
+      preLoaderRoute: typeof AuthSuccessRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/signup-step3-en': {
+      id: '/_auth/signup-step3-en'
+      path: '/signup-step3-en'
+      fullPath: '/signup-step3-en'
+      preLoaderRoute: typeof AuthSignupStep3EnRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/signup-step3': {
+      id: '/_auth/signup-step3'
+      path: '/signup-step3'
+      fullPath: '/signup-step3'
+      preLoaderRoute: typeof AuthSignupStep3RouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/signup-step2-en': {
+      id: '/_auth/signup-step2-en'
+      path: '/signup-step2-en'
+      fullPath: '/signup-step2-en'
+      preLoaderRoute: typeof AuthSignupStep2EnRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/signup-step2': {
+      id: '/_auth/signup-step2'
+      path: '/signup-step2'
+      fullPath: '/signup-step2'
+      preLoaderRoute: typeof AuthSignupStep2RouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/signup-step1': {
+      id: '/_auth/signup-step1'
+      path: '/signup-step1'
+      fullPath: '/signup-step1'
+      preLoaderRoute: typeof AuthSignupStep1RouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/search-id-success': {
+      id: '/_auth/search-id-success'
+      path: '/search-id-success'
+      fullPath: '/search-id-success'
+      preLoaderRoute: typeof AuthSearchIdSuccessRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/search-account': {
+      id: '/_auth/search-account'
+      path: '/search-account'
+      fullPath: '/search-account'
+      preLoaderRoute: typeof AuthSearchAccountRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/progress-status-result-en': {
+      id: '/_auth/progress-status-result-en'
+      path: '/progress-status-result-en'
+      fullPath: '/progress-status-result-en'
+      preLoaderRoute: typeof AuthProgressStatusResultEnRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/progress-status-result': {
+      id: '/_auth/progress-status-result'
+      path: '/progress-status-result'
+      fullPath: '/progress-status-result'
+      preLoaderRoute: typeof AuthProgressStatusResultRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/progress-status-email': {
+      id: '/_auth/progress-status-email'
+      path: '/progress-status-email'
+      fullPath: '/progress-status-email'
+      preLoaderRoute: typeof AuthProgressStatusEmailRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/progress-status-cert': {
+      id: '/_auth/progress-status-cert'
+      path: '/progress-status-cert'
+      fullPath: '/progress-status-cert'
+      preLoaderRoute: typeof AuthProgressStatusCertRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/password-set': {
+      id: '/_auth/password-set'
+      path: '/password-set'
+      fullPath: '/password-set'
+      preLoaderRoute: typeof AuthPasswordSetRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/password-modify': {
+      id: '/_auth/password-modify'
+      path: '/password-modify'
+      fullPath: '/password-modify'
+      preLoaderRoute: typeof AuthPasswordModifyRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/password-input': {
+      id: '/_auth/password-input'
+      path: '/password-input'
+      fullPath: '/password-input'
+      preLoaderRoute: typeof AuthPasswordInputRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/mpass-cert': {
+      id: '/_auth/mpass-cert'
+      path: '/mpass-cert'
+      fullPath: '/mpass-cert'
+      preLoaderRoute: typeof AuthMpassCertRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/login': {
+      id: '/_auth/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof AuthLoginRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/google-cert': {
+      id: '/_auth/google-cert'
+      path: '/google-cert'
+      fullPath: '/google-cert'
+      preLoaderRoute: typeof AuthGoogleCertRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/dormant-account': {
+      id: '/_auth/dormant-account'
+      path: '/dormant-account'
+      fullPath: '/dormant-account'
+      preLoaderRoute: typeof AuthDormantAccountRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/agreement_check': {
+      id: '/_auth/agreement_check'
+      path: '/agreement_check'
+      fullPath: '/agreement_check'
+      preLoaderRoute: typeof AuthAgreement_checkRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/agreement-privacy': {
+      id: '/_auth/agreement-privacy'
+      path: '/agreement-privacy'
+      fullPath: '/agreement-privacy'
+      preLoaderRoute: typeof AuthAgreementPrivacyRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_layout/menu3/': {
+      id: '/_layout/menu3/'
+      path: '/menu3'
+      fullPath: '/menu3'
+      preLoaderRoute: typeof LayoutMenu3IndexRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_guide/guide/': {
+      id: '/_guide/guide/'
+      path: '/guide'
+      fullPath: '/guide'
+      preLoaderRoute: typeof GuideGuideIndexRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_layout/setting/setting-web_m': {
+      id: '/_layout/setting/setting-web_m'
+      path: '/setting/setting-web_m'
+      fullPath: '/setting/setting-web_m'
+      preLoaderRoute: typeof LayoutSettingSettingWeb_mRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/setting/setting-sns_m': {
+      id: '/_layout/setting/setting-sns_m'
+      path: '/setting/setting-sns_m'
+      fullPath: '/setting/setting-sns_m'
+      preLoaderRoute: typeof LayoutSettingSettingSns_mRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/setting/setting-license_m': {
+      id: '/_layout/setting/setting-license_m'
+      path: '/setting/setting-license_m'
+      fullPath: '/setting/setting-license_m'
+      preLoaderRoute: typeof LayoutSettingSettingLicense_mRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/setting/setting-language_m': {
+      id: '/_layout/setting/setting-language_m'
+      path: '/setting/setting-language_m'
+      fullPath: '/setting/setting-language_m'
+      preLoaderRoute: typeof LayoutSettingSettingLanguage_mRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/my/setting-sns': {
+      id: '/_layout/my/setting-sns'
+      path: '/my/setting-sns'
+      fullPath: '/my/setting-sns'
+      preLoaderRoute: typeof LayoutMySettingSnsRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/my/password-verify': {
+      id: '/_layout/my/password-verify'
+      path: '/my/password-verify'
+      fullPath: '/my/password-verify'
+      preLoaderRoute: typeof LayoutMyPasswordVerifyRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/my/membership-secession': {
+      id: '/_layout/my/membership-secession'
+      path: '/my/membership-secession'
+      fullPath: '/my/membership-secession'
+      preLoaderRoute: typeof LayoutMyMembershipSecessionRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/my/information-change': {
+      id: '/_layout/my/information-change'
+      path: '/my/information-change'
+      fullPath: '/my/information-change'
+      preLoaderRoute: typeof LayoutMyInformationChangeRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/integrated-search/integrated-search_m': {
+      id: '/_layout/integrated-search/integrated-search_m'
+      path: '/integrated-search/integrated-search_m'
+      fullPath: '/integrated-search/integrated-search_m'
+      preLoaderRoute: typeof LayoutIntegratedSearchIntegratedSearch_mRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/integrated-search/integrated-procedure-m': {
+      id: '/_layout/integrated-search/integrated-procedure-m'
+      path: '/integrated-search/integrated-procedure-m'
+      fullPath: '/integrated-search/integrated-procedure-m'
+      preLoaderRoute: typeof LayoutIntegratedSearchIntegratedProcedureMRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/integrated-search/integrated-procedure': {
+      id: '/_layout/integrated-search/integrated-procedure'
+      path: '/integrated-search/integrated-procedure'
+      fullPath: '/integrated-search/integrated-procedure'
+      preLoaderRoute: typeof LayoutIntegratedSearchIntegratedProcedureRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/integrated-search/integrated-all-m': {
+      id: '/_layout/integrated-search/integrated-all-m'
+      path: '/integrated-search/integrated-all-m'
+      fullPath: '/integrated-search/integrated-all-m'
+      preLoaderRoute: typeof LayoutIntegratedSearchIntegratedAllMRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/integrated-search/integrated-all': {
+      id: '/_layout/integrated-search/integrated-all'
+      path: '/integrated-search/integrated-all'
+      fullPath: '/integrated-search/integrated-all'
+      preLoaderRoute: typeof LayoutIntegratedSearchIntegratedAllRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/footer-menu/privacy': {
+      id: '/_layout/footer-menu/privacy'
+      path: '/footer-menu/privacy'
+      fullPath: '/footer-menu/privacy'
+      preLoaderRoute: typeof LayoutFooterMenuPrivacyRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/footer-menu/open-license': {
+      id: '/_layout/footer-menu/open-license'
+      path: '/footer-menu/open-license'
+      fullPath: '/footer-menu/open-license'
+      preLoaderRoute: typeof LayoutFooterMenuOpenLicenseRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/footer-menu/agreement': {
+      id: '/_layout/footer-menu/agreement'
+      path: '/footer-menu/agreement'
+      fullPath: '/footer-menu/agreement'
+      preLoaderRoute: typeof LayoutFooterMenuAgreementRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/edu-support/edu-licenses-list': {
+      id: '/_layout/edu-support/edu-licenses-list'
+      path: '/edu-support/edu-licenses-list'
+      fullPath: '/edu-support/edu-licenses-list'
+      preLoaderRoute: typeof LayoutEduSupportEduLicensesListRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/course-registration/course-registration-textbook': {
+      id: '/_layout/course-registration/course-registration-textbook'
+      path: '/course-registration/course-registration-textbook'
+      fullPath: '/course-registration/course-registration-textbook'
+      preLoaderRoute: typeof LayoutCourseRegistrationCourseRegistrationTextbookRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/course-registration/course-registration-level': {
+      id: '/_layout/course-registration/course-registration-level'
+      path: '/course-registration/course-registration-level'
+      fullPath: '/course-registration/course-registration-level'
+      preLoaderRoute: typeof LayoutCourseRegistrationCourseRegistrationLevelRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/course-registration/course-registration-complete': {
+      id: '/_layout/course-registration/course-registration-complete'
+      path: '/course-registration/course-registration-complete'
+      fullPath: '/course-registration/course-registration-complete'
+      preLoaderRoute: typeof LayoutCourseRegistrationCourseRegistrationCompleteRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/course-registration/course-registration-all': {
+      id: '/_layout/course-registration/course-registration-all'
+      path: '/course-registration/course-registration-all'
+      fullPath: '/course-registration/course-registration-all'
+      preLoaderRoute: typeof LayoutCourseRegistrationCourseRegistrationAllRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/course-introduction/package-m': {
+      id: '/_layout/course-introduction/package-m'
+      path: '/course-introduction/package-m'
+      fullPath: '/course-introduction/package-m'
+      preLoaderRoute: typeof LayoutCourseIntroductionPackageMRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/course-introduction/package': {
+      id: '/_layout/course-introduction/package'
+      path: '/course-introduction/package'
+      fullPath: '/course-introduction/package'
+      preLoaderRoute: typeof LayoutCourseIntroductionPackageRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/course-introduction/detail-m': {
+      id: '/_layout/course-introduction/detail-m'
+      path: '/course-introduction/detail-m'
+      fullPath: '/course-introduction/detail-m'
+      preLoaderRoute: typeof LayoutCourseIntroductionDetailMRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/course-introduction/detail': {
+      id: '/_layout/course-introduction/detail'
+      path: '/course-introduction/detail'
+      fullPath: '/course-introduction/detail'
+      preLoaderRoute: typeof LayoutCourseIntroductionDetailRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/category/detail_m': {
+      id: '/_layout/category/detail_m'
+      path: '/category/detail_m'
+      fullPath: '/category/detail_m'
+      preLoaderRoute: typeof LayoutCategoryDetail_mRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/category/detail': {
+      id: '/_layout/category/detail'
+      path: '/category/detail'
+      fullPath: '/category/detail'
+      preLoaderRoute: typeof LayoutCategoryDetailRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_guide/guide/typography': {
+      id: '/_guide/guide/typography'
+      path: '/guide/typography'
+      fullPath: '/guide/typography'
+      preLoaderRoute: typeof GuideGuideTypographyRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/tooltip': {
+      id: '/_guide/guide/tooltip'
+      path: '/guide/tooltip'
+      fullPath: '/guide/tooltip'
+      preLoaderRoute: typeof GuideGuideTooltipRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/toast': {
+      id: '/_guide/guide/toast'
+      path: '/guide/toast'
+      fullPath: '/guide/toast'
+      preLoaderRoute: typeof GuideGuideToastRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/thumnail': {
+      id: '/_guide/guide/thumnail'
+      path: '/guide/thumnail'
+      fullPath: '/guide/thumnail'
+      preLoaderRoute: typeof GuideGuideThumnailRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/textarea': {
+      id: '/_guide/guide/textarea'
+      path: '/guide/textarea'
+      fullPath: '/guide/textarea'
+      preLoaderRoute: typeof GuideGuideTextareaRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/test': {
+      id: '/_guide/guide/test'
+      path: '/guide/test'
+      fullPath: '/guide/test'
+      preLoaderRoute: typeof GuideGuideTestRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/tabs': {
+      id: '/_guide/guide/tabs'
+      path: '/guide/tabs'
+      fullPath: '/guide/tabs'
+      preLoaderRoute: typeof GuideGuideTabsRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/table': {
+      id: '/_guide/guide/table'
+      path: '/guide/table'
+      fullPath: '/guide/table'
+      preLoaderRoute: typeof GuideGuideTableRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/switch': {
+      id: '/_guide/guide/switch'
+      path: '/guide/switch'
+      fullPath: '/guide/switch'
+      preLoaderRoute: typeof GuideGuideSwitchRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/stepper': {
+      id: '/_guide/guide/stepper'
+      path: '/guide/stepper'
+      fullPath: '/guide/stepper'
+      preLoaderRoute: typeof GuideGuideStepperRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/spinner': {
+      id: '/_guide/guide/spinner'
+      path: '/guide/spinner'
+      fullPath: '/guide/spinner'
+      preLoaderRoute: typeof GuideGuideSpinnerRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/select': {
+      id: '/_guide/guide/select'
+      path: '/guide/select'
+      fullPath: '/guide/select'
+      preLoaderRoute: typeof GuideGuideSelectRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/result': {
+      id: '/_guide/guide/result'
+      path: '/guide/result'
+      fullPath: '/guide/result'
+      preLoaderRoute: typeof GuideGuideResultRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/respond': {
+      id: '/_guide/guide/respond'
+      path: '/guide/respond'
+      fullPath: '/guide/respond'
+      preLoaderRoute: typeof GuideGuideRespondRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/radio': {
+      id: '/_guide/guide/radio'
+      path: '/guide/radio'
+      fullPath: '/guide/radio'
+      preLoaderRoute: typeof GuideGuideRadioRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/progress': {
+      id: '/_guide/guide/progress'
+      path: '/guide/progress'
+      fullPath: '/guide/progress'
+      preLoaderRoute: typeof GuideGuideProgressRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/popover': {
+      id: '/_guide/guide/popover'
+      path: '/guide/popover'
+      fullPath: '/guide/popover'
+      preLoaderRoute: typeof GuideGuidePopoverRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/phone-number': {
+      id: '/_guide/guide/phone-number'
+      path: '/guide/phone-number'
+      fullPath: '/guide/phone-number'
+      preLoaderRoute: typeof GuideGuidePhoneNumberRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/panel': {
+      id: '/_guide/guide/panel'
+      path: '/guide/panel'
+      fullPath: '/guide/panel'
+      preLoaderRoute: typeof GuideGuidePanelRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/pagination': {
+      id: '/_guide/guide/pagination'
+      path: '/guide/pagination'
+      fullPath: '/guide/pagination'
+      preLoaderRoute: typeof GuideGuidePaginationRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/optionCard': {
+      id: '/_guide/guide/optionCard'
+      path: '/guide/optionCard'
+      fullPath: '/guide/optionCard'
+      preLoaderRoute: typeof GuideGuideOptionCardRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/operator': {
+      id: '/_guide/guide/operator'
+      path: '/guide/operator'
+      fullPath: '/guide/operator'
+      preLoaderRoute: typeof GuideGuideOperatorRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/notice': {
+      id: '/_guide/guide/notice'
+      path: '/guide/notice'
+      fullPath: '/guide/notice'
+      preLoaderRoute: typeof GuideGuideNoticeRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/modal': {
+      id: '/_guide/guide/modal'
+      path: '/guide/modal'
+      fullPath: '/guide/modal'
+      preLoaderRoute: typeof GuideGuideModalRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/mobile': {
+      id: '/_guide/guide/mobile'
+      path: '/guide/mobile'
+      fullPath: '/guide/mobile'
+      preLoaderRoute: typeof GuideGuideMobileRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/list': {
+      id: '/_guide/guide/list'
+      path: '/guide/list'
+      fullPath: '/guide/list'
+      preLoaderRoute: typeof GuideGuideListRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/layout': {
+      id: '/_guide/guide/layout'
+      path: '/guide/layout'
+      fullPath: '/guide/layout'
+      preLoaderRoute: typeof GuideGuideLayoutRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/input-timer': {
+      id: '/_guide/guide/input-timer'
+      path: '/guide/input-timer'
+      fullPath: '/guide/input-timer'
+      preLoaderRoute: typeof GuideGuideInputTimerRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/input': {
+      id: '/_guide/guide/input'
+      path: '/guide/input'
+      fullPath: '/guide/input'
+      preLoaderRoute: typeof GuideGuideInputRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/info': {
+      id: '/_guide/guide/info'
+      path: '/guide/info'
+      fullPath: '/guide/info'
+      preLoaderRoute: typeof GuideGuideInfoRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/image': {
+      id: '/_guide/guide/image'
+      path: '/guide/image'
+      fullPath: '/guide/image'
+      preLoaderRoute: typeof GuideGuideImageRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/icon': {
+      id: '/_guide/guide/icon'
+      path: '/guide/icon'
+      fullPath: '/guide/icon'
+      preLoaderRoute: typeof GuideGuideIconRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/grid': {
+      id: '/_guide/guide/grid'
+      path: '/guide/grid'
+      fullPath: '/guide/grid'
+      preLoaderRoute: typeof GuideGuideGridRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/form': {
+      id: '/_guide/guide/form'
+      path: '/guide/form'
+      fullPath: '/guide/form'
+      preLoaderRoute: typeof GuideGuideFormRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/drop-down': {
+      id: '/_guide/guide/drop-down'
+      path: '/guide/drop-down'
+      fullPath: '/guide/drop-down'
+      preLoaderRoute: typeof GuideGuideDropDownRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/divider': {
+      id: '/_guide/guide/divider'
+      path: '/guide/divider'
+      fullPath: '/guide/divider'
+      preLoaderRoute: typeof GuideGuideDividerRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/date-picker': {
+      id: '/_guide/guide/date-picker'
+      path: '/guide/date-picker'
+      fullPath: '/guide/date-picker'
+      preLoaderRoute: typeof GuideGuideDatePickerRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/data-display': {
+      id: '/_guide/guide/data-display'
+      path: '/guide/data-display'
+      fullPath: '/guide/data-display'
+      preLoaderRoute: typeof GuideGuideDataDisplayRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/css': {
+      id: '/_guide/guide/css'
+      path: '/guide/css'
+      fullPath: '/guide/css'
+      preLoaderRoute: typeof GuideGuideCssRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/color': {
+      id: '/_guide/guide/color'
+      path: '/guide/color'
+      fullPath: '/guide/color'
+      preLoaderRoute: typeof GuideGuideColorRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/chips': {
+      id: '/_guide/guide/chips'
+      path: '/guide/chips'
+      fullPath: '/guide/chips'
+      preLoaderRoute: typeof GuideGuideChipsRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/checkbox': {
+      id: '/_guide/guide/checkbox'
+      path: '/guide/checkbox'
+      fullPath: '/guide/checkbox'
+      preLoaderRoute: typeof GuideGuideCheckboxRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/carousel': {
+      id: '/_guide/guide/carousel'
+      path: '/guide/carousel'
+      fullPath: '/guide/carousel'
+      preLoaderRoute: typeof GuideGuideCarouselRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/buttons': {
+      id: '/_guide/guide/buttons'
+      path: '/guide/buttons'
+      fullPath: '/guide/buttons'
+      preLoaderRoute: typeof GuideGuideButtonsRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/box-shadow': {
+      id: '/_guide/guide/box-shadow'
+      path: '/guide/box-shadow'
+      fullPath: '/guide/box-shadow'
+      preLoaderRoute: typeof GuideGuideBoxShadowRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/banner': {
+      id: '/_guide/guide/banner'
+      path: '/guide/banner'
+      fullPath: '/guide/banner'
+      preLoaderRoute: typeof GuideGuideBannerRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/badge': {
+      id: '/_guide/guide/badge'
+      path: '/guide/badge'
+      fullPath: '/guide/badge'
+      preLoaderRoute: typeof GuideGuideBadgeRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/avatar': {
+      id: '/_guide/guide/avatar'
+      path: '/guide/avatar'
+      fullPath: '/guide/avatar'
+      preLoaderRoute: typeof GuideGuideAvatarRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/alert': {
+      id: '/_guide/guide/alert'
+      path: '/guide/alert'
+      fullPath: '/guide/alert'
+      preLoaderRoute: typeof GuideGuideAlertRouteImport
+      parentRoute: typeof GuideRoute
+    }
+  }
+}
+
+interface AuthRouteChildren {
+  AuthAgreementPrivacyRoute: typeof AuthAgreementPrivacyRoute
+  AuthAgreement_checkRoute: typeof AuthAgreement_checkRoute
+  AuthDormantAccountRoute: typeof AuthDormantAccountRoute
+  AuthGoogleCertRoute: typeof AuthGoogleCertRoute
+  AuthLoginRoute: typeof AuthLoginRoute
+  AuthMpassCertRoute: typeof AuthMpassCertRoute
+  AuthPasswordInputRoute: typeof AuthPasswordInputRoute
+  AuthPasswordModifyRoute: typeof AuthPasswordModifyRoute
+  AuthPasswordSetRoute: typeof AuthPasswordSetRoute
+  AuthProgressStatusCertRoute: typeof AuthProgressStatusCertRoute
+  AuthProgressStatusEmailRoute: typeof AuthProgressStatusEmailRoute
+  AuthProgressStatusResultRoute: typeof AuthProgressStatusResultRoute
+  AuthProgressStatusResultEnRoute: typeof AuthProgressStatusResultEnRoute
+  AuthSearchAccountRoute: typeof AuthSearchAccountRoute
+  AuthSearchIdSuccessRoute: typeof AuthSearchIdSuccessRoute
+  AuthSignupStep1Route: typeof AuthSignupStep1Route
+  AuthSignupStep2Route: typeof AuthSignupStep2Route
+  AuthSignupStep2EnRoute: typeof AuthSignupStep2EnRoute
+  AuthSignupStep3Route: typeof AuthSignupStep3Route
+  AuthSignupStep3EnRoute: typeof AuthSignupStep3EnRoute
+  AuthSuccessRoute: typeof AuthSuccessRoute
+}
+
+const AuthRouteChildren: AuthRouteChildren = {
+  AuthAgreementPrivacyRoute: AuthAgreementPrivacyRoute,
+  AuthAgreement_checkRoute: AuthAgreement_checkRoute,
+  AuthDormantAccountRoute: AuthDormantAccountRoute,
+  AuthGoogleCertRoute: AuthGoogleCertRoute,
+  AuthLoginRoute: AuthLoginRoute,
+  AuthMpassCertRoute: AuthMpassCertRoute,
+  AuthPasswordInputRoute: AuthPasswordInputRoute,
+  AuthPasswordModifyRoute: AuthPasswordModifyRoute,
+  AuthPasswordSetRoute: AuthPasswordSetRoute,
+  AuthProgressStatusCertRoute: AuthProgressStatusCertRoute,
+  AuthProgressStatusEmailRoute: AuthProgressStatusEmailRoute,
+  AuthProgressStatusResultRoute: AuthProgressStatusResultRoute,
+  AuthProgressStatusResultEnRoute: AuthProgressStatusResultEnRoute,
+  AuthSearchAccountRoute: AuthSearchAccountRoute,
+  AuthSearchIdSuccessRoute: AuthSearchIdSuccessRoute,
+  AuthSignupStep1Route: AuthSignupStep1Route,
+  AuthSignupStep2Route: AuthSignupStep2Route,
+  AuthSignupStep2EnRoute: AuthSignupStep2EnRoute,
+  AuthSignupStep3Route: AuthSignupStep3Route,
+  AuthSignupStep3EnRoute: AuthSignupStep3EnRoute,
+  AuthSuccessRoute: AuthSuccessRoute,
+}
+
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
+
+interface GuideRouteChildren {
+  GuideGuideAlertRoute: typeof GuideGuideAlertRoute
+  GuideGuideAvatarRoute: typeof GuideGuideAvatarRoute
+  GuideGuideBadgeRoute: typeof GuideGuideBadgeRoute
+  GuideGuideBannerRoute: typeof GuideGuideBannerRoute
+  GuideGuideBoxShadowRoute: typeof GuideGuideBoxShadowRoute
+  GuideGuideButtonsRoute: typeof GuideGuideButtonsRoute
+  GuideGuideCarouselRoute: typeof GuideGuideCarouselRoute
+  GuideGuideCheckboxRoute: typeof GuideGuideCheckboxRoute
+  GuideGuideChipsRoute: typeof GuideGuideChipsRoute
+  GuideGuideColorRoute: typeof GuideGuideColorRoute
+  GuideGuideCssRoute: typeof GuideGuideCssRoute
+  GuideGuideDataDisplayRoute: typeof GuideGuideDataDisplayRoute
+  GuideGuideDatePickerRoute: typeof GuideGuideDatePickerRoute
+  GuideGuideDividerRoute: typeof GuideGuideDividerRoute
+  GuideGuideDropDownRoute: typeof GuideGuideDropDownRoute
+  GuideGuideFormRoute: typeof GuideGuideFormRoute
+  GuideGuideGridRoute: typeof GuideGuideGridRoute
+  GuideGuideIconRoute: typeof GuideGuideIconRoute
+  GuideGuideImageRoute: typeof GuideGuideImageRoute
+  GuideGuideInfoRoute: typeof GuideGuideInfoRoute
+  GuideGuideInputRoute: typeof GuideGuideInputRoute
+  GuideGuideInputTimerRoute: typeof GuideGuideInputTimerRoute
+  GuideGuideLayoutRoute: typeof GuideGuideLayoutRoute
+  GuideGuideListRoute: typeof GuideGuideListRoute
+  GuideGuideMobileRoute: typeof GuideGuideMobileRoute
+  GuideGuideModalRoute: typeof GuideGuideModalRoute
+  GuideGuideNoticeRoute: typeof GuideGuideNoticeRoute
+  GuideGuideOperatorRoute: typeof GuideGuideOperatorRoute
+  GuideGuideOptionCardRoute: typeof GuideGuideOptionCardRoute
+  GuideGuidePaginationRoute: typeof GuideGuidePaginationRoute
+  GuideGuidePanelRoute: typeof GuideGuidePanelRoute
+  GuideGuidePhoneNumberRoute: typeof GuideGuidePhoneNumberRoute
+  GuideGuidePopoverRoute: typeof GuideGuidePopoverRoute
+  GuideGuideProgressRoute: typeof GuideGuideProgressRoute
+  GuideGuideRadioRoute: typeof GuideGuideRadioRoute
+  GuideGuideRespondRoute: typeof GuideGuideRespondRoute
+  GuideGuideResultRoute: typeof GuideGuideResultRoute
+  GuideGuideSelectRoute: typeof GuideGuideSelectRoute
+  GuideGuideSpinnerRoute: typeof GuideGuideSpinnerRoute
+  GuideGuideStepperRoute: typeof GuideGuideStepperRoute
+  GuideGuideSwitchRoute: typeof GuideGuideSwitchRoute
+  GuideGuideTableRoute: typeof GuideGuideTableRoute
+  GuideGuideTabsRoute: typeof GuideGuideTabsRoute
+  GuideGuideTestRoute: typeof GuideGuideTestRoute
+  GuideGuideTextareaRoute: typeof GuideGuideTextareaRoute
+  GuideGuideThumnailRoute: typeof GuideGuideThumnailRoute
+  GuideGuideToastRoute: typeof GuideGuideToastRoute
+  GuideGuideTooltipRoute: typeof GuideGuideTooltipRoute
+  GuideGuideTypographyRoute: typeof GuideGuideTypographyRoute
+  GuideGuideIndexRoute: typeof GuideGuideIndexRoute
+}
+
+const GuideRouteChildren: GuideRouteChildren = {
+  GuideGuideAlertRoute: GuideGuideAlertRoute,
+  GuideGuideAvatarRoute: GuideGuideAvatarRoute,
+  GuideGuideBadgeRoute: GuideGuideBadgeRoute,
+  GuideGuideBannerRoute: GuideGuideBannerRoute,
+  GuideGuideBoxShadowRoute: GuideGuideBoxShadowRoute,
+  GuideGuideButtonsRoute: GuideGuideButtonsRoute,
+  GuideGuideCarouselRoute: GuideGuideCarouselRoute,
+  GuideGuideCheckboxRoute: GuideGuideCheckboxRoute,
+  GuideGuideChipsRoute: GuideGuideChipsRoute,
+  GuideGuideColorRoute: GuideGuideColorRoute,
+  GuideGuideCssRoute: GuideGuideCssRoute,
+  GuideGuideDataDisplayRoute: GuideGuideDataDisplayRoute,
+  GuideGuideDatePickerRoute: GuideGuideDatePickerRoute,
+  GuideGuideDividerRoute: GuideGuideDividerRoute,
+  GuideGuideDropDownRoute: GuideGuideDropDownRoute,
+  GuideGuideFormRoute: GuideGuideFormRoute,
+  GuideGuideGridRoute: GuideGuideGridRoute,
+  GuideGuideIconRoute: GuideGuideIconRoute,
+  GuideGuideImageRoute: GuideGuideImageRoute,
+  GuideGuideInfoRoute: GuideGuideInfoRoute,
+  GuideGuideInputRoute: GuideGuideInputRoute,
+  GuideGuideInputTimerRoute: GuideGuideInputTimerRoute,
+  GuideGuideLayoutRoute: GuideGuideLayoutRoute,
+  GuideGuideListRoute: GuideGuideListRoute,
+  GuideGuideMobileRoute: GuideGuideMobileRoute,
+  GuideGuideModalRoute: GuideGuideModalRoute,
+  GuideGuideNoticeRoute: GuideGuideNoticeRoute,
+  GuideGuideOperatorRoute: GuideGuideOperatorRoute,
+  GuideGuideOptionCardRoute: GuideGuideOptionCardRoute,
+  GuideGuidePaginationRoute: GuideGuidePaginationRoute,
+  GuideGuidePanelRoute: GuideGuidePanelRoute,
+  GuideGuidePhoneNumberRoute: GuideGuidePhoneNumberRoute,
+  GuideGuidePopoverRoute: GuideGuidePopoverRoute,
+  GuideGuideProgressRoute: GuideGuideProgressRoute,
+  GuideGuideRadioRoute: GuideGuideRadioRoute,
+  GuideGuideRespondRoute: GuideGuideRespondRoute,
+  GuideGuideResultRoute: GuideGuideResultRoute,
+  GuideGuideSelectRoute: GuideGuideSelectRoute,
+  GuideGuideSpinnerRoute: GuideGuideSpinnerRoute,
+  GuideGuideStepperRoute: GuideGuideStepperRoute,
+  GuideGuideSwitchRoute: GuideGuideSwitchRoute,
+  GuideGuideTableRoute: GuideGuideTableRoute,
+  GuideGuideTabsRoute: GuideGuideTabsRoute,
+  GuideGuideTestRoute: GuideGuideTestRoute,
+  GuideGuideTextareaRoute: GuideGuideTextareaRoute,
+  GuideGuideThumnailRoute: GuideGuideThumnailRoute,
+  GuideGuideToastRoute: GuideGuideToastRoute,
+  GuideGuideTooltipRoute: GuideGuideTooltipRoute,
+  GuideGuideTypographyRoute: GuideGuideTypographyRoute,
+  GuideGuideIndexRoute: GuideGuideIndexRoute,
+}
+
+const GuideRouteWithChildren = GuideRoute._addFileChildren(GuideRouteChildren)
+
+interface LayoutRouteChildren {
+  LayoutIndexRoute: typeof LayoutIndexRoute
+  LayoutCategoryDetailRoute: typeof LayoutCategoryDetailRoute
+  LayoutCategoryDetail_mRoute: typeof LayoutCategoryDetail_mRoute
+  LayoutCourseIntroductionDetailRoute: typeof LayoutCourseIntroductionDetailRoute
+  LayoutCourseIntroductionDetailMRoute: typeof LayoutCourseIntroductionDetailMRoute
+  LayoutCourseIntroductionPackageRoute: typeof LayoutCourseIntroductionPackageRoute
+  LayoutCourseIntroductionPackageMRoute: typeof LayoutCourseIntroductionPackageMRoute
+  LayoutCourseRegistrationCourseRegistrationAllRoute: typeof LayoutCourseRegistrationCourseRegistrationAllRoute
+  LayoutCourseRegistrationCourseRegistrationCompleteRoute: typeof LayoutCourseRegistrationCourseRegistrationCompleteRoute
+  LayoutCourseRegistrationCourseRegistrationLevelRoute: typeof LayoutCourseRegistrationCourseRegistrationLevelRoute
+  LayoutCourseRegistrationCourseRegistrationTextbookRoute: typeof LayoutCourseRegistrationCourseRegistrationTextbookRoute
+  LayoutEduSupportEduLicensesListRoute: typeof LayoutEduSupportEduLicensesListRoute
+  LayoutFooterMenuAgreementRoute: typeof LayoutFooterMenuAgreementRoute
+  LayoutFooterMenuOpenLicenseRoute: typeof LayoutFooterMenuOpenLicenseRoute
+  LayoutFooterMenuPrivacyRoute: typeof LayoutFooterMenuPrivacyRoute
+  LayoutIntegratedSearchIntegratedAllRoute: typeof LayoutIntegratedSearchIntegratedAllRoute
+  LayoutIntegratedSearchIntegratedAllMRoute: typeof LayoutIntegratedSearchIntegratedAllMRoute
+  LayoutIntegratedSearchIntegratedProcedureRoute: typeof LayoutIntegratedSearchIntegratedProcedureRoute
+  LayoutIntegratedSearchIntegratedProcedureMRoute: typeof LayoutIntegratedSearchIntegratedProcedureMRoute
+  LayoutIntegratedSearchIntegratedSearch_mRoute: typeof LayoutIntegratedSearchIntegratedSearch_mRoute
+  LayoutMyInformationChangeRoute: typeof LayoutMyInformationChangeRoute
+  LayoutMyMembershipSecessionRoute: typeof LayoutMyMembershipSecessionRoute
+  LayoutMyPasswordVerifyRoute: typeof LayoutMyPasswordVerifyRoute
+  LayoutMySettingSnsRoute: typeof LayoutMySettingSnsRoute
+  LayoutSettingSettingLanguage_mRoute: typeof LayoutSettingSettingLanguage_mRoute
+  LayoutSettingSettingLicense_mRoute: typeof LayoutSettingSettingLicense_mRoute
+  LayoutSettingSettingSns_mRoute: typeof LayoutSettingSettingSns_mRoute
+  LayoutSettingSettingWeb_mRoute: typeof LayoutSettingSettingWeb_mRoute
+  LayoutMenu3IndexRoute: typeof LayoutMenu3IndexRoute
+}
+
+const LayoutRouteChildren: LayoutRouteChildren = {
+  LayoutIndexRoute: LayoutIndexRoute,
+  LayoutCategoryDetailRoute: LayoutCategoryDetailRoute,
+  LayoutCategoryDetail_mRoute: LayoutCategoryDetail_mRoute,
+  LayoutCourseIntroductionDetailRoute: LayoutCourseIntroductionDetailRoute,
+  LayoutCourseIntroductionDetailMRoute: LayoutCourseIntroductionDetailMRoute,
+  LayoutCourseIntroductionPackageRoute: LayoutCourseIntroductionPackageRoute,
+  LayoutCourseIntroductionPackageMRoute: LayoutCourseIntroductionPackageMRoute,
+  LayoutCourseRegistrationCourseRegistrationAllRoute:
+    LayoutCourseRegistrationCourseRegistrationAllRoute,
+  LayoutCourseRegistrationCourseRegistrationCompleteRoute:
+    LayoutCourseRegistrationCourseRegistrationCompleteRoute,
+  LayoutCourseRegistrationCourseRegistrationLevelRoute:
+    LayoutCourseRegistrationCourseRegistrationLevelRoute,
+  LayoutCourseRegistrationCourseRegistrationTextbookRoute:
+    LayoutCourseRegistrationCourseRegistrationTextbookRoute,
+  LayoutEduSupportEduLicensesListRoute: LayoutEduSupportEduLicensesListRoute,
+  LayoutFooterMenuAgreementRoute: LayoutFooterMenuAgreementRoute,
+  LayoutFooterMenuOpenLicenseRoute: LayoutFooterMenuOpenLicenseRoute,
+  LayoutFooterMenuPrivacyRoute: LayoutFooterMenuPrivacyRoute,
+  LayoutIntegratedSearchIntegratedAllRoute:
+    LayoutIntegratedSearchIntegratedAllRoute,
+  LayoutIntegratedSearchIntegratedAllMRoute:
+    LayoutIntegratedSearchIntegratedAllMRoute,
+  LayoutIntegratedSearchIntegratedProcedureRoute:
+    LayoutIntegratedSearchIntegratedProcedureRoute,
+  LayoutIntegratedSearchIntegratedProcedureMRoute:
+    LayoutIntegratedSearchIntegratedProcedureMRoute,
+  LayoutIntegratedSearchIntegratedSearch_mRoute:
+    LayoutIntegratedSearchIntegratedSearch_mRoute,
+  LayoutMyInformationChangeRoute: LayoutMyInformationChangeRoute,
+  LayoutMyMembershipSecessionRoute: LayoutMyMembershipSecessionRoute,
+  LayoutMyPasswordVerifyRoute: LayoutMyPasswordVerifyRoute,
+  LayoutMySettingSnsRoute: LayoutMySettingSnsRoute,
+  LayoutSettingSettingLanguage_mRoute: LayoutSettingSettingLanguage_mRoute,
+  LayoutSettingSettingLicense_mRoute: LayoutSettingSettingLicense_mRoute,
+  LayoutSettingSettingSns_mRoute: LayoutSettingSettingSns_mRoute,
+  LayoutSettingSettingWeb_mRoute: LayoutSettingSettingWeb_mRoute,
+  LayoutMenu3IndexRoute: LayoutMenu3IndexRoute,
+}
+
+const LayoutRouteWithChildren =
+  LayoutRoute._addFileChildren(LayoutRouteChildren)
+
+interface LearningRouteChildren {
+  LearningBlogRoute: typeof LearningBlogRoute
+  LearningBlogMRoute: typeof LearningBlogMRoute
+  LearningEbookRoute: typeof LearningEbookRoute
+  LearningEbookMRoute: typeof LearningEbookMRoute
+  LearningFileRoute: typeof LearningFileRoute
+  LearningFileMRoute: typeof LearningFileMRoute
+  LearningGalleryRoute: typeof LearningGalleryRoute
+  LearningGalleryMRoute: typeof LearningGalleryMRoute
+  LearningHtmlRoute: typeof LearningHtmlRoute
+  LearningHtmlMRoute: typeof LearningHtmlMRoute
+  LearningIframeRoute: typeof LearningIframeRoute
+  LearningIframeMRoute: typeof LearningIframeMRoute
+  LearningLinkRoute: typeof LearningLinkRoute
+  LearningLinkMRoute: typeof LearningLinkMRoute
+  LearningLiveRoute: typeof LearningLiveRoute
+  LearningLiveMRoute: typeof LearningLiveMRoute
+  LearningVideoRoute: typeof LearningVideoRoute
+  LearningVideoMRoute: typeof LearningVideoMRoute
+}
+
+const LearningRouteChildren: LearningRouteChildren = {
+  LearningBlogRoute: LearningBlogRoute,
+  LearningBlogMRoute: LearningBlogMRoute,
+  LearningEbookRoute: LearningEbookRoute,
+  LearningEbookMRoute: LearningEbookMRoute,
+  LearningFileRoute: LearningFileRoute,
+  LearningFileMRoute: LearningFileMRoute,
+  LearningGalleryRoute: LearningGalleryRoute,
+  LearningGalleryMRoute: LearningGalleryMRoute,
+  LearningHtmlRoute: LearningHtmlRoute,
+  LearningHtmlMRoute: LearningHtmlMRoute,
+  LearningIframeRoute: LearningIframeRoute,
+  LearningIframeMRoute: LearningIframeMRoute,
+  LearningLinkRoute: LearningLinkRoute,
+  LearningLinkMRoute: LearningLinkMRoute,
+  LearningLiveRoute: LearningLiveRoute,
+  LearningLiveMRoute: LearningLiveMRoute,
+  LearningVideoRoute: LearningVideoRoute,
+  LearningVideoMRoute: LearningVideoMRoute,
+}
+
+const LearningRouteWithChildren = LearningRoute._addFileChildren(
+  LearningRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRouteWithChildren,
   GuideRoute: GuideRouteWithChildren,
   LayoutRoute: LayoutRouteWithChildren,
   LearningRoute: LearningRouteWithChildren,
 }
-
-export const routeTree = rootRoute
+export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-/* ROUTE_MANIFEST_START
-{
-  "routes": {
-    "__root__": {
-      "filePath": "__root.tsx",
-      "children": [
-        "/_auth",
-        "/_guide",
-        "/_layout",
-        "/_learning"
-      ]
-    },
-    "/_auth": {
-      "filePath": "_auth.tsx",
-      "children": [
-        "/_auth/agreement-privacy",
-        "/_auth/agreement_check",
-        "/_auth/dormant-account",
-        "/_auth/google-cert",
-        "/_auth/login",
-        "/_auth/mpass-cert",
-        "/_auth/password-input",
-        "/_auth/password-modify",
-        "/_auth/password-set",
-        "/_auth/progress-status-cert",
-        "/_auth/progress-status-email",
-        "/_auth/progress-status-result",
-        "/_auth/progress-status-result-en",
-        "/_auth/search-account",
-        "/_auth/search-id-success",
-        "/_auth/signup-step1",
-        "/_auth/signup-step2",
-        "/_auth/signup-step2-en",
-        "/_auth/signup-step3",
-        "/_auth/signup-step3-en",
-        "/_auth/success"
-      ]
-    },
-    "/_guide": {
-      "filePath": "_guide.tsx",
-      "children": [
-        "/_guide/guide/alert",
-        "/_guide/guide/avatar",
-        "/_guide/guide/badge",
-        "/_guide/guide/banner",
-        "/_guide/guide/box-shadow",
-        "/_guide/guide/buttons",
-        "/_guide/guide/carousel",
-        "/_guide/guide/checkbox",
-        "/_guide/guide/chips",
-        "/_guide/guide/color",
-        "/_guide/guide/css",
-        "/_guide/guide/data-display",
-        "/_guide/guide/date-picker",
-        "/_guide/guide/divider",
-        "/_guide/guide/drop-down",
-        "/_guide/guide/form",
-        "/_guide/guide/grid",
-        "/_guide/guide/icon",
-        "/_guide/guide/image",
-        "/_guide/guide/info",
-        "/_guide/guide/input",
-        "/_guide/guide/input-timer",
-        "/_guide/guide/layout",
-        "/_guide/guide/list",
-        "/_guide/guide/mobile",
-        "/_guide/guide/modal",
-        "/_guide/guide/notice",
-        "/_guide/guide/operator",
-        "/_guide/guide/optionCard",
-        "/_guide/guide/pagination",
-        "/_guide/guide/panel",
-        "/_guide/guide/phone-number",
-        "/_guide/guide/popover",
-        "/_guide/guide/progress",
-        "/_guide/guide/radio",
-        "/_guide/guide/respond",
-        "/_guide/guide/result",
-        "/_guide/guide/select",
-        "/_guide/guide/spinner",
-        "/_guide/guide/stepper",
-        "/_guide/guide/switch",
-        "/_guide/guide/table",
-        "/_guide/guide/tabs",
-        "/_guide/guide/test",
-        "/_guide/guide/textarea",
-        "/_guide/guide/thumnail",
-        "/_guide/guide/toast",
-        "/_guide/guide/tooltip",
-        "/_guide/guide/typography",
-        "/_guide/guide/"
-      ]
-    },
-    "/_layout": {
-      "filePath": "_layout.tsx",
-      "children": [
-        "/_layout/",
-        "/_layout/category/detail",
-        "/_layout/category/detail_m",
-        "/_layout/course-introduction/detail",
-        "/_layout/course-introduction/detail-m",
-        "/_layout/course-introduction/package",
-        "/_layout/course-introduction/package-m",
-        "/_layout/course-registration/course-registration-all",
-        "/_layout/course-registration/course-registration-complete",
-        "/_layout/course-registration/course-registration-level",
-        "/_layout/course-registration/course-registration-textbook",
-        "/_layout/edu-support/edu-licenses-list",
-        "/_layout/footer-menu/agreement",
-        "/_layout/footer-menu/open-license",
-        "/_layout/footer-menu/privacy",
-        "/_layout/integrated-search/integrated-all",
-        "/_layout/integrated-search/integrated-all-m",
-        "/_layout/integrated-search/integrated-procedure",
-        "/_layout/integrated-search/integrated-procedure-m",
-        "/_layout/integrated-search/integrated-search_m",
-        "/_layout/my/information-change",
-        "/_layout/my/membership-secession",
-        "/_layout/my/password-verify",
-        "/_layout/my/setting-sns",
-        "/_layout/setting/setting-language_m",
-        "/_layout/setting/setting-license_m",
-        "/_layout/setting/setting-sns_m",
-        "/_layout/setting/setting-web_m",
-        "/_layout/menu3/"
-      ]
-    },
-    "/_learning": {
-      "filePath": "_learning.tsx",
-      "children": [
-        "/_learning/blog",
-        "/_learning/blog-m",
-        "/_learning/ebook",
-        "/_learning/ebook-m",
-        "/_learning/file",
-        "/_learning/file-m",
-        "/_learning/gallery",
-        "/_learning/gallery-m",
-        "/_learning/html",
-        "/_learning/html-m",
-        "/_learning/iframe",
-        "/_learning/iframe-m",
-        "/_learning/link",
-        "/_learning/link-m",
-        "/_learning/live",
-        "/_learning/live-m",
-        "/_learning/video",
-        "/_learning/video-m"
-      ]
-    },
-    "/_auth/agreement-privacy": {
-      "filePath": "_auth/agreement-privacy.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/agreement_check": {
-      "filePath": "_auth/agreement_check.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/dormant-account": {
-      "filePath": "_auth/dormant-account.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/google-cert": {
-      "filePath": "_auth/google-cert.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/login": {
-      "filePath": "_auth/login.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/mpass-cert": {
-      "filePath": "_auth/mpass-cert.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/password-input": {
-      "filePath": "_auth/password-input.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/password-modify": {
-      "filePath": "_auth/password-modify.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/password-set": {
-      "filePath": "_auth/password-set.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/progress-status-cert": {
-      "filePath": "_auth/progress-status-cert.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/progress-status-email": {
-      "filePath": "_auth/progress-status-email.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/progress-status-result": {
-      "filePath": "_auth/progress-status-result.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/progress-status-result-en": {
-      "filePath": "_auth/progress-status-result-en.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/search-account": {
-      "filePath": "_auth/search-account.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/search-id-success": {
-      "filePath": "_auth/search-id-success.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/signup-step1": {
-      "filePath": "_auth/signup-step1.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/signup-step2": {
-      "filePath": "_auth/signup-step2.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/signup-step2-en": {
-      "filePath": "_auth/signup-step2-en.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/signup-step3": {
-      "filePath": "_auth/signup-step3.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/signup-step3-en": {
-      "filePath": "_auth/signup-step3-en.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/success": {
-      "filePath": "_auth/success.tsx",
-      "parent": "/_auth"
-    },
-    "/_learning/blog": {
-      "filePath": "_learning/blog.tsx",
-      "parent": "/_learning"
-    },
-    "/_learning/blog-m": {
-      "filePath": "_learning/blog-m.tsx",
-      "parent": "/_learning"
-    },
-    "/_learning/ebook": {
-      "filePath": "_learning/ebook.tsx",
-      "parent": "/_learning"
-    },
-    "/_learning/ebook-m": {
-      "filePath": "_learning/ebook-m.tsx",
-      "parent": "/_learning"
-    },
-    "/_learning/file": {
-      "filePath": "_learning/file.tsx",
-      "parent": "/_learning"
-    },
-    "/_learning/file-m": {
-      "filePath": "_learning/file-m.tsx",
-      "parent": "/_learning"
-    },
-    "/_learning/gallery": {
-      "filePath": "_learning/gallery.tsx",
-      "parent": "/_learning"
-    },
-    "/_learning/gallery-m": {
-      "filePath": "_learning/gallery-m.tsx",
-      "parent": "/_learning"
-    },
-    "/_learning/html": {
-      "filePath": "_learning/html.tsx",
-      "parent": "/_learning"
-    },
-    "/_learning/html-m": {
-      "filePath": "_learning/html-m.tsx",
-      "parent": "/_learning"
-    },
-    "/_learning/iframe": {
-      "filePath": "_learning/iframe.tsx",
-      "parent": "/_learning"
-    },
-    "/_learning/iframe-m": {
-      "filePath": "_learning/iframe-m.tsx",
-      "parent": "/_learning"
-    },
-    "/_learning/link": {
-      "filePath": "_learning/link.tsx",
-      "parent": "/_learning"
-    },
-    "/_learning/link-m": {
-      "filePath": "_learning/link-m.tsx",
-      "parent": "/_learning"
-    },
-    "/_learning/live": {
-      "filePath": "_learning/live.tsx",
-      "parent": "/_learning"
-    },
-    "/_learning/live-m": {
-      "filePath": "_learning/live-m.tsx",
-      "parent": "/_learning"
-    },
-    "/_learning/video": {
-      "filePath": "_learning/video.tsx",
-      "parent": "/_learning"
-    },
-    "/_learning/video-m": {
-      "filePath": "_learning/video-m.tsx",
-      "parent": "/_learning"
-    },
-    "/_layout/": {
-      "filePath": "_layout/index.tsx",
-      "parent": "/_layout"
-    },
-    "/_guide/guide/alert": {
-      "filePath": "_guide/guide/alert.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/avatar": {
-      "filePath": "_guide/guide/avatar.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/badge": {
-      "filePath": "_guide/guide/badge.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/banner": {
-      "filePath": "_guide/guide/banner.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/box-shadow": {
-      "filePath": "_guide/guide/box-shadow.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/buttons": {
-      "filePath": "_guide/guide/buttons.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/carousel": {
-      "filePath": "_guide/guide/carousel.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/checkbox": {
-      "filePath": "_guide/guide/checkbox.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/chips": {
-      "filePath": "_guide/guide/chips.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/color": {
-      "filePath": "_guide/guide/color.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/css": {
-      "filePath": "_guide/guide/css.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/data-display": {
-      "filePath": "_guide/guide/data-display.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/date-picker": {
-      "filePath": "_guide/guide/date-picker.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/divider": {
-      "filePath": "_guide/guide/divider.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/drop-down": {
-      "filePath": "_guide/guide/drop-down.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/form": {
-      "filePath": "_guide/guide/form.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/grid": {
-      "filePath": "_guide/guide/grid.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/icon": {
-      "filePath": "_guide/guide/icon.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/image": {
-      "filePath": "_guide/guide/image.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/info": {
-      "filePath": "_guide/guide/info.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/input": {
-      "filePath": "_guide/guide/input.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/input-timer": {
-      "filePath": "_guide/guide/input-timer.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/layout": {
-      "filePath": "_guide/guide/layout.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/list": {
-      "filePath": "_guide/guide/list.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/mobile": {
-      "filePath": "_guide/guide/mobile.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/modal": {
-      "filePath": "_guide/guide/modal.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/notice": {
-      "filePath": "_guide/guide/notice.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/operator": {
-      "filePath": "_guide/guide/operator.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/optionCard": {
-      "filePath": "_guide/guide/optionCard.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/pagination": {
-      "filePath": "_guide/guide/pagination.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/panel": {
-      "filePath": "_guide/guide/panel.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/phone-number": {
-      "filePath": "_guide/guide/phone-number.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/popover": {
-      "filePath": "_guide/guide/popover.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/progress": {
-      "filePath": "_guide/guide/progress.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/radio": {
-      "filePath": "_guide/guide/radio.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/respond": {
-      "filePath": "_guide/guide/respond.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/result": {
-      "filePath": "_guide/guide/result.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/select": {
-      "filePath": "_guide/guide/select.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/spinner": {
-      "filePath": "_guide/guide/spinner.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/stepper": {
-      "filePath": "_guide/guide/stepper.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/switch": {
-      "filePath": "_guide/guide/switch.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/table": {
-      "filePath": "_guide/guide/table.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/tabs": {
-      "filePath": "_guide/guide/tabs.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/test": {
-      "filePath": "_guide/guide/test.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/textarea": {
-      "filePath": "_guide/guide/textarea.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/thumnail": {
-      "filePath": "_guide/guide/thumnail.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/toast": {
-      "filePath": "_guide/guide/toast.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/tooltip": {
-      "filePath": "_guide/guide/tooltip.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/typography": {
-      "filePath": "_guide/guide/typography.tsx",
-      "parent": "/_guide"
-    },
-    "/_layout/category/detail": {
-      "filePath": "_layout/category/detail.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/category/detail_m": {
-      "filePath": "_layout/category/detail_m.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/course-introduction/detail": {
-      "filePath": "_layout/course-introduction/detail.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/course-introduction/detail-m": {
-      "filePath": "_layout/course-introduction/detail-m.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/course-introduction/package": {
-      "filePath": "_layout/course-introduction/package.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/course-introduction/package-m": {
-      "filePath": "_layout/course-introduction/package-m.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/course-registration/course-registration-all": {
-      "filePath": "_layout/course-registration/course-registration-all.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/course-registration/course-registration-complete": {
-      "filePath": "_layout/course-registration/course-registration-complete.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/course-registration/course-registration-level": {
-      "filePath": "_layout/course-registration/course-registration-level.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/course-registration/course-registration-textbook": {
-      "filePath": "_layout/course-registration/course-registration-textbook.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/edu-support/edu-licenses-list": {
-      "filePath": "_layout/edu-support/edu-licenses-list.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/footer-menu/agreement": {
-      "filePath": "_layout/footer-menu/agreement.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/footer-menu/open-license": {
-      "filePath": "_layout/footer-menu/open-license.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/footer-menu/privacy": {
-      "filePath": "_layout/footer-menu/privacy.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/integrated-search/integrated-all": {
-      "filePath": "_layout/integrated-search/integrated-all.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/integrated-search/integrated-all-m": {
-      "filePath": "_layout/integrated-search/integrated-all-m.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/integrated-search/integrated-procedure": {
-      "filePath": "_layout/integrated-search/integrated-procedure.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/integrated-search/integrated-procedure-m": {
-      "filePath": "_layout/integrated-search/integrated-procedure-m.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/integrated-search/integrated-search_m": {
-      "filePath": "_layout/integrated-search/integrated-search_m.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/my/information-change": {
-      "filePath": "_layout/my/information-change.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/my/membership-secession": {
-      "filePath": "_layout/my/membership-secession.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/my/password-verify": {
-      "filePath": "_layout/my/password-verify.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/my/setting-sns": {
-      "filePath": "_layout/my/setting-sns.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/setting/setting-language_m": {
-      "filePath": "_layout/setting/setting-language_m.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/setting/setting-license_m": {
-      "filePath": "_layout/setting/setting-license_m.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/setting/setting-sns_m": {
-      "filePath": "_layout/setting/setting-sns_m.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/setting/setting-web_m": {
-      "filePath": "_layout/setting/setting-web_m.tsx",
-      "parent": "/_layout"
-    },
-    "/_guide/guide/": {
-      "filePath": "_guide/guide/index.tsx",
-      "parent": "/_guide"
-    },
-    "/_layout/menu3/": {
-      "filePath": "_layout/menu3/index.tsx",
-      "parent": "/_layout"
-    }
-  }
-}
-ROUTE_MANIFEST_END */

@@ -33,7 +33,14 @@ const EditDatePickerCell = <T,>({
     lastSavedValueRef.current = newValue;
   }, [getValue]);
 
-  return <DatePicker {...dateOptionsProps} value={value} size="md" onChange={handleDateChange} />;
+  return (
+    <DatePicker
+      {...dateOptionsProps}
+      value={new Date(value)}
+      size="md"
+      onChange={handleDateChange}
+    />
+  );
 };
 
 export { EditDatePickerCell };

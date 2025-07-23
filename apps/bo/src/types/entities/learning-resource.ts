@@ -550,3 +550,18 @@ export interface RandomQuestionCountUpdateReq {
   questionTotalCount: number;
   countList: RandomQuestionCountInfo[];
 }
+
+export interface QuestionListForRetrieveReq {
+  examPoolUuid: string;
+  tenantId: number;
+  channelUuid: string;
+  contentName?: string;
+  questionType?: EnQuestionType;
+  questionLevel?: EnQuestionLevel;
+}
+
+export interface QuestionListForRetrieveRes {
+  contentName: string;
+  examQuestionUuid: string;
+  questionText: string;
+}

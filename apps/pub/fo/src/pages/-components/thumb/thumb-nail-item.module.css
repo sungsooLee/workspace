@@ -3,13 +3,13 @@
   &.thumbnail_item {
     @apply relative;
     .thumbnail_link {
-      @apply relative block;
+      @apply relative flex flex-col;
     }
     .thumbnail_view {
       @apply relative;
       [class*='nlp--thumbnail'] {
         span img {
-          @apply w-full object-cover;
+          @apply w-full rounded-[8px] object-cover;
         }
       }
       .custom_node {
@@ -38,7 +38,7 @@
       @apply title3-b line-clamp-2 text-[#232326];
     }
     .custom_info_node {
-      @apply flex w-full;
+      @apply flex w-full flex-wrap;
       & > span {
         @apply label-lg inline-flex items-center text-[var(--gray50)];
         svg {
@@ -50,11 +50,11 @@
       }
     }
     .count_info_node {
-      @apply mt-[12px] flex;
+      @apply mt-[12px] flex flex-wrap;
       & > span {
         @apply flex items-center;
         em {
-          @apply label-lg text-[var(--gray50)];
+          @apply label-lg ml-[4px] text-[var(--gray50)];
         }
         &:not(:first-child) {
           &::before {
@@ -64,11 +64,28 @@
       }
     }
     .toggle_btn {
-      @apply absolute right-[16px] top-[30px] z-[5];
+      @apply absolute right-[12px] top-[134px] z-[5] !px-0;
+      svg {
+        @apply !mx-0;
+      }
     }
     &.stacked_item {
       .custom_node {
         @apply top-[28px];
+      }
+      .toggle_btn {
+        @apply top-[150px];
+      }
+    }
+    &.horizontal {
+      .thumbnail_link {
+        @apply flex-row;
+        .thumbnail_view {
+          @apply w-[47%] shrink-0;
+        }
+        .thumbnail_info {
+          @apply ml-[20px] mt-0 flex flex-1 flex-col;
+        }
       }
     }
   }

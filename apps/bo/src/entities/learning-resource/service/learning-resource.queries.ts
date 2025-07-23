@@ -4,6 +4,7 @@ import {
   BlogUpdateReq,
   ContentBaseInfo,
   ContentCourseMappingParams,
+  ExamQuestionGenType,
   GetContentDetailRes,
   GetContentsParams,
   HtmlVideoFileChangeReq,
@@ -14,6 +15,7 @@ import {
   PutVideoUpdateParams,
   QuestionItem,
   QuestionItemDeleteParam,
+  QuestionListForRetrieveReq,
   QuestionStatusUpdateReq,
   RandomQuestionCountUpdateReq,
   TestPaperBasicInfoSaveReq,
@@ -25,7 +27,7 @@ export const queryKeys = {
   userByUuid: ['user-by-uuid'] as const,
   contents: ['contents'] as const,
   contentDetail: (contentUuid: string) => ['content-detail', contentUuid] as const,
-  contentCourseMapping: ['content-course-mapping'] as const,
+  contentCourseMapping: (contentUuid: string) => ['content-course-mapping', contentUuid] as const,
   deleteContent: ['delete-content'] as const,
   createDraftVideo: ['create-draft-video'] as const,
   videoChange: ['video-change'] as const,
@@ -41,6 +43,8 @@ export const queryKeys = {
   blogResource: ['blog-resource'] as const,
   questionBankQuestionList: ['question-bank-question-list'] as const,
   questionBankQuestionItem: ['question-bank-question-item'] as const,
+  randomQuestionCount: (examUuid: string) => ['random-question-count', examUuid] as const,
+  questionListForRetrieve: ['question-list-for-retrieve'] as const,
 };
 
 export const learningResourceQueryOptions = {
@@ -73,7 +77,7 @@ export const learningResourceQueryOptions = {
     enabled: !!contentUuid,
   }),
   getContentCourseMapping: (contentUuid: string, params: ContentCourseMappingParams) => ({
-    queryKey: queryKeys.contentCourseMapping,
+    queryKey: queryKeys.contentCourseMapping(contentUuid),
     queryFn: () => LearningResourceService.fetchContentCourseMapping(contentUuid, params),
   }),
   getLearningResources: (params: any) => ({
@@ -141,6 +145,22 @@ export const learningResourceQueryOptions = {
           enabled: !!examQuestionUuid,
         }
       : getQuerySkipToken<QuestionItem>(),
+
+  getExamRandomQuestionCount: (examUuid: string, questionGenType: ExamQuestionGenType) => ({
+    queryKey: queryKeys.randomQuestionCount(examUuid),
+    queryFn: () => LearningResourceService.fetchExamRandomQuestionCount(examUuid),
+    cacheTime: 0,
+    staleTime: 0,
+    enabled: !!examUuid && questionGenType === ExamQuestionGenType.RANDOM,
+  }),
+
+  getQuestionListForRetrieve: (params: QuestionListForRetrieveReq) => ({
+    queryKey: queryKeys.questionListForRetrieve,
+    queryFn: () => LearningResourceService.fetchQuestionListForRetrieve(params),
+    cacheTime: 0,
+    staleTime: 0,
+    enabled: true,
+  }),
 };
 
 export const mutateOptions = {

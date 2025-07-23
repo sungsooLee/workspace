@@ -49,7 +49,7 @@ function RouteComponent() {
     };
     return searchData;
   };
-  const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
+  const { provider: searchProvider, getValues } = useSearchBox(searchConfig());
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, searchParam);
 
   const handleOnSearch = () => {
@@ -79,13 +79,13 @@ function RouteComponent() {
       <MainContents>
         <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
         <Divider />
-        <GridBox config={gConfig} columns={columns} showNumberingColumn title={t('회사 목록')} />
+        <GridBox config={gConfig} columns={columns()} showNumberingColumn title={t('회사 목록')} />
       </MainContents>
     </PageContainer>
   );
 }
 
-const searchConfig: SearchBoxConfig = {
+const searchConfig = (): SearchBoxConfig => ({
   builders: [
     [
       {
@@ -145,7 +145,7 @@ const searchConfig: SearchBoxConfig = {
       ],
     },
   },
-};
+});
 
 const gridConfig: useGridBoxConfig = {
   query: queryOptions.list,
@@ -160,7 +160,7 @@ const gridConfig: useGridBoxConfig = {
 
 const columnHelper = createColumnHelper<any>();
 
-const columns = [
+const columns = () => [
   columnHelper.accessor('companyType', {
     header: t('그룹'),
     cell: (info) =>

@@ -31,6 +31,7 @@ export const queryOptions = {
   get: <T = Course>(id: number): UseQueryOptions<T> => ({
     queryKey: queryKeys.get(id),
     queryFn: () => CourseService.fetch(id),
+    enabled: !!id,
   }),
   // 과정 항목 설정 정보 조회
   getCourseConfig: <T = CourseConfig>(queryParams: CourseConfigQueryParams) => ({

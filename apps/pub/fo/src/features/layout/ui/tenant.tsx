@@ -35,7 +35,7 @@ const TenantContent = ({
       });
 
       // 일부 alert는 result가 undefined 이므로 무조건 확인시 실행
-      if (!result || result.ok || result === true) {
+      if (result === true) {
         onSelect(tenant);
       }
     } catch (e) {
@@ -77,9 +77,11 @@ const TenantComponent = () => {
       align="end"
       sideOffset={20}
     >
-      <span className={styles.select}>
-        {selectedTenant ? selectedTenant : <img src={logoImage} alt="Logo" />}
-      </span>
+      <div className={styles.select}>
+        <span className={styles.text}>
+          {selectedTenant ? selectedTenant : <img src={logoImage} alt="Logo" />}
+        </span>
+      </div>
       <span className={styles.ico}>
         <IcoArrowDown />
       </span>

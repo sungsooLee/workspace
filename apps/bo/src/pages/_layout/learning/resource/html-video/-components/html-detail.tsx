@@ -121,6 +121,3 @@ const HtmlDetailComponent = forwardRef<HTMLFormElement, HtmlDetailProps>(
 HtmlDetailComponent.displayName = 'HtmlDetail';
 
 export const HtmlDetail = HtmlDetailComponent;
-
-// const formConfig = (hasMapping: boolean): DynamicFormConfig =>
-//   cloneDeepWith(mediaContentFormConfig({ hasMapping }));

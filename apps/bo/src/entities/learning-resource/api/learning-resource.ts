@@ -1,4 +1,4 @@
-import { fileDownload, httpService } from '@learnway/shared';
+import { httpService } from '@learnway/shared';
 import { faker } from '@faker-js/faker';
 import { CMSApiPrefix, PMSApiPrefix } from '@learnway/config';
 import {
@@ -27,9 +27,12 @@ import {
   QuestionItem,
   QuestionItemDeleteParam,
   QuestionStatusUpdateReq,
+  RandomQuestionCountInfo,
   RandomQuestionCountUpdateReq,
+  QuestionListForRetrieveReq,
   TestPaperBasicInfoSaveReq,
   TestPaperBasicInfoSaveRes,
+  QuestionListForRetrieveRes,
 } from '@types';
 
 export default class LearningResourceService {
@@ -49,7 +52,7 @@ export default class LearningResourceService {
     return httpService.get(`${CMSApiPrefix()}/contents`, params);
   }
 
-  static fetchContent(contentUuid?: string): Promise<GetContentDetailRes> {
+  static fetchContent(contentUuid: string): Promise<GetContentDetailRes> {
     return httpService.get(`${CMSApiPrefix()}/content/${contentUuid}`);
   }
 
@@ -213,6 +216,14 @@ export default class LearningResourceService {
   }
 
   /**
+   * 랜덤형 문항의 유형별 출제 문제수를 조회한다.
+   * @param examUuid
+   */
+  static fetchExamRandomQuestionCount(examUuid: string): Promise<RandomQuestionCountInfo[]> {
+    return httpService.get(`${CMSApiPrefix()}/exam/random/${examUuid}`);
+  }
+
+  /**
    * 문제은행 기본 정보 저장
    * @param body
    * @returns
@@ -266,6 +277,16 @@ export default class LearningResourceService {
    */
   static updateQuestionStatus(body: QuestionStatusUpdateReq) {
     return httpService.put(`${CMSApiPrefix()}/exam/question/status`, body);
+  }
+
+  /**
+   * 문항가져오기 팝업용 목록 조회
+   * @param params
+   */
+  static fetchQuestionListForRetrieve(
+    params: QuestionListForRetrieveReq,
+  ): Promise<QuestionListForRetrieveRes[]> {
+    return httpService.get(`${CMSApiPrefix()}/exam/question/status`, { params });
   }
 
   /**

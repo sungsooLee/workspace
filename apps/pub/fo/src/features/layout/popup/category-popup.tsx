@@ -147,18 +147,20 @@ const CategoryPopupComponent = () => {
               </div>
             </div>
           </div>
-          <div className={styles.swiper}>
-            <Carousel
-              items={items}
-              slidesPerView={'auto'}
-              className={styles.category_carousel}
-              spaceBetween={8}
-              modules={[Navigation]}
-              showNavigation={true}
-              prevIcon={<IcoArrowBackward />}
-              nextIcon={<IcoArrowForward />}
-            />
-          </div>
+          {items.length > 0 && (
+            <div className={styles.swiper}>
+              <Carousel
+                items={items}
+                slidesPerView={'auto'}
+                className={styles.category_carousel}
+                spaceBetween={8}
+                modules={[Navigation]}
+                showNavigation={true}
+                prevIcon={<IcoArrowBackward />}
+                nextIcon={<IcoArrowForward />}
+              />
+            </div>
+          )}
         </div>
       </ModalBody>
     </ModalContainer>

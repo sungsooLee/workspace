@@ -36,7 +36,7 @@ const SubTitlesFormFieldComponent = forwardRef<HTMLDivElement, SubtitlesFormFiel
       maxFileSize = 5 * 1024 * 1024,
     } = uploadConfig;
 
-    const { groupUuid, files, addFiles, onFetch, onRemove, inputAccept } = useS3Uploader({
+    const { files, addFiles, onFetch, onRemove, inputAccept } = useS3Uploader({
       s3Path,
       affairsType,
       languageCode,
@@ -62,8 +62,7 @@ const SubTitlesFormFieldComponent = forwardRef<HTMLDivElement, SubtitlesFormFiel
 
     useEffect(() => {
       console.log('🚀 ~ SubTitlesFormFieldComponent ~ value:', value);
-      if (!value) onChange([]);
-      else if (value.length > 0 && files.length === 0) {
+      if (value && value.length > 0 && files.length === 0) {
         fetchFileInfo(value.map(({ subtitleFileUuid }) => subtitleFileUuid));
       }
     }, [value]);
@@ -126,14 +125,14 @@ const SubTitlesFormFieldComponent = forwardRef<HTMLDivElement, SubtitlesFormFiel
       if (!inputFileRef.current) return;
       const files = inputFileRef.current.files;
       if (files && files.length) {
-        if (clickedSubtitleRef.current) await onRemove(clickedSubtitleRef.current);
+        if (clickedSubtitleRef.current) await onRemove(clickedSubtitleRef.current, true);
         await addFiles(Array.from(files));
         inputFileRef.current.value = '';
       }
     };
 
     const handleSubtitleDelete = async (uuid: string) => {
-      await onRemove(uuid);
+      await onRemove(uuid, true);
       onChange(value.filter(({ subtitleFileUuid }) => subtitleFileUuid !== uuid));
     };
 

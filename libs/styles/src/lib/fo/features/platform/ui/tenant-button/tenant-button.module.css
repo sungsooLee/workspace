@@ -35,9 +35,12 @@
     transition: all 0.1s linear;
   }
   .select {
-    @apply flex h-[40px] w-[80px] items-center overflow-hidden text-ellipsis whitespace-nowrap text-left align-middle leading-[40px];
+    @apply ellipsis flex h-[40px] w-[80px] items-center leading-[40px];
+    .text {
+      @apply ellipsis inline-block;
+    }
     img {
-      @apply h-[32px] w-full;
+      @apply max-h-[32px] w-full;
     }
   }
 

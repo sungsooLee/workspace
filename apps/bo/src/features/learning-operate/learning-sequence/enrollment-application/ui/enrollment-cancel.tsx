@@ -1,13 +1,5 @@
-import { SearchBoxConfig, SearchBoxProvider, useSearchBox } from '@learnway/hooks';
-import {
-  Button,
-  Divider,
-  GridBox,
-  StatsSummary,
-  StatsSummaryData,
-  useGridBox,
-  useGridBoxConfig,
-} from '@learnway/ui';
+import { SearchBoxProvider } from '@learnway/hooks';
+import { Button, Divider, GridBox, useGridBox, useGridBoxConfig, useModal } from '@learnway/ui';
 import { GridExcelDownloadButton, SearchBox } from '@shared/ui';
 import { queryOptions } from '@entities/learning-sequence/service/learning-sequence.queries';
 import { useCallback, useEffect, useState } from 'react';
@@ -16,9 +8,10 @@ import { t } from 'i18next';
 import { LMSApiPrefix } from '@learnway/config';
 import { FieldValues, UseFormGetValues, UseFormSetValue } from 'react-hook-form';
 import { DATE_TIME_FORMAT, getDateToString, SelectOption } from '@learnway/shared';
-import dayjs from 'dayjs';
 import { useRouter } from '@tanstack/react-router';
 import { Mode } from '@pages/_layout/learning/learning-sequence/-common/type';
+import { EnrollmentCancelReasonModal } from '../modal/enrollment-cancel-reason-modal';
+import { getEnrollStatusName } from '../constants/enroll-status';
 
 const _global = {
   linkClickSequenceName: (payload: any) => {
@@ -42,6 +35,17 @@ type EnrollmentCancelComponentProps = {
   setOptions: (name: string, options: SelectOption[]) => void;
 };
 
+const gridConfig: useGridBoxConfig = {
+  query: queryOptions.enrollmentCancelList,
+  columns: [],
+  data: [],
+  gridState: {
+    page: 0,
+    size: 10,
+    sort: [],
+  },
+};
+
 const EnrollmentCancelComponent = ({
   courseSequenceId,
   searchProvider,
@@ -50,43 +54,38 @@ const EnrollmentCancelComponent = ({
   setOptions,
 }: EnrollmentCancelComponentProps) => {
   const router = useRouter();
-  const gridConfig: useGridBoxConfig = {
-    query: queryOptions.enrollmentCancelList,
-    columns: [],
-    data: [],
-    gridState: {
-      page: 0,
-      size: 10,
-      sort: [],
-    },
-  };
   const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
   const [columns, setColumns] = useState() as any;
+  const { open: openModal } = useModal();
 
   _global.linkClickSequenceName = (payload: any) => {
     router.navigate({
       to: '/learning/learning-sequence/sequence-management',
       state: {
-        setMode: Mode.DETAIL,
-        courseId: 1,
-        sequenceId: 1,
+        pMode: Mode.DETAIL,
+        // pCourseId: 1,
+        pSequenceId: payload.courseSequenceId,
       },
     });
   };
 
   _global.linkClickReason = (payload: any) => {
     console.log('##', payload);
+    openModal({
+      width: 'sm',
+      content: <EnrollmentCancelReasonModal reason={payload.approvalReason} />,
+    });
   };
 
   useEffect(() => {
     const columns = [
-      columnHelper.accessor('openYear', {
+      columnHelper.accessor('openingYear', {
         header: t('개설'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
         size: 58,
       }),
-      columnHelper.accessor('sequenceName', {
+      columnHelper.accessor('courseSequenceName', {
         header: t('차수명'),
         cell: (info) => (
           <Button
@@ -100,7 +99,7 @@ const EnrollmentCancelComponent = ({
         enableGrouping: false,
         size: 339,
       }),
-      columnHelper.accessor('eduStartDate', {
+      columnHelper.accessor('learningStartDate', {
         header: t('학습 시작일'),
         cell: (info) => {
           const date = info.getValue() as Date;
@@ -109,7 +108,7 @@ const EnrollmentCancelComponent = ({
         enableGrouping: false,
         size: 160,
       }),
-      columnHelper.accessor('eduEndDate', {
+      columnHelper.accessor('learningEndDate', {
         header: t('학습 종료일'),
         cell: (info) => {
           const date = info.getValue() as Date;
@@ -118,37 +117,37 @@ const EnrollmentCancelComponent = ({
         enableGrouping: false,
         size: 160,
       }),
-      columnHelper.accessor('company', {
+      columnHelper.accessor('companyName', {
         header: t('회사'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
         size: 130,
       }),
-      columnHelper.accessor('department', {
+      columnHelper.accessor('departmentName', {
         header: t('부서'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
         size: 130,
       }),
-      columnHelper.accessor('employeeId', {
+      columnHelper.accessor('employeeNumber', {
         header: t('사번'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
         size: 80,
       }),
-      columnHelper.accessor('employeeName', {
+      columnHelper.accessor('userName', {
         header: t('이름'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
         size: 70,
       }),
-      columnHelper.accessor('status', {
+      columnHelper.accessor('enrollStatusType', {
         header: t('상태'),
-        cell: (info) => info.getValue(),
+        cell: (info) => getEnrollStatusName(info.getValue()),
         enableGrouping: false,
         size: 80,
       }),
-      columnHelper.accessor('cancelDate', {
+      columnHelper.accessor('createdDate', {
         header: t('취소/반려 일시'),
         cell: (info) => {
           const date = info.getValue() as Date;
@@ -157,7 +156,7 @@ const EnrollmentCancelComponent = ({
         enableGrouping: false,
         size: 160,
       }),
-      columnHelper.accessor('reason', {
+      columnHelper.accessor('approvalReason', {
         header: t('사유'),
         cell: (info) => (
           <Button
@@ -174,11 +173,33 @@ const EnrollmentCancelComponent = ({
     ] as ColumnDef<any, unknown>[];
 
     setColumns(columns);
-    gridFetch();
   }, []);
 
   const handleOnSearch = useCallback((data: any) => {
-    console.log('#search:', data);
+    const payload = {
+      // openingYear: data.openingYear || null,
+      // courseSequenceId: data.courseSequenceId || null,
+      openingYear: 2025,
+      courseSequenceId: 2,
+      enrollStatusType: data.enrollStatusType || '',
+      // learningStartDate: data.learningRange?.from
+      //   ? getDateToString(data.learningRange?.from, DATE_TIME_FORMAT.DATE)
+      //   : null,
+      // learningEndDate: data.learningRange?.to
+      //   ? getDateToString(data.learningRange?.to, DATE_TIME_FORMAT.DATE)
+      //   : null,
+      // companyId: data.company || null,
+      // deptId: data.deptId || null,
+      learningStartDate: '2025-06-22',
+      learningEndDate: '2025-08-22',
+      companyId: 54,
+      deptId: 1,
+      employeeNumber: data.employeeNumber || '',
+      name: data.name || '',
+    };
+
+    console.log('## payload=>', payload);
+    gridFetch(payload);
   }, []);
 
   const columnHelper = createColumnHelper<any>();

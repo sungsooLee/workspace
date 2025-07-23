@@ -60,84 +60,82 @@ function RouteComponent() {
   };
 
   return (
-    <form>
-      <PageContainer hideOutLine={true}>
-        <ContentsButtons>
-          <ToggleButtonGroup
-            defaultValue={'과정관리value'}
-            options={[
-              { label: '과정관리', value: '과정관리value' },
-              { label: '수강관리', value: '수강관리value' },
-            ]}
-            onClick={(value) => console.log('ToggleButtonGroup.onClick', value)}
-          />
+    <PageContainer hideOutLine={true}>
+      <ContentsButtons>
+        <ToggleButtonGroup
+          defaultValue={'과정관리value'}
+          options={[
+            { label: '과정관리', value: '과정관리value' },
+            { label: '수강관리', value: '수강관리value' },
+          ]}
+          onClick={(value) => console.log('ToggleButtonGroup.onClick', value)}
+        />
+        <Button
+          type="button"
+          variant="point"
+          size="sm"
+          label={'Values'}
+          onClick={() => console.log('getTabValues', getTabValues())}
+        />
+        {!!visibleButtons?.isTranslate && (
           <Button
             type="button"
             variant="point"
             size="sm"
-            label={'Values'}
-            onClick={() => console.log('getTabValues', getTabValues())}
+            label={'과정 번역'}
+            onClick={() => console.log('과정 번역')}
           />
-          {!!visibleButtons?.isTranslate && (
-            <Button
-              type="button"
-              variant="point"
-              size="sm"
-              label={'과정 번역'}
-              onClick={() => console.log('과정 번역')}
-            />
-          )}
-          {!!visibleButtons?.isCopy && (
-            <Button
-              type="button"
-              variant="point"
-              size="sm"
-              label={'과정 복사'}
-              onClick={() => console.log('과정 복사')}
-            />
-          )}
-          {!!visibleButtons?.isList && (
-            <Button
-              type="button"
-              variant="point"
-              size="sm"
-              label={'목록'}
-              onClick={() => trigger(TriggerKey.LIST)}
-            />
-          )}
-          {!!visibleButtons?.isDivider && <Divider orientation={'vertical'} />}
-          {!!visibleButtons?.isDelete && (
-            <Button
-              type="button"
-              variant="point"
-              size="sm"
-              label={'삭제'}
-              onClick={() => trigger(TriggerKey.DELETE)}
-              disabled={!courseId}
-            />
-          )}
-          {!!visibleButtons?.isSave && (
-            <Button
-              type="button"
-              variant="primary"
-              size="sm"
-              label={'저장'}
-              onClick={() => trigger(TriggerKey.SAVE)}
-            />
-          )}
-        </ContentsButtons>
-        <MainContents>
-          <Tabs
-            type={'fill'}
-            size={'sm'}
-            items={tabItems}
-            onTabChange={handleTabChange}
-            selectedTabKey={activeTab}
-            showContentBorder={true}
-            // onBeforeTabChange={async (currentTabKey, nextTabKey) => await saveConfirm()}
+        )}
+        {!!visibleButtons?.isCopy && (
+          <Button
+            type="button"
+            variant="point"
+            size="sm"
+            label={'과정 복사'}
+            onClick={() => console.log('과정 복사')}
           />
-        </MainContents>
-      </PageContainer>
-    </form>
+        )}
+        {!!visibleButtons?.isList && (
+          <Button
+            type="button"
+            variant="point"
+            size="sm"
+            label={'목록'}
+            onClick={() => trigger(TriggerKey.LIST)}
+          />
+        )}
+        {!!visibleButtons?.isDivider && <Divider orientation={'vertical'} />}
+        {!!visibleButtons?.isDelete && (
+          <Button
+            type="button"
+            variant="point"
+            size="sm"
+            label={'삭제'}
+            onClick={() => trigger(TriggerKey.DELETE)}
+            disabled={!courseId}
+          />
+        )}
+        {!!visibleButtons?.isSave && (
+          <Button
+            type="button"
+            variant="primary"
+            size="sm"
+            label={'저장'}
+            onClick={() => trigger(TriggerKey.SAVE)}
+          />
+        )}
+      </ContentsButtons>
+      <MainContents>
+        <Tabs
+          type={'fill'}
+          size={'sm'}
+          items={tabItems}
+          onTabChange={handleTabChange}
+          selectedTabKey={activeTab}
+          showContentBorder={true}
+          // onBeforeTabChange={async (currentTabKey, nextTabKey) => await saveConfirm()}
+        />
+      </MainContents>
+    </PageContainer>
   );
 }
