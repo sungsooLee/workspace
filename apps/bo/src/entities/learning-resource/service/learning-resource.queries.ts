@@ -27,8 +27,7 @@ export const queryKeys = {
   userByUuid: ['user-by-uuid'] as const,
   contents: ['contents'] as const,
   contentDetail: (contentUuid: string) => ['content-detail', contentUuid] as const,
-  contentCourseMapping: (contentUuid: string, params: ContentCourseMappingParams) =>
-    ['content-course-mapping', contentUuid, JSON.stringify(params)] as const,
+  contentCourseMapping: (contentUuid: string) => ['content-course-mapping', contentUuid] as const,
   deleteContent: ['delete-content'] as const,
   createDraftVideo: ['create-draft-video'] as const,
   videoChange: ['video-change'] as const,
@@ -45,8 +44,7 @@ export const queryKeys = {
   questionBankQuestionList: ['question-bank-question-list'] as const,
   questionBankQuestionItem: ['question-bank-question-item'] as const,
   randomQuestionCount: (examUuid: string) => ['random-question-count', examUuid] as const,
-  questionListForRetrieve: (params: QuestionListForRetrieveReq) =>
-    ['question-list-for-retrieve', JSON.stringify(params)] as const,
+  questionListForRetrieve: ['question-list-for-retrieve'] as const,
 };
 
 export const learningResourceQueryOptions = {
@@ -79,7 +77,7 @@ export const learningResourceQueryOptions = {
     enabled: !!contentUuid,
   }),
   getContentCourseMapping: (contentUuid: string, params: ContentCourseMappingParams) => ({
-    queryKey: queryKeys.contentCourseMapping(contentUuid, params),
+    queryKey: queryKeys.contentCourseMapping(contentUuid),
     queryFn: () => LearningResourceService.fetchContentCourseMapping(contentUuid, params),
   }),
   getLearningResources: (params: any) => ({
@@ -157,7 +155,7 @@ export const learningResourceQueryOptions = {
   }),
 
   getQuestionListForRetrieve: (params: QuestionListForRetrieveReq) => ({
-    queryKey: queryKeys.questionListForRetrieve(params),
+    queryKey: queryKeys.questionListForRetrieve,
     queryFn: () => LearningResourceService.fetchQuestionListForRetrieve(params),
     cacheTime: 0,
     staleTime: 0,
