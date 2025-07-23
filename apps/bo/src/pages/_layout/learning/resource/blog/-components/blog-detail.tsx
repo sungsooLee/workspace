@@ -146,24 +146,3 @@ const BlogDetailComponent = forwardRef<HTMLFormElement, BlogDetailProps>(
 BlogDetailComponent.displayName = 'BlogDetail';
 
 export const BlogDetail = BlogDetailComponent;
-
-// const formConfig = (hasMapping: boolean): DynamicFormConfig => {
-//   const commonMediaContentFormConfig = cloneDeepWith(mediaContentFormConfig({ hasMapping }));
-//
-//   return {
-//     builders: [
-//       ...commonMediaContentFormConfig.builders,
-//       {
-//         label: t('블로그 내용'),
-//         name: 'blogContent',
-//         type: 'custom',
-//         format: 'string',
-//         value: '',
-//       },
-//     ],
-//     validator: {
-//       ...commonMediaContentFormConfig.validator,
-//       blogContent: true,
-//     },
-//   };
-// };

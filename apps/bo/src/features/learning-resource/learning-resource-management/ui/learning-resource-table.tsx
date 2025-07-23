@@ -295,7 +295,7 @@ function LearningResourceTableComponent() {
       },
       {
         size: 83,
-        name: 'langCountryCode',
+        name: 'languageCountryCode',
         label: t('LABEL.grid.column.translation', '번역'),
         render: (_: any) => t(`pms.multilingual.LangCountryCode.${_.getValue()}`),
       },

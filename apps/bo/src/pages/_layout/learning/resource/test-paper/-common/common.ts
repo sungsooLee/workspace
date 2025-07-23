@@ -87,3 +87,16 @@ export const getExamTemplateTextByType = (type?: ExamTemplateType): string => {
 
   return EXAM_TEMPLATE_TYPES[type];
 };
+
+export const EXAM_GEN_TYPES = Object.freeze({
+  [ExamQuestionGenType.FIXED]: t('일반형'),
+  [ExamQuestionGenType.RANDOM]: t('랜덤형'),
+});
+
+export const getQuestionGenTypeText = (type?: ExamQuestionGenType): string => {
+  if (!type) {
+    return '';
+  }
+
+  return EXAM_GEN_TYPES[type];
+};
