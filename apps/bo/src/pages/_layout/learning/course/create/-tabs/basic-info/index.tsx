@@ -22,396 +22,364 @@ import {
   UserGroupTabsChoiceModal,
 } from '@shared/ui';
 import { Course } from '@types';
-import { forwardRef, useEffect, useImperativeHandle } from 'react';
+import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CourseTabBaseProps, CourseTabFormRef } from '../../../-common/type';
+import { useCourseCreateSubPage } from '../../../-hooks/use-course-create-sub-page';
 
-const BasicInfoComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>(
-  ({ onSave, onConfigPropChange, data: { formData, courseConfig, isSaved } }, ref) => {
-    const { t } = useTranslation();
+const BasicInfoComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>((_, ref) => {
+  const { t } = useTranslation();
 
-    const {
-      provider,
-      getValues,
-      updateFormData,
-      onFormValid,
-      formState,
-      watch,
-      formValues,
-      onFormChange,
-    } = useDynamicForm2();
+  const form = useDynamicForm2();
+  const { provider, getValues, watch, onFormChange } = form;
 
-    const channelUuid = watch('channelUuid');
-    const courseType = watch('courseType');
+  const { courseConfig } = useCourseCreateSubPage(form);
 
-    console.log('----- basic', {
-      formData,
-      courseConfig,
-      channelUuid,
-      courseType,
-      isSaved,
-      values: getValues(),
-    });
+  const channelUuid = watch('channelUuid');
+  const courseType = watch('courseType');
 
-    // 부모 컴포넌트에서 호출할 수 있는 메서드
-    useImperativeHandle(ref, () => ({
-      validate: async () => {
-        // 모든 필드에 대해 유효성 검사 수행
-        const isValid = await onFormValid();
-        const data = formDataToRequestData(formValues as Course);
-        const errors = formState.errors;
+  console.log('----- basic', {
+    channelUuid,
+    courseType,
+    values: getValues(),
+  });
 
-        return {
-          isValid,
-          data,
-          errors,
-        };
-      },
-      getValues: () => formDataToRequestData(formValues as Course),
-    }));
+  // useEffect(() => {
+  //   console.log('BasicInfoComponent init');
+  //   // 초기 데이터가 있으면 설정
+  //   if (formData) {
+  //     updateFormData(responseDataToFormData(formData));
+  //   }
+  // }, [formData]);
 
-    useEffect(() => {
-      console.log('BasicInfoComponent init');
-      // 초기 데이터가 있으면 설정
-      if (formData) {
-        updateFormData(responseDataToFormData(formData));
-      }
-    }, [formData]);
+  // 유형과 채널이 모두 변경되었을 때 상위 컴포넌트에 알림
+  // useEffect(() => {
+  //   const hasProp = courseType && channelUuid;
+  //   const isChanged = formData.courseType !== courseType || formData.channelUuid !== channelUuid;
+  //   if (hasProp && isChanged) {
+  //     console.log('유형과 채널 변경됨:', { courseType, channelUuid });
+  //     // 상위 컴포넌트에 변경 알림
+  //     onConfigPropChange?.({ courseType, channelUuid });
+  //   }
+  // }, [courseType, channelUuid, onConfigPropChange]);
 
-    // 유형과 채널이 모두 변경되었을 때 상위 컴포넌트에 알림
-    useEffect(() => {
-      const hasProp = courseType && channelUuid;
-      const isChanged = formData.courseType !== courseType || formData.channelUuid !== channelUuid;
-      if (hasProp && isChanged) {
-        console.log('유형과 채널 변경됨:', { courseType, channelUuid });
-        // 상위 컴포넌트에 변경 알림
-        onConfigPropChange?.({ courseType, channelUuid });
-      }
-    }, [courseType, channelUuid, onConfigPropChange]);
+  return (
+    <form>
+      {/*기본정보*/}
+      <FormSubTitle label={t('기본정보')} />
+      {/*유형, 채널*/}
+      <ContentsRow>
+        {/*유형*/}
+        <FormRow2
+          provider={provider}
+          name={'courseType'}
+          label={'유형'}
+          element={
+            <DropdownFormField
+              optionsConfig={{
+                codeGroup: CODE_GROUP['lms.course.CourseType'],
+              }}
+            />
+          }
+        />
+        {/*채널*/}
+        <FormRow2
+          provider={provider}
+          name={'channelUuid'}
+          label={'채널'}
+          element={<TenantChannelDropdownFormField2 tenantId={-1} />}
+        />
+      </ContentsRow>
 
-    return (
-      <div>
-        {/*기본정보*/}
-        <FormSubTitle label={t('기본정보')} />
-        {/*유형, 채널*/}
-        <ContentsRow>
-          {/*유형*/}
-          <FormRow2
-            provider={provider}
-            name={'courseType'}
-            label={'유형'}
-            element={
-              <DropdownFormField
-                optionsConfig={{
-                  codeGroup: CODE_GROUP['lms.course.CourseType'],
-                }}
-              />
-            }
-          />
-          {/*채널*/}
-          <FormRow2
-            provider={provider}
-            name={'channelUuid'}
-            label={'채널'}
-            element={<TenantChannelDropdownFormField2 tenantId={-1} />}
-          />
-        </ContentsRow>
+      {/*공개대상*/}
+      <FormSubTitle label={t('공개대상')} />
+      {/*테넌트*/}
+      <ContentsRow>
+        <FormRow2
+          provider={provider}
+          name={'tenantIds'}
+          label={'테넌트'}
+          format={'array'}
+          element={<TenantByRoleChannelCheckboxFormField channelUuid={getValues().channelUuid} />}
+        />
+      </ContentsRow>
+      {/*카테고리*/}
+      <ContentsRow>
+        <FormRow2
+          provider={provider}
+          name={'categories'}
+          label={'카테고리'}
+          format={'object'}
+          element={
+            <ListModalSelectorFormField
+              deletable
+              modalConfig={() => ({
+                content: <CategoryChoiceModal tenantIds={getValues().tenantIds} />,
+                width: 'lg',
+              })}
+              transformModalData={(modalData: any[]) => {
+                return modalData?.map((d: any) => ({
+                  categoryId: d.id,
+                  categoryPath: d.fullPath,
+                }));
+              }}
+              listConfig={{
+                checkable: true,
+                deletable: true,
+                disabledActive: true,
+                labelField: 'categoryPath',
+                valueField: 'categoryId',
+                selectedNodeBeforeLabel: (
+                  <Badge option={{ label: '대표', value: '' }} variant={'text'} status="fill" />
+                ),
+              }}
+              selectedValue={getValues()?.primaryCategoryId}
+              onSelected={(option: any) => onFormChange({ primaryCategoryId: option.categoryId })}
+              actionNode={<Button variant="text" size="sm" label={t('추가')} />}
+            />
+          }
+        />
+      </ContentsRow>
 
-        {/*공개대상*/}
-        <FormSubTitle label={t('공개대상')} />
-        {/*테넌트*/}
-        <ContentsRow>
-          <FormRow2
-            provider={provider}
-            name={'tenantIds'}
-            label={'테넌트'}
-            format={'array'}
-            element={<TenantByRoleChannelCheckboxFormField channelUuid={getValues().channelUuid} />}
-          />
-        </ContentsRow>
-        {/*카테고리*/}
-        <ContentsRow>
-          <FormRow2
-            provider={provider}
-            name={'categories'}
-            label={'카테고리'}
-            format={'object'}
-            element={
-              <ListModalSelectorFormField
-                deletable
-                modalConfig={() => ({
-                  content: <CategoryChoiceModal tenantIds={getValues().tenantIds} />,
-                  width: 'lg',
-                })}
-                transformModalData={(modalData: any[]) => {
-                  return modalData?.map((d: any) => ({
-                    categoryId: d.id,
-                    categoryPath: d.fullPath,
-                  }));
-                }}
-                listConfig={{
-                  checkable: true,
-                  deletable: true,
-                  disabledActive: true,
-                  labelField: 'categoryPath',
-                  valueField: 'categoryId',
-                  selectedNodeBeforeLabel: (
-                    <Badge option={{ label: '대표', value: '' }} variant={'text'} status="fill" />
-                  ),
-                }}
-                selectedValue={getValues()?.primaryCategoryId}
-                onSelected={(option: any) => onFormChange({ primaryCategoryId: option.categoryId })}
-                actionNode={<Button variant="text" size="sm" label={t('추가')} />}
-              />
-            }
-          />
-        </ContentsRow>
+      {/*학습대상(유저그룹)*/}
+      <ContentsRow>
+        <FormRow2
+          provider={provider}
+          name={'targetList'}
+          format={'object'}
+          label={'학습대상(유저그룹)'}
+          element={
+            <ChipListModalSelectorFormField
+              modalConfig={() => ({
+                content: (
+                  <UserGroupTabsChoiceModal
+                    tenantIds={getValues().tenantIds}
+                    option={getValues().targetList}
+                  />
+                ),
+              })}
+              chipList={{
+                labelField: 'pathValue',
+                valueField: 'pathKey',
+                wordwrap: true,
+              }}
+              showAddButton
+              // transformModalData={(data: any) => console.log('data', data)}
+            />
+          }
+        />
+      </ContentsRow>
 
-        {/*학습대상(유저그룹)*/}
-        <ContentsRow>
-          <FormRow2
-            provider={provider}
-            name={'targetList'}
-            format={'object'}
-            label={'학습대상(유저그룹)'}
-            element={
-              <ChipListModalSelectorFormField
-                modalConfig={() => ({
-                  content: (
-                    <UserGroupTabsChoiceModal
-                      tenantIds={getValues().tenantIds}
-                      option={getValues().targetList}
-                    />
-                  ),
-                })}
-                chipList={{
-                  labelField: 'pathValue',
-                  valueField: 'pathKey',
-                  wordwrap: true,
-                }}
-                showAddButton
-                // transformModalData={(data: any) => console.log('data', data)}
-              />
-            }
-          />
-        </ContentsRow>
-
-        {/*과정소개*/}
-        <FormSubTitle label={t('과정소개')} />
-        {/*언어*/}
-        <ContentsRow>
-          <FormRow2
-            provider={provider}
-            name={'language'}
-            label={'언어'}
-            element={
-              <DropdownFormField
-                optionsConfig={{
-                  codeGroup: CODE_GROUP['pms.multilingual.LangCountryCode'],
-                }}
-              />
-            }
-          />
-        </ContentsRow>
-        {/*과정명*/}
-        <ContentsRow>
-          <FormRow2
-            provider={provider}
-            name={'courseName'}
-            label={'과정명'}
-            element={<Input maxLength={40} />}
-          />
-        </ContentsRow>
-        {/*교육 내용*/}
-        <ContentsRow>
-          <FormRow2
-            provider={provider}
-            name={'courseContent'}
-            label={'교육내용'}
-            element={<EditorFormField />}
-          />
-        </ContentsRow>
-        {/* 난이도 */}
-        <ContentsRow>
-          <FormRow2
-            provider={provider}
-            name={'trainingLevelType'}
-            label={'난이도'}
-            element={
-              <RadioGroupFormField
-                optionsConfig={{
-                  codeGroup: CODE_GROUP['lms.course.TrainingLevelType'],
-                }}
-              />
-            }
-          />
-          {/* 교육공간 */}
-          <FormRow2
-            provider={provider}
-            name={'learningSpaceType'}
-            label={'교육공간'}
-            element={
-              <RadioGroupFormField
-                optionsConfig={{
-                  codeGroup: CODE_GROUP['lms.course.LearningSpaceType'],
-                  optionsNode: [
-                    {
-                      value: 'REGISTERED', // 장소선택
-                      node: (
-                        <>
-                          <FormRow2
-                            provider={provider}
-                            name={'learningSpaceId'}
-                            type={'hidden'}
-                            value={''}
-                          />
-                          <FormRow2
-                            provider={provider}
-                            name={'learningSpaceName'}
-                            value={''}
-                            element={
-                              <InputModalSelectorFormField
-                                modalConfig={{
-                                  content: <TrainingPlaceChoiceModal />,
-                                }}
-                                transformModalData={(data: any) => ({
-                                  learningSpaceId: data.learningSpaceId,
-                                  learningSpaceName: data.learningSpaceName,
-                                })}
-                              />
-                            }
-                          />
-                        </>
-                      ),
-                    },
-                    {
-                      value: 'MANUAL', // 직접입력
-                      node: (
+      {/*과정소개*/}
+      <FormSubTitle label={t('과정소개')} />
+      {/*언어*/}
+      <ContentsRow>
+        <FormRow2
+          provider={provider}
+          name={'language'}
+          label={'언어'}
+          element={
+            <DropdownFormField
+              optionsConfig={{
+                codeGroup: CODE_GROUP['pms.multilingual.LangCountryCode'],
+              }}
+            />
+          }
+        />
+      </ContentsRow>
+      {/*과정명*/}
+      <ContentsRow>
+        <FormRow2
+          provider={provider}
+          name={'courseName'}
+          label={'과정명'}
+          element={<Input maxLength={40} />}
+        />
+      </ContentsRow>
+      {/*교육 내용*/}
+      <ContentsRow>
+        <FormRow2
+          provider={provider}
+          name={'courseContent'}
+          label={'교육내용'}
+          element={<EditorFormField />}
+        />
+      </ContentsRow>
+      {/* 난이도 */}
+      <ContentsRow>
+        <FormRow2
+          provider={provider}
+          name={'trainingLevelType'}
+          label={'난이도'}
+          element={
+            <RadioGroupFormField
+              optionsConfig={{
+                codeGroup: CODE_GROUP['lms.course.TrainingLevelType'],
+              }}
+            />
+          }
+        />
+        {/* 교육공간 */}
+        <FormRow2
+          provider={provider}
+          name={'learningSpaceType'}
+          label={'교육공간'}
+          element={
+            <RadioGroupFormField
+              optionsConfig={{
+                codeGroup: CODE_GROUP['lms.course.LearningSpaceType'],
+                optionsNode: [
+                  {
+                    value: 'REGISTERED', // 장소선택
+                    node: (
+                      <>
                         <FormRow2
                           provider={provider}
-                          name={'learningSpaceNameKeyIn'}
+                          name={'learningSpaceId'}
+                          type={'hidden'}
                           value={''}
-                          element={<Input />}
                         />
-                      ),
-                    },
-                  ],
-                }}
-              />
-            }
-          />
-        </ContentsRow>
+                        <FormRow2
+                          provider={provider}
+                          name={'learningSpaceName'}
+                          value={''}
+                          element={
+                            <InputModalSelectorFormField
+                              modalConfig={{
+                                content: <TrainingPlaceChoiceModal />,
+                              }}
+                              transformModalData={(data: any) => ({
+                                learningSpaceId: data.learningSpaceId,
+                                learningSpaceName: data.learningSpaceName,
+                              })}
+                            />
+                          }
+                        />
+                      </>
+                    ),
+                  },
+                  {
+                    value: 'MANUAL', // 직접입력
+                    node: (
+                      <FormRow2
+                        provider={provider}
+                        name={'learningSpaceNameKeyIn'}
+                        value={''}
+                        element={<Input />}
+                      />
+                    ),
+                  },
+                ],
+              }}
+            />
+          }
+        />
+      </ContentsRow>
 
-        {/*관리자*/}
-        <FormSubTitle label={t('관리자')} />
+      {/*관리자*/}
+      <FormSubTitle label={t('관리자')} />
+      {/*담당자*/}
+      <ContentsRow>
         {/*담당자*/}
-        <ContentsRow>
-          {/*담당자*/}
-          <FormRow2
-            provider={provider}
-            name={'coordinatorName'}
-            label={'담당자'}
-            element={
-              <InputModalSelectorFormField
-                modalConfig={{
-                  content: <UserChoiceModal />,
-                }}
-                transformModalData={(data: any) => ({
-                  coordinatorUuid: data.uuid,
-                  coordinatorName: `${data.name}/${data?.dept?.deptName}`,
-                  coordinatorDeptName: `${data.name}/${data?.dept?.deptName}`,
-                })}
+        <FormRow2
+          provider={provider}
+          name={'coordinatorName'}
+          label={'담당자'}
+          element={
+            <InputModalSelectorFormField
+              modalConfig={{
+                content: <UserChoiceModal />,
+              }}
+              transformModalData={(data: any) => ({
+                coordinatorUuid: data.uuid,
+                coordinatorName: `${data.name}/${data?.dept?.deptName}`,
+                coordinatorDeptName: `${data.name}/${data?.dept?.deptName}`,
+              })}
+            />
+          }
+        />
+        {/*연락처*/}
+        <FormRow2
+          provider={provider}
+          name={'연락처1'}
+          label={'연락처'}
+          element={
+            <>
+              <FormRow2
+                provider={provider}
+                name={'coordinatorTelCountryCode'}
+                element={
+                  <DropdownFormField
+                    optionsConfig={{
+                      codeGroup: CODE_GROUP['cmmon.TelCountryCode'],
+                    }}
+                  />
+                }
               />
-            }
-          />
-          {/*연락처*/}
-          <FormRow2
-            provider={provider}
-            name={'연락처1'}
-            label={'연락처'}
-            element={
-              <>
-                <FormRow2
-                  provider={provider}
-                  name={'coordinatorTelCountryCode'}
-                  element={
-                    <DropdownFormField
-                      optionsConfig={{
-                        codeGroup: CODE_GROUP['cmmon.TelCountryCode'],
-                      }}
-                    />
-                  }
-                />
-                <FormRow2 provider={provider} name={'coordinatorTelNo'} element={<Input />} />
-              </>
-            }
-          />
-          {/*이메일*/}
-          <FormRow2
-            provider={provider}
-            name={'coordinatorEmail'}
-            label={'이메일'}
-            element={<Input />}
-          />
-          {/*담당자 ID - hidden */}
-          <FormRow2 provider={provider} name={'coordinatorId'} type={'hidden'} value={''} />
-        </ContentsRow>
+              <FormRow2 provider={provider} name={'coordinatorTelNo'} element={<Input />} />
+            </>
+          }
+        />
+        {/*이메일*/}
+        <FormRow2
+          provider={provider}
+          name={'coordinatorEmail'}
+          label={'이메일'}
+          element={<Input />}
+        />
+        {/*담당자 ID - hidden */}
+        <FormRow2 provider={provider} name={'coordinatorId'} type={'hidden'} value={''} />
+      </ContentsRow>
+      {/*운영자*/}
+      <ContentsRow>
         {/*운영자*/}
-        <ContentsRow>
-          {/*운영자*/}
-          <FormRow2
-            provider={provider}
-            name={'operatorName'}
-            label={'운영자'}
-            element={
-              <InputModalSelectorFormField
-                modalConfig={{
-                  content: <UserChoiceModal />,
-                }}
-                transformModalData={(data: any) => ({
-                  operatorUuid: data.uuid,
-                  operatorName: `${data.name}/${data?.dept?.deptName}`,
-                  operatorDeptName: `${data.name}/${data?.dept?.deptName}`,
-                })}
+        <FormRow2
+          provider={provider}
+          name={'operatorName'}
+          label={'운영자'}
+          element={
+            <InputModalSelectorFormField
+              modalConfig={{
+                content: <UserChoiceModal />,
+              }}
+              transformModalData={(data: any) => ({
+                operatorUuid: data.uuid,
+                operatorName: `${data.name}/${data?.dept?.deptName}`,
+                operatorDeptName: `${data.name}/${data?.dept?.deptName}`,
+              })}
+            />
+          }
+        />
+        {/*연락처*/}
+        <FormRow2
+          provider={provider}
+          name={'연락처2'}
+          label={'연락처'}
+          element={
+            <>
+              <FormRow2
+                provider={provider}
+                name={'operatorTelCountryCode'}
+                element={
+                  <DropdownFormField
+                    optionsConfig={{
+                      codeGroup: CODE_GROUP['cmmon.TelCountryCode'],
+                    }}
+                  />
+                }
               />
-            }
-          />
-          {/*연락처*/}
-          <FormRow2
-            provider={provider}
-            name={'연락처2'}
-            label={'연락처'}
-            element={
-              <>
-                <FormRow2
-                  provider={provider}
-                  name={'operatorTelCountryCode'}
-                  element={
-                    <DropdownFormField
-                      optionsConfig={{
-                        codeGroup: CODE_GROUP['cmmon.TelCountryCode'],
-                      }}
-                    />
-                  }
-                />
-                <FormRow2 provider={provider} name={'operatorTelNo'} element={<Input />} />
-              </>
-            }
-          />
-          {/*이메일*/}
-          <FormRow2
-            provider={provider}
-            name={'operatorEmail'}
-            label={'이메일'}
-            element={<Input />}
-          />
-          {/*운영자 ID - hidden */}
-          <FormRow2 provider={provider} name={'operatorId'} type={'hidden'} value={''} />
-        </ContentsRow>
-      </div>
-    );
-  },
-);
+              <FormRow2 provider={provider} name={'operatorTelNo'} element={<Input />} />
+            </>
+          }
+        />
+        {/*이메일*/}
+        <FormRow2 provider={provider} name={'operatorEmail'} label={'이메일'} element={<Input />} />
+        {/*운영자 ID - hidden */}
+        <FormRow2 provider={provider} name={'operatorId'} type={'hidden'} value={''} />
+      </ContentsRow>
+    </form>
+  );
+});
 
 export const BasicInfo = BasicInfoComponent;
 

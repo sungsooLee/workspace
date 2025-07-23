@@ -91,9 +91,7 @@ export type CourseType = string;
  * - data: 폼 데이터 및 과정 설정 정보
  */
 export interface CourseTabBaseProps {
-  onSave?: () => Promise<void>;
-  onConfigPropChange?: (config: { courseType: string; channelUuid: string }) => void;
-  data: CourseTabData;
+  activeTab?: CourseTab;
 }
 
 /**
