@@ -62,7 +62,8 @@ const SubTitlesFormFieldComponent = forwardRef<HTMLDivElement, SubtitlesFormFiel
 
     useEffect(() => {
       console.log('🚀 ~ SubTitlesFormFieldComponent ~ value:', value);
-      if (value.length > 0 && files.length === 0) {
+      if (!value) onChange([]);
+      else if (value.length > 0 && files.length === 0) {
         fetchFileInfo(value.map(({ subtitleFileUuid }) => subtitleFileUuid));
       }
     }, [value]);
@@ -138,7 +139,7 @@ const SubTitlesFormFieldComponent = forwardRef<HTMLDivElement, SubtitlesFormFiel
 
     return (
       <div className={dynamicFormStyles.multiple_row} ref={ref}>
-        {value.map((subtitle) => (
+        {value?.map((subtitle) => (
           <ContentsRow className={dynamicFormStyles.row_inner} key={subtitle.subtitleFileUuid}>
             <Dropdown
               className={dynamicFormStyles.short}
