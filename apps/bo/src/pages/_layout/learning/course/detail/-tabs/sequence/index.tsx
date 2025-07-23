@@ -13,6 +13,7 @@ import {
   useCourseStore,
 } from '../../../-store/use-course-store';
 import { Route as CourseRoute } from '../../../index';
+import { Button } from '@learnway/ui';
 
 const SequenceComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBaseProps>(
   ({ courseId, courseSequenceId, setCourseSequenceId }, ref) => {
@@ -46,9 +47,19 @@ const SequenceComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBase
     }, [sequenceId]);
 
     return mode === 'MAIN' ? (
-      <SequenceList setMode={setMode} setSequenceId={setSequenceId} courseId={courseId} />
+      <>
+        <Button variant="point" size="sm" onClick={() => setMode('DETAIL')}>
+          상세
+        </Button>
+        <SequenceList setMode={setMode} setSequenceId={setSequenceId} courseId={courseId} />
+      </>
     ) : (
-      <SequenceDetail ref={ref} setMode={setMode} courseId={courseId} sequenceId={sequenceId} />
+      <>
+        <Button variant="point" size="sm" onClick={() => setMode('MAIN')}>
+          목록
+        </Button>
+        <SequenceDetail ref={ref} setMode={setMode} courseId={courseId} sequenceId={sequenceId} />
+      </>
     );
   },
 );

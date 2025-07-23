@@ -63,7 +63,7 @@ export const useCourseDetailPage = (courseType?: string) => {
       };
     }
     // 차수 탭일 때 (상세)
-    if (activeTab === CourseDetailTab.COMMUNITY && contentViewType !== ContentViewType.LIST) {
+    if (activeTab === CourseDetailTab.SEQUENCE && contentViewType !== ContentViewType.LIST) {
       return {
         isList: true,
         isDelete: true,
