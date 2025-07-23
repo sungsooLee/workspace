@@ -33,7 +33,7 @@ const _global = {
 function RouteComponent() {
   const router = useRouter();
 
-  const { provider: sProvider, getValues } = useSearchBox(searchConfig);
+  const { provider: sProvider, getValues } = useSearchBox(searchConfig());
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
 
   const [tableInstance, setTableInstance] = useState<Table<any>>();
@@ -123,7 +123,7 @@ function RouteComponent() {
         <Divider />
         <GridBox
           config={gConfig}
-          columns={columns}
+          columns={columns()}
           multiple
           hideRowSelectionCheckBox={true}
           title={t('채널 개설 신청 목록')}
@@ -158,7 +158,7 @@ function RouteComponent() {
   );
 }
 
-const searchConfig: SearchBoxConfig = {
+const searchConfig = (): SearchBoxConfig => ({
   builders: [
     [
       {
@@ -215,7 +215,7 @@ const searchConfig: SearchBoxConfig = {
       },
     ],
   ],
-};
+});
 
 const gridConfig: useGridBoxConfig = {
   query: requestChannelQueryOptions.list,
@@ -230,174 +230,178 @@ const gridConfig: useGridBoxConfig = {
 
 const columnHelper = createColumnHelper<any>();
 
-const columns = [
-  columnHelper.accessor('checkbox', {
-    // 상태에 따른 checkbox disabled를 위해 checkbox 따로 구현
-    id: 'select-check',
-    size: 50,
-    maxSize: 50,
-    minSize: 50,
-    meta: {
-      align: 'center',
-      headerAlign: 'center',
-      cellAlign: 'center',
-    },
-    enableSorting: false,
-    header: ({ table }) => (
-      <div style={{ width: '100%', textAlign: 'center' }}>
-        <Checkbox
-          checked={table.getIsAllRowsSelected()}
-          onCheckedChange={(checked) => {
-            table.toggleAllRowsSelected(!!checked);
-          }}
-        />
-      </div>
-    ),
-    cell: ({ row }) => {
-      const disabled = row.original.approvalStatusType !== 'PENDING';
-      return (
-        <div style={{ width: '100%', textAlign: 'center', paddingRight: 0 }}>
+const columns = () =>
+  [
+    columnHelper.accessor('checkbox', {
+      // 상태에 따른 checkbox disabled를 위해 checkbox 따로 구현
+      id: 'select-check',
+      size: 50,
+      maxSize: 50,
+      minSize: 50,
+      meta: {
+        align: 'center',
+        headerAlign: 'center',
+        cellAlign: 'center',
+      },
+      enableSorting: false,
+      header: ({ table }) => (
+        <div style={{ width: '100%', textAlign: 'center' }}>
           <Checkbox
-            checked={row.getIsSelected()}
-            disabled={row.getIsGrouped() || disabled}
-            onCheckedChange={() => {
-              if (!row.getIsGrouped()) {
-                row.getToggleSelectedHandler();
-              }
+            checked={table.getIsAllRowsSelected()}
+            onCheckedChange={(checked) => {
+              table.toggleAllRowsSelected(!!checked);
             }}
           />
         </div>
-      );
-    },
-  }),
-  columnHelper.accessor('channelRequestId', {
-    cell: (info) => (
-      <Button
-        className="link"
-        stopPropagation
-        onClick={(e) => _global.linkClick(info.row.original.channelRequestUuid)}
-        label={info.row.original.channelRequestId}
-      />
-    ),
-    header: t('신청 ID'),
-    enableGrouping: false,
-    size: 160,
-  }),
-  columnHelper.accessor('tenantName', {
-    cell: (info) => info.getValue(),
-    header: t('테넌트'),
-    size: 160,
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('channelName', {
-    cell: (info) => info.getValue(),
-    header: t('채널명'),
-    size: 160,
-    enableGrouping: false,
-  }),
+      ),
+      cell: ({ row }) => {
+        const disabled = row.original.approvalStatusType !== 'PENDING';
+        return (
+          <div style={{ width: '100%', textAlign: 'center', paddingRight: 0 }}>
+            <Checkbox
+              checked={row.getIsSelected()}
+              disabled={row.getIsGrouped() || disabled}
+              onCheckedChange={() => {
+                if (!row.getIsGrouped()) {
+                  row.getToggleSelectedHandler();
+                }
+              }}
+            />
+          </div>
+        );
+      },
+    }),
+    columnHelper.accessor('channelRequestId', {
+      cell: (info) => (
+        <Button
+          className="link"
+          stopPropagation
+          onClick={(e) => _global.linkClick(info.row.original.channelRequestUuid)}
+          label={info.row.original.channelRequestId}
+        />
+      ),
+      header: t('신청 ID'),
+      enableGrouping: false,
+      size: 160,
+    }),
+    columnHelper.accessor('tenantName', {
+      cell: (info) => info.getValue(),
+      header: t('테넌트'),
+      size: 160,
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('channelName', {
+      cell: (info) => info.getValue(),
+      header: t('채널명'),
+      size: 160,
+      enableGrouping: false,
+    }),
 
-  columnHelper.accessor('channelMainId', {
-    cell: (info) => info.getValue(),
-    header: t('채널 핸들'),
-    size: 100,
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('channelTenatMappingType', {
-    cell: (info) =>
-      t(
-        `${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.channel.ChannelTenatMappingType.${info.getValue()}`,
-      ),
-    header: t('채널 유형'),
-    size: 80,
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('channelSecretType', {
-    cell: (info) =>
-      t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.channel.ChannelSecretType.${info.getValue()}`),
-    header: t('채널 구분'),
-    size: 80,
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('companyName', {
-    cell: (info) => info.getValue(),
-    header: t('회사'),
-    enableGrouping: false,
-    size: 120,
-  }),
-  columnHelper.accessor('reqeusterEmployeeNumber', {
-    cell: (info) => info.getValue(),
-    header: t('사번'),
-    enableGrouping: false,
-    size: 100,
-  }),
-  columnHelper.accessor('reqeusterName', {
-    cell: (info) => info.getValue(),
-    header: t('이름'),
-    enableGrouping: false,
-    size: 100,
-  }),
-  columnHelper.accessor('requestDate', {
-    cell: (info) =>
-      getDateToString(new Date(info.row.original.requestDate), DATE_TIME_FORMAT.DATETIME_SEC),
-    header: t('신청일'),
-    size: 160,
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('approvalStatusType', {
-    cell: (info) =>
-      t(
-        `${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.channel.ChannelApprovalStatusType.${info.getValue()}`,
-      ),
-    header: t('신청 상태'),
-    enableGrouping: false,
-    size: 90,
-  }),
-  columnHelper.accessor('approverName', {
-    cell: (info) => info.getValue(),
-    header: t('결재자'),
-    enableGrouping: false,
-    size: 90,
-  }),
-  columnHelper.accessor('approvalDate', {
-    cell: (info) =>
-      info.getValue() === null
-        ? ''
-        : getDateToString(new Date(info.row.original.approvalDate), DATE_TIME_FORMAT.DATETIME_SEC),
-    header: t('접수/반려일'),
-    size: 160,
-    enableGrouping: false,
-  }),
-  columnHelper.accessor('channelOpen', {
-    cell: (info) => {
-      if (info.row.original.approvalStatusType === 'ACCEPTED')
-        return (
-          <Button
-            size={'xs'}
-            variant="gray"
-            stopPropagation
-            onClick={(e) => {
-              _global.openChannelClick(info.row.original.channelRequestUuid);
-            }}
-            label={t('채널 개설')}
-          />
-        );
-      else if (info.row.original.approvalStatusType === 'APPROVED')
-        return (
-          <Button
-            size={'xs'}
-            variant="gray"
-            stopPropagation
-            onClick={(e) => {
-              _global.channelDetailClick(info.row.original.channelInfoChannelUuid);
-            }}
-            label={t('채널 상세')}
-          />
-        );
-      return '';
-    },
-    header: t('채널 확인'),
-    size: 80,
-    enableGrouping: false,
-    enableSorting: false,
-  }),
-] as ColumnDef<any, unknown>[];
+    columnHelper.accessor('channelMainId', {
+      cell: (info) => info.getValue(),
+      header: t('채널 핸들'),
+      size: 100,
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('channelTenatMappingType', {
+      cell: (info) =>
+        t(
+          `${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.channel.ChannelTenatMappingType.${info.getValue()}`,
+        ),
+      header: t('채널 유형'),
+      size: 80,
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('channelSecretType', {
+      cell: (info) =>
+        t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.channel.ChannelSecretType.${info.getValue()}`),
+      header: t('채널 구분'),
+      size: 80,
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('companyName', {
+      cell: (info) => info.getValue(),
+      header: t('회사'),
+      enableGrouping: false,
+      size: 120,
+    }),
+    columnHelper.accessor('reqeusterEmployeeNumber', {
+      cell: (info) => info.getValue(),
+      header: t('사번'),
+      enableGrouping: false,
+      size: 100,
+    }),
+    columnHelper.accessor('reqeusterName', {
+      cell: (info) => info.getValue(),
+      header: t('이름'),
+      enableGrouping: false,
+      size: 100,
+    }),
+    columnHelper.accessor('requestDate', {
+      cell: (info) =>
+        getDateToString(new Date(info.row.original.requestDate), DATE_TIME_FORMAT.DATETIME_SEC),
+      header: t('신청일'),
+      size: 160,
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('approvalStatusType', {
+      cell: (info) =>
+        t(
+          `${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.channel.ChannelApprovalStatusType.${info.getValue()}`,
+        ),
+      header: t('신청 상태'),
+      enableGrouping: false,
+      size: 90,
+    }),
+    columnHelper.accessor('approverName', {
+      cell: (info) => info.getValue(),
+      header: t('결재자'),
+      enableGrouping: false,
+      size: 90,
+    }),
+    columnHelper.accessor('approvalDate', {
+      cell: (info) =>
+        info.getValue() === null
+          ? ''
+          : getDateToString(
+              new Date(info.row.original.approvalDate),
+              DATE_TIME_FORMAT.DATETIME_SEC,
+            ),
+      header: t('접수/반려일'),
+      size: 160,
+      enableGrouping: false,
+    }),
+    columnHelper.accessor('channelOpen', {
+      cell: (info) => {
+        if (info.row.original.approvalStatusType === 'ACCEPTED')
+          return (
+            <Button
+              size={'xs'}
+              variant="gray"
+              stopPropagation
+              onClick={(e) => {
+                _global.openChannelClick(info.row.original.channelRequestUuid);
+              }}
+              label={t('채널 개설')}
+            />
+          );
+        else if (info.row.original.approvalStatusType === 'APPROVED')
+          return (
+            <Button
+              size={'xs'}
+              variant="gray"
+              stopPropagation
+              onClick={(e) => {
+                _global.channelDetailClick(info.row.original.channelInfoChannelUuid);
+              }}
+              label={t('채널 상세')}
+            />
+          );
+        return '';
+      },
+      header: t('채널 확인'),
+      size: 80,
+      enableGrouping: false,
+      enableSorting: false,
+    }),
+  ] as ColumnDef<any, unknown>[];
