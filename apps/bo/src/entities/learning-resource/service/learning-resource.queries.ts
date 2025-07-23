@@ -28,7 +28,7 @@ export const queryKeys = {
   contents: ['contents'] as const,
   contentDetail: (contentUuid: string) => ['content-detail', contentUuid] as const,
   contentCourseMapping: (contentUuid: string, params: ContentCourseMappingParams) =>
-    ['content-course-mapping', contentUuid, params] as const,
+    ['content-course-mapping', contentUuid, JSON.stringify(params)] as const,
   deleteContent: ['delete-content'] as const,
   createDraftVideo: ['create-draft-video'] as const,
   videoChange: ['video-change'] as const,
@@ -46,7 +46,7 @@ export const queryKeys = {
   questionBankQuestionItem: ['question-bank-question-item'] as const,
   randomQuestionCount: (examUuid: string) => ['random-question-count', examUuid] as const,
   questionListForRetrieve: (params: QuestionListForRetrieveReq) =>
-    ['question-list-for-retrieve', params] as const,
+    ['question-list-for-retrieve', JSON.stringify(params)] as const,
 };
 
 export const learningResourceQueryOptions = {
