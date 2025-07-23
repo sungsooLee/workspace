@@ -16,8 +16,11 @@ function HeaderComponent() {
       <header className={styles.header}>
         <h1>
           <Logo />
-          <Tenant />
         </h1>
+
+        <div className={styles.tenant}>
+          <Tenant />
+        </div>
 
         <div className={styles.util}>
           <NotificationM />

@@ -1,12 +1,18 @@
 /* tenant.module.css */
 .start {
   &.tenant_content {
+    @apply shadow-20 h-[296px] w-[268px] overflow-auto rounded-[12px] bg-white p-[12px];
     .tenant_wrap {
       .tenant_list {
-        @apply flex w-full flex-wrap;
+        @apply w-full flex-wrap;
         li {
-          &:hover {
-            @apply bg-[var(--secondary5)];
+          @apply label-lg text-[var(--gray35)];
+          a {
+            @apply block w-full rounded-[4px] p-[12px];
+            .active,
+            &:hover {
+              @apply bg-[var(--blue95)] text-[var(--gray10)];
+            }
           }
         }
       }
@@ -15,21 +21,21 @@
 }
 
 .btn_tenant {
-  @apply flex min-h-[40px] min-w-[55px] items-center justify-between px-[24px] text-[1.4rem] text-[var(--gray9)];
+  @apply flex min-h-[40px] min-w-[55px] items-center justify-between px-[0] text-[1.4rem] text-[var(--gray9)];
   &[data-state='open'] {
     .ico {
       @apply bg-[var(--gray92)];
-    }
-    svg {
-      @apply rotate-180;
-      transition: all 0.1s linear;
+      svg {
+        @apply h-[16px] w-[16px] rotate-180;
+        transition: all 0.1s linear;
+      }
     }
   }
   svg {
     transition: all 0.1s linear;
   }
   .select {
-    @apply inline-block h-[40px] w-[80px] overflow-hidden text-ellipsis whitespace-nowrap align-middle leading-[40px];
+    @apply inline-block h-[40px] w-[80px] overflow-hidden text-ellipsis whitespace-nowrap text-left align-middle leading-[40px];
   }
 
   .ico {
