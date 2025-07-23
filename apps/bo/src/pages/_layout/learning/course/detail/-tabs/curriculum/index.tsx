@@ -1,23 +1,27 @@
 import { TriggerKey, useCourseStore } from '@pages/_layout/learning/course/-store/use-course-store';
-import { goToCourseList } from '@shared/index';
+import { useNavigate } from '@tanstack/react-router';
 import { useUpdateEffect } from 'ahooks';
 import { forwardRef } from 'react';
 import { CourseDetailTabBaseProps, CourseDetailTabFormRef } from '../../../-common/type';
+import { Route as CourseRoute } from '../../../index';
 
 const CurriculumComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBaseProps>(
   ({ courseId }, ref) => {
     const lastTriggered = useCourseStore((state) => state.lastTriggered);
-
+    const navigate = useNavigate();
     useUpdateEffect(() => {
       if (!lastTriggered) return;
 
       switch (lastTriggered.key) {
         case TriggerKey.LIST:
-          return goToCourseList();
+          navigate({ to: CourseRoute.to });
+          break;
         case TriggerKey.SAVE:
-          return saveFormData();
+          saveFormData();
+          break;
         case TriggerKey.DELETE:
-          return deleteFormData();
+          deleteFormData();
+          break;
       }
     }, [lastTriggered]);
 
