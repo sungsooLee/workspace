@@ -35,7 +35,7 @@ const TenantContent = ({
       });
 
       // 일부 alert는 result가 undefined 이므로 무조건 확인시 실행
-      if (!result || result.ok || result === true) {
+      if (result === true) {
         onSelect(tenant);
       }
     } catch (e) {
