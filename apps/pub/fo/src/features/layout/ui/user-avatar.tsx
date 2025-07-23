@@ -3,7 +3,7 @@ import { memo, useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import { Avatar, Button, Popover, useModal } from '@learnway/ui';
 import { PasswordVerifyPopup } from '../../layout';
-import { IcLogOut01 } from '@learnway/icons';
+import { IcLogOut01, IcoXclose } from '@learnway/icons';
 import styles from './user-avatar.module.css';
 import fallbackStyles from './fallback.module.css';
 
@@ -12,13 +12,6 @@ const PopoverContent = () => {
   const { confirm: openConfirm } = useModal();
   const { open: openModal } = useModal();
   const [hasAvataImage] = useState<boolean>(true); // 아바타 이미지 없는 경우(true/false)
-
-  const handleClickAlert1 = () => {
-    openConfirm({
-      title: <></>,
-      content: <>로그아웃 하시겠습니까?</>,
-    });
-  };
 
   const handleClickAlert2 = () => {
     openConfirm({
@@ -40,6 +33,17 @@ const PopoverContent = () => {
 
   return (
     <div className={`${styles.start} ${styles.avatar_area}`}>
+      <div className="title_area">
+        <h2>내정보</h2>
+        <Popover.Close asChild>
+          <Button
+            variant="ghost"
+            size="ts"
+            onlyIcon={true}
+            icon={<IcoXclose width={24} height={24} stroke="#131416" />}
+          />
+        </Popover.Close>
+      </div>
       <div className={styles.profile_info}>
         <div className={styles.avatar_img}>
           {/* 퍼블수정 20250318 : 아바타 사진 수정 */}

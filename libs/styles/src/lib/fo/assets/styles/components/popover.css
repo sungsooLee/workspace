@@ -1,0 +1,17 @@
+/* popover */
+.nlp--popover-content {
+  .title_area {
+    @apply flex items-center justify-between border-b-[1px] border-solid border-[var(--gray90)] px-[24px] py-[20px];
+    h2 {
+      @apply title4-b;
+    }
+    button {
+      svg {
+        @apply !m-0 !h-[24px] !w-[24px];
+      }
+      &:hover {
+        @apply !bg-transparent;
+      }
+    }
+  }
+}
