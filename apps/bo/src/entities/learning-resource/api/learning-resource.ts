@@ -29,8 +29,10 @@ import {
   QuestionStatusUpdateReq,
   RandomQuestionCountInfo,
   RandomQuestionCountUpdateReq,
+  QuestionListForRetrieveReq,
   TestPaperBasicInfoSaveReq,
   TestPaperBasicInfoSaveRes,
+  QuestionListForRetrieveRes,
 } from '@types';
 
 export default class LearningResourceService {
@@ -275,6 +277,16 @@ export default class LearningResourceService {
    */
   static updateQuestionStatus(body: QuestionStatusUpdateReq) {
     return httpService.put(`${CMSApiPrefix()}/exam/question/status`, body);
+  }
+
+  /**
+   * 문항가져오기 팝업용 목록 조회
+   * @param params
+   */
+  static fetchQuestionListForRetrieve(
+    params: QuestionListForRetrieveReq,
+  ): Promise<QuestionListForRetrieveRes[]> {
+    return httpService.get(`${CMSApiPrefix()}/exam/question/status`, { params });
   }
 
   /**

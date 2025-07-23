@@ -32,6 +32,7 @@ import {
   EnFormMode,
   EnQuestionLevel,
   EnQuestionType,
+  ExamTemplateType,
   QuestionItem,
   QuestionItemGridRow,
 } from '@types';
@@ -49,7 +50,7 @@ const LearningResourceTestItemModalComponent = ({
   questionItemGridRow,
   onSuccessCallback,
 }: {
-  contentInfo: ContentInformation & { examPoolUuid?: string };
+  contentInfo: ContentInformation & { examPoolUuid?: string; examTemplateType?: ExamTemplateType };
   questionItemGridRow?: QuestionItemGridRow;
   onSuccessCallback?: () => void | Promise<void>;
 }) => {
@@ -342,10 +343,14 @@ const LearningResourceTestItemModalComponent = ({
               <FormRow2
                 provider={provider}
                 name="questionType"
-                label="문항유형"
+                label={t('문항유형')}
                 format="string"
                 type="custom"
-                value={EnQuestionType.SINGLE}
+                value={
+                  contentInfo?.examTemplateType === ExamTemplateType.QUIZ
+                    ? EnQuestionType.OX
+                    : EnQuestionType.SINGLE
+                }
                 element={
                   <RadioGroupFormField
                     options={[
@@ -355,6 +360,7 @@ const LearningResourceTestItemModalComponent = ({
                       { label: '주관식', value: EnQuestionType.ESSAY },
                       { label: 'OX', value: EnQuestionType.OX },
                     ]}
+                    disabled={contentInfo?.examTemplateType === ExamTemplateType.QUIZ}
                   />
                 }
                 // optionsConfig={{
@@ -491,8 +497,8 @@ const LearningResourceTestItemModalComponent = ({
                         title: '보기목록',
                         guideText: '보기의 첨부파일은 최대1개, 이미지파일만 가능합니다.',
                         multiple: true,
-                        showAdd: true,
-                        showRemove: true,
+                        showAdd: contentInfo?.examTemplateType !== ExamTemplateType.QUIZ,
+                        showRemove: contentInfo?.examTemplateType !== ExamTemplateType.QUIZ,
                         showTotalCount: true,
                         columns: gridColumn,
                         isRowSelected: (row: object) => {
