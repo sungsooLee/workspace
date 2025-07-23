@@ -123,6 +123,26 @@ export function useSaveUsers(options: any) {
   };
 }
 
+export function useSaveRoleUserGroups(options: any) {
+  const mutation = useMutation({
+    ...mutateOptions.modifyUserGroupToRole(),
+    onSuccess: async (data, variables, context) => {
+      if (options.onSuccess) {
+        options.onSuccess(data, variables, context);
+      }
+    },
+    ...options,
+  });
+  return {
+    saveRoleUserGroups: (payload: any, callback?: any) => {
+      mutation.mutate(payload, callback);
+    },
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  }
+}
+
 export function useCreateMyRoleApplication<T = RoleApplicationParam>(options: any) {
   const mutation = useMutation<unknown, unknown, T>({
     ...mutateOptions.createMyRoleApplication(),

@@ -197,4 +197,8 @@ export const roleMutateOptions = {
   approveRoleApplications: () => ({
     mutationFn: (payload: any) => RoleManagerService.approveRoleApplication(payload),
   }),
+
+  modifyUserGroupToRole: () => ({
+    mutationFn: ({ roleId, body }: roleParam) => RoleManagerService.modifyUserGroupToRole(roleId, body),
+  })
 };
