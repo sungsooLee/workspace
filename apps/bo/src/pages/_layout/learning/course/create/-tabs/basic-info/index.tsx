@@ -33,7 +33,7 @@ const BasicInfoComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>((_, 
   const form = useDynamicForm2();
   const { provider, getValues, watch, onFormChange } = form;
 
-  const { courseConfig } = useCourseCreateSubPage(form);
+  const { isUpdateMode, courseConfig } = useCourseCreateSubPage(form);
 
   const channelUuid = watch('channelUuid');
   const courseType = watch('courseType');
@@ -74,6 +74,8 @@ const BasicInfoComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>((_, 
           provider={provider}
           name={'courseType'}
           label={'유형'}
+          disabled={isUpdateMode}
+          validation={{ required: true }}
           element={
             <DropdownFormField
               optionsConfig={{
@@ -87,6 +89,8 @@ const BasicInfoComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>((_, 
           provider={provider}
           name={'channelUuid'}
           label={'채널'}
+          disabled={isUpdateMode}
+          validation={{ required: true }}
           element={<TenantChannelDropdownFormField2 tenantId={-1} />}
         />
       </ContentsRow>
@@ -100,6 +104,7 @@ const BasicInfoComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>((_, 
           name={'tenantIds'}
           label={'테넌트'}
           format={'array'}
+          validation={{ required: true }}
           element={<TenantByRoleChannelCheckboxFormField channelUuid={getValues().channelUuid} />}
         />
       </ContentsRow>
@@ -110,6 +115,7 @@ const BasicInfoComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>((_, 
           name={'categories'}
           label={'카테고리'}
           format={'object'}
+          validation={{ required: true }}
           element={
             <ListModalSelectorFormField
               deletable
@@ -178,6 +184,7 @@ const BasicInfoComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>((_, 
           provider={provider}
           name={'language'}
           label={'언어'}
+          validation={{ required: true }}
           element={
             <DropdownFormField
               optionsConfig={{
@@ -193,6 +200,7 @@ const BasicInfoComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>((_, 
           provider={provider}
           name={'courseName'}
           label={'과정명'}
+          validation={{ required: true }}
           element={<Input maxLength={40} />}
         />
       </ContentsRow>
@@ -202,6 +210,7 @@ const BasicInfoComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>((_, 
           provider={provider}
           name={'courseContent'}
           label={'교육내용'}
+          validation={{ required: true }}
           element={<EditorFormField />}
         />
       </ContentsRow>
@@ -211,6 +220,7 @@ const BasicInfoComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>((_, 
           provider={provider}
           name={'trainingLevelType'}
           label={'난이도'}
+          validation={{ required: true }}
           element={
             <RadioGroupFormField
               optionsConfig={{
@@ -224,6 +234,7 @@ const BasicInfoComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>((_, 
           provider={provider}
           name={'learningSpaceType'}
           label={'교육공간'}
+          validation={{ required: true }}
           element={
             <RadioGroupFormField
               optionsConfig={{
@@ -285,6 +296,7 @@ const BasicInfoComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>((_, 
           provider={provider}
           name={'coordinatorName'}
           label={'담당자'}
+          validation={{ required: true }}
           element={
             <InputModalSelectorFormField
               modalConfig={{
@@ -292,8 +304,8 @@ const BasicInfoComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>((_, 
               }}
               transformModalData={(data: any) => ({
                 coordinatorUuid: data.uuid,
-                coordinatorName: `${data.name}/${data?.dept?.deptName}`,
-                coordinatorDeptName: `${data.name}/${data?.dept?.deptName}`,
+                coordinatorName: data.uuid ? `${data.name}/${data?.dept?.deptName}` : '',
+                coordinatorDeptName: data.uuid ? `${data.name}/${data?.dept?.deptName}` : '',
               })}
             />
           }
@@ -337,6 +349,7 @@ const BasicInfoComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>((_, 
           provider={provider}
           name={'operatorName'}
           label={'운영자'}
+          validation={{ required: true }}
           element={
             <InputModalSelectorFormField
               modalConfig={{
@@ -344,8 +357,8 @@ const BasicInfoComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>((_, 
               }}
               transformModalData={(data: any) => ({
                 operatorUuid: data.uuid,
-                operatorName: `${data.name}/${data?.dept?.deptName}`,
-                operatorDeptName: `${data.name}/${data?.dept?.deptName}`,
+                operatorName: data.uuid ? `${data.name}/${data?.dept?.deptName}` : '',
+                operatorDeptName: data.uuid ? `${data.name}/${data?.dept?.deptName}` : '',
               })}
             />
           }

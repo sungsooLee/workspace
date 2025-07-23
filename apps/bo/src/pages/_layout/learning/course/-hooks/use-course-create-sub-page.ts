@@ -25,6 +25,7 @@ import { TriggerKey, useCourseStore } from '../-store/use-course-store';
 import { useNavigate } from '@tanstack/react-router';
 import { useUpdateEffect } from 'ahooks';
 import { UseDynamicFormResult } from '@learnway/hooks';
+import { Route as CourseListRoute } from '..';
 
 export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
   const { showSaveComplete, saveConfirm } = useModal();
@@ -48,7 +49,7 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
   // 3. courseConfig를 가져옴
 
   // courseData를 먼저 가져와서 channelUuid를 확보
-  const { data: courseData } = useFetchCourse(courseCreateInfo.courseId);
+  const { data: courseData, refetch } = useFetchCourse(courseCreateInfo.courseId);
 
   // courseConfigParams를 courseData와 courseCreateInfo로부터 생성
   const courseConfigParams = useMemo(
@@ -63,46 +64,40 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
   const { data: courseConfig } = useFetchCourseConfig(courseConfigParams);
 
   const { mutate: createCourse } = useCreateCourse({
-    onSuccess: () => {
-      showSaveComplete();
+    onSuccess: async () => {
+      await showSaveComplete();
+      moveCourseListPage();
     },
   });
 
   const { mutate: deleteCourse } = useDeleteCourse({
-    onSuccess: () => {
-      showSaveComplete();
-    },
+    onSuccess: () => handleUpdateSuccess(),
   });
 
   const { mutate: updateCourseWizard1 } = useUpdateCourseWizard1({
-    onSuccess: () => {
-      showSaveComplete();
-    },
+    onSuccess: () => handleUpdateSuccess(),
   });
 
   const { mutate: updateCourseWizard2 } = useUpdateCourseWizard2({
-    onSuccess: () => {
-      showSaveComplete();
-    },
+    onSuccess: () => handleUpdateSuccess(),
   });
 
   const { mutate: updateCourseWizard3 } = useUpdateCourseWizard3({
-    onSuccess: () => {
-      showSaveComplete();
-    },
+    onSuccess: () => handleUpdateSuccess(),
   });
 
   const { mutate: updateCourseWizard4 } = useUpdateCourseWizard4({
-    onSuccess: () => {
-      showSaveComplete();
-    },
+    onSuccess: () => handleUpdateSuccess(),
   });
 
   const { mutate: updateCourseWizard5 } = useUpdateCourseWizard5({
-    onSuccess: () => {
-      showSaveComplete();
-    },
+    onSuccess: () => handleUpdateSuccess(),
   });
+
+  const handleUpdateSuccess = () => {
+    showSaveComplete();
+    // refetch();
+  };
 
   const getUpdateMutate = useCallback((currentTab: CourseTab) => {
     switch (currentTab) {
@@ -124,13 +119,13 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
       if (!(await saveConfirm())) {
         return;
       }
-      const courseId = data?.courseId;
       const wizardStep = getWizardStep(courseCreateInfo.activeTab);
       const mergeData = { ...formValues, ...data, wizardStep };
+      const isUpdate = mergeData?.courseId;
       const requestData = formDataToRequestData(mergeData);
       const updateCourse = getUpdateMutate(courseCreateInfo.activeTab);
 
-      courseId ? updateCourse(requestData) : createCourse(requestData);
+      isUpdate ? updateCourse(requestData) : createCourse(requestData);
     });
     // 가짜 이벤트 객체를 생성해서 수동으로 호출
     run({ preventDefault: () => null } as any);
@@ -160,13 +155,21 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
     // }));
   }, []);
 
+  const isUpdateMode = useMemo(() => !!courseData?.courseId, [courseData]);
+
+  const moveCourseListPage = () => {
+    navigate({
+      to: CourseListRoute.to,
+    });
+  };
+
   useUpdateEffect(() => {
     switch (lastTriggered?.key) {
       case TriggerKey.SAVE:
         handleSave();
         break;
       case TriggerKey.DELETE:
-        // handleDeleteAction(lastTriggered.payload);
+        handleDelete();
         break;
     }
   }, [lastTriggered]);
@@ -178,7 +181,7 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
   }, [courseData]);
 
   return {
-    handleDelete,
+    isUpdateMode,
     loadMockData,
     courseConfig,
   };
