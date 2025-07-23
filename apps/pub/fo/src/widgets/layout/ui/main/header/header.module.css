@@ -31,9 +31,11 @@
         }
       }
     }
-
-    .nav_area {
-      @apply relative flex items-center;
+    .nav_container {
+      @apply flex items-center justify-start;
+      .nav_area {
+        @apply relative flex items-center;
+      }
     }
   }
 }
