@@ -1,7 +1,7 @@
 import React from 'react';
 import { DynamicFormProvider } from '@learnway/hooks';
 import { FormState } from '../types/form.types';
-import { CurriculumForm } from './curriculum-form-simple';
+import { CurriculumForm } from './curriculum-form';
 import { MAPPING_CURRICULUM_TYPE } from '@types';
 import { ModuleForm } from './module-form';
 import { LessonForm } from './lesson-form';
