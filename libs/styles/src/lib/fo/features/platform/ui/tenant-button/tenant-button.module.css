@@ -7,9 +7,9 @@
         @apply w-full flex-wrap;
         li {
           @apply label-lg text-[var(--gray35)];
-          a {
-            @apply block w-full rounded-[4px] p-[12px];
-            .active,
+          > button {
+            @apply block w-full rounded-[4px] p-[12px] text-left leading-[140%];
+            &.active,
             &:hover {
               @apply bg-[var(--blue95)] text-[var(--gray10)];
             }
@@ -35,7 +35,10 @@
     transition: all 0.1s linear;
   }
   .select {
-    @apply inline-block h-[40px] w-[80px] overflow-hidden text-ellipsis whitespace-nowrap text-left align-middle leading-[40px];
+    @apply flex h-[40px] w-[80px] items-center overflow-hidden text-ellipsis whitespace-nowrap text-left align-middle leading-[40px];
+    img {
+      @apply h-[32px] w-full;
+    }
   }
 
   .ico {
