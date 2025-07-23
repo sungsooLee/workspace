@@ -2,94 +2,79 @@ import { useDynamicForm2 } from '@learnway/hooks';
 import { IcoMinus, IcoPlus } from '@learnway/icons';
 import { Button, FormSubTitle, SplitPanel, TreeBox, TreeContainer } from '@learnway/ui';
 import { Course } from '@types';
-import { forwardRef, useEffect, useImperativeHandle } from 'react';
+import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CourseTabBaseProps, CourseTabFormRef } from '../../../-common/type';
+import { useCourseCreateSubPage } from '../../../-hooks/use-course-create-sub-page';
 
-const CurriculumComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>(
-  ({ onSave, data: { formData, courseConfig } }, ref) => {
-    const { t } = useTranslation();
-    // const { provider, getValues, fetchData } = dynamicForm;
-    const { provider, getValues, onSubmit, onFormValid, formState, updateFormData, formValues } =
-      useDynamicForm2();
+const CurriculumComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>((_, ref) => {
+  const { t } = useTranslation();
 
-    // 부모 컴포넌트에서 호출할 수 있는 메서드
-    useImperativeHandle(ref, () => ({
-      validate: async () => {
-        // 모든 필드에 대해 유효성 검사 수행
-        const isValid = await onFormValid();
-        const data = formDataToRequestData(formValues as Course);
-        const errors = formState.errors;
+  const form = useDynamicForm2();
+  const { provider, getValues, watch, onFormChange } = form;
 
-        return {
-          isValid,
-          data,
-          errors,
-        };
-      },
-      getValues: () => formDataToRequestData(formValues as Course),
-    }));
+  const { courseConfig } = useCourseCreateSubPage(form);
 
-    useEffect(() => {
-      console.log('curriculumComponent init');
-      // 초기 데이터가 있으면 설정
-      if (formData) {
-        updateFormData(responseDataToFormData(formData));
-      }
-    }, [formData]);
+  const channelUuid = watch('channelUuid');
+  const courseType = watch('courseType');
 
-    return (
-      <div>
-        {/*대표커리큘럼설정*/}
-        <FormSubTitle
-          label={t('대표 커리큘럼 설정')}
-          lineType={'dark'}
-          actionNode={<Button variant="text" size="sm" label={t('미리보기')} />}
-        />
-        {/* 트리 */}
-        <SplitPanel divider>
-          <div>
-            <TreeContainer>
-              <TreeBox
-                data={[]}
-                treeId={'menu-tree'}
-                title={'목차'}
-                customButtonNode={
-                  <>
-                    <Button variant="text" size="sm" label={t('불러오기')} />
-                    <Button
-                      variant="text"
-                      size="sm"
-                      label={t('신규등록')}
-                      icon={<IcoPlus width={16} height={16} stroke={'#4C515E'} />}
-                    />
-                  </>
-                }
-              />
-            </TreeContainer>
-          </div>
-          <div>
-            <FormSubTitle
-              label={t('상세정보')}
-              lineType={'dark'}
-              actionNode={
+  console.log('----- basic', {
+    channelUuid,
+    courseType,
+    values: getValues(),
+  });
+
+  return (
+    <div>
+      {/*대표커리큘럼설정*/}
+      <FormSubTitle
+        label={t('대표 커리큘럼 설정')}
+        lineType={'dark'}
+        actionNode={<Button variant="text" size="sm" label={t('미리보기')} />}
+      />
+      {/* 트리 */}
+      <SplitPanel divider>
+        <div>
+          <TreeContainer>
+            <TreeBox
+              data={[]}
+              treeId={'menu-tree'}
+              title={'목차'}
+              customButtonNode={
                 <>
+                  <Button variant="text" size="sm" label={t('불러오기')} />
                   <Button
-                    variant="outline"
+                    variant="text"
                     size="sm"
-                    label={t('LABEL.grid.header.remove', '삭제')}
-                    icon={<IcoMinus width={16} height={16} stroke={'#131C30'} />}
+                    label={t('신규등록')}
+                    icon={<IcoPlus width={16} height={16} stroke={'#4C515E'} />}
                   />
-                  <Button variant="save" size="sm" label={t('저장')} />
                 </>
               }
             />
-          </div>
-        </SplitPanel>
-      </div>
-    );
-  },
-);
+          </TreeContainer>
+        </div>
+        <div>
+          <FormSubTitle
+            label={t('상세정보')}
+            lineType={'dark'}
+            actionNode={
+              <>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  label={t('LABEL.grid.header.remove', '삭제')}
+                  icon={<IcoMinus width={16} height={16} stroke={'#131C30'} />}
+                />
+                <Button variant="save" size="sm" label={t('저장')} />
+              </>
+            }
+          />
+        </div>
+      </SplitPanel>
+    </div>
+  );
+});
 
 export const Curriculum = CurriculumComponent;
 
