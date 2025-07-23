@@ -47,19 +47,9 @@ const SequenceComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBase
     }, [sequenceId]);
 
     return mode === 'MAIN' ? (
-      <>
-        <Button variant="point" size="sm" onClick={() => setMode('DETAIL')}>
-          상세
-        </Button>
-        <SequenceList setMode={setMode} setSequenceId={setSequenceId} courseId={courseId} />
-      </>
+      <SequenceList setMode={setMode} setSequenceId={setSequenceId} courseId={courseId} />
     ) : (
-      <>
-        <Button variant="point" size="sm" onClick={() => setMode('MAIN')}>
-          목록
-        </Button>
-        <SequenceDetail ref={ref} setMode={setMode} courseId={courseId} sequenceId={sequenceId} />
-      </>
+      <SequenceDetail ref={ref} setMode={setMode} courseId={courseId} sequenceId={sequenceId} />
     );
   },
 );
