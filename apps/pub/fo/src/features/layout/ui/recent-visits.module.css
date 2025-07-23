@@ -1,7 +1,7 @@
 /* recent-visits.module.css */
 .start {
   &.recent_visits {
-    @apply relative flex items-center border-t-[1px] border-solid border-[var(--gray90)] bg-[var(--blue98)] pb-[26px] pl-0 pr-[67px] pt-[24px];
+    @apply relative flex min-h-[68px] items-center border-t-[1px] border-solid border-[var(--gray90)] bg-[var(--blue98)] pb-[16px] pl-0 pr-[67px] pt-[15px];
     .tit {
       @apply label-xl-b relative z-[4] w-[125px] shrink-0 text-center text-[var(--gray25)];
     }
