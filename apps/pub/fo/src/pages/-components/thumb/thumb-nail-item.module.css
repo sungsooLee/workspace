@@ -3,7 +3,7 @@
   &.thumbnail_item {
     @apply relative;
     .thumbnail_link {
-      @apply relative block;
+      @apply relative flex flex-col;
     }
     .thumbnail_view {
       @apply relative;
@@ -75,6 +75,17 @@
       }
       .toggle_btn {
         @apply top-[150px];
+      }
+    }
+    &.horizontal {
+      .thumbnail_link {
+        @apply flex-row;
+        .thumbnail_view {
+          @apply w-[240px] shrink-0;
+        }
+        .thumbnail_info {
+          @apply ml-[20px] mt-0 flex flex-1 flex-col;
+        }
       }
     }
   }

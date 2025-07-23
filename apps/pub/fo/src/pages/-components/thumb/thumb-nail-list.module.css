@@ -2,9 +2,10 @@
 .start {
   &.thumbnail_list {
     @apply grid w-full gap-x-[20px] gap-y-[30px];
-    &.item_col3 {
-    }
     &.item_col4 {
+    }
+    &.horizontal {
+      @apply gap-x-[40px];
     }
   }
 }

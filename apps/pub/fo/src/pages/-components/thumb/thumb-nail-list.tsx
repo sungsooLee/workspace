@@ -7,25 +7,26 @@ interface ThumbnailListProps {
   items: ThumbnailData[];
   direction?: 'horizontal' | 'vertical';
   stacked?: boolean;
-  className?: string;
   cols?: number;
+  className?: string;
 }
 
 const ThumbnailList: React.FC<ThumbnailListProps> = ({
   items,
   direction = 'vertical',
   stacked = false,
-  className,
   cols,
+  className,
 }) => {
   return (
     <div
       className={cn(
         styles.start,
         styles.thumbnail_list,
-        className,
         cols && styles[`item_col${cols}`],
+        direction && styles[direction],
         'thumbnail_list',
+        className,
       )}
       style={cols ? { gridTemplateColumns: `repeat(${cols}, 1fr)` } : undefined}
     >

@@ -79,10 +79,10 @@ function RouteComponent() {
   };
 
   // 리스트 정렬 버튼 제어
-  const [isActive, setIsActive] = useState<boolean>(true);
+  const [isActive, setIsActive] = useState<boolean>(false);
 
   const handleButtonClick = () => {
-    isActive === true ? setIsActive(false) : setIsActive(true);
+    isActive ? setIsActive(false) : setIsActive(true);
   };
 
   const item = [
@@ -582,7 +582,22 @@ function RouteComponent() {
         </div>
 
         {/* Thumnail List */}
-        <ThumbnailList stacked={false} items={item} cols={4} />
+        <ThumbnailList
+          items={item}
+          cols={isActive ? 2 : 4}
+          direction={isActive ? 'horizontal' : 'vertical'}
+        />
+
+        {/* pagination */}
+        <Pagination
+          className={cn(styles.pagenation, styles.paginationItem)}
+          pageNumber={0}
+          totalPages={5}
+          hidePageSizeOptions={true}
+          hidePageInfo={true}
+          showFirstButton={false}
+          showLastButton={false}
+        />
 
         {/* 검색결과 없음 */}
         <div className={styles.empty}>
