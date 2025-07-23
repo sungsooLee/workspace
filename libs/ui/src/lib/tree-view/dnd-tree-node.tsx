@@ -175,11 +175,19 @@ export const DndTreeNode: React.FC<DndTreeNodeProps> = ({
       }
 
       // MaxDepth 검증
-      if (maxDepth !== undefined && position === 'INSIDE') {
+      if (maxDepth !== undefined) {
         const draggedNodeMaxDepth = getNodeMaxDepth(effectiveDraggedNode);
-        const insideFinalLevel = level + 1;
-        if (insideFinalLevel + draggedNodeMaxDepth - 1 > maxDepth) {
-          return false;
+
+        if (position === 'INSIDE') {
+          const insideFinalLevel = level + 1;
+          if (insideFinalLevel + draggedNodeMaxDepth - 1 > maxDepth) {
+            return false;
+          }
+        } else if (position === 'BEFORE' || position === 'AFTER') {
+          const finalLevel = level;
+          if (finalLevel + draggedNodeMaxDepth - 1 > maxDepth) {
+            return false;
+          }
         }
       }
 
