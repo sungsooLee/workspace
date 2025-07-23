@@ -1,7 +1,6 @@
 export * from './const/form';
 export * from './lib/breakpoint-modal.hook';
 export * from './lib/lazy-loading';
-export * from './lib/navigation-util';
 export * from './lib/permission-store';
 export * from './lib/use-authorized-query';
 export * from './lib/use-page-state';

@@ -8,16 +8,18 @@ import {
 import { useDynamicForm2 } from '@learnway/hooks';
 import { useModal } from '@learnway/ui';
 import { TriggerKey, useCourseStore } from '@pages/_layout/learning/course/-store/use-course-store';
-import { goToCourseList } from '@shared/index';
+import { useNavigate } from '@tanstack/react-router';
 import { Course, CourseConfig } from '@types';
 import { useUpdateEffect } from 'ahooks';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Route as CourseRoute } from '../index';
 
 export function useCourseDetail(courseId: number) {
   const { t } = useTranslation();
   const { showSaveComplete, alert, saveConfirm, confirm } = useModal();
   const lastTriggered = useCourseStore((state) => state.lastTriggered);
+  const navigate = useNavigate();
 
   const { provider, getValues, updateFormData, formValues, onSubmit, onFormChange } =
     useDynamicForm2();
@@ -38,14 +40,14 @@ export function useCourseDetail(courseId: number) {
   const { mutate: deleteCourse } = useDeleteCourse({
     onSuccess: async (response: any) => {
       await showSaveComplete();
-      goToCourseList();
+      navigate({ to: CourseRoute.to });
     },
   });
 
   const { mutate: copyCourse } = useCopyCourse({
     onSuccess: async (response: any) => {
       await alert(t('과정 복사 완료'));
-      goToCourseList();
+      navigate({ to: CourseRoute.to });
     },
   });
 
@@ -74,16 +76,20 @@ export function useCourseDetail(courseId: number) {
   useUpdateEffect(() => {
     switch (lastTriggered?.key) {
       case TriggerKey.LIST:
-        return goToCourseList();
+        navigate({ to: CourseRoute.to });
+        break;
       case TriggerKey.SAVE:
-        return handleSave();
+        handleSave();
+        break;
       case TriggerKey.COPY:
-        return handleCopy();
+        handleCopy();
+        break;
       case TriggerKey.TRANSLATE:
-        return handleSave();
+        handleSave();
+        break;
       case TriggerKey.DELETE:
         // handleDeleteAction(lastTriggered.payload);
-        return;
+        break;
     }
   }, [lastTriggered]);
 
