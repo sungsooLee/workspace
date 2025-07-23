@@ -35,7 +35,7 @@ const IntegratedSearchButtonComponent = ({
       <div className={styles.btn_box}>
         {tabButton.items.map((item, index) => (
           <Link
-            to=""
+            to={'/'}
             key={index}
             className={activeButton === index ? styles.active : ''}
             onClick={() => handleButtonClick(index)}
