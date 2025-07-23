@@ -1,7 +1,16 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import React, { useRef, useEffect, useState } from 'react';
-import { cn } from '@learnway/shared';
-import { Button, ContentsRow, Input, Dropdown, Pagination, useModal, Popover } from '@learnway/ui';
+import { cn, getRandomId } from '@learnway/shared';
+import {
+  Button,
+  ContentsRow,
+  Input,
+  Dropdown,
+  Pagination,
+  useModal,
+  Popover,
+  Badge,
+} from '@learnway/ui';
 import {
   IcoArrowDown,
   IcoArrowForward,
@@ -9,16 +18,20 @@ import {
   IcoArray,
   IcoDotpoints,
   IcoPlay,
+  IcoStar,
+  IcoEye,
+  IcoHeart,
 } from '@learnway/icons';
+
 import { CategoryDepthPopupM, FilterPopup } from '../../../features/layout';
+import ThumbnailList from '../../-components/thumb/thumb-nail-list';
 
 import dropdownPopoverStyles from '../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
-import thumnailStyles from '../../../shared/ui/thumnail/thumnail.module.css';
-import thumnailImgStyles from '../../../shared/ui/thumnail/thumnail-img.module.css';
 
 import styles from './detail_m.module.css';
 
-import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
+/* ThumbnailList */
+import bannerImg from '@learnway/styles/fo/assets/images/banner/img_banner_sample.jpg';
 
 export const Route = createFileRoute('/_layout/category/detail_m')({
   component: RouteComponent,
@@ -55,57 +68,402 @@ function RouteComponent() {
   // 필터 선택된 값이 있으면 true 변경
   const [selectCheck, setSelectCheck] = useState(true);
 
-  // 썸네일 list (가로형, 세로형) 변경
-  const [direction, setDirection] = useState('vertical');
-  const list_ui = () => {
-    if (direction === 'vertical') {
-      setDirection('horizontal'); // 가로형
-    } else {
-      setDirection('vertical'); // 세로형
-    }
+  // 리스트 정렬 버튼 제어
+  const [isActive, setIsActive] = useState<boolean>(false);
+
+  const handleButtonClick = () => {
+    isActive ? setIsActive(false) : setIsActive(true);
   };
 
-  return (
-    <div className={`${styles.start} ${styles.detail_m}`}>
-      <ul className={styles.category_box}>
-        <li>
-          <Button>
-            서비스
-            <span>
-              <IcoArrowDown width={16} height={16} stroke="#6f798b"></IcoArrowDown>
-            </span>
-            <IcoArrowForward
-              width={12}
-              height={12}
-              stroke="#6f798b"
-              className={styles.arr}
-            ></IcoArrowForward>
-          </Button>
-        </li>
-        <li>
-          <Button>
-            차량정보
-            <span>
-              <IcoArrowDown width={16} height={16} stroke="#6f798b"></IcoArrowDown>
-            </span>
-            <IcoArrowForward
-              width={12}
-              height={12}
-              stroke="#6f798b"
-              className={styles.arr}
-            ></IcoArrowForward>
-          </Button>
-        </li>
-        <li>
-          <Button>
-            수소/전기차
-            <span>
-              <IcoArrowDown width={16} height={16} stroke="#6f798b"></IcoArrowDown>
-            </span>
-          </Button>
-        </li>
-      </ul>
+  const item = [
+    {
+      imageUrl: bannerImg,
+      title:
+        '일을 쉽게 만드는 문제 해결 사고법 일을 쉽게 만드는 문제 해결 사고법 일을 쉽게 만드는 문제 해결 사고법 ',
+      tagLabels: ['이러닝', '문제해결력', '논리적사고'],
+      labelCustomNode: [
+        <Badge
+          variant="text"
+          status="primary"
+          size="xs"
+          option={{ label: 'New', value: `${getRandomId()}` }}
+        />,
+        <Badge
+          variant="text"
+          status="gray"
+          size="xs"
+          option={{ label: '접수중', value: `${getRandomId()}` }}
+        />,
+        <Badge
+          variant="text"
+          status="caution"
+          size="xs"
+          option={{ label: 'D-7', value: `${getRandomId()}` }}
+        />,
+      ],
+      infoCustomNode: [
+        <span>{'이러닝'}</span>,
+        <span>
+          <IcoPlay width={16} height={16} stroke="#4C515E" />
+          {'05:00'}
+        </span>,
+      ],
+      toggleButton: true,
+      countInfoNode: [
+        <span>
+          <IcoStar width={20} height={20} stroke="#0056FF" fill="#0056FF" />
+          <em>{'4.2'}</em>
+        </span>,
+        <span>
+          <IcoEye width={20} height={20} fill="none" stroke="#4D525C" />
+          <em>{'78,800'}</em>
+        </span>,
+        <span>
+          <IcoHeart width={20} height={20} stroke="#F58B75" fill="#F58B75" />
+          <em>{'153'}</em>
+        </span>,
+      ],
+    },
+    {
+      imageUrl: bannerImg,
+      title:
+        '일을 쉽게 만드는 문제 해결 사고법 일을 쉽게 만드는 문제 해결 사고법 일을 쉽게 만드는 문제 해결 사고법 ',
+      tagLabels: ['이러닝', '문제해결력', '논리적사고'],
+      labelCustomNode: [
+        <Badge
+          variant="text"
+          status="primary"
+          size="xs"
+          option={{ label: 'New', value: `${getRandomId()}` }}
+        />,
+        <Badge
+          variant="text"
+          status="gray"
+          size="xs"
+          option={{ label: '접수중', value: `${getRandomId()}` }}
+        />,
+        <Badge
+          variant="text"
+          status="caution"
+          size="xs"
+          option={{ label: 'D-7', value: `${getRandomId()}` }}
+        />,
+      ],
+      infoCustomNode: [
+        <span>{'이러닝'}</span>,
+        <span>
+          <IcoPlay width={16} height={16} stroke="#4C515E" />
+          {'05:00'}
+        </span>,
+      ],
+      toggleButton: true,
+      countInfoNode: [
+        <span>
+          <IcoStar width={20} height={20} stroke="#0056FF" fill="#0056FF" />
+          <em>{'4.2'}</em>
+        </span>,
+        <span>
+          <IcoEye width={20} height={20} fill="none" stroke="#4D525C" />
+          <em>{'78,800'}</em>
+        </span>,
+        <span>
+          <IcoHeart width={20} height={20} stroke="#F58B75" fill="#F58B75" />
+          <em>{'153'}</em>
+        </span>,
+      ],
+    },
+    {
+      imageUrl: bannerImg,
+      title:
+        '일을 쉽게 만드는 문제 해결 사고법 일을 쉽게 만드는 문제 해결 사고법 일을 쉽게 만드는 문제 해결 사고법 ',
+      tagLabels: ['이러닝', '문제해결력', '논리적사고'],
+      labelCustomNode: [
+        <Badge
+          variant="text"
+          status="primary"
+          size="xs"
+          option={{ label: 'New', value: `${getRandomId()}` }}
+        />,
+        <Badge
+          variant="text"
+          status="gray"
+          size="xs"
+          option={{ label: '접수중', value: `${getRandomId()}` }}
+        />,
+        <Badge
+          variant="text"
+          status="caution"
+          size="xs"
+          option={{ label: 'D-7', value: `${getRandomId()}` }}
+        />,
+      ],
+      infoCustomNode: [
+        <span>{'이러닝'}</span>,
+        <span>
+          <IcoPlay width={16} height={16} stroke="#4C515E" />
+          {'05:00'}
+        </span>,
+      ],
+      toggleButton: true,
+      countInfoNode: [
+        <span>
+          <IcoStar width={20} height={20} stroke="#0056FF" fill="#0056FF" />
+          <em>{'4.2'}</em>
+        </span>,
+        <span>
+          <IcoEye width={20} height={20} fill="none" stroke="#4D525C" />
+          <em>{'78,800'}</em>
+        </span>,
+        <span>
+          <IcoHeart width={20} height={20} stroke="#F58B75" fill="#F58B75" />
+          <em>{'153'}</em>
+        </span>,
+      ],
+    },
+    {
+      imageUrl: bannerImg,
+      title:
+        '일을 쉽게 만드는 문제 해결 사고법 일을 쉽게 만드는 문제 해결 사고법 일을 쉽게 만드는 문제 해결 사고법 ',
+      tagLabels: ['이러닝', '문제해결력', '논리적사고'],
+      labelCustomNode: [
+        <Badge
+          variant="text"
+          status="primary"
+          size="xs"
+          option={{ label: 'New', value: `${getRandomId()}` }}
+        />,
+        <Badge
+          variant="text"
+          status="gray"
+          size="xs"
+          option={{ label: '접수중', value: `${getRandomId()}` }}
+        />,
+        <Badge
+          variant="text"
+          status="caution"
+          size="xs"
+          option={{ label: 'D-7', value: `${getRandomId()}` }}
+        />,
+      ],
+      infoCustomNode: [
+        <span>{'이러닝'}</span>,
+        <span>
+          <IcoPlay width={16} height={16} stroke="#4C515E" />
+          {'05:00'}
+        </span>,
+      ],
+      toggleButton: true,
+      countInfoNode: [
+        <span>
+          <IcoStar width={20} height={20} stroke="#0056FF" fill="#0056FF" />
+          <em>{'4.2'}</em>
+        </span>,
+        <span>
+          <IcoEye width={20} height={20} fill="none" stroke="#4D525C" />
+          <em>{'78,800'}</em>
+        </span>,
+        <span>
+          <IcoHeart width={20} height={20} stroke="#F58B75" fill="#F58B75" />
+          <em>{'153'}</em>
+        </span>,
+      ],
+    },
+    {
+      imageUrl: bannerImg,
+      title:
+        '일을 쉽게 만드는 문제 해결 사고법 일을 쉽게 만드는 문제 해결 사고법 일을 쉽게 만드는 문제 해결 사고법 ',
+      tagLabels: ['이러닝', '문제해결력', '논리적사고'],
+      labelCustomNode: [
+        <Badge
+          variant="text"
+          status="primary"
+          size="xs"
+          option={{ label: 'New', value: `${getRandomId()}` }}
+        />,
+        <Badge
+          variant="text"
+          status="gray"
+          size="xs"
+          option={{ label: '접수중', value: `${getRandomId()}` }}
+        />,
+        <Badge
+          variant="text"
+          status="caution"
+          size="xs"
+          option={{ label: 'D-7', value: `${getRandomId()}` }}
+        />,
+      ],
+      infoCustomNode: [
+        <span>{'이러닝'}</span>,
+        <span>
+          <IcoPlay width={16} height={16} stroke="#4C515E" />
+          {'05:00'}
+        </span>,
+      ],
+      toggleButton: true,
+      countInfoNode: [
+        <span>
+          <IcoStar width={20} height={20} stroke="#0056FF" fill="#0056FF" />
+          <em>{'4.2'}</em>
+        </span>,
+        <span>
+          <IcoEye width={20} height={20} fill="none" stroke="#4D525C" />
+          <em>{'78,800'}</em>
+        </span>,
+        <span>
+          <IcoHeart width={20} height={20} stroke="#F58B75" fill="#F58B75" />
+          <em>{'153'}</em>
+        </span>,
+      ],
+    },
+    {
+      imageUrl: bannerImg,
+      title:
+        '일을 쉽게 만드는 문제 해결 사고법 일을 쉽게 만드는 문제 해결 사고법 일을 쉽게 만드는 문제 해결 사고법 ',
+      tagLabels: ['이러닝', '문제해결력', '논리적사고'],
+      labelCustomNode: [
+        <Badge
+          variant="text"
+          status="primary"
+          size="xs"
+          option={{ label: 'New', value: `${getRandomId()}` }}
+        />,
+        <Badge
+          variant="text"
+          status="gray"
+          size="xs"
+          option={{ label: '접수중', value: `${getRandomId()}` }}
+        />,
+        <Badge
+          variant="text"
+          status="caution"
+          size="xs"
+          option={{ label: 'D-7', value: `${getRandomId()}` }}
+        />,
+      ],
+      infoCustomNode: [
+        <span>{'이러닝'}</span>,
+        <span>
+          <IcoPlay width={16} height={16} stroke="#4C515E" />
+          {'05:00'}
+        </span>,
+      ],
+      toggleButton: true,
+      countInfoNode: [
+        <span>
+          <IcoStar width={20} height={20} stroke="#0056FF" fill="#0056FF" />
+          <em>{'4.2'}</em>
+        </span>,
+        <span>
+          <IcoEye width={20} height={20} fill="none" stroke="#4D525C" />
+          <em>{'78,800'}</em>
+        </span>,
+        <span>
+          <IcoHeart width={20} height={20} stroke="#F58B75" fill="#F58B75" />
+          <em>{'153'}</em>
+        </span>,
+      ],
+    },
+    {
+      imageUrl: bannerImg,
+      title:
+        '일을 쉽게 만드는 문제 해결 사고법 일을 쉽게 만드는 문제 해결 사고법 일을 쉽게 만드는 문제 해결 사고법 ',
+      tagLabels: ['이러닝', '문제해결력', '논리적사고'],
+      labelCustomNode: [
+        <Badge
+          variant="text"
+          status="primary"
+          size="xs"
+          option={{ label: 'New', value: `${getRandomId()}` }}
+        />,
+        <Badge
+          variant="text"
+          status="gray"
+          size="xs"
+          option={{ label: '접수중', value: `${getRandomId()}` }}
+        />,
+        <Badge
+          variant="text"
+          status="caution"
+          size="xs"
+          option={{ label: 'D-7', value: `${getRandomId()}` }}
+        />,
+      ],
+      infoCustomNode: [
+        <span>{'이러닝'}</span>,
+        <span>
+          <IcoPlay width={16} height={16} stroke="#4C515E" />
+          {'05:00'}
+        </span>,
+      ],
+      toggleButton: true,
+      countInfoNode: [
+        <span>
+          <IcoStar width={20} height={20} stroke="#0056FF" fill="#0056FF" />
+          <em>{'4.2'}</em>
+        </span>,
+        <span>
+          <IcoEye width={20} height={20} fill="none" stroke="#4D525C" />
+          <em>{'78,800'}</em>
+        </span>,
+        <span>
+          <IcoHeart width={20} height={20} stroke="#F58B75" fill="#F58B75" />
+          <em>{'153'}</em>
+        </span>,
+      ],
+    },
+    {
+      imageUrl: bannerImg,
+      title:
+        '일을 쉽게 만드는 문제 해결 사고법 일을 쉽게 만드는 문제 해결 사고법 일을 쉽게 만드는 문제 해결 사고법 ',
+      tagLabels: ['이러닝', '문제해결력', '논리적사고'],
+      labelCustomNode: [
+        <Badge
+          variant="text"
+          status="primary"
+          size="xs"
+          option={{ label: 'New', value: `${getRandomId()}` }}
+        />,
+        <Badge
+          variant="text"
+          status="gray"
+          size="xs"
+          option={{ label: '접수중', value: `${getRandomId()}` }}
+        />,
+        <Badge
+          variant="text"
+          status="caution"
+          size="xs"
+          option={{ label: 'D-7', value: `${getRandomId()}` }}
+        />,
+      ],
+      infoCustomNode: [
+        <span>{'이러닝'}</span>,
+        <span>
+          <IcoPlay width={16} height={16} stroke="#4C515E" />
+          {'05:00'}
+        </span>,
+      ],
+      toggleButton: true,
+      countInfoNode: [
+        <span>
+          <IcoStar width={20} height={20} stroke="#0056FF" fill="#0056FF" />
+          <em>{'4.2'}</em>
+        </span>,
+        <span>
+          <IcoEye width={20} height={20} fill="none" stroke="#4D525C" />
+          <em>{'78,800'}</em>
+        </span>,
+        <span>
+          <IcoHeart width={20} height={20} stroke="#F58B75" fill="#F58B75" />
+          <em>{'153'}</em>
+        </span>,
+      ],
+    },
+  ];
 
+  return (
+    <div className={cn(styles.start, styles.detail_m)}>
       <div className={styles.gray_box}>
         <div className={styles.box}>
           {/* 분류가 1개인 경우 */}
@@ -133,15 +491,14 @@ function RouteComponent() {
                 content: <CategoryDepthPopupM />,
               })
             }
-          >
-            분류선택
-            <IcoArrowDown width={16} height={16} stroke="#131c30" />
-          </Button>
+            icon={<IcoArrowDown width={16} height={16} stroke="#131c30" />}
+            label={'분류선택'}
+          />
         </div>
         <div className={styles.box}>
-          <ContentsRow className={styles.search}>
-            <Input id="" type="text" placeholder="과정명 검색" showSearchIcon={true} />
-          </ContentsRow>
+          <div className={styles.search_input}>
+            <Input id="" type="text" placeholder="과정명 검색" inputSize={'lg'} showSearchIcon />
+          </div>
 
           <div className={styles.filter_wrap}>
             <Button
@@ -158,7 +515,7 @@ function RouteComponent() {
                 height={20}
                 fill="none"
                 stroke={selectCheck === true ? '#fff' : '#07287e'}
-              ></IcoFilter>
+              />
             </Button>
           </div>
         </div>
@@ -173,10 +530,9 @@ function RouteComponent() {
           </div>
           <div className={styles.right}>
             <div className={styles.box}>
-              {/* 퍼블수정 20250513 : dropdown > popover로 변경 */}
               <Popover
                 popoverContent={<DropdownPopoverCompoment />}
-                className={`${dropdownPopoverStyles.btn} ${dropdownPopoverStyles.text}`}
+                className={cn(dropdownPopoverStyles.btn, dropdownPopoverStyles.text)}
                 side="bottom"
                 align="end"
                 sideOffset={10}
@@ -198,190 +554,29 @@ function RouteComponent() {
                 <IcoArrowDown width={16} height={16} stroke="#131C30" />
               </Popover>
             </div>
-            <div className={styles.box}>
-              <Button onClick={list_ui}>
-                {direction === 'horizontal' ? (
-                  <IcoArray width={16} height={16} stroke="#4c515e" fill="none" />
-                ) : (
-                  <IcoDotpoints width={16} height={16} stroke="#4c515e" fill="none" />
-                )}
-              </Button>
+            <div className={styles.btn_box}>
+              <Button
+                onlyIcon={true}
+                icon={<IcoDotpoints width={20} height={20} fill="none" />}
+                className={cn(styles.btn_order, isActive ? styles.active : null)}
+                onClick={() => handleButtonClick()}
+              />
+              <Button
+                onlyIcon={true}
+                className={cn(styles.btn_order, !isActive ? styles.active : null)}
+                icon={<IcoArray width={20} height={20} fill="#fff" stroke="#131416" />}
+                onClick={() => handleButtonClick()}
+              />
             </div>
           </div>
         </div>
 
-        {/* 검색결과 있음 */}
-        <div className={styles.list}>
-          <ul className={cn(styles.list_box, styles[direction])}>
-            <li>
-              {/* thumnail module */}
-              <div
-                className={cn(
-                  thumnailStyles.start,
-                  thumnailStyles.thumbnail,
-                  direction && thumnailStyles[direction],
-                )}
-              >
-                {/* link (찜 기능과 겹침으로 따로 빠짐) */}
-                <Link to={'/'} className={thumnailStyles.link}></Link>
-
-                <div className={thumnailStyles.thumnail_box}>
-                  {/* img */}
-                  <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
-                    <ul className={thumnailImgStyles.label}>
-                      <li style={{ backgroundColor: '#00afd5' }}>New</li>
-                    </ul>
-                    <div className={thumnailImgStyles.img}>
-                      <img src={listImage1} alt="" />
-                    </div>
-                  </div>
-                  {/* txt */}
-                  <div className={thumnailStyles.text_box}>
-                    <div className={thumnailStyles.type}>
-                      {/* type */}
-                      <span className={thumnailStyles.txt}>동영상</span>
-                      <span className={thumnailStyles.time}>
-                        {/* time icon */}
-                        <IcoPlay width={12} height={12} fill="#6f798b" />
-                        {/* time */}
-                        04:59
-                      </span>
-                    </div>
-                    <p className={thumnailStyles.text}>필수개발과정</p>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li>
-              {/* thumnail module */}
-              <div
-                className={cn(
-                  thumnailStyles.start,
-                  thumnailStyles.thumbnail,
-                  direction && thumnailStyles[direction],
-                )}
-              >
-                {/* link (찜 기능과 겹침으로 따로 빠짐) */}
-                <Link to={'/'} className={thumnailStyles.link}></Link>
-
-                <div className={thumnailStyles.thumnail_box}>
-                  {/* img */}
-                  <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
-                    <ul className={thumnailImgStyles.label}>
-                      <li style={{ backgroundColor: '#00afd5' }}>New</li>
-                    </ul>
-                    <div className={thumnailImgStyles.img}>
-                      <img src={listImage1} alt="" />
-                    </div>
-                  </div>
-                  {/* txt */}
-                  <div className={thumnailStyles.text_box}>
-                    <div className={thumnailStyles.type}>
-                      {/* type */}
-                      <span className={thumnailStyles.txt}>동영상</span>
-                      <span className={thumnailStyles.time}>
-                        {/* time icon */}
-                        <IcoPlay width={12} height={12} fill="#6f798b" />
-                        {/* time */}
-                        04:59
-                      </span>
-                    </div>
-                    <p className={thumnailStyles.text}>필수개발과정</p>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li>
-              {/* thumnail module */}
-              <div
-                className={cn(
-                  thumnailStyles.start,
-                  thumnailStyles.thumbnail,
-                  direction && thumnailStyles[direction],
-                )}
-              >
-                {/* link (찜 기능과 겹침으로 따로 빠짐) */}
-                <Link to={'/'} className={thumnailStyles.link}></Link>
-
-                <div className={thumnailStyles.thumnail_box}>
-                  {/* img */}
-                  <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
-                    <ul className={thumnailImgStyles.label}>
-                      <li style={{ backgroundColor: '#00afd5' }}>New</li>
-                    </ul>
-                    <div className={thumnailImgStyles.img}>
-                      <img src={listImage1} alt="" />
-                    </div>
-                  </div>
-                  {/* txt */}
-                  <div className={thumnailStyles.text_box}>
-                    <div className={thumnailStyles.type}>
-                      {/* type */}
-                      <span className={thumnailStyles.txt}>동영상</span>
-                      <span className={thumnailStyles.time}>
-                        {/* time icon */}
-                        <IcoPlay width={12} height={12} fill="#6f798b" />
-                        {/* time */}
-                        04:59
-                      </span>
-                    </div>
-                    <p className={thumnailStyles.text}>필수개발과정</p>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li>
-              {/* thumnail module */}
-              <div
-                className={cn(
-                  thumnailStyles.start,
-                  thumnailStyles.thumbnail,
-                  direction && thumnailStyles[direction],
-                )}
-              >
-                {/* link (찜 기능과 겹침으로 따로 빠짐) */}
-                <Link to={'/'} className={thumnailStyles.link}></Link>
-
-                <div className={thumnailStyles.thumnail_box}>
-                  {/* img */}
-                  <div className={`${thumnailImgStyles.start} ${thumnailImgStyles.img_box}`}>
-                    <ul className={thumnailImgStyles.label}>
-                      <li style={{ backgroundColor: '#00afd5' }}>New</li>
-                    </ul>
-                    <div className={thumnailImgStyles.img}>
-                      <img src={listImage1} alt="" />
-                    </div>
-                  </div>
-                  {/* txt */}
-                  <div className={thumnailStyles.text_box}>
-                    <div className={thumnailStyles.type}>
-                      {/* type */}
-                      <span className={thumnailStyles.txt}>동영상</span>
-                      <span className={thumnailStyles.time}>
-                        {/* time icon */}
-                        <IcoPlay width={12} height={12} fill="#6f798b" />
-                        {/* time */}
-                        04:59
-                      </span>
-                    </div>
-                    <p className={thumnailStyles.text}>필수개발과정</p>
-                  </div>
-                </div>
-              </div>
-            </li>
-          </ul>
-
-          {/* pagination */}
-          <Pagination
-            className={cn(styles.pagenation, styles.paginationItem)}
-            pageNumber={0}
-            totalPages={5}
-            hidePageSizeOptions={true}
-            hidePageInfo={true}
-            showFirstButton={false}
-            showLastButton={false}
-          />
-        </div>
+        {/* Thumnail List */}
+        <ThumbnailList
+          items={item}
+          cols={isActive ? 1 : 2}
+          direction={isActive ? 'horizontal' : 'vertical'}
+        />
       </div>
     </div>
   );
