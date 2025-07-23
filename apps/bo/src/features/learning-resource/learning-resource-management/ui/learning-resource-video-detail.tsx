@@ -6,13 +6,15 @@ import { DynamicFormProvider } from '@learnway/hooks';
 import { ContentsRow } from '@learnway/ui';
 import { ContentsHistoryInfoFormField, FormRow2, SwitchFormField } from '@shared/ui';
 import { LearningResourceBaseForm } from './learning-resource-base-form';
-import { FieldValues, UseFormGetValues } from 'react-hook-form';
 import { t } from 'i18next';
 
 interface Props {
   provider: DynamicFormProvider;
 }
 const LearningResourceVideoDetailComponent = ({ provider }: Props) => {
+  const { watch } = provider;
+  const isSubtitles = watch('isSubtitles');
+  const videoSubtitles = watch('videoSubtitles');
   return (
     <>
       <LearningResourceBaseForm provider={provider} showAiInfo showLessonTime readOnlyLessonTime />
@@ -23,12 +25,14 @@ const LearningResourceVideoDetailComponent = ({ provider }: Props) => {
           provider={provider}
           name="isSubtitles"
           switchConfig={{
-            label: (value: boolean, getValues: UseFormGetValues<FieldValues>) =>
-              value ? `자막 ${getValues().subtitles?.length || 0}개` : '자막 없음',
             labelTarget: 'subtitles',
           }}
-          element={<SwitchFormField />}
-          value={true}
+          element={
+            <SwitchFormField
+              label={isSubtitles ? `자막 ${videoSubtitles?.length || 0}개` : '자막 없음'}
+            />
+          }
+          value={false}
         />
       </ContentsRow>
       <FormDisplay provider={provider} dependencies={[{ name: 'isSubtitles', value: true }]}>

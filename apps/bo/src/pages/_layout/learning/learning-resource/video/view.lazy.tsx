@@ -22,6 +22,7 @@ import { NotFound } from '@features/layout';
 import { useCallback, useEffect } from 'react';
 import { LearningResourceVideoDetail, MovieInfo } from '@features/learning-resource';
 import { PutVideoUpdateRes } from '@types';
+import { convertToForm, convertToSubmit } from './-common/util';
 
 export const Route = createLazyFileRoute('/_layout/learning/learning-resource/video/view')({
   component: RouteComponent,
@@ -40,7 +41,7 @@ function RouteComponent() {
   const { provider, onSubmit, onFormChange, getValues } = useDynamicForm2();
 
   useEffect(() => {
-    if (data) onFormChange(data);
+    if (data) onFormChange(convertToForm(data));
   }, [data]);
 
   const { delete: deleteVideoContent } = useDeleteContent({
@@ -57,7 +58,7 @@ function RouteComponent() {
   const { update: updateVideoContent } = usePutVideoUpdate({
     onSuccess: (result: PutVideoUpdateRes) => {
       console.log('update success', result);
-      onFormChange(result);
+      onFormChange(convertToForm(result));
     },
   });
 
@@ -73,7 +74,7 @@ function RouteComponent() {
   }, [data?.contentUuid]);
 
   const handleFormSubmit = (data: any) => {
-    updateVideoContent(data);
+    updateVideoContent(convertToSubmit(data));
   };
 
   const handleCourseMapping = useCallback(() => {
@@ -108,7 +109,9 @@ function RouteComponent() {
             {debug && (
               <Button
                 variant="point"
-                onClick={() => console.log('🚀 ~ data & Form values:', data, getValues())}
+                onClick={() =>
+                  console.log('🚀 ~ data & Form values:', data, convertToSubmit(getValues()))
+                }
               >
                 폼 데이터 확인 for debug
               </Button>

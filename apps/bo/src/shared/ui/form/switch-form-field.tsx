@@ -7,38 +7,43 @@ import { useWatch } from 'react-hook-form';
 const SwitchFormFieldComponent = forwardRef<
   ElementRef<typeof Primitive.Root>,
   BaseFormFieldProps<boolean>
->(({ value = false, control, onChange, getValues, switchConfig, disabled, invert }, ref) => {
-  const { onChangeGuideText } = useDynamicFormContext();
+>(
+  (
+    { value = false, control, label = '', onChange, getValues, switchConfig, disabled, invert },
+    ref,
+  ) => {
+    const { onChangeGuideText } = useDynamicFormContext();
 
-  const watched = useWatch({
-    control,
-    name: switchConfig?.labelTarget || '',
-  });
+    const watched = useWatch({
+      control,
+      name: switchConfig?.labelTarget || '',
+    });
 
-  const fieldLabel = useMemo<string>(() => {
-    if (!switchConfig?.label) return '';
-    return switchConfig
-      ? typeof switchConfig.label === 'string'
-        ? switchConfig.label
-        : switchConfig.label(value, getValues)
-      : '';
-  }, [value, watched]);
+    const fieldLabel = useMemo<string>(() => {
+      if (!switchConfig?.label) return '';
+      return switchConfig
+        ? typeof switchConfig.label === 'string'
+          ? switchConfig.label
+          : switchConfig.label(value, getValues)
+        : '';
+    }, [value, watched]);
 
-  useEffect(() => {
-    if (switchConfig?.guideText) {
-      onChangeGuideText(switchConfig.guideText(value));
-    }
-  }, [value]);
+    useEffect(() => {
+      if (switchConfig?.guideText) {
+        onChangeGuideText(switchConfig.guideText(value));
+      }
+    }, [value]);
 
-  return (
-    <Switch
-      ref={ref}
-      checked={invert ? !value : value}
-      onCheckedChange={(value) => onChange(invert ? !value : value)}
-      label={fieldLabel}
-      disabled={disabled}
-    />
-  );
-});
+    return (
+      <Switch
+        ref={ref}
+        checked={invert ? !value : value}
+        onCheckedChange={(value) => onChange(invert ? !value : value)}
+        label={label || fieldLabel}
+        disabled={disabled}
+      />
+    );
+  },
+);
 
 export const SwitchFormField = SwitchFormFieldComponent;
