@@ -1,17 +1,35 @@
 .start {
-  @apply pt-[26px];
   .tit_box {
-    @apply mb-[8px] flex h-[40px] items-center justify-between;
+    @apply mb-[24px] mt-[60px] flex items-center justify-between;
     h3 {
-      @apply title_5_b text-[var(--gray9)];
+      @apply headline3-b text-[var(--gray10)];
     }
     [class*='nlp--dropdown-text'] {
       @apply !w-[250px] flex-initial;
     }
+    button {
+      @apply gap-[6px];
+      span {
+        @apply flex items-center;
+      }
+      svg {
+        @apply !ml-0;
+      }
+      &[data-state='open'] {
+        .plus {
+          @apply !rotate-0;
+        }
+      }
+    }
   }
 
   .info_box {
-    @apply mt-[40px];
+    @apply mt-[60px];
+    .tit_box {
+      h3 {
+        @apply headline1-b;
+      }
+    }
     &.pds {
       .tit_box {
         .btn {

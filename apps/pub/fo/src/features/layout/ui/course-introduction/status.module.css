@@ -3,40 +3,43 @@
   .panel_degreey {
     @apply rounded-[8px];
     .list {
-      @apply flex items-center justify-between p-[16px];
+      @apply flex items-center justify-between p-[24px];
       .date_status {
         @apply flex items-center;
         .date_box {
-          @apply body_3_r text-[var(--gray7)];
+          @apply label-xl text-[var(--gray35)];
           .date {
             @apply relative ml-[8px] inline-block pl-[8px];
             &::before {
-              @apply absolute left-0 top-[4px] block h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
-            }
-            &.time {
-              @apply text-[var(--status1)];
+              @apply absolute left-0 top-1/2 block h-[12px] w-[1px] -translate-y-1/2 bg-[var(--gray75)] content-[''];
             }
           }
           + .date_box {
-            @apply ml-[24px];
+            @apply ml-[32px];
           }
         }
       }
       h3 {
-        @apply body_2_b;
+        @apply body-lg text-[var(--gray35)];
       }
     }
     &.completed {
-      @apply bg-[var(--secondary6)];
+      @apply bg-[var(--blue95)];
+      & > div {
+        @apply border-[var(--blue65)];
+      }
       h3 {
-        @apply text-[var(--secondary3)];
+        @apply text-[var(--blue50)];
       }
     }
 
     &.incomplete {
-      @apply bg-[var(--secondary8)];
+      @apply bg-[var(--red98)];
+      & > div {
+        @apply border-[var(--red65)];
+      }
       h3 {
-        @apply text-[var(--status1)];
+        @apply text-[var(--red65)];
       }
     }
 
@@ -54,12 +57,12 @@
     @apply mt-[16px] w-full;
   }
   .progress_rate {
-    @apply flex items-center justify-between p-[16px];
+    @apply flex items-center justify-between p-[24px];
     [class*='progress_wrap'] {
       @apply w-full;
     }
     h3 {
-      @apply mr-[24px] flex-shrink-0 basis-[94px];
+      @apply body-lg mr-[16px] whitespace-nowrap text-[var(--gray35)];
     }
     .progress_bar {
       @apply flex-1 border border-solid border-[var(--gray3)] bg-[var(--gray3)];
@@ -68,7 +71,7 @@
     .info {
       @apply basis-[50px] text-right;
       .progress {
-        @apply title_6_b ml-[20px] inline-block text-[var(--secondary3)];
+        @apply body-lg ml-[16px] inline-block text-[var(--blue50)];
       }
     }
   }
@@ -76,41 +79,48 @@
   .status_box {
     @apply mt-[16px];
     .status_table {
-      @apply px-[16px] pb-[16px] pt-[8px];
+      @apply border-t-[1px] border-solid border-[var(--gray90)] p-[32px] pt-0;
+      .table {
+        @apply -mt-[8px];
+        tr {
+          th {
+            @apply title1-b !h-[48px] !bg-[inherit] text-[var(--gray10)];
+          }
+          td {
+            @apply body-md !h-[60px] text-[var(--gray35)];
+          }
+        }
+      }
     }
     .btn_action {
       @apply border-t-[1px] border-solid border-[var(--gray3)];
       button {
-        @apply flex h-[40px] w-full items-center justify-center;
+        @apply flex h-[56px] w-full items-center justify-center gap-[6px];
         span {
-          @apply body_3_r text-[var(--gray8)];
+          @apply label-xl leading-[20px] text-[var(--gray35)];
         }
         svg {
-          @apply ml-[3px];
-        }
-        &.active {
-          svg {
-            @apply rotate-180;
+          @apply !mx-0;
+          &.ico_arrow {
+            &.active {
+              svg {
+                @apply rotate-180;
+              }
+            }
           }
         }
       }
     }
     .status_list {
-      @apply relative flex items-start justify-between gap-[16px] p-[16px];
+      @apply relative flex items-start justify-between gap-[16px] p-[32px];
 
       .status_info {
         @apply relative w-full text-center before:content-[''];
-        &::before {
-          @apply absolute left-0 top-0 h-[82px] w-[1px] bg-[var(--gray5)];
-        }
-        &:first-child::before {
-          @apply hidden;
-        }
         .tt {
-          @apply label_bo_1_r inline-flex h-[24px] items-center justify-center rounded-[12px] bg-[var(--primary5)] px-[12px] text-center text-[var(--primary1)];
+          @apply label-sm inline-flex items-center justify-center rounded-[24px] bg-[var(--blue95)] px-[12px] py-[8px] text-center text-[var(--gray10)];
         }
         .score_box {
-          @apply title_4_b mt-[8px] flex flex-col items-center justify-center text-[var(--primary4)];
+          @apply headline3-b mt-[10px] flex flex-col items-center justify-center text-[var(--blue50)];
 
           .score {
             @apply flex gap-[8px];
@@ -120,7 +130,7 @@
           }
         }
         .default {
-          @apply body_4_r block w-full text-[12px] text-[var(--gray9)];
+          @apply body-xsm mt-[10px] block w-full text-[var(--gray50)];
         }
       }
     }
