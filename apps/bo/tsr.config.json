@@ -2,7 +2,7 @@
   "routesDirectory": "./src/pages",
   "generatedRouteTree": "./src/routeTree.gen.ts",
   "routeFileIgnorePrefix": "-",
-  "autoCodeSplitting": true,
+  "autoCodeSplitting": false,
   "enableRouteGeneration": true,
   "addExtensions": false,
   "disableLogging": false

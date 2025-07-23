@@ -51,7 +51,7 @@ export default defineConfig(({ mode }) => {
       nxCopyAssetsPlugin(['*.md']),
       !isTest &&
         TanStackRouterVite({
-          autoCodeSplitting: true,
+          autoCodeSplitting: false,
           generatedRouteTree: './src/routeTree.gen.ts',
         }),
       viteReact(),

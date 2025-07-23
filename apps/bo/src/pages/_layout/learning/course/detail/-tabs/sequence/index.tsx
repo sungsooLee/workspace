@@ -13,6 +13,7 @@ import {
   useCourseStore,
 } from '../../../-store/use-course-store';
 import { Route as CourseRoute } from '../../../index';
+import { Button } from '@learnway/ui';
 
 const SequenceComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBaseProps>(
   ({ courseId, courseSequenceId, setCourseSequenceId }, ref) => {
