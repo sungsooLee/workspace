@@ -1,13 +1,12 @@
 //  IA105 / NLP_BO_CMS_1016, NLP_BO_CMS_1002 / 학습자원조회_나의 학습자원_등록_동영상(자체)
 
-import { createLazyFileRoute, Link, useRouter } from '@tanstack/react-router';
+import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { Button, Divider, useModal } from '@learnway/ui';
 import {
   PageContainer,
   MainContents,
   ContentsButtons,
-  LinkBox,
   SubContents,
   ContentCourseMappingModal,
 } from '@shared/ui';
@@ -29,7 +28,7 @@ export const Route = createLazyFileRoute('/_layout/learning/learning-resource/vi
 });
 
 function RouteComponent() {
-  const { open: openModal, confirm: openConfirm } = useModal();
+  const { open: openModal, alert: openAlert, confirm: openConfirm } = useModal();
   const {
     state: { contentUuid, listParam },
   } = useCurrentRoute();
@@ -38,10 +37,13 @@ function RouteComponent() {
   );
 
   const router = useRouter();
-  const { provider, onSubmit, onFormChange, getValues, watch } = useDynamicForm2();
+  const { provider, onSubmit, updateFormData, formState, getValues, watch } = useDynamicForm2();
+
+  const isDrafted = watch('isDrafted');
+  const isCourseUsed = watch('isCourseUsed');
 
   useEffect(() => {
-    if (data) onFormChange(convertToForm(data));
+    if (data) updateFormData(convertToForm(data));
   }, [data]);
 
   const { delete: deleteVideoContent } = useDeleteContent({
@@ -58,23 +60,37 @@ function RouteComponent() {
   const { update: updateVideoContent } = usePutVideoUpdate({
     onSuccess: (result: PutVideoUpdateRes) => {
       console.log('update success', result);
-      onFormChange(convertToForm(result));
+      updateFormData(convertToForm(result));
     },
   });
 
   const handleDelete = useCallback(async () => {
+    if (isCourseUsed) {
+      await openAlert({
+        title: t('과정에서 사용 중입니다.'),
+        content: t('과정에서 사용중인 학습자원은 삭제할 수 없습니다.'),
+      });
+      return;
+    }
     if (
       await openConfirm({
         title: t('삭제 하시겠습니까?'),
         content: t('삭제 후 목록으로 이동합니다.'),
       })
     ) {
-      deleteVideoContent(data?.contentUuid as string);
+      deleteVideoContent(contentUuid as string);
     }
-  }, [data?.contentUuid]);
+  }, [data]);
 
-  const handleFormSubmit = (data: any) => {
-    updateVideoContent(convertToSubmit(data));
+  const handleFormSubmit = async (data: any) => {
+    if (
+      await openConfirm({
+        title: t('저장 하시겠습니까?'),
+        content: t('입력한 정보로 저장합니다.'),
+      })
+    ) {
+      updateVideoContent(convertToSubmit(data));
+    }
   };
 
   const handleCourseMapping = useCallback(() => {
@@ -88,8 +104,6 @@ function RouteComponent() {
       width: 'lg',
     });
   }, [data]);
-
-  const isDrafted = watch('isDrafted');
 
   if (fetchError) {
     console.log('🚀 ~ RouteComponent ~ fetchError:', fetchError);
@@ -109,7 +123,12 @@ function RouteComponent() {
             <Button
               variant="point"
               onClick={() =>
-                console.log('🚀 ~ data & Form values:', data, convertToSubmit(getValues()))
+                console.log(
+                  '🚀 ~ data & Form values:',
+                  formState.isDirty,
+                  data,
+                  convertToSubmit(getValues()),
+                )
               }
             >
               폼 데이터 확인 for debug
