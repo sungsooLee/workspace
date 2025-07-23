@@ -31,22 +31,7 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
   const { showSaveComplete, saveConfirm } = useModal();
   const { lastTriggered, courseCreateInfo } = useCourseStore((state) => state);
   const navigate = useNavigate();
-  const {
-    getValues,
-    updateFormData,
-    onFormValid,
-    formState,
-    watch,
-    formValues,
-    onFormChange,
-    onSubmit,
-  } = form;
-
-  // courseConfigParams를 먼저 선언하고, useFetchCourseConfig에서 사용하도록 순서를 바꿉니다.
-  // 순서와 가독성을 개선한 예시입니다.
-  // 1. courseConfigParams를 먼저 선언 (courseType, channelUuid 모두 courseCreateInfo에서 가져옴)
-  // 2. courseData를 가져와서 channelUuid를 최신화
-  // 3. courseConfig를 가져옴
+  const { updateFormData, formValues, onSubmit } = form;
 
   // courseData를 먼저 가져와서 channelUuid를 확보
   const { data: courseData, refetch } = useFetchCourse(courseCreateInfo.courseId);
