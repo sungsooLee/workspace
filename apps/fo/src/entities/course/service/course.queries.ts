@@ -1,6 +1,7 @@
-import { UseQueryOptions } from "@tanstack/react-query"
-import { Course } from "@types"
-import CourseService from "../api/course"
+import { UseQueryOptions } from '@tanstack/react-query';
+import { Course } from '@types';
+import CourseService from '../api/course';
+import { getQuerySkipToken } from '@learnway/shared';
 
 // import CourseService, { TreeService } from "../api/course"
 // export const treeKeys = {
@@ -16,7 +17,7 @@ import CourseService from "../api/course"
 export const queryKeys = {
   course: (id: number) => ['course', id] as const,
   sequences: (uuid: string) => ['sequences', uuid] as const,
-}
+};
 export const queryOptions = {
   // 과정 상세 조회
   detail: (id: number): UseQueryOptions => ({
@@ -29,4 +30,12 @@ export const queryOptions = {
     queryKey: queryKeys.sequences(uuid),
     queryFn: () => CourseService.fetchSequnces(uuid),
   }),
-}
+
+  courseDetail: (courseId: number) =>
+    courseId
+      ? {
+          queryKey: queryKeys.course(courseId),
+          queryFn: () => CourseService.fetchCourse(courseId),
+        }
+      : getQuerySkipToken<any>(),
+};

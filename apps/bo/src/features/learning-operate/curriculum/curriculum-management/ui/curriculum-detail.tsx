@@ -7,6 +7,7 @@ import { useDynamicForm2 } from '@learnway/hooks';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
 import { t } from 'i18next';
+import { useQueryClient } from '@tanstack/react-query';
 
 import { NodeFormRenderer } from '../components/node-form-renderer';
 import { CurriculumTree } from '../components/curriculum-tree';
@@ -16,6 +17,8 @@ import { useCurriculumTree } from '../hooks/use-curriculum-tree';
 import { useCurriculumForm } from '../hooks/use-curriculum-form';
 import { useCurriculumApi } from '../hooks/use-curriculum-api';
 import { useCurriculumActions } from '../hooks/use-curriculum-actions';
+import { CurriculumDetailResponse, MAPPING_CURRICULUM_TYPE } from '@types';
+import { useRouter } from '@tanstack/react-router';
 
 interface CurriculumDetailProps {
   mode: FORM_MODE;
@@ -32,7 +35,8 @@ const CurriculumDetailComponent = ({
   const [formKey, setFormKey] = useState(0);
   const { confirm: openConfirm } = useModal();
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const router = useRouter();
+  const queryClient = useQueryClient();
   // Dynamic Form Hook
   const {
     provider,
@@ -66,6 +70,7 @@ const CurriculumDetailComponent = ({
 
   const {
     treeData,
+    setTreeData,
     expandedKeys,
     setExpandedKeys,
     expandParentNodes,
@@ -76,6 +81,7 @@ const CurriculumDetailComponent = ({
     curriculumDetail,
     onNodeSelect: updateFormStateForNode,
     formState,
+    curriculumId,
   });
 
   const api = useCurriculumApi({ curriculumId, onFormChange });
@@ -95,6 +101,7 @@ const CurriculumDetailComponent = ({
     treeData,
     refetchCurriculumDetail,
     formState,
+    router,
   });
 
   const handleSave = async () => {
@@ -124,9 +131,13 @@ const CurriculumDetailComponent = ({
 
   const handleDelete = () => {
     if (formState.selectedNode) {
+      const isCurriculum = formState.selectedNode.type === MAPPING_CURRICULUM_TYPE.CURRICULUM;
+
       openConfirm({
         title: t('LABEL.confirm.delete.title'),
-        content: t('LABEL.confirm.delete.message', { type: t('레슨') }),
+        content: isCurriculum
+          ? t('삭제 후 목록으로 이동합니다.')
+          : t('LABEL.confirm.delete.message', { type: t('레슨') }),
         onClose: (value: boolean) => {
           if (value) {
             handleDeleteNode(formState);
@@ -135,18 +146,46 @@ const CurriculumDetailComponent = ({
       });
     }
   };
-
   useEffect(() => {
     if (mode === FORM_MODE.detail && curriculumId > 0 && curriculumDetail && treeData.length > 0) {
-      const curriculumNode = treeData.find(
+      const rootNode = treeData.find(
         (node) => node.parentId === null || node.parentId === undefined,
       );
 
-      if (curriculumNode && !formState.selectedNode) {
-        handleNodeSelect(curriculumNode);
+      if (rootNode && !formState.selectedNode) {
+        // 트리 확장
+        const keysToExpand: string[] = [rootNode.key];
+        treeData.forEach((node) => {
+          if (node.parentId === rootNode.id) {
+            keysToExpand.push(node.key);
+          }
+        });
+        setExpandedKeys(keysToExpand);
+
+        handleNodeSelect(rootNode);
       }
     }
-  }, [mode, curriculumId, curriculumDetail, treeData, formState.selectedNode, handleNodeSelect]);
+  }, [curriculumDetail, treeData]);
+
+  const handleCopyCurriculum = (curriculumId: number) => {
+    if (curriculumId > 0) {
+      api.copyCurriculum(
+        { curriculumId },
+        {
+          onSuccess: (data: CurriculumDetailResponse) => {
+            setTreeData([]);
+            resetFormState();
+            clearAllValidators();
+
+            //응답받은 curriculumId로 상위로 올리기
+            if (onCurriculumCreated) {
+              onCurriculumCreated(data.curriculumId);
+            }
+          },
+        },
+      );
+    }
+  };
 
   return (
     <SectionLayout contentsRatio="half">
@@ -165,8 +204,20 @@ const CurriculumDetailComponent = ({
         customDropValidator={customDropValidator}
         renderNodeDragHandle={renderNodeDragHandle}
         curriculumDetail={curriculumDetail}
-        onCurriculumLoad={(selectedCurriculumId) => {
-          console.log('선택된 커리큘럼:', selectedCurriculumId);
+        onCurriculumLoad={(selectedCurriculumId: number) => {
+          if (selectedCurriculumId) {
+            setTimeout(() => {
+              openConfirm({
+                title: '불러오시겠습니까?',
+                content: '목차는 불러온 목차로 새로 업데이트 됩니다.',
+                onClose: (value: boolean) => {
+                  if (value) {
+                    handleCopyCurriculum(selectedCurriculumId);
+                  }
+                },
+              });
+            }, 100);
+          }
         }}
       />
 

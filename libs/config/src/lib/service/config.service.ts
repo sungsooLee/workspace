@@ -26,9 +26,13 @@ export function getConfig(): LearnwayConfiguration {
 }
 
 export function PMSApiPrefix(): string {
+  // const baseUrl = import.meta.env.VITE_PMS_SERVICE_URL || import.meta.env.VITE_AXIOS_BASE_URL;
+  // return `${baseUrl}/pms-module${getConfig()?.APP_API_URI || API_BO_URI}${API_FIXED_URI}`;
   return `/pms-module${getConfig()?.APP_API_URI || API_BO_URI}${API_FIXED_URI}`;
 }
 export function CMSApiPrefix(): string {
+  // const baseUrl = import.meta.env.VITE_CMS_SERVICE_URL || import.meta.env.VITE_AXIOS_BASE_URL;
+  // return `${baseUrl}/cms-module${getConfig()?.APP_API_URI || API_BO_URI}${API_FIXED_URI}`;
   return `/cms-module${getConfig()?.APP_API_URI || API_BO_URI}${API_FIXED_URI}`;
 }
 export function LMSApiPrefix(): string {

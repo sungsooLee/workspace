@@ -101,10 +101,18 @@ const LearningWindowGalleryPlayerComponent: FC<any> = () => {
             />
           </Button>
           {/* prev, next button */}
-          <Button className={styles.btn_prev} onClick={() => handlePrevClick()}>
+          <Button
+            className={styles.btn_prev}
+            disabled={mainImgIndex === 0}
+            onClick={() => handlePrevClick()}
+          >
             <IcoArrowBackward width={40} height={40} stroke="#fff" />
           </Button>
-          <Button className={styles.btn_next} onClick={() => handleNextClick()}>
+          <Button
+            className={styles.btn_next}
+            disabled={mainImgIndex + 1 >= swiperCount}
+            onClick={() => handleNextClick()}
+          >
             <IcoArrowBackward width={40} height={40} stroke="#fff" />
           </Button>
         </div>
@@ -123,8 +131,6 @@ const LearningWindowGalleryPlayerComponent: FC<any> = () => {
             spaceBetween={8}
             slidesPerView="auto"
             centeredSlides={true}
-            prevDisabled={true}
-            nextDisabled={mainImgIndex + 1 >= swiperCount}
             onSwiper={(swiper) => {
               setSwiperCount(swiper.slides.length);
               swiperRef.current = swiper;

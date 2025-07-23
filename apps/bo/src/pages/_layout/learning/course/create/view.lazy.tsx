@@ -1,7 +1,7 @@
 import { Button, Divider, Tabs, useModal } from '@learnway/ui';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { useCallback, useEffect, useMemo } from 'react';
-import { useCourseForm } from '../-hooks/use-course-form';
+import { useCourseCreatePage } from '../-hooks/use-course-create-page';
 import { MainContents, PageContainer, ContentsButtons } from '@shared/ui';
 import { CourseTab, CourseTabFormRef } from '../-common/type';
 import { BasicInfo } from './-tabs/basic-info';
@@ -33,7 +33,7 @@ function RouteComponent() {
     loadMockData,
     getTabValues,
     deleteCourseData,
-  } = useCourseForm(courseType);
+  } = useCourseCreatePage(courseType);
 
   // 최초 데이터 로드
   useEffect(() => {

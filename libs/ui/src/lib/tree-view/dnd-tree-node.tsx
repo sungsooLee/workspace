@@ -23,7 +23,7 @@ import {
 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import { DropZone } from './components/drop-zone';
-import { InsideDropGuide } from './components/drop-zone-guide';
+// import { InsideDropGuide } from './components/drop-zone-guide';
 import {
   getInsideDropBackground,
   getInsideDropBorder,
@@ -175,11 +175,19 @@ export const DndTreeNode: React.FC<DndTreeNodeProps> = ({
       }
 
       // MaxDepth 검증
-      if (maxDepth !== undefined && position === 'INSIDE') {
+      if (maxDepth !== undefined) {
         const draggedNodeMaxDepth = getNodeMaxDepth(effectiveDraggedNode);
-        const insideFinalLevel = level + 1;
-        if (insideFinalLevel + draggedNodeMaxDepth - 1 > maxDepth) {
-          return false;
+
+        if (position === 'INSIDE') {
+          const insideFinalLevel = level + 1;
+          if (insideFinalLevel + draggedNodeMaxDepth - 1 > maxDepth) {
+            return false;
+          }
+        } else if (position === 'BEFORE' || position === 'AFTER') {
+          const finalLevel = level;
+          if (finalLevel + draggedNodeMaxDepth - 1 > maxDepth) {
+            return false;
+          }
         }
       }
 
@@ -621,7 +629,7 @@ export const DndTreeNode: React.FC<DndTreeNodeProps> = ({
           minHeight: '40px',
           margin: shouldCollapseForSameLevel ? '0px 0' : '2px 0',
           opacity: isDragging ? 0.7 : 1,
-          cursor: isDraggable ? 'grab' : 'default',
+          cursor: isDraggable ? (isDragging ? 'grabbing' : 'grab') : 'default',
           border: getInsideDropBorder(
             isOverInside || (isDraggedFromOtherTree && dropPosition === 'INSIDE'),
             isValidDropTargetForPosition('INSIDE'),
@@ -706,14 +714,14 @@ export const DndTreeNode: React.FC<DndTreeNodeProps> = ({
             alignItems: 'center',
             position: 'relative',
             minHeight: '36px',
-            zIndex: 10,
+            zIndex: 1,
           }}
         >
-          <InsideDropGuide
+          {/* <InsideDropGuide
             isHovered={isOverInside || (isDraggedFromOtherTree && dropPosition === 'INSIDE')}
             isValid={isValidDropTargetForPosition('INSIDE')}
             position="INSIDE"
-          />
+          /> */}
           {level === 0 ? (
             <span
               className={cn(hasChildren ? styles.has_children : '', styles.tree_menu)}

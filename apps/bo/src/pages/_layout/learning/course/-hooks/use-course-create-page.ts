@@ -13,7 +13,7 @@ import {
   getDummyCourseConfig,
 } from './course-mock-data';
 
-export const useCourseForm = (courseType?: string) => {
+export const useCourseCreatePage = (courseType?: string) => {
   // 현재 활성 탭
   const [activeTab, setActiveTab] = useState(CourseTab.STEP1);
 

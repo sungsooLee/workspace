@@ -36,7 +36,7 @@ const LearningResourceVideoDetailComponent = ({ provider }: Props) => {
           {/*자막 목록*/}
           <FormRow2
             provider={provider}
-            name="subtitles"
+            name="videoSubtitles"
             type="custom"
             format="array"
             value={[]}

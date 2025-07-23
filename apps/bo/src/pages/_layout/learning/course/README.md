@@ -15,7 +15,7 @@ course/
 │   ├── constants.ts             # 상수 정의
 │   └── type.ts                  # 타입 정의
 ├── -hooks/              # 커스텀 훅들
-│   └── useCourseManagement.tsx  # 과정 관리 비즈니스 로직
+│   └── useCoursePage.tsx  # 과정 관리 비즈니스 로직
 ├── utils/               # 유틸리티 함수들
 │   └── gridConfig.tsx           # 그리드 설정 생성 함수
 ├── index.tsx           # 메인 컴포넌트
@@ -32,7 +32,7 @@ course/
 
 ### 2. **비즈니스 로직 분리**
 
-- `useCourseManagement` 훅으로 상태 관리 로직 분리
+- `useCoursePage` 훅으로 상태 관리 로직 분리
 - 테스트하기 쉬운 구조
 - 컴포넌트와 로직의 명확한 분리
 
@@ -77,10 +77,10 @@ import { CourseSearchForm, CourseGrid } from './course/-components';
 ### 커스텀 훅 사용
 
 ```tsx
-import { useCourseManagement } from './course/-hooks/useCourseManagement';
+import { useCoursePage } from './course/-hooks/useCoursePage';
 
 function MyComponent() {
-  const { selectedRows, buttonState, handleOnSearch } = useCourseManagement();
+  const { selectedRows, buttonState, handleOnSearch } = useCoursePage();
   // ...
 }
 ```

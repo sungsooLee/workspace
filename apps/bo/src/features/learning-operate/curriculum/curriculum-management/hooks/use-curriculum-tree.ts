@@ -8,12 +8,14 @@ interface UseCurriculumTreeProps {
   curriculumDetail: CurriculumResponse | undefined;
   onNodeSelect: (node: TreeNode, treeData: TreeNode[]) => void;
   formState: FormState;
+  curriculumId?: number;
 }
 
 export const useCurriculumTree = ({
   curriculumDetail,
   onNodeSelect,
   formState,
+  curriculumId,
 }: UseCurriculumTreeProps) => {
   const [treeData, setTreeData] = useState<TreeNode[]>([]);
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
@@ -23,8 +25,9 @@ export const useCurriculumTree = ({
     if (curriculumDetail) {
       const treeNodes = buildTreeFromCurriculumData(curriculumDetail);
       setTreeData(treeNodes);
+      prevSelectedNodeRef.current = null;
     }
-  }, [curriculumDetail]);
+  }, [curriculumDetail, curriculumId]);
 
   const expandParentNodes = useCallback(
     (parentNode: TreeNode | null) => {
@@ -97,6 +100,10 @@ export const useCurriculumTree = ({
 
       // BEFORE/AFTER 드롭의 경우
       const targetParent = findParentNode(treeData, targetNode.parentId);
+
+      if (targetNode.type === MAPPING_CURRICULUM_TYPE.CURRICULUM) {
+        return true;
+      }
 
       // 레슨은 커리큘럼 하위 또는 GENERAL 모듈 하위로만 이동 가능
       if (sourceNode.type === MAPPING_CURRICULUM_TYPE.LESSON) {

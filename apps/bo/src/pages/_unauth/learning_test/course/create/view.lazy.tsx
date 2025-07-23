@@ -3,7 +3,7 @@ import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { useCallback, useEffect, useMemo } from 'react';
 import { MainContents, PageContainer, ContentsButtons } from '@shared/ui';
 import { PublishCourse } from '@pages/_layout/learning/course/create/-tabs/publish-course';
-import { useCourseForm } from '@pages/_layout/learning/course/-hooks/use-course-form';
+import { useCourseCreatePage } from '@pages/_layout/learning/course/-hooks/use-course-create-page';
 import { CourseTab } from '@pages/_layout/learning/course/-common/type';
 import { BasicInfo } from '@pages/_layout/learning/course/create/-tabs/basic-info';
 import { CourseRegistration } from '@pages/_layout/learning/course/create/-tabs/course-registration';
@@ -34,7 +34,7 @@ function RouteComponent() {
     loadMockData,
     getTabValues,
     deleteCourseData,
-  } = useCourseForm(courseType);
+  } = useCourseCreatePage(courseType);
 
   // 최초 데이터 로드
   useEffect(() => {

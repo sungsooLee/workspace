@@ -12,11 +12,11 @@ import { Button, ContentsRow, Dropdown, Input } from '@learnway/ui';
 import { t } from 'i18next';
 import { IcoDelete04 } from '@learnway/icons';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
-import { VideoSubtitles } from '@types';
+import { VideoSubtitle } from '@types';
 import { map } from 'lodash';
 import { getDefaultLang } from '@learnway/shared';
 
-interface SubtitlesFormFieldProps extends BaseFormFieldProps<VideoSubtitles[]> {
+interface SubtitlesFormFieldProps extends BaseFormFieldProps<VideoSubtitle[]> {
   uploadConfig?: S3UploaderConfig;
 }
 
@@ -62,7 +62,8 @@ const SubTitlesFormFieldComponent = forwardRef<HTMLDivElement, SubtitlesFormFiel
 
     useEffect(() => {
       console.log('🚀 ~ SubTitlesFormFieldComponent ~ value:', value);
-      if (value.length > 0 && files.length === 0) {
+      if (!value) onChange([]);
+      else if (value.length > 0 && files.length === 0) {
         fetchFileInfo(value.map(({ subtitleFileUuid }) => subtitleFileUuid));
       }
     }, [value]);
@@ -81,7 +82,7 @@ const SubTitlesFormFieldComponent = forwardRef<HTMLDivElement, SubtitlesFormFiel
         onChange([
           ...value,
           {
-            languageCode: newLangCode,
+            languageCountryCode: newLangCode,
             subtitleFileUuid: newSubtitle.fileUuid!,
             subtitleName: newSubtitle.fileName,
           },
@@ -103,10 +104,10 @@ const SubTitlesFormFieldComponent = forwardRef<HTMLDivElement, SubtitlesFormFiel
       }
     }, [files]);
 
-    const handleLanguageCodeChange = (uuid: string, languageCode: string) => {
+    const handleLanguageCodeChange = (uuid: string, languageCountryCode: string) => {
       onChange(
         value.map((subtitle) =>
-          subtitle.subtitleFileUuid === uuid ? { ...subtitle, languageCode } : subtitle,
+          subtitle.subtitleFileUuid === uuid ? { ...subtitle, languageCountryCode } : subtitle,
         ),
       );
     };
@@ -138,12 +139,12 @@ const SubTitlesFormFieldComponent = forwardRef<HTMLDivElement, SubtitlesFormFiel
 
     return (
       <div className={dynamicFormStyles.multiple_row} ref={ref}>
-        {value.map((subtitle) => (
+        {value?.map((subtitle) => (
           <ContentsRow className={dynamicFormStyles.row_inner} key={subtitle.subtitleFileUuid}>
             <Dropdown
               className={dynamicFormStyles.short}
               options={options}
-              value={subtitle.languageCode}
+              value={subtitle.languageCountryCode}
               onChange={(code) => handleLanguageCodeChange(subtitle.subtitleFileUuid, code)}
             />
             <Input type="text" value={subtitle.subtitleName} />

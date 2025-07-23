@@ -22,13 +22,14 @@ import {
 } from '@learnway/icons';
 import { NoticeBox } from '@shared/ui';
 import { formatFileSize, UploadStatus } from '@learnway/hooks';
-import { PMSApiPrefix } from '@learnway/config';
+import { CMSApiPrefix, LMSApiPrefix, PMSApiPrefix } from '@learnway/config';
 import { compact } from 'lodash';
 import { useDropzone } from 'react-dropzone';
 import { t } from 'i18next';
 
 interface ExcelUploadModalProps {
   validateUrl: string;
+  affairsType?: 'PMS' | 'CMS' | 'LMS';
   templateUrls?: {
     xlsx?: string;
     csv?: string;
@@ -71,7 +72,11 @@ function toUploadFile(file: File): UploadFile {
   };
 }
 
-const ExcelUploadModalComponent = ({ validateUrl, templateUrls }: ExcelUploadModalProps) => {
+const ExcelUploadModalComponent = ({
+  validateUrl,
+  affairsType = 'PMS',
+  templateUrls,
+}: ExcelUploadModalProps) => {
   const acceptFiles = ['xlsx', 'xls'];
   const maxFileCount = 1;
   const maxFileSize = 1024 * 1024 * 10;
@@ -104,6 +109,17 @@ const ExcelUploadModalComponent = ({ validateUrl, templateUrls }: ExcelUploadMod
     return () => clearInterval(interval);
   }, [isLoading]);
 
+  const downloadUrlPrefix = useCallback((): string => {
+    switch (affairsType) {
+      case 'PMS':
+        return `${PMSApiPrefix()}`;
+      case 'CMS':
+        return `${CMSApiPrefix()}`;
+      case 'LMS':
+        return `${LMSApiPrefix()}`;
+    }
+  }, [affairsType]);
+
   // 파일 선택 시 자동 유효성 검사 실행
   const handleFileSelect = useCallback(
     async (files: File[]) => {
@@ -126,12 +142,13 @@ const ExcelUploadModalComponent = ({ validateUrl, templateUrls }: ExcelUploadMod
         //   method: 'POST',
         //   body: formData,
         // });
+
         const response: {
           result: boolean;
           dataList?: Record<string, any>[];
           faultRows?: number[];
           totalRows?: number;
-        } = await httpService.post(`${PMSApiPrefix()}` + validateUrl, formData, {
+        } = await httpService.post(downloadUrlPrefix() + validateUrl, formData, {
           timeout: 1000 * 120,
         });
         const {

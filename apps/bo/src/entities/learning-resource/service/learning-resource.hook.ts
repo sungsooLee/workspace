@@ -9,9 +9,11 @@ import {
   PostDraftHtmlVideoParams,
   PostDraftVideosParams,
   PutVideoChangeParams,
+  PutVideoUpdateParams,
   QuestionItem,
   QuestionItemDeleteParam,
   QuestionStatusUpdateReq,
+  RandomQuestionCountUpdateReq,
   TestPaperBasicInfoSaveReq,
 } from '@types';
 
@@ -37,6 +39,20 @@ export function usePostDraftVideos(options?: any) {
 
   return {
     create: (payload: PostDraftVideosParams) => mutation.mutate(payload as any),
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
+}
+
+export function usePutVideoUpdate(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.putVideoUpdate(),
+    ...options,
+  });
+
+  return {
+    update: (payload: PutVideoUpdateParams) => mutation.mutate(payload as any),
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
     data: mutation.data,
@@ -252,6 +268,19 @@ export function useUpdateQuestionStatus(options?: any) {
 
   return {
     update: (params: QuestionStatusUpdateReq) => mutation.mutate(params as any),
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+  };
+}
+
+export function useUpdateExamPaperQuestionCount(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.updateExamPaperQuestionCountInfo(),
+    ...options,
+  });
+
+  return {
+    update: (params: RandomQuestionCountUpdateReq) => mutation.mutate(params as any),
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
   };

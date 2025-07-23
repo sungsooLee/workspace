@@ -3,6 +3,7 @@ export * from './lib/breakpoint-modal.hook';
 export * from './lib/lazy-loading';
 export * from './lib/permission-store';
 export * from './lib/use-authorized-query';
+export * from './lib/use-page-state';
 export * from './storybook';
 export * from './ui/components/external-user-choice';
 export * from './ui/components/user-choice';

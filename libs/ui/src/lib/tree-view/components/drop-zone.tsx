@@ -1,5 +1,5 @@
 import React from 'react';
-import { DropZoneGuide, DropZoneIndicatorLine } from './drop-zone-guide';
+import { DropZoneIndicatorLine } from './drop-zone-guide';
 import {
   getDropZoneBackground,
   getDropZoneBorder,
@@ -71,7 +71,7 @@ export const DropZone: React.FC<DropZoneProps> = ({
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <DropZoneGuide isHovered={isHovered} isValid={isValid} position={position} />
+      {/* <DropZoneGuide isHovered={isHovered} isValid={isValid} position={position} /> */}
       <DropZoneIndicatorLine isHovered={isHovered} isValid={isValid} />
     </div>
   );

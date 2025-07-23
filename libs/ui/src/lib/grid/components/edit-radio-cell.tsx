@@ -5,14 +5,20 @@ import { RadioGroup, RadioGroupComponentProps } from '../../radio-group/radio-gr
 interface EditRadioCellProps<T> {
   info: CellContext<T, string>;
   radio?: RadioGroupComponentProps;
+  /** 사용하는 곳에서 직접 자료 설정 할떄 사용 */
+  onValueChange?: (value: string) => void;
 }
 
-const EditRadioCell = <T,>({ info, radio: radioProps }: EditRadioCellProps<T>) => {
+const EditRadioCell = <T,>({ info, radio: radioProps, onValueChange }: EditRadioCellProps<T>) => {
   const { table, row, cell, getValue } = info;
   const [value, setValue] = useState<any>(getValue());
 
   const handleValueChange = (newValue: string) => {
-    table.options.meta?.updateData(row.index, cell.column.id, newValue);
+    if (onValueChange) {
+      onValueChange(newValue);
+    } else {
+      table.options.meta?.updateData(row.index, cell.column.id, newValue);
+    }
   };
 
   useEffect(() => {

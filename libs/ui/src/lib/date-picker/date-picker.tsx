@@ -14,7 +14,7 @@ import { BaseFieldProps } from '../type';
 import { useCreation } from 'ahooks';
 import { convertDateFormatToFns } from './date-picker.service';
 import { PopoverTimeInput } from './custom-time-picker';
-import { ReactNode } from '@tanstack/react-router';
+import { ReactNode } from 'react';
 import { CustomDatePickerHeader } from './custom-date-picker-header';
 import { ko, enUS } from 'date-fns/locale';
 import { useTranslation } from 'react-i18next';

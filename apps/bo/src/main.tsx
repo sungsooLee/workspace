@@ -16,7 +16,7 @@ import { showToast } from '@learnway/ui';
 
 const isLocal = process.env.NODE_ENV === 'local';
 
-const router = createRouter({
+export const router = createRouter({
   routeTree,
   defaultPreload: 'intent',
   defaultPreloadStaleTime: 0,

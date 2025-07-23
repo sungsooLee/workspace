@@ -6,6 +6,7 @@ import {
   Course,
   CourseConfig,
   CourseConfigQueryParams,
+  CourseCounts,
   CoursePopupListItem,
   CoursePopupQueryParams,
   CoursesQueryParams,
@@ -184,6 +185,18 @@ export const useFetchCoursePopup = <T = CoursePopupListItem>(
   options?: UseQueryOptions<PaginationResponse<T>, Error>,
 ): UseQueryResult<PaginationResponse<T>, Error> => {
   return useQuery({ ...queryOptions.getCoursePopup<T>(params), ...options });
+};
+
+/**
+ * 과정 카운트 요약 정보
+ * @param params - 코스 목록 조회 쿼리 파라미터.
+ * @param options - 추가 쿼리 옵션.
+ */
+export const useFetchCourseCounts = <T = CourseCounts>(
+  id: number,
+  options?: UseQueryOptions<T, Error>,
+): UseQueryResult<T, Error> => {
+  return useQuery({ ...queryOptions.getCourseCounts<T>(id), ...options });
 };
 
 // 과정 찜 여부 변경

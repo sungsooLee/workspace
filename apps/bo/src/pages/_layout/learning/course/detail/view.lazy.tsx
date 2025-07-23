@@ -1,199 +1,139 @@
-import { Button, Divider, Tabs, ToggleButtonGroup, useModal } from '@learnway/ui';
+import { Button, Divider, Tabs, ToggleButtonGroup } from '@learnway/ui';
 import { CourseDetailTab } from '@pages/_layout/learning/course/-common/type';
-import { useCourseDetailForm } from '@pages/_layout/learning/course/-hooks/use-course-detail-form';
+import { useCourseDetailPage } from '@pages/_layout/learning/course/-hooks/use-course-detail-page';
 import { Community } from '@pages/_layout/learning/course/detail/-tabs/community';
 import { CourseDetail } from '@pages/_layout/learning/course/detail/-tabs/course-detail';
 import { Curriculum } from '@pages/_layout/learning/course/detail/-tabs/curriculum';
 import { Sequence } from '@pages/_layout/learning/course/detail/-tabs/sequence';
+import { usePageState } from '@shared/lib/use-page-state';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
-import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
-import { useEffect, useMemo, useState } from 'react';
+import { createLazyFileRoute } from '@tanstack/react-router';
+import { useMemo } from 'react';
+import { ContentViewType, TriggerKey, useCourseActions } from '../-store/use-course-store';
 
 export const Route = createLazyFileRoute('/_layout/learning/course/detail/view')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const router = useRouter();
-  const { showSaveComplete, showDeleteComplete, deleteConfirm, saveConfirm } = useModal();
+  const { trigger, setContentViewType } = useCourseActions();
 
   // 라우터 state에서 courseId 가져오기
-  const { courseId, courseType } = router.state.location.state;
-  const [courseSequenceId, setCourseSequenceId] = useState<number>(0);
+  const { courseId, courseType } = usePageState();
 
   // 커스텀 훅 사용
-  const { activeTab, setTabRef, saveTabData, changeTab, getTabValues, deleteTabData } =
-    useCourseDetailForm(courseType);
-
-  const moveListPage = () => {
-    router.navigate({
-      to: '/learning/course',
-    });
-  };
-
-  const handleListClick = () => {
-    console.log('handleListClick');
-    moveListPage();
-  };
-
-  const handleSaveClick = async () => {
-    saveTabData();
-    // try {
-    //   if (await saveConfirm()) {
-    //     await saveTabData();
-    //     await showSaveComplete();
-    //     moveListPage();
-    //   }
-    // } catch (e) {
-    //   console.error('저장 중 에러:', e);
-    // }
-  };
-
-  const handleDeleteClick = async () => {
-    try {
-      if (await deleteConfirm()) {
-        await deleteTabData();
-        await showDeleteComplete();
-        moveListPage();
-      }
-    } catch (e) {
-      // 에러는 상위에서 처리하거나, 필요시 여기서 처리
-      console.error('삭제 중 에러:', e);
-    }
-  };
-
-  const handleTabChange = (activeKey: string) => {
-    console.log('activeKey', activeKey);
-    changeTab(activeKey as CourseDetailTab);
-  };
+  const { activeTab, changeTab, getTabValues, visibleButtons } = useCourseDetailPage(courseType);
 
   const tabItems = useMemo(
     () => [
       {
         title: '과정상세',
         key: CourseDetailTab.COURSE_DETAIL,
-        content: (
-          <CourseDetail
-            ref={(ref) => setTabRef(CourseDetailTab.COURSE_DETAIL, ref)}
-            courseId={courseId}
-          />
-        ),
+        content: <CourseDetail courseId={courseId} />,
       },
       {
         title: '커리큘럼',
         key: CourseDetailTab.CURRICULUM,
-        content: (
-          <Curriculum
-            ref={(ref) => setTabRef(CourseDetailTab.CURRICULUM, ref)}
-            courseId={courseId}
-          />
-        ),
+        content: <Curriculum courseId={courseId} />,
       },
       {
         title: '차수',
         key: CourseDetailTab.SEQUENCE,
-        content: (
-          <Sequence
-            ref={(ref) => setTabRef(CourseDetailTab.SEQUENCE, ref)}
-            courseId={courseId}
-            courseSequenceId={courseSequenceId}
-            setCourseSequenceId={setCourseSequenceId}
-          />
-        ),
+        content: <Sequence courseId={courseId} />,
       },
       {
         title: '커뮤니티',
         key: CourseDetailTab.COMMUNITY,
-        content: (
-          <Community ref={(ref) => setTabRef(CourseDetailTab.COMMUNITY, ref)} courseId={courseId} />
-        ),
+        content: <Community courseId={courseId} />,
       },
     ],
-    [setTabRef],
+    [],
   );
 
-  useEffect(() => {
-    console.log('변경courseSequenceId=>', courseSequenceId);
-  }, [courseSequenceId]);
-
-  console.log('------- view.lazy page...');
+  const handleTabChange = (tabKey: string) => {
+    changeTab(tabKey as CourseDetailTab);
+    setContentViewType(ContentViewType.LIST); // 탭 이동시 목록 뷰로 변경
+  };
 
   return (
-    <PageContainer hideOutLine={true}>
-      <ContentsButtons>
-        <ToggleButtonGroup
-          defaultValue={'과정관리value'}
-          options={[
-            { label: '과정관리', value: '과정관리value' },
-            { label: '수강관리', value: '수강관리value' },
-          ]}
-          onClick={(value) =>
-            router.navigate({
-              to: `/learning/learning-sequence/enrollment-application`,
-              state: {
-                courseIdKey: courseId,
-                courseSequenceIdKey: courseSequenceId, // 있는경우, 없는경우가 존재함
-              },
-            })
-          }
-        />
-        <Button
-          type="button"
-          variant="point"
-          size="sm"
-          label={'Tab Values'}
-          onClick={() => console.log('getTabValues', getTabValues())}
-        />
-        <Button
-          type="button"
-          variant="point"
-          size="sm"
-          label={'SET'}
-          // onClick={() => loadMockData(4)}
-        />
-        <Button
-          type="button"
-          variant="point"
-          size="sm"
-          label={'과정 번역'}
-          onClick={() => console.log('과정 번역')}
-        />
-        <Button
-          type="button"
-          variant="point"
-          size="sm"
-          label={'과정 복사'}
-          onClick={() => console.log('과정 복사')}
-        />
-        <Button type="button" variant="point" size="sm" label={'목록'} onClick={handleListClick} />
-        <Divider orientation={'vertical'} />
-        <Button
-          type="button"
-          variant="point"
-          size="sm"
-          label={'삭제'}
-          onClick={handleDeleteClick}
-          disabled={!courseId}
-        />
-        <Button
-          type="button"
-          variant="primary"
-          size="sm"
-          label={'저장'}
-          onClick={handleSaveClick}
-        />
-      </ContentsButtons>
-      <MainContents>
-        <Tabs
-          type={'fill'}
-          size={'sm'}
-          items={tabItems}
-          onTabChange={handleTabChange}
-          selectedTabKey={activeTab}
-          showContentBorder={true}
-          // onBeforeTabChange={async (currentTabKey, nextTabKey) => await saveConfirm()}
-        />
-      </MainContents>
-    </PageContainer>
+    <form>
+      <PageContainer hideOutLine={true}>
+        <ContentsButtons>
+          <ToggleButtonGroup
+            defaultValue={'과정관리value'}
+            options={[
+              { label: '과정관리', value: '과정관리value' },
+              { label: '수강관리', value: '수강관리value' },
+            ]}
+            onClick={(value) => console.log('ToggleButtonGroup.onClick', value)}
+          />
+          <Button
+            type="button"
+            variant="point"
+            size="sm"
+            label={'Values'}
+            onClick={() => console.log('getTabValues', getTabValues())}
+          />
+          {!!visibleButtons?.isTranslate && (
+            <Button
+              type="button"
+              variant="point"
+              size="sm"
+              label={'과정 번역'}
+              onClick={() => console.log('과정 번역')}
+            />
+          )}
+          {!!visibleButtons?.isCopy && (
+            <Button
+              type="button"
+              variant="point"
+              size="sm"
+              label={'과정 복사'}
+              onClick={() => console.log('과정 복사')}
+            />
+          )}
+          {!!visibleButtons?.isList && (
+            <Button
+              type="button"
+              variant="point"
+              size="sm"
+              label={'목록'}
+              onClick={() => trigger(TriggerKey.LIST)}
+            />
+          )}
+          {!!visibleButtons?.isDivider && <Divider orientation={'vertical'} />}
+          {!!visibleButtons?.isDelete && (
+            <Button
+              type="button"
+              variant="point"
+              size="sm"
+              label={'삭제'}
+              onClick={() => trigger(TriggerKey.DELETE)}
+              disabled={!courseId}
+            />
+          )}
+          {!!visibleButtons?.isSave && (
+            <Button
+              type="button"
+              variant="primary"
+              size="sm"
+              label={'저장'}
+              onClick={() => trigger(TriggerKey.SAVE)}
+            />
+          )}
+        </ContentsButtons>
+        <MainContents>
+          <Tabs
+            type={'fill'}
+            size={'sm'}
+            items={tabItems}
+            onTabChange={handleTabChange}
+            selectedTabKey={activeTab}
+            showContentBorder={true}
+            // onBeforeTabChange={async (currentTabKey, nextTabKey) => await saveConfirm()}
+          />
+        </MainContents>
+      </PageContainer>
+    </form>
   );
 }

@@ -1,16 +1,39 @@
-import { forwardRef, useImperativeHandle } from 'react';
+import { TriggerKey, useCourseStore } from '@pages/_layout/learning/course/-store/use-course-store';
+import { useNavigate } from '@tanstack/react-router';
+import { useUpdateEffect } from 'ahooks';
+import { forwardRef } from 'react';
 import { CourseDetailTabBaseProps, CourseDetailTabFormRef } from '../../../-common/type';
+import { Route as CourseRoute } from '../../../index';
 
 const CurriculumComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBaseProps>(
   ({ courseId }, ref) => {
-    // 부모 컴포넌트에서 호출할 수 있는 메서드
-    useImperativeHandle(ref, () => ({
-      getValues: () => console.log('getValues'),
-      save: async () => {
-        console.log('save');
-        return true;
-      },
-    }));
+    const lastTriggered = useCourseStore((state) => state.lastTriggered);
+    const navigate = useNavigate();
+    useUpdateEffect(() => {
+      if (!lastTriggered) return;
+
+      switch (lastTriggered.key) {
+        case TriggerKey.LIST:
+          navigate({ to: CourseRoute.to });
+          break;
+        case TriggerKey.SAVE:
+          saveFormData();
+          break;
+        case TriggerKey.DELETE:
+          deleteFormData();
+          break;
+      }
+    }, [lastTriggered]);
+
+    // 저장
+    const saveFormData = () => {
+      console.log('👶 폼 데이터 저장');
+    };
+
+    // 삭제
+    const deleteFormData = () => {
+      console.log('👶 폼 데�터 삭제');
+    };
 
     return <>Curriculum</>;
   },

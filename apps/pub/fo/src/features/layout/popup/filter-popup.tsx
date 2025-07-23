@@ -47,14 +47,6 @@ const filter5 = [
   { label: '고급', value: 'c' },
 ];
 
-const options: any[] = [
-  { label: '클래스', value: 'A' },
-  { label: '동영상', value: 'B' },
-  { label: '이북', value: 'C' },
-  { label: '웹', value: 'E' },
-  { label: '시험', value: 'F' },
-];
-
 // 퍼블수정 20250314 modal 컴포넌트 수정으로 전체적 수정
 const FilterPopupComponent = () => {
   const { close: closeModal } = useModal();
@@ -205,7 +197,7 @@ const FilterPopupComponent = () => {
             </li>
           </ul>
 
-          <div className={styles.look}>
+          {/* <div className={styles.look}>
             <ChipList
               options={options}
               className={styles.chip_list}
@@ -213,7 +205,7 @@ const FilterPopupComponent = () => {
               type="line"
               size="sm"
             />
-          </div>
+          </div> */}
         </div>
       </ModalBody>
       <ModalFooter>

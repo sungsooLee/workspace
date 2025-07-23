@@ -14,7 +14,7 @@ import { createGridConfig } from '../-common/grid-config';
 import { useCopyCourse, useUpdateFavorite } from '@entities/course';
 import { useTranslation } from 'react-i18next';
 
-export const useCourseManagement = (): CourseManagementHookResult => {
+export const useCoursePage = (): CourseManagementHookResult => {
   const router = useRouter();
   const { open: openModal, alert, confirm } = useModal();
   const { t } = useTranslation();

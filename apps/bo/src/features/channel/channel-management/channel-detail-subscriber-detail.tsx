@@ -1,6 +1,13 @@
 import { useFetchUser } from '@entities/users/service/users.hook';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import { FormSubTitle, GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
+import {
+  FormSubTitle,
+  GridBox,
+  useGridBox,
+  useGridBoxConfig,
+  useModal,
+  useToast,
+} from '@learnway/ui';
 import { EnGlobalConst } from '@types';
 import { t } from 'i18next';
 import { forwardRef, useCallback, useImperativeHandle } from 'react';
@@ -12,12 +19,15 @@ import { createColumnHelper } from '@tanstack/react-table';
 
 interface ChannelDetailSubscriberDetailProps {
   userUuid: string;
+  onUnsubscribe: () => void;
 }
 
 const ChannelDetailSubscriberDetailComponent = (
   props: ChannelDetailSubscriberDetailProps,
   ref: any,
 ) => {
+  const { confirm: openConfirm } = useModal();
+  const { open: openToast } = useToast();
   const { data: user } = useFetchUser(props.userUuid);
 
   const { provider: sProvider, getValues } = useSearchBox(searchConfig);
@@ -47,7 +57,23 @@ const ChannelDetailSubscriberDetailComponent = (
 
   useImperativeHandle(ref, () => ({
     cancelSubscribe() {
-      console.log('#### cancelSubscribe');
+      openConfirm({
+        title: t('구독을 해지하시겠습니까?'),
+        content: (
+          <p>
+            {t('선택한 구독자의 채널 구독이 해지됩니다.')}
+            <br />
+            {t('해지 시 사용자에게 알림이 발송됩니다.')}
+          </p>
+        ),
+        onClose: (value: boolean) => {
+          if (value) {
+            console.log('#### cancelSubscribe', value);
+            openToast({ title: t('구독을 해지 하였습니다.'), type: 'success' });
+            props.onUnsubscribe();
+          }
+        },
+      });
     },
   }));
 
