@@ -1,5 +1,5 @@
 import { useSaveRoleUserGroups, useSaveUsers } from '@entities/role';
-import { useFetchRoleTree, useGetRoleUserGroups } from '@entities/role/service/role-manage.hook';
+import { useFetchRoleTree } from '@entities/role/service/role-manage.hook';
 import { roleManagerQueryOptions } from '@entities/role/service/role-manage.queries';
 import { transformRoleApiDataToTreeData } from '@features/platform-management/tenant/service/tenant-detail-tree.service';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
@@ -18,13 +18,13 @@ import {
   useGridBox,
   useModal, useToast,
 } from '@learnway/ui';
-import { FormRow, SectionLayout, UserGroupChoiceModal, UserGroupTabsChoiceModal } from '@shared/ui';
+import { FormRow, SectionLayout, UserGroupTabsChoiceModal } from '@shared/ui';
 import { useRouterState } from '@tanstack/react-router';
 import { createColumnHelper, Table } from '@tanstack/react-table';
-import { CombineUserGroup, EnFormMode } from '@types';
+import { EnFormMode } from '@types';
 import { t } from 'i18next';
-import React, { forwardRef, useEffect, useState } from 'react';
-import { FieldValues } from 'react-hook-form';
+import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import { FieldValues, useWatch } from 'react-hook-form';
 import { TenantDetailLearningRoleGrantRangeModal } from './tenant-detail-learning-role-grant-range-modal';
 import { TenantDetailLearningRoleGrantUserShuttleModal } from './tenant-detail-learning-role-grant-user-shuttle-modal';
 
@@ -46,6 +46,8 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
   const { open: openModal, alert, confirm: openConfirm } = useModal();
   const { open: openToast } = useToast();
 
+  const userGroupRef = useRef<any>(null);
+
   const [roleTree, setRoleTree] = useState<any>(null);
   const [selectedRole, setSelectedRole] = useState<any>(null);
   const [formMode, setFormMode] = useState<EnFormMode>(EnFormMode.NONE);
@@ -54,7 +56,6 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
   const [tableInstance, setTableInstance] = useState<Table<any>>();
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const [isRoleUserGroup, setIsRoleUserGroup] = useState<boolean>(true);
-  const [userGroup, setUserGroup] = useState<any>();
 
   const tenantId = routerState.location.state?.tenantId;
   const tenantName = routerState.location.state?.tenantName;
@@ -79,10 +80,10 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
     return fetchOption as FieldValues;
   };
 
-  // const { provider: sProvider, getValues } = useSearchBox(searchConfig);
-  const { provider, onSubmit, clearFormError, updateFormData, onFormChange, getValues } =
+  const { provider, onSubmit, clearFormError, updateFormData, onFormChange, getValues, formState, watch } =
     useDynamicForm(formConfig());
   const { config, gridFetch } = useGridBox(gridConfig, getGridParams);
+  const userGroupWatch = useWatch({ control: provider.control, name: 'userGroup' });
 
   const { data: roleData } = useFetchRoleTree(tenantId, siteScope);
   const { saveUsersRole: saveRoleUsers } = useSaveUsers({});
@@ -104,7 +105,11 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
       setFormMode(EnFormMode.VIEW);
 
       const userGroupData = await RoleManagerService.fetchRoleUserGroups(node.roleId);
-      setUserGroup(userGroupData);
+
+      const newValue = getValues();
+      newValue.userGroup = userGroupData;
+      userGroupRef.current = newValue;
+      updateFormData(newValue);
     }
   };
   const handleUserAddButtonClick = async () => {
@@ -156,20 +161,6 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
     }
   };
 
-  const handleAddUserGroupButtonClick = async (data: any) => {
-    const payload = {
-      roleId: selectedRole.roleId,
-      body: {
-        addUserGroupIds: data.flatMap((groups: any) => groups.combiners).map( (combiner: any) => combiner.combineValue),
-      }
-    }
-    saveRoleUserGroups(payload, {
-      onSuccess: () => {
-        openToast({ title: '유저그룸 역할부여 추가 했습니다.', type: 'success', });
-      }
-    })
-  }
-
   useEffect(() => {
     if (roleData) {
       const transformedData = transformRoleApiDataToTreeData(roleData);
@@ -178,30 +169,28 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
   }, [roleData]);
 
   useEffect(() => {
-    if( userGroup ) {
-      // 임시 설정
-      const groups: any[] = []
-      userGroup.forEach((group: any) => {
-        groups.push(
-          {
-            pathKey: `${tenantId}-${group.userGroupId}`,
-            pathValue: `ROOT > ${tenantName}`,
-            combiners: [
-              {
-                combineType: "USER_GROUP",
-                combineValue: group.userGroupId,
-                combineName: group.userGroupName,
-              }
-            ]
+    if( selectedRole && userGroupWatch ) {
+      if( userGroupWatch.length > 0 ) setIsRoleUserGroup(false);
+      else setIsRoleUserGroup(true);
+      const sortingArrayByGroupId = (arr: any[]) => [...arr].sort( (x, y) => x.groupId - y.groupId);
+      const isEqual =
+        JSON.stringify(sortingArrayByGroupId(userGroupRef.current.userGroup)) === JSON.stringify(sortingArrayByGroupId(userGroupWatch));
+      if( !isEqual ) {
+        const payload = {
+          roleId: selectedRole?.roleId,
+          body: {
+            groups: userGroupWatch,
           }
-        );
-      })
-
-      console.log(groups)
-      setIsRoleUserGroup(false)
-      updateFormData({userGroup: groups})
+        }
+        console.log('payload => ', payload);
+        saveRoleUserGroups(payload, {
+          onSuccess: () => {
+            openToast({ title: '유저그룹 역할부여 추가 했습니다.', type: 'success', });
+          }
+        })
+      }
     }
-  }, [userGroup]);
+  }, [userGroupWatch])
 
   return (
     <SectionLayout contentsRatio={'thirty'}>
@@ -314,7 +303,6 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
                           width: 'xl',
                           height: 'fix',
                           content: <UserGroupTabsChoiceModal tenantIds={[tenantId]} />,
-                          onClose: handleAddUserGroupButtonClick
                         }}
                         actionNode={
                           <Button
