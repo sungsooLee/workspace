@@ -23,6 +23,7 @@ export * from './form/form-group';
 export * from './form/form-row';
 export * from './form/form-row2';
 export * from './form/form-translation-box';
+export * from './form/pass-option-form-field/pass-option-form-field';
 export * from './form/phone-number-form-field-simple';
 export * from './form/phone-number-form-filed';
 export * from './form/single-attachment-form-field';

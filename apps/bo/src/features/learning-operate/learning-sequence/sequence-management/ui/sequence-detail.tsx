@@ -25,7 +25,6 @@ import {
 import dayjs from 'dayjs';
 import { DateRangePickerFormField, DropdownFormField, FormDisplay } from '@features/form';
 import { InstructorListPopup } from '@features/learning-operate-support/instructor-tutor/instructor-management/modal/instructor-list-modal';
-import { PassOptionFormField } from '@pages/_layout/learning/course/-components/pass-option-form-field/pass-option-form-field';
 import {
   useUpdateSequence,
   useDeleteSequence,
@@ -36,6 +35,7 @@ import { CourseDetailTabFormRef } from '@pages/_layout/learning/course/-common/t
 import { useTranslation } from 'react-i18next';
 import { useUpdateEffect } from 'ahooks';
 import { TriggerKey } from '@pages/_layout/learning/course/-store/use-course-store';
+import { PassOptionFormField } from '@shared/ui';
 
 type SequenceDetailComponentProps = {
   mode: string;
