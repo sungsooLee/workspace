@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import {
   Button,
@@ -48,23 +48,24 @@ import lectureStyles from '@learnway/styles/fo/pages/_layout/course-introduction
 import packageSideStyles from '@learnway/styles/fo/pages/_layout/course-introduction/package-side.module.css';
 import pageFullInner from '@learnway/styles/fo/widgets/layout/ui/container/page-full-inner.module.css';
 
-
 // 이미지
 import playImg from '@learnway/styles/fo/assets/images/common/img_play.png';
 import bnrImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 import { queryOptions, useCourseDetail } from '@entities/course';
 
-import { MobileView } from 'react-device-detect';
 import { MobileContainerFooter } from '@shared/m.ui';
 
 import styles from '@learnway/styles/fo/pages/_layout/course-introduction/detail-m.module.css';
 
 export function CourseDetailMobile() {
+  const router = useRouter();
+  const routerState = useRouterState();
+  const courseId = routerState.location.state?.courseId;
 
-  const { data: course } = useCourseDetail(1);
-  console.log('%%%%%%%', course);
-  
+  const { data: courseData } = useCourseDetail(courseId || 1);
+  console.log('@', courseId, courseData);
+
   const { open: openModal } = useModal();
   const { confirm: openConfirm } = useModal();
   const { alert: openAlert } = useModal();
@@ -346,7 +347,6 @@ export function CourseDetailMobile() {
   const [listCategoryOpen, setListCategoryOpen] = useState<boolean>(true);
   const [listSubTitleOpen, setListSubTitleOpen] = useState<boolean>(false);
 
-
   return (
     <div className={`${styles.start} ${styles.package_wrap}`}>
       <div className={styles.thumbnail_img}>
@@ -527,12 +527,10 @@ export function CourseDetailMobile() {
       </div>
 
       {/* button fix */}
-      <MobileView>
-        <MobileContainerFooter>
-          {/* 찜/공유 수강신청 Button */}
-          <CourseFixedButton course={true} />
-        </MobileContainerFooter>
-      </MobileView>
+      <MobileContainerFooter>
+        {/* 찜/공유 수강신청 Button */}
+        <CourseFixedButton course={true} />
+      </MobileContainerFooter>
     </div>
-  )
+  );
 }

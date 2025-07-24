@@ -249,7 +249,7 @@ const CourseDashboardCompoment = () => {
           <div className={statusStyles.btn_action}>
             <Button
               className={detail === true ? statusStyles.active : ''}
-              onClick={() => (detail === true ? setDetail(false) : setDetail(true))}
+              onClick={() => setDetail(!detail)}
             >
               <span>{detail === true ? '성적 접기' : '성적 자세히'}</span>
               <IcoArrowDown width={16} height={16} stroke="#131c30" />

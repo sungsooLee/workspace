@@ -35,7 +35,7 @@ export * from './ui/course-introduction/dashboard';
 export * from './ui/course-introduction/curriculum-study';
 export * from './ui/course-introduction/review-option-popover';
 export * from './ui/course-introduction/introduction';
-export * from './ui/course-introduction/education';
+export * from './ui/course-introduction/education-list';
 export * from './ui/course-introduction/review';
 export * from './ui/review';
 export * from './ui/comment';

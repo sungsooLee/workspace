@@ -1,4 +1,4 @@
-import { forwardRef, ReactNode } from 'react';
+import { forwardRef, ReactNode, useState } from 'react';
 import { cn } from '@learnway/shared';
 
 import * as Primitive from '@radix-ui/react-popover';
@@ -16,6 +16,8 @@ interface PopoverComponentProps extends Primitive.PopoverContentProps {
   container?: HTMLElement;
   // modal 에서 popover 사용 시 FocusOutside 이벤트 예외 처리
   forceCloseFocusOutside?: boolean;
+  autoClose?: boolean;
+  autoCloseDelay?: number;
 }
 
 const PopoverComponent = forwardRef<
@@ -31,6 +33,8 @@ const PopoverComponent = forwardRef<
       onOpenChange,
       forceCloseFocusOutside = false,
       container,
+      autoClose = false, // 자동으로 닫히기 위한 boolean값
+      autoCloseDelay = 3000, // 자동으로 닫히는 딜레이
       ...props
     },
     ref,
@@ -38,11 +42,21 @@ const PopoverComponent = forwardRef<
     const { activeModal } = useModalStore();
     const currentActiveModal = activeModal();
 
+    const [isOpen, setIsOpen] = useState(false);
+
     return (
       <Primitive.Root
-        open={open}
+        open={isOpen}
         onOpenChange={(op) => {
           onOpenChange?.(op);
+
+          // 자동으로 사라지기 위한 딜레이 설정
+          setIsOpen(op);
+          if (autoClose && op) {
+            setTimeout(() => {
+              setIsOpen(false);
+            }, autoCloseDelay);
+          }
         }}
       >
         <Primitive.PopoverTrigger className={cn('nlp--popover-trigger', className)}>
