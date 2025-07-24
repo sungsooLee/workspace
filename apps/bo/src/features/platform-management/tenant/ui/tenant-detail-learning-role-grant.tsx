@@ -161,21 +161,6 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
     }
   };
 
-  const checkSubjectUserGroups = (e: any) => {
-    e.stopPropagation();
-
-    const combiners: any[] = []
-    userGroupWatch.forEach((items: any) => {
-      items.combiners.forEach((item: any) => combiners.push(item));
-    })
-    const payload: any = [{ combiners }]
-
-    openModal({
-      width: 'xl',
-      content: <UserGroupChoiceModal groups={payload}/>,
-    });
-  }
-
   useEffect(() => {
     if (roleData) {
       const transformedData = transformRoleApiDataToTreeData(roleData);
@@ -324,7 +309,15 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
                             variant="text"
                             label={t('대상자')}
                             disabled={isRoleUserGroup}
-                            onClick={checkSubjectUserGroups}
+                            onClick={
+                              (e: any) => {
+                                e.stopPropagation();
+                                openModal({
+                                  width: 'xl',
+                                  content: <UserGroupChoiceModal groups={userGroupWatch}/>,
+                                });
+                              }
+                            }
                           />
                         }
                       />
