@@ -1,10 +1,10 @@
 import { Button, Divider, Tabs } from '@learnway/ui';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
 import { createLazyFileRoute } from '@tanstack/react-router';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { CourseTab } from '../-common/type';
 import { useCourseCreatePage } from '../-hooks/use-course-create-page';
-import { TriggerKey } from '../-store/use-course-store';
+import { TriggerKey, useCourseStore } from '../-store/use-course-store';
 import { BasicInfo } from './-tabs/basic-info';
 import { CourseRegistration } from './-tabs/course-registration';
 import { Curriculum } from './-tabs/curriculum';
@@ -72,7 +72,6 @@ function RouteComponent() {
 
   return (
     <PageContainer>
-      s
       <ContentsButtons>
         {/* <Button
           type="button"

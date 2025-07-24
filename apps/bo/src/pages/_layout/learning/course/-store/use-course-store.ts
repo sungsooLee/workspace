@@ -1,9 +1,10 @@
 import { create } from 'zustand';
-import { CourseTab } from '../-common/type'; // 경로는 실제 프로젝트에 맞게 수정하세요.
+import { CourseTab } from '../-common/type';
 
-// --- Types ---
+// 저장 상태 타입 정의
 export type SaveStatus = 'idle' | 'saving' | 'success' | 'error';
 
+// 트리거 키 enum
 export enum TriggerKey {
   SAVE = 'save',
   LIST = 'list',
@@ -13,49 +14,45 @@ export enum TriggerKey {
   VALUES = 'values',
 }
 
+// 컨텐츠 뷰 타입 enum
 export enum ContentViewType {
   LIST = 'list',
   DETAIL = 'detail',
 }
 
-/**
- * Trigger 액션 발생 시 전달되는 페이로드의 타입입니다.
- * 현재는 유연성을 위해 모든 키에 대해 'any' 타입을 허용합니다.
- * 특정 TriggerKey에 따라 페이로드의 구조가 정해져 있다면,
- * 예를 들어 `SAVE` 시에는 `{ data: MySaveData }`, `DELETE` 시에는 `{ id: string }` 등
- * 유니온 타입이나 오버로딩을 통해 더 구체적으로 정의할 수 있습니다.
- */
+// 트리거 페이로드 타입
 interface TriggerPayload {
   [key: string]: any;
 }
 
-interface CourseCreateInfo {
+// 코스 생성 정보 타입
+export interface CourseCreateInfo {
   courseId: number;
   courseType: string;
   activeTab: CourseTab;
 }
 
-// 스토어의 상태 타입
-interface CourseState {
-  lastTriggered: { key: TriggerKey; payload?: TriggerPayload } | null;
-  saveStatus: SaveStatus;
-  contentViewType: ContentViewType;
-  courseCreateInfo: CourseCreateInfo;
+// 코스 상태 타입
+export interface CourseState {
+  lastTriggered: { key: TriggerKey; payload?: TriggerPayload } | null; // 마지막 트리거 정보
+  saveStatus: SaveStatus; // 저장 상태
+  contentViewType: ContentViewType; // 현재 컨텐츠 뷰 타입
+  courseCreateInfo: CourseCreateInfo; // 코스 생성 정보
 }
 
-// 스토어의 액션 타입
-interface CourseActions {
-  trigger: (key: TriggerKey, payload?: TriggerPayload) => void;
-  setSaveStatus: (status: SaveStatus) => void;
-  setContentViewType: (type: ContentViewType) => void;
-  setCourseCreateInfo: (info: CourseCreateInfo) => void;
-  reset: () => void;
+// 코스 액션 타입
+export interface CourseActions {
+  trigger: (key: TriggerKey, payload?: TriggerPayload) => void; // 트리거 실행
+  setSaveStatus: (status: SaveStatus) => void; // 저장 상태 변경
+  setContentViewType: (type: ContentViewType) => void; // 뷰 타입 변경
+  setCourseCreateInfo: (info: Partial<CourseCreateInfo>) => void; // 코스 생성 정보 변경
+  reset: () => void; // 상태 초기화
 }
 
-// 전체 스토어 타입 (상태 + 액션)
-type CourseStore = CourseState & { actions: CourseActions };
+// 코스 스토어 타입 (상태 + 액션)
+export type CourseStore = CourseState & CourseActions;
 
-// --- Initial State ---
+// 초기 상태 상수
 const INITIAL_COURSE_STATE: CourseState = {
   lastTriggered: null,
   saveStatus: 'idle',
@@ -67,42 +64,31 @@ const INITIAL_COURSE_STATE: CourseState = {
   },
 };
 
-// --- Store ---
+// zustand 스토어 생성
 export const useCourseStore = create<CourseStore>((set) => ({
-  ...INITIAL_COURSE_STATE, // 초기 상태 적용
-  actions: {
-    trigger: (key, payload) =>
-      set({
-        lastTriggered: { key, payload },
-      }),
-    setSaveStatus: (status) => set({ saveStatus: status }),
-    setContentViewType: (type) => set({ contentViewType: type }),
-    setCourseCreateInfo: (info) => set({ courseCreateInfo: info }),
-    reset: () => set(INITIAL_COURSE_STATE), // 초기 상태로 리셋
-  },
+  ...INITIAL_COURSE_STATE,
+  trigger: (key, payload) => set({ lastTriggered: { key, payload } }), // 트리거 실행 시 lastTriggered 갱신
+  setSaveStatus: (status) => set({ saveStatus: status }), // 저장 상태 변경
+  setContentViewType: (type) => set({ contentViewType: type }), // 뷰 타입 변경
+  setCourseCreateInfo: (info) =>
+    set((state) => ({
+      courseCreateInfo: { ...state.courseCreateInfo, ...info }, // 코스 생성 정보 병합
+    })),
+  reset: () => set(INITIAL_COURSE_STATE), // 상태 초기화
 }));
 
-// --- Custom Hooks for Consumers ---
+// 셀렉터 훅 (각 상태별로 반환)
+export const useCourseLastTriggered = () => useCourseStore((state) => state.lastTriggered);
+export const useCourseSaveStatus = () => useCourseStore((state) => state.saveStatus);
+export const useCourseContentViewType = () => useCourseStore((state) => state.contentViewType);
+export const useCourseCreateInfo = () => useCourseStore((state) => state.courseCreateInfo);
 
-/**
- * 코스 관련 상태를 선택적으로 조회하는 훅 컬렉션입니다.
- * 필요한 상태만 구독하여 불필요한 컴포넌트 리렌더링을 방지할 수 있습니다.
- * @example
- * const saveStatus = useCourseSelectors.useSaveStatus();
- * const { courseId, activeTab } = useCourseSelectors.useCourseCreateInfo();
- */
-export const useCourseSelectors = {
-  useLastTriggered: () => useCourseStore((state) => state.lastTriggered),
-  useSaveStatus: () => useCourseStore((state) => state.saveStatus),
-  useContentViewType: () => useCourseStore((state) => state.contentViewType),
-  useCourseCreateInfo: () => useCourseStore((state) => state.courseCreateInfo),
+// 액션 훅 (액션만 반환)
+export const useCourseActions = () => {
+  const trigger = useCourseStore((state) => state.trigger);
+  const setSaveStatus = useCourseStore((state) => state.setSaveStatus);
+  const setContentViewType = useCourseStore((state) => state.setContentViewType);
+  const setCourseCreateInfo = useCourseStore((state) => state.setCourseCreateInfo);
+  const reset = useCourseStore((state) => state.reset);
+  return { trigger, setSaveStatus, setContentViewType, setCourseCreateInfo, reset };
 };
-
-/**
- * 코스 관련 액션을 호출하는 훅입니다.
- * 컴포넌트에서 상태 변경 로직을 트리거할 때 사용합니다.
- * @example
- * const { trigger, setSaveStatus } = useCourseActions();
- * setSaveStatus('saving');
- */
-export const useCourseActions = () => useCourseStore((state) => state.actions);

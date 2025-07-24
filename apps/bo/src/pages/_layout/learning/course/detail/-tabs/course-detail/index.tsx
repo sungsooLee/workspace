@@ -36,13 +36,14 @@ import { useTranslation } from 'react-i18next';
 import { CourseDetailTabBaseProps, CourseDetailTabFormRef } from '../../../-common/type';
 import { CourseStatsSummary } from '../../../-components/course-stats-summary/course-stats-summary';
 import { PassOptionFormField } from '../../../-components/pass-option-form-field/pass-option-form-field';
-import { useCourseDetail } from '../../../-hooks/use-course-detail';
+import { useCourseDetailSubCourse } from '../../../-hooks/use-course-detail-sub-course';
 
 const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBaseProps>(
-  ({ courseId }, ref) => {
+  (_, ref) => {
     const { t } = useTranslation();
 
-    const { provider, getValues, onFormChange, courseConfig } = useCourseDetail(courseId);
+    const { provider, getValues, onFormChange, courseConfig, courseId } =
+      useCourseDetailSubCourse();
 
     return (
       <form>
