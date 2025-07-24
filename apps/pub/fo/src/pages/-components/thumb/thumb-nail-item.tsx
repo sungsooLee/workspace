@@ -74,7 +74,7 @@ const ThumbnailItem: React.FC<ThumbnailItemProps> = ({
           {data.countInfoNode && <div className={styles.count_info_node}>{data.countInfoNode}</div>}
         </div>
       </Link>
-      {data.toggleButton && <ToggleButton variant="heart" className={styles.toggle_btn} />}
+      {data.toggleButton && <ToggleButton variant={'heart'} className={styles.toggle_btn} />}
     </div>
   );
 };
