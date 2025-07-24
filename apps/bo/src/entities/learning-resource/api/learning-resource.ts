@@ -35,6 +35,13 @@ import {
   QuestionListForRetrieveRes,
   PostDraftScormParams,
   PostDraftScormRes,
+  PutScormUpdateParams,
+  PutScormUpdateRes,
+  PutScormChangeParams,
+  PutScormChangeRes,
+  GetScormResourceRes,
+  GetScormStatusRes,
+  GetScormFileChangeRes,
 } from '@types';
 
 export default class LearningResourceService {
@@ -89,8 +96,16 @@ export default class LearningResourceService {
     return httpService.put<PutVideoUpdateRes>(`${CMSApiPrefix()}/video/update`, params);
   }
 
+  static putScormUpdate(params: PutScormUpdateParams) {
+    return httpService.put<PutScormUpdateRes>(`${CMSApiPrefix()}/scorm/update`, params);
+  }
+
   static putVideoChange(params: PutVideoChangeParams) {
     return httpService.put<PutVideoChangeRes>(`${CMSApiPrefix()}/video/file/change`, params);
+  }
+
+  static putScormChange(params: PutScormChangeParams) {
+    return httpService.put<PutScormChangeRes>(`${CMSApiPrefix()}/scorm/file/change`, params);
   }
 
   static fetchLearningResources(params: any) {
@@ -303,6 +318,13 @@ export default class LearningResourceService {
   }
 
   /**
+   * 비디오 컨텐츠 상태 조회
+   */
+  static getScormStatus(contentUuid: string) {
+    return httpService.get<GetScormStatusRes>(`${CMSApiPrefix()}/scorm/${contentUuid}/status`);
+  }
+
+  /**
    * 비디오 파일변경 상태 조회
    */
   static getVideoFileChange(resourceId: number) {
@@ -312,9 +334,25 @@ export default class LearningResourceService {
   }
 
   /**
+   * 스콤 파일변경 상태 조회
+   */
+  static getScormFileChange(resourceId: number) {
+    return httpService.get<GetScormFileChangeRes>(
+      `${CMSApiPrefix()}/scorm/file/change/${resourceId}`,
+    );
+  }
+
+  /**
    * 동영상 학습자원 상세 조회
    */
   static getVideoResource(contentUuid: string) {
     return httpService.get<GetVideoResourceRes>(`${CMSApiPrefix()}/video/${contentUuid}/resource`);
+  }
+
+  /**
+   * 스콤 학습자원 상세 조회
+   */
+  static getScormResource(contentUuid: string) {
+    return httpService.get<GetScormResourceRes>(`${CMSApiPrefix()}/scorm/${contentUuid}/resource`);
   }
 }
