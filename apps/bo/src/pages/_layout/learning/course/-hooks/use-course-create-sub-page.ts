@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo } from 'react';
-import { CourseTab } from '../-common/type';
+import { CourseDetailTab, CourseTab } from '../-common/type';
 
 import {
   useCreateCourse,
@@ -12,19 +12,26 @@ import {
   useUpdateCourseWizard4,
   useUpdateCourseWizard5,
 } from '@entities/course';
-import { useModal } from '@learnway/ui';
-import { Course, CourseConfig } from '@types';
-import { getDummyCourse, getDummyCourse2, getDummyCourse4 } from './course-mock-data';
-import { TriggerKey, useCourseStore } from '../-store/use-course-store';
-import { useNavigate } from '@tanstack/react-router';
-import { useUpdateEffect } from 'ahooks';
 import { UseDynamicFormResult } from '@learnway/hooks';
+import { useModal } from '@learnway/ui';
+import { useNavigate } from '@tanstack/react-router';
+import { Course, CourseConfig } from '@types';
+import { useUpdateEffect } from 'ahooks';
+import {
+  TriggerKey,
+  useCourseCreateInfo,
+  useCourseLastTriggered,
+} from '../-store/use-course-store';
+import { getDummyCourse, getDummyCourse2, getDummyCourse4 } from './course-mock-data';
 
 export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
   const { showSaveComplete, saveConfirm, showDeleteComplete } = useModal();
-  const { lastTriggered, courseCreateInfo } = useCourseStore((state) => state);
   const navigate = useNavigate();
   const { updateFormData, formValues, onSubmit } = form;
+  const lastTriggered = useCourseLastTriggered();
+  const courseCreateInfo = useCourseCreateInfo();
+
+  console.log('----- useCourseCreateSubPage ', courseCreateInfo.courseId);
 
   // courseData를 먼저 가져와서 channelUuid를 확보
   const { data: courseData, refetch } = useFetchCourse(courseCreateInfo.courseId);
@@ -63,7 +70,7 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
   });
 
   const getUpdateMutate = useCallback(
-    (currentTab: CourseTab) => updateMutations[currentTab],
+    (currentTab: CourseTab | CourseDetailTab) => updateMutations[currentTab as CourseTab],
     [updateMutations],
   );
 
@@ -275,7 +282,7 @@ export const formDataToRequestData = (d: Course) => {
   };
 };
 
-const getWizardStep = (activeTab: CourseTab) => {
+const getWizardStep = (activeTab: CourseTab | CourseDetailTab) => {
   switch (activeTab) {
     case CourseTab.STEP1:
       return 'STEP1';

@@ -1,5 +1,4 @@
-import { forwardRef, useMemo, useState, useCallback, useEffect } from 'react';
-import { t } from 'i18next';
+import { forwardRef, useCallback, useEffect, useState } from 'react';
 import { BaseFormFieldProps } from '@learnway/hooks';
 import { Input } from '@learnway/ui';
 import { cn } from '@learnway/shared';

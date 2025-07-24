@@ -1,4 +1,7 @@
-import { TriggerKey, useCourseStore } from '@pages/_layout/learning/course/-store/use-course-store';
+import {
+  TriggerKey,
+  useCourseLastTriggered,
+} from '@pages/_layout/learning/course/-store/use-course-store';
 import { useNavigate } from '@tanstack/react-router';
 import { useUpdateEffect } from 'ahooks';
 import { forwardRef } from 'react';
@@ -6,8 +9,8 @@ import { CourseDetailTabBaseProps, CourseDetailTabFormRef } from '../../../-comm
 import { Route as CourseRoute } from '../../../index';
 
 const CurriculumComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBaseProps>(
-  ({ courseId }, ref) => {
-    const lastTriggered = useCourseStore((state) => state.lastTriggered);
+  (_, ref) => {
+    const lastTriggered = useCourseLastTriggered();
     const navigate = useNavigate();
     useUpdateEffect(() => {
       if (!lastTriggered) return;

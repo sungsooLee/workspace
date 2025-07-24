@@ -12,12 +12,11 @@ import {
   RadioGroupFormField,
   SplitPanel,
 } from '@learnway/ui';
-import { FormRow, FormRow2, SwitchFormField } from '@shared/ui';
+import { FormRow, FormRow2, SwitchFormField, PassOptionFormField } from '@shared/ui';
 import { Course, CourseConfig } from '@types';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CourseTabBaseProps, CourseTabFormRef } from '../../../-common/type';
-import { PassOptionFormField } from '../../../-components/pass-option-form-field/pass-option-form-field';
 import { useCourseCreateSubPage } from '../../../-hooks/use-course-create-sub-page';
 
 const DetailInfoComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>((_, ref) => {

@@ -2,7 +2,7 @@ import { DateRangePickerFormField, DropdownFormField, FormDisplay } from '@featu
 import { InstructorListPopup } from '@features/learning-operate-support/instructor-tutor/instructor-management/modal/instructor-list-modal';
 import {
   CategoryChoiceModal,
-  CourseChoiceModal,
+  CourseChoiceModal, CourseStatsSummary,
 } from '@features/learning-operate/course/course-management';
 import { CODE_GROUP, S3_PATH } from '@learnway/hooks';
 import {
@@ -30,19 +30,19 @@ import {
   TrainingPlaceChoiceModal,
   UserChoiceModal,
   UserGroupTabsChoiceModal,
+  PassOptionFormField,
 } from '@shared/ui';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CourseDetailTabBaseProps, CourseDetailTabFormRef } from '../../../-common/type';
-import { CourseStatsSummary } from '../../../-components/course-stats-summary/course-stats-summary';
-import { PassOptionFormField } from '../../../-components/pass-option-form-field/pass-option-form-field';
-import { useCourseDetail } from '../../../-hooks/use-course-detail';
+import { useCourseDetailSubCourse } from '../../../-hooks/use-course-detail-sub-course';
 
 const CourseDetailComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBaseProps>(
-  ({ courseId }, ref) => {
+  (_, ref) => {
     const { t } = useTranslation();
 
-    const { provider, getValues, onFormChange, courseConfig } = useCourseDetail(courseId);
+    const { provider, getValues, onFormChange, courseConfig, courseId } =
+      useCourseDetailSubCourse();
 
     return (
       <form>

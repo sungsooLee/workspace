@@ -99,9 +99,10 @@ export interface CourseTabBaseProps {
  * - courseId: 과정 ID
  */
 export interface CourseDetailTabBaseProps {
-  courseId: number;
-  courseSequenceId?: number;
-  setCourseSequenceId?: (data: number) => void;
+  dummy?: string;
+  // courseId: number;
+  // courseSequenceId?: number;
+  // setCourseSequenceId?: (data: number) => void;
 }
 
 /**
