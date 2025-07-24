@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo } from 'react';
-import { CourseTab } from '../-common/type';
+import { CourseDetailTab, CourseTab } from '../-common/type';
 
 import {
   useCreateCourse,
@@ -70,7 +70,7 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
   });
 
   const getUpdateMutate = useCallback(
-    (currentTab: CourseTab) => updateMutations[currentTab],
+    (currentTab: CourseTab | CourseDetailTab) => updateMutations[currentTab as CourseTab],
     [updateMutations],
   );
 
@@ -282,7 +282,7 @@ export const formDataToRequestData = (d: Course) => {
   };
 };
 
-const getWizardStep = (activeTab: CourseTab) => {
+const getWizardStep = (activeTab: CourseTab | CourseDetailTab) => {
   switch (activeTab) {
     case CourseTab.STEP1:
       return 'STEP1';

@@ -1,7 +1,8 @@
 import { usePageState } from '@shared/index';
 import { useCallback, useMemo, useState } from 'react';
 import { CourseDetailTab } from '../-common/type';
-import { ContentViewType, useCourseContentViewType } from '../-store/use-course-store';
+import { ContentViewType, useCourseActions, useCourseCreateInfo } from '../-store/use-course-store';
+import { useNavigate } from '@tanstack/react-router';
 // 라우터 state에서 전달받는 값의 타입 정의
 export interface CourseDetailPageLocationState {
   courseId?: number; // 과정 ID
@@ -15,12 +16,16 @@ export interface CourseDetailPageLocationState {
  * 과정 상세 페이지에서 탭 상태 및 탭별 ref, 값 조회 등을 관리하는 커스텀 훅
  */
 export const useCourseDetailPage = () => {
+  const navigate = useNavigate();
   // 라우터 state에서 courseId 가져오기
   const { courseId, courseType, sequenceId, initialTab, initialContentViewType } =
     usePageState<CourseDetailPageLocationState>();
 
   // 현재 활성화된 탭 컨텐츠의 뷰 타입
-  const contentViewType = useCourseContentViewType();
+  const { contentViewType } = useCourseCreateInfo();
+
+  //
+  const { setCourseCreateInfo } = useCourseActions();
 
   // 현재 활성화된 탭 상태 (기본값: 과정상세)
   const [activeTab, setActiveTab] = useState(initialTab ?? CourseDetailTab.COURSE_DETAIL);
@@ -31,7 +36,22 @@ export const useCourseDetailPage = () => {
    */
   const changeTab = useCallback((tabKey: CourseDetailTab) => {
     setActiveTab(tabKey);
+    setCourseCreateInfo({ activeTab: tabKey, contentViewType: ContentViewType.LIST });
   }, []);
+
+  /**
+   * 수강관리 화면으로 이동
+   */
+  const moveEnrollmentManagementPage = useCallback(() => {
+    const state = {
+      courseId,
+      sequenceId: contentViewType === ContentViewType.LIST ? undefined : sequenceId,
+    };
+    navigate({
+      to: '/learning/course',
+      state,
+    });
+  }, [courseId, sequenceId]);
 
   /**
    * 버튼의 표시 여부를 결정하는 함수 (탭 변경 시 버튼 표시 여부 결정)
@@ -85,5 +105,7 @@ export const useCourseDetailPage = () => {
     changeTab,
     // 버튼 표시 상태
     visibleButtons,
+    // 수강관리 화면으로 이동
+    moveEnrollmentManagementPage,
   };
 };

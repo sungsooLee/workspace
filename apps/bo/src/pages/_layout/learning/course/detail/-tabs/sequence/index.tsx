@@ -17,11 +17,13 @@ const SequenceComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBase
   const { courseId, sequenceId: initSequenceId } = useCourseDetailSubSequence();
   const [sequenceId, setSequenceId] = useState<number>(initSequenceId ?? 0);
 
-  const { setContentViewType } = useCourseActions();
+  const { setCourseCreateInfo } = useCourseActions();
 
   useEffect(() => {
     console.log('lastTriggered', lastTriggered);
-    setContentViewType(mode === 'MAIN' ? ContentViewType.LIST : ContentViewType.DETAIL); // 탭
+    setCourseCreateInfo({
+      contentViewType: mode === 'MAIN' ? ContentViewType.LIST : ContentViewType.DETAIL,
+    }); // 탭
   }, [mode]);
 
   // useEffect(() => {

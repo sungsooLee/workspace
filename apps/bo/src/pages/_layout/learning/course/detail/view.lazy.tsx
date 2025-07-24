@@ -15,10 +15,11 @@ export const Route = createLazyFileRoute('/_layout/learning/course/detail/view')
 });
 
 function RouteComponent() {
-  const { trigger, setContentViewType } = useCourseActions();
+  const { trigger } = useCourseActions();
 
   // 커스텀 훅 사용
-  const { activeTab, changeTab, visibleButtons } = useCourseDetailPage();
+  const { activeTab, changeTab, visibleButtons, moveEnrollmentManagementPage } =
+    useCourseDetailPage();
 
   const tabItems = useMemo(
     () => [
@@ -48,19 +49,18 @@ function RouteComponent() {
 
   const handleTabChange = (tabKey: string) => {
     changeTab(tabKey as CourseDetailTab);
-    setContentViewType(ContentViewType.LIST); // 탭 이동시 목록 뷰로 변경
   };
 
   return (
     <PageContainer hideOutLine={true}>
       <ContentsButtons>
         <ToggleButtonGroup
-          defaultValue={'과정관리value'}
+          defaultValue={'과정관리'}
           options={[
-            { label: '과정관리', value: '과정관리value' },
-            { label: '수강관리', value: '수강관리value' },
+            { label: '과정관리', value: '과정관리' },
+            { label: '수강관리', value: '수강관리' },
           ]}
-          onClick={(value) => console.log('ToggleButtonGroup.onClick', value)}
+          onClick={(value) => value === '수강관리' && moveEnrollmentManagementPage()}
         />
         <Button type="button" variant="point" size="sm" label={'Values'} />
         {!!visibleButtons?.isTranslate && (
