@@ -21,6 +21,7 @@ import {
   MenuChoiceTreeModal,
   OrganizationChoiceTreeModal,
   OrganizationShuttleTreeModal,
+  PackageChoiceModal,
   PageContainer,
   SubContents,
   TenantChoiceModal,
@@ -693,6 +694,26 @@ function RouteComponent() {
                 }}
               >
                 {'과정 조회'}
+              </Button>
+              <span className="text-yellow-500">{'진행중'}</span>
+            </div>
+            <div className="flex gap-4">
+              <Button
+                size={'xs'}
+                className="btn_table flex-1"
+                variant={'gray2'}
+                stopPropagation
+                onClick={(e) => {
+                  openModal({
+                    width: 'xl',
+                    content: <PackageChoiceModal />,
+                    onClose(data: any) {
+                      console.log('패키지 조회 결과', data);
+                    },
+                  });
+                }}
+              >
+                {'패키지 조회'}
               </Button>
               <span className="text-yellow-500">{'진행중'}</span>
             </div>

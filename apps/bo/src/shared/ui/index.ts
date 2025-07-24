@@ -63,6 +63,7 @@ export * from './modal/menu-choice-modal';
 export * from './modal/menu-choice-tree-modal';
 export * from './modal/organization-choice-tree-modal';
 export * from './modal/organization-shuttle-tree-modal';
+export * from './modal/package-choice-modal';
 export * from './modal/reject-modal';
 export * from './modal/resource-choice-modal';
 export * from './modal/role-application-history-modal';
