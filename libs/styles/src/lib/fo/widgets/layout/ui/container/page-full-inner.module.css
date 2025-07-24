@@ -31,6 +31,9 @@
   &.bg_sec1 {
     @apply bg-[var(--gray98)];
   }
+  &.bg_sec2 {
+    @apply bg-[var(--blue98)];
+  }
 }
 
 /* 해당 display 최소 size */

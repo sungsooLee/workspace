@@ -1,16 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import React, { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { cn, getRandomId } from '@learnway/shared';
-import {
-  Button,
-  ContentsRow,
-  Input,
-  Dropdown,
-  Pagination,
-  useModal,
-  Popover,
-  Badge,
-} from '@learnway/ui';
+import { Button, Input, Dropdown, Pagination, useModal, Popover, Badge } from '@learnway/ui';
 import {
   IcoArrowDown,
   IcoArrowForward,
