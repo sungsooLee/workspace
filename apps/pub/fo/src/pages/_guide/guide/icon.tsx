@@ -1221,7 +1221,17 @@ import { IcoAlertCircleGray } from '@learnway/icons'; // 사용할 icon 함수�
         </pre>
       </div>
       <div className="group">
-        <h3 className="guide_tit3">SVG Lists</h3>
+        <h3 className="guide_tit3">SVG Preview</h3>
+        <div className="flex_box">
+          {icons.map(({ name, Component, file }) => (
+            <div key={name} className="icon_item">
+              <div>{Component}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="group">
+        <h3 className="guide_tit3">SVG Lists Detail</h3>
         <div className="flex_box">
           {icons.map(({ name, Component, file }) => (
             <div key={name} className="icon_item">

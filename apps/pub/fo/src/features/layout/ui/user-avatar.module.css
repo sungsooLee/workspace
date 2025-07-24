@@ -5,6 +5,18 @@
     .profile_info {
       @apply flex items-center justify-start;
       .avatar_img {
+        @apply relative;
+        .ico {
+          @apply absolute bottom-[0] right-[-10px] block h-[24px] w-[24px] rounded-full bg-[var(--blue65)];
+          button {
+            @apply !bg-transparent;
+            svg {
+              @apply h-[12px] w-[12px];
+              fill: #fff !important;
+              stroke: transparent !important;
+            }
+          }
+        }
         .start {
           @apply h-[66px] w-[66px];
         }

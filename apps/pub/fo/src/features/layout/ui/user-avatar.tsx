@@ -3,7 +3,7 @@ import { memo, useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import { Avatar, Button, Popover, useModal } from '@learnway/ui';
 import { PasswordVerifyPopup } from '../../layout';
-import { IcLogOut01, IcoXclose } from '@learnway/icons';
+import { IcLogOut01, IcoXclose, IcoLearning03 } from '@learnway/icons';
 import styles from './user-avatar.module.css';
 import fallbackStyles from './fallback.module.css';
 
@@ -39,6 +39,9 @@ const PopoverContent = () => {
           <Avatar imageUrl="https://github.com/shadcn.png" size="2xl" />
           {/* 텍스트일경우 */}
           {/* <Avatar fallback="AB" size="2xl" /> */}
+          <span className={styles.ico}>
+            <Button variant="ghost" size="ts" onlyIcon={true} icon={<IcoLearning03 />} />
+          </span>
         </div>
         <div className={styles.profile}>
           <div className={styles.info_box}>
