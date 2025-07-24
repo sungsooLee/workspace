@@ -23,7 +23,7 @@ import {
   convertToScormForm,
   convertToScormSubmit,
   LearningResourceScormDetail,
-  MovieInfo,
+  ScormInfo,
 } from '@features/learning-resource';
 import { PutScormUpdateRes } from '@types';
 
@@ -187,7 +187,7 @@ function RouteComponent() {
           <LearningResourceScormDetail provider={provider} />
         </MainContents>
         <SubContents>
-          <MovieInfo provider={provider} />
+          <ScormInfo provider={provider} />
         </SubContents>
       </PageContainer>
     </form>

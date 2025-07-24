@@ -12,6 +12,7 @@ import {
   PostDraftHtmlVideoParams,
   PostDraftScormParams,
   PostDraftVideosParams,
+  PutScormChangeParams,
   PutScormUpdateParams,
   PutVideoChangeParams,
   PutVideoUpdateParams,
@@ -184,6 +185,9 @@ export const mutateOptions = {
   }),
   putVideoChange: () => ({
     mutationFn: (params: PutVideoChangeParams) => LearningResourceService.putVideoChange(params),
+  }),
+  putScormChange: () => ({
+    mutationFn: (params: PutScormChangeParams) => LearningResourceService.putScormChange(params),
   }),
   postDraftHTML5: () => ({
     mutationFn: (params: PostDraftHtmlVideoParams) =>

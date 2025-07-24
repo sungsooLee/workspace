@@ -186,7 +186,7 @@ function RouteComponent() {
           <ContentsHistoryInfoFormField />
         </MainContents>
         <SubContents>
-          <ScormInfo />
+          <ScormInfo provider={provider} />
         </SubContents>
       </PageContainer>
     </form>

@@ -30,8 +30,18 @@ const MediaInfoComponent = ({ status, buttons, type, url, infoList }: MediaInfoC
         <div className={style.status_wrap}>
           <Spinner isLoading={true} showBackdrop className={style.loading} />
           <p className={style.text}>
-            <strong>{t('인코딩 진행 중입니다.')}</strong>
-            {t('인코딩 대기 및 영상 길이에 따라 인코딩 시간이 오래 걸릴수도 있습니다.')}
+            {type === LEARNING_TYPE.VIDEO && (
+              <>
+                <strong>{t('인코딩 진행 중입니다.')}</strong>
+                {t('인코딩 대기 및 영상 길이에 따라 인코딩 시간이 오래 걸릴수도 있습니다.')}
+              </>
+            )}
+            {type === LEARNING_TYPE.SCORM && (
+              <>
+                <strong>{t('패키지 등록 중입니다.')}</strong>
+                {t('등록 대기 및 파일 크기에 따라 등록 시간이 오래 걸릴수도 있습니다.')}
+              </>
+            )}
           </p>
         </div>
       )}
@@ -40,15 +50,18 @@ const MediaInfoComponent = ({ status, buttons, type, url, infoList }: MediaInfoC
         <div className={style.status_wrap}>
           <IcoStatusFail className={style.fail} />
           <p className={style.text}>
-            <strong>{t('인코딩이 실패되었습니다.')}</strong>
-            {t('다시 시도해 주세요.')}
+            <strong>
+              {type === LEARNING_TYPE.VIDEO && t('인코딩이 실패되었습니다.')}
+              {type === LEARNING_TYPE.SCORM && t('패키지 등록이 실패되었습니다.')}
+            </strong>
           </p>
           <div className={style.btn_box}>
             <Button className={style.btn} variant="gray" size="sm">
               {t('재시도')}
             </Button>
             <Button className={style.btn} variant="primary" size="sm">
-              {t('동영상 변경')}
+              {type === LEARNING_TYPE.VIDEO && t('동영상 변경')}
+              {type === LEARNING_TYPE.SCORM && t('파일 변경')}
             </Button>
           </div>
         </div>
@@ -68,6 +81,11 @@ const MediaInfoComponent = ({ status, buttons, type, url, infoList }: MediaInfoC
           {type === LEARNING_TYPE.VIDEO && url && (
             <div className={style.media}>
               <ReactPlayer url={url} playing controls width={416} />
+            </div>
+          )}
+          {type === LEARNING_TYPE.SCORM && (
+            <div className={style.media}>
+              <img src={'https://picsum.photos/320/180'} width="100%" />
             </div>
           )}
           {/* info_list */}
