@@ -1,3 +1,85 @@
 /* course-package.module.css */
 .start {
+  &.course_package {
+    .search_box_wrap {
+      @apply rounded-[12px] bg-[var(--blue98)] p-[32px];
+      .select_area {
+        @apply flex flex-wrap;
+        .search_select {
+          @apply w-[240px] shrink-0;
+        }
+        .search_input {
+          @apply ml-[12px] flex flex-1 flex-wrap;
+          [class*='nlp--input'] {
+            @apply flex-1;
+          }
+          [class*='btn'] {
+            @apply ml-[8px] w-[73px] shrink-0;
+          }
+        }
+      }
+    }
+    .list_box {
+      @apply mt-[40px] flex flex-wrap;
+      .list_title {
+        @apply h-[245px] w-[245px] shrink-0 rounded-br-[80px] bg-gradient-to-br pl-[40px] pt-[40px];
+        strong {
+          @apply headline2-b whitespace-pre-line text-[var(--gray10)];
+        }
+        p {
+          @apply title3 mt-[8px] text-[var(--gray35)];
+        }
+        a {
+          @apply label-lg mt-[32px] inline-flex items-center text-[var(--gray35)];
+        }
+        &.type_mint {
+          @apply from-white to-[#DCF9EF];
+        }
+        &.type_blue {
+          @apply from-white to-[#DCF1F9];
+        }
+        &.type_purple {
+          @apply from-white to-[#DFDCF9];
+        }
+      }
+      [class*='thumbnail_list'] {
+        @apply ml-[80px] flex-1 pt-[40px];
+      }
+      & + .list_box {
+        @apply mt-[16px];
+      }
+    }
+  }
+}
+
+/* Mobile */
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.course_package {
+        .list_box {
+          @apply flex-col;
+          .list_title {
+            @apply mb-[16px] flex h-auto w-full items-center justify-between bg-none p-0;
+            strong {
+              @apply title5-b whitespace-normal;
+            }
+            p {
+              @apply hidden;
+            }
+            a {
+              @apply label-sm mt-0;
+            }
+          }
+          [class*='thumbnail_list'] {
+            @apply ml-0 pt-0;
+            [class*='tag_list'],
+            [class*='count_info_node'] {
+              @apply hidden;
+            }
+          }
+        }
+      }
+    }
+  }
 }

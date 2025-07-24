@@ -77,6 +77,11 @@
     }
     .tabs_wrap {
       @apply mt-[40px];
+      [class*='nlp--tabs'] {
+        div[data-state='active'] {
+          @apply mt-[40px];
+        }
+      }
     }
     & > [class*='inner'] {
       @apply !py-[60px];
