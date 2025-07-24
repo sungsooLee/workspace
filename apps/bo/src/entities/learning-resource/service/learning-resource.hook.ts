@@ -9,6 +9,7 @@ import {
   PostDraftHtmlVideoParams,
   PostDraftScormParams,
   PostDraftVideosParams,
+  PutScormUpdateParams,
   PutVideoChangeParams,
   PutVideoUpdateParams,
   QuestionItem,
@@ -68,6 +69,20 @@ export function usePutVideoUpdate(options?: any) {
 
   return {
     update: (payload: PutVideoUpdateParams) => mutation.mutate(payload as any),
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
+}
+
+export function usePutScormUpdate(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.putScormUpdate(),
+    ...options,
+  });
+
+  return {
+    update: (payload: PutScormUpdateParams) => mutation.mutate(payload as any),
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
     data: mutation.data,

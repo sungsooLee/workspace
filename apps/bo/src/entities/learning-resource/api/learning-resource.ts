@@ -35,6 +35,8 @@ import {
   QuestionListForRetrieveRes,
   PostDraftScormParams,
   PostDraftScormRes,
+  PutScormUpdateParams,
+  PutScormUpdateRes,
 } from '@types';
 
 export default class LearningResourceService {
@@ -87,6 +89,10 @@ export default class LearningResourceService {
 
   static putVideoUpdate(params: PutVideoUpdateParams) {
     return httpService.put<PutVideoUpdateRes>(`${CMSApiPrefix()}/video/update`, params);
+  }
+
+  static putScormUpdate(params: PutScormUpdateParams) {
+    return httpService.put<PutScormUpdateRes>(`${CMSApiPrefix()}/scorm/update`, params);
   }
 
   static putVideoChange(params: PutVideoChangeParams) {

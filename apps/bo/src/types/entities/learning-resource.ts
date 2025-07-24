@@ -493,6 +493,28 @@ export interface PutVideoUpdateRes extends ContentInformation {
   videoSubtitles: VideoSubtitle[];
 }
 
+export type PutScormUpdateParams = ContentBaseInfo;
+
+interface ScormItem {
+  itemTitle: string;
+  scoId: string;
+  itemFilePath: string;
+  itemUrl: string;
+  itemType: string;
+  items?: ScormItem[];
+}
+
+export interface PutScormUpdateRes extends ContentInformation {
+  fileChagngeId: number | null;
+  processingStatus: ProcessingStatus;
+  children: {
+    orgnId: number;
+    orgnTitle: string;
+    orgnElementId: string;
+    items: ScormItem[];
+  }[];
+}
+
 export enum EnQuestionType {
   SINGLE = 'SINGLE',
   MULTIPLE = 'MULTIPLE',
