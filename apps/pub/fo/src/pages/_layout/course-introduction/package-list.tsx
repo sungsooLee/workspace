@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { cn } from '@learnway/shared';
 import { isMobile } from 'react-device-detect';
 
-import { Button } from '@learnway/ui';
+import { Button, Tabs } from '@learnway/ui';
 import { IcoArrowDown, IcoShare, IcoBell02 } from '@learnway/icons';
 
 /* style */
@@ -12,6 +12,9 @@ import styles from './package-list.module.css';
 
 /* images */
 import aiImg from '@learnway/styles/fo/assets/images/menu/course/img_course_ai.png';
+
+/* tab contents */
+import { CoursePackage } from './-contents/course-package';
 
 export const Route = createFileRoute('/_layout/course-introduction/package-list')({
   component: RouteComponent,
@@ -23,6 +26,35 @@ function RouteComponent() {
   const handleClick = () => {
     setIsActive((prev) => !prev); // 상태 토글
   };
+
+  // Tabs
+  const items = [
+    {
+      title: '홈',
+      key: 'menu1',
+      content: '',
+    },
+    {
+      title: '과정',
+      key: 'menu2',
+      content: '',
+    },
+    {
+      title: '패키지',
+      key: 'menu3',
+      content: <CoursePackage />,
+    },
+    {
+      title: '공지사항',
+      key: 'menu4',
+      content: '',
+    },
+    {
+      title: '커뮤니티',
+      key: 'menu5',
+      content: '',
+    },
+  ];
 
   return (
     <div className={cn(styles.start, styles.package_wrap)}>
@@ -51,7 +83,7 @@ function RouteComponent() {
                 <div className={styles.detail_info}>
                   <p className={cn(styles.detail_text, isActive ? styles.ellipsis : null)}>
                     {
-                      'AI 지식 스튜디오는 인공지능을 처음 접하는 초보자부터 실무 적용을 고민하는 전문가까지, 모두를 위한 AI 학습 채널입니다. 생성형 AI, 머신러닝, 데이터 분석, 프롬프트 엔지니어링 등 AI 지식 스튜디오는 인공지능을 처음 접하는 초보자부터 실무 적용을 고민하는 전문가까지, 모두를 위한 AI 학습 채널입니다. 생성형 AI, 머신러닝, 데이터 분석, 프롬프트 엔지니어링 등AI 지식 스튜디오는 인공지능을 처음 접하는 초보자부터 실무 적용을 고민하는 전문가까지, 모두를 위한 AI 학습 채널입니다. 생성형 AI, 머신러닝, 데이터 분석, 프롬프트 엔지니어링 등AI 지식 스튜디오는 인공지능을 처음 접하는 초보자부터 실무 적용을 고민하는 전문가까지, 모두를 위한 AI 학습 채널입니다. 생성형 AI, 머신러닝, 데이터 분석, 프롬프트 엔지니어링 등'
+                      'AI 지식 스튜디오는 인공지능을 처음 접하는 초보자부터 실무 적용을 고민하는 전문가까지, 모두를 위한 AI 학습 채널입니다. AI 지식 스튜디오는 인공지능을 처음 접하는 초보자부터 실무 적용을 고민하는 전문가까지, 모두를 위한 AI 학습 채널입니다. '
                     }
                   </p>
                   <Button
@@ -96,7 +128,9 @@ function RouteComponent() {
           </div>
         </div>
       </div>
-      <div>2222</div>
+      <div className={styles.tabs_wrap}>
+        <Tabs selectedTabKey={'menu3'} items={items} type="line" size={!isMobile ? 'xl2' : 'lg'} />
+      </div>
     </div>
   );
 }

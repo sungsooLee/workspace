@@ -34,7 +34,7 @@ export interface TabsComponentProps extends React.ComponentProps<typeof Primitiv
   /** 탭의 색상 테마 */
   variant?: 'primary' | 'secondary' | 'gray'; // gray는 line형
   /** 탭의 크기 */
-  size?: 'sm' | 'md';
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'xl2';
   /** 접근성을 위한 ARIA 레이블 */
   ariaLabel?: string;
   /** 외부에서 탭을 제어하기 위한 초기 선택된 탭 키 */
