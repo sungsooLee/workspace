@@ -1,6 +1,13 @@
 import { memo, useState } from 'react';
 import { BrowserView, isMobile, MobileView } from 'react-device-detect';
-import { IcoArrowDown, IcoCaution03, IcoLock, IcoPlus, IcoClose02 } from '@learnway/icons';
+import {
+  IcoArrowDown,
+  IcoCaution03,
+  IcoLock,
+  IcoPlus,
+  IcoCalendar01,
+  IcoLoading02,
+} from '@learnway/icons';
 import { Button, Panel, Popover, ProgressBar, TableBox, useModal } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import styles from './dashboard.module.css';
@@ -105,17 +112,17 @@ const CourseDashboardCompoment = () => {
         <Panel
           type="rounded"
           hideHeaderUnderline
-          className={`${statusStyles.panel_degreey} $/*{statusStyles.incomplete} */`}
+          className={`${statusStyles.panel_degreey} ${statusStyles.completed}`}
         >
           <div className={statusStyles.list}>
             <h3>학습중</h3>
             <div className={statusStyles.date_status}>
               <div className={statusStyles.date_box}>
-                교육기간
+                {isMobile ? <IcoCalendar01 width={24} height={24} stroke="#131416" /> : '교육기간'}
                 <span className={statusStyles.date}>25-03-01 ~ 26-03-31 (374차)</span>
               </div>
               <div className={statusStyles.date_box}>
-                남은학습기간
+                {isMobile ? <IcoLoading02 width={24} height={24} fill="#131416" /> : '남은학습기간'}
                 <span className={`${statusStyles.date} ${statusStyles.time}`}>D-27</span>
                 {/* 남은기간 적을 시 className="time" */}
               </div>

@@ -214,13 +214,9 @@ const FilterPopupComponent = () => {
           variant={'gray'}
           size={'lg'}
           onClick={() => closeModal()}
-        >
-          <IcoRefresh02 width={20} height={20} stroke="#4c515e" fill="none"></IcoRefresh02>
-          초기화
-        </Button>
-        <Button variant={'primary'} size={'lg'} onClick={() => closeModal()}>
-          적용
-        </Button>
+          label={'초기화'}
+        />
+        <Button variant={'primary'} size={'lg'} onClick={() => closeModal()} label={'적용'} />
       </ModalFooter>
     </ModalContainer>
   );

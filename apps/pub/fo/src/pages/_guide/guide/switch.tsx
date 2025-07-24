@@ -1,11 +1,13 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Switch } from '@learnway/ui';
+import { memo, useState } from 'react';
 
 export const Route = createFileRoute('/_guide/guide/switch')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const [isChecked, setIsChecked] = useState(false);
   return (
     <div>
       <h2 className="guide_tit2">Switch Component Guide</h2>
@@ -22,6 +24,22 @@ import { Switch } from '@learnway/ui';
 <Switch id="id-1" label="Label" />
 `}
           </code>
+
+          <code>
+            {`// label을 동적으로 변경하려면
+import { memo, useState } from 'react';
+import { Switch } from '@learnway/ui';
+
+const [isChecked, setIsChecked] = useState(false);
+
+// 적용방법(예시)
+<Switch
+  checked={isChecked}
+  onCheckedChange={setIsChecked}
+  label={isChecked ? 'ON' : 'OFF'}
+/>
+`}
+          </code>
         </pre>
       </div>
       <div className="group">
@@ -35,6 +53,27 @@ import { Switch } from '@learnway/ui';
         <div className="code_example">
           <pre className="code_block">
             <code>{`<Switch id="id-1" label="Label" />`}</code>
+          </pre>
+        </div>
+
+        <h3 className="guide_tit3">Switch 동적</h3>
+        <div className="flex_box">
+          <div className="desc">
+            <Switch
+              checked={isChecked}
+              onCheckedChange={setIsChecked}
+              label={isChecked ? 'ON' : 'OFF'}
+            />
+          </div>
+        </div>
+
+        <div className="code_example">
+          <pre className="code_block">
+            <code>{`<Switch
+  checked={isChecked}
+  onCheckedChange={setIsChecked}
+  label={isChecked ? 'ON' : 'OFF'}
+/>`}</code>
           </pre>
         </div>
 

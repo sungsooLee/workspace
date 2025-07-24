@@ -114,7 +114,7 @@ export { ReactComponent as IcoArrowDownDouble } from './lib/ic_arrow_down_double
 export { ReactComponent as IcoArrowUpDouble } from './lib/ic_arrow_up_double.svg';
 export { ReactComponent as IcoNarrowRight } from './lib/ic_arrow_narrow_right.svg'; // transfer grid
 export { ReactComponent as IcoGridOrder } from './lib/ic_grid_order.svg'; // grid order
-export { ReactComponent as IcoFileImg } from './lib/ic_file_img.svg'; // image
+export { ReactComponent as IcoFileImg } from './lib/ic_file_img.svg'; // imagecurrent
 export { ReactComponent as IcoFileVideo } from './lib/ic_file_video.svg'; // video
 export { ReactComponent as IcoExam } from './lib/ic_exam.svg'; // exam
 export { ReactComponent as IcoFolder } from './lib/ic_folder.svg'; // folder
@@ -194,6 +194,11 @@ export { ReactComponent as IcoVideoStop } from './lib/ic_video_stop.svg';
 export { ReactComponent as IcoSettingsFill } from './lib/ic_settings_fill.svg';
 export { ReactComponent as IcoSpeakerOffFill } from './lib/ic_speaker_off_fill.svg';
 export { ReactComponent as IcoCircleProgress } from './lib/ic_circle_progress.svg';
+export { ReactComponent as IcoLoading02 } from './lib/ic_loading_02.svg';
+export { ReactComponent as IcoPoint } from './lib/ic_point.svg';
+export { ReactComponent as IcoChart } from './lib/ico_chart.svg';
+export { ReactComponent as IcoPaper } from './lib/ico_paper.svg';
+export { ReactComponent as IcoRocket } from './lib/ico_rocket.svg';
 //export Default as Information from './lib/information.svg?react';
 
 //import Information from './lib/information.svg';

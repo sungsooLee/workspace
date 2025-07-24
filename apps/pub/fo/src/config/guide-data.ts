@@ -665,7 +665,7 @@ export const guideData = [
     pageId: 'category/detail',
     pageType: 'Page',
     completionDate: '2025-03-14',
-    lastUpdateDate: '2025-05-13',
+    lastUpdateDate: '2025-07-24',
     remarks: 'NLP_FO_CAT_1000 (레이어창 카테고리) 포함\nNLP_FO_CAT_1002 (필터 레이어팝업) 포함',
   },
   {
@@ -675,7 +675,7 @@ export const guideData = [
     pageId: 'category/detail',
     pageType: 'Page',
     completionDate: '2025-03-14',
-    lastUpdateDate: '2025-05-13',
+    lastUpdateDate: '2025-07-24',
     remarks: '',
   },
   {
@@ -685,7 +685,7 @@ export const guideData = [
     pageId: 'category/detail',
     pageType: 'Pop-up',
     completionDate: '2025-03-10',
-    lastUpdateDate: '2025-03-31',
+    lastUpdateDate: '2025-07-24',
     remarks: '- filter.tsx\n- 내용안에 포함',
   },
   {
@@ -695,7 +695,7 @@ export const guideData = [
     pageId: 'category/detail_m',
     pageType: 'Pop-up',
     completionDate: '2025-03-14',
-    lastUpdateDate: '2025-07-22',
+    lastUpdateDate: '2025-07-24',
     remarks: '모바일 모드로 변경 후 상단 전체메뉴 클릭',
   },
   {
@@ -705,7 +705,7 @@ export const guideData = [
     pageId: 'category/detail_m',
     pageType: 'Page',
     completionDate: '2025-03-14',
-    lastUpdateDate: '2025-05-13',
+    lastUpdateDate: '2025-07-24',
     remarks: '- 분류 바텀팝업 안 dropdown 화면넘어가는 이슈 공통 요청중',
   },
   {
@@ -715,7 +715,7 @@ export const guideData = [
     pageId: 'category/detail_m',
     pageType: 'Pop-up',
     completionDate: '2025-05-09',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-24',
     remarks: '- filter-popup.tsx',
   },
   {
@@ -727,6 +727,26 @@ export const guideData = [
     completionDate: '2025-07-11',
     lastUpdateDate: '',
     remarks: '- introduction.tsx\n- toastpopup 공통 수정 요청중',
+  },
+  {
+    screenId: 'NLP_FO_CHN_2002',
+    screenName: '패키지 목록',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: 'course-introduction/package-list',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: 'PC/MOBILE 한페이지 작업중',
+  },
+  {
+    screenId: 'NLP_FO_CHN_2006',
+    screenName: '과정 목록',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: 'course-introduction/course-list',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: 'PC/MOBILE 한페이지 작업중',
   },
   {
     screenId: 'NLP_FO_LEC_1001',
