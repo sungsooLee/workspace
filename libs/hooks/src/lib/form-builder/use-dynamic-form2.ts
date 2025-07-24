@@ -403,6 +403,7 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
       return true;
     } catch (error: any) {
       clearErrors(); // 기존 에러 클리어
+      console.log(error);
 
       // Zod 에러를 react-hook-form 에러로 변환
       if (error && error.issues) {
@@ -441,7 +442,7 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
         console.log('🚀 validation result:', isValid);
 
         if (!isValid) {
-          console.log('Form validation failed, submit canceled');
+          console.log('Form validation failed, submit canceled', formState.errors);
           // 첫 번째 에러 필드로 포커스 이동
           const errors = formState.errors;
           const firstErrorKey = Object.keys(errors)[0];

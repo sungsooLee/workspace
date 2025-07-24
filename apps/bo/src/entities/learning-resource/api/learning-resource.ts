@@ -292,7 +292,7 @@ export default class LearningResourceService {
   static fetchQuestionListForRetrieve(
     params: QuestionListForRetrieveReq,
   ): Promise<QuestionListForRetrieveRes[]> {
-    return httpService.get(`${CMSApiPrefix()}/exam/question/status`, { params });
+    return httpService.get(`${CMSApiPrefix()}/exam/questions/pool`, params);
   }
 
   /**

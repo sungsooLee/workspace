@@ -9,6 +9,7 @@ interface ExcelButtonsProps {
   disabled?: boolean;
   className?: string;
   affairsType?: 'PMS' | 'CMS' | 'LMS';
+  formDataName?: string;
 }
 
 const GridExcelUploadButtonComponent: React.FC<ExcelButtonsProps> = ({
@@ -17,6 +18,7 @@ const GridExcelUploadButtonComponent: React.FC<ExcelButtonsProps> = ({
   disabled = false,
   className,
   affairsType = 'PMS',
+  formDataName = 'file',
 }) => {
   const { open: openModal } = useModal();
 
@@ -24,7 +26,13 @@ const GridExcelUploadButtonComponent: React.FC<ExcelButtonsProps> = ({
   const handleUpload = async () => {
     if (validateUrl) {
       const result = await openModal({
-        content: <ExcelUploadModal validateUrl={validateUrl} affairsType={affairsType} />,
+        content: (
+          <ExcelUploadModal
+            validateUrl={validateUrl}
+            affairsType={affairsType}
+            formDataName={formDataName}
+          />
+        ),
         width: 'lg',
       });
       if (result) onUpload?.(result);

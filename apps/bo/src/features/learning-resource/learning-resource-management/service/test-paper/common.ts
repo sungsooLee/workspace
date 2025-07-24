@@ -71,13 +71,14 @@ export const convertDetailInfoToFormData = (
       to: data.contentUseEndDate ? dayjs(data.contentUseEndDate).toDate() : undefined,
     },
     questionGenType: data.questionGenType ?? ExamQuestionGenType.FIXED,
+    tags: data.tags,
   });
 };
 
 export const EXAM_TEMPLATE_TYPES = Object.freeze({
-  [ExamTemplateType.EXAM]: t('일반 시험지'),
-  [ExamTemplateType.OMR]: t('OMR 시험지'),
-  [ExamTemplateType.QUIZ]: t('OX 퀴즈'),
+  [ExamTemplateType.EXAM]: '일반 시험지',
+  [ExamTemplateType.OMR]: 'OMR 시험지',
+  [ExamTemplateType.QUIZ]: 'OX 퀴즈',
 });
 
 export const getExamTemplateTextByType = (type?: ExamTemplateType): string => {
@@ -89,8 +90,8 @@ export const getExamTemplateTextByType = (type?: ExamTemplateType): string => {
 };
 
 export const EXAM_GEN_TYPES = Object.freeze({
-  [ExamQuestionGenType.FIXED]: t('일반형'),
-  [ExamQuestionGenType.RANDOM]: t('랜덤형'),
+  [ExamQuestionGenType.FIXED]: '일반형',
+  [ExamQuestionGenType.RANDOM]: '랜덤형',
 });
 
 export const getQuestionGenTypeText = (type?: ExamQuestionGenType): string => {
@@ -100,3 +101,9 @@ export const getQuestionGenTypeText = (type?: ExamQuestionGenType): string => {
 
   return EXAM_GEN_TYPES[type];
 };
+
+export const getDropdownOptions = (types: object) =>
+  Object.entries(types).map(([value, label]) => ({
+    value,
+    label: t(label),
+  }));

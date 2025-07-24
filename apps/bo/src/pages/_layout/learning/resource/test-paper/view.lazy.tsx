@@ -1,6 +1,6 @@
 /* IA118 / NLP_BO_CMS_1203 - 나의 학습자원 > 시험지 등록 및 상세 */
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
+import { createLazyFileRoute, useBlocker, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { Button, Divider, Tabs, useModal } from '@learnway/ui';
 import {
@@ -32,6 +32,7 @@ export const Route = createLazyFileRoute('/_layout/learning/resource/test-paper/
 
 function RouteComponent() {
   const router = useRouter();
+
   const { mode, tenantId, contentUuid, data, refetchContentDetail, hasMapping, listParam } =
     useExamLoaderData();
 
@@ -48,6 +49,7 @@ function RouteComponent() {
     onBasicInfoFormChange: onFormChange,
     onSubmit,
     saveBasicInfo,
+    formState,
   } = useExamBasicInfoForm({
     mode,
     contentUuid,
@@ -65,6 +67,18 @@ function RouteComponent() {
     },
     onUpdateSuccess: async (result?: unknown) => {
       await refetchContentDetail();
+    },
+  });
+
+  useBlocker({
+    shouldBlockFn: async () => {
+      if (!formState.isDirty) {
+        return false;
+      }
+      return !(await openConfirm({
+        title: t('이동 하시겠습니까?'),
+        content: t('입력 중인 항목이 초기화됩니다.'),
+      }));
     },
   });
 
@@ -93,7 +107,7 @@ function RouteComponent() {
         ),
       },
       {
-        title: `${t('문항 관리')}${data?.questionGenType ? `(${t(getQuestionGenTypeText(data?.questionGenType))})` : ''}`,
+        title: `${t('문항 관리')}${data?.questionGenType ? `(${t(getQuestionGenTypeText(data.questionGenType))})` : ''}`,
         key: ExamTab.QUESTION,
         content: (
           <LearningResourceQuestionInfo
