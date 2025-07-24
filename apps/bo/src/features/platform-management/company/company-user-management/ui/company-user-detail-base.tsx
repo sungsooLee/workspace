@@ -114,6 +114,18 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
         }
       }
 
+      if( (user.jobRole && user.jobRole.length > 0) || (user.jobDomain && user.jobDomain.length > 0) ) {
+        initialData.jobDomain = null;
+        initialData.jobRole = null;
+        const maxLength = Math.max(user.jobRole.length, user.jobDomain.length);
+        const result = Array.from({ length: maxLength }, (_, i) => ({
+          id: `${user.jobDomain[i] ?? null}_${user.jobRole[i] ?? null}`,
+          role1: user.jobDomain[i] ?? null,
+          role2: user.jobRole[i] ?? null,
+        }));
+        initialData.jobDomains = result;
+      }
+
       updateFormData(initialData);
     }
   }, [props.userInfo]);
@@ -148,7 +160,8 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
       phoneNumber: data.phoneNumber, // 휴대폰 번호
       companyPhoneNumber: data.companyPhoneNumber, // 연락처(사무실)
       // 직군/직무: 직군 선택에 따른 직무 - 현재 공통 코드로만 존재할지 아니면 따로 관리를 할지를 협의해야한다고 해서 구현 못 함.
-
+      jobDomain: [''],
+      jobRole: [''],
       // 계정 정보
       linkageSystem: data.hrInfoManageType !== 'MANUAL_MANAGE' ? data.hrInfoManageType : null,
       accountStatus: 'NORMAL',
@@ -176,6 +189,22 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
     if( data.isUseTwoFactorAuth ) {
       payload.foTwoFactorAuthEnabled = data.twoFactorAuthPlatformTypeList.includes('FO_PLATFORM');
       payload.boTwoFactorAuthEnabled = data.twoFactorAuthPlatformTypeList.includes('BO_PLATFORM');
+    }
+
+    if( data.jobDomain !== '' ) {
+      payload.jobDomain = Array.of(data.jobDomain);
+      payload.jobRole = [];
+    } else {
+      if( data.jobManagement ) {
+        const jobDomains: any[] = [];
+        const jobRoleNames: any[] = [];
+        data.jobManagement.forEach((job: any) => {
+          jobDomains.push(job.jobDomainName)
+          jobRoleNames.push(job.jobRoleName)
+        });
+        payload.jobDomain = [...jobDomains];
+        payload.jobRole = [...jobRoleNames];
+      }
     }
 
     const filteredPayload = Object.fromEntries(
@@ -536,7 +565,6 @@ const formConfig = (): DynamicFormConfig => ({
   ],
   validator: {
     name: true,
-    birthday: true,
     email: {
       format: 'object',
       required: true,
