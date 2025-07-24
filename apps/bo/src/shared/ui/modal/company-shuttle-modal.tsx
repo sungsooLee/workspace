@@ -61,7 +61,7 @@ const CompanyShuttleComponent = () => {
           }}
           showNumberingColumn={false}
           gridData={gridData}
-          columns={columns}
+          columns={columns()}
           rowKey={'companyId'}
           leftTitle={t('회사 목록')}
           rightTitle={t('회사 선택')}
@@ -120,7 +120,7 @@ const searchConfig= (): SearchBoxConfig => ({
 });
 
 const columnHelper = createColumnHelper<any>();
-const columns = [
+const columns = () => [
   columnHelper.accessor('companyType', {
     id: 'companyType',
     cell: (info) =>
