@@ -1,6 +1,6 @@
 import { cloneDeep } from 'lodash';
 
-export function convertToForm(data: any) {
+export function convertToVideoForm(data: any) {
   const _ = cloneDeep(data);
   _.contentUseDate = {
     from: _.contentUseStartDate ? new Date(_.contentUseStartDate) : undefined,
@@ -12,7 +12,7 @@ export function convertToForm(data: any) {
   return _;
 }
 
-export function convertToSubmit(data: any) {
+export function convertToVideoSubmit(data: any) {
   const _ = cloneDeep(data);
   _.contentUseStartDate = _.contentUseDate?.from || null;
   _.contentUseEndDate = _.contentUseDate?.to || null;
