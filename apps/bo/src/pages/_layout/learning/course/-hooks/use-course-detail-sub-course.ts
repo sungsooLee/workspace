@@ -7,24 +7,35 @@ import {
 } from '@entities/course';
 import { useDynamicForm2 } from '@learnway/hooks';
 import { useModal } from '@learnway/ui';
-import { TriggerKey, useCourseStore } from '@pages/_layout/learning/course/-store/use-course-store';
+import {
+  TriggerKey,
+  useCourseLastTriggered,
+} from '@pages/_layout/learning/course/-store/use-course-store';
 import { useNavigate } from '@tanstack/react-router';
 import { Course, CourseConfig } from '@types';
 import { useUpdateEffect } from 'ahooks';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Route as CourseRoute } from '../index';
+import { CourseDetailPageLocationState } from '@pages/_layout/learning/course/-hooks/use-course-detail-page';
+import { usePageState } from '@shared/lib/use-page-state';
 
-export function useCourseDetail(courseId: number) {
+export function useCourseDetailSubCourse() {
   const { t } = useTranslation();
   const { showSaveComplete, alert, saveConfirm, confirm } = useModal();
-  const lastTriggered = useCourseStore((state) => state.lastTriggered);
+  const lastTriggered = useCourseLastTriggered();
+  // const { courseId } = useCourseCreateInfo();
   const navigate = useNavigate();
+
+  // 라우터 state에서 courseId 가져오기
+  const { courseId = -1 } = usePageState<CourseDetailPageLocationState>();
 
   const { provider, getValues, updateFormData, formValues, onSubmit, onFormChange } =
     useDynamicForm2();
 
   const { data: formData } = useFetchCourse(courseId);
+
+  console.log('courseId', courseId);
 
   const { data: courseConfig } = useFetchCourseConfig({
     courseType: formData?.courseType,
@@ -108,6 +119,7 @@ export function useCourseDetail(courseId: number) {
     onFormChange,
     courseConfig,
     formData,
+    courseId,
     handleSave,
   };
 }

@@ -5,9 +5,14 @@ import { t } from 'i18next';
 import { CourseGrid } from './-components/course-grid';
 import { CourseSearchForm } from './-components/course-search-form';
 import { useCoursePage } from './-hooks/use-course-page';
+import { useCourseStore } from './-store/use-course-store';
+import { CourseDetailTab } from './-common/type';
 
 export const Route = createFileRoute('/_layout/learning/course/')({
   component: RouteComponent,
+  beforeLoad: () => {
+    useCourseStore.getState().reset();
+  },
 });
 
 function RouteComponent() {
@@ -27,12 +32,16 @@ function RouteComponent() {
   return (
     <PageContainer>
       <ContentsButtons>
+        <Link to="/learning/course/create/view" className="link">
+          신규 /
+        </Link>
         <Link to="/learning/course/create/view" state={{ courseId: 7 }} className="link">
-          등록 테스트
+          등록7 /
         </Link>
         <Link to="/learning/course/detail/view" state={{ courseId: 7 }} className="link">
-          상세 테스트
+          상세7
         </Link>
+        <Divider orientation={'vertical'} />
         <Button
           type="button"
           variant="point"
