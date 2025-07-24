@@ -19,9 +19,13 @@ import {
 } from '@entities/learning-resource';
 import { NotFound } from '@features/layout';
 import { useCallback, useEffect } from 'react';
-import { LearningResourceVideoDetail, MovieInfo } from '@features/learning-resource';
+import {
+  convertToVideoForm,
+  convertToVideoSubmit,
+  LearningResourceVideoDetail,
+  MovieInfo,
+} from '@features/learning-resource';
 import { PutVideoUpdateRes } from '@types';
-import { convertToForm, convertToSubmit } from './-common/util';
 
 export const Route = createLazyFileRoute('/_layout/learning/learning-resource/video/view')({
   component: RouteComponent,
@@ -53,7 +57,7 @@ function RouteComponent() {
   });
 
   useEffect(() => {
-    if (data) updateFormData(convertToForm(data));
+    if (data) updateFormData(convertToVideoForm(data));
   }, [data]);
 
   const { delete: deleteVideoContent } = useDeleteContent({
@@ -70,7 +74,7 @@ function RouteComponent() {
   const { update: updateVideoContent } = usePutVideoUpdate({
     onSuccess: (result: PutVideoUpdateRes) => {
       console.log('update success', result);
-      updateFormData(convertToForm(result));
+      updateFormData(convertToVideoForm(result));
     },
   });
 
@@ -99,7 +103,7 @@ function RouteComponent() {
         content: t('입력한 정보로 저장합니다.'),
       })
     ) {
-      updateVideoContent(convertToSubmit(data));
+      updateVideoContent(convertToVideoSubmit(data));
     }
   };
 
@@ -137,7 +141,7 @@ function RouteComponent() {
                   '🚀 ~ data & Form values:',
                   formState.isDirty,
                   data,
-                  convertToSubmit(getValues()),
+                  convertToVideoSubmit(getValues()),
                 )
               }
             >
