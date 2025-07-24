@@ -88,8 +88,11 @@ export function pageRouteConfig(routeConfig?: PageRouteConfig<PageMeta>) {
   return {
     beforeLoad: async ({ location, context, params, search, preload, route }: any) => {
       console.log('### beforeLoad start');
-      // 인증 정보 확인
-      if (routeConfig?.authorization) {
+      // 환경변수로 인증 체크 비활성화 확인 (테스트 용)
+      const isAuthDisabled = import.meta.env.VITE_DISABLE_AUTH === 'true';
+
+      // 인증 정보 확인 (환경변수가 true가 아니고, routeConfig에서 authorization이 true인 경우만)
+      if (!isAuthDisabled && routeConfig?.authorization) {
         try {
           await authorization({ location, context });
         } catch (e) {

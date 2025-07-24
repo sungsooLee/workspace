@@ -2,58 +2,45 @@ import {
   SequenceDetail,
   SequenceList,
 } from '@features/learning-operate/learning-sequence/sequence-management';
-import { useNavigate } from '@tanstack/react-router';
-import { useUpdateEffect } from 'ahooks';
 import { forwardRef, useEffect, useState } from 'react';
 import { CourseDetailTabBaseProps, CourseDetailTabFormRef } from '../../../-common/type';
+import { useCourseDetailSubSequence } from '../../../-hooks/use-course-detail-sub-sequence';
 import {
   ContentViewType,
-  TriggerKey,
   useCourseActions,
-  useCourseStore,
+  useCourseLastTriggered,
 } from '../../../-store/use-course-store';
-import { Route as CourseRoute } from '../../../index';
-import { Button } from '@learnway/ui';
 
-const SequenceComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBaseProps>(
-  ({ courseId, courseSequenceId, setCourseSequenceId }, ref) => {
-    const [mode, setMode] = useState<string>('MAIN');
-    const [sequenceId, setSequenceId] = useState<number>(0);
-    const lastTriggered = useCourseStore((state) => state.lastTriggered);
-    const { setContentViewType } = useCourseActions();
-    const navigate = useNavigate();
+const SequenceComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBaseProps>((_, ref) => {
+  const [mode, setMode] = useState<string>('MAIN');
+  const lastTriggered = useCourseLastTriggered();
+  const { courseId, sequenceId: initSequenceId } = useCourseDetailSubSequence();
+  const [sequenceId, setSequenceId] = useState<number>(initSequenceId ?? 0);
 
-    useUpdateEffect(() => {
-      switch (lastTriggered?.key) {
-        case TriggerKey.LIST:
-          if (mode === 'MAIN') navigate({ to: CourseRoute.to });
-          break;
-      }
-    }, [lastTriggered]);
+  const { setContentViewType } = useCourseActions();
 
-    useEffect(() => {
-      console.log('lastTriggered', lastTriggered);
-      setContentViewType(mode === 'MAIN' ? ContentViewType.LIST : ContentViewType.DETAIL); // 탭
-    }, [mode]);
+  useEffect(() => {
+    console.log('lastTriggered', lastTriggered);
+    setContentViewType(mode === 'MAIN' ? ContentViewType.LIST : ContentViewType.DETAIL); // 탭
+  }, [mode]);
 
-    useEffect(() => {
-      console.log('차수ID:', sequenceId);
-      if (setCourseSequenceId) setCourseSequenceId(sequenceId);
-    }, [sequenceId]);
+  // useEffect(() => {
+  //   console.log('차수ID:', sequenceId);
+  //   if (setCourseSequenceId) setCourseSequenceId(sequenceId);
+  // }, [sequenceId]);
 
-    return mode === 'MAIN' ? (
-      <SequenceList setMode={setMode} setSequenceId={setSequenceId} courseId={courseId} />
-    ) : (
-      <SequenceDetail
-        ref={ref}
-        mode={mode}
-        setMode={setMode}
-        courseId={courseId}
-        sequenceId={sequenceId}
-        lastTriggered={lastTriggered}
-      />
-    );
-  },
-);
+  return mode === 'MAIN' ? (
+    <SequenceList setMode={setMode} setSequenceId={setSequenceId} courseId={courseId} />
+  ) : (
+    <SequenceDetail
+      ref={ref}
+      mode={mode}
+      setMode={setMode}
+      courseId={courseId}
+      sequenceId={sequenceId}
+      lastTriggered={lastTriggered}
+    />
+  );
+});
 
 export const Sequence = SequenceComponent;

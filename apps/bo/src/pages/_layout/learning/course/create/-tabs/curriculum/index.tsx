@@ -36,7 +36,7 @@ const CurriculumComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>((_,
       />
       {/* 커리큘럼 상세 */}
       <CurriculumDetail
-        mode={FORM_MODE.create}
+        mode={getValues().primaryCurriculumId ? FORM_MODE.detail : FORM_MODE.create}
         curriculumId={getValues().primaryCurriculumId}
         onCurriculumCreated={(curriculumId: number) => {
           console.log('----- onCurriculumCreated', curriculumId);

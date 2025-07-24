@@ -41,6 +41,10 @@ export const fetchCodeGroup = async <K extends CODE_GROUP_TYPE>(
   group: K,
   filter?: Record<string, any>,
 ): Promise<Code[K]> => {
+  // TODO: 테스트 용
+  if (import.meta.env.VITE_DISABLE_AUTH === 'true') {
+    return [];
+  }
   const codeOption = codeOptions[group];
   let api;
   if (codeOption) {
