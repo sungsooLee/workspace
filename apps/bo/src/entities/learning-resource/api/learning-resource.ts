@@ -33,6 +33,8 @@ import {
   TestPaperBasicInfoSaveReq,
   TestPaperBasicInfoSaveRes,
   QuestionListForRetrieveRes,
+  PostDraftScormParams,
+  PostDraftScormRes,
 } from '@types';
 
 export default class LearningResourceService {
@@ -77,6 +79,10 @@ export default class LearningResourceService {
 
   static postDraftVideos(params: PostDraftVideosParams): Promise<PostDraftVideosRes> {
     return httpService.post(`${CMSApiPrefix()}/videos/draft`, params);
+  }
+
+  static postDraftScorm(params: PostDraftScormParams): Promise<PostDraftScormRes> {
+    return httpService.post(`${CMSApiPrefix()}/scorm/draft`, params);
   }
 
   static putVideoUpdate(params: PutVideoUpdateParams) {
