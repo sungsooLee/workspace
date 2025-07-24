@@ -10,13 +10,19 @@ import {
   PageContainer,
 } from '@shared/ui';
 import { TestPaperBasicInfoSaveRes } from '@types';
-import { getExamTemplateTextByType, getQuestionGenTypeText } from './-common/common';
-import { ExamTab, PageMode } from './-common/type';
-import { useExamLoaderData } from './-hooks/use-exam-loader-data';
-import { useExamPaperForm } from './-hooks/use-exam-paper-form';
-import { useExamBasicInfoForm } from './-hooks/use-exam-basic-info-form';
-import { TestPaperInfo } from './-tabs/test-paper-info';
-import { QuestionInfo } from './-tabs/question-info';
+import {
+  LearningResourceQuestionInfo,
+  LearningResourceTestPaperInfo,
+} from '@features/learning-resource';
+import {
+  ExamTab,
+  PageMode,
+  getExamTemplateTextByType,
+  getQuestionGenTypeText,
+  useExamBasicInfoForm,
+  useExamLoaderData,
+  useExamPaperForm,
+} from '@features/learning-resource/learning-resource-management/service';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 
@@ -68,7 +74,7 @@ function RouteComponent() {
         title: `${t('시험지 정보')}${mode === PageMode.UPDATE ? `(${t(getExamTemplateTextByType(data?.examTemplateType))})` : ''}`,
         key: ExamTab.PAPER,
         content: (
-          <TestPaperInfo
+          <LearningResourceTestPaperInfo
             ref={basicInfoRef}
             basicInfoForm={{
               provider,
@@ -90,7 +96,7 @@ function RouteComponent() {
         title: `${t('문항 관리')}${data?.questionGenType ? `(${t(getQuestionGenTypeText(data?.questionGenType))})` : ''}`,
         key: ExamTab.QUESTION,
         content: (
-          <QuestionInfo
+          <LearningResourceQuestionInfo
             ref={questionInfoRef}
             basicInfoForm={{ provider, getValues, updateFormDataByKey, saveBasicInfo }}
             contentUuid={contentUuid}
