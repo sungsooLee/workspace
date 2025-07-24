@@ -3,8 +3,8 @@ import { useDynamicForm2 } from '@learnway/hooks';
 import { useModal } from '@learnway/ui';
 import { TestPaperBasicInfoSaveRes } from '@types';
 import { useCreateExamPaperContent, useUpdateExamPaperContent } from '@entities/learning-resource';
-import { PageMode, TestPaperBasicInfoFormData } from '../-common/type';
-import { getExamSaveRequestDataFromFormData } from '../-common/common';
+import { getExamSaveRequestDataFromFormData } from './common';
+import { PageMode, TestPaperBasicInfoFormData } from './type';
 
 export const useExamBasicInfoForm = (options: {
   mode: PageMode;

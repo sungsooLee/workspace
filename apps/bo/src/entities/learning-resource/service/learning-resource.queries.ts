@@ -42,7 +42,8 @@ export const queryKeys = {
   html5Status: ['html5-status'] as const,
   blogResource: ['blog-resource'] as const,
   questionBankQuestionList: ['question-bank-question-list'] as const,
-  questionBankQuestionItem: ['question-bank-question-item'] as const,
+  questionBankQuestionItem: (examQuestionUuid: string) =>
+    ['question-bank-question-item', examQuestionUuid] as const,
   randomQuestionCount: (examUuid: string) => ['random-question-count', examUuid] as const,
   questionListForRetrieve: ['question-list-for-retrieve'] as const,
 };
@@ -140,7 +141,7 @@ export const learningResourceQueryOptions = {
   getQuestionItem: (examQuestionUuid?: string) =>
     examQuestionUuid
       ? {
-          queryKey: queryKeys.questionBankQuestionItem,
+          queryKey: queryKeys.questionBankQuestionItem(examQuestionUuid),
           queryFn: () => LearningResourceService.getQuestionItem(examQuestionUuid),
           enabled: !!examQuestionUuid,
         }

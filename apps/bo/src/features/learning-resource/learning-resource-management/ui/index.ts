@@ -8,3 +8,6 @@ export * from './legacy/ebook-info';
 export * from './legacy/image-info';
 export * from './legacy/movie-info';
 export * from './legacy/scorm-info';
+
+export * from './learning-resource-test-paper-info';
+export * from './learning-resource-question-info';
