@@ -21,7 +21,6 @@ const SettingsPopover = (props: VideoPlayerContainerProps) => {
     speed: '1x',
     source: 'Auto',
     quality: 'Auto',
-    subtitle: 'Korean',
   });
 
   const handleSelect = (key: keyof typeof selected, value: string) => {
@@ -89,22 +88,12 @@ const SettingsPopover = (props: VideoPlayerContainerProps) => {
       case MENU.SUBTITLE:
         return (
           <SubMenu title="자막" badge="9-5" onBack={() => setActiveMenu(MENU.ROOT)}>
-            {[
-              'Korean',
-              'العربية',
-              '中國台灣',
-              'Deutsch',
-              'English',
-              'Spanish',
-              'French',
-              'Indonesian',
-              '日本語',
-            ].map((v) => (
+            {props.videoSubtitles?.map((v) => (
               <MenuItem
-                key={v}
-                label={v}
-                active={selected.subtitle === v}
-                onClick={() => handleSelect('subtitle', v)}
+                key={v.label}
+                label={v.label}
+                active={props.selectedSubtitle.srcLang === v.srcLang}
+                onClick={() => props.changeSubtitle(v)}
               />
             ))}
           </SubMenu>
@@ -121,15 +110,17 @@ const SettingsPopover = (props: VideoPlayerContainerProps) => {
                 value={selected.speed}
                 onClick={() => setActiveMenu(MENU.SPEED)}
               />
-              <MenuItem
-                label="품질"
-                value={props.videoQuality.label}
-                onClick={() => setActiveMenu(MENU.QUALITY)}
-              />
-              {props.videoConfig && (
+              {props.encodedVideos && (
+                <MenuItem
+                  label="품질"
+                  value={props.videoQuality.label}
+                  onClick={() => setActiveMenu(MENU.QUALITY)}
+                />
+              )}
+              {props.videoSubtitles && (
                 <MenuItem
                   label="자막"
-                  value={selected.subtitle}
+                  value={props.selectedSubtitle.label}
                   onClick={() => setActiveMenu(MENU.SUBTITLE)}
                 />
               )}

@@ -100,13 +100,15 @@ const BottomProgressBar = (props: VideoPlayerContainerProps) => {
 
         {/* 오른쪽: 설정, 전체화면 */}
         <div className={styles.right}>
-          <IcoSubtitles
-            className={styles.sub_title}
-            width={isMobile ? 16 : 24}
-            height={isMobile ? 16 : 24}
-            fill={props.subtitlesVisible ? '#80aaff' : '#fff'}
-            onClick={props.toggleSubtitles}
-          />
+          {props.videoSubtitles && (
+            <IcoSubtitles
+              className={styles.sub_title}
+              width={isMobile ? 16 : 24}
+              height={isMobile ? 16 : 24}
+              fill={props.subtitlesVisible ? '#80aaff' : '#fff'}
+              onClick={props.toggleSubtitles}
+            />
+          )}
           <div className="relative">
             <IcoSettingsFill
               className={styles.setting}

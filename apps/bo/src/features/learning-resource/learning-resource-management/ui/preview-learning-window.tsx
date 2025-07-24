@@ -150,6 +150,9 @@ const PreviewLearningWindowComponent: FC<any> = ({
       galleryLearningHistory: (payload) => {
         console.log('galleryLearningHistory called', payload);
       },
+      otherClickButton: async (playInfo, otherInfo) => {
+        console.log('otherClickButton called', playInfo, otherInfo);
+      },
     });
   }, [data]);
 

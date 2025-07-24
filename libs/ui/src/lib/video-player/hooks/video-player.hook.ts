@@ -3,10 +3,12 @@ import { t } from 'i18next';
 import ReactPlayer from 'react-player';
 import { EnLibGlobalConst } from '@learnway/types';
 import { VideoPlayerContainerProps } from '../types/video-player-container.type';
+import { useTranslation } from 'react-i18next';
 type UseVideoPlayer = {
   onProgressCallback?: (state: { played: number; playedSeconds: number; speed: number }) => void;
   gotoBeforeLesson?: () => void;
   gotoNextLesson?: () => void;
+  langCode?: string;
 };
 
 export const VideoQualities = {
@@ -40,10 +42,12 @@ export const getHeightValueEncodedVideo = (data: any[], height: number) => {
 };
 
 export const useVideoPlayer = ({
+  langCode = 'KO',
   onProgressCallback,
   gotoBeforeLesson,
   gotoNextLesson,
 }: UseVideoPlayer = {}): VideoPlayerContainerProps => {
+  const { t: transT } = useTranslation();
   const playerContainerRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<ReactPlayer>(null);
   const [videoConfig, setVideoConfig] = useState<any>();
@@ -62,14 +66,88 @@ export const useVideoPlayer = ({
   const [playUrl, setPlayUrl] = useState<string>();
   const [videoQuality, setVideoQuality] = useState<any>(VideoQualities.auto);
   const [autoQualityStepPos, setAutoQualityStepPos] = useState<number>(0);
+  const [selectedSubtitle, setSelectedSubtitle] = useState<any>();
 
   //player 정보 전달을 위한 값
   const [isFirstLoad, setIsFirstLoad] = useState(true);
   const [videoStart, setVideoStart] = useState<number>(0);
 
+  const changeSubtitle = (subtitle: any) => {
+    //if (!videoSubtitles) return;
+    // subtitle 설정
+
+    setSelectedSubtitle(subtitle);
+
+    const video = playerRef.current?.getInternalPlayer() as HTMLVideoElement | null;
+
+    if (video && video.textTracks.length > 0) {
+      for (let i = 0; i < video.textTracks.length; i++) {
+        if (subtitlesVisible) {
+          video.textTracks[i].mode =
+            video.textTracks[i].language === subtitle.srcLang ? 'showing' : 'hidden';
+        } else {
+          video.textTracks[i].mode = 'hidden';
+        }
+      }
+    }
+
+    // const subItem = videoSubtitles.find((item: any) => {
+    //   return item.srcLang === langCode;
+    // });
+    // if (subItem) {
+    //   config.file.tracks = [subItem];
+    //   setVideoConfig(config);
+    //   setSelectedSubtitle(subItem);
+    // }
+  };
+
+  const resetReactPlayerConfig = (tracks: any[]) => {
+    if (!tracks) return;
+    console.log('11111111111111111', tracks);
+    let nowSubtitle;
+
+    if (langCode) {
+      nowSubtitle = tracks.find((item: any) => {
+        return item.srcLang === langCode;
+      });
+    }
+    if (!nowSubtitle) {
+      nowSubtitle = tracks[0];
+    }
+    nowSubtitle.default = true;
+    const config = {
+      file: {
+        attributes: {
+          crossOrigin: 'anonymous',
+        },
+        tracks,
+      },
+    };
+    setVideoConfig(config);
+    changeSubtitle(nowSubtitle);
+  };
+
   useEffect(() => {
+    console.log('333333333333333', videoInfo);
     if (videoInfo) {
-      setVideoSubtitles(videoInfo.videoSubtitles);
+      if (videoInfo.videoSubtitles && videoInfo.videoSubtitles.length > 0) {
+        const tracks: any[] = [];
+        videoInfo.videoSubtitles.forEach((subItem: any) => {
+          tracks.push({
+            kind: 'subtitles',
+            src: subItem.subtitleUrl,
+            srcLang: subItem.languageCountryCode,
+            default: false,
+            label: transT(
+              `${EnLibGlobalConst.SYSTEM_COMMON_CODE}.pms.multilingual.LangCountryCode.${subItem.languageCountryCode}`,
+              subItem.languageCountryCode,
+            ),
+          });
+        });
+
+        setVideoSubtitles(tracks);
+        resetReactPlayerConfig(tracks);
+      }
 
       if (videoInfo.encodedVideos && videoInfo.encodedVideos.length > 0) {
         const videoMap = new Map();
@@ -79,30 +157,6 @@ export const useVideoPlayer = ({
           }
         });
         setEncodedVideos([...videoMap.values()]);
-      }
-      // subtitle 설정
-      const config = {
-        attributes: {
-          crossOrigin: 'anonymous',
-        },
-        file: {
-          tracks: [] as any[],
-        },
-      };
-
-      videoInfo.videoSubtitles.forEach((item: any) => {
-        config.file.tracks.push({
-          kind: 'subtitles',
-          src: item.subtitleUrl,
-          srcLang: item.languageCountryCode,
-          default: true,
-          label: t(
-            `${EnLibGlobalConst.SYSTEM_COMMON_CODE}.pms.multilingual.LangCountryCode.${item.languageCountryCode}`,
-          ),
-        });
-      });
-      if (videoInfo.videoSubtitles && videoInfo.videoSubtitles.length > 0) {
-        setVideoConfig(config);
       }
       setPlayUrl(videoInfo.masterVideo);
     } else {
@@ -153,9 +207,16 @@ export const useVideoPlayer = ({
   };
   const toggleSubtitles = () => {
     const video = playerRef.current?.getInternalPlayer() as HTMLVideoElement | null;
+    console.log('99999999999', video?.textTracks);
     if (video && video.textTracks.length > 0) {
+      console.log('tracks', video.textTracks);
       for (let i = 0; i < video.textTracks.length; i++) {
-        video.textTracks[i].mode = subtitlesVisible ? 'hidden' : 'showing';
+        if (!subtitlesVisible) {
+          video.textTracks[i].mode =
+            video.textTracks[i].language === selectedSubtitle.srcLang ? 'showing' : 'hidden';
+        } else {
+          video.textTracks[i].mode = 'hidden';
+        }
       }
       setSubtitlesVisible(!subtitlesVisible);
     }
@@ -240,12 +301,15 @@ export const useVideoPlayer = ({
 
     if (!isFirstLoad) {
       setSeconds(currentTime);
+      if (videoSubtitles && videoSubtitles.length > 0) resetReactPlayerConfig(videoSubtitles);
       return;
     }
     if (videoInfo) {
-      setCurrentTime(videoInfo.lastVideoEndTime);
-      setSeconds(videoInfo.lastVideoEndTime);
-      setVideoStart(videoInfo.lastVideoEndTime);
+      if (videoInfo.lastVideoEndTime) {
+        setCurrentTime(videoInfo.lastVideoEndTime);
+        setSeconds(videoInfo.lastVideoEndTime);
+        setVideoStart(videoInfo.lastVideoEndTime);
+      }
     }
     setIsFirstLoad(false);
   };
@@ -279,9 +343,17 @@ export const useVideoPlayer = ({
     const data = getHeightValueEncodedVideo(encodedVideos, selectedHeight);
 
     if (data) {
+      if (videoSubtitles) {
+        console.log('32433242432');
+        resetReactPlayerConfig(videoSubtitles);
+      }
       setPlayUrl(data.m3u8Url);
       setVideoQuality(v);
     } else if (v.label === VideoQualities.auto.label) {
+      if (videoSubtitles) {
+        console.log('3337434734111111111111111');
+        resetReactPlayerConfig(videoSubtitles);
+      }
       setPlayUrl(videoInfo.masterVideo);
       setVideoQuality(v);
     }
@@ -299,6 +371,9 @@ export const useVideoPlayer = ({
     setPlayUrl,
     videoStart,
     setVideoStart,
+    selectedSubtitle,
+    changeSubtitle,
+
     videoConfig,
     videoSubtitles,
     encodedVideos,
