@@ -23,16 +23,17 @@ import {
   TestPaperBasicInfoDetail,
 } from '@types';
 import { FormRow2, GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
-import {
-  QUESTION_LEVELS,
-  QUESTION_TYPES,
-} from '@features/learning-resource/learning-resource-management/service/exam-util';
 import { SegmentedControlFormField } from '@features/form/ui/segmented-control-form-field';
-import { LearningResourceTestItemModal } from '@features/learning-resource/learning-resource-management/ui/learning-resource-test-item-modal';
-import { LearningResourceQuestionShuttleModal } from '@features/learning-resource/learning-resource-management/ui/learning-resource-question-shuttle-modal';
-import { getExamTemplateTextByType } from '../-common/common';
-import { ExamQuestionInfoProps, QuestionStatisticRow, TabFormRef } from '../-common/type';
-import { useExamQuestionInfoInput } from '../-hooks/use-exam-question-info-input';
+import { QUESTION_LEVELS, QUESTION_TYPES } from '../service/exam-util';
+import { getExamTemplateTextByType } from '../service/test-paper/common';
+import {
+  ExamQuestionInfoProps,
+  QuestionStatisticRow,
+  TabFormRef,
+} from '../service/test-paper/type';
+import { useExamQuestionInfoInput } from '../service/test-paper/use-exam-question-info-input';
+import { LearningResourceTestItemModal } from './learning-resource-test-item-modal';
+import { LearningResourceQuestionShuttleModal } from './learning-resource-question-shuttle-modal';
 
 /* styles */
 import styles from '@learnway/styles/bo/pages/_layout/learning/test-detail.module.css';
@@ -527,6 +528,6 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
   },
 );
 
-QuestionInfoComponent.displayName = 'QuestionInfo';
+QuestionInfoComponent.displayName = 'LearningResourceQuestionInfo';
 
-export const QuestionInfo = QuestionInfoComponent;
+export const LearningResourceQuestionInfo = QuestionInfoComponent;

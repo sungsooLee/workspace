@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { ExamQuestionGenType, TestPaperBasicInfoDetail } from '@types';
-import { TabFormRef } from '../-common/type';
+import { TabFormRef } from './type';
 
 export const useExamPaperForm = (data: TestPaperBasicInfoDetail | undefined) => {
   const basicInfoRef = useRef<TabFormRef>(null);

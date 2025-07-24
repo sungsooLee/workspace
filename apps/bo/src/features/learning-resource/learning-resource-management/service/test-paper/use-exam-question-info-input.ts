@@ -17,7 +17,7 @@ import {
   useUpdateExamPaperQuestionCount,
   useUpdateQuestionStatus,
 } from '@entities/learning-resource';
-import { LevelKey, QuestionStatisticRow, SelectedQuestionState } from '../-common/type';
+import { LevelKey, QuestionStatisticRow, SelectedQuestionState } from './type';
 
 export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) => {
   const { contentUuid, examPoolUuid, questionGenType, questionCount } = basicInfo;
