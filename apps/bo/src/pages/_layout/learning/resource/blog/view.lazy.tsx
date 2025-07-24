@@ -16,8 +16,8 @@ import {
 } from '@shared/ui';
 import { learningResourceQueryOptions, useDeleteContent } from '@entities/learning-resource';
 import { PreviewLearningWindow } from '@features/learning-resource/learning-resource-management/ui/preview-learning-window';
+import { LearningResourceBlogDetail } from '@features/learning-resource';
 
-import { BlogDetail } from './-components/blog-detail';
 import styles from './blog-detail.module.css';
 
 export const Route = createLazyFileRoute('/_layout/learning/resource/blog/view')({
@@ -166,7 +166,7 @@ function RouteComponent() {
       </ContentsButtons>
 
       <MainContents>
-        <BlogDetail
+        <LearningResourceBlogDetail
           ref={formRef}
           tenantId={tenantId}
           mode="update"

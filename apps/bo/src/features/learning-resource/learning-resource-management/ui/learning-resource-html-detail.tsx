@@ -10,9 +10,9 @@ import { HtmlVideoDetailRes, HtmlVideoMetadataRes, ProcessingStatus } from '@typ
 import { useUpdateHTML5Metadata } from '@entities/learning-resource';
 import { ContentsHistoryInfoFormField } from '@shared/ui';
 import { MediaContentRequiredCheckFormField } from '@features/form/ui';
-import { LearningResourceBaseForm } from '@features/learning-resource/learning-resource-management/ui/learning-resource-base-form';
-import { useRoleInfo } from '../../-common/common';
-import { getPayloadFromHtmlMetadataSubmit } from '../-common/form-submit';
+import { useRoleInfo } from '../service/util';
+import { getPayloadFromHtmlMetadataSubmit } from '../service/learning-resource-html-form-submit';
+import { LearningResourceBaseForm } from './learning-resource-base-form';
 
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 
@@ -120,4 +120,4 @@ const HtmlDetailComponent = forwardRef<HTMLFormElement, HtmlDetailProps>(
 
 HtmlDetailComponent.displayName = 'HtmlDetail';
 
-export const HtmlDetail = HtmlDetailComponent;
+export const LearningResourceHtmlDetail = HtmlDetailComponent;

@@ -15,8 +15,10 @@ import {
   SubContents,
 } from '@shared/ui';
 import { ProcessingStatus } from '@types';
-import { FileInfo } from './-components/file-info';
-import { HtmlDetail } from './-components/html-detail';
+import {
+  LearningResourceHtmlDetail,
+  LearningResourceHtmlFileInfo,
+} from '@features/learning-resource';
 
 export const Route = createLazyFileRoute('/_layout/learning/resource/html-video/view')({
   component: RouteComponent,
@@ -185,7 +187,7 @@ function RouteComponent() {
       </ContentsButtons>
 
       <MainContents>
-        <HtmlDetail
+        <LearningResourceHtmlDetail
           ref={formRef}
           mode={mode}
           tenantId={tenantId}
@@ -196,7 +198,11 @@ function RouteComponent() {
 
       <SubContents>
         {data?.contentUuid && data?.fileUuid && (
-          <FileInfo contentUuid={data.contentUuid} uuid={data.fileUuid} mode={mode} />
+          <LearningResourceHtmlFileInfo
+            contentUuid={data.contentUuid}
+            uuid={data.fileUuid}
+            mode={mode}
+          />
         )}
       </SubContents>
     </PageContainer>
