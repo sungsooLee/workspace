@@ -75,7 +75,9 @@ const CourseEducationCompoment = ({educations} : {educations: any}) => {
       <div className={styles.education_box}>
         <ul>
           {educations.classes.map((edu: any) => (
-            <li><Education data={edu} /></li>
+            <li>
+              <Education edu={edu} />
+            </li>
           ))}
         </ul>
 
