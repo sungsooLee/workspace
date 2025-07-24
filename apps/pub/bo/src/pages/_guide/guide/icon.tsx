@@ -196,6 +196,10 @@ import {
   IcoSettingsFill,
   IcoSpeakerOffFill,
   IcoCircleProgress,
+  IcoPoint,
+  IcoChart,
+  IcoPaper,
+  IcoRocket,
 } from '@learnway/icons';
 
 export const Route = createFileRoute('/_guide/guide/icon')({
@@ -1183,6 +1187,26 @@ function RouteComponent() {
       name: 'IcoCircleProgress',
       Component: <IcoCircleProgress width={24} height={24} stroke="#4C515E" />,
       file: 'ic_circle_progress.svg',
+    },
+    {
+      name: 'IcoPoint',
+      Component: <IcoPoint width={24} height={24} stroke="#FF8245" />,
+      file: 'ic_point.svg',
+    },
+    {
+      name: 'IcoChart',
+      Component: <IcoChart width={67} height={62} />,
+      file: 'ic_chart.svg (색상변경금지)',
+    },
+    {
+      name: 'IcoPaper',
+      Component: <IcoPaper width={75} height={72} />,
+      file: 'ic_paper.svg (색상변경금지)',
+    },
+    {
+      name: 'IcoRocket',
+      Component: <IcoRocket width={64} height={61} />,
+      file: 'ic_rocket.svg (색상변경금지)',
     },
   ];
   return (

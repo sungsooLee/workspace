@@ -195,6 +195,10 @@ export { ReactComponent as IcoSettingsFill } from './lib/ic_settings_fill.svg';
 export { ReactComponent as IcoSpeakerOffFill } from './lib/ic_speaker_off_fill.svg';
 export { ReactComponent as IcoCircleProgress } from './lib/ic_circle_progress.svg';
 export { ReactComponent as IcoLoading02 } from './lib/ic_loading_02.svg';
+export { ReactComponent as IcoPoint } from './lib/ic_point.svg';
+export { ReactComponent as IcoChart } from './lib/ico_chart.svg';
+export { ReactComponent as IcoPaper } from './lib/ico_paper.svg';
+export { ReactComponent as IcoRocket } from './lib/ico_rocket.svg';
 //export Default as Information from './lib/information.svg?react';
 
 //import Information from './lib/information.svg';
