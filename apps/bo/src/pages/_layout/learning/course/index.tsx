@@ -38,11 +38,7 @@ function RouteComponent() {
         <Link to="/learning/course/create/view" state={{ courseId: 7 }} className="link">
           등록7 /
         </Link>
-        <Link
-          to="/learning/course/detail/view"
-          state={{ courseId: 7, initialTab: CourseDetailTab.SEQUENCE }}
-          className="link"
-        >
+        <Link to="/learning/course/detail/view" state={{ courseId: 7 }} className="link">
           상세7
         </Link>
         <Divider orientation={'vertical'} />
