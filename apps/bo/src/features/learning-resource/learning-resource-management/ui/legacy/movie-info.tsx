@@ -1,23 +1,16 @@
 //  IA105 / NLP_BO_CMS_1016, NLP_BO_CMS_1002
 
-import { Button, Spinner, useModal } from '@learnway/ui';
-import { IcoStatusFail } from '@learnway/icons';
-import style from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
+import { useModal } from '@learnway/ui';
 import { DynamicFormProvider, useFileManager } from '@learnway/hooks';
-import {
-  isProcessing,
-  isProcessingCompleted,
-  isProcessingFailed,
-  isProcessingNone,
-  useVideoResource,
-} from '@entities/learning-resource';
+import { useVideoResource } from '@entities/learning-resource';
 import { formatBytes } from '@learnway/shared';
 import { useCallback, useMemo } from 'react';
 import { max } from 'lodash';
 import { PreviewLearningWindow } from '../preview-learning-window';
-import ReactPlayer from 'react-player';
 import { LearningResourceFileUploadModal } from '../learning-resource-file-upload-modal';
 import { LEARNING_TYPE } from '@learnway/config';
+import { t } from 'i18next';
+import { MediaInfo } from './media-info';
 
 interface MovieInfoProps {
   provider: DynamicFormProvider;
@@ -94,86 +87,31 @@ const MovieInfoComponent = ({ provider }: MovieInfoProps) => {
   // media btn list
   const buttons = [
     {
-      label: '원본 다운로드',
+      label: t('원본 다운로드'),
       onClick: downloadOriginal,
     },
     {
-      label: '동영상 변경',
+      label: t('동영상 변경'),
       onClick: changeFile,
     },
     {
-      label: '콘텐츠 URL보기',
+      label: t('콘텐츠 URL보기'),
       onClick: () => console.log('btn 3'),
     },
     {
-      label: '미리보기',
+      label: t('미리보기'),
       onClick: preview,
     },
   ];
 
-  if (isProcessingNone(status)) return null;
-
   return (
-    <>
-      <strong className={style.title}>업로드 파일</strong>
-      {/* 인코딩 진행 중 */}
-      {isProcessing(status) && (
-        <div className={style.status_wrap}>
-          <Spinner isLoading={true} showBackdrop className={style.loading} />
-          <p className={style.text}>
-            <strong>인코딩 진행 중입니다.</strong>
-            인코딩 대기 및 영상 길이에 따라 인코딩 시간이 오래 걸릴수도 있습니다.
-          </p>
-        </div>
-      )}
-      {/* 인코딩 실패 */}
-      {isProcessingFailed(status) && (
-        <div className={style.status_wrap}>
-          <IcoStatusFail className={style.fail} />
-          <p className={style.text}>
-            <strong>인코딩이 실패되었습니다.</strong>
-            다시 시도해 주세요.
-          </p>
-          <div className={style.btn_box}>
-            <Button className={style.btn} variant="gray" size="sm">
-              재시도
-            </Button>
-            <Button className={style.btn} variant="primary" size="sm">
-              동영상 변경
-            </Button>
-          </div>
-        </div>
-      )}
-      {isProcessingCompleted(status) && (
-        <>
-          <ul className={style.btn_list}>
-            {buttons.map((btn, index) => (
-              <li key={index}>
-                <Button onClick={btn.onClick} className={style.btn_text}>
-                  {btn.label}
-                </Button>
-              </li>
-            ))}
-          </ul>
-          {/* media(비디오 영역) */}
-          {url && (
-            <div className={style.media}>
-              <ReactPlayer url={url} playing controls width={416} />
-              {/* <img src={'https://picsum.photos/200'} width="100%" alt="" /> */}
-            </div>
-          )}
-          {/* info_list */}
-          <ul className={style.info_list}>
-            {infoList.map((item, index) => (
-              <li key={index}>
-                <span className={style.title}>{item.title}</span>
-                <span className={style.text}>{item.text}</span>
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
-    </>
+    <MediaInfo
+      status={status}
+      buttons={buttons}
+      type={LEARNING_TYPE.VIDEO}
+      url={url}
+      infoList={infoList}
+    />
   );
 };
 
