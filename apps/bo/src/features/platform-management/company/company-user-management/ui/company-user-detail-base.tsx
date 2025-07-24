@@ -195,12 +195,12 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
       payload.jobDomain = Array.of(data.jobDomain);
       payload.jobRole = [];
     } else {
-      if( data.jobManagement ) {
+      if( data.jobDomains ) {
         const jobDomains: any[] = [];
         const jobRoleNames: any[] = [];
-        data.jobManagement.forEach((job: any) => {
-          jobDomains.push(job.jobDomainName)
-          jobRoleNames.push(job.jobRoleName)
+        data.jobDomains.forEach((job: any) => {
+          jobDomains.push(job.role1)
+          jobRoleNames.push(job.role2)
         });
         payload.jobDomain = [...jobDomains];
         payload.jobRole = [...jobRoleNames];
