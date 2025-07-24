@@ -112,7 +112,7 @@ const CourseDashboardCompoment = () => {
         <Panel
           type="rounded"
           hideHeaderUnderline
-          className={`${statusStyles.panel_degreey} $/*{statusStyles.incomplete} */`}
+          className={`${statusStyles.panel_degreey} ${statusStyles.completed}`}
         >
           <div className={statusStyles.list}>
             <h3>학습중</h3>

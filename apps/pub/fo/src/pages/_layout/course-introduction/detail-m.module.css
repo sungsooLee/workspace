@@ -81,6 +81,9 @@
       .introduction_content {
         & > div {
           @apply mt-[56px];
+          &:nth-last-child(1) {
+            @apply py-[40px];
+          }
         }
       }
     }
