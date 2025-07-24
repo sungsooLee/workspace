@@ -1,11 +1,10 @@
 /* user-avatar.module.css */
 .start {
   &.avatar_area {
-    @apply min-w-[360px] rounded-[8px] border border-solid border-[var(--gray3)] bg-[var(--white)] shadow-[0px_2px_10px_rgba(0,0,0,0.08)];
+    @apply min-w-[360px] rounded-[8px] border border-solid border-[var(--gray3)] bg-[var(--white)] p-[32px] shadow-[0px_2px_10px_rgba(0,0,0,0.08)];
     .profile_info {
-      @apply pb-[32px] pt-[36px];
+      @apply flex items-center justify-start;
       .avatar_img {
-        @apply m-auto text-center;
         .start {
           @apply h-[66px] w-[66px];
         }
@@ -30,28 +29,12 @@
       }
 
       .profile {
-        @apply m-auto max-w-[300px] px-[34px];
+        @apply ml-[20px] flex-row text-left;
         .name {
-          @apply body_1_b ellipsis mt-[16px] block text-center text-[var(--gray9)];
+          @apply body_1_b ellipsis mt-[16px] block text-[var(--gray9)];
         }
-        .tenant,
-        .team {
-          @apply body_3_r ellipsis mt-[8px] block text-center text-[var(--gray7)];
-        }
-        .team {
-          @apply ellipsis mt-[0] overflow-hidden text-ellipsis whitespace-nowrap;
-        }
-        .time {
-          @apply mt-[16px] flex justify-center;
-          span {
-            @apply body_bo_3_r text-[var(--gray7)];
-            & + span {
-              @apply relative ml-[8px] pl-[8px];
-              &::before {
-                @apply absolute left-0 top-1/2 h-[12px] w-px -translate-y-1/2 bg-[var(--gray5)] content-[''];
-              }
-            }
-          }
+        .tenant {
+          @apply body_3_r ellipsis mt-[8px] block text-[var(--gray7)];
         }
       }
     }
