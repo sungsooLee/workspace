@@ -35,18 +35,18 @@ import {
   CourseIntroduction, // 과정소개
   CourseEducation, // 교육일정
   CourseReview, // 후기
+  CourseRelatedProcess, // 연관과정
   CourseFixedButton, // 수강신청 버튼
   CourseCancelReasonPopup, // 수강신청 취소 사유 입력
   PackageCardList, // 패키지 카드
 } from '../../../features/layout';
 
-import pageContentsStyles from '../../_page-contents.module.css';
-import pageFullInner from '../../../widgets/layout/ui/container/page-full-inner.module.css';
-import packageInformationStyles from './package-information.module.css';
-import lectureStyles from './lecture.module.css';
-import packageSideStyles from './package-side.module.css';
-
-import styles from './detail.module.css';
+import pageContentsStyles from '@learnway/styles/fo/pages/_page-contents.module.css';
+import pageFullInner from '@learnway/styles/fo/widgets/layout/ui/container/page-full-inner.module.css';
+import packageInformationStyles from '@learnway/styles/fo/pages/_layout/course-introduction/package-information.module.css';
+import lectureStyles from '@learnway/styles/fo/pages/_layout/course-introduction/lecture.module.css';
+import packageSideStyles from '@learnway/styles/fo/pages/_layout/course-introduction/package-side.module.css';
+import styles from '@learnway/styles/fo/pages/_layout/course-introduction/detail.module.css';
 
 // 이미지
 import playImg from '@learnway/styles/fo/assets/images/common/img_play.png';
@@ -98,9 +98,11 @@ function RouteComponent() {
           <CourseIntroduction />
           <CourseEducation />
           <CourseReview />
-          {/* 연관과정 썸네일 공통 컴포넌트 작업 예정 (현재 작업 x) */}
           <div className={cn(pageFullInner.start, pageFullInner.inner, pageFullInner.bg_sec1)}>
-            <div className={pageFullInner.contents}>공통 컴포넌트 대기중</div>
+            <div className={pageFullInner.contents}>
+              {/* 퍼블수정 20250724 연관과정 추가 */}
+              <CourseRelatedProcess />
+            </div>
           </div>
         </div>
       ),

@@ -1,0 +1,51 @@
+.start {
+  &.related_process {
+    @apply mr-auto w-[880px];
+    .box {
+      strong {
+        @apply headline2-b mb-[24px] block text-[var(--gray10)];
+      }
+      & > div {
+        @apply w-full;
+      }
+      [class*='swiper-slide'] {
+        @apply !w-[280px];
+      }
+      [class*='prev_btn'] {
+        @apply top-[85px] h-[44px] w-[44px] translate-y-0;
+      }
+      [class*='next_btn'] {
+        @apply top-[85px] h-[44px] w-[44px] translate-y-0;
+      }
+      & + .box {
+        @apply mt-[60px];
+      }
+    }
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.related_process {
+        @apply w-full px-[16px];
+        .box {
+          strong {
+            @apply headline1-b mb-[16px];
+          }
+          [class*='nlp--carousel-wrap'] {
+            & > div {
+              @apply -mx-[16px] w-[100vw] px-[16px];
+            }
+          }
+          [class*='swiper-slide'] {
+            @apply !w-[242px];
+          }
+          & + .box {
+            @apply mt-[40px];
+          }
+        }
+      }
+    }
+  }
+}

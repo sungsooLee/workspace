@@ -729,6 +729,26 @@ export const guideData = [
     remarks: '- introduction.tsx\n- toastpopup 공통 수정 요청중',
   },
   {
+    screenId: 'NLP_FO_CHN_2002',
+    screenName: '패키지 목록',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: 'course-introduction/package-list',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: 'PC/MOBILE 한페이지 작업중',
+  },
+  {
+    screenId: 'NLP_FO_CHN_2006',
+    screenName: '과정 목록',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: 'course-introduction/course-list',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: 'PC/MOBILE 한페이지 작업중',
+  },
+  {
     screenId: 'NLP_FO_LEC_1001',
     screenName: '과정상세_공통_공유하기',
     layoutType: '', // 자동 분리됨 작성x
