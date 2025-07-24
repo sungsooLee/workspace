@@ -4,10 +4,21 @@ import { ModalTitle, ModalBody, ModalContainer, ModalFooter, Button, Textarea } 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import styles from '@learnway/styles/fo/features/layout/popup/course-cancel-reason-popup.module.css';
 
-const CourseCancelReasonPopupComponent = () => {
+const CourseCancelReasonPopupComponent = ({
+  okCallback,
+  closeCallback,
+}: {
+  okCallback: (value: string) => void;
+  closeCallback: () => void;
+}) => {
   const [reasonValue, setReasonValue] = useState<string>('Text');
   const handleReasonValueChange = (value: string) => {
     setReasonValue(value);
+  };
+
+  const handleCancleReason = () => {
+    closeCallback();
+    okCallback(reasonValue);
   };
   return (
     <ModalContainer>
@@ -30,8 +41,8 @@ const CourseCancelReasonPopupComponent = () => {
         </div>
       </ModalBody>
       <ModalFooter>
-        <Button label={'취소'} variant={'gray'} size={'xl'}></Button>
-        <Button label={'확인'} variant={'primary'} size={'xl'} />
+        <Button label={'취소'} variant={'gray'} size={'xl'} onClick={closeCallback}></Button>
+        <Button label={'확인'} variant={'primary'} size={'xl'} onClick={handleCancleReason} />
       </ModalFooter>
     </ModalContainer>
   );

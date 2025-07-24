@@ -1,7 +1,7 @@
 import { lazy, Suspense } from 'react';
 import { Outlet, createRootRouteWithContext } from '@tanstack/react-router';
 
-import { ModalWrapper, useModalStore } from '@learnway/ui';
+import { ModalWrapper, ToastWrapper, useModalStore } from '@learnway/ui';
 import { useGlobalRouterEvent } from '@learnway/hooks';
 import { PageRouteContext } from '@learnway/shared';
 import { useRenewalMenuStateFromRouting } from '@learnway/auth/entities';
@@ -42,6 +42,7 @@ function RootComponent() {
     <>
       <Outlet />
       <ModalWrapper />
+      <ToastWrapper />
       {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       {import.meta.env.VITE_APP_ENV === 'local' && (
         <Suspense fallback={null}>
