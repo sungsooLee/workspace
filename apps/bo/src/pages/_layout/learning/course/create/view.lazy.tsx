@@ -4,12 +4,12 @@ import { createLazyFileRoute } from '@tanstack/react-router';
 import { useMemo } from 'react';
 import { CourseTab } from '../-common/type';
 import { useCourseCreatePage } from '../-hooks/use-course-create-page';
+import { TriggerKey } from '../-store/use-course-store';
 import { BasicInfo } from './-tabs/basic-info';
 import { CourseRegistration } from './-tabs/course-registration';
 import { Curriculum } from './-tabs/curriculum';
 import { DetailInfo } from './-tabs/detail-info';
 import { PublishCourse } from './-tabs/publish-course';
-import { TriggerKey } from '../-store/use-course-store';
 
 export const Route = createLazyFileRoute('/_layout/learning/course/create/view')({
   component: RouteComponent,
