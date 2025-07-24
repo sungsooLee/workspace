@@ -7,9 +7,9 @@ import { useFetchAuthUser } from '@learnway/auth/entities';
 import { Button, Divider, useModal } from '@learnway/ui';
 import defaultImage from '@assets/images/thumb/img_thumb_default.jpg';
 import { ContentsButtons, MainContents, PageContainer, SubContents } from '@shared/ui';
-import { BlogDetail } from './-components/blog-detail';
 
 import styles from './blog-detail.module.css';
+import { LearningResourceBlogDetail } from '@features/learning-resource';
 
 export const Route = createLazyFileRoute('/_layout/learning/resource/blog/regist')({
   component: RouteComponent,
@@ -76,7 +76,7 @@ function RouteComponent() {
       </ContentsButtons>
 
       <MainContents>
-        <BlogDetail ref={formRef} tenantId={tenantId} mode="create" />
+        <LearningResourceBlogDetail ref={formRef} tenantId={tenantId} mode="create" />
       </MainContents>
 
       {/* 썸네일 영역 */}

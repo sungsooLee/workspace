@@ -9,10 +9,10 @@ import { useChangeHTML5VideoFile } from '@entities/learning-resource';
 import defaultImage from '@assets/images/thumb/img_thumb_default.jpg';
 import { ChannelChoiceModal } from '@shared/ui';
 import { LearningResourceFileUploadModal } from '@features/learning-resource';
-import { PreviewLearningWindow } from '@features/learning-resource/learning-resource-management/ui/preview-learning-window';
+import { PreviewLearningWindow } from './preview-learning-window';
 
 import movieStyles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
-import styles from '../html-detail.module.css';
+import styles from './html-detail.module.css';
 
 type FileInfoProps = {
   contentUuid: string;
@@ -150,4 +150,4 @@ const FileInfoComponent = ({ contentUuid, uuid, mode }: FileInfoProps) => {
 
 FileInfoComponent.displayName = 'FileInfo';
 
-export const FileInfo = FileInfoComponent;
+export const LearningResourceHtmlFileInfo = FileInfoComponent;
