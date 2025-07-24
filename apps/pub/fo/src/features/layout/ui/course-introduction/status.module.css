@@ -13,6 +13,9 @@
             &::before {
               @apply absolute left-0 top-1/2 block h-[12px] w-[1px] -translate-y-1/2 bg-[var(--gray75)] content-[''];
             }
+            &.time {
+              @apply text-[var(--red50)];
+            }
           }
           + .date_box {
             @apply ml-[32px];
@@ -156,53 +159,41 @@
     .start {
       .panel_degreey {
         .list {
-          @apply flex-col items-start;
+          @apply flex-col items-start p-[20px];
+          h3 {
+            @apply body-md-b text-[var(--gray10)];
+          }
           .date_status {
             @apply flex-col items-start;
             .date_box {
-              @apply mt-[8px];
-              .date {
-                &::before {
-                }
+              @apply mt-[8px] flex items-start;
+              span {
+                @apply ml-[10px] pl-[10px] leading-[24px];
               }
               + .date_box {
-                @apply ml-0 mt-[4px];
+                @apply ml-0 mt-[8px];
               }
             }
           }
-        }
-        &.completed {
-          h3 {
+          &.completed {
+            
           }
         }
-
-        &.incomplete {
-          h3 {
-          }
-        }
-
-        h3 {
-          @apply body_3_b;
-          .ico {
-            svg {
-            }
-          }
-        }
-      }
-      .progress_box {
       }
       .progress_rate {
+        @apply p-[20px];
         [class*='progress_wrap'] {
         }
         h3 {
-          @apply body_3_b basis-[60px];
+          @apply title3-b mr-[24px];
         }
         .progress_bar {
+          @apply w-auto;
         }
 
         .info {
           .progress {
-            @apply ml-[16px];
+            @apply ml-[16px] body-md;
           }
         }
       }
