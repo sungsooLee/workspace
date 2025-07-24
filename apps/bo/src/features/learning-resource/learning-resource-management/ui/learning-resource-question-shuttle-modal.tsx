@@ -1,9 +1,16 @@
 import { useCallback } from 'react';
 import { t } from 'i18next';
 import { Button, ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui';
+import { useDynamicForm2 } from '@learnway/hooks';
 
 const LearningResourceQuestionShuttleComponent = () => {
   const { close } = useModal();
+
+  const { provider, getValues, onSubmit } = useDynamicForm2({
+    builders: [],
+    mode: 'onSubmit',
+    reValidateMode: 'onChange',
+  });
 
   const handleClickCloseButton = useCallback(() => {
     close();

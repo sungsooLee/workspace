@@ -7,6 +7,7 @@ import {
   HtmlVideoFileChangeReq,
   HtmlVideoMetadataReq,
   PostDraftHtmlVideoParams,
+  PostDraftScormParams,
   PostDraftVideosParams,
   PutVideoChangeParams,
   PutVideoUpdateParams,
@@ -39,6 +40,20 @@ export function usePostDraftVideos(options?: any) {
 
   return {
     create: (payload: PostDraftVideosParams) => mutation.mutate(payload as any),
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
+}
+
+export function usePostDraftScorm(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.postDraftScorm(),
+    ...options,
+  });
+
+  return {
+    create: (payload: PostDraftScormParams) => mutation.mutate(payload as any),
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
     data: mutation.data,

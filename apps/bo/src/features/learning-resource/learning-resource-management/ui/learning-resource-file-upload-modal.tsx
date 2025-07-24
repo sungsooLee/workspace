@@ -42,6 +42,7 @@ const acceptFiles = {
     'SKM',
     'K3G',
   ],
+  [LEARNING_TYPE.SCORM]: ['ZIP'],
   [LEARNING_TYPE.HTML5_VIDEO]: ['ZIP'],
 };
 
@@ -56,7 +57,7 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({
       s3Path: S3_PATH['upload/content/original'],
       affairsType: 'CMS',
       maxFileCount,
-      maxFileSize: 3 * 1024 * 1024 * 1024,
+      maxFileSize: 4 * 1024 * 1024 * 1024,
       acceptFiles: acceptFiles[type],
     });
   const [errorMessage, setErrorMessage] = useState('');

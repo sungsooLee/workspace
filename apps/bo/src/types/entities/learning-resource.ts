@@ -74,6 +74,8 @@ export interface PostDraftVideosParams {
   fileUuids: string[];
 }
 
+export type PostDraftScormParams = PostDraftVideosParams;
+
 export interface PostDraftHtmlVideoParams {
   tenantId: string;
   channelUuid: string;
@@ -264,6 +266,8 @@ export interface PostDraftVideosRes {
     isDrafted: boolean;
   }[];
 }
+
+export type PostDraftScormRes = PostDraftVideosRes;
 
 export interface PostDraftHtmlVideoRes {
   contentUuid: string;

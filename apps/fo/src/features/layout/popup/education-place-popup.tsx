@@ -8,10 +8,10 @@ import mapImage from '@learnway/styles/fo/assets/images/temp/img_map.png';
 
 // 약도보기 popover
 const CopyPopoverComponent = () => {
-  return <p className={styles.copy}>주소를 복사하였습니다</p>;
+  return <p className={styles.copy}>준비중인 기능입니다{/*주소를 복사하였습니다*/}</p>;
 };
 
-const EducationPlacePopupComponent = ({address}: {address: any}) => {
+const EducationPlacePopupComponent = ({ address }: { address: any }) => {
   return (
     <ModalContainer>
       <ModalTitle>{'교육장소'}</ModalTitle>
@@ -25,14 +25,22 @@ const EducationPlacePopupComponent = ({address}: {address: any}) => {
             </dl>
             {/* 퍼블수정 20250708 마크업 수정 */}
             <p className={styles.addr}>
-              서울 강남구 테헤란로 510
+              {address}
               <Popover
                 popoverContent={<CopyPopoverComponent />}
                 side="bottom"
                 align={isMobile ? 'center' : 'start'}
                 sideOffset={15}
+                forceCloseFocusOutside={true}
+                autoClose={true}
               >
-                <span>주소복사</span>
+                <span
+                  onClick={() => {
+                    console.log(address);
+                  }}
+                >
+                  주소복사
+                </span>
               </Popover>
             </p>
           </div>

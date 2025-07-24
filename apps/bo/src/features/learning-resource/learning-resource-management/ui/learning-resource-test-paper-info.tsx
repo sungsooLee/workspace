@@ -13,13 +13,14 @@ import { CheckBoxFormField, FormRow2, SwitchFormField } from '@shared/ui';
 import { isEmptyData } from '@learnway/shared';
 
 import { FormDisplay } from '@features/form';
-import styles from '@learnway/styles/bo/pages/_layout/learning/test-detail.module.css';
 import movieInfoStyles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
 import previewImg from '@assets/images/temp/img_exam_basic.jpg';
 
-import { LearningResourceBaseForm } from '@features/learning-resource/learning-resource-management/ui/learning-resource-base-form';
-import { convertDetailInfoToFormData } from '../-common/common';
-import { ExamBasicInfoProps, PageMode, TabFormRef } from '../-common/type';
+import { convertDetailInfoToFormData } from '../service/test-paper/common';
+import { ExamBasicInfoProps, PageMode, TabFormRef } from '../service/test-paper/type';
+import { LearningResourceBaseForm } from './learning-resource-base-form';
+
+import styles from '@learnway/styles/bo/pages/_layout/learning/test-detail.module.css';
 
 const TestPaperInfoComponent = forwardRef<TabFormRef, ExamBasicInfoProps>(
   ({ basicInfoForm, contentUuid = '', tenantId, mode, data = {}, hasMapping = false }, ref) => {
@@ -368,6 +369,6 @@ const TestPaperInfoComponent = forwardRef<TabFormRef, ExamBasicInfoProps>(
   },
 );
 
-TestPaperInfoComponent.displayName = 'TestPaperInfo';
+TestPaperInfoComponent.displayName = 'LearningResourceTestPaperInfo';
 
-export const TestPaperInfo = TestPaperInfoComponent;
+export const LearningResourceTestPaperInfo = TestPaperInfoComponent;

@@ -9,9 +9,9 @@ import { useFetchAuthUser } from '@learnway/auth/entities';
 import { BlogDetailRes, BlogPostRes, BlogUpdateReq } from '@types';
 import { MediaContentRequiredCheckFormField } from '@features/form/ui';
 import { useCreateBlogContent, useUpdateBlogContent } from '@entities/learning-resource';
-import { LearningResourceBaseForm } from '@features/learning-resource/learning-resource-management/ui/learning-resource-base-form';
-import { useRoleInfo } from '../../-common/common';
-import { getPayloadFromBlogSubmit } from '../-common/form-submit';
+import { useRoleInfo } from '../service/util';
+import { getPayloadFromBlogSubmit } from '../service/learning-resource-blog-form-submit';
+import { LearningResourceBaseForm } from './learning-resource-base-form';
 
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { ContentsHistoryInfoFormField } from '@shared/ui';
@@ -145,4 +145,4 @@ const BlogDetailComponent = forwardRef<HTMLFormElement, BlogDetailProps>(
 
 BlogDetailComponent.displayName = 'BlogDetail';
 
-export const BlogDetail = BlogDetailComponent;
+export const LearningResourceBlogDetail = BlogDetailComponent;

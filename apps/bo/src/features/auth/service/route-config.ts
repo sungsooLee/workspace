@@ -58,15 +58,15 @@ async function authorization({ location, context }: { location: ParsedLocation; 
   // console.log('### Decode Token', token);
   // console.log('### authorization', authUser);
 
-  if (token === null) {
-    throw ERROR.AUTHORIZATION;
-  }
+  // if (token === null) {
+  //   throw ERROR.AUTHORIZATION;
+  // }
 
   // 패스워드 만료 시 패스워드 변경 페이지로 라우팅
-  const diff = dateDiff(token!.passwordExpireDate, new Date(), 'd');
-  if (location.pathname !== '/change-password' && diff !== undefined && 0 >= diff) {
-    throw ERROR.PASSWORD_EXPIRE;
-  }
+  // const diff = dateDiff(token!.passwordExpireDate, new Date(), 'd');
+  // if (location.pathname !== '/change-password' && diff !== undefined && 0 >= diff) {
+  //   throw ERROR.PASSWORD_EXPIRE;
+  // }
 
   // if (location.pathname === '/' || !authUser?.menus) {
   //   if (authUser === undefined) {

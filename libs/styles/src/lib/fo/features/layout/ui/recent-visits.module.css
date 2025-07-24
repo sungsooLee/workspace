@@ -1,17 +1,17 @@
 /* recent-visits.module.css */
 .start {
   &.recent_visits {
-    @apply relative flex items-center pb-[26px] pl-[32px] pr-[68px] pt-[24px];
+    @apply relative flex min-h-[68px] items-center border-t-[1px] border-solid border-[var(--gray90)] bg-[var(--blue98)] pb-[16px] pl-0 pr-[67px] pt-[15px];
     .tit {
-      @apply inline-block w-[108px];
+      @apply label-xl-b relative z-[4] w-[125px] shrink-0 text-center text-[var(--gray25)];
     }
     .recent_swiper {
-      @apply flex w-full justify-start;
+      @apply w-full flex-1 shrink-0 justify-start;
     }
     .slide {
       @apply flex w-auto items-center justify-start gap-[8px] overflow-hidden whitespace-nowrap;
       > .item {
-        @apply body_3_r flex h-[32px] max-w-[143px] items-center rounded-[8px] bg-[var(--gray1)] pl-[12px] pr-[10px] text-[var(--gray8)];
+        @apply body_3_r flex h-[36px] w-auto items-center rounded-[8px] border border-solid border-[var(--gray90)] bg-white pl-0 pr-[10px] text-[var(--gray8)];
         [class*='nlp--button']:nth-last-child(1) {
           @apply bg-transparent;
           svg {
@@ -32,8 +32,8 @@
         @apply absolute top-[0] z-[3] flex h-[28px] w-[28px] cursor-pointer items-center justify-center rounded-full border border-solid border-[var(--gray5)] bg-[var(--white)] text-center;
       }
       &::before {
-        background: url(../../../assets/images/common/bg_swipe_shadow.png) no-repeat;
-        @apply pointer-events-none absolute top-[0] z-[-1] inline-block h-[32px] w-[110px] bg-[length:110px_32px] bg-no-repeat content-[''];
+        @apply pointer-events-none absolute top-[0] z-[-1] inline-block h-[60px] w-[110px] content-[''];
+        background: linear-gradient(to right, var(--blue98), transparent);
       }
     }
     .recent_button_next {
@@ -44,7 +44,7 @@
       }
     }
     .recent_button_prev {
-      @apply left-[128px];
+      @apply left-[114px];
 
       &::before {
         @apply left-[-28px];
