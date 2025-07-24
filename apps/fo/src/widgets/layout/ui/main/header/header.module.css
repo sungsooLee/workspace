@@ -17,8 +17,9 @@
             }
           }
           .tenant {
+            @apply flex;
             &::before {
-              @apply relative top-[6px] ml-[20px] mr-[10px] inline-block h-[20px] w-[1px] bg-[var(--gray75)] content-[''];
+              @apply relative top-[10px] ml-[20px] mr-[20px] inline-block h-[20px] w-[1px] bg-[var(--gray75)] content-[''];
             }
           }
         }
@@ -31,9 +32,11 @@
         }
       }
     }
-
-    .nav_area {
-      @apply relative flex items-center;
+    .nav_container {
+      @apply flex items-center justify-start;
+      .nav_area {
+        @apply relative flex items-center;
+      }
     }
   }
 }

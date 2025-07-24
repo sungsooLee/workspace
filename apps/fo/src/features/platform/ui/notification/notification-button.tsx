@@ -43,7 +43,7 @@ const NotificationComponent = ({ userUUID }: any) => {
 
   const { open: openModal } = useModal();
 
-  const { notifications, unreadCount, markAsRead, checkAll } = useNotifications({ userUUID });
+  // const { notifications, unreadCount, markAsRead, checkAll } = useNotifications({ userUUID });
 
   useEffect(() => {
     let eventSource: EventSource | null = null;

@@ -4,7 +4,7 @@ import { convertHierarchyToList } from '@learnway/shared';
 
 import { queryOptions, queryKeys } from './menu.queries';
 
-export function useFetchMenus(tenantId?: number, roleId?: number) {
+export function useFetchMenus(tenantId?: number, roleId?: number | string) {
   return useQuery(queryOptions.all(tenantId, roleId));
 }
 

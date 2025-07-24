@@ -8,15 +8,17 @@ import { Menu } from '../../../types';
 export const queryKeys = {
   all: ['menus'] as const,
   allByParentMenuId: (parentMenuId: number) => [...queryKeys.all, parentMenuId] as const,
-  detail: (tenantId: number) => [...queryKeys.all, tenantId] as const,
+  detail: (tenantId: number, roleId: number | string) =>
+    [...queryKeys.all, tenantId, roleId] as const,
+  menuDetail: (menuId: number) => ['menus-detail', menuId] as const,
 };
 
 export const queryOptions = {
-  all: (tenantId?: number, roleId?: number) =>
+  all: (tenantId?: number, roleId?: number | string) =>
     // TODO roleId 체크 추가  && roleId
-    tenantId
+    tenantId && roleId
       ? {
-          queryKey: queryKeys.detail(roleId || tenantId),
+          queryKey: queryKeys.detail(tenantId, roleId),
           queryFn: async () => {
             const data = await MenuService.getMenus(tenantId, roleId, isMobile);
 
@@ -39,7 +41,7 @@ export const queryOptions = {
       : getQuerySkipToken<Menu[]>(),
 
   detail: (menuId: number) => ({
-    queryKey: queryKeys.detail(menuId),
+    queryKey: queryKeys.menuDetail(menuId),
     queryFn: () => MenuService.getMenu(menuId),
   }),
 };

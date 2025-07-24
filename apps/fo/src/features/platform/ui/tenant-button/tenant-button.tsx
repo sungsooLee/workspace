@@ -1,37 +1,80 @@
 import { memo } from 'react';
-import { MobileView, BrowserView } from 'react-device-detect';
-import { useCreation } from 'ahooks';
 
-import { Button, useModal } from '@learnway/ui';
-import { IcoCheck, IcoArrowDown } from '@learnway/icons';
-import { useFetchAuthUser } from '@learnway/auth/entities';
-
-import { TenantModal } from './tenant-modal';
-import { Tenant } from '../../../../types';
+import { Button, Popover, useModal } from '@learnway/ui';
+import { IcoArrowDown } from '@learnway/icons';
+import { useFetchAuthUser, useUpdateTenantRoleLastSelect } from '@learnway/auth/entities';
+import { Tenant } from '@learnway/auth/types';
 
 import styles from '@learnway/styles/fo/features/platform/ui/tenant-button/tenant-button.module.css';
 
-const TenantComponent = () => {
-  const { open: openModal } = useModal();
+const TenantContent = () => {
+  const { data } = useFetchAuthUser();
+  const { update: updateTenantRole } = useUpdateTenantRoleLastSelect();
 
+  const { alert: openAlert } = useModal();
+
+  const handleSelect = async (tenant: Tenant) => {
+    try {
+      const result = await openAlert({
+        title: <>테넌트 변경</>,
+        content: <>선택한 테넌트로 변경하시겠어요?</>,
+        okButtonLabel: '확인',
+        cancelButtonLabel: '취소',
+      });
+
+      // 일부 alert는 result가 undefined 이므로 무조건 확인시 실행
+      if (result === true) {
+        // onSelect(tenant);
+        updateTenantRole({
+          lastVisitedFoTenantId: tenant.tenantId,
+        });
+      }
+    } catch (e) {
+      // 취소했거나 창을 닫았을 때는 무시
+    }
+  };
+
+  return (
+    <div className={`${styles.start} ${styles.tenant_content}`}>
+      <div className={styles.tenant_wrap}>
+        <ul className={styles.tenant_list}>
+          {data?.tenants?.map((tenant, index) => (
+            <li key={index}>
+              <Button
+                variant="text"
+                onClick={() => handleSelect(tenant)}
+                className={data?.activeTenant?.tenantId === tenant.tenantId ? styles.active : ''}
+              >
+                {tenant.tenantName}
+              </Button>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+};
+
+const TenantComponent = () => {
   const { data } = useFetchAuthUser();
 
   return (
-    <Button
+    <Popover
+      popoverContent={<TenantContent />}
       className={styles.btn_tenant}
-      onClick={() =>
-        // 퍼블수정 20250320 : mobile, pc 분기 처리
-        openModal({
-          width: 'sm',
-          content: <TenantModal />,
-        })
-      }
+      side="bottom"
+      align="end"
+      sideOffset={20}
     >
-      <span className={styles.select}>{data?.activeTenant?.tenantName}</span>
+      <div className={styles.select}>
+        <span className={styles.text}>
+          <img src={data?.activeTenant?.logoImageUrl} alt="Logo" />
+        </span>
+      </div>
       <span className={styles.ico}>
         <IcoArrowDown />
       </span>
-    </Button>
+    </Popover>
   );
 };
 
