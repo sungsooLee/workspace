@@ -41,15 +41,36 @@ const PopoverContent = () => {
           {/* <Avatar fallback="AB" size="2xl" /> */}
         </div>
         <div className={styles.profile}>
-          <span className={styles.name}>김현대</span>
-          <span className={styles.tenant}>현대오토에버</span>
-          <span className={styles.team}>팀명</span>
-          {/* 퍼블수정 20250317 : 최근접속 추가 */}
-          <span className={styles.time}>
-            <span>최근접속</span>
-            <span>2026-01-01 18:28</span>
-          </span>
+          <div className={styles.info_box}>
+            <span className={styles.name}>김현대</span>
+            <Button size="sm" underline={true} label={'개인정보변경'} />
+          </div>
+          <div className={styles.tenant}>
+            <span>현대오토에버</span>
+            <span>Sales & Marketing</span>
+            <span>책임연구원</span>
+          </div>
         </div>
+      </div>
+
+      <div className={styles.point_box}>
+        <span className={styles.txt}>나의 포인트</span>
+        <span className={styles.point}>
+          <em>243</em>P
+        </span>
+      </div>
+
+      <Button variant="primary" size="xl">
+        나의 학습
+      </Button>
+
+      {/* 최근방문 */}
+      <div className={styles.recent_visits}>
+        <h3>최근 방문</h3>
+        <dl>
+          <dt></dt>
+          <dd>결재함</dd>
+        </dl>
       </div>
       <ul className={styles.info_list}>
         <li>
