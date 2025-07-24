@@ -108,15 +108,17 @@ const EnrollmentRegistComponent = ({
       }),
       columnHelper.accessor('courseSequenceName', {
         header: t('차수명'),
-        cell: (info) => (
-          <Button
-            className="link"
-            onClick={() => {
-              _global.linkClickSequenceName(info.row.original as any);
-            }}
-            label={info.getValue() as string}
-          />
-        ),
+        cell: (info) =>
+          // (
+          // <Button
+          //   className="link"
+          //   onClick={() => {
+          //     _global.linkClickSequenceName(info.row.original as any);
+          //   }}
+          //   label={info.getValue() as string}
+          // />
+          //)
+          info.getValue(),
         enableGrouping: false,
         size: 207,
       }),

@@ -68,6 +68,7 @@ export const CODE_GROUP = {
   'lms.sequence.SequenceEnrollButtonType': 'lms.sequence.SequenceEnrollButtonType',
   'lms.sequence.SequenceEnrollStatusType': 'lms.sequence.SequenceEnrollStatusType',
   'lms.space.OnOffLineType': 'lms.space.OnOffLineType',
+  'lms.sequence.LearningStatusType': 'lms.sequence.LearningStatusType',
   'pms.api.ApiMethodCode': 'pms.api.ApiMethodCode',
   'pms.api.ApiNodeType': 'pms.api.ApiNodeType',
   'pms.api.ApiScopeCode': 'pms.api.ApiScopeCode',

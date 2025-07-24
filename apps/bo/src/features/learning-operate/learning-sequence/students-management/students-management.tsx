@@ -2,13 +2,18 @@ import { useEffect, useCallback, useState } from 'react';
 import { useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { Link, useRouter } from '@tanstack/react-router';
-import { Tabs } from '@learnway/ui';
+import {
+  Divider,
+  GridBox,
+  SplitPanel,
+  StatsSummary,
+  Tabs,
+  useGridBox,
+  useGridBoxConfig,
+} from '@learnway/ui';
 import { useSearchBox, SearchBoxConfig } from '@learnway/hooks';
 import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
-import { EnrollmentRegist } from './enrollment-regist';
-import { EnrollmentWait } from './enrollment-wait';
-import { EnrollmentCancel } from './enrollment-cancel';
 import { queryOptions as sequenceQueryOptions } from '@entities/learning-sequence/service/learning-sequence.queries';
 import { queryOptions as companysQueryOptions } from '@entities/companies/service/companies.queries';
 import { queryOptions as departmentQueryOptions } from '@entities/department';
@@ -17,55 +22,39 @@ import { generateYears } from '@learnway/shared';
 import { useFetchEnrollmentSequenceCombo } from '@entities/learning-sequence/service/learning-sequence.hook';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { useWatch } from 'react-hook-form';
+import { GridExcelDownloadButton, SearchBox } from '@shared/ui';
+import { createColumnHelper } from '@tanstack/react-table';
+import { queryOptions } from '@entities/learning-sequence/service/learning-sequence.queries';
+import { LMSApiPrefix } from '@learnway/config';
 
-type EnrollmentComponentProps = {
-  courseId?: number;
-  courseSequenceId?: number;
+// type StudentsManagementComponentProps = {
+
+// };
+
+const gridConfig: useGridBoxConfig = {
+  query: queryOptions.enrollmentRegistList,
+  columns: [],
+  data: [],
+  gridState: {
+    page: 0,
+    size: 10,
+    sort: [],
+  },
 };
 
 /**
- * NLP_BO_LMS_0035,0036,0037 : 수강신청 목록(탭)
+ * NLP_BO_LMS_0045 : 수강생관리
  * @returns
  */
-const EnrollmentComponent = ({
-  courseId: courseIdProps,
-  courseSequenceId: courseSequenceIdProps,
-}: EnrollmentComponentProps) => {
+const StudentsManagementComponent = () => {
   const { data: loginUser } = useFetchAuthUser();
   const router = useRouter();
   const routerState = useRouterState();
-  const courseIdKey = routerState.location.state?.courseIdKey ?? courseIdProps ?? null; // 과정ID
-  const courseSequenceIdKey =
-    routerState.location.state?.courseSequenceIdKey ?? courseSequenceIdProps ?? null; // 차수ID(있는경우 검색조건 값 선택)
+  const courseIdKey = routerState.location.state?.courseIdKey || 0; // 과정ID
+  const courseSequenceIdKey = routerState.location.state?.courseSequenceIdKey || 0; // 차수ID(있는경우 검색조건 값 선택)
   console.log('## courseIdKey =>', courseIdKey);
   console.log('## courseSequenceIdKey =>', courseSequenceIdKey);
-  const [selectedTabKey, setSelectedTabKey] = useState<string>(SequenceTabDetail.ENROLLMENT_REGIST);
   const queryClient = useQueryClient();
-
-  const getStatusOptions = () => {
-    switch (selectedTabKey) {
-      case SequenceTabDetail.ENROLLMENT_REGIST:
-        return [
-          { label: t('결재/승인 완료'), value: 'ENROLL_DONE' },
-          { label: t('신청중'), value: 'ENROLL_REQUEST' },
-          { label: t('취소'), value: 'CANCEL_DONE' },
-          { label: t('반려'), value: 'REJECT_DONE' },
-        ];
-      case SequenceTabDetail.ENROLLMENT_WAIT:
-        return [
-          { label: '대기중', value: '1' },
-          { label: '링크 발송', value: '2' },
-          { label: '링크 완료', value: '3' },
-        ];
-      case SequenceTabDetail.ENROLLMENT_CANCEL:
-        return [
-          { label: '반려', value: '1' },
-          { label: '승인', value: '2' },
-        ];
-      default:
-        return []; // fallback: 옵션 없을 때 빈 배열
-    }
-  };
 
   const searchConfig: SearchBoxConfig = {
     builders: [
@@ -94,7 +83,7 @@ const EnrollmentComponent = ({
           label: t('LABEL.form.label.sequence', '상태'),
           value: '',
           presetOptionLabel: t('전체'),
-          options: getStatusOptions(), // dynamic handling
+          options: [], // dynamic handling
         },
         {
           name: 'learningRange', // learningStartDate, learningEndDate
@@ -149,28 +138,24 @@ const EnrollmentComponent = ({
     },
   };
   const { provider: searchProvider, getValues, setValue, setOptions } = useSearchBox(searchConfig);
-
+  const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
+  const [columns, setColumns] = useState() as any;
   const companyId = useWatch({ control: searchProvider.control, name: 'companyId' });
   const openingYear = useWatch({ control: searchProvider.control, name: 'openingYear' });
-
-  const handleTabChange = (tabKey: string) => {
-    if (tabKey !== selectedTabKey) {
-      setSelectedTabKey(tabKey);
-    }
-  };
 
   useEffect(() => {
     if (!loginUser) return;
     if (loginUser.activeTenant?.tenantId) {
       setCompanyOption(loginUser.activeTenant?.tenantId);
     }
-  }, [selectedTabKey, loginUser]);
+  }, [loginUser]);
 
   useEffect(() => {
     setSequenceOption();
-  }, [selectedTabKey, openingYear]);
+  }, [openingYear]);
 
   const setSequenceOption = async () => {
+    console.log('### setSequenceOption');
     const searchValues = getValues();
     const payload = {
       openingYear: searchValues.openingYear,
@@ -179,10 +164,7 @@ const EnrollmentComponent = ({
     const result = await queryClient.fetchQuery(
       sequenceQueryOptions.enrollmentSequenceCombo(payload),
     );
-    // setOptions('courseSequenceId', [
-    //   { label: '1', value: 1 },
-    //   { label: '2', value: 2 },
-    // ]);
+
     if (result) {
       console.log('result=>', result);
       const sequenceIdOptions = result.map((item: any) => ({
@@ -205,7 +187,7 @@ const EnrollmentComponent = ({
           content.map((_: any) => ({ value: _.deptId, label: _.deptName })),
         );
     })();
-  }, [selectedTabKey, companyId]);
+  }, [companyId]);
 
   const setCompanyOption = async (tenantId: number) => {
     console.log('### setCompanyOption');
@@ -217,61 +199,51 @@ const EnrollmentComponent = ({
     setOptions('companyId', companyIdOptions);
   };
 
-  const tabItems = [
-    {
-      title: '수강신청',
-      key: SequenceTabDetail.ENROLLMENT_REGIST,
-      content: (
-        <EnrollmentRegist
-          courseId={courseIdKey}
-          courseSequenceId={courseSequenceIdKey}
-          searchProvider={searchProvider}
-          getValues={getValues}
-          setValue={setValue}
-          setOptions={setOptions}
-        />
-      ),
-    },
-    {
-      title: '수강신청 대기',
-      key: SequenceTabDetail.ENROLLMENT_WAIT,
-      content: (
-        <EnrollmentWait
-          courseId={courseIdKey}
-          courseSequenceId={courseSequenceIdKey}
-          searchProvider={searchProvider}
-          getValues={getValues}
-          setValue={setValue}
-          setOptions={setOptions}
-        />
-      ),
-    },
-    {
-      title: '수강취소/반려',
-      key: SequenceTabDetail.ENROLLMENT_CANCEL,
-      content: (
-        <EnrollmentCancel
-          courseId={courseIdKey}
-          courseSequenceId={courseSequenceIdKey}
-          searchProvider={searchProvider}
-          getValues={getValues}
-          setValue={setValue}
-          setOptions={setOptions}
-        />
-      ),
-    },
-  ];
+  const handleOnSearch = useCallback((data: any) => {
+    //   console.log('## payload=>', payload);
+    //   setStats(payload);
+    //   console.log('setStats completed');
+    //   gridFetch(payload);
+    //   console.log('gridFetch completed');
+  }, []);
 
+  const columnHelper = createColumnHelper<any>();
   return (
-    <Tabs
-      items={tabItems}
-      type="line"
-      size="sm"
-      showContentBorder
-      selectedTabKey={selectedTabKey}
-      onTabChange={handleTabChange}
-    />
+    <>
+      <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
+      <Divider />
+      <SplitPanel gap={10}>
+        <div>
+          <div>현황</div>
+          <StatsSummary data={[]} />
+        </div>
+        <div>
+          <div>현황</div>
+          <StatsSummary data={[]} />
+        </div>
+      </SplitPanel>
+      <GridBox
+        config={gConfig}
+        // data={gridData}
+        columns={columns}
+        multiple={true}
+        disabledSelectionToggle
+        title={t('수강생 목록')}
+        // onRowsSelect={(rows: any) => {
+        //   setSelectedRows(rows);
+        // }}
+        customButtonNode={<></>}
+        excelButtons={
+          <>
+            <GridExcelDownloadButton
+              url={`${LMSApiPrefix()}/multilingual/exportExcel`}
+              params={getValues()}
+            />
+          </>
+        }
+      />
+    </>
   );
 };
 
-export const Enrollment = EnrollmentComponent;
+export const StudentsManagement = StudentsManagementComponent;

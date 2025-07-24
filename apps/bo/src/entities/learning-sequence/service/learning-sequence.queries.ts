@@ -67,6 +67,10 @@ export const mutateOptions = {
   createSequence: () => ({
     mutationFn: (payload: any) => LearningSequenceService.createSequence(payload),
   }),
+  // 차수 일괄 설정
+  bulkUpdateSequence: () => ({
+    mutationFn: (payload: any) => LearningSequenceService.bulkUpdateSequence(payload),
+  }),
   // 차수 수정 (리스트)
   updateSequenceList: () => ({
     mutationFn: (payload: any) => LearningSequenceService.updateSequenceList(payload),

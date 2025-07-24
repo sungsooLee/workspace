@@ -5,9 +5,9 @@ import { DatePicker } from '@learnway/ui';
 
 interface EduRow {
   id?: string;
-  status: string;
+  learningStartType: string;
   courseSequenceEndDateTime: Date;
-  eduEndDay: number;
+  learningStartDays: number;
 }
 
 interface EditInputDateCellProps<T extends EduRow> {
@@ -24,7 +24,7 @@ const EditInputDateCell = <T extends EduRow>({
   input: inputProps,
 }: EditInputDateCellProps<T>) => {
   const { table, row, cell, getValue } = info;
-  const { status, courseSequenceEndDateTime, eduEndDay } = row.original;
+  const { learningStartType, courseSequenceEndDateTime, learningStartDays } = row.original;
 
   const [value, setValue] = useState<any>(getValue());
   const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -33,7 +33,7 @@ const EditInputDateCell = <T extends EduRow>({
   const saveValue = (newValue: any) => {
     if (newValue !== lastSavedValueRef.current) {
       let columnId = '' as string;
-      if (status === 'LEARNING') columnId = 'eduEndDay';
+      if (learningStartType === 'DAYS_AFTER_ENROLL') columnId = 'learningStartDays';
       else columnId = 'courseSequenceEndDateTime';
       table.options.meta?.updateData(row.index, columnId, newValue);
       lastSavedValueRef.current = newValue;
@@ -75,21 +75,18 @@ const EditInputDateCell = <T extends EduRow>({
   }, [getValue]);
 
   useEffect(() => {
-    console.log(status);
-    console.log(courseSequenceEndDateTime);
-    console.log(eduEndDay);
     return () => {
       if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
     };
   }, []);
 
   // 조건 분기
-  if (status === 'LEARNING') {
+  if (learningStartType === 'DAYS_AFTER_ENROLL') {
     return (
       <Input
         {...inputProps}
         type="number"
-        value={eduEndDay}
+        value={learningStartDays}
         onChange={handleInputChange}
         onBlur={handleInputBlur}
         onKeyDown={handleInputKeyDown}

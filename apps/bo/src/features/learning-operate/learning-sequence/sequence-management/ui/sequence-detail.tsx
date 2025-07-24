@@ -87,8 +87,8 @@ const SequenceDetailComponent = forwardRef<CourseDetailTabFormRef, SequenceDetai
     }, [lastTriggered]);
 
     const handleUpdateSequence = async () => {
-      const confirm = await openConfirm(t('수정 하시겠습니까?'));
-      if (!confirm) return;
+      // const confirm = await openConfirm(t('수정 하시겠습니까?'));
+      // if (!confirm) return;
       updateSequence({ sequenceId: sequenceIdProps, ...formDataToRequestData(formValues) });
     };
 
