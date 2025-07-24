@@ -112,7 +112,7 @@ function RouteComponent() {
     getValues,
     setValue,
     formState,
-  } = useDynamicForm(formConfig);
+  } = useDynamicForm(formConfig());
   const assignmentTypeWatch = useWatch({ control: provider.control, name: 'assignmentType' });
 
   const handleListButtonClick = () => {
@@ -402,14 +402,14 @@ function RouteComponent() {
           onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
           data={userGroupSettings}
           config={gManualConfig}
-          columns={manualColumns}
+          columns={manualColumns()}
         />
       </MainContents>
     </PageContainer>
   );
 }
 
-const formConfig: DynamicFormConfig = {
+const formConfig = (): DynamicFormConfig => ({
   builders: [
     {
       name: 'userGroupOriginType',
@@ -496,7 +496,7 @@ const formConfig: DynamicFormConfig = {
       required: (values) => values.userGroupOriginType === 'PERSONAL',
     },
   },
-};
+});
 
 const searchManualConfig = (): SearchBoxConfig => ({
   builders: [
@@ -548,7 +548,7 @@ const gridManualConfig = {
 };
 
 const columnHelper = createColumnHelper<any>();
-const manualColumns = [
+const manualColumns = () => [
   columnHelper.accessor('select-check', {
     id: 'select-check',
     size: 32,

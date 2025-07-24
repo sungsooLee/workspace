@@ -60,7 +60,7 @@ function RouteComponent() {
   const [languageTypeList, setLanguageTypeList] = useState<any[]>([]);
 
   const { open: openModal, confirm: openConfirm } = useModal();
-  const { control, provider, onSubmit, onFormChange, formState } = useDynamicForm(formConfig);
+  const { control, provider, onSubmit, onFormChange, formState } = useDynamicForm(formConfig());
 
   const { create } = useCreateTenant({
     onSuccess: async () => {
@@ -508,7 +508,7 @@ const s3UploadConfig = {
   maxFileSize: 1024 * 1024 * 50,
 };
 
-const formConfig: DynamicFormConfig = {
+const formConfig = (): DynamicFormConfig => ({
   builders: [
     {
       name: 'tenantName',
@@ -869,4 +869,4 @@ const formConfig: DynamicFormConfig = {
       },
     },
   },
-};
+});
