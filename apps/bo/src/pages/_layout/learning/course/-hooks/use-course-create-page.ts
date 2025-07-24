@@ -24,6 +24,8 @@ export const useCourseCreatePage = () => {
   };
 
   useEffect(() => {
+    console.log('----- useCourseCreatePage : useEffect', { courseId, courseType, activeTab });
+
     setCourseCreateInfo({ courseId, courseType, activeTab });
   }, [courseId, courseType, activeTab]);
 

@@ -26,6 +26,8 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
   const navigate = useNavigate();
   const { updateFormData, formValues, onSubmit } = form;
 
+  console.log('----- useCourseCreateSubPage ', courseCreateInfo.courseId);
+
   // courseData를 먼저 가져와서 channelUuid를 확보
   const { data: courseData, refetch } = useFetchCourse(courseCreateInfo.courseId);
 
