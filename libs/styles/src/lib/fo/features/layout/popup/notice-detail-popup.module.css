@@ -1,12 +1,29 @@
 .start {
+  .table {
+    @apply -mt-[40px] border-[var(--gray10)];
+    tr {
+      th {
+        @apply title1-b !h-[48px] bg-white text-[var(--gray10)];
+        svg {
+          @apply !ml-[4px];
+        }
+      }
+      td {
+        @apply !body-md py-[18px] text-[var(--gray35)];
+      }
+    }
+  }
   .text_info {
-    @apply body_3_r mt-[16px] text-[var(--gray8)];
+    @apply body-md mt-[24px] text-[var(--gray35)];
   }
 }
 
 :global(body.mobile) {
   @screen mobile {
     .start {
+      .table_wrap {
+        @apply px-[16px];
+      }
       .text_info {
       }
     }

@@ -10,7 +10,7 @@ import {
   useModal,
   TableBox,
 } from '@learnway/ui';
-import styles from './notice-detail-popup.module.css';
+import styles from '@learnway/styles/fo/features/layout/popup/notice-detail-popup.module.css';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import tableListStyles from '../../../shared/ui/list/table-list.module.css';
 
