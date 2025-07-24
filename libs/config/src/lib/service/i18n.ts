@@ -7,15 +7,20 @@ import dayjs from 'dayjs';
 export function initI18N(resources: any) {
   i18next.use(initReactI18next).init({
     debug: false,
+    resources: {
+      ...resources,
+    },
     lng: getDefaultLang(),
-    fallbackLng: false,
+    fallbackLng: 'ko',
+    missingKeyHandler: (lngs, namespace, key, fallbackValue, options) => {
+      return key;
+    },
     react: {
       useSuspense: true,
     },
     interpolation: {
       escapeValue: false, // react already safes from xss => https://www.i18next.com/translation-function/interpolation#unescape
     },
-    resources,
   });
   dayjs.locale(getDefaultLang());
 }
