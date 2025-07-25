@@ -1,4 +1,4 @@
-import { FC, useState, forwardRef, useCallback } from 'react';
+import { useState } from 'react';
 import { t } from 'i18next';
 import {
   Button,
@@ -15,8 +15,13 @@ import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { queryOptions } from '@entities/channel/service/channel.queries';
+import { ChannelParam } from '@types';
 
-const ChannelListModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
+type Props = {
+  roleId?: string;
+};
+
+const ChannelListModalComponent = ({ roleId = '' }: Props) => {
   const { closeModal } = useModal();
 
   const searchConfig: SearchBoxConfig = {
@@ -113,7 +118,7 @@ const ChannelListModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
   const { provider: sProvider, getValues } = useSearchBox(searchConfig);
 
   const gridConfig = {
-    query: queryOptions.list,
+    query: (data: ChannelParam) => queryOptions.list(roleId, data),
     columns: [
       {
         name: 'tenantName',
@@ -168,13 +173,6 @@ const ChannelListModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
     setSelectedRow(row);
   };
 
-  const handleOnSearch = useCallback((data: any) => {
-    gridFetch(data);
-  }, []);
-
-  const handleOnClose = () => {
-    closeModal();
-  };
   const handleOnConfirm = () => {
     if (!selectedRow) closeModal();
     closeModal(selectedRow);
@@ -185,7 +183,7 @@ const ChannelListModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
       <ModalTitle>채널 조회</ModalTitle>
       <ModalBody>
         <div className={popupStyles.wrap}>
-          <SearchBox provider={sProvider} onSearch={handleOnSearch} />
+          <SearchBox provider={sProvider} onSearch={gridFetch} />
           <Divider />
           <GridBox
             onRowSelect={handleRowSelect}
@@ -198,12 +196,12 @@ const ChannelListModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
       </ModalBody>
       <ModalFooter>
         <ModalFooter>
-          <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={handleOnClose} />
+          <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={closeModal} />
           <Button label={t('확인')} variant={'primary'} size={'lg'} onClick={handleOnConfirm} />
         </ModalFooter>
       </ModalFooter>
     </ModalContainer>
   );
-});
+};
 
 export const ChannelListChoiceModal = ChannelListModalComponent;
