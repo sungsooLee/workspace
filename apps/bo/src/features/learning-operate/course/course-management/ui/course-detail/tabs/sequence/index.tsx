@@ -22,7 +22,6 @@ const SequenceComponent = forwardRef<HTMLElement, CourseDetailTabBaseProps>((_, 
   const { setCourseCreateInfo } = useCourseActions();
 
   useEffect(() => {
-    console.log('lastTriggered', lastTriggered);
     setCourseCreateInfo({
       contentViewType: mode === 'MAIN' ? ContentViewType.LIST : ContentViewType.DETAIL,
     }); // 탭
