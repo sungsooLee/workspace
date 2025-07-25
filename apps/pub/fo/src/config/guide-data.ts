@@ -274,6 +274,7 @@ export const guideData = [
     completionDate: '2025-03-26',
     lastUpdateDate: '2025-05-12',
     remarks: '- id-change-popup.tsx',
+    cancel: true,
   },
   {
     screenId: 'NLP_FO_MYP_1015',
@@ -292,7 +293,7 @@ export const guideData = [
     pageId: 'my/membership-secession',
     pageType: 'Page',
     completionDate: '2025-03-27',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-25',
     remarks: '- membership-secession.tsx',
   },
   {
@@ -344,6 +345,7 @@ export const guideData = [
     completionDate: '2025-03-26',
     lastUpdateDate: '',
     remarks: '- EN',
+    cancel: true,
   },
   {
     screenId: 'NLP_FO_MYP_1016',
@@ -379,11 +381,11 @@ export const guideData = [
     screenId: 'NLP_FO_MYP_MR_1003',
     screenName: 'M_My_비밀번호 확인_KR',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '/',
-    pageType: 'Pop-up',
+    pageId: 'my/password-verify',
+    pageType: 'Page',
     completionDate: '2025-03-25',
-    lastUpdateDate: '',
-    remarks: '- password-verify-popup.tsx',
+    lastUpdateDate: '2025-07-22',
+    remarks: '- password-verify.tsx (팝업 -> 페이지로 변경)',
   },
   {
     screenId: 'NLP_FO_MYP_MR_1000',
@@ -402,7 +404,7 @@ export const guideData = [
     pageId: 'my/information-change',
     pageType: 'Pop-up',
     completionDate: '2025-03-26',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-18',
     remarks: '- password-change-popup.tsx',
   },
   {
@@ -414,6 +416,7 @@ export const guideData = [
     completionDate: '2025-03-26',
     lastUpdateDate: '',
     remarks: '- id-change-popup.tsx',
+    cancel: true,
   },
   {
     screenId: 'NLP_FO_MYP_MR_1015',
@@ -422,7 +425,7 @@ export const guideData = [
     pageId: 'my/information-change',
     pageType: 'Pop-up',
     completionDate: '2025-03-27',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-18',
     remarks: '- phone-change-popup.tsx',
   },
   {
@@ -432,15 +435,15 @@ export const guideData = [
     pageId: 'my/membership-secession',
     pageType: 'Page',
     completionDate: '2025-03-27',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-25',
     remarks: '- membership-secession.tsx',
   },
   {
     screenId: 'NLP_FO_MYP_MR_1010',
     screenName: 'M_My_비밀번호 확인_EN',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '/',
-    pageType: 'Pop-up',
+    pageId: 'my/password-verify',
+    pageType: 'Page',
     completionDate: '2025-03-25',
     lastUpdateDate: '',
     remarks: '- EN',
@@ -474,6 +477,7 @@ export const guideData = [
     completionDate: '2025-03-26',
     lastUpdateDate: '',
     remarks: '- EN',
+    cancel: true,
   },
   {
     screenId: 'NLP_FO_MYP_MR_1016',
