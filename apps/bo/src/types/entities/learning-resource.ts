@@ -472,12 +472,19 @@ interface ScormItem {
   items?: ScormItem[];
 }
 
+export interface ScormOrgn {
+  orgnId: number;
+  orgnTitle: string;
+  orgnElementId: string;
+  items: ScormItem[];
+}
+
 export interface GetScormResourceRes {
   contentId: number;
   contentUuid: string;
   fileInfo: ResourceFileInfo;
   processingStatus: ProcessingStatus;
-  children: { orgnId: number; grgnTitle: string; orgnElementId: string; items: ScormItem[] }[];
+  children: ScormOrgn[];
 }
 
 export interface PutVideoChangeParams {
@@ -523,12 +530,7 @@ export type PutScormUpdateParams = ContentBaseInfo;
 export interface PutScormUpdateRes extends ContentInformation {
   fileChagngeId: number | null;
   processingStatus: ProcessingStatus;
-  children: {
-    orgnId: number;
-    orgnTitle: string;
-    orgnElementId: string;
-    items: ScormItem[];
-  }[];
+  children: ScormOrgn[];
 }
 
 export enum EnQuestionType {
