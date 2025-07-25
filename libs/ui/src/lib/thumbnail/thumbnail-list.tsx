@@ -97,21 +97,21 @@ const ThumbnailListComponent = forwardRef<HTMLDivElement, ThumbnailListComponent
      * @param checked - 변경된 체크 상태 (true/false)
      * @param checkedFile - 체크 상태가 변경된 ImageOption 객체
      */
-    const handleCheckChange = (_checked: CheckedState, checkedFile: FileInfo) => {
-      if (!_checked && checked) return onChecked?.(null);
+    // const handleCheckChange = (_checked: CheckedState, checkedFile: FileInfo) => {
+    //   if (!_checked && checked) return onChecked?.(checkedFile.fileUuid);
 
-      if (_checked) return onChecked?.(checkedFile.fileUuid);
+    //   if (_checked) return onChecked?.(checkedFile.fileUuid);
 
-      // 현재 옵션 배열에서 체크 상태가 변경된 썸네일을 업데이트한 새로운 배열 생성
-      // const newOptions = options.map((d: ImageOption) => {
-      //   if (d.id === checkedFile.id) {
-      //     return { ...d, checked: !!checked }; // checked 상태 업데이트
-      //   }
-      //   return d;
-      // });
-      // 변경된 체크 상태를 부모 컴포넌트에 알림
-      // onCheckedChange?.(newOptions);
-    };
+    //   // 현재 옵션 배열에서 체크 상태가 변경된 썸네일을 업데이트한 새로운 배열 생성
+    //   // const newOptions = options.map((d: ImageOption) => {
+    //   //   if (d.id === checkedFile.id) {
+    //   //     return { ...d, checked: !!checked }; // checked 상태 업데이트
+    //   //   }
+    //   //   return d;
+    //   // });
+    //   // 변경된 체크 상태를 부모 컴포넌트에 알림
+    //   // onCheckedChange?.(newOptions);
+    // };
 
     /**
      * `options` 배열을 기반으로 `Thumbnail` 컴포넌트 배열을 생성합니다.
@@ -127,7 +127,7 @@ const ThumbnailListComponent = forwardRef<HTMLDivElement, ThumbnailListComponent
           showDeleteBtn={showDeleteButton}
           showPreviewBtn={showPreviewButton}
           selected={checked === file.fileUuid}
-          onCheckedChange={(checked: CheckedState) => handleCheckChange(checked, file)}
+          onCheckedChange={() => onChecked?.(file.fileUuid)}
           onRemoveClick={() => handleRemoveClick(file)}
         />
       ),
