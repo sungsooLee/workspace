@@ -3,16 +3,16 @@ import {
   SequenceList,
 } from '@features/learning-operate/learning-sequence/sequence-management';
 import { forwardRef, useEffect, useState } from 'react';
-import { CourseDetailTabBaseProps, CourseDetailTabFormRef } from '../../../-common/type';
-import { useCourseDetailSubSequence } from '../../../-hooks/use-course-detail-sub-sequence';
+import { useCourseDetailSubSequence } from '../../../../hooks/use-course-detail-sub-sequence';
 import {
   ContentViewType,
   useCourseActions,
   useCourseLastTriggered,
   useCourseStore,
-} from '../../../-store/use-course-store';
+} from '../../../../store/use-course-store';
+import { CourseDetailTabBaseProps } from '@features/learning-operate/course/course-management/types/type';
 
-const SequenceComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBaseProps>((_, ref) => {
+const SequenceComponent = forwardRef<HTMLElement, CourseDetailTabBaseProps>((_, ref) => {
   const [mode, setMode] = useState<string>('MAIN');
   const lastTriggered = useCourseLastTriggered();
   const { courseId, sequenceId: initSequenceId } = useCourseDetailSubSequence();
@@ -37,7 +37,6 @@ const SequenceComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBase
     <SequenceList setMode={setMode} setSequenceId={setSequenceId} courseId={courseId} />
   ) : (
     <SequenceDetail
-      ref={ref}
       mode={mode}
       setMode={setMode}
       courseId={courseId}

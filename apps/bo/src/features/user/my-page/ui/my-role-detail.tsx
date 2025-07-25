@@ -1,8 +1,12 @@
-import { useCallback, useEffect, useMemo } from 'react';
-import { t } from 'i18next';
-import { CellContext, createColumnHelper } from '@tanstack/react-table';
 import { Link, useRouter } from '@tanstack/react-router';
+import { CellContext, createColumnHelper } from '@tanstack/react-table';
+import { t } from 'i18next';
+import { useCallback, useEffect, useMemo } from 'react';
 
+import { useFetchRole } from '@entities/role/service/role-manage.hook';
+import { roleManagerQueryOptions } from '@entities/role/service/role-manage.queries';
+import { FormDisplay } from '@features/form/ui/form-display';
+import { MyRoleExtendModal } from '@features/user/my-page/ui/my-role-extend-modal';
 import {
   CODE_GROUP,
   compactValues,
@@ -23,10 +27,6 @@ import {
   useGridBox,
   useModal,
 } from '@learnway/ui';
-import { useFetchRole } from '@entities/role/service/role-manage.hook';
-import { roleManagerQueryOptions } from '@entities/role/service/role-manage.queries';
-import { FormDisplay } from '@features/form/ui/form-display';
-import { MyRoleExtendModal } from '@features/user/my-page/ui/my-role-extend-modal';
 import {
   ContentsButtons,
   ContentsHistoryInfoFormField,
@@ -50,7 +50,7 @@ const MyRoleDetailComponent = ({ route }: any) => {
   const { state } = useCurrentRoute();
   const router = useRouter();
 
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
   const {
     provider: sProvider,
     getValues,
