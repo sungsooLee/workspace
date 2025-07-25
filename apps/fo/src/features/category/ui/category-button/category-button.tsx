@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useRouter } from '@tanstack/react-router';
+import { useRouter, useRouterState } from '@tanstack/react-router';
 
 import { Button, ModalBody, ModalContainer, ModalTitle, Popover, useModal } from '@learnway/ui';
 import { IcoArray, IcoArrowForward, IcoMenu02 } from '@learnway/icons';
@@ -9,6 +9,8 @@ import { CategoryNavigationPopover } from '../category-navigation-popover/catego
 import styles from '@learnway/styles/fo/features/category/category-button.module.css';
 import { RecentVisits } from '@features/layout';
 import { cn } from '@learnway/shared';
+import { useFetchAuthUser } from '@learnway/auth/entities';
+import { useCategoryTree } from '@entities/category';
 
 interface CategoryPopupProps {
   isOpen: boolean;
@@ -73,6 +75,10 @@ const PopupContent = () => {
   const [activeId, setActiveId] = useState<number>(mainData[0].id);
   const [activeSubId, setActiveSubId] = useState<number>();
   const [activeChildId, setActiveChildId] = useState<number>();
+  const [tenantId, setTenantId] = useState<number>(0);
+
+  const { data: loginUser } = useFetchAuthUser();
+  // const { data: categoryTree} = useCategoryTree(tenantId);
 
   const menuHandleClick = (id: number) => {
     setActiveId(id);
@@ -85,6 +91,15 @@ const PopupContent = () => {
   const childMenuHandleClick = (id: number) => {
     setActiveChildId(id);
   };
+
+  useEffect(() => {
+    if (!loginUser) return;
+
+    if (loginUser.activeTenant) {
+      setTenantId(loginUser.activeTenant.tenantId);
+    }
+  }, [loginUser]);
+
   return (
     <ModalContainer className={styles.modal_container}>
       <ModalTitle>{'학습테마'}</ModalTitle>

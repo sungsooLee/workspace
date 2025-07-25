@@ -9,8 +9,7 @@ import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import {
   ChipListModalSelectorFormField,
   ContentsRow,
-  EditDropdownCell,
-  EditInputCell,
+  EditDropdownCell, EditInputCell,
   EditSwitchCell,
   FormSubTitle,
   GridFormField,
@@ -25,8 +24,12 @@ import { ContentsHistoryInfoFormField, FormRow, OrganizationChoiceTreeModal } fr
 import { EMAIL_REGEX, EnGlobalConst } from '@types';
 import { useFetchUser } from '@entities/users/service/users.hook';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import { getUserStatus } from '@features/platform-management/company/company-user-management/service/company-user.service';
-import { CompanyUserDetailJob } from '@features/platform-management/company/company-user-management/ui/company-user-detail-job';
+import {
+  getUserStatus
+} from '@features/platform-management/company/company-user-management/service/company-user.service';
+import {
+  CompanyUserDetailJob
+} from '@features/platform-management/company/company-user-management/ui/company-user-detail-job';
 
 interface userDetailProps {
   userData: any;
@@ -36,24 +39,17 @@ function compareLatestDate(dates: string[]) {
   const validDates = dates.filter((d): d is string => d! == null);
 
   return validDates.length > 0
-    ? validDates.reduce((latest, current) =>
-        new Date(current) > new Date(latest) ? current : latest,
-      )
+    ? validDates.reduce((latest, current) => new Date(current) > new Date(latest) ? current : latest)
     : '-';
 }
 
 const jobDomainMap = {
-  'BRAND&BASIC': '브랜드&베이직',
-  SELLING: '영업',
-  SERVICE: '서비스',
-};
+  'BRAND&BASIC': '브랜드&베이직', SELLING: '영업', SERVICE : '서비스'
+}
 
 const jobRoleMap = {
-  STAFF: '스텝',
-  SYSTEM_MANAGER: '시스템 매니저',
-  TRAINING_MANAGER: '트레이닝 매니저',
-  ETC: '기타',
-};
+  STAFF: '스텝', SYSTEM_MANAGER: '시스템 매니저', TRAINING_MANAGER: '트레이닝 매니저', ETC: '기타'
+}
 
 /**
  *
@@ -65,7 +61,7 @@ const TenantUserApplicationDetailComponent = (props: userDetailProps, ref: any) 
   const router = useRouter();
   const routerState = useRouterState();
 
-  const { openModal, confirm: openConfirm, alert: openAlert } = useModal();
+  const { open: openModal, confirm: openConfirm, alert: openAlert } = useModal();
 
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -91,72 +87,58 @@ const TenantUserApplicationDetailComponent = (props: userDetailProps, ref: any) 
   };
 
   useEffect(() => {
-    if (props.userData) {
+    if( props.userData ) {
       const userData = props.userData;
-      console.log('#### userData {} => ', userData);
+      console.log('#### userData {} => ', userData)
       const dates = [userData.lockedDate, userData.dormantDate, userData.deletedDate];
       const latestDate = compareLatestDate(dates);
 
       const data = {
         ...userData,
         phoneNumber: userData.phoneNumber && formatPhoneNumber(userData.phoneNumber),
-        companyNumber:
-          userData.companyPhoneNumber && formatPhoneNumber(userData.companyPhoneNumber),
+        companyNumber: userData.companyPhoneNumber && formatPhoneNumber(userData.companyPhoneNumber),
         companyName: userData.company.name,
         deptName: userData.dept?.deptName,
         userPosition: userData.isLeader ? t('조직장') : t('조직원'),
-        gender:
-          userData.gender &&
-          t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.user.Gender.${userData.gender}`),
+        gender: userData.gender && t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.user.Gender.${userData.gender}`),
         userState: getUserStatus(userData),
 
-        createdDate:
-          userData.createdDate &&
-          getDateToString(new Date(userData.createdDate), DATE_TIME_FORMAT.DATETIME_SEC),
-        joinDate:
-          userData.joinDate &&
-          getDateToString(new Date(userData.joinDate), DATE_TIME_FORMAT.DATETIME_SEC),
-        retireDate:
-          userData.retireDate &&
-          getDateToString(new Date(userData.retireDate), DATE_TIME_FORMAT.DATETIME_SEC),
-        promotionDate:
-          userData.promotionDate &&
-          getDateToString(new Date(userData.promotionDate), DATE_TIME_FORMAT.DATETIME_SEC),
-        dormantDate:
-          userData.dormantDate &&
-          getDateToString(new Date(userData.dormantDate), DATE_TIME_FORMAT.DATETIME_SEC),
+        createdDate: userData.createdDate
+          && getDateToString(new Date(userData.createdDate), DATE_TIME_FORMAT.DATETIME_SEC),
+        joinDate: userData.joinDate
+          && getDateToString(new Date(userData.joinDate), DATE_TIME_FORMAT.DATETIME_SEC),
+        retireDate: userData.retireDate
+          && getDateToString(new Date(userData.retireDate), DATE_TIME_FORMAT.DATETIME_SEC),
+        promotionDate: userData.promotionDate
+          && getDateToString(new Date(userData.promotionDate), DATE_TIME_FORMAT.DATETIME_SEC),
+        dormantDate: userData.dormantDate
+          && getDateToString(new Date(userData.dormantDate), DATE_TIME_FORMAT.DATETIME_SEC),
 
         // 계정 정보 데이터 관리 방식
         hrInfoManageType: userData.linkageSystem ? userData.linkageSystem : 'MANUAL_MANAGE',
-        companyMemberJoinTypeList: userData.companyMemberJoinTypeList
-          ? userData.companyMemberJoinTypeList
-          : ['BO_JOIN_MANAGER'],
+        companyMemberJoinTypeList: userData.companyMemberJoinTypeList ? userData.companyMemberJoinTypeList : ['BO_JOIN_MANAGER'],
         accountStatus: 'NORMAL',
         approvalStatus: userData.enabledDate !== null ? '승인' : '대기',
-        lastApprovalStatusUpdateDate:
-          userData.enabledDate &&
-          getDateToString(new Date(userData.enabledDate), DATE_TIME_FORMAT.DATETIME_SEC),
-        accountLastUpdateDate: latestDate
-          ? getDateToString(new Date(latestDate), DATE_TIME_FORMAT.DATETIME_SEC)
-          : '-',
+        lastApprovalStatusUpdateDate: userData.enabledDate
+          && getDateToString(new Date(userData.enabledDate), DATE_TIME_FORMAT.DATETIME_SEC),
+        accountLastUpdateDate: latestDate ? getDateToString(new Date(latestDate), DATE_TIME_FORMAT.DATETIME_SEC) : '-',
         tenant: userData.tenants,
-      };
-      if (userData.lockedDate === null) {
-        if (userData.dormantDate !== null) {
+
+        loginRestriction: userData.company.companyLoginRestrictionList
+      }
+      if( userData.lockedDate === null ) {
+        if( userData.dormantDate !== null ) {
           data.accountStatus = 'INACTIVE_LOCK';
         }
       } else {
-        if (userData.dormantDate === null) {
+        if( userData.dormantDate === null ) {
           data.accountStatus = 'INACTIVE';
         } else {
           data.accountStatus = 'LOCK';
         }
       }
 
-      if (
-        (userData.jobRole && userData.jobRole.length > 0) ||
-        (userData.jobDomain && userData.jobDomain.length > 0)
-      ) {
+      if( (userData.jobRole && userData.jobRole.length > 0) || (userData.jobDomain && userData.jobDomain.length > 0) ) {
         data.jobDomain = null;
         data.jobRole = null;
         const maxLength = Math.max(userData.jobRole.length, userData.jobDomain.length);
@@ -164,18 +146,18 @@ const TenantUserApplicationDetailComponent = (props: userDetailProps, ref: any) 
           const id = `${userData.jobDomain[i] ?? null}_${userData.jobRole[i] ?? null}`;
           const role1 = userData.jobDomain[i] ?? null;
           const role2 = userData.jobRole[i] ?? null;
-          console.log('1', jobDomainMap[role1 as keyof typeof jobDomainMap]);
-          console.log('2', jobRoleMap[role2 as keyof typeof jobRoleMap]);
+          console.log('1', jobDomainMap[role1 as keyof typeof jobDomainMap])
+          console.log('2', jobRoleMap[role2 as keyof typeof jobRoleMap])
           return {
             id,
             jobDomainName: jobDomainMap[role1 as keyof typeof jobDomainMap] ?? role1,
             jobRoleName: jobRoleMap[role2 as keyof typeof jobRoleMap] ?? role2,
-          };
+          }
         });
         data.jobDomains = result;
       }
 
-      updateFormData(data);
+      updateFormData(data)
     }
   }, [props.userData]);
 
@@ -331,7 +313,7 @@ const columns = () => [
     accessorKey: 'jobDomainName',
     size: 200,
     cell: (info: CellContext<any, string>) => (
-      <EditInputCell info={info} input={{ disabled: true }} />
+      <EditInputCell info={info} input={{disabled: true}} />
     ),
     meta: {
       cellAlign: 'center',
@@ -342,7 +324,7 @@ const columns = () => [
     accessorKey: 'jobRoleName',
     size: 'auto',
     cell: (info: CellContext<any, string>) => (
-      <EditInputCell info={info} input={{ disabled: true }} />
+      <EditInputCell info={info} input={{disabled: true}} />
     ),
     meta: {
       cellAlign: 'center',
@@ -662,9 +644,9 @@ const formConfig = (): DynamicFormConfig => ({
     // 종료
     {
       name: 'loginRestriction',
-      type: 'radio-group',
+      type: 'checkbox-group',
       label: t('로그인 제한'),
-      value: 'BASIS_COMPANY',
+      value: ['2'],
       options: [
         { label: '로그인 제한 시간 설정', value: '1' },
         { label: '근테 연동 로그인 제한', value: '2' },

@@ -23,6 +23,7 @@ import styles from '@learnway/styles/fo/pages/_learning/side-panel/side-panel.mo
 import { useLearningWindow } from '../../learnway-learning-window.store';
 import { DATE_TIME_FORMAT, duration } from '@learnway/shared';
 import { convertUploadFilesToFileInfos } from '@learnway/hooks';
+import { CmsLearningCompletionStatus } from '@learnway/types';
 
 interface ChildData {
   className?: string;
@@ -39,10 +40,10 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
     playInfo,
     playList,
     playIndex,
-    progressInfo,
     setPlayInfo,
     gotoBeforeLesson,
     gotoNextLesson,
+    getProgressNumber,
   } = useLearningWindow();
   const { openModal, confirm: openConfirm } = useModal();
 
@@ -68,19 +69,6 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
         gotoBeforeLesson();
       }
     }
-  };
-
-  const getProgressNumber = (moduleId: number, lessonId: number) => {
-    if (progressInfo) {
-      const key = `${moduleId}_${lessonId}`;
-      if (progressInfo.has(key)) {
-        const item = progressInfo.get(key);
-        console.log('---- ', item.progress);
-        return item.progress;
-      }
-    }
-
-    return 0;
   };
 
   const sendValueToParent = (index: number) => {
@@ -298,24 +286,14 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
           <div className={styles.control}>
             <Button
               disabled={!(playIndex !== 0 && playList && playIndex < playList.length)}
-              onClick={() =>
-                openModal({
-                  width: 's',
-                  content: <NextLearningPopup />,
-                })
-              }
+              onClick={() => handlePriveNextClick(false)}
             >
               <IcoPrevPlay width={isMobile ? 20 : 32} height={isMobile ? 20 : 32} />
               <span>이전</span>
             </Button>
             <Button
               disabled={!(playList && playList.length > playIndex + 1)}
-              onClick={() =>
-                openModal({
-                  width: 's',
-                  content: <NextLearningPopup isNext={true} />,
-                })
-              }
+              onClick={() => handlePriveNextClick(true)}
             >
               <IcoPrevNext width={isMobile ? 20 : 32} height={isMobile ? 20 : 32} />
               <span>다음</span>

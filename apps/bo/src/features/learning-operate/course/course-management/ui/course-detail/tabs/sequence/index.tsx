@@ -3,13 +3,14 @@ import {
   SequenceList,
 } from '@features/learning-operate/learning-sequence/sequence-management';
 import { forwardRef, useEffect, useState } from 'react';
-import { CourseDetailTabBaseProps, CourseDetailTabFormRef } from '../../../../types/type';
-import { useCourseDetailSubSequence } from '../../../../hooks/use-course-detail-sub-sequence';
+import { CourseDetailTabBaseProps, CourseDetailTabFormRef } from '../../../-common/type';
+import { useCourseDetailSubSequence } from '../../../-hooks/use-course-detail-sub-sequence';
 import {
   ContentViewType,
   useCourseActions,
   useCourseLastTriggered,
-} from '../../../../store/use-course-store';
+  useCourseStore,
+} from '../../../-store/use-course-store';
 
 const SequenceComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBaseProps>((_, ref) => {
   const [mode, setMode] = useState<string>('MAIN');
@@ -17,6 +18,7 @@ const SequenceComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBase
   const { courseId, sequenceId: initSequenceId } = useCourseDetailSubSequence();
   const [sequenceId, setSequenceId] = useState<number>(initSequenceId ?? 0);
 
+  const { courseCreateInfo } = useCourseStore();
   const { setCourseCreateInfo } = useCourseActions();
 
   useEffect(() => {
@@ -26,15 +28,16 @@ const SequenceComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBase
     }); // 탭
   }, [mode]);
 
-  // useEffect(() => {
-  //   console.log('차수ID:', sequenceId);
-  //   if (setCourseSequenceId) setCourseSequenceId(sequenceId);
-  // }, [sequenceId]);
+  useEffect(() => {
+    const courseSequenceId = sequenceId;
+    setCourseCreateInfo({ sequenceId: courseSequenceId });
+  }, [sequenceId]);
 
-  return mode === 'MAIN' ? (
+  return courseCreateInfo.contentViewType === ContentViewType.LIST ? (
     <SequenceList setMode={setMode} setSequenceId={setSequenceId} courseId={courseId} />
   ) : (
     <SequenceDetail
+      ref={ref}
       mode={mode}
       setMode={setMode}
       courseId={courseId}

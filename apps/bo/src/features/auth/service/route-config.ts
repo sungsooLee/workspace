@@ -5,14 +5,16 @@ import type { ParsedLocation } from '@tanstack/react-router';
 import { isEmpty } from 'lodash';
 import { ZodSchema } from 'zod';
 
-import { authUserQueryKeys } from '@learnway/auth/entities';
+import { authUserQueryKeys, mutateOptions, menuQueryOptions } from '@learnway/auth/entities';
+
 import type { AuthUser } from '@learnway/auth/types';
 import { ERROR, tokenService } from '@learnway/config';
-import { buildJodObject, dateDiff } from '@learnway/shared';
+import { buildJodObject, convertHierarchyToList, dateDiff } from '@learnway/shared';
 import type { PageRouteConfig } from '@learnway/shared';
 
 import type { PageMeta } from '../../../types';
 import { ErrorComponent } from '@features/layout';
+import { QueryClient } from '@tanstack/react-query';
 
 // Default Routing config
 const defaultPageRouteConfig: PageRouteConfig<PageMeta> = {
@@ -49,31 +51,58 @@ export const decodeJwt = (token: string | null) => {
 
 // 사용자의 권한 여부를 확인
 async function authorization({ location, context }: { location: ParsedLocation; context: any }) {
-  const queryClient = context.queryClient;
-  const authUser = queryClient.getQueryData(authUserQueryKeys.authUser) as AuthUser;
+  if (tokenService.accessToken === null) {
+    throw ERROR.AUTHORIZATION;
+  }
 
-  const token = decodeJwt(tokenService.accessToken);
-  // const refresh = decodeJwt(tokenService.refreshToken);
+  try {
+    const token = decodeJwt(tokenService.accessToken);
+    console.log('@ token', token);
+    // const refresh = decodeJwt(tokenService.refreshToken);
 
-  // console.log('### Decode Token', token);
-  // console.log('### authorization', authUser);
+    // 패스워드 만료 시 패스워드 변경 페이지로 라우팅
+    const diff = dateDiff(token!.passwordExpireDate, new Date(), 'd');
+    if (location.pathname !== '/change-password' && diff !== undefined && 0 >= diff) {
+      throw ERROR.PASSWORD_EXPIRE;
+    }
+  } catch (e) {
+    console.error('@ Token ERROR:', e);
+  }
 
-  // if (token === null) {
-  //   throw ERROR.AUTHORIZATION;
-  // }
+  const queryClient = context.queryClient as QueryClient;
+  const authUserQuery = queryClient.getQueryData(authUserQueryKeys.authUser) as AuthUser;
 
-  // 패스워드 만료 시 패스워드 변경 페이지로 라우팅
-  // const diff = dateDiff(token!.passwordExpireDate, new Date(), 'd');
-  // if (location.pathname !== '/change-password' && diff !== undefined && 0 >= diff) {
-  //   throw ERROR.PASSWORD_EXPIRE;
-  // }
+  if (!authUserQuery) {
+    const authUserFetch = (await mutateOptions.reissue().mutationFn()) as AuthUser;
+    const menus = await queryClient.fetchQuery(
+      menuQueryOptions.all(
+        authUserFetch?.activeTenant?.tenantId,
+        authUserFetch?.activeRole?.roleId,
+      ),
+    );
+    console.log('@ auth fetch', authUserFetch);
+    console.log('@ auth menus222222', convertHierarchyToList(menus));
 
-  // if (location.pathname === '/' || !authUser?.menus) {
-  //   if (authUser === undefined) {
-  //     throw ERROR.AUTHORIZATION;
-  //   }
-  //   return;
-  // }
+    if (authUserFetch && menus) {
+      authUserFetch.menus = convertHierarchyToList(menus);
+      queryClient.setQueryData(authUserQueryKeys.authUser, authUserFetch);
+    }
+
+    if (location.pathname === '/' || !authUserFetch?.menus) {
+      if (authUserFetch === undefined) {
+        throw ERROR.AUTHORIZATION;
+      }
+      return;
+    }
+  }
+
+  if (location.pathname === '/' || !authUserQuery?.menus) {
+    if (authUserQuery === undefined) {
+      throw ERROR.AUTHORIZATION;
+    }
+    return;
+  }
+
   /* 메뉴별 접근 권한에 대한 설계 필요
   const unauthScreen = authUser?.menus.some((menu: any) => menu.path === location.pathname);
   if (!unauthScreen) {

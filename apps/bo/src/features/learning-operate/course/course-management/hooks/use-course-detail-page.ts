@@ -48,7 +48,7 @@ export const useCourseDetailPage = () => {
       sequenceId: contentViewType === ContentViewType.LIST ? undefined : sequenceId,
     };
     navigate({
-      to: '/learning/course',
+      to: '/learning/learning-sequence/enrollment-application',
       state,
     });
   }, [courseId, sequenceId]);

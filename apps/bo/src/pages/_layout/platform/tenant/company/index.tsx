@@ -16,6 +16,7 @@ import { SearchBox } from '@shared/ui/search-box';
 import { queryOptions } from '@entities/companies/service/companies.queries';
 
 import { EnGlobalConst } from '@types';
+import { TenantCompanyList } from '@features/platform-management/tenant/company/company-list';
 
 export const Route = createFileRoute('/_layout/platform/tenant/company/')({
   component: RouteComponent,
@@ -27,185 +28,13 @@ export const Route = createFileRoute('/_layout/platform/tenant/company/')({
  */
 
 function RouteComponent() {
-  const router = useRouter();
-
-  const { data: loginUser } = useFetchAuthUser();
-
-  const [tenantId, setTenantId] = useState<number>();
-
-  const searchParam = () => {
-    const data = getValues();
-    const searchData = {
-      tenantId,
-      companyType: data.companyType,
-      name: data.name,
-      isUsed: data.isUsed,
-      modifyStartDate: data.modifyDate.from
-        ? getDateToString(new Date(data.modifyDate.from), 'YYYYMMDD')
-        : '',
-      modifyEndDate: data.modifyDate.to
-        ? getDateToString(new Date(data.modifyDate.to), 'YYYYMMDD')
-        : '',
-    };
-    return searchData;
-  };
-  const { provider: searchProvider, getValues } = useSearchBox(searchConfig());
-  const { config: gConfig, gridFetch } = useGridBox(gridConfig, searchParam);
-
-  const handleOnSearch = () => {
-    if (!tenantId) return;
-    gridFetch(searchParam());
-  };
-
-  useEffect(() => {
-    if (!loginUser) return;
-
-    if (loginUser.activeTenant) {
-      setTenantId(loginUser.activeTenant.tenantId);
-    } else {
-      if (loginUser.tenants && loginUser.tenants.length > 0) {
-        setTenantId(loginUser.tenants[0].tenantId);
-      }
-    }
-  }, [loginUser]);
-
-  useEffect(() => {
-    if (!tenantId) return;
-    gridFetch(searchParam());
-  }, [tenantId]);
-
   return (
     <PageContainer>
       <MainContents>
-        <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
-        <Divider />
-        <GridBox config={gConfig} columns={columns()} showNumberingColumn title={t('회사 목록')} />
+        <TenantCompanyList />
       </MainContents>
     </PageContainer>
   );
 }
 
-const searchConfig = (): SearchBoxConfig => ({
-  builders: [
-    [
-      {
-        name: 'companyType',
-        type: 'dropdown',
-        label: t('그룹'),
-        value: '',
-        optionsConfig: {
-          options: [{ value: '', label: t('전체') }],
-          codeGroup: CODE_GROUP['pms.company.CompanyType'],
-        },
-      },
-      {
-        name: 'name',
-        type: 'text',
-        label: t('회사명'),
-        value: '',
-        placeholder: '',
-      },
-      {
-        name: 'isUsed',
-        type: 'dropdown',
-        label: t('회사정보 사용'),
-        value: '',
-        options: [
-          { value: '', label: t('전체') },
-          { value: true, label: t('사용') },
-          { value: false, label: t('미사용') },
-        ],
-      },
-      {
-        name: 'modifyDate',
-        type: 'date-range',
-        label: t('수정 기간'),
-        value: {
-          from: undefined,
-          to: undefined,
-        },
-      },
-    ],
-  ],
-  validator: {
-    modifyDate: {
-      conditions: [
-        {
-          fn: (values: any) => !values.modifyDate?.from && values.modifyDate?.to,
-          message: t('시작 날짜를 선택하세요'),
-        },
-        {
-          fn: (values: any) => values.modifyDate?.from && !values.modifyDate?.to,
-          message: t('종료 날짜를 선택하세요.'),
-        },
-        {
-          fn: (values: any) => values.modifyDate.from > values.modifyDate.to,
-          message: t('시작 날짜는 종료 날짜 보다 이전일 이어야 합니다.'),
-        },
-      ],
-    },
-  },
-});
 
-const gridConfig: useGridBoxConfig = {
-  query: queryOptions.list,
-  columns: [],
-  data: [],
-  gridState: {
-    page: 0,
-    size: 10,
-    sort: [],
-  },
-};
-
-const columnHelper = createColumnHelper<any>();
-
-const columns = () => [
-  columnHelper.accessor('companyType', {
-    header: t('그룹'),
-    cell: (info) =>
-      t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.company.CompanyType.${info.getValue()}`),
-    meta: {
-      size: 'auto',
-    },
-  }),
-  columnHelper.accessor('name', {
-    header: t('회사명'),
-    cell: (info) => (
-      <Link
-        to="/platform/tenant/company/detail"
-        state={{
-          companyCode: info.row.original.companyCode,
-        }}
-        className="link"
-      >
-        {info.row.original.name}
-      </Link>
-    ),
-    meta: {
-      size: 'auto',
-    },
-  }),
-  columnHelper.accessor('isUsed', {
-    header: t('회사정보 사용'),
-    cell: (info) => (info.getValue() ? t('사용') : t('미사용')),
-  }),
-  columnHelper.accessor('lastModifiedBy', {
-    header: t('수정자'),
-    cell: (info) =>
-      info.row.original.isUseLinkageSystem ? '시스템' : info.row.original.lastModifiedBy,
-    meta: {
-      size: 'auto',
-    },
-  }),
-  columnHelper.accessor('modifiedDate', {
-    header: t('수정일'),
-    cell: (info) =>
-      info.getValue() === null
-        ? ''
-        : getDateToString(new Date(info.row.original.modifiedDate), DATE_TIME_FORMAT.DATETIME_SEC),
-    meta: {
-      size: 'auto',
-    },
-  }),
-] as ColumnDef<any, unknown>[];

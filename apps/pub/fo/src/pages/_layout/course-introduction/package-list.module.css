@@ -2,9 +2,9 @@
 .start {
   &.package_wrap {
     .ai_wrap {
-      @apply relative pr-[328px];
+      @apply relative;
       .ai_explain_wrap {
-        @apply relative min-h-[120px] pl-[144px];
+        @apply relative min-h-[120px] pl-[144px] pr-[328px];
         .img_logo {
           @apply absolute left-0 top-0 h-[120px] w-[120px];
         }
@@ -96,9 +96,8 @@
       &.package_wrap {
         @apply px-[16px];
         .ai_wrap {
-          @apply !pr-0;
           .ai_explain_wrap {
-            @apply pl-[96px];
+            @apply !pr-0 pl-[96px];
             .img_logo {
               @apply mt-[16px] h-[80px] w-[80px];
             }
@@ -142,6 +141,14 @@
         }
         .btn_wrap {
           @apply mt-[24px];
+        }
+        .tabs_wrap {
+          @apply mt-[32px];
+          [class*='nlp--tabs'] {
+            div[data-state='active'] {
+              @apply mt-[32px];
+            }
+          }
         }
         & > [class*='inner'] {
           @apply !py-[40px];

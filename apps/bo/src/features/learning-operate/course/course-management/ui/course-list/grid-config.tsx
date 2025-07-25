@@ -3,10 +3,13 @@ import { CODE_GROUP, getCodeLabel } from '@learnway/hooks';
 import { Link } from '@tanstack/react-router';
 import { CoursesQueryParams } from '@types';
 import { t } from 'i18next';
-import { CourseGridColumn } from '../../types/type';
+import { CourseGridColumn } from './type';
 import { EditFavorite } from '@learnway/ui';
 
-export const createGridConfig = (handleFavoriteClick: (courseId: number) => void) => {
+export const createGridConfig = (
+  handleFavoriteClick: (courseId: number) => void,
+  pathname: string,
+) => {
   const columns: CourseGridColumn[] = [
     // 테넌트
     {
@@ -53,10 +56,14 @@ export const createGridConfig = (handleFavoriteClick: (courseId: number) => void
       size: 300,
       render: ({ row }: any) => {
         const { courseId, wizardStep, courseName } = row.original || {};
-        const url =
-          wizardStep === 'FULL_UPDATE'
-            ? '/learning/course/detail' // 상세 페이지 (5단계 저장 이후)
-            : '/learning/course/create'; // 상세 상세 (5단계 저장 이전)
+        const isManagementPage = pathname === '/learning/course/management';
+
+        const url = isManagementPage
+          ? '/learning/learning-sequence/enrollment-application'
+          : wizardStep === 'FULL_UPDATE'
+            ? '/learning/course/detail/view' // 상세 페이지 (5단계 저장 이후)
+            : '/learning/course/create/view'; // 상세 상세 (5단계 저장 이전)
+
         return (
           <Link to={url} state={{ courseId }} className="link">
             {courseName}

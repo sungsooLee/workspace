@@ -104,18 +104,8 @@ const SequenceListComponent = ({
   const { copySequence } = useCopySequence({});
 
   _global.linkClick = (payload: any) => {
-    if (courseIdProps) {
-      setMode(Mode.DETAIL);
-      setSequenceId(payload.courseSequenceId);
-    } else {
-      router.navigate({
-        to: '/learning/learning-sequence/enrollment-application',
-        state: {
-          courseIdKey: courseIdProps,
-          courseSequenceIdKey: payload.courseSequenceId,
-        },
-      });
-    }
+    setMode(Mode.DETAIL);
+    setSequenceId(payload.courseSequenceId);
   };
 
   const { provider, getValues, onSubmit } = useDynamicForm2({
@@ -352,38 +342,39 @@ const SequenceListComponent = ({
   };
 
   const onCopyRow = async () => {
-    if (!inputCopy || inputCopy <= 0) return;
+    if (!inputCopy || inputCopy <= 0 || selectedItems.length !== 1) return;
     const confirmRes = await openConfirm({
       title: t('선택한 과정을 복사 하시겠습니까?'),
       content: t('선택하신 차수로 복사됩니다.'),
     });
+
     if (!confirmRes) return;
-
-    const lastSeq = selectedItems.reduce((max, row) => Math.max(max, row.sequence), 0);
-    let seqCounter = lastSeq;
-
-    const clonedRows: any[] = [];
-
-    for (const row of selectedItems) {
-      for (let i = 0; i < inputCopy; i++) {
-        seqCounter += 1;
-        clonedRows.push({
-          ...row,
-          sequence: seqCounter, // seq만 고유하게 부여
-          sequenceId: row.sequenceId,
-          courseSequenceName: '[Copy]' + row.courseSequenceName,
-        });
-      }
-    }
-
-    // const newData = [...gridData, ...clonedRows];
-    // setGridData(newData);
+    const payload = {
+      sequenceId: selectedItems[0].courseSequenceId,
+      addQuantity: inputCopy,
+    };
+    await copySequence(payload, {
+      onSuccess: async (data: any, variables: any, context: any) => {
+        console.log('onSuccess:', data);
+        await showSaveComplete();
+        handleOnRefresh();
+      },
+      onError: (data: any, variables: any, context: any) => {
+        console.log('onError:', data);
+      },
+    });
   };
 
   const onBatch = async () => {
     openModal({
       width: 'lg',
       content: <SequenceBatchModal courseId={courseIdProps} selectedItems={selectedItems} />,
+      onClose(data: any) {
+        console.log('### selectedUserGroups', data);
+        if (data) {
+          handleOnRefresh();
+        }
+      },
     });
   };
 
@@ -508,7 +499,8 @@ const SequenceListComponent = ({
                 onChange={(e) => setInputCopy(parseInt(e.target.value))}
               />
               <CopyBatchButtons
-                disabled={selectedItems.length > 0 ? false : true}
+                disabledCopy={selectedItems.length === 1 ? false : true}
+                disabledBatch={selectedItems.length > 0 ? false : true}
                 onCopyRow={onCopyRow}
                 onBatch={onBatch}
               />
