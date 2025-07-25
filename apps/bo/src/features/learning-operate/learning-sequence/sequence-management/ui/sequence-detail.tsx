@@ -132,6 +132,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                 provider={provider}
                 name={'courseType'}
                 label={'유형'}
+                disabled
                 element={
                   <DropdownFormField
                     optionsConfig={{
@@ -146,6 +147,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                 provider={provider}
                 name={'channelUuid'}
                 label={'채널'}
+                disabled
                 element={<TenantChannelDropdownFormField2 tenantId={-1} />}
                 validation={{ required: true }}
               />
@@ -1572,7 +1574,7 @@ export const formDataToRequestData = (d: LearningSequence) => {
   //   ...d,
   // };
   return {
-    tenantList: d.tenantList,
+    tenantList: d.tenantList ? d.tenantList?.map((x: any) => x.tenantId) : [],
     targetList: d.targetList,
     courseSequenceName: d.courseSequenceName,
     isUsed: d.isUsed,

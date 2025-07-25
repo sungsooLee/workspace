@@ -1,51 +1,23 @@
-import { forwardRef, useMemo } from 'react';
-// import { CourseTabBaseProps, TabFormRef } from '../../../-common/type';
 import { useEffect, useCallback, useState, useRef } from 'react';
-import { useLocation } from '@tanstack/react-router';
-import { useWatch } from 'react-hook-form';
 import { t } from 'i18next';
 import { Link, useRouter } from '@tanstack/react-router';
 import { CellContext, ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import {
   Button,
-  Checkbox,
-  ContentsRow,
-  DatePicker,
   Divider,
-  Dropdown,
   EditDatePickerCell,
-  EditDropdownCell,
   EditInputCell,
-  EditTimeRangeCell,
   GridBox,
-  GridFormField,
   Input,
-  TableBox,
   useGridBox,
   useGridBoxConfig,
   useModal,
 } from '@learnway/ui';
-import { SearchBox, SearchBoxForm } from '@shared/ui/search-box';
-import {
-  useSearchBox,
-  SearchBoxConfig,
-  CODE_GROUP,
-  SelectOption,
-  compactValues,
-  useDynamicForm,
-  useDynamicForm2,
-} from '@learnway/hooks';
+import { SelectOption, useDynamicForm2 } from '@learnway/hooks';
 import { queryOptions } from '@entities/learning-sequence/service/learning-sequence.queries';
-import { useQueryClient } from '@tanstack/react-query';
-import { FormRow, FormRow2, GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
+import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
 import { LMSApiPrefix } from '@learnway/config';
-import { EnPageMode } from '@types';
-import { IcoPlus } from '@learnway/icons';
-import { useActiveMenuDepthState, useFetchAuthUser } from '@learnway/auth/entities';
-import dayjs from 'dayjs';
-import { getRandomId } from '@learnway/shared';
 import { SequenceBatchModal } from '@features/learning-operate/learning-sequence/sequence-management';
-import { DateRangePickerFormField, DropdownFormField } from '@features/form';
 import { EditInputDateCell } from '../component/edit-input-date-cell';
 import { CopyBatchButtons } from '../component/copy-batch-buttons';
 import { Mode } from '@pages/_layout/learning/learning-sequence/-common/type';
@@ -119,16 +91,6 @@ const SequenceListComponent = ({
   const [showSaveButton, setShowSaveButton] = useState<any>();
 
   useEffect(() => {
-    if (courseIdProps) {
-      setShowSaveButton({
-        saveButton: {
-          disabled: false,
-          label: t('저장'),
-          onClick: handleSaveClick,
-        },
-      });
-    }
-
     const openYearColumn = [
       columnHelper.accessor('openingYear', {
         header: t('개설연도'),
@@ -527,7 +489,11 @@ const SequenceListComponent = ({
         }
         showRemove={courseIdProps ? true : false}
         onRemoveClick={handleRemoveRows}
-        {...showSaveButton}
+        saveButton={{
+          disabled: false,
+          label: t('저장'),
+          onClick: () => handleSaveClick?.(),
+        }}
       />
     </>
   );
