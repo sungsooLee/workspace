@@ -98,9 +98,7 @@ export const mutateOptions = {
   // 차수 복사
   copySequence: () => ({
     mutationFn: (payload: any) => {
-      const sequenceId = payload.sequenceId;
-      delete payload.sequenceId;
-      return LearningSequenceService.copySequence(sequenceId, payload);
+      return LearningSequenceService.copySequence(payload);
     },
   }),
 };

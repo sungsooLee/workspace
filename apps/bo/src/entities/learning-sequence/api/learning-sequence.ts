@@ -24,7 +24,7 @@ export default class LearningSequenceService {
   }
 
   static createSequence(params: any) {
-    return httpService.post(`${LMSApiPrefix()}/sequence`, params);
+    return httpService.post(`${LMSApiPrefix()}/sequences`, params);
   }
 
   static bulkUpdateSequence(params: any) {
@@ -47,8 +47,8 @@ export default class LearningSequenceService {
     return httpService.delete(`${LMSApiPrefix()}/sequence/${sequenceId}`);
   }
 
-  static copySequence(sequenceId: number, params: any) {
-    return httpService.post(`${LMSApiPrefix()}/sequence/${sequenceId}`, {});
+  static copySequence(params: any) {
+    return httpService.post(`${LMSApiPrefix()}/sequences/copy`, params);
   }
 
   static fetchEnrollmentSequenceCombo(params: any) {

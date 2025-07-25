@@ -34,9 +34,9 @@ const EnrollmentComponent = ({
   const { data: loginUser } = useFetchAuthUser();
   const router = useRouter();
   const routerState = useRouterState();
-  const courseIdKey = routerState.location.state?.courseIdKey ?? courseIdProps ?? null; // 과정ID
+  const courseIdKey = routerState.location.state?.courseId ?? courseIdProps ?? null; // 과정ID
   const courseSequenceIdKey =
-    routerState.location.state?.courseSequenceIdKey ?? courseSequenceIdProps ?? null; // 차수ID(있는경우 검색조건 값 선택)
+    routerState.location.state?.sequenceId ?? courseSequenceIdProps ?? null; // 차수ID(있는경우 검색조건 값 선택)
   console.log('## courseIdKey =>', courseIdKey);
   console.log('## courseSequenceIdKey =>', courseSequenceIdKey);
   const [selectedTabKey, setSelectedTabKey] = useState<string>(SequenceTabDetail.ENROLLMENT_REGIST);
@@ -84,7 +84,7 @@ const EnrollmentComponent = ({
           type: 'dropdown',
           label: t('LABEL.form.label.sequence', '차수'),
           format: 'number',
-          value: '',
+          value: courseSequenceIdKey,
           presetOptionLabel: t('LABEL.form.label.select', '선택'),
           options: [],
         },

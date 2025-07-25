@@ -23,8 +23,9 @@ export const useCoursePage = (): CourseManagementHookResult => {
     mode: 'onSubmit', // 서브밋할 때만 validation 실행
     reValidateMode: 'onChange', // 에러 발생 후에는 값 변경시 즉시 재검증
   });
+  const pathname = router.state.location.pathname;
   const { config: gConfig, gridFetch } = useGridBox(
-    createGridConfig((courseId: number) => handleFavoriteClick(courseId)),
+    createGridConfig((courseId: number) => handleFavoriteClick(courseId), pathname),
     getValues,
   );
   const [selectedRows, setSelectedRows] = useState<CourseListItem[]>([]);
