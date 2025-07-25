@@ -14,6 +14,7 @@ export interface ThumbnailData {
   infoCustomNode?: React.ReactNode[];
   toggleButton?: boolean;
   countInfoNode?: React.ReactNode[];
+  indexNumber?: string;
 }
 
 interface ThumbnailItemProps {
@@ -50,6 +51,7 @@ const ThumbnailItem: React.FC<ThumbnailItemProps> = ({
             className={styles.thumbnail_image}
           />
           {data.labelCustomNode && <div className={styles.custom_node}>{data.labelCustomNode}</div>}
+          {data.indexNumber && <span className={styles.index_node}>{data.indexNumber}</span>}
         </div>
         <div className={styles.thumbnail_info}>
           {data.infoCustomNode && (

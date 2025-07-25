@@ -23,7 +23,8 @@ function RouteComponent() {
       <div className={`${styles.start} ${styles.secession}`}>
         <div className={styles.box}>
           <div className={styles.confirm}>
-            <IcoError02 width={80} height={80} />
+            {/* 퍼블수정 20250725 사이즈 수정 */}
+            <IcoError02 width={isMobile ? 56 : 80} height={isMobile ? 56 : 80} />
             <p>
               회원탈퇴를 신청하기 전에
               <br />
@@ -55,7 +56,6 @@ function RouteComponent() {
           </div>
         </BrowserView>
 
-        {/* 모바일 아직 미작업 */}
         <MobileView>
           <MobileContainerFooter>
             <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
