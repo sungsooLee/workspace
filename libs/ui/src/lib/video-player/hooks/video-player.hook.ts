@@ -86,6 +86,7 @@ export const useVideoPlayer = ({
     nowSubtitle.default = true;
     const config = {
       file: {
+        forceHLS: true,
         attributes: {
           crossOrigin: 'anonymous',
         },
@@ -118,6 +119,16 @@ export const useVideoPlayer = ({
 
         setVideoSubtitles(tracks);
         resetReactPlayerConfig(tracks);
+      } else {
+        // 모바일 설정 HLS 강제 처리
+        setVideoConfig({
+          file: {
+            forceHLS: true,
+            attributes: {
+              crossOrigin: 'anonymous',
+            },
+          },
+        });
       }
 
       if (videoInfo.encodedVideos && videoInfo.encodedVideos.length > 0) {
