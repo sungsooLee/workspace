@@ -2,7 +2,7 @@ import { useEffect, Suspense, lazy } from 'react';
 import { Outlet, createRootRouteWithContext, useRouter } from '@tanstack/react-router';
 
 import { ModalWrapper, ToastWrapper, useModalStore } from '@learnway/ui';
-import { useGlobalRouterEvent } from '@learnway/hooks';
+import { useCodeStore, useCodeStoreShare, useGlobalRouterEvent } from '@learnway/hooks';
 import { setupErrorToastListener } from '@learnway/shared';
 import { MinWidthRequired } from '@shared/ui';
 import { useBreakpointModalClose } from '../shared/lib/breakpoint-modal.hook';
@@ -33,7 +33,12 @@ function RootComponent() {
   const router = useRouter();
   const isUnderBreakpoint = useBreakpointModalClose(closeAll, 1000);
 
+  // Routing 상태 변경 시 Active menu depth 상태 정보 갱신
   useRenewalMenuStateFromRouting();
+
+  // 공통코드 스토어 탭간 동기화 처리
+  useCodeStoreShare();
+
   useGlobalRouterEvent({
     onBeforeLoad: () => {
       closeAll();

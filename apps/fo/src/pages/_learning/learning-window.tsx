@@ -4,7 +4,6 @@ import { createFileRoute, useRouter, useRouterState } from '@tanstack/react-rout
 import { t } from 'i18next';
 
 import {
-  EnContentType,
   LearnwayLearningWindowLayout,
   useLearningWindow,
   ScormPlayerConfigProperties,
@@ -26,6 +25,7 @@ import {
   useGetHtml5Resource,
   useGetImageResource,
 } from '@entities/learning-resource';
+import { CmsEnContentType } from '@learnway/types';
 
 export const Route = createFileRoute('/_learning/learning-window')({
   component: RouteComponent,
@@ -74,6 +74,9 @@ function RouteComponent() {
     console.log('handelVideoWatchStatistics', payload);
     watchLogStatistics(payload);
   };
+  const handleOtherClickButton = async (playInfo: any, otherInfo: any) => {
+    console.log('handleOtherClikcButton called');
+  };
 
   useEffect(() => {
     if (!scormInfo) return;
@@ -119,7 +122,7 @@ function RouteComponent() {
     clearInfo();
     clearConfig();
     switch (playInfo.contentType) {
-      case EnContentType.EBOOK:
+      case CmsEnContentType.EBOOK:
         setEbookConfig({
           contentUuid: playInfo.contentUuid,
           curriculumId: playInfo.curriculumId,
@@ -129,7 +132,7 @@ function RouteComponent() {
           scoId: playInfo.scoId,
         });
         break;
-      case EnContentType.SCORM:
+      case CmsEnContentType.SCORM:
         setScormConfig({
           contentUuid: playInfo.contentUuid,
           curriculumId: playInfo.curriculumId,
@@ -139,7 +142,7 @@ function RouteComponent() {
           scoId: playInfo.scoId,
         });
         break;
-      case EnContentType.VIDEO:
+      case CmsEnContentType.VIDEO:
         setVideoConfig({
           contentUuid: playInfo.contentUuid,
           courseSequenceId: playInfo.sequenceId,
@@ -149,18 +152,20 @@ function RouteComponent() {
           lessonId: playInfo.lessonId,
         });
         break;
-      case EnContentType.BLOG:
+      case CmsEnContentType.BLOG:
         setBlogConfig({
           contentUuid: playInfo.contentUuid,
         });
         break;
-      case EnContentType.HTML5_VIDEO:
+      case CmsEnContentType.HTML5_VIDEO:
         setHtmlConfig({
           contentUuid: playInfo.contentUuid,
         });
         break;
-      case EnContentType.IMAGE:
+      case CmsEnContentType.IMAGE:
         setImageConfig({ contentUuid: playInfo.contentUuid });
+        break;
+      case CmsEnContentType.ETC:
         break;
       default:
     }
@@ -186,6 +191,7 @@ function RouteComponent() {
       galleryLearningHistory: ImageService.saveImageLearning,
       videoOnProgress: handleVideoProgress,
       videoWatchStatistics: handleVideoWatchStatistics,
+      otherClickButton: handleOtherClickButton,
     });
   }, []);
 

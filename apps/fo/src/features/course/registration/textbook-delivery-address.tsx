@@ -6,16 +6,21 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
 import { BrowserView, MobileView } from 'react-device-detect';
 import { AddressSearchModal } from '@shared/ui';
 import styles from '@learnway/styles/fo/pages/_layout/course/textbook.module.css';
+import { AddressSearchResult } from '@types';
 
-const TextbookDeliveryAddressComponent = () => {
+type Props = {
+  onAddressSearchResult: (value: AddressSearchResult) => void;
+};
+
+const TextbookDeliveryAddressComponent = ({ onAddressSearchResult }: Props) => {
   const { open: openModal } = useModal();
 
   const handleAddressSearchResult = async () => {
-    const address = await openModal({
+    const address: AddressSearchResult = await openModal({
       width: 'sm',
       content: <AddressSearchModal />,
     });
-    console.log(address, 'address');
+    onAddressSearchResult(address);
     // setEditionValue({ postalCode: address.zipNo, address: address.roadAddr });
   };
 
@@ -78,6 +83,7 @@ const TextbookDeliveryAddressComponent = () => {
                       placeholder="주소를 입력해주세요"
                       inputSize={'lg'}
                       value=""
+                      readOnly
                     />
                     <Button variant="gray" size="lx" onClick={handleAddressSearchResult}>
                       주소 찾기
@@ -106,6 +112,7 @@ const TextbookDeliveryAddressComponent = () => {
                     placeholder="주소를 입력해주세요"
                     inputSize={'lg'}
                     value=""
+                    readOnly
                   />
                   <Input
                     id="addr5"

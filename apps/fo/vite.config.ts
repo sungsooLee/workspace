@@ -46,7 +46,11 @@ export default defineConfig(({ mode }) => {
       host: 'localhost',
     },
     plugins: [
-      !isTest && TanStackRouterVite({ autoCodeSplitting: true }),
+      !isTest &&
+        TanStackRouterVite({
+          autoCodeSplitting: false,
+          generatedRouteTree: './src/routeTree.gen.ts',
+        }),
       react(),
       nxViteTsPaths(),
       nxCopyAssetsPlugin(['*.md']),

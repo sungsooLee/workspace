@@ -19,11 +19,16 @@ const CompanyUserDetailJobComponent = ({ provider }: { provider: any }) => {
     {
       header: '직군',
       accessorKey: 'role1',
+      size: 200,
       cell: (info: CellContext<any, string>) => (
         <EditDropdownCell
           info={info}
           dropdown={{
-            options: [{ label: 'TEST', value: 'TEST' }],
+            options: [
+              { label: '브랜드&베이직', value: 'BRAND&BASIC' },
+              { label: '영업', value: 'SELLING' },
+              { label: '서비스', value: 'SERVICE' },
+            ],
           }}
         />
       ),
@@ -35,11 +40,17 @@ const CompanyUserDetailJobComponent = ({ provider }: { provider: any }) => {
     {
       header: '직무',
       accessorKey: 'role2',
+      size: 'auto',
       cell: (info: CellContext<any, string>) => (
         <EditDropdownCell
           info={info}
           dropdown={{
-            options: [{ label: 'TEST', value: 'TEST' }],
+            options: [
+              { label: '스텝', value: 'STAFF' },
+              { label: '시스템 매니저', value: 'SYSTEM_MANAGER' },
+              { label: '트레이닝 매니저', value: 'TRAINING_MANAGER' },
+              { label: '기타', value: 'ETC' },
+            ],
           }}
         />
       ),
@@ -76,7 +87,7 @@ const CompanyUserDetailJobComponent = ({ provider }: { provider: any }) => {
                 showTotalCount: false,
                 columns: jobGroupColumns,
                 title: t('직군/직무 관리'),
-                visibleRowCount: 3,
+                visibleRowCount: 1,
               }}
             />
           }

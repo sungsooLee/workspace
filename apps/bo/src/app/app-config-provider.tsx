@@ -40,7 +40,7 @@ export function AppConfigProvider({ children }: AppConfigProviderProps) {
   useMount(async () => {
     setConfig('APP_INFO', 'BO');
     // console.log('### useMount start');
-    tokenService.refreshToken && (await reissue());
+    // tokenService.refreshToken && (await reissue());
     // console.log('### useMount end');
   });
 
@@ -76,9 +76,9 @@ export function AppConfigProvider({ children }: AppConfigProviderProps) {
     if (!codeGroupData || !i18nData) return;
 
     // reissue 체크
-    if (!authUser && tokenService.refreshToken) {
-      return;
-    }
+    // if (!authUser && tokenService.refreshToken) {
+    //   return;
+    // }
 
     setIsLoading(false);
   }, [codeGroupData, i18nData, authUser]);

@@ -65,6 +65,7 @@ const items = [
     title: 'Tab B',
     key: 'b',
     content: <h2>Tab B content</h2>,
+    disabled: true,
   },
   {
     title: 'Tab C',

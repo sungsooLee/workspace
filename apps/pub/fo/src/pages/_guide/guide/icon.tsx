@@ -6,6 +6,7 @@ import {
   IcoCheck,
   IcoCheck02,
   IcoStar,
+  IcoStar02,
   IcoGridFilter,
   IcoDownload,
   IcoDownload02,
@@ -23,6 +24,8 @@ import {
   IcoLinkblank,
   IcoChevronDown,
   IcoChevronLeft,
+  IcoArrowPrev,
+  IcoArrowNext,
   IcoChevronLeftDouble,
   IcoChevronRight,
   IcoChevronRightDouble,
@@ -32,10 +35,12 @@ import {
   IcoChevronRightDoubleDisabled,
   IcoArrowBackward,
   IcoMenu01,
+  IcoMenu02,
   IcoConfirm,
   IcoModify,
   IcoTrash,
   IcoSearch,
+  IcoSearchWrite,
   IcoXclose,
   IcoCaution,
   IcoCaution02,
@@ -45,15 +50,19 @@ import {
   IcoComplete,
   IcoAlertComplete,
   IcoDelete03,
+  IcoDelete04,
   IcoFormRequired,
   IcoCheckboxChecked,
   IcoAlertCircle,
   IcoAlertCircleGray,
   IcoAlertCircle03,
   IcoTooltipArrow,
+  IcoTooltipArrow02,
   IcoCloseCircle,
   IcLogOut01,
   IcoUploadCloud,
+  IcoFileUpload,
+  IcoClipboard,
   IcoLoading,
   IcoTrash03,
   IcoCalendar01,
@@ -73,17 +82,24 @@ import {
   IcoRefresh02,
   IcoPause,
   IcoComplete02,
+  IcoProgressComplete,
   IcoFileMp4,
+  IcoFileExcel,
   IcoBlog,
   IcoEntrust,
   IcoInfoCircle,
   IcoImage01,
   IcoVideo01,
   IcoVideo02,
+  IcoClass,
+  IcoQuestionBank,
+  IcoLive,
+  IcoLiveHive,
   IcoHtml,
   IcoEtc,
   IcoUser01,
   IcoSpinner,
+  IcoSpinnerBlue,
   IcoSucess,
   IcoArray,
   IcoPlay,
@@ -97,6 +113,7 @@ import {
   IcoProgress,
   IcoFilter,
   IcoArrowDownDouble,
+  IcoArrowUpDouble,
   IcoNarrowRight,
   IcoGridOrder,
   IcoFileImg,
@@ -122,14 +139,67 @@ import {
   IcoBoxMinus,
   IcoBoxPlus,
   IcoMessageText,
-  IcoProgressComplete,
-  IcoTooltipArrow02,
+  IcoMove01,
+  IcoFile01,
+  IcoCopy,
+  IcoLearning01,
+  IcoLearning02,
+  IcoLearning03,
+  IcoLearning04,
+  IcoLearning05,
+  IcoLearning06,
+  IcoPrevPlay,
+  IcoPrevNext,
+  IcoArrowDownFilled,
+  IcoSubtitles,
+  IcoPlayerSetting,
+  IcoPlayerPlay,
+  IcoPlayerPause,
+  IcoExpand,
+  IcoReduce,
+  IcoClock10Back,
+  IcoClock10Forward,
+  IcoBackward,
+  IcoList,
+  IcoAvatar,
+  IcoAvatar02,
+  IcoSymbol,
+  IcoFilePng,
+  IcoBook,
+  IcoBuilding,
+  IcoCategory,
+  IcoDivice,
+  IcoLevel,
+  IcoLocation,
+  IcoPrize,
+  IcoSubtitles02,
+  IcoTime,
   IcoPdf,
   IcoLock,
-  IcoTime,
+  IcoEssential,
+  IcoTeacher,
+  IcoMoney,
+  IcoChair,
+  IcoTranslation,
+  IcoImport,
+  IcoSucess03,
+  IcoError02,
   IcoHistory,
   IcoLang,
+  IcoLink,
   IcoArrow,
+  IcoSpeakerFill,
+  IcoNextPlayFill,
+  IcoPrevPlayFill,
+  IcoVideoPlay,
+  IcoVideoStop,
+  IcoSettingsFill,
+  IcoSpeakerOffFill,
+  IcoCircleProgress,
+  IcoPoint,
+  IcoChart,
+  IcoPaper,
+  IcoRocket,
 } from '@learnway/icons';
 
 export const Route = createFileRoute('/_guide/guide/icon')({
@@ -137,6 +207,1008 @@ export const Route = createFileRoute('/_guide/guide/icon')({
 });
 
 function RouteComponent() {
+  const icons = [
+    {
+      name: 'IcoArrowDown',
+      Component: <IcoArrowDown width={30} height={30} stroke="#4C515E" />,
+      file: 'ic_arrow_down.svg',
+    },
+    {
+      name: 'IcoArrowUp',
+      Component: <IcoArrowUp width={30} height={30} stroke="#4C515E" />,
+      file: 'ic_arrow_up.svg',
+    },
+    {
+      name: 'IcoAlarmFill',
+      Component: <IcoAlarmFill width={30} height={30} stroke="#4C515E" />,
+      file: 'ic_alarm_fill.svg',
+    },
+    {
+      name: 'IcoCheck',
+      Component: <IcoCheck width={20} height={20} stroke="#4C515E" />,
+      file: 'ic_check.svg',
+    },
+    {
+      name: 'IcoCheck02',
+      Component: <IcoCheck02 width={20} height={20} stroke="#4C515E" />,
+      file: 'ic_check02.svg',
+    },
+    {
+      name: 'IcoStar',
+      Component: <IcoStar width={20} height={20} stroke="#4C515E" />,
+      file: 'ic_star.svg',
+    },
+    {
+      name: 'IcoStar02',
+      Component: <IcoStar02 width={20} height={20} stroke="#4C515E" />,
+      file: 'ic_star02.svg',
+    },
+    {
+      name: 'IcoGridFilter',
+      Component: <IcoGridFilter width={16} height={16} stroke="#4C515E" />,
+      file: 'ic_grid_filter.svg',
+    },
+    {
+      name: 'IcoDownload',
+      Component: <IcoDownload width={16} height={16} stroke="#4C515E" />,
+      file: 'ic_download.svg',
+    },
+    {
+      name: 'IcoDownload02',
+      Component: <IcoDownload02 width={16} height={16} stroke="#4C515E" />,
+      file: 'ic_download02.svg',
+    },
+    {
+      name: 'IcoMinus',
+      Component: <IcoMinus width={16} height={16} stroke="#4C515E" />,
+      file: 'ic_minus.svg',
+    },
+    {
+      name: 'IcoPlus',
+      Component: <IcoPlus width={16} height={16} stroke="#4C515E" />,
+      file: 'ic_plus.svg',
+    },
+    {
+      name: 'IcoSetting',
+      Component: <IcoSetting width={16} height={16} stroke="#4C515E" />,
+      file: 'ic_setting.svg',
+    },
+    {
+      name: 'IcoClose',
+      Component: <IcoClose width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_close.svg',
+    },
+    {
+      name: 'IcoClose02',
+      Component: <IcoClose02 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_close02.svg',
+    },
+    {
+      name: 'IcoFillActive',
+      Component: <IcoFillActive width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_fill_active.svg',
+    },
+    {
+      name: 'IcoArrowForward',
+      Component: <IcoArrowForward width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_arrow_forward.svg',
+    },
+    {
+      name: 'IcoHome02',
+      Component: <IcoHome02 width={12} height={12} stroke="#4C515E" />,
+      file: 'ic_home02.svg',
+    },
+    {
+      name: 'IcoHome03',
+      Component: <IcoHome03 width={16} height={16} stroke="#4C515E" />,
+      file: 'ic_home-03.svg',
+    },
+    {
+      name: 'IcoBell02',
+      Component: <IcoBell02 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_bell-02.svg',
+    },
+    {
+      name: 'IcoBell03',
+      Component: <IcoBell03 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_bell_03.svg',
+    },
+    {
+      name: 'IcoLinkblank',
+      Component: <IcoLinkblank width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_btn_pop.svg',
+    },
+    {
+      name: 'IcoChevronDown',
+      Component: <IcoChevronDown width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_chevron_down.svg',
+    },
+    {
+      name: 'IcoChevronLeft',
+      Component: <IcoChevronLeft width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_chevron_left.svg',
+    },
+    {
+      name: 'IcoArrowPrev',
+      Component: <IcoArrowPrev width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_arrow_prev.svg',
+    },
+    {
+      name: 'IcoArrowNext',
+      Component: <IcoArrowNext width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_arrow_next.svg',
+    },
+    {
+      name: 'IcoChevronLeftDouble',
+      Component: <IcoChevronLeftDouble width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_chevron_left_double.svg',
+    },
+    {
+      name: 'IcoChevronRight',
+      Component: <IcoChevronRight width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_chevron_right.svg',
+    },
+    {
+      name: 'IcoChevronRightDouble',
+      Component: <IcoChevronRightDouble width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_chevron_right_double.svg',
+    },
+    {
+      name: 'IcoChevronLeftDisabled',
+      Component: <IcoChevronLeftDisabled width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_chevron_left_disabled.svg',
+    },
+    {
+      name: 'IcoChevronLeftDoubleDisabled',
+      Component: <IcoChevronLeftDoubleDisabled width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_chevron_left_double_disabled.svg',
+    },
+    {
+      name: 'IcoChevronRightDisabled',
+      Component: <IcoChevronRightDisabled width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_chevron_right_disabled.svg',
+    },
+    {
+      name: 'IcoChevronRightDoubleDisabled',
+      Component: <IcoChevronRightDoubleDisabled width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_chevron_right_double_disabled.svg',
+    },
+    {
+      name: 'IcoArrowBackward',
+      Component: <IcoArrowBackward width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_arrow_backward.svg',
+    },
+    {
+      name: 'IcoMenu01',
+      Component: <IcoMenu01 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_menu-01.svg',
+    },
+    {
+      name: 'IcoMenu02',
+      Component: <IcoMenu02 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_menu-02.svg',
+    },
+    {
+      name: 'IcoConfirm',
+      Component: <IcoConfirm width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_success_alt.svg',
+    },
+    {
+      name: 'IcoModify',
+      Component: <IcoModify width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_pencil_fill.svg',
+    },
+    {
+      name: 'IcoTrash',
+      Component: <IcoTrash width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_trash.svg',
+    },
+    {
+      name: 'IcoSearch',
+      Component: <IcoSearch width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_search.svg',
+    },
+    {
+      name: 'IcoSearchWrite',
+      Component: <IcoSearchWrite width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_search_write.svg',
+    },
+    {
+      name: 'IcoXclose',
+      Component: <IcoXclose width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_x_close.svg',
+    },
+    {
+      name: 'IcoCaution',
+      Component: <IcoCaution width={48} height={48} stroke="#4C515E" />,
+      file: 'ic_caution.svg',
+    },
+    {
+      name: 'IcoCaution02',
+      Component: <IcoCaution02 width={24} height={25} stroke="#4C515E" />,
+      file: 'ic_caution02.svg',
+    },
+    {
+      name: 'IcoCaution03',
+      Component: <IcoCaution03 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_caution03.svg',
+    },
+    {
+      name: 'IcoWarning',
+      Component: <IcoWarning width={48} height={48} stroke="#4C515E" />,
+      file: 'ic_warning.svg',
+    },
+    {
+      name: 'IcoError',
+      Component: <IcoError width={48} height={48} stroke="#4C515E" />,
+      file: 'ic_error.svg',
+    },
+    {
+      name: 'IcoComplete',
+      Component: <IcoComplete width={48} height={48} stroke="#4C515E" />,
+      file: 'ic_complete.svg',
+    },
+    {
+      name: 'IcoAlertComplete',
+      Component: <IcoAlertComplete width={48} height={48} stroke="#4C515E" />,
+      file: 'ic_alert_complete.svg',
+    },
+    {
+      name: 'IcoDelete03',
+      Component: <IcoDelete03 width={48} height={48} stroke="#4C515E" />,
+      file: 'ic_delete_03.svg',
+    },
+    {
+      name: 'IcoDelete04',
+      Component: <IcoDelete04 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_close_circle02.svg',
+    },
+    {
+      name: 'IcoFormRequired',
+      Component: <IcoFormRequired width={9} height={8} stroke="#4C515E" />,
+      file: 'ic_form_required.svg',
+    },
+    {
+      name: 'IcoCheckboxChecked',
+      Component: <IcoCheckboxChecked width={12} height={13} stroke="#4C515E" />,
+      file: 'ic_checkbox_checked.svg',
+    },
+    {
+      name: 'IcoAlertCircle',
+      Component: <IcoAlertCircle width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_alert_circle02.svg',
+    },
+    {
+      name: 'IcoAlertCircleGray',
+      Component: <IcoAlertCircleGray width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_alert_circle_gray.svg',
+    },
+    {
+      name: 'IcoAlertCircle03',
+      Component: <IcoAlertCircle03 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_alert_circle_03.svg',
+    },
+    {
+      name: 'IcoTooltipArrow',
+      Component: <IcoTooltipArrow width={12} height={13} stroke="#4C515E" />,
+      file: 'ic_tooltip_arrow.svg',
+    },
+    {
+      name: 'IcoTooltipArrow02',
+      Component: <IcoTooltipArrow02 width={12} height={13} stroke="#4C515E" />,
+      file: 'ic_tooltip_arrow02.svg',
+    },
+    {
+      name: 'IcoCloseCircle',
+      Component: <IcoCloseCircle width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_close_circle.svg',
+    },
+    {
+      name: 'IcLogOut01',
+      Component: <IcLogOut01 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_log_out_01.svg',
+    },
+    {
+      name: 'IcoUploadCloud',
+      Component: <IcoUploadCloud width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_upload_cloud.svg',
+    },
+    {
+      name: 'IcoFileUpload',
+      Component: <IcoFileUpload width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_file_upload.svg',
+    },
+    {
+      name: 'IcoClipboard',
+      Component: <IcoClipboard width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_clipboard.svg',
+    },
+    {
+      name: 'IcoLoading',
+      Component: <IcoLoading width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_loading.svg',
+    },
+    {
+      name: 'IcoTrash03',
+      Component: <IcoTrash03 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_trash_03.svg',
+    },
+    {
+      name: 'IcoCalendar01',
+      Component: <IcoCalendar01 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_calendar_01.svg',
+    },
+    {
+      name: 'IcoBuilding01',
+      Component: <IcoBuilding01 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_building-01.svg',
+    },
+    {
+      name: 'IcoOverseasDealer',
+      Component: <IcoOverseasDealer width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_overseas_dealer.svg',
+    },
+    {
+      name: 'IcoMail',
+      Component: <IcoMail width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_mail.svg',
+    },
+    {
+      name: 'IcoPhone02',
+      Component: <IcoPhone02 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_phone-02.svg',
+    },
+    {
+      name: 'IcoDotpoints',
+      Component: <IcoDotpoints width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_dotpoints-02.svg',
+    },
+    {
+      name: 'IcoGrid01',
+      Component: <IcoGrid01 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_grid-01.svg',
+    },
+    {
+      name: 'IcoMybook',
+      Component: <IcoMybook width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_mybook.svg',
+    },
+    {
+      name: 'IcoPlay02',
+      Component: <IcoPlay02 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_play-02.svg',
+    },
+    {
+      name: 'IcoMoreHorizontal',
+      Component: <IcoMoreHorizontal width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_more_horizontal.svg',
+    },
+    {
+      name: 'IcoEye',
+      Component: <IcoEye width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_eye.svg',
+    },
+    {
+      name: 'IcoAnnouncement03',
+      Component: <IcoAnnouncement03 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_announcement_03.svg',
+    },
+    {
+      name: 'IcoClock01',
+      Component: <IcoClock01 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_clock_01.svg',
+    },
+    {
+      name: 'IcoRefresh',
+      Component: <IcoRefresh width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_refresh.svg',
+    },
+    {
+      name: 'IcoRefresh02',
+      Component: <IcoRefresh02 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_refresh02.svg',
+    },
+    {
+      name: 'IcoPause',
+      Component: <IcoPause width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_pause.svg',
+    },
+    {
+      name: 'IcoComplete02',
+      Component: <IcoComplete02 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_complete02.svg',
+    },
+    {
+      name: 'IcoProgressComplete',
+      Component: <IcoProgressComplete width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_complete03.svg',
+    },
+    {
+      name: 'IcoFileMp4',
+      Component: <IcoFileMp4 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_file_mp4.svg',
+    },
+    {
+      name: 'IcoFileExcel',
+      Component: <IcoFileExcel width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_file_excel.svg',
+    },
+    {
+      name: 'IcoBlog',
+      Component: <IcoBlog width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_blog.svg',
+    },
+    {
+      name: 'IcoEntrust',
+      Component: <IcoEntrust width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_entrust.svg',
+    },
+    {
+      name: 'IcoInfoCircle',
+      Component: <IcoInfoCircle width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_info_circle.svg',
+    },
+    {
+      name: 'IcoImage01',
+      Component: <IcoImage01 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_image_01.svg',
+    },
+    {
+      name: 'IcoVideo01',
+      Component: <IcoVideo01 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_video_recorder_01.svg',
+    },
+    {
+      name: 'IcoVideo02',
+      Component: <IcoVideo02 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_video_recorder_02.svg',
+    },
+    {
+      name: 'IcoClass',
+      Component: <IcoClass width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_users_plus.svg',
+    },
+    {
+      name: 'IcoQuestionBank',
+      Component: <IcoQuestionBank width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_questionbank.svg',
+    },
+    {
+      name: 'IcoLive',
+      Component: <IcoLive width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_live.svg',
+    },
+    {
+      name: 'IcoLiveHive',
+      Component: <IcoLiveHive width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_livehive.svg',
+    },
+    {
+      name: 'IcoHtml',
+      Component: <IcoHtml width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_html.svg',
+    },
+    {
+      name: 'IcoEtc',
+      Component: <IcoEtc width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_etc.svg',
+    },
+    {
+      name: 'IcoUser01',
+      Component: <IcoUser01 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_user_01.svg',
+    },
+    {
+      name: 'IcoSpinner',
+      Component: <IcoSpinner width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_spinner.svg',
+    },
+    {
+      name: 'IcoSpinnerBlue',
+      Component: <IcoSpinnerBlue width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_spinner_blue.svg',
+    },
+    {
+      name: 'IcoSucess',
+      Component: <IcoSucess width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_sucess.svg',
+    },
+    {
+      name: 'IcoArray',
+      Component: <IcoArray width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_array.svg',
+    },
+    {
+      name: 'IcoPlay',
+      Component: <IcoPlay width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_play.svg',
+    },
+    {
+      name: 'IcoRating',
+      Component: <IcoRating width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_rating.svg',
+    },
+    {
+      name: 'IcoHeart',
+      Component: <IcoHeart width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_heart.svg',
+    },
+    {
+      name: 'IcoMonitor01',
+      Component: <IcoMonitor01 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_monitor-01.svg',
+    },
+    {
+      name: 'IcoStatusFail',
+      Component: <IcoStatusFail width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_status_failed.svg',
+    },
+    {
+      name: 'IcoShieldTick01',
+      Component: <IcoShieldTick01 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_shield-tick-01.svg',
+    },
+    {
+      name: 'IcoFaceId01',
+      Component: <IcoFaceId01 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_face-id-01.svg',
+    },
+    {
+      name: 'IcoCompanion',
+      Component: <IcoCompanion width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_companion.svg',
+    },
+    {
+      name: 'IcoProgress',
+      Component: <IcoProgress width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_progress.svg',
+    },
+    {
+      name: 'IcoFilter',
+      Component: <IcoFilter width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_filter.svg',
+    },
+    {
+      name: 'IcoArrowDownDouble',
+      Component: <IcoArrowDownDouble width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_arrow_down_double.svg',
+    },
+    {
+      name: 'IcoArrowUpDouble',
+      Component: <IcoArrowUpDouble width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_arrow_up_double.svg',
+    },
+    {
+      name: 'IcoNarrowRight',
+      Component: <IcoNarrowRight width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_arrow_narrow_right.svg',
+    },
+    {
+      name: 'IcoGridOrder',
+      Component: <IcoGridOrder width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_grid_order.svg',
+    },
+    {
+      name: 'IcoFileImg',
+      Component: <IcoFileImg width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_file_img.svg',
+    },
+    {
+      name: 'IcoFileVideo',
+      Component: <IcoFileVideo width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_file_video.svg',
+    },
+    {
+      name: 'IcoExam',
+      Component: <IcoExam width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_exam.svg',
+    },
+    {
+      name: 'IcoFolder',
+      Component: <IcoFolder width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_folder.svg',
+    },
+    {
+      name: 'IcoHomework',
+      Component: <IcoHomework width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_homework.svg',
+    },
+    {
+      name: 'IcoMultiScorm',
+      Component: <IcoMultiScorm width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_multi_scorm.svg',
+    },
+    {
+      name: 'IcoSurvey',
+      Component: <IcoSurvey width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_survey.svg',
+    },
+    {
+      name: 'IcoSetting01',
+      Component: <IcoSetting01 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_setting_01.svg',
+    },
+    {
+      name: 'IcoReview',
+      Component: <IcoReview width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_review.svg',
+    },
+    {
+      name: 'IcoSucess02',
+      Component: <IcoSucess02 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_sucess_02.svg',
+    },
+    {
+      name: 'IcoPaperClip',
+      Component: <IcoPaperClip width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_paperclip.svg',
+    },
+    {
+      name: 'IcoPpt',
+      Component: <IcoPpt width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_ppt.svg',
+    },
+    {
+      name: 'IcoShare',
+      Component: <IcoShare width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_share.svg',
+    },
+    {
+      name: 'IcoPin',
+      Component: <IcoPin width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_pin.svg',
+    },
+    {
+      name: 'IcoThumbsUp',
+      Component: <IcoThumbsUp width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_thumbs_up.svg',
+    },
+    {
+      name: 'IcoMessageCircle',
+      Component: <IcoMessageCircle width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_message_circle.svg',
+    },
+    {
+      name: 'IcoMoreVertical',
+      Component: <IcoMoreVertical width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_more_vertical.svg',
+    },
+    {
+      name: 'IcoDownArrow',
+      Component: <IcoDownArrow width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_down_arrow.svg',
+    },
+    {
+      name: 'IcoArrowLineTop',
+      Component: <IcoArrowLineTop width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_arrow_line_top.svg',
+    },
+    {
+      name: 'IcoFolderOpen',
+      Component: <IcoFolderOpen width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_folder_open.svg',
+    },
+    {
+      name: 'IcoBoxMinus',
+      Component: <IcoBoxMinus width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_box_minus.svg',
+    },
+    {
+      name: 'IcoBoxPlus',
+      Component: <IcoBoxPlus width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_box_plus.svg',
+    },
+    {
+      name: 'IcoMessageText',
+      Component: <IcoMessageText width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_message-text-square.svg',
+    },
+    {
+      name: 'IcoMove01',
+      Component: <IcoMove01 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_move_01.svg',
+    },
+    {
+      name: 'IcoFile01',
+      Component: <IcoFile01 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_file_01.svg',
+    },
+    {
+      name: 'IcoCopy',
+      Component: <IcoCopy width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_copy.svg',
+    },
+    {
+      name: 'IcoLearning01',
+      Component: <IcoLearning01 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_learning_01.svg',
+    },
+    {
+      name: 'IcoLearning02',
+      Component: <IcoLearning02 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_learning_02.svg',
+    },
+    {
+      name: 'IcoLearning03',
+      Component: <IcoLearning03 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_learning_03.svg',
+    },
+    {
+      name: 'IcoLearning04',
+      Component: <IcoLearning04 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_learning_04.svg',
+    },
+    {
+      name: 'IcoLearning05',
+      Component: <IcoLearning05 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_learning_05.svg',
+    },
+    {
+      name: 'IcoLearning06',
+      Component: <IcoLearning06 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_learning_06.svg',
+    },
+    {
+      name: 'IcoPrevPlay',
+      Component: <IcoPrevPlay width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_prev_play.svg',
+    },
+    {
+      name: 'IcoPrevNext',
+      Component: <IcoPrevNext width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_next_play.svg',
+    },
+    {
+      name: 'IcoArrowDownFilled',
+      Component: <IcoArrowDownFilled width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_arrow_down_filled.svg',
+    },
+    {
+      name: 'IcoSubtitles',
+      Component: <IcoSubtitles width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_subtitles.svg',
+    },
+    {
+      name: 'IcoPlayerSetting',
+      Component: <IcoPlayerSetting width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_player_setting.svg',
+    },
+    {
+      name: 'IcoPlayerPlay',
+      Component: <IcoPlayerPlay width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_player_play.svg',
+    },
+    {
+      name: 'IcoPlayerPause',
+      Component: <IcoPlayerPause width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_player_pause.svg',
+    },
+    {
+      name: 'IcoExpand',
+      Component: <IcoExpand width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_expand.svg',
+    },
+    {
+      name: 'IcoReduce',
+      Component: <IcoReduce width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_reduce.svg',
+    },
+    {
+      name: 'IcoClock10Back',
+      Component: <IcoClock10Back width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_clock_10_back.svg',
+    },
+    {
+      name: 'IcoClock10Forward',
+      Component: <IcoClock10Forward width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_clock_10_forward.svg',
+    },
+    {
+      name: 'IcoBackward',
+      Component: <IcoBackward width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_backward.svg',
+    },
+    {
+      name: 'IcoList',
+      Component: <IcoList width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_list.svg',
+    },
+    {
+      name: 'IcoAvatar',
+      Component: <IcoAvatar width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_avatar.svg',
+    },
+    {
+      name: 'IcoAvatar02',
+      Component: <IcoAvatar02 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_avatar_02.svg',
+    },
+    {
+      name: 'IcoSymbol',
+      Component: <IcoSymbol width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_symbol.svg',
+    },
+    {
+      name: 'IcoFilePng',
+      Component: <IcoFilePng width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_file_png.svg',
+    },
+    {
+      name: 'IcoBook',
+      Component: <IcoBook width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_book.svg',
+    },
+    {
+      name: 'IcoBuilding',
+      Component: <IcoBuilding width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_building.svg',
+    },
+    {
+      name: 'IcoCategory',
+      Component: <IcoCategory width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_category.svg',
+    },
+    {
+      name: 'IcoDivice',
+      Component: <IcoDivice width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_divice.svg',
+    },
+    {
+      name: 'IcoLevel',
+      Component: <IcoLevel width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_level.svg',
+    },
+    {
+      name: 'IcoLocation',
+      Component: <IcoLocation width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_location.svg',
+    },
+    {
+      name: 'IcoPrize',
+      Component: <IcoPrize width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_prize.svg',
+    },
+    {
+      name: 'IcoSubtitles02',
+      Component: <IcoSubtitles02 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_subtitles_02.svg',
+    },
+    {
+      name: 'IcoTime',
+      Component: <IcoTime width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_time.svg',
+    },
+    {
+      name: 'IcoPdf',
+      Component: <IcoPdf width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_pdf.svg',
+    },
+    {
+      name: 'IcoLock',
+      Component: <IcoLock width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_lock.svg',
+    },
+    {
+      name: 'IcoEssential',
+      Component: <IcoEssential width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_essential.svg',
+    },
+    {
+      name: 'IcoTeacher',
+      Component: <IcoTeacher width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_teacher.svg',
+    },
+    {
+      name: 'IcoMoney',
+      Component: <IcoMoney width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_money.svg',
+    },
+    {
+      name: 'IcoChair',
+      Component: <IcoChair width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_chair.svg',
+    },
+    {
+      name: 'IcoTranslation',
+      Component: <IcoTranslation width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_translation.svg',
+    },
+    {
+      name: 'IcoImport',
+      Component: <IcoImport width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_import.svg',
+    },
+    {
+      name: 'IcoSucess03',
+      Component: <IcoSucess03 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_sucess_03.svg',
+    },
+    {
+      name: 'IcoError02',
+      Component: <IcoError02 width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_error_02.svg',
+    },
+    {
+      name: 'IcoHistory',
+      Component: <IcoHistory width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_history.svg',
+    },
+    {
+      name: 'IcoLang',
+      Component: <IcoLang width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_lang.svg',
+    },
+    {
+      name: 'IcoLink',
+      Component: <IcoLink width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_link.svg',
+    },
+    {
+      name: 'IcoArrow',
+      Component: <IcoArrow width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_arrow.svg',
+    },
+    {
+      name: 'IcoSpeakerFill',
+      Component: <IcoSpeakerFill width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_speaker_fill.svg',
+    },
+    {
+      name: 'IcoNextPlayFill',
+      Component: <IcoNextPlayFill width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_nextplay_fill.svg',
+    },
+    {
+      name: 'IcoPrevPlayFill',
+      Component: <IcoPrevPlayFill width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_prevplay_fill.svg',
+    },
+    {
+      name: 'IcoVideoPlay',
+      Component: <IcoVideoPlay width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_video_play.svg',
+    },
+    {
+      name: 'IcoVideoStop',
+      Component: <IcoVideoStop width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_video_stop.svg',
+    },
+    {
+      name: 'IcoSettingsFill',
+      Component: <IcoSettingsFill width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_settings_fill.svg',
+    },
+    {
+      name: 'IcoSpeakerOffFill',
+      Component: <IcoSpeakerOffFill width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_speaker_off_fill.svg',
+    },
+    {
+      name: 'IcoCircleProgress',
+      Component: <IcoCircleProgress width={24} height={24} stroke="#4C515E" />,
+      file: 'ic_circle_progress.svg',
+    },
+    {
+      name: 'IcoPoint',
+      Component: <IcoPoint width={24} height={24} stroke="#FF8245" />,
+      file: 'ic_point.svg',
+    },
+    {
+      name: 'IcoChart',
+      Component: <IcoChart width={67} height={62} />,
+      file: 'ic_chart.svg (색상변경금지)',
+    },
+    {
+      name: 'IcoPaper',
+      Component: <IcoPaper width={75} height={72} />,
+      file: 'ic_paper.svg (색상변경금지)',
+    },
+    {
+      name: 'IcoRocket',
+      Component: <IcoRocket width={64} height={61} />,
+      file: 'ic_rocket.svg (색상변경금지)',
+    },
+  ];
   return (
     <div>
       <h2 className="guide_tit2">Icon Component Guide</h2>
@@ -173,140 +1245,27 @@ import { IcoAlertCircleGray } from '@learnway/icons'; // 사용할 icon 함수�
         </pre>
       </div>
       <div className="group">
-        <h3 className="guide_tit3">SVG Lists</h3>
+        <h3 className="guide_tit3">SVG Preview</h3>
         <div className="flex_box">
-          <div className="desc flex-wrap">
-            <IcoArrowDown width={30} height={30} stroke="#4C515E" />
-            <IcoArrowUp width={30} height={30} stroke="#4C515E" />
-            <IcoAlarmFill width={30} height={30} stroke="#4C515E" />
-            <IcoCheck width={30} height={30} stroke="#4C515E" />
-            <IcoCheck02 width={30} height={30} stroke="#4C515E" />
-            <IcoStar width={30} height={30} stroke="#4C515E" />
-            <IcoGridFilter width={30} height={30} stroke="#4C515E" />
-            <IcoDownload width={30} height={30} stroke="#4C515E" />
-            <IcoDownload02 width={20} height={20} stroke="#4C515E" />
-            <IcoMinus width={30} height={30} stroke="#4C515E" />
-            <IcoPlus width={30} height={30} stroke="#4C515E" />
-            <IcoSetting width={30} height={30} stroke="#4C515E" />
-            <IcoClose width={30} height={30} stroke="#4C515E" />
-            <IcoClose02 width={30} height={30} stroke="#4C515E" />
-            <IcoFillActive width={30} height={30} stroke="#4C515E" />
-            <IcoArrowForward width={30} height={30} stroke="#4C515E" />
-            <IcoHome02 width={30} height={30} stroke="#4C515E" />
-            <IcoHome03 width={30} height={30} stroke="#4C515E" />
-            <IcoBell02 width={30} height={30} stroke="#4C515E" />
-            <IcoBell03 width={30} height={30} stroke="#4C515E" />
-            <IcoLinkblank width={30} height={30} stroke="#4C515E" />
-            <IcoChevronDown width={30} height={30} stroke="#4C515E" />
-            <IcoChevronLeft width={30} height={30} stroke="#4C515E" />
-            <IcoChevronLeftDouble width={30} height={30} stroke="#4C515E" />
-            <IcoChevronRight width={30} height={30} stroke="#4C515E" />
-            <IcoChevronRightDouble width={30} height={30} stroke="#4C515E" />
-            <IcoChevronLeftDisabled width={30} height={30} stroke="#4C515E" />
-            <IcoChevronLeftDoubleDisabled width={30} height={30} stroke="#4C515E" />
-            <IcoChevronRightDisabled width={30} height={30} stroke="#4C515E" />
-            <IcoChevronRightDoubleDisabled width={30} height={30} stroke="#4C515E" />
-            <IcoArrowBackward width={30} height={30} stroke="#4C515E" />
-            <IcoMenu01 width={30} height={30} fill="#A9AFB8" stroke="#8c97ae" />
-            <IcoConfirm width={30} height={30} stroke="none" fill="#A9AFB8" />
-            <IcoModify width={30} height={30} stroke="#4C515E" />
-            <IcoTrash width={30} height={30} stroke="#4C515E" />
-            <IcoSearch width={30} height={30} stroke="#4C515E" />
-            <IcoXclose width={30} height={30} stroke="#4C515E" />
-            <IcoCaution width={30} height={30} stroke="#4C515E" />
-            <IcoCaution02 width={30} height={30} stroke="#4C515E" />
-            <IcoCaution03 width={30} height={30} stroke="#4C515E" />
-            <IcoWarning width={30} height={30} stroke="#4C515E" />
-            <IcoError width={30} height={30} stroke="#4C515E" />
-            <IcoComplete width={30} height={30} stroke="#4C515E" />
-            <IcoProgressComplete width={30} height={30} />
-            <IcoAlertComplete width={30} height={30} stroke="#4C515E" />
-            <IcoDelete03 width={30} height={30} stroke="#4C515E" />
-            <IcoFormRequired width={30} height={30} stroke="#4C515E" />
-            <IcoCheckboxChecked width={30} height={30} stroke="#4C515E" />
-            <IcoAlertCircle width={30} height={30} stroke="#4C515E" />
-            <IcoAlertCircleGray width={30} height={30} stroke="#4C515E" />
-            <IcoAlertCircle03 width={30} height={30} />
-            <IcoTooltipArrow width={30} height={30} stroke="#4C515E" />
-            <IcoCloseCircle width={30} height={30} stroke="#4C515E" />
-            <IcLogOut01 width={30} height={30} stroke="#4C515E" />
-            <IcoUploadCloud width={30} height={30} stroke="#4C515E" />
-            <IcoLoading width={30} height={30} stroke="#4C515E" />
-            <IcoTrash03 width={30} height={30} stroke="#131C30" />
-            <IcoCalendar01 width={30} height={30} stroke="#131C30" />
-            <IcoBuilding01 width={30} height={30} stroke="#131C30" />
-            <IcoOverseasDealer width={30} height={30} stroke="#131C30" />
-            <IcoMail width={30} height={30} stroke="#131C30" />
-            <IcoPhone02 width={30} height={30} stroke="#131C30" />
-            <IcoDotpoints width={30} height={30} stroke="#4C515E" />
-            <IcoGrid01 width={30} height={30} stroke="#131C30" />
-            <IcoMybook width={30} height={30} stroke="#131C30" />
-            <IcoPlay02 width={30} height={30} stroke="#131C30" />
-            <IcoMoreHorizontal width={30} height={30} stroke="#131C30" />
-            <IcoEye width={30} height={30} stroke="#4C515E" />
-            <IcoAnnouncement03 width={30} height={30} stroke="#4C515E" />
-            <IcoClock01 width={30} height={30} stroke="#4C515E" />
-            <IcoRefresh width={30} height={30} fill="#4c515e" />
-            <IcoRefresh02 width={30} height={30} stroke="#4c515e" fill="none" />
-            <IcoPause width={30} height={30} stroke="#4C515E" fill="#4c515e" />
-            <IcoComplete02 width={30} height={30} stroke="#4C515E" fill="#4c515e" />
-            <IcoBlog width={30} height={30} stroke="#4C515E" />
-            <IcoEntrust width={30} height={30} stroke="#4C515E" />
-            <IcoInfoCircle width={30} height={30} stroke="#4C515E" fill="none" />
-            <IcoImage01 width={30} height={30} stroke="#4C515E" />
-            <IcoVideo01 width={30} height={30} stroke="#4C515E" />
-            <IcoVideo02 width={30} height={30} stroke="#4C515E" />
-            <IcoHtml width={30} height={30} stroke="#4C515E" />
-            <IcoEtc width={30} height={30} stroke="#4C515E" />
-            <IcoUser01 width={30} height={30} stroke="#4C515E" />
-            <IcoSpinner width={30} height={30} stroke="#4C515E" />
-            <IcoSucess width={30} height={30} stroke="#4C515E" />
-            <IcoArray width={30} height={30} stroke="#4C515E" />
-            <IcoPlay width={30} height={30} stroke="#4C515E" />
-            <IcoRating width={30} height={30} stroke="#4C515E" />
-            <IcoHeart width={30} height={30} stroke="#4C515E" />
-            <IcoMonitor01 width={30} height={30} stroke="#4C515E" />
-            <IcoStatusFail width={30} height={30} stroke="#4C515E" />
-            <IcoShieldTick01 width={30} height={30} stroke="#4C515E" />
-            <IcoFaceId01 width={30} height={30} stroke="#4C515E" />
-            <IcoCompanion width={30} height={30} stroke="#4C515E" />
-            <IcoProgress width={30} height={30} stroke="#4C515E" />
-            <IcoFilter width={30} height={30} stroke="#4C515E" />
-            <IcoArrowDownDouble width={30} height={30} stroke="#4C515E" />
-            <IcoNarrowRight width={30} height={30} stroke="#4C515E" />
-            <IcoGridOrder width={30} height={30} stroke="#4C515E" />
-            <IcoFileVideo width={48} height={48} stroke="#4C515E" />
-            <IcoFileImg width={48} height={48} stroke="#4C515E" />
-            <IcoExam width={30} height={30} stroke="#4C515E" />
-            <IcoFolder width={30} height={30} stroke="#4C515E" />
-            <IcoHomework width={30} height={30} stroke="#4C515E" />
-            <IcoMultiScorm width={30} height={30} stroke="#4C515E" />
-            <IcoSurvey width={30} height={30} stroke="#4C515E" />
-            <IcoSetting01 width={30} height={30} stroke="#4C515E" />
-            <IcoReview width={30} height={30} stroke="#4C515E" />
-            <IcoSucess02 width={30} height={30} stroke="#4C515E" />
-            <IcoPaperClip width={30} height={30} stroke="#4C515E" />
-            <IcoPpt width={30} height={30} stroke="#4C515E" />
-            <IcoFileMp4 width={30} height={30} stroke="#4C515E" />
-            <IcoShare width={30} height={30} stroke="#4C515E" />
-            <IcoPin width={30} height={30} stroke="#4C515E" />
-            <IcoThumbsUp width={30} height={30} stroke="#4C515E" />
-            <IcoMessageCircle width={30} height={30} stroke="#4C515E" />
-            <IcoMoreVertical width={30} height={30} stroke="#4C515E" />
-            <IcoDownArrow width={30} height={30} stroke="#4C515E" />
-            <IcoArrowLineTop width={30} height={30} stroke="#4C515E" />
-            <IcoFolderOpen width={30} height={30} stroke="#4C515E" />
-            <IcoBoxMinus width={30} height={30} stroke="#4C515E" />
-            <IcoBoxPlus width={30} height={30} stroke="#4C515E" />
-            <IcoMessageText width={30} height={30} stroke="#4C515E" />
-            <IcoTooltipArrow02 width={12} height={8} fill="#4D525C" />
-            <IcoPdf width={24} height={24} fill="#4D525C" />
-            <IcoLock width={24} height={24} fill="#4D525C" />
-            <IcoTime width={24} height={24} fill="#131416" />
-            <IcoHistory width={24} height={24} fill="#131416" />
-            <IcoLang width={24} height={24} fill="#131416" />
-            <IcoArrow width={16} height={16} fill="#131416" />
-          </div>
+          {icons.map(({ name, Component, file }) => (
+            <div key={name} className="icon_item">
+              <div>{Component}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="group">
+        <h3 className="guide_tit3">SVG Lists Detail</h3>
+        <div className="flex_box">
+          {icons.map(({ name, Component, file }) => (
+            <div key={name} className="icon_item">
+              <div className="item">
+                <div>{Component}</div>
+                <div>이름 : {name}</div>
+                <div>파일명 : {file}</div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

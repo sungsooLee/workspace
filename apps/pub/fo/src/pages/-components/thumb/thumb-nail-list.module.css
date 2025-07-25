@@ -9,3 +9,14 @@
     }
   }
 }
+
+/* Mobile */
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.thumbnail_list {
+        @apply gap-x-[16px] gap-y-[24px];
+      }
+    }
+  }
+}

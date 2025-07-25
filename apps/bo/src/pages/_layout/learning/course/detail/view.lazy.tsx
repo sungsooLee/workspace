@@ -5,7 +5,6 @@ import { Community } from '@pages/_layout/learning/course/detail/-tabs/community
 import { CourseDetail } from '@pages/_layout/learning/course/detail/-tabs/course-detail';
 import { Curriculum } from '@pages/_layout/learning/course/detail/-tabs/curriculum';
 import { Sequence } from '@pages/_layout/learning/course/detail/-tabs/sequence';
-import { usePageState } from '@shared/lib/use-page-state';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
 import { createLazyFileRoute } from '@tanstack/react-router';
 import { useMemo } from 'react';
@@ -16,35 +15,33 @@ export const Route = createLazyFileRoute('/_layout/learning/course/detail/view')
 });
 
 function RouteComponent() {
-  const { trigger, setContentViewType } = useCourseActions();
-
-  // 라우터 state에서 courseId 가져오기
-  const { courseId, courseType } = usePageState();
+  const { trigger } = useCourseActions();
 
   // 커스텀 훅 사용
-  const { activeTab, changeTab, getTabValues, visibleButtons } = useCourseDetailPage(courseType);
+  const { activeTab, changeTab, visibleButtons, moveEnrollmentManagementPage } =
+    useCourseDetailPage();
 
   const tabItems = useMemo(
     () => [
       {
         title: '과정상세',
         key: CourseDetailTab.COURSE_DETAIL,
-        content: <CourseDetail courseId={courseId} />,
+        content: <CourseDetail />,
       },
       {
         title: '커리큘럼',
         key: CourseDetailTab.CURRICULUM,
-        content: <Curriculum courseId={courseId} />,
+        content: <Curriculum />,
       },
       {
         title: '차수',
         key: CourseDetailTab.SEQUENCE,
-        content: <Sequence courseId={courseId} />,
+        content: <Sequence />,
       },
       {
         title: '커뮤니티',
         key: CourseDetailTab.COMMUNITY,
-        content: <Community courseId={courseId} />,
+        content: <Community />,
       },
     ],
     [],
@@ -52,27 +49,20 @@ function RouteComponent() {
 
   const handleTabChange = (tabKey: string) => {
     changeTab(tabKey as CourseDetailTab);
-    setContentViewType(ContentViewType.LIST); // 탭 이동시 목록 뷰로 변경
   };
 
   return (
     <PageContainer hideOutLine={true}>
       <ContentsButtons>
         <ToggleButtonGroup
-          defaultValue={'과정관리value'}
+          defaultValue={'과정관리'}
           options={[
-            { label: '과정관리', value: '과정관리value' },
-            { label: '수강관리', value: '수강관리value' },
+            { label: '과정관리', value: '과정관리' },
+            { label: '수강관리', value: '수강관리' },
           ]}
-          onClick={(value) => console.log('ToggleButtonGroup.onClick', value)}
+          onClick={(value) => value === '수강관리' && moveEnrollmentManagementPage()}
         />
-        <Button
-          type="button"
-          variant="point"
-          size="sm"
-          label={'Values'}
-          onClick={() => console.log('getTabValues', getTabValues())}
-        />
+        <Button type="button" variant="point" size="sm" label={'Values'} />
         {!!visibleButtons?.isTranslate && (
           <Button
             type="button"
@@ -108,7 +98,6 @@ function RouteComponent() {
             size="sm"
             label={'삭제'}
             onClick={() => trigger(TriggerKey.DELETE)}
-            disabled={!courseId}
           />
         )}
         {!!visibleButtons?.isSave && (

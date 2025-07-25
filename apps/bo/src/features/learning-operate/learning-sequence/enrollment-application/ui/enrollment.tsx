@@ -11,79 +11,36 @@ import { EnrollmentWait } from './enrollment-wait';
 import { EnrollmentCancel } from './enrollment-cancel';
 import { queryOptions as sequenceQueryOptions } from '@entities/learning-sequence/service/learning-sequence.queries';
 import { queryOptions as companysQueryOptions } from '@entities/companies/service/companies.queries';
+import { queryOptions as departmentQueryOptions } from '@entities/department';
 import { SequenceTabDetail } from '@pages/_layout/learning/learning-sequence/-common/type';
 import { generateYears } from '@learnway/shared';
 import { useFetchEnrollmentSequenceCombo } from '@entities/learning-sequence/service/learning-sequence.hook';
 import { useFetchAuthUser } from '@learnway/auth/entities';
+import { useWatch } from 'react-hook-form';
 
-// type EnrollmentComponentProps = {
-
-// };
+type EnrollmentComponentProps = {
+  courseId?: number;
+  courseSequenceId?: number;
+};
 
 /**
  * NLP_BO_LMS_0035,0036,0037 : 수강신청 목록(탭)
  * @returns
  */
-const EnrollmentComponent = () => {
+const EnrollmentComponent = ({
+  courseId: courseIdProps,
+  courseSequenceId: courseSequenceIdProps,
+}: EnrollmentComponentProps) => {
   const { data: loginUser } = useFetchAuthUser();
   const router = useRouter();
   const routerState = useRouterState();
-  const courseIdKey = routerState.location.state?.courseIdKey || 0; // 과정ID
-  const courseSequenceIdKey = routerState.location.state?.courseSequenceIdKey || 0; // 차수ID(있는경우 검색조건 값 선택)
+  const courseIdKey = routerState.location.state?.courseId ?? courseIdProps ?? null; // 과정ID
+  const courseSequenceIdKey =
+    routerState.location.state?.sequenceId ?? courseSequenceIdProps ?? null; // 차수ID(있는경우 검색조건 값 선택)
   console.log('## courseIdKey =>', courseIdKey);
   console.log('## courseSequenceIdKey =>', courseSequenceIdKey);
   const [selectedTabKey, setSelectedTabKey] = useState<string>(SequenceTabDetail.ENROLLMENT_REGIST);
-
-  const handleTabChange = (tabKey: string) => {
-    if (tabKey !== selectedTabKey) {
-      setSelectedTabKey(tabKey);
-    }
-  };
-
-  useEffect(() => {
-    if (!loginUser) return;
-    if (loginUser.activeTenant?.tenantId) {
-      setCompanyOption(loginUser.activeTenant?.tenantId);
-    }
-  }, [selectedTabKey, loginUser]);
-
-  useEffect(() => {
-    setSequenceOption();
-  }, [selectedTabKey]);
-
-  const setSequenceOption = async () => {
-    console.log('### setSequenceOption');
-    const searchValues = getValues();
-    const payload = {
-      openingYear: searchValues.openingYear,
-      courseId: courseIdKey,
-    };
-    const result = await queryClient.fetchQuery(
-      sequenceQueryOptions.enrollmentSequenceCombo(payload),
-    );
-    setOptions('courseSequenceId', [
-      { label: '1', value: 1 },
-      { label: '2', value: 2 },
-    ]);
-    // if (result) {
-    //   console.log('result=>', result);
-    //   const sequenceIdOptions = result.map((item: any) => ({
-    //     label: item.courseSequenceName,
-    //     value: item.courseSequenceId,
-    //   }));
-    //   setOptions('courseSequenceId', sequenceIdOptions);
-    // }
-  };
-
-  const setCompanyOption = async (tenantId: number) => {
-    console.log('### setCompanyOption');
-    const companys = await queryClient.fetchQuery(companysQueryOptions.tenantCompany(tenantId));
-    const companyIdOptions = companys.map((item) => ({
-      label: item.name,
-      value: item.companyId,
-    }));
-    setOptions('companyId', companyIdOptions);
-  };
+  const queryClient = useQueryClient();
 
   const getStatusOptions = () => {
     switch (selectedTabKey) {
@@ -127,7 +84,7 @@ const EnrollmentComponent = () => {
           type: 'dropdown',
           label: t('LABEL.form.label.sequence', '차수'),
           format: 'number',
-          value: '',
+          value: courseSequenceIdKey,
           presetOptionLabel: t('LABEL.form.label.select', '선택'),
           options: [],
         },
@@ -191,9 +148,74 @@ const EnrollmentComponent = () => {
       courseSequenceId: true,
     },
   };
-
-  const queryClient = useQueryClient();
   const { provider: searchProvider, getValues, setValue, setOptions } = useSearchBox(searchConfig);
+
+  const companyId = useWatch({ control: searchProvider.control, name: 'companyId' });
+  const openingYear = useWatch({ control: searchProvider.control, name: 'openingYear' });
+
+  const handleTabChange = (tabKey: string) => {
+    if (tabKey !== selectedTabKey) {
+      setSelectedTabKey(tabKey);
+    }
+  };
+
+  useEffect(() => {
+    if (!loginUser) return;
+    if (loginUser.activeTenant?.tenantId) {
+      setCompanyOption(loginUser.activeTenant?.tenantId);
+    }
+  }, [selectedTabKey, loginUser]);
+
+  useEffect(() => {
+    setSequenceOption();
+  }, [selectedTabKey, openingYear]);
+
+  const setSequenceOption = async () => {
+    const searchValues = getValues();
+    const payload = {
+      openingYear: searchValues.openingYear,
+      courseId: courseIdKey,
+    };
+    const result = await queryClient.fetchQuery(
+      sequenceQueryOptions.enrollmentSequenceCombo(payload),
+    );
+    // setOptions('courseSequenceId', [
+    //   { label: '1', value: 1 },
+    //   { label: '2', value: 2 },
+    // ]);
+    if (result) {
+      console.log('result=>', result);
+      const sequenceIdOptions = result.map((item: any) => ({
+        label: item.courseSequenceName,
+        value: item.courseSequenceId,
+      }));
+      setOptions('courseSequenceId', sequenceIdOptions);
+    }
+  };
+
+  useEffect(() => {
+    setValue('deptId', '');
+    if (!companyId && companyId !== 0) return;
+
+    (async () => {
+      const { content } = await queryClient.fetchQuery(departmentQueryOptions.list({ companyId }));
+      if (content)
+        setOptions(
+          'deptId',
+          content.map((_: any) => ({ value: _.deptId, label: _.deptName })),
+        );
+    })();
+  }, [selectedTabKey, companyId]);
+
+  const setCompanyOption = async (tenantId: number) => {
+    console.log('### setCompanyOption');
+    const companys = await queryClient.fetchQuery(companysQueryOptions.tenantCompany(tenantId));
+    const companyIdOptions = companys.map((item) => ({
+      label: item.name,
+      value: item.companyId,
+    }));
+    setOptions('companyId', companyIdOptions);
+  };
 
   const tabItems = [
     {

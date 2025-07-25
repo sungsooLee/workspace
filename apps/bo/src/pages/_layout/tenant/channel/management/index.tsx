@@ -21,18 +21,6 @@ function RouteComponent() {
 
   const { data: loginUser } = useFetchAuthUser();
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig());
-  const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
-  const [registButtonEnabled, setRegistButtonEnabled] = useState(false);
-
-  useEffect(() => {
-    if (loginUser) {
-      setRegistButtonEnabled(
-        loginUser.activeRole?.roleType === 'PLATFORM_MANAGER' ||
-          loginUser.activeRole?.roleType === 'TENANT_MANAGER',
-      );
-      gridFetch(searchParam());
-    }
-  }, [loginUser]);
 
   const searchParam = () => {
     const data = getValues();
@@ -46,6 +34,19 @@ function RouteComponent() {
     };
     return searchData;
   };
+
+  const { config: gConfig, gridFetch } = useGridBox(gridConfig, searchParam);
+  const [registButtonEnabled, setRegistButtonEnabled] = useState(false);
+
+  useEffect(() => {
+    if (loginUser) {
+      setRegistButtonEnabled(
+        loginUser.activeRole?.roleType === 'PLATFORM_MANAGER' ||
+          loginUser.activeRole?.roleType === 'TENANT_MANAGER',
+      );
+      gridFetch(searchParam());
+    }
+  }, [loginUser]);
 
   const handleOnSearch = useCallback((data: any) => {
     gridFetch(searchParam());

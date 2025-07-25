@@ -1,25 +1,34 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
-import { CourseDetailTab, CourseDetailTabFormRef } from '../-common/type';
-import { ContentViewType, useCourseActions, useCourseStore } from '../-store/use-course-store';
+import { usePageState } from '@shared/index';
+import { useCallback, useMemo, useState } from 'react';
+import { CourseDetailTab } from '../-common/type';
+import { ContentViewType, useCourseActions, useCourseCreateInfo } from '../-store/use-course-store';
+import { useNavigate } from '@tanstack/react-router';
+// 라우터 state에서 전달받는 값의 타입 정의
+export interface CourseDetailPageLocationState {
+  courseId?: number; // 과정 ID
+  courseType?: string; // 과정 타입
+  sequenceId?: number; // 차수 ID
+  initialTab?: CourseDetailTab; // 초기 활성화 탭
+  initialContentViewType?: ContentViewType; // 초기 컨텐츠 뷰 타입
+}
 
 /**
  * 과정 상세 페이지에서 탭 상태 및 탭별 ref, 값 조회 등을 관리하는 커스텀 훅
- * @param courseType 과정 타입 (옵션)
  */
-export const useCourseDetailPage = (courseType?: string) => {
+export const useCourseDetailPage = () => {
+  const navigate = useNavigate();
+  // 라우터 state에서 courseId 가져오기
+  const { courseId, courseType, initialTab, initialContentViewType } =
+    usePageState<CourseDetailPageLocationState>();
+
   // 현재 활성화된 탭 컨텐츠의 뷰 타입
-  const contentViewType = useCourseStore((state) => state.contentViewType);
+  const { contentViewType, sequenceId } = useCourseCreateInfo();
+
+  //
+  const { setCourseCreateInfo } = useCourseActions();
 
   // 현재 활성화된 탭 상태 (기본값: 과정상세)
-  const [activeTab, setActiveTab] = useState(CourseDetailTab.COURSE_DETAIL);
-
-  // 각 탭의 ref를 저장하는 객체 (탭별로 폼 ref를 관리)
-  const tabRefs = useRef<Record<string, CourseDetailTabFormRef | null>>({
-    [CourseDetailTab.COURSE_DETAIL]: null, // 과정상세 탭 ref
-    [CourseDetailTab.CURRICULUM]: null, // 커리큘럼 탭 ref
-    [CourseDetailTab.SEQUENCE]: null, // 차수 탭 ref
-    [CourseDetailTab.COMMUNITY]: null, // 커뮤니티 탭 ref
-  });
+  const [activeTab, setActiveTab] = useState(initialTab ?? CourseDetailTab.COURSE_DETAIL);
 
   /**
    * 탭을 변경하는 함수
@@ -27,13 +36,22 @@ export const useCourseDetailPage = (courseType?: string) => {
    */
   const changeTab = useCallback((tabKey: CourseDetailTab) => {
     setActiveTab(tabKey);
+    setCourseCreateInfo({ activeTab: tabKey, contentViewType: ContentViewType.LIST });
   }, []);
 
   /**
-   * 현재 활성화된 탭의 ref에 접근하여 값을 가져오는 함수
-   * @returns 현재 탭의 getValues() 결과 또는 null
+   * 수강관리 화면으로 이동
    */
-  const getTabValues = () => tabRefs.current[activeTab]?.getValues?.() ?? null;
+  const moveEnrollmentManagementPage = useCallback(() => {
+    const state = {
+      courseId,
+      sequenceId: contentViewType === ContentViewType.LIST ? undefined : sequenceId,
+    };
+    navigate({
+      to: '/learning/learning-sequence/enrollment-application',
+      state,
+    });
+  }, [courseId, sequenceId]);
 
   /**
    * 버튼의 표시 여부를 결정하는 함수 (탭 변경 시 버튼 표시 여부 결정)
@@ -84,12 +102,10 @@ export const useCourseDetailPage = (courseType?: string) => {
     // 현재 활성화된 탭
     activeTab,
     // 탭별 ref 객체
-    tabRefs,
-    // 탭 변경 함수
     changeTab,
-    // 현재 탭의 값 조회 함수
-    getTabValues,
     // 버튼 표시 상태
     visibleButtons,
+    // 수강관리 화면으로 이동
+    moveEnrollmentManagementPage,
   };
 };

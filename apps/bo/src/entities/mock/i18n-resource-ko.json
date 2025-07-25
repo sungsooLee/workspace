@@ -487,7 +487,9 @@
         "downloadReasonType": "다운로드 사유",
         "downloadDetailReasonType": "상세 사유",
         "downloadDetailReason": "상세 사유",
-        "courseSequenceName": "차수명"
+        "courseSequenceName": "차수명",
+        "learningStatusType": "상태",
+        "courseSequenceRange": "학습기간"
       },
       "validation": {
         "needInput": "{{code}}를 입력해 주세요.",

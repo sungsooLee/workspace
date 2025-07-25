@@ -91,7 +91,6 @@ const LearningWindowVideoPlayerComponent: FC<any> = () => {
                 onReady={player.onReady}
                 onBuffer={player.onBuffer}
                 config={player.videoConfig}
-                //config={playConfig}
               />
             </VideoPlayerContainer>
           </div>

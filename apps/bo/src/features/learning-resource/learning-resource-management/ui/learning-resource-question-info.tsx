@@ -111,7 +111,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
       await openModal({
         width: 'xl',
         height: 'fix',
-        content: <LearningResourceQuestionShuttleModal />,
+        content: <LearningResourceQuestionShuttleModal examPoolUuid={data?.examPoolUuid ?? ''} />,
       });
     }, []);
 
@@ -496,6 +496,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
                   <GridExcelUploadButton
                     validateUrl={`/exam/questions/${data?.examPoolUuid}/upload`}
                     affairsType="CMS"
+                    formDataName="multipartFile"
                   />
                   <GridExcelDownloadButton
                     method="post"

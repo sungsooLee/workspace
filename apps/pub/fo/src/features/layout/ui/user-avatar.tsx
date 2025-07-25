@@ -1,17 +1,22 @@
 import { cn } from '@learnway/shared';
 import { memo, useState } from 'react';
 import { Link } from '@tanstack/react-router';
-import { Avatar, Button, Popover, useModal } from '@learnway/ui';
+import { Avatar, Button, Popover, useModal, Switch } from '@learnway/ui';
 import { PasswordVerifyPopup } from '../../layout';
-import { IcLogOut01, IcoXclose } from '@learnway/icons';
+import {
+  IcLogOut01,
+  IcoPoint,
+  IcoLearning03,
+  IcoChart,
+  IcoPaper,
+  IcoRocket,
+} from '@learnway/icons';
 import styles from './user-avatar.module.css';
 import fallbackStyles from './fallback.module.css';
 
 const PopoverContent = () => {
-  // 퍼블수정 20250324 : alert -> confirm 으로 변경
   const { confirm: openConfirm } = useModal();
-  const { open: openModal } = useModal();
-  const [hasAvataImage] = useState<boolean>(true); // 아바타 이미지 없는 경우(true/false)
+  const [isChecked, setIsChecked] = useState(false);
 
   const handleClickAlert2 = () => {
     openConfirm({
@@ -33,72 +38,101 @@ const PopoverContent = () => {
 
   return (
     <div className={`${styles.start} ${styles.avatar_area}`}>
-      <div className="title_area">
-        <h2>내정보</h2>
-        <Popover.Close asChild>
-          <Button
-            variant="ghost"
-            size="ts"
-            onlyIcon={true}
-            icon={<IcoXclose width={24} height={24} stroke="#131416" />}
-          />
-        </Popover.Close>
-      </div>
       <div className={styles.profile_info}>
         <div className={styles.avatar_img}>
-          {/* 퍼블수정 20250318 : 아바타 사진 수정 */}
-          {hasAvataImage ? (
-            <div className={styles.avatar_box}>
-              {/* <span className={cn(fallbackStyles.fallback, styles.name)}>
-                <em className={cn(fallbackStyles.fallback, styles.text)}>{'김'}</em>
-              </span> */}
-              <Avatar imageUrl="https://github.com/shadcn.png" className={styles.info_avata} />
-            </div>
-          ) : (
-            // 아바타 이미지 없는 경우 CASE
-            <div className={styles.avatar_box}>
-              <span className={cn(fallbackStyles.fallback, styles.name)}>
-                <em className={cn(fallbackStyles.fallback, styles.text)}>{'김'}</em>
-              </span>
-            </div>
-          )}
-        </div>
-        <div className={styles.profile}>
-          <span className={styles.name}>김현대</span>
-          <span className={styles.tenant}>현대오토에버</span>
-          <span className={styles.team}>팀명</span>
-          {/* 퍼블수정 20250317 : 최근접속 추가 */}
-          <span className={styles.time}>
-            <span>최근접속</span>
-            <span>2026-01-01 18:28</span>
+          {/* 이미지일경우 */}
+          <Avatar imageUrl="https://github.com/shadcn.png" size="2xl" />
+          {/* 텍스트일경우 */}
+          {/* <Avatar fallback="AB" size="2xl" /> */}
+          <span className={styles.ico}>
+            <Button variant="ghost" size="ts" onlyIcon={true} icon={<IcoLearning03 />} />
           </span>
         </div>
+        <div className={styles.profile}>
+          <div className={styles.info_box}>
+            <span className={styles.name}>김현대</span>
+            <Button size="sm" underline={true} label={'개인정보변경'} />
+          </div>
+          <div className={styles.tenant}>
+            <span>현대오토에버</span>
+            <span>Sales & Marketing</span>
+            <span>책임연구원</span>
+          </div>
+        </div>
+      </div>
+
+      <div className={styles.point_box}>
+        <IcoPoint className={styles.ico} />
+        <span className={styles.txt}>나의 포인트</span>
+        <span className={styles.point}>
+          <em>243</em>P
+        </span>
+      </div>
+
+      <Button variant="primary" size="xl" className={styles.btn_my}>
+        나의 학습
+      </Button>
+
+      {/* 최근방문 */}
+      <div className={styles.recent_visits}>
+        <h3>최근 방문</h3>
+        <ul className={styles.list}>
+          <li>
+            <Button className={styles.btn}>
+              <span className={styles.ico}>
+                <IcoChart />
+              </span>
+              <span className={styles.txt}>결재함</span>
+            </Button>
+          </li>
+          <li>
+            <Button className={styles.btn}>
+              <span className={styles.ico}>
+                <IcoPaper />
+              </span>
+              <span className={styles.txt}>학습이력</span>
+            </Button>
+          </li>
+          <li>
+            <Button className={styles.btn}>
+              <span className={styles.ico}>
+                <IcoRocket />
+              </span>
+              <span className={styles.txt}>찜한 과정</span>
+            </Button>
+          </li>
+        </ul>
       </div>
       <ul className={styles.info_list}>
+        <li></li>
         <li>
-          <Button
-            onClick={() =>
-              openModal({
-                width: 's',
-                content: <PasswordVerifyPopup />,
-              })
-            }
-          >
-            개인정보 변경
-          </Button>
-          {/* <Link to={'/'}>개인정보 변경</Link> */}
+          <span className={styles.txt}>알림</span>
+          <Switch
+            checked={isChecked}
+            onCheckedChange={setIsChecked}
+            label={isChecked ? 'ON' : 'OFF'}
+          />
         </li>
+
         <li>
-          <Link to={'/'}>프로필 작성</Link>
+          <span className={styles.txt}>언어</span>
+          <Button variant="arrow" size="md" label={'한국어'} />
         </li>
-        {/* 퍼블수정 20250328 : 로그인 설정 추가 */}
+
         <li>
-          <Link to={'/'}>SNS 로그인 설정</Link>
+          <span className={styles.txt}>HRD 센터</span>
+          <Button variant="arrow" size="md" label={'바로가기'} />
+        </li>
+
+        <li>
+          <span className={styles.txt}>권한 신청</span>
+          <Button variant="arrow" size="md" label={'바로가기'} />
         </li>
       </ul>
-      <Button className={styles.btn_log} variant="text" onClick={() => handleClickAlert2()}>
-        <IcLogOut01 width={20} height={20} stroke="#3E4550" /> <span>로그아웃</span>
-      </Button>
+
+      <div className={styles.btn_log}>
+        <Button size="md" underline={true} label={'로그아웃'} onClick={() => handleClickAlert2()} />
+      </div>
     </div>
   );
 };

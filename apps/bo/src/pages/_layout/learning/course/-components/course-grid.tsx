@@ -1,4 +1,3 @@
-import { LMSApiPrefix } from '@learnway/config';
 import { Button, GridBox } from '@learnway/ui';
 import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
 import { CourseListItem } from '@types';
@@ -51,10 +50,13 @@ export const CourseGrid: React.FC<CourseGridProps> = ({
       config={config}
       multiple
       showNumberingColumn
-      copyButton={{
-        disabled: !buttonState.copy,
-        onClick: handleCopyClick,
-      }}
+      copyButton={useMemo(
+        () => ({
+          disabled: !buttonState.copy,
+          onClick: handleCopyClick,
+        }),
+        [buttonState.copy],
+      )}
       onRowsSelect={onRowsSelect}
       customButtonNode={customButtonNode}
       excelButtons={

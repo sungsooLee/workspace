@@ -55,7 +55,7 @@
           @apply absolute left-[19px] top-[13px] h-[calc(100%-13px)] w-[2px] bg-[var(--gray95)] content-[''];
         }
         & > div {
-          @apply pb-[40px];
+          @apply pb-[60px];
           &:last-child {
             @apply pb-0;
           }
@@ -93,6 +93,15 @@
       }
       .sub_package_content {
         @apply mt-[32px] pl-[60px];
+        .btn_box {
+          @apply flex justify-center pt-[16px];
+          button {
+            @apply label-lg-b flex items-center gap-[4px] !px-[12px] text-[var(--gray35)];
+            svg {
+              @apply mx-0;
+            }
+          }
+        }
       }
     }
     .operator_box {

@@ -1,0 +1,162 @@
+/* package-list.module.css */
+.start {
+  &.package_wrap {
+    .ai_wrap {
+      @apply relative;
+      .ai_explain_wrap {
+        @apply relative min-h-[120px] pl-[144px] pr-[328px];
+        .img_logo {
+          @apply absolute left-0 top-0 h-[120px] w-[120px];
+        }
+        .ai_copy_wrap {
+          .title {
+            @apply headline3-b pt-[8px] text-[var(--gray10)];
+          }
+          .ai_info {
+            @apply mt-[8px] flex flex-wrap items-center;
+            span {
+              @apply label-xl flex items-center text-[var(--gray50)];
+              &.ai_menu {
+                @apply label-xl-b text-[var(--blue50)];
+              }
+              &:not(:first-child) {
+                &::before {
+                  @apply mx-[8px] flex h-[14px] w-[1px] bg-[var(--gray75)] content-[''];
+                }
+              }
+            }
+          }
+          .detail_info {
+            @apply mt-[8px] flex w-full items-start justify-between;
+            .detail_text {
+              @apply label-xl flex-1 text-[var(--gray35)];
+              &.ellipsis {
+                @apply truncate;
+              }
+            }
+            .btn_detail {
+              @apply label-lg ml-[24px] mt-[2px] flex shrink-0 items-center justify-end overflow-hidden !px-0 text-[var(--gray35)];
+              svg {
+                @apply rotate-180;
+              }
+              &.active {
+                svg {
+                  @apply rotate-0;
+                }
+              }
+            }
+          }
+        }
+      }
+      .notice_wrap {
+        @apply mt-[32px] flex items-center;
+        .notice_title {
+          @apply label-xl w-[80px] shrink-0 text-left text-[var(--gray10)];
+        }
+        .notice_text {
+          @apply label-xl flex-1 truncate text-[var(--gray35)];
+        }
+        .notice_date {
+          @apply label-xl ml-[24px] shrink-0 text-right text-[var(--gray35)];
+        }
+      }
+      .btn_wrap {
+        @apply absolute right-0 top-[36px] flex h-[48px] w-full max-w-[272px] items-center;
+        button {
+          &:not(.btn_subscribe) {
+            @apply h-[48px] w-[48px] shrink-0 border border-solid border-[var(--gray75)] bg-white;
+          }
+          &:not(:first-child) {
+            @apply ml-[8px];
+          }
+          &.btn_subscribe {
+            @apply flex-1;
+          }
+        }
+      }
+    }
+    .tabs_wrap {
+      @apply mt-[40px];
+      [class*='nlp--tabs'] {
+        div[data-state='active'] {
+          @apply mt-[40px];
+        }
+      }
+    }
+    & > [class*='inner'] {
+      @apply !py-[60px];
+    }
+  }
+}
+
+/* Mobile */
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.package_wrap {
+        @apply px-[16px];
+        .ai_wrap {
+          .ai_explain_wrap {
+            @apply !pr-0 pl-[96px];
+            .img_logo {
+              @apply mt-[16px] h-[80px] w-[80px];
+            }
+            .ai_copy_wrap {
+              .title {
+                @apply headline1-b pt-0;
+              }
+              .ai_info {
+                span {
+                  @apply title2;
+                  &:first-child {
+                    @apply title2-b mb-[4px] w-full flex-none;
+                  }
+                  &:not(:nth-last-child(1)) {
+                    @apply before:hidden;
+                  }
+                }
+              }
+              .detail_info {
+                .detail_text {
+                  @apply body-sm;
+                }
+                .btn_detail {
+                  @apply mt-0 -indent-[9999px];
+                }
+              }
+            }
+          }
+          .btn_wrap {
+            @apply static max-w-full;
+          }
+        }
+        .notice_wrap {
+          @apply mt-[24px];
+          .notice_text {
+            @apply body-sm;
+          }
+          .notice_date {
+            @apply body-sm;
+          }
+        }
+        .btn_wrap {
+          @apply mt-[24px];
+        }
+        .tabs_wrap {
+          @apply mt-[32px];
+          [class*='nlp--tabs'] {
+            div[data-state='active'] {
+              @apply mt-[32px];
+            }
+          }
+        }
+        & > [class*='inner'] {
+          @apply !py-[40px];
+          & > [class*='contents'] {
+            @apply px-[16px];
+          }
+        }
+      }
+    }
+  }
+}

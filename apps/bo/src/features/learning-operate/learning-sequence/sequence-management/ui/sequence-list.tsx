@@ -116,8 +116,19 @@ const SequenceListComponent = ({
   const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
   const [params, setParams] = useState<Record<string, any>>({});
   const [valuesWithLabel, setValuesWithLabel] = useState<Record<string, SelectOption>>({});
+  const [showSaveButton, setShowSaveButton] = useState<any>();
 
   useEffect(() => {
+    if (courseIdProps) {
+      setShowSaveButton({
+        saveButton: {
+          disabled: false,
+          label: t('저장'),
+          onClick: handleSaveClick,
+        },
+      });
+    }
+
     const openYearColumn = [
       columnHelper.accessor('openingYear', {
         header: t('개설연도'),
@@ -140,7 +151,7 @@ const SequenceListComponent = ({
             />
           );
         },
-        size: 90,
+        size: 100,
       }),
     ] as ColumnDef<any, unknown>[];
 
@@ -273,12 +284,29 @@ const SequenceListComponent = ({
 
   const handleOnSearch = useCallback((data: any) => {
     console.log('## search param:', data);
-    const payload = {
-      courseId: courseIdProps,
-      openingYear: parseInt(data.openingYear),
-      isUsed: data.isUsed === 'true',
-      courseSequenceName: data.courseSequenceName,
-    };
+    let payload = {};
+    if (!courseIdProps) {
+      // 메뉴 진입
+      payload = {
+        tenantId: data.tenantId,
+        channelUuid: data.channelUuid,
+        openingYear: parseInt(data.openingYear),
+        courseType: data.courseType,
+        courseName: data.courseName,
+        courseSequenceName: data.courseSequenceName,
+        learningStatusType: data.learningStatusType,
+        courseSequenceStartDateTime: data.courseSequenceRange.from,
+        courseSequenceEndDateTime: data.courseSequenceRange.to,
+      };
+    } else {
+      // 탭 진입
+      payload = {
+        courseId: courseIdProps,
+        openingYear: parseInt(data.openingYear),
+        isUsed: data.isUsed === 'true',
+        courseSequenceName: data.courseSequenceName,
+      };
+    }
     console.log('##payload:', payload);
     gridFetch(payload);
   }, []);
@@ -314,38 +342,39 @@ const SequenceListComponent = ({
   };
 
   const onCopyRow = async () => {
-    if (!inputCopy || inputCopy <= 0) return;
+    if (!inputCopy || inputCopy <= 0 || selectedItems.length !== 1) return;
     const confirmRes = await openConfirm({
       title: t('선택한 과정을 복사 하시겠습니까?'),
       content: t('선택하신 차수로 복사됩니다.'),
     });
+
     if (!confirmRes) return;
-
-    const lastSeq = selectedItems.reduce((max, row) => Math.max(max, row.sequence), 0);
-    let seqCounter = lastSeq;
-
-    const clonedRows: any[] = [];
-
-    for (const row of selectedItems) {
-      for (let i = 0; i < inputCopy; i++) {
-        seqCounter += 1;
-        clonedRows.push({
-          ...row,
-          sequence: seqCounter, // seq만 고유하게 부여
-          sequenceId: row.sequenceId,
-          courseSequenceName: '[Copy]' + row.courseSequenceName,
-        });
-      }
-    }
-
-    // const newData = [...gridData, ...clonedRows];
-    // setGridData(newData);
+    const payload = {
+      sequenceId: selectedItems[0].courseSequenceId,
+      addQuantity: inputCopy,
+    };
+    await copySequence(payload, {
+      onSuccess: async (data: any, variables: any, context: any) => {
+        console.log('onSuccess:', data);
+        await showSaveComplete();
+        handleOnRefresh();
+      },
+      onError: (data: any, variables: any, context: any) => {
+        console.log('onError:', data);
+      },
+    });
   };
 
   const onBatch = async () => {
     openModal({
       width: 'lg',
-      content: <SequenceBatchModal selectedItems={selectedItems} />,
+      content: <SequenceBatchModal courseId={courseIdProps} selectedItems={selectedItems} />,
+      onClose(data: any) {
+        console.log('### selectedUserGroups', data);
+        if (data) {
+          handleOnRefresh();
+        }
+      },
     });
   };
 
@@ -400,23 +429,37 @@ const SequenceListComponent = ({
     console.log('##save');
     console.log('gConfig:', gConfig);
     console.log('save:', gConfig.gridData);
-    // const payload = gConfig.gridData?.map((x: any) => {
-    //   return {
-    //     courseSequenceId: x.courseSequenceId,
-    //     learningStartType: x.learningStartType,
-    //     enrollStartDate: x.enrollStartDate,
-    //     enrollEndDate: x.enrollEndDate,
-    //     learningStartDate: x.learningStartDate,
-    //     learningEndDate: x.learningEndDate,
-    //     maxEnrollQuota: x.maxEnrollQuota,
-    //   };
-    // });
+    const payload = gConfig.gridData?.content?.map((x: any) => {
+      return {
+        courseSequenceId: x.courseSequenceId ?? null,
+        courseSequenceNo: parseInt(x.courseSequenceNo) ?? null,
+        enrollStartDateTime: x.enrollmentStartDateTime ?? null,
+        enrollEndDateTime: x.enrollmentEndDateTime ?? null,
+        learningStartType: x.learningStartType ?? null,
+        learningStartDays: x.learningStartType === 'DAYS_AFTER_ENROLL' ? x.learningStartDays : null,
+        learningStartDateTime:
+          x.learningStartType !== 'DAYS_AFTER_ENROLL' ? x.courseSequenceStartDateTime : null,
+        learningEndDateTime:
+          x.learningStartType !== 'DAYS_AFTER_ENROLL' ? x.courseSequenceEndDateTime : null,
+      };
+    });
+    console.log('## payload=>', payload);
+    await updateSequenceList(payload, {
+      onSuccess: async (data: any, variables: any, context: any) => {
+        console.log('onSuccess:', data);
+        await showSaveComplete();
+        handleOnRefresh();
+      },
+      onError: (data: any, variables: any, context: any) => {
+        console.log('onError:', data);
+      },
+    });
   };
 
   const columnHelper = createColumnHelper<any>();
   return (
     <>
-      {/* {!courseId ? (
+      {!courseIdProps ? (
         <CourseSequenceSearchForm
           provider={provider}
           onSubmit={onSubmit}
@@ -424,8 +467,8 @@ const SequenceListComponent = ({
         />
       ) : (
         <SequenceSearchForm provider={provider} onSubmit={onSubmit} onSearch={handleOnSearch} />
-      )} */}
-      <SequenceSearchForm provider={provider} onSubmit={onSubmit} onSearch={handleOnSearch} />
+      )}
+      {/* <SequenceSearchForm provider={provider} onSubmit={onSubmit} onSearch={handleOnSearch} /> */}
       <Divider />
       <GridBox
         config={gConfig}
@@ -435,48 +478,49 @@ const SequenceListComponent = ({
         title={t('차수 목록')}
         onRowsSelect={handleRowsSelect}
         customButtonNode={
-          <>
-            <Input
-              type={'number'}
-              suffixText={'개'}
-              value={inputAdd}
-              onChange={(e) => setInputAdd(parseInt(e.target.value))}
-            />
-            <Button
-              variant="text"
-              size="xs"
-              label={t('LABEL.grid.header.add', '추가')}
-              onClick={onAddRow}
-            />
-            <Input
-              type={'number'}
-              suffixText={'개'}
-              value={inputCopy}
-              onChange={(e) => setInputCopy(parseInt(e.target.value))}
-            />
-            <CopyBatchButtons
-              disabled={selectedItems.length > 0 ? false : true}
-              onCopyRow={onCopyRow}
-              onBatch={onBatch}
-            />
-          </>
+          courseIdProps && (
+            <>
+              <Input
+                type={'number'}
+                suffixText={'개'}
+                value={inputAdd}
+                onChange={(e) => setInputAdd(parseInt(e.target.value))}
+              />
+              <Button
+                variant="text"
+                size="xs"
+                label={t('LABEL.grid.header.add', '추가')}
+                onClick={onAddRow}
+              />
+              <Input
+                type={'number'}
+                suffixText={'개'}
+                value={inputCopy}
+                onChange={(e) => setInputCopy(parseInt(e.target.value))}
+              />
+              <CopyBatchButtons
+                disabledCopy={selectedItems.length === 1 ? false : true}
+                disabledBatch={selectedItems.length > 0 ? false : true}
+                onCopyRow={onCopyRow}
+                onBatch={onBatch}
+              />
+            </>
+          )
         }
         excelButtons={
           <>
-            <GridExcelUploadButton validateUrl="/multilingual/excelUploadValidation" />
+            {courseIdProps && (
+              <GridExcelUploadButton validateUrl="/multilingual/excelUploadValidation" />
+            )}
             <GridExcelDownloadButton
               url={`${LMSApiPrefix()}/multilingual/exportExcel`}
               params={getValues()}
             />
           </>
         }
-        showRemove={true}
+        showRemove={courseIdProps ? true : false}
         onRemoveClick={handleRemoveRows}
-        saveButton={{
-          disabled: false,
-          label: t('저장'),
-          onClick: handleSaveClick,
-        }}
+        {...showSaveButton}
       />
     </>
   );

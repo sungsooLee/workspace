@@ -1,3 +1,32 @@
+export enum CmsEnContentType {
+  /**동영상 */
+  VIDEO = 'VIDEO',
+  /**이북 */
+  EBOOK = 'EBOOK',
+  /** 스콤 */
+  SCORM = 'SCORM',
+  /** HTML5 */
+  HTML5_VIDEO = 'HTML5_VIDEO',
+  /** 겔러리 */
+  IMAGE = 'IMAGE',
+  /** 외부 링크 */
+  EXTERNAL_LINK = 'EXTERNAL_LINK',
+  /** 외부 위탁 */
+  EXTERNAL_AGENCY = 'EXTERNAL_AGENCY',
+  /** 블로그 */
+  BLOG = 'BLOG',
+  /** 시험 */
+  EXAM = 'EXAM',
+  /** 문제은행 */
+  EXAM_POOL = 'EXAM_POOL',
+  /** 과제 */
+  ASSIGNMENT = 'ASSIGNMENT',
+  /** 설문 */
+  SURVEY = 'SURVEY',
+  /** 기타 */
+  ETC = 'ETC',
+}
+
 export enum CmsLearningCompletionStatus {
   COMPLETED = 'COMPLETED',
   INCOMPLETE = 'INCOMPLETE',

@@ -1,3 +1,4 @@
+import { menuQueryOptions } from './../../menu/service/menu.queries';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import type { MutateOptions } from '@tanstack/react-query';
 
@@ -5,7 +6,10 @@ import { cookieService } from '@learnway/shared';
 import type { MutateCallback } from '@learnway/shared';
 import type { PhoneNumberValue } from '@learnway/ui';
 
-import { mutateOptions, queryOptions } from './users.queries';
+import {
+  userMutateOptions as mutateOptions,
+  userQueryOptions as queryOptions,
+} from './users.queries';
 
 import type { AuthUser, Role, Tenant } from '../../../types';
 import {

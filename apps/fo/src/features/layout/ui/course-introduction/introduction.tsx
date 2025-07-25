@@ -368,7 +368,7 @@ const CourseIntroductionCompoment = ({
               <ul>
                 <li>
                   보안프로그램 : 본 과정은 보안프로그램을 설치해야 하는 과정입니다. 학습 전,
-                  <Link to="">보안프로그램</Link>을 먼저 설치해주세요.
+                  <Link to=".">보안프로그램</Link>을 먼저 설치해주세요.
                 </li>
                 {introduction.information?.map((item: any, index: any) => (
                   <li key={index}>

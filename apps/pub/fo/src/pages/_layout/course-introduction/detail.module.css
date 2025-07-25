@@ -51,6 +51,9 @@
         .introduction_content {
           & > div {
             @apply mt-[60px];
+            &:nth-last-child(1) {
+              @apply -mb-[80px];
+            }
           }
         }
       }

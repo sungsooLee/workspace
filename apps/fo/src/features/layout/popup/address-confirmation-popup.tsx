@@ -1,9 +1,25 @@
 import React, { memo } from 'react';
-import { ModalBody, ModalContainer, ModalTitle, ModalFooter, Button } from '@learnway/ui';
+import { ModalBody, ModalContainer, ModalTitle, ModalFooter, Button, useModal } from '@learnway/ui';
 
 import styles from '@learnway/styles/fo/features/layout/popup/address-confirmation-popup.module.css';
+import { Address } from '@types';
 
-const AddressConfirmationPopupComponent = () => {
+interface Props {
+  address: Address;
+  name: string;
+  phoneNumber: string;
+}
+
+const AddressConfirmationPopupComponent = ({ address, name, phoneNumber }: Props) => {
+  const { close } = useModal();
+
+  const onConfirm = () => {
+    close(true);
+  };
+
+  const onEdit = () => {
+    close(false);
+  };
   return (
     <ModalContainer>
       <ModalTitle>{'주소 확인'}</ModalTitle>
@@ -17,26 +33,26 @@ const AddressConfirmationPopupComponent = () => {
           <div className={styles.box}>
             <dl>
               <dt>받으실 분 :</dt>
-              <dd>김현대님</dd>
+              <dd>{`${name}님`}</dd>
             </dl>
             <dl>
               <dt>휴대폰 번호 :</dt>
-              <dd>010-222-3333</dd>
+              <dd>{phoneNumber}</dd>
             </dl>
             <dl>
               <dt>받으실 주소 :</dt>
               <dd>
-                06134
+                {address.postalCode}
                 <br />
-                서울 강남구 테헤란로5길 7 (역삼동, KG Tower), 902호
+                {address.roadAddress}
               </dd>
             </dl>
           </div>
         </div>
       </ModalBody>
       <ModalFooter>
-        <Button label={'수정'} variant="gray" size="xl"></Button>
-        <Button label={'확인'} variant={'primary'} size={'xl'}></Button>
+        <Button label={'수정'} variant="gray" size="xl" onClick={onEdit}></Button>
+        <Button label={'확인'} variant={'primary'} size={'xl'} onClick={onConfirm}></Button>
       </ModalFooter>
     </ModalContainer>
   );

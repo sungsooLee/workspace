@@ -7,14 +7,14 @@ export const getTimeValueFromHour = (duration: {
   return hour * 60 * 60 + minute * 60 + second;
 };
 
-export const getHourValueFromTime = (contentTime: string | number | undefined) => {
-  if (typeof contentTime !== 'number') {
-    contentTime = isNaN(Number(contentTime)) ? 0 : Number(contentTime);
+export const getHourValueFromTime = (time: string | number | undefined) => {
+  if (typeof time !== 'number') {
+    time = isNaN(Number(time)) ? 0 : Number(time);
   }
 
-  const hour = Math.floor(contentTime / (60 * 60));
-  const minute = Math.floor((contentTime % (60 * 60)) / 60);
-  const second = contentTime % 60;
+  const hour = Math.floor(time / (60 * 60));
+  const minute = Math.floor((time % (60 * 60)) / 60);
+  const second = time % 60;
 
   return { hour, minute, second };
 };

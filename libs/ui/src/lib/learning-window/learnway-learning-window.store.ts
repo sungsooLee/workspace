@@ -1,14 +1,5 @@
 import { create } from 'zustand';
-import { CmsImageContent } from '@learnway/types';
-export enum EnContentType {
-  VIDEO = 'VIDEO',
-  EBOOK = 'EBOOK',
-  SCORM = 'SCORM',
-  IMAGE = 'IMAGE',
-  BLOG = 'BLOG',
-  HTML5_VIDEO = 'HTML5_VIDEO',
-  EXTERNAL_LINK = 'EXTERNAL_LINK',
-}
+import { CmsEnContentType, CmsImageContent } from '@learnway/types';
 
 export interface LearningWindowPlayInfo {
   isDirect?: boolean;
@@ -21,7 +12,7 @@ export interface LearningWindowPlayInfo {
   contentUuid: string;
   orgnId?: number;
   scoId?: string;
-  contentType: EnContentType;
+  contentType: CmsEnContentType;
   lessonName?: string;
 }
 export interface ScormPlayerConfigProperties {
@@ -86,7 +77,7 @@ interface Lesson {
   contentUuid: string;
   orgnId?: number;
   scoId?: string;
-  contentType: EnContentType;
+  contentType: CmsEnContentType;
 }
 
 /** 스콤 및 비디오 player 에서 사용할 함수 정보 */
@@ -105,6 +96,8 @@ interface FunctionInfomation {
   galleryLearningHistory: (payload: any) => void;
   /** 커리큘럼의 모든 lesson의 진척 조회 함수 */
   lessonProgress: (payload: any) => Promise<any>;
+  /** 기타/라이브/링크 클릭 */
+  otherClickButton: (playInfo: LearningWindowPlayInfo, otherInfo: any) => Promise<void>;
 }
 
 interface LearningWindowStoreData {

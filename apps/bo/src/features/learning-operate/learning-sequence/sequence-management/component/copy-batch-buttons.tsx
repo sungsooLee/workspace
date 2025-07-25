@@ -4,11 +4,13 @@ import { memo } from 'react';
 
 const CopyBatchButtons = memo(
   ({
-    disabled,
+    disabledCopy,
+    disabledBatch,
     onCopyRow,
     onBatch,
   }: {
-    disabled: boolean;
+    disabledCopy: boolean;
+    disabledBatch: boolean;
     onCopyRow: () => void;
     onBatch: () => void;
   }) => {
@@ -18,10 +20,10 @@ const CopyBatchButtons = memo(
           variant="text"
           size="xs"
           label={t('LABEL.grid.header.copy', '복사')}
-          disabled={disabled}
+          disabled={disabledCopy}
           onClick={onCopyRow}
         />
-        <Button variant="text" label={t('일괄설정')} disabled={disabled} onClick={onBatch} />
+        <Button variant="text" label={t('일괄설정')} disabled={disabledBatch} onClick={onBatch} />
       </>
     );
   },

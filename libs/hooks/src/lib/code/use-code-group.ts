@@ -64,3 +64,32 @@ export const useCodeGroupItem = <T = any>(
     refetch,
   };
 };
+
+/**
+ * @description 코드 스토어 탭간 공유
+ */
+export const useCodeStoreShare = () => {
+  useEffect(() => {
+    const handleStorageChange = (event: StorageEvent) => {
+      if (event.key === 'code-store' && event.newValue) {
+        try {
+          const { state: newState } = JSON.parse(event.newValue);
+          useCodeStore.setState((currentState) => {
+            // 현재 스토어의 함수들을 보존하고,
+            // persist된 새 상태의 데이터(newPersistedState)로 'code' 부분을 업데이트합니다.
+            return {
+              ...currentState, // 현재 스토어의 모든 상태와 함수를 복사
+              code: newState.code, // 새로운 'code' 데이터로 덮어쓰기
+            };
+          });
+        } catch (e) {
+          console.error('@@@ Error parsing shared state from storage event:', e);
+        }
+      }
+    };
+    window.addEventListener('storage', handleStorageChange);
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
+};

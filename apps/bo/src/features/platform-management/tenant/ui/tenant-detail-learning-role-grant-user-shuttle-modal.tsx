@@ -52,7 +52,7 @@ const TenantDetailLearningRoleGrantUserShuttleModalComponent = ({ roleId }: { ro
     getValues: getSearchValues,
     setOptions,
     setValue,
-  } = useSearchBox(searchConfig);
+  } = useSearchBox(searchConfig());
   const {
     provider,
     updateFormData,
@@ -138,7 +138,7 @@ const TenantDetailLearningRoleGrantUserShuttleModalComponent = ({ roleId }: { ro
           }}
           showNumberingColumn={false}
           gridData={gridData}
-          columns={columns}
+          columns={columns()}
           rowKey={'uuid'}
           leftTitle={t('사용자목록')}
           rightTitle={t('사용자 선택')}
@@ -173,7 +173,7 @@ const TenantDetailLearningRoleGrantUserShuttleModalComponent = ({ roleId }: { ro
 export const TenantDetailLearningRoleGrantUserShuttleModal =
   TenantDetailLearningRoleGrantUserShuttleModalComponent;
 
-const searchConfig: SearchBoxConfig = {
+const searchConfig = (): SearchBoxConfig => ({
   builders: [
     [
       {
@@ -215,10 +215,10 @@ const searchConfig: SearchBoxConfig = {
   validator: {
     companyId: true,
   },
-};
+});
 
 const columnHelper = createColumnHelper<any>();
-const columns = [
+const columns = () => [
   columnHelper.accessor('company', {
     id: 'company',
     header: t('회사'),

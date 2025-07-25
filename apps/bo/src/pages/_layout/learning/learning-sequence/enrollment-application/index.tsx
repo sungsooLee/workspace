@@ -11,9 +11,11 @@ import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.cs
 import { Enrollment } from '@features/learning-operate/learning-sequence/enrollment-application/ui/enrollment';
 import { SequenceTab } from '../-common/type';
 import { useSequenceForm } from '../-hook/use-sequence-form';
+import { StudentsManagement } from '@features/learning-operate/learning-sequence/students-management/students-management';
 
 /**
  * [NLP_BO_LMS_0035] 수강신청 목록 조회
+ * @state: courseIdKey, courseSequenceIdKey
  */
 export const Route = createFileRoute('/_layout/learning/learning-sequence/enrollment-application/')(
   {
@@ -80,10 +82,7 @@ function RouteComponent() {
       {
         title: '수강생 관리',
         key: SequenceTab.STUDENT_MANAGEMENT,
-        // content: (
-        //   <StudentManagement />
-        //   />
-        // ),
+        content: <StudentsManagement />,
       },
       {
         title: '평가/과제/설문 관리',

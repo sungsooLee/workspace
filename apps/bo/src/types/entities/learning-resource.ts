@@ -21,7 +21,6 @@ export interface MediaContentSaveReq {
   coordinatorName: string;
   coordinatorTelCountryCode?: string;
   coordinatorTelNo: string;
-  contentTime: number;
   isUnlimited: boolean;
   contentUseStartDate: Date | undefined;
   contentUseEndDate: Date | undefined;
@@ -55,7 +54,6 @@ export interface BlogUpdateReq extends BlogCreateReq {
 
 export interface BlogDetailRes extends GetContentDetailRes {
   blogContent: object;
-  contentTime: number;
 }
 
 export interface BlogPostRes extends BlogCreateReq {
@@ -122,8 +120,6 @@ export interface ContentBaseInfo {
   coordinatorTelCountryCode: string;
   /** 담당자 연락처 */
   coordinatorTelNo: string;
-  /** 콘텐츠시간(분) */
-  contentTime?: number;
 
   /** 사용기한 무기한 여부 */
   isUnlimited: boolean;
@@ -419,7 +415,9 @@ export interface GetVideoStatusRes {
   isDrafted: boolean;
 }
 
-interface VideoFileInfo {
+export type GetScormStatusRes = GetVideoStatusRes;
+
+interface ResourceFileInfo {
   groupUuid: string;
   fileId: number;
   fileUuid: string;
@@ -458,7 +456,7 @@ export interface GetVideoResourceRes {
   contentName: string;
   languageCountryCode: string;
   contentStatusCode: ContentStatusCode;
-  fileInfo: VideoFileInfo;
+  fileInfo: ResourceFileInfo;
   masterVideo: string | null;
   contentAddInfo: number;
   encodedVideos: EncodedVideo[] | null;
@@ -466,10 +464,29 @@ export interface GetVideoResourceRes {
   videoSubtitles: VideoSubtitle[];
 }
 
+interface ScormItem {
+  itemTitle: string;
+  scoId: string;
+  itemFilePath: string;
+  itemUrl: string;
+  itemType: string;
+  items?: ScormItem[];
+}
+
+export interface GetScormResourceRes {
+  contentId: number;
+  contentUuid: string;
+  fileInfo: ResourceFileInfo;
+  processingStatus: ProcessingStatus;
+  children: { orgnId: number; grgnTitle: string; orgnElementId: string; items: ScormItem[] }[];
+}
+
 export interface PutVideoChangeParams {
   contentUuid: string;
   fileUuid: string;
 }
+
+export type PutScormChangeParams = PutVideoChangeParams;
 
 export interface PutVideoChangeRes {
   resourceId: number;
@@ -479,6 +496,15 @@ export interface PutVideoChangeRes {
 }
 
 export type GetVideoFileChangeRes = PutVideoChangeRes;
+
+export interface PutScormChangeRes {
+  changeId: number;
+  contentUuid: string;
+  fileUuid: string;
+  processingStatus: ProcessingStatus;
+}
+
+export type GetScormFileChangeRes = PutScormChangeRes;
 
 export interface PutVideoUpdateParams extends ContentBaseInfo {
   videoSubtitles?: VideoSubtitle[];
@@ -491,6 +517,19 @@ export interface PutVideoUpdateRes extends ContentInformation {
   encodedVideos: EncodedVideo[] | null;
   encodedAudios: EncodedAudio[] | null;
   videoSubtitles: VideoSubtitle[];
+}
+
+export type PutScormUpdateParams = ContentBaseInfo;
+
+export interface PutScormUpdateRes extends ContentInformation {
+  fileChagngeId: number | null;
+  processingStatus: ProcessingStatus;
+  children: {
+    orgnId: number;
+    orgnTitle: string;
+    orgnElementId: string;
+    items: ScormItem[];
+  }[];
 }
 
 export enum EnQuestionType {

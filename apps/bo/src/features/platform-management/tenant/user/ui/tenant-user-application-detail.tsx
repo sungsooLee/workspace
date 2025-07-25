@@ -9,7 +9,7 @@ import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import {
   ChipListModalSelectorFormField,
   ContentsRow,
-  EditDropdownCell,
+  EditDropdownCell, EditInputCell,
   EditSwitchCell,
   FormSubTitle,
   GridFormField,
@@ -41,6 +41,14 @@ function compareLatestDate(dates: string[]) {
   return validDates.length > 0
     ? validDates.reduce((latest, current) => new Date(current) > new Date(latest) ? current : latest)
     : '-';
+}
+
+const jobDomainMap = {
+  'BRAND&BASIC': '브랜드&베이직', SELLING: '영업', SERVICE : '서비스'
+}
+
+const jobRoleMap = {
+  STAFF: '스텝', SYSTEM_MANAGER: '시스템 매니저', TRAINING_MANAGER: '트레이닝 매니저', ETC: '기타'
 }
 
 /**
@@ -115,6 +123,8 @@ const TenantUserApplicationDetailComponent = (props: userDetailProps, ref: any) 
           && getDateToString(new Date(userData.enabledDate), DATE_TIME_FORMAT.DATETIME_SEC),
         accountLastUpdateDate: latestDate ? getDateToString(new Date(latestDate), DATE_TIME_FORMAT.DATETIME_SEC) : '-',
         tenant: userData.tenants,
+
+        loginRestriction: userData.company.companyLoginRestrictionList
       }
       if( userData.lockedDate === null ) {
         if( userData.dormantDate !== null ) {
@@ -126,6 +136,25 @@ const TenantUserApplicationDetailComponent = (props: userDetailProps, ref: any) 
         } else {
           data.accountStatus = 'LOCK';
         }
+      }
+
+      if( (userData.jobRole && userData.jobRole.length > 0) || (userData.jobDomain && userData.jobDomain.length > 0) ) {
+        data.jobDomain = null;
+        data.jobRole = null;
+        const maxLength = Math.max(userData.jobRole.length, userData.jobDomain.length);
+        const result = Array.from({ length: maxLength }, (_, i) => {
+          const id = `${userData.jobDomain[i] ?? null}_${userData.jobRole[i] ?? null}`;
+          const role1 = userData.jobDomain[i] ?? null;
+          const role2 = userData.jobRole[i] ?? null;
+          console.log('1', jobDomainMap[role1 as keyof typeof jobDomainMap])
+          console.log('2', jobRoleMap[role2 as keyof typeof jobRoleMap])
+          return {
+            id,
+            jobDomainName: jobDomainMap[role1 as keyof typeof jobDomainMap] ?? role1,
+            jobRoleName: jobRoleMap[role2 as keyof typeof jobRoleMap] ?? role2,
+          }
+        });
+        data.jobDomains = result;
       }
 
       updateFormData(data)
@@ -174,7 +203,22 @@ const TenantUserApplicationDetailComponent = (props: userDetailProps, ref: any) 
       </ContentsRow>
 
       {/* 직군/직무 정보 */}
-      <CompanyUserDetailJob provider={provider} />
+      <FormSubTitle label={t('직군/직무 정보')} lineType="dark" />
+      <ContentsRow>
+        <FormRow
+          provider={provider}
+          name="jobDomains"
+          element={
+            <GridFormField
+              gridProps={{
+                columns: columns(),
+                title: t('직군/직무 관리'),
+                visibleRowCount: 1,
+              }}
+            />
+          }
+        />
+      </ContentsRow>
 
       <FormSubTitle label={t('계정 정보')} lineType="dark" />
       <ContentsRow>
@@ -266,35 +310,23 @@ export const TenantUserApplicationDetail = forwardRef(TenantUserApplicationDetai
 const columns = () => [
   {
     header: '직군',
-    accessorKey: 'opt1',
+    accessorKey: 'jobDomainName',
     size: 200,
     cell: (info: CellContext<any, string>) => (
-      <EditDropdownCell
-        info={info}
-        dropdown={{
-          options: [{ label: '선택', value: '' }],
-        }}
-      />
+      <EditInputCell info={info} input={{disabled: true}} />
     ),
     meta: {
-      headerAlign: 'center',
       cellAlign: 'center',
     },
   },
   {
     header: '직무',
-    accessorKey: 'loginRestrictionTime',
+    accessorKey: 'jobRoleName',
     size: 'auto',
     cell: (info: CellContext<any, string>) => (
-      <EditDropdownCell
-        info={info}
-        dropdown={{
-          options: [{ label: '선택', value: '' }],
-        }}
-      />
+      <EditInputCell info={info} input={{disabled: true}} />
     ),
     meta: {
-      headerAlign: 'center',
       cellAlign: 'center',
     },
   },
@@ -302,9 +334,14 @@ const columns = () => [
     header: '정/부',
     accessorKey: 'isUsed',
     size: 170,
-    cell: (info: CellContext<any, boolean>) => <EditSwitchCell info={info} />,
+    cell: (info: CellContext<any, boolean>) => (
+      <EditSwitchCell
+        info={info}
+        switchConfig={{ label: (value: boolean) => (value ? t('정') : t('부')) }}
+        switch={{ disabled: true }}
+      />
+    ),
     meta: {
-      headerAlign: 'center',
       cellAlign: 'center',
     },
   },
@@ -607,9 +644,9 @@ const formConfig = (): DynamicFormConfig => ({
     // 종료
     {
       name: 'loginRestriction',
-      type: 'radio-group',
+      type: 'checkbox-group',
       label: t('로그인 제한'),
-      value: 'BASIS_COMPANY',
+      value: ['2'],
       options: [
         { label: '로그인 제한 시간 설정', value: '1' },
         { label: '근테 연동 로그인 제한', value: '2' },
