@@ -21,7 +21,6 @@ export const getPayloadFromHtmlMetadataSubmit = (options: {
     contentUseStartDate: options.data.contentUseDate?.from,
     contentUseEndDate: options.data.contentUseDate?.to,
     isUnlimited: !options.data.isLimitExist,
-    contentTime: options.data.contentAddInfo,
     isVendored: options.data.isVendored,
     vendorCode: options.data.vendorCode,
     vendorName: options.data.vendorName,

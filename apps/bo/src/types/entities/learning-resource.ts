@@ -21,7 +21,6 @@ export interface MediaContentSaveReq {
   coordinatorName: string;
   coordinatorTelCountryCode?: string;
   coordinatorTelNo: string;
-  contentTime: number;
   isUnlimited: boolean;
   contentUseStartDate: Date | undefined;
   contentUseEndDate: Date | undefined;
@@ -55,7 +54,6 @@ export interface BlogUpdateReq extends BlogCreateReq {
 
 export interface BlogDetailRes extends GetContentDetailRes {
   blogContent: object;
-  contentTime: number;
 }
 
 export interface BlogPostRes extends BlogCreateReq {
@@ -122,8 +120,6 @@ export interface ContentBaseInfo {
   coordinatorTelCountryCode: string;
   /** 담당자 연락처 */
   coordinatorTelNo: string;
-  /** 콘텐츠시간(분) */
-  contentTime?: number;
 
   /** 사용기한 무기한 여부 */
   isUnlimited: boolean;
