@@ -1,3 +1,7 @@
+import { useCallback } from 'react';
+import { AuthUser } from '@learnway/auth/types';
+import { CODE_GROUP, useCodeStore } from '@learnway/hooks';
+import { isEmptyData } from '@learnway/shared';
 import { LEARNING_TYPE } from '@learnway/config';
 
 export const getDetailPathByContentType = (contentType: string): string => {
@@ -27,32 +31,6 @@ export const getDetailRouterState = (contentUuid: string, contentType: string) =
     // 컨텐츠 유형에 따라 state 추가 설정
   }
   return state;
-};
-
-import { useCallback } from 'react';
-import { AuthUser } from '@learnway/auth/types';
-import { CODE_GROUP, useCodeStore } from '@learnway/hooks';
-import { isEmptyData } from '@learnway/shared';
-
-export const getTimeValueFromHour = (duration: {
-  hour: number;
-  minute: number;
-  second: number;
-}): number => {
-  const { hour, minute, second } = duration;
-  return hour * 60 * 60 + minute * 60 + second;
-};
-
-export const getHourValueFromTime = (contentTime: string | number | undefined) => {
-  if (typeof contentTime !== 'number') {
-    contentTime = isNaN(Number(contentTime)) ? 0 : Number(contentTime);
-  }
-
-  const hour = Math.floor(contentTime / (60 * 60));
-  const minute = Math.floor((contentTime % (60 * 60)) / 60);
-  const second = contentTime % 60;
-
-  return { hour, minute, second };
 };
 
 export const useRoleInfo = (options: {
