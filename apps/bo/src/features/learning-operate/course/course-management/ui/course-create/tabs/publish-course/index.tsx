@@ -4,7 +4,6 @@ import { ContentsRow, FormSubTitle, RadioGroupFormField, TextareaFormField } fro
 import { ChipListFormField, FormRow2, ThumbnailListFormField } from '@shared/ui';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useCourseCreateSubPage } from '../../../../hooks/use-course-create-sub-page';
 import { CourseTabBaseProps } from '../../../../types/type';
 
 const PublishCourseComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) => {
@@ -12,17 +11,6 @@ const PublishCourseComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, r
 
   const form = useDynamicForm2();
   const { provider, getValues, watch, onFormChange } = form;
-
-  const { courseConfig } = useCourseCreateSubPage(form);
-
-  const channelUuid = watch('channelUuid');
-  const courseType = watch('courseType');
-
-  console.log('----- basic', {
-    channelUuid,
-    courseType,
-    values: getValues(),
-  });
 
   return (
     <div>
@@ -52,8 +40,8 @@ const PublishCourseComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, r
           name={'courseValidityRange'}
           label={'노출 기간'}
           format={'object'}
-          element={<DateRangePickerFormField displayType={'day-time-h'} />}
           validation={{ required: true }}
+          element={<DateRangePickerFormField displayType={'day-time-h'} />}
         />
       </ContentsRow>
       {/*썸네일*/}
@@ -74,8 +62,6 @@ const PublishCourseComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, r
               onSelected={(selectedThumbnail1: string) =>
                 onFormChange({ primaryThumbnailFileUuid: selectedThumbnail1 })
               }
-              // selected={selectedThumbnail1}
-              // onSelected={handleSelected}
             />
           }
         />

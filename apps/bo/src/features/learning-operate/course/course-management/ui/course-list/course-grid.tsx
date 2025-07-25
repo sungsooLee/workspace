@@ -10,9 +10,9 @@ interface CourseGridProps {
   selectedRows: CourseListItem[];
   buttonState: CourseButtonState;
   getValues: () => any;
-  onRowsSelect: (rows: CourseListItem[]) => void;
-  onCopyClick: () => void;
-  onShareClick: () => void;
+  onRowsSelect?: (rows: CourseListItem[]) => void;
+  onCopyClick?: () => void;
+  onShareClick?: () => void;
 }
 
 export const CourseGrid: React.FC<CourseGridProps> = ({
@@ -33,7 +33,7 @@ export const CourseGrid: React.FC<CourseGridProps> = ({
         size="sm"
         label={t('LABEL.grid.header.toShare')}
         disabled={!buttonState.share}
-        onClick={() => onShareClick()}
+        onClick={() => onShareClick?.()}
       />
     ),
     [buttonState.share],
@@ -46,7 +46,7 @@ export const CourseGrid: React.FC<CourseGridProps> = ({
       showNumberingColumn
       copyButton={{
         disabled: !buttonState.copy,
-        onClick: () => onCopyClick(),
+        onClick: () => onCopyClick?.(),
       }}
       onRowsSelect={onRowsSelect}
       customButtonNode={customButtonNode}

@@ -1,6 +1,7 @@
 import { Button, Divider, Tabs } from '@learnway/ui';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useCourseCreatePage } from '../../hooks/use-course-create-page';
 import { TriggerKey } from '../../store/use-course-store';
 import { CourseTab } from '../../types/type';
@@ -13,6 +14,7 @@ import { PublishCourse } from './tabs/publish-course';
 const Component = () => {
   // 커스텀 훅 사용
   const { changeTab, moveCourseListPage, activeTab, isCreateMode, trigger } = useCourseCreatePage();
+  const { t } = useTranslation();
 
   const handleTabChange = (activeKey: string) => {
     console.log('activeKey', activeKey);
@@ -86,7 +88,7 @@ const Component = () => {
           type="button"
           variant="point"
           size="sm"
-          label={'목록'}
+          label={t('목록')}
           onClick={moveCourseListPage}
         />
         <Divider orientation={'vertical'} />
@@ -94,7 +96,7 @@ const Component = () => {
           type="button"
           variant="point"
           size="sm"
-          label={'삭제'}
+          label={t('삭제')}
           onClick={() => trigger(TriggerKey.DELETE)}
           disabled={isCreateMode}
         />
@@ -102,7 +104,7 @@ const Component = () => {
           type="button"
           variant="primary"
           size="sm"
-          label={'저장'}
+          label={t('저장')}
           onClick={() => trigger(TriggerKey.SAVE)}
         />
       </ContentsButtons>

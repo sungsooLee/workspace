@@ -124,3 +124,7 @@ h4.auth--title {
 .content_wrap div + .title_wrap {
   @apply mt-[24px];
 }
+
+[data-radix-popper-content-wrapper] {
+  z-index: 9999 !important;
+}

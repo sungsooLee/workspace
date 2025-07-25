@@ -12,18 +12,9 @@ const CourseRegistrationComponent = forwardRef<HTMLElement, CourseTabBaseProps>(
   const { t } = useTranslation();
 
   const form = useDynamicForm2();
-  const { provider, getValues, watch, onFormChange } = form;
+  const { provider } = form;
 
   const { courseConfig } = useCourseCreateSubPage(form);
-
-  const channelUuid = watch('channelUuid');
-  const courseType = watch('courseType');
-
-  console.log('----- basic', {
-    channelUuid,
-    courseType,
-    values: getValues(),
-  });
 
   return (
     <div>
@@ -44,7 +35,8 @@ const CourseRegistrationComponent = forwardRef<HTMLElement, CourseTabBaseProps>(
           <FormRow2
             provider={provider}
             name={'approvalLineType'}
-            label={'승인'}
+            label={'승인 결재 라인'}
+            validation={{ required: true }}
             element={
               <DropdownFormField
                 optionsConfig={{
@@ -59,6 +51,7 @@ const CourseRegistrationComponent = forwardRef<HTMLElement, CourseTabBaseProps>(
             name={'isMaxEnrollQuotaRestricted'}
             label={'정원'}
             format={'boolean'}
+            validation={{ required: true }}
             element={
               <RadioGroupFormField
                 optionsConfig={{
@@ -89,6 +82,7 @@ const CourseRegistrationComponent = forwardRef<HTMLElement, CourseTabBaseProps>(
             provider={provider}
             name={'waitListPickMethodType'}
             label={'수강신청 대기'}
+            validation={{ required: true }}
             element={
               <RadioGroupFormField
                 optionsConfig={{
@@ -134,6 +128,7 @@ const CourseRegistrationComponent = forwardRef<HTMLElement, CourseTabBaseProps>(
             name={'isPreEnrollQuestionAllowed'}
             label={'수강전 문의'}
             format={'boolean'}
+            validation={{ required: true }}
             element={
               <RadioGroupFormField
                 optionsConfig={{
@@ -143,7 +138,7 @@ const CourseRegistrationComponent = forwardRef<HTMLElement, CourseTabBaseProps>(
             }
           />
           {/* 더미 */}
-          <FormRow2 provider={provider} name={'dummy'} element={<></>} />
+          <FormRow2 provider={provider} name={'dummy'} />
         </ContentsRow>
       </FormDisplay>
     </div>

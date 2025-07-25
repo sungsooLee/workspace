@@ -1,7 +1,4 @@
-import {
-  CourseTabBaseProps,
-  useCourseCreateSubPage,
-} from '@features/learning-operate/course/course-management';
+import { CourseTabBaseProps } from '@features/learning-operate/course/course-management';
 import { CurriculumDetail } from '@features/learning-operate/curriculum/curriculum-management/ui/curriculum-detail';
 import { useDynamicForm2 } from '@learnway/hooks';
 import { Button, FormSubTitle } from '@learnway/ui';
@@ -13,18 +10,7 @@ const CurriculumComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
   const { t } = useTranslation();
 
   const form = useDynamicForm2();
-  const { provider, getValues, watch, onFormChange } = form;
-
-  const { courseConfig } = useCourseCreateSubPage(form);
-
-  const channelUuid = watch('channelUuid');
-  const courseType = watch('courseType');
-
-  console.log('----- basic', {
-    channelUuid,
-    courseType,
-    values: getValues(),
-  });
+  const { getValues, onFormChange } = form;
 
   return (
     <div>

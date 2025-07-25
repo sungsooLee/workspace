@@ -33,18 +33,9 @@ const BasicInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) 
   const { openModal } = useModal();
 
   const form = useDynamicForm2();
-  const { provider, getValues, watch, onFormChange } = form;
+  const { provider, getValues, onFormChange } = form;
 
-  const { isUpdateMode, courseConfig } = useCourseCreateSubPage(form);
-
-  const channelUuid = watch('channelUuid');
-  const courseType = watch('courseType');
-
-  console.log('----- basic ..', {
-    channelUuid,
-    courseType,
-    values: getValues(),
-  });
+  const { isUpdateMode } = useCourseCreateSubPage(form);
 
   return (
     <form>
