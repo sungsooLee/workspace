@@ -1,20 +1,39 @@
 import { FC, useState } from 'react';
 import { cn, getRandomId } from '@learnway/shared';
 import { Link } from '@tanstack/react-router';
-import { Button, Input, Dropdown, Badge } from '@learnway/ui';
+import { Button, Input, Dropdown, Badge, Carousel } from '@learnway/ui';
 import { IcoPlay, IcoStar, IcoEye, IcoHeart, IcoPlus, IcoArrowForward } from '@learnway/icons';
 import { isMobile } from 'react-device-detect';
 
 /* ThumbnailList */
 import bannerImg from '@learnway/styles/fo/assets/images/banner/img_banner_sample.jpg';
+import visualImg from '@learnway/styles/fo/assets/images/banner/img_visual_banner.png';
 import ThumbnailList from '../../../-components/thumb/thumb-nail-list';
 
 /* style */
 import styles from './course-package.module.css';
+import { BannerItem } from './banner-item';
 
 const CoursePackageComponent: FC = () => {
   // dropdown
   const [searchValues01, setSearchValues01] = useState<string[]>(['대분류']);
+
+  const data = [
+    {
+      title: '2025 AI 트렌드',
+      text: '사용자의 관심을 사로잡는 \n 23가지 기술',
+      buttonLabel: '더보기',
+      imageUrl: visualImg,
+    },
+    // ...
+  ];
+
+  // Carousel
+  const bannerItems = [
+    <BannerItem items={data} />,
+    <BannerItem items={data} />,
+    <BannerItem items={data} />,
+  ];
 
   const item = [
     {
@@ -162,7 +181,16 @@ const CoursePackageComponent: FC = () => {
   ];
 
   return (
-    <div className={cn(styles.start, styles.course_package)}>
+    <div className={cn(styles.start, styles.course_contents)}>
+      <div className={styles.banner_wrap}>
+        <Carousel
+          items={bannerItems}
+          className={cn(styles.banner_swiper, 'banner_swiper')}
+          loop={true}
+          spaceBetween={8}
+          pagination={{ clickable: true }}
+        />
+      </div>
       <div className={styles.search_box_wrap}>
         <div className={styles.select_area}>
           <Dropdown
@@ -182,47 +210,49 @@ const CoursePackageComponent: FC = () => {
           </div>
         </div>
       </div>
-      {/* list_box */}
-      <div className={styles.list_box}>
-        <div className={cn(styles.list_title, styles.type_mint)}>
-          <strong>{'요즘 뜨는 \n AI 트렌드 코스'}</strong>
-          <p>{'함께 배워볼까요?'}</p>
-          <Link to={'/'} className={styles.list_link}>
-            <IcoPlus width={16} height={16} stroke={'#4D525C'} />
-            {'더보기'}
-            <IcoArrowForward width={16} height={16} stroke={'#4D525C'} />
-          </Link>
+      {/* list_box_wrap */}
+      <div className={styles.list_box_wrap}>
+        {/* list_box */}
+        <div className={styles.list_box}>
+          <div className={styles.list_title}>
+            <strong>{'요즘 뜨는 \n AI 트렌드 코스'}</strong>
+            <p>{'함께 배워볼까요?'}</p>
+            <Link to={'/'} className={styles.list_link}>
+              <IcoPlus width={16} height={16} stroke={'#4D525C'} />
+              {'더보기'}
+              <IcoArrowForward width={16} height={16} stroke={'#4D525C'} />
+            </Link>
+          </div>
+          {/* Thumnail List */}
+          <ThumbnailList items={item} cols={!isMobile ? 3 : 2} />
         </div>
-        {/* Thumnail List */}
-        <ThumbnailList items={item} cols={!isMobile ? 3 : 2} />
-      </div>
-      {/* list_box */}
-      <div className={styles.list_box}>
-        <div className={cn(styles.list_title, styles.type_blue)}>
-          <strong>{'AI 입문부터 \n 시작'}</strong>
-          <p>{'어디 까지 알고 계신가요?'}</p>
-          <Link to={'/'} className={styles.list_link}>
-            <IcoPlus width={16} height={16} stroke={'#4D525C'} />
-            {'더보기'}
-            <IcoArrowForward width={16} height={16} stroke={'#4D525C'} />
-          </Link>
+        {/* list_box */}
+        <div className={styles.list_box}>
+          <div className={styles.list_title}>
+            <strong>{'AI 입문부터 \n 시작'}</strong>
+            <p>{'어디 까지 알고 계신가요?'}</p>
+            <Link to={'/'} className={styles.list_link}>
+              <IcoPlus width={16} height={16} stroke={'#4D525C'} />
+              {'더보기'}
+              <IcoArrowForward width={16} height={16} stroke={'#4D525C'} />
+            </Link>
+          </div>
+          {/* Thumnail List */}
+          <ThumbnailList items={item} cols={!isMobile ? 3 : 2} />
         </div>
-        {/* Thumnail List */}
-        <ThumbnailList items={item} cols={!isMobile ? 3 : 2} />
-      </div>
-      {/* list_box */}
-      <div className={styles.list_box}>
-        <div className={cn(styles.list_title, styles.type_purple)}>
-          <strong>{'AI 윤리 & 보안 \n 한 눈에 보기'}</strong>
-          <p>{'함께 배워볼까요?'}</p>
-          <Link to={'/'} className={styles.list_link}>
-            <IcoPlus width={16} height={16} stroke={'#4D525C'} />
-            {'더보기'}
-            <IcoArrowForward width={16} height={16} stroke={'#4D525C'} />
-          </Link>
+        {/* list_box */}
+        <div className={styles.list_box}>
+          <div className={styles.list_title}>
+            <strong>{'AI 윤리 & 보안 \n 한 눈에 보기'}</strong>
+            <Link to={'/'} className={styles.list_link}>
+              <IcoPlus width={16} height={16} stroke={'#4D525C'} />
+              {'더보기'}
+              <IcoArrowForward width={16} height={16} stroke={'#4D525C'} />
+            </Link>
+          </div>
+          {/* Thumnail List */}
+          <ThumbnailList items={item} cols={!isMobile ? 3 : 2} />
         </div>
-        {/* Thumnail List */}
-        <ThumbnailList items={item} cols={!isMobile ? 3 : 2} />
       </div>
     </div>
   );

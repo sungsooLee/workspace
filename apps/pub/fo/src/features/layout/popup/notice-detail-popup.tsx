@@ -10,7 +10,7 @@ import {
   useModal,
   TableBox,
 } from '@learnway/ui';
-import styles from './notice-detail-popup.module.css';
+import styles from '@learnway/styles/fo/features/layout/popup/notice-detail-popup.module.css';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import tableListStyles from '../../../shared/ui/list/table-list.module.css';
 
@@ -76,26 +76,25 @@ const NoticeDetailPopupComponent = () => {
 
             <MobileView>
               <div className={`${tableListStyles.start} ${tableListStyles.table_list}`}>
+                {/* 퍼블수정 20250725 마크업 수정 */}
                 <div className={tableListStyles.list_row}>
-                  <div className={`${tableListStyles.row} ${tableListStyles.col}`}>
-                    <span className={tableListStyles.dt}>상태</span>
-                    <span className={tableListStyles.dd}>완료</span>
-                  </div>
-                  <div className={`${tableListStyles.row} ${tableListStyles.col}`}>
-                    <span className={tableListStyles.dt}>접속회수</span>
-                    <span className={tableListStyles.dd}>4</span>
-                  </div>
                   <div className={`${tableListStyles.row} ${tableListStyles.col}`}>
                     <span className={tableListStyles.dt}>접속로그</span>
                     <span className={tableListStyles.dd}>
-                      26-03-03 11:24pm ~ 26-03-03 11:28pm
-                      <br />
-                      26-03-04 12:24pm ~ 26-03-04 12:28pm
-                      <br />
-                      26-03-04 12:24pm ~ 26-03-01 10:29am
-                      <br />
-                      26-03-01 11:24am ~ 26-03-01 11:34am
+                      <span>상태</span>
+                      <span>완료</span>
                     </span>
+                    <span className={tableListStyles.dd}>
+                      <span>접속회수</span>
+                      <span>4</span>
+                    </span>
+                  </div>
+                  <div className={`${tableListStyles.row} ${tableListStyles.col}`}>
+                    <span className={tableListStyles.dt}>접속로그</span>
+                    <span className={tableListStyles.dd}>26-03-03 11:24pm ~ 26-03-03 11:28pm</span>
+                    <span className={tableListStyles.dd}>26-03-03 11:24pm ~ 26-03-03 11:28pm</span>
+                    <span className={tableListStyles.dd}>26-03-03 11:24pm ~ 26-03-03 11:28pm</span>
+                    <span className={tableListStyles.dd}>26-03-03 11:24pm ~ 26-03-03 11:28pm</span>
                   </div>
                 </div>
               </div>
