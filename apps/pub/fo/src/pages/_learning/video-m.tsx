@@ -22,7 +22,7 @@ export const Route = createFileRoute('/_learning/video-m')({
 });
 
 function RouteComponent() {
-  const { alert: openAlert, open: openModal } = useModal();
+  const { alert: openAlert, openModal } = useModal();
   const handleVideoEnd = () => {
     const payload = {
       courseSequenceId: baseInfo?.sequenceId,

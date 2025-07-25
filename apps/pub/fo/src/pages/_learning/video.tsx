@@ -10,7 +10,7 @@ import {
   useLearningWindow,
   useVideoPlayer,
 } from '@learnway/ui';
-import { VideoSettingPopup, VideoSubsettingPopup } from '../../features/learning';
+import { VideoSettingPopup } from '../../features/learning';
 
 import styles from '@learnway/styles/fo/pages/_learning/learning.module.css';
 
