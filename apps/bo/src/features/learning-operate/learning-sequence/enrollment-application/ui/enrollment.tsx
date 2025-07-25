@@ -17,30 +17,30 @@ import { generateYears } from '@learnway/shared';
 import { useFetchEnrollmentSequenceCombo } from '@entities/learning-sequence/service/learning-sequence.hook';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { useWatch } from 'react-hook-form';
+import { useEnrollmentStore } from '../store/use-enrollment-store';
+import { usePageState } from '@shared/index';
 
 type EnrollmentComponentProps = {
-  courseId?: number;
-  courseSequenceId?: number;
+  courseId?: number; // 과정 ID
+  courseName?: string; // 과정명
+  courseType?: string; // 과정 타입
+  sequenceId?: number; // 차수 ID
 };
 
 /**
  * NLP_BO_LMS_0035,0036,0037 : 수강신청 목록(탭)
  * @returns
  */
-const EnrollmentComponent = ({
-  courseId: courseIdProps,
-  courseSequenceId: courseSequenceIdProps,
-}: EnrollmentComponentProps) => {
+const EnrollmentComponent = () => {
   const { data: loginUser } = useFetchAuthUser();
-  const router = useRouter();
-  const routerState = useRouterState();
-  const courseIdKey = routerState.location.state?.courseId ?? courseIdProps ?? null; // 과정ID
-  const courseSequenceIdKey =
-    routerState.location.state?.sequenceId ?? courseSequenceIdProps ?? null; // 차수ID(있는경우 검색조건 값 선택)
-  console.log('## courseIdKey =>', courseIdKey);
-  console.log('## courseSequenceIdKey =>', courseSequenceIdKey);
+  const { enrollmentCreateInfo, setEnrollmentCreateInfo } = useEnrollmentStore();
+  const { courseId, courseName, courseType, sequenceId } = usePageState<EnrollmentComponentProps>();
   const [selectedTabKey, setSelectedTabKey] = useState<string>(SequenceTabDetail.ENROLLMENT_REGIST);
   const queryClient = useQueryClient();
+
+  useEffect(() => {
+    setEnrollmentCreateInfo({ courseId, courseName, courseType, sequenceId });
+  }, []);
 
   const getStatusOptions = () => {
     switch (selectedTabKey) {
@@ -84,7 +84,7 @@ const EnrollmentComponent = ({
           type: 'dropdown',
           label: t('LABEL.form.label.sequence', '차수'),
           format: 'number',
-          value: courseSequenceIdKey,
+          value: enrollmentCreateInfo.sequenceId,
           presetOptionLabel: t('LABEL.form.label.select', '선택'),
           options: [],
         },
@@ -174,7 +174,7 @@ const EnrollmentComponent = ({
     const searchValues = getValues();
     const payload = {
       openingYear: searchValues.openingYear,
-      courseId: courseIdKey,
+      courseId: enrollmentCreateInfo.courseId,
     };
     const result = await queryClient.fetchQuery(
       sequenceQueryOptions.enrollmentSequenceCombo(payload),
@@ -208,7 +208,6 @@ const EnrollmentComponent = ({
   }, [selectedTabKey, companyId]);
 
   const setCompanyOption = async (tenantId: number) => {
-    console.log('### setCompanyOption');
     const companys = await queryClient.fetchQuery(companysQueryOptions.tenantCompany(tenantId));
     const companyIdOptions = companys.map((item) => ({
       label: item.name,
@@ -223,8 +222,6 @@ const EnrollmentComponent = ({
       key: SequenceTabDetail.ENROLLMENT_REGIST,
       content: (
         <EnrollmentRegist
-          courseId={courseIdKey}
-          courseSequenceId={courseSequenceIdKey}
           searchProvider={searchProvider}
           getValues={getValues}
           setValue={setValue}
@@ -237,8 +234,6 @@ const EnrollmentComponent = ({
       key: SequenceTabDetail.ENROLLMENT_WAIT,
       content: (
         <EnrollmentWait
-          courseId={courseIdKey}
-          courseSequenceId={courseSequenceIdKey}
           searchProvider={searchProvider}
           getValues={getValues}
           setValue={setValue}
@@ -251,8 +246,6 @@ const EnrollmentComponent = ({
       key: SequenceTabDetail.ENROLLMENT_CANCEL,
       content: (
         <EnrollmentCancel
-          courseId={courseIdKey}
-          courseSequenceId={courseSequenceIdKey}
           searchProvider={searchProvider}
           getValues={getValues}
           setValue={setValue}

@@ -65,7 +65,7 @@ export const createGridConfig = (
             : '/learning/course/create'; // 상세 상세 (5단계 저장 이전)
 
         return (
-          <Link to={url} state={{ courseId }} className="link">
+          <Link to={url} state={{ courseId, courseName }} className="link">
             {courseName}
           </Link>
         );

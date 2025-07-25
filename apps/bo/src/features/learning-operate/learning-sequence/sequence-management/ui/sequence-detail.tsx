@@ -1489,29 +1489,30 @@ const responseDataToFormData = (d: LearningSequence): any => {
  */
 export const formDataToRequestData = (d: LearningSequence) => {
   console.log('####formDataToRequestData=>', d);
+  d.curriculumId = 0;
 
   // 수강취소(미사용/사용)
   if (!d.isEnrollCancelDeadLineActivated) {
-    d.enrollCancelRange = undefined;
-    d.enrollCancelStartDateTime = undefined;
-    d.enrollCancelEndDateTime = undefined;
+    d.enrollCancelRange = null;
+    d.enrollCancelStartDateTime = null;
+    d.enrollCancelEndDateTime = null;
   }
 
   // 교육공간 라디오 선택에 따라 값 변경 관련 처리 (교육공간=learningSpaceType)
   // 교육공간 > 차세데 학습학습 플랫폼
   if (d.learningSpaceType === 'LEARNING_WAY') {
-    d.learningSpaceId = undefined; // 교육 장소 ID
-    d.learningSpaceName = undefined; // 교육 장소(선택입력)
-    d.learningSpaceNameKeyIn = undefined; // 교육 장소 직접입력
+    d.learningSpaceId = null; // 교육 장소 ID
+    d.learningSpaceName = null; // 교육 장소(선택입력)
+    d.learningSpaceNameKeyIn = null; // 교육 장소 직접입력
   }
   // 교육공간 > 공간선택
   else if (d.learningSpaceType === 'REGISTERED') {
-    d.learningSpaceNameKeyIn = undefined; // 교육 장소 직접입력
+    d.learningSpaceNameKeyIn = null; // 교육 장소 직접입력
   }
   // 교육공간 > 직적입력
   else if (d.learningSpaceType === 'MANUAL') {
-    d.learningSpaceId = undefined; // 교육 장소 ID
-    d.learningSpaceName = undefined; // 교육 장소(선택입력)
+    d.learningSpaceId = null; // 교육 장소 ID
+    d.learningSpaceName = null; // 교육 장소(선택입력)
   }
   // 학습대상-ID 배열
   d.targetListIds = d.targetList?.map((d: any) => d.id);
@@ -1520,34 +1521,34 @@ export const formDataToRequestData = (d: LearningSequence) => {
   // d.operatorTelCountryCode = 'KOR_82';
   // 복습 제한 > 미사용
   if (d.isReviewRestricted === false) {
-    d.maxReviewPeriodMonths = undefined; // 복습 제한 기간(개월)
+    d.maxReviewPeriodMonths = null; // 복습 제한 기간(개월)
   }
   // 1일 진도제한 > 미사용
   if (d.isDailyLearningProgressRestricted === false) {
-    d.maxDailyLearningProgress = undefined; // 1일 진도제한(분)
+    d.maxDailyLearningProgress = null; // 1일 진도제한(분)
   }
 
   // 인정 학습시간 > 학습시간
   if (d.recognizedStudyMinType === 'TIME') {
-    d.recognizedStudyCycles = undefined; // 인정 학습 횟수
-    d.recognizedStudyMinutes = undefined; // 인정 학습시간(분)
+    d.recognizedStudyCycles = null; // 인정 학습 횟수
+    d.recognizedStudyMinutes = null; // 인정 학습시간(분)
   }
   // 학습포인트 > 미사용
   if (d.isRecognizedStudyPoint === false) {
-    d.recognizedStudyPoint = undefined; // 인정학습점수(학습포인트)
+    d.recognizedStudyPoint = null; // 인정학습점수(학습포인트)
   }
   // 강사 > 강사선택
   if (d.instructorAssignType === 'REGISTERED') {
-    d.instructorName = undefined; // 강사 직접입력
+    d.instructorName = null; // 강사 직접입력
   }
   // 1인당 교육비 > 미사용
   if (d.isUseTrainingCostPerPerson === false) {
-    d.trainingCostPerPerson = undefined; // 1인당 교육비(원)
+    d.trainingCostPerPerson = null; // 1인당 교육비(원)
   }
 
   // 고용보험 환급비용 > 미사용
   if (d.isUseEmploymentInsuranceRefund === false) {
-    d.employmentInsuranceRefund = undefined; // 고용보험 환급비(원)
+    d.employmentInsuranceRefund = null; // 고용보험 환급비(원)
   }
 
   // 날짜 범위 쪼개기
@@ -1561,14 +1562,102 @@ export const formDataToRequestData = (d: LearningSequence) => {
     d.enrollCancelEndDateTime = d.enrollCancelRange?.to;
   }
 
-  console.log('d.learningStartRange=>', d.learningStartRange);
   if (d.learningStartRange) {
     d.learningStartDateTime = d.learningStartRange?.from;
     d.learningEndDateTime = d.learningStartRange?.to;
   }
   //
 
+  // return {
+  //   ...d,
+  // };
   return {
-    ...d,
+    tenantList: d.tenantList,
+    targetList: d.targetList,
+    courseSequenceName: d.courseSequenceName,
+    isUsed: d.isUsed,
+    enrollmentStartDateTime: d.enrollmentStartDateTime,
+    enrollmentEndDateTime: d.enrollmentEndDateTime,
+    isEnrollCancelDeadLineActivated: d.isEnrollCancelDeadLineActivated,
+    enrollCancelStartDateTime: d.enrollCancelStartDateTime,
+    enrollCancelEndDateTime: d.enrollCancelEndDateTime,
+    learningStartType: d.learningStartType,
+    learningStartDays: d.learningStartDays,
+    learningStartDateTime: d.learningStartDateTime,
+    learningEndDateTime: d.learningEndDateTime,
+    learningSpaceType: d.learningSpaceType,
+    learningSpaceId: d.learningSpaceId,
+    learningSpaceName: d.learningSpaceName,
+    learningSpaceNameKeyIn: d.learningSpaceNameKeyIn,
+    approvalLineType: d.approvalLineType,
+    isMaxEnrollQuotaRestricted: d.isMaxEnrollQuotaRestricted,
+    maxEnrollQuota: d.maxEnrollQuota,
+    waitListPickMethodType: d.waitListPickMethodType,
+    maxWaitlistQuota: d.maxWaitlistQuota,
+    isInstructorAssigned: d.isInstructorAssigned,
+    instructorAssignType: d.instructorAssignType,
+    instructorId: d.instructorId,
+    instructorName: d.instructorName,
+    isTextbookProvided: d.isTextbookProvided,
+    textbookName: d.textbookName,
+    textbookFee: d.textbookFee,
+    coordinatorUuid: d.coordinatorUuid,
+    coordinatorName: d.coordinatorName,
+    coordinatorDeptName: d.coordinatorDeptName,
+    coordinatorTelCountryCode: d.coordinatorTelCountryCode,
+    coordinatorTelNo: d.coordinatorTelNo,
+    coordinatorEmail: d.coordinatorEmail,
+    operatorUuid: d.operatorUuid,
+    operatorName: d.operatorName,
+    operatorDeptName: d.operatorDeptName,
+    operatorTelCountryCode: d.operatorTelCountryCode,
+    operatorTelNo: d.operatorTelNo,
+    operatorEmail: d.operatorEmail,
+    isUsePassOption: d.isUsePassOption,
+    passMethodType: d.passMethodType,
+    isCertificateProvided: d.isCertificateProvided,
+    progressMinPassScore: d.progressMinPassScore,
+    attendanceMinPassScore: d.attendanceMinPassScore,
+    examMinPassScore: d.examMinPassScore,
+    asgmtMinPassScore: d.asgmtMinPassScore,
+    totalMinPassScore: d.totalMinPassScore,
+    progressWeights: d.progressWeights,
+    attendanceWeights: d.attendanceWeights,
+    examWeights: d.examWeights,
+    asgmtWeights: d.asgmtWeights,
+    recognizedStudyMinType: d.recognizedStudyMinType,
+    recognizedStudyCycles: d.recognizedStudyCycles,
+    recognizedStudyMinutes: d.recognizedStudyMinutes,
+    isRecognizedStudyPoint: d.isRecognizedStudyPoint,
+    recognizedStudyPoint: d.recognizedStudyPoint,
+    isLearnEnvEnabled: d.isLearnEnvEnabled,
+    deviceRestrictType: d.deviceRestrictType,
+    isIntranetRestricted: d.isIntranetRestricted,
+    learningRestrictTimeType: d.learningRestrictTimeType,
+    isReviewRestricted: d.isReviewRestricted,
+    maxReviewPeriodMonths: d.maxReviewPeriodMonths,
+    isCaptureBlockEnabled: d.isCaptureBlockEnabled,
+    isSecurityAgreementEnable: d.isSecurityAgreementEnable,
+    isLearnControlEnabled: d.isLearnControlEnabled,
+    isDailyLearningProgressRestricted: d.isDailyLearningProgressRestricted,
+    maxDailyLearningProgress: d.maxDailyLearningProgress,
+    isProgressResetEnabled: d.isProgressResetEnabled,
+    isSequentialLearningRequired: d.isSequentialLearningRequired,
+    isPlayerControlRestricted: d.isPlayerControlRestricted,
+    maxPlayBackRate: d.maxPlayBackRate,
+    hmgStandardMainCategory: d.hmgStandardMainCategory,
+    hmgStandardSubCategory: d.hmgStandardSubCategory,
+    isUseTrainingCostPerPerson: d.isUseTrainingCostPerPerson,
+    trainingCostPerPerson: d.trainingCostPerPerson,
+    isUseEmploymentInsuranceRefund: d.isUseEmploymentInsuranceRefund,
+    employmentInsuranceRefund: d.employmentInsuranceRefund,
+    isStayed: d.isStayed,
+    isCarTenantCustomOption: d.isCarTenantCustomOption,
+    isRotemTenantCustomOption: d.isRotemTenantCustomOption,
+    isOutsourcingTenantCustomOption: d.isOutsourcingTenantCustomOption,
+    isWiaTenantCustomOption: d.isWiaTenantCustomOption,
+    isAutoeverTenantCustomOption: d.isAutoeverTenantCustomOption,
+    tenantCustoms: d.tenantCustoms == null ? [] : d.tenantCustoms,
+    curriculumId: d.curriculumId,
   };
 };

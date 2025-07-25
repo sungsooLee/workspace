@@ -6,6 +6,7 @@ import { CourseDetailTab } from '../types/type';
 // 라우터 state에서 전달받는 값의 타입 정의
 export interface CourseDetailPageLocationState {
   courseId?: number; // 과정 ID
+  courseName?: string; // 과정명
   courseType?: string; // 과정 타입
   sequenceId?: number; // 차수 ID
   initialTab?: CourseDetailTab; // 초기 활성화 탭
@@ -18,7 +19,7 @@ export interface CourseDetailPageLocationState {
 export const useCourseDetailPage = () => {
   const navigate = useNavigate();
   // 라우터 state에서 courseId 가져오기
-  const { courseId, courseType, initialTab, initialContentViewType } =
+  const { courseId, courseName, courseType, initialTab, initialContentViewType } =
     usePageState<CourseDetailPageLocationState>();
 
   // 현재 활성화된 탭 컨텐츠의 뷰 타입
@@ -45,6 +46,7 @@ export const useCourseDetailPage = () => {
   const moveEnrollmentManagementPage = useCallback(() => {
     const state = {
       courseId,
+      courseName,
       sequenceId: contentViewType === ContentViewType.LIST ? undefined : sequenceId,
     };
     navigate({
@@ -99,6 +101,8 @@ export const useCourseDetailPage = () => {
   }, [activeTab, contentViewType]);
 
   return {
+    // 과정명
+    courseName,
     // 현재 활성화된 탭
     activeTab,
     // 탭별 ref 객체

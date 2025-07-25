@@ -23,6 +23,7 @@ import { RegistPaymentModal } from '../modal/regist-payment-modal';
 import { ForceApprovalModal } from '../modal/force-approval-modal';
 import { useQueryClient } from '@tanstack/react-query';
 import { getEnrollStatusName } from '../constants/enroll-status';
+import { useEnrollmentStore } from '../store/use-enrollment-store';
 
 const _global = {
   linkClickSequenceName: (payload: any) => {
@@ -41,8 +42,6 @@ const _global = {
  * @returns
  */
 type EnrollmentRegistComponentProps = {
-  courseId?: number;
-  courseSequenceId?: number;
   searchProvider: SearchBoxProvider;
   getValues: UseFormGetValues<FieldValues>;
   setValue: UseFormSetValue<FieldValues>;
@@ -61,13 +60,12 @@ const gridConfig: useGridBoxConfig = {
 };
 
 const EnrollmentRegistComponent = ({
-  courseSequenceId,
   searchProvider,
   getValues,
   setValue,
   setOptions,
 }: EnrollmentRegistComponentProps) => {
-  console.log('## courseSequenceId:', courseSequenceId);
+  const { enrollmentCreateInfo } = useEnrollmentStore();
   const router = useRouter();
   const { openModal, confirm: openConfirm, alert } = useModal();
   const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
@@ -83,7 +81,7 @@ const EnrollmentRegistComponent = ({
       to: '/learning/learning-sequence/sequence-management',
       state: {
         pMode: Mode.DETAIL,
-        // pCourseId: 1,
+        pCourseId: enrollmentCreateInfo.courseId,
         pSequenceId: payload.courseSequenceId,
       },
     });
@@ -202,7 +200,6 @@ const EnrollmentRegistComponent = ({
     ] as ColumnDef<any, unknown>[];
 
     setColumns(columns);
-    // gridFetch();
   }, []);
 
   const setStats = async (payload: any) => {

@@ -30,17 +30,17 @@ export interface LearningSequence {
   enrollmentEndDateTime?: string;
   isEnrollCancelDeadLineActivated: boolean;
   enrollCancelRange?: any;
-  enrollCancelStartDateTime?: string;
-  enrollCancelEndDateTime?: string;
+  enrollCancelStartDateTime?: string | null;
+  enrollCancelEndDateTime?: string | null;
   learningStartType: string;
   learningStartDays?: number | null;
   learningStartRange?: any;
   learningStartDateTime?: string | null;
   learningEndDateTime?: string | null;
   learningSpaceType: string;
-  learningSpaceId?: number;
-  learningSpaceName?: string;
-  learningSpaceNameKeyIn?: string;
+  learningSpaceId?: number | null;
+  learningSpaceName?: string | null;
+  learningSpaceNameKeyIn?: string | null;
   approvalLineType: string;
   isMaxEnrollQuotaRestricted: boolean;
   maxEnrollQuota: number;
@@ -49,7 +49,7 @@ export interface LearningSequence {
   isInstructorAssigned: boolean;
   instructorAssignType: string;
   instructorId?: number;
-  instructorName?: string;
+  instructorName?: string | null;
   isTextbookProvided: boolean;
   textbookName: string;
   textbookFee: number;
@@ -78,21 +78,21 @@ export interface LearningSequence {
   examWeights: number;
   asgmtWeights: number;
   recognizedStudyMinType: string;
-  recognizedStudyCycles?: number;
-  recognizedStudyMinutes?: number;
+  recognizedStudyCycles?: number | null;
+  recognizedStudyMinutes?: number | null;
   isRecognizedStudyPoint: boolean;
-  recognizedStudyPoint?: number;
+  recognizedStudyPoint?: number | null;
   isLearnEnvEnabled: boolean;
   deviceRestrictType: string;
   isIntranetRestricted: boolean;
   learningRestrictTimeType: string;
   isReviewRestricted: boolean;
-  maxReviewPeriodMonths?: number;
+  maxReviewPeriodMonths?: number | null;
   isCaptureBlockEnabled: boolean;
   isSecurityAgreementEnable: boolean;
   isLearnControlEnabled: boolean;
   isDailyLearningProgressRestricted: boolean;
-  maxDailyLearningProgress?: number;
+  maxDailyLearningProgress?: number | null;
   isProgressResetEnabled: boolean;
   isSequentialLearningRequired: boolean;
   isPlayerControlRestricted: boolean;
@@ -100,9 +100,9 @@ export interface LearningSequence {
   hmgStandardMainCategory: string;
   hmgStandardSubCategory: string;
   isUseTrainingCostPerPerson: boolean;
-  trainingCostPerPerson?: number;
+  trainingCostPerPerson?: number | null;
   isUseEmploymentInsuranceRefund: boolean;
-  employmentInsuranceRefund?: number;
+  employmentInsuranceRefund?: number | null;
   isStayed: boolean;
   isCarTenantCustomOption: boolean;
   isRotemTenantCustomOption: boolean;
@@ -110,6 +110,7 @@ export interface LearningSequence {
   isWiaTenantCustomOption: boolean;
   isAutoeverTenantCustomOption: boolean;
   tenantCustoms: Array<any>;
+  curriculumId?: number;
 }
 
 export interface LearningSequenceCombo {

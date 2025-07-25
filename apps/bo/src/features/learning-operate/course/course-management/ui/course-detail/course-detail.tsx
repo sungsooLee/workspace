@@ -13,7 +13,7 @@ const Component = () => {
   const { trigger } = useCourseActions();
 
   // 커스텀 훅 사용
-  const { activeTab, changeTab, visibleButtons, moveEnrollmentManagementPage } =
+  const { activeTab, courseName, changeTab, visibleButtons, moveEnrollmentManagementPage } =
     useCourseDetailPage();
 
   const tabItems = useMemo(
@@ -47,7 +47,7 @@ const Component = () => {
   };
 
   return (
-    <PageContainer hideOutLine={true}>
+    <PageContainer hideOutLine={true} customTitle={courseName}>
       <ContentsButtons>
         <ToggleButtonGroup
           defaultValue={'과정관리'}

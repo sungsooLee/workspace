@@ -31,7 +31,14 @@ const CourseListComponent = () => {
         <Link to="/learning/course/create" state={{ courseId: 7 }} className="link">
           등록7 /
         </Link>
-        <Link to="/learning/course/detail" state={{ courseId: 7 }} className="link">
+        <Link
+          to="/learning/course/detail"
+          state={{
+            courseId: 7,
+            courseName: '스마트제조를 위한 스마트공장 구축 및 추진실무 - MES구축',
+          }}
+          className="link"
+        >
           상세7
         </Link>
         <Divider orientation={'vertical'} />

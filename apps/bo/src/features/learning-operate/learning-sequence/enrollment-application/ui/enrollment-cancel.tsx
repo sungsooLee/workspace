@@ -12,6 +12,7 @@ import { useRouter } from '@tanstack/react-router';
 import { Mode } from '@pages/_layout/learning/learning-sequence/-common/type';
 import { EnrollmentCancelReasonModal } from '../modal/enrollment-cancel-reason-modal';
 import { getEnrollStatusName } from '../constants/enroll-status';
+import { useEnrollmentStore } from '../store/use-enrollment-store';
 
 const _global = {
   linkClickSequenceName: (payload: any) => {
@@ -27,8 +28,6 @@ const _global = {
  * @returns
  */
 type EnrollmentCancelComponentProps = {
-  courseId?: number;
-  courseSequenceId?: number;
   searchProvider: SearchBoxProvider;
   getValues: UseFormGetValues<FieldValues>;
   setValue: UseFormSetValue<FieldValues>;
@@ -47,12 +46,12 @@ const gridConfig: useGridBoxConfig = {
 };
 
 const EnrollmentCancelComponent = ({
-  courseSequenceId,
   searchProvider,
   getValues,
   setValue,
   setOptions,
 }: EnrollmentCancelComponentProps) => {
+  const { enrollmentCreateInfo } = useEnrollmentStore();
   const router = useRouter();
   const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
   const [columns, setColumns] = useState() as any;
