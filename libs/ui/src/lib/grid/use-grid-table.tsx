@@ -14,6 +14,7 @@ import {
   Row,
   RowSelectionState,
   SortingState,
+  Table,
   useReactTable,
   VisibilityState,
 } from '@tanstack/react-table';
@@ -21,7 +22,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { isEmpty } from 'lodash';
 import { GridProps } from './types/grid'; // GridProps 타입 import
 import { useTranslation } from 'react-i18next';
-import { cn, gridStateToSortQueryParams } from '@learnway/shared'; // t 함수 필요 시 import
+import { cn, findRowSelection, gridStateToSortQueryParams } from '@learnway/shared'; // t 함수 필요 시 import
 import styles from './grid.module.css';
 import { Checkbox } from '../checkbox/checkbox';
 import { Button } from '../button/button';
@@ -279,18 +280,32 @@ export function useGridTable<T extends object>(
   ]);
 
   const handleRowSelectionChangeForSingle: OnChangeFn<RowSelectionState> = (updaterOrValue) => {
+    if (selectedRowIds && Array.isArray(selectedRowIds)) {
+      const findSelection = findRowSelection(table, selectedRowIds, rowId);
+      setRowSelection(findSelection);
+      return;
+    }
+
     const newSelection =
       typeof updaterOrValue === 'function' ? updaterOrValue(rowSelection) : updaterOrValue;
     if (isEmpty(newSelection)) return;
-    const selectedRowIds = Object.keys(newSelection);
-    const lastId = selectedRowIds?.at(-1);
+    const rowIds = Object.keys(newSelection);
+    const lastId = rowIds?.at(-1);
     const newSelectionState = lastId ? { [lastId]: true } : {};
     setRowSelection(newSelectionState);
   };
 
   const handleRowSelectionChangeForMultiple: OnChangeFn<RowSelectionState> = (updaterOrValue) => {
+    if (selectedRowIds && Array.isArray(selectedRowIds)) {
+      const findSelection = findRowSelection(table, selectedRowIds, rowId);
+      console.log('xx1 : findSelection', findSelection);
+      setRowSelection(findSelection);
+      return;
+    }
+
     const newSelection =
       typeof updaterOrValue === 'function' ? updaterOrValue(rowSelection) : updaterOrValue;
+    console.log('xx2 : newSelection', newSelection);
     setRowSelection(newSelection);
   };
 
@@ -445,35 +460,41 @@ export function useGridTable<T extends object>(
   }, [rowSelection, table, onRowSelect, onRowsSelect]);
 
   // selectedRowIds prop이 변경될 때 rowSelection 동기화
-  useEffect(() => {
-    if (selectedRowIds && Array.isArray(selectedRowIds)) {
-      const findRows = table
-        .getRowModel()
-        ?.rows?.filter((row) => {
-          return selectedRowIds.includes((row.original as Record<string, any>)[rowId]);
-        })
-        ?.map((row) => [row.id, true]);
-      setRowSelection(Object.fromEntries(findRows));
+  // useEffect(() => {
+  //   if (selectedRowIds && Array.isArray(selectedRowIds)) {
+  //     const findRows = table
+  //       .getRowModel()
+  //       ?.rows?.filter((row) => {
+  //         const v = (row.original as Record<string, any>)[rowId];
+  //         console.log('xx : row', v);
+  //         return selectedRowIds.includes(String(v));
+  //       })
+  //       ?.map((row) => [row.id, true]);
+  //     setRowSelection(Object.fromEntries(findRows));
 
-      console.log('xx : data', {
-        selectedRowIds,
-        data,
-        findRows,
-        rowId,
-        model: table?.getRowModel(),
-      });
-    }
-  }, [selectedRowIds, table, data]);
+  //     console.log('xx : data', {
+  //       selectedRowIds,
+  //       data,
+  //       findRows: Object.fromEntries(findRows),
+  //       rowId,
+  //       model: table?.getRowModel(),
+  //     });
+  //   }
+  // }, [selectedRowIds, table, data]);
 
   // data 변경시 첫번째 행 선택
   useEffect(() => {
     const firstRowId = table.getRowModel()?.rows?.[0]?.id;
     if (firstRowId && autoSelectFirstRow && !tableMode) {
       setRowSelection({ [firstRowId]: true });
+    } else if (selectedRowIds && Array.isArray(selectedRowIds)) {
+      const newSelection = findRowSelection(table, selectedRowIds, rowId);
+      setRowSelection(newSelection);
+      console.log('xx : findRows', { newSelection, rowId, data: table.getRowModel()?.rows });
     } else {
       table.toggleAllRowsSelected(false);
     }
-  }, [data, table, autoSelectFirstRow, tableMode]);
+  }, [data, table, autoSelectFirstRow, tableMode, selectedRowIds]);
 
   // useReactTable 훅으로 생성된 table 인스턴스를 상위 컴포넌트로 전달
   useEffect(() => {

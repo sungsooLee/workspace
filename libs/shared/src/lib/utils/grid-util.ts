@@ -97,3 +97,21 @@ export const gridBoxStateToGridState = (state: any) => {
 //   });
 //   return { sorting };
 // };
+
+/**
+ * 선택된 행 ID 목록을 기반으로 테이블에서 해당 행들을 찾아 RowSelectionState 객체를 생성합니다.
+ * @param table
+ * @param selectedRowIds
+ * @param rowId
+ * @returns
+ */
+export const findRowSelection = (table: Table<any>, selectedRowIds: string[], rowId: string) => {
+  const findRows = table
+    .getRowModel()
+    ?.rows?.filter((row) => {
+      const v = (row.original as Record<string, any>)[rowId];
+      return selectedRowIds.includes(String(v));
+    })
+    ?.map((row) => [row.id, true]);
+  return Object.fromEntries(findRows);
+};

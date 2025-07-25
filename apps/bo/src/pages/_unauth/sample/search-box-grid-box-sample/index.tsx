@@ -64,7 +64,7 @@ function RouteComponent() {
         <Divider />
         <GridBox
           config={gConfig}
-          selectedRowIds={['1', '2', '3']}
+          selectedRowIds={['3']}
           showNumberingColumn
           customButtonNode={customButtonNode}
           multiple

@@ -332,6 +332,7 @@ export interface GridBoxState {
   page?: number;
   size?: number;
   sort?: string[];
+  filter?: string[];
 }
 
 /**
