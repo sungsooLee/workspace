@@ -64,6 +64,7 @@ function RouteComponent() {
         <Divider />
         <GridBox
           config={gConfig}
+          selectedRowIds={['1', '2', '3']}
           showNumberingColumn
           customButtonNode={customButtonNode}
           multiple
@@ -151,16 +152,11 @@ const searchConfig: SearchBoxConfig = {
       },
     ],
   ],
-  validator: {
-    채널: {
-      required: true,
-    },
-  },
 };
 
 const gridConfig = {
   query: queryOptions.all<LabelMessagesQueryParams>,
-  rowId: 'labelMessageName',
+  rowId: 'labelMessageId',
   columns: [
     // 분류
     { name: 'labelMessageType', label: () => t('LABEL.grid.column.type'), size: 100 },

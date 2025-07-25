@@ -335,6 +335,10 @@ export interface GridBoxProps<T extends object = object>
    * @returns 선택 가능하면 true, 불가능하면 false
    */
   isRowSelectable?: (row: T) => boolean;
+  /**
+   * 외부에서 선택된 row의 id 배열을 지정할 수 있습니다.
+   */
+  selectedRowIds?: string[] | number[];
 }
 
 /**

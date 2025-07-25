@@ -319,6 +319,10 @@ export interface GridProps<T> {
    * @returns 적용할 CSS 클래스명
    */
   getRowClassName?: (row: T) => string;
+  /**
+   * 외부에서 선택된 row의 id 배열을 지정할 수 있습니다.
+   */
+  selectedRowIds?: string[];
 }
 
 /**

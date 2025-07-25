@@ -218,6 +218,18 @@ const useModal = (): useModalReturnValue => {
     [],
   );
 
+  // "확인시 수정된 내용이 없어진다"라는 의미의 컨펌 함수
+  const confirmNavigation = useCallback(
+    (props?: AlertComponentProps): Promise<any> =>
+      confirm({
+        ...props,
+        title: props?.title ?? '이동 하시겠습니까?',
+        content: props?.content ?? '입력 중인 항목이 초기화됩니다.',
+        type: 'complete',
+      }),
+    [],
+  );
+
   return {
     openModal: open,
     closeModal: close,
@@ -231,6 +243,7 @@ const useModal = (): useModalReturnValue => {
     saveConfirm,
     updateConfirm,
     deleteConfirm,
+    confirmNavigation,
   };
 };
 

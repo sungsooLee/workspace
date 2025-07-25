@@ -17,16 +17,23 @@ import { useModal } from '@learnway/ui';
 import { useNavigate } from '@tanstack/react-router';
 import { Course, CourseConfig } from '@types';
 import { useUpdateEffect } from 'ahooks';
-import { TriggerKey, useCourseCreateInfo, useCourseLastTriggered } from '../store/use-course-store';
+import isEqual from 'lodash/isEqual';
+import {
+  TriggerKey,
+  useCourseActions,
+  useCourseCreateInfo,
+  useCourseLastTriggered,
+} from '../store/use-course-store';
 import { getDummyCourse, getDummyCourse2, getDummyCourse4 } from './course-mock-data';
 
 // 과정 생성/수정 서브페이지 커스텀 훅
 export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
   const { showSaveComplete, saveConfirm, showDeleteComplete } = useModal();
   const navigate = useNavigate();
-  const { updateFormData, formValues, onSubmit } = form;
+  const { updateFormData, formValues, onSubmit, formState } = form;
   const lastTriggered = useCourseLastTriggered();
-  const { courseId, courseType, activeTab } = useCourseCreateInfo();
+  const { courseId, courseType, activeTab, formState: storeFormState } = useCourseCreateInfo();
+  const { setCourseCreateInfo } = useCourseActions();
 
   // courseData를 먼저 가져와서 channelUuid를 확보
   const { data: courseData } = useFetchCourse(courseId);
@@ -154,6 +161,13 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
       updateFormData(formData);
     }
   }, [courseData, courseType]);
+
+  // form state 변경 시 코스 생성 정보 업데이트
+  useEffect(() => {
+    if (!isEqual(storeFormState, formState)) {
+      setCourseCreateInfo({ formState });
+    }
+  }, [formState, storeFormState]);
 
   return {
     isUpdateMode,

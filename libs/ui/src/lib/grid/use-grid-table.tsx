@@ -61,6 +61,7 @@ export function useGridTable<T extends object>(
     tableMode, // tableMode 추가
     onTableInstanceChange, // table 인스턴스 전달 콜백
     enableColumnResize = false,
+    selectedRowIds, // 추가: 외부에서 선택된 row id 배열
   } = props;
 
   const { t } = useTranslation();
@@ -148,7 +149,6 @@ export function useGridTable<T extends object>(
                 width: '100%',
                 height: '100%',
               }}
-              aria-expanded={row.getIsExpanded()}
               role="button"
             >
               {row.getIsExpanded() ? (
@@ -206,6 +206,7 @@ export function useGridTable<T extends object>(
             name="select-row"
             checked={checked}
             onChange={() => row.getToggleSelectedHandler()}
+            aria-label="행 선택"
           />
         </div>
       );
@@ -380,14 +381,15 @@ export function useGridTable<T extends object>(
     getSubRows: (row: any) => {
       return row.subRows || row.children || row.details || [];
     },
-    getRowId: (row: any, index: number, parent) => {
-      if (parent) {
-        return `${parent.id}_child_${index}`;
-      }
+    // getRowId: (row: any, index: number, parent) => {
+    //   if (parent) {
+    //     return `${parent.id}_child_${index}`;
+    //   }
 
-      const pageIndex = pagination?.pageIndex ?? 0;
-      return `page_${pageIndex}_row_${index}`;
-    },
+    //   const pageIndex = pagination?.pageIndex ?? 0;
+    //   return `page_${pageIndex}_row_${index}`;
+    // },
+    getRowId: (row: any) => String((row as Record<string, any>)[rowId]),
     meta: {
       updateData: handleUpdateData,
       removeData: handleRemoveData,
@@ -441,6 +443,27 @@ export function useGridTable<T extends object>(
     onRowSelect?.(firstSelectedRow);
     onRowsSelect?.(originalSelectedRows);
   }, [rowSelection, table, onRowSelect, onRowsSelect]);
+
+  // selectedRowIds prop이 변경될 때 rowSelection 동기화
+  useEffect(() => {
+    if (selectedRowIds && Array.isArray(selectedRowIds)) {
+      const findRows = table
+        .getRowModel()
+        ?.rows?.filter((row) => {
+          return selectedRowIds.includes((row.original as Record<string, any>)[rowId]);
+        })
+        ?.map((row) => [row.id, true]);
+      setRowSelection(Object.fromEntries(findRows));
+
+      console.log('xx : data', {
+        selectedRowIds,
+        data,
+        findRows,
+        rowId,
+        model: table?.getRowModel(),
+      });
+    }
+  }, [selectedRowIds, table, data]);
 
   // data 변경시 첫번째 행 선택
   useEffect(() => {

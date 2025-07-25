@@ -9,7 +9,6 @@ export const queryKeys = {
 
 export const queryOptions = {
   all: <T = LabelMessage>(queryParam?: LabelMessagesQueryParams) => {
-    console.log('label-messages.queries.ts :: queryParam :: ', queryParam);
     return {
       queryKey: [queryKeys.all, queryParam],
       queryFn: async (): Promise<PaginationResponse<T>> =>

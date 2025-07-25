@@ -80,4 +80,5 @@ export interface useModalReturnValue {
   saveConfirm: (props?: AlertComponentProps) => Promise<boolean>;
   updateConfirm: (props?: AlertComponentProps) => Promise<boolean>;
   deleteConfirm: (props?: AlertComponentProps) => Promise<boolean>;
+  confirmNavigation: (props?: AlertComponentProps) => Promise<boolean>;
 }
