@@ -3,4 +3,3 @@ export * from './form';
 export * from './highlight-message-box/highlight-message-box';
 export * from './embeded-alert/embeded-alert';
 export * from './modal/address-search-modal';
-export * from './modal/education-place-popup';

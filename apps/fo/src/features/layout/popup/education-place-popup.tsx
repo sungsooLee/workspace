@@ -5,27 +5,32 @@ import { isMobile } from 'react-device-detect';
 import styles from '@learnway/styles/fo/features/layout/popup/education-place-popup.module.css';
 
 import mapImage from '@learnway/styles/fo/assets/images/temp/img_map.png';
+import { Address } from '@types';
 
 // 약도보기 popover
 const CopyPopoverComponent = () => {
   return <p className={styles.copy}>준비중인 기능입니다{/*주소를 복사하였습니다*/}</p>;
 };
 
-const EducationPlacePopupComponent = ({ address }: { address: any }) => {
+type Props = {
+  address?: Address;
+};
+
+const EducationPlacePopupComponent = ({ address }: Props) => {
   return (
     <ModalContainer>
       <ModalTitle>{'교육장소'}</ModalTitle>
       <ModalBody>
         <div className={`${styles.start} ${styles.education_wrap}`}>
           <div className={styles.addr_box}>
-            <strong>루첸빌딩 지하 1층</strong>
+            <strong>{address?.detail}</strong>
             <dl className={styles.number}>
               <dt>전화번호 :</dt>
               <dd>02-999-8888</dd>
             </dl>
             {/* 퍼블수정 20250708 마크업 수정 */}
             <p className={styles.addr}>
-              {address}
+              {address?.roadAddress}
               <Popover
                 popoverContent={<CopyPopoverComponent />}
                 side="bottom"

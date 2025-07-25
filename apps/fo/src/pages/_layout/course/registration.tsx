@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { Button, useModal } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import { IcoCaution, IcoLocation, IcoCalendar01, IcoAvatar02, IcoTime } from '@learnway/icons';
@@ -12,11 +12,11 @@ import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-
 import educationStyles from '@learnway/styles/fo/pages/_layout/course/education.module.css';
 import styles from '@learnway/styles/fo/pages/_layout/course/registration.module.css';
 import { useCreateSingleCourseApplicationQueue } from '@entities/enroll';
-import { LangLevelTest } from '@types';
-import { EducationPlacePopup } from '@shared/ui';
+import { Address, AddressSearchResult, LangLevelTest } from '@types';
 import { PreLevelTest, TextbookDeliveryAddress } from '@features/course';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useSearchParam } from 'react-use';
+import { AddressConfirmationPopup, EducationPlacePopup } from '@features/layout';
 export const Route = createFileRoute('/_layout/course/registration')({
   component: RouteComponent,
 });
@@ -24,7 +24,7 @@ export const Route = createFileRoute('/_layout/course/registration')({
 type COURSE_REGISTRATION_FORMAT = 'ALL' | 'LEVEL_TEST' | 'TEXTBOOK';
 
 function RouteComponent() {
-  const { open: openModal, alert: openAlert } = useModal();
+  const { open: openModal, alert: openAlert, confirm: openConfirm } = useModal();
   const path = useSearchParam('format');
   const DEFAULT_COURSE_REGISTRATION_FORMAT = 'ALL';
   const currentCourseRegistrationFormat =
@@ -53,7 +53,16 @@ function RouteComponent() {
     });
   };
 
-  // const courseSequenceUuid = '';
+  const cancel = () => {
+    openConfirm({
+      title: <>수강 신청을 취소하시겠습니까?</>,
+      content: <p>{`지금 취소하실 경우\n입력한 내용은 저장되지 않습니다.`}</p>,
+      cancelButtonLabel: '아니요',
+    });
+  };
+
+  const router = useRouter();
+
   // const bookDeliveryInfo: BookDeliveryInfo = {
   //   recipientName: '김지훈',
   //   countryCode: '+82',
@@ -84,8 +93,40 @@ function RouteComponent() {
     { courseSequenceUuid, additionalInfo: { langLevelTest } },
   );
 
+  const [addressResult, setAddressResult] = useState<AddressSearchResult>();
+
+  const onAddressSearchResult = (value: AddressSearchResult) => {
+    setAddressResult(value);
+  };
+
   const submit = async () => {
-    await createSingleCourseApplicationQueue();
+    if (addressResult) {
+      const isConfirm = await openModal({
+        width: isMobile ? 'm_full' : 'md',
+        content: (
+          <AddressConfirmationPopup
+            address={{
+              roadAddress: addressResult.roadAddr,
+              postalCode: addressResult.zipNo,
+            }}
+            name="김현대"
+            phoneNumber="01012341234"
+          />
+        ),
+      });
+      if (isConfirm) {
+        // await createSingleCourseApplicationQueue();
+        router.navigate({
+          to: '/course/registration-complete',
+        });
+      }
+    }
+  };
+
+  const address: Address = {
+    detail: '루첸빌딩 지하 1층',
+    roadAddress: '서울시 강남구 테헤란로 510',
+    postalCode: '12345',
   };
 
   return (
@@ -126,7 +167,7 @@ function RouteComponent() {
                     onClick={() =>
                       openModal({
                         width: isMobile ? 'm_full' : 'md',
-                        content: <EducationPlacePopup />,
+                        content: <EducationPlacePopup address={address} />,
                       })
                     }
                   >
@@ -151,7 +192,9 @@ function RouteComponent() {
           <div className="my-12 h-1 w-full bg-[#EFF0F1]" />
         )}
         {/* 교재 배송지 */}
-        {isShowTextbook && <TextbookDeliveryAddress />}
+        {isShowTextbook && (
+          <TextbookDeliveryAddress onAddressSearchResult={onAddressSearchResult} />
+        )}
       </div>
 
       {/* 안내사항 */}
@@ -169,10 +212,10 @@ function RouteComponent() {
       {/* button */}
       <BrowserView>
         <div className={cn(authFormStyles.btn_wrap, styles.btn_wrap, 'auth--btn_wrap')}>
-          <Button variant="gray" size="xl" className="min">
+          <Button variant="gray" size="xl" className="min" onClick={cancel}>
             취소
           </Button>
-          <Button variant="primary" size="xl" onClick={() => submit()}>
+          <Button variant="primary" size="xl" onClick={submit}>
             신청
           </Button>
         </div>
@@ -181,10 +224,10 @@ function RouteComponent() {
       <MobileView>
         <MobileContainerFooter>
           <div className={cn(authFormStyles.btn_wrap, styles.btn_wrap, 'auth--btn_wrap')}>
-            <Button variant="gray" size="xl" className="min">
+            <Button variant="gray" size="xl" className="min" onClick={cancel}>
               취소
             </Button>
-            <Button variant="primary" size="xl" onClick={() => submit()}>
+            <Button variant="primary" size="xl" onClick={submit}>
               신청
             </Button>
           </div>
