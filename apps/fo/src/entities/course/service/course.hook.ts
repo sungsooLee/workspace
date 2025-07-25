@@ -29,6 +29,7 @@ export function useCourseDashboardData(uuid: string) {
 
 // 과정 전체 정보 불러오기
 export function useCourseFullDetail(id: number) {
+  console.log('sssss');
   const { data: courseData } = useCourseDetail(id);
 
   const data = courseData && mapCourseDetail(courseData);
@@ -89,14 +90,14 @@ export function useCourseEnrollWaitingCancle(options: any) {
   };
 }
 // 과정찜하기
-export function useCourseLike(options: any) {
+export function useCourseLike(options?: any) {
   const mutation = useMutation({
     ...mutateOptions.courseLikeRequest(),
     ...options,
   });
   return {
-    courseLikeRequest: (payload: any, callback?: any) => {
-      mutation.mutate(payload, callback);
+    courseLikeRequest: async (payload: any, callback?: any) => {
+      return await mutation.mutateAsync(payload, callback);
     },
     ...mutation,
   };

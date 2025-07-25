@@ -156,15 +156,6 @@ const EducationComponent = ({
     // if (courseEnrollCompletePopup) courseEnrollCompletePopup();
   };
 
-  // 찜하기
-  const handleCourseLikeRequest = () => {
-    console.log('1');
-
-    courseLikeRequest({ courseId: '111111' });
-
-    // if (courseEnrollCompletePopup) courseEnrollCompletePopup();
-  };
-
   return (
     <div
       className={`${styles.start} ${styles.education} ${disabled === true ? styles.disabled : ''} ${className || ''}`}

@@ -8,10 +8,12 @@ import dropdownPopoverStyles from '@learnway/styles/fo/shared/ui/dropdown-popove
 import styles from '@learnway/styles/fo/features/layout/ui/course-introduction/education.module.css';
 
 const CourseEducationCompoment = ({
-  educations,
+  educationsTemp,
+  // educations,
   courseEnrollCompletePopup,
   CourseCancelCompletePopup,
 }: {
+  educationsTemp?: any;
   educations: any;
   courseEnrollCompletePopup: () => void;
   CourseCancelCompletePopup: () => void;
@@ -82,9 +84,13 @@ const CourseEducationCompoment = ({
       )}
       <div className={styles.education_box}>
         <ul>
-          {educations.classes?.map((edu: any) => (
+          {educationsTemp.classes?.map((edu: any) => (
             <li key={edu.id}>
-              <Education edu={edu} courseEnrollCompletePopup={courseEnrollCompletePopup} CourseCancelCompletePopup={CourseCancelCompletePopup} />
+              <Education
+                edu={edu}
+                courseEnrollCompletePopup={courseEnrollCompletePopup}
+                CourseCancelCompletePopup={CourseCancelCompletePopup}
+              />
             </li>
           ))}
         </ul>
