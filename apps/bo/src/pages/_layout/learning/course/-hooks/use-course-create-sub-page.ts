@@ -24,14 +24,13 @@ import {
 } from '../-store/use-course-store';
 import { getDummyCourse, getDummyCourse2, getDummyCourse4 } from './course-mock-data';
 
+// 과정 생성/수정 서브페이지 커스텀 훅
 export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
   const { showSaveComplete, saveConfirm, showDeleteComplete } = useModal();
   const navigate = useNavigate();
   const { updateFormData, formValues, onSubmit } = form;
   const lastTriggered = useCourseLastTriggered();
   const courseCreateInfo = useCourseCreateInfo();
-
-  console.log('----- useCourseCreateSubPage ', courseCreateInfo.courseId);
 
   // courseData를 먼저 가져와서 channelUuid를 확보
   const { data: courseData, refetch } = useFetchCourse(courseCreateInfo.courseId);
@@ -45,9 +44,10 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
     [courseCreateInfo.courseType, courseData?.channelUuid],
   );
 
-  // courseConfig를 가져옴
+  // 과정 설정 정보(courseConfig) 조회
   const { data: courseConfig } = useFetchCourseConfig(courseConfigParams);
 
+  // 과정 생성 뮤테이션
   const { mutate: createCourse } = useCreateCourse({
     onSuccess: async () => {
       await showSaveComplete();
@@ -55,6 +55,7 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
     },
   });
 
+  // 과정 삭제 뮤테이션
   const { mutate: deleteCourse } = useDeleteCourse({
     onSuccess: () => {
       showDeleteComplete();
@@ -62,6 +63,7 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
     },
   });
 
+  // 각 스텝별 과정 수정 뮤테이션 객체
   const updateMutations = useUpdateCourseWizardMutations(() => {
     showSaveComplete();
     if (courseCreateInfo.activeTab === CourseTab.STEP5) {
@@ -69,11 +71,13 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
     }
   });
 
+  // 현재 탭에 맞는 update 뮤테이션 반환
   const getUpdateMutate = useCallback(
     (currentTab: CourseTab | CourseDetailTab) => updateMutations[currentTab as CourseTab],
     [updateMutations],
   );
 
+  // 저장 핸들러
   const handleSave = useCallback(async () => {
     const run = onSubmit(async (data) => {
       if (!(await saveConfirm())) {
@@ -91,6 +95,7 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
     run({ preventDefault: () => null } as any);
   }, [formValues, courseCreateInfo.activeTab]);
 
+  // 삭제 핸들러
   const handleDelete = useCallback(async () => {
     if (!(await saveConfirm())) {
       return;
@@ -98,7 +103,7 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
     deleteCourse(formValues.courseId ?? -1);
   }, []);
 
-  // 테스트용
+  // 테스트용 더미 데이터 로드
   const loadMockData = useCallback((type = 1) => {
     const dummyData =
       type === 1
@@ -115,20 +120,24 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
     // }));
   }, []);
 
+  // 수정 모드 여부
   const isUpdateMode = useMemo(() => !!courseData?.courseId, [courseData]);
 
+  // 과정 목록 페이지 이동
   const moveCourseListPage = () => {
     navigate({
       to: '/learning/course',
     });
   };
 
+  // 과정 상세 페이지 이동
   const moveCourseDetailPage = () => {
     navigate({
       to: '/learning/course/detail/view',
     });
   };
 
+  // 저장/삭제 트리거 감지 effect
   useUpdateEffect(() => {
     switch (lastTriggered?.key) {
       case TriggerKey.SAVE:
@@ -140,6 +149,7 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
     }
   }, [lastTriggered]);
 
+  // courseData 변경 시 폼 데이터 갱신
   useEffect(() => {
     if (courseData) {
       const selectedCourseType = courseCreateInfo.courseType; // 과정 유형 선택 모달에서 선택한 값
@@ -156,9 +166,7 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
   };
 };
 
-/**
- * 응답 데이터를 폼 데이터로 변환
- */
+// 응답 데이터를 폼 데이터로 변환
 const responseDataToFormData = (d: Course, c: CourseConfig = {} as CourseConfig): Course => {
   return {
     ...d,
@@ -200,7 +208,7 @@ const responseDataToFormData = (d: Course, c: CourseConfig = {} as CourseConfig)
  */
 export const formDataToRequestData = (d: Course) => {
   // 교육공간 라디오 선택에 따라 값 변경 관련 처리 (교육공간=learningSpaceType)
-  // 교육공간 > 차세데 학습학습 플랫폼
+  // 교육공간 > 차세대 학습 플랫폼
   if (d.learningSpaceType === 'LEARNING_WAY') {
     d.learningSpaceId = undefined; // 교육 장소 ID
     d.learningSpaceName = undefined; // 교육 장소(선택입력)
@@ -210,7 +218,7 @@ export const formDataToRequestData = (d: Course) => {
   else if (d.learningSpaceType === 'REGISTERED') {
     d.learningSpaceNameKeyIn = undefined; // 교육 장소 직접입력
   }
-  // 교육공간 > 직적입력
+  // 교육공간 > 직접입력
   else if (d.learningSpaceType === 'MANUAL') {
     d.learningSpaceId = undefined; // 교육 장소 ID
     d.learningSpaceName = undefined; // 교육 장소(선택입력)
@@ -227,11 +235,11 @@ export const formDataToRequestData = (d: Course) => {
   // d.coordinatorTelCountryCode = 'KOR_82';
   // d.operatorTelCountryCode = 'KOR_82';
 
-  //사전 필수과정
+  // 사전 필수과정
   const preRequisiteCourseIds = d.preRequisiteCourseList
     ?.map((d) => d.courseId)
     ?.filter((id): id is number => id !== undefined);
-  //연관 과정
+  // 연관 과정
   const relatedCourseIds = d.relatedCourseList
     ?.map((d) => d.courseId)
     ?.filter((id): id is number => id !== undefined);
@@ -282,6 +290,7 @@ export const formDataToRequestData = (d: Course) => {
   };
 };
 
+// 현재 활성화된 탭에 맞는 wizard step 반환
 const getWizardStep = (activeTab: CourseTab | CourseDetailTab) => {
   switch (activeTab) {
     case CourseTab.STEP1:
@@ -297,6 +306,7 @@ const getWizardStep = (activeTab: CourseTab | CourseDetailTab) => {
   }
 };
 
+// 각 과정 스텝별 update 뮤테이션 반환
 export const useUpdateCourseWizardMutations = (onSuccess: () => void) => {
   const w1 = useUpdateCourseWizard1({ onSuccess });
   const w2 = useUpdateCourseWizard2({ onSuccess });

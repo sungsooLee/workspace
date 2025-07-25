@@ -115,38 +115,3 @@ const PublishCourseComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>(
 });
 
 export const PublishCourse = PublishCourseComponent;
-
-/**
- * 응답 데이터를 폼 데이터로 변환
- */
-const responseDataToFormData = (d: Course): Course => {
-  // 리턴
-  return {
-    ...d,
-    courseValidityRange: {
-      from: d.courseValidityStartDateTime, // 과정 유효 시작일
-      to: d.courseValidityEndDateTime, // 과정 유효 종료일
-    },
-  };
-};
-
-/**
- * 상세정보 컴포넌트 폼 데이터를 요청 데이터로 변환하는 함수
- *
- * @component Curriculum
- * @param {Course} d - 상세정보 폼 데이터
- * @returns {Course} 상세정보 요청 데이터
- */
-
-export const formDataToRequestData = (d: Course) => {
-  return {
-    ...d,
-    courseValidityStartDateTime: d.courseValidityRange?.from, // 과정 유효 시작일
-    courseValidityEndDateTime: d.courseValidityRange?.to, // 과정 유효 종료일
-    // courseValidityStartHour: 0, // 과정 노출 시작 시각 (삭제 후 courseValidityStartDate에 통합 예정)
-    // courseValidityEndHour: 23, // 과정 노출 종료 시각 (삭제 후 courseValidityEndDate에 통합 예정)
-    // thumbnailFileGroupUuid: '1', // 썸네일 이미지 Group UUID
-    // primaryThumbnailFileUuid: '1', // 대표 썸네일 이미지 UUID
-    // tagNames: d.tagNames?.map((item: any) => ({ value: item?.tagName })), // 태그
-  };
-};

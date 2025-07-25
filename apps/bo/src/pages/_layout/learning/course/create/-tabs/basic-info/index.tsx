@@ -12,6 +12,7 @@ import {
   InputModalSelectorFormField,
   ListModalSelectorFormField,
   RadioGroupFormField,
+  useModal,
 } from '@learnway/ui';
 import {
   FormRow2,
@@ -19,6 +20,7 @@ import {
   TenantChannelDropdownFormField2,
   TrainingPlaceChoiceModal,
   UserChoiceModal,
+  UserGroupChoiceModal,
   UserGroupTabsChoiceModal,
 } from '@shared/ui';
 import { Course } from '@types';
@@ -29,6 +31,7 @@ import { useCourseCreateSubPage } from '../../../-hooks/use-course-create-sub-pa
 
 const BasicInfoComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>((_, ref) => {
   const { t } = useTranslation();
+  const { openModal } = useModal();
 
   const form = useDynamicForm2();
   const { provider, getValues, watch, onFormChange } = form;
@@ -152,6 +155,19 @@ const BasicInfoComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>((_, 
               }}
               showAddButton
               // transformModalData={(data: any) => console.log('data', data)}
+            />
+          }
+          actionNode={
+            <Button
+              variant="text"
+              label={t('대상자')}
+              onClick={(e: any) => {
+                // e.stopPropagation();
+                openModal({
+                  width: 'xl',
+                  content: <UserGroupChoiceModal groups={getValues().targetList} />,
+                });
+              }}
             />
           }
         />
@@ -376,53 +392,3 @@ const BasicInfoComponent = forwardRef<CourseTabFormRef, CourseTabBaseProps>((_, 
 });
 
 export const BasicInfo = BasicInfoComponent;
-
-/**
- * 응답 데이터를 폼 데이터로 변환
- */
-const responseDataToFormData = (d: Course): Course => {
-  return {
-    ...d,
-    tenantIds: d?.tenantList?.map((d: any) => d.tenantId), // 테넌트 아이디
-  };
-};
-
-/**
- * 과정 기본 정보 컴포넌트 폼 데이터를 요청 데이터로 변환하는 함수
- *
- * @component BasicInfo
- * @param {Course} d - 과정 기본 정보 폼 데이터
- * @returns {Course} 과정 기본 정보 요청 데이터
- */
-
-export const formDataToRequestData = (d: Course) => {
-  // 교육공간 라디오 선택에 따라 값 변경 관련 처리 (교육공간=learningSpaceType)
-  // 교육공간 > 차세데 학습학습 플랫폼
-  if (d.learningSpaceType === 'LEARNING_WAY') {
-    d.learningSpaceId = undefined; // 교육 장소 ID
-    d.learningSpaceName = undefined; // 교육 장소(선택입력)
-    d.learningSpaceNameKeyIn = undefined; // 교육 장소 직접입력
-  }
-  // 교육공간 > 공간선택
-  else if (d.learningSpaceType === 'REGISTERED') {
-    d.learningSpaceNameKeyIn = undefined; // 교육 장소 직접입력
-  }
-  // 교육공간 > 직적입력
-  else if (d.learningSpaceType === 'MANUAL') {
-    d.learningSpaceId = undefined; // 교육 장소 ID
-    d.learningSpaceName = undefined; // 교육 장소(선택입력)
-  }
-
-  // 카테고리 아이디 배열
-  d.categoryIds = d.categories?.map((d: any) => d.categoryId);
-  // 대표 카테고리
-  // d.primaryCategoryId = d.categories?.[0]?.categoryId;
-  // 학습대상-ID 배열
-  d.targetListIds = d.targetList?.map((d: any) => d.id);
-
-  // 담당자, 운영자 연락처 국가코드
-  d.coordinatorTelCountryCode = 'KOR_82';
-  d.operatorTelCountryCode = 'KOR_82';
-
-  return d;
-};
