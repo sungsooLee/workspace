@@ -117,7 +117,7 @@ export const useCoursePage = (): CourseManagementHookResult => {
     if (await confirm(t('복사하시겠습니까?'))) {
       copyCourse(selectedRows[0].courseId);
     }
-  }, []);
+  }, [selectedRows]);
 
   /**
    * 과정 공유 핸들러

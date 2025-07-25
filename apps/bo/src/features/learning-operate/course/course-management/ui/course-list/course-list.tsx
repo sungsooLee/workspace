@@ -18,6 +18,8 @@ const CourseListComponent = () => {
     handleGridRowsSelect,
     handleBatchUploadClick,
     handleCourseOpenClick,
+    handleCopyClick,
+    handleShareClick,
   } = useCoursePage();
 
   return (
@@ -61,6 +63,8 @@ const CourseListComponent = () => {
           buttonState={buttonState}
           getValues={getValues}
           onRowsSelect={handleGridRowsSelect}
+          onCopyClick={handleCopyClick}
+          onShareClick={handleShareClick}
         />
       </MainContents>
     </PageContainer>
