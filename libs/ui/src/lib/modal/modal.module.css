@@ -141,7 +141,7 @@
       & > div {
         @apply h-full;
         & > div {
-          @apply h-[calc(100%-65px)] !max-h-none px-0 py-0 !pb-0;
+          @apply h-[calc(100%-65px)] !max-h-none p-[16px];
         }
       }
     }

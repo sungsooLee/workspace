@@ -235,6 +235,250 @@ const CoursePackageComponent: FC = () => {
     },
   ];
 
+  // Thumnail
+  const item3 = [
+    {
+      imageUrl: bannerImg,
+      title: '단번에 끌리는 메시지, 짧게 쓰는 카피라이팅 공식',
+      tagLabels: ['모바일전용', '사내IP전용', '#AI기술'],
+      infoCustomNode: [
+        <span>{'이러닝'}</span>,
+        <span>
+          <IcoPlay width={16} height={16} stroke="#4C515E" />
+          {'12개 과정'}
+        </span>,
+      ],
+      toggleButton: true,
+      countInfoNode: [
+        <span>
+          <IcoStar width={20} height={20} stroke="#0056FF" fill="#0056FF" />
+          <em>{'4.2'}</em>
+        </span>,
+        <span>
+          <IcoHeart width={20} height={20} stroke="#F58B75" fill="#F58B75" />
+          <em>{'153'}</em>
+        </span>,
+      ],
+      indexNumber: '1',
+    },
+    {
+      imageUrl: bannerImg,
+      title: '단번에 끌리는 메시지, 짧게 쓰는 카피라이팅 공식',
+      tagLabels: ['모바일전용', '사내IP전용', '#AI기술'],
+      infoCustomNode: [
+        <span>{'이러닝'}</span>,
+        <span>
+          <IcoPlay width={16} height={16} stroke="#4C515E" />
+          {'12개 과정'}
+        </span>,
+      ],
+      toggleButton: true,
+      countInfoNode: [
+        <span>
+          <IcoStar width={20} height={20} stroke="#0056FF" fill="#0056FF" />
+          <em>{'4.2'}</em>
+        </span>,
+        <span>
+          <IcoHeart width={20} height={20} stroke="#F58B75" fill="#F58B75" />
+          <em>{'153'}</em>
+        </span>,
+      ],
+      indexNumber: '2',
+    },
+    {
+      imageUrl: bannerImg,
+      title: '단번에 끌리는 메시지, 짧게 쓰는 카피라이팅 공식',
+      tagLabels: ['모바일전용', '사내IP전용', '#AI기술'],
+      infoCustomNode: [
+        <span>{'이러닝'}</span>,
+        <span>
+          <IcoPlay width={16} height={16} stroke="#4C515E" />
+          {'12개 과정'}
+        </span>,
+      ],
+      toggleButton: true,
+      countInfoNode: [
+        <span>
+          <IcoStar width={20} height={20} stroke="#0056FF" fill="#0056FF" />
+          <em>{'4.2'}</em>
+        </span>,
+        <span>
+          <IcoHeart width={20} height={20} stroke="#F58B75" fill="#F58B75" />
+          <em>{'153'}</em>
+        </span>,
+      ],
+      indexNumber: '3',
+    },
+    {
+      imageUrl: bannerImg,
+      title: '단번에 끌리는 메시지, 짧게 쓰는 카피라이팅 공식',
+      tagLabels: ['모바일전용', '사내IP전용', '#AI기술'],
+      infoCustomNode: [
+        <span>{'이러닝'}</span>,
+        <span>
+          <IcoPlay width={16} height={16} stroke="#4C515E" />
+          {'12개 과정'}
+        </span>,
+      ],
+      toggleButton: true,
+      countInfoNode: [
+        <span>
+          <IcoStar width={20} height={20} stroke="#0056FF" fill="#0056FF" />
+          <em>{'4.2'}</em>
+        </span>,
+        <span>
+          <IcoHeart width={20} height={20} stroke="#F58B75" fill="#F58B75" />
+          <em>{'153'}</em>
+        </span>,
+      ],
+      indexNumber: '4',
+    },
+  ];
+
+  // Thumnail
+  const item4 = [
+    {
+      imageUrl: bannerImg,
+      title: '단번에 끌리는 메시지, 짧게 쓰는 카피라이팅 공식',
+      tagLabels: ['모바일전용', '사내IP전용', '#AI기술'],
+      labelCustomNode: [
+        <Badge
+          variant="text"
+          status="primary"
+          size="xs"
+          option={{ label: 'New', value: `${getRandomId()}` }}
+        />,
+      ],
+      infoCustomNode: [
+        <span>{'이러닝'}</span>,
+        <span>
+          <IcoPlay width={16} height={16} stroke="#4C515E" />
+          {'12개 과정'}
+        </span>,
+      ],
+      toggleButton: true,
+      countInfoNode: [
+        <span>
+          <IcoStar width={20} height={20} stroke="#0056FF" fill="#0056FF" />
+          <em>{'4.2'}</em>
+        </span>,
+        <span>
+          <IcoEye width={20} height={20} fill="none" stroke="#4D525C" />
+          <em>{'78,800'}</em>
+        </span>,
+        <span>
+          <IcoHeart width={20} height={20} stroke="#F58B75" fill="#F58B75" />
+          <em>{'153'}</em>
+        </span>,
+      ],
+    },
+    {
+      imageUrl: bannerImg,
+      title: '단번에 끌리는 메시지, 짧게 쓰는 카피라이팅 공식',
+      tagLabels: ['모바일전용', '사내IP전용', '#AI기술'],
+      labelCustomNode: [
+        <Badge
+          variant="text"
+          status="primary"
+          size="xs"
+          option={{ label: 'New', value: `${getRandomId()}` }}
+        />,
+      ],
+      infoCustomNode: [
+        <span>{'이러닝'}</span>,
+        <span>
+          <IcoPlay width={16} height={16} stroke="#4C515E" />
+          {'12개 과정'}
+        </span>,
+      ],
+      toggleButton: true,
+      countInfoNode: [
+        <span>
+          <IcoStar width={20} height={20} stroke="#0056FF" fill="#0056FF" />
+          <em>{'4.2'}</em>
+        </span>,
+        <span>
+          <IcoEye width={20} height={20} fill="none" stroke="#4D525C" />
+          <em>{'78,800'}</em>
+        </span>,
+        <span>
+          <IcoHeart width={20} height={20} stroke="#F58B75" fill="#F58B75" />
+          <em>{'153'}</em>
+        </span>,
+      ],
+    },
+    {
+      imageUrl: bannerImg,
+      title: '단번에 끌리는 메시지, 짧게 쓰는 카피라이팅 공식',
+      tagLabels: ['모바일전용', '사내IP전용', '#AI기술'],
+      labelCustomNode: [
+        <Badge
+          variant="text"
+          status="primary"
+          size="xs"
+          option={{ label: 'New', value: `${getRandomId()}` }}
+        />,
+      ],
+      infoCustomNode: [
+        <span>{'이러닝'}</span>,
+        <span>
+          <IcoPlay width={16} height={16} stroke="#4C515E" />
+          {'12개 과정'}
+        </span>,
+      ],
+      toggleButton: true,
+      countInfoNode: [
+        <span>
+          <IcoStar width={20} height={20} stroke="#0056FF" fill="#0056FF" />
+          <em>{'4.2'}</em>
+        </span>,
+        <span>
+          <IcoEye width={20} height={20} fill="none" stroke="#4D525C" />
+          <em>{'78,800'}</em>
+        </span>,
+        <span>
+          <IcoHeart width={20} height={20} stroke="#F58B75" fill="#F58B75" />
+          <em>{'153'}</em>
+        </span>,
+      ],
+    },
+    {
+      imageUrl: bannerImg,
+      title: '단번에 끌리는 메시지, 짧게 쓰는 카피라이팅 공식',
+      tagLabels: ['모바일전용', '사내IP전용', '#AI기술'],
+      labelCustomNode: [
+        <Badge
+          variant="text"
+          status="primary"
+          size="xs"
+          option={{ label: 'New', value: `${getRandomId()}` }}
+        />,
+      ],
+      infoCustomNode: [
+        <span>{'이러닝'}</span>,
+        <span>
+          <IcoPlay width={16} height={16} stroke="#4C515E" />
+          {'12개 과정'}
+        </span>,
+      ],
+      toggleButton: true,
+      countInfoNode: [
+        <span>
+          <IcoStar width={20} height={20} stroke="#0056FF" fill="#0056FF" />
+          <em>{'4.2'}</em>
+        </span>,
+        <span>
+          <IcoEye width={20} height={20} fill="none" stroke="#4D525C" />
+          <em>{'78,800'}</em>
+        </span>,
+        <span>
+          <IcoHeart width={20} height={20} stroke="#F58B75" fill="#F58B75" />
+          <em>{'153'}</em>
+        </span>,
+      ],
+    },
+  ];
+
   return (
     <div className={cn(styles.start, styles.course_contents)}>
       <div className={styles.banner_wrap}>
@@ -359,6 +603,16 @@ const CoursePackageComponent: FC = () => {
       </div>
       {/* title */}
       <strong className={styles.menu_title}>{'지금 보면 딱! 좋은 인기 과정'}</strong>
+      <div className={styles.thumnail_wrap}>
+        {/* Thumnail List */}
+        <ThumbnailList items={item3} cols={2} direction={!isMobile ? 'horizontal' : 'vertical'} />
+      </div>
+      {/* title */}
+      <strong className={styles.menu_title}>{'따끈따끈한 최신 과정'}</strong>
+      <div className={styles.thumnail_wrap}>
+        {/* Thumnail List */}
+        <ThumbnailList items={item4} cols={2} direction={!isMobile ? 'horizontal' : 'vertical'} />
+      </div>
     </div>
   );
 };
