@@ -15,6 +15,7 @@ import {
   PutVideoUpdateParams,
   QuestionItem,
   QuestionItemDeleteParam,
+  QuestionsCopyReq,
   QuestionStatusUpdateReq,
   RandomQuestionCountUpdateReq,
   TestPaperBasicInfoSaveReq,
@@ -326,6 +327,19 @@ export function useUpdateExamPaperQuestionCount(options?: any) {
 
   return {
     update: (params: RandomQuestionCountUpdateReq) => mutation.mutate(params as any),
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+  };
+}
+
+export function useCopyQuestionsToExamPaper(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.copyQuestionsToExamPaper(),
+    ...options,
+  });
+
+  return {
+    copy: (params: QuestionsCopyReq) => mutation.mutate(params as any),
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
   };

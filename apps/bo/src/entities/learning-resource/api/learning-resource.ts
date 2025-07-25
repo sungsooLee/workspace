@@ -42,6 +42,7 @@ import {
   GetScormResourceRes,
   GetScormStatusRes,
   GetScormFileChangeRes,
+  QuestionsCopyReq,
 } from '@types';
 
 export default class LearningResourceService {
@@ -308,6 +309,14 @@ export default class LearningResourceService {
     params: QuestionListForRetrieveReq,
   ): Promise<QuestionListForRetrieveRes[]> {
     return httpService.get(`${CMSApiPrefix()}/exam/questions/pool`, params);
+  }
+
+  /**
+   * 시험 문항 단건 또는 다건 복사
+   * @param body
+   */
+  static copyQuestionsToExamPaper(body: QuestionsCopyReq): Promise<{ result: boolean }> {
+    return httpService.post(`${CMSApiPrefix()}/exam/questions/copy`, body);
   }
 
   /**

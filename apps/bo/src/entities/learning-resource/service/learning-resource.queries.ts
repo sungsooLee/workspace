@@ -16,6 +16,7 @@ import {
   PutScormUpdateParams,
   PutVideoChangeParams,
   PutVideoUpdateParams,
+  QuestionsCopyReq,
   QuestionItem,
   QuestionItemDeleteParam,
   QuestionListForRetrieveReq,
@@ -241,5 +242,9 @@ export const mutateOptions = {
   updateExamPaperQuestionCountInfo: () => ({
     mutationFn: (params: RandomQuestionCountUpdateReq) =>
       LearningResourceService.updateExamPaperQuestionCountInfo(params),
+  }),
+  copyQuestionsToExamPaper: () => ({
+    mutationFn: (params: QuestionsCopyReq) =>
+      LearningResourceService.copyQuestionsToExamPaper(params),
   }),
 };

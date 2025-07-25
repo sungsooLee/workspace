@@ -80,6 +80,8 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
     const {
       questionList,
       selectedQuestions,
+      setSelectedQuestions,
+      refetch: refetchQuestionList,
       questionState,
       scorePerQuestion,
       questionCreateSuccessCallback,
@@ -108,11 +110,16 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
     const { openModal } = useModal();
 
     const handleClickRetrieveQuestionModal = useCallback(async () => {
-      await openModal({
+      const result = await openModal({
         width: 'xl',
         height: 'fix',
         content: <LearningResourceQuestionShuttleModal examPoolUuid={data?.examPoolUuid ?? ''} />,
       });
+
+      if (result) {
+        const { data: refetchResult } = await refetchQuestionList();
+        setSelectedQuestions(refetchResult?.filter((q) => q.isUsed) as QuestionItem[]);
+      }
     }, []);
 
     const handleClickAddQuestionButton = useCallback(async () => {
