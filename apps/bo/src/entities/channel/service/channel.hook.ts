@@ -1,9 +1,9 @@
 import { useMutation, useQuery, UseQueryOptions, UseQueryResult } from '@tanstack/react-query';
-import { ChannelByRoleId } from '@types';
+import { ChannelByRoleId, ChannelParam } from '@types';
 import { mutateOptions, queryOptions } from './channel.queries';
 
-export function useGetChannelList(params: any) {
-  return useQuery(queryOptions.list(params));
+export function useGetChannelList(roleId: string, params: ChannelParam) {
+  return useQuery(queryOptions.list(roleId, params));
 }
 
 export function useGetChannelDetail(channelUuid: string) {
