@@ -10,7 +10,9 @@ interface CourseGridProps {
   selectedRows: CourseListItem[];
   buttonState: CourseButtonState;
   getValues: () => any;
-  onRowsSelect: (rows: CourseListItem[]) => void;
+  onRowsSelect?: (rows: CourseListItem[]) => void;
+  onCopyClick?: () => void;
+  onShareClick?: () => void;
 }
 
 export const CourseGrid: React.FC<CourseGridProps> = ({
@@ -19,18 +21,10 @@ export const CourseGrid: React.FC<CourseGridProps> = ({
   buttonState,
   getValues,
   onRowsSelect,
+  onCopyClick,
+  onShareClick,
 }) => {
   const { t } = useTranslation();
-
-  const handleCopyClick = () => {
-    console.log('Copy click - selectedRows:', selectedRows);
-    // TODO: 복사 로직 구현
-  };
-
-  const handleShareClick = () => {
-    console.log('Share click - selectedRows:', selectedRows);
-    // TODO: 공유 로직 구현
-  };
 
   const customButtonNode = useMemo(
     () => (
@@ -39,7 +33,7 @@ export const CourseGrid: React.FC<CourseGridProps> = ({
         size="sm"
         label={t('LABEL.grid.header.toShare')}
         disabled={!buttonState.share}
-        onClick={handleShareClick}
+        onClick={() => onShareClick?.()}
       />
     ),
     [buttonState.share],
@@ -50,13 +44,10 @@ export const CourseGrid: React.FC<CourseGridProps> = ({
       config={config}
       multiple
       showNumberingColumn
-      copyButton={useMemo(
-        () => ({
-          disabled: !buttonState.copy,
-          onClick: handleCopyClick,
-        }),
-        [buttonState.copy],
-      )}
+      copyButton={{
+        disabled: !buttonState.copy,
+        onClick: () => onCopyClick?.(),
+      }}
       onRowsSelect={onRowsSelect}
       customButtonNode={customButtonNode}
       excelButtons={

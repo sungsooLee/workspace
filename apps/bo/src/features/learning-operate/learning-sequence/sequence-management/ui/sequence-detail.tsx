@@ -368,7 +368,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
               <FormRow2
                 provider={provider}
                 name={'approvalLineType'}
-                label={'승인'}
+                label={'승인 결재 라인'}
                 element={
                   <DropdownFormField
                     optionsConfig={{

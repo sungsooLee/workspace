@@ -26,18 +26,18 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
   const navigate = useNavigate();
   const { updateFormData, formValues, onSubmit } = form;
   const lastTriggered = useCourseLastTriggered();
-  const courseCreateInfo = useCourseCreateInfo();
+  const { courseId, courseType, activeTab } = useCourseCreateInfo();
 
   // courseData를 먼저 가져와서 channelUuid를 확보
-  const { data: courseData, refetch } = useFetchCourse(courseCreateInfo.courseId);
+  const { data: courseData } = useFetchCourse(courseId);
 
   // courseConfigParams를 courseData와 courseCreateInfo로부터 생성
   const courseConfigParams = useMemo(
     () => ({
-      courseType: courseCreateInfo.courseType,
+      courseType,
       channelUuid: courseData?.channelUuid,
     }),
-    [courseCreateInfo.courseType, courseData?.channelUuid],
+    [courseType, courseData?.channelUuid],
   );
 
   // 과정 설정 정보(courseConfig) 조회
@@ -62,7 +62,7 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
   // 각 스텝별 과정 수정 뮤테이션 객체
   const updateMutations = useUpdateCourseWizardMutations(() => {
     showSaveComplete();
-    if (courseCreateInfo.activeTab === CourseTab.STEP5) {
+    if (activeTab === CourseTab.STEP5) {
       moveCourseDetailPage();
     }
   });
@@ -79,25 +79,25 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
       if (!(await saveConfirm())) {
         return;
       }
-      const wizardStep = getWizardStep(courseCreateInfo.activeTab);
+      const wizardStep = getWizardStep(activeTab);
       const mergeData = { ...formValues, ...data, wizardStep };
       const isUpdate = mergeData?.courseId;
       const requestData = formDataToRequestData(mergeData);
-      const updateCourse = getUpdateMutate(courseCreateInfo.activeTab);
+      const updateCourse = getUpdateMutate(activeTab);
 
       isUpdate ? updateCourse(requestData) : createCourse(requestData);
     });
     // 가짜 이벤트 객체를 생성해서 수동으로 호출
     run({ preventDefault: () => null } as any);
-  }, [formValues, courseCreateInfo.activeTab]);
+  }, [formValues, activeTab]);
 
   // 삭제 핸들러
   const handleDelete = useCallback(async () => {
     if (!(await saveConfirm())) {
       return;
     }
-    deleteCourse(formValues.courseId ?? -1);
-  }, []);
+    deleteCourse(courseId);
+  }, [courseId]);
 
   // 테스트용 더미 데이터 로드
   const loadMockData = useCallback((type = 1) => {
@@ -148,12 +148,12 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
   // courseData 변경 시 폼 데이터 갱신
   useEffect(() => {
     if (courseData) {
-      const selectedCourseType = courseCreateInfo.courseType; // 과정 유형 선택 모달에서 선택한 값
+      const selectedCourseType = courseType; // 과정 유형 선택 모달에서 선택한 값
       const formData = responseDataToFormData(courseData);
       formData.courseType = formData.courseType ?? selectedCourseType; // 최초 등록시 과정 유형 선택 모달에서 선택한 값으로 설정
       updateFormData(formData);
     }
-  }, [courseData, courseCreateInfo.courseType]);
+  }, [courseData, courseType]);
 
   return {
     isUpdateMode,

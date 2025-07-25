@@ -159,6 +159,7 @@ export * from './lib/learning-window/player/ui/learning-window-scorm-player';
 export * from './lib/learning-window/player/ui/learning-window-video-player';
 export * from './lib/list/list';
 export * from './lib/list/type';
+export * from './lib/popover-list/popover';
 export * from './lib/modal/modal-container';
 export * from './lib/modal/modal-wrapper';
 export * from './lib/modal/modal.hook';
