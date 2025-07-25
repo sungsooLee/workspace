@@ -25,7 +25,7 @@ function LayoutComponent({ children }: LayoutComponentProps) {
       <MobileContainerHeader />
       <main>{children}</main>
       {/* 하단 반응형 footer */}
-      <Footer />
+      {/* <Footer /> */}
       {/* {pageMeta?.mobile?.showFooter && <MobileFooter />} */}
       {/* <MobileFooter /> */}
     </div>
