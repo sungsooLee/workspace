@@ -25,7 +25,7 @@ export const Route = createFileRoute('/_layout/learning/learning-resource/regist
 
 function RouteComponent() {
   const router = useRouter();
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
 
   const [selectedType, setSelectedType] = useState<LEARNING_TYPE>('');
 

@@ -19,7 +19,7 @@ import {
 } from '../service/learning-resource-question-service';
 
 const LearningResourceQuestionBankQuestionComponent = () => {
-  const { alert, open: openModal, confirm: openConfirm } = useModal();
+  const { alert, openModal, confirm: openConfirm } = useModal();
   const [statistic, setStatistic] = useState<QuestionStatisticRow[]>(initStatisticRow);
 
   const { baseInfo } = useLearningResourceQuestionDetailForm();

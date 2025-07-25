@@ -50,7 +50,7 @@ const ListModalSelectorFormFieldComponent = forwardRef<
     },
     ref,
   ) => {
-    const { open: openModal } = useModal();
+    const { openModal } = useModal();
 
     // const [selectedValue, setSelectedValue] = useState<any>();
 

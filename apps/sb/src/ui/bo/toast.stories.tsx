@@ -20,7 +20,7 @@ const ToastTester = ({
   autoTrigger?: boolean;
   showCloseButton?: boolean;
 }) => {
-  const { open, closeAll } = useToast();
+  const { open, closeAllModal } = useToast();
 
   const handleShowToast = () => {
     const config = {
@@ -35,7 +35,7 @@ const ToastTester = ({
 
   useEffect(() => {
     if (autoTrigger) {
-      closeAll();
+      closeAllModal();
     }
   }, []);
 

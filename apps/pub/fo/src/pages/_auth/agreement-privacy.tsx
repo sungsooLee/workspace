@@ -14,7 +14,7 @@ export const Route = createFileRoute('/_auth/agreement-privacy')({
 });
 
 function RouteComponent() {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
   return (
     <div className={`${styles.start} ${styles.auth_wrap}`}>
       <div className={cn(styles.auth_box, 'auth--box')}>

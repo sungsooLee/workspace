@@ -24,7 +24,7 @@ import { useCreateTenantWidget } from '@entities/widgets/service/widgets.hook';
 const TenantDetailWidgetMappingModalComponent: FC<{ tenantId: number }> = ({ tenantId }) => {
   const [tableInstance, setTableInstance] = useState<Table<any>>();
 
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
 
   const { provider: sProvider } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig);

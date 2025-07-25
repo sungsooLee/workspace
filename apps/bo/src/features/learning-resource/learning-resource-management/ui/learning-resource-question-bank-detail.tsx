@@ -12,7 +12,7 @@ import { useLearningResourceQuestionDetailForm } from '../service/learning-resou
 import { ContentBaseInfo } from '@types';
 
 const LearningResourceQuestionBankDetailComponent = (props: any, ref: any) => {
-  const { alert, open: openModal, confirm: openConfirm } = useModal();
+  const { alert, openModal, confirm: openConfirm } = useModal();
   const { baseInfo, formMode, setFuncInfo, createQuestionBank } =
     useLearningResourceQuestionDetailForm();
 

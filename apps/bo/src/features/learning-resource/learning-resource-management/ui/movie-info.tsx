@@ -17,7 +17,7 @@ interface MovieInfoProps {
 }
 
 const MovieInfoComponent = ({ provider }: MovieInfoProps) => {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
   const { fileDownload } = useFileManager();
   const { watch } = provider;
   const {

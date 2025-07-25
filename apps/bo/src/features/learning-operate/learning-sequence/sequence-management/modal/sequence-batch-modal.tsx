@@ -45,7 +45,7 @@ const SequenceBatchModalComponent = ({
   selectedItems,
 }: SequenceBatchModalComponentProps) => {
   const {
-    close: closeModal,
+    closeModal,
     confirm: openConfirm,
     alert: openAlert,
     showSaveComplete,
@@ -225,7 +225,7 @@ const SequenceBatchModalComponent = ({
       onSuccess: async (data: any, variables: any, context: any) => {
         console.log('onSuccess:', data);
         await showSaveComplete();
-        closeModal();
+        closeModal(true);
       },
       onError: (data: any, variables: any, context: any) => {
         console.log('onError:', data);

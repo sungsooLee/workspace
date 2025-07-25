@@ -35,7 +35,7 @@ const MyRoleComponent = (route: any) => {
     onFormValid,
   } = useSearchBox(searchConfig as SearchBoxConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
   const [selectedRow, setSelectedRow] = useState<any | null>(null);
 
   function handleRefetch() {

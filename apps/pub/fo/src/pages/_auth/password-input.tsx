@@ -15,7 +15,7 @@ export const Route = createFileRoute('/_auth/password-input')({
 });
 
 function RouteComponent() {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
   return (
     <form className="form_row">
       <div className={`${styles.start} ${styles.auth_wrap} ${styles.password_input}`}>
@@ -78,7 +78,8 @@ function RouteComponent() {
                       width: 'md',
                       content: <GoogleCertGuidePopup />,
                     })
-                  }>
+                  }
+                >
                   구글 OTP 인증 가이드
                 </Button>
               </dd>

@@ -36,7 +36,7 @@ function RouteComponent() {
   const { mode, tenantId, contentUuid, data, refetchContentDetail, hasMapping, listParam } =
     useExamLoaderData();
 
-  const { alert, open: openModal, confirm: openConfirm } = useModal();
+  const { alert, openModal, confirm: openConfirm } = useModal();
 
   const { basicInfoRef, questionInfoRef, questionGenType, setQuestionGenType } =
     useExamPaperForm(data);

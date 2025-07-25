@@ -3,13 +3,13 @@ import { getQuerySkipToken } from '@learnway/shared';
 import { User } from '@learnway/types';
 import UsersService from '../api/users';
 
-export const queryKeys = {
+export const userQueryKeys = {
   all: ['user'] as const,
   detail: () => ['user-me'] as const,
   role: () => ['user-role'] as const,
 };
 
-export const queryOptions = {
+export const userQueryOptions = {
   // all: () => ({
   //   queryKey: queryKeys.all,
   //   queryFn: async () => {
@@ -20,7 +20,7 @@ export const queryOptions = {
   //   },
   // }),
   detail: () => ({
-    queryKey: queryKeys.detail(),
+    queryKey: userQueryKeys.detail(),
     queryFn: async (): Promise<User | null> => {
       const data = await UsersService.getUser();
       console.log('## get user detail :: ', data);
@@ -29,7 +29,7 @@ export const queryOptions = {
     },
   }),
   role: () => ({
-    queryKey: queryKeys.detail(),
+    queryKey: userQueryKeys.detail(),
     queryFn: async (): Promise<User | null> => {
       const data = await UsersService.getUserGnbRole();
       if (!data) return null;
@@ -40,7 +40,7 @@ export const queryOptions = {
 
 // : getQuerySkipToken<any>(),
 
-export const mutateOptions = {
+export const userMutateOptions = {
   verifySMS: () => ({
     mutationFn: (payload: any) => UsersService.verifySMS(payload),
   }),

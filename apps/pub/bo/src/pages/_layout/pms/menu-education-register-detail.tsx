@@ -46,7 +46,7 @@ function RouteComponent() {
   ];
 
   // 공통 팝업(이력 정보)
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
   const ModalHistoryInfoContent = () => {
     // 이력 구분
     const [recordSelectedValues, setRecordSelectedValues] = useState<string[]>([]);

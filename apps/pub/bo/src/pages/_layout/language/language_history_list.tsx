@@ -478,7 +478,7 @@ function RouteComponent() {
   const ModalOwnerSearchContent = () => {
     const [selectedValues, setSelectedValues] = useState<string[]>([]);
 
-    const { close: closeModal } = useModal();
+    const { closeModal } = useModal();
     const data2: any[] = [
       {
         title1: '영어',

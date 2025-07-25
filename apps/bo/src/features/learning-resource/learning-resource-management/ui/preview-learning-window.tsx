@@ -82,7 +82,10 @@ const PreviewLearningWindowComponent: FC<any> = ({
     console.log('playInfo ', playInfo);
     if (playInfo.scoId) {
       const info = getScormItemByScoId(playInfo.scoId);
-      setScormInfo({ ...info, itemURL: info.itemUrl });
+      console.log(`scomItem ${playInfo.scoId}`, info);
+      if (info) {
+        setScormInfo({ ...info, itemURL: info.itemUrl });
+      }
     }
   }, [playInfo]);
 

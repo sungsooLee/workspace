@@ -9,7 +9,7 @@ import styles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google
 
 function GoogleOtpGuideButtonComponent() {
   const { t } = useTranslation();
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
 
   return (
     <Button

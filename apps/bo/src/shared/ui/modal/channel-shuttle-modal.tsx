@@ -24,7 +24,7 @@ type Props = {
 
 const ChannelShuttleModalComponent = ({ roleId = '' }: Props) => {
   const ref = useRef<ShuttleGridToGridImperative>(null);
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
 
   const searchConfig: SearchBoxConfig = {
     builders: [

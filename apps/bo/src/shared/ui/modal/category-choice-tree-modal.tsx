@@ -44,7 +44,7 @@ const CategoryChoiceTreeModalModalComponent = () => {
     string[]
   >([]);
 
-  const { open: openModal, close: closeModal, confirm: openConfirm, alert: openAlert } = useModal();
+  const { openModal, closeModal, confirm: openConfirm, alert: openAlert } = useModal();
 
   const { data: commonCategories } = useFetchCategory();
 

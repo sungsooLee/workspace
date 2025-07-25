@@ -56,7 +56,7 @@ const FileInfoComponent = ({ contentUuid, uuid, mode }: FileInfoProps) => {
     },
   });
 
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
 
   const handleClickFileChange = async () => {
     const channelInfo = await openModal({

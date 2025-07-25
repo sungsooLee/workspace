@@ -58,7 +58,7 @@ function RouteComponent() {
     setChecked((prev) => ({ ...prev, [id]: checked }));
   };
 
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
   const columnHelper = createColumnHelper<any>();
   // 회사 조회 팝업 (공통)
   const ModalCompanySearchContent = () => {

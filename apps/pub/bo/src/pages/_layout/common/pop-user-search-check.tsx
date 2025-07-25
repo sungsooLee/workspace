@@ -24,7 +24,7 @@ export const Route = createFileRoute('/_layout/common/pop-user-search-check')({
 });
 
 function RouteComponent() {
-  const { open: openModal, close: closeModal } = useModal();
+  const { openModal, closeModal } = useModal();
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
   const options = [
     { value: 'option1', label: '전체' },

@@ -8,7 +8,7 @@ import { CategoryFilterPopup } from './category-filter-popup';
 
 const FilterComponent = ({ onOptionChange }: any) => {
   // modal
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
 
   // 선택된 값이 있으면 true 변경
   const [selectCheck, setSelectCheck] = useState(false);
@@ -116,12 +116,14 @@ const FilterComponent = ({ onOptionChange }: any) => {
       <div className={styles.filter_btn_box}>
         <Button
           className={cn(styles.filter_btn, selectCheck === true ? styles.selected : '')}
-          onClick={handleOpenFilterModal}>
+          onClick={handleOpenFilterModal}
+        >
           <IcoFilter
             width={20}
             height={20}
             fill="none"
-            stroke={selectCheck === true ? '#fff' : '#07287e'}></IcoFilter>
+            stroke={selectCheck === true ? '#fff' : '#07287e'}
+          ></IcoFilter>
         </Button>
       </div>
 
@@ -151,7 +153,8 @@ const FilterComponent = ({ onOptionChange }: any) => {
             width={20}
             height={20}
             fill="none"
-            stroke="#131c30"></IcoRefresh02>
+            stroke="#131c30"
+          ></IcoRefresh02>
           초기화
         </Button>
       </div>

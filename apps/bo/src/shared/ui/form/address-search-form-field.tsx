@@ -70,7 +70,7 @@ const AddressSearchComponent = function ({
   ...props
 }: AddressSearchComponentProps) {
   const { t } = useTranslation();
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
   const [editionValue, setEditionValue] = useState<AddressValue>({
     postalCode: value?.postalCode,
     address: value?.address,

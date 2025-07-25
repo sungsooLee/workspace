@@ -25,7 +25,7 @@ const UserShuttleComponent = () => {
   const [option, setOption] = useState<any>();
   const [gridData, setGrideData] = useState<any[]>([]);
 
-  const { close } = useModal();
+  const { closeModal } = useModal();
   const searchConfig: SearchBoxConfig = {
     builders: [
       [
@@ -127,11 +127,11 @@ const UserShuttleComponent = () => {
   };
 
   const handleOnClose = () => {
-    close();
+    closeModal();
   };
   const handleOnConfirm = () => {
     if (!option) return;
-    close(option);
+    closeModal(option);
   };
 
   return (

@@ -57,7 +57,7 @@ const CompanyGroupPlatformComponent: FC<{}> = ({}) => {
       ],
     },
   ];
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
   const options = [
     { value: 'option1', label: '전체' },

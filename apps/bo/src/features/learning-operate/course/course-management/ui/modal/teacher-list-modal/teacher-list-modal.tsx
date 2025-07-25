@@ -26,7 +26,7 @@ export interface TeacherListModalProps {
 const TeacherListModalComponent = forwardRef<HTMLDivElement, TeacherListModalProps>(
   ({ channelId, ...props }, ref) => {
     const { t } = useTranslation();
-    const { close: closeModal } = useModal();
+    const { closeModal } = useModal();
     const { data: gridData }: any = getMockData();
     const [selectedRow, setSelectedRow] = useState();
     const columns = [{ header: t('강사명'), accessorKey: 'name' }];

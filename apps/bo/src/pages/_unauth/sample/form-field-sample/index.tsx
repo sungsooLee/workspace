@@ -35,7 +35,7 @@ export const Route = createFileRoute('/_unauth/sample/form-field-sample/')({
 });
 
 function RouteComponent() {
-  const { open: openModal, saveConfirm } = useModal();
+  const { openModal, saveConfirm } = useModal();
   const { provider, onSubmit, getValues, watch, onFormValid } = useDynamicForm2();
 
   // DropdownCodeGroup 필드 값 감시

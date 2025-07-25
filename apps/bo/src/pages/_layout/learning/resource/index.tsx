@@ -18,7 +18,7 @@ export const Route = createFileRoute('/_layout/learning/resource/')({
 function RouteComponent() {
   const router = useRouter();
   const { provider: searchProvider } = useSearchBox(searchConfig);
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
   // 등록 팝업 호출 여부
   const [displayContent, setDisplayContent] = useState(true);
 

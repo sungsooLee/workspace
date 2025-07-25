@@ -41,7 +41,7 @@ function RouteComponent() {
     learningResourceQueryOptions.getCurriculumsMapping(state?.contentUuid),
   );
 
-  const { open: openModal, alert: openAlert, confirm: openConfirm } = useModal();
+  const { openModal, alert: openAlert, confirm: openConfirm } = useModal();
 
   const openBlogPreviewPopup = useCallback(() => {
     openModal({
@@ -107,7 +107,7 @@ function RouteComponent() {
 
   const handleClickCourseButton = () => {
     router.navigate({
-      to: '/learning/course/create/view',
+      to: '/learning/course/create',
     });
   };
 

@@ -56,7 +56,7 @@ const EnrollmentCancelComponent = ({
   const router = useRouter();
   const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
   const [columns, setColumns] = useState() as any;
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
 
   _global.linkClickSequenceName = (payload: any) => {
     router.navigate({

@@ -16,7 +16,7 @@ export const Route = createFileRoute('/_auth/mpass-cert')({
 });
 
 function RouteComponent() {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
   const [selectedValue, setSelectedValue] = useState<string>('type1');
 
   const handleValueChange = (value: string) => {

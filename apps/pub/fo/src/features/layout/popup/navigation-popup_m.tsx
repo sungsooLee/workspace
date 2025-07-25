@@ -9,8 +9,8 @@ import { IcoHome03, IcoSetting01, IcoMybook, IcoReview } from '@learnway/icons';
 import styles from './navigate-modal.module.css';
 
 const NavigationPopupMComponent = () => {
-  const { open: openModal } = useModal();
-  const { close: closeModal } = useModal();
+  const { openModal } = useModal();
+  const { closeModal } = useModal();
   return (
     <ModalContainer>
       <ModalTitle> </ModalTitle>

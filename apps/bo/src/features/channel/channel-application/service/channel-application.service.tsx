@@ -16,7 +16,7 @@ export const getChannelUrl = (channelMainId: string) => {
  * @returns
  */
 export const useChannelApplication = () => {
-  const { open: openModal, confirm: openConfirm, alert } = useModal();
+  const { openModal, confirm: openConfirm, alert } = useModal();
 
   const { approve: approveRequestChannel } = useApproveRequestChannel({});
   const { reject: rejectRequestChannel } = useRejectRequestChannel({});

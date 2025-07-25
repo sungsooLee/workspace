@@ -41,7 +41,7 @@ const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(
     ref,
   ) => {
     const { t } = useTranslation();
-    const { close: closeModal } = useModal();
+    const { closeModal } = useModal();
     const [isProcessing, setIsProcessing] = useState(false);
 
     // description scroll check Start

@@ -71,7 +71,7 @@ const TenantDetailWidgetComponent: FC<any> = () => {
 
   const tenantId = routerState.location.state?.tenantId;
 
-  const { open: openModal, confirm: openConfirm } = useModal();
+  const { openModal, confirm: openConfirm } = useModal();
 
   const { provider, updateFormData, getValues, onFormChange } = useDynamicForm(formConfig());
 
@@ -455,41 +455,42 @@ const formConfig = (): DynamicFormConfig => ({
 //Column Helper 정의
 const columnHelper = createColumnHelper<any>();
 
-const columns = () => [
-  columnHelper.accessor('c1', {
-    id: 'c1',
-    cell: (prop: any) => {
-      return <strong>{prop.row.original.c1}</strong>;
-    },
-    header: '구분',
-    enableGrouping: false,
-    size: 50,
-    maxSize: 50,
-    minSize: 50,
-    meta: {
-      headerAlign: 'center',
-      cellAlign: 'left',
-    },
-  }),
-  columnHelper.accessor('c2', {
-    id: 'c2',
-    cell: (props: any) => {
-      console.log('props', props);
-      return (
-        <div className={cn(dataWrapStyles.wrap)}>
-          <Input value={props.row.original.componentId} disabled />
-          <span
-            className={dataWrapStyles.guide_text}
-          >{`가로*세로 ${new Intl.NumberFormat().format(props.row.original.width)}*${new Intl.NumberFormat().format(props.row.original.height)}`}</span>
-        </div>
-      );
-    },
-    header: '컴포넌트 ID',
-    enableGrouping: false,
-    size: 300,
-    meta: {
-      headerAlign: 'center', // 헤더 정렬
-      cellAlign: 'left', // 셀 정렬
-    },
-  }),
-] as ColumnDef<any, unknown>[];
+const columns = () =>
+  [
+    columnHelper.accessor('c1', {
+      id: 'c1',
+      cell: (prop: any) => {
+        return <strong>{prop.row.original.c1}</strong>;
+      },
+      header: '구분',
+      enableGrouping: false,
+      size: 50,
+      maxSize: 50,
+      minSize: 50,
+      meta: {
+        headerAlign: 'center',
+        cellAlign: 'left',
+      },
+    }),
+    columnHelper.accessor('c2', {
+      id: 'c2',
+      cell: (props: any) => {
+        console.log('props', props);
+        return (
+          <div className={cn(dataWrapStyles.wrap)}>
+            <Input value={props.row.original.componentId} disabled />
+            <span
+              className={dataWrapStyles.guide_text}
+            >{`가로*세로 ${new Intl.NumberFormat().format(props.row.original.width)}*${new Intl.NumberFormat().format(props.row.original.height)}`}</span>
+          </div>
+        );
+      },
+      header: '컴포넌트 ID',
+      enableGrouping: false,
+      size: 300,
+      meta: {
+        headerAlign: 'center', // 헤더 정렬
+        cellAlign: 'left', // 셀 정렬
+      },
+    }),
+  ] as ColumnDef<any, unknown>[];

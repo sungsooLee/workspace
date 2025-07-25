@@ -35,7 +35,7 @@ const columnHelper = createColumnHelper<any>();
 export const TranslationStatusPopup = (props: TranslationStatusPopupProps) => {
   const { getLanguageName } = useLanguageMap();
   const { keyType, multilingualId, multilingualKey, keyTypeName, baseLanguage } = props;
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
 
   const { data } = useTranslationStatus(multilingualId);
   const translations = data?.translations || [];

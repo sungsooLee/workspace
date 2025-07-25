@@ -34,7 +34,7 @@ interface TrainingPlaceDetailProps {
 
 const TrainingPlaceDetailComponent = (props: TrainingPlaceDetailProps, ref: any) => {
   const router = useRouter();
-  const { open: openModal, alert: openAlert, confirm: openConfirm, close: closeModal } = useModal();
+  const { openModal, alert: openAlert, confirm: openConfirm, closeModal } = useModal();
   const { open: openToast } = useToast();
   const [savedId, setSavedId] = useState(undefined);
   const { provider, updateFormData, onSubmit, onFormChange, getValues } =

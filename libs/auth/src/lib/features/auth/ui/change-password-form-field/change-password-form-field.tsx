@@ -26,7 +26,7 @@ function ChangePasswordFormFieldComponent({
 }: ChangePasswordFormFieldComponentProps) {
   const { t } = useTranslation();
 
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
   const { onChangeGuideText, ...restProps } = props;
 
   return (

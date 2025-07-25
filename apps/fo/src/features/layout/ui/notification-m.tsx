@@ -7,7 +7,7 @@ import { IcoBell02 } from '@learnway/icons';
 import styles from '@learnway/styles/fo/features/layout/ui/notification-m.module.css';
 
 const NotificationMComponent = () => {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
 
   return (
     <div className={`${styles.start} ${styles.alarm_info}`}>
@@ -17,7 +17,8 @@ const NotificationMComponent = () => {
             width: 'm_full',
             content: <NotificationPopupM />,
           })
-        }>
+        }
+      >
         <span className={styles.alarm_info}>
           <IcoBell02 width={24} height={24} stroke="#131C30" />
           <em className={styles.noti}></em>

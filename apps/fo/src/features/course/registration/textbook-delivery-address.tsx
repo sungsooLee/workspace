@@ -13,7 +13,7 @@ type Props = {
 };
 
 const TextbookDeliveryAddressComponent = ({ onAddressSearchResult }: Props) => {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
 
   const handleAddressSearchResult = async () => {
     const address: AddressSearchResult = await openModal({

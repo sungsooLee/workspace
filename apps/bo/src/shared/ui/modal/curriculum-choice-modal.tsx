@@ -34,7 +34,7 @@ export const CurriculumChoiceModal = ({
   languageCountryCode,
   curriculumName,
 }: Props) => {
-  const { close } = useModal();
+  const { closeModal } = useModal();
 
   const { getLanguageName } = useLanguageMap();
   const [selectedRow, setSelectedRow] = useState();
@@ -152,7 +152,7 @@ export const CurriculumChoiceModal = ({
 
   const handleOnConfirm = () => {
     if (!selectedRow) return;
-    close(selectedRow);
+    closeModal(selectedRow);
   };
 
   useEffect(() => {

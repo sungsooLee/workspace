@@ -28,7 +28,7 @@ const CompanyShuttleComponent = () => {
   const [option, setOption] = useState<any>();
   const [gridData, setGrideData] = useState<any[]>([]);
 
-  const { close } = useModal();
+  const { closeModal } = useModal();
 
   const queryClient = useQueryClient();
   const { provider: sProvider } = useSearchBox(searchConfig());
@@ -41,11 +41,11 @@ const CompanyShuttleComponent = () => {
   };
 
   const handleOnClose = () => {
-    close();
+    closeModal();
   };
   const handleOnConfirm = () => {
     if (!option) return;
-    close(option);
+    closeModal(option);
   };
 
   return (
@@ -84,7 +84,7 @@ const CompanyShuttleComponent = () => {
 
 export const CompanyShuttleModal = CompanyShuttleComponent;
 
-const searchConfig= (): SearchBoxConfig => ({
+const searchConfig = (): SearchBoxConfig => ({
   builders: [
     [
       {
@@ -120,32 +120,33 @@ const searchConfig= (): SearchBoxConfig => ({
 });
 
 const columnHelper = createColumnHelper<any>();
-const columns = () => [
-  columnHelper.accessor('companyType', {
-    id: 'companyType',
-    cell: (info) =>
-      t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.company.CompanyType.${info.getValue()}`),
-    header: t('그룹'),
-    size: 132,
-  }),
-  columnHelper.accessor('name', {
-    id: 'name',
-    cell: (info) => info.getValue(),
-    header: t('회사'),
-    size: 132,
-  }),
-  columnHelper.accessor('rpsntrName', {
-    id: 'rpsntrName',
-    cell: (info) => info.getValue(),
-    header: t('대표자'),
-    size: 132,
-  }),
+const columns = () =>
+  [
+    columnHelper.accessor('companyType', {
+      id: 'companyType',
+      cell: (info) =>
+        t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.company.CompanyType.${info.getValue()}`),
+      header: t('그룹'),
+      size: 132,
+    }),
+    columnHelper.accessor('name', {
+      id: 'name',
+      cell: (info) => info.getValue(),
+      header: t('회사'),
+      size: 132,
+    }),
+    columnHelper.accessor('rpsntrName', {
+      id: 'rpsntrName',
+      cell: (info) => info.getValue(),
+      header: t('대표자'),
+      size: 132,
+    }),
 
-  columnHelper.accessor('managerPhone', {
-    id: 'managerPhone',
-    cell: (info) => info.getValue(),
-    header: t('대표전화'),
-    size: 132,
-    enableGrouping: false,
-  }),
-] as ColumnDef<any, unknown>[];
+    columnHelper.accessor('managerPhone', {
+      id: 'managerPhone',
+      cell: (info) => info.getValue(),
+      header: t('대표전화'),
+      size: 132,
+      enableGrouping: false,
+    }),
+  ] as ColumnDef<any, unknown>[];

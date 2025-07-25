@@ -65,47 +65,16 @@ export const useVideoPlayer = ({
   const [subtitlesVisible, setSubtitlesVisible] = useState(false);
   const [playUrl, setPlayUrl] = useState<string>();
   const [videoQuality, setVideoQuality] = useState<any>(VideoQualities.auto);
-  const [autoQualityStepPos, setAutoQualityStepPos] = useState<number>(0);
   const [selectedSubtitle, setSelectedSubtitle] = useState<any>();
 
   //player 정보 전달을 위한 값
   const [isFirstLoad, setIsFirstLoad] = useState(true);
   const [videoStart, setVideoStart] = useState<number>(0);
 
-  const changeSubtitle = (subtitle: any) => {
-    //if (!videoSubtitles) return;
-    // subtitle 설정
-
-    setSelectedSubtitle(subtitle);
-
-    const video = playerRef.current?.getInternalPlayer() as HTMLVideoElement | null;
-
-    if (video && video.textTracks.length > 0) {
-      for (let i = 0; i < video.textTracks.length; i++) {
-        if (subtitlesVisible) {
-          video.textTracks[i].mode =
-            video.textTracks[i].language === subtitle.srcLang ? 'showing' : 'hidden';
-        } else {
-          video.textTracks[i].mode = 'hidden';
-        }
-      }
-    }
-
-    // const subItem = videoSubtitles.find((item: any) => {
-    //   return item.srcLang === langCode;
-    // });
-    // if (subItem) {
-    //   config.file.tracks = [subItem];
-    //   setVideoConfig(config);
-    //   setSelectedSubtitle(subItem);
-    // }
-  };
-
-  const resetReactPlayerConfig = (tracks: any[]) => {
-    if (!tracks) return;
-    console.log('11111111111111111', tracks);
+  const resetReactPlayerConfig = (subtitles: any[]) => {
+    if (!subtitles) return;
     let nowSubtitle;
-
+    const tracks = JSON.parse(JSON.stringify(subtitles));
     if (langCode) {
       nowSubtitle = tracks.find((item: any) => {
         return item.srcLang === langCode;
@@ -127,8 +96,10 @@ export const useVideoPlayer = ({
     changeSubtitle(nowSubtitle);
   };
 
+  /**
+   * 비디오 정보를 받아 자막 정보와 품질 정보 처리
+   */
   useEffect(() => {
-    console.log('333333333333333', videoInfo);
     if (videoInfo) {
       if (videoInfo.videoSubtitles && videoInfo.videoSubtitles.length > 0) {
         const tracks: any[] = [];
@@ -166,7 +137,33 @@ export const useVideoPlayer = ({
     setIsFirstLoad(true);
   }, [videoInfo]);
 
-  // 재생 속도 설정 함수
+  /**
+   * 자막 언어 변경
+   * @param subtitle
+   */
+  const changeSubtitle = (subtitle: any) => {
+    //if (!videoSubtitles) return;
+    // subtitle 설정
+
+    setSelectedSubtitle(subtitle);
+
+    const video = playerRef.current?.getInternalPlayer() as HTMLVideoElement | null;
+
+    if (video && video.textTracks.length > 0) {
+      for (let i = 0; i < video.textTracks.length; i++) {
+        if (subtitlesVisible) {
+          video.textTracks[i].mode =
+            video.textTracks[i].language === subtitle.srcLang ? 'showing' : 'hidden';
+        } else {
+          video.textTracks[i].mode = 'hidden';
+        }
+      }
+    }
+  };
+
+  /**
+   *  재생 속도 설정 함수
+   */
   const changePlaybackRate = (rate: number) => {
     setPlaybackRate(rate);
     const internalPlayer = playerRef.current?.getInternalPlayer() as HTMLVideoElement | null;
@@ -175,7 +172,9 @@ export const useVideoPlayer = ({
     }
   };
 
-  // 전체화면 토글 함수
+  /**
+   * 전체화면 토글 함수
+   */
   const toggleFullscreen = () => {
     const elem = playerContainerRef.current;
 
@@ -205,9 +204,13 @@ export const useVideoPlayer = ({
       setIsFullscreen(false);
     }
   };
+
+  /**
+   * 자막 토글 처리
+   * 현재 선택된 언어가 노출 되도록 함.
+   */
   const toggleSubtitles = () => {
     const video = playerRef.current?.getInternalPlayer() as HTMLVideoElement | null;
-    console.log('99999999999', video?.textTracks);
     if (video && video.textTracks.length > 0) {
       console.log('tracks', video.textTracks);
       for (let i = 0; i < video.textTracks.length; i++) {
@@ -222,7 +225,12 @@ export const useVideoPlayer = ({
     }
   };
 
-  // 🎬 시간 변환 함수
+  /**
+   * 화면 출력을 위한 시간 변환
+   * 🎬 시간 변환 함수
+   * @param seconds
+   * @returns
+   */
   const formatTime = (seconds: number) => {
     const m = Math.floor(seconds / 60)
       .toString()
@@ -233,13 +241,21 @@ export const useVideoPlayer = ({
     return `${m}:${s}`;
   };
 
+  /**
+   * 초 값으로 비디오 진행 변경
+   * @param progress
+   */
   const setSeconds = (progress: number) => {
     const current = playerRef.current;
     if (current) {
       current.seekTo(progress, 'seconds');
     }
   };
-  // ⏮ 10초 되감기
+
+  /**
+   * ⏮ 10초 되감기
+   * @deprecated 기획내용에서 빠짐
+   */
   const handleRewind = () => {
     const current = playerRef.current;
     if (current) {
@@ -248,7 +264,10 @@ export const useVideoPlayer = ({
     }
   };
 
-  // ⏭ 10초 앞으로
+  /**
+   * ⏭ 10초 앞으로
+   * @deprecated 기획내용에서 빠짐
+   */
   const handleForward = () => {
     const current = playerRef.current;
     if (current) {
@@ -257,72 +276,34 @@ export const useVideoPlayer = ({
     }
   };
 
-  // ▶️ / ⏸️ 토글
+  /**
+   * 재생 중지 토글 (▶️ / ⏸️ 토글)
+   */
   const togglePlay = () => {
     setPlaying((prev) => !prev);
   };
 
-  // 🔁 재생 위치 동기화
-  const onProgress = (state: { played: number; playedSeconds: number }) => {
-    setPlayed(state.played);
-    setCurrentTime(state.playedSeconds);
-    //updateSubtitles(state.playedSeconds);
-    onProgressCallback &&
-      onProgressCallback({
-        ...state,
-        playedSeconds: Math.floor(state.playedSeconds),
-        speed: playbackRate,
-      });
-  };
-  const onBuffer = () => {
-    let pos = autoQualityStepPos + 1;
-    if (pos >= qualitesAutoStep.length) return;
-    do {
-      if (!encodedVideos) return;
-      const video = getHeightValueEncodedVideo(encodedVideos, qualitesAutoStep[pos].height);
-      if (video) {
-        setPlayUrl(video.m3u8Url);
-        setAutoQualityStepPos(pos);
-        return;
-      }
-      pos++;
-    } while (pos < qualitesAutoStep.length);
-    // 종료 처리
-    setAutoQualityStepPos(pos);
-  };
-
-  // 🧭 총 재생시간 설정
-  const onDuration = (d: number) => {
-    setDuration(d);
-  };
-
-  const onReady = (param: any) => {
-    console.log('onReady', param);
-
-    if (!isFirstLoad) {
-      setSeconds(currentTime);
-      if (videoSubtitles && videoSubtitles.length > 0) resetReactPlayerConfig(videoSubtitles);
-      return;
-    }
-    if (videoInfo) {
-      if (videoInfo.lastVideoEndTime) {
-        setCurrentTime(videoInfo.lastVideoEndTime);
-        setSeconds(videoInfo.lastVideoEndTime);
-        setVideoStart(videoInfo.lastVideoEndTime);
-      }
-    }
-    setIsFirstLoad(false);
-  };
-
+  /**
+   * 음소거 토글
+   */
   const toggleMute = () => {
     setMuted((prev) => !prev);
   };
 
+  /**
+   * 비디오 음량 변경
+   * @param e
+   */
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setVolume(parseFloat(e.target.value));
     setMuted(false);
   };
 
+  /**
+   * 비디오 출력 위치 변경
+   * @param e
+   * @returns
+   */
   const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!playerRef.current) return;
 
@@ -337,6 +318,11 @@ export const useVideoPlayer = ({
     playerRef.current.seekTo(percentage, 'fraction');
   };
 
+  /**
+   * 비디오 품질 변경
+   * @param v
+   * @returns
+   */
   const changeQuality = (v: any) => {
     if (!encodedVideos) return;
     const selectedHeight = v.height;
@@ -344,14 +330,12 @@ export const useVideoPlayer = ({
 
     if (data) {
       if (videoSubtitles) {
-        console.log('32433242432');
         resetReactPlayerConfig(videoSubtitles);
       }
       setPlayUrl(data.m3u8Url);
       setVideoQuality(v);
     } else if (v.label === VideoQualities.auto.label) {
       if (videoSubtitles) {
-        console.log('3337434734111111111111111');
         resetReactPlayerConfig(videoSubtitles);
       }
       setPlayUrl(videoInfo.masterVideo);
@@ -364,6 +348,75 @@ export const useVideoPlayer = ({
   };
   const handleGoNextLesson = () => {
     gotoNextLesson?.();
+  };
+
+  /**
+   * 🔁 재생 위치 동기화
+   * onProgress callback 함수
+   * @param state
+   */
+  const onProgress = (state: { played: number; playedSeconds: number }) => {
+    setPlayed(state.played);
+    setCurrentTime(state.playedSeconds);
+    onProgressCallback &&
+      onProgressCallback({
+        ...state,
+        playedSeconds: Math.floor(state.playedSeconds),
+        speed: playbackRate,
+      });
+  };
+
+  /**
+   * onBuffer callback 함수
+   */
+  const onBuffer = () => {
+    console.log('on Buffer');
+    // let pos = autoQualityStepPos + 1;
+    // if (pos >= qualitesAutoStep.length) return;
+    // do {
+    //   if (!encodedVideos) return;
+    //   const video = getHeightValueEncodedVideo(encodedVideos, qualitesAutoStep[pos].height);
+    //   if (video) {
+    //     setPlayUrl(video.m3u8Url);
+    //     setAutoQualityStepPos(pos);
+    //     return;
+    //   }
+    //   pos++;
+    // } while (pos < qualitesAutoStep.length);
+    // // 종료 처리
+    // setAutoQualityStepPos(pos);
+  };
+
+  /**
+   * 🧭 총 재생시간 설정
+   * onDuration callback 함수
+   * @param d
+   */
+  const onDuration = (d: number) => {
+    setDuration(d);
+  };
+
+  /**
+   * 비디오 출력 준비 완료 : url 변경시 호출 됨
+   * onReady callback
+   * @param param
+   * @returns
+   */
+  const onReady = (param: any) => {
+    console.log('onReady', param);
+    if (!isFirstLoad) {
+      setSeconds(currentTime);
+      if (videoSubtitles && videoSubtitles.length > 0) resetReactPlayerConfig(videoSubtitles);
+      return;
+    }
+    if (videoInfo) {
+      if (videoInfo.lastVideoEndTime) {
+        setCurrentTime(videoInfo.lastVideoEndTime);
+        setSeconds(videoInfo.lastVideoEndTime);
+        setVideoStart(videoInfo.lastVideoEndTime);
+      }
+    }
+    setIsFirstLoad(false);
   };
 
   return {

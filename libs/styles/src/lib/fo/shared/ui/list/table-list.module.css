@@ -3,10 +3,7 @@
   &.table_list {
     @apply w-full border-t border-solid border-[var(--gray7)];
     .row {
-      @apply flex justify-between pt-[0];
-      + .row {
-        @apply mt-[8px] pt-[8px];
-      }
+      @apply flex justify-between py-[4px];
       &.col {
         @apply flex-col pt-[16px];
 
@@ -17,20 +14,20 @@
     }
 
     .dt {
-      @apply body_3_r shrink-0 basis-[70%] overflow-hidden text-ellipsis whitespace-nowrap pr-[20px] text-[var(--gray9)];
+      @apply shrink-0 basis-[70%] overflow-hidden text-ellipsis whitespace-nowrap pr-[20px];
       + .dd {
         @apply flex items-center whitespace-pre text-right text-[var(--gray7)];
       }
     }
     .dt,
     .dd {
-      @apply body_3_r;
+      @apply title2 text-[var(--gray50)];
     }
     .tit {
-      @apply body_3_b mb-[8px] block text-[1.4rem] text-[var(--gray9)];
+      @apply title2 mb-[4px] block py-[4px] leading-[20px] text-[var(--gray10)];
     }
     .list_row {
-      @apply border-b border-solid border-[var(--gray3)] py-[16px];
+      @apply border-t border-solid border-[var(--gray75)] py-[8px];
     }
   }
 }

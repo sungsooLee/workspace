@@ -9,7 +9,7 @@ import '@learnway/styles/fo/features/layout/m.ui/navigate-button/navigate-button
 
 const NavigationMComponent = () => {
   // modal
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
 
   return (
     <div className={`${styles.start} ${styles.menu}`}>

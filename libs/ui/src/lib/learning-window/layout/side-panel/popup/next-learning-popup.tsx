@@ -12,7 +12,7 @@ import {
 import { IcoRefresh02, IcoPrevNext } from '@learnway/icons';
 
 const NextLearningPopupComponent: FC<any> = ({ isNext }) => {
-  const { open: openModal, close: closeModal } = useModal();
+  const { closeModal } = useModal();
   const { playIndex, playList, gotoNextLesson, gotoBeforeLesson } = useLearningWindow();
   const addValue = isNext ? 1 : -1;
   const hanldeNextButtonClick = () => {

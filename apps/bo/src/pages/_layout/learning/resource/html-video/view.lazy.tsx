@@ -48,7 +48,7 @@ function RouteComponent() {
   // draft: 임시저장 상태 / complete: 한 번이라도 저장 버튼을 눌러 저장한 상태
   const [mode, setMode] = useState<'draft' | 'complete'>('draft');
 
-  const { open: openModal, confirm: openConfirm } = useModal();
+  const { openModal, confirm: openConfirm } = useModal();
 
   const handleClickCourseMapping = useCallback(async () => {
     if (!state?.contentUuid) {
@@ -106,7 +106,7 @@ function RouteComponent() {
 
   const handleClickCourseButton = useCallback(() => {
     router.navigate({
-      to: '/learning/course/create/view',
+      to: '/learning/course/create',
     });
   }, []);
 

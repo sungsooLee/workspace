@@ -27,7 +27,7 @@ export const Route = createFileRoute('/_layout/course-registration/course-regist
 });
 
 function RouteComponent() {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
 
   const gender = [
     { label: '상관없음', value: 'value1' },

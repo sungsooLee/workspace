@@ -1,19 +1,9 @@
-import {
-  ContentsRow,
-  Input,
-  ModalBody,
-  ModalContainer,
-  ModalTitle,
-  Textarea,
-  useModal,
-} from '@learnway/ui';
-import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
+import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
+import { ContentsRow, Input, ModalBody, ModalContainer, ModalTitle, Textarea } from '@learnway/ui';
 import { useFetchProgram } from '../../../../../entities/program/service/program-manage.hook';
 
 const ApiInfoModalComponent = ({ apiId }: any) => {
-  const { close } = useModal();
-
   const { data } = useFetchProgram(apiId);
   console.log(data);
   return (

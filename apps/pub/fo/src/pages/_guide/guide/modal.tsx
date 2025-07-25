@@ -3,7 +3,7 @@ import { isMobile } from 'react-device-detect';
 import { Button, ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui';
 
 const ContentModal = () => {
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
   return (
     <ModalContainer>
       <ModalTitle>{'타이틀'}</ModalTitle>
@@ -62,7 +62,7 @@ export const Route = createFileRoute('/_guide/guide/modal')({
 });
 
 function RouteComponent() {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
   return (
     <div className="content">
       <h2 className="guide_tit2">Modal Component Guide</h2>
@@ -77,7 +77,7 @@ function RouteComponent() {
             {`// 초기 import
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, ModalDescription, useModal  } from '@learnway/ui';
 // Modal open, close
-const { open: openModal,  close: closeModal } = useModal();
+const { openModal,  closeModal } = useModal();
 
 <ModalContainer>
   <ModalTitle>{'타이틀'}</ModalTitle>
@@ -122,7 +122,7 @@ openModal({
             <code>{`
 import { Button, useModal } from '@learnway/ui';
 const CustomFooter = () => {
-    const { close: closeModal } = useModal();
+    const { closeModal } = useModal();
     return (
       <>
         <Button variant="gray" size="lg" onClick={() => closeModal()}>
@@ -163,7 +163,7 @@ onClick={() =>
         <div className="code_example">
           <pre className="code_block">
             <code>{`const CustomFooter = () => {
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
   return (
     <>   
     // 예시
@@ -220,8 +220,8 @@ export const MpassPopup = memo(MpassPopupCompoment);
 import { Button, useModal } from '@learnway/ui';
 
 // 호출
-const { open: openModal } = useModal();
-const { close: closeModal } = useModal();
+const { openModal } = useModal();
+const { closeModal } = useModal();
 
 <Button
   onClick={() => {
@@ -247,7 +247,7 @@ import { useEffect } from 'react';
 import { Button, useModal } from '@learnway/ui';
 
 // 호출
-const { open: openModal, close: closeModal } = useModal();
+const { openModal, closeModal } = useModal();
 
 // 자동모달 띄우기
 useEffect(() => {
@@ -280,7 +280,7 @@ useEffect(() => {
       <div className="code_example">
         <pre className="code_block">
           <code>{`const CustomFooter = () => {
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
   return (
     <>   
     // 예시

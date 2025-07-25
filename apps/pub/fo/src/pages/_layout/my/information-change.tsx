@@ -17,7 +17,7 @@ export const Route = createFileRoute('/_layout/my/information-change')({
 });
 
 function RouteComponent() {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
 
   return (
     <div className={myPageContainerStyles.start}>

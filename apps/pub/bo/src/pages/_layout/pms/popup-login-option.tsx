@@ -28,7 +28,7 @@ export const Route = createFileRoute('/_layout/pms/popup-login-option')({
 });
 
 function RouteComponent() {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
 
   useEffect(() => {
     openModal({
@@ -40,7 +40,7 @@ function RouteComponent() {
 }
 
 const Contents = () => {
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
   const columnHelper = createColumnHelper<any>();
   const [selectedValues, setSelectedValues] = useState<null>(null);
   const options = [

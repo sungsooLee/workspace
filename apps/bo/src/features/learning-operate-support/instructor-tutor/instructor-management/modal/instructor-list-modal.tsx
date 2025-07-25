@@ -8,7 +8,7 @@ import { useState } from 'react';
  * 화면 번호 NLP_BO_LMS0014 : 강사/튜터 선택(팝업)
  */
 const InstructorListModal = () => {
-  const { close: closeModal, alert: openAlert } = useModal();
+  const { closeModal, alert: openAlert } = useModal();
   const [selectedItem, setSelectedItem] = useState<any>(null);
 
   const handleOnSubmit = async () => {

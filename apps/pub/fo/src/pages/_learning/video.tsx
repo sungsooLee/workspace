@@ -21,7 +21,7 @@ export const Route = createFileRoute('/_learning/video')({
 });
 
 function RouteComponent() {
-  const { alert: openAlert, open: openModal } = useModal();
+  const { alert: openAlert, openModal } = useModal();
 
   // 완료 alert
   const handleCompleteAlert = () => {
@@ -98,14 +98,61 @@ function RouteComponent() {
   const player = useVideoPlayer({ onProgressCallback: handleOnProgress });
 
   useEffect(() => {
-    console.log('videoInfo', videoInfo);
+    const video = {
+      contentUuid: 'd8e6f50c-abec-470e-93c1-ac0695c259d2',
+      contentName: '김석태  0724 - ttimes01',
+      masterVideo: '/upload/content/video/2025/5/3/master.m3u8',
+      encodedVideos: [
+        {
+          contentUuid: 'd8e6f50c-abec-470e-93c1-ac0695c259d2',
+          m3u8Url: '/upload/content/video/2025/5/3/720/playlist.m3u8',
+          height: 720,
+          width: 1280,
+          filePath: 'upload/content/video/2025/5/3/720/playlist.m3u8',
+        },
+        {
+          contentUuid: 'd8e6f50c-abec-470e-93c1-ac0695c259d2',
+          m3u8Url: '/upload/content/video/2025/5/3/master.m3u8',
+          height: 0,
+          width: 0,
+          filePath: 'upload/content/video/2025/5/3/master.m3u8',
+        },
+        {
+          contentUuid: 'd8e6f50c-abec-470e-93c1-ac0695c259d2',
+          m3u8Url: '/upload/content/video/2025/5/3/1080/playlist.m3u8',
+          height: 1080,
+          width: 1920,
+          filePath: 'upload/content/video/2025/5/3/1080/playlist.m3u8',
+        },
+        {
+          contentUuid: 'd8e6f50c-abec-470e-93c1-ac0695c259d2',
+          m3u8Url: '/upload/content/video/2025/5/3/360/playlist.m3u8',
+          height: 360,
+          width: 540,
+          filePath: 'upload/content/video/2025/5/3/360/playlist.m3u8',
+        },
+      ],
+      videoDuration: 1032,
+      lastVideoEndTime: 42,
+      progress: 4,
+      languageCountryCode: 'KO',
+      encodedAudios: [
+        {
+          contentUuid: 'd8e6f50c-abec-470e-93c1-ac0695c259d2',
+          fileUrl: '/upload/content/video/2025/5/3/audio/audio_2x.mp3',
+          filePath: 'upload/content/video/2025/5/3/audio/audio_2x.mp3',
+        },
+        {
+          contentUuid: 'd8e6f50c-abec-470e-93c1-ac0695c259d2',
+          fileUrl: '/upload/content/video/2025/5/3/audio/audio_1x.mp3',
+          filePath: 'upload/content/video/2025/5/3/audio/audio_1x.mp3',
+        },
+      ],
+    };
     setTimeout(() => {
-      player.togglePlay();
-      player.setSeconds(videoInfo.lastVideoEndTime);
-      setVideoStart(videoInfo.lastVideoEndTime);
-    }, 500);
-  }, [videoInfo]);
-  useEffect(() => {
+      console.log('11111111111111111');
+      player.setVideoInfo(video);
+    }, 1000);
     console.log('end video');
     return () => {
       handleVideoEnd();
@@ -129,21 +176,12 @@ function RouteComponent() {
                 onProgress={player.onProgress}
                 onDuration={player.onDuration}
                 onEnded={handleVideoEnd}
+                onReady={player.onReady}
                 onBuffer={player.onBuffer}
-                url={video}
+                config={player.videoConfig}
+                url={player.playUrl}
               />
             </VideoPlayerContainer>
-            {/* 퍼블 임시 확인 */}
-            <Button
-              onClick={() =>
-                openModal({
-                  width: 'm_bottom_sheet',
-                  content: <VideoSubsettingPopup />,
-                })
-              }
-            >
-              팝업 예시
-            </Button>
           </div>
         </div>
       </div>

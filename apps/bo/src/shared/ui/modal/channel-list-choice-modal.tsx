@@ -22,7 +22,7 @@ type Props = {
 };
 
 const ChannelListModalComponent = ({ roleId = '' }: Props) => {
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
 
   const searchConfig: SearchBoxConfig = {
     builders: [

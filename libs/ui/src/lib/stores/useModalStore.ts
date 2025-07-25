@@ -4,21 +4,21 @@ import { last } from 'lodash';
 
 interface ModalStore {
   modals: ModalConfig[]; // modal stack
-  open: (config: ModalConfig) => void;
-  close: (data?: any) => void;
-  closeAll: () => void;
+  openModal: (config: ModalConfig) => void;
+  closeModal: (data?: any) => void;
+  closeAllModal: () => void;
   activeModal: () => ModalConfig | undefined;
   getModal: (id: string) => ModalConfig | undefined;
 }
 
 export const useModalStore = create<ModalStore>((set, get) => ({
   modals: [],
-  open: (config: ModalConfig) => {
+  openModal: (config: ModalConfig) => {
     set((state) => ({
       modals: [...state.modals, config],
     }));
   },
-  close: (data?: any) => {
+  closeModal: (data?: any) => {
     const modal = get().modals?.at(-1); // 마지막 모달 (현재 떠있는 모달)
 
     modal?.onClose?.(data);
@@ -30,7 +30,7 @@ export const useModalStore = create<ModalStore>((set, get) => ({
   activeModal: () => {
     return last(get().modals);
   },
-  closeAll: () => set({ modals: [] }),
+  closeAllModal: () => set({ modals: [] }),
   getModal: (id: string) => {
     return get().modals?.find((d: ModalConfig) => d.id === id); // 마지막 모달 (현재 떠있는 모달)
   },

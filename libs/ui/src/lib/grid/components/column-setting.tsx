@@ -91,7 +91,7 @@ function ColumnSettingsContent<T extends object>({
   table: Table<T>;
   onApply: (settings: ColumnSetting[]) => void;
 }) {
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
   const leafColumns = table.getAllLeafColumns().filter((col) => col.id !== 'select'); //체크박스 컬럼 제외
   const { t } = useTranslation();
   console.log(leafColumns);
@@ -191,7 +191,8 @@ function ColumnSettingsContent<T extends object>({
                   <SortableItem key={columnId} id={columnId}>
                     <div
                       className="flex flex-1 items-center gap-2"
-                      onClick={(e) => e.stopPropagation()}>
+                      onClick={(e) => e.stopPropagation()}
+                    >
                       <Checkbox
                         id={columnId}
                         size="md"
@@ -228,7 +229,7 @@ function ColumnSettings<T extends object>({
   onColumnChange,
   table,
 }: ColumnSettingsProps<T>): JSX.Element {
-  const { open } = useModal();
+  const { openModal } = useModal();
 
   const handleOpenSettings = () => {
     const handleApply =
@@ -237,10 +238,10 @@ function ColumnSettings<T extends object>({
         return;
       });
 
-    open({
+    openModal(() => ({
       content: <ColumnSettingsContent<T> onApply={handleApply} table={table} />,
       width: 'md',
-    });
+    }));
   };
 
   return (

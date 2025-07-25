@@ -63,7 +63,7 @@ export function CourseDetail() {
   const { data: courseData } = useCourseFullDetail(courseId || 1);
   console.log('@', courseId, courseData);
 
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
   const { confirm: openConfirm } = useModal();
   const { alert: openAlert } = useModal();
 

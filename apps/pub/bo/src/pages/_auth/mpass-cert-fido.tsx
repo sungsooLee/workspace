@@ -21,7 +21,7 @@ export const Route = createFileRoute('/_auth/mpass-cert-fido')({
 });
 
 function RouteComponent() {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
 
   return (
     <form className="form_row">

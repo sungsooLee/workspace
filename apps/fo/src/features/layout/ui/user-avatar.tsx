@@ -10,7 +10,7 @@ import fallbackStyles from '@learnway/styles/fo/features/layout/ui/fallback.modu
 const PopoverContent = () => {
   // 퍼블수정 20250324 : alert -> confirm 으로 변경
   const { confirm: openConfirm } = useModal();
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
   const [hasAvataImage] = useState<boolean>(true); // 아바타 이미지 없는 경우(true/false)
 
   const handleClickAlert1 = () => {

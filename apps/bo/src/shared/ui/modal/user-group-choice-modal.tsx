@@ -100,7 +100,7 @@ const UserGroupModalComponent = ({ groups }: Pick<BlackwhiteUsersParam, 'groups'
     data: [],
   };
 
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
   const { provider: sProvider, getValues, setOptions, setValue } = useSearchBox(searchConfig);
   const { config, gridFetch } = useGridBox(gridConfig, getValues);
   const queryClient = useQueryClient();

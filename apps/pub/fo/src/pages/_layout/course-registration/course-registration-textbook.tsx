@@ -18,7 +18,7 @@ export const Route = createFileRoute('/_layout/course-registration/course-regist
 });
 
 function RouteComponent() {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
 
   return (
     <div className={`${styles.start} ${styles.course}`}>

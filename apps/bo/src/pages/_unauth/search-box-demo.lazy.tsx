@@ -70,7 +70,7 @@ const channel = {
 };
 
 function RouteComponent() {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
 
   const searchConfig: any = {
     builders: [

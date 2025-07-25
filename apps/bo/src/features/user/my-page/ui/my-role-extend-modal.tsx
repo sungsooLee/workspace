@@ -33,7 +33,7 @@ const MyRoleExtendModalComponent: FC<{
   data: any;
   callback?: () => void;
 }> = ({ type, data, callback }: { type: MyRoleModal; data: any; callback?: () => void }) => {
-  const { close: closeModal, alert: openAlert, showSaveComplete, closeAll } = useModal();
+  const { closeModal, alert: openAlert, showSaveComplete, closeAllModal } = useModal();
 
   const { t: useTranslationT } = useTranslation();
   const formConfig = FormConfig(useTranslationT);
@@ -122,7 +122,7 @@ const MyRoleExtendModalComponent: FC<{
           callback?.();
           showSaveComplete({
             onClose: () => {
-              closeAll();
+              closeAllModal();
             },
           });
         },

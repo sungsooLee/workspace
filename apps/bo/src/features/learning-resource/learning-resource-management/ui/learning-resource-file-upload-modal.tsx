@@ -51,7 +51,7 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({
   type,
   maxFileCount = 100,
 }) => {
-  const { close } = useModal();
+  const { closeModal } = useModal();
   const { stats, files, addFiles, onPause, onRetry, onResume, onRemove, inputAccept } =
     useS3Uploader({
       s3Path: S3_PATH['upload/content/original'],
@@ -73,9 +73,9 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({
 
   const onConfirm = useCallback(async () => {
     if (maxFileCount === 1) {
-      close(map(files, 'fileUuid')[0]);
+      closeModal(map(files, 'fileUuid')[0]);
     } else {
-      close(map(files, 'fileUuid'));
+      closeModal(map(files, 'fileUuid'));
     }
   }, [files]);
 
@@ -124,7 +124,7 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({
         </div>
       </ModalBody>
       <ModalFooter>
-        <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => close()} />
+        <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
         <Button
           label={'확인'}
           variant={'primary'}

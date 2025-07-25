@@ -52,7 +52,7 @@ const ChannelBasicInfoComponent: FC<{}> = ({}) => {
     },
   ];
   const ModalUseableSearchContent = () => {
-    const { close: closeModal } = useModal();
+    const { closeModal } = useModal();
 
     return (
       <ModalContainer>

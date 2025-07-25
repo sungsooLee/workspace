@@ -49,7 +49,7 @@ const filter5 = [
 
 // 퍼블수정 20250314 modal 컴포넌트 수정으로 전체적 수정
 const FilterPopupComponent = () => {
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
 
   // 퍼블수정 20250331 : option card 컴포넌트 수정 value 값 추가
   const [filterValue, setFilterValue] = useState<string[]>();

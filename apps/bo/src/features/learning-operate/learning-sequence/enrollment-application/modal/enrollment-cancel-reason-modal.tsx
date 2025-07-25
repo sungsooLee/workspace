@@ -1,17 +1,15 @@
-import React, { FC, useEffect } from 'react';
-import { t } from 'i18next';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import {
+  ContentsRow,
   ModalBody,
   ModalContainer,
-  ModalFooter,
   ModalTitle,
-  useModal,
-  Button,
-  ContentsRow,
   TextareaFormField,
+  useModal,
 } from '@learnway/ui';
-import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
 import { FormRow } from '@shared/ui';
+import { t } from 'i18next';
+import { FC, useEffect } from 'react';
 
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 
@@ -22,14 +20,14 @@ export interface EnrollmentCancelReasonModalComponent {
 const EnrollmentCancelReasonModalComponent: FC<any> = ({
   reason: reasonProps,
 }: EnrollmentCancelReasonModalComponent) => {
-  const { close } = useModal();
+  const { closeModal } = useModal();
   const { provider, onSubmit, updateFormData } = useDynamicForm(formConfig);
 
   useEffect(() => {
     updateFormData({ reason: reasonProps });
   }, []);
   const handleOnSubmit = (node: any) => {
-    close(node);
+    closeModal(node);
   };
   return (
     <form className="form_row" onSubmit={onSubmit(handleOnSubmit)}>
