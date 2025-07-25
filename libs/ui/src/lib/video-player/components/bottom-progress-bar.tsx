@@ -17,17 +17,17 @@ import SettingsPopover from './settings-popover';
 
 import styles from './bottom-progress-bar.module.css';
 import { useModal } from '../../modal/modal.hook';
-import { VideoSubsettingPopup } from './video-subsetting-popup';
+import { VideoSettingModal } from './video-setting-modal';
 
 const BottomProgressBar = (props: VideoPlayerContainerProps) => {
   const { alert: openAlert, openModal } = useModal();
   const [showSettings, setShowSettings] = useState(false);
 
-  const toggleSettings = () => {
+  const toggleSettings = async () => {
     if (isMobile) {
       openModal({
         width: 'm_bottom_sheet',
-        content: <VideoSubsettingPopup />,
+        content: <VideoSettingModal {...props} />,
       });
     } else {
       setShowSettings((prev) => !prev);

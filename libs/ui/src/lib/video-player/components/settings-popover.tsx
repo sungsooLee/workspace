@@ -3,7 +3,7 @@ import { IcoChevronLeft, IcoCheck } from '@learnway/icons';
 import { VideoPlayerContainerProps } from '../types';
 
 import styles from './settings-popover.module.css';
-import { getHeightValueEncodedVideo, VideoQualities } from '../hooks/video-player.hook';
+import { getHeightValueEncodedVideo, VideoQualities, VideoSpeed } from '../hooks/video-player.hook';
 
 const MENU = {
   ROOT: 'root',
@@ -33,14 +33,13 @@ const SettingsPopover = (props: VideoPlayerContainerProps) => {
       case MENU.SPEED:
         return (
           <SubMenu title="재생속도" badge="9-2" onBack={() => setActiveMenu(MENU.ROOT)}>
-            {['0.25x', '0.5x', '0.75x', '1x', '1.25x', '1.5x', '1.75x', '2x'].map((v) => (
+            {VideoSpeed.map((v) => (
               <MenuItem
-                key={v}
-                label={v}
-                active={selected.speed === v}
+                key={v.label}
+                label={v.label}
+                active={props.playbackRate === v.value}
                 onClick={() => {
-                  props.changePlaybackRate(parseFloat(v.replace('x', '')));
-                  handleSelect('speed', v);
+                  props.changePlaybackRate(v.value);
                 }}
               />
             ))}
@@ -107,7 +106,7 @@ const SettingsPopover = (props: VideoPlayerContainerProps) => {
             <div className={styles.option}>
               <MenuItem
                 label="재생속도"
-                value={selected.speed}
+                value={VideoSpeed.find((item) => item.value === props.playbackRate)?.label}
                 onClick={() => setActiveMenu(MENU.SPEED)}
               />
               {props.encodedVideos && (

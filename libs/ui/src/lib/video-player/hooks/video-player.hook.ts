@@ -17,6 +17,16 @@ export const VideoQualities = {
   middle: { label: '720P', height: 720 },
   low: { label: '360P', height: 360 },
 };
+export const VideoSpeed = [
+  { label: '0.25x', value: 0.25 },
+  { label: '0.5x', value: 0.5 },
+  { label: '0.75x', value: 0.75 },
+  { label: '1x', value: 1 },
+  { label: '1.25x', value: 1.25 },
+  { label: '1.5x', value: 1.5 },
+  { label: '1.75x', value: 1.75 },
+  { label: '2x', value: 2 },
+];
 const qualitesAutoStep = [VideoQualities.high, VideoQualities.middle, VideoQualities.low];
 
 const rightHeight = (item: any) => {
@@ -438,6 +448,7 @@ export const useVideoPlayer = ({
     selectedSubtitle,
     changeSubtitle,
 
+    playbackRate,
     videoConfig,
     videoSubtitles,
     encodedVideos,

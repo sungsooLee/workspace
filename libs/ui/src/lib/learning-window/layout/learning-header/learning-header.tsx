@@ -24,7 +24,7 @@ function LearningHeaderComponent() {
         {/* 퍼블수정 20250716 : 마크업 수정 */}
         {isMobile ? (
           <div className={styles.header_info}>
-            <Button>
+            <Button onClick={handleBackButtonClick}>
               <IcoArrowBackward width={24} height={24} stroke="#131416" />
             </Button>
             <div className={styles.tit_box}>
@@ -36,7 +36,7 @@ function LearningHeaderComponent() {
         ) : (
           // 퍼블수정 20250722 pc header 전체 수정
           <div className={styles.header_info}>
-            <Button className={styles.btn_back}>
+            <Button className={styles.btn_back} onClick={handleBackButtonClick}>
               <img src={logo} alt="" />
             </Button>
             <div className={styles.tit_box}>
