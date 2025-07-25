@@ -1360,7 +1360,7 @@ export const guideData = [
     pageId: 'course-introduction/detail-m',
     pageType: 'Page',
     completionDate: '2025-04-30	',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-24',
     remarks: '/features/layout/ui/course-introduction/dashboard.tsx',
   },
   {
