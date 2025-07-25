@@ -18,11 +18,11 @@ export interface CourseDetailPageLocationState {
 export const useCourseDetailPage = () => {
   const navigate = useNavigate();
   // 라우터 state에서 courseId 가져오기
-  const { courseId, courseType, sequenceId, initialTab, initialContentViewType } =
+  const { courseId, courseType, initialTab, initialContentViewType } =
     usePageState<CourseDetailPageLocationState>();
 
   // 현재 활성화된 탭 컨텐츠의 뷰 타입
-  const { contentViewType } = useCourseCreateInfo();
+  const { contentViewType, sequenceId } = useCourseCreateInfo();
 
   //
   const { setCourseCreateInfo } = useCourseActions();
