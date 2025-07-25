@@ -153,7 +153,7 @@ const ThumbnailComponent = forwardRef<HTMLDivElement, ThumbnailProps>(
             />
           )}
           {isHovered && (
-            <>
+            <div className={styles.delete_btn}>
               {showPreviewBtn && path && (
                 <Button
                   className={styles.btn_delete}
@@ -184,7 +184,7 @@ const ThumbnailComponent = forwardRef<HTMLDivElement, ThumbnailProps>(
                   />
                 </Button>
               )}
-            </>
+            </div>
           )}
         </div>
         <div className={styles.image_wrap}>

@@ -14,7 +14,7 @@ import ThumbnailList from '../../../-components/thumb/thumb-nail-list';
 import styles from './course-contents.module.css';
 import { BannerItem } from './banner-item';
 
-const CoursePackageComponent: FC = () => {
+const CourseHomeComponent: FC = () => {
   // dropdown
   const [searchValues01, setSearchValues01] = useState<string[]>(['대분류']);
 
@@ -619,5 +619,5 @@ const CoursePackageComponent: FC = () => {
   );
 };
 
-CoursePackageComponent.displayName = 'CoursePackage';
-export const CoursePackage = CoursePackageComponent;
+CourseHomeComponent.displayName = 'CourseHome';
+export const CourseHome = CourseHomeComponent;

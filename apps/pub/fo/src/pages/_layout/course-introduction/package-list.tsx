@@ -15,6 +15,7 @@ import aiImg from '@learnway/styles/fo/assets/images/menu/course/img_course_ai.p
 
 /* tab contents */
 import { CoursePackage } from './-contents/course-package';
+import { CourseHome } from './-contents/course-home';
 
 export const Route = createFileRoute('/_layout/course-introduction/package-list')({
   component: RouteComponent,
@@ -32,7 +33,7 @@ function RouteComponent() {
     {
       title: '홈',
       key: 'menu1',
-      content: '',
+      content: <CourseHome />,
     },
     {
       title: '과정',

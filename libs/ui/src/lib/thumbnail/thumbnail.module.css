@@ -57,16 +57,15 @@
   .not_found_image {
     @apply flex h-[84px] w-[128px] items-center justify-center bg-[#eaf1fa] text-[12px] font-normal leading-[1rem] text-[var(--gray7)];
   }
-
-  .btn_delete {
-    @apply cursor-pointer bg-transparent;
+  .delete_btn {
+    @apply absolute left-1/2 top-1/2 z-[2] flex w-[60px] -translate-x-1/2 -translate-y-1/2 items-center justify-between;
+    .btn_delete {
+      @apply h-[24px] w-[24px] cursor-pointer bg-transparent;
+    }
   }
 
   .image_wrap {
     @apply relative overflow-hidden;
-    & > span {
-      @apply relative;
-    }
   }
 }
 /* 
