@@ -21,7 +21,8 @@ import {
 } from '@shared/ui';
 import { getDropdownOptions } from '../service';
 import { QUESTION_LEVELS, QUESTION_TYPES } from '../service/exam-util';
-import { useQuestionSearchForm } from '../service/learning-resource-question-import.hook';
+import { useQuestionSearchAndCopy } from '../service/learning-resource-question-import.hook';
+import { LearningResourceQuestionItemInfoModal } from './learning-resource-question-item-info-modal';
 
 type QuestionShuttleModalProps = {
   examPoolUuid: string;
@@ -30,11 +31,28 @@ type QuestionShuttleModalProps = {
 const LearningResourceQuestionShuttleComponent = ({ examPoolUuid }: QuestionShuttleModalProps) => {
   const ref = useRef<ShuttleGridToGridImperative>(null);
 
-  const { closeModal } = useModal();
+  const { openModal, closeModal } = useModal();
 
   const { provider: sProvider } = useSearchBox(questionSearchConfig());
 
-  const { handleOnSearch, gridData } = useQuestionSearchForm(examPoolUuid);
+  const { handleOnSearch, gridData, handleSelectQuestions, handleCopyQuestions } =
+    useQuestionSearchAndCopy(examPoolUuid);
+
+  const handleViewQuestionButtonClick = useCallback(async (item: QuestionListForRetrieveRes) => {
+    await openModal({
+      width: 'xl',
+      height: 'fix',
+      content: <LearningResourceQuestionItemInfoModal data={item} />,
+    });
+  }, []);
+
+  const handleClickCloseButton = useCallback(() => {
+    closeModal();
+  }, []);
+
+  const handleClickSaveButton = () => {
+    handleCopyQuestions();
+  };
 
   const columns = useMemo(() => {
     const columnHelper = createColumnHelper<QuestionListForRetrieveRes>();
@@ -52,7 +70,7 @@ const LearningResourceQuestionShuttleComponent = ({ examPoolUuid }: QuestionShut
         cell: (info) => (
           <span
             className="cursor-pointer text-[var(--gray8)] underline"
-            // onClick={() => handleViewQuestionButtonClick(info.row.original)}
+            onClick={() => handleViewQuestionButtonClick(info.row.original)}
           >
             {info.getValue()}
           </span>
@@ -63,10 +81,6 @@ const LearningResourceQuestionShuttleComponent = ({ examPoolUuid }: QuestionShut
         },
       }),
     ] as ColumnDef<any, unknown>[];
-  }, []);
-
-  const handleClickCloseButton = useCallback(() => {
-    closeModal();
   }, []);
 
   return (
@@ -81,14 +95,20 @@ const LearningResourceQuestionShuttleComponent = ({ examPoolUuid }: QuestionShut
           showNumberingColumn={false}
           gridData={gridData}
           rowKey="examQuestionUuid"
-          onSelectedChange={(e) => console.log(e)}
+          onSelectedChange={handleSelectQuestions}
           leftTitle={t('문항 목록')}
           rightTitle={t('선택 목록')}
         />
       </ModalBody>
       <ModalFooter>
         <Button label={t('취소')} variant="gray" size="lg" onClick={handleClickCloseButton} />
-        <Button type="button" label={t('확인')} variant="primary" size="lg" />
+        <Button
+          type="button"
+          label={t('확인')}
+          variant="primary"
+          size="lg"
+          onClick={handleClickSaveButton}
+        />
       </ModalFooter>
     </ModalContainer>
   );
@@ -121,6 +141,8 @@ const questionSearchConfig = (): SearchBoxConfig => ({
         label: t('문제은행'),
         value: '',
       },
+    ],
+    [
       {
         name: 'languageCountryCode',
         label: t('문항언어'),

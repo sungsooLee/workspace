@@ -312,7 +312,9 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
 
   return {
     questionList,
+    refetch,
     selectedQuestions,
+    setSelectedQuestions,
     questionState,
     scorePerQuestion,
     questionCreateSuccessCallback,

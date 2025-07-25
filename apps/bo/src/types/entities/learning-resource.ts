@@ -608,4 +608,13 @@ export interface QuestionListForRetrieveRes {
   contentName: string;
   examQuestionUuid: string;
   questionText: string;
+  questionType: EnQuestionType;
+  languageCountryCode: string;
+  tenantName: string;
+  channelName: string;
+}
+
+export interface QuestionsCopyReq {
+  examPoolContentUuid: string;
+  questionUuidList: string[];
 }
