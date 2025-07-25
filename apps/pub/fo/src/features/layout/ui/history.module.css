@@ -1,6 +1,6 @@
 .start {
-  &.history_wrap {
-    @apply h-auto w-[513px] overflow-hidden rounded-[16px] border border-solid border-[var(--gray3)] bg-[var(--white)] shadow-[0px_2px_10px_rgba(0,0,0,0.08)];
+  .history_area {
+    @apply p-[32px];
   }
 }
 

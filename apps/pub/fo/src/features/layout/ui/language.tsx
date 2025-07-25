@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next';
 
 import { Button, Popover } from '@learnway/ui';
 import styles from './language.module.css';
-import { IcoArrowDown, IcoLang } from '@learnway/icons';
+import popoverInnerStyles from './popover-inner.module.css';
+import { IcoArrowDown, IcoLang, IcoClose02 } from '@learnway/icons';
 
 const PopoverContent = () => {
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
@@ -28,7 +29,15 @@ const PopoverContent = () => {
   };
 
   return (
-    <div className={`${styles.start} ${styles.language_content}`}>
+    <div className={`${styles.start} ${popoverInnerStyles.start}`}>
+      <div className={popoverInnerStyles.title_area}>
+        <h2>내정보</h2>
+        <Popover.Close>
+          <Button variant="expand" size="sm" onlyIcon>
+            <IcoClose02 className={popoverInnerStyles.btn_close} />
+          </Button>
+        </Popover.Close>
+      </div>
       <div className={styles.lang_wrap}>
         <ul className={styles.lang_list}>
           {langs.map((langs, idx) => (

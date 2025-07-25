@@ -1,18 +1,53 @@
 import { memo, useState } from 'react';
 
 import { Button, Popover } from '@learnway/ui';
-import { IcoHistory } from '@learnway/icons';
+import { IcoHistory, IcoClose02, IcoBell03 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { HistoryContents } from '../../layout';
 
 import styles from './history.module.css';
+import popoverInnerStyles from './popover-inner.module.css';
 
 const PopoverContent = () => {
+  const activityList = [
+    {
+      subject: '내 정보를 설정했어요.',
+      date: '방금전',
+    },
+    {
+      subject: '비밀번호를 변경했어요.',
+      date: '1시간 전',
+    },
+    {
+      subject: '알림을 OFF했어요',
+      date: '8시간 전',
+    },
+  ];
   return (
-    <div className={cn(styles.start, styles.history_wrap)}>
-      <div className={styles.history_content}>
-        {/* contents */}
-        <HistoryContents />
+    <div className={`${styles.start} ${popoverInnerStyles.start}`}>
+      <div className={popoverInnerStyles.title_area}>
+        <h2>최근 학습활동</h2>
+        <Popover.Close>
+          <Button variant="expand" size="sm" onlyIcon>
+            <IcoClose02 className={popoverInnerStyles.btn_close} />
+          </Button>
+        </Popover.Close>
+      </div>
+
+      <div className={styles.history_area}>
+        <ul>
+          {activityList.map((item, index) => (
+            <li key={index}>
+              <strong className={styles.subject}>{item.subject}</strong>
+              <span className={styles.date}>{item.date}</span>
+            </li>
+          ))}
+        </ul>
+
+        {/* 최근 학습 활동이 없을경우*/}
+        <div className={styles.empty}>
+          <IcoBell03 width={48} height={48} stroke="#a9afbb" className={styles.ico_bell} />
+          최근 학습 활동이 없습니다.
+        </div>
       </div>
     </div>
   );
