@@ -88,7 +88,7 @@
         @apply justify-center;
       }
       .toggle_btn {
-        @apply left-[41%] right-auto top-[135px];
+        @apply bottom-[8px] left-[41%] right-auto top-auto;
       }
     }
   }
@@ -126,7 +126,7 @@
         }
         &.horizontal {
           .toggle_btn {
-            @apply left-[calc(41%-8px)];
+            @apply bottom-[8px] left-[calc(41%-8px)] top-auto;
           }
         }
       }

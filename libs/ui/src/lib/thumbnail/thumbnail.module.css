@@ -26,7 +26,7 @@
             @apply absolute -top-[14px] left-[28px] z-[0] h-full w-[calc(100%-56px)] rounded-[12px] bg-[var(--gray90)] content-[''];
           }
           .thumbnail_image {
-            @apply relative z-[2];
+            @apply relative z-[2] w-full;
           }
         }
       }
