@@ -11,14 +11,14 @@ interface Props {
 }
 
 const AddressConfirmationPopupComponent = ({ address, name, phoneNumber }: Props) => {
-  const { close } = useModal();
+  const { closeModal } = useModal();
 
   const onConfirm = () => {
-    close(true);
+    closeModal(true);
   };
 
   const onEdit = () => {
-    close(false);
+    closeModal(false);
   };
   return (
     <ModalContainer>
