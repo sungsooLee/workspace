@@ -59,7 +59,7 @@ const MediaInfoComponent = ({ status, buttons, type, url, infoList }: MediaInfoC
             <Button className={style.btn} variant="gray" size="sm">
               {t('재시도')}
             </Button>
-            <Button className={style.btn} variant="primary" size="sm">
+            <Button className={style.btn} variant="primary" size="sm" onClick={buttons[1].onClick}>
               {type === LEARNING_TYPE.VIDEO && t('동영상 변경')}
               {type === LEARNING_TYPE.SCORM && t('파일 변경')}
             </Button>
