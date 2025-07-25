@@ -169,7 +169,7 @@ export default class CourseService {
       ],
     };
 
-    // return await httpService.get<T>(`${LMSApiPrefix()}/course/${id}`);
+    return await httpService.get(`${LMSApiPrefix()}/course/${id}`);
   }
 
   // 과정 차수 불러오기
@@ -233,13 +233,13 @@ export default class CourseService {
     return await httpService.post(`${LMSApiPrefix()}/course/enroll`, payload);
   }
   // 과정찜하기
-  static async postCourseLike(payload: any) {
-    console.log('payload', payload);
-    return {
-      code: 200,
-      message: '좋아요',
-    };
-    return await httpService.post(`${LMSApiPrefix()}/course/enroll`, payload);
+  static async postCourseLike(courseId: any) {
+    // console.log('payload', payload);
+    // return {
+    //   code: 200,
+    //   message: '좋아요',
+    // };
+    return await httpService.post(`${LMSApiPrefix()}/course/${courseId}/like`, {});
   }
 
   static fetchCourse(courseId: number) {

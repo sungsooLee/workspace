@@ -166,176 +166,175 @@ const ddata = {
       ],
     },
   ],
-  introduction: {
-    aiSummary:
-      '과정 소개 내용입니다. 과정 소개 내용입니다. 과정 소개 내용입니다. 과정 소개 내용입니다. 과정 소개 내용입니다.',
-    tags: [
-      { value: 'tag1', label: '태그1' },
-      { value: 'tag2', label: '태그2' },
-      { value: 'tag3', label: '태그3' },
-    ],
-    goal: [{ text: '과정 목표1' }, { text: '과정 목표2' }, { text: '과정 목표3' }],
-    contentsSummary: [{ text: '과정 내용1' }, { text: '과정 내용2' }, { text: '과정 내용3' }],
-    content: {
-      title: '과정 소개',
-      text:
-        '과정 소개 내용입니다. 과정 소개 내용입니다. 과정 소개 내용입니다. 과정 소개 내용입니다. 과정 소개 내용입니다.',
-      image: 'https://cdn.learnway.io/course/introduction.png',
-    },
-    recommand: [{ text: '추천 대상1' }, { text: '추천 대상2' }, { text: '추천 대상3' }],
-    curriculum: [
-      {
-        id: 'c1',
-        name: '커리큘럼1',
-        totalTime: '10시간',
-        course: [
-          {
-            id: 'A100020',
-            name: '과정1',
-            type: '이북',
-            duration: '2시간',
-          },
-          {
-            id: 'A100021',
-            name: '과정2',
-            type: '이북',
-            duration: '2시간',
-          },
-          {
-            id: 'A100022',
-            name: '과정3',
-            type: '이북',
-            duration: '2시간',
-          },
-        ],
-      },
-      {
-        id: 'c2',
-        name: '커리큘럼2',
-        totalTime: '10시간',
-        course: [
-          {
-            id: 'A100020',
-            name: '과정1',
-            type: '이북',
-            duration: '2시간',
-          },
-          {
-            id: 'A100021',
-            name: '과정2',
-            type: '이북',
-            duration: '2시간',
-          },
-          {
-            id: 'A100022',
-            name: '과정3',
-            type: '이북',
-            duration: '2시간',
-          },
-        ],
-      },
-      {
-        id: 'c3',
-        name: '커리큘럼3',
-        totalTime: '10시간',
-        course: [
-          {
-            id: 'A100020',
-            name: '과정1',
-            type: '이북',
-            duration: '2시간',
-          },
-          {
-            id: 'A100021',
-            name: '과정2',
-            type: '이북',
-            duration: '2시간',
-          },
-          {
-            id: 'A100022',
-            name: '과정3',
-            type: '이북',
-            duration: '2시간',
-          },
-        ],
-      },
-    ],
-    completionCriteria: {
-      scores: [
-        {
-          title: '총점(100%)',
-          attendance: '80점 이상',
-        },
-        {
-          title: '총점(100%)',
-          attendance: '90점 이상',
-        },
-        {
-          title: '총점(100%)',
-          attendance: '80점 이상',
-        },
-        {
-          title: '총점(100%)',
-          attendance: '90점 이상',
-        },
-      ],
-      description: [
-        {
-          text: '과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다.',
-        },
-        {
-          text: '과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다.',
-        },
-        {
-          text: '과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다.',
-        },
-      ],
-    },
-    teachers: [
-      {
-        id: 't1',
-        name: '강사1',
-        historys: [{ text: '강사1 이력1' }, { text: '강사1 이력2' }, { text: '강사1 이력3' }],
-      },
-      {
-        id: 't2',
-        name: '강사2',
-        profileImage: 'https://cdn.learnway.io/teacher/profile2.png',
-        description: '강사2 소개입니다. 강사2 소개입니다. 강사2 소개입니다.',
-        email: 'abcde@google.com',
-        historys: [{ text: '강사1 이력1' }, { text: '강사1 이력2' }, { text: '강사1 이력3' }],
-      },
-    ],
-    operators: [
-      {
-        id: 'o1',
-        name: '운영자1',
-        teams: '운영팀',
-        position: '운영자',
-        email: 'abs@google.com',
-        phone: '010-1234-5678',
-      },
-      {
-        id: 'o2',
-        name: '운영자2',
-        profileImage: 'https://cdn.learnway.io/operator/profile2.png',
-        teams: '운영팀',
-        position: '운영자',
-        email: 'abs@google.com',
-        phone: '010-1234-5678',
-      },
-    ],
-    information: [
-      {
-        title: '과정 정보1',
-        content: '과정 정보 내용1입니다. 과정 정보 내용1입니다. 과정 정보 내용1입니다.',
-      },
-      {
-        title: '과정 정보2',
-        content: '과정 정보 내용2입니다. 과정 정보 내용2입니다. 과정 정보 내용2입니다.',
-      },
-    ],
-  },
+  // introduction: {
+  //   aiSummary:
+  //     '과정 소개 내용입니다. 과정 소개 내용입니다. 과정 소개 내용입니다. 과정 소개 내용입니다. 과정 소개 내용입니다.',
+  //   tags: [
+  //     { value: 'tag1', label: '태그1' },
+  //     { value: 'tag2', label: '태그2' },
+  //     { value: 'tag3', label: '태그3' },
+  //   ],
+  //   goal: [{ text: '과정 목표1' }, { text: '과정 목표2' }, { text: '과정 목표3' }],
+  //   contentsSummary: [{ text: '과정 내용1' }, { text: '과정 내용2' }, { text: '과정 내용3' }],
+  //   content: {
+  //     title: '과정 소개',
+  //     text: '과정 소개 내용입니다. 과정 소개 내용입니다. 과정 소개 내용입니다. 과정 소개 내용입니다. 과정 소개 내용입니다.',
+  //     image: 'https://cdn.learnway.io/course/introduction.png',
+  //   },
+  //   recommand: [{ text: '추천 대상1' }, { text: '추천 대상2' }, { text: '추천 대상3' }],
+  //   curriculum: [
+  //     {
+  //       id: 'c1',
+  //       name: '커리큘럼1',
+  //       totalTime: '10시간',
+  //       course: [
+  //         {
+  //           id: 'A100020',
+  //           name: '과정1',
+  //           type: '이북',
+  //           duration: '2시간',
+  //         },
+  //         {
+  //           id: 'A100021',
+  //           name: '과정2',
+  //           type: '이북',
+  //           duration: '2시간',
+  //         },
+  //         {
+  //           id: 'A100022',
+  //           name: '과정3',
+  //           type: '이북',
+  //           duration: '2시간',
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       id: 'c2',
+  //       name: '커리큘럼2',
+  //       totalTime: '10시간',
+  //       course: [
+  //         {
+  //           id: 'A100020',
+  //           name: '과정1',
+  //           type: '이북',
+  //           duration: '2시간',
+  //         },
+  //         {
+  //           id: 'A100021',
+  //           name: '과정2',
+  //           type: '이북',
+  //           duration: '2시간',
+  //         },
+  //         {
+  //           id: 'A100022',
+  //           name: '과정3',
+  //           type: '이북',
+  //           duration: '2시간',
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       id: 'c3',
+  //       name: '커리큘럼3',
+  //       totalTime: '10시간',
+  //       course: [
+  //         {
+  //           id: 'A100020',
+  //           name: '과정1',
+  //           type: '이북',
+  //           duration: '2시간',
+  //         },
+  //         {
+  //           id: 'A100021',
+  //           name: '과정2',
+  //           type: '이북',
+  //           duration: '2시간',
+  //         },
+  //         {
+  //           id: 'A100022',
+  //           name: '과정3',
+  //           type: '이북',
+  //           duration: '2시간',
+  //         },
+  //       ],
+  //     },
+  //   ],
+  //   completionCriteria: {
+  //     scores: [
+  //       {
+  //         title: '총점(100%)',
+  //         attendance: '80점 이상',
+  //       },
+  //       {
+  //         title: '총점(100%)',
+  //         attendance: '90점 이상',
+  //       },
+  //       {
+  //         title: '총점(100%)',
+  //         attendance: '80점 이상',
+  //       },
+  //       {
+  //         title: '총점(100%)',
+  //         attendance: '90점 이상',
+  //       },
+  //     ],
+  //     description: [
+  //       {
+  //         text: '과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다.',
+  //       },
+  //       {
+  //         text: '과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다.',
+  //       },
+  //       {
+  //         text: '과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다.',
+  //       },
+  //     ],
+  //   },
+  //   teachers: [
+  //     {
+  //       id: 't1',
+  //       name: '강사1',
+  //       historys: [{ text: '강사1 이력1' }, { text: '강사1 이력2' }, { text: '강사1 이력3' }],
+  //     },
+  //     {
+  //       id: 't2',
+  //       name: '강사2',
+  //       profileImage: 'https://cdn.learnway.io/teacher/profile2.png',
+  //       description: '강사2 소개입니다. 강사2 소개입니다. 강사2 소개입니다.',
+  //       email: 'abcde@google.com',
+  //       historys: [{ text: '강사1 이력1' }, { text: '강사1 이력2' }, { text: '강사1 이력3' }],
+  //     },
+  //   ],
+  //   operators: [
+  //     {
+  //       id: 'o1',
+  //       name: '운영자1',
+  //       teams: '운영팀',
+  //       position: '운영자',
+  //       email: 'abs@google.com',
+  //       phone: '010-1234-5678',
+  //     },
+  //     {
+  //       id: 'o2',
+  //       name: '운영자2',
+  //       profileImage: 'https://cdn.learnway.io/operator/profile2.png',
+  //       teams: '운영팀',
+  //       position: '운영자',
+  //       email: 'abs@google.com',
+  //       phone: '010-1234-5678',
+  //     },
+  //   ],
+  //   information: [
+  //     {
+  //       title: '과정 정보1',
+  //       content: '과정 정보 내용1입니다. 과정 정보 내용1입니다. 과정 정보 내용1입니다.',
+  //     },
+  //     {
+  //       title: '과정 정보2',
+  //       content: '과정 정보 내용2입니다. 과정 정보 내용2입니다. 과정 정보 내용2입니다.',
+  //     },
+  //   ],
+  // },
   educations: {
     classes: [
       {
@@ -442,13 +441,13 @@ const ddata = {
     ],
     reviews: [],
   },
-  channel: {
-    id: '200030',
-    name: '채널 이름 채널 이름 채널 이름',
-    description: '채널 설명',
-    thumbnail: 'https://cdn.learnway.io/channel/thumbnail.png',
-    subscribers: 1500,
-  },
+  // channel: {
+  //   id: '200030',
+  //   name: '채널 이름 채널 이름 채널 이름',
+  //   description: '채널 설명',
+  //   thumbnail: 'https://cdn.learnway.io/channel/thumbnail.png',
+  //   subscribers: 1500,
+  // },
 
   isEnrollRequired: true,
 };
@@ -464,7 +463,7 @@ export const mapCourseDetail = (courseData: CourseResponse): CourseCompleteDetai
     // courseType: data.courseType || 'default',
     // primaryCategoryId: data.primaryCategoryId || 0,
     // categories: data.categories || [],
-    // trainingLevelType: data.trainingLevelType || 'beginner', 
+    // trainingLevelType: data.trainingLevelType || 'beginner',
     ...courseData,
     ...ddata,
 
@@ -477,7 +476,7 @@ export const mapCourseDetail = (courseData: CourseResponse): CourseCompleteDetai
 
       data: {
         type: CourseTypeLabel[courseData.courseType as CourseType] || '',
-        category: courseData.categories?.map(c => c.categoryName).join(' > ') || '',
+        category: courseData.categories?.map((c) => c.categoryName).join(' > ') || '',
         place: '**********',
         duration: 11111111, // **********
         outchannel: '*************',
@@ -487,5 +486,119 @@ export const mapCourseDetail = (courseData: CourseResponse): CourseCompleteDetai
         captionLanguage: courseData.language || '',
       },
     },
-  }
+    channel: {
+      id: '200030',
+      name: '****************',
+      description: '**************',
+      thumbnail: 'https://cdn.learnway.io/channel/thumbnail.png',
+      subscribers: 1500,
+    },
+    introduction: {
+      aiSummary: courseData.courseSummary || '',
+      tags: courseData.tagNames?.map((tag) => ({ value: tag.tagId, label: tag.tagName })) || [],
+      goal: [{ text: '**********1' }, { text: '**********2' }, { text: '**********3' }], // 과정 교육목표
+      contentsSummary: [
+        { text: '*************1' },
+        { text: '*************2' },
+        { text: '*************3' },
+      ], // 과정 내용 요약
+      content: {
+        title: '과정 소개',
+        content:
+          '<div><p>과정 내용입니다. 과정 내용입니다. 과정 내용입니다.</p></div>과정 소개 내용입니다. 과정 소개 내용입니다. 과정 소개 내용입니다. 과정 소개 내용입니다. 과정 소개 내용입니다.',
+        // image: 'https://cdn.learnway.io/course/introduction.png',
+      },
+      recommand: [
+        { text: '*************1' },
+        { text: '*************2' },
+        { text: '*************3' },
+      ], // 학습대상 추천
+      curriculum: [
+        // 커리큘럼
+        {
+          id: 'c1',
+          name: '************ 커리큘럼1',
+          totalTime: '*********** 10시간',
+          course: [
+            {
+              id: '********** A100020',
+              name: '********** 과정1',
+              type: '********** 이북',
+              duration: '********** 2시간',
+            },
+          ],
+        },
+      ],
+      completionCriteria: {
+        scores: [
+          {
+            title: `총점(100%)`,
+            attendance: `${courseData.totalMinPassScore}점 이상`,
+          },
+          {
+            title: `진도(${courseData.progressWeights}%)`,
+            attendance: `${courseData.progressMinPassScore}점 이상`,
+          },
+          {
+            title: `출석(${courseData.attendanceWeights}%)`,
+            attendance: `${courseData.attendanceMinPassScore}점 이상`,
+          },
+          {
+            title: `평가(${courseData.examWeights}%)`,
+            attendance: `${courseData.examMinPassScore}점 이상`,
+          },
+          {
+            title: `과제(${courseData.asgmtWeights}%)`,
+            attendance: `${courseData.asgmtMinPassScore}점 이상`,
+          },
+        ],
+        description: [
+          {
+            text: '********************* 과정 이수 기준 설명',
+          },
+          {
+            text: '********************* 과정 이수 기준 설명',
+          },
+          {
+            text: '********************* 과정 이수 기준 설명',
+          },
+        ],
+      },
+      teachers: [
+        {
+          id: 'instructor',
+          name: courseData.instructorName,
+          profileImage: '************** .png',
+          description: '************ 강사 소개',
+          email: courseData.instructorEmail,
+          historys: [
+            { text: courseData.career },
+            { text: courseData.career },
+            { text: courseData.career },
+          ],
+        },
+      ],
+      operators: [
+        {
+          id: 'operator',
+          name: courseData.operatorName,
+          profileImage: '************.png',
+          teams: courseData.operatorCompany,
+          position: courseData.operatorDept,
+          email: courseData.operatorEmail,
+          phone: courseData.operatorTelNo,
+        },
+      ],
+      information: [
+        {
+          title: '*********** 과정 정보1',
+          content: '************* 과정 내용1',
+        },
+        {
+          title: '*********** 과정 정보2',
+          content: '************* 과정 내용2',
+        },
+      ],
+    },
+  };
 };

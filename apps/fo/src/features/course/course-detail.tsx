@@ -52,7 +52,13 @@ import pageFullInner from '@learnway/styles/fo/widgets/layout/ui/container/page-
 import playImg from '@learnway/styles/fo/assets/images/common/img_play.png';
 import bnrImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
-import { queryOptions, useCourseDetail, useCourseFullDetail } from '@entities/course';
+import {
+  queryOptions,
+  useCourseDetail,
+  useCourseFullDetail,
+  useCourseLike,
+  useCourseSequences,
+} from '@entities/course';
 
 import styles from '@learnway/styles/fo/pages/_layout/course-introduction/detail.module.css';
 
@@ -60,12 +66,17 @@ export function CourseDetail() {
   const routerState = useRouterState();
   const courseId = routerState.location.state?.courseId;
 
-  const { data: courseData } = useCourseFullDetail(courseId || 1);
-  console.log('@', courseId, courseData);
+  const { data: courseData } = useCourseFullDetail(courseId || 2);
+  const { data: sequencesData } = useCourseSequences(courseId || 2);
+  // const sequencesData = {};
+  const { courseLikeRequest } = useCourseLike();
+  console.log('@', courseId, courseData, sequencesData);
 
   const { open: openModal } = useModal();
   const { confirm: openConfirm } = useModal();
   const { alert: openAlert } = useModal();
+
+  const [likeCount, setLikeCount] = useState<number>(courseData?.course.courseLike ?? 0);
 
   // 탭 순서
   const [selectedTabTitle, setSelectedTabTitle] = useState<number>(0); // 탭 타이틀 순서
@@ -76,7 +87,7 @@ export function CourseDetail() {
     { title: '대시보드', isEroll: false, selectTabNumber: '0' },
     { title: '과정소개', isEroll: false, selectTabNumber: '1' },
     { title: '교육일정', isEroll: true, selectTabNumber: '1' }, // 과정소개 탭 안에서 교욱일정이 있기 때문에 tabNumber값 동일
-    { title: '후기', isEroll: false, selectTabNumber: '1', count: '0', new: true }, // 과정소개 탭 안에서 후기가 있기 때문에 tabNumber값 동일
+    { title: '후기', isEroll: false, selectTabNumber: '1', new: true }, // 과정소개 탭 안에서 후기가 있기 때문에 tabNumber값 동일
     { title: '수강전 문의', isEroll: true, selectTabNumber: '2', new: true },
     { title: '커뮤니티', isEroll: false, selectTabNumber: '3', new: true },
     { title: '새소식', isEroll: false, selectTabNumber: '4', new: true },
@@ -251,7 +262,8 @@ export function CourseDetail() {
           )}
           {courseData?.educations && (
             <CourseEducation
-              educations={courseData?.educations}
+              educationsTemp={courseData?.educations}
+              educations={sequencesData}
               courseEnrollCompletePopup={CourseEnrollComplete}
               CourseCancelCompletePopup={CourseCancelCompleteAlert}
             />
@@ -277,6 +289,20 @@ export function CourseDetail() {
       //   console.log('버튼 클릭');
       // },
     });
+  };
+
+  // 과정 찜하기
+  const handleCourseLike = async () => {
+    try {
+      const data = await courseLikeRequest(courseId || 2);
+      if (data) {
+        setLikeCount((prev) => prev + 1); // 증가
+      } else {
+        setLikeCount((prev) => prev - 1); // 감소
+      }
+    } catch (err) {
+      console.error('like course error', err);
+    }
   };
 
   const packageCardValueFn = (arr: Array<any>) => {
@@ -579,7 +605,7 @@ export function CourseDetail() {
                       onClick={() => handleTab(item.selectTabNumber, index)}
                     >
                       {item.title}
-                      <em>{item.count}</em>
+                      {/* <em>{item.count}</em> */}
                     </Button>
                   ))}
                 </div>
@@ -625,7 +651,7 @@ export function CourseDetail() {
               <div className={packageInformationStyles.subscribe_box}>
                 {/* 퍼블수정 20250624 로고 삭제 */}
                 <strong className={packageInformationStyles.channel_name}>
-                  {courseData?.channel?.channelName}
+                  {courseData?.channel?.name}
                 </strong>
                 <Button
                   className={packageInformationStyles.btn_subscribe}
@@ -749,7 +775,11 @@ export function CourseDetail() {
 
               {/* 찜/공유 수강신청 Button */}
               <div className={styles.course_btn_wrap}>
-                <CourseFixedButton course={courseData?.class.length} courseData={courseData} />
+                <CourseFixedButton
+                  course={courseData?.class.length}
+                  likeCount={likeCount}
+                  handleCourseLike={handleCourseLike}
+                />
               </div>
             </div>
           </div>
