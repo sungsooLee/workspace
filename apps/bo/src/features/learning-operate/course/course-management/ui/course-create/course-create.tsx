@@ -13,7 +13,8 @@ import { PublishCourse } from './tabs/publish-course';
 
 const Component = () => {
   // 커스텀 훅 사용
-  const { changeTab, moveCourseListPage, activeTab, isCreateMode, trigger } = useCourseCreatePage();
+  const { changeTab, moveCourseListPage, activeTab, isCreateMode, trigger, handleBeforeChange } =
+    useCourseCreatePage();
   const { t } = useTranslation();
 
   const handleTabChange = (activeKey: string) => {
@@ -115,6 +116,7 @@ const Component = () => {
           items={tabItems}
           onTabChange={handleTabChange}
           selectedTabKey={activeTab}
+          onBeforeTabChange={handleBeforeChange}
         />
       </MainContents>
     </PageContainer>

@@ -62,6 +62,7 @@ const GridBoxComponent = <T extends object>(
     onRemoveAllClick,
     onSearchClick,
     excelButtons,
+    selectedRowIds,
     ...props
   }: GridBoxProps<T>,
   ref: React.Ref<GridImperative>,
@@ -418,6 +419,7 @@ const GridBoxComponent = <T extends object>(
         onTableInstanceChange={handleTableInstanceChange}
         isRowSelectable={props.isRowSelectable as ((row: object) => boolean) | undefined}
         getRowClassName={props.getRowClassName as ((row: object) => string) | undefined}
+        selectedRowIds={selectedRowIds?.map(String)}
       />
       {/* 페이지네이션 */}
       {!paginationProps.disabled && (
