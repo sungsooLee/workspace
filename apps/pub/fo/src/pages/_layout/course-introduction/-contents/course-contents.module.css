@@ -117,6 +117,71 @@
         }
       }
     }
+    .result_list_wrap {
+      @apply mt-[40px];
+      .sort_wrap {
+        @apply mb-[16px] flex items-center justify-between;
+        .title {
+          @apply title2-b text-[var(--gray10)];
+          .num {
+            @apply title2-b text-[var(--blue50)];
+          }
+        }
+        .sort_area {
+          @apply flex items-center;
+          .check_menu {
+            @apply relative;
+            & + .array {
+              &::after {
+                @apply absolute left-[0] top-[50%] flex h-[12px] w-[1px] -translate-y-1/2 bg-[var(--gray90)] content-[''];
+              }
+            }
+          }
+        }
+      }
+      .array,
+      .box {
+        @apply relative ml-[16px] inline-flex pl-[16px];
+        & + .box {
+          @apply relative ml-[16px] flex items-center pl-[16px];
+          &::after {
+            @apply absolute left-[0] top-[50%] h-[12px] w-[1px] -translate-y-1/2 bg-[var(--gray90)] content-[''];
+          }
+        }
+        & > div {
+          button {
+            @apply border-0;
+          }
+        }
+      }
+      .btn_box {
+        @apply relative ml-[16px] flex h-[36px] w-[72px] items-center rounded-[4px] border border-solid border-[var(--gray90)];
+        &::before {
+          @apply absolute left-1/2 top-0 h-full w-[1px] bg-[var(--gray90)] content-[''];
+        }
+        .btn_order {
+          @apply h-[36px] w-[36px];
+          &:nth-last-child(1) {
+            @apply ml-[0.5px];
+          }
+          svg {
+            path {
+              @apply stroke-[#B7BBC3];
+            }
+          }
+          &.active {
+            svg {
+              path {
+                @apply stroke-[#131416];
+              }
+            }
+          }
+        }
+      }
+    }
+    .pagination {
+      @apply mt-[40px];
+    }
   }
 }
 
@@ -218,8 +283,6 @@
               }
             }
           }
-        }
-        .thumnail_wrap {
         }
       }
     }
