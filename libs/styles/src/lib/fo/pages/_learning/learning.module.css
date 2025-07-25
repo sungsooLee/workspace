@@ -110,8 +110,11 @@
             @apply title5-b text-white;
           }
         }
-        .video_contents > * {
-          @apply h-auto max-h-[calc(100dvh-80px)] w-auto max-w-full;
+        .video_contents {
+          @apply flex h-[calc(100dvh-80px)] w-[100dvw] items-center;
+          & > div {
+            @apply !h-full !w-full;
+          }
           video {
             @apply h-full w-full !object-contain;
           }
