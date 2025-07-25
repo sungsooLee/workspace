@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import { cn, getRandomId } from '@learnway/shared';
 import { Link } from '@tanstack/react-router';
-import { Button, Input, Dropdown, Badge, Carousel } from '@learnway/ui';
+import { Button, Input, Dropdown, Badge, Carousel, Thumbnail } from '@learnway/ui';
 import { IcoPlay, IcoStar, IcoEye, IcoHeart, IcoPlus, IcoArrowForward } from '@learnway/icons';
 import { isMobile } from 'react-device-detect';
 
@@ -35,6 +35,7 @@ const CoursePackageComponent: FC = () => {
     <BannerItem items={data} />,
   ];
 
+  // Thumnail
   const item = [
     {
       imageUrl: bannerImg,
@@ -180,6 +181,60 @@ const CoursePackageComponent: FC = () => {
     },
   ];
 
+  // Thumnail
+  const item2 = [
+    {
+      imageUrl: bannerImg,
+      title: '필수개발과정필수개발과정필필수개발과정필수개발과정필필수개발과정필수개발과정필',
+      tagLabels: ['모바일전용', '사내IP전용', '#AI기술'],
+      labelCustomNode: [
+        <Badge
+          variant="text"
+          status="primary"
+          size="xs"
+          option={{ label: 'New', value: `${getRandomId()}` }}
+        />,
+      ],
+      infoCustomNode: [<span>{'패키지'}</span>, <span>{'12개 과정'}</span>],
+      toggleButton: true,
+      countInfoNode: [
+        <span>
+          <IcoStar width={20} height={20} stroke="#0056FF" fill="#0056FF" />
+          <em>{'4.2'}</em>
+        </span>,
+        <span>
+          <IcoHeart width={20} height={20} stroke="#F58B75" fill="#F58B75" />
+          <em>{'153'}</em>
+        </span>,
+      ],
+    },
+    {
+      imageUrl: bannerImg,
+      title: '필수개발과정필수개발과정필필수개발과정필수개발과정필필수개발과정필수개발과정필',
+      tagLabels: ['모바일전용', '사내IP전용', '#AI기술'],
+      labelCustomNode: [
+        <Badge
+          variant="text"
+          status="primary"
+          size="xs"
+          option={{ label: 'New', value: `${getRandomId()}` }}
+        />,
+      ],
+      infoCustomNode: [<span>{'패키지'}</span>, <span>{'12개 과정'}</span>],
+      toggleButton: true,
+      countInfoNode: [
+        <span>
+          <IcoStar width={20} height={20} stroke="#0056FF" fill="#0056FF" />
+          <em>{'4.2'}</em>
+        </span>,
+        <span>
+          <IcoHeart width={20} height={20} stroke="#F58B75" fill="#F58B75" />
+          <em>{'153'}</em>
+        </span>,
+      ],
+    },
+  ];
+
   return (
     <div className={cn(styles.start, styles.course_contents)}>
       <div className={styles.banner_wrap}>
@@ -254,6 +309,56 @@ const CoursePackageComponent: FC = () => {
           <ThumbnailList items={item} cols={!isMobile ? 3 : 2} />
         </div>
       </div>
+      {/* title */}
+      <strong className={styles.menu_title}>{'따로 또 같이, 알차게 준비한 패키지!'}</strong>
+      {/* package_list_wrap */}
+      <div className={styles.package_list_wrap}>
+        <div className={styles.package_banner}>
+          <Thumbnail stacked={true} path={bannerImg} enableHover={false} />
+          <div className={styles.package_copy}>
+            <div className={styles.badge_view}>
+              <Badge
+                variant="text"
+                status="primary"
+                size="xs"
+                option={{ label: 'New', value: `${getRandomId()}` }}
+              />
+              <Badge
+                variant="outline"
+                status="gray"
+                size="xs"
+                option={{ label: '패키지', value: `${getRandomId()}` }}
+              />
+              <Badge
+                variant="outline"
+                status="gray"
+                size="xs"
+                option={{ label: '6개 과정', value: `${getRandomId()}` }}
+              />
+            </div>
+            <div className={styles.title_area}>
+              <strong>{'2025 트렌드'}</strong>
+              <p>{'고객을 설득하는 \n 말하기, 듣기의 23가지 기술'}</p>
+            </div>
+            <div className={styles.count_info}>
+              <span>
+                <IcoEye width={20} height={20} fill="none" stroke="#fff" />
+                <em>{'78,800'}</em>
+              </span>
+              <span>
+                <IcoHeart width={20} height={20} stroke="#F58B75" fill="#F58B75" />
+                <em>{'153'}</em>
+              </span>
+            </div>
+          </div>
+        </div>
+        {/* Thumnail List */}
+        <div className={styles.list_wrapper}>
+          <ThumbnailList items={item2} cols={1} direction={'horizontal'} stacked={true} />
+        </div>
+      </div>
+      {/* title */}
+      <strong className={styles.menu_title}>{'지금 보면 딱! 좋은 인기 과정'}</strong>
     </div>
   );
 };

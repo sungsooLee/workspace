@@ -21,7 +21,7 @@
     }
     .list_box_wrap {
       .list_box {
-        @apply flex flex-wrap bg-[var(--blue98)] p-[40px];
+        @apply flex flex-wrap rounded-[12px] bg-[var(--blue98)] p-[40px];
         .list_title {
           @apply w-[245px] shrink-0;
           strong {
@@ -47,11 +47,72 @@
     }
     .banner_wrap {
       [class*='swiper-pagination-bullets'] {
-        @apply !bottom-auto left-[40px] top-[40px] !w-auto;
+        @apply !bottom-auto left-[40px] top-[40px] h-[4px] !w-auto;
         [class*='swiper-pagination-bullet'] {
-          @apply h-[4px] w-[20px] !rounded-[2px] !bg-[var(--gray85)] opacity-100;
+          @apply h-[4px] w-[20px] !rounded-[2px] !bg-[var(--gray85)] align-top opacity-100;
           &[class*='swiper-pagination-bullet-active'] {
             @apply !bg-[var(--blue50)];
+          }
+        }
+      }
+    }
+    .menu_title {
+      @apply headline3-b mb-[24px] mt-[80px] flex text-[var(--gray10)];
+    }
+    .package_list_wrap {
+      @apply flex flex-wrap;
+      .package_banner {
+        @apply relative flex-1;
+        .package_copy {
+          @apply absolute left-0 top-0 z-[4] w-full bg-transparent px-[36px] py-[50px];
+          .badge_view {
+            span {
+              @apply mr-[8px] inline-flex;
+            }
+          }
+          .title_area {
+            @apply mt-[40px];
+            strong {
+              @apply block text-[2.4rem] font-semibold leading-[3.2rem] text-[#B497FF];
+            }
+            p {
+              @apply mt-[8px] whitespace-pre-line text-[3.6rem] font-semibold leading-[4.2rem] text-white;
+            }
+          }
+          .count_info {
+            @apply mt-[78px] flex items-center;
+            span {
+              @apply label-lg mr-[8px] inline-flex items-center text-white;
+              &:not(:first-child) {
+                &::before {
+                  @apply mx-[8px] h-[14px] w-[1px] bg-white content-[''];
+                }
+              }
+            }
+          }
+        }
+        [class*='nlp--thumbnail'] {
+          [class*='image_wrap'] span img {
+            @apply rounded-[12px];
+          }
+        }
+      }
+      .list_wrapper {
+        @apply ml-[40px] flex flex-1 items-center;
+        [class*='thumbnail_list'] {
+          @apply gap-y-[26px];
+          [class*='thumbnail_item'] {
+            [class*='thumbnail_link'] {
+              [class*='thumbnail_view'] {
+                @apply w-[36.5%];
+              }
+            }
+            [class*='toggle_btn'] {
+              @apply left-[calc(33%-16px)];
+            }
+          }
+          [class*='thumbnail_title'] {
+            @apply line-clamp-1;
           }
         }
       }
@@ -101,6 +162,59 @@
               [class*='tag_list'],
               [class*='count_info_node'] {
                 @apply hidden;
+              }
+            }
+          }
+        }
+        .banner_wrap {
+          [class*='swiper-pagination-bullets'] {
+            @apply left-[16px] top-[16px];
+          }
+        }
+        .menu_title {
+          @apply headline1-b mb-[20px] mt-[56px];
+        }
+        .package_list_wrap {
+          @apply flex-col;
+          .package_banner {
+            .package_copy {
+              @apply p-[8px] pt-[22px];
+              .title_area {
+                @apply mt-[16px] pl-[12px];
+                strong {
+                  @apply text-[1.4rem] leading-[1.6rem];
+                }
+                p {
+                  @apply mt-[4px] text-[2.2rem] leading-[2.4rem];
+                }
+              }
+              .count_info {
+                @apply mt-[16px] pl-[12px];
+              }
+            }
+          }
+          .list_wrapper {
+            @apply ml-0 mt-[20px];
+            [class*='thumbnail_list'] {
+              @apply gap-y-[12px];
+              [class*='thumbnail_item'] {
+                [class*='thumbnail_link'] {
+                  [class*='thumbnail_view'] {
+                    @apply w-[50%];
+                  }
+                  [class*='thumbnail_info'] {
+                    [class*='tag_list'],
+                    [class*='count_info_node'] {
+                      @apply hidden;
+                    }
+                  }
+                }
+                [class*='toggle_btn'] {
+                  @apply left-[calc(50%-30px)];
+                }
+              }
+              [class*='thumbnail_title'] {
+                @apply line-clamp-2;
               }
             }
           }

@@ -19,8 +19,8 @@ export interface ThumbnailData {
 interface ThumbnailItemProps {
   data: ThumbnailData;
   direction?: 'horizontal' | 'vertical';
-  className?: string;
   stacked?: boolean;
+  className?: string;
 }
 
 const ThumbnailItem: React.FC<ThumbnailItemProps> = ({

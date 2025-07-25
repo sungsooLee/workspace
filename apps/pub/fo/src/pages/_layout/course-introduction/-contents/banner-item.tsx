@@ -31,7 +31,7 @@ const BannerItemComponent: FC<Itemprops> = ({ items }) => {
                 label={item.buttonLabel}
                 icon={<IcoArrowForward width={16} height={16} stroke={'#131416'} />}
                 iconAlign={'right'}
-                size={'md'}
+                size={'sm'}
                 className={styles.banner_btn}
               />
             )}
