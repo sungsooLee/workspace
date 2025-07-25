@@ -26,3 +26,4 @@ export * from './user/ui/tenant-user-application-detail';
 export * from './user/ui/tenant-user-list';
 export * from './user/ui/tenant-user-regist-application-list';
 export * from './user/ui/tenant-user-regist';
+export * from './company/company-list'
