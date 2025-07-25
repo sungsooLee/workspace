@@ -52,8 +52,14 @@ export function useAuthSignin() {
     },
     reissue: async (): Promise<AuthUser | undefined> => {
       const user = await reissue();
-      const menus = await asyncMenus(user?.activeTenant?.tenantId, user.activeRole?.roleId);
-      return updateMenu(menus);
+      if (user.roles && user.roles.length > 0) {
+        const menus = await asyncMenus(
+          user.activeTenant?.tenantId,
+          user.roles?.map((role: any) => role.roleId).join(','),
+        );
+        return updateMenu(menus);
+      }
+      return user;
     },
   };
 }

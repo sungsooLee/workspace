@@ -1,16 +1,19 @@
-/* eslint-disable no-useless-catch */
 import { createElement } from 'react';
 import { ErrorComponent, redirect } from '@tanstack/react-router';
 import type { ParsedLocation } from '@tanstack/react-router';
 import { isEmpty } from 'lodash';
 import { ZodSchema } from 'zod';
 
-import { authUserQueryKeys } from '@learnway/auth/entities';
+import { authUserQueryKeys, mutateOptions, menuQueryOptions } from '@learnway/auth/entities';
+
 import type { AuthUser } from '@learnway/auth/types';
-import { ERROR } from '@learnway/config';
+import { ERROR, tokenService } from '@learnway/config';
+import { buildJodObject, convertHierarchyToList, dateDiff } from '@learnway/shared';
 import type { PageRouteConfig } from '@learnway/shared';
-import { buildJodObject, dateDiff } from '@learnway/shared';
+
 import type { PageMeta } from '../../../types';
+// import { ErrorComponent } from '@features/layout';
+import { QueryClient } from '@tanstack/react-query';
 
 // Default Routing config
 const defaultPageRouteConfig: PageRouteConfig<PageMeta> = {
@@ -25,23 +28,81 @@ const defaultPageRouteConfig: PageRouteConfig<PageMeta> = {
   },
 };
 
-// 사용자의 권한 여부를 확인
-function authorization({ location, context }: { location: ParsedLocation; context: any }) {
-  const queryClient = context.queryClient;
-  const authUser = queryClient.getQueryData(authUserQueryKeys.authUser) as AuthUser;
+export const decodeJwt = (token: string | null) => {
+  if (!token) {
+    console.error('### Invalid token:');
+    return null;
+  }
+  // // console.log('### Encode Token : ', token);
 
-  if (authUser === undefined) {
+  try {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split('')
+        .map(function (c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join(''),
+    );
+
+    return JSON.parse(jsonPayload);
+  } catch (error) {
+    return null;
+  }
+};
+
+// 사용자의 권한 여부를 확인
+async function authorization({ location, context }: { location: ParsedLocation; context: any }) {
+  if (tokenService.accessToken === null) {
     throw ERROR.AUTHORIZATION;
   }
 
-  // 패스워드 만료 시 패스워드 변경 페이지로 라우팅
-  const diff = dateDiff(authUser!.passwordExpireDate, new Date(), 'd');
-  if (location.pathname !== '/change-password' && diff !== undefined && 0 >= diff) {
-    throw ERROR.PASSWORD_EXPIRE;
+  try {
+    const token = decodeJwt(tokenService.accessToken);
+    console.log('@ token', token);
+    // const refresh = decodeJwt(tokenService.refreshToken);
+
+    // 패스워드 만료 시 패스워드 변경 페이지로 라우팅
+    const diff = dateDiff(token!.passwordExpireDate, new Date(), 'd');
+    if (location.pathname !== '/change-password' && diff !== undefined && 0 >= diff) {
+      throw ERROR.PASSWORD_EXPIRE;
+    }
+  } catch (e) {
+    console.error('@ Token ERROR:', e);
   }
 
-  if (location.pathname === '/' || !authUser?.menus) {
-    if (authUser === undefined) {
+  const queryClient = context.queryClient as QueryClient;
+  const authUserQuery = queryClient.getQueryData(authUserQueryKeys.authUser) as AuthUser;
+
+  if (!authUserQuery) {
+    const authUserFetch = (await mutateOptions.reissue().mutationFn()) as AuthUser;
+    if (authUserFetch.roles && authUserFetch.roles.length > 0) {
+      const menus = await queryClient.fetchQuery(
+        menuQueryOptions.all(
+          authUserFetch?.activeTenant?.tenantId,
+          authUserFetch.roles.map((r) => r.roleId).join(','),
+        ),
+      );
+      if (authUserFetch && menus) {
+        authUserFetch.menus = convertHierarchyToList(menus);
+        queryClient.setQueryData(authUserQueryKeys.authUser, authUserFetch);
+      }
+      console.log('@ auth fetch', authUserFetch);
+      console.log('@ auth menus222222', convertHierarchyToList(menus));
+    }
+
+    if (location.pathname === '/' || !authUserFetch?.menus) {
+      if (authUserFetch === undefined) {
+        throw ERROR.AUTHORIZATION;
+      }
+      return;
+    }
+  }
+
+  if (location.pathname === '/' || !authUserQuery?.menus) {
+    if (authUserQuery === undefined) {
       throw ERROR.AUTHORIZATION;
     }
     return;
@@ -59,19 +120,21 @@ function authorization({ location, context }: { location: ParsedLocation; contex
 export function pageRouteConfig(routeConfig?: PageRouteConfig<PageMeta>) {
   return {
     beforeLoad: async ({ location, context, params, search, preload, route }: any) => {
-      //   // 인증 정보 확인
-      //   if (routeConfig?.authorization) {
-      //     try {
-      //       authorization({ location, context });
-      //     } catch (e) {
-      //       if (e === ERROR.PAGE_ACCESS_RIGHTS) {
-      //         throw redirect({ to: '/' });
-      //       } else {
-      //         throw redirect({ to: '/login', search: { redirect: location.pathname } });
-      //       }
-      //     }
-      //   }
-      //   return { ...context, state: location?.state }; // context 정보 확장
+      // 인증 정보 확인
+      if (routeConfig?.authorization) {
+        try {
+          await authorization({ location, context });
+        } catch (e) {
+          if (e === ERROR.PAGE_ACCESS_RIGHTS) {
+            throw redirect({ to: '/' });
+          } else if (e === ERROR.PASSWORD_EXPIRE) {
+            throw redirect({ to: '/change-password' });
+          } else {
+            throw redirect({ to: '/login', search: { redirect: location.pathname } });
+          }
+        }
+      }
+      return { ...context, state: location?.state }; // context 정보 확장
     },
     loader: ({ location, context, params, search, preload, route, ...props }: any) => {
       // 기타 validation
