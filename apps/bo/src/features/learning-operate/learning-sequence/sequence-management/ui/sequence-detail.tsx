@@ -85,8 +85,6 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
     }, [lastTriggered]);
 
     const handleUpdateSequence = async () => {
-      // const confirm = await openConfirm(t('수정 하시겠습니까?'));
-      // if (!confirm) return;
       updateSequence({ sequenceId: sequenceIdProps, ...formDataToRequestData(formValues) });
     };
 
@@ -141,6 +139,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                     }}
                   />
                 }
+                validation={{ required: true }}
               />
               {/*채널*/}
               <FormRow2
@@ -148,6 +147,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                 name={'channelUuid'}
                 label={'채널'}
                 element={<TenantChannelDropdownFormField2 tenantId={-1} />}
+                validation={{ required: true }}
               />
             </ContentsRow>
             {/* 공개대상 */}
@@ -162,6 +162,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                 element={
                   <TenantByRoleChannelCheckboxFormField channelUuid={getValues().channelUuid} />
                 }
+                validation={{ required: true }}
               />
             </ContentsRow>
             {/*학습대상(유저그룹)*/}
@@ -199,6 +200,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                 name={'courseSequenceName'}
                 label={'차수명'}
                 element={<Input type={'text'} maxLength={40} />}
+                validation={{ required: true }}
               />
             </ContentsRow>
             <ContentsRow>
@@ -225,6 +227,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                   // enrollmentEndDateTime 수강신청 종료일시
                   <DateRangePickerFormField />
                 }
+                validation={{ required: true }}
               />
             </ContentsRow>
             <ContentsRow>
@@ -395,6 +398,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                     ]}
                   />
                 }
+                validation={{ required: true }}
               />
               {/* 정원 */}
               <FormRow2
@@ -427,6 +431,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                     }}
                   />
                 }
+                validation={{ required: true }}
               />
             </ContentsRow>
             {/* 수강신청 대기 */}
@@ -444,6 +449,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                     ]}
                   />
                 }
+                validation={{ required: true }}
               />
             </ContentsRow>
             {/*교재*/}
@@ -568,6 +574,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                     })}
                   />
                 }
+                validation={{ required: true }}
               />
               {/*연락처*/}
               <FormRow2
@@ -612,6 +619,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                     })}
                   />
                 }
+                validation={{ required: true }}
               />
               {/*연락처*/}
               <FormRow2
@@ -1230,6 +1238,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                     }}
                   />
                 }
+                validation={{ required: true }}
               />
               {/* 중분류 */}
               <FormRow2
@@ -1243,6 +1252,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                     }}
                   />
                 }
+                validation={{ required: true }}
               />
             </ContentsRow>
             {/* 1인당 교육비, 고용보험 환급비용 */}
@@ -1445,6 +1455,7 @@ export const SequenceDetail = SequenceDetailComponent;
  * 응답 데이터를 폼 데이터로 변환
  */
 const responseDataToFormData = (d: LearningSequence): any => {
+  console.log('##responseDataToFormData=>', d);
   return {
     ...d,
     tenantIds: d?.tenantList?.map((d: any) => d.tenantId), // 테넌트 아이디
@@ -1477,14 +1488,7 @@ const responseDataToFormData = (d: LearningSequence): any => {
  * @returns {LearningSequence} 차수 기본 정보 요청 데이터
  */
 export const formDataToRequestData = (d: LearningSequence) => {
-  // 학습기간 유형(시작일 기준/기간 지정)
-  if (d.learningStartType === 'DAYS_AFTER_ENROLL') {
-    d.learningStartDays = undefined;
-  } else {
-    d.learningStartRange = undefined;
-    d.learningStartDateTime = undefined;
-    d.learningEndDateTime = undefined;
-  }
+  console.log('####formDataToRequestData=>', d);
 
   // 수강취소(미사용/사용)
   if (!d.isEnrollCancelDeadLineActivated) {
@@ -1557,6 +1561,7 @@ export const formDataToRequestData = (d: LearningSequence) => {
     d.enrollCancelEndDateTime = d.enrollCancelRange?.to;
   }
 
+  console.log('d.learningStartRange=>', d.learningStartRange);
   if (d.learningStartRange) {
     d.learningStartDateTime = d.learningStartRange?.from;
     d.learningEndDateTime = d.learningStartRange?.to;

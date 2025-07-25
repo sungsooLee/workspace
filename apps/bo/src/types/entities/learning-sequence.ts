@@ -33,10 +33,10 @@ export interface LearningSequence {
   enrollCancelStartDateTime?: string;
   enrollCancelEndDateTime?: string;
   learningStartType: string;
-  learningStartDays?: number;
+  learningStartDays?: number | null;
   learningStartRange?: any;
-  learningStartDateTime?: string;
-  learningEndDateTime?: string;
+  learningStartDateTime?: string | null;
+  learningEndDateTime?: string | null;
   learningSpaceType: string;
   learningSpaceId?: number;
   learningSpaceName?: string;

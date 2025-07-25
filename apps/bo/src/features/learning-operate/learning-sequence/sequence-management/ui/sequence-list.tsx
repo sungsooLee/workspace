@@ -307,6 +307,10 @@ const SequenceListComponent = ({
         courseSequenceName: data.courseSequenceName,
       };
     }
+    setParams({
+      ...payload,
+    });
+    // setValuesWithLabel(getValuesWithLabel());
     console.log('##payload:', payload);
     gridFetch(payload);
   }, []);
@@ -513,8 +517,11 @@ const SequenceListComponent = ({
               <GridExcelUploadButton validateUrl="/multilingual/excelUploadValidation" />
             )}
             <GridExcelDownloadButton
-              url={`${LMSApiPrefix()}/multilingual/exportExcel`}
-              params={getValues()}
+              url={`${LMSApiPrefix()}/sequences/excel`}
+              params={params}
+              paramLabels={valuesWithLabel}
+              dataCount={data?.totalElements}
+              disabled={!data?.totalElements}
             />
           </>
         }

@@ -74,6 +74,8 @@ const EnrollmentRegistComponent = ({
   const [columns, setColumns] = useState() as any;
   const [selectedRows, setSelectedRows] = useState<any[]>();
   const [statsCount, setStatsCount] = useState<Array<StatsSummaryData>>([]);
+  const [params, setParams] = useState<Record<string, any>>({});
+  const [valuesWithLabel, setValuesWithLabel] = useState<Record<string, SelectOption>>({});
   const queryClient = useQueryClient();
 
   _global.linkClickSequenceName = (payload: any) => {
@@ -108,17 +110,7 @@ const EnrollmentRegistComponent = ({
       }),
       columnHelper.accessor('courseSequenceName', {
         header: t('차수명'),
-        cell: (info) =>
-          // (
-          // <Button
-          //   className="link"
-          //   onClick={() => {
-          //     _global.linkClickSequenceName(info.row.original as any);
-          //   }}
-          //   label={info.getValue() as string}
-          // />
-          //)
-          info.getValue(),
+        cell: (info) => info.getValue(),
         enableGrouping: false,
         size: 207,
       }),
@@ -225,27 +217,38 @@ const EnrollmentRegistComponent = ({
   };
 
   const handleOnSearch = useCallback((data: any) => {
+    // const payload = {
+    //   openingYear: 2025,
+    //   courseSequenceId: 2,
+    //   enrollStatusType: data.enrollStatusType || '',
+    //   learningStartDate: '2025-06-22',
+    //   learningEndDate: '2025-08-22',
+    //   companyId: 54,
+    //   deptId: 1,
+    //   employeeNumber: data.employeeNumber || '',
+    //   name: data.name || '',
+    // };
+
     const payload = {
-      // openingYear: data.openingYear || null,
-      // courseSequenceId: data.courseSequenceId || null,
-      openingYear: 2025,
-      courseSequenceId: 2,
+      openingYear: data.openingYear || null,
+      courseSequenceId: data.courseSequenceId || null,
       enrollStatusType: data.enrollStatusType || '',
-      // learningStartDate: data.learningRange?.from
-      //   ? getDateToString(data.learningRange?.from, DATE_TIME_FORMAT.DATE)
-      //   : null,
-      // learningEndDate: data.learningRange?.to
-      //   ? getDateToString(data.learningRange?.to, DATE_TIME_FORMAT.DATE)
-      //   : null,
-      // companyId: data.company || null,
-      // deptId: data.deptId || null,
-      learningStartDate: '2025-06-22',
-      learningEndDate: '2025-08-22',
-      companyId: 54,
-      deptId: 1,
+      learningStartDate: data.learningRange?.from
+        ? getDateToString(data.learningRange?.from, DATE_TIME_FORMAT.DATE)
+        : null,
+      learningEndDate: data.learningRange?.to
+        ? getDateToString(data.learningRange?.to, DATE_TIME_FORMAT.DATE)
+        : null,
+      companyId: data.company || null,
+      deptId: data.deptId || null,
       employeeNumber: data.employeeNumber || '',
       name: data.name || '',
     };
+
+    setParams({
+      ...payload,
+    });
+    // setValuesWithLabel(getValuesWithLabel());
 
     console.log('## payload=>', payload);
     setStats(payload);
@@ -310,7 +313,6 @@ const EnrollmentRegistComponent = ({
             />
             <Button variant="text" label={t('메시지발송')} onClick={(e) => console.log('test')} />
 
-            {/* <Dropdown options={[{ label: '1', value: '1' }]} value={'1'} /> */}
             <Button variant="text" label={t('일괄승인')} onClick={handleBulkApproval} />
             <Button variant="text" label={t('강제승인')} onClick={handleForcedApproval} />
             <Button variant="text" label={t('반려')} onClick={handleRejection} />
@@ -320,8 +322,10 @@ const EnrollmentRegistComponent = ({
         excelButtons={
           <>
             <GridExcelDownloadButton
-              url={`${LMSApiPrefix()}/multilingual/exportExcel`}
-              params={getValues()}
+              url={`${LMSApiPrefix()}/enrolls/excel`}
+              params={params}
+              dataCount={data?.totalElements}
+              disabled={!data?.totalElements}
             />
           </>
         }
