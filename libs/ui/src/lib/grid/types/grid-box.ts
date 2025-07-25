@@ -338,7 +338,7 @@ export interface GridBoxProps<T extends object = object>
   /**
    * 외부에서 선택된 row의 id 배열을 지정할 수 있습니다.
    */
-  selectedRowIds?: string[] | number[];
+  selectedRowIds?: string[];
 }
 
 /**
