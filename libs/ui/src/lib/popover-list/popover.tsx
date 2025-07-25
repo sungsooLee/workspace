@@ -22,7 +22,7 @@ const Component = forwardRef<React.ElementRef<typeof Primitive.Popover>, Popover
     return (
       <Primitive.Root open={isOpen} onOpenChange={setIsOpen}>
         <Primitive.Trigger asChild>{children}</Primitive.Trigger>
-        <Primitive.Content>
+        <Primitive.Content {...props}>
           <List options={options} onOptionSelect={handleOptionSelect} />
         </Primitive.Content>
       </Primitive.Root>
