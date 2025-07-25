@@ -11,6 +11,7 @@ import { LearningResourceFileUploadModal } from './learning-resource-file-upload
 import { LEARNING_TYPE } from '@learnway/config';
 import { t } from 'i18next';
 import { MediaInfo } from './media-info';
+import { ScormViewModal } from './learning-resource-scorm-view-modal';
 
 interface MovieInfoProps {
   provider: DynamicFormProvider;
@@ -53,6 +54,14 @@ const ScormInfoComponent = ({ provider }: MovieInfoProps) => {
     handleChangeScorm(fileUuid);
   }, [tenantId, channelUuid, channelName]);
 
+  const scormView = useCallback(() => {
+    if (scormResource?.children)
+      openModal({
+        width: 'md',
+        content: <ScormViewModal scormData={scormResource.children} />,
+      });
+  }, [scormResource]);
+
   const preview = useCallback(() => {
     openModal({
       width: 'full',
@@ -86,7 +95,7 @@ const ScormInfoComponent = ({ provider }: MovieInfoProps) => {
     },
     {
       label: t('스콤보기'),
-      onClick: () => console.log('btn 3'),
+      onClick: scormView,
     },
     {
       label: t('미리보기'),

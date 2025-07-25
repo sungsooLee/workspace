@@ -102,7 +102,7 @@ export function useGridTable<T extends object>(
 
   const createExpandColumn = (): ColumnDef<T> => ({
     id: 'expand',
-    size: 64,
+    size: 54,
     // maxSize: 100,
     // minSize: 100,
     enablePinning: true,
@@ -166,7 +166,7 @@ export function useGridTable<T extends object>(
   // 넘버링/선택 컬럼 정의를 이 훅 안으로 이동
   const createNumberingColumn = (): ColumnDef<T> => ({
     id: 'numbering',
-    size: 64,
+    size: 54,
     header: 'NO.',
     meta: { cellAlign: 'center' },
     enableSorting: false,
