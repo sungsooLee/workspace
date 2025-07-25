@@ -16,6 +16,7 @@ import {
   useFetchAuthUser,
   useUpdateAuthUser,
 } from '../../authorization/service/authorization.hook';
+import { getConfig } from '@learnway/config';
 
 interface phoneNumberPayload {
   name: string;
@@ -144,10 +145,14 @@ export function useUpdateTenantRoleLastSelect(mutationOptions = {}) {
   const { mutateAsync, isSuccess, isError } = useMutation({
     ...mutateOptions.updateTenantRoleLastSelect(),
     onSuccess: async (data: any, variables, context) => {
-      if (variables.lastVisitedBoTenantId) {
-        const tenant = authUser?.tenants?.find(
-          (tenant) => tenant.tenantId === variables.lastVisitedBoTenantId,
-        );
+      if (variables) {
+        const tenantId =
+          getConfig().APP_INFO === 'BO'
+            ? variables.lastVisitedBoTenantId
+            : variables.lastVisitedFoTenantId;
+
+        console.log('@@@ tenantId', tenantId);
+        const tenant = authUser?.tenants?.find((tenant) => tenant.tenantId === tenantId);
         const role = authUser?.roles?.find((role) => role.roleId === variables.lastVisitedBoRoleId);
         tenant && updateActiveTenant(tenant);
         role && updateActiveRole(role);

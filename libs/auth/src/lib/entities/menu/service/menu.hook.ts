@@ -4,7 +4,7 @@ import { convertHierarchyToList } from '@learnway/shared';
 
 import { menuQueryOptions as queryOptions, menuQueryKeys as queryKeys } from './menu.queries';
 
-export function useFetchMenus(tenantId?: number, roleId?: number) {
+export function useFetchMenus(tenantId?: number, roleId?: number | string) {
   return useQuery(queryOptions.all(tenantId, roleId));
 }
 
@@ -16,7 +16,7 @@ export function useAsycFetchMenus(mutationOptions = {}) {
   const queryClient = useQueryClient();
 
   return {
-    asyncMenus: async (tenantId: number, roleId: number) => {
+    asyncMenus: async (tenantId: number, roleId: number | string) => {
       // console.log('#### asyncMenus', tenantId, roleId);
 
       // TODO 롤 체크 추가 ( FO 로그인 정책 추가 후 )

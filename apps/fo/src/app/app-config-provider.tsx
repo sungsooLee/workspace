@@ -41,7 +41,7 @@ export function AppConfigProvider({ children }: AppConfigProviderProps) {
     // set api prefix by fo
     setConfig('APP_INFO', 'FO');
     setConfig('APP_API_URI', API_FO_URI);
-    tokenService.refreshToken && (await reissue());
+    // tokenService.refreshToken && (await reissue());
   });
 
   useEffect(() => {

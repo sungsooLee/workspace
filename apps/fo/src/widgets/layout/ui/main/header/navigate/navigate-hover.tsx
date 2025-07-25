@@ -18,7 +18,7 @@ interface NavigateHoverComponentProps {
 function NavigateHoverComponent({ hoverMenu, isOpen, onClose }: NavigateHoverComponentProps) {
   const { t } = useTranslation();
   const router = useRouter();
-  const { data } = useMenuHierarchy();
+  // const { data } = useMenuHierarchy();
 
   useEffect(() => {
     return router.history.subscribe((navigation) => {
