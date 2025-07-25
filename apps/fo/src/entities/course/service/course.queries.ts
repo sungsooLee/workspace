@@ -29,9 +29,9 @@ export const queryOptions = {
     queryFn: async () => CourseService.fetch(id),
   }),
   // 과정 차수 불러오기
-  courseSequences: (uuid: string): UseQueryOptions => ({
-    queryKey: queryKeys.sequences(uuid),
-    queryFn: () => CourseService.fetchSequences(uuid),
+  courseSequences: (id: string): UseQueryOptions => ({
+    queryKey: queryKeys.sequences(id),
+    queryFn: () => CourseService.fetchSequences(id),
   }),
   // 과정 차수 단건 불러오기
   courseSequenceOne: (sequenceId: string): UseQueryOptions => ({
@@ -74,7 +74,7 @@ export const mutateOptions = {
   }),
   // 과정찜하기
   courseLikeRequest: () => ({
-    mutationFn: (payload: any) => CourseService.postCourseLike(payload),
+    mutationFn: (courseId: number) => CourseService.postCourseLike(courseId),
   }),
   courseDetail: (courseId: number) =>
     courseId
