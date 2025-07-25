@@ -23,8 +23,31 @@
     .start {
       .table_wrap {
         @apply px-[16px];
+        & > div {
+          @apply rounded-[8px] border-[1px] border-solid border-[var(--gray90)] p-[20px];
+          div,
+          span {
+            @apply !border-none;
+          }
+          [class*='list_row'] {
+            @apply py-0;
+          }
+          [class*='row'] {
+            @apply py-0;
+            & + [class*='row'] {
+              @apply mt-[32px];
+            }
+          }
+          [class*='dt'] {
+            @apply title4-b text-[var(--gray10)];
+          }
+          [class*='dd'] {
+            @apply body-md mt-[8px] flex items-center justify-between !pb-0 text-[var(--gray35)];
+          }
+        }
       }
       .text_info {
+        @apply body-sm mt-[10px] px-[20px];
       }
     }
   }

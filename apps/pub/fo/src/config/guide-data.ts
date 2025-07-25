@@ -1283,13 +1283,13 @@ export const guideData = [
   },
   {
     screenId: 'NLP_FO_CLA_1011',
-    screenName: '강의실_과제_등록',
+    screenName: '	강의실_홈(대시보드)_학습이력 팝업창',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'course-introduction/detail',
+    pageType: 'Pop-up',
+    completionDate: '2025-07-23',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- notice-detail-popup.tsx',
   },
   {
     screenId: 'NLP_FO_CLA_1012',
@@ -1466,13 +1466,13 @@ export const guideData = [
   },
   {
     screenId: 'NLP_FO_CLA_MA_1011',
-    screenName: 'M_강의실_과제_상세',
+    screenName: 'M_강의실_홈(대시보드)_학습이력 팝업창',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'course-introduction/detail-m',
+    pageType: 'Pop-up',
+    completionDate: '2025-07-25',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- notice-detail-popup.tsx',
   },
   {
     screenId: 'NLP_FO_CLA_MA_1012',
