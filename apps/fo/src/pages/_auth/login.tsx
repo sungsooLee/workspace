@@ -57,7 +57,7 @@ function RouteComponent() {
   const { login } = useAuthSignin();
   const { logout } = useLogoutUser();
   const { set: setLanguage, inProgress } = useSetLanguage();
-  const { open: openModal, alert: openAlert } = useModal();
+  const { openModal, alert: openAlert } = useModal();
 
   // const { data: authData } = useFetchAuthUser();
   // useEffect(() => {

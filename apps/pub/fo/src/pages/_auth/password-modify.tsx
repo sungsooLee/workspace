@@ -17,7 +17,7 @@ export const Route = createFileRoute('/_auth/password-modify')({
 });
 
 function RouteComponent() {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
   return (
     <form className="form_row">
       <div className={`${styles.start} ${styles.auth_wrap} ${styles.password_modify}`}>
@@ -85,7 +85,8 @@ function RouteComponent() {
           </div>
 
           <div
-            className={`${noticeBoxStyles.start} ${noticeBoxStyles.signup_noti} ${styles.signup_noti}`}>
+            className={`${noticeBoxStyles.start} ${noticeBoxStyles.signup_noti} ${styles.signup_noti}`}
+          >
             <dl className={noticeBoxStyles.check_point}>
               <dt>
                 <IcoCaution width={16} height={16} stroke="#6F798B" />
@@ -114,7 +115,8 @@ function RouteComponent() {
                       width: 'sm',
                       content: <GoogleCertGuidePopup />,
                     })
-                  }>
+                  }
+                >
                   구글 OTP 인증 가이드
                 </Button>
               </dd>

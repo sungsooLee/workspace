@@ -40,7 +40,7 @@ export const Route = createFileRoute('/_layout/learning/popup-learningSetting')(
 });
 
 function RouteComponent() {
-  const { open: openModal, close: closeModal } = useModal();
+  const { openModal, closeModal } = useModal();
   // grid
   const data: any[] = [
     {

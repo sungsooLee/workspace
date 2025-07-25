@@ -11,8 +11,8 @@ import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/con
 import { cn } from '@learnway/shared';
 
 const GoogleKeyPopupCompoment = () => {
-  const { close: closeModal } = useModal();
-  const { open: openModal } = useModal();
+  const { closeModal } = useModal();
+  const { openModal } = useModal();
   return (
     <ModalContainer>
       <ModalTitle>{'구글 OTP 인증키 생성'}</ModalTitle>

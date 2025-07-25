@@ -13,7 +13,7 @@ import styles from '@learnway/styles/bo/assets/styles/modules/widget-management.
 
 const ChangePasswordModalComponent = () => {
   const { t } = useTranslation();
-  const { close: closeModal, alert } = useModal();
+  const { closeModal, alert } = useModal();
 
   const { provider, onFormChange, control, getValues, onFormValid, onSubmit, setFormError } =
     useDynamicForm(passwordFormConfig);

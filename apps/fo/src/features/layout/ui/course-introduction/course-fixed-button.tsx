@@ -16,7 +16,7 @@ interface CourseFixedButton {
 }
 
 const CourseFixedButtonComponent = ({ course, courseData }: CourseFixedButton) => {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
 
   // 찜
   const [heart, setHeart] = useState(false);

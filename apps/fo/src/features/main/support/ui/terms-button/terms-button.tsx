@@ -14,7 +14,7 @@ interface TermsButtonComponentProps {
 
 function TermsButtonComponent({ termsType }: TermsButtonComponentProps) {
   const { t } = useTranslation();
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
 
   const { data } = useFetchAuthUser();
 

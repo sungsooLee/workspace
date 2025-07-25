@@ -21,7 +21,7 @@ import { ContentInformation } from '@types';
 const CopyModalComponent = ({ contentUuid }: { contentUuid: string }) => {
   const { t } = useTranslation();
   const router = useRouter();
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<any>(null);

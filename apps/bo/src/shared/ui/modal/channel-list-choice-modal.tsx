@@ -17,7 +17,7 @@ import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-content
 import { queryOptions } from '@entities/channel/service/channel.queries';
 
 const ChannelListModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
 
   const searchConfig: SearchBoxConfig = {
     builders: [

@@ -16,7 +16,7 @@ import { IcoRefresh02, IcoSearch } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 
 function SelectCoordinatorModalComponent() {
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
   return (
     <ModalContainer>

@@ -33,7 +33,7 @@ export const Route = createFileRoute('/_auth/search-account')({
 });
 
 function RouteComponent() {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
   const [selectedTabKey, selectedTabKey2] = useState<string>('');
   const items = [
     {

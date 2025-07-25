@@ -52,7 +52,7 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
 
   const formRef = useRef<HTMLFormElement>(null);
 
-  const { open: openModal, confirm: openConfirm } = useModal();
+  const { openModal, confirm: openConfirm } = useModal();
 
   const { getCode } = useCodeStore();
   const { provider, updateFormData, onSubmit, onFormChange, getValues } =

@@ -5,7 +5,7 @@ import imgGuide2 from '../../../assets/images/popup/img_mpass_guide2.png';
 import { ModalBody, ModalContainer, ModalTitle, ModalFooter, Button, useModal } from '@learnway/ui';
 
 const MpassPopupCompoment = () => {
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
   return (
     <ModalContainer>
       <ModalTitle>{'FIDO 인증'}</ModalTitle>

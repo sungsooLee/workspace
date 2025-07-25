@@ -29,7 +29,7 @@ export interface CategoryChoiceModalProps {
 const CategoryChoiceModalComponent = forwardRef<HTMLDivElement, CategoryChoiceModalProps>(
   ({ tenantIds, ...props }, ref) => {
     const { t } = useTranslation();
-    const { close: closeModal } = useModal();
+    const { closeModal } = useModal();
     const { data } = useFetchTenantCategoryTreePopup(tenantIds);
     const treeData = useMemo(
       () =>

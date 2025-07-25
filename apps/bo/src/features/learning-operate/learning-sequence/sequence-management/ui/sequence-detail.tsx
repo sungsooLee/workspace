@@ -1,4 +1,12 @@
-import { useEffect, useCallback, useState, useRef, useImperativeHandle, forwardRef } from 'react';
+import {
+  useDeleteSequence,
+  useUpdateSequence,
+} from '@entities/learning-sequence/service/learning-sequence.hook';
+import { queryOptions } from '@entities/learning-sequence/service/learning-sequence.queries';
+import { DateRangePickerFormField, DropdownFormField, FormDisplay } from '@features/form';
+import { InstructorListPopup } from '@features/learning-operate-support/instructor-tutor/instructor-management/modal/instructor-list-modal';
+import { TriggerKey } from '@features/learning-operate/course/course-management';
+import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import {
   ChipListModalSelectorFormField,
   ContentsRow,
@@ -10,11 +18,10 @@ import {
   SplitPanel,
   useModal,
 } from '@learnway/ui';
-import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
-import { useQueryClient } from '@tanstack/react-query';
 import {
   FormRow,
   FormRow2,
+  PassOptionFormField,
   SwitchFormField,
   TenantByRoleChannelCheckboxFormField,
   TenantChannelDropdownFormField2,
@@ -22,20 +29,11 @@ import {
   UserChoiceModal,
   UserGroupTabsChoiceModal,
 } from '@shared/ui';
-import dayjs from 'dayjs';
-import { DateRangePickerFormField, DropdownFormField, FormDisplay } from '@features/form';
-import { InstructorListPopup } from '@features/learning-operate-support/instructor-tutor/instructor-management/modal/instructor-list-modal';
-import {
-  useUpdateSequence,
-  useDeleteSequence,
-} from '@entities/learning-sequence/service/learning-sequence.hook';
-import { queryOptions } from '@entities/learning-sequence/service/learning-sequence.queries';
-import { LearningSequence } from 'src/types/entities/learning-sequence';
-import { CourseDetailTabFormRef } from '@pages/_layout/learning/course/-common/type';
-import { useTranslation } from 'react-i18next';
+import { useQueryClient } from '@tanstack/react-query';
 import { useUpdateEffect } from 'ahooks';
-import { TriggerKey } from '@pages/_layout/learning/course/-store/use-course-store';
-import { PassOptionFormField } from '@shared/ui';
+import { forwardRef, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
+import { LearningSequence } from 'src/types/entities/learning-sequence';
 
 type SequenceDetailComponentProps = {
   mode: string;
@@ -49,7 +47,7 @@ type SequenceDetailComponentProps = {
  * NLP_BO_LMS_0033 : 차수 상세
  * @returns
  */
-const SequenceDetailComponent = forwardRef<CourseDetailTabFormRef, SequenceDetailComponentProps>(
+const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentProps>(
   ({ mode, setMode, courseId: courseIdProps, sequenceId: sequenceIdProps, lastTriggered }, ref) => {
     console.log('##courseIdProps=>', courseIdProps);
     console.log('##sequenceIdProps=>', sequenceIdProps);

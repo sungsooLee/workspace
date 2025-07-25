@@ -149,7 +149,7 @@ const TenantModal = () => {
 };
 
 const TenantComponent = () => {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
   return (
     <Button
       className={styles.btn_tenant}

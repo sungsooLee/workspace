@@ -53,7 +53,7 @@ const ChipListModalSelectorFormFieldComponent = forwardRef<
     },
     ref,
   ) => {
-    const { open: openModal } = useModal();
+    const { openModal } = useModal();
 
     const mergeValue = (modalData: any) => {
       if (!modalData) {

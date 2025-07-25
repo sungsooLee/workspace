@@ -85,7 +85,7 @@ const ExcelUploadModalComponent = ({
 
   const acceptFileString = useMemo(() => acceptFilesToAccept(acceptFiles), [acceptFiles]);
 
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
 
   const [files, setFiles] = useState<UploadFile[]>([]);
   const [isLoading, setIsLoading] = useState(false);

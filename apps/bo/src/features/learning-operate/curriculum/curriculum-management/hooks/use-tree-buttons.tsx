@@ -19,7 +19,7 @@ export const useTreeButtons = ({
   curriculumDetail,
   onCurriculumLoad,
 }: UseTreeButtonsProps) => {
-  const { open } = useModal();
+  const { openModal } = useModal();
   const renderNodeButtons = (node: TreeNode, level: number): React.ReactNode => {
     const nodeType = node.type as MAPPING_CURRICULUM_TYPE;
     const allowedChildren = NODE_CHILDREN_MAP[nodeType] || [];
@@ -72,7 +72,7 @@ export const useTreeButtons = ({
   };
 
   const handleLoadButtonClick = () => {
-    open({
+    openModal({
       content: (
         <CurriculumChoiceModal
           initialTenantId={curriculumDetail?.tenantId}

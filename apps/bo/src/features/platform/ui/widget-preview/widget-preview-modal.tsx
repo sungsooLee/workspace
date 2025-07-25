@@ -19,7 +19,7 @@ import type { Widget } from '../../../../types';
 import { EmbedWidgetPreview } from '../embed-widget-preview/embed-widget-preview';
 
 const WidgetPreviewModalComponent = ({ widget }: { widget: Widget }) => {
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
 
   console.log('widget', widget);
   const items = useCreation(() => {

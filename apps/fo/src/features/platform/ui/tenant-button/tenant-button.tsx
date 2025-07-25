@@ -12,7 +12,7 @@ import { Tenant } from '../../../../types';
 import styles from '@learnway/styles/fo/features/platform/ui/tenant-button/tenant-button.module.css';
 
 const TenantComponent = () => {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
 
   const { data } = useFetchAuthUser();
 

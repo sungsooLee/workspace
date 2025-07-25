@@ -24,7 +24,7 @@ export const Route = createFileRoute('/_layout/course/registration')({
 type COURSE_REGISTRATION_FORMAT = 'ALL' | 'LEVEL_TEST' | 'TEXTBOOK';
 
 function RouteComponent() {
-  const { open: openModal, alert: openAlert, confirm: openConfirm } = useModal();
+  const { openModal, alert: openAlert, confirm: openConfirm } = useModal();
   const path = useSearchParam('format');
   const DEFAULT_COURSE_REGISTRATION_FORMAT = 'ALL';
   const currentCourseRegistrationFormat =

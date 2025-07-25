@@ -69,9 +69,9 @@ export interface ModalClose<T = any> {
 
 export interface useModalReturnValue {
   modals: ModalConfig[];
-  open: (props: ModalConfig | (() => ModalConfig)) => Promise<any>;
-  close: (data?: any) => void;
-  closeAll: () => void;
+  openModal: (props: ModalConfig | (() => ModalConfig)) => Promise<any>;
+  closeModal: (data?: any) => void;
+  closeAllModal: () => void;
   alert: (props: AlertComponentProps | string) => Promise<boolean>;
   confirm: (props: AlertComponentProps | string) => Promise<boolean>;
   showSaveComplete: (props?: AlertComponentProps) => Promise<boolean>;

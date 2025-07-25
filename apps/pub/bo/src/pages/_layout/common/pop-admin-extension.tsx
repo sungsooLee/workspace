@@ -26,7 +26,7 @@ export const Route = createFileRoute('/_layout/common/pop-admin-extension')({
 });
 
 function RouteComponent() {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
 
   useEffect(() => {
     openModal({
@@ -38,7 +38,7 @@ function RouteComponent() {
 }
 
 const CategorySelectContent = () => {
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
   return (
     <ModalContainer>
       <ModalTitle>카테고리 선택</ModalTitle>

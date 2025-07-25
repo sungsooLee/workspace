@@ -76,7 +76,7 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleInfo, siteScope }: a
   const tenantId = routerState.location.state?.tenantId;
   const tenantName = routerState.location.state?.tenantName;
 
-  const { open: openModal, confirm: openConfirm } = useModal();
+  const { openModal, confirm: openConfirm } = useModal();
 
   const { data: roleData } = useFetchRoleTree(tenantId, siteScope);
   const { data: roleMenuData } = useFetchRoleMenus(tenantId, siteScope, selectedRole?.roleId || '');

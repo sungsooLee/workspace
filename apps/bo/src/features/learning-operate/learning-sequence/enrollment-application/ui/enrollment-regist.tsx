@@ -69,7 +69,7 @@ const EnrollmentRegistComponent = ({
 }: EnrollmentRegistComponentProps) => {
   console.log('## courseSequenceId:', courseSequenceId);
   const router = useRouter();
-  const { open: openModal, confirm: openConfirm, alert } = useModal();
+  const { openModal, confirm: openConfirm, alert } = useModal();
   const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
   const [columns, setColumns] = useState() as any;
   const [selectedRows, setSelectedRows] = useState<any[]>();

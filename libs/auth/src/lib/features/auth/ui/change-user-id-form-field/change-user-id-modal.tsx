@@ -25,7 +25,7 @@ const TIME_LIMIT_VERIFY = 180;
 
 const ChangeUserIdModalComponent = ({ widget }: { widget: any }) => {
   const { t } = useTranslation();
-  const { close: closeModal, alert } = useModal();
+  const { closeModal, alert } = useModal();
 
   const { provider, onFormChange, control, getValues, onFormValid, onSubmit, setFormError } =
     useDynamicForm(userIdFormConfig);

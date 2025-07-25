@@ -23,8 +23,8 @@ const CourseDashboardCompoment = () => {
 
   const progress = 80;
 
-  const { open: openModal } = useModal();
-  const { close: closeModal } = useModal();
+  const { openModal } = useModal();
+  const { closeModal } = useModal();
 
   const [detail, setDetail] = useState<boolean>();
 

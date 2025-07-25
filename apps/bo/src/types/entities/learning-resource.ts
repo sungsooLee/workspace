@@ -1,4 +1,5 @@
-import { CourseType } from '@pages/_layout/learning/course/-common/type';
+import { CourseType } from '@features/learning-operate/course/course-management';
+import { PaginationRequest, PaginationResponse } from '@learnway/ui';
 import {
   ContentAddInfoType,
   ContentCreateType,
@@ -8,8 +9,6 @@ import {
   FileType,
   ProcessingStatus,
 } from './enum';
-import { PaginationRequest, PaginationResponse } from '@learnway/ui';
-import { CmsImageItem } from '@learnway/types';
 
 export interface MediaContentSaveReq {
   contentName: string;

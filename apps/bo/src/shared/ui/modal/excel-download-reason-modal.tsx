@@ -35,7 +35,7 @@ function ExcelDownloadReasonModalCompoment({
   dataCount,
   paramLabels,
 }: ExcelDownloadReasonModalComponentProps) {
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
   const { data: user } = useFetchAuthUser();
   const { activeMenuDepthMenu } = useActiveMenuDepthState((state) => state);
   const { getCode } = useCodeStore();

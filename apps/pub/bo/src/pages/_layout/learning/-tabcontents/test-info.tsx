@@ -43,7 +43,7 @@ import previewImg from '../../../../assets/images/temp/img_exam_basic.jpg';
 import selectedImg from '../../../../assets/images/thumb/img_thumb_hyundai.jpg';
 
 const TestInfoComponent: FC<{}> = ({}) => {
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
   const ModalChannelContent = () => {
     const [selectedValues, setSelectedValues] = useState<string[]>([]);
     const options = [

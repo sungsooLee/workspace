@@ -18,7 +18,7 @@ import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-content
 import { tenantQueryOptions } from '@entities/tenant/service/tenant.queries';
 
 const TenantModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
 
   const searchConfig: SearchBoxConfig = {
     builders: [

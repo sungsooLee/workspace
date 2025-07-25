@@ -21,7 +21,7 @@ export const Route = createFileRoute('/_auth/popup-role-select')({
 });
 
 function RouteComponent() {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
   useEffect(() => {
     openModal({
       width: 'lg', // sm(600px), md(800px), lg(1024px), xl(1400px)
@@ -38,7 +38,7 @@ function RouteComponent() {
 }
 
 const Contents = () => {
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
   const [tenantvalues, setTenantValues] = useState<string>('a');
   const [rolevalues, setRolevalues] = useState<string>('a');
   const tenantOptions = [

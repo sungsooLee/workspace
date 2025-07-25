@@ -20,7 +20,7 @@ const GridExcelUploadButtonComponent: React.FC<ExcelButtonsProps> = ({
   affairsType = 'PMS',
   formDataName = 'file',
 }) => {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
 
   // 업로드
   const handleUpload = async () => {

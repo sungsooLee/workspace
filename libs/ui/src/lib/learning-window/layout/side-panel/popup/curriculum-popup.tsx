@@ -10,7 +10,7 @@ interface ChildData {
 }
 
 const CurriculumPopupComponent = () => {
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
 
   const { curriculum, playInfo, playList, playIndex, setPlayInfo } = useLearningWindow();
 

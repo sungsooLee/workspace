@@ -16,7 +16,7 @@ export const Route = createFileRoute('/_layout/learning/pop-program-guide')({
 });
 
 function RouteComponent() {
-  const { open: openModal, close: closeModal } = useModal();
+  const { openModal, closeModal } = useModal();
   const GuideContent = () => {
     // grid
     const data: any[] = [

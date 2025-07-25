@@ -134,7 +134,7 @@ export function useLoginTimer() {
   const { logout } = useLogoutUser();
   const { reissue } = useReissue();
   const { exp, showAlert, setShowAlert, reset } = useExpStore((state) => state);
-  const { alert: openAlert, confirm: openConfirm, closeAll } = useModal();
+  const { alert: openAlert, confirm: openConfirm, closeAllModal } = useModal();
 
   const intervalRef = useRef<NodeJS.Timer | null>(null);
 
@@ -174,7 +174,7 @@ export function useLoginTimer() {
   }
 
   function handleLogout() {
-    closeAll();
+    closeAllModal();
     logout(undefined, {
       onSuccess: () => {
         openAlert({
@@ -212,10 +212,10 @@ export function useLoginTimer() {
         if (feedback) {
           await reissue();
           setShowAlert(true);
-          closeAll();
+          closeAllModal();
         } else {
           // 로그인 연장 취소한 경우 다시 묻지 않음
-          closeAll();
+          closeAllModal();
         }
       },
     });

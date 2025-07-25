@@ -94,7 +94,7 @@ const SequenceListComponent = ({
 }: SequenceListComponentProps) => {
   console.log('## courseIdProps:', courseIdProps);
   const router = useRouter();
-  const { open: openModal, confirm: openConfirm, alert: openAlert, showSaveComplete } = useModal();
+  const { openModal, confirm: openConfirm, alert: openAlert, showSaveComplete } = useModal();
   const [columns, setColumns] = useState() as any;
   const [selectedItems, setSelectedItems] = useState<any[]>([]);
 

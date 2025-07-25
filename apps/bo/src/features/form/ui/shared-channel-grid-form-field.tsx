@@ -16,7 +16,7 @@ const SharedChannelGridFormFieldComponent = forwardRef<
   SharedChannelGridFormFieldComponentProps
 >(({ value, onChange }, ref) => {
   const { t } = useTranslation();
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
 
   // 테이블 컬럼 정의
   const columns = [

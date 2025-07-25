@@ -20,7 +20,7 @@ import { useModal } from '../../modal/modal.hook';
 import { VideoSubsettingPopup } from './video-subsetting-popup';
 
 const BottomProgressBar = (props: VideoPlayerContainerProps) => {
-  const { alert: openAlert, open: openModal } = useModal();
+  const { alert: openAlert, openModal } = useModal();
   const [showSettings, setShowSettings] = useState(false);
 
   const toggleSettings = () => {

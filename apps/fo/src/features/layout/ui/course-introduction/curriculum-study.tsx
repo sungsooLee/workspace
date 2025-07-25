@@ -10,7 +10,7 @@ interface CurriculumStudyProps {
 }
 
 const CurriculumStudyComponent = ({ className }: CurriculumStudyProps) => {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
   return (
     <div className={`${styles.start} ${styles.curriculum} ${className || ''}`}>
       <ol>

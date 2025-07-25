@@ -55,7 +55,7 @@ function RouteComponent() {
   const router = useRouter();
 
   console.log('### detail state,', state);
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
   const {
     provider: sProvider,
     getValues,

@@ -30,7 +30,7 @@ export const Route = createFileRoute('/_layout/common/pop-data-range-setting')({
 });
 
 function RouteComponent() {
-  const { open: openModal, close: closeModal } = useModal();
+  const { openModal, closeModal } = useModal();
 
   const PackageContent = () => {
     const [activeIndex, setActiveIndex] = useState<number>(0);

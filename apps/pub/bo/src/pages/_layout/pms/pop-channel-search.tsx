@@ -23,7 +23,7 @@ export const Route = createFileRoute('/_layout/pms/pop-channel-search')({
 });
 
 function RouteComponent() {
-  const { open: openModal, close: closeModal } = useModal();
+  const { openModal, closeModal } = useModal();
   const TabContents = () => {
     // grid
     const [pageNumber, setpageNumber] = useState(0);

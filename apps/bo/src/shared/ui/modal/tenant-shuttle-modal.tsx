@@ -20,7 +20,7 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
 const TenantShuttleModalComponent = forwardRef((_) => {
   const ref = useRef<ShuttleGridToGridImperative>(null);
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
 
   const searchConfig: SearchBoxConfig = {
     builders: [

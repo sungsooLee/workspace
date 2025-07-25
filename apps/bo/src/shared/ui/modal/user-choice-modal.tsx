@@ -11,7 +11,7 @@ type UserChoiceModalComponentProps = {
  * 화면 번호 NLP_BO_TMS_1100_02 : 유저 조회(공통)
  */
 const UserModalComponent = forwardRef(({ title = '유저' }: UserChoiceModalComponentProps, ref) => {
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
 
   const [selectedRow, setSelectedRow] = useState();
 

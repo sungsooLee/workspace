@@ -62,7 +62,7 @@ const RoleInfoComponent: FC<{}> = ({}) => {
       { value: 'type3-2', label: '항목' },
     ];
 
-    const { close: closeModal } = useModal();
+    const { closeModal } = useModal();
 
     return (
       <ModalContainer>
