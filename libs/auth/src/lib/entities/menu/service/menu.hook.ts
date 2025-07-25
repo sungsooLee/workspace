@@ -2,7 +2,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { convertHierarchyToList } from '@learnway/shared';
 
-import { queryOptions, queryKeys } from './menu.queries';
+import { menuQueryOptions as queryOptions, menuQueryKeys as queryKeys } from './menu.queries';
 
 export function useFetchMenus(tenantId?: number, roleId?: number) {
   return useQuery(queryOptions.all(tenantId, roleId));
