@@ -16,7 +16,7 @@ export function useAsycFetchMenus(mutationOptions = {}) {
   const queryClient = useQueryClient();
 
   return {
-    asyncMenus: async (tenantId: number, roleId: number) => {
+    asyncMenus: async (tenantId: number, roleId: number | string) => {
       // console.log('#### asyncMenus', tenantId, roleId);
 
       // TODO 롤 체크 추가 ( FO 로그인 정책 추가 후 )

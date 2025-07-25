@@ -30,19 +30,19 @@ export function useAuthSignin() {
       return await login(payload, {
         ...callback,
         onSuccess: async (data, variables, context) => {
-          const menus = await asyncMenus(
-            data.activeTenant?.tenantId,
-            getConfig().APP_INFO === 'BO'
-              ? data.activeRole?.roleId
-              : data.roles?.map((role: any) => role.roleId).join(','),
-          );
-
           if (payload.saveId) {
             cookieService.set('SAVED_USER_ID', payload.username);
           } else {
             cookieService.remove('SAVED_USER_ID');
           }
-          callback?.onSuccess && callback.onSuccess(updateMenu(menus), {}, {});
+          if (data.roles && data.roles.length > 0) {
+            const menus = await asyncMenus(
+              data.activeTenant?.tenantId,
+              data.roles?.map((role: any) => role.roleId).join(','),
+            );
+            updateMenu(menus);
+          }
+          callback?.onSuccess && callback.onSuccess(data, {}, {});
         },
         onError: async (error, variables, context) => {
           alert({ title: 'LABEL.messages.invalidInputInformation', content: error?.message });

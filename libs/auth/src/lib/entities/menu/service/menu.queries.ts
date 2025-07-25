@@ -15,7 +15,6 @@ export const menuQueryKeys = {
 
 export const menuQueryOptions = {
   all: (tenantId?: number, roleId?: number | string) =>
-    // TODO roleId 체크 추가  && roleId
     tenantId && roleId
       ? {
           queryKey: menuQueryKeys.detail(tenantId, roleId),
@@ -39,33 +38,6 @@ export const menuQueryOptions = {
           ...queryOptionsForUseCache,
         }
       : getQuerySkipToken<Menu[]>(),
-
-  allFo: (tenantId?: number, roleId?: number) =>
-    // TODO roleId 체크 추가  && roleId
-    tenantId && roleId
-      ? {
-          queryKey: menuQueryKeys.detail(tenantId, roleId),
-          queryFn: async () => {
-            const data = await MenuService.getMenus(tenantId, roleId, isMobile);
-
-            return convertHierarchyNode(
-              data?.children || [],
-              (node: any, depth: number, index: number, parentNode?: any) => {
-                if (parentNode) {
-                  const cloneParentNode = { ...parentNode };
-                  delete cloneParentNode.children;
-                  node['parentNode'] = cloneParentNode;
-                }
-                node['depth'] = depth;
-
-                return [node, node.children];
-              },
-            );
-          },
-          ...queryOptionsForUseCache,
-        }
-      : getQuerySkipToken<Menu[]>(),
-
   detail: (menuId: number) => ({
     queryKey: menuQueryKeys.menuDetail(menuId),
     queryFn: () => MenuService.getMenu(menuId),
