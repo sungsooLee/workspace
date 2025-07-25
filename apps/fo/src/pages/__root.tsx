@@ -2,7 +2,7 @@ import { lazy, Suspense } from 'react';
 import { Outlet, createRootRouteWithContext } from '@tanstack/react-router';
 
 import { ModalWrapper, ToastWrapper, useModalStore } from '@learnway/ui';
-import { useGlobalRouterEvent } from '@learnway/hooks';
+import { useCodeStoreShare, useGlobalRouterEvent } from '@learnway/hooks';
 import { PageRouteContext } from '@learnway/shared';
 import { useRenewalMenuStateFromRouting } from '@learnway/auth/entities';
 // import { useSessionTimout } from '@learnway/auth/features';
@@ -28,7 +28,11 @@ export const Route = createRootRouteWithContext<PageRouteContext>()({
 function RootComponent() {
   const { closeAll } = useModalStore();
 
+  // Routing 상태 변경 시 Active menu depth 상태 정보 갱신
   useRenewalMenuStateFromRouting();
+
+  // 공통코드 스토어 탭간 동기화 처리
+  useCodeStoreShare();
   // useSessionTimout();
 
   // router event subscribe

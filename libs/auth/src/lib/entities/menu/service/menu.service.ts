@@ -38,7 +38,7 @@ export function useMenuHierarchy(menuScope = 'BO') {
 }
 
 /**
- * Routing 상태 변경 시 Active menu depth 상태 정보 갱신
+ * @description Routing 상태 변경 시 Active menu depth 상태 정보 갱신
  */
 export function useRenewalMenuStateFromRouting() {
   const state = useRouterState();
