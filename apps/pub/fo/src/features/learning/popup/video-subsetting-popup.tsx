@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { ModalBody, ModalContainer, ModalTitle, ModalFooter, Button } from '@learnway/ui';
 import { IcoCheck } from '@learnway/icons';
 
-import styles from './video-subsetting-popup.module.css';
+import styles from './video-setting-popup.module.css';
 
 const VideoSubsettingPopupComponent = () => {
   return (
