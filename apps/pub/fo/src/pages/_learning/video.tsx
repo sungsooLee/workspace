@@ -133,17 +133,6 @@ function RouteComponent() {
                 url={video}
               />
             </VideoPlayerContainer>
-            {/* 퍼블 임시 확인 */}
-            <Button
-              onClick={() =>
-                openModal({
-                  width: 'm_bottom_sheet',
-                  content: <VideoSubsettingPopup />,
-                })
-              }
-            >
-              팝업 예시
-            </Button>
           </div>
         </div>
       </div>
