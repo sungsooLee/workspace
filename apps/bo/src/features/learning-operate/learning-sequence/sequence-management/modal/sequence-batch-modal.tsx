@@ -45,7 +45,7 @@ const SequenceBatchModalComponent = ({
   selectedItems,
 }: SequenceBatchModalComponentProps) => {
   const {
-    close: closeModal,
+    closeModal,
     confirm: openConfirm,
     alert: openAlert,
     showSaveComplete,

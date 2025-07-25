@@ -50,7 +50,7 @@ export const LessonForm: React.FC<LessonFormProps> = ({
   curriculumData,
   parentNode,
 }) => {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
   const lessonType = watch('lessonType') || LESSON_TYPE.GENERAL;
   const contentName = watch('contentName');
 

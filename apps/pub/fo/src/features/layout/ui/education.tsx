@@ -20,7 +20,7 @@ interface EducationProps {
 }
 
 const EducationComponent = ({ className }: EducationProps) => {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
   const [detail, setDetail] = useState<boolean>();
   const [disabled, setDisabled] = useState(false); // 기간만료, 인원마감 등 case
 

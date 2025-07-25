@@ -26,7 +26,7 @@ export const Route = createRootRouteWithContext<PageRouteContext>()({
 });
 
 function RootComponent() {
-  const { closeAll } = useModalStore();
+  const { closeAllModal } = useModalStore();
 
   // Routing 상태 변경 시 Active menu depth 상태 정보 갱신
   useRenewalMenuStateFromRouting();
@@ -38,7 +38,7 @@ function RootComponent() {
   // router event subscribe
   useGlobalRouterEvent({
     onBeforeLoad: () => {
-      closeAll();
+      closeAllModal();
     },
   });
 

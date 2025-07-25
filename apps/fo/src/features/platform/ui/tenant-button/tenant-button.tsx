@@ -10,7 +10,6 @@ import styles from '@learnway/styles/fo/features/platform/ui/tenant-button/tenan
 const TenantContent = () => {
   const { data } = useFetchAuthUser();
   const { update: updateTenantRole } = useUpdateTenantRoleLastSelect();
-
   const { alert: openAlert } = useModal();
 
   const handleSelect = async (tenant: Tenant) => {

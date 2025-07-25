@@ -66,7 +66,7 @@ export function CourseDetailMobile() {
   const { data: courseData } = useCourseDetail(courseId || 1);
   console.log('@', courseId, courseData);
 
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
   const { confirm: openConfirm } = useModal();
   const { alert: openAlert } = useModal();
 

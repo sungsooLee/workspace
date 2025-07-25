@@ -8,7 +8,7 @@ import { Dropdown, Button, useModal } from '@learnway/ui';
 import styles from '@learnway/styles/fo/widgets/layout/ui/main/footer/footer.module.css';
 import { AgreementPopup, PrivacyPopup, ContactPopup } from '../../../../../features/auth';
 function FooterComponent() {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
   const options = [
     { value: 'option1', label: 'site1' },

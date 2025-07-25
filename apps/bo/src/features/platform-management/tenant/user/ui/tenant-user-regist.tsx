@@ -11,7 +11,8 @@ import {
   ChipListModalSelectorFormField,
   ContentsRow,
   DatePicker,
-  EditDropdownCell, EditInputCell,
+  EditDropdownCell,
+  EditInputCell,
   EditSwitchCell,
   FormSubTitle,
   GridFormField,
@@ -30,9 +31,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useCreateUser } from '@entities/users/service/users.hook';
 import { useCodesByCodeGroup } from '@entities/platform';
 import { useSystemCodeDetail } from '@entities/common-code';
-import {
-  CompanyUserDetailAccount
-} from '@features/platform-management/company/company-user-management/ui/company-user-detail-account';
+import { CompanyUserDetailAccount } from '@features/platform-management/company/company-user-management/ui/company-user-detail-account';
 import { EnFormMode } from '@types';
 
 const EMAIL_REGEX =
@@ -56,21 +55,29 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
   const routerState = useRouterState();
   const queryClient = useQueryClient();
 
-  const { open: openModal, confirm: openConfirm, alert: openAlert } = useModal();
+  const { openModal, confirm: openConfirm, alert: openAlert } = useModal();
   const { data: codeGroupData } = useSystemCodeDetail('cmmon.TelCountryCode');
 
   const formRef = useRef<HTMLFormElement>(null);
 
   const { create } = useCreateUser({
     onSuccess: async () => {
-      router.navigate({to: '/platform/tenant/user'})
-    }
-  })
+      router.navigate({ to: '/platform/tenant/user' });
+    },
+  });
 
   const companyCodes = routerState.location.state?.companyCodes;
 
-  const { provider, updateFormData, onSubmit, onFormChange, getValues, control, clearFormError, setFormError } =
-    useDynamicForm(formConfig());
+  const {
+    provider,
+    updateFormData,
+    onSubmit,
+    onFormChange,
+    getValues,
+    control,
+    clearFormError,
+    setFormError,
+  } = useDynamicForm(formConfig());
 
   useImperativeHandle(ref, () => ({
     saveData() {
@@ -91,7 +98,7 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
       width: 'md',
       // 현재 25-07-17 : 회사 코드 전체를 보내면 400 error 발생
       // content: <OrganizationChoiceTreeModal companyCodes={companyCodes} />,
-      content: <OrganizationChoiceTreeModal companyCodes={['H199', 'H103',]} />,
+      content: <OrganizationChoiceTreeModal companyCodes={['H199', 'H103']} />,
     });
 
     const company = await queryClient.fetchQuery(CompanyService.detail(organization.companyCode));
@@ -147,7 +154,7 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
       accountStatus: null,
 
       // 로그인 및 인증 설정 정보
-      ssoType: data.isUseSso ? data.ssoTypeList !== 'AES_Link' ? data.ssoTypeList : null : null,
+      ssoType: data.isUseSso ? (data.ssoTypeList !== 'AES_Link' ? data.ssoTypeList : null) : null,
       authType: data.passwordAuthType,
       twoFactorAuthType: data.twoFactorAuthType,
       foTwoFactorAuthEnabled: data.twoFactorAuthPlatformTypeList.includes('FO_PLATFORM'),
@@ -158,28 +165,28 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
     payload.companyId = 54;
     payload.deptId = 2;
 
-    if( data.userState === '2' ) {
+    if (data.userState === '2') {
       payload.isOnLeave = true;
       payload.isSuspended = false;
-    } else if( data.userState === '3' ) {
+    } else if (data.userState === '3') {
       payload.isOnLeave = false;
       payload.isSuspended = true;
     }
 
-    if( data.hrInfoManageType === 'AUTO_MANAGE' ) {
+    if (data.hrInfoManageType === 'AUTO_MANAGE') {
       payload.linkageSystem = data.linkageSystem;
     }
 
-    if( data.jobDomain !== '' ) {
+    if (data.jobDomain !== '') {
       payload.jobDomain = Array.of(data.jobDomain);
       payload.jobRole = [];
     } else {
-      if( data.jobManagement ) {
+      if (data.jobManagement) {
         const jobDomains: any[] = [];
         const jobRoleNames: any[] = [];
         data.jobManagement.forEach((job: any) => {
-          jobDomains.push(job.jobDomainName)
-          jobRoleNames.push(job.jobRoleName)
+          jobDomains.push(job.jobDomainName);
+          jobRoleNames.push(job.jobRoleName);
         });
         payload.jobDomain = [...jobDomains];
         payload.jobRole = [...jobRoleNames];
@@ -187,8 +194,10 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
     }
 
     const filteredPayload = Object.fromEntries(
-      Object.entries(payload).filter(([_, value]) => value !== null && value !== undefined && value !== '')
-    )
+      Object.entries(payload).filter(
+        ([_, value]) => value !== null && value !== undefined && value !== '',
+      ),
+    );
     console.log('payload: {} => ', filteredPayload);
     if (await openConfirm('저장 하시겠습니까?')) {
       create(filteredPayload);
@@ -303,7 +312,7 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
         />
       </ContentsRow>
 
-      <CompanyUserDetailAccount provider={provider} formMode={EnFormMode.ADD}/>
+      <CompanyUserDetailAccount provider={provider} formMode={EnFormMode.ADD} />
       <ContentsRow>
         <FormRow
           provider={provider}
@@ -420,7 +429,7 @@ const formConfig = (): DynamicFormConfig => ({
       options: [
         { value: '1', label: t('조직장') },
         { value: '2', label: t('조직원') },
-      ]
+      ],
     },
     {
       name: 'positionName',
@@ -502,7 +511,7 @@ const formConfig = (): DynamicFormConfig => ({
       label: t('사번'),
       value: '',
       format: 'number',
-      maxLength: 7
+      maxLength: 7,
     },
     {
       name: 'email',
@@ -721,11 +730,8 @@ const formConfig = (): DynamicFormConfig => ({
       conditions: [
         {
           fn: (values) => {
-            const value =
-              typeof values.email === 'string'
-                ? values.email
-                : values.email.fieldValue;
-            if( !value || value.trim().length === 0) return false;
+            const value = typeof values.email === 'string' ? values.email : values.email.fieldValue;
+            if (!value || value.trim().length === 0) return false;
             const pattern = new RegExp(EMAIL_REGEX, 'i');
             return !pattern.test(value.trim());
           },

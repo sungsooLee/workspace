@@ -7,7 +7,7 @@ import { ModalConfig, useModalReturnValue } from './type';
 import { getRandomId } from '@learnway/shared';
 
 const useModal = (): useModalReturnValue => {
-  const { modals, open: openModal, close: closeModal, closeAll: closeAllModal } = useModalStore();
+  const { modals, openModal, closeModal, closeAllModal } = useModalStore();
 
   /**
    * 일반 모달을 엽니다.
@@ -195,7 +195,7 @@ const useModal = (): useModalReturnValue => {
         content: '저장 하시겠습니까?',
         type: 'complete',
       }),
-    [], 
+    [],
   );
 
   const updateConfirm = useCallback(
@@ -219,9 +219,9 @@ const useModal = (): useModalReturnValue => {
   );
 
   return {
-    open,
-    close,
-    closeAll,
+    openModal: open,
+    closeModal: close,
+    closeAllModal: closeAll,
     alert,
     confirm,
     modals,

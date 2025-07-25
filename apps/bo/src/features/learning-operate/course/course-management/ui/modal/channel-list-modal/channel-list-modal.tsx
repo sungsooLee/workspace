@@ -28,7 +28,7 @@ const ChannelListModalComponent = forwardRef<HTMLDivElement, ChannelListModalPro
     console.log('channelId', channelId);
     const { t } = useTranslation();
     const { data: gridData }: any = getMockData();
-    const { close: closeModal } = useModal();
+    const { closeModal } = useModal();
     const [selectedRow, setSelectedRow] = useState();
     const columns = [{ header: t('채널명'), accessorKey: 'channelName' }];
 

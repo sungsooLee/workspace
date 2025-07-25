@@ -11,7 +11,7 @@ const TrainingPlaceDetailModalComponent = ({
   mode: EnFormMode;
   spaceId?: number;
 }) => {
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
   const formRef = useRef<HTMLFormElement>(null);
 
   const handleOnSave = () => {

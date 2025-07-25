@@ -26,7 +26,7 @@ export const FilterContent = ({
   onApply,
   options = [],
 }: FilterContentProps) => {
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
   const { t } = useTranslation();
 
   const getInitialValue = () => {

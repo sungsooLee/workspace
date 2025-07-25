@@ -80,7 +80,7 @@ const imageOptions = Array(5)
 function RouteComponent() {
   // 퍼블수정 20240317 : 수정된 Modal 컴포넌트로 수정
   // Modal : 채널 검색
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
   const ModalChannelContent = () => {
     const [selectedValues, setSelectedValues] = useState<string[]>([]);
     const options = [

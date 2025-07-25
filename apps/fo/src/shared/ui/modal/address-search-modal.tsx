@@ -36,7 +36,7 @@ const RESERVED_WORD_SQL = [
 ];
 
 const AddressSearchModalComponent: FC<any> = () => {
-  const { close } = useModal();
+  const { closeModal } = useModal();
 
   const [searchValue, setSearchValue] = useState('');
   const [searchResult, setSearchResult] = useState<any[]>([]);
@@ -121,7 +121,7 @@ const AddressSearchModalComponent: FC<any> = () => {
   };
 
   const handleSelect = (item: any) => {
-    close(item);
+    closeModal(item);
   };
 
   const handlePageChange = (pageNumber: number) => {

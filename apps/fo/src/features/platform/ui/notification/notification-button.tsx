@@ -41,7 +41,7 @@ const NotificationComponent = ({ userUUID }: any) => {
   const queryClient = useQueryClient();
   const [isConnected, setIsConnected] = useState(false);
 
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
 
   // const { notifications, unreadCount, markAsRead, checkAll } = useNotifications({ userUUID });
 

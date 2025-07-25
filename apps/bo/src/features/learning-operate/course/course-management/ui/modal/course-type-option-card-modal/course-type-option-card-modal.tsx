@@ -30,7 +30,7 @@ const CourseTypeOptionCardModalComponent = forwardRef<
   CourseTypeOptionCardModalProps
 >(({ ...props }, ref) => {
   const { t } = useTranslation();
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
   const { data: courseTypeData } = useCodeGroup('lms.course.CourseType', {}, getMockCourseType());
 
   const handleCardSelect = (option: any) => {

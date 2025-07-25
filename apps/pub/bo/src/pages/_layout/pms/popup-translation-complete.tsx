@@ -26,7 +26,7 @@ export const Route = createFileRoute('/_layout/pms/popup-translation-complete')(
 });
 
 function RouteComponent() {
-  const { open: openModal, close: closeModal } = useModal();
+  const { openModal, closeModal } = useModal();
   const TabContents = () => {
     // grid
     // const [pageNumber, setPageIndex] = useState(0);

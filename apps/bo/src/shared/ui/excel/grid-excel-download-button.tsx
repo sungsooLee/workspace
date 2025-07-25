@@ -28,7 +28,7 @@ const GridExcelDownloadButtonComponent: React.FC<ExcelButtonsProps> = ({
   disabled = false,
   className,
 }) => {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
   const { hasPersonalInfo, currentMenu } = usePersonalInfoCheck();
   const [isDownloading, setIsDownloading] = useState(false);
 

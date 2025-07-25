@@ -32,7 +32,7 @@ export const Route = createLazyFileRoute('/_layout/learning/learning-resource/sc
 });
 
 function RouteComponent() {
-  const { open: openModal, alert: openAlert, confirm: openConfirm } = useModal();
+  const { openModal, alert: openAlert, confirm: openConfirm } = useModal();
   const {
     state: { contentUuid, listParam },
   } = useCurrentRoute();

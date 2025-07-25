@@ -25,7 +25,7 @@ export interface ManagerListModalProps {
 const ManagerListModalComponent = forwardRef<HTMLDivElement, ManagerListModalProps>(
   ({ ...props }, ref) => {
     const { t } = useTranslation();
-    const { close: closeModal } = useModal();
+    const { closeModal } = useModal();
     const { data: gridData }: any = getMockData();
     const [selectedRow, setSelectedRow] = useState();
     const columns = [{ header: t('운영자'), accessorKey: 'name' }];

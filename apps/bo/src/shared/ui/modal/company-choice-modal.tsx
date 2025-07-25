@@ -104,7 +104,7 @@ const CompanyModalComponent = forwardRef((props, ref) => {
       size: 210,
     }),
   ] as ColumnDef<any, unknown>[];
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
   const { provider: sProvider, getValues } = useSearchBox(searchConfig);
   const { config, gridFetch } = useGridBox(gridConfig, getValues);
 

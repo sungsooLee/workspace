@@ -9,7 +9,7 @@ import { IcoArray } from '@learnway/icons';
 
 const CategoryLayerButton = () => {
   // modal
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
 
   return (
     <div className={cn(styles.start, styles.category)}>

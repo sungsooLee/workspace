@@ -20,7 +20,7 @@ import { queryOptions } from '@entities/instructor/service/instructor.queries';
  */
 const InstructorHistoryComponent = (props: any) => {
   const router = useRouter();
-  const { open: openModal, alert } = useModal();
+  const { openModal, alert } = useModal();
   const options = [
     { value: 0, label: '선택' },
     { value: 1, label: '과정명' },

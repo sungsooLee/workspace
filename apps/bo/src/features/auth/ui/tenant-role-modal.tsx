@@ -18,7 +18,7 @@ import { useTranslation } from 'react-i18next';
  */
 const TenantRoleModalComponent = () => {
   const { t } = useTranslation();
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
   const { data: authUser } = useFetchAuthUser();
   const { update: updateTenantRole } = useUpdateTenantRoleLastSelect();
 

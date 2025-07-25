@@ -16,7 +16,7 @@ import {
 } from '@learnway/ui';
 
 const GoogleInputPopupCompoment = () => {
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
   return (
     <ModalContainer>
       <ModalTitle>{'FIDO 인증'}</ModalTitle>

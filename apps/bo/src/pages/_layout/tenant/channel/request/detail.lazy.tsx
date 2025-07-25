@@ -36,7 +36,7 @@ function RouteComponent() {
   const routerState = useRouterState();
   const channelRequestUuid = routerState.location.state?.channelRequestUuid;
 
-  const { open: openModal, confirm: openConfirm, alert: openAlert } = useModal();
+  const { openModal, confirm: openConfirm, alert: openAlert } = useModal();
   const { data, refetch } = useGetRequestChannelDetail(channelRequestUuid);
   const { accept: acceptRequestChannel, reject: rejectRequestChannel } = useChannelApplication();
   const { update } = useUpdateRequestChannel({

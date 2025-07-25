@@ -33,7 +33,7 @@ const LoginRestrictTimeSettingModalComponent: FC<any> = ({
   mode: EnFormMode;
   data: any;
 }) => {
-  const { close, alert } = useModal();
+  const { closeModal, alert } = useModal();
   const { getCode } = useCodeStore();
 
   console.log('### mode', mode);
@@ -89,8 +89,8 @@ const LoginRestrictTimeSettingModalComponent: FC<any> = ({
         }
       });
     }
-    if (mode === EnFormMode.VIEW) close({ index: data.index, node });
-    else close(node);
+    if (mode === EnFormMode.VIEW) closeModal({ index: data.index, node });
+    else closeModal(node);
   };
 
   const initOptionConfig = async () => {
@@ -225,7 +225,7 @@ const LoginRestrictTimeSettingModalComponent: FC<any> = ({
           </div>
         </ModalBody>
         <ModalFooter>
-          <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={() => close()} />
+          <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
           <Button type="submit" label={t('확인')} variant={'primary'} size={'lg'} />
         </ModalFooter>
       </ModalContainer>

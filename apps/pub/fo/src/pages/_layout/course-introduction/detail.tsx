@@ -58,7 +58,7 @@ export const Route = createFileRoute('/_layout/course-introduction/detail')({
 });
 
 function RouteComponent() {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
   const { confirm: openConfirm } = useModal();
   const { alert: openAlert } = useModal();
 

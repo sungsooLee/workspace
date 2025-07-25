@@ -89,7 +89,7 @@ const data: ListInfo[] = [
 ];
 
 function RouteComponent() {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
   const carouselItems = items.map((item) => (
     <div>
       <div>
@@ -237,7 +237,7 @@ function RouteComponent() {
 }
 
 const ContentModal = () => {
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
   return (
     <ModalContainer>
       <ModalTitle>{'타이틀'}</ModalTitle>

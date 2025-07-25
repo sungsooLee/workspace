@@ -28,7 +28,7 @@ const TIME_LIMIT_VERIFY = 180;
 
 const ChangePhoneNumberModalComponent = ({ widget }: { widget: any }) => {
   const { t } = useTranslation();
-  const { close: closeModal, alert } = useModal();
+  const { closeModal, alert } = useModal();
 
   const {
     provider,

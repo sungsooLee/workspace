@@ -16,7 +16,8 @@ import {
   TreeContainer,
   TreeNode,
   useGridBox,
-  useModal, useToast,
+  useModal,
+  useToast,
 } from '@learnway/ui';
 import { FormRow, SectionLayout, UserGroupChoiceModal, UserGroupTabsChoiceModal } from '@shared/ui';
 import { useRouterState } from '@tanstack/react-router';
@@ -43,7 +44,7 @@ import RoleManagerService from '@entities/role/api/role-manager';
  */
 const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, ref: any) => {
   const routerState = useRouterState();
-  const { open: openModal, alert, confirm: openConfirm } = useModal();
+  const { openModal, alert, confirm: openConfirm } = useModal();
   const { open: openToast } = useToast();
 
   const userGroupRef = useRef<any>(null);
@@ -80,14 +81,22 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
     return fetchOption as FieldValues;
   };
 
-  const { provider, onSubmit, clearFormError, updateFormData, onFormChange, getValues, formState, watch } =
-    useDynamicForm(formConfig());
+  const {
+    provider,
+    onSubmit,
+    clearFormError,
+    updateFormData,
+    onFormChange,
+    getValues,
+    formState,
+    watch,
+  } = useDynamicForm(formConfig());
   const { config, gridFetch } = useGridBox(gridConfig, getGridParams);
   const userGroupWatch = useWatch({ control: provider.control, name: 'userGroup' });
 
   const { data: roleData } = useFetchRoleTree(tenantId, siteScope);
   const { saveUsersRole: saveRoleUsers } = useSaveUsers({});
-  const { saveRoleUserGroups } = useSaveRoleUserGroups({})
+  const { saveRoleUserGroups } = useSaveRoleUserGroups({});
 
   const handleOnSearch = () => {
     if (formMode === EnFormMode.VIEW) {
@@ -169,28 +178,29 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
   }, [roleData]);
 
   useEffect(() => {
-    if( selectedRole && userGroupWatch ) {
-      if( userGroupWatch.length > 0 ) setIsRoleUserGroup(false);
+    if (selectedRole && userGroupWatch) {
+      if (userGroupWatch.length > 0) setIsRoleUserGroup(false);
       else setIsRoleUserGroup(true);
-      const sortingArrayByGroupId = (arr: any[]) => [...arr].sort( (x, y) => x.groupId - y.groupId);
+      const sortingArrayByGroupId = (arr: any[]) => [...arr].sort((x, y) => x.groupId - y.groupId);
       const isEqual =
-        JSON.stringify(sortingArrayByGroupId(userGroupRef.current.userGroup)) === JSON.stringify(sortingArrayByGroupId(userGroupWatch));
-      if( !isEqual ) {
+        JSON.stringify(sortingArrayByGroupId(userGroupRef.current.userGroup)) ===
+        JSON.stringify(sortingArrayByGroupId(userGroupWatch));
+      if (!isEqual) {
         const payload = {
           roleId: selectedRole?.roleId,
           body: {
             groups: userGroupWatch,
-          }
-        }
+          },
+        };
         console.log('payload => ', payload);
         saveRoleUserGroups(payload, {
           onSuccess: () => {
-            openToast({ title: '유저그룹 역할부여 추가 했습니다.', type: 'success', });
-          }
-        })
+            openToast({ title: '유저그룹 역할부여 추가 했습니다.', type: 'success' });
+          },
+        });
       }
     }
-  }, [userGroupWatch])
+  }, [userGroupWatch]);
 
   return (
     <SectionLayout contentsRatio={'thirty'}>
@@ -277,7 +287,7 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
                       openConfirm({
                         title: t('삭제'),
                         content: t('선택한 정보는 삭제됩니다.'),
-                        onClose: handleDeleteButtonClick
+                        onClose: handleDeleteButtonClick,
                       });
                     }}
                   />
@@ -309,15 +319,13 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
                             variant="text"
                             label={t('대상자')}
                             disabled={isRoleUserGroup}
-                            onClick={
-                              (e: any) => {
-                                e.stopPropagation();
-                                openModal({
-                                  width: 'xl',
-                                  content: <UserGroupChoiceModal groups={userGroupWatch}/>,
-                                });
-                              }
-                            }
+                            onClick={(e: any) => {
+                              e.stopPropagation();
+                              openModal({
+                                width: 'xl',
+                                content: <UserGroupChoiceModal groups={userGroupWatch} />,
+                              });
+                            }}
                           />
                         }
                       />

@@ -22,7 +22,7 @@ export const Route = createFileRoute('/_layout/pms/popup-widget-management')({
 });
 
 function RouteComponent() {
-  const { open: openModal, close: closeModal } = useModal();
+  const { openModal, closeModal } = useModal();
   const items = [
     {
       title: 'PC',

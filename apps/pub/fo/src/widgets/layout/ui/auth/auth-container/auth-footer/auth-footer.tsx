@@ -11,7 +11,7 @@ import { AgreementPopup, PrivacyPopup, ContactPopup } from '../../../../../../fe
 import { isSigninPage } from '../../../../../../features/platform';
 
 function AuthFooterComponent() {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
   const location = useLocation();
   return (
     <div className={`${styles.start} ${styles.footer_auth}`}>
@@ -24,7 +24,8 @@ function AuthFooterComponent() {
                   width: isMobile ? 'm_full' : 'sm',
                   content: <AgreementPopup />,
                 })
-              }>
+              }
+            >
               이용약관
             </Button>
           </li>
@@ -35,7 +36,8 @@ function AuthFooterComponent() {
                   width: isMobile ? 'm_full' : 'sm',
                   content: <PrivacyPopup />,
                 })
-              }>
+              }
+            >
               개인정보처리 방침
             </Button>
           </li>
@@ -46,7 +48,8 @@ function AuthFooterComponent() {
                   width: isMobile ? 'm_full' : 'lg',
                   content: <ContactPopup />,
                 })
-              }>
+              }
+            >
               고객지원
             </Button>
           </li>

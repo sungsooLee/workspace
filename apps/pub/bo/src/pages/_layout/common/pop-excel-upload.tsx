@@ -32,7 +32,7 @@ export const Route = createFileRoute('/_layout/common/pop-excel-upload')({
 });
 
 function RouteComponent() {
-  const { open: openModal, close: closeModal } = useModal();
+  const { openModal, closeModal } = useModal();
   const ExcelUploadContents = () => {
     return (
       <ModalContainer>

@@ -1,4 +1,4 @@
-import { useState, forwardRef, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { t } from 'i18next';
 import {
   Button,
@@ -18,9 +18,13 @@ import { queryOptions } from '@entities/channel/service/channel.queries';
 import { useQueryClient } from '@tanstack/react-query';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
-const ChannelShuttleModalComponent = forwardRef((_) => {
+type Props = {
+  roleId?: string;
+};
+
+const ChannelShuttleModalComponent = ({ roleId = '' }: Props) => {
   const ref = useRef<ShuttleGridToGridImperative>(null);
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
 
   const searchConfig: SearchBoxConfig = {
     builders: [
@@ -114,13 +118,14 @@ const ChannelShuttleModalComponent = forwardRef((_) => {
   const handleOnConfirm = () => {
     closeModal(option);
   };
+
   const queryClient = useQueryClient();
 
   const [gridData, setGrideData] = useState<any[]>([]);
   const [option, setOption] = useState<any>();
 
   const handleOnSearch = async (data: any) => {
-    const response = await queryClient.fetchQuery(queryOptions.list(data));
+    const response = await queryClient.fetchQuery(queryOptions.list(roleId, data));
     setGrideData(response.content);
   };
 
@@ -153,6 +158,6 @@ const ChannelShuttleModalComponent = forwardRef((_) => {
       </ModalFooter>
     </ModalContainer>
   );
-});
+};
 
 export const ChannelShuttleModal = ChannelShuttleModalComponent;

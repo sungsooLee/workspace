@@ -1,14 +1,12 @@
 import { useTranslation } from 'react-i18next';
 
-import { useModal } from '@learnway/ui';
-import { useEffect, useState } from 'react';
-import { useCounter } from 'ahooks';
 import { DATE_TIME_FORMAT, duration } from '@learnway/shared';
+import { useCounter } from 'ahooks';
+import { useEffect, useState } from 'react';
 
 const initialTime = 300;
 
 function SessionTimeoutConfirmComponent() {
-  const { close } = useModal();
   const { t } = useTranslation();
 
   const [seconds, setSeconds] = useState(initialTime);

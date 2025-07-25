@@ -174,7 +174,7 @@ const PopupContent = () => {
 
 export const CategoryButton = () => {
   const router = useRouter();
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
 
   // useEffect(() => {
   //   return router.history.subscribe((navigation) => {

@@ -21,7 +21,7 @@ export const Route = createFileRoute('/_learning/video')({
 });
 
 function RouteComponent() {
-  const { alert: openAlert, open: openModal } = useModal();
+  const { alert: openAlert, openModal } = useModal();
 
   // 완료 alert
   const handleCompleteAlert = () => {

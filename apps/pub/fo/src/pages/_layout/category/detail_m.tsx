@@ -29,7 +29,7 @@ export const Route = createFileRoute('/_layout/category/detail_m')({
 });
 
 function RouteComponent() {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
 
   // dropdown
   const [divisionValues, setDivisionValues] = useState<string[]>(['분류선택']);

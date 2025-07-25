@@ -105,7 +105,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
       [],
     );
 
-    const { open: openModal } = useModal();
+    const { openModal } = useModal();
 
     const handleClickRetrieveQuestionModal = useCallback(async () => {
       await openModal({

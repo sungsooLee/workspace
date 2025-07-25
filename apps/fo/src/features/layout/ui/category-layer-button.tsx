@@ -9,7 +9,7 @@ import { IcoArray } from '@learnway/icons';
 
 const CategoryLayerButton = () => {
   // modal
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
 
   return (
     <div className={cn(styles.start, styles.category)}>
@@ -19,7 +19,8 @@ const CategoryLayerButton = () => {
             width: 'm_full',
             content: <CategoryPopup />,
           })
-        }>
+        }
+      >
         <IcoArray width={24} height={24} stroke="#131c30" fill="none"></IcoArray>
       </Button>
     </div>

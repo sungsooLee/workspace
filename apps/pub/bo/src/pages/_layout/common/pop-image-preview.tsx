@@ -15,7 +15,7 @@ export const Route = createFileRoute('/_layout/common/pop-image-preview')({
 });
 
 function RouteComponent() {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
   useEffect(() => {
     openModal({
       width: 'full',

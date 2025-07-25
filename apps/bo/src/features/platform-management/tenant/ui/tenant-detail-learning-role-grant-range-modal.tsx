@@ -37,7 +37,7 @@ const TenantDetailLearningRoleGrantRangeModalComponent = ({
   roleId: number;
   userList: any[];
 }) => {
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
 
   const formRef = useRef<HTMLFormElement>(null);
 

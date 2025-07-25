@@ -30,7 +30,7 @@ type QuestionShuttleModalProps = {
 const LearningResourceQuestionShuttleComponent = ({ examPoolUuid }: QuestionShuttleModalProps) => {
   const ref = useRef<ShuttleGridToGridImperative>(null);
 
-  const { close } = useModal();
+  const { closeModal } = useModal();
 
   const { provider: sProvider } = useSearchBox(questionSearchConfig());
 
@@ -66,7 +66,7 @@ const LearningResourceQuestionShuttleComponent = ({ examPoolUuid }: QuestionShut
   }, []);
 
   const handleClickCloseButton = useCallback(() => {
-    close();
+    closeModal();
   }, []);
 
   return (

@@ -66,7 +66,7 @@ enum EnCategoryType {
  * @returns
  */
 const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
-  const { alert: openAlert, open: openModal, confirm: openConfirm } = useModal();
+  const { alert: openAlert, openModal, confirm: openConfirm } = useModal();
 
   const [treeData, setTreeData] = useState([]);
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
@@ -251,9 +251,7 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
             ? nodeInfo.targetNode?.key
             : nodeInfo.targetNode?.parentKey;
         if (nodeInfo.sourceNode.depth !== targetDepth) {
-          openAlert(
-            t('LABEL.alert.movableSameLevel')
-          );
+          openAlert(t('LABEL.alert.movableSameLevel'));
           return false;
         }
         if (nodeInfo.sourceNode.parentKey !== parentKey) {

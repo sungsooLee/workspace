@@ -15,7 +15,7 @@ export const Route = createFileRoute('/_auth/mpass-cert-otp')({
 });
 
 function RouteComponent() {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
   return (
     <form className="form_row">
       <div className={`${styles.start} ${styles.auth_wrap} ${styles.mpass_cert}`}>
@@ -27,7 +27,8 @@ function RouteComponent() {
 
           <div
             className={cn(otpToolFormField.signup_select, 'auth--signup-select')}
-            role="radiogroup">
+            role="radiogroup"
+          >
             <RadioCard
               options={[
                 {
@@ -87,7 +88,8 @@ function RouteComponent() {
                   width: 'sm',
                   content: <MpassPopup />,
                 })
-              }>
+              }
+            >
               MPASS 인증
             </Button>
           </div>

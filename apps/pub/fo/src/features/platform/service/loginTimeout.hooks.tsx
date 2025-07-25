@@ -48,12 +48,12 @@ export function useLoginTimeout() {
   const endTimeRef = useRef<number | null>(null);
   const intervalRef = useRef<NodeJS.Timer | null>(null);
   const isCancelAlert = useRef<boolean | null>(false);
-  const { alert: openAlert, closeAll: closeAllModal } = useModal();
+  const { alert: openAlert, closeAllModal: closeAllModalModal } = useModal();
   const { logout } = useLogoutUser();
 
   const handleLogout = useCallback(() => {
     try {
-      closeAllModal();
+      closeAllModalModal();
       openAlert({
         title: '자동 로그아웃',
         description: '로그인 시간이 만료되어 자동 로그아웃되었습니다.',

@@ -54,7 +54,7 @@ const LearningResourceTestItemModalComponent = ({
   questionItemGridRow?: QuestionItemGridRow;
   onSuccessCallback?: () => void | Promise<void>;
 }) => {
-  const { close, confirm: openConfirm } = useModal();
+  const { closeModal, confirm: openConfirm } = useModal();
   const [disabledButton, setDisabledButton] = useState(false);
   const [otherOptions, setOtherOptions] = useState<any[]>();
   const [formMode, setFormMode] = useState<EnFormMode>(
@@ -119,7 +119,7 @@ const LearningResourceTestItemModalComponent = ({
           console.log('ok ', data);
 
           data && onSuccessCallback?.();
-          close();
+          closeModal();
         },
         onError: (error: any) => {
           console.log('error', error);
@@ -542,7 +542,7 @@ const LearningResourceTestItemModalComponent = ({
           variant="gray"
           size="lg"
           onClick={() => {
-            close();
+            closeModal();
           }}
         />
         {formMode === EnFormMode.VIEW && (

@@ -9,7 +9,7 @@ interface ReviewOptionPopoverProps {
 }
 
 function ReviewOptionPopoverComponent({ className }: ReviewOptionPopoverProps) {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
   const { confirm: openConfirm } = useModal();
 
   // 후기 삭제 confirm

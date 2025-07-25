@@ -8,8 +8,8 @@ import { Button, ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } 
 import { GoogleInputPopup, GoogleKeyPopup } from '../../../features/auth';
 
 const GoogleQrcodePopupCompoment = () => {
-  const { open: openModal } = useModal();
-  const { close: closeModal } = useModal();
+  const { openModal } = useModal();
+  const { closeModal } = useModal();
   return (
     <ModalContainer>
       <ModalTitle>{'구글 OTP 인증키 생성'}</ModalTitle>
@@ -30,7 +30,8 @@ const GoogleQrcodePopupCompoment = () => {
                     content: <GoogleKeyPopup />,
                   });
                 });
-              }}>
+              }}
+            >
               스캔할 수 없나요?
             </Button>
           </div>

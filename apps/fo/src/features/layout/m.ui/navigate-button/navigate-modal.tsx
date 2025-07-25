@@ -21,7 +21,7 @@ const NavigateModalComponent = () => {
 
   const [tip, setTip] = useState<number | null>(null);
 
-  const { open: openModal, confirm } = useModal();
+  const { openModal, confirm } = useModal();
 
   return (
     <ModalContainer>

@@ -8,7 +8,7 @@ import imgGuide5 from '../../../assets/images/popup/google_guide_img5.png';
 import imgGuide6 from '../../../assets/images/popup/google_guide_img6.png';
 
 const GoogleCertGuidePopupCompoment = () => {
-  //const { close: closeModal } = useModal();
+  //const { closeModal } = useModal();
   return (
     <ModalContainer>
       <ModalTitle>{'FIDO 인증'}</ModalTitle>

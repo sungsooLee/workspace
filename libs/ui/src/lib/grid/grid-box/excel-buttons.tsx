@@ -11,7 +11,7 @@ export const ExcelButtons: FC<{ config?: ExcelConfig; getParams?: UseFormReturn[
   config,
   getParams,
 }) => {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
 
   if (!config) return <></>;
   const { upload, download, form, onBeforeDownload, onBeforeUpload } = config;

@@ -35,10 +35,10 @@ const EducationComponent = ({
   courseEnrollCompletePopup,
   CourseCancelCompletePopup,
 }: EducationProps) => {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
   const { confirm: openConfirm } = useModal();
   const { alert: openAlert } = useModal();
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
 
   const [detail, setDetail] = useState<boolean>();
   const [disabled, setDisabled] = useState(false); // 기간만료, 인원마감 등 case

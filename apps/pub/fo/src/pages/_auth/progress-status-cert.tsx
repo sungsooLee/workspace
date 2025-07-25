@@ -35,7 +35,7 @@ export const Route = createFileRoute('/_auth/progress-status-cert')({
 });
 
 function RouteComponent() {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
 
   return (
     <form className="form_row">

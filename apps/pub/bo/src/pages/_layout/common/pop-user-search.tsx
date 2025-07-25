@@ -19,7 +19,7 @@ export const Route = createFileRoute('/_layout/common/pop-user-search')({
 });
 
 function RouteComponent() {
-  const { open: openModal, close: closeModal } = useModal();
+  const { openModal, closeModal } = useModal();
   const UserSearchContent = () => {
     const tabItems = [
       {

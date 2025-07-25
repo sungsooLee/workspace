@@ -33,7 +33,7 @@ import { EbookInstallGuideModal } from './e-book-install-guide-modal';
 
 // 학습 유형 선택 팝업 컴포넌트
 const LearningTypeChoiceModalComponent = () => {
-  const { close, open } = useModal();
+  const { closeModal, openModal } = useModal();
   // 현재 활성화된 학습 유형의 상태를 관리 (기본값으로 learningTypes 배열의 첫 번째 학습 유형 사용)
   const [activeType, setActiveType] = useState(learningTypes[0].value);
 
@@ -44,14 +44,14 @@ const LearningTypeChoiceModalComponent = () => {
    */
   const handleChoiceLearningType = async (option: OptionCardItem) => {
     if (option.value === LEARNING_TYPE.E_BOOK) {
-      await open({
+      await openModal({
         hideCloseButton: true,
         width: 'auto',
         content: <EbookInstallGuideModal />,
       });
       return;
     }
-    close(option.value);
+    closeModal(option.value);
   };
 
   return (

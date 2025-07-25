@@ -8,7 +8,7 @@ import { IcoFilter, IcoRefresh02 } from '@learnway/icons';
 
 const FilterComponent = () => {
   // modal
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
 
   // filer 팝업에서 선택된 값이 있으면 true 변경 필요
   const [selectCheck, setSelectCheck] = useState(true);

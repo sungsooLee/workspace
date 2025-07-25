@@ -31,8 +31,6 @@ const CourseDashboardCompoment = () => {
 
   const progress = 80;
 
-  const { open: openModal, close: closeModal } = useModal();
-
   const [detail, setDetail] = useState<boolean>();
 
   const columnHelper = createColumnHelper<any>();
@@ -106,7 +104,7 @@ const CourseDashboardCompoment = () => {
       </div>
 
       <div className={statusStyles.start}>
-        {/* 이수 : completed 
+        {/* 이수 : completed
             미이수 : incomplete
         */}
         <Panel

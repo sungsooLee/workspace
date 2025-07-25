@@ -18,7 +18,7 @@ import { t } from 'i18next';
 import { useFetchPrograms } from '../../../../../entities/program/service/program-manage.hook';
 
 const MenuApiMappingModalComponent = ({ menuScopeCode, selectedApiKeys }: any) => {
-  const { open: openModal, close } = useModal();
+  const { openModal, closeModal } = useModal();
   const [treeData, setTreeData] = useState([]);
   const { data, isLoading } = useFetchPrograms(menuScopeCode);
 
@@ -79,14 +79,14 @@ const MenuApiMappingModalComponent = ({ menuScopeCode, selectedApiKeys }: any) =
         </div>
       </ModalBody>
       <ModalFooter>
-        <Button variant={'gray'} size={'lg'} onClick={close}>
+        <Button variant={'gray'} size={'lg'} onClick={closeModal}>
           {t('LABEL.common.cancel')}
         </Button>
         <Button
           variant={'primary'}
           size={'lg'}
           onClick={() => {
-            close(selectedItems);
+            closeModal(selectedItems);
           }}
         >
           {t('LABEL.button.apply')}

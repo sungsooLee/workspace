@@ -43,7 +43,7 @@ const OrganizationShuttleTreeModalComponent = ({
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [selectedChips, setSelectedChips] = useState<any[]>([]);
 
-  const { open: openModal, close: closeModal, confirm: openConfirm, alert: openAlert } = useModal();
+  const { openModal, closeModal, confirm: openConfirm, alert: openAlert } = useModal();
 
   const { data: organizationData } = useGetCompanyDepartmentTree(companyCodes);
 
