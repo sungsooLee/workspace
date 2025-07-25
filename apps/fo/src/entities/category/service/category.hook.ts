@@ -29,3 +29,7 @@ export const useCategoryNavigation = () => {
 
   return { handleCategoryClick };
 };
+
+export const useCategoryTree = (tenantId: number) => {
+  return useQuery(queryOptions.tree(tenantId));
+}
