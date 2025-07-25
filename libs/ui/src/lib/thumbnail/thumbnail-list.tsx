@@ -10,6 +10,7 @@ import styles from './thumbnail-list.module.css';
 import { FileInfo } from '@learnway/hooks';
 import { DefaultThumbnail } from './default-thumbnail';
 import { sortBy } from 'lodash';
+import { CourseType } from '@learnway/types';
 
 export interface ThumbnailListComponentProps
   extends Omit<ThumbnailProps, 'onCheckedChange' | 'path' | 'id'> {
@@ -53,7 +54,7 @@ export interface ThumbnailListComponentProps
    * 썸네일 목록을 클릭하면 파일 id를 전달하는 콜백 함수
    */
   onChecked?: (uuid: string | null) => void;
-  showDefault?: boolean;
+  showDefault?: boolean | CourseType;
 }
 
 /**
@@ -134,6 +135,7 @@ const ThumbnailListComponent = forwardRef<HTMLDivElement, ThumbnailListComponent
 
     const defaultThumbnail = (
       <DefaultThumbnail
+        showDefault={showDefault}
         showCheckbox={showCheckbox}
         selected={!checked}
         onCheckedChange={() => onChecked?.(null)}

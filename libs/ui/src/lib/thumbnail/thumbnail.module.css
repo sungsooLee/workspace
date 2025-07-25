@@ -14,6 +14,25 @@
     }
     &.default_thumbnail {
       @apply h-[84px] min-w-[128px] bg-[url(../../assets/images/thumb/img_thumb_default.jpg)] bg-cover bg-center bg-no-repeat;
+      /* 코스 타입별로 이미지 변경 */
+      &.ELEARNING1 {
+        @apply bg-[url(../../assets/images/thumb/img_thumb_default.jpg)];
+      }
+      &.ELEARNING2 {
+        @apply bg-[url(../../assets/images/thumb/img_thumb_default.jpg)];
+      }
+      &.CLASS {
+        @apply bg-[url(../../assets/images/thumb/img_thumb_default.jpg)];
+      }
+      &.LIVE {
+        @apply bg-[url(../../assets/images/thumb/img_thumb_default.jpg)];
+      }
+      &.EXAM {
+        @apply bg-[url(../../assets/images/thumb/img_thumb_default.jpg)];
+      }
+      &.SURVEY {
+        @apply bg-[url(../../assets/images/thumb/img_thumb_default.jpg)];
+      }
     }
     &.stacked {
       .image_wrap {
