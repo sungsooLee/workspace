@@ -30,6 +30,7 @@ const PopoverComponent = forwardRef<
       className,
       popoverContent,
       open,
+      side = 'bottom',
       onOpenChange,
       forceCloseFocusOutside = false,
       container,
@@ -71,6 +72,9 @@ const PopoverComponent = forwardRef<
           }
         >
           <Primitive.Content
+            side={side}
+            avoidCollisions={true} // 충돌 방지 활성화
+            sideOffset={10}
             className={cn(styles.popover_content, 'nlp--popover-content', className)}
             {...props}
             onInteractOutside={(e) => {

@@ -412,13 +412,13 @@
 }
 
 .time_select_wrap {
-  @apply absolute left-0 top-[36px] z-[100] h-auto w-auto;
+  @apply z-[100] h-auto w-auto;
   .vertical_time_selector {
     @apply flex flex-col;
     .time_select {
-      @apply flex;
+      @apply flex rounded-[4px] border border-solid border-[var(--gray7)] bg-[var(--white)];
       .hours_area {
-        @apply min-w-[60px] rounded-[4px] border border-solid border-[var(--gray7)] bg-[var(--white)] px-[8px] py-[4px];
+        @apply min-w-[60px] px-[8px] py-[4px];
         .time_text {
           @apply body_3_b flex min-h-[32px] items-center justify-center text-[var(--gray8)];
         }
