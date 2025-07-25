@@ -123,6 +123,8 @@ const TenantUserApplicationDetailComponent = (props: userDetailProps, ref: any) 
           && getDateToString(new Date(userData.enabledDate), DATE_TIME_FORMAT.DATETIME_SEC),
         accountLastUpdateDate: latestDate ? getDateToString(new Date(latestDate), DATE_TIME_FORMAT.DATETIME_SEC) : '-',
         tenant: userData.tenants,
+
+        loginRestriction: userData.company.companyLoginRestrictionList
       }
       if( userData.lockedDate === null ) {
         if( userData.dormantDate !== null ) {
@@ -642,9 +644,9 @@ const formConfig = (): DynamicFormConfig => ({
     // 종료
     {
       name: 'loginRestriction',
-      type: 'radio-group',
+      type: 'checkbox-group',
       label: t('로그인 제한'),
-      value: 'BASIS_COMPANY',
+      value: ['2'],
       options: [
         { label: '로그인 제한 시간 설정', value: '1' },
         { label: '근테 연동 로그인 제한', value: '2' },

@@ -172,6 +172,7 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
       twoFactorAuthType: data['2FAType'],
       foTwoFactorAuthEnabled: false,
       boTwoFactorAuthEnabled: false,
+      loginRestriction: data.company.companyLoginRestrictionList
     };
 
     if( data.userState === '2' ) {
@@ -546,9 +547,9 @@ const formConfig = (): DynamicFormConfig => ({
     },
     {
       name: 'limitLogin',
-      type: 'radio-group',
+      type: 'checkbox-group',
       label: t('로그인 제한'),
-      value: 'opt1',
+      value: ['opt2'],
       options: [
         { label: '로그인 제한 시간 설정', value: 'opt1' },
         { label: '근태 연동 로그인 제한', value: 'opt2' },

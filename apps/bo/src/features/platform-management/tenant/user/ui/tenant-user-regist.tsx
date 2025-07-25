@@ -102,6 +102,7 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
       lastDept: organization.deptName,
       deptId: organization.deptId,
       firstDept: '',
+      loginRestriction: company.companyLoginRestrictionList
     };
 
     if (organization.depth > 2) {
@@ -695,9 +696,9 @@ const formConfig = (): DynamicFormConfig => ({
     // 종료
     {
       name: 'loginRestriction',
-      type: 'radio-group',
+      type: 'checkbox-group',
       label: t('로그인 제한'),
-      value: '2',
+      value: ['2'],
       options: [
         { label: '로그인 제한 시간 설정', value: '1' },
         { label: '근테 연동 로그인 제한', value: '2' },
