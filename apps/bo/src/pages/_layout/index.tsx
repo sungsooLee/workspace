@@ -40,10 +40,10 @@ function HomeComponent() {
         <div className={style.guide_wrap}>
           <div className={style.preview}>
             <div className={style.guide_box}>
-              <div style={{ marginBottom: 10 }}>
+              {/* <div style={{ marginBottom: 10 }}>
                 <h3>M0</h3>
-              </div>
-              <table className={style.pub_table} style={{ width: '100%' }}>
+              </div> */}
+              {/* <table className={style.pub_table} style={{ width: '100%' }}>
                 <thead>
                   <tr>
                     <th scope="col">스크린 명</th>
@@ -75,7 +75,7 @@ function HomeComponent() {
                     </tr>
                   ))}
                 </tbody>
-              </table>
+              </table> */}
               <div style={{ marginBottom: 10, marginTop: 40 }}>
                 <h3>Guide</h3>
               </div>
@@ -468,6 +468,12 @@ export const munu = [
 ];
 
 export const guide = [
+  {
+    screenName: '서치박스, 그리드박스',
+    pageId: 'sample/search-box-grid-box-sample',
+    pageType: 'Page',
+    memo: '', // 비고
+  },
   {
     screenName: '폼 샘플',
     pageId: 'sample/form-field-sample',
