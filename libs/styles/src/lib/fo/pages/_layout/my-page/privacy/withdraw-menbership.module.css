@@ -46,22 +46,27 @@
   @screen mobile {
     .start {
       &.secession {
+        @apply w-full p-[16px];
         .box {
           @apply mt-0 border-none pt-0;
           .confirm {
             p {
-              @apply body_3_r;
+              @apply body-md mt-[16px] text-[var(--gray35)];
             }
           }
           .bullet_notice {
-            @apply mt-[24px] rounded-[8px] border-[1px] border-solid border-[var(--gray4)] p-[24px];
+            @apply mt-[48px] rounded-[12px] bg-[var(--gray98)] p-[24px];
             ul {
+              @apply rounded-none bg-inherit p-0;
               li {
                 @apply body_3_r;
               }
             }
             & > div {
-              @apply items-start;
+              @apply mt-[20px] items-start;
+              label {
+                @apply body-sm;
+              }
             }
           }
         }

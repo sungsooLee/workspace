@@ -74,7 +74,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
   const { provider, updateFormData, onSubmit, onFormChange, getValues, clearFormError, control } =
     useDynamicForm(formConfig());
   const prevDataRef = React.useRef(null);
-  const { alert, open: openModal, confirm: openConfirm } = useModal();
+  const { alert, openModal, confirm: openConfirm } = useModal();
 
   // fetch data
   const { data: detailData, refetch: refetchDetail } = useFetchMenuTenantDetail(
@@ -209,43 +209,44 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
     }
   }, [detailData]);
 
-  const columns = () => [
-    columnHelper.accessor('apiName', {
-      id: 'apiName',
-      cell: (info: any) => {
-        return (
-          <Button
-            className="link"
-            onClick={() =>
-              openModal({
-                content: <ApiInfoModal apiId={info.row.original.apiUuid} />,
-                width: 's',
-                closeOnOutsideClick: true,
-              })
-            }
-            label={info.getValue()}
-          />
-        );
-      },
-      header: 'API',
-      size: 612,
-    }),
-    columnHelper.accessor('Delete', {
-      cell: (info) => {
-        return (
-          <Button disabled={roleInfo !== 'PLATFORM'} variant="gray2" size={'xs'} type={'button'}>
-            {t('삭제')}
-          </Button>
-        );
-      },
-      header: t('삭제'),
-      size: 100,
-      meta: {
-        headerAlign: 'left', // 헤더만 가운데 정렬
-        cellAlign: 'center', // 셀은 오른쪽 정렬
-      },
-    }),
-  ] as ColumnDef<any, unknown>[];
+  const columns = () =>
+    [
+      columnHelper.accessor('apiName', {
+        id: 'apiName',
+        cell: (info: any) => {
+          return (
+            <Button
+              className="link"
+              onClick={() =>
+                openModal({
+                  content: <ApiInfoModal apiId={info.row.original.apiUuid} />,
+                  width: 's',
+                  closeOnOutsideClick: true,
+                })
+              }
+              label={info.getValue()}
+            />
+          );
+        },
+        header: 'API',
+        size: 612,
+      }),
+      columnHelper.accessor('Delete', {
+        cell: (info) => {
+          return (
+            <Button disabled={roleInfo !== 'PLATFORM'} variant="gray2" size={'xs'} type={'button'}>
+              {t('삭제')}
+            </Button>
+          );
+        },
+        header: t('삭제'),
+        size: 100,
+        meta: {
+          headerAlign: 'left', // 헤더만 가운데 정렬
+          cellAlign: 'center', // 셀은 오른쪽 정렬
+        },
+      }),
+    ] as ColumnDef<any, unknown>[];
 
   return (
     <SectionLayout contentsRatio={'thirty'}>

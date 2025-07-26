@@ -10,6 +10,7 @@ import {
   useLearningWindow,
   useVideoPlayer,
 } from '@learnway/ui';
+import { VideoSettingPopup } from '../../features/learning';
 
 import styles from '@learnway/styles/fo/pages/_learning/learning-m.module.css';
 
@@ -21,6 +22,7 @@ export const Route = createFileRoute('/_learning/video-m')({
 });
 
 function RouteComponent() {
+  const { alert: openAlert, openModal } = useModal();
   const handleVideoEnd = () => {
     const payload = {
       courseSequenceId: baseInfo?.sequenceId,
@@ -96,6 +98,16 @@ function RouteComponent() {
           <div className={styles.detail_lesson}>
             <strong>레슨명</strong>
           </div>
+          <Button
+            onClick={() =>
+              openModal({
+                width: 'm_bottom_sheet',
+                content: <VideoSettingPopup />,
+              })
+            }
+          >
+            aaaa
+          </Button>
         </div>
       </div>
     </div>

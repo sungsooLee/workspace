@@ -15,7 +15,7 @@ import { useMenuManageFetchTree } from '@entities/menu';
 import { transformMenuApiDataToTreeData } from '@features/platform-management/tenant/service/tenant-detail-tree.service';
 
 const MenuModalComponent: FC<any> = forwardRef(({ menuScopeCode }, ref) => {
-  const { close } = useModal();
+  const { closeModal } = useModal();
   const [treeData, setTreeData] = useState([]);
   // const { data, isLoading } = useFetchPrograms(menuScopeCode);
   const { data } = useMenuManageFetchTree(menuScopeCode, 'ko');
@@ -63,12 +63,12 @@ const MenuModalComponent: FC<any> = forwardRef(({ menuScopeCode }, ref) => {
       </ModalBody>
       <ModalFooter>
         <ModalFooter>
-          <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={close} />
+          <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={closeModal} />
           <Button
             label={t('적용')}
             variant={'primary'}
             size={'lg'}
-            onClick={() => close(selectedItems)}
+            onClick={() => closeModal(selectedItems)}
           />
         </ModalFooter>
       </ModalFooter>

@@ -26,7 +26,7 @@ import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-content
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
 
 const ChannelRequestChoiceModalComponent = () => {
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
   const { provider: sProvider, getValues } = useSearchBox(searchConfig);
   const { config, gridFetch } = useGridBox(gridConfig, getValues);
 

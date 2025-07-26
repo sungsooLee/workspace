@@ -1,3 +1,4 @@
+import { menuQueryOptions } from './../../menu/service/menu.queries';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import type { MutateOptions } from '@tanstack/react-query';
 
@@ -5,13 +6,17 @@ import { cookieService } from '@learnway/shared';
 import type { MutateCallback } from '@learnway/shared';
 import type { PhoneNumberValue } from '@learnway/ui';
 
-import { mutateOptions, queryOptions } from './users.queries';
+import {
+  userMutateOptions as mutateOptions,
+  userQueryOptions as queryOptions,
+} from './users.queries';
 
 import type { AuthUser, Role, Tenant } from '../../../types';
 import {
   useFetchAuthUser,
   useUpdateAuthUser,
 } from '../../authorization/service/authorization.hook';
+import { getConfig } from '@learnway/config';
 
 interface phoneNumberPayload {
   name: string;
@@ -140,10 +145,14 @@ export function useUpdateTenantRoleLastSelect(mutationOptions = {}) {
   const { mutateAsync, isSuccess, isError } = useMutation({
     ...mutateOptions.updateTenantRoleLastSelect(),
     onSuccess: async (data: any, variables, context) => {
-      if (variables.lastVisitedBoTenantId) {
-        const tenant = authUser?.tenants?.find(
-          (tenant) => tenant.tenantId === variables.lastVisitedBoTenantId,
-        );
+      if (variables) {
+        const tenantId =
+          getConfig().APP_INFO === 'BO'
+            ? variables.lastVisitedBoTenantId
+            : variables.lastVisitedFoTenantId;
+
+        console.log('@@@ tenantId', tenantId);
+        const tenant = authUser?.tenants?.find((tenant) => tenant.tenantId === tenantId);
         const role = authUser?.roles?.find((role) => role.roleId === variables.lastVisitedBoRoleId);
         tenant && updateActiveTenant(tenant);
         role && updateActiveRole(role);

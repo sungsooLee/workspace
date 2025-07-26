@@ -39,7 +39,7 @@ export const Route = createFileRoute('/_layout/learning/popup-learningRegisterat
 });
 
 function RouteComponent() {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
   useEffect(() => {
     openModal({
       width: 'lg', // sm(600px), md(800px), lg(1024px), xl(1400px)
@@ -50,7 +50,7 @@ function RouteComponent() {
 }
 
 const EbookContent = () => {
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
   return (
     <ModalContainer>
       <ModalBody>
@@ -81,7 +81,7 @@ const EbookContent = () => {
 };
 
 const TypeSelectContent = () => {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
   const data = [
     {
       label: '동영상',

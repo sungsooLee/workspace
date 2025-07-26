@@ -8,7 +8,7 @@ import { IcoFilter, IcoRefresh02 } from '@learnway/icons';
 
 const FilterComponent = () => {
   // modal
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
 
   // filer 팝업에서 선택된 값이 있으면 true 변경 필요
   const [selectCheck, setSelectCheck] = useState(true);
@@ -99,16 +99,7 @@ const FilterComponent = () => {
       </div>
 
       <div className={styles.reset}>
-        <Button className={styles.btn_reset}>
-          <IcoRefresh02
-            className={styles.ico_reset}
-            width={20}
-            height={20}
-            fill="none"
-            stroke="#131c30"
-          ></IcoRefresh02>
-          초기화
-        </Button>
+        <Button className={styles.btn_reset} label={'초기화'} />
       </div>
     </div>
   );

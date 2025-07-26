@@ -1,49 +1,48 @@
-import { useState } from 'react';
-import { t } from 'i18next';
-import { createLazyFileRoute } from '@tanstack/react-router';
-import {
-  AddressSearchModal,
-  ChannelListChoiceModal,
-  ChannelShuttleModal,
-  CompanyChoiceModal,
-  CompanyShuttleModal,
-  TenantChoiceModal,
-  TenantShuttleModal,
-  UserChoiceModal,
-  UserShuttleModal,
-  MenuChoiceTreeModal,
-  CategoryChoiceTreeModal,
-  UserGroupChoiceModal,
-  UserGroupTabsChoiceModal,
-  UserGroupOrganizationShuttleModal,
-  OrganizationChoiceTreeModal,
-  OrganizationShuttleTreeModal,
-  TrainingPlaceChoiceModal,
-  TrainingPlaceDetailModal,
-  FormRow,
-  MainContents,
-  PageContainer,
-  SubContents,
-  ContentsButtons,
-  ThumbnailListFormField,
-} from '@shared/ui';
+import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
+import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 import {
   Button,
   ChipListModalSelectorFormField,
   ContentsRow,
-  Input,
-  LearnwayLearningWindowLayout,
   PreviewImage,
   useModal,
 } from '@learnway/ui';
+import {
+  AddressSearchModal,
+  CategoryChoiceTreeModal,
+  ChannelListChoiceModal,
+  ChannelShuttleModal,
+  CompanyChoiceModal,
+  CompanyShuttleModal,
+  ContentsButtons,
+  CourseChoiceModal,
+  FormRow,
+  MainContents,
+  MenuChoiceTreeModal,
+  OrganizationChoiceTreeModal,
+  OrganizationShuttleTreeModal,
+  PackageChoiceModal,
+  PageContainer,
+  SubContents,
+  TenantChoiceModal,
+  TenantShuttleModal,
+  ThumbnailListFormField,
+  TrainingPlaceChoiceModal,
+  TrainingPlaceDetailModal,
+  UserChoiceModal,
+  UserGroupChoiceModal,
+  UserGroupOrganizationShuttleModal,
+  UserGroupTabsChoiceModal,
+  UserShuttleModal,
+} from '@shared/ui';
 import { AddressSearchFormField } from '@shared/ui/form/address-search-form-field';
-import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
-import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
+import { createLazyFileRoute } from '@tanstack/react-router';
+import { t } from 'i18next';
+import { useState } from 'react';
 
 import { DynamicFormConfig, S3_PATH, useDynamicForm } from '@learnway/hooks';
 
 import langCodes from '@entities/mock/i18n-resource-ko.json';
-import TranslationService from '@entities/translation/api/translation';
 
 import LabelMessagesService from '@entities/label-messages/api/label-messages';
 import { IcoDownload } from '@learnway/icons';
@@ -52,6 +51,7 @@ import { EnFormMode } from '@types';
 
 import { useDeployTranslation } from '@entities/translation/service/translation.hook';
 import { PreviewLearningWindow } from '@features/learning-resource/learning-resource-management/ui/preview-learning-window';
+import { CourseType } from '@learnway/types';
 
 export const Route = createLazyFileRoute('/_layout/common-popup')({
   component: RouteComponent,
@@ -61,7 +61,7 @@ const imageFileUrl =
   'https://images.pexels.com/photos/842711/pexels-photo-842711.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2';
 
 function RouteComponent() {
-  const { alert, open: openModal, confirm: openConfirm } = useModal();
+  const { alert, openModal, confirm: openConfirm } = useModal();
   const [organizations, setOrganizations] = useState<any>([]);
   const { provider, onSubmit, control, getValues, updateFormData, onFormChange, watch } =
     useDynamicForm(formConfig);
@@ -602,7 +602,7 @@ function RouteComponent() {
               >
                 {'교육공간 조회 팝업'}
               </Button>
-              <span className="text-yellow-500">{'진행중'}</span>
+              <span className="text-green-400">{'완료'}</span>
             </div>
 
             <div className="flex gap-4">
@@ -623,7 +623,7 @@ function RouteComponent() {
               >
                 {'교육공간 선택 팝업'}
               </Button>
-              <span className="text-yellow-500">{'진행중'}</span>
+              <span className="text-green-400">{'완료'}</span>
             </div>
             <div className="flex gap-4">
               <Button
@@ -641,10 +641,11 @@ function RouteComponent() {
                   });
                 }}
               >
-                {'교육공간 등록 결과'}
+                {'교육공간 등록'}
               </Button>
-              <span className="text-yellow-500">{'진행중'}</span>
+              <span className="text-green-400">{'완료'}</span>
             </div>
+            <div className="h-1 w-full border-white bg-slate-700" />
             <div className="flex gap-4">
               <Button
                 size={'xs'}
@@ -673,6 +674,47 @@ function RouteComponent() {
                 }}
               >
                 {'컨텐츠 미리 보기 팝업'}
+              </Button>
+              <span className="text-yellow-500">{'진행중'}</span>
+            </div>
+            <div className="h-1 w-full border-white bg-slate-700" />
+            <div className="flex gap-4">
+              <Button
+                size={'xs'}
+                className="btn_table flex-1"
+                variant={'gray2'}
+                stopPropagation
+                onClick={(e) => {
+                  openModal({
+                    width: 'xl',
+                    content: <CourseChoiceModal />,
+                    onClose(data: any) {
+                      console.log('과정 조회 결과', data);
+                    },
+                  });
+                }}
+              >
+                {'과정 조회'}
+              </Button>
+              <span className="text-yellow-500">{'진행중'}</span>
+            </div>
+            <div className="flex gap-4">
+              <Button
+                size={'xs'}
+                className="btn_table flex-1"
+                variant={'gray2'}
+                stopPropagation
+                onClick={(e) => {
+                  openModal({
+                    width: 'xl',
+                    content: <PackageChoiceModal />,
+                    onClose(data: any) {
+                      console.log('패키지 조회 결과', data);
+                    },
+                  });
+                }}
+              >
+                {'패키지 조회'}
               </Button>
               <span className="text-yellow-500">{'진행중'}</span>
             </div>
@@ -764,7 +806,7 @@ const formConfig: DynamicFormConfig = {
       max: 2,
       value: [],
       uuidType: 'files',
-      showDefault: true,
+      showDefault: CourseType.ELEARNING1,
       uploadConfig: {
         affairType: 'CMS',
         s3Path: S3_PATH['upload/content/image'],

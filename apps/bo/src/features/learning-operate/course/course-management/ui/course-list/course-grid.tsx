@@ -1,0 +1,64 @@
+import { Button, GridBox } from '@learnway/ui';
+import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
+import { CourseListItem } from '@types';
+import React, { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { CourseButtonState } from '../../types/type';
+
+interface CourseGridProps {
+  config: any;
+  selectedRows: CourseListItem[];
+  buttonState: CourseButtonState;
+  getValues: () => any;
+  onRowsSelect?: (rows: CourseListItem[]) => void;
+  onCopyClick?: () => void;
+  onShareClick?: () => void;
+}
+
+export const CourseGrid: React.FC<CourseGridProps> = ({
+  config,
+  selectedRows,
+  buttonState,
+  getValues,
+  onRowsSelect,
+  onCopyClick,
+  onShareClick,
+}) => {
+  const { t } = useTranslation();
+
+  const customButtonNode = useMemo(
+    () => (
+      <Button
+        variant="text"
+        size="sm"
+        label={t('LABEL.grid.header.toShare')}
+        disabled={!buttonState.share}
+        onClick={() => onShareClick?.()}
+      />
+    ),
+    [buttonState.share],
+  );
+
+  return (
+    <GridBox
+      config={config}
+      multiple
+      showNumberingColumn
+      copyButton={{
+        disabled: !buttonState.copy,
+        onClick: () => onCopyClick?.(),
+      }}
+      onRowsSelect={onRowsSelect}
+      customButtonNode={customButtonNode}
+      excelButtons={
+        <>
+          <GridExcelUploadButton validateUrl={'/api/v1/course/validation/excel/upload'} />
+          <GridExcelDownloadButton
+            url={'/api/v1/course/validation/excel/export'}
+            params={getValues()}
+          />
+        </>
+      }
+    />
+  );
+};

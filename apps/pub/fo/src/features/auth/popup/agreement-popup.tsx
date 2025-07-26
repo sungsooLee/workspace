@@ -12,7 +12,7 @@ import {
 } from '@learnway/ui';
 
 const AgreementPopupCompoment = () => {
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
   return (
     <ModalContainer>
       <ModalTitle>{'이용약관'}</ModalTitle>

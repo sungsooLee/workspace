@@ -1,0 +1,54 @@
+.input_area {
+  .tit_box {
+    strong {
+      @apply headline1-b text-[var(--gray10)];
+    }
+  }
+  .box {
+    @apply mt-[24px];
+    & > div {
+      @apply border-t-0;
+      & > div {
+        @apply pb-0;
+      }
+      & + div {
+        @apply mt-[32px];
+      }
+    }
+    .input_box {
+      @apply items-start;
+      & > div {
+        @apply flex-1;
+      }
+    }
+    .option_card {
+      @apply gap-[8px];
+      button {
+        span {
+          @apply label-xl !text-[var(--gray35)];
+        }
+        &[class*='active'] {
+          @apply !border-[var(--blue50)];
+          span {
+            @apply label-xl-b !text-[var(--blue50)];
+          }
+        }
+      }
+    }
+    .input_date {
+      @apply flex w-full items-center gap-[8px];
+      & > div {
+        @apply flex-1;
+      }
+    }
+  }
+}
+:global(body.mobile) {
+  @screen mobile {
+    .input_area {
+      & + .input_area {
+        @apply mt-[32px] pt-[32px];
+      }
+    }
+  }
+}

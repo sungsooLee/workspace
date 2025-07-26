@@ -30,6 +30,7 @@ import { t } from 'i18next';
 interface ExcelUploadModalProps {
   validateUrl: string;
   affairsType?: 'PMS' | 'CMS' | 'LMS';
+  formDataName?: string;
   templateUrls?: {
     xlsx?: string;
     csv?: string;
@@ -75,6 +76,7 @@ function toUploadFile(file: File): UploadFile {
 const ExcelUploadModalComponent = ({
   validateUrl,
   affairsType = 'PMS',
+  formDataName = 'file',
   templateUrls,
 }: ExcelUploadModalProps) => {
   const acceptFiles = ['xlsx', 'xls'];
@@ -83,7 +85,7 @@ const ExcelUploadModalComponent = ({
 
   const acceptFileString = useMemo(() => acceptFilesToAccept(acceptFiles), [acceptFiles]);
 
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
 
   const [files, setFiles] = useState<UploadFile[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -134,7 +136,7 @@ const ExcelUploadModalComponent = ({
       try {
         // FormData로 파일 전송
         const formData = new FormData();
-        formData.append('file', file);
+        formData.append(formDataName, file);
 
         setProgressMessage('파일 검증 중입니다. 잠시만 기다려주세요');
 
@@ -151,6 +153,7 @@ const ExcelUploadModalComponent = ({
         } = await httpService.post(downloadUrlPrefix() + validateUrl, formData, {
           timeout: 1000 * 120,
         });
+        console.log('excel upload result', response);
         const {
           result: success,
           dataList: successRows,

@@ -10,7 +10,7 @@ export const Route = createFileRoute('/_layout/common/pop-category-select')({
 });
 
 function RouteComponent() {
-  const { open: openModal, close: closeModal } = useModal();
+  const { openModal, closeModal } = useModal();
   const CategorySelectContent = () => {
     return (
       <ModalContainer>

@@ -88,4 +88,7 @@ const TenantModalComponent = () => {
   );
 };
 
+/**
+ * @deprecated
+ */
 export const TenantModal = memo(TenantModalComponent);

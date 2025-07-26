@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { ModalBody, ModalContainer, ModalTitle, ModalFooter, Button } from '@learnway/ui';
-import { IcoArrowForward } from '@learnway/icons';
+import { IcoArrowForward, IcoCheck } from '@learnway/icons';
 
 import styles from './video-setting-popup.module.css';
 
@@ -27,6 +27,17 @@ const VideoSettingPopupComponent = () => {
                   Auto
                   <IcoArrowForward width={16} height={16} stroke="#131416" />
                 </span>
+              </Button>
+            </li>
+            <li>
+              <Button>
+                <strong>Korean</strong>
+                <IcoCheck width={24} height={24} stroke="#0056ff" />
+              </Button>
+            </li>
+            <li>
+              <Button>
+                <strong>Korean</strong>
               </Button>
             </li>
           </ul>

@@ -10,7 +10,7 @@ export const Route = createFileRoute('/_layout/learning/pop-modifier-info')({
 });
 
 function RouteComponent() {
-  const { open: openModal, close: closeModal } = useModal();
+  const { openModal, closeModal } = useModal();
   const InfoContent = () => {
     return (
       <ModalContainer>

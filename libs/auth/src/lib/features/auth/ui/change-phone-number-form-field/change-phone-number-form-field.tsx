@@ -28,7 +28,7 @@ const PhoneNumberFormFieldComponent = forwardRef<HTMLDivElement, PhoneNumberForm
     _,
   ) => {
     const { t } = useTranslation();
-    const { open: openModal } = useModal();
+    const { openModal } = useModal();
 
     const nationCode = useWatch({ control, name: fields.nationCode });
     /**

@@ -53,7 +53,7 @@ const MenuChoiceTreeModalComponent = ({ menuScopeCode }: { menuScopeCode: 'FO' |
   const [selectedTreeExpandedKeys, setSelectedTreeExpandedKeys] = useState<string[]>([]);
   const [selectedTreeAllKeys, setSelectedTreeAllKeys] = useState<string[]>([]);
 
-  const { open: openModal, confirm: openConfirm, close: closeModal } = useModal();
+  const { openModal, confirm: openConfirm, closeModal } = useModal();
 
   const { data: baseMenuDB } = useMenuManageFetchTree(menuScopeCode, 'ko');
 

@@ -40,7 +40,7 @@ const ResourceChoiceModalComponent = ({
   initialChannelUuid,
   initialContentType,
 }: Props) => {
-  const { close } = useModal();
+  const { closeModal } = useModal();
   const { getLanguageName } = useLanguageMap();
   const { getContentsTypeName } = useContentsMap();
   const [selectedRow, setSelectedRow] = useState();
@@ -145,7 +145,7 @@ const ResourceChoiceModalComponent = ({
 
   const handleOnConfirm = () => {
     if (!selectedRow) return;
-    close(selectedRow);
+    closeModal(selectedRow);
   };
   useEffect(() => {
     if (!channelUuid) return;

@@ -5,6 +5,8 @@
   "scripts": {
     "dev:fo": "npx nx serve fo --configuration=local",
     "dev:bo": "npx nx serve bo --configuration=local",
+    "dev:bo_unauth": "VITE_DISABLE_AUTH=true npx nx serve bo --configuration=local",
+    "dev:fo_unauth": "VITE_DISABLE_AUTH=true npx nx serve fo --configuration=local",
     "dev:sb": "nx run sb:storybook -p 6066",
     "dev:pb-bo": "npx nx serve pb-bo",
     "dev:pb-fo": "npx nx serve pb-fo",

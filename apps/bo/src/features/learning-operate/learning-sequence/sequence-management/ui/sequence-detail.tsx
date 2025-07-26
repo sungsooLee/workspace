@@ -1,4 +1,12 @@
-import { useEffect, useCallback, useState, useRef, useImperativeHandle, forwardRef } from 'react';
+import {
+  useDeleteSequence,
+  useUpdateSequence,
+} from '@entities/learning-sequence/service/learning-sequence.hook';
+import { queryOptions } from '@entities/learning-sequence/service/learning-sequence.queries';
+import { DateRangePickerFormField, DropdownFormField, FormDisplay } from '@features/form';
+import { InstructorListPopup } from '@features/learning-operate-support/instructor-tutor/instructor-management/modal/instructor-list-modal';
+import { TriggerKey } from '@features/learning-operate/course/course-management';
+import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import {
   ChipListModalSelectorFormField,
   ContentsRow,
@@ -10,11 +18,10 @@ import {
   SplitPanel,
   useModal,
 } from '@learnway/ui';
-import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
-import { useQueryClient } from '@tanstack/react-query';
 import {
   FormRow,
   FormRow2,
+  PassOptionFormField,
   SwitchFormField,
   TenantByRoleChannelCheckboxFormField,
   TenantChannelDropdownFormField2,
@@ -22,20 +29,11 @@ import {
   UserChoiceModal,
   UserGroupTabsChoiceModal,
 } from '@shared/ui';
-import dayjs from 'dayjs';
-import { DateRangePickerFormField, DropdownFormField, FormDisplay } from '@features/form';
-import { InstructorListPopup } from '@features/learning-operate-support/instructor-tutor/instructor-management/modal/instructor-list-modal';
-import { PassOptionFormField } from '@pages/_layout/learning/course/-components/pass-option-form-field/pass-option-form-field';
-import {
-  useUpdateSequence,
-  useDeleteSequence,
-} from '@entities/learning-sequence/service/learning-sequence.hook';
-import { queryOptions } from '@entities/learning-sequence/service/learning-sequence.queries';
-import { LearningSequence } from 'src/types/entities/learning-sequence';
-import { CourseDetailTabFormRef } from '@pages/_layout/learning/course/-common/type';
-import { useTranslation } from 'react-i18next';
+import { useQueryClient } from '@tanstack/react-query';
 import { useUpdateEffect } from 'ahooks';
-import { TriggerKey } from '@pages/_layout/learning/course/-store/use-course-store';
+import { forwardRef, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
+import { LearningSequence } from 'src/types/entities/learning-sequence';
 
 type SequenceDetailComponentProps = {
   mode: string;
@@ -49,7 +47,7 @@ type SequenceDetailComponentProps = {
  * NLP_BO_LMS_0033 : 차수 상세
  * @returns
  */
-const SequenceDetailComponent = forwardRef<CourseDetailTabFormRef, SequenceDetailComponentProps>(
+const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentProps>(
   ({ mode, setMode, courseId: courseIdProps, sequenceId: sequenceIdProps, lastTriggered }, ref) => {
     console.log('##courseIdProps=>', courseIdProps);
     console.log('##sequenceIdProps=>', sequenceIdProps);
@@ -87,8 +85,6 @@ const SequenceDetailComponent = forwardRef<CourseDetailTabFormRef, SequenceDetai
     }, [lastTriggered]);
 
     const handleUpdateSequence = async () => {
-      const confirm = await openConfirm(t('수정 하시겠습니까?'));
-      if (!confirm) return;
       updateSequence({ sequenceId: sequenceIdProps, ...formDataToRequestData(formValues) });
     };
 
@@ -136,6 +132,7 @@ const SequenceDetailComponent = forwardRef<CourseDetailTabFormRef, SequenceDetai
                 provider={provider}
                 name={'courseType'}
                 label={'유형'}
+                disabled
                 element={
                   <DropdownFormField
                     optionsConfig={{
@@ -143,13 +140,16 @@ const SequenceDetailComponent = forwardRef<CourseDetailTabFormRef, SequenceDetai
                     }}
                   />
                 }
+                validation={{ required: true }}
               />
               {/*채널*/}
               <FormRow2
                 provider={provider}
                 name={'channelUuid'}
                 label={'채널'}
+                disabled
                 element={<TenantChannelDropdownFormField2 tenantId={-1} />}
+                validation={{ required: true }}
               />
             </ContentsRow>
             {/* 공개대상 */}
@@ -164,6 +164,7 @@ const SequenceDetailComponent = forwardRef<CourseDetailTabFormRef, SequenceDetai
                 element={
                   <TenantByRoleChannelCheckboxFormField channelUuid={getValues().channelUuid} />
                 }
+                validation={{ required: true }}
               />
             </ContentsRow>
             {/*학습대상(유저그룹)*/}
@@ -201,6 +202,7 @@ const SequenceDetailComponent = forwardRef<CourseDetailTabFormRef, SequenceDetai
                 name={'courseSequenceName'}
                 label={'차수명'}
                 element={<Input type={'text'} maxLength={40} />}
+                validation={{ required: true }}
               />
             </ContentsRow>
             <ContentsRow>
@@ -227,6 +229,7 @@ const SequenceDetailComponent = forwardRef<CourseDetailTabFormRef, SequenceDetai
                   // enrollmentEndDateTime 수강신청 종료일시
                   <DateRangePickerFormField />
                 }
+                validation={{ required: true }}
               />
             </ContentsRow>
             <ContentsRow>
@@ -367,7 +370,7 @@ const SequenceDetailComponent = forwardRef<CourseDetailTabFormRef, SequenceDetai
               <FormRow2
                 provider={provider}
                 name={'approvalLineType'}
-                label={'승인'}
+                label={'승인 결재 라인'}
                 element={
                   <DropdownFormField
                     optionsConfig={{
@@ -397,6 +400,7 @@ const SequenceDetailComponent = forwardRef<CourseDetailTabFormRef, SequenceDetai
                     ]}
                   />
                 }
+                validation={{ required: true }}
               />
               {/* 정원 */}
               <FormRow2
@@ -429,6 +433,7 @@ const SequenceDetailComponent = forwardRef<CourseDetailTabFormRef, SequenceDetai
                     }}
                   />
                 }
+                validation={{ required: true }}
               />
             </ContentsRow>
             {/* 수강신청 대기 */}
@@ -446,6 +451,7 @@ const SequenceDetailComponent = forwardRef<CourseDetailTabFormRef, SequenceDetai
                     ]}
                   />
                 }
+                validation={{ required: true }}
               />
             </ContentsRow>
             {/*교재*/}
@@ -570,6 +576,7 @@ const SequenceDetailComponent = forwardRef<CourseDetailTabFormRef, SequenceDetai
                     })}
                   />
                 }
+                validation={{ required: true }}
               />
               {/*연락처*/}
               <FormRow2
@@ -614,6 +621,7 @@ const SequenceDetailComponent = forwardRef<CourseDetailTabFormRef, SequenceDetai
                     })}
                   />
                 }
+                validation={{ required: true }}
               />
               {/*연락처*/}
               <FormRow2
@@ -1232,6 +1240,7 @@ const SequenceDetailComponent = forwardRef<CourseDetailTabFormRef, SequenceDetai
                     }}
                   />
                 }
+                validation={{ required: true }}
               />
               {/* 중분류 */}
               <FormRow2
@@ -1245,6 +1254,7 @@ const SequenceDetailComponent = forwardRef<CourseDetailTabFormRef, SequenceDetai
                     }}
                   />
                 }
+                validation={{ required: true }}
               />
             </ContentsRow>
             {/* 1인당 교육비, 고용보험 환급비용 */}
@@ -1447,6 +1457,7 @@ export const SequenceDetail = SequenceDetailComponent;
  * 응답 데이터를 폼 데이터로 변환
  */
 const responseDataToFormData = (d: LearningSequence): any => {
+  console.log('##responseDataToFormData=>', d);
   return {
     ...d,
     tenantIds: d?.tenantList?.map((d: any) => d.tenantId), // 테넌트 아이디
@@ -1479,37 +1490,31 @@ const responseDataToFormData = (d: LearningSequence): any => {
  * @returns {LearningSequence} 차수 기본 정보 요청 데이터
  */
 export const formDataToRequestData = (d: LearningSequence) => {
-  // 학습기간 유형(시작일 기준/기간 지정)
-  if (d.learningStartType === 'DAYS_AFTER_ENROLL') {
-    d.learningStartDays = undefined;
-  } else {
-    d.learningStartRange = undefined;
-    d.learningStartDateTime = undefined;
-    d.learningEndDateTime = undefined;
-  }
+  console.log('####formDataToRequestData=>', d);
+  d.curriculumId = 0;
 
   // 수강취소(미사용/사용)
   if (!d.isEnrollCancelDeadLineActivated) {
-    d.enrollCancelRange = undefined;
-    d.enrollCancelStartDateTime = undefined;
-    d.enrollCancelEndDateTime = undefined;
+    d.enrollCancelRange = null;
+    d.enrollCancelStartDateTime = null;
+    d.enrollCancelEndDateTime = null;
   }
 
   // 교육공간 라디오 선택에 따라 값 변경 관련 처리 (교육공간=learningSpaceType)
   // 교육공간 > 차세데 학습학습 플랫폼
   if (d.learningSpaceType === 'LEARNING_WAY') {
-    d.learningSpaceId = undefined; // 교육 장소 ID
-    d.learningSpaceName = undefined; // 교육 장소(선택입력)
-    d.learningSpaceNameKeyIn = undefined; // 교육 장소 직접입력
+    d.learningSpaceId = null; // 교육 장소 ID
+    d.learningSpaceName = null; // 교육 장소(선택입력)
+    d.learningSpaceNameKeyIn = null; // 교육 장소 직접입력
   }
   // 교육공간 > 공간선택
   else if (d.learningSpaceType === 'REGISTERED') {
-    d.learningSpaceNameKeyIn = undefined; // 교육 장소 직접입력
+    d.learningSpaceNameKeyIn = null; // 교육 장소 직접입력
   }
   // 교육공간 > 직적입력
   else if (d.learningSpaceType === 'MANUAL') {
-    d.learningSpaceId = undefined; // 교육 장소 ID
-    d.learningSpaceName = undefined; // 교육 장소(선택입력)
+    d.learningSpaceId = null; // 교육 장소 ID
+    d.learningSpaceName = null; // 교육 장소(선택입력)
   }
   // 학습대상-ID 배열
   d.targetListIds = d.targetList?.map((d: any) => d.id);
@@ -1518,34 +1523,34 @@ export const formDataToRequestData = (d: LearningSequence) => {
   // d.operatorTelCountryCode = 'KOR_82';
   // 복습 제한 > 미사용
   if (d.isReviewRestricted === false) {
-    d.maxReviewPeriodMonths = undefined; // 복습 제한 기간(개월)
+    d.maxReviewPeriodMonths = null; // 복습 제한 기간(개월)
   }
   // 1일 진도제한 > 미사용
   if (d.isDailyLearningProgressRestricted === false) {
-    d.maxDailyLearningProgress = undefined; // 1일 진도제한(분)
+    d.maxDailyLearningProgress = null; // 1일 진도제한(분)
   }
 
   // 인정 학습시간 > 학습시간
   if (d.recognizedStudyMinType === 'TIME') {
-    d.recognizedStudyCycles = undefined; // 인정 학습 횟수
-    d.recognizedStudyMinutes = undefined; // 인정 학습시간(분)
+    d.recognizedStudyCycles = null; // 인정 학습 횟수
+    d.recognizedStudyMinutes = null; // 인정 학습시간(분)
   }
   // 학습포인트 > 미사용
   if (d.isRecognizedStudyPoint === false) {
-    d.recognizedStudyPoint = undefined; // 인정학습점수(학습포인트)
+    d.recognizedStudyPoint = null; // 인정학습점수(학습포인트)
   }
   // 강사 > 강사선택
   if (d.instructorAssignType === 'REGISTERED') {
-    d.instructorName = undefined; // 강사 직접입력
+    d.instructorName = null; // 강사 직접입력
   }
   // 1인당 교육비 > 미사용
   if (d.isUseTrainingCostPerPerson === false) {
-    d.trainingCostPerPerson = undefined; // 1인당 교육비(원)
+    d.trainingCostPerPerson = null; // 1인당 교육비(원)
   }
 
   // 고용보험 환급비용 > 미사용
   if (d.isUseEmploymentInsuranceRefund === false) {
-    d.employmentInsuranceRefund = undefined; // 고용보험 환급비(원)
+    d.employmentInsuranceRefund = null; // 고용보험 환급비(원)
   }
 
   // 날짜 범위 쪼개기
@@ -1565,7 +1570,96 @@ export const formDataToRequestData = (d: LearningSequence) => {
   }
   //
 
+  // return {
+  //   ...d,
+  // };
   return {
-    ...d,
+    tenantList: d.tenantList ? d.tenantList?.map((x: any) => x.tenantId) : [],
+    targetList: d.targetList,
+    courseSequenceName: d.courseSequenceName,
+    isUsed: d.isUsed,
+    enrollmentStartDateTime: d.enrollmentStartDateTime,
+    enrollmentEndDateTime: d.enrollmentEndDateTime,
+    isEnrollCancelDeadLineActivated: d.isEnrollCancelDeadLineActivated,
+    enrollCancelStartDateTime: d.enrollCancelStartDateTime,
+    enrollCancelEndDateTime: d.enrollCancelEndDateTime,
+    learningStartType: d.learningStartType,
+    learningStartDays: d.learningStartDays,
+    learningStartDateTime: d.learningStartDateTime,
+    learningEndDateTime: d.learningEndDateTime,
+    learningSpaceType: d.learningSpaceType,
+    learningSpaceId: d.learningSpaceId,
+    learningSpaceName: d.learningSpaceName,
+    learningSpaceNameKeyIn: d.learningSpaceNameKeyIn,
+    approvalLineType: d.approvalLineType,
+    isMaxEnrollQuotaRestricted: d.isMaxEnrollQuotaRestricted,
+    maxEnrollQuota: d.maxEnrollQuota,
+    waitListPickMethodType: d.waitListPickMethodType,
+    maxWaitlistQuota: d.maxWaitlistQuota,
+    isInstructorAssigned: d.isInstructorAssigned,
+    instructorAssignType: d.instructorAssignType,
+    instructorId: d.instructorId,
+    instructorName: d.instructorName,
+    isTextbookProvided: d.isTextbookProvided,
+    textbookName: d.textbookName,
+    textbookFee: d.textbookFee,
+    coordinatorUuid: d.coordinatorUuid,
+    coordinatorName: d.coordinatorName,
+    coordinatorDeptName: d.coordinatorDeptName,
+    coordinatorTelCountryCode: d.coordinatorTelCountryCode,
+    coordinatorTelNo: d.coordinatorTelNo,
+    coordinatorEmail: d.coordinatorEmail,
+    operatorUuid: d.operatorUuid,
+    operatorName: d.operatorName,
+    operatorDeptName: d.operatorDeptName,
+    operatorTelCountryCode: d.operatorTelCountryCode,
+    operatorTelNo: d.operatorTelNo,
+    operatorEmail: d.operatorEmail,
+    isUsePassOption: d.isUsePassOption,
+    passMethodType: d.passMethodType,
+    isCertificateProvided: d.isCertificateProvided,
+    progressMinPassScore: d.progressMinPassScore,
+    attendanceMinPassScore: d.attendanceMinPassScore,
+    examMinPassScore: d.examMinPassScore,
+    asgmtMinPassScore: d.asgmtMinPassScore,
+    totalMinPassScore: d.totalMinPassScore,
+    progressWeights: d.progressWeights,
+    attendanceWeights: d.attendanceWeights,
+    examWeights: d.examWeights,
+    asgmtWeights: d.asgmtWeights,
+    recognizedStudyMinType: d.recognizedStudyMinType,
+    recognizedStudyCycles: d.recognizedStudyCycles,
+    recognizedStudyMinutes: d.recognizedStudyMinutes,
+    isRecognizedStudyPoint: d.isRecognizedStudyPoint,
+    recognizedStudyPoint: d.recognizedStudyPoint,
+    isLearnEnvEnabled: d.isLearnEnvEnabled,
+    deviceRestrictType: d.deviceRestrictType,
+    isIntranetRestricted: d.isIntranetRestricted,
+    learningRestrictTimeType: d.learningRestrictTimeType,
+    isReviewRestricted: d.isReviewRestricted,
+    maxReviewPeriodMonths: d.maxReviewPeriodMonths,
+    isCaptureBlockEnabled: d.isCaptureBlockEnabled,
+    isSecurityAgreementEnable: d.isSecurityAgreementEnable,
+    isLearnControlEnabled: d.isLearnControlEnabled,
+    isDailyLearningProgressRestricted: d.isDailyLearningProgressRestricted,
+    maxDailyLearningProgress: d.maxDailyLearningProgress,
+    isProgressResetEnabled: d.isProgressResetEnabled,
+    isSequentialLearningRequired: d.isSequentialLearningRequired,
+    isPlayerControlRestricted: d.isPlayerControlRestricted,
+    maxPlayBackRate: d.maxPlayBackRate,
+    hmgStandardMainCategory: d.hmgStandardMainCategory,
+    hmgStandardSubCategory: d.hmgStandardSubCategory,
+    isUseTrainingCostPerPerson: d.isUseTrainingCostPerPerson,
+    trainingCostPerPerson: d.trainingCostPerPerson,
+    isUseEmploymentInsuranceRefund: d.isUseEmploymentInsuranceRefund,
+    employmentInsuranceRefund: d.employmentInsuranceRefund,
+    isStayed: d.isStayed,
+    isCarTenantCustomOption: d.isCarTenantCustomOption,
+    isRotemTenantCustomOption: d.isRotemTenantCustomOption,
+    isOutsourcingTenantCustomOption: d.isOutsourcingTenantCustomOption,
+    isWiaTenantCustomOption: d.isWiaTenantCustomOption,
+    isAutoeverTenantCustomOption: d.isAutoeverTenantCustomOption,
+    tenantCustoms: d.tenantCustoms == null ? [] : d.tenantCustoms,
+    curriculumId: d.curriculumId,
   };
 };

@@ -1,8 +1,8 @@
-import { memo, useEffect, useState } from 'react';
+import { memo, useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import { isMobile } from 'react-device-detect';
 import { cn } from '@learnway/shared';
-import { ChipList, SelectOption, Avatar, Button, Accordion } from '@learnway/ui';
+import { ChipList, Avatar, Button, Accordion } from '@learnway/ui';
 import { IcoSymbol, IcoEssential, IcoArrowDown } from '@learnway/icons';
 import { Curriculum, PackageCardList } from '../../../../features/layout/';
 
@@ -26,51 +26,18 @@ const CourseIntroductionCompoment = ({
 }) => {
   const [preRequiredData, setPreRequiredData] = useState(preRequired);
 
-  // 태그
-  // const tagValue: SelectOption[] = [
-  //   { label: '스마트팩토리', value: 'A' },
-  //   { label: '디지털혁신', value: 'B' },
-  //   { label: '정보보안기술', value: 'C' },
-  //   { label: '스마트팩토리', value: 'D' },
-  //   { label: '스마트팩토리', value: 'E' },
-  //   { label: '스마트팩토리', value: 'F' },
-  //   { label: '스마트팩토리', value: 'G' },
-  //   { label: '스마트팩토리', value: 'H' },
-  //   { label: '스마트팩토리', value: 'I' },
-  //   { label: '스마트팩토리', value: 'J' },
-  //   { label: '스마트팩토리', value: 'K' },
-  //   { label: '스마트팩토리', value: 'L' },
-  //   { label: '스마트팩토리', value: 'M' },
-  // ];
   const tagValue = introduction.tags;
 
-  // 사전 필수 과정 아코디언 카드 리스트
-  // 패키지 카드
-  // const packageCardValue = [
-  //   {
-  //     imgSrc: listImage1,
-  //     text: '필수 개발 과정 Spring Framework OpenAPI 서비스 필수요소 1',
-  //   },
-  //   {
-  //     imgSrc: listImage1,
-  //     text: '필수 개발 과정 Spring Framework OpenAPI 서비스 필수요소 2',
-  //   },
-  //   {
-  //     imgSrc: listImage1,
-  //     text: '필수 개발 과정 Spring Framework OpenAPI 서비스 필수요소 3',
-  //   },
-  // ];
-
-  const prePackageCardValueFn = (arr: any) => {
-    return arr.map((a: any) => ({
+  const prePackageCardValueFn = (arr: Array<any>) => {
+    return arr.map((a) => ({
       imgSrc: listImage1,
-      // imgSrc: a.courseThumbnail,
-      text: a.courseName,
+      // imgSrc: a.thumbnail,
+      text: a.name,
     }));
   };
 
   // 사전 필수 과정 아코디언
-  const [aforetimeValue, setAforetimeValue] = useState<string>('a');
+  const [aforetimeValue, setAforetimeValue] = useState<string>(preRequired[0].id || '');
   // const aforetimeValueItems = [
   //   {
   //     value: 'a',
@@ -89,39 +56,22 @@ const CourseIntroductionCompoment = ({
   //       </div>
   //     ),
   //   },
-  //   {
-  //     value: 'b',
-  //     title: (
-  //       <div className={styles.aforetime_title}>
-  //         <p>
-  //           <IcoEssential width={32} height={32} />
-  //           사전 필수 과정이 있는 과정입니다.
-  //         </p>
-  //         <span>{aforetimeValue === 'b' ? '닫기' : '더보기'}</span>
-  //       </div>
-  //     ),
-  //     children: (
-  //       <div className={styles.aforetime_contents}>
-  //         <PackageCardList cardListData={packageCardValue} />
-  //       </div>
-  //     ),
-  //   },
   // ];
-  const aforetimeValueItems = preRequiredData
-    ? preRequiredData.map((p: any) => ({
-        value: p.requiredCourseId,
+  const aforetimeValueItems = preRequired
+    ? preRequired.map((p: any) => ({
+        value: p.id,
         title: (
           <div className={styles.aforetime_title}>
             <p>
               <IcoEssential width={32} height={32} />
-              {p.requiredCourseName}
+              {p.name}
             </p>
-            <span>{aforetimeValue === p.requiredCourseId ? '닫기' : '더보기'}</span>
+            <span>{aforetimeValue === p.id ? '닫기' : '더보기'}</span>
           </div>
         ),
         children: (
           <div className={styles.aforetime_contents}>
-            <PackageCardList cardListData={prePackageCardValueFn(p.requiredCourse)} />
+            <PackageCardList cardListData={prePackageCardValueFn(p.course)} />
           </div>
         ),
       }))
@@ -132,8 +82,8 @@ const CourseIntroductionCompoment = ({
     { txt: '현업사례로 보는 업무자동화에 파이썬이 필요한 이유', type: '이북', time: '1시간 28분' },
     { txt: '현업사례로 보는 업무자동화에 파이썬이 필요한 이유', type: '동영상', time: '30분' },
   ];
-  const CurriculumDataFn = (arr: any) => {
-    return arr.map((a: any) => ({
+  const CurriculumDataFn = (arr: Array<any>) => {
+    return arr.map((a) => ({
       txt: a.courseName,
       type: a.courseType,
       time: a.duration,
@@ -142,37 +92,13 @@ const CourseIntroductionCompoment = ({
 
   // 커리큘럼 아코디언
   const [curriculumValue, setCurriculumValue] = useState<string>('a');
-  // const curriculumValueItems = [
-  //   {
-  //     value: 'a',
-  //     title: (
-  //       <div className={styles.title}>
-  //         <p>
-  //           1일 업무를 10분만에 해결하는 파이썬 업무자동화<span>1시간</span>
-  //         </p>
-  //       </div>
-  //     ),
-  //     children: <Curriculum curriculumData={CurriculumData} />,
-  //   },
-  //   {
-  //     value: 'b',
-  //     title: (
-  //       <div className={styles.title}>
-  //         <p>
-  //           1일 업무를 10분만에 해결하는 파이썬 업무자동화<span>1시간</span>
-  //         </p>
-  //       </div>
-  //     ),
-  //     children: <Curriculum curriculumData={CurriculumData} />,
-  //   },
-  // ];
-  const curriculumValueItems = introduction.curriculum.map((i: any) => ({
-    value: i.curriculumId,
+  const curriculumValueItems = introduction.curriculum?.map((i: any) => ({
+    value: i.id,
     title: (
       <div className={styles.title}>
         <p>
-          {i.curriculumName}
-          <span>{i.curriculumTotalTime}</span>
+          {i.name}
+          <span>{i.totalTime}</span>
         </p>
       </div>
     ),
@@ -181,10 +107,6 @@ const CourseIntroductionCompoment = ({
 
   // 과정 정보 더보기
   const [more, setMore] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (preRequiredData.length) setAforetimeValue(preRequiredData[0].requiredCourseId);
-  }, [preRequiredData]);
 
   return (
     <div className={`${styles.start} ${styles.introduction}`}>
@@ -224,9 +146,7 @@ const CourseIntroductionCompoment = ({
           {/* bullet number module */}
           <div className={`${bulletStyles.start} ${bulletStyles.list}`}>
             <ul>
-              {introduction.goal.map((item: any) => (
-                <li>{item.text}</li>
-              ))}
+              {introduction.goal?.map((item: any, index: any) => <li key={index}>{item.text}</li>)}
             </ul>
           </div>
         </div>
@@ -241,8 +161,8 @@ const CourseIntroductionCompoment = ({
           {/* bullet module */}
           <div className={`${bulletStyles.start} ${bulletStyles.list}`}>
             <ul>
-              {introduction.contentsSummary.map((summary: any) => (
-                <li>{summary.text}</li>
+              {introduction.contentsSummary?.map((summary: any, index: any) => (
+                <li key={index}>{summary.text}</li>
               ))}
             </ul>
           </div>
@@ -273,8 +193,8 @@ const CourseIntroductionCompoment = ({
             {/* bullet module */}
             <div className={`${bulletStyles.start} ${bulletStyles.list}`}>
               <ul>
-                {introduction.contentsSummary.map((item: any) => (
-                  <li>{item.text}</li>
+                {introduction.contentsSummary?.map((item: any, index: any) => (
+                  <li key={index}>{item.text}</li>
                 ))}
               </ul>
             </div>
@@ -308,8 +228,8 @@ const CourseIntroductionCompoment = ({
             </div>
             <div className={styles.evaluation_box}>
               <ul>
-                {introduction.completionCriteria.scores.map((item: any) => (
-                  <li>
+                {introduction.completionCriteria?.scores?.map((item: any, index: any) => (
+                  <li key={index}>
                     <span>{item.title}</span>
                     <strong>{item.attendance}</strong>
                   </li>
@@ -318,8 +238,8 @@ const CourseIntroductionCompoment = ({
               {/* bulletStyles */}
               <div className={`${bulletStyles.start} ${bulletStyles.list}`}>
                 <ul>
-                  {introduction.completionCriteria.description.map((item: any) => (
-                    <li>{item.text}</li>
+                  {introduction.completionCriteria?.description?.map((item: any, index: any) => (
+                    <li key={index}>{item.text}</li>
                   ))}
                 </ul>
               </div>
@@ -334,8 +254,8 @@ const CourseIntroductionCompoment = ({
               <strong>강사소개</strong>
             </div>
             <div className={styles.operator_box}>
-              {introduction.teachers.map((item: any) => (
-                <div className={`${operatorStyles.start} ${operatorStyles.operator}`}>
+              {introduction.teachers?.map((item: any, index: any) => (
+                <div key={index} className={`${operatorStyles.start} ${operatorStyles.operator}`}>
                   {item.teacherProfileImage ? (
                     <div className={operatorStyles.avatar}>
                       <Avatar
@@ -365,8 +285,10 @@ const CourseIntroductionCompoment = ({
                     </div>
                     {item.historys && (
                       <div className={operatorStyles.definition_list}>
-                        {item.historys.map((h: any) => (
-                          <span className={operatorStyles.txt}>{h.text}</span>
+                        {item.historys?.map((h: any, index: any) => (
+                          <span key={index} className={operatorStyles.txt}>
+                            {h.text}
+                          </span>
                         ))}
                       </div>
                     )}
@@ -374,60 +296,6 @@ const CourseIntroductionCompoment = ({
                 </div>
               ))}
             </div>
-            {/* <div className={styles.operator_box}>
-              <div className={`${operatorStyles.start} ${operatorStyles.operator}`}>
-                <div className={operatorStyles.avatar}>
-                  <Avatar
-                    imageUrl={avatarDefault}
-                    size={isMobile ? 'xl' : '2xl'}
-                    className={styles.info_avata}
-                  />
-                </div>
-                <div className={operatorStyles.txt_box}>
-                  <div className={operatorStyles.profile}>
-                    <strong>김현대 사외강사</strong>
-                  </div>
-                  <div className={operatorStyles.definition_list}>
-                    <span className={operatorStyles.txt}>
-                      현&#41; 한국산업기술협회 연구원 수석교수
-                    </span>
-                    <span className={operatorStyles.txt}>현&#41; 표면처리기술사</span>
-                    <span className={operatorStyles.txt}>현&#41; 한국산업인력공단 NSC 개발위원</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className={`${operatorStyles.start} ${operatorStyles.operator}`}>
-                <div className={operatorStyles.avatar}>
-                  <Avatar
-                    imageUrl="https://github.com/shadcn.png"
-                    size={isMobile ? 'xl' : '2xl'}
-                    className={styles.info_avata}
-                  />
-                </div>
-                <div className={operatorStyles.txt_box}>
-                  <div className={operatorStyles.profile}>
-                    <strong>김현대 사외강사</strong>
-                    <div>
-                      <span>이메일</span>
-                      <span>abc@gmail.com</span>
-                    </div>
-                  </div>
-                  <div className={operatorStyles.definition_list}>
-                    <div className={`${definitionListStyles.start} ${definitionListStyles.list}`}>
-                      <dl>
-                        <dt>이메일</dt>
-                        <dd>abc@hyundai.conm</dd>
-                      </dl>
-                      <dl>
-                        <dt>전화</dt>
-                        <dd>02-555-2323</dd>
-                      </dl>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div> */}
           </div>
         )}
 
@@ -438,8 +306,8 @@ const CourseIntroductionCompoment = ({
               <strong>과정 운영자</strong>
             </div>
             <div className={styles.operator_box}>
-              {introduction.operators.map((item: any) => (
-                <div className={`${operatorStyles.start} ${operatorStyles.operator}`}>
+              {introduction.operators?.map((item: any, index: any) => (
+                <div key={index} className={`${operatorStyles.start} ${operatorStyles.operator}`}>
                   {item.operatorProfileImage ? (
                     <div className={operatorStyles.avatar}>
                       <Avatar
@@ -500,10 +368,10 @@ const CourseIntroductionCompoment = ({
               <ul>
                 <li>
                   보안프로그램 : 본 과정은 보안프로그램을 설치해야 하는 과정입니다. 학습 전,
-                  <Link to={'/'}>보안프로그램</Link>을 먼저 설치해주세요.
+                  <Link to=".">보안프로그램</Link>을 먼저 설치해주세요.
                 </li>
-                {introduction.information.map((item: any) => (
-                  <li>
+                {introduction.information?.map((item: any, index: any) => (
+                  <li key={index}>
                     {item.title}: {item.content}
                   </li>
                 ))}
@@ -515,10 +383,7 @@ const CourseIntroductionCompoment = ({
 
       {/* 과정 정보 접기/펼치기 */}
       <div className={styles.btn_more}>
-        <Button
-          onClick={() => setMore((prev) => !prev)}
-          className={more && true ? styles.active : ''}
-        >
+        <Button onClick={() => setMore((prev) => !prev)} className={more ? styles.active : ''}>
           {more === true ? '과정 정보 접기' : '과정 정보 펼치기'}
           <IcoArrowDown width={16} height={16} stroke="#4d525c" />
         </Button>

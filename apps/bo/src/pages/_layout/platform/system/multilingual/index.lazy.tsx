@@ -45,7 +45,7 @@ export const Route = createLazyFileRoute('/_layout/platform/system/multilingual/
 // };
 
 function RouteComponent() {
-  const { confirm, alert, open: openModal } = useModal();
+  const { confirm, alert, openModal } = useModal();
   const { state } = useCurrentRoute();
   const {
     provider: sProvider,

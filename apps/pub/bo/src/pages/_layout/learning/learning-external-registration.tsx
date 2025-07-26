@@ -47,7 +47,7 @@ export const Route = createFileRoute('/_layout/learning/learning-external-regist
 });
 
 function RouteComponent() {
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
 
   const ModalChannelContent = () => {
     const [selectedValues, setSelectedValues] = useState<string[]>([]);

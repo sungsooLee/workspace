@@ -55,7 +55,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
   const [roleIdOptions, setRoleIdOptions] = useState<any>();
 
   const {
-    open: openModal,
+    openModal,
     confirm: openConfirm,
     alert: openAlert,
     showSaveComplete,

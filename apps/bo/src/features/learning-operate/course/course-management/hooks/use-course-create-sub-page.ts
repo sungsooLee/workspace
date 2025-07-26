@@ -1,0 +1,334 @@
+import { useCallback, useEffect, useMemo } from 'react';
+import { CourseDetailTab, CourseTab } from '../types/type';
+
+import {
+  useCreateCourse,
+  useDeleteCourse,
+  useFetchCourse,
+  useFetchCourseConfig,
+  useUpdateCourseWizard1,
+  useUpdateCourseWizard2,
+  useUpdateCourseWizard3,
+  useUpdateCourseWizard4,
+  useUpdateCourseWizard5,
+} from '@entities/course';
+import { UseDynamicFormResult } from '@learnway/hooks';
+import { useModal } from '@learnway/ui';
+import { useNavigate } from '@tanstack/react-router';
+import { Course, CourseConfig } from '@types';
+import { useUpdateEffect } from 'ahooks';
+import isEqual from 'lodash/isEqual';
+import {
+  TriggerKey,
+  useCourseActions,
+  useCourseCreateInfo,
+  useCourseLastTriggered,
+} from '../store/use-course-store';
+import { getDummyCourse, getDummyCourse2, getDummyCourse4 } from './course-mock-data';
+
+// 과정 생성/수정 서브페이지 커스텀 훅
+export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
+  const { showSaveComplete, saveConfirm, showDeleteComplete } = useModal();
+  const navigate = useNavigate();
+  const { updateFormData, formValues, onSubmit, formState } = form;
+  const lastTriggered = useCourseLastTriggered();
+  const { courseId, courseType, activeTab, formState: storeFormState } = useCourseCreateInfo();
+  const { setCourseCreateInfo } = useCourseActions();
+
+  // courseData를 먼저 가져와서 channelUuid를 확보
+  const { data: courseData } = useFetchCourse(courseId);
+
+  // courseConfigParams를 courseData와 courseCreateInfo로부터 생성
+  const courseConfigParams = useMemo(
+    () => ({
+      courseType,
+      channelUuid: courseData?.channelUuid,
+    }),
+    [courseType, courseData?.channelUuid],
+  );
+
+  // 과정 설정 정보(courseConfig) 조회
+  const { data: courseConfig } = useFetchCourseConfig(courseConfigParams);
+
+  // 과정 생성 뮤테이션
+  const { mutate: createCourse } = useCreateCourse({
+    onSuccess: async () => {
+      await showSaveComplete();
+      moveCourseListPage();
+    },
+  });
+
+  // 과정 삭제 뮤테이션
+  const { mutate: deleteCourse } = useDeleteCourse({
+    onSuccess: () => {
+      showDeleteComplete();
+      moveCourseListPage();
+    },
+  });
+
+  // 각 스텝별 과정 수정 뮤테이션 객체
+  const updateMutations = useUpdateCourseWizardMutations(() => {
+    showSaveComplete();
+    if (activeTab === CourseTab.STEP5) {
+      moveCourseDetailPage();
+    }
+  });
+
+  // 현재 탭에 맞는 update 뮤테이션 반환
+  const getUpdateMutate = useCallback(
+    (currentTab: CourseTab | CourseDetailTab) => updateMutations[currentTab as CourseTab],
+    [updateMutations],
+  );
+
+  // 저장 핸들러
+  const handleSave = useCallback(async () => {
+    const run = onSubmit(async (data) => {
+      if (!(await saveConfirm())) {
+        return;
+      }
+      const wizardStep = getWizardStep(activeTab);
+      const mergeData = { ...formValues, ...data, wizardStep };
+      const isUpdate = mergeData?.courseId;
+      const requestData = formDataToRequestData(mergeData);
+      const updateCourse = getUpdateMutate(activeTab);
+
+      isUpdate ? updateCourse(requestData) : createCourse(requestData);
+    });
+    // 가짜 이벤트 객체를 생성해서 수동으로 호출
+    run({ preventDefault: () => null } as any);
+  }, [formValues, activeTab]);
+
+  // 삭제 핸들러
+  const handleDelete = useCallback(async () => {
+    if (!(await saveConfirm())) {
+      return;
+    }
+    deleteCourse(courseId);
+  }, [courseId]);
+
+  // 테스트용 더미 데이터 로드
+  const loadMockData = useCallback((type = 1) => {
+    const dummyData =
+      type === 1
+        ? getDummyCourse()
+        : type === 2
+          ? getDummyCourse2()
+          : type === 4
+            ? getDummyCourse4()
+            : getDummyCourse();
+    // setData((prev) => ({
+    //   ...prev,
+    //   formData: dummyData as Course,
+    //   courseConfig: getDummyCourseConfig(),
+    // }));
+  }, []);
+
+  // 수정 모드 여부
+  const isUpdateMode = useMemo(() => !!courseData?.courseId, [courseData]);
+
+  // 과정 목록 페이지 이동
+  const moveCourseListPage = () => {
+    navigate({
+      to: '/learning/course',
+    });
+  };
+
+  // 과정 상세 페이지 이동
+  const moveCourseDetailPage = () => {
+    navigate({
+      to: '/learning/course/detail',
+    });
+  };
+
+  // 저장/삭제 트리거 감지 effect
+  useUpdateEffect(() => {
+    switch (lastTriggered?.key) {
+      case TriggerKey.SAVE:
+        handleSave();
+        break;
+      case TriggerKey.DELETE:
+        handleDelete();
+        break;
+    }
+  }, [lastTriggered]);
+
+  // courseData 변경 시 폼 데이터 갱신
+  useEffect(() => {
+    if (courseData) {
+      const selectedCourseType = courseType; // 과정 유형 선택 모달에서 선택한 값
+      const formData = responseDataToFormData(courseData);
+      formData.courseType = formData.courseType ?? selectedCourseType; // 최초 등록시 과정 유형 선택 모달에서 선택한 값으로 설정
+      updateFormData(formData);
+    }
+  }, [courseData, courseType]);
+
+  // form state 변경 시 코스 생성 정보 업데이트
+  useEffect(() => {
+    if (!isEqual(storeFormState, formState)) {
+      setCourseCreateInfo({ formState });
+    }
+  }, [formState, storeFormState]);
+
+  return {
+    isUpdateMode,
+    loadMockData,
+    courseConfig,
+  };
+};
+
+// 응답 데이터를 폼 데이터로 변환
+const responseDataToFormData = (d: Course, c: CourseConfig = {} as CourseConfig): Course => {
+  return {
+    ...d,
+    tenantIds: d?.tenantList?.map((d: any) => d.tenantId), // 테넌트 아이디
+    isLearnEnvEnabled: c.learningEnvOption !== 'IMPOSSIBLE', // 학습환경 설정 사용 여부
+    isLearnControlEnabled: c.learningControlOption !== 'IMPOSSIBLE', // 학습제어 설정 사용 여부
+    isUsePassOption: c.passOption !== 'IMPOSSIBLE', // 이수기준 설정 사용 여부
+    isCommunicationToolEnabled: c.communicationOption !== 'IMPOSSIBLE', // 커뮤니티 및 공유설정 사용 여부
+    isInstructorAssigned: c.instructorOption !== 'IMPOSSIBLE', // 강사 설정 사용 여부
+    isTextbookProvided: c.textBookOption !== 'IMPOSSIBLE', // 교재 설정 사용 여부
+    isRelatedPrerequisiteCourseExisted: c.relatedCourseOption !== 'IMPOSSIBLE', // 사전/연관학습 설정 사용 여부
+    isUseOutsourcing: true, // 오토에버 위탁 전용 설정 여부 (CourseConfig 에 관리안함)
+    // 이수기준 설정
+    passOption: {
+      progressMinPassScore: d.progressMinPassScore, // 진도 최소 이수 점수
+      attendanceMinPassScore: d.attendanceMinPassScore, // 출석 최소 이수 점수
+      examMinPassScore: d.examMinPassScore, // 평가 최소 이수 점수
+      asgmtMinPassScore: d.asgmtMinPassScore, // 과제 최소 이수 점수
+      totalMinPassScore: d.totalMinPassScore, // 총점 최소 이수 점수
+      progressWeights: d.progressWeights, // 진도 반영 비율
+      attendanceWeights: d.attendanceWeights, // 출석 반영 비율
+      examWeights: d.examWeights, // 평가 반영 비율
+      asgmtWeights: d.asgmtWeights, // 과제 반영 비율
+    },
+    courseValidityRange: {
+      from: d.courseValidityStartDateTime, // 과정 유효 시작일
+      to: d.courseValidityEndDateTime, // 과정 유효 종료일
+    },
+    // tagNameArray: d.tagNames?.map((item) => item.value), // 태그
+  };
+};
+
+/**
+ * 과정 기본 정보 컴포넌트 폼 데이터를 요청 데이터로 변환하는 함수
+ *
+ * @component BasicInfo
+ * @param {Course} d - 과정 기본 정보 폼 데이터
+ * @returns {Course} 과정 기본 정보 요청 데이터
+ */
+export const formDataToRequestData = (d: Course) => {
+  // 교육공간 라디오 선택에 따라 값 변경 관련 처리 (교육공간=learningSpaceType)
+  // 교육공간 > 차세대 학습 플랫폼
+  if (d.learningSpaceType === 'LEARNING_WAY') {
+    d.learningSpaceId = undefined; // 교육 장소 ID
+    d.learningSpaceName = undefined; // 교육 장소(선택입력)
+    d.learningSpaceNameKeyIn = undefined; // 교육 장소 직접입력
+  }
+  // 교육공간 > 공간선택
+  else if (d.learningSpaceType === 'REGISTERED') {
+    d.learningSpaceNameKeyIn = undefined; // 교육 장소 직접입력
+  }
+  // 교육공간 > 직접입력
+  else if (d.learningSpaceType === 'MANUAL') {
+    d.learningSpaceId = undefined; // 교육 장소 ID
+    d.learningSpaceName = undefined; // 교육 장소(선택입력)
+  }
+
+  // 카테고리 아이디 배열
+  d.categoryIds = d.categories?.map((d: any) => d.categoryId);
+  // 대표 카테고리
+  // d.primaryCategoryId = d.categories?.[0]?.categoryId;
+  // 학습대상-ID 배열
+  d.targetListIds = d.targetList?.map((d: any) => d.id);
+
+  // 담당자, 운영자 연락처 국가코드
+  // d.coordinatorTelCountryCode = 'KOR_82';
+  // d.operatorTelCountryCode = 'KOR_82';
+
+  // 사전 필수과정
+  const preRequisiteCourseIds = d.preRequisiteCourseList
+    ?.map((d) => d.courseId)
+    ?.filter((id): id is number => id !== undefined);
+  // 연관 과정
+  const relatedCourseIds = d.relatedCourseList
+    ?.map((d) => d.courseId)
+    ?.filter((id): id is number => id !== undefined);
+
+  // 라디오 옵션 null 처리
+  // 복습 제한 > 미사용
+  if (d.isReviewRestricted === false) {
+    d.maxReviewPeriodMonths = undefined; // 복습 제한 기간(개월)
+  }
+
+  // 1일 진도제한 > 미사용
+  if (d.isDailyLearningProgressRestricted === false) {
+    d.maxDailyLearningProgress = undefined; // 1일 진도제한(분)
+  }
+
+  // 인정 학습시간 > 학습시간
+  if (d.recognizedStudyMinType === 'TIME') {
+    d.recognizedStudyCycles = undefined; // 인정 학습 횟수
+  }
+
+  // 학습포인트 > 미사용
+  if (d.isRecognizedStudyPoint === false) {
+    d.recognizedStudyPoint = undefined; // 인정학습점수(학습포인트)
+  }
+
+  // 강사 > 강사선택
+  if (d.instructorAssignType === 'REGISTERED') {
+    d.instructorName = undefined; // 강사 직접입력
+  }
+
+  // 1인당 교육비 > 미사용
+  if (d.isUseTrainingCostPerPerson === false) {
+    d.trainingCostPerPerson = undefined; // 1인당 교육비(원)
+  }
+
+  // 고용보험 환급비용 > 미사용
+  if (d.isUseEmploymentInsuranceRefund === false) {
+    d.employmentInsuranceRefund = undefined; // 고용보험 환급비(원)
+  }
+
+  return {
+    ...d,
+    ...d.passOption, // 이수기준 설정
+    preRequisiteCourseIds,
+    relatedCourseIds,
+    courseValidityStartDateTime: d.courseValidityRange?.from, // 과정 유효 시작일
+    courseValidityEndDateTime: d.courseValidityRange?.to, // 과정 유효 종료일
+  };
+};
+
+// 현재 활성화된 탭에 맞는 wizard step 반환
+const getWizardStep = (activeTab: CourseTab | CourseDetailTab) => {
+  switch (activeTab) {
+    case CourseTab.STEP1:
+      return 'STEP1';
+    case CourseTab.STEP2:
+      return 'STEP2';
+    case CourseTab.STEP3:
+      return 'STEP3';
+    case CourseTab.STEP4:
+      return 'STEP4';
+    case CourseTab.STEP5:
+      return 'STEP5';
+  }
+};
+
+// 각 과정 스텝별 update 뮤테이션 반환
+export const useUpdateCourseWizardMutations = (onSuccess: () => void) => {
+  const w1 = useUpdateCourseWizard1({ onSuccess });
+  const w2 = useUpdateCourseWizard2({ onSuccess });
+  const w3 = useUpdateCourseWizard3({ onSuccess });
+  const w4 = useUpdateCourseWizard4({ onSuccess });
+  const w5 = useUpdateCourseWizard5({ onSuccess });
+
+  return {
+    [CourseTab.STEP1]: w1.mutate,
+    [CourseTab.STEP2]: w2.mutate,
+    [CourseTab.STEP3]: w3.mutate,
+    [CourseTab.STEP4]: w4.mutate,
+    [CourseTab.STEP5]: w5.mutate,
+  };
+};

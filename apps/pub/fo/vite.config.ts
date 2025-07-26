@@ -21,6 +21,18 @@ export default defineConfig({
         changeOrigin: true,
         secure: false,
       },
+      '/public': {
+        target:
+          'http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com',
+        changeOrigin: true,
+        secure: false,
+      },
+      '/upload': {
+        target:
+          'http://internal-hae-dev-hmgnlp-ingress-alb-an2-1797144147.ap-northeast-2.elb.amazonaws.com',
+        changeOrigin: true,
+        secure: false,
+      },
     },
   },
   preview: {

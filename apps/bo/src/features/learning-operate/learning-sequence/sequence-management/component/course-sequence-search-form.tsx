@@ -1,3 +1,4 @@
+import { DateRangePickerFormField } from '@features/form';
 import { DropdownFormField } from '@features/form/ui/dropdown-form-field';
 import { CODE_GROUP } from '@learnway/hooks';
 import { generateYears } from '@learnway/shared';
@@ -56,9 +57,12 @@ export const CourseSequenceSearchForm: React.FC<CourseSequenceSearchFormProps> =
           element={
             <DropdownFormField
               options={generateYears(10)}
-              presetOptionLabel={t('LABEL.form.label.all')}
+              presetOptionLabel={t('LABEL.form.label.select', '선택')}
             />
           }
+          validation={{
+            required: true,
+          }}
         />
         {/* 과정유형 */}
         <FormRow2
@@ -67,7 +71,7 @@ export const CourseSequenceSearchForm: React.FC<CourseSequenceSearchFormProps> =
           label={t('LABEL.form.label.courseType')}
           element={
             <DropdownFormField
-              presetOptionLabel={t('LABEL.form.label.all')}
+              presetOptionLabel={t('LABEL.form.label.select', '선택')}
               optionsConfig={{
                 codeGroup: CODE_GROUP['lms.course.CourseType'],
               }}
@@ -93,9 +97,26 @@ export const CourseSequenceSearchForm: React.FC<CourseSequenceSearchFormProps> =
         {/* 상태 */}
         <FormRow2
           provider={provider}
-          name="status"
-          label={t('LABEL.form.label.status')}
-          element={<Input />}
+          name="learningStatusType"
+          label={t('LABEL.form.label.learningStatusType')}
+          element={
+            <DropdownFormField
+              presetOptionLabel={t('LABEL.form.label.select', '선택')}
+              optionsConfig={{
+                codeGroup: CODE_GROUP['lms.sequence.LearningStatusType'],
+              }}
+            />
+          }
+        />
+        {/* 학습 기간 */}
+        <FormRow2
+          provider={provider}
+          name={'courseSequenceRange'}
+          label={t('LABEL.form.label.courseSequenceRange')}
+          type={'date-range'}
+          format={'object'}
+          value={{ from: undefined, to: undefined }}
+          element={<DateRangePickerFormField />}
         />
       </ContentsRow>
     </SearchBoxForm>

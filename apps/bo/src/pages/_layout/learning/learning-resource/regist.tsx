@@ -1,6 +1,10 @@
 import { PageContainer } from '@shared/ui';
 // IA105 / NLP_BO_CMS_1058 // IA105 / NLP_BO_CMS_1017 // IA106 / NLP_BO_CMS_1060
-import { usePostDraftHTMLVideo, usePostDraftVideos } from '@entities/learning-resource';
+import {
+  usePostDraftHTMLVideo,
+  usePostDraftScorm,
+  usePostDraftVideos,
+} from '@entities/learning-resource';
 import {
   getDetailPathByContentType,
   LearningResourceFileUploadModal,
@@ -10,7 +14,7 @@ import { ChannelChoiceModal } from '@shared/ui';
 import { getDefaultLang, LEARNING_TYPE } from '@learnway/config';
 import { useModal } from '@learnway/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { PostDraftHtmlVideoRes, PostDraftVideosRes } from '@types';
+import { PostDraftHtmlVideoRes, PostDraftScormRes, PostDraftVideosRes } from '@types';
 
 import { pick } from 'lodash';
 import { useEffect, useState } from 'react';
@@ -21,7 +25,7 @@ export const Route = createFileRoute('/_layout/learning/learning-resource/regist
 
 function RouteComponent() {
   const router = useRouter();
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
 
   const [selectedType, setSelectedType] = useState<LEARNING_TYPE>('');
 
@@ -34,6 +38,31 @@ function RouteComponent() {
       if (result.contents.length === 1) {
         return router.navigate({
           to: getDetailPathByContentType(LEARNING_TYPE.VIDEO),
+          state: {
+            contentUuid: result.contents[0].contentUuid,
+          },
+          replace: true,
+        });
+      }
+      router.navigate({
+        to: '/learning/learning-resource',
+        state: {
+          listParam,
+        },
+        replace: true,
+      });
+    },
+    onError: (error: any) => {
+      console.error(error);
+      // 에러 얼럿 띄우면서 다시 리스트 화면으로?
+    },
+  });
+
+  const { create: postDraftScorm } = usePostDraftScorm({
+    onSuccess: (result: PostDraftScormRes) => {
+      if (result.contents.length === 1) {
+        return router.navigate({
+          to: getDetailPathByContentType(LEARNING_TYPE.SCORM),
           state: {
             contentUuid: result.contents[0].contentUuid,
           },
@@ -95,6 +124,33 @@ function RouteComponent() {
 
     setListParam(pick(channelInfo, ['tenantId', 'channelUuid']));
     postDraftVideos({
+      languageCountryCode: getDefaultLang().toUpperCase(),
+      tenantId: channelInfo.tenantId,
+      channelUuid: channelInfo.channelUuid,
+      fileUuids,
+    });
+  };
+
+  const uploadScorm = async () => {
+    const channelInfo = await openModal({
+      content: <ChannelChoiceModal />,
+    });
+    if (!channelInfo) {
+      setSelectedType('');
+      return;
+    }
+
+    const fileUuids = await openModal({
+      content: <LearningResourceFileUploadModal channel={channelInfo} type={LEARNING_TYPE.SCORM} />,
+      width: 'lg',
+    });
+    if (!fileUuids) {
+      setSelectedType('');
+      return;
+    }
+
+    setListParam(pick(channelInfo, ['tenantId', 'channelUuid']));
+    postDraftScorm({
       languageCountryCode: getDefaultLang().toUpperCase(),
       tenantId: channelInfo.tenantId,
       channelUuid: channelInfo.channelUuid,
@@ -170,7 +226,7 @@ function RouteComponent() {
       }
       // 스콤
       case LEARNING_TYPE.SCORM: {
-        router.navigate({ to: '/learning/resource/scorm/view', replace: true });
+        uploadScorm();
         break;
       }
       // HTML 동영상

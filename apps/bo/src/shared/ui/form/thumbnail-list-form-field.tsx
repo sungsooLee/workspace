@@ -1,6 +1,6 @@
 // IA011 / NLP_BO_PMS_1100_05_01
-import { Dispatch, forwardRef, SetStateAction, useEffect, useState } from 'react';
-import { ImageOption, ThumbnailImageUpload } from '@learnway/ui'; // @learnway/ui에서 ThumbnailImageUpload 컴포넌트 import
+import { forwardRef, useEffect, useState } from 'react';
+import { ThumbnailImageUpload } from '@learnway/ui'; // @learnway/ui에서 ThumbnailImageUpload 컴포넌트 import
 import {
   S3UploaderConfig,
   BaseFormFieldProps,
@@ -8,6 +8,7 @@ import {
   useFileManager,
 } from '@learnway/hooks'; // @learnway/hooks에서 폼 필드 기본 props 타입 import
 import { difference, first, isArray, isEqual, uniq } from 'lodash';
+import { CourseType } from '@learnway/types';
 
 /**
  * ThumbnailImageUploadFormField 컴포넌트의 props 인터페이스
@@ -17,7 +18,7 @@ interface ThumbnailImageUploadFormFieldProps extends BaseFormFieldProps<string[]
   uploadConfig?: S3UploaderConfig;
   max?: number;
   uuidType: 'files' | 'group';
-  showDefault?: boolean;
+  showDefault?: boolean | CourseType;
   isLoading?: boolean;
   selected: string;
   onSelected: (uuid: string) => void;

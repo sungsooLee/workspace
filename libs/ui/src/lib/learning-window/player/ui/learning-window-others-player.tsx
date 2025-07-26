@@ -12,7 +12,7 @@ import { useLearningWindow } from '../../learnway-learning-window.store';
 const styles = isMobile ? stylesMobile : stylesWeb;
 
 const LearningWindowOthersPlayerComponent: FC<any> = () => {
-  const { otherInfo } = useLearningWindow();
+  const { playInfo, otherInfo } = useLearningWindow();
   const handleLinkClick = () => {
     console.log('handleClick');
   };

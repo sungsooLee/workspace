@@ -154,7 +154,7 @@ const PopupContent = () => {
 };
 
 const CategoryCompoment = ({ isOpen }: CategoryPopupProps) => {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
   return (
     <div className={styles.start}>
       <Button

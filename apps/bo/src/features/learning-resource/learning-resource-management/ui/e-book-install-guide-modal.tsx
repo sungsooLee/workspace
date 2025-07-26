@@ -1,7 +1,7 @@
 import { Button, ModalBody, ModalContainer, ModalFooter, useModal } from '@learnway/ui';
 import styles from '@learnway/styles/bo/assets/styles/modules/e-book.module.css'; // 퍼블수정 20240318 : libs로 경로 수정
 const EbookInstallGuideModalComponent = () => {
-  const { close } = useModal();
+  const { closeModal } = useModal();
   return (
     <ModalContainer>
       <ModalBody>
@@ -25,7 +25,7 @@ const EbookInstallGuideModalComponent = () => {
         </div>
       </ModalBody>
       <ModalFooter>
-        <Button label={'확인'} variant={'primary'} size={'lg'} onClick={() => close()} />
+        <Button label={'확인'} variant={'primary'} size={'lg'} onClick={() => closeModal()} />
       </ModalFooter>
     </ModalContainer>
   );

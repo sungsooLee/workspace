@@ -17,17 +17,17 @@ import SettingsPopover from './settings-popover';
 
 import styles from './bottom-progress-bar.module.css';
 import { useModal } from '../../modal/modal.hook';
-import { VideoSubsettingPopup } from './video-subsetting-popup';
+import { VideoSettingModal } from './video-setting-modal';
 
 const BottomProgressBar = (props: VideoPlayerContainerProps) => {
-  const { alert: openAlert, open: openModal } = useModal();
+  const { alert: openAlert, openModal } = useModal();
   const [showSettings, setShowSettings] = useState(false);
 
-  const toggleSettings = () => {
+  const toggleSettings = async () => {
     if (isMobile) {
       openModal({
         width: 'm_bottom_sheet',
-        content: <VideoSubsettingPopup />,
+        content: <VideoSettingModal {...props} />,
       });
     } else {
       setShowSettings((prev) => !prev);
@@ -100,13 +100,15 @@ const BottomProgressBar = (props: VideoPlayerContainerProps) => {
 
         {/* 오른쪽: 설정, 전체화면 */}
         <div className={styles.right}>
-          <IcoSubtitles
-            className={styles.sub_title}
-            width={isMobile ? 16 : 24}
-            height={isMobile ? 16 : 24}
-            fill={props.subtitlesVisible ? '#80aaff' : '#fff'}
-            onClick={props.toggleSubtitles}
-          />
+          {props.videoSubtitles && (
+            <IcoSubtitles
+              className={styles.sub_title}
+              width={isMobile ? 16 : 24}
+              height={isMobile ? 16 : 24}
+              fill={props.subtitlesVisible ? '#80aaff' : '#fff'}
+              onClick={props.toggleSubtitles}
+            />
+          )}
           <div className="relative">
             <IcoSettingsFill
               className={styles.setting}

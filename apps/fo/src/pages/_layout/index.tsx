@@ -57,9 +57,7 @@ function HomeComponent() {
           onClick={async () => {
             const values = getValues();
 
-            const coursePromeis = queryClient.fetchQuery(
-              queryOptions.courseDetail(values.courseId),
-            );
+            const coursePromeis = queryClient.fetchQuery(queryOptions.detail(values.courseId));
             console.log(coursePromeis);
             coursePromeis
               .then((courseData) => {

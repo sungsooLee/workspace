@@ -29,7 +29,7 @@ export const Route = createFileRoute('/_layout/learning/popup-fileupload')({
 });
 
 function RouteComponent() {
-  const { open: openModal, close: closeModal } = useModal();
+  const { openModal, closeModal } = useModal();
   const FileUploadContent = () => {
     return (
       // 퍼블수정 2025-04-22

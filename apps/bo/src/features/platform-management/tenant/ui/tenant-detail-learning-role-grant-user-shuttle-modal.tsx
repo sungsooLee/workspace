@@ -44,7 +44,7 @@ const TenantDetailLearningRoleGrantUserShuttleModalComponent = ({ roleId }: { ro
 
   const formRef = useRef<HTMLFormElement>(null);
 
-  const { close, alert } = useModal();
+  const { closeModal, alert } = useModal();
 
   const queryClient = useQueryClient();
   const {
@@ -52,7 +52,7 @@ const TenantDetailLearningRoleGrantUserShuttleModalComponent = ({ roleId }: { ro
     getValues: getSearchValues,
     setOptions,
     setValue,
-  } = useSearchBox(searchConfig);
+  } = useSearchBox(searchConfig());
   const {
     provider,
     updateFormData,
@@ -81,7 +81,7 @@ const TenantDetailLearningRoleGrantUserShuttleModalComponent = ({ roleId }: { ro
   };
 
   const handleOnClose = () => {
-    close();
+    closeModal();
   };
   const handleOnSubmit = async (data: any) => {
     const { dateRange } = getValues();
@@ -105,7 +105,7 @@ const TenantDetailLearningRoleGrantUserShuttleModalComponent = ({ roleId }: { ro
       saveRoleUsers(payload, { onSuccess: resolve });
     });
     console.log('getValues', result);
-    close();
+    closeModal();
   };
 
   useEffect(() => {
@@ -138,7 +138,7 @@ const TenantDetailLearningRoleGrantUserShuttleModalComponent = ({ roleId }: { ro
           }}
           showNumberingColumn={false}
           gridData={gridData}
-          columns={columns}
+          columns={columns()}
           rowKey={'uuid'}
           leftTitle={t('사용자목록')}
           rightTitle={t('사용자 선택')}
@@ -173,7 +173,7 @@ const TenantDetailLearningRoleGrantUserShuttleModalComponent = ({ roleId }: { ro
 export const TenantDetailLearningRoleGrantUserShuttleModal =
   TenantDetailLearningRoleGrantUserShuttleModalComponent;
 
-const searchConfig: SearchBoxConfig = {
+const searchConfig = (): SearchBoxConfig => ({
   builders: [
     [
       {
@@ -215,38 +215,39 @@ const searchConfig: SearchBoxConfig = {
   validator: {
     companyId: true,
   },
-};
+});
 
 const columnHelper = createColumnHelper<any>();
-const columns = [
-  columnHelper.accessor('company', {
-    id: 'company',
-    header: t('회사'),
-    cell: (info) => info.row.original.company.name,
-    size: 132,
-  }),
-  columnHelper.accessor('dept', {
-    id: 'dept',
-    header: t('소속'),
-    size: 132,
-    cell: (info) => info.row.original.dept.deptName,
-    meta: {
-      headerAlign: 'left', // 헤더만 가운데 정렬
-      cellAlign: 'left', // 셀은 오른쪽 정렬
-    },
-  }),
-  columnHelper.accessor('employeeNumber', {
-    id: 'employeeNumber',
-    header: t('사번'),
-    size: 132,
-    cell: (info) => info.getValue(),
-  }),
-  columnHelper.accessor('name', {
-    header: t('이름'),
-    size: 132,
-    cell: (info) => info.getValue(),
-  }),
-] as ColumnDef<any, unknown>[];
+const columns = () =>
+  [
+    columnHelper.accessor('company', {
+      id: 'company',
+      header: t('회사'),
+      cell: (info) => info.row.original.company.name,
+      size: 132,
+    }),
+    columnHelper.accessor('dept', {
+      id: 'dept',
+      header: t('소속'),
+      size: 132,
+      cell: (info) => info.row.original.dept.deptName,
+      meta: {
+        headerAlign: 'left', // 헤더만 가운데 정렬
+        cellAlign: 'left', // 셀은 오른쪽 정렬
+      },
+    }),
+    columnHelper.accessor('employeeNumber', {
+      id: 'employeeNumber',
+      header: t('사번'),
+      size: 132,
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor('name', {
+      header: t('이름'),
+      size: 132,
+      cell: (info) => info.getValue(),
+    }),
+  ] as ColumnDef<any, unknown>[];
 
 const formConfig: DynamicFormConfig = {
   builders: [

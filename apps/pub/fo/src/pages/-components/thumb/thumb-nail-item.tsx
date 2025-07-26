@@ -14,13 +14,14 @@ export interface ThumbnailData {
   infoCustomNode?: React.ReactNode[];
   toggleButton?: boolean;
   countInfoNode?: React.ReactNode[];
+  indexNumber?: string;
 }
 
 interface ThumbnailItemProps {
   data: ThumbnailData;
   direction?: 'horizontal' | 'vertical';
-  className?: string;
   stacked?: boolean;
+  className?: string;
 }
 
 const ThumbnailItem: React.FC<ThumbnailItemProps> = ({
@@ -50,6 +51,7 @@ const ThumbnailItem: React.FC<ThumbnailItemProps> = ({
             className={styles.thumbnail_image}
           />
           {data.labelCustomNode && <div className={styles.custom_node}>{data.labelCustomNode}</div>}
+          {data.indexNumber && <span className={styles.index_node}>{data.indexNumber}</span>}
         </div>
         <div className={styles.thumbnail_info}>
           {data.infoCustomNode && (
@@ -74,7 +76,7 @@ const ThumbnailItem: React.FC<ThumbnailItemProps> = ({
           {data.countInfoNode && <div className={styles.count_info_node}>{data.countInfoNode}</div>}
         </div>
       </Link>
-      {data.toggleButton && <ToggleButton variant="heart" className={styles.toggle_btn} />}
+      {data.toggleButton && <ToggleButton variant={'heart'} className={styles.toggle_btn} />}
     </div>
   );
 };

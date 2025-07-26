@@ -6,7 +6,7 @@ import { TrainingPlaceList } from '@features/learning-operate-support/learning-s
 import { TrainingPlaceDetail } from '@features/learning-operate-support/learning-space/learning-space-management/training-place-detail';
 
 const TrainingPlaceChoiceModalComponent = () => {
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
   const childRef = useRef<HTMLFormElement>(null);
 
   const [formMode, setFormMode] = useState(EnFormMode.NONE);

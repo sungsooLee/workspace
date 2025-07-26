@@ -15,7 +15,7 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import tableListStyles from '@learnway/styles/fo/shared/ui/list/table-list.module.css';
 
 const NoticeDetailPopupComponent = () => {
-  const { open: openModal, close: closeModal } = useModal();
+  const { openModal, closeModal } = useModal();
   const columnHelper = createColumnHelper<any>();
 
   // thead : 'value'

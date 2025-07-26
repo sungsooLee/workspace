@@ -6,8 +6,8 @@ import { GoogleQrcodePopup, GoogleInputPopup } from '../../../features/auth';
 import { Button, ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui';
 
 const GoogleKeyPopupCompoment = () => {
-  const { close: closeModal } = useModal();
-  const { open: openModal } = useModal();
+  const { closeModal } = useModal();
+  const { openModal } = useModal();
   return (
     <ModalContainer>
       <ModalTitle>{'구글 OTP 인증키 생성'}</ModalTitle>
@@ -27,7 +27,8 @@ const GoogleKeyPopupCompoment = () => {
                   width: 'sm',
                   content: <GoogleQrcodePopup />,
                 });
-              }}>
+              }}
+            >
               QR코드 스캔
             </Button>
           </div>

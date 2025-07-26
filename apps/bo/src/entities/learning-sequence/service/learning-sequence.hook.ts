@@ -26,6 +26,22 @@ export function useCreateSequence(options: any) {
   };
 }
 
+export function useBulkUpdateSequence(options: any) {
+  const { mutate, isSuccess, isError, data } = useMutation({
+    ...mutateOptions.bulkUpdateSequence(),
+    ...options,
+  });
+
+  return {
+    bulkUpdateSequence: async (payload: any, callback?: any) => {
+      await mutate(payload, callback);
+    },
+    isSuccess,
+    isError,
+    data,
+  };
+}
+
 export function useUpdateSequenceList(options: any) {
   const { mutate, isSuccess, isError, data } = useMutation({
     ...mutateOptions.updateSequenceList(),

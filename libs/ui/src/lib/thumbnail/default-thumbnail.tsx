@@ -1,28 +1,40 @@
 import { cn } from '@learnway/shared';
 import styles from './thumbnail.module.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Checkbox } from '../checkbox/checkbox';
+import { CourseType } from '@learnway/types';
 
 export function DefaultThumbnail({
+  showDefault,
   showCheckbox,
   selected,
   onCheckedChange,
 }: {
+  showDefault?: boolean | CourseType;
   showCheckbox?: boolean;
   selected?: boolean;
   onCheckedChange?: (checked: boolean) => void;
 }) {
-  const [isHovered, setIsHovered] = useState(false);
-  const handleHover = (state: boolean) => setIsHovered(state);
+  const [defaultThumbnail, setDefaultThumbnail] = useState<string | undefined>();
+
+  useEffect(() => {
+    if (typeof showDefault === 'string') {
+      setDefaultThumbnail(styles[showDefault]);
+    }
+  }, [showDefault]);
 
   return (
     <div
-      className={cn(styles.start, styles.thumbnail, styles.default_thumbnail, 'nlp--thumbnail', {
-        [styles.active]: isHovered,
-        [styles.selected]: selected,
-      })}
-      onMouseEnter={() => handleHover(true)}
-      onMouseLeave={() => handleHover(false)}
+      className={cn(
+        styles.start,
+        styles.thumbnail,
+        styles.default_thumbnail,
+        defaultThumbnail,
+        'nlp--thumbnail',
+        {
+          [styles.selected]: selected,
+        },
+      )}
     >
       <div className="absolute z-10 flex h-full w-full items-center justify-center gap-3">
         {/* 체크박스 */}

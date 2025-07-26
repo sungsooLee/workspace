@@ -19,7 +19,7 @@ import { IcoSearch } from '@learnway/icons';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
 const TenantSearchPopupCompoment = () => {
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
 
   // drop down
   const [selectedValues, setSelectedValues] = useState<string[]>([]);

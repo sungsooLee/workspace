@@ -35,7 +35,7 @@ interface ProfileMenu {
 const PopoverContent = () => {
   const { t } = useTranslation();
   const router = useRouter();
-  const { confirm: openConfirm, open } = useModal();
+  const { confirm: openConfirm, openModal } = useModal();
   const { data } = useFetchAuthUser();
   const { logout } = useLogoutUser();
 
@@ -47,7 +47,7 @@ const PopoverContent = () => {
       {
         title: '개인정보 변경',
         action: () => {
-          open({
+          openModal({
             width: 's',
             content: <PasswordVerifyModal />,
             onClose: (verify?: any) => {

@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Button, Input, ContentsRow, Panel } from '@learnway/ui';
+import { isMobile } from 'react-device-detect';
 import { IcoError02 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import { MobileView, BrowserView } from 'react-device-detect';
@@ -20,7 +21,7 @@ function RouteComponent() {
       <div className={`${styles.start} ${styles.password}`}>
         <div className={styles.box}>
           <div className={styles.confirm}>
-            <IcoError02 width={80} height={80} />
+            <IcoError02 width={isMobile ? 56 : 80} height={isMobile ? 56 : 80} />
             <div className={styles.text_box}>
               <strong>비밀번호가 일치하지 않습니다.</strong>
               <p>개인정보 접근을 위해 비밀번호를 확인해주세요.</p>
@@ -46,6 +47,7 @@ function RouteComponent() {
           </ContentsRow>
         </div>
 
+        {/* pc button */}
         <BrowserView>
           <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
             <Button variant="gray" size="xl2">
@@ -56,6 +58,15 @@ function RouteComponent() {
             </Button>
           </div>
         </BrowserView>
+
+        {/* mobile button */}
+        <MobileView>
+          <MobileContainerFooter>
+            <Button variant="primary" size="xl">
+              확인
+            </Button>
+          </MobileContainerFooter>
+        </MobileView>
       </div>
     </div>
   );

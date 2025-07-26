@@ -33,6 +33,16 @@ import {
   TestPaperBasicInfoSaveReq,
   TestPaperBasicInfoSaveRes,
   QuestionListForRetrieveRes,
+  PostDraftScormParams,
+  PostDraftScormRes,
+  PutScormUpdateParams,
+  PutScormUpdateRes,
+  PutScormChangeParams,
+  PutScormChangeRes,
+  GetScormResourceRes,
+  GetScormStatusRes,
+  GetScormFileChangeRes,
+  QuestionsCopyReq,
 } from '@types';
 
 export default class LearningResourceService {
@@ -79,12 +89,24 @@ export default class LearningResourceService {
     return httpService.post(`${CMSApiPrefix()}/videos/draft`, params);
   }
 
+  static postDraftScorm(params: PostDraftScormParams): Promise<PostDraftScormRes> {
+    return httpService.post(`${CMSApiPrefix()}/scorm/draft`, params);
+  }
+
   static putVideoUpdate(params: PutVideoUpdateParams) {
     return httpService.put<PutVideoUpdateRes>(`${CMSApiPrefix()}/video/update`, params);
   }
 
+  static putScormUpdate(params: PutScormUpdateParams) {
+    return httpService.put<PutScormUpdateRes>(`${CMSApiPrefix()}/scorm/update`, params);
+  }
+
   static putVideoChange(params: PutVideoChangeParams) {
     return httpService.put<PutVideoChangeRes>(`${CMSApiPrefix()}/video/file/change`, params);
+  }
+
+  static putScormChange(params: PutScormChangeParams) {
+    return httpService.put<PutScormChangeRes>(`${CMSApiPrefix()}/scorm/file/change`, params);
   }
 
   static fetchLearningResources(params: any) {
@@ -286,7 +308,15 @@ export default class LearningResourceService {
   static fetchQuestionListForRetrieve(
     params: QuestionListForRetrieveReq,
   ): Promise<QuestionListForRetrieveRes[]> {
-    return httpService.get(`${CMSApiPrefix()}/exam/question/status`, { params });
+    return httpService.get(`${CMSApiPrefix()}/exam/questions/pool`, params);
+  }
+
+  /**
+   * 시험 문항 단건 또는 다건 복사
+   * @param body
+   */
+  static copyQuestionsToExamPaper(body: QuestionsCopyReq): Promise<{ result: boolean }> {
+    return httpService.post(`${CMSApiPrefix()}/exam/questions/copy`, body);
   }
 
   /**
@@ -294,6 +324,13 @@ export default class LearningResourceService {
    */
   static getVideoStatus(contentUuid: string) {
     return httpService.get<GetVideoStatusRes>(`${CMSApiPrefix()}/video/${contentUuid}/status`);
+  }
+
+  /**
+   * 비디오 컨텐츠 상태 조회
+   */
+  static getScormStatus(contentUuid: string) {
+    return httpService.get<GetScormStatusRes>(`${CMSApiPrefix()}/scorm/${contentUuid}/status`);
   }
 
   /**
@@ -306,9 +343,25 @@ export default class LearningResourceService {
   }
 
   /**
+   * 스콤 파일변경 상태 조회
+   */
+  static getScormFileChange(resourceId: number) {
+    return httpService.get<GetScormFileChangeRes>(
+      `${CMSApiPrefix()}/scorm/file/change/${resourceId}`,
+    );
+  }
+
+  /**
    * 동영상 학습자원 상세 조회
    */
   static getVideoResource(contentUuid: string) {
     return httpService.get<GetVideoResourceRes>(`${CMSApiPrefix()}/video/${contentUuid}/resource`);
+  }
+
+  /**
+   * 스콤 학습자원 상세 조회
+   */
+  static getScormResource(contentUuid: string) {
+    return httpService.get<GetScormResourceRes>(`${CMSApiPrefix()}/scorm/${contentUuid}/resource`);
   }
 }

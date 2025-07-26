@@ -50,6 +50,7 @@ const GridComponent = forwardRef(
       getRowClassName,
       enableDragAndDrop,
       onDragEnd,
+      selectedRowIds,
     }: GridProps<T>,
     ref: React.Ref<GridImperative>,
   ) => {
@@ -102,6 +103,7 @@ const GridComponent = forwardRef(
       showExpandColumn,
       isRowSelectable,
       enableColumnResize,
+      selectedRowIds,
     });
 
     // 부모 컴포넌트에서 grid 특정 기능 수행시 필요

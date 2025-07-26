@@ -14,6 +14,7 @@ import {
   Row,
   RowSelectionState,
   SortingState,
+  Table,
   useReactTable,
   VisibilityState,
 } from '@tanstack/react-table';
@@ -21,7 +22,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { isEmpty } from 'lodash';
 import { GridProps } from './types/grid'; // GridProps 타입 import
 import { useTranslation } from 'react-i18next';
-import { cn, gridStateToSortQueryParams } from '@learnway/shared'; // t 함수 필요 시 import
+import { cn, findRowSelection, gridStateToSortQueryParams } from '@learnway/shared'; // t 함수 필요 시 import
 import styles from './grid.module.css';
 import { Checkbox } from '../checkbox/checkbox';
 import { Button } from '../button/button';
@@ -61,6 +62,7 @@ export function useGridTable<T extends object>(
     tableMode, // tableMode 추가
     onTableInstanceChange, // table 인스턴스 전달 콜백
     enableColumnResize = false,
+    selectedRowIds, // 추가: 외부에서 선택된 row id 배열
   } = props;
 
   const { t } = useTranslation();
@@ -102,7 +104,7 @@ export function useGridTable<T extends object>(
 
   const createExpandColumn = (): ColumnDef<T> => ({
     id: 'expand',
-    size: 64,
+    size: 54,
     // maxSize: 100,
     // minSize: 100,
     enablePinning: true,
@@ -148,7 +150,6 @@ export function useGridTable<T extends object>(
                 width: '100%',
                 height: '100%',
               }}
-              aria-expanded={row.getIsExpanded()}
               role="button"
             >
               {row.getIsExpanded() ? (
@@ -166,7 +167,7 @@ export function useGridTable<T extends object>(
   // 넘버링/선택 컬럼 정의를 이 훅 안으로 이동
   const createNumberingColumn = (): ColumnDef<T> => ({
     id: 'numbering',
-    size: 64,
+    size: 54,
     header: 'NO.',
     meta: { cellAlign: 'center' },
     enableSorting: false,
@@ -206,6 +207,7 @@ export function useGridTable<T extends object>(
             name="select-row"
             checked={checked}
             onChange={() => row.getToggleSelectedHandler()}
+            aria-label="행 선택"
           />
         </div>
       );
@@ -278,18 +280,32 @@ export function useGridTable<T extends object>(
   ]);
 
   const handleRowSelectionChangeForSingle: OnChangeFn<RowSelectionState> = (updaterOrValue) => {
+    if (selectedRowIds && Array.isArray(selectedRowIds)) {
+      const findSelection = findRowSelection(table, selectedRowIds, rowId);
+      setRowSelection(findSelection);
+      return;
+    }
+
     const newSelection =
       typeof updaterOrValue === 'function' ? updaterOrValue(rowSelection) : updaterOrValue;
     if (isEmpty(newSelection)) return;
-    const selectedRowIds = Object.keys(newSelection);
-    const lastId = selectedRowIds?.at(-1);
+    const rowIds = Object.keys(newSelection);
+    const lastId = rowIds?.at(-1);
     const newSelectionState = lastId ? { [lastId]: true } : {};
     setRowSelection(newSelectionState);
   };
 
   const handleRowSelectionChangeForMultiple: OnChangeFn<RowSelectionState> = (updaterOrValue) => {
+    if (selectedRowIds && Array.isArray(selectedRowIds)) {
+      const findSelection = findRowSelection(table, selectedRowIds, rowId);
+      console.log('xx1 : findSelection', findSelection);
+      setRowSelection(findSelection);
+      return;
+    }
+
     const newSelection =
       typeof updaterOrValue === 'function' ? updaterOrValue(rowSelection) : updaterOrValue;
+    console.log('xx2 : newSelection', newSelection);
     setRowSelection(newSelection);
   };
 
@@ -380,14 +396,15 @@ export function useGridTable<T extends object>(
     getSubRows: (row: any) => {
       return row.subRows || row.children || row.details || [];
     },
-    getRowId: (row: any, index: number, parent) => {
-      if (parent) {
-        return `${parent.id}_child_${index}`;
-      }
+    // getRowId: (row: any, index: number, parent) => {
+    //   if (parent) {
+    //     return `${parent.id}_child_${index}`;
+    //   }
 
-      const pageIndex = pagination?.pageIndex ?? 0;
-      return `page_${pageIndex}_row_${index}`;
-    },
+    //   const pageIndex = pagination?.pageIndex ?? 0;
+    //   return `page_${pageIndex}_row_${index}`;
+    // },
+    getRowId: (row: any) => String((row as Record<string, any>)[rowId]),
     meta: {
       updateData: handleUpdateData,
       removeData: handleRemoveData,
@@ -442,15 +459,42 @@ export function useGridTable<T extends object>(
     onRowsSelect?.(originalSelectedRows);
   }, [rowSelection, table, onRowSelect, onRowsSelect]);
 
+  // selectedRowIds prop이 변경될 때 rowSelection 동기화
+  // useEffect(() => {
+  //   if (selectedRowIds && Array.isArray(selectedRowIds)) {
+  //     const findRows = table
+  //       .getRowModel()
+  //       ?.rows?.filter((row) => {
+  //         const v = (row.original as Record<string, any>)[rowId];
+  //         console.log('xx : row', v);
+  //         return selectedRowIds.includes(String(v));
+  //       })
+  //       ?.map((row) => [row.id, true]);
+  //     setRowSelection(Object.fromEntries(findRows));
+
+  //     console.log('xx : data', {
+  //       selectedRowIds,
+  //       data,
+  //       findRows: Object.fromEntries(findRows),
+  //       rowId,
+  //       model: table?.getRowModel(),
+  //     });
+  //   }
+  // }, [selectedRowIds, table, data]);
+
   // data 변경시 첫번째 행 선택
   useEffect(() => {
     const firstRowId = table.getRowModel()?.rows?.[0]?.id;
     if (firstRowId && autoSelectFirstRow && !tableMode) {
       setRowSelection({ [firstRowId]: true });
+    } else if (selectedRowIds && Array.isArray(selectedRowIds)) {
+      const newSelection = findRowSelection(table, selectedRowIds, rowId);
+      setRowSelection(newSelection);
+      console.log('xx : findRows', { newSelection, rowId, data: table.getRowModel()?.rows });
     } else {
       table.toggleAllRowsSelected(false);
     }
-  }, [data, table, autoSelectFirstRow, tableMode]);
+  }, [data, table, autoSelectFirstRow, tableMode, selectedRowIds]);
 
   // useReactTable 훅으로 생성된 table 인스턴스를 상위 컴포넌트로 전달
   useEffect(() => {

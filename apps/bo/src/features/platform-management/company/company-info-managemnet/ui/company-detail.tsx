@@ -39,7 +39,7 @@ const CompanyDetailComponent = (props: any, ref: any) => {
 
   const { data: detailData, refetch } = useFetchCompany(companyCode);
 
-  const { open: openModal, confirm: openConfirm, alert: openAlert } = useModal();
+  const { openModal, confirm: openConfirm, alert: openAlert } = useModal();
   const { open: openToast } = useToast();
 
   const [tableInstance, setTableInstance] = useState<Table<any>>();

@@ -21,10 +21,7 @@ import {
 import { transformDepartmentApiDataToTreeData } from '@features/platform-management/company/company-organization-management/service/company-organization.service';
 
 import { useGetCompanyDepartmentTree } from '@entities/department';
-import {
-  getAllTreeKeys,
-  getAllParent,
-} from '@features/platform-management/tenant';
+import { getAllTreeKeys, getAllParent } from '@features/platform-management/tenant';
 import { findOrganizationPathById } from '@features/platform-management/company';
 
 /**
@@ -35,7 +32,7 @@ import { findOrganizationPathById } from '@features/platform-management/company'
 const OrganizationChoiceTreeModalComponent = ({ companyCodes }: { companyCodes: string[] }) => {
   const [organizationTree, setCommonCategoryTree] = useState<any>([]);
 
-  const { open: openModal, close: closeModal, confirm: openConfirm, alert: openAlert } = useModal();
+  const { openModal, closeModal, confirm: openConfirm, alert: openAlert } = useModal();
 
   const { data: organizationData } = useGetCompanyDepartmentTree(companyCodes);
 

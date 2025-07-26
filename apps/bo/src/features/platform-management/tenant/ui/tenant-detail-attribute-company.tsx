@@ -39,7 +39,7 @@ const TenantDetailAttributeCompanyComponent = (
 ) => {
   const formRef = useRef<HTMLFormElement>(null);
 
-  const { open: openModal, confirm: openConfirm } = useModal();
+  const { openModal, confirm: openConfirm } = useModal();
   const { provider, updateFormData, onSubmit, onFormChange, getValues, clearFormError, control } =
     useDynamicForm(formConfig);
   const { update } = useUpdateTenantAttributeCompany(tenantId, {

@@ -16,7 +16,7 @@
           }
           &[class*='active'] {
             span {
-              @apply !button_3_b !text-[var(--primary1)];
+              @apply !button_3_b !text-[var(--blue50)];
             }
           }
         }

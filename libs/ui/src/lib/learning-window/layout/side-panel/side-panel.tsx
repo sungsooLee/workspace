@@ -23,6 +23,7 @@ import styles from '@learnway/styles/fo/pages/_learning/side-panel/side-panel.mo
 import { useLearningWindow } from '../../learnway-learning-window.store';
 import { DATE_TIME_FORMAT, duration } from '@learnway/shared';
 import { convertUploadFilesToFileInfos } from '@learnway/hooks';
+import { CmsLearningCompletionStatus } from '@learnway/types';
 
 interface ChildData {
   className?: string;
@@ -39,12 +40,12 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
     playInfo,
     playList,
     playIndex,
-    progressInfo,
     setPlayInfo,
     gotoBeforeLesson,
     gotoNextLesson,
+    getProgressNumber,
   } = useLearningWindow();
-  const { open: openModal, confirm: openConfirm } = useModal();
+  const { openModal, confirm: openConfirm } = useModal();
 
   const [menuSelected, setMenuSelected] = useState(false); // content 영역 show/hide
   const [menuContents, setMenuContents] = useState([false, false, false, false]); // 각 메뉴 컨텐츠 영역 show/hide
@@ -68,19 +69,6 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
         gotoBeforeLesson();
       }
     }
-  };
-
-  const getProgressNumber = (moduleId: number, lessonId: number) => {
-    if (progressInfo) {
-      const key = `${moduleId}_${lessonId}`;
-      if (progressInfo.has(key)) {
-        const item = progressInfo.get(key);
-        console.log('---- ', item.progress);
-        return item.progress;
-      }
-    }
-
-    return 0;
   };
 
   const sendValueToParent = (index: number) => {
@@ -142,61 +130,106 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
                   <div className={styles.curriculum}>
                     <ul>
                       {curriculum.moduleList.map((module: any) => {
-                        return (
-                          <li key={`learning-window-module-${module.moduleId}`}>
-                            <div className={styles.box}>
-                              <div className={styles.header}>
-                                <strong>{module.moduleName}</strong>
-                                {module.learningTime && (
-                                  <span>
-                                    {duration(module.learningTime, DATE_TIME_FORMAT.HOUR_MIN)}
-                                  </span>
-                                )}
-                              </div>
-                              <div className={styles.contents}>
-                                <ul
-                                  key={`learning-window-module-ul-${module.moduleId}`}
-                                  className={styles.step}
-                                >
-                                  {module.lessonList &&
-                                    module.lessonList.map((lesson: any) => {
-                                      return (
-                                        <li
-                                          key={`learning-window-lesson-${module.moduleId}_${lesson.lessonId}`}
-                                          className={
-                                            playInfo && playInfo.lessonId === lesson.lessonId
-                                              ? styles.active
-                                              : ''
-                                          }
-                                          onClick={() => {
-                                            setPlayInfo(module.moduleId, lesson.lessonId);
-                                          }}
-                                        >
-                                          <div className={styles.step_box}>
-                                            <ProgressCheck
-                                              progress={getProgressNumber(
-                                                module.moduleId,
-                                                lesson.lessonId,
-                                              )}
-                                            />
-                                            <p>{lesson.lessonName}</p>
-                                            {lesson.learningTime && (
-                                              <span>
-                                                {duration(
-                                                  lesson.learningTime,
-                                                  DATE_TIME_FORMAT.HOUR_MIN,
-                                                )}
-                                              </span>
+                        if (module.isDummy) {
+                          return (
+                            <li key={`learning-window-module-${module.moduleId}`}>
+                              <div className={styles.box}>
+                                <div className={styles.contents}>
+                                  <ul
+                                    key={`learning-window-module-ul-${module.moduleId}`}
+                                    className={styles.step}
+                                  >
+                                    <li
+                                      key={`learning-window-lesson-${module.moduleId}_${module.lessonId}`}
+                                      className={
+                                        playInfo && playInfo.lessonId === module.lessonId
+                                          ? styles.active
+                                          : ''
+                                      }
+                                      onClick={() => {
+                                        setPlayInfo(module.moduleId, module.lessonId);
+                                      }}
+                                    >
+                                      <div className={styles.step_box}>
+                                        <ProgressCheck
+                                          progress={getProgressNumber(
+                                            module.moduleId,
+                                            module.lessonId,
+                                          )}
+                                        />
+                                        <p>{module.lessonName}</p>
+                                        {module.learningTime && (
+                                          <span>
+                                            {duration(
+                                              module.learningTime,
+                                              DATE_TIME_FORMAT.HOUR_MIN,
                                             )}
-                                          </div>
-                                        </li>
-                                      );
-                                    })}
-                                </ul>
+                                          </span>
+                                        )}
+                                      </div>
+                                    </li>
+                                  </ul>
+                                </div>
                               </div>
-                            </div>
-                          </li>
-                        );
+                            </li>
+                          );
+                        } else {
+                          return (
+                            <li key={`learning-window-module-${module.moduleId}`}>
+                              <div className={styles.box}>
+                                <div className={styles.header}>
+                                  <strong>{module.moduleName}</strong>
+                                  {module.learningTime && (
+                                    <span>
+                                      {duration(module.learningTime, DATE_TIME_FORMAT.HOUR_MIN)}
+                                    </span>
+                                  )}
+                                </div>
+                                <div className={styles.contents}>
+                                  <ul
+                                    key={`learning-window-module-ul-${module.moduleId}`}
+                                    className={styles.step}
+                                  >
+                                    {module.lessonList &&
+                                      module.lessonList.map((lesson: any) => {
+                                        return (
+                                          <li
+                                            key={`learning-window-lesson-${module.moduleId}_${lesson.lessonId}`}
+                                            className={
+                                              playInfo && playInfo.lessonId === lesson.lessonId
+                                                ? styles.active
+                                                : ''
+                                            }
+                                            onClick={() => {
+                                              setPlayInfo(module.moduleId, lesson.lessonId);
+                                            }}
+                                          >
+                                            <div className={styles.step_box}>
+                                              <ProgressCheck
+                                                progress={getProgressNumber(
+                                                  module.moduleId,
+                                                  lesson.lessonId,
+                                                )}
+                                              />
+                                              <p>{lesson.lessonName}</p>
+                                              {lesson.learningTime && (
+                                                <span>
+                                                  {duration(
+                                                    lesson.learningTime,
+                                                    DATE_TIME_FORMAT.HOUR_MIN,
+                                                  )}
+                                                </span>
+                                              )}
+                                            </div>
+                                          </li>
+                                        );
+                                      })}
+                                  </ul>
+                                </div>
+                              </div>
+                            </li>
+                          );
+                        }
                       })}
                     </ul>
                   </div>
@@ -253,24 +286,14 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
           <div className={styles.control}>
             <Button
               disabled={!(playIndex !== 0 && playList && playIndex < playList.length)}
-              onClick={() =>
-                openModal({
-                  width: 's',
-                  content: <NextLearningPopup />,
-                })
-              }
+              onClick={() => handlePriveNextClick(false)}
             >
               <IcoPrevPlay width={isMobile ? 20 : 32} height={isMobile ? 20 : 32} />
               <span>이전</span>
             </Button>
             <Button
               disabled={!(playList && playList.length > playIndex + 1)}
-              onClick={() =>
-                openModal({
-                  width: 's',
-                  content: <NextLearningPopup isNext={true} />,
-                })
-              }
+              onClick={() => handlePriveNextClick(true)}
             >
               <IcoPrevNext width={isMobile ? 20 : 32} height={isMobile ? 20 : 32} />
               <span>다음</span>

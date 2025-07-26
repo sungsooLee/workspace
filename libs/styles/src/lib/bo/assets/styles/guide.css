@@ -145,7 +145,7 @@
           margin-top: 40px;
         }
         .flex_box {
-          @apply relative flex items-center gap-[10px] overflow-x-auto;
+          @apply relative flex flex-wrap items-center gap-[10px] overflow-x-auto;
           padding: 20px 20px 20px;
           border: 1px dashed #ccc;
           &:has(.desc)::after {
@@ -186,6 +186,21 @@
             margin-bottom: 50px;
             code {
               margin-top: 10px;
+            }
+          }
+          + .guide_tit4 {
+            margin-top: 20px;
+          }
+          .icon_item {
+            @apply flex flex-wrap justify-center gap-[40px] text-center;
+            .item {
+              @apply mb-[30px] flex w-[200px] flex-col justify-center text-center;
+              > div {
+                @apply body-sm mx-auto text-center;
+                &:first-child {
+                  @apply mb-[10px];
+                }
+              }
             }
           }
         }

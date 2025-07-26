@@ -64,6 +64,7 @@ const GridBoxComponent = <T extends object>(
     excelButtons,
     enableDragAndDrop,
     onDragEnd,
+    selectedRowIds,
     ...props
   }: GridBoxProps<T>,
   ref: React.Ref<GridImperative>,
@@ -368,7 +369,7 @@ const GridBoxComponent = <T extends object>(
           {/* 추가 */}
           {showAdd && (
             <Button
-              variant="outline"
+              variant="text"
               size="sm"
               icon={<IcoPlus width={16} height={16} stroke={'#4C515E'} />}
               label={t('LABEL.grid.header.add', '추가')}
@@ -378,7 +379,7 @@ const GridBoxComponent = <T extends object>(
           {/* 삭제 */}
           {showRemove && (
             <Button
-              variant="outline"
+              variant="text"
               size="sm"
               label={t('LABEL.grid.header.remove', '삭제')}
               icon={<IcoMinus width={16} height={16} stroke={'#131C30'} />}
@@ -389,7 +390,7 @@ const GridBoxComponent = <T extends object>(
           {copyButton && (
             <Button
               {...copyButton}
-              variant="outline"
+              variant="text"
               size="sm"
               label={copyButton.label || t('LABEL.grid.header.copy', '복사')}
               icon={<IcoCopy width={16} height={16} stroke={'#131C30'} />}
@@ -422,6 +423,7 @@ const GridBoxComponent = <T extends object>(
         getRowClassName={props.getRowClassName as ((row: object) => string) | undefined}
         enableDragAndDrop={enableDragAndDrop}
         onDragEnd={onDragEnd as ((reorderedData: object[]) => void) | undefined}
+        selectedRowIds={selectedRowIds?.map(String)}
       />
       {/* 페이지네이션 */}
       {!paginationProps.disabled && (

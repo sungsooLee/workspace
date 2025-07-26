@@ -24,7 +24,7 @@ interface TermsModalComponentProps {
 
 function TermsModalComponent({ termsType }: TermsModalComponentProps) {
   const { t } = useTranslation();
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
 
   const ref = useRef<any>();
   const [termsId, setTermsId] = useState<string | undefined>();

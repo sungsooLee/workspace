@@ -1,6 +1,6 @@
 /* IA118 / NLP_BO_CMS_1203 - 나의 학습자원 > 시험지 등록 및 상세 */
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
+import { createLazyFileRoute, useBlocker, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { Button, Divider, Tabs, useModal } from '@learnway/ui';
 import {
@@ -10,13 +10,19 @@ import {
   PageContainer,
 } from '@shared/ui';
 import { TestPaperBasicInfoSaveRes } from '@types';
-import { getExamTemplateTextByType, getQuestionGenTypeText } from './-common/common';
-import { ExamTab, PageMode } from './-common/type';
-import { useExamLoaderData } from './-hooks/use-exam-loader-data';
-import { useExamPaperForm } from './-hooks/use-exam-paper-form';
-import { useExamBasicInfoForm } from './-hooks/use-exam-basic-info-form';
-import { TestPaperInfo } from './-tabs/test-paper-info';
-import { QuestionInfo } from './-tabs/question-info';
+import {
+  LearningResourceQuestionInfo,
+  LearningResourceTestPaperInfo,
+} from '@features/learning-resource';
+import {
+  ExamTab,
+  PageMode,
+  getExamTemplateTextByType,
+  getQuestionGenTypeText,
+  useExamBasicInfoForm,
+  useExamLoaderData,
+  useExamPaperForm,
+} from '@features/learning-resource/learning-resource-management/service';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 
@@ -26,10 +32,11 @@ export const Route = createLazyFileRoute('/_layout/learning/resource/test-paper/
 
 function RouteComponent() {
   const router = useRouter();
+
   const { mode, tenantId, contentUuid, data, refetchContentDetail, hasMapping, listParam } =
     useExamLoaderData();
 
-  const { alert, open: openModal, confirm: openConfirm } = useModal();
+  const { alert, openModal, confirm: openConfirm } = useModal();
 
   const { basicInfoRef, questionInfoRef, questionGenType, setQuestionGenType } =
     useExamPaperForm(data);
@@ -42,6 +49,7 @@ function RouteComponent() {
     onBasicInfoFormChange: onFormChange,
     onSubmit,
     saveBasicInfo,
+    formState,
   } = useExamBasicInfoForm({
     mode,
     contentUuid,
@@ -62,13 +70,25 @@ function RouteComponent() {
     },
   });
 
+  useBlocker({
+    shouldBlockFn: async () => {
+      if (!formState.isDirty) {
+        return false;
+      }
+      return !(await openConfirm({
+        title: t('이동 하시겠습니까?'),
+        content: t('입력 중인 항목이 초기화됩니다.'),
+      }));
+    },
+  });
+
   const tabItems = useMemo(
     () => [
       {
         title: `${t('시험지 정보')}${mode === PageMode.UPDATE ? `(${t(getExamTemplateTextByType(data?.examTemplateType))})` : ''}`,
         key: ExamTab.PAPER,
         content: (
-          <TestPaperInfo
+          <LearningResourceTestPaperInfo
             ref={basicInfoRef}
             basicInfoForm={{
               provider,
@@ -87,10 +107,10 @@ function RouteComponent() {
         ),
       },
       {
-        title: `${t('문항 관리')}${data?.questionGenType ? `(${t(getQuestionGenTypeText(data?.questionGenType))})` : ''}`,
+        title: `${t('문항 관리')}${data?.questionGenType ? `(${t(getQuestionGenTypeText(data.questionGenType))})` : ''}`,
         key: ExamTab.QUESTION,
         content: (
-          <QuestionInfo
+          <LearningResourceQuestionInfo
             ref={questionInfoRef}
             basicInfoForm={{ provider, getValues, updateFormDataByKey, saveBasicInfo }}
             contentUuid={contentUuid}

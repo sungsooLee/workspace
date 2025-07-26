@@ -3,7 +3,7 @@ import { IcoChevronLeft, IcoCheck } from '@learnway/icons';
 import { VideoPlayerContainerProps } from '../types';
 
 import styles from './settings-popover.module.css';
-import { getHeightValueEncodedVideo, VideoQualities } from '../hooks/video-player.hook';
+import { getHeightValueEncodedVideo, VideoQualities, VideoSpeed } from '../hooks/video-player.hook';
 
 const MENU = {
   ROOT: 'root',
@@ -21,7 +21,6 @@ const SettingsPopover = (props: VideoPlayerContainerProps) => {
     speed: '1x',
     source: 'Auto',
     quality: 'Auto',
-    subtitle: 'Korean',
   });
 
   const handleSelect = (key: keyof typeof selected, value: string) => {
@@ -34,14 +33,13 @@ const SettingsPopover = (props: VideoPlayerContainerProps) => {
       case MENU.SPEED:
         return (
           <SubMenu title="재생속도" badge="9-2" onBack={() => setActiveMenu(MENU.ROOT)}>
-            {['0.25x', '0.5x', '0.75x', '1x', '1.25x', '1.5x', '1.75x', '2x'].map((v) => (
+            {VideoSpeed.map((v) => (
               <MenuItem
-                key={v}
-                label={v}
-                active={selected.speed === v}
+                key={v.label}
+                label={v.label}
+                active={props.playbackRate === v.value}
                 onClick={() => {
-                  props.changePlaybackRate(parseFloat(v.replace('x', '')));
-                  handleSelect('speed', v);
+                  props.changePlaybackRate(v.value);
                 }}
               />
             ))}
@@ -89,22 +87,12 @@ const SettingsPopover = (props: VideoPlayerContainerProps) => {
       case MENU.SUBTITLE:
         return (
           <SubMenu title="자막" badge="9-5" onBack={() => setActiveMenu(MENU.ROOT)}>
-            {[
-              'Korean',
-              'العربية',
-              '中國台灣',
-              'Deutsch',
-              'English',
-              'Spanish',
-              'French',
-              'Indonesian',
-              '日本語',
-            ].map((v) => (
+            {props.videoSubtitles?.map((v) => (
               <MenuItem
-                key={v}
-                label={v}
-                active={selected.subtitle === v}
-                onClick={() => handleSelect('subtitle', v)}
+                key={v.label}
+                label={v.label}
+                active={props.selectedSubtitle.srcLang === v.srcLang}
+                onClick={() => props.changeSubtitle(v)}
               />
             ))}
           </SubMenu>
@@ -118,18 +106,20 @@ const SettingsPopover = (props: VideoPlayerContainerProps) => {
             <div className={styles.option}>
               <MenuItem
                 label="재생속도"
-                value={selected.speed}
+                value={VideoSpeed.find((item) => item.value === props.playbackRate)?.label}
                 onClick={() => setActiveMenu(MENU.SPEED)}
               />
-              <MenuItem
-                label="품질"
-                value={props.videoQuality.label}
-                onClick={() => setActiveMenu(MENU.QUALITY)}
-              />
-              {props.videoConfig && (
+              {props.encodedVideos && (
+                <MenuItem
+                  label="품질"
+                  value={props.videoQuality.label}
+                  onClick={() => setActiveMenu(MENU.QUALITY)}
+                />
+              )}
+              {props.videoSubtitles && (
                 <MenuItem
                   label="자막"
-                  value={selected.subtitle}
+                  value={props.selectedSubtitle.label}
                   onClick={() => setActiveMenu(MENU.SUBTITLE)}
                 />
               )}

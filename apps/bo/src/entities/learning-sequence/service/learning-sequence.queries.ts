@@ -67,6 +67,10 @@ export const mutateOptions = {
   createSequence: () => ({
     mutationFn: (payload: any) => LearningSequenceService.createSequence(payload),
   }),
+  // 차수 일괄 설정
+  bulkUpdateSequence: () => ({
+    mutationFn: (payload: any) => LearningSequenceService.bulkUpdateSequence(payload),
+  }),
   // 차수 수정 (리스트)
   updateSequenceList: () => ({
     mutationFn: (payload: any) => LearningSequenceService.updateSequenceList(payload),
@@ -94,9 +98,7 @@ export const mutateOptions = {
   // 차수 복사
   copySequence: () => ({
     mutationFn: (payload: any) => {
-      const sequenceId = payload.sequenceId;
-      delete payload.sequenceId;
-      return LearningSequenceService.copySequence(sequenceId, payload);
+      return LearningSequenceService.copySequence(payload);
     },
   }),
 };

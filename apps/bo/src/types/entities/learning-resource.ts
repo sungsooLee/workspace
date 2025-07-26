@@ -1,4 +1,5 @@
-import { CourseType } from '@pages/_layout/learning/course/-common/type';
+import { CourseType } from '@features/learning-operate/course/course-management';
+import { PaginationRequest, PaginationResponse } from '@learnway/ui';
 import {
   ContentAddInfoType,
   ContentCreateType,
@@ -8,8 +9,6 @@ import {
   FileType,
   ProcessingStatus,
 } from './enum';
-import { PaginationRequest, PaginationResponse } from '@learnway/ui';
-import { CmsImageItem } from '@learnway/types';
 
 export interface MediaContentSaveReq {
   contentName: string;
@@ -21,7 +20,6 @@ export interface MediaContentSaveReq {
   coordinatorName: string;
   coordinatorTelCountryCode?: string;
   coordinatorTelNo: string;
-  contentTime: number;
   isUnlimited: boolean;
   contentUseStartDate: Date | undefined;
   contentUseEndDate: Date | undefined;
@@ -55,7 +53,6 @@ export interface BlogUpdateReq extends BlogCreateReq {
 
 export interface BlogDetailRes extends GetContentDetailRes {
   blogContent: object;
-  contentTime: number;
 }
 
 export interface BlogPostRes extends BlogCreateReq {
@@ -73,6 +70,8 @@ export interface PostDraftVideosParams {
   channelUuid: string;
   fileUuids: string[];
 }
+
+export type PostDraftScormParams = PostDraftVideosParams;
 
 export interface PostDraftHtmlVideoParams {
   tenantId: string;
@@ -120,8 +119,6 @@ export interface ContentBaseInfo {
   coordinatorTelCountryCode: string;
   /** 담당자 연락처 */
   coordinatorTelNo: string;
-  /** 콘텐츠시간(분) */
-  contentTime?: number;
 
   /** 사용기한 무기한 여부 */
   isUnlimited: boolean;
@@ -264,6 +261,8 @@ export interface PostDraftVideosRes {
     isDrafted: boolean;
   }[];
 }
+
+export type PostDraftScormRes = PostDraftVideosRes;
 
 export interface PostDraftHtmlVideoRes {
   contentUuid: string;
@@ -415,7 +414,9 @@ export interface GetVideoStatusRes {
   isDrafted: boolean;
 }
 
-interface VideoFileInfo {
+export type GetScormStatusRes = GetVideoStatusRes;
+
+interface ResourceFileInfo {
   groupUuid: string;
   fileId: number;
   fileUuid: string;
@@ -454,7 +455,7 @@ export interface GetVideoResourceRes {
   contentName: string;
   languageCountryCode: string;
   contentStatusCode: ContentStatusCode;
-  fileInfo: VideoFileInfo;
+  fileInfo: ResourceFileInfo;
   masterVideo: string | null;
   contentAddInfo: number;
   encodedVideos: EncodedVideo[] | null;
@@ -462,10 +463,36 @@ export interface GetVideoResourceRes {
   videoSubtitles: VideoSubtitle[];
 }
 
+interface ScormItem {
+  itemTitle: string;
+  scoId: string;
+  itemFilePath: string;
+  itemUrl: string;
+  itemType: string;
+  items?: ScormItem[];
+}
+
+export interface ScormOrgn {
+  orgnId: number;
+  orgnTitle: string;
+  orgnElementId: string;
+  items: ScormItem[];
+}
+
+export interface GetScormResourceRes {
+  contentId: number;
+  contentUuid: string;
+  fileInfo: ResourceFileInfo;
+  processingStatus: ProcessingStatus;
+  children: ScormOrgn[];
+}
+
 export interface PutVideoChangeParams {
   contentUuid: string;
   fileUuid: string;
 }
+
+export type PutScormChangeParams = PutVideoChangeParams;
 
 export interface PutVideoChangeRes {
   resourceId: number;
@@ -475,6 +502,15 @@ export interface PutVideoChangeRes {
 }
 
 export type GetVideoFileChangeRes = PutVideoChangeRes;
+
+export interface PutScormChangeRes {
+  changeId: number;
+  contentUuid: string;
+  fileUuid: string;
+  processingStatus: ProcessingStatus;
+}
+
+export type GetScormFileChangeRes = PutScormChangeRes;
 
 export interface PutVideoUpdateParams extends ContentBaseInfo {
   videoSubtitles?: VideoSubtitle[];
@@ -487,6 +523,14 @@ export interface PutVideoUpdateRes extends ContentInformation {
   encodedVideos: EncodedVideo[] | null;
   encodedAudios: EncodedAudio[] | null;
   videoSubtitles: VideoSubtitle[];
+}
+
+export type PutScormUpdateParams = ContentBaseInfo;
+
+export interface PutScormUpdateRes extends ContentInformation {
+  fileChagngeId: number | null;
+  processingStatus: ProcessingStatus;
+  children: ScormOrgn[];
 }
 
 export enum EnQuestionType {
@@ -564,4 +608,13 @@ export interface QuestionListForRetrieveRes {
   contentName: string;
   examQuestionUuid: string;
   questionText: string;
+  questionType: EnQuestionType;
+  languageCountryCode: string;
+  tenantName: string;
+  channelName: string;
+}
+
+export interface QuestionsCopyReq {
+  examPoolContentUuid: string;
+  questionUuidList: string[];
 }

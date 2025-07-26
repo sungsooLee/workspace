@@ -18,7 +18,7 @@ export const Route = createFileRoute('/_layout/learning/popup-upload')({
 });
 
 function RouteComponent() {
-  const { open: openModal, close: closeModal } = useModal();
+  const { openModal, closeModal } = useModal();
   const FileUploadContent = () => {
     return (
       // 퍼블수정 20240418 : ModalTitle 추가 */}

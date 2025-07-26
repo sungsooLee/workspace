@@ -49,7 +49,7 @@ const filter5 = [
 
 // 퍼블수정 20250314 modal 컴포넌트 수정으로 전체적 수정
 const FilterPopupComponent = () => {
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
 
   // 퍼블수정 20250331 : option card 컴포넌트 수정 value 값 추가
   const [filterValue, setFilterValue] = useState<string[]>();
@@ -214,13 +214,9 @@ const FilterPopupComponent = () => {
           variant={'gray'}
           size={'lg'}
           onClick={() => closeModal()}
-        >
-          <IcoRefresh02 width={20} height={20} stroke="#4c515e" fill="none"></IcoRefresh02>
-          초기화
-        </Button>
-        <Button variant={'primary'} size={'lg'} onClick={() => closeModal()}>
-          적용
-        </Button>
+          label={'초기화'}
+        />
+        <Button variant={'primary'} size={'lg'} onClick={() => closeModal()} label={'적용'} />
       </ModalFooter>
     </ModalContainer>
   );

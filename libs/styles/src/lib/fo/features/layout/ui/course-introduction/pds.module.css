@@ -1,31 +1,33 @@
 .start {
   .pds_box {
-    @apply flex w-full items-center justify-between px-[24px] py-[34px];
-    span {
-      @apply label-xl flex items-center text-left leading-[26px] text-[var(--gray35)];
+    @apply flex w-full items-center justify-between p-[24px];
+    .txt {
+      @apply label-xl flex items-center gap-[4px] overflow-hidden text-left leading-[22px] text-[var(--gray35)];
       &:first-child {
         @apply flex-1;
       }
       &.size {
         @apply mr-[24px] inline-block text-center;
       }
+      span {
+        @apply ellipsis;
+      }
       svg {
-        @apply mr-[3px];
+        @apply min-w-[24px];
+      }
+    }
+    .info {
+      span {
+        @apply body-md text-[var(--gray35)];
       }
     }
     button {
-      @apply w-[73px];
-    }
-    .ico_pds {
-      @apply mr-[4px];
-    }
-    .ico_lock {
-      @apply ml-[8px];
+      @apply ml-[16px] w-[70px];
     }
   }
   [class*='nlp--panel'] {
     + [class*='nlp--panel'] {
-      @apply mt-[12px];
+      @apply mt-[16px];
     }
   }
 }
@@ -34,9 +36,9 @@
   @screen mobile {
     .start {
       .pds_box {
-        @apply w-full flex-col items-start justify-start p-[16px];
+        @apply flex w-full items-center justify-start p-[16px];
         .info {
-          @apply mt-[8px] flex w-full justify-between;
+          @apply mt-[8px];
         }
         span {
           &:first-child {

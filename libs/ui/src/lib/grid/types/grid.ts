@@ -331,6 +331,10 @@ export interface GridProps<T> {
    * @param reorderedData - 재정렬된 데이터 배열
    */
   onDragEnd?: (reorderedData: T[]) => void;
+  /**
+   * 외부에서 선택된 row의 id 배열을 지정할 수 있습니다.
+   */
+  selectedRowIds?: string[];
 }
 
 /**
@@ -340,6 +344,7 @@ export interface GridBoxState {
   page?: number;
   size?: number;
   sort?: string[];
+  filter?: string[];
 }
 
 /**

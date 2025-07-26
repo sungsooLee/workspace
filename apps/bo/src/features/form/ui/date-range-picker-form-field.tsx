@@ -17,7 +17,6 @@ const DateRangePickerFormFieldComponent: FC<RangeDatePickerProps> = ({
   displayType = 'day',
   ...props
 }) => {
-  console.log('Date', value);
   return (
     <RangeDatePicker
       {...props}

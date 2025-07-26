@@ -90,7 +90,7 @@ function HeaderComponent() {
 
           <div className={styles.nav_container} onMouseLeave={handleMouseLeave}>
             <div className={styles.nav_area}>
-              <CategoryButton onOpenChange={handleCategoryOpen} isOpen={isCategoryOpen} />
+              <CategoryButton />
               <Navigate onMouseEnter={handleMouseEnter} hoverMenu={hoverMenu} />
             </div>
 

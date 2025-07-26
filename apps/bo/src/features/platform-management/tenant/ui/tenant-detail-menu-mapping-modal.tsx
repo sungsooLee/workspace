@@ -44,7 +44,7 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
   const [menuTreeExpandedKeys, setMenuTreeExpandedKeys] = useState<string[]>([]);
   const [menuTreeAllKeys, setMenuTreeAllKeys] = useState<string[]>([]);
 
-  const { open: openModal, confirm: openConfirm, close: closeModal } = useModal();
+  const { openModal, confirm: openConfirm, closeModal } = useModal();
 
   const { data: baseMenuDB } = useMenuManageFetchTree(menuScopeCode, 'ko');
 

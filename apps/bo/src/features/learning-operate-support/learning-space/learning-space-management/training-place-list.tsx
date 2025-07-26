@@ -24,7 +24,7 @@ interface TrainingPlaceListProps {
 }
 
 const TrainingPlaceListComponent = (props: TrainingPlaceListProps, ref: any) => {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
   const { provider: searchProvider, getValues, setValue } = useSearchBox(searchConfig());
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
 

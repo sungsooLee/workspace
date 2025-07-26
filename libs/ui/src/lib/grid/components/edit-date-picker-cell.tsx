@@ -36,7 +36,7 @@ const EditDatePickerCell = <T,>({
   return (
     <DatePicker
       {...dateOptionsProps}
-      value={new Date(value)}
+      value={value ? new Date(value) : undefined}
       size="md"
       onChange={handleDateChange}
     />

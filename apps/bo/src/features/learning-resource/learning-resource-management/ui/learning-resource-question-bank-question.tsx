@@ -1,39 +1,17 @@
-import { FC, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
-
-import movieInfoStyles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
 import styles from '@learnway/styles/bo/pages/_layout/learning/test-detail.module.css';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
-
-import previewImg from '@assets/images/temp/img_exam_basic.jpg';
 
 import { cn } from '@learnway/shared';
-import {
-  Button,
-  ContentsRow,
-  FormSubTitle,
-  GridBox,
-  Input,
-  RadioGroupFormField,
-  SplitPanel,
-  TableBox,
-  Tabs,
-  useModal,
-} from '@learnway/ui';
-import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
-
-import { LearningResourceBaseForm } from './learning-resource-base-form';
+import { Button, FormSubTitle, GridBox, Input, RadioGroupFormField, useModal } from '@learnway/ui';
 import { useLearningResourceQuestionDetailForm } from '../service/learning-resource-question-detail-from.hook';
-import { FormRow2, GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
-import { Link } from 'lucide-react';
-import { IcoCopy, IcoFormRequired, IcoMenu01, IcoMinus, IcoPlus } from '@learnway/icons';
+import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
+import { IcoCopy, IcoMenu01, IcoMinus, IcoPlus } from '@learnway/icons';
 import { LearningResourceTestItemModal } from './learning-resource-test-item-modal';
-import { useCreateQuestionItem, useGetQuestionItemList } from '@entities/learning-resource';
-import { QuestionInfo } from '@pages/_layout/learning/resource/test-paper/-tabs/question-info';
-import { EnQuestionLevel, EnQuestionType, QuestionItem, QuestionItemGridRow } from '@types';
+import { useGetQuestionItemList } from '@entities/learning-resource';
+import { QuestionItemGridRow } from '@types';
 import {
   initStatisticRow,
   QuestionStatisticRow,
@@ -41,7 +19,7 @@ import {
 } from '../service/learning-resource-question-service';
 
 const LearningResourceQuestionBankQuestionComponent = () => {
-  const { alert, open: openModal, confirm: openConfirm } = useModal();
+  const { alert, openModal, confirm: openConfirm } = useModal();
   const [statistic, setStatistic] = useState<QuestionStatisticRow[]>(initStatisticRow);
 
   const { baseInfo } = useLearningResourceQuestionDetailForm();

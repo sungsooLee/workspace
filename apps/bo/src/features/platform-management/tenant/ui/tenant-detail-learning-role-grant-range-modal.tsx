@@ -37,7 +37,7 @@ const TenantDetailLearningRoleGrantRangeModalComponent = ({
   roleId: number;
   userList: any[];
 }) => {
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
 
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -57,7 +57,7 @@ const TenantDetailLearningRoleGrantRangeModalComponent = ({
     getValues,
     clearFormError,
     setFormError,
-  } = useDynamicForm(formConfig);
+  } = useDynamicForm(formConfig());
 
   const { saveUsersRole: saveRoleUsers } = useSaveUsers({});
 
@@ -201,7 +201,7 @@ export const TenantDetailLearningRoleGrantRangeModal =
 
 const items = [t('역할 사용 여부'), t('역할 시작일/종료일')];
 
-const formConfig: DynamicFormConfig = {
+const formConfig = (): DynamicFormConfig => ({
   builders: [
     {
       name: 'activeIndex',
@@ -257,4 +257,4 @@ const formConfig: DynamicFormConfig = {
       ],
     },
   },
-};
+});

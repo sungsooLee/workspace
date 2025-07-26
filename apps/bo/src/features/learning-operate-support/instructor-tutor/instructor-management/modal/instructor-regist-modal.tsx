@@ -19,7 +19,7 @@ const InstructorRegistModal = ({
   readOnly = false,
   refreshOnSearch,
 }: InstructorRegistModalProps) => {
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
   const formRef = useRef<HTMLFormElement>(null);
 
   const handleOnClose = () => {

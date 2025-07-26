@@ -3,3 +3,12 @@ export enum EnLibGlobalConst {
   LEARNER_MENU = 'LEARNER_MENU',
   HRD_CENTER_MENU = 'HRD_CENTER_MENU',
 }
+
+export enum CourseType {
+  ELEARNING1 = 'ELEARNING1',
+  ELEARNING2 = 'ELEARNING2',
+  CLASS = 'CLASS',
+  LIVE = 'LIVE',
+  EXAM = 'EXAM',
+  SURVEY = 'SURVEY',
+}

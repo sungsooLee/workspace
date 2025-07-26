@@ -18,7 +18,7 @@ const PackageCardListComponent = ({ className, cardListData }: PackageCardListPr
   return (
     <div className={cn(styles.start, styles.card_list, className)}>
       {cardListData.map((cardItems, index) => (
-        <PackageCard cardData={cardItems} />
+        <PackageCard key={index} cardData={cardItems} />
       ))}
     </div>
   );

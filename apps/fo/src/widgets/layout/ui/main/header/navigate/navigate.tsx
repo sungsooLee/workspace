@@ -7,11 +7,12 @@ import { Link, useRouterState } from '@tanstack/react-router';
 import { IcoArrow, IcoArrowForward } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 
-import { useMenuHierarchy } from '@entities/menu';
+// import { useMenuHierarchy } from '@entities/menu';
 
 import styles from './navigate.module.css';
 import { Carousel } from '@learnway/ui';
 import { Menu } from '@learnway/auth/types';
+import { useMenuHierarchy } from '@learnway/auth/entities';
 
 interface NavigateComponentProps {
   onMouseEnter?: (menu: Menu) => void;
@@ -24,7 +25,7 @@ interface GNBMenu extends Menu {
 
 function NavigateComponent({ onMouseEnter, hoverMenu }: NavigateComponentProps) {
   const { t } = useTranslation();
-  const { data } = useMenuHierarchy();
+  const { data } = useMenuHierarchy('FO');
   const location = useRouterState();
   // const prevRef = useRef<HTMLDivElement | null>(null);
   // const nextRef = useRef<HTMLDivElement | null>(null);

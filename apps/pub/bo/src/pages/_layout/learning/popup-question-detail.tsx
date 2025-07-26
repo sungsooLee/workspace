@@ -36,7 +36,7 @@ export const Route = createFileRoute('/_layout/learning/popup-question-detail')(
 });
 
 function RouteComponent() {
-  const { open: openModal, close: closeModal } = useModal();
+  const { openModal, closeModal } = useModal();
   const QuestionAddContent = () => {
     const [checked, setChecked] = useState<{ [key: number]: boolean }>({
       1: false,

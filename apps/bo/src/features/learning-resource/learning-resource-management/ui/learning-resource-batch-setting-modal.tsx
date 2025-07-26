@@ -26,7 +26,7 @@ import { SelectCoordinatorModal } from './learning-resource-select-coordinator-m
 import styles from './setting-item.module.css';
 
 function BatchSettingModalComponent() {
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
   // grid
   const columnHelper = createColumnHelper<any>();
   const columns = [

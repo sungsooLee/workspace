@@ -274,6 +274,7 @@ export const guideData = [
     completionDate: '2025-03-26',
     lastUpdateDate: '2025-05-12',
     remarks: '- id-change-popup.tsx',
+    cancel: true,
   },
   {
     screenId: 'NLP_FO_MYP_1015',
@@ -292,7 +293,7 @@ export const guideData = [
     pageId: 'my/membership-secession',
     pageType: 'Page',
     completionDate: '2025-03-27',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-25',
     remarks: '- membership-secession.tsx',
   },
   {
@@ -344,6 +345,7 @@ export const guideData = [
     completionDate: '2025-03-26',
     lastUpdateDate: '',
     remarks: '- EN',
+    cancel: true,
   },
   {
     screenId: 'NLP_FO_MYP_1016',
@@ -379,11 +381,11 @@ export const guideData = [
     screenId: 'NLP_FO_MYP_MR_1003',
     screenName: 'M_My_비밀번호 확인_KR',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '/',
-    pageType: 'Pop-up',
+    pageId: 'my/password-verify',
+    pageType: 'Page',
     completionDate: '2025-03-25',
-    lastUpdateDate: '',
-    remarks: '- password-verify-popup.tsx',
+    lastUpdateDate: '2025-07-22',
+    remarks: '- password-verify.tsx (팝업 -> 페이지로 변경)',
   },
   {
     screenId: 'NLP_FO_MYP_MR_1000',
@@ -402,7 +404,7 @@ export const guideData = [
     pageId: 'my/information-change',
     pageType: 'Pop-up',
     completionDate: '2025-03-26',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-18',
     remarks: '- password-change-popup.tsx',
   },
   {
@@ -414,6 +416,7 @@ export const guideData = [
     completionDate: '2025-03-26',
     lastUpdateDate: '',
     remarks: '- id-change-popup.tsx',
+    cancel: true,
   },
   {
     screenId: 'NLP_FO_MYP_MR_1015',
@@ -422,7 +425,7 @@ export const guideData = [
     pageId: 'my/information-change',
     pageType: 'Pop-up',
     completionDate: '2025-03-27',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-18',
     remarks: '- phone-change-popup.tsx',
   },
   {
@@ -432,15 +435,15 @@ export const guideData = [
     pageId: 'my/membership-secession',
     pageType: 'Page',
     completionDate: '2025-03-27',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-25',
     remarks: '- membership-secession.tsx',
   },
   {
     screenId: 'NLP_FO_MYP_MR_1010',
     screenName: 'M_My_비밀번호 확인_EN',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '/',
-    pageType: 'Pop-up',
+    pageId: 'my/password-verify',
+    pageType: 'Page',
     completionDate: '2025-03-25',
     lastUpdateDate: '',
     remarks: '- EN',
@@ -474,6 +477,7 @@ export const guideData = [
     completionDate: '2025-03-26',
     lastUpdateDate: '',
     remarks: '- EN',
+    cancel: true,
   },
   {
     screenId: 'NLP_FO_MYP_MR_1016',
@@ -665,7 +669,7 @@ export const guideData = [
     pageId: 'category/detail',
     pageType: 'Page',
     completionDate: '2025-03-14',
-    lastUpdateDate: '2025-05-13',
+    lastUpdateDate: '2025-07-24',
     remarks: 'NLP_FO_CAT_1000 (레이어창 카테고리) 포함\nNLP_FO_CAT_1002 (필터 레이어팝업) 포함',
   },
   {
@@ -675,7 +679,7 @@ export const guideData = [
     pageId: 'category/detail',
     pageType: 'Page',
     completionDate: '2025-03-14',
-    lastUpdateDate: '2025-05-13',
+    lastUpdateDate: '2025-07-24',
     remarks: '',
   },
   {
@@ -685,7 +689,7 @@ export const guideData = [
     pageId: 'category/detail',
     pageType: 'Pop-up',
     completionDate: '2025-03-10',
-    lastUpdateDate: '2025-03-31',
+    lastUpdateDate: '2025-07-24',
     remarks: '- filter.tsx\n- 내용안에 포함',
   },
   {
@@ -695,7 +699,7 @@ export const guideData = [
     pageId: 'category/detail_m',
     pageType: 'Pop-up',
     completionDate: '2025-03-14',
-    lastUpdateDate: '2025-07-22',
+    lastUpdateDate: '2025-07-24',
     remarks: '모바일 모드로 변경 후 상단 전체메뉴 클릭',
   },
   {
@@ -705,7 +709,7 @@ export const guideData = [
     pageId: 'category/detail_m',
     pageType: 'Page',
     completionDate: '2025-03-14',
-    lastUpdateDate: '2025-05-13',
+    lastUpdateDate: '2025-07-24',
     remarks: '- 분류 바텀팝업 안 dropdown 화면넘어가는 이슈 공통 요청중',
   },
   {
@@ -715,7 +719,7 @@ export const guideData = [
     pageId: 'category/detail_m',
     pageType: 'Pop-up',
     completionDate: '2025-05-09',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-24',
     remarks: '- filter-popup.tsx',
   },
   {
@@ -727,6 +731,26 @@ export const guideData = [
     completionDate: '2025-07-11',
     lastUpdateDate: '',
     remarks: '- introduction.tsx\n- toastpopup 공통 수정 요청중',
+  },
+  {
+    screenId: 'NLP_FO_CHN_2002',
+    screenName: '패키지 목록',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: 'course-introduction/package-list',
+    pageType: 'Page',
+    completionDate: '2025-07-25',
+    lastUpdateDate: '',
+    remarks: 'PC/MOBILE 한페이지 작업중',
+  },
+  {
+    screenId: 'NLP_FO_CHN_2006',
+    screenName: '과정 목록',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: 'course-introduction/course-list',
+    pageType: 'Page',
+    completionDate: '2025-07-25',
+    lastUpdateDate: '',
+    remarks: 'PC/MOBILE 한페이지 작업중',
   },
   {
     screenId: 'NLP_FO_LEC_1001',
@@ -1263,13 +1287,13 @@ export const guideData = [
   },
   {
     screenId: 'NLP_FO_CLA_1011',
-    screenName: '강의실_과제_등록',
+    screenName: '	강의실_홈(대시보드)_학습이력 팝업창',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'course-introduction/detail',
+    pageType: 'Pop-up',
+    completionDate: '2025-07-23',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- notice-detail-popup.tsx',
   },
   {
     screenId: 'NLP_FO_CLA_1012',
@@ -1340,7 +1364,7 @@ export const guideData = [
     pageId: 'course-introduction/detail-m',
     pageType: 'Page',
     completionDate: '2025-04-30	',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-24',
     remarks: '/features/layout/ui/course-introduction/dashboard.tsx',
   },
   {
@@ -1446,13 +1470,13 @@ export const guideData = [
   },
   {
     screenId: 'NLP_FO_CLA_MA_1011',
-    screenName: 'M_강의실_과제_상세',
+    screenName: 'M_강의실_홈(대시보드)_학습이력 팝업창',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '',
-    pageType: '',
-    completionDate: '',
+    pageId: 'course-introduction/detail-m',
+    pageType: 'Pop-up',
+    completionDate: '2025-07-25',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- notice-detail-popup.tsx',
   },
   {
     screenId: 'NLP_FO_CLA_MA_1012',

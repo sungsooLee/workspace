@@ -14,7 +14,7 @@ enum QuestionTab {
 }
 
 const LearningResourceQuestionBankComponent = () => {
-  const { alert, open: openModal } = useModal();
+  const { alert, openModal } = useModal();
   const [selectedTabKey, setSelectedTabKey] = useState<string>(QuestionTab.QUESTION_BASE);
   const { baseInfo, formMode } = useLearningResourceQuestionDetailForm();
 

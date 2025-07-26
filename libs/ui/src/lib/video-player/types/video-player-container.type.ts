@@ -73,4 +73,8 @@ export type VideoPlayerContainerProps = {
 
   videoStart: number;
   setVideoStart: (v: number) => void;
+
+  selectedSubtitle: any;
+  changeSubtitle: (v: any) => void;
+  playbackRate: number;
 } & PropsWithChildren;

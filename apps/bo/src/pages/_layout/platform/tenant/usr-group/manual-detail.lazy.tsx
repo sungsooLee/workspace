@@ -71,7 +71,7 @@ function RouteComponent() {
     routerState.location.state?.userGroupId,
   );
 
-  const { open: openModal, confirm: openConfirm, alert: openAlert } = useModal();
+  const { openModal, confirm: openConfirm, alert: openAlert } = useModal();
   const [tenantInfo, setTenantInfo] = useState<Tenant>();
   const [modalUserGroups, setModalUserGroups] = useState<any>(null);
   const [tableInstance, setTableInstance] = useState<Table<any>>();
@@ -112,7 +112,7 @@ function RouteComponent() {
     getValues,
     setValue,
     formState,
-  } = useDynamicForm(formConfig);
+  } = useDynamicForm(formConfig());
   const assignmentTypeWatch = useWatch({ control: provider.control, name: 'assignmentType' });
 
   const handleListButtonClick = () => {
@@ -402,14 +402,14 @@ function RouteComponent() {
           onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
           data={userGroupSettings}
           config={gManualConfig}
-          columns={manualColumns}
+          columns={manualColumns()}
         />
       </MainContents>
     </PageContainer>
   );
 }
 
-const formConfig: DynamicFormConfig = {
+const formConfig = (): DynamicFormConfig => ({
   builders: [
     {
       name: 'userGroupOriginType',
@@ -496,7 +496,7 @@ const formConfig: DynamicFormConfig = {
       required: (values) => values.userGroupOriginType === 'PERSONAL',
     },
   },
-};
+});
 
 const searchManualConfig = (): SearchBoxConfig => ({
   builders: [
@@ -548,98 +548,99 @@ const gridManualConfig = {
 };
 
 const columnHelper = createColumnHelper<any>();
-const manualColumns = [
-  columnHelper.accessor('select-check', {
-    id: 'select-check',
-    size: 32,
-    maxSize: 32,
-    minSize: 32,
-    meta: {
-      align: 'center',
-      headerAlign: 'center',
-      cellAlign: 'center',
-    },
-    enableSorting: false,
-    header: ({ table }) => {
-      return (
-        <div style={{ width: '100%', textAlign: 'center' }}>
-          <Checkbox
-            checked={table.getIsAllRowsSelected()}
-            onCheckedChange={(checked) => {
-              table.toggleAllRowsSelected(!!checked);
-            }}
-          />
-        </div>
-      );
-    },
-    cell: ({ row }) => {
-      return (
-        <div style={{ width: '100%', textAlign: 'center', paddingRight: 0 }}>
-          <Checkbox
-            checked={row.getIsSelected()}
-            onCheckedChange={() => {
-              if (!row.getIsGrouped()) {
-                row.getToggleSelectedHandler();
-              }
-            }}
-          />
-        </div>
-      );
-    },
-  }),
-  columnHelper.accessor('companyName', {
-    cell: (info) => info.getValue(),
-    header: t('회사'),
-    size: 152,
-  }),
-  columnHelper.accessor('deptName', {
-    cell: (info) => info.getValue(),
-    header: t('소속'),
-    size: 200,
-  }),
-  columnHelper.accessor('employeeNumber', {
-    cell: (info) => info.getValue(),
-    header: t('사번'),
-    size: 120,
-  }),
-  columnHelper.accessor('userName', {
-    header: t('이름'),
-    size: 104,
-  }),
-  columnHelper.accessor('userStatus', {
-    cell: (info: any) => {
-      switch (info.getValue()) {
-        case 'ACTIVE':
-          return t('재직');
-        case 'SUSPENDED':
-          return t('정직');
-        default:
-          return t('휴직');
-      }
-    },
-    header: t('제직여부'),
-    meta: {
-      cellAlign: 'center',
-    },
-    size: 152,
-  }),
-  columnHelper.accessor('accountStatus', {
-    cell: (info: any) => {
-      switch (info.getValue()) {
-        case 'NORMAL':
-          return t('정상');
-        case 'WAIT':
-          return t('대기');
-        case 'DORMANT':
-          return t('휴면');
-        default:
-          return t('잠김');
-      }
-    },
-    header: t('계정상태'),
-    meta: {
-      cellAlign: 'center',
-    },
-    size: 104,
-  }),
-] as ColumnDef<any, unknown>[];
+const manualColumns = () =>
+  [
+    columnHelper.accessor('select-check', {
+      id: 'select-check',
+      size: 32,
+      maxSize: 32,
+      minSize: 32,
+      meta: {
+        align: 'center',
+        headerAlign: 'center',
+        cellAlign: 'center',
+      },
+      enableSorting: false,
+      header: ({ table }) => {
+        return (
+          <div style={{ width: '100%', textAlign: 'center' }}>
+            <Checkbox
+              checked={table.getIsAllRowsSelected()}
+              onCheckedChange={(checked) => {
+                table.toggleAllRowsSelected(!!checked);
+              }}
+            />
+          </div>
+        );
+      },
+      cell: ({ row }) => {
+        return (
+          <div style={{ width: '100%', textAlign: 'center', paddingRight: 0 }}>
+            <Checkbox
+              checked={row.getIsSelected()}
+              onCheckedChange={() => {
+                if (!row.getIsGrouped()) {
+                  row.getToggleSelectedHandler();
+                }
+              }}
+            />
+          </div>
+        );
+      },
+    }),
+    columnHelper.accessor('companyName', {
+      cell: (info) => info.getValue(),
+      header: t('회사'),
+      size: 152,
+    }),
+    columnHelper.accessor('deptName', {
+      cell: (info) => info.getValue(),
+      header: t('소속'),
+      size: 200,
+    }),
+    columnHelper.accessor('employeeNumber', {
+      cell: (info) => info.getValue(),
+      header: t('사번'),
+      size: 120,
+    }),
+    columnHelper.accessor('userName', {
+      header: t('이름'),
+      size: 104,
+    }),
+    columnHelper.accessor('userStatus', {
+      cell: (info: any) => {
+        switch (info.getValue()) {
+          case 'ACTIVE':
+            return t('재직');
+          case 'SUSPENDED':
+            return t('정직');
+          default:
+            return t('휴직');
+        }
+      },
+      header: t('제직여부'),
+      meta: {
+        cellAlign: 'center',
+      },
+      size: 152,
+    }),
+    columnHelper.accessor('accountStatus', {
+      cell: (info: any) => {
+        switch (info.getValue()) {
+          case 'NORMAL':
+            return t('정상');
+          case 'WAIT':
+            return t('대기');
+          case 'DORMANT':
+            return t('휴면');
+          default:
+            return t('잠김');
+        }
+      },
+      header: t('계정상태'),
+      meta: {
+        cellAlign: 'center',
+      },
+      size: 104,
+    }),
+  ] as ColumnDef<any, unknown>[];

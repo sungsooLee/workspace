@@ -11,9 +11,19 @@ import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.cs
 import { Enrollment } from '@features/learning-operate/learning-sequence/enrollment-application/ui/enrollment';
 import { SequenceTab } from '../-common/type';
 import { useSequenceForm } from '../-hook/use-sequence-form';
+import { StudentsManagement } from '@features/learning-operate/learning-sequence/students-management/students-management';
+import { usePageState } from '@shared/index';
+
+export interface EnrollmentApplicationProps {
+  courseId?: number; // 과정 ID
+  courseName?: string; // 과정명
+  courseType?: string; // 과정 타입
+  sequenceId?: number; // 차수 ID
+}
 
 /**
  * [NLP_BO_LMS_0035] 수강신청 목록 조회
+ * @state: courseIdKey, courseSequenceIdKey
  */
 export const Route = createFileRoute('/_layout/learning/learning-sequence/enrollment-application/')(
   {
@@ -23,7 +33,8 @@ export const Route = createFileRoute('/_layout/learning/learning-sequence/enroll
 
 function RouteComponent() {
   const router = useRouter();
-  const [btnState, setBtnState] = useState<string>('edu');
+  const { courseId, courseName, courseType, sequenceId } =
+    usePageState<EnrollmentApplicationProps>();
   const { showSaveComplete, showDeleteComplete, deleteConfirm, saveConfirm } = useModal();
   // 커스텀 훅 사용
   const { activeTab, setTabRef, saveTabData, changeTab, getTabValues, deleteTabData } =
@@ -32,6 +43,12 @@ function RouteComponent() {
   const moveListPage = () => {
     router.navigate({
       to: '/learning/learning-sequence/enrollment-application',
+      state: {
+        courseId,
+        courseName,
+        courseType,
+        sequenceId,
+      },
     });
   };
 
@@ -80,10 +97,7 @@ function RouteComponent() {
       {
         title: '수강생 관리',
         key: SequenceTab.STUDENT_MANAGEMENT,
-        // content: (
-        //   <StudentManagement />
-        //   />
-        // ),
+        content: <StudentsManagement />,
       },
       {
         title: '평가/과제/설문 관리',
@@ -97,7 +111,7 @@ function RouteComponent() {
   );
 
   return (
-    <PageContainer hideOutLine={true}>
+    <PageContainer hideOutLine={true} customTitle={courseName}>
       <ContentsButtons>
         <ToggleButtonGroup
           defaultValue={'edu'}
@@ -108,10 +122,6 @@ function RouteComponent() {
           onClick={(value) =>
             router.navigate({
               to: `/learning/course`,
-              state: {
-                // courseId: '',
-                // courseName: ''
-              },
             })
           }
         />

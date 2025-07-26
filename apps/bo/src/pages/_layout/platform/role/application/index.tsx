@@ -43,7 +43,7 @@ function RouteComponent() {
   const { data: loginUser } = useFetchAuthUser();
   const queryClient = useQueryClient();
 
-  const { alert: openAlert, confirm: openConfirm, open: openModal } = useModal();
+  const { alert: openAlert, confirm: openConfirm, openModal } = useModal();
   const { provider: searchProvider, getValues, setOptions } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
   const [tableInstance, setTableInstance] = useState<Table<any>>();

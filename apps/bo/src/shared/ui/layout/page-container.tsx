@@ -55,6 +55,7 @@ const PageContainerComponent: FC<{
   tabs?: boolean; // 컨텐츠 상단에 tab 있는 경우
   scrollHidden?: boolean; // 컨텐츠 안에 스크롤인 경우
   hideOutLine?: boolean; // 공통 > 나의 정보 화면(외곽라인,bg 없는 경우)
+  customTitle?: string; // 별도 타이틀로 설정해야 하는 경우
   guidePopupProps?: GuidePopupProps; // 가이드 팝업 props, props가 존재하면 노출
 }> = ({
   children,
@@ -64,6 +65,7 @@ const PageContainerComponent: FC<{
   tabs = false,
   scrollHidden = false,
   hideOutLine = false,
+  customTitle,
   guidePopupProps,
 }) => {
   const { meta } = useCurrentRoute();
@@ -82,6 +84,7 @@ const PageContainerComponent: FC<{
   const { alert: openAlert } = useModal();
   // 페이지 타이틀
   const title = useCreation(() => {
+    if (customTitle) return customTitle;
     const currentMenuCode = last(activeMenuDepth)?.menuCode;
     return currentMenuCode ? `HRD_CENTER_MENU.${currentMenuCode}` : meta?.title;
   }, [activeMenuDepth]);

@@ -32,7 +32,7 @@ interface Props {
 
 const ContentCourseMappingModalComponent = ({ contentUuid, channelUuid }: Props) => {
   const router = useRouter();
-  const { close, confirm } = useModal();
+  const { closeModal, confirm } = useModal();
 
   const searchBoxConfig = (): SearchBoxConfig => ({
     builders: [
@@ -123,7 +123,7 @@ const ContentCourseMappingModalComponent = ({ contentUuid, channelUuid }: Props)
               });
               if (confirmed)
                 router.navigate({
-                  to: '/learning/course/detail/view',
+                  to: '/learning/course/detail',
                   state: { courseId: row.original.courseId },
                 });
             }}
@@ -149,7 +149,7 @@ const ContentCourseMappingModalComponent = ({ contentUuid, channelUuid }: Props)
         <GridBox config={config} showNumberingColumn />
       </ModalBody>
       <ModalFooter>
-        <Button label={t('확인')} variant="primary" size="lg" onClick={() => close()} />
+        <Button label={t('확인')} variant="primary" size="lg" onClick={() => closeModal()} />
       </ModalFooter>
     </ModalContainer>
   );

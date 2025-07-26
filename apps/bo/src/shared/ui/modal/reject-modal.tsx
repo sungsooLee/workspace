@@ -16,11 +16,11 @@ import { FormRow } from '@shared/ui';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 
 const RejectModalComponent: FC<any> = () => {
-  const { close } = useModal();
+  const { closeModal } = useModal();
   const { provider, onSubmit } = useDynamicForm(formConfig);
 
   const handleOnSubmit = (node: any) => {
-    close(node);
+    closeModal(node);
   };
   return (
     <form className="form_row" onSubmit={onSubmit(handleOnSubmit)}>
@@ -40,7 +40,7 @@ const RejectModalComponent: FC<any> = () => {
           </div>
         </ModalBody>
         <ModalFooter>
-          <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={() => close()} />
+          <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
           <Button type="submit" label={t('확인')} variant={'primary'} size={'lg'} />
         </ModalFooter>
       </ModalContainer>

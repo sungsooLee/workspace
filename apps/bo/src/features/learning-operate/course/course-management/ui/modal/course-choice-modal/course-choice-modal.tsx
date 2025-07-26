@@ -39,7 +39,7 @@ const CourseChoiceModalComponent = forwardRef<HTMLDivElement, CourseChoiceModalP
   ({ tenantIds, channelUuid, ...props }, ref) => {
     console.log('CourseChoiceModalComponent >> ', { tenantIds, channelUuid });
     const { t } = useTranslation();
-    const { close: closeModal } = useModal();
+    const { closeModal } = useModal();
     const [selectedRows, setSelectedRows] = useState<CourseListItem[]>([]);
 
     const { provider, getValues, onSubmit, watch } = useDynamicForm2();

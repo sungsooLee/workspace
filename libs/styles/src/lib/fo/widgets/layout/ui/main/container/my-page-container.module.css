@@ -11,7 +11,7 @@
 :global(body.mobile) {
   @screen mobile {
     .start {
-      @apply w-full px-[20px] pb-[40px];
+      @apply mt-0 w-full;
       h2 {
         @apply hidden;
       }

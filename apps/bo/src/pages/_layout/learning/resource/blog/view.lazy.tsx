@@ -16,8 +16,8 @@ import {
 } from '@shared/ui';
 import { learningResourceQueryOptions, useDeleteContent } from '@entities/learning-resource';
 import { PreviewLearningWindow } from '@features/learning-resource/learning-resource-management/ui/preview-learning-window';
+import { LearningResourceBlogDetail } from '@features/learning-resource';
 
-import { BlogDetail } from './-components/blog-detail';
 import styles from './blog-detail.module.css';
 
 export const Route = createLazyFileRoute('/_layout/learning/resource/blog/view')({
@@ -41,7 +41,7 @@ function RouteComponent() {
     learningResourceQueryOptions.getCurriculumsMapping(state?.contentUuid),
   );
 
-  const { open: openModal, alert: openAlert, confirm: openConfirm } = useModal();
+  const { openModal, alert: openAlert, confirm: openConfirm } = useModal();
 
   const openBlogPreviewPopup = useCallback(() => {
     openModal({
@@ -107,7 +107,7 @@ function RouteComponent() {
 
   const handleClickCourseButton = () => {
     router.navigate({
-      to: '/learning/course/create/view',
+      to: '/learning/course/create',
     });
   };
 
@@ -166,7 +166,7 @@ function RouteComponent() {
       </ContentsButtons>
 
       <MainContents>
-        <BlogDetail
+        <LearningResourceBlogDetail
           ref={formRef}
           tenantId={tenantId}
           mode="update"

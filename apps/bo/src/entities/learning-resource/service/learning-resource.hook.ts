@@ -7,11 +7,15 @@ import {
   HtmlVideoFileChangeReq,
   HtmlVideoMetadataReq,
   PostDraftHtmlVideoParams,
+  PostDraftScormParams,
   PostDraftVideosParams,
+  PutScormChangeParams,
+  PutScormUpdateParams,
   PutVideoChangeParams,
   PutVideoUpdateParams,
   QuestionItem,
   QuestionItemDeleteParam,
+  QuestionsCopyReq,
   QuestionStatusUpdateReq,
   RandomQuestionCountUpdateReq,
   TestPaperBasicInfoSaveReq,
@@ -45,6 +49,20 @@ export function usePostDraftVideos(options?: any) {
   };
 }
 
+export function usePostDraftScorm(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.postDraftScorm(),
+    ...options,
+  });
+
+  return {
+    create: (payload: PostDraftScormParams) => mutation.mutate(payload as any),
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
+}
+
 export function usePutVideoUpdate(options?: any) {
   const mutation = useMutation({
     ...mutateOptions.putVideoUpdate(),
@@ -59,6 +77,20 @@ export function usePutVideoUpdate(options?: any) {
   };
 }
 
+export function usePutScormUpdate(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.putScormUpdate(),
+    ...options,
+  });
+
+  return {
+    update: (payload: PutScormUpdateParams) => mutation.mutate(payload as any),
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
+}
+
 export function usePutVideoChange(options?: any) {
   const mutation = useMutation({
     ...mutateOptions.putVideoChange(),
@@ -67,6 +99,20 @@ export function usePutVideoChange(options?: any) {
 
   return {
     update: (payload: PutVideoChangeParams) => mutation.mutate(payload as any),
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
+}
+
+export function usePutScormChange(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.putScormChange(),
+    ...options,
+  });
+
+  return {
+    update: (payload: PutScormChangeParams) => mutation.mutate(payload as any),
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
     data: mutation.data,
@@ -281,6 +327,19 @@ export function useUpdateExamPaperQuestionCount(options?: any) {
 
   return {
     update: (params: RandomQuestionCountUpdateReq) => mutation.mutate(params as any),
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+  };
+}
+
+export function useCopyQuestionsToExamPaper(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.copyQuestionsToExamPaper(),
+    ...options,
+  });
+
+  return {
+    copy: (params: QuestionsCopyReq) => mutation.mutate(params as any),
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
   };

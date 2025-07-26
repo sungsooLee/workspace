@@ -1,3 +1,6 @@
+import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
+import { cn } from '@learnway/shared';
+import styles from '@learnway/styles/bo/assets/styles/modules/popup-search.module.css';
 import {
   Button,
   ContentsRow,
@@ -7,15 +10,12 @@ import {
   ModalFooter,
   useModal,
 } from '@learnway/ui';
-import styles from '@learnway/styles/bo/assets/styles/modules/popup-search.module.css';
 import { t } from 'i18next';
-import React, { useState } from 'react';
-import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
-import { cn } from '@learnway/shared';
+import { useState } from 'react';
 import { SearchBox } from '../search-box';
 
 const ManagerChoicePopupComponent = () => {
-  const { close } = useModal();
+  const { closeModal } = useModal();
   const { provider: sProvider } = useSearchBox(searchConfig);
   const [option, setOption] = useState<{ value: string; label: string }>();
   const [options, setOptions] = useState([
@@ -52,7 +52,7 @@ const ManagerChoicePopupComponent = () => {
   };
 
   const handleOnClose = () => {
-    close({
+    closeModal({
       managerId: '',
       managerName: '',
     });
@@ -60,7 +60,7 @@ const ManagerChoicePopupComponent = () => {
   const handleOnConfirm = () => {
     if (!option) return;
     console.log(option);
-    close({ managerId: option.value, managerName: option.label });
+    closeModal({ managerId: option.value, managerName: option.label });
   };
 
   return (

@@ -478,7 +478,7 @@ const StandaloneTimeInput = ({
           </div>
         </div>
 
-        <div className="minutes_area">
+        <div className="hours_area">
           <div className="time_text">{locale === ko ? t('분') : t('Minute')}</div>
           <div className="column_options">
             {minuteOptions.map((m, i) => (
@@ -501,7 +501,7 @@ const StandaloneTimeInput = ({
         </div>
 
         {showSeconds && (
-          <div className="seconds_area">
+          <div className="hours_area">
             <div className="time_text">{locale === ko ? t('초') : t('Second')}</div>
             <div className="column_options">
               {secondOptions.map((s, i) => (

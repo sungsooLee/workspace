@@ -84,6 +84,15 @@
       }
       .sub_package_content {
         @apply mt-[24px] pl-[40px];
+        .btn_box {
+          @apply pt-[24px];
+          button {
+            @apply label-lg-b flex w-full items-center gap-[4px] !px-[12px] text-[var(--gray35)];
+            svg {
+              @apply mx-0;
+            }
+          }
+        }
       }
     }
     .operator_box {

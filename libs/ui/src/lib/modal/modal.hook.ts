@@ -7,7 +7,7 @@ import { ModalConfig, useModalReturnValue } from './type';
 import { getRandomId } from '@learnway/shared';
 
 const useModal = (): useModalReturnValue => {
-  const { modals, open: openModal, close: closeModal, closeAll: closeAllModal } = useModalStore();
+  const { modals, openModal, closeModal, closeAllModal } = useModalStore();
 
   /**
    * 일반 모달을 엽니다.
@@ -195,7 +195,7 @@ const useModal = (): useModalReturnValue => {
         content: '저장 하시겠습니까?',
         type: 'complete',
       }),
-    [], 
+    [],
   );
 
   const updateConfirm = useCallback(
@@ -218,10 +218,22 @@ const useModal = (): useModalReturnValue => {
     [],
   );
 
+  // "확인시 수정된 내용이 없어진다"라는 의미의 컨펌 함수
+  const confirmNavigation = useCallback(
+    (props?: AlertComponentProps): Promise<any> =>
+      confirm({
+        ...props,
+        title: props?.title ?? '이동 하시겠습니까?',
+        content: props?.content ?? '입력 중인 항목이 초기화됩니다.',
+        type: 'complete',
+      }),
+    [],
+  );
+
   return {
-    open,
-    close,
-    closeAll,
+    openModal: open,
+    closeModal: close,
+    closeAllModal: closeAll,
     alert,
     confirm,
     modals,
@@ -231,6 +243,7 @@ const useModal = (): useModalReturnValue => {
     saveConfirm,
     updateConfirm,
     deleteConfirm,
+    confirmNavigation,
   };
 };
 

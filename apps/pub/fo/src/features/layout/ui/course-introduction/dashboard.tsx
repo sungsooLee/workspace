@@ -1,13 +1,21 @@
 import { memo, useState } from 'react';
 import { BrowserView, isMobile, MobileView } from 'react-device-detect';
-import { IcoArrowDown, IcoCaution03, IcoLock, IcoPlus, IcoClose02 } from '@learnway/icons';
+import {
+  IcoArrowDown,
+  IcoCaution03,
+  IcoLock,
+  IcoPlus,
+  IcoCalendar01,
+  IcoLoading02,
+  IcoPdf,
+} from '@learnway/icons';
 import { Button, Panel, Popover, ProgressBar, TableBox, useModal } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import styles from './dashboard.module.css';
-import statusStyles from './status.module.css';
-import pdsStyles from './pds.module.css';
-import tableListStyles from '../../../../shared/ui/list/table-list.module.css';
-import dropdownPopoverStyles from '../../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
+import styles from '@learnway/styles/fo/features/layout/ui/course-introduction/dashboard.module.css';
+import statusStyles from '@learnway/styles/fo/features/layout/ui/course-introduction/status.module.css';
+import pdsStyles from '@learnway/styles/fo/features/layout/ui/course-introduction/pds.module.css';
+import tableListStyles from '@learnway/styles/fo/shared/ui/list/table-list.module.css';
+import dropdownPopoverStyles from '@learnway/styles/fo/shared/ui/dropdown-popover/dropdown-popover.module.css';
 import { CurriculumStudy } from '../../../../features/layout';
 
 const DropdownPopoverCompoment = () => {
@@ -22,9 +30,6 @@ const CourseDashboardCompoment = () => {
   const [selectedValues, setSelectedValues] = useState<null>(null);
 
   const progress = 80;
-
-  const { open: openModal } = useModal();
-  const { close: closeModal } = useModal();
 
   const [detail, setDetail] = useState<boolean>();
 
@@ -99,23 +104,23 @@ const CourseDashboardCompoment = () => {
       </div>
 
       <div className={statusStyles.start}>
-        {/* 이수 : completed 
+        {/* 이수 : completed
             미이수 : incomplete
         */}
         <Panel
           type="rounded"
           hideHeaderUnderline
-          className={`${statusStyles.panel_degreey} $/*{statusStyles.incomplete} */`}
+          className={`${statusStyles.panel_degreey} ${statusStyles.completed}`}
         >
           <div className={statusStyles.list}>
             <h3>학습중</h3>
             <div className={statusStyles.date_status}>
               <div className={statusStyles.date_box}>
-                교육기간
+                {isMobile ? <IcoCalendar01 width={24} height={24} stroke="#131416" /> : '교육기간'}
                 <span className={statusStyles.date}>25-03-01 ~ 26-03-31 (374차)</span>
               </div>
               <div className={statusStyles.date_box}>
-                남은학습기간
+                {isMobile ? <IcoLoading02 width={24} height={24} fill="#131416" /> : '남은학습기간'}
                 <span className={`${statusStyles.date} ${statusStyles.time}`}>D-27</span>
                 {/* 남은기간 적을 시 className="time" */}
               </div>
@@ -145,7 +150,15 @@ const CourseDashboardCompoment = () => {
             <div className={statusStyles.status_info}>
               <span className={statusStyles.tt}>평가 (1/2, 30%)</span>
               <div className={statusStyles.score_box}>
-                <div className={statusStyles.score}>38점</div>
+                <div className={statusStyles.score}>
+                  <div className={statusStyles.deadline_box}>
+                    <IcoCaution03 width={18} height={18} stroke="#FF4646" />
+                    <div className={statusStyles.deadline}>
+                      <p>마감 : 26-03-25 11:59pm</p>
+                    </div>
+                  </div>
+                  -
+                </div>
               </div>
             </div>
 
@@ -298,22 +311,25 @@ const CourseDashboardCompoment = () => {
             <h3>
               자료실<em>2</em>
             </h3>
-            <Button variant="line" size={isMobile ? 'ts' : 'lx'} className={styles.btn}>
+            {/* 퍼블수정 20250724 사이즈 수정 */}
+            <Button variant="line" size={isMobile ? 'md' : 'lx'} className={styles.btn}>
               전체 다운로드
             </Button>
           </div>
           <div className={pdsStyles.start}>
             <Panel hideHeaderUnderline actions="" className="w_full" type="rounded">
               <div className={pdsStyles.pds_box}>
-                {/* 퍼블수정 20250723 pdf 아이콘 삭제 */}
                 <span className={pdsStyles.txt}>
-                  비즈니스 영어 단어&숙어집.pdf
+                  {/* 퍼블수정 20250724 pdf 원복 */}
+                  <IcoPdf className={styles.ico_pdf} />
+                  <span>비즈니스 영어 단어&숙어집.pdf</span>
                   <IcoLock className={styles.ico_lock} />
                 </span>
                 <div className={pdsStyles.info}>
-                  <span className={pdsStyles.size}>200MB</span>
-                  {/* 퍼블수정 20250723 버튼 사이즈 수정 */}
-                  <Button variant="line" size={isMobile ? 'ts' : 'md'} className={pdsStyles.btn}>
+                  {/* 퍼블수정 20250724 mobile에서 hide */}
+                  {isMobile || <span className={pdsStyles.size}>200MB</span>}
+                  {/* 퍼블수정 20250724 버튼 사이즈 수정 */}
+                  <Button variant="line" size="md" className={pdsStyles.btn}>
                     다운로드
                   </Button>
                 </div>
@@ -323,12 +339,13 @@ const CourseDashboardCompoment = () => {
             <Panel hideHeaderUnderline actions="" className="w_full" type="rounded">
               <div className={pdsStyles.pds_box}>
                 <span className={pdsStyles.txt}>
-                  비즈니스 영어 단어&숙어집.pdf
+                  <IcoPdf className={styles.ico_pdf} />
+                  <span>비즈니스 영어 단어&숙어집.pdf</span>
                   <IcoLock className={styles.ico_lock} />
                 </span>
                 <div className={pdsStyles.info}>
-                  <span className={pdsStyles.size}>200MB</span>
-                  <Button variant="line" size={isMobile ? 'ts' : 'md'} className={pdsStyles.btn}>
+                  {isMobile || <span className={pdsStyles.size}>200MB</span>}
+                  <Button variant="line" size="md" className={pdsStyles.btn}>
                     다운로드
                   </Button>
                 </div>

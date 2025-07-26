@@ -17,11 +17,11 @@ export const Route = createFileRoute('/_layout/my/information-change')({
 });
 
 function RouteComponent() {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
 
   return (
     <div className={myPageContainerStyles.start}>
-      <h2>개인정보 변경</h2>
+      {isMobile || <h2>개인정보 변경</h2>}
       {/* 퍼블수정 20250718 전체 수정 */}
       <div className={`${styles.start} ${styles.information_change}`}>
         <div className={styles.box}>
@@ -112,7 +112,7 @@ function RouteComponent() {
           </div>
 
           <div className={styles.information}>
-            <strong className={styles.title}>소속 정보</strong>
+            {isMobile || <strong className={styles.title}>소속 정보</strong>}
 
             {/* 회사 */}
             <ContentsRow>

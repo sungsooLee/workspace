@@ -59,3 +59,4 @@ storybook-static
 .github/instructions/nx.instructions.md
 .cursor/mcp.json
 .vscode/settings.json
+apps/pub/bo/src/routeTree.gen.ts

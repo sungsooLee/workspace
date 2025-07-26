@@ -40,7 +40,7 @@ type InstructorListProps = {
  */
 const InstructorListComponent = ({ viewMode, setSelectedItem }: InstructorListProps) => {
   const router = useRouter();
-  const { open: openModal, alert } = useModal();
+  const { openModal, alert } = useModal();
   const [columns, setColumns] = useState() as any;
 
   const queryClient = useQueryClient();

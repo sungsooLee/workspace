@@ -43,7 +43,7 @@ function LearningResourceTableComponent() {
   } = useCurrentRoute();
 
   const router = useRouter();
-  const { open: openModal, alert } = useModal();
+  const { openModal, alert } = useModal();
 
   const { create: postContentCopy } = usePostContentCopy({
     onSuccess: (result: ContentInformation) => {

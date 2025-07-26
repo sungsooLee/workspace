@@ -55,7 +55,7 @@ const TenantDetailLearningRoleMenuMappingModalComponent: FC<any> = ({
   const [roleMenuTreeExpandedKeys, setRoleMenuTreeExpandedKeys] = useState<string[]>([]);
   const [roleMenuTreeAllKeys, setRoleMenuTreeAllKeys] = useState<string[]>([]);
 
-  const { open: openModal, confirm: openConfirm, close: closeModal } = useModal();
+  const { openModal, confirm: openConfirm, closeModal } = useModal();
 
   const { data: tenantMenuData } = useFetchMenuTenantMappingTree(tenantId, siteScope);
   const { data: roleMenuData, refetch } = useFetchRoleMenus(tenantId, siteScope, roleId);

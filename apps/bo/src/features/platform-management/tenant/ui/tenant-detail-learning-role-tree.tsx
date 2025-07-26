@@ -423,7 +423,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
                         modalConfig={{
                           title: '',
                           width: 'xl',
-                          content: <ChannelListChoiceModal />,
+                          content: <ChannelListChoiceModal roleId={roleDetail?.roleId}/>,
                         }}
                       />
                     }

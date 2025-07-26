@@ -33,7 +33,7 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
 
   const { data: loginUser } = useFetchAuthUser();
 
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
 
   _global.linkClick = (userGroupId: number) => {
     router.navigate({
@@ -50,100 +50,129 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
       query: userGroupManualOptions.userGroupManualList,
       columns: [
         {
-          name: 'no', label: t('NO.'), type: 'numbering'
+          name: 'no',
+          label: t('NO.'),
+          type: 'numbering',
         },
         {
-          name: 'tenantName', label: t('테넌트명'), size: 159
+          name: 'tenantName',
+          label: t('테넌트명'),
+          size: 159,
         },
         {
-          name: 'userGroupOriginType', label: t('유저그룹유형'), render: (info: any) => {
-            return t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.user.UserGroupOriginType.${info.getValue()}`);
+          name: 'userGroupOriginType',
+          label: t('유저그룹유형'),
+          render: (info: any) => {
+            return t(
+              `${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.user.UserGroupOriginType.${info.getValue()}`,
+            );
           },
-          size: 163
+          size: 163,
         },
         {
-          name: 'opt2', label: t('채널'), size: 106, render: (info: any) => {
-            if( info.row.original.userGroupOriginType === 'CHANNEL' ) {
+          name: 'opt2',
+          label: t('채널'),
+          size: 106,
+          render: (info: any) => {
+            if (info.row.original.userGroupOriginType === 'CHANNEL') {
               return info.row.original.originName;
             }
             return info.getValue();
-          }
+          },
         },
         {
-          name: 'opt3', label: t('개인'), size: 101, render: (info: any) => {
-            if( info.row.original.userGroupOriginType === 'PERSONAL' ) {
+          name: 'opt3',
+          label: t('개인'),
+          size: 101,
+          render: (info: any) => {
+            if (info.row.original.userGroupOriginType === 'PERSONAL') {
               return info.row.original.originName;
             }
             return info.getValue();
-          }
+          },
         },
         {
-          name: 'userGroupName', label: t('유저그룹명'), render: (info: any) => {
+          name: 'userGroupName',
+          label: t('유저그룹명'),
+          render: (info: any) => {
             return (
               <Button
                 className="link"
-                onClick={() =>
-                  _global.linkClick(info.row.original.userGroupId)
-                }
+                onClick={() => _global.linkClick(info.row.original.userGroupId)}
               >
                 {info.getValue()}
               </Button>
-            )
+            );
           },
-          size: 207
+          size: 207,
         },
         {
-          name: 'userCount', label: t('대상자'), render: (info: any) => {
+          name: 'userCount',
+          label: t('대상자'),
+          render: (info: any) => {
             return `${info.getValue().toLocaleString('ko-KR')}명`;
           },
           meta: {
             cellAlign: 'right',
           },
-          size: 127
+          size: 127,
         },
         {
-          name: 'userGroupId', label: t('대상자 확인'), render: (info: any) => {
+          name: 'userGroupId',
+          label: t('대상자 확인'),
+          render: (info: any) => {
             const data = info.row.original;
-            const combiners: CombineUserGroup[] = [{
-              // groupId: 0,
-              pathKey: '',
-              pathValue: '',
-              combiners: [{
-                combineType: 'USER_GROUP',
-                combineValue: data.userGroupId,
-                combineName: '',
-              }],
-            }];
+            const combiners: CombineUserGroup[] = [
+              {
+                // groupId: 0,
+                pathKey: '',
+                pathValue: '',
+                combiners: [
+                  {
+                    combineType: 'USER_GROUP',
+                    combineValue: data.userGroupId,
+                    combineName: '',
+                  },
+                ],
+              },
+            ];
 
-            return <Button
-              variant="gray2" size="xs"
-              onClick={(e) => {
-                e.stopPropagation();
-                openModal({
-                  width: 'xl',
-                  content: <UserGroupChoiceModal groups={combiners}/>,
-                });
-              }}
-            >
-              {t('대상자')}
-            </Button>
+            return (
+              <Button
+                variant="gray2"
+                size="xs"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openModal({
+                    width: 'xl',
+                    content: <UserGroupChoiceModal groups={combiners} />,
+                  });
+                }}
+              >
+                {t('대상자')}
+              </Button>
+            );
           },
           meta: {
             cellAlign: 'center',
           },
-          size: 96
+          size: 96,
         },
         {
-          name: 'isUsed', label: t('사용여부'), render: (info: any) => {
+          name: 'isUsed',
+          label: t('사용여부'),
+          render: (info: any) => {
             return info.row.original.isUsed ? t('사용') : t('미사용');
           },
           meta: {
             cellAlign: 'center',
           },
-          size: 88
+          size: 88,
         },
         {
-          name: 'createdDate', label: t('등록일'), render: (info: any) => {
+          name: 'createdDate',
+          label: t('등록일'),
+          render: (info: any) => {
             return getDateToString(
               new Date(info.row.original.createdDate),
               DATE_TIME_FORMAT.DATETIME_SEC,
@@ -152,10 +181,12 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
           meta: {
             cellAlign: 'center',
           },
-          size: 194
+          size: 194,
         },
         {
-          name: 'modifiedDate', label: t('수정일'), render: (info: any) => {
+          name: 'modifiedDate',
+          label: t('수정일'),
+          render: (info: any) => {
             return getDateToString(
               new Date(info.row.original.modifiedDate),
               DATE_TIME_FORMAT.DATETIME_SEC,
@@ -164,7 +195,7 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
           meta: {
             cellAlign: 'center',
           },
-          size: 194
+          size: 194,
         },
       ],
       data: [],
@@ -172,9 +203,9 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
         page: 0,
         size: 20,
         sort: [],
-      }
+      },
     }),
-    []
+    [],
   );
 
   const {
@@ -290,7 +321,9 @@ const searchConfig = (): SearchBoxConfig => ({
         value: { from: undefined, to: undefined },
       },
       {
-        name: '', type: 'hidden', value: ''
+        name: '',
+        type: 'hidden',
+        value: '',
       },
     ],
   ],

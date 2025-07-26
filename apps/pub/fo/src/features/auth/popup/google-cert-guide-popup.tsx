@@ -16,7 +16,7 @@ import imgGuideM5 from '@learnway/styles/fo/assets/images/popup/google_guide_img
 import imgGuideM6 from '@learnway/styles/fo/assets/images/popup/google_guide_img6_m.png';
 
 const GoogleCertGuidePopupCompoment = () => {
-  //const { close: closeModal } = useModal();
+  //const { closeModal } = useModal();
   return (
     <ModalContainer>
       <ModalTitle>{'FIDO 인증'}</ModalTitle>

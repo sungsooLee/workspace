@@ -5,18 +5,19 @@ import { isMobile } from 'react-device-detect';
 import MenuService from '../api/menu';
 import { Menu } from '../../../types';
 
-export const queryKeys = {
+export const menuQueryKeys = {
   all: ['menus'] as const,
-  allByParentMenuId: (parentMenuId: number) => [...queryKeys.all, parentMenuId] as const,
-  detail: (tenantId: number) => [...queryKeys.all, tenantId] as const,
+  allByParentMenuId: (parentMenuId: number) => [...menuQueryKeys.all, parentMenuId] as const,
+  detail: (tenantId: number, roleId: number | string) =>
+    [...menuQueryKeys.all, tenantId, roleId] as const,
+  menuDetail: (menuId: number) => ['menus-detail', menuId] as const,
 };
 
-export const queryOptions = {
-  all: (tenantId?: number, roleId?: number) =>
-    // TODO roleId 체크 추가  && roleId
-    tenantId
+export const menuQueryOptions = {
+  all: (tenantId?: number, roleId?: number | string) =>
+    tenantId && roleId
       ? {
-          queryKey: queryKeys.detail(roleId || tenantId),
+          queryKey: menuQueryKeys.detail(tenantId, roleId),
           queryFn: async () => {
             const data = await MenuService.getMenus(tenantId, roleId, isMobile);
 
@@ -37,9 +38,8 @@ export const queryOptions = {
           ...queryOptionsForUseCache,
         }
       : getQuerySkipToken<Menu[]>(),
-
   detail: (menuId: number) => ({
-    queryKey: queryKeys.detail(menuId),
+    queryKey: menuQueryKeys.menuDetail(menuId),
     queryFn: () => MenuService.getMenu(menuId),
   }),
 };

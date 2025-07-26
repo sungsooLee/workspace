@@ -84,7 +84,7 @@ const ThumbnailComponent = forwardRef<HTMLDivElement, ThumbnailProps>(
     // 썸네일에 마우스가 호버되었는지 여부를 관리하는 상태
     const [isHovered, setIsHovered] = useState(false);
 
-    const { open: openModal } = useModal();
+    const { openModal } = useModal();
 
     const downloadByUrl = async (url: string) => {
       try {
@@ -153,7 +153,7 @@ const ThumbnailComponent = forwardRef<HTMLDivElement, ThumbnailProps>(
             />
           )}
           {isHovered && (
-            <>
+            <div className={styles.delete_btn}>
               {showPreviewBtn && path && (
                 <Button
                   className={styles.btn_delete}
@@ -184,7 +184,7 @@ const ThumbnailComponent = forwardRef<HTMLDivElement, ThumbnailProps>(
                   />
                 </Button>
               )}
-            </>
+            </div>
           )}
         </div>
         <div className={styles.image_wrap}>

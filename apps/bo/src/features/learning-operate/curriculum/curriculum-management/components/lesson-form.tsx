@@ -14,7 +14,7 @@ import { LESSON_TYPE, MODULE_TYPE } from '@types';
 import { t } from 'i18next';
 import { ContentChoiceModalSelector } from './content-choice-selector';
 import { DropdownFormField, DurationTimeFormField } from '@features/form/ui';
-import { getHourValueFromTime } from '@pages/_layout/learning/resource/-common/common';
+import { getHourValueFromTime } from '@learnway/shared';
 import { learningResourceQueryOptions } from '@entities/learning-resource';
 import { useQuery } from '@tanstack/react-query';
 import { useGetLessonDetail } from '../../../../../entities/curriculum';
@@ -50,7 +50,7 @@ export const LessonForm: React.FC<LessonFormProps> = ({
   curriculumData,
   parentNode,
 }) => {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
   const lessonType = watch('lessonType') || LESSON_TYPE.GENERAL;
   const contentName = watch('contentName');
 

@@ -24,7 +24,7 @@ export const Route = createFileRoute('/_auth/google-cert')({
 });
 
 function RouteComponent() {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
 
   return (
     <form className="form_row">
@@ -91,7 +91,8 @@ function RouteComponent() {
                       width: isMobile ? 'm_full' : 'md',
                       content: <GoogleCertGuidePopup />,
                     })
-                  }>
+                  }
+                >
                   구글 OTP 인증 가이드
                 </Button>
               </dd>
@@ -108,7 +109,8 @@ function RouteComponent() {
                   width: isMobile ? 'm_full' : 'sm',
                   content: <GoogleQrcodePopup />,
                 })
-              }>
+              }
+            >
               QR코드로 인증키 생성
             </Button>
           </div>
@@ -129,7 +131,8 @@ function RouteComponent() {
                     width: 'sm',
                     content: <MpassPopup />,
                   })
-                }>
+                }
+              >
                 구글 OTP 인증
               </Button>
             </div>
@@ -146,7 +149,8 @@ function RouteComponent() {
                     width: 'm_full',
                     content: <MpassPopup />,
                   })
-                }>
+                }
+              >
                 구글 OTP 인증
               </Button>
             </MobileContainerFooter>

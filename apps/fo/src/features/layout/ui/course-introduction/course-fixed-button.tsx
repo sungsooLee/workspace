@@ -12,18 +12,24 @@ import styles from '@learnway/styles/fo/features/layout/ui/course-introduction/c
 
 interface CourseFixedButton {
   course?: boolean; // 차수 유/무
-  courseData?: any;
+  likeCount?: number;
+  handleCourseLike?: () => void;
 }
 
-const CourseFixedButtonComponent = ({ course, courseData }: CourseFixedButton) => {
-  const { open: openModal } = useModal();
+const CourseFixedButtonComponent = ({ course, likeCount, handleCourseLike }: CourseFixedButton) => {
+  const { openModal } = useModal();
 
   // 찜
   const [heart, setHeart] = useState(false);
 
   return (
     <div className={`${styles.start} ${styles.course_button}`}>
-      <Button onClick={() => (heart === true ? setHeart(false) : setHeart(true))}>
+      <Button
+        onClick={() => {
+          // heart === true ? setHeart(false) : setHeart(true);
+          handleCourseLike && handleCourseLike();
+        }}
+      >
         {/* 퍼블수정 20250624 색상 수정 */}
         <IcoHeart
           width={20}
@@ -31,7 +37,7 @@ const CourseFixedButtonComponent = ({ course, courseData }: CourseFixedButton) =
           stroke={heart === true ? '#f58b75' : '#b7bbc3'}
           fill={heart === true ? '#f58b75' : '#b7bbc3'}
         />
-        {courseData?.course.courseLike}
+        {likeCount}
       </Button>
       <Button>
         <IcoShare width={20} height={20} stroke="#4c515e" />

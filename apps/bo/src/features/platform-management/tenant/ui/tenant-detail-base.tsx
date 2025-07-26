@@ -9,7 +9,8 @@ import {
   Button,
   CheckboxGroupFormField,
   ChipListModalSelectorFormField,
-  ContentsRow, FormSubTitle,
+  ContentsRow,
+  FormSubTitle,
   Switch,
   TextareaFormField,
   Tooltip,
@@ -44,7 +45,7 @@ import { cn } from '@learnway/shared';
  */
 const TenantDetailBaseComponent = (props: any, ref: any) => {
   const routerState = useRouterState();
-  const { open: openModal, confirm: openConfirm } = useModal();
+  const { openModal, confirm: openConfirm } = useModal();
 
   const [languageTypeList, setLanguageTypeList] = useState<any[]>([]);
   const [checked, setChecked] = useState<{ [key: number]: boolean }>({
@@ -131,9 +132,9 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
       const device = [];
       const useCategory = [];
       const logoImageUrl = [tenantData.logoImageUrl];
-      if( tenantData.logoImageUrl.includes('/upload/content/image') ) {
+      if (tenantData.logoImageUrl.includes('/upload/content/image')) {
         const imageUrl = tenantData.logoImageUrl.substring(
-          tenantData.logoImageUrl.indexOf('/upload/content/image') + 1
+          tenantData.logoImageUrl.indexOf('/upload/content/image') + 1,
         );
         logoImageUrl.push(imageUrl);
       }
@@ -176,7 +177,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
         isCarTenantCustomOption: platformAttributeProperties.isUseCarTenantCustomOption,
         isRotemTenantCustomOption: platformAttributeProperties.isUseRotemTenantCustomOption,
         isOutsourcingTenantCustomOption:
-        platformAttributeProperties.isUseOutsourcingTenantCustomOption,
+          platformAttributeProperties.isUseOutsourcingTenantCustomOption,
         isWiaTenantCustomOption: platformAttributeProperties.isUseWiaTenantCustomOption,
         isAutoeverTenantCustomOption: platformAttributeProperties.isUseAutoeverTenantCustomOption,
       });
@@ -309,23 +310,33 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
       </ContentsRow>
       <FormDisplay provider={provider} dependencies={[{ name: 'isEnrollOption', value: true }]}>
         <ContentsRow>
-          <FormItem label={t('승인')} guideText={t('수강신청 결재라인을 설정합니다.')}/>
-          <FormItem label={t('정원')} guideText={t('수강 신청 정원 사용 여부를 설정합니다.')}/>
-          <FormItem label={t('수강신청 대기')} guideText={t('수강 신청 대기 자동 모드, 수동 모드를 설정합니다.')}/>
+          <FormItem label={t('승인')} guideText={t('수강신청 결재라인을 설정합니다.')} />
+          <FormItem label={t('정원')} guideText={t('수강 신청 정원 사용 여부를 설정합니다.')} />
+          <FormItem
+            label={t('수강신청 대기')}
+            guideText={t('수강 신청 대기 자동 모드, 수동 모드를 설정합니다.')}
+          />
         </ContentsRow>
         <ContentsRow>
-          <FormItem label={t('차수 중복 수강')} guideText={t('동일 차수 종북 학습 여부를 설정합니다.')}/>
-          <FormItem label={t('사전 레벨 테스트')} guideText={t('수강신청 학습 전 레벨 테스트 진행 여부를 설정합니다.')}/>
-          <FormItem label={t('교재 배송지 수집')} guideText={t('교재 배송지 주소 수집 여부를 설정합니다.')}/>
+          <FormItem
+            label={t('차수 중복 수강')}
+            guideText={t('동일 차수 종북 학습 여부를 설정합니다.')}
+          />
+          <FormItem
+            label={t('사전 레벨 테스트')}
+            guideText={t('수강신청 학습 전 레벨 테스트 진행 여부를 설정합니다.')}
+          />
+          <FormItem
+            label={t('교재 배송지 수집')}
+            guideText={t('교재 배송지 주소 수집 여부를 설정합니다.')}
+          />
         </ContentsRow>
       </FormDisplay>
 
       <ContentsRow type={'horizontal'} titleMode>
         <FormRow provider={provider} name={'isTextBookOption'} />
       </ContentsRow>
-      <FormDisplay
-        provider={provider}
-        dependencies={[{ name: 'isTextBookOption', value: true }]}>
+      <FormDisplay provider={provider} dependencies={[{ name: 'isTextBookOption', value: true }]}>
         <ContentsRow>
           <FormItem label={t('교재명')} guideText={t('교재명을 설정합니다.')} />
           <FormItem label={t('교재비')} guideText={t('교재 비용을  설정합니다.')} />
@@ -336,9 +347,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
       <ContentsRow type={'horizontal'} titleMode>
         <FormRow provider={provider} name={'isInstructorOption'} />
       </ContentsRow>
-      <FormDisplay
-        provider={provider}
-        dependencies={[{ name: 'isInstructorOption', value: true }]}>
+      <FormDisplay provider={provider} dependencies={[{ name: 'isInstructorOption', value: true }]}>
         <ContentsRow>
           <FormItem label={t('강사')} guideText={t('강사가 과정을 진행 시 강사를 설정합니다.')} />
           <FormItem label={t('튜터')} guideText={t('튜터가 과정을 진행 시 튜터를 설정합니다.')} />
@@ -359,12 +368,24 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
       </ContentsRow>
       <FormDisplay provider={provider} dependencies={[{ name: 'isPassOption', value: true }]}>
         <ContentsRow>
-          <FormItem label={t('이수 처리 설정')} guideText={t('과정 학습 이수 처리 여부를 설정합니다.')} />
-          <FormItem label={t('인정 학습시간')} guideText={t('과정 학습 시 학습 시간 인정 시간을 설정합니다.')} />
-          <FormItem label={t('학습 포인트')} guideText={t('과정 학습 시 자급하는 포인트를 설정합니다.')} />
+          <FormItem
+            label={t('이수 처리 설정')}
+            guideText={t('과정 학습 이수 처리 여부를 설정합니다.')}
+          />
+          <FormItem
+            label={t('인정 학습시간')}
+            guideText={t('과정 학습 시 학습 시간 인정 시간을 설정합니다.')}
+          />
+          <FormItem
+            label={t('학습 포인트')}
+            guideText={t('과정 학습 시 자급하는 포인트를 설정합니다.')}
+          />
         </ContentsRow>
         <ContentsRow>
-          <FormItem label={t('수료증 제공')} guideText={t('과정 학습 이수 완료 시 수료증 제공 여부를 설정합니다.')} />
+          <FormItem
+            label={t('수료증 제공')}
+            guideText={t('과정 학습 이수 완료 시 수료증 제공 여부를 설정합니다.')}
+          />
           <FormItem />
           <FormItem />
         </ContentsRow>
@@ -375,9 +396,13 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
       </ContentsRow>
       <FormDisplay
         provider={provider}
-        dependencies={[{ name: 'isCommunicationOption', value: true }]}>
+        dependencies={[{ name: 'isCommunicationOption', value: true }]}
+      >
         <ContentsRow>
-          <FormItem label={t('커뮤니티 및 공유 설정')} guideText={t('과정 상세의 공지사항, 커뮤니티 등을 설정합니다.')} />
+          <FormItem
+            label={t('커뮤니티 및 공유 설정')}
+            guideText={t('과정 상세의 공지사항, 커뮤니티 등을 설정합니다.')}
+          />
           <FormItem />
           <FormItem />
         </ContentsRow>
@@ -391,14 +416,29 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
         dependencies={[{ name: 'isLearningEnvOption', value: true }]}
       >
         <ContentsRow>
-          <FormItem label={t('기기 제한')} guideText={t('PC, 모바일 등 학습 가능한 기기를 설정합니다.')} />
-          <FormItem label={t('네트워크 제한')} guideText={t('과정 학습 시 사내망, 사외망 접속 제한을 설정합니다.')} />
-          <FormItem label={t('학습시간 제한')} guideText={t('근무시간 기준 학습시간 제한을 설정합니다.')} />
+          <FormItem
+            label={t('기기 제한')}
+            guideText={t('PC, 모바일 등 학습 가능한 기기를 설정합니다.')}
+          />
+          <FormItem
+            label={t('네트워크 제한')}
+            guideText={t('과정 학습 시 사내망, 사외망 접속 제한을 설정합니다.')}
+          />
+          <FormItem
+            label={t('학습시간 제한')}
+            guideText={t('근무시간 기준 학습시간 제한을 설정합니다.')}
+          />
         </ContentsRow>
         <ContentsRow>
           <FormItem label={t('복습 제한')} guideText={t('과정 복습에 제한을 설정합니다.')} />
-          <FormItem label={t('화면 캡쳐 방지')} guideText={t('학습창 화면 캡쳐 방지 여부를 설정합니다.')} />
-          <FormItem label={t('학습전 보안 서약')} guideText={t('학습전 보안 서약 여부를 설정합니다.')} />
+          <FormItem
+            label={t('화면 캡쳐 방지')}
+            guideText={t('학습창 화면 캡쳐 방지 여부를 설정합니다.')}
+          />
+          <FormItem
+            label={t('학습전 보안 서약')}
+            guideText={t('학습전 보안 서약 여부를 설정합니다.')}
+          />
         </ContentsRow>
       </FormDisplay>
 
@@ -407,15 +447,28 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
       </ContentsRow>
       <FormDisplay
         provider={provider}
-        dependencies={[{ name: 'isLearningControlOption', value: true }]}>
+        dependencies={[{ name: 'isLearningControlOption', value: true }]}
+      >
         <ContentsRow>
           <FormItem label={t('1일 진도제한')} guideText={t('1일 진도제한 여부를 설정합니다.')} />
-          <FormItem label={t('진도 초기화')} guideText={t('학습한 과정의 진도 초기화 여부를 설정합니다.')} />
-          <FormItem label={t('순차 학습')} guideText={t('과정 기준 순서로 학습 진행 여부를 설정합니다.')} />
+          <FormItem
+            label={t('진도 초기화')}
+            guideText={t('학습한 과정의 진도 초기화 여부를 설정합니다.')}
+          />
+          <FormItem
+            label={t('순차 학습')}
+            guideText={t('과정 기준 순서로 학습 진행 여부를 설정합니다.')}
+          />
         </ContentsRow>
         <ContentsRow>
-          <FormItem label={t('동영상 탐색바 제한')} guideText={t('동영상 탐색바의 기능 제한을 설정합니다.')} />
-          <FormItem label={t('동영상 배속 제한')} guideText={t('동영상 학습 시 재생 배속 제한을 설정합니다.')} />
+          <FormItem
+            label={t('동영상 탐색바 제한')}
+            guideText={t('동영상 탐색바의 기능 제한을 설정합니다.')}
+          />
+          <FormItem
+            label={t('동영상 배속 제한')}
+            guideText={t('동영상 학습 시 재생 배속 제한을 설정합니다.')}
+          />
           <FormItem />
         </ContentsRow>
       </FormDisplay>
@@ -425,10 +478,17 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
       </ContentsRow>
       <FormDisplay
         provider={provider}
-        dependencies={[{ name: 'isRelatedCourseOption', value: true }]}>
+        dependencies={[{ name: 'isRelatedCourseOption', value: true }]}
+      >
         <ContentsRow>
-          <FormItem label={t('사전 필수 과정')} guideText={t('과정 학습 전 필수 학습 과정을 설정합니다.')} />
-          <FormItem label={t('연관 학습')} guideText={t('등록 과정과 연관된 학습 과정을 설정합니다.')} />
+          <FormItem
+            label={t('사전 필수 과정')}
+            guideText={t('과정 학습 전 필수 학습 과정을 설정합니다.')}
+          />
+          <FormItem
+            label={t('연관 학습')}
+            guideText={t('등록 과정과 연관된 학습 과정을 설정합니다.')}
+          />
           <FormItem />
         </ContentsRow>
       </FormDisplay>
@@ -436,13 +496,20 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
       <ContentsRow type={'horizontal'} titleMode>
         <FormRow provider={provider} name={'isAdminDataOption'} />
       </ContentsRow>
-      <FormDisplay
-        provider={provider}
-        dependencies={[{ name: 'isAdminDataOption', value: true }]}>
+      <FormDisplay provider={provider} dependencies={[{ name: 'isAdminDataOption', value: true }]}>
         <ContentsRow>
-          <FormItem label={t('HMG 과정 데이터 표준 분류')} guideText={t('과정 표준 분류를 설정합니다.')} />
-          <FormItem label={t('1인당 교육비')} guideText={t('1인당 교육비 사용 금액을 설정합니다.')} />
-          <FormItem label={t('고용보험 환급')} guideText={t('고용보험 환급 대상 과정 여부를 설정합니다.')} />
+          <FormItem
+            label={t('HMG 과정 데이터 표준 분류')}
+            guideText={t('과정 표준 분류를 설정합니다.')}
+          />
+          <FormItem
+            label={t('1인당 교육비')}
+            guideText={t('1인당 교육비 사용 금액을 설정합니다.')}
+          />
+          <FormItem
+            label={t('고용보험 환급')}
+            guideText={t('고용보험 환급 대상 과정 여부를 설정합니다.')}
+          />
         </ContentsRow>
         <ContentsRow>
           <FormItem label={t('과정 플래그')} guideText={t('과정 플래그 기능을 설정합니다.')} />
@@ -456,7 +523,8 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
       </ContentsRow>
       <FormDisplay
         provider={provider}
-        dependencies={[{ name: 'isCarTenantCustomOption', value: true }]}>
+        dependencies={[{ name: 'isCarTenantCustomOption', value: true }]}
+      >
         <ContentsRow>
           <FormItem label={t('테넌트 전용항목')} guideText={t('테넌트 전용항목')} />
           <FormItem />
@@ -474,7 +542,8 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
       </ContentsRow>
       <FormDisplay
         provider={provider}
-        dependencies={[{ name: 'isRotemTenantCustomOption', value: true }]}>
+        dependencies={[{ name: 'isRotemTenantCustomOption', value: true }]}
+      >
         <ContentsRow>
           <FormItem label={t('테넌트 전용항목')} guideText={t('테넌트 전용항목')} />
           <FormItem />
@@ -778,7 +847,9 @@ const formConfig = (): DynamicFormConfig => ({
       name: 'isRelatedCourseOption', // 사전/연관학습
       type: 'switch',
       label: '사전/연관학습',
-      tooltip: t('사전/연관학습 허용 여부를 설정할 수 있으며, 비허용 시 테넌트에서 사용할 수 없습니다.'),
+      tooltip: t(
+        '사전/연관학습 허용 여부를 설정할 수 있으며, 비허용 시 테넌트에서 사용할 수 없습니다.',
+      ),
       value: false,
       switchConfig: {
         label: (value: boolean) => (value ? t('허용') : t('미허용')),
@@ -798,7 +869,9 @@ const formConfig = (): DynamicFormConfig => ({
       name: 'isCarTenantCustomOption', // 완성차 테넌트 전용 항목
       type: 'switch',
       label: '완성차 테넌트 전용 항목',
-      tooltip: t('완성차 테넌트 전용 항목의 허용 여부를 설정할 수 있으며, 비허용 시 테넌트에서 사용할 수 없습니다.'),
+      tooltip: t(
+        '완성차 테넌트 전용 항목의 허용 여부를 설정할 수 있으며, 비허용 시 테넌트에서 사용할 수 없습니다.',
+      ),
       value: false,
       switchConfig: {
         label: (value: boolean) => (value ? t('허용') : t('미허용')),
@@ -808,7 +881,9 @@ const formConfig = (): DynamicFormConfig => ({
       name: 'isRotemTenantCustomOption', // 로템 테넌트 전용 항목
       type: 'switch',
       label: '로템 테넌트 전용 항목',
-      tooltip: t('로템 테넌트 전용 항목의 허용 여부를 설정할 수 있으며, 비허용 시 테넌트에서 사용할 수 없습니다.'),
+      tooltip: t(
+        '로템 테넌트 전용 항목의 허용 여부를 설정할 수 있으며, 비허용 시 테넌트에서 사용할 수 없습니다.',
+      ),
       value: false,
       switchConfig: {
         label: (value: boolean) => (value ? t('허용') : t('미허용')),
@@ -818,7 +893,9 @@ const formConfig = (): DynamicFormConfig => ({
       name: 'isOutsourcingTenantCustomOption', // 위탁 테넌트 전용 항목
       type: 'switch',
       label: '위탁 테넌트 전용 힝목',
-      tooltip: t('위탁 테넌트 전용 힝목의 허용 여부를 설정할 수 있으며, 비허용 시 테넌트에서 사용할 수 없습니다.'),
+      tooltip: t(
+        '위탁 테넌트 전용 힝목의 허용 여부를 설정할 수 있으며, 비허용 시 테넌트에서 사용할 수 없습니다.',
+      ),
       value: false,
       switchConfig: {
         label: (value: boolean) => (value ? t('허용') : t('미허용')),
@@ -828,7 +905,9 @@ const formConfig = (): DynamicFormConfig => ({
       name: 'isWiaTenantCustomOption', // 위아 테넌트 전용 항목
       type: 'switch',
       label: '위아 테넌트 전용 항목',
-      tooltip: t('위아 테넌트 전용 항목의 허용 여부를 설정할 수 있으며, 비허용 시 테넌트에서 사용할 수 없습니다.'),
+      tooltip: t(
+        '위아 테넌트 전용 항목의 허용 여부를 설정할 수 있으며, 비허용 시 테넌트에서 사용할 수 없습니다.',
+      ),
       value: false,
       switchConfig: {
         label: (value: boolean) => (value ? t('허용') : t('미허용')),
@@ -838,7 +917,9 @@ const formConfig = (): DynamicFormConfig => ({
       name: 'isAutoeverTenantCustomOption', // 오토에버 테넌트 전용 항목
       type: 'switch',
       label: '오토에버 테넌트 전용 항목',
-      tooltip: t('오토에버 테넌트 전용 항목의 허용 여부를 설정할 수 있으며, 비허용 시 테넌트에서 사용할 수 없습니다.'),
+      tooltip: t(
+        '오토에버 테넌트 전용 항목의 허용 여부를 설정할 수 있으며, 비허용 시 테넌트에서 사용할 수 없습니다.',
+      ),
       value: false,
       switchConfig: {
         label: (value: boolean) => (value ? t('허용') : t('미허용')),
@@ -877,7 +958,7 @@ const formConfig = (): DynamicFormConfig => ({
       conditions: [
         {
           fn: (values) => {
-            console.log('### logoImageUrl => ', values)
+            console.log('### logoImageUrl => ', values);
             if (values.logoImageUrl.length == 0) return true;
             return false;
           },

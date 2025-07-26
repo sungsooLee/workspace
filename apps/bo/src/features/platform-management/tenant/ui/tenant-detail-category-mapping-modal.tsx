@@ -27,7 +27,10 @@ import {
   useMoveTenantCategory,
 } from '@entities/tenant/service/tenant-category.hook';
 import { useFetchCategory } from '@entities/category';
-import { getFirstExpandKeys, getAllTreeKeys } from '@features/platform-management/tenant/service/tenant-detail-tree.service';
+import {
+  getFirstExpandKeys,
+  getAllTreeKeys,
+} from '@features/platform-management/tenant/service/tenant-detail-tree.service';
 
 type ActionFunction = (payload: any) => void;
 
@@ -50,7 +53,7 @@ const TenantDetailCategoryMappingModalComponent: FC<any> = ({ tenantId, onNodeCh
   );
   const [tenantCategoryTreeAllKeys, setTenantCategoryTreeAllKeys] = useState<string[]>([]);
 
-  const { open: openModal, close: closeModal, confirm: openConfirm, alert: openAlert } = useModal();
+  const { openModal, closeModal, confirm: openConfirm, alert: openAlert } = useModal();
 
   const { data: commonCategories } = useFetchCategory();
   const { data: tenantCategories, refetch } = useFetchTenantCategory(tenantId);

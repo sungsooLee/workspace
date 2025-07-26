@@ -27,7 +27,7 @@ interface Channel {
 }
 
 const ChannelChoicePopupComponent = () => {
-  const { close } = useModal();
+  const { closeModal } = useModal();
 
   const { data } = useFetchAuthUser<AuthUser>();
   const { data: channel } = useFetchChannelByRoleId(data?.activeRole?.roleId as number);
@@ -80,11 +80,11 @@ const ChannelChoicePopupComponent = () => {
     if (!selectedRow) return;
 
     const tenantId = get(getValues(), 'tenantId');
-    close({ ...selectedRow, tenantId });
+    closeModal({ ...selectedRow, tenantId });
   };
 
   const handleOnClose = () => {
-    close();
+    closeModal();
   };
 
   return (

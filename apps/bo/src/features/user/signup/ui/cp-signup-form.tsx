@@ -37,7 +37,7 @@ export const CPSignupForm = () => {
   const handleChange = (event: SelectOption) => {
     console.log(event);
   };
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
   return (
     <form className="form_row">
       <div className={`${styles.start} ${styles.auth_wrap} ${styles.signup_step}`}>

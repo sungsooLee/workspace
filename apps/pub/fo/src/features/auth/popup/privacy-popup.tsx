@@ -14,7 +14,7 @@ import { MobileView, BrowserView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
 
 const PrivacyPopupCompoment = () => {
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
   return (
     <ModalContainer>
       <ModalTitle>{'개인정보처리방침'}</ModalTitle>

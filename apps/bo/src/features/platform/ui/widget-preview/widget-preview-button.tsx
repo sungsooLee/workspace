@@ -6,7 +6,7 @@ import { WidgetPreviewModal } from './widget-preview-modal';
 import type { Widget } from '@types';
 
 const WidgetPreviewComponent = ({ widget, disabled }: { widget: Widget; disabled?: boolean }) => {
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
   return (
     <Button
       size={'xs'}

@@ -19,6 +19,7 @@ import { DATE_TIME_FORMAT, getDateToString, SelectOption } from '@learnway/share
 import dayjs from 'dayjs';
 import { useRouter } from '@tanstack/react-router';
 import { Mode } from '@pages/_layout/learning/learning-sequence/-common/type';
+import { useEnrollmentStore } from '../store/use-enrollment-store';
 
 const _global = {
   linkClickSequenceName: (payload: any) => {
@@ -37,8 +38,6 @@ const _global = {
  * @returns
  */
 type EnrollmentWaitComponentProps = {
-  courseId?: number;
-  courseSequenceId?: number;
   searchProvider: SearchBoxProvider;
   getValues: UseFormGetValues<FieldValues>;
   setValue: UseFormSetValue<FieldValues>;
@@ -46,12 +45,12 @@ type EnrollmentWaitComponentProps = {
 };
 
 const EnrollmentWaitComponent = ({
-  courseSequenceId,
   searchProvider,
   getValues,
   setValue,
   setOptions,
 }: EnrollmentWaitComponentProps) => {
+  const { enrollmentCreateInfo } = useEnrollmentStore();
   const router = useRouter();
   const gridConfig: useGridBoxConfig = {
     query: queryOptions.enrollmentWaitList,

@@ -15,8 +15,10 @@ import {
   SubContents,
 } from '@shared/ui';
 import { ProcessingStatus } from '@types';
-import { FileInfo } from './-components/file-info';
-import { HtmlDetail } from './-components/html-detail';
+import {
+  LearningResourceHtmlDetail,
+  LearningResourceHtmlFileInfo,
+} from '@features/learning-resource';
 
 export const Route = createLazyFileRoute('/_layout/learning/resource/html-video/view')({
   component: RouteComponent,
@@ -46,7 +48,7 @@ function RouteComponent() {
   // draft: 임시저장 상태 / complete: 한 번이라도 저장 버튼을 눌러 저장한 상태
   const [mode, setMode] = useState<'draft' | 'complete'>('draft');
 
-  const { open: openModal, confirm: openConfirm } = useModal();
+  const { openModal, confirm: openConfirm } = useModal();
 
   const handleClickCourseMapping = useCallback(async () => {
     if (!state?.contentUuid) {
@@ -104,7 +106,7 @@ function RouteComponent() {
 
   const handleClickCourseButton = useCallback(() => {
     router.navigate({
-      to: '/learning/course/create/view',
+      to: '/learning/course/create',
     });
   }, []);
 
@@ -185,7 +187,7 @@ function RouteComponent() {
       </ContentsButtons>
 
       <MainContents>
-        <HtmlDetail
+        <LearningResourceHtmlDetail
           ref={formRef}
           mode={mode}
           tenantId={tenantId}
@@ -196,7 +198,11 @@ function RouteComponent() {
 
       <SubContents>
         {data?.contentUuid && data?.fileUuid && (
-          <FileInfo contentUuid={data.contentUuid} uuid={data.fileUuid} mode={mode} />
+          <LearningResourceHtmlFileInfo
+            contentUuid={data.contentUuid}
+            uuid={data.fileUuid}
+            mode={mode}
+          />
         )}
       </SubContents>
     </PageContainer>

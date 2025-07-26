@@ -16,11 +16,11 @@ import { FormRow } from '@shared/ui';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 
 const ForceApprovalModalComponent: FC<any> = () => {
-  const { close } = useModal();
+  const { closeModal } = useModal();
   const { provider, onSubmit } = useDynamicForm(formConfig);
 
   const handleOnSubmit = (node: any) => {
-    close(node);
+    closeModal(node);
   };
   return (
     <form className="form_row" onSubmit={onSubmit(handleOnSubmit)}>

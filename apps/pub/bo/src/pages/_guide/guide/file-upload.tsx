@@ -36,7 +36,7 @@ export const Route = createFileRoute('/_guide/guide/file-upload')({
 });
 
 function RouteComponent() {
-  const { open: openModal, close: closeModal } = useModal();
+  const { openModal, closeModal } = useModal();
   const FileUploadContent = () => {
     return (
       <ModalContainer>

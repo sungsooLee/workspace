@@ -6,7 +6,7 @@ import { MODULE_TYPE } from '@types';
 import { t } from 'i18next';
 import { ContentChoiceModalSelector } from './content-choice-selector';
 import { DurationTimeFormField } from '@features/form/ui';
-import { getHourValueFromTime } from '@pages/_layout/learning/resource/-common/common';
+import { getHourValueFromTime } from '@learnway/shared';
 import { learningResourceQueryOptions } from '@entities/learning-resource';
 import { useQuery } from '@tanstack/react-query';
 import { useGetScormDetail } from '@entities/contents';

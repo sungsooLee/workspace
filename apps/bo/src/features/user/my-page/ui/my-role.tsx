@@ -1,6 +1,11 @@
-import { CODE_GROUP, compactValues, useCurrentRoute, useSearchBox } from '@learnway/hooks';
+import {
+  CODE_GROUP,
+  compactValues,
+  SearchBoxConfig,
+  useCurrentRoute,
+  useSearchBox,
+} from '@learnway/hooks';
 import { Button, Divider, GridBox, useGridBox, useModal } from '@learnway/ui';
-import { t } from 'i18next';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { SearchBox } from '@shared/ui/search-box';
 import { MyRoleExtendModal } from './my-role-extend-modal';
@@ -10,15 +15,27 @@ import { DATE_TIME_FORMAT, dateDiff, formatDate } from '@learnway/shared';
 import { CellContext, createColumnHelper } from '@tanstack/react-table';
 import { RoleApplication } from '@types';
 import { TenantByRoleDropdownFormField, TenantChannelDropdownFormField } from '@shared/ui';
+import { useTranslation } from 'react-i18next';
+import { TFunction, t } from 'i18next';
 
 const MyRoleComponent = (route: any) => {
+  const { t } = useTranslation();
+  const searchConfig = SearchConfig(t);
+
+  console.log('###', searchConfig);
+
   const router = useRouter();
 
   const { state } = useCurrentRoute();
 
-  const { provider: sProvider, getValues, onFormChange, onFormValid } = useSearchBox(searchConfig);
+  const {
+    provider: sProvider,
+    getValues,
+    onFormChange,
+    onFormValid,
+  } = useSearchBox(searchConfig as SearchBoxConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
   const [selectedRow, setSelectedRow] = useState<any | null>(null);
 
   function handleRefetch() {
@@ -95,9 +112,7 @@ const MyRoleComponent = (route: any) => {
   );
 };
 
-export const MyRole = MyRoleComponent;
-
-const searchConfig: any = {
+const SearchConfig = (t: TFunction<'translation', undefined>) => ({
   builders: [
     [
       {
@@ -160,7 +175,7 @@ const searchConfig: any = {
       },
     ],
   ],
-};
+});
 
 const gridConfig = {
   // query: '',
@@ -262,3 +277,5 @@ const createGridColumns = (onCellClick: (data: any) => void) => [
     size: 104,
   }),
 ];
+
+export const MyRole = MyRoleComponent;

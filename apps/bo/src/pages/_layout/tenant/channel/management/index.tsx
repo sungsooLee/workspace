@@ -8,7 +8,7 @@ import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { createColumnHelper } from '@tanstack/react-table';
-import { EnGlobalConst } from '@types';
+import { ChannelParam, EnGlobalConst } from '@types';
 import { t } from 'i18next';
 import { useCallback, useEffect, useState } from 'react';
 
@@ -21,18 +21,19 @@ function RouteComponent() {
 
   const { data: loginUser } = useFetchAuthUser();
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig());
-  const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
-  const [registButtonEnabled, setRegistButtonEnabled] = useState(false);
 
-  useEffect(() => {
-    if (loginUser) {
-      setRegistButtonEnabled(
-        loginUser.activeRole?.roleType === 'PLATFORM_MANAGER' ||
-          loginUser.activeRole?.roleType === 'TENANT_MANAGER',
-      );
-      gridFetch(searchParam());
-    }
-  }, [loginUser]);
+  const roleId = loginUser?.activeRole?.roleId;
+
+  const gridConfig: useGridBoxConfig = {
+    query: (data: ChannelParam) => queryOptions.list(`${roleId}`, data),
+    columns: [],
+    data: [],
+    gridState: {
+      page: 0,
+      size: 10,
+      sort: [],
+    },
+  };
 
   const searchParam = () => {
     const data = getValues();
@@ -46,6 +47,19 @@ function RouteComponent() {
     };
     return searchData;
   };
+
+  const { config: gConfig, gridFetch } = useGridBox(gridConfig, searchParam);
+  const [registButtonEnabled, setRegistButtonEnabled] = useState(false);
+
+  useEffect(() => {
+    if (loginUser) {
+      setRegistButtonEnabled(
+        loginUser.activeRole?.roleType === 'PLATFORM_MANAGER' ||
+          loginUser.activeRole?.roleType === 'TENANT_MANAGER',
+      );
+      gridFetch(searchParam());
+    }
+  }, [loginUser]);
 
   const handleOnSearch = useCallback((data: any) => {
     gridFetch(searchParam());
@@ -173,17 +187,6 @@ const searchConfig = (): SearchBoxConfig => ({
     ],
   ],
 });
-
-const gridConfig: useGridBoxConfig = {
-  query: queryOptions.list,
-  columns: [],
-  data: [],
-  gridState: {
-    page: 0,
-    size: 10,
-    sort: [],
-  },
-};
 
 const columnHelper = createColumnHelper<any>();
 

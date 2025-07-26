@@ -23,7 +23,7 @@ function ChangeUserIdFormFieldComponent({
 }: ChangeUserIdFormFieldComponentProps) {
   const { t } = useTranslation();
 
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
   const { onChangeGuideText, ...restProps } = props;
 
   // Withdrawal of membership

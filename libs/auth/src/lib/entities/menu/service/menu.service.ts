@@ -11,6 +11,7 @@ import { Menu } from '../../../types';
 import { useActiveMenuDepthState } from '../store/use-active-menu-depth';
 import { useLayoutStore } from '../store/use-layout-sotre';
 import { useModal } from '@learnway/ui';
+import { getConfig } from '@learnway/config';
 
 /**
  * 메뉴 정보를 트리 구조로 반환
@@ -18,7 +19,13 @@ import { useModal } from '@learnway/ui';
  */
 export function useMenuHierarchy(menuScope = 'BO') {
   const { data: authUser } = useFetchAuthUser();
-  const { data } = useFetchMenus(authUser?.activeTenant?.tenantId, authUser?.activeRole?.roleId);
+
+  console.log('@@@ useMenuHierarchy authUser', authUser);
+  const isBO = getConfig().APP_INFO === 'BO';
+  const { data } = useFetchMenus(
+    authUser?.activeTenant?.tenantId,
+    isBO ? authUser?.activeRole?.roleId : authUser?.roles?.map((r) => r.roleId)?.join(','),
+  );
 
   return {
     data: useCreation(() => {
@@ -38,7 +45,7 @@ export function useMenuHierarchy(menuScope = 'BO') {
 }
 
 /**
- * Routing 상태 변경 시 Active menu depth 상태 정보 갱신
+ * @description Routing 상태 변경 시 Active menu depth 상태 정보 갱신
  */
 export function useRenewalMenuStateFromRouting() {
   const state = useRouterState();

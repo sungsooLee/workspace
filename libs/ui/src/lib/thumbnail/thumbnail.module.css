@@ -14,6 +14,25 @@
     }
     &.default_thumbnail {
       @apply h-[84px] min-w-[128px] bg-[url(../../assets/images/thumb/img_thumb_default.jpg)] bg-cover bg-center bg-no-repeat;
+      /* 코스 타입별로 이미지 변경 */
+      &.ELEARNING1 {
+        @apply bg-[url(../../assets/images/thumb/img_thumb_default.jpg)];
+      }
+      &.ELEARNING2 {
+        @apply bg-[url(../../assets/images/thumb/img_thumb_default.jpg)];
+      }
+      &.CLASS {
+        @apply bg-[url(../../assets/images/thumb/img_thumb_default.jpg)];
+      }
+      &.LIVE {
+        @apply bg-[url(../../assets/images/thumb/img_thumb_default.jpg)];
+      }
+      &.EXAM {
+        @apply bg-[url(../../assets/images/thumb/img_thumb_default.jpg)];
+      }
+      &.SURVEY {
+        @apply bg-[url(../../assets/images/thumb/img_thumb_default.jpg)];
+      }
     }
     &.stacked {
       .image_wrap {
@@ -26,7 +45,7 @@
             @apply absolute -top-[14px] left-[28px] z-[0] h-full w-[calc(100%-56px)] rounded-[12px] bg-[var(--gray90)] content-[''];
           }
           .thumbnail_image {
-            @apply relative z-[2];
+            @apply relative z-[2] w-full;
           }
         }
       }
@@ -57,16 +76,15 @@
   .not_found_image {
     @apply flex h-[84px] w-[128px] items-center justify-center bg-[#eaf1fa] text-[12px] font-normal leading-[1rem] text-[var(--gray7)];
   }
-
-  .btn_delete {
-    @apply cursor-pointer bg-transparent;
+  .delete_btn {
+    @apply absolute left-1/2 top-1/2 z-[2] flex w-[60px] -translate-x-1/2 -translate-y-1/2 items-center justify-between;
+    .btn_delete {
+      @apply h-[24px] w-[24px] cursor-pointer bg-transparent;
+    }
   }
 
   .image_wrap {
     @apply relative overflow-hidden;
-    & > span {
-      @apply relative;
-    }
   }
 }
 /* 

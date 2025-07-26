@@ -21,7 +21,7 @@ import { MobileView, BrowserView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
 
 const ContactPopupCompoment = () => {
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
   return (
     <form className="form_row">
       <ModalContainer>

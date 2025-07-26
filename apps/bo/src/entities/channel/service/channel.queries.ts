@@ -1,18 +1,22 @@
 import { UseQueryOptions } from '@tanstack/react-query';
-import { ChannelByRoleId } from '@types';
+import { ChannelByRoleId, ChannelParam } from '@types';
 import ChannelService from '../api/channel';
 
+const CHANNEL_KEY = 'channel';
 export const queryKeys = {
-  all: ['channel'] as const,
-  list: (params: any) => [...queryKeys.all, 'list', params] as const,
-  detail: (channelUuid: string) => [...queryKeys.all, 'detail', channelUuid] as const,
+  all: [CHANNEL_KEY] as const,
+  list: [CHANNEL_KEY, 'list'] as const,
+  detail: (channelUuid: string) => [CHANNEL_KEY, 'detail', channelUuid] as const,
   channelByRoleId: (channelId: number) => ['channel-by-role-id', channelId] as const,
 };
 
 export const queryOptions = {
-  list: (params: any) => ({
-    queryKey: queryKeys.list(params),
-    queryFn: () => ChannelService.getChannelList(params),
+  list: (roleId: string, params: ChannelParam) => ({
+    queryKey: queryKeys.list,
+    queryFn: () => ChannelService.getChannelList(roleId, params),
+    cacheTime: 0,
+    staleTime: 0,
+    enabled: roleId ? true : false,
   }),
   detail: (channelUuid: string) => ({
     queryKey: queryKeys.detail(channelUuid),

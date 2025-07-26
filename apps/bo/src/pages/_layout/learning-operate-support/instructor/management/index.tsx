@@ -13,7 +13,7 @@ export const Route = createFileRoute('/_layout/learning-operate-support/instruct
 
 function RouteComponent() {
   const router = useRouter();
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
 
   return (
     <PageContainer>

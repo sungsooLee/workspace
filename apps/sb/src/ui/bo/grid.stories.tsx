@@ -1,16 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/jsx-no-useless-fragment */
-import { Meta, StoryObj } from '@storybook/react/*';
-import {
-  CellContext,
-  ColumnFiltersState,
-  createColumnHelper,
-  SortingState,
-  Table,
-} from '@tanstack/react-table';
-import { useQuery } from '@tanstack/react-query';
 import { ReactQueryConfigProvider } from '@learnway/config';
-import React, { ReactNode, useEffect, useMemo, useState } from 'react';
+import { IcoDownload, IcoSetting } from '@learnway/icons';
+import { getRandomId, getRowSelectionByList } from '@learnway/shared';
 import {
   Button,
   CountText,
@@ -23,13 +15,22 @@ import {
   GridBox,
   GridBoxPagination,
   GridBoxSearchInputCondition,
+  GridBoxState,
   GridState,
   ModalWrapper,
+  PaginationResponse,
   TableBox,
 } from '@learnway/ui';
-import { IcoArrowDown, IcoArrowUp, IcoDownload, IcoSetting } from '@learnway/icons';
-import { cn, getRandomId, getRowSelectionByList } from '@learnway/shared';
-import { PaginationResponse } from '../../../../bo/src/types';
+import { Meta, StoryObj } from '@storybook/react/*';
+import { useQuery } from '@tanstack/react-query';
+import {
+  CellContext,
+  ColumnFiltersState,
+  createColumnHelper,
+  SortingState,
+  Table,
+} from '@tanstack/react-table';
+import { ReactNode, useEffect, useMemo, useState } from 'react';
 
 export default {
   title: 'Bo-Components/Grid',
@@ -257,12 +258,12 @@ const BaseTable = () => {
     fetch: fetchTableData,
   });
 
-  const handleStateChange = (newState: GridState) => {
+  const handleStateChange = (newState: GridBoxState) => {
     console.log(newState);
     setTableState((prev) => ({
       ...prev,
-      sorting: newState.sorting || prev.sorting,
-      filters: newState.filters || prev.filters,
+      // sorting: newState.sorting || prev.sorting,
+      // filters: newState.filters || prev.filters,
     }));
   };
 
@@ -482,10 +483,10 @@ const GridContentGroupingByColumn = () => {
     queryFn: () => fetchInfiniteData({ tableState }),
   });
 
-  const handleStateChange = (newState: GridState) => {
+  const handleStateChange = (newState: GridBoxState) => {
     setTableState((prev) => ({
       ...prev,
-      sorting: newState.sorting || prev.sorting,
+      sorting: newState.sort || prev.sort,
       filters: newState.filters || prev.filters,
     }));
   };
@@ -540,11 +541,11 @@ const PinnedColumnTable = () => {
     queryFn: () => fetchInfiniteData({ tableState }),
   });
 
-  const handleStateChange = (newState: GridState) => {
+  const handleStateChange = (newState: GridBoxState) => {
     setTableState((prev) => ({
       ...prev,
-      sorting: newState.sorting || prev.sorting,
-      filters: newState.filters || prev.filters,
+      // sorting: newState.sort || prev.sort,
+      // filters: (newState.filter as ColumnFiltersState) || prev.filters,
     }));
   };
 
@@ -908,6 +909,39 @@ export const TemplateColumnAlign: any = (args: any) => {
 };
 TemplateColumnAlign.storyName = '컬럼 정렬';
 
+// 그리드 선택 컨트롤
+export const TemplateSelectedRowId: any = (args: any) => {
+  const [selectedRowIds, setSelectedRowIds] = useState<string[]>(['1', '2', '3']);
+  const data = Array(10)
+    .fill(null)
+    .map((_, i) => ({
+      id: `${i}`,
+      name: `name_${i}`,
+      name2: `name2_${i}`,
+      name3: `name3_${i}`,
+      name4: `name4_${i}`,
+      name5: `name5_${i}`,
+    }));
+  const columns = [
+    { accessorKey: 'name', size: 200, meta: { cellClass: 'title' } },
+    { accessorKey: 'name2' },
+    { accessorKey: 'name3' },
+    { accessorKey: 'name4' },
+    { accessorKey: 'name5' },
+  ];
+  return (
+    <GridBox
+      data={data}
+      columns={columns}
+      multiple
+      onRowsSelect={(rows) => console.log('rows', rows)}
+      // onRowsSelect={(rows) => setSelectedRowIds(rows.map((row) => row.id))}
+      selectedRowIds={selectedRowIds}
+    />
+  );
+};
+TemplateSelectedRowId.storyName = '그리드 선택 컨트롤';
+
 // 컬럼 유형
 // export const TemplateColumnType: any = (args: any) => {
 //   const data = Array(5)
@@ -1170,7 +1204,7 @@ const transformDataForTable = (data: any[], depth = 0): any[] => {
     console.log(depth);
     const transformedItem = {
       ...item,
-      depth: depth,
+      depth,
       className: depth > 0 ? 'expanded-row' : '',
     };
 
