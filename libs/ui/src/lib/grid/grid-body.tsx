@@ -2,12 +2,76 @@ import React, { CSSProperties, useRef } from 'react';
 import { Cell, flexRender, Row, Table } from '@tanstack/react-table';
 import { cn } from '@learnway/shared';
 import { IcoDownArrow } from '@learnway/icons';
-
+import { SortableContext, verticalListSortingStrategy, useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 import styles from './grid-body.module.css';
-import { WordWrap } from '../word-wrap/word-wrap';
 import { useTooltip } from './tooltip-context';
 
-// GridBody.tsx (새 파일)
+// Context로 드래그 핸들 리스너 전달
+export const DragHandleContext = React.createContext<{
+  listeners?: any;
+  attributes?: any;
+  setActivatorNodeRef?: (element: HTMLElement | null) => void;
+} | null>(null);
+
+// Sortable Row 컴포넌트
+const SortableRow = ({
+  id,
+  children,
+  className,
+  onClick,
+  onDoubleClick,
+}: {
+  id: string;
+  children: React.ReactNode;
+  className?: string;
+  onClick?: () => void;
+  onDoubleClick?: () => void;
+}) => {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    setActivatorNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({
+    id,
+    animateLayoutChanges: () => true,
+    transition: {
+      duration: 50,
+      easing: 'cubic-bezier(0.4, 0.0, 0.2, 1)',
+    },
+  });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition: transition || 'transform cubic-bezier(0.4, 0.0, 0.2, 1)',
+    opacity: isDragging ? 0.9 : 1,
+    zIndex: isDragging ? 999 : 'auto',
+    position: isDragging ? 'relative' : 'static',
+    boxShadow: isDragging ? '0 8px 16px rgba(0, 0, 0, 0.15)' : 'none',
+    borderRadius: isDragging ? '4px' : '0',
+  } as React.CSSProperties;
+
+  return (
+    <DragHandleContext.Provider value={{ listeners, attributes, setActivatorNodeRef }}>
+      <tr
+        ref={setNodeRef}
+        style={style}
+        {...attributes}
+        // listeners를 tr에서 제거
+        className={cn(className, isDragging && 'bg-blue-50 shadow-lg')}
+        onClick={onClick}
+        onDoubleClick={onDoubleClick}
+      >
+        {children}
+      </tr>
+    </DragHandleContext.Provider>
+  );
+};
+
 interface GridBodyProps<T extends object> {
   table: Table<T>;
   lastPinnedColumnId: string | undefined;
@@ -15,6 +79,8 @@ interface GridBodyProps<T extends object> {
   onRowDoubleClick?: (selectedRow: any) => void;
   isRowSelectable?: (row: T) => boolean;
   getRowClassName?: (row: T) => string;
+  enableDragAndDrop?: boolean;
+  rowId?: string;
 }
 
 export const GridBody = <T extends object>({
@@ -24,28 +90,33 @@ export const GridBody = <T extends object>({
   onRowDoubleClick,
   isRowSelectable,
   getRowClassName,
+  enableDragAndDrop,
+  rowId = 'id',
 }: GridBodyProps<T>) => {
-  return (
-    <tbody>
-      {table.getRowModel().rows.map((row) => {
+  const rows = table.getRowModel().rows;
+
+  // DnD가 활성화된 경우 SortableContext로 감싸기
+  const bodyContent = (
+    <>
+      {rows.map((row) => {
         const depth = (row.original as any)?._depth ?? row.depth;
         const isSubRow = depth > 0;
         const canSelect = isRowSelectable ? isRowSelectable(row.original) : true;
 
-        return (
-          <tr
-            key={row.id}
-            className={cn(
-              row.getIsSelected() && styles.selected,
-              isSubRow && styles.appended,
-              depth > 0 && styles.appended,
-              getRowClassName?.(row.original),
-            )}
-            onClick={() =>
-              !row.getIsGrouped() && !disabledSelectionToggle && canSelect && row.toggleSelected()
-            }
-            onDoubleClick={() => onRowDoubleClick?.(row.original)}
-          >
+        const rowClassName = cn(
+          row.getIsSelected() && styles.selected,
+          isSubRow && styles.appended,
+          depth > 0 && styles.appended,
+          getRowClassName?.(row.original),
+        );
+
+        const handleRowClick = () =>
+          !row.getIsGrouped() && !disabledSelectionToggle && canSelect && row.toggleSelected();
+
+        const handleRowDoubleClick = () => onRowDoubleClick?.(row.original);
+
+        const rowContent = (
+          <>
             {row.getVisibleCells().map((cell: Cell<T, unknown>) => (
               <GridCell
                 key={cell.id}
@@ -55,9 +126,52 @@ export const GridBody = <T extends object>({
                 disabledSelectionToggle={disabledSelectionToggle}
               />
             ))}
+          </>
+        );
+
+        // DnD가 활성화된 경우 SortableRow 사용
+        if (enableDragAndDrop) {
+          const dataId = (row.original as any)[rowId];
+          return (
+            <SortableRow
+              key={row.id}
+              id={dataId}
+              className={rowClassName}
+              onClick={handleRowClick}
+              onDoubleClick={handleRowDoubleClick}
+            >
+              {rowContent}
+            </SortableRow>
+          );
+        }
+
+        // 일반 row
+        return (
+          <tr
+            key={row.id}
+            className={rowClassName}
+            onClick={handleRowClick}
+            onDoubleClick={handleRowDoubleClick}
+          >
+            {rowContent}
           </tr>
         );
       })}
+    </>
+  );
+
+  return (
+    <tbody>
+      {enableDragAndDrop ? (
+        <SortableContext
+          items={rows.map((row) => (row.original as any)[rowId])}
+          strategy={verticalListSortingStrategy}
+        >
+          {bodyContent}
+        </SortableContext>
+      ) : (
+        bodyContent
+      )}
     </tbody>
   );
 };

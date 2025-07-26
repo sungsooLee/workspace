@@ -319,6 +319,18 @@ export interface GridProps<T> {
    * @returns 적용할 CSS 클래스명
    */
   getRowClassName?: (row: T) => string;
+
+  /**
+   * 드래그 앤 드롭 기능 활성화 여부
+   * true일 경우 테이블 행을 드래그하여 순서를 변경할 수 있습니다.
+   */
+  enableDragAndDrop?: boolean;
+
+  /**
+   * 드래그 앤 드롭으로 행 순서가 변경되었을 때 호출되는 콜백 함수
+   * @param reorderedData - 재정렬된 데이터 배열
+   */
+  onDragEnd?: (reorderedData: T[]) => void;
 }
 
 /**

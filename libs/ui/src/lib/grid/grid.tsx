@@ -48,6 +48,8 @@ const GridComponent = forwardRef(
       isRowSelectable,
       enableColumnResize = false,
       getRowClassName,
+      enableDragAndDrop,
+      onDragEnd,
     }: GridProps<T>,
     ref: React.Ref<GridImperative>,
   ) => {
@@ -188,6 +190,8 @@ const GridComponent = forwardRef(
                 onRowDoubleClick={onRowDoubleClick}
                 isRowSelectable={isRowSelectable}
                 getRowClassName={getRowClassName}
+                enableDragAndDrop={enableDragAndDrop}
+                rowId={rowId}
               />
             )}
             {isLoading && <GridLoading<T> table={table} />}
