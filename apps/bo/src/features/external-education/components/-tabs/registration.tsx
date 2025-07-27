@@ -50,7 +50,7 @@ export function Registration({ formId, onRegisterSave }: ApplicationItemsProps) 
   const { create: createExternalLayout } = useCreateExternalCourseLayout({});
   const [applicationItems, setApplicationItems] = useState<ApplicationItem[]>([]);
   const [selectedRows, setSelectedRows] = useState<ApplicationItem[]>([]);
-  const { open: openModal } = useModal();
+  const { openModal } = useModal();
 
   useEffect(() => {
     if (layoutList && Array.isArray(layoutList)) {
@@ -173,15 +173,28 @@ export function Registration({ formId, onRegisterSave }: ApplicationItemsProps) 
     }),
   ];
 
-  // 컴포넌트 추가 핸들러 - 여러 컴포넌트를 한번에 추가
-  const handleAddComponents = (newComponents: ApplicationItem[]) => {
+  const handleAddComponents = (
+    newComponents: ApplicationItem[],
+    allSelectedComponents: ApplicationItem[],
+  ) => {
     setApplicationItems((prev) => {
-      const maxOrder = prev.length > 0 ? Math.max(...prev.map((item) => item.order)) : 0;
+      const selectedIds = allSelectedComponents.map((comp) => comp.id);
+
+      const remainingItems = prev.filter((item) => selectedIds.includes(item.id));
+
+      const maxOrder =
+        remainingItems.length > 0 ? Math.max(...remainingItems.map((item) => item.order)) : 0;
       const componentsWithOrder = newComponents.map((component, index) => ({
         ...component,
         order: maxOrder + index + 1,
       }));
-      return [...prev, ...componentsWithOrder];
+
+      const finalItems = [...remainingItems, ...componentsWithOrder];
+
+      return finalItems.map((item, index) => ({
+        ...item,
+        order: index + 1,
+      }));
     });
   };
 
@@ -200,6 +213,7 @@ export function Registration({ formId, onRegisterSave }: ApplicationItemsProps) 
           onAdd={handleAddComponents}
           selectedItems={applicationItems}
           type={'REGISTRATION'}
+          // onConfirm={handleConfirmComponents}
         />
       ),
     }));

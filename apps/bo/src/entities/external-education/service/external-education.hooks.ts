@@ -77,7 +77,10 @@ export function useCreateExternalCoursePopup(options: any) {
       if (options.onSuccess) {
         options.onSuccess(data, variables, context);
       }
-      // queryClient.invalidateQueries({ queryKey: queryKeys.getExternalPopup(variables.externalCourseFormId) });
+      // 팝업 쿼리키 무효화 - 저장 후 최신 데이터 자동 재조회
+      queryClient.invalidateQueries({ 
+        queryKey: [...queryKeys.all, 'popup', variables.externalCourseFormId] 
+      });
     },
     ...options,
   });

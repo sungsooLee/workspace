@@ -38,7 +38,7 @@ interface ComponentGroup {
 }
 
 interface AddComponentModalProps {
-  onAdd: (components: ApplicationItem[]) => void;
+  onAdd: (newComponents: ApplicationItem[], allSelectedComponents: ApplicationItem[]) => void;
   selectedItems: ApplicationItem[];
   type: any;
 }
@@ -51,9 +51,9 @@ const AddComponentModalComponent = ({ onAdd, selectedItems, type }: AddComponent
   });
 
   const [components, setComponents] = useState<ApplicationItem[]>([]);
-  const [selectedRows, setSelectedRows] = useState<ApplicationItem[]>([]);
+  const [selectedRows, setSelectedRows] = useState<ApplicationItem[]>(selectedItems);
   const [tableInstance, setTableInstance] = useState<any>(null);
-  const { close: closeModal } = useModal();
+  const { closeModal } = useModal();
 
   useEffect(() => {
     if (componentData?.componentGroups) {
@@ -107,9 +107,8 @@ const AddComponentModalComponent = ({ onAdd, selectedItems, type }: AddComponent
     const existingIds = selectedItems.map((item) => item.id);
     const newComponents = selectedRows.filter((row) => !existingIds.includes(row.id));
 
-    if (newComponents.length > 0) {
-      onAdd(newComponents);
-    }
+    // 새로운 컴포넌트와 전체 선택된 컴포넌트를 함께 전달
+    onAdd(newComponents, selectedRows);
 
     closeModal();
   };
@@ -149,6 +148,7 @@ const AddComponentModalComponent = ({ onAdd, selectedItems, type }: AddComponent
           rowId="id"
           onRowsSelect={handleGridRowsSelect}
           onTableInstanceChange={handleTableInstanceChange}
+          // selectedRowIds={selectedRows.map((row) => row.id.toString())}
         />
       </ModalBody>
       <ModalFooter>

@@ -4,7 +4,6 @@ import { useDynamicForm2 } from '@learnway/hooks';
 import { useEffect, useCallback } from 'react';
 import {
   useGetExternalEducationDetail,
-  ExternalEducationService,
   useCreateExternalCourseForm,
 } from '@entities/external-education';
 
@@ -31,7 +30,6 @@ export function BasicInfo({ formId, mode, onRegisterSave, onFormIdCreated }: Bas
     }
   }, [detailData, formId]);
 
-  // API 호출 함수
   const submitApiCall = useCallback(
     async (validatedData: any): Promise<boolean> => {
       try {
