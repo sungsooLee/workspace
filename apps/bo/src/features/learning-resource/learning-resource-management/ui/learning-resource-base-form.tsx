@@ -47,7 +47,7 @@ const LearningResourceBaseFormComponent = ({
   /** 학습자원명 입력 가능한 글자수 (기본 최대 150자이나 다른 경우 존재함) */
   contentNameMaxLength?: number;
   /** 학습자원 생성 타입 (수기/번역/공유) */
-  createType: ContentCreateType;
+  createType?: ContentCreateType;
 }) => {
   const { watch } = provider;
   const isCourseUsed = watch('isCourseUsed');
