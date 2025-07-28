@@ -3,8 +3,9 @@ import { CODE_GROUP, getCodeLabel } from '@learnway/hooks';
 import { Link } from '@tanstack/react-router';
 import { CoursesQueryParams } from '@types';
 import { t } from 'i18next';
-import { EditFavorite } from '@learnway/ui';
+import { Button, EditFavorite } from '@learnway/ui';
 import { CourseGridColumn } from '../../types/type';
+import { CourseFavoriteIcon } from '../course-favorite-icon/course-favorite-icon';
 
 export const createGridConfig = (
   handleFavoriteClick: (courseId: number) => void,
@@ -47,7 +48,12 @@ export const createGridConfig = (
       name: 'isBookmarks',
       label: () => t('LABEL.grid.column.favorite'),
       size: 40,
-      render: (info: any) => <EditFavorite info={info} onClick={() => console.log('info', info)} />,
+      render: (info: any) => (
+        <CourseFavoriteIcon courseId={info?.original?.courseId} isFavorite={info.getValue()} />
+      ),
+      meta: {
+        cellAlign: 'center',
+      },
     },
     // 과정명
     {
@@ -123,12 +129,22 @@ export const createGridConfig = (
       name: 'preview',
       label: () => t('LABEL.grid.column.preview'),
       size: 90,
+      render: (info: any) => (
+        <Button
+          variant="text"
+          size="sm"
+          className="link"
+          label={t('LABEL.grid.column.preview')}
+          disabled={!info?.original?.isUsed}
+        />
+      ),
     },
     // URL
     {
       name: 'url',
       label: () => t('LABEL.grid.column.url'),
       size: 90,
+      render: (info: any) => <Button variant="gray2" size="xs" label={t('URL 생성')} />,
     },
   ];
 
