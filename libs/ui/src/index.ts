@@ -183,6 +183,7 @@ export * from './lib/radio-card/radio-card';
 export * from './lib/radio-card/type';
 export * from './lib/radio-group/radio-group';
 export * from './lib/radio-group/type';
+export * from './lib/rating/star-rating';
 export * from './lib/shuttle-grid-to-chips/shuttle-grid-to-chips';
 export * from './lib/shuttle-grid-to-chips/use-shuttle-grid-to-chips.hook';
 export * from './lib/shuttle-grid-to-grid/shuttle-grid-to-grid';

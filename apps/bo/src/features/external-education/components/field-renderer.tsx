@@ -6,6 +6,7 @@ import {
   CheckboxGroupFormField,
   DatePicker,
   RangeDatePicker,
+  StarRating,
 } from '@learnway/ui';
 import {
   FieldConfig,
@@ -14,6 +15,7 @@ import {
   DateFieldConfig,
   FileFieldConfig,
   CustomFieldConfig,
+  RatingFieldConfig,
 } from '../types/form-field.types';
 import { AddressField } from './custom-fields/address-field';
 import { ExperienceField } from './custom-fields/experience-field';
@@ -181,6 +183,27 @@ const renderFileField = ({
   return (
     //파일 업로드 컴포넌트
     <>파일 업로드 컴포넌트</>
+  );
+};
+
+const renderRatingField = ({
+  config,
+  fieldKey,
+  value,
+  onChange,
+  error,
+  disabled,
+  preview,
+}: FieldRendererProps & { config: RatingFieldConfig }) => {
+  return (
+    // 별점 컴포넌트
+    <StarRating
+      value={value as number}
+      onChange={onChange}
+      maxRating={config.maxRating}
+      animated={config.animated}
+      size={config.size || 'md'}
+    />
   );
 };
 

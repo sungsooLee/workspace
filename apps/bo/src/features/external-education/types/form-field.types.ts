@@ -14,6 +14,7 @@ export type FieldType =
   | 'file'
   | 'address'
   | 'experience'
+  | 'rating'
   | 'custom';
 
 // 기본 필드 설정 인터페이스
@@ -62,6 +63,13 @@ export interface FileFieldConfig extends BaseFieldConfig {
   multiple?: boolean;
 }
 
+export interface RatingFieldConfig extends BaseFieldConfig {
+  type: 'rating';
+  maxRating?: number; // 최대 별점 개수
+  animated?: boolean; // 애니메이션 효과 여부
+  size?: 'sm' | 'md' | 'lg'; // 크기
+}
+
 export interface CustomFieldConfig extends BaseFieldConfig {
   type: 'custom';
   componentName: string;
@@ -74,6 +82,7 @@ export type FieldConfig =
   | SelectFieldConfig
   | DateFieldConfig
   | FileFieldConfig
+  | RatingFieldConfig
   | CustomFieldConfig;
 
 // 전체 필드 설정 (커스텀 외의 모든 항목 정의)
@@ -101,10 +110,11 @@ export const DEFAULT_FIELD_CONFIG: Record<string, FieldConfig> = {
     required: true,
   },
   COURSE_SATISFACTION: {
-    type: 'input',
+    type: 'rating',
     label: '교육 만족도',
-    maxLength: 50,
-    required: true,
+    maxRating: 5,
+    animated: true,
+    size: 'lg',
   },
   JOB_SATISFACTION: {
     type: 'input',
