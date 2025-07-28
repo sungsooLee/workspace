@@ -21,8 +21,13 @@ function RouteComponent() {
       content: <>선택한 언어로 변경하시겠습니까?</>,
       cancelButtonLabel: '취소',
       okButtonLabel: '확인',
+
+      onClose: (result?: boolean) => {
+        if (result === true) {
+          setLanguageActive(index);
+        }
+      },
     });
-    setLanguageActive(index); // 선택된 언어
   };
 
   return (

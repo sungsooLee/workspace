@@ -142,7 +142,7 @@ export const guideData = [
     pageId: 'setting/setting-language_m',
     pageType: 'Page',
     completionDate: '2025-03-21',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-28',
     remarks: 'setting-language_m.tsx',
   },
   {
