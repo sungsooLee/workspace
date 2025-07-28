@@ -101,6 +101,7 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
         isUseTwoFactorAuth: user.boTwoFactorAuthEnabled || user.foTwoFactorAuthEnabled,
         twoFactorAuthPlatformTypeList: [user.boTwoFactorAuthEnabled && 'BO_PLATFORM', user.foTwoFactorAuthEnabled && 'FO_PLATFORM'],
         '2FAType': user.twoFactorAuthType,
+        limitLogin: user.company.companyLoginRestrictionList
       };
       if( user.lockedDate === null ) {
         if( user.dormantDate !== null ) {
@@ -172,7 +173,6 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
       twoFactorAuthType: data['2FAType'],
       foTwoFactorAuthEnabled: false,
       boTwoFactorAuthEnabled: false,
-      loginRestriction: data.company.companyLoginRestrictionList
     };
 
     if( data.userState === '2' ) {
@@ -192,7 +192,7 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
       payload.boTwoFactorAuthEnabled = data.twoFactorAuthPlatformTypeList.includes('BO_PLATFORM');
     }
 
-    if( data.jobDomain !== '' ) {
+    if( data.jobDomain !== '' && data.jobDomain.length !== 0 ) {
       payload.jobDomain = Array.of(data.jobDomain);
       payload.jobRole = [];
     } else {
@@ -366,9 +366,9 @@ const formConfig = (): DynamicFormConfig => ({
     },
     {
       name: 'jobDomain',
-      type: 'text',
+      type: 'custom',
       label: t('직군'),
-      value: '',
+      value: [],
       placeholder: '',
     },
     {
