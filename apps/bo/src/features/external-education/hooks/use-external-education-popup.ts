@@ -69,9 +69,9 @@ export function useExternalEducationPopup(formId?: number, isActive?: boolean) {
   const saveFunction = async (): Promise<boolean> => {
     try {
       const currentValues = currentFormValuesRef.current;
-      if (!currentValues.popupTitle || currentValues.popupTitle.trim() === '') {
-        return false;
-      }
+      // if (!currentValues.popupTitle || currentValues.popupTitle.trim() === '') {
+      //   return false;
+      // }
 
       const requestData = formDataToRequestData(currentValues);
       return new Promise<boolean>((resolve) => {
