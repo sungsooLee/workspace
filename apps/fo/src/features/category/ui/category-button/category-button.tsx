@@ -16,76 +16,60 @@ interface CategoryPopupProps {
   isOpen: boolean;
 }
 
-type MainItem = { id: number; label: string };
-type SubItem = { id: number; label: string };
+type MainItem = { id: number; label: string, isChild: boolean };
+type SubItem = { id: number; label: string, parentId: number, isChild: boolean };
 type ChildItem = { id: number; label: string };
 
-const mainData: MainItem[] = [
-  { id: 1, label: '기업경영' },
-  { id: 2, label: '리더십/비즈스킬' },
-  { id: 3, label: '어학' },
-  { id: 4, label: 'HR/총무' },
-  { id: 5, label: '경영/기획' },
-  { id: 6, label: '고객서비스' },
-  { id: 7, label: '마케팅 및 세일즈' },
-  { id: 8, label: '법무/보안' },
-  { id: 9, label: '생산' },
-  { id: 10, label: '서비스' },
-  { id: 11, label: '연구개발' },
-  { id: 12, label: '품질' },
-  { id: 13, label: '안전' },
-  { id: 14, label: '기타' },
-];
-
-const subData: SubItem[] = [
-  { id: 1, label: '기업경영' },
-  { id: 2, label: '리더십/비즈스킬' },
-  { id: 3, label: '어학' },
-  { id: 4, label: 'HR/총무' },
-  { id: 5, label: '경영/기획' },
-  { id: 6, label: '고객서비스' },
-  { id: 7, label: '마케팅 및 세일즈' },
-  { id: 8, label: '법무/보안' },
-  { id: 9, label: '생산' },
-  { id: 10, label: '서비스' },
-  { id: 11, label: '연구개발' },
-  { id: 12, label: '품질' },
-  { id: 13, label: '안전' },
-  { id: 14, label: '기타' },
-];
-
-const childData: ChildItem[] = [
-  { id: 1, label: '기업경영' },
-  { id: 2, label: '리더십/비즈스킬' },
-  { id: 3, label: '어학' },
-  { id: 4, label: 'HR/총무' },
-  { id: 5, label: '경영/기획' },
-  { id: 6, label: '고객서비스' },
-  { id: 7, label: '마케팅 및 세일즈' },
-  { id: 8, label: '법무/보안' },
-  { id: 9, label: '생산' },
-  { id: 10, label: '서비스' },
-  { id: 11, label: '연구개발' },
-  { id: 12, label: '품질' },
-  { id: 13, label: '안전' },
-  { id: 14, label: '기타' },
-];
-
 const PopupContent = () => {
-  const [activeId, setActiveId] = useState<number>(mainData[0].id);
+  const [mainData, setMainData] = useState<MainItem[]>([]);
+  const [subData, setSubData] = useState<SubItem[]>([]);
+  const [childData, setChildData] = useState<ChildItem[]>([]);
+
+  const [activeId, setActiveId] = useState<number>();
   const [activeSubId, setActiveSubId] = useState<number>();
   const [activeChildId, setActiveChildId] = useState<number>();
   const [tenantId, setTenantId] = useState<number>(0);
 
   const { data: loginUser } = useFetchAuthUser();
-  // const { data: categoryTree} = useCategoryTree(tenantId);
+  const { data: categoryTree, refetch: categoryRefetch} = useCategoryTree(tenantId);
 
-  const menuHandleClick = (id: number) => {
+  const menuHandleClick = (id: number, isChild: boolean) => {
     setActiveId(id);
+    if( isChild ) {
+      // 2 Depth
+      const subTreeData = categoryTree.children.filter( (item: any) => item.id === id)[0];
+      const twoDepthData = subTreeData.children.map( (item: any) => {
+        return {
+          id: item.id,
+          label: item.name,
+          parentId: subTreeData.id,
+          isChild: item.children.length > 0 ? true : false,
+        }
+      });
+      setSubData(twoDepthData);
+    } else {
+      setSubData([]);
+    }
   };
 
-  const subMenuHandleClick = (id: number) => {
+  const subMenuHandleClick = (id: number, parentId: number, isChild: boolean) => {
     setActiveSubId(id);
+    if( isChild ) {
+      // 3 Depth
+      const subTreeData = categoryTree.children.filter( (item: any) => item.id === parentId)[0];
+      console.log(subTreeData);
+      const twoDepthData = subTreeData.children.filter( (item: any) => item.id === id)[0];
+      console.log(twoDepthData);
+      const threeDepthData = twoDepthData.children.map( (item: any) => {
+        return {
+          id: item.id,
+          label: item.name,
+        }
+      })
+      setChildData(threeDepthData);
+    } else {
+      setChildData([]);
+    }
   };
 
   const childMenuHandleClick = (id: number) => {
@@ -97,8 +81,25 @@ const PopupContent = () => {
 
     if (loginUser.activeTenant) {
       setTenantId(loginUser.activeTenant.tenantId);
+      categoryRefetch();
     }
   }, [loginUser]);
+
+  useEffect(() => {
+    if( categoryTree ) {
+      console.log('### categoryTree DATA => ', categoryTree);
+      const mainTreeData: any[] = categoryTree.children;
+      // 1 Depth
+      const oneDepthData = mainTreeData.map(item => {
+        return {
+          id: item.id,
+          label: item.name,
+          isChild: item.children.length > 0 ? true : false,
+        }
+      })
+      setMainData(oneDepthData);
+    }
+  }, [categoryTree]);
 
   return (
     <ModalContainer className={styles.modal_container}>
@@ -117,9 +118,9 @@ const PopupContent = () => {
                         className={activeId === item.id ? styles.active : ''}
                         label={item.label}
                         icon={
-                          activeId === item.id && <IcoArrowForward className={styles.ico_arrow} />
+                          item.isChild && <IcoArrowForward className={styles.ico_arrow} />
                         }
-                        onClick={() => menuHandleClick(item.id)}
+                        onClick={() => menuHandleClick(item.id, item.isChild)}
                       />
                     </li>
                   ))}
@@ -136,11 +137,11 @@ const PopupContent = () => {
                         className={activeSubId === item.id ? styles.active : ''}
                         label={item.label}
                         icon={
-                          activeSubId === item.id && (
+                          item.isChild && (
                             <IcoArrowForward className={styles.ico_arrow} />
                           )
                         }
-                        onClick={() => subMenuHandleClick(item.id)}
+                        onClick={() => subMenuHandleClick(item.id, item.parentId, item.isChild)}
                       />
                     </li>
                   ))}
