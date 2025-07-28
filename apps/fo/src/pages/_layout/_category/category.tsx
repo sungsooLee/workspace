@@ -1,14 +1,15 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createFileRoute, Link, useRouter, useRouterState } from '@tanstack/react-router';
 import { Navigation } from 'swiper/modules';
-
-import { Carousel, ContentsRow, Input, Pagination, Dropdown } from '@learnway/ui';
+import { Carousel, ContentsRow, Input, Pagination, Dropdown, EmptyText, Button } from '@learnway/ui';
 import styles from '@learnway/styles/fo/pages/_layout/category/category.module.css';
 import { cn } from '@learnway/shared';
+import { Filter } from '../../../features/category/ui/category-filter/category-filter';
+import { ThumnailList } from '@features/layout';
+import { t } from 'i18next';
 
 import bnrCImage1 from '../../../assets/images/banner/banner_category_01.png';
 import bnrCImage2 from '../../../assets/images/banner/banner_category_02.png';
-import { Filter } from '../../../features/category/ui/category-filter/category-filter';
 
 export const Route = createFileRoute('/_layout/_category/category')({
   component: RouteComponent,
@@ -20,6 +21,8 @@ function RouteComponent() {
   const routerState = useRouterState();
   const tenantId = router.state.location.state?.tenantId;
   const categoryId = router.state.location.state?.categoryId;
+
+  const [depth, setDepth] = useState(3);
 
   const items = [
     <Link to={'/'}>
@@ -51,14 +54,17 @@ function RouteComponent() {
     // 카테고리 필터 변경되면 검색 API 호출
   };
 
+  const handleOnSearch = (data: any) => {
+    console.log('### data : ', data)
+  }
+
   useEffect(() => {
     console.log(`2. tenantId=${tenantId} | categoryId=${categoryId}`);
   }, [routerState.location.state.tenantId, routerState.location.state.categoryId]);
 
   return (
     <div className={styles.start}>
-      {/* ■ 마케팅 영역
-어드민에서 1,2 Depth 화면에서만 노출/비노출 설정 가능*/}
+      {/* ■ 마케팅 영역 - 어드민에서 1,2 Depth 화면에서만 노출/비노출 설정 가능*/}
       <div className={styles.swiper}>
         <Carousel
           items={items}
@@ -74,43 +80,48 @@ function RouteComponent() {
         <ul className={styles.divisio_box}>
           <li>
             <div className={styles.search_division}>
-              {/*
-              카테고리 4,5,6 뎁스 영역
-              */}
-              <Dropdown
-                className={styles.search_select}
-                size="lg"
-                options={[
-                  { value: 'a', label: '대분류' },
-                  { value: 'b', label: 'ST1' },
-                  { value: 'c', label: '아이오닉 6' },
-                  { value: 'd', label: '아이오닉 5' },
-                  { value: 'e', label: '코나' },
-                  { value: 'f', label: '넥쏘' },
-                  { value: 'g', label: '포터' },
-                  { value: 'h', label: '캐스퍼' },
-                ]}
-              />
-              <Dropdown
-                className={styles.search_select}
-                size="lg"
-                options={[
-                  { value: 'a', label: '중분류' },
-                  { value: 'b', label: 'NE PE(2024)' },
-                  { value: 'c', label: 'NE(2021)' },
-                ]}
-              />
-              <Dropdown
-                className={styles.search_select}
-                size="lg"
-                options={[
-                  { value: 'a', label: '소분류' },
-                  { value: 'b', label: '상품정보' },
-                  { value: 'c', label: '기술정보' },
-                ]}
-              />
-              <ContentsRow className={styles.search}>
-                <Input id="" type="text" placeholder="과정명 검색" showSearchIcon={true} />
+              { /* 카테고리 4,5,6 뎁스 영역 */
+                depth > 3 && (
+                  <ContentsRow className={styles.search_area}>
+                    <Dropdown
+                      className={styles.search_select}
+                      size="lg"
+                      options={[
+                        { value: 'a', label: '대분류' },
+                        { value: 'b', label: 'ST1' },
+                        { value: 'c', label: '아이오닉 6' },
+                        { value: 'd', label: '아이오닉 5' },
+                        { value: 'e', label: '코나' },
+                        { value: 'f', label: '넥쏘' },
+                        { value: 'g', label: '포터' },
+                        { value: 'h', label: '캐스퍼' },
+                      ]}
+                    />
+                    <Dropdown
+                      className={styles.search_select}
+                      size="lg"
+                      options={[
+                        { value: 'a', label: '중분류' },
+                        { value: 'b', label: 'NE PE(2024)' },
+                        { value: 'c', label: 'NE(2021)' },
+                      ]}
+                    />
+                    <Dropdown
+                      className={styles.search_select}
+                      size="lg"
+                      options={[
+                        { value: 'a', label: '소분류' },
+                        { value: 'b', label: '상품정보' },
+                        { value: 'c', label: '기술정보' },
+                      ]}
+                    />
+                  </ContentsRow>
+                )
+              }
+
+              <ContentsRow className={styles.search_input}>
+                <Input id="courseName" type="text" placeholder="과정명 검색" inputSize={'lg'} showSearchIcon={false} />
+                <Button label={t('검색')} variant={'primary'} size={'lx'} />
               </ContentsRow>
             </div>
           </li>
@@ -150,7 +161,7 @@ function RouteComponent() {
           </div>
         </div>
 
-        {/* <ThumnailList className={styles.list} listUi={listUi}></ThumnailList> */}
+         <ThumnailList />
       </div>
 
       <Pagination
@@ -159,6 +170,14 @@ function RouteComponent() {
         pageNumber={page}
         onChange={handlePageChange}
       />
+
+      {/* 검색결과 없음 */}
+      {/*<div className={styles.empty}>*/}
+      {/*  <EmptyText*/}
+      {/*    text={'검색 결과를 찾을 수 없습니다.'}*/}
+      {/*    description={'다른 과정명으로 검색해 보세요.'}*/}
+      {/*  />*/}
+      {/*</div>*/}
     </div>
   );
 }
