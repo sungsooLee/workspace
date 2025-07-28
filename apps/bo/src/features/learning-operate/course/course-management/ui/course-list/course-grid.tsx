@@ -50,7 +50,6 @@ export const CourseGrid: React.FC<CourseGridProps> = ({
       }}
       onRowsSelect={onRowsSelect}
       customButtonNode={customButtonNode}
-      guideText="드래그 앤 드롭으로 순서 변경 가능"
       excelButtons={
         <>
           <GridExcelUploadButton validateUrl={'/api/v1/course/validation/excel/upload'} />
