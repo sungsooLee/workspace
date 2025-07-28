@@ -1,5 +1,6 @@
-import { httpService } from '@learnway/shared';
+import { omit } from 'lodash';
 import { faker } from '@faker-js/faker';
+import { httpService } from '@learnway/shared';
 import { CMSApiPrefix, PMSApiPrefix } from '@learnway/config';
 import {
   BlogCreateReq,
@@ -43,6 +44,13 @@ import {
   GetScormStatusRes,
   GetScormFileChangeRes,
   QuestionsCopyReq,
+  HtmlVideoChangeStatus,
+  PostDraftETCParams,
+  PostDraftETCRes,
+  ContentExportReq,
+  ContentExportRes,
+  ContentSharingInfoReq,
+  ContentSharingInfoRes,
 } from '@types';
 
 export default class LearningResourceService {
@@ -81,6 +89,21 @@ export default class LearningResourceService {
     return httpService.get(`${CMSApiPrefix()}/content/curriculum-mapping/${contentUuid}`);
   }
 
+  static exportContent(body: ContentExportReq): Promise<ContentExportRes> {
+    return httpService.post(
+      `${CMSApiPrefix()}/content/${body.contentUuid}/export`,
+      omit(body, 'contentUuid'),
+    );
+  }
+
+  static fetchContentSharingInfo(params: ContentSharingInfoReq): Promise<ContentSharingInfoRes> {
+    const { contentUuid, tenantId, channelUuid } = params;
+    return httpService.get(`${CMSApiPrefix()}/content/${contentUuid}/channel/sharing`, {
+      tenantId,
+      channelUuid,
+    });
+  }
+
   static postContentCopy(contentUuid: string): Promise<PostContentCopyRes> {
     return httpService.post(`${CMSApiPrefix()}/content/${contentUuid}/copy`, {});
   }
@@ -91,6 +114,10 @@ export default class LearningResourceService {
 
   static postDraftScorm(params: PostDraftScormParams): Promise<PostDraftScormRes> {
     return httpService.post(`${CMSApiPrefix()}/scorm/draft`, params);
+  }
+
+  static postDraftETC(params: PostDraftETCParams): Promise<PostDraftETCRes> {
+    return httpService.post(`${CMSApiPrefix()}/etc/draft`, params);
   }
 
   static putVideoUpdate(params: PutVideoUpdateParams) {
@@ -185,6 +212,10 @@ export default class LearningResourceService {
   // HTML5 동영상 상태 조회
   static fetchHTML5Status(contentUuid: string): Promise<HtmlVideoStatus> {
     return httpService.get(`${CMSApiPrefix()}/html5/${contentUuid}/status`);
+  }
+  // HTML5 동영상 파일변경 상태 조회
+  static fetchHTML5FileChangeStatus(changeId: number): Promise<HtmlVideoChangeStatus> {
+    return httpService.get(`${CMSApiPrefix()}/html5/file/change/${changeId}`);
   }
 
   // HTML5 동영상 콘텐츠 리소스 조회

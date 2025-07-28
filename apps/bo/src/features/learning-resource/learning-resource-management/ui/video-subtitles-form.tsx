@@ -24,7 +24,7 @@ const VideoSubtitlesFormComponent = ({ provider }: Props) => {
           }}
           element={
             <SwitchFormField
-              label={isSubtitles ? `자막 ${videoSubtitles?.length || 0}개` : '자막 없음'}
+              fieldLabel={isSubtitles ? `자막 ${videoSubtitles?.length || 0}개` : '자막 없음'}
             />
           }
           value={false}

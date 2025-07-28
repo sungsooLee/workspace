@@ -1,7 +1,7 @@
 import { memo, useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import { Button } from '@learnway/ui';
-import { IcoBell03, IcoXclose } from '@learnway/icons';
+import { IcoBell02, IcoXclose } from '@learnway/icons';
 import { isMobile } from 'react-device-detect';
 
 import styles from './history-contents.module.css';
@@ -82,7 +82,7 @@ const HistoryContentsComponent = () => {
       {/* 알림 없는 경우 */}
       {history.length === 0 ? (
         <p className={styles.empty}>
-          <IcoBell03 width={48} height={48} stroke="#a9afbb" className={styles.ico_bell} />
+          <IcoBell02 width={48} height={48} stroke="#a9afbb" className={styles.ico_bell} />
           새로운 알림이 없습니다.
           <span className={styles.sub_text}>알림은 30일 동안 보관됩니다.</span>
         </p>

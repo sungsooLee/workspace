@@ -6,10 +6,19 @@ import { useWatch } from 'react-hook-form';
 
 const SwitchFormFieldComponent = forwardRef<
   ElementRef<typeof Primitive.Root>,
-  BaseFormFieldProps<boolean>
+  BaseFormFieldProps<boolean> & { fieldLabel?: string }
 >(
   (
-    { value = false, control, label = '', onChange, getValues, switchConfig, disabled, invert },
+    {
+      value = false,
+      control,
+      fieldLabel: _fieldLabel = '',
+      onChange,
+      getValues,
+      switchConfig,
+      disabled,
+      invert,
+    },
     ref,
   ) => {
     const { onChangeGuideText } = useDynamicFormContext();
@@ -20,13 +29,14 @@ const SwitchFormFieldComponent = forwardRef<
     });
 
     const fieldLabel = useMemo<string>(() => {
+      if (_fieldLabel) return _fieldLabel;
       if (!switchConfig?.label) return '';
       return switchConfig
         ? typeof switchConfig.label === 'string'
           ? switchConfig.label
           : switchConfig.label(value, getValues)
         : '';
-    }, [value, watched]);
+    }, [_fieldLabel, value, watched]);
 
     useEffect(() => {
       if (switchConfig?.guideText) {
@@ -39,7 +49,7 @@ const SwitchFormFieldComponent = forwardRef<
         ref={ref}
         checked={invert ? !value : value}
         onCheckedChange={(value) => onChange(invert ? !value : value)}
-        label={label || fieldLabel}
+        label={fieldLabel}
         disabled={disabled}
       />
     );

@@ -19,6 +19,7 @@ export { ReactComponent as IcoHome02 } from './lib/ic_home02.svg'; // 12*12 brea
 export { ReactComponent as IcoHome03 } from './lib/ic_home-03.svg'; // 16*16 bread Home FO
 export { ReactComponent as IcoBell02 } from './lib/ic_bell-02.svg'; // bell02 lineinformation
 export { ReactComponent as IcoBell03 } from './lib/ic_bell_03.svg'; // bell03 line
+export { ReactComponent as IcoBell04 } from './lib/ic_bell_04.svg';
 export { ReactComponent as IcoLinkblank } from './lib/ic_btn_pop.svg'; // link blank line
 export { ReactComponent as IcoChevronDown } from './lib/ic_chevron_down.svg';
 export { ReactComponent as IcoChevronLeft } from './lib/ic_chevron_left.svg'; // grid paging IcoArrowDown
