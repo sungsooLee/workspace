@@ -3,21 +3,28 @@
   &.footer_auth {
     @apply pb-[40px];
     .footer_area {
-      @apply text-[14px] leading-[1.2];
       .menu_list {
-        @apply flex items-center justify-center gap-[24px];
+        @apply flex items-center justify-center;
         > li {
-          a,
+          @apply relative flex text-[var(--gray35)];
           button {
-            @apply text-[#6F798B];
-            &:hover {
-              @apply underline;
+            @apply body-sm !p-0;
+          }
+          &::before {
+            @apply relative top-[0] mx-[12px] h-[12px] w-[1px] bg-[var(--gray85)] content-[''];
+          }
+          &:first-child {
+            &::before {
+              @apply hidden;
             }
+          }
+          &:hover {
+            @apply underline;
           }
         }
       }
       .copyright {
-        @apply mt-[16px] text-[var(--gray7)];
+        @apply body-xsm mt-[8px] text-[var(--gray50)];
       }
     }
   }
@@ -27,14 +34,16 @@
   @screen mobile {
     .start {
       &.footer_auth {
-        @apply bg-[#F6F8FD] py-[16px];
+        @apply bg-[#F6F8FD] py-[24px];
         .footer_area {
-          @apply text-[1.2rem];
           .menu_list {
-            @apply gap-[14px];
+            > li {
+              &::before {
+                @apply top-[3px];
+              }
+            }
           }
           .copyright {
-            @apply m-auto mt-[8px] max-w-[200px];
           }
         }
       }
