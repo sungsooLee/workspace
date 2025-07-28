@@ -40,7 +40,11 @@ function RouteComponent() {
                 삭제를 원하는 게시글이 있다면 반드시 탈퇴 전 비공개 처리하거나 삭제하시기 바랍니다.
               </li>
             </ul>
-            <Checkbox size="lg" label="안내 사항을 모두 확인하였으며, 이에 동의 합니다." />
+            {/* 퍼블수정 20250728 size 수정 */}
+            <Checkbox
+              size={isMobile ? 'md' : 'lg'}
+              label="안내 사항을 모두 확인하였으며, 이에 동의 합니다."
+            />
           </div>
         </div>
 

@@ -140,10 +140,10 @@ export const guideData = [
     screenName: 'M_언어설정',
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'setting/setting-language_m',
-    pageType: 'Page',
+    pageType: 'Pop-up',
     completionDate: '2025-03-21',
     lastUpdateDate: '2025-07-28',
-    remarks: 'setting-language_m.tsx',
+    remarks: '- setting-language-popup.tsx (기존 Page에서 Popup으로 변경)',
   },
   {
     screenId: 'NLP_FO_GNB_MA_1007',
@@ -293,7 +293,7 @@ export const guideData = [
     pageId: 'my/membership-secession',
     pageType: 'Page',
     completionDate: '2025-03-27',
-    lastUpdateDate: '2025-07-25',
+    lastUpdateDate: '2025-07-28',
     remarks: '- membership-secession.tsx',
   },
   {
@@ -435,7 +435,7 @@ export const guideData = [
     pageId: 'my/membership-secession',
     pageType: 'Page',
     completionDate: '2025-03-27',
-    lastUpdateDate: '2025-07-25',
+    lastUpdateDate: '2025-07-28',
     remarks: '- membership-secession.tsx',
   },
   {

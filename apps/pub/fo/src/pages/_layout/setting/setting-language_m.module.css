@@ -1,12 +1,13 @@
 .start {
   &.language_wrap {
+    @apply px-[16px];
     ul {
       li {
         button {
-          @apply body_3_r flex w-full items-center justify-between px-[20px] leading-[24px] text-[var(--gray9)] h-[56px];
+          @apply title2 flex w-full items-center justify-between leading-[20px] text-[var(--gray35)] h-[56px] !px-0;
         }
         & + li {
-          @apply border-t-[1px] border-solid border-[var(--gray3)];
+          @apply border-t-[1px] border-solid border-[var(--gray92)];
         }
       }
     }

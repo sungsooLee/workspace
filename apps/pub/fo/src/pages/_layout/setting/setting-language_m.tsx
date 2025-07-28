@@ -38,7 +38,7 @@ function RouteComponent() {
             <Button onClick={() => languageConfirm(index)}>
               {text}
               {languageActive === index ? (
-                <IcoCheck width={24} height={24} stroke="#00afd5" fill="none"></IcoCheck>
+                <IcoCheck width={24} height={24} stroke="#0056ff" fill="none"></IcoCheck>
               ) : null}
             </Button>
           </li>

@@ -2,7 +2,11 @@ import { createFileRoute, Link } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import { isMobile } from 'react-device-detect';
 import { ContentsRow, Input, Button, useModal } from '@learnway/ui';
-import { PasswordChangePopup, PhoneChangePopup } from '../../../features/layout';
+import {
+  PasswordChangePopup,
+  PhoneChangePopup,
+  SettingLanguagePopup,
+} from '../../../features/layout';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import { IcoCaution } from '@learnway/icons';
 
@@ -52,7 +56,7 @@ function RouteComponent() {
                     onClick={() =>
                       openModal({
                         width: isMobile ? 'm_full' : 'sm',
-                        content: <PasswordChangePopup />,
+                        content: <SettingLanguagePopup />,
                       })
                     }
                   >
