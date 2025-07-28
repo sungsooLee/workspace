@@ -24,6 +24,8 @@ import {
   RandomQuestionCountUpdateReq,
   TestPaperBasicInfoSaveReq,
   PostDraftETCParams,
+  PutETCUpdateParams,
+  PutETCChangeParams,
 } from '@types';
 import LearningResourceService from '../api/learning-resource';
 
@@ -196,11 +198,17 @@ export const mutateOptions = {
   putScormUpdate: () => ({
     mutationFn: (params: PutScormUpdateParams) => LearningResourceService.putScormUpdate(params),
   }),
+  putETCUpdate: () => ({
+    mutationFn: (params: PutETCUpdateParams) => LearningResourceService.putETCUpdate(params),
+  }),
   putVideoChange: () => ({
     mutationFn: (params: PutVideoChangeParams) => LearningResourceService.putVideoChange(params),
   }),
   putScormChange: () => ({
     mutationFn: (params: PutScormChangeParams) => LearningResourceService.putScormChange(params),
+  }),
+  putETCChange: () => ({
+    mutationFn: (params: PutETCChangeParams) => LearningResourceService.putETCChange(params),
   }),
   postDraftHTML5: () => ({
     mutationFn: (params: PostDraftHtmlVideoParams) =>

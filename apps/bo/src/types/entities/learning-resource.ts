@@ -510,6 +510,10 @@ export interface PutVideoChangeParams {
 
 export type PutScormChangeParams = PutVideoChangeParams;
 
+export type PutETCChangeParams = PutVideoChangeParams;
+
+export interface PutETCChangeRes {}
+
 export interface PutVideoChangeRes {
   resourceId: number;
   contentUuid: string;
@@ -547,6 +551,12 @@ export interface PutScormUpdateRes extends ContentInformation {
   fileChagngeId: number | null;
   processingStatus: ProcessingStatus;
   children: ScormOrgn[];
+}
+
+export type PutETCUpdateParams = ContentBaseInfo;
+
+export interface PutETCUpdateRes extends ContentInformation {
+  fileChangeId: number | null;
 }
 
 export enum EnQuestionType {

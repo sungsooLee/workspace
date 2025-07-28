@@ -10,6 +10,8 @@ import {
   PostDraftHtmlVideoParams,
   PostDraftScormParams,
   PostDraftVideosParams,
+  PutETCChangeParams,
+  PutETCUpdateParams,
   PutScormChangeParams,
   PutScormUpdateParams,
   PutVideoChangeParams,
@@ -106,6 +108,20 @@ export function usePutScormUpdate(options?: any) {
   };
 }
 
+export function usePutETCUpdate(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.putETCUpdate(),
+    ...options,
+  });
+
+  return {
+    update: (payload: PutETCUpdateParams) => mutation.mutate(payload as any),
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
+}
+
 export function usePutVideoChange(options?: any) {
   const mutation = useMutation({
     ...mutateOptions.putVideoChange(),
@@ -128,6 +144,20 @@ export function usePutScormChange(options?: any) {
 
   return {
     update: (payload: PutScormChangeParams) => mutation.mutate(payload as any),
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
+}
+
+export function usePutETCChange(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.putETCChange(),
+    ...options,
+  });
+
+  return {
+    update: (payload: PutETCChangeParams) => mutation.mutate(payload as any),
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
     data: mutation.data,
