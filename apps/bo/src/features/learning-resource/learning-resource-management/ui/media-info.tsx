@@ -36,7 +36,7 @@ const MediaInfoComponent = ({ status, buttons, type, url, infoList }: MediaInfoC
                 {t('인코딩 대기 및 영상 길이에 따라 인코딩 시간이 오래 걸릴수도 있습니다.')}
               </>
             )}
-            {type === LEARNING_TYPE.SCORM && (
+            {[LEARNING_TYPE.SCORM, LEARNING_TYPE.HTML5_VIDEO].includes(type) && (
               <>
                 <strong>{t('패키지 등록 중입니다.')}</strong>
                 {t('등록 대기 및 파일 크기에 따라 등록 시간이 오래 걸릴수도 있습니다.')}

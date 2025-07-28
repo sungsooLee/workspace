@@ -80,6 +80,13 @@ export interface PostDraftHtmlVideoParams {
   fileUuid: string;
 }
 
+export interface HtmlVideoChangeStatus {
+  changeId: number;
+  contentUuid: string;
+  fileUuid: string;
+  processingStatus: ProcessingStatus;
+}
+
 export interface Resource {
   resourceId: number;
   startFile: string;
