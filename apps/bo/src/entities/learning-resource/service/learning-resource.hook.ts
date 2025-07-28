@@ -6,6 +6,7 @@ import {
   ContentBaseInfo,
   HtmlVideoFileChangeReq,
   HtmlVideoMetadataReq,
+  PostDraftETCParams,
   PostDraftHtmlVideoParams,
   PostDraftScormParams,
   PostDraftVideosParams,
@@ -57,6 +58,20 @@ export function usePostDraftScorm(options?: any) {
 
   return {
     create: (payload: PostDraftScormParams) => mutation.mutate(payload as any),
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
+}
+
+export function usePostDraftETC(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.postDraftETC(),
+    ...options,
+  });
+
+  return {
+    create: (payload: PostDraftETCParams) => mutation.mutate(payload as any),
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
     data: mutation.data,

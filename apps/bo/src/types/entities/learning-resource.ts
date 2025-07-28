@@ -80,6 +80,8 @@ export interface PostDraftHtmlVideoParams {
   fileUuid: string;
 }
 
+export type PostDraftETCParams = PostDraftHtmlVideoParams;
+
 export interface Resource {
   resourceId: number;
   startFile: string;
@@ -263,6 +265,13 @@ export interface PostDraftVideosRes {
 }
 
 export type PostDraftScormRes = PostDraftVideosRes;
+
+export interface PostDraftETCRes {
+  contentUuid: string;
+  contentType: ContentType;
+  contentStatusCode: ContentStatusCode;
+  isDrafted: boolean;
+}
 
 export interface PostDraftHtmlVideoRes {
   contentUuid: string;
