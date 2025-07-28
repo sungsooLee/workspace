@@ -15,6 +15,7 @@ import aiImg from '@learnway/styles/fo/assets/images/menu/course/img_course_ai.p
 
 /* tab contents */
 import { CoursePackage } from './-contents/course-package';
+import { Course } from './-contents/course';
 import { CourseHome } from './-contents/course-home';
 
 export const Route = createFileRoute('/_layout/course-introduction/package-list')({
@@ -38,7 +39,7 @@ function RouteComponent() {
     {
       title: '과정',
       key: 'menu2',
-      content: '',
+      content: <Course />,
     },
     {
       title: '패키지',
@@ -48,12 +49,12 @@ function RouteComponent() {
     {
       title: '공지사항',
       key: 'menu4',
-      content: '',
+      content: '추후작업',
     },
     {
       title: '커뮤니티',
       key: 'menu5',
-      content: '',
+      content: '추후작업',
     },
   ];
 

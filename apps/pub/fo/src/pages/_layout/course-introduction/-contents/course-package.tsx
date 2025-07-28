@@ -6,7 +6,6 @@ import {
   IcoStar,
   IcoEye,
   IcoHeart,
-  IcoArrowForward,
   IcoArrowDown,
   IcoDotpoints,
   IcoArray,
@@ -17,6 +16,9 @@ import { isMobile } from 'react-device-detect';
 /* ThumbnailList */
 import bannerImg from '@learnway/styles/fo/assets/images/banner/img_banner_sample.jpg';
 import ThumbnailList from '../../../-components/thumb/thumb-nail-list';
+
+/* filter */
+import { FilterModal } from './filter-modal';
 
 /* style */
 import styles from './course-contents.module.css';
@@ -618,8 +620,9 @@ const CoursePackageComponent: FC = () => {
   // 리스트 정렬 버튼 제어
   const [isActive, setIsActive] = useState<boolean>(false);
 
-  const handleButtonClick = () => {
-    isActive ? setIsActive(false) : setIsActive(true);
+  const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const value = e.currentTarget.dataset.side;
+    setIsActive(value === 'left');
   };
 
   return (
@@ -643,13 +646,7 @@ const CoursePackageComponent: FC = () => {
           </div>
         </div>
         <div className={styles.select_menu}>
-          <Button
-            variant={'text'}
-            label={'더보기'}
-            icon={<IcoArrowForward width={20} height={20} stroke="#4D525C" />}
-            iconAlign={'right'}
-            size={'sm'}
-          />
+          <FilterModal />
         </div>
       </div>
       <div className={styles.result_list_wrap}>
@@ -659,7 +656,21 @@ const CoursePackageComponent: FC = () => {
           </strong>
           <div className={styles.sort_area}>
             <Checkbox label={'학습 가능 과정'} size="sm" className={styles.check_menu} />
-            <Arrays arraysData={arrays} className={styles.array} />
+            {!isMobile ? (
+              <Arrays arraysData={arrays} className={styles.array} />
+            ) : (
+              <Popover
+                popoverContent={<DropdownPopoverCompoment />}
+                className={cn(dropdownPopoverStyles.btn, dropdownPopoverStyles.text)}
+                side="bottom"
+                align="end"
+                sideOffset={10}
+              >
+                <span>{'최신순'}</span>
+                <IcoArrowDown width={16} height={16} stroke="#131C30" />
+              </Popover>
+            )}
+
             <div className={styles.box}>
               <Popover
                 popoverContent={<DropdownPopoverCompoment />}
@@ -677,13 +688,15 @@ const CoursePackageComponent: FC = () => {
                 onlyIcon={true}
                 icon={<IcoDotpoints width={20} height={20} fill="none" />}
                 className={cn(styles.btn_order, isActive ? styles.active : null)}
-                onClick={() => handleButtonClick()}
+                data-side="left"
+                onClick={handleButtonClick}
               />
               <Button
                 onlyIcon={true}
                 className={cn(styles.btn_order, !isActive ? styles.active : null)}
                 icon={<IcoArray width={20} height={20} fill="#fff" stroke="#131416" />}
-                onClick={() => handleButtonClick()}
+                data-side="right"
+                onClick={handleButtonClick}
               />
             </div>
           </div>
@@ -691,7 +704,7 @@ const CoursePackageComponent: FC = () => {
         {/* Thumnail List */}
         <ThumbnailList
           items={item}
-          cols={isActive ? 2 : 4}
+          cols={isMobile ? (isActive ? 1 : 2) : isActive ? 4 : 2}
           direction={isActive ? 'horizontal' : 'vertical'}
         />
         {/* pagination */}

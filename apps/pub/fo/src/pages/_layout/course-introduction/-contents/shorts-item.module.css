@@ -1,0 +1,13 @@
+/* shorts-item.module.css */
+.start {
+  &.shorts_item {
+    .item {
+      .item_info_wrap {
+        .title {
+        }
+        .badge {
+        }
+      }
+    }
+  }
+}
