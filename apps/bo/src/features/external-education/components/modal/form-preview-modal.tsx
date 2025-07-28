@@ -11,7 +11,7 @@ interface FormPreviewModalProps {
 const FormPreviewModalComponent = ({ applicationItems }: FormPreviewModalProps) => {
   // 순서대로 정렬된 아이템들
   const sortedItems = [...applicationItems].sort((a, b) => a.order - b.order);
-  const { close: onClose } = useModal();
+  const { closeModal } = useModal();
 
   const [formValues, setFormValues] = useState<Record<string, unknown>>({});
 
@@ -98,9 +98,11 @@ const FormPreviewModalComponent = ({ applicationItems }: FormPreviewModalProps) 
           </div>
         )}
       </ModalBody>
-      {/* <ModalFooter>
-        <Button onClick={onClose}>닫기</Button>
-      </ModalFooter> */}
+      <ModalFooter>
+        <Button variant={'primary'} size={'lg'} onClick={closeModal}>
+          확인
+        </Button>
+      </ModalFooter>
     </ModalContainer>
   );
 };

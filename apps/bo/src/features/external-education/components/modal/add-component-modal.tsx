@@ -152,10 +152,9 @@ const AddComponentModalComponent = ({ onAdd, selectedItems, type }: AddComponent
         />
       </ModalBody>
       <ModalFooter>
-        <Button variant="ghost" onClick={handleCancel}>
-          취소
+        <Button variant={'primary'} size={'lg'} onClick={handleConfirm}>
+          확인
         </Button>
-        <Button onClick={handleConfirm}>확인</Button>
       </ModalFooter>
     </ModalContainer>
   );

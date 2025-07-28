@@ -7,6 +7,7 @@ import {
   DatePicker,
   RangeDatePicker,
   StarRating,
+  Star,
 } from '@learnway/ui';
 import {
   FieldConfig,
@@ -197,12 +198,12 @@ const renderRatingField = ({
 }: FieldRendererProps & { config: RatingFieldConfig }) => {
   return (
     // 별점 컴포넌트
-    <StarRating
+    <Star
       value={value as number}
       onChange={onChange}
-      maxRating={config.maxRating}
-      animated={config.animated}
-      size={config.size || 'md'}
+      // maxRating={config.maxRating}
+      // animated={config.animated}
+      // size={config.size || 'md'}
     />
   );
 };
@@ -300,6 +301,9 @@ export const FieldRenderer: React.FC<FieldRendererProps> = (props) => {
 
       case 'file':
         return renderFileField({ ...props, config: config as FileFieldConfig });
+
+      case 'rating':
+        return renderRatingField({ ...props, config: config as RatingFieldConfig });
 
       case 'custom':
         return renderCustomField({ ...props, config: config as CustomFieldConfig });

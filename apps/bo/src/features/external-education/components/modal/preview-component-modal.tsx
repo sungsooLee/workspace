@@ -1,9 +1,11 @@
-import { Button, ModalBody, ModalContainer, ModalFooter, ModalTitle } from '@learnway/ui';
+import { Button, ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui';
 import FieldRenderer from '../field-renderer';
 import { DEFAULT_FIELD_CONFIG } from '../../types/form-field.types';
 
 const PreviewComponentModalComponent = ({ componentId }: any) => {
   const fieldConfig = DEFAULT_FIELD_CONFIG[componentId];
+  const { closeModal } = useModal();
+
   if (!fieldConfig) return null;
 
   return (
@@ -25,7 +27,9 @@ const PreviewComponentModalComponent = ({ componentId }: any) => {
         />
       </ModalBody>
       <ModalFooter>
-        <Button onClick={() => console.log('닫기')}>닫기</Button>
+        <Button variant={'primary'} size={'lg'} onClick={closeModal}>
+          확인
+        </Button>
       </ModalFooter>
     </ModalContainer>
   );

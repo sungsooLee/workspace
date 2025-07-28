@@ -33,19 +33,15 @@ export const IconTest: Story = {
 };
 
 // 기본 사용법
-const DefaultComponent = (args: { value?: number; size?: 'sm' | 'md' | 'lg'; animated?: boolean }) => {
+const DefaultComponent = (args: any) => {
   const [rating, setRating] = useState(args.value || 0);
-  
+
   return (
     <div style={{ padding: '20px' }}>
       <h3>기본 StarRating</h3>
       <div>
         <p style={{ marginBottom: '10px', color: '#666' }}>현재 별점: {rating}점</p>
-        <StarRating
-          {...args}
-          value={rating}
-          onChange={setRating}
-        />
+        <StarRating {...args} value={rating} onChange={setRating} />
       </div>
     </div>
   );
@@ -61,47 +57,45 @@ export const Default: Story = {
 };
 
 // 크기별 예시
-const SizesComponent = () => {
-  const [ratings, setRatings] = useState({ sm: 2, md: 3, lg: 4 });
-  
-  return (
-    <div style={{ padding: '20px' }}>
-      <h3>크기별 StarRating</h3>
-      
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-        <div>
-          <h4>Small (sm)</h4>
-          <StarRating
-            size="sm"
-            value={ratings.sm}
-            onChange={(value) => setRatings(prev => ({ ...prev, sm: value }))}
-          />
-        </div>
-        
-        <div>
-          <h4>Medium (md)</h4>
-          <StarRating
-            size="md"
-            value={ratings.md}
-            onChange={(value) => setRatings(prev => ({ ...prev, md: value }))}
-          />
-        </div>
-        
-        <div>
-          <h4>Large (lg)</h4>
-          <StarRating
-            size="lg"
-            value={ratings.lg}
-            onChange={(value) => setRatings(prev => ({ ...prev, lg: value }))}
-          />
+export const Sizes: Story = {
+  render: () => {
+    const [ratings, setRatings] = useState({ sm: 2, md: 3, lg: 4 });
+
+    return (
+      <div style={{ padding: '20px' }}>
+        <h3>크기별 StarRating</h3>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          <div>
+            <h4>Small (sm)</h4>
+            <StarRating
+              size="sm"
+              value={ratings.sm}
+              onChange={(value) => setRatings((prev) => ({ ...prev, sm: value }))}
+            />
+          </div>
+
+          <div>
+            <h4>Medium (md)</h4>
+            <StarRating
+              size="md"
+              value={ratings.md}
+              onChange={(value) => setRatings((prev) => ({ ...prev, md: value }))}
+            />
+          </div>
+
+          <div>
+            <h4>Large (lg)</h4>
+            <StarRating
+              size="lg"
+              value={ratings.lg}
+              onChange={(value) => setRatings((prev) => ({ ...prev, lg: value }))}
+            />
+          </div>
         </div>
       </div>
-    </div>
-  );
-};
-
-export const Sizes: Story = {
-  render: () => <SizesComponent />,
+    );
+  },
 };
 
 // 읽기 전용 모드
@@ -109,7 +103,7 @@ export const ReadOnly: Story = {
   render: () => (
     <div style={{ padding: '20px' }}>
       <h3>읽기 전용 StarRating</h3>
-      
+
       <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
         <div>
           <span style={{ marginRight: '10px' }}>1점:</span>

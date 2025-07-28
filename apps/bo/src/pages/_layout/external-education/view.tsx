@@ -32,16 +32,20 @@ function RouteComponent() {
     tabSaveFunctions.current[tabKey] = saveFn;
   };
 
-  // 등록 성공 후 formId 업데이트 핸들러
   const handleFormIdCreated = useCallback((newFormId: number) => {
     setCurrentFormId(newFormId);
   }, []);
 
-  // 탭 변경 전 검증 핸들러 (onBeforeTabChange)
+  // 탭 변경 전 검증 핸들러
   const handleBeforeTabChange = async (
     currentTabKey: string,
     nextTabKey: string,
   ): Promise<boolean> => {
+    // 기본정보 탭에서 formId가 이미 있는 경우 저장하지 않음
+    if (currentTabKey === ExternalEducationTab.BASIC_INFO && currentFormId) {
+      return true;
+    }
+
     const currentSaveFn = tabSaveFunctions.current[currentTabKey as ExternalEducationTab];
     if (currentSaveFn) {
       try {
