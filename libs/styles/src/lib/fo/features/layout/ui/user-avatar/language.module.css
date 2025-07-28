@@ -1,0 +1,37 @@
+/* language.module.css */
+.btn_language {
+  @apply box-border flex min-h-[40px] items-center justify-between text-[1.4rem] text-[var(--gray9)];
+  &[data-state='open'] {
+    svg {
+      @apply rotate-180;
+      transition: all 0.1s linear;
+    }
+  }
+  svg {
+    transition: all 0.1s linear;
+  }
+  .ic_lang {
+    @apply h-[24px] w-[24px] !rotate-0;
+    fill: var(--gray10);
+  }
+  .select {
+    @apply label-md-b ml-[6px] mr-[4px] inline-block text-[var(--gray10)];
+  }
+}
+
+/* 언어 */
+.lang_area {
+  @apply max-h-[calc(100vh-170px)] overflow-y-auto px-[32px] py-[24px];
+  .lang_list {
+    @apply flex flex-col justify-start;
+    > li {
+      button {
+        @apply ellipsis label-xl w-full !rounded-none px-[12px] py-[11px] text-left;
+        &:hover,
+        &.active {
+          @apply label-xl-b !bg-none text-[var(--blue65)];
+        }
+      }
+    }
+  }
+}
