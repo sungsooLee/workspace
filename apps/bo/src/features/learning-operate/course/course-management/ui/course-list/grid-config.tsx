@@ -55,15 +55,8 @@ export const createGridConfig = (
       label: () => t('LABEL.grid.column.courseName'),
       size: 300,
       render: ({ row }: any) => {
-        const { courseId, wizardStep, courseName } = row.original || {};
-        const isManagementPage = pathname === '/learning/course/management';
-
-        const url = isManagementPage
-          ? '/learning/learning-sequence/enrollment-application'
-          : wizardStep === 'FULL_UPDATE'
-            ? '/learning/course/detail' // 상세 페이지 (5단계 저장 이후)
-            : '/learning/course/create'; // 상세 상세 (5단계 저장 이전)
-
+        const { courseId, courseName } = row.original || {};
+        const url = getDetailUrl(row, pathname);
         return (
           <Link to={url} state={{ courseId, courseName }} className="link">
             {courseName}
@@ -144,4 +137,31 @@ export const createGridConfig = (
     query: queryOptions.all<CoursesQueryParams>,
     columns,
   };
+};
+
+/**
+ * row와 pathname을 받아 해당 row의 상세 페이지 URL을 반환합니다.
+ *
+ * @param {any} row - 그리드의 행 데이터 객체
+ * @param {string} pathname - 현재 페이지의 경로
+ * @returns {string} - 상세 페이지로 이동할 URL
+ *
+ * - 수강관리 화면이면 '/learning/learning-sequence/enrollment-application' 반환
+ * - wizardStep이 'FULL_UPDATE'이면 '/learning/course/detail' 반환 (5단계 저장 이후)
+ * - 그 외에는 '/learning/course/create' 반환 (5단계 저장 이전)
+ */
+const getDetailUrl = (row: any, pathname: string): string => {
+  const { wizardStep } = row.original || {};
+
+  // 수강관리 화면
+  if (pathname === '/learning/course/management') {
+    return '/learning/learning-sequence/enrollment-application'; // 수강관리 > ??
+  }
+
+  // 과정 등록 완료 (5단계 저장 이후)ㄴ
+  if (wizardStep === 'FULL_UPDATE') {
+    return '/learning/course/detail'; // 과정관리 > 상세 페이지
+  }
+
+  return '/learning/course/create'; // 과정관리 > 등록 페이지
 };

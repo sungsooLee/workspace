@@ -92,6 +92,7 @@ export type CourseType = string;
  */
 export interface CourseTabBaseProps {
   activeTab?: CourseTab;
+  setCheckDirtyAndSave?: (checkDirtyAndSave: () => Promise<boolean>) => void;
 }
 
 /**

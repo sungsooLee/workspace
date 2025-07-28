@@ -1,10 +1,15 @@
 import { useNavigate } from '@tanstack/react-router';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-import { usePageState } from '@shared/lib/use-page-state';
-import { ContentViewType, useCourseActions, useCourseCreateInfo } from '../store/use-course-store';
-import { CourseTab } from '../types/type';
 import { useModal } from '@learnway/ui';
+import { usePageState } from '@shared/lib/use-page-state';
+import {
+  ContentViewType,
+  useCheckDirtyForm,
+  useCourseActions,
+  useCourseCreateInfo,
+} from '../store/use-course-store';
+import { CourseTab } from '../types/type';
 
 // 라우터 state에서 전달받는 값의 타입 정의
 interface LocationState {
@@ -20,7 +25,7 @@ export const useCourseCreatePage = () => {
   const { confirmNavigation } = useModal();
   const { courseId, courseType, initialTab } = usePageState<LocationState>();
   const [activeTab, setActiveTab] = useState(initialTab ?? CourseTab.STEP1);
-  const { formState } = useCourseCreateInfo();
+  const checkDirtyForm = useCheckDirtyForm();
 
   const moveCourseListPage = () => {
     navigate({
@@ -32,15 +37,19 @@ export const useCourseCreatePage = () => {
     setActiveTab((state) => selectedTab);
   };
 
-  const handleBeforeChange = async (currentTabKey: string, nextTabKey: string) => {
-    console.log('handleBeforeChange', formState);
-    if (formState.isDirty) {
-      return await confirmNavigation();
-    }
-    return true;
-  };
+  const handleBeforeChange = useCallback(
+    async (currentTabKey: string, nextTabKey: string) => {
+      // console.log('use-course-create-page : callback.checkDirtyForm', checkDirtyForm);
+      if (checkDirtyForm?.()) {
+        return await confirmNavigation();
+      }
+      return true;
+    },
+    [checkDirtyForm, confirmNavigation],
+  );
 
   useEffect(() => {
+    // console.log('use-course-create-page : useEffect.courseId,courseType', formState);
     setCourseCreateInfo({ courseId, courseType, activeTab });
   }, [courseId, courseType, activeTab]);
 

@@ -17,7 +17,6 @@ import { useModal } from '@learnway/ui';
 import { useNavigate } from '@tanstack/react-router';
 import { Course, CourseConfig } from '@types';
 import { useUpdateEffect } from 'ahooks';
-import isEqual from 'lodash/isEqual';
 import {
   TriggerKey,
   useCourseActions,
@@ -32,8 +31,8 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
   const navigate = useNavigate();
   const { updateFormData, formValues, onSubmit, formState } = form;
   const lastTriggered = useCourseLastTriggered();
-  const { courseId, courseType, activeTab, formState: storeFormState } = useCourseCreateInfo();
-  const { setCourseCreateInfo } = useCourseActions();
+  const { courseId, courseType, activeTab } = useCourseCreateInfo();
+  const { setCheckDirtyForm } = useCourseActions();
 
   // courseData를 먼저 가져와서 channelUuid를 확보
   const { data: courseData } = useFetchCourse(courseId);
@@ -142,6 +141,7 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
 
   // 저장/삭제 트리거 감지 effect
   useUpdateEffect(() => {
+    // form이 dirty한 경우 early return
     switch (lastTriggered?.key) {
       case TriggerKey.SAVE:
         handleSave();
@@ -162,12 +162,11 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
     }
   }, [courseData, courseType]);
 
-  // form state 변경 시 코스 생성 정보 업데이트
+  // form state 변경 시 코스 생성 정보 업데이트 - 무한 반복 방지를 위해 제거
   useEffect(() => {
-    if (!isEqual(storeFormState, formState)) {
-      setCourseCreateInfo({ formState });
-    }
-  }, [formState, storeFormState]);
+    // console.log('use-course-create-sub-page : useEffect.formState', formState.isDirty);
+    setCheckDirtyForm(() => formState.isDirty);
+  }, [formState.isDirty]);
 
   return {
     isUpdateMode,
