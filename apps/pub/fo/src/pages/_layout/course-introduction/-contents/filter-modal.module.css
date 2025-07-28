@@ -1,0 +1,12 @@
+/* filter-modal.module.css */
+.start {
+  &.filter_wrap {
+    @apply flex w-full flex-wrap justify-between;
+    .option_card {
+      @apply max-w-[calc(100%-90px)] flex-1 shrink-0;
+    }
+    .btn_more {
+      @apply bg-transparent;
+    }
+  }
+}

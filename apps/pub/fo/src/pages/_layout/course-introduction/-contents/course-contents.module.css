@@ -1,6 +1,13 @@
 /* course-package.module.css */
 .start {
   &.course_contents {
+    @apply relative pb-[56px];
+    .search_wrap {
+      @apply absolute -top-[100px] right-0 flex h-[60px] max-w-[408px] items-center justify-end;
+      [class*='nlp--input'] {
+        @apply ml-[8px] border-[var(--gray75)];
+      }
+    }
     .search_box_wrap {
       @apply rounded-[12px] bg-[var(--blue98)] p-[32px];
       .select_area {
@@ -16,6 +23,12 @@
           [class*='btn'] {
             @apply ml-[8px] w-[73px] shrink-0;
           }
+        }
+      }
+      .select_menu {
+        @apply mt-[24px] flex items-center justify-between border-t-[1px] border-solid border-[var(--gray90)] pt-[24px];
+        .btn_more {
+          @apply !bg-transparent;
         }
       }
     }
@@ -46,6 +59,7 @@
       }
     }
     .banner_wrap {
+      @apply mb-[40px];
       [class*='swiper-pagination-bullets'] {
         @apply !bottom-auto left-[40px] top-[40px] h-[4px] !w-auto;
         [class*='swiper-pagination-bullet'] {
@@ -182,6 +196,9 @@
     .pagination {
       @apply mt-[40px];
     }
+    .shorts_wrap {
+      @apply mt-[24px];
+    }
   }
 }
 
@@ -190,6 +207,9 @@
   @screen mobile {
     .start {
       &.course_contents {
+        .search_wrap {
+          @apply -top-[88px] max-w-[40px];
+        }
         .search_box_wrap {
           @apply p-[24px];
           .select_area {
@@ -220,9 +240,9 @@
               }
             }
             [class*='thumbnail_list'] {
-              @apply ml-0 !auto-cols-max !grid-flow-col overflow-x-auto;
-              & > [class*='thumbnail_item'] {
-                @apply w-[156px];
+              @apply ml-0 !auto-cols-max !grid-flow-col overflow-x-auto pr-[16px];
+              [class*='thumbnail_item'] {
+                @apply !w-[156px];
               }
               [class*='tag_list'],
               [class*='count_info_node'] {
@@ -281,6 +301,49 @@
               [class*='thumbnail_title'] {
                 @apply line-clamp-2;
               }
+            }
+          }
+        }
+        .result_list_wrap {
+          .sort_wrap {
+            @apply relative flex-col flex-wrap items-start;
+            .title {
+              @apply flex h-[36px] w-full items-center pr-[80px];
+            }
+            .sort_area {
+              @apply mt-[8px] flex h-[36px] w-full items-center;
+              [class*='nlp--checkbox'] {
+                @apply mr-auto;
+              }
+              .box {
+                @apply ml-0 flex items-center pl-0;
+                &::before {
+                  @apply mx-[8px] h-[12px] w-[1px] bg-[var(--gray90)] content-[''];
+                }
+              }
+            }
+            .btn_box {
+              @apply absolute right-0 top-0;
+            }
+          }
+          [class*='thumbnail_list'] {
+            &[class*='horizontal'] {
+              @apply !gap-y-[16px];
+              [class*='thumbnail_view'] {
+                @apply !w-[47.5%];
+              }
+            }
+            [class*='tag_list'],
+            [class*='count_info_node'] {
+              @apply hidden;
+            }
+          }
+        }
+        .thumnail_wrap {
+          [class*='thumbnail_list'] {
+            [class*='tag_list'],
+            [class*='count_info_node'] {
+              @apply hidden;
             }
           }
         }

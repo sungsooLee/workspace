@@ -54,6 +54,12 @@
   &.error {
     @apply border-[var(--status1)];
   }
+  &.md {
+    @apply rounded-[6px] border-[var(--gray90)];
+    .input {
+      @apply !h-[34px] !min-h-[34px] px-[16px];
+    }
+  }
   &.lg {
     @apply rounded-[8px] border-[var(--gray90)];
     .input {

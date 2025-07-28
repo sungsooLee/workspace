@@ -1,93 +1,30 @@
 import { FC, useState } from 'react';
 import { cn, getRandomId } from '@learnway/shared';
-import { Link } from '@tanstack/react-router';
-import { Badge, Button, Carousel, Dropdown, Input, Thumbnail } from '@learnway/ui';
+import { Button, Input, Dropdown, Badge, Popover, Checkbox, Pagination } from '@learnway/ui';
 import {
   IcoPlay,
   IcoStar,
   IcoEye,
   IcoHeart,
-  IcoPlus,
   IcoArrowForward,
-  IcoSearch,
+  IcoArrowDown,
+  IcoDotpoints,
+  IcoArray,
 } from '@learnway/icons';
+import { Arrays } from '../../../../features/layout';
 import { isMobile } from 'react-device-detect';
 
 /* ThumbnailList */
 import bannerImg from '@learnway/styles/fo/assets/images/banner/img_banner_sample.jpg';
-import visualImg from '@learnway/styles/fo/assets/images/banner/img_visual_banner.png';
-import shortsImg from '@learnway/styles/fo/assets/images/temp/img_shorts.jpg';
 import ThumbnailList from '../../../-components/thumb/thumb-nail-list';
 
 /* style */
 import styles from './course-contents.module.css';
-import { BannerItem } from './banner-item'; // 상단 배너
-import { ShortsItem } from './shorts-item'; // 하단 shorts
+import dropdownPopoverStyles from '../../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
 
-const CourseHomeComponent: FC = () => {
-  // Search
-  const [selectedValues, setSelectedValues] = useState<string[]>([]);
-  // Banner
-  const bannerData = [
-    {
-      title: '2025 AI 트렌드',
-      text: '사용자의 관심을 사로잡는 \n 23가지 기술',
-      buttonLabel: '더보기',
-      imageUrl: visualImg,
-    },
-    {
-      title: '2025 AI 트렌드2',
-      text: '사용자의 관심을 사로잡는 \n 23가지 기술',
-      buttonLabel: '더보기',
-      imageUrl: visualImg,
-    },
-    {
-      title: '2025 AI 트렌드3',
-      text: '사용자의 관심을 사로잡는 \n 23가지 기술',
-      buttonLabel: '더보기',
-      imageUrl: visualImg,
-    },
-  ];
-  // Shorts
-  const shortsData = [
-    {
-      title: '경청이 리더십의 시작이라는 말, 들어보셨나요?',
-      badgeLabel: '마음챙김',
-      imageUrl: shortsImg,
-    },
-    {
-      title: '경청이 리더십의 시작이라는 말, 들어보셨나요?',
-      badgeLabel: '마음챙김',
-      imageUrl: shortsImg,
-    },
-    {
-      title: '경청이 리더십의 시작이라는 말, 들어보셨나요?',
-      badgeLabel: '마음챙김',
-      imageUrl: shortsImg,
-    },
-    {
-      title: '경청이 리더십의 시작이라는 말, 들어보셨나요?',
-      badgeLabel: '마음챙김',
-      imageUrl: shortsImg,
-    },
-    {
-      title: '경청이 리더십의 시작이라는 말, 들어보셨나요?',
-      badgeLabel: '마음챙김',
-      imageUrl: shortsImg,
-    },
-    {
-      title: '경청이 리더십의 시작이라는 말, 들어보셨나요?',
-      badgeLabel: '마음챙김',
-      imageUrl: shortsImg,
-    },
-    {
-      title: '경청이 리더십의 시작이라는 말, 들어보셨나요?',
-      badgeLabel: '마음챙김',
-      imageUrl: shortsImg,
-    },
-  ];
-
-  const bannerItems = bannerData.map((item, index) => <BannerItem key={index} items={[item]} />);
+const CourseComponent: FC = () => {
+  // dropdown
+  const [searchValues01, setSearchValues01] = useState<string[]>(['대분류']);
 
   // Thumnail
   const item = [
@@ -233,14 +170,11 @@ const CourseHomeComponent: FC = () => {
         </span>,
       ],
     },
-  ];
-
-  // Thumnail
-  const item2 = [
     {
       imageUrl: bannerImg,
-      title: '필수개발과정필수개발과정필필수개발과정필수개발과정필필수개발과정필수개발과정필',
-      tagLabels: ['모바일전용', '사내IP전용', '#AI기술'],
+      title:
+        '일을 쉽게 만드는 문제 해결 사고법 일을 쉽게 만드는 문제 해결 사고법 일을 쉽게 만드는 문제 해결 사고법 ',
+      tagLabels: ['이러닝', '문제해결력', '논리적사고'],
       labelCustomNode: [
         <Badge
           variant="text"
@@ -248,159 +182,17 @@ const CourseHomeComponent: FC = () => {
           size="xs"
           option={{ label: 'New', value: `${getRandomId()}` }}
         />,
-      ],
-      infoCustomNode: [<span>{'패키지'}</span>, <span>{'12개 과정'}</span>],
-      toggleButton: true,
-      countInfoNode: [
-        <span>
-          <IcoStar width={20} height={20} stroke="#0056FF" fill="#0056FF" />
-          <em>{'4.2'}</em>
-        </span>,
-        <span>
-          <IcoHeart width={20} height={20} stroke="#F58B75" fill="#F58B75" />
-          <em>{'153'}</em>
-        </span>,
-      ],
-    },
-    {
-      imageUrl: bannerImg,
-      title: '필수개발과정필수개발과정필필수개발과정필수개발과정필필수개발과정필수개발과정필',
-      tagLabels: ['모바일전용', '사내IP전용', '#AI기술'],
-      labelCustomNode: [
         <Badge
           variant="text"
-          status="primary"
+          status="gray"
           size="xs"
-          option={{ label: 'New', value: `${getRandomId()}` }}
+          option={{ label: '접수중', value: `${getRandomId()}` }}
         />,
-      ],
-      infoCustomNode: [<span>{'패키지'}</span>, <span>{'12개 과정'}</span>],
-      toggleButton: true,
-      countInfoNode: [
-        <span>
-          <IcoStar width={20} height={20} stroke="#0056FF" fill="#0056FF" />
-          <em>{'4.2'}</em>
-        </span>,
-        <span>
-          <IcoHeart width={20} height={20} stroke="#F58B75" fill="#F58B75" />
-          <em>{'153'}</em>
-        </span>,
-      ],
-    },
-  ];
-
-  // Thumnail
-  const item3 = [
-    {
-      imageUrl: bannerImg,
-      title: '단번에 끌리는 메시지, 짧게 쓰는 카피라이팅 공식',
-      tagLabels: ['모바일전용', '사내IP전용', '#AI기술'],
-      infoCustomNode: [
-        <span>{'이러닝'}</span>,
-        <span>
-          <IcoPlay width={16} height={16} stroke="#4C515E" />
-          {'05:00'}
-        </span>,
-      ],
-      toggleButton: true,
-      countInfoNode: [
-        <span>
-          <IcoStar width={20} height={20} stroke="#0056FF" fill="#0056FF" />
-          <em>{'4.2'}</em>
-        </span>,
-        <span>
-          <IcoHeart width={20} height={20} stroke="#F58B75" fill="#F58B75" />
-          <em>{'153'}</em>
-        </span>,
-      ],
-      indexNumber: '1',
-    },
-    {
-      imageUrl: bannerImg,
-      title: '단번에 끌리는 메시지, 짧게 쓰는 카피라이팅 공식',
-      tagLabels: ['모바일전용', '사내IP전용', '#AI기술'],
-      infoCustomNode: [
-        <span>{'이러닝'}</span>,
-        <span>
-          <IcoPlay width={16} height={16} stroke="#4C515E" />
-          {'05:00'}
-        </span>,
-      ],
-      toggleButton: true,
-      countInfoNode: [
-        <span>
-          <IcoStar width={20} height={20} stroke="#0056FF" fill="#0056FF" />
-          <em>{'4.2'}</em>
-        </span>,
-        <span>
-          <IcoHeart width={20} height={20} stroke="#F58B75" fill="#F58B75" />
-          <em>{'153'}</em>
-        </span>,
-      ],
-      indexNumber: '2',
-    },
-    {
-      imageUrl: bannerImg,
-      title: '단번에 끌리는 메시지, 짧게 쓰는 카피라이팅 공식',
-      tagLabels: ['모바일전용', '사내IP전용', '#AI기술'],
-      infoCustomNode: [
-        <span>{'이러닝'}</span>,
-        <span>
-          <IcoPlay width={16} height={16} stroke="#4C515E" />
-          {'05:00'}
-        </span>,
-      ],
-      toggleButton: true,
-      countInfoNode: [
-        <span>
-          <IcoStar width={20} height={20} stroke="#0056FF" fill="#0056FF" />
-          <em>{'4.2'}</em>
-        </span>,
-        <span>
-          <IcoHeart width={20} height={20} stroke="#F58B75" fill="#F58B75" />
-          <em>{'153'}</em>
-        </span>,
-      ],
-      indexNumber: '3',
-    },
-    {
-      imageUrl: bannerImg,
-      title: '단번에 끌리는 메시지, 짧게 쓰는 카피라이팅 공식',
-      tagLabels: ['모바일전용', '사내IP전용', '#AI기술'],
-      infoCustomNode: [
-        <span>{'이러닝'}</span>,
-        <span>
-          <IcoPlay width={16} height={16} stroke="#4C515E" />
-          {'05:00'}
-        </span>,
-      ],
-      toggleButton: true,
-      countInfoNode: [
-        <span>
-          <IcoStar width={20} height={20} stroke="#0056FF" fill="#0056FF" />
-          <em>{'4.2'}</em>
-        </span>,
-        <span>
-          <IcoHeart width={20} height={20} stroke="#F58B75" fill="#F58B75" />
-          <em>{'153'}</em>
-        </span>,
-      ],
-      indexNumber: '4',
-    },
-  ];
-
-  // Thumnail
-  const item4 = [
-    {
-      imageUrl: bannerImg,
-      title: '단번에 끌리는 메시지, 짧게 쓰는 카피라이팅 공식',
-      tagLabels: ['모바일전용', '사내IP전용', '#AI기술'],
-      labelCustomNode: [
         <Badge
           variant="text"
-          status="primary"
+          status="caution"
           size="xs"
-          option={{ label: 'New', value: `${getRandomId()}` }}
+          option={{ label: 'D-7', value: `${getRandomId()}` }}
         />,
       ],
       infoCustomNode: [
@@ -428,7 +220,7 @@ const CourseHomeComponent: FC = () => {
     },
     {
       imageUrl: bannerImg,
-      title: '단번에 끌리는 메시지, 짧게 쓰는 카피라이팅 공식',
+      title: '회의 분위기는 시작 멘트에서 갈린다',
       tagLabels: ['모바일전용', '사내IP전용', '#AI기술'],
       labelCustomNode: [
         <Badge
@@ -436,6 +228,113 @@ const CourseHomeComponent: FC = () => {
           status="primary"
           size="xs"
           option={{ label: 'New', value: `${getRandomId()}` }}
+        />,
+        <Badge
+          variant="text"
+          status="gray"
+          size="xs"
+          option={{ label: '접수중', value: `${getRandomId()}` }}
+        />,
+        <Badge
+          variant="text"
+          status="caution"
+          size="xs"
+          option={{ label: 'D-7', value: `${getRandomId()}` }}
+        />,
+      ],
+      infoCustomNode: [
+        <span>{'라이브'}</span>,
+        <span>
+          <IcoPlay width={16} height={16} stroke="#4C515E" />
+          {'05:00'}
+        </span>,
+      ],
+      toggleButton: true,
+      countInfoNode: [
+        <span>
+          <IcoStar width={20} height={20} stroke="#0056FF" fill="#0056FF" />
+          <em>{'4.2'}</em>
+        </span>,
+        <span>
+          <IcoEye width={20} height={20} fill="none" stroke="#4D525C" />
+          <em>{'78,800'}</em>
+        </span>,
+        <span>
+          <IcoHeart width={20} height={20} stroke="#F58B75" fill="#F58B75" />
+          <em>{'153'}</em>
+        </span>,
+      ],
+    },
+    {
+      imageUrl: bannerImg,
+      title: '목표에서 실행까지: 전략 리더십 전략 프로세스 바로 알기 #1',
+      tagLabels: ['이러닝', '문제해결력', '논리적사고'],
+      labelCustomNode: [
+        <Badge
+          variant="text"
+          status="primary"
+          size="xs"
+          option={{ label: 'New', value: `${getRandomId()}` }}
+        />,
+        <Badge
+          variant="text"
+          status="gray"
+          size="xs"
+          option={{ label: '접수중', value: `${getRandomId()}` }}
+        />,
+        <Badge
+          variant="text"
+          status="caution"
+          size="xs"
+          option={{ label: 'D-7', value: `${getRandomId()}` }}
+        />,
+      ],
+      infoCustomNode: [
+        <span>{'라이브'}</span>,
+        <span>
+          <IcoPlay width={16} height={16} stroke="#4C515E" />
+          {'05:00'}
+        </span>,
+      ],
+      toggleButton: true,
+      countInfoNode: [
+        <span>
+          <IcoStar width={20} height={20} stroke="#0056FF" fill="#0056FF" />
+          <em>{'4.2'}</em>
+        </span>,
+        <span>
+          <IcoEye width={20} height={20} fill="none" stroke="#4D525C" />
+          <em>{'78,800'}</em>
+        </span>,
+        <span>
+          <IcoHeart width={20} height={20} stroke="#F58B75" fill="#F58B75" />
+          <em>{'153'}</em>
+        </span>,
+      ],
+    },
+    {
+      imageUrl: bannerImg,
+      title:
+        '일을 쉽게 만드는 문제 해결 사고법 일을 쉽게 만드는 문제 해결 사고법 일을 쉽게 만드는 문제 해결 사고법 ',
+      tagLabels: ['이러닝', '문제해결력', '논리적사고'],
+      labelCustomNode: [
+        <Badge
+          variant="text"
+          status="primary"
+          size="xs"
+          option={{ label: 'New', value: `${getRandomId()}` }}
+        />,
+        <Badge
+          variant="text"
+          status="gray"
+          size="xs"
+          option={{ label: '접수중', value: `${getRandomId()}` }}
+        />,
+        <Badge
+          variant="text"
+          status="caution"
+          size="xs"
+          option={{ label: 'D-7', value: `${getRandomId()}` }}
         />,
       ],
       infoCustomNode: [
@@ -463,14 +362,27 @@ const CourseHomeComponent: FC = () => {
     },
     {
       imageUrl: bannerImg,
-      title: '단번에 끌리는 메시지, 짧게 쓰는 카피라이팅 공식',
-      tagLabels: ['모바일전용', '사내IP전용', '#AI기술'],
+      title:
+        '일을 쉽게 만드는 문제 해결 사고법 일을 쉽게 만드는 문제 해결 사고법 일을 쉽게 만드는 문제 해결 사고법 ',
+      tagLabels: ['이러닝', '문제해결력', '논리적사고'],
       labelCustomNode: [
         <Badge
           variant="text"
           status="primary"
           size="xs"
           option={{ label: 'New', value: `${getRandomId()}` }}
+        />,
+        <Badge
+          variant="text"
+          status="gray"
+          size="xs"
+          option={{ label: '접수중', value: `${getRandomId()}` }}
+        />,
+        <Badge
+          variant="text"
+          status="caution"
+          size="xs"
+          option={{ label: 'D-7', value: `${getRandomId()}` }}
         />,
       ],
       infoCustomNode: [
@@ -498,7 +410,7 @@ const CourseHomeComponent: FC = () => {
     },
     {
       imageUrl: bannerImg,
-      title: '단번에 끌리는 메시지, 짧게 쓰는 카피라이팅 공식',
+      title: '회의 분위기는 시작 멘트에서 갈린다',
       tagLabels: ['모바일전용', '사내IP전용', '#AI기술'],
       labelCustomNode: [
         <Badge
@@ -506,6 +418,161 @@ const CourseHomeComponent: FC = () => {
           status="primary"
           size="xs"
           option={{ label: 'New', value: `${getRandomId()}` }}
+        />,
+        <Badge
+          variant="text"
+          status="gray"
+          size="xs"
+          option={{ label: '접수중', value: `${getRandomId()}` }}
+        />,
+        <Badge
+          variant="text"
+          status="caution"
+          size="xs"
+          option={{ label: 'D-7', value: `${getRandomId()}` }}
+        />,
+      ],
+      infoCustomNode: [
+        <span>{'라이브'}</span>,
+        <span>
+          <IcoPlay width={16} height={16} stroke="#4C515E" />
+          {'05:00'}
+        </span>,
+      ],
+      toggleButton: true,
+      countInfoNode: [
+        <span>
+          <IcoStar width={20} height={20} stroke="#0056FF" fill="#0056FF" />
+          <em>{'4.2'}</em>
+        </span>,
+        <span>
+          <IcoEye width={20} height={20} fill="none" stroke="#4D525C" />
+          <em>{'78,800'}</em>
+        </span>,
+        <span>
+          <IcoHeart width={20} height={20} stroke="#F58B75" fill="#F58B75" />
+          <em>{'153'}</em>
+        </span>,
+      ],
+    },
+    {
+      imageUrl: bannerImg,
+      title: '목표에서 실행까지: 전략 리더십 전략 프로세스 바로 알기 #1',
+      tagLabels: ['이러닝', '문제해결력', '논리적사고'],
+      labelCustomNode: [
+        <Badge
+          variant="text"
+          status="primary"
+          size="xs"
+          option={{ label: 'New', value: `${getRandomId()}` }}
+        />,
+        <Badge
+          variant="text"
+          status="gray"
+          size="xs"
+          option={{ label: '접수중', value: `${getRandomId()}` }}
+        />,
+        <Badge
+          variant="text"
+          status="caution"
+          size="xs"
+          option={{ label: 'D-7', value: `${getRandomId()}` }}
+        />,
+      ],
+      infoCustomNode: [
+        <span>{'라이브'}</span>,
+        <span>
+          <IcoPlay width={16} height={16} stroke="#4C515E" />
+          {'05:00'}
+        </span>,
+      ],
+      toggleButton: true,
+      countInfoNode: [
+        <span>
+          <IcoStar width={20} height={20} stroke="#0056FF" fill="#0056FF" />
+          <em>{'4.2'}</em>
+        </span>,
+        <span>
+          <IcoEye width={20} height={20} fill="none" stroke="#4D525C" />
+          <em>{'78,800'}</em>
+        </span>,
+        <span>
+          <IcoHeart width={20} height={20} stroke="#F58B75" fill="#F58B75" />
+          <em>{'153'}</em>
+        </span>,
+      ],
+    },
+    {
+      imageUrl: bannerImg,
+      title:
+        '일을 쉽게 만드는 문제 해결 사고법 일을 쉽게 만드는 문제 해결 사고법 일을 쉽게 만드는 문제 해결 사고법 ',
+      tagLabels: ['이러닝', '문제해결력', '논리적사고'],
+      labelCustomNode: [
+        <Badge
+          variant="text"
+          status="primary"
+          size="xs"
+          option={{ label: 'New', value: `${getRandomId()}` }}
+        />,
+        <Badge
+          variant="text"
+          status="gray"
+          size="xs"
+          option={{ label: '접수중', value: `${getRandomId()}` }}
+        />,
+        <Badge
+          variant="text"
+          status="caution"
+          size="xs"
+          option={{ label: 'D-7', value: `${getRandomId()}` }}
+        />,
+      ],
+      infoCustomNode: [
+        <span>{'이러닝'}</span>,
+        <span>
+          <IcoPlay width={16} height={16} stroke="#4C515E" />
+          {'05:00'}
+        </span>,
+      ],
+      toggleButton: true,
+      countInfoNode: [
+        <span>
+          <IcoStar width={20} height={20} stroke="#0056FF" fill="#0056FF" />
+          <em>{'4.2'}</em>
+        </span>,
+        <span>
+          <IcoEye width={20} height={20} fill="none" stroke="#4D525C" />
+          <em>{'78,800'}</em>
+        </span>,
+        <span>
+          <IcoHeart width={20} height={20} stroke="#F58B75" fill="#F58B75" />
+          <em>{'153'}</em>
+        </span>,
+      ],
+    },
+    {
+      imageUrl: bannerImg,
+      title:
+        '일을 쉽게 만드는 문제 해결 사고법 일을 쉽게 만드는 문제 해결 사고법 일을 쉽게 만드는 문제 해결 사고법 ',
+      tagLabels: ['이러닝', '문제해결력', '논리적사고'],
+      labelCustomNode: [
+        <Badge
+          variant="text"
+          status="primary"
+          size="xs"
+          option={{ label: 'New', value: `${getRandomId()}` }}
+        />,
+        <Badge
+          variant="text"
+          status="gray"
+          size="xs"
+          option={{ label: '접수중', value: `${getRandomId()}` }}
+        />,
+        <Badge
+          variant="text"
+          status="caution"
+          size="xs"
+          option={{ label: 'D-7', value: `${getRandomId()}` }}
         />,
       ],
       infoCustomNode: [
@@ -533,166 +600,114 @@ const CourseHomeComponent: FC = () => {
     },
   ];
 
-  // shorts
-  const shortsItems = shortsData.map((item, index) => <ShortsItem key={index} items={[item]} />);
+  const DropdownPopoverCompoment = () => {
+    return (
+      <div className={`${dropdownPopoverStyles.start} ${dropdownPopoverStyles.dropdown_wrap}`}>
+        <Button>20개씩</Button>
+        <Button>50개씩</Button>
+        <Button>80개씩</Button>
+      </div>
+    );
+  };
+
+  const arrays = {
+    items: ['최신순', '과정명순', '조회순'],
+    initialSelectedItem: 0, // 초기 선택값
+  };
+
+  // 리스트 정렬 버튼 제어
+  const [isActive, setIsActive] = useState<boolean>(false);
+
+  const handleButtonClick = () => {
+    isActive ? setIsActive(false) : setIsActive(true);
+  };
 
   return (
     <div className={cn(styles.start, styles.course_contents)}>
-      {/* Search */}
-      <div className={styles.search_wrap}>
-        {!isMobile ? (
-          <>
-            <Dropdown
-              options={[
-                { value: 'type1', label: '전체' },
-                { value: 'type2', label: 'AI 지식 스튜디오' },
-              ]}
-              value={selectedValues}
-              onChange={(selected) => setSelectedValues(selected)}
-              size="md"
-              defaultValue={'type1'}
-            />
-            <Input placeholder={'Text'} inputSize={'md'} showSearchIcon={true} />
-          </>
-        ) : (
-          <Button
-            onlyIcon={true}
-            icon={
-              <IcoSearch width={24} height={24} stroke={'#131C30'} className={styles.btn_search} />
-            }
+      <div className={styles.search_box_wrap}>
+        <div className={styles.select_area}>
+          <Dropdown
+            className={styles.search_select}
+            size="lg"
+            options={[
+              { value: 'a', label: '패키지' },
+              { value: 'b', label: '패키지2' },
+              { value: 'c', label: '패키지3' },
+            ]}
+            value={searchValues01}
+            onChange={(selected) => setSearchValues01(selected)}
           />
-        )}
+          <div className={styles.search_input}>
+            <Input type="text" placeholder="검색어" inputSize={'lg'} />
+            <Button label={'검색'} variant={'primary'} size={'lx'} />
+          </div>
+        </div>
+        <div className={styles.select_menu}>
+          <Button
+            variant={'text'}
+            label={'더보기'}
+            icon={<IcoArrowForward width={20} height={20} stroke="#4D525C" />}
+            iconAlign={'right'}
+            size={'sm'}
+          />
+        </div>
       </div>
-      {/* Banner */}
-      <div className={styles.banner_wrap}>
-        <Carousel
-          items={bannerItems}
-          className={cn(styles.banner_swiper, 'banner_swiper')}
-          loop={true}
-          spaceBetween={8}
-          pagination={{ clickable: true }}
+      <div className={styles.result_list_wrap}>
+        <div className={styles.sort_wrap}>
+          <strong className={styles.title}>
+            교육 패키지<span className={styles.num}>{'178'}</span>개
+          </strong>
+          <div className={styles.sort_area}>
+            <Checkbox label={'학습 가능 과정'} size="sm" className={styles.check_menu} />
+            <Arrays arraysData={arrays} className={styles.array} />
+            <div className={styles.box}>
+              <Popover
+                popoverContent={<DropdownPopoverCompoment />}
+                className={cn(dropdownPopoverStyles.btn, dropdownPopoverStyles.text)}
+                side="bottom"
+                align="end"
+                sideOffset={10}
+              >
+                <span>{'20개씩'}</span>
+                <IcoArrowDown width={16} height={16} stroke="#131C30" />
+              </Popover>
+            </div>
+            <div className={styles.btn_box}>
+              <Button
+                onlyIcon={true}
+                icon={<IcoDotpoints width={20} height={20} fill="none" />}
+                className={cn(styles.btn_order, isActive ? styles.active : null)}
+                onClick={() => handleButtonClick()}
+              />
+              <Button
+                onlyIcon={true}
+                className={cn(styles.btn_order, !isActive ? styles.active : null)}
+                icon={<IcoArray width={20} height={20} fill="#fff" stroke="#131416" />}
+                onClick={() => handleButtonClick()}
+              />
+            </div>
+          </div>
+        </div>
+        {/* Thumnail List */}
+        <ThumbnailList
+          items={item}
+          cols={isActive ? 2 : 4}
+          direction={isActive ? 'horizontal' : 'vertical'}
         />
-      </div>
-      {/* list_box_wrap */}
-      <div className={styles.list_box_wrap}>
-        {/* list_box */}
-        <div className={styles.list_box}>
-          <div className={styles.list_title}>
-            <strong>{'요즘 뜨는 \n AI 트렌드 코스'}</strong>
-            <p>{'함께 배워볼까요?'}</p>
-            <Link to={'/'} className={styles.list_link}>
-              <IcoPlus width={16} height={16} stroke={'#4D525C'} />
-              {'더보기'}
-              <IcoArrowForward width={16} height={16} stroke={'#4D525C'} />
-            </Link>
-          </div>
-          {/* Thumnail List */}
-          <ThumbnailList items={item} cols={!isMobile ? 3 : 2} />
-        </div>
-        {/* list_box */}
-        <div className={styles.list_box}>
-          <div className={styles.list_title}>
-            <strong>{'AI 입문부터 \n 시작'}</strong>
-            <p>{'어디 까지 알고 계신가요?'}</p>
-            <Link to={'/'} className={styles.list_link}>
-              <IcoPlus width={16} height={16} stroke={'#4D525C'} />
-              {'더보기'}
-              <IcoArrowForward width={16} height={16} stroke={'#4D525C'} />
-            </Link>
-          </div>
-          {/* Thumnail List */}
-          <ThumbnailList items={item} cols={!isMobile ? 3 : 2} />
-        </div>
-        {/* list_box */}
-        <div className={styles.list_box}>
-          <div className={styles.list_title}>
-            <strong>{'AI 윤리 & 보안 \n 한 눈에 보기'}</strong>
-            <Link to={'/'} className={styles.list_link}>
-              <IcoPlus width={16} height={16} stroke={'#4D525C'} />
-              {'더보기'}
-              <IcoArrowForward width={16} height={16} stroke={'#4D525C'} />
-            </Link>
-          </div>
-          {/* Thumnail List */}
-          <ThumbnailList items={item} cols={!isMobile ? 3 : 2} />
-        </div>
-      </div>
-      {/* title */}
-      <strong className={styles.menu_title}>{'따로 또 같이, 알차게 준비한 패키지!'}</strong>
-      {/* package_list_wrap */}
-      <div className={styles.package_list_wrap}>
-        <div className={styles.package_banner}>
-          <Thumbnail stacked={true} path={bannerImg} enableHover={false} />
-          <div className={styles.package_copy}>
-            <div className={styles.badge_view}>
-              <Badge
-                variant="text"
-                status="primary"
-                size="xs"
-                option={{ label: 'New', value: `${getRandomId()}` }}
-              />
-              <Badge
-                variant="outline"
-                status="gray"
-                size="xs"
-                option={{ label: '패키지', value: `${getRandomId()}` }}
-              />
-              <Badge
-                variant="outline"
-                status="gray"
-                size="xs"
-                option={{ label: '6개 과정', value: `${getRandomId()}` }}
-              />
-            </div>
-            <div className={styles.title_area}>
-              <strong>{'2025 트렌드'}</strong>
-              <p>{'고객을 설득하는 \n 말하기, 듣기의 23가지 기술'}</p>
-            </div>
-            <div className={styles.count_info}>
-              <span>
-                <IcoEye width={20} height={20} fill="none" stroke="#fff" />
-                <em>{'78,800'}</em>
-              </span>
-              <span>
-                <IcoHeart width={20} height={20} stroke="#F58B75" fill="#F58B75" />
-                <em>{'153'}</em>
-              </span>
-            </div>
-          </div>
-        </div>
-        {/* Thumnail List */}
-        <div className={styles.list_wrapper}>
-          <ThumbnailList items={item2} cols={1} direction={'horizontal'} stacked={true} />
-        </div>
-      </div>
-      {/* title */}
-      <strong className={styles.menu_title}>{'지금 보면 딱! 좋은 인기 과정'}</strong>
-      <div className={styles.thumnail_wrap}>
-        {/* Thumnail List */}
-        <ThumbnailList items={item3} cols={2} direction={!isMobile ? 'horizontal' : 'vertical'} />
-      </div>
-      {/* title */}
-      <strong className={styles.menu_title}>{'따끈따끈한 최신 과정'}</strong>
-      <div className={styles.thumnail_wrap}>
-        {/* Thumnail List */}
-        <ThumbnailList items={item4} cols={2} direction={!isMobile ? 'horizontal' : 'vertical'} />
-      </div>
-      {/* title */}
-      <strong className={styles.menu_title}>{'짧고 빠르게 볼 수 있는 최고 인기 숏츠'}</strong>
-      {/* Shorts */}
-      <div className={styles.shorts_wrap}>
-        <Carousel
-          items={shortsItems}
-          className={cn(styles.shorts_swiper, 'shorts_swiper')}
-          loop={false}
-          slidesPerView={!isMobile ? 6 : 1.8}
-          spaceBetween={20}
-          showNavigation={!isMobile ? true : false}
+        {/* pagination */}
+        <Pagination
+          className={styles.pagination}
+          pageNumber={0}
+          totalPages={5}
+          hidePageSizeOptions={true}
+          hidePageInfo={true}
+          showFirstButton={false}
+          showLastButton={false}
         />
       </div>
     </div>
   );
 };
 
-CourseHomeComponent.displayName = 'CourseHome';
-export const CourseHome = CourseHomeComponent;
+CourseComponent.displayName = 'Course';
+export const Course = CourseComponent;

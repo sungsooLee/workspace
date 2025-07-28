@@ -37,7 +37,8 @@
     &.stacked {
       .image_wrap {
         @apply pt-[14px];
-        span {
+        & > span {
+          @apply relative;
           &::before {
             @apply absolute -top-[7px] left-[12px] z-[1] h-full w-[calc(100%-24px)] rounded-[12px] border-t-[1px] border-solid border-white bg-[var(--gray75)] content-[''];
           }
