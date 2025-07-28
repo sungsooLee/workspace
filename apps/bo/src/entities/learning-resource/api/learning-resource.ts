@@ -55,6 +55,7 @@ import {
   PutETCUpdateRes,
   PutETCChangeParams,
   PutETCChangeRes,
+  FetchTranslationListRes,
 } from '@types';
 
 export default class LearningResourceService {
@@ -83,6 +84,12 @@ export default class LearningResourceService {
     params: ContentCourseMappingParams,
   ): Promise<ContentCourseMappingRes> {
     return httpService.get(`${CMSApiPrefix()}/content/course-mapping/${contentUuid}`, params);
+  }
+
+  static fetchTranslationList(contentUuid: string) {
+    return httpService.get<FetchTranslationListRes>(
+      `${CMSApiPrefix()}/content/${contentUuid}/translation/list`,
+    );
   }
 
   static deleteContent(contentUuid: string): Promise<number> {

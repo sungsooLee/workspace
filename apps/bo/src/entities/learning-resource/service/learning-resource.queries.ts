@@ -35,6 +35,7 @@ export const queryKeys = {
   contents: ['contents'] as const,
   contentDetail: (contentUuid: string) => ['content-detail', contentUuid] as const,
   contentCourseMapping: (contentUuid: string) => ['content-course-mapping', contentUuid] as const,
+  translationList: (contentUuid: string) => ['translation-list', contentUuid] as const,
   deleteContent: ['delete-content'] as const,
   createDraftVideo: ['create-draft-video'] as const,
   videoChange: ['video-change'] as const,
@@ -88,6 +89,13 @@ export const learningResourceQueryOptions = {
   getContentCourseMapping: (contentUuid: string, params: ContentCourseMappingParams) => ({
     queryKey: queryKeys.contentCourseMapping(contentUuid),
     queryFn: () => LearningResourceService.fetchContentCourseMapping(contentUuid, params),
+  }),
+  getTranslationList: (contentUuid: string) => ({
+    queryKey: queryKeys.translationList(contentUuid),
+    queryFn: () => LearningResourceService.fetchTranslationList(contentUuid),
+    cacheTime: 0,
+    staleTime: 0,
+    enabled: !!contentUuid,
   }),
   getLearningResources: (params: any) => ({
     queryKey: queryKeys.learningResources,

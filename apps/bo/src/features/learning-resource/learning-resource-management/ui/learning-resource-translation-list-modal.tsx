@@ -16,6 +16,8 @@ import { ContentCreateType, ContentInformation } from '@types';
 import { useEffect, useState } from 'react';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
 import { cn } from '@learnway/shared';
+import { learningResourceQueryOptions } from '@entities/learning-resource';
+import { useQuery } from '@tanstack/react-query';
 
 interface TranslationListModalComponentProps {
   contentInfo: ContentInformation;
@@ -28,31 +30,29 @@ interface TranslationListData {
 
 function TranslationListModalComponent({ contentInfo }: TranslationListModalComponentProps) {
   const { closeModal } = useModal();
+  const { data: fetchData } = useQuery(
+    learningResourceQueryOptions.getTranslationList(contentInfo.contentUuid),
+  );
+
   const [data, setData] = useState<TranslationListData[]>([]);
-  // useEffect(() => {
-  //   setData(
-  //     flatten(
-  //       scormData.map(({ orgnTitle, items }) =>
-  //         items?.map(({ itemTitle, itemUrl }) => ({
-  //           orgnTitle,
-  //           itemTitle,
-  //           itemUrl,
-  //         })),
-  //       ),
-  //     ),
-  //   );
-  // }, [scormData]);
+  useEffect(() => {
+    if (!fetchData) {
+      setData([]);
+      return;
+    }
+    setData(fetchData);
+  }, [fetchData]);
 
   const columnHelper = createColumnHelper<TranslationListData>();
 
   const columns = [
     columnHelper.accessor('languageCountryCode', {
-      cell: (info) => info.getValue(),
+      cell: (_) => t(`pms.multilingual.LangCountryCode.${_.getValue()}`),
       header: t('번역언어'),
       enableGrouping: false,
     }),
     columnHelper.accessor('createType', {
-      cell: (info) => info.getValue(),
+      cell: (_) => (!_.getValue() ? t('번역필요') : t('번역')),
       header: t('번역상태'),
       enableGrouping: false,
     }),
@@ -81,7 +81,7 @@ function TranslationListModalComponent({ contentInfo }: TranslationListModalComp
               </tr>
               <tr>
                 <th scope="row">{t('언어')}</th>
-                <td>{contentInfo.languageCountryCode}</td>
+                <td>{t(`pms.multilingual.LangCountryCode.${contentInfo.languageCountryCode}`)}</td>
                 <th scope="row">{t('학습자원명')}</th>
                 <td>{contentInfo.contentName}</td>
               </tr>
@@ -94,6 +94,7 @@ function TranslationListModalComponent({ contentInfo }: TranslationListModalComp
             disabledSelectionToggle
             columns={columns}
             data={data}
+            visibleRowCount={30}
           />
         </div>
       </ModalBody>
