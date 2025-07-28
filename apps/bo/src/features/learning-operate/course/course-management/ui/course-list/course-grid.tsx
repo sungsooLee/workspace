@@ -42,7 +42,6 @@ export const CourseGrid: React.FC<CourseGridProps> = ({
   return (
     <GridBox
       config={config}
-      data={[{}]}
       multiple
       showNumberingColumn
       copyButton={{
