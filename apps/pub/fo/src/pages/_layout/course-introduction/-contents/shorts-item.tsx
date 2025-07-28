@@ -24,17 +24,19 @@ const ShortsItemComponent: FC<Itemprops> = ({ items }) => {
       {items.map((item, index) => (
         <div key={index} className={styles.item}>
           <Link to={item.link} className={styles.item_info_wrap}>
-            {item.infoNode && <div className={styles.view_wrap}>{item.infoNode}</div>}
-            {item.badgeLabel && (
-              <Badge
-                variant="outline"
-                status="gray"
-                size="xs"
-                option={{ label: item.badgeLabel, value: index }}
-                className={styles.badge}
-              />
-            )}
-            {item.title && <strong className={styles.title}>{item.title}</strong>}
+            {item.infoNode && <div className={styles.info_wrap}>{item.infoNode}</div>}
+            <div className={styles.title_wrap}>
+              {item.badgeLabel && (
+                <Badge
+                  variant="outline"
+                  status="gray"
+                  size="xs"
+                  option={{ label: item.badgeLabel, value: index }}
+                  className={styles.badge}
+                />
+              )}
+              {item.title && <strong className={styles.title}>{item.title}</strong>}
+            </div>
           </Link>
           {item.imageUrl && <img src={item.imageUrl} alt={''} className={styles.shorts_img} />}
         </div>

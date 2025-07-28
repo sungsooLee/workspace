@@ -4,12 +4,18 @@
     .item {
       @apply relative overflow-hidden rounded-[12px];
       .item_info_wrap {
-        @apply absolute left-0 top-0 block h-full w-full p-[20px];
+        @apply absolute left-0 top-0 flex h-full w-full flex-col justify-between p-[20px];
         .title {
           @apply title4-b line-clamp-2 text-white;
         }
         .badge {
           @apply mb-[12px] inline-flex;
+        }
+        .info_wrap {
+          @apply flex items-center;
+          [class*='nlp--badge'] {
+            @apply mr-[4px];
+          }
         }
       }
     }
