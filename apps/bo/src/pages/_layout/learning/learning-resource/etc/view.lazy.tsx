@@ -1,5 +1,6 @@
-import React from 'react';
-import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
+// IA109 / NLP_BO_CMS_1027, NLP_BO_CMS_1009
+
+import { createLazyFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { Button, ContentsRow, DynamicFormField, InputModalSelectorFormField } from '@learnway/ui';
 import { PageContainer, ContentsButtons, MainContents, SubContents, LinkBox } from '@shared/ui';
@@ -11,7 +12,7 @@ import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '../../../../..
 import { ChannelChoiceModal, ManagerChoiceModal } from '@shared/ui';
 import { BlogInfo } from '@features/learning-resource';
 
-export const Route = createFileRoute('/_layout/learning/resource/view/etc')({
+export const Route = createLazyFileRoute('/_layout/learning/learning-resource/etc/view')({
   component: RouteComponent,
 });
 
