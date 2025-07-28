@@ -1,5 +1,6 @@
-import { httpService } from '@learnway/shared';
+import { omit } from 'lodash';
 import { faker } from '@faker-js/faker';
+import { httpService } from '@learnway/shared';
 import { CMSApiPrefix, PMSApiPrefix } from '@learnway/config';
 import {
   BlogCreateReq,
@@ -46,6 +47,10 @@ import {
   HtmlVideoChangeStatus,
   PostDraftETCParams,
   PostDraftETCRes,
+  ContentExportReq,
+  ContentExportRes,
+  ContentSharingInfoReq,
+  ContentSharingInfoRes,
 } from '@types';
 
 export default class LearningResourceService {
@@ -82,6 +87,21 @@ export default class LearningResourceService {
 
   static fetchCurriculumMapping(contentUuid: string): Promise<boolean> {
     return httpService.get(`${CMSApiPrefix()}/content/curriculum-mapping/${contentUuid}`);
+  }
+
+  static exportContent(body: ContentExportReq): Promise<ContentExportRes> {
+    return httpService.post(
+      `${CMSApiPrefix()}/content/${body.contentUuid}/export`,
+      omit(body, 'contentUuid'),
+    );
+  }
+
+  static fetchContentSharingInfo(params: ContentSharingInfoReq): Promise<ContentSharingInfoRes> {
+    const { contentUuid, tenantId, channelUuid } = params;
+    return httpService.get(`${CMSApiPrefix()}/content/${contentUuid}/channel/sharing`, {
+      tenantId,
+      channelUuid,
+    });
   }
 
   static postContentCopy(contentUuid: string): Promise<PostContentCopyRes> {
