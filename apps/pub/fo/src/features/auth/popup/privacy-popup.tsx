@@ -21,7 +21,7 @@ const PrivacyPopupCompoment = () => {
       <ModalBody>
         <div className={`${styles.start} ${styles.agreement_popup}`}>
           <Dropdown
-            size="lg"
+            size="md"
             options={[
               { value: 'type1', label: '약관 명 YYYY-MM-DD' },
               { value: 'type2', label: '약관 명 YYYY-MM-DD' },

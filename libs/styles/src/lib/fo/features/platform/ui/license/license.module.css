@@ -16,12 +16,7 @@
   @screen mobile {
     .start {
       &.license_wrap {
-        h2 {
-          @apply hidden;
-        }
-        ul {
-          @apply mt-0;
-        }
+        @apply p-[16px] body-sm text-[var(--gray35)];
       }
     }
   }
