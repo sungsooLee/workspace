@@ -21,6 +21,7 @@ import {
   IcoHome03,
   IcoBell02,
   IcoBell03,
+  IcoBell04,
   IcoLinkblank,
   IcoChevronDown,
   IcoChevronLeft,
@@ -312,6 +313,11 @@ function RouteComponent() {
       name: 'IcoBell03',
       Component: <IcoBell03 width={24} height={24} stroke="#4C515E" />,
       file: 'ic_bell_03.svg',
+    },
+    {
+      name: 'IcoBell04',
+      Component: <IcoBell04 width={40} height={40} stroke="#4C515E" />,
+      file: 'ic_bell_04.svg',
     },
     {
       name: 'IcoLinkblank',

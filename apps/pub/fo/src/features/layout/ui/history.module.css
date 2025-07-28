@@ -1,6 +1,35 @@
 .start {
   .history_area {
     @apply p-[32px];
+    .history_list {
+      @apply flex flex-col gap-[24px];
+      > li {
+        @apply relative pl-[44px];
+        &.now {
+          &::after {
+            @apply bg-[var(--blue50)];
+          }
+        }
+        &::after {
+          @apply absolute left-0 top-[5px] h-[12px] w-[12px] rounded-full bg-[var(--gray90)] content-[''];
+        }
+        &::before {
+          @apply absolute left-[5px] top-[23px] h-full w-[1px] bg-[var(--gray90)] content-[''];
+        }
+        .subject {
+          @apply title4-b;
+        }
+        .date {
+          @apply body-md mt-[8px] block text-[var(--gray65)];
+        }
+      }
+    }
+  }
+  .empty {
+    @apply body-lg-b flex flex-col justify-center gap-[20px] py-[24px] text-center;
+    .ico_bell {
+      @apply mx-auto h-[40px] w-[40px];
+    }
   }
 }
 

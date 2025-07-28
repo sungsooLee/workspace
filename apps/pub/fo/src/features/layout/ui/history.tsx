@@ -1,7 +1,7 @@
 import { memo, useState } from 'react';
 
 import { Button, Popover } from '@learnway/ui';
-import { IcoHistory, IcoClose02, IcoBell03 } from '@learnway/icons';
+import { IcoHistory, IcoClose02, IcoBell04 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 
 import styles from './history.module.css';
@@ -34,9 +34,9 @@ const PopoverContent = () => {
       </div>
 
       <div className={styles.history_area}>
-        <ul>
+        <ul className={styles.history_list}>
           {activityList.map((item, index) => (
-            <li key={index}>
+            <li key={index} className={index === 0 ? styles.now : ''}>
               <strong className={styles.subject}>{item.subject}</strong>
               <span className={styles.date}>{item.date}</span>
             </li>
@@ -45,8 +45,8 @@ const PopoverContent = () => {
 
         {/* 최근 학습 활동이 없을경우*/}
         <div className={styles.empty}>
-          <IcoBell03 width={48} height={48} stroke="#a9afbb" className={styles.ico_bell} />
-          최근 학습 활동이 없습니다.
+          <IcoBell04 width={48} height={48} stroke="#a9afbb" className={styles.ico_bell} />
+          <span>최근 학습 활동이 없습니다.</span>
         </div>
       </div>
     </div>
