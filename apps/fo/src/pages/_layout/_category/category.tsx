@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { createFileRoute, Link } from '@tanstack/react-router';
+import { useEffect, useState } from 'react';
+import { createFileRoute, Link, useRouter, useRouterState } from '@tanstack/react-router';
 import { Navigation } from 'swiper/modules';
 
 import { Carousel, ContentsRow, Input, Pagination, Dropdown } from '@learnway/ui';
@@ -16,6 +16,10 @@ export const Route = createFileRoute('/_layout/_category/category')({
 
 function RouteComponent() {
   // const { categoryId } = Route.useParams();
+  const router = useRouter();
+  const routerState = useRouterState();
+  const tenantId = router.state.location.state?.tenantId;
+  const categoryId = router.state.location.state?.categoryId;
 
   const items = [
     <Link to={'/'}>
@@ -47,9 +51,13 @@ function RouteComponent() {
     // 카테고리 필터 변경되면 검색 API 호출
   };
 
+  useEffect(() => {
+    console.log(`2. tenantId=${tenantId} | categoryId=${categoryId}`);
+  }, [routerState.location.state.tenantId, routerState.location.state.categoryId]);
+
   return (
     <div className={styles.start}>
-      {/* ■ 마케팅 영역 
+      {/* ■ 마케팅 영역
 어드민에서 1,2 Depth 화면에서만 노출/비노출 설정 가능*/}
       <div className={styles.swiper}>
         <Carousel
