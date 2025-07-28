@@ -1,3 +1,4 @@
+import { UseFormReturn } from 'react-hook-form';
 import { create } from 'zustand';
 import { CourseDetailTab, CourseTab } from '../types/type';
 
@@ -32,6 +33,7 @@ export interface CourseCreateInfo {
   sequenceId: number;
   activeTab: CourseTab | CourseDetailTab;
   contentViewType: ContentViewType;
+  formState: Pick<UseFormReturn['formState'], 'isDirty'>;
 }
 
 // 코스 상태 타입
@@ -59,6 +61,9 @@ const INITIAL_COURSE_STATE: CourseState = {
     sequenceId: 0,
     contentViewType: ContentViewType.LIST,
     activeTab: CourseTab.STEP1,
+    formState: {
+      isDirty: false,
+    },
   },
 };
 

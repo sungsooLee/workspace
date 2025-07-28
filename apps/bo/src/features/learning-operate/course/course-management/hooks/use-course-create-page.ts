@@ -2,8 +2,9 @@ import { useNavigate } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 
 import { usePageState } from '@shared/lib/use-page-state';
-import { ContentViewType, useCourseActions } from '../store/use-course-store';
+import { ContentViewType, useCourseActions, useCourseCreateInfo } from '../store/use-course-store';
 import { CourseTab } from '../types/type';
+import { useModal } from '@learnway/ui';
 
 // 라우터 state에서 전달받는 값의 타입 정의
 interface LocationState {
@@ -16,9 +17,10 @@ interface LocationState {
 export const useCourseCreatePage = () => {
   const navigate = useNavigate();
   const { trigger, setCourseCreateInfo } = useCourseActions();
-
+  const { confirmNavigation } = useModal();
   const { courseId, courseType, initialTab } = usePageState<LocationState>();
   const [activeTab, setActiveTab] = useState(initialTab ?? CourseTab.STEP1);
+  const { formState } = useCourseCreateInfo();
 
   const moveCourseListPage = () => {
     navigate({
@@ -28,6 +30,14 @@ export const useCourseCreatePage = () => {
 
   const handleChangeTab = (selectedTab: CourseTab) => {
     setActiveTab((state) => selectedTab);
+  };
+
+  const handleBeforeChange = async (currentTabKey: string, nextTabKey: string) => {
+    console.log('handleBeforeChange', formState);
+    if (formState.isDirty) {
+      return await confirmNavigation();
+    }
+    return true;
   };
 
   useEffect(() => {
@@ -41,5 +51,6 @@ export const useCourseCreatePage = () => {
     moveCourseListPage,
     isCreateMode: !courseId,
     contentViewType: ContentViewType,
+    handleBeforeChange,
   };
 };

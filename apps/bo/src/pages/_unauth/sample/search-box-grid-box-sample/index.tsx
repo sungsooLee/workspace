@@ -7,7 +7,7 @@ import { SearchBox } from '@shared/ui/search-box';
 import { createFileRoute } from '@tanstack/react-router';
 import { LabelMessage, LabelMessagesQueryParams } from '@types';
 import { t } from 'i18next';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
 export const Route = createFileRoute('/_unauth/sample/search-box-grid-box-sample/')({
   component: RouteComponent,
@@ -23,6 +23,23 @@ function RouteComponent() {
 
   const handleOnRowDoubleClick = useCallback((row: any) => {
     console.log('handleOnRowDoubleClick.row {} => ', row);
+  }, []);
+
+  const customButtonNode = useMemo(() => {
+    return (
+      <PopoverList
+        options={[
+          { label: 'Menu 1', value: '1' },
+          { label: 'Menu 2', value: '2' },
+          { label: 'Menu 3', value: '3' },
+        ]}
+        onOptionSelect={(option: any) => {
+          console.log('onOptionSelect', option);
+        }}
+      >
+        <Button type="button" variant="point" size="sm" label={'popover'} />
+      </PopoverList>
+    );
   }, []);
 
   return (
@@ -47,7 +64,9 @@ function RouteComponent() {
         <Divider />
         <GridBox
           config={gConfig}
+          selectedRowIds={['3']}
           showNumberingColumn
+          customButtonNode={customButtonNode}
           multiple
           isRowSelectable={(row: LabelMessage) => row.labelMessageMultilingulKey !== 'key5'} // 라벨/메세지 코드 값이 'key5' 인 경우 선택 불가
           onRowDoubleClick={handleOnRowDoubleClick}
@@ -133,16 +152,11 @@ const searchConfig: SearchBoxConfig = {
       },
     ],
   ],
-  validator: {
-    채널: {
-      required: true,
-    },
-  },
 };
 
 const gridConfig = {
   query: queryOptions.all<LabelMessagesQueryParams>,
-  rowId: 'labelMessageName',
+  rowId: 'labelMessageId',
   columns: [
     // 분류
     { name: 'labelMessageType', label: () => t('LABEL.grid.column.type'), size: 100 },

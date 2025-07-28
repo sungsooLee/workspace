@@ -738,7 +738,7 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'course-introduction/package-list',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-07-25',
     lastUpdateDate: '',
     remarks: 'PC/MOBILE 한페이지 작업중',
   },
@@ -748,7 +748,7 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'course-introduction/course-list',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-07-25',
     lastUpdateDate: '',
     remarks: 'PC/MOBILE 한페이지 작업중',
   },

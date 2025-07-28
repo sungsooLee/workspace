@@ -51,6 +51,7 @@ import { EnFormMode } from '@types';
 
 import { useDeployTranslation } from '@entities/translation/service/translation.hook';
 import { PreviewLearningWindow } from '@features/learning-resource/learning-resource-management/ui/preview-learning-window';
+import { CourseType } from '@learnway/types';
 
 export const Route = createLazyFileRoute('/_layout/common-popup')({
   component: RouteComponent,
@@ -805,7 +806,7 @@ const formConfig: DynamicFormConfig = {
       max: 2,
       value: [],
       uuidType: 'files',
-      showDefault: true,
+      showDefault: CourseType.ELEARNING1,
       uploadConfig: {
         affairType: 'CMS',
         s3Path: S3_PATH['upload/content/image'],

@@ -15,6 +15,7 @@ import {
   useS3Uploader,
 } from '@learnway/hooks';
 import { compact, difference, map } from 'lodash';
+import { CourseType } from '@learnway/types';
 
 export interface ThumbnailImageUploadProps {
   /**
@@ -71,7 +72,7 @@ export interface ThumbnailImageUploadProps {
    * 썸네일 변경 콜백
    */
   onChangeValues: Dispatch<SetStateAction<ThumbnailFileValue>>;
-  showDefault?: boolean;
+  showDefault?: boolean | CourseType;
   isLoading?: boolean;
   selected: string;
   onSelected: (uuid: string) => void;

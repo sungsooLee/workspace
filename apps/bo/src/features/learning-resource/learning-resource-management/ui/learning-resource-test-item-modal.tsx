@@ -308,14 +308,19 @@ const LearningResourceTestItemModalComponent = ({
 
   return (
     <ModalContainer>
-      <ModalTitle>{'문항상세'}</ModalTitle>
+      <ModalTitle>{t('문항 상세')}</ModalTitle>
       <ModalBody>
         <form ref={formRef} onSubmit={onSubmit(handleSubmit)}>
           <div className={cn(popupStyles.wrap, styles.start)}>
-            <FormSubTitle label="문제은행 정보" noLine />
+            <FormSubTitle
+              label={t(
+                `${contentInfo.contentType === ContentType.EXAM ? '시험지' : '문제은행'} 정보`,
+              )}
+              noLine
+            />
             <div className={cn(tableStyles.start, tableStyles.wrap)}>
               <table>
-                <caption>{'기본정보'}</caption>
+                <caption>{t('기본 정보')}</caption>
                 <colgroup>
                   <col style={{ width: '240px' }} />
                   <col />
