@@ -54,6 +54,12 @@ const CourseHomeComponent: FC = () => {
       title: '경청이 리더십의 시작이라는 말, 들어보셨나요?',
       badgeLabel: '마음챙김',
       imageUrl: shortsImg,
+      infoNode: (
+        <>
+          <Badge variant={'text'} status={'primary'} option={{ label: 'New', value: '' }} />
+          <span></span>
+        </>
+      ),
     },
     {
       title: '경청이 리더십의 시작이라는 말, 들어보셨나요?',

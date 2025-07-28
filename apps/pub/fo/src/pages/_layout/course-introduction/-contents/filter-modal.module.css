@@ -1,12 +1,45 @@
 /* filter-modal.module.css */
 .start {
   &.filter_wrap {
-    @apply flex w-full flex-wrap justify-between;
+    @apply flex w-full flex-wrap items-center justify-between;
     .option_card {
       @apply max-w-[calc(100%-90px)] flex-1 shrink-0;
     }
-    .btn_more {
-      @apply bg-transparent;
+    .btn_wrap {
+      @apply shrink-0;
+      .btn_more {
+        @apply bg-transparent !px-0;
+      }
+    }
+  }
+}
+
+/* Mobile */
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.filter_wrap {
+        @apply flex-col;
+        .option_card {
+          @apply !grid w-full !max-w-full !auto-cols-max !grid-flow-col overflow-x-auto whitespace-nowrap;
+          [class*='nlp--button'] {
+            @apply !min-h-[36px];
+          }
+        }
+        .btn_wrap {
+          @apply block w-full text-right;
+        }
+      }
+    }
+    .pop_filter {
+      .option_card {
+        [class*='nlp--button'] {
+          @apply min-w-0;
+          & > span {
+            @apply !line-clamp-1;
+          }
+        }
+      }
     }
   }
 }

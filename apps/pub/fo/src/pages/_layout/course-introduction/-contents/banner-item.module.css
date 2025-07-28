@@ -12,7 +12,7 @@
           @apply headline3-b mt-[8px] block whitespace-pre-line text-[var(--gray10)];
         }
         .banner_btn {
-          @apply mt-[24px] inline-flex;
+          @apply mt-[24px] inline-flex !pr-0;
         }
       }
       .banner_img {

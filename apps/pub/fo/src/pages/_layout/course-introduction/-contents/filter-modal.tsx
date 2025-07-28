@@ -40,28 +40,30 @@ const FilterModalComponent: FC = () => {
   return (
     <div className={cn(styles.start, styles.filter_wrap)}>
       <OptionCard
-        options={filter}
+        options={filter.slice(0, 6)}
         multiple
         className={styles.option_card}
         value={filterValue}
         onOptionsSelect={(options: OptionCardItem[]) =>
-          setFilterValue(options.slice(0, 4).map((d: OptionCardItem) => d.value))
+          setFilterValue(options.map((d: OptionCardItem) => d.value))
         }
       />
-      <Button
-        variant={'text'}
-        label={'더보기'}
-        icon={<IcoArrowForward width={20} height={20} stroke="#4D525C" />}
-        iconAlign={'right'}
-        size={'sm'}
-        className={styles.btn_more}
-        onClick={() =>
-          openModal({
-            width: 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
-            content: <FilterPopup />,
-          })
-        }
-      />
+      <div className={styles.btn_wrap}>
+        <Button
+          variant={'text'}
+          label={'더보기'}
+          icon={<IcoArrowForward width={20} height={20} stroke="#4D525C" />}
+          iconAlign={'right'}
+          size={'sm'}
+          className={styles.btn_more}
+          onClick={() =>
+            openModal({
+              width: isMobile ? 'm_full' : 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
+              content: <FilterPopup />,
+            })
+          }
+        />
+      </div>
     </div>
   );
 };
@@ -75,9 +77,9 @@ const FilterPopup = () => {
     <ModalContainer>
       <ModalTitle>{'키워드 노출'}</ModalTitle>
       <ModalBody>
-        <div className={styles.start}>
+        <div className={cn(styles.start, styles.pop_filter)}>
           <OptionCard
-            options={filter}
+            options={filter.slice(1)}
             multiple
             className={styles.option_card}
             value={filterValue2}

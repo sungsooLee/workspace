@@ -27,9 +27,6 @@
       }
       .select_menu {
         @apply mt-[24px] flex items-center justify-between border-t-[1px] border-solid border-[var(--gray90)] pt-[24px];
-        .btn_more {
-          @apply !bg-transparent;
-        }
       }
     }
     .list_box_wrap {
@@ -222,6 +219,9 @@
                 @apply border-[var(--gray75)];
               }
             }
+          }
+          .select_menu {
+            @apply mt-[16px] pt-[16px];
           }
         }
         .list_box_wrap {
