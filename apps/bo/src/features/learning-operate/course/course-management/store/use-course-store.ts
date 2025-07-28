@@ -1,4 +1,3 @@
-import { UseFormReturn } from 'react-hook-form';
 import { create } from 'zustand';
 import { CourseDetailTab, CourseTab } from '../types/type';
 
@@ -33,19 +32,21 @@ export interface CourseCreateInfo {
   sequenceId: number;
   activeTab: CourseTab | CourseDetailTab;
   contentViewType: ContentViewType;
-  formState: Pick<UseFormReturn['formState'], 'isDirty'>;
+  // formState: Pick<UseFormReturn['formState'], 'isDirty'>;
 }
 
 // 코스 상태 타입
 export interface CourseState {
   lastTriggered: { key: TriggerKey; payload?: TriggerPayload } | null; // 마지막 트리거 정보
   courseCreateInfo: CourseCreateInfo; // 코스 생성 정보
+  checkDirtyForm: (() => boolean) | null; // 폼 더티 체크 함수
 }
 
 // 코스 액션 타입
 export interface CourseActions {
   trigger: (key: TriggerKey, payload?: TriggerPayload) => void; // 트리거 실행
   setCourseCreateInfo: (info: Partial<CourseCreateInfo>) => void; // 코스 생성 정보 변경
+  setCheckDirtyForm: (fn: (() => boolean) | null) => void; // 폼 더티 체크 함수 설정
   reset: () => void; // 상태 초기화
 }
 
@@ -61,10 +62,8 @@ const INITIAL_COURSE_STATE: CourseState = {
     sequenceId: 0,
     contentViewType: ContentViewType.LIST,
     activeTab: CourseTab.STEP1,
-    formState: {
-      isDirty: false,
-    },
   },
+  checkDirtyForm: null,
 };
 
 // zustand 스토어 생성
@@ -75,17 +74,20 @@ export const useCourseStore = create<CourseStore>((set) => ({
     set((state) => ({
       courseCreateInfo: { ...state.courseCreateInfo, ...info }, // 코스 생성 정보 병합
     })),
+  setCheckDirtyForm: (fn) => set({ checkDirtyForm: fn }), // 폼 더티 체크 함수 설정
   reset: () => set(INITIAL_COURSE_STATE), // 상태 초기화
 }));
 
 // 셀렉터 훅 (각 상태별로 반환)
 export const useCourseLastTriggered = () => useCourseStore((state) => state.lastTriggered);
 export const useCourseCreateInfo = () => useCourseStore((state) => state.courseCreateInfo);
+export const useCheckDirtyForm = () => useCourseStore((state) => state.checkDirtyForm);
 
 // 액션 훅 (액션만 반환)
 export const useCourseActions = () => {
   const trigger = useCourseStore((state) => state.trigger);
   const setCourseCreateInfo = useCourseStore((state) => state.setCourseCreateInfo);
+  const setCheckDirtyForm = useCourseStore((state) => state.setCheckDirtyForm);
   const reset = useCourseStore((state) => state.reset);
-  return { trigger, setCourseCreateInfo, reset };
+  return { trigger, setCourseCreateInfo, setCheckDirtyForm, reset };
 };

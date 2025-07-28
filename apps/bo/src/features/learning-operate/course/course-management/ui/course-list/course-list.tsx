@@ -5,6 +5,7 @@ import { t } from 'i18next';
 import { useCoursePage } from '../../hooks/use-course-page';
 import { CourseGrid } from './course-grid';
 import { CourseSearchForm } from '../course-search-form/course-search-form';
+import { isLocalhost } from '@learnway/shared';
 
 const CourseListComponent = () => {
   const {
@@ -25,23 +26,27 @@ const CourseListComponent = () => {
   return (
     <PageContainer>
       <ContentsButtons>
-        <Link to="/learning/course/create" className="link">
-          신규 /
-        </Link>
-        <Link to="/learning/course/create" state={{ courseId: 7 }} className="link">
-          등록7 /
-        </Link>
-        <Link
-          to="/learning/course/detail"
-          state={{
-            courseId: 7,
-            courseName: '스마트제조를 위한 스마트공장 구축 및 추진실무 - MES구축',
-          }}
-          className="link"
-        >
-          상세7
-        </Link>
-        <Divider orientation={'vertical'} />
+        {isLocalhost() && (
+          <>
+            <Link to="/learning/course/create" className="link">
+              신규 /
+            </Link>
+            <Link to="/learning/course/create" state={{ courseId: 7 }} className="link">
+              등록7 /
+            </Link>
+            <Link
+              to="/learning/course/detail"
+              state={{
+                courseId: 7,
+                courseName: '스마트제조를 위한 스마트공장 구축 및 추진실무 - MES구축',
+              }}
+              className="link"
+            >
+              상세7
+            </Link>
+            <Divider orientation={'vertical'} />
+          </>
+        )}
         <Button
           type="button"
           variant="point"

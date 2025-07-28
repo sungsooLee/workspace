@@ -305,7 +305,7 @@ export function useGridTable<T extends object>(
 
     const newSelection =
       typeof updaterOrValue === 'function' ? updaterOrValue(rowSelection) : updaterOrValue;
-    console.log('xx2 : newSelection', newSelection);
+    // console.log('xx2 : newSelection', newSelection);
     setRowSelection(newSelection);
   };
 
