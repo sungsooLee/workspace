@@ -1,15 +1,16 @@
 import { FC, memo } from 'react';
 import styles from '@learnway/styles/fo/pages/_learning/side-panel/popup/next-learning-popup.module.css';
+
+import { IcoRefresh02, IcoPrevNext } from '@learnway/icons';
 import {
   ModalBody,
   ModalContainer,
-  ModalTitle,
   ModalFooter,
-  Button,
-  useLearningWindow,
-  useModal,
-} from '@learnway/ui';
-import { IcoRefresh02, IcoPrevNext } from '@learnway/icons';
+  ModalTitle,
+} from '../../../../modal/modal-container';
+import { useModal } from '../../../../modal/modal.hook';
+import { useLearningWindow } from '../../../learnway-learning-window.store';
+import { Button } from '../../../../button/button';
 
 const NextLearningPopupComponent: FC<any> = ({ isNext }) => {
   const { closeModal } = useModal();
