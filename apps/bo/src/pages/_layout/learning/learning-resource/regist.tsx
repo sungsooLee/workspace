@@ -1,6 +1,7 @@
 import { PageContainer } from '@shared/ui';
 // IA105 / NLP_BO_CMS_1058 // IA105 / NLP_BO_CMS_1017 // IA106 / NLP_BO_CMS_1060
 import {
+  usePostDraftETC,
   usePostDraftHTMLVideo,
   usePostDraftScorm,
   usePostDraftVideos,
@@ -14,7 +15,12 @@ import { ChannelChoiceModal } from '@shared/ui';
 import { getDefaultLang, LEARNING_TYPE } from '@learnway/config';
 import { useModal } from '@learnway/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { PostDraftHtmlVideoRes, PostDraftScormRes, PostDraftVideosRes } from '@types';
+import {
+  PostDraftETCRes,
+  PostDraftHtmlVideoRes,
+  PostDraftScormRes,
+  PostDraftVideosRes,
+} from '@types';
 
 import { pick } from 'lodash';
 import { useEffect, useState } from 'react';
@@ -104,6 +110,22 @@ function RouteComponent() {
     },
   });
 
+  const { create: postDraftETC } = usePostDraftETC({
+    onSuccess: (result: PostDraftETCRes) => {
+      return router.navigate({
+        to: getDetailPathByContentType(LEARNING_TYPE.ETC),
+        state: {
+          contentUuid: result.contentUuid,
+        },
+        replace: true,
+      });
+    },
+    onError: (error: any) => {
+      console.error(error);
+      // 에러 얼럿 띄우면서 다시 리스트 화면으로?
+    },
+  });
+
   const uploadVideo = async () => {
     const channelInfo = await openModal({
       content: <ChannelChoiceModal />,
@@ -187,6 +209,39 @@ function RouteComponent() {
     setListParam(pick(channelInfo, ['tenantId', 'channelUuid']));
 
     postDraftHTMLVideo({
+      languageCountryCode: getDefaultLang().toUpperCase(),
+      tenantId: channelInfo.tenantId,
+      channelUuid: channelInfo.channelUuid,
+      fileUuid,
+    });
+  };
+
+  const uploadETC = async () => {
+    const channelInfo = await openModal({
+      content: <ChannelChoiceModal />,
+    });
+    if (!channelInfo) {
+      setSelectedType('');
+      return;
+    }
+
+    const fileUuid = await openModal({
+      content: (
+        <LearningResourceFileUploadModal
+          channel={channelInfo}
+          type={LEARNING_TYPE.ETC}
+          maxFileCount={1}
+        />
+      ),
+      width: 'lg',
+    });
+    if (!fileUuid) {
+      setSelectedType('');
+      return;
+    }
+
+    setListParam(pick(channelInfo, ['tenantId', 'channelUuid']));
+    postDraftETC({
       languageCountryCode: getDefaultLang().toUpperCase(),
       tenantId: channelInfo.tenantId,
       channelUuid: channelInfo.channelUuid,
@@ -284,7 +339,7 @@ function RouteComponent() {
       }
       // 기타
       case LEARNING_TYPE.ETC: {
-        router.navigate({ to: '/learning/resource/etc/view', replace: true });
+        uploadETC();
         break;
       }
     }

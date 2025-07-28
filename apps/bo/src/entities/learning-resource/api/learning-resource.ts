@@ -44,6 +44,8 @@ import {
   GetScormFileChangeRes,
   QuestionsCopyReq,
   HtmlVideoChangeStatus,
+  PostDraftETCParams,
+  PostDraftETCRes,
 } from '@types';
 
 export default class LearningResourceService {
@@ -92,6 +94,10 @@ export default class LearningResourceService {
 
   static postDraftScorm(params: PostDraftScormParams): Promise<PostDraftScormRes> {
     return httpService.post(`${CMSApiPrefix()}/scorm/draft`, params);
+  }
+
+  static postDraftETC(params: PostDraftETCParams): Promise<PostDraftETCRes> {
+    return httpService.post(`${CMSApiPrefix()}/etc/draft`, params);
   }
 
   static putVideoUpdate(params: PutVideoUpdateParams) {

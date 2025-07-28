@@ -18,6 +18,8 @@ export const getDetailPathByContentType = (contentType: string): string => {
       return '/learning/resource/test-paper/view';
     case LEARNING_TYPE.EXAM_POOL:
       return '/learning/resource/question-bank/view';
+    case LEARNING_TYPE.ETC:
+      return '/learning/learning-resource/etc/view';
   }
   return '';
 };

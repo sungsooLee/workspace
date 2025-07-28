@@ -44,6 +44,7 @@ const acceptFiles = {
   ],
   [LEARNING_TYPE.SCORM]: ['ZIP'],
   [LEARNING_TYPE.HTML5_VIDEO]: ['ZIP'],
+  [LEARNING_TYPE.ETC]: ['PPTX', 'DOX', 'DOCX', 'XLS', 'PSD', 'PDF', 'HWP', 'TXT'],
 };
 
 const LearningResourceFileUploadModalComponent: FC<Props> = ({

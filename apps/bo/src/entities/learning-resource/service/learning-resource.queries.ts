@@ -23,6 +23,7 @@ import {
   QuestionStatusUpdateReq,
   RandomQuestionCountUpdateReq,
   TestPaperBasicInfoSaveReq,
+  PostDraftETCParams,
 } from '@types';
 import LearningResourceService from '../api/learning-resource';
 
@@ -185,6 +186,9 @@ export const mutateOptions = {
   }),
   postDraftScorm: () => ({
     mutationFn: (params: PostDraftScormParams) => LearningResourceService.postDraftScorm(params),
+  }),
+  postDraftETC: () => ({
+    mutationFn: (params: PostDraftETCParams) => LearningResourceService.postDraftETC(params),
   }),
   putVideoUpdate: () => ({
     mutationFn: (params: PutVideoUpdateParams) => LearningResourceService.putVideoUpdate(params),
