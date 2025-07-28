@@ -12,6 +12,7 @@ import {
 } from '@learnway/icons';
 import styles from './user-avatar.module.css';
 import popoverInnerStyles from './popover-inner.module.css';
+import languagestyles from './language.module.css';
 
 const PopoverContent = () => {
   const { confirm: openConfirm } = useModal();
@@ -175,14 +176,15 @@ const PopoverContent = () => {
           </div>
         </div>
       ) : (
-        // 언어
-        <div className={styles.lang_area}>
-          <ul className={styles.lang_list}>
+        // 언어 language.tsx 동일
+        // 퍼블수정 20250728 : languagestyles 스타일 */}
+        <div className={languagestyles.lang_area}>
+          <ul className={languagestyles.lang_list}>
             {languages.map((lang) => (
               <li key={lang.value}>
                 <Button
                   label={lang.label}
-                  className={selectedLang === lang.label ? styles.active : ''}
+                  className={selectedLang === lang.label ? languagestyles.active : ''}
                   onClick={() => {
                     console.log(`선택된 언어: ${lang.value}`);
                     setSelectedLang(lang.label); // 언어 라벨 상태 업데이트

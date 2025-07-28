@@ -2,53 +2,52 @@ import { memo, useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import { isMobile } from 'react-device-detect';
 import { useTranslation } from 'react-i18next';
-
 import { Button, Popover } from '@learnway/ui';
 import styles from './language.module.css';
 import popoverInnerStyles from './popover-inner.module.css';
 import { IcoArrowDown, IcoLang, IcoClose02 } from '@learnway/icons';
 
 const PopoverContent = () => {
-  const [activeIdx, setActiveIdx] = useState<number | null>(null);
-  const langs = [
-    'Korea',
-    'English',
-    'French',
-    'Arabic',
-    'Indonesian',
-    'Chinese Taiwan',
-    'Japanese',
-    'Deutsch',
-    'Malay',
-    'Nepali',
-    'Spanish',
-    'Portuguese',
+  const [selectedLang, setSelectedLang] = useState('한국어');
+  const languages = [
+    { label: '한국어 (Korea)', value: 'ko' },
+    { label: 'English (English)', value: 'en' },
+    { label: 'Español (Spanish)', value: 'es' },
+    { label: '(Arabic) العربية', value: 'ar' },
+    { label: 'Русский (Russian)', value: 'ru' },
+    { label: 'Français (French)', value: 'fr' },
+    { label: 'Português (Portuguese)', value: 'pt' },
+    { label: 'Bahasa Indonesia (Indonesian)', value: 'id' },
+    { label: '中文 (Chinese)', value: 'zh' },
+    { label: 'Tiếng Việt (Vietnamese)', value: 'vi' },
+    { label: 'Türkçe (Turkish)', value: 'tr' },
+    { label: 'ไทย (Thai)', value: 'th' },
+    { label: 'Deutsch (German)', value: 'de' },
+    { label: 'עִבְרִית (Hebrew)', value: 'he' },
+    { label: 'नेपाली (Nepali)', value: 'ne' },
+    { label: 'हिन्दी (Hindi)', value: 'hi' },
+    { label: '日本語 (Japanese)', value: 'ja' },
   ];
-  const handleClick = (idx: number): void => {
-    setActiveIdx(idx);
-  };
 
   return (
     <div className={`${styles.start} ${popoverInnerStyles.start}`}>
       <div className={popoverInnerStyles.title_area}>
-        <h2>내정보</h2>
+        <h2>언어</h2>
         <Popover.Close>
           <Button variant="expand" size="sm" onlyIcon>
             <IcoClose02 className={popoverInnerStyles.btn_close} />
           </Button>
         </Popover.Close>
       </div>
-      <div className={styles.lang_wrap}>
+
+      <div className={styles.lang_area}>
         <ul className={styles.lang_list}>
-          {langs.map((langs, idx) => (
-            <li>
+          {languages.map((lang) => (
+            <li key={lang.value}>
               <Button
-                key={idx}
-                className={`${styles.btn} ${activeIdx === idx ? styles.active : ''}`}
-                onClick={() => handleClick(idx)}
-              >
-                {langs}
-              </Button>
+                label={lang.label}
+                className={selectedLang === lang.label ? styles.active : ''}
+              />
             </li>
           ))}
         </ul>
@@ -65,7 +64,6 @@ const LanguageComponent = ({ className }: LanguageComponentProp) => {
   return (
     // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
-      {/* 퍼블수정 20250321 : 언어 분기처리 (pc,mobile) */}
       {isMobile ? (
         <Link to={'/'} className={`${styles.btn_language} ${className}`}>
           <IcoLang className={styles.ic_lang} />
