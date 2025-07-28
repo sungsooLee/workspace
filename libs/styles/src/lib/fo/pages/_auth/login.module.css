@@ -11,7 +11,22 @@
       .id_save {
       }
       .info {
-        @apply label-lg flex gap-[24px] text-[var(--gray35)];
+        @apply label-lg flex text-[var(--gray35)];
+        a,
+        button {
+          @apply relative flex text-[var(--gray35)];
+          &::before {
+            @apply relative top-[3px] mx-[12px] h-[12px] w-[1px] bg-[var(--gray85)] content-[''];
+          }
+          &:first-child {
+            &::before {
+              @apply hidden;
+            }
+          }
+          &:hover {
+            @apply underline;
+          }
+        }
       }
     }
     .btn_box {
@@ -22,39 +37,48 @@
     }
 
     .sns_login {
-      @apply relative mt-[40px] text-center;
+      @apply relative mt-[48px] pb-[36px] text-center;
       .list {
         @apply mt-[24px] flex items-center justify-center gap-[24px];
         > li {
           @apply h-[48px] w-[48px];
+          button {
+            @apply !h-full !w-full !p-0;
+            img {
+              @apply h-full w-full;
+            }
+          }
         }
       }
       &::before {
-        @apply absolute left-[0] top-[12px] block h-[1px] w-full bg-[var(--gray4)] content-[""];
+        @apply absolute left-[0] top-[12px] block h-[1px] w-full bg-[var(--gray90)] content-[""];
         z-index: 0;
       }
       .tit_sns {
-        @apply body_2_r relative m-auto inline-block h-[26px] w-[180px] bg-[var(--white)] text-[var(--gray7)];
+        @apply body-sm relative m-auto inline-block h-[26px] w-[140px] bg-[var(--white)] text-[var(--gray35)];
         z-index: 2;
       }
       .noti {
-        @apply body_bo_2_r mt-[24px] text-[var(--gray7)];
+        @apply body-xsm mt-[24px] text-[var(--gray35)];
       }
     }
 
     .login_guide {
-      @apply body_3_r flex h-[56px] items-center justify-center border-t border-solid border-[var(--gray4)] text-[var(--gray7)];
-      .btn_join {
-        @apply text-[var(--secondary3)];
-      }
-      a {
-        @apply underline;
-        + a {
-          @apply ml-[16px];
+      @apply label-lg mt-[24px] flex items-center justify-center text-[var(--gray35)];
+      a,
+      button {
+        @apply relative flex;
+        &::before {
+          @apply relative top-[3px] mx-[12px] h-[12px] w-[1px] bg-[var(--gray85)] content-[''];
         }
-      }
-      svg {
-        @apply mr-[4px];
+        &:first-child {
+          &::before {
+            @apply hidden;
+          }
+        }
+        &:hover {
+          @apply underline;
+        }
       }
     }
   }
@@ -72,15 +96,12 @@
         .login_info {
           .id_save {
             label {
-              @apply text-[1.4rem];
             }
           }
           .info {
-            @apply body_3_r;
           }
         }
         .btn_box {
-          @apply mt-[24px];
           .btn {
           }
         }
@@ -88,9 +109,7 @@
         .sns_login {
           @apply mt-[40px];
           .list {
-            @apply mt-[24px] gap-[24px];
             > li {
-              @apply h-[48px] w-[48px];
             }
           }
           &::before {
@@ -98,26 +117,13 @@
             z-index: 0;
           }
           .tit_sns {
-            @apply body_3_r h-[22px] w-[140px];
             z-index: 2;
           }
           .noti {
-            @apply body_bo_2_r m-auto mt-[24px] max-w-[250px];
           }
         }
 
         .login_guide {
-          @apply body_3_r flex h-auto border-t-[0] pb-[16px] pt-[12px];
-          .btn_join {
-          }
-          a {
-            + a {
-              @apply ml-[16px];
-            }
-          }
-          svg {
-            @apply mr-[4px];
-          }
         }
       }
     }
