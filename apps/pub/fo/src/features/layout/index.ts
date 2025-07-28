@@ -59,3 +59,4 @@ export * from './ui/package-card';
 export * from './ui/package-card-list';
 export * from './ui/history-contents';
 export * from './ui/course-introduction/course-related-process';
+export * from './popup/setting-language-popup';

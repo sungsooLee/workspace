@@ -69,6 +69,31 @@ function RouteComponent() {
           </Button>
         </div>
 
+        <div className={styles.sns_login}>
+          <h3 className={styles.tit_sns}>소셜 로그인</h3>
+          <ul className={styles.list}>
+            <li>
+              <Button>
+                <img src={snsNaverImage} alt="naver" />
+              </Button>
+            </li>
+            <li>
+              <Button>
+                <img src={snskakaoImage} alt="kakao" />
+              </Button>
+            </li>
+            {/* 영문 시 : 구글로그인만 출력 */}
+            <li>
+              <Button>
+                <img src={snsGoogleImage} alt="google" />
+              </Button>
+            </li>
+          </ul>
+          <div className={styles.noti}>
+            회사 메일로 회원가입 이후 SNS 간편회원으로 로그인 할 수 있습니다.
+          </div>
+        </div>
+
         <div className={styles.login_guide}>
           <span>
             <Link to="/progress-status-cert">회원 가입 현황</Link>

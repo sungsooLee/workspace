@@ -411,6 +411,17 @@ export interface GridBoxPagination {
    * @param {number} pageSize 변경된 페이지 크기
    */
   onPageSizeChange?: (pageSize: number) => void;
+
+  /**
+   * 드래그 앤 드롭 활성화 여부
+   */
+  enableDragAndDrop?: boolean;
+
+  /**
+   * 드래그 앤 드롭 완료 시 호출되는 콜백 함수
+   */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onDragEnd?: (reorderedData: any[]) => void;
 }
 
 export interface ExcelConfig {

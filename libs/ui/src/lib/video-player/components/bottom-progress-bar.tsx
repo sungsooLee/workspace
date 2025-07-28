@@ -52,9 +52,9 @@ const BottomProgressBar = (props: VideoPlayerContainerProps) => {
       </div>
       <div className={styles.option}>
         <div className={styles.left}>
-          <button>
+          {/* <button>
             <IcoPrevPlayFill width={isMobile ? 16 : 24} height={isMobile ? 16 : 24} />
-          </button>
+          </button> */}
           <button onClick={props.togglePlay}>
             {props.playing ? (
               <IcoVideoStop width={isMobile ? 16 : 24} height={isMobile ? 16 : 24} fill="#fff" />
@@ -122,9 +122,9 @@ const BottomProgressBar = (props: VideoPlayerContainerProps) => {
           </div>
           <button onClick={props.toggleFullscreen}>
             {props.isFullscreen ? (
-              <IcoReduce width={isMobile ? 16 : 24} height={isMobile ? 16 : 24} />
+              <IcoReduce width={isMobile ? 16 : 24} height={isMobile ? 16 : 24} stroke="#fff" />
             ) : (
-              <IcoExpand width={isMobile ? 16 : 24} height={isMobile ? 16 : 24} />
+              <IcoExpand width={isMobile ? 16 : 24} height={isMobile ? 16 : 24} stroke="#fff" />
             )}
           </button>
         </div>

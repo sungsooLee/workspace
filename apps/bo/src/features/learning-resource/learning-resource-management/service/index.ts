@@ -1,3 +1,5 @@
+export * from './html-video/use-fetch-html-video-info';
+
 export * from './test-paper/common';
 export * from './test-paper/type';
 export * from './test-paper/use-exam-basic-info-form';

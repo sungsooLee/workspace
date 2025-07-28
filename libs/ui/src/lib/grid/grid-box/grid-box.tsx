@@ -62,6 +62,8 @@ const GridBoxComponent = <T extends object>(
     onRemoveAllClick,
     onSearchClick,
     excelButtons,
+    enableDragAndDrop,
+    onDragEnd,
     selectedRowIds,
     ...props
   }: GridBoxProps<T>,
@@ -419,6 +421,8 @@ const GridBoxComponent = <T extends object>(
         onTableInstanceChange={handleTableInstanceChange}
         isRowSelectable={props.isRowSelectable as ((row: object) => boolean) | undefined}
         getRowClassName={props.getRowClassName as ((row: object) => string) | undefined}
+        enableDragAndDrop={enableDragAndDrop}
+        onDragEnd={onDragEnd as ((reorderedData: object[]) => void) | undefined}
         selectedRowIds={selectedRowIds?.map(String)}
       />
       {/* 페이지네이션 */}

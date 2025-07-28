@@ -566,7 +566,6 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
                 }
               />
             </ContentsRow>
-            {/** TODO. 유저그룹 팝업 작업 후 수정 */}
             <ContentsRow>
               <FormRow
                 provider={provider}

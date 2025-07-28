@@ -4,6 +4,7 @@ import ReactPlayer from 'react-player';
 import { EnLibGlobalConst } from '@learnway/types';
 import { VideoPlayerContainerProps } from '../types/video-player-container.type';
 import { useTranslation } from 'react-i18next';
+import { useLanguageMap } from '@learnway/hooks';
 type UseVideoPlayer = {
   onProgressCallback?: (state: { played: number; playedSeconds: number; speed: number }) => void;
   gotoBeforeLesson?: () => void;
@@ -81,6 +82,8 @@ export const useVideoPlayer = ({
   const [isFirstLoad, setIsFirstLoad] = useState(true);
   const [videoStart, setVideoStart] = useState<number>(0);
 
+  const { getLanguageName } = useLanguageMap();
+
   const resetReactPlayerConfig = (subtitles: any[]) => {
     if (!subtitles) return;
     let nowSubtitle;
@@ -120,10 +123,7 @@ export const useVideoPlayer = ({
             src: subItem.subtitleUrl,
             srcLang: subItem.languageCountryCode,
             default: false,
-            label: transT(
-              `${EnLibGlobalConst.SYSTEM_COMMON_CODE}.pms.multilingual.LangCountryCode.${subItem.languageCountryCode}`,
-              subItem.languageCountryCode,
-            ),
+            label: getLanguageName(subItem.languageCountryCode),
           });
         });
 

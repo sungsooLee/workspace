@@ -1,0 +1,41 @@
+.starContainer {
+  display: inline-flex;
+  gap: 4px;
+  line-height: 0;
+}
+
+/* Gap sizes based on star size */
+.gap-small {
+  gap: 2px;
+}
+
+.gap-medium {
+  gap: 4px;
+}
+
+.gap-large {
+  gap: 6px;
+}
+
+/* Star icon styles */
+.starIcon {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.starIcon:hover:not(.readonly) {
+  transform: scale(1.1);
+}
+
+.readonly {
+  cursor: default;
+}
+
+/* Active and inactive states */
+.active {
+  fill: #ffb800; /* Default active color */
+}
+
+.inactive {
+  fill: #e5e5e5; /* Default inactive color */
+}

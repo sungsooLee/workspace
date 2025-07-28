@@ -6,7 +6,7 @@ import { useScormResource } from '@entities/learning-resource';
 import { formatBytes } from '@learnway/shared';
 import { useCallback, useMemo } from 'react';
 import { max } from 'lodash';
-import { PreviewLearningWindow } from './preview-learning-window';
+import { PreviewLearningWindow } from '../../../../shared/ui/modal/preview-learning-window';
 import { LearningResourceFileUploadModal } from './learning-resource-file-upload-modal';
 import { LEARNING_TYPE } from '@learnway/config';
 import { t } from 'i18next';

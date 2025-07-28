@@ -18,19 +18,18 @@
     @apply label-md-b ml-[6px] mr-[4px] inline-block text-[var(--gray10)];
   }
 }
-.language_content {
-  @apply rounded-[8px] border border-solid border-[var(--gray6)] bg-[var(--white)] p-[8px] shadow-[0px_2px_10px_rgba(0,0,0,0.08)];
-  .lang_wrap {
-    .lang_list {
-      @apply flex max-w-[400px] flex-wrap;
-      li {
-        @apply body_3_r w-[calc(100%/2)] min-w-[188px];
-        .btn {
-          @apply box-border block h-full w-full rounded-[4px] px-[12px] py-[12px] text-left text-[var(--gray9)];
-          &.active,
-          a:hover {
-            @apply bg-[var(--secondary5)];
-          }
+
+/* 언어 */
+.lang_area {
+  @apply max-h-[calc(100vh-170px)] overflow-y-auto px-[32px] py-[24px];
+  .lang_list {
+    @apply flex flex-col justify-start;
+    > li {
+      button {
+        @apply ellipsis label-xl w-full !rounded-none px-[12px] py-[11px] text-left;
+        &:hover,
+        &.active {
+          @apply label-xl-b !bg-none text-[var(--blue65)];
         }
       }
     }

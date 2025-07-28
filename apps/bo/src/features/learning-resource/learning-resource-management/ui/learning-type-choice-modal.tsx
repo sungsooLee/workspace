@@ -28,7 +28,6 @@ import {
 } from '@learnway/ui';
 import { useState } from 'react';
 import { LEARNING_TYPE } from '@learnway/config';
-import { getRandomId } from '@learnway/shared';
 import { EbookInstallGuideModal } from './e-book-install-guide-modal';
 
 // 학습 유형 선택 팝업 컴포넌트
@@ -149,7 +148,7 @@ const learningTypes = [
     icon: <IcoSurvey />,
     description: '설명문구2줄설명',
   },
-  { label: '기타', value: getRandomId(), icon: <IcoEtc />, description: '설명문구2줄설명' },
+  { label: '기타', value: LEARNING_TYPE.ETC, icon: <IcoEtc />, description: '설명문구2줄설명' },
   {
     label: '라이브',
     value: LEARNING_TYPE.LIVE,

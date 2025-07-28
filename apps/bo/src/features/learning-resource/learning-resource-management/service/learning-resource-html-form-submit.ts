@@ -1,11 +1,6 @@
 import { ContentAddInfoType, HtmlVideoMetadataReq, Tag } from '@types';
 
-export const getPayloadFromHtmlMetadataSubmit = (options: {
-  data: any;
-  tenantId: number;
-  // mode: 'draft' | 'complete';
-  contentUuid: string;
-}) => {
+export const getPayloadFromHtmlMetadataSubmit = (options: { data: any; contentUuid: string }) => {
   console.log(options.data);
   const payload: HtmlVideoMetadataReq = {
     contentUuid: options.contentUuid,
@@ -16,7 +11,6 @@ export const getPayloadFromHtmlMetadataSubmit = (options: {
     description: options.data.description,
     coordinatorUuid: options.data.coordinatorUuid,
     coordinatorName: options.data.coordinatorName,
-    // coordinatorTelCountryCode: options.data.coordinatorTelCountryCode,
     coordinatorTelNo: options.data.coordinatorTelNo,
     contentUseStartDate: options.data.contentUseDate?.from,
     contentUseEndDate: options.data.contentUseDate?.to,
@@ -25,7 +19,6 @@ export const getPayloadFromHtmlMetadataSubmit = (options: {
     vendorCode: options.data.vendorCode,
     vendorName: options.data.vendorName,
     vendorCoordinatorName: options.data.vendorCoordinatorName,
-    // vendorTelCountryCode: options.data.vendorTelCountryCode,
     vendorTelNo: options.data.vendorTelNo,
     isCourseUsed: options.data.isCourseUsed,
     isContentSecured: options.data.isContentSecured,

@@ -80,6 +80,15 @@ export interface PostDraftHtmlVideoParams {
   fileUuid: string;
 }
 
+export interface HtmlVideoChangeStatus {
+  changeId: number;
+  contentUuid: string;
+  fileUuid: string;
+  processingStatus: ProcessingStatus;
+}
+
+export type PostDraftETCParams = PostDraftHtmlVideoParams;
+
 export interface Resource {
   resourceId: number;
   startFile: string;
@@ -263,6 +272,13 @@ export interface PostDraftVideosRes {
 }
 
 export type PostDraftScormRes = PostDraftVideosRes;
+
+export interface PostDraftETCRes {
+  contentUuid: string;
+  contentType: ContentType;
+  contentStatusCode: ContentStatusCode;
+  isDrafted: boolean;
+}
 
 export interface PostDraftHtmlVideoRes {
   contentUuid: string;
@@ -494,6 +510,10 @@ export interface PutVideoChangeParams {
 
 export type PutScormChangeParams = PutVideoChangeParams;
 
+export type PutETCChangeParams = PutVideoChangeParams;
+
+export interface PutETCChangeRes {}
+
 export interface PutVideoChangeRes {
   resourceId: number;
   contentUuid: string;
@@ -531,6 +551,12 @@ export interface PutScormUpdateRes extends ContentInformation {
   fileChagngeId: number | null;
   processingStatus: ProcessingStatus;
   children: ScormOrgn[];
+}
+
+export type PutETCUpdateParams = ContentBaseInfo;
+
+export interface PutETCUpdateRes extends ContentInformation {
+  fileChangeId: number | null;
 }
 
 export enum EnQuestionType {
@@ -617,4 +643,34 @@ export interface QuestionListForRetrieveRes {
 export interface QuestionsCopyReq {
   examPoolContentUuid: string;
   questionUuidList: string[];
+}
+
+export interface ContentExportReq {
+  contentUuid: string;
+  tenantId: number;
+  destChannelUuid: string;
+  languageCountryCode: string;
+}
+
+export interface ContentExportRes {
+  srcTenantId: number;
+  srcChannelUuid: string;
+  srcContentUuid: string;
+  destTenantId: number;
+  destChannelUuid: string;
+  destContentUuid: string;
+  languageCountryCode: string;
+  createType: ContentCreateType;
+  contentType: ContentType;
+}
+
+export interface ContentSharingInfoReq {
+  contentUuid: string;
+  tenantId: number;
+  channelUuid: string;
+}
+
+export interface ContentSharingInfoRes {
+  isPossible: boolean;
+  reason: string;
 }

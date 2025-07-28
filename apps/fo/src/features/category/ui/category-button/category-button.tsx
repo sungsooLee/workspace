@@ -1,104 +1,95 @@
 import { useEffect, useState } from 'react';
-import { useRouter, useRouterState } from '@tanstack/react-router';
+import { useRouter } from '@tanstack/react-router';
 
-import { Button, ModalBody, ModalContainer, ModalTitle, Popover, useModal } from '@learnway/ui';
-import { IcoArray, IcoArrowForward, IcoMenu02 } from '@learnway/icons';
-
-import { CategoryNavigationPopover } from '../category-navigation-popover/category-navigation-popover';
+import { Button, ModalBody, ModalContainer, ModalTitle, useModal } from '@learnway/ui';
+import { IcoArray, IcoArrowForward } from '@learnway/icons';
 
 import styles from '@learnway/styles/fo/features/category/category-button.module.css';
 import { RecentVisits } from '@features/layout';
 import { cn } from '@learnway/shared';
-import { useFetchAuthUser } from '@learnway/auth/entities';
 import { useCategoryTree } from '@entities/category';
+import { useFetchAuthUser } from '@learnway/auth/entities';
 
 interface CategoryPopupProps {
-  isOpen: boolean;
+  id: number;
+  onNavigate: (tenantId:number, categoryId: number) => void;
 }
 
-type MainItem = { id: number; label: string };
-type SubItem = { id: number; label: string };
+type MainItem = { id: number; label: string, isChild: boolean };
+type SubItem = { id: number; label: string, parentId: number, isChild: boolean };
 type ChildItem = { id: number; label: string };
 
-const mainData: MainItem[] = [
-  { id: 1, label: '기업경영' },
-  { id: 2, label: '리더십/비즈스킬' },
-  { id: 3, label: '어학' },
-  { id: 4, label: 'HR/총무' },
-  { id: 5, label: '경영/기획' },
-  { id: 6, label: '고객서비스' },
-  { id: 7, label: '마케팅 및 세일즈' },
-  { id: 8, label: '법무/보안' },
-  { id: 9, label: '생산' },
-  { id: 10, label: '서비스' },
-  { id: 11, label: '연구개발' },
-  { id: 12, label: '품질' },
-  { id: 13, label: '안전' },
-  { id: 14, label: '기타' },
-];
+const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
+  const [mainData, setMainData] = useState<MainItem[]>([]);
+  const [subData, setSubData] = useState<SubItem[]>([]);
+  const [childData, setChildData] = useState<ChildItem[]>([]);
 
-const subData: SubItem[] = [
-  { id: 1, label: '기업경영' },
-  { id: 2, label: '리더십/비즈스킬' },
-  { id: 3, label: '어학' },
-  { id: 4, label: 'HR/총무' },
-  { id: 5, label: '경영/기획' },
-  { id: 6, label: '고객서비스' },
-  { id: 7, label: '마케팅 및 세일즈' },
-  { id: 8, label: '법무/보안' },
-  { id: 9, label: '생산' },
-  { id: 10, label: '서비스' },
-  { id: 11, label: '연구개발' },
-  { id: 12, label: '품질' },
-  { id: 13, label: '안전' },
-  { id: 14, label: '기타' },
-];
-
-const childData: ChildItem[] = [
-  { id: 1, label: '기업경영' },
-  { id: 2, label: '리더십/비즈스킬' },
-  { id: 3, label: '어학' },
-  { id: 4, label: 'HR/총무' },
-  { id: 5, label: '경영/기획' },
-  { id: 6, label: '고객서비스' },
-  { id: 7, label: '마케팅 및 세일즈' },
-  { id: 8, label: '법무/보안' },
-  { id: 9, label: '생산' },
-  { id: 10, label: '서비스' },
-  { id: 11, label: '연구개발' },
-  { id: 12, label: '품질' },
-  { id: 13, label: '안전' },
-  { id: 14, label: '기타' },
-];
-
-const PopupContent = () => {
-  const [activeId, setActiveId] = useState<number>(mainData[0].id);
+  const [activeId, setActiveId] = useState<number>();
   const [activeSubId, setActiveSubId] = useState<number>();
   const [activeChildId, setActiveChildId] = useState<number>();
-  const [tenantId, setTenantId] = useState<number>(0);
+  const [tenantId, setTenantId] = useState<number>(id);
 
-  const { data: loginUser } = useFetchAuthUser();
-  // const { data: categoryTree} = useCategoryTree(tenantId);
+  const { data: categoryTree, refetch: categoryRefetch} = useCategoryTree(tenantId);
 
-  const menuHandleClick = (id: number) => {
+  const menuHandleClick = (id: number, isChild: boolean) => {
     setActiveId(id);
+    if( isChild ) {
+      // 2 Depth
+      const subTreeData = categoryTree.children.filter( (item: any) => item.id === id)[0];
+      const twoDepthData = subTreeData.children.map( (item: any) => {
+        return {
+          id: item.id,
+          label: item.name,
+          parentId: subTreeData.id,
+          isChild: item.children.length > 0 ? true : false,
+        }
+      });
+      setSubData(twoDepthData);
+    } else {
+      setSubData([]);
+      onNavigate(tenantId, id);
+    }
   };
 
-  const subMenuHandleClick = (id: number) => {
+  const subMenuHandleClick = (id: number, parentId: number, isChild: boolean) => {
     setActiveSubId(id);
+    if( isChild ) {
+      // 3 Depth
+      const subTreeData = categoryTree.children.filter( (item: any) => item.id === parentId)[0];
+      const twoDepthData = subTreeData.children.filter( (item: any) => item.id === id)[0];
+      const threeDepthData = twoDepthData.children.map( (item: any) => {
+        return {
+          id: item.id,
+          label: item.name,
+        }
+      })
+      setChildData(threeDepthData);
+    } else {
+      setChildData([]);
+      onNavigate(tenantId, id);
+    }
   };
 
   const childMenuHandleClick = (id: number) => {
     setActiveChildId(id);
+    onNavigate(tenantId, id);
   };
 
   useEffect(() => {
-    if (!loginUser) return;
-
-    if (loginUser.activeTenant) {
-      setTenantId(loginUser.activeTenant.tenantId);
+    if( categoryTree ) {
+      console.log('### categoryTreeData => ', categoryTree);
+      const mainTreeData: any[] = categoryTree.children;
+      // 1 Depth
+      const oneDepthData = mainTreeData.map(item => {
+        return {
+          id: item.id,
+          label: item.name,
+          isChild: item.children.length > 0 ? true : false,
+        }
+      })
+      setMainData(oneDepthData);
     }
-  }, [loginUser]);
+  }, [categoryTree]);
 
   return (
     <ModalContainer className={styles.modal_container}>
@@ -117,9 +108,9 @@ const PopupContent = () => {
                         className={activeId === item.id ? styles.active : ''}
                         label={item.label}
                         icon={
-                          activeId === item.id && <IcoArrowForward className={styles.ico_arrow} />
+                          item.isChild && <IcoArrowForward className={styles.ico_arrow} />
                         }
-                        onClick={() => menuHandleClick(item.id)}
+                        onClick={() => menuHandleClick(item.id, item.isChild)}
                       />
                     </li>
                   ))}
@@ -136,11 +127,11 @@ const PopupContent = () => {
                         className={activeSubId === item.id ? styles.active : ''}
                         label={item.label}
                         icon={
-                          activeSubId === item.id && (
+                          item.isChild && (
                             <IcoArrowForward className={styles.ico_arrow} />
                           )
                         }
-                        onClick={() => subMenuHandleClick(item.id)}
+                        onClick={() => subMenuHandleClick(item.id, item.parentId, item.isChild)}
                       />
                     </li>
                   ))}
@@ -172,7 +163,7 @@ const PopupContent = () => {
   );
 };
 
-export const CategoryButton = () => {
+export const CategoryButton = ( {tenantId}: {tenantId?: number}) => {
   const router = useRouter();
   const { openModal } = useModal();
 
@@ -182,19 +173,35 @@ export const CategoryButton = () => {
   //   });
   // }, [router.history, onOpenChange]);
 
+  const handlerSelectedCategoryClick = (tenantId: number, categoryId: number) => {
+    router.navigate({
+      to: '/category',
+      replace: true,
+      state: {
+        ...router.state.location.state,
+        tenantId,
+        categoryId
+      }
+    });
+  }
+
   return (
     <div className={styles.start}>
-      <Button
-        className={styles.btn_category}
-        onlyIcon={true}
-        icon={<IcoArray width={24} height={24} fill="#fff" stroke="#131416" />}
-        onClick={() =>
-          openModal({
-            width: 'xl', // sm(600px), md(800px), lg(1024px), xl(1400px)
-            content: <PopupContent />,
-          })
-        }
-      />
+      {
+        tenantId && (
+          <Button
+            className={styles.btn_category}
+            onlyIcon={true}
+            icon={<IcoArray width={24} height={24} fill="#fff" stroke="#131416" />}
+            onClick={() =>
+              openModal({
+                width: 'xl', // sm(600px), md(800px), lg(1024px), xl(1400px)
+                content: <PopupContent id={tenantId} onNavigate={handlerSelectedCategoryClick} />,
+              })
+            }
+          />
+        )
+      }
     </div>
   );
 };

@@ -23,6 +23,9 @@ import {
   QuestionStatusUpdateReq,
   RandomQuestionCountUpdateReq,
   TestPaperBasicInfoSaveReq,
+  PostDraftETCParams,
+  PutETCUpdateParams,
+  PutETCChangeParams,
 } from '@types';
 import LearningResourceService from '../api/learning-resource';
 
@@ -43,7 +46,8 @@ export const queryKeys = {
   html5Draft: ['html5-draft'] as const,
   html5MetaUpdate: ['html5-update'] as const,
   html5Resource: ['html5-resource'] as const,
-  html5Status: ['html5-status'] as const,
+  html5Status: (contentUuid: string) => ['html5-status', contentUuid] as const,
+  html5FileChangeStatus: (changeId: number) => ['html5-file-change-status', changeId] as const,
   blogResource: ['blog-resource'] as const,
   questionBankQuestionList: ['question-bank-question-list'] as const,
   questionBankQuestionItem: (examQuestionUuid: string) =>
@@ -120,11 +124,18 @@ export const learningResourceQueryOptions = {
     enabled: true,
   }),
   getHTML5Status: (contentUuid: string) => ({
-    queryKey: queryKeys.html5Status,
+    queryKey: queryKeys.html5Status(contentUuid),
     queryFn: () => LearningResourceService.fetchHTML5Status(contentUuid),
     cacheTime: 0,
     staleTime: 0,
-    enabled: true,
+    enabled: !!contentUuid,
+  }),
+  getHTML5FileChangeStatus: (changeId: number) => ({
+    queryKey: queryKeys.html5FileChangeStatus(changeId),
+    queryFn: () => LearningResourceService.fetchHTML5FileChangeStatus(changeId),
+    cacheTime: 0,
+    staleTime: 0,
+    enabled: !!changeId,
   }),
   getBlogContent: (contentUuid: string) => ({
     queryKey: queryKeys.blogResource,
@@ -178,17 +189,26 @@ export const mutateOptions = {
   postDraftScorm: () => ({
     mutationFn: (params: PostDraftScormParams) => LearningResourceService.postDraftScorm(params),
   }),
+  postDraftETC: () => ({
+    mutationFn: (params: PostDraftETCParams) => LearningResourceService.postDraftETC(params),
+  }),
   putVideoUpdate: () => ({
     mutationFn: (params: PutVideoUpdateParams) => LearningResourceService.putVideoUpdate(params),
   }),
   putScormUpdate: () => ({
     mutationFn: (params: PutScormUpdateParams) => LearningResourceService.putScormUpdate(params),
   }),
+  putETCUpdate: () => ({
+    mutationFn: (params: PutETCUpdateParams) => LearningResourceService.putETCUpdate(params),
+  }),
   putVideoChange: () => ({
     mutationFn: (params: PutVideoChangeParams) => LearningResourceService.putVideoChange(params),
   }),
   putScormChange: () => ({
     mutationFn: (params: PutScormChangeParams) => LearningResourceService.putScormChange(params),
+  }),
+  putETCChange: () => ({
+    mutationFn: (params: PutETCChangeParams) => LearningResourceService.putETCChange(params),
   }),
   postDraftHTML5: () => ({
     mutationFn: (params: PostDraftHtmlVideoParams) =>

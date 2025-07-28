@@ -1,5 +1,6 @@
-import { httpService } from '@learnway/shared';
+import { omit } from 'lodash';
 import { faker } from '@faker-js/faker';
+import { httpService } from '@learnway/shared';
 import { CMSApiPrefix, PMSApiPrefix } from '@learnway/config';
 import {
   BlogCreateReq,
@@ -43,6 +44,17 @@ import {
   GetScormStatusRes,
   GetScormFileChangeRes,
   QuestionsCopyReq,
+  HtmlVideoChangeStatus,
+  PostDraftETCParams,
+  PostDraftETCRes,
+  ContentExportReq,
+  ContentExportRes,
+  ContentSharingInfoReq,
+  ContentSharingInfoRes,
+  PutETCUpdateParams,
+  PutETCUpdateRes,
+  PutETCChangeParams,
+  PutETCChangeRes,
 } from '@types';
 
 export default class LearningResourceService {
@@ -81,6 +93,21 @@ export default class LearningResourceService {
     return httpService.get(`${CMSApiPrefix()}/content/curriculum-mapping/${contentUuid}`);
   }
 
+  static exportContent(body: ContentExportReq): Promise<ContentExportRes> {
+    return httpService.post(
+      `${CMSApiPrefix()}/content/${body.contentUuid}/export`,
+      omit(body, 'contentUuid'),
+    );
+  }
+
+  static fetchContentSharingInfo(params: ContentSharingInfoReq): Promise<ContentSharingInfoRes> {
+    const { contentUuid, tenantId, channelUuid } = params;
+    return httpService.get(`${CMSApiPrefix()}/content/${contentUuid}/channel/sharing`, {
+      tenantId,
+      channelUuid,
+    });
+  }
+
   static postContentCopy(contentUuid: string): Promise<PostContentCopyRes> {
     return httpService.post(`${CMSApiPrefix()}/content/${contentUuid}/copy`, {});
   }
@@ -93,6 +120,10 @@ export default class LearningResourceService {
     return httpService.post(`${CMSApiPrefix()}/scorm/draft`, params);
   }
 
+  static postDraftETC(params: PostDraftETCParams): Promise<PostDraftETCRes> {
+    return httpService.post(`${CMSApiPrefix()}/etc/draft`, params);
+  }
+
   static putVideoUpdate(params: PutVideoUpdateParams) {
     return httpService.put<PutVideoUpdateRes>(`${CMSApiPrefix()}/video/update`, params);
   }
@@ -101,12 +132,20 @@ export default class LearningResourceService {
     return httpService.put<PutScormUpdateRes>(`${CMSApiPrefix()}/scorm/update`, params);
   }
 
+  static putETCUpdate(params: PutETCUpdateParams) {
+    return httpService.put<PutETCUpdateRes>(`${CMSApiPrefix()}/etc/update`, params);
+  }
+
   static putVideoChange(params: PutVideoChangeParams) {
     return httpService.put<PutVideoChangeRes>(`${CMSApiPrefix()}/video/file/change`, params);
   }
 
   static putScormChange(params: PutScormChangeParams) {
     return httpService.put<PutScormChangeRes>(`${CMSApiPrefix()}/scorm/file/change`, params);
+  }
+
+  static putETCChange(params: PutETCChangeParams) {
+    return httpService.put<PutETCChangeRes>(`${CMSApiPrefix()}/etc/file/change`, params);
   }
 
   static fetchLearningResources(params: any) {
@@ -185,6 +224,10 @@ export default class LearningResourceService {
   // HTML5 동영상 상태 조회
   static fetchHTML5Status(contentUuid: string): Promise<HtmlVideoStatus> {
     return httpService.get(`${CMSApiPrefix()}/html5/${contentUuid}/status`);
+  }
+  // HTML5 동영상 파일변경 상태 조회
+  static fetchHTML5FileChangeStatus(changeId: number): Promise<HtmlVideoChangeStatus> {
+    return httpService.get(`${CMSApiPrefix()}/html5/file/change/${changeId}`);
   }
 
   // HTML5 동영상 콘텐츠 리소스 조회

@@ -1,6 +1,13 @@
-import { useEffect, useCallback, useState } from 'react';
-import { t } from 'i18next';
-import { createFileRoute } from '@tanstack/react-router';
+import { queryOptions as companysQueryOptions } from '@entities/companies/service/companies.queries';
+import {
+  roleApplicationQueryOptions,
+  roleManagerQueryOptions,
+  useApproveRoleApplication,
+} from '@entities/role';
+import { MyRoleExtendModal } from '@features/user/my-page/ui/my-role-extend-modal';
+import { useFetchAuthUser } from '@learnway/auth/entities';
+import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
+import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import {
   Button,
   Checkbox,
@@ -10,21 +17,14 @@ import {
   useGridBoxConfig,
   useModal,
 } from '@learnway/ui';
-import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import { ColumnDef, createColumnHelper, Table } from '@tanstack/react-table';
+import { MainContents, PageContainer, RejectModal, RoleApplicationHistoryModal } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
-import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
-import {
-  useApproveRoleApplication,
-  roleApplicationQueryOptions,
-  roleManagerQueryOptions,
-} from '@entities/role';
-import { EnGlobalConst, LabelMessage } from '@types';
-import { RejectModal, RoleApplicationHistoryModal, MainContents, PageContainer } from '@shared/ui';
-import { MyRoleExtendModal } from '@features/user/my-page/ui/my-role-extend-modal';
-import { useFetchAuthUser } from '@learnway/auth/entities';
 import { useQueryClient } from '@tanstack/react-query';
-import { queryOptions as companysQueryOptions } from '@entities/companies/service/companies.queries';
+import { createFileRoute } from '@tanstack/react-router';
+import { ColumnDef, createColumnHelper, Table } from '@tanstack/react-table';
+import { EnGlobalConst } from '@types';
+import { t } from 'i18next';
+import { useCallback, useEffect, useState } from 'react';
 
 export const Route = createFileRoute('/_layout/platform/role/application/')({
   component: RouteComponent,
@@ -44,7 +44,7 @@ function RouteComponent() {
   const queryClient = useQueryClient();
 
   const { alert: openAlert, confirm: openConfirm, openModal } = useModal();
-  const { provider: searchProvider, getValues, setOptions } = useSearchBox(searchConfig);
+  const { provider: searchProvider, getValues, setOptions } = useSearchBox(searchConfig());
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
   const [tableInstance, setTableInstance] = useState<Table<any>>();
   const { approve: approveRoleApplication } = useApproveRoleApplication({
@@ -194,7 +194,7 @@ function RouteComponent() {
         <Divider />
         <GridBox
           config={gConfig}
-          columns={columns}
+          columns={columns()}
           multiple
           title={t('역할신청 목록')}
           hideRowSelectionCheckBox
@@ -212,7 +212,7 @@ function RouteComponent() {
   );
 }
 
-const searchConfig: SearchBoxConfig = {
+const searchConfig = (): SearchBoxConfig => ({
   builders: [
     [
       {
@@ -269,7 +269,7 @@ const searchConfig: SearchBoxConfig = {
       },
     ],
   ],
-};
+});
 
 const gridConfig: useGridBoxConfig = {
   query: roleApplicationQueryOptions.list,
@@ -284,184 +284,185 @@ const gridConfig: useGridBoxConfig = {
 
 const columnHelper = createColumnHelper<any>();
 
-const columns = [
-  columnHelper.accessor('checkbox', {
-    // 상태에 따른 checkbox disabled를 위해 checkbox 따로 구현
-    id: 'select-check',
-    size: 50,
-    maxSize: 50,
-    minSize: 50,
-    meta: {
-      align: 'center',
-      headerAlign: 'center',
-      cellAlign: 'center',
-    },
-    enableSorting: false,
-    header: ({ table }) => (
-      <div style={{ width: '100%', textAlign: 'center' }}>
-        <Checkbox
-          checked={table.getIsAllRowsSelected()}
-          onCheckedChange={(checked) => {
-            table.toggleAllRowsSelected(!!checked);
-          }}
-        />
-      </div>
-    ),
-    cell: ({ row }) => {
-      const disabled = row.original.status === 'APPROVED' || row.original.status === 'REJECTED';
-      return (
-        <div style={{ width: '100%', textAlign: 'center', paddingRight: 0 }}>
+const columns = () =>
+  [
+    columnHelper.accessor('checkbox', {
+      // 상태에 따른 checkbox disabled를 위해 checkbox 따로 구현
+      id: 'select-check',
+      size: 50,
+      maxSize: 50,
+      minSize: 50,
+      meta: {
+        align: 'center',
+        headerAlign: 'center',
+        cellAlign: 'center',
+      },
+      enableSorting: false,
+      header: ({ table }) => (
+        <div style={{ width: '100%', textAlign: 'center' }}>
           <Checkbox
-            checked={row.getIsSelected()}
-            disabled={row.getIsGrouped() || disabled}
-            onCheckedChange={() => {
-              if (!row.getIsGrouped()) {
-                row.getToggleSelectedHandler();
-              }
+            checked={table.getIsAllRowsSelected()}
+            onCheckedChange={(checked) => {
+              table.toggleAllRowsSelected(!!checked);
             }}
           />
         </div>
-      );
-    },
-  }),
-  columnHelper.accessor('checkbox', {
-    id: 'numbering',
-    size: 64,
-    header: 'NO.',
-    meta: { cellAlign: 'center' },
-    enableSorting: false,
-    cell: ({ row }: any) => {
-      if (row.depth === 0) {
-        return <p>{row.index + 1}</p>;
-        // return pagination ? (
-        //   <p>{pagination.pageNumber * pagination.pageSize + row.index + 1}</p>
-        // ) : (
-        //   <p>{row.index + 1}</p>
-        // );
-      }
+      ),
+      cell: ({ row }) => {
+        const disabled = row.original.status === 'APPROVED' || row.original.status === 'REJECTED';
+        return (
+          <div style={{ width: '100%', textAlign: 'center', paddingRight: 0 }}>
+            <Checkbox
+              checked={row.getIsSelected()}
+              disabled={row.getIsGrouped() || disabled}
+              onCheckedChange={() => {
+                if (!row.getIsGrouped()) {
+                  row.getToggleSelectedHandler();
+                }
+              }}
+            />
+          </div>
+        );
+      },
+    }),
+    columnHelper.accessor('checkbox', {
+      id: 'numbering',
+      size: 64,
+      header: 'NO.',
+      meta: { cellAlign: 'center' },
+      enableSorting: false,
+      cell: ({ row }: any) => {
+        if (row.depth === 0) {
+          return <p>{row.index + 1}</p>;
+          // return pagination ? (
+          //   <p>{pagination.pageNumber * pagination.pageSize + row.index + 1}</p>
+          // ) : (
+          //   <p>{row.index + 1}</p>
+          // );
+        }
 
-      return <span></span>;
-    },
-  }),
-  columnHelper.group({
-    id: 'role',
-    header: t('신청한 역할'),
-    meta: {
-      headerAlign: 'center',
-    },
-    columns: [
-      columnHelper.accessor('role.roleType', {
-        header: t('역할 타입'),
-        cell: (info) =>
-          t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.role.RoleType.${info.getValue()}`),
-        enableGrouping: false,
-        size: 150,
-      }),
-      columnHelper.accessor('role.name', {
-        header: t('역할명'),
-        cell: (info) => (
-          <Button
-            variant="link"
-            label={info.row.original.role.name}
-            onClick={() => _global.linkClick(info.row.original)}
-          />
-        ),
-        enableGrouping: false,
-      }),
-      columnHelper.accessor('startDate', {
-        header: t('역할 시작일'),
-        cell: (info) => info.getValue(),
-        enableGrouping: false,
-        size: 100,
-        meta: {
-          cellAlign: 'center',
-        },
-      }),
-      columnHelper.accessor('endDate', {
-        header: t('역할 종료일'),
-        cell: (info) => info.getValue(),
-        enableGrouping: false,
-        size: 100,
-        meta: {
-          cellAlign: 'center',
-        },
-      }),
-    ],
-  }),
-  columnHelper.group({
-    id: 'applicant',
-    header: t('신청자 정보'),
-    meta: {
-      headerAlign: 'center',
-    },
-    columns: [
-      columnHelper.accessor('applicant.company.name', {
-        header: t('회사명'),
-        cell: (info) => info.getValue(),
-        enableGrouping: false,
-        size: 130,
-      }),
-      columnHelper.accessor('applicant.dept.deptName', {
-        header: t('부서명'),
-        cell: (info) => info.getValue(),
-        enableGrouping: false,
-        size: 130,
-      }),
-      columnHelper.accessor('applicant.employeeNumber', {
-        header: t('사번'),
-        cell: (info) => info.getValue(),
-        enableGrouping: false,
-        size: 130,
-      }),
-      columnHelper.accessor('applicant.name', {
-        header: t('이름'),
-        cell: (info) => (
-          <Button
-            variant="link"
-            label={info.row.original.applicant.name}
-            onClick={() => _global.linkClick(info.row.original)}
-          />
-        ),
-        enableGrouping: false,
-        size: 130,
-      }),
-    ],
-  }),
-  columnHelper.accessor('createdDate', {
-    header: t('역할 신청 일시'),
-    cell: (info) =>
-      info.getValue() === null
-        ? ''
-        : getDateToString(new Date(info.row.original.createdDate), DATE_TIME_FORMAT.DATETIME_SEC),
-    enableGrouping: false,
-    size: 160,
-    meta: {
-      cellAlign: 'center',
-    },
-  }),
-  columnHelper.accessor('status', {
-    header: t('역할 신청 상태'),
-    cell: (info) =>
-      t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.role.RoleApplicationStatus.${info.getValue()}`),
-    enableGrouping: false,
-    size: 100,
-    meta: {
-      cellAlign: 'center',
-    },
-  }),
-  columnHelper.accessor('roleApplicationId', {
-    header: t('이력'),
-    cell: (info) => (
-      <Button
-        variant="gray"
-        label={t('이력 보기')}
-        onClick={() => _global.historyClick(info.row.original)}
-      />
-    ),
-    enableGrouping: false,
-    size: 80,
-    meta: {
-      cellAlign: 'center',
-    },
-  }),
-] as ColumnDef<any, unknown>[];
+        return <span></span>;
+      },
+    }),
+    columnHelper.group({
+      id: 'role',
+      header: t('신청한 역할'),
+      meta: {
+        headerAlign: 'center',
+      },
+      columns: [
+        columnHelper.accessor('role.roleType', {
+          header: t('역할 타입'),
+          cell: (info) =>
+            t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.role.RoleType.${info.getValue()}`),
+          enableGrouping: false,
+          size: 150,
+        }),
+        columnHelper.accessor('role.name', {
+          header: t('역할명'),
+          cell: (info) => (
+            <Button
+              variant="link"
+              label={info.row.original.role.name}
+              onClick={() => _global.linkClick(info.row.original)}
+            />
+          ),
+          enableGrouping: false,
+        }),
+        columnHelper.accessor('startDate', {
+          header: t('역할 시작일'),
+          cell: (info) => info.getValue(),
+          enableGrouping: false,
+          size: 100,
+          meta: {
+            cellAlign: 'center',
+          },
+        }),
+        columnHelper.accessor('endDate', {
+          header: t('역할 종료일'),
+          cell: (info) => info.getValue(),
+          enableGrouping: false,
+          size: 100,
+          meta: {
+            cellAlign: 'center',
+          },
+        }),
+      ],
+    }),
+    columnHelper.group({
+      id: 'applicant',
+      header: t('신청자 정보'),
+      meta: {
+        headerAlign: 'center',
+      },
+      columns: [
+        columnHelper.accessor('applicant.company.name', {
+          header: t('회사명'),
+          cell: (info) => info.getValue(),
+          enableGrouping: false,
+          size: 130,
+        }),
+        columnHelper.accessor('applicant.dept.deptName', {
+          header: t('부서명'),
+          cell: (info) => info.getValue(),
+          enableGrouping: false,
+          size: 130,
+        }),
+        columnHelper.accessor('applicant.employeeNumber', {
+          header: t('사번'),
+          cell: (info) => info.getValue(),
+          enableGrouping: false,
+          size: 130,
+        }),
+        columnHelper.accessor('applicant.name', {
+          header: t('이름'),
+          cell: (info) => (
+            <Button
+              variant="link"
+              label={info.row.original.applicant.name}
+              onClick={() => _global.linkClick(info.row.original)}
+            />
+          ),
+          enableGrouping: false,
+          size: 130,
+        }),
+      ],
+    }),
+    columnHelper.accessor('createdDate', {
+      header: t('역할 신청 일시'),
+      cell: (info) =>
+        info.getValue() === null
+          ? ''
+          : getDateToString(new Date(info.row.original.createdDate), DATE_TIME_FORMAT.DATETIME_SEC),
+      enableGrouping: false,
+      size: 160,
+      meta: {
+        cellAlign: 'center',
+      },
+    }),
+    columnHelper.accessor('status', {
+      header: t('역할 신청 상태'),
+      cell: (info) =>
+        t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.role.RoleApplicationStatus.${info.getValue()}`),
+      enableGrouping: false,
+      size: 100,
+      meta: {
+        cellAlign: 'center',
+      },
+    }),
+    columnHelper.accessor('roleApplicationId', {
+      header: t('이력'),
+      cell: (info) => (
+        <Button
+          variant="gray"
+          label={t('이력 보기')}
+          onClick={() => _global.historyClick(info.row.original)}
+        />
+      ),
+      enableGrouping: false,
+      size: 80,
+      meta: {
+        cellAlign: 'center',
+      },
+    }),
+  ] as ColumnDef<any, unknown>[];

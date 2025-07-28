@@ -15,7 +15,7 @@ import {
   SubContents,
 } from '@shared/ui';
 import { learningResourceQueryOptions, useDeleteContent } from '@entities/learning-resource';
-import { PreviewLearningWindow } from '@features/learning-resource/learning-resource-management/ui/preview-learning-window';
+import { PreviewLearningWindow } from '@shared/ui/modal/preview-learning-window';
 import { LearningResourceBlogDetail } from '@features/learning-resource';
 
 import styles from './blog-detail.module.css';

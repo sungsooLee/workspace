@@ -50,6 +50,7 @@ const CompanyDetailComponent = (props: any, ref: any) => {
   const [loginRestrictTimeSettings, setLoginRestrictTimeSettings] = useState<any[]>([]);
 
   useEffect(() => {
+    console.log('####', getValues());
     if (props.mode === EnFormMode.VIEW && detailData) {
       console.log('detailData', detailData);
       const initialData = {
@@ -1094,7 +1095,8 @@ const formConfig = (): DynamicFormConfig => ({
       conditions: [
         {
           fn: (values) => {
-            if (values.companyEmail.trim().length === 0) return false;
+            console.log('# values', values);
+            if (!values.companyEmail || values.companyEmail.trim().length === 0) return false;
             const pattern = new RegExp(EMAIL_REGEX, 'i');
             return !pattern.test(values.companyEmail.trim());
           },
@@ -1107,7 +1109,7 @@ const formConfig = (): DynamicFormConfig => ({
       conditions: [
         {
           fn: (values) => {
-            if (values.managerEmail.trim().length === 0) return false;
+            if (!values.managerEmail || values.managerEmail.trim().length === 0) return false;
             const pattern = new RegExp(EMAIL_REGEX, 'i');
             return !pattern.test(values.managerEmail.trim());
           },
