@@ -57,7 +57,7 @@
           @apply bg-cover bg-center;
           background-image: none;
           .auth_area {
-            @apply mb-[16px] pb-0;
+            @apply pb-0;
           }
         }
 
