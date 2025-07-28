@@ -918,7 +918,7 @@ const formConfig = (): DynamicFormConfig => ({
       placeholder: '',
       guideText: t('채널이 사용 상태인 경우 과정을 등록할 수 있습니다.'),
       switchConfig: {
-        label: (value: boolean) => (value ? '사용' : '미사용'),
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
       },
     },
     {
@@ -929,7 +929,7 @@ const formConfig = (): DynamicFormConfig => ({
       placeholder: '',
       guideText: t('채널이 노출 상태인 경우 학습자가 채널에 접속할 수 있습니다.'),
       switchConfig: {
-        label: (value: boolean) => (value ? '노출' : '비노출'),
+        label: (value: boolean) => (value ? t('노출') : t('비노출')),
       },
     },
     //// 채널 홈 정보
