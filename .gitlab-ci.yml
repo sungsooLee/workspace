@@ -61,8 +61,13 @@ deploy:
   script:
     - aws --version
     - aws configure list
-    - aws s3 sync dist/apps/fo s3://${S3_BUCKET}/fo --delete
-    - aws s3 sync dist/apps/bo s3://${S3_BUCKET}/bo --delete
+    # HTML 파일은 캐시하지 않도록 별도 처리
+    - aws s3 sync dist/apps/fo s3://${S3_BUCKET}/fo --delete --exclude "index.html"
+    - aws s3 sync dist/apps/bo s3://${S3_BUCKET}/bo --delete --exclude "index.html"
+
+    # index.html은 no-cache로 별도 업로드
+    - aws s3 cp dist/apps/fo/index.html s3://${S3_BUCKET}/fo/index.html --cache-control "no-cache, no-store, must-revalidate"
+    - aws s3 cp dist/apps/bo/index.html s3://${S3_BUCKET}/bo/index.html --cache-control "no-cache, no-store, must-revalidate"
     # - aws s3 sync dist/apps/pb-fo s3://${S3_BUCKET}/pb-fo --delete
     # - aws s3 sync dist/apps/pb-bo s3://${S3_BUCKET}/pb-bo --delete
 
