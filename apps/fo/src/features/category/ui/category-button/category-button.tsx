@@ -13,14 +13,14 @@ import { useFetchAuthUser } from '@learnway/auth/entities';
 import { useCategoryTree } from '@entities/category';
 
 interface CategoryPopupProps {
-  isOpen: boolean;
+  onNavigate: ( categoryId: number ) => void;
 }
 
 type MainItem = { id: number; label: string, isChild: boolean };
 type SubItem = { id: number; label: string, parentId: number, isChild: boolean };
 type ChildItem = { id: number; label: string };
 
-const PopupContent = () => {
+const PopupContent: React.FC<CategoryPopupProps> = ({ onNavigate }) => {
   const [mainData, setMainData] = useState<MainItem[]>([]);
   const [subData, setSubData] = useState<SubItem[]>([]);
   const [childData, setChildData] = useState<ChildItem[]>([]);
@@ -49,6 +49,7 @@ const PopupContent = () => {
       setSubData(twoDepthData);
     } else {
       setSubData([]);
+      onNavigate(id);
     }
   };
 
@@ -57,9 +58,7 @@ const PopupContent = () => {
     if( isChild ) {
       // 3 Depth
       const subTreeData = categoryTree.children.filter( (item: any) => item.id === parentId)[0];
-      console.log(subTreeData);
       const twoDepthData = subTreeData.children.filter( (item: any) => item.id === id)[0];
-      console.log(twoDepthData);
       const threeDepthData = twoDepthData.children.map( (item: any) => {
         return {
           id: item.id,
@@ -69,16 +68,17 @@ const PopupContent = () => {
       setChildData(threeDepthData);
     } else {
       setChildData([]);
+      onNavigate(id);
     }
   };
 
   const childMenuHandleClick = (id: number) => {
     setActiveChildId(id);
+    onNavigate(id);
   };
 
   useEffect(() => {
     if (!loginUser) return;
-
     if (loginUser.activeTenant) {
       setTenantId(loginUser.activeTenant.tenantId);
       categoryRefetch();
@@ -183,6 +183,11 @@ export const CategoryButton = () => {
   //   });
   // }, [router.history, onOpenChange]);
 
+  const handlerSelectedCategoryClick = (categoryId: number) => {
+    console.log(`categoryId: ${categoryId}`);
+    console.log('router', router.state.location);
+  }
+
   return (
     <div className={styles.start}>
       <Button
@@ -192,7 +197,7 @@ export const CategoryButton = () => {
         onClick={() =>
           openModal({
             width: 'xl', // sm(600px), md(800px), lg(1024px), xl(1400px)
-            content: <PopupContent />,
+            content: <PopupContent onNavigate={handlerSelectedCategoryClick} />,
           })
         }
       />
