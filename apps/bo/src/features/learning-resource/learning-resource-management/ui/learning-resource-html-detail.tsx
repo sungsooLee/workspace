@@ -18,13 +18,12 @@ import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.cs
 
 type HtmlDetailProps = {
   mode: 'draft' | 'complete';
-  tenantId: number;
   data?: Partial<HtmlVideoDetailRes>;
   hasMapping?: boolean;
 };
 
 const HtmlDetailComponent = forwardRef<HTMLFormElement, HtmlDetailProps>(
-  ({ mode, tenantId, data = {}, hasMapping = false }, ref) => {
+  ({ mode, data = {}, hasMapping = false }, ref) => {
     const { provider, onSubmit, getValues, updateFormData, onFormChange } = useDynamicForm2();
 
     const { data: loginUser } = useFetchAuthUser();
@@ -83,7 +82,6 @@ const HtmlDetailComponent = forwardRef<HTMLFormElement, HtmlDetailProps>(
     const handleSubmit = async (formData: any): Promise<void> => {
       const { payload } = getPayloadFromHtmlMetadataSubmit({
         data: formData,
-        tenantId,
         contentUuid: data?.contentUuid ?? '',
       });
 

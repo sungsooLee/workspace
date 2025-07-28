@@ -634,3 +634,33 @@ export interface QuestionsCopyReq {
   examPoolContentUuid: string;
   questionUuidList: string[];
 }
+
+export interface ContentExportReq {
+  contentUuid: string;
+  tenantId: number;
+  destChannelUuid: string;
+  languageCountryCode: string;
+}
+
+export interface ContentExportRes {
+  srcTenantId: number;
+  srcChannelUuid: string;
+  srcContentUuid: string;
+  destTenantId: number;
+  destChannelUuid: string;
+  destContentUuid: string;
+  languageCountryCode: string;
+  createType: ContentCreateType;
+  contentType: ContentType;
+}
+
+export interface ContentSharingInfoReq {
+  contentUuid: string;
+  tenantId: number;
+  channelUuid: string;
+}
+
+export interface ContentSharingInfoRes {
+  isPossible: boolean;
+  reason: string;
+}

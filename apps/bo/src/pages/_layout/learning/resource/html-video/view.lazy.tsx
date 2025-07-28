@@ -1,12 +1,9 @@
 /* IA112 / NLP_BO_CMS_1022 - 나의 학습자원 > HTML 상세(저장 및 조회용) */
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { t } from 'i18next';
-import { useQuery } from '@tanstack/react-query';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
-import { useCurrentRoute } from '@learnway/hooks';
-import { useFetchAuthUser } from '@learnway/auth/entities';
 import { Button, Divider, useModal } from '@learnway/ui';
-import { learningResourceQueryOptions, useDeleteContent } from '@entities/learning-resource';
+import { useDeleteContent } from '@entities/learning-resource';
 import {
   ContentCourseMappingModal,
   ContentsButtons,
@@ -19,6 +16,7 @@ import {
   LearningResourceHtmlDetail,
   LearningResourceHtmlFileInfo,
 } from '@features/learning-resource';
+import { useFetchHtmlVideoInfo } from '@features/learning-resource/learning-resource-management/service';
 
 export const Route = createLazyFileRoute('/_layout/learning/resource/html-video/view')({
   component: RouteComponent,
@@ -28,22 +26,11 @@ function RouteComponent() {
   const formRef = useRef<HTMLFormElement>(null);
 
   const router = useRouter();
-  const { state } = useCurrentRoute();
 
-  const { data: loginUser } = useFetchAuthUser();
-  const [tenantId, setTenantId] = useState<number>(-1);
+  const { loginUser, contentUuid, data, hasMapping, htmlStatus, listParam } =
+    useFetchHtmlVideoInfo();
 
-  const { data, error: fetchError } = useQuery(
-    learningResourceQueryOptions.getContent(state?.contentUuid),
-  );
-
-  const { data: hasMapping } = useQuery(
-    learningResourceQueryOptions.getCurriculumsMapping(state?.contentUuid),
-  );
-
-  const { data: htmlStatus } = useQuery(
-    learningResourceQueryOptions.getHTML5Status(state?.contentUuid),
-  );
+  // const [tenantId, setTenantId] = useState<number>(-1);
 
   // draft: 임시저장 상태 / complete: 한 번이라도 저장 버튼을 눌러 저장한 상태
   const [mode, setMode] = useState<'draft' | 'complete'>('draft');
@@ -51,7 +38,7 @@ function RouteComponent() {
   const { openModal, confirm: openConfirm } = useModal();
 
   const handleClickCourseMapping = useCallback(async () => {
-    if (!state?.contentUuid) {
+    if (!contentUuid) {
       return;
     }
 
@@ -59,7 +46,7 @@ function RouteComponent() {
       content: (
         <ContentCourseMappingModal
           channelUuid={data?.channelUuid ?? ''}
-          contentUuid={state.contentUuid}
+          contentUuid={contentUuid}
         />
       ),
       width: 'lg',
@@ -81,10 +68,10 @@ function RouteComponent() {
     ) {
       router.navigate({
         to: '/learning/learning-resource',
-        state: { listParam: state?.listParam },
+        state: { listParam },
       });
     }
-  }, [state]);
+  }, [listParam]);
 
   const { delete: deleteBlogContent } = useDeleteContent({
     onSuccess: (result: number) => {
@@ -100,9 +87,9 @@ function RouteComponent() {
         content: t('삭제 후 목록으로 이동합니다.'),
       })
     ) {
-      deleteBlogContent(data?.contentUuid as string);
+      deleteBlogContent(contentUuid as string);
     }
-  }, [data?.contentUuid]);
+  }, [contentUuid]);
 
   const handleClickCourseButton = useCallback(() => {
     router.navigate({
@@ -111,23 +98,23 @@ function RouteComponent() {
   }, []);
 
   useEffect(() => {
-    if (!state?.contentUuid) {
+    if (!contentUuid) {
       router.navigate({
         to: '/learning/learning-resource',
         replace: true,
       });
     }
-  }, [state]);
+  }, [contentUuid]);
 
-  useEffect(() => {
-    if (loginUser?.activeTenant) {
-      setTenantId(loginUser.activeTenant.tenantId);
-    } else {
-      if (loginUser?.tenants?.length) {
-        setTenantId(loginUser.tenants[0].tenantId);
-      }
-    }
-  }, [loginUser]);
+  // useEffect(() => {
+  //   if (loginUser?.activeTenant) {
+  //     setTenantId(loginUser.activeTenant.tenantId);
+  //   } else {
+  //     if (loginUser?.tenants?.length) {
+  //       setTenantId(loginUser.tenants[0].tenantId);
+  //     }
+  //   }
+  // }, [loginUser]);
 
   useEffect(() => {
     if (htmlStatus?.processingStatus === ProcessingStatus.COMPLETE) {
@@ -187,13 +174,7 @@ function RouteComponent() {
       </ContentsButtons>
 
       <MainContents>
-        <LearningResourceHtmlDetail
-          ref={formRef}
-          mode={mode}
-          tenantId={tenantId}
-          data={data}
-          hasMapping={hasMapping}
-        />
+        <LearningResourceHtmlDetail ref={formRef} mode={mode} data={data} hasMapping={hasMapping} />
       </MainContents>
 
       <SubContents>
