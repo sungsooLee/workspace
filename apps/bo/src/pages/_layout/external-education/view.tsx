@@ -7,7 +7,7 @@ import {
   ExternalEducationTab,
 } from '@features/external-education/types/types';
 import { BasicInfo, Registration, Result } from '@features/external-education';
-import { Popup } from '../../../features/external-education/components/-tabs/Popup';
+import { Popup } from '../../../features/external-education/components/-tabs/popup';
 
 export const Route = createFileRoute('/_layout/external-education/view')({
   component: RouteComponent,

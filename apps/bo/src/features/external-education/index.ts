@@ -1,5 +1,4 @@
 export * from './components/-tabs/basic-Info';
-export * from './components/-tabs/Popup';
 export * from './components/-tabs/registration';
 export * from './components/-tabs/result';
 export * from './components/custom-fields/address-field';

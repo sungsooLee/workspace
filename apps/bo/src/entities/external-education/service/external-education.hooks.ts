@@ -73,13 +73,13 @@ export function useCreateExternalCoursePopup(options: any) {
   const queryClient = useQueryClient();
   const mutation = useMutation({
     ...mutateOptions.createExternalCoursePopup(),
-    onSuccess: async (data: any, variables, context) => {
+    onSuccess: async (data: any, variables: { externalCourseFormId: number }, context) => {
       if (options.onSuccess) {
         options.onSuccess(data, variables, context);
       }
       // 팝업 쿼리키 무효화 - 저장 후 최신 데이터 자동 재조회
-      queryClient.invalidateQueries({ 
-        queryKey: [...queryKeys.all, 'popup', variables.externalCourseFormId] 
+      queryClient.invalidateQueries({
+        queryKey: [...queryKeys.all, 'popup', variables.externalCourseFormId],
       });
     },
     ...options,
