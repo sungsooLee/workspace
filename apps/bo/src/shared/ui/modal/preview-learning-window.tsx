@@ -6,6 +6,7 @@ import { LearnwayLearningWindowLayout, useLearningWindow } from '@learnway/ui';
 import { learningResourceQueryOptions, useFetchBlogContent } from '@entities/learning-resource';
 import { ContentType } from '@types';
 import { CmsImageContent, CmsImageItem } from '@learnway/types';
+import { useGetCurriculumDetail } from '@entities/curriculum';
 
 /**
  *
@@ -14,9 +15,11 @@ import { CmsImageContent, CmsImageItem } from '@learnway/types';
  */
 const PreviewLearningWindowComponent: FC<any> = ({
   contentUuid,
+  curriculumId,
   scoId,
 }: {
-  contentUuid: string;
+  contentUuid?: string;
+  curriculumId?: number;
   scoId?: string;
 }) => {
   const {
@@ -34,10 +37,15 @@ const PreviewLearningWindowComponent: FC<any> = ({
     clearInfo,
   } = useLearningWindow();
 
+  const [newContentUuid, setNewContentUuid] = useState<string>();
+
   const { data, error: fetchError } = useQuery(
-    learningResourceQueryOptions.getContent(contentUuid),
+    learningResourceQueryOptions.getContent(newContentUuid ?? ''),
   );
-  const getScormItemByScoId = (scoId: string) => {
+
+  const { data: curriculumnData } = useGetCurriculumDetail(curriculumId ?? 0);
+  const getScormItemByScoId = (scoId?: string) => {
+    if (!scoId) return;
     let retval: any;
     data?.children.forEach((mod: any, index: number) => {
       if (retval) return;
@@ -80,12 +88,19 @@ const PreviewLearningWindowComponent: FC<any> = ({
   useEffect(() => {
     if (!playInfo) return;
     console.log('playInfo ', playInfo);
-    if (playInfo.scoId) {
-      const info = getScormItemByScoId(playInfo.scoId);
-      console.log(`scomItem ${playInfo.scoId}`, info);
-      if (info) {
-        setScormInfo({ ...info, itemURL: info.itemUrl });
+    //curriculumId 가 없는 경우에 대한 스콤 처리
+    if (!curriculumId) {
+      if (playInfo.scoId) {
+        const info = getScormItemByScoId(playInfo.scoId);
+        console.log(`scomItem ${playInfo.scoId}`, info);
+        if (info) {
+          setScormInfo({ ...info, itemURL: info.itemUrl });
+        }
       }
+    } else {
+      // FO 학습창과 동일하게 컨텐츠 정보를 조회 하여 미리보기 할 수 있어야 함.
+      clearInfo();
+      setNewContentUuid(playInfo.contentUuid);
     }
   }, [playInfo]);
 
@@ -106,12 +121,17 @@ const PreviewLearningWindowComponent: FC<any> = ({
   useEffect(() => {
     clearInfo();
     if (!data) return;
+    if (!curriculumId) setCurriculum(undefined);
     console.log('🚀 ~ useEffect ~ data:', data);
     switch (data.contentType) {
       case ContentType.SCORM:
-        setCurriculum(genCuliculumInfo(data));
+        if (!curriculumId) {
+          setCurriculum(genCuliculumInfo(data));
+        } else {
+          const info = getScormItemByScoId(playInfo?.scoId);
+          setScormInfo({ ...info, itemURL: info.itemUrl });
+        }
         break;
-
       case ContentType.BLOG:
         setBlogInfo(data);
         break;
@@ -158,6 +178,16 @@ const PreviewLearningWindowComponent: FC<any> = ({
       },
     });
   }, [data]);
+
+  useEffect(() => {
+    if (!contentUuid) return;
+    setNewContentUuid(contentUuid);
+  }, [contentUuid]);
+
+  useEffect(() => {
+    if (!curriculumnData) return;
+    setCurriculum(curriculumnData);
+  }, [curriculumnData]);
 
   return <LearnwayLearningWindowLayout />;
 };
