@@ -24,7 +24,7 @@ import { FilterModal } from './filter-modal';
 import styles from './course-contents.module.css';
 import dropdownPopoverStyles from '../../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
 
-const CoursePackageComponent: FC = () => {
+const CourseComponent: FC = () => {
   // dropdown
   const [searchValues01, setSearchValues01] = useState<string[]>(['대분류']);
 
@@ -652,7 +652,7 @@ const CoursePackageComponent: FC = () => {
       <div className={styles.result_list_wrap}>
         <div className={styles.sort_wrap}>
           <strong className={styles.title}>
-            교육 패키지<span className={styles.num}>{'178'}</span>개
+            <span className={styles.num}>{'178'}</span>개
           </strong>
           <div className={styles.sort_area}>
             <Checkbox label={'학습 가능 과정'} size="sm" className={styles.check_menu} />
@@ -722,5 +722,5 @@ const CoursePackageComponent: FC = () => {
   );
 };
 
-CoursePackageComponent.displayName = 'CoursePackage';
-export const CoursePackage = CoursePackageComponent;
+CourseComponent.displayName = 'Course';
+export const Course = CourseComponent;

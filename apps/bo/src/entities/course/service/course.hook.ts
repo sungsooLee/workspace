@@ -201,8 +201,8 @@ export const useFetchCourseCounts = <T = CourseCounts>(
 
 // 과정 찜 여부 변경
 export const useUpdateFavorite = (
-  options?: MutationHookOptions<any, Error, { id: number; isBookmarks: boolean }, unknown>,
-): UseMutationResult<any, Error, { id: number; isBookmarks: boolean }, unknown> => {
+  options?: MutationHookOptions<any, Error, { id: number }, unknown>,
+): UseMutationResult<any, Error, { id: number }, unknown> => {
   return useMutation({
     ...mutateOptions.updateFavorite(),
     ...options,

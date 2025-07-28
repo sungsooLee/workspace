@@ -51,6 +51,10 @@ import {
   ContentExportRes,
   ContentSharingInfoReq,
   ContentSharingInfoRes,
+  PutETCUpdateParams,
+  PutETCUpdateRes,
+  PutETCChangeParams,
+  PutETCChangeRes,
 } from '@types';
 
 export default class LearningResourceService {
@@ -128,12 +132,20 @@ export default class LearningResourceService {
     return httpService.put<PutScormUpdateRes>(`${CMSApiPrefix()}/scorm/update`, params);
   }
 
+  static putETCUpdate(params: PutETCUpdateParams) {
+    return httpService.put<PutETCUpdateRes>(`${CMSApiPrefix()}/etc/update`, params);
+  }
+
   static putVideoChange(params: PutVideoChangeParams) {
     return httpService.put<PutVideoChangeRes>(`${CMSApiPrefix()}/video/file/change`, params);
   }
 
   static putScormChange(params: PutScormChangeParams) {
     return httpService.put<PutScormChangeRes>(`${CMSApiPrefix()}/scorm/file/change`, params);
+  }
+
+  static putETCChange(params: PutETCChangeParams) {
+    return httpService.put<PutETCChangeRes>(`${CMSApiPrefix()}/etc/file/change`, params);
   }
 
   static fetchLearningResources(params: any) {

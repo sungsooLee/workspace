@@ -1,4 +1,5 @@
 import { GridBoxConfig } from '@learnway/ui';
+import { ColumnMeta } from '@tanstack/react-table';
 import { Course, CourseConfig, CourseListItem, CoursesQueryParams } from '@types';
 
 // ===== 과정 관리 페이지 타입 =====
@@ -47,6 +48,7 @@ export interface CourseGridColumn {
   label: () => string;
   size: number;
   render?: (info: any) => React.ReactNode;
+  meta?: ColumnMeta<CourseListItem, any>;
 }
 
 /**

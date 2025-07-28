@@ -92,7 +92,6 @@ export const mutateOptions = {
   }),
   // 과정 찜 여부 변경
   updateFavorite: () => ({
-    mutationFn: (payload: { id: number; isBookmarks: boolean }) =>
-      CourseService.updateFavorite(payload),
+    mutationFn: (payload: { id: number }) => CourseService.updateFavorite(payload),
   }),
 };

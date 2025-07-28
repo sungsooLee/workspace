@@ -1,26 +1,25 @@
 import { useEffect, useState } from 'react';
-import { useRouter, useRouterState } from '@tanstack/react-router';
+import { useRouter } from '@tanstack/react-router';
 
-import { Button, ModalBody, ModalContainer, ModalTitle, Popover, useModal } from '@learnway/ui';
-import { IcoArray, IcoArrowForward, IcoMenu02 } from '@learnway/icons';
-
-import { CategoryNavigationPopover } from '../category-navigation-popover/category-navigation-popover';
+import { Button, ModalBody, ModalContainer, ModalTitle, useModal } from '@learnway/ui';
+import { IcoArray, IcoArrowForward } from '@learnway/icons';
 
 import styles from '@learnway/styles/fo/features/category/category-button.module.css';
 import { RecentVisits } from '@features/layout';
 import { cn } from '@learnway/shared';
-import { useFetchAuthUser } from '@learnway/auth/entities';
 import { useCategoryTree } from '@entities/category';
+import { useFetchAuthUser } from '@learnway/auth/entities';
 
 interface CategoryPopupProps {
-  onNavigate: ( categoryId: number ) => void;
+  id: number;
+  onNavigate: (tenantId:number, categoryId: number) => void;
 }
 
 type MainItem = { id: number; label: string, isChild: boolean };
 type SubItem = { id: number; label: string, parentId: number, isChild: boolean };
 type ChildItem = { id: number; label: string };
 
-const PopupContent: React.FC<CategoryPopupProps> = ({ onNavigate }) => {
+const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
   const [mainData, setMainData] = useState<MainItem[]>([]);
   const [subData, setSubData] = useState<SubItem[]>([]);
   const [childData, setChildData] = useState<ChildItem[]>([]);
@@ -28,9 +27,8 @@ const PopupContent: React.FC<CategoryPopupProps> = ({ onNavigate }) => {
   const [activeId, setActiveId] = useState<number>();
   const [activeSubId, setActiveSubId] = useState<number>();
   const [activeChildId, setActiveChildId] = useState<number>();
-  const [tenantId, setTenantId] = useState<number>(0);
+  const [tenantId, setTenantId] = useState<number>(id);
 
-  const { data: loginUser } = useFetchAuthUser();
   const { data: categoryTree, refetch: categoryRefetch} = useCategoryTree(tenantId);
 
   const menuHandleClick = (id: number, isChild: boolean) => {
@@ -49,7 +47,7 @@ const PopupContent: React.FC<CategoryPopupProps> = ({ onNavigate }) => {
       setSubData(twoDepthData);
     } else {
       setSubData([]);
-      onNavigate(id);
+      onNavigate(tenantId, id);
     }
   };
 
@@ -68,26 +66,18 @@ const PopupContent: React.FC<CategoryPopupProps> = ({ onNavigate }) => {
       setChildData(threeDepthData);
     } else {
       setChildData([]);
-      onNavigate(id);
+      onNavigate(tenantId, id);
     }
   };
 
   const childMenuHandleClick = (id: number) => {
     setActiveChildId(id);
-    onNavigate(id);
+    onNavigate(tenantId, id);
   };
 
   useEffect(() => {
-    if (!loginUser) return;
-    if (loginUser.activeTenant) {
-      setTenantId(loginUser.activeTenant.tenantId);
-      categoryRefetch();
-    }
-  }, [loginUser]);
-
-  useEffect(() => {
     if( categoryTree ) {
-      console.log('### categoryTree DATA => ', categoryTree);
+      console.log('### categoryTreeData => ', categoryTree);
       const mainTreeData: any[] = categoryTree.children;
       // 1 Depth
       const oneDepthData = mainTreeData.map(item => {
@@ -173,7 +163,7 @@ const PopupContent: React.FC<CategoryPopupProps> = ({ onNavigate }) => {
   );
 };
 
-export const CategoryButton = () => {
+export const CategoryButton = ( {tenantId}: {tenantId?: number}) => {
   const router = useRouter();
   const { openModal } = useModal();
 
@@ -183,24 +173,35 @@ export const CategoryButton = () => {
   //   });
   // }, [router.history, onOpenChange]);
 
-  const handlerSelectedCategoryClick = (categoryId: number) => {
-    console.log(`categoryId: ${categoryId}`);
-    console.log('router', router.state.location);
+  const handlerSelectedCategoryClick = (tenantId: number, categoryId: number) => {
+    router.navigate({
+      to: '/category',
+      replace: true,
+      state: {
+        ...router.state.location.state,
+        tenantId,
+        categoryId
+      }
+    });
   }
 
   return (
     <div className={styles.start}>
-      <Button
-        className={styles.btn_category}
-        onlyIcon={true}
-        icon={<IcoArray width={24} height={24} fill="#fff" stroke="#131416" />}
-        onClick={() =>
-          openModal({
-            width: 'xl', // sm(600px), md(800px), lg(1024px), xl(1400px)
-            content: <PopupContent onNavigate={handlerSelectedCategoryClick} />,
-          })
-        }
-      />
+      {
+        tenantId && (
+          <Button
+            className={styles.btn_category}
+            onlyIcon={true}
+            icon={<IcoArray width={24} height={24} fill="#fff" stroke="#131416" />}
+            onClick={() =>
+              openModal({
+                width: 'xl', // sm(600px), md(800px), lg(1024px), xl(1400px)
+                content: <PopupContent id={tenantId} onNavigate={handlerSelectedCategoryClick} />,
+              })
+            }
+          />
+        )
+      }
     </div>
   );
 };

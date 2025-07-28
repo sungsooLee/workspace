@@ -58,8 +58,34 @@ function RouteComponent() {
         <div className={styles.login_info}>
           <Checkbox label="아이디 저장" className={styles.id_save} size="md" />
           <div className={styles.info}>
-            <Link to="/search-account">아이디/비밀번호찾기</Link>{' '}
-            <Link to="/search-account">아이디/비밀번호찾기</Link>
+            <Link to="/search-account">아이디찾기</Link>{' '}
+            <Link to="/search-account">비밀번호찾기</Link>
+          </div>
+        </div>
+
+        {/* 이번 프로젝트에서는 개발 제외 (퍼블,디자인만 작업) */}
+        <div className={styles.sns_login}>
+          <h3 className={styles.tit_sns}>소셜 로그인</h3>
+          <ul className={styles.list}>
+            <li>
+              <Button>
+                <img src={snsNaverImage} alt="naver" />
+              </Button>
+            </li>
+            <li>
+              <Button>
+                <img src={snskakaoImage} alt="kakao" />
+              </Button>
+            </li>
+            {/* 영문 시 : 구글로그인만 출력 */}
+            <li>
+              <Button>
+                <img src={snsGoogleImage} alt="google" />
+              </Button>
+            </li>
+          </ul>
+          <div className={styles.noti}>
+            회사 메일로 회원가입 이후 SNS 간편회원으로 로그인 할 수 있습니다.
           </div>
         </div>
 
@@ -70,10 +96,8 @@ function RouteComponent() {
         </div>
 
         <div className={styles.login_guide}>
-          <span>
-            <Link to="/progress-status-cert">회원 가입 현황</Link>
-            <Link to="/signup-step1">회원가입</Link>
-          </span>
+          <Link to="/progress-status-cert">회원 가입 현황</Link>
+          <Link to="/signup-step1">회원가입</Link>
         </div>
       </div>
     </div>

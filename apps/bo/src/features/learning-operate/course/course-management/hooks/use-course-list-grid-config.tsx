@@ -1,15 +1,17 @@
 import { queryOptions } from '@entities/course/service/course.queries';
 import { CODE_GROUP, getCodeLabel } from '@learnway/hooks';
-import { Link } from '@tanstack/react-router';
+import { Button, useModal } from '@learnway/ui';
+import { PreviewLearningWindow } from '@shared/ui/modal/preview-learning-window';
+import { Link, useLocation } from '@tanstack/react-router';
 import { CoursesQueryParams } from '@types';
 import { t } from 'i18next';
-import { EditFavorite } from '@learnway/ui';
-import { CourseGridColumn } from '../../types/type';
+import { CourseGridColumn } from '../types/type';
+import { CourseFavoriteIcon } from '../ui/course-favorite-icon/course-favorite-icon';
 
-export const createGridConfig = (
-  handleFavoriteClick: (courseId: number) => void,
-  pathname: string,
-) => {
+export const useCourseListGridConfig = () => {
+  const { pathname } = useLocation();
+  const { openModal } = useModal();
+
   const columns: CourseGridColumn[] = [
     // 테넌트
     {
@@ -47,7 +49,13 @@ export const createGridConfig = (
       name: 'isBookmarks',
       label: () => t('LABEL.grid.column.favorite'),
       size: 40,
-      render: (info: any) => <EditFavorite info={info} onClick={() => console.log('info', info)} />,
+      render: ({ row, getValue }) => {
+        console.log(row);
+        return <CourseFavoriteIcon courseId={row?.original?.courseId} isFavorite={getValue()} />;
+      },
+      meta: {
+        cellAlign: 'center',
+      },
     },
     // 과정명
     {
@@ -123,12 +131,28 @@ export const createGridConfig = (
       name: 'preview',
       label: () => t('LABEL.grid.column.preview'),
       size: 90,
+      render: (info: any) => (
+        <Button
+          variant="text"
+          size="sm"
+          className="link"
+          label={t('LABEL.grid.column.preview')}
+          disabled={!info?.original?.isUsed}
+          onClick={() => {
+            openModal({
+              width: 'full',
+              content: <PreviewLearningWindow contentUuid={info?.original?.contentUuid} />,
+            });
+          }}
+        />
+      ),
     },
     // URL
     {
       name: 'url',
       label: () => t('LABEL.grid.column.url'),
       size: 90,
+      render: (info: any) => <Button variant="gray2" size="xs" label={t('URL 생성')} />,
     },
   ];
 

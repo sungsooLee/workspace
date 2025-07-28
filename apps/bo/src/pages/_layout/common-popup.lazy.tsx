@@ -50,7 +50,7 @@ import { IcoDownload } from '@learnway/icons';
 import { EnFormMode } from '@types';
 
 import { useDeployTranslation } from '@entities/translation/service/translation.hook';
-import { PreviewLearningWindow } from '@features/learning-resource/learning-resource-management/ui/preview-learning-window';
+import { PreviewLearningWindow } from '@shared/ui/modal/preview-learning-window';
 import { CourseType } from '@learnway/types';
 
 export const Route = createLazyFileRoute('/_layout/common-popup')({
@@ -664,8 +664,9 @@ function RouteComponent() {
                       // 스콤: 2f17e8a6-a160-4768-8bd0-0f5f74b2acdc
                       // 스콤: item 미리보기 호출 시 scoId를 추가하여 호출
                       // 2d2e6260-3c9d-4ada-9c0f-43b57cc745b9
+                      //38
 
-                      <PreviewLearningWindow contentUuid="2d2e6260-3c9d-4ada-9c0f-43b57cc745b9" />
+                      <PreviewLearningWindow curriculumId={3} />
                     ),
                     onClose(data: any) {
                       console.log('컨텐츠 미리 보기 팝업', data);

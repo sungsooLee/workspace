@@ -84,6 +84,10 @@ export const PAGE_META_BY_PATH: Record<string, PageMeta> = {
     title: '이용약관 및 개인정보 처리방침',
     info: '이용약관과 개인정보 처리방침을 확인해주세요.',
   },
+  '/pb-fo/tenant-select': {
+    title: '테넌트 선택',
+    info: '입장하실 테넌트를 선택하세요',
+  },
 };
 
 export function isSigninPageInfo(path: string): boolean {

@@ -153,7 +153,7 @@ export default class CourseService {
    * @param payload - 찜 여부 변경 정보.
    * @returns 찜 여부 변경 결과 Promise.
    */
-  static async updateFavorite(payload: { id: number; isBookmarks: boolean }): Promise<any> {
+  static async updateFavorite(payload: { id: number }): Promise<any> {
     return httpService.put<any>(`${LMSApiPrefix()}/course/${payload.id}/bookmark`, payload);
   }
 }

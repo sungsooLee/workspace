@@ -19,6 +19,10 @@ export function convertToScormSubmit(data: any) {
   return _;
 }
 
+export const convertToETCForm = convertToScormForm;
+
+export const convertToETCSubmit = convertToScormSubmit;
+
 export function convertToVideoForm(data: any) {
   const _ = convertToScormForm(data);
   _.isSubtitles = Boolean(_.videoSubtitles?.length);

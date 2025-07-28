@@ -1,39 +1,198 @@
 import { FC, useState } from 'react';
 import { cn, getRandomId } from '@learnway/shared';
 import { Link } from '@tanstack/react-router';
-import { Button, Input, Dropdown, Badge, Carousel, Thumbnail } from '@learnway/ui';
-import { IcoPlay, IcoStar, IcoEye, IcoHeart, IcoPlus, IcoArrowForward } from '@learnway/icons';
+import { Badge, Button, Carousel, Dropdown, Input, Thumbnail } from '@learnway/ui';
+import {
+  IcoPlay,
+  IcoStar,
+  IcoEye,
+  IcoHeart,
+  IcoPlus,
+  IcoArrowForward,
+  IcoSearch,
+} from '@learnway/icons';
 import { isMobile } from 'react-device-detect';
 
 /* ThumbnailList */
 import bannerImg from '@learnway/styles/fo/assets/images/banner/img_banner_sample.jpg';
 import visualImg from '@learnway/styles/fo/assets/images/banner/img_visual_banner.png';
+import shortsImg from '@learnway/styles/fo/assets/images/temp/img_shorts.jpg';
 import ThumbnailList from '../../../-components/thumb/thumb-nail-list';
 
 /* style */
 import styles from './course-contents.module.css';
-import { BannerItem } from './banner-item';
+import { BannerItem } from './banner-item'; // 상단 배너
+import { ShortsItem } from './shorts-item'; // 하단 shorts
 
 const CourseHomeComponent: FC = () => {
-  // dropdown
-  const [searchValues01, setSearchValues01] = useState<string[]>(['대분류']);
-
-  const data = [
+  // Search
+  const [selectedValues, setSelectedValues] = useState<string[]>([]);
+  // Banner
+  const bannerData = [
     {
       title: '2025 AI 트렌드',
       text: '사용자의 관심을 사로잡는 \n 23가지 기술',
       buttonLabel: '더보기',
       imageUrl: visualImg,
     },
-    // ...
+    {
+      title: '2025 AI 트렌드2',
+      text: '사용자의 관심을 사로잡는 \n 23가지 기술',
+      buttonLabel: '더보기',
+      imageUrl: visualImg,
+    },
+    {
+      title: '2025 AI 트렌드3',
+      text: '사용자의 관심을 사로잡는 \n 23가지 기술',
+      buttonLabel: '더보기',
+      imageUrl: visualImg,
+    },
+  ];
+  // Shorts
+  const shortsData = [
+    {
+      title: '경청이 리더십의 시작이라는 말, 들어보셨나요?',
+      badgeLabel: '마음챙김',
+      imageUrl: shortsImg,
+      infoNode: (
+        <>
+          <Badge
+            variant={'text'}
+            status={'primary'}
+            option={{ label: 'New', value: '' }}
+            size={'xs'}
+          />
+          <span className={styles.info}>
+            <IcoEye width={16} height={16} stroke="#fff" />
+            <em>{`${new Intl.NumberFormat().format(2500)}`}</em>
+            {'시청'}
+          </span>
+        </>
+      ),
+    },
+    {
+      title: '경청이 리더십의 시작이라는 말, 들어보셨나요?',
+      badgeLabel: '마음챙김',
+      imageUrl: shortsImg,
+      infoNode: (
+        <>
+          <Badge
+            variant={'text'}
+            status={'primary'}
+            option={{ label: 'New', value: '' }}
+            size={'xs'}
+          />
+          <span className={styles.info}>
+            <IcoEye width={16} height={16} stroke="#fff" />
+            <em>{`${new Intl.NumberFormat().format(2500)}`}</em>
+            {'시청'}
+          </span>
+        </>
+      ),
+    },
+    {
+      title: '경청이 리더십의 시작이라는 말, 들어보셨나요?',
+      badgeLabel: '마음챙김',
+      imageUrl: shortsImg,
+      infoNode: (
+        <>
+          <Badge
+            variant={'text'}
+            status={'primary'}
+            option={{ label: 'New', value: '' }}
+            size={'xs'}
+          />
+          <span className={styles.info}>
+            <IcoEye width={16} height={16} stroke="#fff" />
+            <em>{`${new Intl.NumberFormat().format(2500)}`}</em>
+            {'시청'}
+          </span>
+        </>
+      ),
+    },
+    {
+      title: '경청이 리더십의 시작이라는 말, 들어보셨나요?',
+      badgeLabel: '마음챙김',
+      imageUrl: shortsImg,
+      infoNode: (
+        <>
+          <Badge
+            variant={'text'}
+            status={'primary'}
+            option={{ label: 'New', value: '' }}
+            size={'xs'}
+          />
+          <span className={styles.info}>
+            <IcoEye width={16} height={16} stroke="#fff" />
+            <em>{`${new Intl.NumberFormat().format(2500)}`}</em>
+            {'시청'}
+          </span>
+        </>
+      ),
+    },
+    {
+      title: '경청이 리더십의 시작이라는 말, 들어보셨나요?',
+      badgeLabel: '마음챙김',
+      imageUrl: shortsImg,
+      infoNode: (
+        <>
+          <Badge
+            variant={'text'}
+            status={'primary'}
+            option={{ label: 'New', value: '' }}
+            size={'xs'}
+          />
+          <span className={styles.info}>
+            <IcoEye width={16} height={16} stroke="#fff" />
+            <em>{`${new Intl.NumberFormat().format(2500)}`}</em>
+            {'시청'}
+          </span>
+        </>
+      ),
+    },
+    {
+      title: '경청이 리더십의 시작이라는 말, 들어보셨나요?',
+      badgeLabel: '마음챙김',
+      imageUrl: shortsImg,
+      infoNode: (
+        <>
+          <Badge
+            variant={'text'}
+            status={'primary'}
+            option={{ label: 'New', value: '' }}
+            size={'xs'}
+          />
+          <span className={styles.info}>
+            <IcoEye width={16} height={16} stroke="#fff" />
+            <em>{`${new Intl.NumberFormat().format(2500)}`}</em>
+            {'시청'}
+          </span>
+        </>
+      ),
+    },
+    {
+      title: '경청이 리더십의 시작이라는 말, 들어보셨나요?',
+      badgeLabel: '마음챙김',
+      imageUrl: shortsImg,
+      infoNode: (
+        <>
+          <Badge
+            variant={'text'}
+            status={'primary'}
+            option={{ label: 'New', value: '' }}
+            size={'xs'}
+          />
+          <span className={styles.info}>
+            <IcoEye width={16} height={16} stroke="#fff" />
+            <em>{`${new Intl.NumberFormat().format(2500)}`}</em>
+            {'시청'}
+          </span>
+        </>
+      ),
+    },
   ];
 
-  // Carousel
-  const bannerItems = [
-    <BannerItem items={data} />,
-    <BannerItem items={data} />,
-    <BannerItem items={data} />,
-  ];
+  const bannerItems = bannerData.map((item, index) => <BannerItem key={index} items={[item]} />);
 
   // Thumnail
   const item = [
@@ -479,8 +638,37 @@ const CourseHomeComponent: FC = () => {
     },
   ];
 
+  // shorts
+  const shortsItems = shortsData.map((item, index) => <ShortsItem key={index} items={[item]} />);
+
   return (
     <div className={cn(styles.start, styles.course_contents)}>
+      {/* Search */}
+      <div className={styles.search_wrap}>
+        {!isMobile ? (
+          <>
+            <Dropdown
+              options={[
+                { value: 'type1', label: '전체' },
+                { value: 'type2', label: 'AI 지식 스튜디오' },
+              ]}
+              value={selectedValues}
+              onChange={(selected) => setSelectedValues(selected)}
+              size="md"
+              defaultValue={'type1'}
+            />
+            <Input placeholder={'Text'} inputSize={'md'} showSearchIcon={true} />
+          </>
+        ) : (
+          <Button
+            onlyIcon={true}
+            icon={
+              <IcoSearch width={24} height={24} stroke={'#131C30'} className={styles.btn_search} />
+            }
+          />
+        )}
+      </div>
+      {/* Banner */}
       <div className={styles.banner_wrap}>
         <Carousel
           items={bannerItems}
@@ -489,25 +677,6 @@ const CourseHomeComponent: FC = () => {
           spaceBetween={8}
           pagination={{ clickable: true }}
         />
-      </div>
-      <div className={styles.search_box_wrap}>
-        <div className={styles.select_area}>
-          <Dropdown
-            className={styles.search_select}
-            size="lg"
-            options={[
-              { value: 'a', label: '패키지' },
-              { value: 'b', label: '패키지2' },
-              { value: 'c', label: '패키지3' },
-            ]}
-            value={searchValues01}
-            onChange={(selected) => setSearchValues01(selected)}
-          />
-          <div className={styles.search_input}>
-            <Input type="text" placeholder="검색어" inputSize={'lg'} />
-            <Button label={'검색'} variant={'primary'} size={'lx'} />
-          </div>
-        </div>
       </div>
       {/* list_box_wrap */}
       <div className={styles.list_box_wrap}>
@@ -615,6 +784,17 @@ const CourseHomeComponent: FC = () => {
       </div>
       {/* title */}
       <strong className={styles.menu_title}>{'짧고 빠르게 볼 수 있는 최고 인기 숏츠'}</strong>
+      {/* Shorts */}
+      <div className={styles.shorts_wrap}>
+        <Carousel
+          items={shortsItems}
+          className={cn(styles.shorts_swiper, 'shorts_swiper')}
+          loop={false}
+          slidesPerView={!isMobile ? 6 : 1.8}
+          spaceBetween={20}
+          showNavigation={!isMobile ? true : false}
+        />
+      </div>
     </div>
   );
 };
