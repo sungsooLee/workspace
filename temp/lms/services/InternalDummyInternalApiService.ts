@@ -2,8 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { com_ever_edu_lms_blackwhitecall_dto_req_BlackAndWhiteUpsertReqDto } from '../models/com_ever_edu_lms_blackwhitecall_dto_req_BlackAndWhiteUpsertReqDto';
-import type { com_ever_edu_lms_blackwhitecall_dto_res_BlackAndWhiteResDto } from '../models/com_ever_edu_lms_blackwhitecall_dto_res_BlackAndWhiteResDto';
+import type { com_ever_edu_external_blackandwhite_dto_req_BlackAndWhiteUpsertReqDto } from '../models/com_ever_edu_external_blackandwhite_dto_req_BlackAndWhiteUpsertReqDto';
+import type { com_ever_edu_external_blackandwhite_dto_res_BlackAndWhiteResDto } from '../models/com_ever_edu_external_blackandwhite_dto_res_BlackAndWhiteResDto';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
@@ -12,12 +12,12 @@ export class InternalDummyInternalApiService {
      * 블랙/화이트 등록 테스트용
      * 블랙/화이트 목록을 mapping한다.
      * @param requestBody
-     * @returns com_ever_edu_lms_blackwhitecall_dto_res_BlackAndWhiteResDto OK
+     * @returns com_ever_edu_external_blackandwhite_dto_res_BlackAndWhiteResDto OK
      * @throws ApiError
      */
-    public static mappingBlackAndWhite1(
-        requestBody: com_ever_edu_lms_blackwhitecall_dto_req_BlackAndWhiteUpsertReqDto,
-    ): CancelablePromise<com_ever_edu_lms_blackwhitecall_dto_res_BlackAndWhiteResDto> {
+    public static mappingBlackAndWhite(
+        requestBody: com_ever_edu_external_blackandwhite_dto_req_BlackAndWhiteUpsertReqDto,
+    ): CancelablePromise<com_ever_edu_external_blackandwhite_dto_res_BlackAndWhiteResDto> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/admin/api/v1/dummy/black-and-white/mapping',
@@ -37,13 +37,13 @@ export class InternalDummyInternalApiService {
      * 블랙/화이트 그룹 상세 정보를 조회한다.
      * @param blackAndWhiteGroupMappingType
      * @param mappingId
-     * @returns com_ever_edu_lms_blackwhitecall_dto_res_BlackAndWhiteResDto OK
+     * @returns com_ever_edu_external_blackandwhite_dto_res_BlackAndWhiteResDto OK
      * @throws ApiError
      */
-    public static selectBlackAndWhite1(
+    public static selectBlackAndWhite(
         blackAndWhiteGroupMappingType: 'COURSE' | 'SEQUENCE' | 'CATEGORY' | 'CHANNEL' | 'ROLE' | 'COMPANY_RESTRICTION',
         mappingId: number,
-    ): CancelablePromise<com_ever_edu_lms_blackwhitecall_dto_res_BlackAndWhiteResDto> {
+    ): CancelablePromise<com_ever_edu_external_blackandwhite_dto_res_BlackAndWhiteResDto> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/dummy/black-and-white/{blackAndWhiteGroupMappingType}/{mappingId}',

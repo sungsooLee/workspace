@@ -3,22 +3,15 @@
 /* tslint:disable */
 /* eslint-disable */
 export type com_ever_edu_cms_content_dto_res_ContentTranslationResDto = {
+    languageCountryCode?: com_ever_edu_cms_content_dto_res_ContentTranslationResDto.languageCountryCode;
     contentUuid?: string;
     contentName?: string;
-    langCountryCode?: com_ever_edu_cms_content_dto_res_ContentTranslationResDto.langCountryCode;
     createType?: com_ever_edu_cms_content_dto_res_ContentTranslationResDto.createType;
     groupContentId?: number;
     contentType?: com_ever_edu_cms_content_dto_res_ContentTranslationResDto.contentType;
-    contentStatusCode?: com_ever_edu_cms_content_dto_res_ContentTranslationResDto.contentStatusCode;
-    createdBy?: string;
-    creatorName?: string;
-    createdDate?: string;
-    lastModifiedBy?: string;
-    modifyerName?: string;
-    modifiedDate?: string;
 };
 export namespace com_ever_edu_cms_content_dto_res_ContentTranslationResDto {
-    export enum langCountryCode {
+    export enum languageCountryCode {
         KO = 'KO',
         EN = 'EN',
         ES = 'ES',
@@ -47,7 +40,7 @@ export namespace com_ever_edu_cms_content_dto_res_ContentTranslationResDto {
     export enum createType {
         MANUAL = 'MANUAL',
         SHARED = 'SHARED',
-        TRASLATE = 'TRASLATE',
+        TRANSLATE = 'TRANSLATE',
     }
     export enum contentType {
         VIDEO = 'VIDEO',
@@ -63,11 +56,6 @@ export namespace com_ever_edu_cms_content_dto_res_ContentTranslationResDto {
         ASSIGNMENT = 'ASSIGNMENT',
         SURVEY = 'SURVEY',
         ETC = 'ETC',
-    }
-    export enum contentStatusCode {
-        TEMPORARY_SAVE = 'TEMPORARY_SAVE',
-        SAVE = 'SAVE',
-        DELETE = 'DELETE',
     }
 }
 

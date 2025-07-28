@@ -20,10 +20,6 @@ export type com_ever_edu_pms_user_dto_req_TutorRegisterReqDto = {
      */
     password: string;
     /**
-     * 휴대폰 국가번호
-     */
-    phoneNationNumber: string;
-    /**
      * 휴대폰 번호
      */
     phoneNumber: string;

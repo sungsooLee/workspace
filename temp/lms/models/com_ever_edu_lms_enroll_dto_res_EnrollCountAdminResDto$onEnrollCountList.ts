@@ -11,6 +11,7 @@ export namespace com_ever_edu_lms_enroll_dto_res_EnrollCountAdminResDto$onEnroll
         ENROLL_DONE = 'ENROLL_DONE',
         ENROLL_REQUEST = 'ENROLL_REQUEST',
         CANCEL_DONE = 'CANCEL_DONE',
+        REJECT_DONE = 'REJECT_DONE',
     }
 }
 

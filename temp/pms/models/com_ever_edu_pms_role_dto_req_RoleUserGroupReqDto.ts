@@ -2,14 +2,11 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { com_ever_edu_pms_blackwhite_dto_req_WhiteGroupReqDto } from './com_ever_edu_pms_blackwhite_dto_req_WhiteGroupReqDto';
 export type com_ever_edu_pms_role_dto_req_RoleUserGroupReqDto = {
     /**
-     * 추가할 유저그룹 ID 목록
+     * 유저 그룹 목록
      */
-    addUserGroupIds?: Array<number>;
-    /**
-     * 삭제할 유저그룹 ID 목록
-     */
-    removeUserGroupIds?: Array<number>;
+    groups?: Array<com_ever_edu_pms_blackwhite_dto_req_WhiteGroupReqDto>;
 };
 

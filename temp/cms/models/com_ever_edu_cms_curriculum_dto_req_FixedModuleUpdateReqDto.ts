@@ -5,7 +5,7 @@
 export type com_ever_edu_cms_curriculum_dto_req_FixedModuleUpdateReqDto = {
     moduleId: number;
     moduleName?: string;
-    description?: string;
+    moduleDescription?: string;
     totalTime?: number;
 };
 

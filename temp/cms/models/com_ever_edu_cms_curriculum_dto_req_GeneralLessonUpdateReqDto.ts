@@ -6,6 +6,6 @@ export type com_ever_edu_cms_curriculum_dto_req_GeneralLessonUpdateReqDto = {
     lessonId?: number;
     lessonName?: string;
     learningTime?: number;
-    description?: string;
+    lessonDescription?: string;
 };
 

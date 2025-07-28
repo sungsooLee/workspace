@@ -73,8 +73,8 @@ export namespace com_ever_edu_lms_sequence_dto_res_SequenceListResDto$OnAdmin {
      * 학습기간 지정 유형
      */
     export enum learningStartType {
-        DAYS_AFTER_ENROLL = 'DAYS_AFTER_ENROLL',
         FIXED_DATE = 'FIXED_DATE',
+        DAYS_AFTER_ENROLL = 'DAYS_AFTER_ENROLL',
     }
     /**
      * 상태

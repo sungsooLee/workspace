@@ -13,7 +13,7 @@ export type com_ever_edu_cms_content_dto_req_ContentExcelExportReqDto = {
      */
     channelUuid?: string;
     /**
-     * 콘텐츠 분류(복수선택) enum(cms.content.ContentType) - 유형(복수선택), null OR VIDEO|EBOOK|SCORM|HTML5_VIDEO|IMAGE|EXTERNAL_LINK|EXTERNAL_AGENCY|BLOG|EXAM|EXAM_POOL|ASSIGNMENT|SURVEY|ETC
+     * 콘텐츠 분류(복수선택) Enum(cms.content.ContentType) - 유형(복수선택), null OR VIDEO|EBOOK|SCORM|HTML5_VIDEO|IMAGE|EXTERNAL_LINK|EXTERNAL_AGENCY|BLOG|EXAM|EXAM_POOL|ASSIGNMENT|SURVEY|ETC
      */
     contentTypes?: Array<'VIDEO' | 'EBOOK' | 'SCORM' | 'HTML5_VIDEO' | 'IMAGE' | 'EXTERNAL_LINK' | 'EXTERNAL_AGENCY' | 'BLOG' | 'EXAM' | 'EXAM_POOL' | 'ASSIGNMENT' | 'SURVEY' | 'ETC'>;
     /**
@@ -37,9 +37,9 @@ export type com_ever_edu_cms_content_dto_req_ContentExcelExportReqDto = {
      */
     coordinatorName?: string;
     /**
-     * 국가 언어 코드 enum(ms.multilingual.LangCountryCode)
+     * 국가 언어 코드 Enum(pms.multilingual.LangCountryCode)
      */
-    langCountryCode?: com_ever_edu_cms_content_dto_req_ContentExcelExportReqDto.langCountryCode;
+    languageCountryCode?: com_ever_edu_cms_content_dto_req_ContentExcelExportReqDto.languageCountryCode;
     /**
      * 메뉴ID
      */
@@ -49,9 +49,9 @@ export type com_ever_edu_cms_content_dto_req_ContentExcelExportReqDto = {
 };
 export namespace com_ever_edu_cms_content_dto_req_ContentExcelExportReqDto {
     /**
-     * 국가 언어 코드 enum(ms.multilingual.LangCountryCode)
+     * 국가 언어 코드 Enum(pms.multilingual.LangCountryCode)
      */
-    export enum langCountryCode {
+    export enum languageCountryCode {
         KO = 'KO',
         EN = 'EN',
         ES = 'ES',

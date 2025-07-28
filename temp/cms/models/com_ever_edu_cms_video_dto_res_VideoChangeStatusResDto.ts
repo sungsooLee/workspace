@@ -5,6 +5,9 @@
 export type com_ever_edu_cms_video_dto_res_VideoChangeStatusResDto = {
     resourceId?: number;
     contentUuid?: string;
+    /**
+     * 파일 UUID
+     */
     fileUuid?: string;
     processingStatus?: com_ever_edu_cms_video_dto_res_VideoChangeStatusResDto.processingStatus;
 };

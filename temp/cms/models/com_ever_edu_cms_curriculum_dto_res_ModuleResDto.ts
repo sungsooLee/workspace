@@ -7,7 +7,6 @@ export type com_ever_edu_cms_curriculum_dto_res_ModuleResDto = {
     mappingCurriculumType?: com_ever_edu_cms_curriculum_dto_res_ModuleResDto.mappingCurriculumType;
     moduleId?: number;
     moduleName?: string;
-    description?: string;
     moduleType?: com_ever_edu_cms_curriculum_dto_res_ModuleResDto.moduleType;
     sortOrder?: number;
     isDummy?: boolean;
@@ -18,6 +17,7 @@ export type com_ever_edu_cms_curriculum_dto_res_ModuleResDto = {
     modifyerName?: string;
     modifiedDate?: string;
     lessonList?: Array<com_ever_edu_cms_curriculum_dto_res_LessonResDto>;
+    moduleDescription?: string;
 };
 export namespace com_ever_edu_cms_curriculum_dto_res_ModuleResDto {
     export enum mappingCurriculumType {

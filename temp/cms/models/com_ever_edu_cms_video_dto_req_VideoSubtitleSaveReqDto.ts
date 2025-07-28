@@ -9,14 +9,39 @@ export type com_ever_edu_cms_video_dto_req_VideoSubtitleSaveReqDto = {
     /**
      * 콘텐츠 ID
      */
-    subtitleFileUuid?: string;
+    subtitleFileUuid: string;
+    languageCountryCode: com_ever_edu_cms_video_dto_req_VideoSubtitleSaveReqDto.languageCountryCode;
     /**
-     * 콘텐츠 ID
+     * 자막명
      */
-    languageCode?: string;
-    /**
-     * 콘텐츠 ID
-     */
-    subtitleName?: string;
+    subtitleName: string;
 };
+export namespace com_ever_edu_cms_video_dto_req_VideoSubtitleSaveReqDto {
+    export enum languageCountryCode {
+        KO = 'KO',
+        EN = 'EN',
+        ES = 'ES',
+        AR = 'AR',
+        RU = 'RU',
+        FR = 'FR',
+        PT = 'PT',
+        ID = 'ID',
+        ZH = 'ZH',
+        VI = 'VI',
+        TR = 'TR',
+        TH = 'TH',
+        DE = 'DE',
+        HE = 'HE',
+        NE = 'NE',
+        FA = 'FA',
+        HI = 'HI',
+        JA = 'JA',
+        MS = 'MS',
+        IT = 'IT',
+        SK = 'SK',
+        RO = 'RO',
+        HR = 'HR',
+        ET = 'ET',
+    }
+}
 

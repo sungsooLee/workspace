@@ -4,11 +4,11 @@
 /* eslint-disable */
 export type com_ever_edu_cms_content_dto_req_ContentExportReqDto = {
     tenantId: number;
-    channelUuid: string;
-    langCountryCode?: com_ever_edu_cms_content_dto_req_ContentExportReqDto.langCountryCode;
+    destChannelUuid: string;
+    languageCountryCode?: com_ever_edu_cms_content_dto_req_ContentExportReqDto.languageCountryCode;
 };
 export namespace com_ever_edu_cms_content_dto_req_ContentExportReqDto {
-    export enum langCountryCode {
+    export enum languageCountryCode {
         KO = 'KO',
         EN = 'EN',
         ES = 'ES',

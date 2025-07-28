@@ -6,7 +6,9 @@ export type com_ever_edu_pms_user_dto_res_UserGroupDto = {
     userGroupId?: number;
     userGroupName?: string;
     userGroupSubName?: string;
+    tenantId?: number;
     tenantName?: string;
+    companyId?: number;
     companyName?: string;
     fullName?: string;
     userCount?: number;

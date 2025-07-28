@@ -2,8 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { com_ever_edu_external_blackandwhite_dto_res_WhiteGroupResDto } from './com_ever_edu_external_blackandwhite_dto_res_WhiteGroupResDto';
 import type { com_ever_edu_external_tenant_dto_res_TenantResDto } from './com_ever_edu_external_tenant_dto_res_TenantResDto';
-import type { com_ever_edu_lms_blackwhite_dto_res_WhiteGroupResDto } from './com_ever_edu_lms_blackwhite_dto_res_WhiteGroupResDto';
 import type { com_ever_edu_lms_category_dto_res_CourseCategoryFlatDto } from './com_ever_edu_lms_category_dto_res_CourseCategoryFlatDto';
 import type { com_ever_edu_lms_course_dto_res_CourseAdminResDto$SimpleCourseDto } from './com_ever_edu_lms_course_dto_res_CourseAdminResDto$SimpleCourseDto';
 import type { com_ever_edu_lms_course_dto_TenantCustomDto } from './com_ever_edu_lms_course_dto_TenantCustomDto';
@@ -23,7 +23,7 @@ export type com_ever_edu_lms_course_dto_res_CourseAdminResDto = {
      * 카테고리 목록
      */
     categories?: Array<com_ever_edu_lms_category_dto_res_CourseCategoryFlatDto>;
-    targetList?: Array<com_ever_edu_lms_blackwhite_dto_res_WhiteGroupResDto>;
+    targetList?: Array<com_ever_edu_external_blackandwhite_dto_res_WhiteGroupResDto>;
     language?: string;
     courseName?: string;
     courseSummary?: string;

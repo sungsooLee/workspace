@@ -36,6 +36,7 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep2 = {
      */
     isDuplicateEnrollAllowed?: boolean;
     learningSpaceNameValid?: boolean;
+    instructorValid?: boolean;
 };
 export namespace com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep2 {
     /**
