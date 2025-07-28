@@ -4,6 +4,7 @@ import {
   BlogCreateReq,
   BlogUpdateReq,
   ContentBaseInfo,
+  ContentExportReq,
   HtmlVideoFileChangeReq,
   HtmlVideoMetadataReq,
   PostDraftETCParams,
@@ -35,6 +36,19 @@ export function usePostContentCopy(options?: any) {
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
     data: mutation.data,
+  };
+}
+
+export function usePostContentExport(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.postContentExport(),
+    ...options,
+  });
+
+  return {
+    exportContent: (payload: ContentExportReq) => mutation.mutate(payload as any),
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
   };
 }
 

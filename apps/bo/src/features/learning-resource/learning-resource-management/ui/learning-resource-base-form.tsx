@@ -16,7 +16,7 @@ import {
   UserChoiceModal,
 } from '@shared/ui';
 
-import { EnFormMode } from '@types';
+import { ContentCreateType, EnFormMode } from '@types';
 
 import { DropdownFormField, FormDisplay, SecondDurationTimeFormField } from '@features/form';
 import { DateRangePickerFormField } from '@features/form/ui';
@@ -31,6 +31,7 @@ const LearningResourceBaseFormComponent = ({
   readOnlyLessonTime = false,
   showBlogEditor = false,
   contentNameMaxLength = 150,
+  createType = ContentCreateType.MANUAL,
 }: {
   provider: DynamicFormProvider;
   formMode?: EnFormMode;
@@ -45,9 +46,13 @@ const LearningResourceBaseFormComponent = ({
   showBlogEditor?: boolean;
   /** 학습자원명 입력 가능한 글자수 (기본 최대 150자이나 다른 경우 존재함) */
   contentNameMaxLength?: number;
+  /** 학습자원 생성 타입 (수기/번역/공유) */
+  createType: ContentCreateType;
 }) => {
   const { watch } = provider;
   const isCourseUsed = watch('isCourseUsed');
+
+  const editDisabled = createType !== ContentCreateType.MANUAL;
 
   return (
     <>
@@ -164,7 +169,7 @@ const LearningResourceBaseFormComponent = ({
           switchConfig={{
             label: (value: boolean) => (value ? '무기한' : '기간설정'),
           }}
-          element={<SwitchFormField invert />}
+          element={<SwitchFormField invert disabled={editDisabled} />}
         />
       </ContentsRow>
       {/* 사용기한 상세 */}
@@ -174,7 +179,7 @@ const LearningResourceBaseFormComponent = ({
             provider={provider}
             name="contentUseDate"
             format="object"
-            element={<DateRangePickerFormField />}
+            element={<DateRangePickerFormField disabled={editDisabled} />}
           />
         </ContentsRow>
       </FormDisplay>
@@ -184,7 +189,7 @@ const LearningResourceBaseFormComponent = ({
           provider={provider}
           label="외주개발업체정보"
           name="isVendored"
-          element={<SwitchFormField />}
+          element={<SwitchFormField disabled={editDisabled} />}
           value={false}
           format="boolean"
           switchConfig={{
@@ -208,7 +213,7 @@ const LearningResourceBaseFormComponent = ({
                   width: 'md',
                   content: <ManagerChoiceModal />,
                 }}
-                disabled={formMode === EnFormMode.VIEW}
+                disabled={formMode === EnFormMode.VIEW || editDisabled}
               />
             }
           />
@@ -220,7 +225,7 @@ const LearningResourceBaseFormComponent = ({
             label={t('외주개발업체 담당자')}
             name="vendorCoordinatorName"
             value=""
-            element={<Input />}
+            element={<Input readOnly={editDisabled} />}
           />
           {/*외주개발업체 연락처*/}
           <FormRow2
@@ -229,7 +234,7 @@ const LearningResourceBaseFormComponent = ({
             name="vendorTelNo"
             format="text"
             value=""
-            element={<Input />}
+            element={<Input readOnly={editDisabled} />}
           />
         </ContentsRow>
       </FormDisplay>
@@ -258,7 +263,7 @@ const LearningResourceBaseFormComponent = ({
             label={'학습 시간'}
             format="number"
             value={0}
-            element={<SecondDurationTimeFormField readOnly={readOnlyLessonTime} />}
+            element={<SecondDurationTimeFormField readOnly={readOnlyLessonTime || editDisabled} />}
           />
         </ContentsRow>
       )}
