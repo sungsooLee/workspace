@@ -24,8 +24,9 @@ import {
   convertToVideoSubmit,
   LearningResourceVideoDetail,
   MovieInfo,
+  TranslationListModal,
 } from '@features/learning-resource';
-import { PutVideoUpdateRes } from '@types';
+import { ContentCreateType, PutVideoUpdateRes } from '@types';
 
 export const Route = createLazyFileRoute('/_layout/learning/learning-resource/video/view')({
   component: RouteComponent,
@@ -44,6 +45,7 @@ function RouteComponent() {
   const { provider, onSubmit, updateFormData, formState, getValues, watch } = useDynamicForm2();
 
   const isDrafted = watch('isDrafted');
+  const createType = watch('createType');
   const isCourseUsed = watch('isCourseUsed');
 
   useBlocker({
@@ -119,6 +121,14 @@ function RouteComponent() {
     });
   }, [data]);
 
+  const handleTranslationList = useCallback(() => {
+    if (!data) return;
+    openModal({
+      content: <TranslationListModal contentInfo={data} />,
+      width: 'lg',
+    });
+  }, [data]);
+
   if (fetchError) {
     console.log('🚀 ~ RouteComponent ~ fetchError:', fetchError);
     return <NotFound />;
@@ -156,7 +166,12 @@ function RouteComponent() {
               <Button variant="point" size="sm" onClick={handleCourseMapping}>
                 {t('매핑과정')}
               </Button>
-              <Button variant="point" size="sm">
+              <Button
+                variant="point"
+                size="sm"
+                disabled={createType !== ContentCreateType.MANUAL}
+                onClick={handleTranslationList}
+              >
                 {t('번역현황')}
               </Button>
             </>
@@ -175,7 +190,7 @@ function RouteComponent() {
             {t('삭제')}
           </Button>
           {!isDrafted && (
-            <Button variant="point" size="sm">
+            <Button variant="point" size="sm" disabled={createType !== ContentCreateType.MANUAL}>
               {t('번역')}
             </Button>
           )}
