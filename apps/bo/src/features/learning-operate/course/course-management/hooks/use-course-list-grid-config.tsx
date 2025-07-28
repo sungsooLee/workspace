@@ -49,9 +49,10 @@ export const useCourseListGridConfig = () => {
       name: 'isBookmarks',
       label: () => t('LABEL.grid.column.favorite'),
       size: 40,
-      render: (info: any) => (
-        <CourseFavoriteIcon courseId={info?.original?.courseId} isFavorite={info.getValue()} />
-      ),
+      render: ({ row, getValue }) => {
+        console.log(row);
+        return <CourseFavoriteIcon courseId={row?.original?.courseId} isFavorite={getValue()} />;
+      },
       meta: {
         cellAlign: 'center',
       },
