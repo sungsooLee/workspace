@@ -1,16 +1,17 @@
 import { queryOptions } from '@entities/course/service/course.queries';
 import { CODE_GROUP, getCodeLabel } from '@learnway/hooks';
-import { Link } from '@tanstack/react-router';
+import { Button, useModal } from '@learnway/ui';
+import { PreviewLearningWindow } from '@shared/ui/modal/preview-learning-window';
+import { Link, useLocation } from '@tanstack/react-router';
 import { CoursesQueryParams } from '@types';
 import { t } from 'i18next';
-import { Button, EditFavorite } from '@learnway/ui';
-import { CourseGridColumn } from '../../types/type';
-import { CourseFavoriteIcon } from '../course-favorite-icon/course-favorite-icon';
+import { CourseGridColumn } from '../types/type';
+import { CourseFavoriteIcon } from '../ui/course-favorite-icon/course-favorite-icon';
 
-export const createGridConfig = (
-  handleFavoriteClick: (courseId: number) => void,
-  pathname: string,
-) => {
+export const useCourseListGridConfig = () => {
+  const { pathname } = useLocation();
+  const { openModal } = useModal();
+
   const columns: CourseGridColumn[] = [
     // 테넌트
     {
@@ -136,6 +137,12 @@ export const createGridConfig = (
           className="link"
           label={t('LABEL.grid.column.preview')}
           disabled={!info?.original?.isUsed}
+          onClick={() => {
+            openModal({
+              width: 'full',
+              content: <PreviewLearningWindow contentUuid={info?.original?.contentUuid} />,
+            });
+          }}
         />
       ),
     },

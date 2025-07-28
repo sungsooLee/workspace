@@ -23,7 +23,7 @@ export * from './ui/course-detail/tabs/sequence/index';
 export * from './ui/course-favorite-icon/course-favorite-icon';
 export * from './ui/course-list/course-grid';
 export * from './ui/course-list/course-list';
-export * from './ui/course-list/grid-config';
+export * from './hooks/use-course-list-grid-config';
 export * from './ui/course-management/course-management';
 export * from './ui/course-search-form/course-search-form';
 export * from './ui/course-stats-summary/course-stats-summary';

@@ -1,4 +1,8 @@
-import { CourseTypeOptionCardModal } from '@features/learning-operate/course/course-management';
+import { useCopyCourse, useUpdateFavorite } from '@entities/course';
+import {
+  CourseTypeOptionCardModal,
+  useCourseListGridConfig,
+} from '@features/learning-operate/course/course-management';
 import { useDynamicForm2 } from '@learnway/hooks';
 import { useGridBox, useModal } from '@learnway/ui';
 import { useRouter } from '@tanstack/react-router';
@@ -11,8 +15,6 @@ import {
   CourseSearchFormData,
   CourseType,
 } from '../types/type';
-import { createGridConfig } from '../ui/course-list/grid-config';
-import { useUpdateFavorite, useCopyCourse } from '@entities/course';
 
 export const useCoursePage = (): CourseManagementHookResult => {
   const router = useRouter();
@@ -23,11 +25,8 @@ export const useCoursePage = (): CourseManagementHookResult => {
     mode: 'onSubmit', // 서브밋할 때만 validation 실행
     reValidateMode: 'onChange', // 에러 발생 후에는 값 변경시 즉시 재검증
   });
-  const pathname = router.state.location.pathname;
-  const { config: gConfig, gridFetch } = useGridBox(
-    createGridConfig((courseId: number) => handleFavoriteClick(courseId), pathname),
-    getValues,
-  );
+  const gridConfig = useCourseListGridConfig();
+  const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
   const [selectedRows, setSelectedRows] = useState<CourseListItem[]>([]);
 
   // 과정 복사 뮤테이션
@@ -48,7 +47,6 @@ export const useCoursePage = (): CourseManagementHookResult => {
   });
   // 버튼 활성화/비활성화 상태 관리
   const buttonState: CourseButtonState = useMemo(() => {
-    const hasSelection = selectedRows.length > 0;
     return {
       copy: selectedRows?.length === 1,
       share: selectedRows?.length === 1,
@@ -83,10 +81,10 @@ export const useCoursePage = (): CourseManagementHookResult => {
   }, []);
 
   /**
-   * 찜 핸들러
+   * 그리드 키리보기 컬럼 > 클릭 핸들러
    */
-  const handleFavoriteClick = useCallback((courseId: number) => {
-    console.log('handleFavoriteClick.courseId => ', courseId);
+  const handlePreviewClick = useCallback((courseId: number) => {
+    console.log('handlePreviewClick.courseId => ', courseId);
   }, []);
 
   /**
