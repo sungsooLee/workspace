@@ -5,7 +5,7 @@ import { DynamicFormProvider, FileInfo, useFileManager } from '@learnway/hooks';
 import { usePutETCChange } from '@entities/learning-resource';
 import { formatBytes, splitFileName } from '@learnway/shared';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { PreviewLearningWindow } from './preview-learning-window';
+import { PreviewLearningWindow } from '../../../../shared/ui/modal/preview-learning-window';
 import { LearningResourceFileUploadModal } from './learning-resource-file-upload-modal';
 import { LEARNING_TYPE } from '@learnway/config';
 import { t } from 'i18next';

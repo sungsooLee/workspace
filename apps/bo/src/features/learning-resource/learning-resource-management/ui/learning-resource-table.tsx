@@ -33,7 +33,7 @@ import {
   TenantChannelDropdownFormField,
 } from '@shared/ui';
 import { CMSApiPrefix } from '@learnway/config';
-import { PreviewLearningWindow } from './preview-learning-window';
+import { PreviewLearningWindow } from '../../../../shared/ui/modal/preview-learning-window';
 import { getDetailPathByContentType, getDetailRouterState } from '@features/learning-resource';
 import { ContentCreateType, ContentInfo, ContentInformation } from '@types';
 

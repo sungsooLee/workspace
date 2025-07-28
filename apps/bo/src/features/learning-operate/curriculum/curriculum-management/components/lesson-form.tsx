@@ -20,7 +20,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useGetLessonDetail } from '../../../../../entities/curriculum';
 import subTitleStyles from '@learnway/styles/bo/assets/styles/modules/form-sub-title.module.css';
 import { IcoPlus } from '@learnway/icons';
-import { PreviewLearningWindow } from '@features/learning-resource/learning-resource-management/ui/preview-learning-window';
+import { PreviewLearningWindow } from '@shared/ui/modal/preview-learning-window';
 
 interface LessonFormProps {
   provider: DynamicFormProvider;

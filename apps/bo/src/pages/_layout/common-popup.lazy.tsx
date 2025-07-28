@@ -50,7 +50,7 @@ import { IcoDownload } from '@learnway/icons';
 import { EnFormMode } from '@types';
 
 import { useDeployTranslation } from '@entities/translation/service/translation.hook';
-import { PreviewLearningWindow } from '@features/learning-resource/learning-resource-management/ui/preview-learning-window';
+import { PreviewLearningWindow } from '@shared/ui/modal/preview-learning-window';
 import { CourseType } from '@learnway/types';
 
 export const Route = createLazyFileRoute('/_layout/common-popup')({
