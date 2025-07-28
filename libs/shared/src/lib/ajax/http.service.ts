@@ -178,6 +178,11 @@ export class HttpService {
   private executeRequest<T>(args: RequestArgs): Promise<T> {
     const { url } = args;
 
+    // 테스트 용
+    if (import.meta.env['VITE_DISABLE_AUTH'] === 'true') {
+      throw new Error('disable auth');
+    }
+
     return this.httpRequest<T>(args)
       .then((response: AxiosResponse) => {
         if (response.status >= 200 && response.status < 300) {

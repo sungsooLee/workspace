@@ -1,37 +1,36 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
-  Children,
-  FC,
-  isValidElement,
-  ReactNode,
-  useState,
-  useEffect,
-  useRef,
-  useMemo,
-} from 'react';
-import { useCreation } from 'ahooks';
-import { isArray, last } from 'lodash';
-import { t } from 'i18next';
-import { cn } from '@learnway/shared';
-import { Button, Popover, useModal } from '@learnway/ui';
-import { IcoStar, IcoArrowLineTop, IcoAlertCircle, IcoClose02 } from '@learnway/icons';
-import { useCurrentRoute } from '@learnway/hooks';
-import {
   useActiveMenuDepthState,
   useAsycFetchMenusForceRefatch,
   useFetchAuthUser,
   useUpdateUser,
 } from '@learnway/auth/entities';
+import { useCurrentRoute } from '@learnway/hooks';
+import { IcoAlertCircle, IcoArrowLineTop, IcoClose02, IcoStar } from '@learnway/icons';
+import { cn } from '@learnway/shared';
+import { Button, Popover, useModal } from '@learnway/ui';
+import { useCreation } from 'ahooks';
+import { t } from 'i18next';
+import { last } from 'lodash';
+import {
+  Children,
+  FC,
+  isValidElement,
+  ReactNode,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 
 import { Breadcrumbs } from './breadcrumbs/breadcrumbs';
-import { ContentsButtons } from './slot/contents-buttons';
 import { PageContents } from './page-contents';
+import { ContentsButtons } from './slot/contents-buttons';
 
-import styles from '@learnway/styles/bo/assets/styles/modules/page-container.module.css';
-import fabStyles from '@learnway/styles/bo/assets/styles/modules/fab.module.css'; /* fab */
-import tooltipPopoverStyles from '@learnway/styles/bo/assets/styles/modules/tootip-popover.module.css';
 import { useCreateMenuFavorites, useDeleteMenuFavorites } from '@entities/menu';
-import { useRouterState } from '@tanstack/react-router';
+import fabStyles from '@learnway/styles/bo/assets/styles/modules/fab.module.css'; /* fab */
+import styles from '@learnway/styles/bo/assets/styles/modules/page-container.module.css';
+import tooltipPopoverStyles from '@learnway/styles/bo/assets/styles/modules/tootip-popover.module.css';
 import { NoticeBox } from '@shared/ui';
 
 export type GuidePopupProps = {

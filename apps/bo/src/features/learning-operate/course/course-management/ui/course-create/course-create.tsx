@@ -63,7 +63,7 @@ const Component = () => {
         disabled: isCreateMode,
       },
     ],
-    [],
+    [isCreateMode],
   );
 
   console.log('------- view.lazy page...');
