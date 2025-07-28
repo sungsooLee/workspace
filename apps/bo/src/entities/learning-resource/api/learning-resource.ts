@@ -43,6 +43,7 @@ import {
   GetScormStatusRes,
   GetScormFileChangeRes,
   QuestionsCopyReq,
+  HtmlVideoChangeStatus,
 } from '@types';
 
 export default class LearningResourceService {
@@ -185,6 +186,10 @@ export default class LearningResourceService {
   // HTML5 동영상 상태 조회
   static fetchHTML5Status(contentUuid: string): Promise<HtmlVideoStatus> {
     return httpService.get(`${CMSApiPrefix()}/html5/${contentUuid}/status`);
+  }
+  // HTML5 동영상 파일변경 상태 조회
+  static fetchHTML5FileChangeStatus(changeId: number): Promise<HtmlVideoChangeStatus> {
+    return httpService.get(`${CMSApiPrefix()}/html5/file/change/${changeId}`);
   }
 
   // HTML5 동영상 콘텐츠 리소스 조회
