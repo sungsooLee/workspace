@@ -5,13 +5,12 @@ import { Link } from '@tanstack/react-router';
 /* style */
 import styles from './shorts-item.module.css';
 import { Badge } from '@learnway/ui';
-import { IcoEye } from '@learnway/icons';
 
 interface Item {
   badgeLabel?: string;
   title?: string;
   imageUrl?: string;
-  countView?: number;
+  infoNode?: React.ReactNode;
   link?: string;
 }
 
@@ -25,15 +24,7 @@ const ShortsItemComponent: FC<Itemprops> = ({ items }) => {
       {items.map((item, index) => (
         <div key={index} className={styles.item}>
           <Link to={item.link} className={styles.item_info_wrap}>
-            {item.countView && (
-              <div className={styles.view_wrap}>
-                <IcoEye width={16} height={16} stroke="#fff" />
-                <span
-                  className={styles.count}
-                >{`${new Intl.NumberFormat().format(item.countView)}`}</span>
-                {'시청'}
-              </div>
-            )}
+            {item.infoNode && <div className={styles.view_wrap}>{item.infoNode}</div>}
             {item.badgeLabel && (
               <Badge
                 variant="outline"

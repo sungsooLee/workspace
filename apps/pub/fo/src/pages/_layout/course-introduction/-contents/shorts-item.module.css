@@ -2,10 +2,14 @@
 .start {
   &.shorts_item {
     .item {
+      @apply relative overflow-hidden rounded-[12px];
       .item_info_wrap {
+        @apply absolute left-0 top-0 block h-full w-full p-[20px];
         .title {
+          @apply title4-b line-clamp-2 text-white;
         }
         .badge {
+          @apply mb-[12px] inline-flex;
         }
       }
     }

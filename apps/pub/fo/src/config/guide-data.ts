@@ -738,19 +738,9 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: 'course-introduction/package-list',
     pageType: 'Page',
-    completionDate: '2025-07-25',
+    completionDate: '2025-07-28',
     lastUpdateDate: '',
-    remarks: 'PC/MOBILE 한페이지 작업중',
-  },
-  {
-    screenId: 'NLP_FO_CHN_2006',
-    screenName: '과정 목록',
-    layoutType: '', // 자동 분리됨 작성x
-    pageId: 'course-introduction/course-list',
-    pageType: 'Page',
-    completionDate: '2025-07-25',
-    lastUpdateDate: '',
-    remarks: 'PC/MOBILE 한페이지 작업중',
+    remarks: 'PC/MOBILE 한페이지 작업중(홈/과정/패키지 텝메뉴 포함)',
   },
   {
     screenId: 'NLP_FO_LEC_1001',

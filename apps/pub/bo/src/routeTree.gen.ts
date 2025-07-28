@@ -8,2739 +8,1057 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-// Import Routes
+import { Route as rootRouteImport } from './pages/__root'
+import { Route as LayoutRouteImport } from './pages/_layout'
+import { Route as GuideRouteImport } from './pages/_guide'
+import { Route as AuthRouteImport } from './pages/_auth'
+import { Route as LayoutIndexRouteImport } from './pages/_layout/index'
+import { Route as LayoutTestRouteImport } from './pages/_layout/test'
+import { Route as LayoutMenuIdRouteImport } from './pages/_layout/$menuId'
+import { Route as AuthSuccessRouteImport } from './pages/_auth/success'
+import { Route as AuthSignupStep3RouteImport } from './pages/_auth/signup-step3'
+import { Route as AuthSignupStep2RouteImport } from './pages/_auth/signup-step2'
+import { Route as AuthSignupStep1RouteImport } from './pages/_auth/signup-step1'
+import { Route as AuthSearchIdSuccessRouteImport } from './pages/_auth/search-id-success'
+import { Route as AuthSearchAccountPwRouteImport } from './pages/_auth/search-account-pw'
+import { Route as AuthSearchAccountRouteImport } from './pages/_auth/search-account'
+import { Route as AuthProgressStatusEmailRouteImport } from './pages/_auth/progress-status-email'
+import { Route as AuthProgressStatusCpRouteImport } from './pages/_auth/progress-status-cp'
+import { Route as AuthProgressStatusCertifyRouteImport } from './pages/_auth/progress-status-certify'
+import { Route as AuthProgressStatusCertRouteImport } from './pages/_auth/progress-status-cert'
+import { Route as AuthProgressStatusAdminFailRouteImport } from './pages/_auth/progress-status-admin-fail'
+import { Route as AuthProgressStatusAdminRouteImport } from './pages/_auth/progress-status-admin'
+import { Route as AuthProgressStatusRouteImport } from './pages/_auth/progress-status'
+import { Route as AuthPopupRoleSelectRouteImport } from './pages/_auth/popup-role-select'
+import { Route as AuthPasswordModifyRouteImport } from './pages/_auth/password-modify'
+import { Route as AuthPasswordInputRouteImport } from './pages/_auth/password-input'
+import { Route as AuthMpassCertOtpRouteImport } from './pages/_auth/mpass-cert-otp'
+import { Route as AuthMpassCertFidoRouteImport } from './pages/_auth/mpass-cert-fido'
+import { Route as AuthMpassCertRouteImport } from './pages/_auth/mpass-cert'
+import { Route as AuthLoginRouteImport } from './pages/_auth/login'
+import { Route as AuthGoogleCertRouteImport } from './pages/_auth/google-cert'
+import { Route as AuthAdminAuthStep4RouteImport } from './pages/_auth/admin-auth-step4'
+import { Route as AuthAdminAuthStep3RouteImport } from './pages/_auth/admin-auth-step3'
+import { Route as AuthAdminAuthStep2RouteImport } from './pages/_auth/admin-auth-step2'
+import { Route as LayoutMenu3IndexRouteImport } from './pages/_layout/menu3/index'
+import { Route as GuideGuideIndexRouteImport } from './pages/_guide/guide/index'
+import { Route as LayoutPmsWidgetRegisterRouteImport } from './pages/_layout/pms/widget-register'
+import { Route as LayoutPmsWidgetManagementRouteImport } from './pages/_layout/pms/widget-management'
+import { Route as LayoutPmsWidgetDetailRouteImport } from './pages/_layout/pms/widget-detail'
+import { Route as LayoutPmsTerms_managementRouteImport } from './pages/_layout/pms/terms_management'
+import { Route as LayoutPmsTenantMenuManagementRouteImport } from './pages/_layout/pms/tenant-menu-management'
+import { Route as LayoutPmsShortening_url_registerRouteImport } from './pages/_layout/pms/shortening_url_register'
+import { Route as LayoutPmsShortening_url_listRouteImport } from './pages/_layout/pms/shortening_url_list'
+import { Route as LayoutPmsPrivate_search_listRouteImport } from './pages/_layout/pms/private_search_list'
+import { Route as LayoutPmsPrivate_search_detailRouteImport } from './pages/_layout/pms/private_search_detail'
+import { Route as LayoutPmsPopupWidgetManagementRouteImport } from './pages/_layout/pms/popup-widget-management'
+import { Route as LayoutPmsPopupTranslationCompleteRouteImport } from './pages/_layout/pms/popup-translation-complete'
+import { Route as LayoutPmsPopupLoginOptionRouteImport } from './pages/_layout/pms/popup-login-option'
+import { Route as LayoutPmsPopChannelSearchRouteImport } from './pages/_layout/pms/pop-channel-search'
+import { Route as LayoutPmsMenuTenantUserManagementRouteImport } from './pages/_layout/pms/menu-tenant-user-management'
+import { Route as LayoutPmsMenuTenantUserEducationRouteImport } from './pages/_layout/pms/menu-tenant-user-education'
+import { Route as LayoutPmsMenuTenantPlatformManagementRegistrationRouteImport } from './pages/_layout/pms/menu-tenant-platform-management-registration'
+import { Route as LayoutPmsMenuTenantPlatformManagementBasicInfomationRouteImport } from './pages/_layout/pms/menu-tenant-platform-management-basic-infomation'
+import { Route as LayoutPmsMenuTenantPlatformManagementRouteImport } from './pages/_layout/pms/menu-tenant-platform-management'
+import { Route as LayoutPmsMenuTenantPlatformLearningMenuRouteImport } from './pages/_layout/pms/menu-tenant-platform-learning-menu'
+import { Route as LayoutPmsMenuTenantPlatformCategoryMenuRouteImport } from './pages/_layout/pms/menu-tenant-platform-category-menu'
+import { Route as LayoutPmsMenuTenantMainwidgetManagementRouteImport } from './pages/_layout/pms/menu-tenant-mainwidget-management'
+import { Route as LayoutPmsMenuTenantMainbannerManagementRouteImport } from './pages/_layout/pms/menu-tenant-mainbanner-management'
+import { Route as LayoutPmsMenuTenantLearningRoleManagementRouteImport } from './pages/_layout/pms/menu-tenant-learning-role-management'
+import { Route as LayoutPmsMenuTenantGroupManagementRouteImport } from './pages/_layout/pms/menu-tenant-group-management'
+import { Route as LayoutPmsMenuTenantCompanyGroupRouteImport } from './pages/_layout/pms/menu-tenant-company-group'
+import { Route as LayoutPmsMenuTenantAttributeManagementRouteImport } from './pages/_layout/pms/menu-tenant-attribute-management'
+import { Route as LayoutPmsMenuPlatformCompanyDetailRouteImport } from './pages/_layout/pms/menu-platform-company-detail'
+import { Route as LayoutPmsMenuPlatformCommonGroupRouteImport } from './pages/_layout/pms/menu-platform-common-group'
+import { Route as LayoutPmsMenuPlatformRouteImport } from './pages/_layout/pms/menu-platform'
+import { Route as LayoutPmsMenuManagementRouteImport } from './pages/_layout/pms/menu-management'
+import { Route as LayoutPmsMenuMainRegistrationRouteImport } from './pages/_layout/pms/menu-main-registration'
+import { Route as LayoutPmsMenuMainNotificationManagementRouteImport } from './pages/_layout/pms/menu-main-notification-management'
+import { Route as LayoutPmsMenuEducationRegisterDetailRouteImport } from './pages/_layout/pms/menu-education-register-detail'
+import { Route as LayoutPmsMenuEducationLocationManagementRouteImport } from './pages/_layout/pms/menu-education-location-management'
+import { Route as LayoutPmsMenuChannelRegisterRouteImport } from './pages/_layout/pms/menu-channel-register'
+import { Route as LayoutPmsMenuChannelOpenManagementRouteImport } from './pages/_layout/pms/menu-channel-open-management'
+import { Route as LayoutPmsMenuChannelOpenDetailManagementRouteImport } from './pages/_layout/pms/menu-channel-open-detail-management'
+import { Route as LayoutPmsMenuChannelManagementRouteImport } from './pages/_layout/pms/menu-channel-management'
+import { Route as LayoutPmsMenuChannelDetailManagementRouteImport } from './pages/_layout/pms/menu-channel-detail-management'
+import { Route as LayoutPmsMenuChannelDetailRouteImport } from './pages/_layout/pms/menu-channel-detail'
+import { Route as LayoutPmsLanguage_managementRouteImport } from './pages/_layout/pms/language_management'
+import { Route as LayoutPmsGroupManagementRegisterRouteImport } from './pages/_layout/pms/group-management-register'
+import { Route as LayoutPmsGroupManagementInfoRouteImport } from './pages/_layout/pms/group-management-info'
+import { Route as LayoutPmsGroupManagementRouteImport } from './pages/_layout/pms/group-management'
+import { Route as LayoutPmsCategoryMenagementRouteImport } from './pages/_layout/pms/category-menagement'
+import { Route as LayoutMenu8Menu9RouteImport } from './pages/_layout/menu8/menu9'
+import { Route as LayoutMenu4Menu5RouteImport } from './pages/_layout/menu4/menu5'
+import { Route as LayoutMenuMenuIdRouteImport } from './pages/_layout/menu/$menuId'
+import { Route as LayoutLmsProcedureOpenSettingRouteImport } from './pages/_layout/lms/procedure-open-setting'
+import { Route as LayoutLmsProcedureManagementRouteImport } from './pages/_layout/lms/procedure-management'
+import { Route as LayoutLearningTestDetailRouteImport } from './pages/_layout/learning/testDetail'
+import { Route as LayoutLearningPopupUploadRouteImport } from './pages/_layout/learning/popup-upload'
+import { Route as LayoutLearningPopupQuestionDetailRouteImport } from './pages/_layout/learning/popup-question-detail'
+import { Route as LayoutLearningPopupLearningSettingRouteImport } from './pages/_layout/learning/popup-learningSetting'
+import { Route as LayoutLearningPopupLearningRegisterationRouteImport } from './pages/_layout/learning/popup-learningRegisteration'
+import { Route as LayoutLearningPopupFileuploadRouteImport } from './pages/_layout/learning/popup-fileupload'
+import { Route as LayoutLearningPopProgramGuideRouteImport } from './pages/_layout/learning/pop-program-guide'
+import { Route as LayoutLearningPopModifierInfoRouteImport } from './pages/_layout/learning/pop-modifier-info'
+import { Route as LayoutLearningMediaRegisterRouteImport } from './pages/_layout/learning/mediaRegister'
+import { Route as LayoutLearningMediaDetailRouteImport } from './pages/_layout/learning/mediaDetail'
+import { Route as LayoutLearningLearningSearchRouteImport } from './pages/_layout/learning/learningSearch'
+import { Route as LayoutLearningLearningResourceSearchRouteImport } from './pages/_layout/learning/learning-resource-search'
+import { Route as LayoutLearningLearningExternalRegistrationRouteImport } from './pages/_layout/learning/learning-external-registration'
+import { Route as LayoutLearningFileUploadRouteImport } from './pages/_layout/learning/file-upload'
+import { Route as LayoutLanguageLanguage_subjects_managementRouteImport } from './pages/_layout/language/language_subjects_management'
+import { Route as LayoutLanguageLanguage_history_listRouteImport } from './pages/_layout/language/language_history_list'
+import { Route as LayoutContentsLayoutRouteImport } from './pages/_layout/contents/layout'
+import { Route as LayoutCompletionEducation_operate_groupRouteImport } from './pages/_layout/completion/education_operate_group'
+import { Route as LayoutCompletionDetailCalculationReasonRouteImport } from './pages/_layout/completion/detail-calculation-reason'
+import { Route as LayoutCommonProfileMyinfoRouteImport } from './pages/_layout/common/profile-myinfo'
+import { Route as LayoutCommonPopUserSearchCheckRouteImport } from './pages/_layout/common/pop-user-search-check'
+import { Route as LayoutCommonPopUserSearchRouteImport } from './pages/_layout/common/pop-user-search'
+import { Route as LayoutCommonPopUserGroupSearchRouteImport } from './pages/_layout/common/pop-user-group-search'
+import { Route as LayoutCommonPopImagePreviewRouteImport } from './pages/_layout/common/pop-image-preview'
+import { Route as LayoutCommonPopExcelUploadRouteImport } from './pages/_layout/common/pop-excel-upload'
+import { Route as LayoutCommonPopDataRangeSettingRouteImport } from './pages/_layout/common/pop-data-range-setting'
+import { Route as LayoutCommonPopCategorySelectRouteImport } from './pages/_layout/common/pop-category-select'
+import { Route as LayoutCommonPopAdminExtensionRouteImport } from './pages/_layout/common/pop-admin-extension'
+import { Route as LayoutCommonNotFoundRouteImport } from './pages/_layout/common/not-found'
+import { Route as LayoutCommonBreakpointRouteImport } from './pages/_layout/common/breakpoint'
+import { Route as GuideGuideWordWrapRouteImport } from './pages/_guide/guide/word-wrap'
+import { Route as GuideGuideTypographyRouteImport } from './pages/_guide/guide/typography'
+import { Route as GuideGuideTreeViewRouteImport } from './pages/_guide/guide/tree-view'
+import { Route as GuideGuideTooltipRouteImport } from './pages/_guide/guide/tooltip'
+import { Route as GuideGuideTextareaRouteImport } from './pages/_guide/guide/textarea'
+import { Route as GuideGuideTestRouteImport } from './pages/_guide/guide/test'
+import { Route as GuideGuideTabsRouteImport } from './pages/_guide/guide/tabs'
+import { Route as GuideGuideTableRouteImport } from './pages/_guide/guide/table'
+import { Route as GuideGuideSwitchRouteImport } from './pages/_guide/guide/switch'
+import { Route as GuideGuideStepperTabsRouteImport } from './pages/_guide/guide/stepper-tabs'
+import { Route as GuideGuideStepperRouteImport } from './pages/_guide/guide/stepper'
+import { Route as GuideGuideSpinnerRouteImport } from './pages/_guide/guide/spinner'
+import { Route as GuideGuideShuttleGridRouteImport } from './pages/_guide/guide/shuttle-grid'
+import { Route as GuideGuideSelectRouteImport } from './pages/_guide/guide/select'
+import { Route as GuideGuideSearchBoxRouteImport } from './pages/_guide/guide/search-box'
+import { Route as GuideGuideRespondRouteImport } from './pages/_guide/guide/respond'
+import { Route as GuideGuideRadioRouteImport } from './pages/_guide/guide/radio'
+import { Route as GuideGuideProgressRouteImport } from './pages/_guide/guide/progress'
+import { Route as GuideGuidePopoverRouteImport } from './pages/_guide/guide/popover'
+import { Route as GuideGuidePhoneNumberRouteImport } from './pages/_guide/guide/phone-number'
+import { Route as GuideGuidePanelRouteImport } from './pages/_guide/guide/panel'
+import { Route as GuideGuidePaginationRouteImport } from './pages/_guide/guide/pagination'
+import { Route as GuideGuideOptionCardRouteImport } from './pages/_guide/guide/optionCard'
+import { Route as GuideGuideNoticeBoxRouteImport } from './pages/_guide/guide/notice-box'
+import { Route as GuideGuideNormal_tableRouteImport } from './pages/_guide/guide/normal_table'
+import { Route as GuideGuideModalRouteImport } from './pages/_guide/guide/modal'
+import { Route as GuideGuideLayoutRouteImport } from './pages/_guide/guide/layout'
+import { Route as GuideGuideInputTimerRouteImport } from './pages/_guide/guide/input-timer'
+import { Route as GuideGuideInputRouteImport } from './pages/_guide/guide/input'
+import { Route as GuideGuideInfoRouteImport } from './pages/_guide/guide/info'
+import { Route as GuideGuideImageRouteImport } from './pages/_guide/guide/image'
+import { Route as GuideGuideIconRouteImport } from './pages/_guide/guide/icon'
+import { Route as GuideGuideGridRouteImport } from './pages/_guide/guide/grid'
+import { Route as GuideGuideFormRouteImport } from './pages/_guide/guide/form'
+import { Route as GuideGuideFileUploadRouteImport } from './pages/_guide/guide/file-upload'
+import { Route as GuideGuideEmptyRouteImport } from './pages/_guide/guide/empty'
+import { Route as GuideGuideEmailRouteImport } from './pages/_guide/guide/email'
+import { Route as GuideGuideDropDownRouteImport } from './pages/_guide/guide/drop-down'
+import { Route as GuideGuideDatePickerRouteImport } from './pages/_guide/guide/date-picker'
+import { Route as GuideGuideCssRouteImport } from './pages/_guide/guide/css'
+import { Route as GuideGuideColorRouteImport } from './pages/_guide/guide/color'
+import { Route as GuideGuideChipsRouteImport } from './pages/_guide/guide/chips'
+import { Route as GuideGuideCheckboxRouteImport } from './pages/_guide/guide/checkbox'
+import { Route as GuideGuideCarouselRouteImport } from './pages/_guide/guide/carousel'
+import { Route as GuideGuideButtonsRouteImport } from './pages/_guide/guide/buttons'
+import { Route as GuideGuideBadgeRouteImport } from './pages/_guide/guide/badge'
+import { Route as GuideGuideAvatarRouteImport } from './pages/_guide/guide/avatar'
+import { Route as GuideGuideAutocompleteRouteImport } from './pages/_guide/guide/autocomplete'
+import { Route as GuideGuideAlertRouteImport } from './pages/_guide/guide/alert'
+import { Route as GuideGuideAccordionRouteImport } from './pages/_guide/guide/accordion'
 
-import { Route as rootRoute } from './pages/__root'
-import { Route as LayoutImport } from './pages/_layout'
-import { Route as GuideImport } from './pages/_guide'
-import { Route as AuthImport } from './pages/_auth'
-import { Route as LayoutIndexImport } from './pages/_layout/index'
-import { Route as LayoutTestImport } from './pages/_layout/test'
-import { Route as LayoutMenuIdImport } from './pages/_layout/$menuId'
-import { Route as AuthSuccessImport } from './pages/_auth/success'
-import { Route as AuthSignupStep3Import } from './pages/_auth/signup-step3'
-import { Route as AuthSignupStep2Import } from './pages/_auth/signup-step2'
-import { Route as AuthSignupStep1Import } from './pages/_auth/signup-step1'
-import { Route as AuthSearchIdSuccessImport } from './pages/_auth/search-id-success'
-import { Route as AuthSearchAccountPwImport } from './pages/_auth/search-account-pw'
-import { Route as AuthSearchAccountImport } from './pages/_auth/search-account'
-import { Route as AuthProgressStatusEmailImport } from './pages/_auth/progress-status-email'
-import { Route as AuthProgressStatusCpImport } from './pages/_auth/progress-status-cp'
-import { Route as AuthProgressStatusCertifyImport } from './pages/_auth/progress-status-certify'
-import { Route as AuthProgressStatusCertImport } from './pages/_auth/progress-status-cert'
-import { Route as AuthProgressStatusAdminFailImport } from './pages/_auth/progress-status-admin-fail'
-import { Route as AuthProgressStatusAdminImport } from './pages/_auth/progress-status-admin'
-import { Route as AuthProgressStatusImport } from './pages/_auth/progress-status'
-import { Route as AuthPopupRoleSelectImport } from './pages/_auth/popup-role-select'
-import { Route as AuthPasswordModifyImport } from './pages/_auth/password-modify'
-import { Route as AuthPasswordInputImport } from './pages/_auth/password-input'
-import { Route as AuthMpassCertOtpImport } from './pages/_auth/mpass-cert-otp'
-import { Route as AuthMpassCertFidoImport } from './pages/_auth/mpass-cert-fido'
-import { Route as AuthMpassCertImport } from './pages/_auth/mpass-cert'
-import { Route as AuthLoginImport } from './pages/_auth/login'
-import { Route as AuthGoogleCertImport } from './pages/_auth/google-cert'
-import { Route as AuthAdminAuthStep4Import } from './pages/_auth/admin-auth-step4'
-import { Route as AuthAdminAuthStep3Import } from './pages/_auth/admin-auth-step3'
-import { Route as AuthAdminAuthStep2Import } from './pages/_auth/admin-auth-step2'
-import { Route as LayoutMenu3IndexImport } from './pages/_layout/menu3/index'
-import { Route as GuideGuideIndexImport } from './pages/_guide/guide/index'
-import { Route as LayoutPmsWidgetRegisterImport } from './pages/_layout/pms/widget-register'
-import { Route as LayoutPmsWidgetManagementImport } from './pages/_layout/pms/widget-management'
-import { Route as LayoutPmsWidgetDetailImport } from './pages/_layout/pms/widget-detail'
-import { Route as LayoutPmsTermsmanagementImport } from './pages/_layout/pms/terms_management'
-import { Route as LayoutPmsTenantMenuManagementImport } from './pages/_layout/pms/tenant-menu-management'
-import { Route as LayoutPmsShorteningurlregisterImport } from './pages/_layout/pms/shortening_url_register'
-import { Route as LayoutPmsShorteningurllistImport } from './pages/_layout/pms/shortening_url_list'
-import { Route as LayoutPmsPrivatesearchlistImport } from './pages/_layout/pms/private_search_list'
-import { Route as LayoutPmsPrivatesearchdetailImport } from './pages/_layout/pms/private_search_detail'
-import { Route as LayoutPmsPopupWidgetManagementImport } from './pages/_layout/pms/popup-widget-management'
-import { Route as LayoutPmsPopupTranslationCompleteImport } from './pages/_layout/pms/popup-translation-complete'
-import { Route as LayoutPmsPopupLoginOptionImport } from './pages/_layout/pms/popup-login-option'
-import { Route as LayoutPmsPopChannelSearchImport } from './pages/_layout/pms/pop-channel-search'
-import { Route as LayoutPmsMenuTenantUserManagementImport } from './pages/_layout/pms/menu-tenant-user-management'
-import { Route as LayoutPmsMenuTenantUserEducationImport } from './pages/_layout/pms/menu-tenant-user-education'
-import { Route as LayoutPmsMenuTenantPlatformManagementRegistrationImport } from './pages/_layout/pms/menu-tenant-platform-management-registration'
-import { Route as LayoutPmsMenuTenantPlatformManagementBasicInfomationImport } from './pages/_layout/pms/menu-tenant-platform-management-basic-infomation'
-import { Route as LayoutPmsMenuTenantPlatformManagementImport } from './pages/_layout/pms/menu-tenant-platform-management'
-import { Route as LayoutPmsMenuTenantPlatformLearningMenuImport } from './pages/_layout/pms/menu-tenant-platform-learning-menu'
-import { Route as LayoutPmsMenuTenantPlatformCategoryMenuImport } from './pages/_layout/pms/menu-tenant-platform-category-menu'
-import { Route as LayoutPmsMenuTenantMainwidgetManagementImport } from './pages/_layout/pms/menu-tenant-mainwidget-management'
-import { Route as LayoutPmsMenuTenantMainbannerManagementImport } from './pages/_layout/pms/menu-tenant-mainbanner-management'
-import { Route as LayoutPmsMenuTenantLearningRoleManagementImport } from './pages/_layout/pms/menu-tenant-learning-role-management'
-import { Route as LayoutPmsMenuTenantGroupManagementImport } from './pages/_layout/pms/menu-tenant-group-management'
-import { Route as LayoutPmsMenuTenantCompanyGroupImport } from './pages/_layout/pms/menu-tenant-company-group'
-import { Route as LayoutPmsMenuTenantAttributeManagementImport } from './pages/_layout/pms/menu-tenant-attribute-management'
-import { Route as LayoutPmsMenuPlatformCompanyDetailImport } from './pages/_layout/pms/menu-platform-company-detail'
-import { Route as LayoutPmsMenuPlatformCommonGroupImport } from './pages/_layout/pms/menu-platform-common-group'
-import { Route as LayoutPmsMenuPlatformImport } from './pages/_layout/pms/menu-platform'
-import { Route as LayoutPmsMenuManagementImport } from './pages/_layout/pms/menu-management'
-import { Route as LayoutPmsMenuMainRegistrationImport } from './pages/_layout/pms/menu-main-registration'
-import { Route as LayoutPmsMenuMainNotificationManagementImport } from './pages/_layout/pms/menu-main-notification-management'
-import { Route as LayoutPmsMenuEducationRegisterDetailImport } from './pages/_layout/pms/menu-education-register-detail'
-import { Route as LayoutPmsMenuEducationLocationManagementImport } from './pages/_layout/pms/menu-education-location-management'
-import { Route as LayoutPmsMenuChannelRegisterImport } from './pages/_layout/pms/menu-channel-register'
-import { Route as LayoutPmsMenuChannelOpenManagementImport } from './pages/_layout/pms/menu-channel-open-management'
-import { Route as LayoutPmsMenuChannelOpenDetailManagementImport } from './pages/_layout/pms/menu-channel-open-detail-management'
-import { Route as LayoutPmsMenuChannelManagementImport } from './pages/_layout/pms/menu-channel-management'
-import { Route as LayoutPmsMenuChannelDetailManagementImport } from './pages/_layout/pms/menu-channel-detail-management'
-import { Route as LayoutPmsMenuChannelDetailImport } from './pages/_layout/pms/menu-channel-detail'
-import { Route as LayoutPmsLanguagemanagementImport } from './pages/_layout/pms/language_management'
-import { Route as LayoutPmsGroupManagementRegisterImport } from './pages/_layout/pms/group-management-register'
-import { Route as LayoutPmsGroupManagementInfoImport } from './pages/_layout/pms/group-management-info'
-import { Route as LayoutPmsGroupManagementImport } from './pages/_layout/pms/group-management'
-import { Route as LayoutPmsCategoryMenagementImport } from './pages/_layout/pms/category-menagement'
-import { Route as LayoutMenu8Menu9Import } from './pages/_layout/menu8/menu9'
-import { Route as LayoutMenu4Menu5Import } from './pages/_layout/menu4/menu5'
-import { Route as LayoutMenuMenuIdImport } from './pages/_layout/menu/$menuId'
-import { Route as LayoutLmsProcedureOpenSettingImport } from './pages/_layout/lms/procedure-open-setting'
-import { Route as LayoutLmsProcedureManagementImport } from './pages/_layout/lms/procedure-management'
-import { Route as LayoutLearningTestDetailImport } from './pages/_layout/learning/testDetail'
-import { Route as LayoutLearningPopupUploadImport } from './pages/_layout/learning/popup-upload'
-import { Route as LayoutLearningPopupQuestionDetailImport } from './pages/_layout/learning/popup-question-detail'
-import { Route as LayoutLearningPopupLearningSettingImport } from './pages/_layout/learning/popup-learningSetting'
-import { Route as LayoutLearningPopupLearningRegisterationImport } from './pages/_layout/learning/popup-learningRegisteration'
-import { Route as LayoutLearningPopupFileuploadImport } from './pages/_layout/learning/popup-fileupload'
-import { Route as LayoutLearningPopProgramGuideImport } from './pages/_layout/learning/pop-program-guide'
-import { Route as LayoutLearningPopModifierInfoImport } from './pages/_layout/learning/pop-modifier-info'
-import { Route as LayoutLearningMediaRegisterImport } from './pages/_layout/learning/mediaRegister'
-import { Route as LayoutLearningMediaDetailImport } from './pages/_layout/learning/mediaDetail'
-import { Route as LayoutLearningLearningSearchImport } from './pages/_layout/learning/learningSearch'
-import { Route as LayoutLearningLearningResourceSearchImport } from './pages/_layout/learning/learning-resource-search'
-import { Route as LayoutLearningLearningExternalRegistrationImport } from './pages/_layout/learning/learning-external-registration'
-import { Route as LayoutLearningFileUploadImport } from './pages/_layout/learning/file-upload'
-import { Route as LayoutLanguageLanguagesubjectsmanagementImport } from './pages/_layout/language/language_subjects_management'
-import { Route as LayoutLanguageLanguagehistorylistImport } from './pages/_layout/language/language_history_list'
-import { Route as LayoutContentsLayoutImport } from './pages/_layout/contents/layout'
-import { Route as LayoutCompletionEducationoperategroupImport } from './pages/_layout/completion/education_operate_group'
-import { Route as LayoutCompletionDetailCalculationReasonImport } from './pages/_layout/completion/detail-calculation-reason'
-import { Route as LayoutCommonProfileMyinfoImport } from './pages/_layout/common/profile-myinfo'
-import { Route as LayoutCommonPopUserSearchCheckImport } from './pages/_layout/common/pop-user-search-check'
-import { Route as LayoutCommonPopUserSearchImport } from './pages/_layout/common/pop-user-search'
-import { Route as LayoutCommonPopUserGroupSearchImport } from './pages/_layout/common/pop-user-group-search'
-import { Route as LayoutCommonPopImagePreviewImport } from './pages/_layout/common/pop-image-preview'
-import { Route as LayoutCommonPopExcelUploadImport } from './pages/_layout/common/pop-excel-upload'
-import { Route as LayoutCommonPopDataRangeSettingImport } from './pages/_layout/common/pop-data-range-setting'
-import { Route as LayoutCommonPopCategorySelectImport } from './pages/_layout/common/pop-category-select'
-import { Route as LayoutCommonPopAdminExtensionImport } from './pages/_layout/common/pop-admin-extension'
-import { Route as LayoutCommonNotFoundImport } from './pages/_layout/common/not-found'
-import { Route as LayoutCommonBreakpointImport } from './pages/_layout/common/breakpoint'
-import { Route as GuideGuideWordWrapImport } from './pages/_guide/guide/word-wrap'
-import { Route as GuideGuideTypographyImport } from './pages/_guide/guide/typography'
-import { Route as GuideGuideTreeViewImport } from './pages/_guide/guide/tree-view'
-import { Route as GuideGuideTooltipImport } from './pages/_guide/guide/tooltip'
-import { Route as GuideGuideTextareaImport } from './pages/_guide/guide/textarea'
-import { Route as GuideGuideTestImport } from './pages/_guide/guide/test'
-import { Route as GuideGuideTabsImport } from './pages/_guide/guide/tabs'
-import { Route as GuideGuideTableImport } from './pages/_guide/guide/table'
-import { Route as GuideGuideSwitchImport } from './pages/_guide/guide/switch'
-import { Route as GuideGuideStepperTabsImport } from './pages/_guide/guide/stepper-tabs'
-import { Route as GuideGuideStepperImport } from './pages/_guide/guide/stepper'
-import { Route as GuideGuideSpinnerImport } from './pages/_guide/guide/spinner'
-import { Route as GuideGuideShuttleGridImport } from './pages/_guide/guide/shuttle-grid'
-import { Route as GuideGuideSelectImport } from './pages/_guide/guide/select'
-import { Route as GuideGuideSearchBoxImport } from './pages/_guide/guide/search-box'
-import { Route as GuideGuideRespondImport } from './pages/_guide/guide/respond'
-import { Route as GuideGuideRadioImport } from './pages/_guide/guide/radio'
-import { Route as GuideGuideProgressImport } from './pages/_guide/guide/progress'
-import { Route as GuideGuidePopoverImport } from './pages/_guide/guide/popover'
-import { Route as GuideGuidePhoneNumberImport } from './pages/_guide/guide/phone-number'
-import { Route as GuideGuidePanelImport } from './pages/_guide/guide/panel'
-import { Route as GuideGuidePaginationImport } from './pages/_guide/guide/pagination'
-import { Route as GuideGuideOptionCardImport } from './pages/_guide/guide/optionCard'
-import { Route as GuideGuideNoticeBoxImport } from './pages/_guide/guide/notice-box'
-import { Route as GuideGuideNormaltableImport } from './pages/_guide/guide/normal_table'
-import { Route as GuideGuideModalImport } from './pages/_guide/guide/modal'
-import { Route as GuideGuideLayoutImport } from './pages/_guide/guide/layout'
-import { Route as GuideGuideInputTimerImport } from './pages/_guide/guide/input-timer'
-import { Route as GuideGuideInputImport } from './pages/_guide/guide/input'
-import { Route as GuideGuideInfoImport } from './pages/_guide/guide/info'
-import { Route as GuideGuideImageImport } from './pages/_guide/guide/image'
-import { Route as GuideGuideIconImport } from './pages/_guide/guide/icon'
-import { Route as GuideGuideGridImport } from './pages/_guide/guide/grid'
-import { Route as GuideGuideFormImport } from './pages/_guide/guide/form'
-import { Route as GuideGuideFileUploadImport } from './pages/_guide/guide/file-upload'
-import { Route as GuideGuideEmptyImport } from './pages/_guide/guide/empty'
-import { Route as GuideGuideEmailImport } from './pages/_guide/guide/email'
-import { Route as GuideGuideDropDownImport } from './pages/_guide/guide/drop-down'
-import { Route as GuideGuideDatePickerImport } from './pages/_guide/guide/date-picker'
-import { Route as GuideGuideCssImport } from './pages/_guide/guide/css'
-import { Route as GuideGuideColorImport } from './pages/_guide/guide/color'
-import { Route as GuideGuideChipsImport } from './pages/_guide/guide/chips'
-import { Route as GuideGuideCheckboxImport } from './pages/_guide/guide/checkbox'
-import { Route as GuideGuideCarouselImport } from './pages/_guide/guide/carousel'
-import { Route as GuideGuideButtonsImport } from './pages/_guide/guide/buttons'
-import { Route as GuideGuideBadgeImport } from './pages/_guide/guide/badge'
-import { Route as GuideGuideAvatarImport } from './pages/_guide/guide/avatar'
-import { Route as GuideGuideAutocompleteImport } from './pages/_guide/guide/autocomplete'
-import { Route as GuideGuideAlertImport } from './pages/_guide/guide/alert'
-import { Route as GuideGuideAccordionImport } from './pages/_guide/guide/accordion'
-
-// Create/Update Routes
-
-const LayoutRoute = LayoutImport.update({
+const LayoutRoute = LayoutRouteImport.update({
   id: '/_layout',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const GuideRoute = GuideImport.update({
+const GuideRoute = GuideRouteImport.update({
   id: '/_guide',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const AuthRoute = AuthImport.update({
+const AuthRoute = AuthRouteImport.update({
   id: '/_auth',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const LayoutIndexRoute = LayoutIndexImport.update({
+const LayoutIndexRoute = LayoutIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => LayoutRoute,
 } as any)
-
-const LayoutTestRoute = LayoutTestImport.update({
+const LayoutTestRoute = LayoutTestRouteImport.update({
   id: '/test',
   path: '/test',
   getParentRoute: () => LayoutRoute,
 } as any)
-
-const LayoutMenuIdRoute = LayoutMenuIdImport.update({
+const LayoutMenuIdRoute = LayoutMenuIdRouteImport.update({
   id: '/$menuId',
   path: '/$menuId',
   getParentRoute: () => LayoutRoute,
 } as any)
-
-const AuthSuccessRoute = AuthSuccessImport.update({
+const AuthSuccessRoute = AuthSuccessRouteImport.update({
   id: '/success',
   path: '/success',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthSignupStep3Route = AuthSignupStep3Import.update({
+const AuthSignupStep3Route = AuthSignupStep3RouteImport.update({
   id: '/signup-step3',
   path: '/signup-step3',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthSignupStep2Route = AuthSignupStep2Import.update({
+const AuthSignupStep2Route = AuthSignupStep2RouteImport.update({
   id: '/signup-step2',
   path: '/signup-step2',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthSignupStep1Route = AuthSignupStep1Import.update({
+const AuthSignupStep1Route = AuthSignupStep1RouteImport.update({
   id: '/signup-step1',
   path: '/signup-step1',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthSearchIdSuccessRoute = AuthSearchIdSuccessImport.update({
+const AuthSearchIdSuccessRoute = AuthSearchIdSuccessRouteImport.update({
   id: '/search-id-success',
   path: '/search-id-success',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthSearchAccountPwRoute = AuthSearchAccountPwImport.update({
+const AuthSearchAccountPwRoute = AuthSearchAccountPwRouteImport.update({
   id: '/search-account-pw',
   path: '/search-account-pw',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthSearchAccountRoute = AuthSearchAccountImport.update({
+const AuthSearchAccountRoute = AuthSearchAccountRouteImport.update({
   id: '/search-account',
   path: '/search-account',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthProgressStatusEmailRoute = AuthProgressStatusEmailImport.update({
+const AuthProgressStatusEmailRoute = AuthProgressStatusEmailRouteImport.update({
   id: '/progress-status-email',
   path: '/progress-status-email',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthProgressStatusCpRoute = AuthProgressStatusCpImport.update({
+const AuthProgressStatusCpRoute = AuthProgressStatusCpRouteImport.update({
   id: '/progress-status-cp',
   path: '/progress-status-cp',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthProgressStatusCertifyRoute = AuthProgressStatusCertifyImport.update({
-  id: '/progress-status-certify',
-  path: '/progress-status-certify',
-  getParentRoute: () => AuthRoute,
-} as any)
-
-const AuthProgressStatusCertRoute = AuthProgressStatusCertImport.update({
+const AuthProgressStatusCertifyRoute =
+  AuthProgressStatusCertifyRouteImport.update({
+    id: '/progress-status-certify',
+    path: '/progress-status-certify',
+    getParentRoute: () => AuthRoute,
+  } as any)
+const AuthProgressStatusCertRoute = AuthProgressStatusCertRouteImport.update({
   id: '/progress-status-cert',
   path: '/progress-status-cert',
   getParentRoute: () => AuthRoute,
 } as any)
-
 const AuthProgressStatusAdminFailRoute =
-  AuthProgressStatusAdminFailImport.update({
+  AuthProgressStatusAdminFailRouteImport.update({
     id: '/progress-status-admin-fail',
     path: '/progress-status-admin-fail',
     getParentRoute: () => AuthRoute,
   } as any)
-
-const AuthProgressStatusAdminRoute = AuthProgressStatusAdminImport.update({
+const AuthProgressStatusAdminRoute = AuthProgressStatusAdminRouteImport.update({
   id: '/progress-status-admin',
   path: '/progress-status-admin',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthProgressStatusRoute = AuthProgressStatusImport.update({
+const AuthProgressStatusRoute = AuthProgressStatusRouteImport.update({
   id: '/progress-status',
   path: '/progress-status',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthPopupRoleSelectRoute = AuthPopupRoleSelectImport.update({
+const AuthPopupRoleSelectRoute = AuthPopupRoleSelectRouteImport.update({
   id: '/popup-role-select',
   path: '/popup-role-select',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthPasswordModifyRoute = AuthPasswordModifyImport.update({
+const AuthPasswordModifyRoute = AuthPasswordModifyRouteImport.update({
   id: '/password-modify',
   path: '/password-modify',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthPasswordInputRoute = AuthPasswordInputImport.update({
+const AuthPasswordInputRoute = AuthPasswordInputRouteImport.update({
   id: '/password-input',
   path: '/password-input',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthMpassCertOtpRoute = AuthMpassCertOtpImport.update({
+const AuthMpassCertOtpRoute = AuthMpassCertOtpRouteImport.update({
   id: '/mpass-cert-otp',
   path: '/mpass-cert-otp',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthMpassCertFidoRoute = AuthMpassCertFidoImport.update({
+const AuthMpassCertFidoRoute = AuthMpassCertFidoRouteImport.update({
   id: '/mpass-cert-fido',
   path: '/mpass-cert-fido',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthMpassCertRoute = AuthMpassCertImport.update({
+const AuthMpassCertRoute = AuthMpassCertRouteImport.update({
   id: '/mpass-cert',
   path: '/mpass-cert',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthLoginRoute = AuthLoginImport.update({
+const AuthLoginRoute = AuthLoginRouteImport.update({
   id: '/login',
   path: '/login',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthGoogleCertRoute = AuthGoogleCertImport.update({
+const AuthGoogleCertRoute = AuthGoogleCertRouteImport.update({
   id: '/google-cert',
   path: '/google-cert',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthAdminAuthStep4Route = AuthAdminAuthStep4Import.update({
+const AuthAdminAuthStep4Route = AuthAdminAuthStep4RouteImport.update({
   id: '/admin-auth-step4',
   path: '/admin-auth-step4',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthAdminAuthStep3Route = AuthAdminAuthStep3Import.update({
+const AuthAdminAuthStep3Route = AuthAdminAuthStep3RouteImport.update({
   id: '/admin-auth-step3',
   path: '/admin-auth-step3',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const AuthAdminAuthStep2Route = AuthAdminAuthStep2Import.update({
+const AuthAdminAuthStep2Route = AuthAdminAuthStep2RouteImport.update({
   id: '/admin-auth-step2',
   path: '/admin-auth-step2',
   getParentRoute: () => AuthRoute,
 } as any)
-
-const LayoutMenu3IndexRoute = LayoutMenu3IndexImport.update({
+const LayoutMenu3IndexRoute = LayoutMenu3IndexRouteImport.update({
   id: '/menu3/',
   path: '/menu3/',
   getParentRoute: () => LayoutRoute,
 } as any)
-
-const GuideGuideIndexRoute = GuideGuideIndexImport.update({
+const GuideGuideIndexRoute = GuideGuideIndexRouteImport.update({
   id: '/guide/',
   path: '/guide/',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const LayoutPmsWidgetRegisterRoute = LayoutPmsWidgetRegisterImport.update({
+const LayoutPmsWidgetRegisterRoute = LayoutPmsWidgetRegisterRouteImport.update({
   id: '/pms/widget-register',
   path: '/pms/widget-register',
   getParentRoute: () => LayoutRoute,
 } as any)
-
-const LayoutPmsWidgetManagementRoute = LayoutPmsWidgetManagementImport.update({
-  id: '/pms/widget-management',
-  path: '/pms/widget-management',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
-const LayoutPmsWidgetDetailRoute = LayoutPmsWidgetDetailImport.update({
+const LayoutPmsWidgetManagementRoute =
+  LayoutPmsWidgetManagementRouteImport.update({
+    id: '/pms/widget-management',
+    path: '/pms/widget-management',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+const LayoutPmsWidgetDetailRoute = LayoutPmsWidgetDetailRouteImport.update({
   id: '/pms/widget-detail',
   path: '/pms/widget-detail',
   getParentRoute: () => LayoutRoute,
 } as any)
-
-const LayoutPmsTermsmanagementRoute = LayoutPmsTermsmanagementImport.update({
-  id: '/pms/terms_management',
-  path: '/pms/terms_management',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
+const LayoutPmsTerms_managementRoute =
+  LayoutPmsTerms_managementRouteImport.update({
+    id: '/pms/terms_management',
+    path: '/pms/terms_management',
+    getParentRoute: () => LayoutRoute,
+  } as any)
 const LayoutPmsTenantMenuManagementRoute =
-  LayoutPmsTenantMenuManagementImport.update({
+  LayoutPmsTenantMenuManagementRouteImport.update({
     id: '/pms/tenant-menu-management',
     path: '/pms/tenant-menu-management',
     getParentRoute: () => LayoutRoute,
   } as any)
-
-const LayoutPmsShorteningurlregisterRoute =
-  LayoutPmsShorteningurlregisterImport.update({
+const LayoutPmsShortening_url_registerRoute =
+  LayoutPmsShortening_url_registerRouteImport.update({
     id: '/pms/shortening_url_register',
     path: '/pms/shortening_url_register',
     getParentRoute: () => LayoutRoute,
   } as any)
-
-const LayoutPmsShorteningurllistRoute = LayoutPmsShorteningurllistImport.update(
-  {
+const LayoutPmsShortening_url_listRoute =
+  LayoutPmsShortening_url_listRouteImport.update({
     id: '/pms/shortening_url_list',
     path: '/pms/shortening_url_list',
     getParentRoute: () => LayoutRoute,
-  } as any,
-)
-
-const LayoutPmsPrivatesearchlistRoute = LayoutPmsPrivatesearchlistImport.update(
-  {
+  } as any)
+const LayoutPmsPrivate_search_listRoute =
+  LayoutPmsPrivate_search_listRouteImport.update({
     id: '/pms/private_search_list',
     path: '/pms/private_search_list',
     getParentRoute: () => LayoutRoute,
-  } as any,
-)
-
-const LayoutPmsPrivatesearchdetailRoute =
-  LayoutPmsPrivatesearchdetailImport.update({
+  } as any)
+const LayoutPmsPrivate_search_detailRoute =
+  LayoutPmsPrivate_search_detailRouteImport.update({
     id: '/pms/private_search_detail',
     path: '/pms/private_search_detail',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutPmsPopupWidgetManagementRoute =
-  LayoutPmsPopupWidgetManagementImport.update({
+  LayoutPmsPopupWidgetManagementRouteImport.update({
     id: '/pms/popup-widget-management',
     path: '/pms/popup-widget-management',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutPmsPopupTranslationCompleteRoute =
-  LayoutPmsPopupTranslationCompleteImport.update({
+  LayoutPmsPopupTranslationCompleteRouteImport.update({
     id: '/pms/popup-translation-complete',
     path: '/pms/popup-translation-complete',
     getParentRoute: () => LayoutRoute,
   } as any)
-
-const LayoutPmsPopupLoginOptionRoute = LayoutPmsPopupLoginOptionImport.update({
-  id: '/pms/popup-login-option',
-  path: '/pms/popup-login-option',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
-const LayoutPmsPopChannelSearchRoute = LayoutPmsPopChannelSearchImport.update({
-  id: '/pms/pop-channel-search',
-  path: '/pms/pop-channel-search',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
+const LayoutPmsPopupLoginOptionRoute =
+  LayoutPmsPopupLoginOptionRouteImport.update({
+    id: '/pms/popup-login-option',
+    path: '/pms/popup-login-option',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+const LayoutPmsPopChannelSearchRoute =
+  LayoutPmsPopChannelSearchRouteImport.update({
+    id: '/pms/pop-channel-search',
+    path: '/pms/pop-channel-search',
+    getParentRoute: () => LayoutRoute,
+  } as any)
 const LayoutPmsMenuTenantUserManagementRoute =
-  LayoutPmsMenuTenantUserManagementImport.update({
+  LayoutPmsMenuTenantUserManagementRouteImport.update({
     id: '/pms/menu-tenant-user-management',
     path: '/pms/menu-tenant-user-management',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutPmsMenuTenantUserEducationRoute =
-  LayoutPmsMenuTenantUserEducationImport.update({
+  LayoutPmsMenuTenantUserEducationRouteImport.update({
     id: '/pms/menu-tenant-user-education',
     path: '/pms/menu-tenant-user-education',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutPmsMenuTenantPlatformManagementRegistrationRoute =
-  LayoutPmsMenuTenantPlatformManagementRegistrationImport.update({
+  LayoutPmsMenuTenantPlatformManagementRegistrationRouteImport.update({
     id: '/pms/menu-tenant-platform-management-registration',
     path: '/pms/menu-tenant-platform-management-registration',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutPmsMenuTenantPlatformManagementBasicInfomationRoute =
-  LayoutPmsMenuTenantPlatformManagementBasicInfomationImport.update({
+  LayoutPmsMenuTenantPlatformManagementBasicInfomationRouteImport.update({
     id: '/pms/menu-tenant-platform-management-basic-infomation',
     path: '/pms/menu-tenant-platform-management-basic-infomation',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutPmsMenuTenantPlatformManagementRoute =
-  LayoutPmsMenuTenantPlatformManagementImport.update({
+  LayoutPmsMenuTenantPlatformManagementRouteImport.update({
     id: '/pms/menu-tenant-platform-management',
     path: '/pms/menu-tenant-platform-management',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutPmsMenuTenantPlatformLearningMenuRoute =
-  LayoutPmsMenuTenantPlatformLearningMenuImport.update({
+  LayoutPmsMenuTenantPlatformLearningMenuRouteImport.update({
     id: '/pms/menu-tenant-platform-learning-menu',
     path: '/pms/menu-tenant-platform-learning-menu',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutPmsMenuTenantPlatformCategoryMenuRoute =
-  LayoutPmsMenuTenantPlatformCategoryMenuImport.update({
+  LayoutPmsMenuTenantPlatformCategoryMenuRouteImport.update({
     id: '/pms/menu-tenant-platform-category-menu',
     path: '/pms/menu-tenant-platform-category-menu',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutPmsMenuTenantMainwidgetManagementRoute =
-  LayoutPmsMenuTenantMainwidgetManagementImport.update({
+  LayoutPmsMenuTenantMainwidgetManagementRouteImport.update({
     id: '/pms/menu-tenant-mainwidget-management',
     path: '/pms/menu-tenant-mainwidget-management',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutPmsMenuTenantMainbannerManagementRoute =
-  LayoutPmsMenuTenantMainbannerManagementImport.update({
+  LayoutPmsMenuTenantMainbannerManagementRouteImport.update({
     id: '/pms/menu-tenant-mainbanner-management',
     path: '/pms/menu-tenant-mainbanner-management',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutPmsMenuTenantLearningRoleManagementRoute =
-  LayoutPmsMenuTenantLearningRoleManagementImport.update({
+  LayoutPmsMenuTenantLearningRoleManagementRouteImport.update({
     id: '/pms/menu-tenant-learning-role-management',
     path: '/pms/menu-tenant-learning-role-management',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutPmsMenuTenantGroupManagementRoute =
-  LayoutPmsMenuTenantGroupManagementImport.update({
+  LayoutPmsMenuTenantGroupManagementRouteImport.update({
     id: '/pms/menu-tenant-group-management',
     path: '/pms/menu-tenant-group-management',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutPmsMenuTenantCompanyGroupRoute =
-  LayoutPmsMenuTenantCompanyGroupImport.update({
+  LayoutPmsMenuTenantCompanyGroupRouteImport.update({
     id: '/pms/menu-tenant-company-group',
     path: '/pms/menu-tenant-company-group',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutPmsMenuTenantAttributeManagementRoute =
-  LayoutPmsMenuTenantAttributeManagementImport.update({
+  LayoutPmsMenuTenantAttributeManagementRouteImport.update({
     id: '/pms/menu-tenant-attribute-management',
     path: '/pms/menu-tenant-attribute-management',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutPmsMenuPlatformCompanyDetailRoute =
-  LayoutPmsMenuPlatformCompanyDetailImport.update({
+  LayoutPmsMenuPlatformCompanyDetailRouteImport.update({
     id: '/pms/menu-platform-company-detail',
     path: '/pms/menu-platform-company-detail',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutPmsMenuPlatformCommonGroupRoute =
-  LayoutPmsMenuPlatformCommonGroupImport.update({
+  LayoutPmsMenuPlatformCommonGroupRouteImport.update({
     id: '/pms/menu-platform-common-group',
     path: '/pms/menu-platform-common-group',
     getParentRoute: () => LayoutRoute,
   } as any)
-
-const LayoutPmsMenuPlatformRoute = LayoutPmsMenuPlatformImport.update({
+const LayoutPmsMenuPlatformRoute = LayoutPmsMenuPlatformRouteImport.update({
   id: '/pms/menu-platform',
   path: '/pms/menu-platform',
   getParentRoute: () => LayoutRoute,
 } as any)
-
-const LayoutPmsMenuManagementRoute = LayoutPmsMenuManagementImport.update({
+const LayoutPmsMenuManagementRoute = LayoutPmsMenuManagementRouteImport.update({
   id: '/pms/menu-management',
   path: '/pms/menu-management',
   getParentRoute: () => LayoutRoute,
 } as any)
-
 const LayoutPmsMenuMainRegistrationRoute =
-  LayoutPmsMenuMainRegistrationImport.update({
+  LayoutPmsMenuMainRegistrationRouteImport.update({
     id: '/pms/menu-main-registration',
     path: '/pms/menu-main-registration',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutPmsMenuMainNotificationManagementRoute =
-  LayoutPmsMenuMainNotificationManagementImport.update({
+  LayoutPmsMenuMainNotificationManagementRouteImport.update({
     id: '/pms/menu-main-notification-management',
     path: '/pms/menu-main-notification-management',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutPmsMenuEducationRegisterDetailRoute =
-  LayoutPmsMenuEducationRegisterDetailImport.update({
+  LayoutPmsMenuEducationRegisterDetailRouteImport.update({
     id: '/pms/menu-education-register-detail',
     path: '/pms/menu-education-register-detail',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutPmsMenuEducationLocationManagementRoute =
-  LayoutPmsMenuEducationLocationManagementImport.update({
+  LayoutPmsMenuEducationLocationManagementRouteImport.update({
     id: '/pms/menu-education-location-management',
     path: '/pms/menu-education-location-management',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutPmsMenuChannelRegisterRoute =
-  LayoutPmsMenuChannelRegisterImport.update({
+  LayoutPmsMenuChannelRegisterRouteImport.update({
     id: '/pms/menu-channel-register',
     path: '/pms/menu-channel-register',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutPmsMenuChannelOpenManagementRoute =
-  LayoutPmsMenuChannelOpenManagementImport.update({
+  LayoutPmsMenuChannelOpenManagementRouteImport.update({
     id: '/pms/menu-channel-open-management',
     path: '/pms/menu-channel-open-management',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutPmsMenuChannelOpenDetailManagementRoute =
-  LayoutPmsMenuChannelOpenDetailManagementImport.update({
+  LayoutPmsMenuChannelOpenDetailManagementRouteImport.update({
     id: '/pms/menu-channel-open-detail-management',
     path: '/pms/menu-channel-open-detail-management',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutPmsMenuChannelManagementRoute =
-  LayoutPmsMenuChannelManagementImport.update({
+  LayoutPmsMenuChannelManagementRouteImport.update({
     id: '/pms/menu-channel-management',
     path: '/pms/menu-channel-management',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutPmsMenuChannelDetailManagementRoute =
-  LayoutPmsMenuChannelDetailManagementImport.update({
+  LayoutPmsMenuChannelDetailManagementRouteImport.update({
     id: '/pms/menu-channel-detail-management',
     path: '/pms/menu-channel-detail-management',
     getParentRoute: () => LayoutRoute,
   } as any)
-
-const LayoutPmsMenuChannelDetailRoute = LayoutPmsMenuChannelDetailImport.update(
-  {
+const LayoutPmsMenuChannelDetailRoute =
+  LayoutPmsMenuChannelDetailRouteImport.update({
     id: '/pms/menu-channel-detail',
     path: '/pms/menu-channel-detail',
     getParentRoute: () => LayoutRoute,
-  } as any,
-)
-
-const LayoutPmsLanguagemanagementRoute =
-  LayoutPmsLanguagemanagementImport.update({
+  } as any)
+const LayoutPmsLanguage_managementRoute =
+  LayoutPmsLanguage_managementRouteImport.update({
     id: '/pms/language_management',
     path: '/pms/language_management',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutPmsGroupManagementRegisterRoute =
-  LayoutPmsGroupManagementRegisterImport.update({
+  LayoutPmsGroupManagementRegisterRouteImport.update({
     id: '/pms/group-management-register',
     path: '/pms/group-management-register',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutPmsGroupManagementInfoRoute =
-  LayoutPmsGroupManagementInfoImport.update({
+  LayoutPmsGroupManagementInfoRouteImport.update({
     id: '/pms/group-management-info',
     path: '/pms/group-management-info',
     getParentRoute: () => LayoutRoute,
   } as any)
-
-const LayoutPmsGroupManagementRoute = LayoutPmsGroupManagementImport.update({
-  id: '/pms/group-management',
-  path: '/pms/group-management',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
+const LayoutPmsGroupManagementRoute =
+  LayoutPmsGroupManagementRouteImport.update({
+    id: '/pms/group-management',
+    path: '/pms/group-management',
+    getParentRoute: () => LayoutRoute,
+  } as any)
 const LayoutPmsCategoryMenagementRoute =
-  LayoutPmsCategoryMenagementImport.update({
+  LayoutPmsCategoryMenagementRouteImport.update({
     id: '/pms/category-menagement',
     path: '/pms/category-menagement',
     getParentRoute: () => LayoutRoute,
   } as any)
-
-const LayoutMenu8Menu9Route = LayoutMenu8Menu9Import.update({
+const LayoutMenu8Menu9Route = LayoutMenu8Menu9RouteImport.update({
   id: '/menu8/menu9',
   path: '/menu8/menu9',
   getParentRoute: () => LayoutRoute,
 } as any)
-
-const LayoutMenu4Menu5Route = LayoutMenu4Menu5Import.update({
+const LayoutMenu4Menu5Route = LayoutMenu4Menu5RouteImport.update({
   id: '/menu4/menu5',
   path: '/menu4/menu5',
   getParentRoute: () => LayoutRoute,
 } as any)
-
-const LayoutMenuMenuIdRoute = LayoutMenuMenuIdImport.update({
+const LayoutMenuMenuIdRoute = LayoutMenuMenuIdRouteImport.update({
   id: '/menu/$menuId',
   path: '/menu/$menuId',
   getParentRoute: () => LayoutRoute,
 } as any)
-
 const LayoutLmsProcedureOpenSettingRoute =
-  LayoutLmsProcedureOpenSettingImport.update({
+  LayoutLmsProcedureOpenSettingRouteImport.update({
     id: '/lms/procedure-open-setting',
     path: '/lms/procedure-open-setting',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutLmsProcedureManagementRoute =
-  LayoutLmsProcedureManagementImport.update({
+  LayoutLmsProcedureManagementRouteImport.update({
     id: '/lms/procedure-management',
     path: '/lms/procedure-management',
     getParentRoute: () => LayoutRoute,
   } as any)
-
-const LayoutLearningTestDetailRoute = LayoutLearningTestDetailImport.update({
-  id: '/learning/testDetail',
-  path: '/learning/testDetail',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
-const LayoutLearningPopupUploadRoute = LayoutLearningPopupUploadImport.update({
-  id: '/learning/popup-upload',
-  path: '/learning/popup-upload',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
+const LayoutLearningTestDetailRoute =
+  LayoutLearningTestDetailRouteImport.update({
+    id: '/learning/testDetail',
+    path: '/learning/testDetail',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+const LayoutLearningPopupUploadRoute =
+  LayoutLearningPopupUploadRouteImport.update({
+    id: '/learning/popup-upload',
+    path: '/learning/popup-upload',
+    getParentRoute: () => LayoutRoute,
+  } as any)
 const LayoutLearningPopupQuestionDetailRoute =
-  LayoutLearningPopupQuestionDetailImport.update({
+  LayoutLearningPopupQuestionDetailRouteImport.update({
     id: '/learning/popup-question-detail',
     path: '/learning/popup-question-detail',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutLearningPopupLearningSettingRoute =
-  LayoutLearningPopupLearningSettingImport.update({
+  LayoutLearningPopupLearningSettingRouteImport.update({
     id: '/learning/popup-learningSetting',
     path: '/learning/popup-learningSetting',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutLearningPopupLearningRegisterationRoute =
-  LayoutLearningPopupLearningRegisterationImport.update({
+  LayoutLearningPopupLearningRegisterationRouteImport.update({
     id: '/learning/popup-learningRegisteration',
     path: '/learning/popup-learningRegisteration',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutLearningPopupFileuploadRoute =
-  LayoutLearningPopupFileuploadImport.update({
+  LayoutLearningPopupFileuploadRouteImport.update({
     id: '/learning/popup-fileupload',
     path: '/learning/popup-fileupload',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutLearningPopProgramGuideRoute =
-  LayoutLearningPopProgramGuideImport.update({
+  LayoutLearningPopProgramGuideRouteImport.update({
     id: '/learning/pop-program-guide',
     path: '/learning/pop-program-guide',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutLearningPopModifierInfoRoute =
-  LayoutLearningPopModifierInfoImport.update({
+  LayoutLearningPopModifierInfoRouteImport.update({
     id: '/learning/pop-modifier-info',
     path: '/learning/pop-modifier-info',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutLearningMediaRegisterRoute =
-  LayoutLearningMediaRegisterImport.update({
+  LayoutLearningMediaRegisterRouteImport.update({
     id: '/learning/mediaRegister',
     path: '/learning/mediaRegister',
     getParentRoute: () => LayoutRoute,
   } as any)
-
-const LayoutLearningMediaDetailRoute = LayoutLearningMediaDetailImport.update({
-  id: '/learning/mediaDetail',
-  path: '/learning/mediaDetail',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
+const LayoutLearningMediaDetailRoute =
+  LayoutLearningMediaDetailRouteImport.update({
+    id: '/learning/mediaDetail',
+    path: '/learning/mediaDetail',
+    getParentRoute: () => LayoutRoute,
+  } as any)
 const LayoutLearningLearningSearchRoute =
-  LayoutLearningLearningSearchImport.update({
+  LayoutLearningLearningSearchRouteImport.update({
     id: '/learning/learningSearch',
     path: '/learning/learningSearch',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutLearningLearningResourceSearchRoute =
-  LayoutLearningLearningResourceSearchImport.update({
+  LayoutLearningLearningResourceSearchRouteImport.update({
     id: '/learning/learning-resource-search',
     path: '/learning/learning-resource-search',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutLearningLearningExternalRegistrationRoute =
-  LayoutLearningLearningExternalRegistrationImport.update({
+  LayoutLearningLearningExternalRegistrationRouteImport.update({
     id: '/learning/learning-external-registration',
     path: '/learning/learning-external-registration',
     getParentRoute: () => LayoutRoute,
   } as any)
-
-const LayoutLearningFileUploadRoute = LayoutLearningFileUploadImport.update({
-  id: '/learning/file-upload',
-  path: '/learning/file-upload',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
-const LayoutLanguageLanguagesubjectsmanagementRoute =
-  LayoutLanguageLanguagesubjectsmanagementImport.update({
+const LayoutLearningFileUploadRoute =
+  LayoutLearningFileUploadRouteImport.update({
+    id: '/learning/file-upload',
+    path: '/learning/file-upload',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+const LayoutLanguageLanguage_subjects_managementRoute =
+  LayoutLanguageLanguage_subjects_managementRouteImport.update({
     id: '/language/language_subjects_management',
     path: '/language/language_subjects_management',
     getParentRoute: () => LayoutRoute,
   } as any)
-
-const LayoutLanguageLanguagehistorylistRoute =
-  LayoutLanguageLanguagehistorylistImport.update({
+const LayoutLanguageLanguage_history_listRoute =
+  LayoutLanguageLanguage_history_listRouteImport.update({
     id: '/language/language_history_list',
     path: '/language/language_history_list',
     getParentRoute: () => LayoutRoute,
   } as any)
-
-const LayoutContentsLayoutRoute = LayoutContentsLayoutImport.update({
+const LayoutContentsLayoutRoute = LayoutContentsLayoutRouteImport.update({
   id: '/contents/layout',
   path: '/contents/layout',
   getParentRoute: () => LayoutRoute,
 } as any)
-
-const LayoutCompletionEducationoperategroupRoute =
-  LayoutCompletionEducationoperategroupImport.update({
+const LayoutCompletionEducation_operate_groupRoute =
+  LayoutCompletionEducation_operate_groupRouteImport.update({
     id: '/completion/education_operate_group',
     path: '/completion/education_operate_group',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutCompletionDetailCalculationReasonRoute =
-  LayoutCompletionDetailCalculationReasonImport.update({
+  LayoutCompletionDetailCalculationReasonRouteImport.update({
     id: '/completion/detail-calculation-reason',
     path: '/completion/detail-calculation-reason',
     getParentRoute: () => LayoutRoute,
   } as any)
-
-const LayoutCommonProfileMyinfoRoute = LayoutCommonProfileMyinfoImport.update({
-  id: '/common/profile-myinfo',
-  path: '/common/profile-myinfo',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
+const LayoutCommonProfileMyinfoRoute =
+  LayoutCommonProfileMyinfoRouteImport.update({
+    id: '/common/profile-myinfo',
+    path: '/common/profile-myinfo',
+    getParentRoute: () => LayoutRoute,
+  } as any)
 const LayoutCommonPopUserSearchCheckRoute =
-  LayoutCommonPopUserSearchCheckImport.update({
+  LayoutCommonPopUserSearchCheckRouteImport.update({
     id: '/common/pop-user-search-check',
     path: '/common/pop-user-search-check',
     getParentRoute: () => LayoutRoute,
   } as any)
-
-const LayoutCommonPopUserSearchRoute = LayoutCommonPopUserSearchImport.update({
-  id: '/common/pop-user-search',
-  path: '/common/pop-user-search',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
+const LayoutCommonPopUserSearchRoute =
+  LayoutCommonPopUserSearchRouteImport.update({
+    id: '/common/pop-user-search',
+    path: '/common/pop-user-search',
+    getParentRoute: () => LayoutRoute,
+  } as any)
 const LayoutCommonPopUserGroupSearchRoute =
-  LayoutCommonPopUserGroupSearchImport.update({
+  LayoutCommonPopUserGroupSearchRouteImport.update({
     id: '/common/pop-user-group-search',
     path: '/common/pop-user-group-search',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutCommonPopImagePreviewRoute =
-  LayoutCommonPopImagePreviewImport.update({
+  LayoutCommonPopImagePreviewRouteImport.update({
     id: '/common/pop-image-preview',
     path: '/common/pop-image-preview',
     getParentRoute: () => LayoutRoute,
   } as any)
-
-const LayoutCommonPopExcelUploadRoute = LayoutCommonPopExcelUploadImport.update(
-  {
+const LayoutCommonPopExcelUploadRoute =
+  LayoutCommonPopExcelUploadRouteImport.update({
     id: '/common/pop-excel-upload',
     path: '/common/pop-excel-upload',
     getParentRoute: () => LayoutRoute,
-  } as any,
-)
-
+  } as any)
 const LayoutCommonPopDataRangeSettingRoute =
-  LayoutCommonPopDataRangeSettingImport.update({
+  LayoutCommonPopDataRangeSettingRouteImport.update({
     id: '/common/pop-data-range-setting',
     path: '/common/pop-data-range-setting',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutCommonPopCategorySelectRoute =
-  LayoutCommonPopCategorySelectImport.update({
+  LayoutCommonPopCategorySelectRouteImport.update({
     id: '/common/pop-category-select',
     path: '/common/pop-category-select',
     getParentRoute: () => LayoutRoute,
   } as any)
-
 const LayoutCommonPopAdminExtensionRoute =
-  LayoutCommonPopAdminExtensionImport.update({
+  LayoutCommonPopAdminExtensionRouteImport.update({
     id: '/common/pop-admin-extension',
     path: '/common/pop-admin-extension',
     getParentRoute: () => LayoutRoute,
   } as any)
-
-const LayoutCommonNotFoundRoute = LayoutCommonNotFoundImport.update({
+const LayoutCommonNotFoundRoute = LayoutCommonNotFoundRouteImport.update({
   id: '/common/not-found',
   path: '/common/not-found',
   getParentRoute: () => LayoutRoute,
 } as any)
-
-const LayoutCommonBreakpointRoute = LayoutCommonBreakpointImport.update({
+const LayoutCommonBreakpointRoute = LayoutCommonBreakpointRouteImport.update({
   id: '/common/breakpoint',
   path: '/common/breakpoint',
   getParentRoute: () => LayoutRoute,
 } as any)
-
-const GuideGuideWordWrapRoute = GuideGuideWordWrapImport.update({
+const GuideGuideWordWrapRoute = GuideGuideWordWrapRouteImport.update({
   id: '/guide/word-wrap',
   path: '/guide/word-wrap',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideTypographyRoute = GuideGuideTypographyImport.update({
+const GuideGuideTypographyRoute = GuideGuideTypographyRouteImport.update({
   id: '/guide/typography',
   path: '/guide/typography',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideTreeViewRoute = GuideGuideTreeViewImport.update({
+const GuideGuideTreeViewRoute = GuideGuideTreeViewRouteImport.update({
   id: '/guide/tree-view',
   path: '/guide/tree-view',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideTooltipRoute = GuideGuideTooltipImport.update({
+const GuideGuideTooltipRoute = GuideGuideTooltipRouteImport.update({
   id: '/guide/tooltip',
   path: '/guide/tooltip',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideTextareaRoute = GuideGuideTextareaImport.update({
+const GuideGuideTextareaRoute = GuideGuideTextareaRouteImport.update({
   id: '/guide/textarea',
   path: '/guide/textarea',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideTestRoute = GuideGuideTestImport.update({
+const GuideGuideTestRoute = GuideGuideTestRouteImport.update({
   id: '/guide/test',
   path: '/guide/test',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideTabsRoute = GuideGuideTabsImport.update({
+const GuideGuideTabsRoute = GuideGuideTabsRouteImport.update({
   id: '/guide/tabs',
   path: '/guide/tabs',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideTableRoute = GuideGuideTableImport.update({
+const GuideGuideTableRoute = GuideGuideTableRouteImport.update({
   id: '/guide/table',
   path: '/guide/table',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideSwitchRoute = GuideGuideSwitchImport.update({
+const GuideGuideSwitchRoute = GuideGuideSwitchRouteImport.update({
   id: '/guide/switch',
   path: '/guide/switch',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideStepperTabsRoute = GuideGuideStepperTabsImport.update({
+const GuideGuideStepperTabsRoute = GuideGuideStepperTabsRouteImport.update({
   id: '/guide/stepper-tabs',
   path: '/guide/stepper-tabs',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideStepperRoute = GuideGuideStepperImport.update({
+const GuideGuideStepperRoute = GuideGuideStepperRouteImport.update({
   id: '/guide/stepper',
   path: '/guide/stepper',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideSpinnerRoute = GuideGuideSpinnerImport.update({
+const GuideGuideSpinnerRoute = GuideGuideSpinnerRouteImport.update({
   id: '/guide/spinner',
   path: '/guide/spinner',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideShuttleGridRoute = GuideGuideShuttleGridImport.update({
+const GuideGuideShuttleGridRoute = GuideGuideShuttleGridRouteImport.update({
   id: '/guide/shuttle-grid',
   path: '/guide/shuttle-grid',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideSelectRoute = GuideGuideSelectImport.update({
+const GuideGuideSelectRoute = GuideGuideSelectRouteImport.update({
   id: '/guide/select',
   path: '/guide/select',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideSearchBoxRoute = GuideGuideSearchBoxImport.update({
+const GuideGuideSearchBoxRoute = GuideGuideSearchBoxRouteImport.update({
   id: '/guide/search-box',
   path: '/guide/search-box',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideRespondRoute = GuideGuideRespondImport.update({
+const GuideGuideRespondRoute = GuideGuideRespondRouteImport.update({
   id: '/guide/respond',
   path: '/guide/respond',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideRadioRoute = GuideGuideRadioImport.update({
+const GuideGuideRadioRoute = GuideGuideRadioRouteImport.update({
   id: '/guide/radio',
   path: '/guide/radio',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideProgressRoute = GuideGuideProgressImport.update({
+const GuideGuideProgressRoute = GuideGuideProgressRouteImport.update({
   id: '/guide/progress',
   path: '/guide/progress',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuidePopoverRoute = GuideGuidePopoverImport.update({
+const GuideGuidePopoverRoute = GuideGuidePopoverRouteImport.update({
   id: '/guide/popover',
   path: '/guide/popover',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuidePhoneNumberRoute = GuideGuidePhoneNumberImport.update({
+const GuideGuidePhoneNumberRoute = GuideGuidePhoneNumberRouteImport.update({
   id: '/guide/phone-number',
   path: '/guide/phone-number',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuidePanelRoute = GuideGuidePanelImport.update({
+const GuideGuidePanelRoute = GuideGuidePanelRouteImport.update({
   id: '/guide/panel',
   path: '/guide/panel',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuidePaginationRoute = GuideGuidePaginationImport.update({
+const GuideGuidePaginationRoute = GuideGuidePaginationRouteImport.update({
   id: '/guide/pagination',
   path: '/guide/pagination',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideOptionCardRoute = GuideGuideOptionCardImport.update({
+const GuideGuideOptionCardRoute = GuideGuideOptionCardRouteImport.update({
   id: '/guide/optionCard',
   path: '/guide/optionCard',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideNoticeBoxRoute = GuideGuideNoticeBoxImport.update({
+const GuideGuideNoticeBoxRoute = GuideGuideNoticeBoxRouteImport.update({
   id: '/guide/notice-box',
   path: '/guide/notice-box',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideNormaltableRoute = GuideGuideNormaltableImport.update({
+const GuideGuideNormal_tableRoute = GuideGuideNormal_tableRouteImport.update({
   id: '/guide/normal_table',
   path: '/guide/normal_table',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideModalRoute = GuideGuideModalImport.update({
+const GuideGuideModalRoute = GuideGuideModalRouteImport.update({
   id: '/guide/modal',
   path: '/guide/modal',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideLayoutRoute = GuideGuideLayoutImport.update({
+const GuideGuideLayoutRoute = GuideGuideLayoutRouteImport.update({
   id: '/guide/layout',
   path: '/guide/layout',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideInputTimerRoute = GuideGuideInputTimerImport.update({
+const GuideGuideInputTimerRoute = GuideGuideInputTimerRouteImport.update({
   id: '/guide/input-timer',
   path: '/guide/input-timer',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideInputRoute = GuideGuideInputImport.update({
+const GuideGuideInputRoute = GuideGuideInputRouteImport.update({
   id: '/guide/input',
   path: '/guide/input',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideInfoRoute = GuideGuideInfoImport.update({
+const GuideGuideInfoRoute = GuideGuideInfoRouteImport.update({
   id: '/guide/info',
   path: '/guide/info',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideImageRoute = GuideGuideImageImport.update({
+const GuideGuideImageRoute = GuideGuideImageRouteImport.update({
   id: '/guide/image',
   path: '/guide/image',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideIconRoute = GuideGuideIconImport.update({
+const GuideGuideIconRoute = GuideGuideIconRouteImport.update({
   id: '/guide/icon',
   path: '/guide/icon',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideGridRoute = GuideGuideGridImport.update({
+const GuideGuideGridRoute = GuideGuideGridRouteImport.update({
   id: '/guide/grid',
   path: '/guide/grid',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideFormRoute = GuideGuideFormImport.update({
+const GuideGuideFormRoute = GuideGuideFormRouteImport.update({
   id: '/guide/form',
   path: '/guide/form',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideFileUploadRoute = GuideGuideFileUploadImport.update({
+const GuideGuideFileUploadRoute = GuideGuideFileUploadRouteImport.update({
   id: '/guide/file-upload',
   path: '/guide/file-upload',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideEmptyRoute = GuideGuideEmptyImport.update({
+const GuideGuideEmptyRoute = GuideGuideEmptyRouteImport.update({
   id: '/guide/empty',
   path: '/guide/empty',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideEmailRoute = GuideGuideEmailImport.update({
+const GuideGuideEmailRoute = GuideGuideEmailRouteImport.update({
   id: '/guide/email',
   path: '/guide/email',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideDropDownRoute = GuideGuideDropDownImport.update({
+const GuideGuideDropDownRoute = GuideGuideDropDownRouteImport.update({
   id: '/guide/drop-down',
   path: '/guide/drop-down',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideDatePickerRoute = GuideGuideDatePickerImport.update({
+const GuideGuideDatePickerRoute = GuideGuideDatePickerRouteImport.update({
   id: '/guide/date-picker',
   path: '/guide/date-picker',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideCssRoute = GuideGuideCssImport.update({
+const GuideGuideCssRoute = GuideGuideCssRouteImport.update({
   id: '/guide/css',
   path: '/guide/css',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideColorRoute = GuideGuideColorImport.update({
+const GuideGuideColorRoute = GuideGuideColorRouteImport.update({
   id: '/guide/color',
   path: '/guide/color',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideChipsRoute = GuideGuideChipsImport.update({
+const GuideGuideChipsRoute = GuideGuideChipsRouteImport.update({
   id: '/guide/chips',
   path: '/guide/chips',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideCheckboxRoute = GuideGuideCheckboxImport.update({
+const GuideGuideCheckboxRoute = GuideGuideCheckboxRouteImport.update({
   id: '/guide/checkbox',
   path: '/guide/checkbox',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideCarouselRoute = GuideGuideCarouselImport.update({
+const GuideGuideCarouselRoute = GuideGuideCarouselRouteImport.update({
   id: '/guide/carousel',
   path: '/guide/carousel',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideButtonsRoute = GuideGuideButtonsImport.update({
+const GuideGuideButtonsRoute = GuideGuideButtonsRouteImport.update({
   id: '/guide/buttons',
   path: '/guide/buttons',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideBadgeRoute = GuideGuideBadgeImport.update({
+const GuideGuideBadgeRoute = GuideGuideBadgeRouteImport.update({
   id: '/guide/badge',
   path: '/guide/badge',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideAvatarRoute = GuideGuideAvatarImport.update({
+const GuideGuideAvatarRoute = GuideGuideAvatarRouteImport.update({
   id: '/guide/avatar',
   path: '/guide/avatar',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideAutocompleteRoute = GuideGuideAutocompleteImport.update({
+const GuideGuideAutocompleteRoute = GuideGuideAutocompleteRouteImport.update({
   id: '/guide/autocomplete',
   path: '/guide/autocomplete',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideAlertRoute = GuideGuideAlertImport.update({
+const GuideGuideAlertRoute = GuideGuideAlertRouteImport.update({
   id: '/guide/alert',
   path: '/guide/alert',
   getParentRoute: () => GuideRoute,
 } as any)
-
-const GuideGuideAccordionRoute = GuideGuideAccordionImport.update({
+const GuideGuideAccordionRoute = GuideGuideAccordionRouteImport.update({
   id: '/guide/accordion',
   path: '/guide/accordion',
   getParentRoute: () => GuideRoute,
 } as any)
 
-// Populate the FileRoutesByPath interface
-
-declare module '@tanstack/react-router' {
-  interface FileRoutesByPath {
-    '/_auth': {
-      id: '/_auth'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof AuthImport
-      parentRoute: typeof rootRoute
-    }
-    '/_guide': {
-      id: '/_guide'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof GuideImport
-      parentRoute: typeof rootRoute
-    }
-    '/_layout': {
-      id: '/_layout'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof LayoutImport
-      parentRoute: typeof rootRoute
-    }
-    '/_auth/admin-auth-step2': {
-      id: '/_auth/admin-auth-step2'
-      path: '/admin-auth-step2'
-      fullPath: '/admin-auth-step2'
-      preLoaderRoute: typeof AuthAdminAuthStep2Import
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/admin-auth-step3': {
-      id: '/_auth/admin-auth-step3'
-      path: '/admin-auth-step3'
-      fullPath: '/admin-auth-step3'
-      preLoaderRoute: typeof AuthAdminAuthStep3Import
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/admin-auth-step4': {
-      id: '/_auth/admin-auth-step4'
-      path: '/admin-auth-step4'
-      fullPath: '/admin-auth-step4'
-      preLoaderRoute: typeof AuthAdminAuthStep4Import
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/google-cert': {
-      id: '/_auth/google-cert'
-      path: '/google-cert'
-      fullPath: '/google-cert'
-      preLoaderRoute: typeof AuthGoogleCertImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/login': {
-      id: '/_auth/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof AuthLoginImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/mpass-cert': {
-      id: '/_auth/mpass-cert'
-      path: '/mpass-cert'
-      fullPath: '/mpass-cert'
-      preLoaderRoute: typeof AuthMpassCertImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/mpass-cert-fido': {
-      id: '/_auth/mpass-cert-fido'
-      path: '/mpass-cert-fido'
-      fullPath: '/mpass-cert-fido'
-      preLoaderRoute: typeof AuthMpassCertFidoImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/mpass-cert-otp': {
-      id: '/_auth/mpass-cert-otp'
-      path: '/mpass-cert-otp'
-      fullPath: '/mpass-cert-otp'
-      preLoaderRoute: typeof AuthMpassCertOtpImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/password-input': {
-      id: '/_auth/password-input'
-      path: '/password-input'
-      fullPath: '/password-input'
-      preLoaderRoute: typeof AuthPasswordInputImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/password-modify': {
-      id: '/_auth/password-modify'
-      path: '/password-modify'
-      fullPath: '/password-modify'
-      preLoaderRoute: typeof AuthPasswordModifyImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/popup-role-select': {
-      id: '/_auth/popup-role-select'
-      path: '/popup-role-select'
-      fullPath: '/popup-role-select'
-      preLoaderRoute: typeof AuthPopupRoleSelectImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/progress-status': {
-      id: '/_auth/progress-status'
-      path: '/progress-status'
-      fullPath: '/progress-status'
-      preLoaderRoute: typeof AuthProgressStatusImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/progress-status-admin': {
-      id: '/_auth/progress-status-admin'
-      path: '/progress-status-admin'
-      fullPath: '/progress-status-admin'
-      preLoaderRoute: typeof AuthProgressStatusAdminImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/progress-status-admin-fail': {
-      id: '/_auth/progress-status-admin-fail'
-      path: '/progress-status-admin-fail'
-      fullPath: '/progress-status-admin-fail'
-      preLoaderRoute: typeof AuthProgressStatusAdminFailImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/progress-status-cert': {
-      id: '/_auth/progress-status-cert'
-      path: '/progress-status-cert'
-      fullPath: '/progress-status-cert'
-      preLoaderRoute: typeof AuthProgressStatusCertImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/progress-status-certify': {
-      id: '/_auth/progress-status-certify'
-      path: '/progress-status-certify'
-      fullPath: '/progress-status-certify'
-      preLoaderRoute: typeof AuthProgressStatusCertifyImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/progress-status-cp': {
-      id: '/_auth/progress-status-cp'
-      path: '/progress-status-cp'
-      fullPath: '/progress-status-cp'
-      preLoaderRoute: typeof AuthProgressStatusCpImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/progress-status-email': {
-      id: '/_auth/progress-status-email'
-      path: '/progress-status-email'
-      fullPath: '/progress-status-email'
-      preLoaderRoute: typeof AuthProgressStatusEmailImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/search-account': {
-      id: '/_auth/search-account'
-      path: '/search-account'
-      fullPath: '/search-account'
-      preLoaderRoute: typeof AuthSearchAccountImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/search-account-pw': {
-      id: '/_auth/search-account-pw'
-      path: '/search-account-pw'
-      fullPath: '/search-account-pw'
-      preLoaderRoute: typeof AuthSearchAccountPwImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/search-id-success': {
-      id: '/_auth/search-id-success'
-      path: '/search-id-success'
-      fullPath: '/search-id-success'
-      preLoaderRoute: typeof AuthSearchIdSuccessImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/signup-step1': {
-      id: '/_auth/signup-step1'
-      path: '/signup-step1'
-      fullPath: '/signup-step1'
-      preLoaderRoute: typeof AuthSignupStep1Import
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/signup-step2': {
-      id: '/_auth/signup-step2'
-      path: '/signup-step2'
-      fullPath: '/signup-step2'
-      preLoaderRoute: typeof AuthSignupStep2Import
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/signup-step3': {
-      id: '/_auth/signup-step3'
-      path: '/signup-step3'
-      fullPath: '/signup-step3'
-      preLoaderRoute: typeof AuthSignupStep3Import
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/success': {
-      id: '/_auth/success'
-      path: '/success'
-      fullPath: '/success'
-      preLoaderRoute: typeof AuthSuccessImport
-      parentRoute: typeof AuthImport
-    }
-    '/_layout/$menuId': {
-      id: '/_layout/$menuId'
-      path: '/$menuId'
-      fullPath: '/$menuId'
-      preLoaderRoute: typeof LayoutMenuIdImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/test': {
-      id: '/_layout/test'
-      path: '/test'
-      fullPath: '/test'
-      preLoaderRoute: typeof LayoutTestImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/': {
-      id: '/_layout/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof LayoutIndexImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_guide/guide/accordion': {
-      id: '/_guide/guide/accordion'
-      path: '/guide/accordion'
-      fullPath: '/guide/accordion'
-      preLoaderRoute: typeof GuideGuideAccordionImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/alert': {
-      id: '/_guide/guide/alert'
-      path: '/guide/alert'
-      fullPath: '/guide/alert'
-      preLoaderRoute: typeof GuideGuideAlertImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/autocomplete': {
-      id: '/_guide/guide/autocomplete'
-      path: '/guide/autocomplete'
-      fullPath: '/guide/autocomplete'
-      preLoaderRoute: typeof GuideGuideAutocompleteImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/avatar': {
-      id: '/_guide/guide/avatar'
-      path: '/guide/avatar'
-      fullPath: '/guide/avatar'
-      preLoaderRoute: typeof GuideGuideAvatarImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/badge': {
-      id: '/_guide/guide/badge'
-      path: '/guide/badge'
-      fullPath: '/guide/badge'
-      preLoaderRoute: typeof GuideGuideBadgeImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/buttons': {
-      id: '/_guide/guide/buttons'
-      path: '/guide/buttons'
-      fullPath: '/guide/buttons'
-      preLoaderRoute: typeof GuideGuideButtonsImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/carousel': {
-      id: '/_guide/guide/carousel'
-      path: '/guide/carousel'
-      fullPath: '/guide/carousel'
-      preLoaderRoute: typeof GuideGuideCarouselImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/checkbox': {
-      id: '/_guide/guide/checkbox'
-      path: '/guide/checkbox'
-      fullPath: '/guide/checkbox'
-      preLoaderRoute: typeof GuideGuideCheckboxImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/chips': {
-      id: '/_guide/guide/chips'
-      path: '/guide/chips'
-      fullPath: '/guide/chips'
-      preLoaderRoute: typeof GuideGuideChipsImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/color': {
-      id: '/_guide/guide/color'
-      path: '/guide/color'
-      fullPath: '/guide/color'
-      preLoaderRoute: typeof GuideGuideColorImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/css': {
-      id: '/_guide/guide/css'
-      path: '/guide/css'
-      fullPath: '/guide/css'
-      preLoaderRoute: typeof GuideGuideCssImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/date-picker': {
-      id: '/_guide/guide/date-picker'
-      path: '/guide/date-picker'
-      fullPath: '/guide/date-picker'
-      preLoaderRoute: typeof GuideGuideDatePickerImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/drop-down': {
-      id: '/_guide/guide/drop-down'
-      path: '/guide/drop-down'
-      fullPath: '/guide/drop-down'
-      preLoaderRoute: typeof GuideGuideDropDownImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/email': {
-      id: '/_guide/guide/email'
-      path: '/guide/email'
-      fullPath: '/guide/email'
-      preLoaderRoute: typeof GuideGuideEmailImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/empty': {
-      id: '/_guide/guide/empty'
-      path: '/guide/empty'
-      fullPath: '/guide/empty'
-      preLoaderRoute: typeof GuideGuideEmptyImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/file-upload': {
-      id: '/_guide/guide/file-upload'
-      path: '/guide/file-upload'
-      fullPath: '/guide/file-upload'
-      preLoaderRoute: typeof GuideGuideFileUploadImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/form': {
-      id: '/_guide/guide/form'
-      path: '/guide/form'
-      fullPath: '/guide/form'
-      preLoaderRoute: typeof GuideGuideFormImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/grid': {
-      id: '/_guide/guide/grid'
-      path: '/guide/grid'
-      fullPath: '/guide/grid'
-      preLoaderRoute: typeof GuideGuideGridImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/icon': {
-      id: '/_guide/guide/icon'
-      path: '/guide/icon'
-      fullPath: '/guide/icon'
-      preLoaderRoute: typeof GuideGuideIconImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/image': {
-      id: '/_guide/guide/image'
-      path: '/guide/image'
-      fullPath: '/guide/image'
-      preLoaderRoute: typeof GuideGuideImageImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/info': {
-      id: '/_guide/guide/info'
-      path: '/guide/info'
-      fullPath: '/guide/info'
-      preLoaderRoute: typeof GuideGuideInfoImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/input': {
-      id: '/_guide/guide/input'
-      path: '/guide/input'
-      fullPath: '/guide/input'
-      preLoaderRoute: typeof GuideGuideInputImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/input-timer': {
-      id: '/_guide/guide/input-timer'
-      path: '/guide/input-timer'
-      fullPath: '/guide/input-timer'
-      preLoaderRoute: typeof GuideGuideInputTimerImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/layout': {
-      id: '/_guide/guide/layout'
-      path: '/guide/layout'
-      fullPath: '/guide/layout'
-      preLoaderRoute: typeof GuideGuideLayoutImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/modal': {
-      id: '/_guide/guide/modal'
-      path: '/guide/modal'
-      fullPath: '/guide/modal'
-      preLoaderRoute: typeof GuideGuideModalImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/normal_table': {
-      id: '/_guide/guide/normal_table'
-      path: '/guide/normal_table'
-      fullPath: '/guide/normal_table'
-      preLoaderRoute: typeof GuideGuideNormaltableImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/notice-box': {
-      id: '/_guide/guide/notice-box'
-      path: '/guide/notice-box'
-      fullPath: '/guide/notice-box'
-      preLoaderRoute: typeof GuideGuideNoticeBoxImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/optionCard': {
-      id: '/_guide/guide/optionCard'
-      path: '/guide/optionCard'
-      fullPath: '/guide/optionCard'
-      preLoaderRoute: typeof GuideGuideOptionCardImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/pagination': {
-      id: '/_guide/guide/pagination'
-      path: '/guide/pagination'
-      fullPath: '/guide/pagination'
-      preLoaderRoute: typeof GuideGuidePaginationImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/panel': {
-      id: '/_guide/guide/panel'
-      path: '/guide/panel'
-      fullPath: '/guide/panel'
-      preLoaderRoute: typeof GuideGuidePanelImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/phone-number': {
-      id: '/_guide/guide/phone-number'
-      path: '/guide/phone-number'
-      fullPath: '/guide/phone-number'
-      preLoaderRoute: typeof GuideGuidePhoneNumberImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/popover': {
-      id: '/_guide/guide/popover'
-      path: '/guide/popover'
-      fullPath: '/guide/popover'
-      preLoaderRoute: typeof GuideGuidePopoverImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/progress': {
-      id: '/_guide/guide/progress'
-      path: '/guide/progress'
-      fullPath: '/guide/progress'
-      preLoaderRoute: typeof GuideGuideProgressImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/radio': {
-      id: '/_guide/guide/radio'
-      path: '/guide/radio'
-      fullPath: '/guide/radio'
-      preLoaderRoute: typeof GuideGuideRadioImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/respond': {
-      id: '/_guide/guide/respond'
-      path: '/guide/respond'
-      fullPath: '/guide/respond'
-      preLoaderRoute: typeof GuideGuideRespondImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/search-box': {
-      id: '/_guide/guide/search-box'
-      path: '/guide/search-box'
-      fullPath: '/guide/search-box'
-      preLoaderRoute: typeof GuideGuideSearchBoxImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/select': {
-      id: '/_guide/guide/select'
-      path: '/guide/select'
-      fullPath: '/guide/select'
-      preLoaderRoute: typeof GuideGuideSelectImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/shuttle-grid': {
-      id: '/_guide/guide/shuttle-grid'
-      path: '/guide/shuttle-grid'
-      fullPath: '/guide/shuttle-grid'
-      preLoaderRoute: typeof GuideGuideShuttleGridImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/spinner': {
-      id: '/_guide/guide/spinner'
-      path: '/guide/spinner'
-      fullPath: '/guide/spinner'
-      preLoaderRoute: typeof GuideGuideSpinnerImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/stepper': {
-      id: '/_guide/guide/stepper'
-      path: '/guide/stepper'
-      fullPath: '/guide/stepper'
-      preLoaderRoute: typeof GuideGuideStepperImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/stepper-tabs': {
-      id: '/_guide/guide/stepper-tabs'
-      path: '/guide/stepper-tabs'
-      fullPath: '/guide/stepper-tabs'
-      preLoaderRoute: typeof GuideGuideStepperTabsImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/switch': {
-      id: '/_guide/guide/switch'
-      path: '/guide/switch'
-      fullPath: '/guide/switch'
-      preLoaderRoute: typeof GuideGuideSwitchImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/table': {
-      id: '/_guide/guide/table'
-      path: '/guide/table'
-      fullPath: '/guide/table'
-      preLoaderRoute: typeof GuideGuideTableImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/tabs': {
-      id: '/_guide/guide/tabs'
-      path: '/guide/tabs'
-      fullPath: '/guide/tabs'
-      preLoaderRoute: typeof GuideGuideTabsImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/test': {
-      id: '/_guide/guide/test'
-      path: '/guide/test'
-      fullPath: '/guide/test'
-      preLoaderRoute: typeof GuideGuideTestImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/textarea': {
-      id: '/_guide/guide/textarea'
-      path: '/guide/textarea'
-      fullPath: '/guide/textarea'
-      preLoaderRoute: typeof GuideGuideTextareaImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/tooltip': {
-      id: '/_guide/guide/tooltip'
-      path: '/guide/tooltip'
-      fullPath: '/guide/tooltip'
-      preLoaderRoute: typeof GuideGuideTooltipImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/tree-view': {
-      id: '/_guide/guide/tree-view'
-      path: '/guide/tree-view'
-      fullPath: '/guide/tree-view'
-      preLoaderRoute: typeof GuideGuideTreeViewImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/typography': {
-      id: '/_guide/guide/typography'
-      path: '/guide/typography'
-      fullPath: '/guide/typography'
-      preLoaderRoute: typeof GuideGuideTypographyImport
-      parentRoute: typeof GuideImport
-    }
-    '/_guide/guide/word-wrap': {
-      id: '/_guide/guide/word-wrap'
-      path: '/guide/word-wrap'
-      fullPath: '/guide/word-wrap'
-      preLoaderRoute: typeof GuideGuideWordWrapImport
-      parentRoute: typeof GuideImport
-    }
-    '/_layout/common/breakpoint': {
-      id: '/_layout/common/breakpoint'
-      path: '/common/breakpoint'
-      fullPath: '/common/breakpoint'
-      preLoaderRoute: typeof LayoutCommonBreakpointImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/common/not-found': {
-      id: '/_layout/common/not-found'
-      path: '/common/not-found'
-      fullPath: '/common/not-found'
-      preLoaderRoute: typeof LayoutCommonNotFoundImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/common/pop-admin-extension': {
-      id: '/_layout/common/pop-admin-extension'
-      path: '/common/pop-admin-extension'
-      fullPath: '/common/pop-admin-extension'
-      preLoaderRoute: typeof LayoutCommonPopAdminExtensionImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/common/pop-category-select': {
-      id: '/_layout/common/pop-category-select'
-      path: '/common/pop-category-select'
-      fullPath: '/common/pop-category-select'
-      preLoaderRoute: typeof LayoutCommonPopCategorySelectImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/common/pop-data-range-setting': {
-      id: '/_layout/common/pop-data-range-setting'
-      path: '/common/pop-data-range-setting'
-      fullPath: '/common/pop-data-range-setting'
-      preLoaderRoute: typeof LayoutCommonPopDataRangeSettingImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/common/pop-excel-upload': {
-      id: '/_layout/common/pop-excel-upload'
-      path: '/common/pop-excel-upload'
-      fullPath: '/common/pop-excel-upload'
-      preLoaderRoute: typeof LayoutCommonPopExcelUploadImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/common/pop-image-preview': {
-      id: '/_layout/common/pop-image-preview'
-      path: '/common/pop-image-preview'
-      fullPath: '/common/pop-image-preview'
-      preLoaderRoute: typeof LayoutCommonPopImagePreviewImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/common/pop-user-group-search': {
-      id: '/_layout/common/pop-user-group-search'
-      path: '/common/pop-user-group-search'
-      fullPath: '/common/pop-user-group-search'
-      preLoaderRoute: typeof LayoutCommonPopUserGroupSearchImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/common/pop-user-search': {
-      id: '/_layout/common/pop-user-search'
-      path: '/common/pop-user-search'
-      fullPath: '/common/pop-user-search'
-      preLoaderRoute: typeof LayoutCommonPopUserSearchImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/common/pop-user-search-check': {
-      id: '/_layout/common/pop-user-search-check'
-      path: '/common/pop-user-search-check'
-      fullPath: '/common/pop-user-search-check'
-      preLoaderRoute: typeof LayoutCommonPopUserSearchCheckImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/common/profile-myinfo': {
-      id: '/_layout/common/profile-myinfo'
-      path: '/common/profile-myinfo'
-      fullPath: '/common/profile-myinfo'
-      preLoaderRoute: typeof LayoutCommonProfileMyinfoImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/completion/detail-calculation-reason': {
-      id: '/_layout/completion/detail-calculation-reason'
-      path: '/completion/detail-calculation-reason'
-      fullPath: '/completion/detail-calculation-reason'
-      preLoaderRoute: typeof LayoutCompletionDetailCalculationReasonImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/completion/education_operate_group': {
-      id: '/_layout/completion/education_operate_group'
-      path: '/completion/education_operate_group'
-      fullPath: '/completion/education_operate_group'
-      preLoaderRoute: typeof LayoutCompletionEducationoperategroupImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/contents/layout': {
-      id: '/_layout/contents/layout'
-      path: '/contents/layout'
-      fullPath: '/contents/layout'
-      preLoaderRoute: typeof LayoutContentsLayoutImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/language/language_history_list': {
-      id: '/_layout/language/language_history_list'
-      path: '/language/language_history_list'
-      fullPath: '/language/language_history_list'
-      preLoaderRoute: typeof LayoutLanguageLanguagehistorylistImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/language/language_subjects_management': {
-      id: '/_layout/language/language_subjects_management'
-      path: '/language/language_subjects_management'
-      fullPath: '/language/language_subjects_management'
-      preLoaderRoute: typeof LayoutLanguageLanguagesubjectsmanagementImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/learning/file-upload': {
-      id: '/_layout/learning/file-upload'
-      path: '/learning/file-upload'
-      fullPath: '/learning/file-upload'
-      preLoaderRoute: typeof LayoutLearningFileUploadImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/learning/learning-external-registration': {
-      id: '/_layout/learning/learning-external-registration'
-      path: '/learning/learning-external-registration'
-      fullPath: '/learning/learning-external-registration'
-      preLoaderRoute: typeof LayoutLearningLearningExternalRegistrationImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/learning/learning-resource-search': {
-      id: '/_layout/learning/learning-resource-search'
-      path: '/learning/learning-resource-search'
-      fullPath: '/learning/learning-resource-search'
-      preLoaderRoute: typeof LayoutLearningLearningResourceSearchImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/learning/learningSearch': {
-      id: '/_layout/learning/learningSearch'
-      path: '/learning/learningSearch'
-      fullPath: '/learning/learningSearch'
-      preLoaderRoute: typeof LayoutLearningLearningSearchImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/learning/mediaDetail': {
-      id: '/_layout/learning/mediaDetail'
-      path: '/learning/mediaDetail'
-      fullPath: '/learning/mediaDetail'
-      preLoaderRoute: typeof LayoutLearningMediaDetailImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/learning/mediaRegister': {
-      id: '/_layout/learning/mediaRegister'
-      path: '/learning/mediaRegister'
-      fullPath: '/learning/mediaRegister'
-      preLoaderRoute: typeof LayoutLearningMediaRegisterImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/learning/pop-modifier-info': {
-      id: '/_layout/learning/pop-modifier-info'
-      path: '/learning/pop-modifier-info'
-      fullPath: '/learning/pop-modifier-info'
-      preLoaderRoute: typeof LayoutLearningPopModifierInfoImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/learning/pop-program-guide': {
-      id: '/_layout/learning/pop-program-guide'
-      path: '/learning/pop-program-guide'
-      fullPath: '/learning/pop-program-guide'
-      preLoaderRoute: typeof LayoutLearningPopProgramGuideImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/learning/popup-fileupload': {
-      id: '/_layout/learning/popup-fileupload'
-      path: '/learning/popup-fileupload'
-      fullPath: '/learning/popup-fileupload'
-      preLoaderRoute: typeof LayoutLearningPopupFileuploadImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/learning/popup-learningRegisteration': {
-      id: '/_layout/learning/popup-learningRegisteration'
-      path: '/learning/popup-learningRegisteration'
-      fullPath: '/learning/popup-learningRegisteration'
-      preLoaderRoute: typeof LayoutLearningPopupLearningRegisterationImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/learning/popup-learningSetting': {
-      id: '/_layout/learning/popup-learningSetting'
-      path: '/learning/popup-learningSetting'
-      fullPath: '/learning/popup-learningSetting'
-      preLoaderRoute: typeof LayoutLearningPopupLearningSettingImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/learning/popup-question-detail': {
-      id: '/_layout/learning/popup-question-detail'
-      path: '/learning/popup-question-detail'
-      fullPath: '/learning/popup-question-detail'
-      preLoaderRoute: typeof LayoutLearningPopupQuestionDetailImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/learning/popup-upload': {
-      id: '/_layout/learning/popup-upload'
-      path: '/learning/popup-upload'
-      fullPath: '/learning/popup-upload'
-      preLoaderRoute: typeof LayoutLearningPopupUploadImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/learning/testDetail': {
-      id: '/_layout/learning/testDetail'
-      path: '/learning/testDetail'
-      fullPath: '/learning/testDetail'
-      preLoaderRoute: typeof LayoutLearningTestDetailImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/lms/procedure-management': {
-      id: '/_layout/lms/procedure-management'
-      path: '/lms/procedure-management'
-      fullPath: '/lms/procedure-management'
-      preLoaderRoute: typeof LayoutLmsProcedureManagementImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/lms/procedure-open-setting': {
-      id: '/_layout/lms/procedure-open-setting'
-      path: '/lms/procedure-open-setting'
-      fullPath: '/lms/procedure-open-setting'
-      preLoaderRoute: typeof LayoutLmsProcedureOpenSettingImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/menu/$menuId': {
-      id: '/_layout/menu/$menuId'
-      path: '/menu/$menuId'
-      fullPath: '/menu/$menuId'
-      preLoaderRoute: typeof LayoutMenuMenuIdImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/menu4/menu5': {
-      id: '/_layout/menu4/menu5'
-      path: '/menu4/menu5'
-      fullPath: '/menu4/menu5'
-      preLoaderRoute: typeof LayoutMenu4Menu5Import
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/menu8/menu9': {
-      id: '/_layout/menu8/menu9'
-      path: '/menu8/menu9'
-      fullPath: '/menu8/menu9'
-      preLoaderRoute: typeof LayoutMenu8Menu9Import
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/category-menagement': {
-      id: '/_layout/pms/category-menagement'
-      path: '/pms/category-menagement'
-      fullPath: '/pms/category-menagement'
-      preLoaderRoute: typeof LayoutPmsCategoryMenagementImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/group-management': {
-      id: '/_layout/pms/group-management'
-      path: '/pms/group-management'
-      fullPath: '/pms/group-management'
-      preLoaderRoute: typeof LayoutPmsGroupManagementImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/group-management-info': {
-      id: '/_layout/pms/group-management-info'
-      path: '/pms/group-management-info'
-      fullPath: '/pms/group-management-info'
-      preLoaderRoute: typeof LayoutPmsGroupManagementInfoImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/group-management-register': {
-      id: '/_layout/pms/group-management-register'
-      path: '/pms/group-management-register'
-      fullPath: '/pms/group-management-register'
-      preLoaderRoute: typeof LayoutPmsGroupManagementRegisterImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/language_management': {
-      id: '/_layout/pms/language_management'
-      path: '/pms/language_management'
-      fullPath: '/pms/language_management'
-      preLoaderRoute: typeof LayoutPmsLanguagemanagementImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/menu-channel-detail': {
-      id: '/_layout/pms/menu-channel-detail'
-      path: '/pms/menu-channel-detail'
-      fullPath: '/pms/menu-channel-detail'
-      preLoaderRoute: typeof LayoutPmsMenuChannelDetailImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/menu-channel-detail-management': {
-      id: '/_layout/pms/menu-channel-detail-management'
-      path: '/pms/menu-channel-detail-management'
-      fullPath: '/pms/menu-channel-detail-management'
-      preLoaderRoute: typeof LayoutPmsMenuChannelDetailManagementImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/menu-channel-management': {
-      id: '/_layout/pms/menu-channel-management'
-      path: '/pms/menu-channel-management'
-      fullPath: '/pms/menu-channel-management'
-      preLoaderRoute: typeof LayoutPmsMenuChannelManagementImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/menu-channel-open-detail-management': {
-      id: '/_layout/pms/menu-channel-open-detail-management'
-      path: '/pms/menu-channel-open-detail-management'
-      fullPath: '/pms/menu-channel-open-detail-management'
-      preLoaderRoute: typeof LayoutPmsMenuChannelOpenDetailManagementImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/menu-channel-open-management': {
-      id: '/_layout/pms/menu-channel-open-management'
-      path: '/pms/menu-channel-open-management'
-      fullPath: '/pms/menu-channel-open-management'
-      preLoaderRoute: typeof LayoutPmsMenuChannelOpenManagementImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/menu-channel-register': {
-      id: '/_layout/pms/menu-channel-register'
-      path: '/pms/menu-channel-register'
-      fullPath: '/pms/menu-channel-register'
-      preLoaderRoute: typeof LayoutPmsMenuChannelRegisterImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/menu-education-location-management': {
-      id: '/_layout/pms/menu-education-location-management'
-      path: '/pms/menu-education-location-management'
-      fullPath: '/pms/menu-education-location-management'
-      preLoaderRoute: typeof LayoutPmsMenuEducationLocationManagementImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/menu-education-register-detail': {
-      id: '/_layout/pms/menu-education-register-detail'
-      path: '/pms/menu-education-register-detail'
-      fullPath: '/pms/menu-education-register-detail'
-      preLoaderRoute: typeof LayoutPmsMenuEducationRegisterDetailImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/menu-main-notification-management': {
-      id: '/_layout/pms/menu-main-notification-management'
-      path: '/pms/menu-main-notification-management'
-      fullPath: '/pms/menu-main-notification-management'
-      preLoaderRoute: typeof LayoutPmsMenuMainNotificationManagementImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/menu-main-registration': {
-      id: '/_layout/pms/menu-main-registration'
-      path: '/pms/menu-main-registration'
-      fullPath: '/pms/menu-main-registration'
-      preLoaderRoute: typeof LayoutPmsMenuMainRegistrationImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/menu-management': {
-      id: '/_layout/pms/menu-management'
-      path: '/pms/menu-management'
-      fullPath: '/pms/menu-management'
-      preLoaderRoute: typeof LayoutPmsMenuManagementImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/menu-platform': {
-      id: '/_layout/pms/menu-platform'
-      path: '/pms/menu-platform'
-      fullPath: '/pms/menu-platform'
-      preLoaderRoute: typeof LayoutPmsMenuPlatformImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/menu-platform-common-group': {
-      id: '/_layout/pms/menu-platform-common-group'
-      path: '/pms/menu-platform-common-group'
-      fullPath: '/pms/menu-platform-common-group'
-      preLoaderRoute: typeof LayoutPmsMenuPlatformCommonGroupImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/menu-platform-company-detail': {
-      id: '/_layout/pms/menu-platform-company-detail'
-      path: '/pms/menu-platform-company-detail'
-      fullPath: '/pms/menu-platform-company-detail'
-      preLoaderRoute: typeof LayoutPmsMenuPlatformCompanyDetailImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/menu-tenant-attribute-management': {
-      id: '/_layout/pms/menu-tenant-attribute-management'
-      path: '/pms/menu-tenant-attribute-management'
-      fullPath: '/pms/menu-tenant-attribute-management'
-      preLoaderRoute: typeof LayoutPmsMenuTenantAttributeManagementImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/menu-tenant-company-group': {
-      id: '/_layout/pms/menu-tenant-company-group'
-      path: '/pms/menu-tenant-company-group'
-      fullPath: '/pms/menu-tenant-company-group'
-      preLoaderRoute: typeof LayoutPmsMenuTenantCompanyGroupImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/menu-tenant-group-management': {
-      id: '/_layout/pms/menu-tenant-group-management'
-      path: '/pms/menu-tenant-group-management'
-      fullPath: '/pms/menu-tenant-group-management'
-      preLoaderRoute: typeof LayoutPmsMenuTenantGroupManagementImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/menu-tenant-learning-role-management': {
-      id: '/_layout/pms/menu-tenant-learning-role-management'
-      path: '/pms/menu-tenant-learning-role-management'
-      fullPath: '/pms/menu-tenant-learning-role-management'
-      preLoaderRoute: typeof LayoutPmsMenuTenantLearningRoleManagementImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/menu-tenant-mainbanner-management': {
-      id: '/_layout/pms/menu-tenant-mainbanner-management'
-      path: '/pms/menu-tenant-mainbanner-management'
-      fullPath: '/pms/menu-tenant-mainbanner-management'
-      preLoaderRoute: typeof LayoutPmsMenuTenantMainbannerManagementImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/menu-tenant-mainwidget-management': {
-      id: '/_layout/pms/menu-tenant-mainwidget-management'
-      path: '/pms/menu-tenant-mainwidget-management'
-      fullPath: '/pms/menu-tenant-mainwidget-management'
-      preLoaderRoute: typeof LayoutPmsMenuTenantMainwidgetManagementImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/menu-tenant-platform-category-menu': {
-      id: '/_layout/pms/menu-tenant-platform-category-menu'
-      path: '/pms/menu-tenant-platform-category-menu'
-      fullPath: '/pms/menu-tenant-platform-category-menu'
-      preLoaderRoute: typeof LayoutPmsMenuTenantPlatformCategoryMenuImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/menu-tenant-platform-learning-menu': {
-      id: '/_layout/pms/menu-tenant-platform-learning-menu'
-      path: '/pms/menu-tenant-platform-learning-menu'
-      fullPath: '/pms/menu-tenant-platform-learning-menu'
-      preLoaderRoute: typeof LayoutPmsMenuTenantPlatformLearningMenuImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/menu-tenant-platform-management': {
-      id: '/_layout/pms/menu-tenant-platform-management'
-      path: '/pms/menu-tenant-platform-management'
-      fullPath: '/pms/menu-tenant-platform-management'
-      preLoaderRoute: typeof LayoutPmsMenuTenantPlatformManagementImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/menu-tenant-platform-management-basic-infomation': {
-      id: '/_layout/pms/menu-tenant-platform-management-basic-infomation'
-      path: '/pms/menu-tenant-platform-management-basic-infomation'
-      fullPath: '/pms/menu-tenant-platform-management-basic-infomation'
-      preLoaderRoute: typeof LayoutPmsMenuTenantPlatformManagementBasicInfomationImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/menu-tenant-platform-management-registration': {
-      id: '/_layout/pms/menu-tenant-platform-management-registration'
-      path: '/pms/menu-tenant-platform-management-registration'
-      fullPath: '/pms/menu-tenant-platform-management-registration'
-      preLoaderRoute: typeof LayoutPmsMenuTenantPlatformManagementRegistrationImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/menu-tenant-user-education': {
-      id: '/_layout/pms/menu-tenant-user-education'
-      path: '/pms/menu-tenant-user-education'
-      fullPath: '/pms/menu-tenant-user-education'
-      preLoaderRoute: typeof LayoutPmsMenuTenantUserEducationImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/menu-tenant-user-management': {
-      id: '/_layout/pms/menu-tenant-user-management'
-      path: '/pms/menu-tenant-user-management'
-      fullPath: '/pms/menu-tenant-user-management'
-      preLoaderRoute: typeof LayoutPmsMenuTenantUserManagementImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/pop-channel-search': {
-      id: '/_layout/pms/pop-channel-search'
-      path: '/pms/pop-channel-search'
-      fullPath: '/pms/pop-channel-search'
-      preLoaderRoute: typeof LayoutPmsPopChannelSearchImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/popup-login-option': {
-      id: '/_layout/pms/popup-login-option'
-      path: '/pms/popup-login-option'
-      fullPath: '/pms/popup-login-option'
-      preLoaderRoute: typeof LayoutPmsPopupLoginOptionImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/popup-translation-complete': {
-      id: '/_layout/pms/popup-translation-complete'
-      path: '/pms/popup-translation-complete'
-      fullPath: '/pms/popup-translation-complete'
-      preLoaderRoute: typeof LayoutPmsPopupTranslationCompleteImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/popup-widget-management': {
-      id: '/_layout/pms/popup-widget-management'
-      path: '/pms/popup-widget-management'
-      fullPath: '/pms/popup-widget-management'
-      preLoaderRoute: typeof LayoutPmsPopupWidgetManagementImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/private_search_detail': {
-      id: '/_layout/pms/private_search_detail'
-      path: '/pms/private_search_detail'
-      fullPath: '/pms/private_search_detail'
-      preLoaderRoute: typeof LayoutPmsPrivatesearchdetailImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/private_search_list': {
-      id: '/_layout/pms/private_search_list'
-      path: '/pms/private_search_list'
-      fullPath: '/pms/private_search_list'
-      preLoaderRoute: typeof LayoutPmsPrivatesearchlistImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/shortening_url_list': {
-      id: '/_layout/pms/shortening_url_list'
-      path: '/pms/shortening_url_list'
-      fullPath: '/pms/shortening_url_list'
-      preLoaderRoute: typeof LayoutPmsShorteningurllistImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/shortening_url_register': {
-      id: '/_layout/pms/shortening_url_register'
-      path: '/pms/shortening_url_register'
-      fullPath: '/pms/shortening_url_register'
-      preLoaderRoute: typeof LayoutPmsShorteningurlregisterImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/tenant-menu-management': {
-      id: '/_layout/pms/tenant-menu-management'
-      path: '/pms/tenant-menu-management'
-      fullPath: '/pms/tenant-menu-management'
-      preLoaderRoute: typeof LayoutPmsTenantMenuManagementImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/terms_management': {
-      id: '/_layout/pms/terms_management'
-      path: '/pms/terms_management'
-      fullPath: '/pms/terms_management'
-      preLoaderRoute: typeof LayoutPmsTermsmanagementImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/widget-detail': {
-      id: '/_layout/pms/widget-detail'
-      path: '/pms/widget-detail'
-      fullPath: '/pms/widget-detail'
-      preLoaderRoute: typeof LayoutPmsWidgetDetailImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/widget-management': {
-      id: '/_layout/pms/widget-management'
-      path: '/pms/widget-management'
-      fullPath: '/pms/widget-management'
-      preLoaderRoute: typeof LayoutPmsWidgetManagementImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_layout/pms/widget-register': {
-      id: '/_layout/pms/widget-register'
-      path: '/pms/widget-register'
-      fullPath: '/pms/widget-register'
-      preLoaderRoute: typeof LayoutPmsWidgetRegisterImport
-      parentRoute: typeof LayoutImport
-    }
-    '/_guide/guide/': {
-      id: '/_guide/guide/'
-      path: '/guide'
-      fullPath: '/guide'
-      preLoaderRoute: typeof GuideGuideIndexImport
-      parentRoute: typeof GuideImport
-    }
-    '/_layout/menu3/': {
-      id: '/_layout/menu3/'
-      path: '/menu3'
-      fullPath: '/menu3'
-      preLoaderRoute: typeof LayoutMenu3IndexImport
-      parentRoute: typeof LayoutImport
-    }
-  }
-}
-
-// Create and export the route tree
-
-interface AuthRouteChildren {
-  AuthAdminAuthStep2Route: typeof AuthAdminAuthStep2Route
-  AuthAdminAuthStep3Route: typeof AuthAdminAuthStep3Route
-  AuthAdminAuthStep4Route: typeof AuthAdminAuthStep4Route
-  AuthGoogleCertRoute: typeof AuthGoogleCertRoute
-  AuthLoginRoute: typeof AuthLoginRoute
-  AuthMpassCertRoute: typeof AuthMpassCertRoute
-  AuthMpassCertFidoRoute: typeof AuthMpassCertFidoRoute
-  AuthMpassCertOtpRoute: typeof AuthMpassCertOtpRoute
-  AuthPasswordInputRoute: typeof AuthPasswordInputRoute
-  AuthPasswordModifyRoute: typeof AuthPasswordModifyRoute
-  AuthPopupRoleSelectRoute: typeof AuthPopupRoleSelectRoute
-  AuthProgressStatusRoute: typeof AuthProgressStatusRoute
-  AuthProgressStatusAdminRoute: typeof AuthProgressStatusAdminRoute
-  AuthProgressStatusAdminFailRoute: typeof AuthProgressStatusAdminFailRoute
-  AuthProgressStatusCertRoute: typeof AuthProgressStatusCertRoute
-  AuthProgressStatusCertifyRoute: typeof AuthProgressStatusCertifyRoute
-  AuthProgressStatusCpRoute: typeof AuthProgressStatusCpRoute
-  AuthProgressStatusEmailRoute: typeof AuthProgressStatusEmailRoute
-  AuthSearchAccountRoute: typeof AuthSearchAccountRoute
-  AuthSearchAccountPwRoute: typeof AuthSearchAccountPwRoute
-  AuthSearchIdSuccessRoute: typeof AuthSearchIdSuccessRoute
-  AuthSignupStep1Route: typeof AuthSignupStep1Route
-  AuthSignupStep2Route: typeof AuthSignupStep2Route
-  AuthSignupStep3Route: typeof AuthSignupStep3Route
-  AuthSuccessRoute: typeof AuthSuccessRoute
-}
-
-const AuthRouteChildren: AuthRouteChildren = {
-  AuthAdminAuthStep2Route: AuthAdminAuthStep2Route,
-  AuthAdminAuthStep3Route: AuthAdminAuthStep3Route,
-  AuthAdminAuthStep4Route: AuthAdminAuthStep4Route,
-  AuthGoogleCertRoute: AuthGoogleCertRoute,
-  AuthLoginRoute: AuthLoginRoute,
-  AuthMpassCertRoute: AuthMpassCertRoute,
-  AuthMpassCertFidoRoute: AuthMpassCertFidoRoute,
-  AuthMpassCertOtpRoute: AuthMpassCertOtpRoute,
-  AuthPasswordInputRoute: AuthPasswordInputRoute,
-  AuthPasswordModifyRoute: AuthPasswordModifyRoute,
-  AuthPopupRoleSelectRoute: AuthPopupRoleSelectRoute,
-  AuthProgressStatusRoute: AuthProgressStatusRoute,
-  AuthProgressStatusAdminRoute: AuthProgressStatusAdminRoute,
-  AuthProgressStatusAdminFailRoute: AuthProgressStatusAdminFailRoute,
-  AuthProgressStatusCertRoute: AuthProgressStatusCertRoute,
-  AuthProgressStatusCertifyRoute: AuthProgressStatusCertifyRoute,
-  AuthProgressStatusCpRoute: AuthProgressStatusCpRoute,
-  AuthProgressStatusEmailRoute: AuthProgressStatusEmailRoute,
-  AuthSearchAccountRoute: AuthSearchAccountRoute,
-  AuthSearchAccountPwRoute: AuthSearchAccountPwRoute,
-  AuthSearchIdSuccessRoute: AuthSearchIdSuccessRoute,
-  AuthSignupStep1Route: AuthSignupStep1Route,
-  AuthSignupStep2Route: AuthSignupStep2Route,
-  AuthSignupStep3Route: AuthSignupStep3Route,
-  AuthSuccessRoute: AuthSuccessRoute,
-}
-
-const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
-
-interface GuideRouteChildren {
-  GuideGuideAccordionRoute: typeof GuideGuideAccordionRoute
-  GuideGuideAlertRoute: typeof GuideGuideAlertRoute
-  GuideGuideAutocompleteRoute: typeof GuideGuideAutocompleteRoute
-  GuideGuideAvatarRoute: typeof GuideGuideAvatarRoute
-  GuideGuideBadgeRoute: typeof GuideGuideBadgeRoute
-  GuideGuideButtonsRoute: typeof GuideGuideButtonsRoute
-  GuideGuideCarouselRoute: typeof GuideGuideCarouselRoute
-  GuideGuideCheckboxRoute: typeof GuideGuideCheckboxRoute
-  GuideGuideChipsRoute: typeof GuideGuideChipsRoute
-  GuideGuideColorRoute: typeof GuideGuideColorRoute
-  GuideGuideCssRoute: typeof GuideGuideCssRoute
-  GuideGuideDatePickerRoute: typeof GuideGuideDatePickerRoute
-  GuideGuideDropDownRoute: typeof GuideGuideDropDownRoute
-  GuideGuideEmailRoute: typeof GuideGuideEmailRoute
-  GuideGuideEmptyRoute: typeof GuideGuideEmptyRoute
-  GuideGuideFileUploadRoute: typeof GuideGuideFileUploadRoute
-  GuideGuideFormRoute: typeof GuideGuideFormRoute
-  GuideGuideGridRoute: typeof GuideGuideGridRoute
-  GuideGuideIconRoute: typeof GuideGuideIconRoute
-  GuideGuideImageRoute: typeof GuideGuideImageRoute
-  GuideGuideInfoRoute: typeof GuideGuideInfoRoute
-  GuideGuideInputRoute: typeof GuideGuideInputRoute
-  GuideGuideInputTimerRoute: typeof GuideGuideInputTimerRoute
-  GuideGuideLayoutRoute: typeof GuideGuideLayoutRoute
-  GuideGuideModalRoute: typeof GuideGuideModalRoute
-  GuideGuideNormaltableRoute: typeof GuideGuideNormaltableRoute
-  GuideGuideNoticeBoxRoute: typeof GuideGuideNoticeBoxRoute
-  GuideGuideOptionCardRoute: typeof GuideGuideOptionCardRoute
-  GuideGuidePaginationRoute: typeof GuideGuidePaginationRoute
-  GuideGuidePanelRoute: typeof GuideGuidePanelRoute
-  GuideGuidePhoneNumberRoute: typeof GuideGuidePhoneNumberRoute
-  GuideGuidePopoverRoute: typeof GuideGuidePopoverRoute
-  GuideGuideProgressRoute: typeof GuideGuideProgressRoute
-  GuideGuideRadioRoute: typeof GuideGuideRadioRoute
-  GuideGuideRespondRoute: typeof GuideGuideRespondRoute
-  GuideGuideSearchBoxRoute: typeof GuideGuideSearchBoxRoute
-  GuideGuideSelectRoute: typeof GuideGuideSelectRoute
-  GuideGuideShuttleGridRoute: typeof GuideGuideShuttleGridRoute
-  GuideGuideSpinnerRoute: typeof GuideGuideSpinnerRoute
-  GuideGuideStepperRoute: typeof GuideGuideStepperRoute
-  GuideGuideStepperTabsRoute: typeof GuideGuideStepperTabsRoute
-  GuideGuideSwitchRoute: typeof GuideGuideSwitchRoute
-  GuideGuideTableRoute: typeof GuideGuideTableRoute
-  GuideGuideTabsRoute: typeof GuideGuideTabsRoute
-  GuideGuideTestRoute: typeof GuideGuideTestRoute
-  GuideGuideTextareaRoute: typeof GuideGuideTextareaRoute
-  GuideGuideTooltipRoute: typeof GuideGuideTooltipRoute
-  GuideGuideTreeViewRoute: typeof GuideGuideTreeViewRoute
-  GuideGuideTypographyRoute: typeof GuideGuideTypographyRoute
-  GuideGuideWordWrapRoute: typeof GuideGuideWordWrapRoute
-  GuideGuideIndexRoute: typeof GuideGuideIndexRoute
-}
-
-const GuideRouteChildren: GuideRouteChildren = {
-  GuideGuideAccordionRoute: GuideGuideAccordionRoute,
-  GuideGuideAlertRoute: GuideGuideAlertRoute,
-  GuideGuideAutocompleteRoute: GuideGuideAutocompleteRoute,
-  GuideGuideAvatarRoute: GuideGuideAvatarRoute,
-  GuideGuideBadgeRoute: GuideGuideBadgeRoute,
-  GuideGuideButtonsRoute: GuideGuideButtonsRoute,
-  GuideGuideCarouselRoute: GuideGuideCarouselRoute,
-  GuideGuideCheckboxRoute: GuideGuideCheckboxRoute,
-  GuideGuideChipsRoute: GuideGuideChipsRoute,
-  GuideGuideColorRoute: GuideGuideColorRoute,
-  GuideGuideCssRoute: GuideGuideCssRoute,
-  GuideGuideDatePickerRoute: GuideGuideDatePickerRoute,
-  GuideGuideDropDownRoute: GuideGuideDropDownRoute,
-  GuideGuideEmailRoute: GuideGuideEmailRoute,
-  GuideGuideEmptyRoute: GuideGuideEmptyRoute,
-  GuideGuideFileUploadRoute: GuideGuideFileUploadRoute,
-  GuideGuideFormRoute: GuideGuideFormRoute,
-  GuideGuideGridRoute: GuideGuideGridRoute,
-  GuideGuideIconRoute: GuideGuideIconRoute,
-  GuideGuideImageRoute: GuideGuideImageRoute,
-  GuideGuideInfoRoute: GuideGuideInfoRoute,
-  GuideGuideInputRoute: GuideGuideInputRoute,
-  GuideGuideInputTimerRoute: GuideGuideInputTimerRoute,
-  GuideGuideLayoutRoute: GuideGuideLayoutRoute,
-  GuideGuideModalRoute: GuideGuideModalRoute,
-  GuideGuideNormaltableRoute: GuideGuideNormaltableRoute,
-  GuideGuideNoticeBoxRoute: GuideGuideNoticeBoxRoute,
-  GuideGuideOptionCardRoute: GuideGuideOptionCardRoute,
-  GuideGuidePaginationRoute: GuideGuidePaginationRoute,
-  GuideGuidePanelRoute: GuideGuidePanelRoute,
-  GuideGuidePhoneNumberRoute: GuideGuidePhoneNumberRoute,
-  GuideGuidePopoverRoute: GuideGuidePopoverRoute,
-  GuideGuideProgressRoute: GuideGuideProgressRoute,
-  GuideGuideRadioRoute: GuideGuideRadioRoute,
-  GuideGuideRespondRoute: GuideGuideRespondRoute,
-  GuideGuideSearchBoxRoute: GuideGuideSearchBoxRoute,
-  GuideGuideSelectRoute: GuideGuideSelectRoute,
-  GuideGuideShuttleGridRoute: GuideGuideShuttleGridRoute,
-  GuideGuideSpinnerRoute: GuideGuideSpinnerRoute,
-  GuideGuideStepperRoute: GuideGuideStepperRoute,
-  GuideGuideStepperTabsRoute: GuideGuideStepperTabsRoute,
-  GuideGuideSwitchRoute: GuideGuideSwitchRoute,
-  GuideGuideTableRoute: GuideGuideTableRoute,
-  GuideGuideTabsRoute: GuideGuideTabsRoute,
-  GuideGuideTestRoute: GuideGuideTestRoute,
-  GuideGuideTextareaRoute: GuideGuideTextareaRoute,
-  GuideGuideTooltipRoute: GuideGuideTooltipRoute,
-  GuideGuideTreeViewRoute: GuideGuideTreeViewRoute,
-  GuideGuideTypographyRoute: GuideGuideTypographyRoute,
-  GuideGuideWordWrapRoute: GuideGuideWordWrapRoute,
-  GuideGuideIndexRoute: GuideGuideIndexRoute,
-}
-
-const GuideRouteWithChildren = GuideRoute._addFileChildren(GuideRouteChildren)
-
-interface LayoutRouteChildren {
-  LayoutMenuIdRoute: typeof LayoutMenuIdRoute
-  LayoutTestRoute: typeof LayoutTestRoute
-  LayoutIndexRoute: typeof LayoutIndexRoute
-  LayoutCommonBreakpointRoute: typeof LayoutCommonBreakpointRoute
-  LayoutCommonNotFoundRoute: typeof LayoutCommonNotFoundRoute
-  LayoutCommonPopAdminExtensionRoute: typeof LayoutCommonPopAdminExtensionRoute
-  LayoutCommonPopCategorySelectRoute: typeof LayoutCommonPopCategorySelectRoute
-  LayoutCommonPopDataRangeSettingRoute: typeof LayoutCommonPopDataRangeSettingRoute
-  LayoutCommonPopExcelUploadRoute: typeof LayoutCommonPopExcelUploadRoute
-  LayoutCommonPopImagePreviewRoute: typeof LayoutCommonPopImagePreviewRoute
-  LayoutCommonPopUserGroupSearchRoute: typeof LayoutCommonPopUserGroupSearchRoute
-  LayoutCommonPopUserSearchRoute: typeof LayoutCommonPopUserSearchRoute
-  LayoutCommonPopUserSearchCheckRoute: typeof LayoutCommonPopUserSearchCheckRoute
-  LayoutCommonProfileMyinfoRoute: typeof LayoutCommonProfileMyinfoRoute
-  LayoutCompletionDetailCalculationReasonRoute: typeof LayoutCompletionDetailCalculationReasonRoute
-  LayoutCompletionEducationoperategroupRoute: typeof LayoutCompletionEducationoperategroupRoute
-  LayoutContentsLayoutRoute: typeof LayoutContentsLayoutRoute
-  LayoutLanguageLanguagehistorylistRoute: typeof LayoutLanguageLanguagehistorylistRoute
-  LayoutLanguageLanguagesubjectsmanagementRoute: typeof LayoutLanguageLanguagesubjectsmanagementRoute
-  LayoutLearningFileUploadRoute: typeof LayoutLearningFileUploadRoute
-  LayoutLearningLearningExternalRegistrationRoute: typeof LayoutLearningLearningExternalRegistrationRoute
-  LayoutLearningLearningResourceSearchRoute: typeof LayoutLearningLearningResourceSearchRoute
-  LayoutLearningLearningSearchRoute: typeof LayoutLearningLearningSearchRoute
-  LayoutLearningMediaDetailRoute: typeof LayoutLearningMediaDetailRoute
-  LayoutLearningMediaRegisterRoute: typeof LayoutLearningMediaRegisterRoute
-  LayoutLearningPopModifierInfoRoute: typeof LayoutLearningPopModifierInfoRoute
-  LayoutLearningPopProgramGuideRoute: typeof LayoutLearningPopProgramGuideRoute
-  LayoutLearningPopupFileuploadRoute: typeof LayoutLearningPopupFileuploadRoute
-  LayoutLearningPopupLearningRegisterationRoute: typeof LayoutLearningPopupLearningRegisterationRoute
-  LayoutLearningPopupLearningSettingRoute: typeof LayoutLearningPopupLearningSettingRoute
-  LayoutLearningPopupQuestionDetailRoute: typeof LayoutLearningPopupQuestionDetailRoute
-  LayoutLearningPopupUploadRoute: typeof LayoutLearningPopupUploadRoute
-  LayoutLearningTestDetailRoute: typeof LayoutLearningTestDetailRoute
-  LayoutLmsProcedureManagementRoute: typeof LayoutLmsProcedureManagementRoute
-  LayoutLmsProcedureOpenSettingRoute: typeof LayoutLmsProcedureOpenSettingRoute
-  LayoutMenuMenuIdRoute: typeof LayoutMenuMenuIdRoute
-  LayoutMenu4Menu5Route: typeof LayoutMenu4Menu5Route
-  LayoutMenu8Menu9Route: typeof LayoutMenu8Menu9Route
-  LayoutPmsCategoryMenagementRoute: typeof LayoutPmsCategoryMenagementRoute
-  LayoutPmsGroupManagementRoute: typeof LayoutPmsGroupManagementRoute
-  LayoutPmsGroupManagementInfoRoute: typeof LayoutPmsGroupManagementInfoRoute
-  LayoutPmsGroupManagementRegisterRoute: typeof LayoutPmsGroupManagementRegisterRoute
-  LayoutPmsLanguagemanagementRoute: typeof LayoutPmsLanguagemanagementRoute
-  LayoutPmsMenuChannelDetailRoute: typeof LayoutPmsMenuChannelDetailRoute
-  LayoutPmsMenuChannelDetailManagementRoute: typeof LayoutPmsMenuChannelDetailManagementRoute
-  LayoutPmsMenuChannelManagementRoute: typeof LayoutPmsMenuChannelManagementRoute
-  LayoutPmsMenuChannelOpenDetailManagementRoute: typeof LayoutPmsMenuChannelOpenDetailManagementRoute
-  LayoutPmsMenuChannelOpenManagementRoute: typeof LayoutPmsMenuChannelOpenManagementRoute
-  LayoutPmsMenuChannelRegisterRoute: typeof LayoutPmsMenuChannelRegisterRoute
-  LayoutPmsMenuEducationLocationManagementRoute: typeof LayoutPmsMenuEducationLocationManagementRoute
-  LayoutPmsMenuEducationRegisterDetailRoute: typeof LayoutPmsMenuEducationRegisterDetailRoute
-  LayoutPmsMenuMainNotificationManagementRoute: typeof LayoutPmsMenuMainNotificationManagementRoute
-  LayoutPmsMenuMainRegistrationRoute: typeof LayoutPmsMenuMainRegistrationRoute
-  LayoutPmsMenuManagementRoute: typeof LayoutPmsMenuManagementRoute
-  LayoutPmsMenuPlatformRoute: typeof LayoutPmsMenuPlatformRoute
-  LayoutPmsMenuPlatformCommonGroupRoute: typeof LayoutPmsMenuPlatformCommonGroupRoute
-  LayoutPmsMenuPlatformCompanyDetailRoute: typeof LayoutPmsMenuPlatformCompanyDetailRoute
-  LayoutPmsMenuTenantAttributeManagementRoute: typeof LayoutPmsMenuTenantAttributeManagementRoute
-  LayoutPmsMenuTenantCompanyGroupRoute: typeof LayoutPmsMenuTenantCompanyGroupRoute
-  LayoutPmsMenuTenantGroupManagementRoute: typeof LayoutPmsMenuTenantGroupManagementRoute
-  LayoutPmsMenuTenantLearningRoleManagementRoute: typeof LayoutPmsMenuTenantLearningRoleManagementRoute
-  LayoutPmsMenuTenantMainbannerManagementRoute: typeof LayoutPmsMenuTenantMainbannerManagementRoute
-  LayoutPmsMenuTenantMainwidgetManagementRoute: typeof LayoutPmsMenuTenantMainwidgetManagementRoute
-  LayoutPmsMenuTenantPlatformCategoryMenuRoute: typeof LayoutPmsMenuTenantPlatformCategoryMenuRoute
-  LayoutPmsMenuTenantPlatformLearningMenuRoute: typeof LayoutPmsMenuTenantPlatformLearningMenuRoute
-  LayoutPmsMenuTenantPlatformManagementRoute: typeof LayoutPmsMenuTenantPlatformManagementRoute
-  LayoutPmsMenuTenantPlatformManagementBasicInfomationRoute: typeof LayoutPmsMenuTenantPlatformManagementBasicInfomationRoute
-  LayoutPmsMenuTenantPlatformManagementRegistrationRoute: typeof LayoutPmsMenuTenantPlatformManagementRegistrationRoute
-  LayoutPmsMenuTenantUserEducationRoute: typeof LayoutPmsMenuTenantUserEducationRoute
-  LayoutPmsMenuTenantUserManagementRoute: typeof LayoutPmsMenuTenantUserManagementRoute
-  LayoutPmsPopChannelSearchRoute: typeof LayoutPmsPopChannelSearchRoute
-  LayoutPmsPopupLoginOptionRoute: typeof LayoutPmsPopupLoginOptionRoute
-  LayoutPmsPopupTranslationCompleteRoute: typeof LayoutPmsPopupTranslationCompleteRoute
-  LayoutPmsPopupWidgetManagementRoute: typeof LayoutPmsPopupWidgetManagementRoute
-  LayoutPmsPrivatesearchdetailRoute: typeof LayoutPmsPrivatesearchdetailRoute
-  LayoutPmsPrivatesearchlistRoute: typeof LayoutPmsPrivatesearchlistRoute
-  LayoutPmsShorteningurllistRoute: typeof LayoutPmsShorteningurllistRoute
-  LayoutPmsShorteningurlregisterRoute: typeof LayoutPmsShorteningurlregisterRoute
-  LayoutPmsTenantMenuManagementRoute: typeof LayoutPmsTenantMenuManagementRoute
-  LayoutPmsTermsmanagementRoute: typeof LayoutPmsTermsmanagementRoute
-  LayoutPmsWidgetDetailRoute: typeof LayoutPmsWidgetDetailRoute
-  LayoutPmsWidgetManagementRoute: typeof LayoutPmsWidgetManagementRoute
-  LayoutPmsWidgetRegisterRoute: typeof LayoutPmsWidgetRegisterRoute
-  LayoutMenu3IndexRoute: typeof LayoutMenu3IndexRoute
-}
-
-const LayoutRouteChildren: LayoutRouteChildren = {
-  LayoutMenuIdRoute: LayoutMenuIdRoute,
-  LayoutTestRoute: LayoutTestRoute,
-  LayoutIndexRoute: LayoutIndexRoute,
-  LayoutCommonBreakpointRoute: LayoutCommonBreakpointRoute,
-  LayoutCommonNotFoundRoute: LayoutCommonNotFoundRoute,
-  LayoutCommonPopAdminExtensionRoute: LayoutCommonPopAdminExtensionRoute,
-  LayoutCommonPopCategorySelectRoute: LayoutCommonPopCategorySelectRoute,
-  LayoutCommonPopDataRangeSettingRoute: LayoutCommonPopDataRangeSettingRoute,
-  LayoutCommonPopExcelUploadRoute: LayoutCommonPopExcelUploadRoute,
-  LayoutCommonPopImagePreviewRoute: LayoutCommonPopImagePreviewRoute,
-  LayoutCommonPopUserGroupSearchRoute: LayoutCommonPopUserGroupSearchRoute,
-  LayoutCommonPopUserSearchRoute: LayoutCommonPopUserSearchRoute,
-  LayoutCommonPopUserSearchCheckRoute: LayoutCommonPopUserSearchCheckRoute,
-  LayoutCommonProfileMyinfoRoute: LayoutCommonProfileMyinfoRoute,
-  LayoutCompletionDetailCalculationReasonRoute:
-    LayoutCompletionDetailCalculationReasonRoute,
-  LayoutCompletionEducationoperategroupRoute:
-    LayoutCompletionEducationoperategroupRoute,
-  LayoutContentsLayoutRoute: LayoutContentsLayoutRoute,
-  LayoutLanguageLanguagehistorylistRoute:
-    LayoutLanguageLanguagehistorylistRoute,
-  LayoutLanguageLanguagesubjectsmanagementRoute:
-    LayoutLanguageLanguagesubjectsmanagementRoute,
-  LayoutLearningFileUploadRoute: LayoutLearningFileUploadRoute,
-  LayoutLearningLearningExternalRegistrationRoute:
-    LayoutLearningLearningExternalRegistrationRoute,
-  LayoutLearningLearningResourceSearchRoute:
-    LayoutLearningLearningResourceSearchRoute,
-  LayoutLearningLearningSearchRoute: LayoutLearningLearningSearchRoute,
-  LayoutLearningMediaDetailRoute: LayoutLearningMediaDetailRoute,
-  LayoutLearningMediaRegisterRoute: LayoutLearningMediaRegisterRoute,
-  LayoutLearningPopModifierInfoRoute: LayoutLearningPopModifierInfoRoute,
-  LayoutLearningPopProgramGuideRoute: LayoutLearningPopProgramGuideRoute,
-  LayoutLearningPopupFileuploadRoute: LayoutLearningPopupFileuploadRoute,
-  LayoutLearningPopupLearningRegisterationRoute:
-    LayoutLearningPopupLearningRegisterationRoute,
-  LayoutLearningPopupLearningSettingRoute:
-    LayoutLearningPopupLearningSettingRoute,
-  LayoutLearningPopupQuestionDetailRoute:
-    LayoutLearningPopupQuestionDetailRoute,
-  LayoutLearningPopupUploadRoute: LayoutLearningPopupUploadRoute,
-  LayoutLearningTestDetailRoute: LayoutLearningTestDetailRoute,
-  LayoutLmsProcedureManagementRoute: LayoutLmsProcedureManagementRoute,
-  LayoutLmsProcedureOpenSettingRoute: LayoutLmsProcedureOpenSettingRoute,
-  LayoutMenuMenuIdRoute: LayoutMenuMenuIdRoute,
-  LayoutMenu4Menu5Route: LayoutMenu4Menu5Route,
-  LayoutMenu8Menu9Route: LayoutMenu8Menu9Route,
-  LayoutPmsCategoryMenagementRoute: LayoutPmsCategoryMenagementRoute,
-  LayoutPmsGroupManagementRoute: LayoutPmsGroupManagementRoute,
-  LayoutPmsGroupManagementInfoRoute: LayoutPmsGroupManagementInfoRoute,
-  LayoutPmsGroupManagementRegisterRoute: LayoutPmsGroupManagementRegisterRoute,
-  LayoutPmsLanguagemanagementRoute: LayoutPmsLanguagemanagementRoute,
-  LayoutPmsMenuChannelDetailRoute: LayoutPmsMenuChannelDetailRoute,
-  LayoutPmsMenuChannelDetailManagementRoute:
-    LayoutPmsMenuChannelDetailManagementRoute,
-  LayoutPmsMenuChannelManagementRoute: LayoutPmsMenuChannelManagementRoute,
-  LayoutPmsMenuChannelOpenDetailManagementRoute:
-    LayoutPmsMenuChannelOpenDetailManagementRoute,
-  LayoutPmsMenuChannelOpenManagementRoute:
-    LayoutPmsMenuChannelOpenManagementRoute,
-  LayoutPmsMenuChannelRegisterRoute: LayoutPmsMenuChannelRegisterRoute,
-  LayoutPmsMenuEducationLocationManagementRoute:
-    LayoutPmsMenuEducationLocationManagementRoute,
-  LayoutPmsMenuEducationRegisterDetailRoute:
-    LayoutPmsMenuEducationRegisterDetailRoute,
-  LayoutPmsMenuMainNotificationManagementRoute:
-    LayoutPmsMenuMainNotificationManagementRoute,
-  LayoutPmsMenuMainRegistrationRoute: LayoutPmsMenuMainRegistrationRoute,
-  LayoutPmsMenuManagementRoute: LayoutPmsMenuManagementRoute,
-  LayoutPmsMenuPlatformRoute: LayoutPmsMenuPlatformRoute,
-  LayoutPmsMenuPlatformCommonGroupRoute: LayoutPmsMenuPlatformCommonGroupRoute,
-  LayoutPmsMenuPlatformCompanyDetailRoute:
-    LayoutPmsMenuPlatformCompanyDetailRoute,
-  LayoutPmsMenuTenantAttributeManagementRoute:
-    LayoutPmsMenuTenantAttributeManagementRoute,
-  LayoutPmsMenuTenantCompanyGroupRoute: LayoutPmsMenuTenantCompanyGroupRoute,
-  LayoutPmsMenuTenantGroupManagementRoute:
-    LayoutPmsMenuTenantGroupManagementRoute,
-  LayoutPmsMenuTenantLearningRoleManagementRoute:
-    LayoutPmsMenuTenantLearningRoleManagementRoute,
-  LayoutPmsMenuTenantMainbannerManagementRoute:
-    LayoutPmsMenuTenantMainbannerManagementRoute,
-  LayoutPmsMenuTenantMainwidgetManagementRoute:
-    LayoutPmsMenuTenantMainwidgetManagementRoute,
-  LayoutPmsMenuTenantPlatformCategoryMenuRoute:
-    LayoutPmsMenuTenantPlatformCategoryMenuRoute,
-  LayoutPmsMenuTenantPlatformLearningMenuRoute:
-    LayoutPmsMenuTenantPlatformLearningMenuRoute,
-  LayoutPmsMenuTenantPlatformManagementRoute:
-    LayoutPmsMenuTenantPlatformManagementRoute,
-  LayoutPmsMenuTenantPlatformManagementBasicInfomationRoute:
-    LayoutPmsMenuTenantPlatformManagementBasicInfomationRoute,
-  LayoutPmsMenuTenantPlatformManagementRegistrationRoute:
-    LayoutPmsMenuTenantPlatformManagementRegistrationRoute,
-  LayoutPmsMenuTenantUserEducationRoute: LayoutPmsMenuTenantUserEducationRoute,
-  LayoutPmsMenuTenantUserManagementRoute:
-    LayoutPmsMenuTenantUserManagementRoute,
-  LayoutPmsPopChannelSearchRoute: LayoutPmsPopChannelSearchRoute,
-  LayoutPmsPopupLoginOptionRoute: LayoutPmsPopupLoginOptionRoute,
-  LayoutPmsPopupTranslationCompleteRoute:
-    LayoutPmsPopupTranslationCompleteRoute,
-  LayoutPmsPopupWidgetManagementRoute: LayoutPmsPopupWidgetManagementRoute,
-  LayoutPmsPrivatesearchdetailRoute: LayoutPmsPrivatesearchdetailRoute,
-  LayoutPmsPrivatesearchlistRoute: LayoutPmsPrivatesearchlistRoute,
-  LayoutPmsShorteningurllistRoute: LayoutPmsShorteningurllistRoute,
-  LayoutPmsShorteningurlregisterRoute: LayoutPmsShorteningurlregisterRoute,
-  LayoutPmsTenantMenuManagementRoute: LayoutPmsTenantMenuManagementRoute,
-  LayoutPmsTermsmanagementRoute: LayoutPmsTermsmanagementRoute,
-  LayoutPmsWidgetDetailRoute: LayoutPmsWidgetDetailRoute,
-  LayoutPmsWidgetManagementRoute: LayoutPmsWidgetManagementRoute,
-  LayoutPmsWidgetRegisterRoute: LayoutPmsWidgetRegisterRoute,
-  LayoutMenu3IndexRoute: LayoutMenu3IndexRoute,
-}
-
-const LayoutRouteWithChildren =
-  LayoutRoute._addFileChildren(LayoutRouteChildren)
-
 export interface FileRoutesByFullPath {
-  '': typeof LayoutRouteWithChildren
   '/admin-auth-step2': typeof AuthAdminAuthStep2Route
   '/admin-auth-step3': typeof AuthAdminAuthStep3Route
   '/admin-auth-step4': typeof AuthAdminAuthStep4Route
@@ -2794,7 +1112,7 @@ export interface FileRoutesByFullPath {
   '/guide/input-timer': typeof GuideGuideInputTimerRoute
   '/guide/layout': typeof GuideGuideLayoutRoute
   '/guide/modal': typeof GuideGuideModalRoute
-  '/guide/normal_table': typeof GuideGuideNormaltableRoute
+  '/guide/normal_table': typeof GuideGuideNormal_tableRoute
   '/guide/notice-box': typeof GuideGuideNoticeBoxRoute
   '/guide/optionCard': typeof GuideGuideOptionCardRoute
   '/guide/pagination': typeof GuideGuidePaginationRoute
@@ -2831,10 +1149,10 @@ export interface FileRoutesByFullPath {
   '/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/common/profile-myinfo': typeof LayoutCommonProfileMyinfoRoute
   '/completion/detail-calculation-reason': typeof LayoutCompletionDetailCalculationReasonRoute
-  '/completion/education_operate_group': typeof LayoutCompletionEducationoperategroupRoute
+  '/completion/education_operate_group': typeof LayoutCompletionEducation_operate_groupRoute
   '/contents/layout': typeof LayoutContentsLayoutRoute
-  '/language/language_history_list': typeof LayoutLanguageLanguagehistorylistRoute
-  '/language/language_subjects_management': typeof LayoutLanguageLanguagesubjectsmanagementRoute
+  '/language/language_history_list': typeof LayoutLanguageLanguage_history_listRoute
+  '/language/language_subjects_management': typeof LayoutLanguageLanguage_subjects_managementRoute
   '/learning/file-upload': typeof LayoutLearningFileUploadRoute
   '/learning/learning-external-registration': typeof LayoutLearningLearningExternalRegistrationRoute
   '/learning/learning-resource-search': typeof LayoutLearningLearningResourceSearchRoute
@@ -2858,7 +1176,7 @@ export interface FileRoutesByFullPath {
   '/pms/group-management': typeof LayoutPmsGroupManagementRoute
   '/pms/group-management-info': typeof LayoutPmsGroupManagementInfoRoute
   '/pms/group-management-register': typeof LayoutPmsGroupManagementRegisterRoute
-  '/pms/language_management': typeof LayoutPmsLanguagemanagementRoute
+  '/pms/language_management': typeof LayoutPmsLanguage_managementRoute
   '/pms/menu-channel-detail': typeof LayoutPmsMenuChannelDetailRoute
   '/pms/menu-channel-detail-management': typeof LayoutPmsMenuChannelDetailManagementRoute
   '/pms/menu-channel-management': typeof LayoutPmsMenuChannelManagementRoute
@@ -2890,21 +1208,19 @@ export interface FileRoutesByFullPath {
   '/pms/popup-login-option': typeof LayoutPmsPopupLoginOptionRoute
   '/pms/popup-translation-complete': typeof LayoutPmsPopupTranslationCompleteRoute
   '/pms/popup-widget-management': typeof LayoutPmsPopupWidgetManagementRoute
-  '/pms/private_search_detail': typeof LayoutPmsPrivatesearchdetailRoute
-  '/pms/private_search_list': typeof LayoutPmsPrivatesearchlistRoute
-  '/pms/shortening_url_list': typeof LayoutPmsShorteningurllistRoute
-  '/pms/shortening_url_register': typeof LayoutPmsShorteningurlregisterRoute
+  '/pms/private_search_detail': typeof LayoutPmsPrivate_search_detailRoute
+  '/pms/private_search_list': typeof LayoutPmsPrivate_search_listRoute
+  '/pms/shortening_url_list': typeof LayoutPmsShortening_url_listRoute
+  '/pms/shortening_url_register': typeof LayoutPmsShortening_url_registerRoute
   '/pms/tenant-menu-management': typeof LayoutPmsTenantMenuManagementRoute
-  '/pms/terms_management': typeof LayoutPmsTermsmanagementRoute
+  '/pms/terms_management': typeof LayoutPmsTerms_managementRoute
   '/pms/widget-detail': typeof LayoutPmsWidgetDetailRoute
   '/pms/widget-management': typeof LayoutPmsWidgetManagementRoute
   '/pms/widget-register': typeof LayoutPmsWidgetRegisterRoute
   '/guide': typeof GuideGuideIndexRoute
   '/menu3': typeof LayoutMenu3IndexRoute
 }
-
 export interface FileRoutesByTo {
-  '': typeof GuideRouteWithChildren
   '/admin-auth-step2': typeof AuthAdminAuthStep2Route
   '/admin-auth-step3': typeof AuthAdminAuthStep3Route
   '/admin-auth-step4': typeof AuthAdminAuthStep4Route
@@ -2958,7 +1274,7 @@ export interface FileRoutesByTo {
   '/guide/input-timer': typeof GuideGuideInputTimerRoute
   '/guide/layout': typeof GuideGuideLayoutRoute
   '/guide/modal': typeof GuideGuideModalRoute
-  '/guide/normal_table': typeof GuideGuideNormaltableRoute
+  '/guide/normal_table': typeof GuideGuideNormal_tableRoute
   '/guide/notice-box': typeof GuideGuideNoticeBoxRoute
   '/guide/optionCard': typeof GuideGuideOptionCardRoute
   '/guide/pagination': typeof GuideGuidePaginationRoute
@@ -2995,10 +1311,10 @@ export interface FileRoutesByTo {
   '/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/common/profile-myinfo': typeof LayoutCommonProfileMyinfoRoute
   '/completion/detail-calculation-reason': typeof LayoutCompletionDetailCalculationReasonRoute
-  '/completion/education_operate_group': typeof LayoutCompletionEducationoperategroupRoute
+  '/completion/education_operate_group': typeof LayoutCompletionEducation_operate_groupRoute
   '/contents/layout': typeof LayoutContentsLayoutRoute
-  '/language/language_history_list': typeof LayoutLanguageLanguagehistorylistRoute
-  '/language/language_subjects_management': typeof LayoutLanguageLanguagesubjectsmanagementRoute
+  '/language/language_history_list': typeof LayoutLanguageLanguage_history_listRoute
+  '/language/language_subjects_management': typeof LayoutLanguageLanguage_subjects_managementRoute
   '/learning/file-upload': typeof LayoutLearningFileUploadRoute
   '/learning/learning-external-registration': typeof LayoutLearningLearningExternalRegistrationRoute
   '/learning/learning-resource-search': typeof LayoutLearningLearningResourceSearchRoute
@@ -3022,7 +1338,7 @@ export interface FileRoutesByTo {
   '/pms/group-management': typeof LayoutPmsGroupManagementRoute
   '/pms/group-management-info': typeof LayoutPmsGroupManagementInfoRoute
   '/pms/group-management-register': typeof LayoutPmsGroupManagementRegisterRoute
-  '/pms/language_management': typeof LayoutPmsLanguagemanagementRoute
+  '/pms/language_management': typeof LayoutPmsLanguage_managementRoute
   '/pms/menu-channel-detail': typeof LayoutPmsMenuChannelDetailRoute
   '/pms/menu-channel-detail-management': typeof LayoutPmsMenuChannelDetailManagementRoute
   '/pms/menu-channel-management': typeof LayoutPmsMenuChannelManagementRoute
@@ -3054,21 +1370,20 @@ export interface FileRoutesByTo {
   '/pms/popup-login-option': typeof LayoutPmsPopupLoginOptionRoute
   '/pms/popup-translation-complete': typeof LayoutPmsPopupTranslationCompleteRoute
   '/pms/popup-widget-management': typeof LayoutPmsPopupWidgetManagementRoute
-  '/pms/private_search_detail': typeof LayoutPmsPrivatesearchdetailRoute
-  '/pms/private_search_list': typeof LayoutPmsPrivatesearchlistRoute
-  '/pms/shortening_url_list': typeof LayoutPmsShorteningurllistRoute
-  '/pms/shortening_url_register': typeof LayoutPmsShorteningurlregisterRoute
+  '/pms/private_search_detail': typeof LayoutPmsPrivate_search_detailRoute
+  '/pms/private_search_list': typeof LayoutPmsPrivate_search_listRoute
+  '/pms/shortening_url_list': typeof LayoutPmsShortening_url_listRoute
+  '/pms/shortening_url_register': typeof LayoutPmsShortening_url_registerRoute
   '/pms/tenant-menu-management': typeof LayoutPmsTenantMenuManagementRoute
-  '/pms/terms_management': typeof LayoutPmsTermsmanagementRoute
+  '/pms/terms_management': typeof LayoutPmsTerms_managementRoute
   '/pms/widget-detail': typeof LayoutPmsWidgetDetailRoute
   '/pms/widget-management': typeof LayoutPmsWidgetManagementRoute
   '/pms/widget-register': typeof LayoutPmsWidgetRegisterRoute
   '/guide': typeof GuideGuideIndexRoute
   '/menu3': typeof LayoutMenu3IndexRoute
 }
-
 export interface FileRoutesById {
-  __root__: typeof rootRoute
+  __root__: typeof rootRouteImport
   '/_auth': typeof AuthRouteWithChildren
   '/_guide': typeof GuideRouteWithChildren
   '/_layout': typeof LayoutRouteWithChildren
@@ -3125,7 +1440,7 @@ export interface FileRoutesById {
   '/_guide/guide/input-timer': typeof GuideGuideInputTimerRoute
   '/_guide/guide/layout': typeof GuideGuideLayoutRoute
   '/_guide/guide/modal': typeof GuideGuideModalRoute
-  '/_guide/guide/normal_table': typeof GuideGuideNormaltableRoute
+  '/_guide/guide/normal_table': typeof GuideGuideNormal_tableRoute
   '/_guide/guide/notice-box': typeof GuideGuideNoticeBoxRoute
   '/_guide/guide/optionCard': typeof GuideGuideOptionCardRoute
   '/_guide/guide/pagination': typeof GuideGuidePaginationRoute
@@ -3162,10 +1477,10 @@ export interface FileRoutesById {
   '/_layout/common/pop-user-search-check': typeof LayoutCommonPopUserSearchCheckRoute
   '/_layout/common/profile-myinfo': typeof LayoutCommonProfileMyinfoRoute
   '/_layout/completion/detail-calculation-reason': typeof LayoutCompletionDetailCalculationReasonRoute
-  '/_layout/completion/education_operate_group': typeof LayoutCompletionEducationoperategroupRoute
+  '/_layout/completion/education_operate_group': typeof LayoutCompletionEducation_operate_groupRoute
   '/_layout/contents/layout': typeof LayoutContentsLayoutRoute
-  '/_layout/language/language_history_list': typeof LayoutLanguageLanguagehistorylistRoute
-  '/_layout/language/language_subjects_management': typeof LayoutLanguageLanguagesubjectsmanagementRoute
+  '/_layout/language/language_history_list': typeof LayoutLanguageLanguage_history_listRoute
+  '/_layout/language/language_subjects_management': typeof LayoutLanguageLanguage_subjects_managementRoute
   '/_layout/learning/file-upload': typeof LayoutLearningFileUploadRoute
   '/_layout/learning/learning-external-registration': typeof LayoutLearningLearningExternalRegistrationRoute
   '/_layout/learning/learning-resource-search': typeof LayoutLearningLearningResourceSearchRoute
@@ -3189,7 +1504,7 @@ export interface FileRoutesById {
   '/_layout/pms/group-management': typeof LayoutPmsGroupManagementRoute
   '/_layout/pms/group-management-info': typeof LayoutPmsGroupManagementInfoRoute
   '/_layout/pms/group-management-register': typeof LayoutPmsGroupManagementRegisterRoute
-  '/_layout/pms/language_management': typeof LayoutPmsLanguagemanagementRoute
+  '/_layout/pms/language_management': typeof LayoutPmsLanguage_managementRoute
   '/_layout/pms/menu-channel-detail': typeof LayoutPmsMenuChannelDetailRoute
   '/_layout/pms/menu-channel-detail-management': typeof LayoutPmsMenuChannelDetailManagementRoute
   '/_layout/pms/menu-channel-management': typeof LayoutPmsMenuChannelManagementRoute
@@ -3221,23 +1536,21 @@ export interface FileRoutesById {
   '/_layout/pms/popup-login-option': typeof LayoutPmsPopupLoginOptionRoute
   '/_layout/pms/popup-translation-complete': typeof LayoutPmsPopupTranslationCompleteRoute
   '/_layout/pms/popup-widget-management': typeof LayoutPmsPopupWidgetManagementRoute
-  '/_layout/pms/private_search_detail': typeof LayoutPmsPrivatesearchdetailRoute
-  '/_layout/pms/private_search_list': typeof LayoutPmsPrivatesearchlistRoute
-  '/_layout/pms/shortening_url_list': typeof LayoutPmsShorteningurllistRoute
-  '/_layout/pms/shortening_url_register': typeof LayoutPmsShorteningurlregisterRoute
+  '/_layout/pms/private_search_detail': typeof LayoutPmsPrivate_search_detailRoute
+  '/_layout/pms/private_search_list': typeof LayoutPmsPrivate_search_listRoute
+  '/_layout/pms/shortening_url_list': typeof LayoutPmsShortening_url_listRoute
+  '/_layout/pms/shortening_url_register': typeof LayoutPmsShortening_url_registerRoute
   '/_layout/pms/tenant-menu-management': typeof LayoutPmsTenantMenuManagementRoute
-  '/_layout/pms/terms_management': typeof LayoutPmsTermsmanagementRoute
+  '/_layout/pms/terms_management': typeof LayoutPmsTerms_managementRoute
   '/_layout/pms/widget-detail': typeof LayoutPmsWidgetDetailRoute
   '/_layout/pms/widget-management': typeof LayoutPmsWidgetManagementRoute
   '/_layout/pms/widget-register': typeof LayoutPmsWidgetRegisterRoute
   '/_guide/guide/': typeof GuideGuideIndexRoute
   '/_layout/menu3/': typeof LayoutMenu3IndexRoute
 }
-
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | ''
     | '/admin-auth-step2'
     | '/admin-auth-step3'
     | '/admin-auth-step4'
@@ -3400,7 +1713,6 @@ export interface FileRouteTypes {
     | '/menu3'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | ''
     | '/admin-auth-step2'
     | '/admin-auth-step3'
     | '/admin-auth-step4'
@@ -3728,849 +2040,1536 @@ export interface FileRouteTypes {
     | '/_layout/menu3/'
   fileRoutesById: FileRoutesById
 }
-
 export interface RootRouteChildren {
   AuthRoute: typeof AuthRouteWithChildren
   GuideRoute: typeof GuideRouteWithChildren
   LayoutRoute: typeof LayoutRouteWithChildren
 }
 
+declare module '@tanstack/react-router' {
+  interface FileRoutesByPath {
+    '/_layout': {
+      id: '/_layout'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof LayoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_guide': {
+      id: '/_guide'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof GuideRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_layout/': {
+      id: '/_layout/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof LayoutIndexRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/test': {
+      id: '/_layout/test'
+      path: '/test'
+      fullPath: '/test'
+      preLoaderRoute: typeof LayoutTestRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/$menuId': {
+      id: '/_layout/$menuId'
+      path: '/$menuId'
+      fullPath: '/$menuId'
+      preLoaderRoute: typeof LayoutMenuIdRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_auth/success': {
+      id: '/_auth/success'
+      path: '/success'
+      fullPath: '/success'
+      preLoaderRoute: typeof AuthSuccessRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/signup-step3': {
+      id: '/_auth/signup-step3'
+      path: '/signup-step3'
+      fullPath: '/signup-step3'
+      preLoaderRoute: typeof AuthSignupStep3RouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/signup-step2': {
+      id: '/_auth/signup-step2'
+      path: '/signup-step2'
+      fullPath: '/signup-step2'
+      preLoaderRoute: typeof AuthSignupStep2RouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/signup-step1': {
+      id: '/_auth/signup-step1'
+      path: '/signup-step1'
+      fullPath: '/signup-step1'
+      preLoaderRoute: typeof AuthSignupStep1RouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/search-id-success': {
+      id: '/_auth/search-id-success'
+      path: '/search-id-success'
+      fullPath: '/search-id-success'
+      preLoaderRoute: typeof AuthSearchIdSuccessRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/search-account-pw': {
+      id: '/_auth/search-account-pw'
+      path: '/search-account-pw'
+      fullPath: '/search-account-pw'
+      preLoaderRoute: typeof AuthSearchAccountPwRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/search-account': {
+      id: '/_auth/search-account'
+      path: '/search-account'
+      fullPath: '/search-account'
+      preLoaderRoute: typeof AuthSearchAccountRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/progress-status-email': {
+      id: '/_auth/progress-status-email'
+      path: '/progress-status-email'
+      fullPath: '/progress-status-email'
+      preLoaderRoute: typeof AuthProgressStatusEmailRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/progress-status-cp': {
+      id: '/_auth/progress-status-cp'
+      path: '/progress-status-cp'
+      fullPath: '/progress-status-cp'
+      preLoaderRoute: typeof AuthProgressStatusCpRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/progress-status-certify': {
+      id: '/_auth/progress-status-certify'
+      path: '/progress-status-certify'
+      fullPath: '/progress-status-certify'
+      preLoaderRoute: typeof AuthProgressStatusCertifyRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/progress-status-cert': {
+      id: '/_auth/progress-status-cert'
+      path: '/progress-status-cert'
+      fullPath: '/progress-status-cert'
+      preLoaderRoute: typeof AuthProgressStatusCertRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/progress-status-admin-fail': {
+      id: '/_auth/progress-status-admin-fail'
+      path: '/progress-status-admin-fail'
+      fullPath: '/progress-status-admin-fail'
+      preLoaderRoute: typeof AuthProgressStatusAdminFailRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/progress-status-admin': {
+      id: '/_auth/progress-status-admin'
+      path: '/progress-status-admin'
+      fullPath: '/progress-status-admin'
+      preLoaderRoute: typeof AuthProgressStatusAdminRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/progress-status': {
+      id: '/_auth/progress-status'
+      path: '/progress-status'
+      fullPath: '/progress-status'
+      preLoaderRoute: typeof AuthProgressStatusRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/popup-role-select': {
+      id: '/_auth/popup-role-select'
+      path: '/popup-role-select'
+      fullPath: '/popup-role-select'
+      preLoaderRoute: typeof AuthPopupRoleSelectRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/password-modify': {
+      id: '/_auth/password-modify'
+      path: '/password-modify'
+      fullPath: '/password-modify'
+      preLoaderRoute: typeof AuthPasswordModifyRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/password-input': {
+      id: '/_auth/password-input'
+      path: '/password-input'
+      fullPath: '/password-input'
+      preLoaderRoute: typeof AuthPasswordInputRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/mpass-cert-otp': {
+      id: '/_auth/mpass-cert-otp'
+      path: '/mpass-cert-otp'
+      fullPath: '/mpass-cert-otp'
+      preLoaderRoute: typeof AuthMpassCertOtpRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/mpass-cert-fido': {
+      id: '/_auth/mpass-cert-fido'
+      path: '/mpass-cert-fido'
+      fullPath: '/mpass-cert-fido'
+      preLoaderRoute: typeof AuthMpassCertFidoRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/mpass-cert': {
+      id: '/_auth/mpass-cert'
+      path: '/mpass-cert'
+      fullPath: '/mpass-cert'
+      preLoaderRoute: typeof AuthMpassCertRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/login': {
+      id: '/_auth/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof AuthLoginRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/google-cert': {
+      id: '/_auth/google-cert'
+      path: '/google-cert'
+      fullPath: '/google-cert'
+      preLoaderRoute: typeof AuthGoogleCertRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/admin-auth-step4': {
+      id: '/_auth/admin-auth-step4'
+      path: '/admin-auth-step4'
+      fullPath: '/admin-auth-step4'
+      preLoaderRoute: typeof AuthAdminAuthStep4RouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/admin-auth-step3': {
+      id: '/_auth/admin-auth-step3'
+      path: '/admin-auth-step3'
+      fullPath: '/admin-auth-step3'
+      preLoaderRoute: typeof AuthAdminAuthStep3RouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/admin-auth-step2': {
+      id: '/_auth/admin-auth-step2'
+      path: '/admin-auth-step2'
+      fullPath: '/admin-auth-step2'
+      preLoaderRoute: typeof AuthAdminAuthStep2RouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_layout/menu3/': {
+      id: '/_layout/menu3/'
+      path: '/menu3'
+      fullPath: '/menu3'
+      preLoaderRoute: typeof LayoutMenu3IndexRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_guide/guide/': {
+      id: '/_guide/guide/'
+      path: '/guide'
+      fullPath: '/guide'
+      preLoaderRoute: typeof GuideGuideIndexRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_layout/pms/widget-register': {
+      id: '/_layout/pms/widget-register'
+      path: '/pms/widget-register'
+      fullPath: '/pms/widget-register'
+      preLoaderRoute: typeof LayoutPmsWidgetRegisterRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/widget-management': {
+      id: '/_layout/pms/widget-management'
+      path: '/pms/widget-management'
+      fullPath: '/pms/widget-management'
+      preLoaderRoute: typeof LayoutPmsWidgetManagementRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/widget-detail': {
+      id: '/_layout/pms/widget-detail'
+      path: '/pms/widget-detail'
+      fullPath: '/pms/widget-detail'
+      preLoaderRoute: typeof LayoutPmsWidgetDetailRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/terms_management': {
+      id: '/_layout/pms/terms_management'
+      path: '/pms/terms_management'
+      fullPath: '/pms/terms_management'
+      preLoaderRoute: typeof LayoutPmsTerms_managementRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/tenant-menu-management': {
+      id: '/_layout/pms/tenant-menu-management'
+      path: '/pms/tenant-menu-management'
+      fullPath: '/pms/tenant-menu-management'
+      preLoaderRoute: typeof LayoutPmsTenantMenuManagementRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/shortening_url_register': {
+      id: '/_layout/pms/shortening_url_register'
+      path: '/pms/shortening_url_register'
+      fullPath: '/pms/shortening_url_register'
+      preLoaderRoute: typeof LayoutPmsShortening_url_registerRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/shortening_url_list': {
+      id: '/_layout/pms/shortening_url_list'
+      path: '/pms/shortening_url_list'
+      fullPath: '/pms/shortening_url_list'
+      preLoaderRoute: typeof LayoutPmsShortening_url_listRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/private_search_list': {
+      id: '/_layout/pms/private_search_list'
+      path: '/pms/private_search_list'
+      fullPath: '/pms/private_search_list'
+      preLoaderRoute: typeof LayoutPmsPrivate_search_listRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/private_search_detail': {
+      id: '/_layout/pms/private_search_detail'
+      path: '/pms/private_search_detail'
+      fullPath: '/pms/private_search_detail'
+      preLoaderRoute: typeof LayoutPmsPrivate_search_detailRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/popup-widget-management': {
+      id: '/_layout/pms/popup-widget-management'
+      path: '/pms/popup-widget-management'
+      fullPath: '/pms/popup-widget-management'
+      preLoaderRoute: typeof LayoutPmsPopupWidgetManagementRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/popup-translation-complete': {
+      id: '/_layout/pms/popup-translation-complete'
+      path: '/pms/popup-translation-complete'
+      fullPath: '/pms/popup-translation-complete'
+      preLoaderRoute: typeof LayoutPmsPopupTranslationCompleteRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/popup-login-option': {
+      id: '/_layout/pms/popup-login-option'
+      path: '/pms/popup-login-option'
+      fullPath: '/pms/popup-login-option'
+      preLoaderRoute: typeof LayoutPmsPopupLoginOptionRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/pop-channel-search': {
+      id: '/_layout/pms/pop-channel-search'
+      path: '/pms/pop-channel-search'
+      fullPath: '/pms/pop-channel-search'
+      preLoaderRoute: typeof LayoutPmsPopChannelSearchRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/menu-tenant-user-management': {
+      id: '/_layout/pms/menu-tenant-user-management'
+      path: '/pms/menu-tenant-user-management'
+      fullPath: '/pms/menu-tenant-user-management'
+      preLoaderRoute: typeof LayoutPmsMenuTenantUserManagementRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/menu-tenant-user-education': {
+      id: '/_layout/pms/menu-tenant-user-education'
+      path: '/pms/menu-tenant-user-education'
+      fullPath: '/pms/menu-tenant-user-education'
+      preLoaderRoute: typeof LayoutPmsMenuTenantUserEducationRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/menu-tenant-platform-management-registration': {
+      id: '/_layout/pms/menu-tenant-platform-management-registration'
+      path: '/pms/menu-tenant-platform-management-registration'
+      fullPath: '/pms/menu-tenant-platform-management-registration'
+      preLoaderRoute: typeof LayoutPmsMenuTenantPlatformManagementRegistrationRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/menu-tenant-platform-management-basic-infomation': {
+      id: '/_layout/pms/menu-tenant-platform-management-basic-infomation'
+      path: '/pms/menu-tenant-platform-management-basic-infomation'
+      fullPath: '/pms/menu-tenant-platform-management-basic-infomation'
+      preLoaderRoute: typeof LayoutPmsMenuTenantPlatformManagementBasicInfomationRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/menu-tenant-platform-management': {
+      id: '/_layout/pms/menu-tenant-platform-management'
+      path: '/pms/menu-tenant-platform-management'
+      fullPath: '/pms/menu-tenant-platform-management'
+      preLoaderRoute: typeof LayoutPmsMenuTenantPlatformManagementRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/menu-tenant-platform-learning-menu': {
+      id: '/_layout/pms/menu-tenant-platform-learning-menu'
+      path: '/pms/menu-tenant-platform-learning-menu'
+      fullPath: '/pms/menu-tenant-platform-learning-menu'
+      preLoaderRoute: typeof LayoutPmsMenuTenantPlatformLearningMenuRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/menu-tenant-platform-category-menu': {
+      id: '/_layout/pms/menu-tenant-platform-category-menu'
+      path: '/pms/menu-tenant-platform-category-menu'
+      fullPath: '/pms/menu-tenant-platform-category-menu'
+      preLoaderRoute: typeof LayoutPmsMenuTenantPlatformCategoryMenuRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/menu-tenant-mainwidget-management': {
+      id: '/_layout/pms/menu-tenant-mainwidget-management'
+      path: '/pms/menu-tenant-mainwidget-management'
+      fullPath: '/pms/menu-tenant-mainwidget-management'
+      preLoaderRoute: typeof LayoutPmsMenuTenantMainwidgetManagementRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/menu-tenant-mainbanner-management': {
+      id: '/_layout/pms/menu-tenant-mainbanner-management'
+      path: '/pms/menu-tenant-mainbanner-management'
+      fullPath: '/pms/menu-tenant-mainbanner-management'
+      preLoaderRoute: typeof LayoutPmsMenuTenantMainbannerManagementRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/menu-tenant-learning-role-management': {
+      id: '/_layout/pms/menu-tenant-learning-role-management'
+      path: '/pms/menu-tenant-learning-role-management'
+      fullPath: '/pms/menu-tenant-learning-role-management'
+      preLoaderRoute: typeof LayoutPmsMenuTenantLearningRoleManagementRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/menu-tenant-group-management': {
+      id: '/_layout/pms/menu-tenant-group-management'
+      path: '/pms/menu-tenant-group-management'
+      fullPath: '/pms/menu-tenant-group-management'
+      preLoaderRoute: typeof LayoutPmsMenuTenantGroupManagementRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/menu-tenant-company-group': {
+      id: '/_layout/pms/menu-tenant-company-group'
+      path: '/pms/menu-tenant-company-group'
+      fullPath: '/pms/menu-tenant-company-group'
+      preLoaderRoute: typeof LayoutPmsMenuTenantCompanyGroupRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/menu-tenant-attribute-management': {
+      id: '/_layout/pms/menu-tenant-attribute-management'
+      path: '/pms/menu-tenant-attribute-management'
+      fullPath: '/pms/menu-tenant-attribute-management'
+      preLoaderRoute: typeof LayoutPmsMenuTenantAttributeManagementRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/menu-platform-company-detail': {
+      id: '/_layout/pms/menu-platform-company-detail'
+      path: '/pms/menu-platform-company-detail'
+      fullPath: '/pms/menu-platform-company-detail'
+      preLoaderRoute: typeof LayoutPmsMenuPlatformCompanyDetailRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/menu-platform-common-group': {
+      id: '/_layout/pms/menu-platform-common-group'
+      path: '/pms/menu-platform-common-group'
+      fullPath: '/pms/menu-platform-common-group'
+      preLoaderRoute: typeof LayoutPmsMenuPlatformCommonGroupRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/menu-platform': {
+      id: '/_layout/pms/menu-platform'
+      path: '/pms/menu-platform'
+      fullPath: '/pms/menu-platform'
+      preLoaderRoute: typeof LayoutPmsMenuPlatformRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/menu-management': {
+      id: '/_layout/pms/menu-management'
+      path: '/pms/menu-management'
+      fullPath: '/pms/menu-management'
+      preLoaderRoute: typeof LayoutPmsMenuManagementRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/menu-main-registration': {
+      id: '/_layout/pms/menu-main-registration'
+      path: '/pms/menu-main-registration'
+      fullPath: '/pms/menu-main-registration'
+      preLoaderRoute: typeof LayoutPmsMenuMainRegistrationRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/menu-main-notification-management': {
+      id: '/_layout/pms/menu-main-notification-management'
+      path: '/pms/menu-main-notification-management'
+      fullPath: '/pms/menu-main-notification-management'
+      preLoaderRoute: typeof LayoutPmsMenuMainNotificationManagementRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/menu-education-register-detail': {
+      id: '/_layout/pms/menu-education-register-detail'
+      path: '/pms/menu-education-register-detail'
+      fullPath: '/pms/menu-education-register-detail'
+      preLoaderRoute: typeof LayoutPmsMenuEducationRegisterDetailRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/menu-education-location-management': {
+      id: '/_layout/pms/menu-education-location-management'
+      path: '/pms/menu-education-location-management'
+      fullPath: '/pms/menu-education-location-management'
+      preLoaderRoute: typeof LayoutPmsMenuEducationLocationManagementRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/menu-channel-register': {
+      id: '/_layout/pms/menu-channel-register'
+      path: '/pms/menu-channel-register'
+      fullPath: '/pms/menu-channel-register'
+      preLoaderRoute: typeof LayoutPmsMenuChannelRegisterRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/menu-channel-open-management': {
+      id: '/_layout/pms/menu-channel-open-management'
+      path: '/pms/menu-channel-open-management'
+      fullPath: '/pms/menu-channel-open-management'
+      preLoaderRoute: typeof LayoutPmsMenuChannelOpenManagementRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/menu-channel-open-detail-management': {
+      id: '/_layout/pms/menu-channel-open-detail-management'
+      path: '/pms/menu-channel-open-detail-management'
+      fullPath: '/pms/menu-channel-open-detail-management'
+      preLoaderRoute: typeof LayoutPmsMenuChannelOpenDetailManagementRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/menu-channel-management': {
+      id: '/_layout/pms/menu-channel-management'
+      path: '/pms/menu-channel-management'
+      fullPath: '/pms/menu-channel-management'
+      preLoaderRoute: typeof LayoutPmsMenuChannelManagementRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/menu-channel-detail-management': {
+      id: '/_layout/pms/menu-channel-detail-management'
+      path: '/pms/menu-channel-detail-management'
+      fullPath: '/pms/menu-channel-detail-management'
+      preLoaderRoute: typeof LayoutPmsMenuChannelDetailManagementRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/menu-channel-detail': {
+      id: '/_layout/pms/menu-channel-detail'
+      path: '/pms/menu-channel-detail'
+      fullPath: '/pms/menu-channel-detail'
+      preLoaderRoute: typeof LayoutPmsMenuChannelDetailRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/language_management': {
+      id: '/_layout/pms/language_management'
+      path: '/pms/language_management'
+      fullPath: '/pms/language_management'
+      preLoaderRoute: typeof LayoutPmsLanguage_managementRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/group-management-register': {
+      id: '/_layout/pms/group-management-register'
+      path: '/pms/group-management-register'
+      fullPath: '/pms/group-management-register'
+      preLoaderRoute: typeof LayoutPmsGroupManagementRegisterRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/group-management-info': {
+      id: '/_layout/pms/group-management-info'
+      path: '/pms/group-management-info'
+      fullPath: '/pms/group-management-info'
+      preLoaderRoute: typeof LayoutPmsGroupManagementInfoRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/group-management': {
+      id: '/_layout/pms/group-management'
+      path: '/pms/group-management'
+      fullPath: '/pms/group-management'
+      preLoaderRoute: typeof LayoutPmsGroupManagementRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/pms/category-menagement': {
+      id: '/_layout/pms/category-menagement'
+      path: '/pms/category-menagement'
+      fullPath: '/pms/category-menagement'
+      preLoaderRoute: typeof LayoutPmsCategoryMenagementRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/menu8/menu9': {
+      id: '/_layout/menu8/menu9'
+      path: '/menu8/menu9'
+      fullPath: '/menu8/menu9'
+      preLoaderRoute: typeof LayoutMenu8Menu9RouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/menu4/menu5': {
+      id: '/_layout/menu4/menu5'
+      path: '/menu4/menu5'
+      fullPath: '/menu4/menu5'
+      preLoaderRoute: typeof LayoutMenu4Menu5RouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/menu/$menuId': {
+      id: '/_layout/menu/$menuId'
+      path: '/menu/$menuId'
+      fullPath: '/menu/$menuId'
+      preLoaderRoute: typeof LayoutMenuMenuIdRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/lms/procedure-open-setting': {
+      id: '/_layout/lms/procedure-open-setting'
+      path: '/lms/procedure-open-setting'
+      fullPath: '/lms/procedure-open-setting'
+      preLoaderRoute: typeof LayoutLmsProcedureOpenSettingRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/lms/procedure-management': {
+      id: '/_layout/lms/procedure-management'
+      path: '/lms/procedure-management'
+      fullPath: '/lms/procedure-management'
+      preLoaderRoute: typeof LayoutLmsProcedureManagementRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/learning/testDetail': {
+      id: '/_layout/learning/testDetail'
+      path: '/learning/testDetail'
+      fullPath: '/learning/testDetail'
+      preLoaderRoute: typeof LayoutLearningTestDetailRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/learning/popup-upload': {
+      id: '/_layout/learning/popup-upload'
+      path: '/learning/popup-upload'
+      fullPath: '/learning/popup-upload'
+      preLoaderRoute: typeof LayoutLearningPopupUploadRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/learning/popup-question-detail': {
+      id: '/_layout/learning/popup-question-detail'
+      path: '/learning/popup-question-detail'
+      fullPath: '/learning/popup-question-detail'
+      preLoaderRoute: typeof LayoutLearningPopupQuestionDetailRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/learning/popup-learningSetting': {
+      id: '/_layout/learning/popup-learningSetting'
+      path: '/learning/popup-learningSetting'
+      fullPath: '/learning/popup-learningSetting'
+      preLoaderRoute: typeof LayoutLearningPopupLearningSettingRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/learning/popup-learningRegisteration': {
+      id: '/_layout/learning/popup-learningRegisteration'
+      path: '/learning/popup-learningRegisteration'
+      fullPath: '/learning/popup-learningRegisteration'
+      preLoaderRoute: typeof LayoutLearningPopupLearningRegisterationRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/learning/popup-fileupload': {
+      id: '/_layout/learning/popup-fileupload'
+      path: '/learning/popup-fileupload'
+      fullPath: '/learning/popup-fileupload'
+      preLoaderRoute: typeof LayoutLearningPopupFileuploadRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/learning/pop-program-guide': {
+      id: '/_layout/learning/pop-program-guide'
+      path: '/learning/pop-program-guide'
+      fullPath: '/learning/pop-program-guide'
+      preLoaderRoute: typeof LayoutLearningPopProgramGuideRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/learning/pop-modifier-info': {
+      id: '/_layout/learning/pop-modifier-info'
+      path: '/learning/pop-modifier-info'
+      fullPath: '/learning/pop-modifier-info'
+      preLoaderRoute: typeof LayoutLearningPopModifierInfoRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/learning/mediaRegister': {
+      id: '/_layout/learning/mediaRegister'
+      path: '/learning/mediaRegister'
+      fullPath: '/learning/mediaRegister'
+      preLoaderRoute: typeof LayoutLearningMediaRegisterRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/learning/mediaDetail': {
+      id: '/_layout/learning/mediaDetail'
+      path: '/learning/mediaDetail'
+      fullPath: '/learning/mediaDetail'
+      preLoaderRoute: typeof LayoutLearningMediaDetailRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/learning/learningSearch': {
+      id: '/_layout/learning/learningSearch'
+      path: '/learning/learningSearch'
+      fullPath: '/learning/learningSearch'
+      preLoaderRoute: typeof LayoutLearningLearningSearchRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/learning/learning-resource-search': {
+      id: '/_layout/learning/learning-resource-search'
+      path: '/learning/learning-resource-search'
+      fullPath: '/learning/learning-resource-search'
+      preLoaderRoute: typeof LayoutLearningLearningResourceSearchRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/learning/learning-external-registration': {
+      id: '/_layout/learning/learning-external-registration'
+      path: '/learning/learning-external-registration'
+      fullPath: '/learning/learning-external-registration'
+      preLoaderRoute: typeof LayoutLearningLearningExternalRegistrationRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/learning/file-upload': {
+      id: '/_layout/learning/file-upload'
+      path: '/learning/file-upload'
+      fullPath: '/learning/file-upload'
+      preLoaderRoute: typeof LayoutLearningFileUploadRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/language/language_subjects_management': {
+      id: '/_layout/language/language_subjects_management'
+      path: '/language/language_subjects_management'
+      fullPath: '/language/language_subjects_management'
+      preLoaderRoute: typeof LayoutLanguageLanguage_subjects_managementRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/language/language_history_list': {
+      id: '/_layout/language/language_history_list'
+      path: '/language/language_history_list'
+      fullPath: '/language/language_history_list'
+      preLoaderRoute: typeof LayoutLanguageLanguage_history_listRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/contents/layout': {
+      id: '/_layout/contents/layout'
+      path: '/contents/layout'
+      fullPath: '/contents/layout'
+      preLoaderRoute: typeof LayoutContentsLayoutRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/completion/education_operate_group': {
+      id: '/_layout/completion/education_operate_group'
+      path: '/completion/education_operate_group'
+      fullPath: '/completion/education_operate_group'
+      preLoaderRoute: typeof LayoutCompletionEducation_operate_groupRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/completion/detail-calculation-reason': {
+      id: '/_layout/completion/detail-calculation-reason'
+      path: '/completion/detail-calculation-reason'
+      fullPath: '/completion/detail-calculation-reason'
+      preLoaderRoute: typeof LayoutCompletionDetailCalculationReasonRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/common/profile-myinfo': {
+      id: '/_layout/common/profile-myinfo'
+      path: '/common/profile-myinfo'
+      fullPath: '/common/profile-myinfo'
+      preLoaderRoute: typeof LayoutCommonProfileMyinfoRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/common/pop-user-search-check': {
+      id: '/_layout/common/pop-user-search-check'
+      path: '/common/pop-user-search-check'
+      fullPath: '/common/pop-user-search-check'
+      preLoaderRoute: typeof LayoutCommonPopUserSearchCheckRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/common/pop-user-search': {
+      id: '/_layout/common/pop-user-search'
+      path: '/common/pop-user-search'
+      fullPath: '/common/pop-user-search'
+      preLoaderRoute: typeof LayoutCommonPopUserSearchRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/common/pop-user-group-search': {
+      id: '/_layout/common/pop-user-group-search'
+      path: '/common/pop-user-group-search'
+      fullPath: '/common/pop-user-group-search'
+      preLoaderRoute: typeof LayoutCommonPopUserGroupSearchRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/common/pop-image-preview': {
+      id: '/_layout/common/pop-image-preview'
+      path: '/common/pop-image-preview'
+      fullPath: '/common/pop-image-preview'
+      preLoaderRoute: typeof LayoutCommonPopImagePreviewRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/common/pop-excel-upload': {
+      id: '/_layout/common/pop-excel-upload'
+      path: '/common/pop-excel-upload'
+      fullPath: '/common/pop-excel-upload'
+      preLoaderRoute: typeof LayoutCommonPopExcelUploadRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/common/pop-data-range-setting': {
+      id: '/_layout/common/pop-data-range-setting'
+      path: '/common/pop-data-range-setting'
+      fullPath: '/common/pop-data-range-setting'
+      preLoaderRoute: typeof LayoutCommonPopDataRangeSettingRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/common/pop-category-select': {
+      id: '/_layout/common/pop-category-select'
+      path: '/common/pop-category-select'
+      fullPath: '/common/pop-category-select'
+      preLoaderRoute: typeof LayoutCommonPopCategorySelectRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/common/pop-admin-extension': {
+      id: '/_layout/common/pop-admin-extension'
+      path: '/common/pop-admin-extension'
+      fullPath: '/common/pop-admin-extension'
+      preLoaderRoute: typeof LayoutCommonPopAdminExtensionRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/common/not-found': {
+      id: '/_layout/common/not-found'
+      path: '/common/not-found'
+      fullPath: '/common/not-found'
+      preLoaderRoute: typeof LayoutCommonNotFoundRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/common/breakpoint': {
+      id: '/_layout/common/breakpoint'
+      path: '/common/breakpoint'
+      fullPath: '/common/breakpoint'
+      preLoaderRoute: typeof LayoutCommonBreakpointRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_guide/guide/word-wrap': {
+      id: '/_guide/guide/word-wrap'
+      path: '/guide/word-wrap'
+      fullPath: '/guide/word-wrap'
+      preLoaderRoute: typeof GuideGuideWordWrapRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/typography': {
+      id: '/_guide/guide/typography'
+      path: '/guide/typography'
+      fullPath: '/guide/typography'
+      preLoaderRoute: typeof GuideGuideTypographyRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/tree-view': {
+      id: '/_guide/guide/tree-view'
+      path: '/guide/tree-view'
+      fullPath: '/guide/tree-view'
+      preLoaderRoute: typeof GuideGuideTreeViewRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/tooltip': {
+      id: '/_guide/guide/tooltip'
+      path: '/guide/tooltip'
+      fullPath: '/guide/tooltip'
+      preLoaderRoute: typeof GuideGuideTooltipRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/textarea': {
+      id: '/_guide/guide/textarea'
+      path: '/guide/textarea'
+      fullPath: '/guide/textarea'
+      preLoaderRoute: typeof GuideGuideTextareaRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/test': {
+      id: '/_guide/guide/test'
+      path: '/guide/test'
+      fullPath: '/guide/test'
+      preLoaderRoute: typeof GuideGuideTestRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/tabs': {
+      id: '/_guide/guide/tabs'
+      path: '/guide/tabs'
+      fullPath: '/guide/tabs'
+      preLoaderRoute: typeof GuideGuideTabsRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/table': {
+      id: '/_guide/guide/table'
+      path: '/guide/table'
+      fullPath: '/guide/table'
+      preLoaderRoute: typeof GuideGuideTableRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/switch': {
+      id: '/_guide/guide/switch'
+      path: '/guide/switch'
+      fullPath: '/guide/switch'
+      preLoaderRoute: typeof GuideGuideSwitchRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/stepper-tabs': {
+      id: '/_guide/guide/stepper-tabs'
+      path: '/guide/stepper-tabs'
+      fullPath: '/guide/stepper-tabs'
+      preLoaderRoute: typeof GuideGuideStepperTabsRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/stepper': {
+      id: '/_guide/guide/stepper'
+      path: '/guide/stepper'
+      fullPath: '/guide/stepper'
+      preLoaderRoute: typeof GuideGuideStepperRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/spinner': {
+      id: '/_guide/guide/spinner'
+      path: '/guide/spinner'
+      fullPath: '/guide/spinner'
+      preLoaderRoute: typeof GuideGuideSpinnerRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/shuttle-grid': {
+      id: '/_guide/guide/shuttle-grid'
+      path: '/guide/shuttle-grid'
+      fullPath: '/guide/shuttle-grid'
+      preLoaderRoute: typeof GuideGuideShuttleGridRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/select': {
+      id: '/_guide/guide/select'
+      path: '/guide/select'
+      fullPath: '/guide/select'
+      preLoaderRoute: typeof GuideGuideSelectRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/search-box': {
+      id: '/_guide/guide/search-box'
+      path: '/guide/search-box'
+      fullPath: '/guide/search-box'
+      preLoaderRoute: typeof GuideGuideSearchBoxRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/respond': {
+      id: '/_guide/guide/respond'
+      path: '/guide/respond'
+      fullPath: '/guide/respond'
+      preLoaderRoute: typeof GuideGuideRespondRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/radio': {
+      id: '/_guide/guide/radio'
+      path: '/guide/radio'
+      fullPath: '/guide/radio'
+      preLoaderRoute: typeof GuideGuideRadioRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/progress': {
+      id: '/_guide/guide/progress'
+      path: '/guide/progress'
+      fullPath: '/guide/progress'
+      preLoaderRoute: typeof GuideGuideProgressRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/popover': {
+      id: '/_guide/guide/popover'
+      path: '/guide/popover'
+      fullPath: '/guide/popover'
+      preLoaderRoute: typeof GuideGuidePopoverRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/phone-number': {
+      id: '/_guide/guide/phone-number'
+      path: '/guide/phone-number'
+      fullPath: '/guide/phone-number'
+      preLoaderRoute: typeof GuideGuidePhoneNumberRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/panel': {
+      id: '/_guide/guide/panel'
+      path: '/guide/panel'
+      fullPath: '/guide/panel'
+      preLoaderRoute: typeof GuideGuidePanelRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/pagination': {
+      id: '/_guide/guide/pagination'
+      path: '/guide/pagination'
+      fullPath: '/guide/pagination'
+      preLoaderRoute: typeof GuideGuidePaginationRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/optionCard': {
+      id: '/_guide/guide/optionCard'
+      path: '/guide/optionCard'
+      fullPath: '/guide/optionCard'
+      preLoaderRoute: typeof GuideGuideOptionCardRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/notice-box': {
+      id: '/_guide/guide/notice-box'
+      path: '/guide/notice-box'
+      fullPath: '/guide/notice-box'
+      preLoaderRoute: typeof GuideGuideNoticeBoxRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/normal_table': {
+      id: '/_guide/guide/normal_table'
+      path: '/guide/normal_table'
+      fullPath: '/guide/normal_table'
+      preLoaderRoute: typeof GuideGuideNormal_tableRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/modal': {
+      id: '/_guide/guide/modal'
+      path: '/guide/modal'
+      fullPath: '/guide/modal'
+      preLoaderRoute: typeof GuideGuideModalRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/layout': {
+      id: '/_guide/guide/layout'
+      path: '/guide/layout'
+      fullPath: '/guide/layout'
+      preLoaderRoute: typeof GuideGuideLayoutRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/input-timer': {
+      id: '/_guide/guide/input-timer'
+      path: '/guide/input-timer'
+      fullPath: '/guide/input-timer'
+      preLoaderRoute: typeof GuideGuideInputTimerRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/input': {
+      id: '/_guide/guide/input'
+      path: '/guide/input'
+      fullPath: '/guide/input'
+      preLoaderRoute: typeof GuideGuideInputRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/info': {
+      id: '/_guide/guide/info'
+      path: '/guide/info'
+      fullPath: '/guide/info'
+      preLoaderRoute: typeof GuideGuideInfoRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/image': {
+      id: '/_guide/guide/image'
+      path: '/guide/image'
+      fullPath: '/guide/image'
+      preLoaderRoute: typeof GuideGuideImageRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/icon': {
+      id: '/_guide/guide/icon'
+      path: '/guide/icon'
+      fullPath: '/guide/icon'
+      preLoaderRoute: typeof GuideGuideIconRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/grid': {
+      id: '/_guide/guide/grid'
+      path: '/guide/grid'
+      fullPath: '/guide/grid'
+      preLoaderRoute: typeof GuideGuideGridRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/form': {
+      id: '/_guide/guide/form'
+      path: '/guide/form'
+      fullPath: '/guide/form'
+      preLoaderRoute: typeof GuideGuideFormRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/file-upload': {
+      id: '/_guide/guide/file-upload'
+      path: '/guide/file-upload'
+      fullPath: '/guide/file-upload'
+      preLoaderRoute: typeof GuideGuideFileUploadRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/empty': {
+      id: '/_guide/guide/empty'
+      path: '/guide/empty'
+      fullPath: '/guide/empty'
+      preLoaderRoute: typeof GuideGuideEmptyRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/email': {
+      id: '/_guide/guide/email'
+      path: '/guide/email'
+      fullPath: '/guide/email'
+      preLoaderRoute: typeof GuideGuideEmailRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/drop-down': {
+      id: '/_guide/guide/drop-down'
+      path: '/guide/drop-down'
+      fullPath: '/guide/drop-down'
+      preLoaderRoute: typeof GuideGuideDropDownRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/date-picker': {
+      id: '/_guide/guide/date-picker'
+      path: '/guide/date-picker'
+      fullPath: '/guide/date-picker'
+      preLoaderRoute: typeof GuideGuideDatePickerRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/css': {
+      id: '/_guide/guide/css'
+      path: '/guide/css'
+      fullPath: '/guide/css'
+      preLoaderRoute: typeof GuideGuideCssRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/color': {
+      id: '/_guide/guide/color'
+      path: '/guide/color'
+      fullPath: '/guide/color'
+      preLoaderRoute: typeof GuideGuideColorRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/chips': {
+      id: '/_guide/guide/chips'
+      path: '/guide/chips'
+      fullPath: '/guide/chips'
+      preLoaderRoute: typeof GuideGuideChipsRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/checkbox': {
+      id: '/_guide/guide/checkbox'
+      path: '/guide/checkbox'
+      fullPath: '/guide/checkbox'
+      preLoaderRoute: typeof GuideGuideCheckboxRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/carousel': {
+      id: '/_guide/guide/carousel'
+      path: '/guide/carousel'
+      fullPath: '/guide/carousel'
+      preLoaderRoute: typeof GuideGuideCarouselRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/buttons': {
+      id: '/_guide/guide/buttons'
+      path: '/guide/buttons'
+      fullPath: '/guide/buttons'
+      preLoaderRoute: typeof GuideGuideButtonsRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/badge': {
+      id: '/_guide/guide/badge'
+      path: '/guide/badge'
+      fullPath: '/guide/badge'
+      preLoaderRoute: typeof GuideGuideBadgeRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/avatar': {
+      id: '/_guide/guide/avatar'
+      path: '/guide/avatar'
+      fullPath: '/guide/avatar'
+      preLoaderRoute: typeof GuideGuideAvatarRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/autocomplete': {
+      id: '/_guide/guide/autocomplete'
+      path: '/guide/autocomplete'
+      fullPath: '/guide/autocomplete'
+      preLoaderRoute: typeof GuideGuideAutocompleteRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/alert': {
+      id: '/_guide/guide/alert'
+      path: '/guide/alert'
+      fullPath: '/guide/alert'
+      preLoaderRoute: typeof GuideGuideAlertRouteImport
+      parentRoute: typeof GuideRoute
+    }
+    '/_guide/guide/accordion': {
+      id: '/_guide/guide/accordion'
+      path: '/guide/accordion'
+      fullPath: '/guide/accordion'
+      preLoaderRoute: typeof GuideGuideAccordionRouteImport
+      parentRoute: typeof GuideRoute
+    }
+  }
+}
+
+interface AuthRouteChildren {
+  AuthAdminAuthStep2Route: typeof AuthAdminAuthStep2Route
+  AuthAdminAuthStep3Route: typeof AuthAdminAuthStep3Route
+  AuthAdminAuthStep4Route: typeof AuthAdminAuthStep4Route
+  AuthGoogleCertRoute: typeof AuthGoogleCertRoute
+  AuthLoginRoute: typeof AuthLoginRoute
+  AuthMpassCertRoute: typeof AuthMpassCertRoute
+  AuthMpassCertFidoRoute: typeof AuthMpassCertFidoRoute
+  AuthMpassCertOtpRoute: typeof AuthMpassCertOtpRoute
+  AuthPasswordInputRoute: typeof AuthPasswordInputRoute
+  AuthPasswordModifyRoute: typeof AuthPasswordModifyRoute
+  AuthPopupRoleSelectRoute: typeof AuthPopupRoleSelectRoute
+  AuthProgressStatusRoute: typeof AuthProgressStatusRoute
+  AuthProgressStatusAdminRoute: typeof AuthProgressStatusAdminRoute
+  AuthProgressStatusAdminFailRoute: typeof AuthProgressStatusAdminFailRoute
+  AuthProgressStatusCertRoute: typeof AuthProgressStatusCertRoute
+  AuthProgressStatusCertifyRoute: typeof AuthProgressStatusCertifyRoute
+  AuthProgressStatusCpRoute: typeof AuthProgressStatusCpRoute
+  AuthProgressStatusEmailRoute: typeof AuthProgressStatusEmailRoute
+  AuthSearchAccountRoute: typeof AuthSearchAccountRoute
+  AuthSearchAccountPwRoute: typeof AuthSearchAccountPwRoute
+  AuthSearchIdSuccessRoute: typeof AuthSearchIdSuccessRoute
+  AuthSignupStep1Route: typeof AuthSignupStep1Route
+  AuthSignupStep2Route: typeof AuthSignupStep2Route
+  AuthSignupStep3Route: typeof AuthSignupStep3Route
+  AuthSuccessRoute: typeof AuthSuccessRoute
+}
+
+const AuthRouteChildren: AuthRouteChildren = {
+  AuthAdminAuthStep2Route: AuthAdminAuthStep2Route,
+  AuthAdminAuthStep3Route: AuthAdminAuthStep3Route,
+  AuthAdminAuthStep4Route: AuthAdminAuthStep4Route,
+  AuthGoogleCertRoute: AuthGoogleCertRoute,
+  AuthLoginRoute: AuthLoginRoute,
+  AuthMpassCertRoute: AuthMpassCertRoute,
+  AuthMpassCertFidoRoute: AuthMpassCertFidoRoute,
+  AuthMpassCertOtpRoute: AuthMpassCertOtpRoute,
+  AuthPasswordInputRoute: AuthPasswordInputRoute,
+  AuthPasswordModifyRoute: AuthPasswordModifyRoute,
+  AuthPopupRoleSelectRoute: AuthPopupRoleSelectRoute,
+  AuthProgressStatusRoute: AuthProgressStatusRoute,
+  AuthProgressStatusAdminRoute: AuthProgressStatusAdminRoute,
+  AuthProgressStatusAdminFailRoute: AuthProgressStatusAdminFailRoute,
+  AuthProgressStatusCertRoute: AuthProgressStatusCertRoute,
+  AuthProgressStatusCertifyRoute: AuthProgressStatusCertifyRoute,
+  AuthProgressStatusCpRoute: AuthProgressStatusCpRoute,
+  AuthProgressStatusEmailRoute: AuthProgressStatusEmailRoute,
+  AuthSearchAccountRoute: AuthSearchAccountRoute,
+  AuthSearchAccountPwRoute: AuthSearchAccountPwRoute,
+  AuthSearchIdSuccessRoute: AuthSearchIdSuccessRoute,
+  AuthSignupStep1Route: AuthSignupStep1Route,
+  AuthSignupStep2Route: AuthSignupStep2Route,
+  AuthSignupStep3Route: AuthSignupStep3Route,
+  AuthSuccessRoute: AuthSuccessRoute,
+}
+
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
+
+interface GuideRouteChildren {
+  GuideGuideAccordionRoute: typeof GuideGuideAccordionRoute
+  GuideGuideAlertRoute: typeof GuideGuideAlertRoute
+  GuideGuideAutocompleteRoute: typeof GuideGuideAutocompleteRoute
+  GuideGuideAvatarRoute: typeof GuideGuideAvatarRoute
+  GuideGuideBadgeRoute: typeof GuideGuideBadgeRoute
+  GuideGuideButtonsRoute: typeof GuideGuideButtonsRoute
+  GuideGuideCarouselRoute: typeof GuideGuideCarouselRoute
+  GuideGuideCheckboxRoute: typeof GuideGuideCheckboxRoute
+  GuideGuideChipsRoute: typeof GuideGuideChipsRoute
+  GuideGuideColorRoute: typeof GuideGuideColorRoute
+  GuideGuideCssRoute: typeof GuideGuideCssRoute
+  GuideGuideDatePickerRoute: typeof GuideGuideDatePickerRoute
+  GuideGuideDropDownRoute: typeof GuideGuideDropDownRoute
+  GuideGuideEmailRoute: typeof GuideGuideEmailRoute
+  GuideGuideEmptyRoute: typeof GuideGuideEmptyRoute
+  GuideGuideFileUploadRoute: typeof GuideGuideFileUploadRoute
+  GuideGuideFormRoute: typeof GuideGuideFormRoute
+  GuideGuideGridRoute: typeof GuideGuideGridRoute
+  GuideGuideIconRoute: typeof GuideGuideIconRoute
+  GuideGuideImageRoute: typeof GuideGuideImageRoute
+  GuideGuideInfoRoute: typeof GuideGuideInfoRoute
+  GuideGuideInputRoute: typeof GuideGuideInputRoute
+  GuideGuideInputTimerRoute: typeof GuideGuideInputTimerRoute
+  GuideGuideLayoutRoute: typeof GuideGuideLayoutRoute
+  GuideGuideModalRoute: typeof GuideGuideModalRoute
+  GuideGuideNormal_tableRoute: typeof GuideGuideNormal_tableRoute
+  GuideGuideNoticeBoxRoute: typeof GuideGuideNoticeBoxRoute
+  GuideGuideOptionCardRoute: typeof GuideGuideOptionCardRoute
+  GuideGuidePaginationRoute: typeof GuideGuidePaginationRoute
+  GuideGuidePanelRoute: typeof GuideGuidePanelRoute
+  GuideGuidePhoneNumberRoute: typeof GuideGuidePhoneNumberRoute
+  GuideGuidePopoverRoute: typeof GuideGuidePopoverRoute
+  GuideGuideProgressRoute: typeof GuideGuideProgressRoute
+  GuideGuideRadioRoute: typeof GuideGuideRadioRoute
+  GuideGuideRespondRoute: typeof GuideGuideRespondRoute
+  GuideGuideSearchBoxRoute: typeof GuideGuideSearchBoxRoute
+  GuideGuideSelectRoute: typeof GuideGuideSelectRoute
+  GuideGuideShuttleGridRoute: typeof GuideGuideShuttleGridRoute
+  GuideGuideSpinnerRoute: typeof GuideGuideSpinnerRoute
+  GuideGuideStepperRoute: typeof GuideGuideStepperRoute
+  GuideGuideStepperTabsRoute: typeof GuideGuideStepperTabsRoute
+  GuideGuideSwitchRoute: typeof GuideGuideSwitchRoute
+  GuideGuideTableRoute: typeof GuideGuideTableRoute
+  GuideGuideTabsRoute: typeof GuideGuideTabsRoute
+  GuideGuideTestRoute: typeof GuideGuideTestRoute
+  GuideGuideTextareaRoute: typeof GuideGuideTextareaRoute
+  GuideGuideTooltipRoute: typeof GuideGuideTooltipRoute
+  GuideGuideTreeViewRoute: typeof GuideGuideTreeViewRoute
+  GuideGuideTypographyRoute: typeof GuideGuideTypographyRoute
+  GuideGuideWordWrapRoute: typeof GuideGuideWordWrapRoute
+  GuideGuideIndexRoute: typeof GuideGuideIndexRoute
+}
+
+const GuideRouteChildren: GuideRouteChildren = {
+  GuideGuideAccordionRoute: GuideGuideAccordionRoute,
+  GuideGuideAlertRoute: GuideGuideAlertRoute,
+  GuideGuideAutocompleteRoute: GuideGuideAutocompleteRoute,
+  GuideGuideAvatarRoute: GuideGuideAvatarRoute,
+  GuideGuideBadgeRoute: GuideGuideBadgeRoute,
+  GuideGuideButtonsRoute: GuideGuideButtonsRoute,
+  GuideGuideCarouselRoute: GuideGuideCarouselRoute,
+  GuideGuideCheckboxRoute: GuideGuideCheckboxRoute,
+  GuideGuideChipsRoute: GuideGuideChipsRoute,
+  GuideGuideColorRoute: GuideGuideColorRoute,
+  GuideGuideCssRoute: GuideGuideCssRoute,
+  GuideGuideDatePickerRoute: GuideGuideDatePickerRoute,
+  GuideGuideDropDownRoute: GuideGuideDropDownRoute,
+  GuideGuideEmailRoute: GuideGuideEmailRoute,
+  GuideGuideEmptyRoute: GuideGuideEmptyRoute,
+  GuideGuideFileUploadRoute: GuideGuideFileUploadRoute,
+  GuideGuideFormRoute: GuideGuideFormRoute,
+  GuideGuideGridRoute: GuideGuideGridRoute,
+  GuideGuideIconRoute: GuideGuideIconRoute,
+  GuideGuideImageRoute: GuideGuideImageRoute,
+  GuideGuideInfoRoute: GuideGuideInfoRoute,
+  GuideGuideInputRoute: GuideGuideInputRoute,
+  GuideGuideInputTimerRoute: GuideGuideInputTimerRoute,
+  GuideGuideLayoutRoute: GuideGuideLayoutRoute,
+  GuideGuideModalRoute: GuideGuideModalRoute,
+  GuideGuideNormal_tableRoute: GuideGuideNormal_tableRoute,
+  GuideGuideNoticeBoxRoute: GuideGuideNoticeBoxRoute,
+  GuideGuideOptionCardRoute: GuideGuideOptionCardRoute,
+  GuideGuidePaginationRoute: GuideGuidePaginationRoute,
+  GuideGuidePanelRoute: GuideGuidePanelRoute,
+  GuideGuidePhoneNumberRoute: GuideGuidePhoneNumberRoute,
+  GuideGuidePopoverRoute: GuideGuidePopoverRoute,
+  GuideGuideProgressRoute: GuideGuideProgressRoute,
+  GuideGuideRadioRoute: GuideGuideRadioRoute,
+  GuideGuideRespondRoute: GuideGuideRespondRoute,
+  GuideGuideSearchBoxRoute: GuideGuideSearchBoxRoute,
+  GuideGuideSelectRoute: GuideGuideSelectRoute,
+  GuideGuideShuttleGridRoute: GuideGuideShuttleGridRoute,
+  GuideGuideSpinnerRoute: GuideGuideSpinnerRoute,
+  GuideGuideStepperRoute: GuideGuideStepperRoute,
+  GuideGuideStepperTabsRoute: GuideGuideStepperTabsRoute,
+  GuideGuideSwitchRoute: GuideGuideSwitchRoute,
+  GuideGuideTableRoute: GuideGuideTableRoute,
+  GuideGuideTabsRoute: GuideGuideTabsRoute,
+  GuideGuideTestRoute: GuideGuideTestRoute,
+  GuideGuideTextareaRoute: GuideGuideTextareaRoute,
+  GuideGuideTooltipRoute: GuideGuideTooltipRoute,
+  GuideGuideTreeViewRoute: GuideGuideTreeViewRoute,
+  GuideGuideTypographyRoute: GuideGuideTypographyRoute,
+  GuideGuideWordWrapRoute: GuideGuideWordWrapRoute,
+  GuideGuideIndexRoute: GuideGuideIndexRoute,
+}
+
+const GuideRouteWithChildren = GuideRoute._addFileChildren(GuideRouteChildren)
+
+interface LayoutRouteChildren {
+  LayoutMenuIdRoute: typeof LayoutMenuIdRoute
+  LayoutTestRoute: typeof LayoutTestRoute
+  LayoutIndexRoute: typeof LayoutIndexRoute
+  LayoutCommonBreakpointRoute: typeof LayoutCommonBreakpointRoute
+  LayoutCommonNotFoundRoute: typeof LayoutCommonNotFoundRoute
+  LayoutCommonPopAdminExtensionRoute: typeof LayoutCommonPopAdminExtensionRoute
+  LayoutCommonPopCategorySelectRoute: typeof LayoutCommonPopCategorySelectRoute
+  LayoutCommonPopDataRangeSettingRoute: typeof LayoutCommonPopDataRangeSettingRoute
+  LayoutCommonPopExcelUploadRoute: typeof LayoutCommonPopExcelUploadRoute
+  LayoutCommonPopImagePreviewRoute: typeof LayoutCommonPopImagePreviewRoute
+  LayoutCommonPopUserGroupSearchRoute: typeof LayoutCommonPopUserGroupSearchRoute
+  LayoutCommonPopUserSearchRoute: typeof LayoutCommonPopUserSearchRoute
+  LayoutCommonPopUserSearchCheckRoute: typeof LayoutCommonPopUserSearchCheckRoute
+  LayoutCommonProfileMyinfoRoute: typeof LayoutCommonProfileMyinfoRoute
+  LayoutCompletionDetailCalculationReasonRoute: typeof LayoutCompletionDetailCalculationReasonRoute
+  LayoutCompletionEducation_operate_groupRoute: typeof LayoutCompletionEducation_operate_groupRoute
+  LayoutContentsLayoutRoute: typeof LayoutContentsLayoutRoute
+  LayoutLanguageLanguage_history_listRoute: typeof LayoutLanguageLanguage_history_listRoute
+  LayoutLanguageLanguage_subjects_managementRoute: typeof LayoutLanguageLanguage_subjects_managementRoute
+  LayoutLearningFileUploadRoute: typeof LayoutLearningFileUploadRoute
+  LayoutLearningLearningExternalRegistrationRoute: typeof LayoutLearningLearningExternalRegistrationRoute
+  LayoutLearningLearningResourceSearchRoute: typeof LayoutLearningLearningResourceSearchRoute
+  LayoutLearningLearningSearchRoute: typeof LayoutLearningLearningSearchRoute
+  LayoutLearningMediaDetailRoute: typeof LayoutLearningMediaDetailRoute
+  LayoutLearningMediaRegisterRoute: typeof LayoutLearningMediaRegisterRoute
+  LayoutLearningPopModifierInfoRoute: typeof LayoutLearningPopModifierInfoRoute
+  LayoutLearningPopProgramGuideRoute: typeof LayoutLearningPopProgramGuideRoute
+  LayoutLearningPopupFileuploadRoute: typeof LayoutLearningPopupFileuploadRoute
+  LayoutLearningPopupLearningRegisterationRoute: typeof LayoutLearningPopupLearningRegisterationRoute
+  LayoutLearningPopupLearningSettingRoute: typeof LayoutLearningPopupLearningSettingRoute
+  LayoutLearningPopupQuestionDetailRoute: typeof LayoutLearningPopupQuestionDetailRoute
+  LayoutLearningPopupUploadRoute: typeof LayoutLearningPopupUploadRoute
+  LayoutLearningTestDetailRoute: typeof LayoutLearningTestDetailRoute
+  LayoutLmsProcedureManagementRoute: typeof LayoutLmsProcedureManagementRoute
+  LayoutLmsProcedureOpenSettingRoute: typeof LayoutLmsProcedureOpenSettingRoute
+  LayoutMenuMenuIdRoute: typeof LayoutMenuMenuIdRoute
+  LayoutMenu4Menu5Route: typeof LayoutMenu4Menu5Route
+  LayoutMenu8Menu9Route: typeof LayoutMenu8Menu9Route
+  LayoutPmsCategoryMenagementRoute: typeof LayoutPmsCategoryMenagementRoute
+  LayoutPmsGroupManagementRoute: typeof LayoutPmsGroupManagementRoute
+  LayoutPmsGroupManagementInfoRoute: typeof LayoutPmsGroupManagementInfoRoute
+  LayoutPmsGroupManagementRegisterRoute: typeof LayoutPmsGroupManagementRegisterRoute
+  LayoutPmsLanguage_managementRoute: typeof LayoutPmsLanguage_managementRoute
+  LayoutPmsMenuChannelDetailRoute: typeof LayoutPmsMenuChannelDetailRoute
+  LayoutPmsMenuChannelDetailManagementRoute: typeof LayoutPmsMenuChannelDetailManagementRoute
+  LayoutPmsMenuChannelManagementRoute: typeof LayoutPmsMenuChannelManagementRoute
+  LayoutPmsMenuChannelOpenDetailManagementRoute: typeof LayoutPmsMenuChannelOpenDetailManagementRoute
+  LayoutPmsMenuChannelOpenManagementRoute: typeof LayoutPmsMenuChannelOpenManagementRoute
+  LayoutPmsMenuChannelRegisterRoute: typeof LayoutPmsMenuChannelRegisterRoute
+  LayoutPmsMenuEducationLocationManagementRoute: typeof LayoutPmsMenuEducationLocationManagementRoute
+  LayoutPmsMenuEducationRegisterDetailRoute: typeof LayoutPmsMenuEducationRegisterDetailRoute
+  LayoutPmsMenuMainNotificationManagementRoute: typeof LayoutPmsMenuMainNotificationManagementRoute
+  LayoutPmsMenuMainRegistrationRoute: typeof LayoutPmsMenuMainRegistrationRoute
+  LayoutPmsMenuManagementRoute: typeof LayoutPmsMenuManagementRoute
+  LayoutPmsMenuPlatformRoute: typeof LayoutPmsMenuPlatformRoute
+  LayoutPmsMenuPlatformCommonGroupRoute: typeof LayoutPmsMenuPlatformCommonGroupRoute
+  LayoutPmsMenuPlatformCompanyDetailRoute: typeof LayoutPmsMenuPlatformCompanyDetailRoute
+  LayoutPmsMenuTenantAttributeManagementRoute: typeof LayoutPmsMenuTenantAttributeManagementRoute
+  LayoutPmsMenuTenantCompanyGroupRoute: typeof LayoutPmsMenuTenantCompanyGroupRoute
+  LayoutPmsMenuTenantGroupManagementRoute: typeof LayoutPmsMenuTenantGroupManagementRoute
+  LayoutPmsMenuTenantLearningRoleManagementRoute: typeof LayoutPmsMenuTenantLearningRoleManagementRoute
+  LayoutPmsMenuTenantMainbannerManagementRoute: typeof LayoutPmsMenuTenantMainbannerManagementRoute
+  LayoutPmsMenuTenantMainwidgetManagementRoute: typeof LayoutPmsMenuTenantMainwidgetManagementRoute
+  LayoutPmsMenuTenantPlatformCategoryMenuRoute: typeof LayoutPmsMenuTenantPlatformCategoryMenuRoute
+  LayoutPmsMenuTenantPlatformLearningMenuRoute: typeof LayoutPmsMenuTenantPlatformLearningMenuRoute
+  LayoutPmsMenuTenantPlatformManagementRoute: typeof LayoutPmsMenuTenantPlatformManagementRoute
+  LayoutPmsMenuTenantPlatformManagementBasicInfomationRoute: typeof LayoutPmsMenuTenantPlatformManagementBasicInfomationRoute
+  LayoutPmsMenuTenantPlatformManagementRegistrationRoute: typeof LayoutPmsMenuTenantPlatformManagementRegistrationRoute
+  LayoutPmsMenuTenantUserEducationRoute: typeof LayoutPmsMenuTenantUserEducationRoute
+  LayoutPmsMenuTenantUserManagementRoute: typeof LayoutPmsMenuTenantUserManagementRoute
+  LayoutPmsPopChannelSearchRoute: typeof LayoutPmsPopChannelSearchRoute
+  LayoutPmsPopupLoginOptionRoute: typeof LayoutPmsPopupLoginOptionRoute
+  LayoutPmsPopupTranslationCompleteRoute: typeof LayoutPmsPopupTranslationCompleteRoute
+  LayoutPmsPopupWidgetManagementRoute: typeof LayoutPmsPopupWidgetManagementRoute
+  LayoutPmsPrivate_search_detailRoute: typeof LayoutPmsPrivate_search_detailRoute
+  LayoutPmsPrivate_search_listRoute: typeof LayoutPmsPrivate_search_listRoute
+  LayoutPmsShortening_url_listRoute: typeof LayoutPmsShortening_url_listRoute
+  LayoutPmsShortening_url_registerRoute: typeof LayoutPmsShortening_url_registerRoute
+  LayoutPmsTenantMenuManagementRoute: typeof LayoutPmsTenantMenuManagementRoute
+  LayoutPmsTerms_managementRoute: typeof LayoutPmsTerms_managementRoute
+  LayoutPmsWidgetDetailRoute: typeof LayoutPmsWidgetDetailRoute
+  LayoutPmsWidgetManagementRoute: typeof LayoutPmsWidgetManagementRoute
+  LayoutPmsWidgetRegisterRoute: typeof LayoutPmsWidgetRegisterRoute
+  LayoutMenu3IndexRoute: typeof LayoutMenu3IndexRoute
+}
+
+const LayoutRouteChildren: LayoutRouteChildren = {
+  LayoutMenuIdRoute: LayoutMenuIdRoute,
+  LayoutTestRoute: LayoutTestRoute,
+  LayoutIndexRoute: LayoutIndexRoute,
+  LayoutCommonBreakpointRoute: LayoutCommonBreakpointRoute,
+  LayoutCommonNotFoundRoute: LayoutCommonNotFoundRoute,
+  LayoutCommonPopAdminExtensionRoute: LayoutCommonPopAdminExtensionRoute,
+  LayoutCommonPopCategorySelectRoute: LayoutCommonPopCategorySelectRoute,
+  LayoutCommonPopDataRangeSettingRoute: LayoutCommonPopDataRangeSettingRoute,
+  LayoutCommonPopExcelUploadRoute: LayoutCommonPopExcelUploadRoute,
+  LayoutCommonPopImagePreviewRoute: LayoutCommonPopImagePreviewRoute,
+  LayoutCommonPopUserGroupSearchRoute: LayoutCommonPopUserGroupSearchRoute,
+  LayoutCommonPopUserSearchRoute: LayoutCommonPopUserSearchRoute,
+  LayoutCommonPopUserSearchCheckRoute: LayoutCommonPopUserSearchCheckRoute,
+  LayoutCommonProfileMyinfoRoute: LayoutCommonProfileMyinfoRoute,
+  LayoutCompletionDetailCalculationReasonRoute:
+    LayoutCompletionDetailCalculationReasonRoute,
+  LayoutCompletionEducation_operate_groupRoute:
+    LayoutCompletionEducation_operate_groupRoute,
+  LayoutContentsLayoutRoute: LayoutContentsLayoutRoute,
+  LayoutLanguageLanguage_history_listRoute:
+    LayoutLanguageLanguage_history_listRoute,
+  LayoutLanguageLanguage_subjects_managementRoute:
+    LayoutLanguageLanguage_subjects_managementRoute,
+  LayoutLearningFileUploadRoute: LayoutLearningFileUploadRoute,
+  LayoutLearningLearningExternalRegistrationRoute:
+    LayoutLearningLearningExternalRegistrationRoute,
+  LayoutLearningLearningResourceSearchRoute:
+    LayoutLearningLearningResourceSearchRoute,
+  LayoutLearningLearningSearchRoute: LayoutLearningLearningSearchRoute,
+  LayoutLearningMediaDetailRoute: LayoutLearningMediaDetailRoute,
+  LayoutLearningMediaRegisterRoute: LayoutLearningMediaRegisterRoute,
+  LayoutLearningPopModifierInfoRoute: LayoutLearningPopModifierInfoRoute,
+  LayoutLearningPopProgramGuideRoute: LayoutLearningPopProgramGuideRoute,
+  LayoutLearningPopupFileuploadRoute: LayoutLearningPopupFileuploadRoute,
+  LayoutLearningPopupLearningRegisterationRoute:
+    LayoutLearningPopupLearningRegisterationRoute,
+  LayoutLearningPopupLearningSettingRoute:
+    LayoutLearningPopupLearningSettingRoute,
+  LayoutLearningPopupQuestionDetailRoute:
+    LayoutLearningPopupQuestionDetailRoute,
+  LayoutLearningPopupUploadRoute: LayoutLearningPopupUploadRoute,
+  LayoutLearningTestDetailRoute: LayoutLearningTestDetailRoute,
+  LayoutLmsProcedureManagementRoute: LayoutLmsProcedureManagementRoute,
+  LayoutLmsProcedureOpenSettingRoute: LayoutLmsProcedureOpenSettingRoute,
+  LayoutMenuMenuIdRoute: LayoutMenuMenuIdRoute,
+  LayoutMenu4Menu5Route: LayoutMenu4Menu5Route,
+  LayoutMenu8Menu9Route: LayoutMenu8Menu9Route,
+  LayoutPmsCategoryMenagementRoute: LayoutPmsCategoryMenagementRoute,
+  LayoutPmsGroupManagementRoute: LayoutPmsGroupManagementRoute,
+  LayoutPmsGroupManagementInfoRoute: LayoutPmsGroupManagementInfoRoute,
+  LayoutPmsGroupManagementRegisterRoute: LayoutPmsGroupManagementRegisterRoute,
+  LayoutPmsLanguage_managementRoute: LayoutPmsLanguage_managementRoute,
+  LayoutPmsMenuChannelDetailRoute: LayoutPmsMenuChannelDetailRoute,
+  LayoutPmsMenuChannelDetailManagementRoute:
+    LayoutPmsMenuChannelDetailManagementRoute,
+  LayoutPmsMenuChannelManagementRoute: LayoutPmsMenuChannelManagementRoute,
+  LayoutPmsMenuChannelOpenDetailManagementRoute:
+    LayoutPmsMenuChannelOpenDetailManagementRoute,
+  LayoutPmsMenuChannelOpenManagementRoute:
+    LayoutPmsMenuChannelOpenManagementRoute,
+  LayoutPmsMenuChannelRegisterRoute: LayoutPmsMenuChannelRegisterRoute,
+  LayoutPmsMenuEducationLocationManagementRoute:
+    LayoutPmsMenuEducationLocationManagementRoute,
+  LayoutPmsMenuEducationRegisterDetailRoute:
+    LayoutPmsMenuEducationRegisterDetailRoute,
+  LayoutPmsMenuMainNotificationManagementRoute:
+    LayoutPmsMenuMainNotificationManagementRoute,
+  LayoutPmsMenuMainRegistrationRoute: LayoutPmsMenuMainRegistrationRoute,
+  LayoutPmsMenuManagementRoute: LayoutPmsMenuManagementRoute,
+  LayoutPmsMenuPlatformRoute: LayoutPmsMenuPlatformRoute,
+  LayoutPmsMenuPlatformCommonGroupRoute: LayoutPmsMenuPlatformCommonGroupRoute,
+  LayoutPmsMenuPlatformCompanyDetailRoute:
+    LayoutPmsMenuPlatformCompanyDetailRoute,
+  LayoutPmsMenuTenantAttributeManagementRoute:
+    LayoutPmsMenuTenantAttributeManagementRoute,
+  LayoutPmsMenuTenantCompanyGroupRoute: LayoutPmsMenuTenantCompanyGroupRoute,
+  LayoutPmsMenuTenantGroupManagementRoute:
+    LayoutPmsMenuTenantGroupManagementRoute,
+  LayoutPmsMenuTenantLearningRoleManagementRoute:
+    LayoutPmsMenuTenantLearningRoleManagementRoute,
+  LayoutPmsMenuTenantMainbannerManagementRoute:
+    LayoutPmsMenuTenantMainbannerManagementRoute,
+  LayoutPmsMenuTenantMainwidgetManagementRoute:
+    LayoutPmsMenuTenantMainwidgetManagementRoute,
+  LayoutPmsMenuTenantPlatformCategoryMenuRoute:
+    LayoutPmsMenuTenantPlatformCategoryMenuRoute,
+  LayoutPmsMenuTenantPlatformLearningMenuRoute:
+    LayoutPmsMenuTenantPlatformLearningMenuRoute,
+  LayoutPmsMenuTenantPlatformManagementRoute:
+    LayoutPmsMenuTenantPlatformManagementRoute,
+  LayoutPmsMenuTenantPlatformManagementBasicInfomationRoute:
+    LayoutPmsMenuTenantPlatformManagementBasicInfomationRoute,
+  LayoutPmsMenuTenantPlatformManagementRegistrationRoute:
+    LayoutPmsMenuTenantPlatformManagementRegistrationRoute,
+  LayoutPmsMenuTenantUserEducationRoute: LayoutPmsMenuTenantUserEducationRoute,
+  LayoutPmsMenuTenantUserManagementRoute:
+    LayoutPmsMenuTenantUserManagementRoute,
+  LayoutPmsPopChannelSearchRoute: LayoutPmsPopChannelSearchRoute,
+  LayoutPmsPopupLoginOptionRoute: LayoutPmsPopupLoginOptionRoute,
+  LayoutPmsPopupTranslationCompleteRoute:
+    LayoutPmsPopupTranslationCompleteRoute,
+  LayoutPmsPopupWidgetManagementRoute: LayoutPmsPopupWidgetManagementRoute,
+  LayoutPmsPrivate_search_detailRoute: LayoutPmsPrivate_search_detailRoute,
+  LayoutPmsPrivate_search_listRoute: LayoutPmsPrivate_search_listRoute,
+  LayoutPmsShortening_url_listRoute: LayoutPmsShortening_url_listRoute,
+  LayoutPmsShortening_url_registerRoute: LayoutPmsShortening_url_registerRoute,
+  LayoutPmsTenantMenuManagementRoute: LayoutPmsTenantMenuManagementRoute,
+  LayoutPmsTerms_managementRoute: LayoutPmsTerms_managementRoute,
+  LayoutPmsWidgetDetailRoute: LayoutPmsWidgetDetailRoute,
+  LayoutPmsWidgetManagementRoute: LayoutPmsWidgetManagementRoute,
+  LayoutPmsWidgetRegisterRoute: LayoutPmsWidgetRegisterRoute,
+  LayoutMenu3IndexRoute: LayoutMenu3IndexRoute,
+}
+
+const LayoutRouteWithChildren =
+  LayoutRoute._addFileChildren(LayoutRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRouteWithChildren,
   GuideRoute: GuideRouteWithChildren,
   LayoutRoute: LayoutRouteWithChildren,
 }
-
-export const routeTree = rootRoute
+export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-/* ROUTE_MANIFEST_START
-{
-  "routes": {
-    "__root__": {
-      "filePath": "__root.tsx",
-      "children": [
-        "/_auth",
-        "/_guide",
-        "/_layout"
-      ]
-    },
-    "/_auth": {
-      "filePath": "_auth.tsx",
-      "children": [
-        "/_auth/admin-auth-step2",
-        "/_auth/admin-auth-step3",
-        "/_auth/admin-auth-step4",
-        "/_auth/google-cert",
-        "/_auth/login",
-        "/_auth/mpass-cert",
-        "/_auth/mpass-cert-fido",
-        "/_auth/mpass-cert-otp",
-        "/_auth/password-input",
-        "/_auth/password-modify",
-        "/_auth/popup-role-select",
-        "/_auth/progress-status",
-        "/_auth/progress-status-admin",
-        "/_auth/progress-status-admin-fail",
-        "/_auth/progress-status-cert",
-        "/_auth/progress-status-certify",
-        "/_auth/progress-status-cp",
-        "/_auth/progress-status-email",
-        "/_auth/search-account",
-        "/_auth/search-account-pw",
-        "/_auth/search-id-success",
-        "/_auth/signup-step1",
-        "/_auth/signup-step2",
-        "/_auth/signup-step3",
-        "/_auth/success"
-      ]
-    },
-    "/_guide": {
-      "filePath": "_guide.tsx",
-      "children": [
-        "/_guide/guide/accordion",
-        "/_guide/guide/alert",
-        "/_guide/guide/autocomplete",
-        "/_guide/guide/avatar",
-        "/_guide/guide/badge",
-        "/_guide/guide/buttons",
-        "/_guide/guide/carousel",
-        "/_guide/guide/checkbox",
-        "/_guide/guide/chips",
-        "/_guide/guide/color",
-        "/_guide/guide/css",
-        "/_guide/guide/date-picker",
-        "/_guide/guide/drop-down",
-        "/_guide/guide/email",
-        "/_guide/guide/empty",
-        "/_guide/guide/file-upload",
-        "/_guide/guide/form",
-        "/_guide/guide/grid",
-        "/_guide/guide/icon",
-        "/_guide/guide/image",
-        "/_guide/guide/info",
-        "/_guide/guide/input",
-        "/_guide/guide/input-timer",
-        "/_guide/guide/layout",
-        "/_guide/guide/modal",
-        "/_guide/guide/normal_table",
-        "/_guide/guide/notice-box",
-        "/_guide/guide/optionCard",
-        "/_guide/guide/pagination",
-        "/_guide/guide/panel",
-        "/_guide/guide/phone-number",
-        "/_guide/guide/popover",
-        "/_guide/guide/progress",
-        "/_guide/guide/radio",
-        "/_guide/guide/respond",
-        "/_guide/guide/search-box",
-        "/_guide/guide/select",
-        "/_guide/guide/shuttle-grid",
-        "/_guide/guide/spinner",
-        "/_guide/guide/stepper",
-        "/_guide/guide/stepper-tabs",
-        "/_guide/guide/switch",
-        "/_guide/guide/table",
-        "/_guide/guide/tabs",
-        "/_guide/guide/test",
-        "/_guide/guide/textarea",
-        "/_guide/guide/tooltip",
-        "/_guide/guide/tree-view",
-        "/_guide/guide/typography",
-        "/_guide/guide/word-wrap",
-        "/_guide/guide/"
-      ]
-    },
-    "/_layout": {
-      "filePath": "_layout.tsx",
-      "children": [
-        "/_layout/$menuId",
-        "/_layout/test",
-        "/_layout/",
-        "/_layout/common/breakpoint",
-        "/_layout/common/not-found",
-        "/_layout/common/pop-admin-extension",
-        "/_layout/common/pop-category-select",
-        "/_layout/common/pop-data-range-setting",
-        "/_layout/common/pop-excel-upload",
-        "/_layout/common/pop-image-preview",
-        "/_layout/common/pop-user-group-search",
-        "/_layout/common/pop-user-search",
-        "/_layout/common/pop-user-search-check",
-        "/_layout/common/profile-myinfo",
-        "/_layout/completion/detail-calculation-reason",
-        "/_layout/completion/education_operate_group",
-        "/_layout/contents/layout",
-        "/_layout/language/language_history_list",
-        "/_layout/language/language_subjects_management",
-        "/_layout/learning/file-upload",
-        "/_layout/learning/learning-external-registration",
-        "/_layout/learning/learning-resource-search",
-        "/_layout/learning/learningSearch",
-        "/_layout/learning/mediaDetail",
-        "/_layout/learning/mediaRegister",
-        "/_layout/learning/pop-modifier-info",
-        "/_layout/learning/pop-program-guide",
-        "/_layout/learning/popup-fileupload",
-        "/_layout/learning/popup-learningRegisteration",
-        "/_layout/learning/popup-learningSetting",
-        "/_layout/learning/popup-question-detail",
-        "/_layout/learning/popup-upload",
-        "/_layout/learning/testDetail",
-        "/_layout/lms/procedure-management",
-        "/_layout/lms/procedure-open-setting",
-        "/_layout/menu/$menuId",
-        "/_layout/menu4/menu5",
-        "/_layout/menu8/menu9",
-        "/_layout/pms/category-menagement",
-        "/_layout/pms/group-management",
-        "/_layout/pms/group-management-info",
-        "/_layout/pms/group-management-register",
-        "/_layout/pms/language_management",
-        "/_layout/pms/menu-channel-detail",
-        "/_layout/pms/menu-channel-detail-management",
-        "/_layout/pms/menu-channel-management",
-        "/_layout/pms/menu-channel-open-detail-management",
-        "/_layout/pms/menu-channel-open-management",
-        "/_layout/pms/menu-channel-register",
-        "/_layout/pms/menu-education-location-management",
-        "/_layout/pms/menu-education-register-detail",
-        "/_layout/pms/menu-main-notification-management",
-        "/_layout/pms/menu-main-registration",
-        "/_layout/pms/menu-management",
-        "/_layout/pms/menu-platform",
-        "/_layout/pms/menu-platform-common-group",
-        "/_layout/pms/menu-platform-company-detail",
-        "/_layout/pms/menu-tenant-attribute-management",
-        "/_layout/pms/menu-tenant-company-group",
-        "/_layout/pms/menu-tenant-group-management",
-        "/_layout/pms/menu-tenant-learning-role-management",
-        "/_layout/pms/menu-tenant-mainbanner-management",
-        "/_layout/pms/menu-tenant-mainwidget-management",
-        "/_layout/pms/menu-tenant-platform-category-menu",
-        "/_layout/pms/menu-tenant-platform-learning-menu",
-        "/_layout/pms/menu-tenant-platform-management",
-        "/_layout/pms/menu-tenant-platform-management-basic-infomation",
-        "/_layout/pms/menu-tenant-platform-management-registration",
-        "/_layout/pms/menu-tenant-user-education",
-        "/_layout/pms/menu-tenant-user-management",
-        "/_layout/pms/pop-channel-search",
-        "/_layout/pms/popup-login-option",
-        "/_layout/pms/popup-translation-complete",
-        "/_layout/pms/popup-widget-management",
-        "/_layout/pms/private_search_detail",
-        "/_layout/pms/private_search_list",
-        "/_layout/pms/shortening_url_list",
-        "/_layout/pms/shortening_url_register",
-        "/_layout/pms/tenant-menu-management",
-        "/_layout/pms/terms_management",
-        "/_layout/pms/widget-detail",
-        "/_layout/pms/widget-management",
-        "/_layout/pms/widget-register",
-        "/_layout/menu3/"
-      ]
-    },
-    "/_auth/admin-auth-step2": {
-      "filePath": "_auth/admin-auth-step2.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/admin-auth-step3": {
-      "filePath": "_auth/admin-auth-step3.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/admin-auth-step4": {
-      "filePath": "_auth/admin-auth-step4.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/google-cert": {
-      "filePath": "_auth/google-cert.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/login": {
-      "filePath": "_auth/login.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/mpass-cert": {
-      "filePath": "_auth/mpass-cert.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/mpass-cert-fido": {
-      "filePath": "_auth/mpass-cert-fido.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/mpass-cert-otp": {
-      "filePath": "_auth/mpass-cert-otp.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/password-input": {
-      "filePath": "_auth/password-input.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/password-modify": {
-      "filePath": "_auth/password-modify.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/popup-role-select": {
-      "filePath": "_auth/popup-role-select.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/progress-status": {
-      "filePath": "_auth/progress-status.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/progress-status-admin": {
-      "filePath": "_auth/progress-status-admin.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/progress-status-admin-fail": {
-      "filePath": "_auth/progress-status-admin-fail.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/progress-status-cert": {
-      "filePath": "_auth/progress-status-cert.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/progress-status-certify": {
-      "filePath": "_auth/progress-status-certify.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/progress-status-cp": {
-      "filePath": "_auth/progress-status-cp.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/progress-status-email": {
-      "filePath": "_auth/progress-status-email.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/search-account": {
-      "filePath": "_auth/search-account.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/search-account-pw": {
-      "filePath": "_auth/search-account-pw.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/search-id-success": {
-      "filePath": "_auth/search-id-success.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/signup-step1": {
-      "filePath": "_auth/signup-step1.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/signup-step2": {
-      "filePath": "_auth/signup-step2.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/signup-step3": {
-      "filePath": "_auth/signup-step3.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/success": {
-      "filePath": "_auth/success.tsx",
-      "parent": "/_auth"
-    },
-    "/_layout/$menuId": {
-      "filePath": "_layout/$menuId.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/test": {
-      "filePath": "_layout/test.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/": {
-      "filePath": "_layout/index.tsx",
-      "parent": "/_layout"
-    },
-    "/_guide/guide/accordion": {
-      "filePath": "_guide/guide/accordion.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/alert": {
-      "filePath": "_guide/guide/alert.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/autocomplete": {
-      "filePath": "_guide/guide/autocomplete.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/avatar": {
-      "filePath": "_guide/guide/avatar.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/badge": {
-      "filePath": "_guide/guide/badge.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/buttons": {
-      "filePath": "_guide/guide/buttons.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/carousel": {
-      "filePath": "_guide/guide/carousel.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/checkbox": {
-      "filePath": "_guide/guide/checkbox.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/chips": {
-      "filePath": "_guide/guide/chips.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/color": {
-      "filePath": "_guide/guide/color.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/css": {
-      "filePath": "_guide/guide/css.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/date-picker": {
-      "filePath": "_guide/guide/date-picker.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/drop-down": {
-      "filePath": "_guide/guide/drop-down.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/email": {
-      "filePath": "_guide/guide/email.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/empty": {
-      "filePath": "_guide/guide/empty.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/file-upload": {
-      "filePath": "_guide/guide/file-upload.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/form": {
-      "filePath": "_guide/guide/form.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/grid": {
-      "filePath": "_guide/guide/grid.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/icon": {
-      "filePath": "_guide/guide/icon.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/image": {
-      "filePath": "_guide/guide/image.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/info": {
-      "filePath": "_guide/guide/info.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/input": {
-      "filePath": "_guide/guide/input.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/input-timer": {
-      "filePath": "_guide/guide/input-timer.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/layout": {
-      "filePath": "_guide/guide/layout.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/modal": {
-      "filePath": "_guide/guide/modal.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/normal_table": {
-      "filePath": "_guide/guide/normal_table.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/notice-box": {
-      "filePath": "_guide/guide/notice-box.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/optionCard": {
-      "filePath": "_guide/guide/optionCard.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/pagination": {
-      "filePath": "_guide/guide/pagination.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/panel": {
-      "filePath": "_guide/guide/panel.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/phone-number": {
-      "filePath": "_guide/guide/phone-number.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/popover": {
-      "filePath": "_guide/guide/popover.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/progress": {
-      "filePath": "_guide/guide/progress.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/radio": {
-      "filePath": "_guide/guide/radio.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/respond": {
-      "filePath": "_guide/guide/respond.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/search-box": {
-      "filePath": "_guide/guide/search-box.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/select": {
-      "filePath": "_guide/guide/select.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/shuttle-grid": {
-      "filePath": "_guide/guide/shuttle-grid.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/spinner": {
-      "filePath": "_guide/guide/spinner.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/stepper": {
-      "filePath": "_guide/guide/stepper.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/stepper-tabs": {
-      "filePath": "_guide/guide/stepper-tabs.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/switch": {
-      "filePath": "_guide/guide/switch.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/table": {
-      "filePath": "_guide/guide/table.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/tabs": {
-      "filePath": "_guide/guide/tabs.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/test": {
-      "filePath": "_guide/guide/test.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/textarea": {
-      "filePath": "_guide/guide/textarea.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/tooltip": {
-      "filePath": "_guide/guide/tooltip.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/tree-view": {
-      "filePath": "_guide/guide/tree-view.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/typography": {
-      "filePath": "_guide/guide/typography.tsx",
-      "parent": "/_guide"
-    },
-    "/_guide/guide/word-wrap": {
-      "filePath": "_guide/guide/word-wrap.tsx",
-      "parent": "/_guide"
-    },
-    "/_layout/common/breakpoint": {
-      "filePath": "_layout/common/breakpoint.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/common/not-found": {
-      "filePath": "_layout/common/not-found.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/common/pop-admin-extension": {
-      "filePath": "_layout/common/pop-admin-extension.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/common/pop-category-select": {
-      "filePath": "_layout/common/pop-category-select.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/common/pop-data-range-setting": {
-      "filePath": "_layout/common/pop-data-range-setting.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/common/pop-excel-upload": {
-      "filePath": "_layout/common/pop-excel-upload.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/common/pop-image-preview": {
-      "filePath": "_layout/common/pop-image-preview.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/common/pop-user-group-search": {
-      "filePath": "_layout/common/pop-user-group-search.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/common/pop-user-search": {
-      "filePath": "_layout/common/pop-user-search.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/common/pop-user-search-check": {
-      "filePath": "_layout/common/pop-user-search-check.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/common/profile-myinfo": {
-      "filePath": "_layout/common/profile-myinfo.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/completion/detail-calculation-reason": {
-      "filePath": "_layout/completion/detail-calculation-reason.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/completion/education_operate_group": {
-      "filePath": "_layout/completion/education_operate_group.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/contents/layout": {
-      "filePath": "_layout/contents/layout.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/language/language_history_list": {
-      "filePath": "_layout/language/language_history_list.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/language/language_subjects_management": {
-      "filePath": "_layout/language/language_subjects_management.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/learning/file-upload": {
-      "filePath": "_layout/learning/file-upload.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/learning/learning-external-registration": {
-      "filePath": "_layout/learning/learning-external-registration.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/learning/learning-resource-search": {
-      "filePath": "_layout/learning/learning-resource-search.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/learning/learningSearch": {
-      "filePath": "_layout/learning/learningSearch.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/learning/mediaDetail": {
-      "filePath": "_layout/learning/mediaDetail.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/learning/mediaRegister": {
-      "filePath": "_layout/learning/mediaRegister.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/learning/pop-modifier-info": {
-      "filePath": "_layout/learning/pop-modifier-info.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/learning/pop-program-guide": {
-      "filePath": "_layout/learning/pop-program-guide.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/learning/popup-fileupload": {
-      "filePath": "_layout/learning/popup-fileupload.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/learning/popup-learningRegisteration": {
-      "filePath": "_layout/learning/popup-learningRegisteration.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/learning/popup-learningSetting": {
-      "filePath": "_layout/learning/popup-learningSetting.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/learning/popup-question-detail": {
-      "filePath": "_layout/learning/popup-question-detail.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/learning/popup-upload": {
-      "filePath": "_layout/learning/popup-upload.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/learning/testDetail": {
-      "filePath": "_layout/learning/testDetail.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/lms/procedure-management": {
-      "filePath": "_layout/lms/procedure-management.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/lms/procedure-open-setting": {
-      "filePath": "_layout/lms/procedure-open-setting.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/menu/$menuId": {
-      "filePath": "_layout/menu/$menuId.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/menu4/menu5": {
-      "filePath": "_layout/menu4/menu5.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/menu8/menu9": {
-      "filePath": "_layout/menu8/menu9.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/category-menagement": {
-      "filePath": "_layout/pms/category-menagement.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/group-management": {
-      "filePath": "_layout/pms/group-management.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/group-management-info": {
-      "filePath": "_layout/pms/group-management-info.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/group-management-register": {
-      "filePath": "_layout/pms/group-management-register.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/language_management": {
-      "filePath": "_layout/pms/language_management.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/menu-channel-detail": {
-      "filePath": "_layout/pms/menu-channel-detail.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/menu-channel-detail-management": {
-      "filePath": "_layout/pms/menu-channel-detail-management.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/menu-channel-management": {
-      "filePath": "_layout/pms/menu-channel-management.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/menu-channel-open-detail-management": {
-      "filePath": "_layout/pms/menu-channel-open-detail-management.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/menu-channel-open-management": {
-      "filePath": "_layout/pms/menu-channel-open-management.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/menu-channel-register": {
-      "filePath": "_layout/pms/menu-channel-register.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/menu-education-location-management": {
-      "filePath": "_layout/pms/menu-education-location-management.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/menu-education-register-detail": {
-      "filePath": "_layout/pms/menu-education-register-detail.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/menu-main-notification-management": {
-      "filePath": "_layout/pms/menu-main-notification-management.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/menu-main-registration": {
-      "filePath": "_layout/pms/menu-main-registration.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/menu-management": {
-      "filePath": "_layout/pms/menu-management.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/menu-platform": {
-      "filePath": "_layout/pms/menu-platform.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/menu-platform-common-group": {
-      "filePath": "_layout/pms/menu-platform-common-group.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/menu-platform-company-detail": {
-      "filePath": "_layout/pms/menu-platform-company-detail.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/menu-tenant-attribute-management": {
-      "filePath": "_layout/pms/menu-tenant-attribute-management.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/menu-tenant-company-group": {
-      "filePath": "_layout/pms/menu-tenant-company-group.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/menu-tenant-group-management": {
-      "filePath": "_layout/pms/menu-tenant-group-management.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/menu-tenant-learning-role-management": {
-      "filePath": "_layout/pms/menu-tenant-learning-role-management.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/menu-tenant-mainbanner-management": {
-      "filePath": "_layout/pms/menu-tenant-mainbanner-management.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/menu-tenant-mainwidget-management": {
-      "filePath": "_layout/pms/menu-tenant-mainwidget-management.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/menu-tenant-platform-category-menu": {
-      "filePath": "_layout/pms/menu-tenant-platform-category-menu.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/menu-tenant-platform-learning-menu": {
-      "filePath": "_layout/pms/menu-tenant-platform-learning-menu.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/menu-tenant-platform-management": {
-      "filePath": "_layout/pms/menu-tenant-platform-management.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/menu-tenant-platform-management-basic-infomation": {
-      "filePath": "_layout/pms/menu-tenant-platform-management-basic-infomation.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/menu-tenant-platform-management-registration": {
-      "filePath": "_layout/pms/menu-tenant-platform-management-registration.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/menu-tenant-user-education": {
-      "filePath": "_layout/pms/menu-tenant-user-education.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/menu-tenant-user-management": {
-      "filePath": "_layout/pms/menu-tenant-user-management.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/pop-channel-search": {
-      "filePath": "_layout/pms/pop-channel-search.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/popup-login-option": {
-      "filePath": "_layout/pms/popup-login-option.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/popup-translation-complete": {
-      "filePath": "_layout/pms/popup-translation-complete.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/popup-widget-management": {
-      "filePath": "_layout/pms/popup-widget-management.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/private_search_detail": {
-      "filePath": "_layout/pms/private_search_detail.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/private_search_list": {
-      "filePath": "_layout/pms/private_search_list.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/shortening_url_list": {
-      "filePath": "_layout/pms/shortening_url_list.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/shortening_url_register": {
-      "filePath": "_layout/pms/shortening_url_register.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/tenant-menu-management": {
-      "filePath": "_layout/pms/tenant-menu-management.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/terms_management": {
-      "filePath": "_layout/pms/terms_management.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/widget-detail": {
-      "filePath": "_layout/pms/widget-detail.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/widget-management": {
-      "filePath": "_layout/pms/widget-management.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/pms/widget-register": {
-      "filePath": "_layout/pms/widget-register.tsx",
-      "parent": "/_layout"
-    },
-    "/_guide/guide/": {
-      "filePath": "_guide/guide/index.tsx",
-      "parent": "/_guide"
-    },
-    "/_layout/menu3/": {
-      "filePath": "_layout/menu3/index.tsx",
-      "parent": "/_layout"
-    }
-  }
-}
-ROUTE_MANIFEST_END */
