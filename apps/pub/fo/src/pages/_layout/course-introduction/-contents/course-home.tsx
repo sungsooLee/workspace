@@ -56,8 +56,17 @@ const CourseHomeComponent: FC = () => {
       imageUrl: shortsImg,
       infoNode: (
         <>
-          <Badge variant={'text'} status={'primary'} option={{ label: 'New', value: '' }} />
-          <span></span>
+          <Badge
+            variant={'text'}
+            status={'primary'}
+            option={{ label: 'New', value: '' }}
+            size={'xs'}
+          />
+          <span className={styles.info}>
+            <IcoEye width={16} height={16} stroke="#fff" />
+            <em>{`${new Intl.NumberFormat().format(2500)}`}</em>
+            {'시청'}
+          </span>
         </>
       ),
     },
@@ -65,31 +74,121 @@ const CourseHomeComponent: FC = () => {
       title: '경청이 리더십의 시작이라는 말, 들어보셨나요?',
       badgeLabel: '마음챙김',
       imageUrl: shortsImg,
+      infoNode: (
+        <>
+          <Badge
+            variant={'text'}
+            status={'primary'}
+            option={{ label: 'New', value: '' }}
+            size={'xs'}
+          />
+          <span className={styles.info}>
+            <IcoEye width={16} height={16} stroke="#fff" />
+            <em>{`${new Intl.NumberFormat().format(2500)}`}</em>
+            {'시청'}
+          </span>
+        </>
+      ),
     },
     {
       title: '경청이 리더십의 시작이라는 말, 들어보셨나요?',
       badgeLabel: '마음챙김',
       imageUrl: shortsImg,
+      infoNode: (
+        <>
+          <Badge
+            variant={'text'}
+            status={'primary'}
+            option={{ label: 'New', value: '' }}
+            size={'xs'}
+          />
+          <span className={styles.info}>
+            <IcoEye width={16} height={16} stroke="#fff" />
+            <em>{`${new Intl.NumberFormat().format(2500)}`}</em>
+            {'시청'}
+          </span>
+        </>
+      ),
     },
     {
       title: '경청이 리더십의 시작이라는 말, 들어보셨나요?',
       badgeLabel: '마음챙김',
       imageUrl: shortsImg,
+      infoNode: (
+        <>
+          <Badge
+            variant={'text'}
+            status={'primary'}
+            option={{ label: 'New', value: '' }}
+            size={'xs'}
+          />
+          <span className={styles.info}>
+            <IcoEye width={16} height={16} stroke="#fff" />
+            <em>{`${new Intl.NumberFormat().format(2500)}`}</em>
+            {'시청'}
+          </span>
+        </>
+      ),
     },
     {
       title: '경청이 리더십의 시작이라는 말, 들어보셨나요?',
       badgeLabel: '마음챙김',
       imageUrl: shortsImg,
+      infoNode: (
+        <>
+          <Badge
+            variant={'text'}
+            status={'primary'}
+            option={{ label: 'New', value: '' }}
+            size={'xs'}
+          />
+          <span className={styles.info}>
+            <IcoEye width={16} height={16} stroke="#fff" />
+            <em>{`${new Intl.NumberFormat().format(2500)}`}</em>
+            {'시청'}
+          </span>
+        </>
+      ),
     },
     {
       title: '경청이 리더십의 시작이라는 말, 들어보셨나요?',
       badgeLabel: '마음챙김',
       imageUrl: shortsImg,
+      infoNode: (
+        <>
+          <Badge
+            variant={'text'}
+            status={'primary'}
+            option={{ label: 'New', value: '' }}
+            size={'xs'}
+          />
+          <span className={styles.info}>
+            <IcoEye width={16} height={16} stroke="#fff" />
+            <em>{`${new Intl.NumberFormat().format(2500)}`}</em>
+            {'시청'}
+          </span>
+        </>
+      ),
     },
     {
       title: '경청이 리더십의 시작이라는 말, 들어보셨나요?',
       badgeLabel: '마음챙김',
       imageUrl: shortsImg,
+      infoNode: (
+        <>
+          <Badge
+            variant={'text'}
+            status={'primary'}
+            option={{ label: 'New', value: '' }}
+            size={'xs'}
+          />
+          <span className={styles.info}>
+            <IcoEye width={16} height={16} stroke="#fff" />
+            <em>{`${new Intl.NumberFormat().format(2500)}`}</em>
+            {'시청'}
+          </span>
+        </>
+      ),
     },
   ];
 

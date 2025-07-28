@@ -196,6 +196,12 @@
     .shorts_wrap {
       @apply mt-[24px];
     }
+    .info {
+      @apply label-sm inline-flex h-[22px] items-center overflow-hidden rounded-[4px] bg-[#131416] bg-opacity-60 px-[6px] align-top text-white;
+      em {
+        @apply label-sm text-white;
+      }
+    }
   }
 }
 
