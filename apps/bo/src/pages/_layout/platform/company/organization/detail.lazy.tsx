@@ -16,7 +16,7 @@ function RouteComponent() {
 
   useEffect(() => {
     if (!companyCode) router.navigate({ to: '/platform/company/organization' });
-  }, [companyCode]);
+  }, []);
 
   return (
     <PageContainer>

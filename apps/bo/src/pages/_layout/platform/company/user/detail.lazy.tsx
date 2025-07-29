@@ -1,9 +1,9 @@
-import { useRef } from 'react';
+import { CompanyUserDetail } from '@features/platform-management/company';
+import { Button } from '@learnway/ui';
+import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
-import { PageContainer, MainContents, LinkBox, ContentsButtons } from '@shared/ui';
-import { Button } from '@learnway/ui';
-import { CompanyUserDetail } from '@features/platform-management/company';
+import { useRef } from 'react';
 
 export const Route = createLazyFileRoute('/_layout/platform/company/user/detail')({
   component: RouteComponent,
@@ -29,9 +29,8 @@ function RouteComponent() {
             variant="point"
             size="sm"
             onClick={() => router.navigate({ to: '/platform/company/user' })}
-          >
-            {t('LABEL.button.list')}
-          </Button>
+            label={t('LABEL.button.list')}
+          />
         </LinkBox>
         <Button variant="point" size="sm" onClick={handleOnReset} label={t('LABEL.button.reset')} />
         <Button variant="primary" size="sm" onClick={handleOnSave} label={t('LABEL.button.save')} />

@@ -202,6 +202,10 @@ const CompanyOrganizationInfoListComponent = ({
     return !disabled;
   };
 
+  const handleExcelUpload = async (data: Record<string, any>[]) => {
+    gridFetch();
+  };
+
   return (
     <>
       <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
@@ -228,6 +232,7 @@ const CompanyOrganizationInfoListComponent = ({
             <GridExcelUploadButton
               validateUrl={`/department/${companyCode}/child/excelUpload`}
               affairsType="PMS"
+              onUpload={handleExcelUpload}
             />
           }
           onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}

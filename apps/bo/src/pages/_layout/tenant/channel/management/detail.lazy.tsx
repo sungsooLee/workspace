@@ -44,7 +44,7 @@ function RouteComponent() {
 
   useEffect(() => {
     if (!channelUuid) router.navigate({ to: '/tenant/channel/management' });
-  }, [channelUuid, router]);
+  }, []);
 
   const baseFormRef = useRef<HTMLFormElement>(null);
   const userFormRef = useRef<HTMLFormElement>(null);
@@ -170,9 +170,8 @@ function RouteComponent() {
             variant="point"
             size="sm"
             onClick={() => router.navigate({ to: '/tenant/channel/management' })}
-          >
-            {t('LABEL.button.list')}
-          </Button>
+            label={t('LABEL.button.list')}
+          />
         </LinkBox>
         {buttonLayout === EnButtonLayout.REGISTER && (
           <Button variant="point" size="sm" onClick={handleOnRegister} label={t('등록')} />
