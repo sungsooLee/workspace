@@ -1,6 +1,5 @@
 /* IA112 / NLP_BO_CMS_1022 - 나의 학습자원 > HTML 상세(저장 및 조회용) */
 import { useEffect } from 'react';
-import { t } from 'i18next';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { useModal } from '@learnway/ui';
 import { ContentsButtons, MainContents, PageContainer, SubContents } from '@shared/ui';
@@ -15,6 +14,7 @@ import {
 } from '@features/learning-resource';
 import { useFetchHtmlVideoInfo } from '@features/learning-resource/learning-resource-management/service';
 import { getPayloadFromHtmlMetadataSubmit } from '@features/learning-resource/learning-resource-management/service/learning-resource-html-form-submit';
+import { useTranslation } from 'react-i18next';
 
 export const Route = createLazyFileRoute('/_layout/learning/resource/html-video/view')({
   component: RouteComponent,
@@ -22,6 +22,7 @@ export const Route = createLazyFileRoute('/_layout/learning/resource/html-video/
 
 function RouteComponent() {
   const router = useRouter();
+  const { t } = useTranslation();
 
   const { contentUuid, data, hasMapping } = useFetchHtmlVideoInfo();
 
@@ -57,7 +58,7 @@ function RouteComponent() {
     if (
       await openConfirm({
         title: t('LABEL.confirm.save.title'),
-        content: t('입력한 정보로 저장합니다.'),
+        content: t('LABEL.confirm.save.message'),
       })
     ) {
       updateMetadata(payload);
