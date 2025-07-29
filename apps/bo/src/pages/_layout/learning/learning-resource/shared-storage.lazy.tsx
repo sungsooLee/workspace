@@ -11,7 +11,7 @@ function RouteComponent() {
   return (
     <PageContainer>
       <MainContents>
-        t<LearningResourceSharedTable />
+        <LearningResourceSharedTable />
       </MainContents>
     </PageContainer>
   );
