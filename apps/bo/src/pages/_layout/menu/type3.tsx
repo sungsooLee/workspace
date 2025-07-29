@@ -1,12 +1,12 @@
-import { useFieldArray } from 'react-hook-form';
-import { createFileRoute } from '@tanstack/react-router';
-import { Button } from '@learnway/ui';
-import { ContentsButtons, MainContents, SubContents, ContentsRow, PageContainer } from '@shared/ui';
-import { MovieInfo } from '../../../widgets/contents/movie-info';
-import { useRef } from 'react';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { FormRow } from '../../../shared/ui/form';
+import { Button, ContentsRow } from '@learnway/ui';
+import { ContentsButtons, MainContents, PageContainer, SubContents } from '@shared/ui';
+import { createFileRoute } from '@tanstack/react-router';
+import { useFieldArray } from 'react-hook-form';
 import { CustomFormField } from '../../../shared/ui/form/custom-form-field';
+import { FormRow } from '../../../shared/ui/form';
+import { MovieInfo } from '@widgets/contents/movie-info';
+import { useRef } from 'react';
 
 export const Route = createFileRoute('/_layout/menu/type3')({
   component: RouteComponent,
