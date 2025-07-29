@@ -1,3 +1,18 @@
 /* search-before.module.css */
 .start {
+    .title_wrap {
+        @apply flex items-center mt-[40px] mb-[16px];
+        .title {
+            @apply title3-b text-[var(--gray10)];
+        }
+    }
+    .btn_list {
+        @apply flex flex-wrap;
+        .btn {
+            @apply h-[36px] border-[var(--gray90)] border-solid border !mr-[8px] !mb-[8px] !label-md;
+            & + .btn {
+                @apply !ml-0 ;
+            }
+        }
+    }
 }
