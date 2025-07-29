@@ -1,5 +1,5 @@
 .nlp--input {
-  @apply !overflow-hidden !rounded-[8px] border-[var(--gray75)] bg-white;
+  @apply !overflow-hidden !rounded-[8px] bg-white;
   input {
     @apply !label-xl !px-[16px] leading-[1rem] !text-[var(--gray10)];
     &:disabled {
@@ -11,6 +11,9 @@
     &::placeholder {
       @apply !text-[var(--gray75)];
     }
+  }
+  &[class*='lg'] {
+    @apply !border-[var(--gray75)];
   }
   [class*='after_area'] {
     [class*='count'] {

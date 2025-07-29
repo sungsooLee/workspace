@@ -187,7 +187,7 @@ function RouteComponent() {
                   <IcoCaution width={16} height={16} stroke="#6F798B" />
                   유의사항
                 </dt>
-                <dd>본인 명의의 인증 수단 정보를 정확히 입력해 주세요.</dd>
+                <dd>인증번호 문자를 받지 못하셨으면 휴대폰번호가 정확한지 확인하세요.</dd>
               </dl>
             </div>
             {/* 유의사항 모듈 */}
