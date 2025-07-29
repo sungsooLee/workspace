@@ -1,16 +1,15 @@
 // IA109 / NLP_BO_CMS_1027, NLP_BO_CMS_1009
 
-import { useModal } from '@learnway/ui';
-import { DynamicFormProvider, FileInfo, useFileManager } from '@learnway/hooks';
 import { usePutETCChange } from '@entities/learning-resource';
-import { formatBytes, splitFileName } from '@learnway/shared';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { PreviewLearningWindow } from '../../../../shared/ui/modal/preview-learning-window';
-import { LearningResourceFileUploadModal } from './learning-resource-file-upload-modal';
 import { LEARNING_TYPE } from '@learnway/config';
-import { t } from 'i18next';
-import { MediaInfo } from './media-info';
+import { DynamicFormProvider, FileInfo, useFileManager } from '@learnway/hooks';
+import { formatBytes, splitFileName } from '@learnway/shared';
+import { useModal } from '@learnway/ui';
 import { ProcessingStatus } from '@types';
+import { t } from 'i18next';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { LearningResourceFileUploadModal } from './learning-resource-file-upload-modal';
+import { MediaInfo } from './media-info';
 
 interface MovieInfoProps {
   provider: DynamicFormProvider;

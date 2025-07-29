@@ -1,15 +1,15 @@
 //  IA105 / NLP_BO_CMS_1016, NLP_BO_CMS_1002
 
-import { useModal } from '@learnway/ui';
-import { DynamicFormProvider, useFileManager } from '@learnway/hooks';
 import { useVideoResource } from '@entities/learning-resource';
-import { formatBytes } from '@learnway/shared';
-import { useCallback, useMemo } from 'react';
-import { max } from 'lodash';
-import { PreviewLearningWindow } from '../../../../shared/ui/modal/preview-learning-window';
-import { LearningResourceFileUploadModal } from './learning-resource-file-upload-modal';
 import { LEARNING_TYPE } from '@learnway/config';
+import { DynamicFormProvider, useFileManager } from '@learnway/hooks';
+import { formatBytes } from '@learnway/shared';
+import { useModal } from '@learnway/ui';
+import { PreviewLearningWindow } from '@shared/ui';
 import { t } from 'i18next';
+import { max } from 'lodash';
+import { useCallback, useMemo } from 'react';
+import { LearningResourceFileUploadModal } from './learning-resource-file-upload-modal';
 import { MediaInfo } from './media-info';
 
 interface MovieInfoProps {

@@ -23,6 +23,7 @@ import {
 } from '@learnway/ui';
 import {
   GridExcelDownloadButton,
+  PreviewLearningWindow,
   TenantByRoleDropdownFormField,
   TenantChannelDropdownFormField,
 } from '@shared/ui';
@@ -32,7 +33,6 @@ import { ContentCreateType, ContentInfo, ContentInformation } from '@types';
 import { t } from 'i18next';
 import { first, get, map, some, uniq } from 'lodash';
 import { useEffect, useState } from 'react';
-import { PreviewLearningWindow } from '../../../../shared/ui/modal/preview-learning-window';
 import { BatchSettingModal } from './learning-resource-batch-setting-modal';
 import { ModifierInfoModal } from './learning-resource-modifier-info-modal';
 import { ProgramGuideModal } from './learning-resource-program-guide-modal';

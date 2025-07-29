@@ -1,15 +1,13 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { t } from 'i18next';
-import { Button, useModal } from '@learnway/ui';
-
+import defaultImage from '@assets/images/thumb/img_thumb_default.jpg';
+import { useChangeHTML5VideoFile } from '@entities/learning-resource';
+import { LearningResourceFileUploadModal } from '@features/learning-resource';
 import { LEARNING_TYPE } from '@learnway/config';
 import { formatFileSize, useFileManager } from '@learnway/hooks';
+import { Button, useModal } from '@learnway/ui';
+import { ChannelChoiceModal, PreviewLearningWindow } from '@shared/ui';
 import { ContentStatusCode, HtmlVideoFileChangeRes } from '@types';
-import { useChangeHTML5VideoFile } from '@entities/learning-resource';
-import defaultImage from '@assets/images/thumb/img_thumb_default.jpg';
-import { ChannelChoiceModal } from '@shared/ui';
-import { LearningResourceFileUploadModal } from '@features/learning-resource';
-import { PreviewLearningWindow } from '../../../../shared/ui/modal/preview-learning-window';
+import { t } from 'i18next';
+import { useCallback, useEffect, useState } from 'react';
 
 import movieStyles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
 import styles from './html-detail.module.css';
