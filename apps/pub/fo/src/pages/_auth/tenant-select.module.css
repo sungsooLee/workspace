@@ -1,0 +1,7 @@
+.start {
+  &.tenant_select {
+    .btn_wrap {
+      @apply mt-[36px];
+    }
+  }
+}

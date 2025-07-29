@@ -1784,7 +1784,7 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: '/',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-07-29',
     lastUpdateDate: '',
     remarks: '',
   },
@@ -1794,7 +1794,7 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: '/',
     pageType: 'Page',
-    completionDate: '',
+    completionDate: '2025-07-29',
     lastUpdateDate: '',
     remarks: '',
   },

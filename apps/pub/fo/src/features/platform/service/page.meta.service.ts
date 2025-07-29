@@ -88,6 +88,10 @@ export const PAGE_META_BY_PATH: Record<string, PageMeta> = {
     title: '테넌트 선택',
     info: '입장하실 테넌트를 선택하세요',
   },
+  '/pb-fo/dormant-info': {
+    title: '휴면 계정 안내',
+    info: '',
+  },
 };
 
 export function isSigninPageInfo(path: string): boolean {
