@@ -33,7 +33,7 @@ function RouteComponent() {
   const tenantId = router.state.location.state?.tenantId;
   const categoryId = router.state.location.state?.categoryId;
 
-  const { data: categoryInfo } = useFetchCategoryDetail(categoryId);
+  const { data: categoryInfo, refetch: categoryRefetch } = useFetchCategoryDetail(categoryId);
   const [data, setData] = useState<any[]>([]);
 
   const [depth, setDepth] = useState(3);
@@ -104,11 +104,14 @@ function RouteComponent() {
 
   useEffect(() => {
     console.log(`2. tenantId=${tenantId} | categoryId=${categoryId}`);
+    if( categoryId ) categoryRefetch();
   }, [routerState.location.state.tenantId, routerState.location.state.categoryId]);
 
   useEffect(() => {
     if( categoryInfo ) {
       console.log('categoryInfo => ', categoryInfo)
+      // categoryInfo.categoryPath
+      // categoryInfo.categoryName
     }
   }, [categoryInfo])
 
@@ -211,8 +214,8 @@ function RouteComponent() {
           ) : (
             <div className={styles.empty}>
               <EmptyText
-                text={'검색 결과를 찾을 수 없습니다.'}
-                description={'다른 과정명으로 검색해 보세요.'}
+                text={t('검색 결과를 찾을 수 없습니다.')}
+                description={t('다른 과정명으로 검색해 보세요.')}
               />
             </div>
           )

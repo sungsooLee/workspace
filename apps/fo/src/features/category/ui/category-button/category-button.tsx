@@ -8,7 +8,7 @@ import styles from '@learnway/styles/fo/features/category/category-button.module
 import { RecentVisits } from '@features/layout';
 import { cn } from '@learnway/shared';
 import { useCategoryTree } from '@entities/category';
-import { useFetchAuthUser } from '@learnway/auth/entities';
+import { t } from 'i18next';
 
 interface CategoryPopupProps {
   id: number;
@@ -93,7 +93,7 @@ const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
 
   return (
     <ModalContainer className={styles.modal_container}>
-      <ModalTitle>{'학습테마'}</ModalTitle>
+      <ModalTitle>{t('학습테마')}</ModalTitle>
       <ModalBody>
         <div className={styles.start}>
           {/* 카테고리 영역 */}
