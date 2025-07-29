@@ -44,12 +44,7 @@ const SequenceBatchModalComponent = ({
   courseId: courseIdProps,
   selectedItems,
 }: SequenceBatchModalComponentProps) => {
-  const {
-    closeModal,
-    confirm: openConfirm,
-    alert: openAlert,
-    showSaveComplete,
-  } = useModal();
+  const { closeModal, confirm: openConfirm, alert: openAlert, showSaveComplete } = useModal();
   const [columns, setColumns] = useState() as any;
   const [gridData, setGridData] = useState<any[]>([]);
   const [selectedRowsKey, setSelectedRowsKey] = useState<string[]>([]);
@@ -74,10 +69,10 @@ const SequenceBatchModalComponent = ({
 
   const handleOnSearch = useCallback(() => {
     const data = [
-      { key: 'isUsed', name: '차수 사용 여부' },
-      { key: 'enrollmentRange', name: '수강신청 기간' },
-      { key: 'learningStartType', name: '학습 기간' },
-      { key: 'isMaxEnrollQuotaRestricted', name: '정원' },
+      { key: 'isUsed', name: t('차수 사용 여부') },
+      { key: 'enrollmentRange', name: t('수강신청 기간') },
+      { key: 'learningStartType', name: t('학습 기간') },
+      { key: 'isMaxEnrollQuotaRestricted', name: t('정원') },
     ];
 
     setGridData(data);
@@ -305,8 +300,8 @@ const SequenceBatchModalComponent = ({
                                 element={
                                   <Input
                                     type="number"
-                                    prefixText="학습 가능일로부터"
-                                    suffixText="일"
+                                    prefixText={t('학습 가능일로부터')}
+                                    suffixText={t('일')}
                                   />
                                 }
                               />

@@ -50,14 +50,14 @@ const EnrollmentComponent = () => {
         ];
       case SequenceTabDetail.ENROLLMENT_WAIT:
         return [
-          { label: '대기중', value: '1' },
-          { label: '링크 발송', value: '2' },
-          { label: '링크 완료', value: '3' },
+          { label: t('대기중'), value: '1' },
+          { label: t('링크 발송'), value: '2' },
+          { label: t('링크 완료'), value: '3' },
         ];
       case SequenceTabDetail.ENROLLMENT_CANCEL:
         return [
-          { label: '반려', value: '1' },
-          { label: '승인', value: '2' },
+          { label: t('반려'), value: '1' },
+          { label: t('승인'), value: '2' },
         ];
       default:
         return []; // fallback: 옵션 없을 때 빈 배열
@@ -215,7 +215,7 @@ const EnrollmentComponent = () => {
 
   const tabItems = [
     {
-      title: '수강신청',
+      title: t('수강신청'),
       key: SequenceTabDetail.ENROLLMENT_REGIST,
       content: (
         <EnrollmentRegist
@@ -227,7 +227,7 @@ const EnrollmentComponent = () => {
       ),
     },
     {
-      title: '수강신청 대기',
+      title: t('수강신청 대기'),
       key: SequenceTabDetail.ENROLLMENT_WAIT,
       content: (
         <EnrollmentWait
@@ -239,7 +239,7 @@ const EnrollmentComponent = () => {
       ),
     },
     {
-      title: '수강취소/반려',
+      title: t('수강취소/반려'),
       key: SequenceTabDetail.ENROLLMENT_CANCEL,
       content: (
         <EnrollmentCancel

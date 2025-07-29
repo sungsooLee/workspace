@@ -105,8 +105,8 @@ const InstructorRegistComponent = (props: any, ref: any) => {
         label: t('강사 타입'),
         value: 'INTERNAL_INSTRUCTOR',
         options: [
-          { label: '사내', value: 'INTERNAL_INSTRUCTOR' },
-          { label: '사외', value: 'EXTERNAL_INSTRUCTOR' },
+          { label: t('사내'), value: 'INTERNAL_INSTRUCTOR' },
+          { label: t('사외'), value: 'EXTERNAL_INSTRUCTOR' },
         ],
         disabled: props.instructorId || props.readOnly,
       },
@@ -116,8 +116,8 @@ const InstructorRegistComponent = (props: any, ref: any) => {
         label: t('전임강사 여부'),
         value: 1,
         options: [
-          { label: '비전임', value: 1 },
-          { label: '전임', value: 2 },
+          { label: t('비전임'), value: 1 },
+          { label: t('전임'), value: 2 },
         ],
         disabled: props.instructorId || props.readOnly,
       },
@@ -242,7 +242,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
         label: t('강사 소개'),
         value: '',
         maxLength: 500,
-        placeholder: '강사 소개를 입력해 주세요.',
+        placeholder: t('강사 소개를 입력해 주세요.'),
         disabled: props.readOnly,
       },
       {
@@ -251,7 +251,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
         label: t('강사 경력'),
         value: '',
         maxLength: 500,
-        placeholder: '강사 경력을 입력해 주세요.',
+        placeholder: t('강사 경력을 입력해 주세요.'),
         disabled: props.readOnly,
       },
       {
@@ -267,8 +267,9 @@ const InstructorRegistComponent = (props: any, ref: any) => {
           acceptFiles: ['JPEG', 'JPG', 'PNG', 'GIF'],
           maxFileCount: 10,
         },
-        description:
+        description: t(
           '파일 사이즈 000x000 / 확장자 JPEG, JPG, PNG, GIF / 업로드 가능 1개 / 파일용량 최대 50MB',
+        ),
         disabled: props.readOnly,
       },
       {
@@ -292,6 +293,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
         conditions: [
           {
             fn: (values) => {
+              if (!values.employeeIdOrEmail) return false;
               const value =
                 typeof values.employeeIdOrEmail === 'string'
                   ? values.employeeIdOrEmail
@@ -314,23 +316,20 @@ const InstructorRegistComponent = (props: any, ref: any) => {
         required: true,
         conditions: [
           {
-            fn: (values) => values.activeIndex === 1 && !values.dateRange?.from,
-            message: t('시작 및 종료 날짜를 선택하세요'),
-          },
-          {
-            fn: (values) => values.activeIndex === 1 && !values.dateRange?.from,
+            fn: (values) => !values.dateRange?.from,
             message: t('시작 날짜를 선택하세요'),
           },
           {
-            fn: (values) => values.activeIndex === 1 && !values.dateRange?.to,
+            fn: (values) => !values.dateRange?.to,
             message: t('종료 날짜를 선택하세요.'),
           },
           {
-            fn: (values) => values.activeIndex === 1 && values.dateRange.from > values.dateRange.to,
+            fn: (values) => values.dateRange.from > values.dateRange.to,
             message: t('시작 날짜는 종료 날짜 보다 이전일 이어야 합니다.'),
           },
         ],
       },
+      career: true,
     },
   };
 
@@ -371,8 +370,8 @@ const InstructorRegistComponent = (props: any, ref: any) => {
       if (data.instructorType === 'EXTERNAL_INSTRUCTOR') {
         if (data.password !== data.passwordConfirm) {
           openAlert({
-            title: '비밀번호가 불일치',
-            content: '비밀번호를 확인해주세요.',
+            title: t('비밀번호 불일치'),
+            content: t('비밀번호를 확인해주세요.'),
           });
           return false;
         }
@@ -398,23 +397,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
       password: data.instructorType === 'INTERNAL_INSTRUCTOR' ? null : data.password,
       phoneNationNumber: data.telCountryCode,
       phoneNumber: data.telNo,
-      // TODO: 확인 필요
-      nationCd: {
-        language: 'string',
-        script: 'string',
-        variant: 'string',
-        displayName: 'string',
-        country: 'string',
-        unicodeLocaleAttributes: ['string'],
-        unicodeLocaleKeys: ['string'],
-        displayLanguage: 'string',
-        displayScript: 'string',
-        displayCountry: 'string',
-        displayVariant: 'string',
-        extensionKeys: ['string'],
-        iso3Language: 'string',
-        iso3Country: 'string',
-      },
+      nationCd: null,
     };
     const payloadUser = {
       roleId: data?.roleId,
@@ -456,25 +439,25 @@ const InstructorRegistComponent = (props: any, ref: any) => {
       carreerMonth: carreerMonthVal,
     };
 
-    const confirmOk = await openConfirm('저장 하시겠습니까?');
+    const confirmOk = await openConfirm(t('저장 하시겠습니까?'));
     if (!confirmOk) return;
 
     let validation = true;
     // [1] 사외 강사인 경우 회원가입 API호출
-    // if (data.instructorType === 'EXTERNAL_INSTRUCTOR') {
-    //   await createTutor(payloadTutor, {
-    //     onSuccess: async (data: any, variables: any, context: any) => {
-    //       console.log('[1] onSuccess:', data);
-    //       if (data && Object.keys(data).includes('uuid')) {
-    //         payloadUser.addUserUuids[0].userUuid = data.uuid;
-    //       }
-    //     },
-    //     onError: (data: any, variables: any, context: any) => {
-    //       console.log('[1] onError:', data);
-    //       validation = false;
-    //     },
-    //   });
-    // }
+    if (data.instructorType === 'EXTERNAL_INSTRUCTOR') {
+      await createTutor(payloadTutor, {
+        onSuccess: async (data: any, variables: any, context: any) => {
+          console.log('[1] onSuccess:', data);
+          if (data && Object.keys(data).includes('uuid')) {
+            payloadUser.body.addUserUuids[0].userUuid = data.uuid;
+          }
+        },
+        onError: (data: any, variables: any, context: any) => {
+          console.log('[1] onError:', data);
+          validation = false;
+        },
+      });
+    }
 
     // [2] 역할 저장
     if (validation) {
@@ -525,7 +508,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
       instructorId: props.instructorId,
     };
 
-    if (await openConfirm('수정 하시겠습니까?')) {
+    if (await openConfirm(t('수정 하시겠습니까?'))) {
       updateInstructor(payload, {
         onSuccess: async (data: any) => {
           await showUpdateComplete();
@@ -543,7 +526,7 @@ const InstructorRegistComponent = (props: any, ref: any) => {
   };
 
   const handleOnDelete = async () => {
-    if (await openConfirm('삭제 하시겠습니까?')) {
+    if (await openConfirm(t('삭제 하시겠습니까?'))) {
       deleteInstructor(props.instructorId, {
         onSuccess: async () => {
           await showDeleteComplete();

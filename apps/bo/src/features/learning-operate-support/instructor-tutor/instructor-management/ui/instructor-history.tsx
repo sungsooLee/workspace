@@ -22,9 +22,9 @@ const InstructorHistoryComponent = (props: any) => {
   const router = useRouter();
   const { openModal, alert } = useModal();
   const options = [
-    { value: 0, label: '선택' },
-    { value: 1, label: '과정명' },
-    { value: 2, label: '차수명' },
+    { value: 0, label: t('선택') },
+    { value: 1, label: t('과정명') },
+    { value: 2, label: t('차수명') },
   ];
   const [selectedValue, setSelectedValue] = useState(0);
   const [inputValue, setInputValue] = useState('');
@@ -143,7 +143,7 @@ const InstructorHistoryComponent = (props: any) => {
         config={gConfig}
         columns={columns}
         gridData={data}
-        title="강사이력 목록"
+        title={t('강사이력 목록')}
         customButtonNode={
           <>
             <Dropdown
@@ -151,12 +151,12 @@ const InstructorHistoryComponent = (props: any) => {
               value={selectedValue}
               onChange={onChangeSearchOption}
               variant="default"
-              placeholder="선택"
+              placeholder={t('선택')}
               size={'sm'}
             />
             <Input
               type="text"
-              placeholder="검색"
+              placeholder={t('검색')}
               showSearchIcon={true}
               searchIconType={'search'}
               value={inputValue}

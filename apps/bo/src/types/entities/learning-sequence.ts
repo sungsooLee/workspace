@@ -26,8 +26,8 @@ export interface LearningSequence {
   courseSequenceName: string;
   isUsed: boolean;
   enrollmentRange?: any;
-  enrollmentStartDateTime?: string;
-  enrollmentEndDateTime?: string;
+  enrollStartDateTime?: string;
+  enrollEndDateTime?: string;
   isEnrollCancelDeadLineActivated: boolean;
   enrollCancelRange?: any;
   enrollCancelStartDateTime?: string | null;

@@ -197,23 +197,23 @@ const EnrollmentWaitComponent = ({
 
   const getStats = (): Array<StatsSummaryData> => [
     {
-      label: '수강대기신청',
+      label: t('수강대기신청'),
       value: 1000,
     },
     {
-      label: '수강신청 링크발송',
+      label: t('수강신청 링크발송'),
       value: 1000,
     },
     {
-      label: '수강신청 대기중',
+      label: t('수강신청 대기중'),
       value: 1000,
     },
     {
-      label: '수강신청 링크만료',
+      label: t('수강신청 링크만료'),
       value: 1000,
     },
     {
-      label: '수강신청 신청성공',
+      label: t('수강신청 신청성공'),
       value: 1000,
     },
   ];

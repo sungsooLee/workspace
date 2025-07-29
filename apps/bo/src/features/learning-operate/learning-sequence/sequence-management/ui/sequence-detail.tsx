@@ -31,7 +31,7 @@ import {
 } from '@shared/ui';
 import { useQueryClient } from '@tanstack/react-query';
 import { useUpdateEffect } from 'ahooks';
-import { forwardRef, useEffect, useRef } from 'react';
+import { forwardRef, useCallback, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { LearningSequence } from 'src/types/entities/learning-sequence';
 
@@ -54,6 +54,19 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
     const { t } = useTranslation();
     const { confirm: openConfirm, showSaveComplete } = useModal();
     const formRef = useRef<HTMLFormElement>(null);
+    const {
+      provider,
+      updateFormData,
+      onSubmit,
+      onFormChange,
+      onFormValid,
+      getValues,
+      setValue,
+      formState,
+      control,
+      formValues,
+    } = useDynamicForm2();
+
     const { updateSequence } = useUpdateSequence({
       onSuccess: async (response: any) => {
         console.log('useUpdateSequence :: onSuccess', response);
@@ -84,9 +97,20 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
       }
     }, [lastTriggered]);
 
-    const handleUpdateSequence = async () => {
-      updateSequence({ sequenceId: sequenceIdProps, ...formDataToRequestData(formValues) });
-    };
+    const handleUpdateSequence = useCallback(async () => {
+      const run = onSubmit(async (data) => {
+        // if (!(await saveConfirm())) {
+        //   return;
+        // }
+        updateSequence({ sequenceId: sequenceIdProps, ...formDataToRequestData(formValues) });
+      });
+      // 가짜 이벤트 객체를 생성해서 수동으로 호출
+      run({ preventDefault: () => null } as any);
+    }, [formValues]);
+
+    // const handleUpdateSequence = async () => {
+    //   updateSequence({ sequenceId: sequenceIdProps, ...formDataToRequestData(formValues) });
+    // };
 
     const handleDeleteSequence = async () => {
       const confirm = await openConfirm(t('삭제 하시겠습니까?'));
@@ -107,19 +131,6 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
       initializeData();
     }, []);
 
-    const {
-      provider,
-      updateFormData,
-      onSubmit,
-      onFormChange,
-      onFormValid,
-      getValues,
-      setValue,
-      formState,
-      control,
-      formValues,
-    } = useDynamicForm2();
-
     const queryClient = useQueryClient();
 
     return (
@@ -131,7 +142,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
               <FormRow2
                 provider={provider}
                 name={'courseType'}
-                label={'유형'}
+                label={t('유형')}
                 disabled
                 element={
                   <DropdownFormField
@@ -146,7 +157,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
               <FormRow2
                 provider={provider}
                 name={'channelUuid'}
-                label={'채널'}
+                label={t('채널')}
                 disabled
                 element={<TenantChannelDropdownFormField2 tenantId={-1} />}
                 validation={{ required: true }}
@@ -159,7 +170,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
               <FormRow2
                 provider={provider}
                 name={'tenantIds'}
-                label={'테넌트'}
+                label={t('테넌트')}
                 format={'array'}
                 element={
                   <TenantByRoleChannelCheckboxFormField channelUuid={getValues().channelUuid} />
@@ -173,7 +184,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                 provider={provider}
                 name={'targetList'}
                 format={'object'}
-                label={'학습대상(유저그룹)'}
+                label={t('학습대상(유저그룹)')}
                 element={
                   <ChipListModalSelectorFormField
                     modalConfig={() => ({
@@ -200,7 +211,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
               <FormRow2
                 provider={provider}
                 name={'courseSequenceName'}
-                label={'차수명'}
+                label={t('차수명')}
                 element={<Input type={'text'} maxLength={40} />}
                 validation={{ required: true }}
               />
@@ -209,7 +220,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
               <FormRow2
                 provider={provider}
                 name={'isUsed'}
-                label={'차수 사용여부'}
+                label={t('차수 사용여부')}
                 format={'boolean'}
                 element={
                   <RadioGroupFormField
@@ -222,14 +233,26 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
               <FormRow2
                 provider={provider}
                 name={'enrollmentRange'}
-                label={'수강신청 기간'}
+                label={t('수강신청 기간')}
                 format={'object'}
-                element={
-                  // enrollmentStartDateTime 수강신청 시작일시
-                  // enrollmentEndDateTime 수강신청 종료일시
-                  <DateRangePickerFormField />
-                }
-                validation={{ required: true }}
+                element={<DateRangePickerFormField />}
+                validation={{
+                  required: true,
+                  conditions: [
+                    {
+                      fn: (values: any) => !values.enrollmentRange?.from,
+                      message: t('시작 날짜를 선택하세요'),
+                    },
+                    {
+                      fn: (values: any) => !values.enrollmentRange?.to,
+                      message: t('종료 날짜를 선택하세요'),
+                    },
+                    {
+                      fn: (values: any) => values.enrollmentRange.from > values.enrollmentRange.to,
+                      message: t('시작 날짜는 종료 날짜 보다 이전일 이어야 합니다.'),
+                    },
+                  ],
+                }}
               />
             </ContentsRow>
             <ContentsRow>
@@ -237,13 +260,13 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
               <FormRow2
                 provider={provider}
                 name={'learningStartType'}
-                label={'학습기간 유형'}
+                label={t('학습기간 유형')}
                 element={
                   <RadioGroupFormField
                     options={[
                       {
-                        value: 'DAYS_AFTER_ENROLL',
-                        label: t('시작일 기준'),
+                        value: 'FIXED_DATE',
+                        label: t('기간 지정'),
                         node: (
                           <FormRow2
                             provider={provider}
@@ -254,15 +277,19 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                         ),
                       },
                       {
-                        value: 'FIXED_DATE',
-                        label: t('기간 지정'),
+                        value: 'DAYS_AFTER_ENROLL',
+                        label: t('시작일 기준'),
                         node: (
                           <FormRow2
                             provider={provider}
                             name={'learningStartDays'}
                             // value={''}
                             element={
-                              <Input type="number" prefixText="학습 가능일로부터" suffixText="일" />
+                              <Input
+                                type="number"
+                                prefixText={t('학습 가능일로부터')}
+                                suffixText={t('일')}
+                              />
                             }
                           />
                         ),
@@ -270,6 +297,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                     ]}
                   />
                 }
+                validation={{ required: true }}
               />
             </ContentsRow>
             <ContentsRow>
@@ -277,7 +305,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
               <FormRow2
                 provider={provider}
                 name={'isEnrollCancelDeadLineActivated'}
-                label={'수강취소'}
+                label={t('수강취소')}
                 format={'boolean'}
                 element={
                   <RadioGroupFormField
@@ -297,6 +325,29 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                               /* enrollCancelStartDateTime 수강취소가능시작일시
                               enrollCancelEndDateTime	수강취소가능종료일시 */
                               element={<DateRangePickerFormField />}
+                              validation={{
+                                required: true,
+                                conditions: [
+                                  {
+                                    fn: (values: any) =>
+                                      values.isEnrollCancelDeadLineActivated &&
+                                      !values.enrollCancelRange?.from,
+                                    message: t('시작 날짜를 선택하세요'),
+                                  },
+                                  {
+                                    fn: (values: any) =>
+                                      values.isEnrollCancelDeadLineActivated &&
+                                      !values.enrollCancelRange?.to,
+                                    message: t('종료 날짜를 선택하세요'),
+                                  },
+                                  {
+                                    fn: (values: any) =>
+                                      values.isEnrollCancelDeadLineActivated &&
+                                      values.enrollCancelRange.from > values.enrollCancelRange.to,
+                                    message: t('시작 날짜는 종료 날짜 보다 이전일 이어야 합니다.'),
+                                  },
+                                ],
+                              }}
                             />
                           ),
                         },
@@ -304,6 +355,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                     }}
                   />
                 }
+                validation={{ required: true }}
               />
             </ContentsRow>
             <ContentsRow>
@@ -311,7 +363,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
               <FormRow2
                 provider={provider}
                 name={'learningSpaceType'}
-                label={'교육공간'}
+                label={t('교육공간')}
                 element={
                   <RadioGroupFormField
                     optionsConfig={{
@@ -370,7 +422,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
               <FormRow2
                 provider={provider}
                 name={'approvalLineType'}
-                label={'승인 결재 라인'}
+                label={t('승인 결재 라인')}
                 element={
                   <DropdownFormField
                     optionsConfig={{
@@ -441,7 +493,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
               <FormRow2
                 provider={provider}
                 name={'waitListPickMethodType'}
-                label={'수강신청 대기'}
+                label={t('수강신청 대기')}
                 element={
                   <RadioGroupFormField
                     options={[
@@ -459,7 +511,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
               <FormRow2
                 provider={provider}
                 name={'isTextbookProvided'}
-                label={'교재'}
+                label={t('교재')}
                 format={'boolean'}
                 element={<SwitchFormField />}
               />
@@ -474,16 +526,16 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                 <FormRow2
                   provider={provider}
                   name={'textbookName'}
-                  label={'교재명'}
+                  label={t('교재명')}
                   element={<Input />}
                 />
                 {/*교재비*/}
                 <FormRow2
                   provider={provider}
                   name={'textbookFee'}
-                  label={'교재비'}
+                  label={t('교재비')}
                   format={'number'}
-                  element={<Input prefixText={'1인당'} suffixText={'원'} />}
+                  element={<Input prefixText={t('1인당')} suffixText={t('원')} />}
                 />
               </ContentsRow>
             </FormDisplay>
@@ -492,7 +544,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
               <FormRow2
                 provider={provider}
                 name={'isInstructorAssigned'}
-                label={'강사'}
+                label={t('강사')}
                 format={'boolean'}
                 element={<SwitchFormField />}
               />
@@ -507,7 +559,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                 <FormRow2
                   provider={provider}
                   name={'instructorAssignType'}
-                  label={'강사'}
+                  label={t('강사')}
                   element={
                     <RadioGroupFormField
                       optionsConfig={{
@@ -563,7 +615,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
               <FormRow2
                 provider={provider}
                 name={'coordinatorName'}
-                label={'담당자'}
+                label={t('담당자')}
                 element={
                   <InputModalSelectorFormField
                     modalConfig={{
@@ -582,7 +634,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
               <FormRow2
                 provider={provider}
                 name={'coordinatorTelNo'}
-                label={'연락처'}
+                label={t('연락처')}
                 element={
                   <PhoneNumberFormField
                     fields={{ nationCode: 'coordinatorTelCountryCode', number: 'coordinatorTelNo' }}
@@ -596,7 +648,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
               <FormRow2
                 provider={provider}
                 name={'coordinatorEmail'}
-                label={'이메일'}
+                label={t('이메일')}
                 element={<Input />}
               />
               {/*담당자 ID - hidden */}
@@ -608,7 +660,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
               <FormRow2
                 provider={provider}
                 name={'operatorName'}
-                label={'운영자'}
+                label={t('운영자')}
                 element={
                   <InputModalSelectorFormField
                     modalConfig={{
@@ -627,7 +679,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
               <FormRow2
                 provider={provider}
                 name={'operatorTelNo'}
-                label={'연락처'}
+                label={t('연락처')}
                 element={
                   <PhoneNumberFormField
                     fields={{ nationCode: 'operatorTelCountryCode', number: 'operatorTelNo' }}
@@ -641,7 +693,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
               <FormRow2
                 provider={provider}
                 name={'operatorEmail'}
-                label={'이메일'}
+                label={t('이메일')}
                 element={<Input />}
               />
               {/*운영자 ID - hidden */}
@@ -654,7 +706,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
               <FormRow2
                 provider={provider}
                 name={'deviceRestrictType'}
-                label={'기기 제한'}
+                label={t('기기 제한')}
                 element={
                   <RadioGroupFormField
                     optionsConfig={{
@@ -667,7 +719,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
               <FormRow2
                 provider={provider}
                 name={'isIntranetRestricted'}
-                label={'네트워크 제한'}
+                label={t('네트워크 제한')}
                 format={'boolean'}
                 element={
                   <RadioGroupFormField
@@ -683,7 +735,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
               <FormRow2
                 provider={provider}
                 name={'learningRestrictTimeType'}
-                label={'학습시간 제한'}
+                label={t('학습시간 제한')}
                 element={
                   <RadioGroupFormField
                     optionsConfig={{
@@ -696,7 +748,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
               <FormRow2
                 provider={provider}
                 name={'isReviewRestricted'}
-                label={'복습 제한'}
+                label={t('복습 제한')}
                 format={'boolean'}
                 element={
                   <RadioGroupFormField
@@ -714,8 +766,8 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                                 <Input
                                   type={'number'}
                                   min={0}
-                                  prefixText={'학습 종료일 기준'}
-                                  suffixText="개월"
+                                  prefixText={t('학습 종료일 기준')}
+                                  suffixText={t('개월')}
                                 />
                               }
                             />
@@ -732,7 +784,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
               <FormRow2
                 provider={provider}
                 name={'isCaptureBlockEnabled'}
-                label={'화면캡쳐 방지'}
+                label={t('화면캡쳐 방지')}
                 format={'boolean'}
                 element={
                   <RadioGroupFormField
@@ -746,7 +798,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
               <FormRow2
                 provider={provider}
                 name={'isSecurityAgreementEnable'}
-                label={'학습전 보안 서약'}
+                label={t('학습전 보안 서약')}
                 format={'boolean'}
                 element={
                   <RadioGroupFormField
@@ -763,7 +815,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                 provider={provider}
                 name={'isLearnControlEnabled'}
                 format={'boolean'}
-                label={'학습제어'}
+                label={t('학습제어')}
                 element={<SwitchFormField />}
               />
             </ContentsRow>
@@ -777,7 +829,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                 <FormRow2
                   provider={provider}
                   name={'isDailyLearningProgressRestricted'}
-                  label={'1일 진도제한'}
+                  label={t('1일 진도제한')}
                   format={'boolean'}
                   element={
                     <RadioGroupFormField
@@ -795,7 +847,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                                   <Input
                                     type={'number'}
                                     min={0}
-                                    prefixText={'하루 기준'}
+                                    prefixText={t('하루 기준')}
                                     suffixText="%"
                                   />
                                 }
@@ -811,7 +863,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                 <FormRow2
                   provider={provider}
                   name={'isProgressResetEnabled'}
-                  label={'진도 초기화'}
+                  label={t('진도 초기화')}
                   format={'boolean'}
                   element={
                     <RadioGroupFormField
@@ -827,7 +879,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                 <FormRow2
                   provider={provider}
                   name={'isSequentialLearningRequired'}
-                  label={'순차 학습'}
+                  label={t('순차 학습')}
                   format={'boolean'}
                   element={
                     <RadioGroupFormField
@@ -841,7 +893,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                 <FormRow2
                   provider={provider}
                   name={'isPlayerControlRestricted'}
-                  label={'동영상 탐색바 제한'}
+                  label={t('동영상 탐색바 제한')}
                   format={'boolean'}
                   element={
                     <RadioGroupFormField
@@ -857,7 +909,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                 <FormRow2
                   provider={provider}
                   name={'maxPlayBackRate'}
-                  label={'동영상 배속 제한'}
+                  label={t('동영상 배속 제한')}
                   element={
                     <RadioGroupFormField
                       optionsConfig={{
@@ -873,7 +925,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
               <FormRow2
                 provider={provider}
                 name={'isUsePassOption'}
-                label={'이수기준'}
+                label={t('이수기준')}
                 format={'boolean'}
                 element={<SwitchFormField />}
               />
@@ -888,7 +940,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                 <FormRow2
                   provider={provider}
                   name={'passMethodType'}
-                  label={'이수처리 방식'}
+                  label={t('이수처리 방식')}
                   element={
                     <RadioGroupFormField
                       optionsConfig={{
@@ -902,7 +954,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                   provider={provider}
                   name={'isCertificateProvided'}
                   format={'boolean'}
-                  label={'수료증 제공'}
+                  label={t('수료증 제공')}
                   element={
                     <RadioGroupFormField
                       optionsConfig={{
@@ -917,7 +969,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                 <FormRow2
                   provider={provider}
                   name={'passOption'}
-                  label={'이수기준 설정'}
+                  label={t('이수기준 설정')}
                   format={'object'}
                   element={<PassOptionFormField />}
                 />
@@ -928,7 +980,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                 <FormRow2
                   provider={provider}
                   name={'recognizedStudyMinType'}
-                  label={'인정 학습시간'}
+                  label={t('인정 학습시간')}
                   element={
                     <RadioGroupFormField
                       optionsConfig={{
@@ -942,13 +994,13 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                                 <FormRow2
                                   provider={provider}
                                   name={'recognizedStudyCycles'}
-                                  element={<Input type={'number'} min={0} suffixText="회" />}
+                                  element={<Input type={'number'} min={0} suffixText={t('회')} />}
                                 />
                                 {/* // 인정학습시간(분) */}
                                 <FormRow2
                                   provider={provider}
                                   name={'recognizedStudyMinutes'}
-                                  element={<Input type={'number'} min={0} suffixText="분" />}
+                                  element={<Input type={'number'} min={0} suffixText={t('분')} />}
                                 />
                               </>
                             ),
@@ -962,7 +1014,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                 <FormRow2
                   provider={provider}
                   name={'isRecognizedStudyPoint'}
-                  label={'학습 포인트'}
+                  label={t('학습 포인트')}
                   format={'boolean'}
                   element={
                     <RadioGroupFormField
@@ -976,7 +1028,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                               <FormRow2
                                 provider={provider}
                                 name={'recognizedStudyPoint'}
-                                element={<Input type={'number'} min={0} suffixText="포인트" />}
+                                element={<Input type={'number'} min={0} suffixText={t('포인트')} />}
                               />
                             ),
                           },
@@ -992,7 +1044,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
               <FormRow2
                 provider={provider}
                 name={'isLearnEnvEnabled'}
-                label={'학습환경'}
+                label={t('학습환경')}
                 format={'boolean'}
                 element={<SwitchFormField />}
               />
@@ -1007,7 +1059,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                 <FormRow2
                   provider={provider}
                   name={'deviceRestrictType'}
-                  label={'기기 제한'}
+                  label={t('기기 제한')}
                   element={
                     <RadioGroupFormField
                       optionsConfig={{
@@ -1020,7 +1072,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                 <FormRow2
                   provider={provider}
                   name={'isIntranetRestricted'}
-                  label={'네트워크 제한'}
+                  label={t('네트워크 제한')}
                   format={'boolean'}
                   element={
                     <RadioGroupFormField
@@ -1036,7 +1088,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                 <FormRow2
                   provider={provider}
                   name={'learningRestrictTimeType'}
-                  label={'학습시간 제한'}
+                  label={t('학습시간 제한')}
                   element={
                     <RadioGroupFormField
                       optionsConfig={{
@@ -1049,7 +1101,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                 <FormRow2
                   provider={provider}
                   name={'isReviewRestricted'}
-                  label={'복습 제한'}
+                  label={t('복습 제한')}
                   format={'boolean'}
                   element={
                     <RadioGroupFormField
@@ -1067,8 +1119,8 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                                   <Input
                                     type={'number'}
                                     min={0}
-                                    prefixText={'학습 종료일 기준'}
-                                    suffixText="개월"
+                                    prefixText={t('학습 종료일 기준')}
+                                    suffixText={t('개월')}
                                   />
                                 }
                               />
@@ -1085,7 +1137,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                 <FormRow2
                   provider={provider}
                   name={'isCaptureBlockEnabled'}
-                  label={'화면캡쳐 방지'}
+                  label={t('화면캡쳐 방지')}
                   format={'boolean'}
                   element={
                     <RadioGroupFormField
@@ -1099,7 +1151,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                 <FormRow2
                   provider={provider}
                   name={'isSecurityAgreementEnable'}
-                  label={'학습전 보안 서약'}
+                  label={t('학습전 보안 서약')}
                   format={'boolean'}
                   element={
                     <RadioGroupFormField
@@ -1117,7 +1169,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                 provider={provider}
                 name={'isLearnControlEnabled'}
                 format={'boolean'}
-                label={'학습제어'}
+                label={t('학습제어')}
                 element={<SwitchFormField />}
               />
             </ContentsRow>
@@ -1131,7 +1183,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                 <FormRow2
                   provider={provider}
                   name={'isDailyLearningProgressRestricted'}
-                  label={'1일 진도제한'}
+                  label={t('1일 진도제한')}
                   format={'boolean'}
                   element={
                     <RadioGroupFormField
@@ -1149,7 +1201,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                                   <Input
                                     type={'number'}
                                     min={0}
-                                    prefixText={'하루 기준'}
+                                    prefixText={t('하루 기준')}
                                     suffixText="%"
                                   />
                                 }
@@ -1165,7 +1217,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                 <FormRow2
                   provider={provider}
                   name={'isProgressResetEnabled'}
-                  label={'진도 초기화'}
+                  label={t('진도 초기화')}
                   format={'boolean'}
                   element={
                     <RadioGroupFormField
@@ -1181,7 +1233,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                 <FormRow2
                   provider={provider}
                   name={'isSequentialLearningRequired'}
-                  label={'순차 학습'}
+                  label={t('순차 학습')}
                   format={'boolean'}
                   element={
                     <RadioGroupFormField
@@ -1195,7 +1247,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                 <FormRow2
                   provider={provider}
                   name={'isPlayerControlRestricted'}
-                  label={'동영상 탐색바 제한'}
+                  label={t('동영상 탐색바 제한')}
                   format={'boolean'}
                   element={
                     <RadioGroupFormField
@@ -1211,7 +1263,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                 <FormRow2
                   provider={provider}
                   name={'maxPlayBackRate'}
-                  label={'동영상 배속 제한'}
+                  label={t('동영상 배속 제한')}
                   element={
                     <RadioGroupFormField
                       optionsConfig={{
@@ -1232,7 +1284,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
               <FormRow2
                 provider={provider}
                 name={'hmgStandardMainCategory'}
-                label={'HMG 과정 데이터 표준 대분류'}
+                label={t('HMG 과정 데이터 표준 대분류')}
                 element={
                   <DropdownFormField
                     optionsConfig={{
@@ -1246,7 +1298,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
               <FormRow2
                 provider={provider}
                 name={'hmgStandardSubCategory'}
-                label={'HMG 과정 데이터 표준 중분류'}
+                label={t('HMG 과정 데이터 표준 중분류')}
                 element={
                   <DropdownFormField
                     optionsConfig={{
@@ -1263,7 +1315,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
               <FormRow2
                 provider={provider}
                 name={'isUseTrainingCostPerPerson'}
-                label={'1인당 교육비'}
+                label={t('1인당 교육비')}
                 format={'boolean'}
                 element={
                   <RadioGroupFormField
@@ -1278,7 +1330,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                               provider={provider}
                               name={'trainingCostPerPerson'}
                               format={'number'}
-                              element={<Input type={'number'} min={0} suffixText="원" />}
+                              element={<Input type={'number'} min={0} suffixText={t('원')} />}
                             />
                           ),
                         },
@@ -1291,7 +1343,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
               <FormRow2
                 provider={provider}
                 name={'isUseEmploymentInsuranceRefund'}
-                label={'고용보험 환급비용'}
+                label={t('고용보험 환급비용')}
                 format={'boolean'}
                 element={
                   <RadioGroupFormField
@@ -1306,7 +1358,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                               provider={provider}
                               name={'employmentInsuranceRefund'}
                               format={'number'}
-                              element={<Input type={'number'} min={0} suffixText="원" />}
+                              element={<Input type={'number'} min={0} suffixText={t('원')} />}
                             />
                           ),
                         },
@@ -1322,7 +1374,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
               <FormRow2
                 provider={provider}
                 name={'isStayed'}
-                label={'숙박 여부'}
+                label={t('숙박 여부')}
                 format={'boolean'}
                 element={
                   <RadioGroupFormField
@@ -1340,7 +1392,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
               <FormRow2
                 provider={provider}
                 name={'isUseOutsourcing'}
-                label={'(테넌트) 전용'}
+                label={t('(테넌트) 전용')}
                 format={'boolean'}
                 element={<SwitchFormField />}
               />
@@ -1355,7 +1407,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                 <FormRow2
                   provider={provider}
                   name={'isPreLevelTestRequired'}
-                  label={'사전 레벨테스트'}
+                  label={t('사전 레벨테스트')}
                   format={'boolean'}
                   element={
                     <RadioGroupFormField
@@ -1369,7 +1421,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                 <FormRow2
                   provider={provider}
                   name={'isBookDeliveryInfoRequired'}
-                  label={'교재 배송지 수집'}
+                  label={t('교재 배송지 수집')}
                   format={'boolean'}
                   element={
                     <RadioGroupFormField
@@ -1386,7 +1438,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                 <FormRow2
                   provider={provider}
                   name={'tutorName'}
-                  label={'튜터'}
+                  label={t('튜터')}
                   element={
                     <InputModalSelectorFormField
                       modalConfig={{
@@ -1407,7 +1459,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                 <FormRow2
                   provider={provider}
                   name={'outsourcingCompanyName'}
-                  label={'위탁 소유회사'}
+                  label={t('위탁 소유회사')}
                   element={
                     <InputModalSelectorFormField
                       modalConfig={{
@@ -1443,7 +1495,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
           </div>
           {/* 커리큘럼 */}
           <div>
-            <h2>커리큘럼</h2>
+            <h2>{t('커리큘럼')}</h2>
           </div>
         </SplitPanel>
       </form>
@@ -1466,7 +1518,7 @@ const responseDataToFormData = (d: LearningSequence): any => {
     // 수강취소 기간 설정
     enrollCancelRange: { from: d.enrollCancelStartDateTime, to: d.enrollCancelEndDateTime },
     // 수강신청 기간 설정
-    enrollmentRange: { from: d.enrollmentStartDateTime, to: d.enrollmentEndDateTime },
+    enrollmentRange: { from: d.enrollStartDateTime, to: d.enrollEndDateTime },
     // 이수기준 설정
     passOption: {
       progressMinPassScore: d.progressMinPassScore, // 진도 최소 이수 점수
@@ -1555,8 +1607,8 @@ export const formDataToRequestData = (d: LearningSequence) => {
 
   // 날짜 범위 쪼개기
   if (d.enrollmentRange) {
-    d.enrollmentStartDateTime = d.enrollmentRange?.from;
-    d.enrollmentEndDateTime = d.enrollmentRange?.to;
+    d.enrollStartDateTime = d.enrollmentRange?.from;
+    d.enrollEndDateTime = d.enrollmentRange?.to;
   }
 
   if (d.enrollCancelRange) {
@@ -1574,19 +1626,19 @@ export const formDataToRequestData = (d: LearningSequence) => {
   //   ...d,
   // };
   return {
-    tenantList: d.tenantList ? d.tenantList?.map((x: any) => x.tenantId) : [],
+    tenantIds: d.tenantList ? d.tenantList?.map((x: any) => x.tenantId) : [],
     targetList: d.targetList,
     courseSequenceName: d.courseSequenceName,
     isUsed: d.isUsed,
-    enrollmentStartDateTime: d.enrollmentStartDateTime,
-    enrollmentEndDateTime: d.enrollmentEndDateTime,
+    enrollStartDateTime: d.enrollStartDateTime,
+    enrollEndDateTime: d.enrollEndDateTime,
     isEnrollCancelDeadLineActivated: d.isEnrollCancelDeadLineActivated,
     enrollCancelStartDateTime: d.enrollCancelStartDateTime,
     enrollCancelEndDateTime: d.enrollCancelEndDateTime,
     learningStartType: d.learningStartType,
-    learningStartDays: d.learningStartDays,
-    learningStartDateTime: d.learningStartDateTime,
-    learningEndDateTime: d.learningEndDateTime,
+    learningStartDays: d.learningStartType === 'DAYS_AFTER_ENROLL' ? d.learningStartDays : null,
+    learningStartDateTime: d.learningStartType === 'FIXED_DATE' ? d.learningStartDateTime : null,
+    learningEndDateTime: d.learningStartType === 'FIXED_DATE' ? d.learningEndDateTime : null,
     learningSpaceType: d.learningSpaceType,
     learningSpaceId: d.learningSpaceId,
     learningSpaceName: d.learningSpaceName,

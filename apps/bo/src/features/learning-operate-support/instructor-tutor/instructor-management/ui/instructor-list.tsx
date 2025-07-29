@@ -143,7 +143,8 @@ const InstructorListComponent = ({ viewMode, setSelectedItem }: InstructorListPr
       }),
       columnHelper.accessor('instructorType', {
         header: t('강사 타입'),
-        cell: (info) => (info.getValue() === 'INTERNAL_INSTRUCTOR' ? '사내 강사' : '사외 강사'),
+        cell: (info) =>
+          info.getValue() === 'INTERNAL_INSTRUCTOR' ? t('사내 강사') : t('사외 강사'),
         enableGrouping: false,
         size: viewMode === EnPageMode.PAGE ? 180 : 246,
       }),

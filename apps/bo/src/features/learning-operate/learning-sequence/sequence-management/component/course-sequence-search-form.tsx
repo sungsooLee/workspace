@@ -32,7 +32,7 @@ export const CourseSequenceSearchForm: React.FC<CourseSequenceSearchFormProps> =
         <FormRow2
           provider={provider}
           name="tenantId"
-          label="테넌트"
+          label={t('테넌트')}
           format={'number'}
           element={<TenantByRoleDropdownFormField />}
           validation={{

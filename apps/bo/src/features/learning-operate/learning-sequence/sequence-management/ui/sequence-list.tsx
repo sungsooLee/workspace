@@ -13,7 +13,7 @@ import {
   useGridBoxConfig,
   useModal,
 } from '@learnway/ui';
-import { SelectOption, useDynamicForm2 } from '@learnway/hooks';
+import { CODE_GROUP, SelectOption, useDynamicForm2 } from '@learnway/hooks';
 import { queryOptions } from '@entities/learning-sequence/service/learning-sequence.queries';
 import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
 import { LMSApiPrefix } from '@learnway/config';
@@ -74,6 +74,8 @@ const SequenceListComponent = ({
   const { updateSequenceList } = useUpdateSequenceList({});
   const { deleteSequenceList } = useDeleteSequenceList({});
   const { copySequence } = useCopySequence({});
+  const [originalData, setOriginalData] = useState<any[]>([]);
+  const [didSearch, setDidSearch] = useState(false); // 조회 완료 플래그
 
   _global.linkClick = (payload: any) => {
     setMode(Mode.DETAIL);
@@ -85,7 +87,7 @@ const SequenceListComponent = ({
     mode: 'onSubmit', // 서브밋할 때만 validation 실행
     reValidateMode: 'onChange', // 에러 발생 후에는 값 변경시 즉시 재검증
   });
-  const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
+  const { config: gConfig, gridFetch, data: gridData } = useGridBox(gridConfig, getValues);
   const [params, setParams] = useState<Record<string, any>>({});
   const [valuesWithLabel, setValuesWithLabel] = useState<Record<string, SelectOption>>({});
   const [showSaveButton, setShowSaveButton] = useState<any>();
@@ -176,7 +178,8 @@ const SequenceListComponent = ({
       columnHelper.accessor('courseSequenceStartDateTime', {
         header: t('학습 시작일'),
         cell: (info) => {
-          if (info.row.original.status === '학습중') return '수강신청 승인일로 부터';
+          if (info.row.original.learningStartType === 'DAYS_AFTER_ENROLL')
+            return t('수강신청 승인일로 부터');
           else
             return <EditDatePickerCell info={info} dateOptions={{ displayType: 'day-time-h' }} />;
         },
@@ -186,7 +189,7 @@ const SequenceListComponent = ({
       columnHelper.accessor('courseSequenceEndDateTimeMerge', {
         header: t('학습 종료일'),
         cell: (info: CellContext<any, string>) => {
-          return <EditInputDateCell info={info} input={{ suffixText: '일' }} />;
+          return <EditInputDateCell info={info} input={{ suffixText: t('일') }} />;
         },
         enableGrouping: false,
         size: 300,
@@ -194,6 +197,7 @@ const SequenceListComponent = ({
       columnHelper.accessor('learningStatusType', {
         header: t('상태'),
         cell: (info) => info.getValue(),
+        // cell: (info) => CODE_GROUP['lms.sequence.LearningStatusType'],
         enableGrouping: false,
         size: 88,
       }),
@@ -244,29 +248,36 @@ const SequenceListComponent = ({
     handleOnSearch(searchValues);
   };
 
-  const handleOnSearch = useCallback((data: any) => {
-    console.log('## search param:', data);
+  useEffect(() => {
+    if (didSearch && gridData) {
+      setOriginalData(gridData.content); // ✅ 최초 조회만 저장
+      setDidSearch(false);
+    }
+  }, [didSearch, gridData]);
+
+  const handleOnSearch = useCallback((param: any) => {
+    console.log('## search param:', param);
     let payload = {};
     if (!courseIdProps) {
       // 메뉴 진입
       payload = {
-        tenantId: data.tenantId,
-        channelUuid: data.channelUuid,
-        openingYear: parseInt(data.openingYear),
-        courseType: data.courseType,
-        courseName: data.courseName,
-        courseSequenceName: data.courseSequenceName,
-        learningStatusType: data.learningStatusType,
-        courseSequenceStartDateTime: data.courseSequenceRange.from,
-        courseSequenceEndDateTime: data.courseSequenceRange.to,
+        tenantId: param.tenantId,
+        channelUuid: param.channelUuid,
+        openingYear: parseInt(param.openingYear),
+        courseType: param.courseType,
+        courseName: param.courseName,
+        courseSequenceName: param.courseSequenceName,
+        learningStatusType: param.learningStatusType,
+        courseSequenceStartDateTime: param.courseSequenceRange.from,
+        courseSequenceEndDateTime: param.courseSequenceRange.to,
       };
     } else {
       // 탭 진입
       payload = {
         courseId: courseIdProps,
-        openingYear: parseInt(data.openingYear),
-        isUsed: data.isUsed === 'true',
-        courseSequenceName: data.courseSequenceName,
+        openingYear: parseInt(param.openingYear),
+        isUsed: param.isUsed === 'true',
+        courseSequenceName: param.courseSequenceName,
       };
     }
     setParams({
@@ -275,6 +286,7 @@ const SequenceListComponent = ({
     // setValuesWithLabel(getValuesWithLabel());
     console.log('##payload:', payload);
     gridFetch(payload);
+    setDidSearch(true); // ✅ 조회 완료 신호
   }, []);
 
   const handleRowsSelect = useCallback((rows: any[]) => {
@@ -284,7 +296,7 @@ const SequenceListComponent = ({
   const [inputAdd, setInputAdd] = useState<number>();
   const [inputCopy, setInputCopy] = useState<number>();
   const onAddRow = async () => {
-    console.log('data=>', data);
+    console.log('data=>', gridData);
     if (!inputAdd || inputAdd <= 0) return;
     const confirmRes = await openConfirm({
       title: t('차수를 추가 하시겠습니까?'),
@@ -391,11 +403,81 @@ const SequenceListComponent = ({
     });
   };
 
+  const isEdited = (original: any, current: any) => {
+    if (original.courseSequenceNo !== current.courseSequenceNo) {
+      return true;
+    }
+    if (
+      original.enrollmentStartDateTime !== current.enrollmentStartDateTime ||
+      original.enrollmentEndDateTime !== current.enrollmentEndDateTime
+    ) {
+      return true;
+    }
+
+    if (current.learningStartType === 'DAYS_AFTER_ENROLL') {
+      if (original.learningStartDays !== current.learningStartDays) {
+        return true;
+      }
+    }
+
+    if (current.learningStartType === 'FIXED_DATE') {
+      if (
+        original.courseSequenceStartDateTime !== current.courseSequenceStartDateTime ||
+        original.courseSequenceEndDateTime !== current.courseSequenceEndDateTime
+      ) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
   const handleSaveClick = async () => {
     console.log('##save');
+    console.log('originalData=>', originalData);
     console.log('gConfig:', gConfig);
-    console.log('save:', gConfig.gridData);
-    const payload = gConfig.gridData?.content?.map((x: any) => {
+
+    // 변경된 행만 추출
+    const editedRows = gConfig.gridData?.content.filter((current, index) => {
+      const original = originalData[index];
+      return isEdited(original, current);
+    });
+
+    if (editedRows && editedRows.length === 0) {
+      openAlert(t('변경된 항목이 없습니다.'));
+      return;
+    }
+
+    console.log('## editedRows=>', editedRows);
+
+    const invalidItems = editedRows
+      ?.map((x: any, index: number) => {
+        let error = false;
+
+        if (!x.enrollmentStartDateTime || !x.enrollmentEndDateTime) {
+          console.log('수강일 누락');
+          error = true;
+        }
+        if (!x.learningStartType) {
+          console.log('학습시작입 타입 누락');
+          error = true;
+        } else if (x.learningStartType === 'FIXED_DATE') {
+          if (!x.courseSequenceStartDateTime || !x.courseSequenceEndDateTime) {
+            console.log('학습시작일 누락');
+            error = true;
+          }
+        }
+
+        return error ? { rowIndex: index + 1 } : null;
+      })
+      .filter(Boolean);
+
+    if (invalidItems && invalidItems.length > 0) {
+      openAlert(`${t('항목에 누락된 값이 있습니다')}`);
+      return;
+    }
+
+    const payload = editedRows?.map((x: any) => {
       return {
         courseSequenceId: x.courseSequenceId ?? null,
         courseSequenceNo: parseInt(x.courseSequenceNo) ?? null,
@@ -404,11 +486,12 @@ const SequenceListComponent = ({
         learningStartType: x.learningStartType ?? null,
         learningStartDays: x.learningStartType === 'DAYS_AFTER_ENROLL' ? x.learningStartDays : null,
         learningStartDateTime:
-          x.learningStartType !== 'DAYS_AFTER_ENROLL' ? x.courseSequenceStartDateTime : null,
+          x.learningStartType === 'FIXED_DATE' ? x.courseSequenceStartDateTime : null,
         learningEndDateTime:
-          x.learningStartType !== 'DAYS_AFTER_ENROLL' ? x.courseSequenceEndDateTime : null,
+          x.learningStartType === 'FIXED_DATE' ? x.courseSequenceEndDateTime : null,
       };
     });
+
     console.log('## payload=>', payload);
     await updateSequenceList(payload, {
       onSuccess: async (data: any, variables: any, context: any) => {
@@ -434,7 +517,6 @@ const SequenceListComponent = ({
       ) : (
         <SequenceSearchForm provider={provider} onSubmit={onSubmit} onSearch={handleOnSearch} />
       )}
-      {/* <SequenceSearchForm provider={provider} onSubmit={onSubmit} onSearch={handleOnSearch} /> */}
       <Divider />
       <GridBox
         config={gConfig}
@@ -448,7 +530,7 @@ const SequenceListComponent = ({
             <>
               <Input
                 type={'number'}
-                suffixText={'개'}
+                suffixText={t('개')}
                 value={inputAdd}
                 onChange={(e) => setInputAdd(parseInt(e.target.value))}
               />
@@ -460,7 +542,7 @@ const SequenceListComponent = ({
               />
               <Input
                 type={'number'}
-                suffixText={'개'}
+                suffixText={t('개')}
                 value={inputCopy}
                 onChange={(e) => setInputCopy(parseInt(e.target.value))}
               />
@@ -482,8 +564,8 @@ const SequenceListComponent = ({
               url={`${LMSApiPrefix()}/sequences/excel`}
               params={params}
               paramLabels={valuesWithLabel}
-              dataCount={data?.totalElements}
-              disabled={!data?.totalElements}
+              dataCount={gridData?.totalElements}
+              disabled={!gridData?.totalElements}
             />
           </>
         }
