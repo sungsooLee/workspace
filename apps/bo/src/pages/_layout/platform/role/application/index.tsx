@@ -54,10 +54,6 @@ function RouteComponent() {
   });
 
   useEffect(() => {
-    gridFetch();
-  }, []);
-
-  useEffect(() => {
     if (!loginUser) return;
     if (loginUser.activeTenant?.tenantId) {
       console.log('loginUser', loginUser);
@@ -357,6 +353,9 @@ const columns = () =>
             t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.role.RoleType.${info.getValue()}`),
           enableGrouping: false,
           size: 150,
+          meta: {
+            sortKey: 'roleEntity.roleType',
+          },
         }),
         columnHelper.accessor('role.name', {
           header: t('역할명'),
@@ -368,12 +367,14 @@ const columns = () =>
             />
           ),
           enableGrouping: false,
+          meta: {
+            sortKey: 'roleEntity.name',
+          },
         }),
         columnHelper.accessor('startDate', {
           header: t('역할 시작일'),
           cell: (info) => info.getValue(),
           enableGrouping: false,
-          enableSorting: false,
           size: 100,
           meta: {
             cellAlign: 'center',
@@ -383,7 +384,6 @@ const columns = () =>
           header: t('역할 종료일'),
           cell: (info) => info.getValue(),
           enableGrouping: false,
-          enableSorting: false,
           size: 100,
           meta: {
             cellAlign: 'center',
@@ -403,12 +403,18 @@ const columns = () =>
           cell: (info) => info.getValue(),
           enableGrouping: false,
           size: 130,
+          meta: {
+            sortKey: 'applicant.companyEntity.name',
+          },
         }),
         columnHelper.accessor('applicant.dept.deptName', {
           header: t('부서명'),
           cell: (info) => info.getValue(),
           enableGrouping: false,
           size: 130,
+          meta: {
+            sortKey: 'applicant.deptEntity.deptName',
+          },
         }),
         columnHelper.accessor('applicant.employeeNumber', {
           header: t('사번'),
@@ -439,7 +445,6 @@ const columns = () =>
           ? ''
           : getDateToString(new Date(info.row.original.createdDate), DATE_TIME_FORMAT.DATETIME_SEC),
       enableGrouping: false,
-      enableSorting: false,
       size: 160,
       meta: {
         cellAlign: 'center',
