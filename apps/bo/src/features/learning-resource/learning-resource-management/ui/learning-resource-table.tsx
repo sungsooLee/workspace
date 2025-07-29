@@ -106,12 +106,10 @@ function LearningResourceTableComponent() {
           label: t('LABEL.form.label.isVendored', '외주여부'),
           value: '',
           presetOptionLabel: t('LABEL.form.label.all', '전체'),
-          optionsConfig: {
-            options: [
-              { value: 'true', label: 'Y' },
-              { value: 'false', label: 'N' },
-            ],
-          },
+          options: [
+            { value: 'true', label: 'Y' },
+            { value: 'false', label: 'N' },
+          ],
         },
         {
           name: 'isContentEnabled',
@@ -119,12 +117,10 @@ function LearningResourceTableComponent() {
           label: t('LABEL.form.label.isContentEnabled', '사용가능'),
           value: '',
           presetOptionLabel: t('LABEL.form.label.all', '전체'),
-          optionsConfig: {
-            options: [
-              { value: 'true', label: 'Y' },
-              { value: 'false', label: 'N' },
-            ],
-          },
+          options: [
+            { value: 'true', label: t('사용가능') },
+            { value: 'false', label: t('사용불가') },
+          ],
         },
         {
           name: 'isCourseUsed',
@@ -132,12 +128,10 @@ function LearningResourceTableComponent() {
           label: t('LABEL.form.label.isCourseUsed', '교육활용'),
           value: '',
           presetOptionLabel: t('LABEL.form.label.all', '전체'),
-          optionsConfig: {
-            options: [
-              { value: 'true', label: 'Y' },
-              { value: 'false', label: 'N' },
-            ],
-          },
+          options: [
+            { value: 'true', label: 'Y' },
+            { value: 'false', label: 'N' },
+          ],
         },
         {
           name: 'coordinatorName',
@@ -292,7 +286,7 @@ function LearningResourceTableComponent() {
         size: 95,
         name: 'isContentEnabled',
         label: t('LABEL.grid.column.isContentEnabled', '사용가능'),
-        render: (_: any) => (_.getValue() ? 'Y' : 'N'),
+        render: (_: any) => (_.getValue() ? t('사용가능') : t('사용불가')),
       },
       {
         size: 83,
