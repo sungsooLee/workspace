@@ -211,12 +211,12 @@ const searchConfig = (): SearchBoxConfig => ({
     ],
     [
       {
-        name: 'accountStatus',
+        name: 'userState',
         type: 'dropdown',
         label: t('계정 상태'),
         value: '',
         optionsConfig: {
-          codeGroup: CODE_GROUP['pms.user.AccountStatus'],
+          codeGroup: CODE_GROUP['pms.user.UserState'],
         },
         presetOptionLabel: t('전체'),
       },
