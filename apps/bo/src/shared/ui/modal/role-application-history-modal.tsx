@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
-import { t } from 'i18next';
-import { ModalBody, ModalContainer, ModalTitle, GridBox } from '@learnway/ui';
+import RoleManagerService from '@entities/role/api/role-manager';
+import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
+import { GridBox, ModalBody, ModalContainer, ModalTitle } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { EnGlobalConst } from '@types';
-import { getDateToString, DATE_TIME_FORMAT } from '@learnway/shared';
-import RoleManagerService from '@entities/role/api/role-manager';
+import { t } from 'i18next';
+import { useEffect, useState } from 'react';
 
 const RoleApplicationHistoryModalComponent = ({ applicationId }: { applicationId: number }) => {
   const [gridData, setGridData] = useState<any[]>([]);
@@ -53,6 +53,7 @@ const columns = (): ColumnDef<any, unknown>[] => [
       );
     },
     enableGrouping: false,
+    enableSorting: false,
     size: 180,
     meta: {
       cellAlign: 'center',
@@ -67,6 +68,7 @@ const columns = (): ColumnDef<any, unknown>[] => [
       return info.row.original.applicant.name + ' / ' + info.row.original.applicant.employeeNumber;
     },
     enableGrouping: false,
+    enableSorting: false,
     size: 180,
   }),
   columnHelper.accessor('status', {
@@ -74,6 +76,7 @@ const columns = (): ColumnDef<any, unknown>[] => [
     cell: (info) =>
       t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.role.RoleApplicationStatus.${info.getValue()}`),
     enableGrouping: false,
+    enableSorting: false,
     size: 180,
   }),
   columnHelper.accessor('reason', {
@@ -90,6 +93,7 @@ const columns = (): ColumnDef<any, unknown>[] => [
       }
     },
     enableGrouping: false,
+    enableSorting: false,
     meta: {
       size: 'auto',
     },

@@ -1,3 +1,5 @@
+import { useSystemCodeDetail } from '@entities/common-code';
+import { useUpdateUser } from '@entities/users/service/users.hook';
 import { DuplicateState } from '@features/form';
 import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
@@ -12,10 +14,6 @@ import { CompanyUserDetailAccount } from './company-user-detail-account';
 import { CompanyUserDetailAuthentication } from './company-user-detail-auth';
 import { CompanyUserDetailJob } from './company-user-detail-job';
 import { CompanyUserDetailPersonal } from './company-user-detail-personal';
-import { useUpdateUser } from '@entities/users/service/users.hook';
-import { useSystemCodeDetail } from '@entities/common-code';
-import UsersService from '@entities/users/api/users';
-import UserService from '@learnway/auth/entities/user/api/users';
 
 interface CompanyUserDetailBaseProps {
   userInfo: any;
@@ -26,7 +24,9 @@ function compareLatestDate(dates: string[]) {
   const validDates = dates.filter((d): d is string => d! == null);
 
   return validDates.length > 0
-    ? validDates.reduce((latest, current) => new Date(current) > new Date(latest) ? current : latest)
+    ? validDates.reduce((latest, current) =>
+        new Date(current) > new Date(latest) ? current : latest,
+      )
     : '-';
 }
 
@@ -34,18 +34,17 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
   const { provider, control, updateFormData, onSubmit, onFormChange, clearFormError, getValues } =
     useDynamicForm(formConfig());
 
-
   const { confirm: openConfirm } = useModal();
   const { open: openToast } = useToast();
   const { data: codeGroupData } = useSystemCodeDetail('cmmon.TelCountryCode');
 
   const { update } = useUpdateUser({
     onSuccess: (data: any) => {
-      openToast({ title: '저장 하였습니다.', type: 'success' });
+      openToast({ title: t('저장 하였습니다.'), type: 'success' });
       props.userRefetch();
       updateFormData(data);
-    }
-  })
+    },
+  });
 
   const [roleData, setRoleData] = useState<any[]>([]);
   const formRef = useRef<HTMLFormElement>(null);
@@ -85,37 +84,47 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
 
         // 계정 정보 데이터 관리 방식
         hrInfoManageType: user.linkageSystem ? user.linkageSystem : 'MANUAL_MANAGE',
-        companyMemberJoinTypeList: user.companyMemberJoinTypeList ? user.companyMemberJoinTypeList : ['BO_JOIN_MANAGER'],
+        companyMemberJoinTypeList: user.companyMemberJoinTypeList
+          ? user.companyMemberJoinTypeList
+          : ['BO_JOIN_MANAGER'],
         accountStatus: 'NORMAL',
-        approvalStatus: user.enabledDate !== null? '승인' : '대기',
+        approvalStatus: user.enabledDate !== null ? t('승인') : t('대기'),
         lastApprovalStatusUpdateDate: user.enabledDate
           ? getDateToString(new Date(user.enabledDate), DATE_TIME_FORMAT.DATETIME_SEC)
           : '-',
         // lockedDate, dormantDate, deletedDate 중 가장 최근 일자
-        lastAccountStatusUpdateDate: latestDate ? getDateToString(new Date(latestDate), DATE_TIME_FORMAT.DATETIME_SEC) : '-',
+        lastAccountStatusUpdateDate: latestDate
+          ? getDateToString(new Date(latestDate), DATE_TIME_FORMAT.DATETIME_SEC)
+          : '-',
         tenantList: user.tenants,
 
         // 로그인 및 인증 설정 정보
         isUseSso: user.ssoType !== null ? user.ssoType : false,
         ssoTypeList: user.ssoTypeList ? user.ssoTypeList : '',
         isUseTwoFactorAuth: user.boTwoFactorAuthEnabled || user.foTwoFactorAuthEnabled,
-        twoFactorAuthPlatformTypeList: [user.boTwoFactorAuthEnabled && 'BO_PLATFORM', user.foTwoFactorAuthEnabled && 'FO_PLATFORM'],
+        twoFactorAuthPlatformTypeList: [
+          user.boTwoFactorAuthEnabled && 'BO_PLATFORM',
+          user.foTwoFactorAuthEnabled && 'FO_PLATFORM',
+        ],
         '2FAType': user.twoFactorAuthType,
-        limitLogin: user.company.companyLoginRestrictionList
+        limitLogin: user.company.companyLoginRestrictionList,
       };
-      if( user.lockedDate === null ) {
-        if( user.dormantDate !== null ) {
+      if (user.lockedDate === null) {
+        if (user.dormantDate !== null) {
           initialData.accountStatus = 'INACTIVE_LOCK';
         }
       } else {
-        if( user.dormantDate === null ) {
+        if (user.dormantDate === null) {
           initialData.accountStatus = 'INACTIVE';
         } else {
           initialData.accountStatus = 'LOCK';
         }
       }
 
-      if( (user.jobRole && user.jobRole.length > 0) || (user.jobDomain && user.jobDomain.length > 0) ) {
+      if (
+        (user.jobRole && user.jobRole.length > 0) ||
+        (user.jobDomain && user.jobDomain.length > 0)
+      ) {
         initialData.jobDomain = null;
         initialData.jobRole = null;
         const maxLength = Math.max(user.jobRole.length, user.jobDomain.length);
@@ -175,33 +184,33 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
       boTwoFactorAuthEnabled: false,
     };
 
-    if( data.userState === '2' ) {
+    if (data.userState === '2') {
       payload.isOnLeave = true;
       payload.isSuspended = false;
-    } else if( data.userState === '3' ) {
+    } else if (data.userState === '3') {
       payload.isOnLeave = false;
       payload.isSuspended = true;
     }
 
-    if( data.hrInfoManageType === 'AUTO_MANAGE' ) {
+    if (data.hrInfoManageType === 'AUTO_MANAGE') {
       payload.linkageSystem = data.linkageSystem;
     }
 
-    if( data.isUseTwoFactorAuth ) {
+    if (data.isUseTwoFactorAuth) {
       payload.foTwoFactorAuthEnabled = data.twoFactorAuthPlatformTypeList.includes('FO_PLATFORM');
       payload.boTwoFactorAuthEnabled = data.twoFactorAuthPlatformTypeList.includes('BO_PLATFORM');
     }
 
-    if( data.jobDomain !== '' && data.jobDomain.length !== 0 ) {
+    if (data.jobDomain !== '' && data.jobDomain.length !== 0) {
       payload.jobDomain = Array.of(data.jobDomain);
       payload.jobRole = [];
     } else {
-      if( data.jobDomains ) {
+      if (data.jobDomains) {
         const jobDomains: any[] = [];
         const jobRoleNames: any[] = [];
         data.jobDomains.forEach((job: any) => {
-          jobDomains.push(job.role1)
-          jobRoleNames.push(job.role2)
+          jobDomains.push(job.role1);
+          jobRoleNames.push(job.role2);
         });
         payload.jobDomain = [...jobDomains];
         payload.jobRole = [...jobRoleNames];
@@ -209,8 +218,10 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
     }
 
     const filteredPayload = Object.fromEntries(
-      Object.entries(payload).filter(([_, value]) => value !== null && value !== undefined && value !== '')
-    )
+      Object.entries(payload).filter(
+        ([_, value]) => value !== null && value !== undefined && value !== '',
+      ),
+    );
     console.log('### payload', filteredPayload);
     if (await openConfirm('저장 하시겠습니까?')) {
       update(filteredPayload);
@@ -295,7 +306,7 @@ const formConfig = (): DynamicFormConfig => ({
       value: { fieldValue: '', checkState: DuplicateState.needInput },
       format: 'object',
       placeholder: ' ',
-      disabled: true
+      disabled: true,
     },
     {
       name: 'birthday',
@@ -446,11 +457,11 @@ const formConfig = (): DynamicFormConfig => ({
       //   codeGroup: CODE_GROUP['pms.user.AccountStatus'],
       // },
       options: [
-        {value: 'NORMAL', label: '정상'},
-        {value: 'LOCK', label: '잠김'},
-        {value: 'INACTIVE', label: '휴면(정상)'},
-        {value: 'INACTIVE_LOCK', label: '휴면(잠김)'},
-      ]
+        { value: 'NORMAL', label: '정상' },
+        { value: 'LOCK', label: '잠김' },
+        { value: 'INACTIVE', label: '휴면(정상)' },
+        { value: 'INACTIVE_LOCK', label: '휴면(잠김)' },
+      ],
     },
     {
       name: 'lastAccountStatusUpdateDate',
