@@ -1,7 +1,7 @@
-import fs from 'fs';
-import path from 'path';
 import * as parser from '@babel/parser';
 import { default as tr } from '@babel/traverse';
+import fs from 'fs';
+import path from 'path';
 import translate from 'translate';
 
 /* package.json
@@ -32,8 +32,9 @@ const jsonFileName = '/Working/git/fe/apps/bo/src/entities/mock/i18n-resource-ko
 const jsonRoot = 'LABEL.tenant.page';
 
 const rootPath =
-  '/Working/git/fe/apps/bo/src/features/learning-resource/learning-resource-management/ui/learning-resource-question-bank-question.tsx';
+  '/Working/git/fe/apps/bo/src/features/learning-resource/learning-resource-management/ui';
 //  "/Working/git/fe/apps/bo/src/features/learning-resource/learning-resource-management/ui/learning-resource-table.tsx";
+// '/Working/git/fe/apps/bo/src/pages/_layout/learning';
 
 /** 설정 종료 */
 
@@ -141,6 +142,7 @@ async function processDataAndFileLang(filePath) {
       }
     }
   }
+
   if (appendJson) {
     if (!onlyJsonData && updatefile) {
       const jsonString = JSON.stringify(langJson, null, 2);
@@ -148,13 +150,7 @@ async function processDataAndFileLang(filePath) {
     }
   } else {
     if (onlyJsonData) {
-      const newChangeList = [];
-      for (const item of changeList) {
-        if (valueMap.has(item.value)) {
-          newChangeList.push(item);
-        }
-      }
-      replaceJavascript(filePath, newChangeList);
+      replaceJavascript(filePath, changeList);
     } else {
       if (!updatefile && changeList.length > 0) {
         replaceJavascript(filePath, changeList);
@@ -296,7 +292,7 @@ function getFileLangPosition(filePath) {
               ptype: path.parent.type,
               stLineNo: path.node.loc.start.line,
               edLineNo: path.node.loc.end.line,
-              text: path.node?.name?.name + ' maxLength 미지정 의심',
+              text: `${path.node?.name?.name} maxLength 미지정 의심`,
               start: path.node.start,
               end: path.node.end,
             });
@@ -324,7 +320,7 @@ function getFileLangPosition(filePath) {
             ptype: path.parent.type,
             stLineNo: path.node.loc.start.line,
             edLineNo: path.node.loc.end.line,
-            text: colType + ' type column내 maxLength 미지정 의심',
+            text: `${colType} type column내 maxLength 미지정 의심`,
             start: path.node.start,
             end: path.node.end,
           });
