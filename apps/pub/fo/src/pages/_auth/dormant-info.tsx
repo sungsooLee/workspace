@@ -16,6 +16,7 @@ export const Route = createFileRoute('/_auth/dormant-info')({
 function RouteComponent() {
   return (
     <div className={cn(styles.auth_box, 'auth--box')}>
+      <AuthTitle />
       {/* 결과모듈 */}
       <div className={`${proccessResultStyles.start} ${styles.success_info}`}>
         <i className={proccessResultStyles.ico}>
