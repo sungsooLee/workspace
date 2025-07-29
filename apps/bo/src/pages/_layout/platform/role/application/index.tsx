@@ -353,9 +353,7 @@ const columns = () =>
             t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.role.RoleType.${info.getValue()}`),
           enableGrouping: false,
           size: 150,
-          meta: {
-            sortKey: 'roleEntity.roleType',
-          },
+          id: 'roleEntity.roleType',
         }),
         columnHelper.accessor('role.name', {
           header: t('역할명'),
@@ -367,9 +365,7 @@ const columns = () =>
             />
           ),
           enableGrouping: false,
-          meta: {
-            sortKey: 'roleEntity.name',
-          },
+          id: 'roleEntity.name',
         }),
         columnHelper.accessor('startDate', {
           header: t('역할 시작일'),
@@ -403,18 +399,14 @@ const columns = () =>
           cell: (info) => info.getValue(),
           enableGrouping: false,
           size: 130,
-          meta: {
-            sortKey: 'applicant.companyEntity.name',
-          },
+          id: 'applicant.companyEntity.name',
         }),
         columnHelper.accessor('applicant.dept.deptName', {
           header: t('부서명'),
           cell: (info) => info.getValue(),
           enableGrouping: false,
           size: 130,
-          meta: {
-            sortKey: 'applicant.deptEntity.deptName',
-          },
+          id: 'applicant.deptEntity.deptName',
         }),
         columnHelper.accessor('applicant.employeeNumber', {
           header: t('사번'),
