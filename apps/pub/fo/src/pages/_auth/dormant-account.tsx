@@ -2,7 +2,8 @@ import { isMobile } from 'react-device-detect';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useState } from 'react';
 import { cn } from '@learnway/shared';
-import { IcoPhone02, IcoMail, IcoCaution, IcoFormRequired } from '@learnway/icons';
+import { AuthTitle } from '../../features/auth';
+import { IcoPhone03, IcoMail02, IcoCaution, IcoFormRequired } from '@learnway/icons';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import styles from '@learnway/styles/fo/pages/_auth/search-account/search-account.module.css';
 // import searchAccountFormStyles from './search-account-form.module.css';
@@ -42,19 +43,7 @@ function RouteComponent() {
     <form className="form_row">
       <div className={`${styles.start} ${styles.auth_wrap} ${styles.search_account}`}>
         <div className={cn(styles.auth_box, 'auth--box')}>
-          {/* 퍼블수정 20250319 : embededAlert */}
-          <div className={`${embededAlert.start} ${styles.search_info} ${styles.dormant}`}>
-            <IcoCaution width={48} height={48} stroke={'#A9AFB8'} />
-            <p className={embededAlert.txt}>본인인증 후 휴면계정 해제할 수 있습니다.</p>
-          </div>
-
-          <div className={`${hightlightMessageBoxStyles.start} ${styles.noti_box}`}>
-            마지막 이용일 : <strong>YYYY-MM-DD</strong>
-            <br />
-            휴면 전환일 : <strong>YYYY-MM-DD</strong>
-            <br />
-            별도 분리 보관 정보항목 : <strong>아이디 및 회원정보</strong>
-          </div>
+          <AuthTitle />
 
           <ContentsRow>
             <div className={formStyles.form_item}>
@@ -69,7 +58,7 @@ function RouteComponent() {
                       value: 'type1',
                       label: (
                         <div>
-                          <IcoPhone02 width={48} height={48} className="ico1" />
+                          <IcoPhone03 width={48} height={48} className="ico1" />
                           <span>휴대폰 인증</span>
                         </div>
                       ),
@@ -78,7 +67,7 @@ function RouteComponent() {
                       value: 'type2',
                       label: (
                         <div>
-                          <IcoMail width={48} height={48} className="ico2" />
+                          <IcoMail02 width={48} height={48} className="ico2" />
                           <span>이메일 인증</span>
                         </div>
                       ),
@@ -102,7 +91,7 @@ function RouteComponent() {
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
-                  <Input id="name" type="text" placeholder="이름(김현대)" value="" />
+                  <Input id="name" type="text" placeholder="이름(김현대)" value="" inputSize="lg" />
                 </div>
               </div>
             </ContentsRow>
@@ -117,7 +106,13 @@ function RouteComponent() {
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
-                  <Input id="name" type="text" placeholder="생년월일(19991229)" value="" />
+                  <Input
+                    id="name"
+                    type="text"
+                    placeholder="생년월일(19991229)"
+                    value=""
+                    inputSize="lg"
+                  />
                 </div>
               </div>
             </ContentsRow>
@@ -133,14 +128,11 @@ function RouteComponent() {
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
-                  {/* 퍼블수정 20250313 : 공통 변경 */}
-                  <PhoneNumber
-                    options={[
-                      { value: 'type1', label: '+82' },
-                      { value: 'type2', label: '+83' },
-                    ]}
-                    size="lg"
+                  <Input
+                    id="name-1-6"
+                    type="text"
                     placeholder="-없이 휴대폰 번호입력(0102345678)"
+                    inputSize="lg"
                   />
                 </div>
               </div>
@@ -157,7 +149,12 @@ function RouteComponent() {
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
-                  <Input id="name-1-6" type="text" placeholder="생년월일(19991229)" />
+                  <Input
+                    id="name-1-6"
+                    type="text"
+                    placeholder="생년월일(19991229)"
+                    inputSize="lg"
+                  />
                 </div>
               </div>
             </ContentsRow>
@@ -172,12 +169,12 @@ function RouteComponent() {
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
-                  {/* 퍼블수정 20250313 : 인증번호 콤포넌트 추가 */}
                   <InputTimer
                     startTimer={1}
                     initialTime={300}
                     placeholder="인증번호 입력"
                     resetLabel="재전송"
+                    inputSize="lg"
                   />
                 </div>
               </div>

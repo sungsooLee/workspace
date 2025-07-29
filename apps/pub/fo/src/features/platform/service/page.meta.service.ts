@@ -46,7 +46,7 @@ export const PAGE_META_BY_PATH: Record<string, PageMeta> = {
   },
   '/pb-fo/dormant-account': {
     title: '휴면 계정 해제',
-    info: '휴면 계정을 해제하고 다시 이용해보세요.',
+    info: '본인인증 수단을 선택하세요.',
   },
   '/pb-fo/password-input': {
     title: '비밀번호 입력',

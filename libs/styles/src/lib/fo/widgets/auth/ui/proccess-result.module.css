@@ -3,21 +3,30 @@
   @apply text-center;
   .ico {
     @apply m-auto inline-flex items-center justify-center;
+    svg {
+      @apply h-[80px] w-[80px];
+    }
     .ico1 {
       @apply stroke-[#00AFD5];
     }
     .ico2 {
       @apply stroke-[#FFB902];
     }
+    .ico3 {
+      @apply w-[40px] fill-[#4D525C];
+    }
     + h3.title {
       @apply mt-[24px];
+    }
+    + .noti {
+      @apply mt-[40px];
     }
   }
   h3.title {
     @apply headline1-b leading-[31px] text-[var(--gray10)];
   }
   .noti {
-    @apply body-md mt-[16px] leading-[24px] text-[var(--gray35)];
+    @apply body-lg mt-[16px] leading-[24px] text-[var(--gray35)];
   }
   .noti_box {
     @apply mt-[24px];

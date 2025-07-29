@@ -70,7 +70,9 @@ import {
   IcoBuilding01,
   IcoOverseasDealer,
   IcoMail,
+  IcoMail02,
   IcoPhone02,
+  IcoPhone03,
   IcoDotpoints,
   IcoGrid01,
   IcoMybook,
@@ -556,13 +558,23 @@ function RouteComponent() {
     },
     {
       name: 'IcoMail',
-      Component: <IcoMail width={24} height={24} stroke="#4C515E" />,
+      Component: <IcoMail width={40} height={40} stroke="#4C515E" />,
       file: 'ic_mail.svg',
     },
     {
+      name: 'IcoMail02',
+      Component: <IcoMail02 width={40} height={40} stroke="#4C515E" />,
+      file: 'ic_mail-02.svg',
+    },
+    {
       name: 'IcoPhone02',
-      Component: <IcoPhone02 width={24} height={24} stroke="#4C515E" />,
+      Component: <IcoPhone02 width={40} height={40} stroke="#4C515E" />,
       file: 'ic_phone-02.svg',
+    },
+    {
+      name: 'IcoPhone03',
+      Component: <IcoPhone03 width={40} height={40} stroke="#4C515E" />,
+      file: 'ic_phone-03.svg',
     },
     {
       name: 'IcoDotpoints',

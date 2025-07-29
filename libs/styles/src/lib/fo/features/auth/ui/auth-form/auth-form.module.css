@@ -1,5 +1,5 @@
 .auth_form {
-  @apply mt-[32px];
+  @apply mt-[16px];
 }
 .signup_noti {
   @apply mt-[8px];

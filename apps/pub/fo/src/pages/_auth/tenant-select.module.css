@@ -1,5 +1,8 @@
 .start {
   &.tenant_select {
+    .auth_form {
+      @apply mt-[20px];
+    }
     .btn_wrap {
       @apply mt-[36px];
     }

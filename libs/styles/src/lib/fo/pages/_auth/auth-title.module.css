@@ -1,6 +1,6 @@
 .start {
   h2 {
-    @apply flex-col items-center justify-center whitespace-pre pb-[60px] text-center;
+    @apply flex-col items-center justify-center whitespace-pre pb-[40px] text-center;
     .title {
       @apply headline3-b block text-[var(--gray10)];
     }
