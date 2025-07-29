@@ -8,6 +8,7 @@ import {
   useLearningWindow,
   ScormPlayerConfigProperties,
   LearningWindowBaseInfo,
+  LearningWindowPlayInfo,
 } from '@learnway/ui';
 import {
   useVideoWatchInitialize,
@@ -82,7 +83,7 @@ function RouteComponent() {
     console.log('handelVideoWatchStatistics', payload);
     watchLogStatistics(payload);
   };
-  const handleOtherClickButton = async (playInfo: LearningWindowBaseInfo, otherInfo: any) => {
+  const handleOtherClickButton = async (playInfo: LearningWindowPlayInfo, otherInfo: any) => {
     console.log('handleOtherClikcButton called');
     if (otherInfo.contentType === CmsEnContentType.ETC) {
       download({
