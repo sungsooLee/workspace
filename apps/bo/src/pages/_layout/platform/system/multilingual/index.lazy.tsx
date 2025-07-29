@@ -19,7 +19,7 @@ import {
   useSearchBox,
   useLanguageMap,
   useCodeStore,
-  useUnsavedChangesConfirm,
+  SelectOption,
 } from '@learnway/hooks';
 import { useWatch } from 'react-hook-form';
 import { SearchBox } from '@shared/ui/search-box';
@@ -55,7 +55,9 @@ function RouteComponent() {
     setOptions,
     control,
     setValue,
+    getValuesWithLabel,
   } = useSearchBox(searchConfig);
+  const [valuesWithLabel, setValuesWithLabel] = useState<Record<string, SelectOption>>({});
   const { getCode } = useCodeStore();
   const { getLanguageName } = useLanguageMap();
   const keyTypeCode = useWatch({ control, name: 'keyTypeCode' });
@@ -145,6 +147,7 @@ function RouteComponent() {
     originalDataRef.current = null; // 검색 시 즉시 초기화
     setShouldUpdateOriginalData(true); // 검색 시 originalData 업데이트 허용
     gridFetch(getValues(), { ...gridStateRef.current, page: 0 });
+    setValuesWithLabel(getValuesWithLabel());
   };
 
   /**
@@ -204,6 +207,7 @@ function RouteComponent() {
       <GridExcelDownloadButton
         url={`${PMSApiPrefix()}/multilingual/exportExcel`}
         params={{ ...getValues(), targetLocale: getValues('targetLocale').toLowerCase() }}
+        paramLabels={valuesWithLabel}
         disabled={!data || (data && data.content && data.content.length === 0)}
         dataCount={data?.content?.length}
         onBeforeDownload={async () => {
