@@ -5,9 +5,9 @@ import { Navigation } from 'swiper/modules';
 import { IcoArrowForward } from '@learnway/icons';
 import { Chip } from '@learnway/ui';
 
-import { Category } from '../../../../types/entities/category';
-import { useCategories } from '../../services/category.service';
-import { useCategoryNavigation } from '../../../../entities/category/service/category.hook';
+import { Category } from '../../../types/entities/category';
+import { useCategories } from '../services/category.service';
+import { useCategoryNavigation } from '@entities/category/service/category.hook';
 
 import styles from '@learnway/styles/fo/features/category/category-badge-list.module.css';
 
