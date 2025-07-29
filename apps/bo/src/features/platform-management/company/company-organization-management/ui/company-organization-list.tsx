@@ -11,7 +11,10 @@ import { useFetchAuthUser } from '@learnway/auth/entities';
 
 import { SearchBox } from '@shared/ui/search-box';
 
-import { queryOptions, queryOptions as companyQueryOptions } from '@entities/companies/service/companies.queries';
+import {
+  queryOptions,
+  queryOptions as companyQueryOptions,
+} from '@entities/companies/service/companies.queries';
 import { EnGlobalConst } from '@types';
 import { useCreation } from 'ahooks';
 import { widgetsQueryOptions } from '@entities/widgets';
@@ -45,54 +48,60 @@ const CompanyOrganizationListComponent = ({
       query: companyQueryOptions.list,
       columns: [
         {
-          name:  'companyType', label: t('그룹'), render: (info: any) => {
-            return t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.company.CompanyType.${info.getValue()}`);
-          }
+          name: 'companyType',
+          label: t('그룹'),
+          render: (info: any) => {
+            return t(
+              `${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.company.CompanyType.${info.getValue()}`,
+            );
+          },
         },
         {
-          name: 'isUseLinkageSystem', label: t('데이터 관리 방식'), render: (info: any) => {
+          name: 'isUseLinkageSystem',
+          label: t('데이터 관리 방식'),
+          render: (info: any) => {
             return info.getValue() ? '자동 관리' : '수동 관리';
-          }
+          },
         },
         {
-          name: 'name', label: t('회사명'), render: (info: any) => {
-            return <Button
-              className="link"
-              onClick={() => {
-                _global.linkClick(info.row.original);
-              }}
-              label={info.getValue() as string}
-            />
-          }
+          name: 'name',
+          label: t('회사명'),
+          render: (info: any) => {
+            return (
+              <Button
+                className="link"
+                onClick={() => {
+                  _global.linkClick(info.row.original);
+                }}
+                label={info.getValue() as string}
+              />
+            );
+          },
         },
         {
-          name: 'useYn', label: t('회사정보 사용'), render: (info: any) => {
-            return (info.getValue() ? t('사용') : t('미사용'))
-          }
+          name: 'isUsed',
+          label: t('회사정보 사용'),
+          render: (info: any) => {
+            return info.getValue() ? t('사용') : t('미사용');
+          },
         },
         {
-          name: 'createdBy', label: t('등록자'), render: (info: any) => {
-            return (info.row.original.isUseLinkageSystem ? '시스템' : info.row.original.createdBy)
-          }
+          name: 'lastModifiedBy',
+          label: t('수정자'),
+          render: (info: any) => {
+            return info.row.original.isUseLinkageSystem
+              ? '시스템'
+              : info.row.original.lastModifiedBy;
+          },
         },
         {
-          name: 'createdDate', label: t('등록일'), render: (info: any) => {
+          name: 'modifiedDate',
+          label: t('수정일'),
+          render: (info: any) => {
             return info.getValue() === null
               ? ''
-              : getDateToString(new Date(info.getValue() as string), DATE_TIME_FORMAT.DATETIME_SEC)
-          }
-        },
-        {
-          name: 'lastModifiedBy', label: t('수정자'), render: (info: any) => {
-            return info.row.original.isUseLinkageSystem ? '시스템' : info.row.original.lastModifiedBy
-          }
-        },
-        {
-          name: 'modifiedDate', label: t('수정일'), render: (info: any) => {
-            return info.getValue() === null
-              ? ''
-              : getDateToString(new Date(info.getValue() as string), DATE_TIME_FORMAT.DATETIME_SEC)
-          }
+              : getDateToString(new Date(info.getValue() as string), DATE_TIME_FORMAT.DATETIME_SEC);
+          },
         },
       ],
       data: [],
@@ -100,7 +109,7 @@ const CompanyOrganizationListComponent = ({
         page: 0,
         size: 10,
         sort: [],
-      }
+      },
     }),
     [],
   );
@@ -128,7 +137,7 @@ const CompanyOrganizationListComponent = ({
     onFormValid,
     getValues,
   } = useSearchBox(searchConfig());
-  const { config: gConfig, gridFetch } = useGridBox(gridInitConfig, getValues);
+  const { config: gConfig, gridFetch } = useGridBox(gridInitConfig, searchParam);
 
   _global.linkClick = (row: any) => {
     console.log('getValues', getValues());
@@ -170,7 +179,7 @@ const CompanyOrganizationListComponent = ({
       <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
       <Divider />
       {/*<GridBox config={gConfig} columns={columns} />*/}
-      <GridBox config={gConfig}/>
+      <GridBox config={gConfig} />
     </>
   );
 };
