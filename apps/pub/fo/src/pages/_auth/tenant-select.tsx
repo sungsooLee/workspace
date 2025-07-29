@@ -15,8 +15,8 @@ export const Route = createFileRoute('/_auth/tenant-select')({
 
 function RouteComponent() {
   const dummyOptions = [
-    { label: '메뉴 A', value: 'a' },
-    { label: '메뉴 B', value: 'b' },
+    { label: '현대자동차 그룹', value: 'a' },
+    { label: '플랫폼 테넌트', value: 'b' },
   ];
   const [values, setValues] = useState<string[]>();
   return (

@@ -173,7 +173,9 @@ function RouteComponent() {
             </dt>
             <dd>
               개인정보 변경을 원하시면 DDMS에서 진행해주세요.
-              <Link to={'/'}>DDMS 바로 가기</Link>
+              <Link to={'/'} className={noticeBoxStyles.link}>
+                DDMS 바로 가기
+              </Link>
             </dd>
           </dl>
         </div>

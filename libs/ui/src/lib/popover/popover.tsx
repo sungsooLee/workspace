@@ -12,6 +12,7 @@ interface PopoverComponentProps extends Primitive.PopoverContentProps {
   className?: string;
   open?: boolean;
   side?: 'top' | 'right' | 'bottom' | 'left';
+  centered?: boolean; // 센터인 경우
   onOpenChange?: (open: boolean) => void;
   container?: HTMLElement;
   // modal 에서 popover 사용 시 FocusOutside 이벤트 예외 처리
@@ -31,6 +32,7 @@ const PopoverComponent = forwardRef<
       popoverContent,
       open,
       side = 'bottom',
+      centered,
       onOpenChange,
       forceCloseFocusOutside = false,
       container,
@@ -75,7 +77,12 @@ const PopoverComponent = forwardRef<
             side={side}
             avoidCollisions={true} // 충돌 방지 활성화
             sideOffset={10}
-            className={cn(styles.popover_content, 'nlp--popover-content', className)}
+            className={cn(
+              styles.popover_content,
+              centered && styles.centered,
+              'nlp--popover-content',
+              className,
+            )}
             {...props}
             onInteractOutside={(e) => {
               // popover open 상태에서 modal open 시 modal content event 버블링 문제

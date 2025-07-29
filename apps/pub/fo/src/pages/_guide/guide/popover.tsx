@@ -44,7 +44,7 @@ function RouteComponent() {
               popoverContent={<PopoverContent />}
               className=""
               side="bottom"
-              align="start"
+              align="center"
               sideOffset={10}
             >
               팝오버 클릭요소

@@ -7,5 +7,10 @@
     .btn {
       @apply button_3_r ml-[8px] !min-w-[auto] rounded-[8px] border-[#A9AFB8];
     }
+    [class*='lg']{
+      & + button{
+        @apply !h-[44px];
+      }
+    }
   }
 }

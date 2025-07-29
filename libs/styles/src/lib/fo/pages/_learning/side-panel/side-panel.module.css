@@ -47,11 +47,8 @@
         }
         &.new {
           @apply relative;
-          svg {
-            @apply mr-[5px];
-          }
           &::before {
-            @apply absolute right-[13px] top-[7px] h-[5px] w-[5px] rounded-[50%] bg-[var(--red50)] content-[''];
+            @apply absolute right-[15px] top-0 h-[8px] w-[8px] rounded-[50%] bg-[var(--red50)] content-[''];
           }
         }
         &.btn_sh {
@@ -185,6 +182,11 @@
             @apply m-0 flex w-auto flex-1 items-center py-0;
             span {
               @apply label-md mt-[8px];
+            }
+            &.new {
+              &::before {
+                @apply right-[6px] w-[5px] h-[5px];
+              }
             }
           }
         }
