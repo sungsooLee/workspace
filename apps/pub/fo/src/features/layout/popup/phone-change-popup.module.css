@@ -10,11 +10,11 @@
           @apply mt-[24px];
         }
       }
-      .phone_box {
+      /* .phone_box {
         button {
           @apply !h-[44px];
         }
-      }
+      } */
     }
   }
 }
