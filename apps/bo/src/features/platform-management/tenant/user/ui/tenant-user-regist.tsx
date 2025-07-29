@@ -405,7 +405,7 @@ const formConfig = (): DynamicFormConfig => ({
       name: 'companyName',
       type: 'text',
       label: t('회사'),
-      value: '현대오토에버',
+      value: '',
     },
     {
       name: 'firstDept',
@@ -417,7 +417,7 @@ const formConfig = (): DynamicFormConfig => ({
       name: 'lastDept',
       type: 'text',
       label: t('소속'),
-      value: '개발본부',
+      value: '',
     },
     { name: 'deptId', type: 'hidden', label: '', value: '', format: 'number' },
     {
