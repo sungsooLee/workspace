@@ -53,6 +53,7 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
           name: 'no',
           label: t('NO.'),
           type: 'numbering',
+          enableSorting: false,
         },
         {
           name: 'tenantName',
@@ -79,6 +80,7 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
             }
             return info.getValue();
           },
+          enableSorting: false,
         },
         {
           name: 'opt3',
@@ -90,6 +92,7 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
             }
             return info.getValue();
           },
+          enableSorting: false,
         },
         {
           name: 'userGroupName',
@@ -157,6 +160,7 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
             cellAlign: 'center',
           },
           size: 96,
+          enableSorting: false,
         },
         {
           name: 'isUsed',
