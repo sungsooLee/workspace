@@ -32,18 +32,34 @@ export type com_ever_edu_cms_content_dto_res_SharedBoxResDto = {
      */
     sourceGroupContentId?: number;
     /**
-     * 원본 학습자원 유형, enum(cms.content.ContentType)
+     * 원본 학습자원 유형, Enum(cms.content.ContentType)
      */
     sourceContentType?: com_ever_edu_cms_content_dto_res_SharedBoxResDto.sourceContentType;
     contentCreateType?: com_ever_edu_cms_content_dto_res_SharedBoxResDto.contentCreateType;
     /**
-     * 원본 학습자원 국가 언어 코드
+     * 원본 학습자원 국가 언어 코드 Enum(pms.multilingual.LangCountryCode)
      */
-    langCountryCode?: com_ever_edu_cms_content_dto_res_SharedBoxResDto.langCountryCode;
+    languageCountryCode?: com_ever_edu_cms_content_dto_res_SharedBoxResDto.languageCountryCode;
     /**
      * 원본 학습자원 사용가능 여부
      */
     isContentEnabled?: boolean;
+    /**
+     * 목적지 테넌트 id
+     */
+    destTenantId?: number;
+    /**
+     * 목적지 테넌트명
+     */
+    destTenantName?: string;
+    /**
+     * 목적지 채널 UUID
+     */
+    destChannelUuid?: string;
+    /**
+     * 목적지 채널명
+     */
+    destChannelName?: string;
     /**
      * 공유자 UUID
      */
@@ -55,12 +71,12 @@ export type com_ever_edu_cms_content_dto_res_SharedBoxResDto = {
     /**
      * 공유 횟수
      */
-    shareCount?: number;
+    sharedCount?: number;
     sharedDate?: string;
 };
 export namespace com_ever_edu_cms_content_dto_res_SharedBoxResDto {
     /**
-     * 원본 학습자원 유형, enum(cms.content.ContentType)
+     * 원본 학습자원 유형, Enum(cms.content.ContentType)
      */
     export enum sourceContentType {
         VIDEO = 'VIDEO',
@@ -80,12 +96,12 @@ export namespace com_ever_edu_cms_content_dto_res_SharedBoxResDto {
     export enum contentCreateType {
         MANUAL = 'MANUAL',
         SHARED = 'SHARED',
-        TRASLATE = 'TRASLATE',
+        TRANSLATE = 'TRANSLATE',
     }
     /**
-     * 원본 학습자원 국가 언어 코드
+     * 원본 학습자원 국가 언어 코드 Enum(pms.multilingual.LangCountryCode)
      */
-    export enum langCountryCode {
+    export enum languageCountryCode {
         KO = 'KO',
         EN = 'EN',
         ES = 'ES',

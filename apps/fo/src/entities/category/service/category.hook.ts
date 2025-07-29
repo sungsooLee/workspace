@@ -33,3 +33,7 @@ export const useCategoryNavigation = () => {
 export const useCategoryTree = (tenantId: number) => {
   return useQuery(queryOptions.tree(tenantId));
 }
+
+export const useFetchCategoryDetail = (categoryId: number) => {
+  return useQuery(queryOptions.detail(categoryId));
+}

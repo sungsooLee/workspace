@@ -3,7 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { com_ever_edu_lms_category_dto_res_CourseCategoryFlatDto } from './com_ever_edu_lms_category_dto_res_CourseCategoryFlatDto';
-import type { com_ever_edu_lms_course_dto_res_CourseUserResDto$SimpleCourseDto } from './com_ever_edu_lms_course_dto_res_CourseUserResDto$SimpleCourseDto';
+import type { com_ever_edu_lms_course_dto_res_CourseUserSearchResDto } from './com_ever_edu_lms_course_dto_res_CourseUserSearchResDto';
 import type { com_ever_edu_lms_course_dto_res_StarRatingResDto } from './com_ever_edu_lms_course_dto_res_StarRatingResDto';
 import type { com_ever_edu_lms_tag_dto_res_TagResDto } from './com_ever_edu_lms_tag_dto_res_TagResDto';
 export type com_ever_edu_lms_course_dto_res_CourseUserResDto = {
@@ -66,6 +66,10 @@ export type com_ever_edu_lms_course_dto_res_CourseUserResDto = {
     tagNames?: Array<com_ever_edu_lms_tag_dto_res_TagResDto>;
     courseContent?: string;
     /**
+     * 커리큘럼 ID
+     */
+    curriculumId?: number;
+    /**
      * 이수기준 설정 여부
      */
     isUsePassOption?: boolean;
@@ -126,26 +130,18 @@ export type com_ever_edu_lms_course_dto_res_CourseUserResDto = {
      */
     career?: string;
     /**
-     * 운영자 이름
+     * 운영자 UUID
      */
-    operatorName?: string;
+    operatorUuid?: string;
     /**
-     * 운영자 회사
+     * 담당자 UUID
      */
-    operatorCompany?: string;
+    coordinatorUuid?: string;
+    relatedCourseList?: Array<com_ever_edu_lms_course_dto_res_CourseUserSearchResDto>;
     /**
-     * 운영자 부서
+     * 사전 학습 목록
      */
-    operatorDept?: string;
-    /**
-     * 운영자 이메일
-     */
-    operatorEmail?: string;
-    /**
-     * 운영자 전화번호
-     */
-    operatorTelNo?: string;
-    relatedCourseList?: Array<com_ever_edu_lms_course_dto_res_CourseUserResDto$SimpleCourseDto>;
+    preqCourseList?: Array<com_ever_edu_lms_course_dto_res_CourseUserSearchResDto>;
 };
 export namespace com_ever_edu_lms_course_dto_res_CourseUserResDto {
     /**

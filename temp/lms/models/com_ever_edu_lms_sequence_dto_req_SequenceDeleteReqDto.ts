@@ -3,6 +3,9 @@
 /* tslint:disable */
 /* eslint-disable */
 export type com_ever_edu_lms_sequence_dto_req_SequenceDeleteReqDto = {
-    courseSequenceId?: number;
+    /**
+     * 차수 ID
+     */
+    courseSequenceId: number;
 };
 

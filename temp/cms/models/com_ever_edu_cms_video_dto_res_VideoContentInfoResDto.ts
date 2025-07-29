@@ -2,24 +2,26 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { com_ever_edu_cms_video_dto_res_EncodedAudioResponseDto } from './com_ever_edu_cms_video_dto_res_EncodedAudioResponseDto';
 import type { com_ever_edu_cms_video_dto_res_EncodedVideoResponseDto } from './com_ever_edu_cms_video_dto_res_EncodedVideoResponseDto';
 import type { com_ever_edu_cms_video_dto_res_VideoSubtitleResDto } from './com_ever_edu_cms_video_dto_res_VideoSubtitleResDto';
 export type com_ever_edu_cms_video_dto_res_VideoContentInfoResDto = {
     contentUuid?: string;
     contentName?: string;
-    langCountryCode?: com_ever_edu_cms_video_dto_res_VideoContentInfoResDto.langCountryCode;
     masterVideo?: string;
     encodedVideos?: Array<com_ever_edu_cms_video_dto_res_EncodedVideoResponseDto>;
+    videoSubtitles?: Array<com_ever_edu_cms_video_dto_res_VideoSubtitleResDto>;
     videoDuration?: number;
     /**
      * 직전 비디오 종료 시간
      */
     lastVideoEndTime?: number;
     progress?: number;
-    videoSubtitles?: Array<com_ever_edu_cms_video_dto_res_VideoSubtitleResDto>;
+    languageCountryCode?: com_ever_edu_cms_video_dto_res_VideoContentInfoResDto.languageCountryCode;
+    encodedAudios?: Array<com_ever_edu_cms_video_dto_res_EncodedAudioResponseDto>;
 };
 export namespace com_ever_edu_cms_video_dto_res_VideoContentInfoResDto {
-    export enum langCountryCode {
+    export enum languageCountryCode {
         KO = 'KO',
         EN = 'EN',
         ES = 'ES',

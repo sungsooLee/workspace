@@ -47,17 +47,9 @@ export type com_ever_edu_pms_user_dto_res_UserResDto = {
      */
     email?: string;
     /**
-     * 휴대폰 국가번호
-     */
-    phoneNationNumber?: string;
-    /**
      * 휴대폰 번호
      */
     phoneNumber?: string;
-    /**
-     * 직장전화 국가번호
-     */
-    companyPhoneNationNumber?: string;
     /**
      * 직장전화 번호
      */
@@ -71,11 +63,11 @@ export type com_ever_edu_pms_user_dto_res_UserResDto = {
     /**
      * 직군
      */
-    jobDomain?: string;
+    jobDomain?: Array<string>;
     /**
      * 직무
      */
-    jobRole?: string;
+    jobRole?: Array<string>;
     /**
      * 호칭
      */
@@ -160,6 +152,18 @@ export type com_ever_edu_pms_user_dto_res_UserResDto = {
      */
     authType?: com_ever_edu_pms_user_dto_res_UserResDto.authType;
     /**
+     * 2차 인증 유형 유형
+     */
+    twoFactorAuthType?: com_ever_edu_pms_user_dto_res_UserResDto.twoFactorAuthType;
+    /**
+     * FO 로그인 2차 인증 사용
+     */
+    foTwoFactorAuthEnabled?: boolean;
+    /**
+     * BO 로그인 2차 인증 사용
+     */
+    boTwoFactorAuthEnabled?: boolean;
+    /**
      * 최근 접속 FO 테넌트 ID
      */
     lastVisitedFoTenantId?: number;
@@ -183,6 +187,22 @@ export type com_ever_edu_pms_user_dto_res_UserResDto = {
      * 사용자 역할 목록
      */
     roles?: Array<com_ever_edu_pms_user_dto_res_UserResDto$UserRoleDto>;
+    /**
+     * 등록자ID
+     */
+    createdBy?: string;
+    /**
+     * 등록일시
+     */
+    createdDate?: string;
+    /**
+     * 최종수정자ID
+     */
+    lastModifiedBy?: string;
+    /**
+     * 최종수정일시
+     */
+    modifiedDate?: string;
 };
 export namespace com_ever_edu_pms_user_dto_res_UserResDto {
     /**
@@ -221,6 +241,16 @@ export namespace com_ever_edu_pms_user_dto_res_UserResDto {
         PLATFORM = 'PLATFORM',
         HMG_SSO = 'HMG_SSO',
         AUTOWAY = 'AUTOWAY',
+        DENIED_PASSWORD = 'DENIED_PASSWORD',
+    }
+    /**
+     * 2차 인증 유형 유형
+     */
+    export enum twoFactorAuthType {
+        MPASS = 'MPASS',
+        MPASS_OTP = 'MPASS_OTP',
+        MPASS_FIDO = 'MPASS_FIDO',
+        GOOGLE_OTP = 'GOOGLE_OTP',
     }
 }
 

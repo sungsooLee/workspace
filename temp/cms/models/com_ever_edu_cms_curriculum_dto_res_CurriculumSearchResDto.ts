@@ -17,7 +17,12 @@ export type com_ever_edu_cms_curriculum_dto_res_CurriculumSearchResDto = {
     isPublished?: boolean;
     isUsed?: boolean;
     openingYear?: number;
+    createdBy?: string;
+    creatorName?: string;
     createdDate?: string;
+    lastModifiedBy?: string;
+    modifierName?: string;
+    modifiedDate?: string;
 };
 export namespace com_ever_edu_cms_curriculum_dto_res_CurriculumSearchResDto {
     export enum curriculumType {

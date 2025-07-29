@@ -3,7 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * SSCO CMI 저장 정보
+ * SCO CMI 저장 정보
  */
 export type com_ever_edu_cms_scorm_dto_rte_ScoCmiObjectInfoDto = {
     /**

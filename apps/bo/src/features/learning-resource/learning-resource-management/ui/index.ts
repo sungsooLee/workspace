@@ -1,6 +1,7 @@
 export * from './learning-resource-table';
 export * from './learning-resource-file-upload-modal';
 export * from './learning-type-choice-modal';
+export * from './learning-resource-translation-list-modal';
 export * from './learning-resource-video-detail';
 export * from './movie-info';
 export * from './learning-resource-scorm-detail';

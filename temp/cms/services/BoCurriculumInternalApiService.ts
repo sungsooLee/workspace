@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { com_ever_edu_cms_content_dto_res_ContentProgressListResDto } from '../models/com_ever_edu_cms_content_dto_res_ContentProgressListResDto';
 import type { com_ever_edu_cms_curriculum_dto_res_CurriculumResDto } from '../models/com_ever_edu_cms_curriculum_dto_res_CurriculumResDto';
 import type { com_ever_edu_cms_curriculum_dto_res_TotalContentDurationResDto } from '../models/com_ever_edu_cms_curriculum_dto_res_TotalContentDurationResDto';
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -34,8 +35,8 @@ export class BoCurriculumInternalApiService {
         });
     }
     /**
-     * 커리큘럼의 동영상 콘텐츠 총 재생시간을 합산하여 반환한다.
-     * 커리큘럼에 동영상 콘텐츠만 있는 경우 콘텐츠의 총 재생시간을 합산하여 반환한다.
+     * 커리큘럼의 동영상 콘텐츠 총 재생시간 합산
+     * 커리큘럼에 동영상 콘텐츠만 있는 경우 콘텐츠의 총 재생시간을 합산하여 반환한다.<BR>- VIDEO: 동영상 유형<BR>- SCORM: 스콤 유형<BR>- EBOOK: 이북 유형<BR>- HTML5_VIDEO: HTML 동영상<BR>- IMAGE: 이미지 유형<BR>- ETC: 기타 유형<BR>- BLOG: 블로그 유형<BR>- EXTERNAL_LINK: 외부링크 유형<BR>- EXTERNAL_AGENCY: 외부위탁 유형
      * @param curriculumId
      * @returns com_ever_edu_cms_curriculum_dto_res_TotalContentDurationResDto OK
      * @throws ApiError
@@ -48,6 +49,40 @@ export class BoCurriculumInternalApiService {
             url: '/internal/api/v1/curriculum/{curriculumId}/duration',
             path: {
                 'curriculumId': curriculumId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 커리큘럼 학습자원 학습 진행률 조회
+     * 커리큘럼의 학습자원 학습 진행률을 조회한다.
+     * @param courseSequenceId 과정차수Id
+     * @param courseId 과정Id
+     * @param curriculumId 커리큘럼Id
+     * @param userUuid 학습자UUID
+     * @returns com_ever_edu_cms_content_dto_res_ContentProgressListResDto OK
+     * @throws ApiError
+     */
+    public static getCurriculumContentProgress1(
+        courseSequenceId?: string,
+        courseId?: string,
+        curriculumId?: string,
+        userUuid?: string,
+    ): CancelablePromise<com_ever_edu_cms_content_dto_res_ContentProgressListResDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/internal/api/v1/curriculum/content/progress',
+            query: {
+                'courseSequenceId': courseSequenceId,
+                'courseId': courseId,
+                'curriculumId': curriculumId,
+                'userUuid': userUuid,
             },
             errors: {
                 400: `Bad Request`,

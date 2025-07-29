@@ -18,11 +18,12 @@ export type com_ever_edu_cms_content_dto_res_FindContentResDto = {
     coordinatorName?: string;
     contentAddInfoType?: com_ever_edu_cms_content_dto_res_FindContentResDto.contentAddInfoType;
     contentAddInfo?: number;
-    langCountryCode?: com_ever_edu_cms_content_dto_res_FindContentResDto.langCountryCode;
+    languageCountryCode?: com_ever_edu_cms_content_dto_res_FindContentResDto.languageCountryCode;
     createdBy?: string;
     createdDate?: string;
     lastModifiedBy?: string;
     modifiedDate?: string;
+    contentId?: number;
     creatorName?: string;
     modifyerName?: string;
 };
@@ -45,7 +46,7 @@ export namespace com_ever_edu_cms_content_dto_res_FindContentResDto {
     export enum createType {
         MANUAL = 'MANUAL',
         SHARED = 'SHARED',
-        TRASLATE = 'TRASLATE',
+        TRANSLATE = 'TRANSLATE',
     }
     export enum contentStatusCode {
         TEMPORARY_SAVE = 'TEMPORARY_SAVE',
@@ -56,7 +57,7 @@ export namespace com_ever_edu_cms_content_dto_res_FindContentResDto {
         VIDEO_ADD_INFO = 'VIDEO_ADD_INFO',
         EXAM_ADD_INFO = 'EXAM_ADD_INFO',
     }
-    export enum langCountryCode {
+    export enum languageCountryCode {
         KO = 'KO',
         EN = 'EN',
         ES = 'ES',

@@ -13,7 +13,7 @@ export type com_ever_edu_cms_ebook_dto_res_EbookResourceResDto = {
      */
     contentUuid?: string;
     /**
-     * E-BOOK 처리 상태 코드
+     * E-BOOK 처리 상태 Enum(cms.ebook.EbookProcessingStatus) - FAIL|COMPLETE|STARTED|UPLOADING|PARSING
      */
     processingStatus?: com_ever_edu_cms_ebook_dto_res_EbookResourceResDto.processingStatus;
     /**
@@ -23,7 +23,7 @@ export type com_ever_edu_cms_ebook_dto_res_EbookResourceResDto = {
 };
 export namespace com_ever_edu_cms_ebook_dto_res_EbookResourceResDto {
     /**
-     * E-BOOK 처리 상태 코드
+     * E-BOOK 처리 상태 Enum(cms.ebook.EbookProcessingStatus) - FAIL|COMPLETE|STARTED|UPLOADING|PARSING
      */
     export enum processingStatus {
         NONE = 'NONE',

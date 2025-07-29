@@ -19,6 +19,15 @@ export const useFetchHtmlVideoInfo = () => {
     learningResourceQueryOptions.getHTML5Status(state?.contentUuid),
   );
 
+  // 컨텐츠 내보내기(번역/공유) 가능 여부
+  // const { data: sharingInfo } = useQuery(
+  //   learningResourceQueryOptions.getContentSharingInfo({
+  //     contentUuid: state?.contentUuid,
+  //     tenantId: state?.listParam?.tenantId,
+  //     channelUuid: state?.listParam?.channelUuid,
+  //   }),
+  // );
+
   return {
     loginUser,
     contentUuid: state?.contentUuid,

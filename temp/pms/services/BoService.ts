@@ -2,12 +2,20 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { com_ever_edu_global_dto_UuidListDto } from '../models/com_ever_edu_global_dto_UuidListDto';
 import type { com_ever_edu_global_excel_dto_res_ExcelValidationResDto } from '../models/com_ever_edu_global_excel_dto_res_ExcelValidationResDto';
 import type { com_ever_edu_pms_approval_manage_dto_req_ApprovalLineCheckDupReqDto } from '../models/com_ever_edu_pms_approval_manage_dto_req_ApprovalLineCheckDupReqDto';
+import type { com_ever_edu_pms_approval_manage_dto_req_ApprovalLinePopupSearchDto } from '../models/com_ever_edu_pms_approval_manage_dto_req_ApprovalLinePopupSearchDto';
+import type { com_ever_edu_pms_approval_manage_dto_req_ApprovalLineTempDeleteReqDto } from '../models/com_ever_edu_pms_approval_manage_dto_req_ApprovalLineTempDeleteReqDto';
+import type { com_ever_edu_pms_approval_manage_dto_req_ApprovalLineTempDetailReqDto } from '../models/com_ever_edu_pms_approval_manage_dto_req_ApprovalLineTempDetailReqDto';
 import type { com_ever_edu_pms_approval_manage_dto_req_ApprovalLineTempRegistReqDto } from '../models/com_ever_edu_pms_approval_manage_dto_req_ApprovalLineTempRegistReqDto';
+import type { com_ever_edu_pms_approval_manage_dto_req_ApprovalLineTempUpdateListReqDto } from '../models/com_ever_edu_pms_approval_manage_dto_req_ApprovalLineTempUpdateListReqDto';
 import type { com_ever_edu_pms_approval_manage_dto_req_ApprovalLineTempUpdateReqDto } from '../models/com_ever_edu_pms_approval_manage_dto_req_ApprovalLineTempUpdateReqDto';
 import type { com_ever_edu_pms_approval_manage_dto_res_ApprovalLineCheckDupResDto } from '../models/com_ever_edu_pms_approval_manage_dto_res_ApprovalLineCheckDupResDto';
+import type { com_ever_edu_pms_approval_manage_dto_res_ApprovalLineMessageResDto } from '../models/com_ever_edu_pms_approval_manage_dto_res_ApprovalLineMessageResDto';
 import type { com_ever_edu_pms_approval_manage_dto_res_ApprovalLineSearchResDto } from '../models/com_ever_edu_pms_approval_manage_dto_res_ApprovalLineSearchResDto';
+import type { com_ever_edu_pms_blackwhite_dto_req_BlackAndWhiteMappingReqDto } from '../models/com_ever_edu_pms_blackwhite_dto_req_BlackAndWhiteMappingReqDto';
+import type { com_ever_edu_pms_blackwhite_dto_res_WhiteGroupResDto } from '../models/com_ever_edu_pms_blackwhite_dto_res_WhiteGroupResDto';
 import type { com_ever_edu_pms_channel_dto_req_ChannelRequestApprovalApproveReqDto } from '../models/com_ever_edu_pms_channel_dto_req_ChannelRequestApprovalApproveReqDto';
 import type { com_ever_edu_pms_channel_dto_req_ChannelRequestApprovalRejectReqDto } from '../models/com_ever_edu_pms_channel_dto_req_ChannelRequestApprovalRejectReqDto';
 import type { com_ever_edu_pms_channel_dto_req_ChannelRequestUpdateReqDto } from '../models/com_ever_edu_pms_channel_dto_req_ChannelRequestUpdateReqDto';
@@ -27,6 +35,9 @@ import type { com_ever_edu_pms_form_dto_req_FormReqDto$CustomForm } from '../mod
 import type { com_ever_edu_pms_form_dto_req_FormReqDto$OptionalForm } from '../models/com_ever_edu_pms_form_dto_req_FormReqDto$OptionalForm';
 import type { com_ever_edu_pms_form_dto_res_FormResDto$Form } from '../models/com_ever_edu_pms_form_dto_res_FormResDto$Form';
 import type { com_ever_edu_pms_form_dto_res_FormResDto$OptionalFormUsage } from '../models/com_ever_edu_pms_form_dto_res_FormResDto$OptionalFormUsage';
+import type { com_ever_edu_pms_holiday_dto_req_HolidaySaveReqDto } from '../models/com_ever_edu_pms_holiday_dto_req_HolidaySaveReqDto';
+import type { com_ever_edu_pms_holiday_dto_res_HolidayExcelResDto } from '../models/com_ever_edu_pms_holiday_dto_res_HolidayExcelResDto';
+import type { com_ever_edu_pms_holiday_dto_res_HolidayResDto } from '../models/com_ever_edu_pms_holiday_dto_res_HolidayResDto';
 import type { com_ever_edu_pms_labelmessage_dto_req_LabelMessageSaveReqDto$LabelMessageDto } from '../models/com_ever_edu_pms_labelmessage_dto_req_LabelMessageSaveReqDto$LabelMessageDto';
 import type { com_ever_edu_pms_labelmessage_dto_req_LabelMessageSearchReqDto$SearchByAdmin } from '../models/com_ever_edu_pms_labelmessage_dto_req_LabelMessageSearchReqDto$SearchByAdmin';
 import type { com_ever_edu_pms_labelmessage_dto_res_LabelMessageResDto$DetailOnAdmin } from '../models/com_ever_edu_pms_labelmessage_dto_res_LabelMessageResDto$DetailOnAdmin';
@@ -62,6 +73,8 @@ import type { com_ever_edu_pms_notification_dto_res_EmailResDto$MultipleEmail } 
 import type { com_ever_edu_pms_notification_dto_res_EmailTemplateResDto } from '../models/com_ever_edu_pms_notification_dto_res_EmailTemplateResDto';
 import type { com_ever_edu_pms_notification_dto_res_MessageQueueEntryResDto } from '../models/com_ever_edu_pms_notification_dto_res_MessageQueueEntryResDto';
 import type { com_ever_edu_pms_notification_dto_res_PeriodicEmailResDto$DetailOnAdmin } from '../models/com_ever_edu_pms_notification_dto_res_PeriodicEmailResDto$DetailOnAdmin';
+import type { com_ever_edu_pms_privacyaccess_dto_req_PrivacyAccessLogSearchReqDto$SearchByAdmin } from '../models/com_ever_edu_pms_privacyaccess_dto_req_PrivacyAccessLogSearchReqDto$SearchByAdmin';
+import type { com_ever_edu_pms_privacyaccess_dto_res_PrivacyAccessLogResDto$DetailOnAdmin } from '../models/com_ever_edu_pms_privacyaccess_dto_res_PrivacyAccessLogResDto$DetailOnAdmin';
 import type { com_ever_edu_pms_role_dto_req_MoveRoleReqDto } from '../models/com_ever_edu_pms_role_dto_req_MoveRoleReqDto';
 import type { com_ever_edu_pms_role_dto_req_RoleApplicationApproveReqDto } from '../models/com_ever_edu_pms_role_dto_req_RoleApplicationApproveReqDto';
 import type { com_ever_edu_pms_role_dto_req_RoleApplicationReqDto } from '../models/com_ever_edu_pms_role_dto_req_RoleApplicationReqDto';
@@ -76,14 +89,29 @@ import type { com_ever_edu_pms_role_dto_res_RoleApplicationResDto } from '../mod
 import type { com_ever_edu_pms_role_dto_res_RoleMenuResDto } from '../models/com_ever_edu_pms_role_dto_res_RoleMenuResDto';
 import type { com_ever_edu_pms_role_dto_res_RoleResDto } from '../models/com_ever_edu_pms_role_dto_res_RoleResDto';
 import type { com_ever_edu_pms_role_dto_res_RoleTreeResDto } from '../models/com_ever_edu_pms_role_dto_res_RoleTreeResDto';
-import type { com_ever_edu_pms_role_dto_res_RoleUserGroupResDto } from '../models/com_ever_edu_pms_role_dto_res_RoleUserGroupResDto';
+import type { com_ever_edu_pms_tenant_approval_dto_req_TenantApprovalLinePopChoiceReqDto } from '../models/com_ever_edu_pms_tenant_approval_dto_req_TenantApprovalLinePopChoiceReqDto';
+import type { com_ever_edu_pms_tenant_approval_dto_req_TenantApprovalLinePopDetailReqDto } from '../models/com_ever_edu_pms_tenant_approval_dto_req_TenantApprovalLinePopDetailReqDto';
+import type { com_ever_edu_pms_tenant_approval_dto_req_TenantApprovalLinePopUserReqDto } from '../models/com_ever_edu_pms_tenant_approval_dto_req_TenantApprovalLinePopUserReqDto';
+import type { com_ever_edu_pms_tenant_approval_dto_req_TenantApprovalLineRegReqDto } from '../models/com_ever_edu_pms_tenant_approval_dto_req_TenantApprovalLineRegReqDto';
+import type { com_ever_edu_pms_tenant_approval_dto_req_TenantApprovalLineSearchReqDto } from '../models/com_ever_edu_pms_tenant_approval_dto_req_TenantApprovalLineSearchReqDto';
+import type { com_ever_edu_pms_tenant_approval_dto_req_TenantApprovalUpdateListReqDto } from '../models/com_ever_edu_pms_tenant_approval_dto_req_TenantApprovalUpdateListReqDto';
+import type { com_ever_edu_pms_tenant_approval_dto_req_TenantApprovalUpdateOnOffReqDto } from '../models/com_ever_edu_pms_tenant_approval_dto_req_TenantApprovalUpdateOnOffReqDto';
+import type { com_ever_edu_pms_tenant_approval_dto_res_TenantApprovalLinePopChoiceResDto } from '../models/com_ever_edu_pms_tenant_approval_dto_res_TenantApprovalLinePopChoiceResDto';
+import type { com_ever_edu_pms_tenant_approval_dto_res_TenantApprovalLinePopDetailResDto } from '../models/com_ever_edu_pms_tenant_approval_dto_res_TenantApprovalLinePopDetailResDto';
+import type { com_ever_edu_pms_tenant_approval_dto_res_TenantApprovalLinePopUserResDto } from '../models/com_ever_edu_pms_tenant_approval_dto_res_TenantApprovalLinePopUserResDto';
+import type { com_ever_edu_pms_tenant_approval_dto_res_TenantApprovalLineSearchResDto } from '../models/com_ever_edu_pms_tenant_approval_dto_res_TenantApprovalLineSearchResDto';
+import type { com_ever_edu_pms_tenant_approval_dto_res_TenantApprovalMessageResDto } from '../models/com_ever_edu_pms_tenant_approval_dto_res_TenantApprovalMessageResDto';
+import type { com_ever_edu_pms_tenant_approval_dto_TenantApprovalSettingDto } from '../models/com_ever_edu_pms_tenant_approval_dto_TenantApprovalSettingDto';
 import type { com_ever_edu_pms_tenant_dto_req_TenantCreateReqDto } from '../models/com_ever_edu_pms_tenant_dto_req_TenantCreateReqDto';
 import type { com_ever_edu_pms_tenant_dto_req_TenantPropertiesUpdateReqDto } from '../models/com_ever_edu_pms_tenant_dto_req_TenantPropertiesUpdateReqDto';
+import type { com_ever_edu_pms_tenant_dto_req_TenantStaticFileCreateReqDto } from '../models/com_ever_edu_pms_tenant_dto_req_TenantStaticFileCreateReqDto';
+import type { com_ever_edu_pms_tenant_dto_req_TenantStaticFileUpdateReqDto } from '../models/com_ever_edu_pms_tenant_dto_req_TenantStaticFileUpdateReqDto';
 import type { com_ever_edu_pms_tenant_dto_req_TenantUpdateReqDto } from '../models/com_ever_edu_pms_tenant_dto_req_TenantUpdateReqDto';
 import type { com_ever_edu_pms_tenant_dto_res_TenantResDto$DetailOnAdmin } from '../models/com_ever_edu_pms_tenant_dto_res_TenantResDto$DetailOnAdmin';
 import type { com_ever_edu_pms_tenant_dto_res_TenantResDto$ListOnAdmin } from '../models/com_ever_edu_pms_tenant_dto_res_TenantResDto$ListOnAdmin';
 import type { com_ever_edu_pms_tenant_dto_res_TenantResDto$PropertiesResDto } from '../models/com_ever_edu_pms_tenant_dto_res_TenantResDto$PropertiesResDto';
 import type { com_ever_edu_pms_tenant_dto_res_TenantResDto$SimpleList } from '../models/com_ever_edu_pms_tenant_dto_res_TenantResDto$SimpleList';
+import type { com_ever_edu_pms_tenant_dto_res_TenantStaticFileResDto$DetailOnAdmin } from '../models/com_ever_edu_pms_tenant_dto_res_TenantStaticFileResDto$DetailOnAdmin';
 import type { com_ever_edu_pms_terms_dto_req_TermsSaveReqDto$TermsDto } from '../models/com_ever_edu_pms_terms_dto_req_TermsSaveReqDto$TermsDto';
 import type { com_ever_edu_pms_terms_dto_req_TermsSearchReqDto$SearchByAdmin } from '../models/com_ever_edu_pms_terms_dto_req_TermsSearchReqDto$SearchByAdmin';
 import type { com_ever_edu_pms_terms_dto_res_TermsResDto$DetailOnAdmin } from '../models/com_ever_edu_pms_terms_dto_res_TermsResDto$DetailOnAdmin';
@@ -95,11 +123,10 @@ import type { com_ever_edu_pms_user_dto_req_ChangePhoneNumberReqDto } from '../m
 import type { com_ever_edu_pms_user_dto_req_ConfirmPasswordReqDto } from '../models/com_ever_edu_pms_user_dto_req_ConfirmPasswordReqDto';
 import type { com_ever_edu_pms_user_dto_req_CustomUserGroupSaveReqDto$CustomUserGroupDto } from '../models/com_ever_edu_pms_user_dto_req_CustomUserGroupSaveReqDto$CustomUserGroupDto';
 import type { com_ever_edu_pms_user_dto_req_CustomUserGroupSearchReqDto$SearchByAdmin } from '../models/com_ever_edu_pms_user_dto_req_CustomUserGroupSearchReqDto$SearchByAdmin';
-import type { com_ever_edu_pms_user_dto_req_ExtendPasswordChangeDateReqDto } from '../models/com_ever_edu_pms_user_dto_req_ExtendPasswordChangeDateReqDto';
-import type { com_ever_edu_pms_user_dto_req_IssueNewPasswordReqDto } from '../models/com_ever_edu_pms_user_dto_req_IssueNewPasswordReqDto';
 import type { com_ever_edu_pms_user_dto_req_SendVerifyEmailReqDto } from '../models/com_ever_edu_pms_user_dto_req_SendVerifyEmailReqDto';
 import type { com_ever_edu_pms_user_dto_req_SendVerifyPhoneNumberReqDto } from '../models/com_ever_edu_pms_user_dto_req_SendVerifyPhoneNumberReqDto';
 import type { com_ever_edu_pms_user_dto_req_TutorRegisterReqDto } from '../models/com_ever_edu_pms_user_dto_req_TutorRegisterReqDto';
+import type { com_ever_edu_pms_user_dto_req_UserChangeReqDto } from '../models/com_ever_edu_pms_user_dto_req_UserChangeReqDto';
 import type { com_ever_edu_pms_user_dto_req_UserGroupSearchReqDto$SearchByCommon } from '../models/com_ever_edu_pms_user_dto_req_UserGroupSearchReqDto$SearchByCommon';
 import type { com_ever_edu_pms_user_dto_req_UserRegisterReqDto } from '../models/com_ever_edu_pms_user_dto_req_UserRegisterReqDto';
 import type { com_ever_edu_pms_user_dto_req_UserSearchReqDto } from '../models/com_ever_edu_pms_user_dto_req_UserSearchReqDto';
@@ -127,6 +154,7 @@ import type { org_springframework_data_domain_PageCom_ever_edu_pms_channel_dto_r
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyDeptResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyDeptResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyDeptUserResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyDeptUserResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyResDto';
+import type { org_springframework_data_domain_PageCom_ever_edu_pms_holiday_dto_res_HolidayListResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_holiday_dto_res_HolidayListResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_labelmessage_dto_res_LabelMessageResDto$ListOnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_labelmessage_dto_res_LabelMessageResDto$ListOnAdmin';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_multilingual_dto_res_MultilingualResDto$ListOnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_multilingual_dto_res_MultilingualResDto$ListOnAdmin';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_notification_dto_res_EmailRecordResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_notification_dto_res_EmailRecordResDto';
@@ -135,9 +163,11 @@ import type { org_springframework_data_domain_PageCom_ever_edu_pms_notification_
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_notification_dto_res_MessageQueueEntryResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_notification_dto_res_MessageQueueEntryResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_notification_dto_res_MessageQueueResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_notification_dto_res_MessageQueueResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_notification_dto_res_PeriodicEmailResDto$ListOnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_notification_dto_res_PeriodicEmailResDto$ListOnAdmin';
+import type { org_springframework_data_domain_PageCom_ever_edu_pms_privacyaccess_dto_res_PrivacyAccessLogResDto$ListOnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_privacyaccess_dto_res_PrivacyAccessLogResDto$ListOnAdmin';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_role_dto_res_RoleApplicationResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_role_dto_res_RoleApplicationResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_role_dto_res_RoleUserResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_role_dto_res_RoleUserResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_tenant_dto_res_TenantResDto$ListOnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_tenant_dto_res_TenantResDto$ListOnAdmin';
+import type { org_springframework_data_domain_PageCom_ever_edu_pms_tenant_dto_res_TenantStaticFileResDto$ListOnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_tenant_dto_res_TenantStaticFileResDto$ListOnAdmin';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_terms_dto_res_TermsAgreementResDto$ListOnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_terms_dto_res_TermsAgreementResDto$ListOnAdmin';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_terms_dto_res_TermsResDto$ListOnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_terms_dto_res_TermsResDto$ListOnAdmin';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_user_dto_res_BlackAndWhiteTargetDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_user_dto_res_BlackAndWhiteTargetDto';
@@ -219,6 +249,85 @@ export class BoService {
             url: '/admin/api/v1/widgets/tenant-mappings/{tenantWidgetId}',
             path: {
                 'tenantWidgetId': tenantWidgetId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 사용자 조회(단건)
+     * 사용자를 조회한다.
+     * @param uuid
+     * @returns com_ever_edu_pms_user_dto_res_UserResDto OK
+     * @throws ApiError
+     */
+    public static getUser(
+        uuid: string,
+    ): CancelablePromise<com_ever_edu_pms_user_dto_res_UserResDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/users/{uuid}',
+            path: {
+                'uuid': uuid,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 개인정보 변경
+     * 개인정보 변경페이지 필요 정보를 조회한다.
+     * @param uuid
+     * @param requestBody
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static changeUserInfo1(
+        uuid: string,
+        requestBody: com_ever_edu_pms_user_dto_req_UserChangeReqDto,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/admin/api/v1/users/{uuid}',
+            path: {
+                'uuid': uuid,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 사용자 삭제
+     * 사용자를 삭제한다.
+     * @param uuid
+     * @returns void
+     * @throws ApiError
+     */
+    public static deleteUser(
+        uuid: string,
+    ): CancelablePromise<void> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/admin/api/v1/users/{uuid}',
+            path: {
+                'uuid': uuid,
             },
             errors: {
                 400: `Bad Request`,
@@ -314,30 +423,6 @@ export class BoService {
         return __request(OpenAPI, {
             method: 'PUT',
             url: '/admin/api/v1/users/verifications/change-password-by-email',
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 임시 비밀번호 발급
-     * 특정 사용자의 비밀번호를 임시 비밀번호로 변경한다.
-     * @param requestBody
-     * @returns any OK
-     * @throws ApiError
-     */
-    public static issueNewPassword(
-        requestBody: com_ever_edu_pms_user_dto_req_IssueNewPasswordReqDto,
-    ): CancelablePromise<any> {
-        return __request(OpenAPI, {
-            method: 'PUT',
-            url: '/admin/api/v1/users/issue-new-password',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -458,7 +543,7 @@ export class BoService {
      * @returns any OK
      * @throws ApiError
      */
-    public static delete1(
+    public static delete2(
         userGroupId: number,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -537,7 +622,7 @@ export class BoService {
      * @returns any OK
      * @throws ApiError
      */
-    public static delete2(
+    public static delete3(
         termsId: number,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -677,6 +762,193 @@ export class BoService {
             path: {
                 'tenantId': tenantId,
             },
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 테넌트 정적 파일 목록 조회
+     * 테넌트 정적 파일 목록 조회
+     * @param page Zero-based page index (0..N)
+     * @param size The size of the page to be returned
+     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @param originalFileName 파일명
+     * @param fileType 파일유형
+     * @param expiryStartDate 유효기간시작날짜
+     * @param expiryEndDate 유효기간종료날짜
+     * @returns org_springframework_data_domain_PageCom_ever_edu_pms_tenant_dto_res_TenantStaticFileResDto$ListOnAdmin OK
+     * @throws ApiError
+     */
+    public static getTenantStaticFileList(
+        page?: number,
+        size: number = 10,
+        sort?: Array<string>,
+        originalFileName?: string,
+        fileType?: string,
+        expiryStartDate?: string,
+        expiryEndDate?: string,
+    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_tenant_dto_res_TenantStaticFileResDto$ListOnAdmin> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/tenants/static-file',
+            query: {
+                'page': page,
+                'size': size,
+                'sort': sort,
+                'original_file_name': originalFileName,
+                'fileType': fileType,
+                'expiryStartDate': expiryStartDate,
+                'expiryEndDate': expiryEndDate,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 테넌트 정적 파일 수정
+     * 테넌트 정적 파일 수정
+     * @param requestBody
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static updateTenantStaticFile(
+        requestBody: com_ever_edu_pms_tenant_dto_req_TenantStaticFileUpdateReqDto,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/admin/api/v1/tenants/static-file',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 테넌트 정적 파일 저장
+     * 테넌트 정적 파일 저장
+     * @param requestBody
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static createTenantStaticFile(
+        requestBody: com_ever_edu_pms_tenant_dto_req_TenantStaticFileCreateReqDto,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/tenants/static-file',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 테넌트 결재라인수정
+     * 테넌트 결재라인관리 수정한다.
+     * @param requestBody
+     * @returns com_ever_edu_pms_tenant_approval_dto_res_TenantApprovalMessageResDto OK
+     * @throws ApiError
+     */
+    public static updateApprovalLine(
+        requestBody: com_ever_edu_pms_tenant_approval_dto_req_TenantApprovalUpdateListReqDto,
+    ): CancelablePromise<com_ever_edu_pms_tenant_approval_dto_res_TenantApprovalMessageResDto> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/admin/api/v1/tenant_approval/updateTenantApprovalLine',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 테넌트-회사-결재라인 사용여부 on/off(테넌트)
+     * 결재라인 사용여부 on/off
+     * @param requestBody
+     * @returns com_ever_edu_pms_tenant_approval_dto_res_TenantApprovalMessageResDto OK
+     * @throws ApiError
+     */
+    public static updateTenantApprovalLineOnOff(
+        requestBody: com_ever_edu_pms_tenant_approval_dto_req_TenantApprovalUpdateOnOffReqDto,
+    ): CancelablePromise<com_ever_edu_pms_tenant_approval_dto_res_TenantApprovalMessageResDto> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/admin/api/v1/tenant_approval/updateTenantApprovalLineUseYn',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 플랫폼-결재라인 사용여부 on/off
+     * 결재라인 사용여부 on/off
+     * @param requestBody
+     * @returns com_ever_edu_pms_tenant_approval_dto_res_TenantApprovalMessageResDto OK
+     * @throws ApiError
+     */
+    public static updatePlatformApprovalLineOnOff(
+        requestBody: com_ever_edu_pms_tenant_approval_dto_req_TenantApprovalUpdateOnOffReqDto,
+    ): CancelablePromise<com_ever_edu_pms_tenant_approval_dto_res_TenantApprovalMessageResDto> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/admin/api/v1/tenant_approval/updatePlatformApprovalLineUseYn',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 테넌트 결재라인등록
+     * 테넌트 결재라인관리 등록한다.(최초등록)
+     * @param requestBody
+     * @returns com_ever_edu_pms_tenant_approval_dto_res_TenantApprovalMessageResDto OK
+     * @throws ApiError
+     */
+    public static insertApprovalLine(
+        requestBody: com_ever_edu_pms_tenant_approval_dto_req_TenantApprovalLineRegReqDto,
+    ): CancelablePromise<com_ever_edu_pms_tenant_approval_dto_res_TenantApprovalMessageResDto> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/admin/api/v1/tenant_approval/registTenantApprovalLine',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -832,7 +1104,7 @@ export class BoService {
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_multilingual_dto_res_MultilingualResDto$ListOnAdmin OK
      * @throws ApiError
      */
-    public static findPage5(
+    public static findPage7(
         params: com_ever_edu_pms_multilingual_dto_req_MultilingualSearchReqDto$SearchByAdmin,
         page?: number,
         size: number = 10,
@@ -913,7 +1185,7 @@ export class BoService {
      * @returns com_ever_edu_pms_menu_dto_res_MenuResDto$DetailOnAdmin OK
      * @throws ApiError
      */
-    public static update2(
+    public static update3(
         menuId: number,
         requestBody: com_ever_edu_pms_menu_dto_req_MenuSaveReqDto$MenuDto,
     ): CancelablePromise<com_ever_edu_pms_menu_dto_res_MenuResDto$DetailOnAdmin> {
@@ -941,7 +1213,7 @@ export class BoService {
      * @returns any OK
      * @throws ApiError
      */
-    public static delete3(
+    public static delete5(
         menuId: number,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -1020,7 +1292,7 @@ export class BoService {
      * @returns com_ever_edu_pms_labelmessage_dto_res_LabelMessageResDto$DetailOnAdmin OK
      * @throws ApiError
      */
-    public static findById2(
+    public static findById3(
         labelMessageId: number,
     ): CancelablePromise<com_ever_edu_pms_labelmessage_dto_res_LabelMessageResDto$DetailOnAdmin> {
         return __request(OpenAPI, {
@@ -1046,7 +1318,7 @@ export class BoService {
      * @returns com_ever_edu_pms_labelmessage_dto_res_LabelMessageResDto$DetailOnAdmin OK
      * @throws ApiError
      */
-    public static update3(
+    public static update4(
         labelMessageId: number,
         requestBody: com_ever_edu_pms_labelmessage_dto_req_LabelMessageSaveReqDto$LabelMessageDto,
     ): CancelablePromise<com_ever_edu_pms_labelmessage_dto_res_LabelMessageResDto$DetailOnAdmin> {
@@ -1074,7 +1346,7 @@ export class BoService {
      * @returns any OK
      * @throws ApiError
      */
-    public static delete4(
+    public static delete6(
         labelMessageId: number,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
@@ -1087,6 +1359,88 @@ export class BoService {
                 400: `Bad Request`,
                 401: `Unauthorized`,
                 404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 휴일 상세 조회
+     * 휴일 상세 조회
+     * @param holidayId
+     * @returns com_ever_edu_pms_holiday_dto_res_HolidayResDto OK
+     * @throws ApiError
+     */
+    public static selectHolidayInfo(
+        holidayId: number,
+    ): CancelablePromise<com_ever_edu_pms_holiday_dto_res_HolidayResDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/holiday/{holidayId}',
+            path: {
+                'holidayId': holidayId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 휴일 상세 수정
+     * 휴일 상세 수정
+     * @param holidayId
+     * @param requestBody
+     * @returns com_ever_edu_pms_holiday_dto_res_HolidayResDto OK
+     * @throws ApiError
+     */
+    public static modifyHolidayInfo(
+        holidayId: number,
+        requestBody: com_ever_edu_pms_holiday_dto_req_HolidaySaveReqDto,
+    ): CancelablePromise<com_ever_edu_pms_holiday_dto_res_HolidayResDto> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/admin/api/v1/holiday/{holidayId}',
+            path: {
+                'holidayId': holidayId,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 휴일 정보 삭제
+     * 휴일 정보 삭제
+     * @param holidayId
+     * @returns number OK
+     * @throws ApiError
+     */
+    public static removeHolidayInfo(
+        holidayId: number,
+    ): CancelablePromise<number> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/admin/api/v1/holiday/{holidayId}',
+            path: {
+                'holidayId': holidayId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
                 422: `Unprocessable Entity`,
                 500: `Internal Server Error`,
             },
@@ -1426,7 +1780,7 @@ export class BoService {
      * @returns com_ever_edu_pms_channel_dto_res_ChannelDetailResDto OK
      * @throws ApiError
      */
-    public static selectChannelBaseInfo1(
+    public static selectChannelBaseInfo2(
         channelUuid: string,
     ): CancelablePromise<com_ever_edu_pms_channel_dto_res_ChannelDetailResDto> {
         return __request(OpenAPI, {
@@ -1489,6 +1843,102 @@ export class BoService {
             path: {
                 'channelUuid': channelUuid,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 결재라인관리수정
+     * 결재라인관리 수정한다. - approvalLineList는 화면의 순서대로 넣어주세요. 조회시 역순으로 전달합니다.
+     * @param requestBody
+     * @returns com_ever_edu_pms_approval_manage_dto_res_ApprovalLineSearchResDto OK
+     * @throws ApiError
+     */
+    public static updateApprovalLine1(
+        requestBody: com_ever_edu_pms_approval_manage_dto_req_ApprovalLineTempUpdateReqDto,
+    ): CancelablePromise<com_ever_edu_pms_approval_manage_dto_res_ApprovalLineSearchResDto> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/admin/api/v1/approval_manage/updateApprovalLineTemp',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 결재라인관리-결재라인목록수정
+     * 결재라인관리-결재라인목록수정
+     * @param requestBody
+     * @returns com_ever_edu_pms_approval_manage_dto_res_ApprovalLineSearchResDto OK
+     * @throws ApiError
+     */
+    public static updateApprovalLineList(
+        requestBody: com_ever_edu_pms_approval_manage_dto_req_ApprovalLineTempUpdateListReqDto,
+    ): CancelablePromise<com_ever_edu_pms_approval_manage_dto_res_ApprovalLineSearchResDto> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/admin/api/v1/approval_manage/updateApprovalLineTempList',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * test
+     * check테스트
+     * @param requestBody
+     * @returns com_ever_edu_pms_approval_manage_dto_res_ApprovalLineMessageResDto OK
+     * @throws ApiError
+     */
+    public static testApprovalLine(
+        requestBody: com_ever_edu_pms_approval_manage_dto_req_ApprovalLineTempUpdateReqDto,
+    ): CancelablePromise<com_ever_edu_pms_approval_manage_dto_res_ApprovalLineMessageResDto> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/admin/api/v1/approval_manage/testApprovalLineTemp',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 결재라인관리등록
+     * 결재라인관리 등록한다. - approvalLineList는 화면의 순서대로 넣어주세요. 조회시 역순으로 전달합니다.
+     * @param requestBody
+     * @returns com_ever_edu_pms_approval_manage_dto_res_ApprovalLineSearchResDto OK
+     * @throws ApiError
+     */
+    public static insertApprovalLine1(
+        requestBody: com_ever_edu_pms_approval_manage_dto_req_ApprovalLineTempRegistReqDto,
+    ): CancelablePromise<com_ever_edu_pms_approval_manage_dto_res_ApprovalLineSearchResDto> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/admin/api/v1/approval_manage/registApprovalLineTemp',
+            body: requestBody,
+            mediaType: 'application/json',
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,
@@ -1731,6 +2181,30 @@ export class BoService {
         });
     }
     /**
+     * 계정 잠금해제(관리자)
+     * 관리자가 계정 잠금을 해제한다.
+     * @param requestBody
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static unlockAccount(
+        requestBody: com_ever_edu_global_dto_UuidListDto,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/users/unlock-account',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
      * 강사 회원가입
      * 운영자가 강사 사용자를 등록한다.
      * @param requestBody
@@ -1755,18 +2229,18 @@ export class BoService {
         });
     }
     /**
-     * 비밀번호 변경 기간 연장
-     * 비밀번호 변경 기간을 연장한다.
+     * 계정 반려(관리자)
+     * 관리자가 계정을 반려한다.
      * @param requestBody
      * @returns any OK
      * @throws ApiError
      */
-    public static changePasswordByPhoneNumber2(
-        requestBody: com_ever_edu_pms_user_dto_req_ExtendPasswordChangeDateReqDto,
+    public static rejectAccount(
+        requestBody: com_ever_edu_global_dto_UuidListDto,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/admin/api/v1/users/extend-password-change-date',
+            url: '/admin/api/v1/users/reject-account',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -1791,6 +2265,30 @@ export class BoService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/admin/api/v1/users/confirm-password',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 계정 승인(관리자)
+     * 관리자가 계정을 승인한다.
+     * @param requestBody
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static approveAccount(
+        requestBody: com_ever_edu_global_dto_UuidListDto,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/users/approve-account',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -1855,6 +2353,33 @@ export class BoService {
                 400: `Bad Request`,
                 401: `Unauthorized`,
                 404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 유저그룹 대상자 엑셀 업로드 유효성 검사
+     * 유저그룹 대상자 엑셀 업로드 유효성 검사
+     * @param formData
+     * @returns com_ever_edu_global_excel_dto_res_ExcelValidationResDto OK
+     * @throws ApiError
+     */
+    public static uploadExcelValidation(
+        formData?: {
+            file: Blob;
+        },
+    ): CancelablePromise<com_ever_edu_global_excel_dto_res_ExcelValidationResDto> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/userGroup/excelUploadValidation',
+            formData: formData,
+            mediaType: 'multipart/form-data',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
                 422: `Unprocessable Entity`,
                 500: `Internal Server Error`,
             },
@@ -2018,6 +2543,145 @@ export class BoService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/admin/api/v1/tenants',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 테넌트 정적 파일 유효기간 1년 초과시 사용 불가 처리 (배치용)
+     * 테넌트 정적 파일 유효기간 1년 초과시 사용 불가 처리 (배치용)
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static expireOutdatedTenantStaticFiles(): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/tenants/static-file/expire',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 테넌트 내부결재설정 결재양식/사용여부 조회
+     * 테넌트 내부결재설정 결재양식/사용여부 조회
+     * @param requestBody
+     * @returns com_ever_edu_pms_tenant_approval_dto_TenantApprovalSettingDto OK
+     * @throws ApiError
+     */
+    public static selectTenantApprovalSettingList(
+        requestBody: com_ever_edu_pms_tenant_approval_dto_req_TenantApprovalLineSearchReqDto,
+    ): CancelablePromise<Array<com_ever_edu_pms_tenant_approval_dto_TenantApprovalSettingDto>> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/tenant_approval/selectTenantApprovalSettingList',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 테넌트_회사_결재관리 조회
+     * 테넌트_회사_결재관리 조회
+     * @param requestBody
+     * @returns com_ever_edu_pms_tenant_approval_dto_res_TenantApprovalLineSearchResDto OK
+     * @throws ApiError
+     */
+    public static selectTenantApprovalLineList(
+        requestBody: com_ever_edu_pms_tenant_approval_dto_req_TenantApprovalLineSearchReqDto,
+    ): CancelablePromise<com_ever_edu_pms_tenant_approval_dto_res_TenantApprovalLineSearchResDto> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/tenant_approval/selectTenantApprovalLineList',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 테넌트_회사_결재관리_팝업 조회
+     * 테넌트_회사_결재관리팝업 조회
+     * @param requestBody
+     * @returns com_ever_edu_pms_tenant_approval_dto_res_TenantApprovalLinePopDetailResDto OK
+     * @throws ApiError
+     */
+    public static selectTenantApprovalLineDetail(
+        requestBody: com_ever_edu_pms_tenant_approval_dto_req_TenantApprovalLinePopDetailReqDto,
+    ): CancelablePromise<com_ever_edu_pms_tenant_approval_dto_res_TenantApprovalLinePopDetailResDto> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/tenant_approval/selectTenantApprovalLineDetail',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 결재자검색-팝업검색 조회
+     * 결재자검색-팝업검색
+     * @param requestBody
+     * @returns com_ever_edu_pms_tenant_approval_dto_res_TenantApprovalLinePopUserResDto OK
+     * @throws ApiError
+     */
+    public static findApprovalUser(
+        requestBody: com_ever_edu_pms_tenant_approval_dto_req_TenantApprovalLinePopUserReqDto,
+    ): CancelablePromise<com_ever_edu_pms_tenant_approval_dto_res_TenantApprovalLinePopUserResDto> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/tenant_approval/popup/findApprovalUser',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 결재라인-팝업검색 조회
+     * 결재라인-팝업검색
+     * @param requestBody
+     * @returns com_ever_edu_pms_tenant_approval_dto_res_TenantApprovalLinePopChoiceResDto OK
+     * @throws ApiError
+     */
+    public static findApprovalLine(
+        requestBody: com_ever_edu_pms_tenant_approval_dto_req_TenantApprovalLinePopChoiceReqDto,
+    ): CancelablePromise<com_ever_edu_pms_tenant_approval_dto_res_TenantApprovalLinePopChoiceResDto> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/tenant_approval/popup/findApprovalLine',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -2407,7 +3071,7 @@ export class BoService {
      * @returns com_ever_edu_global_excel_dto_res_ExcelValidationResDto OK
      * @throws ApiError
      */
-    public static uploadExcelValidation(
+    public static uploadExcelValidation1(
         formData?: {
             file: Blob;
         },
@@ -2459,7 +3123,7 @@ export class BoService {
      * @returns com_ever_edu_pms_menu_dto_res_MenuResDto$DetailOnAdmin OK
      * @throws ApiError
      */
-    public static save3(
+    public static save4(
         requestBody: com_ever_edu_pms_menu_dto_req_MenuSaveReqDto$MenuDto,
     ): CancelablePromise<com_ever_edu_pms_menu_dto_res_MenuResDto$DetailOnAdmin> {
         return __request(OpenAPI, {
@@ -2645,7 +3309,7 @@ export class BoService {
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_labelmessage_dto_res_LabelMessageResDto$ListOnAdmin OK
      * @throws ApiError
      */
-    public static findPage6(
+    public static findPage8(
         params: com_ever_edu_pms_labelmessage_dto_req_LabelMessageSearchReqDto$SearchByAdmin,
         page?: number,
         size: number = 10,
@@ -2676,7 +3340,7 @@ export class BoService {
      * @returns com_ever_edu_pms_labelmessage_dto_res_LabelMessageResDto$DetailOnAdmin Created
      * @throws ApiError
      */
-    public static save4(
+    public static save5(
         requestBody: com_ever_edu_pms_labelmessage_dto_req_LabelMessageSaveReqDto$LabelMessageDto,
     ): CancelablePromise<com_ever_edu_pms_labelmessage_dto_res_LabelMessageResDto$DetailOnAdmin> {
         return __request(OpenAPI, {
@@ -2688,6 +3352,117 @@ export class BoService {
                 400: `Bad Request`,
                 401: `Unauthorized`,
                 404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 휴일 목록 조회
+     * 휴일 목록 조회
+     * @param page Zero-based page index (0..N)
+     * @param size The size of the page to be returned
+     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @param holidayId 휴일관리 ID
+     * @param tenantId 테넌트 ID
+     * @param companyCode 회사코드
+     * @param holidayType 휴일 유형
+     * @param holidayName 휴일명
+     * @param startDate 휴일기간 시작일(yyyy-MM-dd)
+     * @param endDate 휴일기간 종료일(yyyy-MM-dd)
+     * @param holidayDesc 휴일 내용
+     * @param isUsed 사용여부
+     * @returns org_springframework_data_domain_PageCom_ever_edu_pms_holiday_dto_res_HolidayListResDto OK
+     * @throws ApiError
+     */
+    public static selectHolidayList(
+        page?: number,
+        size: number = 10,
+        sort?: Array<string>,
+        holidayId?: string,
+        tenantId?: string,
+        companyCode?: string,
+        holidayType?: string,
+        holidayName?: string,
+        startDate?: string,
+        endDate?: string,
+        holidayDesc?: string,
+        isUsed?: string,
+    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_holiday_dto_res_HolidayListResDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/holiday',
+            query: {
+                'page': page,
+                'size': size,
+                'sort': sort,
+                'holidayId': holidayId,
+                'tenantId': tenantId,
+                'companyCode': companyCode,
+                'holidayType': holidayType,
+                'holidayName': holidayName,
+                'startDate': startDate,
+                'endDate': endDate,
+                'holidayDesc': holidayDesc,
+                'isUsed': isUsed,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 휴일 신규 등록
+     * 휴일 신규 등록
+     * @param requestBody
+     * @returns com_ever_edu_pms_holiday_dto_res_HolidayResDto OK
+     * @throws ApiError
+     */
+    public static registHoliday(
+        requestBody: com_ever_edu_pms_holiday_dto_req_HolidaySaveReqDto,
+    ): CancelablePromise<com_ever_edu_pms_holiday_dto_res_HolidayResDto> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/holiday',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 휴일 엑셀파일 일괄 등록
+     * 휴일 엑셀파일 일괄 등록
+     * @param formData
+     * @returns com_ever_edu_pms_holiday_dto_res_HolidayExcelResDto OK
+     * @throws ApiError
+     */
+    public static uploadExcelFileHoliday(
+        formData?: {
+            multipartFile?: Blob;
+        },
+    ): CancelablePromise<com_ever_edu_pms_holiday_dto_res_HolidayExcelResDto> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/holiday/excel',
+            formData: formData,
+            mediaType: 'multipart/form-data',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
                 422: `Unprocessable Entity`,
                 500: `Internal Server Error`,
             },
@@ -3068,6 +3843,7 @@ export class BoService {
     /**
      * 채널 조회
      * 테넌트의 채널목록을 조회한다.
+     * @param roleId 역활 Id
      * @param page Zero-based page index (0..N)
      * @param size The size of the page to be returned
      * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -3087,6 +3863,7 @@ export class BoService {
      * @throws ApiError
      */
     public static selectChannelList(
+        roleId: string,
         page?: number,
         size: number = 10,
         sort?: Array<string>,
@@ -3111,6 +3888,7 @@ export class BoService {
                 'size': size,
                 'sort': sort,
                 'tenantId': tenantId,
+                'roleId': roleId,
                 'channelCreationType': channelCreationType,
                 'channelName': channelName,
                 'channelMainId': channelMainId,
@@ -3157,18 +3935,43 @@ export class BoService {
         });
     }
     /**
-     * 결재라인관리수정
-     * 결재라인관리 수정한다.
-     * @param requestBody
-     * @returns com_ever_edu_pms_approval_manage_dto_res_ApprovalLineSearchResDto OK
+     * 블랙/화이트를 삭제한다.
+     * 블랙/화이트를 삭제한다.
+     * @param groupId
+     * @returns any OK
      * @throws ApiError
      */
-    public static updateApprovalLine(
-        requestBody: com_ever_edu_pms_approval_manage_dto_req_ApprovalLineTempUpdateReqDto,
-    ): CancelablePromise<com_ever_edu_pms_approval_manage_dto_res_ApprovalLineSearchResDto> {
+    public static delete(
+        groupId: number,
+    ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/admin/api/v1/approval_manage/updateApprovalLineTemp',
+            url: '/admin/api/v1/black-and-white/{groupId}/delete',
+            path: {
+                'groupId': groupId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 블랙/화이트 목록을 mapping한다.
+     * 블랙/화이트 목록을 mapping한다.
+     * @param requestBody
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static mapping(
+        requestBody: com_ever_edu_pms_blackwhite_dto_req_BlackAndWhiteMappingReqDto,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/black-and-white/mapping',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -3181,18 +3984,18 @@ export class BoService {
         });
     }
     /**
-     * 결재라인관리등록
-     * 결재라인관리 등록한다.
+     * 결재라인 검색 팝업조회
+     * 결재라인 검색 팝업조회 조회한다.
      * @param requestBody
      * @returns com_ever_edu_pms_approval_manage_dto_res_ApprovalLineSearchResDto OK
      * @throws ApiError
      */
-    public static insertApprovalLine(
-        requestBody: com_ever_edu_pms_approval_manage_dto_req_ApprovalLineTempRegistReqDto,
-    ): CancelablePromise<com_ever_edu_pms_approval_manage_dto_res_ApprovalLineSearchResDto> {
+    public static findApprovalLine1(
+        requestBody: com_ever_edu_pms_approval_manage_dto_req_ApprovalLinePopupSearchDto,
+    ): CancelablePromise<Array<com_ever_edu_pms_approval_manage_dto_res_ApprovalLineSearchResDto>> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/admin/api/v1/approval_manage/registApprovalLineTemp',
+            url: '/admin/api/v1/approval_manage/popup/findApprovalLine',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -3265,6 +4068,30 @@ export class BoService {
                 'startDate': startDate,
                 'endDate': endDate,
             },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 결재라인관리상세조회
+     * 결재라인관리상세 조회한다.
+     * @param requestBody
+     * @returns com_ever_edu_pms_approval_manage_dto_res_ApprovalLineSearchResDto OK
+     * @throws ApiError
+     */
+    public static selectApprovalLineTempDetail(
+        requestBody: com_ever_edu_pms_approval_manage_dto_req_ApprovalLineTempDetailReqDto,
+    ): CancelablePromise<com_ever_edu_pms_approval_manage_dto_res_ApprovalLineSearchResDto> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/approval_manage/approvalLineTempDetail',
+            body: requestBody,
+            mediaType: 'application/json',
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,
@@ -3407,56 +4234,6 @@ export class BoService {
             url: '/admin/api/v1/widgets/tenant/{tenantId}',
             path: {
                 'tenantId': tenantId,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 사용자 조회(단건)
-     * 사용자를 조회한다.
-     * @param uuid
-     * @returns com_ever_edu_pms_user_dto_res_UserResDto OK
-     * @throws ApiError
-     */
-    public static getUser(
-        uuid: string,
-    ): CancelablePromise<com_ever_edu_pms_user_dto_res_UserResDto> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/users/{uuid}',
-            path: {
-                'uuid': uuid,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 사용자 삭제
-     * 사용자를 삭제한다.
-     * @param uuid
-     * @returns void
-     * @throws ApiError
-     */
-    public static deleteUser(
-        uuid: string,
-    ): CancelablePromise<void> {
-        return __request(OpenAPI, {
-            method: 'DELETE',
-            url: '/admin/api/v1/users/{uuid}',
-            path: {
-                'uuid': uuid,
             },
             errors: {
                 400: `Bad Request`,
@@ -3635,6 +4412,7 @@ export class BoService {
      * @param tenantIds
      * @param userGroupType
      * @param userGroupName
+     * @param roleIds
      * @returns com_ever_edu_pms_user_dto_res_UserGroupDto OK
      * @throws ApiError
      */
@@ -3642,6 +4420,7 @@ export class BoService {
         tenantIds: Array<number>,
         userGroupType?: 'ORGANIZATION' | 'JOB_GROUP' | 'JOB' | 'JOB_TITLE' | 'JOB_POSITION' | 'CUSTOM_GROUP',
         userGroupName?: string,
+        roleIds?: Array<number>,
     ): CancelablePromise<Array<com_ever_edu_pms_user_dto_res_UserGroupDto>> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -3650,6 +4429,7 @@ export class BoService {
                 'userGroupType': userGroupType,
                 'userGroupName': userGroupName,
                 'tenantIds': tenantIds,
+                'roleIds': roleIds,
             },
             errors: {
                 400: `Bad Request`,
@@ -3720,12 +4500,14 @@ export class BoService {
      * 유저그룹검색 팝업 조회 - 조직
      * @param tenantIds
      * @param tenantName
+     * @param roleIds
      * @returns com_ever_edu_pms_user_dto_res_UserGroupTreeDto OK
      * @throws ApiError
      */
     public static getOrganizationTree(
         tenantIds: Array<number>,
         tenantName?: string,
+        roleIds?: Array<number>,
     ): CancelablePromise<com_ever_edu_pms_user_dto_res_UserGroupTreeDto> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -3733,6 +4515,7 @@ export class BoService {
             query: {
                 'tenantName': tenantName,
                 'tenantIds': tenantIds,
+                'roleIds': roleIds,
             },
             errors: {
                 400: `Bad Request`,
@@ -3747,17 +4530,20 @@ export class BoService {
      * 유저그룹 사용자정의 트리 조회
      * 유저그룹 사용자정의 트리 조회
      * @param userGroupName
+     * @param roleIds
      * @returns com_ever_edu_pms_user_dto_res_UserGroupTreeDto OK
      * @throws ApiError
      */
     public static getCustomGroupTree(
         userGroupName?: string,
+        roleIds?: Array<number>,
     ): CancelablePromise<com_ever_edu_pms_user_dto_res_UserGroupTreeDto> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/userGroup/custom-groups-tree',
             query: {
                 'userGroupName': userGroupName,
+                'roleIds': roleIds,
             },
             errors: {
                 400: `Bad Request`,
@@ -3800,17 +4586,20 @@ export class BoService {
      * 회사별 - 유저그룹 조직 트리 조회
      * 회사별 - 유저그룹 조직 트리 조회
      * @param companyId
+     * @param roleIds
      * @returns com_ever_edu_pms_user_dto_res_UserGroupTreeDto OK
      * @throws ApiError
      */
     public static getCompanyTree(
         companyId: number,
+        roleIds?: Array<number>,
     ): CancelablePromise<com_ever_edu_pms_user_dto_res_UserGroupTreeDto> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/userGroup/company/organization-tree',
             query: {
                 'companyId': companyId,
+                'roleIds': roleIds,
             },
             errors: {
                 400: `Bad Request`,
@@ -3850,6 +4639,82 @@ export class BoService {
                 400: `Bad Request`,
                 401: `Unauthorized`,
                 404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 테넌트 정적 파일 상세 조회
+     * 테넌트 정적 파일 상세 조회
+     * @param fileUuid
+     * @returns com_ever_edu_pms_tenant_dto_res_TenantStaticFileResDto$DetailOnAdmin OK
+     * @throws ApiError
+     */
+    public static getTenantStaticFileDetail(
+        fileUuid: string,
+    ): CancelablePromise<com_ever_edu_pms_tenant_dto_res_TenantStaticFileResDto$DetailOnAdmin> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/tenants/static-file/{fileUuid}',
+            path: {
+                'fileUuid': fileUuid,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 테넌트 정적 파일 삭제
+     * 테넌트 정적 파일 삭제
+     * @param fileUuid
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static deleteTenantStaticFile(
+        fileUuid: string,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/admin/api/v1/tenants/static-file/{fileUuid}',
+            path: {
+                'fileUuid': fileUuid,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 파일 접속 URL 다운로드 요청
+     * 파일 접속 URL 다운로드 요청
+     * @param fileUuid
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static getPublicAccessUrlForFile(
+        fileUuid: string,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/tenants/static-file/download/{fileUuid}',
+            path: {
+                'fileUuid': fileUuid,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
                 422: `Unprocessable Entity`,
                 500: `Internal Server Error`,
             },
@@ -4049,12 +4914,12 @@ export class BoService {
      * 역할 유저그룹 조회
      * 역할 유저그룹을 조회한다.
      * @param roleId
-     * @returns com_ever_edu_pms_role_dto_res_RoleUserGroupResDto OK
+     * @returns com_ever_edu_pms_blackwhite_dto_res_WhiteGroupResDto OK
      * @throws ApiError
      */
     public static getRoleUserGroups(
         roleId: number,
-    ): CancelablePromise<Array<com_ever_edu_pms_role_dto_res_RoleUserGroupResDto>> {
+    ): CancelablePromise<Array<com_ever_edu_pms_blackwhite_dto_res_WhiteGroupResDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/roles/{roleId}/user-groups',
@@ -4433,6 +5298,59 @@ export class BoService {
         });
     }
     /**
+     * 개인정보 조회사유 목록 조회
+     * 개인정보 조회사유 목록 조회
+     * @param pageable
+     * @param params
+     * @returns org_springframework_data_domain_PageCom_ever_edu_pms_privacyaccess_dto_res_PrivacyAccessLogResDto$ListOnAdmin OK
+     * @throws ApiError
+     */
+    public static findPage6(
+        pageable: org_springdoc_core_converters_models_Pageable,
+        params: com_ever_edu_pms_privacyaccess_dto_req_PrivacyAccessLogSearchReqDto$SearchByAdmin,
+    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_privacyaccess_dto_res_PrivacyAccessLogResDto$ListOnAdmin> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/privacy-access-log',
+            query: {
+                'pageable': pageable,
+                'params': params,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 개인정보 조회사유 단건 조회
+     * 개인정보 조회사유 단건 조회
+     * @param privacyAccessLogId
+     * @returns com_ever_edu_pms_privacyaccess_dto_res_PrivacyAccessLogResDto$DetailOnAdmin OK
+     * @throws ApiError
+     */
+    public static findDetailById1(
+        privacyAccessLogId: number,
+    ): CancelablePromise<com_ever_edu_pms_privacyaccess_dto_res_PrivacyAccessLogResDto$DetailOnAdmin> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/privacy-access-log/{privacyAccessLogId}',
+            path: {
+                'privacyAccessLogId': privacyAccessLogId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
      * 다국어 단건 조회
      * 다국어 단건 조회
      * @param multilingualKeyValue
@@ -4685,7 +5603,7 @@ export class BoService {
      * @returns com_ever_edu_pms_menu_dto_res_MenuResDto$DetailOnAdmin OK
      * @throws ApiError
      */
-    public static findDetailById1(
+    public static findDetailById2(
         menuId: number,
     ): CancelablePromise<com_ever_edu_pms_menu_dto_res_MenuResDto$DetailOnAdmin> {
         return __request(OpenAPI, {
@@ -4732,21 +5650,21 @@ export class BoService {
      * BO GNB 테넌트메뉴목록 트리 조회
      * GNB 메뉴 목록을 트리구조로 조회한다.
      * @param tenantId
-     * @param roleId
+     * @param roleIds
      * @param deviceType
      * @returns com_ever_edu_pms_menu_dto_res_GnbTenantMenuTreeDto OK
      * @throws ApiError
      */
     public static findTenantMenu1(
         tenantId: number,
-        roleId?: number,
+        roleIds?: Array<number>,
         deviceType?: string,
     ): CancelablePromise<com_ever_edu_pms_menu_dto_res_GnbTenantMenuTreeDto> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/menus/tenantTree',
             query: {
-                'roleId': roleId,
+                'roleIds': roleIds,
                 'tenantId': tenantId,
                 'deviceType': deviceType,
             },
@@ -4835,6 +5753,65 @@ export class BoService {
                 400: `Bad Request`,
                 401: `Unauthorized`,
                 404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 휴일 목록 엑셀 다운로드
+     * 휴일 목록 엑셀 다운로드
+     * @param page Zero-based page index (0..N)
+     * @param size The size of the page to be returned
+     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @param holidayId 휴일관리 ID
+     * @param tenantId 테넌트 ID
+     * @param companyCode 회사코드
+     * @param holidayType 휴일 유형
+     * @param holidayName 휴일명
+     * @param startDate 휴일기간 시작일(yyyy-MM-dd)
+     * @param endDate 휴일기간 종료일(yyyy-MM-dd)
+     * @param holidayDesc 휴일 내용
+     * @param isUsed 사용여부
+     * @returns com_ever_edu_pms_holiday_dto_res_HolidayExcelResDto OK
+     * @throws ApiError
+     */
+    public static downloadExcelHolidayList(
+        page?: number,
+        size: number = 10,
+        sort?: Array<string>,
+        holidayId?: string,
+        tenantId?: string,
+        companyCode?: string,
+        holidayType?: string,
+        holidayName?: string,
+        startDate?: string,
+        endDate?: string,
+        holidayDesc?: string,
+        isUsed?: string,
+    ): CancelablePromise<com_ever_edu_pms_holiday_dto_res_HolidayExcelResDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/holiday/exceldownload',
+            query: {
+                'page': page,
+                'size': size,
+                'sort': sort,
+                'holidayId': holidayId,
+                'tenantId': tenantId,
+                'companyCode': companyCode,
+                'holidayType': holidayType,
+                'holidayName': holidayName,
+                'startDate': startDate,
+                'endDate': endDate,
+                'holidayDesc': holidayDesc,
+                'isUsed': isUsed,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
                 422: `Unprocessable Entity`,
                 500: `Internal Server Error`,
             },
@@ -5322,6 +6299,7 @@ export class BoService {
     /**
      * 채널 조회(팝업)
      * 채널의 팝업용 목록을 조회한다. 셔틀 팝업
+     * @param roleId 역활 Id
      * @param page Zero-based page index (0..N)
      * @param size The size of the page to be returned
      * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -5341,6 +6319,7 @@ export class BoService {
      * @throws ApiError
      */
     public static selectChannelPopupList(
+        roleId: string,
         page?: number,
         size: number = 10,
         sort?: Array<string>,
@@ -5365,6 +6344,7 @@ export class BoService {
                 'size': size,
                 'sort': sort,
                 'tenantId': tenantId,
+                'roleId': roleId,
                 'channelCreationType': channelCreationType,
                 'channelName': channelName,
                 'channelMainId': channelMainId,
@@ -5471,6 +6451,30 @@ export class BoService {
         return __request(OpenAPI, {
             method: 'DELETE',
             url: '/admin/api/v1/department/remove',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 결재라인관리(삭제)
+     * 결재라인관리 삭제한다.
+     * @param requestBody
+     * @returns com_ever_edu_pms_approval_manage_dto_res_ApprovalLineMessageResDto OK
+     * @throws ApiError
+     */
+    public static deleteApprovalLine(
+        requestBody: com_ever_edu_pms_approval_manage_dto_req_ApprovalLineTempDeleteReqDto,
+    ): CancelablePromise<com_ever_edu_pms_approval_manage_dto_res_ApprovalLineMessageResDto> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/admin/api/v1/approval_manage/deleteApprovalLineTemp',
             body: requestBody,
             mediaType: 'application/json',
             errors: {

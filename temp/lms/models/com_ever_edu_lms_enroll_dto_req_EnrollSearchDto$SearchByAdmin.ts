@@ -16,11 +16,11 @@ export type com_ever_edu_lms_enroll_dto_req_EnrollSearchDto$SearchByAdmin = {
      */
     enrollStatusType?: com_ever_edu_lms_enroll_dto_req_EnrollSearchDto$SearchByAdmin.enrollStatusType;
     /**
-     * 검색 조건 : 학습 시작 일시
+     * 검색 조건 : 학습 시작 일시(yyyy-MM-dd)
      */
     learningStartDate?: string;
     /**
-     * 검색 조건 : 학습 종료 일시
+     * 검색 조건 : 학습 종료 일시(yyyy-MM-dd)
      */
     learningEndDate?: string;
     /**
@@ -48,6 +48,7 @@ export namespace com_ever_edu_lms_enroll_dto_req_EnrollSearchDto$SearchByAdmin {
         ENROLL_DONE = 'ENROLL_DONE',
         ENROLL_REQUEST = 'ENROLL_REQUEST',
         CANCEL_DONE = 'CANCEL_DONE',
+        REJECT_DONE = 'REJECT_DONE',
     }
 }
 

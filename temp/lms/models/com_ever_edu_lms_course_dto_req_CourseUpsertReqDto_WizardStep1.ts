@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { com_ever_edu_lms_blackwhite_dto_req_WhiteGroupReqDto_WizardStep1 } from './com_ever_edu_lms_blackwhite_dto_req_WhiteGroupReqDto_WizardStep1';
+import type { com_ever_edu_external_blackandwhite_dto_req_WhiteGroupReqDto_WizardStep1 } from './com_ever_edu_external_blackandwhite_dto_req_WhiteGroupReqDto_WizardStep1';
 export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1 = {
     /**
      * 과정 생성/수정 마법사 타입 (lms.course.WizardStep)
@@ -27,7 +27,7 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1 = {
     /**
      * 학습대상-유저그룹
      */
-    targetList?: Array<com_ever_edu_lms_blackwhite_dto_req_WhiteGroupReqDto_WizardStep1>;
+    targetList?: Array<com_ever_edu_external_blackandwhite_dto_req_WhiteGroupReqDto_WizardStep1>;
     /**
      * 언어 설정
      */
@@ -113,6 +113,7 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1 = {
      */
     instructorId?: number;
     learningSpaceNameValid?: boolean;
+    instructorValid?: boolean;
 };
 export namespace com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep1 {
     /**
