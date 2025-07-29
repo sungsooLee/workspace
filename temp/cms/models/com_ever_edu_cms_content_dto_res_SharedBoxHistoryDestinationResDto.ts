@@ -31,13 +31,13 @@ export type com_ever_edu_cms_content_dto_res_SharedBoxHistoryDestinationResDto =
      */
     destChannelName?: string;
     /**
-     * 도착지 콘텐츠 국가 언어 코드
+     * 도착지 콘텐츠 국가 언어 코드 Enum(pms.multilingual.LangCountryCode)
      */
-    langCountryCode?: com_ever_edu_cms_content_dto_res_SharedBoxHistoryDestinationResDto.langCountryCode;
+    languageCountryCode?: com_ever_edu_cms_content_dto_res_SharedBoxHistoryDestinationResDto.languageCountryCode;
     /**
      * 도착지 콘텐츠 국가 언어 코드
      */
-    langCountryCodeName?: string;
+    languageCountryCodeName?: string;
     /**
      * 수신자 UUID
      */
@@ -50,9 +50,9 @@ export type com_ever_edu_cms_content_dto_res_SharedBoxHistoryDestinationResDto =
 };
 export namespace com_ever_edu_cms_content_dto_res_SharedBoxHistoryDestinationResDto {
     /**
-     * 도착지 콘텐츠 국가 언어 코드
+     * 도착지 콘텐츠 국가 언어 코드 Enum(pms.multilingual.LangCountryCode)
      */
-    export enum langCountryCode {
+    export enum languageCountryCode {
         KO = 'KO',
         EN = 'EN',
         ES = 'ES',

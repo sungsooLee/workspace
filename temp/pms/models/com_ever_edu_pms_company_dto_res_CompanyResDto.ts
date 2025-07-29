@@ -782,6 +782,7 @@ export namespace com_ever_edu_pms_company_dto_res_CompanyResDto {
         PLATFORM = 'PLATFORM',
         HMG_SSO = 'HMG_SSO',
         AUTOWAY = 'AUTOWAY',
+        DENIED_PASSWORD = 'DENIED_PASSWORD',
     }
     /**
      * 2차 인증 유형 유형

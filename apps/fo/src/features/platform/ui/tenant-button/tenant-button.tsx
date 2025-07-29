@@ -10,11 +10,11 @@ import styles from '@learnway/styles/fo/features/platform/ui/tenant-button/tenan
 const TenantContent = () => {
   const { data } = useFetchAuthUser();
   const { update: updateTenantRole } = useUpdateTenantRoleLastSelect();
-  const { alert: openAlert } = useModal();
+  const { confirm } = useModal();
 
   const handleSelect = async (tenant: Tenant) => {
     try {
-      const result = await openAlert({
+      const result = await confirm({
         title: <>테넌트 변경</>,
         content: <>선택한 테넌트로 변경하시겠어요?</>,
         okButtonLabel: '확인',

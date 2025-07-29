@@ -55,6 +55,7 @@ import {
   PutETCUpdateRes,
   PutETCChangeParams,
   PutETCChangeRes,
+  FetchTranslationListRes,
 } from '@types';
 
 export default class LearningResourceService {
@@ -85,6 +86,12 @@ export default class LearningResourceService {
     return httpService.get(`${CMSApiPrefix()}/content/course-mapping/${contentUuid}`, params);
   }
 
+  static fetchTranslationList(contentUuid: string) {
+    return httpService.get<FetchTranslationListRes>(
+      `${CMSApiPrefix()}/content/${contentUuid}/translation/list`,
+    );
+  }
+
   static deleteContent(contentUuid: string): Promise<number> {
     return httpService.delete(`${CMSApiPrefix()}/content/${contentUuid}`);
   }
@@ -93,7 +100,7 @@ export default class LearningResourceService {
     return httpService.get(`${CMSApiPrefix()}/content/curriculum-mapping/${contentUuid}`);
   }
 
-  static exportContent(body: ContentExportReq): Promise<ContentExportRes> {
+  static postContentExport(body: ContentExportReq): Promise<ContentExportRes> {
     return httpService.post(
       `${CMSApiPrefix()}/content/${body.contentUuid}/export`,
       omit(body, 'contentUuid'),

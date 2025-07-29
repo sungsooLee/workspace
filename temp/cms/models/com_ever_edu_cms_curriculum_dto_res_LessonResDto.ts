@@ -12,7 +12,7 @@ export type com_ever_edu_cms_curriculum_dto_res_LessonResDto = {
     mappingCurriculumType?: com_ever_edu_cms_curriculum_dto_res_LessonResDto.mappingCurriculumType;
     lessonId?: number;
     lessonName?: string;
-    description?: string;
+    lessonDescription?: string;
     lessonType?: com_ever_edu_cms_curriculum_dto_res_LessonResDto.lessonType;
     sortOrder?: number;
     contentType?: com_ever_edu_cms_curriculum_dto_res_LessonResDto.contentType;
@@ -25,8 +25,8 @@ export namespace com_ever_edu_cms_curriculum_dto_res_LessonResDto {
         CURRICULUM = 'CURRICULUM',
     }
     export enum lessonType {
-        TOC = 'TOC',
-        RESOURCES = 'RESOURCES',
+        GENERAL = 'GENERAL',
+        RESOURCE = 'RESOURCE',
     }
     export enum contentType {
         VIDEO = 'VIDEO',

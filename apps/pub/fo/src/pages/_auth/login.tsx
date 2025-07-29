@@ -58,17 +58,12 @@ function RouteComponent() {
         <div className={styles.login_info}>
           <Checkbox label="아이디 저장" className={styles.id_save} size="md" />
           <div className={styles.info}>
-            <Link to="/search-account">아이디/비밀번호찾기</Link>{' '}
-            <Link to="/search-account">아이디/비밀번호찾기</Link>
+            <Link to="/search-account">아이디찾기</Link>{' '}
+            <Link to="/search-account">비밀번호찾기</Link>
           </div>
         </div>
 
-        <div className={styles.btn_box}>
-          <Button size="xl" variant="primary" className={styles.btn}>
-            로그인
-          </Button>
-        </div>
-
+        {/* 이번 프로젝트에서는 개발 제외 (퍼블,디자인만 작업) */}
         <div className={styles.sns_login}>
           <h3 className={styles.tit_sns}>소셜 로그인</h3>
           <ul className={styles.list}>
@@ -94,11 +89,15 @@ function RouteComponent() {
           </div>
         </div>
 
+        <div className={styles.btn_box}>
+          <Button size="xl" variant="primary" className={styles.btn}>
+            로그인
+          </Button>
+        </div>
+
         <div className={styles.login_guide}>
-          <span>
-            <Link to="/progress-status-cert">회원 가입 현황</Link>
-            <Link to="/signup-step1">회원가입</Link>
-          </span>
+          <Link to="/progress-status-cert">회원 가입 현황</Link>
+          <Link to="/signup-step1">회원가입</Link>
         </div>
       </div>
     </div>

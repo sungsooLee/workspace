@@ -16,12 +16,15 @@ export type com_ever_edu_lms_enroll_dto_res_EnrollListAdminResDto = {
     companyName?: string;
     employeeNumber?: string;
     userName?: string;
+    approvalReason?: string;
+    finalApprovalDate?: string;
 };
 export namespace com_ever_edu_lms_enroll_dto_res_EnrollListAdminResDto {
     export enum enrollStatusType {
         ENROLL_DONE = 'ENROLL_DONE',
         ENROLL_REQUEST = 'ENROLL_REQUEST',
         CANCEL_DONE = 'CANCEL_DONE',
+        REJECT_DONE = 'REJECT_DONE',
     }
 }
 

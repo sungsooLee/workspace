@@ -10,6 +10,7 @@ export type com_ever_edu_cms_video_dto_res_WatchSummaryResDto = {
     courseId?: number;
     courseSequenceId?: number;
     totalPlayTime?: number;
+    playTime?: number;
     playRate?: number;
     videoWatchProgressStatus?: com_ever_edu_cms_video_dto_res_WatchSummaryResDto.videoWatchProgressStatus;
 };

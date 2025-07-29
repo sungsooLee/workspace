@@ -161,13 +161,13 @@
       @apply title3-b absolute left-0 right-0 top-0 flex !h-[44px] items-start pt-[17px] leading-[22px] text-[var(--gray10)];
     }
     [class*='modal-content'] {
-      @apply !max-h-[calc(100dvh-60px)] px-[16px] pb-[16px] pt-[60px];
+      @apply !max-h-[calc(100dvh-60px)] px-[16px] pt-[60px];
       [class*='modal-content'] {
-        @apply !pb-[16px];
+        @apply !p-0 !pb-[16px] border-0;
       }
     }
     [class*='footer'] {
-      @apply !pt-[16px];
+      @apply !py-[16px] !px-0;
       [class*='nlp--button'] {
         @apply rounded-[8px];
       }

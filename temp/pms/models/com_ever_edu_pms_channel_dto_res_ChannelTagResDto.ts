@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type com_ever_edu_pms_channel_dto_res_ChannelTagResDto = {
+    tagId?: number;
     tagName?: string;
 };
 

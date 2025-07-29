@@ -24,9 +24,17 @@ export type com_ever_edu_cms_content_dto_req_ContentProgressReqDto = {
      */
     lessonId?: number;
     /**
+     * Fixed-Orgn Id
+     */
+    orgnId?: number;
+    /**
+     * Fixed-Item ID
+     */
+    itemId?: number;
+    /**
      * 콘텐츠 UUID
      */
-    contentUuid?: string;
+    contentUuid: string;
     /**
      * 사용자 UUID
      */

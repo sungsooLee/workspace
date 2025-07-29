@@ -8,6 +8,10 @@ export type com_ever_edu_pms_channel_dto_req_ChannelSearchReqDto = {
      */
     tenantId?: number;
     /**
+     * 역활 Id
+     */
+    roleId: number;
+    /**
      * 채널 개설 방식 구분
      */
     channelCreationType?: com_ever_edu_pms_channel_dto_req_ChannelSearchReqDto.channelCreationType;

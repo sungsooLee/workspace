@@ -22,5 +22,17 @@ export type com_ever_edu_cms_exam_dto_res_ExamQuestionOptionResDto = {
      * 첨부파일 UUID
      */
     fileUuid?: string;
+    /**
+     * 참고 파일 - 물리파일명
+     */
+    fileName?: string | null;
+    /**
+     * 참고 파일 - 물리파일크기
+     */
+    fileSize?: number | null;
+    /**
+     * 참고 파일 - 물리파일경로
+     */
+    filePath?: string | null;
 };
 

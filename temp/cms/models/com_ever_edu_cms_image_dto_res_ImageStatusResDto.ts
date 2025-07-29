@@ -10,9 +10,9 @@ export type com_ever_edu_cms_image_dto_res_ImageStatusResDto = {
     contentType?: com_ever_edu_cms_image_dto_res_ImageStatusResDto.contentType;
     contentStatusCode?: com_ever_edu_cms_image_dto_res_ImageStatusResDto.contentStatusCode;
     /**
-     * 파일 UUID 목록
+     * 이미지파일 UUID 목록
      */
-    fileUuids?: Array<string>;
+    images?: Array<string>;
     isDrafted?: boolean;
 };
 export namespace com_ever_edu_cms_image_dto_res_ImageStatusResDto {

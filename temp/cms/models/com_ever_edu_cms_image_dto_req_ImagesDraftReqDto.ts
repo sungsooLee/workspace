@@ -9,9 +9,9 @@ export type com_ever_edu_cms_image_dto_req_ImagesDraftReqDto = {
     languageCountryCode: com_ever_edu_cms_image_dto_req_ImagesDraftReqDto.languageCountryCode;
     storageType: com_ever_edu_cms_image_dto_req_ImagesDraftReqDto.storageType;
     /**
-     * 파일 UUID 목록
+     * 이미지파일 UUID 목록
      */
-    fileUuids: Array<string>;
+    images: Array<string>;
 };
 export namespace com_ever_edu_cms_image_dto_req_ImagesDraftReqDto {
     export enum languageCountryCode {

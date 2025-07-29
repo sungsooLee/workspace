@@ -2,14 +2,15 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { com_ever_edu_lms_category_dto_res_TreeBaseDto } from './com_ever_edu_lms_category_dto_res_TreeBaseDto';
+import type { com_ever_edu_lms_util_tree_TreeBaseDto } from './com_ever_edu_lms_util_tree_TreeBaseDto';
 export type com_ever_edu_lms_category_dto_res_CategoryMasterTreeDto = {
     id?: number;
     categoryName?: string;
     categoryType?: com_ever_edu_lms_category_dto_res_CategoryMasterTreeDto.categoryType;
     sortSeq?: number;
+    name?: string;
     depth?: number;
-    children?: Array<com_ever_edu_lms_category_dto_res_TreeBaseDto>;
+    children?: Array<com_ever_edu_lms_util_tree_TreeBaseDto>;
 };
 export namespace com_ever_edu_lms_category_dto_res_CategoryMasterTreeDto {
     export enum categoryType {

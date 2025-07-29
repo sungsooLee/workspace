@@ -28,6 +28,5 @@ export type com_ever_edu_cms_image_dto_req_ImageLearningSaveReqDto = {
      */
     contentUuid?: string;
     resourceId?: number;
-    fileUuid?: string;
 };
 

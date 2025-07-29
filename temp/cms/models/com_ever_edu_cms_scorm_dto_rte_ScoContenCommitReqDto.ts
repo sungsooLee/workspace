@@ -25,7 +25,7 @@ export type com_ever_edu_cms_scorm_dto_rte_ScoContenCommitReqDto = {
      */
     orgnId?: number;
     /**
-     * Scorm Manifest Item element Id
+     * 스콤 Manifest Item element Id
      */
     scoId: string;
     objectInfo: com_ever_edu_cms_scorm_dto_rte_ScoCmiObjectInfoDto;

@@ -24,7 +24,7 @@ export class BoScormService {
      * @returns com_ever_edu_cms_scorm_dto_res_ScormResDto OK
      * @throws ApiError
      */
-    public static updateScorm(
+    public static updateContent1(
         requestBody: com_ever_edu_cms_scorm_dto_req_ScormUpdateReqDto,
         curriculumId?: number,
         moduleIds?: string,
@@ -56,7 +56,7 @@ export class BoScormService {
      * @returns com_ever_edu_cms_scorm_dto_res_ScormChangeStatusResDto OK
      * @throws ApiError
      */
-    public static changeScormFile(
+    public static changeContentFile1(
         requestBody: com_ever_edu_cms_scorm_dto_req_ScormFileChangeReqDto,
     ): CancelablePromise<com_ever_edu_cms_scorm_dto_res_ScormChangeStatusResDto> {
         return __request(OpenAPI, {
@@ -84,7 +84,7 @@ export class BoScormService {
      * @returns com_ever_edu_cms_scorm_dto_res_ScormDraftListResDto OK
      * @throws ApiError
      */
-    public static draftSaveScorm(
+    public static draftSaveContents1(
         requestBody: com_ever_edu_cms_scorm_dto_req_ScormDraftReqDto,
         curriculumId?: number,
         moduleIds?: string,
@@ -116,7 +116,7 @@ export class BoScormService {
      * @returns com_ever_edu_cms_scorm_dto_res_ScormStatusResDto OK
      * @throws ApiError
      */
-    public static getScormStatus(
+    public static getContentStatus1(
         contentUuid: string,
     ): CancelablePromise<com_ever_edu_cms_scorm_dto_res_ScormStatusResDto> {
         return __request(OpenAPI, {
@@ -142,7 +142,7 @@ export class BoScormService {
      * @returns com_ever_edu_cms_scorm_dto_res_ScormResourceResDto OK
      * @throws ApiError
      */
-    public static getContentResource5(
+    public static getContentResource8(
         contentUuid: string,
     ): CancelablePromise<com_ever_edu_cms_scorm_dto_res_ScormResourceResDto> {
         return __request(OpenAPI, {
@@ -167,7 +167,7 @@ export class BoScormService {
      * @returns com_ever_edu_cms_scorm_dto_res_ScormChangeStatusResDto OK
      * @throws ApiError
      */
-    public static getScormChangeStatus(
+    public static getContentChangeStatus1(
         changeId: number,
     ): CancelablePromise<com_ever_edu_cms_scorm_dto_res_ScormChangeStatusResDto> {
         return __request(OpenAPI, {
@@ -180,7 +180,6 @@ export class BoScormService {
                 400: `Bad Request`,
                 401: `Unauthorized`,
                 404: `Not Found`,
-                405: `Method Not Allowed`,
                 422: `Unprocessable Entity`,
                 500: `Internal Server Error`,
             },

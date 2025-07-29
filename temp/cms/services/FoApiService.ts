@@ -15,7 +15,7 @@ export class FoApiService {
      * @returns number OK
      * @throws ApiError
      */
-    public static saveLearningLog(
+    public static saveLearningLog1(
         requestBody: com_ever_edu_cms_image_dto_req_ImageLearningSaveReqDto,
     ): CancelablePromise<number> {
         return __request(OpenAPI, {
