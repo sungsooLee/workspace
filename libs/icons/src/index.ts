@@ -68,7 +68,9 @@ export { ReactComponent as IcoCalendar01 } from './lib/ic_calendar_01.svg'; // c
 export { ReactComponent as IcoBuilding01 } from './lib/ic_building-01.svg';
 export { ReactComponent as IcoOverseasDealer } from './lib/ic_overseas_dealer.svg';
 export { ReactComponent as IcoMail } from './lib/ic_mail.svg';
+export { ReactComponent as IcoMail02 } from './lib/ic_mail-02.svg';
 export { ReactComponent as IcoPhone02 } from './lib/ic_phone-02.svg';
+export { ReactComponent as IcoPhone03 } from './lib/ic_phone-03.svg';
 export { ReactComponent as IcoDotpoints } from './lib/ic_dotpoints-02.svg';
 export { ReactComponent as IcoGrid01 } from './lib/ic_grid-01.svg';
 export { ReactComponent as IcoMybook } from './lib/ic_mybook.svg';
