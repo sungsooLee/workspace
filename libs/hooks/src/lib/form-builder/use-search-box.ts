@@ -1,11 +1,10 @@
-import { DynamicFormProvider, SearchBoxConfig, SelectOption, UseSearchBoxReturn } from './type';
-import { useForm } from 'react-hook-form';
-import { FormEvent, useMemo, useState } from 'react';
-import { extractSearchBoxDefaultValues } from './util';
-import { buildJodObject, ValidatorConfig, ValidatorFormat } from '@learnway/shared';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { find, first, fromPairs, isArray, isNil, omitBy } from 'lodash';
-import { t } from 'i18next';
+import { buildJodObject, ValidatorConfig, ValidatorFormat } from '@learnway/shared';
+import { find, first, fromPairs, isArray, isEmpty, isNil, omitBy, toPairs } from 'lodash';
+import { FormEvent, useMemo, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { DynamicFormProvider, SearchBoxConfig, SelectOption, UseSearchBoxReturn } from './type';
+import { extractSearchBoxDefaultValues } from './util';
 /**
  * 동적 으로 검색 영역에 대한 지원을 하는 훅 (useSearchBox)
  *
@@ -207,30 +206,21 @@ const useSearchBoxHook = <T extends SearchBoxConfig>(config: T): UseSearchBoxRet
   const getValuesWithLabel = (): Record<string, SelectOption> => {
     const values = getValues();
 
-    const selectedOptions = flatBuilders.map((builder) => {
-      if (builder.options || builder.optionsConfig) {
-        const options = getOptions(builder.name)?.map((option) => ({
-          ...option,
-          label: t(option.label || ''),
-        }));
-        if (!options) return [builder.name, null];
+    const selectedOption = toPairs(values).map(([key, value]) => {
+      const options = getOptions(key);
+      if(isEmpty(options)) return isEmpty(value) ? [key, null] : [key, { value, label: value }];
 
-        const selectedOption = isArray(values[builder.name])
-          ? values[builder.name].map((value: any) => find(options, { value }))
-          : find(options, { value: values[builder.name] });
+      const selectedOption = isArray(value)
+        ? value.map(_ => find(options, {value: _}))
+        : find(options, {value});
 
-        if (selectedOption && (!isArray(selectedOption) || first(selectedOption)?.value))
-          return [builder.name, selectedOption];
+      if(selectedOption && (!isArray(selectedOption) || first(selectedOption)?.value))
+        return [key, selectedOption];
 
-        return [builder.name, null];
-      }
+      return [key, null];
+    })
 
-      if (values[builder.name])
-        return [builder.name, { value: values[builder.name], label: values[builder.name] }];
-
-      return [builder.name, null];
-    });
-    return omitBy(fromPairs(selectedOptions), (value) => isNil(value) || value === '');
+    return omitBy(fromPairs(selectedOption), (value) => isNil(value) || value === '');
   };
 
   // provider 객체 반환
