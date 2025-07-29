@@ -1,6 +1,8 @@
 // IA106, IA105 / NLP_BO_CMS_1059, NLP_BO_CMS_1060
 
-import { FC, useCallback, useEffect, useState } from 'react';
+import { LEARNING_TYPE } from '@learnway/config';
+import { S3_PATH, useS3Uploader } from '@learnway/hooks';
+import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import {
   Button,
   DndFileProgress,
@@ -10,11 +12,9 @@ import {
   ModalTitle,
   useModal,
 } from '@learnway/ui';
-import { S3_PATH, useS3Uploader } from '@learnway/hooks';
-import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
-import { LEARNING_TYPE } from '@learnway/config';
 import { t } from 'i18next';
 import { map } from 'lodash';
+import { FC, useCallback, useEffect, useState } from 'react';
 
 interface Props {
   channel: {
@@ -96,7 +96,7 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({
   }, [stats]);
   return (
     <ModalContainer>
-      <ModalTitle>{'파일 업로드'}</ModalTitle>
+      <ModalTitle>{t('파일 업로드')}</ModalTitle>
       <ModalBody>
         <div className={popupStyles.wrap}>
           <div className={popupStyles.selected_area}>
@@ -125,9 +125,9 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({
         </div>
       </ModalBody>
       <ModalFooter>
-        <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
+        <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
         <Button
-          label={'확인'}
+          label={t('확인')}
           variant={'primary'}
           disabled={stats.status !== 'completed'}
           size={'lg'}
