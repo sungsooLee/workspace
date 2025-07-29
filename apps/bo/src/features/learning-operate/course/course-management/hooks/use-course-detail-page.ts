@@ -1,8 +1,8 @@
-import { usePageState } from '@shared/index';
 import { useNavigate } from '@tanstack/react-router';
 import { useCallback, useMemo, useState } from 'react';
 import { ContentViewType, useCourseActions, useCourseCreateInfo } from '../store/use-course-store';
 import { CourseDetailTab } from '../types/type';
+import { usePageState } from '@shared/lib';
 // 라우터 state에서 전달받는 값의 타입 정의
 export interface CourseDetailPageLocationState {
   courseId?: number; // 과정 ID
