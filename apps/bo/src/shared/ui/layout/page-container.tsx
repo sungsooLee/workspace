@@ -10,15 +10,15 @@ import {
   IcoAlertCircle,
   IcoArrowLineTop,
   IcoClose02,
-  IcoLang,
-  IcoShare,
+  IcoImport,
   IcoStar,
+  IcoTranslation,
 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import { Button, Popover, Tooltip, useModal } from '@learnway/ui';
 import { useCreation } from 'ahooks';
 import { t } from 'i18next';
-import { last } from 'lodash';
+import { isEmpty, last } from 'lodash';
 import {
   Children,
   FC,
@@ -51,7 +51,7 @@ export type GuidePopupProps = {
 export type TooltipProps = {
   show: boolean;
   content: ReactNode | string;
-  type?: ContentCreateType | undefined; // 툴팁 아이콘 타입 (추후 새로운 아이콘 필요 시 추가 or 수정 필요)
+  type: ContentCreateType | string | undefined; // 툴팁 아이콘 타입 (추후 새로운 아이콘 필요 시 추가 or 수정 필요)
 };
 
 /**
@@ -117,6 +117,20 @@ const PageContainerComponent: FC<{
   );
   const BodySlot = Children.toArray(children).filter(
     (child) => !(isValidElement(child) && child.type === ContentsButtons),
+  );
+
+  const tooltip = useMemo(
+    () => [
+      {
+        key: 'TRANSLATE',
+        Component: <IcoTranslation width={18} height={18} fill="#f6f8fd" stroke="#4c515e" />,
+      },
+      {
+        key: 'SHARED',
+        Component: <IcoImport width={18} height={18} fill="#f6f8fd" stroke="#4c515e" />,
+      },
+    ],
+    [],
   );
 
   // scroll event
@@ -330,16 +344,17 @@ const PageContainerComponent: FC<{
                 align="start"
                 content={tooltipProps.content}
               >
-                <Button onlyIcon>
-                  {/* FIXME: 다국어 아이콘 수정 예정 */}
-                  {tooltipProps.type === 'TRANSLATE' ? (
-                    <IcoLang width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
-                  ) : tooltipProps.type === 'SHARED' ? (
-                    <IcoShare width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
-                  ) : (
-                    <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
-                  )}
-                </Button>
+                {isEmpty(tooltip.find((item) => item.key === tooltipProps.type)) && (
+                  <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
+                )}
+                {tooltip.map(
+                  ({ key, Component }) =>
+                    key === tooltipProps.type && (
+                      <Button onlyIcon key={key}>
+                        {Component}
+                      </Button>
+                    ),
+                )}
               </Tooltip>
             )}
           </h3>

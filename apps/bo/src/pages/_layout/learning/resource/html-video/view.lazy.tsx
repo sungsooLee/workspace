@@ -14,6 +14,7 @@ import { useDynamicForm2 } from '@learnway/hooks';
 import { ContentCreateType, ProcessingStatus } from '@types';
 import { useDeleteContent } from '@entities/learning-resource';
 import {
+  getTooltipContent,
   LearningResourceHtmlDetail,
   LearningResourceHtmlFileInfo,
 } from '@features/learning-resource';
@@ -109,17 +110,6 @@ function RouteComponent() {
     router.navigate({
       to: '/learning/course/create',
     });
-  }, []);
-
-  const getTooltipContent = useCallback((createType?: ContentCreateType) => {
-    switch (createType) {
-      case 'TRANSLATE':
-        return 'LABEL.page.tooltip.learningResourceIsTranslated';
-      case 'SHARED':
-        return 'LABEL.page.tooltip.learningResourceIsShared';
-      default:
-        return 'LABEL.page.tooltip.learningResourceIsUsed';
-    }
   }, []);
 
   useEffect(() => {
