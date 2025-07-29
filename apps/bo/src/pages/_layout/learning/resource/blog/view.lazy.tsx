@@ -1,24 +1,18 @@
 /* IA110 / NLP_BO_CMS_1013 - 나의 학습자원 > 블로그 삳세 */
-import defaultImage from '@assets/images/thumb/img_thumb_default.jpg';
-import { learningResourceQueryOptions, useDeleteContent } from '@entities/learning-resource';
-import { getTooltipContent, LearningResourceBlogDetail } from '@features/learning-resource';
-import { useFetchAuthUser } from '@learnway/auth/entities';
-import { useCurrentRoute } from '@learnway/hooks';
-import { Button, Divider, useModal } from '@learnway/ui';
-import {
-  ContentCourseMappingModal,
-  ContentsButtons,
-  MainContents,
-  PageContainer,
-  PreviewLearningWindow,
-  SubContents,
-} from '@shared/ui';
-import { useQuery } from '@tanstack/react-query';
-import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
-import { t } from 'i18next';
-import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
-
+import { useCallback, useRef } from 'react';
+import { createLazyFileRoute } from '@tanstack/react-router';
+import { useTranslation } from 'react-i18next';
+import { useDynamicForm2 } from '@learnway/hooks';
+import { useModal } from '@learnway/ui';
 import { ContentCreateType } from '@types';
+import defaultImage from '@assets/images/thumb/img_thumb_default.jpg';
+import { ContentsButtons, MainContents, PageContainer, PreviewLearningWindow, SubContents } from '@shared/ui';
+import {
+  useBlogContentForm,
+  useFetchBlogInfo,
+} from '@features/learning-resource/learning-resource-management/service';
+import { ContentTopButtons, getTooltipContent, LearningResourceBlogDetail } from '@features/learning-resource';
+
 import styles from './blog-detail.module.css';
 
 export const Route = createLazyFileRoute('/_layout/learning/resource/blog/view')({
@@ -26,173 +20,62 @@ export const Route = createLazyFileRoute('/_layout/learning/resource/blog/view')
 });
 
 function RouteComponent() {
-  const router = useRouter();
-  const { state } = useCurrentRoute();
+  const { t } = useTranslation();
 
   const formRef = useRef<HTMLFormElement>(null);
 
-  const { data: loginUser } = useFetchAuthUser();
-  const [tenantId, setTenantId] = useState<number>(-1);
+  const form = useDynamicForm2();
+  const { provider, onSubmit } = form;
 
-  const { data, error: fetchError } = useQuery(
-    learningResourceQueryOptions.getContent(state?.contentUuid),
-  );
+  const { mode, contentUuid, data, hasMapping, listParam } = useFetchBlogInfo();
 
-  const { data: hasMapping } = useQuery(
-    learningResourceQueryOptions.getCurriculumsMapping(state?.contentUuid),
-  );
+  const { openModal } = useModal();
 
-  const { openModal, alert: openAlert, confirm: openConfirm } = useModal();
-
-  const openBlogPreviewPopup = useCallback(() => {
-    openModal({
-      width: 'full',
-      content: <PreviewLearningWindow contentUuid={data?.contentUuid} />,
-    });
-  }, [data?.contentUuid]);
-
-  const handleClickCourseMapping = useCallback(async () => {
-    if (!state?.contentUuid) {
-      return;
-    }
+  const openBlogPreviewPopup = useCallback(async () => {
     await openModal({
-      content: (
-        <ContentCourseMappingModal
-          channelUuid={data?.channelUuid ?? ''}
-          contentUuid={state.contentUuid}
-        />
-      ),
-      width: 'lg',
+      width: 'full',
+      content: <PreviewLearningWindow contentUuid={contentUuid} />,
     });
-  }, [data]);
+  }, [contentUuid]);
 
-  const handleClickGoListButton = useCallback(async () => {
-    if (
-      await openConfirm({
-        title: t('LABEL.confirm.goList.title'),
-        content: t('LABEL.confirm.goList.message'),
-      })
-    ) {
-      router.navigate({
-        to: '/learning/learning-resource',
-        state: { listParam: state?.listParam },
-      });
-    }
-  }, [state]);
-
-  const { delete: deleteBlogContent } = useDeleteContent({
-    onSuccess: (result: number) => {
-      console.log('delete success', result);
-      return router.navigate({ to: '/learning/learning-resource', replace: true });
-    },
-  });
-
-  const handleClickDeleteButton = async () => {
-    console.log('hasMapping', hasMapping);
-
-    if (
-      await openConfirm({
-        title: t('삭제 하시겠습니까?'),
-        content: t('삭제 후 목록으로 이동합니다.'),
-      })
-    ) {
-      deleteBlogContent(data?.contentUuid as string);
-    }
-  };
-
-  const handleClickSubmitButton = (e: MouseEvent<HTMLButtonElement>) => {
-    if (formRef.current) {
-      formRef.current?.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
-    }
-  };
-
-  const handleClickCourseButton = () => {
-    router.navigate({
-      to: '/learning/course/create',
-    });
-  };
-
-  useEffect(() => {
-    if (loginUser?.activeTenant) {
-      setTenantId(loginUser.activeTenant.tenantId);
-    } else {
-      if (loginUser?.tenants?.length) {
-        setTenantId(loginUser.tenants[0].tenantId);
-      }
-    }
-  }, [loginUser]);
+  const { handleOnSubmit } = useBlogContentForm({ mode, provider });
 
   return (
-    <PageContainer
-      tooltipProps={{
-        show: !!hasMapping || data?.createType !== ContentCreateType.MANUAL,
-        content: t(getTooltipContent(data?.createType)),
-        type: data?.createType,
-      }}
-    >
-      <ContentsButtons>
-        <Button
-          type="button"
-          variant="search"
-          size="sm"
-          label={t('과정개설')}
-          onClick={handleClickCourseButton}
-        />
-        <Button
-          type="button"
-          variant="point"
-          size="sm"
-          label={t('매핑과정')}
-          onClick={handleClickCourseMapping}
-        />
-        <Button type="button" variant="point" size="sm" label={t('번역현황')} />
-        <Button
-          type="button"
-          variant="point"
-          size="sm"
-          label={t('목록')}
-          onClick={handleClickGoListButton}
-        />
-        <Divider orientation="vertical" />
-        <Button
-          type="button"
-          variant="point"
-          size="sm"
-          label={t('LABEL.button.delete')}
-          onClick={handleClickDeleteButton}
-          disabled={hasMapping}
-        />
-        <Button type="button" variant="point" size="sm" label={t('LABEL.button.translate')} />
-        <Button
-          type="button"
-          variant="primary"
-          size="sm"
-          label={t('LABEL.button.save')}
-          onClick={handleClickSubmitButton}
-        />
-      </ContentsButtons>
+    <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
+      <PageContainer
+        tooltipProps={{
+          show: !!hasMapping || data?.createType !== ContentCreateType.MANUAL,
+          content: t(getTooltipContent(data?.createType)),
+          type: data?.createType,
+        }}
+      >
+        <ContentsButtons>
+          <ContentTopButtons provider={provider} />
+        </ContentsButtons>
 
-      <MainContents>
-        <LearningResourceBlogDetail
-          ref={formRef}
-          tenantId={tenantId}
-          mode="update"
-          blogInfo={data}
-          hasMapping={hasMapping}
-        />
-      </MainContents>
+        <MainContents>
+          <LearningResourceBlogDetail
+            form={form}
+            mode={mode}
+            blogInfo={data}
+            hasMapping={hasMapping}
+          />
+        </MainContents>
 
-      <SubContents>
-        <div className={styles.sub_container}>
-          <strong className={styles.title}>{t('cms.content.ContentType.BLOG')}</strong>
-          <p className={styles.preview} onClick={openBlogPreviewPopup}>
-            {t('LABEL.button.preview')}
-          </p>
-        </div>
-        <div className={styles.thumbnail_container}>
-          <img width="100%" src={defaultImage} alt="" />
-        </div>
-      </SubContents>
-    </PageContainer>
+        <SubContents>
+          <div className={styles.sub_container}>
+            <strong className={styles.title}>{t('cms.content.ContentType.BLOG')}</strong>
+            {mode === 'UPDATE' && (
+              <p className={styles.preview} onClick={openBlogPreviewPopup}>
+                {t('LABEL.button.preview')}
+              </p>
+            )}
+          </div>
+          <div className={styles.thumbnail_container}>
+            <img width="100%" src={defaultImage} alt="" />
+          </div>
+        </SubContents>
+      </PageContainer>
+    </form>
   );
 }

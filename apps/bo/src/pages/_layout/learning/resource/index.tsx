@@ -86,7 +86,7 @@ function RouteComponent() {
       }
       // 설문
       case LEARNING_TYPE.SURVEY: {
-        router.navigate({ to: '/learning/resource/blog/regist' });
+        router.navigate({ to: '/learning/resource/survey/view' });
         break;
       }
       // 시험지

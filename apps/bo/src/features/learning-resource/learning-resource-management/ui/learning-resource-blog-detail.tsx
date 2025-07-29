@@ -1,147 +1,96 @@
-import React, { forwardRef, useEffect } from 'react';
-import { useRouter } from '@tanstack/react-router';
-import { t } from 'i18next';
+import React, { useEffect } from 'react';
 import dayjs from 'dayjs';
-import { ContentsRow, useModal } from '@learnway/ui';
+import { ContentsRow } from '@learnway/ui';
 import { cn, isEmptyData } from '@learnway/shared';
-import { useDynamicForm2 } from '@learnway/hooks';
+import { UseDynamicFormResult } from '@learnway/hooks';
 import { useFetchAuthUser } from '@learnway/auth/entities';
-import { BlogDetailRes, BlogPostRes, BlogUpdateReq } from '@types';
+import { BlogDetailRes } from '@types';
+import { ContentsHistoryInfoFormField } from '@shared/ui';
 import { MediaContentRequiredCheckFormField } from '@features/form/ui';
-import { useCreateBlogContent, useUpdateBlogContent } from '@entities/learning-resource';
 import { useRoleInfo } from '../service/util';
-import { getPayloadFromBlogSubmit } from '../service/learning-resource-blog-form-submit';
 import { LearningResourceBaseForm } from './learning-resource-base-form';
 
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import { ContentsHistoryInfoFormField } from '@shared/ui';
 
 type BlogDetailProps = {
-  tenantId: number;
-  mode: 'create' | 'update';
+  form: UseDynamicFormResult;
+  mode: 'CREATE' | 'UPDATE';
   blogInfo?: Partial<BlogDetailRes>;
   hasMapping?: boolean;
 };
 
-const BlogDetailComponent = forwardRef<HTMLFormElement, BlogDetailProps>(
-  ({ tenantId, mode, blogInfo = {}, hasMapping = false }, ref) => {
-    const router = useRouter();
-    const { confirm: openConfirm } = useModal();
+const BlogDetailComponent = ({
+  form,
+  mode,
+  blogInfo = {},
+  hasMapping = false,
+}: BlogDetailProps) => {
+  const { provider, getValues, updateFormData, onFormChange, watch } = form;
 
-    const { provider, onSubmit, getValues, updateFormData, onFormChange } = useDynamicForm2();
+  const createType = watch('createType');
+  console.log('createType', createType);
 
-    const { create: createBlogContent } = useCreateBlogContent({
-      onSuccess: (result: BlogPostRes) => {
-        if (result?.contentUuid) {
-          return router.navigate({
-            to: '/learning/resource/blog/view',
-            state: {
-              contentUuid: result.contentUuid,
-            },
-            replace: true,
-          });
-        }
-      },
-    });
+  const { data: loginUser } = useFetchAuthUser();
 
-    const { update: updateBlogContent } = useUpdateBlogContent({
-      onSuccess: (result: BlogPostRes) => {
-        if (result?.contentUuid) {
-          return router.navigate({
-            to: '/learning/resource/blog/view',
-            state: {
-              contentUuid: result.contentUuid,
-            },
-            replace: true,
-          });
-        }
-      },
-    });
-
-    const handleOnSubmit = async (data: any): Promise<void> => {
-      console.log(data);
-      const { payload } = getPayloadFromBlogSubmit({
-        data,
-        tenantId,
-        mode,
-        contentUuid: mode === 'update' ? blogInfo?.contentUuid : '',
+  const { initRoleInfo } = useRoleInfo({
+    loginUser,
+    onChannelMemberCallback: () => {
+      updateFormData({
+        ...getValues(),
+        coordinatorUuid: loginUser?.uuid,
+        coordinatorName: loginUser?.name,
+        coordinatorTelCountryCode: loginUser?.phoneNumberNationCode,
+        coordinatorTelNo: loginUser?.phoneNumber,
       });
+    },
+  });
 
-      if (
-        await openConfirm({
-          title: t('LABEL.confirm.save.title'),
-          content: t('입력한 정보로 저장합니다.'),
-        })
-      ) {
-        if (mode === 'create') {
-          createBlogContent(payload);
-        } else {
-          updateBlogContent(payload as BlogUpdateReq);
-        }
-      }
-    };
+  useEffect(() => {
+    (async () => {
+      await initRoleInfo();
+    })();
+  }, [loginUser]);
 
-    const { data: loginUser } = useFetchAuthUser();
+  useEffect(() => {
+    if (mode === 'UPDATE' && !isEmptyData(blogInfo)) {
+      onFormChange({
+        ...blogInfo,
+        contentUseDate: {
+          from: blogInfo.contentUseStartDate
+            ? dayjs(blogInfo.contentUseStartDate).toDate()
+            : undefined,
+          to: blogInfo.contentUseEndDate ? dayjs(blogInfo.contentUseEndDate).toDate() : undefined,
+        },
+        blogContent: JSON.stringify(blogInfo.blogContent ?? {}),
+        aiSummary: blogInfo.aiSummary ?? '',
+        aiKeyword: blogInfo.aiKeyword ?? '',
+      });
+    }
+  }, [blogInfo]);
 
-    const { initRoleInfo } = useRoleInfo({
-      loginUser,
-      onChannelMemberCallback: () => {
-        updateFormData({
-          ...getValues(),
-          coordinatorUuid: loginUser?.uuid,
-          coordinatorName: loginUser?.name,
-          coordinatorTelCountryCode: loginUser?.phoneNumberNationCode,
-          coordinatorTelNo: loginUser?.phoneNumber,
-        });
-      },
-    });
+  return (
+    <>
+      <LearningResourceBaseForm
+        provider={provider}
+        showAiInfo
+        showLessonTime
+        showBlogEditor
+        hasMapping={hasMapping}
+        createType={createType}
+      />
 
-    useEffect(() => {
-      (async () => {
-        await initRoleInfo();
-      })();
-    }, [loginUser]);
+      {/* 필수 확인 영역 */}
+      <MediaContentRequiredCheckFormField provider={provider} />
 
-    useEffect(() => {
-      if (mode === 'update' && !isEmptyData(blogInfo)) {
-        onFormChange({
-          ...blogInfo,
-          contentUseDate: {
-            from: blogInfo.contentUseStartDate
-              ? dayjs(blogInfo.contentUseStartDate).toDate()
-              : undefined,
-            to: blogInfo.contentUseEndDate ? dayjs(blogInfo.contentUseEndDate).toDate() : undefined,
-          },
-          blogContent: JSON.stringify(blogInfo.blogContent ?? {}),
-          aiSummary: blogInfo.aiSummary ?? '',
-          aiKeyword: blogInfo.aiKeyword ?? '',
-        });
-      }
-    }, [blogInfo]);
-
-    return (
-      <form ref={ref} onSubmit={onSubmit(handleOnSubmit)}>
-        <LearningResourceBaseForm
-          provider={provider}
-          showAiInfo
-          showLessonTime
-          showBlogEditor
-          hasMapping={hasMapping}
-        />
-
-        {/* 필수 확인 영역 */}
-        <MediaContentRequiredCheckFormField provider={provider} />
-
-        {/* 이력정보 */}
-        {mode === 'update' && (
-          <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
-            <ContentsHistoryInfoFormField provider={provider} />
-          </ContentsRow>
-        )}
-      </form>
-    );
-  },
-);
+      {/* 이력정보 */}
+      {mode === 'UPDATE' && (
+        <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
+          <ContentsHistoryInfoFormField provider={provider} />
+        </ContentsRow>
+      )}
+    </>
+  );
+};
 
 BlogDetailComponent.displayName = 'BlogDetail';
 

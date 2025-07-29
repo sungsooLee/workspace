@@ -19,9 +19,11 @@ type HtmlDetailProps = {
 };
 
 const HtmlDetailComponent = ({ form, data = {}, hasMapping = false }: HtmlDetailProps) => {
+  const { data: loginUser } = useFetchAuthUser();
+
   const { provider, getValues, updateFormData, onFormChange, watch } = form;
 
-  const { data: loginUser } = useFetchAuthUser();
+  const createType = watch('createType');
 
   const { initRoleInfo } = useRoleInfo({
     loginUser,
@@ -35,8 +37,6 @@ const HtmlDetailComponent = ({ form, data = {}, hasMapping = false }: HtmlDetail
       });
     },
   });
-
-  const createType = watch('createType');
 
   useEffect(() => {
     (async () => {
