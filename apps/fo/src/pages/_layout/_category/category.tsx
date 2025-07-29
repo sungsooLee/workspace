@@ -21,6 +21,7 @@ import { t } from 'i18next';
 import bnrCImage1 from '../../../assets/images/banner/banner_category_01.png';
 import bnrCImage2 from '../../../assets/images/banner/banner_category_02.png';
 import { IcoArray, IcoArrowDown, IcoDotpoints } from '@learnway/icons';
+import { useFetchCategoryDetail } from '@entities/category';
 
 export const Route = createFileRoute('/_layout/_category/category')({
   component: RouteComponent,
@@ -32,7 +33,7 @@ function RouteComponent() {
   const tenantId = router.state.location.state?.tenantId;
   const categoryId = router.state.location.state?.categoryId;
 
-  // TODO const { data: courseData } = useCourseList(categoryId);
+  const { data: categoryInfo } = useFetchCategoryDetail(categoryId);
   const [data, setData] = useState<any[]>([]);
 
   const [depth, setDepth] = useState(3);
@@ -104,6 +105,12 @@ function RouteComponent() {
   useEffect(() => {
     console.log(`2. tenantId=${tenantId} | categoryId=${categoryId}`);
   }, [routerState.location.state.tenantId, routerState.location.state.categoryId]);
+
+  useEffect(() => {
+    if( categoryInfo ) {
+      console.log('categoryInfo => ', categoryInfo)
+    }
+  }, [categoryInfo])
 
   return (
     <div className={styles.start}>
