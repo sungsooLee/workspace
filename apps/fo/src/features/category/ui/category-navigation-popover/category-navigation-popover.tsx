@@ -121,7 +121,7 @@ export function CategoryNavigationPopover({ isOpen }: CategoryLayerProps) {
 
                 <div className={styles.depth_area}>
                   {selectedCategory.children?.map((category: Category, index: number) => (
-                    <div key={category.categoryId} className={styles.depth_wrap}>
+                    <div key={category.id} className={styles.depth_wrap}>
                       <div className={styles.tit}>
                         <h3>
                           <Link to="/category" onClick={() => handleCategoryClick(category)}>
@@ -141,7 +141,7 @@ export function CategoryNavigationPopover({ isOpen }: CategoryLayerProps) {
                         <div className={styles.depth_info}>
                           <ul className={styles.list}>
                             {(category.children as Category[]).map((sub: Category) => (
-                              <li key={sub.categoryId}>
+                              <li key={sub.id}>
                                 <Link to="/category" onClick={() => handleCategoryClick(sub)}>
                                   {sub.name}
                                 </Link>
