@@ -1,3 +1,4 @@
+import { TFunction } from 'i18next';
 import { EnQuestionLevel, EnQuestionType, QuestionItem } from '@types';
 
 export type QuestionStatisticRow = {
@@ -7,12 +8,14 @@ export type QuestionStatisticRow = {
   easy: number;
 };
 
-export const initStatisticRow: QuestionStatisticRow[] = [
-  { title: '객관식', hard: 0, medium: 0, easy: 0 },
-  { title: 'OX', hard: 0, medium: 0, easy: 0 },
-  { title: '다답식', hard: 0, medium: 0, easy: 0 },
-  { title: '단답식', hard: 0, medium: 0, easy: 0 },
-  { title: '주관식', hard: 0, medium: 0, easy: 0 },
+export const initStatisticRow: (
+  t: TFunction<'translation', undefined>,
+) => QuestionStatisticRow[] = (t) => [
+  { title: t('객관식'), hard: 0, medium: 0, easy: 0 },
+  { title: t('OX'), hard: 0, medium: 0, easy: 0 },
+  { title: t('다답식'), hard: 0, medium: 0, easy: 0 },
+  { title: t('단답식'), hard: 0, medium: 0, easy: 0 },
+  { title: t('주관식'), hard: 0, medium: 0, easy: 0 },
 ];
 
 export function updateNewStatistics(item: QuestionItem, newStatistic: QuestionStatisticRow[]) {

@@ -1,5 +1,5 @@
-import { FC, forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
-import { t } from 'i18next';
+import { forwardRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Tabs, useModal } from '@learnway/ui';
 
@@ -14,6 +14,8 @@ enum QuestionTab {
 }
 
 const LearningResourceQuestionBankComponent = () => {
+  const { t } = useTranslation();
+
   const { alert, openModal } = useModal();
   const [selectedTabKey, setSelectedTabKey] = useState<string>(QuestionTab.QUESTION_BASE);
   const { baseInfo, formMode } = useLearningResourceQuestionDetailForm();
@@ -25,8 +27,8 @@ const LearningResourceQuestionBankComponent = () => {
     console.log('formMode', formMode, baseInfo);
     if (nextTabKey === QuestionTab.QUESTION_ITEM && formMode === EnFormMode.ADD) {
       alert({
-        title: '입력한 정보를 저장하세요.',
-        content: '저장된적 없는 경우 다음단계로 이동할수 없습니다.',
+        title: t('입력한 정보를 저장하세요.'),
+        content: t('저장된적 없는 경우 다음단계로 이동할수 없습니다.'),
       });
       return false;
     }
@@ -35,12 +37,12 @@ const LearningResourceQuestionBankComponent = () => {
 
   const items = [
     {
-      title: '문제은행 정보',
+      title: t('문제은행 정보'),
       key: QuestionTab.QUESTION_BASE,
       content: <LearningResourceQuestionBankDetail />,
     },
     {
-      title: '문항추가',
+      title: t('문항추가'),
       key: QuestionTab.QUESTION_ITEM,
       content: <LearningResourceQuestionBankQuestion />,
     },

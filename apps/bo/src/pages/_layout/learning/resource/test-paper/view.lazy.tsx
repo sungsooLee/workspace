@@ -1,7 +1,7 @@
 /* IA118 / NLP_BO_CMS_1203 - 나의 학습자원 > 시험지 등록 및 상세 */
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { createLazyFileRoute, useBlocker, useRouter } from '@tanstack/react-router';
-import { t } from 'i18next';
 import { Button, Divider, Tabs, useModal } from '@learnway/ui';
 import {
   ContentCourseMappingModal,
@@ -9,7 +9,7 @@ import {
   MainContents,
   PageContainer,
 } from '@shared/ui';
-import { TestPaperBasicInfoSaveRes } from '@types';
+import { ExamTemplateType, TestPaperBasicInfoSaveRes } from '@types';
 import {
   LearningResourceQuestionInfo,
   LearningResourceTestPaperInfo,
@@ -31,6 +31,8 @@ export const Route = createLazyFileRoute('/_layout/learning/resource/test-paper/
 });
 
 function RouteComponent() {
+  const { t } = useTranslation();
+
   const router = useRouter();
 
   const { mode, tenantId, contentUuid, data, refetchContentDetail, hasMapping, listParam } =
@@ -85,7 +87,7 @@ function RouteComponent() {
   const tabItems = useMemo(
     () => [
       {
-        title: `${t('시험지 정보')}${mode === PageMode.UPDATE ? `(${t(getExamTemplateTextByType(data?.examTemplateType))})` : ''}`,
+        title: `${t('시험지 정보')}${mode === PageMode.UPDATE ? `(${getExamTemplateTextByType(data?.examTemplateType as ExamTemplateType, t)})` : ''}`,
         key: ExamTab.PAPER,
         content: (
           <LearningResourceTestPaperInfo
@@ -107,7 +109,7 @@ function RouteComponent() {
         ),
       },
       {
-        title: `${t('문항 관리')}${data?.questionGenType ? `(${t(getQuestionGenTypeText(data.questionGenType))})` : ''}`,
+        title: `${t('문항 관리')}${data?.questionGenType ? `(${getQuestionGenTypeText(data.questionGenType, t)})` : ''}`,
         key: ExamTab.QUESTION,
         content: (
           <LearningResourceQuestionInfo
