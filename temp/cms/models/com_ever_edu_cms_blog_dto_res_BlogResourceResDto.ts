@@ -6,11 +6,11 @@ import type { com_fasterxml_jackson_databind_JsonNode } from './com_fasterxml_ja
 export type com_ever_edu_cms_blog_dto_res_BlogResourceResDto = {
     contentUuid?: string;
     contentName?: string;
-    langCountryCode?: com_ever_edu_cms_blog_dto_res_BlogResourceResDto.langCountryCode;
+    languageCountryCode?: com_ever_edu_cms_blog_dto_res_BlogResourceResDto.languageCountryCode;
     blogContent?: com_fasterxml_jackson_databind_JsonNode;
 };
 export namespace com_ever_edu_cms_blog_dto_res_BlogResourceResDto {
-    export enum langCountryCode {
+    export enum languageCountryCode {
         KO = 'KO',
         EN = 'EN',
         ES = 'ES',

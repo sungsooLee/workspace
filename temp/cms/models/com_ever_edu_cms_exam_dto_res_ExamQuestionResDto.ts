@@ -5,10 +5,6 @@
 import type { com_ever_edu_cms_exam_dto_res_ExamQuestionOptionResDto } from './com_ever_edu_cms_exam_dto_res_ExamQuestionOptionResDto';
 export type com_ever_edu_cms_exam_dto_res_ExamQuestionResDto = {
     /**
-     * 정렬 순서
-     */
-    sortSeq?: number;
-    /**
      * 시험 문항 UUID
      */
     examQuestionUuid?: string;
@@ -33,9 +29,25 @@ export type com_ever_edu_cms_exam_dto_res_ExamQuestionResDto = {
      */
     optionCount?: number;
     /**
-     * 사용여부
+     * 시험 문항의 참고 파일
      */
-    isUsed?: boolean;
+    fileUuid?: string | null;
+    /**
+     * 시험 문항의 참고 파일 - 물리파일명
+     */
+    fileName?: string | null;
+    /**
+     * 시험 문항의 참고 파일 - 물리파일크기
+     */
+    fileSize?: number | null;
+    /**
+     * 시험 문항의 참고 파일 - 물리파일경로
+     */
+    filePath?: string | null;
+    /**
+     * 시험 문항의 첨부 파일 유형(IMG/FILE)
+     */
+    fileType?: com_ever_edu_cms_exam_dto_res_ExamQuestionResDto.fileType | null;
     /**
      * 보기 목록
      */
@@ -59,6 +71,13 @@ export namespace com_ever_edu_cms_exam_dto_res_ExamQuestionResDto {
         HARD = 'HARD',
         MEDIUM = 'MEDIUM',
         EASY = 'EASY',
+    }
+    /**
+     * 시험 문항의 첨부 파일 유형(IMG/FILE)
+     */
+    export enum fileType {
+        IMG = 'IMG',
+        FILE = 'FILE',
     }
 }
 

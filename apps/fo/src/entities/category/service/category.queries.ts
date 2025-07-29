@@ -4,6 +4,7 @@ import CategoryService from '../api/category';
 export const queryKeys = {
   all: ['categories'] as const,
   tree: ['category-tree'] as const,
+  detail: ['category-detail'] as const,
 };
 
 export const queryOptions = {
@@ -29,5 +30,9 @@ export const queryOptions = {
   tree: (tenantId: number) => ({
     queryKey: [...queryKeys.tree, tenantId],
     queryFn: () => CategoryService.getCategoryTree(tenantId)
+  }),
+  detail: (categoryId: number) => ({
+    queryKey: queryKeys.detail,
+    queryFn: async () => CategoryService.getCategoryDetail(categoryId),
   })
 };

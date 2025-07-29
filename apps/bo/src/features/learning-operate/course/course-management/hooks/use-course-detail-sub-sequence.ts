@@ -2,10 +2,10 @@ import {
   TriggerKey,
   useCourseLastTriggered,
 } from '@features/learning-operate/course/course-management';
-import { usePageState } from '@shared/index';
 import { useNavigate } from '@tanstack/react-router';
 import { useUpdateEffect } from 'ahooks';
 import { CourseDetailPageLocationState } from './use-course-detail-page';
+import { usePageState } from '@shared/lib';
 
 export function useCourseDetailSubSequence() {
   const lastTriggered = useCourseLastTriggered();

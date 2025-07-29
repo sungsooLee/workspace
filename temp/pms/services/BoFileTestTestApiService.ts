@@ -9,6 +9,38 @@ import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class BoFileTestTestApiService {
     /**
+     * MultipartFile AIP 암호화 처리 - 사용금지(임시 테스트용)
+     * MultipartFile AIP 암호화 처리 테스트
+     * @param companyCode companyCode
+     * @param formData
+     * @returns string OK
+     * @throws ApiError
+     */
+    public static testDrmEnc(
+        companyCode: string,
+        formData?: {
+            file?: Blob;
+        },
+    ): CancelablePromise<string> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/test/api/v1/file/drm/enc',
+            query: {
+                'companyCode': companyCode,
+            },
+            formData: formData,
+            mediaType: 'multipart/form-data',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
      * MultipartFile 업로드 처리(복호화) - 사용금지(임시 테스트용)
      * MultipartFile 업로드 처리(복호화) 테스트
      * @param companyCode companyCode

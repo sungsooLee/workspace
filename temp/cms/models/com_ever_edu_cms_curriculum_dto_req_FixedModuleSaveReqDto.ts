@@ -6,7 +6,7 @@ export type com_ever_edu_cms_curriculum_dto_req_FixedModuleSaveReqDto = {
     curriculumId?: number;
     moduleName?: string;
     moduleType?: com_ever_edu_cms_curriculum_dto_req_FixedModuleSaveReqDto.moduleType;
-    description?: string;
+    moduleDescription?: string;
     contentUuid?: string;
     orgnId?: number;
     totalTime?: number;

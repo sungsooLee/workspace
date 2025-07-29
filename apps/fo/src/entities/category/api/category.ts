@@ -10,4 +10,8 @@ export default class CategoryService {
   static getCategoryTree(tenantId: number) {
     return httpService.get<any>(`${LMSApiPrefix()}/tenant-category/tree/${tenantId}`);
   }
+
+  static getCategoryDetail(categoryId: number) {
+    return httpService.get<any>(`${LMSApiPrefix()}/category/${categoryId}`);
+  }
 }

@@ -25,8 +25,22 @@ export type com_ever_edu_cms_content_dto_res_ContentProgressResDto = {
     lessonId?: number;
     contentUuid?: string;
     contentType?: com_ever_edu_cms_content_dto_res_ContentProgressResDto.contentType;
+    /**
+     * Fixed-Orgn Id
+     */
+    orgnId?: number;
+    /**
+     * Fixed-Item ID
+     */
+    itemId?: number;
+    /**
+     * 학습자 UUID
+     */
+    userUuid?: string;
     progress?: number;
     completionStatus?: com_ever_edu_cms_content_dto_res_ContentProgressResDto.completionStatus;
+    startDate?: string;
+    endDate?: string;
 };
 export namespace com_ever_edu_cms_content_dto_res_ContentProgressResDto {
     export enum contentType {

@@ -12,19 +12,18 @@ export class FoHtml5ApiService {
     /**
      * HTML5 동영상 학습 이력 저장
      * HTML5 동영상 학습 이력을 저장한다
-     * @param learningSaveReqDto
+     * @param requestBody
      * @returns com_ever_edu_cms_html5_dto_res_Html5LearningSaveResDto OK
      * @throws ApiError
      */
-    public static learningHistoryRecord(
-        learningSaveReqDto: com_ever_edu_cms_html5_dto_req_Html5LearningSaveReqDto,
+    public static saveLearningLog2(
+        requestBody: com_ever_edu_cms_html5_dto_req_Html5LearningSaveReqDto,
     ): CancelablePromise<com_ever_edu_cms_html5_dto_res_Html5LearningSaveResDto> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/user/api/v1/html5/learning',
-            query: {
-                'learningSaveReqDto': learningSaveReqDto,
-            },
+            body: requestBody,
+            mediaType: 'application/json',
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,

@@ -28,6 +28,10 @@ export type com_ever_edu_pms_user_dto_req_UserSearchReqDto = {
      */
     userName?: string;
     /**
+     * Email
+     */
+    email?: string;
+    /**
      * 사번
      */
     employeeNumber?: string;

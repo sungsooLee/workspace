@@ -32,15 +32,15 @@ export type com_ever_edu_cms_html5_dto_res_Html5LearningSaveResDto = {
      */
     playRate?: number;
     /**
-     * 학습진행상태
+     * 학습진행상태 Enum(cms.html5.Html5LearningProgressStatus)
      */
-    watchProgressStatus?: com_ever_edu_cms_html5_dto_res_Html5LearningSaveResDto.watchProgressStatus;
+    learningProgressStatus?: com_ever_edu_cms_html5_dto_res_Html5LearningSaveResDto.learningProgressStatus;
 };
 export namespace com_ever_edu_cms_html5_dto_res_Html5LearningSaveResDto {
     /**
-     * 학습진행상태
+     * 학습진행상태 Enum(cms.html5.Html5LearningProgressStatus)
      */
-    export enum watchProgressStatus {
+    export enum learningProgressStatus {
         COMPLETE = 'COMPLETE',
         PLAYING = 'PLAYING',
     }

@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { ColumnDef, createColumnHelper, Table } from '@tanstack/react-table';
-import { t } from 'i18next';
-import { cn } from '@learnway/shared';
-import { Checkbox, Divider, GridBox, useGridBox, useModal } from '@learnway/ui';
-import { SearchBox } from '@shared/ui/search-box';
-import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
-import { GridExcelUploadButton } from '@shared/ui';
-import { EnOrganizationShowType } from './company-organization-tree';
+import { useDeleteDepartment } from '@entities/department/service/department.hook';
 import { queryOptions as departmentQuery } from '@entities/department/service/department.queries';
 import { hmgQueryOptions as hmgDepartmentQuery } from '@entities/department/service/hmg-department.queries';
-import { useDeleteDepartment } from '@entities/department/service/department.hook';
+import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
+import { Checkbox, Divider, GridBox, useGridBox, useModal } from '@learnway/ui';
+import { GridExcelUploadButton } from '@shared/ui';
+import { SearchBox } from '@shared/ui/search-box';
+import { ColumnDef, createColumnHelper, Table } from '@tanstack/react-table';
 import { EnGlobalConst } from '@types';
+import { t } from 'i18next';
+import { useEffect, useState } from 'react';
+import { EnOrganizationShowType } from './company-organization-tree';
 
 /**
  * 화면번호: NLP_BO_TMS_1111_03 테넌트-회사조직 대상자 (조직)
@@ -27,10 +26,41 @@ const CompanyOrganizationInfoListComponent = ({
   deptId: number;
   //companyHrInfoManageType: string;
 }) => {
+  const searchConfig: SearchBoxConfig = {
+    builders: [
+      [
+        {
+          name: 'hrInfoManageType',
+          type: 'dropdown',
+          label: t('조직 등록 유형'),
+          value: '',
+          presetOptionLabel: t('전체'),
+          optionsConfig: {
+            codeGroup: CODE_GROUP['pms.company.HrInfoManageType'],
+          },
+        },
+        {
+          name: 'deptName',
+          type: 'text',
+          label: t('조직명'),
+          value: '',
+          placeholder: t('입력'),
+        },
+        {
+          name: 'deptManagerName',
+          type: 'text',
+          label: t('조직장 이름'),
+          value: '',
+          placeholder: t('입력'),
+        },
+      ],
+    ],
+  };
+
   const { confirm: openConfirm, alert: openAlert } = useModal();
   const [tableInstance, setTableInstance] = useState<Table<any>>();
 
-  const { provider: searchProvider, getValues } = useSearchBox(searchConfig());
+  const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
   const getSearchParam = () => {
     const retval = { ...getValues(), companyCode, parentDeptId: deptId };
 
@@ -172,6 +202,10 @@ const CompanyOrganizationInfoListComponent = ({
     return !disabled;
   };
 
+  const handleExcelUpload = async (data: Record<string, any>[]) => {
+    gridFetch();
+  };
+
   return (
     <>
       <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
@@ -194,7 +228,13 @@ const CompanyOrganizationInfoListComponent = ({
           multiple
           title={t('조직 목록')}
           showRemove
-          excelButtons={<GridExcelUploadButton />}
+          excelButtons={
+            <GridExcelUploadButton
+              validateUrl={`/department/${companyCode}/child/excelUpload`}
+              affairsType="PMS"
+              onUpload={handleExcelUpload}
+            />
+          }
           onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
           onRemoveClick={handleRemoveClick}
           isRowSelectable={handleOnSelectable}
@@ -205,37 +245,6 @@ const CompanyOrganizationInfoListComponent = ({
 };
 
 export const CompanyOrganizationInfoList = CompanyOrganizationInfoListComponent;
-
-const searchConfig = (): SearchBoxConfig => ({
-  builders: [
-    [
-      {
-        name: 'hrInfoManageType',
-        type: 'dropdown',
-        label: t('조직 등록 유형'),
-        value: '',
-        presetOptionLabel: t('전체'),
-        optionsConfig: {
-          codeGroup: CODE_GROUP['pms.company.HrInfoManageType'],
-        },
-      },
-      {
-        name: 'deptName',
-        type: 'text',
-        label: t('조직명'),
-        value: '',
-        placeholder: t('입력'),
-      },
-      {
-        name: 'deptManagerName',
-        type: 'text',
-        label: t('조직장 이름'),
-        value: '',
-        placeholder: t('입력'),
-      },
-    ],
-  ],
-});
 
 const gridConfigOrg = {
   query: hmgDepartmentQuery.child,

@@ -25,9 +25,13 @@ export type com_ever_edu_cms_exam_dto_req_ExamQuestionSaveReqDto = {
      */
     explainText?: string | null;
     /**
-     * 시험 문항의 참고 파일
+     * 시험 문항의 참고 파일 Uuid
      */
-    fileGroupId?: number | null;
+    fileUuid?: string | null;
+    /**
+     * 시험 문항의 첨부 파일 유형(IMG/FILE)
+     */
+    fileType?: com_ever_edu_cms_exam_dto_req_ExamQuestionSaveReqDto.fileType | null;
     /**
      * 시험 문항 선택지 목록
      */
@@ -51,6 +55,13 @@ export namespace com_ever_edu_cms_exam_dto_req_ExamQuestionSaveReqDto {
         HARD = 'HARD',
         MEDIUM = 'MEDIUM',
         EASY = 'EASY',
+    }
+    /**
+     * 시험 문항의 첨부 파일 유형(IMG/FILE)
+     */
+    export enum fileType {
+        IMG = 'IMG',
+        FILE = 'FILE',
     }
 }
 

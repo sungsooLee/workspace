@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { com_ever_edu_lms_blackwhite_dto_req_WhiteGroupReqDto_FullUpdate } from './com_ever_edu_lms_blackwhite_dto_req_WhiteGroupReqDto_FullUpdate';
+import type { com_ever_edu_external_blackandwhite_dto_req_WhiteGroupReqDto_FullUpdate } from './com_ever_edu_external_blackandwhite_dto_req_WhiteGroupReqDto_FullUpdate';
 import type { com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TagNameWrapper_FullUpdate } from './com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TagNameWrapper_FullUpdate';
 import type { com_ever_edu_lms_course_dto_TenantCustomDto_FullUpdate } from './com_ever_edu_lms_course_dto_TenantCustomDto_FullUpdate';
 export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate = {
@@ -25,7 +25,7 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate = {
     /**
      * 학습대상-유저그룹
      */
-    targetList?: Array<com_ever_edu_lms_blackwhite_dto_req_WhiteGroupReqDto_FullUpdate>;
+    targetList?: Array<com_ever_edu_external_blackandwhite_dto_req_WhiteGroupReqDto_FullUpdate>;
     /**
      * 언어 설정
      */
@@ -403,6 +403,7 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate = {
      */
     tagNames: Array<com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TagNameWrapper_FullUpdate>;
     learningSpaceNameValid?: boolean;
+    instructorValid?: boolean;
 };
 export namespace com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate {
     /**

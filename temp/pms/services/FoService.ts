@@ -4,8 +4,10 @@
 /* eslint-disable */
 import type { com_ever_edu_pms_channel_dto_req_ChannelRequestSaveReqDto } from '../models/com_ever_edu_pms_channel_dto_req_ChannelRequestSaveReqDto';
 import type { com_ever_edu_pms_channel_dto_req_ChannelSearchReqDto } from '../models/com_ever_edu_pms_channel_dto_req_ChannelSearchReqDto';
+import type { com_ever_edu_pms_channel_dto_res_ChannelDetailResDto } from '../models/com_ever_edu_pms_channel_dto_res_ChannelDetailResDto';
 import type { com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto } from '../models/com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto';
 import type { com_ever_edu_pms_channel_dto_res_ChannelResDto } from '../models/com_ever_edu_pms_channel_dto_res_ChannelResDto';
+import type { com_ever_edu_pms_channel_dto_res_ChannelUserResDto } from '../models/com_ever_edu_pms_channel_dto_res_ChannelUserResDto';
 import type { com_ever_edu_pms_company_dto_res_CompanyResDto } from '../models/com_ever_edu_pms_company_dto_res_CompanyResDto';
 import type { com_ever_edu_pms_menu_dto_res_GnbTenantMenuTreeDto } from '../models/com_ever_edu_pms_menu_dto_res_GnbTenantMenuTreeDto';
 import type { com_ever_edu_pms_notification_dto_req_AlarmSaveReqDto } from '../models/com_ever_edu_pms_notification_dto_req_AlarmSaveReqDto';
@@ -30,12 +32,14 @@ import type { com_ever_edu_pms_user_dto_req_ChangeEmailReqDto } from '../models/
 import type { com_ever_edu_pms_user_dto_req_ChangePasswordReqDto } from '../models/com_ever_edu_pms_user_dto_req_ChangePasswordReqDto';
 import type { com_ever_edu_pms_user_dto_req_ChangePhoneNumberReqDto } from '../models/com_ever_edu_pms_user_dto_req_ChangePhoneNumberReqDto';
 import type { com_ever_edu_pms_user_dto_req_ConfirmPasswordReqDto } from '../models/com_ever_edu_pms_user_dto_req_ConfirmPasswordReqDto';
-import type { com_ever_edu_pms_user_dto_req_ExtendPasswordChangeDateReqDto } from '../models/com_ever_edu_pms_user_dto_req_ExtendPasswordChangeDateReqDto';
 import type { com_ever_edu_pms_user_dto_req_SendVerifyEmailReqDto } from '../models/com_ever_edu_pms_user_dto_req_SendVerifyEmailReqDto';
 import type { com_ever_edu_pms_user_dto_req_SendVerifyPhoneNumberReqDto } from '../models/com_ever_edu_pms_user_dto_req_SendVerifyPhoneNumberReqDto';
+import type { com_ever_edu_pms_user_dto_req_UserChangeReqDto } from '../models/com_ever_edu_pms_user_dto_req_UserChangeReqDto';
 import type { com_ever_edu_pms_user_dto_req_VerifyEmailReqDto } from '../models/com_ever_edu_pms_user_dto_req_VerifyEmailReqDto';
 import type { com_ever_edu_pms_user_dto_req_VerifyPhoneNumberReqDto } from '../models/com_ever_edu_pms_user_dto_req_VerifyPhoneNumberReqDto';
 import type { com_ever_edu_pms_user_dto_req_VisitTenantAndRoleReqDto } from '../models/com_ever_edu_pms_user_dto_req_VisitTenantAndRoleReqDto';
+import type { com_ever_edu_pms_user_dto_req_WakeUpAccountByEmailReqDto } from '../models/com_ever_edu_pms_user_dto_req_WakeUpAccountByEmailReqDto';
+import type { com_ever_edu_pms_user_dto_req_WakeUpAccountByPhoneReqDto } from '../models/com_ever_edu_pms_user_dto_req_WakeUpAccountByPhoneReqDto';
 import type { com_ever_edu_pms_user_dto_res_ConfirmPasswordResDto } from '../models/com_ever_edu_pms_user_dto_res_ConfirmPasswordResDto';
 import type { com_ever_edu_pms_user_dto_res_FindMyIdResDto } from '../models/com_ever_edu_pms_user_dto_res_FindMyIdResDto';
 import type { com_ever_edu_pms_user_dto_res_IsEmailExistsResDto } from '../models/com_ever_edu_pms_user_dto_res_IsEmailExistsResDto';
@@ -48,6 +52,35 @@ import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class FoService {
+    /**
+     * 개인정보 변경
+     * 개인정보 변경페이지 필요 정보를 조회한다.
+     * @param uuid
+     * @param requestBody
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static changeUserInfo(
+        uuid: string,
+        requestBody: com_ever_edu_pms_user_dto_req_UserChangeReqDto,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/user/api/v1/users/{uuid}',
+            path: {
+                'uuid': uuid,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
     /**
      * 최근 접속 테넌트/역할 저장
      * 최근 접속 테넌트/역할을 저장한다.
@@ -322,6 +355,64 @@ export class FoService {
         });
     }
     /**
+     * 휴면계정 해제(휴대폰 인증)
+     * 회원이 휴대폰 인증을 통해 휴면계정을 해제한다.
+     * @param uuid
+     * @param requestBody
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static wakeUpAccountByPhone(
+        uuid: string,
+        requestBody: com_ever_edu_pms_user_dto_req_WakeUpAccountByPhoneReqDto,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/user/api/v1/users/{uuid}/wake-up-account-by-phone',
+            path: {
+                'uuid': uuid,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 휴면계정 해제(이메일 인증)
+     * 회원이 이메일 인증을 통해 휴면계정을 해제한다.
+     * @param uuid
+     * @param requestBody
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static wakeUpAccountByEmail(
+        uuid: string,
+        requestBody: com_ever_edu_pms_user_dto_req_WakeUpAccountByEmailReqDto,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/user/api/v1/users/{uuid}/wake-up-account-by-email',
+            path: {
+                'uuid': uuid,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
      * 휴대전화번호 인증 요청
      * 휴대전화번호 인증을 요청한다.
      * @param requestBody
@@ -406,30 +497,6 @@ export class FoService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/user/api/v1/users/verifications/send-verify-email',
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 비밀번호 변경 기간 연장
-     * 비밀번호 변경 기간을 연장한다.
-     * @param requestBody
-     * @returns any OK
-     * @throws ApiError
-     */
-    public static changePasswordByPhoneNumber1(
-        requestBody: com_ever_edu_pms_user_dto_req_ExtendPasswordChangeDateReqDto,
-    ): CancelablePromise<any> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/user/api/v1/users/extend-password-change-date',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -1191,21 +1258,21 @@ export class FoService {
      * FO GNB 테넌트메뉴목록 트리 조회
      * GNB 테넌트 메뉴 목록을 트리구조로 조회한다.
      * @param tenantId
-     * @param roleId
+     * @param roleIds
      * @param deviceType
      * @returns com_ever_edu_pms_menu_dto_res_GnbTenantMenuTreeDto OK
      * @throws ApiError
      */
     public static findTenantMenu(
         tenantId: number,
-        roleId?: number,
+        roleIds?: Array<number>,
         deviceType?: string,
     ): CancelablePromise<com_ever_edu_pms_menu_dto_res_GnbTenantMenuTreeDto> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/user/api/v1/menus/tenantTree',
             query: {
-                'roleId': roleId,
+                'roleIds': roleIds,
                 'tenantId': tenantId,
                 'deviceType': deviceType,
             },
@@ -1233,6 +1300,56 @@ export class FoService {
             url: '/user/api/v1/companies/brn/{brn}',
             path: {
                 'brn': brn,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 채널 조회
+     * 테넌트의 채널목록을 조회한다.
+     * @param listSize 리스트 조회갯수
+     * @returns com_ever_edu_pms_channel_dto_res_ChannelUserResDto OK
+     * @throws ApiError
+     */
+    public static selectUserChannelList(
+        listSize: string = '5',
+    ): CancelablePromise<Array<com_ever_edu_pms_channel_dto_res_ChannelUserResDto>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/user/api/v1/channel',
+            query: {
+                'listSize': listSize,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 채널 기본 상세 조회
+     * 채널 기본 상세정보를 조회한다.
+     * @param channelUuid
+     * @returns com_ever_edu_pms_channel_dto_res_ChannelDetailResDto OK
+     * @throws ApiError
+     */
+    public static selectChannelBaseInfo(
+        channelUuid: string,
+    ): CancelablePromise<com_ever_edu_pms_channel_dto_res_ChannelDetailResDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/user/api/v1/channel/{channelUuid}',
+            path: {
+                'channelUuid': channelUuid,
             },
             errors: {
                 400: `Bad Request`,
@@ -1357,7 +1474,7 @@ export class FoService {
      * @returns any OK
      * @throws ApiError
      */
-    public static delete(
+    public static delete1(
         alarmId: number,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {

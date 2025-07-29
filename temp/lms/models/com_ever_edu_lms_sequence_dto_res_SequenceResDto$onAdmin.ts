@@ -2,8 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { com_ever_edu_external_blackandwhite_dto_res_WhiteGroupResDto } from './com_ever_edu_external_blackandwhite_dto_res_WhiteGroupResDto';
 import type { com_ever_edu_external_tenant_dto_res_TenantResDto } from './com_ever_edu_external_tenant_dto_res_TenantResDto';
-import type { com_ever_edu_lms_blackwhite_dto_res_WhiteGroupResDto } from './com_ever_edu_lms_blackwhite_dto_res_WhiteGroupResDto';
 import type { com_ever_edu_lms_course_dto_TenantCustomDto } from './com_ever_edu_lms_course_dto_TenantCustomDto';
 export type com_ever_edu_lms_sequence_dto_res_SequenceResDto$OnAdmin = {
     /**
@@ -21,7 +21,7 @@ export type com_ever_edu_lms_sequence_dto_res_SequenceResDto$OnAdmin = {
     /**
      * 학습대상(유저그룹)
      */
-    targetList?: Array<com_ever_edu_lms_blackwhite_dto_res_WhiteGroupResDto>;
+    targetList?: Array<com_ever_edu_external_blackandwhite_dto_res_WhiteGroupResDto>;
     /**
      * 차수명
      */
@@ -33,11 +33,11 @@ export type com_ever_edu_lms_sequence_dto_res_SequenceResDto$OnAdmin = {
     /**
      * 수강신청 시작일시
      */
-    enrollmentStartDateTime?: string;
+    enrollStartDateTime?: string;
     /**
      * 수강신청 종료일시
      */
-    enrollmentEndDateTime?: string;
+    enrollEndDateTime?: string;
     /**
      * 수강 취소 사용여부
      */
@@ -343,6 +343,10 @@ export type com_ever_edu_lms_sequence_dto_res_SequenceResDto$OnAdmin = {
      * 테넌트 전용 설정 내용
      */
     tenantCustoms?: Array<com_ever_edu_lms_course_dto_TenantCustomDto>;
+    /**
+     * 커리큘럼 ID
+     */
+    curriculumId?: number;
 };
 export namespace com_ever_edu_lms_sequence_dto_res_SequenceResDto$OnAdmin {
     /**
@@ -360,8 +364,8 @@ export namespace com_ever_edu_lms_sequence_dto_res_SequenceResDto$OnAdmin {
      * 학습기간 지정 유형
      */
     export enum learningStartType {
-        DAYS_AFTER_ENROLL = 'DAYS_AFTER_ENROLL',
         FIXED_DATE = 'FIXED_DATE',
+        DAYS_AFTER_ENROLL = 'DAYS_AFTER_ENROLL',
     }
     export enum learningSpaceType {
         LEARNING_WAY = 'LEARNING_WAY',

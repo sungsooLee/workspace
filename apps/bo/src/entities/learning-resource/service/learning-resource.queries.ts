@@ -26,6 +26,8 @@ import {
   PostDraftETCParams,
   PutETCUpdateParams,
   PutETCChangeParams,
+  ContentExportReq,
+  ContentSharingInfoReq,
 } from '@types';
 import LearningResourceService from '../api/learning-resource';
 
@@ -35,12 +37,14 @@ export const queryKeys = {
   contents: ['contents'] as const,
   contentDetail: (contentUuid: string) => ['content-detail', contentUuid] as const,
   contentCourseMapping: (contentUuid: string) => ['content-course-mapping', contentUuid] as const,
+  translationList: (contentUuid: string) => ['translation-list', contentUuid] as const,
   deleteContent: ['delete-content'] as const,
   createDraftVideo: ['create-draft-video'] as const,
   videoChange: ['video-change'] as const,
   learningResources: ['learning-resources'] as const,
   curriculumMapping: ['mapping-curriculum'] as const,
   mappingCourses: ['mapping-courses'] as const,
+  contentSharingInfo: (contentUuid: string) => ['content-sharing-info', contentUuid] as const,
   sharedHistories: ['shared-histories'] as const,
   programGuideDownload: ['program-guide-download'] as const,
   html5Draft: ['html5-draft'] as const,
@@ -89,6 +93,13 @@ export const learningResourceQueryOptions = {
     queryKey: queryKeys.contentCourseMapping(contentUuid),
     queryFn: () => LearningResourceService.fetchContentCourseMapping(contentUuid, params),
   }),
+  getTranslationList: (contentUuid: string) => ({
+    queryKey: queryKeys.translationList(contentUuid),
+    queryFn: () => LearningResourceService.fetchTranslationList(contentUuid),
+    cacheTime: 0,
+    staleTime: 0,
+    enabled: !!contentUuid,
+  }),
   getLearningResources: (params: any) => ({
     queryKey: queryKeys.learningResources,
     queryFn: () => LearningResourceService.fetchLearningResources(params),
@@ -101,6 +112,14 @@ export const learningResourceQueryOptions = {
     queryFn: () => LearningResourceService.fetchCurriculumMapping(contentUuid),
     enabled: !!contentUuid,
   }),
+  getContentSharingInfo: (params: ContentSharingInfoReq) => ({
+    queryKey: queryKeys.contentSharingInfo(params.contentUuid),
+    queryFn: () => LearningResourceService.fetchContentSharingInfo(params),
+    cacheTime: 0,
+    staleTime: 0,
+    enabled: !!params.contentUuid,
+  }),
+
   getSharedHistories: (params: any) => ({
     queryKey: queryKeys.sharedHistories,
     queryFn: () => LearningResourceService.fetchSharedHistories(params),
@@ -182,6 +201,9 @@ export const learningResourceQueryOptions = {
 export const mutateOptions = {
   postContentCopy: () => ({
     mutationFn: (contentUuid: string) => LearningResourceService.postContentCopy(contentUuid),
+  }),
+  postContentExport: () => ({
+    mutationFn: (params: ContentExportReq) => LearningResourceService.postContentExport(params),
   }),
   postDraftVideos: () => ({
     mutationFn: (params: PostDraftVideosParams) => LearningResourceService.postDraftVideos(params),

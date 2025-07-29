@@ -11,5 +11,21 @@ export type com_ever_edu_lms_student_dto_res_StudentHistoryDto$OnAdmin = {
     isCompleted?: boolean;
     examScore?: number;
     asgmtScore?: number;
+    courseSequenceNo?: number;
+    courseName?: string;
+    learningStartDate?: string;
+    learningEndDate?: string;
+    courseType?: com_ever_edu_lms_student_dto_res_StudentHistoryDto$OnAdmin.courseType;
+    attendanceScore?: number;
 };
+export namespace com_ever_edu_lms_student_dto_res_StudentHistoryDto$OnAdmin {
+    export enum courseType {
+        ELEARNING1 = 'ELEARNING1',
+        ELEARNING2 = 'ELEARNING2',
+        CLASS = 'CLASS',
+        LIVE = 'LIVE',
+        EXAM = 'EXAM',
+        SURVEY = 'SURVEY',
+    }
+}
 

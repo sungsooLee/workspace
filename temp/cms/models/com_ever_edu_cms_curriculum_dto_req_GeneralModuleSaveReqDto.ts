@@ -6,7 +6,7 @@ export type com_ever_edu_cms_curriculum_dto_req_GeneralModuleSaveReqDto = {
     curriculumId?: number;
     moduleName?: string;
     moduleType?: com_ever_edu_cms_curriculum_dto_req_GeneralModuleSaveReqDto.moduleType;
-    description?: string;
+    moduleDescription?: string;
 };
 export namespace com_ever_edu_cms_curriculum_dto_req_GeneralModuleSaveReqDto {
     export enum moduleType {

@@ -2,8 +2,6 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { com_ever_edu_global_dto_IdNameDto } from './com_ever_edu_global_dto_IdNameDto';
-import type { com_ever_edu_global_dto_UuidNameDto } from './com_ever_edu_global_dto_UuidNameDto';
 export type com_ever_edu_pms_role_dto_res_RoleUserResDto = {
     /**
      * 사용자 UUID
@@ -49,17 +47,5 @@ export type com_ever_edu_pms_role_dto_res_RoleUserResDto = {
      * 역할 사용 여부
      */
     isUsed?: boolean;
-    /**
-     * 데이터 접근 범위(회사)
-     */
-    companies?: Array<com_ever_edu_global_dto_IdNameDto>;
-    /**
-     * 데이터 접근 범위(채널)
-     */
-    channels?: Array<com_ever_edu_global_dto_UuidNameDto>;
-    /**
-     * 데이터 접근 범위(조직)
-     */
-    depts?: Array<com_ever_edu_global_dto_IdNameDto>;
 };
 

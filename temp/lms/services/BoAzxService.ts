@@ -72,7 +72,7 @@ export class BoAzxService {
      * @returns any OK
      * @throws ApiError
      */
-    public static delete7(
+    public static delete6(
         azxId: number,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {

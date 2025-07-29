@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { com_ever_edu_lms_blackwhitecall_dto_res_WhiteGroupResDto } from './com_ever_edu_lms_blackwhitecall_dto_res_WhiteGroupResDto';
+import type { com_ever_edu_external_blackandwhite_dto_res_WhiteGroupResDto } from './com_ever_edu_external_blackandwhite_dto_res_WhiteGroupResDto';
 export type com_ever_edu_lms_category_dto_res_TenantCategoryDto = {
     categoryId?: number;
     categoryName?: string;
@@ -11,7 +11,7 @@ export type com_ever_edu_lms_category_dto_res_TenantCategoryDto = {
     categoryContent?: string;
     isUsed?: boolean;
     tenantIsUsed?: boolean;
-    whiteList?: Array<com_ever_edu_lms_blackwhitecall_dto_res_WhiteGroupResDto>;
+    whiteList?: Array<com_ever_edu_external_blackandwhite_dto_res_WhiteGroupResDto>;
     categoryPath?: string;
 };
 export namespace com_ever_edu_lms_category_dto_res_TenantCategoryDto {

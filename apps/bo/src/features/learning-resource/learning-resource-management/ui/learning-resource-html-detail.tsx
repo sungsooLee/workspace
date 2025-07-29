@@ -2,7 +2,7 @@ import React, { forwardRef, useEffect } from 'react';
 import { useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import dayjs from 'dayjs';
-import { useDynamicForm2 } from '@learnway/hooks';
+import { UseDynamicFormResult } from '@learnway/hooks';
 import { cn, isEmptyData } from '@learnway/shared';
 import { ContentsRow, useModal } from '@learnway/ui';
 import { useFetchAuthUser } from '@learnway/auth/entities';
@@ -17,14 +17,15 @@ import { LearningResourceBaseForm } from './learning-resource-base-form';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 
 type HtmlDetailProps = {
+  form: UseDynamicFormResult;
   mode: 'draft' | 'complete';
   data?: Partial<HtmlVideoDetailRes>;
   hasMapping?: boolean;
 };
 
 const HtmlDetailComponent = forwardRef<HTMLFormElement, HtmlDetailProps>(
-  ({ mode, data = {}, hasMapping = false }, ref) => {
-    const { provider, onSubmit, getValues, updateFormData, onFormChange } = useDynamicForm2();
+  ({ form, data = {}, hasMapping = false }, ref) => {
+    const { provider, onSubmit, getValues, updateFormData, onFormChange, watch } = form;
 
     const { data: loginUser } = useFetchAuthUser();
 
@@ -41,29 +42,10 @@ const HtmlDetailComponent = forwardRef<HTMLFormElement, HtmlDetailProps>(
       },
     });
 
-    useEffect(() => {
-      (async () => {
-        await initRoleInfo();
-      })();
-    }, [loginUser]);
-
-    useEffect(() => {
-      if (!isEmptyData(data)) {
-        onFormChange({
-          ...data,
-          contentUseDate: {
-            from: data.contentUseStartDate ? dayjs(data.contentUseStartDate).toDate() : undefined,
-            to: data.contentUseEndDate ? dayjs(data.contentUseEndDate).toDate() : undefined,
-          },
-          aiSummary: data.aiSummary ?? '',
-          aiKeyword: data.aiKeyword ?? '',
-          resource: data.resource ?? {},
-        });
-      }
-    }, [data]);
-
     const router = useRouter();
     const { confirm: openConfirm } = useModal();
+
+    const createType = watch('createType');
 
     const { update: updateMetadata } = useUpdateHTML5Metadata({
       onSuccess: (result: HtmlVideoMetadataRes) => {
@@ -72,6 +54,10 @@ const HtmlDetailComponent = forwardRef<HTMLFormElement, HtmlDetailProps>(
             to: '/learning/resource/html-video/view',
             state: {
               contentUuid: result.contentUuid,
+              listParam: {
+                tenantId: result.tenantId,
+                channelUuid: result.channelUuid,
+              },
             },
             replace: true,
           });
@@ -95,6 +81,27 @@ const HtmlDetailComponent = forwardRef<HTMLFormElement, HtmlDetailProps>(
       }
     };
 
+    useEffect(() => {
+      (async () => {
+        await initRoleInfo();
+      })();
+    }, [loginUser]);
+
+    useEffect(() => {
+      if (!isEmptyData(data)) {
+        onFormChange({
+          ...data,
+          contentUseDate: {
+            from: data.contentUseStartDate ? dayjs(data.contentUseStartDate).toDate() : undefined,
+            to: data.contentUseEndDate ? dayjs(data.contentUseEndDate).toDate() : undefined,
+          },
+          aiSummary: data.aiSummary ?? '',
+          aiKeyword: data.aiKeyword ?? '',
+          resource: data.resource ?? {},
+        });
+      }
+    }, [data]);
+
     return (
       <form ref={ref} method="post" onSubmit={onSubmit(handleSubmit)}>
         <LearningResourceBaseForm
@@ -102,6 +109,7 @@ const HtmlDetailComponent = forwardRef<HTMLFormElement, HtmlDetailProps>(
           showAiInfo
           showLessonTime
           hasMapping={hasMapping}
+          createType={createType}
         />
 
         {/* 필수 확인 영역 */}

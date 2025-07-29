@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type com_ever_edu_pms_tenant_dto_res_TenantResDto$TagResDto = {
+    tagId?: number;
     tagName?: string;
 };
 

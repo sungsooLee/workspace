@@ -7,15 +7,15 @@ export type com_ever_edu_cms_curriculum_dto_req_GeneralLessonSaveReqDto_LessonSa
     moduleId?: number;
     lessonType?: com_ever_edu_cms_curriculum_dto_req_GeneralLessonSaveReqDto_LessonSave.lessonType;
     lessonName?: string;
-    description?: string;
+    lessonDescription?: string;
     learningTime?: number;
     contentUuid?: string;
     contentName?: string;
 };
 export namespace com_ever_edu_cms_curriculum_dto_req_GeneralLessonSaveReqDto_LessonSave {
     export enum lessonType {
-        TOC = 'TOC',
-        RESOURCES = 'RESOURCES',
+        GENERAL = 'GENERAL',
+        RESOURCE = 'RESOURCE',
     }
 }
 

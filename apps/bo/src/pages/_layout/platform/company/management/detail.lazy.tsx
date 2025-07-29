@@ -1,10 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
-import { t } from 'i18next';
-import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
-import { Tabs, Button } from '@learnway/ui';
 import { CompanyDetail, CompanyDetailHR } from '@features/platform-management/company';
+import { Button, Tabs } from '@learnway/ui';
+import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui';
+import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { EnFormMode } from '@types';
-import { MainContents, PageContainer, LinkBox, ContentsButtons } from '@shared/ui';
+import { t } from 'i18next';
+import { useEffect, useRef, useState } from 'react';
 
 export const Route = createLazyFileRoute('/_layout/platform/company/management/detail')({
   component: RouteComponent,
@@ -21,7 +21,7 @@ function RouteComponent() {
 
   useEffect(() => {
     if (!companyCode) router.navigate({ to: '/platform/company/management' });
-  }, [companyCode, router]);
+  }, []);
 
   const handleTabChange = (tabKey: string) => {
     if (tabKey !== selectedTabKey) {

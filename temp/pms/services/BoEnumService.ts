@@ -15,7 +15,7 @@ export class BoEnumService {
      * @returns any OK
      * @throws ApiError
      */
-    public static saveEnumCode(
+    public static saveEnumCode1(
         cdGroupId: string,
         cdId: string,
     ): CancelablePromise<any> {
@@ -42,7 +42,7 @@ export class BoEnumService {
      * @returns string OK
      * @throws ApiError
      */
-    public static findAllEnums2(
+    public static findAllEnums21(
         cdGroupId?: string,
     ): CancelablePromise<Array<string>> {
         return __request(OpenAPI, {
@@ -67,7 +67,7 @@ export class BoEnumService {
      * @returns com_ever_edu_enums_EnumValue OK
      * @throws ApiError
      */
-    public static getEnumCodeList(
+    public static getEnumCodeList2(
         enumNames: Array<string>,
     ): CancelablePromise<Array<Record<string, Array<com_ever_edu_enums_EnumValue>>>> {
         return __request(OpenAPI, {
@@ -93,7 +93,7 @@ export class BoEnumService {
      * @returns com_ever_edu_enums_EnumValue OK
      * @throws ApiError
      */
-    public static getEnumCodeList1(
+    public static getEnumCodeList3(
         cdGroupId: string,
         cdId: string,
     ): CancelablePromise<com_ever_edu_enums_EnumValue> {

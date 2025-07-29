@@ -3,6 +3,7 @@ import { AuthUser } from '@learnway/auth/types';
 import { CODE_GROUP, useCodeStore } from '@learnway/hooks';
 import { isEmptyData } from '@learnway/shared';
 import { LEARNING_TYPE } from '@learnway/config';
+import { ContentCreateType } from '@types';
 
 export const getDetailPathByContentType = (contentType: string): string => {
   switch (contentType) {
@@ -33,6 +34,17 @@ export const getDetailRouterState = (contentUuid: string, contentType: string) =
     // 컨텐츠 유형에 따라 state 추가 설정
   }
   return state;
+};
+
+export const getTooltipContent = (createType?: ContentCreateType) => {
+  switch (createType) {
+    case 'TRANSLATE':
+      return 'LABEL.page.tooltip.learningResourceIsTranslated';
+    case 'SHARED':
+      return 'LABEL.page.tooltip.learningResourceIsShared';
+    default:
+      return 'LABEL.page.tooltip.learningResourceIsUsed';
+  }
 };
 
 export const useRoleInfo = (options: {
