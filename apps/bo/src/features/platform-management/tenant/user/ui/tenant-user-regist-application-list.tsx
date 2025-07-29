@@ -63,7 +63,7 @@ const TenantUserRegistApplicationListComponent: FC<any> = ({ rootPath }) => {
     onFormChange,
     onFormValid,
   } = useSearchBox(searchConfig());
-  const { config: gConfig, gridFetch } = useGridBox(gridConfig);
+  const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
 
   const tenantIdWatch = useWatch({ control: searchProvider.control, name: 'tenantId' });
 
@@ -342,6 +342,7 @@ const columns = () =>
       },
       header: t('테넌트'),
       size: 114,
+      enableSorting: false,
     }),
     columnHelper.accessor('opt1', {
       cell: (info) => {
@@ -351,16 +352,19 @@ const columns = () =>
       },
       header: t('그룹'),
       size: 114,
+      enableSorting: false,
     }),
     columnHelper.accessor('opt2', {
       cell: (info) => info.row.original.company.name,
       header: t('회사'),
       size: 114,
+      enableSorting: false,
     }),
     columnHelper.accessor('opt3', {
       cell: (info) => info.row.original.dept?.deptName,
       header: t('소속'),
       size: 114,
+      enableSorting: false,
     }),
     columnHelper.accessor('positionName', {
       cell: (info) => info.getValue(),
@@ -413,6 +417,7 @@ const columns = () =>
         cellAlign: 'center',
       },
       size: 76,
+      enableSorting: false,
     }),
     columnHelper.accessor('enabledDate', {
       cell: (info) =>
