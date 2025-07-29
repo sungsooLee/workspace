@@ -122,6 +122,24 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
   const handleOnSubmit = async (data: any) => {
     console.log('#### handleOnSubmit', data);
 
+    if( data.phoneNumber ) {
+      const phoneNumber = `0${data.phoneNumber}`;
+      const regex = new RegExp('^01[016789]\\d{7,8}$');
+      if( !regex.test(phoneNumber) ) {
+        setFormError('phoneNumber', t('휴대폰 번호 형식에 맞게 입력해 주세요.'));
+        return false;
+      }
+    }
+
+    if( data.companyNumber ) {
+      const companyPhoneNumber = `0${data.companyNumber}`;
+      const officePhoneRegex = new RegExp('^0(2|[3-6][1-5])\\d{7,8}$');
+      if( !officePhoneRegex.test(companyPhoneNumber) ) {
+        setFormError('companyNumber', t('연락처 형식에 맞게 입력해 주세요.'));
+        return false;
+      }
+    }
+
     const payload = {
       // 회사/조직 정보
       companyId: data.companyId, //회사 id
@@ -144,7 +162,6 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
       phoneNumber: data.phoneNumber, // 휴대폰 번호
       engName: data.engName, // 영문 이름
       gender: data.userGender, // 성별
-      companyPhoneNationNumber: null, // 연락처(사무실)-국가번호
       companyPhoneNumber: data.companyNumber, // 연락처(사무실)
 
       // 직군/직무: 직군 선택에 따른 직무 - 현재 공통 코드로만 존재할지 아니면 따로 관리를 할지를 협의해야한다고 해서 구현 못 함.
@@ -350,9 +367,9 @@ const columns = () => [
         info={info}
         dropdown={{
           options: [
-            { label: '브랜드&베이직', value: 'BRAND&BASIC' },
-            { label: '영업', value: 'SELLING' },
-            { label: '서비스', value: 'SERVICE' },
+            { label: t('브랜드&베이직'), value: 'BRAND&BASIC' },
+            { label: t('영업'), value: 'SELLING' },
+            { label: t('서비스'), value: 'SERVICE' },
           ],
         }}
       />
@@ -370,10 +387,10 @@ const columns = () => [
         info={info}
         dropdown={{
           options: [
-            { label: '스텝', value: 'STAFF' },
-            { label: '시스템 매니저', value: 'SYSTEM_MANAGER' },
-            { label: '트레이닝 매니저', value: 'TRAINING_MANAGER' },
-            { label: '기타', value: 'ETC' },
+            { label: t('스텝'), value: 'STAFF' },
+            { label: t('시스템 매니저'), value: 'SYSTEM_MANAGER' },
+            { label: t('트레이닝 매니저'), value: 'TRAINING_MANAGER' },
+            { label: t('기타'), value: 'ETC' },
           ],
         }}
       />
@@ -479,10 +496,10 @@ const formConfig = (): DynamicFormConfig => ({
       label: t('재직 상태'),
       value: '1',
       options: [
-        { label: '재직', value: '1' },
-        { label: '정직', value: '2' },
-        { label: '휴직', value: '3' },
-        { label: '퇴사', value: '4' },
+        { label: t('재직'), value: '1' },
+        { label: t('정직'), value: '2' },
+        { label: t('휴직'), value: '3' },
+        { label: t('퇴사'), value: '4' },
       ],
     },
     {
@@ -555,8 +572,8 @@ const formConfig = (): DynamicFormConfig => ({
     {
       label: t('연락처(사무실)'),
       name: 'companyNumber',
-      type: 'phone-number',
-      format: 'string',
+      type: 'text',
+      format: 'number',
       value: '',
     },
     {
@@ -600,10 +617,10 @@ const formConfig = (): DynamicFormConfig => ({
       label: t('계정상태'),
       value: '1',
       options: [
-        { label: '정상', value: '1' },
-        { label: '잠김', value: '2' },
-        { label: '휴면(정상)', value: '3' },
-        { label: '휴면(잠김)', value: '4' },
+        { label: t('정상'), value: '1' },
+        { label: t('잠김'), value: '2' },
+        { label: t('휴면(정상)'), value: '3' },
+        { label: t('휴면(잠김)'), value: '4' },
       ],
     },
 
@@ -709,9 +726,9 @@ const formConfig = (): DynamicFormConfig => ({
       label: t('로그인 제한'),
       value: ['2'],
       options: [
-        { label: '로그인 제한 시간 설정', value: '1' },
-        { label: '근테 연동 로그인 제한', value: '2' },
-        { label: '제한 없음', value: '3' },
+        { label: t('로그인 제한 시간 설정'), value: '1' },
+        { label: t('근테 연동 로그인 제한'), value: '2' },
+        { label: t('제한 없음'), value: '3' },
       ],
       guideText: t('로그인 시간 제한 선택 시 회사관리 제한 시간에는 로그인할 수 없습니다.'),
       disabled: true,

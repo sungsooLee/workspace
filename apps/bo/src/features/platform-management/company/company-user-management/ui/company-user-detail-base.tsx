@@ -31,7 +31,7 @@ function compareLatestDate(dates: string[]) {
 }
 
 const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: any) => {
-  const { provider, control, updateFormData, onSubmit, onFormChange, clearFormError, getValues } =
+  const { provider, control, updateFormData, onSubmit, onFormChange, clearFormError, getValues, setFormError } =
     useDynamicForm(formConfig());
 
   const { confirm: openConfirm } = useModal();
@@ -154,6 +154,16 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
 
   const handleOnSubmit = async (data: any) => {
     console.log('#### handleOnSubmit', data);
+
+    if( data.companyPhoneNumber ) {
+      const companyPhoneNumber = data.companyPhoneNumber;
+      const officePhoneRegex = new RegExp('^0(2|[3-6][1-5])\\d{7,8}$');
+      if( !officePhoneRegex.test(companyPhoneNumber) ) {
+        setFormError('companyPhoneNumber', t('연락처 형식에 맞게 입력해 주세요.'));
+        return false;
+      }
+    }
+
     const payload = {
       userUuid: props.userInfo.uuid,
       companyId: props.userInfo.company.companyId, //회사 id
@@ -342,8 +352,8 @@ const formConfig = (): DynamicFormConfig => ({
     {
       label: t('연락처 (사무실)'),
       name: 'companyPhoneNumber',
-      type: 'phone-number',
-      format: 'string',
+      type: 'text',
+      format: 'number',
       value: '',
       placeholder: '',
     },
@@ -562,9 +572,9 @@ const formConfig = (): DynamicFormConfig => ({
       label: t('로그인 제한'),
       value: ['opt2'],
       options: [
-        { label: '로그인 제한 시간 설정', value: 'opt1' },
-        { label: '근태 연동 로그인 제한', value: 'opt2' },
-        { label: '제한 없음', value: 'opt3' },
+        { label: t('로그인 제한 시간 설정'), value: 'opt1' },
+        { label: t('근태 연동 로그인 제한'), value: 'opt2' },
+        { label: t('제한 없음'), value: 'opt3' },
       ],
       guideText: t('로그인 시간 제한 선택 시 회사관리 제한 시간에는 로그인할 수 없습니다.'),
     },
