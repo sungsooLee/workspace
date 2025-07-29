@@ -7,6 +7,7 @@ import { CoursesQueryParams } from '@types';
 import { t } from 'i18next';
 import { CourseGridColumn } from '../types/type';
 import { CourseFavoriteIcon } from '../ui/course-favorite-icon/course-favorite-icon';
+import { ShowUrlCopyButton } from '@shared/ui';
 
 export const useCourseListGridConfig = () => {
   const { pathname } = useLocation();
@@ -152,7 +153,7 @@ export const useCourseListGridConfig = () => {
       name: 'url',
       label: () => t('LABEL.grid.column.url'),
       size: 90,
-      render: (info: any) => <Button variant="gray2" size="xs" label={t('URL 생성')} />,
+      render: (info: any) => <ShowUrlCopyButton />,
     },
   ];
 
