@@ -2,11 +2,17 @@ import { Button, ButtonComponentProps, useModal } from '@learnway/ui';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-interface ShortUrlCopierProps extends ButtonComponentProps {
-  dummys?: string;
+interface ShortUrlCopyButtonProps extends ButtonComponentProps {
+  url?: string;
+  params?: Record<string, string | number | boolean>;
 }
 
-const Component: React.FC<ShortUrlCopierProps> = ({ label, ...props }) => {
+const Component: React.FC<ShortUrlCopyButtonProps> = ({
+  label,
+  variant = 'gray2',
+  size = 'xs',
+  ...props
+}) => {
   const { t } = useTranslation();
   const { alert } = useModal();
 
@@ -34,12 +40,14 @@ const Component: React.FC<ShortUrlCopierProps> = ({ label, ...props }) => {
   return (
     <Button
       {...props}
-      variant="gray2"
-      size="xs"
-      onClick={handleClick}
+      variant={variant}
+      size={size}
       label={label || t('URL 생성')}
+      preventDefault
+      stopPropagation
+      onClick={handleClick}
     />
   );
 };
 
-export const ShowUrlCopyButton = Component;
+export const ShortUrlCopyButton = Component;

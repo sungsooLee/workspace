@@ -1,18 +1,13 @@
-import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { pageRouteConfig } from '@features/auth/index';
+import { Button, Divider, Tabs, ToggleButtonGroup, useModal } from '@learnway/ui';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
-import { Button, Divider, Switch, Tabs, ToggleButtonGroup, useModal } from '@learnway/ui';
-import { t } from 'i18next';
+import { createFileRoute, useRouter } from '@tanstack/react-router';
 // import { RoundList } from '@features/learning-operate/round';
-import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
-import { useMemo, useState } from 'react';
-import { IcoArrowDown } from '@learnway/icons';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { Enrollment } from '@features/learning-operate/learning-sequence/enrollment-application/ui/enrollment';
+import { StudentsManagement } from '@features/learning-operate/learning-sequence/students-management/students-management';
+import { usePageState } from '@shared/lib';
+import { useMemo } from 'react';
 import { SequenceTab } from '../-common/type';
 import { useSequenceForm } from '../-hook/use-sequence-form';
-import { StudentsManagement } from '@features/learning-operate/learning-sequence/students-management/students-management';
-import { usePageState } from '@shared/index';
 
 export interface EnrollmentApplicationProps {
   courseId?: number; // 과정 ID

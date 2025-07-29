@@ -1,17 +1,16 @@
 import { queryOptions } from '@entities/course/service/course.queries';
 import { CODE_GROUP, getCodeLabel } from '@learnway/hooks';
 import { Button, useModal } from '@learnway/ui';
-import { PreviewLearningWindow } from '@shared/ui/modal/preview-learning-window';
+import { ShortUrlCopyButton } from '@shared/ui';
 import { Link, useLocation } from '@tanstack/react-router';
 import { CoursesQueryParams } from '@types';
 import { t } from 'i18next';
 import { CourseGridColumn } from '../types/type';
 import { CourseFavoriteIcon } from '../ui/course-favorite-icon/course-favorite-icon';
-import { ShowUrlCopyButton } from '@shared/ui';
 
 export const useCourseListGridConfig = () => {
   const { pathname } = useLocation();
-  const { openModal } = useModal();
+  const { alert } = useModal();
 
   const columns: CourseGridColumn[] = [
     // 테넌트
@@ -51,7 +50,6 @@ export const useCourseListGridConfig = () => {
       label: () => t('LABEL.grid.column.favorite'),
       size: 40,
       render: ({ row, getValue }) => {
-        console.log(row);
         return <CourseFavoriteIcon courseId={row?.original?.courseId} isFavorite={getValue()} />;
       },
       meta: {
@@ -139,11 +137,9 @@ export const useCourseListGridConfig = () => {
           className="link"
           label={t('LABEL.grid.column.preview')}
           disabled={!info?.original?.isUsed}
+          stopPropagation
           onClick={() => {
-            openModal({
-              width: 'full',
-              content: <PreviewLearningWindow contentUuid={info?.original?.contentUuid} />,
-            });
+            alert('과정상세 페이지 이동');
           }}
         />
       ),
@@ -153,7 +149,9 @@ export const useCourseListGridConfig = () => {
       name: 'url',
       label: () => t('LABEL.grid.column.url'),
       size: 90,
-      render: (info: any) => <ShowUrlCopyButton />,
+      render: (info: any) => (
+        <ShortUrlCopyButton url={`original url`} params={{ courseId: info?.original?.courseId }} />
+      ),
     },
   ];
 
