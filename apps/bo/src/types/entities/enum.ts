@@ -134,7 +134,7 @@ export enum ProcessingStatus {
  */
 export enum ContentStatusCode {
   TEMPORARY_SAVE = 'TEMPORARY_SAVE',
-  SAVED = 'SAVED',
+  SAVED = 'SAVE',
   DELETED = 'DELETED',
 }
 

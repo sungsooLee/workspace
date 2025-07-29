@@ -4,7 +4,7 @@ import { Button, useModal } from '@learnway/ui';
 
 import { LEARNING_TYPE } from '@learnway/config';
 import { formatFileSize, useFileManager } from '@learnway/hooks';
-import { HtmlVideoFileChangeRes } from '@types';
+import { ContentStatusCode, HtmlVideoFileChangeRes } from '@types';
 import { useChangeHTML5VideoFile } from '@entities/learning-resource';
 import defaultImage from '@assets/images/thumb/img_thumb_default.jpg';
 import { ChannelChoiceModal } from '@shared/ui';
@@ -17,10 +17,10 @@ import styles from './html-detail.module.css';
 type FileInfoProps = {
   contentUuid: string;
   uuid: string;
-  mode: 'draft' | 'complete';
+  status: ContentStatusCode;
 };
 
-const FileInfoComponent = ({ contentUuid, uuid, mode }: FileInfoProps) => {
+const FileInfoComponent = ({ contentUuid, uuid, status }: FileInfoProps) => {
   const [fileUuid, setFileUuid] = useState<string>(uuid);
   const [fileAttrs, setFileAttrs] = useState<{ label: string; value: string }[]>([]);
 
@@ -102,6 +102,7 @@ const FileInfoComponent = ({ contentUuid, uuid, mode }: FileInfoProps) => {
       <ul className={movieStyles.btn_list}>
         <li>
           <Button
+            type="button"
             className={movieStyles.btn_text}
             label={t('원본 다운로드')}
             onClick={handleClickFileDownload}
@@ -109,14 +110,16 @@ const FileInfoComponent = ({ contentUuid, uuid, mode }: FileInfoProps) => {
         </li>
         <li>
           <Button
+            type="button"
             className={movieStyles.btn_text}
             label={t('파일 변경')}
             onClick={handleClickFileChange}
           />
         </li>
-        {mode === 'complete' && (
+        {status === ContentStatusCode.SAVED && (
           <li>
             <Button
+              type="button"
               className={movieStyles.btn_text}
               label={t('미리보기')}
               onClick={openHTMLVideoPreviewPopup}
