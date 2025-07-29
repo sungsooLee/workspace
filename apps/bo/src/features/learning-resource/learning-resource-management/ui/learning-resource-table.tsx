@@ -34,8 +34,9 @@ import {
 } from '@shared/ui';
 import { CMSApiPrefix } from '@learnway/config';
 import { PreviewLearningWindow } from '../../../../shared/ui/modal/preview-learning-window';
-import { getDetailPathByContentType, getDetailRouterState } from '@features/learning-resource';
 import { ContentCreateType, ContentInfo, ContentInformation } from '@types';
+import { getDetailPathByContentType, getDetailRouterState } from '@features/learning-resource';
+import { LearningResourceShareShuttleModal } from '@features/learning-resource/learning-resource-management/ui/learning-resource-share-shuttle-modal';
 
 function LearningResourceTableComponent() {
   const {
@@ -147,7 +148,7 @@ function LearningResourceTableComponent() {
       ],
       [
         {
-          name: 'langCountryCode',
+          name: 'languageCountryCode',
           type: 'dropdown',
           label: t('LABEL.form.label.langCountryCode', '언어'),
           value: '',
@@ -357,9 +358,20 @@ function LearningResourceTableComponent() {
     })();
   }, [listParam]);
 
-  function handleShare() {
+  async function handleShare() {
     console.log('🚀 ~ handleShare ~ params:', params);
-    console.log('🚀 ~ handleShare ~ data:', data);
+    // console.log('🚀 ~ handleShare ~ data:', data);
+    console.log('🚀 ~ handleShare ~ selectedRows:', selectedRows);
+
+    if (selectedRows.length !== 1) {
+      return;
+    }
+
+    await openModal({
+      width: 'xl',
+      height: 'fix',
+      content: <LearningResourceShareShuttleModal data={selectedRows[0]} />,
+    });
   }
 
   function openProgramGuide() {

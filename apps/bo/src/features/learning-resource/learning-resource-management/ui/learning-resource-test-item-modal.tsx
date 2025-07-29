@@ -329,21 +329,23 @@ const LearningResourceTestItemModalComponent = ({
                 </colgroup>
                 <tbody>
                   <tr>
-                    <th scope={'row'}>{'테넌트'}</th>
+                    <th scope="row">{t('테넌트')}</th>
                     <td>{contentInfo.tenantName}</td>
-                    <th scope={'row'}>{'채널'}</th>
+                    <th scope="row">{t('채널')}</th>
                     <td>{contentInfo.channelName}</td>
                   </tr>
                   <tr>
-                    <th scope={'row'}>{'학습자원명'}</th>
+                    <th scope="row">{t('학습자원명')}</th>
                     <td>{contentInfo.contentName}</td>
-                    <th scope={'row'}>{'언어'}</th>
-                    <td>{contentInfo.languageCountryCode}</td>
+                    <th scope="row">{t('언어')}</th>
+                    <td>
+                      {t(`pms.multilingual.LangCountryCode.${contentInfo.languageCountryCode}`)}
+                    </td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <FormSubTitle label={'문항정보'} lineType={'dark'} />
+            <FormSubTitle label={t('문항정보')} lineType="dark" />
             <ContentsRow>
               <FormRow2
                 provider={provider}

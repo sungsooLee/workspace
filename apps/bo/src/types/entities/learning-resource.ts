@@ -248,7 +248,7 @@ export interface ContentInfo {
   coordinatorName: string; //	담당자명[...]
   contentAddInfoType: ContentAddInfoType; //	콘텐츠 추가정보 코드 Enum(ContentAddInfoType) - VIDEO_ADD_INFO(초)|EXAM_ADD_INFO(건수)[...]
   contentAddInfo: string; //	콘텐츠 추가 정보, 콘텐츠 추가정보 코드 별 초/건수 값[...]
-  langCountryCode: string; //	국가 언어 코드[...]
+  languageCountryCode: string; //	국가 언어 코드[...]
   createdBy: string; //	최초등록자아이디[...]
   createdDate: string; //	최초등록타임스탬프[...]
   lastModifiedBy: string; //	최종수정자아이디[...]
