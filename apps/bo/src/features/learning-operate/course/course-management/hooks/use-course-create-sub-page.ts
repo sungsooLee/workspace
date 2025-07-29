@@ -31,7 +31,7 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
   const navigate = useNavigate();
   const { updateFormData, formValues, onSubmit, formState, watch } = form;
   const lastTriggered = useCourseLastTriggered();
-  const { courseId, courseType: aa, activeTab } = useCourseCreateInfo();
+  const { courseId, courseType: initCourseType, activeTab } = useCourseCreateInfo();
   const { setCheckDirtyForm } = useCourseActions();
 
   const courseType = watch('courseType');
@@ -163,12 +163,21 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
   // courseData 변경 시 폼 데이터 갱신
   useEffect(() => {
     if (courseData) {
-      const selectedCourseType = courseType; // 과정 유형 선택 모달에서 선택한 값
       const formData = responseDataToFormData(courseData);
-      formData.courseType = formData.courseType ?? selectedCourseType; // 최초 등록시 과정 유형 선택 모달에서 선택한 값으로 설정
       updateFormData(formData);
+    } else {
+      updateFormData({ courseType: initCourseType });
     }
-  }, [courseData, courseType]);
+
+    // if (courseData) {
+    //   const selectedCourseType = initCourseType; // 과정 유형 선택 모달에서 선택한 값
+    //   const formData = responseDataToFormData(courseData);
+    //   formData.courseType = formData.courseType ?? selectedCourseType; // 최초 등록시 과정 유형 선택 모달에서 선택한 값으로 설정
+    //   updateFormData(formData);
+    // } else {
+    //   updateFormData({ courseType: initCourseType });
+    // }
+  }, [courseData, initCourseType]);
 
   // form state 변경 시 코스 생성 정보 업데이트 - 무한 반복 방지를 위해 제거
   useEffect(() => {
