@@ -367,6 +367,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
           label={t('파일 저장 설정(채널)')}
           format="array"
           value={[]}
+          validation={{ required: true }}
           optionsConfig={{
             codeGroup: CODE_GROUP['pms.company.FileStorageType'],
           }}
@@ -404,6 +405,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
           tooltip={t(
             'PC, 모바일, APP 모두 사용가능하며 과정 등록 시 PC, 모바일 학습 여부를 설정할 수 있습니다.',
           )}
+          validation={{ required: true }}
           value={[]}
           options={[
             {
@@ -429,6 +431,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
           format="array"
           tooltip="테넌트 - 카테고리 관리에서 사용할 카테고리를 선택할 수 있습니다"
           value={[]}
+          validation={{ required: true }}
           options={[
             {
               value: EnUseCategory.isCommonCategory,
@@ -452,6 +455,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
           tooltip={t(
             '테넌트에서 사용할 언어를 선택하고, 선택한 언어에서 다국어 설정을 할 수 있습니다.',
           )}
+          validation={{ required: true }}
           value={[]}
           element={
             <CheckboxGroupFormField showSelectAll={true} cols={6} options={languageTypeList} />
