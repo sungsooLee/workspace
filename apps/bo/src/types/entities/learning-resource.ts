@@ -297,6 +297,7 @@ export interface HtmlVideoMetadataReq extends MediaContentSaveReq {
 
 export interface HtmlVideoMetadataRes extends HtmlVideoMetadataReq {
   processingStatus: ProcessingStatus;
+  contentStatusCode: ContentStatusCode;
   resource?: Resource;
 }
 
