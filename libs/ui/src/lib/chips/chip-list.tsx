@@ -1,14 +1,14 @@
 import React, { ChangeEvent, forwardRef, KeyboardEvent, useState } from 'react';
 
-import { cn, getRandomNumber } from '@learnway/shared';
+import { cn } from '@learnway/shared';
 import { t } from 'i18next';
 import { Button } from '../button/button';
 import { Input } from '../input/input';
 import { Popover } from '../popover/popover';
 import { Chip, ChipComponentProps } from './chip';
 
-import styles from './chip-list.module.css';
 import { undefined } from 'zod';
+import styles from './chip-list.module.css';
 
 export interface ChipListComponentProps extends Omit<ChipComponentProps, 'option' | 'onClick'> {
   options: Array<any>;
@@ -153,7 +153,7 @@ const ChipListComponent = forwardRef<HTMLDivElement, ChipListComponentProps>(
                 valueField={valueField}
                 disabled={disabled || isOptionDisabled?.(option)}
                 invalid={isOptionInvalid?.(option)}
-                hideCloseButton={option.isFixed || isOptionHideCloseButton?.(option)} // option.isFixed=true인 경우, 삭제 불가 (isOptionHideCloseButton 사용되면 fiexed 삭제 예정)
+                hideCloseButton={props.hideCloseButton || option.isFixed || isOptionHideCloseButton?.(option)} // option.isFixed=true인 경우, 삭제 불가 (isOptionHideCloseButton 사용되면 fiexed 삭제 예정)
                 className={cn(styles.btn_chips, size && styles[size], type && styles[type])}
                 onClick={onChipClick && handleChipClick}
                 onDelete={handleChipDelete}
