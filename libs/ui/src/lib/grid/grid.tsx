@@ -56,6 +56,8 @@ const GridComponent = forwardRef(
   ) => {
     const tableContainerRef = useRef<HTMLDivElement>(null);
 
+    console.log('xx : columns 1', columns);
+
     // flattenSubRows->true ? subrows, children의 배열 flat하게 만들고 스타일 주기 위함.
     const flattenData = useMemo(() => {
       if (!flattenSubRows) return data;

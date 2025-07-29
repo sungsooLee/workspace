@@ -39,8 +39,6 @@ export * from './form/thumbnail-public-form-field';
 export * from './layout/breadcrumbs/breadcrumbs';
 export * from './layout/page-container';
 export * from './layout/page-contents';
-export * from './layout/parts/contents-row';
-export * from './layout/parts/wrap-box';
 export * from './layout/section-layout/section-layout';
 export * from './layout/slot/contents-buttons';
 export * from './layout/slot/link-box';

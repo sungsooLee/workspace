@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { DropdownFormField } from '@features/form';
 import {
   CODE_GROUP,
   DynamicFormConfig,
@@ -6,12 +6,11 @@ import {
   useCodeStore,
   useDynamicForm,
 } from '@learnway/hooks';
-import { Button, CheckboxGroupFormField, RadioGroupFormField } from '@learnway/ui';
-import { FormRow } from '@shared/ui';
+import { Button, CheckboxGroupFormField, ContentsRow, RadioGroupFormField } from '@learnway/ui';
+import { ContentsButtons, FormRow, MainContents, PageContainer, SubContents } from '@shared/ui';
+import { createFileRoute } from '@tanstack/react-router';
 import { MovieInfo } from '@widgets/contents/movie-info';
-import { DropdownFormField } from '@features/form';
 import { useEffect, useState } from 'react';
-import { MainContents, PageContainer, ContentsButtons, ContentsRow, SubContents } from '@shared/ui';
 
 export const Route = createFileRoute('/_layout/menu/type2')({
   component: RouteComponent,
