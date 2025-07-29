@@ -1,5 +1,5 @@
-import { memo } from 'react';
 import { ModalBody, ModalContainer, ModalTitle, Popover } from '@learnway/ui';
+import { memo } from 'react';
 import { isMobile } from 'react-device-detect';
 
 import styles from '@learnway/styles/fo/features/layout/popup/education-place-popup.module.css';
@@ -13,7 +13,7 @@ const CopyPopoverComponent = () => {
 };
 
 type Props = {
-  address?: string;
+  address?: Address;
   addressName?: string;
 };
 
@@ -31,7 +31,7 @@ const EducationPlacePopupComponent = ({ address, addressName }: Props) => {
             </dl>
             {/* 퍼블수정 20250708 마크업 수정 */}
             <p className={styles.addr}>
-              {address}
+              {address?.roadAddress}
               <Popover
                 popoverContent={<CopyPopoverComponent />}
                 side="bottom"
@@ -42,7 +42,7 @@ const EducationPlacePopupComponent = ({ address, addressName }: Props) => {
               >
                 <span
                   onClick={() => {
-                    console.log(address);
+                    console.log(address?.roadAddress);
                   }}
                 >
                   주소복사

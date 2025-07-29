@@ -263,7 +263,10 @@ const EducationComponent = ({
                       width: isMobile ? 'm_full' : 'md',
                       content: (
                         <EducationPlacePopup
-                          address={edu.learningSpaceEntity?.address}
+                          address={{
+                            postalCode: edu.learningSpaceEntity?.postalCode,
+                            roadAddress: edu.learningSpaceEntity?.address,
+                          }}
                           addressName={edu.learningSpaceEntity?.learningSpaceName}
                         />
                       ),
