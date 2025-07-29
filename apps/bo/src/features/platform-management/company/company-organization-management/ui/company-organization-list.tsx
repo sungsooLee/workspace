@@ -79,7 +79,7 @@ const CompanyOrganizationListComponent = ({
           },
         },
         {
-          name: 'useYn',
+          name: 'isUsed',
           label: t('회사정보 사용'),
           render: (info: any) => {
             return info.getValue() ? t('사용') : t('미사용');
