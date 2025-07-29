@@ -120,7 +120,7 @@ function HomeComponent() {
 // completionDate: 완료일
 // memo: 비고
 // end: true, false
-export const munu = [
+const munu = [
   {
     screenName: '404',
     pageId: '404',
@@ -467,7 +467,7 @@ export const munu = [
   },
 ];
 
-export const guide = [
+const guide = [
   {
     screenName: '서치박스, 그리드박스',
     pageId: 'sample/search-box-grid-box-sample',

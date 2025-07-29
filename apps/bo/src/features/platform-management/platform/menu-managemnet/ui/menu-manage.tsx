@@ -1,7 +1,18 @@
-import { useEffect, useRef, useState, forwardRef, useImperativeHandle, useCallback } from 'react';
-import { t } from 'i18next';
-import { CellContext, ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { useRouter } from '@tanstack/react-router';
+import {
+  queryKeys,
+  useCheckExistsMenu,
+  useCreateMenu,
+  useDeleteMenu,
+  useMenuManageDetail,
+  useMenuTree,
+  useMoveMenu,
+  useUpdateMenu,
+} from '@entities/menu';
+import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { IcoMinus, IcoPlus } from '@learnway/icons';
+import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
+import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 import {
   Button,
   CheckboxGroupFormField,
@@ -16,33 +27,22 @@ import {
   TreeNode,
   useModal,
 } from '@learnway/ui';
-import { IcoMinus, IcoPlus } from '@learnway/icons';
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { ApiInfoModal } from './api-info-modal';
-import { MenuApiMappingModal } from './menu-api-mapping-modal';
+import { FormRow, SwitchFormField } from '@shared/ui';
+import { useQueryClient } from '@tanstack/react-query';
+import { useRouter } from '@tanstack/react-router';
+import { CellContext, ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { ApiMappingMenuDetail, MenuDetail } from '@types';
+import { t } from 'i18next';
+import { isEqual } from 'lodash';
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { useWatch } from 'react-hook-form';
 import {
   findMenuPathById,
   findNodeByMenuId,
   transformApiDataToTreeData,
 } from '../service/menu.service';
-import {
-  queryKeys,
-  useCheckExistsMenu,
-  useCreateMenu,
-  useDeleteMenu,
-  useMenuManageDetail,
-  useMenuTree,
-  useMoveMenu,
-  useUpdateMenu,
-} from '@entities/menu';
-import { FormRow, SwitchFormField } from '@shared/ui';
-import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
-import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
-import { useWatch } from 'react-hook-form';
-import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
-import { isEqual } from 'lodash';
-import { useQueryClient } from '@tanstack/react-query';
-import { ApiMappingMenuDetail, MenuDetail } from '@types';
+import { ApiInfoModal } from './api-info-modal';
+import { MenuApiMappingModal } from './menu-api-mapping-modal';
 
 const FORM_MODE = {
   NONE: 'NONE',
@@ -142,9 +142,10 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
   const handleOnSubmit = (node: Record<string, any>) => {
     const apiMappingKeys = [] as number[];
     if (node?.apiMappingMenuList) {
-      node.apiMappingMenuList.forEach(({ i }: { i: ApiMappingMenuDetail }) => {
-        if (i.apiId) {
-          apiMappingKeys.push(i.apiId);
+      node.apiMappingMenuList.forEach((i: ApiMappingMenuDetail) => {
+        const { apiId } = i;
+        if (apiId) {
+          apiMappingKeys.push(apiId);
         }
       });
     }
