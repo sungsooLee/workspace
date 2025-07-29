@@ -137,6 +137,10 @@ export interface Course {
    */
   channelUuid?: string;
   /**
+   * 소유 테넌트 id (GNB 에서 선택한 tenantId)
+   */
+  tenantId: number;
+  /**
    * 테넌트 ID 배열
    */
   tenantIds?: Array<number>;
@@ -619,6 +623,9 @@ export interface CourseConfigQueryParams {
  */
 export type CourseConfigOptionType = 'IMPOSSIBLE' | 'OPTIONAL' | 'MANDATORY';
 
+/**
+ * 과정 항목 설정 정보
+ */
 export interface CourseConfig {
   /**
    * 수강신청 설정
@@ -660,6 +667,26 @@ export interface CourseConfig {
    * 사용가능 컨텐츠 설정
    */
   allowedContentTypes: string[];
+  /**
+   * 완성차 테넌트 전용 항목 설정 여부
+   */
+  carTenantCustomOption?: CourseConfigOptionType;
+  /**
+   * 로템 테넌트 전용 항목 설정 여부
+   */
+  rotemTenantCustomOption?: CourseConfigOptionType;
+  /**
+   * 위탁 테넌트 전용 항목 설정 여부
+   */
+  outsourcingTenantCustomOption?: CourseConfigOptionType;
+  /**
+   * 위아 테넌트 전용 항목 설정 여부
+   */
+  wiaTenantCustomOption?: CourseConfigOptionType;
+  /**
+   * 오토에버 테넌트 전용 항목 설정 여부
+   */
+  autoeverTenantCustomOption?: CourseConfigOptionType;
   /**
    * 파일 저장소 유형
    */

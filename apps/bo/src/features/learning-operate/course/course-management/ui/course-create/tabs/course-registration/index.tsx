@@ -10,10 +10,8 @@ import { CourseTabBaseProps } from '../../../../types/type';
 
 const CourseRegistrationComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) => {
   const { t } = useTranslation();
-
   const form = useDynamicForm2();
   const { provider } = form;
-
   const { courseConfig } = useCourseCreateSubPage(form);
 
   return (
