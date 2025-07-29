@@ -1,11 +1,10 @@
-import { formUtils } from '@entities/form-utils';
 import { ALL_OPTION, SelectOption, useSearchBox } from '@learnway/hooks';
+import { formUtils } from '@learnway/shared';
 import { ModalBody, ModalContainer, ModalTitle, useModal } from '@learnway/ui';
+import { MainContents, PageContainer } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { createLazyFileRoute } from '@tanstack/react-router';
-import { MainContents, PageContainer } from '@shared/ui';
 
-import { mapValues } from 'lodash';
 import { useEffect } from 'react';
 import { useWatch } from 'react-hook-form';
 

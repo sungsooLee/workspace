@@ -1,12 +1,12 @@
 import { DynamicFormProvider, useCurrentRoute } from '@learnway/hooks';
 import { Button, Divider, useModal } from '@learnway/ui';
 import { ContentCourseMappingModal } from '@shared/ui';
-import { ContentCreateType, ContentInformation } from '@types';
+import { ContentCreateType, ContentExportRes, ContentInformation } from '@types';
 import { t } from 'i18next';
 import { useCallback, useMemo } from 'react';
 import { TranslationListModal } from './learning-resource-translation-list-modal';
 import { useBlocker, useRouter } from '@tanstack/react-router';
-import { useDeleteContent } from '@entities/learning-resource';
+import { useDeleteContent, usePostContentExport } from '@entities/learning-resource';
 
 interface Props {
   provider: DynamicFormProvider;
@@ -20,6 +20,7 @@ const ContentTopButtonsComponent = ({ provider }: Props) => {
   } = useCurrentRoute();
   const { watch, getValues, formState } = provider;
 
+  const tenantId = watch('tenantId');
   const contentUuid = watch('contentUuid');
   const channelUuid = watch('channelUuid');
   const createType = watch('createType');
@@ -52,14 +53,33 @@ const ContentTopButtonsComponent = ({ provider }: Props) => {
     },
   });
 
+  const { exportContent } = usePostContentExport({
+    onSuccess: (result: ContentExportRes) => {
+      if (result.destContentUuid) {
+        router.navigate({
+          to: '/learning/resource/html-video/view',
+          state: {
+            contentUuid: result.destContentUuid,
+            listParam: {
+              ...listParam,
+              tenantId: result.destTenantId,
+              channelUuid: result.destChannelUuid,
+            },
+          },
+          replace: true,
+        });
+      }
+    },
+  });
+
   const handleCourseMapping = useCallback(() => {
     openModal({
       content: (
-        <ContentCourseMappingModal contentUuid={contentUuid} channelUuid={channelUuid || ''} />
+        <ContentCourseMappingModal contentUuid={contentUuid} channelUuid={data.channelUuid} />
       ),
       width: 'lg',
     });
-  }, [contentUuid, channelUuid]);
+  }, [contentUuid, data]);
 
   const handleTranslationList = useCallback(() => {
     if (!data) return;
@@ -86,6 +106,17 @@ const ContentTopButtonsComponent = ({ provider }: Props) => {
       deleteContent(contentUuid as string);
     }
   }, [isCourseUsed, contentUuid]);
+
+  const handleTranslateAction = useCallback(() => {
+    if (!contentUuid) return;
+
+    exportContent({
+      tenantId,
+      contentUuid,
+      destChannelUuid: data.channelUuid,
+      languageCountryCode: data.languageCountryCode,
+    });
+  }, [tenantId, contentUuid, data]);
 
   return (
     <>
@@ -119,7 +150,12 @@ const ContentTopButtonsComponent = ({ provider }: Props) => {
         {t('삭제')}
       </Button>
       {!isDrafted && (
-        <Button variant="point" size="sm" disabled={createType !== ContentCreateType.MANUAL}>
+        <Button
+          variant="point"
+          size="sm"
+          disabled={createType !== ContentCreateType.MANUAL}
+          onClick={handleTranslateAction}
+        >
           {t('번역')}
         </Button>
       )}

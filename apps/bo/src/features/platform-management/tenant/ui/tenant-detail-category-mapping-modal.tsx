@@ -305,7 +305,7 @@ const TenantDetailCategoryMappingModalComponent: FC<any> = ({ tenantId, onNodeCh
                 <div className={layoutStyles.inner_contents}>
                   <DndTreeView
                     treeId="mapping-common-tree"
-                    type={'DRAG_DROP'}
+                    type={'TREE_TO_TREE'}
                     data={commonCategoryTreeData}
                     // nodeButtons={renderBaseSelectButtons}
                     // selectedNode={selectedNode}

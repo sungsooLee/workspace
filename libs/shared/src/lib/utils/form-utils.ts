@@ -1,5 +1,5 @@
 import { ManipulateType } from 'dayjs';
-import { dateCalculator, getDateToString } from '@learnway/shared';
+import { dateCalculator, getDateToString } from '../date/date-util';
 
 interface NowProps {
   unit?: ManipulateType;

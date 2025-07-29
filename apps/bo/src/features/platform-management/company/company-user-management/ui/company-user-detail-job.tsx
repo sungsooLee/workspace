@@ -17,7 +17,7 @@ import { t } from 'i18next';
 const CompanyUserDetailJobComponent = ({ provider }: { provider: any }) => {
   const jobGroupColumns = [
     {
-      header: '직군',
+      header: t('직군'),
       accessorKey: 'role1',
       size: 200,
       cell: (info: CellContext<any, string>) => (
@@ -25,9 +25,9 @@ const CompanyUserDetailJobComponent = ({ provider }: { provider: any }) => {
           info={info}
           dropdown={{
             options: [
-              { label: '브랜드&베이직', value: 'BRAND&BASIC' },
-              { label: '영업', value: 'SELLING' },
-              { label: '서비스', value: 'SERVICE' },
+              { label: t('브랜드&베이직'), value: 'BRAND&BASIC' },
+              { label: t('영업'), value: 'SELLING' },
+              { label: t('서비스'), value: 'SERVICE' },
             ],
           }}
         />
@@ -38,7 +38,7 @@ const CompanyUserDetailJobComponent = ({ provider }: { provider: any }) => {
       },
     },
     {
-      header: '직무',
+      header: t('직무'),
       accessorKey: 'role2',
       size: 'auto',
       cell: (info: CellContext<any, string>) => (
@@ -46,10 +46,10 @@ const CompanyUserDetailJobComponent = ({ provider }: { provider: any }) => {
           info={info}
           dropdown={{
             options: [
-              { label: '스텝', value: 'STAFF' },
-              { label: '시스템 매니저', value: 'SYSTEM_MANAGER' },
-              { label: '트레이닝 매니저', value: 'TRAINING_MANAGER' },
-              { label: '기타', value: 'ETC' },
+              { label: t('스텝'), value: 'STAFF' },
+              { label: t('시스템 매니저'), value: 'SYSTEM_MANAGER' },
+              { label: t('트레이닝 매니저'), value: 'TRAINING_MANAGER' },
+              { label: t('기타'), value: 'ETC' },
             ],
           }}
         />
@@ -60,7 +60,7 @@ const CompanyUserDetailJobComponent = ({ provider }: { provider: any }) => {
       },
     },
     {
-      header: '정/부',
+      header: t('정/부'),
       accessorKey: 'isMain',
       size: 170,
       cell: (info: CellContext<any, boolean>) => <EditSwitchCell info={info} />,

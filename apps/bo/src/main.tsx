@@ -6,8 +6,8 @@ import { appConfig, queryConfig } from '@learnway/config';
 import '@learnway/config/style/font.css';
 import { usePageRouteState } from '@learnway/hooks';
 
+import { GlobalLoadingIndicator } from '@shared/ui';
 import { AppConfigProvider } from './app/app-config-provider';
-import { GlobalLoadingIndicator } from './components/global-loading-indicator';
 import { routeTree } from './routeTree.gen';
 
 import { registerToastHandler } from '@learnway/shared';

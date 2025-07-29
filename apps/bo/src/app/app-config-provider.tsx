@@ -1,21 +1,20 @@
-import { useEffect, useState, ReactNode } from 'react';
 import { useMount } from 'ahooks';
+import { ReactNode, useEffect, useState } from 'react';
 
 import {
+  initAxios,
   initI18N,
   initZod,
-  initAxios,
-  tokenService,
   // getDefaultLang,
   setConfig,
 } from '@learnway/config';
 import { Spinner } from '@learnway/ui';
 
-import { useFetchI18nResource, useFetchCodeGroups } from '../entities/platform';
+import { useFetchCodeGroups, useFetchI18nResource } from '../entities/platform';
 import { useAuthSignin } from '../features/auth';
 
-import '../styles.css';
 import { useFetchAuthUser } from '@learnway/auth/entities';
+import '../styles.css';
 
 declare global {
   interface Window {
@@ -25,7 +24,6 @@ declare global {
   }
 }
 
-/* eslint-disable-next-line */
 export interface AppConfigProviderProps {
   children?: ReactNode;
 }
