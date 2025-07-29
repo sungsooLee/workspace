@@ -1,8 +1,8 @@
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { Button, ModalContainer, ModalBody, ModalTitle, GridBox } from '@learnway/ui';
 import { useFileManager } from '@learnway/hooks';
-import { UIEvent } from 'react';
+import { Button, GridBox, ModalBody, ModalContainer, ModalTitle } from '@learnway/ui';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
+import { UIEvent } from 'react';
 
 function ProgramGuideModalComponent() {
   const { s3FileDownload } = useFileManager();
@@ -100,13 +100,13 @@ function ProgramGuideModalComponent() {
   const columns = [
     columnHelper.accessor('fileName', {
       cell: (info) => info.getValue(),
-      header: '파일명',
+      header: t('파일명'),
       size: 510,
       enableGrouping: false,
     }),
     columnHelper.accessor('download', {
       cell: (info) => info.getValue(),
-      header: '다운로드',
+      header: t('다운로드'),
       size: 220,
       enableGrouping: false,
     }),
