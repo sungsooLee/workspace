@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from 'react';
-import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 import { useQuery } from '@tanstack/react-query';
 import { createColumnHelper } from '@tanstack/react-table';
 import {
@@ -41,6 +41,8 @@ type QuestionDetailInfoProps = {
 };
 
 const LearningResourceQuestionInfoComponent = ({ data }: QuestionDetailInfoProps) => {
+  const { t } = useTranslation();
+
   const { data: questionInfo } = useQuery(
     learningResourceQueryOptions.getQuestionItem(data.examQuestionUuid),
   );
@@ -69,8 +71,8 @@ const LearningResourceQuestionInfoComponent = ({ data }: QuestionDetailInfoProps
     if (!isEmptyData(questionInfo)) {
       updateFormData({
         ...questionInfo,
-        questionTypeText: t(QUESTION_TYPES[questionInfo?.questionType as EnQuestionType]),
-        questionLevel: t(QUESTION_LEVELS[questionInfo?.questionLevel as EnQuestionLevel]),
+        questionTypeText: QUESTION_TYPES(t)[questionInfo?.questionType as EnQuestionType],
+        questionLevel: QUESTION_LEVELS(t)[questionInfo?.questionLevel as EnQuestionLevel],
       });
     }
   }, [questionInfo]);

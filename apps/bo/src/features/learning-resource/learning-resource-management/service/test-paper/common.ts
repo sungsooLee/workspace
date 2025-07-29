@@ -1,4 +1,4 @@
-import { t } from 'i18next';
+import { TFunction } from 'i18next';
 import dayjs from 'dayjs';
 import {
   ContentAddInfoType,
@@ -75,35 +75,31 @@ export const convertDetailInfoToFormData = (
   });
 };
 
-export const EXAM_TEMPLATE_TYPES = Object.freeze({
-  [ExamTemplateType.EXAM]: '일반 시험지',
-  [ExamTemplateType.OMR]: 'OMR 시험지',
-  [ExamTemplateType.QUIZ]: 'OX 퀴즈',
-});
+export const EXAM_TEMPLATE_TYPES = (t: TFunction<'translation', undefined>) =>
+  Object.freeze({
+    [ExamTemplateType.EXAM]: t('일반 시험지'),
+    [ExamTemplateType.OMR]: t('OMR 시험지'),
+    [ExamTemplateType.QUIZ]: t('OX 퀴즈'),
+  });
 
-export const getExamTemplateTextByType = (type?: ExamTemplateType): string => {
-  if (!type) {
-    return '';
-  }
+export const getExamTemplateTextByType = (
+  type: ExamTemplateType,
+  t: TFunction<'translation', undefined>,
+): string => EXAM_TEMPLATE_TYPES(t)[type];
 
-  return EXAM_TEMPLATE_TYPES[type];
-};
+export const EXAM_GEN_TYPES = (t: TFunction<'translation', undefined>) =>
+  Object.freeze({
+    [ExamQuestionGenType.FIXED]: t('일반형'),
+    [ExamQuestionGenType.RANDOM]: t('랜덤형'),
+  });
 
-export const EXAM_GEN_TYPES = Object.freeze({
-  [ExamQuestionGenType.FIXED]: '일반형',
-  [ExamQuestionGenType.RANDOM]: '랜덤형',
-});
-
-export const getQuestionGenTypeText = (type?: ExamQuestionGenType): string => {
-  if (!type) {
-    return '';
-  }
-
-  return EXAM_GEN_TYPES[type];
-};
+export const getQuestionGenTypeText = (
+  type: ExamQuestionGenType,
+  t: TFunction<'translation', undefined>,
+): string => EXAM_GEN_TYPES(t)[type];
 
 export const getDropdownOptions = (types: object) =>
   Object.entries(types).map(([value, label]) => ({
     value,
-    label: t(label),
+    label,
   }));

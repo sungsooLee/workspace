@@ -1,7 +1,7 @@
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
-import { t } from 'i18next';
-import { cn, isEmptyData } from '@learnway/shared';
+import { useTranslation } from 'react-i18next';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { cn, isEmptyData } from '@learnway/shared';
 import { CMSApiPrefix } from '@learnway/config';
 import {
   Button,
@@ -18,6 +18,7 @@ import {
   EnQuestionLevel,
   EnQuestionType,
   ExamQuestionGenType,
+  ExamTemplateType,
   QuestionItem,
   QuestionItemGridRow,
   TestPaperBasicInfoDetail,
@@ -53,6 +54,8 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
     },
     ref,
   ) => {
+    const { t } = useTranslation();
+
     const { provider: basicInfoProvider, getValues, saveBasicInfo } = basicInfoForm;
 
     const { watch } = basicInfoProvider;
@@ -160,35 +163,35 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
     const questionStates: QuestionStatisticRow[] = useMemo(
       () => [
         {
-          title: QUESTION_TYPES[EnQuestionType.SINGLE],
+          title: QUESTION_TYPES(t)[EnQuestionType.SINGLE],
           hard: questionState[EnQuestionType.SINGLE]?.[EnQuestionLevel.HARD] ?? 0,
           medium: questionState[EnQuestionType.SINGLE]?.[EnQuestionLevel.MEDIUM] ?? 0,
           easy: questionState[EnQuestionType.SINGLE]?.[EnQuestionLevel.EASY] ?? 0,
           type: EnQuestionType.SINGLE,
         },
         {
-          title: QUESTION_TYPES[EnQuestionType.OX],
+          title: QUESTION_TYPES(t)[EnQuestionType.OX],
           hard: questionState[EnQuestionType.OX]?.[EnQuestionLevel.HARD] ?? 0,
           medium: questionState[EnQuestionType.OX]?.[EnQuestionLevel.MEDIUM] ?? 0,
           easy: questionState[EnQuestionType.OX]?.[EnQuestionLevel.EASY] ?? 0,
           type: EnQuestionType.OX,
         },
         {
-          title: QUESTION_TYPES[EnQuestionType.MULTIPLE],
+          title: QUESTION_TYPES(t)[EnQuestionType.MULTIPLE],
           hard: questionState[EnQuestionType.MULTIPLE]?.[EnQuestionLevel.HARD] ?? 0,
           medium: questionState[EnQuestionType.MULTIPLE]?.[EnQuestionLevel.MEDIUM] ?? 0,
           easy: questionState[EnQuestionType.MULTIPLE]?.[EnQuestionLevel.EASY] ?? 0,
           type: EnQuestionType.MULTIPLE,
         },
         {
-          title: QUESTION_TYPES[EnQuestionType.SHORT_ANSWER],
+          title: QUESTION_TYPES(t)[EnQuestionType.SHORT_ANSWER],
           hard: questionState[EnQuestionType.SHORT_ANSWER]?.[EnQuestionLevel.HARD] ?? 0,
           medium: questionState[EnQuestionType.SHORT_ANSWER]?.[EnQuestionLevel.MEDIUM] ?? 0,
           easy: questionState[EnQuestionType.SHORT_ANSWER]?.[EnQuestionLevel.EASY] ?? 0,
           type: EnQuestionType.SHORT_ANSWER,
         },
         {
-          title: QUESTION_TYPES[EnQuestionType.ESSAY],
+          title: QUESTION_TYPES(t)[EnQuestionType.ESSAY],
           hard: questionState[EnQuestionType.ESSAY]?.[EnQuestionLevel.HARD] ?? 0,
           medium: questionState[EnQuestionType.ESSAY]?.[EnQuestionLevel.MEDIUM] ?? 0,
           easy: questionState[EnQuestionType.ESSAY]?.[EnQuestionLevel.EASY] ?? 0,
@@ -308,7 +311,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
           },
         }),
         columnHelper.accessor('questionType', {
-          cell: (info) => QUESTION_TYPES[info.getValue()],
+          cell: (info) => QUESTION_TYPES(t)[info.getValue()],
           header: t('문항유형'),
           enableGrouping: false,
           meta: {
@@ -317,7 +320,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
           },
         }),
         columnHelper.accessor('questionLevel', {
-          cell: (info) => QUESTION_LEVELS[info.getValue()],
+          cell: (info) => QUESTION_LEVELS(t)[info.getValue()],
           header: t('난이도'),
           enableGrouping: false,
           meta: {
@@ -404,7 +407,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
               </tr>
               <tr>
                 <th scope="row">{t('유형')}</th>
-                <td>{getExamTemplateTextByType(data?.examTemplateType)}</td>
+                <td>{getExamTemplateTextByType(data?.examTemplateType as ExamTemplateType, t)}</td>
                 <th scope="row">{t('학습자원명')}</th>
                 <td>{data?.contentName}</td>
               </tr>

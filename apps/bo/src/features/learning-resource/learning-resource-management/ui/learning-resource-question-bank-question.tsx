@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { t } from 'i18next';
 import styles from '@learnway/styles/bo/pages/_layout/learning/test-detail.module.css';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
 
@@ -19,8 +19,10 @@ import {
 } from '../service/learning-resource-question-service';
 
 const LearningResourceQuestionBankQuestionComponent = () => {
+  const { t } = useTranslation();
+
   const { alert, openModal, confirm: openConfirm } = useModal();
-  const [statistic, setStatistic] = useState<QuestionStatisticRow[]>(initStatisticRow);
+  const [statistic, setStatistic] = useState<QuestionStatisticRow[]>(initStatisticRow(t));
 
   const { baseInfo } = useLearningResourceQuestionDetailForm();
 
@@ -28,7 +30,7 @@ const LearningResourceQuestionBankQuestionComponent = () => {
 
   const handleAddQuestionButtonClick = async () => {
     if (baseInfo) {
-      const questionItem = await openModal({
+      await openModal({
         width: 'xl',
         content: <LearningResourceTestItemModal contentInfo={baseInfo} />,
       });
@@ -184,7 +186,7 @@ const LearningResourceQuestionBankQuestionComponent = () => {
   useEffect(() => {
     console.log('questionItemList', questionItemList);
     if (!questionItemList) return;
-    const newStatistic: QuestionStatisticRow[] = [...initStatisticRow];
+    const newStatistic: QuestionStatisticRow[] = [...initStatisticRow(t)];
 
     questionItemList.forEach((item) => {
       updateNewStatistics(item, newStatistic);
