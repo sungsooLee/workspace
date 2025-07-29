@@ -85,18 +85,6 @@ const CompanyOrganizationListComponent = ({
             return info.getValue() ? t('사용') : t('미사용');
           },
         },
-        // {
-        //   name: 'createdBy', label: t('등록자'), render: (info: any) => {
-        //     return (info.row.original.isUseLinkageSystem ? '시스템' : info.row.original.createdBy)
-        //   }
-        // },
-        // {
-        //   name: 'createdDate', label: t('등록일'), render: (info: any) => {
-        //     return info.getValue() === null
-        //       ? ''
-        //       : getDateToString(new Date(info.getValue() as string), DATE_TIME_FORMAT.DATETIME_SEC)
-        //   }
-        // },
         {
           name: 'lastModifiedBy',
           label: t('수정자'),
