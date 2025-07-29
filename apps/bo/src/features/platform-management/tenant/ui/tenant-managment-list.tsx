@@ -130,6 +130,7 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath, roleInfo }) => {
         {
           name: 'companyTenantList',
           label: t('LABEL.grid.column.company'),
+          enableSorting: false,
           render: (info: any) => {
             return (
               info.getValue() &&
@@ -144,6 +145,7 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath, roleInfo }) => {
         {
           name: 'tenantUserList',
           label: t('LABEL.grid.column.tenantManager'),
+          enableSorting: false,
           render: (info: any) => {
             return (
               info.getValue() &&
@@ -164,11 +166,6 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath, roleInfo }) => {
           size: 104,
         },
         {
-          name: 'createdBy',
-          label: t('등록자'),
-          size: 104,
-        },
-        {
           name: 'createdDate',
           label: t('등록일시'),
           render: (info: any) => {
@@ -178,11 +175,6 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath, roleInfo }) => {
             cellAlign: 'center',
           },
           size: 192,
-        },
-        {
-          name: 'lastModifiedBy',
-          label: t('수정자'),
-          size: 104,
         },
         {
           name: 'modifiedDate',
