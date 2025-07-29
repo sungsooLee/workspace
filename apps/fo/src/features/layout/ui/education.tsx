@@ -1,19 +1,17 @@
-import { memo, useState } from 'react';
-import { Button, useModal } from '@learnway/ui';
-import { isMobile } from 'react-device-detect';
 import {
   IcoArrowDown,
+  IcoAvatar02,
   IcoCalendar01,
   IcoLocation,
-  IcoTime,
-  IcoAvatar02,
-  IcoTeacher,
   IcoMoney,
+  IcoTeacher,
+  IcoTime,
 } from '@learnway/icons';
+import { Button, useModal } from '@learnway/ui';
+import { memo, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import { CourseCancelReasonPopup, EducationPlacePopup } from '../../../features/layout';
 
-import bulletStyles from '@learnway/styles/fo/shared/ui/list/bullet.module.css';
-import styles from '@learnway/styles/fo/features/layout/ui/education.module.css';
 import {
   // useCourseEnroll,
   useCourseEnrollCancle,
@@ -21,6 +19,10 @@ import {
   useCourseEnrollWaitingCancle,
   useCourseLike,
 } from '@entities/course';
+import { DATE_TIME_FORMAT, formatISODateString } from '@learnway/shared';
+import styles from '@learnway/styles/fo/features/layout/ui/education.module.css';
+import bulletStyles from '@learnway/styles/fo/shared/ui/list/bullet.module.css';
+import { InstructorType, InstructorTypeLabel } from '@types';
 
 interface EducationProps {
   className?: string;
@@ -164,17 +166,18 @@ const EducationComponent = ({
         <div className={styles.txt_box}>
           <div className={styles.box}>
             <span className={styles.date}>
-              {edu.startDate} ~ {edu.endDate}
+              {formatISODateString(edu.learningStartDateTime, DATE_TIME_FORMAT.DATE)} ~{' '}
+              {formatISODateString(edu.learningEndDateTime, DATE_TIME_FORMAT.DATE)}
             </span>
-            {isMobile && (
+            {/* {isMobile && (
               <>
                 <span className={styles.state}>2차</span>
                 <span className={styles.label}>{edu.state}</span>
               </>
-            )}
+            )} */}
           </div>
           <div className={styles.box}>
-            <p>{edu.name}</p>
+            <p>{edu.courseSequenceName}</p>
           </div>
         </div>
         <div className={styles.btn_box}>
@@ -206,31 +209,31 @@ const EducationComponent = ({
           >
             수강 신청
           </Button>
-          <br />
+          {/* <br /> */}
           {/* 수강취소 - 사유입력 - 신청완료 */}
-          <Button variant="line" size="xl" onClick={handleCourseCancelConfirm}>
+          {/* <Button variant="line" size="xl" onClick={handleCourseCancelConfirm}>
             수강 취소
-          </Button>
-          <br />
+          </Button> */}
+          {/* <br /> */}
           {/* 수강대기 신청 - 잔여석 0자리일때 신청 */}
-          <Button variant="line" size="xl" onClick={handleEnrollWaitingRequest}>
+          {/* <Button variant="line" size="xl" onClick={handleEnrollWaitingRequest}>
             수강대기 신청
-          </Button>
-          <br />
+          </Button> */}
+          {/* <br /> */}
           {/* 수강대기 신청 취소 - 잔여석 0자리일때 신청 */}
-          <Button variant="gray" size="xl" onClick={handleEnrollWaitingCancleRequest}>
+          {/* <Button variant="gray" size="xl" onClick={handleEnrollWaitingCancleRequest}>
             수강대기 취소
-          </Button>
-          <br />
+          </Button> */}
+          {/* <br /> */}
           {/* 수강신청 불가 팝업 - */}
-          <Button variant="line" size="xl">
+          {/* <Button variant="line" size="xl">
             수강 신청 - 불가
-          </Button>
-          <br />
+          </Button> */}
+          {/* <br /> */}
           {/* 학습하기 - 학습중,학습하기,학습완료,이수,미이수 모두 강의실로 이동 / 학습완료 중 복습가능,불가능 따라 스타일은 두개 */}
-          <Button variant="primary" size="xl">
+          {/* <Button variant="primary" size="xl">
             학습중
-          </Button>
+          </Button> */}
         </div>
       </div>
       <div className={styles.info_box}>
@@ -239,25 +242,31 @@ const EducationComponent = ({
             <li>
               <IcoCalendar01 width={20} height={20} stroke="#4d525c" />
               <span>
-                {edu.info.startTime} ~ {edu.info.endTime}
+                {formatISODateString(edu.enrollStartDateTime, DATE_TIME_FORMAT.DATE)} ~
+                {formatISODateString(edu.enrollEndDateTime, DATE_TIME_FORMAT.DATE)}
               </span>
             </li>
             <li>
               <IcoAvatar02 width={20} height={20} viewBox="0 0 24 24" fill="#4d525c" />
               <span>
-                {edu.info.seats.current} / {edu.info.seats.total} (잔여{' '}
-                <em>{edu.info.seats.remaining}</em>)
+                {edu.enrollCount || 0} / {edu.maxEnrollQuota} (잔여{' '}
+                <em>{edu.maxEnrollQuota - edu.enrollCount}</em>)
               </span>
             </li>
             <li>
               <IcoLocation width={20} height={20} stroke="#4d525c" />
-              <span>{edu.info.location}</span>
-              {edu.info.address && (
+              <span>{edu.learningSpaceNameKeyIn}</span>
+              {edu.learningSpaceEntity?.address && (
                 <Button
                   onClick={() =>
                     openModal({
                       width: isMobile ? 'm_full' : 'md',
-                      content: <EducationPlacePopup address={edu.info.address} />,
+                      content: (
+                        <EducationPlacePopup
+                          address={edu.learningSpaceEntity?.address}
+                          addressName={edu.learningSpaceEntity?.learningSpaceName}
+                        />
+                      ),
                     })
                   }
                 >
@@ -267,7 +276,8 @@ const EducationComponent = ({
             </li>
             <li>
               <IcoTime width={20} height={20} fill="#4d525c" />
-              <span>{edu.info.duration}</span>
+              {/* <span>{edu.info.duration}</span> */}
+              <span>00</span>
             </li>
           </ul>
           {/* 추가 list */}
@@ -276,38 +286,62 @@ const EducationComponent = ({
               <ul>
                 <li>
                   <IcoTeacher width={20} height={20} fill="#4d525c" />
-                  <span>{edu.info.teacher}</span>
+                  <span>
+                    {edu.instructorName}{' '}
+                    {InstructorTypeLabel[edu.instructorType as InstructorType] || ''}
+                  </span>
                 </li>
                 <li>
                   <IcoMoney width={20} height={20} fill="#4d525c" />
-                  <span>{edu.info.price}</span>
+                  <span>1인당 {edu.trainingCostPerPerson}원</span>
                 </li>
               </ul>
-              {edu.completionCriteria && (
-                <dl className={styles.full}>
-                  <dt>이수기준</dt>
-                  <dd>
-                    <div className={styles.evaluation_box}>
+              <dl className={styles.full}>
+                <dt>이수기준</dt>
+                <dd>
+                  <div className={styles.evaluation_box}>
+                    <ul>
+                      {/* {edu.completionCriteria.scores.map((i: any) => (
+                        <li>
+                          <span>{i.title}</span>
+                          <strong>{i.attendance}</strong>
+                        </li>
+                      ))} */}
+                      <li>
+                        <span>총점({edu.title}%)</span>
+                        <strong>{edu.attendance}점 이상</strong>
+                      </li>
+                      <li>
+                        <span>진도({edu.progressWeights}%)</span>
+                        <strong>{edu.progressMinPassScore}점 이상</strong>
+                      </li>
+                      <li>
+                        <span>출석({edu.attendanceWeights}%)</span>
+                        <strong>{edu.attendanceMinPassScore}점 이상</strong>
+                      </li>
+                      <li>
+                        <span>평가({edu.examWeights}%)</span>
+                        <strong>{edu.examMinPassScore}점 이상</strong>
+                      </li>
+                      <li>
+                        <span>과제({edu.asgmtWeights}%)</span>
+                        <strong>{edu.asgmtMinPassScore}점 이상</strong>
+                      </li>
+                    </ul>
+                    {/* bulletStyles */}
+                    <div className={`${bulletStyles.start} ${bulletStyles.list}`}>
                       <ul>
-                        {edu.completionCriteria.scores.map((i: any) => (
-                          <li>
-                            <span>{i.title}</span>
-                            <strong>{i.attendance}</strong>
-                          </li>
-                        ))}
+                        <li>항목의 이수기준을 교육기간 내 충족해야 수료 처리됩니다.</li>
+                        <li>
+                          최종평가, 과제평가가 있을 시 반드시 기한 내 제출해야 합니다. (단,
+                          제출기회는 1회)
+                        </li>
+                        <li>과제물은 반드시 문서보안을 해제해 등록해야 평가가 가능합니다.</li>
                       </ul>
-                      {/* bulletStyles */}
-                      <div className={`${bulletStyles.start} ${bulletStyles.list}`}>
-                        <ul>
-                          {edu.completionCriteria.description.map((i: any) => (
-                            <li>{i.text}</li>
-                          ))}
-                        </ul>
-                      </div>
                     </div>
-                  </dd>
-                </dl>
-              )}
+                  </div>
+                </dd>
+              </dl>
             </div>
           ) : (
             ''

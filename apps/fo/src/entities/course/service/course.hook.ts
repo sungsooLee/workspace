@@ -7,29 +7,28 @@ export function useCourseDetail(id: number) {
   return useQuery<any>(queryOptions.detail(id));
 }
 // 과정 차수 불러오기
-export function useCourseSequences(uuid: string) {
-  return useQuery<any>(queryOptions.courseSequences(uuid));
+export function useCourseSequences(uuid: string, reqDto: any) {
+  return useQuery<any>(queryOptions.courseSequences(uuid, reqDto));
 }
 // 과정 차수 단건 불러오기
 export function useCourseSequenceOne(sequenceId: string) {
   return useQuery<any>(queryOptions.courseSequenceOne(sequenceId));
 }
-// 과정 패키지 리스트 불러오기
-export function useCoursePackage(uuid: string) {
-  return useQuery<any>(queryOptions.coursePackage(uuid));
-}
-// 과정 패키지별 아이템 불러오기
-export function useCoursePackageItems(uuid: string, packageId: string) {
-  return useQuery<any>(queryOptions.coursePackageItems(uuid, packageId));
-}
-// 과정 대시보드 불러오기
-export function useCourseDashboardData(uuid: string) {
-  return useQuery<any>(queryOptions.courseDashboardData(uuid));
-}
+// 과정 패키지 리스트 불러오기 - 미정
+// export function useCoursePackage(uuid: string) {
+//   return useQuery<any>(queryOptions.coursePackage(uuid));
+// }
+// 과정 패키지별 아이템 불러오기 - 미정
+// export function useCoursePackageItems(uuid: string, packageId: string) {
+//   return useQuery<any>(queryOptions.coursePackageItems(uuid, packageId));
+// }
+// 과정 대시보드 불러오기 - 미정
+// export function useCourseDashboardData(uuid: string) {
+//   return useQuery<any>(queryOptions.courseDashboardData(uuid));
+// }
 
 // 과정 전체 정보 불러오기
 export function useCourseFullDetail(id: number) {
-  console.log('sssss');
   const { data: courseData } = useCourseDetail(id);
 
   const data = courseData && mapCourseDetail(courseData);

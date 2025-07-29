@@ -8,14 +8,17 @@ import styles from '@learnway/styles/fo/features/layout/ui/arrays.module.css';
 interface ArraysProps {
   arraysData: { items: string[]; initialSelectedItem: number | null };
   className?: string;
+  onChange?: (selectedIndex: number | null) => void;
 }
 
-const ArraysButton = ({ className, arraysData }: ArraysProps) => {
+const ArraysButton = ({ className, arraysData, onChange }: ArraysProps) => {
   const { items, initialSelectedItem } = arraysData;
   const [selectedItem, setSelectedItem] = useState<number | null>(initialSelectedItem);
 
   const handleOnChange = (index: number) => {
-    setSelectedItem((prev) => (prev === index ? null : index));
+    const newIndex = selectedItem === index ? null : index;
+    setSelectedItem(newIndex);
+    onChange?.(newIndex);
   };
 
   useEffect(() => {

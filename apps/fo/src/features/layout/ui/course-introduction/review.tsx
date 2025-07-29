@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { forwardRef, memo } from 'react';
 import { isMobile } from 'react-device-detect';
 import { Carousel } from '@learnway/ui';
 import { IcoStar } from '@learnway/icons';
@@ -6,11 +6,15 @@ import { Review, ReviewRating } from '../../../../features/layout/';
 
 import styles from '@learnway/styles/fo/features/layout/ui/course-introduction/review.module.css';
 
-const CourseReviewCompoment = ({reviews}: {reviews: any}) => {
+interface ReviewProps {
+  reviews: any;
+}
+
+const CourseReviewCompoment = forwardRef<HTMLDivElement, ReviewProps>(({ reviews }, ref) => {
   const itemSwiper = [<Review />, <Review />, <Review />, <Review />];
 
   return (
-    <div className={`${styles.start} ${styles.review_wrap}`}>
+    <div ref={ref} className={`${styles.start} ${styles.review_wrap}`}>
       <div className={styles.tit_box}>
         <h2>
           과정후기<span>1M+</span>
@@ -40,6 +44,6 @@ const CourseReviewCompoment = ({reviews}: {reviews: any}) => {
       </div>
     </div>
   );
-};
+});
 
 export const CourseReview = memo(CourseReviewCompoment);

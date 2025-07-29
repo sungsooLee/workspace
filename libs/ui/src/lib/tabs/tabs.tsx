@@ -82,9 +82,14 @@ export const TabsComponent = forwardRef<
     const [value, setValue] = React.useState(selectedTabKey || items?.at(0)?.key || '');
 
     // 외부에서 selectedTabKey 변경되면 내부 상태도 동기화
+    // useEffect(() => {
+    //   if (selectedTabKey) {
+    //     setValue(selectedTabKey);
+    //   }
+    // }, [selectedTabKey]);
     useEffect(() => {
-      if (selectedTabKey) {
-        setValue(selectedTabKey);
+      if (selectedTabKey && selectedTabKey !== value) {
+        handleTabChangeInternal(selectedTabKey);
       }
     }, [selectedTabKey]);
 

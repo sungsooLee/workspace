@@ -14,13 +14,19 @@ interface CourseFixedButton {
   course?: boolean; // 차수 유/무
   likeCount?: number;
   handleCourseLike?: () => void;
+  heart?: boolean;
 }
 
-const CourseFixedButtonComponent = ({ course, likeCount, handleCourseLike }: CourseFixedButton) => {
+const CourseFixedButtonComponent = ({
+  course,
+  likeCount,
+  handleCourseLike,
+  heart = false,
+}: CourseFixedButton) => {
   const { openModal } = useModal();
 
   // 찜
-  const [heart, setHeart] = useState(false);
+  // const [heart, setHeart] = useState(false);
 
   return (
     <div className={`${styles.start} ${styles.course_button}`}>

@@ -136,34 +136,19 @@ const ddata = {
     {
       id: 'A100020',
       name: '선수 과정 이름 선수 과정 이름 선수 과정 이름 선수 과정 이름',
-      course: [
-        {
-          id: 'A100020',
-          name: '선수 과정 이름 선수 과정 이름 선수 과정 이름 선수 과정 이름',
-          thumbnail: 'https://cdn.learnway.io/course/thumbnail.png',
-        },
-        {
-          id: 'A100021',
-          name: '선수 과정 이름2 선수 과정 이름 선수 과정 이름 선수 과정 이름',
-          thumbnail: 'https://cdn.learnway.io/course/thumbnail.png',
-        },
-      ],
+      thumbnail: 'https://cdn.learnway.io/course/thumbnail.png',
+      courseId: 7,
+      courseName: 'CLASS - A2',
+      courseType: 'CLASS',
+      curriculumId: 2,
+      starRatingAverage: 0,
+      viewCount: 2,
+      likeCount: 1,
     },
     {
       id: 'A100021',
-      name: '선수 과정 이름 선수 과정 이름 선수 과정 이름 선수 과정 이름',
-      course: [
-        {
-          id: 'A100020',
-          name: '선수 과정 이름 선수 과정 이름 선수 과정 이름 선수 과정 이름',
-          thumbnail: 'https://cdn.learnway.io/course/thumbnail.png',
-        },
-        {
-          id: 'A100021',
-          name: '선수 과정 이름2 선수 과정 이름 선수 과정 이름 선수 과정 이름',
-          thumbnail: 'https://cdn.learnway.io/course/thumbnail.png',
-        },
-      ],
+      name: '선수 과정 이름2 선수 과정 이름 선수 과정 이름 선수 과정 이름',
+      thumbnail: 'https://cdn.learnway.io/course/thumbnail.png',
     },
   ],
   // introduction: {
@@ -454,16 +439,6 @@ const ddata = {
 
 export const mapCourseDetail = (courseData: CourseResponse): CourseCompleteDetail => {
   return {
-    // courseName: data.courseName || '',
-    // starRatingAverage: data.starRatingAverage || 0,
-    // starRatings: data.starRatings || [],
-    // likeCount: data.likeCount || 0,
-    // viewCount: data.viewCount || 0,
-    // channelUuid: data.channelUuid || '',
-    // courseType: data.courseType || 'default',
-    // primaryCategoryId: data.primaryCategoryId || 0,
-    // categories: data.categories || [],
-    // trainingLevelType: data.trainingLevelType || 'beginner',
     ...courseData,
     ...ddata,
 
@@ -471,16 +446,13 @@ export const mapCourseDetail = (courseData: CourseResponse): CourseCompleteDetai
       // courseId: 'A100021',
       courseName: courseData.courseName || '',
       courseStar: courseData.starRatingAverage || 0,
-      courseLike: courseData.likeCount || 0,
+      courseLike: courseData.likeCount,
+      courseLikeChk: courseData.isLikeCourse,
       courseViews: courseData.viewCount || 0,
 
       data: {
         type: CourseTypeLabel[courseData.courseType as CourseType] || '',
         category: courseData.categories?.map((c) => c.categoryName).join(' > ') || '',
-        place: '**********',
-        duration: 11111111, // **********
-        outchannel: '*************',
-        lernType: '***************',
         level: TrainingLevelTypeLabel[courseData.trainingLevelType as TrainingLevelType] || '',
         certificate: courseData.isCertificateProvided || false,
         captionLanguage: courseData.language || '',
@@ -496,23 +468,12 @@ export const mapCourseDetail = (courseData: CourseResponse): CourseCompleteDetai
     introduction: {
       aiSummary: courseData.courseSummary || '',
       tags: courseData.tagNames?.map((tag) => ({ value: tag.tagId, label: tag.tagName })) || [],
-      goal: [{ text: '**********1' }, { text: '**********2' }, { text: '**********3' }], // 과정 교육목표
-      contentsSummary: [
-        { text: '*************1' },
-        { text: '*************2' },
-        { text: '*************3' },
-      ], // 과정 내용 요약
       content: {
         title: '과정 소개',
-        content:
-          '<div><p>과정 내용입니다. 과정 내용입니다. 과정 내용입니다.</p></div>과정 소개 내용입니다. 과정 소개 내용입니다. 과정 소개 내용입니다. 과정 소개 내용입니다. 과정 소개 내용입니다.',
+        // content: '<div><p>과정 내용입니다. 과정 내용입니다. 과정 내용입니다.</p></div>과정 소개 내용입니다. 과정 소개 내용입니다. 과정 소개 내용입니다. 과정 소개 내용입니다. 과정 소개 내용입니다.',
+        content: courseData.courseContent || '',
         // image: 'https://cdn.learnway.io/course/introduction.png',
       },
-      recommand: [
-        { text: '*************1' },
-        { text: '*************2' },
-        { text: '*************3' },
-      ], // 학습대상 추천
       curriculum: [
         // 커리큘럼
         {
@@ -552,17 +513,6 @@ export const mapCourseDetail = (courseData: CourseResponse): CourseCompleteDetai
             attendance: `${courseData.asgmtMinPassScore}점 이상`,
           },
         ],
-        description: [
-          {
-            text: '********************* 과정 이수 기준 설명',
-          },
-          {
-            text: '********************* 과정 이수 기준 설명',
-          },
-          {
-            text: '********************* 과정 이수 기준 설명',
-          },
-        ],
       },
       teachers: [
         {
@@ -571,11 +521,7 @@ export const mapCourseDetail = (courseData: CourseResponse): CourseCompleteDetai
           profileImage: '************** .png',
           description: '************ 강사 소개',
           email: courseData.instructorEmail,
-          historys: [
-            { text: courseData.career },
-            { text: courseData.career },
-            { text: courseData.career },
-          ],
+          career: courseData.career || '전) 경력1\n전) 경력2\n현) 경력3',
         },
       ],
       operators: [
@@ -589,16 +535,25 @@ export const mapCourseDetail = (courseData: CourseResponse): CourseCompleteDetai
           phone: courseData.operatorTelNo,
         },
       ],
-      information: [
-        {
-          title: '*********** 과정 정보1',
-          content: '************* 과정 내용1',
-        },
-        {
-          title: '*********** 과정 정보2',
-          content: '************* 과정 내용2',
-        },
-      ],
+      // information: [
+      //   {
+      //     title: '*********** 과정 정보1',
+      //     content: '************* 과정 내용1',
+      //   },
+      //   {
+      //     title: '*********** 과정 정보2',
+      //     content: '************* 과정 내용2',
+      //   },
+      // ],
     },
+    // preRequired: courseData.preqCourseList?.map((item) => ({
+    //   courseId: 7,
+    //   courseName: "CLASS - A2",
+    //   courseType: "CLASS",
+    //   curriculumId: 2,
+    //   starRatingAverage: 0,
+    //   viewCount: 2,
+    //   likeCount: 1
+    // })) || [],
   };
 };
