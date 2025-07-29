@@ -29,25 +29,30 @@ import { getDummyCourse, getDummyCourse2, getDummyCourse4 } from './course-mock-
 export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
   const { showSaveComplete, saveConfirm, showDeleteComplete } = useModal();
   const navigate = useNavigate();
-  const { updateFormData, formValues, onSubmit, formState } = form;
+  const { updateFormData, formValues, onSubmit, formState, watch } = form;
   const lastTriggered = useCourseLastTriggered();
-  const { courseId, courseType, activeTab } = useCourseCreateInfo();
+  const { courseId, courseType: aa, activeTab } = useCourseCreateInfo();
   const { setCheckDirtyForm } = useCourseActions();
+
+  const courseType = watch('courseType');
+  const channelUuid = watch('channelUuid');
 
   // courseData를 먼저 가져와서 channelUuid를 확보
   const { data: courseData } = useFetchCourse(courseId);
 
   // courseConfigParams를 courseData와 courseCreateInfo로부터 생성
-  const courseConfigParams = useMemo(
-    () => ({
-      courseType,
-      channelUuid: courseData?.channelUuid,
-    }),
-    [courseType, courseData?.channelUuid],
-  );
+  // const courseConfigParams = useMemo(
+  //   () => ({
+  //     courseType,
+  //     channelUuid: courseData?.channelUuid,
+  //   }),
+  //   [courseType, courseData?.channelUuid],
+  // );
 
   // 과정 설정 정보(courseConfig) 조회
-  const { data: courseConfig } = useFetchCourseConfig(courseConfigParams);
+  const { data: courseConfig } = useFetchCourseConfig(
+    useMemo(() => ({ courseType, channelUuid }), [courseType, channelUuid]),
+  );
 
   // 과정 생성 뮤테이션
   const { mutate: createCourse } = useCreateCourse({
@@ -136,6 +141,9 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
   const moveCourseDetailPage = () => {
     navigate({
       to: '/learning/course/detail',
+      state: {
+        courseId,
+      },
     });
   };
 

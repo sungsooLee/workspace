@@ -4,6 +4,7 @@ import { ContentsRow, FormSubTitle, RadioGroupFormField, TextareaFormField } fro
 import { ChipListFormField, FormRow2, ThumbnailListFormField } from '@shared/ui';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useCourseCreateSubPage } from '../../../../hooks/use-course-create-sub-page';
 import { CourseTabBaseProps } from '../../../../types/type';
 
 const PublishCourseComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) => {
@@ -11,6 +12,7 @@ const PublishCourseComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, r
 
   const form = useDynamicForm2();
   const { provider, getValues, watch, onFormChange } = form;
+  const { isUpdateMode } = useCourseCreateSubPage(form);
 
   return (
     <div>
