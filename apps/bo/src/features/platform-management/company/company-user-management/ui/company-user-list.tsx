@@ -140,7 +140,7 @@ const CompanyUserListComponent = () => {
     return tenantId;
   };
   _global.getDetailPath = () => {
-    return location.pathname + '/detail';
+    return `${location.pathname}/detail`;
   };
 
   const customExcelButtons = () => {
@@ -297,12 +297,14 @@ const columns = () =>
           `${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.company.CompanyType.${info.row.original.company.companyType}`,
         ),
       enableGrouping: false,
+      enableSorting: false,
       size: 120,
     }),
     columnHelper.accessor('companyEntity.name', {
       header: t('회사'),
       cell: (info) => info.row.original.company.name,
       enableGrouping: false,
+      enableSorting: false,
       size: 120,
     }),
     columnHelper.accessor('deptEntity.deptName', {
@@ -310,6 +312,9 @@ const columns = () =>
       cell: (info) => info.row.original.dept?.deptName,
       enableGrouping: false,
       size: 120,
+      meta: {
+        sortKey: 'deptEntity.deptName',
+      },
     }),
     columnHelper.accessor('positionName', {
       header: t('호칭(직위)'),
@@ -431,6 +436,7 @@ const columns = () =>
       enableGrouping: false,
       meta: {
         cellAlign: 'center',
+        sortKey: 'userEntity.createdDate',
       },
       size: 160,
     }),
