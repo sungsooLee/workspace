@@ -1,30 +1,26 @@
 // IA012 / NLP_BO_PMS_1100_6
+import { DropdownFormField } from '@features/form';
+import { useActiveMenuDepthState, useFetchAuthUser } from '@learnway/auth/entities';
+import { CODE_GROUP, SelectOption, useCodeStore, useDynamicForm2 } from '@learnway/hooks';
+import { IcoAlertCircle } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import {
-  ModalContainer,
-  ModalBody,
-  ModalTitle,
-  Tooltip,
-  ContentsRow,
-  useModal,
-  ModalFooter,
   Button,
+  ContentsRow,
+  Input,
+  ModalBody,
+  ModalContainer,
+  ModalFooter,
+  ModalTitle,
+  RadioGroupFormField,
+  TextareaFormField,
+  Tooltip,
+  useModal,
 } from '@learnway/ui';
+import { ChipListFormField, FormRow2 } from '@shared/ui';
 import { t } from 'i18next';
-import { IcoAlertCircle } from '@learnway/icons';
-import { FormRow } from '@shared/ui';
-import {
-  CODE_GROUP,
-  DynamicFormConfig,
-  SelectOption,
-  useCodeStore,
-  useDynamicForm,
-} from '@learnway/hooks';
-import { useActiveMenuDepthState, useFetchAuthUser } from '@learnway/auth/entities';
-import { useEffect, useState } from 'react';
 import { first, flatten, get, isArray, map, mapValues, pick, values } from 'lodash';
-import { useWatch } from 'react-hook-form';
-import { DropdownFormField } from '@features/form';
+import { useEffect } from 'react';
 
 interface ExcelDownloadReasonModalComponentProps {
   dataCount: number;
@@ -40,87 +36,7 @@ function ExcelDownloadReasonModalCompoment({
   const { activeMenuDepthMenu } = useActiveMenuDepthState((state) => state);
   const { getCode } = useCodeStore();
 
-  const formConfig: DynamicFormConfig = {
-    builders: [
-      {
-        name: 'downloadReasonType',
-        type: 'radio-group',
-        label: t('LABEL.form.label.downloadReasonType', '다운로드 사유'),
-        optionsConfig: {
-          codeGroup: CODE_GROUP['pms.excel.DownloadReasonTypeCode'],
-        },
-        value: '',
-      },
-      {
-        name: 'downloadDetailReasonType',
-        type: 'dropdown',
-        label: t('LABEL.form.label.downloadDetailReasonType', '상세 사유'),
-        optionsConfig: {
-          codeGroup: CODE_GROUP['pms.excel.DownloadAffairsReasonTypeCode'],
-        },
-        value: '',
-      },
-      {
-        name: 'downloadDetailReason',
-        type: 'textarea',
-        label: t('LABEL.form.label.downloadDetailReason', '상세 사유'),
-        value: '',
-        maxLength: 2000,
-        placeholder: t('LABEL.form.placeholder.downloadDetailReason', '세부 사유 명확하게 입력'),
-      },
-      { name: 'userUuid', type: 'hidden', value: user?.uuid },
-      {
-        name: 'employeeNumber',
-        type: 'text',
-        label: t('LABEL.form.label.employeeNumber', '사번'),
-        readOnly: true,
-        value: user?.employeeNumber,
-      },
-      {
-        name: 'name',
-        type: 'text',
-        label: t('LABEL.form.label.name', '이름'),
-        readOnly: true,
-        value: user?.name,
-      },
-      {
-        name: 'menuPath',
-        type: 'text',
-        label: t('LABEL.form.label.menuPath', '메뉴 경로'),
-        readOnly: true,
-        value: activeMenuDepthMenu?.map((menu) => menu.menuName).join(' > '),
-      },
-      {
-        name: 'requestParameter',
-        type: 'chip-list',
-        label: t('LABEL.form.label.requestParameter', '검색 조건'),
-        readOnly: true,
-        value: [],
-        chipListConfig: {
-          hideCloseButton: true,
-        },
-      },
-      {
-        name: 'dataCount',
-        type: 'number',
-        label: t('LABEL.form.label.dataCount', '조회 건'),
-        readOnly: true,
-        value: dataCount,
-        suffixText: t('LABEL.form.label.countUnit', '건'),
-      },
-    ],
-    validator: {
-      downloadReasonType: true,
-      downloadDetailReasonType: true,
-      downloadDetailReason: {
-        required: (values) => values.downloadReasonType === 'ETC',
-      },
-    },
-  };
-  const { provider, setValue, onSubmit } = useDynamicForm(formConfig);
-  const [downloadDetailReasonTypeOptions, setDownloadDetailReasonTypeOptions] = useState<
-    SelectOption[]
-  >([]);
+  const { provider, setValue, onSubmit, watch } = useDynamicForm2();
 
   useEffect(() => {
     (async () => {
@@ -129,23 +45,23 @@ function ExcelDownloadReasonModalCompoment({
     })();
   }, []);
 
-  const downloadReasonType = useWatch({ control: provider.control, name: 'downloadReasonType' });
+  const downloadReasonType = watch('downloadReasonType');
+
+  const DOWNLOAD_DETAIL_REASON_TYPE_CODE_GROUP: Record<string, string> = {
+    AFFAIRS: CODE_GROUP['pms.excel.DownloadAffairsReasonTypeCode'],
+    LEGAL_REQUEST: CODE_GROUP['pms.excel.DownloadLegalRequestReasonTypeCode'],
+    OUTSIDE_SUBMIT: CODE_GROUP['pms.excel.DownloadOutsideSubmitReasonTypeCode'],
+    RND: CODE_GROUP['pms.excel.DownloadRndReasonTypeCode'],
+    ETC: CODE_GROUP['pms.excel.DownloadEtcReasonTypeCode'],
+  };
+
   useEffect(() => {
     if (!downloadReasonType) return;
-
-    const DOWNLOAD_DETAIL_REASON_TYPE_CODE_GROUP: Record<string, string> = {
-      AFFAIRS: CODE_GROUP['pms.excel.DownloadAffairsReasonTypeCode'],
-      LEGAL_REQUEST: CODE_GROUP['pms.excel.DownloadLegalRequestReasonTypeCode'],
-      OUTSIDE_SUBMIT: CODE_GROUP['pms.excel.DownloadOutsideSubmitReasonTypeCode'],
-      RND: CODE_GROUP['pms.excel.DownloadRndReasonTypeCode'],
-      ETC: CODE_GROUP['pms.excel.DownloadEtcReasonTypeCode'],
-    };
 
     (async () => {
       const downloadDetailReasonTypeOption = await getCode(
         DOWNLOAD_DETAIL_REASON_TYPE_CODE_GROUP[downloadReasonType],
       );
-      setDownloadDetailReasonTypeOptions(downloadDetailReasonTypeOption);
       setValue('downloadDetailReasonType', get(first(downloadDetailReasonTypeOption), 'value'));
       setValue('downloadDetailReason', '');
     })();
@@ -153,6 +69,7 @@ function ExcelDownloadReasonModalCompoment({
 
   useEffect(() => {
     setValue('requestParameter', flatten(values(paramLabels)));
+    console.log('🚀 ~ ExcelDownloadReasonModalCompoment ~ paramLabels:', paramLabels);
   }, [paramLabels]);
 
   useEffect(() => {
@@ -204,34 +121,96 @@ function ExcelDownloadReasonModalCompoment({
         </ModalTitle>
         <ModalBody>
           <ContentsRow>
-            <FormRow provider={provider} name="downloadReasonType" />
+            <FormRow2
+              provider={provider}
+              name="downloadReasonType"
+              label={t('LABEL.form.label.downloadReasonType', '다운로드 사유')}
+              element={
+                <RadioGroupFormField
+                  optionsConfig={{
+                    codeGroup: CODE_GROUP['pms.excel.DownloadReasonTypeCode'],
+                  }}
+                />
+              }
+            />
           </ContentsRow>
           <div className={cn(downloadReasonType === 'ETC' && 'hidden')}>
             <ContentsRow>
-              <FormRow
+              <FormRow2
+                key={downloadReasonType}
                 provider={provider}
                 name="downloadDetailReasonType"
-                element={<DropdownFormField options={downloadDetailReasonTypeOptions} />}
+                label={t('LABEL.form.label.downloadDetailReasonType', '상세 사유')}
+                optionsConfig={{
+                  codeGroup: DOWNLOAD_DETAIL_REASON_TYPE_CODE_GROUP[downloadReasonType],
+                }}
+                element={<DropdownFormField />}
               />
             </ContentsRow>
           </div>
           <div className={cn(downloadReasonType !== 'ETC' && 'hidden')}>
             <ContentsRow>
-              <FormRow provider={provider} name="downloadDetailReason" />
+              <FormRow2
+                provider={provider}
+                name="downloadDetailReason"
+                label={t('LABEL.form.label.downloadDetailReason', '상세 사유')}
+                value=""
+                maxLength={2000}
+                placeholder={t(
+                  'LABEL.form.placeholder.downloadDetailReason',
+                  '세부 사유 명확하게 입력',
+                )}
+                element={<TextareaFormField />}
+              />
             </ContentsRow>
           </div>
           <ContentsRow>
-            <FormRow provider={provider} name="employeeNumber" />
-            <FormRow provider={provider} name="name" />
+            <FormRow2
+              provider={provider}
+              name="employeeNumber"
+              label={t('LABEL.form.label.employeeNumber', '사번')}
+              readOnly
+              value={user?.employeeNumber}
+              element={<Input />}
+            />
+            <FormRow2
+              provider={provider}
+              name="name"
+              label={t('LABEL.form.label.name', '이름')}
+              readOnly
+              value={user?.name}
+              element={<Input />}
+            />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider} name="menuPath" />
+            <FormRow2
+              provider={provider}
+              name="menuPath"
+              label={t('LABEL.form.label.menuPath', '메뉴 경로')}
+              readOnly
+              value={activeMenuDepthMenu?.map((menu) => menu.menuName).join(' > ')}
+              element={<Input />}
+            />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider} name="requestParameter" />
+            <FormRow2
+              provider={provider}
+              name="requestParameter"
+              label={t('LABEL.form.label.requestParameter', '검색 조건')}
+              readOnly
+              value={[]}
+              element={<ChipListFormField chipListConfig={{ hideCloseButton: true }} />}
+            />
           </ContentsRow>
           <ContentsRow>
-            <FormRow provider={provider} name="dataCount" />
+            <FormRow2
+              provider={provider}
+              name="dataCount"
+              label={t('LABEL.form.label.dataCount', '조회 건')}
+              readOnly
+              value={dataCount}
+              element={<Input type="number" suffixText={t('LABEL.form.label.countUnit', '건')} />}
+            />
           </ContentsRow>
         </ModalBody>
         <ModalFooter>
