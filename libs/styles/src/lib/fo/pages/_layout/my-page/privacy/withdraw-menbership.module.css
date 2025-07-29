@@ -1,6 +1,6 @@
 .start {
   &.secession {
-    @apply mx-auto w-[670px] px-[60px] pb-[40px] pt-[60px];
+    @apply mx-auto w-[670px] px-[60px] pb-[40px] pt-[40px];
     .box {
       .confirm {
         @apply mt-0;
