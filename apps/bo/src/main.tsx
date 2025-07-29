@@ -26,6 +26,13 @@ export const router = createRouter({
     setPageRouteState: undefined,
     queryClient: undefined,
   },
+  defaultErrorComponent: ({ error }) => {
+    // Dynamic import 에러 처리
+    if (error.message.includes('Loading chunk')) {
+      window.location.reload();
+    }
+    return <div>Error: {error.message}</div>;
+  },
 });
 
 declare module '@tanstack/react-router' {

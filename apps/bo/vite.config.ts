@@ -2,10 +2,11 @@
 import { defineConfig, loadEnv } from 'vite';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import { nxCopyAssetsPlugin } from '@nx/vite/plugins/nx-copy-assets.plugin';
-import { TanStackRouterVite } from '@tanstack/router-plugin/vite';
+import { tanstackRouter } from '@tanstack/router-plugin/vite';
 import svgr from '@svgr/rollup';
 import path from 'path';
 import viteReact from '@vitejs/plugin-react';
+import { visualizer } from 'rollup-plugin-visualizer';
 
 // vitest automatically sets NODE_ENV to 'test' when running tests
 const isTest = process.env.NODE_ENV === 'test';
@@ -14,6 +15,7 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   const basePath = env.VITE_BO_BASE_PATH || '';
   const isProduction = mode === 'production';
+  const isDevelopment = mode === 'development';
 
   return {
     root: __dirname,
@@ -50,8 +52,8 @@ export default defineConfig(({ mode }) => {
       nxViteTsPaths(),
       nxCopyAssetsPlugin(['*.md']),
       !isTest &&
-        TanStackRouterVite({
-          autoCodeSplitting: false,
+        tanstackRouter({
+          autoCodeSplitting: true,
           generatedRouteTree: './src/routeTree.gen.ts',
         }),
       viteReact(),
@@ -89,6 +91,7 @@ export default defineConfig(({ mode }) => {
       minify: 'esbuild',
       target: 'es2020',
       cssCodeSplit: true,
+      chunkSizeWarningLimit: 1000,
       rollupOptions: {
         output: {
           entryFileNames: 'assets/[name].[hash].js',
@@ -106,14 +109,22 @@ export default defineConfig(({ mode }) => {
             return `assets/[name].[hash].[ext]`;
           },
           manualChunks: {
-            vendor: ['react', 'react-dom', 'react-router-dom'],
+            vendor: ['react', 'react-dom'],
+            router: ['react-router-dom', '@tanstack/react-router'],
             ui: [
               '@radix-ui/react-dialog',
               '@radix-ui/react-dropdown-menu',
               '@radix-ui/react-select',
+              '@radix-ui/react-checkbox',
+              '@radix-ui/react-popover',
+              '@radix-ui/react-tabs',
+              '@radix-ui/react-toast',
             ],
-            tanstack: ['@tanstack/react-query', '@tanstack/react-router', '@tanstack/react-table'],
-            utils: ['lodash', 'lodash-es', 'dayjs', 'date-fns'],
+            query: ['@tanstack/react-query'],
+            table: ['@tanstack/react-table'],
+            utils: ['lodash-es', 'dayjs', 'date-fns'],
+            icons: ['@radix-ui/react-icons', 'lucide-react'],
+            form: ['react-hook-form', '@hookform/resolvers', 'zod'],
           },
         },
         external: [],
