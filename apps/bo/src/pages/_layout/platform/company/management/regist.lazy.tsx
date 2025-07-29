@@ -28,13 +28,15 @@ function RouteComponent() {
             variant="point"
             size="sm"
             onClick={() => router.navigate({ to: '/platform/company/management' })}
-          >
-            {t('LABEL.button.list')}
-          </Button>
+            label={t('LABEL.button.list')}
+          />
         </LinkBox>
-        <Button variant="primary" size="sm" onClick={handleSaveClick}>
-          {t('LABEL.button.save')}
-        </Button>
+        <Button
+          variant="primary"
+          size="sm"
+          onClick={handleSaveClick}
+          label={t('LABEL.button.save')}
+        />
       </ContentsButtons>
       <MainContents>
         <CompanyDetail ref={formRef} mode={EnFormMode.ADD} />

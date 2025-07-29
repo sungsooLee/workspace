@@ -44,16 +44,11 @@ function RouteComponent() {
             variant="point"
             size="sm"
             onClick={() => router.navigate({ to: '/tenant/channel/management' })}
-          >
-            {t('LABEL.button.list')}
-          </Button>
+            label={t('LABEL.button.list')}
+          />
         </LinkBox>
-        <Button variant="point" size="sm" onClick={handleOnReset}>
-          {t('LABEL.button.reset')}
-        </Button>
-        <Button variant="primary" size="sm" onClick={handleOnSave}>
-          {t('LABEL.button.save')}
-        </Button>
+        <Button variant="point" size="sm" onClick={handleOnReset} label={t('LABEL.button.reset')} />
+        <Button variant="primary" size="sm" onClick={handleOnSave} label={t('LABEL.button.save')} />
       </ContentsButtons>
       <MainContents>
         <ChannelDetail
