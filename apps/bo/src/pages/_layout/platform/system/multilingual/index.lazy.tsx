@@ -214,8 +214,8 @@ function RouteComponent() {
         url={`${PMSApiPrefix()}/multilingual/exportExcel`}
         params={{ ...getValues(), targetLocale: getValues('targetLocale').toLowerCase() }}
         paramLabels={valuesWithLabel}
-        disabled={!data || (data && data.content && data.content.length === 0)}
-        dataCount={data?.content?.length}
+        dataCount={data?.totalElements}
+        disabled={!data?.totalElements}
         onBeforeDownload={async () => {
           const keyTypeCode = getValues('keyTypeCode');
           const targetLocale = getValues('targetLocale');
