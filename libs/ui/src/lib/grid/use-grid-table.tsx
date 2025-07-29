@@ -263,6 +263,14 @@ export function useGridTable<T extends object>(
       finalColumns = [createExpandColumn(), ...finalColumns];
     }
 
+    // column 기본값 정의
+    finalColumns = finalColumns.map((d) => {
+      return {
+        ...d,
+        sortDescFirst: false, // 정렬 순서 고정 (asc, desc, null)
+      };
+    });
+
     return finalColumns;
   }, [
     columns,
