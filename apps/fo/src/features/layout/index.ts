@@ -67,5 +67,4 @@ export * from './ui/search/recommended-search';
 export * from './ui/search/search-popover';
 export * from './ui/user-avatar/user-avatar';
 
-export * from './ui/history/history-contents';
 export * from './ui/history/history';

@@ -5,8 +5,8 @@
 import type { com_ever_edu_lms_course_dto_res_CourseUserResDto } from './com_ever_edu_lms_course_dto_res_CourseUserResDto';
 export type com_ever_edu_lms_sequence_dto_res_SequenceResDto$onUser = {
     courseSequenceUuid?: string;
-    enrollmentStartDate?: string;
-    enrollmentEndDate?: string;
+    enrollStartDate?: string;
+    enrollEndDate?: string;
     courseSequenceStartDate?: string;
     courseSequenceEndDate?: string;
     isDeleted?: boolean;

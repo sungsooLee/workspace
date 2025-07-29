@@ -249,6 +249,7 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4 = {
      */
     tenantCustoms?: Array<com_ever_edu_lms_course_dto_TenantCustomDto_WizardStep4>;
     learningSpaceNameValid?: boolean;
+    instructorValid?: boolean;
 };
 export namespace com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep4 {
     /**

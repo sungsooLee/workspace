@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, useCallback } from 'react';
+import { FC, useState, useEffect, useCallback, useMemo } from 'react';
 import { useWatch } from 'react-hook-form';
 import { useRouter, useRouterState, Link } from '@tanstack/react-router';
 import { createColumnHelper, ColumnDef } from '@tanstack/react-table';
@@ -19,13 +19,6 @@ import { queryOptions as companysQueryOptions } from '@entities/companies/servic
 import { useCreation } from 'ahooks';
 import { TenantByRoleDropdownFormField } from '@shared/ui';
 
-const _global = {
-  tenantIdValidator: false,
-  linkClick: (tenantId: number, tenantName: string) => {
-    return;
-  },
-};
-
 /**
  * 화면번호 : NLP_BO_TMS_1000
  * @param param0
@@ -37,87 +30,162 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath, roleInfo }) => {
 
   const { data: loginUser } = useFetchAuthUser();
   const queryClient = useQueryClient();
-
-  _global.tenantIdValidator = !roleInfo;
-
-  _global.linkClick = (tenantId: number, tenantName: string) => {
+  const isPlatformManager = roleInfo === 'PLATFORM';
+  const linkClick = (tenantId: number, tenantName: string) => {
     router.navigate({
       to: `${rootPath}/tenant/management/detail`,
       state: {
         tenantId,
         tenantName,
         listParam: getValues(),
-        roleInfo
+        roleInfo,
       },
     });
   };
+  const searchConfig: SearchBoxConfig = useMemo(
+    () => ({
+      builders: [
+        [
+          {
+            name: 'tenantId',
+            type: 'custom',
+            label: t('LABEL.form.label.tenant', '테넌트'),
+            value: '',
+            format: 'number',
+            element: <TenantByRoleDropdownFormField />, // presetOptionLabel: t('LABEL.form.label.select', '선택'),
+          },
+          {
+            name: 'companyCode',
+            type: 'dropdown',
+            label: t('LABEL.grid.column.company'),
+            presetOptionLabel: t('LABEL.form.label.select'),
+            value: '',
+            options: [],
+          },
+          {
+            name: 'tenantManagerName',
+            type: 'text',
+            label: t('LABEL.grid.column.tenantManager'),
+            value: '',
+          },
+        ],
+        [
+          {
+            name: 'companyManagerName',
+            type: 'text',
+            label: t('LABEL.grid.column.companyManager'),
+            value: '',
+          },
+          {
+            name: 'isUsed',
+            type: 'dropdown',
+            label: t('LABEL.form.label.useYn'),
+            value: '',
+            options: [
+              { value: '', label: t('LABEL.all') },
+              { value: 'true', label: t('LABEL.common.enable') },
+              { value: 'false', label: t('LABEL.common.disable') },
+            ],
+          },
+        ],
+      ],
+      validator: {
+        tenantId: {
+          required: !isPlatformManager,
+          conditions: [
+            {
+              fn: (values: any) => {
+                if (isPlatformManager) return false;
+                console.log(values);
+                return !values.tenantId;
+              },
+              message: t('{{type}}를 선택해주세요.', { type: t('테넌트') }),
+            },
+          ],
+        },
+      },
+    }),
+    [roleInfo],
+  );
 
   const gridInitConfig = useCreation(
     () => ({
       query: tenantQueryOptions.list,
       columns: [
         {
-          name:  'tenantName', label: t('LABEL.grid.column.tenantName'), render: (info: any) => {
+          name: 'tenantName',
+          label: t('LABEL.grid.column.tenantName'),
+          render: (info: any) => {
             return (
               <Button
                 className="link"
-                onClick={() =>
-                  _global.linkClick(info.row.original.tenantId, info.row.original.tenantName)
-                }
+                onClick={() => linkClick(info.row.original.tenantId, info.row.original.tenantName)}
               >
                 {info.getValue()}
               </Button>
             );
           },
-          size: 192
+          size: 192,
         },
         {
-          name: 'companyTenantList', label: t('LABEL.grid.column.company'), render: (info: any) => {
-            return info.getValue() &&
-            info
-              .getValue()
-              .map((item: any) => item.companyName)
-              .join(',')
+          name: 'companyTenantList',
+          label: t('LABEL.grid.column.company'),
+          enableSorting: false,
+          render: (info: any) => {
+            return (
+              info.getValue() &&
+              info
+                .getValue()
+                .map((item: any) => item.companyName)
+                .join(',')
+            );
           },
-          size: 200
+          size: 200,
         },
         {
-          name: 'tenantUserList', label: t('LABEL.grid.column.tenantManager'), render: (info: any) => {
-            return info.getValue() &&
-            info
-              .getValue()
-              .map((item: any) => item.userName)
-              .join(',')
+          name: 'tenantUserList',
+          label: t('LABEL.grid.column.tenantManager'),
+          enableSorting: false,
+          render: (info: any) => {
+            return (
+              info.getValue() &&
+              info
+                .getValue()
+                .map((item: any) => item.userName)
+                .join(',')
+            );
           },
-          size: 120
+          size: 120,
         },
         {
-          name: 'isUsed', label: t('사용여부'), render: (info: any) => {
+          name: 'isUsed',
+          label: t('사용여부'),
+          render: (info: any) => {
             return info.row.original.isUsed ? t('LABEL.common.enable') : t('미사용');
           },
-          size: 104
+          size: 104,
         },
         {
-          name: 'createdBy', label: t('등록자'), size: 104
-        },
-        {
-          name: 'createdDate', label: t('등록일시'), render: (info: any) => {
+          name: 'createdDate',
+          label: t('등록일시'),
+          render: (info: any) => {
             return getDateToString(new Date(info.getValue()), DATE_TIME_FORMAT.DATETIME_SEC);
-          }, meta: {
+          },
+          meta: {
             cellAlign: 'center',
           },
-          size: 192
+          size: 192,
         },
         {
-          name: 'lastModifiedBy', label: t('수정자'), size: 104
-        },
-        {
-          name: 'modifiedDate', label: t('수정일시'), render: (info: any) => {
+          name: 'modifiedDate',
+          label: t('수정일시'),
+          render: (info: any) => {
             return getDateToString(new Date(info.getValue()), DATE_TIME_FORMAT.DATETIME_SEC);
-          }, meta: {
+          },
+          meta: {
             cellAlign: 'center',
           },
-          size: 192
+          size: 192,
         },
       ],
       data: [],
@@ -125,7 +193,7 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath, roleInfo }) => {
         page: 0,
         size: 20,
         sort: [],
-      }
+      },
     }),
     [],
   );
@@ -137,7 +205,7 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath, roleInfo }) => {
     onFormValid,
     setOptions,
     setValue,
-  } = useSearchBox(searchConfig());
+  } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch } = useGridBox(gridInitConfig, getValues);
 
   const tenantIdWatch = useWatch({ control: searchProvider.control, name: 'tenantId' });
@@ -201,175 +269,3 @@ const TenantManagmentListComponent: FC<any> = ({ rootPath, roleInfo }) => {
 };
 
 export const TenantManagmentList = TenantManagmentListComponent;
-
-const searchConfig= (): SearchBoxConfig =>({
-  builders: [
-    [
-      // {
-      //   name: 'tenantId',
-      //   type: 'dropdown',
-      //   label: t('LABEL.form.label.tenant'),
-      //   format: 'object',
-      //   value: '',
-      //   options: [],
-      //   isClearable: true,
-      //   isSearchable: true,
-      //   placeholder: t('LABEL.grid.header.inputSelect'),
-      // },
-      {
-        name: 'tenantId',
-        type: 'custom',
-        label: t('LABEL.form.label.tenant', '테넌트'),
-        value: '',
-        format: 'number',
-        element: <TenantByRoleDropdownFormField />, // presetOptionLabel: t('LABEL.form.label.select', '선택'),
-        // optionsConfig: {
-        //   codeGroup: CODE_GROUP['manual.bo.my.tenant.tenantId'],
-        // },
-      },
-      // {
-      //   name: 'companyName',
-      //   type: 'dropdown',
-      //   label: t('회사명'),
-      //   value: '',
-      //   optionsConfig: {
-      //     codeGroup: CODE_GROUP['manual.company.companyCode'],
-      //   },
-      {
-        name: 'companyCode',
-        type: 'dropdown',
-        label: t('LABEL.grid.column.company'),
-        presetOptionLabel: t('LABEL.form.label.select'),
-        value: '',
-        options: [],
-      },
-      {
-        name: 'tenantManagerName',
-        type: 'text',
-        label: t('LABEL.grid.column.tenantManager'),
-        value: '',
-      },
-    ],
-    [
-      {
-        name: 'companyManagerName',
-        type: 'text',
-        label: t('LABEL.grid.column.companyManager'),
-        value: '',
-      },
-      {
-        name: 'isUsed',
-        type: 'dropdown',
-        label: t('LABEL.form.label.useYn'),
-        value: '',
-        options: [
-          { value: '', label: t('LABEL.all') },
-          { value: 'true', label: t('LABEL.common.enable') },
-          { value: 'false', label: t('LABEL.common.disable') },
-        ],
-      },
-    ],
-  ],
-  validator: {
-    tenantId: {
-      required: false,
-      conditions: [
-        {
-          fn: (values: any) => {
-            if (!_global.tenantIdValidator) return false;
-            console.log(values);
-            return !values.tenantId;
-          },
-          message: t('{{type}}를 선택해주세요.', { type: t('테넌트') }),
-        },
-      ],
-    },
-  },
-});
-
-// const gridConfig: useGridBoxConfig = {
-//   query: tenantQueryOptions.list,
-//   columns: [],
-//   data: [],
-//
-//   pagination: {
-//     pageSize: 20,
-//     pageIndex: 0,
-//     totalRows: 0,
-//   },
-// };
-//
-// const columnHelper = createColumnHelper<Tenant>();
-// const columns = [
-//   columnHelper.accessor('tenantName', {
-//     cell: (info) => {
-//       return (
-//         <Button
-//           className="link"
-//           onClick={() =>
-//             _global.linkClick(info.row.original.tenantId, info.row.original.tenantName)
-//           }
-//         >
-//           {info.getValue()}
-//         </Button>
-//       );
-//     },
-//     header: t('LABEL.grid.column.tenantName'),
-//     size: 192,
-//   }),
-//   columnHelper.accessor('companyTenantList', {
-//     cell: (info) =>
-//       info.getValue() &&
-//       info
-//         .getValue()
-//         .map((item) => item.companyName)
-//         .join(','),
-//     header: t('LABEL.grid.column.company'),
-//     size: 200,
-//   }),
-//   columnHelper.accessor('tenantUserList', {
-//     cell: (info) =>
-//       info.getValue() &&
-//       info
-//         .getValue()
-//         .map((item) => item.userName)
-//         .join(','),
-//     header: t('LABEL.grid.column.tenantManager'),
-//     size: 120,
-//   }),
-//   columnHelper.accessor('isUsed', {
-//     cell: (info) => {
-//       return info.row.original.isUsed ? t('LABEL.common.enable') : t('미사용');
-//     },
-//     header: t('사용여부'),
-//     size: 104,
-//   }),
-//   columnHelper.accessor('createdBy', {
-//     header: t('등록자'),
-//     size: 104,
-//   }),
-//   columnHelper.accessor('createdDate', {
-//     cell: (info) => {
-//       return getDateToString(new Date(info.getValue()), DATE_TIME_FORMAT.DATETIME_SEC);
-//     },
-//     header: t('등록일시'),
-//     size: 192,
-//     meta: {
-//       cellAlign: 'center',
-//     },
-//   }),
-//   columnHelper.accessor('lastModifiedBy', {
-//     header: t('수정자'),
-//     size: 104,
-//   }),
-//   columnHelper.accessor('modifiedDate', {
-//     cell: (info) => {
-//       return getDateToString(new Date(info.getValue()), DATE_TIME_FORMAT.DATETIME_SEC);
-//     },
-//     header: t('수정일시'),
-//     size: 192,
-//     meta: {
-//       cellAlign: 'center',
-//     },
-//   }),
-// ] as ColumnDef<any, unknown>[];

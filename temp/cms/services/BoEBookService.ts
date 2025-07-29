@@ -18,7 +18,7 @@ export class BoEBookService {
      * @returns com_ever_edu_cms_ebook_dto_res_EbookResDto OK
      * @throws ApiError
      */
-    public static updateEbook(
+    public static updateContent7(
         ebookReqDto: com_ever_edu_cms_ebook_dto_req_EbookSaveReqDto,
     ): CancelablePromise<com_ever_edu_cms_ebook_dto_res_EbookResDto> {
         return __request(OpenAPI, {
@@ -43,7 +43,7 @@ export class BoEBookService {
      * @returns com_ever_edu_cms_ebook_dto_res_EbookResDto OK
      * @throws ApiError
      */
-    public static saveEbook(
+    public static saveContent2(
         ebookReqDto: com_ever_edu_cms_ebook_dto_req_EbookSaveReqDto,
     ): CancelablePromise<com_ever_edu_cms_ebook_dto_res_EbookResDto> {
         return __request(OpenAPI, {
@@ -68,7 +68,7 @@ export class BoEBookService {
      * @returns com_ever_edu_cms_ebook_dto_res_EbookStatusResDto OK
      * @throws ApiError
      */
-    public static getEbookStatus(
+    public static getContentStatus3(
         contentUuid: string,
     ): CancelablePromise<com_ever_edu_cms_ebook_dto_res_EbookStatusResDto> {
         return __request(OpenAPI, {
@@ -94,7 +94,7 @@ export class BoEBookService {
      * @returns com_ever_edu_cms_ebook_dto_res_EbookResourceResDto OK
      * @throws ApiError
      */
-    public static getContentResource9(
+    public static getContentResource14(
         contentUuid: string,
     ): CancelablePromise<com_ever_edu_cms_ebook_dto_res_EbookResourceResDto> {
         return __request(OpenAPI, {
@@ -119,7 +119,7 @@ export class BoEBookService {
      * @returns com_ever_edu_cms_ebook_dto_res_EbookChangeStatusResDto OK
      * @throws ApiError
      */
-    public static getEbookChangeStatus(
+    public static changeContentFile4(
         changeUuid: string,
     ): CancelablePromise<com_ever_edu_cms_ebook_dto_res_EbookChangeStatusResDto> {
         return __request(OpenAPI, {

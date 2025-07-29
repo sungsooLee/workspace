@@ -141,7 +141,12 @@
       "tenantCategory": {
         "title": "테넌트 카테고리 목록"
       },
-      "menu": {}
+      "menu": {},
+      "tooltip": {
+        "learningResourceIsUsed": "해당 학습자원은 과정에서 사용 중입니다.\n일부 정보만 변경할 수 있고, 삭제 및 업로드 파일 변경은 할 수 없습니다.",
+        "learningResourceIsTranslated": "번역된 학습자원입니다.",
+        "learningResourceIsShared": "공유된 학습자원입니다."
+      }
     },
     "modal": {
       "addressSearch": {
@@ -312,7 +317,7 @@
       "courseApplication": "수강 신청",
       "nonExposure": "비노출",
       "learningStartDate": "학습 시작일",
-      "complete": "이수",
+      "finish": "이수",
       "curriculum": "커리큘럼",
       "individual": "개인",
       "currentSituation": "현황",
@@ -448,7 +453,32 @@
       "assignment": "과제",
       "fileSize": "파일용량",
       "menuList": "메뉴 목록",
-      "web": "웹"
+      "web": "웹",
+      "explanationOfLearningResources": "학습자원 설명",
+      "questionManagement": "문항 관리",
+      "courseOpening": "과정개설",
+      "applicationDateForAuthorization": "권한 신청일",
+      "channelDescription": "채널 설명",
+      "nextLecture": "다음 강의",
+      "uploadSummary": "업로드 요약",
+      "totalFile": "총 파일",
+      "complete": "완료",
+      "error": "오류",
+      "attachFile": "파일 첨부",
+      "pause": "일시 중지됨",
+      "uploadedCompletion": "업로드 완료",
+      "uploadFailure": "업로드 실패",
+      "uploadError": "업로드 오류",
+      "quality": "품질",
+      "subtitle": "자막",
+      "regenerationSpeed": "재생속도",
+      "back": "뒤로",
+      "width": "가로",
+      "replay": "다시보기",
+      "duringValidityReview": "유효성 검토중",
+      "quiz": "퀴즈",
+      "oxQuiz": "OX 퀴즈",
+      "enterTheAuthenticationNumber": "인증번호 입력"
     },
     "link": {
       "multilingual": "다국어관리"
@@ -883,11 +913,6 @@
       "OUT_WORKING_TIME": {
         "title": "로그인 할 수 없습니다. ",
         "message": "근무 시간에는 로그인할 수 없습니다.\n업무 시간을 확인해 주세요."
-      }
-    },
-    "tenant": {
-      "page": {
-        "tenant": "테넌트담당자"
       }
     },
     "mock": {

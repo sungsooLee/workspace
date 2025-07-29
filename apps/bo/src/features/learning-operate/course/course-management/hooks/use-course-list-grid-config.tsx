@@ -1,7 +1,7 @@
 import { queryOptions } from '@entities/course/service/course.queries';
 import { CODE_GROUP, getCodeLabel } from '@learnway/hooks';
 import { Button, useModal } from '@learnway/ui';
-import { PreviewLearningWindow } from '@shared/ui/modal/preview-learning-window';
+import { ShortUrlCopyButton } from '@shared/ui';
 import { Link, useLocation } from '@tanstack/react-router';
 import { CoursesQueryParams } from '@types';
 import { t } from 'i18next';
@@ -10,7 +10,7 @@ import { CourseFavoriteIcon } from '../ui/course-favorite-icon/course-favorite-i
 
 export const useCourseListGridConfig = () => {
   const { pathname } = useLocation();
-  const { openModal } = useModal();
+  const { alert } = useModal();
 
   const columns: CourseGridColumn[] = [
     // 테넌트
@@ -49,9 +49,9 @@ export const useCourseListGridConfig = () => {
       name: 'isBookmarks',
       label: () => t('LABEL.grid.column.favorite'),
       size: 40,
-      render: (info: any) => (
-        <CourseFavoriteIcon courseId={info?.original?.courseId} isFavorite={info.getValue()} />
-      ),
+      render: ({ row, getValue }) => {
+        return <CourseFavoriteIcon courseId={row?.original?.courseId} isFavorite={getValue()} />;
+      },
       meta: {
         cellAlign: 'center',
       },
@@ -137,11 +137,9 @@ export const useCourseListGridConfig = () => {
           className="link"
           label={t('LABEL.grid.column.preview')}
           disabled={!info?.original?.isUsed}
+          stopPropagation
           onClick={() => {
-            openModal({
-              width: 'full',
-              content: <PreviewLearningWindow contentUuid={info?.original?.contentUuid} />,
-            });
+            alert('과정상세 페이지 이동');
           }}
         />
       ),
@@ -151,7 +149,9 @@ export const useCourseListGridConfig = () => {
       name: 'url',
       label: () => t('LABEL.grid.column.url'),
       size: 90,
-      render: (info: any) => <Button variant="gray2" size="xs" label={t('URL 생성')} />,
+      render: (info: any) => (
+        <ShortUrlCopyButton url={`original url`} params={{ courseId: info?.original?.courseId }} />
+      ),
     },
   ];
 

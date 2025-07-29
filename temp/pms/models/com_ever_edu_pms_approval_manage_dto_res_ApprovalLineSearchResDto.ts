@@ -2,10 +2,10 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { com_ever_edu_pms_approval_manage_dto_res_ApprovalLineSearchSubListDto } from './com_ever_edu_pms_approval_manage_dto_res_ApprovalLineSearchSubListDto';
+import type { com_ever_edu_pms_approval_manage_dto_ApprovalLineSearchSubDto } from './com_ever_edu_pms_approval_manage_dto_ApprovalLineSearchSubDto';
 export type com_ever_edu_pms_approval_manage_dto_res_ApprovalLineSearchResDto = {
     /**
-     * 결재라입
+     * 결재라인ID
      */
     approvalLineTempId?: number;
     /**
@@ -21,9 +21,9 @@ export type com_ever_edu_pms_approval_manage_dto_res_ApprovalLineSearchResDto = 
      */
     approvalLineTempName?: string;
     /**
-     * 기본결재라인seq
+     * 기본결재라인ID
      */
-    defaultApprovalLineSeq?: number;
+    defaultApprovalLineId?: string;
     /**
      * 결재라인 사용여부
      */
@@ -45,9 +45,13 @@ export type com_ever_edu_pms_approval_manage_dto_res_ApprovalLineSearchResDto = 
      */
     defaultApprovalLineText?: string;
     /**
+     * 결재라인개수
+     */
+    subApprovalCount?: number;
+    /**
      * 결재라인목록
      */
-    approvalLineList?: Array<Array<com_ever_edu_pms_approval_manage_dto_res_ApprovalLineSearchSubListDto>>;
+    approvalLineList?: Array<com_ever_edu_pms_approval_manage_dto_ApprovalLineSearchSubDto>;
 };
 export namespace com_ever_edu_pms_approval_manage_dto_res_ApprovalLineSearchResDto {
     /**

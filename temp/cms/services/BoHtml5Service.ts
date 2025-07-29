@@ -20,7 +20,7 @@ export class BoHtml5Service {
      * @returns com_ever_edu_cms_html5_dto_res_Html5ResDto OK
      * @throws ApiError
      */
-    public static updateScorm1(
+    public static updateContent3(
         requestBody: com_ever_edu_cms_html5_dto_req_Html5UpdateReqDto,
     ): CancelablePromise<com_ever_edu_cms_html5_dto_res_Html5ResDto> {
         return __request(OpenAPI, {
@@ -44,7 +44,7 @@ export class BoHtml5Service {
      * @returns com_ever_edu_cms_html5_dto_res_Html5ChangeStatusResDto OK
      * @throws ApiError
      */
-    public static changeHtml5File(
+    public static changeContentFile2(
         requestBody: com_ever_edu_cms_html5_dto_req_Html5FileChangeReqDto,
     ): CancelablePromise<com_ever_edu_cms_html5_dto_res_Html5ChangeStatusResDto> {
         return __request(OpenAPI, {
@@ -69,7 +69,7 @@ export class BoHtml5Service {
      * @returns com_ever_edu_cms_html5_dto_res_Html5StatusResDto OK
      * @throws ApiError
      */
-    public static draftSaveHtml(
+    public static draftSaveContent1(
         requestBody: com_ever_edu_cms_html5_dto_req_Html5DraftReqDto,
     ): CancelablePromise<com_ever_edu_cms_html5_dto_res_Html5StatusResDto> {
         return __request(OpenAPI, {
@@ -93,7 +93,7 @@ export class BoHtml5Service {
      * @returns com_ever_edu_cms_html5_dto_res_Html5StatusResDto OK
      * @throws ApiError
      */
-    public static getScormStatus1(
+    public static getContentStatus2(
         contentUuid: string,
     ): CancelablePromise<com_ever_edu_cms_html5_dto_res_Html5StatusResDto> {
         return __request(OpenAPI, {
@@ -106,7 +106,6 @@ export class BoHtml5Service {
                 400: `Bad Request`,
                 401: `Unauthorized`,
                 404: `Not Found`,
-                405: `Method Not Allowed`,
                 422: `Unprocessable Entity`,
                 500: `Internal Server Error`,
             },
@@ -119,7 +118,7 @@ export class BoHtml5Service {
      * @returns com_ever_edu_cms_html5_dto_res_Html5ResourceResDto OK
      * @throws ApiError
      */
-    public static getContentResource7(
+    public static getContentResource10(
         contentUuid: string,
     ): CancelablePromise<com_ever_edu_cms_html5_dto_res_Html5ResourceResDto> {
         return __request(OpenAPI, {
@@ -144,7 +143,7 @@ export class BoHtml5Service {
      * @returns com_ever_edu_cms_html5_dto_res_Html5ChangeStatusResDto OK
      * @throws ApiError
      */
-    public static getHtml5ChangeStatus(
+    public static getContentChangeStatus2(
         changeId: number,
     ): CancelablePromise<com_ever_edu_cms_html5_dto_res_Html5ChangeStatusResDto> {
         return __request(OpenAPI, {
@@ -157,7 +156,6 @@ export class BoHtml5Service {
                 400: `Bad Request`,
                 401: `Unauthorized`,
                 404: `Not Found`,
-                405: `Method Not Allowed`,
                 422: `Unprocessable Entity`,
                 500: `Internal Server Error`,
             },

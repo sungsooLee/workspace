@@ -40,17 +40,9 @@ export type com_ever_edu_pms_user_dto_req_UserRegisterReqDto = {
      */
     password: string;
     /**
-     * 휴대폰 국가번호
-     */
-    phoneNationNumber?: string;
-    /**
      * 휴대폰 번호
      */
     phoneNumber?: string;
-    /**
-     * 직장전화 국가번호
-     */
-    companyPhoneNationNumber?: string;
     /**
      * 직장전화 번호
      */
@@ -70,11 +62,11 @@ export type com_ever_edu_pms_user_dto_req_UserRegisterReqDto = {
     /**
      * 직군
      */
-    jobDomain?: string;
+    jobDomain?: Array<string>;
     /**
      * 직무
      */
-    jobRole?: string;
+    jobRole?: Array<string>;
     /**
      * 호칭
      */
@@ -122,6 +114,18 @@ export type com_ever_edu_pms_user_dto_req_UserRegisterReqDto = {
      * 비밀번호 인증 유형
      */
     authType?: com_ever_edu_pms_user_dto_req_UserRegisterReqDto.authType;
+    /**
+     * 2차 인증 유형 유형
+     */
+    twoFactorAuthType?: com_ever_edu_pms_user_dto_req_UserRegisterReqDto.twoFactorAuthType;
+    /**
+     * FO 로그인 2차 인증 사용
+     */
+    foTwoFactorAuthEnabled?: boolean;
+    /**
+     * BO 로그인 2차 인증 사용
+     */
+    boTwoFactorAuthEnabled?: boolean;
 };
 export namespace com_ever_edu_pms_user_dto_req_UserRegisterReqDto {
     /**
@@ -160,6 +164,16 @@ export namespace com_ever_edu_pms_user_dto_req_UserRegisterReqDto {
         PLATFORM = 'PLATFORM',
         HMG_SSO = 'HMG_SSO',
         AUTOWAY = 'AUTOWAY',
+        DENIED_PASSWORD = 'DENIED_PASSWORD',
+    }
+    /**
+     * 2차 인증 유형 유형
+     */
+    export enum twoFactorAuthType {
+        MPASS = 'MPASS',
+        MPASS_OTP = 'MPASS_OTP',
+        MPASS_FIDO = 'MPASS_FIDO',
+        GOOGLE_OTP = 'GOOGLE_OTP',
     }
 }
 

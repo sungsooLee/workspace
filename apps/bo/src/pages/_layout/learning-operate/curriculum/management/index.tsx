@@ -1,9 +1,9 @@
-import { createFileRoute, useRouter, useNavigate, Link } from '@tanstack/react-router';
+import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
 import { Button } from '@learnway/ui';
-import { FORM_MODE } from '../../../../../shared';
+import { FORM_MODE } from '@shared/const';
 import { useState } from 'react';
-import { CurriculumDetail } from '../../../../../features/learning-operate/curriculum';
+import { CurriculumDetail } from '@features/learning-operate/curriculum';
 
 export const Route = createFileRoute('/_layout/learning-operate/curriculum/management/')({
   component: RouteComponent,

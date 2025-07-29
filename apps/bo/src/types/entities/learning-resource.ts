@@ -352,6 +352,17 @@ export interface Content {
 
 export type ContentCourseMappingRes = PaginationResponse<Content>;
 
+interface TranslationSituation {
+  languageCountryCode: string;
+  contentUuid?: string;
+  contentName?: string;
+  createType?: ContentCreateType;
+  groupContentId?: number;
+  contentType: ContentType;
+}
+
+export type FetchTranslationListRes = TranslationSituation[];
+
 export interface TestPaperBasicInfoSaveReq extends MediaContentSaveReq {
   contentUuid?: string;
   examTemplateType: ExamTemplateType;

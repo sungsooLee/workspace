@@ -2,18 +2,13 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { com_ever_edu_cms_asgmt_dto_req_AsgmtGroupSaveReqDto } from '../models/com_ever_edu_cms_asgmt_dto_req_AsgmtGroupSaveReqDto';
-import type { com_ever_edu_cms_asgmt_dto_req_AsgmtGroupSaveReqDto$Copy } from '../models/com_ever_edu_cms_asgmt_dto_req_AsgmtGroupSaveReqDto$Copy';
-import type { com_ever_edu_cms_asgmt_dto_req_AsgmtGroupUpdateReqDto } from '../models/com_ever_edu_cms_asgmt_dto_req_AsgmtGroupUpdateReqDto';
-import type { com_ever_edu_cms_asgmt_dto_req_AsgmtGroupUpdateReqDto$IsPublishedReqDto } from '../models/com_ever_edu_cms_asgmt_dto_req_AsgmtGroupUpdateReqDto$IsPublishedReqDto';
-import type { com_ever_edu_cms_asgmt_dto_req_AsgmtMappingUserSaveReqDto } from '../models/com_ever_edu_cms_asgmt_dto_req_AsgmtMappingUserSaveReqDto';
-import type { com_ever_edu_cms_asgmt_dto_req_AsgmtSaveReqDto } from '../models/com_ever_edu_cms_asgmt_dto_req_AsgmtSaveReqDto';
-import type { com_ever_edu_cms_asgmt_dto_req_AsgmtSubmitSaveReqDto$onAdmin } from '../models/com_ever_edu_cms_asgmt_dto_req_AsgmtSubmitSaveReqDto$onAdmin';
-import type { com_ever_edu_cms_asgmt_dto_req_AsgmtSubmitUpdateReqDto$AsgmtResult } from '../models/com_ever_edu_cms_asgmt_dto_req_AsgmtSubmitUpdateReqDto$AsgmtResult';
-import type { com_ever_edu_cms_asgmt_dto_req_AsgmtUpdateReqDto } from '../models/com_ever_edu_cms_asgmt_dto_req_AsgmtUpdateReqDto';
-import type { com_ever_edu_cms_asgmt_dto_res_AsgmtGroupResDto$ListOnAdmin } from '../models/com_ever_edu_cms_asgmt_dto_res_AsgmtGroupResDto$ListOnAdmin';
-import type { com_ever_edu_cms_asgmt_dto_res_AsgmtResDto$DetailOnAdmin } from '../models/com_ever_edu_cms_asgmt_dto_res_AsgmtResDto$DetailOnAdmin';
-import type { com_ever_edu_cms_asgmt_dto_res_AsgmtResDto$ListOnAdmin } from '../models/com_ever_edu_cms_asgmt_dto_res_AsgmtResDto$ListOnAdmin';
+import type { com_ever_edu_cms_asgmt_dto_req_AssignmentSaveReqDto } from '../models/com_ever_edu_cms_asgmt_dto_req_AssignmentSaveReqDto';
+import type { com_ever_edu_cms_asgmt_dto_req_AssignmentSubmissionCopiedReqDto } from '../models/com_ever_edu_cms_asgmt_dto_req_AssignmentSubmissionCopiedReqDto';
+import type { com_ever_edu_cms_asgmt_dto_req_AssignmentSubmissionDeleteReqDto } from '../models/com_ever_edu_cms_asgmt_dto_req_AssignmentSubmissionDeleteReqDto';
+import type { com_ever_edu_cms_asgmt_dto_req_AssignmentSubmissionSaveReqDto } from '../models/com_ever_edu_cms_asgmt_dto_req_AssignmentSubmissionSaveReqDto';
+import type { com_ever_edu_cms_asgmt_dto_req_AssignmentSubmissionUpdateReqDto } from '../models/com_ever_edu_cms_asgmt_dto_req_AssignmentSubmissionUpdateReqDto';
+import type { com_ever_edu_cms_asgmt_dto_req_AssignmentUpdateReqDto } from '../models/com_ever_edu_cms_asgmt_dto_req_AssignmentUpdateReqDto';
+import type { com_ever_edu_cms_asgmt_dto_res_AssignmentSubmissionResDto } from '../models/com_ever_edu_cms_asgmt_dto_res_AssignmentSubmissionResDto';
 import type { com_ever_edu_cms_blog_dto_req_BlogSaveReqDto } from '../models/com_ever_edu_cms_blog_dto_req_BlogSaveReqDto';
 import type { com_ever_edu_cms_blog_dto_req_BlogUpdateReqDto } from '../models/com_ever_edu_cms_blog_dto_req_BlogUpdateReqDto';
 import type { com_ever_edu_cms_blog_dto_res_BlogContentResDto } from '../models/com_ever_edu_cms_blog_dto_res_BlogContentResDto';
@@ -23,9 +18,10 @@ import type { com_ever_edu_cms_content_dto_req_ContentExcelExportReqDto } from '
 import type { com_ever_edu_cms_content_dto_req_ContentExportReqDto } from '../models/com_ever_edu_cms_content_dto_req_ContentExportReqDto';
 import type { com_ever_edu_cms_content_dto_req_ContentProgressListReqDto } from '../models/com_ever_edu_cms_content_dto_req_ContentProgressListReqDto';
 import type { com_ever_edu_cms_content_dto_req_ContentSaveReqDto } from '../models/com_ever_edu_cms_content_dto_req_ContentSaveReqDto';
-import type { com_ever_edu_cms_content_dto_req_ContentUpdateReqDto } from '../models/com_ever_edu_cms_content_dto_req_ContentUpdateReqDto';
 import type { com_ever_edu_cms_content_dto_req_SharedBoxContentReqDto } from '../models/com_ever_edu_cms_content_dto_req_SharedBoxContentReqDto';
 import type { com_ever_edu_cms_content_dto_res_BatchSettingsResDto } from '../models/com_ever_edu_cms_content_dto_res_BatchSettingsResDto';
+import type { com_ever_edu_cms_content_dto_res_CheckSharingPossibleResDto } from '../models/com_ever_edu_cms_content_dto_res_CheckSharingPossibleResDto';
+import type { com_ever_edu_cms_content_dto_res_ContentExportResDto } from '../models/com_ever_edu_cms_content_dto_res_ContentExportResDto';
 import type { com_ever_edu_cms_content_dto_res_ContentProgressListResDto } from '../models/com_ever_edu_cms_content_dto_res_ContentProgressListResDto';
 import type { com_ever_edu_cms_content_dto_res_ContentProgressResDto } from '../models/com_ever_edu_cms_content_dto_res_ContentProgressResDto';
 import type { com_ever_edu_cms_content_dto_res_ContentResDto } from '../models/com_ever_edu_cms_content_dto_res_ContentResDto';
@@ -57,7 +53,9 @@ import type { com_ever_edu_cms_etc_dto_res_EtcContentResDto } from '../models/co
 import type { com_ever_edu_cms_etc_dto_res_EtcContentResourceResDto } from '../models/com_ever_edu_cms_etc_dto_res_EtcContentResourceResDto';
 import type { com_ever_edu_cms_etc_dto_res_EtcContentStatusResDto } from '../models/com_ever_edu_cms_etc_dto_res_EtcContentStatusResDto';
 import type { com_ever_edu_cms_exam_dto_req_ExamPoolStepUpdateReqDto } from '../models/com_ever_edu_cms_exam_dto_req_ExamPoolStepUpdateReqDto';
+import type { com_ever_edu_cms_exam_dto_req_ExamPoolUpdateReqDto } from '../models/com_ever_edu_cms_exam_dto_req_ExamPoolUpdateReqDto';
 import type { com_ever_edu_cms_exam_dto_req_ExamQuestionDeleteReqDto } from '../models/com_ever_edu_cms_exam_dto_req_ExamQuestionDeleteReqDto';
+import type { com_ever_edu_cms_exam_dto_req_ExamQuestionExcelExportReqDto } from '../models/com_ever_edu_cms_exam_dto_req_ExamQuestionExcelExportReqDto';
 import type { com_ever_edu_cms_exam_dto_req_ExamQuestionSaveCopiedReqDto } from '../models/com_ever_edu_cms_exam_dto_req_ExamQuestionSaveCopiedReqDto';
 import type { com_ever_edu_cms_exam_dto_req_ExamQuestionSaveReqDto } from '../models/com_ever_edu_cms_exam_dto_req_ExamQuestionSaveReqDto';
 import type { com_ever_edu_cms_exam_dto_req_ExamQuestionSearchReqDto } from '../models/com_ever_edu_cms_exam_dto_req_ExamQuestionSearchReqDto';
@@ -67,13 +65,21 @@ import type { com_ever_edu_cms_exam_dto_req_ExamQuestionUseStatusUpdateReqDto } 
 import type { com_ever_edu_cms_exam_dto_req_ExamSaveReqDto } from '../models/com_ever_edu_cms_exam_dto_req_ExamSaveReqDto';
 import type { com_ever_edu_cms_exam_dto_req_ExamStepUpdateReqDto } from '../models/com_ever_edu_cms_exam_dto_req_ExamStepUpdateReqDto';
 import type { com_ever_edu_cms_exam_dto_req_ExamUpdateReqDto } from '../models/com_ever_edu_cms_exam_dto_req_ExamUpdateReqDto';
+import type { com_ever_edu_cms_exam_dto_res_ExamBooleanResDto } from '../models/com_ever_edu_cms_exam_dto_res_ExamBooleanResDto';
+import type { com_ever_edu_cms_exam_dto_res_ExamPoolResDto } from '../models/com_ever_edu_cms_exam_dto_res_ExamPoolResDto';
 import type { com_ever_edu_cms_exam_dto_res_ExamQuestionMappingResDto } from '../models/com_ever_edu_cms_exam_dto_res_ExamQuestionMappingResDto';
 import type { com_ever_edu_cms_exam_dto_res_ExamQuestionResDto } from '../models/com_ever_edu_cms_exam_dto_res_ExamQuestionResDto';
 import type { com_ever_edu_cms_exam_dto_res_ExamQuestionSearchResDto } from '../models/com_ever_edu_cms_exam_dto_res_ExamQuestionSearchResDto';
 import type { com_ever_edu_cms_exam_dto_res_ExamRandomQuestionResDto } from '../models/com_ever_edu_cms_exam_dto_res_ExamRandomQuestionResDto';
 import type { com_ever_edu_cms_exam_dto_res_ExamSaveResDto } from '../models/com_ever_edu_cms_exam_dto_res_ExamSaveResDto';
+import type { com_ever_edu_cms_external_agency_dto_req_ExternalAgencySaveReqDto } from '../models/com_ever_edu_cms_external_agency_dto_req_ExternalAgencySaveReqDto';
+import type { com_ever_edu_cms_external_agency_dto_req_ExternalAgencyUpdateReqDto } from '../models/com_ever_edu_cms_external_agency_dto_req_ExternalAgencyUpdateReqDto';
+import type { com_ever_edu_cms_external_agency_dto_res_ExternalAgencyResDto } from '../models/com_ever_edu_cms_external_agency_dto_res_ExternalAgencyResDto';
+import type { com_ever_edu_cms_external_agency_dto_res_ExternalAgencyResourceResDto } from '../models/com_ever_edu_cms_external_agency_dto_res_ExternalAgencyResourceResDto';
 import type { com_ever_edu_cms_external_link_dto_req_ExternalLinkSaveReqDto } from '../models/com_ever_edu_cms_external_link_dto_req_ExternalLinkSaveReqDto';
 import type { com_ever_edu_cms_external_link_dto_req_ExternalLinkUpdateReqDto } from '../models/com_ever_edu_cms_external_link_dto_req_ExternalLinkUpdateReqDto';
+import type { com_ever_edu_cms_external_link_dto_res_ExternalLinkContentResDto } from '../models/com_ever_edu_cms_external_link_dto_res_ExternalLinkContentResDto';
+import type { com_ever_edu_cms_external_link_dto_res_ExternalLinkResourceResDto } from '../models/com_ever_edu_cms_external_link_dto_res_ExternalLinkResourceResDto';
 import type { com_ever_edu_cms_image_dto_req_ImageContentUpdateReqDto } from '../models/com_ever_edu_cms_image_dto_req_ImageContentUpdateReqDto';
 import type { com_ever_edu_cms_image_dto_req_ImageOrderSaveReqDto } from '../models/com_ever_edu_cms_image_dto_req_ImageOrderSaveReqDto';
 import type { com_ever_edu_cms_image_dto_req_ImagesDraftReqDto } from '../models/com_ever_edu_cms_image_dto_req_ImagesDraftReqDto';
@@ -98,8 +104,6 @@ import type { com_ever_edu_cms_video_dto_res_VideoResDto } from '../models/com_e
 import type { com_ever_edu_cms_video_dto_res_VideoResourceResDto } from '../models/com_ever_edu_cms_video_dto_res_VideoResourceResDto';
 import type { com_ever_edu_cms_video_dto_res_VideoStatusResDto } from '../models/com_ever_edu_cms_video_dto_res_VideoStatusResDto';
 import type { org_springdoc_core_converters_models_Pageable } from '../models/org_springdoc_core_converters_models_Pageable';
-import type { org_springframework_data_domain_PageCom_ever_edu_cms_asgmt_dto_res_AsgmtGroupResDto$DetailOnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_cms_asgmt_dto_res_AsgmtGroupResDto$DetailOnAdmin';
-import type { org_springframework_data_domain_PageCom_ever_edu_cms_asgmt_dto_res_AsgmtGroupResDto$ListOnAdmin } from '../models/org_springframework_data_domain_PageCom_ever_edu_cms_asgmt_dto_res_AsgmtGroupResDto$ListOnAdmin';
 import type { org_springframework_data_domain_PageCom_ever_edu_cms_content_dto_res_FindContentExportResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_cms_content_dto_res_FindContentExportResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_cms_content_dto_res_FindContentResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_cms_content_dto_res_FindContentResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_cms_content_dto_res_SharedBoxResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_cms_content_dto_res_SharedBoxResDto';
@@ -117,7 +121,7 @@ export class BoService {
      * @returns com_ever_edu_cms_video_dto_res_VideoResDto OK
      * @throws ApiError
      */
-    public static updateVideo(
+    public static updateContent(
         requestBody: com_ever_edu_cms_video_dto_req_VideoUpdateReqDto,
     ): CancelablePromise<com_ever_edu_cms_video_dto_res_VideoResDto> {
         return __request(OpenAPI, {
@@ -141,7 +145,7 @@ export class BoService {
      * @returns com_ever_edu_cms_video_dto_res_VideoChangeStatusResDto OK
      * @throws ApiError
      */
-    public static changeVideoFile(
+    public static changeContentFile(
         requestBody: com_ever_edu_cms_video_dto_req_VideoFileChangeReqDto,
     ): CancelablePromise<com_ever_edu_cms_video_dto_res_VideoChangeStatusResDto> {
         return __request(OpenAPI, {
@@ -273,7 +277,7 @@ export class BoService {
      * @returns com_ever_edu_cms_image_dto_res_ImageContentResDto OK
      * @throws ApiError
      */
-    public static updateImageContent(
+    public static updateContent2(
         requestBody: com_ever_edu_cms_image_dto_req_ImageContentUpdateReqDto,
     ): CancelablePromise<com_ever_edu_cms_image_dto_res_ImageContentResDto> {
         return __request(OpenAPI, {
@@ -291,16 +295,42 @@ export class BoService {
         });
     }
     /**
+     * 외부링크 콘텐츠 수정
+     * 외부링크 콘텐츠를 수정한다.
      * @param requestBody
-     * @returns number OK
+     * @returns com_ever_edu_cms_external_link_dto_res_ExternalLinkContentResDto OK
      * @throws ApiError
      */
-    public static updateExternalLink(
+    public static updateContent4(
         requestBody: com_ever_edu_cms_external_link_dto_req_ExternalLinkUpdateReqDto,
-    ): CancelablePromise<number> {
+    ): CancelablePromise<com_ever_edu_cms_external_link_dto_res_ExternalLinkContentResDto> {
         return __request(OpenAPI, {
             method: 'PUT',
             url: '/admin/api/v1/external-link/update',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 외부위탁 콘텐츠 수정
+     * 외부위탁 콘텐츠를 수정한다.
+     * @param requestBody
+     * @returns com_ever_edu_cms_external_agency_dto_res_ExternalAgencyResDto OK
+     * @throws ApiError
+     */
+    public static updateContent5(
+        requestBody: com_ever_edu_cms_external_agency_dto_req_ExternalAgencyUpdateReqDto,
+    ): CancelablePromise<com_ever_edu_cms_external_agency_dto_res_ExternalAgencyResDto> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/admin/api/v1/external-agency/update',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -416,12 +446,12 @@ export class BoService {
      * 시험 문항 삭제
      * 시험 문항 목록을 삭제한다.
      * @param requestBody
-     * @returns any Created
+     * @returns com_ever_edu_cms_exam_dto_res_ExamBooleanResDto Created
      * @throws ApiError
      */
     public static delete1(
         requestBody: com_ever_edu_cms_exam_dto_req_ExamQuestionDeleteReqDto,
-    ): CancelablePromise<any> {
+    ): CancelablePromise<com_ever_edu_cms_exam_dto_res_ExamBooleanResDto> {
         return __request(OpenAPI, {
             method: 'DELETE',
             url: '/admin/api/v1/exam/question',
@@ -466,12 +496,12 @@ export class BoService {
      * 시험 문항 순서변경
      * 시험 문항의 순서를 변경한다.
      * @param requestBody
-     * @returns any Created
+     * @returns com_ever_edu_cms_exam_dto_res_ExamBooleanResDto Created
      * @throws ApiError
      */
     public static updateQuestionSortSeq(
         requestBody: com_ever_edu_cms_exam_dto_req_ExamQuestionSortSeqUpdateReqDto,
-    ): CancelablePromise<any> {
+    ): CancelablePromise<com_ever_edu_cms_exam_dto_res_ExamBooleanResDto> {
         return __request(OpenAPI, {
             method: 'PUT',
             url: '/admin/api/v1/exam/question/sort',
@@ -491,12 +521,12 @@ export class BoService {
      * 문제은행 정보 수정
      * 문제은행 정보를 수정한다.
      * @param requestBody
-     * @returns number Created
+     * @returns com_ever_edu_cms_exam_dto_res_ExamPoolResDto Created
      * @throws ApiError
      */
     public static update3(
-        requestBody: com_ever_edu_cms_content_dto_req_ContentUpdateReqDto,
-    ): CancelablePromise<number> {
+        requestBody: com_ever_edu_cms_exam_dto_req_ExamPoolUpdateReqDto,
+    ): CancelablePromise<com_ever_edu_cms_exam_dto_res_ExamPoolResDto> {
         return __request(OpenAPI, {
             method: 'PUT',
             url: '/admin/api/v1/exam/pool',
@@ -539,7 +569,7 @@ export class BoService {
     }
     /**
      * 문제은행 콘텐츠 문항추가 페이지 수정
-     * 문제은행 > 문항추가 페이지의 저장 버튼 기능
+     * 문제은행 > 문항추가(선택형) 페이지의 상단 저장(문제은행 문항수 수정) 버튼 기능
      * @param requestBody
      * @returns number Created
      * @throws ApiError
@@ -564,7 +594,7 @@ export class BoService {
     }
     /**
      * 시험지 콘텐츠 문항추가 페이지 수정
-     * 시험지 > 문항추가 페이지의 저장 버튼 기능
+     * 시험지 > 문항추가(선택형/랜덤형) 페이지의 상단 저장(시험지 문항수 수정) 버튼 기능
      * @param requestBody
      * @returns number Created
      * @throws ApiError
@@ -594,7 +624,7 @@ export class BoService {
      * @returns com_ever_edu_cms_etc_dto_res_EtcContentResDto OK
      * @throws ApiError
      */
-    public static updateEtcContent(
+    public static updateContent6(
         requestBody: com_ever_edu_cms_etc_dto_req_EtcContentUpdateReqDto,
     ): CancelablePromise<com_ever_edu_cms_etc_dto_res_EtcContentResDto> {
         return __request(OpenAPI, {
@@ -613,12 +643,12 @@ export class BoService {
     }
     /**
      * 기타 콘텐츠 파일변경
-     * 등록한 기타 콘텐츠의 파일을 변경한다.<br>파일변경 상태 조회 API를 이용하여 변경 작업 상태를 확인할 수 있다.
+     * 등록한 기타 콘텐츠의 파일을 변경한다.
      * @param requestBody
      * @returns com_ever_edu_cms_etc_dto_res_EtcContentResourceResDto OK
      * @throws ApiError
      */
-    public static changeEtcContentFile(
+    public static changeContentFile3(
         requestBody: com_ever_edu_cms_etc_dto_req_EtcContentFileChangeReqDto,
     ): CancelablePromise<com_ever_edu_cms_etc_dto_res_EtcContentResourceResDto> {
         return __request(OpenAPI, {
@@ -674,6 +704,31 @@ export class BoService {
             url: '/admin/api/v1/curriculum',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 커리큘럼 삭제
+     * 커리큘럼을 논리삭제 한다.
+     * @param curriculumId
+     * @returns string OK
+     * @throws ApiError
+     */
+    public static deleteCurriculum(
+        curriculumId: number,
+    ): CancelablePromise<string> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/admin/api/v1/curriculum',
+            query: {
+                'curriculumId': curriculumId,
+            },
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,
@@ -858,7 +913,7 @@ export class BoService {
      * @returns com_ever_edu_cms_blog_dto_res_BlogContentResDto OK
      * @throws ApiError
      */
-    public static updateBlog(
+    public static updateContent8(
         requestBody: com_ever_edu_cms_blog_dto_req_BlogUpdateReqDto,
     ): CancelablePromise<com_ever_edu_cms_blog_dto_res_BlogContentResDto> {
         return __request(OpenAPI, {
@@ -876,48 +931,18 @@ export class BoService {
         });
     }
     /**
-     * 과제 단건 조회
-     * 과제 단건을 조회한다.
-     * @param asgmtUuid 과제 ID
-     * @returns com_ever_edu_cms_asgmt_dto_res_AsgmtResDto$DetailOnAdmin OK
-     * @throws ApiError
-     */
-    public static findAsgmtById(
-        asgmtUuid: string,
-    ): CancelablePromise<com_ever_edu_cms_asgmt_dto_res_AsgmtResDto$DetailOnAdmin> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/asgmt/{asgmtUUID}',
-            path: {
-                'asgmtUUID': asgmtUuid,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
      * 과제 단건 수정
      * 과제 단건을 수정한다.
-     * @param asgmtUuid 과제 ID
      * @param requestBody
-     * @returns string OK
+     * @returns string Created
      * @throws ApiError
      */
-    public static updateAsgmt(
-        asgmtUuid: string,
-        requestBody: com_ever_edu_cms_asgmt_dto_req_AsgmtUpdateReqDto,
+    public static update4(
+        requestBody: com_ever_edu_cms_asgmt_dto_req_AssignmentUpdateReqDto,
     ): CancelablePromise<string> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/admin/api/v1/asgmt/{asgmtUUID}',
-            path: {
-                'asgmtUUID': asgmtUuid,
-            },
+            url: '/admin/api/v1/assignment',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -930,106 +955,18 @@ export class BoService {
         });
     }
     /**
-     * 과제 채점
-     * 과제를 채점한다.
-     * @param asgmtSubmitId 과제 제출 ID
+     * 과제 단건 등록
+     * 과제 단건을 등록한다.
      * @param requestBody
-     * @returns number OK
+     * @returns string Created
      * @throws ApiError
      */
-    public static scoring(
-        asgmtSubmitId: number,
-        requestBody: com_ever_edu_cms_asgmt_dto_req_AsgmtSubmitUpdateReqDto$AsgmtResult,
-    ): CancelablePromise<number> {
+    public static save4(
+        requestBody: com_ever_edu_cms_asgmt_dto_req_AssignmentSaveReqDto,
+    ): CancelablePromise<string> {
         return __request(OpenAPI, {
-            method: 'PUT',
-            url: '/admin/api/v1/asgmt/submit/{asgmtSubmitId}/scoring',
-            path: {
-                'asgmtSubmitId': asgmtSubmitId,
-            },
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 과제 그룹 단건 조회
-     * 과제 단건을 조회한다.
-     * @param contentId 과제 ID
-     * @returns com_ever_edu_cms_asgmt_dto_res_AsgmtGroupResDto$ListOnAdmin OK
-     * @throws ApiError
-     */
-    public static findGroupByNo(
-        contentId: number,
-    ): CancelablePromise<com_ever_edu_cms_asgmt_dto_res_AsgmtGroupResDto$ListOnAdmin> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/asgmt/group/{contentId}',
-            path: {
-                'contentId': contentId,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 과제 그룹 단건 수정
-     * 과제 그룹 단건을 수정한다.
-     * @param contentId 과제 그룹 ID
-     * @param requestBody
-     * @returns number OK
-     * @throws ApiError
-     */
-    public static updateGroup(
-        contentId: number,
-        requestBody: com_ever_edu_cms_asgmt_dto_req_AsgmtGroupUpdateReqDto,
-    ): CancelablePromise<number> {
-        return __request(OpenAPI, {
-            method: 'PUT',
-            url: '/admin/api/v1/asgmt/group/{contentId}',
-            path: {
-                'contentId': contentId,
-            },
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 과제 그룹 사용 여부 변경
-     * 과제 그룹의 사용 여부를 변경한다.
-     * @param isPublished
-     * @param requestBody
-     * @returns any OK
-     * @throws ApiError
-     */
-    public static updateIsPublished(
-        isPublished: boolean,
-        requestBody: Array<com_ever_edu_cms_asgmt_dto_req_AsgmtGroupUpdateReqDto$IsPublishedReqDto>,
-    ): CancelablePromise<any> {
-        return __request(OpenAPI, {
-            method: 'PUT',
-            url: '/admin/api/v1/asgmt/group/publish',
-            query: {
-                'isPublished': isPublished,
-            },
+            method: 'POST',
+            url: '/admin/api/v1/assignment',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -1043,24 +980,50 @@ export class BoService {
         });
     }
     /**
-     * 과제 배포
-     * 과제를 배포한다.
+     * 과제물 수정
+     * 과제물을 수정한다.
      * @param requestBody
-     * @returns any OK
+     * @returns any Created
      * @throws ApiError
      */
-    public static assignAsgmt(
-        requestBody: Array<com_ever_edu_cms_asgmt_dto_req_AsgmtMappingUserSaveReqDto>,
+    public static update5(
+        requestBody: com_ever_edu_cms_asgmt_dto_req_AssignmentSubmissionUpdateReqDto,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/admin/api/v1/asgmt/assign',
+            url: '/admin/api/v1/assignment/submission',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,
                 404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 과제물 등록
+     * 과제물을 등록한다.
+     * @param requestBody
+     * @returns string Created
+     * @throws ApiError
+     */
+    public static save5(
+        requestBody: com_ever_edu_cms_asgmt_dto_req_AssignmentSubmissionSaveReqDto,
+    ): CancelablePromise<string> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/assignment/submission',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
                 422: `Unprocessable Entity`,
                 500: `Internal Server Error`,
             },
@@ -1073,7 +1036,7 @@ export class BoService {
      * @returns com_ever_edu_cms_video_dto_res_VideoDraftListResDto OK
      * @throws ApiError
      */
-    public static draftVideosSave(
+    public static draftSaveContents(
         requestBody: com_ever_edu_cms_video_dto_req_VideoSaveReqDto_DraftMultipleSave,
     ): CancelablePromise<com_ever_edu_cms_video_dto_res_VideoDraftListResDto> {
         return __request(OpenAPI, {
@@ -1230,7 +1193,7 @@ export class BoService {
      * @returns com_ever_edu_cms_image_dto_res_ImageStatusResDto OK
      * @throws ApiError
      */
-    public static draftSaveImage(
+    public static draftSaveContent(
         requestBody: com_ever_edu_cms_image_dto_req_ImagesDraftReqDto,
     ): CancelablePromise<com_ever_edu_cms_image_dto_res_ImageStatusResDto> {
         return __request(OpenAPI, {
@@ -1248,13 +1211,15 @@ export class BoService {
         });
     }
     /**
+     * 외부링크 콘텐츠 등록
+     * 외부링크 콘텐츠를 등록한다.
      * @param requestBody
-     * @returns number OK
+     * @returns com_ever_edu_cms_external_link_dto_res_ExternalLinkContentResDto OK
      * @throws ApiError
      */
-    public static saveExternalLink(
+    public static saveContent(
         requestBody: com_ever_edu_cms_external_link_dto_req_ExternalLinkSaveReqDto,
-    ): CancelablePromise<number> {
+    ): CancelablePromise<com_ever_edu_cms_external_link_dto_res_ExternalLinkContentResDto> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/admin/api/v1/external-link/save',
@@ -1264,6 +1229,92 @@ export class BoService {
                 400: `Bad Request`,
                 401: `Unauthorized`,
                 404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 외부위탁 콘텐츠 생성
+     * 외부위탁 콘텐츠를 생성한다.
+     * @param requestBody
+     * @returns com_ever_edu_cms_external_agency_dto_res_ExternalAgencyResDto OK
+     * @throws ApiError
+     */
+    public static saveContent1(
+        requestBody: com_ever_edu_cms_external_agency_dto_req_ExternalAgencySaveReqDto,
+    ): CancelablePromise<com_ever_edu_cms_external_agency_dto_res_ExternalAgencyResDto> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/external-agency/save',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 시험 문항 엑셀 업로드
+     * 시험 문항 단건 또는 다건을 작성한 엑셀 파일을 업로드한다.
+     * @param examPoolUuid
+     * @param formData
+     * @returns com_ever_edu_cms_exam_dto_res_ExamBooleanResDto Created
+     * @throws ApiError
+     */
+    public static excelImportQuestionsFile(
+        examPoolUuid: string,
+        formData?: {
+            multipartFile?: Blob;
+        },
+    ): CancelablePromise<com_ever_edu_cms_exam_dto_res_ExamBooleanResDto> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/exam/questions/{examPoolUuid}/upload',
+            path: {
+                'examPoolUuid': examPoolUuid,
+            },
+            formData: formData,
+            mediaType: 'multipart/form-data',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 시험 문항 엑셀 다운로드
+     * 시험 문항 단건 또는 다건을 작성한 엑셀 파일을 다운로드한다.
+     * @param examPoolUuid
+     * @param requestBody
+     * @returns any Created
+     * @throws ApiError
+     */
+    public static excelExportQuestionsFile(
+        examPoolUuid: string,
+        requestBody: com_ever_edu_cms_exam_dto_req_ExamQuestionExcelExportReqDto,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/exam/questions/{examPoolUuid}/download',
+            path: {
+                'examPoolUuid': examPoolUuid,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
                 422: `Unprocessable Entity`,
                 500: `Internal Server Error`,
             },
@@ -1298,12 +1349,12 @@ export class BoService {
      * 문항가져오기 문항 등록
      * 문항가져오기 팝업에서 선택한 문항을 등록한다.
      * @param requestBody
-     * @returns any OK
+     * @returns com_ever_edu_cms_exam_dto_res_ExamBooleanResDto Created
      * @throws ApiError
      */
     public static saveQuestionFromQuestionPoolList(
         requestBody: com_ever_edu_cms_exam_dto_req_ExamQuestionSaveCopiedReqDto,
-    ): CancelablePromise<any> {
+    ): CancelablePromise<com_ever_edu_cms_exam_dto_res_ExamBooleanResDto> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/admin/api/v1/exam/questions/pool',
@@ -1323,12 +1374,12 @@ export class BoService {
      * 시험 문항 복사
      * 문항추가 화면에서 기등록된 시험 문항 단건 또는 다건을 복사한다.
      * @param requestBody
-     * @returns any Created
+     * @returns com_ever_edu_cms_exam_dto_res_ExamBooleanResDto Created
      * @throws ApiError
      */
     public static saveCopiedList(
         requestBody: com_ever_edu_cms_exam_dto_req_ExamQuestionSaveCopiedReqDto,
-    ): CancelablePromise<any> {
+    ): CancelablePromise<com_ever_edu_cms_exam_dto_res_ExamBooleanResDto> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/admin/api/v1/exam/questions/copy',
@@ -1376,7 +1427,7 @@ export class BoService {
      * @returns com_ever_edu_cms_etc_dto_res_EtcContentStatusResDto OK
      * @throws ApiError
      */
-    public static draftSaveEtcContent(
+    public static draftSaveContent2(
         requestBody: com_ever_edu_cms_etc_dto_req_EtcContentDraftReqDto,
     ): CancelablePromise<com_ever_edu_cms_etc_dto_res_EtcContentStatusResDto> {
         return __request(OpenAPI, {
@@ -1572,13 +1623,13 @@ export class BoService {
      * 콘텐츠를 내보내기(번역/공유)한다.<br>콘텐츠 내보내기 시 리소스 메타 데이터까지 복사하고 리소스 파일은 복사하지 않는다.
      * @param contentUuid 콘텐츠 UUID
      * @param requestBody
-     * @returns com_ever_edu_cms_content_dto_res_ContentResDto OK
+     * @returns com_ever_edu_cms_content_dto_res_ContentExportResDto OK
      * @throws ApiError
      */
     public static export(
         contentUuid: string,
         requestBody: com_ever_edu_cms_content_dto_req_ContentExportReqDto,
-    ): CancelablePromise<com_ever_edu_cms_content_dto_res_ContentResDto> {
+    ): CancelablePromise<com_ever_edu_cms_content_dto_res_ContentExportResDto> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/admin/api/v1/content/{contentUuid}/export',
@@ -1652,7 +1703,7 @@ export class BoService {
      * @returns com_ever_edu_cms_blog_dto_res_BlogContentResDto OK
      * @throws ApiError
      */
-    public static saveBlog(
+    public static saveContent3(
         requestBody: com_ever_edu_cms_blog_dto_req_BlogSaveReqDto,
     ): CancelablePromise<com_ever_edu_cms_blog_dto_res_BlogContentResDto> {
         return __request(OpenAPI, {
@@ -1670,146 +1721,20 @@ export class BoService {
         });
     }
     /**
-     * 과제 단건 등록
-     * 과제 단건을 등록한다.
-     * @param requestBody
-     * @returns string Created
-     * @throws ApiError
-     */
-    public static saveAsgmt(
-        requestBody: com_ever_edu_cms_asgmt_dto_req_AsgmtSaveReqDto,
-    ): CancelablePromise<string> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/admin/api/v1/asgmt',
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 과제 관리자 제출
-     * 사용자의 과제를 관리자가 제출한다.
-     * @param requestBody
-     * @returns number Created
-     * @throws ApiError
-     */
-    public static submitByAdmin(
-        requestBody: com_ever_edu_cms_asgmt_dto_req_AsgmtSubmitSaveReqDto$onAdmin,
-    ): CancelablePromise<number> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/admin/api/v1/asgmt/submit/submit',
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 과제 랜덤 배포
-     * 차수의 과제를 랜덤으로 배포한다.
-     * @param courseSequenceId 과정 차수 ID
-     * @param userId 사용자 ID
-     * @returns any Created
-     * @throws ApiError
-     */
-    public static assignRandomAsgmt(
-        courseSequenceId: number,
-        userId: number,
-    ): CancelablePromise<any> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/admin/api/v1/asgmt/sequence/{courseSequenceId}/assign/{userId}/random',
-            path: {
-                'courseSequenceId': courseSequenceId,
-                'userId': userId,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                405: `Method Not Allowed`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 과제 그룹 단건 등록
-     * 과제 그룹 단건을 등록한다.
-     * @param requestBody
-     * @returns number Created
-     * @throws ApiError
-     */
-    public static saveGroup(
-        requestBody: com_ever_edu_cms_asgmt_dto_req_AsgmtGroupSaveReqDto,
-    ): CancelablePromise<number> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/admin/api/v1/asgmt/group',
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 과제 이전 차수 복사
-     * 선택한 차수의 과제를 현재 차수에 복사한다.
+     * 과제물 복사
+     * 과제물을 단건 또는 다건을 복사한다.
      * @param requestBody
      * @returns any Created
      * @throws ApiError
      */
-    public static copy1(
-        requestBody: com_ever_edu_cms_asgmt_dto_req_AsgmtGroupSaveReqDto$Copy,
+    public static saveCopiedList1(
+        requestBody: com_ever_edu_cms_asgmt_dto_req_AssignmentSubmissionCopiedReqDto,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/admin/api/v1/asgmt/copy',
+            url: '/admin/api/v1/assignment/submissions/copy',
             body: requestBody,
             mediaType: 'application/json',
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 동영상 학습자원 상세 조회
-     * 동영상 학습자원 상세 조회한다.
-     * @param contentUuid 콘텐츠 UUID
-     * @returns com_ever_edu_cms_video_dto_res_VideoResourceResDto OK
-     * @throws ApiError
-     */
-    public static getContentResource4(
-        contentUuid: string,
-    ): CancelablePromise<com_ever_edu_cms_video_dto_res_VideoResourceResDto> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/video/{contentUuid}',
-            path: {
-                'contentUuid': contentUuid,
-            },
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,
@@ -1827,12 +1752,38 @@ export class BoService {
      * @returns com_ever_edu_cms_video_dto_res_VideoStatusResDto OK
      * @throws ApiError
      */
-    public static getVideoStatus(
+    public static getContentStatus(
         contentUuid: string,
     ): CancelablePromise<com_ever_edu_cms_video_dto_res_VideoStatusResDto> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/video/{contentUuid}/status',
+            path: {
+                'contentUuid': contentUuid,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 동영상 학습자원 상세 조회
+     * 동영상 학습자원 상세 조회한다.
+     * @param contentUuid 콘텐츠 UUID
+     * @returns com_ever_edu_cms_video_dto_res_VideoResourceResDto OK
+     * @throws ApiError
+     */
+    public static getContentResource7(
+        contentUuid: string,
+    ): CancelablePromise<com_ever_edu_cms_video_dto_res_VideoResourceResDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/video/{contentUuid}/resource',
             path: {
                 'contentUuid': contentUuid,
             },
@@ -1853,7 +1804,7 @@ export class BoService {
      * @returns com_ever_edu_cms_video_dto_res_VideoChangeStatusResDto OK
      * @throws ApiError
      */
-    public static getVideoChangeStatus(
+    public static getContentChangeStatus(
         resourceId: number,
     ): CancelablePromise<com_ever_edu_cms_video_dto_res_VideoChangeStatusResDto> {
         return __request(OpenAPI, {
@@ -1866,7 +1817,6 @@ export class BoService {
                 400: `Bad Request`,
                 401: `Unauthorized`,
                 404: `Not Found`,
-                405: `Method Not Allowed`,
                 422: `Unprocessable Entity`,
                 500: `Internal Server Error`,
             },
@@ -1926,12 +1876,88 @@ export class BoService {
      * @returns com_ever_edu_cms_image_dto_res_ImageResourceListResDto OK
      * @throws ApiError
      */
-    public static getContentResource6(
+    public static getContentResource9(
         contentUuid: string,
     ): CancelablePromise<com_ever_edu_cms_image_dto_res_ImageResourceListResDto> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/image/{contentUuid}/resource',
+            path: {
+                'contentUuid': contentUuid,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * Image 콘텐츠 리소스 다운로드
+     * Image 콘텐츠 리소스를 다운로드한다.
+     * @param contentUuid Image 콘텐츠 UUID
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static getContentResourceDownload(
+        contentUuid: string,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/image/{contentUuid}/resource/download',
+            path: {
+                'contentUuid': contentUuid,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 외부링크 콘텐츠 리소스 조회
+     * 외부링크 콘텐츠 리소스를 조회한다.
+     * @param contentUuid 콘텐츠 UUID
+     * @returns com_ever_edu_cms_external_link_dto_res_ExternalLinkResourceResDto OK
+     * @throws ApiError
+     */
+    public static getContentResource11(
+        contentUuid: string,
+    ): CancelablePromise<com_ever_edu_cms_external_link_dto_res_ExternalLinkResourceResDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/external-link/{contentUuid}/resource',
+            path: {
+                'contentUuid': contentUuid,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 외부위탁 콘텐츠 리소스 조회
+     * 외부위탁 콘텐츠 리소스를 조회한다.
+     * @param contentUuid HTML5 콘텐츠 UUID
+     * @returns com_ever_edu_cms_external_agency_dto_res_ExternalAgencyResourceResDto OK
+     * @throws ApiError
+     */
+    public static getContentResource12(
+        contentUuid: string,
+    ): CancelablePromise<com_ever_edu_cms_external_agency_dto_res_ExternalAgencyResourceResDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/external-agency/{contentUuid}/resource',
             path: {
                 'contentUuid': contentUuid,
             },
@@ -2026,7 +2052,7 @@ export class BoService {
      * @returns com_ever_edu_cms_etc_dto_res_EtcContentResourceResDto OK
      * @throws ApiError
      */
-    public static getContentResource8(
+    public static getContentResource13(
         contentUuid: string,
     ): CancelablePromise<com_ever_edu_cms_etc_dto_res_EtcContentResourceResDto> {
         return __request(OpenAPI, {
@@ -2188,7 +2214,7 @@ export class BoService {
      * @param isContentEnabled
      * @param isCourseUsed
      * @param coordinatorName
-     * @param langCountryCode
+     * @param languageCountryCode
      * @param isMockUp
      * @param page Zero-based page index (0..N)
      * @param size The size of the page to be returned
@@ -2205,7 +2231,7 @@ export class BoService {
         isContentEnabled?: string,
         isCourseUsed?: string,
         coordinatorName?: string,
-        langCountryCode?: string,
+        languageCountryCode?: string,
         isMockUp?: boolean,
         page?: number,
         size: number = 20,
@@ -2223,7 +2249,7 @@ export class BoService {
                 'isContentEnabled': isContentEnabled,
                 'isCourseUsed': isCourseUsed,
                 'coordinatorName': coordinatorName,
-                'langCountryCode': langCountryCode,
+                'languageCountryCode': languageCountryCode,
                 'isMockUp': isMockUp,
                 'page': page,
                 'size': size,
@@ -2431,7 +2457,7 @@ export class BoService {
      * 학습 자원 현지화(내보내기) 목록을 조회한다.<br><br><b>페이징 정보</b>: <br> - totalElements: 쿼리 결과물의 전체 데이터 갯수 <br> - totalPages: 페이징하였을 때 나오는 총 페이지의 갯수 <br> - size: 페이지 당 데이터 수 설정 값(rows per page) <br> - numberOfElements: 페이지에 존재하는 요소의 갯수(최대 size와 동일) <br> - number: 요소를 가져온 페이지의 번호. 0 ~
      * @param tenantId
      * @param channelName
-     * @param langCountryCode
+     * @param languageCountryCode
      * @param isMockUp
      * @param page Zero-based page index (0..N)
      * @param size The size of the page to be returned
@@ -2442,7 +2468,7 @@ export class BoService {
     public static findContentExportList(
         tenantId?: string,
         channelName?: string,
-        langCountryCode?: string,
+        languageCountryCode?: string,
         isMockUp?: boolean,
         page?: number,
         size: number = 10,
@@ -2454,7 +2480,7 @@ export class BoService {
             query: {
                 'tenantId': tenantId,
                 'channelName': channelName,
-                'langCountryCode': langCountryCode,
+                'languageCountryCode': languageCountryCode,
                 'isMockUp': isMockUp,
                 'page': page,
                 'size': size,
@@ -2545,19 +2571,44 @@ export class BoService {
         });
     }
     /**
-     * 콘텐츠 타 채널 공유 가능여부
-     * 콘텐츠 타 채널 공유 가능여부를 반환 api입니다.
+     * 학습자원 학습 진행 여부
+     * 학습자원 학습 진행 이력이 있는지 조회한다.
+     * @param contentUuid 콘텐츠 UUID
+     * @returns boolean OK
+     * @throws ApiError
+     */
+    public static hasContentProgress(
+        contentUuid: string,
+    ): CancelablePromise<boolean> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/content/{contentUuid}/progress/exists',
+            path: {
+                'contentUuid': contentUuid,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 콘텐츠 내보내기(번역/공유) 가능여부
+     * 콘텐츠 내보내기(번역/공유) 가능여부를 체크하는 api입니다.
      * @param contentUuid 출발지 콘텐츠 UUID
      * @param tenantId 도착지 콘텐츠의 테넌트 ID
-     * @param channelUUid 도착지 콘텐츠의 채널 UUID
-     * @returns boolean OK
+     * @param channelUuid 도착지 콘텐츠의 채널 UUID
+     * @returns com_ever_edu_cms_content_dto_res_CheckSharingPossibleResDto OK
      * @throws ApiError
      */
     public static isChannelSharingPossible(
         contentUuid: string,
         tenantId: number,
-        channelUUid: string,
-    ): CancelablePromise<boolean> {
+        channelUuid: string,
+    ): CancelablePromise<com_ever_edu_cms_content_dto_res_CheckSharingPossibleResDto> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/admin/api/v1/content/{contentUuid}/channel/sharing',
@@ -2566,7 +2617,7 @@ export class BoService {
             },
             query: {
                 'tenantId': tenantId,
-                'channelUUid': channelUUid,
+                'channelUuid': channelUuid,
             },
             errors: {
                 400: `Bad Request`,
@@ -2580,23 +2631,27 @@ export class BoService {
     /**
      * 학습자원 학습 진행률 조회
      * 학습자원 학습 진행률을 조회한다.
+     * @param contentUuid 콘텐츠 UUID
      * @param courseSequenceId 과정차수Id
      * @param courseId 과정Id
      * @param curriculumId 커리큘럼Id
      * @param moduleId 콘텐츠 모듈/스콤-Orgn Id
      * @param lessonId 레슨/스콤-Item ID
-     * @param contentUuid 콘텐츠 UUID
+     * @param orgnId Fixed-Orgn Id
+     * @param itemId Fixed-Item ID
      * @param userUuid 사용자 UUID
      * @returns com_ever_edu_cms_content_dto_res_ContentProgressResDto OK
      * @throws ApiError
      */
     public static getContentProgress1(
+        contentUuid: string,
         courseSequenceId?: string,
         courseId?: string,
         curriculumId?: string,
         moduleId?: string,
         lessonId?: string,
-        contentUuid?: string,
+        orgnId?: string,
+        itemId?: string,
         userUuid?: string,
     ): CancelablePromise<com_ever_edu_cms_content_dto_res_ContentProgressResDto> {
         return __request(OpenAPI, {
@@ -2608,6 +2663,8 @@ export class BoService {
                 'curriculumId': curriculumId,
                 'moduleId': moduleId,
                 'lessonId': lessonId,
+                'orgnId': orgnId,
+                'itemId': itemId,
                 'contentUuid': contentUuid,
                 'userUuid': userUuid,
             },
@@ -2694,7 +2751,7 @@ export class BoService {
      * @returns com_ever_edu_cms_blog_dto_res_BlogResourceResDto OK
      * @throws ApiError
      */
-    public static getBlogResource1(
+    public static getContentResource15(
         contentUuid: string,
     ): CancelablePromise<com_ever_edu_cms_blog_dto_res_BlogResourceResDto> {
         return __request(OpenAPI, {
@@ -2713,25 +2770,20 @@ export class BoService {
         });
     }
     /**
-     * 과제 그룹 목록 및 과제 목록 조회
-     * 과정 차수에 속한 과제 그룹 목록을 조회한다.
-     * @param pageable
-     * @param courseSequenceId 과정 차수 ID
-     * @returns org_springframework_data_domain_PageCom_ever_edu_cms_asgmt_dto_res_AsgmtGroupResDto$DetailOnAdmin OK
+     * 과제물 목록 조회
+     * 과제 화면의 과제물 목록을 조회한다.
+     * @param contentUuid
+     * @returns com_ever_edu_cms_asgmt_dto_res_AssignmentSubmissionResDto OK
      * @throws ApiError
      */
-    public static findAllPage(
-        pageable: org_springdoc_core_converters_models_Pageable,
-        courseSequenceId: number,
-    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_cms_asgmt_dto_res_AsgmtGroupResDto$DetailOnAdmin> {
+    public static findAllByContentUuid(
+        contentUuid: string,
+    ): CancelablePromise<Array<com_ever_edu_cms_asgmt_dto_res_AssignmentSubmissionResDto>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/admin/api/v1/asgmt/sequence/{courseSequenceId}',
+            url: '/admin/api/v1/assignment/submissions/{contentUuid}',
             path: {
-                'courseSequenceId': courseSequenceId,
-            },
-            query: {
-                'pageable': pageable,
+                'contentUuid': contentUuid,
             },
             errors: {
                 400: `Bad Request`,
@@ -2743,50 +2795,20 @@ export class BoService {
         });
     }
     /**
-     * 과제 그룹 목록 조회
-     * 과정 차수에 속한 과제 그룹 목록을 조회한다.
-     * @param pageable
-     * @param courseSequenceId 과정 차수 ID
-     * @returns org_springframework_data_domain_PageCom_ever_edu_cms_asgmt_dto_res_AsgmtGroupResDto$ListOnAdmin OK
+     * 과제물 단건 조회
+     * 과제물 상세정보를 조회한다.
+     * @param assignmentSubmissionUuid
+     * @returns com_ever_edu_cms_asgmt_dto_res_AssignmentSubmissionResDto OK
      * @throws ApiError
      */
-    public static findGroupPage(
-        pageable: org_springdoc_core_converters_models_Pageable,
-        courseSequenceId: number,
-    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_cms_asgmt_dto_res_AsgmtGroupResDto$ListOnAdmin> {
+    public static findByContentUuid3(
+        assignmentSubmissionUuid: string,
+    ): CancelablePromise<com_ever_edu_cms_asgmt_dto_res_AssignmentSubmissionResDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/admin/api/v1/asgmt/sequence/{courseSequenceId}/groups',
+            url: '/admin/api/v1/assignment/submission/{assignmentSubmissionUuid}',
             path: {
-                'courseSequenceId': courseSequenceId,
-            },
-            query: {
-                'pageable': pageable,
-            },
-            errors: {
-                400: `Bad Request`,
-                401: `Unauthorized`,
-                404: `Not Found`,
-                422: `Unprocessable Entity`,
-                500: `Internal Server Error`,
-            },
-        });
-    }
-    /**
-     * 과제 목록 조회
-     * 과정 그룹에 속한 과제 목록을 조회한다.
-     * @param contentId 과정 그룹 ID
-     * @returns com_ever_edu_cms_asgmt_dto_res_AsgmtResDto$ListOnAdmin OK
-     * @throws ApiError
-     */
-    public static findAsgmtList(
-        contentId: number,
-    ): CancelablePromise<Array<com_ever_edu_cms_asgmt_dto_res_AsgmtResDto$ListOnAdmin>> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/admin/api/v1/asgmt/group/{contentId}/asgmts',
-            path: {
-                'contentId': contentId,
+                'assignmentSubmissionUuid': assignmentSubmissionUuid,
             },
             errors: {
                 400: `Bad Request`,
@@ -2901,6 +2923,31 @@ export class BoService {
                 400: `Bad Request`,
                 401: `Unauthorized`,
                 404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 과제물 삭제
+     * 과제물 목록을 삭제한다.
+     * @param requestBody
+     * @returns any Created
+     * @throws ApiError
+     */
+    public static delete2(
+        requestBody: com_ever_edu_cms_asgmt_dto_req_AssignmentSubmissionDeleteReqDto,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/admin/api/v1/assignment/submissions',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
                 422: `Unprocessable Entity`,
                 500: `Internal Server Error`,
             },

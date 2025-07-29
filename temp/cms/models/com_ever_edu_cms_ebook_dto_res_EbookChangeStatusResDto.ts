@@ -10,13 +10,13 @@ export type com_ever_edu_cms_ebook_dto_res_EbookChangeStatusResDto = {
      */
     fileName?: string;
     /**
-     * SCORM 처리 상태. FAIL|COMPLETE|STARTED|UPLOADING|PARSING
+     * E-BOOK 처리 상태 Enum(cms.ebook.EbookProcessingStatus) - FAIL|COMPLETE|STARTED|UPLOADING|PARSING
      */
     processingStatus?: com_ever_edu_cms_ebook_dto_res_EbookChangeStatusResDto.processingStatus;
 };
 export namespace com_ever_edu_cms_ebook_dto_res_EbookChangeStatusResDto {
     /**
-     * SCORM 처리 상태. FAIL|COMPLETE|STARTED|UPLOADING|PARSING
+     * E-BOOK 처리 상태 Enum(cms.ebook.EbookProcessingStatus) - FAIL|COMPLETE|STARTED|UPLOADING|PARSING
      */
     export enum processingStatus {
         NONE = 'NONE',

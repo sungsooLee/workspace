@@ -16,9 +16,10 @@ import {
 } from '@shared/ui';
 import { learningResourceQueryOptions, useDeleteContent } from '@entities/learning-resource';
 import { PreviewLearningWindow } from '@shared/ui/modal/preview-learning-window';
-import { LearningResourceBlogDetail } from '@features/learning-resource';
+import { getTooltipContent, LearningResourceBlogDetail } from '@features/learning-resource';
 
 import styles from './blog-detail.module.css';
+import { ContentCreateType } from '@types';
 
 export const Route = createLazyFileRoute('/_layout/learning/resource/blog/view')({
   component: RouteComponent,
@@ -122,7 +123,13 @@ function RouteComponent() {
   }, [loginUser]);
 
   return (
-    <PageContainer>
+    <PageContainer
+      tooltipProps={{
+        show: !!hasMapping || data?.createType !== ContentCreateType.MANUAL,
+        content: t(getTooltipContent(data?.createType)),
+        type: data?.createType,
+      }}
+    >
       <ContentsButtons>
         <Button
           type="button"

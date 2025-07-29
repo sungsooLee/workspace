@@ -5,6 +5,5 @@
 export type com_ever_edu_cms_tag_dto_res_TagResDto = {
     tagId?: number;
     tagName?: string;
-    contentUuid?: string;
 };
 

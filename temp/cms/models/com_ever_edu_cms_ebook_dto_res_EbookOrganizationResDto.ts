@@ -4,7 +4,7 @@
 /* eslint-disable */
 import type { com_ever_edu_cms_ebook_dto_res_EbookItemResDto } from './com_ever_edu_cms_ebook_dto_res_EbookItemResDto';
 /**
- * E-Book Organization 목록
+ * E-BOOK Organization 목록
  */
 export type com_ever_edu_cms_ebook_dto_res_EbookOrganizationResDto = {
     /**

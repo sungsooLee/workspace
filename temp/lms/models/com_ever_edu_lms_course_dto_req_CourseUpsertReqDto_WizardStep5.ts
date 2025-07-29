@@ -37,6 +37,7 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep5 = {
      */
     tagNames: Array<com_ever_edu_lms_course_dto_req_CourseUpsertReqDto$TagNameWrapper_WizardStep5>;
     learningSpaceNameValid?: boolean;
+    instructorValid?: boolean;
 };
 export namespace com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep5 {
     /**

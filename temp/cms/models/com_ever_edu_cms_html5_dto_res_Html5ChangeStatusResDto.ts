@@ -10,13 +10,13 @@ export type com_ever_edu_cms_html5_dto_res_Html5ChangeStatusResDto = {
      */
     fileUuid?: string;
     /**
-     * HTML5 동영상 콘텐츠 처리 상태. FAIL|COMPLETE|STARTED|PARSING|UPLOADING
+     * HTML5 동영상 콘텐츠 처리 상태 Enum(cms.html5.Html5ProcessingStatus) -  FAIL|COMPLETE|STARTED|PARSING|UPLOADING
      */
     processingStatus?: com_ever_edu_cms_html5_dto_res_Html5ChangeStatusResDto.processingStatus;
 };
 export namespace com_ever_edu_cms_html5_dto_res_Html5ChangeStatusResDto {
     /**
-     * HTML5 동영상 콘텐츠 처리 상태. FAIL|COMPLETE|STARTED|PARSING|UPLOADING
+     * HTML5 동영상 콘텐츠 처리 상태 Enum(cms.html5.Html5ProcessingStatus) -  FAIL|COMPLETE|STARTED|PARSING|UPLOADING
      */
     export enum processingStatus {
         NONE = 'NONE',

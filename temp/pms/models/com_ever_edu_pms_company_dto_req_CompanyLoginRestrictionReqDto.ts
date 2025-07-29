@@ -2,8 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { com_ever_edu_pms_blackwhite_dto_req_WhiteGroupReqDto } from './com_ever_edu_pms_blackwhite_dto_req_WhiteGroupReqDto';
 import type { com_ever_edu_pms_company_dto_req_CompanyLoginRestrictionDetailReqDto } from './com_ever_edu_pms_company_dto_req_CompanyLoginRestrictionDetailReqDto';
-import type { com_ever_edu_pms_company_dto_req_CompanyLoginRestrictionUserGroupReqDto } from './com_ever_edu_pms_company_dto_req_CompanyLoginRestrictionUserGroupReqDto';
 /**
  * 회사로그인제한정보
  */
@@ -43,7 +43,7 @@ export type com_ever_edu_pms_company_dto_req_CompanyLoginRestrictionReqDto = {
     /**
      * 회사로그인제한 유저그룹
      */
-    companyLoginRestrictionUserGroupList?: Array<com_ever_edu_pms_company_dto_req_CompanyLoginRestrictionUserGroupReqDto>;
+    companyLoginRestrictionWhiteUserGroupList?: Array<com_ever_edu_pms_blackwhite_dto_req_WhiteGroupReqDto>;
     /**
      * 사용여부
      */

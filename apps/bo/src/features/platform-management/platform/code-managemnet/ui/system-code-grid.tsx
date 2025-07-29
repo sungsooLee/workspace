@@ -64,7 +64,7 @@ const SystemCodeGridComponent = ({ data }: any) => {
   const [tableInstance, setTableInstance] = useState<Table<any>>();
   const { data: detailData } = useSystemCodeDetail(selectedRow?.enumNames);
 
-  const { provider, updateFormData } = useDynamicForm(formConfig);
+  const { provider, updateFormData } = useDynamicForm(formConfig());
 
   const handleRowSelect = (row: any) => {
     setSelectedDetailRow(null);
@@ -212,7 +212,7 @@ const SystemCodeGridComponent = ({ data }: any) => {
 
 export const SystemCodeGrid = SystemCodeGridComponent;
 
-const formConfig: DynamicFormConfig = {
+const formConfig = (): DynamicFormConfig => ({
   builders: [
     {
       name: 'cdGroupId',
@@ -257,4 +257,4 @@ const formConfig: DynamicFormConfig = {
       placeholder: '',
     },
   ],
-};
+});

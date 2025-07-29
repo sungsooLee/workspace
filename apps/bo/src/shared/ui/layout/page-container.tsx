@@ -6,12 +6,19 @@ import {
   useUpdateUser,
 } from '@learnway/auth/entities';
 import { useCurrentRoute } from '@learnway/hooks';
-import { IcoAlertCircle, IcoArrowLineTop, IcoClose02, IcoStar } from '@learnway/icons';
+import {
+  IcoAlertCircle,
+  IcoArrowLineTop,
+  IcoClose02,
+  IcoImport,
+  IcoStar,
+  IcoTranslation,
+} from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { Button, Popover, useModal } from '@learnway/ui';
+import { Button, Popover, Tooltip, useModal } from '@learnway/ui';
 import { useCreation } from 'ahooks';
 import { t } from 'i18next';
-import { last } from 'lodash';
+import { isEmpty, last } from 'lodash';
 import {
   Children,
   FC,
@@ -32,12 +39,19 @@ import fabStyles from '@learnway/styles/bo/assets/styles/modules/fab.module.css'
 import styles from '@learnway/styles/bo/assets/styles/modules/page-container.module.css';
 import tooltipPopoverStyles from '@learnway/styles/bo/assets/styles/modules/tootip-popover.module.css';
 import { NoticeBox } from '@shared/ui';
+import { ContentCreateType } from '@types';
 
 export type GuidePopupProps = {
   title?: string;
   description?: string;
   descriptions?: string[];
   type?: 'bullet' | 'count';
+};
+
+export type TooltipProps = {
+  show: boolean;
+  content: ReactNode | string;
+  type: ContentCreateType | string | undefined; // 툴팁 아이콘 타입 (추후 새로운 아이콘 필요 시 추가 or 수정 필요)
 };
 
 /**
@@ -50,22 +64,26 @@ const PageContainerComponent: FC<{
   children?: ReactNode; // 자식 요소
   displayContent?: boolean; // 컨텐츠를 출력할지 여부를 결정한다. 기본값은 출력
   showFavoriteButton?: boolean;
+  showTooltip?: boolean; // 메뉴 타이틀 우측 툴팁 노출 여부
   notice?: boolean; // 화면내에 Notice 있는 경우
   tabs?: boolean; // 컨텐츠 상단에 tab 있는 경우
   scrollHidden?: boolean; // 컨텐츠 안에 스크롤인 경우
   hideOutLine?: boolean; // 공통 > 나의 정보 화면(외곽라인,bg 없는 경우)
   customTitle?: string; // 별도 타이틀로 설정해야 하는 경우
   guidePopupProps?: GuidePopupProps; // 가이드 팝업 props, props가 존재하면 노출
+  tooltipProps?: TooltipProps; // 툴팁 props
 }> = ({
   children,
   displayContent = true,
   showFavoriteButton = true,
+  showTooltip = false,
   notice = false,
   tabs = false,
   scrollHidden = false,
   hideOutLine = false,
   customTitle,
   guidePopupProps,
+  tooltipProps,
 }) => {
   const { meta } = useCurrentRoute();
   const { activeMenuDepthMenu: activeMenuDepth, setActiveMenuDepthMenu } = useActiveMenuDepthState(
@@ -99,6 +117,20 @@ const PageContainerComponent: FC<{
   );
   const BodySlot = Children.toArray(children).filter(
     (child) => !(isValidElement(child) && child.type === ContentsButtons),
+  );
+
+  const tooltip = useMemo(
+    () => [
+      {
+        key: 'TRANSLATE',
+        Component: <IcoTranslation width={18} height={18} fill="#f6f8fd" stroke="#4c515e" />,
+      },
+      {
+        key: 'SHARED',
+        Component: <IcoImport width={18} height={18} fill="#f6f8fd" stroke="#4c515e" />,
+      },
+    ],
+    [],
   );
 
   // scroll event
@@ -304,6 +336,26 @@ const PageContainerComponent: FC<{
               >
                 <IcoAlertCircle width={20} height={20} fill="#A9AFB8" stroke="#ffffff" />
               </Popover>
+            )}
+            {tooltipProps?.show && (
+              <Tooltip
+                className="ml-[2px] align-middle"
+                side="right"
+                align="start"
+                content={tooltipProps.content}
+              >
+                {isEmpty(tooltip.find((item) => item.key === tooltipProps.type)) && (
+                  <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
+                )}
+                {tooltip.map(
+                  ({ key, Component }) =>
+                    key === tooltipProps.type && (
+                      <Button onlyIcon key={key}>
+                        {Component}
+                      </Button>
+                    ),
+                )}
+              </Tooltip>
             )}
           </h3>
           {ButtonSlot && displayContent && <div className={styles.btn_wrap}>{ButtonSlot}</div>}
