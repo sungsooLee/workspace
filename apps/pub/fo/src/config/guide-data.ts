@@ -553,12 +553,13 @@ export const guideData = [
     screenId: 'NLP_FO_USE_1010',
     screenName: '통합검색_최근/추천/인기 검색어팝업',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '/',
+    pageId: 'main/integrated-search',
     pageType: 'Pop-up',
     completionDate: '2025-03-26',
     lastUpdateDate: '',
     remarks:
-      '- 최근 : recent-searches.tsx\n- 추천 : recommended-searches.tsx\n- 인기 : popular-searches.tsx',
+      // '- 최근 : recent-searches.tsx\n- 추천 : recommended-searches.tsx\n- 인기 : popular-searches.tsx',
+      '',
   },
   {
     screenId: 'NLP_FO_USE_1011',

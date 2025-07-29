@@ -1,3 +1,5 @@
 .popover_content {
   @apply z-[0];
+  &.centered {
+  }
 }
