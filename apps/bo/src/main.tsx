@@ -1,18 +1,18 @@
-import * as ReactDOM from 'react-dom/client';
-import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { QueryClientProvider } from '@tanstack/react-query';
+import { createRouter, RouterProvider } from '@tanstack/react-router';
+import * as ReactDOM from 'react-dom/client';
 
-import { queryConfig, appConfig } from '@learnway/config';
-import { usePageRouteState } from '@learnway/hooks';
+import { appConfig, queryConfig } from '@learnway/config';
 import '@learnway/config/style/font.css';
+import { usePageRouteState } from '@learnway/hooks';
 
 import { AppConfigProvider } from './app/app-config-provider';
-import { routeTree } from './routeTree.gen';
 import { GlobalLoadingIndicator } from './components/global-loading-indicator';
+import { routeTree } from './routeTree.gen';
 
-import type { PageMeta } from './types';
 import { registerToastHandler } from '@learnway/shared';
 import { showToast } from '@learnway/ui';
+import type { PageMeta } from './types';
 
 const isLocal = process.env.NODE_ENV === 'local';
 
@@ -28,7 +28,10 @@ export const router = createRouter({
   },
   defaultErrorComponent: ({ error }) => {
     // Dynamic import 에러 처리
-    if (error.message.includes('Loading chunk')) {
+    if (
+      error.message.includes('Failed to fetch dynamically imported module') ||
+      error.message.includes('Loading chunk')
+    ) {
       window.location.reload();
     }
     return <div>Error: {error.message}</div>;

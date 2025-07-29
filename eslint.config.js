@@ -48,6 +48,9 @@ module.exports = [
           caughtErrorsIgnorePattern: '^_',
         },
       ],
+      // 사용하지 않는 import 제거
+      'no-unused-imports': 'off',
+      // '@typescript-eslint/no-unused-imports': 'error',
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/prefer-as-const': 'error',
 

@@ -1,12 +1,11 @@
 /// <reference types='vitest' />
-import { defineConfig, loadEnv } from 'vite';
-import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import { nxCopyAssetsPlugin } from '@nx/vite/plugins/nx-copy-assets.plugin';
-import { tanstackRouter } from '@tanstack/router-plugin/vite';
+import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import svgr from '@svgr/rollup';
-import path from 'path';
+import { tanstackRouter } from '@tanstack/router-plugin/vite';
 import viteReact from '@vitejs/plugin-react';
-import { visualizer } from 'rollup-plugin-visualizer';
+import path from 'path';
+import { defineConfig, loadEnv } from 'vite';
 
 // vitest automatically sets NODE_ENV to 'test' when running tests
 const isTest = process.env.NODE_ENV === 'test';
@@ -41,29 +40,30 @@ export default defineConfig(({ mode }) => {
         },
       },
     },
-    // optimizeDeps: {
-    //   exclude: ['@tanstack/router-devtools', '@tanstack/react-query-devtools'],
-    // },
+    optimizeDeps: {
+      include: ['react', 'react-dom', '@tanstack/react-router', '@tanstack/react-query'],
+      exclude: ['@tanstack/router-devtools', '@tanstack/react-query-devtools'],
+    },
     preview: {
       port: 4300,
       host: 'localhost',
     },
     plugins: [
+      viteReact(),
       nxViteTsPaths(),
       nxCopyAssetsPlugin(['*.md']),
       !isTest &&
         tanstackRouter({
-          autoCodeSplitting: true,
+          autoCodeSplitting: false, // 일시적으로 비활성화
           generatedRouteTree: './src/routeTree.gen.ts',
         }),
-      viteReact(),
       svgr({
         include: '**/*.svg',
         icon: true,
         titleProp: false,
         descProp: false,
       }),
-    ],
+    ].filter(Boolean),
     resolve: {
       alias: [
         { find: '@/', replacement: path.resolve(__dirname, 'src') },
@@ -95,7 +95,14 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         output: {
           entryFileNames: 'assets/[name].[hash].js',
-          chunkFileNames: 'assets/[name].[hash].js',
+          chunkFileNames: (chunkInfo) => {
+            // lazy 청크는 별도 폴더로 분리
+            const facadeModuleId = chunkInfo.facadeModuleId ? chunkInfo.facadeModuleId : '';
+            if (facadeModuleId.includes('.lazy.')) {
+              return 'assets/lazy/[name].[hash].js';
+            }
+            return 'assets/[name].[hash].js';
+          },
           assetFileNames: (assetInfo) => {
             const fileName = assetInfo.names?.[0] || assetInfo.originalFileName || 'asset';
             const info = fileName.split('.');

@@ -1,4 +1,20 @@
-import React, { useCallback, useEffect, useMemo, useState, useRef } from 'react';
+import {
+  useDeployTranslation,
+  useTranslation,
+} from '@entities/translation/service/translation.hook';
+import { translationQueryOptions } from '@entities/translation/service/translation.queries';
+import { TranslationStatusPopup } from '@features/platform-management/platform/multilingual-managemnet';
+import { PMSApiPrefix } from '@learnway/config';
+import {
+  CODE_GROUP,
+  SearchBoxConfig,
+  SelectOption,
+  useCodeStore,
+  useCurrentRoute,
+  useLanguageMap,
+  useSearchBox,
+} from '@learnway/hooks';
+import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import {
   Button,
   CountText,
@@ -9,31 +25,21 @@ import {
   useGridBox,
   useModal,
 } from '@learnway/ui';
-import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
-import { translationQueryOptions } from '@entities/translation/service/translation.queries';
 import {
-  CODE_GROUP,
-  SearchBoxConfig,
-  useCurrentRoute,
-  useSearchBox,
-  useLanguageMap,
-  useCodeStore,
-  SelectOption,
-} from '@learnway/hooks';
-import { useWatch } from 'react-hook-form';
+  ContentsButtons,
+  GridExcelDownloadButton,
+  GridExcelUploadButton,
+  LinkBox,
+  MainContents,
+  PageContainer,
+} from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
+import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { CellContext } from '@tanstack/react-table';
-import {
-  useDeployTranslation,
-  useTranslation,
-} from '@entities/translation/service/translation.hook';
-import { t } from 'i18next';
-import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
-import { PMSApiPrefix } from '@learnway/config';
 import { MultilingualUpdateReqParams } from '@types';
-import { TranslationStatusPopup } from '@features/platform-management/platform/multilingual-managemnet';
-import { MainContents, PageContainer, ContentsButtons, LinkBox } from '@shared/ui';
+import { t } from 'i18next';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useWatch } from 'react-hook-form';
 
 export const Route = createLazyFileRoute('/_layout/platform/system/multilingual/')({
   component: RouteComponent,
@@ -283,8 +289,6 @@ function RouteComponent() {
     }
   }, [data?.content]);
 
-  console.log(data && data.content);
-
   return (
     <div>
       <PageContainer>
@@ -453,6 +457,7 @@ const searchConfig: SearchBoxConfig = {
 
 const createGridConfig = (onCellClick: (data: any) => void, currentTargetLocale: string) => ({
   query: translationQueryOptions.all,
+  gridState: { size: 10 },
   columns: [
     {
       name: 'no1',
