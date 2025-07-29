@@ -31,7 +31,7 @@ function RouteComponent() {
     learningResourceQueryOptions.getContent(contentUuid),
   );
 
-  const { provider, onSubmit, updateFormData, formState, getValues, watch } = useDynamicForm2();
+  const { provider, onSubmit, updateFormData, formState, getValues } = useDynamicForm2();
 
   useEffect(() => {
     if (data) updateFormData(convertToVideoForm(data));
