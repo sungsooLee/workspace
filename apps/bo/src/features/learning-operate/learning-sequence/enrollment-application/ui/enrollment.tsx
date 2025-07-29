@@ -1,24 +1,21 @@
-import { useEffect, useCallback, useState } from 'react';
-import { useRouterState } from '@tanstack/react-router';
-import { t } from 'i18next';
-import { Link, useRouter } from '@tanstack/react-router';
-import { Tabs } from '@learnway/ui';
-import { useSearchBox, SearchBoxConfig } from '@learnway/hooks';
-import { useQueryClient } from '@tanstack/react-query';
-import dayjs from 'dayjs';
-import { EnrollmentRegist } from './enrollment-regist';
-import { EnrollmentWait } from './enrollment-wait';
-import { EnrollmentCancel } from './enrollment-cancel';
-import { queryOptions as sequenceQueryOptions } from '@entities/learning-sequence/service/learning-sequence.queries';
 import { queryOptions as companysQueryOptions } from '@entities/companies/service/companies.queries';
 import { queryOptions as departmentQueryOptions } from '@entities/department';
-import { SequenceTabDetail } from '@pages/_layout/learning/learning-sequence/-common/type';
-import { generateYears } from '@learnway/shared';
-import { useFetchEnrollmentSequenceCombo } from '@entities/learning-sequence/service/learning-sequence.hook';
+import { queryOptions as sequenceQueryOptions } from '@entities/learning-sequence/service/learning-sequence.queries';
 import { useFetchAuthUser } from '@learnway/auth/entities';
+import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
+import { generateYears } from '@learnway/shared';
+import { Tabs } from '@learnway/ui';
+import { SequenceTabDetail } from '@pages/_layout/learning/learning-sequence/-common/type';
+import { usePageState } from '@shared/lib';
+import { useQueryClient } from '@tanstack/react-query';
+import dayjs from 'dayjs';
+import { t } from 'i18next';
+import { useEffect, useState } from 'react';
 import { useWatch } from 'react-hook-form';
 import { useEnrollmentStore } from '../store/use-enrollment-store';
-import { usePageState } from '@shared/index';
+import { EnrollmentCancel } from './enrollment-cancel';
+import { EnrollmentRegist } from './enrollment-regist';
+import { EnrollmentWait } from './enrollment-wait';
 
 type EnrollmentComponentProps = {
   courseId?: number; // 과정 ID
