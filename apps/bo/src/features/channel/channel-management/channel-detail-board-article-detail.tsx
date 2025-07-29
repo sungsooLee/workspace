@@ -1,7 +1,6 @@
-import { formUtils } from '@entities/form-utils';
 import { FormDisplay } from '@features/form/ui/form-display';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { cn } from '@learnway/shared';
+import { cn, formUtils } from '@learnway/shared';
 import { ChipListModalSelectorFormField, ContentsRow, FormSubTitle, Input } from '@learnway/ui';
 import { FormRow } from '@shared/ui';
 import { t } from 'i18next';

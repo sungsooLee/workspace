@@ -1,5 +1,5 @@
-import { httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
+import { httpService } from '@learnway/shared';
 
 export default class TenantMenuManageService {
   /**
@@ -52,8 +52,8 @@ export default class TenantMenuManageService {
   static findMenuTenantMappingTree(tenantId: number, menuScope: string): Promise<any> {
     // console.log(`${tenantId}  ${deviceType}`);
     return httpService.get<any>(`${PMSApiPrefix()}/menus/tenantMappingTree`, {
-      tenantId: tenantId,
-      menuScope: menuScope,
+      tenantId,
+      menuScope,
     });
   }
 
@@ -67,7 +67,7 @@ export default class TenantMenuManageService {
   }
 }
 
-/* 
+/*
 payload 로부터 필요 없는 값을 제거 하여 전달 하기
 */
 function createTenantMenuCreateByAny(data: any) {

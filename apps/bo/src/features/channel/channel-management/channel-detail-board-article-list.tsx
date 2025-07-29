@@ -1,12 +1,10 @@
-import { useState, useCallback } from 'react';
-import { t } from 'i18next';
-import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { cn } from '@learnway/shared';
-import { Button, GridBox, Checkbox, useGridBox, useGridBoxConfig, Divider } from '@learnway/ui';
+import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
+import { formUtils } from '@learnway/shared';
+import { Button, Checkbox, Divider, GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
-import { useSearchBox, SearchBoxConfig } from '@learnway/hooks';
-import { formUtils } from '@entities/form-utils';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { t } from 'i18next';
+import { useCallback } from 'react';
 
 interface ChannelDetailBoardArticleListProps {
   onArticleClick?: (articleId: number) => void;
