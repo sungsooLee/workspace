@@ -373,6 +373,7 @@ const columns = () =>
           header: t('역할 시작일'),
           cell: (info) => info.getValue(),
           enableGrouping: false,
+          enableSorting: false,
           size: 100,
           meta: {
             cellAlign: 'center',
@@ -382,6 +383,7 @@ const columns = () =>
           header: t('역할 종료일'),
           cell: (info) => info.getValue(),
           enableGrouping: false,
+          enableSorting: false,
           size: 100,
           meta: {
             cellAlign: 'center',
@@ -412,6 +414,7 @@ const columns = () =>
           header: t('사번'),
           cell: (info) => info.getValue(),
           enableGrouping: false,
+          enableSorting: false,
           size: 130,
         }),
         columnHelper.accessor('applicant.name', {
@@ -424,6 +427,7 @@ const columns = () =>
             />
           ),
           enableGrouping: false,
+          enableSorting: false,
           size: 130,
         }),
       ],
@@ -435,6 +439,7 @@ const columns = () =>
           ? ''
           : getDateToString(new Date(info.row.original.createdDate), DATE_TIME_FORMAT.DATETIME_SEC),
       enableGrouping: false,
+      enableSorting: false,
       size: 160,
       meta: {
         cellAlign: 'center',
@@ -445,6 +450,7 @@ const columns = () =>
       cell: (info) =>
         t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.role.RoleApplicationStatus.${info.getValue()}`),
       enableGrouping: false,
+      enableSorting: false,
       size: 100,
       meta: {
         cellAlign: 'center',
@@ -460,6 +466,7 @@ const columns = () =>
         />
       ),
       enableGrouping: false,
+      enableSorting: false,
       size: 80,
       meta: {
         cellAlign: 'center',

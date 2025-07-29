@@ -125,8 +125,8 @@ const searchConfig: SearchBoxConfig = {
         label: t('역할 상태'),
         value: '',
         options: [
-          { label: '사용', value: 'A' },
-          { label: '미사용', value: 'B' },
+          { label: t('사용'), value: 'A' },
+          { label: t('미사용'), value: 'B' },
         ],
         presetOptionLabel: t('전체'),
       },
@@ -137,14 +137,14 @@ const searchConfig: SearchBoxConfig = {
         format: 'boolean',
         value: undefined,
         options: [
-          { label: '만료', value: true },
-          { label: '정상', value: false },
+          { label: t('만료'), value: true },
+          { label: t('정상'), value: false },
         ],
         presetOptionLabel: t('전체'),
       },
       {
         name: 'roleDate',
-        label: '역할 기간',
+        label: t('역할 기간'),
         type: 'date-range',
         value: {
           from: undefined,
