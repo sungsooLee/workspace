@@ -1,5 +1,5 @@
 .start {
-  @apply rounded-[12px] bg-[var(--gray98)] p-[32px];
+  @apply rounded-[12px] bg-[var(--gray98)] p-[24px];
   .check_point {
     @apply body_4_r text-left text-[var(--gray35)];
     dt {
@@ -19,7 +19,7 @@
     }
   }
   .link {
-    @apply ml-[12px] !p-0 text-[var(--blud50)] underline;
+    @apply ml-[12px] !p-0 text-[var(--blue50)] underline label-lg;
     text-underline-offset: 4px;
   }
 }
@@ -27,13 +27,13 @@
 :global(body.mobile) {
   @screen mobile {
     .start {
-      @apply p-[24px];
+      @apply p-[16px];
       .check_point {
         dt {
-          @apply body-md;
+          @apply body-md-b;
         }
         dd {
-          @apply body-sm pl-[10px] leading-[21px];
+          @apply body-sm pl-[10px] leading-[21px] mt-[8px];
           &::before {
             @apply top-[7px] h-[3px] w-[3px];
           }
