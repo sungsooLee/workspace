@@ -1,25 +1,25 @@
 /* IA110 / NLP_BO_CMS_1013 - 나의 학습자원 > 블로그 삳세 */
-import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
-import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
-import { useQuery } from '@tanstack/react-query';
-import { t } from 'i18next';
-import { useCurrentRoute } from '@learnway/hooks';
-import { useFetchAuthUser } from '@learnway/auth/entities';
-import { Button, Divider, useModal } from '@learnway/ui';
 import defaultImage from '@assets/images/thumb/img_thumb_default.jpg';
+import { learningResourceQueryOptions, useDeleteContent } from '@entities/learning-resource';
+import { getTooltipContent, LearningResourceBlogDetail } from '@features/learning-resource';
+import { useFetchAuthUser } from '@learnway/auth/entities';
+import { useCurrentRoute } from '@learnway/hooks';
+import { Button, Divider, useModal } from '@learnway/ui';
 import {
   ContentCourseMappingModal,
   ContentsButtons,
   MainContents,
   PageContainer,
+  PreviewLearningWindow,
   SubContents,
 } from '@shared/ui';
-import { learningResourceQueryOptions, useDeleteContent } from '@entities/learning-resource';
-import { PreviewLearningWindow } from '@shared/ui/modal/preview-learning-window';
-import { getTooltipContent, LearningResourceBlogDetail } from '@features/learning-resource';
+import { useQuery } from '@tanstack/react-query';
+import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
+import { t } from 'i18next';
+import { MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
 
-import styles from './blog-detail.module.css';
 import { ContentCreateType } from '@types';
+import styles from './blog-detail.module.css';
 
 export const Route = createLazyFileRoute('/_layout/learning/resource/blog/view')({
   component: RouteComponent,
