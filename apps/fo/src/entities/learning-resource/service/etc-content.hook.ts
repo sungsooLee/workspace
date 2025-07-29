@@ -1,4 +1,6 @@
+import { useQuery } from '@tanstack/react-query';
 import { EtcContentService } from '../api/etc-content';
+import { etcContentQueryOptions } from './etc-content.queries';
 
 /**
  * Etc content Download용
@@ -10,3 +12,7 @@ export const useEtcContentManager = () => {
     download,
   };
 };
+
+export function useGetEtcContentResource(contentUuid?: string) {
+  return useQuery(etcContentQueryOptions.resource(contentUuid));
+}

@@ -26,6 +26,10 @@ import {
   useGetImageResource,
 } from '@entities/learning-resource';
 import { CmsEnContentType } from '@learnway/types';
+import {
+  useEtcContentManager,
+  useGetEtcContentResource,
+} from '@entities/learning-resource/service/etc-content.hook';
 
 export const Route = createFileRoute('/_learning/learning-window')({
   component: RouteComponent,
@@ -41,6 +45,7 @@ function RouteComponent() {
   const [blogConfig, setBlogConfig] = useState<any>();
   const [htmlConfig, setHtmlConfig] = useState<any>();
   const [imageConfig, setImageConfig] = useState<any>();
+  const [etcConfig, setEtcConfig] = useState<any>();
 
   const {
     baseInfo,
@@ -51,6 +56,7 @@ function RouteComponent() {
     setHtmlInfo,
     setEbookInfo,
     setGalleryInfo,
+    setOtherInfo,
     setBaseInfo,
     setCurriculum,
     clearInfo,
@@ -63,6 +69,8 @@ function RouteComponent() {
   const { data: blogInfo } = useGetBlogResource(blogConfig?.contentUuid);
   const { data: htmlInfo } = useGetHtml5Resource(htmlConfig?.contentUuid);
   const { data: imageInfo } = useGetImageResource(imageConfig?.contentUuid);
+  const { data: etcInfo } = useGetEtcContentResource(etcConfig?.contentUuid);
+  const { download } = useEtcContentManager();
 
   const { watchLog, watchLogStatistics } = useVideoWatchLog();
 
@@ -74,8 +82,18 @@ function RouteComponent() {
     console.log('handelVideoWatchStatistics', payload);
     watchLogStatistics(payload);
   };
-  const handleOtherClickButton = async (playInfo: any, otherInfo: any) => {
+  const handleOtherClickButton = async (playInfo: LearningWindowBaseInfo, otherInfo: any) => {
     console.log('handleOtherClikcButton called');
+    if (otherInfo.contentType === CmsEnContentType.ETC) {
+      download({
+        courseSequenceId: playInfo.sequenceId,
+        courseId: playInfo.courseId,
+        curriculumId: playInfo.curriculumId,
+        moduleId: playInfo.moduleId,
+        lessonId: playInfo.lessonId,
+        contentUuid: otherInfo.contentUuid,
+      });
+    }
   };
 
   useEffect(() => {
@@ -107,6 +125,12 @@ function RouteComponent() {
     setEbookInfo(htmlInfo);
   }, [ebookInfo]);
 
+  useEffect(() => {
+    if (!etcInfo) return;
+    console.log('etcInfo', etcInfo);
+    setOtherInfo({ ...etcInfo, label: etcInfo?.fileInfo?.fileName });
+  }, [etcInfo]);
+
   const clearConfig = () => {
     setScormConfig(undefined);
     setEbookConfig(undefined);
@@ -114,6 +138,7 @@ function RouteComponent() {
     setBlogConfig(undefined);
     setHtmlConfig(undefined);
     setImageConfig(undefined);
+    setEtcConfig(undefined);
   };
 
   useEffect(() => {
@@ -166,6 +191,7 @@ function RouteComponent() {
         setImageConfig({ contentUuid: playInfo.contentUuid });
         break;
       case CmsEnContentType.ETC:
+        setEtcConfig({ contentUuid: playInfo.contentUuid });
         break;
       default:
     }
