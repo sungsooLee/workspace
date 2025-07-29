@@ -42,7 +42,7 @@ export function CategoryBadgeList({ onClose, onClick }: CategoryBadgeListProps) 
     // categories 데이터에서 해당하는 카테고리들을 찾아서 설정
     if (categories?.length && recentCategoryIds?.length) {
       const recent = recentCategoryIds
-        .map((id: number) => categories.find((cat: Category) => cat.categoryId === id))
+        .map((id: number) => categories.find((cat: Category) => cat.id === id))
         .filter(Boolean)
         .slice(0, 8); // 최대 8개까지만 표시
 
@@ -54,22 +54,22 @@ export function CategoryBadgeList({ onClose, onClick }: CategoryBadgeListProps) 
     e.stopPropagation();
     // 최근 방문 목록에서 제거
     const updatedIds = recentCategories
-      .filter((cat) => cat.categoryId !== categoryId)
-      .map((cat) => cat.categoryId);
+      .filter((cat) => cat.id !== categoryId)
+      .map((cat) => cat.id);
 
     localStorage.setItem('recentCategories', JSON.stringify(updatedIds));
-    setRecentCategories((prev) => prev.filter((cat) => cat.categoryId !== categoryId));
+    setRecentCategories((prev) => prev.filter((cat) => cat.id !== categoryId));
     onClose?.(categoryId);
   };
 
   const handleDelete = (categoryId: number) => {
     // 최근 방문 목록에서 제거
     const updatedIds = recentCategories
-      .filter((cat) => cat.categoryId !== categoryId)
-      .map((cat) => cat.categoryId);
+      .filter((cat) => cat.id !== categoryId)
+      .map((cat) => cat.id);
 
     localStorage.setItem('recentCategories', JSON.stringify(updatedIds));
-    setRecentCategories((prev) => prev.filter((cat) => cat.categoryId !== categoryId));
+    setRecentCategories((prev) => prev.filter((cat) => cat.id !== categoryId));
     // onClose?.(categoryId);
   };
   const handleClick = (data: Category) => {
@@ -93,14 +93,14 @@ export function CategoryBadgeList({ onClose, onClick }: CategoryBadgeListProps) 
           <div className={styles.lists}>
             {recentCategories.map((item) => (
               <SwiperSlide
-                key={item.categoryId}
+                key={item.id}
                 className={styles.slide}
                 onClick={() => handleClick(item)}
               >
                 <Chip
                   className={styles.item}
-                  option={{ label: item.name, value: item.categoryId + '' }}
-                  onDelete={() => handleDelete(item.categoryId)}
+                  option={{ label: item.name, value: item.id + '' }}
+                  onDelete={() => handleDelete(item.id)}
                 />
               </SwiperSlide>
             ))}
