@@ -22,7 +22,7 @@ function RouteComponent() {
         />
       </ContentsButtons>
       <MainContents>
-        <CompanyList />
+        <CompanyList detailPath={'/platform/company/management/detail'} />
       </MainContents>
     </PageContainer>
   );

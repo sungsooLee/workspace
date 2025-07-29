@@ -1,4 +1,5 @@
 import { useSystemCodeDetail } from '@entities/common-code';
+import EnrollService from '@entities/enroll/api/enroll';
 import { useUpdateUser } from '@entities/users/service/users.hook';
 import { DuplicateState } from '@features/form';
 import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
@@ -31,8 +32,16 @@ function compareLatestDate(dates: string[]) {
 }
 
 const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: any) => {
-  const { provider, control, updateFormData, onSubmit, onFormChange, clearFormError, getValues, setFormError } =
-    useDynamicForm(formConfig());
+  const {
+    provider,
+    control,
+    updateFormData,
+    onSubmit,
+    onFormChange,
+    clearFormError,
+    getValues,
+    setFormError,
+  } = useDynamicForm(formConfig());
 
   const { confirm: openConfirm } = useModal();
   const { open: openToast } = useToast();
@@ -47,9 +56,14 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
   });
 
   const [roleData, setRoleData] = useState<any[]>([]);
+  const [deliveryList, setDeliveryList] = useState<any[]>([]);
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
+    const initDeliveryList = async () => {
+      const data = await EnrollService.fetchEnrollDeliveryList(props.userInfo.userId);
+      setDeliveryList(data);
+    };
     if (props.userInfo) {
       const user = props.userInfo;
       const dates = [user.lockedDate, user.dormantDate, user.deletedDate];
@@ -137,6 +151,7 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
       }
 
       updateFormData(initialData);
+      //initDeliveryList();
     }
   }, [props.userInfo]);
 
@@ -155,10 +170,10 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
   const handleOnSubmit = async (data: any) => {
     console.log('#### handleOnSubmit', data);
 
-    if( data.companyPhoneNumber ) {
+    if (data.companyPhoneNumber) {
       const companyPhoneNumber = data.companyPhoneNumber;
       const officePhoneRegex = new RegExp('^0(2|[3-6][1-5])\\d{7,8}$');
-      if( !officePhoneRegex.test(companyPhoneNumber) ) {
+      if (!officePhoneRegex.test(companyPhoneNumber)) {
         setFormError('companyPhoneNumber', t('연락처 형식에 맞게 입력해 주세요.'));
         return false;
       }

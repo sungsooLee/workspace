@@ -1,9 +1,9 @@
-import { FC, useEffect, useState, useCallback } from 'react';
-import { t } from 'i18next';
-import { useRouterState } from '@tanstack/react-router';
-import { TreeBox, TreeNode, Button, TreeContainer } from '@learnway/ui';
+import { UserGroupCompanyService } from '@entities/user-group/api/user-group-company';
 import { transformUserGroupOrganizationApiDataToTreeData } from '@features/platform-management/company';
-import { useGetCompanyOrganizationTree } from '@entities/user-group/service/user-group-company.hook';
+import { Button, TreeBox, TreeContainer, TreeNode } from '@learnway/ui';
+import { useRouterState } from '@tanstack/react-router';
+import { t } from 'i18next';
+import { useEffect, useState } from 'react';
 
 interface CompanyOrganizationDetailTreeProps {
   title: string;
@@ -19,8 +19,7 @@ const CompanyOrganizationDetailTreeComponent = ({
 
   const [treeData, setTreeData] = useState([]);
   const [selectedNode, setSelectedNode] = useState<any>(null);
-
-  const { data, refetch } = useGetCompanyOrganizationTree(companyId);
+  const [companyOrganizationData, setCompanyOrganizationData] = useState(null);
 
   const renderNodeButtons = (node: TreeNode, level: number) => {
     if (level === 0) return;
@@ -47,9 +46,17 @@ const CompanyOrganizationDetailTreeComponent = ({
   };
 
   useEffect(() => {
-    if (data) {
+    const init = async () => {
+      const data = await UserGroupCompanyService.getCompanyOrganizationTree(companyId);
+      setCompanyOrganizationData(data);
+    };
+    if (companyId) init();
+  }, [companyId]);
+
+  useEffect(() => {
+    if (companyOrganizationData) {
       const transformedData = transformUserGroupOrganizationApiDataToTreeData(
-        [data],
+        [companyOrganizationData],
         t('러닝웨이 - 조직'),
       );
       setTreeData(transformedData);
@@ -59,7 +66,7 @@ const CompanyOrganizationDetailTreeComponent = ({
         setSelectedNode(companyNode);
       }
     }
-  }, [data]);
+  }, [companyOrganizationData]);
 
   useEffect(() => {
     if (selectedNode) onSelect(selectedNode);

@@ -1,7 +1,7 @@
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import { queryOptions as requestChannelQueryOptions } from '@entities/channel/service/request-channel.queries';
 import { useChannelApplication } from '@features/channel/channel-application/service/channel-application.service';
@@ -61,10 +61,6 @@ function RouteComponent() {
     if (rows && rows.length > 0) setApprovalButtonDisabled(false);
     else setApprovalButtonDisabled(true);
   };
-
-  useEffect(() => {
-    gridFetch();
-  }, []);
 
   const handleAcceptClick = (e: any) => {
     const rows = tableInstance?.getSelectedRowModel().rows;
@@ -197,7 +193,7 @@ const searchConfig = (): SearchBoxConfig => ({
       },
       {
         name: 'regDate',
-        label: '신청일',
+        label: t('신청일'),
         type: 'date-range',
         value: {
           from: undefined,
@@ -206,7 +202,7 @@ const searchConfig = (): SearchBoxConfig => ({
       },
       {
         name: 'approvalDate',
-        label: '접수/반려일',
+        label: t('접수/반려일'),
         type: 'date-range',
         value: {
           from: undefined,
@@ -311,6 +307,7 @@ const columns = () =>
       header: t('채널 유형'),
       size: 80,
       enableGrouping: false,
+      enableSorting: false,
     }),
     columnHelper.accessor('channelSecretType', {
       cell: (info) =>
@@ -318,6 +315,7 @@ const columns = () =>
       header: t('채널 구분'),
       size: 80,
       enableGrouping: false,
+      enableSorting: false,
     }),
     columnHelper.accessor('companyName', {
       cell: (info) => info.getValue(),
@@ -351,6 +349,7 @@ const columns = () =>
         ),
       header: t('신청 상태'),
       enableGrouping: false,
+      enableSorting: false,
       size: 90,
     }),
     columnHelper.accessor('approverName', {

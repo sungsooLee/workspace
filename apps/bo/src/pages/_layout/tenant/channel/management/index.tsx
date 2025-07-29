@@ -57,7 +57,6 @@ function RouteComponent() {
         loginUser.activeRole?.roleType === 'PLATFORM_MANAGER' ||
           loginUser.activeRole?.roleType === 'TENANT_MANAGER',
       );
-      gridFetch(searchParam());
     }
   }, [loginUser]);
 
@@ -197,6 +196,7 @@ const columns = () => [
     header: t('개설방식'),
     size: 90,
     enableGrouping: false,
+    enableSorting: false,
     meta: {
       cellAlign: 'center',
     },
@@ -214,6 +214,7 @@ const columns = () => [
     },
     header: t('테넌트'),
     enableGrouping: false,
+    enableSorting: false,
   }),
 
   columnHelper.accessor('channelName', {
@@ -248,6 +249,7 @@ const columns = () => [
     header: t('채널 유형'),
     size: 90,
     enableGrouping: false,
+    enableSorting: false,
     meta: {
       cellAlign: 'center',
     },
@@ -258,6 +260,7 @@ const columns = () => [
     header: t('채널 구분'),
     size: 90,
     enableGrouping: false,
+    enableSorting: false,
     meta: {
       cellAlign: 'center',
     },
@@ -269,6 +272,7 @@ const columns = () => [
       ),
     header: t('구독 방식'),
     enableGrouping: false,
+    enableSorting: false,
     size: 90,
     meta: {
       cellAlign: 'center',
@@ -287,11 +291,13 @@ const columns = () => [
     },
     header: t('채널 소유자'),
     enableGrouping: false,
+    enableSorting: false,
   }),
   columnHelper.accessor('isUsed', {
     cell: (info) => (info.getValue() ? t('사용') : t('미사용')),
     header: t('사용여부'),
     enableGrouping: false,
+    enableSorting: false,
     size: 90,
     meta: {
       cellAlign: 'center',
@@ -301,6 +307,7 @@ const columns = () => [
     cell: (info) => (info.getValue() ? t('노출') : t('비노출')),
     header: t('노출 여부'),
     enableGrouping: false,
+    enableSorting: false,
     size: 90,
     meta: {
       cellAlign: 'center',

@@ -1,23 +1,21 @@
-import { useEffect, useCallback } from 'react';
-import { useLocation, Link } from '@tanstack/react-router';
-import { t } from 'i18next';
-import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { queryOptions } from '@entities/companies/service/companies.queries';
+import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
+import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { Divider, GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
 import { SearchBox } from '@shared/ui/search-box';
-import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
-import { queryOptions } from '@entities/companies/service/companies.queries';
+import { Link } from '@tanstack/react-router';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { EnGlobalConst } from '@types';
+import { t } from 'i18next';
+import { useCallback } from 'react';
 
-const CompanyListComponent = () => {
-  const location = useLocation();
+interface CompanyListProps {
+  detailPath: string;
+}
 
+const CompanyListComponent = ({ detailPath }: CompanyListProps) => {
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig());
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
-
-  useEffect(() => {
-    gridFetch();
-  }, []);
 
   const handleOnSearch = useCallback((data: any) => {
     const searchData = {
@@ -48,18 +46,20 @@ const CompanyListComponent = () => {
     }),
     columnHelper.accessor('name', {
       header: t('회사명'),
-      cell: (info) => (
-        <Link
-          to={location.pathname + '/detail'}
-          state={{
-            companyCode: info.row.original.companyCode,
-            companyId: info.row.original.companyId,
-          }}
-          className="link"
-        >
-          {info.row.original.name}
-        </Link>
-      ),
+      cell: (info) => {
+        return (
+          <Link
+            to={detailPath}
+            state={{
+              companyCode: info.row.original.companyCode,
+              companyId: info.row.original.companyId,
+            }}
+            className="link"
+          >
+            {info.row.original.name}
+          </Link>
+        );
+      },
       enableGrouping: false,
       meta: {
         size: 'auto',
@@ -77,7 +77,7 @@ const CompanyListComponent = () => {
     columnHelper.accessor('lastModifiedBy', {
       header: t('수정자'),
       cell: (info) =>
-        info.row.original.isUseLinkageSystem ? '시스템' : info.row.original.lastModifiedBy,
+        info.row.original.isUseLinkageSystem ? t('시스템') : info.row.original.lastModifiedBy,
       enableGrouping: false,
       meta: {
         size: 'auto',

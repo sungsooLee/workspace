@@ -1,21 +1,21 @@
-import { useEffect, useCallback, useImperativeHandle, forwardRef } from 'react';
-import { t } from 'i18next';
+import { queryOptions } from '@entities/training-place/service/space.queries';
+import { CODE_GROUP, SearchBoxConfig, useFileManager, useSearchBox } from '@learnway/hooks';
+import { IcoDownload } from '@learnway/icons';
 import {
   Button,
   Divider,
-  useModal,
-  PreviewImage,
   GridBox,
+  PreviewImage,
   useGridBox,
   useGridBoxConfig,
+  useModal,
 } from '@learnway/ui';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { SearchBox } from '@shared/ui/search-box';
-import { useSearchBox, SearchBoxConfig, CODE_GROUP, useFileManager } from '@learnway/hooks';
-import { EnGlobalConst, EnPageMode } from '@types';
-import { queryOptions } from '@entities/training-place/service/space.queries';
 import { Link } from '@tanstack/react-router';
-import { IcoDownload } from '@learnway/icons';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { EnGlobalConst, EnPageMode } from '@types';
+import { t } from 'i18next';
+import { forwardRef, useCallback, useImperativeHandle } from 'react';
 
 interface TrainingPlaceListProps {
   pageMode: EnPageMode;
@@ -29,10 +29,6 @@ const TrainingPlaceListComponent = (props: TrainingPlaceListProps, ref: any) => 
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
 
   const { getFileInfo, fileDownload } = useFileManager();
-
-  useEffect(() => {
-    gridFetch();
-  }, [gridFetch]);
 
   const handleOnSearch = useCallback(
     (data: any) => {
@@ -96,6 +92,7 @@ const TrainingPlaceListComponent = (props: TrainingPlaceListProps, ref: any) => 
       cell: (info) => (info.getValue() ? t('사용') : t('미사용')),
       enableGrouping: false,
       size: 150,
+      enableSorting: false,
       meta: {
         cellAlign: 'center',
       },
@@ -151,6 +148,7 @@ const TrainingPlaceListComponent = (props: TrainingPlaceListProps, ref: any) => 
             return '';
           },
           enableGrouping: false,
+          enableSorting: false,
           size: 150,
           meta: {
             cellAlign: 'center',

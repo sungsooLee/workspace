@@ -1,5 +1,5 @@
-import { httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
+import { httpService } from '@learnway/shared';
 
 export class UserGroupCompanyService {
   /**
@@ -18,7 +18,7 @@ export class UserGroupCompanyService {
    */
   static getCompanyOrganizationTree(companyId: number): Promise<any> {
     return httpService.get<any>(`${PMSApiPrefix()}/userGroup/company/organization-tree`, {
-      companyId: companyId,
+      companyId,
     });
   }
 
