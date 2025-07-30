@@ -168,7 +168,7 @@ const UserShuttleComponent = ({
 
   const handleOnSearch = (data: any) => {
     const queryPromise = queryClient.fetchQuery(
-      usersQueryOptions.all({ ...data, roleId, page: 0, size: 2000 }),
+      usersQueryOptions.all({ ...data, page: 0, size: 2000 }),
     );
     queryPromise.then((data) => {
       setGrideData(data.content);
