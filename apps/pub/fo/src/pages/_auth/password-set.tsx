@@ -1,13 +1,12 @@
-import { isMobile } from 'react-device-detect';
-import { createFileRoute, Link } from '@tanstack/react-router';
+import { IcoCaution, IcoFormRequired } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { Button, Input, ContentsRow, useModal } from '@learnway/ui';
-import styles from './password-input.module.css';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
-import { IcoCaution, IcoFormRequired } from '@learnway/icons';
+import { Button, ContentsRow, Input } from '@learnway/ui';
+import { createFileRoute } from '@tanstack/react-router';
+import styles from './password-input.module.css';
 
-import { MobileView, BrowserView } from 'react-device-detect';
+import { BrowserView, MobileView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
 
 export const Route = createFileRoute('/_auth/password-set')({
@@ -74,7 +73,7 @@ function RouteComponent() {
           <div className={`${noticeBoxStyles.start} ${styles.signup_noti}`}>
             <dl className={noticeBoxStyles.check_point}>
               <dt>
-                <IcoCaution width={16} height={16} stroke="#6F798B" />
+                <IcoCaution />
                 유의사항
               </dt>
               <dd>

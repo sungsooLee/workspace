@@ -1,12 +1,11 @@
-import { memo } from 'react';
-import { isMobile } from 'react-device-detect';
-import styles from './google-key-popup.module.css';
-import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import { IcoCaution } from '@learnway/icons';
-import { GoogleQrcodePopup, GoogleInputPopup } from '../../../features/auth';
+import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import { Button, ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui';
-import { MobileView, BrowserView } from 'react-device-detect';
+import { memo } from 'react';
+import { BrowserView, isMobile, MobileView } from 'react-device-detect';
+import { GoogleInputPopup, GoogleQrcodePopup } from '../../../features/auth';
 import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
+import styles from './google-key-popup.module.css';
 
 import { cn } from '@learnway/shared';
 
@@ -40,7 +39,7 @@ const GoogleKeyPopupCompoment = () => {
           <div className={`${noticeBoxStyles.start} ${styles.signup_noti}`}>
             <dl className={noticeBoxStyles.check_point}>
               <dt>
-                <IcoCaution width={16} height={16} stroke="#6F798B" />
+                <IcoCaution />
                 유의사항
               </dt>
               <dd>구글 OTP 앱에서 +를 탭하고 QR코드 스캔을 선택해 주세요.</dd>

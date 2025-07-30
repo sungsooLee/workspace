@@ -1,16 +1,14 @@
-import { createFileRoute, Link } from '@tanstack/react-router';
-import { cn } from '@learnway/shared';
-import { isMobile } from 'react-device-detect';
-import { ContentsRow, Input, Button, useModal } from '@learnway/ui';
-import { PasswordChangePopup, PhoneChangePopup } from '../../../features/layout';
-import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import { IcoCaution } from '@learnway/icons';
+import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
+import { Button, ContentsRow, Input, useModal } from '@learnway/ui';
+import { createFileRoute, Link } from '@tanstack/react-router';
+import { isMobile } from 'react-device-detect';
+import { PasswordChangePopup, PhoneChangePopup } from '../../../features/layout';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 //import styles from './information-change.module.css';
 import styles from '@learnway/styles/fo/pages/_layout/my-page/privacy/change-information.module.css';
 import myPageContainerStyles from '@learnway/styles/fo/widgets/layout/ui/main/container/my-page-container.module.css';
-import fallbackStyles from '../../../features/layout/ui/fallback.module.css';
 
 export const Route = createFileRoute('/_layout/my/information-change')({
   component: RouteComponent,
@@ -157,7 +155,7 @@ function RouteComponent() {
         <div className={`${noticeBoxStyles.start} ${styles.notice}`}>
           <dl className={noticeBoxStyles.check_point}>
             <dt>
-              <IcoCaution width={24} height={24} stroke="#4d525c" />
+              <IcoCaution />
               안내사항
             </dt>
             <dd>개인정보 변경을 원하시면 HSW에서 진행해주세요. 변경된 정보를 다음날 적용됩니다.</dd>
@@ -168,7 +166,7 @@ function RouteComponent() {
         <div className={`${noticeBoxStyles.start} ${styles.notice}`}>
           <dl className={noticeBoxStyles.check_point}>
             <dt>
-              <IcoCaution width={24} height={24} stroke="#4d525c" />
+              <IcoCaution />
               안내사항
             </dt>
             <dd>

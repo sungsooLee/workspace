@@ -1,19 +1,16 @@
-import { isMobile } from 'react-device-detect';
-import { createFileRoute } from '@tanstack/react-router';
+import { IcoCaution, IcoFormRequired } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { IcoShieldTick01, IcoFaceId01, IcoCaution, IcoFormRequired } from '@learnway/icons';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
-import otpToolFormField from './otp-tool-form-field.module.css';
+import { createFileRoute } from '@tanstack/react-router';
 //import styles from './mpass-cert.module.css';
-import styles from '@learnway/styles/fo/pages/_auth/signup-progress/signup-progress.module.css';
-import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-form.module.css'; // 영역
+import styles from '@learnway/styles/fo/pages/_auth/signup-progress/signup-progress.module.css';
 import embededAlert from '@learnway/styles/fo/shared/ui/embeded-alert/embeded-alert.module.css';
+import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 
-import { Button, RadioCard, Input, useModal, ContentsRow } from '@learnway/ui';
-import { MpassPopup } from '../../features/auth';
+import { Button, ContentsRow, Input, useModal } from '@learnway/ui';
 
-import { MobileView, BrowserView } from 'react-device-detect';
+import { BrowserView, MobileView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
 
 export const Route = createFileRoute('/_auth/progress-status-email')({
@@ -59,7 +56,7 @@ function RouteComponent() {
           <div className={`${noticeBoxStyles.start} ${authFormStyles.signup_noti}`}>
             <dl className={noticeBoxStyles.check_point}>
               <dt>
-                <IcoCaution width={16} height={16} stroke="#6F798B" />
+                <IcoCaution />
                 유의사항
               </dt>
               <dd>아이디로 사용하는 이메일을 입력해야 진행현황을 확인할 수 있습니다.</dd>
