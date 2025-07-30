@@ -686,3 +686,23 @@ export interface ContentSharingInfoRes {
   isPossible: boolean;
   reason: string;
 }
+
+export interface TenantCodeType {
+  tenantId: number;
+  tenantName: string;
+}
+
+export interface GetShareTenantsChannelsParams {
+  contentUuid: string;
+  tenantId: number;
+  channelName?: string;
+}
+
+export interface ChannelCodeType {
+  tenantId: number;
+  tenantName: string;
+  channelUuid: string;
+  cahnnelName: string;
+}
+
+export type GetShareTenantsChannelsRes = ChannelCodeType[];

@@ -32,20 +32,20 @@ const ChannelDetailBoardArticleListComponent = ({
   const columns = [
     columnHelper.accessor('boardType', {
       cell: (info) => info.getValue(),
-      header: '게시판 유형',
+      header: t('게시판 유형'),
       size: 130,
       enableGrouping: false,
     }),
     columnHelper.accessor('boardCode', {
       cell: (info) => info.getValue(),
-      header: '게시판 코드',
+      header: t('게시판 코드'),
       size: 100,
       enableGrouping: false,
     }),
 
     columnHelper.accessor('articleDivision', {
       cell: (info) => info.getValue(),
-      header: '게시물 분류',
+      header: t('게시물 분류'),
       enableGrouping: false,
       size: 120,
     }),
@@ -55,12 +55,12 @@ const ChannelDetailBoardArticleListComponent = ({
           {info.row.original.title}
         </Button>
       ),
-      header: '제목',
+      header: t('제목'),
       enableGrouping: false,
     }),
     columnHelper.accessor('isFixed', {
       cell: (info) => (info.getValue() ? t('고정') : t('비고정')),
-      header: '고정 공지 여부',
+      header: t('고정 공지 여부'),
       enableGrouping: false,
       size: 130,
     }),
@@ -72,7 +72,7 @@ const ChannelDetailBoardArticleListComponent = ({
     }),
     columnHelper.accessor('isActive', {
       cell: (info) => (info.getValue() ? t('노출') : t('비노출')),
-      header: '노출 여부',
+      header: t('노출 여부'),
       enableGrouping: false,
       size: 120,
     }),
@@ -84,13 +84,13 @@ const ChannelDetailBoardArticleListComponent = ({
     }),
     columnHelper.accessor('createdBy', {
       cell: (info) => info.getValue(),
-      header: '등록자',
+      header: t('등록자'),
       size: 130,
       enableGrouping: false,
     }),
     columnHelper.accessor('createdDate', {
       cell: (info) => info.getValue(),
-      header: '등록일',
+      header: t('등록일'),
       enableGrouping: false,
       size: 130,
     }),

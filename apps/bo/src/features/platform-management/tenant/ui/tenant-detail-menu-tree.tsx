@@ -168,6 +168,7 @@ const TenantDetailMenuTreeComponent: FC<any> = ({ menuScope, roleInfo }) => {
           payload.menuScope = menuScope;
           updateMenuTenent(payload, {
             onSuccess: () => {
+              refetchMenuTree();
               refetchDetail();
             },
           });

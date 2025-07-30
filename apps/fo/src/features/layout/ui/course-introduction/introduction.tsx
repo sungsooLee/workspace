@@ -1,35 +1,35 @@
-import { forwardRef, memo, useEffect, useState } from 'react';
-import { Link } from '@tanstack/react-router';
-import { isMobile } from 'react-device-detect';
+import { IcoArrowDown, IcoEssential, IcoSymbol } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { ChipList, Avatar, Button, Accordion } from '@learnway/ui';
-import { IcoSymbol, IcoEssential, IcoArrowDown } from '@learnway/icons';
+import { Accordion, Avatar, Button, ChipList } from '@learnway/ui';
+import { Link } from '@tanstack/react-router';
+import { forwardRef, memo, useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import { Curriculum, PackageCardList } from '../../../../features/layout/';
 // import { initialConfig as editorConfig } from '@learnway/ui/src/lib/editor/config/editor.config';
 // import { HtmlContent } from '@learnway/ui/src/lib/html-content/html-content';
 import { initialConfig as editorConfig } from '../../../../../../../libs/ui/src/lib/editor/config/editor.config'; // 임시로 상대경로
 import { HtmlContent } from '../../../../../../../libs/ui/src/lib/html-content/html-content'; // 임시로 상대경로
 
-import operatorStyles from '@learnway/styles/fo/pages/_layout/course-introduction/operator.module.css';
+import styles from '@learnway/styles/fo/features/layout/ui/course-introduction/introduction.module.css';
 import definitionListStyles from '@learnway/styles/fo/pages/_layout/course-introduction/definition-list.module.css';
+import operatorStyles from '@learnway/styles/fo/pages/_layout/course-introduction/operator.module.css';
 import dataNoticeStyles from '@learnway/styles/fo/shared/ui/data-display/notice.module.css';
 import bulletStyles from '@learnway/styles/fo/shared/ui/list/bullet.module.css';
-import styles from '@learnway/styles/fo/features/layout/ui/course-introduction/introduction.module.css';
 
 // 이미지
-import discriminationImg from '@learnway/styles/fo/assets/images/temp/img_discrimination.png';
-import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 import avatarDefault from '@learnway/styles/fo/assets/images/common/img_avatar.png';
-import { createEditor } from 'lexical';
+import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 import { $generateHtmlFromNodes } from '@lexical/html';
+import { createEditor } from 'lexical';
 
 interface Props {
   preRequired: Array<any>;
   introduction: any;
+  curriculum: any;
 }
 
 const CourseIntroductionCompoment = forwardRef<HTMLDivElement, Props>(
-  ({ preRequired, introduction }, ref) => {
+  ({ preRequired, introduction, curriculum }, ref) => {
     const [preRequiredData, setPreRequiredData] = useState(preRequired);
 
     const tagValue = introduction.tags;
@@ -86,17 +86,17 @@ const CourseIntroductionCompoment = forwardRef<HTMLDivElement, Props>(
 
     // 커리큘럼 아코디언
     const [curriculumValue, setCurriculumValue] = useState<string>('a');
-    const curriculumValueItems = introduction.curriculum?.map((i: any) => ({
-      value: i.id,
+    const curriculumValueItems = curriculum?.moduleList?.map((module: any) => ({
+      value: module.moduleId,
       title: (
         <div className={styles.title}>
           <p>
-            {i.name}
-            <span>{i.totalTime}</span>
+            {module.moduleName}
+            <span>{module.totalTime && module.totalTime + '분'}</span>
           </p>
         </div>
       ),
-      children: <Curriculum curriculumData={CurriculumDataFn(i.course)} />,
+      children: <Curriculum curriculumData={module.lessonList} />,
     }));
 
     // 과정 정보 더보기
@@ -170,7 +170,7 @@ const CourseIntroductionCompoment = forwardRef<HTMLDivElement, Props>(
           <HtmlContent>{htmlString}</HtmlContent>
 
           {/* 커리큘럼 */}
-          {introduction.curriculum && (
+          {curriculum && (
             <div className={styles.info_box}>
               <div className={styles.tit_box}>
                 <strong>커리큘럼</strong>

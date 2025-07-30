@@ -1,12 +1,15 @@
 import { memo } from 'react';
-import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
-import { TermsButton } from '../../../../../../features/main';
+import { TermsButton } from '@features/main';
 
 import styles from '@learnway/styles/fo/widgets/layout/ui/auth/auth-footer/auth-footer.module.css';
+import { Button, useModal } from '@learnway/ui';
 
 function AuthFooterComponent() {
+  const { t } = useTranslation();
+  const { openModal, alert } = useModal();
+
   return (
     <div className={`${styles.start} ${styles.footer_auth}`}>
       <div className={styles.footer_area}>
@@ -18,11 +21,21 @@ function AuthFooterComponent() {
             <TermsButton termsType="PRIVACY_POLICY" />
           </li>
           <li>
-            <Link to={'/'}>고객지원</Link>
+            <Button
+              onClick={
+                () => alert('준비중 입니다.')
+                // openModal({
+                //   width: isMobile ? 'm_full' : 'lg',
+                //   content: <ContactPopup />,
+                // })
+              }
+            >
+              {t('고객지원')}
+            </Button>
           </li>
         </ul>
         <div className={styles.copyright}>
-          copyright © 2023 Hyundai-Autoever. All rights reserved.{' '}
+          copyright © 2023 Hyundai-Autoever. All rights reserved.
         </div>
         {/**
         <ul className={styles.menu_list}>

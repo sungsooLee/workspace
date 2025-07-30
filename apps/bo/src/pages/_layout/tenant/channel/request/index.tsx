@@ -160,7 +160,7 @@ const searchConfig = (): SearchBoxConfig => ({
       {
         name: 'tenantId',
         type: 'custom',
-        label: t('LABEL.form.label.tenant', '테넌트'),
+        label: t('테넌트'),
         value: '',
         format: 'object',
         element: <TenantByRoleDropdownFormField />,
@@ -170,14 +170,14 @@ const searchConfig = (): SearchBoxConfig => ({
         type: 'text',
         label: t('채널명'),
         value: '',
-        placeholder: '입력',
+        placeholder: '',
       },
       {
         name: 'requesterEmployeeNumber',
         type: 'text',
         label: t('신청자 사번'),
         value: '',
-        placeholder: '입력',
+        placeholder: '',
       },
     ],
     [

@@ -50,7 +50,6 @@ export * from './modal/address-search-modal';
 export * from './modal/category-choice-tree-modal';
 export * from './modal/channel-choice-modal';
 export * from './modal/channel-list-choice-modal';
-export * from './modal/channel-request-choice-modal';
 export * from './modal/channel-shuttle-modal';
 export * from './modal/company-choice-modal';
 export * from './modal/company-shuttle-modal';

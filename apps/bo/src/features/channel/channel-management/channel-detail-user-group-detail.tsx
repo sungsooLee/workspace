@@ -188,7 +188,7 @@ const formConfig = (): DynamicFormConfig => ({
       placeholder: '',
       guideText: t('사용 상태인 경우 유저그룹에서 조회할 수 있습니다.'),
       switchConfig: {
-        label: (value: boolean) => (value ? '사용' : '미사용'),
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
       },
     },
     {

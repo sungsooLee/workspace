@@ -133,10 +133,10 @@ const formConfig: DynamicFormConfig = {
       type: 'radio-group',
       label: t('고정 여부'),
       value: true,
-      guideText: '고정 게시물은 게재 기간을 선택해야 합니다.',
+      guideText: t('고정 게시물은 게재 기간을 선택해야 합니다.'),
       options: [
-        { value: true, label: '고정' },
-        { value: false, label: '미고정' },
+        { value: true, label: t('고정') },
+        { value: false, label: t('미고정') },
       ],
     },
     {
@@ -154,8 +154,8 @@ const formConfig: DynamicFormConfig = {
       label: t('노출 여부'),
       value: true,
       options: [
-        { value: true, label: '노출' },
-        { value: false, label: '비노출' },
+        { value: true, label: t('노출') },
+        { value: false, label: t('비노출') },
       ],
     },
     {
@@ -188,8 +188,8 @@ const formConfig: DynamicFormConfig = {
       label: t('비밀글 여부'),
       value: true,
       options: [
-        { value: true, label: '공개' },
-        { value: false, label: '비밀' },
+        { value: true, label: t('공개') },
+        { value: false, label: t('비밀') },
       ],
     },
     {
@@ -198,8 +198,8 @@ const formConfig: DynamicFormConfig = {
       label: t('댓글 좋아요 여부'),
       value: true,
       options: [
-        { value: true, label: '사용' },
-        { value: false, label: '미사용' },
+        { value: true, label: t('사용') },
+        { value: false, label: t('미사용') },
       ],
     },
     {
@@ -208,7 +208,7 @@ const formConfig: DynamicFormConfig = {
       label: t('답글 등록 여부'),
       value: true,
       switchConfig: {
-        label: (value: boolean) => (value ? '사용' : '미사용'),
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
       },
     },
     {
@@ -217,7 +217,7 @@ const formConfig: DynamicFormConfig = {
       label: t('댓글 등록 여부'),
       value: true,
       switchConfig: {
-        label: (value: boolean) => (value ? '사용' : '미사용'),
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
       },
     },
     {
@@ -228,9 +228,9 @@ const formConfig: DynamicFormConfig = {
       value: [],
       showSelectAll: true,
       options: [
-        { value: 'EMAIL', label: '이메일' },
-        { value: 'SMS', label: 'SMS' },
-        { value: 'KAKAO', label: '카카오톡' },
+        { value: 'EMAIL', label: t('이메일') },
+        { value: 'SMS', label: t('SMS') },
+        { value: 'KAKAO', label: t('카카오톡') },
       ],
     },
     {
@@ -241,9 +241,9 @@ const formConfig: DynamicFormConfig = {
       value: [],
       showSelectAll: true,
       options: [
-        { value: 'EMAIL', label: '이메일' },
-        { value: 'SMS', label: 'SMS' },
-        { value: 'KAKAO', label: '카카오톡' },
+        { value: 'EMAIL', label: t('이메일') },
+        { value: 'SMS', label: t('SMS') },
+        { value: 'KAKAO', label: t('카카오톡') },
       ],
     },
   ],
