@@ -3,12 +3,16 @@
   "version": "1.0.0",
   "description": "프론트엔드 개발 가이드 문서",
   "scripts": {
-    "serve": "python -m http.server 3001",
-    "serve:mac": "python3 -m http.server 3001",
-    "dev": "docsify serve . --port 3001",
-    "build": "echo 'Static files ready for deployment'",
-    "start": "python -m http.server 3001",
-    "docs": "python -m http.server 3001"
+    "dev": "docsify serve . --port 3001 --open",
+    "serve": "docsify serve . --port 3001",
+    "start": "npm run dev",
+    "docs": "npm run dev",
+    "install-cli": "npm install -g docsify-cli",
+    "serve:simple": "npx serve . -p 3001 -s",
+    "serve:http": "npx http-server . -p 3001 -o"
+  },
+  "devDependencies": {
+    "docsify-cli": "^4.4.4"
   },
   "keywords": ["docs", "frontend", "fsd", "react", "typescript"],
   "author": "Development Team",

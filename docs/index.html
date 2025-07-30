@@ -23,10 +23,18 @@
       padding: 2px 4px;
       border-radius: 3px;
     }
+    .markdown-section h1 {
+      color: #2c3e50;
+      border-bottom: 2px solid #42b883;
+      padding-bottom: 8px;
+    }
+    .sidebar-nav > ul > li > a {
+      font-weight: 600;
+    }
   </style>
 </head>
 <body>
-  <div id="app">문서를 로딩 중입니다...</div>
+  <div id="app">📚 문서를 로딩 중입니다...</div>
   <script>
     window.$docsify = {
       name: '프론트엔드 개발 가이드',
@@ -43,23 +51,14 @@
         depth: 6
       },
       copyCode: {
-        buttonText: 'Copy',
-        errorText: 'Error',
-        successText: 'Copied'
+        buttonText: '복사',
+        errorText: '오류',
+        successText: '복사완료!'
       },
       pagination: {
         previousText: '이전',
         nextText: '다음',
-      },
-      plugins: [
-        function(hook, vm) {
-          hook.beforeEach(function (html) {
-            return html
-              .replace(/\]\(\.\//g, '](')
-              .replace(/\]\(\.\.\/sample-codes\//g, '](sample-codes/');
-          });
-        }
-      ]
+      }
     }
   </script>
   <!-- Docsify v4 -->
