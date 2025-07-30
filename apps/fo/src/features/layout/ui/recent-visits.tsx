@@ -8,16 +8,16 @@ import { Navigation } from 'swiper/modules';
 
 const RecentVisitsCompoment = () => {
   const items: SelectOption[] = [
-    { label: '현대자동차 현대자동차현대자동차 A', value: 'A' },
-    { label: '현대자동차 B', value: 'B' },
-    { label: '현대자동차 C', value: 'C' },
-    { label: '현대자동차 D', value: 'E' },
-    { label: '현대자동차 F', value: 'F' },
-    { label: '현대자동차 g', value: 'g' },
-    { label: '현대자동차 h', value: 'h' },
-    { label: '현대자동차 i', value: 'i' },
-    { label: '현대자동차 j', value: 'j' },
-    { label: '현대자동차 k', value: 'k' },
+    // { label: '현대자동차 현대자동차현대자동차 A', value: 'A' },
+    // { label: '현대자동차 B', value: 'B' },
+    // { label: '현대자동차 C', value: 'C' },
+    // { label: '현대자동차 D', value: 'E' },
+    // { label: '현대자동차 F', value: 'F' },
+    // { label: '현대자동차 g', value: 'g' },
+    // { label: '현대자동차 h', value: 'h' },
+    // { label: '현대자동차 i', value: 'i' },
+    // { label: '현대자동차 j', value: 'j' },
+    // { label: '현대자동차 k', value: 'k' },
   ];
 
   const prevRef = useRef<HTMLDivElement | null>(null);
@@ -37,7 +37,7 @@ const RecentVisitsCompoment = () => {
   return (
     <div className={`${styles.start} ${styles.recent_visits}`}>
       <h3 className={styles.tit}>최근방문</h3>
-      {/* 방문한 카테고리가 없을경우 
+      {/* 방문한 카테고리가 없을경우
       <div className={styles.no_visits}>최근 방문한 카테고리가 없습니다.</div>*/}
 
       {/* 방문한 카테고리가 있을경우 */}

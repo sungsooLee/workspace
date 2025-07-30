@@ -35,16 +35,17 @@ function RouteComponent() {
   const { data: categoryInfo } = useFetchCategoryDetail(categoryId);
 
   const [depth, setDepth] = useState(3);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [size , setSize] = useState(20);
   const [sorting, setSorting] = useState([]);
   const [courseName, setCourseName] = useState('');
   const [coursePayload, setCoursePayload] = useState({
     page, size, sort: sorting, categoryId, courseName
   });
-  const [data, setData] = useState<any[]>([]);
-
+  const [data, setData] = useState<any>({});
   const [sortingDisabled, setSortingDisabled] = useState(true);
+
+  // 4,5,6 뎁스 일 때 사용
   const [topOptions, setTopOptions] = useState<any[]>(
     [
       { value: 'a', label: '대분류' },
@@ -91,34 +92,45 @@ function RouteComponent() {
   const handlePageChange = (value: number) => {
     setPage(value);
   };
+  const handlePageSizeChange = (value: number) => {
+    setSize(value)
+  }
 
-  const handleFilterOptionChange = (options: any) => {
-    // 카테고리 필터 변경되면 검색 API 호출
+  const handleFilterOptionChange = async (options: any) => {
+    const payload = {
+      ...coursePayload,
+      courseType: options.map( (row: any) => row.value),
+    }
+    setCoursePayload(payload);
+    await fetchCoursesCategory(payload)
   };
 
-  const handleOnSearch = () => {
+  const handleOnSearch = async () => {
     const payload = {
       ...coursePayload,
       courseName
     }
     setCoursePayload(payload)
-    console.log('### search payload : ', payload)
+    await fetchCoursesCategory(payload)
   }
 
   useEffect(() => {
     if( categoryInfo ) {
       (async () => {
-        console.log('#### categoryInfo => ', categoryInfo)
         const payload = {
           ...coursePayload,
           categoryId: categoryInfo.categoryId,
         }
         setCoursePayload(payload);
-        const courses = await CategoryService.getFetchCoursesCategory(payload);
-        console.log('### courses => ', courses);
+        await fetchCoursesCategory(payload)
       })();
     }
-  }, [categoryInfo])
+  }, [categoryInfo, page, size])
+
+  const fetchCoursesCategory = async (payload: any) => {
+    const courses = await CategoryService.getFetchCoursesCategory(payload);
+    setData(courses)
+  }
 
   return (
     <div className={styles.start}>
@@ -138,24 +150,13 @@ function RouteComponent() {
         <ul className={styles.divisio_box}>
           <li>
             <div className={styles.search_division}>
-              { /* 카테고리 4,5,6 뎁스 영역 */
+              {
+                /* 카테고리 4,5,6 뎁스 영역 */
                 depth > 3 && (
                   <ContentsRow className={styles.search_area}>
-                    <Dropdown
-                      className={styles.search_select}
-                      size="lg"
-                      options={topOptions}
-                    />
-                    <Dropdown
-                      className={styles.search_select}
-                      size="lg"
-                      options={middleOptions}
-                    />
-                    <Dropdown
-                      className={styles.search_select}
-                      size="lg"
-                      options={bottomOptions}
-                    />
+                    <Dropdown className={styles.search_select} size="lg" options={topOptions} />
+                    <Dropdown className={styles.search_select} size="lg" options={middleOptions} />
+                    <Dropdown className={styles.search_select} size="lg" options={bottomOptions} />
                   </ContentsRow>
                 )
               }
@@ -172,7 +173,12 @@ function RouteComponent() {
                   }}
                   onEnterKeyDown={() => handleOnSearch}
                 />
-                <Button label={t('검색')} variant={'primary'} size={'lx'} onClick={handleOnSearch}/>
+                <Button
+                  label={t('검색')}
+                  variant={'primary'}
+                  size={'lx'}
+                  onClick={handleOnSearch}
+                />
               </ContentsRow>
             </div>
           </li>
@@ -186,7 +192,11 @@ function RouteComponent() {
         <div className={styles.align}>
           <div className={styles.left}>
             <span className={styles.txt}>
-              <em>32</em>개
+              <em>
+                {
+                  data.totalElements ? data.totalElements : 0
+                }
+              </em>개
             </span>
           </div>
           <div className={styles.right}>
@@ -194,7 +204,9 @@ function RouteComponent() {
             <div className={styles.box}>
               <Popover
                 popoverContent={
-                  <div className={`${dropdownPopoverStyles.start} ${dropdownPopoverStyles.dropdown_wrap}`}>
+                  <div
+                    className={`${dropdownPopoverStyles.start} ${dropdownPopoverStyles.dropdown_wrap}`}
+                  >
                     <Button>20개씩</Button>
                     <Button>50개씩</Button>
                     <Button>80개씩</Button>
@@ -210,7 +222,11 @@ function RouteComponent() {
               </Popover>
             </div>
             <div className={styles.box}>
-              <Button onClick={() => {setSortingDisabled(!sortingDisabled)}}>
+              <Button
+                onClick={() => {
+                  setSortingDisabled(!sortingDisabled);
+                }}
+              >
                 {sortingDisabled ? (
                   <IcoArray width={24} height={24} stroke="#4c515e" fill="none" />
                 ) : (
@@ -221,36 +237,30 @@ function RouteComponent() {
           </div>
         </div>
 
-        {
-          ( data && data.length > 0 ) ? (
-            <>
-              <ThumnailList />
-            </>
-          ) : (
-            <div className={styles.empty}>
-              <EmptyText
-                text={t('검색 결과를 찾을 수 없습니다.')}
-                description={t('다른 과정명으로 검색해 보세요.')}
-              />
-            </div>
-          )
-        }
+        {data.content && data.content.length > 0 ? (
+          data.content.map((item: any) => <ThumnailList />)
+        ) : (
+          <div className={styles.empty}>
+            <EmptyText
+              text={t('검색 결과를 찾을 수 없습니다.')}
+              description={t('다른 과정명으로 검색해 보세요.')}
+            />
+          </div>
+        )}
       </div>
 
-      {
-        ( data && data.length > 0 ) && (
-          <Pagination
-            className={cn(styles.pagenation, styles.paginationItem)}
-            pageNumber={0}
-            totalPages={5}
-            hidePageSizeOptions={true}
-            hidePageInfo={true}
-            showFirstButton={false}
-            showLastButton={false}
-            onChange={handlePageChange}
-          />
-        )
-      }
+      {data && data.length > 0 && (
+        <Pagination
+          className={cn(styles.pagenation, styles.paginationItem)}
+          pageNumber={0}
+          totalPages={5}
+          hidePageSizeOptions={true}
+          hidePageInfo={true}
+          showFirstButton={false}
+          showLastButton={false}
+          onChange={handlePageChange}
+        />
+      )}
     </div>
   );
 }

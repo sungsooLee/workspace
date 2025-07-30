@@ -1,79 +1,81 @@
-.filter_wrap {
-  @apply relative flex items-start pr-[80px];
-  .filter_btn_box {
-    .filter_btn {
-      @apply flex h-[44px] w-[44px] items-center justify-center rounded-[8px] border-[1px] border-solid border-[var(--gray75)] bg-white;
-      &.selected {
-        @apply relative border-[var(--blue50)] bg-[var(--blue50)];
-        &::after {
-          @apply absolute right-0 top-0 h-[12px] w-[12px] -translate-y-1/2 translate-x-1/2 rounded-[50%] bg-[var(--red65)] content-[''];
+.start {
+  &.filter_wrap {
+    @apply relative flex items-start pr-[80px];
+    .filter_btn_box {
+      .filter_btn {
+        @apply flex h-[44px] w-[44px] items-center justify-center rounded-[8px] border-[1px] border-solid border-[var(--gray75)] bg-white;
+        &.selected {
+          @apply relative border-[var(--blue50)] bg-[var(--blue50)];
+          &::after {
+            @apply absolute right-0 top-0 h-[12px] w-[12px] -translate-y-1/2 translate-x-1/2 rounded-[50%] bg-[var(--red65)] content-[''];
+          }
         }
       }
     }
-  }
-  .option_card {
-    @apply w-auto;
-    div,
-    button,
-    span {
-      @apply !inline;
-    }
-
-    button {
-      @apply overflow-hidden !rounded-[8px] px-[10px];
-      span {
-        @apply !label-xl text-[var(--gray35)];
-      }
-    }
-  }
-
-  .select_box {
-    @apply relative ml-[12px] pr-[80px];
     .option_card {
-      @apply !inline align-top;
+      @apply w-auto;
+      div,
+      button,
+      span {
+        @apply !inline;
+      }
+
       button {
-        @apply mb-[8px] mr-[8px] !inline align-top;
+        @apply overflow-hidden !rounded-[8px] px-[10px];
         span {
-          @apply !text-[var(--gray8)];
-        }
-        &[class*='active'] {
-          span {
-            @apply label-xl-b !text-[var(--blue50)];
-          }
+          @apply !label-xl text-[var(--gray35)];
         }
       }
     }
 
-    .chip_list {
-      @apply !inline align-top;
-      & > div {
-        @apply mt-0 !inline align-top;
-        span {
-          @apply mb-[8px] mr-[8px] !inline-flex items-center;
-          button {
-            @apply button_bo_2_r !p-0 text-[var(--blue50)];
+    .select_box {
+      @apply relative ml-[12px] pr-[80px];
+      .option_card {
+        @apply !inline align-top;
+        button {
+          @apply mb-[8px] mr-[8px] !inline align-top;
+          span {
+            @apply !text-[var(--gray8)];
+          }
+          &[class*='active'] {
+            span {
+              @apply label-xl-b !text-[var(--blue50)];
+            }
           }
         }
       }
-      [class*='nlp--chips'] {
-        @apply h-[44px] border-[var(--blue50)];
-        [class*='nlp--button'] {
-          @apply label-xl-b text-[var(--blue50)];
-          &:nth-last-child(1) {
-            @apply h-[16px] w-[16px] bg-transparent;
-            svg {
-              @apply h-auto w-[16px] stroke-[var(--blue50)];
+
+      .chip_list {
+        @apply !inline align-top;
+        & > div {
+          @apply mt-0 !inline align-top;
+          span {
+            @apply mb-[8px] mr-[8px] !inline-flex items-center;
+            button {
+              @apply button_bo_2_r !p-0 text-[var(--blue50)];
+            }
+          }
+        }
+        [class*='nlp--chips'] {
+          @apply h-[44px] border-[var(--blue50)];
+          [class*='nlp--button'] {
+            @apply label-xl-b text-[var(--blue50)];
+            &:nth-last-child(1) {
+              @apply h-[16px] w-[16px] bg-transparent;
+              svg {
+                @apply h-auto w-[16px] stroke-[var(--blue50)];
+              }
             }
           }
         }
       }
     }
-  }
 
-  .reset {
-    @apply body_2_r absolute bottom-0 right-0 flex items-center text-[var(--gray8)];
-    .ico_reset {
-      @apply mr-[8px];
+    .reset {
+      @apply body_2_r absolute bottom-0 right-0 flex items-center text-[var(--gray8)];
+      .ico_reset {
+        @apply mr-[8px];
+      }
     }
   }
 }
