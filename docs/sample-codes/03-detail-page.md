@@ -177,6 +177,7 @@ import { DynamicFormProvider } from '@learnway/hooks';
 import { Input, Select } from '@learnway/ui';
 import { ContentsRow, FormRow2 } from '@shared/ui';
 import { User } from '@entities/user';
+import { t } from 'i18next';
 
 type FormMode = 'CREATE' | 'UPDATE';
 
@@ -197,16 +198,16 @@ export const UserDetailForm: React.FC<UserDetailFormProps> = ({
 
   // 역할 옵션
   const roleOptions = [
-    { value: 'admin', label: '관리자' },
-    { value: 'manager', label: '매니저' },
-    { value: 'user', label: '사용자' },
+    { value: 'admin', label: t('관리자') },
+    { value: 'manager', label: t('매니저') },
+    { value: 'user', label: t('사용자') },
   ];
 
   // 상태 옵션
   const statusOptions = [
-    { value: 'active', label: '활성' },
-    { value: 'inactive', label: '비활성' },
-    { value: 'pending', label: '대기' },
+    { value: 'active', label: t('활성') },
+    { value: 'inactive', label: t('비활성') },
+    { value: 'pending', label: t('대기') },
   ];
 
   return (
@@ -216,21 +217,21 @@ export const UserDetailForm: React.FC<UserDetailFormProps> = ({
         <FormRow2
           provider={provider}
           name="name"
-          label="사용자명"
-          placeholder="사용자명을 입력하세요"
-          validation={{ required: '사용자명은 필수입니다.' }}
+          label={t('사용자명')}
+          placeholder={t('사용자명을 입력하세요')}
+          validation={{ required: t('사용자명은 필수입니다.') }}
           element={<Input />}
         />
         <FormRow2
           provider={provider}
           name="email"
-          label="이메일"
-          placeholder="이메일을 입력하세요"
+          label={t('이메일')}
+          placeholder={t('이메일을 입력하세요')}
           validation={{ 
-            required: '이메일은 필수입니다.',
+            required: t('이메일은 필수입니다.'),
             pattern: {
               value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-              message: '올바른 이메일 형식을 입력하세요.'
+              message: t('올바른 이메일 형식을 입력하세요.')
             }
           }}
           element={<Input />}
@@ -242,17 +243,17 @@ export const UserDetailForm: React.FC<UserDetailFormProps> = ({
         <FormRow2
           provider={provider}
           name="role"
-          label="역할"
-          placeholder="역할을 선택하세요"
-          validation={{ required: '역할은 필수입니다.' }}
+          label={t('역할')}
+          placeholder={t('역할을 선택하세요')}
+          validation={{ required: t('역할은 필수입니다.') }}
           element={<Select options={roleOptions} />}
         />
         <FormRow2
           provider={provider}
           name="status"
-          label="상태"
-          placeholder="상태를 선택하세요"
-          validation={{ required: '상태는 필수입니다.' }}
+          label={t('상태')}
+          placeholder={t('상태를 선택하세요')}
+          validation={{ required: t('상태는 필수입니다.') }}
           element={<Select options={statusOptions} />}
         />
       </ContentsRow>
@@ -410,12 +411,12 @@ router.navigate({
   <FormRow2
     provider={provider}
     name="phone"
-    label="전화번호"
-    placeholder="전화번호를 입력하세요"
+    label={t('전화번호')}
+    placeholder={t('전화번호를 입력하세요')}
     validation={{ 
       pattern: {
         value: /^[0-9-]+$/,
-        message: '올바른 전화번호 형식을 입력하세요.'
+        message: t('올바른 전화번호 형식을 입력하세요.')
       }
     }}
     element={<Input />}
@@ -423,8 +424,8 @@ router.navigate({
   <FormRow2
     provider={provider}
     name="department"
-    label="부서"
-    placeholder="부서를 선택하세요"
+    label={t('부서')}
+    placeholder={t('부서를 선택하세요')}
     element={<Select options={departmentOptions} />}
   />
 </ContentsRow>
