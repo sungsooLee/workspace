@@ -9,6 +9,7 @@ import { CourseGridColumn } from '../types/type';
 import { CourseFavoriteIcon } from '../ui/course-favorite-icon/course-favorite-icon';
 
 export const useCourseListGridConfig = () => {
+  console.log('useCourseListGridConfig', getCodeLabel(CODE_GROUP['mock.options.use'], false));
   const { pathname } = useLocation();
   const { alert } = useModal();
 

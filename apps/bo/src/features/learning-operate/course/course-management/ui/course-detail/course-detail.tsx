@@ -73,7 +73,7 @@ const Component = () => {
             variant="point"
             size="sm"
             label={'과정 복사'}
-            onClick={() => console.log('과정 복사')}
+            onClick={() => trigger(TriggerKey.COPY)}
           />
         )}
         {!!visibleButtons?.isList && (

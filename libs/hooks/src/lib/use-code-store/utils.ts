@@ -1,8 +1,8 @@
-import { CODE_GROUP_TYPE } from './constants';
-import { httpService } from '@learnway/shared';
-import { Code, CodeApiType } from './types';
-import { codeOptions } from './config';
 import { PMSApiPrefix } from '@learnway/config';
+import { httpService } from '@learnway/shared';
+import { codeOptions } from './config';
+import { CODE_GROUP_TYPE } from './constants';
+import { Code, CodeApiType } from './types';
 import { useCodeStore } from './use-code-store';
 
 /**
@@ -79,10 +79,11 @@ export const fetchCodeGroup = async <K extends CODE_GROUP_TYPE>(
  */
 export const getCodeLabel = (
   codeGroup: CODE_GROUP_TYPE,
-  codeValue: string,
+  codeValue: string | number | boolean,
   defaultValue = '',
 ): string => {
-  if (!codeValue || !codeGroup) return defaultValue;
+  if (!codeGroup) return defaultValue;
+  if (codeValue === null || codeValue === undefined || codeValue === '') return defaultValue;
 
   try {
     const store = useCodeStore.getState();
