@@ -1956,7 +1956,7 @@ export const guideData = [
     pageId: 'dormant-account',
     pageType: 'Page',
     completionDate: '2025-03-12',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-29',
     remarks: '',
   },
   {
@@ -1966,7 +1966,7 @@ export const guideData = [
     pageId: 'dormant-account',
     pageType: 'Page',
     completionDate: '2025-03-12',
-    lastUpdateDate: '',
+    lastUpdateDate: '2025-07-29',
     remarks: '',
   },
   {

@@ -1,5 +1,11 @@
 .start {
-  @apply body_3_r rounded-[8px] bg-[#EDFCFF] px-[16px] py-[16px] text-left !leading-[1.6] text-[#045161];
+  @apply body-md rounded-[8px] bg-[var(--blue98)] p-[24px] text-left text-[var(--blue50)];
+  .info_txt{
+    @apply block;
+    &:not(:first-child){
+      @apply mt-[8px];
+    }
+  }
 }
 
 :global(body.mobile) {

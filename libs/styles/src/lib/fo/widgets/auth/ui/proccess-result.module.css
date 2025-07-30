@@ -6,8 +6,12 @@
     svg {
       @apply h-[80px] w-[80px];
     }
-    .ico1 {
-      @apply stroke-[#00AFD5];
+
+    &:has(.ico1){
+      @apply bg-[var(--blue95)] w-[80px] h-[80px] rounded-full;
+      svg{
+        @apply w-[32px] h-auto stroke-[var(--blue50)];
+      }
     }
     .ico2 {
       @apply stroke-[#FFB902];
@@ -18,12 +22,24 @@
     + h3.title {
       @apply mt-[24px];
     }
+    + h4.title {
+      @apply mt-[40px];
+    }
     + .noti {
       @apply mt-[40px];
     }
   }
   h3.title {
     @apply headline1-b leading-[31px] text-[var(--gray10)];
+  }
+  h4.title {
+    @apply body-lg-b leading-[31px] text-[var(--gray10)];
+    + .noti{
+      @apply mt-[12px];
+      + .noti_box{
+        @apply mt-[40px];
+      }
+    }
   }
   .noti {
     @apply body-lg mt-[16px] leading-[24px] text-[var(--gray35)];

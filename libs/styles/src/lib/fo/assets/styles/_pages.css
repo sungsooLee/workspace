@@ -51,6 +51,11 @@ h4.auth--title {
       @apply m-auto max-w-[200px];
     }
   }
+  .nlp--button{
+    +.nlp--button{
+      @apply !ml-[12px];
+    }
+  }
 }
 
 /* mobile */

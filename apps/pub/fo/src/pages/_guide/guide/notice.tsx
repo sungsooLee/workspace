@@ -1,7 +1,7 @@
-import { createFileRoute, Link } from '@tanstack/react-router';
-import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import { IcoCaution } from '@learnway/icons';
+import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import { Button } from '@learnway/ui';
+import { createFileRoute, Link } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/_guide/guide/notice')({
   component: RouteComponent,
@@ -27,7 +27,7 @@ function RouteComponent() {
             <div className={noticeBoxStyles.start}>
               <dl className={noticeBoxStyles.check_point}>
                 <dt>
-                  <IcoCaution width={16} height={16} stroke="#6F798B" />
+                  <IcoCaution />
                   유의사항
                 </dt>
                 <dd>
@@ -60,7 +60,7 @@ import styles from './test.module.css'; // 예시 페이지 모듈
 <div className={\`\${noticeBoxStyles.start} \${styles.signup_noti}\`}>
   <dl className={noticeBoxStyles.check_point}>
     <dt>
-      <IcoCaution width={16} height={16} stroke="#6F798B" />
+      <IcoCaution />
       유의사항
     </dt>
     <dd>

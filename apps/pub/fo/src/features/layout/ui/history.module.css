@@ -2,9 +2,10 @@
   .history_area {
     @apply p-[32px];
     .history_list {
-      @apply flex flex-col gap-[24px];
+      @apply flex max-w-[380px] flex-col gap-[24px] overflow-hidden;
       > li {
         @apply relative pl-[44px];
+
         &.now {
           &::after {
             @apply bg-[var(--blue50)];
@@ -17,7 +18,7 @@
           @apply absolute left-[5px] top-[23px] h-full w-[1px] bg-[var(--gray90)] content-[''];
         }
         .subject {
-          @apply title4-b;
+          @apply title4-b line-clamp-2 text-ellipsis;
         }
         .date {
           @apply body-md mt-[8px] block text-[var(--gray65)];

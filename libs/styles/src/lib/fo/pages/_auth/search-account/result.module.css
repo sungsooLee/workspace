@@ -8,14 +8,11 @@
   }
 
   .noti_box {
-    @apply mt-[24px];
+    @apply mt-[40px];
   }
 
   .btn_wrap {
-    @apply mt-[48px];
-    button {
-      @apply m-auto max-w-[294px];
-    }
+    @apply mt-[60px];
   }
 }
 
