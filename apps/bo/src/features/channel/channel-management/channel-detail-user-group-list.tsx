@@ -1,8 +1,8 @@
 import { useGetChannelDetail } from '@entities/channel/service/channel.hook';
-import { useFetchAuthUser } from '@learnway/auth/entities';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { getDateToString } from '@learnway/shared';
 import { Button, Divider, GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
+import { getCurrentAuthUser } from '@shared/lib';
 import { SearchBox } from '@shared/ui';
 import { useRouterState } from '@tanstack/react-router';
 import { createColumnHelper } from '@tanstack/react-table';
@@ -24,7 +24,6 @@ const ChannelDetailUserGroupListComponent = ({ onChange }: ChannelDetailUserGrou
   const channelUuid = routerState.location.state?.channelUuid;
 
   const { data: channelData } = useGetChannelDetail(channelUuid);
-  const { data: loginUser } = useFetchAuthUser();
 
   const { provider: sProvider, getValues, setOptions, setValue } = useSearchBox(searchConfig);
 
@@ -59,10 +58,11 @@ const ChannelDetailUserGroupListComponent = ({ onChange }: ChannelDetailUserGrou
   }, [channelData]);
 
   useEffect(() => {
-    if (channelData && loginUser) {
-      setValue('tenantId', loginUser.activeTenant?.tenantId);
+    if (channelData) {
+      const loginUser = getCurrentAuthUser();
+      if (loginUser) setValue('tenantId', loginUser.activeTenant?.tenantId);
     }
-  }, [channelData, loginUser]);
+  }, [channelData]);
 
   const handleOnSearch = useCallback((data: any) => {
     gridFetch(searchParam());

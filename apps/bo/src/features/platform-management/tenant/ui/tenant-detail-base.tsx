@@ -126,7 +126,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
       })),
     };
     console.log('payload {} => ', payload);
-    if (await openConfirm('저장 하시겠습니까?')) {
+    if (await openConfirm(t('저장 하시겠습니까?'))) {
       update(payload);
     }
   };
@@ -172,7 +172,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
         })),
         tenantUserList: tenantData.tenantUserList.map((item) => ({
           uuid: item.userUuid,
-          name: item.userName ?? '이름 없음',
+          name: item.userName ?? t('이름 없음'),
         })),
         isEnrollOption: platformAttributeProperties.isUseEnrollOption,
         isTextBookOption: platformAttributeProperties.isUseTextBookOption,
@@ -261,7 +261,9 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
           label={t('테넌트 로고')}
           format="array"
           tooltip={t('테넌트에 사용할 로고로 파일 1개만 등록할 수 있습니다.')}
-          description="파일 사이즈 92x32 / 확장자 JPEG, JPG, PNG, GIF / 업로드 가능 1개 / 파일용량 최대 50MB"
+          description={t(
+            '파일 사이즈 92x32 / 확장자 JPEG, JPG, PNG, GIF / 업로드 가능 1개 / 파일용량 최대 50MB',
+          )}
           value={[]}
           validation={{
             required: true,
@@ -356,7 +358,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
             '테넌트 사용이 ON이면 학습자 사이트에 로그인 할 수 있으며, OFF이면 로그인 할 수 없습니다.',
           )}
           switchConfig={{
-            label: (value: boolean) => (value ? '사용' : '미사용'),
+            label: (value: boolean) => (value ? t('사용') : t('미사용')),
           }}
           guideText={t('테넌트 사용 여부를 설정할 수 있습니다.')}
           element={<SwitchFormField />}
@@ -391,7 +393,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
           label={t('설명')}
           value=""
           maxLength={2000}
-          placeholder="설명을 입력해 주세요."
+          placeholder={t('설명을 입력해 주세요.')}
           element={<TextareaFormField resize="none" />}
         />
       </ContentsRow>
@@ -429,17 +431,17 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
           name="useCategory"
           label={t('카테고리 사용 여부')}
           format="array"
-          tooltip="테넌트 - 카테고리 관리에서 사용할 카테고리를 선택할 수 있습니다"
+          tooltip={t('테넌트 - 카테고리 관리에서 사용할 카테고리를 선택할 수 있습니다')}
           value={[]}
           validation={{ required: true }}
           options={[
             {
               value: EnUseCategory.isCommonCategory,
-              label: '공통 카테고리',
+              label: t('공통 카테고리'),
             },
             {
               value: EnUseCategory.isTenantCategory,
-              label: '테넌트 카테고리',
+              label: t('테넌트 카테고리'),
             },
           ]}
           showSelectAll={true}
@@ -467,7 +469,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
         <FormRow2
           provider={provider}
           name={'isEnrollOption'}
-          label="수강신청"
+          label={t('수강신청')}
           tooltip={t('과정 등록 필수 값으로 사용 여부 수정이 불가합니다.')}
           value={true}
           switchConfig={{
@@ -505,7 +507,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
         <FormRow2
           provider={provider}
           name={'isTextBookOption'}
-          label="교재"
+          label={t('교재')}
           tooltip={t('교재 허용 여부를 설정할 수 있으며, 비허용 시 테넌트에서 사용할 수 없습니다.')}
           value={false}
           switchConfig={{
@@ -526,7 +528,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
         <FormRow2
           provider={provider}
           name={'isInstructorOption'}
-          label="강사"
+          label={t('강사')}
           tooltip={t('강사 허용 여부를 설정할 수 있으며, 비허용 시 테넌트에서 사용할 수 없습니다.')}
           value={false}
           switchConfig={{
@@ -545,7 +547,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
       <ContentsRow type={'horizontal'} titleMode>
         <FormRow2
           provider={provider}
-          label="이수 기준"
+          label={t('이수 기준')}
           tooltip={t('과정 등록 필수 값으로 사용 여부 수정이 불가합니다.')}
           value={true}
           switchConfig={{
@@ -584,7 +586,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
         <FormRow2
           provider={provider}
           name={'isCommunicationOption'}
-          label="커뮤니티"
+          label={t('커뮤니티')}
           tooltip={t(
             '커뮤니티 허용 여부를 설정할 수 있으며, 비허용 시 테넌트에서 사용할 수 없습니다.',
           )}
@@ -613,7 +615,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
         <FormRow2
           provider={provider}
           name={'isLearningEnvOption'}
-          label="학습환경"
+          label={t('학습환경')}
           tooltip={t(
             '학습환경 허용 여부를 설정할 수 있으며, 비허용 시 테넌트에서 사용할 수 없습니다.',
           )}
@@ -659,7 +661,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
         <FormRow2
           provider={provider}
           name={'isLearningControlOption'}
-          label="학습제어"
+          label={t('학습제어')}
           tooltip={t(
             '학습제어 허용 여부를 설정할 수 있으며, 비허용 시 테넌트에서 사용할 수 없습니다.',
           )}
@@ -702,7 +704,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
         <FormRow2
           provider={provider}
           name={'isRelatedCourseOption'}
-          label="사전/연관학습"
+          label={t('사전/연관학습')}
           tooltip={t(
             '사전/연관학습 허용 여부를 설정할 수 있으며, 비허용 시 테넌트에서 사용할 수 없습니다.',
           )}
@@ -734,7 +736,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
         <FormRow2
           provider={provider}
           name={'isAdminDataOption'}
-          label="행정 항목"
+          label={t('행정 항목')}
           tooltip={t(
             '행정항목 허용 여부를 설정할 수 있으며, 비허용 시 테넌트에서 사용할 수 없습니다.',
           )}
@@ -771,7 +773,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
         <FormRow2
           provider={provider}
           name={'isCarTenantCustomOption'}
-          label="완성차 테넌트 전용 항목"
+          label={t('완성차 테넌트 전용 항목')}
           tooltip={t(
             '완성차 테넌트 전용 항목의 허용 여부를 설정할 수 있으며, 비허용 시 테넌트에서 사용할 수 없습니다.',
           )}
@@ -802,7 +804,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
         <FormRow2
           provider={provider}
           name={'isRotemTenantCustomOption'}
-          label="로템 테넌트 전용 항목"
+          label={t('로템 테넌트 전용 항목')}
           tooltip={t(
             '로템 테넌트 전용 항목의 허용 여부를 설정할 수 있으며, 비허용 시 테넌트에서 사용할 수 없습니다.',
           )}
@@ -833,7 +835,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
         <FormRow2
           provider={provider}
           name={'isOutsourcingTenantCustomOption'}
-          label="위탁 테넌트 전용 힝목"
+          label={t('위탁 테넌트 전용 힝목')}
           tooltip={t(
             '위탁 테넌트 전용 힝목의 허용 여부를 설정할 수 있으며, 비허용 시 테넌트에서 사용할 수 없습니다.',
           )}
@@ -864,7 +866,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
         <FormRow2
           provider={provider}
           name={'isWiaTenantCustomOption'}
-          label="위아 테넌트 전용 항목"
+          label={t('위아 테넌트 전용 항목')}
           tooltip={t(
             '위아 테넌트 전용 항목의 허용 여부를 설정할 수 있으며, 비허용 시 테넌트에서 사용할 수 없습니다.',
           )}
@@ -895,7 +897,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
         <FormRow2
           provider={provider}
           name={'isAutoeverTenantCustomOption'}
-          label="오토에버 테넌트 전용 항목"
+          label={t('오토에버 테넌트 전용 항목')}
           tooltip={t(
             '오토에버 테넌트 전용 항목의 허용 여부를 설정할 수 있으며, 비허용 시 테넌트에서 사용할 수 없습니다.',
           )}

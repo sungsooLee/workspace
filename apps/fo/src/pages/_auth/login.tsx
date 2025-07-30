@@ -1,35 +1,26 @@
+import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
+import { isEmpty } from 'lodash';
 import { useEffect } from 'react';
 import { BrowserView, MobileView } from 'react-device-detect';
-import { createFileRoute, useRouter, Link } from '@tanstack/react-router';
-import { z } from 'zod';
 import { useTranslation } from 'react-i18next';
-import { isEmpty } from 'lodash';
 
-import { Button, ContentsRow, DynamicFormField, Input, useModal } from '@learnway/ui';
-import {
-  useExpStore,
-  useFetchAuthUser,
-  useLogoutUser,
-  useSessionTimeoutAlertState,
-} from '@learnway/auth/entities';
-import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
+import { useLogoutUser, useSessionTimeoutAlertState } from '@learnway/auth/entities';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { cn, dateDiff } from '@learnway/shared';
+import { Button, ContentsRow, Input, useModal } from '@learnway/ui';
 
-import { useAuthSignin, getSavedUserid, pageRouteConfig } from '@features/auth';
+import { getSavedUserid, pageRouteConfig, useAuthSignin } from '@features/auth';
 import { useSetLanguage } from '@features/platform';
 import { AUTH_CONTAINERS } from '@widgets/layout';
 
-import { FormRow } from '@shared/ui';
 import { AUTH_ERROR_CODE } from '@learnway/auth/features';
 import { CheckBoxFormField } from '@learnway/auth/shared';
+import { FormRow } from '@shared/ui';
 
-import snsNaverImage from '../../assets/images/common/logo_sns_naver.png';
-import snskakaoImage from '../../assets/images/common/logo_sns_kakao.png';
-import snsGoogleImage from '../../assets/images/common/logo_sns_google.png';
-
-import styles from '@learnway/styles/fo/pages/_auth/login.module.css';
-import authTitleStyle from '@learnway/styles/fo/pages/_auth/auth-title.module.css';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
+import authTitleStyle from '@learnway/styles/fo/pages/_auth/auth-title.module.css';
+import styles from '@learnway/styles/fo/pages/_auth/login.module.css';
+import { TFunction } from 'i18next';
 
 export const Route = createFileRoute('/_auth/login')({
   component: RouteComponent,
@@ -50,6 +41,7 @@ function RouteComponent() {
   const search = Route.useSearch();
   const { alert } = useModal();
 
+  const formConfig = FormConfig(t);
   const { provider, onSubmit, onFormChange, getValues, onFormValid, onFormFocus } =
     useDynamicForm(formConfig);
   const [sessionTimeoutAlert, setSessionTimeoutAlert] = useSessionTimeoutAlertState();
@@ -78,8 +70,10 @@ function RouteComponent() {
   useEffect(() => {
     if (sessionTimeoutAlert) {
       openAlert({
-        title: '자동 로그아웃 되었습니다.',
-        content: '로그인 후 2시간이 경과되어 로그아웃 되었습니다.\n다시 로그인 후 이용해 주십시오',
+        title: t('자동 로그아웃 되었습니다.'),
+        content: t(
+          '로그인 후 2시간이 경과되어 로그아웃 되었습니다.\n다시 로그인 후 이용해 주십시오',
+        ),
       });
       setSessionTimeoutAlert(false);
     }
@@ -299,15 +293,19 @@ function RouteComponent() {
           <div className={authTitleStyle.start}>
             <BrowserView>
               <h2 className={authTitleStyle.title_login}>
-                <span className={authTitleStyle.title}>{'Welcome Back'}</span>
-                <span className={authTitleStyle.info}>{'Please enter your details to login.'}</span>
+                <span className={authTitleStyle.title}>{t('Welcome Back')}</span>
+                <span className={authTitleStyle.info}>
+                  {t('Please enter your details to login.')}
+                </span>
               </h2>
             </BrowserView>
             <MobileView>
               <h2 className={authTitleStyle.title_login}>
                 {/* 퍼블확인용 */}
-                <span className={authTitleStyle.title}>{'Welcome Back'}</span>
-                <span className={authTitleStyle.info}>{'Please enter your details to login.'}</span>
+                <span className={authTitleStyle.title}>{t('Welcome Back')}</span>
+                <span className={authTitleStyle.info}>
+                  {t('Please enter your details to login.')}
+                </span>
               </h2>
             </MobileView>
           </div>
@@ -379,42 +377,44 @@ function RouteComponent() {
   );
 }
 
-const formConfig: DynamicFormConfig = {
-  builders: [
-    {
-      name: 'username',
-      type: 'text',
-      label: 'LABEL.common.account(email)',
-      value: '',
-      placeholder: '아아디/이메일을 입력하세요',
-      description: '기본 메세지',
-      format: 'email',
-    },
-    {
-      name: 'password',
-      type: 'text',
-      label: 'LABEL.common.password',
-      // maxLength: 10,
-      value: '',
-      placeholder: '비밀번호를 입력하세요',
-    },
-    {
-      name: 'saveId',
-      type: 'checkbox',
-      checkConfig: {
-        label: 'LABEL.common.saveAccount',
+const FormConfig = (t: TFunction<'translation', undefined>): DynamicFormConfig => {
+  return {
+    builders: [
+      {
+        name: 'username',
+        type: 'text',
+        label: t('LABEL.common.account(email)'),
+        value: '',
+        placeholder: t('아아디/이메일을 입력하세요'),
+        description: t('기본 메세지'),
+        format: 'email',
       },
-      value: false,
+      {
+        name: 'password',
+        type: 'text',
+        label: t('LABEL.common.password'),
+        // maxLength: 10,
+        value: '',
+        placeholder: t('비밀번호를 입력하세요'),
+      },
+      {
+        name: 'saveId',
+        type: 'checkbox',
+        checkConfig: {
+          label: t('LABEL.common.saveAccount'),
+        },
+        value: false,
+      },
+    ],
+    validator: {
+      username: {
+        format: 'email',
+        required: true,
+      },
+      password: {
+        format: 'string',
+        required: true,
+      },
     },
-  ],
-  validator: {
-    username: {
-      format: 'email',
-      required: true,
-    },
-    password: {
-      format: 'string',
-      required: true,
-    },
-  },
+  };
 };

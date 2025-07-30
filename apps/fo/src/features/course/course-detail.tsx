@@ -1,93 +1,103 @@
-import { useEffect, useState } from 'react';
-import { createFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
-import { cn } from '@learnway/shared';
 import {
-  Button,
-  Tabs,
-  Accordion,
-  OptionCard,
-  OptionCardItem,
-  useModal,
-  Panel,
-  useToast,
-  SelectOption,
-  Carousel,
-} from '@learnway/ui';
-import {
-  IcoHeart,
-  IcoStar,
-  IcoCaution,
-  IcoClock01,
+  IcoArrowDown,
   IcoBook,
-  IcoBuilding,
   IcoCategory,
-  IcoDivice,
+  IcoCaution,
+  IcoChair,
+  IcoClock01,
+  IcoEye,
   IcoLevel,
   IcoLocation,
-  IcoPrize,
+  IcoStar,
   IcoSubtitles02,
-  IcoTime,
-  IcoEye,
-  IcoArrowDown,
-  IcoChair,
 } from '@learnway/icons';
+import { cn } from '@learnway/shared';
+import {
+  Accordion,
+  Button,
+  OptionCard,
+  OptionCardItem,
+  Panel,
+  Tabs,
+  useModal,
+  useToast,
+} from '@learnway/ui';
+import { useRouterState } from '@tanstack/react-router';
+import { useEffect, useRef, useState } from 'react';
 
 import {
-  CourseDashboard,
-  CourseIntroduction, // 과정소개
-  CourseEducation, // 교육일정
-  CourseReview, // 후기
-  CourseFixedButton, // 수강신청 버튼
-  PackageCardList, // 패키지 카드
-  CourseCancelReasonPopup /* 수강신청 취소 사유 입력 */,
+  CourseDashboard, // 과정소개
+  CourseEducation, // 후기
+  CourseFixedButton,
+  CourseIntroduction, // 교육일정
+  CourseReview, // 수강신청 버튼
+  PackageCardList,
 } from '../../features/layout/';
 
-import pageContentsStyles from '@learnway/styles/fo/pages/_page-contents.module.css';
-import packageInformationStyles from '@learnway/styles/fo/pages/_layout/course-introduction/package-information.module.css';
 import lectureStyles from '@learnway/styles/fo/pages/_layout/course-introduction/lecture.module.css';
+import packageInformationStyles from '@learnway/styles/fo/pages/_layout/course-introduction/package-information.module.css';
 import packageSideStyles from '@learnway/styles/fo/pages/_layout/course-introduction/package-side.module.css';
+import pageContentsStyles from '@learnway/styles/fo/pages/_page-contents.module.css';
 import pageFullInner from '@learnway/styles/fo/widgets/layout/ui/container/page-full-inner.module.css';
 
 // 이미지
-import playImg from '@learnway/styles/fo/assets/images/common/img_play.png';
-import bnrImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
-import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
+import { useCourseFullDetail, useCourseLike, useCourseSequences } from '@entities/course';
 import {
-  queryOptions,
-  useCourseDetail,
-  useCourseFullDetail,
-  useCourseLike,
-  useCourseSequences,
-} from '@entities/course';
+  default as bnrImage1,
+  default as listImage1,
+} from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 
+import { useChannelDetail } from '@entities/channel/service/channel.hook';
+import { useGetCurriculumnDetail } from '@entities/curriculum';
 import styles from '@learnway/styles/fo/pages/_layout/course-introduction/detail.module.css';
 
 export function CourseDetail() {
   const routerState = useRouterState();
   const courseId = routerState.location.state?.courseId;
+  const introduceRef = useRef(null);
+  const educationRef = useRef(null);
+  const reviewRef = useRef(null);
 
-  const { data: courseData } = useCourseFullDetail(courseId || 2);
-  const { data: sequencesData } = useCourseSequences(courseId || 2);
+  const testCourseId = 7;
+
+  const [openingYear, setOpeningYear] = useState(2025);
+  const [isAll, setIsAll] = useState(true);
+
+  const { data: courseData } = useCourseFullDetail(courseId || testCourseId);
+  const { data: sequencesData } = useCourseSequences(courseId || testCourseId, {
+    openingYear: openingYear,
+    isAll: isAll,
+  });
   // const sequencesData = {};
-  const { courseLikeRequest } = useCourseLike();
+  const { courseLikeRequest, mutate: toggleLikeMutate, isPending: isLikePending } = useCourseLike();
   console.log('@', courseId, courseData, sequencesData);
+  const { data: channelData } = useChannelDetail(courseData?.channelUuid || '');
+  const { data: curriculumData } = useGetCurriculumnDetail(courseData?.curriculumId);
 
   const { openModal } = useModal();
   const { confirm: openConfirm } = useModal();
   const { alert: openAlert } = useModal();
 
-  const [likeCount, setLikeCount] = useState<number>(courseData?.course.courseLike ?? 0);
+  const [likeCount, setLikeCount] = useState<number>(courseData?.course.courseLike);
+  const [likeChk, setLikeChk] = useState<boolean>(courseData?.course.courseLikeChk);
 
   // 탭 순서
   const [selectedTabTitle, setSelectedTabTitle] = useState<number>(0); // 탭 타이틀 순서
   const [selectedTabContent, setSelectedTabContent] = useState<string>('0'); // 탭 컨텐츠 순서
 
   // 탭 타이틀
-  const tabTitleSwiper = [
+  interface TabTitleSwiper {
+    title: string;
+    isEroll: boolean;
+    selectTabNumber: string;
+    new?: boolean;
+    targetRef?: React.RefObject<HTMLElement> | null;
+  }
+  const tabTitleSwiper: TabTitleSwiper[] = [
     { title: '대시보드', isEroll: false, selectTabNumber: '0' },
-    { title: '과정소개', isEroll: false, selectTabNumber: '1' },
-    { title: '교육일정', isEroll: true, selectTabNumber: '1' }, // 과정소개 탭 안에서 교욱일정이 있기 때문에 tabNumber값 동일
-    { title: '후기', isEroll: false, selectTabNumber: '1', new: true }, // 과정소개 탭 안에서 후기가 있기 때문에 tabNumber값 동일
+    { title: '과정소개', isEroll: false, selectTabNumber: '1' /* targetRef: introduceRef */ },
+    { title: '교육일정', isEroll: true, selectTabNumber: '1', targetRef: educationRef }, // 과정소개 탭 안에서 교욱일정이 있기 때문에 tabNumber값 동일
+    { title: '후기', isEroll: false, selectTabNumber: '1', new: true, targetRef: reviewRef }, // 과정소개 탭 안에서 후기가 있기 때문에 tabNumber값 동일
     { title: '수강전 문의', isEroll: true, selectTabNumber: '2', new: true },
     { title: '커뮤니티', isEroll: false, selectTabNumber: '3', new: true },
     { title: '새소식', isEroll: false, selectTabNumber: '4', new: true },
@@ -256,25 +266,46 @@ export function CourseDetail() {
         <div className={styles.introduction_content}>
           {courseData?.preRequired && (
             <CourseIntroduction
+              ref={introduceRef}
               preRequired={courseData?.preRequired}
               introduction={courseData?.introduction}
+              curriculum={curriculumData}
             />
           )}
           {courseData?.educations && (
             <CourseEducation
+              ref={educationRef}
               educationsTemp={courseData?.educations}
               educations={sequencesData}
               courseEnrollCompletePopup={CourseEnrollComplete}
               CourseCancelCompletePopup={CourseCancelCompleteAlert}
+              setOpeningYear={setOpeningYear}
+              setIsAll={setIsAll}
+              isAll={isAll}
             />
           )}
-          {courseData?.reviews && <CourseReview reviews={courseData?.reviews} />}
+          {courseData?.reviews && <CourseReview ref={reviewRef} reviews={courseData?.reviews} />}
           {/* 연관과정 썸네일 공통 컴포넌트 작업 예정 (현재 작업 x) */}
           <div className={cn(pageFullInner.start, pageFullInner.inner, pageFullInner.bg_sec1)}>
             <div className={pageFullInner.contents}>공통 컴포넌트 대기중</div>
           </div>
         </div>
       ),
+    },
+    {
+      title: '수강전 문의',
+      key: '2',
+      content: <div>수강전 문의</div>,
+    },
+    {
+      title: '커뮤니티',
+      key: '3',
+      content: <div>커뮤니티</div>,
+    },
+    {
+      title: '새소식',
+      key: '4',
+      content: <div>새소식</div>,
     },
   ];
 
@@ -293,16 +324,30 @@ export function CourseDetail() {
 
   // 과정 찜하기
   const handleCourseLike = async () => {
-    try {
-      const data = await courseLikeRequest(courseId || 2);
-      if (data) {
-        setLikeCount((prev) => prev + 1); // 증가
-      } else {
-        setLikeCount((prev) => prev - 1); // 감소
-      }
-    } catch (err) {
-      console.error('like course error', err);
-    }
+    if (isLikePending) return;
+
+    toggleLikeMutate(courseId || testCourseId, {
+      onSuccess: () => {
+        setLikeChk((prev) => !prev);
+        setLikeCount((prev) => prev + (likeChk ? -1 : 1));
+      },
+      onError: () => {
+        console.log('좋아요 실패하였습니다');
+      },
+    });
+    // try {
+
+    //   const data = await courseLikeRequest(courseId || testCourseId);
+    //   if (data) {
+    //     setLikeCount((prev) => prev); // 증가
+    //     setLikeChk(!likeChk);
+    //   } else {
+    //     setLikeCount((prev) => prev - 1); // 감소
+    //     setLikeChk(false);
+    //   }
+    // } catch (err) {
+    //   console.error('like course error', err);
+    // }
   };
 
   const packageCardValueFn = (arr: Array<any>) => {
@@ -445,6 +490,41 @@ export function CourseDetail() {
   const [listCategoryOpen, setListCategoryOpen] = useState<boolean>(true);
   const [listSubTitleOpen, setListSubTitleOpen] = useState<boolean>(false);
 
+  const waitForRef = (ref: any, maxWaitTime = 3000) => {
+    return new Promise((resolve, reject) => {
+      if (ref.current) {
+        resolve(ref.current);
+        return;
+      }
+
+      let timeoutId: any;
+      const observer = new MutationObserver(() => {
+        if (ref.current) {
+          clearTimeout(timeoutId);
+          observer.disconnect();
+          resolve(ref.current);
+        }
+      });
+
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true,
+      });
+
+      timeoutId = setTimeout(() => {
+        observer.disconnect();
+        reject(new Error('Element not found within timeout'));
+      }, maxWaitTime);
+    });
+  };
+
+  useEffect(() => {
+    if (!courseData?.course.courseLike) return;
+
+    setLikeCount(courseData.course.courseLike);
+    setLikeChk(courseData.course.courseLikeChk);
+  }, [courseData?.course.courseLike]);
+
   return (
     <div className={`${styles.start} ${styles.package_wrap}`}>
       {/* page contents */}
@@ -453,17 +533,17 @@ export function CourseDetail() {
         <div className={pageContentsStyles.main_contents}>
           <div className={styles.thumbnail_img}>
             {/* 플레이 버튼 o */}
-            <Button>
-              <img src={bnrImage1} alt="" />
-              <div className={styles.img_play}>
+            {/* <Button> */}
+            <img src={bnrImage1} alt="" />
+            {/* <div className={styles.img_play}>
                 <img src={playImg} alt="" />
-              </div>
-            </Button>
+              </div> */}
+            {/* </Button> */}
             {/* 플레이 버튼 x */}
             {/* <img src={bnrImage1} alt="" /> */}
           </div>
 
-          <div>
+          {/* <div>
             <Button
               variant="chips"
               size="sm"
@@ -583,7 +663,7 @@ export function CourseDetail() {
             >
               수강신청 완료
             </Button>
-          </div>
+          </div> */}
 
           {courseData && (
             <>
@@ -602,7 +682,24 @@ export function CourseDetail() {
                         selectedTabTitle === index ? styles.active : '',
                         item.new && styles.new,
                       )}
-                      onClick={() => handleTab(item.selectTabNumber, index)}
+                      onClick={async () => {
+                        handleTab(item.selectTabNumber, index);
+                        if (item.targetRef) {
+                          try {
+                            await waitForRef(item.targetRef);
+                            const target = item.targetRef?.current;
+                            if (target) {
+                              const top = target.getBoundingClientRect().top + window.scrollY;
+                              window.scrollTo({
+                                top: top - 50,
+                                behavior: 'smooth',
+                              });
+                            }
+                          } catch (error) {
+                            console.warn('타겟을 못찾음', error);
+                          }
+                        }
+                      }}
                     >
                       {item.title}
                       {/* <em>{item.count}</em> */}
@@ -617,9 +714,6 @@ export function CourseDetail() {
                   selectedTabKey={selectedTabContent}
                   items={tabTitleContents}
                   type="line"
-                  onTabChange={() => {
-                    console.log('after');
-                  }}
                 />
               </div>
             </>
@@ -640,7 +734,7 @@ export function CourseDetail() {
               <div className={packageInformationStyles.count_box}>
                 <div className={packageInformationStyles.box}>
                   <IcoStar width={16} height={16} stroke="#0056ff" fill="#0056ff" />
-                  <span>{courseData?.course?.courseStar}</span>
+                  <span>{likeCount || courseData?.course?.courseStar}</span>
                 </div>
                 <div className={packageInformationStyles.box}>
                   <IcoEye width={16} height={16} stroke="#0056ff" />
@@ -648,20 +742,23 @@ export function CourseDetail() {
                 </div>
               </div>
               {/* 구독 */}
-              <div className={packageInformationStyles.subscribe_box}>
-                {/* 퍼블수정 20250624 로고 삭제 */}
-                <strong className={packageInformationStyles.channel_name}>
-                  {courseData?.channel?.name}
-                </strong>
-                <Button
-                  className={packageInformationStyles.btn_subscribe}
-                  variant="primary"
-                  size="xl"
-                  onClick={() => handleSubscribeToast()}
-                >
-                  구독하기
-                </Button>
-              </div>
+              {channelData && channelData.isDisplay && (
+                <div className={packageInformationStyles.subscribe_box}>
+                  {/* 퍼블수정 20250624 로고 삭제 */}
+                  <strong className={packageInformationStyles.channel_name}>
+                    {channelData.channelName}
+                  </strong>
+                  {/* <Button
+                    className={packageInformationStyles.btn_subscribe}
+                    variant="primary"
+                    size="xl"
+                    onClick={() => handleSubscribeToast()}
+                  >
+                    구독하기
+                  </Button> */}{' '}
+                  {/* 채널 구독정보 아직 미완 */}
+                </div>
+              )}
               {/* 학습정보 */}
               <div className={packageInformationStyles.list_box}>
                 <ul>
@@ -682,30 +779,30 @@ export function CourseDetail() {
                       <IcoArrowDown width={20} height={20} stroke="#4d525c" />
                     </Button>
                   </li>
-                  <li>
+                  {/* <li>
                     <IcoLocation width={20} height={20} stroke="#4d525c" />
                     <p>{courseData?.course?.data.place}</p>
-                  </li>
-                  <li>
+                  </li> */}
+                  {/* <li>
                     <IcoTime width={20} height={20} fill="#4d525c" />
                     <p>{courseData?.course?.data.duration}</p>
-                  </li>
-                  <li>
+                  </li> */}
+                  {/* <li>
                     <IcoBuilding width={20} height={20} fill="#4d525c" />
                     <p>{courseData?.course?.data.outchannel}</p>
                   </li>
                   <li>
                     <IcoDivice width={20} height={20} fill="#4d525c" />
                     <p>{courseData?.course?.data.lernType}</p>
-                  </li>
+                  </li> */}
                   <li>
                     <IcoLevel width={20} height={20} fill="#4d525c" />
                     <p>{courseData?.course?.data.level}</p>
                   </li>
-                  <li>
+                  {/* <li>
                     <IcoPrize width={20} height={20} fill="#4d525c" />
                     <p>{courseData?.course?.data.certificate}</p>
-                  </li>
+                  </li> */}
                   <li className={listSubTitleOpen === true ? packageInformationStyles.open : ''}>
                     <IcoSubtitles02 width={20} height={20} fill="#4d525c" />
                     <p>{courseData?.course?.data.captionLanguage}</p>
@@ -778,6 +875,7 @@ export function CourseDetail() {
                 <CourseFixedButton
                   course={courseData?.class.length}
                   likeCount={likeCount}
+                  heart={likeChk}
                   handleCourseLike={handleCourseLike}
                 />
               </div>

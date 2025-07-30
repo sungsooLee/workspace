@@ -15,8 +15,8 @@ interface CategoryPopupProps {
   onNavigate: (tenantId:number, categoryId: number) => void;
 }
 
-type MainItem = { id: number; label: string, isChild: boolean };
-type SubItem = { id: number; label: string, parentId: number, isChild: boolean };
+type MainItem = { id: number; label: string; isChild: boolean };
+type SubItem = { id: number; label: string; parentId: number; isChild: boolean };
 type ChildItem = { id: number; label: string };
 
 const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
@@ -33,6 +33,7 @@ const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
 
   const menuHandleClick = (id: number, isChild: boolean) => {
     setActiveId(id);
+    setChildData([]);
     if( isChild ) {
       // 2 Depth
       const subTreeData = categoryTree.children.filter( (item: any) => item.id === id)[0];

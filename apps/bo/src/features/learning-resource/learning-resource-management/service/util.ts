@@ -19,6 +19,8 @@ export const getDetailPathByContentType = (contentType: string): string => {
       return '/learning/resource/test-paper/view';
     case LEARNING_TYPE.EXAM_POOL:
       return '/learning/resource/question-bank/view';
+    case LEARNING_TYPE.ASSIGNMENT:
+      return '/learning/resource/assignment/view';
     case LEARNING_TYPE.ETC:
       return '/learning/learning-resource/etc/view';
   }
@@ -29,6 +31,7 @@ export const getDetailRouterState = (contentUuid: string, contentType: string) =
   const state = { contentUuid };
   switch (contentType) {
     case LEARNING_TYPE.EXAM:
+    case LEARNING_TYPE.BLOG:
       Object.assign(state, { mode: 'UPDATE' });
       break;
     // 컨텐츠 유형에 따라 state 추가 설정

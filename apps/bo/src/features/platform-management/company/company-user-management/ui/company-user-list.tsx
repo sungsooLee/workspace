@@ -312,9 +312,7 @@ const columns = () =>
       cell: (info) => info.row.original.dept?.deptName,
       enableGrouping: false,
       size: 120,
-      meta: {
-        sortKey: 'deptEntity.deptName',
-      },
+      id: 'deptEntity.deptName',
     }),
     columnHelper.accessor('positionName', {
       header: t('호칭(직위)'),
@@ -436,8 +434,8 @@ const columns = () =>
       enableGrouping: false,
       meta: {
         cellAlign: 'center',
-        sortKey: 'userEntity.createdDate',
       },
+      id: 'userEntity.createdDate',
       size: 160,
     }),
   ] as ColumnDef<any, unknown>[];

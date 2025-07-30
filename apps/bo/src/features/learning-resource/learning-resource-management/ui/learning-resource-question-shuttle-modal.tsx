@@ -1,5 +1,6 @@
 import { useCallback, useMemo, useRef } from 'react';
-import { t } from 'i18next';
+import { TFunction } from 'i18next';
+import { useTranslation } from 'react-i18next';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import {
   Button,
@@ -29,11 +30,13 @@ type QuestionShuttleModalProps = {
 };
 
 const LearningResourceQuestionShuttleComponent = ({ examPoolUuid }: QuestionShuttleModalProps) => {
+  const { t } = useTranslation();
+
   const ref = useRef<ShuttleGridToGridImperative>(null);
 
   const { openModal, closeModal } = useModal();
 
-  const { provider: sProvider } = useSearchBox(questionSearchConfig());
+  const { provider: sProvider } = useSearchBox(questionSearchConfig(t));
 
   const { handleOnSearch, gridData, handleSelectQuestions, handleCopyQuestions } =
     useQuestionSearchAndCopy(examPoolUuid);
@@ -116,7 +119,7 @@ const LearningResourceQuestionShuttleComponent = ({ examPoolUuid }: QuestionShut
 
 LearningResourceQuestionShuttleComponent.displayName = 'LearningResourceQuestionShuttleModal';
 
-const questionSearchConfig = (): SearchBoxConfig => ({
+const questionSearchConfig = (t: TFunction<'translation', undefined>): SearchBoxConfig => ({
   builders: [
     [
       {
@@ -158,14 +161,14 @@ const questionSearchConfig = (): SearchBoxConfig => ({
         label: t('문항유형'),
         type: 'dropdown',
         value: '',
-        options: [{ value: '', label: t('전체') }, ...getDropdownOptions(QUESTION_TYPES)],
+        options: [{ value: '', label: t('전체') }, ...getDropdownOptions(QUESTION_TYPES(t))],
       },
       {
         name: 'questionLevel',
         label: t('난이도'),
         type: 'dropdown',
         value: '',
-        options: [{ value: '', label: t('전체') }, ...getDropdownOptions(QUESTION_LEVELS)],
+        options: [{ value: '', label: t('전체') }, ...getDropdownOptions(QUESTION_LEVELS(t))],
       },
     ],
   ],

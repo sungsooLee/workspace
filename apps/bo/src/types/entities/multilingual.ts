@@ -37,6 +37,10 @@ export interface MultilingualQueryParams extends PaginationRequest {
    * 기준명
    */
   translation?: string;
+
+  roleId?: number;
+
+  tenantId?: number;
 }
 
 export type MultilingualUpdateReqDto = {

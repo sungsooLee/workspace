@@ -41,6 +41,8 @@ export function setDefaultLang(lang: string): Promise<any> {
 }
 
 export function setI18nResource(lang: string, resource: any) {
+  console.log('@@@ set 18n', lang);
+  dayjs.locale(lang);
   i18next.addResourceBundle(lang, 'translation', resource[lang]['translation'], true, true);
 }
 

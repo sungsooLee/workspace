@@ -1,18 +1,16 @@
-import { memo, useEffect, useMemo, useRef, useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
+import { memo, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Navigation } from 'swiper/modules';
 
+import { IcoArrow } from '@learnway/icons';
 import { Link, useRouterState } from '@tanstack/react-router';
-import { IcoArrow, IcoArrowForward } from '@learnway/icons';
-import { cn } from '@learnway/shared';
 
 // import { useMenuHierarchy } from '@entities/menu';
 
-import styles from './navigate.module.css';
-import { Carousel } from '@learnway/ui';
-import { Menu } from '@learnway/auth/types';
 import { useMenuHierarchy } from '@learnway/auth/entities';
+import { Menu } from '@learnway/auth/types';
+import { Carousel } from '@learnway/ui';
+import styles from './navigate.module.css';
 
 interface NavigateComponentProps {
   onMouseEnter?: (menu: Menu) => void;
@@ -84,7 +82,7 @@ function NavigateComponent({ onMouseEnter, hoverMenu }: NavigateComponentProps) 
                   onMouseEnter={() => handleEnter(item)}
                   className={hoverMenu?.menuId === item.menuId ? styles.active : ''}
                 >
-                  <span>{item.menuName}</span>
+                  <span>{t(item.menuCode)}</span>
                 </Link>
                 {/* {item.isLabel && <span className={`${styles.label} ${styles.color1}`}>마감임박</span>} */}
               </div>

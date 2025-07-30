@@ -1,11 +1,12 @@
+import { useCallback, useMemo } from 'react';
+import { useBlocker, useRouter } from '@tanstack/react-router';
+import { t } from 'i18next';
+import { LEARNING_TYPE } from '@learnway/config';
 import { DynamicFormProvider, useCurrentRoute } from '@learnway/hooks';
 import { Button, Divider, useModal } from '@learnway/ui';
 import { ContentCourseMappingModal } from '@shared/ui';
 import { ContentCreateType, ContentExportRes, ContentInformation } from '@types';
-import { t } from 'i18next';
-import { useCallback, useMemo } from 'react';
 import { TranslationListModal } from './learning-resource-translation-list-modal';
-import { useBlocker, useRouter } from '@tanstack/react-router';
 import { useDeleteContent, usePostContentExport } from '@entities/learning-resource';
 
 interface Props {
@@ -23,6 +24,7 @@ const ContentTopButtonsComponent = ({ provider }: Props) => {
   const tenantId = watch('tenantId');
   const contentUuid = watch('contentUuid');
   const channelUuid = watch('channelUuid');
+  const contentType = watch('contentType');
   const createType = watch('createType');
   const isDrafted = watch('isDrafted');
   const isCourseUsed = watch('isCourseUsed');
@@ -53,11 +55,31 @@ const ContentTopButtonsComponent = ({ provider }: Props) => {
     },
   });
 
+  const detailUrl = useMemo(() => {
+    switch (contentType) {
+      case LEARNING_TYPE.VIDEO:
+        return '/learning/learning-resource/video/view';
+      case LEARNING_TYPE.SCORM:
+        return '/learning/learning-resource/scorm/view';
+      case LEARNING_TYPE.HTML5_VIDEO:
+        return '/learning/resource/html-video/view';
+      case LEARNING_TYPE.BLOG:
+        return '/learning/resource/blog/view';
+      case LEARNING_TYPE.EXAM:
+        return '/learning/resource/test-paper/view';
+      case LEARNING_TYPE.EXAM_POOL:
+        return '/learning/resource/question-bank/view';
+      // TODO: 학습자원 유형 상세페이지 추가 예정
+      default:
+        return '/learning/learning-resource';
+    }
+  }, [contentType]);
+
   const { exportContent } = usePostContentExport({
     onSuccess: (result: ContentExportRes) => {
       if (result.destContentUuid) {
         router.navigate({
-          to: '/learning/resource/html-video/view',
+          to: detailUrl,
           state: {
             contentUuid: result.destContentUuid,
             listParam: {

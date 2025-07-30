@@ -396,6 +396,22 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
       );
   };
 
+  const handleExpandAll = (allExpand: boolean) => {
+    // 모든 노드 키 수집
+    const getAllKeys = (nodes: TreeNode[]): string[] => {
+      return nodes.reduce((keys: string[], node) => {
+        keys.push(node.key);
+        if (!allExpand && node.children?.length) {
+          keys.push(...getAllKeys(node.children));
+        }
+        return keys;
+      }, []);
+    };
+
+    const oneDepthKeys = getAllKeys(treeData);
+    setExpandedKeys(oneDepthKeys);
+  }
+
   return (
     <div className={cn(layoutStyles.start, layoutStyles.wrap)}>
       <div className={cn(layoutStyles.inner, layoutStyles.type_progress2)}>
@@ -417,7 +433,7 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
               variant="text"
               size="sm"
               className={layoutStyles.btn_text}
-              onClick={() => setExpandedKeys([])}
+              onClick={() => handleExpandAll(true)}
             >
               {t('LABEL.tree.closed')}
             </Button>

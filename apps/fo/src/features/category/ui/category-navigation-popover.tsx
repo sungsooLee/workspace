@@ -4,12 +4,12 @@ import { Link } from '@tanstack/react-router';
 import { IcoArrowDown, IcoArrowForward } from '@learnway/icons';
 import { Button } from '@learnway/ui';
 
-import { Category } from '../../../../types';
-import { useCategoryNavigation } from '../../../../entities/category/service/category.hook';
-import { useCategories } from '../../services/category.service';
-import { CategoryBadgeList } from '../category-badge-list/category-badge-list';
-import bnrImage1 from '../../../../assets/images/banner/banner_cate1.png';
-import bnrImage2 from '../../../../assets/images/banner/banner_cate2.png';
+import { Category } from '@types';
+import { useCategoryNavigation } from '@entities/category/service/category.hook';
+import { useCategories } from '../services/category.service';
+import { CategoryBadgeList } from './category-badge-list';
+import bnrImage1 from '@assets/images/banner/banner_cate1.png';
+import bnrImage2 from '@assets/images/banner/banner_cate2.png';
 
 import styles from '@learnway/styles/fo/features/category/category-navigation-popover.module.css';
 
@@ -121,7 +121,7 @@ export function CategoryNavigationPopover({ isOpen }: CategoryLayerProps) {
 
                 <div className={styles.depth_area}>
                   {selectedCategory.children?.map((category: Category, index: number) => (
-                    <div key={category.categoryId} className={styles.depth_wrap}>
+                    <div key={category.id} className={styles.depth_wrap}>
                       <div className={styles.tit}>
                         <h3>
                           <Link to="/category" onClick={() => handleCategoryClick(category)}>
@@ -141,7 +141,7 @@ export function CategoryNavigationPopover({ isOpen }: CategoryLayerProps) {
                         <div className={styles.depth_info}>
                           <ul className={styles.list}>
                             {(category.children as Category[]).map((sub: Category) => (
-                              <li key={sub.categoryId}>
+                              <li key={sub.id}>
                                 <Link to="/category" onClick={() => handleCategoryClick(sub)}>
                                   {sub.name}
                                 </Link>

@@ -92,15 +92,8 @@ export function useGridTable<T extends object>(
       : [],
     right: [],
   });
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(() =>
-    columns.reduce((acc, col) => {
-      acc[col.accessorKey as string] = !(col.meta?.hidden || false);
-      return acc;
-    }, {} as VisibilityState),
-  );
-  const [columnOrder, setColumnOrder] = useState<string[]>(() =>
-    columns.map((col) => col.id as string),
-  );
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [columnOrder, setColumnOrder] = useState<string[]>([]);
 
   const createExpandColumn = (): ColumnDef<T> => ({
     id: 'expand',
@@ -223,16 +216,18 @@ export function useGridTable<T extends object>(
     meta: { align: 'center', headerAlign: 'center', cellAlign: 'center' },
     header: (
       { table: reactTableInstance }, // table prop 이름을 reactTableInstance로 변경하여 충돌 방지
-    ) => (
-      <div style={{ width: '100%', textAlign: 'center' }}>
-        <Checkbox
-          checked={reactTableInstance.getIsAllRowsSelected()}
-          onCheckedChange={(checked) => {
-            reactTableInstance.toggleAllRowsSelected(!!checked);
-          }}
-        />
-      </div>
-    ),
+    ) => {
+      return (
+        <div style={{ width: '100%', textAlign: 'center' }}>
+          <Checkbox
+            checked={reactTableInstance.getIsAllRowsSelected()}
+            onCheckedChange={(checked) => {
+              reactTableInstance.toggleAllRowsSelected(!!checked);
+            }}
+          />
+        </div>
+      );
+    },
     cell: ({ row }: { row: Row<T> }) => {
       const canSelect = props.isRowSelectable ? props.isRowSelectable(row.original) : true;
       return (
@@ -267,6 +262,15 @@ export function useGridTable<T extends object>(
     if (props.showExpandColumn) {
       finalColumns = [createExpandColumn(), ...finalColumns];
     }
+
+    // column 기본값 정의
+    finalColumns = finalColumns.map((d) => {
+      return {
+        ...d,
+        sortDescFirst: false, // 정렬 순서 고정 (asc, desc, null)
+      };
+    });
+
     return finalColumns;
   }, [
     columns,
@@ -276,7 +280,6 @@ export function useGridTable<T extends object>(
     props.hideRowSelectionRadioBox,
     props.hideRowSelectionCheckBox,
     props.showExpandColumn,
-    t, // t 함수 의존성 추가
   ]);
 
   const handleRowSelectionChangeForSingle: OnChangeFn<RowSelectionState> = (updaterOrValue) => {

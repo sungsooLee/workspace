@@ -1,22 +1,23 @@
 //  IA105 / NLP_BO_CMS_1016, NLP_BO_CMS_1002 / 학습자원조회_나의 학습자원_등록_동영상(자체)
 
-import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
-import { t } from 'i18next';
-import { Button, useModal } from '@learnway/ui';
-import { PageContainer, MainContents, ContentsButtons, SubContents } from '@shared/ui';
-import { useCurrentRoute, useDynamicForm2 } from '@learnway/hooks';
-import { useQuery } from '@tanstack/react-query';
 import { learningResourceQueryOptions, usePutVideoUpdate } from '@entities/learning-resource';
 import { NotFound } from '@features/layout';
-import { useEffect } from 'react';
 import {
   ContentTopButtons,
   convertToVideoForm,
   convertToVideoSubmit,
+  getTooltipContent,
   LearningResourceVideoDetail,
   MovieInfo,
 } from '@features/learning-resource';
-import { PutVideoUpdateRes } from '@types';
+import { useCurrentRoute, useDynamicForm2 } from '@learnway/hooks';
+import { Button, useModal } from '@learnway/ui';
+import { ContentsButtons, MainContents, PageContainer, SubContents } from '@shared/ui';
+import { useQuery } from '@tanstack/react-query';
+import { createLazyFileRoute } from '@tanstack/react-router';
+import { ContentCreateType, PutVideoUpdateRes } from '@types';
+import { t } from 'i18next';
+import { useEffect } from 'react';
 
 export const Route = createLazyFileRoute('/_layout/learning/learning-resource/video/view')({
   component: RouteComponent,
@@ -29,6 +30,9 @@ function RouteComponent() {
   } = useCurrentRoute();
   const { data, error: fetchError } = useQuery(
     learningResourceQueryOptions.getContent(contentUuid),
+  );
+  const { data: hasMapping } = useQuery(
+    learningResourceQueryOptions.getCurriculumsMapping(contentUuid),
   );
 
   const { provider, onSubmit, updateFormData, formState, getValues } = useDynamicForm2();
@@ -67,7 +71,13 @@ function RouteComponent() {
 
   return (
     <form onSubmit={onSubmit(handleFormSubmit)}>
-      <PageContainer>
+      <PageContainer
+        tooltipProps={{
+          show: !!hasMapping || data?.createType !== ContentCreateType.MANUAL,
+          content: t(getTooltipContent(data?.createType)),
+          type: data?.createType,
+        }}
+      >
         <ContentsButtons>
           {debug && (
             <Button

@@ -42,10 +42,10 @@ function LayoutComponent({ children }: LayoutComponentProps) {
     <>
       <Header />
       <div className={`${styles.start} ${styles.container}`}>
-        {shouldShowBreadcrumbs && (
+        {shouldShowBreadcrumbs.isShow && (
           <div className={styles.breadcrums}>
             <div className={styles.inner}>
-              <Breadcrumbs currentCategoryId={currentCategoryId} />
+              <Breadcrumbs tenantId={shouldShowBreadcrumbs.tenantId} currentCategoryId={currentCategoryId} />
             </div>
           </div>
         )}

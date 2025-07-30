@@ -1,22 +1,23 @@
 // IA109 / NLP_BO_CMS_1027, NLP_BO_CMS_1009
 
-import { createLazyFileRoute } from '@tanstack/react-router';
-import { t } from 'i18next';
-import { Button, useModal } from '@learnway/ui';
-import { PageContainer, MainContents, ContentsButtons, SubContents } from '@shared/ui';
-import { useCurrentRoute, useDynamicForm2 } from '@learnway/hooks';
-import { useQuery } from '@tanstack/react-query';
 import { learningResourceQueryOptions, usePutETCUpdate } from '@entities/learning-resource';
 import { NotFound } from '@features/layout';
-import { useEffect } from 'react';
 import {
   ContentTopButtons,
   convertToETCForm,
   convertToETCSubmit,
   ETCInfo,
+  getTooltipContent,
   LearningResourceETCDetail,
 } from '@features/learning-resource';
-import { PutETCUpdateRes } from '@types';
+import { useCurrentRoute, useDynamicForm2 } from '@learnway/hooks';
+import { Button, useModal } from '@learnway/ui';
+import { ContentsButtons, MainContents, PageContainer, SubContents } from '@shared/ui';
+import { useQuery } from '@tanstack/react-query';
+import { createLazyFileRoute } from '@tanstack/react-router';
+import { ContentCreateType, PutETCUpdateRes } from '@types';
+import { t } from 'i18next';
+import { useEffect } from 'react';
 
 export const Route = createLazyFileRoute('/_layout/learning/learning-resource/etc/view')({
   component: RouteComponent,
@@ -29,6 +30,9 @@ function RouteComponent() {
   } = useCurrentRoute();
   const { data, error: fetchError } = useQuery(
     learningResourceQueryOptions.getContent(contentUuid),
+  );
+  const { data: hasMapping } = useQuery(
+    learningResourceQueryOptions.getCurriculumsMapping(contentUuid),
   );
 
   const { provider, onSubmit, updateFormData, formState, getValues } = useDynamicForm2();
@@ -67,7 +71,13 @@ function RouteComponent() {
 
   return (
     <form onSubmit={onSubmit(handleFormSubmit)}>
-      <PageContainer>
+      <PageContainer
+        tooltipProps={{
+          show: !!hasMapping || data?.createType !== ContentCreateType.MANUAL,
+          content: t(getTooltipContent(data?.createType)),
+          type: data?.createType,
+        }}
+      >
         <ContentsButtons>
           {debug && (
             <Button

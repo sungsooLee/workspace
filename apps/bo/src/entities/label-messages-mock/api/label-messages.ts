@@ -99,10 +99,12 @@ export const mockData = (params?: LabelMessagesQueryParams): PaginationResponse<
     if (!sortType) {
       return 0;
     } else if (sortKey && sortType === 'desc') {
-      return b[sortKey]?.localeCompare(a[sortKey]);
+      // localeCompare 사용 전 문자열 변환 및 null/undefined 방지
+      return String(b[sortKey] ?? '').localeCompare(String(a[sortKey] ?? ''));
     } else if (sortKey) {
-      return a[sortKey]?.localeCompare(b[sortKey]);
+      return String(a[sortKey] ?? '').localeCompare(String(b[sortKey] ?? ''));
     }
+    return 0;
   });
   return {
     content: sortContent,

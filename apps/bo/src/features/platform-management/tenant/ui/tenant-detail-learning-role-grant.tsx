@@ -19,20 +19,25 @@ import {
   useModal,
   useToast,
 } from '@learnway/ui';
-import { FormRow, SectionLayout, UserGroupChoiceModal, UserGroupTabsChoiceModal } from '@shared/ui';
+import {
+  FormRow,
+  SectionLayout,
+  UserGroupChoiceModal,
+  UserGroupTabsChoiceModal,
+  UserShuttleModal,
+} from '@shared/ui';
 import { useRouterState } from '@tanstack/react-router';
 import { createColumnHelper, Table } from '@tanstack/react-table';
-import { BlackwhiteUsersParam, CombineUserGroup, EnFormMode } from '@types';
+import { EnFormMode } from '@types';
 import { t } from 'i18next';
-import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import { forwardRef, useEffect, useRef, useState } from 'react';
 import { FieldValues, useWatch } from 'react-hook-form';
 import { TenantDetailLearningRoleGrantRangeModal } from './tenant-detail-learning-role-grant-range-modal';
-import { TenantDetailLearningRoleGrantUserShuttleModal } from './tenant-detail-learning-role-grant-user-shuttle-modal';
 
+import RoleManagerService from '@entities/role/api/role-manager';
+import { IcoMinus, IcoPlus } from '@learnway/icons';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import styles from '@learnway/styles/bo/features/role/role-info.module.css';
-import { IcoMinus, IcoPlus } from '@learnway/icons';
-import RoleManagerService from '@entities/role/api/role-manager';
 
 /**
  * 화면번호:
@@ -124,7 +129,7 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
   const handleUserAddButtonClick = async () => {
     if (selectedRole) {
       const data = await openModal({
-        content: <TenantDetailLearningRoleGrantUserShuttleModal roleId={selectedRole.roleId} />,
+        content: <UserShuttleModal isShowDateRangePicker roleId={selectedRole.roleId} />,
         width: 'xl',
         height: 'fix',
       });

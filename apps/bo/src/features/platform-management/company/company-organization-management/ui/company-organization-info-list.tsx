@@ -19,12 +19,10 @@ const CompanyOrganizationInfoListComponent = ({
   companyCode,
   showType,
   deptId,
-  //companyHrInfoManageType,
 }: {
   companyCode: string;
   showType: string;
   deptId: number;
-  //companyHrInfoManageType: string;
 }) => {
   const searchConfig: SearchBoxConfig = {
     builders: [
@@ -187,7 +185,7 @@ const CompanyOrganizationInfoListComponent = ({
       const deptIdsToRemove = deleteRows.map((r) => r.original.deptId);
       console.log('deptIdsToRemove', deptIdsToRemove);
 
-      if (await openConfirm('삭제 하시겠습니까?')) {
+      if (await openConfirm(t('삭제 하시겠습니까?'))) {
         const payload = {
           companyCode,
           deptIdList: deptIdsToRemove,

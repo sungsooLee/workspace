@@ -1,11 +1,13 @@
 import { HTMLAttributes } from 'react';
 // import { NumericFormat } from 'react-number-format';
-import styles from './stats-summary.module.css';
 import { cn } from '@learnway/shared';
+import styles from './stats-summary.module.css';
 
 export interface StatsSummaryData {
   label: string;
   value: number;
+  unit?: string;
+  percentage?: number;
 }
 
 export interface StatsSummaryComponentProps extends HTMLAttributes<HTMLDivElement> {
@@ -20,7 +22,10 @@ export const StatsSummary = ({ data, ...props }: StatsSummaryComponentProps) => 
           <span className={styles.label}>{stat.label}</span>
           <span className={styles.value}>
             <span className={styles.num}>{`${new Intl.NumberFormat().format(stat.value)}`}</span>
-            <span className={styles.unit}>{'건'}</span>
+            <span className={styles.unit}>
+              {stat.unit ? stat.unit : '건'}
+              {stat.percentage && <span>({stat.percentage}%)</span>}
+            </span>
           </span>
         </div>
       ))}

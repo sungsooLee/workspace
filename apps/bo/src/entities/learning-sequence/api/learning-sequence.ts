@@ -1,16 +1,16 @@
+import { LMSApiPrefix } from '@learnway/config';
 import { httpService } from '@learnway/shared';
-import { PageableContent } from '@types';
-import { PMSApiPrefix, LMSApiPrefix } from '@learnway/config';
-import {
-  LearningSequence,
-  LearningSequenceCombo,
-  LearningSequences,
-} from 'src/types/entities/learning-sequence';
 import {
   EnrollmentCancelList,
   EnrollmentRegistCount,
   EnrollmentRegistList,
 } from 'src/types/entities/enrollment';
+import {
+  LearningSequence,
+  LearningSequenceCombo,
+  LearningSequences,
+} from 'src/types/entities/learning-sequence';
+import { StudentHistory, StudentsList } from 'src/types/entities/students';
 
 export default class LearningSequenceService {
   static fetchSequenceList(params: any) {
@@ -69,5 +69,20 @@ export default class LearningSequenceService {
   }
   static fetchEnrollmentCancelList(params: any) {
     return httpService.get<EnrollmentCancelList[]>(`${LMSApiPrefix()}/enrolls/cancel`, params);
+  }
+  static fetchStudentsList(params: any) {
+    return httpService.get<StudentsList[]>(`${LMSApiPrefix()}/students/list`, params);
+  }
+  static fetchStudentsListLeftCount(params: any) {
+    return httpService.get<any>(`${LMSApiPrefix()}/students/count`, params);
+  }
+  static fetchStudentsListRightCount(params: any) {
+    return httpService.get<any>(`${LMSApiPrefix()}/students/sequence/detail`, params);
+  }
+  static updateStudentsReason(params: any) {
+    return httpService.put(`${LMSApiPrefix()}/students/certification/reason`, params);
+  }
+  static fetchStudentsHistory(params: any) {
+    return httpService.get<StudentHistory[]>(`${LMSApiPrefix()}/students/history`, params);
   }
 }

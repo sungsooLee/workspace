@@ -1,7 +1,7 @@
-import TranslationService from '../api/translation';
-import { keyTypeCode, MultilingualExcel, MultilingualUpdateReqParams, Tenant } from '@types';
-import TenantService from '../../tenant/api/tenant';
 import { skipToken } from '@tanstack/react-query';
+import { MultilingualExcel, MultilingualQueryParams, MultilingualUpdateReqParams } from '@types';
+import TenantService from '../../tenant/api/tenant';
+import TranslationService from '../api/translation';
 
 export const queryKeys = {
   all: ['translation-all'] as const,
@@ -16,7 +16,7 @@ export const queryKeys = {
 };
 
 export const translationQueryOptions = {
-  all: (params: any) => ({
+  all: (params: MultilingualQueryParams) => ({
     queryKey: queryKeys.all,
     queryFn: () => TranslationService.fetchTranslations(params),
     cacheTime: 0,

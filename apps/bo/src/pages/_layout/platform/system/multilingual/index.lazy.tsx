@@ -4,6 +4,7 @@ import {
 } from '@entities/translation/service/translation.hook';
 import { translationQueryOptions } from '@entities/translation/service/translation.queries';
 import { TranslationStatusPopup } from '@features/platform-management/platform/multilingual-managemnet';
+import { useFetchAuthUser } from '@learnway/auth/entities';
 import { PMSApiPrefix } from '@learnway/config';
 import {
   CODE_GROUP,
@@ -53,6 +54,102 @@ export const Route = createLazyFileRoute('/_layout/platform/system/multilingual/
 function RouteComponent() {
   const { confirm, alert, openModal } = useModal();
   const { state } = useCurrentRoute();
+  const { data: authUser } = useFetchAuthUser();
+
+  // searchConfig를 컴포넌트 내부에 정의하여 authUser 접근 가능
+  const searchConfig: SearchBoxConfig = useMemo(
+    () => ({
+      builders: [
+        [
+          {
+            name: 'keyTypeCode',
+            type: 'dropdown',
+            label: 'LABEL.platform.system.multilingual.keyType',
+            value: '',
+            optionsConfig: {
+              options: [{ value: '', label: 'LABEL.form.label.select' }],
+              codeGroup: CODE_GROUP['pms.multilingual.KeyTypeCode'],
+              transformOptions: (options: SelectOption[]) => {
+                // 플랫폼 매니저가 아닌 경우 필터링
+                const isPlatformManager = authUser?.activeRole?.roleType === 'PLATFORM_MANAGER';
+                if (!isPlatformManager) {
+                  return options.filter(
+                    (option) =>
+                      option.value === '' ||
+                      ['LEARNER_MENU', 'HRD_CENTER_MENU'].includes(String(option.value)),
+                  );
+                }
+                return options;
+              },
+            },
+          },
+          {
+            name: 'targetLocale',
+            type: 'dropdown',
+            label: 'LABEL.platform.system.multilingual.translationLanguage',
+            value: '',
+            optionsConfig: {
+              options: [{ value: '', label: 'LABEL.form.label.select' }],
+              codeGroup: CODE_GROUP['pms.multilingual.LangCountryCode'],
+            },
+          },
+          {
+            name: 'isTranslated',
+            type: 'dropdown',
+            label: 'LABEL.platform.system.multilingual.translationStatus',
+            value: '',
+            options: [
+              { value: '', label: t('LABEL.all') },
+              { value: 'true', label: t('pms.multilingual.Is_Translation.true') },
+              { value: 'false', label: t('pms.multilingual.Is_Translation.false') },
+            ],
+          },
+        ],
+        [
+          {
+            name: 'multilingualKey',
+            type: 'text',
+            label: 'LABEL.platform.system.multilingual.multilingualKey',
+            value: '',
+            customConfig: {
+              placeholder: {
+                target: 'keyTypeCode',
+                placeholder: (item: Record<string, any>) => {
+                  if (!item.keyTypeCode) {
+                    return 'LABEL.platform.system.multilingual.placeholder.multilingualKey.default';
+                  }
+                  return `LABEL.platform.system.multilingual.placeholder.multilingualKey.${item.keyTypeCode}`;
+                },
+              },
+            },
+          },
+          {
+            name: 'translation',
+            type: 'text',
+            label: 'LABEL.platform.system.multilingual.translation',
+            value: '',
+            customConfig: {
+              placeholder: {
+                target: 'keyTypeCode',
+                placeholder: (item: Record<string, any>) => {
+                  if (!item.keyTypeCode) {
+                    return 'LABEL.platform.system.multilingual.placeholder.translation.default';
+                  }
+                  return `LABEL.platform.system.multilingual.placeholder.translation.${item.keyTypeCode}`;
+                },
+              },
+            },
+          },
+        ],
+      ],
+      validator: {
+        keyTypeCode: true,
+        targetLocale: true,
+      },
+    }),
+    [authUser?.activeRole?.roleType],
+  );
+
   const {
     provider: sProvider,
     getValues,
@@ -70,18 +167,24 @@ function RouteComponent() {
   const targetLocale = useWatch({ control, name: 'targetLocale' });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const getGridFetchParams = () => ({
+    ...getValues(),
+    roleId: authUser?.activeRole?.roleId,
+    tenantId: authUser?.activeTenant?.tenantId,
+  });
+
   const { update } = useTranslation({
     onSuccess: () => {
       setIsSubmitting(false);
-      setShouldUpdateOriginalData(true); // 변경 후 OriginalData 갱신하기 위함.
-      gridFetch(getValues());
+      setShouldUpdateOriginalData(true);
+      gridFetch(getGridFetchParams());
     },
   });
 
   const { createByExcel } = useTranslation({
     onSuccess: () => {
       setShouldUpdateOriginalData(true);
-      gridFetch(getValues());
+      gridFetch(getGridFetchParams());
     },
   });
 
@@ -107,7 +210,7 @@ function RouteComponent() {
     [handleCellClick, currentTargetLocale],
   );
 
-  const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
+  const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getGridFetchParams);
   const gridStateRef = useRef<any>(null); // 그리드 상태 저장용
 
   // 커스텀 훅을 사용한 간단한 변경사항 확인
@@ -152,7 +255,7 @@ function RouteComponent() {
     setCurrentTargetLocale(getValues('targetLocale'));
     originalDataRef.current = null; // 검색 시 즉시 초기화
     setShouldUpdateOriginalData(true); // 검색 시 originalData 업데이트 허용
-    gridFetch(getValues(), { ...gridStateRef.current, page: 0 });
+    gridFetch(getGridFetchParams(), { ...gridStateRef.current, page: 0 });
     setValuesWithLabel(getValuesWithLabel());
   };
 
@@ -375,85 +478,6 @@ function RouteComponent() {
     </div>
   );
 }
-
-const searchConfig: SearchBoxConfig = {
-  builders: [
-    [
-      {
-        name: 'keyTypeCode',
-        type: 'dropdown',
-        label: 'LABEL.platform.system.multilingual.keyType',
-        value: '',
-        optionsConfig: {
-          options: [{ value: '', label: 'LABEL.form.label.select' }],
-          codeGroup: CODE_GROUP['pms.multilingual.KeyTypeCode'],
-        },
-      },
-      {
-        name: 'targetLocale',
-        type: 'dropdown',
-        label: 'LABEL.platform.system.multilingual.translationLanguage',
-        value: '',
-
-        optionsConfig: {
-          options: [{ value: '', label: 'LABEL.form.label.select' }],
-          codeGroup: CODE_GROUP['pms.multilingual.LangCountryCode'],
-        },
-      },
-      {
-        name: 'isTranslated',
-        type: 'dropdown',
-        label: 'LABEL.platform.system.multilingual.translationStatus',
-        value: '',
-        options: [
-          { value: '', label: t('LABEL.all') },
-          { value: 'true', label: t('pms.multilingual.Is_Translation.true') },
-          { value: 'false', label: t('pms.multilingual.Is_Translation.false') },
-        ],
-      },
-    ],
-    [
-      {
-        name: 'multilingualKey',
-        type: 'text',
-        label: 'LABEL.platform.system.multilingual.multilingualKey',
-        value: '',
-        customConfig: {
-          placeholder: {
-            target: 'keyTypeCode',
-            placeholder: (item: Record<string, any>) => {
-              if (!item.keyTypeCode) {
-                return 'LABEL.platform.system.multilingual.placeholder.multilingualKey.default';
-              }
-              return `LABEL.platform.system.multilingual.placeholder.multilingualKey.${item.keyTypeCode}`;
-            },
-          },
-        },
-      },
-      {
-        name: 'translation',
-        type: 'text',
-        label: 'LABEL.platform.system.multilingual.translation',
-        value: '',
-        customConfig: {
-          placeholder: {
-            target: 'keyTypeCode',
-            placeholder: (item: Record<string, any>) => {
-              if (!item.keyTypeCode) {
-                return 'LABEL.platform.system.multilingual.placeholder.translation.default';
-              }
-              return `LABEL.platform.system.multilingual.placeholder.translation.${item.keyTypeCode}`;
-            },
-          },
-        },
-      },
-    ],
-  ],
-  validator: {
-    keyTypeCode: true,
-    targetLocale: true,
-  },
-};
 
 const createGridConfig = (onCellClick: (data: any) => void, currentTargetLocale: string) => ({
   query: translationQueryOptions.all,

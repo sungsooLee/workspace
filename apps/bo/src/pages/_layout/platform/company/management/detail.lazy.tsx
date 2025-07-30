@@ -41,12 +41,12 @@ function RouteComponent() {
 
   const menuItems = [
     {
-      title: '회사 정보',
+      title: t('회사 정보'),
       key: 'company',
       content: <CompanyDetail ref={formRef} mode={EnFormMode.VIEW} />,
     },
     {
-      title: 'HR 연동 정보',
+      title: t('HR 연동 정보'),
       key: 'hr',
       content: <CompanyDetailHR />,
     },
@@ -58,18 +58,27 @@ function RouteComponent() {
         {selectedTabKey === 'company' ? (
           <>
             <LinkBox>
-              <Button variant="point" size="sm" onClick={handleListClick}>
-                {t('LABEL.button.list')}
-              </Button>
+              <Button
+                variant="point"
+                size="sm"
+                onClick={handleListClick}
+                label={t('LABEL.button.list')}
+              />
             </LinkBox>
-            <Button variant="primary" size="sm" onClick={handleSaveClick}>
-              {t('LABEL.button.save')}
-            </Button>
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={handleSaveClick}
+              label={t('LABEL.button.save')}
+            />
           </>
         ) : (
-          <Button variant="point" size="sm" onClick={handleListClick}>
-            {t('LABEL.button.list')}
-          </Button>
+          <Button
+            variant="point"
+            size="sm"
+            onClick={handleListClick}
+            label={t('LABEL.button.list')}
+          />
         )}
       </ContentsButtons>
       <MainContents>

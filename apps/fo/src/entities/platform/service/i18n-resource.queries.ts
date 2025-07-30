@@ -20,6 +20,8 @@ export const queryOptions = {
               },
             };
           },
+          staleTime: Infinity,
+          cacheTime: Infinity,
         }
       : getQuerySkipToken<any>(),
 };

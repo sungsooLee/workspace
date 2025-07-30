@@ -1,19 +1,18 @@
-import React from 'react';
-import { t } from 'i18next';
-import { createFileRoute } from '@tanstack/react-router';
-import {
-  Button,
-  ChipListModalSelectorFormField,
-  Input,
-  InputModalSelectorFormField,
-} from '@learnway/ui';
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { FormRow, SubContents, ContentsRow, ContentsButtons } from '@shared/ui';
-import { MainContents, PageContainer } from '@shared/ui';
 import {
   ManagerListModal,
   TeacherListModal,
 } from '@features/learning-operate/course/course-management';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import {
+  Button,
+  ChipListModalSelectorFormField,
+  ContentsRow,
+  Input,
+  InputModalSelectorFormField,
+} from '@learnway/ui';
+import { ContentsButtons, FormRow, MainContents, PageContainer, SubContents } from '@shared/ui';
+import { createFileRoute } from '@tanstack/react-router';
+import { t } from 'i18next';
 
 export const Route = createFileRoute('/_layout/learning/')({
   component: RouteComponent,

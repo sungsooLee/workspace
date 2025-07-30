@@ -308,7 +308,11 @@ function RouteComponent() {
       }
       // 블로그
       case LEARNING_TYPE.BLOG: {
-        router.navigate({ to: '/learning/resource/blog/regist', replace: true });
+        router.navigate({
+          to: '/learning/resource/blog/view',
+          state: { mode: 'CREATE' },
+          replace: true,
+        });
         break;
       }
       // 설문
