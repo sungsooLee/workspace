@@ -15,8 +15,8 @@ interface CategoryPopupProps {
   onNavigate: (tenantId:number, categoryId: number) => void;
 }
 
-type MainItem = { id: number; label: string, isChild: boolean };
-type SubItem = { id: number; label: string, parentId: number, isChild: boolean };
+type MainItem = { id: number; label: string; isChild: boolean };
+type SubItem = { id: number; label: string; parentId: number; isChild: boolean };
 type ChildItem = { id: number; label: string };
 
 const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {

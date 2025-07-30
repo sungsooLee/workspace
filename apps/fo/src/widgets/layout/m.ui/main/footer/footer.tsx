@@ -10,8 +10,11 @@ import { IcoHome03, IcoDotpoints, IcoSearch, IcoMybook, IcoEye, IcoArray } from 
 
 import styles from '@learnway/styles/fo/widgets/layout/m.ui/main/footer/footer.module.css';
 import { CategoryPopup } from '@features/layout';
+import { useFetchAuthUser } from '@learnway/auth/entities';
 
 function FooterComponent() {
+  const {data: loginUser} = useFetchAuthUser();
+
   const { t } = useTranslation();
   const { openModal } = useModal();
   const openSearch = useSearchStore((state) => state.openSearch);
@@ -23,7 +26,7 @@ function FooterComponent() {
   const handleCategoryPopup = () => {
     openModal({
       width: 'm_full',
-      content: <CategoryPopup />,
+      content: <CategoryPopup activeTenantId={loginUser!.activeTenant!.tenantId}/>,
     })
   }
 
