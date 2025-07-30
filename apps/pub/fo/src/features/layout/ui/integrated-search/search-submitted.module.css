@@ -1,3 +1,33 @@
 /* search-submitted.module.css */
 .start {
+  &.search_submitted {
+    @apply mt-[40px];
+    .message_wrap {
+      @apply flex w-full flex-col flex-wrap;
+      .question_wrap {
+        @apply flex h-[48px] justify-end;
+        .text {
+          @apply body-md relative mr-[10px] rounded-[16px] rounded-tr-none bg-[#4D88FF] px-[24px] py-[12px] text-white;
+          .icon_arrow {
+            @apply absolute -right-[6px] top-0 h-[10px] w-[15px];
+          }
+        }
+      }
+      .result_wrap {
+        @apply mt-[40px];
+      }
+    }
+    .title_wrap {
+      @apply mb-[16px] flex flex-col;
+      .title {
+        @apply title5 text-[var(--gray10)];
+        .point {
+          @apply title5-b text-[var(--blue65)];
+        }
+      }
+      .text {
+        @apply title2 mt-[4px] text-[var(--gray25)];
+      }
+    }
+  }
 }
