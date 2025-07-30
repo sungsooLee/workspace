@@ -4,6 +4,7 @@ import {
 } from '@entities/translation/service/translation.hook';
 import { translationQueryOptions } from '@entities/translation/service/translation.queries';
 import { TranslationStatusPopup } from '@features/platform-management/platform/multilingual-managemnet';
+import { useFetchAuthUser } from '@learnway/auth/entities';
 import { PMSApiPrefix } from '@learnway/config';
 import {
   CODE_GROUP,
@@ -69,19 +70,26 @@ function RouteComponent() {
   const keyTypeCode = useWatch({ control, name: 'keyTypeCode' });
   const targetLocale = useWatch({ control, name: 'targetLocale' });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { data: authUser } = useFetchAuthUser();
+
+  const getGridFetchParams = () => ({
+    ...getValues(),
+    roleId: authUser?.activeRole?.roleId,
+    tenantId: authUser?.activeTenant?.tenantId,
+  });
 
   const { update } = useTranslation({
     onSuccess: () => {
       setIsSubmitting(false);
-      setShouldUpdateOriginalData(true); // 변경 후 OriginalData 갱신하기 위함.
-      gridFetch(getValues());
+      setShouldUpdateOriginalData(true);
+      gridFetch(getGridFetchParams());
     },
   });
 
   const { createByExcel } = useTranslation({
     onSuccess: () => {
       setShouldUpdateOriginalData(true);
-      gridFetch(getValues());
+      gridFetch(getGridFetchParams());
     },
   });
 
