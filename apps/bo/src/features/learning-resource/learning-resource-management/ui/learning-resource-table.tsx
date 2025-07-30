@@ -353,9 +353,7 @@ function LearningResourceTableComponent() {
   }, [listParam]);
 
   async function handleShare() {
-    console.log('🚀 ~ handleShare ~ params:', params);
-    // console.log('🚀 ~ handleShare ~ data:', data);
-    console.log('🚀 ~ handleShare ~ selectedRows:', selectedRows);
+    // console.log('🚀 ~ handleShare ~ selectedRows:', selectedRows);
 
     if (selectedRows.length !== 1) {
       return;
