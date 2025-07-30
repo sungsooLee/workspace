@@ -1,15 +1,4 @@
 /* IA118 / NLP_BO_CMS_1203 - 나의 학습자원 > 시험지 등록 및 상세 */
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { createLazyFileRoute, useBlocker, useRouter } from '@tanstack/react-router';
-import { Button, Divider, Tabs, useModal } from '@learnway/ui';
-import {
-  ContentCourseMappingModal,
-  ContentsButtons,
-  MainContents,
-  PageContainer,
-} from '@shared/ui';
-import { ExamTemplateType, TestPaperBasicInfoSaveRes } from '@types';
 import {
   LearningResourceQuestionInfo,
   LearningResourceTestPaperInfo,
@@ -23,6 +12,12 @@ import {
   useExamLoaderData,
   useExamPaperForm,
 } from '@features/learning-resource/learning-resource-management/service';
+import { Button, Divider, Tabs, useModal } from '@learnway/ui';
+import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
+import { createLazyFileRoute, useBlocker, useRouter } from '@tanstack/react-router';
+import { ExamTemplateType, TestPaperBasicInfoSaveRes } from '@types';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 
@@ -156,23 +151,6 @@ function RouteComponent() {
     },
     [saved],
   );
-
-  // 매핑과정 버튼 클릭 시 팝업 오픈
-  const handleClickCourseMapping = useCallback(async () => {
-    if (!contentUuid) {
-      return;
-    }
-
-    await openModal({
-      content: (
-        <ContentCourseMappingModal
-          channelUuid={data?.channelUuid ?? ''}
-          contentUuid={contentUuid}
-        />
-      ),
-      width: 'lg',
-    });
-  }, [data]);
 
   const handleClickGoListButton = useCallback(async () => {
     if (
