@@ -30,7 +30,7 @@ import {
   ContentsButtons,
   ChannelListChoiceModal,
   UserChoiceModal,
-  UserGroupOrganizationShuttleModal,
+  UserGroupOrganizationShuttleModal, UserShuttleModal,
 } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
 
@@ -45,10 +45,14 @@ import {
 import { FormDisplay } from '@features/form';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { queryOptions } from '@entities/user-group/service/user-group.queries';
-import { Tenant } from '@learnway/auth/types';
+import { Role, Tenant } from '@learnway/auth/types';
 import { useGetChannelDetail } from '@entities/channel/service/channel.hook';
 import { useQuery } from '@tanstack/react-query';
 import { useWatch } from 'react-hook-form';
+import {
+  getUserStatus
+} from '@features/platform-management/company/company-user-management/service/company-user.service';
+import { EnGlobalConst } from '@types';
 
 export const Route = createLazyFileRoute('/_layout/platform/tenant/usr-group/manual-detail')({
   component: RouteComponent,
@@ -73,9 +77,18 @@ function RouteComponent() {
 
   const { openModal, confirm: openConfirm, alert: openAlert } = useModal();
   const [tenantInfo, setTenantInfo] = useState<Tenant>();
+  const [roleInfo, setRoleInfo] = useState<Role>();
   const [modalUserGroups, setModalUserGroups] = useState<any>(null);
   const [tableInstance, setTableInstance] = useState<Table<any>>();
   const [userGroupSettings, setUserGroupSettings] = useState<any>();
+  const [gridUserManualConfig, setGridUserManualConfig] = useState(
+    {
+      title: '유저그룹 설정 목록',
+      query: '',
+      columns: [],
+      data: [],
+    }
+  )
 
   const { create } = useCreateUserGroupManual({
     onSuccess: async () => {
@@ -96,11 +109,18 @@ function RouteComponent() {
     setValue: setManualValue,
     formState: manualFormState,
   } = useSearchBox(searchManualConfig());
+
   const {
     config: gManualConfig,
     gridFetch: gridManualFetch,
     data: gridManualData,
   } = useGridBox(gridManualConfig, getManualValues);
+
+  const {
+    config: gUserManualConfig,
+    gridFetch: gridUserManualFetch,
+    data: gridUserManualData,
+  } = useGridBox(gridUserManualConfig, getManualValues);
 
   const {
     provider,
@@ -200,27 +220,70 @@ function RouteComponent() {
   };
 
   const openUserGroupModal = () => {
-    if (tenantInfo) {
-      openModal({
-        width: 'xl',
-        content: <UserGroupOrganizationShuttleModal tenantIds={[tenantInfo.tenantId]} />,
-        onClose(data: any) {
-          if (data) {
-            console.log('Modal {} => ', data);
-            const combiners = data
-              .flatMap((g: any) => g.combiners)
-              .map(({ combineName, ...rest }: any) => rest);
-            const saveValues = getManualValues();
-            saveValues['groups'] = [
-              {
-                combiners,
-              },
-            ];
-            setModalUserGroups(combiners);
-            gridManualFetch(saveValues);
-          }
-        },
-      });
+    if (tenantInfo && roleInfo) {
+      const values = getValues()
+      if( values.assignmentType === 'USER_GROUP_BASED' ) {
+        openModal({
+          width: 'xl',
+          content: <UserGroupOrganizationShuttleModal
+            tenantIds={[tenantInfo.tenantId]} roleIds={[roleInfo.roleId]}/>,
+          onClose(data: any) {
+            if (data) {
+              console.log('Modal {} => ', data);
+              const combiners = data
+                .flatMap((g: any) => g.combiners)
+                .map(({ combineName, ...rest }: any) => rest);
+              const saveValues = getManualValues();
+              saveValues['groups'] = [
+                {
+                  combiners,
+                },
+              ];
+              setModalUserGroups(combiners);
+              gridManualFetch(saveValues);
+            }
+          },
+        });
+      } else {
+        // 사용자 조회 팝업
+        openModal({
+          width: 'xl',
+          content: <UserShuttleModal />,
+          onClose(data: any) {
+            if (data) {
+              console.log('Modal {} => ', data);
+              const tableData = data.map((row: any) => {
+                let status = getUserStatus(row);
+                if (status) status = t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.user.Status.${status}`);
+                else status = '-';
+
+                let accountStatus = t('정상');
+                if (row.enabledDate === null)
+                  accountStatus = t('대기'); // 계정활성화일시
+                else if (row.lockedDate !== null)
+                  accountStatus =  t('잠김'); // 계정잠김일시
+                else if (row.dormantDate !== null) accountStatus = t('휴면'); // 휴면계정전환일시
+
+                return { ...row,
+                  userUuid: row.uuid,
+                  userName: row.name,
+                  companyName: row.company.name,
+                  deptName: row.dept.deptName,
+                  userStatus: status,
+                  accountStatus
+                };
+              })
+              setGridUserManualConfig(
+                {
+                  ...gridUserManualConfig,
+                  data: tableData,
+                }
+              )
+              gridUserManualFetch(tableData)
+            }
+          },
+        });
+      }
     }
   };
 
@@ -245,6 +308,12 @@ function RouteComponent() {
         }
       }
     }
+  };
+
+
+  const handlerExcelUpload = async (data: Record<string, any>[]) => {
+    console.log('excel => ', data)
+    // gridUserManualFetch()
   };
 
   useEffect(() => {
@@ -284,6 +353,7 @@ function RouteComponent() {
     console.log('### loginUser', loginUser);
     if (loginUser) {
       setTenantInfo(loginUser.activeTenant);
+      setRoleInfo(loginUser.activeRole)
       setValue('tenantName', loginUser.activeTenant?.tenantName);
     }
   }, [loginUser]);
@@ -389,21 +459,48 @@ function RouteComponent() {
       </MainContents>
       <MainContents>
         <SearchBox provider={searchManualProvider} onSearch={handleOnSearchManual} />
-        <GridBox
-          showAdd
-          onAddClick={openUserGroupModal}
-          showRemove
-          onRemoveClick={removeUserGroupData}
-          // excelButtons={ (assignmentTypeOptions === 'DIRECT_USER_BASED')
-          //   && <GridExcelUploadButton onUpload={} />}
-          multiple
-          showColumnSettings={false}
-          hideRowSelectionCheckBox={true}
-          onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
-          data={userGroupSettings}
-          config={gManualConfig}
-          columns={manualColumns()}
-        />
+        {
+          (assignmentTypeOptions === 'USER_GROUP_BASED') && (
+            <GridBox
+              showAdd
+              onAddClick={openUserGroupModal}
+              showRemove
+              onRemoveClick={removeUserGroupData}
+              multiple
+              showColumnSettings={false}
+              hideRowSelectionCheckBox={true}
+              onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
+              data={userGroupSettings}
+              config={gManualConfig}
+              columns={manualColumns()}
+            />
+          )
+        }
+        {
+          (assignmentTypeOptions === 'DIRECT_USER_BASED') && (
+            <GridBox
+              showAdd
+              onAddClick={openUserGroupModal}
+              showRemove
+              onRemoveClick={removeUserGroupData}
+              excelButtons={
+                (assignmentTypeOptions === 'DIRECT_USER_BASED') &&
+                <GridExcelUploadButton
+                  validateUrl={'/userGroup/excelUploadValidation'}
+                  affairsType="PMS"
+                  onUpload={handlerExcelUpload}
+                />
+              }
+              multiple
+              showColumnSettings={false}
+              hideRowSelectionCheckBox={true}
+              onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
+              data={userGroupSettings}
+              config={gUserManualConfig}
+              columns={manualColumns()}
+            />
+          )
+        }
       </MainContents>
     </PageContainer>
   );
