@@ -9,6 +9,7 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { EnFormMode, EnGlobalConst } from '@types';
 import { t } from 'i18next';
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { DeliveryAddress } from 'src/types/entities/enroll';
 import { getUserStatus } from '../service/company-user.service';
 import { CompanyUserDetailAccount } from './company-user-detail-account';
 import { CompanyUserDetailAuthentication } from './company-user-detail-auth';
@@ -45,7 +46,7 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
     },
   });
 
-  const [deliveryList, setDeliveryList] = useState<any[]>([]);
+  const [deliveryList, setDeliveryList] = useState<DeliveryAddress[]>([]);
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
