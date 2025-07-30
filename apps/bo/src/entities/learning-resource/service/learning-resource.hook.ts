@@ -21,7 +21,7 @@ import {
   QuestionItemDeleteParam,
   QuestionsCopyReq,
   QuestionStatusUpdateReq,
-  RandomQuestionCountUpdateReq,
+  ExamPaperQuestionCountUpdateReq,
   TestPaperBasicInfoSaveReq,
 } from '@types';
 
@@ -385,7 +385,7 @@ export function useUpdateExamPaperQuestionCount(options?: any) {
   });
 
   return {
-    update: (params: RandomQuestionCountUpdateReq) => mutation.mutate(params as any),
+    update: (params: ExamPaperQuestionCountUpdateReq) => mutation.mutate(params as any),
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
   };

@@ -53,7 +53,7 @@ import {
   QuestionsCopyReq,
   QuestionStatusUpdateReq,
   RandomQuestionCountInfo,
-  RandomQuestionCountUpdateReq,
+  ExamPaperQuestionCountUpdateReq,
   TenantCodeType,
   TestPaperBasicInfoSaveReq,
   TestPaperBasicInfoSaveRes,
@@ -214,7 +214,7 @@ export default class LearningResourceService {
    * 시험지의 유형별/난이도별 문항수 수정 (랜덤으로 입력했을 경우)
    * @param body
    */
-  static updateExamPaperQuestionCountInfo(body: RandomQuestionCountUpdateReq) {
+  static updateExamPaperQuestionCountInfo(body: ExamPaperQuestionCountUpdateReq) {
     return httpService.put(`${CMSApiPrefix()}/exam/add`, body);
   }
 

@@ -627,7 +627,7 @@ export interface RandomQuestionCountInfo {
   easyLevelCount: number;
 }
 
-export interface RandomQuestionCountUpdateReq {
+export interface ExamPaperQuestionCountUpdateReq {
   contentUuid: string;
   questionGenType: ExamQuestionGenType;
   questionTotalCount: number;

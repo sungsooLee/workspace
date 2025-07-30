@@ -54,8 +54,6 @@ export const getExamSaveRequestDataFromFormData = (options: {
 
   delete payload.contentUseDate;
 
-  console.log('payload ===>', payload);
-
   return payload;
 };
 
