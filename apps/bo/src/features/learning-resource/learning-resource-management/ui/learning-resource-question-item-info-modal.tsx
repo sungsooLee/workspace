@@ -107,7 +107,7 @@ const LearningResourceQuestionInfoComponent = ({ data }: QuestionDetailInfoProps
                 </tr>
                 <tr>
                   <th scope="row">{t('언어')}</th>
-                  <td>{data.languageCountryCode}</td>
+                  <td>{t(`pms.multilingual.LangCountryCode.${data?.languageCountryCode}`)}</td>
                 </tr>
               </tbody>
             </table>

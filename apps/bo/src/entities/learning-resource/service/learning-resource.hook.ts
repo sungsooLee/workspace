@@ -361,7 +361,7 @@ export function useDeleteQuestionItemList(options?: any) {
 
   return {
     ...mutation,
-    delete: (param: QuestionItemDeleteParam) => mutation.mutate(param as any),
+    delete: (params: QuestionItemDeleteParam) => mutation.mutate(params as any),
   };
 }
 

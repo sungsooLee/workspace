@@ -52,7 +52,7 @@ import {
   QuestionListForRetrieveRes,
   QuestionsCopyReq,
   QuestionStatusUpdateReq,
-  RandomQuestionCountInfo,
+  QuestionCountInfo,
   ExamPaperQuestionCountUpdateReq,
   TenantCodeType,
   TestPaperBasicInfoSaveReq,
@@ -222,7 +222,7 @@ export default class LearningResourceService {
    * 랜덤형 문항의 유형별 출제 문제수를 조회한다.
    * @param examUuid
    */
-  static fetchExamRandomQuestionCount(examUuid: string): Promise<RandomQuestionCountInfo[]> {
+  static fetchExamRandomQuestionCount(examUuid: string): Promise<QuestionCountInfo[]> {
     return httpService.get(`${CMSApiPrefix()}/exam/random/${examUuid}`);
   }
 
@@ -271,7 +271,7 @@ export default class LearningResourceService {
    * @returns
    */
   static deleteQuestionItemList(param: QuestionItemDeleteParam) {
-    return httpService.delete<any>(`${CMSApiPrefix()}/exam/question`, param);
+    return httpService.delete(`${CMSApiPrefix()}/exam/question`, param);
   }
 
   /**
