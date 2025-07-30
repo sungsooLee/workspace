@@ -10,7 +10,7 @@
             @apply body-sm !p-0;
           }
           &::before {
-            @apply relative top-[0] mx-[12px] h-[12px] w-[1px] bg-[var(--gray85)] content-[''];
+            @apply relative top-[3px] mx-[12px] h-[12px] w-[1px] bg-[var(--gray85)] content-[''];
           }
           &:first-child {
             &::before {
