@@ -1,16 +1,16 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { MobileView, BrowserView } from 'react-device-detect';
-import { useState } from 'react';
-import { cn } from '@learnway/shared';
 import { IcoCaution, IcoFormRequired, IcoMail, IcoPhone02 } from '@learnway/icons';
-import { AuthTitle } from '../../features/auth';
-import styles from '@learnway/styles/fo/pages/_auth/search-account/search-account.module.css'; // 페이지모듈
+import { cn } from '@learnway/shared';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css'; // 폼모듈
-import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css'; // 유의사항
-import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css'; // 구글 otp 인증 가이드 버튼
 import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-form.module.css'; // 영역
-import authToolFormFieldStyles from './auth-tool-form-field.module.css'; // 카드라디오
+import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css'; // 구글 otp 인증 가이드 버튼
+import styles from '@learnway/styles/fo/pages/_auth/search-account/search-account.module.css'; // 페이지모듈
 import embededAlert from '@learnway/styles/fo/shared/ui/embeded-alert/embeded-alert.module.css';
+import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css'; // 유의사항
+import { createFileRoute } from '@tanstack/react-router';
+import { useState } from 'react';
+import { BrowserView, MobileView } from 'react-device-detect';
+import { AuthTitle } from '../../features/auth';
+import authToolFormFieldStyles from './auth-tool-form-field.module.css'; // 카드라디오
 
 import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
 //import { pageRouteConfig } from '../../features/auth';
@@ -178,7 +178,7 @@ function RouteComponent() {
             <div className={`${noticeBoxStyles.start} ${authFormStyles.signup_noti}`}>
               <dl className={noticeBoxStyles.check_point}>
                 <dt>
-                  <IcoCaution width={16} height={16} stroke="#6F798B" />
+                  <IcoCaution />
                   유의사항
                 </dt>
                 <dd>본인 명의의 인증 수단 정보를 정확히 입력해 주세요.</dd>
@@ -377,7 +377,7 @@ function RouteComponent() {
             <div className={`${noticeBoxStyles.start} ${authFormStyles.signup_noti}`}>
               <dl className={noticeBoxStyles.check_point}>
                 <dt>
-                  <IcoCaution width={16} height={16} stroke="#6F798B" />
+                  <IcoCaution />
                   유의사항
                 </dt>
                 <dd>본인 명의의 인증 수단 정보를 정확히 입력해 주세요.</dd>

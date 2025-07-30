@@ -1,25 +1,24 @@
-import { useState } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
+import { IcoAvatar02, IcoCalendar01, IcoCaution, IcoLocation, IcoTime } from '@learnway/icons';
+import { cn } from '@learnway/shared';
 import {
   Button,
   ContentsRow,
+  DatePicker,
   Input,
-  PhoneNumber,
   OptionCard,
   OptionCardItem,
-  DatePicker,
+  PhoneNumber,
   useModal,
 } from '@learnway/ui';
-import { cn } from '@learnway/shared';
-import { IcoCaution, IcoLocation, IcoCalendar01, IcoAvatar02, IcoTime } from '@learnway/icons';
-import { MobileView, BrowserView } from 'react-device-detect';
-import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
-import { isMobile } from 'react-device-detect';
+import { createFileRoute } from '@tanstack/react-router';
+import { useState } from 'react';
+import { BrowserView, isMobile, MobileView } from 'react-device-detect';
 import { EducationPlacePopup } from '../../../features/layout';
+import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
-import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-form.module.css';
+import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import educationStyles from '../../../features/layout/ui/education.module.css';
 import styles from './course-registration-level.module.css';
 export const Route = createFileRoute('/_layout/course-registration/course-registration-level')({
@@ -239,7 +238,7 @@ function RouteComponent() {
       <div className={`${noticeBoxStyles.start} ${styles.notice}`}>
         <dl className={noticeBoxStyles.check_point}>
           <dt>
-            <IcoCaution width={24} height={24} stroke="#4d525c" />
+            <IcoCaution />
             안내사항
           </dt>
           <dd>강사배정은 상황에 따라 변동될 수 있습니다.</dd>

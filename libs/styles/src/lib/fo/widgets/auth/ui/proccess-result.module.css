@@ -6,8 +6,12 @@
     svg {
       @apply h-[80px] w-[80px];
     }
-    .ico1 {
-      @apply stroke-[#00AFD5];
+
+    &:has(.ico1) {
+      @apply h-[80px] w-[80px] rounded-full bg-[var(--blue95)];
+      svg {
+        @apply h-auto w-[32px] stroke-[var(--blue50)];
+      }
     }
     .ico2 {
       @apply stroke-[#FFB902];
@@ -15,7 +19,8 @@
     .ico3 {
       @apply w-[40px] fill-[#4D525C];
     }
-    + h3.title {
+    + h3.title,
+    + h4.title {
       @apply mt-[24px];
     }
     + .noti {
@@ -24,6 +29,15 @@
   }
   h3.title {
     @apply headline1-b leading-[31px] text-[var(--gray10)];
+  }
+  h4.title {
+    @apply body-lg-b leading-[31px] text-[var(--gray10)];
+    + .noti {
+      @apply mt-[12px];
+      + .noti_box {
+        @apply mt-[40px];
+      }
+    }
   }
   .noti {
     @apply body-lg mt-[16px] leading-[24px] text-[var(--gray35)];

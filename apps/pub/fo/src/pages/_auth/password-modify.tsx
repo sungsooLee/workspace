@@ -1,14 +1,14 @@
-import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import { MobileView, BrowserView } from 'react-device-detect';
 import { Button, ContentsRow, Input, useModal } from '@learnway/ui';
+import { createFileRoute } from '@tanstack/react-router';
+import { BrowserView, MobileView } from 'react-device-detect';
 //import styles from './password-modify.module.css';
-import styles from '@learnway/styles/fo/pages/_auth/change-password.module.css';
-import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
-import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
-import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css';
-import hightlightMessageBoxStyles from '@learnway/styles/fo/shared/ui/highlight-message-box/highlight-message-box.module.css';
 import { IcoCaution, IcoFormRequired } from '@learnway/icons';
+import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
+import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css';
+import styles from '@learnway/styles/fo/pages/_auth/change-password.module.css';
+import hightlightMessageBoxStyles from '@learnway/styles/fo/shared/ui/highlight-message-box/highlight-message-box.module.css';
+import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import { GoogleCertGuidePopup } from '../../features/auth';
 import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
 
@@ -89,7 +89,7 @@ function RouteComponent() {
           >
             <dl className={noticeBoxStyles.check_point}>
               <dt>
-                <IcoCaution width={16} height={16} stroke="#6F798B" />
+                <IcoCaution />
                 유의사항
               </dt>
               <dd>

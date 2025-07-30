@@ -1,0 +1,16 @@
+/* search-input-wrap.module.css */
+.search_input_wrap {
+  @apply flex items-center border-b-[1px] border-solid border-[var(--gray90)] pb-[8px];
+  .logo {
+    @apply h-[44px] w-[44px] shrink-0;
+  }
+  .input_area {
+    @apply flex-1;
+  }
+  .btn_action {
+    @apply !h-[44px] !w-[44px] !min-w-[44px] shrink-0 overflow-hidden !rounded-full bg-[var(--gray92)];
+    svg {
+      @apply -rotate-90;
+    }
+  }
+}

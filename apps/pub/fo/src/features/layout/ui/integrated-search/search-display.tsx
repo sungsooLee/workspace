@@ -1,9 +1,10 @@
-import styles from './search-display.module.css';
 import { cn } from '@learnway/shared';
+import styles from './search-display.module.css';
 
 import { SearchBefore } from './search-before';
-import { SearchTyping } from './search-typing';
+import { SearchInputWrap } from './search-input-wrap';
 import { SearchSubmitted } from './search-submitted';
+import { SearchTyping } from './search-typing';
 
 export type SearchState = 'before' | 'typing' | 'submitted';
 export type displayFormat = 'popover' | 'modal';
@@ -46,7 +47,15 @@ export const SearchDisplay: React.FC<SearchDisplayProps> = ({
         className,
       )}
     >
-      <div className={styles.contents}>{renderContent()}</div>
+      <div className={styles.contents}>
+        {(searchState === 'before' || searchState === 'typing') && (
+          <SearchInputWrap
+            buttonActive={false}
+            placeholder={'처음엔 다 어려워요! 추천 키워드부터 가볍게 출발~'}
+          />
+        )}
+        {renderContent()}
+      </div>
     </div>
   );
 };

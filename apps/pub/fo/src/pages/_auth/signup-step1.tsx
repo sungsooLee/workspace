@@ -1,14 +1,12 @@
-import { isMobile } from 'react-device-detect';
-import { createFileRoute } from '@tanstack/react-router';
+import { IcoBuilding01, IcoCaution, IcoOverseasDealer } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { IcoBuilding01 } from '@learnway/icons';
-import { IcoOverseasDealer, IcoCaution } from '@learnway/icons';
-import styles from './signup-step1.module.css';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
+import { Button, RadioCard, SelectOption, Stepper } from '@learnway/ui';
+import { createFileRoute } from '@tanstack/react-router';
 import memberToolFormField from './member-tool-form-field.module.css'; // 회원유형 모듈
-import { Button, RadioCard, Stepper, SelectOption } from '@learnway/ui';
+import styles from './signup-step1.module.css';
 
-import { MobileView, BrowserView } from 'react-device-detect';
+import { BrowserView, MobileView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
 
 export const Route = createFileRoute('/_auth/signup-step1')({
@@ -66,7 +64,7 @@ function RouteComponent() {
           <div className={`${noticeBoxStyles.start} ${styles.signup_noti}`}>
             <dl className={noticeBoxStyles.check_point}>
               <dt>
-                <IcoCaution width={16} height={16} stroke="#6F798B" />
+                <IcoCaution />
                 유의사항
               </dt>
               <dd>일반회원은 한국 내 협력사, 산학협력등 업체 회원입니다.</dd>

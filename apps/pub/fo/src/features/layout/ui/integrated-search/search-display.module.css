@@ -4,7 +4,7 @@
     &.popover {
       @apply w-[780px] p-[2px];
       .contents {
-        @apply relative z-[1] h-full max-h-[710px] w-full rounded-[22px] bg-white p-[32px];
+        @apply relative z-[1] h-auto w-full rounded-[22px] bg-white p-[32px];
       }
       &::before {
         @apply absolute left-0 top-0 z-[0] h-full w-full overflow-hidden rounded-[22px] bg-gradient-to-r from-[#71E2F5] to-[#7673FC] content-[''];

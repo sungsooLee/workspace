@@ -1,21 +1,21 @@
-import { memo } from 'react';
+import { IcoCaution, IcoFormRequired } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import styles from './google-input-popup.module.css';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
-import { IcoCaution, IcoFormRequired } from '@learnway/icons';
 import {
+  Button,
   ContentsRow,
   Input,
   ModalBody,
   ModalContainer,
   ModalFooter,
   ModalTitle,
-  Button,
   useModal,
 } from '@learnway/ui';
+import { memo } from 'react';
+import styles from './google-input-popup.module.css';
 
-import { MobileView, BrowserView } from 'react-device-detect';
+import { BrowserView, MobileView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
 
 const GoogleInputPopupCompoment = () => {
@@ -45,7 +45,7 @@ const GoogleInputPopupCompoment = () => {
           <div className={`${noticeBoxStyles.start} ${styles.signup_noti}`}>
             <dl className={noticeBoxStyles.check_point}>
               <dt>
-                <IcoCaution width={16} height={16} stroke="#6F798B" />
+                <IcoCaution />
                 유의사항
               </dt>
               <dd>구글 OTP 앱에서 +를 탭하고 QR코드 스캔을 선택해 주세요.</dd>

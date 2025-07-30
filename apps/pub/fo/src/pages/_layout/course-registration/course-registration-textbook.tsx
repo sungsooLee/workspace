@@ -1,16 +1,15 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { Button, ContentsRow, Input, PhoneNumber, useModal } from '@learnway/ui';
+import { IcoAvatar02, IcoCalendar01, IcoCaution, IcoLocation, IcoTime } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { isMobile } from 'react-device-detect';
-import { IcoCaution, IcoLocation, IcoCalendar01, IcoAvatar02, IcoTime } from '@learnway/icons';
+import { Button, ContentsRow, Input, PhoneNumber, useModal } from '@learnway/ui';
+import { createFileRoute } from '@tanstack/react-router';
+import { BrowserView, isMobile, MobileView } from 'react-device-detect';
 import { AddressPopup, EducationPlacePopup } from '../../../features/layout';
-import { MobileView, BrowserView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
 
-import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
-import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
-import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-form.module.css';
 import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic.form.module.css';
+import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
+import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-form.module.css';
+import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import educationStyles from '../../../features/layout/ui/education.module.css';
 import styles from './course-registration-textbook.module.css';
 export const Route = createFileRoute('/_layout/course-registration/course-registration-textbook')({
@@ -206,7 +205,7 @@ function RouteComponent() {
       <div className={`${noticeBoxStyles.start} ${styles.notice}`}>
         <dl className={noticeBoxStyles.check_point}>
           <dt>
-            <IcoCaution width={24} height={24} stroke="#4d525c" />
+            <IcoCaution />
             안내사항
           </dt>
           <dd>

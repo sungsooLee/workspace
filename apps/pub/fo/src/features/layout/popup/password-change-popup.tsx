@@ -1,16 +1,16 @@
-import { memo } from 'react';
+import { IcoCaution, IcoFormRequired } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import {
+  Button,
+  ContentsRow,
+  Input,
   ModalBody,
   ModalContainer,
   ModalFooter,
   ModalTitle,
   useModal,
-  Button,
-  ContentsRow,
-  Input,
 } from '@learnway/ui';
-import { IcoFormRequired, IcoCaution } from '@learnway/icons';
+import { memo } from 'react';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
@@ -101,7 +101,7 @@ const PasswordChangePopupComponent = () => {
             {/* 퍼블수정 20250718 아이콘 수정 및 문구 수정 */}
             <dl className={noticeBoxStyles.check_point}>
               <dt>
-                <IcoCaution width={24} height={24} stroke="#4d525c" />
+                <IcoCaution />
                 유의사항
               </dt>
               <dd>

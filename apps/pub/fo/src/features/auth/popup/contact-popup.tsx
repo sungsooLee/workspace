@@ -1,24 +1,24 @@
-import { memo } from 'react';
+import { IcoCaution, IcoFormRequired } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import styles from './contact-popup.module.css';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css'; // 폼모듈
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css'; // 유의사항
 import {
+  Button,
+  ContentsRow,
+  Dropdown,
+  Input,
   ModalBody,
   ModalContainer,
   ModalFooter,
   ModalTitle,
-  Button,
-  useModal,
-  ContentsRow,
-  Input,
-  Dropdown,
   Textarea,
   UppyUpload,
+  useModal,
 } from '@learnway/ui';
-import { IcoFormRequired, IcoCaution } from '@learnway/icons';
-import { MobileView, BrowserView } from 'react-device-detect';
+import { memo } from 'react';
+import { BrowserView, MobileView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
+import styles from './contact-popup.module.css';
 
 const ContactPopupCompoment = () => {
   const { closeModal } = useModal();
@@ -129,7 +129,7 @@ const ContactPopupCompoment = () => {
             <div className={`${noticeBoxStyles.start} ${styles.signup_noti}`}>
               <dl className={noticeBoxStyles.check_point}>
                 <dt>
-                  <IcoCaution width={16} height={16} stroke="#6F798B" />
+                  <IcoCaution />
                   유의사항
                 </dt>
                 <dd>

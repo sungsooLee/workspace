@@ -25,7 +25,7 @@ export const PAGE_META_BY_PATH: Record<string, PageMeta> = {
     info: '가입을 마무리합니다.',
   },
   '/pb-fo/success': {
-    title: '',
+    title: '휴면 계정 해제',
     info: '',
   },
   '/pb-fo/progress-status-email': {
@@ -50,7 +50,7 @@ export const PAGE_META_BY_PATH: Record<string, PageMeta> = {
   },
   '/pb-fo/password-input': {
     title: '비밀번호 입력',
-    info: '비밀번호를 입력해주세요.',
+    info: '',
   },
   '/pb-fo/password-set': {
     title: '비밀번호 설정',
