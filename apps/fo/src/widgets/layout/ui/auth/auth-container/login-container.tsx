@@ -18,10 +18,12 @@ function LoginContainerComponent({ children }: LoginContainerComponentProps) {
 
   const { meta } = useCurrentRoute();
 
+  console.log('@@@ LoginContainerComponent ');
+
   return (
     <div className={`${styles.start} ${styles.auth_container} ${styles.login}`}>
       <div className={`${styles.auth_area}`}>
-        <h2 className={styles.title_login}>{t(meta?.title ?? '')}</h2>
+        {/* <h2 className={styles.title_login}>{t(meta?.title ?? '')}</h2> */}
         <div className={`${styles.auth_inner} ${styles.login}`}>{children}</div>
       </div>
       <AuthFooter />

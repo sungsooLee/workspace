@@ -22,6 +22,10 @@ import authTitleStyle from '@learnway/styles/fo/pages/_auth/auth-title.module.cs
 import styles from '@learnway/styles/fo/pages/_auth/login.module.css';
 import { TFunction } from 'i18next';
 
+import snsGoogleImage from '@assets/images/common/logo_sns_google.png';
+import snskakaoImage from '@assets/images/common/logo_sns_kakao.png';
+import snsNaverImage from '@assets/images/common/logo_sns_naver.png';
+
 export const Route = createFileRoute('/_auth/login')({
   component: RouteComponent,
   ...pageRouteConfig({
@@ -358,6 +362,32 @@ function RouteComponent() {
             </div>
           </div>
 
+          {/* 이번 프로젝트에서는 개발 제외 (퍼블,디자인만 작업) */}
+          <div className={styles.sns_login}>
+            <h3 className={styles.tit_sns}>{t('소셜 로그인')}</h3>
+            <ul className={styles.list}>
+              <li>
+                <Button onClick={() => alert(t('준비중 입니다.'))}>
+                  <img src={snsNaverImage} alt="naver" />
+                </Button>
+              </li>
+              <li>
+                <Button onClick={() => alert(t('준비중 입니다.'))}>
+                  <img src={snskakaoImage} alt="kakao" />
+                </Button>
+              </li>
+              {/* 영문 시 : 구글로그인만 출력 */}
+              <li>
+                <Button onClick={() => alert(t('준비중 입니다.'))}>
+                  <img src={snsGoogleImage} alt="google" />
+                </Button>
+              </li>
+            </ul>
+            <div className={styles.noti}>
+              {t('회사 메일로 회원가입 이후 SNS 간편회원으로 로그인 할 수 있습니다.')}
+            </div>
+          </div>
+
           <div className={styles.btn_box}>
             <Button type="submit" size="xl" variant="primary" className={styles.btn}>
               {t('LABEL.common.login')}
@@ -365,11 +395,11 @@ function RouteComponent() {
           </div>
 
           <div className={styles.login_guide}>
-            <span>
-              <Link to="/signup-progress">{t('LABEL.common.membershipStatus')}</Link>
-              {/*<Link to="/signup">{t('LABEL.common.joinTheMembership')}</Link>*/}
-              <Link to="/login">{t('LABEL.common.joinTheMembership')}</Link>
-            </span>
+            {/* TODO 링크 현행화 */}
+            {/* <Link to="/signup-progress">{t('LABEL.common.membershipStatus')}</Link> */}
+            {/*<Link to="/signup">{t('LABEL.common.joinTheMembership')}</Link>*/}
+            <Link to="/login">{t('LABEL.common.membershipStatus')}</Link>
+            <Link to="/login">{t('LABEL.common.joinTheMembership')}</Link>
           </div>
         </div>
       </div>
