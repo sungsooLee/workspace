@@ -11,9 +11,10 @@ import { useDeleteContent, usePostContentExport } from '@entities/learning-resou
 
 interface Props {
   provider: DynamicFormProvider;
+  hasMapping?: boolean;
 }
 
-const ContentTopButtonsComponent = ({ provider }: Props) => {
+const ContentTopButtonsComponent = ({ provider, hasMapping = false }: Props) => {
   const { openModal, alert: openAlert, confirm: openConfirm } = useModal();
   const router = useRouter();
   const {
@@ -168,7 +169,7 @@ const ContentTopButtonsComponent = ({ provider }: Props) => {
         {t('목록')}
       </Button>
       <Divider orientation={'vertical'} />
-      <Button variant="point" size="sm" onClick={handleDelete}>
+      <Button variant="point" size="sm" onClick={handleDelete} disabled={hasMapping}>
         {t('삭제')}
       </Button>
       {!isDrafted && (
