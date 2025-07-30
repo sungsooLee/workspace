@@ -1,6 +1,9 @@
 // IA104 / NLP_BO_CMS_1044 학습자원 현지화-공유설정(팝업)
+import LearningResourceService from '@entities/learning-resource/api/learning-resource';
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { cn } from '@learnway/shared';
+import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
+import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
 import {
   Button,
   Divider,
@@ -13,20 +16,11 @@ import {
   ShuttleGridToGridImperative,
   useModal,
 } from '@learnway/ui';
-import {
-  SearchBox,
-  TenantByRoleDropdownFormField,
-  TenantChannelDropdownFormField,
-} from '@shared/ui';
+import { SearchBox } from '@shared/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { ContentInfo } from '@types';
+import { ContentInfo, TenantCodeType } from '@types';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-
-import { learningResourceQueryOptions } from '@entities/learning-resource';
-import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
-import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
-import { useQuery } from '@tanstack/react-query';
 
 type ResourceShareShuttleModalProps = {
   data: ContentInfo;
@@ -34,10 +28,6 @@ type ResourceShareShuttleModalProps = {
 
 const LearningResourceShareShuttleModalComponent = ({ data }: ResourceShareShuttleModalProps) => {
   const { t } = useTranslation();
-  const { data: tenantData, error: tenantError } = useQuery(
-    learningResourceQueryOptions.getShareTenantCodes(data.contentUuid),
-  );
-  console.log('🚀 ~ LearningResourceShareShuttleModalComponent ~ data:', tenantData);
 
   const ref = useRef<ShuttleGridToGridImperative>(null);
 
@@ -48,19 +38,24 @@ const LearningResourceShareShuttleModalComponent = ({ data }: ResourceShareShutt
       [
         {
           name: 'tenantId',
-          type: 'custom',
-          label: t('LABEL.form.label.tenant'),
+          type: 'dropdown',
+          label: t('LABEL.form.label.tenant', '테넌트'),
           format: 'object',
-          value: '',
-          element: <TenantByRoleDropdownFormField />,
+          value: data.tenantId,
+          optionsConfig: {
+            api: {
+              fn: () => LearningResourceService.getShareTenantCodes(data.contentUuid),
+              select: (tenants: TenantCodeType[]) =>
+                tenants.map(({ tenantId, tenantName }) => ({ label: tenantName, value: tenantId })),
+            },
+          },
         },
         {
           name: 'channelUuid',
-          type: 'custom',
-          label: t('LABEL.form.label.channel'),
-          format: 'object',
+          type: 'text',
+          label: t('LABEL.form.label.channel', '채널'),
+          format: 'string',
           value: '',
-          element: <TenantChannelDropdownFormField enableFilter />,
         },
       ],
     ],

@@ -174,12 +174,6 @@ export const learningResourceQueryOptions = {
     staleTime: 0,
     enabled: true,
   }),
-
-  getShareTenantCodes: (contentUuid: string) => ({
-    queryKey: queryKeys.shareTenantCodes(contentUuid),
-    queryFn: () => LearningResourceService.getShareTenantCodes(contentUuid),
-    enabled: true,
-  }),
 };
 
 export const mutateOptions = {
