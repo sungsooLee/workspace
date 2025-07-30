@@ -1,7 +1,36 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import type { MutateOptions } from '@tanstack/react-query';
 
-import { vidoeQueryOptions, videoMutateOptions } from './video.queries';
+import { getQuerySkipToken, convertHierarchyNode, getRandomId } from '@learnway/shared';
+import { isMobile } from 'react-device-detect';
+
+import { videoApi } from '../api/video';
+import { CmsVideoContentInfoResDto } from '@learnway/types';
+
+export const videoQueryKeys = {
+  all: ['video'] as const,
+  watchInitialize: (param: any) => [...videoQueryKeys.all, ...Object.values(param)] as const,
+};
+
+export const vidoeQueryOptions = {
+  watchInitialize: (param?: any) =>
+    param
+      ? {
+          queryKey: videoQueryKeys.watchInitialize(param),
+          queryFn: () => videoApi.watchInitialize(param),
+        }
+      : getQuerySkipToken<CmsVideoContentInfoResDto>(),
+};
+
+export const videoMutateOptions = {
+  watchLog: () => ({
+    mutationFn: (payload: any) => videoApi.watchLog(payload),
+  }),
+
+  watchLogStatistics: () => ({
+    mutationFn: (payload: any) => videoApi.watchLogStatistics(payload),
+  }),
+};
 
 export function useVideoWatchLog(mutationOptions = {}) {
   const queryClient = useQueryClient();

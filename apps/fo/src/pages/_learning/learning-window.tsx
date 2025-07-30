@@ -17,10 +17,10 @@ import {
 import { useGetCurriculumnDetail } from '@entities/curriculum';
 
 import {
-  ScormRteService,
-  Html5Service,
-  ImageService,
-  ContentService,
+  scormRteApi,
+  html5Api,
+  imageApi,
+  contentApi,
   useGetScormRteScoInfo,
   useGetBlogResource,
   useGetHtml5Resource,
@@ -211,11 +211,11 @@ function RouteComponent() {
     }
 
     setFuncInfo({
-      lessonProgress: ContentService.getProgressMulti,
-      scormInitialize: ScormRteService.initialize,
-      scormCommit: ScormRteService.commit,
-      html5LearningHistory: Html5Service.saveHtml5Learning,
-      galleryLearningHistory: ImageService.saveImageLearning,
+      lessonProgress: contentApi.getProgressMulti,
+      scormInitialize: scormRteApi.initialize,
+      scormCommit: scormRteApi.commit,
+      html5LearningHistory: html5Api.saveHtml5Learning,
+      galleryLearningHistory: imageApi.saveImageLearning,
       videoOnProgress: handleVideoProgress,
       videoWatchStatistics: handleVideoWatchStatistics,
       otherClickButton: handleOtherClickButton,
