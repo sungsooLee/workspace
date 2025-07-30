@@ -52,7 +52,7 @@ function RouteComponent() {
           <div className={`${noticeBoxStyles.start} ${styles.signup_noti}`}>
             <dl className={noticeBoxStyles.check_point}>
               <dt>
-                <IcoCaution width={24} height={24} stroke="#6F798B" />
+                <IcoCaution />
                 유의사항
               </dt>
               <dd>
