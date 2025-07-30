@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { createFileRoute, Link, useRouter, useRouterState } from '@tanstack/react-router';
+import { createFileRoute, Link, useRouterState } from '@tanstack/react-router';
 import { Navigation } from 'swiper/modules';
 import {
   Carousel,
@@ -21,24 +21,30 @@ import { t } from 'i18next';
 import bnrCImage1 from '../../../assets/images/banner/banner_category_01.png';
 import bnrCImage2 from '../../../assets/images/banner/banner_category_02.png';
 import { IcoArray, IcoArrowDown, IcoDotpoints } from '@learnway/icons';
-import { useFetchCategoryDetail } from '@entities/category';
+import { queryOptions, useFetchCategoryDetail } from '@entities/category';
+import CategoryService from '@entities/category/api/category';
 
 export const Route = createFileRoute('/_layout/_category/category')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const router = useRouter();
   const routerState = useRouterState();
-  const tenantId = router.state.location.state?.tenantId;
-  const categoryId = router.state.location.state?.categoryId;
+  const categoryId = routerState.location.state?.categoryId;
 
-  const { data: categoryInfo, refetch: categoryRefetch } = useFetchCategoryDetail(categoryId);
-  const [data, setData] = useState<any[]>([]);
+  const { data: categoryInfo } = useFetchCategoryDetail(categoryId);
 
   const [depth, setDepth] = useState(3);
   const [page, setPage] = useState(1);
-  const [listUi, setListUi] = useState('type');
+  const [size , setSize] = useState(20);
+  const [sorting, setSorting] = useState([]);
+  const [courseName, setCourseName] = useState('');
+  const [coursePayload, setCoursePayload] = useState({
+    page, size, sort: sorting, categoryId, courseName
+  });
+  const [data, setData] = useState<any[]>([]);
+
+  const [sortingDisabled, setSortingDisabled] = useState(true);
   const [topOptions, setTopOptions] = useState<any[]>(
     [
       { value: 'a', label: '대분류' },
@@ -86,32 +92,31 @@ function RouteComponent() {
     setPage(value);
   };
 
-  const handlerListUi = () => {
-    if (listUi === 'type') {
-      setListUi('type2');
-    } else {
-      setListUi('type');
-    }
-  };
-
   const handleFilterOptionChange = (options: any) => {
     // 카테고리 필터 변경되면 검색 API 호출
   };
 
-  const handleOnSearch = (data: any) => {
-    console.log('### data : ', data)
+  const handleOnSearch = () => {
+    const payload = {
+      ...coursePayload,
+      courseName
+    }
+    setCoursePayload(payload)
+    console.log('### search payload : ', payload)
   }
 
   useEffect(() => {
-    console.log(`2. tenantId=${tenantId} | categoryId=${categoryId}`);
-    if( categoryId ) categoryRefetch();
-  }, [routerState.location.state.tenantId, routerState.location.state.categoryId]);
-
-  useEffect(() => {
     if( categoryInfo ) {
-      console.log('categoryInfo => ', categoryInfo)
-      // categoryInfo.categoryPath
-      // categoryInfo.categoryName
+      (async () => {
+        console.log('#### categoryInfo => ', categoryInfo)
+        const payload = {
+          ...coursePayload,
+          categoryId: categoryInfo.categoryId,
+        }
+        setCoursePayload(payload);
+        const courses = await CategoryService.getFetchCoursesCategory(payload);
+        console.log('### courses => ', courses);
+      })();
     }
   }, [categoryInfo])
 
@@ -156,8 +161,18 @@ function RouteComponent() {
               }
 
               <ContentsRow className={styles.search_input}>
-                <Input id="courseName" type="text" placeholder="과정명 검색" inputSize={'lg'} showSearchIcon={false} />
-                <Button label={t('검색')} variant={'primary'} size={'lx'} />
+                <Input
+                  type="text"
+                  placeholder="과정명 검색"
+                  inputSize={'lg'}
+                  showSearchIcon={false}
+                  value={courseName}
+                  onChange={(e) => {
+                    setCourseName(e.target.value);
+                  }}
+                  onEnterKeyDown={() => handleOnSearch}
+                />
+                <Button label={t('검색')} variant={'primary'} size={'lx'} onClick={handleOnSearch}/>
               </ContentsRow>
             </div>
           </li>
@@ -195,8 +210,8 @@ function RouteComponent() {
               </Popover>
             </div>
             <div className={styles.box}>
-              <Button onClick={handlerListUi}>
-                {listUi === 'type2' ? (
+              <Button onClick={() => {setSortingDisabled(!sortingDisabled)}}>
+                {sortingDisabled ? (
                   <IcoArray width={24} height={24} stroke="#4c515e" fill="none" />
                 ) : (
                   <IcoDotpoints width={24} height={24} stroke="#4c515e" fill="none" />

@@ -76,7 +76,6 @@ const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
 
   useEffect(() => {
     if( categoryTree ) {
-      console.log('### categoryTreeData => ', categoryTree);
       const mainTreeData: any[] = categoryTree.children;
       // 1 Depth
       const oneDepthData = mainTreeData.map(item => {

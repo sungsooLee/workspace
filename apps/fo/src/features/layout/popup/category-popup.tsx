@@ -5,7 +5,7 @@ import { cn } from '@learnway/shared';
 import { Button, Chip, ModalBody, ModalContainer, ModalTitle } from '@learnway/ui';
 import { Navigation } from 'swiper/modules';
 
-import { IcoArrowBackward, IcoArrowDown, IcoArrowForward, IcoArrowUp } from '@learnway/icons';
+import { IcoArrowBackward, IcoArrowForward, IcoArrowUp } from '@learnway/icons';
 
 import { t } from 'i18next';
 
@@ -29,49 +29,17 @@ const CategoryPopupComponent = ({ activeTenantId }: CategoryPopupProps) => {
     <Chip option={{ label: '마케팅', value: 'd' }} />,
     <Chip option={{ label: '경영/기획', value: 'e' }} />,
   ];
-  // const mainData: MainItem[] = [
-  //   { id: 1, label: '기업경영' },
-  //   { id: 2, label: '리더십/비즈스킬' },
-  //   { id: 3, label: '어학' },
-  //   { id: 4, label: 'HR/총무' },
-  //   { id: 5, label: '경영/기획' },
-  //   { id: 6, label: '고객서비스' },
-  //   { id: 7, label: '마케팅 및 세일즈' },
-  //   { id: 8, label: '법무/보안' },
-  //   { id: 9, label: '생산' },
-  //   { id: 10, label: '서비스' },
-  //   { id: 11, label: '연구개발' },
-  //   { id: 12, label: '품질' },
-  //   { id: 13, label: '안전' },
-  //   { id: 14, label: '기타' },
-  // ];
-  // const menuData: MenuItem[] = [
-  //   {
-  //     id: 1,
-  //     label: '경영전략 1',
-  //     link: '',
-  //     subItems: [
-  //       { id: 101, label: '3Depth', link: '' },
-  //       { id: 102, label: '3Depth-1', link: '' },
-  //     ],
-  //   },
-  //   { id: 2, label: '경영전략 2', link: '' }, // 3depth 없음
-  //   {
-  //     id: 3,
-  //     label: '경영전략 3',
-  //     link: '',
-  //     subItems: [
-  //       { id: 301, label: '3Depth', link: '' },
-  //       { id: 302, label: '3Depth-1', link: '' },
-  //     ],
-  //   },
-  // ];
 
   const [mainData, setMainData] = useState<MainItem[]>([]);
   const [menuData, setMenuData] = useState<MenuItem[]>([]);
 
   const [activeId, setActiveId] = useState<number>();
   const [tenantId, setTenantId] = useState<number>(activeTenantId);
+
+  const [firstMenuWithSub, setFirstMenuWithSub] = useState(
+    menuData.find((item) => item.subItems)?.id ?? null
+  );
+  const [openId, setOpenId] = useState<number | null>(firstMenuWithSub);
 
   const { data: categoryTree, refetch: categoryRefetch} = useCategoryTree(tenantId);
 
@@ -108,9 +76,6 @@ const CategoryPopupComponent = ({ activeTenantId }: CategoryPopupProps) => {
     }
   };
 
-  const firstMenuWithSub = menuData.find((item) => item.subItems)?.id ?? null;
-  const [openId, setOpenId] = useState<number | null>(firstMenuWithSub);
-
   const handleClick = (id: number, hasSub: boolean) => {
     if (!hasSub) return;
     setOpenId((prev) => (prev === id ? null : id));
@@ -131,6 +96,12 @@ const CategoryPopupComponent = ({ activeTenantId }: CategoryPopupProps) => {
       setMainData(oneDepthData);
     }
   }, [categoryTree]);
+
+  useEffect(() => {
+    if( menuData ) {
+      setFirstMenuWithSub(menuData.find((item) => item.subItems)?.id ?? null)
+    }
+  }, [menuData])
 
   return (
     <ModalContainer>
@@ -179,7 +150,7 @@ const CategoryPopupComponent = ({ activeTenantId }: CategoryPopupProps) => {
                         )}
                       >
                         <Link to={link}>{label}</Link>
-                        {subItems && (
+                        {(subItems && subItems.length > 0) && (
                           <Button
                             className={styles.btn_cate}
                             onClick={() => handleClick(id, !!subItems)}
