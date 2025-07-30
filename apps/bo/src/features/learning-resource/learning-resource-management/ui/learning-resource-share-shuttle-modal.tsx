@@ -20,7 +20,6 @@ import {
 } from '@shared/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { ContentInfo } from '@types';
-import { TFunction } from 'i18next';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -44,7 +43,30 @@ const LearningResourceShareShuttleModalComponent = ({ data }: ResourceShareShutt
 
   const { closeModal } = useModal();
 
-  const { provider: sProvider } = useSearchBox(sharingInfoSearchConfig(t));
+  const sharingInfoSearchConfig: SearchBoxConfig = {
+    builders: [
+      [
+        {
+          name: 'tenantId',
+          type: 'custom',
+          label: t('LABEL.form.label.tenant'),
+          format: 'object',
+          value: '',
+          element: <TenantByRoleDropdownFormField />,
+        },
+        {
+          name: 'channelUuid',
+          type: 'custom',
+          label: t('LABEL.form.label.channel'),
+          format: 'object',
+          value: '',
+          element: <TenantChannelDropdownFormField enableFilter />,
+        },
+      ],
+    ],
+  };
+
+  const { provider: sProvider } = useSearchBox(sharingInfoSearchConfig);
 
   const [gridData, setGridData] = useState<any[]>([
     {
@@ -164,28 +186,5 @@ const LearningResourceShareShuttleModalComponent = ({ data }: ResourceShareShutt
 };
 
 LearningResourceShareShuttleModalComponent.displayName = 'LearningResourceShareShuttleModal';
-
-const sharingInfoSearchConfig = (t: TFunction<'translation', undefined>): SearchBoxConfig => ({
-  builders: [
-    [
-      {
-        name: 'tenantId',
-        type: 'custom',
-        label: t('LABEL.form.label.tenant'),
-        format: 'object',
-        value: '',
-        element: <TenantByRoleDropdownFormField />,
-      },
-      {
-        name: 'channelUuid',
-        type: 'custom',
-        label: t('LABEL.form.label.channel'),
-        format: 'object',
-        value: '',
-        element: <TenantChannelDropdownFormField enableFilter />,
-      },
-    ],
-  ],
-});
 
 export const LearningResourceShareShuttleModal = LearningResourceShareShuttleModalComponent;
