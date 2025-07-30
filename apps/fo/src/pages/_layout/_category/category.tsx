@@ -238,7 +238,7 @@ function RouteComponent() {
         </div>
 
         {data.content && data.content.length > 0 ? (
-          data.content.map((item: any) => <ThumnailList />)
+          data.content.map((item: any) => <ThumnailList direction={sortingDisabled ? 'vertical' : 'horizontal'}/>)
         ) : (
           <div className={styles.empty}>
             <EmptyText
@@ -249,7 +249,7 @@ function RouteComponent() {
         )}
       </div>
 
-      {data && data.length > 0 && (
+      {data.content && data.content.length > 0 && (
         <Pagination
           className={cn(styles.pagenation, styles.paginationItem)}
           pageNumber={0}
