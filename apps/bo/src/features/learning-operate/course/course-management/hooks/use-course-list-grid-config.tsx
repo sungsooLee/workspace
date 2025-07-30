@@ -71,7 +71,11 @@ export const useCourseListGridConfig = () => {
         const { courseId, courseName } = row.original || {};
         const url = getDetailUrl(row, pathname);
         return (
-          <Link to={url} state={{ courseId, courseName }} className="link">
+          <Link
+            to={url}
+            state={{ courseId, courseName, meta: { title: courseName } }}
+            className="link"
+          >
             {courseName}
           </Link>
         );

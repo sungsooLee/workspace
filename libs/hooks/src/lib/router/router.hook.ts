@@ -42,7 +42,8 @@ export function useCurrentRoute<T = any>(route?: any): CurrentRoute<T> {
       state: location.state,
       params: metchRoute?.params,
       search: metchRoute?.search,
-      meta: (metchRoute?.staticData as any).meta,
+      meta: pageRouteState?.meta || (metchRoute?.staticData as any).meta,
+      // meta: (metchRoute?.staticData as any).meta,
     };
   }
 

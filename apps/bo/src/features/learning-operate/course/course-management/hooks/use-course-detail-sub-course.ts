@@ -58,7 +58,7 @@ export function useCourseDetailSubCourse() {
   const { mutate: copyCourse } = useCopyCourse({
     onSuccess: async (response: any) => {
       await alert(t('과정 복사 완료'));
-      navigate({ to: '/learning/course' });
+      navigate({ to: '/learning/course/detail', state: { courseId: response.data } });
     },
   });
 
