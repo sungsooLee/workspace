@@ -33,6 +33,7 @@ const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
 
   const menuHandleClick = (id: number, isChild: boolean) => {
     setActiveId(id);
+    setChildData([]);
     if( isChild ) {
       // 2 Depth
       const subTreeData = categoryTree.children.filter( (item: any) => item.id === id)[0];
