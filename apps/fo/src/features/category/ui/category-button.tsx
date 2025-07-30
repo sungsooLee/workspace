@@ -31,7 +31,7 @@ const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
 
   const { data: categoryTree, refetch: categoryRefetch} = useCategoryTree(tenantId);
 
-  const menuHandleClick = (id: number, isChild: boolean) => {
+  const menuHandleHover = (id: number, isChild: boolean) => {
     setActiveId(id);
     setChildData([]);
     if( isChild ) {
@@ -48,11 +48,10 @@ const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
       setSubData(twoDepthData);
     } else {
       setSubData([]);
-      onNavigate(tenantId, id);
     }
-  };
+  }
 
-  const subMenuHandleClick = (id: number, parentId: number, isChild: boolean) => {
+  const subMenuHandleHover = (id: number, parentId: number, isChild: boolean) => {
     setActiveSubId(id);
     if( isChild ) {
       // 3 Depth
@@ -67,7 +66,6 @@ const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
       setChildData(threeDepthData);
     } else {
       setChildData([]);
-      onNavigate(tenantId, id);
     }
   };
 
@@ -111,7 +109,8 @@ const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
                         icon={
                           item.isChild && <IcoArrowForward className={styles.ico_arrow} />
                         }
-                        onClick={() => menuHandleClick(item.id, item.isChild)}
+                        onClick={() => onNavigate(tenantId, item.id)}
+                        onMouseOver={() => menuHandleHover(item.id, item.isChild)}
                       />
                     </li>
                   ))}
@@ -132,7 +131,8 @@ const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
                             <IcoArrowForward className={styles.ico_arrow} />
                           )
                         }
-                        onClick={() => subMenuHandleClick(item.id, item.parentId, item.isChild)}
+                        onClick={() => onNavigate(tenantId, item.id)}
+                        onMouseOver={() => subMenuHandleHover(item.id, item.parentId, item.isChild)}
                       />
                     </li>
                   ))}

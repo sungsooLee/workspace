@@ -136,7 +136,7 @@ const LoginRestrictTimeSettingModalComponent: FC<any> = ({
 
   const timeLimitColumns = [
     {
-      header: '요일',
+      header: t('요일'),
       accessorKey: 'dayOfTheWeek',
       size: 200,
       cell: (info: CellContext<any, string>) => (
@@ -156,7 +156,7 @@ const LoginRestrictTimeSettingModalComponent: FC<any> = ({
       },
     },
     {
-      header: '로그인 시간 제한',
+      header: t('로그인 시간 제한'),
       accessorKey: 'loginRestrictionTime',
       size: 'auto',
       cell: (info: CellContext<any, DateRange>) => <EditTimeRangeCell info={info} />,
@@ -166,7 +166,7 @@ const LoginRestrictTimeSettingModalComponent: FC<any> = ({
       },
     },
     {
-      header: '사용 여부',
+      header: t('사용 여부'),
       accessorKey: 'isUsed',
       size: 170,
       cell: (info: CellContext<any, boolean>) => <EditSwitchCell info={info} />,

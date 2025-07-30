@@ -1,11 +1,11 @@
+import { IcoArrowDown } from '@learnway/icons';
+import { Button, Dropdown, PopoverList } from '@learnway/ui';
 import { forwardRef, memo, useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
-import { Button, Popover, Dropdown } from '@learnway/ui';
-import { IcoArrowDown } from '@learnway/icons';
 import { Arrays, Education } from '../..';
 
-import dropdownPopoverStyles from '@learnway/styles/fo/shared/ui/dropdown-popover/dropdown-popover.module.css';
 import styles from '@learnway/styles/fo/features/layout/ui/course-introduction/education.module.css';
+import dropdownPopoverStyles from '@learnway/styles/fo/shared/ui/dropdown-popover/dropdown-popover.module.css';
 
 interface Props {
   educationsTemp?: any;
@@ -51,11 +51,11 @@ const CourseEducationCompoment = forwardRef<HTMLDivElement, Props>(
     };
 
     // mobile 년도별 보기 dropdown
-    const [dateValues, setDateValues] = useState<string[]>(['2025']);
+    const [dateValues, setDateValues] = useState<number>(2025);
     const dateValuesOptions = [
-      { value: '2025', label: '2025' },
-      { value: '2024', label: '2024' },
-      { value: '2023', label: '2023' },
+      { value: 2025, label: '2025' },
+      { value: 2024, label: '2024' },
+      { value: 2023, label: '2023' },
     ];
 
     // 교육일정 더보기
@@ -73,6 +73,16 @@ const CourseEducationCompoment = forwardRef<HTMLDivElement, Props>(
           {isMobile ? (
             <strong className={styles.date}>2026년</strong>
           ) : (
+            <PopoverList
+              options={dateValuesOptions}
+              onOptionSelect={(option: any) => {
+                console.log('onOptionSelect', option);
+                setDateValues(option.value);
+                setOpeningYear(option.value);
+              }}
+            >
+              <Button type="button" variant="point" size="sm" label={String(dateValues)} />
+            </PopoverList>
             // <Popover
             //   className={`${dropdownPopoverStyles.btn} ${dropdownPopoverStyles.text} ${styles.drop_btn}`}
             //   popoverContent={<DropdownPopoverCompoment />}
@@ -86,20 +96,6 @@ const CourseEducationCompoment = forwardRef<HTMLDivElement, Props>(
             //   <span>{'2025년'}</span>
             //   <IcoArrowDown width={16} height={16} stroke="#131C30" />
             // </Popover>
-            <Dropdown
-              className={styles.date_drop}
-              options={dateValuesOptions}
-              value={dateValues}
-              onChange={(selected) => {
-                setDateValues(selected);
-                console.log('select', selected);
-                setOpeningYear(selected);
-              }}
-              placeholder="년도별 옵션"
-              variant="default"
-              isMulti={false}
-              size={'md'}
-            />
           )}
 
           <div className={styles.filter}>
@@ -133,7 +129,7 @@ const CourseEducationCompoment = forwardRef<HTMLDivElement, Props>(
                 />
               </li>
             ))} */}
-            {educations &&
+            {educations && educations.length ? (
               (more ? educations : educations.slice(0, 3)).map((edu: any) => (
                 <li key={edu.courseSequenceId}>
                   <Education
@@ -142,7 +138,10 @@ const CourseEducationCompoment = forwardRef<HTMLDivElement, Props>(
                     CourseCancelCompletePopup={CourseCancelCompletePopup}
                   />
                 </li>
-              ))}
+              ))
+            ) : (
+              <div>교육일정이 없습니다</div>
+            )}
           </ul>
 
           {/* 교육일정 접기/펼치기 */}
