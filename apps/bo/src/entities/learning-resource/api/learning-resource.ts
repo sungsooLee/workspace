@@ -1,4 +1,3 @@
-import { faker } from '@faker-js/faker';
 import { CMSApiPrefix, PMSApiPrefix } from '@learnway/config';
 import { httpService } from '@learnway/shared';
 import {
@@ -18,6 +17,8 @@ import {
   GetScormFileChangeRes,
   GetScormResourceRes,
   GetScormStatusRes,
+  GetShareTenantsChannelsParams,
+  GetShareTenantsChannelsRes,
   GetVideoFileChangeRes,
   GetVideoResourceRes,
   GetVideoStatusRes,
@@ -53,10 +54,11 @@ import {
   QuestionStatusUpdateReq,
   RandomQuestionCountInfo,
   RandomQuestionCountUpdateReq,
+  TenantCodeType,
   TestPaperBasicInfoSaveReq,
   TestPaperBasicInfoSaveRes,
 } from '@types';
-import { omit } from 'lodash';
+import { omit, pick } from 'lodash';
 
 export default class LearningResourceService {
   static fetchChannelsByTenantId(param: {
@@ -181,18 +183,6 @@ export default class LearningResourceService {
   // HTML5 동영상 콘텐츠 리소스 조회
   static fetchHTML5Resource(contentUuid: string) {
     return httpService.get(`${CMSApiPrefix()}/html5/${contentUuid}/resource`);
-  }
-
-  static fetchProgramGuideDownload() {
-    return new Promise((resolve) => {
-      const sharedHistories = Array.from({ length: 10 }, (_, id) => ({
-        id: id + 1,
-        fileName: faker.food.fruit(),
-      }));
-      resolve({
-        content: sharedHistories,
-      });
-    });
   }
 
   // 단건 블로그 컨텐츠 조회
@@ -354,5 +344,24 @@ export default class LearningResourceService {
    */
   static getScormResource(contentUuid: string) {
     return httpService.get<GetScormResourceRes>(`${CMSApiPrefix()}/scorm/${contentUuid}/resource`);
+  }
+
+  /**
+   * 공유 팝업 테넌트 코드 목록
+   */
+  static getShareTenantCodes(contentUuid: string) {
+    return httpService.get<TenantCodeType[]>(
+      `${CMSApiPrefix()}/contents/share/${contentUuid}/tenant/codes`,
+    );
+  }
+
+  /**
+   * 공유 팝업 좌측 테넌트-채널 코드 목록
+   */
+  static getShareTenantsChannels(params: GetShareTenantsChannelsParams) {
+    return httpService.get<GetShareTenantsChannelsRes>(
+      `${CMSApiPrefix()}/contents/share/${params.contentUuid}/tenants/${params.tenantId}/channels`,
+      pick(params, 'channelName'),
+    );
   }
 }
