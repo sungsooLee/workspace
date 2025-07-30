@@ -16,11 +16,12 @@ import { getQuerySkipToken } from '@learnway/shared';
 
 export const queryKeys = {
   course: (id: number) => ['course', id] as const,
-  sequences: (uuid: string) => ['sequences', uuid] as const,
+  sequences: (id: string, openingYear: string, isAll: boolean) =>
+    ['sequences', id, openingYear, isAll] as const,
   sequenceOne: (sequenceId: string) => ['sequence', sequenceId] as const,
-  package: (uuid: string) => ['package', uuid] as const,
-  packageItems: (uuid: string, packageId: string) => ['packageItems', uuid, packageId] as const,
-  dashboard: (uuid: string) => ['dashboard', uuid] as const,
+  package: (id: string) => ['package', id] as const,
+  packageItems: (id: string, packageId: string) => ['packageItems', id, packageId] as const,
+  dashboard: (id: string) => ['dashboard', id] as const,
 };
 export const queryOptions = {
   // 과정 정보 조회
@@ -29,29 +30,33 @@ export const queryOptions = {
     queryFn: async () => CourseService.fetch(id),
   }),
   // 과정 차수 불러오기
-  courseSequences: (id: string): UseQueryOptions => ({
-    queryKey: queryKeys.sequences(id),
-    queryFn: () => CourseService.fetchSequences(id),
+  courseSequences: (
+    id: string,
+    reqDto: { openingYear: string; isAll: boolean },
+  ): UseQueryOptions => ({
+    queryKey: queryKeys.sequences(id, reqDto.openingYear, reqDto.isAll),
+    queryFn: () =>
+      CourseService.fetchSequences(id, { openingYear: reqDto.openingYear, isAll: reqDto.isAll }),
   }),
   // 과정 차수 단건 불러오기
   courseSequenceOne: (sequenceId: string): UseQueryOptions => ({
-    queryKey: queryKeys.sequences(sequenceId),
+    queryKey: queryKeys.sequenceOne(sequenceId),
     queryFn: () => CourseService.fetchSequenceOne(sequenceId),
   }),
   // 과정 패키지 리스트 불러오기
-  coursePackage: (uuid: string): UseQueryOptions => ({
-    queryKey: queryKeys.package(uuid),
-    queryFn: () => CourseService.fetchCoursePackage(uuid),
+  coursePackage: (id: string): UseQueryOptions => ({
+    queryKey: queryKeys.package(id),
+    queryFn: () => CourseService.fetchCoursePackage(id),
   }),
   // 과정 패키지 아이템 불러오기
-  coursePackageItems: (uuid: string, packageId: string): UseQueryOptions => ({
-    queryKey: queryKeys.packageItems(uuid, packageId),
-    queryFn: () => CourseService.fetchCoursePackageItems(uuid, packageId),
+  coursePackageItems: (id: string, packageId: string): UseQueryOptions => ({
+    queryKey: queryKeys.packageItems(id, packageId),
+    queryFn: () => CourseService.fetchCoursePackageItems(id, packageId),
   }),
   // 과정 대시보드 불러오기
-  courseDashboardData: (uuid: string): UseQueryOptions => ({
-    queryKey: queryKeys.dashboard(uuid),
-    queryFn: () => CourseService.fetchDashboard(uuid),
+  courseDashboardData: (id: string): UseQueryOptions => ({
+    queryKey: queryKeys.dashboard(id),
+    queryFn: () => CourseService.fetchDashboard(id),
   }),
 };
 

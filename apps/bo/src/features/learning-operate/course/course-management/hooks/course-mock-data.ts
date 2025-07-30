@@ -207,6 +207,7 @@ export const getDummyCourse4 = (): Course => {
     courseId: 5,
     courseType: 'ELEARNING1',
     channelUuid: 'd4bf5f43-3184-445b-8985-f316619909db',
+    tenantId: 2,
     tenantList: [
       {
         tenantId: 2,

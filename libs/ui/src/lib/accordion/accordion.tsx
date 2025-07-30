@@ -24,6 +24,7 @@ export interface AccordionComponentProps {
   value?: string | string[];
   defaultValue?: string | string[];
   onValueChange?: (value: string | string[]) => void;
+  collapsible?: boolean;
 }
 
 const AccordionComponent = forwardRef<
@@ -38,6 +39,7 @@ const AccordionComponent = forwardRef<
       value,
       type = 'single',
       defaultValue,
+      collapsible,
     }: AccordionComponentProps,
     ref,
   ) => {
@@ -71,6 +73,7 @@ const AccordionComponent = forwardRef<
         defaultValue={editionDefaultValue as any}
         onValueChange={onValueChange}
         ref={ref}
+        collapsible={collapsible}
       >
         {items.map((item: AccordionItem) => {
           return (

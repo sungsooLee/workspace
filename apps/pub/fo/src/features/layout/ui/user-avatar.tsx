@@ -1,24 +1,26 @@
-import { cn } from '@learnway/shared';
-import { memo, useState } from 'react';
-import { Link } from '@tanstack/react-router';
-import { Avatar, Button, Popover, useModal, Switch } from '@learnway/ui';
+import { useCodeGroup } from '@learnway/hooks';
 import {
-  IcoClose02,
-  IcoPoint,
-  IcoLearning03,
   IcoChart,
+  IcoClose02,
+  IcoLearning03,
   IcoPaper,
+  IcoPoint,
   IcoRocket,
 } from '@learnway/icons';
-import styles from './user-avatar.module.css';
-import popoverInnerStyles from './popover-inner.module.css';
+import { Avatar, Button, Popover, Switch, useModal } from '@learnway/ui';
+import { memo, useState } from 'react';
 import languagestyles from './language.module.css';
+import popoverInnerStyles from './popover-inner.module.css';
+import styles from './user-avatar.module.css';
 
 const PopoverContent = () => {
   const { confirm: openConfirm } = useModal();
   const [isChecked, setIsChecked] = useState(false);
   const [selectedLang, setSelectedLang] = useState('한국어');
   const [contentType, setContentType] = useState<'profile' | 'lang'>('profile');
+  const { data } = useCodeGroup('pms.multilingual.LangCountryCode', {});
+
+  console.log('@@@ data', data);
   const languages = [
     { label: '한국어 (Korea)', value: 'ko' },
     { label: 'English (English)', value: 'en' },

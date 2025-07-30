@@ -1,17 +1,18 @@
 import {  useRouter } from '@tanstack/react-router';
-import { useCategories } from '../../../features/category';
 import { Category } from '../../../types';
 import { useEffect, useState } from 'react';
+import { useFetchAuthUser } from '@learnway/auth/entities';
+import { useCategoryTree } from '@entities/category';
 
-function useCategoryBreadcrumbs(currentCategoryId: number | null) {
-  const { data: categories } = useCategories();
+function useCategoryBreadcrumbs(currentCategoryId: number | null, tenantId: number) {
+  const { data: categories } = useCategoryTree(tenantId);
 
   const findCategoryPath = (categoryId: number) => {
     const path: Category[] = [];
 
     const findParent = (categories: Category[], targetId: number) => {
       for (const category of categories) {
-        if (category.categoryId === targetId) {
+        if (category.id === targetId) {
           path.unshift(category);
           return true;
         }
@@ -27,7 +28,7 @@ function useCategoryBreadcrumbs(currentCategoryId: number | null) {
     };
 
     if (currentCategoryId) {
-      findParent(categories, currentCategoryId);
+      findParent(categories.children, currentCategoryId);
     }
 
     return path;
@@ -39,21 +40,31 @@ function useCategoryBreadcrumbs(currentCategoryId: number | null) {
 }
 
 function useShowBreadcrumbs() {
+  const { data: loginUser } = useFetchAuthUser();
   const router = useRouter();
-  const [shouldShow, setShouldShow] = useState(false);
+  const [shouldShow, setShouldShow] = useState({
+    isShow: false,
+    tenantId: 0
+  });
 
   useEffect(() => {
     const unsubscribe = router.subscribe('onResolved', () => {
       const currentPath = router.state.location.pathname;
-      setShouldShow(currentPath.includes('/category'));
+      setShouldShow({
+        isShow: currentPath.includes('/category'),
+        tenantId: (loginUser && loginUser.activeTenant) ? loginUser?.activeTenant?.tenantId : 0
+      });
     });
 
-    setShouldShow(router.state.location.pathname.includes('/category'));
+    setShouldShow({
+      isShow: router.state.location.pathname.includes('/category'),
+      tenantId: (loginUser && loginUser.activeTenant) ? loginUser?.activeTenant?.tenantId : 0
+    });
 
     return () => {
       unsubscribe();
     };
-  }, [router]);
+  }, [router, loginUser]);
 
   return shouldShow;
 }

@@ -1,5 +1,6 @@
 import { getQuerySkipToken } from '@learnway/shared';
 
+import { UsersParams } from '@types';
 import UsersService from '../api/users';
 
 export const queryKeys = {
@@ -9,14 +10,14 @@ export const queryKeys = {
 };
 
 export const usersQueryOptions = {
-  all: (params: any) => ({
+  all: (params: UsersParams) => ({
     queryKey: queryKeys.all,
     queryFn: () => UsersService.fetchListUsers(params),
     cacheTime: 0,
     staleTime: 0,
   }),
 
-  list: (params: any) => ({
+  list: (params: UsersParams) => ({
     queryKey: queryKeys.list,
     queryFn: () => UsersService.fetchListUsers(params),
   }),

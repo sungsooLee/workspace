@@ -1,11 +1,11 @@
-import { FC, useEffect, useState, useCallback } from 'react';
-import { t } from 'i18next';
+import { Button, GridBox, SplitPanel } from '@learnway/ui';
 import { useRouterState } from '@tanstack/react-router';
-import { GridBox, Button, SplitPanel } from '@learnway/ui';
+import { t } from 'i18next';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { CompanyDetailHRUsergroup } from './company-detail-hr-usergroup';
 
-import { EnUserGroupType } from '@types';
 import { useGetCompanyUserGroups } from '@entities/user-group/service/user-group-company.hook';
+import { EnUserGroupType } from '@types';
 
 const _global = {
   selectClick: (row: any) => {
@@ -28,7 +28,7 @@ const CompanyDetailHRLinkComponent: FC<any> = ({ type }: CompanyDetailHRLinkProp
   const [userGroupId, setUserGroupId] = useState<any>(null);
   const [filteredData, setFilteredData] = useState<any[]>([]);
 
-  const { data, refetch } = useGetCompanyUserGroups({ userGroupType: type, companyId: companyId });
+  const { data, refetch } = useGetCompanyUserGroups({ userGroupType: type, companyId });
 
   _global.selectClick = (row: any) => {
     setUserGroupId(row.userGroupId);
@@ -62,7 +62,6 @@ const CompanyDetailHRLinkComponent: FC<any> = ({ type }: CompanyDetailHRLinkProp
 
   const handleGridSearchClick = useCallback(
     (condition: any) => {
-      console.log('handleGridSearchClick', condition);
       const searchValue = condition.value.trim();
       if (searchValue.length > 0) {
         const filterd = data.filter(
@@ -79,7 +78,7 @@ const CompanyDetailHRLinkComponent: FC<any> = ({ type }: CompanyDetailHRLinkProp
       <GridBox
         data={filteredData}
         columns={linkColumns}
-        title={t('유저그룹') + ' - ' + linkTitle}
+        title={`${t('유저그룹')} - ${linkTitle}`}
         disabledSelectionToggle
         onSearchClick={handleGridSearchClick}
       />

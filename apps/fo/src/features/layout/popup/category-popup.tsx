@@ -1,18 +1,27 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import { Carousel } from '@learnway/ui';
-import { Button, Chip, ModalBody, ModalContainer, ModalTitle, useModal } from '@learnway/ui';
+import { cn } from '@learnway/shared';
+import { Button, Chip, ModalBody, ModalContainer, ModalTitle } from '@learnway/ui';
 import { Navigation } from 'swiper/modules';
 
-import { IcoArrowDown, IcoArrowForward } from '@learnway/icons';
+import { IcoArrowBackward, IcoArrowDown, IcoArrowForward, IcoArrowUp } from '@learnway/icons';
 
-import bnrImage1 from '@learnway/styles/fo/assets/images/banner/banner_cate1.png';
-import bnrImage2 from '@learnway/styles/fo/assets/images/banner/banner_cate2.png';
+import { t } from 'i18next';
 
 import styles from '@learnway/styles/fo/features/layout/popup/category-popup.module.css';
+import { useCategoryTree } from '@entities/category';
 
-const CategoryPopupComponent = () => {
-  // 상단 배너 스와이퍼
+interface CategoryPopupProps {
+  activeTenantId: number;
+}
+
+type MainItem = { id: number; label: string; isChild: boolean };
+type SubItem = { id: number; label: string; parentId: number; link: string; };
+type MenuItem = { id: number; label: string; parentId: number; link: string; subItems?: SubItem[]; };
+
+const CategoryPopupComponent = ({ activeTenantId }: CategoryPopupProps) => {
+  // 하단 카테고리 이동 내역
   const items = [
     <Chip option={{ label: '기업경영', value: 'a' }} />,
     <Chip option={{ label: 'Ai교육', value: 'b' }} />,
@@ -20,139 +29,139 @@ const CategoryPopupComponent = () => {
     <Chip option={{ label: '마케팅', value: 'd' }} />,
     <Chip option={{ label: '경영/기획', value: 'e' }} />,
   ];
+  // const mainData: MainItem[] = [
+  //   { id: 1, label: '기업경영' },
+  //   { id: 2, label: '리더십/비즈스킬' },
+  //   { id: 3, label: '어학' },
+  //   { id: 4, label: 'HR/총무' },
+  //   { id: 5, label: '경영/기획' },
+  //   { id: 6, label: '고객서비스' },
+  //   { id: 7, label: '마케팅 및 세일즈' },
+  //   { id: 8, label: '법무/보안' },
+  //   { id: 9, label: '생산' },
+  //   { id: 10, label: '서비스' },
+  //   { id: 11, label: '연구개발' },
+  //   { id: 12, label: '품질' },
+  //   { id: 13, label: '안전' },
+  //   { id: 14, label: '기타' },
+  // ];
+  // const menuData: MenuItem[] = [
+  //   {
+  //     id: 1,
+  //     label: '경영전략 1',
+  //     link: '',
+  //     subItems: [
+  //       { id: 101, label: '3Depth', link: '' },
+  //       { id: 102, label: '3Depth-1', link: '' },
+  //     ],
+  //   },
+  //   { id: 2, label: '경영전략 2', link: '' }, // 3depth 없음
+  //   {
+  //     id: 3,
+  //     label: '경영전략 3',
+  //     link: '',
+  //     subItems: [
+  //       { id: 301, label: '3Depth', link: '' },
+  //       { id: 302, label: '3Depth-1', link: '' },
+  //     ],
+  //   },
+  // ];
 
-  const categories = [
-    {
-      title: '경영전략',
-      link: '', // 타이틀 링크 추가
-      subCategories: [
-        { name: '3dpth Category', link: '' },
-        { name: '3dpth Category', link: '' },
-        { name: '3dpth Category', link: '' },
-        { name: '3dpth Category', link: '' },
-      ],
-    },
-    {
-      title: '경영전략',
-      link: '', // 타이틀 링크 추가
-      subCategories: [{ name: '3dpth Category', link: '' }],
-    },
-  ];
+  const [mainData, setMainData] = useState<MainItem[]>([]);
+  const [menuData, setMenuData] = useState<MenuItem[]>([]);
 
-  // 각 카테고리의 열림/닫힘 상태를 배열로 관리
-  const [openStates, setOpenStates] = useState(categories.map(() => false));
+  const [activeId, setActiveId] = useState<number>();
+  const [tenantId, setTenantId] = useState<number>(activeTenantId);
 
-  // 모든 카테고리가 열려있는지 확인
-  const isAllOpen = openStates.every((state) => state);
+  const { data: categoryTree, refetch: categoryRefetch} = useCategoryTree(tenantId);
 
-  // 전체 열기/닫기
-  const categoryAll = () => {
-    setOpenStates(categories.map(() => !isAllOpen));
+  const menuHandleClick = (id: number, isChild: boolean) => {
+    setActiveId(id);
+    if( isChild ) {
+      // 2 Depth
+      const subTreeData = categoryTree.children.filter( (item: any) => item.id === id)[0];
+      const menuData = subTreeData.children.map( (item: any) => {
+        const children: SubItem[] = [];
+        if( item.children && item.children.length > 0 ) {
+          item.children.forEach( (child: any) => {
+            children.push(
+              {
+                id: child.id,
+                label: child.name,
+                parentId: item.id,
+                link: ''
+              }
+            )
+          })
+        }
+        return {
+          id: item.id,
+          label: item.name,
+          parentId: subTreeData.id,
+          link: item.children.length > 0 ? null : '',
+          subItems: children
+        }
+      });
+      setMenuData(menuData);
+    } else {
+      setMenuData([]);
+    }
   };
 
-  // 개별 열기/닫기
-  const categoryDepth = (index: number) => {
-    setOpenStates((prev) => prev.map((state, i) => (i === index ? !state : state)));
+  const firstMenuWithSub = menuData.find((item) => item.subItems)?.id ?? null;
+  const [openId, setOpenId] = useState<number | null>(firstMenuWithSub);
+
+  const handleClick = (id: number, hasSub: boolean) => {
+    if (!hasSub) return;
+    setOpenId((prev) => (prev === id ? null : id));
   };
+
+  useEffect(() => {
+    if( categoryTree ) {
+      console.log('### categoryTreeData => ', categoryTree);
+      const mainTreeData: any[] = categoryTree.children;
+      // 1 Depth
+      const oneDepthData = mainTreeData.map(item => {
+        return {
+          id: item.id,
+          label: item.name,
+          isChild: item.children.length > 0 ? true : false,
+        }
+      })
+      setMainData(oneDepthData);
+    }
+  }, [categoryTree]);
 
   return (
     <ModalContainer>
-      <ModalTitle>{'카테고리'}</ModalTitle>
+      <ModalTitle>{t('학습테마')}</ModalTitle>
       <ModalBody>
         <div className={styles.start}>
-          <div className={styles.swiper}>
-            <Carousel
-              items={items}
-              slidesPerView={'auto'}
-              className={styles.category_carousel}
-              spaceBetween={8}
-              modules={[Navigation]}
-              navigation={true}
-            />
-          </div>
-
           {/* 카테고리 영역 */}
           <div className={styles.category_wrap}>
             {/* 카테고리 영역 - 좌측메뉴 */}
             <div className={styles.menu_list_wrap}>
               <div className={styles.scroll_box}>
-                {/* list 1 */}
-                <ul className={`${styles.menu_list} ${styles.sec1}`}>
-                  <li>
-                    {/* 버튼 활성화 시 active 추가 */}
-                    <Button className={styles.active}>
-                      <span>기업경영</span>
-                      <IcoArrowForward
-                        className={styles.ico_arrow}
-                        width={16}
-                        height={16}
-                        stroke="#07287E"
+                <ul className={styles.menu_list}>
+                  {mainData.map((item) => (
+                    <li key={item.id}>
+                      <Button
+                        className={activeId === item.id ? styles.active : ''}
+                        label={item.label}
+                        icon={
+                          (activeId === item.id && item.isChild) && (
+                            <IcoArrowForward
+                              className={styles.ico_arrow}
+                              width={16}
+                              height={16}
+                              stroke="#07287E"
+                            />
+                          )
+                        }
+                        onClick={() => menuHandleClick(item.id, item.isChild)}
                       />
-                    </Button>
-                  </li>
-                  <li>
-                    <Button>
-                      <span>리더십/비즈스킬</span>
-                    </Button>
-                  </li>
-                  <li>
-                    <Button>
-                      <span>어학</span>
-                    </Button>
-                  </li>
-                  <li>
-                    <Button>
-                      <span>IT</span>
-                    </Button>
-                  </li>
-                  <li>
-                    <Button>
-                      <span>HR/총무</span>
-                    </Button>
-                  </li>
-                </ul>
-
-                {/* list 2 */}
-                <ul className={`${styles.menu_list} ${styles.sec2}`}>
-                  <li>
-                    <Button>
-                      <span>경영/기획</span>
-                    </Button>
-                  </li>
-                  <li>
-                    <Button>
-                      <span>고객 서비스</span>
-                    </Button>
-                  </li>
-                  <li>
-                    <Button>
-                      <span>마케팅 및 세일즈</span>
-                    </Button>
-                  </li>
-                  <li>
-                    <Button>
-                      <span>법무/보안</span>
-                    </Button>
-                  </li>
-                  <li>
-                    <Button>
-                      <span>생산</span>
-                    </Button>
-                  </li>
-                </ul>
-
-                {/* list 3 */}
-                <ul className={`${styles.menu_list} ${styles.sec3}`}>
-                  <li>
-                    <Button>
-                      <span>서비스</span>
-                    </Button>
-                  </li>
-                  <li>
-                    <Button>
-                      <span>연구개발</span>
-                    </Button>
-                  </li>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>
@@ -160,65 +169,55 @@ const CategoryPopupComponent = () => {
             {/* 카테고리 영역 - 뎁스영역 */}
             <div className={styles.category_inner}>
               <div className={styles.scroll_box}>
-                <div className={styles.tit_head}>
-                  <h2>
-                    <Link to={'/'} className={styles.tit}>
-                      기업경영
-                    </Link>
-                    <Button
-                      onClick={categoryAll}
-                      className={`${styles.btn_cate} ${isAllOpen ? styles.active : ''}`}
-                    >
-                      <IcoArrowDown width={16} height={16} stroke="#07287E" />
-                    </Button>
-                  </h2>
-                </div>
-
                 <div className={styles.depth_area}>
-                  {/* 3dapth */}
-                  {categories.map((category, index) => (
-                    <div key={index} className={styles.depth_wrap}>
-                      <div className={styles.tit}>
-                        <h3>
-                          <Link to={category.link}>{category.title}</Link>
-                        </h3>
-                        <Button
-                          className={`${styles.btn_cate} ${openStates[index] ? styles.active : ''}`}
-                          onClick={() => categoryDepth(index)}
-                        >
-                          <IcoArrowDown width={16} height={16} stroke="#A9AFB8" />
-                        </Button>
+                  {menuData.map(({ id, label, subItems, link }) => (
+                    <div key={id} className={styles.menu_item}>
+                      <div
+                        className={cn(
+                          styles.menu_title,
+                          subItems && openId === id ? styles.active : '',
+                        )}
+                      >
+                        <Link to={link}>{label}</Link>
+                        {subItems && (
+                          <Button
+                            className={styles.btn_cate}
+                            onClick={() => handleClick(id, !!subItems)}
+                            icon={<IcoArrowUp />}
+                          />
+                        )}
                       </div>
 
-                      {!openStates[index] && (
-                        <div className={styles.depth_info}>
-                          <ul className={styles.list}>
-                            {category.subCategories.map((sub, subIndex) => (
-                              <li key={subIndex}>
-                                <Link className={styles.txt} to={sub.link}>
-                                  {sub.name}
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
+                      {subItems && openId === id && (
+                        <div className={styles.sub_menu}>
+                          {subItems.map((sub) => (
+                            <div key={sub.id} className={styles.sub_menu_item}>
+                              <Link to={sub.link}>{sub.label}</Link>
+                            </div>
+                          ))}
                         </div>
                       )}
                     </div>
                   ))}
                 </div>
-
-                <div className={styles.banner_box}>
-                  <Link to={'/'} className={styles.banner_link}>
-                    <img src={bnrImage1} />
-                  </Link>
-                  <Link to={'/'} className={styles.banner_link}>
-                    <img src={bnrImage2} />
-                  </Link>
-                </div>
               </div>
             </div>
           </div>
-        </div>{' '}
+          {items.length > 0 && (
+            <div className={styles.swiper}>
+              <Carousel
+                items={items}
+                slidesPerView={'auto'}
+                className={styles.category_carousel}
+                spaceBetween={8}
+                modules={[Navigation]}
+                showNavigation={true}
+                prevIcon={<IcoArrowBackward />}
+                nextIcon={<IcoArrowForward />}
+              />
+            </div>
+          )}
+        </div>
       </ModalBody>
     </ModalContainer>
   );

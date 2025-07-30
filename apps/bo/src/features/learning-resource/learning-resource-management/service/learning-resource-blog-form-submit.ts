@@ -2,12 +2,11 @@ import { getParsedDataFromString } from '@learnway/shared';
 import { BlogCreateReq, BlogUpdateReq, ContentAddInfoType, Tag } from '@types';
 
 export const getPayloadFromBlogSubmit = (options: {
-  data: any;
+  data: Record<string, any>;
   tenantId: number;
-  mode: 'create' | 'update';
+  mode: 'CREATE' | 'UPDATE';
   contentUuid?: string;
 }) => {
-  console.log(options.data);
   const payload: BlogCreateReq = {
     tenantId: options.data.tenantId,
     contentName: options.data.contentName,
@@ -42,7 +41,7 @@ export const getPayloadFromBlogSubmit = (options: {
     contentAddInfo: options.data.contentAddInfo,
   };
 
-  if (options.mode === 'update') {
+  if (options.mode === 'UPDATE') {
     Object.assign(payload, {
       contentUuid: options.contentUuid ?? '',
     } as BlogUpdateReq);

@@ -1,17 +1,10 @@
-import {
-  Button,
-  findNodePath,
-  TreeBox,
-  TreeEventPayload,
-  TreeNode,
-  useModal,
-  ContentsRow,
-  Input,
-  Textarea,
-  TreeContainer,
-} from '@learnway/ui';
+import { useQueryClient } from '@tanstack/react-query';
+import { TFunction } from 'i18next';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import {
+  queryKeys,
   useCheckExistsCategory,
   useCreateCategory,
   useDeleteCategory,
@@ -19,21 +12,30 @@ import {
   useFetchCategoryDetail,
   useMoveCategory,
   useUpdateCategory,
-  queryKeys,
 } from '@entities/category';
+import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
 import {
   findMenuPathById,
   findNodeByMenuId,
   transformApiDataToTreeData,
 } from '@features/platform-management/platform/category-managemnet';
-import { t } from 'i18next';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { IcoMinus } from '@learnway/icons';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
+import {
+  Button,
+  ContentsRow,
+  findNodePath,
+  Input,
+  Textarea,
+  TreeBox,
+  TreeContainer,
+  TreeEventPayload,
+  TreeNode,
+  useModal,
+} from '@learnway/ui';
 import { FormRow, SwitchFormField } from '@shared/ui';
-import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
-import { IcoMinus } from '@learnway/icons';
-import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
-import { useQueryClient } from '@tanstack/react-query';
 
 const FORM_MODE = {
   NONE: 'NONE',
@@ -47,7 +49,8 @@ export const CategoryManage = () => {
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
   const [formMode, setFormMode] = useState(FORM_MODE.NONE);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const { t } = useTranslation();
+  const formConfig = FormConfig(t);
   const { provider, updateFormData, onSubmit, onFormChange, clearFormError, setFormError } =
     useDynamicForm(formConfig);
   const queryClient = useQueryClient();
@@ -563,99 +566,102 @@ export const CategoryManage = () => {
   );
 };
 
-const formConfig: DynamicFormConfig = {
-  builders: [
-    {
-      name: 'key',
-      type: 'text',
-      label: 'key',
-      value: '',
-    },
-    {
-      name: 'parentKey',
-      type: 'text',
-      label: 'parentKey',
-      value: '',
-    },
-    {
-      name: 'location',
-      type: 'text',
-      label: () => t('LABEL.form.input.categoryLocation'),
-      value: '',
-    },
-    {
-      label: () => t('LABEL.form.input.categoryParentName'),
-      name: 'parentMenuName',
-      type: 'text',
-      format: 'string',
-      value: '',
-    },
-    {
-      label: () => t('LABEL.form.input.categoryCode'),
-      name: 'code',
-      type: 'custom',
-      maxLength: 20,
-      value: { fieldValue: '', checkState: DuplicateState.needInput },
-    },
-    {
-      label: () => t('LABEL.form.input.categoryCodeName'),
-      name: 'categoryName',
-      type: 'text',
-      maxLength: 20,
-      value: '',
-    },
-    {
-      label: 'sortSeq',
-      name: 'sortSeq',
-      type: 'hidden',
-      maxLength: 50,
-      value: 0,
-    },
-    {
-      label: () => t('LABEL.form.input.description'),
-      name: 'categoryContent',
-      type: 'textarea',
-      maxLength: 50,
-      value: '',
-    },
-    {
-      name: 'isUsed',
-      type: 'switch',
-      format: 'boolean',
-      label: () => t('사용 여부'),
-      value: false,
-      switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+const FormConfig = (t: TFunction<'translation', undefined>): DynamicFormConfig => {
+  return {
+    builders: [
+      {
+        name: 'key',
+        type: 'text',
+        label: 'key',
+        value: '',
+      },
+      {
+        name: 'parentKey',
+        type: 'text',
+        label: 'parentKey',
+        value: '',
+      },
+      {
+        name: 'location',
+        type: 'text',
+        label: t('LABEL.form.input.categoryLocation'),
+        value: '',
+      },
+      {
+        label: t('LABEL.form.input.categoryParentName'),
+        name: 'parentMenuName',
+        type: 'text',
+        format: 'string',
+        value: '',
+      },
+      {
+        label: t('LABEL.form.input.categoryCode'),
+        name: 'code',
+        type: 'custom',
+        maxLength: 20,
+        value: { fieldValue: '', checkState: DuplicateState.needInput },
+      },
+      {
+        label: t('LABEL.form.input.categoryCodeName'),
+        name: 'categoryName',
+        type: 'text',
+        maxLength: 20,
+        value: '',
+      },
+      {
+        label: 'sortSeq',
+        name: 'sortSeq',
+        type: 'hidden',
+        maxLength: 50,
+        value: 0,
+      },
+      {
+        label: t('LABEL.form.input.description'),
+        name: 'categoryContent',
+        type: 'textarea',
+        maxLength: 50,
+        value: '',
+      },
+      {
+        name: 'isUsed',
+        type: 'switch',
+        format: 'boolean',
+        label: t('사용 여부'),
+        value: false,
+        switchConfig: {
+          label: (value: boolean) => (value ? t('사용') : t('미사용')),
+        },
+      },
+    ],
+    validator: {
+      code: {
+        format: 'object',
+        required: true,
+        conditions: [
+          {
+            fn: (values) => {
+              const fieldValue = values.code.fieldValue;
+              if (fieldValue === '') return true;
+              return false;
+            },
+            message: t('LABEL.form.validation.needInput', { code: t('LABEL.cdId') }),
+          },
+          {
+            fn: (values: Record<string, any>) =>
+              values.code.checkState === DuplicateState.check ||
+              values.code.checkState === DuplicateState.needInput,
+            message: t('LABEL.form.validation.check', { code: t('LABEL.cdId') }),
+          },
+          {
+            fn: (values: Record<string, any>) =>
+              values.code.checkState === DuplicateState.duplicated,
+            message: t('LABEL.form.validation.duplicated', { code: t('LABEL.cdId') }),
+          },
+        ],
+      },
+      name: {
+        required: true,
       },
     },
-  ],
-  validator: {
-    code: {
-      format: 'object',
-      required: true,
-      conditions: [
-        {
-          fn: (values) => {
-            const fieldValue = values.code.fieldValue;
-            if (fieldValue === '') return true;
-            return false;
-          },
-          message: t('LABEL.form.validation.needInput', { code: t('LABEL.cdId') }),
-        },
-        {
-          fn: (values: Record<string, any>) =>
-            values.code.checkState === DuplicateState.check ||
-            values.code.checkState === DuplicateState.needInput,
-          message: t('LABEL.form.validation.check', { code: t('LABEL.cdId') }),
-        },
-        {
-          fn: (values: Record<string, any>) => values.code.checkState === DuplicateState.duplicated,
-          message: t('LABEL.form.validation.duplicated', { code: t('LABEL.cdId') }),
-        },
-      ],
-    },
-    name: {
-      required: true,
-    },
-  },
+  };
 };

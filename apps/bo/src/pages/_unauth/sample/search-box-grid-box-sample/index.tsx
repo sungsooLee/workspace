@@ -1,20 +1,21 @@
 import { queryOptions } from '@entities/label-messages-mock';
-import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
+import { useDynamicForm2 } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, formatDate } from '@learnway/shared';
 import { Button, Divider, GridBox, PopoverList, useGridBox } from '@learnway/ui';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
-import { SearchBox } from '@shared/ui/search-box';
 import { createFileRoute } from '@tanstack/react-router';
 import { LabelMessage, LabelMessagesQueryParams } from '@types';
 import { t } from 'i18next';
 import { useCallback, useMemo } from 'react';
+import { SearchBox } from './-components/search-box';
+import { createColumnHelper } from '@tanstack/react-table';
 
 export const Route = createFileRoute('/_unauth/sample/search-box-grid-box-sample/')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { provider: sProvider, getValues } = useSearchBox(searchConfig);
+  const { provider, getValues, onSubmit } = useDynamicForm2();
   const { config: gConfig, gridFetch } = useGridBox<LabelMessage>(gridConfig, getValues);
 
   const handleOnSearch = useCallback((data: any) => {
@@ -42,6 +43,53 @@ function RouteComponent() {
     );
   }, []);
 
+  const columnHelper = createColumnHelper<any>();
+
+  const columns = [
+    columnHelper.accessor('labelMessageType', {
+      id: 'labelMessageType',
+      header: t('LABEL.grid.column.type', '분류'),
+      size: 100,
+    }),
+
+    columnHelper.accessor('labelMessageMultilingulKey', {
+      id: 'labelMessageMultilingulKey',
+      header: t('LABEL.grid.column.labelMessageCode', '라벨/메세지 코드'),
+      size: 200,
+    }),
+
+    columnHelper.accessor('labelMessageName.aaa', {
+      id: 'labelMessageName.aaa',
+      header: t('LABEL.grid.column.labelMessage', '라벨/메세지'),
+      size: 200,
+    }),
+
+    columnHelper.accessor('isUsed', {
+      id: 'isUsed',
+      header: t('LABEL.grid.column.useYn', '사용여부'),
+      size: 104,
+      cell: (info: any) => (info.getValue() ? 'Y' : 'N'),
+    }),
+
+    columnHelper.accessor('createdBy', {
+      id: 'createdBy',
+      header: t('LABEL.grid.column.createdBy', '등록자'),
+      size: 139,
+    }),
+
+    columnHelper.accessor('createdDate', {
+      id: 'createdDate',
+      header: '등록일2',
+      size: 200,
+      cell: (info: any) => formatDate(info.getValue(), DATE_TIME_FORMAT.DATETIME_SEC),
+    }),
+  ];
+
+  console.log(
+    'columns order:',
+    columns.map((col) => col.id || (col as any).accessorKey),
+  );
+
   return (
     <PageContainer>
       <ContentsButtons>
@@ -60,15 +108,16 @@ function RouteComponent() {
         <Button type="button" variant="point" size="sm" label={t('과정개설')} />
       </ContentsButtons>
       <MainContents>
-        <SearchBox provider={sProvider} onSearch={handleOnSearch} />
+        <SearchBox provider={provider} onSearch={handleOnSearch} onSubmit={onSubmit} />
         <Divider />
         <GridBox
           config={gConfig}
+          columns={columns}
           selectedRowIds={['3']}
           showNumberingColumn
           customButtonNode={customButtonNode}
           multiple
-          isRowSelectable={(row: LabelMessage) => row.labelMessageMultilingulKey !== 'key5'} // 라벨/메세지 코드 값이 'key5' 인 경우 선택 불가
+          hideRowSelectionCheckBox={false}
           onRowDoubleClick={handleOnRowDoubleClick}
         />
       </MainContents>
@@ -76,124 +125,47 @@ function RouteComponent() {
   );
 }
 
-const searchConfig: SearchBoxConfig = {
-  builders: [
-    [
-      {
-        name: '채널',
-        type: 'dropdown',
-        label: t('채널'),
-        value: '',
-        options: [
-          { value: '', label: '전체' },
-          { value: 'COMMON_CODE', label: t('채널') },
-        ],
-        tooltip: '채널 설명',
-      },
-      {
-        name: '테넌트',
-        type: 'dropdown',
-        label: t('테넌트'),
-        value: '',
-        options: [
-          { value: '', label: '전체' },
-          { value: 'COMMON_CODE', label: t('테넌트') },
-        ],
-      },
-      {
-        name: '유형',
-        type: 'dropdown',
-        label: t('유형'),
-        value: '',
-        options: [
-          { value: '', label: '전체' },
-          { value: 'COMMON_CODE', label: t('유형') },
-        ],
-      },
-      {
-        name: '운영자',
-        type: 'text',
-        label: t('운영자'),
-        value: '',
-      },
-    ],
-    [
-      {
-        name: '개설년도',
-        type: 'dropdown',
-        label: t('개설년도'),
-        value: '',
-        options: [
-          { value: '', label: '전체' },
-          { value: 'COMMON_CODE', label: t('개설년도') },
-        ],
-      },
-      {
-        name: '사용여부',
-        type: 'dropdown',
-        label: t('사용여부'),
-        value: '',
-        options: [
-          { value: '', label: '전체' },
-          { value: 'COMMON_CODE', label: t('사용여부') },
-        ],
-      },
-      {
-        name: '과정코드',
-        type: 'text',
-        label: t('과정코드'),
-        value: '',
-      },
-      {
-        name: '과정명',
-        type: 'text',
-        label: t('과정명'),
-        value: '',
-      },
-    ],
-  ],
-};
-
 const gridConfig = {
   query: queryOptions.all<LabelMessagesQueryParams>,
   rowId: 'labelMessageId',
-  columns: [
-    // 분류
-    { name: 'labelMessageType', label: () => t('LABEL.grid.column.type'), size: 100 },
-    // 라벨/메세지 코드
-    {
-      name: 'labelMessageMultilingulKey',
-      label: t('LABEL.grid.column.labelMessageCode'),
-      size: 200,
-    },
-    // 라벨/메세지
-    {
-      name: 'labelMessageName',
-      label: t('LABEL.grid.column.labelMessage'),
-      size: 200,
-      meta: { sortKey: 'xxx' },
-    },
-    // 사용여부
-    {
-      name: 'isUsed',
-      label: t('LABEL.grid.column.useYn'),
-      size: 104,
-      render: (info: any) => (info.getValue() ? 'Y' : 'N'),
-    },
-    // 등록자
-    {
-      name: 'createdBy',
-      size: 139,
-      label: t('LABEL.grid.column.createdBy'),
-    },
-    // 등록일
-    {
-      name: 'createdDate',
-      label: t('LABEL.grid.column.createdDate'),
-      size: 200,
-      render: (info: any) => formatDate(info.getValue(), DATE_TIME_FORMAT.DATETIME_SEC),
-    },
-  ],
+  columns: [], // 빈 배열로 설정하여 props.columns만 사용
+  // columns: [
+  //   // 분류
+  //   { name: 'labelMessageType', label: () => t('LABEL.grid.column.type', '분류'), size: 100 },
+  //   // 라벨/메세지 코드
+  //   {
+  //     name: 'labelMessageMultilingulKey',
+  //     label: t('LABEL.grid.column.labelMessageCode', '라벨/메세지 코드'),
+  //     size: 200,
+  //   },
+  //   // 라벨/메세지
+  //   {
+  //     name: 'labelMessageName.aaa',
+  //     label: t('LABEL.grid.column.labelMessage', '라벨/메세지'),
+  //     size: 200,
+  //     meta: { sortKey: 'xxx' },
+  //   },
+  //   // 사용여부
+  //   {
+  //     name: 'isUsed',
+  //     label: t('LABEL.grid.column.useYn', '사용여부'),
+  //     size: 104,
+  //     render: (info: any) => (info.getValue() ? 'Y' : 'N'),
+  //   },
+  //   // 등록자
+  //   {
+  //     name: 'createdBy',
+  //     size: 139,
+  //     label: t('LABEL.grid.column.createdBy', '등록자'),
+  //   },
+  //   // 등록일
+  //   {
+  //     name: 'createdDate',
+  //     label: t('LABEL.grid.column.createdDate', '등록일'),
+  //     size: 200,
+  //     render: (info: any) => formatDate(info.getValue(), DATE_TIME_FORMAT.DATETIME_SEC),
+  //   },
+  // ],
   gridState: {
     page: 0,
     size: 10,

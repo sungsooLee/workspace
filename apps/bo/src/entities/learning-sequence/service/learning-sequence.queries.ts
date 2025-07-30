@@ -8,6 +8,10 @@ export const queryKeys = {
   enrollmentRegistCount: ['learning-sequence-enrollment-regist-count'] as const,
   enrollmentWaitList: ['learning-sequence-enrollment-wait-list'] as const,
   enrollmentCancelList: ['learning-sequence-enrollment-cancel-list'] as const,
+  studentsList: ['learning-sequence-students-list'] as const,
+  studentsListLeftCount: ['learning-sequence-students-list-left-count'] as const,
+  studentsListRightCount: ['learning-sequence-students-list-right-count'] as const,
+  studentsHistory: ['learning-sequence-students-history'] as const,
 };
 
 export const queryOptions = {
@@ -60,6 +64,34 @@ export const queryOptions = {
     cacheTime: 0,
     staleTime: 0,
   }),
+  // 수강생 목록 조회
+  studentsList: (params: any) => ({
+    queryKey: queryKeys.studentsList,
+    queryFn: () => LearningSequenceService.fetchStudentsList(params),
+    cacheTime: 0,
+    staleTime: 0,
+  }),
+  // 수강생 좌측 카운트 조회
+  studentsListLeftCount: (params: any) => ({
+    queryKey: queryKeys.studentsListLeftCount,
+    queryFn: () => LearningSequenceService.fetchStudentsListLeftCount(params),
+    cacheTime: 0,
+    staleTime: 0,
+  }),
+  // 수강생 우측 카운트 조회
+  studentsListRightCount: (params: any) => ({
+    queryKey: queryKeys.studentsListRightCount,
+    queryFn: () => LearningSequenceService.fetchStudentsListRightCount(params),
+    cacheTime: 0,
+    staleTime: 0,
+  }),
+  // 수강이력
+  studentsHistory: (params: any) => ({
+    queryKey: queryKeys.studentsHistory,
+    queryFn: () => LearningSequenceService.fetchStudentsHistory(params),
+    cacheTime: 0,
+    staleTime: 0,
+  }),
 };
 
 export const mutateOptions = {
@@ -99,6 +131,12 @@ export const mutateOptions = {
   copySequence: () => ({
     mutationFn: (payload: any) => {
       return LearningSequenceService.copySequence(payload);
+    },
+  }),
+  // 수강생 사유입력
+  updateStudentsReason: () => ({
+    mutationFn: (payload: any) => {
+      return LearningSequenceService.updateStudentsReason(payload);
     },
   }),
 };

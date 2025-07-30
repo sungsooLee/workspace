@@ -4,6 +4,7 @@ import { ContentsRow, FormSubTitle, RadioGroupFormField, TextareaFormField } fro
 import { ChipListFormField, FormRow2, ThumbnailListFormField } from '@shared/ui';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useCourseCreateSubPage } from '../../../../hooks/use-course-create-sub-page';
 import { CourseTabBaseProps } from '../../../../types/type';
 
 const PublishCourseComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) => {
@@ -11,6 +12,7 @@ const PublishCourseComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, r
 
   const form = useDynamicForm2();
   const { provider, getValues, watch, onFormChange } = form;
+  const { isUpdateMode } = useCourseCreateSubPage(form);
 
   return (
     <div>
@@ -21,7 +23,7 @@ const PublishCourseComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, r
         <FormRow2
           provider={provider}
           name={'isUsed'}
-          label={'과정 사용'}
+          label={t('과정 사용')}
           format={'boolean'}
           element={
             <RadioGroupFormField
@@ -38,7 +40,7 @@ const PublishCourseComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, r
         <FormRow2
           provider={provider}
           name={'courseValidityRange'}
-          label={'노출 기간'}
+          label={t('노출 기간')}
           format={'object'}
           validation={{ required: true }}
           element={<DateRangePickerFormField displayType={'day-time-h'} />}
@@ -50,6 +52,7 @@ const PublishCourseComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, r
           provider={provider}
           name={'thumbnailFileGroupUuid'}
           label={t('대표 이미지')}
+          validation={{ required: true }}
           format={'string'}
           element={
             <ThumbnailListFormField
@@ -71,7 +74,7 @@ const PublishCourseComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, r
         <FormRow2
           provider={provider}
           name={'tagNames'}
-          label={'태그'}
+          label={t('태그')}
           format={'array'}
           element={
             <ChipListFormField
@@ -91,7 +94,7 @@ const PublishCourseComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, r
         <FormRow2
           provider={provider}
           name={'courseSummary'}
-          label={'AI 과정 요약(AI 자동추출)'}
+          label={t('AI 과정 요약(AI 자동추출)')}
           element={<TextareaFormField maxLength={500} />}
         />
       </ContentsRow>

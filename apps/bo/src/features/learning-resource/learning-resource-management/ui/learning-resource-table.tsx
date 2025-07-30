@@ -1,14 +1,18 @@
 // IA102 / NLP_BO_CMS_1001
+import { learningResourceQueryOptions, usePostContentCopy } from '@entities/learning-resource';
+import { getDetailPathByContentType, getDetailRouterState } from '@features/learning-resource';
+import { LearningResourceShareShuttleModal } from '@features/learning-resource/learning-resource-management/ui/learning-resource-share-shuttle-modal';
+import { CMSApiPrefix } from '@learnway/config';
 import {
   ALL_OPTION,
   CODE_GROUP,
-  useSearchBox,
   compactValues,
   SelectOption,
   useCurrentRoute,
+  useSearchBox,
 } from '@learnway/hooks';
+import { IcoAlertCircle, IcoClock01, IcoCopy, IcoDownArrow, IcoDownload } from '@learnway/icons';
 import { DATE_TIME_FORMAT, duration } from '@learnway/shared';
-import { SearchBox } from '@shared/ui/search-box';
 import {
   Button,
   Divider,
@@ -18,24 +22,21 @@ import {
   useGridBoxConfig,
   useModal,
 } from '@learnway/ui';
-import { IcoClock01, IcoCopy, IcoDownload, IcoAlertCircle, IcoDownArrow } from '@learnway/icons';
-import { t } from 'i18next';
-import { useEffect, useState } from 'react';
-import { learningResourceQueryOptions, usePostContentCopy } from '@entities/learning-resource';
-import { ModifierInfoModal } from './learning-resource-modifier-info-modal';
-import { ProgramGuideModal } from './learning-resource-program-guide-modal';
-import { BatchSettingModal } from './learning-resource-batch-setting-modal';
-import { first, get, map, some, uniq } from 'lodash';
-import { useRouter } from '@tanstack/react-router';
 import {
   GridExcelDownloadButton,
+  PreviewLearningWindow,
   TenantByRoleDropdownFormField,
   TenantChannelDropdownFormField,
 } from '@shared/ui';
-import { CMSApiPrefix } from '@learnway/config';
-import { PreviewLearningWindow } from '../../../../shared/ui/modal/preview-learning-window';
-import { getDetailPathByContentType, getDetailRouterState } from '@features/learning-resource';
+import { SearchBox } from '@shared/ui/search-box';
+import { useRouter } from '@tanstack/react-router';
 import { ContentCreateType, ContentInfo, ContentInformation } from '@types';
+import { t } from 'i18next';
+import { first, get, map, some, uniq } from 'lodash';
+import { useEffect, useState } from 'react';
+import { BatchSettingModal } from './learning-resource-batch-setting-modal';
+import { ModifierInfoModal } from './learning-resource-modifier-info-modal';
+import { ProgramGuideModal } from './learning-resource-program-guide-modal';
 
 function LearningResourceTableComponent() {
   const {
@@ -105,12 +106,10 @@ function LearningResourceTableComponent() {
           label: t('LABEL.form.label.isVendored', '외주여부'),
           value: '',
           presetOptionLabel: t('LABEL.form.label.all', '전체'),
-          optionsConfig: {
-            options: [
-              { value: 'true', label: 'Y' },
-              { value: 'false', label: 'N' },
-            ],
-          },
+          options: [
+            { value: 'true', label: 'Y' },
+            { value: 'false', label: 'N' },
+          ],
         },
         {
           name: 'isContentEnabled',
@@ -118,12 +117,10 @@ function LearningResourceTableComponent() {
           label: t('LABEL.form.label.isContentEnabled', '사용가능'),
           value: '',
           presetOptionLabel: t('LABEL.form.label.all', '전체'),
-          optionsConfig: {
-            options: [
-              { value: 'true', label: 'Y' },
-              { value: 'false', label: 'N' },
-            ],
-          },
+          options: [
+            { value: 'true', label: t('사용가능') },
+            { value: 'false', label: t('사용불가') },
+          ],
         },
         {
           name: 'isCourseUsed',
@@ -131,12 +128,10 @@ function LearningResourceTableComponent() {
           label: t('LABEL.form.label.isCourseUsed', '교육활용'),
           value: '',
           presetOptionLabel: t('LABEL.form.label.all', '전체'),
-          optionsConfig: {
-            options: [
-              { value: 'true', label: 'Y' },
-              { value: 'false', label: 'N' },
-            ],
-          },
+          options: [
+            { value: 'true', label: 'Y' },
+            { value: 'false', label: 'N' },
+          ],
         },
         {
           name: 'coordinatorName',
@@ -147,7 +142,7 @@ function LearningResourceTableComponent() {
       ],
       [
         {
-          name: 'langCountryCode',
+          name: 'languageCountryCode',
           type: 'dropdown',
           label: t('LABEL.form.label.langCountryCode', '언어'),
           value: '',
@@ -291,7 +286,7 @@ function LearningResourceTableComponent() {
         size: 95,
         name: 'isContentEnabled',
         label: t('LABEL.grid.column.isContentEnabled', '사용가능'),
-        render: (_: any) => (_.getValue() ? 'Y' : 'N'),
+        render: (_: any) => (_.getValue() ? t('사용가능') : t('사용불가')),
       },
       {
         size: 83,
@@ -357,9 +352,18 @@ function LearningResourceTableComponent() {
     })();
   }, [listParam]);
 
-  function handleShare() {
-    console.log('🚀 ~ handleShare ~ params:', params);
-    console.log('🚀 ~ handleShare ~ data:', data);
+  async function handleShare() {
+    // console.log('🚀 ~ handleShare ~ selectedRows:', selectedRows);
+
+    if (selectedRows.length !== 1) {
+      return;
+    }
+
+    await openModal({
+      width: 'xl',
+      height: 'fix',
+      content: <LearningResourceShareShuttleModal data={selectedRows[0]} />,
+    });
   }
 
   function openProgramGuide() {

@@ -54,6 +54,20 @@ export enum CourseEnrollStatusType {
   ENROLL_WAITING_REQUEST = 'ENROLL_WAITING_REQUEST',
   ENROLL_WAITING_CANCEL_REQUEST = 'ENROLL_WAITING_CANCEL_REQUEST',
 }
+export const CourseEnrollStatusTypeLabel: Record<CourseEnrollStatusType, string> = {
+  [CourseEnrollStatusType.NOT_OPEN_YET]: '신청전',
+  [CourseEnrollStatusType.OPEN]: '신청가능',
+  [CourseEnrollStatusType.CLOSED]: '마감',
+  [CourseEnrollStatusType.WAITING]: '대기중',
+  [CourseEnrollStatusType.ENROLLED]: '수강중',
+  [CourseEnrollStatusType.CANCELLED]: '수강취소',
+  [CourseEnrollStatusType.WAITING_CANCELLED]: '대기취소',
+  [CourseEnrollStatusType.WAITING_ENROLLED]: '대기신청완료',
+  [CourseEnrollStatusType.ENROLL_REQUEST]: '수강신청요청',
+  [CourseEnrollStatusType.ENROLL_CANCEL_REQUEST]: '수강취소요청',
+  [CourseEnrollStatusType.ENROLL_WAITING_REQUEST]: '대기신청요청',
+  [CourseEnrollStatusType.ENROLL_WAITING_CANCEL_REQUEST]: '대기취소요청',
+};
 
 // 수강신청/학습 기간 상태
 export enum SequenceEnrollStatusType {
@@ -66,6 +80,16 @@ export enum SequenceEnrollStatusType {
   LEARNING = 'LEARNING',
   COMPLETED = 'COMPLETED',
 }
+export const SequenceEnrollStatusTypeLabel: Record<SequenceEnrollStatusType, string> = {
+  [SequenceEnrollStatusType.OPEN_BEFORE]: '신청전',
+  [SequenceEnrollStatusType.EXPIRED]: '종료',
+  [SequenceEnrollStatusType.FULL]: '마감',
+  [SequenceEnrollStatusType.APPLYING]: '신청중',
+  [SequenceEnrollStatusType.APPROVING]: '승인대기',
+  [SequenceEnrollStatusType.APPROVED]: '승인완료',
+  [SequenceEnrollStatusType.LEARNING]: '학습중',
+  [SequenceEnrollStatusType.COMPLETED]: '완료',
+};
 
 // 수강신청 버튼
 export enum SequenceEnrollButtonType {
@@ -82,12 +106,30 @@ export enum SequenceEnrollButtonType {
   PASSED = 'PASSED',
   FAILED = 'FAILED',
 }
+export const SequenceEnrollButtonTypeLabel: Record<SequenceEnrollButtonType, string> = {
+  [SequenceEnrollButtonType.EXPIRED]: '종료',
+  [SequenceEnrollButtonType.NOT_ELIGIBLE]: '신청불가',
+  [SequenceEnrollButtonType.ENROLL]: '수강신청',
+  [SequenceEnrollButtonType.CANCEL_ENROLLMENT]: '수강취소',
+  [SequenceEnrollButtonType.FULL]: '마감',
+  [SequenceEnrollButtonType.WAITLIST_ENROLL]: '대기신청',
+  [SequenceEnrollButtonType.CANCEL_WAITLIST]: '대기취소',
+  [SequenceEnrollButtonType.READY_TO_LEARN]: '학습준비',
+  [SequenceEnrollButtonType.START_LEARNING]: '학습시작',
+  [SequenceEnrollButtonType.COMPLETED]: '완료',
+  [SequenceEnrollButtonType.PASSED]: '합격',
+  [SequenceEnrollButtonType.FAILED]: '불합격',
+};
 
 // 학습기간 지정 유형
 export enum LearningStartType {
   FIXED_DATE = 'FIXED_DATE',
   DAYS_AFTER_ENROLL = 'DAYS_AFTER_ENROLL',
 }
+export const LearningStartTypeLabel: Record<LearningStartType, string> = {
+  [LearningStartType.FIXED_DATE]: '고정일',
+  [LearningStartType.DAYS_AFTER_ENROLL]: '신청완료 후 N일 후',
+};
 
 // 교육장소 타입
 export enum LearningSpaceType {
@@ -95,18 +137,31 @@ export enum LearningSpaceType {
   REGISTERED = 'REGISTERED',
   MANUAL = 'MANUAL',
 }
+export const LearningSpaceTypeLabel: Record<LearningSpaceType, string> = {
+  [LearningSpaceType.LEARNING_WAY]: '러닝웨이 교육장소',
+  [LearningSpaceType.REGISTERED]: '등록된 교육장소',
+  [LearningSpaceType.MANUAL]: '직접입력',
+};
 
 // 인정학습시간타입
 export enum RecognizedStudyMinType {
   TIME = 'TIME',
   COUNT_TIME = 'COUNT_TIME',
 }
+export const RecognizedStudyMinTypeLabel: Record<RecognizedStudyMinType, string> = {
+  [RecognizedStudyMinType.TIME]: '시간',
+  [RecognizedStudyMinType.COUNT_TIME]: '횟수',
+};
 
 // 강사타입(사내/사외)
 export enum InstructorType {
   INTERNAL_INSTRUCTOR = 'INTERNAL_INSTRUCTOR',
   EXTERNAL_INSTRUCTOR = 'EXTERNAL_INSTRUCTOR',
 }
+export const InstructorTypeLabel: Record<InstructorType, string> = {
+  [InstructorType.INTERNAL_INSTRUCTOR]: '사내강사',
+  [InstructorType.EXTERNAL_INSTRUCTOR]: '사외강사',
+};
 
 // 날짜형태
 type DateTime = string; // '2023-10-01'
@@ -151,6 +206,8 @@ export interface CourseResponse {
   operatorEmail?: string; // 운영자 이메일
   operatorTelNo?: string; // 운영자 전화번호
   relatedCourseList?: Array<RelationCourseItem>; // 연관 학습 목록
+  preqCourseList?: Array<RequiredCourseItem>; // 사전 수강 과정 목록
+  isLikeCourse?: boolean; // 찜 여부
 }
 
 // 과정 상세 종합 데이터
@@ -193,6 +250,18 @@ export interface RelationCourseItem {
   viewCount?: number; // 조회수
   likeCount?: number; // 좋아요 수
   dday?: number; // 디데이
+}
+
+// 사전수강 학습 목록 아이템
+//
+export interface RequiredCourseItem {
+  courseId?: number;
+  courseName?: string;
+  courseType?: CourseType;
+  curriculumId?: number;
+  starRatingAverage?: number;
+  viewCount?: number;
+  likeCount?: number;
 }
 
 // 태그 아이템
@@ -249,14 +318,14 @@ export interface CourseSequencesResponse {
   instructorType?: InstructorType; // 강사타입(사내/사외)
   isUseTrainingCostPerPerson?: boolean; // 1인당 교육비 사용
   trainingCostPerPerson?: number; // 1인당 교육비(원)
-  progressMinPassScore?: number; // 이수 기준 점수-진도 // 이수 기준 점수-진도
-  progressWeights?: number; // 반영 비율-진도 // 반영 비율-진도
-  attendanceMinPassScore?: number; // 이수 기준 점수-출석 // 이수 기준 점수-출석
-  attendanceWeights?: number; // 반영 비율-출석 // 반영 비율-출석
-  examMinPassScore?: number; // 이수 기준 점수-평가 // 이수 기준 점수-평가
-  examWeights?: number; // 점수 반영 비율-평가 // 점수 반영 비율-평가
-  asgmtMinPassScore?: number; // 이수 기준 점수-과제 // 이수 기준 점수-과제
-  asgmtWeights?: number; // 점수 반영 비율-과제 // 점수 반영 비율-과제",
+  progressWeights?: number; // 반영 비율-진도
+  progressMinPassScore?: number; // 이수 기준 점수-진도
+  attendanceWeights?: number; // 반영 비율-출석
+  attendanceMinPassScore?: number; // 이수 기준 점수-출석
+  examWeights?: number; // 점수 반영 비율-평가
+  examMinPassScore?: number; // 이수 기준 점수-평가
+  asgmtWeights?: number; // 점수 반영 비율-과제
+  asgmtMinPassScore?: number; // 이수 기준 점수-과제
 }
 
 // 차수 단건 타입

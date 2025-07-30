@@ -1,29 +1,35 @@
 import { memo } from 'react';
 
 import styles from './breadcrumbs.module.css';
-import { Link } from '@tanstack/react-router';
+import { Link, useRouterState } from '@tanstack/react-router';
 import { IcoHome03, IcoArrowForward, IcoArrowDown } from '@learnway/icons';
 import { Popover } from '@learnway/ui';
 import { useCategoryBreadcrumbs } from '../../../service/breadcurmb.hooks';
-import { useCategories } from '../../../../../features/category/services/category.service';
 import { Category } from '../../../../../types/entities/category';
+import { useCategoryTree } from '@entities/category';
 
 interface BreadcrumbsProps {
   currentCategoryId: number | null;
+  tenantId: number;
 }
 
-function BreadcrumbsComponent({ currentCategoryId }: BreadcrumbsProps) {
-  const breadcrumbPath = useCategoryBreadcrumbs(currentCategoryId);
-  const { data: categories } = useCategories();
+function BreadcrumbsComponent({ tenantId, currentCategoryId }: BreadcrumbsProps) {
+  const routerState = useRouterState();
+  if( !currentCategoryId ) {
+    currentCategoryId = routerState.location.state.categoryId
+  }
+
+  const breadcrumbPath = useCategoryBreadcrumbs(currentCategoryId, tenantId);
+  const { data: categories } = useCategoryTree(tenantId);
 
   const renderPopoverContent = (category: Category) => {
     let siblings: Category[] = [];
     if (category.depth === 1) {
-      siblings = categories.filter((cat) => cat.depth === 1);
+      siblings = categories.children.filter((cat: any) => cat.depth === 1);
     } else {
       siblings =
-        categories.find((cat) =>
-          cat.children?.some((child: Category) => child.categoryId === category.categoryId),
+        categories.children.find((cat: any) =>
+          cat.children?.some((child: Category) => child.id === category.id),
         )?.children || [];
     }
 
@@ -31,11 +37,11 @@ function BreadcrumbsComponent({ currentCategoryId }: BreadcrumbsProps) {
       <div className={`${styles.start} ${styles.hover_menu}`}>
         <ul className={styles.menu_list}>
           {siblings.map((sibling: Category) => (
-            <li key={sibling.categoryId}>
+            <li key={sibling.id}>
               <Link
                 to="/category"
-                state={{ categoryId: sibling.categoryId.toString() }}
-                className={sibling.categoryId === category.categoryId ? styles.active : ''}
+                state={{ categoryId: sibling.id.toString() }}
+                className={sibling.id === category.id ? styles.active : ''}
               >
                 {sibling.name}
               </Link>
@@ -56,7 +62,7 @@ function BreadcrumbsComponent({ currentCategoryId }: BreadcrumbsProps) {
         </Link>
         <IcoArrowForward width={12} height={12} stroke="#6F798B" className={styles.arw} />
         {breadcrumbPath.map((category, index) => (
-          <li key={category.categoryId} className={styles.link_item}>
+          <li key={category.id} className={styles.link_item}>
             <Popover
               popoverContent={renderPopoverContent(category)}
               className={styles.btn_menu}

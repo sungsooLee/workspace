@@ -14,14 +14,14 @@ export const useCategoryNavigation = () => {
     router.navigate({
       to: '/category',
       state: {
-        categoryId: category.categoryId.toString(),
+        categoryId: category.id.toString(),
       },
     });
 
     const recentCategories = JSON.parse(localStorage.getItem('recentCategories') || '[]');
     const updatedCategories = [
-      category.categoryId,
-      ...recentCategories.filter((id: number) => id !== category.categoryId),
+      category.id,
+      ...recentCategories.filter((id: number) => id !== category.id),
     ].slice(0, 8);
 
     localStorage.setItem('recentCategories', JSON.stringify(updatedCategories));

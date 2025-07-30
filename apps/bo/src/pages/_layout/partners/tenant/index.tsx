@@ -1,12 +1,9 @@
-import React, { FC, useEffect } from 'react';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { Button, ContentsRow } from '@learnway/ui';
+import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
 import { createFileRoute } from '@tanstack/react-router';
-import { Button } from '@learnway/ui';
-import { ContentsButtons, MainContents, ContentsRow, PageContainer } from '@shared/ui';
-import { z } from '@learnway/shared';
-import { useDynamicForm } from '@learnway/hooks';
+import { FC, useEffect } from 'react';
 import { FormRow } from '../../../../shared/ui/form';
-import { DynamicFormField } from '@learnway/ui';
-import { DynamicFormConfig } from '@learnway/hooks';
 
 export const Route = createFileRoute('/_layout/partners/tenant/')({
   component: RouteComponent,

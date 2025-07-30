@@ -1,8 +1,8 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { getDefaultLang, setI18nResource } from '@learnway/config';
 
-import { queryKeys, queryOptions, mutateOptions } from './i18n-resource.queries';
+import { mutateOptions, queryKeys, queryOptions } from './i18n-resource.queries';
 
 export function useFetchI18nResource(languageCode?: string) {
   return useQuery(queryOptions.detail(languageCode ?? getDefaultLang()));
@@ -22,7 +22,10 @@ export function useFetchAsyncI18nResource(mutationOptions = {}) {
   return {
     fetch: async (languageCode: string): Promise<any> => {
       let resource = queryClient.getQueryData(queryKeys.detail(languageCode));
+
+      console.log('@@@ resource', resource);
       if (resource) {
+        setI18nResource(languageCode, resource);
         return new Promise((resolve) => resolve(resource));
       }
       resource = await mutateAsync(languageCode);

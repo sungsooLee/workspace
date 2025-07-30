@@ -47,6 +47,7 @@ export interface AuthUser {
   };
 
   exp: string;
+  userLanguageSetCode?: string;
 }
 
 export interface AuthSSOHealthcheck {

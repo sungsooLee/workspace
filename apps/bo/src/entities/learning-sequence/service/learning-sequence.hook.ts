@@ -1,6 +1,6 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
-import { queryOptions, mutateOptions } from './learning-sequence.queries';
+import { mutateOptions, queryOptions } from './learning-sequence.queries';
 
 export function useFetchCourseSequences(params: any) {
   return useQuery(queryOptions.sequenceList(params));
@@ -124,4 +124,20 @@ export function useCopySequence(options: any) {
 
 export function useFetchEnrollmentSequenceCombo(params: any) {
   return useQuery(queryOptions.enrollmentSequenceCombo(params));
+}
+
+export function useUpdateStudentsReason(options: any) {
+  const { mutate, isSuccess, isError, data } = useMutation({
+    ...mutateOptions.updateStudentsReason(),
+    ...options,
+  });
+
+  return {
+    updateStudentsReason: async (payload: any, callback?: any) => {
+      await mutate(payload, callback);
+    },
+    isSuccess,
+    isError,
+    data,
+  };
 }

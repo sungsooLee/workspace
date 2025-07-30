@@ -1,10 +1,10 @@
-import { useRef } from 'react';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
+import { useRef } from 'react';
 
-import { PageContainer, MainContents, ContentsButtons, LinkBox } from '@shared/ui';
+import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui';
 
-import { Tabs, Button } from '@learnway/ui';
+import { Button } from '@learnway/ui';
 
 import { CompanyUserDetail } from '@features/platform-management/company';
 
@@ -39,7 +39,7 @@ function RouteComponent() {
         <Button label={t('LABEL.button.save')} variant="primary" size="sm" onClick={handleOnSave} />
       </ContentsButtons>
       <MainContents>
-        <CompanyUserDetail formRef={formRef} />
+        <CompanyUserDetail formRef={formRef} listPath={'/platform/tenant/user'} />
       </MainContents>
     </PageContainer>
   );

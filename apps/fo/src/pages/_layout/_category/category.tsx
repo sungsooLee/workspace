@@ -14,7 +14,7 @@ import {
 import dropdownPopoverStyles from '../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
 import styles from '@learnway/styles/fo/pages/_layout/category/category.module.css';
 import { cn } from '@learnway/shared';
-import { Filter } from '../../../features/category/ui/category-filter/category-filter';
+import { Filter } from '@features/category/ui/category-filter';
 import { Arrays, ThumnailList } from '@features/layout';
 import { t } from 'i18next';
 

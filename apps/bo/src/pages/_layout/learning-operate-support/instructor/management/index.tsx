@@ -1,6 +1,8 @@
-import { InstructorList } from '@features/learning-operate-support/instructor-tutor/instructor-management';
-import { InstructorListPopup } from '@features/learning-operate-support/instructor-tutor/instructor-management/modal/instructor-list-modal';
-import { InstructorRegistPopup } from '@features/learning-operate-support/instructor-tutor/instructor-management/modal/instructor-regist-modal';
+import {
+  InstructorList,
+  InstructorListPopup,
+  InstructorRegistPopup,
+} from '@features/learning-operate-support/instructor-tutor/instructor-management';
 import { Button, useModal } from '@learnway/ui';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';

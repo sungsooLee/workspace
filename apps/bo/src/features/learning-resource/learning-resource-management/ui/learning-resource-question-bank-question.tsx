@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { t } from 'i18next';
 import styles from '@learnway/styles/bo/pages/_layout/learning/test-detail.module.css';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
 
@@ -19,8 +19,10 @@ import {
 } from '../service/learning-resource-question-service';
 
 const LearningResourceQuestionBankQuestionComponent = () => {
+  const { t } = useTranslation();
+
   const { alert, openModal, confirm: openConfirm } = useModal();
-  const [statistic, setStatistic] = useState<QuestionStatisticRow[]>(initStatisticRow);
+  const [statistic, setStatistic] = useState<QuestionStatisticRow[]>(initStatisticRow(t));
 
   const { baseInfo } = useLearningResourceQuestionDetailForm();
 
@@ -28,7 +30,7 @@ const LearningResourceQuestionBankQuestionComponent = () => {
 
   const handleAddQuestionButtonClick = async () => {
     if (baseInfo) {
-      const questionItem = await openModal({
+      await openModal({
         width: 'xl',
         content: <LearningResourceTestItemModal contentInfo={baseInfo} />,
       });
@@ -55,7 +57,7 @@ const LearningResourceQuestionBankQuestionComponent = () => {
     return [
       columnHelper.accessor('title', {
         cell: (info) => info.getValue(),
-        header: '문항유형',
+        header: t('문항유형'),
         enableGrouping: false,
         size: 100,
         meta: {
@@ -66,7 +68,7 @@ const LearningResourceQuestionBankQuestionComponent = () => {
       }),
       columnHelper.accessor('hard', {
         cell: (info) => <Input value={`${info.getValue()}`} disabled />,
-        header: '문항수(난이도 상)',
+        header: t('문항수(난이도 상)'),
         enableGrouping: false,
         meta: {
           headerAlign: 'center', // 헤더 정렬
@@ -75,7 +77,7 @@ const LearningResourceQuestionBankQuestionComponent = () => {
       }),
       columnHelper.accessor('medium', {
         cell: (info) => <Input value={`${info.getValue()}`} disabled />,
-        header: '문항수(난이도 중)',
+        header: t('문항수(난이도 중)'),
         enableGrouping: false,
         meta: {
           headerAlign: 'center', // 헤더 정렬
@@ -84,7 +86,7 @@ const LearningResourceQuestionBankQuestionComponent = () => {
       }),
       columnHelper.accessor('easy', {
         cell: (info) => <Input value={`${info.getValue()}`} disabled />,
-        header: '문항수(난이도 하)',
+        header: t('문항수(난이도 하)'),
         enableGrouping: false,
         meta: {
           headerAlign: 'center', // 헤더 정렬
@@ -111,7 +113,7 @@ const LearningResourceQuestionBankQuestionComponent = () => {
             </Button>
           );
         },
-        header: '문항',
+        header: t('문항'),
         enableGrouping: false,
         meta: {
           headerAlign: 'center', // 헤더 정렬
@@ -121,7 +123,7 @@ const LearningResourceQuestionBankQuestionComponent = () => {
       }),
       columnHelper.accessor('questionType', {
         cell: (info) => info.getValue(),
-        header: '문항유형',
+        header: t('문항유형'),
         enableGrouping: false,
         size: 216,
         meta: {
@@ -132,7 +134,7 @@ const LearningResourceQuestionBankQuestionComponent = () => {
       }),
       columnHelper.accessor('questionLevel', {
         cell: (info) => info.getValue(),
-        header: '난이도',
+        header: t('난이도'),
         enableGrouping: false,
         size: 104,
         meta: {
@@ -142,7 +144,7 @@ const LearningResourceQuestionBankQuestionComponent = () => {
       }),
       columnHelper.accessor('optionCount', {
         cell: (info) => info.getValue(),
-        header: '보기수',
+        header: t('보기수'),
         size: 104,
         enableGrouping: false,
         meta: {
@@ -155,12 +157,12 @@ const LearningResourceQuestionBankQuestionComponent = () => {
           <RadioGroupFormField
             value={`${info.getValue()}`}
             options={[
-              { value: 'true', label: '사용' },
-              { value: 'false', label: '미사용' },
+              { value: 'true', label: t('사용') },
+              { value: 'false', label: t('미사용') },
             ]}
           />
         ),
-        header: '사용',
+        header: t('사용'),
         size: 240,
         enableGrouping: false,
         meta: {
@@ -170,7 +172,7 @@ const LearningResourceQuestionBankQuestionComponent = () => {
       }),
       columnHelper.accessor('orderChange', {
         cell: (info) => <IcoMenu01 width={24} height={24} fill="#A9AFB8" stroke="#4c515e" />,
-        header: '순서변경',
+        header: t('순서변경'),
         size: 104,
         enableGrouping: false,
         meta: {
@@ -184,7 +186,7 @@ const LearningResourceQuestionBankQuestionComponent = () => {
   useEffect(() => {
     console.log('questionItemList', questionItemList);
     if (!questionItemList) return;
-    const newStatistic: QuestionStatisticRow[] = [...initStatisticRow];
+    const newStatistic: QuestionStatisticRow[] = [...initStatisticRow(t)];
 
     questionItemList.forEach((item) => {
       updateNewStatistics(item, newStatistic);
@@ -193,10 +195,10 @@ const LearningResourceQuestionBankQuestionComponent = () => {
   }, [questionItemList]);
   return (
     <div className={styles.wrap}>
-      <FormSubTitle label={'기본정보'} noLine />
+      <FormSubTitle label={t('기본정보')} noLine />
       <div className={cn(tableStyles.start, tableStyles.wrap)}>
         <table>
-          <caption>{'기본정보'}</caption>
+          <caption>{t('기본정보')}</caption>
           <colgroup>
             <col style={{ width: '240px' }} />
             <col />
@@ -205,26 +207,26 @@ const LearningResourceQuestionBankQuestionComponent = () => {
           </colgroup>
           <tbody>
             <tr>
-              <th scope={'row'}>{'테넌트'}</th>
+              <th scope="row">{t('테넌트')}</th>
               <td>{baseInfo?.tenantName}</td>
-              <th scope={'row'}>{'채널'}</th>
+              <th scope="row">{t('채널')}</th>
               <td>{baseInfo?.channelName}</td>
             </tr>
             <tr>
-              <th scope={'row'}>{'유형'}</th>
+              <th scope="row">{t('유형')}</th>
               <td>{'문제은행'}</td>
-              <th scope={'row'}>{'학습자원명'}</th>
+              <th scope="row">{t('학습자원명')}</th>
               <td>{baseInfo?.contentName}</td>
             </tr>
             <tr>
-              <th scope={'row'}>{'문제은행 언어'}</th>
+              <th scope="row">{t('문제은행 언어')}</th>
               <td colSpan={3}>{baseInfo?.languageCountryCode}</td>
             </tr>
           </tbody>
         </table>
       </div>
       {/* 퍼블수정 20250613 : lineType 추가 */}
-      <FormSubTitle label={'문항정보'} lineType={'dark'} />
+      <FormSubTitle label={t('문항정보')} lineType={'dark'} />
 
       <div className={styles.table_wrap}>
         <GridBox
@@ -236,13 +238,15 @@ const LearningResourceQuestionBankQuestionComponent = () => {
           columns={statisticColumn}
           titleCustomNode={
             <div className="custom_info_wrap">
-              <strong className="table_tit text-[1.4rem] font-normal">{'문항현황'}</strong>
-              <strong className="table_tit text-[1.4rem] font-normal">{'문제은행 문항수'}</strong>
+              <strong className="table_tit text-[1.4rem] font-normal">{t('문항현황')}</strong>
+              <strong className="table_tit text-[1.4rem] font-normal">
+                {t('문제은행 문항수')}
+              </strong>
               <span className="count_info text-[1.4rem]">{questionItemList?.length ?? 0}</span>
             </div>
           }
           className={styles.info_table}
-          guideText={'문항현황은 문항목록에서 문항추가/삭제 시 자동 업데이트 됩니다.'}
+          guideText={t('문항현황은 문항목록에서 문항추가/삭제 시 자동 업데이트 됩니다.')}
           showGuideTextNextLine={true}
         />
         <GridBox
@@ -257,20 +261,20 @@ const LearningResourceQuestionBankQuestionComponent = () => {
           hideRowSelectionCheckBox={false}
           titleCustomNode={
             <div className="custom_info_wrap">
-              <strong className="table_tit font-normal">{'문항목록'}</strong>
-              <strong className="table_tit font-normal">{'전체'}</strong>
-              <span className="count_info">{'5'}</span>
+              <strong className="table_tit font-normal">{t('문항목록')}</strong>
+              <strong className="table_tit font-normal">{t('전체')}</strong>
+              <span className="count_info">0</span>
             </div>
           }
           className={styles.list_table}
           customButtonNode={
             <>
-              <Button variant="text" label={'불러오기'} />
+              <Button variant="text" label={t('불러오기')} />
               <GridExcelUploadButton />
               <GridExcelDownloadButton />
               <Button
                 variant="text"
-                label={'추가'}
+                label={t('LABEL.grid.header.add', '추가')}
                 onClick={handleAddQuestionButtonClick}
                 icon={<IcoPlus width={16} height={16} stroke={'#4C515E'} />}
               />
@@ -281,7 +285,7 @@ const LearningResourceQuestionBankQuestionComponent = () => {
               />
               <Button
                 variant="text"
-                label={'삭제'}
+                label={t('LABEL.grid.header.remove', '삭제')}
                 icon={<IcoMinus width={16} height={16} stroke={'#131C30'} />}
               />
             </>
