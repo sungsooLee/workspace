@@ -7,8 +7,7 @@ import {
   learningResourceQueryOptions,
   useCopyQuestionsToExamPaper,
 } from '@entities/learning-resource';
-
-type CopyResponse = { result: boolean };
+import { CopyResponse } from './test-paper/type';
 
 export const useQuestionSearchAndCopy = (examPoolUuid: string) => {
   const queryClient = useQueryClient();

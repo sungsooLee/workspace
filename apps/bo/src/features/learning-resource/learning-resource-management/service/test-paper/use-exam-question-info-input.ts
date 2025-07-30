@@ -1,27 +1,30 @@
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { t } from 'i18next';
 import { isEmptyData } from '@learnway/shared';
 import { useModal, useToast } from '@learnway/ui';
 import {
   EnQuestionLevel,
   EnQuestionType,
+  ExamPaperQuestionCountUpdateReq,
   ExamQuestionGenType,
   QuestionItem,
+  QuestionsCopyReq,
   RandomQuestionCountInfo,
-  RandomQuestionCountUpdateReq,
   TestPaperBasicInfoDetail,
 } from '@types';
 import {
   learningResourceQueryOptions,
+  useCopyQuestionsToExamPaper,
   useUpdateExamPaperQuestionCount,
   useUpdateQuestionStatus,
 } from '@entities/learning-resource';
-import { LevelKey, QuestionStatisticRow, SelectedQuestionState } from './type';
+import { CopyResponse, LevelKey, QuestionStatisticRow, SelectedQuestionState } from './type';
+import { useTranslation } from 'react-i18next';
 
 export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) => {
   const { contentUuid, examPoolUuid, questionGenType, questionCount } = basicInfo;
 
+  const { t } = useTranslation();
   const { confirm } = useModal();
   const { open: openToast } = useToast();
 
@@ -29,7 +32,7 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
     learningResourceQueryOptions.getQuestionItemList(examPoolUuid),
   );
 
-  const { data: randomQuestionInfo = [] } = useQuery(
+  const { data: randomQuestionInfo = [], refetch: refetchRandomCountInfo } = useQuery(
     learningResourceQueryOptions.getExamRandomQuestionCount(
       contentUuid,
       questionGenType as ExamQuestionGenType,
@@ -90,40 +93,41 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
 
   const levelCountByQuestionTypeAndLevel = useCallback(
     (type: EnQuestionType, key: LevelKey) => {
-      return randomQuestionInfo?.find((q) => q.questionType === type)?.[key] ?? 0;
+      return randomQuestionInfo?.find((q) => q.questionType === type)?.[key];
     },
     [randomQuestionInfo],
   );
 
   const [randomCountUpdateData, setRandomCountUpdateData] = useState<
-    Record<EnQuestionType, Record<string, number>>
+    Record<EnQuestionType, Record<string, number | undefined>>
   >({
     [EnQuestionType.SINGLE]: {
-      hardLevelCount: 0,
-      mediumLevelCount: 0,
-      easyLevelCount: 0,
+      hardLevelCount: undefined,
+      mediumLevelCount: undefined,
+      easyLevelCount: undefined,
     },
     [EnQuestionType.OX]: {
-      hardLevelCount: 0,
-      mediumLevelCount: 0,
-      easyLevelCount: 0,
+      hardLevelCount: undefined,
+      mediumLevelCount: undefined,
+      easyLevelCount: undefined,
     },
     [EnQuestionType.MULTIPLE]: {
-      hardLevelCount: 0,
-      mediumLevelCount: 0,
-      easyLevelCount: 0,
+      hardLevelCount: undefined,
+      mediumLevelCount: undefined,
+      easyLevelCount: undefined,
     },
     [EnQuestionType.SHORT_ANSWER]: {
-      hardLevelCount: 0,
-      mediumLevelCount: 0,
-      easyLevelCount: 0,
+      hardLevelCount: undefined,
+      mediumLevelCount: undefined,
+      easyLevelCount: undefined,
     },
     [EnQuestionType.ESSAY]: {
-      hardLevelCount: 0,
-      mediumLevelCount: 0,
-      easyLevelCount: 0,
+      hardLevelCount: undefined,
+      mediumLevelCount: undefined,
+      easyLevelCount: undefined,
     },
   });
+  const [selectedRandomQuestionCount, setSelectedRandomQuestionCount] = useState<number>(0);
 
   const handleCountInputChange = useCallback(
     (
@@ -135,9 +139,14 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
         target: { value },
       } = e;
 
-      let parsedValue = isNaN(Number(value)) ? 0 : Number(value);
+      let parsedValue =
+        (value !== '' && isNaN(Number(value))) || Number(value) < 0
+          ? 0
+          : value === ''
+            ? value
+            : Number(value);
 
-      if (parsedValue > rowItem[key]) {
+      if (typeof parsedValue === 'number' && parsedValue > rowItem[key]) {
         openToast({
           title: t(
             '각 유형별/난이도 별 출제 문항 수를 입력 시 각 문항의 갯수를 초과할 수 없습니다.',
@@ -158,30 +167,56 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
     [],
   );
 
-  const { update: updateQuestionCountInfo } = useUpdateExamPaperQuestionCount({
-    onSuccess: (result: any) => {
-      console.log(result);
+  const { update } = useUpdateExamPaperQuestionCount({
+    onSuccess: (result: unknown) => {
       openToast({
         title: t('저장되었습니다.'),
         type: 'success',
       });
+
+      setTimeout(async () => {
+        if (questionGenType === ExamQuestionGenType.RANDOM) {
+          const { data: refetchedRandomInfo = [] } = await refetchRandomCountInfo();
+          setSelectedRandomQuestionCount(
+            refetchedRandomInfo.reduce(
+              (acc, curr) =>
+                acc +
+                (curr.hardLevelCount ?? 0) +
+                (curr.mediumLevelCount ?? 0) +
+                (curr.easyLevelCount ?? 0),
+              0,
+            ),
+          );
+        }
+      }, 100);
     },
   });
 
-  const updateQuestionRandomCount = async () => {
-    const countList = Object.entries(randomCountUpdateData).map(
-      ([key, obj]) =>
-        ({
-          questionType: key as EnQuestionType,
-          hardLevelCount: obj.hardLevelCount,
-          mediumLevelCount: obj.mediumLevelCount,
-          easyLevelCount: obj.easyLevelCount,
-        }) satisfies RandomQuestionCountInfo,
-    );
+  const updateQuestionCountInfo = async () => {
+    const countList =
+      questionGenType === ExamQuestionGenType.RANDOM
+        ? Object.entries(randomCountUpdateData).map(
+            ([key, obj]) =>
+              ({
+                questionType: key as EnQuestionType,
+                hardLevelCount: obj.hardLevelCount || 0,
+                mediumLevelCount: obj.mediumLevelCount || 0,
+                easyLevelCount: obj.easyLevelCount || 0,
+              }) satisfies RandomQuestionCountInfo,
+          )
+        : Object.entries(questionState).map(
+            ([key, obj]) =>
+              ({
+                questionType: key as EnQuestionType,
+                hardLevelCount: obj?.[EnQuestionLevel.HARD] || 0,
+                mediumLevelCount: obj?.[EnQuestionLevel.MEDIUM] || 0,
+                easyLevelCount: obj?.[EnQuestionLevel.EASY] || 0,
+              }) satisfies RandomQuestionCountInfo,
+          );
 
-    const payload: RandomQuestionCountUpdateReq = {
+    const payload: ExamPaperQuestionCountUpdateReq = {
       contentUuid,
-      questionGenType: questionGenType ?? ExamQuestionGenType.RANDOM,
+      questionGenType: questionGenType ?? ExamQuestionGenType.FIXED,
       questionTotalCount: questionCount,
       countList,
     };
@@ -192,9 +227,34 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
         content: t('LABEL.confirm.save.message'),
       })
     ) {
-      updateQuestionCountInfo(payload);
+      update(payload);
     }
   };
+
+  const [questionsToCopy, setQuestionsToCopy] = useState<QuestionItem[]>([]);
+
+  const { copy: copyQuestions } = useCopyQuestionsToExamPaper({
+    onSuccess: ({ result }: CopyResponse) => {
+      openToast({
+        title: t('복사되었습니다.'),
+        type: 'success',
+      });
+
+      setTimeout(async () => {
+        const { data: refetchResult } = await refetch();
+        setSelectedQuestions(refetchResult?.filter((q) => q.isUsed) as QuestionItem[]);
+      }, 100);
+    },
+  });
+
+  const handleOnCopyAction = useCallback(() => {
+    const payload: QuestionsCopyReq = {
+      examPoolContentUuid: examPoolUuid as string,
+      questionUuidList: questionsToCopy.map((q) => q.examQuestionUuid),
+    };
+
+    copyQuestions(payload);
+  }, [examPoolUuid, questionsToCopy]);
 
   useEffect(() => {
     setSelectedQuestions(questionList.filter((q) => q.isUsed));
@@ -308,6 +368,17 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
         },
       });
     }
+
+    setSelectedRandomQuestionCount(
+      randomQuestionInfo.reduce(
+        (acc, curr) =>
+          acc +
+          (curr.hardLevelCount ?? 0) +
+          (curr.mediumLevelCount ?? 0) +
+          (curr.easyLevelCount ?? 0),
+        0,
+      ),
+    );
   }, [randomQuestionInfo]);
 
   return {
@@ -315,6 +386,7 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
     refetch,
     selectedQuestions,
     setSelectedQuestions,
+    selectedRandomQuestionCount,
     questionState,
     scorePerQuestion,
     questionCreateSuccessCallback,
@@ -322,6 +394,8 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
     randomCountUpdateData,
     setRandomCountUpdateData,
     handleCountInputChange,
-    updateQuestionRandomCount,
+    updateQuestionCountInfo,
+    setQuestionsToCopy,
+    handleOnCopyAction,
   };
 };

@@ -45,7 +45,6 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
     {
       basicInfoForm,
       contentUuid = '',
-      tenantId,
       mode,
       data,
       hasMapping = false,
@@ -55,6 +54,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
     ref,
   ) => {
     const { t } = useTranslation();
+    const { openModal } = useModal();
 
     const { provider: basicInfoProvider, getValues, saveBasicInfo } = basicInfoForm;
 
@@ -70,20 +70,11 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
           )
         : t('문항현황은 문항목록에서 문항추가/삭제 시 자동 업데이트 됩니다.');
 
-    useEffect(() => {
-      if (isMount.current) {
-        if (questionGenTypeByForm === ExamQuestionGenType.RANDOM) {
-          saveBasicInfo?.(getValues(), true);
-        }
-      } else {
-        isMount.current = true;
-      }
-    }, [questionGenTypeByForm]);
-
     const {
       questionList,
       selectedQuestions,
       setSelectedQuestions,
+      selectedRandomQuestionCount,
       refetch: refetchQuestionList,
       questionState,
       scorePerQuestion,
@@ -91,8 +82,15 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
       updateQuestionStatus,
       randomCountUpdateData,
       handleCountInputChange,
-      updateQuestionRandomCount,
+      updateQuestionCountInfo,
+      setQuestionsToCopy,
+      handleOnCopyAction,
     } = useExamQuestionInfoInput(data as TestPaperBasicInfoDetail);
+
+    const selectedQuestionCount =
+      questionGenTypeByForm === ExamQuestionGenType.RANDOM
+        ? selectedRandomQuestionCount
+        : selectedQuestions.length;
 
     const questionGenTypeOptions = useMemo(
       () => [
@@ -109,8 +107,6 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
       ],
       [],
     );
-
-    const { openModal } = useModal();
 
     const handleClickRetrieveQuestionModal = useCallback(async () => {
       const result = await openModal({
@@ -206,7 +202,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
       return [
         columnHelper.accessor('title', {
           cell: (info) => <strong>{info.getValue()}</strong>,
-          header: '문항유형',
+          header: t('문항유형'),
           enableGrouping: false,
           size: 100,
           meta: {
@@ -231,7 +227,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
               placeholder="0"
             />
           ),
-          header: '문항수(난이도 상)',
+          header: t('문항수(난이도 상)'),
           enableGrouping: false,
           meta: {
             headerAlign: 'center',
@@ -255,7 +251,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
               placeholder="0"
             />
           ),
-          header: '문항수(난이도 중)',
+          header: t('문항수(난이도 중)'),
           enableGrouping: false,
           meta: {
             headerAlign: 'center',
@@ -376,15 +372,19 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
     }, []);
 
     useImperativeHandle(ref, () => ({
-      // 문항
-      update: () => {
-        if (questionGenTypeByForm === ExamQuestionGenType.RANDOM) {
-          updateQuestionRandomCount();
-        } else {
-          saveBasicInfo?.(getValues());
-        }
-      },
+      // 시험지 저장 완료 처리 및 문항 저장
+      complete: async () => await updateQuestionCountInfo(),
     }));
+
+    useEffect(() => {
+      if (isMount.current) {
+        if (questionGenTypeByForm === ExamQuestionGenType.RANDOM) {
+          saveBasicInfo?.(getValues(), true);
+        }
+      } else {
+        isMount.current = true;
+      }
+    }, [questionGenTypeByForm]);
 
     return (
       <div className={styles.wrap}>
@@ -455,10 +455,10 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
                   <span
                     className={cn(
                       'count_info text-[1.4rem]',
-                      data?.questionCount !== selectedQuestions.length ? 'point' : '',
+                      data?.questionCount !== selectedQuestionCount ? 'point' : '',
                     )}
                   >
-                    {selectedQuestions.length}
+                    {selectedQuestionCount}
                   </span>
                   <strong className="table_tit text-[1.4rem] font-normal">
                     {t('문항 당 배점')}
@@ -469,7 +469,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
               className={styles.info_table}
               showGuideTextNextLine
               guideText={questionStatusGuideText}
-              showErrorMessageBesideGuideText={data?.questionCount !== selectedQuestions.length}
+              showErrorMessageBesideGuideText={data?.questionCount !== selectedQuestionCount}
               errorMessageBesideGuideText={t('시험지 문항수와 선택 문항수는 동일해야 합니다.')}
             />
           </div>
@@ -484,14 +484,15 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
               tableMode
               data={questionList}
               columns={questionListColumns}
+              onRowsSelect={setQuestionsToCopy}
               multiple
               showNumberingColumn
               hideRowSelectionCheckBox={false}
               titleCustomNode={
                 <div className="custom_info_wrap pt-[1.2rem]">
-                  <strong className="table_tit text-[1.4rem] font-normal">{'문항목록'}</strong>
-                  <strong className="table_tit text-[1.4rem] font-normal">{'전체'}</strong>
-                  <span className="count_info">{'5'}</span>
+                  <strong className="table_tit text-[1.4rem] font-normal">{t('문항목록')}</strong>
+                  <strong className="table_tit text-[1.4rem] font-normal">{t('전체')}</strong>
+                  <span className="count_info">{questionList.length}</span>
                 </div>
               }
               className={styles.list_table}
@@ -512,22 +513,29 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
                     method="post"
                     url={`${CMSApiPrefix()}/exam/questions/${data?.examPoolUuid}/download`}
                     params={{}}
+                    disabled={!questionList.length}
                   />
                   <Button
+                    type="button"
                     variant="text"
-                    label={t('LABEL.grid.header.add')}
+                    label={t('LABEL.grid.header.add', '추가')}
                     onClick={handleClickAddQuestionButton}
                     icon={<IcoPlus width={16} height={16} stroke={'#4C515E'} />}
                   />
                   <Button
+                    type="button"
                     variant="text"
                     label={t('LABEL.grid.header.copy', '복사')}
                     icon={<IcoCopy width={16} height={16} stroke="#4C515E" />}
+                    onClick={handleOnCopyAction}
+                    disabled={!questionList.length}
                   />
                   <Button
+                    type="button"
                     variant="text"
-                    label={'삭제'}
+                    label={t('LABEL.grid.header.remove', '삭제')}
                     icon={<IcoMinus width={16} height={16} stroke={'#131C30'} />}
+                    disabled={!questionList.length}
                   />
                 </>
               }

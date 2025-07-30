@@ -1,23 +1,24 @@
 /* IA118 / NLP_BO_CMS_1203 - 나의 학습자원 > 시험지 등록 및 상세 */
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { createLazyFileRoute, useBlocker, useRouter } from '@tanstack/react-router';
+import { Tabs, useModal } from '@learnway/ui';
+import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
+import { ExamTemplateType, TestPaperBasicInfoSaveRes } from '@types';
 import {
+  ContentTopButtons,
   LearningResourceQuestionInfo,
   LearningResourceTestPaperInfo,
 } from '@features/learning-resource';
 import {
   ExamTab,
-  PageMode,
   getExamTemplateTextByType,
   getQuestionGenTypeText,
+  PageMode,
   useExamBasicInfoForm,
   useExamLoaderData,
   useExamPaperForm,
 } from '@features/learning-resource/learning-resource-management/service';
-import { Button, Divider, Tabs, useModal } from '@learnway/ui';
-import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
-import { createLazyFileRoute, useBlocker, useRouter } from '@tanstack/react-router';
-import { ExamTemplateType, TestPaperBasicInfoSaveRes } from '@types';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 
@@ -30,10 +31,10 @@ function RouteComponent() {
 
   const router = useRouter();
 
-  const { mode, tenantId, contentUuid, data, refetchContentDetail, hasMapping, listParam } =
+  const { mode, contentUuid, data, refetchContentDetail, hasMapping, listParam } =
     useExamLoaderData();
 
-  const { alert, openModal, confirm: openConfirm } = useModal();
+  const { alert, confirm: openConfirm } = useModal();
 
   const { basicInfoRef, questionInfoRef, questionGenType, setQuestionGenType } =
     useExamPaperForm(data);
@@ -96,7 +97,6 @@ function RouteComponent() {
               saveBasicInfo,
             }}
             contentUuid={contentUuid}
-            tenantId={tenantId}
             mode={mode}
             data={data}
             hasMapping={hasMapping}
@@ -111,7 +111,6 @@ function RouteComponent() {
             ref={questionInfoRef}
             basicInfoForm={{ provider, getValues, updateFormDataByKey, saveBasicInfo }}
             contentUuid={contentUuid}
-            tenantId={tenantId}
             mode={mode}
             data={data}
             hasMapping={hasMapping}
@@ -152,22 +151,11 @@ function RouteComponent() {
     [saved],
   );
 
-  const handleClickGoListButton = useCallback(async () => {
-    if (
-      await openConfirm({
-        title: t('이동 하시겠습니까?'),
-        content: t('LABEL.confirm.goList.message'),
-      })
-    ) {
-      router.navigate({ to: '/learning/learning-resource', state: { listParam } });
-    }
-  }, [listParam]);
-
-  const handleClickSaveButton = () => {
+  const handleSubmit = (data: Record<string, any>) => {
     if (basicInfoRef.current) {
-      basicInfoRef.current?.save?.();
+      basicInfoRef.current?.save?.(data);
     } else if (questionInfoRef.current) {
-      questionInfoRef.current?.update?.();
+      questionInfoRef.current?.complete?.();
     }
   };
 
@@ -179,39 +167,27 @@ function RouteComponent() {
   }, [contentUuid]);
 
   return (
-    <PageContainer>
-      <ContentsButtons>
-        <Button
-          type="button"
-          variant="point"
-          size="sm"
-          label={t('LABEL.button.list')}
-          onClick={handleClickGoListButton}
-        />
-        <Divider orientation="vertical" />
-        <Button
-          type="button"
-          variant="primary"
-          size="sm"
-          label={t('LABEL.button.save')}
-          onClick={handleClickSaveButton}
-        />
-      </ContentsButtons>
+    <form onSubmit={onSubmit(handleSubmit)}>
+      <PageContainer>
+        <ContentsButtons>
+          <ContentTopButtons provider={provider} />
+        </ContentsButtons>
 
-      <MainContents>
-        <div className="form_row">
-          <div className={styles.main_contents}>
-            <Tabs
-              type="progress"
-              size="sm"
-              selectedTabKey={selectedTabKey}
-              items={tabItems}
-              onTabChange={handleTabChange}
-              onBeforeTabChange={handleBeforeTabChange}
-            />
+        <MainContents>
+          <div className="form_row">
+            <div className={styles.main_contents}>
+              <Tabs
+                type="progress"
+                size="sm"
+                selectedTabKey={selectedTabKey}
+                items={tabItems}
+                onTabChange={handleTabChange}
+                onBeforeTabChange={handleBeforeTabChange}
+              />
+            </div>
           </div>
-        </div>
-      </MainContents>
-    </PageContainer>
+        </MainContents>
+      </PageContainer>
+    </form>
   );
 }
