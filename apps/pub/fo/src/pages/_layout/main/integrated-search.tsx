@@ -17,16 +17,11 @@ function RouteComponent() {
       setIsClicked(true);
     };
 
-    // 닫기 버튼 클릭
-    const handleClose = () => {
-      setIsOpen(false);
-    };
     return (
       <SearchDisplay
         searchState={isClicked ? 'typing' : 'submitted'}
         displayFormat={'popover'}
         onBack={handleBack}
-        onClose={handleClose}
       />
     );
   };
