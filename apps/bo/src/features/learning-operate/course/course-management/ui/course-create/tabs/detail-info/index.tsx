@@ -22,7 +22,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
   const { t } = useTranslation();
 
   const form = useDynamicForm2();
-  const { provider, getValues, watch, onFormChange } = form;
+  const { provider, getValues, watch } = form;
 
   const { courseConfig } = useCourseCreateSubPage(form);
 
@@ -42,7 +42,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
         <FormRow2
           provider={provider}
           name={'isLearnEnvEnabled'}
-          label={'학습환경'}
+          label={t('학습환경')}
           format={'boolean'}
           element={<SwitchFormField disabled={courseConfig?.learningEnvOption === 'IMPOSSIBLE'} />}
         />
@@ -54,7 +54,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           <FormRow2
             provider={provider}
             name={'deviceRestrictType'}
-            label={'기기 제한'}
+            label={t('기기 제한')}
             element={
               <RadioGroupFormField
                 optionsConfig={{
@@ -67,7 +67,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           <FormRow2
             provider={provider}
             name={'isIntranetRestricted'}
-            label={'네트워크 제한'}
+            label={t('네트워크 제한')}
             format={'boolean'}
             element={
               <RadioGroupFormField
@@ -81,7 +81,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           <FormRow2
             provider={provider}
             name={'learningRestrictTimeType'}
-            label={'학습시간 제한'}
+            label={t('학습시간 제한')}
             element={
               <RadioGroupFormField
                 optionsConfig={{
@@ -97,7 +97,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           <FormRow2
             provider={provider}
             name={'isReviewRestricted'}
-            label={'복습 제한'}
+            label={t('복습 제한')}
             format={'boolean'}
             element={
               <RadioGroupFormField
@@ -115,8 +115,8 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
                             <Input
                               type={'number'}
                               min={0}
-                              prefixText={'학습 종료일 기준'}
-                              suffixText="개월"
+                              prefixText={t('학습 종료일 기준')}
+                              suffixText={t('개월')}
                             />
                           }
                         />
@@ -131,7 +131,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           <FormRow2
             provider={provider}
             name={'isCaptureBlockEnabled'}
-            label={'화면캡쳐 방지'}
+            label={t('화면캡쳐 방지')}
             format={'boolean'}
             element={
               <RadioGroupFormField
@@ -145,7 +145,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           <FormRow2
             provider={provider}
             name={'isSecurityAgreementEnable'}
-            label={'학습전 보안 서약'}
+            label={t('학습전 보안 서약')}
             format={'boolean'}
             element={
               <RadioGroupFormField
@@ -164,7 +164,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           provider={provider}
           name={'isLearnControlEnabled'}
           format={'boolean'}
-          label={'학습제어'}
+          label={t('학습제어')}
           element={
             <SwitchFormField disabled={courseConfig?.learningControlOption === 'IMPOSSIBLE'} />
           }
@@ -180,7 +180,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           <FormRow2
             provider={provider}
             name={'isDailyLearningProgressRestricted'}
-            label={'1일 진도제한'}
+            label={t('1일 진도제한')}
             format={'boolean'}
             element={
               <RadioGroupFormField
@@ -198,8 +198,8 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
                             <Input
                               type={'number'}
                               min={0}
-                              prefixText={'하루 기준'}
-                              suffixText="%"
+                              prefixText={t('하루 기준')}
+                              suffixText={'%'}
                             />
                           }
                         />
@@ -214,7 +214,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           <FormRow2
             provider={provider}
             name={'isProgressResetEnabled'}
-            label={'진도 초기화'}
+            label={t('진도 초기화')}
             format={'boolean'}
             element={
               <RadioGroupFormField
@@ -228,7 +228,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           <FormRow2
             provider={provider}
             name={'isSequentialLearningRequired'}
-            label={'순차 학습'}
+            label={t('순차 학습')}
             format={'boolean'}
             element={
               <RadioGroupFormField
@@ -245,7 +245,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           <FormRow2
             provider={provider}
             name={'isPlayerControlRestricted'}
-            label={'동영상 탐색바 제한'}
+            label={t('동영상 탐색바 제한')}
             format={'boolean'}
             element={
               <RadioGroupFormField
@@ -259,7 +259,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           <FormRow2
             provider={provider}
             name={'maxPlayBackRate'}
-            label={'동영상 배속 제한'}
+            label={t('동영상 배속 제한')}
             element={
               <RadioGroupFormField
                 optionsConfig={{
@@ -278,7 +278,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
         <FormRow2
           provider={provider}
           name={'isUsePassOption'}
-          label={'이수기준'}
+          label={t('이수기준')}
           format={'boolean'}
           element={<SwitchFormField disabled={courseConfig?.passOption === 'IMPOSSIBLE'} />}
         />
@@ -290,7 +290,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           <FormRow2
             provider={provider}
             name={'passMethodType'}
-            label={'이수처리 방식'}
+            label={t('이수처리 방식')}
             element={
               <RadioGroupFormField
                 optionsConfig={{
@@ -303,7 +303,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           <FormRow2
             provider={provider}
             name={'isCertificateProvided'}
-            label={'수료증 제공'}
+            label={t('수료증 제공')}
             format={'boolean'}
             element={
               <RadioGroupFormField
@@ -317,7 +317,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           <FormRow2
             provider={provider}
             name={'isRecognizedStudyPoint'}
-            label={'학습 포인트'}
+            label={t('학습 포인트')}
             format={'boolean'}
             element={
               <RadioGroupFormField
@@ -331,7 +331,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
                         <FormRow2
                           provider={provider}
                           name={'recognizedStudyPoint'}
-                          element={<Input type={'number'} min={0} suffixText="포인트" />}
+                          element={<Input type={'number'} min={0} suffixText={t('포인트')} />}
                         />
                       ),
                     },
@@ -346,7 +346,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           <FormRow2
             provider={provider}
             name={'passOption'}
-            label={'이수기준 설정'}
+            label={t('이수기준 설정')}
             format={'object'}
             element={<PassOptionFormField />}
           />
@@ -357,7 +357,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           <FormRow2
             provider={provider}
             name={'recognizedStudyMinType'}
-            label={'인정 학습시간'}
+            label={t('인정 학습시간')}
             element={
               <RadioGroupFormField
                 optionsConfig={{
@@ -371,7 +371,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
                           provider={provider}
                           name={'recognizedStudyMinutes'}
                           format={'number'}
-                          element={<Input type={'number'} min={0} suffixText="분" />}
+                          element={<Input type={'number'} min={0} suffixText={t('분')} />}
                         />
                       ),
                     },
@@ -384,14 +384,14 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
                             provider={provider}
                             name={'recognizedStudyCycles'}
                             format={'number'}
-                            element={<Input type={'number'} min={0} suffixText="회" />}
+                            element={<Input type={'number'} min={0} suffixText={t('회')} />}
                           />
                           {/* 인정학습시간(분) */}
                           <FormRow2
                             provider={provider}
                             name={'recognizedStudyMinutes'}
                             format={'number'}
-                            element={<Input type={'number'} min={0} suffixText="분" />}
+                            element={<Input type={'number'} min={0} suffixText={t('분')} />}
                           />
                         </SplitPanel>
                       ),
@@ -409,7 +409,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
         <FormRow2
           provider={provider}
           name={'isCommunicationToolEnabled'}
-          label={'커뮤니티 및 공유설정'}
+          label={t('커뮤니티 및 공유설정')}
           format={'boolean'}
           element={
             <SwitchFormField disabled={courseConfig?.communicationOption === 'IMPOSSIBLE'} />
@@ -427,7 +427,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           <FormRow2
             provider={provider}
             name={'isNoticeEnabled'}
-            label={'공지사항(새소식)'}
+            label={t('공지사항(새소식)')}
             format={'boolean'}
             element={
               <RadioGroupFormField
@@ -441,7 +441,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           <FormRow2
             provider={provider}
             name={'isReplyEnabled'}
-            label={'학습창 댓글'}
+            label={t('학습창 댓글')}
             format={'boolean'}
             element={
               <RadioGroupFormField
@@ -456,7 +456,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           <FormRow2
             provider={provider}
             name={'communityList'}
-            label={'커뮤니티'}
+            label={t('커뮤니티')}
             format={'array'}
             element={
               <CheckboxGroupFormField
@@ -469,7 +469,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           <FormRow2
             provider={provider}
             name={'isSharingAllowed'}
-            label={'과정공유'}
+            label={t('과정공유')}
             format={'boolean'}
             element={
               <RadioGroupFormField
@@ -487,7 +487,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
         <FormRow2
           provider={provider}
           name={'isInstructorAssigned'}
-          label={'강사'}
+          label={t('강사')}
           format={'boolean'}
           element={<SwitchFormField disabled={courseConfig?.instructorOption === 'IMPOSSIBLE'} />}
         />
@@ -502,7 +502,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           <FormRow2
             provider={provider}
             name={'instructorAssignType'}
-            label={'강사'}
+            label={t('강사')}
             element={
               <RadioGroupFormField
                 optionsConfig={{
@@ -528,7 +528,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
         <FormRow2
           provider={provider}
           name={'isTextbookProvided'}
-          label={'교재'}
+          label={t('교재')}
           format={'boolean'}
           element={<SwitchFormField disabled={courseConfig?.textBookOption === 'IMPOSSIBLE'} />}
         />
@@ -540,16 +540,16 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           <FormRow2
             provider={provider}
             name={'textbookName'}
-            label={'교재명'}
+            label={t('교재명')}
             element={<Input />}
           />
           {/*교재비*/}
           <FormRow2
             provider={provider}
             name={'textbookFee'}
-            label={'교재비'}
+            label={t('교재비')}
             format={'number'}
-            element={<Input prefixText={'1인당'} suffixText={'원'} />}
+            element={<Input prefixText={t('1인당')} suffixText={t('원')} />}
           />
         </ContentsRow>
       </FormDisplay>
@@ -559,7 +559,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
         <FormRow2
           provider={provider}
           name={'isRelatedPrerequisiteCourseExisted'}
-          label={'사전/연관학습'}
+          label={t('사전/연관학습')}
           format={'boolean'}
           element={
             <SwitchFormField disabled={courseConfig?.relatedCourseOption === 'IMPOSSIBLE'} />
@@ -575,7 +575,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           <FormRow2
             provider={provider}
             name={'preRequisiteCourseList'}
-            label={'사전 필수과정'}
+            label={t('사전 필수과정')}
             format={'array'}
             element={
               <ChipListModalSelectorFormField
@@ -602,7 +602,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           <FormRow2
             provider={provider}
             name={'relatedCourseList'}
-            label={'연관 과정'}
+            label={t('연관 과정')}
             format={'array'}
             element={
               <ChipListModalSelectorFormField
@@ -634,7 +634,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
         <FormRow2
           provider={provider}
           name={'hmgStandardMainCategory'}
-          label={'HMG 과정 데이터 표준 대분류'}
+          label={t('HMG 과정 데이터 표준 대분류')}
           element={
             <DropdownFormField
               optionsConfig={{
@@ -647,7 +647,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
         <FormRow2
           provider={provider}
           name={'hmgStandardSubCategory'}
-          label={'HMG 과정 데이터 표준 중분류'}
+          label={t('HMG 과정 데이터 표준 중분류')}
           element={
             <DropdownFormField
               optionsConfig={{
@@ -663,7 +663,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
         <FormRow2
           provider={provider}
           name={'isUseTrainingCostPerPerson'}
-          label={'1인당 교육비'}
+          label={t('1인당 교육비')}
           format={'boolean'}
           element={
             <RadioGroupFormField
@@ -678,7 +678,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
                         provider={provider}
                         name={'trainingCostPerPerson'}
                         format={'number'}
-                        element={<Input type={'number'} min={0} suffixText="원" />}
+                        element={<Input type={'number'} min={0} suffixText={t('원')} />}
                       />
                     ),
                   },
@@ -691,7 +691,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
         <FormRow2
           provider={provider}
           name={'isUseEmploymentInsuranceRefund'}
-          label={'고용보험 환급비용'}
+          label={t('고용보험 환급비용')}
           format={'boolean'}
           element={
             <RadioGroupFormField
@@ -706,7 +706,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
                         provider={provider}
                         name={'employmentInsuranceRefund'}
                         format={'number'}
-                        element={<Input type={'number'} min={0} suffixText="원" />}
+                        element={<Input type={'number'} min={0} suffixText={t('원')} />}
                       />
                     ),
                   },
@@ -722,7 +722,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
         <FormRow2
           provider={provider}
           name={'isStayed'}
-          label={'숙박 여부'}
+          label={t('숙박 여부')}
           format={'boolean'}
           element={
             <RadioGroupFormField
@@ -741,7 +741,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
         <FormRow2
           provider={provider}
           name={'isUseOutsourcing'}
-          label={'(테넌트) 전용'}
+          label={t('(테넌트) 전용')}
           format={'boolean'}
           element={<SwitchFormField />}
         />
@@ -753,7 +753,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           <FormRow2
             provider={provider}
             name={'isPreLevelTestRequired'}
-            label={'사전 레벨테스트'}
+            label={t('사전 레벨테스트')}
             format={'boolean'}
             element={
               <RadioGroupFormField
@@ -767,7 +767,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           <FormRow2
             provider={provider}
             name={'isBookDeliveryInfoRequired'}
-            label={'교재 배송지 수집'}
+            label={t('교재 배송지 수집')}
             format={'boolean'}
             element={
               <RadioGroupFormField
@@ -784,7 +784,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           <FormRow2
             provider={provider}
             name={'tutorName'}
-            label={'튜터'}
+            label={t('튜터')}
             element={
               <InputModalSelectorFormField
                 modalConfig={{
@@ -805,7 +805,7 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           <FormRow2
             provider={provider}
             name={'outsourcingCompanyName'}
-            label={'위탁 소유회사'}
+            label={t('위탁 소유회사')}
             element={
               <InputModalSelectorFormField
                 modalConfig={{

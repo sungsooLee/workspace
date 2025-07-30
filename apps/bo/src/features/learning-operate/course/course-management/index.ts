@@ -8,7 +8,7 @@ export * from './hooks/use-course-detail-sub-curriculum';
 export * from './hooks/use-course-detail-sub-sequence';
 export * from './hooks/use-course-list-grid-config';
 export * from './hooks/use-course-page';
-export * from './service/data-convert';
+export * from './service/course-data-convert';
 export * from './store/use-course-store';
 export * from './types/type';
 export * from './ui/course-create/course-create';

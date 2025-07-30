@@ -150,15 +150,7 @@ const UserShuttleComponent = ({
   const { provider: sProvider, setValue, setOptions } = useSearchBox(searchConfig);
   const companyId = useWatch({ control: sProvider.control, name: 'companyId' });
   const formRef = useRef<HTMLFormElement>(null);
-  const {
-    provider,
-    updateFormData,
-    onSubmit,
-    onFormChange,
-    getValues,
-    clearFormError,
-    setFormError,
-  } = useDynamicForm(formConfig);
+  const { provider, getValues } = useDynamicForm(formConfig);
 
   useEffect(() => {
     if (!companyId && companyId !== 0) return;
@@ -174,49 +166,44 @@ const UserShuttleComponent = ({
     })();
   }, [companyId]);
 
-  /**
-   * @param data
-   */
   const handleOnSearch = (data: any) => {
     const queryPromise = queryClient.fetchQuery(
-      usersQueryOptions.all({ ...data, roleId, page: 0, size: 2000 }),
+      usersQueryOptions.all({ ...data, page: 0, size: 2000 }),
     );
     queryPromise.then((data) => {
       setGrideData(data.content);
     });
-    //TODO fetch
   };
 
-  const handleOnClose = () => {
-    closeModal();
-  };
-  const handleOnConfirm = () => {
-    if (!option) return;
-    closeModal(option);
-  };
-
-  const handleOnSubmit = async (data: any) => {
-    const { dateRange } = getValues();
+  const handleOnConfirm = async () => {
     if (!option || option.length === 0) {
       alert('사용자를 선택 하세요.');
       return;
     }
+    if (isShowDateRangePicker) {
+      const { dateRange } = getValues();
+      const addUserUuids: {
+        endDate: Date;
+        isUsed: boolean;
+        startDate: Date;
+        userUuid: string;
+      }[] = [];
 
-    const addUsers: any[] = [];
-    option.forEach((item: any) => {
-      addUsers.push({
-        userUuid: item.uuid,
-        startDate: dateRange.from,
-        endDate: dateRange.to,
-        isUsed: true,
+      option.forEach((item: any) => {
+        addUserUuids.push({
+          userUuid: item.uuid,
+          startDate: dateRange.from,
+          endDate: dateRange.to,
+          isUsed: true,
+        });
       });
-    });
-    const payload = { roleId, body: { addUserUuids: addUsers } };
-    const result = await new Promise((resolve) => {
-      saveRoleUsers(payload, { onSuccess: resolve });
-    });
-    console.log('getValues', result);
-    closeModal();
+      await new Promise((resolve) => {
+        saveRoleUsers({ roleId, body: { addUserUuids } }, { onSuccess: resolve });
+      });
+      closeModal();
+    } else {
+      closeModal(option);
+    }
   };
 
   return (
@@ -236,20 +223,19 @@ const UserShuttleComponent = ({
           rightTitle={t('유저 선택')}
         />
         {isShowDateRangePicker && (
-          <form className="mt-5 w-1/2" ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
+          <form className="mt-5 w-1/2" ref={formRef}>
             <ContentsRow>
               <FormRow
                 provider={provider}
                 name="dateRange"
                 element={<DateRangePickerFormField />}
               />
-              {/* <FormRow provider={provider} name="---" /> */}
             </ContentsRow>
           </form>
         )}
       </ModalBody>
       <ModalFooter>
-        <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={handleOnClose} />
+        <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={closeModal} />
         <Button
           type={'button'}
           label={t('확인')}
