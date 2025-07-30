@@ -47,7 +47,6 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
     clearFormError,
     setFormError,
   } = useDynamicForm2();
-  console.log('provider id ', provider?.providerId);
 
   const formRef = useRef<HTMLFormElement>(null);
 
