@@ -94,7 +94,7 @@ function RouteComponent() {
               폼 데이터 확인 for debug
             </Button>
           )}
-          <ContentTopButtons provider={provider} />
+          <ContentTopButtons provider={provider} hasMapping={hasMapping} />
         </ContentsButtons>
         <MainContents>
           <LearningResourceETCDetail provider={provider} />

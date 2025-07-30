@@ -34,17 +34,14 @@ import { useRouter } from '@tanstack/react-router';
 import { ContentCreateType, ContentInfo, ContentInformation } from '@types';
 import { t } from 'i18next';
 import { first, get, map, some, uniq } from 'lodash';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BatchSettingModal } from './learning-resource-batch-setting-modal';
 import { ModifierInfoModal } from './learning-resource-modifier-info-modal';
 import { ProgramGuideModal } from './learning-resource-program-guide-modal';
 
 function LearningResourceTableComponent() {
   const { data: authUser } = useFetchAuthUser();
-  const role = useMemo(
-    () => authUser?.roles.find((_) => _.roleId === authUser.lastVisitedBoRoleId),
-    [authUser],
-  );
+
   const {
     state: { listParam }, // listParam으로 진입시 channelUuid 초기화되지 않게 하는 방법 필요
   } = useCurrentRoute();
@@ -477,10 +474,12 @@ function LearningResourceTableComponent() {
             <GridExcelDownloadButton
               method="post"
               url={`${CMSApiPrefix()}/contents/excel`}
-              params={{ ...params, lastVisitedBoRoleId: role?.roleId }}
+              params={{ ...params, lastVisitedBoRoleId: authUser?.lastVisitedBoRoleId }}
               paramLabels={valuesWithLabel}
               dataCount={data?.totalElements}
-              disabled={!data?.totalElements || role?.roleType === 'CHANNEL_GUEST_COURSE'}
+              disabled={
+                !data?.totalElements || authUser?.activeRole?.roleType === 'CHANNEL_GUEST_COURSE'
+              }
             />
             <Button
               variant="text"

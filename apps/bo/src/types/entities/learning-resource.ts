@@ -335,6 +335,7 @@ export type CourseMappingStatusRes = {
 export interface ContentCourseMappingParams extends PaginationRequest {
   courseType?: CourseType;
   courseName?: string;
+  lastVisitedBoRoleId: number;
 }
 
 export interface Content {
