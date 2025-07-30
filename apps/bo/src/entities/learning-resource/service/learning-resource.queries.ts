@@ -9,6 +9,7 @@ import {
   ExamQuestionGenType,
   GetContentDetailRes,
   GetContentsParams,
+  GetShareTenantsChannelsParams,
   HtmlVideoFileChangeReq,
   HtmlVideoMetadataReq,
   PostDraftETCParams,
@@ -58,7 +59,7 @@ export const queryKeys = {
     ['question-bank-question-item', examQuestionUuid] as const,
   randomQuestionCount: (examUuid: string) => ['random-question-count', examUuid] as const,
   questionListForRetrieve: ['question-list-for-retrieve'] as const,
-  shareTenantCodes: (contentUuid: string) => ['share-tenant-codes', contentUuid] as const,
+  shareTenantsChannels: (contentUuid: string) => ['share-tenants-channels', contentUuid] as const,
 };
 
 export const learningResourceQueryOptions = {
@@ -172,6 +173,12 @@ export const learningResourceQueryOptions = {
     queryFn: () => LearningResourceService.fetchQuestionListForRetrieve(params),
     cacheTime: 0,
     staleTime: 0,
+    enabled: true,
+  }),
+
+  getShareTenantsChannels: (params: GetShareTenantsChannelsParams) => ({
+    queryKey: queryKeys.shareTenantsChannels(params.contentUuid),
+    queryFn: () => LearningResourceService.getShareTenantsChannels(params),
     enabled: true,
   }),
 };

@@ -17,6 +17,8 @@ import {
   GetScormFileChangeRes,
   GetScormResourceRes,
   GetScormStatusRes,
+  GetShareTenantsChannelsParams,
+  GetShareTenantsChannelsRes,
   GetVideoFileChangeRes,
   GetVideoResourceRes,
   GetVideoStatusRes,
@@ -56,7 +58,7 @@ import {
   TestPaperBasicInfoSaveReq,
   TestPaperBasicInfoSaveRes,
 } from '@types';
-import { omit } from 'lodash';
+import { omit, pick } from 'lodash';
 
 export default class LearningResourceService {
   static fetchChannelsByTenantId(param: {
@@ -350,6 +352,16 @@ export default class LearningResourceService {
   static getShareTenantCodes(contentUuid: string) {
     return httpService.get<TenantCodeType[]>(
       `${CMSApiPrefix()}/contents/share/${contentUuid}/tenant/codes`,
+    );
+  }
+
+  /**
+   * 공유 팝업 좌측 테넌트-채널 코드 목록
+   */
+  static getShareTenantsChannels(params: GetShareTenantsChannelsParams) {
+    return httpService.get<GetShareTenantsChannelsRes>(
+      `${CMSApiPrefix()}/contents/share/${params.contentUuid}/tenants/${params.tenantId}/channels`,
+      pick(params, 'channelName'),
     );
   }
 }

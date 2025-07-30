@@ -1,4 +1,5 @@
 // IA104 / NLP_BO_CMS_1044 학습자원 현지화-공유설정(팝업)
+import { learningResourceQueryOptions } from '@entities/learning-resource';
 import LearningResourceService from '@entities/learning-resource/api/learning-resource';
 import { useSearchBox } from '@learnway/hooks';
 import { cn } from '@learnway/shared';
@@ -17,9 +18,11 @@ import {
   useModal,
 } from '@learnway/ui';
 import { SearchBox } from '@shared/ui';
+import { useQueryClient } from '@tanstack/react-query';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { ContentInfo, TenantCodeType } from '@types';
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { ChannelCodeType, ContentInfo, TenantCodeType } from '@types';
+import { pick } from 'lodash';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 type ResourceShareShuttleModalProps = {
@@ -28,6 +31,7 @@ type ResourceShareShuttleModalProps = {
 
 const LearningResourceShareShuttleModalComponent = ({ data }: ResourceShareShuttleModalProps) => {
   const { t } = useTranslation();
+  const queryClient = useQueryClient();
 
   const ref = useRef<ShuttleGridToGridImperative>(null);
 
@@ -51,7 +55,7 @@ const LearningResourceShareShuttleModalComponent = ({ data }: ResourceShareShutt
           },
         },
         {
-          name: 'channelUuid',
+          name: 'channelName',
           type: 'text',
           label: t('LABEL.form.label.channel', '채널'),
           format: 'string',
@@ -70,41 +74,28 @@ const LearningResourceShareShuttleModalComponent = ({ data }: ResourceShareShutt
     },
   };
 
-  const { provider: sProvider } = useSearchBox(sharingInfoSearchConfig);
+  const { provider: sProvider, getValues } = useSearchBox(sharingInfoSearchConfig);
 
-  const [gridData, setGridData] = useState<any[]>([
-    {
-      sharedBoxId: 0,
-      sourceTenantId: 1,
-      sourceTenantName: 'tenant1',
-      sourceChannelUuid: '3d3e39a1-5c08-454e-a5a3-3f977096449f',
-      sourceChannelName: 'channel1',
-      destTenantId: 1,
-      destTenantName: 'tenant2',
-      destChannelUuid: 'eb192472-e452-47a7-ba22-765a48805e61',
-      destChannelName: 'channel2',
-    },
-    {
-      sharedBoxId: 0,
-      sourceTenantId: 2,
-      sourceTenantName: 'tenant1',
-      sourceChannelUuid: '3d3e39a1-5c08-454e-a5a3-3f977096449f',
-      sourceChannelName: 'channel1',
-      destTenantId: 2,
-      destTenantName: 'tenant3',
-      destChannelUuid: 'eb192472-e452-47a7-ba22-765a48805e64',
-      destChannelName: 'channel2',
-    },
-  ]);
+  const [gridData, setGridData] = useState<ChannelCodeType[]>([]);
 
-  const handleOnSearch = (params: Record<string, any>) => {
-    console.log('search params', params);
+  const handleOnSearch = async (params: Record<string, any>) => {
+    const result = await queryClient.fetchQuery(
+      learningResourceQueryOptions.getShareTenantsChannels({
+        contentUuid: data.contentUuid,
+        ...pick(params, 'tenantId', 'channelName'),
+      }),
+    );
+    setGridData(result);
   };
+
+  useEffect(() => {
+    handleOnSearch(getValues());
+  }, []);
 
   const columns = useMemo(() => {
     const columnHelper = createColumnHelper<any>();
     return [
-      columnHelper.accessor('destTenantName', {
+      columnHelper.accessor('tenantName', {
         header: t('테넌트'),
         cell: (info) => info.getValue(),
         meta: {
@@ -112,7 +103,7 @@ const LearningResourceShareShuttleModalComponent = ({ data }: ResourceShareShutt
           cellAlign: 'left',
         },
       }),
-      columnHelper.accessor('destChannelName', {
+      columnHelper.accessor('channelName', {
         header: t('채널'),
         cell: (info) => info.getValue(),
         meta: {
@@ -167,12 +158,7 @@ const LearningResourceShareShuttleModalComponent = ({ data }: ResourceShareShutt
           <FormSubTitle label={t('공유 정보')} />
           <SearchBox provider={sProvider} onSearch={handleOnSearch} />
           <Divider />
-          <ShuttleGridToGrid
-            ref={ref}
-            columns={columns}
-            gridData={gridData}
-            rowKey="destChannelUuid"
-          />
+          <ShuttleGridToGrid ref={ref} columns={columns} gridData={gridData} rowKey="channelUuid" />
         </div>
       </ModalBody>
       <ModalFooter>
