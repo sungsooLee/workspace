@@ -2,7 +2,7 @@
 
 ## 개요
 
-이 샘플 코드는 FSD(Feature-Sliced Design) 아키텍처의 **entities** 레이어 구현 방법을 보여줍니다. 
+이 샘플 코드는 FSD(Feature-Sliced Design) 아키텍처의 **entities** 레이어 구현 방법을 보여줍니다.
 프로젝트에서 실제 사용하는 **httpService**, **Query Options**, **React Query 훅** 패턴을 완전히 반영한 실용적인 예제입니다.
 
 ## 주요 특징
@@ -22,7 +22,7 @@ src/entities/user/
 ├── service/
 │   ├── user.queries.ts      # Query Options 정의
 │   └── user.hook.ts         # React Query 훅
-├── types/
+├── models/
 │   └── user.types.ts        # 타입 정의
 └── index.ts                 # 엔티티 익스포트
 ```
@@ -51,28 +51,7 @@ export interface UserSearchParams {
   status?: string;
   page?: number;
   size?: number;
-  sort?: string[];  // GridBox 표준 정렬 형식: ['field,direction']
-}
-
-// API 응답 타입 (Spring Data 표준 페이징 형식)
-export interface UserListResponse {
-  content: User[];
-  totalElements: number;
-  totalPages: number;
-  size: number;
-  number: number;
-  first: boolean;
-  last: boolean;
-  pageable: {
-    pageNumber: number;
-    pageSize: number;
-    sort: {
-      sorted: boolean;
-    };
-  };
-  sort: {
-    sorted: boolean;
-  };
+  sort?: string[]; // GridBox 표준 정렬 형식: ['field,direction']
 }
 
 // 사용자 생성 요청 타입
@@ -100,7 +79,13 @@ export interface UserUpdateRequest {
 ```typescript
 import { httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
-import { User, UserListResponse, UserSearchParams, UserCreateRequest, UserUpdateRequest } from '../types/user.types';
+import {
+  User,
+  UserListResponse,
+  UserSearchParams,
+  UserCreateRequest,
+  UserUpdateRequest,
+} from '../types/user.types';
 
 // 사용자 서비스 클래스 (프로젝트 표준 패턴)
 export default class UserService {
@@ -145,14 +130,14 @@ export default class UserService {
 import { UserSearchParams } from '../types/user.types';
 import UserService from '../api/user';
 
-// Query Keys 정의 (프로젝트 표준 패턴)
+// Query Keys 정의
 export const queryKeys = {
   users: ['users'] as const,
   usersList: (params: UserSearchParams) => ['users', 'list', params] as const,
   userDetail: (userId: string) => ['users', 'detail', userId] as const,
 };
 
-// Query Options 정의 (GridBox useGridBox 훅과 호환)
+// Query Options 정의
 export const userQueryOptions = {
   getUsers: (params: UserSearchParams) => ({
     queryKey: queryKeys.usersList(params),
@@ -190,11 +175,10 @@ export const mutateOptions = {
 
 ```typescript
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'react-hot-toast';
 import { userQueryOptions, mutateOptions, queryKeys } from './user.queries';
 import { UserCreateRequest, UserUpdateRequest, UserSearchParams } from '../types/user.types';
 
-// 사용자 목록 조회 훅 (GridBox와 호환)
+// 사용자 목록 조회 훅
 export const useGetUsers = (params: UserSearchParams, options?: any) => {
   return useQuery({ ...userQueryOptions.getUsers(params), ...options });
 };
@@ -213,12 +197,10 @@ export const useCreateUser = (options?: { onSuccess?: (data: any) => void }) => 
     onSuccess: (data) => {
       // 목록 쿼리 무효화
       queryClient.invalidateQueries({ queryKey: queryKeys.users });
-      toast.success('사용자가 등록되었습니다.');
       options?.onSuccess?.(data);
     },
     onError: (error) => {
       console.error('사용자 생성 실패:', error);
-      toast.error('사용자 등록에 실패했습니다.');
     },
     ...options,
   });
@@ -241,12 +223,10 @@ export const useUpdateUser = (options?: { onSuccess?: (data: any) => void }) => 
       // 상세 및 목록 쿼리 무효화
       queryClient.invalidateQueries({ queryKey: queryKeys.userDetail(data.id) });
       queryClient.invalidateQueries({ queryKey: queryKeys.users });
-      toast.success('사용자 정보가 수정되었습니다.');
       options?.onSuccess?.(data);
     },
     onError: (error) => {
       console.error('사용자 수정 실패:', error);
-      toast.error('사용자 수정에 실패했습니다.');
     },
     ...options,
   });
@@ -268,14 +248,12 @@ export const useDeleteUser = (options?: any) => {
     onSuccess: (data) => {
       // 목록 쿼리 무효화
       queryClient.invalidateQueries({ queryKey: queryKeys.users });
-      toast.success('사용자가 삭제되었습니다.');
       if (options?.onSuccess) {
         options.onSuccess(data);
       }
     },
     onError: (error) => {
       console.error('사용자 삭제 실패:', error);
-      toast.error('사용자 삭제에 실패했습니다.');
     },
     ...options,
   });
@@ -390,21 +368,25 @@ async function fetchUserData() {
 ## 핵심 포인트
 
 ### 1. 프로젝트 표준 준수
+
 - **httpService** 사용으로 일관된 HTTP 통신
 - **PMSApiPrefix()** 활용한 API 엔드포인트 관리
 - **Service 클래스** 패턴으로 정적 메서드 구조
 
 ### 2. GridBox 완벽 호환
+
 - **userQueryOptions.getUsers** 형태로 GridBox config에서 직접 사용 가능
 - **GridBox 표준 파라미터** 형식 준수 (page, size, sort)
 - **Spring Data 페이징** 응답 구조 지원
 
 ### 3. React Query 최적화
+
 - **queryKeys** 중앙 관리로 캐시 키 일관성 확보
 - **cacheTime: 0, staleTime: 0** 설정으로 실시간 데이터 보장
 - **invalidateQueries** 활용한 효율적 캐시 관리
 
 ### 4. 개발자 경험 향상
+
 - **명확한 반환 값 구조**: create, update, delete 메서드와 상태 값들
 - **타입 안전성**: 완전한 TypeScript 지원
 - **에러 처리**: toast 메시지와 콘솔 로깅 기본 제공
@@ -412,24 +394,28 @@ async function fetchUserData() {
 ## 체크리스트
 
 ### API 레이어 구현
+
 - [ ] httpService와 적절한 ApiPrefix 사용
 - [ ] Service 클래스 패턴 적용
 - [ ] 프로젝트 표준 타입 정의
 - [ ] Spring Data 페이징 응답 구조 준수
 
-### Query Options 구현  
+### Query Options 구현
+
 - [ ] queryKeys 중앙 관리
 - [ ] GridBox 호환 Query Options
 - [ ] 적절한 cacheTime/staleTime 설정
 - [ ] enabled 조건 정의
 
 ### React Query 훅 구현
+
 - [ ] useGet prefix 명명 규칙 적용
 - [ ] mutation 훅 표준 반환 값 구조
 - [ ] queryClient invalidation 구현
 - [ ] 에러 처리 및 사용자 피드백
 
 ### 엔티티 완성도
+
 - [ ] 적절한 export 구조
 - [ ] 타입 정의 완전성
 - [ ] 사용 예제 문서화
