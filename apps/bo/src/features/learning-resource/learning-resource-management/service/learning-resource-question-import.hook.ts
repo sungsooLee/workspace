@@ -7,7 +7,7 @@ import {
   learningResourceQueryOptions,
   useCopyQuestionsToExamPaper,
 } from '@entities/learning-resource';
-import { CopyResponse } from './test-paper/type';
+import { QuestionMutationResponse } from './test-paper/type';
 
 export const useQuestionSearchAndCopy = (examPoolUuid: string) => {
   const queryClient = useQueryClient();
@@ -32,7 +32,7 @@ export const useQuestionSearchAndCopy = (examPoolUuid: string) => {
   }, []);
 
   const { copy: copyQuestionsToExam } = useCopyQuestionsToExamPaper({
-    onSuccess: ({ result }: CopyResponse) => {
+    onSuccess: ({ result }: QuestionMutationResponse) => {
       if (result) {
         openToast({
           title: t('복사되었습니다.'),
