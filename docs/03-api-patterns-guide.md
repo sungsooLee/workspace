@@ -1,7 +1,3 @@
----
-applyTo: '**/src/**'
----
-
 # API 호출 패턴 가이드
 
 ## 📋 목차
@@ -123,7 +119,7 @@ apiClient.interceptors.request.use(
     }
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => Promise.reject(error),
 );
 
 // 응답 인터셉터
@@ -131,20 +127,20 @@ apiClient.interceptors.response.use(
   (response) => response,
   async (error) => {
     const { response } = error;
-    
+
     // 401 에러 처리
     if (response?.status === 401) {
       // 토큰 갱신 로직 또는 로그인 페이지로 이동
       window.location.href = '/login';
     }
-    
+
     // 일반 에러 메시지
     if (response?.data?.message) {
       toast.error(response.data.message);
     }
-    
+
     return Promise.reject(error);
-  }
+  },
 );
 ```
 
@@ -164,24 +160,19 @@ import type {
 
 export const userApi = {
   // 목록 조회
-  getUsers: (params?: UserListParams) => 
-    apiClient.get<UserListResponse>('/users', { params }),
+  getUsers: (params?: UserListParams) => apiClient.get<UserListResponse>('/users', { params }),
 
   // 상세 조회
-  getUser: (id: string) => 
-    apiClient.get<User>(`/users/${id}`),
+  getUser: (id: string) => apiClient.get<User>(`/users/${id}`),
 
   // 생성
-  createUser: (data: UserCreateRequest) => 
-    apiClient.post<User>('/users', data),
+  createUser: (data: UserCreateRequest) => apiClient.post<User>('/users', data),
 
   // 수정
-  updateUser: ({ id, ...data }: UserUpdateRequest) => 
-    apiClient.put<User>(`/users/${id}`, data),
+  updateUser: ({ id, ...data }: UserUpdateRequest) => apiClient.put<User>(`/users/${id}`, data),
 
   // 삭제
-  deleteUser: (id: string) => 
-    apiClient.delete(`/users/${id}`),
+  deleteUser: (id: string) => apiClient.delete(`/users/${id}`),
 };
 ```
 
@@ -334,7 +325,7 @@ import { useGridBox } from '@learnway/ui';
 export const UserList = () => {
   const [searchParams, setSearchParams] = useState({});
   const { data, isLoading } = useUsers(searchParams);
-  
+
   const { config, gridFetch } = useGridBox({
     query: userQueryOptions.getUsers,
     rowId: 'id',
@@ -364,11 +355,11 @@ import { useUser, useCreateUser, useUpdateUser } from '@entities/user';
 export const UserDetail = ({ mode, userId }: Props) => {
   // 조회
   const { data: user } = useUser(userId);
-  
+
   // 뮤테이션
   const createMutation = useCreateUser();
   const updateMutation = useUpdateUser();
-  
+
   const handleSubmit = (formData: any) => {
     if (mode === 'CREATE') {
       createMutation.mutate(formData);

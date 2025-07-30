@@ -1,7 +1,3 @@
----
-applyTo: '**/src/**'
----
-
 # 테스트 작성 가이드
 
 ## 📋 목차
@@ -103,7 +99,7 @@ describe('date-utils', () => {
     it.each([
       ['2023-12-25', true],
       ['2023-02-29', false], // 윤년 아님
-      ['2024-02-29', true],  // 윤년
+      ['2024-02-29', true], // 윤년
       ['invalid', false],
       ['', false],
     ])('should validate %s as %s', (input, expected) => {
@@ -130,7 +126,9 @@ const mockLocalStorage = (() => {
     removeItem: jest.fn((key: string) => {
       delete store[key];
     }),
-    clear: jest.fn(() => { store = {}; }),
+    clear: jest.fn(() => {
+      store = {};
+    }),
   };
 })();
 
@@ -145,9 +143,7 @@ describe('useLocalStorage', () => {
   });
 
   it('should return default value when no stored value', () => {
-    const { result } = renderHook(() => 
-      useLocalStorage('test-key', 'default')
-    );
+    const { result } = renderHook(() => useLocalStorage('test-key', 'default'));
 
     expect(result.current[0]).toBe('default');
   });
@@ -155,33 +151,24 @@ describe('useLocalStorage', () => {
   it('should return stored value when it exists', () => {
     mockLocalStorage.setItem('test-key', JSON.stringify('stored'));
 
-    const { result } = renderHook(() => 
-      useLocalStorage('test-key', 'default')
-    );
+    const { result } = renderHook(() => useLocalStorage('test-key', 'default'));
 
     expect(result.current[0]).toBe('stored');
   });
 
   it('should update stored value', () => {
-    const { result } = renderHook(() => 
-      useLocalStorage('test-key', 'default')
-    );
+    const { result } = renderHook(() => useLocalStorage('test-key', 'default'));
 
     act(() => {
       result.current[1]('new-value');
     });
 
     expect(result.current[0]).toBe('new-value');
-    expect(mockLocalStorage.setItem).toHaveBeenCalledWith(
-      'test-key',
-      JSON.stringify('new-value')
-    );
+    expect(mockLocalStorage.setItem).toHaveBeenCalledWith('test-key', JSON.stringify('new-value'));
   });
 
   it('should handle function updates', () => {
-    const { result } = renderHook(() => 
-      useLocalStorage('counter', 0)
-    );
+    const { result } = renderHook(() => useLocalStorage('counter', 0));
 
     act(() => {
       result.current[1]((prev: number) => prev + 1);
@@ -222,7 +209,7 @@ describe('user-validation', () => {
 
       const result = userFormSchema.safeParse(invalidData);
       expect(result.success).toBe(false);
-      
+
       if (!result.success) {
         expect(result.error.errors[0].path).toEqual(['email']);
       }
@@ -250,7 +237,7 @@ describe('user-validation', () => {
       };
 
       const permissions = validateUserPermissions(user);
-      
+
       expect(permissions).toEqual({
         canCreate: true,
         canEdit: true,
@@ -267,7 +254,7 @@ describe('user-validation', () => {
       };
 
       const permissions = validateUserPermissions(user);
-      
+
       expect(permissions.canCreate).toBe(false);
       expect(permissions.canEdit).toBe(false);
     });
@@ -292,7 +279,7 @@ import { UserList } from './user-list';
 const server = setupServer(
   rest.get('/api/users', (req, res, ctx) => {
     const search = req.url.searchParams.get('search');
-    
+
     let users = [
       {
         id: '1',
@@ -313,7 +300,7 @@ const server = setupServer(
     ];
 
     if (search) {
-      users = users.filter(user => 
+      users = users.filter(user =>
         user.name.includes(search) || user.email.includes(search)
       );
     }
@@ -428,7 +415,7 @@ describe('UserForm Integration', () => {
 
   it('should submit valid form data', async () => {
     const user = userEvent.setup();
-    
+
     render(
       <UserForm
         mode="CREATE"
@@ -440,7 +427,7 @@ describe('UserForm Integration', () => {
     // 폼 입력
     await user.type(screen.getByLabelText('이름 *'), '홍길동');
     await user.type(screen.getByLabelText('이메일 *'), 'hong@example.com');
-    
+
     const roleSelect = screen.getByLabelText('역할 *');
     await user.selectOptions(roleSelect, 'USER');
 
@@ -460,7 +447,7 @@ describe('UserForm Integration', () => {
 
   it('should show validation errors', async () => {
     const user = userEvent.setup();
-    
+
     render(
       <UserForm
         mode="CREATE"
@@ -524,35 +511,39 @@ test.describe('User Management Flow', () => {
   test('should create, edit, and delete user', async ({ page }) => {
     // 1. 사용자 생성
     await page.click('[data-testid="add-user-button"]');
-    
+
     await expect(page.locator('[data-testid="user-modal"]')).toBeVisible();
-    
+
     await page.fill('[data-testid="user-name"]', '테스트 사용자');
     await page.fill('[data-testid="user-email"]', 'test@example.com');
     await page.selectOption('[data-testid="user-role"]', 'USER');
-    
+
     await page.click('[data-testid="submit-button"]');
-    
+
     await expect(page.locator('.toast-success')).toContainText('사용자가 생성되었습니다');
     await expect(page.locator('[data-testid="user-list"]')).toContainText('테스트 사용자');
 
     // 2. 사용자 수정
-    await page.click('[data-testid="user-row"]:has-text("테스트 사용자") [data-testid="edit-button"]');
-    
+    await page.click(
+      '[data-testid="user-row"]:has-text("테스트 사용자") [data-testid="edit-button"]',
+    );
+
     await page.fill('[data-testid="user-name"]', '수정된 사용자');
     await page.click('[data-testid="submit-button"]');
-    
+
     await expect(page.locator('.toast-success')).toContainText('사용자 정보가 수정되었습니다');
     await expect(page.locator('[data-testid="user-list"]')).toContainText('수정된 사용자');
 
     // 3. 사용자 삭제
-    page.on('dialog', async dialog => {
+    page.on('dialog', async (dialog) => {
       expect(dialog.message()).toContain('정말 삭제하시겠습니까?');
       await dialog.accept();
     });
 
-    await page.click('[data-testid="user-row"]:has-text("수정된 사용자") [data-testid="delete-button"]');
-    
+    await page.click(
+      '[data-testid="user-row"]:has-text("수정된 사용자") [data-testid="delete-button"]',
+    );
+
     await expect(page.locator('.toast-success')).toContainText('사용자가 삭제되었습니다');
     await expect(page.locator('[data-testid="user-list"]')).not.toContainText('수정된 사용자');
   });
@@ -563,7 +554,7 @@ test.describe('User Management Flow', () => {
     await page.click('[data-testid="search-button"]');
 
     await page.waitForSelector('[data-testid="user-row"]');
-    
+
     const userRows = page.locator('[data-testid="user-row"]');
     const count = await userRows.count();
 
@@ -575,7 +566,7 @@ test.describe('User Management Flow', () => {
 
   test('should handle pagination', async ({ page }) => {
     const pagination = page.locator('[data-testid="pagination"]');
-    
+
     if (await pagination.isVisible()) {
       await page.click('[data-testid="next-page-button"]');
       await expect(page).toHaveURL(/page=1/);
@@ -661,7 +652,7 @@ export async function fillForm(
 
   for (const [fieldName, value] of Object.entries(formData)) {
     const field = screen.getByLabelText(new RegExp(fieldName, 'i'));
-    
+
     if (field.tagName === 'SELECT') {
       await user.selectOptions(field, value);
     } else {
@@ -689,9 +680,7 @@ export const handlers = [
     let users = createMockUserList(50);
 
     if (search) {
-      users = users.filter(user =>
-        user.name.includes(search) || user.email.includes(search)
-      );
+      users = users.filter((user) => user.name.includes(search) || user.email.includes(search));
     }
 
     const start = page * size;
@@ -707,7 +696,7 @@ export const handlers = [
         number: page,
         first: page === 0,
         last: end >= users.length,
-      })
+      }),
     );
   }),
 
@@ -715,7 +704,7 @@ export const handlers = [
   rest.get('/api/users/:id', (req, res, ctx) => {
     const { id } = req.params;
     const user = createMockUser({ id: String(id) });
-    
+
     return res(ctx.json(user));
   }),
 
@@ -723,7 +712,7 @@ export const handlers = [
   rest.post('/api/users', async (req, res, ctx) => {
     const userData = await req.json();
     const user = createMockUser({ ...userData, id: String(Date.now()) });
-    
+
     return res(ctx.json(user));
   }),
 
@@ -732,7 +721,7 @@ export const handlers = [
     const { id } = req.params;
     const updates = await req.json();
     const user = createMockUser({ id: String(id), ...updates });
-    
+
     return res(ctx.json(user));
   }),
 
@@ -904,7 +893,7 @@ expect.extend(toHaveNoViolations);
 describe('Accessibility Tests', () => {
   it('UserList should have no accessibility violations', async () => {
     const { container } = renderWithProviders(<UserList />);
-    
+
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
@@ -941,7 +930,7 @@ import { UserForm } from '@features/user-management';
 describe('Keyboard Navigation', () => {
   it('should navigate through form fields with Tab', async () => {
     const user = userEvent.setup();
-    
+
     render(
       <UserForm
         mode="CREATE"
@@ -968,7 +957,7 @@ describe('Keyboard Navigation', () => {
   it('should submit form with Ctrl+Enter', async () => {
     const mockOnSubmit = jest.fn();
     const user = userEvent.setup();
-    
+
     render(
       <UserForm
         mode="CREATE"
@@ -991,36 +980,42 @@ describe('Keyboard Navigation', () => {
 ## ✅ 테스트 체크리스트
 
 ### 단위 테스트 체크리스트
+
 - [ ] 모든 유틸리티 함수가 테스트되었는가?
 - [ ] 에지 케이스(null, undefined, 빈 값)가 처리되는가?
 - [ ] 에러 상황이 적절히 테스트되었는가?
 - [ ] 커스텀 훅의 모든 동작이 테스트되었는가?
 
 ### 통합 테스트 체크리스트
+
 - [ ] 컴포넌트와 API의 상호작용이 테스트되었는가?
 - [ ] 사용자 인터랙션이 올바르게 동작하는가?
 - [ ] 로딩 및 에러 상태가 적절히 처리되는가?
 - [ ] 폼 검증이 올바르게 동작하는가?
 
 ### E2E 테스트 체크리스트
+
 - [ ] 주요 사용자 플로우가 테스트되었는가?
 - [ ] 전체 CRUD 기능이 동작하는가?
 - [ ] 검색과 필터링이 올바르게 동작하는가?
 - [ ] 에러 상황에서 적절한 메시지가 표시되는가?
 
 ### React Query 테스트 체크리스트
+
 - [ ] 성공적인 데이터 페칭이 테스트되었는가?
 - [ ] API 에러가 적절히 처리되는가?
 - [ ] 캐시 무효화가 올바르게 동작하는가?
 - [ ] 낙관적 업데이트가 테스트되었는가?
 
 ### 접근성 테스트 체크리스트
+
 - [ ] 자동화된 접근성 테스트가 통과하는가?
 - [ ] 키보드 네비게이션이 올바르게 동작하는가?
 - [ ] 스크린 리더 사용자를 고려했는가?
 - [ ] 포커스 관리가 적절한가?
 
 ### 전반적인 품질 체크리스트
+
 - [ ] 테스트 커버리지가 목표치를 달성했는가?
 - [ ] 테스트가 안정적이고 신뢰할 수 있는가?
 - [ ] CI/CD에서 모든 테스트가 통과하는가?

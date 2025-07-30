@@ -1,7 +1,3 @@
----
-applyTo: '**/src/**'
----
-
 # 컴포넌트 작성 가이드
 
 ## 📋 목차
@@ -30,14 +26,14 @@ interface ButtonProps {
   onClick?: () => void;
 }
 
-export const Button: React.FC<ButtonProps> = ({ 
+export const Button: React.FC<ButtonProps> = ({
   variant = 'primary',
   size = 'md',
   disabled = false,
   loading = false,
   children,
   onClick,
-  ...props 
+  ...props
 }) => {
   return (
     <button
@@ -61,24 +57,24 @@ interface UserListProps {
   onUserSelect?: (user: User) => void;
 }
 
-export const UserList: React.FC<UserListProps> = ({ 
-  searchParams, 
-  onUserSelect 
+export const UserList: React.FC<UserListProps> = ({
+  searchParams,
+  onUserSelect
 }) => {
   // API 호출
   const { data: users, isLoading } = useUsers(searchParams);
-  
+
   // 로컬 상태
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  
+
   // 이벤트 핸들러
   const handleUserClick = useCallback((user: User) => {
     setSelectedId(user.id);
     onUserSelect?.(user);
   }, [onUserSelect]);
-  
+
   if (isLoading) return <LoadingSpinner />;
-  
+
   return (
     <div className="user-list">
       {users?.map(user => (
@@ -101,7 +97,7 @@ export const UserList: React.FC<UserListProps> = ({
 export const UserManagementWidget: React.FC = () => {
   const [mode, setMode] = useState<'list' | 'detail'>('list');
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  
+
   return (
     <div className="user-management-widget">
       <div className="widget-header">
@@ -110,7 +106,7 @@ export const UserManagementWidget: React.FC = () => {
           사용자 추가
         </Button>
       </div>
-      
+
       <div className="widget-content">
         {mode === 'list' ? (
           <UserList onUserSelect={(user) => {
@@ -118,7 +114,7 @@ export const UserManagementWidget: React.FC = () => {
             setMode('detail');
           }} />
         ) : (
-          <UserDetailForm 
+          <UserDetailForm
             user={selectedUser}
             onClose={() => setMode('list')}
           />
@@ -139,7 +135,7 @@ export const UserManagementWidget: React.FC = () => {
 export const useUserList = (searchParams?: UserSearchParams) => {
   const { data, isLoading, error } = useUsers(searchParams);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
-  
+
   const toggleSelection = useCallback((id: string) => {
     setSelectedIds(prev => {
       const newSet = new Set(prev);
@@ -151,7 +147,7 @@ export const useUserList = (searchParams?: UserSearchParams) => {
       return newSet;
     });
   }, []);
-  
+
   return {
     users: data || [],
     isLoading,
@@ -164,9 +160,9 @@ export const useUserList = (searchParams?: UserSearchParams) => {
 // UI 컴포넌트
 export const UserList: React.FC<UserListProps> = ({ onUserSelect }) => {
   const { users, isLoading, selectedIds, toggleSelection } = useUserList();
-  
+
   if (isLoading) return <LoadingSpinner />;
-  
+
   return (
     <div className="user-list">
       {users.map(user => (
@@ -258,7 +254,7 @@ interface UserFormProps extends BaseProps {
 }
 
 // 기본값 처리
-export const UserForm: React.FC<UserFormProps> = ({ 
+export const UserForm: React.FC<UserFormProps> = ({
   user,
   mode,
   onSubmit,
@@ -267,10 +263,10 @@ export const UserForm: React.FC<UserFormProps> = ({
   loading = false,
   className = '',
   'data-testid': testId,
-  ...props 
+  ...props
 }) => {
   return (
-    <form 
+    <form
       className={`user-form ${className}`}
       data-testid={testId}
       {...props}
@@ -300,17 +296,17 @@ interface SelectProps<T> {
   renderOption?: (option: SelectOption<T>) => React.ReactNode;
 }
 
-export function Select<T>({ 
-  options, 
-  value, 
-  placeholder, 
+export function Select<T>({
+  options,
+  value,
+  placeholder,
   disabled = false,
   onChange,
   renderOption,
 }: SelectProps<T>) {
   return (
     <select disabled={disabled} onChange={(e) => {
-      const selectedOption = options.find(opt => 
+      const selectedOption = options.find(opt =>
         String(opt.value) === e.target.value
       );
       if (selectedOption) {
@@ -340,7 +336,7 @@ export const UserManagementPage: React.FC = () => {
     builders: searchFields,
     defaultValues: {},
   });
-  
+
   // 그리드 설정
   const { config: gridConfig, gridFetch } = useGridBox({
     query: userQueryOptions.getUsers,
@@ -351,11 +347,11 @@ export const UserManagementPage: React.FC = () => {
       sort: ['createdAt,desc'],
     },
   }, searchForm.getValues);
-  
+
   const handleSearch = useCallback((searchData: any) => {
     gridFetch(searchData);
   }, [gridFetch]);
-  
+
   return (
     <PageContainer>
       <ContentsButtons>
@@ -363,9 +359,9 @@ export const UserManagementPage: React.FC = () => {
           사용자 등록
         </Button>
       </ContentsButtons>
-      
+
       <MainContents>
-        <SearchBox 
+        <SearchBox
           provider={searchForm.provider}
           onSearch={handleSearch}
         />
@@ -393,7 +389,7 @@ export const UserDetailForm: React.FC<UserDetailFormProps> = ({
   userInfo,
 }) => {
   const { provider } = form;
-  
+
   return (
     <div className="user-detail-form">
       {/* 첫 번째 행 */}
@@ -411,7 +407,7 @@ export const UserDetailForm: React.FC<UserDetailFormProps> = ({
           name="email"
           label="이메일"
           placeholder="이메일을 입력하세요"
-          validation={{ 
+          validation={{
             required: '이메일은 필수입니다.',
             pattern: {
               value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -421,7 +417,7 @@ export const UserDetailForm: React.FC<UserDetailFormProps> = ({
           element={<Input />}
         />
       </ContentsRow>
-      
+
       {/* 두 번째 행 */}
       <ContentsRow>
         <FormRow2
@@ -465,46 +461,50 @@ export function useFormState<T extends Record<string, any>>({
     touched: {} as Record<keyof T, boolean>,
     isSubmitting: false,
   });
-  
+
   const setValue = useCallback((name: keyof T, value: any) => {
-    setState(prev => ({
+    setState((prev) => ({
       ...prev,
       values: { ...prev.values, [name]: value },
       errors: { ...prev.errors, [name]: '' },
     }));
   }, []);
-  
+
   const validate = useCallback(() => {
     if (!validationSchema) return true;
-    
+
     try {
       validationSchema.parse(state.values);
-      setState(prev => ({ ...prev, errors: {} }));
+      setState((prev) => ({ ...prev, errors: {} }));
       return true;
     } catch (error) {
       if (error instanceof z.ZodError) {
-        const errors = error.errors.reduce((acc, err) => {
-          const path = err.path[0] as keyof T;
-          acc[path] = err.message;
-          return acc;
-        }, {} as Record<keyof T, string>);
-        
-        setState(prev => ({ ...prev, errors }));
+        const errors = error.errors.reduce(
+          (acc, err) => {
+            const path = err.path[0] as keyof T;
+            acc[path] = err.message;
+            return acc;
+          },
+          {} as Record<keyof T, string>,
+        );
+
+        setState((prev) => ({ ...prev, errors }));
       }
       return false;
     }
   }, [state.values, validationSchema]);
-  
+
   return {
     ...state,
     setValue,
     validate,
-    reset: () => setState({
-      values: initialValues,
-      errors: {},
-      touched: {},
-      isSubmitting: false,
-    }),
+    reset: () =>
+      setState({
+        values: initialValues,
+        errors: {},
+        touched: {},
+        isSubmitting: false,
+      }),
   };
 }
 ```
@@ -531,37 +531,37 @@ export const ProductListPage: React.FC = () => {
     filters: {},
     selectedItems: new Set(),
   });
-  
+
   const updateSearchQuery = useCallback((query: string) => {
     setState(prev => ({ ...prev, searchQuery: query }));
   }, []);
-  
+
   const updateFilters = useCallback((filters: Partial<FilterState>) => {
     setState(prev => ({
       ...prev,
       filters: { ...prev.filters, ...filters },
     }));
   }, []);
-  
+
   const updateSelection = useCallback((itemIds: string[]) => {
     setState(prev => ({
       ...prev,
       selectedItems: new Set(itemIds),
     }));
   }, []);
-  
+
   return (
     <div className="product-list-page">
       <ProductSearchBar
         query={state.searchQuery}
         onQueryChange={updateSearchQuery}
       />
-      
+
       <ProductFilters
         filters={state.filters}
         onChange={updateFilters}
       />
-      
+
       <ProductList
         searchQuery={state.searchQuery}
         filters={state.filters}
@@ -596,11 +596,11 @@ export const UserCard = React.memo<UserCardProps>(({
   const handleSelect = useCallback(() => {
     onSelect(user.id);
   }, [onSelect, user.id]);
-  
+
   const handleEdit = useCallback(() => {
     onEdit(user.id);
   }, [onEdit, user.id]);
-  
+
   return (
     <div className={`user-card ${isSelected ? 'selected' : ''}`}>
       <div className="user-info">
@@ -642,39 +642,39 @@ export const DataTable: React.FC<DataTableProps> = ({
   // 필터링과 정렬된 데이터 메모이제이션
   const processedData = useMemo(() => {
     let result = [...data];
-    
+
     // 필터링
     if (filters.category) {
       result = result.filter(item => item.category === filters.category);
     }
-    
+
     if (filters.searchTerm) {
       result = result.filter(item =>
         item.name.toLowerCase().includes(filters.searchTerm.toLowerCase())
       );
     }
-    
+
     // 정렬
     if (sortConfig.field) {
       result.sort((a, b) => {
         const aValue = a[sortConfig.field];
         const bValue = b[sortConfig.field];
-        
+
         if (sortConfig.direction === 'desc') {
           return bValue > aValue ? 1 : -1;
         }
         return aValue > bValue ? 1 : -1;
       });
     }
-    
+
     return result;
   }, [data, filters, sortConfig]);
-  
+
   // 행 클릭 핸들러 메모이제이션
   const handleRowClick = useCallback((row: TableRow) => {
     onRowClick(row);
   }, [onRowClick]);
-  
+
   return (
     <div className="data-table">
       {processedData.map(row => (
@@ -710,35 +710,35 @@ export const Modal: React.FC<ModalProps> = ({
 }) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const titleId = useId();
-  
+
   // 포커스 트랩과 ESC 키 처리
   useEffect(() => {
     if (!isOpen) return;
-    
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         onClose();
       }
     };
-    
+
     document.addEventListener('keydown', handleKeyDown);
-    
+
     // 첫 번째 포커스 가능한 요소에 포커스
     const focusableElement = modalRef.current?.querySelector(
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
     ) as HTMLElement;
     focusableElement?.focus();
-    
+
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, [isOpen, onClose]);
-  
+
   if (!isOpen) return null;
-  
+
   return (
-    <div 
-      className="modal-overlay" 
+    <div
+      className="modal-overlay"
       onClick={onClose}
       role="presentation"
     >
@@ -760,7 +760,7 @@ export const Modal: React.FC<ModalProps> = ({
             ×
           </button>
         </div>
-        
+
         <div className="modal-body">
           {children}
         </div>
@@ -781,7 +781,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   const [focusedIndex, setFocusedIndex] = useState(-1);
   const itemsRef = useRef<HTMLElement[]>([]);
-  
+
   const handleKeyDown = (event: React.KeyboardEvent) => {
     switch (event.key) {
       case 'Enter':
@@ -798,8 +798,8 @@ export const Dropdown: React.FC<DropdownProps> = ({
         if (!isOpen) {
           setIsOpen(true);
         } else {
-          const nextIndex = focusedIndex < itemsRef.current.length - 1 
-            ? focusedIndex + 1 
+          const nextIndex = focusedIndex < itemsRef.current.length - 1
+            ? focusedIndex + 1
             : 0;
           setFocusedIndex(nextIndex);
           itemsRef.current[nextIndex]?.focus();
@@ -807,15 +807,15 @@ export const Dropdown: React.FC<DropdownProps> = ({
         break;
       case 'ArrowUp':
         event.preventDefault();
-        const prevIndex = focusedIndex > 0 
-          ? focusedIndex - 1 
+        const prevIndex = focusedIndex > 0
+          ? focusedIndex - 1
           : itemsRef.current.length - 1;
         setFocusedIndex(prevIndex);
         itemsRef.current[prevIndex]?.focus();
         break;
     }
   };
-  
+
   return (
     <div className="dropdown">
       <button
@@ -827,14 +827,14 @@ export const Dropdown: React.FC<DropdownProps> = ({
       >
         {trigger}
       </button>
-      
+
       {isOpen && (
-        <div 
+        <div
           className="dropdown-menu"
           role="menu"
           aria-orientation="vertical"
         >
-          {React.Children.map(children, (child, index) => 
+          {React.Children.map(children, (child, index) =>
             React.cloneElement(child as React.ReactElement, {
               ref: (el: HTMLElement) => itemsRef.current[index] = el,
               role: 'menuitem',
@@ -986,29 +986,34 @@ describe('UserList', () => {
 ## ✅ 체크리스트
 
 ### 컴포넌트 설계 체크리스트
+
 - [ ] 단일 책임 원칙을 따르고 있는가?
 - [ ] Props가 명확하고 타입이 정의되어 있는가?
 - [ ] 적절한 기본값이 설정되어 있는가?
 - [ ] FSD 아키텍처 레이어에 올바르게 위치하고 있는가?
 
 ### 프로젝트 표준 체크리스트
+
 - [ ] 목록 화면에서 SearchBox + Divider + GridBox 패턴을 사용했는가?
 - [ ] 폼에서 useDynamicForm2와 FormRow2를 활용했는가?
 - [ ] 레이아웃에서 ContentsRow를 적절히 사용했는가?
 - [ ] 표준 컴포넌트(Button, Input, Select 등)를 활용했는가?
 
 ### 성능 체크리스트
+
 - [ ] 불필요한 리렌더링이 발생하지 않는가?
 - [ ] React.memo, useMemo, useCallback이 적절히 사용되었는가?
 - [ ] 큰 데이터셋에 대해 가상화를 고려했는가?
 
 ### 접근성 체크리스트
+
 - [ ] 키보드로 모든 기능에 접근할 수 있는가?
 - [ ] 적절한 ARIA 속성이 설정되어 있는가?
 - [ ] 시맨틱 HTML을 사용했는가?
 - [ ] 스크린 리더 사용자를 고려했는가?
 
 ### 테스트 체크리스트
+
 - [ ] 주요 사용자 상호작용이 테스트되었는가?
 - [ ] 에러 상태와 로딩 상태가 테스트되었는가?
 - [ ] 접근성 관련 기능이 테스트되었는가?
