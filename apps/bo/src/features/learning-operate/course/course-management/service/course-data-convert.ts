@@ -123,7 +123,7 @@ export const formDataToRequestData = (d: Course) => {
   return {
     ...d,
     ...d.passOption, // 이수기준 설정
-    tenantId: d.tenantId || lastVisitedBoTenantId, // 테넌트 아이디 (GNB 에서 선택한 테넌트 아이디)
+    tenantId: d.tenantId || lastVisitedBoTenantId || 0, // 테넌트 아이디 (GNB 에서 선택한 테넌트 아이디)
     preRequisiteCourseIds,
     relatedCourseIds,
     courseValidityStartDateTime: d.courseValidityRange?.from, // 과정 유효 시작일
