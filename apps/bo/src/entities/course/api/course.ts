@@ -1,15 +1,15 @@
-import { httpService } from '@learnway/shared';
 import { LMSApiPrefix } from '@learnway/config';
+import { httpService } from '@learnway/shared';
 import {
   Course,
-  CourseListItem,
   CourseConfig,
   CourseConfigQueryParams,
+  CourseCounts,
+  CourseListItem,
+  CoursePopupListItem,
+  CoursePopupQueryParams,
   CoursesQueryParams,
   PaginationResponse,
-  CoursePopupQueryParams,
-  CoursePopupListItem,
-  CourseCounts,
 } from '../../../types';
 
 /**
@@ -50,8 +50,8 @@ export default class CourseService {
    * @param payload - 복사할 과정 정보.
    * @returns 복사된 과정 정보 Promise.
    */
-  static async copy(id: number): Promise<Course> {
-    return httpService.post<Course>(`${LMSApiPrefix()}/course/${id}/copy`, null);
+  static async copy(payload: { courseId: number; tenantId: number }): Promise<Course> {
+    return httpService.post<Course>(`${LMSApiPrefix()}/course/${payload.courseId}/copy`, payload);
   }
 
   /**

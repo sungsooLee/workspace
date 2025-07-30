@@ -12,6 +12,7 @@ import {
 import { useDynamicForm2 } from '@learnway/hooks';
 import { useModal } from '@learnway/ui';
 import { usePageState } from '@shared/lib/use-page-state';
+import { getCurrentAuthUser } from '@shared/lib/util/query-utils';
 import { useNavigate } from '@tanstack/react-router';
 import { useUpdateEffect } from 'ahooks';
 import { useEffect } from 'react';
@@ -77,7 +78,8 @@ export function useCourseDetailSubCourse() {
   const handleCopy = () => {
     const run = async () => {
       if (await confirm(t('과정 복사 하시겠습니까?'))) {
-        copyCourse(courseId);
+        const { lastVisitedBoTenantId } = getCurrentAuthUser() || {}; // 현재 로그인한 사용자의 테넌트 ID
+        copyCourse({ courseId, tenantId: lastVisitedBoTenantId || -1 });
       }
     };
     run();

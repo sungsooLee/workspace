@@ -1,7 +1,6 @@
 import type { UseMutationResult, UseQueryOptions, UseQueryResult } from '@tanstack/react-query';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
-import { mutateOptions, queryOptions } from './course.queries';
 import {
   Course,
   CourseConfig,
@@ -13,6 +12,7 @@ import {
   MutationHookOptions,
   PaginationResponse,
 } from '../../../types';
+import { mutateOptions, queryOptions } from './course.queries';
 
 /**
  * 모든 코스 목록을 가져오는 쿼리 훅.
@@ -57,8 +57,8 @@ export const useCreateCourse = (
  * @param [options] - 추가 뮤테이션 설정 옵션.
  */
 export const useCopyCourse = (
-  options?: MutationHookOptions<Course, Error, number, unknown>,
-): UseMutationResult<Course, Error, number, unknown> => {
+  options?: MutationHookOptions<Course, Error, { courseId: number; tenantId: number }, unknown>,
+): UseMutationResult<Course, Error, { courseId: number; tenantId: number }, unknown> => {
   return useMutation({
     ...mutateOptions.copy(),
     ...options,
