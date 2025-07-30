@@ -195,8 +195,8 @@ function RouteComponent() {
   const handleOnSearchManual = (searchData: any) => {
     if (modalUserGroups) {
       searchData = { ...searchData, groups: [{ combiners: modalUserGroups }] };
+      gridManualFetch(searchData);
     }
-    gridManualFetch(searchData);
   };
 
   const openUserGroupModal = () => {
