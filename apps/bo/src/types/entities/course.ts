@@ -76,6 +76,10 @@ export interface CourseListItem {
    * 운영자 이름
    */
   operatorName: string;
+  /**
+   * 언어
+   */
+  language?: string;
 }
 
 export interface CoursesQueryParams extends PaginationRequest {
