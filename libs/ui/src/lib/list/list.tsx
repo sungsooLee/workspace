@@ -1,14 +1,14 @@
 import { addOrRemoveItemByKey, cn, getMatchingItemsByKey, reorderOptions } from '@learnway/shared';
 
-import styles from './list.module.css';
+import { closestCenter, DndContext, DragEndEvent } from '@dnd-kit/core';
+import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
+import { SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { IcoDelete04, IcoMenu01 } from '@learnway/icons';
 import React, { isValidElement, ReactElement } from 'react';
 import { Button } from '../button/button';
 import { Checkbox } from '../checkbox/checkbox';
-import { closestCenter, DndContext, DragEndEvent } from '@dnd-kit/core';
-import { SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
-import { IcoDelete03, IcoDelete04, IcoMenu01 } from '@learnway/icons';
-import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 import { CommonReactElementProps } from '../type';
+import styles from './list.module.css';
 
 export interface ListProps extends CommonReactElementProps {
   /** 리스트 옵션 배열 */
@@ -78,6 +78,7 @@ const ListComponent = function ({
    * @param event 클릭 이벤트 객체
    * @param option 선택한 옵션 객체
    */
+
   const handleOptionSelect = (event: React.MouseEvent, option: any) => {
     if (multiple) {
       const newSelectedOptions = addOrRemoveItemByKey(selectedOptions, option, valueField);
@@ -212,16 +213,31 @@ const SortableItem = ({
         !disabledActive && isSelected && styles.active, // selected row style
         isOptionInvalid?.(item) && styles.invalid, // invalid style
       )}
-      onClick={(event: React.MouseEvent) => onClick?.(event, item)}
     >
       <div className={cn(styles.inner, showItemBorder && styles.line)}>
-        {checkable ? <Checkbox variant="radio" checked={!!isSelected} /> : null}
+        {checkable ? (
+          <Checkbox
+            variant="radio"
+            checked={!!isSelected}
+            onClick={(event: React.MouseEvent) => {
+              event.stopPropagation();
+              onClick?.(event, item);
+            }}
+          />
+        ) : null}
 
         {/* selectedNodeBeforeLabel */}
         {isSelected && selectedNodeBeforeLabel}
 
         {/* label */}
-        {textContent}
+        <div
+          onClick={(event: React.MouseEvent) => {
+            event.stopPropagation();
+            onClick?.(event, item);
+          }}
+        >
+          {textContent}
+        </div>
 
         {/* delete */}
         {deletable && (
