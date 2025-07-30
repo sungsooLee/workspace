@@ -112,13 +112,6 @@ export const learningResourceQueryOptions = {
     staleTime: 0,
     enabled: !!params.contentUuid,
   }),
-  getProgramGuideDownload: (params: any) => ({
-    queryKey: queryKeys.programGuideDownload,
-    queryFn: () => LearningResourceService.fetchProgramGuideDownload(),
-    cacheTime: 0,
-    staleTime: 0,
-    enabled: false,
-  }),
   getHTML5Resource: (contentUuid: string) => ({
     queryKey: queryKeys.html5Resource,
     queryFn: () => LearningResourceService.fetchHTML5Resource(contentUuid),

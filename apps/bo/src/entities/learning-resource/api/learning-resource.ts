@@ -1,4 +1,3 @@
-import { faker } from '@faker-js/faker';
 import { CMSApiPrefix, PMSApiPrefix } from '@learnway/config';
 import { httpService } from '@learnway/shared';
 import {
@@ -181,18 +180,6 @@ export default class LearningResourceService {
   // HTML5 동영상 콘텐츠 리소스 조회
   static fetchHTML5Resource(contentUuid: string) {
     return httpService.get(`${CMSApiPrefix()}/html5/${contentUuid}/resource`);
-  }
-
-  static fetchProgramGuideDownload() {
-    return new Promise((resolve) => {
-      const sharedHistories = Array.from({ length: 10 }, (_, id) => ({
-        id: id + 1,
-        fileName: faker.food.fruit(),
-      }));
-      resolve({
-        content: sharedHistories,
-      });
-    });
   }
 
   // 단건 블로그 컨텐츠 조회
