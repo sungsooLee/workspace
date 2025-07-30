@@ -1,4 +1,4 @@
-import { cloneElement, ComponentType, FC, isValidElement } from 'react';
+import { cloneElement, ComponentType, FC, isValidElement, useEffect } from 'react';
 import { Controller } from 'react-hook-form';
 import { DynamicFormFieldProps } from './type';
 
@@ -17,6 +17,9 @@ const DynamicFormFieldComponent2: FC<DynamicFormFieldProps> = ({
   formState,
   ...props
 }) => {
+  useEffect(() => {
+    console.log('dynamic - form', control);
+  }, [control]);
   if (!control || !name || !component) return;
 
   return (
