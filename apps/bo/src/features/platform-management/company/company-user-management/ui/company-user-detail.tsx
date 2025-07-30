@@ -5,10 +5,10 @@ import {
 } from '@features/platform-management/company';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { FormSubTitle, Tabs } from '@learnway/ui';
-import { useRouterState } from '@tanstack/react-router';
+import { useRouter, useRouterState } from '@tanstack/react-router';
 import { EnGlobalConst } from '@types';
 import { t } from 'i18next';
-import { forwardRef, useImperativeHandle, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
@@ -20,14 +20,24 @@ enum EnCompanyUserTab {
   loginHistory = 'loginHistory',
 }
 
-const CompanyUserDetailComponent = ({ formRef }: { formRef: any }) => {
-  const routerState = useRouterState();
+interface CompanyUserDetailProps {
+  formRef: any;
+  listPath: string;
+}
 
+const CompanyUserDetailComponent = ({ formRef, listPath }: CompanyUserDetailProps) => {
+  const router = useRouter();
+  const routerState = useRouterState();
   const userUuid = routerState.location.state.userUuid;
-  const { data: user, refetch: userRefetch } = useFetchUser(userUuid);
-  console.log('### user', user);
 
   const [selectedTabKey, setSelectedTabKey] = useState<string>(EnCompanyUserTab.userInfo);
+
+  useEffect(() => {
+    if (!userUuid) router.navigate({ to: listPath });
+  }, []);
+
+  const { data: user, refetch: userRefetch } = useFetchUser(userUuid);
+  console.log('### user', user);
 
   const handleTabChange = (tabKey: string) => {
     if (tabKey !== selectedTabKey) {
@@ -39,7 +49,7 @@ const CompanyUserDetailComponent = ({ formRef }: { formRef: any }) => {
     {
       title: t('유저 정보'),
       key: EnCompanyUserTab.userInfo,
-      content: <CompanyUserDetailBase ref={formRef} userInfo={user} userRefetch={userRefetch}/>,
+      content: <CompanyUserDetailBase ref={formRef} userInfo={user} userRefetch={userRefetch} />,
     },
     {
       title: t('교육 이력'),
