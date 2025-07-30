@@ -16,7 +16,7 @@ import { UseDynamicFormResult } from '@learnway/hooks';
 import { useModal } from '@learnway/ui';
 import { useNavigate } from '@tanstack/react-router';
 import { useUpdateEffect } from 'ahooks';
-import { formDataToRequestData, responseDataToFormData } from '../service/data-convert';
+import { formDataToRequestData, responseDataToFormData } from '../service/course-data-convert';
 import {
   TriggerKey,
   useCourseActions,
