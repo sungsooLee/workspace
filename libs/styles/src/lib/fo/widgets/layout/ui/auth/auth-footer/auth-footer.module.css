@@ -1,7 +1,6 @@
 /* footer-auth.module.css */
 .start {
   &.footer_auth {
-    @apply pb-[40px];
     .footer_area {
       .menu_list {
         @apply flex items-center justify-center;

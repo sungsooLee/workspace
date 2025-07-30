@@ -7,10 +7,10 @@
       @apply h-[80px] w-[80px];
     }
 
-    &:has(.ico1){
-      @apply bg-[var(--blue95)] w-[80px] h-[80px] rounded-full;
-      svg{
-        @apply w-[32px] h-auto stroke-[var(--blue50)];
+    &:has(.ico1) {
+      @apply h-[80px] w-[80px] rounded-full bg-[var(--blue95)];
+      svg {
+        @apply h-auto w-[32px] stroke-[var(--blue50)];
       }
     }
     .ico2 {
@@ -19,11 +19,9 @@
     .ico3 {
       @apply w-[40px] fill-[#4D525C];
     }
-    + h3.title {
-      @apply mt-[24px];
-    }
+    + h3.title,
     + h4.title {
-      @apply mt-[40px];
+      @apply mt-[24px];
     }
     + .noti {
       @apply mt-[40px];
@@ -34,9 +32,9 @@
   }
   h4.title {
     @apply body-lg-b leading-[31px] text-[var(--gray10)];
-    + .noti{
+    + .noti {
       @apply mt-[12px];
-      + .noti_box{
+      + .noti_box {
         @apply mt-[40px];
       }
     }

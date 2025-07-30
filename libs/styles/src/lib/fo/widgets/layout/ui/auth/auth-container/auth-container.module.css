@@ -9,7 +9,7 @@
   }
   /* //이용약관, 개인정보취급방침 레이아웃 */
   &.auth_container {
-    @apply relative h-full min-h-[100dvh] bg-[var(--gray95)] pt-[140px];
+    @apply relative h-full min-h-[100dvh] bg-[var(--gray95)] py-[140px];
     &.login {
       @apply bg-cover bg-center;
       background: linear-gradient(
