@@ -1,7 +1,6 @@
-import { Tenant, UserGroupManual, UserGroupsParam } from '@types';
-import UserGroupsService from '../api/user-group';
 import { getQuerySkipToken } from '@learnway/shared';
-import TenantService from '@entities/tenant/api/tenant';
+import { UserGroupManual, UserGroupsParam } from '@types';
+import UserGroupsService from '../api/user-group';
 
 export const queryKeys = {
   usergroups: ['user-groups'] as const,
@@ -21,12 +20,12 @@ export const queryOptions = {
     staleTime: 0,
     enabled: tenantIds.length > 0,
   }),
-  organizationTree: (tenantIds: number[], tenantName?: string) => ({
+  organizationTree: (tenantIds: number[], roleIds: number[], tenantName?: string) => ({
     queryKey: queryKeys.organizationTree,
-    queryFn: () => UserGroupsService.fetchOrganizationTree(tenantIds, tenantName),
+    queryFn: () => UserGroupsService.fetchOrganizationTree(tenantIds, roleIds, tenantName),
     cacheTime: 0,
     staleTime: 0,
-    enabled: tenantIds.length > 0,
+    enabled: tenantIds.length > 0 && roleIds.length > 0,
   }),
   customGroupsTree: (userGroupName?: string) => ({
     queryKey: queryKeys.customGroupsTree,
@@ -66,4 +65,4 @@ export const userGroupManualOptions = {
   update: () => ({
     mutationFn: (payload: any) => UserGroupsService.updateUserGroupManual(payload),
   }),
-}
+};
