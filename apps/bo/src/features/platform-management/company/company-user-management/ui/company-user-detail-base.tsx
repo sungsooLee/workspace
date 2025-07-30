@@ -635,7 +635,7 @@ const columnHelper = createColumnHelper<any>();
 
 const deliveryListColumns = () =>
   [
-    columnHelper.accessor('courseNo', {
+    columnHelper.accessor('courseId', {
       header: t('과정번호'),
       size: 125,
     }),
@@ -643,7 +643,7 @@ const deliveryListColumns = () =>
       header: t('과정명'),
       size: 260,
     }),
-    columnHelper.accessor('stepName', {
+    columnHelper.accessor('courseSequenceName', {
       header: t('차수명'),
       size: 277,
     }),
@@ -652,15 +652,20 @@ const deliveryListColumns = () =>
       cell: (info) =>
         `[${info.row.original.postalCode}] ${info.row.original.address} ${info.row.original.addressDetail}`,
     }),
-    columnHelper.accessor('textbookNo', {
+    columnHelper.accessor('bookName', {
       header: t('교재명'),
       size: 140,
     }),
-    columnHelper.accessor('studyDate', {
+    columnHelper.accessor('learningStartDateTime', {
       header: t('학습 기간'),
       size: 260,
       meta: {
         cellAlign: 'center',
+      },
+      cell: (info) => {
+        if (info.row.original.learningStartDateTime && info.row.original.learningEndDateTime)
+          return `${getDateToString(new Date(info.row.original.learningStartDateTime), 'YYYY-MM-DD')} ~ ${getDateToString(new Date(info.row.original.learningEndDateTime), 'YYYY-MM-DD')}`;
+        return '';
       },
     }),
   ] as ColumnDef<any, unknown>[];
