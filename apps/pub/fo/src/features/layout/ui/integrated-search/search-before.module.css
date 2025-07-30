@@ -1,18 +1,82 @@
 /* search-before.module.css */
 .start {
-    .title_wrap {
-        @apply flex items-center mt-[40px] mb-[16px];
-        .title {
-            @apply title3-b text-[var(--gray10)];
-        }
+  .title_wrap {
+    @apply mb-[16px] mt-[40px] flex items-center;
+    .title {
+      @apply title3-b text-[var(--gray10)];
     }
-    .btn_list {
-        @apply flex flex-wrap;
-        .btn {
-            @apply h-[36px] border-[var(--gray90)] border-solid border !mr-[8px] !mb-[8px] !label-md;
-            & + .btn {
-                @apply !ml-0 ;
+  }
+  .btn_list {
+    @apply flex flex-wrap;
+    .btn {
+      @apply !label-md !mb-[8px] !mr-[8px] h-[36px] border border-solid border-[var(--gray90)];
+      & + .btn {
+        @apply !ml-0;
+      }
+    }
+  }
+  .keyword_list {
+    @apply grid grid-flow-col grid-rows-3 gap-x-[32px];
+    li {
+      @apply border-b-[1px] border-solid border-[var(--gray95)];
+      .link {
+        @apply flex h-[44px] w-full items-center;
+        .index {
+          @apply title2-b text-[var(--gray10)];
+        }
+        .label {
+          @apply label-lg text-[var(--gray10)];
+        }
+        .icon_area {
+          @apply ml-[2px] mr-[8px];
+          .icon_up {
+            @apply rotate-180;
+            path {
+              @apply fill-[var(--red65)] stroke-[var(--red65)];
             }
+          }
+          .icon_down {
+            path {
+              @apply fill-[var(--blue65)] stroke-[var(--blue65)];
+            }
+          }
+          .icon_same {
+            path {
+              @apply fill-white stroke-white;
+            }
+          }
         }
+
+        .icon_arrow {
+          @apply ml-auto -rotate-45;
+        }
+      }
+      &:nth-child(3n) {
+        @apply border-none;
+      }
     }
+  }
+  .card_list {
+    @apply grid grid-cols-2 gap-2;
+    li {
+      .link {
+        @apply flex w-full flex-wrap rounded-[8px] bg-[var(--blue98)] p-[12px];
+        .img_wrap {
+          @apply h-[56px] w-[100px] shrink-0 overflow-hidden rounded-[4px];
+          img {
+            @apply h-full w-full;
+          }
+        }
+        .info {
+          @apply ml-[12px] flex-1;
+          .label {
+            @apply body-xsm-b line-clamp-2 block text-[var(--gray10)];
+          }
+          .text {
+            @apply label-sm text-[var(--gray35)];
+          }
+        }
+      }
+    }
+  }
 }
