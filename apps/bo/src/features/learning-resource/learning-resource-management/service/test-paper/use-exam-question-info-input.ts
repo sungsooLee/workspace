@@ -9,16 +9,24 @@ import {
   ExamQuestionGenType,
   QuestionItem,
   QuestionsCopyReq,
-  RandomQuestionCountInfo,
+  QuestionCountInfo,
   TestPaperBasicInfoDetail,
+  QuestionItemDeleteParam,
+  ContentType,
 } from '@types';
 import {
   learningResourceQueryOptions,
   useCopyQuestionsToExamPaper,
+  useDeleteQuestionItemList,
   useUpdateExamPaperQuestionCount,
   useUpdateQuestionStatus,
 } from '@entities/learning-resource';
-import { CopyResponse, LevelKey, QuestionStatisticRow, SelectedQuestionState } from './type';
+import {
+  QuestionMutationResponse,
+  LevelKey,
+  QuestionStatisticRow,
+  SelectedQuestionState,
+} from './type';
 import { useTranslation } from 'react-i18next';
 
 export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) => {
@@ -129,6 +137,17 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
   });
   const [selectedRandomQuestionCount, setSelectedRandomQuestionCount] = useState<number>(0);
 
+  const getSelectedRandomQuestionCount = useCallback((list: QuestionCountInfo[] = []): number => {
+    return list.reduce(
+      (acc, curr) =>
+        acc +
+        (curr.hardLevelCount ?? 0) +
+        (curr.mediumLevelCount ?? 0) +
+        (curr.easyLevelCount ?? 0),
+      0,
+    );
+  }, []);
+
   const handleCountInputChange = useCallback(
     (
       e: ChangeEvent<HTMLInputElement>,
@@ -177,16 +196,7 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
       setTimeout(async () => {
         if (questionGenType === ExamQuestionGenType.RANDOM) {
           const { data: refetchedRandomInfo = [] } = await refetchRandomCountInfo();
-          setSelectedRandomQuestionCount(
-            refetchedRandomInfo.reduce(
-              (acc, curr) =>
-                acc +
-                (curr.hardLevelCount ?? 0) +
-                (curr.mediumLevelCount ?? 0) +
-                (curr.easyLevelCount ?? 0),
-              0,
-            ),
-          );
+          setSelectedRandomQuestionCount(getSelectedRandomQuestionCount(refetchedRandomInfo));
         }
       }, 100);
     },
@@ -202,7 +212,7 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
                 hardLevelCount: obj.hardLevelCount || 0,
                 mediumLevelCount: obj.mediumLevelCount || 0,
                 easyLevelCount: obj.easyLevelCount || 0,
-              }) satisfies RandomQuestionCountInfo,
+              }) satisfies QuestionCountInfo,
           )
         : Object.entries(questionState).map(
             ([key, obj]) =>
@@ -211,7 +221,7 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
                 hardLevelCount: obj?.[EnQuestionLevel.HARD] || 0,
                 mediumLevelCount: obj?.[EnQuestionLevel.MEDIUM] || 0,
                 easyLevelCount: obj?.[EnQuestionLevel.EASY] || 0,
-              }) satisfies RandomQuestionCountInfo,
+              }) satisfies QuestionCountInfo,
           );
 
     const payload: ExamPaperQuestionCountUpdateReq = {
@@ -231,30 +241,58 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
     }
   };
 
-  const [questionsToCopy, setQuestionsToCopy] = useState<QuestionItem[]>([]);
+  const [selectedQuestionRows, setSelectedQuestionRows] = useState<QuestionItem[]>([]);
 
   const { copy: copyQuestions } = useCopyQuestionsToExamPaper({
-    onSuccess: ({ result }: CopyResponse) => {
-      openToast({
-        title: t('복사되었습니다.'),
-        type: 'success',
-      });
+    onSuccess: ({ result }: QuestionMutationResponse) => {
+      if (result) {
+        openToast({
+          title: t('복사되었습니다.'),
+          type: 'success',
+        });
 
-      setTimeout(async () => {
-        const { data: refetchResult } = await refetch();
-        setSelectedQuestions(refetchResult?.filter((q) => q.isUsed) as QuestionItem[]);
-      }, 100);
+        setTimeout(async () => {
+          const { data: refetchResult } = await refetch();
+          setSelectedQuestions(refetchResult?.filter((q) => q.isUsed) as QuestionItem[]);
+        }, 100);
+      }
     },
   });
 
   const handleOnCopyAction = useCallback(() => {
     const payload: QuestionsCopyReq = {
       examPoolContentUuid: examPoolUuid as string,
-      questionUuidList: questionsToCopy.map((q) => q.examQuestionUuid),
+      questionUuidList: selectedQuestionRows.map((q) => q.examQuestionUuid),
     };
 
     copyQuestions(payload);
-  }, [examPoolUuid, questionsToCopy]);
+  }, [examPoolUuid, selectedQuestionRows]);
+
+  const { delete: deleteQuestion } = useDeleteQuestionItemList({
+    onSuccess: ({ result }: QuestionMutationResponse) => {
+      if (result) {
+        openToast({
+          title: t('삭제되었습니다.'),
+          type: 'success',
+        });
+
+        setTimeout(async () => {
+          const { data: refetchResult } = await refetch();
+          setSelectedQuestions(refetchResult?.filter((q) => q.isUsed) as QuestionItem[]);
+        }, 100);
+      }
+    },
+  });
+
+  const handleDeleteQuestionAction = useCallback(() => {
+    const payload: QuestionItemDeleteParam = {
+      contentUuid,
+      contentType: ContentType.EXAM,
+      questionUuidList: selectedQuestionRows.map((q) => q.examQuestionUuid),
+    };
+
+    deleteQuestion(payload);
+  }, [contentUuid, selectedQuestionRows]);
 
   useEffect(() => {
     setSelectedQuestions(questionList.filter((q) => q.isUsed));
@@ -369,16 +407,7 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
       });
     }
 
-    setSelectedRandomQuestionCount(
-      randomQuestionInfo.reduce(
-        (acc, curr) =>
-          acc +
-          (curr.hardLevelCount ?? 0) +
-          (curr.mediumLevelCount ?? 0) +
-          (curr.easyLevelCount ?? 0),
-        0,
-      ),
-    );
+    setSelectedRandomQuestionCount(getSelectedRandomQuestionCount(randomQuestionInfo));
   }, [randomQuestionInfo]);
 
   return {
@@ -395,7 +424,8 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
     setRandomCountUpdateData,
     handleCountInputChange,
     updateQuestionCountInfo,
-    setQuestionsToCopy,
+    setSelectedQuestionRows,
     handleOnCopyAction,
+    handleDeleteQuestionAction,
   };
 };

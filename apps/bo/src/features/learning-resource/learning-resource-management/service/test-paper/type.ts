@@ -4,7 +4,7 @@ import {
   EnQuestionLevel,
   EnQuestionType,
   ExamQuestionGenType,
-  RandomQuestionCountInfo,
+  QuestionCountInfo,
   TestPaperBasicInfoDetail,
   TestPaperBasicInfoSaveReq,
 } from '@types';
@@ -68,6 +68,6 @@ export type SelectedQuestionState = Record<
   Partial<Record<EnQuestionLevel, number>>
 >;
 
-export type LevelKey = keyof Omit<RandomQuestionCountInfo, 'questionType'>;
+export type LevelKey = keyof Omit<QuestionCountInfo, 'questionType'>;
 
-export type CopyResponse = { result: boolean };
+export type QuestionMutationResponse = { result: boolean };

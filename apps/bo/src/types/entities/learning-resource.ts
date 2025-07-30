@@ -620,7 +620,7 @@ export interface QuestionStatusUpdateReq {
   isUsed: boolean;
 }
 
-export interface RandomQuestionCountInfo {
+export interface QuestionCountInfo {
   questionType: EnQuestionType;
   hardLevelCount: number;
   mediumLevelCount: number;
@@ -631,7 +631,7 @@ export interface ExamPaperQuestionCountUpdateReq {
   contentUuid: string;
   questionGenType: ExamQuestionGenType;
   questionTotalCount: number;
-  countList: RandomQuestionCountInfo[];
+  countList: QuestionCountInfo[];
 }
 
 export interface QuestionListForRetrieveReq {

@@ -83,7 +83,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
       randomCountUpdateData,
       handleCountInputChange,
       updateQuestionCountInfo,
-      setQuestionsToCopy,
+      setSelectedQuestionRows,
       handleOnCopyAction,
     } = useExamQuestionInfoInput(data as TestPaperBasicInfoDetail);
 
@@ -484,7 +484,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
               tableMode
               data={questionList}
               columns={questionListColumns}
-              onRowsSelect={setQuestionsToCopy}
+              onRowsSelect={setSelectedQuestionRows}
               multiple
               showNumberingColumn
               hideRowSelectionCheckBox={false}
