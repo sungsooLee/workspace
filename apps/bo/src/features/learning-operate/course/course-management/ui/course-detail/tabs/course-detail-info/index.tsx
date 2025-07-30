@@ -342,24 +342,9 @@ const DetailInfoComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBa
               {/*연락처*/}
               <FormRow2
                 provider={provider}
-                name={'연락처1'}
+                name={'coordinatorTelNo'}
                 label={t('연락처')}
-                element={
-                  <>
-                    <FormRow2
-                      provider={provider}
-                      name={'coordinatorTelCountryCode'}
-                      element={
-                        <DropdownFormField
-                          optionsConfig={{
-                            codeGroup: CODE_GROUP['cmmon.TelCountryCode'],
-                          }}
-                        />
-                      }
-                    />
-                    <FormRow2 provider={provider} name={'coordinatorTelNo'} element={<Input />} />
-                  </>
-                }
+                element={<Input />}
               />
               {/*이메일*/}
               <FormRow2
@@ -395,38 +380,10 @@ const DetailInfoComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBa
               {/*연락처*/}
               <FormRow2
                 provider={provider}
-                name={'연락처2'}
+                name={'operatorTelNo'}
                 label={t('연락처')}
-                element={
-                  <>
-                    <FormRow2
-                      provider={provider}
-                      name={'operatorTelCountryCode'}
-                      element={
-                        <DropdownFormField
-                          optionsConfig={{
-                            codeGroup: CODE_GROUP['cmmon.TelCountryCode'],
-                          }}
-                        />
-                      }
-                    />
-                    <FormRow2 provider={provider} name={'operatorTelNo'} element={<Input />} />
-                  </>
-                }
+                element={<Input />}
               />
-              {/*<FormRow2*/}
-              {/*  provider={provider}*/}
-              {/*  name={'operatorTelNo'}*/}
-              {/*  label={'연락처'}*/}
-              {/*  element={*/}
-              {/*    <PhoneNumberFormField*/}
-              {/*      fields={{ nationCode: 'operatorTelCountryCode', number: 'operatorTelNo' }}*/}
-              {/*      phoneNumberConfig={{*/}
-              {/*        options: [{ value: 'KOR_82', label: '+82' }],*/}
-              {/*      }}*/}
-              {/*    />*/}
-              {/*  }*/}
-              {/*/>*/}
               {/*이메일*/}
               <FormRow2
                 provider={provider}
@@ -459,8 +416,6 @@ const DetailInfoComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBa
                     onSelected={(selectedThumbnail1: string) =>
                       onFormChange({ primaryThumbnailFileUuid: selectedThumbnail1 })
                     }
-                    // selected={selectedThumbnail1}
-                    // onSelected={handleSelected}
                   />
                 }
               />

@@ -217,10 +217,6 @@ export interface Course {
    */
   coordinatorDeptName?: string;
   /**
-   * 담당자 연락처 국가코드
-   */
-  coordinatorTelCountryCode?: string;
-  /**
    * 담당자 연락처
    */
   coordinatorTelNo?: string;
@@ -240,10 +236,6 @@ export interface Course {
    * 운영자 부서이름
    */
   operatorDeptName?: string;
-  /**
-   * 운영자 연락처 국가코드
-   */
-  operatorTelCountryCode?: string;
   /**
    * 운영자 연락처
    */
