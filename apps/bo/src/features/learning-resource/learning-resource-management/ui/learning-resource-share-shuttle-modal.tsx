@@ -1,6 +1,6 @@
 // IA104 / NLP_BO_CMS_1044 학습자원 현지화-공유설정(팝업)
 import LearningResourceService from '@entities/learning-resource/api/learning-resource';
-import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
+import { useSearchBox } from '@learnway/hooks';
 import { cn } from '@learnway/shared';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
@@ -33,7 +33,7 @@ const LearningResourceShareShuttleModalComponent = ({ data }: ResourceShareShutt
 
   const { closeModal } = useModal();
 
-  const sharingInfoSearchConfig: SearchBoxConfig = {
+  const sharingInfoSearchConfig: any = {
     builders: [
       [
         {
@@ -57,8 +57,17 @@ const LearningResourceShareShuttleModalComponent = ({ data }: ResourceShareShutt
           format: 'string',
           value: '',
         },
+        {
+          type: 'empty',
+        },
+        {
+          type: 'empty',
+        },
       ],
     ],
+    validator: {
+      tenantId: true,
+    },
   };
 
   const { provider: sProvider } = useSearchBox(sharingInfoSearchConfig);
