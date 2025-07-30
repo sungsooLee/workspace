@@ -1,5 +1,5 @@
 import { PMSApiPrefix } from '@learnway/config';
-import { httpService } from '@learnway/shared';
+import { getMockCodeGroupOption, httpService } from '@learnway/shared';
 import { codeOptions } from './config';
 import { CODE_GROUP_TYPE } from './constants';
 import { Code, CodeApiType } from './types';
@@ -12,23 +12,33 @@ import { useCodeStore } from './use-code-store';
  */
 const defaultFetchCodeGroup = async <K extends CODE_GROUP_TYPE>(
   group: K,
-  filter = {},
+  filter: Record<string, any> = {},
 ): Promise<Code[K]> => {
-  const response = await httpService.get<any>(`${PMSApiPrefix()}/enum/${group}`, filter);
-  if (response && response[0] && response[0][group]) {
-    return response[0][group].map((item: CodeApiType) => ({
-      ...item,
-      value: item.cdId,
-      label:
-        item.cdGroupId === 'pms.multilingual.LangCountryCode'
-          ? item.multilingualKey
-          : `SYSTEM_COMMON_CODE.${item.multilingualKey || item.cdName}`,
-      multilingualKey: item.multilingualKey
+  try {
+    const response = await httpService.get<any>(`${PMSApiPrefix()}/enum/${group}`, filter);
+
+    const groupData = response?.[0]?.[group];
+    if (!Array.isArray(groupData)) {
+      return [];
+    }
+
+    return groupData.map((item: CodeApiType) => {
+      const isLangCountryCode = item.cdGroupId === 'pms.multilingual.LangCountryCode';
+      const multilingualKey = item.multilingualKey
         ? `SYSTEM_COMMON_CODE.${item.multilingualKey}`
-        : item.cdName,
-    }));
+        : item.cdName;
+
+      return {
+        ...item,
+        value: item.cdId,
+        label: isLangCountryCode ? item.multilingualKey : multilingualKey,
+        multilingualKey,
+      };
+    });
+  } catch (error) {
+    console.error('defaultFetchCodeGroup error:', error);
+    return [];
   }
-  return [];
 };
 
 /**
@@ -82,20 +92,45 @@ export const getCodeLabel = (
   codeValue: string | number | boolean,
   defaultValue = '',
 ): string => {
-  if (!codeGroup) return defaultValue;
-  if (codeValue === null || codeValue === undefined || codeValue === '') return defaultValue;
+  if (!codeGroup || codeValue === null || codeValue === undefined || codeValue === '') {
+    return defaultValue;
+  }
+
+  // mock code group 처리
+  const mockGroups = ['test', 'mock.options.use', 'mock.options.possible'];
+  if (mockGroups.includes(codeGroup)) {
+    return getCodeLabelByMockCode(codeGroup, codeValue, defaultValue);
+  }
 
   try {
-    const store = useCodeStore.getState();
-    const cachedData = store.code[codeGroup];
+    const { code } = useCodeStore.getState();
+    const cachedData = code[codeGroup];
 
-    if (!cachedData?.length) return defaultValue;
+    if (!Array.isArray(cachedData) || cachedData.length === 0) {
+      return defaultValue;
+    }
 
     const foundItem = cachedData.find((item: any) => item.cdId === codeValue);
 
-    return foundItem?.['cdName'] || defaultValue;
-  } catch (error) {
-    console.error('getCodeLabelSync error:', error);
+    return foundItem?.cdName ?? defaultValue;
+  } catch {
     return defaultValue;
   }
+};
+
+/**
+ * mock code group 에서 코드 라벨을 반환하는 함수
+ * @param codeGroup
+ * @param codeValue
+ * @param defaultValue
+ * @returns
+ */
+export const getCodeLabelByMockCode = (
+  codeGroup: CODE_GROUP_TYPE,
+  codeValue: string | number | boolean,
+  defaultValue = '',
+): string => {
+  const data = getMockCodeGroupOption(codeGroup);
+  const foundItem = data.find((item: any) => item.value === codeValue);
+  return (foundItem as any)?.label || defaultValue;
 };
