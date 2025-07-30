@@ -37,6 +37,14 @@ function HomeComponent() {
       },
     });
   };
+  const handleCourse = (values: any) => {
+    router.navigate({
+      to: `/course/detail`,
+      state: {
+        courseId: values.courseId,
+      },
+    });
+  };
   return (
     <div className="flex flex-col gap-10 p-2">
       <h3>Welcome Home!</h3>
@@ -48,6 +56,8 @@ function HomeComponent() {
       <ContentsRow>
         <FormRow provider={provider} name="moduleId" />
         <FormRow provider={provider} name="lessonId" />
+      </ContentsRow>
+      <ContentsRow>
         <Button
           label="학습창"
           variant="primary"
@@ -66,6 +76,18 @@ function HomeComponent() {
               .catch((r) => {
                 handleLearningWindow(values, { courseName: '과정명 없음' });
               });
+          }}
+        />
+        <Button
+          label="과정상세"
+          variant="primary"
+          type="button"
+          size="lg"
+          preventDefault
+          onClick={async () => {
+            const values = getValues();
+
+            handleCourse(values);
           }}
         />
       </ContentsRow>
