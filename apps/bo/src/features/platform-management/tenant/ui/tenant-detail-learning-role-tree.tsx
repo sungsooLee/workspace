@@ -6,6 +6,18 @@ import { cn } from '@learnway/shared';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import styles from '@learnway/styles/bo/features/role/role-info.module.css';
 
+import {
+  useFetchRole,
+  useFetchRoleTree,
+  useMovePosition,
+  useRoleManager,
+} from '@entities/role/service/role-manage.hook';
+import { DropdownFormField } from '@features/form';
+import { FormDisplay } from '@features/form/ui/form-display';
+import {
+  moveRoleCheck,
+  transformRoleApiDataToTreeData,
+} from '@features/platform-management/tenant/service/tenant-detail-tree.service';
 import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import {
   Button,
@@ -20,24 +32,12 @@ import {
   TreeNode,
 } from '@learnway/ui';
 import {
-  useFetchRole,
-  useFetchRoleTree,
-  useMovePosition,
-  useRoleManager,
-} from '@entities/role/service/role-manage.hook';
-import { DropdownFormField } from '@features/form';
-import { FormDisplay } from '@features/form/ui/form-display';
-import {
-  moveRoleCheck,
-  transformRoleApiDataToTreeData,
-} from '@features/platform-management/tenant/service/tenant-detail-tree.service';
-import {
-  FormRow,
-  SwitchFormField,
   ChannelListChoiceModal,
   CompanyShuttleModal,
-  UserGroupChoiceModal,
-  SectionLayout, OrganizationChoiceTreeModal,
+  FormRow,
+  OrganizationChoiceTreeModal,
+  SectionLayout,
+  SwitchFormField,
 } from '@shared/ui';
 import { EnChannelScope, EnCompanyScope, EnDeptScope, EnFormMode, EnTenantScope } from '@types';
 
@@ -106,7 +106,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
 
   useImperativeHandle(ref, () => ({
     showAlertModify: () => {
-      console.log('tree ' + siteScope);
+      console.log(`tree ${siteScope}`);
       return true;
     },
   }));
@@ -117,7 +117,6 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
     const payload = {
       ...formData,
       tenantId,
-      siteScope,
       parentRoleId,
     };
     if (payload.companyScope !== EnCompanyScope.MANUAL) payload.companyIds = [];
@@ -233,7 +232,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
           </div>
         </div>
       );
-    return ''
+    return '';
   };
 
   return (
@@ -390,7 +389,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
                           title: '',
                           width: 'xl',
                           // content: <OrganizationChoiceTreeModal companyCodes={companyCodes} />,
-                          content: <OrganizationChoiceTreeModal companyCodes={['H199', 'H103',]} />,
+                          content: <OrganizationChoiceTreeModal companyCodes={['H199', 'H103']} />,
                         }}
                       />
                     }
@@ -423,7 +422,7 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
                         modalConfig={{
                           title: '',
                           width: 'xl',
-                          content: <ChannelListChoiceModal roleId={roleDetail?.roleId}/>,
+                          content: <ChannelListChoiceModal roleId={roleDetail?.roleId} />,
                         }}
                       />
                     }
