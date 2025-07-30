@@ -1,11 +1,11 @@
-import { memo } from 'react';
-import { Link } from '@tanstack/react-router';
+import { IcoHome03, IcoMenu01, IcoSetting01 } from '@learnway/icons';
 import { Button, useModal } from '@learnway/ui';
-import { IcoArray, IcoHome03, IcoSetting01 } from '@learnway/icons';
+import { Link } from '@tanstack/react-router';
+import { memo } from 'react';
 import { NavigationPopupM } from '../../layout';
 
-import styles from '@learnway/styles/fo/features/layout/m.ui/navigate-button/navigate-button.module.css';
 import '@learnway/styles/fo/features/layout/m.ui/navigate-button/navigate-button.css';
+import styles from '@learnway/styles/fo/features/layout/m.ui/navigate-button/navigate-button.module.css';
 
 const NavigationMComponent = () => {
   // modal
@@ -31,7 +31,8 @@ const NavigationMComponent = () => {
           })
         }
       >
-        <IcoArray width={24} height={24} stroke="#131c30" fill="none" />
+        {/* 퍼블수정 20250731 아이콘 수정 */}
+        <IcoMenu01 width={24} height={24} stroke="#131c30" fill="none" />
       </Button>
     </div>
   );

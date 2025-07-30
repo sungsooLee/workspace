@@ -1,45 +1,47 @@
-import { useState } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
-import { cn } from '@learnway/shared';
-import { Button, Tabs, useModal, Accordion, useToast, Carousel } from '@learnway/ui';
 import {
-  IcoHeart,
-  IcoEye,
-  IcoStar,
   IcoArrowDown,
   IcoBook,
   IcoBuilding,
   IcoCategory,
   IcoDivice,
+  IcoEye,
+  IcoHeart,
   IcoLevel,
   IcoLocation,
   IcoPrize,
+  IcoStar,
   IcoSubtitles02,
   IcoTime,
 } from '@learnway/icons';
+import { cn } from '@learnway/shared';
+import { Accordion, Button, Carousel, Tabs, useModal, useToast } from '@learnway/ui';
+import { createFileRoute } from '@tanstack/react-router';
+import { useState } from 'react';
 import { MobileView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
 
 import {
-  CourseDashboard,
-  CourseIntroduction, // 과정소개
-  CourseEducation, // 교육일정
-  CourseReview, // 후기
-  CourseRelatedProcess, // 연관과정
-  CourseFixedButton, // 수강신청 버튼
-  CourseCancelReasonPopup, // 수강신청 취소 사유 입력
+  CourseCancelReasonPopup,
+  CourseDashboard, // 과정소개
+  CourseEducation, // 연관과정
+  CourseFixedButton,
+  CourseIntroduction, // 후기
+  CourseRelatedProcess, // 교육일정
+  CourseReview, // 수강신청 취소 사유 입력
   PackageCardList, // 패키지 카드
 } from '../../../features/layout';
 
+import styles from '@learnway/styles/fo/pages/_layout/course-introduction/detail-m.module.css';
+import packageInformationStyles from '@learnway/styles/fo/pages/_layout/course-introduction/package-information.module.css';
 import packageSideStyles from '@learnway/styles/fo/pages/_layout/course-introduction/package-side.module.css';
 import pageFullInner from '@learnway/styles/fo/widgets/layout/ui/container/page-full-inner.module.css';
-import packageInformationStyles from '@learnway/styles/fo/pages/_layout/course-introduction/package-information.module.css';
-import styles from '@learnway/styles/fo/pages/_layout/course-introduction/detail-m.module.css';
 
 // 예시 이미지
-import bnrImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 import playImg from '@learnway/styles/fo/assets/images/common/img_play.png';
-import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
+import {
+  default as bnrImage1,
+  default as listImage1,
+} from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 
 export const Route = createFileRoute('/_layout/course-introduction/detail-m')({
   component: RouteComponent,
