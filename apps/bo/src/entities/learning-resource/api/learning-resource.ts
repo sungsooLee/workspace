@@ -1,62 +1,62 @@
-import { omit } from 'lodash';
 import { faker } from '@faker-js/faker';
-import { httpService } from '@learnway/shared';
 import { CMSApiPrefix, PMSApiPrefix } from '@learnway/config';
+import { httpService } from '@learnway/shared';
 import {
   BlogCreateReq,
   BlogUpdateReq,
   ContentBaseInfo,
   ContentCourseMappingParams,
   ContentCourseMappingRes,
+  ContentExportReq,
+  ContentExportRes,
+  ContentSharingInfoReq,
+  ContentSharingInfoRes,
+  FetchTranslationListRes,
   GetContentDetailRes,
   GetContentsParams,
   GetContentsRes,
+  GetScormFileChangeRes,
+  GetScormResourceRes,
+  GetScormStatusRes,
   GetVideoFileChangeRes,
   GetVideoResourceRes,
   GetVideoStatusRes,
+  HtmlVideoChangeStatus,
   HtmlVideoFileChangeReq,
   HtmlVideoMetadataReq,
   HtmlVideoStatus,
   PostContentCopyRes,
+  PostDraftETCParams,
+  PostDraftETCRes,
   PostDraftHtmlVideoParams,
+  PostDraftScormParams,
+  PostDraftScormRes,
   PostDraftVideosParams,
   PostDraftVideosRes,
+  PutETCChangeParams,
+  PutETCChangeRes,
+  PutETCUpdateParams,
+  PutETCUpdateRes,
+  PutScormChangeParams,
+  PutScormChangeRes,
+  PutScormUpdateParams,
+  PutScormUpdateRes,
   PutVideoChangeParams,
   PutVideoChangeRes,
   PutVideoUpdateParams,
   PutVideoUpdateRes,
   QuestionItem,
   QuestionItemDeleteParam,
+  QuestionListForRetrieveReq,
+  QuestionListForRetrieveRes,
+  QuestionsCopyReq,
   QuestionStatusUpdateReq,
   RandomQuestionCountInfo,
   RandomQuestionCountUpdateReq,
-  QuestionListForRetrieveReq,
   TestPaperBasicInfoSaveReq,
   TestPaperBasicInfoSaveRes,
-  QuestionListForRetrieveRes,
-  PostDraftScormParams,
-  PostDraftScormRes,
-  PutScormUpdateParams,
-  PutScormUpdateRes,
-  PutScormChangeParams,
-  PutScormChangeRes,
-  GetScormResourceRes,
-  GetScormStatusRes,
-  GetScormFileChangeRes,
-  QuestionsCopyReq,
-  HtmlVideoChangeStatus,
-  PostDraftETCParams,
-  PostDraftETCRes,
-  ContentExportReq,
-  ContentExportRes,
-  ContentSharingInfoReq,
-  ContentSharingInfoRes,
-  PutETCUpdateParams,
-  PutETCUpdateRes,
-  PutETCChangeParams,
-  PutETCChangeRes,
-  FetchTranslationListRes,
 } from '@types';
+import { omit } from 'lodash';
 
 export default class LearningResourceService {
   static fetchChannelsByTenantId(param: {
@@ -153,65 +153,6 @@ export default class LearningResourceService {
 
   static putETCChange(params: PutETCChangeParams) {
     return httpService.put<PutETCChangeRes>(`${CMSApiPrefix()}/etc/file/change`, params);
-  }
-
-  static fetchLearningResources(params: any) {
-    return new Promise((resolve) => {
-      const learnings = Array.from({ length: 10 }, (_, id) => ({
-        id: id + 1,
-        tenant: faker.food.fruit(),
-        channel: faker.food.fruit(),
-        type: faker.food.fruit(),
-        learningResourceName: faker.food.fruit(),
-        fileType: faker.food.fruit(),
-        fileSize: faker.food.fruit(),
-        managerName: faker.person.fullName(),
-        source: faker.food.fruit(),
-        preview: faker.food.fruit(),
-        educationConjugation: faker.food.fruit(),
-        procedureCnt: faker.food.fruit(),
-        isSecureContents: faker.food.fruit(),
-        sharedChannel: faker.food.fruit(),
-        inspection: faker.food.fruit(),
-        available: faker.food.fruit(),
-        registerUser: faker.food.fruit(),
-        registerDateTime: faker.food.fruit(),
-        modifyUser: faker.food.fruit(),
-        modifyDateTime: faker.food.fruit(),
-      }));
-      resolve({ content: learnings, pageable: { pageSize: 10, pageIndex: 0, totalElements: 55 } });
-    });
-  }
-  static fetchMappingCourses(params: any) {
-    return new Promise((resolve) => {
-      const mappingCourses = Array.from({ length: 10 }, (_, id) => ({
-        id: id + 1,
-        tenant: faker.food.fruit(),
-        channel: faker.food.fruit(),
-        type: faker.food.fruit(),
-        learningResourceName: faker.food.fruit(),
-        learningPeriod: faker.food.fruit(),
-        courseDetail: faker.food.fruit(),
-      }));
-      resolve({
-        content: mappingCourses,
-        pageable: { pageSize: 10, pageIndex: 0, totalElements: 55 },
-      });
-    });
-  }
-  static fetchSharedHistories(params: any) {
-    return new Promise((resolve) => {
-      const sharedHistories = Array.from({ length: 10 }, (_, id) => ({
-        id: id + 1,
-        tenant: faker.food.fruit(),
-        channel: faker.food.fruit(),
-        sharedDt: faker.date.anytime().toDateString(),
-      }));
-      resolve({
-        content: sharedHistories,
-        pageable: { pageSize: 10, pageIndex: 0, totalElements: 55 },
-      });
-    });
   }
 
   // 단건 HTML5 임시 컨텐츠 생성

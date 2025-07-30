@@ -36,7 +36,7 @@ function RouteComponent() {
         <Button variant="primary" size="sm" onClick={handleOnSave} label={t('LABEL.button.save')} />
       </ContentsButtons>
       <MainContents>
-        <CompanyUserDetail formRef={formRef} />
+        <CompanyUserDetail formRef={formRef} listPath={'/platform/company/user'} />
       </MainContents>
     </PageContainer>
   );

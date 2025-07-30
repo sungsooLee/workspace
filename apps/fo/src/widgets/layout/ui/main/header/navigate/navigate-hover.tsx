@@ -1,13 +1,9 @@
-import { memo, useRef, useEffect, useState } from 'react';
 import { Link, useRouter } from '@tanstack/react-router';
+import { memo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { IcoArrowForward } from '@learnway/icons';
 import type { Menu } from '@learnway/auth/types';
 import styles from './navigate-hover.module.css';
-
-import { useMenuHierarchy } from '../../../../../../entities/menu/service/menu.service';
-import { Hierarchy } from '@learnway/shared';
 
 interface NavigateHoverComponentProps {
   onClose: () => void;
@@ -30,7 +26,7 @@ function NavigateHoverComponent({ hoverMenu, isOpen, onClose }: NavigateHoverCom
     <div className={`${styles.start} ${styles.menu_all} ${styles.active}`} onMouseLeave={onClose}>
       <div className={styles.menu_inner}>
         <div className={styles.menu_info}>
-          <h2 className={styles.tit}>{hoverMenu.menuName}</h2>
+          <h2 className={styles.tit}>{t(hoverMenu.menuCode)}</h2>
           <div className={styles.info}>{hoverMenu.menuDesc}</div>
         </div>
 
@@ -39,12 +35,12 @@ function NavigateHoverComponent({ hoverMenu, isOpen, onClose }: NavigateHoverCom
             <div key={subIndex} className={styles.menu_div}>
               <div className={styles.menu_list}>
                 <h3 className={styles.tit}>
-                  <span>{menu.menuName}</span>
+                  <span>{t(menu.menuCode)}</span>
                 </h3>
                 <ul className={styles.list}>
                   {menu.children?.map((sub, itemIndex) => (
                     <li key={itemIndex}>
-                      <Link to={sub.path}>{sub.menuName}</Link>
+                      <Link to={sub.path}>{t(sub.menuCode)}</Link>
                     </li>
                   ))}
                 </ul>

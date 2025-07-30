@@ -61,7 +61,7 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
 
   useEffect(() => {
     const initDeliveryList = async () => {
-      const data = await EnrollService.fetchEnrollDeliveryList(props.userInfo.userId);
+      const data = await EnrollService.fetchEnrollDeliveryList(props.userInfo.uuid);
       setDeliveryList(data);
     };
     if (props.userInfo) {
@@ -151,7 +151,7 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
       }
 
       updateFormData(initialData);
-      //initDeliveryList();
+      initDeliveryList();
     }
   }, [props.userInfo]);
 
@@ -248,7 +248,7 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
       ),
     );
     console.log('### payload', filteredPayload);
-    if (await openConfirm('저장 하시겠습니까?')) {
+    if (await openConfirm(t('저장 하시겠습니까?'))) {
       update(filteredPayload);
     }
   };
@@ -258,9 +258,10 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
       {/* 개인 정보 */}
       <CompanyUserDetailPersonal provider={provider} />
       <FormSubTitle label={t('교재 배송 주소 및 교재 신청 내역')} lineType={'dark'} />
+      {/* 교재 신청 내역은 기획 변경 예정 */}
       <GridBox
-        data={textBookData}
-        columns={textBookColumns}
+        data={deliveryList}
+        columns={deliveryListColumns()}
         title={t('교재 신청 내역')}
         guideText={t('과정 수강 시 교재 신청 내역입니다.')}
         showTotalCount={false}
@@ -630,80 +631,36 @@ const formConfig = (): DynamicFormConfig => ({
   },
 });
 
-const textBookData: any[] = [
-  {
-    courseNo: '12121212',
-    courseName:
-      '신청한 과정명이 출력됩니다. 신청한 과정명이 출력됩니다. 신청한 과정명이 출력됩니다. 신청한 과정명이 출력됩니다. 신청한 과정명이 출력됩니다.',
-    stepName:
-      '신청한 과정명이 출력됩니다. 신청한 과정명이 출력됩니다. 신청한 과정명이 출력됩니다. 신청한 과정명이 출력됩니다. 신청한 과정명이 출력됩니다.',
-    address: '[12345] 서울시 강남구 테헤란로 00길 KG타워 1001호',
-    textbookNo: '1212',
-    deliveryDate: '2025-01-01',
-    deliveryCompleteDate: '2025-01-01',
-  },
-  {
-    courseNo: '12121212',
-    courseName:
-      '신청한 과정명이 출력됩니다. 신청한 과정명이 출력됩니다. 신청한 과정명이 출력됩니다. 신청한 과정명이 출력됩니다. 신청한 과정명이 출력됩니다.',
-    stepName:
-      '신청한 과정명이 출력됩니다. 신청한 과정명이 출력됩니다. 신청한 과정명이 출력됩니다. 신청한 과정명이 출력됩니다. 신청한 과정명이 출력됩니다.',
-    address: '[12345] 서울시 강남구 테헤란로 00길 KG타워 1001호',
-    textbookNo: '1212',
-    deliveryDate: '2025-01-01',
-    deliveryCompleteDate: '2025-01-01',
-  },
-  {
-    courseNo: '12121212',
-    courseName:
-      '신청한 과정명이 출력됩니다. 신청한 과정명이 출력됩니다. 신청한 과정명이 출력됩니다. 신청한 과정명이 출력됩니다. 신청한 과정명이 출력됩니다.',
-    stepName:
-      '신청한 과정명이 출력됩니다. 신청한 과정명이 출력됩니다. 신청한 과정명이 출력됩니다. 신청한 과정명이 출력됩니다. 신청한 과정명이 출력됩니다.',
-    address: '[12345] 서울시 강남구 테헤란로 00길 KG타워 1001호',
-    textbookNo: '1212',
-    deliveryDate: '2025-01-01',
-    deliveryCompleteDate: '2025-01-01',
-  },
-];
-
 const columnHelper = createColumnHelper<any>();
 
-const textBookColumns = [
-  columnHelper.accessor('courseNo', {
-    header: '과정번호',
-    size: 125,
-  }),
-  columnHelper.accessor('courseName', {
-    header: '과정명',
-    size: 260,
-  }),
-  columnHelper.accessor('stepName', {
-    header: '차수명',
-    size: 277,
-  }),
-  columnHelper.accessor('address', {
-    header: '교재배송 주소',
-    meta: {
-      headerAlign: 'center', // 헤더 정렬
-      cellAlign: 'center', // 셀 정렬
-    },
-  }),
-  columnHelper.accessor('textbookNo', {
-    header: '교재번호',
-    size: 140,
-  }),
-  columnHelper.accessor('deliveryDate', {
-    header: '교재 배송 예정일',
-    size: 138,
-    meta: {
-      cellAlign: 'center',
-    },
-  }),
-  columnHelper.accessor('deliveryCompleteDate', {
-    header: '교재 배송 완료일',
-    size: 138,
-    meta: {
-      cellAlign: 'center',
-    },
-  }),
-] as ColumnDef<any, unknown>[];
+const deliveryListColumns = () =>
+  [
+    columnHelper.accessor('courseNo', {
+      header: t('과정번호'),
+      size: 125,
+    }),
+    columnHelper.accessor('courseName', {
+      header: t('과정명'),
+      size: 260,
+    }),
+    columnHelper.accessor('stepName', {
+      header: t('차수명'),
+      size: 277,
+    }),
+    columnHelper.accessor('address', {
+      header: t('교재배송 주소'),
+      cell: (info) =>
+        `[${info.row.original.postalCode}] ${info.row.original.address} ${info.row.original.addressDetail}`,
+    }),
+    columnHelper.accessor('textbookNo', {
+      header: t('교재명'),
+      size: 140,
+    }),
+    columnHelper.accessor('studyDate', {
+      header: t('학습 기간'),
+      size: 260,
+      meta: {
+        cellAlign: 'center',
+      },
+    }),
+  ] as ColumnDef<any, unknown>[];

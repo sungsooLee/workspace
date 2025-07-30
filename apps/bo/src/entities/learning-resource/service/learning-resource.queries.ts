@@ -4,30 +4,30 @@ import {
   BlogUpdateReq,
   ContentBaseInfo,
   ContentCourseMappingParams,
+  ContentExportReq,
+  ContentSharingInfoReq,
   ExamQuestionGenType,
   GetContentDetailRes,
   GetContentsParams,
   HtmlVideoFileChangeReq,
   HtmlVideoMetadataReq,
+  PostDraftETCParams,
   PostDraftHtmlVideoParams,
   PostDraftScormParams,
   PostDraftVideosParams,
+  PutETCChangeParams,
+  PutETCUpdateParams,
   PutScormChangeParams,
   PutScormUpdateParams,
   PutVideoChangeParams,
   PutVideoUpdateParams,
-  QuestionsCopyReq,
   QuestionItem,
   QuestionItemDeleteParam,
   QuestionListForRetrieveReq,
+  QuestionsCopyReq,
   QuestionStatusUpdateReq,
   RandomQuestionCountUpdateReq,
   TestPaperBasicInfoSaveReq,
-  PostDraftETCParams,
-  PutETCUpdateParams,
-  PutETCChangeParams,
-  ContentExportReq,
-  ContentSharingInfoReq,
 } from '@types';
 import LearningResourceService from '../api/learning-resource';
 
@@ -100,13 +100,6 @@ export const learningResourceQueryOptions = {
     staleTime: 0,
     enabled: !!contentUuid,
   }),
-  getLearningResources: (params: any) => ({
-    queryKey: queryKeys.learningResources,
-    queryFn: () => LearningResourceService.fetchLearningResources(params),
-    cacheTime: 0,
-    staleTime: 0,
-    enabled: false,
-  }),
   getCurriculumsMapping: (contentUuid: string) => ({
     queryKey: queryKeys.curriculumMapping,
     queryFn: () => LearningResourceService.fetchCurriculumMapping(contentUuid),
@@ -119,14 +112,6 @@ export const learningResourceQueryOptions = {
     staleTime: 0,
     enabled: !!params.contentUuid,
   }),
-
-  getSharedHistories: (params: any) => ({
-    queryKey: queryKeys.sharedHistories,
-    queryFn: () => LearningResourceService.fetchSharedHistories(params),
-    cacheTime: 0,
-    staleTime: 0,
-    enabled: false,
-  }),
   getProgramGuideDownload: (params: any) => ({
     queryKey: queryKeys.programGuideDownload,
     queryFn: () => LearningResourceService.fetchProgramGuideDownload(),
@@ -134,7 +119,6 @@ export const learningResourceQueryOptions = {
     staleTime: 0,
     enabled: false,
   }),
-
   getHTML5Resource: (contentUuid: string) => ({
     queryKey: queryKeys.html5Resource,
     queryFn: () => LearningResourceService.fetchHTML5Resource(contentUuid),

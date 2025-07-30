@@ -2,12 +2,18 @@ import { Button, useModal } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import styles from '@learnway/styles/fo/features/layout/ui/category-layer-button.module.css';
 import { IcoArray } from '@learnway/icons';
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import { CategoryPopup } from '@features/layout';
 
-const CategoryLayerButton = () => {
+interface CategoryPopupProps {
+  id: number;
+}
+
+const CategoryLayerButton = ({id}: CategoryPopupProps) => {
   // modal
   const { openModal } = useModal();
+
+  const [tenantId, setTenantId] = useState<number>(id);
 
   return (
     <div className={cn(styles.start, styles.category)}>
@@ -17,7 +23,7 @@ const CategoryLayerButton = () => {
         onClick={() =>
           openModal({
             width: 'm_full',
-            content: <CategoryPopup />,
+            content: <CategoryPopup activeTenantId={tenantId}/>,
           })
         }
       >

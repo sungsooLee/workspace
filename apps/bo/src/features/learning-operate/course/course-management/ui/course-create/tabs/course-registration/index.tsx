@@ -21,7 +21,7 @@ const CourseRegistrationComponent = forwardRef<HTMLElement, CourseTabBaseProps>(
         <FormRow2
           provider={provider}
           name={'isEnrollRequired'}
-          label={'수강신청'}
+          label={t('수강신청')}
           format={'boolean'}
           element={<SwitchFormField disabled={courseConfig?.enrollOption === 'IMPOSSIBLE'} />}
         />
@@ -33,7 +33,7 @@ const CourseRegistrationComponent = forwardRef<HTMLElement, CourseTabBaseProps>(
           <FormRow2
             provider={provider}
             name={'approvalLineType'}
-            label={'승인 결재 라인'}
+            label={t('승인 결재 라인')}
             validation={{ required: true }}
             element={
               <DropdownFormField
@@ -47,7 +47,7 @@ const CourseRegistrationComponent = forwardRef<HTMLElement, CourseTabBaseProps>(
           <FormRow2
             provider={provider}
             name={'isMaxEnrollQuotaRestricted'}
-            label={'정원'}
+            label={t('정원')}
             format={'boolean'}
             validation={{ required: true }}
             element={
@@ -63,7 +63,7 @@ const CourseRegistrationComponent = forwardRef<HTMLElement, CourseTabBaseProps>(
                           provider={provider}
                           name={'maxEnrollQuota'}
                           value={''}
-                          element={<Input prefixText="정원" suffixText="명" />}
+                          element={<Input prefixText={t('정원')} suffixText={t('명')} />}
                         />
                       ),
                     },
@@ -79,7 +79,7 @@ const CourseRegistrationComponent = forwardRef<HTMLElement, CourseTabBaseProps>(
           <FormRow2
             provider={provider}
             name={'waitListPickMethodType'}
-            label={'수강신청 대기'}
+            label={t('수강신청 대기')}
             validation={{ required: true }}
             element={
               <RadioGroupFormField
@@ -94,7 +94,7 @@ const CourseRegistrationComponent = forwardRef<HTMLElement, CourseTabBaseProps>(
                           provider={provider}
                           name={'maxWaitlistQuota'}
                           value={''}
-                          element={<Input prefixText="대기 정원" suffixText="명" />}
+                          element={<Input prefixText={t('대기 정원')} suffixText={t('명')} />}
                         />
                       ),
                     },
@@ -107,7 +107,7 @@ const CourseRegistrationComponent = forwardRef<HTMLElement, CourseTabBaseProps>(
           <FormRow2
             provider={provider}
             name={'isDuplicateEnrollAllowed'}
-            label={'차수 중복수강'}
+            label={t('차수 중복수강')}
             format={'boolean'}
             element={
               <RadioGroupFormField
@@ -124,9 +124,9 @@ const CourseRegistrationComponent = forwardRef<HTMLElement, CourseTabBaseProps>(
           <FormRow2
             provider={provider}
             name={'isPreEnrollQuestionAllowed'}
-            label={'수강전 문의'}
+            label={t('수강전 문의')}
             format={'boolean'}
-            validation={{ required: true }}
+            // validation={{ required: true }}
             element={
               <RadioGroupFormField
                 optionsConfig={{

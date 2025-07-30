@@ -16,7 +16,7 @@ import { UseDynamicFormResult } from '@learnway/hooks';
 import { useModal } from '@learnway/ui';
 import { useNavigate } from '@tanstack/react-router';
 import { useUpdateEffect } from 'ahooks';
-import { formDataToRequestData, responseDataToFormData } from '../service/data-convert';
+import { formDataToRequestData, responseDataToFormData } from '../service/course-data-convert';
 import {
   TriggerKey,
   useCourseActions,
@@ -168,15 +168,6 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
     } else {
       updateFormData({ courseType: initCourseType });
     }
-
-    // if (courseData) {
-    //   const selectedCourseType = initCourseType; // 과정 유형 선택 모달에서 선택한 값
-    //   const formData = responseDataToFormData(courseData);
-    //   formData.courseType = formData.courseType ?? selectedCourseType; // 최초 등록시 과정 유형 선택 모달에서 선택한 값으로 설정
-    //   updateFormData(formData);
-    // } else {
-    //   updateFormData({ courseType: initCourseType });
-    // }
   }, [courseData, initCourseType]);
 
   // form state 변경 시 코스 생성 정보 업데이트 - 무한 반복 방지를 위해 제거

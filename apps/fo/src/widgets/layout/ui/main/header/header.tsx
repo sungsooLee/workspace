@@ -1,21 +1,16 @@
-import { memo, useCallback, useEffect, useState } from 'react';
+import { memo, useState } from 'react';
 
-import { cookieService } from '@learnway/shared';
-import { useFetchAuthUser } from '@learnway/auth/entities';
-
-import { Search, Logo, UserAvatar, History } from '@features/layout';
-import { Language, NotificationButton, TenantButton, AdminLink } from '@features/platform';
 import { useFetchTenantByUser } from '@entities/tenant';
-
-import { Tenant } from '../../../../../types';
-
-import { NavigateHover } from './navigate/navigate-hover';
-import { SessionTimer } from '../../../../../features/platform/ui/sessionTimer';
-
-import { Navigate } from './navigate/navigate';
-import styles from './header.module.css';
-import { CategoryButton } from '../../../../../features/category';
+import { CategoryButton } from '@features/category';
+import { History, Logo, Search, UserAvatar } from '@features/layout';
+import { NotificationButton, TenantButton } from '@features/platform';
+import { useFetchAuthUser } from '@learnway/auth/entities';
 import { Menu } from '@learnway/auth/types';
+import { Tenant } from '@types';
+import { Navigate } from './navigate/navigate';
+import { NavigateHover } from './navigate/navigate-hover';
+
+import styles from './header.module.css';
 
 function HeaderComponent() {
   const { data: authUser } = useFetchAuthUser();
@@ -90,7 +85,7 @@ function HeaderComponent() {
 
           <div className={styles.nav_container} onMouseLeave={handleMouseLeave}>
             <div className={styles.nav_area}>
-              <CategoryButton tenantId={authUser?.activeTenant?.tenantId}/>
+              <CategoryButton tenantId={authUser?.activeTenant?.tenantId} />
               <Navigate onMouseEnter={handleMouseEnter} hoverMenu={hoverMenu} />
             </div>
 

@@ -4,7 +4,7 @@ import {
 } from '@entities/learning-sequence/service/learning-sequence.hook';
 import { queryOptions } from '@entities/learning-sequence/service/learning-sequence.queries';
 import { DateRangePickerFormField, DropdownFormField, FormDisplay } from '@features/form';
-import { InstructorListPopup } from '@features/learning-operate-support/instructor-tutor/instructor-management/modal/instructor-list-modal';
+import { InstructorListPopup } from '@features/learning-operate-support/instructor-tutor/instructor-management';
 import { TriggerKey } from '@features/learning-operate/course/course-management';
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import {

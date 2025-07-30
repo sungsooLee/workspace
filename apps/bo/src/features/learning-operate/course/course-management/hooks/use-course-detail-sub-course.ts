@@ -16,7 +16,7 @@ import { useNavigate } from '@tanstack/react-router';
 import { useUpdateEffect } from 'ahooks';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { formDataToRequestData, responseDataToFormData } from '../service/data-convert';
+import { formDataToRequestData, responseDataToFormData } from '../service/course-data-convert';
 import { CourseDetailPageLocationState } from './use-course-detail-page';
 
 export function useCourseDetailSubCourse() {

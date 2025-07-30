@@ -1,7 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { TFunction } from 'i18next';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+// IA104 / NLP_BO_CMS_1044 학습자원 현지화-공유설정(팝업)
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { cn } from '@learnway/shared';
 import {
@@ -16,12 +13,16 @@ import {
   ShuttleGridToGridImperative,
   useModal,
 } from '@learnway/ui';
-import { ContentInfo } from '@types';
 import {
   SearchBox,
   TenantByRoleDropdownFormField,
   TenantChannelDropdownFormField,
 } from '@shared/ui';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { ContentInfo } from '@types';
+import { TFunction } from 'i18next';
+import { useCallback, useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
