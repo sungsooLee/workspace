@@ -686,3 +686,8 @@ export interface ContentSharingInfoRes {
   isPossible: boolean;
   reason: string;
 }
+
+export interface TenantCodeType {
+  tenantId: number;
+  tenantName: string;
+}

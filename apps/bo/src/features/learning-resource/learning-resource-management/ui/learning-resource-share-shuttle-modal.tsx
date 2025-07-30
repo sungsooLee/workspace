@@ -24,8 +24,10 @@ import { TFunction } from 'i18next';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { learningResourceQueryOptions } from '@entities/learning-resource';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
+import { useQuery } from '@tanstack/react-query';
 
 type ResourceShareShuttleModalProps = {
   data: ContentInfo;
@@ -33,6 +35,10 @@ type ResourceShareShuttleModalProps = {
 
 const LearningResourceShareShuttleModalComponent = ({ data }: ResourceShareShuttleModalProps) => {
   const { t } = useTranslation();
+  const { data: tenantData, error: tenantError } = useQuery(
+    learningResourceQueryOptions.getShareTenantCodes(data.contentUuid),
+  );
+  console.log('🚀 ~ LearningResourceShareShuttleModalComponent ~ data:', tenantData);
 
   const ref = useRef<ShuttleGridToGridImperative>(null);
 

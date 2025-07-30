@@ -52,6 +52,7 @@ import {
   QuestionStatusUpdateReq,
   RandomQuestionCountInfo,
   RandomQuestionCountUpdateReq,
+  TenantCodeType,
   TestPaperBasicInfoSaveReq,
   TestPaperBasicInfoSaveRes,
 } from '@types';
@@ -341,5 +342,14 @@ export default class LearningResourceService {
    */
   static getScormResource(contentUuid: string) {
     return httpService.get<GetScormResourceRes>(`${CMSApiPrefix()}/scorm/${contentUuid}/resource`);
+  }
+
+  /**
+   * 공유 팝업 테넌트 코드 목록
+   */
+  static getShareTenantCodes(contentUuid: string) {
+    return httpService.get<TenantCodeType[]>(
+      `${CMSApiPrefix()}/contents/share/${contentUuid}/tenant/codes`,
+    );
   }
 }
