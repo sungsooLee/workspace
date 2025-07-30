@@ -47,7 +47,7 @@ const Component = () => {
   };
 
   return (
-    <PageContainer hideOutLine={true} customTitle={courseName}>
+    <PageContainer hideOutLine={true}>
       <ContentsButtons>
         <ToggleButtonGroup
           defaultValue={'과정관리'}
