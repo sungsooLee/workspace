@@ -49,9 +49,7 @@ export const responseDataToFormData = (d: Course, c: CourseConfig = {} as Course
  * @returns {Course} 과정 기본 정보 요청 데이터
  */
 export const formDataToRequestData = (d: Course) => {
-  const { lastVisitedBoTenantId } = getCurrentAuthUser();
-
-  console.log('authUserQuery', authUserQuery);
+  const { lastVisitedBoTenantId } = getCurrentAuthUser() || {};
 
   // 교육공간 라디오 선택에 따라 값 변경 관련 처리 (교육공간=learningSpaceType)
   // 교육공간 > 차세대 학습 플랫폼
@@ -125,7 +123,7 @@ export const formDataToRequestData = (d: Course) => {
   return {
     ...d,
     ...d.passOption, // 이수기준 설정
-    tenantId: lastVisitedBoTenantId, // 테넌트 아이디 (GNB 에서 선택한 테넌트 아이디)
+    tenantId: d.tenantId || lastVisitedBoTenantId, // 테넌트 아이디 (GNB 에서 선택한 테넌트 아이디)
     preRequisiteCourseIds,
     relatedCourseIds,
     courseValidityStartDateTime: d.courseValidityRange?.from, // 과정 유효 시작일
