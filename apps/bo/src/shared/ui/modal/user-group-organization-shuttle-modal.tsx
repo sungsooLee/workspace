@@ -6,13 +6,13 @@ import { useState } from 'react';
 
 type Props = {
   tenantIds: number[];
-  roleIds: number[];
+  roleIds?: number[];
   option?: CombineUserGroup[];
 };
 
 const UserGroupOrganizationShuttleModalComponent = ({
   tenantIds,
-  roleIds,
+  roleIds = [],
   option: optionProp,
 }: Props) => {
   const { closeModal } = useModal();
