@@ -1,68 +1,55 @@
-import { useEffect, useRef, useState } from 'react';
-import { createFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
-import { cn } from '@learnway/shared';
 import {
-  Button,
-  Tabs,
-  Accordion,
-  OptionCard,
-  OptionCardItem,
-  useModal,
-  Panel,
-  useToast,
-  SelectOption,
-  Carousel,
-} from '@learnway/ui';
-import {
-  IcoHeart,
-  IcoStar,
-  IcoCaution,
-  IcoClock01,
+  IcoArrowDown,
   IcoBook,
-  IcoBuilding,
   IcoCategory,
-  IcoDivice,
+  IcoCaution,
+  IcoChair,
+  IcoClock01,
+  IcoEye,
   IcoLevel,
   IcoLocation,
-  IcoPrize,
+  IcoStar,
   IcoSubtitles02,
-  IcoTime,
-  IcoEye,
-  IcoArrowDown,
-  IcoChair,
 } from '@learnway/icons';
+import { cn } from '@learnway/shared';
+import {
+  Accordion,
+  Button,
+  OptionCard,
+  OptionCardItem,
+  Panel,
+  Tabs,
+  useModal,
+  useToast,
+} from '@learnway/ui';
+import { useRouterState } from '@tanstack/react-router';
+import { useEffect, useRef, useState } from 'react';
 
 import {
-  CourseDashboard,
-  CourseIntroduction, // 과정소개
-  CourseEducation, // 교육일정
-  CourseReview, // 후기
-  CourseFixedButton, // 수강신청 버튼
-  PackageCardList, // 패키지 카드
-  CourseCancelReasonPopup /* 수강신청 취소 사유 입력 */,
+  CourseDashboard, // 과정소개
+  CourseEducation, // 후기
+  CourseFixedButton,
+  CourseIntroduction, // 교육일정
+  CourseReview, // 수강신청 버튼
+  PackageCardList,
 } from '../../features/layout/';
 
-import pageContentsStyles from '@learnway/styles/fo/pages/_page-contents.module.css';
-import packageInformationStyles from '@learnway/styles/fo/pages/_layout/course-introduction/package-information.module.css';
 import lectureStyles from '@learnway/styles/fo/pages/_layout/course-introduction/lecture.module.css';
+import packageInformationStyles from '@learnway/styles/fo/pages/_layout/course-introduction/package-information.module.css';
 import packageSideStyles from '@learnway/styles/fo/pages/_layout/course-introduction/package-side.module.css';
+import pageContentsStyles from '@learnway/styles/fo/pages/_page-contents.module.css';
 import pageFullInner from '@learnway/styles/fo/widgets/layout/ui/container/page-full-inner.module.css';
 
 // 이미지
-import playImg from '@learnway/styles/fo/assets/images/common/img_play.png';
-import bnrImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
-import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
+import { useCourseFullDetail, useCourseLike, useCourseSequences } from '@entities/course';
 import {
-  queryOptions,
-  useCourseDetail,
-  useCourseFullDetail,
-  useCourseLike,
-  useCourseSequences,
-} from '@entities/course';
+  default as bnrImage1,
+  default as listImage1,
+} from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 
-import styles from '@learnway/styles/fo/pages/_layout/course-introduction/detail.module.css';
-import { resolve } from 'path';
 import { useChannelDetail } from '@entities/channel/service/channel.hook';
+import { useGetCurriculumnDetail } from '@entities/curriculum';
+import styles from '@learnway/styles/fo/pages/_layout/course-introduction/detail.module.css';
 
 export function CourseDetail() {
   const routerState = useRouterState();
@@ -85,6 +72,7 @@ export function CourseDetail() {
   const { courseLikeRequest, mutate: toggleLikeMutate, isPending: isLikePending } = useCourseLike();
   console.log('@', courseId, courseData, sequencesData);
   const { data: channelData } = useChannelDetail(courseData?.channelUuid || '');
+  const { data: curriculumData } = useGetCurriculumnDetail(courseData?.curriculumId);
 
   const { openModal } = useModal();
   const { confirm: openConfirm } = useModal();
@@ -281,6 +269,7 @@ export function CourseDetail() {
               ref={introduceRef}
               preRequired={courseData?.preRequired}
               introduction={courseData?.introduction}
+              curriculum={curriculumData}
             />
           )}
           {courseData?.educations && (
@@ -544,12 +533,12 @@ export function CourseDetail() {
         <div className={pageContentsStyles.main_contents}>
           <div className={styles.thumbnail_img}>
             {/* 플레이 버튼 o */}
-            <Button>
-              <img src={bnrImage1} alt="" />
-              <div className={styles.img_play}>
+            {/* <Button> */}
+            <img src={bnrImage1} alt="" />
+            {/* <div className={styles.img_play}>
                 <img src={playImg} alt="" />
-              </div>
-            </Button>
+              </div> */}
+            {/* </Button> */}
             {/* 플레이 버튼 x */}
             {/* <img src={bnrImage1} alt="" /> */}
           </div>
