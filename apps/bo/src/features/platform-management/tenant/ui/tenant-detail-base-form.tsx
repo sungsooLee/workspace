@@ -276,7 +276,7 @@ const TenantDetailBaseFormComponent = ({
           label={t('카테고리 사용 여부')}
           format="array"
           tooltip={t('테넌트 - 카테고리 관리에서 사용할 카테고리를 선택할 수 있습니다')}
-          value={[]}
+          value={[EnUseCategory.isCommonCategory, EnUseCategory.isTenantCategory]}
           validation={{
             required: {
               fn: (values: any) => {
@@ -805,4 +805,4 @@ const TenantDetailBaseFormComponent = ({
   );
 };
 
-export const TenantDetailBaseForm = memo(TenantDetailBaseFormComponent);
+export const TenantDetailBaseForm = TenantDetailBaseFormComponent;
