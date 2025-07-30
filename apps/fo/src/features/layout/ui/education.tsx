@@ -22,6 +22,7 @@ import {
 import { DATE_TIME_FORMAT, formatISODateString } from '@learnway/shared';
 import styles from '@learnway/styles/fo/features/layout/ui/education.module.css';
 import bulletStyles from '@learnway/styles/fo/shared/ui/list/bullet.module.css';
+import { useNavigate } from '@tanstack/react-router';
 import { InstructorType, InstructorTypeLabel } from '@types';
 
 interface EducationProps {
@@ -37,6 +38,8 @@ const EducationComponent = ({
   courseEnrollCompletePopup,
   CourseCancelCompletePopup,
 }: EducationProps) => {
+  const navigate = useNavigate();
+
   const { openModal } = useModal();
   const { confirm: openConfirm } = useModal();
   const { alert: openAlert } = useModal();
@@ -204,7 +207,8 @@ const EducationComponent = ({
             variant="primary"
             size="xl"
             onClick={() => {
-              window.alert('수강신청 페이지 이동');
+              const sendData = { courseSequenceUuid: edu.courseSequenceId };
+              navigate({ to: '/course/registration', state: sendData });
             }}
           >
             수강 신청
