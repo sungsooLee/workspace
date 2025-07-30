@@ -1,0 +1,15 @@
+/* pop-header-actions.module.css */
+.start {
+  &.pop_header_actions {
+    @apply flex h-[25px] items-center justify-between;
+    .btn_back {
+      @apply title4-b !px-0 text-[var(--gray10)];
+      svg {
+        @apply h-[24px] w-[24px] stroke-[var(--gray10)];
+      }
+    }
+    .icon_close {
+      @apply h-[24px] w-[24px] stroke-[var(--gray10)];
+    }
+  }
+}
