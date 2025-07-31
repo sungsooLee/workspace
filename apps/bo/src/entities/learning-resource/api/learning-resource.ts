@@ -56,7 +56,9 @@ import {
   ExamPaperQuestionCountUpdateReq,
   TenantCodeType,
   TestPaperBasicInfoSaveReq,
-  TestPaperBasicInfoSaveRes } from '@types';
+  TestPaperBasicInfoSaveRes,
+  UpdateQuestionBankCountInfoReq,
+} from '@types';
 import { omit, pick } from 'lodash';
 
 export default class LearningResourceService {
@@ -112,7 +114,8 @@ export default class LearningResourceService {
     const { contentUuid, tenantId, channelUuid } = params;
     return httpService.get(`${CMSApiPrefix()}/content/${contentUuid}/channel/sharing`, {
       tenantId,
-      channelUuid });
+      channelUuid,
+    });
   }
 
   static postContentCopy(contentUuid: string): Promise<PostContentCopyRes> {
@@ -209,7 +212,7 @@ export default class LearningResourceService {
   }
 
   /**
-   * 시험지의 유형별/난이도별 문항수 수정 (랜덤으로 입력했을 경우)
+   * 시험지의 유형별/난이도별 문항수 수정
    * @param body
    */
   static updateExamPaperQuestionCountInfo(body: ExamPaperQuestionCountUpdateReq) {
@@ -235,6 +238,14 @@ export default class LearningResourceService {
 
   static updateQuestionBankContent(body: ContentBaseInfo) {
     return httpService.put<TestPaperBasicInfoSaveRes>(`${CMSApiPrefix()}/exam/pool`, body);
+  }
+
+  /**
+   * 문제은행 유형별/난이도별 문항수 수정
+   * @param body
+   */
+  static updateQuestionBankQuestionCountInfo(body: UpdateQuestionBankCountInfoReq) {
+    return httpService.put(`${CMSApiPrefix()}/exam/pool/add`, body);
   }
 
   /**

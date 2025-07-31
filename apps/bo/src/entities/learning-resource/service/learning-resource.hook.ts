@@ -22,170 +22,200 @@ import {
   QuestionsCopyReq,
   QuestionStatusUpdateReq,
   ExamPaperQuestionCountUpdateReq,
-  TestPaperBasicInfoSaveReq } from '@types';
+  TestPaperBasicInfoSaveReq,
+  UpdateQuestionBankCountInfoReq,
+} from '@types';
 
 export function usePostContentCopy(options?: any) {
   const mutation = useMutation({
     ...mutateOptions.postContentCopy(),
-    ...options });
+    ...options,
+  });
 
   return {
     create: (contentUuid: string) => mutation.mutate(contentUuid as any),
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data };
+    data: mutation.data,
+  };
 }
 
 export function usePostContentExport(options?: any) {
   const mutation = useMutation({
     ...mutateOptions.postContentExport(),
-    ...options });
+    ...options,
+  });
 
   return {
     exportContent: (payload: ContentExportReq) => mutation.mutate(payload as any),
     isSuccess: mutation.isSuccess,
-    isError: mutation.isError };
+    isError: mutation.isError,
+  };
 }
 
 export function usePostDraftVideos(options?: any) {
   const mutation = useMutation({
     ...mutateOptions.postDraftVideos(),
-    ...options });
+    ...options,
+  });
 
   return {
     create: (payload: PostDraftVideosParams) => mutation.mutate(payload as any),
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data };
+    data: mutation.data,
+  };
 }
 
 export function usePostDraftScorm(options?: any) {
   const mutation = useMutation({
     ...mutateOptions.postDraftScorm(),
-    ...options });
+    ...options,
+  });
 
   return {
     create: (payload: PostDraftScormParams) => mutation.mutate(payload as any),
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data };
+    data: mutation.data,
+  };
 }
 
 export function usePostDraftETC(options?: any) {
   const mutation = useMutation({
     ...mutateOptions.postDraftETC(),
-    ...options });
+    ...options,
+  });
 
   return {
     create: (payload: PostDraftETCParams) => mutation.mutate(payload as any),
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data };
+    data: mutation.data,
+  };
 }
 
 export function usePutVideoUpdate(options?: any) {
   const mutation = useMutation({
     ...mutateOptions.putVideoUpdate(),
-    ...options });
+    ...options,
+  });
 
   return {
     update: (payload: PutVideoUpdateParams) => mutation.mutate(payload as any),
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data };
+    data: mutation.data,
+  };
 }
 
 export function usePutScormUpdate(options?: any) {
   const mutation = useMutation({
     ...mutateOptions.putScormUpdate(),
-    ...options });
+    ...options,
+  });
 
   return {
     update: (payload: PutScormUpdateParams) => mutation.mutate(payload as any),
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data };
+    data: mutation.data,
+  };
 }
 
 export function usePutETCUpdate(options?: any) {
   const mutation = useMutation({
     ...mutateOptions.putETCUpdate(),
-    ...options });
+    ...options,
+  });
 
   return {
     update: (payload: PutETCUpdateParams) => mutation.mutate(payload as any),
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data };
+    data: mutation.data,
+  };
 }
 
 export function usePutVideoChange(options?: any) {
   const mutation = useMutation({
     ...mutateOptions.putVideoChange(),
-    ...options });
+    ...options,
+  });
 
   return {
     update: (payload: PutVideoChangeParams) => mutation.mutate(payload as any),
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data };
+    data: mutation.data,
+  };
 }
 
 export function usePutScormChange(options?: any) {
   const mutation = useMutation({
     ...mutateOptions.putScormChange(),
-    ...options });
+    ...options,
+  });
 
   return {
     update: (payload: PutScormChangeParams) => mutation.mutate(payload as any),
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data };
+    data: mutation.data,
+  };
 }
 
 export function usePutETCChange(options?: any) {
   const mutation = useMutation({
     ...mutateOptions.putETCChange(),
-    ...options });
+    ...options,
+  });
 
   return {
     update: (payload: PutETCChangeParams) => mutation.mutate(payload as any),
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data };
+    data: mutation.data,
+  };
 }
 
 export function usePostDraftHTMLVideo(options?: any) {
   const mutation = useMutation({
     ...mutateOptions.postDraftHTML5(),
-    ...options });
+    ...options,
+  });
 
   return {
-    upload: (payload: PostDraftHtmlVideoParams) => mutation.mutate(payload as any) };
+    upload: (payload: PostDraftHtmlVideoParams) => mutation.mutate(payload as any),
+  };
 }
 
 export function useUpdateHTML5Metadata(options?: any) {
   const mutation = useMutation({
     ...mutateOptions.updateHTML5Metadata(),
-    ...options });
+    ...options,
+  });
 
   return {
     update: (payload: HtmlVideoMetadataReq) => mutation.mutate(payload as any),
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data };
+    data: mutation.data,
+  };
 }
 
 export function useChangeHTML5VideoFile(options?: any) {
   const mutation = useMutation({
     ...mutateOptions.updateHTML5FileChange(),
-    ...options });
+    ...options,
+  });
 
   return {
     change: (payload: HtmlVideoFileChangeReq) => mutation.mutate(payload as any),
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data };
+    data: mutation.data,
+  };
 }
 
 export function useFetchBlogContent(contentUuid: string, options?: any) {
@@ -195,25 +225,29 @@ export function useFetchBlogContent(contentUuid: string, options?: any) {
 export function useCreateBlogContent(options?: any) {
   const mutation = useMutation({
     ...mutateOptions.createBlogContent(),
-    ...options });
+    ...options,
+  });
 
   return {
     create: (payload: BlogCreateReq) => mutation.mutate(payload as any),
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data };
+    data: mutation.data,
+  };
 }
 
 export function useUpdateBlogContent(options?: any) {
   const mutation = useMutation({
     ...mutateOptions.updateBlogContent(),
-    ...options });
+    ...options,
+  });
 
   return {
     update: (payload: BlogUpdateReq) => mutation.mutate(payload as any),
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data };
+    data: mutation.data,
+  };
 }
 
 export function useDeleteContent(options?: any) {
@@ -225,76 +259,102 @@ export function useDeleteContent(options?: any) {
         options.onSuccess(data);
       }
     },
-    ...options });
+    ...options,
+  });
 
   return {
     ...mutation,
-    delete: (contentUuid: string) => mutation.mutate(contentUuid as any) };
+    delete: (contentUuid: string) => mutation.mutate(contentUuid as any),
+  };
 }
 
 export function useCreateExamPaperContent(options?: any) {
   const mutation = useMutation({
     ...mutateOptions.createExamPaperContent(),
-    ...options });
+    ...options,
+  });
 
   return {
     create: (payload: TestPaperBasicInfoSaveReq) => mutation.mutate(payload as any),
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data };
+    data: mutation.data,
+  };
 }
 
 export function useUpdateExamPaperContent(options?: any) {
   const mutation = useMutation({
     ...mutateOptions.updateExamPaperContent(),
-    ...options });
+    ...options,
+  });
 
   return {
     update: (payload: TestPaperBasicInfoSaveReq) => mutation.mutate(payload as any),
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data };
+    data: mutation.data,
+  };
 }
 
 export function useCreateQuestionBankContent(options?: any) {
   const mutation = useMutation({
     ...mutateOptions.createQuestionBankContent(),
-    ...options });
+    ...options,
+  });
 
   return {
     create: (payload: ContentBaseInfo, options?: any) => mutation.mutate(payload as any, options),
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data };
+    data: mutation.data,
+  };
 }
 
 export function useUpdateQuestionBankContent(options?: any) {
   const mutation = useMutation({
     ...mutateOptions.updateQuestionBankContent(),
-    ...options });
+    ...options,
+  });
 
   return {
     update: (payload: ContentBaseInfo, options?: any) => mutation.mutate(payload as any, options),
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data };
+    data: mutation.data,
+  };
+}
+
+export function useUpdateQuestionBankQuestionCountInfo(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.updateQuestionBankQuestionCountInfo(),
+    ...options,
+  });
+
+  return {
+    update: (payload: UpdateQuestionBankCountInfoReq) => mutation.mutate(payload as any),
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+  };
 }
 
 export function useCreateQuestionItem(options?: any) {
   const mutation = useMutation({
     ...mutateOptions.createQuestionItem(),
-    ...options });
+    ...options,
+  });
 
   return {
     create: (payload: QuestionItem, options?: any) => mutation.mutate(payload as any, options),
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data };
+    data: mutation.data,
+  };
 }
 export function useGetQuestionItem(examQuestionUuid?: string, options?: any) {
   return useQuery<QuestionItem, any>({
     ...learningResourceQueryOptions.getQuestionItem(examQuestionUuid),
-    ...options });
+    ...options,
+  });
 }
 export function useGetContent(contentUuid: string, options?: any) {
   return useQuery({ ...learningResourceQueryOptions.getContent(contentUuid), ...options });
@@ -303,48 +363,57 @@ export function useGetContent(contentUuid: string, options?: any) {
 export function useGetQuestionItemList(examPoolUuid?: string, options?: any) {
   return useQuery<QuestionItem[], any>({
     ...learningResourceQueryOptions.getQuestionItemList(examPoolUuid),
-    ...options });
+    ...options,
+  });
 }
 
 export function useDeleteQuestionItemList(options?: any) {
   const mutation = useMutation({
     ...mutateOptions.deleteQuestionItemList(),
-    ...options });
+    ...options,
+  });
 
   return {
     ...mutation,
-    delete: (params: QuestionItemDeleteParam) => mutation.mutate(params as any) };
+    delete: (params: QuestionItemDeleteParam) => mutation.mutate(params as any),
+  };
 }
 
 export function useUpdateQuestionStatus(options?: any) {
   const mutation = useMutation({
     ...mutateOptions.updateQuestionStatus(),
-    ...options });
+    ...options,
+  });
 
   return {
     update: (params: QuestionStatusUpdateReq) => mutation.mutate(params as any),
     isSuccess: mutation.isSuccess,
-    isError: mutation.isError };
+    isError: mutation.isError,
+  };
 }
 
 export function useUpdateExamPaperQuestionCount(options?: any) {
   const mutation = useMutation({
     ...mutateOptions.updateExamPaperQuestionCountInfo(),
-    ...options });
+    ...options,
+  });
 
   return {
     update: (params: ExamPaperQuestionCountUpdateReq) => mutation.mutate(params as any),
     isSuccess: mutation.isSuccess,
-    isError: mutation.isError };
+    isError: mutation.isError,
+  };
 }
 
 export function useCopyQuestionsToExamPaper(options?: any) {
   const mutation = useMutation({
     ...mutateOptions.copyQuestionsToExamPaper(),
-    ...options });
+    ...options,
+  });
 
   return {
     copy: (params: QuestionsCopyReq) => mutation.mutate(params as any),
     isSuccess: mutation.isSuccess,
-    isError: mutation.isError };
+    isError: mutation.isError,
+  };
 }

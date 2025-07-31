@@ -28,7 +28,9 @@ import {
   QuestionsCopyReq,
   QuestionStatusUpdateReq,
   ExamPaperQuestionCountUpdateReq,
-  TestPaperBasicInfoSaveReq } from '@types';
+  TestPaperBasicInfoSaveReq,
+  UpdateQuestionBankCountInfoReq,
+} from '@types';
 import LearningResourceService from '../api/learning-resource';
 
 export const queryKeys = {
@@ -58,7 +60,8 @@ export const queryKeys = {
     ['question-bank-question-item', examQuestionUuid] as const,
   randomQuestionCount: (examUuid: string) => ['random-question-count', examUuid] as const,
   questionListForRetrieve: ['question-list-for-retrieve'] as const,
-  shareTenantsChannels: (contentUuid: string) => ['share-tenants-channels', contentUuid] as const };
+  shareTenantsChannels: (contentUuid: string) => ['share-tenants-channels', contentUuid] as const,
+};
 
 export const learningResourceQueryOptions = {
   getChannelsByTenantId: (param: { tenantId: string | number; channelName?: string }) => ({
@@ -66,74 +69,87 @@ export const learningResourceQueryOptions = {
     queryFn: () => LearningResourceService.fetchChannelsByTenantId(param),
     cacheTime: 0,
     staleTime: 0,
-    enabled: true }),
+    enabled: true,
+  }),
   getUser: (uuid: string) => ({
     queryKey: queryKeys.userByUuid,
     queryFn: () => LearningResourceService.fetchUser(uuid),
     cacheTime: 0,
     staleTime: 0,
-    enabled: true }),
+    enabled: true,
+  }),
   getContents: (params: GetContentsParams) => ({
     queryKey: queryKeys.contents,
     queryFn: () => LearningResourceService.fetchContents(params),
     cacheTime: 0,
     staleTime: 0,
-    enabled: true }),
+    enabled: true,
+  }),
   getContent: <T = GetContentDetailRes>(contentUuid: string) => ({
     queryKey: queryKeys.contentDetail(contentUuid),
     queryFn: () => LearningResourceService.fetchContent(contentUuid) as T,
     cacheTime: 0,
     staleTime: 0,
-    enabled: !!contentUuid }),
+    enabled: !!contentUuid,
+  }),
   getContentCourseMapping: (contentUuid: string, params: ContentCourseMappingParams) => ({
     queryKey: queryKeys.contentCourseMapping(contentUuid),
-    queryFn: () => LearningResourceService.fetchContentCourseMapping(contentUuid, params) }),
+    queryFn: () => LearningResourceService.fetchContentCourseMapping(contentUuid, params),
+  }),
   getTranslationList: (contentUuid: string) => ({
     queryKey: queryKeys.translationList(contentUuid),
     queryFn: () => LearningResourceService.fetchTranslationList(contentUuid),
     cacheTime: 0,
     staleTime: 0,
-    enabled: !!contentUuid }),
+    enabled: !!contentUuid,
+  }),
   getCurriculumsMapping: (contentUuid: string) => ({
     queryKey: queryKeys.curriculumMapping,
     queryFn: () => LearningResourceService.fetchCurriculumMapping(contentUuid),
-    enabled: !!contentUuid }),
+    enabled: !!contentUuid,
+  }),
   getContentSharingInfo: (params: ContentSharingInfoReq) => ({
     queryKey: queryKeys.contentSharingInfo(params.contentUuid),
     queryFn: () => LearningResourceService.fetchContentSharingInfo(params),
     cacheTime: 0,
     staleTime: 0,
-    enabled: !!params.contentUuid }),
+    enabled: !!params.contentUuid,
+  }),
   getHTML5Resource: (contentUuid: string) => ({
     queryKey: queryKeys.html5Resource,
     queryFn: () => LearningResourceService.fetchHTML5Resource(contentUuid),
     cacheTime: 0,
     staleTime: 0,
-    enabled: true }),
+    enabled: true,
+  }),
   getHTML5Status: (contentUuid: string) => ({
     queryKey: queryKeys.html5Status(contentUuid),
     queryFn: () => LearningResourceService.fetchHTML5Status(contentUuid),
     cacheTime: 0,
     staleTime: 0,
-    enabled: !!contentUuid }),
+    enabled: !!contentUuid,
+  }),
   getHTML5FileChangeStatus: (changeId: number) => ({
     queryKey: queryKeys.html5FileChangeStatus(changeId),
     queryFn: () => LearningResourceService.fetchHTML5FileChangeStatus(changeId),
     cacheTime: 0,
     staleTime: 0,
-    enabled: !!changeId }),
+    enabled: !!changeId,
+  }),
   getBlogContent: (contentUuid: string) => ({
     queryKey: queryKeys.blogResource,
     queryFn: () => LearningResourceService.fetchBlogResource(contentUuid),
     cacheTime: 0,
     staleTime: 0,
-    enabled: true }),
+    enabled: true,
+  }),
   getQuestionItemList: (examPoolUuid?: string) =>
     examPoolUuid
       ? {
           queryKey: queryKeys.questionBankQuestionList,
           queryFn: () => LearningResourceService.getQuestionItemList(examPoolUuid),
-          enabled: !!examPoolUuid }
+          enabled: !!examPoolUuid,
+        }
       : getQuerySkipToken<QuestionItem[]>(),
 
   getQuestionItem: (examQuestionUuid?: string) =>
@@ -141,7 +157,8 @@ export const learningResourceQueryOptions = {
       ? {
           queryKey: queryKeys.questionBankQuestionItem(examQuestionUuid),
           queryFn: () => LearningResourceService.getQuestionItem(examQuestionUuid),
-          enabled: !!examQuestionUuid }
+          enabled: !!examQuestionUuid,
+        }
       : getQuerySkipToken<QuestionItem>(),
 
   getExamRandomQuestionCount: (examUuid: string, questionGenType: ExamQuestionGenType) => ({
@@ -149,82 +166,116 @@ export const learningResourceQueryOptions = {
     queryFn: () => LearningResourceService.fetchExamRandomQuestionCount(examUuid),
     cacheTime: 0,
     staleTime: 0,
-    enabled: !!examUuid && questionGenType === ExamQuestionGenType.RANDOM }),
+    enabled: !!examUuid && questionGenType === ExamQuestionGenType.RANDOM,
+  }),
 
   getQuestionListForRetrieve: (params: QuestionListForRetrieveReq) => ({
     queryKey: queryKeys.questionListForRetrieve,
     queryFn: () => LearningResourceService.fetchQuestionListForRetrieve(params),
     cacheTime: 0,
     staleTime: 0,
-    enabled: true }),
+    enabled: true,
+  }),
 
   getShareTenantsChannels: (params: GetShareTenantsChannelsParams) => ({
     queryKey: queryKeys.shareTenantsChannels(params.contentUuid),
     queryFn: () => LearningResourceService.getShareTenantsChannels(params),
-    enabled: true }) };
+    enabled: true,
+  }),
+};
 
 export const mutateOptions = {
   postContentCopy: () => ({
-    mutationFn: (contentUuid: string) => LearningResourceService.postContentCopy(contentUuid) }),
+    mutationFn: (contentUuid: string) => LearningResourceService.postContentCopy(contentUuid),
+  }),
   postContentExport: () => ({
-    mutationFn: (params: ContentExportReq) => LearningResourceService.postContentExport(params) }),
+    mutationFn: (params: ContentExportReq) => LearningResourceService.postContentExport(params),
+  }),
   postDraftVideos: () => ({
-    mutationFn: (params: PostDraftVideosParams) => LearningResourceService.postDraftVideos(params) }),
+    mutationFn: (params: PostDraftVideosParams) => LearningResourceService.postDraftVideos(params),
+  }),
   postDraftScorm: () => ({
-    mutationFn: (params: PostDraftScormParams) => LearningResourceService.postDraftScorm(params) }),
+    mutationFn: (params: PostDraftScormParams) => LearningResourceService.postDraftScorm(params),
+  }),
   postDraftETC: () => ({
-    mutationFn: (params: PostDraftETCParams) => LearningResourceService.postDraftETC(params) }),
+    mutationFn: (params: PostDraftETCParams) => LearningResourceService.postDraftETC(params),
+  }),
   putVideoUpdate: () => ({
-    mutationFn: (params: PutVideoUpdateParams) => LearningResourceService.putVideoUpdate(params) }),
+    mutationFn: (params: PutVideoUpdateParams) => LearningResourceService.putVideoUpdate(params),
+  }),
   putScormUpdate: () => ({
-    mutationFn: (params: PutScormUpdateParams) => LearningResourceService.putScormUpdate(params) }),
+    mutationFn: (params: PutScormUpdateParams) => LearningResourceService.putScormUpdate(params),
+  }),
   putETCUpdate: () => ({
-    mutationFn: (params: PutETCUpdateParams) => LearningResourceService.putETCUpdate(params) }),
+    mutationFn: (params: PutETCUpdateParams) => LearningResourceService.putETCUpdate(params),
+  }),
   putVideoChange: () => ({
-    mutationFn: (params: PutVideoChangeParams) => LearningResourceService.putVideoChange(params) }),
+    mutationFn: (params: PutVideoChangeParams) => LearningResourceService.putVideoChange(params),
+  }),
   putScormChange: () => ({
-    mutationFn: (params: PutScormChangeParams) => LearningResourceService.putScormChange(params) }),
+    mutationFn: (params: PutScormChangeParams) => LearningResourceService.putScormChange(params),
+  }),
   putETCChange: () => ({
-    mutationFn: (params: PutETCChangeParams) => LearningResourceService.putETCChange(params) }),
+    mutationFn: (params: PutETCChangeParams) => LearningResourceService.putETCChange(params),
+  }),
   postDraftHTML5: () => ({
     mutationFn: (params: PostDraftHtmlVideoParams) =>
-      LearningResourceService.createHTML5Draft(params) }),
+      LearningResourceService.createHTML5Draft(params),
+  }),
   updateHTML5Metadata: () => ({
     mutationFn: (params: HtmlVideoMetadataReq) =>
-      LearningResourceService.updateHTML5Metadata(params) }),
+      LearningResourceService.updateHTML5Metadata(params),
+  }),
   updateHTML5FileChange: () => ({
     mutationFn: (params: HtmlVideoFileChangeReq) =>
-      LearningResourceService.updateHTML5FileChange(params) }),
+      LearningResourceService.updateHTML5FileChange(params),
+  }),
   createBlogContent: () => ({
-    mutationFn: (params: BlogCreateReq) => LearningResourceService.createBlogContent(params) }),
+    mutationFn: (params: BlogCreateReq) => LearningResourceService.createBlogContent(params),
+  }),
   updateBlogContent: () => ({
-    mutationFn: (params: BlogUpdateReq) => LearningResourceService.updateBlogContent(params) }),
+    mutationFn: (params: BlogUpdateReq) => LearningResourceService.updateBlogContent(params),
+  }),
   deleteContent: () => ({
-    mutationFn: (contentUuid: string) => LearningResourceService.deleteContent(contentUuid) }),
+    mutationFn: (contentUuid: string) => LearningResourceService.deleteContent(contentUuid),
+  }),
   createExamPaperContent: () => ({
     mutationFn: (params: TestPaperBasicInfoSaveReq) =>
-      LearningResourceService.createExamPaperContent(params) }),
+      LearningResourceService.createExamPaperContent(params),
+  }),
   updateExamPaperContent: () => ({
     mutationFn: (params: TestPaperBasicInfoSaveReq) =>
-      LearningResourceService.updateExamPaperContent(params) }),
+      LearningResourceService.updateExamPaperContent(params),
+  }),
   createQuestionBankContent: () => ({
     mutationFn: (params: ContentBaseInfo) =>
-      LearningResourceService.createQuestionBankContent(params) }),
-
+      LearningResourceService.createQuestionBankContent(params),
+  }),
   updateQuestionBankContent: () => ({
     mutationFn: (params: ContentBaseInfo) =>
-      LearningResourceService.updateQuestionBankContent(params) }),
+      LearningResourceService.updateQuestionBankContent(params),
+  }),
+  updateQuestionBankQuestionCountInfo: () => ({
+    mutationFn: (params: UpdateQuestionBankCountInfoReq) =>
+      LearningResourceService.updateQuestionBankQuestionCountInfo(params),
+  }),
   createQuestionItem: () => ({
-    mutationFn: (params: QuestionItem) => LearningResourceService.createQuestionItem(params) }),
+    mutationFn: (params: QuestionItem) => LearningResourceService.createQuestionItem(params),
+  }),
   deleteQuestionItemList: () => ({
     mutationFn: (param: QuestionItemDeleteParam) =>
-      LearningResourceService.deleteQuestionItemList(param) }),
+      LearningResourceService.deleteQuestionItemList(param),
+  }),
   updateQuestionStatus: () => ({
     mutationFn: (params: QuestionStatusUpdateReq) =>
-      LearningResourceService.updateQuestionStatus(params) }),
+      LearningResourceService.updateQuestionStatus(params),
+  }),
   updateExamPaperQuestionCountInfo: () => ({
     mutationFn: (params: ExamPaperQuestionCountUpdateReq) =>
-      LearningResourceService.updateExamPaperQuestionCountInfo(params) }),
+      LearningResourceService.updateExamPaperQuestionCountInfo(params),
+  }),
   copyQuestionsToExamPaper: () => ({
     mutationFn: (params: QuestionsCopyReq) =>
-      LearningResourceService.copyQuestionsToExamPaper(params) }) };
+      LearningResourceService.copyQuestionsToExamPaper(params),
+  }),
+};
