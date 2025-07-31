@@ -106,7 +106,7 @@ function RouteComponent() {
   );
 
   return (
-    <PageContainer hideOutLine={true} title={courseName}>
+    <PageContainer hideOutLine={true}>
       <ContentsButtons>
         <ToggleButtonGroup
           defaultValue={'edu'}

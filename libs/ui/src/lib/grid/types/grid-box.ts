@@ -1,8 +1,8 @@
-import { GridBoxState, GridProps } from './grid';
-import React from 'react';
 import { Table } from '@tanstack/react-table';
-import { GridBoxSearchInputCondition } from '../grid-box/grid-box-search-input';
+import React from 'react';
 import { PaginationResponse } from '../../type';
+import { GridBoxSearchInputCondition } from '../grid-box/grid-box-search-input';
+import { GridBoxState, GridProps } from './grid';
 
 /**
  * TODO. GridBox 내의 기능이 확정되지 않아 useGridBox 와 GridBox 에 대한 Config 를 분리해놨는데 확정 된다면 합치는게 좋을꺼 같습니다.
@@ -158,6 +158,26 @@ export interface GridBoxProps<T extends object = object>
   title?: string;
 
   /**
+   * override GridProps
+   */
+  data?: T[];
+
+  /**
+   * grid data
+   */
+  gridData?: PaginationResponse<T>;
+
+  /**
+   * 그리드 컬럼
+   */
+  columns?: any[];
+
+  /**
+   * Show RowIndex
+   */
+  showNumberingColumn?: boolean;
+
+  /**
    * 가이드 텍스트
    */
   guideText?: string;
@@ -266,15 +286,42 @@ export interface GridBoxProps<T extends object = object>
   customButtonNode?: React.ReactNode;
 
   /**
-   * override GridProps
+   * GridBoxState
+   * 그리드에 최초 적용할 state 값
    */
-  data?: T[];
+  gridState?: GridBoxState;
 
   /**
-   * grid data
+   * 페이지네이션 관련 설정을 포함하는 객체입니다.
    */
-  gridData?: PaginationResponse<T>;
+  pagination?: GridBoxPagination;
 
+  /**
+   * 페이지네이션 숨김 여부
+   */
+  hidePagination?: boolean;
+
+  /**
+   * 엑셀 버튼
+   */
+  excelButtons?: React.ReactNode;
+  /**
+   * 외부에서 선택된 row의 id 배열을 지정할 수 있습니다.
+   */
+  selectedRowIds?: string[];
+
+  /**
+   * 클라이언트 사이드 정렬 활성화 여부
+   */
+  clientSideSorting?: boolean;
+  clientSideFiltering?: boolean;
+
+  /**
+   * 특정 행의 선택 가능 여부를 결정하는 함수
+   * @param row - 행 데이터
+   * @returns 선택 가능하면 true, 불가능하면 false
+   */
+  isRowSelectable?: (row: T) => boolean;
   /**
    * 추가 버튼 클릭 핸들러
    */
@@ -299,46 +346,6 @@ export interface GridBoxProps<T extends object = object>
    * 검색영역 조회 버튼 클릭 핸들러 (엔터 눌렀을때도 실행됨)
    */
   onSearchClick?: (condition: GridBoxSearchInputCondition) => void;
-
-  /**
-   * Show RowIndex
-   */
-  showNumberingColumn?: boolean;
-
-  /**
-   * 그리드 컬럼
-   */
-  columns?: any[];
-
-  /**
-   * GridBoxState
-   * 그리드에 최초 적용할 state 값
-   */
-  gridState?: GridBoxState;
-
-  /**
-   * 페이지네이션 관련 설정을 포함하는 객체입니다.
-   */
-  pagination?: GridBoxPagination;
-
-  /**
-   * 엑셀 버튼
-   */
-  excelButtons?: React.ReactNode;
-
-  clientSideSorting?: boolean;
-  clientSideFiltering?: boolean;
-
-  /**
-   * 특정 행의 선택 가능 여부를 결정하는 함수
-   * @param row - 행 데이터
-   * @returns 선택 가능하면 true, 불가능하면 false
-   */
-  isRowSelectable?: (row: T) => boolean;
-  /**
-   * 외부에서 선택된 row의 id 배열을 지정할 수 있습니다.
-   */
-  selectedRowIds?: string[];
 }
 
 /**
