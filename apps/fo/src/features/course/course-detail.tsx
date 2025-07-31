@@ -50,6 +50,7 @@ import {
 import { useChannelDetail } from '@entities/channel/service/channel.hook';
 import { useGetCurriculumnDetail } from '@entities/curriculum';
 import styles from '@learnway/styles/fo/pages/_layout/course-introduction/detail.module.css';
+import { t } from 'i18next';
 
 export function CourseDetail() {
   const routerState = useRouterState();
@@ -95,13 +96,13 @@ export function CourseDetail() {
     targetRef?: React.RefObject<HTMLElement> | null;
   }
   const tabTitleSwiper: TabTitleSwiper[] = [
-    { title: '대시보드', isEroll: false, selectTabNumber: '0' },
-    { title: '과정소개', isEroll: false, selectTabNumber: '1' /* targetRef: introduceRef */ },
-    { title: '교육일정', isEroll: true, selectTabNumber: '1', targetRef: educationRef }, // 과정소개 탭 안에서 교욱일정이 있기 때문에 tabNumber값 동일
-    { title: '후기', isEroll: false, selectTabNumber: '1', new: true, targetRef: reviewRef }, // 과정소개 탭 안에서 후기가 있기 때문에 tabNumber값 동일
-    { title: '수강전 문의', isEroll: true, selectTabNumber: '2', new: true },
-    { title: '커뮤니티', isEroll: false, selectTabNumber: '3', new: true },
-    { title: '새소식', isEroll: false, selectTabNumber: '4', new: true },
+    { title: t('대시보드'), isEroll: false, selectTabNumber: '0' },
+    { title: t('과정소개'), isEroll: false, selectTabNumber: '1' /* targetRef: introduceRef */ },
+    { title: t('교육일정'), isEroll: true, selectTabNumber: '1', targetRef: educationRef }, // 과정소개 탭 안에서 교욱일정이 있기 때문에 tabNumber값 동일
+    { title: t('후기'), isEroll: false, selectTabNumber: '1', new: true, targetRef: reviewRef }, // 과정소개 탭 안에서 후기가 있기 때문에 tabNumber값 동일
+    { title: t('수강전 문의'), isEroll: true, selectTabNumber: '2', new: true },
+    { title: t('커뮤니티'), isEroll: false, selectTabNumber: '3', new: true },
+    { title: t('새소식'), isEroll: false, selectTabNumber: '4', new: true },
   ];
 
   const handleTab = (selectTabNumber: string, selectTabContentsNumber: number) => {
@@ -268,7 +269,7 @@ export function CourseDetail() {
   // 탭 컨텐츠
   const tabTitleContents = [
     {
-      title: '대시보드',
+      title: t('대시보드'),
       key: '0',
       content: (
         <div className={styles.dashboard_content}>
@@ -277,7 +278,7 @@ export function CourseDetail() {
       ),
     },
     {
-      title: '과정소개',
+      title: t('과정소개'),
       key: '1',
       content: (
         <div className={styles.introduction_content}>
@@ -313,17 +314,17 @@ export function CourseDetail() {
       ),
     },
     {
-      title: '수강전 문의',
+      title: t('수강전 문의'),
       key: '2',
       content: <div>수강전 문의</div>,
     },
     {
-      title: '커뮤니티',
+      title: t('커뮤니티'),
       key: '3',
       content: <div>커뮤니티</div>,
     },
     {
-      title: '새소식',
+      title: t('새소식'),
       key: '4',
       content: <div>새소식</div>,
     },
@@ -350,6 +351,14 @@ export function CourseDetail() {
       onSuccess: () => {
         setLikeChk((prev) => !prev);
         setLikeCount((prev) => prev + (likeChk ? -1 : 1));
+
+        const message = likeChk
+          ? t('좋아요 목록에서 삭제하였습니다')
+          : t('좋아요 목록에 추가하였습니다');
+        openToast({
+          title: message,
+          type: 'success',
+        });
       },
       onError: () => {
         console.log('좋아요 실패하였습니다');
@@ -841,7 +850,7 @@ export function CourseDetail() {
                   <div>
                     <IcoCaution width={40} height={40} stroke={'#A9AFB8'} />
                     {/* 퍼블수정 20250624 태그 수정 */}
-                    <strong>현재 수강 신청 가능한 차수가 없습니다.</strong>
+                    <strong>{t('현재 수강 신청 가능한 차수가 없습니다.')}</strong>
                   </div>
                 </Panel>
                 {/* 인원마감/대기신청 */}
@@ -849,8 +858,8 @@ export function CourseDetail() {
                   <div>
                     {/* 퍼블수정 20250624 색상 수정 */}
                     <IcoClock01 width={40} height={40} stroke={'#0056ff'} />
-                    <strong>오전 10:00 수강신청이 시작됩니다!</strong>
-                    <p>수강신청일시는 예고없이 변경될수 있습니다.</p>
+                    <strong>{t('오전 10:00 수강신청이 시작됩니다!')}</strong>
+                    <p>{t('수강신청일시는 예고없이 변경될수 있습니다.')}</p>
                   </div>
                 </Panel>
                 {/* 강의 정보 */}
@@ -903,7 +912,8 @@ export function CourseDetail() {
           >
             <div className={styles.tit_box}>
               <strong>
-                패키지<em>10</em>
+                {t('패키지')}
+                <em>10</em>
               </strong>
             </div>
             <div className={`${packageSideStyles.package_box}`}>

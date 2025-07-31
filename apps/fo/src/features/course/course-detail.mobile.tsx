@@ -37,6 +37,7 @@ import { MobileContainerFooter } from '@shared/m.ui';
 import { useChannelDetail } from '@entities/channel';
 import { useGetCurriculumnDetail } from '@entities/curriculum';
 import styles from '@learnway/styles/fo/pages/_layout/course-introduction/detail-m.module.css';
+import { t } from 'i18next';
 
 export function CourseDetailMobile() {
   const router = useRouter();
@@ -78,17 +79,6 @@ export function CourseDetailMobile() {
   const [selectedTabTitle, setSelectedTabTitle] = useState<number>(0); // 탭 타이틀 순서
   const [selectedTabContent, setSelectedTabContent] = useState<string>('0'); // 탭 컨텐츠 순서
 
-  // 탭 타이틀
-  // const tabTitle = [
-  //   { title: '대시보드', isEroll: false, selectTabNumber: '0' },
-  //   { title: '과정소개', isEroll: false, selectTabNumber: '1' },
-  //   { title: '교육일정', isEroll: true, selectTabNumber: '1' }, // 과정소개 탭 안에서 교욱일정이 있기 때문에 tabNumber값 동일
-  //   { title: '후기', isEroll: false, selectTabNumber: '1', count: '0', new: true }, // 과정소개 탭 안에서 후기가 있기 때문에 tabNumber값 동일
-  //   { title: '수강전 문의', isEroll: true, selectTabNumber: '2', new: true },
-  //   { title: '커뮤니티', isEroll: false, selectTabNumber: '3', new: true },
-  //   { title: '새소식', isEroll: false, selectTabNumber: '4', new: true },
-  // ];
-
   const waitForRef = (ref: any, maxWaitTime = 3000) => {
     return new Promise((resolve, reject) => {
       if (ref.current) {
@@ -118,13 +108,13 @@ export function CourseDetailMobile() {
   };
 
   const tabTitle: any[] = [
-    { title: '대시보드', isEroll: false, selectTabNumber: '0', targetRef: dashboardRef },
-    { title: '과정소개', isEroll: false, selectTabNumber: '1', targetRef: introduceRef },
-    { title: '교육일정', isEroll: true, selectTabNumber: '1', targetRef: educationRef }, // 과정소개 탭 안에서 교욱일정이 있기 때문에 tabNumber값 동일
-    { title: '후기', isEroll: false, selectTabNumber: '1', new: true, targetRef: reviewRef }, // 과정소개 탭 안에서 후기가 있기 때문에 tabNumber값 동일
-    { title: '수강전 문의', isEroll: true, selectTabNumber: '2', new: true },
-    { title: '커뮤니티', isEroll: false, selectTabNumber: '3', new: true },
-    { title: '새소식', isEroll: false, selectTabNumber: '4', new: true },
+    { title: t('대시보드'), isEroll: false, selectTabNumber: '0', targetRef: dashboardRef },
+    { title: t('과정소개'), isEroll: false, selectTabNumber: '1', targetRef: introduceRef },
+    { title: t('교육일정'), isEroll: true, selectTabNumber: '1', targetRef: educationRef }, // 과정소개 탭 안에서 교욱일정이 있기 때문에 tabNumber값 동일
+    { title: t('후기'), isEroll: false, selectTabNumber: '1', new: true, targetRef: reviewRef }, // 과정소개 탭 안에서 후기가 있기 때문에 tabNumber값 동일
+    { title: t('수강전 문의'), isEroll: true, selectTabNumber: '2', new: true },
+    { title: t('커뮤니티'), isEroll: false, selectTabNumber: '3', new: true },
+    { title: t('새소식'), isEroll: false, selectTabNumber: '4', new: true },
   ];
 
   const handleTab = (selectTabNumber: string, selectTabContentsNumber: number) => {
@@ -344,7 +334,7 @@ export function CourseDetailMobile() {
 
   const tabTitleContents = [
     {
-      title: '대시보드',
+      title: t('대시보드'),
       key: '0',
       content: (
         <div className={styles.dashboard_content}>
@@ -353,7 +343,7 @@ export function CourseDetailMobile() {
       ),
     },
     {
-      title: '과정소개',
+      title: t('과정소개'),
       key: '1',
       content: (
         <div className={styles.introduction_content}>
@@ -391,17 +381,17 @@ export function CourseDetailMobile() {
       ),
     },
     {
-      title: '수강전 문의',
+      title: t('수강전 문의'),
       key: '2',
       content: '수강전 문의',
     },
     {
-      title: '커뮤니티',
+      title: t('커뮤니티'),
       key: '3',
       content: '커뮤니티',
     },
     {
-      title: '새소식',
+      title: t('새소식'),
       key: '4',
       content: '새소식',
     },
@@ -644,7 +634,8 @@ export function CourseDetailMobile() {
         >
           <div className={styles.tit_box}>
             <strong>
-              패키지<em>10</em>
+              {t('패키지')}
+              <em>10</em>
             </strong>
           </div>
           <div className={packageSideStyles.package_box}>
