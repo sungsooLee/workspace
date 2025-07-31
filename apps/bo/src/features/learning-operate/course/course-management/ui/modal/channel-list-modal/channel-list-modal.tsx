@@ -37,7 +37,7 @@ const ChannelListModalComponent = forwardRef<HTMLDivElement, ChannelListModalPro
     };
 
     return (
-      <ModalContainer>
+      <ModalContainer width={'lg'}>
         <ModalTitle>{t('채널 리스트')}</ModalTitle>
         <ModalBody>
           <div className={styles.wrap}>
