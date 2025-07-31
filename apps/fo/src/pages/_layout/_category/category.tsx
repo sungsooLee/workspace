@@ -15,14 +15,54 @@ import dropdownPopoverStyles from '../../../shared/ui/dropdown-popover/dropdown-
 import styles from '@learnway/styles/fo/pages/_layout/category/category.module.css';
 import { cn } from '@learnway/shared';
 import { Filter } from '@features/category/ui/category-filter';
-import { Arrays, ThumnailList } from '@features/layout';
+import { Arrays, ThumbnailList } from '@features/layout';
 import { t } from 'i18next';
 
 import bnrCImage1 from '../../../assets/images/banner/banner_category_01.png';
 import bnrCImage2 from '../../../assets/images/banner/banner_category_02.png';
 import { IcoArray, IcoArrowDown, IcoDotpoints } from '@learnway/icons';
-import { queryOptions, useFetchCategoryDetail } from '@entities/category';
+import { useFetchCategoryDetail } from '@entities/category';
 import CategoryService from '@entities/category/api/category';
+
+// 4,5,6 뎁스 일 때 사용하는 더미 데이터
+const topOptions = (
+  [
+    { value: 'a', label: '대분류' },
+    { value: 'b', label: 'ST1' },
+    { value: 'c', label: '아이오닉 6' },
+    { value: 'd', label: '아이오닉 5' },
+    { value: 'e', label: '코나' },
+    { value: 'f', label: '넥쏘' },
+    { value: 'g', label: '포터' },
+    { value: 'h', label: '캐스퍼' },
+  ]
+);
+const middleOptions = (
+  [
+    { value: 'a', label: '중분류' },
+    { value: 'b', label: 'NE PE(2024)' },
+    { value: 'c', label: 'NE(2021)' },
+  ]
+);
+const bottomOptions = (
+  [
+    { value: 'a', label: '소분류' },
+    { value: 'b', label: '상품정보' },
+    { value: 'c', label: '기술정보' },
+  ]
+);
+// 배너 관리 더미 데이터
+const items = [
+  <Link to={'/'}>
+    <img src={bnrCImage1} alt="" />
+  </Link>,
+  <Link to={'/'}>
+    <img src={bnrCImage2} alt="" />
+  </Link>,
+  <Link to={'/'}>
+    <img src={bnrCImage1} alt="" />
+  </Link>,
+];
 
 export const Route = createFileRoute('/_layout/_category/category')({
   component: RouteComponent,
@@ -45,47 +85,8 @@ function RouteComponent() {
   const [data, setData] = useState<any>({});
   const [sortingDisabled, setSortingDisabled] = useState(true);
 
-  // 4,5,6 뎁스 일 때 사용
-  const [topOptions, setTopOptions] = useState<any[]>(
-    [
-      { value: 'a', label: '대분류' },
-      { value: 'b', label: 'ST1' },
-      { value: 'c', label: '아이오닉 6' },
-      { value: 'd', label: '아이오닉 5' },
-      { value: 'e', label: '코나' },
-      { value: 'f', label: '넥쏘' },
-      { value: 'g', label: '포터' },
-      { value: 'h', label: '캐스퍼' },
-    ]
-  );
-  const [middleOptions, setMiddleOptions] = useState<any[]>(
-    [
-      { value: 'a', label: '중분류' },
-      { value: 'b', label: 'NE PE(2024)' },
-      { value: 'c', label: 'NE(2021)' },
-    ]
-  );
-  const [bottomOptions, setBottomOptions] = useState<any[]>(
-    [
-      { value: 'a', label: '소분류' },
-      { value: 'b', label: '상품정보' },
-      { value: 'c', label: '기술정보' },
-    ]
-  );
-
-  const items = [
-    <Link to={'/'}>
-      <img src={bnrCImage1} alt="" />
-    </Link>,
-    <Link to={'/'}>
-      <img src={bnrCImage2} alt="" />
-    </Link>,
-    <Link to={'/'}>
-      <img src={bnrCImage1} alt="" />
-    </Link>,
-  ];
   const arrays = {
-    items: ['최신순', '과정명순', '조회순'],
+    items: [t('최신순'), t('과정명순'), t('조회순')],
     initialSelectedItem: 0, // 초기 선택값
   };
 
@@ -111,6 +112,22 @@ function RouteComponent() {
       courseName
     }
     setCoursePayload(payload)
+    await fetchCoursesCategory(payload)
+  }
+
+  const handleSearchSortable = async (sortingIdx: any) => {
+    const payload = {
+      ...coursePayload,
+    }
+    if( sortingIdx ) {
+      setSorting([])
+      payload.sort = []
+      setCoursePayload(payload)
+    } else {
+      setSorting([])
+      payload.sort = []
+      setCoursePayload(payload)
+    }
     await fetchCoursesCategory(payload)
   }
 
@@ -200,7 +217,7 @@ function RouteComponent() {
             </span>
           </div>
           <div className={styles.right}>
-            <Arrays className={styles.array} arraysData={arrays}></Arrays>
+            <Arrays className={styles.array} arraysData={arrays} onChange={handleSearchSortable}></Arrays>
             <div className={styles.box}>
               <Popover
                 popoverContent={
@@ -238,7 +255,11 @@ function RouteComponent() {
         </div>
 
         {data.content && data.content.length > 0 ? (
-          data.content.map((item: any) => <ThumnailList direction={sortingDisabled ? 'vertical' : 'horizontal'}/>)
+            <ThumbnailList
+              direction={sortingDisabled ? 'vertical' : 'horizontal'}
+              items={data.content}
+              cols={sortingDisabled ? 4 : 2}
+            />
         ) : (
           <div className={styles.empty}>
             <EmptyText

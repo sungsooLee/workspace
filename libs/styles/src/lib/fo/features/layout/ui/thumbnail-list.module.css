@@ -1,0 +1,22 @@
+/* thumb-nail-list.module.css */
+.start {
+  &.thumbnail_list {
+    @apply grid w-full gap-x-[20px] gap-y-[30px];
+    &.item_col4 {
+    }
+    &.horizontal {
+      @apply gap-x-[40px];
+    }
+  }
+}
+
+/* Mobile */
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.thumbnail_list {
+        @apply gap-x-[16px] gap-y-[24px];
+      }
+    }
+  }
+}
