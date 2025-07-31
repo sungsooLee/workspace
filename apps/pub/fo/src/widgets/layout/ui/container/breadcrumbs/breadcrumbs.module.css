@@ -62,3 +62,31 @@
     }
   }
 }
+
+/* Mobile */
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      .breadcrumbs {
+        @apply min-h-[44px];
+        .link_item .btn_menu .stats {
+          @apply rounded-[4px] border-none bg-[var(--gray98)];
+        }
+      }
+      &.hover_menu {
+        @apply scrollbar max-h-[184px] overflow-hidden overflow-y-auto rounded-[6px] border-[var(--blue50)] p-[8px];
+        .menu_list {
+          @apply max-w-[160px] flex-col;
+          li {
+            a {
+              @apply label-md min-h-[28px] text-[var(--gray35)];
+              &.active {
+                @apply label-md-b bg-[var(--blue95)] text-[var(--gray10)];
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

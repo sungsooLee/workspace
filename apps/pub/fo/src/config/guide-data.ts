@@ -111,8 +111,8 @@ export const guideData = [
     pageId: '',
     pageType: 'Pop-up',
     completionDate: '2025-03-21',
-    lastUpdateDate: '',
-    remarks: '- navigation_m.tsx\n- header 공통 (아직 공통에서 main, page 분기처리 안함)',
+    lastUpdateDate: '2025-07-31',
+    remarks: '- navigation-popup_m.tsx',
   },
   {
     screenId: 'NLP_FO_GNB_M_1003',
@@ -123,6 +123,7 @@ export const guideData = [
     completionDate: '2025-03-21',
     lastUpdateDate: '',
     remarks: 'setting-web_m.tsx',
+    cancel: true,
   },
   {
     screenId: 'NLP_FO_GNB_M_1005',

@@ -64,6 +64,7 @@ export { ReactComponent as IcoProgressComplete } from './lib/ic_complete03.svg';
 export { ReactComponent as IcoCopy } from './lib/ic_copy.svg'; // copy
 export { ReactComponent as IcoDelete03 } from './lib/ic_delete_03.svg'; // alert complete icon 48*48
 export { ReactComponent as IcoDivice } from './lib/ic_divice.svg';
+export { ReactComponent as IcoDocument } from './lib/ic_document.svg';
 export { ReactComponent as IcoDotpoints } from './lib/ic_dotpoints-02.svg';
 export { ReactComponent as IcoDownArrow } from './lib/ic_down_arrow.svg'; // down arrow
 export { ReactComponent as IcoDownload } from './lib/ic_download.svg'; // 16*16 grid download
