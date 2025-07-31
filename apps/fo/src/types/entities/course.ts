@@ -1,3 +1,4 @@
+import { ISODateString } from '@types';
 
 // 과정 이수 처리 방식
 export enum PassMethodType {
@@ -380,4 +381,44 @@ export interface TenantEntity {
   tenantName?: string; // 테넌트 이름
   isUsed?: boolean; // 사용 여부
   isDeleted?: boolean; // 삭제 여부
+}
+
+export interface CourseSequenceResponse {
+  sequenceEnrollStatusType?: null;
+  sequenceEnrollButtonType?: null;
+  courseSequenceId: number;
+  courseSequenceName: string;
+  courseSequenceNo?: null;
+  enrollStartDateTime: ISODateString;
+  enrollEndDateTime: ISODateString;
+  learningStartType?: null;
+  learningStartDays?: null;
+  learningStartDateTime: ISODateString;
+  learningEndDateTime: ISODateString;
+  maxEnrollQuota: number;
+  enrollCount?: null;
+  learningSpaceType?: null;
+  learningSpaceEntity?: null;
+  learningSpaceNameKeyIn?: null;
+  recognizedStudyMinType: 'TIME';
+  recognizedStudyCycles?: null;
+  recognizedStudyMinutes?: null;
+  isRecognizedStudyPoint?: null;
+  recognizedStudyPoint?: null;
+  instructorName?: null;
+  instructorType?: null;
+  isUseTrainingCostPerPerson?: null;
+  trainingCostPerPerson?: null;
+  progressMinPassScore: number;
+  progressWeights: number;
+  isUsePassOption?: null;
+  passMethodType?: null;
+  isCertificateProvided?: null;
+  totalMinPassScore: number;
+  attendanceMinPassScore: number;
+  attendanceWeights: number;
+  examMinPassScore: number;
+  examWeights: number;
+  asgmtMinPassScore: number;
+  asgmtWeights: number;
 }

@@ -12,7 +12,7 @@ export function useCourseSequences(uuid: string, reqDto: any) {
 }
 // 과정 차수 단건 불러오기
 export function useCourseSequenceOne(sequenceId: string) {
-  return useQuery<any>(queryOptions.courseSequenceOne(sequenceId));
+  return useQuery(queryOptions.courseSequenceOne(sequenceId));
 }
 // 과정 패키지 리스트 불러오기 - 미정
 // export function useCoursePackage(uuid: string) {

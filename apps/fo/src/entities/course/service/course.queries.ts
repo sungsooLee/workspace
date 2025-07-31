@@ -38,7 +38,7 @@ export const queryOptions = {
       CourseService.fetchSequences(id, { openingYear: reqDto.openingYear, isAll: reqDto.isAll }),
   }),
   // 과정 차수 단건 불러오기
-  courseSequenceOne: (sequenceId: string): UseQueryOptions => ({
+  courseSequenceOne: (sequenceId: string) => ({
     queryKey: queryKeys.sequenceOne(sequenceId),
     queryFn: () => CourseService.fetchSequenceOne(sequenceId),
   }),
