@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { ProgressBar } from '@learnway/ui';
+import { ProgressBar } from '@learnway/ui/progress';
 import { IcoStar } from '@learnway/icons';
 
 import styles from './review-rating.module.css';

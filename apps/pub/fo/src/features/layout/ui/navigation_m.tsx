@@ -1,11 +1,13 @@
 import { IcoHome03, IcoMenu01 } from '@learnway/icons';
-import { Button, useModal } from '@learnway/ui';
+
 import { Link } from '@tanstack/react-router';
 import { memo } from 'react';
 import { NavigationPopupM } from '../../layout';
 
 import '@learnway/styles/fo/features/layout/m.ui/navigate-button/navigate-button.css';
 import styles from '@learnway/styles/fo/features/layout/m.ui/navigate-button/navigate-button.module.css';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 
 const NavigationMComponent = () => {
   // modal

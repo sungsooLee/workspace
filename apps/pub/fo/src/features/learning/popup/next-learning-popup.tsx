@@ -1,8 +1,9 @@
 import { memo } from 'react';
-import { ModalBody, ModalContainer, ModalTitle, ModalFooter, Button } from '@learnway/ui';
 import { IcoRefresh02, IcoPrevNext } from '@learnway/icons';
 
 import styles from './next-learning-popup.module.css';
+import { Button } from '@learnway/ui/button';
+import { ModalContainer, ModalTitle, ModalBody, ModalFooter } from '@learnway/ui/modal';
 
 const NextLearningPopupComponent = () => {
   return (

@@ -1,7 +1,7 @@
 import react, { memo, useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import { Button } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
 import { isMobile } from 'react-device-detect';
 
 import styles from './thumnail-list.module.css';

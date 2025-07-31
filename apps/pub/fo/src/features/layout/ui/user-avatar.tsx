@@ -7,11 +7,16 @@ import {
   IcoPoint,
   IcoRocket,
 } from '@learnway/icons';
-import { Avatar, Button, Popover, Switch, useModal } from '@learnway/ui';
+
 import { memo, useState } from 'react';
 import languagestyles from './language.module.css';
 import popoverInnerStyles from './popover-inner.module.css';
 import styles from './user-avatar.module.css';
+import { useModal } from '@learnway/ui/modal';
+import { Popover } from '@learnway/ui/popover';
+import { Avatar } from '@learnway/ui/avatar';
+import { Button } from '@learnway/ui/button';
+import { Switch } from '@learnway/ui/switch';
 
 const PopoverContent = () => {
   const { confirm: openConfirm } = useModal();

@@ -1,6 +1,5 @@
 import { memo } from 'react';
 import { Link } from '@tanstack/react-router';
-import { Input, Button } from '@learnway/ui';
 import { IcoSearch } from '@learnway/icons';
 
 import { RecentSearches } from './recent-searches';

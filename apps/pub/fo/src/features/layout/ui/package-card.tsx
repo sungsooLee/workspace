@@ -1,4 +1,4 @@
-import { Button } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
 import { cn } from '@learnway/shared';
 
 import styles from './package-card.module.css';

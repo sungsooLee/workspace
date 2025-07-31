@@ -1,7 +1,7 @@
 import { memo, useState, useRef } from 'react';
 import { Link } from '@tanstack/react-router';
 import styles from '@learnway/styles/fo/features/layout/ui/search.module.css';
-import { Input, Button } from '@learnway/ui';
+import { Input } from '@learnway/ui/input';
 import { IcoSearch } from '@learnway/icons';
 
 import { SearchPopover } from './search-popover';

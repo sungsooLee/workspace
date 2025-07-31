@@ -1,8 +1,10 @@
 import { memo } from 'react';
-import { ModalBody, ModalContainer, ModalTitle, ModalFooter, Button } from '@learnway/ui';
+
 import { IcoArrowForward, IcoCheck } from '@learnway/icons';
 
 import styles from './video-setting-popup.module.css';
+import { Button } from '@learnway/ui/button';
+import { ModalContainer, ModalTitle, ModalBody, ModalFooter } from '@learnway/ui/modal';
 
 const VideoSettingPopupComponent = () => {
   return (

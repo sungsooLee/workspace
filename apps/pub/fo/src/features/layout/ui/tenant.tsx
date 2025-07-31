@@ -1,11 +1,13 @@
 import { IcoArrowDown } from '@learnway/icons';
-import { Button, Popover, useModal } from '@learnway/ui';
+import { Popover } from '@learnway/ui/popover';
 import { memo, useState } from 'react';
 import { BrowserView, MobileView } from 'react-device-detect';
 import { TenantPopup } from '../../layout';
 
 import logoImage from '@learnway/styles/fo/assets/images/logo_foot.png';
 import styles from '@learnway/styles/fo/features/platform/ui/tenant-button/tenant-button.module.css';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 
 const TenantContent = ({
   selectedTenant,

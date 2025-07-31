@@ -1,6 +1,6 @@
 import { IcoClose02, IcoNarrowRight, IcoNudge05, IcoNudge10, IcoSearch } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { Button } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
 import { Link } from '@tanstack/react-router';
 import { useState } from 'react';
 

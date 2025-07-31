@@ -2,10 +2,11 @@ import { memo, useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import { isMobile } from 'react-device-detect';
 import { useTranslation } from 'react-i18next';
-import { Button, Popover } from '@learnway/ui';
 import styles from './language.module.css';
 import popoverInnerStyles from './popover-inner.module.css';
 import { IcoArrowDown, IcoLang, IcoClose02 } from '@learnway/icons';
+import { Popover } from '@learnway/ui/popover';
+import { Button } from '@learnway/ui/button';
 
 const PopoverContent = () => {
   const [selectedLang, setSelectedLang] = useState('한국어');

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Button } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
 import { cn } from '@learnway/shared';
 
 import styles from './arrays.module.css';
