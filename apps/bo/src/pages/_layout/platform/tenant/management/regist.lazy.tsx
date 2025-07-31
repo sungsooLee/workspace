@@ -81,7 +81,7 @@ function RouteComponent() {
       isSecurityPledge: true,
     };
     console.log('payload {} => ', payload);
-    if (await openConfirm('저장 하시겠습니까?')) {
+    if (await openConfirm(t('저장 하시겠습니까?'))) {
       create(payload);
     }
   };

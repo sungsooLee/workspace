@@ -9,9 +9,7 @@ import { Tabs, Button } from '@learnway/ui';
 
 import { useFetchAuthUser } from '@learnway/auth/entities';
 
-import {
-  TenantUserRegistApplicationList,
-} from '@features/platform-management/tenant';
+import { TenantUserRegistApplicationList } from '@features/platform-management/tenant';
 
 import { CompanyUserList } from '@features/platform-management/company';
 
@@ -57,13 +55,13 @@ function RouteComponent() {
   }, [loginUser]);
   const tabItems = [
     {
-      title: '유저',
+      title: t('유저'),
       key: 't1',
       // content: <TenantUserList rootPath="/platform" />,
       content: <CompanyUserList />,
     },
     {
-      title: '회원가입 신청',
+      title: t('회원가입 신청'),
       key: 't2',
       content: <TenantUserRegistApplicationList rootPath="/platform" />,
     },
@@ -72,23 +70,21 @@ function RouteComponent() {
   return (
     <PageContainer hideOutLine={true}>
       <ContentsButtons>
-        {
-          (selectedTabKey && selectedTabKey === 't1') && (
-            <Button
-              label={t('LABEL.button.regist')}
-              variant="primary"
-              size="sm"
-              onClick={() => {
-                if (companyCodes && companyCodes.length > 0) {
-                  router.navigate({
-                    to: '/platform/tenant/user/user-regist',
-                    state: { companyCodes },
-                  });
-                }
-              }}
-            />
-          )
-        }
+        {selectedTabKey && selectedTabKey === 't1' && (
+          <Button
+            label={t('LABEL.button.regist')}
+            variant="primary"
+            size="sm"
+            onClick={() => {
+              if (companyCodes && companyCodes.length > 0) {
+                router.navigate({
+                  to: '/platform/tenant/user/user-regist',
+                  state: { companyCodes },
+                });
+              }
+            }}
+          />
+        )}
       </ContentsButtons>
       <MainContents>
         <Tabs
