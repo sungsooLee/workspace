@@ -19,7 +19,7 @@ function RouteComponent() {
 
   useEffect(() => {
     if (!learningSpaceId) router.navigate({ to: '/learning/training-place' });
-  }, [learningSpaceId, router]);
+  }, []);
 
   const handleSaveClick = () => {
     if (formRef.current?.saveData) formRef.current.saveData();
@@ -29,6 +29,11 @@ function RouteComponent() {
     if (formRef.current?.deleteData) formRef.current.deleteData();
   };
 
+  const handleListClick = () => {
+    const listParam = routerState.location.state?.listParam;
+    router.navigate({ to: '/learning/training-place', state: { listParam } });
+  };
+
   return (
     <PageContainer>
       <ContentsButtons>
@@ -36,17 +41,22 @@ function RouteComponent() {
           <Button
             variant="point"
             size="sm"
-            onClick={() => router.navigate({ to: '/learning/training-place' })}
-          >
-            {t('LABEL.button.list')}
-          </Button>
+            onClick={handleListClick}
+            label={t('LABEL.button.list')}
+          />
         </LinkBox>
-        <Button variant="point" size="sm" onClick={handleDeleteClick}>
-          {t('LABEL.button.delete')}
-        </Button>
-        <Button variant="primary" size="sm" onClick={handleSaveClick}>
-          {t('LABEL.button.save')}
-        </Button>
+        <Button
+          variant="point"
+          size="sm"
+          onClick={handleDeleteClick}
+          label={t('LABEL.button.delete')}
+        />
+        <Button
+          variant="primary"
+          size="sm"
+          onClick={handleSaveClick}
+          label={t('LABEL.button.save')}
+        />
       </ContentsButtons>
       <MainContents>
         <TrainingPlaceDetail
