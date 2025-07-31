@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import { cn, getRandomId } from '@learnway/shared';
 import { Link } from '@tanstack/react-router';
-import { Badge, Button, Carousel, Dropdown, Input, Thumbnail } from '@learnway/ui';
+
 import {
   IcoPlay,
   IcoStar,
@@ -23,6 +23,12 @@ import ThumbnailList from '../../../-components/thumb/thumb-nail-list';
 import styles from './course-contents.module.css';
 import { BannerItem } from './banner-item'; // 상단 배너
 import { ShortsItem } from './shorts-item'; // 하단 shorts
+import { Badge } from '@learnway/ui/badge';
+import { Carousel } from '@learnway/ui/carousel';
+import { Button } from '@learnway/ui/button';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { Input } from '@learnway/ui/input';
+import { Thumbnail } from '@learnway/ui/thumbnail';
 
 const CourseHomeComponent: FC = () => {
   // Search

@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Switch } from '@learnway/ui';
+import { Switch } from '@learnway/ui/switch';
 import { memo, useState } from 'react';
 
 export const Route = createFileRoute('/_guide/guide/switch')({
@@ -18,7 +18,7 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-import { Switch } from '@learnway/ui';
+import { Switch } from '@learnway/ui/switch';
 
 // 적용방법(예시)
 <Switch id="id-1" label="Label" />
@@ -28,7 +28,7 @@ import { Switch } from '@learnway/ui';
           <code>
             {`// label을 동적으로 변경하려면
 import { memo, useState } from 'react';
-import { Switch } from '@learnway/ui';
+import { Switch } from '@learnway/ui/switch';
 
 const [isChecked, setIsChecked] = useState(false);
 

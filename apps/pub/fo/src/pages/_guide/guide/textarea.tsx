@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { Textarea } from '@learnway/ui';
+import { Textarea } from '@learnway/ui/textarea';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 
 export const Route = createFileRoute('/_guide/guide/textarea')({
@@ -18,7 +18,7 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-import { Textarea } from '@learnway/ui';
+import { Textarea } from '@learnway/ui/textarea';
 
 // 필요에 따라
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';

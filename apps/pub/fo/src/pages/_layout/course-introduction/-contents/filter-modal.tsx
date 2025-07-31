@@ -1,20 +1,14 @@
 import { FC, useState } from 'react';
 import { cn } from '@learnway/shared';
-import {
-  OptionCard,
-  Button,
-  useModal,
-  OptionCardItem,
-  ModalContainer,
-  ModalTitle,
-  ModalBody,
-  ModalFooter,
-} from '@learnway/ui';
+
 import { IcoArrowForward } from '@learnway/icons';
 import { isMobile } from 'react-device-detect';
 
 /* style */
 import styles from './filter-modal.module.css';
+import { Button } from '@learnway/ui/button';
+import { OptionCard, OptionCardItem } from '@learnway/ui/option-card';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
 const filter = [
   { label: '전체', value: 'a' },

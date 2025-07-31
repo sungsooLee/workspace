@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
 import { cn, getRandomId } from '@learnway/shared';
-import { Button, Input, Dropdown, Badge, Popover, Checkbox, Pagination } from '@learnway/ui';
+
 import {
   IcoPlay,
   IcoStar,
@@ -23,6 +23,13 @@ import { FilterModal } from './filter-modal';
 /* style */
 import styles from './course-contents.module.css';
 import dropdownPopoverStyles from '../../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
+import { Badge } from '@learnway/ui/badge';
+import { Button } from '@learnway/ui/button';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { Input } from '@learnway/ui/input';
+import { Popover } from '@learnway/ui/popover';
+import { Checkbox } from '@learnway/ui/checkbox';
+import { Pagination } from '@learnway/ui/pagination';
 
 const CoursePackageComponent: FC = () => {
   // dropdown

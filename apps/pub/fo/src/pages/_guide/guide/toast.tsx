@@ -1,5 +1,6 @@
-import { Button, useToast } from '@learnway/ui';
 import { createFileRoute } from '@tanstack/react-router';
+import { Button } from '@learnway/ui/button';
+import { useToast } from '@learnway/ui/toast';
 
 export const Route = createFileRoute('/_guide/guide/toast')({
   component: RouteComponent,
@@ -42,8 +43,8 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-        import { useToast } from '@learnway/ui';
-        
+        import { useToast } from '@learnway/ui/toast';
+
         const { open } = useToast();
 
         const handleClickToast = () => {

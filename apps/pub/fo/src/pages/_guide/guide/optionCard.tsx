@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { OptionCard, OptionCardItem } from '@learnway/ui';
+import { OptionCard, OptionCardItem } from '@learnway/ui/option-card';
 import { createFileRoute } from '@tanstack/react-router';
 
 import {

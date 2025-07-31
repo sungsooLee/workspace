@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useRef, useEffect, useState } from 'react';
 import { cn, getRandomId } from '@learnway/shared';
-import { Button, Input, Dropdown, Pagination, useModal, Popover, Badge } from '@learnway/ui';
+
 import {
   IcoArrowDown,
   IcoArrowForward,
@@ -23,6 +23,12 @@ import styles from './detail_m.module.css';
 
 /* ThumbnailList */
 import bannerImg from '@learnway/styles/fo/assets/images/banner/img_banner_sample.jpg';
+import { Button } from '@learnway/ui/button';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
+import { Badge } from '@learnway/ui/badge';
+import { Popover } from '@learnway/ui/popover';
+import { Pagination } from '@learnway/ui/pagination';
 
 export const Route = createFileRoute('/_layout/category/detail_m')({
   component: RouteComponent,

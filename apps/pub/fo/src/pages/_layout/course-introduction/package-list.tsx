@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { cn } from '@learnway/shared';
 import { isMobile } from 'react-device-detect';
 
-import { Button, Tabs } from '@learnway/ui';
 import { IcoArrowDown, IcoShare, IcoBell02 } from '@learnway/icons';
 
 /* style */
@@ -17,6 +16,8 @@ import aiImg from '@learnway/styles/fo/assets/images/menu/course/img_course_ai.p
 import { CoursePackage } from './-contents/course-package';
 import { Course } from './-contents/course';
 import { CourseHome } from './-contents/course-home';
+import { Tabs } from '@learnway/ui/tabs';
+import { Button } from '@learnway/ui/button';
 
 export const Route = createFileRoute('/_layout/course-introduction/package-list')({
   component: RouteComponent,

@@ -1,16 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import React, { useState } from 'react';
 import { cn, getRandomId } from '@learnway/shared';
-import {
-  Dropdown,
-  Button,
-  Pagination,
-  Input,
-  Badge,
-  Carousel,
-  EmptyText,
-  Popover,
-} from '@learnway/ui';
+
 import { isMobile } from 'react-device-detect';
 import { Arrays, Filter } from '../../../features/layout';
 import {
@@ -32,6 +23,14 @@ import bnrCImage2 from '@learnway/styles/fo/assets/images/banner/banner_category
 /* ThumbnailList */
 import bannerImg from '@learnway/styles/fo/assets/images/banner/img_banner_sample.jpg';
 import ThumbnailList from '../../-components/thumb/thumb-nail-list';
+import { Button } from '@learnway/ui/button';
+import { Carousel } from '@learnway/ui/carousel';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { EmptyText } from '@learnway/ui/empty-text';
+import { Input } from '@learnway/ui/input';
+import { Badge } from '@learnway/ui/badge';
+import { Popover } from '@learnway/ui/popover';
+import { Pagination } from '@learnway/ui/pagination';
 
 export const Route = createFileRoute('/_layout/category/detail')({
   component: RouteComponent,

@@ -1,6 +1,7 @@
+import { Button } from '@learnway/ui/button';
+import { useModal, ModalContainer, ModalTitle, ModalBody, ModalFooter } from '@learnway/ui/modal';
 import { createFileRoute } from '@tanstack/react-router';
 import { isMobile } from 'react-device-detect';
-import { Button, ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui';
 
 const ContentModal = () => {
   const { closeModal } = useModal();
@@ -75,7 +76,8 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-import { ModalBody, ModalContainer, ModalFooter, ModalTitle, ModalDescription, useModal  } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 // Modal open, close
 const { openModal,  closeModal } = useModal();
 
@@ -120,7 +122,8 @@ openModal({
         <div className="code_example">
           <pre className="code_block">
             <code>{`
-import { Button, useModal } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 const CustomFooter = () => {
     const { closeModal } = useModal();
     return (
@@ -217,7 +220,8 @@ export const MpassPopup = memo(MpassPopupCompoment);
         <div className="code_example">
           <pre className="code_block">
             <code>{`// import
-import { Button, useModal } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 
 // 호출
 const { openModal } = useModal();
@@ -244,7 +248,8 @@ const { closeModal } = useModal();
           <pre className="code_block">
             <code>{`// import
 import { useEffect } from 'react';
-import { Button, useModal } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 
 // 호출
 const { openModal, closeModal } = useModal();
