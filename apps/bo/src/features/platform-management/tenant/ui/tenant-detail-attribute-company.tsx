@@ -63,14 +63,14 @@ const TenantDetailAttributeCompanyComponent = (
 
   const handleOnSubmit = async (payload: any) => {
     console.log('payload {} => ', payload);
-    if (await openConfirm('저장 하시겠습니까?')) {
+    if (await openConfirm(t('저장 하시겠습니까?'))) {
       update(payload);
     }
   };
 
   useEffect(() => {
     console.log(tenantName, attributeData);
-    updateFormData({ ...attributeData, tenantName: tenantName });
+    updateFormData({ ...attributeData, tenantName });
   }, [attributeData]);
 
   return (
@@ -130,7 +130,7 @@ const formConfig: DynamicFormConfig = {
       type: 'switch',
       label: t('수강 신청 결재라인 사용'),
       value: false,
-      guideText: '수강 신청할 때 승인하는 결제 라인을 설정합니다.',
+      guideText: t('수강 신청할 때 승인하는 결제 라인을 설정합니다.'),
       switchConfig: {
         label: (value: boolean) => (value ? t('사용') : t('미사용')) } },
     {

@@ -61,6 +61,7 @@ const GridBoxComponent = <T extends object>(
     enableDragAndDrop,
     onDragEnd,
     selectedRowIds,
+    hidePagination,
     ...props
   }: GridBoxProps<T>,
   ref: React.Ref<GridImperative>,
@@ -130,6 +131,7 @@ const GridBoxComponent = <T extends object>(
       ?.filter((column: GridBoxColumn<T>) => column.type !== 'numbering')
       ?.map((column: GridBoxColumn<T>) => {
         return columnHelper.accessor(column.name as any, {
+          ...column,
           cell: (info) => {
             if (column.render) {
               // render 함수 내부에서 필요한 값(page, row 등)은 info 객체나 클로저로 접근
@@ -138,8 +140,8 @@ const GridBoxComponent = <T extends object>(
             return info.getValue();
           },
           header: column.label,
-          size: column.size,
-          meta: column.meta,
+          // size: column.size,
+          // meta: column.meta,
           enableSorting: column.enableSorting !== false,
           // 다른 컬럼 옵션들 (sortingFn, filterFn 등) 필요시 추가
         });
@@ -163,9 +165,9 @@ const GridBoxComponent = <T extends object>(
       pageNumber: gridData?.pageable?.pageNumber ?? 0,
       pageSize: gridData?.pageable?.pageSize ?? 20,
       totalPages: gridData?.totalPages ?? 0,
-      disabled: (gridData?.totalPages || 0) === 0,
+      disabled: (gridData?.totalPages || 0) === 0 || hidePagination,
     };
-  }, [gridData]);
+  }, [gridData, hidePagination]);
 
   /**
    * 전체선택 버튼 클릭

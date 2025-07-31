@@ -7,7 +7,13 @@ export type com_ever_edu_cms_curriculum_dto_req_CurriculumSaveReqDto = {
     channelUuid: string;
     curriculumName: string;
     curriculumDescription?: string;
+    /**
+     * Enum(cms.curriculum.CurriculumType)<br>- GENERAL: 일반(이러닝I,II, 클래스, 라이브)<br>- ASSESSMENT:평가<br>- SURVEY: 설문
+     */
     curriculumType: com_ever_edu_cms_curriculum_dto_req_CurriculumSaveReqDto.curriculumType;
+    /**
+     * Enum(pms.multilingual.LangCountryCode)
+     */
     languageCountryCode: com_ever_edu_cms_curriculum_dto_req_CurriculumSaveReqDto.languageCountryCode;
     coordinatorUuid?: string;
     coordinatorName?: string;
@@ -20,11 +26,17 @@ export type com_ever_edu_cms_curriculum_dto_req_CurriculumSaveReqDto = {
     vendorTelNo?: string;
 };
 export namespace com_ever_edu_cms_curriculum_dto_req_CurriculumSaveReqDto {
+    /**
+     * Enum(cms.curriculum.CurriculumType)<br>- GENERAL: 일반(이러닝I,II, 클래스, 라이브)<br>- ASSESSMENT:평가<br>- SURVEY: 설문
+     */
     export enum curriculumType {
         GENERAL = 'GENERAL',
         ASSESSMENT = 'ASSESSMENT',
         SURVEY = 'SURVEY',
     }
+    /**
+     * Enum(pms.multilingual.LangCountryCode)
+     */
     export enum languageCountryCode {
         KO = 'KO',
         EN = 'EN',

@@ -70,6 +70,9 @@
     & + [class*='nlp--contents-row'] {
       @apply mt-[16px];
     }
+    & + [class*='nlp-stats-summary'] {
+      @apply -mt-[8px];
+    }
 
     .custom_area {
       @apply ml-[12px] flex items-center;

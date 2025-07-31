@@ -1,0 +1,16 @@
+.start {
+  &.tenant_content {
+    @apply -my-[16px];
+    .tenant_list {
+      li {
+        @apply w-full;
+        button {
+          @apply title2 flex min-h-[56px] w-full items-center justify-between !px-0 text-[var(--gray35)];
+        }
+        & + li {
+          @apply border-t-[1px] border-solid border-[var(--gray92)];
+        }
+      }
+    }
+  }
+}

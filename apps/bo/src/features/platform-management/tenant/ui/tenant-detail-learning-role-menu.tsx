@@ -28,7 +28,7 @@ const columnHelper = createColumnHelper<any>();
 const columns = [
   columnHelper.accessor('apiName', {
     cell: (info) => info.getValue(),
-    header: '분류',
+    header: t('분류'),
     size: 120,
   }),
   columnHelper.accessor('apiId', {
@@ -129,7 +129,7 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleInfo, siteScope }: a
   const handleSaveClick = () => {
     if (!selectedRole) {
       openModal({
-        content: <div>역할을 선택해주세요.</div>,
+        content: <div>{t('역할을 선택해주세요.')}</div>,
         width: 'sm',
       });
       return;
@@ -251,7 +251,7 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleInfo, siteScope }: a
     if (roleInfo)
       return (
         <Button
-          label={'메뉴선택'}
+          label={t('메뉴선택')}
           variant={'gray2'}
           size={'sm'}
           onClick={handleRoleMenuMapping}
@@ -265,7 +265,7 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleInfo, siteScope }: a
     <SectionLayout contentsRatio={'third_children'}>
       <TreeBox
         type={'SHUTTLE_LIST'}
-        title={'역할 목록'}
+        title={t('역할 목록')}
         data={roleTree}
         initLevel={2}
         treeId={'1'}
@@ -277,7 +277,7 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleInfo, siteScope }: a
         data={roleMenuTree}
         initLevel={2}
         treeId={'2'}
-        title={'메뉴 설정'}
+        title={t('메뉴 설정')}
         type={'SHUTTLE_LIST'}
         selectedNode={selectedRoleMenu}
         handleSelectedNodeChange={(node: any) => handleMenuSelect(node)}
@@ -294,7 +294,7 @@ export const TenantDetailLearningRoleMenuComponent = ({ roleInfo, siteScope }: a
             onClick={handleSaveClick}
             disabled={!apiGridData || apiGridData.length === 0}
           >
-            저장
+            {t('저장')}
           </Button>
         }
         multiple={true} // 체크박스로 직접 관리하므로 multiple 옵션 비활성화

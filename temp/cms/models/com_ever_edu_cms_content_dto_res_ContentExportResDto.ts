@@ -10,7 +10,13 @@ export type com_ever_edu_cms_content_dto_res_ContentExportResDto = {
     destChannelUuid?: string;
     destContentUuid?: string;
     languageCountryCode?: com_ever_edu_cms_content_dto_res_ContentExportResDto.languageCountryCode;
+    /**
+     * Enum(cms.content.ContentCreateType)<br>- MANUAL: 직접생성<br>- TRANSLATE: 번역내보내기<br>- SHARED: 공유내보내기
+     */
     createType?: com_ever_edu_cms_content_dto_res_ContentExportResDto.createType;
+    /**
+     * Enum(cms.content.ContentType)Enum(cms.content.ContentType)<br>- VIDEO: 동영상<br>- EBOOK: 이북<br>- SCORM: 스콤<br>- HTML5_VIDEO: HTML 동영상<br>- IMAGE: 이미지<br>- EXTERNAL_LINK: 외부링크<br>- EXTERNAL_AGENCY: 외부위탁<br>- BLOG: 블로그<br>- EXAM: 시험지<br>- EXAM_POOL: 문제은행<br>- ASSIGNMENT: 과제<br>- SURVEY: 설문지<br>- ETC: 기타
+     */
     contentType?: com_ever_edu_cms_content_dto_res_ContentExportResDto.contentType;
 };
 export namespace com_ever_edu_cms_content_dto_res_ContentExportResDto {
@@ -40,11 +46,17 @@ export namespace com_ever_edu_cms_content_dto_res_ContentExportResDto {
         HR = 'HR',
         ET = 'ET',
     }
+    /**
+     * Enum(cms.content.ContentCreateType)<br>- MANUAL: 직접생성<br>- TRANSLATE: 번역내보내기<br>- SHARED: 공유내보내기
+     */
     export enum createType {
         MANUAL = 'MANUAL',
         SHARED = 'SHARED',
         TRANSLATE = 'TRANSLATE',
     }
+    /**
+     * Enum(cms.content.ContentType)Enum(cms.content.ContentType)<br>- VIDEO: 동영상<br>- EBOOK: 이북<br>- SCORM: 스콤<br>- HTML5_VIDEO: HTML 동영상<br>- IMAGE: 이미지<br>- EXTERNAL_LINK: 외부링크<br>- EXTERNAL_AGENCY: 외부위탁<br>- BLOG: 블로그<br>- EXAM: 시험지<br>- EXAM_POOL: 문제은행<br>- ASSIGNMENT: 과제<br>- SURVEY: 설문지<br>- ETC: 기타
+     */
     export enum contentType {
         VIDEO = 'VIDEO',
         EBOOK = 'EBOOK',

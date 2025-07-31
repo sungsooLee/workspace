@@ -7,6 +7,9 @@ export type com_ever_edu_cms_curriculum_dto_req_CurriculumUpdateReqDto = {
     curriculumName?: string;
     curriculumDescription?: string;
     isUsed?: boolean;
+    /**
+     * Enum(pms.multilingual.LangCountryCode)
+     */
     languageCountryCode?: com_ever_edu_cms_curriculum_dto_req_CurriculumUpdateReqDto.languageCountryCode;
     coordinatorUuid?: string;
     coordinatorName?: string;
@@ -19,6 +22,9 @@ export type com_ever_edu_cms_curriculum_dto_req_CurriculumUpdateReqDto = {
     vendorTelNo?: string;
 };
 export namespace com_ever_edu_cms_curriculum_dto_req_CurriculumUpdateReqDto {
+    /**
+     * Enum(pms.multilingual.LangCountryCode)
+     */
     export enum languageCountryCode {
         KO = 'KO',
         EN = 'EN',

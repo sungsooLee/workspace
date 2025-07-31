@@ -1,4 +1,5 @@
 import { cn } from '@learnway/shared';
+import { t } from 'i18next';
 import { FC } from 'react';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
@@ -25,13 +26,25 @@ const TenantDetailBannerViewComponent: FC<{}> = ({}) => {
   return (
     <div className={cn(styles.start, styles.wrap)}>
       <FormSubTitle
-        label={'배너 정보'}
+        label={t('배너 정보')}
         actionNode={
           <>
-            <Button label={'초기화'} variant={'text'} size={'sm'} className="btn_text" disabled />
-            <Button label={'삭제'} variant={'text'} size={'sm'} className="btn_text" disabled />
-            <Button label={'미리보기'} variant={'text'} size={'sm'} className="btn_text" disabled />
-            <Button label={'저장'} variant={'save'} size={'sm'} disabled />
+            <Button
+              label={t('초기화')}
+              variant={'text'}
+              size={'sm'}
+              className="btn_text"
+              disabled
+            />
+            <Button label={t('삭제')} variant={'text'} size={'sm'} className="btn_text" disabled />
+            <Button
+              label={t('미리보기')}
+              variant={'text'}
+              size={'sm'}
+              className="btn_text"
+              disabled
+            />
+            <Button label={t('저장')} variant={'save'} size={'sm'} disabled />
           </>
         }
         lineType={'light'}
@@ -41,7 +54,7 @@ const TenantDetailBannerViewComponent: FC<{}> = ({}) => {
           {/* form_item */}
           <div className={formStyles.form_item}>
             <label htmlFor="name-banner" className={formStyles.form_label}>
-              <span className={formStyles.form_text}>배너 이미지(PC)</span>
+              <span className={formStyles.form_text}>{t('배너 이미지(PC)')}</span>
               {/* 필수 케이스 */}
               <span className={cn(formStyles.status, formStyles.required)}>
                 <IcoFormRequired width={12} height={12} />
@@ -52,12 +65,14 @@ const TenantDetailBannerViewComponent: FC<{}> = ({}) => {
                 <div className={fileUploadStyles.upload_single}>
                   <div className={fileUploadStyles.view_file}>
                     <div className={fileUploadStyles.attach_area}>
-                      <p className={fileUploadStyles.text}>버튼을 클릭하여 파일을 추가하세요.</p>
+                      <p className={fileUploadStyles.text}>
+                        {t('버튼을 클릭하여 파일을 추가하세요.')}
+                      </p>
                     </div>
                   </div>
                   <Button className={fileUploadStyles.btn_attach} size={'sm'} variant={'gray'}>
                     <input type="file" className={fileUploadStyles.input_file} />
-                    {'파일첨부'}
+                    {t('파일첨부')}
                   </Button>
                 </div>
                 {/* 첨부된 파일 영역 */}
@@ -72,9 +87,9 @@ const TenantDetailBannerViewComponent: FC<{}> = ({}) => {
                             className={fileUploadStyles.icon_type}
                           />
                           <span className={fileUploadStyles.attached_name}>
-                            {
-                              '파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명.png'
-                            }
+                            {t(
+                              '파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명파일명.png',
+                            )}
                           </span>
                         </p>
                         <Button className={fileUploadStyles.btn_clear} onlyIcon>
@@ -84,7 +99,7 @@ const TenantDetailBannerViewComponent: FC<{}> = ({}) => {
                     </div>
                     <Button className={fileUploadStyles.btn_attach} size={'sm'} variant={'gray'}>
                       <input type="file" className={fileUploadStyles.input_file} />
-                      {'파일첨부'}
+                      {t('파일첨부')}
                     </Button>
                   </div>
                 </div>
@@ -104,7 +119,7 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'bannerImage',
       type: 'custom',
-      label: '이미지',
+      label: t('이미지'),
       value: [],
       placeholder: '' },
   ] };

@@ -84,7 +84,7 @@ const TenantDetailLearningRoleGrantRangeModalComponent = ({
 
   return (
     <ModalContainer>
-      <ModalTitle>{'일괄적용'}</ModalTitle>
+      <ModalTitle>{t('일괄적용')}</ModalTitle>
       <ModalBody>
         <div className={cn(popLayoutstyles.start, popLayoutstyles.wrap)}>
           <div className={popLayoutstyles.contents}>
@@ -169,9 +169,9 @@ const TenantDetailLearningRoleGrantRangeModalComponent = ({
         </div>
       </ModalBody>
       <ModalFooter>
-        <Button label={'취소'} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
+        <Button label={t('취소')} variant={'gray'} size={'lg'} onClick={() => closeModal()} />
         <Button
-          label={'적용'}
+          label={t('적용')}
           variant={'primary'}
           size={'lg'}
           onClick={() => {

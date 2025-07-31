@@ -1,6 +1,6 @@
 .start {
   .history_area {
-    @apply p-[32px];
+    @apply popover-scroll p-[32px];
     .history_list {
       @apply flex max-w-[380px] flex-col gap-[24px] overflow-hidden;
       > li {

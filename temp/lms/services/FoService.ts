@@ -2,7 +2,6 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { com_ever_edu_external_curriculum_dto_ContentProgressListResDto } from '../models/com_ever_edu_external_curriculum_dto_ContentProgressListResDto';
 import type { com_ever_edu_lms_category_dto_res_CategoryMasterDto } from '../models/com_ever_edu_lms_category_dto_res_CategoryMasterDto';
 import type { com_ever_edu_lms_category_dto_res_TenantCategoryTreeDto } from '../models/com_ever_edu_lms_category_dto_res_TenantCategoryTreeDto';
 import type { com_ever_edu_lms_course_dto_req_CourseCategorySearchReqDto } from '../models/com_ever_edu_lms_course_dto_req_CourseCategorySearchReqDto';
@@ -11,15 +10,16 @@ import type { com_ever_edu_lms_enroll_dto_req_EnrollCancelReqDto$ByUser } from '
 import type { com_ever_edu_lms_enroll_dto_req_EnrollReqDto$ByUser } from '../models/com_ever_edu_lms_enroll_dto_req_EnrollReqDto$ByUser';
 import type { com_ever_edu_lms_enroll_dto_req_EnrollSearchDto$SearchByUser } from '../models/com_ever_edu_lms_enroll_dto_req_EnrollSearchDto$SearchByUser';
 import type { com_ever_edu_lms_enroll_dto_res_EnrollQueueDto$EnrollQueue } from '../models/com_ever_edu_lms_enroll_dto_res_EnrollQueueDto$EnrollQueue';
+import type { com_ever_edu_lms_enroll_dto_res_EnrollResDto$DeliveryAddressList } from '../models/com_ever_edu_lms_enroll_dto_res_EnrollResDto$DeliveryAddressList';
 import type { com_ever_edu_lms_enroll_dto_res_EnrollResDto$DeliveryAddressOnUser } from '../models/com_ever_edu_lms_enroll_dto_res_EnrollResDto$DeliveryAddressOnUser';
 import type { com_ever_edu_lms_enroll_dto_res_EnrollResDto$DetailOnUser } from '../models/com_ever_edu_lms_enroll_dto_res_EnrollResDto$DetailOnUser';
-import type { com_ever_edu_lms_search_course_dto_req_CourseSearchReqDto$OnUser } from '../models/com_ever_edu_lms_search_course_dto_req_CourseSearchReqDto$OnUser';
-import type { com_ever_edu_lms_search_course_dto_res_CourseSearchResDto$OnUser } from '../models/com_ever_edu_lms_search_course_dto_res_CourseSearchResDto$OnUser';
-import type { com_ever_edu_lms_search_keyword_dto_req_SearchKeywordRequestDto } from '../models/com_ever_edu_lms_search_keyword_dto_req_SearchKeywordRequestDto';
-import type { com_ever_edu_lms_search_keyword_dto_res_SearchKeywordPopularResponseDto } from '../models/com_ever_edu_lms_search_keyword_dto_res_SearchKeywordPopularResponseDto';
-import type { com_ever_edu_lms_search_keyword_dto_res_SearchKeywordResponseDto } from '../models/com_ever_edu_lms_search_keyword_dto_res_SearchKeywordResponseDto';
+import type { com_ever_edu_lms_searching_dto_req_SearchCourseReqDto$OnUser } from '../models/com_ever_edu_lms_searching_dto_req_SearchCourseReqDto$OnUser';
+import type { com_ever_edu_lms_searching_dto_req_SearchKeywordRequestDto } from '../models/com_ever_edu_lms_searching_dto_req_SearchKeywordRequestDto';
+import type { com_ever_edu_lms_searching_dto_res_SearchCourseResDto$OnUser } from '../models/com_ever_edu_lms_searching_dto_res_SearchCourseResDto$OnUser';
+import type { com_ever_edu_lms_searching_dto_res_SearchKeywordPopularResponseDto } from '../models/com_ever_edu_lms_searching_dto_res_SearchKeywordPopularResponseDto';
+import type { com_ever_edu_lms_searching_dto_res_SearchKeywordResponseDto } from '../models/com_ever_edu_lms_searching_dto_res_SearchKeywordResponseDto';
 import type { com_ever_edu_lms_sequence_dto_req_SequenceScheduleReqDto } from '../models/com_ever_edu_lms_sequence_dto_req_SequenceScheduleReqDto';
-import type { com_ever_edu_lms_sequence_dto_res_SequenceResDto$onUser } from '../models/com_ever_edu_lms_sequence_dto_res_SequenceResDto$onUser';
+import type { com_ever_edu_lms_sequence_dto_res_SequenceResDto$OnUser } from '../models/com_ever_edu_lms_sequence_dto_res_SequenceResDto$OnUser';
 import type { com_ever_edu_lms_sequence_dto_res_SequenceUserResDto } from '../models/com_ever_edu_lms_sequence_dto_res_SequenceUserResDto';
 import type { com_ever_edu_lms_student_dto_req_StudentSearchDto$SearchByUser } from '../models/com_ever_edu_lms_student_dto_req_StudentSearchDto$SearchByUser';
 import type { org_springdoc_core_converters_models_Pageable } from '../models/org_springdoc_core_converters_models_Pageable';
@@ -38,7 +38,7 @@ export class FoService {
      * @throws ApiError
      */
     public static saveSearchLogs(
-        requestBody: com_ever_edu_lms_search_keyword_dto_req_SearchKeywordRequestDto,
+        requestBody: com_ever_edu_lms_searching_dto_req_SearchKeywordRequestDto,
     ): CancelablePromise<string> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -160,7 +160,7 @@ export class FoService {
      * @throws ApiError
      */
     public static saveAutoCompleteKeyword(
-        requestBody: com_ever_edu_lms_search_keyword_dto_req_SearchKeywordRequestDto,
+        requestBody: com_ever_edu_lms_searching_dto_req_SearchKeywordRequestDto,
     ): CancelablePromise<string> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -233,12 +233,12 @@ export class FoService {
      * 차수 단건 조회
      * 차수를 조회한다.
      * @param courseSequenceId
-     * @returns com_ever_edu_lms_sequence_dto_res_SequenceResDto$onUser OK
+     * @returns com_ever_edu_lms_sequence_dto_res_SequenceResDto$OnUser OK
      * @throws ApiError
      */
     public static findBySequenceNo(
         courseSequenceId: number,
-    ): CancelablePromise<com_ever_edu_lms_sequence_dto_res_SequenceResDto$onUser> {
+    ): CancelablePromise<com_ever_edu_lms_sequence_dto_res_SequenceResDto$OnUser> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/user/api/v1/sequence/{courseSequenceId}',
@@ -279,13 +279,13 @@ export class FoService {
      * 한 테넌트별 한 사용자의 최근 10개 검색어를 조회합니다.
      * @param tenantId
      * @param userUuid
-     * @returns com_ever_edu_lms_search_keyword_dto_res_SearchKeywordResponseDto OK
+     * @returns com_ever_edu_lms_searching_dto_res_SearchKeywordResponseDto OK
      * @throws ApiError
      */
     public static getRecentSearchLogs(
         tenantId: string,
         userUuid: string,
-    ): CancelablePromise<Array<com_ever_edu_lms_search_keyword_dto_res_SearchKeywordResponseDto>> {
+    ): CancelablePromise<Array<com_ever_edu_lms_searching_dto_res_SearchKeywordResponseDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/user/api/v1/search-logs/{tenantId}/{userUuid}/recent',
@@ -306,17 +306,49 @@ export class FoService {
      * 한 테넌트별 상위 인기 검색어 10개 조회
      * 한 테넌트 내의 인기 검색어 10개를 보여준다.
      * @param tenantId
-     * @returns com_ever_edu_lms_search_keyword_dto_res_SearchKeywordPopularResponseDto OK
+     * @returns com_ever_edu_lms_searching_dto_res_SearchKeywordPopularResponseDto OK
      * @throws ApiError
      */
     public static getPopularSearchLogs(
         tenantId: string,
-    ): CancelablePromise<Array<com_ever_edu_lms_search_keyword_dto_res_SearchKeywordPopularResponseDto>> {
+    ): CancelablePromise<Array<com_ever_edu_lms_searching_dto_res_SearchKeywordPopularResponseDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/user/api/v1/search-logs/{tenantId}/popular-logs',
             path: {
                 'tenantId': tenantId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * @param request
+     * @param pageable
+     * @param courseType
+     * @param enrollmentType
+     * @returns com_ever_edu_lms_searching_dto_res_SearchCourseResDto$OnUser OK
+     * @throws ApiError
+     */
+    public static search(
+        request: com_ever_edu_lms_searching_dto_req_SearchCourseReqDto$OnUser,
+        pageable: org_springdoc_core_converters_models_Pageable,
+        courseType?: 'ELEARNING1' | 'ELEARNING2' | 'CLASS' | 'LIVE' | 'EXAM' | 'SURVEY',
+        enrollmentType?: 'ENROLL_DONE' | 'ENROLL_REQUEST' | 'CANCEL_DONE' | 'REJECT_DONE',
+    ): CancelablePromise<Array<com_ever_edu_lms_searching_dto_res_SearchCourseResDto$OnUser>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/user/api/v1/search-course',
+            query: {
+                'request': request,
+                'courseType': courseType,
+                'enrollmentType': enrollmentType,
+                'pageable': pageable,
             },
             errors: {
                 400: `Bad Request`,
@@ -406,15 +438,21 @@ export class FoService {
         });
     }
     /**
-     * 수강신청 최근 배송지 조회
-     * 수강신청 최근 교재 배송지를 조회한다
-     * @returns com_ever_edu_lms_enroll_dto_res_EnrollResDto$DeliveryAddressOnUser OK
+     * 수강신청 배송지 목록조회
+     * 수강신청 교재 배송지 목록을 조회한다
+     * @param userUuid
+     * @returns com_ever_edu_lms_enroll_dto_res_EnrollResDto$DeliveryAddressList OK
      * @throws ApiError
      */
-    public static findEnrollDeliveryByUserid(): CancelablePromise<com_ever_edu_lms_enroll_dto_res_EnrollResDto$DeliveryAddressOnUser> {
+    public static findEnrollDeliveryList(
+        userUuid: string,
+    ): CancelablePromise<Array<com_ever_edu_lms_enroll_dto_res_EnrollResDto$DeliveryAddressList>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/user/api/v1/enroll/delivery/address',
+            url: '/user/api/v1/enroll/delivery/list',
+            query: {
+                'userUuid': userUuid,
+            },
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,
@@ -425,29 +463,15 @@ export class FoService {
         });
     }
     /**
-     * 커리큘럼 학습 진행률 조회
-     * 커리큘럼의 학습자원 학습 진행률을 조회한다.<BR>커리큘럼에 포한된 학습자원의 학습 진행률을 조회한다.<BR>커리큘럼 상세 정보(CMS API)와 결합하여 과정 진행율 상세를 구현해야한다.
-     * @param courseSequenceId 과정차수Id
-     * @param courseId 과정Id
-     * @param curriculumId 커리큘럼Id
-     * @returns com_ever_edu_external_curriculum_dto_ContentProgressListResDto OK
+     * 수강신청 최근 배송지 조회
+     * 수강신청 최근 교재 배송지를 조회한다
+     * @returns com_ever_edu_lms_enroll_dto_res_EnrollResDto$DeliveryAddressOnUser OK
      * @throws ApiError
      */
-    public static getCurriculumContentProgress(
-        courseSequenceId: number,
-        courseId: number,
-        curriculumId: number,
-    ): CancelablePromise<com_ever_edu_external_curriculum_dto_ContentProgressListResDto> {
+    public static findEnrollDeliveryByUserid(): CancelablePromise<com_ever_edu_lms_enroll_dto_res_EnrollResDto$DeliveryAddressOnUser> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/user/api/v1/dashboard/curriculum/{curriculumId}/progress',
-            path: {
-                'curriculumId': curriculumId,
-            },
-            query: {
-                'courseSequenceId': courseSequenceId,
-                'courseId': courseId,
-            },
+            url: '/user/api/v1/enroll/delivery/address',
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,
@@ -542,27 +566,25 @@ export class FoService {
         });
     }
     /**
-     * @param request
-     * @param pageable
-     * @param courseType
-     * @param enrollmentType
-     * @returns com_ever_edu_lms_search_course_dto_res_CourseSearchResDto$OnUser OK
+     * 나의 교육 일정(차수) 목록 조회
+     * 과정ID, 년도, 전체검색 여부로 차수 목록 조회
+     * @param courseId
+     * @param reqDto
+     * @returns com_ever_edu_lms_sequence_dto_res_SequenceUserResDto OK
      * @throws ApiError
      */
-    public static search(
-        request: com_ever_edu_lms_search_course_dto_req_CourseSearchReqDto$OnUser,
-        pageable: org_springdoc_core_converters_models_Pageable,
-        courseType?: 'ELEARNING1' | 'ELEARNING2' | 'CLASS' | 'LIVE' | 'EXAM' | 'SURVEY',
-        enrollmentType?: 'ENROLL_DONE' | 'ENROLL_REQUEST' | 'CANCEL_DONE' | 'REJECT_DONE',
-    ): CancelablePromise<Array<com_ever_edu_lms_search_course_dto_res_CourseSearchResDto$OnUser>> {
+    public static findMyAllByCourseIdAndOpeningYear(
+        courseId: number,
+        reqDto: com_ever_edu_lms_sequence_dto_req_SequenceScheduleReqDto,
+    ): CancelablePromise<Array<com_ever_edu_lms_sequence_dto_res_SequenceUserResDto>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/user/api/v1/course-search',
+            url: '/user/api/v1/course/{courseId}/sequences/my',
+            path: {
+                'courseId': courseId,
+            },
             query: {
-                'request': request,
-                'courseType': courseType,
-                'enrollmentType': enrollmentType,
-                'pageable': pageable,
+                'reqDto': reqDto,
             },
             errors: {
                 400: `Bad Request`,
@@ -603,13 +625,13 @@ export class FoService {
      * 한 테넌트 내의 키워드 입력시 자동 완성을 제공해주는 기능이다.
      * @param tenantId
      * @param keyword
-     * @returns com_ever_edu_lms_search_keyword_dto_res_SearchKeywordResponseDto OK
+     * @returns com_ever_edu_lms_searching_dto_res_SearchKeywordResponseDto OK
      * @throws ApiError
      */
     public static getKeywordAutoComplete(
         tenantId: string,
         keyword: string,
-    ): CancelablePromise<Array<com_ever_edu_lms_search_keyword_dto_res_SearchKeywordResponseDto>> {
+    ): CancelablePromise<Array<com_ever_edu_lms_searching_dto_res_SearchKeywordResponseDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/user/api/v1/auto-complete/{tenantId}/{keyword}',

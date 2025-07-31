@@ -1,13 +1,13 @@
-import { useCallback, useEffect, useState } from 'react';
-import { OptionCard, OptionCardItem } from '@learnway/ui/option-card';
 import { cn } from '@learnway/shared';
 import styles from '@learnway/styles/fo/features/category/category-filter.module.css';
+import { OptionCard } from '@learnway/ui/option-card';
+import { useEffect, useState } from 'react';
 
-import { IcoFilter, IcoRefresh02 } from '@learnway/icons';
 import { CategoryFilterPopup } from '@features/category/ui/category-filter-popup';
 import { CODE_GROUP, useCodeStore } from '@learnway/hooks';
-import { ChipList } from '@learnway/ui/chip-list';
+import { IcoFilter } from '@learnway/icons';
 import { Button } from '@learnway/ui/button';
+import { ChipList } from '@learnway/ui/chip-list';
 import { useModal } from '@learnway/ui/modal';
 
 const FilterComponent = ({ onOptionChange }: any) => {
@@ -60,7 +60,7 @@ const FilterComponent = ({ onOptionChange }: any) => {
   // OptionCard 선택 처리 핸들러
   const handleCardOptionsSelect = (selectedOptions: any) => {
     setSelectedCardOptions(selectedOptions);
-    onOptionChange(selectedOptions)
+    onOptionChange(selectedOptions);
   };
 
   useEffect(() => {
@@ -69,7 +69,7 @@ const FilterComponent = ({ onOptionChange }: any) => {
       const defaultOptions = data.map((item: any) => {
         return { label: item.cdName, value: item.value };
       });
-      setFilter(defaultOptions)
+      setFilter(defaultOptions);
     })();
   }, []);
 
@@ -109,9 +109,12 @@ const FilterComponent = ({ onOptionChange }: any) => {
           //onChange={handleChipOptionsChange}
         />
       </div>
+      <div className={styles.reset}>
+        <Button className={styles.btn_reset} label={'초기화'} />
+      </div>
     </div>
   );
-}
+};
 
 // const FilterComponent = ({ onOptionChange }: any) => {
 //   // modal

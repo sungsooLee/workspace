@@ -117,7 +117,7 @@ function RouteComponent() {
 
   const menuItems = [
     {
-      title: '테넌트 기본 정보',
+      title: t('테넌트 기본 정보'),
       key: EnTenantDetailTabKey.base,
       content: <TenantDetailBase ref={formBaseRef} roleInfo={'PLATFORM'} />,
     },
@@ -127,17 +127,17 @@ function RouteComponent() {
     //   content: <TenantDetailAttribute ref={formAttrRef} roleInfo={'PLATFORM'} />,
     // },
     {
-      title: '테넌트 메뉴 매핑',
+      title: t('테넌트 메뉴 매핑'),
       key: EnTenantDetailTabKey.menu,
       content: <TenantDetailMenu ref={menuRef} roleInfo={'PLATFORM'} />,
     },
     {
-      title: '테넌트 카테고리 매핑',
+      title: t('테넌트 카테고리 매핑'),
       key: EnTenantDetailTabKey.category,
       content: <TenantDetailCategory roleInfo={'PLATFORM'} />,
     },
     {
-      title: '테넌트 역할 생성',
+      title: t('테넌트 역할 생성'),
       key: EnTenantDetailTabKey.learningRole,
       content: <TenantDetailLearningRole roleInfo={'PLATFORM'} />,
     },

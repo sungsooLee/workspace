@@ -3,7 +3,7 @@ import { useModal } from '@learnway/ui/modal';
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
   useActiveMenuDepthState,
-  useAsycFetchMenusForceRefatch,
+  useAsyncFetchMenusForceRefetch,
   useFetchAuthUser,
   useUpdateUser,
 } from '@learnway/auth/entities';
@@ -21,7 +21,7 @@ import { Popover } from '@learnway/ui/popover';
 import { Tooltip } from '@learnway/ui/tooltip';
 import { useCreation } from 'ahooks';
 import { t } from 'i18next';
-import { isEmpty, last } from 'lodash';
+import { isEmpty } from 'lodash';
 import {
   Children,
   FC,
@@ -72,7 +72,7 @@ const PageContainerComponent: FC<{
   tabs?: boolean; // 컨텐츠 상단에 tab 있는 경우
   scrollHidden?: boolean; // 컨텐츠 안에 스크롤인 경우
   hideOutLine?: boolean; // 공통 > 나의 정보 화면(외곽라인,bg 없는 경우)
-  customTitle?: string; // 별도 타이틀로 설정해야 하는 경우
+  title?: string; // 별도 타이틀로 설정해야 하는 경우
   guidePopupProps?: GuidePopupProps; // 가이드 팝업 props, props가 존재하면 노출
   tooltipProps?: TooltipProps; // 툴팁 props
 }> = ({
@@ -84,37 +84,35 @@ const PageContainerComponent: FC<{
   tabs = false,
   scrollHidden = false,
   hideOutLine = false,
-  customTitle,
+  title,
   guidePopupProps,
   tooltipProps,
 }) => {
   const { meta } = useCurrentRoute();
-  const { activeMenuDepthMenu: activeMenuDepth, setActiveMenuDepthMenu } = useActiveMenuDepthState(
-    (state) => state,
-  );
-  const currentMenu = last(activeMenuDepth);
+  const {
+    activeMenuDepthMenu: activeMenuDepth,
+    setActiveMenuDepthMenu,
+    currentMenu,
+  } = useActiveMenuDepthState((state) => state);
 
   const { data: authUser } = useFetchAuthUser();
 
   const { updateMenu } = useUpdateUser();
-  const { asyncMenus } = useAsycFetchMenusForceRefatch();
+  const { asyncMenus } = useAsyncFetchMenusForceRefetch();
 
   const { createMenuFavorites } = useCreateMenuFavorites();
   const { deleteMenuFavorites } = useDeleteMenuFavorites();
   const { alert: openAlert } = useModal();
+
   // 페이지 타이틀
-  const title = useCreation(() => {
-    if (customTitle) return customTitle;
-    if (meta?.title) return meta?.title;
-    const currentMenuCode = last(activeMenuDepth)?.menuCode;
-    return currentMenuCode ? `HRD_CENTER_MENU.${currentMenuCode}` : '';
-  }, [activeMenuDepth]);
+  const pageTitle = useCreation(() => {
+    return title || meta?.title || t(`HRD_CENTER_MENU.${currentMenu?.menuCode}`);
+  }, [currentMenu]);
 
   // 페이지 즐겨찾기 여부
   const isFavorite = useMemo(() => {
-    const isFavorite = last(activeMenuDepth)?.isFavorite;
-    return isFavorite;
-  }, [activeMenuDepth]);
+    return currentMenu?.isFavorite;
+  }, [currentMenu]);
 
   const ButtonSlot = Children.toArray(children).find(
     (child) => isValidElement(child) && child.type === ContentsButtons,
@@ -251,7 +249,7 @@ const PageContainerComponent: FC<{
             }
           },
           onError: (data: any) => {
-            if (data && data?.code && data?.code === 'B001') {
+            if (data?.code === 'B001') {
               openAlert({
                 title: t('LABEL.alert.notFavoritesAdd.title'),
                 content: t('LABEL.alert.notFavoritesAdd.message'),
@@ -309,7 +307,8 @@ const PageContainerComponent: FC<{
         {/* title_wrap */}
         <div className={cn(styles.title_wrap, 'title_wrap')}>
           <h3 className={cn(styles.title, 'title_bo_1_b')}>
-            {t(title)}
+            {/* 페이지 타이틀 */}
+            {pageTitle}
             {/* 즐겨찾기 기능 */}
             {showFavoriteButton && (
               <Button

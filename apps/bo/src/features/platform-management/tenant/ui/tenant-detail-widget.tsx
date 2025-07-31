@@ -462,7 +462,7 @@ const columns = () =>
       cell: (prop: any) => {
         return <strong>{prop.row.original.c1}</strong>;
       },
-      header: '구분',
+      header: t('구분'),
       enableGrouping: false,
       size: 50,
       maxSize: 50,
@@ -485,7 +485,7 @@ const columns = () =>
           </div>
         );
       },
-      header: '컴포넌트 ID',
+      header: t('컴포넌트 ID'),
       enableGrouping: false,
       size: 300,
       meta: {

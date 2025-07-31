@@ -22,7 +22,12 @@ import {
   UserChoiceModal,
 } from '@shared/ui';
 
-import { DuplicateCheckInputFormField, DuplicateState, FormDisplay } from '@features/form';
+import {
+  DuplicateCheckInputFormField,
+  DuplicateState,
+  FormDisplay,
+  InputFormField,
+} from '@features/form';
 
 import { EnDeviceType, EnFormMode, EnUseCategory } from '@types';
 
@@ -149,8 +154,11 @@ const TenantDetailBaseFormComponent = ({
           type="text"
           value=""
           placeholder=""
-          validation={{ required: true }}
-          element={<Input />}
+          validation={{
+            format: 'string',
+            required: true,
+          }}
+          element={<InputFormField />}
         />
       </ContentsRow>
       <ContentsRow>

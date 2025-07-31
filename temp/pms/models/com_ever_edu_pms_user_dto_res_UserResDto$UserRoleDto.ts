@@ -71,9 +71,12 @@ export namespace com_ever_edu_pms_user_dto_res_UserResDto$UserRoleDto {
         TENANT_MANAGER = 'TENANT_MANAGER',
         CHANNEL_OWNER = 'CHANNEL_OWNER',
         CHANNEL_MEMBER = 'CHANNEL_MEMBER',
-        CHANNEL_GUEST = 'CHANNEL_GUEST',
+        CHANNEL_GUEST_OPERATION = 'CHANNEL_GUEST_OPERATION',
+        CHANNEL_GUEST_COURSE = 'CHANNEL_GUEST_COURSE',
         POLICY_MANAGER = 'POLICY_MANAGER',
         TUTOR = 'TUTOR',
+        LEADER = 'LEADER',
+        MEMBER = 'MEMBER',
     }
     /**
      * 테넌트 적용 범위

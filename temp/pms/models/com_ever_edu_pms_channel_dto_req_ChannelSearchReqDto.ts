@@ -20,6 +20,10 @@ export type com_ever_edu_pms_channel_dto_req_ChannelSearchReqDto = {
      */
     channelName?: string;
     /**
+     * 채널 Uuid
+     */
+    channelUuid?: string;
+    /**
      * 채널메인아이디(채널핸들)
      */
     channelMainId?: string;

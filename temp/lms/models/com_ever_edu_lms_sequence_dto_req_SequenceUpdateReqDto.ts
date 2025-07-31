@@ -91,6 +91,10 @@ export type com_ever_edu_lms_sequence_dto_req_SequenceUpdateReqDto = {
      */
     maxWaitlistQuota?: number;
     /**
+     * 수강전 문의
+     */
+    isPreEnrollQuestionAllowed?: boolean;
+    /**
      * 강사 설정 여부
      */
     isInstructorAssigned: boolean;

@@ -1,4 +1,5 @@
 import { createFileRoute, useRouter } from '@tanstack/react-router';
+import { t } from 'i18next';
 
 import { PageContainer, MainContents, ContentsButtons } from '@shared/ui';
 
@@ -19,7 +20,7 @@ function RouteComponent() {
           size="sm"
           onClick={() => router.navigate({ to: '/platform/tenant/management/regist' })}
         >
-          등록
+          {t('등록')}
         </Button>
       </ContentsButtons>
       <MainContents>

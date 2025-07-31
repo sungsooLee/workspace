@@ -23,6 +23,7 @@ import bulletStyles from '@learnway/styles/fo/shared/ui/list/bullet.module.css';
 import avatarDefault from '@learnway/styles/fo/assets/images/common/img_avatar.png';
 import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 import { $generateHtmlFromNodes } from '@lexical/html';
+import { t } from 'i18next';
 import { createEditor } from 'lexical';
 
 interface Props {
@@ -41,34 +42,35 @@ const CourseIntroductionCompoment = forwardRef<HTMLDivElement, Props>(
       return arr.map((a) => ({
         imgSrc: listImage1,
         // imgSrc: a.thumbnail,
-        text: a.name,
+        text: a.courseName,
       }));
     };
 
     // 사전 필수 과정 아코디언
-    const [aforetimeValue, setAforetimeValue] = useState<string>(preRequired[0].id || '');
+    const [aforetimeValue, setAforetimeValue] = useState<string>(preRequired?.[0].id || '');
     const [aforetimeView, setAforetimeView] = useState<boolean>(false);
-    const aforetimeValueItems = preRequired
-      ? [
-          {
-            value: '1',
-            title: (
-              <div className={styles.aforetime_title}>
-                <p>
-                  <IcoEssential width={32} height={32} />
-                  {'사전 필수 과정이 있는 과정입니다'}
-                </p>
-                <span>{aforetimeValue === '1' ? '닫기' : '더보기'}</span>
-              </div>
-            ),
-            children: (
-              <div className={styles.aforetime_contents}>
-                <PackageCardList cardListData={prePackageCardValueFn(preRequired)} />
-              </div>
-            ),
-          },
-        ]
-      : [];
+    const aforetimeValueItems =
+      preRequired && preRequired.length
+        ? [
+            {
+              value: '1',
+              title: (
+                <div className={styles.aforetime_title}>
+                  <p>
+                    <IcoEssential width={32} height={32} />
+                    {t('사전 필수 과정이 있는 과정입니다')}
+                  </p>
+                  <span>{aforetimeValue === '1' ? '닫기' : '더보기'}</span>
+                </div>
+              ),
+              children: (
+                <div className={styles.aforetime_contents}>
+                  <PackageCardList cardListData={prePackageCardValueFn(preRequired)} />
+                </div>
+              ),
+            },
+          ]
+        : [];
 
     // 커리큘럼 컨텐츠 리스트
     const CurriculumData = [
@@ -149,14 +151,14 @@ const CourseIntroductionCompoment = forwardRef<HTMLDivElement, Props>(
           />
         </div>
 
-        <h2>과정 한눈에 파악하기</h2>
+        <h2>{t('과정 한눈에 파악하기')}</h2>
 
         {/* dataNoticeStyles module */}
         {introduction.aiSummary && (
           <div className={`${dataNoticeStyles.start} ${dataNoticeStyles.notice} ${styles.notice}`}>
             <div className={dataNoticeStyles.tit}>
               <IcoSymbol width={20} height={20} />
-              AI가 요약한 과정 핵심내용
+              {t('AI가 요약한 과정 핵심내용')}
             </div>
             <p className={dataNoticeStyles.txt} style={{ whiteSpace: 'pre-line' }}>
               {introduction.aiSummary}
@@ -176,7 +178,7 @@ const CourseIntroductionCompoment = forwardRef<HTMLDivElement, Props>(
           {curriculum && (
             <div className={styles.info_box}>
               <div className={styles.tit_box}>
-                <strong>커리큘럼</strong>
+                <strong>{t('커리큘럼')}</strong>
               </div>
 
               <div className={styles.curriculum_box}>
@@ -195,7 +197,7 @@ const CourseIntroductionCompoment = forwardRef<HTMLDivElement, Props>(
           {introduction.completionCriteria && (
             <div className={styles.info_box}>
               <div className={styles.tit_box}>
-                <strong>이수기준</strong>
+                <strong>{t('이수기준')}</strong>
               </div>
               <div className={styles.evaluation_box}>
                 <ul>
@@ -209,13 +211,13 @@ const CourseIntroductionCompoment = forwardRef<HTMLDivElement, Props>(
                 {/* bulletStyles */}
                 <div className={`${bulletStyles.start} ${bulletStyles.list}`}>
                   <ul>
-                    <li>이수기준은 차수별로 달라질 수 있습니다.</li>
-                    <li>항목의 이수기준을 교육기간 내 충족해야 수료 처리됩니다.</li>
+                    <li>{t('이수기준은 차수별로 달라질 수 있습니다')}.</li>
+                    <li>{t('항목의 이수기준을 교육기간 내 충족해야 수료 처리됩니다')}.</li>
                     <li>
-                      최종평가, 과제평가가 있을 시 반드시 기한 내 제출해야 합니다. (단, 제출기회는
-                      1회)
+                      {t('최종평가, 과제평가가 있을 시 반드시 기한 내 제출해야 합니다')}. (
+                      {t('단, 제출기회는 1회')})
                     </li>
-                    <li>과제물은 반드시 문서보안을 해제해 등록해야 평가가 가능합니다.</li>
+                    <li>{t('과제물은 반드시 문서보안을 해제해 등록해야 평가가 가능합니다')}.</li>
                   </ul>
                 </div>
               </div>
@@ -226,7 +228,7 @@ const CourseIntroductionCompoment = forwardRef<HTMLDivElement, Props>(
           {introduction.teachers && (
             <div className={styles.info_box}>
               <div className={styles.tit_box}>
-                <strong>강사소개</strong>
+                <strong>{t('강사소개')}</strong>
               </div>
               <div className={styles.operator_box}>
                 {introduction.teachers?.map((item: any, index: any) => (
@@ -253,7 +255,7 @@ const CourseIntroductionCompoment = forwardRef<HTMLDivElement, Props>(
                         <strong>{item.name}</strong>
                         {item.email && (
                           <div>
-                            <span>이메일</span>
+                            <span>{t('이메일')}</span>
                             <span>{item.email}</span>
                           </div>
                         )}
@@ -276,7 +278,7 @@ const CourseIntroductionCompoment = forwardRef<HTMLDivElement, Props>(
           {introduction.operators && (
             <div className={styles.info_box}>
               <div className={styles.tit_box}>
-                <strong>과정 운영자</strong>
+                <strong>{t('과정 운영자')}</strong>
               </div>
               <div className={styles.operator_box}>
                 {introduction.operators?.map((item: any, index: any) => (
@@ -302,8 +304,8 @@ const CourseIntroductionCompoment = forwardRef<HTMLDivElement, Props>(
                       <div className={operatorStyles.profile}>
                         <strong>{item.name}</strong>
                         <div>
-                          <span>{item.position}</span>
-                          <span>{item.teams}</span>
+                          {item.position ? <span>{item.position}</span> : ''}
+                          {item.teams ? <span>{item.teams}</span> : ''}
                         </div>
                       </div>
                       <div className={operatorStyles.definition_list}>
@@ -313,13 +315,73 @@ const CourseIntroductionCompoment = forwardRef<HTMLDivElement, Props>(
                         >
                           {item.email && (
                             <dl>
-                              <dt>이메일</dt>
+                              <dt>{t('이메일')}</dt>
                               <dd>{item.email}</dd>
                             </dl>
                           )}
                           {item.phone && (
                             <dl>
-                              <dt>전화</dt>
+                              <dt>{t('전화')}</dt>
+                              <dd>{item.phone}</dd>
+                            </dl>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* 과정 담당자 */}
+          {introduction.coordinator && (
+            <div className={styles.info_box}>
+              <div className={styles.tit_box}>
+                <strong>{t('과정 담당자')}</strong>
+              </div>
+              <div className={styles.operator_box}>
+                {introduction.coordinator?.map((item: any, index: any) => (
+                  <div key={index} className={`${operatorStyles.start} ${operatorStyles.operator}`}>
+                    {item.profileImage ? (
+                      <div className={operatorStyles.avatar}>
+                        <Avatar
+                          imageUrl="https://github.com/shadcn.png"
+                          size={isMobile ? 'xl' : '2xl'}
+                          className={styles.info_avata}
+                        />
+                      </div>
+                    ) : (
+                      <div className={operatorStyles.avatar}>
+                        <Avatar
+                          imageUrl={avatarDefault}
+                          size={isMobile ? 'xl' : '2xl'}
+                          className={styles.info_avata}
+                        />
+                      </div>
+                    )}
+                    <div className={operatorStyles.txt_box}>
+                      <div className={operatorStyles.profile}>
+                        <strong>{item.name}</strong>
+                        <div>
+                          {item.position ? <span>{item.position}</span> : ''}
+                          {item.teams ? <span>{item.teams}</span> : ''}
+                        </div>
+                      </div>
+                      <div className={operatorStyles.definition_list}>
+                        {/* definition module */}
+                        <div
+                          className={`${definitionListStyles.start} ${definitionListStyles.list}`}
+                        >
+                          {item.email && (
+                            <dl>
+                              <dt>{t('이메일')}</dt>
+                              <dd>{item.email}</dd>
+                            </dl>
+                          )}
+                          {item.phone && (
+                            <dl>
+                              <dt>{t('전화')}</dt>
                               <dd>{item.phone}</dd>
                             </dl>
                           )}
@@ -336,7 +398,7 @@ const CourseIntroductionCompoment = forwardRef<HTMLDivElement, Props>(
           {introduction.information && (
             <div className={styles.info_box}>
               <div className={styles.tit_box}>
-                <strong>과정 및 학습제한 안내</strong>
+                <strong>{t('과정 및 학습제한 안내')}</strong>
               </div>
               {/* bullet module */}
               <div className={`${bulletStyles.start} ${bulletStyles.list}`}>
@@ -347,20 +409,36 @@ const CourseIntroductionCompoment = forwardRef<HTMLDivElement, Props>(
                     </li>
                     ))} */}
                   <li>
-                    연계학습 : 본 과정은 야나두 웹사이트 및 앱을 사용하는 과정입니다. 앱을 다운로드
-                    받아주세요.
+                    {t('연계학습')} : {t('본 과정은 야나두 웹사이트 및 앱을 사용하는 과정입니다')}.{' '}
+                    {t('앱을 다운로드 받아주세요')}.
                   </li>
                   <li>
-                    보안프로그램 : 본 과정은 보안프로그램을 설치해야 하는 과정입니다. 학습 전,{' '}
-                    <Link to=".">보안프로그램</Link>을 먼저 설치해주세요.
+                    {t('보안프로그램')} : {t('본 과정은 보안프로그램을 설치해야 하는 과정입니다')}.{' '}
+                    {t('학습 전')}, <Link to=".">{t('보안프로그램')}</Link>
+                    {t('을 먼저 설치해주세요')}.
                   </li>
-                  <li>승인필요 : 본 과정은 수강신청 후 팀장 및 교육담당자 승인이 필요합니다.</li>
-                  <li>학습장소 : 본 과정은 사내에서만 학습 하실 수 있습니다.</li>
-                  <li>학습시간 : 근무시간(오전9시 ~ 오후 6시)에는 학습 하실 수 없습니다.</li>
-                  <li>학습시간 : 근무시간(오전9시 ~ 오후 6시)에만 학습 하실 수 있습니다.</li>
-                  <li>1일 진도 : 하루에 30%만 학습 하실 수 있습니다.</li>
-                  <li>복습제한 : 본 과정은 복습을 하실 수 없습니다.</li>
-                  <li>중복수강 : 본 과정은 중복 수강을 하실 수 없습니다.</li>
+                  <li>
+                    {t('승인필요')} :{' '}
+                    {t('본 과정은 수강신청 후 팀장 및 교육담당자 승인이 필요합니다')}.
+                  </li>
+                  <li>
+                    {t('학습장소')} : {t('본 과정은 사내에서만 학습 하실 수 있습니다')}.
+                  </li>
+                  <li>
+                    {t('학습시간')} : {t('근무시간(오전9시 ~ 오후 6시)에는 학습 하실 수 없습니다')}.
+                  </li>
+                  <li>
+                    {t('학습시간')} : {t('근무시간(오전9시 ~ 오후 6시)에만 학습 하실 수 있습니다')}.
+                  </li>
+                  <li>
+                    1일 {t('진도')} : {t('하루에 30%만 학습 하실 수 있습니다')}.
+                  </li>
+                  <li>
+                    {t('복습제한')} : {t('본 과정은 복습을 하실 수 없습니다')}.
+                  </li>
+                  <li>
+                    {t('중복수강')} : {t('본 과정은 중복 수강을 하실 수 없습니다')}.
+                  </li>
                 </ul>
               </div>
             </div>
@@ -370,7 +448,7 @@ const CourseIntroductionCompoment = forwardRef<HTMLDivElement, Props>(
         {/* 과정 정보 접기/펼치기 */}
         <div className={styles.btn_more}>
           <Button onClick={() => setMore((prev) => !prev)} className={more ? styles.active : ''}>
-            {more === true ? '과정 정보 접기' : '과정 정보 펼치기'}
+            {more === true ? t('과정 정보 접기') : t('과정 정보 펼치기')}
             <IcoArrowDown width={16} height={16} stroke="#4d525c" />
           </Button>
         </div>

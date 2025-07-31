@@ -7,7 +7,7 @@ export type com_ever_edu_lms_student_dto_req_StudentUpdateReqDto$UpdateStudent =
     /**
      * 차수 ID
      */
-    sourceSequenceId: number;
+    courseSequenceId: number;
     /**
      * 수강생 정보
      */

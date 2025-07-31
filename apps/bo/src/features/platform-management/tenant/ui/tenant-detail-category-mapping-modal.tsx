@@ -2,12 +2,12 @@ import { IcoNarrowRight } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 import { DndTreeView, TreeContainer, TreeNode } from '@learnway/ui/tree-view';
 import { t } from 'i18next';
 import { FC, useEffect, useState } from 'react';
 import popContentsStyles from './pop-contents-layout.module.css';
-import { Button } from '@learnway/ui/button';
-import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 //import { transformApiDataToTreeData } from '@features/category/service/category.service';
 import { useFetchCategory } from '@entities/category';
 import {
@@ -88,14 +88,14 @@ const TenantDetailCategoryMappingModalComponent: FC<any> = ({ tenantId, onNodeCh
   const handleDeleteTenantCategory = (node: TreeNode) => {
     if (node.children && node.children.length > 0) {
       openAlert({
-        title: '삭제할 수 없습니다.',
-        content: '하위 카테고리가 존재 시 삭제할 수 없습니다.',
+        title: t('삭제할 수 없습니다.'),
+        content: t('하위 카테고리가 존재 시 삭제할 수 없습니다.'),
       });
       return false;
     }
     openConfirm({
-      title: '삭제 하시겠습니까?',
-      content: <p>삭제 후 복구할 수 없습니다.</p>,
+      title: t('삭제 하시겠습니까?'),
+      content: <p>{t('삭제 후 복구할 수 없습니다.')}</p>,
       onClose: (value: boolean) => {
         if (value) {
           const payload: any = {};
@@ -134,18 +134,23 @@ const TenantDetailCategoryMappingModalComponent: FC<any> = ({ tenantId, onNodeCh
         break;
     }
     if (sourceNode.depth !== targetDepth) {
-      alert(
-        `동일한 레벨 내에서만 매핑 및 이동이 가능합니다. src:${sourceNode.depth}/dest:${
-          targetDepth
-        }`,
+      openAlert(
+        t(
+          '동일한 레벨 내에서만 매핑 및 이동이 가능합니다. src: {{sourcePath}}/dest: {{destPath}}',
+          { sourcePath: sourceNode.depth, destPath: targetDepth },
+        ),
       );
       return false;
     }
     if (sourceNode.parentKey !== parentKey) {
-      alert(
-        `동일한 부모 카테고리에만 매핑 및 이동이 가능합니다. src:${sourceNode.parentKey}/dest:${
-          parentKey
-        }`,
+      openAlert(
+        t(
+          '동일한 부모 카테고리에만 매핑 및 이동이 가능합니다. src: {{sourcePath}} /dest: {{destPath}}',
+          {
+            sourcePath: sourceNode.depth,
+            destPath: targetDepth,
+          },
+        ),
       );
       return false;
     }
@@ -156,7 +161,7 @@ const TenantDetailCategoryMappingModalComponent: FC<any> = ({ tenantId, onNodeCh
           return false;
         }
         if (tenantCategoryTreeAllKeys.includes(sourceCategoryId)) {
-          alert('이미 매핑된 카테고리입니다.');
+          openAlert(t('이미 매핑된 카테고리입니다.'));
           return false;
         }
         excutable = mappingTenantCategory;
@@ -260,7 +265,7 @@ const TenantDetailCategoryMappingModalComponent: FC<any> = ({ tenantId, onNodeCh
                 <div className={titleStyles.title_wrap}>
                   <div className={titleStyles.title_area}>
                     <h3 className={titleStyles.title}>{t('카테고리 매핑 목록')}</h3>
-                    <strong className={titleStyles.sub_title}>전체</strong>
+                    <strong className={titleStyles.sub_title}>{t('전체')}</strong>
                     <span className={titleStyles.num}>{commonCategoryTreeAllKeys?.length - 1}</span>
                   </div>
                   <div className={layoutStyles.btn_wrap}>

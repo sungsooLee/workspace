@@ -2,7 +2,7 @@
 
 .start {
   &.footer {
-    @apply relative border-t-[1px] border-solid border-[var(--gray90)] pb-[60px] pt-[48px] text-left text-[var(--gray7)];
+    @apply relative border-t-[1px] border-solid border-[var(--gray90)] bg-white pb-[60px] pt-[48px] text-left text-[var(--gray7)];
     .footer_area {
       @apply relative m-auto w-[1440px] px-[40px];
 
@@ -77,7 +77,7 @@
         .footer_area {
           @apply w-full px-[0];
           .footer_info {
-            @apply pb-[54px];
+            @apply pb-0;
 
             .info_box {
               @apply mt-[16px];

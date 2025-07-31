@@ -1,3 +1,4 @@
+import { t } from 'i18next';
 import { VideoPlayerContainerProps } from '../types';
 import { IcoVideoStop, IcoVideoPlay, IcoNextPlayFill, IcoPrevPlayFill } from '@learnway/icons';
 import { isMobile } from 'react-device-detect';
@@ -19,9 +20,9 @@ const CentralControlButton = ({
     const lessonName = playList ? playList[playIndex + addValue].lessonName : '';
     const result = await openConfirm({
       title: `${moduleName} (${lessonName})`,
-      content: '삭제버튼을 누르면 선택하신 항목이 모두 저장되며, 복구할 수 없습니다.',
-      okButtonLabel: isNext ? '다음 강의' : '이전 강의',
-      cancelButtonLabel: '다시보기',
+      content: t('삭제버튼을 누르면 선택하신 항목이 모두 저장되며, 복구할 수 없습니다.'),
+      okButtonLabel: isNext ? t('다음 강의') : t('이전 강의'),
+      cancelButtonLabel: t('다시보기'),
     });
     if (result) {
       if (isNext) {

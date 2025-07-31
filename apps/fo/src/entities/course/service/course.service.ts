@@ -1,4 +1,11 @@
-import { CourseCompleteDetail, CourseResponse, CourseType, CourseTypeLabel, TrainingLevelType, TrainingLevelTypeLabel } from "@types";
+import {
+  CourseCompleteDetail,
+  CourseResponse,
+  CourseType,
+  CourseTypeLabel,
+  TrainingLevelType,
+  TrainingLevelTypeLabel,
+} from '@types';
 
 const ddata = {
   thumbnail: 'https://cdn.learnway.io/thumbnail/thumbnail.png',
@@ -132,25 +139,25 @@ const ddata = {
       ],
     },
   ],
-  preRequired: [
-    {
-      id: 'A100020',
-      name: '선수 과정 이름 선수 과정 이름 선수 과정 이름 선수 과정 이름',
-      thumbnail: 'https://cdn.learnway.io/course/thumbnail.png',
-      courseId: 7,
-      courseName: 'CLASS - A2',
-      courseType: 'CLASS',
-      curriculumId: 2,
-      starRatingAverage: 0,
-      viewCount: 2,
-      likeCount: 1,
-    },
-    {
-      id: 'A100021',
-      name: '선수 과정 이름2 선수 과정 이름 선수 과정 이름 선수 과정 이름',
-      thumbnail: 'https://cdn.learnway.io/course/thumbnail.png',
-    },
-  ],
+  // preRequired: [
+  //   {
+  //     id: 'A100020',
+  //     name: '선수 과정 이름 선수 과정 이름 선수 과정 이름 선수 과정 이름',
+  //     thumbnail: 'https://cdn.learnway.io/course/thumbnail.png',
+  //     courseId: 7,
+  //     courseName: 'CLASS - A2',
+  //     courseType: 'CLASS',
+  //     curriculumId: 2,
+  //     starRatingAverage: 0,
+  //     viewCount: 2,
+  //     likeCount: 1,
+  //   },
+  //   {
+  //     id: 'A100021',
+  //     name: '선수 과정 이름2 선수 과정 이름 선수 과정 이름 선수 과정 이름',
+  //     thumbnail: 'https://cdn.learnway.io/course/thumbnail.png',
+  //   },
+  // ],
   // introduction: {
   //   aiSummary:
   //     '과정 소개 내용입니다. 과정 소개 내용입니다. 과정 소개 내용입니다. 과정 소개 내용입니다. 과정 소개 내용입니다.',
@@ -320,99 +327,99 @@ const ddata = {
   //     },
   //   ],
   // },
-  educations: {
-    classes: [
-      {
-        id: 'C100001',
-        name: '교육 클래스1',
-        type: '온라인',
-        startDate: '2023-01-01',
-        endDate: '2023-12-31',
-        state: '진행중',
-        info: {
-          startTime: '23-01-01 15:00',
-          endTime: '23-01-01 15:00',
-          teacher: '김강사',
-          location: '온라인',
-          duration: '2시간',
-          price: '1인당 30,000원',
-          seats: {
-            total: 30,
-            current: 20,
-            remaining: 10,
-          },
-        },
-        completionCriteria: {
-          scores: [
-            {
-              title: '총점(100%)',
-              attendance: '80점 이상',
-            },
-            {
-              title: '총점(100%)',
-              attendance: '90점 이상',
-            },
-          ],
-          description: [
-            {
-              text: '과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다.',
-            },
-            {
-              text: '과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다.',
-            },
-            {
-              text: '과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다.',
-            },
-          ],
-        },
-      },
-      {
-        id: 'C100002',
-        name: '교육 클래스2',
-        type: '오프라인',
-        startDate: '2023-01-01',
-        endDate: '2023-12-31',
-        state: '진행중',
-        info: {
-          startTime: '23-01-01 15:00',
-          endTime: '23-01-01 15:00',
-          teacher: '김강사',
-          location: '강남역',
-          address: '서울 강남구 테헤란로 KG타워',
-          duration: '2시간',
-          price: '1인당 30,000원',
-          seats: {
-            total: 30,
-            current: 20,
-            remaining: 10,
-          },
-        },
-        completionCriteria: {
-          scores: [
-            {
-              title: '총점(100%)',
-              attendance: '80점 이상',
-            },
-            {
-              title: '총점(100%)',
-              attendance: '90점 이상',
-            },
-          ],
-          description: [
-            {
-              text: '과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다.',
-            },
-            {
-              text: '과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다.',
-            },
-            {
-              text: '과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다.',
-            },
-          ],
-        },
-      },
-    ],
-  },
+  // educations: {
+  //   classes: [
+  //     {
+  //       id: 'C100001',
+  //       name: '교육 클래스1',
+  //       type: '온라인',
+  //       startDate: '2023-01-01',
+  //       endDate: '2023-12-31',
+  //       state: '진행중',
+  //       info: {
+  //         startTime: '23-01-01 15:00',
+  //         endTime: '23-01-01 15:00',
+  //         teacher: '김강사',
+  //         location: '온라인',
+  //         duration: '2시간',
+  //         price: '1인당 30,000원',
+  //         seats: {
+  //           total: 30,
+  //           current: 20,
+  //           remaining: 10,
+  //         },
+  //       },
+  //       completionCriteria: {
+  //         scores: [
+  //           {
+  //             title: '총점(100%)',
+  //             attendance: '80점 이상',
+  //           },
+  //           {
+  //             title: '총점(100%)',
+  //             attendance: '90점 이상',
+  //           },
+  //         ],
+  //         description: [
+  //           {
+  //             text: '과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다.',
+  //           },
+  //           {
+  //             text: '과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다.',
+  //           },
+  //           {
+  //             text: '과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다.',
+  //           },
+  //         ],
+  //       },
+  //     },
+  //     {
+  //       id: 'C100002',
+  //       name: '교육 클래스2',
+  //       type: '오프라인',
+  //       startDate: '2023-01-01',
+  //       endDate: '2023-12-31',
+  //       state: '진행중',
+  //       info: {
+  //         startTime: '23-01-01 15:00',
+  //         endTime: '23-01-01 15:00',
+  //         teacher: '김강사',
+  //         location: '강남역',
+  //         address: '서울 강남구 테헤란로 KG타워',
+  //         duration: '2시간',
+  //         price: '1인당 30,000원',
+  //         seats: {
+  //           total: 30,
+  //           current: 20,
+  //           remaining: 10,
+  //         },
+  //       },
+  //       completionCriteria: {
+  //         scores: [
+  //           {
+  //             title: '총점(100%)',
+  //             attendance: '80점 이상',
+  //           },
+  //           {
+  //             title: '총점(100%)',
+  //             attendance: '90점 이상',
+  //           },
+  //         ],
+  //         description: [
+  //           {
+  //             text: '과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다.',
+  //           },
+  //           {
+  //             text: '과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다.',
+  //           },
+  //           {
+  //             text: '과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다. 과정 이수 기준 설명입니다.',
+  //           },
+  //         ],
+  //       },
+  //     },
+  //   ],
+  // },
   reviews: {
     count: 1010372390123,
     personCount: 1000,
@@ -458,13 +465,13 @@ export const mapCourseDetail = (courseData: CourseResponse): CourseCompleteDetai
         captionLanguage: courseData.language || '',
       },
     },
-    channel: {
-      id: '200030',
-      name: '****************',
-      description: '**************',
-      thumbnail: 'https://cdn.learnway.io/channel/thumbnail.png',
-      subscribers: 1500,
-    },
+    // channel: {
+    //   id: '200030',
+    //   name: '****************',
+    //   description: '**************',
+    //   thumbnail: 'https://cdn.learnway.io/channel/thumbnail.png',
+    //   subscribers: 1500,
+    // },
     introduction: {
       aiSummary: courseData.courseSummary || '',
       tags: courseData.tagNames?.map((tag) => ({ value: tag.tagId, label: tag.tagName })) || [],
@@ -530,9 +537,20 @@ export const mapCourseDetail = (courseData: CourseResponse): CourseCompleteDetai
           name: courseData.operatorName,
           profileImage: '************.png',
           teams: courseData.operatorCompany,
-          position: courseData.operatorDept,
+          position: courseData.operatorDeptName,
           email: courseData.operatorEmail,
           phone: courseData.operatorTelNo,
+        },
+      ],
+      coordinator: [
+        {
+          id: 'operator',
+          name: courseData.coordinatorName,
+          profileImage: '************.png',
+          teams: courseData.coordinatorCompany,
+          position: courseData.coordinatorDeptName,
+          email: courseData.coordinatorEmail,
+          phone: courseData.coordinatorTelNo,
         },
       ],
       // information: [
@@ -546,14 +564,18 @@ export const mapCourseDetail = (courseData: CourseResponse): CourseCompleteDetai
       //   },
       // ],
     },
-    // preRequired: courseData.preqCourseList?.map((item) => ({
-    //   courseId: 7,
-    //   courseName: "CLASS - A2",
-    //   courseType: "CLASS",
-    //   curriculumId: 2,
-    //   starRatingAverage: 0,
-    //   viewCount: 2,
-    //   likeCount: 1
-    // })) || [],
+    preRequired:
+      courseData.preqCourseList?.map((item) => ({
+        // id: item.id,
+        // name: item.name,
+        // thumbnail: item.thumbnail,
+        courseId: item.courseId,
+        courseName: item.courseName,
+        courseType: item.courseType,
+        curriculumId: item.curriculumId,
+        starRatingAverage: item.starRatingAverage,
+        viewCount: item.viewCount,
+        likeCount: item.likeCount,
+      })) || [],
   };
 };

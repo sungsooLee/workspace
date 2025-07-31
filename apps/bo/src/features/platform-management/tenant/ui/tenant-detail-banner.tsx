@@ -21,12 +21,12 @@ const TenantDetailBannerComponent: FC<any> = () => {
 
   const tabItems = [
     {
-      title: '최상단캠페인 배너',
+      title: t('최상단캠페인 배너'),
       key: 'tab01',
       content: renderTabContent(),
     },
     {
-      title: '키비쥬얼영역 배너',
+      title: t('키비쥬얼영역 배너'),
       key: 'tab02',
       content: renderTabContent(),
     },

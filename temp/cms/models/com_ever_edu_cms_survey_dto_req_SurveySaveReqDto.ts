@@ -5,6 +5,9 @@
 import type { com_ever_edu_cms_tag_dto_req_TagReqDto } from './com_ever_edu_cms_tag_dto_req_TagReqDto';
 export type com_ever_edu_cms_survey_dto_req_SurveySaveReqDto = {
     contentName: string;
+    /**
+     * Enum(pms.multilingual.LangCountryCode)
+     */
     languageCountryCode: com_ever_edu_cms_survey_dto_req_SurveySaveReqDto.languageCountryCode;
     tenantId: number;
     channelUuid: string;
@@ -29,6 +32,9 @@ export type com_ever_edu_cms_survey_dto_req_SurveySaveReqDto = {
      * Enum(cms.contentContentAddInfoType)<br>- VIDEO_ADD_INFO(초)<br>- EXAM_ADD_INFO(건수)
      */
     contentAddInfoType?: com_ever_edu_cms_survey_dto_req_SurveySaveReqDto.contentAddInfoType;
+    /**
+     * 콘텐츠 추가정보 코드 별 초/건수 값
+     */
     contentAddInfo?: number;
     isSecured?: boolean;
     isDeleted?: boolean;
@@ -48,6 +54,9 @@ export type com_ever_edu_cms_survey_dto_req_SurveySaveReqDto = {
     isSmsRequired: boolean;
 };
 export namespace com_ever_edu_cms_survey_dto_req_SurveySaveReqDto {
+    /**
+     * Enum(pms.multilingual.LangCountryCode)
+     */
     export enum languageCountryCode {
         KO = 'KO',
         EN = 'EN',

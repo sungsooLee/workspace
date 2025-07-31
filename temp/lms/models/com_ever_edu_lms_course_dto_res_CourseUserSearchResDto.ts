@@ -2,9 +2,6 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-/**
- * 사전 학습 목록
- */
 export type com_ever_edu_lms_course_dto_res_CourseUserSearchResDto = {
     /**
      * 과정 ID

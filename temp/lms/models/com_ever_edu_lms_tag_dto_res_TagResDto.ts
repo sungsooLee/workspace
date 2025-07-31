@@ -2,9 +2,6 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-/**
- * 태그 이름 목록
- */
 export type com_ever_edu_lms_tag_dto_res_TagResDto = {
     /**
      * 태그 ID

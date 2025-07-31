@@ -1,5 +1,5 @@
 import {
-  useAsycFetchMenus,
+  useAsyncFetchMenus,
   useLoginUser,
   useReissue,
   useUpdateAuthUser,
@@ -20,7 +20,7 @@ export function useAuthSignin() {
   const { login } = useLoginUser();
   const { reissue } = useReissue();
   const { updateMenu } = useUpdateUser();
-  const { asyncMenus } = useAsycFetchMenus();
+  const { asyncMenus } = useAsyncFetchMenus();
   const { update: updateAuthUser } = useUpdateAuthUser();
   // const { alert: openAlert } = useModal();
 

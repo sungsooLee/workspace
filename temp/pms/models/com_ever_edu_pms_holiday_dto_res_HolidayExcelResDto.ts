@@ -4,8 +4,8 @@
 /* eslint-disable */
 export type com_ever_edu_pms_holiday_dto_res_HolidayExcelResDto = {
     /**
-     * 성공 갯수
+     * 응답 갯수
      */
-    successCount?: number;
+    resultCount?: number;
 };
 

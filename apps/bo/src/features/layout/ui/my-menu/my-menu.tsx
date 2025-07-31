@@ -14,7 +14,7 @@ import {
 } from '@entities/menu';
 import {
   useActiveMenuDepthState,
-  useAsycFetchMenusForceRefatch,
+  useAsyncFetchMenusForceRefetch,
   useFetchAuthUser,
   useLayoutStore,
   useUpdateUser,
@@ -39,7 +39,7 @@ const PopoverContent = () => {
   const [list, setList] = useState<any[]>([]);
 
   const { updateMenu } = useUpdateUser();
-  const { asyncMenus } = useAsycFetchMenusForceRefatch();
+  const { asyncMenus } = useAsyncFetchMenusForceRefetch();
   const { deleteMenuFavorites } = useDeleteMenuFavorites();
   const { moveMenuFavorites } = useMoveMenuFavorites();
 

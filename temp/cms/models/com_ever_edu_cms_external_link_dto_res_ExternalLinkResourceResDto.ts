@@ -5,12 +5,21 @@
 export type com_ever_edu_cms_external_link_dto_res_ExternalLinkResourceResDto = {
     contentUuid?: string;
     contentName?: string;
+    /**
+     * Enum(pms.multilingual.LangCountryCode) -
+     */
     languageCountryCode?: com_ever_edu_cms_external_link_dto_res_ExternalLinkResourceResDto.languageCountryCode;
     externalLink?: string;
+    /**
+     * Enum(cms.external_link.ExternalLinkType)<br>- CP: CP사<br>- EXT_NEW_WINDOW: 외부 새창<br>- SERICEO: SERICEO
+     */
     externalLinkType?: com_ever_edu_cms_external_link_dto_res_ExternalLinkResourceResDto.externalLinkType;
     source?: string;
 };
 export namespace com_ever_edu_cms_external_link_dto_res_ExternalLinkResourceResDto {
+    /**
+     * Enum(pms.multilingual.LangCountryCode) -
+     */
     export enum languageCountryCode {
         KO = 'KO',
         EN = 'EN',
@@ -37,6 +46,9 @@ export namespace com_ever_edu_cms_external_link_dto_res_ExternalLinkResourceResD
         HR = 'HR',
         ET = 'ET',
     }
+    /**
+     * Enum(cms.external_link.ExternalLinkType)<br>- CP: CP사<br>- EXT_NEW_WINDOW: 외부 새창<br>- SERICEO: SERICEO
+     */
     export enum externalLinkType {
         CP = 'CP',
         EXT_NEW_WINDOW = 'EXT_NEW_WINDOW',

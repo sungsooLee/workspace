@@ -2,7 +2,7 @@
 .start {
   @apply fixed left-0 right-0 top-0 z-[100];
   .header {
-    @apply flex h-[56px] items-center justify-between bg-white pl-[20px] pr-[16px];
+    @apply flex h-[56px] items-center justify-between bg-white px-[16px];
     h1 {
       @apply flex items-center;
       a {
@@ -12,11 +12,15 @@
         @apply h-[56px] w-auto;
       }
     }
+    .tenant {
+      @apply ml-[12px];
+    }
     .util {
-      @apply flex items-center;
-      & > div {
-        & + div {
-          @apply ml-[16px];
+      @apply ml-auto flex items-center;
+      button {
+        @apply !px-0;
+        svg {
+          @apply mx-0;
         }
       }
     }

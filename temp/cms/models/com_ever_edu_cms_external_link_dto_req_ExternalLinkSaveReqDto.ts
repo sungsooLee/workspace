@@ -5,6 +5,9 @@
 import type { com_ever_edu_cms_tag_dto_req_TagReqDto } from './com_ever_edu_cms_tag_dto_req_TagReqDto';
 export type com_ever_edu_cms_external_link_dto_req_ExternalLinkSaveReqDto = {
     contentName: string;
+    /**
+     * Enum(pms.multilingual.LangCountryCode)
+     */
     languageCountryCode: com_ever_edu_cms_external_link_dto_req_ExternalLinkSaveReqDto.languageCountryCode;
     tenantId: number;
     channelUuid: string;
@@ -29,16 +32,25 @@ export type com_ever_edu_cms_external_link_dto_req_ExternalLinkSaveReqDto = {
      * Enum(cms.contentContentAddInfoType)<br>- VIDEO_ADD_INFO(초)<br>- EXAM_ADD_INFO(건수)
      */
     contentAddInfoType?: com_ever_edu_cms_external_link_dto_req_ExternalLinkSaveReqDto.contentAddInfoType;
+    /**
+     * 콘텐츠 추가정보 코드 별 초/건수 값
+     */
     contentAddInfo?: number;
     isSecured?: boolean;
     isDeleted?: boolean;
     isOpened?: boolean;
     tags: Array<com_ever_edu_cms_tag_dto_req_TagReqDto>;
     externalLink: string;
+    /**
+     * Enum(cms.external_link.ExternalLinkType)<br>- CP: CP사<br>- EXT_NEW_WINDOW: 외부 새창<br>- SERICEO: SERICEO
+     */
     externalLinkType: com_ever_edu_cms_external_link_dto_req_ExternalLinkSaveReqDto.externalLinkType;
     source?: string;
 };
 export namespace com_ever_edu_cms_external_link_dto_req_ExternalLinkSaveReqDto {
+    /**
+     * Enum(pms.multilingual.LangCountryCode)
+     */
     export enum languageCountryCode {
         KO = 'KO',
         EN = 'EN',
@@ -72,6 +84,9 @@ export namespace com_ever_edu_cms_external_link_dto_req_ExternalLinkSaveReqDto {
         VIDEO_ADD_INFO = 'VIDEO_ADD_INFO',
         EXAM_ADD_INFO = 'EXAM_ADD_INFO',
     }
+    /**
+     * Enum(cms.external_link.ExternalLinkType)<br>- CP: CP사<br>- EXT_NEW_WINDOW: 외부 새창<br>- SERICEO: SERICEO
+     */
     export enum externalLinkType {
         CP = 'CP',
         EXT_NEW_WINDOW = 'EXT_NEW_WINDOW',

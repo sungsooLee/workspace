@@ -11,9 +11,21 @@ export type com_ever_edu_cms_scorm_dto_res_ScormResDto = {
     channelName?: string;
     contentUuid?: string;
     contentName?: string;
+    /**
+     * Enum(pms.multilingual.LangCountryCode)
+     */
     languageCountryCode?: com_ever_edu_cms_scorm_dto_res_ScormResDto.languageCountryCode;
+    /**
+     * Enum(cms.content.ContentCreateType)<br>- MANUAL: 직접생성<br>- TRANSLATE: 공유내보내기<br>- SHARED: 번역내보내기
+     */
     createType?: com_ever_edu_cms_scorm_dto_res_ScormResDto.createType;
+    /**
+     * Enum(cms.content.ContentType)<br>- VIDEO: 동영상<br>- EBOOK: 이북<br>- SCORM: 스콤<br>- HTML5_VIDEO: HTML 동영상<br>- IMAGE: 이미지<br>- EXTERNAL_LINK: 외부링크<br>- EXTERNAL_AGENCY: 외부위탁<br>- BLOG: 블로그<br>- EXAM: 시험지<br>- EXAM_POOL: 문제은행<br>- ASSIGNMENT: 과제<br>- SURVEY: 설문지<br>- ETC: 기타
+     */
     contentType?: com_ever_edu_cms_scorm_dto_res_ScormResDto.contentType;
+    /**
+     * Enum(cms.content.ContentStatusCode)<br>- TEMPORARY_SAVE<br>- SAVED<br>- DELETED
+     */
     contentStatusCode?: com_ever_edu_cms_scorm_dto_res_ScormResDto.contentStatusCode;
     coordinatorUuid?: string;
     coordinatorName?: string;
@@ -38,6 +50,8 @@ export type com_ever_edu_cms_scorm_dto_res_ScormResDto = {
     isDrafted?: boolean;
     aiSummary?: string;
     aiKeyword?: string;
+    fileChangeId?: number;
+    isFileChanged?: boolean;
     tags?: Array<com_ever_edu_cms_tag_dto_res_TagResDto>;
     createdBy?: string;
     creatorName?: string;
@@ -48,7 +62,6 @@ export type com_ever_edu_cms_scorm_dto_res_ScormResDto = {
     description?: string;
     vendorName?: string;
     isOpened?: boolean;
-    fileChangeId?: number;
     /**
      * SCORM 파일 아이디
      */
@@ -63,6 +76,9 @@ export type com_ever_edu_cms_scorm_dto_res_ScormResDto = {
     children?: Array<com_ever_edu_cms_scorm_dto_res_ScormOrganizationResDto>;
 };
 export namespace com_ever_edu_cms_scorm_dto_res_ScormResDto {
+    /**
+     * Enum(pms.multilingual.LangCountryCode)
+     */
     export enum languageCountryCode {
         KO = 'KO',
         EN = 'EN',
@@ -89,11 +105,17 @@ export namespace com_ever_edu_cms_scorm_dto_res_ScormResDto {
         HR = 'HR',
         ET = 'ET',
     }
+    /**
+     * Enum(cms.content.ContentCreateType)<br>- MANUAL: 직접생성<br>- TRANSLATE: 공유내보내기<br>- SHARED: 번역내보내기
+     */
     export enum createType {
         MANUAL = 'MANUAL',
         SHARED = 'SHARED',
         TRANSLATE = 'TRANSLATE',
     }
+    /**
+     * Enum(cms.content.ContentType)<br>- VIDEO: 동영상<br>- EBOOK: 이북<br>- SCORM: 스콤<br>- HTML5_VIDEO: HTML 동영상<br>- IMAGE: 이미지<br>- EXTERNAL_LINK: 외부링크<br>- EXTERNAL_AGENCY: 외부위탁<br>- BLOG: 블로그<br>- EXAM: 시험지<br>- EXAM_POOL: 문제은행<br>- ASSIGNMENT: 과제<br>- SURVEY: 설문지<br>- ETC: 기타
+     */
     export enum contentType {
         VIDEO = 'VIDEO',
         EBOOK = 'EBOOK',
@@ -109,6 +131,9 @@ export namespace com_ever_edu_cms_scorm_dto_res_ScormResDto {
         SURVEY = 'SURVEY',
         ETC = 'ETC',
     }
+    /**
+     * Enum(cms.content.ContentStatusCode)<br>- TEMPORARY_SAVE<br>- SAVED<br>- DELETED
+     */
     export enum contentStatusCode {
         TEMPORARY_SAVE = 'TEMPORARY_SAVE',
         SAVE = 'SAVE',

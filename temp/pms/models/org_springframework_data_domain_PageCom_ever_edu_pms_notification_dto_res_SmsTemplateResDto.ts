@@ -12,8 +12,8 @@ export type org_springframework_data_domain_PageCom_ever_edu_pms_notification_dt
     content?: Array<com_ever_edu_pms_notification_dto_res_SmsTemplateResDto>;
     number?: number;
     sort?: Array<org_springdoc_core_converters_models_SortObject>;
-    numberOfElements?: number;
     pageable?: PageableObject;
+    numberOfElements?: number;
     first?: boolean;
     last?: boolean;
     empty?: boolean;

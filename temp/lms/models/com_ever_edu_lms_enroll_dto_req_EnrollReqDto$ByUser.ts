@@ -4,7 +4,7 @@
 /* eslint-disable */
 import type { com_ever_edu_lms_enroll_dto_req_AdditionalInfoDto } from './com_ever_edu_lms_enroll_dto_req_AdditionalInfoDto';
 export type com_ever_edu_lms_enroll_dto_req_EnrollReqDto$ByUser = {
-    courseSequenceUuid: string;
+    courseSequenceId: number;
     additionalInfo?: com_ever_edu_lms_enroll_dto_req_AdditionalInfoDto;
 };
 

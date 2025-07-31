@@ -2,9 +2,6 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-/**
- * 공유 도착지 정보 목록
- */
 export type com_ever_edu_cms_content_dto_res_SharedBoxHistoryDestinationResDto = {
     /**
      * 도착지 콘텐츠 UUID

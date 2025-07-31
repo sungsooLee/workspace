@@ -1,12 +1,10 @@
-import { ReactNode } from 'react';
 import { useLocation } from '@tanstack/react-router';
+import { ReactNode } from 'react';
 
-import { PAGE_TITLE_BY_PATH, isSigninPage } from '../../../../../features/platform';
+import { isSigninPage } from '../../../../../features/platform';
 
+import { BrowserView, MobileView } from 'react-device-detect';
 import { AuthFooter } from './auth-footer/auth-footer';
-import { Footer } from '../../../../../widgets/layout/ui/main/footer/footer';
-import { MobileView, BrowserView } from 'react-device-detect';
-import { MobileContainerFooter } from '../../../../../shared/m.ui/container-footer/container-footer';
 
 //import styles from './auth-container.module.css';
 import styles from '@learnway/styles/fo/widgets/layout/ui/auth/auth-container/auth-container.module.css';

@@ -83,6 +83,8 @@ export class FoScormRteApiService {
      * @param sequenceId 과정차수Id
      * @param courseId 과정Id
      * @param curriculumId 커리큘럼Id
+     * @param moduleId 모듈Id
+     * @param lessonId 레슨Id
      * @param contentUuid 스콤콘텐츠UUID
      * @param orgnId 스콤 Organization Id
      * @param scoId item element id(SCOID)
@@ -93,6 +95,8 @@ export class FoScormRteApiService {
         sequenceId: any,
         courseId: any,
         curriculumId: any,
+        moduleId: any,
+        lessonId: any,
         contentUuid: any,
         orgnId: any,
         scoId: any,
@@ -104,6 +108,8 @@ export class FoScormRteApiService {
                 'sequenceId': sequenceId,
                 'courseId': courseId,
                 'curriculumId': curriculumId,
+                'moduleId': moduleId,
+                'lessonId': lessonId,
                 'contentUuid': contentUuid,
                 'orgnId': orgnId,
                 'scoId': scoId,
@@ -124,6 +130,8 @@ export class FoScormRteApiService {
      * @param sequenceId 과정차수Id
      * @param courseId 과정Id
      * @param curriculumId 커리큘럼Id
+     * @param moduleId 모듈Id
+     * @param lessonId 레슨Id
      * @param contentUuid 스콤콘텐츠UUID
      * @param orgnId 스콤 Organization Id
      * @param scoId item element id(SCOID)
@@ -134,6 +142,8 @@ export class FoScormRteApiService {
         sequenceId: any,
         courseId: any,
         curriculumId: any,
+        moduleId: any,
+        lessonId: any,
         contentUuid: any,
         orgnId: any,
         scoId: any,
@@ -145,6 +155,8 @@ export class FoScormRteApiService {
                 'sequenceId': sequenceId,
                 'courseId': courseId,
                 'curriculumId': curriculumId,
+                'moduleId': moduleId,
+                'lessonId': lessonId,
                 'contentUuid': contentUuid,
                 'orgnId': orgnId,
                 'scoId': scoId,

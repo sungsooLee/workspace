@@ -78,7 +78,7 @@ const TenantDetailLearningRoleGrantUserShuttleModalComponent = ({ roleId }: { ro
   const handleOnSubmit = async (data: any) => {
     const { dateRange } = getValues();
     if (!option || option.length === 0) {
-      alert('사용자를 선택 하세요.');
+      alert(t('사용자를 선택 하세요.'));
       return;
     }
 

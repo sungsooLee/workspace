@@ -7,6 +7,9 @@ import type { com_ever_edu_cms_video_dto_req_VideoSubtitleSaveReqDto } from './c
 export type com_ever_edu_cms_video_dto_req_VideoUpdateReqDto = {
     contentUuid: string;
     contentName?: string;
+    /**
+     * Enum(pms.multilingual.LangCountryCode)
+     */
     languageCountryCode?: com_ever_edu_cms_video_dto_req_VideoUpdateReqDto.languageCountryCode;
     tenantId?: number;
     channelUuid?: string;
@@ -27,7 +30,13 @@ export type com_ever_edu_cms_video_dto_req_VideoUpdateReqDto = {
     isContentSecured?: boolean;
     isInspected?: boolean;
     isCopyrighted?: boolean;
+    /**
+     * Enum(cms.contentContentAddInfoType)<br>- VIDEO_ADD_INFO(초)<br>- EXAM_ADD_INFO(건수)
+     */
     contentAddInfoType?: com_ever_edu_cms_video_dto_req_VideoUpdateReqDto.contentAddInfoType;
+    /**
+     * 콘텐츠 추가정보 코드 별 초/건수 값
+     */
     contentAddInfo?: number;
     isSecured?: boolean;
     isDeleted?: boolean;
@@ -39,6 +48,9 @@ export type com_ever_edu_cms_video_dto_req_VideoUpdateReqDto = {
     videoSubtitles?: Array<com_ever_edu_cms_video_dto_req_VideoSubtitleSaveReqDto>;
 };
 export namespace com_ever_edu_cms_video_dto_req_VideoUpdateReqDto {
+    /**
+     * Enum(pms.multilingual.LangCountryCode)
+     */
     export enum languageCountryCode {
         KO = 'KO',
         EN = 'EN',
@@ -65,6 +77,9 @@ export namespace com_ever_edu_cms_video_dto_req_VideoUpdateReqDto {
         HR = 'HR',
         ET = 'ET',
     }
+    /**
+     * Enum(cms.contentContentAddInfoType)<br>- VIDEO_ADD_INFO(초)<br>- EXAM_ADD_INFO(건수)
+     */
     export enum contentAddInfoType {
         VIDEO_ADD_INFO = 'VIDEO_ADD_INFO',
         EXAM_ADD_INFO = 'EXAM_ADD_INFO',

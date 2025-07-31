@@ -16,14 +16,17 @@ export type com_ever_edu_cms_content_dto_res_ContentProgressResDto = {
      */
     curriculumId?: number;
     /**
-     * 콘텐츠 모듈/스콤-Orgn Id
+     * 커리큘럼 모듈 Id
      */
     moduleId?: number;
     /**
-     * 레슨/스콤-Item ID
+     * 커리큘럼 레슨 ID
      */
     lessonId?: number;
     contentUuid?: string;
+    /**
+     * Enum(cms.content.ContentType)Enum(cms.content.ContentType)<br>- VIDEO: 동영상<br>- EBOOK: 이북<br>- SCORM: 스콤<br>- HTML5_VIDEO: HTML 동영상<br>- IMAGE: 이미지<br>- EXTERNAL_LINK: 외부링크<br>- EXTERNAL_AGENCY: 외부위탁<br>- BLOG: 블로그<br>- EXAM: 시험지<br>- EXAM_POOL: 문제은행<br>- ASSIGNMENT: 과제<br>- SURVEY: 설문지<br>- ETC: 기타
+     */
     contentType?: com_ever_edu_cms_content_dto_res_ContentProgressResDto.contentType;
     /**
      * Fixed-Orgn Id
@@ -38,11 +41,17 @@ export type com_ever_edu_cms_content_dto_res_ContentProgressResDto = {
      */
     userUuid?: string;
     progress?: number;
+    /**
+     * Enum(cms.content.LearningCompletionStatus)<br>- COMPLETED: 학습 완료 상태<br>- INCOMPLETE: 학습 진행중인 상태<br>- NOT_ATTEMPTED: 학습 미진행
+     */
     completionStatus?: com_ever_edu_cms_content_dto_res_ContentProgressResDto.completionStatus;
     startDate?: string;
     endDate?: string;
 };
 export namespace com_ever_edu_cms_content_dto_res_ContentProgressResDto {
+    /**
+     * Enum(cms.content.ContentType)Enum(cms.content.ContentType)<br>- VIDEO: 동영상<br>- EBOOK: 이북<br>- SCORM: 스콤<br>- HTML5_VIDEO: HTML 동영상<br>- IMAGE: 이미지<br>- EXTERNAL_LINK: 외부링크<br>- EXTERNAL_AGENCY: 외부위탁<br>- BLOG: 블로그<br>- EXAM: 시험지<br>- EXAM_POOL: 문제은행<br>- ASSIGNMENT: 과제<br>- SURVEY: 설문지<br>- ETC: 기타
+     */
     export enum contentType {
         VIDEO = 'VIDEO',
         EBOOK = 'EBOOK',
@@ -58,6 +67,9 @@ export namespace com_ever_edu_cms_content_dto_res_ContentProgressResDto {
         SURVEY = 'SURVEY',
         ETC = 'ETC',
     }
+    /**
+     * Enum(cms.content.LearningCompletionStatus)<br>- COMPLETED: 학습 완료 상태<br>- INCOMPLETE: 학습 진행중인 상태<br>- NOT_ATTEMPTED: 학습 미진행
+     */
     export enum completionStatus {
         COMPLETED = 'COMPLETED',
         INCOMPLETE = 'INCOMPLETE',

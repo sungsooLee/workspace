@@ -99,7 +99,8 @@ function RouteComponent() {
   }, [data]);
 
   const handleListButtonClick = () => {
-    router.navigate({ to: '/tenant/channel/request' });
+    const listParam = routerState.location.state?.listParam;
+    router.navigate({ to: '/tenant/channel/request', state: { listParam } });
   };
 
   const handleAcceptClick = (e: any) => {

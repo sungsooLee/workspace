@@ -37,7 +37,8 @@ function RouteComponent() {
   };
 
   const handleListClick = () => {
-    router.navigate({ to: '/platform/company/management' });
+    const listParam = routerState.location.state?.listParam;
+    router.navigate({ to: '/platform/company/management', state: { listParam } });
   };
 
   const menuItems = [

@@ -161,7 +161,7 @@ function RouteComponent() {
         return { userUuid: row.userUuid, userName: row.userName };
       });
       console.log('payload {} => ', payload);
-      if (await openConfirm('저장 하시겠습니까?')) {
+      if (await openConfirm(t('저장 하시겠습니까?'))) {
         update(payload);
       }
     } else {
@@ -179,7 +179,7 @@ function RouteComponent() {
       });
 
       console.log('payload {} => ', payload);
-      if (await openConfirm('저장 하시겠습니까?')) {
+      if (await openConfirm(t('저장 하시겠습니까?'))) {
         create(payload);
       }
     }
@@ -301,15 +301,15 @@ function RouteComponent() {
       <ContentsButtons>
         <LinkBox>
           <Button onClick={handleListButtonClick} variant="point" size="sm">
-            목록
+            {t('목록')}
           </Button>
         </LinkBox>
 
         <Button onClick={handleResetButtonClick} variant="point" size="sm">
-          초기화
+          {t('초기화')}
         </Button>
         <Button variant="primary" size="sm" onClick={handleModifyButtonClick}>
-          저장
+          {t('저장')}
         </Button>
       </ContentsButtons>
       <MainContents>
@@ -516,7 +516,7 @@ const searchManualConfig = (): SearchBoxConfig => ({
             return '';
           },
           isSearchable: true,
-          placeholder: '입력 또는 선택',
+          placeholder: t('입력 또는 선택'),
         },
       },
       {
@@ -536,7 +536,7 @@ const searchManualConfig = (): SearchBoxConfig => ({
 });
 
 const gridManualConfig = {
-  title: '유저그룹 설정 목록',
+  title: t('유저그룹 설정 목록'),
   query: queryOptions.blackwhiteUsers,
   columns: [],
   data: [],

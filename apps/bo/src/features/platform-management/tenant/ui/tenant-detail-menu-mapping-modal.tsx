@@ -203,7 +203,7 @@ const TenantDetailMenuMappingModalComponent: FC<any> = ({ menuScopeCode, tenantI
                 <div className={titleStyles.title_wrap}>
                   <div className={titleStyles.title_area}>
                     <h3 className={titleStyles.title}>{t('메뉴매핑 목록')}</h3>
-                    <strong className={titleStyles.sub_title}>전체</strong>
+                    <strong className={titleStyles.sub_title}>{t('전체')}</strong>
                     <span className={titleStyles.num}>{baseMenuAllKeys?.length - 1}</span>
                   </div>
                   <div className={layoutStyles.btn_wrap}>

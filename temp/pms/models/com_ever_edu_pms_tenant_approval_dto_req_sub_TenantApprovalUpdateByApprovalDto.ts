@@ -44,6 +44,18 @@ export type com_ever_edu_pms_tenant_approval_dto_req_sub_TenantApprovalUpdateByA
      */
     approvalWorkDetailTypeName?: string;
     /**
+     * 결재자 유형 TEAM:팀 결재 /APPROVAL_USER:결재자 지정결재
+     */
+    approvalLineApprType?: com_ever_edu_pms_tenant_approval_dto_req_sub_TenantApprovalUpdateByApprovalDto.approvalLineApprType;
+    /**
+     * 결재팀 ID(가상조직/개별결재라인) 팀선택시 추가.
+     */
+    approvalLineDeptId?: number;
+    /**
+     * 결재팀 명
+     */
+    approvalLineDeptName?: string;
+    /**
      * 결재관리(플랫폼)의 결재라인번호
      */
     orgApprovalLineTempId?: number;
@@ -98,6 +110,14 @@ export namespace com_ever_edu_pms_tenant_approval_dto_req_sub_TenantApprovalUpda
         GROUP_APPROVAL_LINE = 'GROUP_APPROVAL_LINE',
         INDIVIDUAL_APPROVAL_LINE = 'INDIVIDUAL_APPROVAL_LINE',
         VIRTUAL_APPROVAL_LINE = 'VIRTUAL_APPROVAL_LINE',
+    }
+    /**
+     * 결재자 유형 TEAM:팀 결재 /APPROVAL_USER:결재자 지정결재
+     */
+    export enum approvalLineApprType {
+        TEAM = 'TEAM',
+        APPROVAL_USER = 'APPROVAL_USER',
+        AUTO = 'AUTO',
     }
 }
 

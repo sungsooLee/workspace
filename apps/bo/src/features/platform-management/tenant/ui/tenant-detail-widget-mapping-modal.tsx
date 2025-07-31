@@ -92,7 +92,7 @@ const searchConfig: SearchBoxConfig = {
         format: 'string',
         value: 'ALL',
         options: [
-          { label: '전체', value: 'ALL' },
+          { label: t('전체'), value: 'ALL' },
           { label: 'PC', value: 'PC' },
           { label: 'Mobile', value: 'MOBILE' },
         ] },
@@ -102,7 +102,7 @@ const searchConfig: SearchBoxConfig = {
         label: t('테넌트 적용 여부'),
         value: '',
         options: [
-          { label: '선택', value: '' },
+          { label: t('선택'), value: '' },
           { label: 'Y', value: 'true' },
           { label: 'N', value: 'false' },
         ] },
@@ -170,7 +170,7 @@ const columns = [
     cell: (info) => {
       return info.getValue();
     },
-    header: '위젯명',
+    header: t('위젯명'),
     enableGrouping: false,
     size: 708 }),
   columnHelper.accessor('device', {
@@ -181,13 +181,13 @@ const columns = [
       row.original.isWebExposed && array.push('Mobile');
       return array.toString();
     },
-    header: '디바이스',
+    header: t('디바이스'),
     size: 200,
     enableGrouping: false }),
   columnHelper.accessor('isTenantApplied', {
     id: 'isTenantApplied',
     cell: (info) => (info.getValue() ? 'Y' : 'N'),
-    header: '테넌트적용여부',
+    header: t('테넌트적용여부'),
     size: 200,
     enableGrouping: false }),
 
@@ -195,7 +195,7 @@ const columns = [
     cell: ({ row }) => {
       return <WidgetPreviewButton widget={row.original} />;
     },
-    header: '미리보기',
+    header: t('미리보기'),
     size: 88,
     enableGrouping: false }),
 ] as ColumnDef<any, unknown>[];

@@ -12,6 +12,10 @@ export type com_ever_edu_lms_course_dto_res_CourseUserResDto = {
      */
     courseName?: string;
     /**
+     * 학생 등록 여부
+     */
+    isStudent?: boolean;
+    /**
      * 별점 평점
      */
     starRatingAverage?: number;
@@ -19,6 +23,10 @@ export type com_ever_edu_lms_course_dto_res_CourseUserResDto = {
      * 별점 목록(1-5)
      */
     starRatings?: Array<com_ever_edu_lms_course_dto_res_StarRatingResDto>;
+    /**
+     * 좋아요 체크 여부
+     */
+    isLikeCourse?: boolean;
     /**
      * 좋아요 수
      */
@@ -69,6 +77,10 @@ export type com_ever_edu_lms_course_dto_res_CourseUserResDto = {
      * 커리큘럼 ID
      */
     curriculumId?: number;
+    /**
+     * 수강신청 필요여부
+     */
+    isEnrollRequired?: boolean;
     /**
      * 이수기준 설정 여부
      */
@@ -129,14 +141,34 @@ export type com_ever_edu_lms_course_dto_res_CourseUserResDto = {
      * 강사 경력
      */
     career?: string;
+    coordinatorUuid?: string;
     /**
-     * 운영자 UUID
+     * 담당자 이름
      */
+    coordinatorName?: string;
+    /**
+     * 담당자 부서명
+     */
+    coordinatorDeptName?: string;
+    coordinatorTelNo?: string;
+    /**
+     * 담당자 이메일
+     */
+    coordinatorEmail?: string;
     operatorUuid?: string;
     /**
-     * 담당자 UUID
+     * 운영자 이름
      */
-    coordinatorUuid?: string;
+    operatorName?: string;
+    /**
+     * 운영자 부서이름
+     */
+    operatorDeptName?: string;
+    operatorTelNo?: string;
+    /**
+     * 운영자 이메일
+     */
+    operatorEmail?: string;
     relatedCourseList?: Array<com_ever_edu_lms_course_dto_res_CourseUserSearchResDto>;
     /**
      * 사전 학습 목록

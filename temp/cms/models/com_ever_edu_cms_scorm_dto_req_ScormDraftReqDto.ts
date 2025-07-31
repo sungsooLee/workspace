@@ -5,6 +5,9 @@
 export type com_ever_edu_cms_scorm_dto_req_ScormDraftReqDto = {
     tenantId: number;
     channelUuid: string;
+    /**
+     * Enum(pms.multilingual.LangCountryCode)
+     */
     languageCountryCode: com_ever_edu_cms_scorm_dto_req_ScormDraftReqDto.languageCountryCode;
     /**
      * 저장할 여러 파일의 UUID 목록
@@ -12,6 +15,9 @@ export type com_ever_edu_cms_scorm_dto_req_ScormDraftReqDto = {
     fileUuids: Array<string>;
 };
 export namespace com_ever_edu_cms_scorm_dto_req_ScormDraftReqDto {
+    /**
+     * Enum(pms.multilingual.LangCountryCode)
+     */
     export enum languageCountryCode {
         KO = 'KO',
         EN = 'EN',

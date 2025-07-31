@@ -55,13 +55,13 @@ function RouteComponent() {
   }, [loginUser]);
   const tabItems = [
     {
-      title: '유저',
+      title: t('유저'),
       key: 't1',
       // content: <TenantUserList rootPath="/platform" />,
-      content: <CompanyUserList />,
+      content: <CompanyUserList detailPath="/platform/tenant/user/detail" />,
     },
     {
-      title: '회원가입 신청',
+      title: t('회원가입 신청'),
       key: 't2',
       content: <TenantUserRegistApplicationList rootPath="/platform" />,
     },

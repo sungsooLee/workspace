@@ -16,18 +16,24 @@ import type { com_ever_edu_pms_approval_manage_dto_res_ApprovalLineMessageResDto
 import type { com_ever_edu_pms_approval_manage_dto_res_ApprovalLineSearchResDto } from '../models/com_ever_edu_pms_approval_manage_dto_res_ApprovalLineSearchResDto';
 import type { com_ever_edu_pms_blackwhite_dto_req_BlackAndWhiteMappingReqDto } from '../models/com_ever_edu_pms_blackwhite_dto_req_BlackAndWhiteMappingReqDto';
 import type { com_ever_edu_pms_blackwhite_dto_res_WhiteGroupResDto } from '../models/com_ever_edu_pms_blackwhite_dto_res_WhiteGroupResDto';
+import type { com_ever_edu_pms_channel_dto_req_ChannelBannerDeleteReqDto } from '../models/com_ever_edu_pms_channel_dto_req_ChannelBannerDeleteReqDto';
+import type { com_ever_edu_pms_channel_dto_req_ChannelBannerDnDReqDto } from '../models/com_ever_edu_pms_channel_dto_req_ChannelBannerDnDReqDto';
+import type { com_ever_edu_pms_channel_dto_req_ChannelBannerSaveReqDto } from '../models/com_ever_edu_pms_channel_dto_req_ChannelBannerSaveReqDto';
 import type { com_ever_edu_pms_channel_dto_req_ChannelRequestApprovalApproveReqDto } from '../models/com_ever_edu_pms_channel_dto_req_ChannelRequestApprovalApproveReqDto';
 import type { com_ever_edu_pms_channel_dto_req_ChannelRequestApprovalRejectReqDto } from '../models/com_ever_edu_pms_channel_dto_req_ChannelRequestApprovalRejectReqDto';
 import type { com_ever_edu_pms_channel_dto_req_ChannelRequestUpdateReqDto } from '../models/com_ever_edu_pms_channel_dto_req_ChannelRequestUpdateReqDto';
 import type { com_ever_edu_pms_channel_dto_req_ChannelSaveReqDto } from '../models/com_ever_edu_pms_channel_dto_req_ChannelSaveReqDto';
+import type { com_ever_edu_pms_channel_dto_res_ChannelBannerResDto } from '../models/com_ever_edu_pms_channel_dto_res_ChannelBannerResDto';
 import type { com_ever_edu_pms_channel_dto_res_ChannelDetailResDto } from '../models/com_ever_edu_pms_channel_dto_res_ChannelDetailResDto';
 import type { com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto } from '../models/com_ever_edu_pms_channel_dto_res_ChannelRequestDetailResDto';
 import type { com_ever_edu_pms_channel_dto_res_ChannelResDto } from '../models/com_ever_edu_pms_channel_dto_res_ChannelResDto';
+import type { com_ever_edu_pms_channel_dto_res_ChannelResultCountResDto } from '../models/com_ever_edu_pms_channel_dto_res_ChannelResultCountResDto';
 import type { com_ever_edu_pms_company_dto_req_CompanyCreateReqDto } from '../models/com_ever_edu_pms_company_dto_req_CompanyCreateReqDto';
 import type { com_ever_edu_pms_company_dto_req_CompanyDeptDeleteReqDto } from '../models/com_ever_edu_pms_company_dto_req_CompanyDeptDeleteReqDto';
 import type { com_ever_edu_pms_company_dto_req_CompanyDeptDndReqDto } from '../models/com_ever_edu_pms_company_dto_req_CompanyDeptDndReqDto';
 import type { com_ever_edu_pms_company_dto_req_CompanyDeptReqDto } from '../models/com_ever_edu_pms_company_dto_req_CompanyDeptReqDto';
 import type { com_ever_edu_pms_company_dto_req_CompanyUpdateReqDto } from '../models/com_ever_edu_pms_company_dto_req_CompanyUpdateReqDto';
+import type { com_ever_edu_pms_company_dto_res_CompanyDeptExcelResDto } from '../models/com_ever_edu_pms_company_dto_res_CompanyDeptExcelResDto';
 import type { com_ever_edu_pms_company_dto_res_CompanyDeptResDto } from '../models/com_ever_edu_pms_company_dto_res_CompanyDeptResDto';
 import type { com_ever_edu_pms_company_dto_res_CompanyDeptTreeResDto } from '../models/com_ever_edu_pms_company_dto_res_CompanyDeptTreeResDto';
 import type { com_ever_edu_pms_company_dto_res_CompanyResDto } from '../models/com_ever_edu_pms_company_dto_res_CompanyResDto';
@@ -97,6 +103,7 @@ import type { com_ever_edu_pms_tenant_approval_dto_req_TenantApprovalLineSearchR
 import type { com_ever_edu_pms_tenant_approval_dto_req_TenantApprovalUpdateListReqDto } from '../models/com_ever_edu_pms_tenant_approval_dto_req_TenantApprovalUpdateListReqDto';
 import type { com_ever_edu_pms_tenant_approval_dto_req_TenantApprovalUpdateOnOffReqDto } from '../models/com_ever_edu_pms_tenant_approval_dto_req_TenantApprovalUpdateOnOffReqDto';
 import type { com_ever_edu_pms_tenant_approval_dto_res_TenantApprovalLinePopChoiceResDto } from '../models/com_ever_edu_pms_tenant_approval_dto_res_TenantApprovalLinePopChoiceResDto';
+import type { com_ever_edu_pms_tenant_approval_dto_res_TenantApprovalLinePopDeptResDto } from '../models/com_ever_edu_pms_tenant_approval_dto_res_TenantApprovalLinePopDeptResDto';
 import type { com_ever_edu_pms_tenant_approval_dto_res_TenantApprovalLinePopDetailResDto } from '../models/com_ever_edu_pms_tenant_approval_dto_res_TenantApprovalLinePopDetailResDto';
 import type { com_ever_edu_pms_tenant_approval_dto_res_TenantApprovalLinePopUserResDto } from '../models/com_ever_edu_pms_tenant_approval_dto_res_TenantApprovalLinePopUserResDto';
 import type { com_ever_edu_pms_tenant_approval_dto_res_TenantApprovalLineSearchResDto } from '../models/com_ever_edu_pms_tenant_approval_dto_res_TenantApprovalLineSearchResDto';
@@ -149,6 +156,7 @@ import type { com_ever_edu_pms_widget_dto_res_WidgetResDto$DetailOnTenant } from
 import type { com_ever_edu_pms_widget_dto_res_WidgetResDto$TenantWidgetListOnTenant } from '../models/com_ever_edu_pms_widget_dto_res_WidgetResDto$TenantWidgetListOnTenant';
 import type { org_springdoc_core_converters_models_Pageable } from '../models/org_springdoc_core_converters_models_Pageable';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_approval_manage_dto_res_ApprovalLineSearchResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_approval_manage_dto_res_ApprovalLineSearchResDto';
+import type { org_springframework_data_domain_PageCom_ever_edu_pms_channel_dto_res_ChannelBannerListResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_channel_dto_res_ChannelBannerListResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_channel_dto_res_ChannelRequestListResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_channel_dto_res_ChannelRequestListResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_channel_dto_res_ChannelResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_channel_dto_res_ChannelResDto';
 import type { org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyDeptResDto } from '../models/org_springframework_data_domain_PageCom_ever_edu_pms_company_dto_res_CompanyDeptResDto';
@@ -1101,6 +1109,8 @@ export class BoService {
      * @param page Zero-based page index (0..N)
      * @param size The size of the page to be returned
      * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @param roleId
+     * @param tenantId
      * @returns org_springframework_data_domain_PageCom_ever_edu_pms_multilingual_dto_res_MultilingualResDto$ListOnAdmin OK
      * @throws ApiError
      */
@@ -1109,6 +1119,8 @@ export class BoService {
         page?: number,
         size: number = 10,
         sort?: Array<string>,
+        roleId?: number,
+        tenantId?: number,
     ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_multilingual_dto_res_MultilingualResDto$ListOnAdmin> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -1118,6 +1130,8 @@ export class BoService {
                 'size': size,
                 'sort': sort,
                 'params': params,
+                'roleId': roleId,
+                'tenantId': tenantId,
             },
             errors: {
                 400: `Bad Request`,
@@ -1847,6 +1861,101 @@ export class BoService {
                 400: `Bad Request`,
                 401: `Unauthorized`,
                 404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 채널 홈 배너 상세 조회
+     * 채널 홈 배너 상세 조회 한다.
+     * @param channelUuid
+     * @param bannerId
+     * @returns com_ever_edu_pms_channel_dto_res_ChannelBannerResDto OK
+     * @throws ApiError
+     */
+    public static selectChannelBannerDetail(
+        channelUuid: string,
+        bannerId: number,
+    ): CancelablePromise<com_ever_edu_pms_channel_dto_res_ChannelBannerResDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/channel/{channelUuid}/banner/{bannerId}',
+            path: {
+                'channelUuid': channelUuid,
+                'bannerId': bannerId,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 채널 홈 배너 수정
+     * 채널 홈 배너 정보를 변경을 한다.
+     * @param channelUuid
+     * @param bannerId
+     * @param requestBody
+     * @returns com_ever_edu_pms_channel_dto_res_ChannelBannerResDto OK
+     * @throws ApiError
+     */
+    public static modifyChannelBanner(
+        channelUuid: string,
+        bannerId: number,
+        requestBody: com_ever_edu_pms_channel_dto_req_ChannelBannerSaveReqDto,
+    ): CancelablePromise<com_ever_edu_pms_channel_dto_res_ChannelBannerResDto> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/admin/api/v1/channel/{channelUuid}/banner/{bannerId}',
+            path: {
+                'channelUuid': channelUuid,
+                'bannerId': bannerId,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 채널 홈 배너 순서변경
+     * 채널 홈 배너 순서변경을 한다.
+     * @param channelUuid
+     * @param bannerId
+     * @param requestBody
+     * @returns com_ever_edu_pms_channel_dto_res_ChannelBannerResDto OK
+     * @throws ApiError
+     */
+    public static modifyChannelBannerSortOrder(
+        channelUuid: string,
+        bannerId: number,
+        requestBody: com_ever_edu_pms_channel_dto_req_ChannelBannerDnDReqDto,
+    ): CancelablePromise<com_ever_edu_pms_channel_dto_res_ChannelBannerResDto> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/admin/api/v1/channel/{channelUuid}/banner/{bannerId}/dnd',
+            path: {
+                'channelUuid': channelUuid,
+                'bannerId': bannerId,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
                 422: `Unprocessable Entity`,
                 500: `Internal Server Error`,
             },
@@ -2694,6 +2803,30 @@ export class BoService {
         });
     }
     /**
+     * 결재팀검색-팝업검색 조회
+     * 결재팀검색-팝업검색
+     * @param requestBody
+     * @returns com_ever_edu_pms_tenant_approval_dto_res_TenantApprovalLinePopDeptResDto OK
+     * @throws ApiError
+     */
+    public static findApprovalDept(
+        requestBody: com_ever_edu_pms_tenant_approval_dto_req_TenantApprovalLinePopUserReqDto,
+    ): CancelablePromise<com_ever_edu_pms_tenant_approval_dto_res_TenantApprovalLinePopDeptResDto> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/tenant_approval/popup/findApprovalDept',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
      * 역할 목록 조회
      * 역할 목록을 조회한다.
      * @param tenantId
@@ -2705,7 +2838,7 @@ export class BoService {
     public static getRoles(
         tenantId: number,
         siteScope: 'FO' | 'BO',
-        roleType?: 'PLATFORM_MANAGER' | 'TENANT_MANAGER' | 'CHANNEL_OWNER' | 'CHANNEL_MEMBER' | 'CHANNEL_GUEST' | 'POLICY_MANAGER' | 'TUTOR',
+        roleType?: 'PLATFORM_MANAGER' | 'TENANT_MANAGER' | 'CHANNEL_OWNER' | 'CHANNEL_MEMBER' | 'CHANNEL_GUEST_OPERATION' | 'CHANNEL_GUEST_COURSE' | 'POLICY_MANAGER' | 'TUTOR' | 'LEADER' | 'MEMBER',
     ): CancelablePromise<Array<com_ever_edu_pms_role_dto_res_RoleResDto>> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -2866,7 +2999,7 @@ export class BoService {
     }
     /**
      * 역할 신청 목록 조회
-     * 역할 신청 목록을 조회한다.
+     * 역할 신청 목록을 조회한다. (정렬 키: 역할 타입(roleEntity.roleType), 역할명(roleEntity.name), 역할 시작일(startDate), 역할 종료일(endDate), 회사명(applicant.companyEntity.name), 부서명(applicant.deptEntity.deptName), 역할 신청일(createdDate), 역할 신청 상태(status))
      * @param pageable
      * @param companyId
      * @param userName
@@ -3455,7 +3588,7 @@ export class BoService {
     ): CancelablePromise<com_ever_edu_pms_holiday_dto_res_HolidayExcelResDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/admin/api/v1/holiday/excel',
+            url: '/admin/api/v1/holiday/excelUpload',
             formData: formData,
             mediaType: 'multipart/form-data',
             errors: {
@@ -3726,27 +3859,32 @@ export class BoService {
         });
     }
     /**
-     * [미작업] 하위 부서 엑셀 업로드
-     * 하위 부서 엑셀 업로드
+     * 부서 엑셀 업로드
+     * 부서 엑셀 업로드
+     * @param companyCode
      * @param formData
-     * @returns string OK
+     * @returns com_ever_edu_pms_company_dto_res_CompanyDeptExcelResDto OK
      * @throws ApiError
      */
-    public static uploadExcel1(
+    public static uploadExcelFile(
+        companyCode: string,
         formData?: {
             file: Blob;
-            targetLocale?: string;
         },
-    ): CancelablePromise<string> {
+    ): CancelablePromise<com_ever_edu_pms_company_dto_res_CompanyDeptExcelResDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/admin/api/v1/department/child/excelUpload',
+            url: '/admin/api/v1/department/{companyCode}/child/excelUpload',
+            path: {
+                'companyCode': companyCode,
+            },
             formData: formData,
             mediaType: 'multipart/form-data',
             errors: {
                 400: `Bad Request`,
                 401: `Unauthorized`,
                 404: `Not Found`,
+                405: `Method Not Allowed`,
                 422: `Unprocessable Entity`,
                 500: `Internal Server Error`,
             },
@@ -3850,6 +3988,7 @@ export class BoService {
      * @param tenantId 테넌트 Id
      * @param channelCreationType 채널 개설 방식 구분
      * @param channelName 채널 명
+     * @param channelUuid 채널 Uuid
      * @param channelMainId 채널메인아이디(채널핸들)
      * @param channelTenatMappingType 채널 테넌트 관계 유형(채널유형) enum: ChannelTenatMappingType
      * @param isUsed 채널 사용여부
@@ -3870,6 +4009,7 @@ export class BoService {
         tenantId?: string,
         channelCreationType?: string,
         channelName?: string,
+        channelUuid?: string,
         channelMainId?: string,
         channelTenatMappingType?: string,
         isUsed?: string,
@@ -3891,6 +4031,7 @@ export class BoService {
                 'roleId': roleId,
                 'channelCreationType': channelCreationType,
                 'channelName': channelName,
+                'channelUuid': channelUuid,
                 'channelMainId': channelMainId,
                 'channelTenatMappingType': channelTenatMappingType,
                 'isUsed': isUsed,
@@ -3905,6 +4046,7 @@ export class BoService {
                 400: `Bad Request`,
                 401: `Unauthorized`,
                 404: `Not Found`,
+                405: `Method Not Allowed`,
                 422: `Unprocessable Entity`,
                 500: `Internal Server Error`,
             },
@@ -3929,6 +4071,36 @@ export class BoService {
                 400: `Bad Request`,
                 401: `Unauthorized`,
                 404: `Not Found`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 채널 홈 배너 등록
+     * 채널 홈 배너 신규 등록을 한다.
+     * @param channelUuid
+     * @param requestBody
+     * @returns com_ever_edu_pms_channel_dto_res_ChannelBannerResDto OK
+     * @throws ApiError
+     */
+    public static registerChannelBanner(
+        channelUuid: string,
+        requestBody: com_ever_edu_pms_channel_dto_req_ChannelBannerSaveReqDto,
+    ): CancelablePromise<com_ever_edu_pms_channel_dto_res_ChannelBannerResDto> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/admin/api/v1/channel/{channelUuid}/banner',
+            path: {
+                'channelUuid': channelUuid,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
                 422: `Unprocessable Entity`,
                 500: `Internal Server Error`,
             },
@@ -5431,6 +5603,8 @@ export class BoService {
      * @param keyTypeCode
      * @param targetLocale
      * @param params
+     * @param roleId
+     * @param tenantId
      * @returns any OK
      * @throws ApiError
      */
@@ -5438,6 +5612,8 @@ export class BoService {
         keyTypeCode: 'SYSTEM_COMMON_CODE' | 'LEARNER_MENU' | 'HRD_CENTER_MENU' | 'LABEL' | 'MESSAGE',
         targetLocale: string,
         params: com_ever_edu_pms_multilingual_dto_req_MultilingualSearchReqDto$SearchByAdmin,
+        roleId?: number,
+        tenantId?: number,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -5446,6 +5622,8 @@ export class BoService {
                 'keyTypeCode': keyTypeCode,
                 'targetLocale': targetLocale,
                 'params': params,
+                'roleId': roleId,
+                'tenantId': tenantId,
             },
             errors: {
                 400: `Bad Request`,
@@ -6272,6 +6450,73 @@ export class BoService {
         });
     }
     /**
+     * 채널 홈 배너 리스트 조회
+     * 채널 홈 배너 목록을 조회한다.
+     * @param channelUuid
+     * @param page Zero-based page index (0..N)
+     * @param size The size of the page to be returned
+     * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @returns org_springframework_data_domain_PageCom_ever_edu_pms_channel_dto_res_ChannelBannerListResDto OK
+     * @throws ApiError
+     */
+    public static selectChannelBannerList(
+        channelUuid: string,
+        page?: number,
+        size: number = 2147483647,
+        sort?: Array<string>,
+    ): CancelablePromise<org_springframework_data_domain_PageCom_ever_edu_pms_channel_dto_res_ChannelBannerListResDto> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/admin/api/v1/channel/{channelUuid}/banners',
+            path: {
+                'channelUuid': channelUuid,
+            },
+            query: {
+                'page': page,
+                'size': size,
+                'sort': sort,
+            },
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
+     * 채널 홈 배너 삭제
+     * 채널 홈 배너 정보를 삭제 한다.
+     * @param channelUuid
+     * @param requestBody
+     * @returns com_ever_edu_pms_channel_dto_res_ChannelResultCountResDto OK
+     * @throws ApiError
+     */
+    public static removeChannelBanner(
+        channelUuid: string,
+        requestBody: com_ever_edu_pms_channel_dto_req_ChannelBannerDeleteReqDto,
+    ): CancelablePromise<com_ever_edu_pms_channel_dto_res_ChannelResultCountResDto> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/admin/api/v1/channel/{channelUuid}/banners',
+            path: {
+                'channelUuid': channelUuid,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request`,
+                401: `Unauthorized`,
+                404: `Not Found`,
+                405: `Method Not Allowed`,
+                422: `Unprocessable Entity`,
+                500: `Internal Server Error`,
+            },
+        });
+    }
+    /**
      * 테넌트 목록 조회 (역활 기준)
      * 테넌트 목록 조회 (역활 기준)
      * @param roleId
@@ -6299,13 +6544,14 @@ export class BoService {
     /**
      * 채널 조회(팝업)
      * 채널의 팝업용 목록을 조회한다. 셔틀 팝업
-     * @param roleId 역활 Id
      * @param page Zero-based page index (0..N)
      * @param size The size of the page to be returned
      * @param sort Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
      * @param tenantId 테넌트 Id
+     * @param roleId 역활 Id
      * @param channelCreationType 채널 개설 방식 구분
      * @param channelName 채널 명
+     * @param channelUuid 채널 Uuid
      * @param channelMainId 채널메인아이디(채널핸들)
      * @param channelTenatMappingType 채널 테넌트 관계 유형(채널유형) enum: ChannelTenatMappingType
      * @param isUsed 채널 사용여부
@@ -6319,13 +6565,14 @@ export class BoService {
      * @throws ApiError
      */
     public static selectChannelPopupList(
-        roleId: string,
         page?: number,
         size: number = 10,
         sort?: Array<string>,
         tenantId?: string,
+        roleId?: string,
         channelCreationType?: string,
         channelName?: string,
+        channelUuid?: string,
         channelMainId?: string,
         channelTenatMappingType?: string,
         isUsed?: string,
@@ -6347,6 +6594,7 @@ export class BoService {
                 'roleId': roleId,
                 'channelCreationType': channelCreationType,
                 'channelName': channelName,
+                'channelUuid': channelUuid,
                 'channelMainId': channelMainId,
                 'channelTenatMappingType': channelTenatMappingType,
                 'isUsed': isUsed,

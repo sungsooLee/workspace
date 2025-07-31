@@ -1,5 +1,6 @@
-import { cn, getRandomId } from '@learnway/shared';
 import { FC, useState } from 'react';
+import { t } from 'i18next';
+import { cn, getRandomId } from '@learnway/shared';
 
 import { FormSubTitle } from '@learnway/ui/base-form';
 import { List } from '@learnway/ui/list';
@@ -19,11 +20,11 @@ const TenantDetailBannerListComponent: FC<{}> = ({}) => {
   return (
     <div className={cn(styles.start, styles.wrap)}>
       <FormSubTitle
-        label={'배너 목록'}
+        label={t('배너 목록')}
         actionNode={
           <>
-            <Button label={'추가'} variant={'text'} size={'sm'} className="btn_text" />
-            <Button label={'순서 저장'} variant={'save'} size={'sm'} disabled />
+            <Button label={t('추가')} variant={'text'} size={'sm'} className="btn_text" />
+            <Button label={t('순서 저장')} variant={'save'} size={'sm'} disabled />
           </>
         }
         lineType={'light'}

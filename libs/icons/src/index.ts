@@ -64,6 +64,7 @@ export { ReactComponent as IcoProgressComplete } from './lib/ic_complete03.svg';
 export { ReactComponent as IcoCopy } from './lib/ic_copy.svg'; // copy
 export { ReactComponent as IcoDelete03 } from './lib/ic_delete_03.svg'; // alert complete icon 48*48
 export { ReactComponent as IcoDivice } from './lib/ic_divice.svg';
+export { ReactComponent as IcoDocument } from './lib/ic_document.svg';
 export { ReactComponent as IcoDotpoints } from './lib/ic_dotpoints-02.svg';
 export { ReactComponent as IcoDownArrow } from './lib/ic_down_arrow.svg'; // down arrow
 export { ReactComponent as IcoDownload } from './lib/ic_download.svg'; // 16*16 grid download
@@ -203,6 +204,7 @@ export { ReactComponent as IcoVideo01 } from './lib/ic_video_recorder_01.svg'; /
 export { ReactComponent as IcoVideo02 } from './lib/ic_video_recorder_02.svg'; // video2
 export { ReactComponent as IcoVideoStop } from './lib/ic_video_stop.svg';
 export { ReactComponent as IcoWarning } from './lib/ic_warning.svg'; // alert warning icon 48*48
+export { ReactComponent as IcoWordArrow } from './lib/ic_word_arrow.svg';
 export { ReactComponent as IcoXclose } from './lib/ic_x_close.svg'; // x close
 export { ReactComponent as IcoChart } from './lib/ico_chart.svg';
 export { ReactComponent as IcoPaper } from './lib/ico_paper.svg';

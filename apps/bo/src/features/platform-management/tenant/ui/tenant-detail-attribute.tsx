@@ -14,17 +14,18 @@ import { Tooltip } from '@learnway/ui/tooltip';
 
 import { FormRow } from '@shared/ui';
 
-import { EnDeviceType, EnUseCategory } from '@types';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
 import { Switch } from '@learnway/ui/switch';
+import { EnDeviceType, EnUseCategory } from '@types';
 
 /** Hook 정의 */
 import {
   useTenantAttributeCompany,
-  useUpdateTenantAttributeCompany } from '@entities/tenant/service/tenant-attribute.hook';
+  useUpdateTenantAttributeCompany,
+} from '@entities/tenant/service/tenant-attribute.hook';
 import { FormDisplay } from '@features/form';
 import { IcoAlertCircle } from '@learnway/icons';
 
@@ -59,7 +60,8 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
   const { update } = useUpdateTenantAttributeCompany(tenantId, {
     onSuccess: (data: any) => {
       refetch();
-    } });
+    },
+  });
 
   useImperativeHandle(ref, () => ({
     saveData() {
@@ -71,11 +73,12 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
     },
     clearForm() {
       onFormChange();
-    } }));
+    },
+  }));
 
   const handleOnSubmit = async (payload: any) => {
     console.log('payload {} => ', payload);
-    if (await openConfirm('저장 하시겠습니까?')) {
+    if (await openConfirm(t('저장 하시겠습니까?'))) {
       update(payload);
     }
   };
@@ -110,7 +113,8 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
           tenantInfo.flatformProperties.isUseOutsourcingTenantCustomOption,
         isUseWiaTenantCustomOption: tenantInfo.flatformProperties.isUseWiaTenantCustomOption,
         isUseAutoeverTenantCustomOption:
-          tenantInfo.flatformProperties.isUseAutoeverTenantCustomOption };
+          tenantInfo.flatformProperties.isUseAutoeverTenantCustomOption,
+      };
       setPlatformProperties(properties);
 
       fetchBaseData({ ...tenantInfo, device, useCategory });
@@ -1026,7 +1030,8 @@ const formBaseConfig = (): DynamicFormConfig => ({
       name: 'tenantName',
       type: 'text',
       label: t('테넌트명'),
-      value: '' },
+      value: '',
+    },
     {
       name: 'isUsed',
       type: 'switch',
@@ -1035,7 +1040,8 @@ const formBaseConfig = (): DynamicFormConfig => ({
         '테넌트 사용이 ON이면 학습자 사이트에 로그인 할 수 있으며, OFF이면 로그인 할 수 없습니다.',
       ),
       value: true,
-      guideText: t('테넌트 사용 여부는 플랫폼 담당자가 변경할 수 있습니다.') },
+      guideText: t('테넌트 사용 여부는 플랫폼 담당자가 변경할 수 있습니다.'),
+    },
     {
       name: 'fileStorageTypeChannelList',
       type: 'checkbox-group',
@@ -1046,7 +1052,9 @@ const formBaseConfig = (): DynamicFormConfig => ({
       value: [],
       format: 'array',
       optionsConfig: {
-        codeGroup: CODE_GROUP['pms.company.FileStorageType'] } },
+        codeGroup: CODE_GROUP['pms.company.FileStorageType'],
+      },
+    },
     {
       name: 'fileStorageTypeBase',
       type: 'checkbox-group',
@@ -1054,7 +1062,9 @@ const formBaseConfig = (): DynamicFormConfig => ({
       tooltip: t('채널 외 커뮤니티, 소모임 등 파일 업로드 할 저장 경로를 선택합니다. '),
       value: '',
       optionsConfig: {
-        codeGroup: CODE_GROUP['pms.company.FileStorageType'] } },
+        codeGroup: CODE_GROUP['pms.company.FileStorageType'],
+      },
+    },
     {
       name: 'device',
       type: 'checkbox-group',
@@ -1065,31 +1075,38 @@ const formBaseConfig = (): DynamicFormConfig => ({
       options: [
         {
           label: 'PC',
-          value: EnDeviceType.isPc },
+          value: EnDeviceType.isPc,
+        },
         {
           label: 'Mobile',
-          value: EnDeviceType.isMobile },
+          value: EnDeviceType.isMobile,
+        },
         {
           label: 'App',
-          value: EnDeviceType.isApp },
+          value: EnDeviceType.isApp,
+        },
       ],
-      showSelectAll: true },
+      showSelectAll: true,
+    },
     {
       name: 'useCategory',
       type: 'checkbox-group',
       label: t('카테고리 사용 여부'),
       format: 'array',
-      tooltip: '테넌트 - 카테고리 관리에서 사용할 카테고리를 선택할 수 있습니다',
+      tooltip: t('테넌트 - 카테고리 관리에서 사용할 카테고리를 선택할 수 있습니다'),
       value: [],
       options: [
         {
           value: EnUseCategory.isCommonCategory,
-          label: '공통 카테고리' },
+          label: t('공통 카테고리'),
+        },
         {
           value: EnUseCategory.isTenantCategory,
-          label: '테넌트 카테고리' },
+          label: t('테넌트 카테고리'),
+        },
       ],
-      showSelectAll: true },
+      showSelectAll: true,
+    },
     {
       name: 'langCountryCodeTypeList',
       type: 'checkbox-group',
@@ -1098,7 +1115,8 @@ const formBaseConfig = (): DynamicFormConfig => ({
       tooltip: t(
         '테넌트에서 사용할 언어를 선택하고, 선택한 언어에서 다국어 설정을 할 수 있습니다.',
       ),
-      value: [] },
+      value: [],
+    },
   ],
   validator: {
     isUsed: true,
@@ -1106,7 +1124,9 @@ const formBaseConfig = (): DynamicFormConfig => ({
     useCategory: true,
     langCountryCodeTypeList: true,
     fileStorageTypeChannelList: true,
-    fileStorageTypeBase: true } });
+    fileStorageTypeBase: true,
+  },
+});
 
 const formTermsConfig = (): DynamicFormConfig => ({
   builders: [
@@ -1116,12 +1136,14 @@ const formTermsConfig = (): DynamicFormConfig => ({
       label: t('약관 정보'),
       value: '',
       options: [
-        { label: '이용약관_v1.25', value: '0' },
-        { label: '개인정보 처리방침(국내)_v1.25', value: '1' },
-        { label: '개인정보 처리방침(글로벌)_v1.00', value: '2' },
-        { label: '고유식별 정보처리 동의_v1.25', value: '3' },
-      ] },
-  ] });
+        { label: t('이용약관_v1.25'), value: '0' },
+        { label: t('개인정보 처리방침(국내)_v1.25'), value: '1' },
+        { label: t('개인정보 처리방침(글로벌)_v1.00'), value: '2' },
+        { label: t('고유식별 정보처리 동의_v1.25'), value: '3' },
+      ],
+    },
+  ],
+});
 
 const formConfig = (): DynamicFormConfig => ({
   builders: [
@@ -1132,96 +1154,125 @@ const formConfig = (): DynamicFormConfig => ({
       label: '',
       value: true,
       switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')) } },
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+    },
     {
       name: 'isTextBookOption', // 교재
       type: 'switch',
       label: '',
       value: false,
       switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')) } },
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+    },
     {
       name: 'isInstructorOption', // 강사
       type: 'switch',
       label: '',
       value: false,
       switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')) } },
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+    },
     {
       name: 'isPassOption', // 이수 기준
       type: 'switch',
       label: '',
       value: true,
       switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')) } },
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+    },
     {
       name: 'isCommunicationOption', // 커뮤니티
       type: 'switch',
       label: '',
       value: false,
       switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')) } },
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+    },
     {
       name: 'isLearningEnvOption', // 학습환경
       type: 'switch',
       label: '',
       value: false,
       switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')) } },
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+    },
     {
       name: 'isLearningControlOption', // 학습제어
       type: 'switch',
       label: '',
       value: false,
       switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')) } },
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+    },
     {
       name: 'isRelatedCourseOption', // 사전/연관학습
       type: 'switch',
       label: '',
       value: false,
       switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')) } },
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+    },
     {
       name: 'isAdminDataOption', // 행정 항묵
       type: 'switch',
       label: '',
       value: false,
       switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')) } },
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+    },
     {
       name: 'isCarTenantCustomOption', // 완성차 테넌트 전용 항목
       type: 'switch',
       label: '',
       value: false,
       switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')) } },
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+    },
     {
       name: 'isRotemTenantCustomOption', // 로템 테넌트 전용 항목
       type: 'switch',
       label: '',
       value: false,
       switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')) } },
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+    },
     {
       name: 'isOutsourcingTenantCustomOption', // 위탁 테넌트 전용 항목
       type: 'switch',
       label: '',
       value: false,
       switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')) } },
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+    },
     {
       name: 'isWiaTenantCustomOption', // 위아 테넌트 전용 항목
       type: 'switch',
       label: '',
       value: false,
       switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')) } },
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+    },
     {
       name: 'isAutoeverTenantCustomOption', // 오토에버 테넌트 전용 항목
       type: 'switch',
       label: '',
       value: false,
       switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')) } },
-  ] });
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+    },
+  ],
+});

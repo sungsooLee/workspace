@@ -22,7 +22,7 @@
       }
     }
     button {
-      @apply ml-[16px] w-[70px];
+      @apply ml-[16px];
     }
   }
   [class*='nlp--panel'] {

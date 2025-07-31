@@ -1,5 +1,6 @@
 /* search-before.module.css */
 .start {
+  @apply scrollbar max-h-[600px] overflow-y-auto overflow-x-hidden;
   .title_wrap {
     @apply mb-[16px] mt-[40px] flex items-center;
     .title {

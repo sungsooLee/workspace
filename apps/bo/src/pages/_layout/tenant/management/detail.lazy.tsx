@@ -95,32 +95,32 @@ function RouteComponent() {
 
   const menuItems = [
     {
-      title: '테넌트 속성 관리',
+      title: t('테넌트 속성 관리'),
       key: EnTenantDetailTabKey.attribute,
       content: <TenantDetailAttribute ref={formAttrRef} />,
     },
     {
-      title: '테넌트 메뉴관리',
+      title: t('테넌트 메뉴관리'),
       key: EnTenantDetailTabKey.menu,
       content: <TenantDetailMenu ref={menuRef} />,
     },
     {
-      title: '테넌트 카테고리 관리',
+      title: t('테넌트 카테고리 관리'),
       key: EnTenantDetailTabKey.category,
       content: <TenantDetailCategory />,
     },
     {
-      title: '테넌트 역할 관리',
+      title: t('테넌트 역할 관리'),
       key: EnTenantDetailTabKey.learningRole,
       content: <TenantDetailLearningRole roleInfo={'TENANT'} />,
     },
     {
-      title: '테넌트 위젯 관리',
+      title: t('테넌트 위젯 관리'),
       key: EnTenantDetailTabKey.widget,
       content: <TenantDetailWidget />,
     },
     {
-      title: '테넌트 배너 관리',
+      title: t('테넌트 배너 관리'),
       key: EnTenantDetailTabKey.banner,
       content: <TenantDetailBanner />,
     },
