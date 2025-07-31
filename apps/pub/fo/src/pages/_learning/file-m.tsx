@@ -1,7 +1,7 @@
 import { isMobile } from 'react-device-detect';
 import { cn } from '@learnway/shared';
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { Button } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
 
 import styles from '@learnway/styles/fo/pages/_learning/learning-m.module.css';
 

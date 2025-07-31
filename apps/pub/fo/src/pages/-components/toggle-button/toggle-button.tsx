@@ -1,7 +1,7 @@
 // ToggleButton.tsx
 import React, { useState } from 'react';
 import styles from './toggle-button.module.css';
-import { Button } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
 import { cn } from '@learnway/shared';
 import { IcoHeart } from '@learnway/icons';
 

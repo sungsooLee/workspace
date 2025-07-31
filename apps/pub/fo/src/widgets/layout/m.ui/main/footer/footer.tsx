@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import styles from '@learnway/styles/fo/widgets/layout/m.ui/main/footer/footer.module.css';
 
-import { Button } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
 import { IcoHome03, IcoDotpoints, IcoSearch, IcoMybook, IcoEye } from '@learnway/icons';
 
 function FooterComponent() {

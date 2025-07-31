@@ -2,9 +2,11 @@ import { isMobile } from 'react-device-detect';
 import { cn } from '@learnway/shared';
 import { useState } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { Button, Checkbox, Dropdown, DropdownOption } from '@learnway/ui';
+import { Dropdown } from '@learnway/ui/dropdown';
+
 // import styles from './legal-content.module.css'; // 이용약관, 개인정보처리방침 공통모듈
 import styles from '@learnway/styles/fo/pages/_layout/terms/terms.module.css';
+import { DropdownOption } from '@learnway/ui/type';
 
 export const Route = createFileRoute('/_layout/footer-menu/agreement')({
   component: RouteComponent,

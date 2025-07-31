@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { isMobile } from 'react-device-detect';
 import React, { useState } from 'react';
-import { Tabs } from '@learnway/ui';
+import { Tabs } from '@learnway/ui/tabs';
 import styles from './edu-licenses-list.module.css';
 import { LicensesHistory } from '../../../features/layout/';
 

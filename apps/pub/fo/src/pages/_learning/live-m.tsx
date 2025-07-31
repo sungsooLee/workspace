@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Button } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
 import { IcoLink } from '@learnway/icons';
 
 import styles from '@learnway/styles/fo/pages/_learning/learning-m.module.css';

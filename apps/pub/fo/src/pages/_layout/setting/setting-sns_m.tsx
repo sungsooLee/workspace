@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Switch } from '@learnway/ui';
+import { Switch } from '@learnway/ui/switch';
 
 import styles from './setting-sns_m.module.css';
 

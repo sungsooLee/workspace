@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { IcoArrowForward } from '@learnway/icons';
-import { useModal, Button } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 
 //import styles from '@learnway/styles/fo/pages/_layout/setting/setting-web_m.module.css';
 import styles from '@learnway/styles/fo/pages/_layout/setting.module.css';

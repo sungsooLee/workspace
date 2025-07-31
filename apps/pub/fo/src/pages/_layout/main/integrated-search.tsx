@@ -1,4 +1,4 @@
-import { Popover } from '@learnway/ui';
+import { Popover } from '@learnway/ui/popover';
 import { createFileRoute } from '@tanstack/react-router';
 import { useState } from 'react';
 import { SearchDisplay } from '../../../features/layout/ui/integrated-search/search-display'; //

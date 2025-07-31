@@ -2,7 +2,7 @@ import { memo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from '@tanstack/react-router';
 import { IcoArrowDown, IcoArrowForward } from '@learnway/icons';
-import { Popover } from '@learnway/ui';
+import { Popover } from '@learnway/ui/popover';
 import styles from './breadcrumbs.module.css';
 
 const PopoverContent1 = () => {

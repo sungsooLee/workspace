@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { Pagination, Carousel, Button } from '@learnway/ui';
+import { Carousel } from '@learnway/ui/carousel';
+import { Button } from '@learnway/ui/button';
 
 import styles from '@learnway/styles/fo/pages/_learning/learning-m.module.css';
 

@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Button, Input, ContentsRow, Panel } from '@learnway/ui';
+
 import { isMobile } from 'react-device-detect';
 import { IcoError02 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
@@ -9,6 +9,10 @@ import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/con
 import myPageContainerStyles from '@learnway/styles/fo/widgets/layout/ui/main/container/my-page-container.module.css';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import styles from './password-verify.module.css';
+import { Panel } from '@learnway/ui/panel';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
 
 export const Route = createFileRoute('/_layout/my/password-verify')({
   component: RouteComponent,
