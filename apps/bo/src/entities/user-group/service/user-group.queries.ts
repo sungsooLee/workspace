@@ -13,19 +13,19 @@ export const queryKeys = {
 };
 
 export const queryOptions = {
-  usergroups: (tenantIds: number[], params: UserGroupsParam) => ({
+  usergroups: (tenantIds: number[], roleId: number, params: UserGroupsParam) => ({
     queryKey: ['user-groups', params.userGroupType],
-    queryFn: () => UserGroupsService.fetchUserGroups(tenantIds, params),
+    queryFn: () => UserGroupsService.fetchUserGroups(tenantIds, roleId, params),
     cacheTime: 0,
     staleTime: 0,
     enabled: tenantIds.length > 0,
   }),
-  organizationTree: (tenantIds: number[], roleIds: number[], tenantName?: string) => ({
+  organizationTree: (tenantIds: number[], roleId: number, tenantName?: string) => ({
     queryKey: queryKeys.organizationTree,
-    queryFn: () => UserGroupsService.fetchOrganizationTree(tenantIds, roleIds, tenantName),
+    queryFn: () => UserGroupsService.fetchOrganizationTree(tenantIds, roleId, tenantName),
     cacheTime: 0,
     staleTime: 0,
-    enabled: tenantIds.length > 0 && roleIds.length > 0,
+    enabled: tenantIds.length > 0 && !!roleId,
   }),
   customGroupsTree: (userGroupName?: string) => ({
     queryKey: queryKeys.customGroupsTree,

@@ -1,4 +1,5 @@
 import { useFetchOrganizationTree } from '@entities/user-group';
+import { useFetchAuthUser } from '@learnway/auth/entities';
 import { cn } from '@learnway/shared';
 import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import {
@@ -12,18 +13,17 @@ import { useEffect, useMemo } from 'react';
 
 type UserGroupOrganizationComponentProps = {
   tenantIds: number[];
-  roleIds: number[];
   option: CombineUserGroup[];
   handleSetOption: (data: CombineUserGroup[]) => void;
 };
 
 const UserGroupOrganizationComponent = ({
   tenantIds,
-  roleIds,
   option,
   handleSetOption,
 }: UserGroupOrganizationComponentProps) => {
-  const { data } = useFetchOrganizationTree(tenantIds, roleIds);
+  const { data: authUser } = useFetchAuthUser();
+  const { data } = useFetchOrganizationTree(tenantIds, authUser?.activeRole?.roleId);
 
   const treeData = useMemo(() => {
     return data ? transformApiDataToTreeData(data) : [];

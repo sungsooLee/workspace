@@ -21,17 +21,11 @@ import { UserGroupOrganization } from '../components/user-group-organization';
 type UserGroupTabModalProps = {
   initialTab?: UserGroupType;
   tenantIds?: number[];
-  roleIds?: number[];
   option?: CombineUserGroup[];
 };
 
 const UserGroupTabModalComponent = forwardRef(
-  ({
-    initialTab = 'ORGANIZATION',
-    tenantIds = [],
-    roleIds = [],
-    option: optionProp,
-  }: UserGroupTabModalProps) => {
+  ({ initialTab = 'ORGANIZATION', tenantIds = [], option: optionProp }: UserGroupTabModalProps) => {
     const { closeModal } = useModal();
 
     const [selectedTabKey, setSelectedTabKey] = useState<UserGroupType>(initialTab);
@@ -59,7 +53,6 @@ const UserGroupTabModalComponent = forwardRef(
                 content: (
                   <UserGroupOrganization
                     tenantIds={tenantIds}
-                    roleIds={roleIds}
                     option={option}
                     handleSetOption={setOption}
                   />
