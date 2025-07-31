@@ -21,7 +21,7 @@ import {
   QuestionItemDeleteParam,
   QuestionsCopyReq,
   QuestionStatusUpdateReq,
-  RandomQuestionCountUpdateReq,
+  ExamPaperQuestionCountUpdateReq,
   TestPaperBasicInfoSaveReq,
 } from '@types';
 
@@ -361,7 +361,7 @@ export function useDeleteQuestionItemList(options?: any) {
 
   return {
     ...mutation,
-    delete: (param: QuestionItemDeleteParam) => mutation.mutate(param as any),
+    delete: (params: QuestionItemDeleteParam) => mutation.mutate(params as any),
   };
 }
 
@@ -385,7 +385,7 @@ export function useUpdateExamPaperQuestionCount(options?: any) {
   });
 
   return {
-    update: (params: RandomQuestionCountUpdateReq) => mutation.mutate(params as any),
+    update: (params: ExamPaperQuestionCountUpdateReq) => mutation.mutate(params as any),
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
   };

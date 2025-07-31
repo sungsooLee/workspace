@@ -30,12 +30,18 @@ export const useCourseListGridConfig = () => {
       name: 'courseId',
       label: () => t('LABEL.grid.column.courseCode'),
       size: 90,
+      meta: {
+        cellAlign: 'right',
+      },
     },
     // 개설연도
     {
       name: 'openingYear',
       label: () => t('LABEL.grid.column.openingDate'),
       size: 90,
+      meta: {
+        cellAlign: 'center',
+      },
     },
     // 과정유형
     {
@@ -65,10 +71,25 @@ export const useCourseListGridConfig = () => {
         const { courseId, courseName } = row.original || {};
         const url = getDetailUrl(row, pathname);
         return (
-          <Link to={url} state={{ courseId, courseName }} className="link">
+          <Link
+            to={url}
+            state={{ courseId, courseName, meta: { title: courseName } }}
+            className="link"
+          >
             {courseName}
           </Link>
         );
+      },
+    },
+    // 언어
+    {
+      name: 'language',
+      label: () => t('LABEL.grid.column.language'),
+      size: 90,
+      render: (info: any) =>
+        getCodeLabel(CODE_GROUP['pms.multilingual.LangCountryCode'], info.getValue()),
+      meta: {
+        cellAlign: 'center',
       },
     },
     // 사용
@@ -76,42 +97,64 @@ export const useCourseListGridConfig = () => {
       name: 'isUsed',
       label: () => t('LABEL.grid.column.use'),
       size: 90,
+      render: (info: any) => getCodeLabel(CODE_GROUP['mock.options.use'], info.getValue()),
+      meta: {
+        cellAlign: 'center',
+      },
     },
     // 차수
     {
       name: 'sequenceCount',
       label: () => t('LABEL.grid.column.session'),
       size: 90,
+      meta: {
+        cellAlign: 'right',
+      },
     },
     // 조회
     {
       name: 'viewCount',
       label: () => t('LABEL.grid.column.search'),
       size: 90,
+      meta: {
+        cellAlign: 'right',
+      },
     },
     // 좋아요
     {
       name: 'likesCount',
       label: () => t('LABEL.grid.column.like'),
       size: 90,
+      meta: {
+        cellAlign: 'right',
+      },
     },
     // 공유
     {
       name: 'shareCount',
       label: () => t('LABEL.grid.column.share'),
       size: 90,
+      meta: {
+        cellAlign: 'right',
+      },
     },
     // 후기
     {
       name: 'reviewCount',
       label: () => t('LABEL.grid.column.review'),
       size: 90,
+      meta: {
+        cellAlign: 'right',
+      },
     },
     // 수강생
     {
       name: 'studentCount',
       label: () => t('LABEL.grid.column.student'),
       size: 90,
+      meta: {
+        cellAlign: 'right',
+      },
     },
     // 담당자
     {
@@ -143,6 +186,9 @@ export const useCourseListGridConfig = () => {
           }}
         />
       ),
+      meta: {
+        cellAlign: 'center',
+      },
     },
     // URL
     {
@@ -152,6 +198,9 @@ export const useCourseListGridConfig = () => {
       render: (info: any) => (
         <ShortUrlCopyButton url={`original url`} params={{ courseId: info?.original?.courseId }} />
       ),
+      meta: {
+        cellAlign: 'center',
+      },
     },
   ];
 

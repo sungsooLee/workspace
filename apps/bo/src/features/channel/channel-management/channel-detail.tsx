@@ -191,8 +191,6 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
           channelUrl: getChannelUrl(requestChannelData.channelMainId),
         };
         updateFormData(requestedData);
-        //TODO. 신청 개설의 설정 요건 확인
-        //TODO. 채널 핸들 변경 시 URL도 변경
       } else updateFormData(initialData);
     } else if (
       props.mode === EnFormMode.VIEW &&
@@ -300,9 +298,6 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
         isAutoeverTenantCustomOption: data.isAutoeverTenantCustomOption,
       },
     };
-    console.log('### commonPayload', commonPayload);
-    console.log('### props.mode', props.mode);
-    console.log('### props.method', props.method);
 
     let payload = {};
     if (props.mode === EnFormMode.ADD) {
@@ -854,7 +849,7 @@ const formConfig = (): DynamicFormConfig => ({
       type: 'text',
       label: t('채널 URL'),
       value: '',
-      placeholder: '채널 핸들 입력 시 자동 생성',
+      placeholder: t('채널 핸들 입력 시 자동 생성'),
     },
     {
       name: 'channelTenatMappingType',
@@ -990,7 +985,7 @@ const formConfig = (): DynamicFormConfig => ({
       label: t('수강 신청'),
       value: false,
       switchConfig: {
-        label: (value: boolean) => (value ? '사용' : '미사용'),
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
       },
       tooltip: t('과정 등록 필수 값으로 사용 여부 수정이 불가합니다.'),
     },
@@ -1000,7 +995,7 @@ const formConfig = (): DynamicFormConfig => ({
       label: t('교재'),
       value: false,
       switchConfig: {
-        label: (value: boolean) => (value ? '사용' : '미사용'),
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
       },
       tooltip: t('교재 허용 여부를 설정할 수 있으며, 비허용 시 테넌트에서 사용할 수 없습니다.'),
     },
@@ -1010,7 +1005,7 @@ const formConfig = (): DynamicFormConfig => ({
       label: t('강사'),
       value: false,
       switchConfig: {
-        label: (value: boolean) => (value ? '사용' : '미사용'),
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
       },
       tooltip: t('강사 허용 여부를 설정할 수 있으며, 비허용 시 테넌트에서 사용할 수 없습니다.'),
     },
@@ -1020,7 +1015,7 @@ const formConfig = (): DynamicFormConfig => ({
       label: t('이수 기준'),
       value: false,
       switchConfig: {
-        label: (value: boolean) => (value ? '사용' : '미사용'),
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
       },
       tooltip: t('과정 등록 필수 값으로 사용 여부 수정이 불가합니다.'),
     },
@@ -1030,7 +1025,7 @@ const formConfig = (): DynamicFormConfig => ({
       label: t('커뮤니티'),
       value: false,
       switchConfig: {
-        label: (value: boolean) => (value ? '사용' : '미사용'),
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
       },
       tooltip: t('커뮤니티 허용 여부를 설정할 수 있으며, 비허용 시 테넌트에서 사용할 수 없습니다.'),
     },
@@ -1040,7 +1035,7 @@ const formConfig = (): DynamicFormConfig => ({
       label: t('학습환경'),
       value: false,
       switchConfig: {
-        label: (value: boolean) => (value ? '사용' : '미사용'),
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
       },
       tooltip: t('학습환경 허용 여부를 설정할 수 있으며, 비허용 시 테넌트에서 사용할 수 없습니다.'),
     },
@@ -1050,7 +1045,7 @@ const formConfig = (): DynamicFormConfig => ({
       label: t('학습제어'),
       value: false,
       switchConfig: {
-        label: (value: boolean) => (value ? '사용' : '미사용'),
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
       },
       tooltip: t('학습제어 허용 여부를 설정할 수 있으며, 비허용 시 테넌트에서 사용할 수 없습니다.'),
     },
@@ -1060,7 +1055,7 @@ const formConfig = (): DynamicFormConfig => ({
       label: t('사전/연관학습'),
       value: false,
       switchConfig: {
-        label: (value: boolean) => (value ? '사용' : '미사용'),
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
       },
       tooltip: t(
         '사전/연관학습 허용 여부를 설정할 수 있으며, 비허용 시 테넌트에서 사용할 수 없습니다.',
@@ -1072,7 +1067,7 @@ const formConfig = (): DynamicFormConfig => ({
       label: t('행정 항목'),
       value: false,
       switchConfig: {
-        label: (value: boolean) => (value ? '사용' : '미사용'),
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
       },
       tooltip: t('행정항목 허용 여부를 설정할 수 있으며, 비허용 시 테넌트에서 사용할 수 없습니다.'),
     },
@@ -1082,7 +1077,7 @@ const formConfig = (): DynamicFormConfig => ({
       label: t('완성차 테넌트 전용 항목'),
       value: false,
       switchConfig: {
-        label: (value: boolean) => (value ? '사용' : '미사용'),
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
       },
       tooltip: t(
         '완성차 테넌트의 전용 항목의 허용 여부를 설정합니다.  비허용 시 테넌트에서 사용할 수 없습니다.',
@@ -1094,7 +1089,7 @@ const formConfig = (): DynamicFormConfig => ({
       label: t('로템 테넌트 전용 항목'),
       value: false,
       switchConfig: {
-        label: (value: boolean) => (value ? '사용' : '미사용'),
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
       },
       tooltip: t(
         '로템 테넌트의 전용 항목의 허용 여부를 설정합니다.  비허용 시 테넌트에서 사용할 수 없습니다.',
@@ -1106,7 +1101,7 @@ const formConfig = (): DynamicFormConfig => ({
       label: t('위탁 테넌트 전용 항목'),
       value: false,
       switchConfig: {
-        label: (value: boolean) => (value ? '사용' : '미사용'),
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
       },
       tooltip: t(
         '위탁 테넌트의 전용 항목의 허용 여부를 설정합니다.  비허용 시 테넌트에서 사용할 수 없습니다.',
@@ -1118,7 +1113,7 @@ const formConfig = (): DynamicFormConfig => ({
       label: t('위아 테넌트 전용 항목'),
       value: false,
       switchConfig: {
-        label: (value: boolean) => (value ? '사용' : '미사용'),
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
       },
       tooltip: t(
         '위아 테넌트의 전용 항목의 허용 여부를 설정합니다.  비허용 시 테넌트에서 사용할 수 없습니다.',
@@ -1130,7 +1125,7 @@ const formConfig = (): DynamicFormConfig => ({
       label: t('오토에버 테넌트 전용 항목'),
       value: false,
       switchConfig: {
-        label: (value: boolean) => (value ? '사용' : '미사용'),
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
       },
       tooltip: t(
         '오토에버 테넌트의 전용 항목의 허용 여부를 설정합니다.  비허용 시 테넌트에서 사용할 수 없습니다.',

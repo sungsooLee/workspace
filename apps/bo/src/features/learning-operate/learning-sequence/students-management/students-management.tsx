@@ -1,5 +1,11 @@
 import { queryOptions as companysQueryOptions } from '@entities/companies/service/companies.queries';
 import { queryOptions as departmentQueryOptions } from '@entities/department';
+import {
+  useDeleteStudentsInfo,
+  useUpdateStudentsCertification,
+  useUpdateStudentsCompletion,
+  useUpdateStudentsInfo,
+} from '@entities/learning-sequence/service/learning-sequence.hook';
 import { queryOptions as sequenceQueryOptions } from '@entities/learning-sequence/service/learning-sequence.queries';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { LMSApiPrefix } from '@learnway/config';
@@ -27,8 +33,11 @@ import { t } from 'i18next';
 import { useCallback, useEffect, useState } from 'react';
 import { useWatch } from 'react-hook-form';
 import { getStudentsStatusName } from './constants/students-status';
+import { SequenceChangeModal } from './modal/sequence-change-modal';
+import { StudentsBookDeliveryModal } from './modal/students-book-delivery-modal';
 import { StudentsEnrollmentTypeHistoryModal } from './modal/students-enrollment-type-history-modal';
 import { StudentsHistoryModal } from './modal/students-history-modal';
+import { StudentsLevelTestModal } from './modal/students-level-test-modal';
 import { StudentsReasonModal } from './modal/students-reason-modal';
 
 // type StudentsManagementComponentProps = {
@@ -72,7 +81,7 @@ const StudentsManagementComponent = () => {
   const { data: loginUser } = useFetchAuthUser();
   const router = useRouter();
   const routerState = useRouterState();
-  const { openModal, confirm: openConfirm, alert } = useModal();
+  const { openModal, confirm: openConfirm, alert: openAlert, showSaveComplete } = useModal();
   const courseIdKey = routerState.location.state?.courseId; // 과정ID
   const courseSequenceIdKey = routerState.location.state?.courseSequenceId; // 차수ID(있는경우 검색조건 값 선택)
   console.log('## courseIdKey =>', courseIdKey);
@@ -83,14 +92,38 @@ const StudentsManagementComponent = () => {
   const [selectedItems, setSelectedItems] = useState<any[]>([]);
   const [params, setParams] = useState<Record<string, any>>({});
 
+  const [originalData, setOriginalData] = useState<any[]>([]);
+  const [didSearch, setDidSearch] = useState(false); // 조회 완료 플래그
+
+  const { updateStudentsInfo } = useUpdateStudentsInfo({});
+  const { deleteStudentsInfo } = useDeleteStudentsInfo({});
+  const { updateStudentsCertification } = useUpdateStudentsCertification({});
+  const { updateStudentsCompletion } = useUpdateStudentsCompletion({});
+
   // 교재
   _global.linkClickBook = (payload: any) => {
-    console.log('payload:', payload);
+    openModal({
+      width: 'sm',
+      content: (
+        <StudentsBookDeliveryModal
+          courseSequenceId={payload.courseSequenceId}
+          userId={payload.userId}
+        />
+      ),
+    });
   };
 
   // 사전레벨
   _global.linkClickPreLevel = (payload: any) => {
-    console.log('##payload', payload);
+    openModal({
+      width: 'md',
+      content: (
+        <StudentsLevelTestModal
+          courseSequenceId={payload.courseSequenceId}
+          userId={payload.userId}
+        />
+      ),
+    });
   };
 
   // 입과방식
@@ -150,11 +183,6 @@ const StudentsManagementComponent = () => {
           value: null,
           presetOptionLabel: t('전체'),
           options: [
-            // { label: t('승인대기'), value: '1' },
-            // { label: t('조직장결재완료'), value: '2' },
-            // { label: t('운영자승인완료'), value: '3' },
-            // { label: t('결재'), value: '4' },
-            // { label: t('승인 완료'), value: '5' },
             { label: t('이수'), value: true },
             { label: t('미이수'), value: false },
           ],
@@ -212,10 +240,17 @@ const StudentsManagementComponent = () => {
     },
   };
   const { provider: searchProvider, getValues, setValue, setOptions } = useSearchBox(searchConfig);
-  const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
+  const { config: gConfig, gridFetch, data: gridData } = useGridBox(gridConfig, getValues);
   const [columns, setColumns] = useState() as any;
   const companyId = useWatch({ control: searchProvider.control, name: 'companyId' });
   const openingYear = useWatch({ control: searchProvider.control, name: 'openingYear' });
+
+  useEffect(() => {
+    if (didSearch && gridData) {
+      setOriginalData(gridData.content); // ✅ 최초 조회만 저장
+      setDidSearch(false);
+    }
+  }, [didSearch, gridData]);
 
   useEffect(() => {
     if (!loginUser) return;
@@ -609,6 +644,7 @@ const StudentsManagementComponent = () => {
     setStatsLeft(payload);
     setStatsRight(payload);
     gridFetch(payload);
+    setDidSearch(true);
   }, []);
 
   const handleOnRefresh = () => {
@@ -624,11 +660,174 @@ const StudentsManagementComponent = () => {
   const handleRemoveRows = async () => {
     console.log('selectedItems=>', selectedItems);
     if (selectedItems.length === 0) return;
+
+    const confirmRes = await openConfirm({
+      title: t('삭제를 진행 하시겠습니까?'),
+      content: (
+        <p>
+          {t('삭제 후에는 복구할 수 없습니다.')}
+          <br />
+          {t('신중하게 처리해 주세요.')}
+        </p>
+      ),
+    });
+    if (!confirmRes) return;
+
+    const payload = {
+      studentId: selectedItems.map((x: any) => x.studentId),
+    };
+    console.log('##payload: ', payload);
+    await deleteStudentsInfo(payload, {
+      onSuccess: async (data: any, variables: any, context: any) => {
+        console.log('onSuccess:', data);
+        await showSaveComplete();
+        handleOnRefresh();
+      },
+      onError: (data: any, variables: any, context: any) => {
+        console.log('onError:', data);
+      },
+    });
+  };
+
+  const isEdited = (original: any, current: any) => {
+    if (original.attendanceScore !== current.attendanceScore) {
+      return true;
+    }
+    if (original.progressScore !== current.progressScore) {
+      return true;
+    }
+    if (original.examScore !== current.examScore) {
+      return true;
+    }
+    if (original.asgmtScore !== current.asgmtScore) {
+      return true;
+    }
+    if (original.isCertified !== current.isCertified) {
+      return true;
+    }
+
+    return false;
   };
 
   const handleSaveClick = async () => {
+    // 변경된 행만 추출
+    const editedRows = gConfig.gridData?.content.filter((current, index) => {
+      const original = originalData.find((x) => x.studentId === current.studentId);
+      return isEdited(original, current);
+    });
+
+    if (editedRows && editedRows.length === 0) {
+      openAlert(t('변경된 항목이 없습니다.'));
+      return;
+    }
+
+    console.log('## editedRows=>', editedRows);
+
+    const list = editedRows?.map((x: any) => {
+      return {
+        studentId: x.studentId,
+        progressScore: parseInt(x.progressScore),
+        examScore: parseInt(x.examScore),
+        asgmtScore: parseInt(x.asgmtScore),
+        attendanceScore: parseInt(x.attendanceScore),
+        isCertified: x.isCertified,
+      };
+    });
+
+    const payload = {
+      courseSequenceId: editedRows?.[0]?.courseSequenceId,
+      list,
+    };
+
+    console.log('## payload=>', payload);
+    await updateStudentsInfo(payload, {
+      onSuccess: async (data: any, variables: any, context: any) => {
+        console.log('onSuccess:', data);
+        await showSaveComplete();
+        handleOnRefresh();
+      },
+      onError: (data: any, variables: any, context: any) => {
+        console.log('onError:', data);
+      },
+    });
+  };
+
+  const handleCertification = async () => {
     console.log('selectedItems=>', selectedItems);
     if (selectedItems.length === 0) return;
+
+    const confirmRes = await openConfirm({
+      title: t('수료판단을 하시겠습니까?'),
+      content: t('선택하신 수료판단 대상에 승인하시겠습니까?'),
+    });
+    if (!confirmRes) return;
+
+    const payload = {
+      studentId: selectedItems.map((x: any) => x.studentId),
+      courseSequenceId: selectedItems[0]?.courseSequenceId,
+    };
+    console.log('##payload: ', payload);
+    await updateStudentsCertification(payload, {
+      onSuccess: async (data: any, variables: any, context: any) => {
+        console.log('onSuccess:', data);
+        await showSaveComplete();
+        handleOnRefresh();
+      },
+      onError: (data: any, variables: any, context: any) => {
+        console.log('onError:', data);
+      },
+    });
+  };
+
+  const handleCompletion = async (param: boolean) => {
+    if (selectedItems.length === 0) return;
+
+    const confirmRes = await openConfirm({
+      title: param ? t('이수확정 하시겠습니까?') : t('확정취소를 하시겠습니까?'),
+      content: param
+        ? t('선택하신 대상에 이수확정 하시겠습니까?')
+        : t('선택하신 대상에 확정취소하시겠습니까?'),
+    });
+    if (!confirmRes) return;
+
+    const payload = {
+      studentId: selectedItems.map((x: any) => x.studentId),
+      status: param,
+      courseSequenceId: selectedItems[0]?.courseSequenceId,
+    };
+
+    await updateStudentsCompletion(payload, {
+      onSuccess: async (data: any, variables: any, context: any) => {
+        console.log('onSuccess:', data);
+        await showSaveComplete();
+        handleOnRefresh();
+      },
+      onError: (data: any, variables: any, context: any) => {
+        console.log('onError:', data);
+      },
+    });
+  };
+
+  const handleSequenceChange = async () => {
+    if (selectedItems.length !== 1) return;
+
+    openModal({
+      width: 'lg',
+      content: (
+        <SequenceChangeModal
+          courseId={courseIdKey}
+          openingYear={selectedItems[0].openingYear}
+          isUsed={true}
+          courseSequenceName={selectedItems[0].courseSequenceName}
+          studentId={selectedItems[0].studentId}
+        />
+      ),
+      onClose(data) {
+        if (data) {
+          handleOnRefresh();
+        }
+      },
+    });
   };
 
   const columnHelper = createColumnHelper<any>();
@@ -665,10 +864,30 @@ const StudentsManagementComponent = () => {
             />
             <Button variant="text" label={t('메시지발송')} onClick={(e) => console.log('test')} />
 
-            <Button variant="text" label={t('수료판단')} onClick={(e) => console.log('test')} />
-            <Button variant="text" label={t('이수확정')} onClick={(e) => console.log('test')} />
-            <Button variant="text" label={t('확정취소')} onClick={(e) => console.log('test')} />
-            <Button variant="text" label={t('차수변경')} onClick={(e) => console.log('test')} />
+            <Button
+              variant="text"
+              label={t('수료판단')}
+              onClick={handleCertification}
+              disabled={selectedItems.length === 0}
+            />
+            <Button
+              variant="text"
+              label={t('이수확정')}
+              onClick={(e) => handleCompletion(true)}
+              disabled={selectedItems.length === 0}
+            />
+            <Button
+              variant="text"
+              label={t('확정취소')}
+              onClick={(e) => handleCompletion(false)}
+              disabled={selectedItems.length === 0}
+            />
+            <Button
+              variant="text"
+              label={t('차수변경')}
+              onClick={handleSequenceChange}
+              disabled={selectedItems.length !== 1}
+            />
             <Button variant="text" label={t('수강생등록')} onClick={(e) => console.log('test')} />
           </>
         }
@@ -678,8 +897,8 @@ const StudentsManagementComponent = () => {
             <GridExcelDownloadButton
               url={`${LMSApiPrefix()}/students/list/excel`}
               params={params}
-              dataCount={data?.totalElements}
-              disabled={!data?.totalElements}
+              dataCount={gridData?.totalElements}
+              disabled={!gridData?.totalElements}
             />
           </>
         }

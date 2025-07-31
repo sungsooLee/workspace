@@ -1,13 +1,13 @@
 import { Button, Divider, Tabs, ToggleButtonGroup } from '@learnway/ui';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
 import { useMemo } from 'react';
-import { TriggerKey, useCourseActions } from '../../store/use-course-store';
-import { CourseDetailInfo } from './tabs/course-detail-info';
 import { useCourseDetailPage } from '../../hooks/use-course-detail-page';
-import { Sequence } from './tabs/sequence';
+import { TriggerKey, useCourseActions } from '../../store/use-course-store';
 import { CourseDetailTab } from '../../types/type';
 import { Community } from './tabs/community';
+import { CourseDetailInfo } from './tabs/course-detail-info';
 import { CurriculumByDetail } from './tabs/curriculum';
+import { Sequence } from './tabs/sequence';
 
 const Component = () => {
   const { trigger } = useCourseActions();
@@ -47,7 +47,7 @@ const Component = () => {
   };
 
   return (
-    <PageContainer hideOutLine={true} customTitle={courseName}>
+    <PageContainer hideOutLine={true}>
       <ContentsButtons>
         <ToggleButtonGroup
           defaultValue={'과정관리'}
@@ -57,7 +57,7 @@ const Component = () => {
           ]}
           onClick={(value) => value === '수강관리' && moveEnrollmentManagementPage()}
         />
-        <Button type="button" variant="point" size="sm" label={'Values'} />
+        {/* <Button type="button" variant="point" size="sm" label={'Values'} /> */}
         {!!visibleButtons?.isTranslate && (
           <Button
             type="button"
@@ -73,7 +73,7 @@ const Component = () => {
             variant="point"
             size="sm"
             label={'과정 복사'}
-            onClick={() => console.log('과정 복사')}
+            onClick={() => trigger(TriggerKey.COPY)}
           />
         )}
         {!!visibleButtons?.isList && (

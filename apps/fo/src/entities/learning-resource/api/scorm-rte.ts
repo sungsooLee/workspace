@@ -1,44 +1,40 @@
 import { httpService } from '@learnway/shared';
 import { CMSApiPrefix } from '@learnway/config';
 
-export class ScormRteService {
-  static commit(payload: any): Promise<any> {
+export const scormRteApi = {
+  commit: (payload: any) => {
     return httpService.put<any>(`${CMSApiPrefix()}/scorm/rte/commit`, payload);
-  }
+  },
 
-  static getValue(param: any): Promise<any> {
+  getValue: (param: any) => {
     return httpService.get<any>(`${CMSApiPrefix()}/scorm/rte/value`, param);
-  }
+  },
 
-  static setValue(payload: any): Promise<any> {
+  setValue: (payload: any) => {
     return httpService.post<any>(`${CMSApiPrefix()}/scorm/rte/value`, payload);
-  }
+  },
 
-  static initialize(payload: any): Promise<any> {
+  initialize: (payload: any) => {
     return httpService.post<any>(`${CMSApiPrefix()}/scorm/rte/initialize`, payload);
-  }
+  },
 
-  static terminate(payload: any): Promise<any> {
+  terminate: (payload: any) => {
     return httpService.delete<any>(`${CMSApiPrefix()}/scorm/rte/terminate`, payload);
-  }
+  },
 
-  static setLastError(errorCode: string, payload: any): Promise<any> {
-    return httpService.post<any>(`${CMSApiPrefix()}/scorm/rte/error/${errorCode}`, payload);
-  }
-
-  static getErrorString(param: any): Promise<any> {
+  getErrorString: (param: any) => {
     return httpService.get<any>(`${CMSApiPrefix()}/scorm/rte/error/message`, param);
-  }
+  },
 
-  static getDiagnostic(param: any): Promise<any> {
+  getDiagnostic: (param: any) => {
     return httpService.get<any>(`${CMSApiPrefix()}/scorm/rte/error/diagnostic`, param);
-  }
+  },
 
-  static getLastError(param: any): Promise<any> {
+  getLastError: (param: any) => {
     return httpService.get<any>(`${CMSApiPrefix()}/scorm/rte/error/code`, param);
-  }
+  },
 
-  static getScoInfo(param: any) {
+  getScoInfo: (param: any) => {
     return httpService.get<any>(`${CMSApiPrefix()}/scorm/rte/sco/info`, param);
-  }
-}
+  },
+};

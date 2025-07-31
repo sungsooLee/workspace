@@ -50,8 +50,8 @@ import { IcoDownload } from '@learnway/icons';
 import { EnFormMode } from '@types';
 
 import { useDeployTranslation } from '@entities/translation/service/translation.hook';
-import { PreviewLearningWindow } from '@shared/ui/modal/preview-learning-window';
 import { CourseType } from '@learnway/types';
+import { PreviewLearningWindow } from '@shared/ui/modal/preview-learning-window';
 
 export const Route = createLazyFileRoute('/_layout/common-popup')({
   component: RouteComponent,
@@ -456,7 +456,9 @@ function RouteComponent() {
                   e.stopPropagation();
                   openModal({
                     width: 'xl',
-                    content: <UserGroupOrganizationShuttleModal tenantIds={[1, 2, 3]} />,
+                    content: (
+                      <UserGroupOrganizationShuttleModal tenantIds={[1, 2, 3]} roleIds={[1]} />
+                    ),
                   });
                 }}
               >
@@ -477,6 +479,7 @@ function RouteComponent() {
                     <UserGroupTabsChoiceModal
                       initialTab="ORGANIZATION"
                       tenantIds={[1, 2, 3]}
+                      roleIds={[1]}
                       option={[
                         {
                           pathKey: '2-54-9-10&&2-54&&3-1678',

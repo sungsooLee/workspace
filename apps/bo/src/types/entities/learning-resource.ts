@@ -335,6 +335,7 @@ export type CourseMappingStatusRes = {
 export interface ContentCourseMappingParams extends PaginationRequest {
   courseType?: CourseType;
   courseName?: string;
+  lastVisitedBoRoleId: number;
 }
 
 export interface Content {
@@ -619,18 +620,18 @@ export interface QuestionStatusUpdateReq {
   isUsed: boolean;
 }
 
-export interface RandomQuestionCountInfo {
+export interface QuestionCountInfo {
   questionType: EnQuestionType;
   hardLevelCount: number;
   mediumLevelCount: number;
   easyLevelCount: number;
 }
 
-export interface RandomQuestionCountUpdateReq {
+export interface ExamPaperQuestionCountUpdateReq {
   contentUuid: string;
   questionGenType: ExamQuestionGenType;
   questionTotalCount: number;
-  countList: RandomQuestionCountInfo[];
+  countList: QuestionCountInfo[];
 }
 
 export interface QuestionListForRetrieveReq {
@@ -686,3 +687,23 @@ export interface ContentSharingInfoRes {
   isPossible: boolean;
   reason: string;
 }
+
+export interface TenantCodeType {
+  tenantId: number;
+  tenantName: string;
+}
+
+export interface GetShareTenantsChannelsParams {
+  contentUuid: string;
+  tenantId: number;
+  channelName?: string;
+}
+
+export interface ChannelCodeType {
+  tenantId: number;
+  tenantName: string;
+  channelUuid: string;
+  cahnnelName: string;
+}
+
+export type GetShareTenantsChannelsRes = ChannelCodeType[];

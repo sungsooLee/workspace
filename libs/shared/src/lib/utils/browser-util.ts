@@ -25,3 +25,11 @@ export const isLocalhost = () => {
     window.location.hostname === '[::1]'
   );
 };
+
+/**
+ * 인증 비활성화 여부를 반환합니다.
+ * @returns {boolean} 인증이 비활성화(true) 상태인지 여부
+ */
+export const isDisableAuth = (): boolean => {
+  return import.meta.env['VITE_DISABLE_AUTH'] === 'true';
+};

@@ -6,8 +6,23 @@ import { t } from 'i18next';
 
 const InputFormFieldComponent = forwardRef<HTMLInputElement, BaseFormFieldProps<string>>(
   ({ formState, control, customConfig, getValues, onChange, value, ...props }, ref) => {
+    const {
+      clearAllValidators,
+      addValidator,
+      registerField,
+      originalValues,
+      onFormChange,
+      fieldRefs,
+      subText,
+      guideText,
+      setValue,
+      onFormFocus,
+      watch,
+      error,
+      ...newProps
+    } = props;
     const placeholderWatch = useWatch({ control, name: customConfig?.placeholder?.target || '' });
-    const [inputProps, setInputProps] = useState<any>(props);
+    const [inputProps, setInputProps] = useState<any>(newProps);
 
     const handleOnChange = (e: any) => {
       console.log('e => ', e);

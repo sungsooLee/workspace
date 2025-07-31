@@ -5,8 +5,8 @@ import svgr from '@svgr/rollup';
 import { tanstackRouter } from '@tanstack/router-plugin/vite';
 import viteReact from '@vitejs/plugin-react';
 import path from 'path';
+import { visualizer } from 'rollup-plugin-visualizer';
 import { defineConfig, loadEnv } from 'vite';
-
 // vitest automatically sets NODE_ENV to 'test' when running tests
 const isTest = process.env.NODE_ENV === 'test';
 
@@ -62,6 +62,14 @@ export default defineConfig(({ mode }) => {
         icon: true,
         titleProp: false,
         descProp: false,
+      }),
+      visualizer({
+        filename: 'stats.html',
+        open: false,
+        gzipSize: true,
+        brotliSize: true,
+        template: 'treemap', // sunburst, treemap, network, or default
+        emitFile: true,
       }),
     ].filter(Boolean),
     resolve: {
