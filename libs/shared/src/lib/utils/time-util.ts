@@ -18,3 +18,18 @@ export const getHourValueFromTime = (time: string | number | undefined) => {
 
   return { hour, minute, second };
 };
+
+export function formatMinutesToHours(minutes: number): string {
+  if (!Number.isFinite(minutes) || minutes < 0) return '0분';
+
+  const hours = Math.floor(minutes / 60);
+  const remainingMinutes = minutes % 60;
+
+  if (hours > 0 && remainingMinutes > 0) {
+    return `${hours}시간 ${remainingMinutes}분`;
+  } else if (hours > 0) {
+    return `${hours}시간`;
+  } else {
+    return `${remainingMinutes}분`;
+  }
+}

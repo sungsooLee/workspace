@@ -1,5 +1,6 @@
 import { LMSApiPrefix } from '@learnway/config';
 import { httpService } from '@learnway/shared';
+import { CourseSequenceResponse } from '@types';
 
 export default class CourseService {
   // 과정 정보 조회
@@ -171,8 +172,8 @@ export default class CourseService {
     });
   }
   // 과정 차수 단건 불러오기
-  static async fetchSequenceOne(courseSequenceId: string): Promise<any> {
-    return await httpService.get<any>(`${LMSApiPrefix()}/sequence/${courseSequenceId}`);
+  static async fetchSequenceOne(courseSequenceId: string): Promise<CourseSequenceResponse> {
+    return await httpService.get(`${LMSApiPrefix()}/sequence/${courseSequenceId}`);
   }
 
   // 과정 패키지 리스트 불러오기

@@ -214,7 +214,7 @@ const EducationComponent = ({
             variant="primary"
             size="xl"
             onClick={() => {
-              const sendData = { courseSequenceUuid: edu.courseSequenceId };
+              const sendData = { courseSequenceId: edu.courseSequenceId };
               navigate({ to: '/course/registration', state: sendData });
             }}
           >
