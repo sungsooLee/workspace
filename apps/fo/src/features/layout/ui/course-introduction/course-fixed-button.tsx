@@ -1,14 +1,14 @@
-import { memo, useState } from 'react';
-import { Link } from '@tanstack/react-router';
-import { isMobile } from 'react-device-detect';
-import { Button, useModal } from '@learnway/ui';
 import { IcoHeart, IcoShare } from '@learnway/icons';
+import { Button, useModal } from '@learnway/ui';
+import { memo } from 'react';
+import { isMobile } from 'react-device-detect';
 
 import {
   CourseSelectionPopup, // 차수선택 팝업
 } from '../../../../features/layout/';
 
 import styles from '@learnway/styles/fo/features/layout/ui/course-introduction/course-fixed-button.module.css';
+import { t } from 'i18next';
 
 interface CourseFixedButton {
   course?: boolean; // 차수 유/무
@@ -47,7 +47,7 @@ const CourseFixedButtonComponent = ({
       </Button>
       <Button>
         <IcoShare width={20} height={20} stroke="#4c515e" />
-        공유
+        {t('공유')}
       </Button>
 
       {/* 수강신청 차수가 있을 때 */}
@@ -65,12 +65,12 @@ const CourseFixedButtonComponent = ({
                 : ''
             }
           >
-            수강신청
+            {t('수강신청')}
           </Button>
           {/* 수강신청 불가능 */}
           {/* <Button variant="line">차수개설 알림신청</Button> */}
           {/* tip */}
-          <span className={styles.tip}>차수를 선택해 주세요</span>
+          <span className={styles.tip}>{t('차수를 선택해 주세요')}</span>
         </div>
       )}
     </div>
