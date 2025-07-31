@@ -1,6 +1,7 @@
 // IA104 / NLP_BO_CMS_1045 학습자원 현지화-공유함
 import { learningResourceQueryOptions } from '@entities/learning-resource';
 import { getDetailPathByContentType, getDetailRouterState } from '@features/learning-resource';
+import { useFetchAuthUser } from '@learnway/auth/entities';
 import {
   ALL_OPTION,
   CODE_GROUP,
@@ -9,6 +10,7 @@ import {
   useSearchBox,
 } from '@learnway/hooks';
 import { IcoDownArrow } from '@learnway/icons';
+import { formatDate } from '@learnway/shared';
 import { Button, Divider, GridBox, useGridBox, useGridBoxConfig, useModal } from '@learnway/ui';
 import {
   PreviewLearningWindow,
@@ -17,11 +19,12 @@ import {
 } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { useRouter } from '@tanstack/react-router';
-import { ContentCreateType, ContentInfo } from '@types';
+import { ContentCreateType, ContentInfo, GetSharedBoxContent } from '@types';
 import { t } from 'i18next';
 import { useEffect, useState } from 'react';
 
 function LearningResourceSharedTableComponent() {
+  const { data: authUser } = useFetchAuthUser();
   const {
     state: { listParam },
   } = useCurrentRoute();
@@ -33,7 +36,7 @@ function LearningResourceSharedTableComponent() {
     builders: [
       [
         {
-          name: 'tenantId',
+          name: 'sourceTenantId',
           type: 'custom',
           label: t('LABEL.form.label.tenant', '테넌트'),
           value: '',
@@ -41,7 +44,7 @@ function LearningResourceSharedTableComponent() {
           element: <TenantByRoleDropdownFormField />,
         },
         {
-          name: 'channelUuid',
+          name: 'sourceChannelUuid',
           type: 'custom',
           label: t('LABEL.form.label.channel', '채널'),
           value: '',
@@ -82,7 +85,7 @@ function LearningResourceSharedTableComponent() {
           },
         },
         {
-          name: 'langCountryCode',
+          name: 'languageCountryCode',
           type: 'dropdown',
           label: t('LABEL.form.label.langCountryCode', '언어'),
           value: '',
@@ -92,23 +95,11 @@ function LearningResourceSharedTableComponent() {
           },
         },
         {
-          name: 'isReceived',
-          type: 'dropdown',
-          label: t('수신상태'),
-          value: '',
-          presetOptionLabel: t('LABEL.form.label.all', '전체'),
-          optionsConfig: {
-            options: [
-              { value: 'false', label: t('수신대기') },
-              { value: 'true', label: t('수신완료') },
-            ],
-          },
-        },
-        {
-          name: 'shared-period',
+          name: 'sharedDate',
           type: 'date-range',
           label: t('공유된 기간'),
           value: { from: undefined, to: undefined },
+          format: 'object',
         },
       ],
     ],
@@ -119,24 +110,24 @@ function LearningResourceSharedTableComponent() {
   };
 
   const gridConfig: useGridBoxConfig = {
-    query: learningResourceQueryOptions.getContents,
+    query: learningResourceQueryOptions.getSharedBoxContents,
     columns: [
       {
         size: 79,
-        name: 'contentType',
+        name: 'sourceContentType',
         label: t('LABEL.grid.column.contentType', '유형'),
         render: (_: any) => t(`cms.content.ContentType.${_.getValue()}`),
       },
       {
         size: 338,
-        name: 'contentName',
+        name: 'sourceContentName',
         label: t('LABEL.grid.column.contentName', '학습자원명'),
         meta: {
           size: 'auto',
         },
         render: (_: any) => (
           <span className="flex">
-            {_.row.original.createType === ContentCreateType.TRANSLATE && (
+            {_.row.original.contentCreateType === ContentCreateType.TRANSLATE && (
               <IcoDownArrow width={16} height={16} stroke="#4C515E" />
             )}
             <Button
@@ -144,9 +135,12 @@ function LearningResourceSharedTableComponent() {
               onClick={(e) => {
                 e.stopPropagation();
                 router.navigate({
-                  to: getDetailPathByContentType(_.row.original.contentType),
+                  to: getDetailPathByContentType(_.row.original.sourceContentType),
                   state: {
-                    ...getDetailRouterState(_.row.original.contentUuid, _.row.original.contentType),
+                    ...getDetailRouterState(
+                      _.row.original.sourceContentUuid,
+                      _.row.original.sourceContentType,
+                    ),
                     listParam: params,
                   },
                 });
@@ -159,7 +153,7 @@ function LearningResourceSharedTableComponent() {
       },
       {
         size: 127,
-        name: 'tenantName',
+        name: 'sourceTenantName',
         label: t('LABEL.grid.column.tenant', '테넌트'),
         meta: {
           size: 'auto',
@@ -167,7 +161,7 @@ function LearningResourceSharedTableComponent() {
       },
       {
         size: 153,
-        name: 'channelName',
+        name: 'sourceChannelName',
         label: t('LABEL.grid.column.channel', '채널'),
         meta: {
           size: 'auto',
@@ -184,7 +178,7 @@ function LearningResourceSharedTableComponent() {
               e.stopPropagation();
               openModal({
                 width: 'full',
-                content: <PreviewLearningWindow contentUuid={_.row.original.contentUuid} />,
+                content: <PreviewLearningWindow contentUuid={_.row.original.sourceContentUuid} />,
               });
             }}
           >
@@ -211,13 +205,13 @@ function LearningResourceSharedTableComponent() {
       },
       {
         size: 100,
-        name: 'isReceived',
+        name: 'sharedCount',
         label: t('수신상태'),
         render: (_: any) => (_.getValue() ? t('수신완료') : t('수신대기')),
       },
       {
         size: 100,
-        name: 'isReceived',
+        name: 'shareButtonUtil',
         label: t('LABEL.grid.column.util', '기능'),
         render: (_: any) => (
           <Button variant="gray2" disabled={_.getValue()}>
@@ -237,11 +231,16 @@ function LearningResourceSharedTableComponent() {
   const { config: gConfig, gridFetch, data } = useGridBox<ContentInfo>(gridConfig, getValues);
   const [params, setParams] = useState<Record<string, any>>({});
 
-  function handleSearch(rawQuery: Record<string, any>) {
-    const processedQuery = compactValues(rawQuery);
+  function handleSearch({ sharedDate, ...rawQuery }: Record<string, any>) {
+    const processedQuery = {
+      ...compactValues(rawQuery),
+      ...(sharedDate?.from && { sharedDateStart: formatDate(sharedDate.from) }),
+      ...(sharedDate?.to && { sharedDateEnd: formatDate(sharedDate.to) }),
+    };
+    console.log('🚀 ~ handleSearch ~ rawQuery:', rawQuery, processedQuery);
 
     setParams(processedQuery);
-    gridFetch(processedQuery);
+    gridFetch({ lastVisitedBoRoleId: authUser?.lastVisitedBoRoleId, ...processedQuery });
   }
 
   useEffect(() => {
@@ -259,11 +258,11 @@ function LearningResourceSharedTableComponent() {
     <>
       <SearchBox provider={searchProvider} onSearch={handleSearch} />
       <Divider />
-      <GridBox<ContentInfo>
+      <GridBox<GetSharedBoxContent>
         config={gConfig}
         showNumberingColumn
         getRowClassName={(row) => {
-          if (row.createType === ContentCreateType.TRANSLATE) return 'bg-[--secondary9]';
+          if (row.contentCreateType === ContentCreateType.TRANSLATE) return 'bg-[--secondary9]';
           return '';
         }}
       />

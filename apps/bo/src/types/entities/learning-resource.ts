@@ -715,6 +715,7 @@ export interface GetSharedBoxContentsParams extends PaginationRequest {
   contentTypes?: ContentType | ContentType[];
   contentName?: string;
   isContentEnabled?: boolean;
+  languageCountryCode?: string;
   sharedDateStart?: string;
   sharedDateEnd?: string;
 }
