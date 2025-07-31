@@ -33,8 +33,12 @@ export default class UserGroupService {
     });
   }
 
-  static fetchCustomGroupsTree(userGroupName?: string): Promise<OrganizationTreeResponse> {
+  static fetchCustomGroupsTree(
+    roleId: number,
+    userGroupName?: string,
+  ): Promise<OrganizationTreeResponse> {
     return httpService.get(`${PMSApiPrefix()}/userGroup/custom-groups-tree`, {
+      roleId,
       userGroupName,
     });
   }
