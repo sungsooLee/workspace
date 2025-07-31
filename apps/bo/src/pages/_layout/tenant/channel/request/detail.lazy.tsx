@@ -1,7 +1,10 @@
-import React, { FC, useEffect, useState } from 'react';
-import { t } from 'i18next';
-import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
-import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
+import {
+  useGetRequestChannelDetail,
+  useUpdateRequestChannel,
+} from '@entities/channel/service/request-channel.hook';
+import { getChannelUrl, useChannelApplication } from '@features/channel';
+import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import {
   Button,
   ContentsRow,
@@ -11,21 +14,18 @@ import {
   TextareaFormField,
   useModal,
 } from '@learnway/ui';
-import { useDynamicForm, DynamicFormConfig, CODE_GROUP } from '@learnway/hooks';
 import {
-  useGetRequestChannelDetail,
-  useUpdateRequestChannel,
-} from '@entities/channel/service/request-channel.hook';
-import { EnGlobalConst } from '@types';
-import {
-  FormRow,
+  ContentsButtons,
   FormItem,
+  FormRow,
+  LinkBox,
   MainContents,
   PageContainer,
-  LinkBox,
-  ContentsButtons,
 } from '@shared/ui';
-import { getChannelUrl, useChannelApplication } from '@features/channel';
+import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
+import { EnGlobalConst } from '@types';
+import { t } from 'i18next';
+import { useEffect } from 'react';
 
 export const Route = createLazyFileRoute('/_layout/tenant/channel/request/detail')({
   component: RouteComponent,
@@ -102,7 +102,8 @@ function RouteComponent() {
   }, [data]);
 
   const handleListButtonClick = () => {
-    router.navigate({ to: '/tenant/channel/request' });
+    const listParam = routerState.location.state?.listParam;
+    router.navigate({ to: '/tenant/channel/request', state: { listParam } });
   };
 
   const handleAcceptClick = (e: any) => {

@@ -180,12 +180,10 @@ const CompanyUserListComponent = ({ detailPath }: CompanyUserListProps) => {
         },
         {
           name: 'deptEntity.deptName',
+          id: 'deptEntity.deptName',
           label: t('소속'),
           render: (info: any) => info.row.original.dept?.deptName,
           size: 120,
-          meta: {
-            sortKey: 'deptEntity.deptName',
-          },
         },
         {
           name: 'positionName',
@@ -291,6 +289,7 @@ const CompanyUserListComponent = ({ detailPath }: CompanyUserListProps) => {
         // linkageSystem값이 null이면 직접 가입, 아니면 I/F
         {
           name: 'createdDate',
+          id: 'userEntity.createdDate',
           label: t('회원가입일'),
           render: (info: any) =>
             info.row.original.linkageSystem === null
@@ -309,7 +308,6 @@ const CompanyUserListComponent = ({ detailPath }: CompanyUserListProps) => {
           size: 160,
           meta: {
             cellAlign: 'center',
-            sortKey: 'userEntity.createdDate',
           },
         },
       ],

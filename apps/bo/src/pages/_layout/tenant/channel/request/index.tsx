@@ -1,40 +1,103 @@
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import { createFileRoute, useRouter } from '@tanstack/react-router';
+import { createFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { queryOptions as requestChannelQueryOptions } from '@entities/channel/service/request-channel.queries';
 import { useChannelApplication } from '@features/channel/channel-application/service/channel-application.service';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
-import { Button, Checkbox, Divider, GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
+import { Button, Checkbox, Divider, GridBox, useGridBox } from '@learnway/ui';
 import { MainContents, PageContainer, TenantByRoleDropdownFormField } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { ColumnDef, createColumnHelper, Table } from '@tanstack/react-table';
 import { EnGlobalConst } from '@types';
 
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
+import { useCreation } from 'ahooks';
 
 export const Route = createFileRoute('/_layout/tenant/channel/request/')({
   component: RouteComponent,
 });
 
-const _global = {
-  linkClick: (uuid: string) => {
-    return;
-  },
-  openChannelClick: (uuid: string) => {
-    return;
-  },
-  channelDetailClick: (uuid: string) => {
-    return;
-  },
-};
-
 function RouteComponent() {
   const router = useRouter();
+  const routerState = useRouterState();
 
-  const { provider: sProvider, getValues } = useSearchBox(searchConfig());
-  const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
+  const searchConfig: SearchBoxConfig = {
+    builders: [
+      [
+        {
+          name: 'tenantId',
+          type: 'custom',
+          label: t('테넌트'),
+          value: '',
+          format: 'object',
+          element: <TenantByRoleDropdownFormField />,
+        },
+        {
+          name: 'channelName',
+          type: 'text',
+          label: t('채널명'),
+          value: '',
+          placeholder: '',
+        },
+        {
+          name: 'requesterEmployeeNumber',
+          type: 'text',
+          label: t('신청자 사번'),
+          value: '',
+          placeholder: '',
+        },
+      ],
+      [
+        {
+          name: 'approvalStatusType',
+          type: 'dropdown',
+          label: t('신청상태'),
+          value: '',
+          optionsConfig: {
+            options: [{ value: '', label: t('LABEL.all') }],
+            codeGroup: CODE_GROUP['pms.channel.ChannelApprovalStatusType'],
+          },
+        },
+        {
+          name: 'regDate',
+          label: t('신청일'),
+          type: 'date-range',
+          value: {
+            from: undefined,
+            to: undefined,
+          },
+        },
+        {
+          name: 'approvalDate',
+          label: t('접수/반려일'),
+          type: 'date-range',
+          value: {
+            from: undefined,
+            to: undefined,
+          },
+        },
+      ],
+    ],
+  };
+
+  const gridInitConfig = useCreation(
+    () => ({
+      query: requestChannelQueryOptions.list,
+      columns: [],
+      data: [],
+      gridState: {
+        page: 0,
+        size: 10,
+        sort: [],
+      },
+    }),
+    [],
+  );
+
+  const { provider: sProvider, getValues, onFormChange, onFormValid } = useSearchBox(searchConfig);
+  const { config: gConfig, gridFetch } = useGridBox(gridInitConfig, getValues);
 
   const [tableInstance, setTableInstance] = useState<Table<any>>();
   const [approvalButtonDisabled, setApprovalButtonDisabled] = useState(true);
@@ -87,15 +150,16 @@ function RouteComponent() {
     return !disabled;
   };
 
-  _global.linkClick = (uuid: string) => {
+  const linkClick = (uuid: string) => {
     router.navigate({
       to: '/tenant/channel/request/detail',
       state: {
         channelRequestUuid: uuid,
+        listParam: getValues(),
       },
     });
   };
-  _global.openChannelClick = (uuid: string) => {
+  const openChannelClick = (uuid: string) => {
     router.navigate({
       to: '/tenant/channel/management/regist',
       state: {
@@ -103,7 +167,7 @@ function RouteComponent() {
       },
     });
   };
-  _global.channelDetailClick = (uuid: string) => {
+  const channelDetailClick = (uuid: string) => {
     router.navigate({
       to: '/tenant/channel/management/detail',
       state: {
@@ -112,122 +176,9 @@ function RouteComponent() {
     });
   };
 
-  return (
-    <PageContainer>
-      <MainContents>
-        <SearchBox provider={sProvider} onSearch={handleOnSearch} />
-        <Divider />
-        <GridBox
-          config={gConfig}
-          columns={columns()}
-          multiple
-          hideRowSelectionCheckBox={true}
-          title={t('채널 개설 신청 목록')}
-          customButtonNode={
-            <>
-              <Button
-                variant="text"
-                size="sm"
-                className={layoutStyles.btn_text}
-                disabled={approvalButtonDisabled}
-                label={t('접수')}
-                stopPropagation
-                onClick={handleAcceptClick}
-              />
-              <Button
-                variant="text"
-                size="sm"
-                className={layoutStyles.btn_text}
-                disabled={approvalButtonDisabled}
-                label={t('반려')}
-                stopPropagation
-                onClick={handleRejectClick}
-              />
-            </>
-          }
-          onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
-          isRowSelectable={handleOnSelectable}
-          onRowSelect={handleOnSelect}
-        />
-      </MainContents>
-    </PageContainer>
-  );
-}
+  const columnHelper = createColumnHelper<any>();
 
-const searchConfig = (): SearchBoxConfig => ({
-  builders: [
-    [
-      {
-        name: 'tenantId',
-        type: 'custom',
-        label: t('테넌트'),
-        value: '',
-        format: 'object',
-        element: <TenantByRoleDropdownFormField />,
-      },
-      {
-        name: 'channelName',
-        type: 'text',
-        label: t('채널명'),
-        value: '',
-        placeholder: '',
-      },
-      {
-        name: 'requesterEmployeeNumber',
-        type: 'text',
-        label: t('신청자 사번'),
-        value: '',
-        placeholder: '',
-      },
-    ],
-    [
-      {
-        name: 'approvalStatusType',
-        type: 'dropdown',
-        label: t('신청상태'),
-        value: '',
-        optionsConfig: {
-          options: [{ value: '', label: t('LABEL.all') }],
-          codeGroup: CODE_GROUP['pms.channel.ChannelApprovalStatusType'],
-        },
-      },
-      {
-        name: 'regDate',
-        label: t('신청일'),
-        type: 'date-range',
-        value: {
-          from: undefined,
-          to: undefined,
-        },
-      },
-      {
-        name: 'approvalDate',
-        label: t('접수/반려일'),
-        type: 'date-range',
-        value: {
-          from: undefined,
-          to: undefined,
-        },
-      },
-    ],
-  ],
-});
-
-const gridConfig: useGridBoxConfig = {
-  query: requestChannelQueryOptions.list,
-  columns: [],
-  data: [],
-  gridState: {
-    page: 0,
-    size: 10,
-    sort: [],
-  },
-};
-
-const columnHelper = createColumnHelper<any>();
-
-const columns = () =>
-  [
+  const columns = [
     columnHelper.accessor('checkbox', {
       // 상태에 따른 checkbox disabled를 위해 checkbox 따로 구현
       id: 'select-check',
@@ -272,7 +223,7 @@ const columns = () =>
         <Button
           className="link"
           stopPropagation
-          onClick={(e) => _global.linkClick(info.row.original.channelRequestUuid)}
+          onClick={(e) => linkClick(info.row.original.channelRequestUuid)}
           label={info.row.original.channelRequestId}
         />
       ),
@@ -378,8 +329,8 @@ const columns = () =>
               size={'xs'}
               variant="gray"
               stopPropagation
-              onClick={(e) => {
-                _global.openChannelClick(info.row.original.channelRequestUuid);
+              onClick={() => {
+                openChannelClick(info.row.original.channelRequestUuid);
               }}
               label={t('채널 개설')}
             />
@@ -390,8 +341,8 @@ const columns = () =>
               size={'xs'}
               variant="gray"
               stopPropagation
-              onClick={(e) => {
-                _global.channelDetailClick(info.row.original.channelInfoChannelUuid);
+              onClick={() => {
+                channelDetailClick(info.row.original.channelInfoChannelUuid);
               }}
               label={t('채널 상세')}
             />
@@ -404,3 +355,58 @@ const columns = () =>
       enableSorting: false,
     }),
   ] as ColumnDef<any, unknown>[];
+
+  useEffect(() => {
+    const init = async () => {
+      const listParam = routerState.location.state.listParam;
+      if (listParam) {
+        onFormChange(listParam);
+        if (await onFormValid()) {
+          handleOnSearch(getValues());
+        }
+      }
+    };
+    init();
+  }, []);
+
+  return (
+    <PageContainer>
+      <MainContents>
+        <SearchBox provider={sProvider} onSearch={handleOnSearch} />
+        <Divider />
+        <GridBox
+          config={gConfig}
+          columns={columns}
+          multiple
+          hideRowSelectionCheckBox={true}
+          title={t('채널 개설 신청 목록')}
+          customButtonNode={
+            <>
+              <Button
+                variant="text"
+                size="sm"
+                className={layoutStyles.btn_text}
+                disabled={approvalButtonDisabled}
+                label={t('접수')}
+                stopPropagation
+                onClick={handleAcceptClick}
+              />
+              <Button
+                variant="text"
+                size="sm"
+                className={layoutStyles.btn_text}
+                disabled={approvalButtonDisabled}
+                label={t('반려')}
+                stopPropagation
+                onClick={handleRejectClick}
+              />
+            </>
+          }
+          onTableInstanceChange={(table: Table<any>) => setTableInstance(table)}
+          isRowSelectable={handleOnSelectable}
+          onRowSelect={handleOnSelect}
+        />
+      </MainContents>
+    </PageContainer>
+  );
+}

@@ -71,6 +71,11 @@ function RouteComponent() {
     return undefined;
   };
 
+  const handleOnList = () => {
+    const listParam = routerState.location.state?.listParam;
+    router.navigate({ to: '/tenant/channel/management', state: { listParam } });
+  };
+
   const handleOnSave = () => {
     const formRef = getFormRef();
     if (formRef?.current?.saveData) formRef.current.saveData();
@@ -166,12 +171,7 @@ function RouteComponent() {
     <PageContainer hideOutLine={true}>
       <ContentsButtons>
         <LinkBox>
-          <Button
-            variant="point"
-            size="sm"
-            onClick={() => router.navigate({ to: '/tenant/channel/management' })}
-            label={t('LABEL.button.list')}
-          />
+          <Button variant="point" size="sm" onClick={handleOnList} label={t('LABEL.button.list')} />
         </LinkBox>
         {buttonLayout === EnButtonLayout.REGISTER && (
           <Button variant="point" size="sm" onClick={handleOnRegister} label={t('등록')} />
