@@ -16,12 +16,10 @@ import {
 
 export default class LearningSequenceService {
   static fetchSequenceList(params: any) {
-    console.log('### fetchSequenceList', params);
     return httpService.get<LearningSequences[]>(`${LMSApiPrefix()}/sequences`, params);
   }
 
   static fetchSequenceOne(sequenceId: number) {
-    console.log('## sequenceId:', sequenceId);
     return httpService.get<LearningSequence>(`${LMSApiPrefix()}/sequence/${sequenceId}`);
   }
 
@@ -101,6 +99,9 @@ export default class LearningSequenceService {
   }
   static updateStudentsSequence(params: any) {
     return httpService.put(`${LMSApiPrefix()}/students/sequence`, params);
+  }
+  static updateStudentsList(params: any) {
+    return httpService.put(`${LMSApiPrefix()}/students/list`, params);
   }
   static fetchStudentsDeliveryAddress(params: any) {
     return httpService.get<StudentsDeliveryAddress>(

@@ -210,7 +210,7 @@ const EnrollmentRegistComponent = ({
   const handleOnSearch = useCallback((data: any) => {
     const payload = {
       openingYear: 2025,
-      courseSequenceId: 2,
+      courseSequenceId: 40,
       enrollStatusType: data.enrollStatusType || '',
       learningStartDate: '2025-06-22',
       learningEndDate: '2025-08-22',

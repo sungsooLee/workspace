@@ -13,7 +13,8 @@ export function useFetchCourseSequence(sequenceId: number) {
 export function useCreateSequence(options: any) {
   const { mutate, isSuccess, isError, data } = useMutation({
     ...mutateOptions.createSequence(),
-    ...options });
+    ...options,
+  });
 
   return {
     createSequence: async (payload: any, callback?: any) => {
@@ -21,13 +22,15 @@ export function useCreateSequence(options: any) {
     },
     isSuccess,
     isError,
-    data };
+    data,
+  };
 }
 
 export function useBulkUpdateSequence(options: any) {
   const { mutate, isSuccess, isError, data } = useMutation({
     ...mutateOptions.bulkUpdateSequence(),
-    ...options });
+    ...options,
+  });
 
   return {
     bulkUpdateSequence: async (payload: any, callback?: any) => {
@@ -35,13 +38,15 @@ export function useBulkUpdateSequence(options: any) {
     },
     isSuccess,
     isError,
-    data };
+    data,
+  };
 }
 
 export function useUpdateSequenceList(options: any) {
   const { mutate, isSuccess, isError, data } = useMutation({
     ...mutateOptions.updateSequenceList(),
-    ...options });
+    ...options,
+  });
 
   return {
     updateSequenceList: async (payload: any, callback?: any) => {
@@ -49,13 +54,15 @@ export function useUpdateSequenceList(options: any) {
     },
     isSuccess,
     isError,
-    data };
+    data,
+  };
 }
 
 export function useUpdateSequence(options: any) {
   const { mutate, isSuccess, isError, data } = useMutation({
     ...mutateOptions.updateSequence(),
-    ...options });
+    ...options,
+  });
 
   return {
     updateSequence: async (payload: any, callback?: any) => {
@@ -63,13 +70,15 @@ export function useUpdateSequence(options: any) {
     },
     isSuccess,
     isError,
-    data };
+    data,
+  };
 }
 
 export function useDeleteSequenceList(options: any) {
   const { mutate, isSuccess, isError, data } = useMutation({
     ...mutateOptions.deleteSequenceList(),
-    ...options });
+    ...options,
+  });
 
   return {
     deleteSequenceList: async (payload: any, callback?: any) => {
@@ -77,13 +86,15 @@ export function useDeleteSequenceList(options: any) {
     },
     isSuccess,
     isError,
-    data };
+    data,
+  };
 }
 
 export function useDeleteSequence(options: any) {
   const { mutate, isSuccess, isError, data } = useMutation({
     ...mutateOptions.deleteSequence(),
-    ...options });
+    ...options,
+  });
 
   return {
     deleteSequence: async (payload: any, callback?: any) => {
@@ -91,13 +102,15 @@ export function useDeleteSequence(options: any) {
     },
     isSuccess,
     isError,
-    data };
+    data,
+  };
 }
 
 export function useCopySequence(options: any) {
   const { mutate, isSuccess, isError, data } = useMutation({
     ...mutateOptions.copySequence(),
-    ...options });
+    ...options,
+  });
 
   return {
     copySequence: async (payload: any, callback?: any) => {
@@ -105,7 +118,8 @@ export function useCopySequence(options: any) {
     },
     isSuccess,
     isError,
-    data };
+    data,
+  };
 }
 
 export function useFetchEnrollmentSequenceCombo(params: any) {
@@ -115,7 +129,8 @@ export function useFetchEnrollmentSequenceCombo(params: any) {
 export function useUpdateStudentsReason(options: any) {
   const { mutate, isSuccess, isError, data } = useMutation({
     ...mutateOptions.updateStudentsReason(),
-    ...options });
+    ...options,
+  });
 
   return {
     updateStudentsReason: async (payload: any, callback?: any) => {
@@ -123,13 +138,15 @@ export function useUpdateStudentsReason(options: any) {
     },
     isSuccess,
     isError,
-    data };
+    data,
+  };
 }
 
 export function useUpdateStudentsInfo(options: any) {
   const { mutate, isSuccess, isError, data } = useMutation({
     ...mutateOptions.updateStudentsInfo(),
-    ...options });
+    ...options,
+  });
 
   return {
     updateStudentsInfo: async (payload: any, callback?: any) => {
@@ -137,13 +154,15 @@ export function useUpdateStudentsInfo(options: any) {
     },
     isSuccess,
     isError,
-    data };
+    data,
+  };
 }
 
 export function useDeleteStudentsInfo(options: any) {
   const { mutate, isSuccess, isError, data } = useMutation({
     ...mutateOptions.deleteStudentsInfo(),
-    ...options });
+    ...options,
+  });
 
   return {
     deleteStudentsInfo: async (payload: any, callback?: any) => {
@@ -151,13 +170,15 @@ export function useDeleteStudentsInfo(options: any) {
     },
     isSuccess,
     isError,
-    data };
+    data,
+  };
 }
 
 export function useUpdateStudentsCertification(options: any) {
   const { mutate, isSuccess, isError, data } = useMutation({
     ...mutateOptions.updateStudentsCertification(),
-    ...options });
+    ...options,
+  });
 
   return {
     updateStudentsCertification: async (payload: any, callback?: any) => {
@@ -165,13 +186,15 @@ export function useUpdateStudentsCertification(options: any) {
     },
     isSuccess,
     isError,
-    data };
+    data,
+  };
 }
 
 export function useUpdateStudentsCompletion(options: any) {
   const { mutate, isSuccess, isError, data } = useMutation({
     ...mutateOptions.updateStudentsCompletion(),
-    ...options });
+    ...options,
+  });
 
   return {
     updateStudentsCompletion: async (payload: any, callback?: any) => {
@@ -179,13 +202,15 @@ export function useUpdateStudentsCompletion(options: any) {
     },
     isSuccess,
     isError,
-    data };
+    data,
+  };
 }
 
 export function useUpdateStudentsSequence(options: any) {
   const { mutate, isSuccess, isError, data } = useMutation({
     ...mutateOptions.updateStudentsSequence(),
-    ...options });
+    ...options,
+  });
 
   return {
     updateStudentsSequence: async (payload: any, callback?: any) => {
@@ -193,5 +218,22 @@ export function useUpdateStudentsSequence(options: any) {
     },
     isSuccess,
     isError,
-    data };
+    data,
+  };
+}
+
+export function useUpdateStudentsList(options: any) {
+  const { mutate, isSuccess, isError, data } = useMutation({
+    ...mutateOptions.updateStudentsList(),
+    ...options,
+  });
+
+  return {
+    updateStudentsList: async (payload: any, callback?: any) => {
+      await mutate(payload, callback);
+    },
+    isSuccess,
+    isError,
+    data,
+  };
 }
