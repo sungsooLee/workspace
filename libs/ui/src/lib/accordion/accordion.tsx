@@ -83,20 +83,18 @@ const AccordionComponent = forwardRef<
               className={cn(styles.accordion_item)}
               key={item.value}
             >
-              {!item.isDummy && item.children && (
-                <Primitive.Trigger
-                  className={cn(styles.accordion_btn, item.children && 'has_children')}
-                >
-                  <span className={cn('accordion_title', item?.active === true ? 'active' : '')}>
-                    {item.children && editionValue?.includes(item.value) ? (
-                      <IcoArrowDown width={16} height={16} stroke="#4C515E" />
-                    ) : (
-                      <IcoArrowForward width={16} height={16} stroke="#4C515E" />
-                    )}
-                    {item.title}
-                  </span>
-                </Primitive.Trigger>
-              )}
+              <Primitive.Trigger
+                className={cn(styles.accordion_btn, item.children && 'has_children')}
+              >
+                <span className={cn('accordion_title', item?.active === true ? 'active' : '')}>
+                  {item.children && editionValue?.includes(item.value) ? (
+                    <IcoArrowDown width={16} height={16} stroke="#4C515E" />
+                  ) : (
+                    <IcoArrowForward width={16} height={16} stroke="#4C515E" />
+                  )}
+                  {item.title}
+                </span>
+              </Primitive.Trigger>
               <Primitive.Content className={cn(styles.accordion_content)}>
                 {item.children}
               </Primitive.Content>
