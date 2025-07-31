@@ -81,7 +81,7 @@ const TenantDetailAttributeComponent = (props: any, ref: any) => {
 
   const handleOnSubmit = async (payload: any) => {
     console.log('payload {} => ', payload);
-    if (await openConfirm('저장 하시겠습니까?')) {
+    if (await openConfirm(t('저장 하시겠습니까?'))) {
       update(payload);
     }
   };
@@ -1096,16 +1096,16 @@ const formBaseConfig = (): DynamicFormConfig => ({
       type: 'checkbox-group',
       label: t('카테고리 사용 여부'),
       format: 'array',
-      tooltip: '테넌트 - 카테고리 관리에서 사용할 카테고리를 선택할 수 있습니다',
+      tooltip: t('테넌트 - 카테고리 관리에서 사용할 카테고리를 선택할 수 있습니다'),
       value: [],
       options: [
         {
           value: EnUseCategory.isCommonCategory,
-          label: '공통 카테고리',
+          label: t('공통 카테고리'),
         },
         {
           value: EnUseCategory.isTenantCategory,
-          label: '테넌트 카테고리',
+          label: t('테넌트 카테고리'),
         },
       ],
       showSelectAll: true,
@@ -1139,10 +1139,10 @@ const formTermsConfig = (): DynamicFormConfig => ({
       label: t('약관 정보'),
       value: '',
       options: [
-        { label: '이용약관_v1.25', value: '0' },
-        { label: '개인정보 처리방침(국내)_v1.25', value: '1' },
-        { label: '개인정보 처리방침(글로벌)_v1.00', value: '2' },
-        { label: '고유식별 정보처리 동의_v1.25', value: '3' },
+        { label: t('이용약관_v1.25'), value: '0' },
+        { label: t('개인정보 처리방침(국내)_v1.25'), value: '1' },
+        { label: t('개인정보 처리방침(글로벌)_v1.00'), value: '2' },
+        { label: t('고유식별 정보처리 동의_v1.25'), value: '3' },
       ],
     },
   ],

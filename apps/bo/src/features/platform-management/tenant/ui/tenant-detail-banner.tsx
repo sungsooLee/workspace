@@ -1,6 +1,8 @@
-import { SectionLayout } from '@shared/ui';
 import { FC, useState } from 'react';
+import { t } from 'i18next';
+
 import { Tabs } from '@learnway/ui';
+import { SectionLayout } from '@shared/ui';
 
 /* styles */
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
@@ -21,12 +23,12 @@ const TenantDetailBannerComponent: FC<any> = () => {
 
   const tabItems = [
     {
-      title: '최상단캠페인 배너',
+      title: t('최상단캠페인 배너'),
       key: 'tab01',
       content: renderTabContent(),
     },
     {
-      title: '키비쥬얼영역 배너',
+      title: t('키비쥬얼영역 배너'),
       key: 'tab02',
       content: renderTabContent(),
     },

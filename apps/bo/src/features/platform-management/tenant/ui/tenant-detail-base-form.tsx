@@ -23,7 +23,12 @@ import {
   UserChoiceModal,
 } from '@shared/ui';
 
-import { DuplicateCheckInputFormField, DuplicateState, FormDisplay } from '@features/form';
+import {
+  DuplicateCheckInputFormField,
+  DuplicateState,
+  FormDisplay,
+  InputFormField,
+} from '@features/form';
 
 import { EnFormMode, EnDeviceType, EnUseCategory } from '@types';
 
@@ -154,7 +159,7 @@ const TenantDetailBaseFormComponent = ({
             format: 'string',
             required: true,
           }}
-          element={<Input />}
+          element={<InputFormField />}
         />
       </ContentsRow>
       <ContentsRow>

@@ -154,7 +154,7 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
       });
       handleOnSearch();
     } else {
-      alert('사용자를 선택하세요.');
+      alert(t('사용자를 선택하세요.'));
     }
   };
 
@@ -200,7 +200,7 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
         console.log('payload => ', payload);
         saveRoleUserGroups(payload, {
           onSuccess: () => {
-            openToast({ title: '유저그룹 역할부여 추가 했습니다.', type: 'success' });
+            openToast({ title: t('유저그룹 역할부여 추가 했습니다.'), type: 'success' });
           },
         });
       }
@@ -215,7 +215,7 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
           initLevel={2}
           treeId={'1'}
           showSearchKeyword
-          title={'역할 목록'}
+          title={t('역할 목록')}
           selectedNode={selectedRole}
           handleSelectedNodeChange={handleRoleSelect}
         />
