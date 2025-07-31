@@ -103,7 +103,7 @@ const PageContainerComponent: FC<{
 
   // 페이지 타이틀
   const pageTitle = useCreation(() => {
-    return customTitle || meta?.title || t(currentMenu?.menuCode || '');
+    return customTitle || meta?.title || t(`HRD_CENTER_MENU.${currentMenu?.menuCode}`);
   }, [currentMenu]);
 
   // 페이지 즐겨찾기 여부
