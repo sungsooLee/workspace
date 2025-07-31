@@ -72,6 +72,7 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
   const [size , setSize] = useState(20);
   const [sorting, setSorting] = useState(['createdDate,DESC']);
   const [courseName, setCourseName] = useState('');
+  const [searchResult, setSearchResult] = useState('');
   const [coursePayload, setCoursePayload] = useState({
     page, size, sort: sorting, categoryId, courseName
   });
@@ -106,6 +107,7 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
     }
     setCoursePayload(payload)
     await fetchCoursesCategory(payload)
+    setSearchResult(courseName)
   }
 
   const handleSearchSortable = async (sortingIdx: any) => {
@@ -209,6 +211,11 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
       </div>
 
       <div className={styles.lists_wrap}>
+        {searchResult !== '' && (
+          <p className={styles.search_text}>
+            “{searchResult}”{t('의 검색결과')}
+          </p>
+        )}
         <div className={styles.align}>
           <div className={styles.left}>
             <span className={styles.txt}>
@@ -227,9 +234,15 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
                   <div
                     className={`${dropdownPopoverStyles.start} ${dropdownPopoverStyles.dropdown_wrap}`}
                   >
-                    <Popover.Close onClick={() => handlePageSizeChange(20)}>{20 + t('개씩')}</Popover.Close>
-                    <Popover.Close onClick={() => handlePageSizeChange(50)}>{50 + t('개씩')}</Popover.Close>
-                    <Popover.Close onClick={() => handlePageSizeChange(80)}>{80 + t('개씩')}</Popover.Close>
+                    <Popover.Close onClick={() => handlePageSizeChange(20)}>
+                      {20 + t('개씩')}
+                    </Popover.Close>
+                    <Popover.Close onClick={() => handlePageSizeChange(50)}>
+                      {50 + t('개씩')}
+                    </Popover.Close>
+                    <Popover.Close onClick={() => handlePageSizeChange(80)}>
+                      {80 + t('개씩')}
+                    </Popover.Close>
                   </div>
                 }
                 className={cn(dropdownPopoverStyles.btn, dropdownPopoverStyles.text)}
@@ -256,7 +269,6 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
             </div>
           </div>
         </div>
-
         {data.content && data.content.length > 0 ? (
           <ThumbnailList
             direction={sortingDisabled ? 'vertical' : 'horizontal'}
