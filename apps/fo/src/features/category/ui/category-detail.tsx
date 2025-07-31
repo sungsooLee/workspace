@@ -86,7 +86,7 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
   const handlePageChange = (value: number) => {
     setPage(value);
   };
-  const handlePageSizeChange = (value: number) => {
+  const handlePageSizeChange = async (value: number) => {
     setSize(value)
   }
 
@@ -227,9 +227,9 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
                   <div
                     className={`${dropdownPopoverStyles.start} ${dropdownPopoverStyles.dropdown_wrap}`}
                   >
-                    <Button>20개씩</Button>
-                    <Button>50개씩</Button>
-                    <Button>80개씩</Button>
+                    <Popover.Close onClick={() => handlePageSizeChange(20)}>{20 + t('개씩')}</Popover.Close>
+                    <Popover.Close onClick={() => handlePageSizeChange(50)}>{50 + t('개씩')}</Popover.Close>
+                    <Popover.Close onClick={() => handlePageSizeChange(80)}>{80 + t('개씩')}</Popover.Close>
                   </div>
                 }
                 className={cn(dropdownPopoverStyles.btn, dropdownPopoverStyles.text)}
@@ -237,7 +237,7 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
                 align="end"
                 sideOffset={10}
               >
-                <span>{'20개씩'}</span>
+                <span>{size + t('개씩')}</span>
                 <IcoArrowDown width={16} height={16} stroke="#131C30" />
               </Popover>
             </div>
