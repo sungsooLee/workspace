@@ -9,7 +9,6 @@ import {
 } from '../../../features/layout';
 
 import styles from '@learnway/styles/fo/features/layout/popup/course-selection-popup.module.css';
-import styles from '@learnway/styles/fo/features/layout/popup/course-selection-popup.module.css';
 import lectureStyles from '@learnway/styles/fo/pages/_layout/course-introduction/lecture.module.css';
 
 const CourseSelectionPopupComponent = ({
