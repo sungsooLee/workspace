@@ -1,10 +1,7 @@
 import {
-  IcoArrowDown,
   IcoBook,
   IcoCategory,
-  IcoCaution,
   IcoChair,
-  IcoClock01,
   IcoEye,
   IcoLevel,
   IcoLocation,
@@ -287,7 +284,7 @@ export function CourseDetail() {
               curriculum={curriculumData}
             />
           )}
-          {courseData?.educations && (
+          {sequencesData && (
             <CourseEducation
               ref={educationRef}
               educationsTemp={courseData?.educations}
@@ -493,20 +490,21 @@ export function CourseDetail() {
   //     },
   //   },
   // ];
+
   const courseOptions = courseData?.class?.map((c: any) => ({
-    label: c.className,
-    value: c.classId,
+    label: c.name,
+    value: c.id,
     original: {
-      number: `${c.classNumber}차`,
-      date: `${c.classStartDate} ~ ${c.classEndDate}`,
+      number: `${c.number}차`,
+      date: `${c.startDate} ~ ${c.endDate}`,
       info: [
         {
           icon: IcoChair,
-          txt: `${c.classRemainingSeats}`,
+          txt: `${c.remainingSeats}`,
         },
         {
           icon: IcoLocation,
-          txt: `${c.classLocation}`,
+          txt: `${c.location}`,
         },
       ],
     },
@@ -514,7 +512,7 @@ export function CourseDetail() {
 
   // 학습유형 리스트 open, close
   const [listCategoryOpen, setListCategoryOpen] = useState<boolean>(true);
-  const [listSubTitleOpen, setListSubTitleOpen] = useState<boolean>(false);
+  const [listSubTitleOpen, setListSubTitleOpen] = useState<boolean>(true);
 
   const waitForRef = (ref: any, maxWaitTime = 3000) => {
     return new Promise((resolve, reject) => {
@@ -784,8 +782,10 @@ export function CourseDetail() {
                   {courseData?.course?.data.category && (
                     <li className={listCategoryOpen === true ? packageInformationStyles.open : ''}>
                       <IcoCategory width={20} height={20} fill="#4d525c" />
-                      <p>{courseData?.course?.data.category}</p>
-                      <Button
+                      <p>
+                        <span>{courseData?.course?.data.category}</span>
+                      </p>
+                      {/* <Button
                         onClick={() =>
                           listCategoryOpen === true
                             ? setListCategoryOpen(false)
@@ -793,7 +793,7 @@ export function CourseDetail() {
                         }
                       >
                         <IcoArrowDown width={20} height={20} stroke="#4d525c" />
-                      </Button>
+                      </Button> */}
                     </li>
                   )}
                   {/* <li>
@@ -826,7 +826,7 @@ export function CourseDetail() {
                     <li className={listSubTitleOpen === true ? packageInformationStyles.open : ''}>
                       <IcoSubtitles02 width={20} height={20} fill="#4d525c" />
                       <p>{courseData?.course?.data.captionLanguage}</p>
-                      <Button
+                      {/* <Button
                         onClick={() =>
                           listSubTitleOpen === true
                             ? setListSubTitleOpen(false)
@@ -834,7 +834,7 @@ export function CourseDetail() {
                         }
                       >
                         <IcoArrowDown width={20} height={20} stroke="#4d525c" />
-                      </Button>
+                      </Button> */}
                     </li>
                   )}
                 </ul>
@@ -843,22 +843,20 @@ export function CourseDetail() {
               {/* 강의 */}
               <div className={packageInformationStyles.lecture_wrap}>
                 {/* 수강 신청 차수 없을 시 */}
-                <Panel hideHeaderUnderline type="rounded" className={styles.result_box}>
+                {/* <Panel hideHeaderUnderline type="rounded" className={styles.result_box}>
                   <div>
                     <IcoCaution width={40} height={40} stroke={'#A9AFB8'} />
-                    {/* 퍼블수정 20250624 태그 수정 */}
                     <strong>{t('현재 수강 신청 가능한 차수가 없습니다.')}</strong>
                   </div>
-                </Panel>
+                </Panel> */}
                 {/* 인원마감/대기신청 */}
-                <Panel hideHeaderUnderline type="rounded" className={styles.result_box}>
+                {/* <Panel hideHeaderUnderline type="rounded" className={styles.result_box}>
                   <div>
-                    {/* 퍼블수정 20250624 색상 수정 */}
                     <IcoClock01 width={40} height={40} stroke={'#0056ff'} />
                     <strong>{t('오전 10:00 수강신청이 시작됩니다!')}</strong>
                     <p>{t('수강신청일시는 예고없이 변경될수 있습니다.')}</p>
                   </div>
-                </Panel>
+                </Panel> */}
                 {/* 강의 정보 */}
                 <OptionCard
                   cols={1}
@@ -898,6 +896,8 @@ export function CourseDetail() {
                   likeCount={likeCount}
                   heart={likeChk}
                   handleCourseLike={handleCourseLike}
+                  courseValues={courseValues}
+                  setCourseValues={setCourseValues}
                 />
               </div>
             </div>

@@ -1,3 +1,4 @@
+import { useCourseDashboardData } from '@entities/course';
 import { IcoArrowDown, IcoCaution03, IcoDownload02, IcoLock, IcoPdf } from '@learnway/icons';
 import styles from '@learnway/styles/fo/features/layout/ui/course-introduction/dashboard.module.css';
 import pdsStyles from '@learnway/styles/fo/features/layout/ui/course-introduction/pds.module.css';
@@ -28,6 +29,13 @@ const CourseDashboardCompoment = forwardRef<HTMLDivElement, any>(({}, ref) => {
   const [selectedValues, setSelectedValues] = useState<null>(null);
 
   const progress = 80;
+
+  const { data: dashboardData } = useCourseDashboardData({
+    courseId: 7,
+    courseSequenceId: 32,
+    curriculumId: 3,
+  });
+  console.log('대시보드 데이터', dashboardData);
 
   const { openModal } = useModal();
   const { closeModal } = useModal();

@@ -17,6 +17,8 @@ interface CourseFixedButton {
   likeCount?: number;
   handleCourseLike?: () => void;
   heart?: boolean;
+  courseValues?: any;
+  setCourseValues?: any;
 }
 
 const CourseFixedButtonComponent = ({
@@ -24,6 +26,8 @@ const CourseFixedButtonComponent = ({
   likeCount,
   handleCourseLike,
   heart = false,
+  courseValues,
+  setCourseValues,
 }: CourseFixedButton) => {
   const { openModal } = useModal();
 
@@ -62,7 +66,7 @@ const CourseFixedButtonComponent = ({
               isMobile
                 ? openModal({
                     width: 'm_full',
-                    content: <CourseSelectionPopup />,
+                    content: <CourseSelectionPopup setParentCourseValues={setCourseValues} />,
                   })
                 : ''
             }
@@ -72,7 +76,7 @@ const CourseFixedButtonComponent = ({
           {/* 수강신청 불가능 */}
           {/* <Button variant="line">차수개설 알림신청</Button> */}
           {/* tip */}
-          <span className={styles.tip}>{t('차수를 선택해 주세요')}</span>
+          {!courseValues && <span className={styles.tip}>{t('차수를 선택해 주세요')}</span>}
         </div>
       )}
     </div>

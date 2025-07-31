@@ -101,3 +101,8 @@ export function useCourseLike(options?: any) {
     ...mutation,
   };
 }
+
+// 대시보드
+export function useCourseDashboardData(options?: any) {
+  return useQuery(queryOptions.courseDashboardData(options));
+}
