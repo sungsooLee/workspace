@@ -16,6 +16,7 @@ import {
   Divider,
   EditDropdownCell,
   EditInputCell,
+  FormSubTitle,
   GridBox,
   SplitPanel,
   StatsSummary,
@@ -413,7 +414,7 @@ const StudentsManagementComponent = () => {
         cell: (info) => {
           const original = info.row.original;
           return (
-            <span>
+            <span className="text_error">
               {parseInt(original.attendanceScore) +
                 parseInt(original.progressScore) +
                 parseInt(original.examScore) +
@@ -835,18 +836,16 @@ const StudentsManagementComponent = () => {
     <>
       <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
       <Divider />
-      <div>
-        <SplitPanel gap={10}>
-          <div>
-            <div>현황</div>
-            <StatsSummary data={statsLeftCount} />
-          </div>
-          <div>
-            <div>이수기준</div>
-            <StatsSummary data={statsRightCount} />
-          </div>
-        </SplitPanel>
-      </div>
+      <SplitPanel gap={24}>
+        <>
+          <FormSubTitle label={'현황'} noLine={true} />
+          <StatsSummary data={statsLeftCount} />
+        </>
+        <>
+          <FormSubTitle label={'이수기준'} noLine={true} />
+          <StatsSummary data={statsRightCount} />
+        </>
+      </SplitPanel>
       <GridBox
         config={gConfig}
         // data={gridData}
