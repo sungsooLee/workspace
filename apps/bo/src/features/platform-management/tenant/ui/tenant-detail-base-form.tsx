@@ -150,7 +150,10 @@ const TenantDetailBaseFormComponent = ({
           type="text"
           value=""
           placeholder=""
-          validation={{ required: true }}
+          validation={{
+            format: 'string',
+            required: true,
+          }}
           element={<Input />}
         />
       </ContentsRow>
