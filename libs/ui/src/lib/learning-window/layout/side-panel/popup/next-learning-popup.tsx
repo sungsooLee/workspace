@@ -1,4 +1,5 @@
 import { FC, memo } from 'react';
+import { t } from 'i18next';
 import styles from '@learnway/styles/fo/pages/_learning/side-panel/popup/next-learning-popup.module.css';
 
 import { IcoRefresh02, IcoPrevNext } from '@learnway/icons';
@@ -22,7 +23,7 @@ const NextLearningPopupComponent: FC<any> = ({ isNext }) => {
   };
   return (
     <ModalContainer>
-      <ModalTitle>{isNext ? '다음 강의' : '이전 강의'}</ModalTitle>
+      <ModalTitle>{isNext ? t('다음 강의') : t('이전 강의')}</ModalTitle>
       <ModalBody>
         <div className={`${styles.start} ${styles.learning}`}>
           {playList ? playList[playIndex + addValue].moduleName : ''} (
@@ -32,7 +33,7 @@ const NextLearningPopupComponent: FC<any> = ({ isNext }) => {
       <ModalFooter>
         <Button variant={'gray'} size={'lg'} className={styles.btn_refresh}>
           <IcoRefresh02 width={24} height={24} stroke="#6f798b" fill="#fff" />
-          <span>다시보기</span>
+          <span>{t('다시보기')}</span>
         </Button>
         <Button
           variant={'primary'}
@@ -41,7 +42,7 @@ const NextLearningPopupComponent: FC<any> = ({ isNext }) => {
           preventDefault
           onClick={hanldeNextButtonClick}
         >
-          <span>{isNext ? '다음 강의' : '이전 강의'}</span>
+          <span>{isNext ? t('다음 강의') : t('이전 강의')}</span>
           <IcoPrevNext width={24} height={24} stroke="#fff" />
         </Button>
       </ModalFooter>

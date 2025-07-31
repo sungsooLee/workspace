@@ -1,11 +1,12 @@
 import { createFileRoute } from '@tanstack/react-router';
+import { useState } from 'react';
 import ThumbnailList from '../../-components/thumb/thumb-nail-list';
 
 // 이미지
-import bannerImg from '@learnway/styles/fo/assets/images/banner/img_banner_sample.jpg';
-import { Badge } from '@learnway/ui';
+import { IcoEye, IcoHeart, IcoPlay, IcoStar } from '@learnway/icons';
 import { getRandomId } from '@learnway/shared';
-import { IcoPlay, IcoStar, IcoEye, IcoHeart } from '@learnway/icons';
+import bannerImg from '@learnway/styles/fo/assets/images/banner/img_banner_sample.jpg';
+import { Badge, Button, Popover } from '@learnway/ui';
 
 export const Route = createFileRoute('/_guide/guide/test')({
   component: RouteComponent,
@@ -398,5 +399,45 @@ function RouteComponent() {
       ],
     },
   ];
-  return <ThumbnailList stacked={false} items={item} cols={4} />;
+
+  const [isOpen, setIsOpen] = useState(true);
+  const [selectedText, setSelectedText] = useState('Apple');
+
+  const handleSelect = (option: string) => {
+    setSelectedText(option);
+    setIsOpen(false);
+  };
+
+  const PopoverContent = () => {
+    const items = ['Apple', 'Banana', 'Cherry'];
+    return (
+      <div>
+        <ul>
+          {items.map((item, index) => (
+            <li key={index}>
+              <Button label={item} onClick={() => handleSelect(item)} />
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  };
+
+  return (
+    <div>
+      <ThumbnailList stacked={false} items={item} cols={4} />
+      <div>
+        <Popover
+          open={isOpen}
+          onOpenChange={setIsOpen}
+          popoverContent={<PopoverContent />}
+          side="bottom"
+          align="start"
+          sideOffset={10}
+        >
+          <span>{selectedText}</span>
+        </Popover>
+      </div>
+    </div>
+  );
 }

@@ -18,13 +18,18 @@ function RouteComponent() {
     if (!companyCode) router.navigate({ to: '/platform/company/organization' });
   }, []);
 
+  const handleListClick = () => {
+    const listParam = routerState.location.state?.listParam;
+    router.navigate({ to: '/platform/company/organization', state: { listParam } });
+  };
+
   return (
     <PageContainer>
       <ContentsButtons>
         <Button
           variant="point"
           size="sm"
-          onClick={() => router.navigate({ to: '/platform/company/organization' })}
+          onClick={handleListClick}
           label={t('LABEL.button.list')}
         />
       </ContentsButtons>

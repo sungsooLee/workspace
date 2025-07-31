@@ -131,16 +131,8 @@
           }
         }
         &.horizontal {
-          .thumbnail_link {
-            .thumbnail_view {
-              @apply w-[156px];
-            }
-            .thumbnail_info {
-              @apply ml-[16px];
-            }
-          }
           .toggle_btn {
-            @apply bottom-[8px] left-[calc(41%-12px)] top-auto;
+            @apply bottom-[8px] left-[calc(41%-8px)] top-auto;
           }
         }
       }

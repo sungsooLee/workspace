@@ -1,9 +1,16 @@
 // BaseForm.stories.tsx
-import { useState } from 'react';
+import {
+  Button,
+  ShuttleGridToGrid,
+  ShuttleGridToGridV2,
+  ShuttleTreeToChips,
+  TreeNode,
+  TreeToTree,
+} from '@learnway/ui';
 import type { Meta } from '@storybook/react';
-import { ShuttleGridToGrid, ShuttleTreeToChips, TreeNode, TreeToTree } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import i18n from 'i18next';
+import { useState } from 'react';
 
 i18n.init({
   lng: 'ko',
@@ -175,3 +182,63 @@ export const TemplateTreeToChips = () => {
   );
 };
 TemplateTreeToChips.storyName = 'Tree To Chips';
+
+// ShuttleGridToGrid
+export const TemplateGridToGrid2: any = (args: any) => {
+  const [gridData, setGridData] = useState<any[]>();
+  const [selectedItems, setSelectedItems] = useState<any[]>([]);
+  const columnHelper = createColumnHelper();
+  const columns = [
+    columnHelper.accessor('label', {
+      header: 'label',
+      cell: (info) => info.getValue(),
+    }),
+    columnHelper.accessor('value', {
+      header: 'value',
+      cell: (info) => info.getValue(),
+    }),
+  ] as ColumnDef<any, unknown>[];
+  return (
+    <div>
+      <div>
+        <Button
+          label="Get Data (0~9)"
+          variant="text"
+          onClick={() => setGridData(getMockData(10))}
+        />
+        <Button
+          label="Get Data (10~19)"
+          variant="text"
+          onClick={() => setGridData(getMockData(10, 20))}
+        />
+        <Button
+          label="오른쪽 그리드 (value2)"
+          variant="text"
+          onClick={() => setSelectedItems([{ label: 'label2', value: 'value2' }])}
+        />
+        <Button
+          label="오른쪽 그리드 (value3)"
+          variant="text"
+          onClick={() => setSelectedItems([{ label: 'label3', value: 'value3' }])}
+        />
+      </div>
+      <ShuttleGridToGridV2
+        gridData={gridData}
+        columns={columns}
+        rowKey={'value'}
+        leftTitle={'OOO 목록'}
+        rightTitle={'OOO 목록'}
+        selectedItems={selectedItems}
+        onSelectedChange={(selectedRows: any) => console.log(selectedRows)}
+      />
+    </div>
+  );
+};
+TemplateGridToGrid2.storyName = 'Grid To Grid Test';
+
+const getMockData = (size = 5, startIndex = 0, labelField = 'label', valueField = 'value') => {
+  return Array.from({ length: size }, (d, i) => ({
+    [valueField]: `value${startIndex + i}`,
+    [labelField]: `label${startIndex + i}`,
+  }));
+};

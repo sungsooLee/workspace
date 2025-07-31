@@ -1,18 +1,17 @@
-import React, { forwardRef, useEffect, useMemo, useState } from 'react';
-import Select, { ActionMeta, components, MultiValue, SingleValue } from 'react-select';
 import { useCreation } from 'ahooks';
 import { difference, filter, find, map } from 'lodash';
+import React, { forwardRef, useEffect, useMemo, useState } from 'react';
+import Select, { ActionMeta, components, MultiValue, SingleValue } from 'react-select';
 
-import { cn, getRandomId } from '@learnway/shared';
 import { IcoArrowDown, IcoDelete03 } from '@learnway/icons';
+import { cn, getRandomId } from '@learnway/shared';
 
 import { Checkbox } from '../checkbox/checkbox';
 import { DropdownOption } from '../type';
 
-import styles from './dropdown.module.css';
-import { Button } from '../button/button';
-import { t } from 'i18next';
 import { ALL_OPTION } from '@learnway/hooks';
+import { Button } from '../button/button';
+import styles from './dropdown.module.css';
 
 export interface ReactSelectComponentProps {
   options: DropdownOption[];
@@ -248,6 +247,8 @@ const PrimitiveComponent = forwardRef<any, ReactSelectComponentProps>(
           onMenuOpen={handleMenuOpen}
           onMenuClose={handleMenuClose}
           menuPlacement="auto"
+          menuPosition="fixed"
+          menuPortalTarget={document.body}
           className={cn(isFocused || isMenuOpen ? 'focused' : '', isReadonly ? 'readonly' : '')}
           classNamePrefix="nlp-select"
           components={{
@@ -259,7 +260,6 @@ const PrimitiveComponent = forwardRef<any, ReactSelectComponentProps>(
             NoOptionsMessage,
           }}
           noOptionsMessage={() => noOptionsMessage || '데이터가 없습니다.'}
-          menuPortalTarget={document.body}
           closeMenuOnSelect={!isMulti}
           hideSelectedOptions={false}
           {...customProps}

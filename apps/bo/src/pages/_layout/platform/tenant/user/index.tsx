@@ -1,17 +1,15 @@
-import { useEffect, useState } from 'react';
-import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { useQueryClient } from '@tanstack/react-query';
+import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
+import { useEffect, useState } from 'react';
 
-import { PageContainer, MainContents, ContentsButtons } from '@shared/ui';
+import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
 
-import { Tabs, Button } from '@learnway/ui';
+import { Button, Tabs } from '@learnway/ui';
 
 import { useFetchAuthUser } from '@learnway/auth/entities';
 
-import {
-  TenantUserRegistApplicationList,
-} from '@features/platform-management/tenant';
+import { TenantUserRegistApplicationList } from '@features/platform-management/tenant';
 
 import { CompanyUserList } from '@features/platform-management/company';
 
@@ -57,13 +55,13 @@ function RouteComponent() {
   }, [loginUser]);
   const tabItems = [
     {
-      title: '유저',
+      title: t('유저'),
       key: 't1',
       // content: <TenantUserList rootPath="/platform" />,
-      content: <CompanyUserList />,
+      content: <CompanyUserList detailPath="/platform/tenant/user/detail" />,
     },
     {
-      title: '회원가입 신청',
+      title: t('회원가입 신청'),
       key: 't2',
       content: <TenantUserRegistApplicationList rootPath="/platform" />,
     },
@@ -72,23 +70,21 @@ function RouteComponent() {
   return (
     <PageContainer hideOutLine={true}>
       <ContentsButtons>
-        {
-          (selectedTabKey && selectedTabKey === 't1') && (
-            <Button
-              label={t('LABEL.button.regist')}
-              variant="primary"
-              size="sm"
-              onClick={() => {
-                if (companyCodes && companyCodes.length > 0) {
-                  router.navigate({
-                    to: '/platform/tenant/user/user-regist',
-                    state: { companyCodes },
-                  });
-                }
-              }}
-            />
-          )
-        }
+        {selectedTabKey && selectedTabKey === 't1' && (
+          <Button
+            label={t('LABEL.button.regist')}
+            variant="primary"
+            size="sm"
+            onClick={() => {
+              if (companyCodes && companyCodes.length > 0) {
+                router.navigate({
+                  to: '/platform/tenant/user/user-regist',
+                  state: { companyCodes },
+                });
+              }
+            }}
+          />
+        )}
       </ContentsButtons>
       <MainContents>
         <Tabs

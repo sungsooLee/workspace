@@ -30,7 +30,8 @@ import {
   ContentsButtons,
   ChannelListChoiceModal,
   UserChoiceModal,
-  UserGroupOrganizationShuttleModal, UserShuttleModal,
+  UserGroupOrganizationShuttleModal,
+  UserShuttleModal,
 } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
 
@@ -47,9 +48,7 @@ import { useFetchAuthUser } from '@learnway/auth/entities';
 import { queryOptions } from '@entities/user-group/service/user-group.queries';
 import { Role, Tenant } from '@learnway/auth/types';
 import { useWatch } from 'react-hook-form';
-import {
-  getUserStatus
-} from '@features/platform-management/company/company-user-management/service/company-user.service';
+import { getUserStatus } from '@features/platform-management/company/company-user-management/service/company-user.service';
 import { EnGlobalConst } from '@types';
 
 export const Route = createLazyFileRoute('/_layout/platform/tenant/usr-group/manual-detail')({
@@ -170,7 +169,7 @@ function RouteComponent() {
         return { userUuid: row.userUuid, userName: row.userName };
       });
       console.log('payload {} => ', payload);
-      if (await openConfirm('저장 하시겠습니까?')) {
+      if (await openConfirm(t('저장 하시겠습니까?'))) {
         update(payload);
       }
     } else {
@@ -188,7 +187,7 @@ function RouteComponent() {
       });
 
       console.log('payload {} => ', payload);
-      if (await openConfirm('저장 하시겠습니까?')) {
+      if (await openConfirm(t('저장 하시겠습니까?'))) {
         create(payload);
       }
     }
@@ -206,8 +205,12 @@ function RouteComponent() {
     if (tenantInfo && roleInfo) {
       openModal({
         width: 'xl',
-        content: <UserGroupOrganizationShuttleModal
-          tenantIds={[tenantInfo.tenantId]} roleIds={[roleInfo.roleId]}/>,
+        content: (
+          <UserGroupOrganizationShuttleModal
+            tenantIds={[tenantInfo.tenantId]}
+            roleIds={[roleInfo.roleId]}
+          />
+        ),
         onClose(data: any) {
           if (data) {
             console.log('Modal {} => ', data);
@@ -288,7 +291,7 @@ function RouteComponent() {
     console.log('### loginUser', loginUser);
     if (loginUser) {
       setTenantInfo(loginUser.activeTenant);
-      setRoleInfo(loginUser.activeRole)
+      setRoleInfo(loginUser.activeRole);
       setValue('tenantName', loginUser.activeTenant?.tenantName);
     }
   }, [loginUser]);
@@ -306,15 +309,15 @@ function RouteComponent() {
       <ContentsButtons>
         <LinkBox>
           <Button onClick={handleListButtonClick} variant="point" size="sm">
-            목록
+            {t('목록')}
           </Button>
         </LinkBox>
 
         <Button onClick={handleResetButtonClick} variant="point" size="sm">
-          초기화
+          {t('초기화')}
         </Button>
         <Button variant="primary" size="sm" onClick={handleModifyButtonClick}>
-          저장
+          {t('저장')}
         </Button>
       </ContentsButtons>
       <MainContents>
@@ -521,7 +524,7 @@ const searchManualConfig = (): SearchBoxConfig => ({
             return '';
           },
           isSearchable: true,
-          placeholder: '입력 또는 선택',
+          placeholder: t('입력 또는 선택'),
         },
       },
       {
@@ -541,7 +544,7 @@ const searchManualConfig = (): SearchBoxConfig => ({
 });
 
 const gridManualConfig = {
-  title: '유저그룹 설정 목록',
+  title: t('유저그룹 설정 목록'),
   query: queryOptions.blackwhiteUsers,
   columns: [],
   data: [],

@@ -1,9 +1,10 @@
 import { memo, useState } from 'react';
+import { t } from 'i18next';
 import { IcoArrowForward, IcoCheck } from '@learnway/icons';
 
 import styles from './video-setting-popup.module.css';
-import { ModalBody, ModalContainer, ModalFooter, ModalTitle } from '../../modal/modal-container';
 import { Button } from '../../button/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle } from '../../modal/modal-container';
 import { VideoPlayerContainerProps } from '../types';
 import { useModal } from '../../modal/modal.hook';
 import { getHeightValueEncodedVideo, VideoQualities, VideoSpeed } from '../hooks/video-player.hook';
@@ -27,7 +28,7 @@ const VideoSettingModalComponent = (props: VideoPlayerContainerProps) => {
     case MENU.SPEED:
       return (
         <ModalContainer>
-          <ModalTitle>{'재생속도'}</ModalTitle>
+          <ModalTitle>{t('재생속도')}</ModalTitle>
           <ModalBody>
             <div className={`${styles.start} ${styles.video_setting}`}>
               <ul>
@@ -47,7 +48,7 @@ const VideoSettingModalComponent = (props: VideoPlayerContainerProps) => {
           </ModalBody>
           <ModalFooter>
             <Button variant={'primary'} size={'lg'} onClick={() => setActiveMenu(MENU.ROOT)}>
-              <span>확인</span>
+              <span>{t('확인')}</span>
             </Button>
           </ModalFooter>
         </ModalContainer>
@@ -64,7 +65,7 @@ const VideoSettingModalComponent = (props: VideoPlayerContainerProps) => {
       }
       return (
         <ModalContainer>
-          <ModalTitle>{'품질'}</ModalTitle>
+          <ModalTitle>{t('품질')}</ModalTitle>
           <ModalBody>
             <div className={`${styles.start} ${styles.video_setting}`}>
               <ul>
@@ -84,7 +85,7 @@ const VideoSettingModalComponent = (props: VideoPlayerContainerProps) => {
           </ModalBody>
           <ModalFooter>
             <Button variant={'primary'} size={'lg'} onClick={() => setActiveMenu(MENU.ROOT)}>
-              <span>확인</span>
+              <span>{t('확인')}</span>
             </Button>
           </ModalFooter>
         </ModalContainer>
@@ -93,7 +94,7 @@ const VideoSettingModalComponent = (props: VideoPlayerContainerProps) => {
     case MENU.SUBTITLE:
       return (
         <ModalContainer>
-          <ModalTitle>{'자막'}</ModalTitle>
+          <ModalTitle>{t('자막')}</ModalTitle>
           <ModalBody>
             <div className={`${styles.start} ${styles.video_setting}`}>
               <ul>
@@ -113,7 +114,7 @@ const VideoSettingModalComponent = (props: VideoPlayerContainerProps) => {
           </ModalBody>
           <ModalFooter>
             <Button variant={'primary'} size={'lg'} onClick={() => setActiveMenu(MENU.ROOT)}>
-              <span>확인</span>
+              <span>{t('확인')}</span>
             </Button>
           </ModalFooter>
         </ModalContainer>
@@ -121,13 +122,13 @@ const VideoSettingModalComponent = (props: VideoPlayerContainerProps) => {
     default:
       return (
         <ModalContainer>
-          <ModalTitle>{'설정'}</ModalTitle>
+          <ModalTitle>{t('설정')}</ModalTitle>
           <ModalBody>
             <div className={`${styles.start} ${styles.video_setting}`}>
               <ul>
                 <li>
                   <Button onClick={() => setActiveMenu(MENU.SPEED)}>
-                    <strong>재생속도</strong>
+                    <strong>{t('재생속도')}</strong>
                     <span>
                       {VideoSpeed.find((item) => item.value === props.playbackRate)?.label}
                       <IcoArrowForward width={16} height={16} stroke="#131416" />
@@ -137,7 +138,7 @@ const VideoSettingModalComponent = (props: VideoPlayerContainerProps) => {
                 {props.encodedVideos && (
                   <li>
                     <Button onClick={() => setActiveMenu(MENU.QUALITY)}>
-                      <strong>품질</strong>
+                      <strong>{t('품질')}</strong>
                       <span>
                         {props.videoQuality.label}
                         <IcoArrowForward width={16} height={16} stroke="#131416" />
@@ -148,7 +149,7 @@ const VideoSettingModalComponent = (props: VideoPlayerContainerProps) => {
                 {props.videoSubtitles && (
                   <li>
                     <Button onClick={() => setActiveMenu(MENU.SUBTITLE)}>
-                      <strong>자막</strong>
+                      <strong>{t('자막')}</strong>
                       <span>
                         {props.selectedSubtitle.label}
                         <IcoArrowForward width={16} height={16} stroke="#131416" />
@@ -167,7 +168,7 @@ const VideoSettingModalComponent = (props: VideoPlayerContainerProps) => {
                 closeModal();
               }}
             >
-              <span>확인</span>
+              <span>{t('확인')}</span>
             </Button>
           </ModalFooter>
         </ModalContainer>

@@ -124,7 +124,7 @@ const searchConfig = (): SearchBoxConfig => ({
           },
           isSearchable: true,
           isClearable: true,
-          placeholder: '입력 또는 선택',
+          placeholder: t('입력 또는 선택'),
         },
       },
       {
