@@ -74,7 +74,6 @@ function RouteComponent() {
 
   const { openModal, confirm: openConfirm, alert: openAlert } = useModal();
   const [tenantInfo, setTenantInfo] = useState<Tenant>();
-  const [roleInfo, setRoleInfo] = useState<Role>();
   const [modalUserGroups, setModalUserGroups] = useState<any>(null);
   const [tableInstance, setTableInstance] = useState<Table<any>>();
   const [userGroupSettings, setUserGroupSettings] = useState<any>();
@@ -202,13 +201,12 @@ function RouteComponent() {
   };
 
   const openUserGroupModal = () => {
-    if (tenantInfo && roleInfo) {
+    if (tenantInfo) {
       openModal({
         width: 'xl',
         content: (
           <UserGroupOrganizationShuttleModal
             tenantIds={[tenantInfo.tenantId]}
-            roleIds={[roleInfo.roleId]}
           />
         ),
         onClose(data: any) {
@@ -291,7 +289,6 @@ function RouteComponent() {
     console.log('### loginUser', loginUser);
     if (loginUser) {
       setTenantInfo(loginUser.activeTenant);
-      setRoleInfo(loginUser.activeRole);
       setValue('tenantName', loginUser.activeTenant?.tenantName);
     }
   }, [loginUser]);
