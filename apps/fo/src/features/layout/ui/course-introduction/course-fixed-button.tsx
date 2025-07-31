@@ -1,13 +1,11 @@
-import { memo, useState } from 'react';
-import { Link } from '@tanstack/react-router';
-import { isMobile } from 'react-device-detect';
 import { IcoHeart, IcoShare } from '@learnway/icons';
-import { Button, useModal } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
+
 import { memo } from 'react';
 import { isMobile } from 'react-device-detect';
 
-import { Button } from '@learnway/ui/button';
-import { useModal } from '@learnway/ui/modal';
+import {
   CourseSelectionPopup, // 차수선택 팝업
 } from '../../../../features/layout/';
 

@@ -7,7 +7,7 @@ import { CategoryFilterPopup } from '@features/category/ui/category-filter-popup
 import { CODE_GROUP, useCodeStore } from '@learnway/hooks';
 import { IcoFilter } from '@learnway/icons';
 import { Button } from '@learnway/ui/button';
-import { ChipList } from '@learnway/ui/chip-list';
+import { ChipList } from '@learnway/ui/chips';
 import { useModal } from '@learnway/ui/modal';
 
 const FilterComponent = ({ onOptionChange }: any) => {

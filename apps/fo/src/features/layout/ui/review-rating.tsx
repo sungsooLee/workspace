@@ -1,8 +1,7 @@
 import { memo } from 'react';
-import { IcoStar } from '@learnway/icons';
 
 import styles from '@learnway/styles/fo/features/layout/ui/review-rating.module.css';
-import { ProgressBar } from '@learnway/ui/progress-bar';
+import { ProgressBar } from '@learnway/ui/progress';
 
 interface ReviewRatingProps {
   className?: string;

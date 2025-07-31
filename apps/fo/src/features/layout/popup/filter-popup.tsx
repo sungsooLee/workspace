@@ -1,21 +1,11 @@
-import { memo, useState } from 'react';
 import { OptionCard, OptionCardItem } from '@learnway/ui/option-card';
+import { memo, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 
-import { cn } from '@learnway/shared';
-import { ChipList } from '@learnway/ui/chip-list';
 import { Button } from '@learnway/ui/button';
+import { ChipList } from '@learnway/ui/chips';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 // 퍼블수정 20250314 import modal추가
-import {
-  ChipList,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  useModal,
-  Button,
-} from '@learnway/ui';
 
 import { IcoRefresh02 } from '@learnway/icons';
 

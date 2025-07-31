@@ -1,10 +1,12 @@
-import { useModal } from '@learnway/ui/modal';
+import {
+  useAsyncFetchMenus,
   useLoginUser,
   useReissue,
   useUpdateUser,
 } from '@learnway/auth/entities';
 import type { AuthUser } from '@learnway/auth/types';
 import { cookieService, MutateCallback } from '@learnway/shared';
+import { useModal } from '@learnway/ui/modal';
 
 interface LoginParams {
   username: string;

@@ -1,6 +1,6 @@
+import { convertHierarchyToList } from '@learnway/shared';
 import { useCreation } from 'ahooks';
 import { useFetchCategories } from '../../../entities/category/service/category.hook';
-import { convertHierarchyToList } from '@learnway/shared';
 
 export function useCategories() {
   const { data } = useFetchCategories();

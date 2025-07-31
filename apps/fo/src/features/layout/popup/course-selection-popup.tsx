@@ -1,16 +1,15 @@
-import { memo, useState } from 'react';
 import { OptionCard, OptionCardItem } from '@learnway/ui/option-card';
+import { memo, useState } from 'react';
 
 import { IcoChair, IcoLocation } from '@learnway/icons';
 
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle } from '@learnway/ui/modal';
 import {
-// TODO: Fix unknown imports:  from '@learnway/ui'
-import { ModalBody, ModalContainer, ModalTitle, ModalFooter } from '@learnway/ui/modal';
   CourseFixedButton, // 수강신청 버튼
 } from '../../../features/layout';
 
-import lectureStyles from '@learnway/styles/fo/pages/_layout/course-introduction/lecture.module.css';
 import styles from '@learnway/styles/fo/features/layout/popup/course-selection-popup.module.css';
+import lectureStyles from '@learnway/styles/fo/pages/_layout/course-introduction/lecture.module.css';
 
 const CourseSelectionPopupComponent = () => {
   // 퍼블수정 20250703 초기값 추가 및 임의 날짜 데이터 수정

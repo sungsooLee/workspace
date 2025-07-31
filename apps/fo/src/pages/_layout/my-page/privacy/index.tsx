@@ -1,13 +1,11 @@
-import { useEffect } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { IcoImage01 } from '@learnway/icons';
-import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
-import {
 // TODO: Fix unknown imports: DynamicFormField from '@learnway/ui'
-import { Avatar } from '@learnway/ui/avatar';
-import { ContentsRow } from '@learnway/ui/contents-row';
+import {
   // ChangeUserIdFormField,
   // ChangePhoneNumberFormField,
   // ChangePasswordFormField,
@@ -16,15 +14,17 @@ import { ContentsRow } from '@learnway/ui/contents-row';
   useUserDetail,
 } from '@learnway/auth/entities';
 import {
-  ChangeUserIdFormField,
-  ChangePhoneNumberFormField,
   ChangePasswordFormField,
+  ChangePhoneNumberFormField,
+  ChangeUserIdFormField,
   WithdrawMembershipButton,
 } from '@learnway/auth/features';
+import { Avatar } from '@learnway/ui/avatar';
+import { ContentsRow } from '@learnway/ui/contents-row';
 
-import { MAIN_CONTAINERS } from '../../../../widgets/layout';
 import { pageRouteConfig } from '../../../../features/auth';
 import { AvataFallback } from '../../../../features/layout';
+import { MAIN_CONTAINERS } from '../../../../widgets/layout';
 
 import { FormRow, NoticeBox } from '../../../../shared/ui';
 

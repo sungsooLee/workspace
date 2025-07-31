@@ -1,19 +1,19 @@
-import { useEffect, useState } from 'react';
 import { useRouter } from '@tanstack/react-router';
+import { useEffect, useState } from 'react';
 
 import { IcoArray, IcoArrowForward } from '@learnway/icons';
 
-import styles from '@learnway/styles/fo/features/category/category-button.module.css';
+import { useCategoryTree } from '@entities/category';
 import { RecentVisits } from '@features/layout';
 import { cn } from '@learnway/shared';
-import { useCategoryTree } from '@entities/category';
-import { t } from 'i18next';
+import styles from '@learnway/styles/fo/features/category/category-button.module.css';
 import { Button } from '@learnway/ui/button';
 import { ModalBody, ModalContainer, ModalTitle, useModal } from '@learnway/ui/modal';
+import { t } from 'i18next';
 
 interface CategoryPopupProps {
   id: number;
-  onNavigate: (tenantId:number, categoryId: number) => void;
+  onNavigate: (tenantId: number, categoryId: number) => void;
 }
 
 type MainItem = { id: number; label: string; isChild: boolean };
@@ -30,40 +30,40 @@ const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
   const [activeChildId, setActiveChildId] = useState<number>();
   const [tenantId, setTenantId] = useState<number>(id);
 
-  const { data: categoryTree, refetch: categoryRefetch} = useCategoryTree(tenantId);
+  const { data: categoryTree, refetch: categoryRefetch } = useCategoryTree(tenantId);
 
   const menuHandleHover = (id: number, isChild: boolean) => {
     setActiveId(id);
     setChildData([]);
-    if( isChild ) {
+    if (isChild) {
       // 2 Depth
-      const subTreeData = categoryTree.children.filter( (item: any) => item.id === id)[0];
-      const twoDepthData = subTreeData.children.map( (item: any) => {
+      const subTreeData = categoryTree.children.filter((item: any) => item.id === id)[0];
+      const twoDepthData = subTreeData.children.map((item: any) => {
         return {
           id: item.id,
           label: item.name,
           parentId: subTreeData.id,
           isChild: item.children.length > 0 ? true : false,
-        }
+        };
       });
       setSubData(twoDepthData);
     } else {
       setSubData([]);
     }
-  }
+  };
 
   const subMenuHandleHover = (id: number, parentId: number, isChild: boolean) => {
     setActiveSubId(id);
-    if( isChild ) {
+    if (isChild) {
       // 3 Depth
-      const subTreeData = categoryTree.children.filter( (item: any) => item.id === parentId)[0];
-      const twoDepthData = subTreeData.children.filter( (item: any) => item.id === id)[0];
-      const threeDepthData = twoDepthData.children.map( (item: any) => {
+      const subTreeData = categoryTree.children.filter((item: any) => item.id === parentId)[0];
+      const twoDepthData = subTreeData.children.filter((item: any) => item.id === id)[0];
+      const threeDepthData = twoDepthData.children.map((item: any) => {
         return {
           id: item.id,
           label: item.name,
-        }
-      })
+        };
+      });
       setChildData(threeDepthData);
     } else {
       setChildData([]);
@@ -76,16 +76,16 @@ const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
   };
 
   useEffect(() => {
-    if( categoryTree ) {
+    if (categoryTree) {
       const mainTreeData: any[] = categoryTree.children;
       // 1 Depth
-      const oneDepthData = mainTreeData.map(item => {
+      const oneDepthData = mainTreeData.map((item) => {
         return {
           id: item.id,
           label: item.name,
           isChild: item.children.length > 0 ? true : false,
-        }
-      })
+        };
+      });
       setMainData(oneDepthData);
     }
   }, [categoryTree]);
@@ -106,9 +106,7 @@ const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
                       <Button
                         className={activeId === item.id ? styles.active : ''}
                         label={item.label}
-                        icon={
-                          item.isChild && <IcoArrowForward className={styles.ico_arrow} />
-                        }
+                        icon={item.isChild && <IcoArrowForward className={styles.ico_arrow} />}
                         onClick={() => onNavigate(tenantId, item.id)}
                         onMouseOver={() => menuHandleHover(item.id, item.isChild)}
                       />
@@ -126,11 +124,7 @@ const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
                       <Button
                         className={activeSubId === item.id ? styles.active : ''}
                         label={item.label}
-                        icon={
-                          item.isChild && (
-                            <IcoArrowForward className={styles.ico_arrow} />
-                          )
-                        }
+                        icon={item.isChild && <IcoArrowForward className={styles.ico_arrow} />}
                         onClick={() => onNavigate(tenantId, item.id)}
                         onMouseOver={() => subMenuHandleHover(item.id, item.parentId, item.isChild)}
                       />
@@ -164,7 +158,7 @@ const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
   );
 };
 
-export const CategoryButton = ( {tenantId}: {tenantId?: number}) => {
+export const CategoryButton = ({ tenantId }: { tenantId?: number }) => {
   const router = useRouter();
   const { openModal } = useModal();
 
@@ -181,28 +175,26 @@ export const CategoryButton = ( {tenantId}: {tenantId?: number}) => {
       state: {
         ...router.state.location.state,
         tenantId,
-        categoryId
-      }
+        categoryId,
+      },
     });
-  }
+  };
 
   return (
     <div className={styles.start}>
-      {
-        tenantId && (
-          <Button
-            className={styles.btn_category}
-            onlyIcon={true}
-            icon={<IcoArray width={24} height={24} fill="#fff" stroke="#131416" />}
-            onClick={() =>
-              openModal({
-                width: 'xl', // sm(600px), md(800px), lg(1024px), xl(1400px)
-                content: <PopupContent id={tenantId} onNavigate={handlerSelectedCategoryClick} />,
-              })
-            }
-          />
-        )
-      }
+      {tenantId && (
+        <Button
+          className={styles.btn_category}
+          onlyIcon={true}
+          icon={<IcoArray width={24} height={24} fill="#fff" stroke="#131416" />}
+          onClick={() =>
+            openModal({
+              width: 'xl', // sm(600px), md(800px), lg(1024px), xl(1400px)
+              content: <PopupContent id={tenantId} onNavigate={handlerSelectedCategoryClick} />,
+            })
+          }
+        />
+      )}
     </div>
   );
 };

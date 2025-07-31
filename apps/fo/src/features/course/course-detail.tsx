@@ -1,9 +1,4 @@
 import {
-// TODO: Fix unknown imports:  from '@learnway/ui'
-import { Button } from '@learnway/ui/button';
-import { useModal } from '@learnway/ui/modal';
-import { Tabs } from '@learnway/ui/tab';
-import { useToast } from '@learnway/ui/toast';
   IcoArrowDown,
   IcoBook,
   IcoCategory,
@@ -18,8 +13,12 @@ import { useToast } from '@learnway/ui/toast';
 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import { Accordion } from '@learnway/ui/accordion';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 import { OptionCard, OptionCardItem } from '@learnway/ui/option-card';
 import { Panel } from '@learnway/ui/panel';
+import { Tabs } from '@learnway/ui/tabs';
+import { useToast } from '@learnway/ui/toast';
 import { useRouterState } from '@tanstack/react-router';
 import { useEffect, useRef, useState } from 'react';
 
@@ -65,8 +64,8 @@ export function CourseDetail() {
 
   const { data: courseData } = useCourseFullDetail(courseId || testCourseId);
   const { data: sequencesData } = useCourseSequences(courseId || testCourseId, {
-    openingYear: openingYear,
-    isAll: isAll,
+    openingYear,
+    isAll,
   });
   // const sequencesData = {};
   const { courseLikeRequest, mutate: toggleLikeMutate, isPending: isLikePending } = useCourseLike();

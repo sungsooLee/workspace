@@ -1,6 +1,6 @@
-import { memo } from 'react';
 import { cn } from '@learnway/shared';
 import { PhoneNumber } from '@learnway/ui/phone-number';
+import { memo } from 'react';
 
 import { IcoFormRequired } from '@learnway/icons';
 
@@ -9,7 +9,7 @@ import styles from '@learnway/styles/fo/features/layout/popup/phone-change-popup
 // TODO: Fix unknown imports: InputTimer,  from '@learnway/ui'
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
-import { Input } from '@learnway/ui/input';
+import { InputTimer } from '@learnway/ui/input';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
 const PhoneChangePopupComponent = () => {

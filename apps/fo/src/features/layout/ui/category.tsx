@@ -1,12 +1,12 @@
-import { memo, useState, useEffect } from 'react';
-import { Link, useRouter } from '@tanstack/react-router';
-import { IcoMenu01, IcoXclose, IcoArrowDown, IcoArrowForward } from '@learnway/icons';
-import { Popover } from '@learnway/ui/popover-list';
-import styles from '@learnway/styles/fo/features/layout/ui/category.module.css';
-import { RecentVisits } from './recent-visits';
+import { IcoArrowDown, IcoArrowForward, IcoMenu01, IcoXclose } from '@learnway/icons';
 import bnrImage1 from '@learnway/styles/fo/assets/images/banner/banner_cate1.png';
 import bnrImage2 from '@learnway/styles/fo/assets/images/banner/banner_cate2.png';
+import styles from '@learnway/styles/fo/features/layout/ui/category.module.css';
 import { Button } from '@learnway/ui/button';
+import { Popover } from '@learnway/ui/popover';
+import { Link, useRouter } from '@tanstack/react-router';
+import { memo, useEffect, useState } from 'react';
+import { RecentVisits } from './recent-visits';
 
 interface CategoryPopoverProps {
   onOpenChange: (isOpen: boolean) => void;

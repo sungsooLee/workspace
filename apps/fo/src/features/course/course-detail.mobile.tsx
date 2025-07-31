@@ -1,10 +1,18 @@
-import { IcoBook, IcoCategory, IcoEye, IcoHeart, IcoLevel, IcoSubtitles02 } from '@learnway/icons';
+import {
+  IcoArrowDown,
+  IcoBook,
+  IcoCategory,
+  IcoEye,
+  IcoHeart,
+  IcoLevel,
+  IcoSubtitles02,
+} from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import { Accordion } from '@learnway/ui/accordion';
 import { Button } from '@learnway/ui/button';
 import { Carousel } from '@learnway/ui/carousel';
 import { useModal } from '@learnway/ui/modal';
-import { Tabs } from '@learnway/ui/tab';
+import { Tabs } from '@learnway/ui/tabs';
 import { useToast } from '@learnway/ui/toast';
 import { useRouter, useRouterState } from '@tanstack/react-router';
 import { useEffect, useRef, useState } from 'react';
@@ -53,8 +61,8 @@ export function CourseDetailMobile() {
 
   const { data: courseData } = useCourseFullDetail(courseId || testCourseId);
   const { data: sequencesData } = useCourseSequences(courseId || testCourseId, {
-    openingYear: openingYear,
-    isAll: isAll,
+    openingYear,
+    isAll,
   });
   // const sequencesData = {};
   const { courseLikeRequest, mutate: toggleLikeMutate, isPending: isLikePending } = useCourseLike();

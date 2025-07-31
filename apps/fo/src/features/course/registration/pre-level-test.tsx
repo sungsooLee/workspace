@@ -1,12 +1,11 @@
-import { useState } from 'react';
+import { cn } from '@learnway/shared';
 import { DatePicker } from '@learnway/ui/date-picker';
 import { OptionCard, OptionCardItem } from '@learnway/ui/option-card';
 import { PhoneNumber } from '@learnway/ui/phone-number';
-import { cn } from '@learnway/shared';
+import { useState } from 'react';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import styles from '@learnway/styles/fo/pages/_layout/course/level.module.css';
-// TODO: Fix unknown imports:  from '@learnway/ui'
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { Input } from '@learnway/ui/input';
 

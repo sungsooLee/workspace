@@ -1,5 +1,4 @@
-import { Button } from '@learnway/ui/button';
-import { useModal } from '@learnway/ui/modal';
+import {
   IcoArrowDown,
   IcoAvatar02,
   IcoCalendar01,
@@ -8,6 +7,8 @@ import { useModal } from '@learnway/ui/modal';
   IcoTeacher,
   IcoTime,
 } from '@learnway/icons';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 import { memo, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import { CourseCancelReasonPopup, EducationPlacePopup } from '../../../features/layout';

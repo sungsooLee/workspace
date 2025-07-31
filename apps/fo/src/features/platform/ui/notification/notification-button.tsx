@@ -1,22 +1,21 @@
-import { memo, useEffect, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
+import { memo, useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 
-import { Popover } from '@learnway/ui/popover-list';
-import { IcoBell02, IcoArray } from '@learnway/icons';
-import { PMSApiPrefix } from '@learnway/config';
 import { useFetchAuthUser } from '@learnway/auth/entities';
+import { PMSApiPrefix } from '@learnway/config';
+import { IcoBell02 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
+import { Popover } from '@learnway/ui/popover';
 
-import { useNotifications } from '../../../../entities/notification/service/notification.hook';
 import { queryKeys } from '../../../../entities/notification/service/notification.queries';
 
-import { NotificationModal } from './notification-modal';
 import { Notification } from './notification';
+import { NotificationModal } from './notification-modal';
 
-import styles from './notification-button.module.css';
 import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
+import styles from './notification-button.module.css';
 
 const PopoverContent = () => {
   return (
@@ -77,7 +76,7 @@ const NotificationComponent = ({ userUUID }: any) => {
           const data = JSON.parse(event.data);
           queryClient.invalidateQueries({ queryKey: queryKeys.unreadCount(userUUID) });
         } catch (error) {
-          console.error('메시지 파싱 에러' + error);
+          console.error(`메시지 파싱 에러${error}`);
         }
       };
 

@@ -8,6 +8,7 @@ import dropdownPopoverStyles from '@learnway/styles/fo/shared/ui/dropdown-popove
 import { Button } from '@learnway/ui/button';
 import { Dropdown } from '@learnway/ui/dropdown';
 import { PopoverList } from '@learnway/ui/popover-list';
+import { t } from 'i18next';
 
 interface Props {
   educationsTemp?: any;

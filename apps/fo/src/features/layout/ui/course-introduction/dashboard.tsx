@@ -4,10 +4,13 @@ import pdsStyles from '@learnway/styles/fo/features/layout/ui/course-introductio
 import statusStyles from '@learnway/styles/fo/features/layout/ui/course-introduction/status.module.css';
 import dropdownPopoverStyles from '@learnway/styles/fo/shared/ui/dropdown-popover/dropdown-popover.module.css';
 import tableListStyles from '@learnway/styles/fo/shared/ui/list/table-list.module.css';
-import { Button, ProgressBar, useModal } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
 import { TableBox } from '@learnway/ui/grid';
+import { useModal } from '@learnway/ui/modal';
+import { ProgressBar } from '@learnway/ui/progress';
+
 import { Panel } from '@learnway/ui/panel';
-import { Popover } from '@learnway/ui/popover-list';
+import { Popover } from '@learnway/ui/popover';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { forwardRef, memo, useState } from 'react';
 import { BrowserView, isMobile, MobileView } from 'react-device-detect';

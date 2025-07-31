@@ -1,54 +1,48 @@
-import React, { useEffect, useState } from 'react';
-import { createFileRoute, Link, useRouterState } from '@tanstack/react-router';
-import { Navigation } from 'swiper/modules';
-import { Carousel } from '@learnway/ui/carousel';
-import { Pagination } from '@learnway/ui/pagination';
-import { Popover } from '@learnway/ui/popover-list';
-import dropdownPopoverStyles from '../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
-import styles from '@learnway/styles/fo/pages/_layout/category/category.module.css';
-import { cn } from '@learnway/shared';
 import { Filter } from '@features/category/ui/category-filter';
 import { Arrays, ThumbnailList } from '@features/layout';
+import { cn } from '@learnway/shared';
+import styles from '@learnway/styles/fo/pages/_layout/category/category.module.css';
+import { Carousel } from '@learnway/ui/carousel';
+import { Pagination } from '@learnway/ui/pagination';
+import { Popover } from '@learnway/ui/popover';
+import { createFileRoute, Link, useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
+import { useEffect, useState } from 'react';
+import { Navigation } from 'swiper/modules';
+import dropdownPopoverStyles from '../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
 
-import bnrCImage1 from '../../../assets/images/banner/banner_category_01.png';
-import bnrCImage2 from '../../../assets/images/banner/banner_category_02.png';
-import { IcoArray, IcoArrowDown, IcoDotpoints } from '@learnway/icons';
 import { useFetchCategoryDetail } from '@entities/category';
 import CategoryService from '@entities/category/api/category';
-import { EmptyText } from '@learnway/ui/empty-text';
+import { IcoArray, IcoArrowDown, IcoDotpoints } from '@learnway/icons';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { Dropdown } from '@learnway/ui/dropdown';
+import { EmptyText } from '@learnway/ui/empty-text';
 import { Input } from '@learnway/ui/input';
+import bnrCImage1 from '../../../assets/images/banner/banner_category_01.png';
+import bnrCImage2 from '../../../assets/images/banner/banner_category_02.png';
 
 // 4,5,6 뎁스 일 때 사용하는 더미 데이터
-const topOptions = (
-  [
-    { value: 'a', label: '대분류' },
-    { value: 'b', label: 'ST1' },
-    { value: 'c', label: '아이오닉 6' },
-    { value: 'd', label: '아이오닉 5' },
-    { value: 'e', label: '코나' },
-    { value: 'f', label: '넥쏘' },
-    { value: 'g', label: '포터' },
-    { value: 'h', label: '캐스퍼' },
-  ]
-);
-const middleOptions = (
-  [
-    { value: 'a', label: '중분류' },
-    { value: 'b', label: 'NE PE(2024)' },
-    { value: 'c', label: 'NE(2021)' },
-  ]
-);
-const bottomOptions = (
-  [
-    { value: 'a', label: '소분류' },
-    { value: 'b', label: '상품정보' },
-    { value: 'c', label: '기술정보' },
-  ]
-);
+const topOptions = [
+  { value: 'a', label: '대분류' },
+  { value: 'b', label: 'ST1' },
+  { value: 'c', label: '아이오닉 6' },
+  { value: 'd', label: '아이오닉 5' },
+  { value: 'e', label: '코나' },
+  { value: 'f', label: '넥쏘' },
+  { value: 'g', label: '포터' },
+  { value: 'h', label: '캐스퍼' },
+];
+const middleOptions = [
+  { value: 'a', label: '중분류' },
+  { value: 'b', label: 'NE PE(2024)' },
+  { value: 'c', label: 'NE(2021)' },
+];
+const bottomOptions = [
+  { value: 'a', label: '소분류' },
+  { value: 'b', label: '상품정보' },
+  { value: 'c', label: '기술정보' },
+];
 // 배너 관리 더미 데이터
 const items = [
   <Link to={'/'}>
@@ -74,11 +68,15 @@ function RouteComponent() {
 
   const [depth, setDepth] = useState(3);
   const [page, setPage] = useState(0);
-  const [size , setSize] = useState(20);
+  const [size, setSize] = useState(20);
   const [sorting, setSorting] = useState([]);
   const [courseName, setCourseName] = useState('');
   const [coursePayload, setCoursePayload] = useState({
-    page, size, sort: sorting, categoryId, courseName
+    page,
+    size,
+    sort: sorting,
+    categoryId,
+    courseName,
   });
   const [data, setData] = useState<any>({});
   const [sortingDisabled, setSortingDisabled] = useState(true);
@@ -92,61 +90,61 @@ function RouteComponent() {
     setPage(value);
   };
   const handlePageSizeChange = (value: number) => {
-    setSize(value)
-  }
+    setSize(value);
+  };
 
   const handleFilterOptionChange = async (options: any) => {
     const payload = {
       ...coursePayload,
-      courseType: options.map( (row: any) => row.value),
-    }
+      courseType: options.map((row: any) => row.value),
+    };
     setCoursePayload(payload);
-    await fetchCoursesCategory(payload)
+    await fetchCoursesCategory(payload);
   };
 
   const handleOnSearch = async () => {
     const payload = {
       ...coursePayload,
-      courseName
-    }
-    setCoursePayload(payload)
-    await fetchCoursesCategory(payload)
-  }
+      courseName,
+    };
+    setCoursePayload(payload);
+    await fetchCoursesCategory(payload);
+  };
 
   const handleSearchSortable = async (sortingIdx: any) => {
     const payload = {
       ...coursePayload,
-    }
-    if( sortingIdx ) {
-      setSorting([])
-      payload.sort = []
-      setCoursePayload(payload)
+    };
+    if (sortingIdx) {
+      setSorting([]);
+      payload.sort = [];
+      setCoursePayload(payload);
     } else {
-      setSorting([])
-      payload.sort = []
-      setCoursePayload(payload)
+      setSorting([]);
+      payload.sort = [];
+      setCoursePayload(payload);
     }
-    await fetchCoursesCategory(payload)
-  }
+    await fetchCoursesCategory(payload);
+  };
 
   useEffect(() => {
-    if( categoryInfo ) {
+    if (categoryInfo) {
       (async () => {
         console.log('### categoryInfo => ', categoryInfo);
         const payload = {
           ...coursePayload,
           categoryId: categoryInfo.categoryId,
-        }
+        };
         setCoursePayload(payload);
-        await fetchCoursesCategory(payload)
+        await fetchCoursesCategory(payload);
       })();
     }
-  }, [categoryInfo, page, size])
+  }, [categoryInfo, page, size]);
 
   const fetchCoursesCategory = async (payload: any) => {
     const courses = await CategoryService.getFetchCoursesCategory(payload);
-    setData(courses)
-  }
+    setData(courses);
+  };
 
   return (
     <div className={styles.start}>
@@ -208,15 +206,15 @@ function RouteComponent() {
         <div className={styles.align}>
           <div className={styles.left}>
             <span className={styles.txt}>
-              <em>
-                {
-                  data.totalElements ? data.totalElements : 0
-                }
-              </em>개
+              <em>{data.totalElements ? data.totalElements : 0}</em>개
             </span>
           </div>
           <div className={styles.right}>
-            <Arrays className={styles.array} arraysData={arrays} onChange={handleSearchSortable}></Arrays>
+            <Arrays
+              className={styles.array}
+              arraysData={arrays}
+              onChange={handleSearchSortable}
+            ></Arrays>
             <div className={styles.box}>
               <Popover
                 popoverContent={
@@ -254,11 +252,11 @@ function RouteComponent() {
         </div>
 
         {data.content && data.content.length > 0 ? (
-            <ThumbnailList
-              direction={sortingDisabled ? 'vertical' : 'horizontal'}
-              items={data.content}
-              cols={sortingDisabled ? 4 : 2}
-            />
+          <ThumbnailList
+            direction={sortingDisabled ? 'vertical' : 'horizontal'}
+            items={data.content}
+            cols={sortingDisabled ? 4 : 2}
+          />
         ) : (
           <div className={styles.empty}>
             <EmptyText

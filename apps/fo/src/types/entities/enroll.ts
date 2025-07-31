@@ -1,4 +1,4 @@
-// TODO: Fix unknown imports: SortRequest from '@learnway/ui'
+import { SortRequest } from '@learnway/ui/type';
 
 type ISODateString = string;
 

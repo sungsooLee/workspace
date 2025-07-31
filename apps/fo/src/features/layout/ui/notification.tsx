@@ -1,8 +1,8 @@
-import { memo, useState } from 'react';
+import { memo } from 'react';
 
-import { Popover } from '@learnway/ui/popover-list';
 import { IcoBell02 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
+import { Popover } from '@learnway/ui/popover';
 import { NotificationContents } from '../../layout';
 
 import styles from '@learnway/styles/fo/features/layout/ui/notification.module.css';

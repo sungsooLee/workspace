@@ -1,15 +1,15 @@
+import { IcoArrowDown } from '@learnway/icons';
+import { Popover } from '@learnway/ui/popover';
 import { memo, useState } from 'react';
 import { isMobile } from 'react-device-detect';
-import { Popover } from '@learnway/ui/popover-list';
-import { IcoArrowDown } from '@learnway/icons';
 import { Arrays, Education } from '../../../../features/layout/';
 
-import dropdownPopoverStyles from '@learnway/styles/fo/shared/ui/dropdown-popover/dropdown-popover.module.css';
 import styles from '@learnway/styles/fo/features/layout/ui/course-introduction/education.module.css';
+import dropdownPopoverStyles from '@learnway/styles/fo/shared/ui/dropdown-popover/dropdown-popover.module.css';
 import { Button } from '@learnway/ui/button';
 import { Dropdown } from '@learnway/ui/dropdown';
 
-const CourseEducationCompoment = ({educations} : {educations: any}) => {
+const CourseEducationCompoment = ({ educations }: { educations: any }) => {
   // 소팅 조건
   const arrays = {
     items: ['수강신청 가능', '전체보기'],

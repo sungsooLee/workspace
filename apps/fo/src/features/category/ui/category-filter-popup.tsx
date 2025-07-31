@@ -2,6 +2,8 @@ import { OptionCard } from '@learnway/ui/option-card';
 import { memo, useCallback, useEffect, useState } from 'react';
 
 import styles from '@learnway/styles/fo/features/category/category-filter-popup.module.css';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
 interface FilterPopupComponentProps {
   initialFilters?: any; // 초기 필터 값 (이전에 선택한 값)

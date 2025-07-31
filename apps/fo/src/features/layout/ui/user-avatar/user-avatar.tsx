@@ -4,10 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useFetchAuthUser, useLogoutUser } from '@learnway/auth/entities';
 import { useCodeGroup, useLanguageStore } from '@learnway/hooks';
-import { Avatar } from '@learnway/ui/avatar';
-import { Button } from '@learnway/ui/button';
-import { useModal } from '@learnway/ui/modal';
-import { Switch } from '@learnway/ui/switch';
+import {
   IcoChart,
   IcoClose02,
   IcoLearning03,
@@ -16,7 +13,11 @@ import { Switch } from '@learnway/ui/switch';
   IcoRocket,
 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { Popover } from '@learnway/ui/popover-list';
+import { Avatar } from '@learnway/ui/avatar';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
+import { Popover } from '@learnway/ui/popover';
+import { Switch } from '@learnway/ui/switch';
 
 import { useSetLanguage } from '@features/platform';
 import languagestyles from '@learnway/styles/fo/features/layout/ui/user-avatar/language.module.css';

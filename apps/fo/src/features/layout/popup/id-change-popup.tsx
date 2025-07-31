@@ -1,21 +1,14 @@
-import { memo } from 'react';
-import { cn } from '@learnway/shared';
-import { isMobile } from 'react-device-detect';
-import {
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  useModal,
-  Button,
-  ContentsRow,
-  Input,
-  InputTimer,
-} from '@learnway/ui';
 import { IcoFormRequired, IcoSucess02 } from '@learnway/icons';
+import { cn } from '@learnway/shared';
+import { memo } from 'react';
+import { isMobile } from 'react-device-detect';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import styles from '@learnway/styles/fo/features/layout/popup/id-change-popup.module.css';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input, InputTimer } from '@learnway/ui/input';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
 const IdChangePopupComponent = () => {
   const { alert: openAlert } = useModal();

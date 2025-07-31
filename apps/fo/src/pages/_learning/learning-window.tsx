@@ -1,32 +1,28 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
 import { createFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
-
-import { t } from 'i18next';
+import { useEffect, useState } from 'react';
 
 import {
-  LearnwayLearningWindowLayout,
-  useLearningWindow,
-  ScormPlayerConfigProperties,
   LearningWindowBaseInfo,
   LearningWindowPlayInfo,
-} from '@learnway/ui';
+  LearnwayLearningWindowLayout,
+  ScormPlayerConfigProperties,
+  useLearningWindow,
+} from '@learnway/ui/learning-window';
 
 import { useGetCurriculumnDetail } from '@entities/curriculum';
 
-import {
-  useGetVideoWatchInitialize,
-  useVideoWatchLog,
-  useGetScormScoInfo,
-  useGetBlogResource,
-  useGetHtml5Resource,
-  useGetImageResource,
-} from '@entities/learning-resource/service/learning-resource.hook';
-import { CmsEnContentType } from '@learnway/types';
+import { learningResourceApi } from '@entities/learning-resource/api/learning-resource';
 import {
   useEtcContentManager,
+  useGetBlogResource,
   useGetEtcResource,
+  useGetHtml5Resource,
+  useGetImageResource,
+  useGetScormScoInfo,
+  useGetVideoWatchInitialize,
+  useVideoWatchLog,
 } from '@entities/learning-resource/service/learning-resource.hook';
-import { learningResourceApi } from '@entities/learning-resource/api/learning-resource';
+import { CmsEnContentType } from '@learnway/types';
 
 export const Route = createFileRoute('/_learning/learning-window')({
   component: RouteComponent,

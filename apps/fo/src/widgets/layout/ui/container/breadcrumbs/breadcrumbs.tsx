@@ -1,12 +1,12 @@
 import { memo } from 'react';
 
-import styles from './breadcrumbs.module.css';
-import { Link, useRouterState } from '@tanstack/react-router';
-import { IcoHome03, IcoArrowForward, IcoArrowDown } from '@learnway/icons';
-import { Popover } from '@learnway/ui/popover-list';
-import { useCategoryBreadcrumbs } from '../../../service/breadcurmb.hooks';
-import { Category } from '../../../../../types/entities/category';
 import { useCategoryTree } from '@entities/category';
+import { IcoArrowDown, IcoArrowForward, IcoHome03 } from '@learnway/icons';
+import { Popover } from '@learnway/ui/popover';
+import { Link, useRouterState } from '@tanstack/react-router';
+import { Category } from '../../../../../types/entities/category';
+import { useCategoryBreadcrumbs } from '../../../service/breadcurmb.hooks';
+import styles from './breadcrumbs.module.css';
 
 interface BreadcrumbsProps {
   currentCategoryId: number | null;
@@ -15,8 +15,8 @@ interface BreadcrumbsProps {
 
 function BreadcrumbsComponent({ tenantId, currentCategoryId }: BreadcrumbsProps) {
   const routerState = useRouterState();
-  if( !currentCategoryId ) {
-    currentCategoryId = routerState.location.state.categoryId
+  if (!currentCategoryId) {
+    currentCategoryId = routerState.location.state.categoryId;
   }
 
   const breadcrumbPath = useCategoryBreadcrumbs(currentCategoryId, tenantId);
@@ -32,20 +32,20 @@ function BreadcrumbsComponent({ tenantId, currentCategoryId }: BreadcrumbsProps)
     //       cat.children?.some((child: Category) => child.id === category.id),
     //     )?.children || [];
     // }
-    if( idx === 0 ) {
+    if (idx === 0) {
       siblings = categories.children;
     } else {
       const parentCategory = breadcrumbPath[idx - 1];
 
       const traverse = (nodes: any) => {
-        for(const node of nodes) {
-          if(node.id === parentCategory.id) {
+        for (const node of nodes) {
+          if (node.id === parentCategory.id) {
             siblings = node.children ?? [];
             return;
           }
-          if(node.children) traverse(node.children);
+          if (node.children) traverse(node.children);
         }
-      }
+      };
 
       traverse(categories.children);
     }

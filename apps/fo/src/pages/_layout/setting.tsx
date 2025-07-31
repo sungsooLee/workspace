@@ -1,13 +1,12 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 
-import { IcoArrowForward } from '@learnway/icons';
 import { useLogoutUser } from '@learnway/auth/entities';
+import { IcoArrowForward } from '@learnway/icons';
 
 import { pageRouteConfig } from '../../features/auth';
 
 import styles from '@learnway/styles/fo/pages/_layout/setting.module.css';
 import { Button } from '@learnway/ui/button';
-import { useModal } from '@learnway/ui/modal';
 
 export const Route = createFileRoute('/_layout/setting')({
   component: RouteComponent,

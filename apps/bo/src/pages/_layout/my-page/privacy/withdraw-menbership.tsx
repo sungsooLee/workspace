@@ -1,7 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/_layout/my-page/privacy/withdraw-menbership')({
-  component: RouteComponent });
+  component: RouteComponent,
+});
 
 function RouteComponent() {
   return <div>Hello "/_layout/my-page/withdraw-menbership"!</div>;
