@@ -3,6 +3,7 @@ import { memo } from 'react';
 import { useFetchAuthUser, useUpdateTenantRoleLastSelect } from '@learnway/auth/entities';
 import { Tenant } from '@learnway/auth/types';
 import { IcoArrowDown } from '@learnway/icons';
+import { getFullImagePath } from '@learnway/shared';
 import { Popover } from '@learnway/ui/popover';
 
 import styles from '@learnway/styles/fo/features/platform/ui/tenant-button/tenant-button.module.css';
@@ -69,7 +70,7 @@ const TenantComponent = () => {
     >
       <div className={styles.select}>
         <span className={styles.text}>
-          <img src={data?.activeTenant?.logoImageUrl} alt="Logo" />
+          <img src={getFullImagePath(data?.activeTenant?.logoImageUrl)} alt="Logo" />
         </span>
       </div>
       <span className={styles.ico}>

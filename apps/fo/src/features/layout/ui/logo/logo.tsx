@@ -1,10 +1,12 @@
-import { memo } from 'react';
 import { Link } from '@tanstack/react-router';
+import { memo } from 'react';
 import { isMobile } from 'react-device-detect';
 
-import { Tenant } from '../../../../types';
-import logoImage from '../../../../assets/images/logo.png';
-import mIogoImage from '../../../../assets/images/m_logo.png';
+import { getFullImagePath } from '@learnway/shared';
+
+import logoImage from '@assets/images/logo.png';
+import mIogoImage from '@assets/images/m_logo.png';
+import { Tenant } from '@types';
 
 import styles from '@learnway/styles/fo/features/layout/ui/logo.module.css';
 
@@ -27,7 +29,7 @@ const LogoComponent = ({ activeTenant }: LogoComponentProps) => {
     <div className={`${styles.start} ${styles.logo}`}>
       <Link to={'/'}>
         {(activeTenant?.logoImageUrl && (
-          <img src={activeTenant?.logoImageUrl} title={activeTenant.tenantName} />
+          <img src={getFullImagePath(activeTenant?.logoImageUrl)} title={activeTenant.tenantName} />
         )) ??
           activeTenant?.tenantName}
         {/* {activeTenant.} */}
