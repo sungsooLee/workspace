@@ -1,7 +1,6 @@
 import react, { memo, useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import { Button } from '@learnway/ui';
 import { isMobile } from 'react-device-detect';
 
 import styles from '@learnway/styles/fo/features/layout/ui/thumnail-list.module.css';
@@ -9,6 +8,7 @@ import styles from '@learnway/styles/fo/features/layout/ui/thumnail-list.module.
 import { IcoPlay, IcoRating, IcoHeart, IcoEye, IcoPhone02, IcoMonitor01 } from '@learnway/icons';
 
 import playImg from '@learnway/styles/fo/assets/images/common/img_play.png';
+import { Button } from '@learnway/ui/button';
 
 // 예시이미지
 import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';

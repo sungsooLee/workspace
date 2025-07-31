@@ -9,8 +9,7 @@ export default class ChannelService {
   ): Promise<PaginationResponse<ChannelResponse>> {
     return httpService.get(`${PMSApiPrefix()}/channel`, {
       roleId,
-      ...params,
-    });
+      ...params });
   }
 
   static async getChannelDetail(channelUuid: string) {
@@ -32,8 +31,7 @@ export default class ChannelService {
   static async existsChannelMainId(channelMainId: string, channelUuid: any = undefined) {
     return httpService.get<any>(`${PMSApiPrefix()}/channel/channelMainId/exist`, {
       channelMainId,
-      channelUuid,
-    });
+      channelUuid });
   }
 
   /**

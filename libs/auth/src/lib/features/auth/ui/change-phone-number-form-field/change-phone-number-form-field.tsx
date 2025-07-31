@@ -1,11 +1,14 @@
 import { forwardRef } from 'react';
+import { isMobile } from 'react-device-detect';
 import { useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { isMobile } from 'react-device-detect';
 
 import { BaseFormFieldProps } from '@learnway/hooks';
-import { PhoneNumber, PhoneNumberValue, Button, useModal } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
 
+import { useModal } from '@learnway/ui/modal';
+
+import { PhoneNumber, PhoneNumberValue } from '@learnway/ui/phone-number';
 import { ChangePhoneNumberModal } from './change-phone-number-modal';
 
 interface PhoneNumberFormFieldProps extends BaseFormFieldProps<string> {

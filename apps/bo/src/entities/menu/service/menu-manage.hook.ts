@@ -2,8 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   mutateOptions,
   queryKeys,
-  menuManageQueryOptions as queryOptions,
-} from './menu-manage.queries';
+  menuManageQueryOptions as queryOptions } from './menu-manage.queries';
 import { useApiQuery } from '../../../shared/lib/use-authorized-query';
 import MenuMangerService, { MenuManageApi } from '../api/menu-manage';
 import { MenuDetail } from '../../../types/entities/menu';
@@ -39,12 +38,10 @@ export function useCreateMenu(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
   return {
     ...mutation,
-    create: mutation.mutate,
-  };
+    create: mutation.mutate };
 }
 
 export function useUpdateMenu(options: any) {
@@ -57,12 +54,10 @@ export function useUpdateMenu(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
   return {
     ...mutation,
-    update: mutation.mutate,
-  };
+    update: mutation.mutate };
 }
 
 export function useCheckExistsMenu(options?: {
@@ -83,8 +78,7 @@ export function useCheckExistsMenu(options?: {
     queryParams || undefined,
     queryKey,
     {
-      enabled: false,
-    },
+      enabled: false },
   );
 
   const checkExistsMenu = (
@@ -113,8 +107,7 @@ export function useCheckExistsMenu(options?: {
 
   return {
     ...queryResult,
-    checkExistsMenu,
-  };
+    checkExistsMenu };
 }
 
 export function useDeleteMenu(options: any) {
@@ -127,13 +120,11 @@ export function useDeleteMenu(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
 
   return {
     ...mutation,
-    delete: (payload: any, callback?: any) => mutation.mutate(payload, callback),
-  };
+    delete: (payload: any, callback?: any) => mutation.mutate(payload, callback) };
 }
 
 export function useMoveMenu(options: any) {
@@ -146,12 +137,10 @@ export function useMoveMenu(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
   return {
     ...mutation,
-    move: (payload: any, callback?: any) => mutation.mutate(payload, callback),
-  };
+    move: (payload: any, callback?: any) => mutation.mutate(payload, callback) };
 }
 
 export function useCreateMenuFavorites(options?: any) {
@@ -162,15 +151,13 @@ export function useCreateMenuFavorites(options?: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
   return {
     ...mutation,
     createMenuFavorites: (payload: any, callback?: any) => {
       console.log('### createMenuFavorites', payload);
       mutation.mutate(payload, callback);
-    },
-  };
+    } };
 }
 
 export function useDeleteMenuFavorites(options?: any) {
@@ -181,14 +168,12 @@ export function useDeleteMenuFavorites(options?: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
   return {
     ...mutation,
     deleteMenuFavorites: (payload: any, callback?: any) => {
       mutation.mutate(payload, callback);
-    },
-  };
+    } };
 }
 
 export function useMoveMenuFavorites(options?: any) {
@@ -199,12 +184,10 @@ export function useMoveMenuFavorites(options?: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
   return {
     ...mutation,
     moveMenuFavorites: (payload: any, callback?: any) => {
       mutation.mutate(payload, callback);
-    },
-  };
+    } };
 }

@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from '@tanstack/react-router';
 
-import { useModal } from '@learnway/ui';
 import { useCurrentRoute } from '@learnway/hooks';
 
 import { widgetsQueryOptions, mutateOptions } from './widgets.queries';
+import { useModal } from '@learnway/ui/modal';
 
 const useWidgetsHook = () => {
   const { state } = useCurrentRoute();
@@ -31,8 +31,7 @@ const useWidgetsHook = () => {
   return {
     widgetCode: state.widgetCode,
     getWidget: handleGetWidget,
-    processType,
-  };
+    processType };
 };
 
 export const useWidgets = useWidgetsHook;
@@ -44,8 +43,7 @@ export function useAllTenantWidget(tenantId: number) {
 export function useCreateTenantWidget(options: any) {
   const mutation = useMutation({
     ...mutateOptions.createTenant(),
-    ...options,
-  });
+    ...options });
 
   return {
     createTenantWidget: (payload: any, callback?: any) => {
@@ -53,15 +51,13 @@ export function useCreateTenantWidget(options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }
 
 export function useMoveTenantWidget(options: any) {
   const mutation = useMutation({
     ...mutateOptions.moveTenantWidget(),
-    ...options,
-  });
+    ...options });
 
   return {
     moveTenantWidget: (payload: any, callback?: any) => {
@@ -69,15 +65,13 @@ export function useMoveTenantWidget(options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }
 
 export function useUpdateTenantWidget(options: any) {
   const mutation = useMutation({
     ...mutateOptions.updateTenantWidget(),
-    ...options,
-  });
+    ...options });
 
   return {
     updateTenantWidget: (payload: any, callback?: any) => {
@@ -85,6 +79,5 @@ export function useUpdateTenantWidget(options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }

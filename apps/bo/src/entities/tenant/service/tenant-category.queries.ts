@@ -4,8 +4,7 @@ export const queryKeys = {
   all: (tenantId: number) => ['tenant-category', tenantId] as const,
   detail: (tenantId: number, id: number) => ['tenant-category', tenantId, id] as const,
   getTenantCategoryTreePopup: (tenantIds: Array<number>) =>
-    ['tenant-category-tree-popup', tenantIds] as const,
-};
+    ['tenant-category-tree-popup', tenantIds] as const };
 
 export const queryOptions = {
   all: (tenantId: number) => ({
@@ -17,8 +16,7 @@ export const queryOptions = {
       if (!data) return null;
       return data;
     },
-    enabled: !!tenantId,
-  }),
+    enabled: !!tenantId }),
   detail: (tenantId: number, id: number) => ({
     queryKey: queryKeys.detail(tenantId, id),
     queryFn: async () => {
@@ -27,30 +25,21 @@ export const queryOptions = {
       if (!data) return null;
       return data;
     },
-    enabled: !!tenantId && !!id,
-  }),
+    enabled: !!tenantId && !!id }),
   // [BO] 과정 생성 카테고리 팝업
   fetchTenantCategoryTreePopup: (tenantIds: Array<number>) => ({
     queryKey: queryKeys.getTenantCategoryTreePopup(tenantIds),
     queryFn: async () => TenantCategoryService.fetchTenantCategoryTreePopup(tenantIds),
-    enabled: !!tenantIds?.length,
-  }),
-};
+    enabled: !!tenantIds?.length }) };
 
 export const mutateOptions = {
   create: () => ({
-    mutationFn: (payload: any) => TenantCategoryService.createTenantCategory(payload),
-  }),
+    mutationFn: (payload: any) => TenantCategoryService.createTenantCategory(payload) }),
   update: () => ({
-    mutationFn: (payload: any) => TenantCategoryService.updateTenantCategory(payload),
-  }),
+    mutationFn: (payload: any) => TenantCategoryService.updateTenantCategory(payload) }),
   delete: () => ({
-    mutationFn: (payload: any) => TenantCategoryService.deleteTenantCategory(payload),
-  }),
+    mutationFn: (payload: any) => TenantCategoryService.deleteTenantCategory(payload) }),
   move: () => ({
-    mutationFn: (payload: any) => TenantCategoryService.moveTenantCategory(payload),
-  }),
+    mutationFn: (payload: any) => TenantCategoryService.moveTenantCategory(payload) }),
   mapping: () => ({
-    mutationFn: (payload: any) => TenantCategoryService.mappingTenantCategory(payload),
-  }),
-};
+    mutationFn: (payload: any) => TenantCategoryService.mappingTenantCategory(payload) }) };

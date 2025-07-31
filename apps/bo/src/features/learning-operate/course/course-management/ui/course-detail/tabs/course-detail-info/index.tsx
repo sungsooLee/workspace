@@ -6,21 +6,20 @@ import {
   CourseStatsSummary,
 } from '@features/learning-operate/course/course-management';
 import { CODE_GROUP, S3_PATH } from '@learnway/hooks';
+import { Badge } from '@learnway/ui/badge';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { SplitPanel } from '@learnway/ui/elements';
 import {
-  Badge,
-  Button,
   ChipListModalSelectorFormField,
-  ContentsRow,
   EditorFormField,
-  FormSubTitle,
-  Input,
   InputModalSelectorFormField,
   ListModalSelectorFormField,
   RadioGroupFormField,
-  SplitPanel,
   TextareaFormField,
-  useModal,
-} from '@learnway/ui';
+} from '@learnway/ui/form-field';
+import { Input } from '@learnway/ui/input';
 import {
   ChipListFormField,
   FormRow,

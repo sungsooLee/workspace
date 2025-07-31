@@ -1,5 +1,5 @@
 import { CourseType } from '@features/learning-operate/course/course-management';
-import { PaginationRequest, PaginationResponse } from '@learnway/ui';
+import { PaginationRequest, PaginationResponse } from '@learnway/ui/type';
 import {
   ContentAddInfoType,
   ContentCreateType,
@@ -703,7 +703,7 @@ export interface ChannelCodeType {
   tenantId: number;
   tenantName: string;
   channelUuid: string;
-  cahnnelName: string;
+  channelName: string;
 }
 
 export type GetShareTenantsChannelsRes = ChannelCodeType[];

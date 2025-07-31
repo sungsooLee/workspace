@@ -1,75 +1,81 @@
-import { memo } from 'react';
+import { Avatar, Button, ModalBody, ModalContainer, ModalTitle } from '@learnway/ui';
 import { Link } from '@tanstack/react-router';
-import { PasswordVerifyPopup } from '../../layout';
-import { cn } from '@learnway/shared';
-import { ModalBody, ModalContainer, ModalTitle, useModal, Avatar, Button } from '@learnway/ui';
+import { memo } from 'react';
 
-import { IcoHome03, IcoSetting01, IcoMybook, IcoReview } from '@learnway/icons';
+import { IcoChart, IcoDocument, IcoPoint } from '@learnway/icons';
 
-import styles from './navigate-modal.module.css';
+import styles from './navigation-popup_m.module.css';
 
 const NavigationPopupMComponent = () => {
-  const { openModal } = useModal();
-  const { closeModal } = useModal();
   return (
     <ModalContainer>
       <ModalTitle> </ModalTitle>
       <ModalBody>
+        {/* 퍼블수정 20250731 전체 수정 */}
         <div className={styles.start}>
           <div className={styles.profile_info}>
-            <div className={styles.profile}>
-              <span className={styles.name}>김현대</span>
-              <span className={styles.tenant}>현대오토에버</span>
-              <span className={styles.team}>팀명</span>
-              <Button
-                className={styles.link}
-                onClick={() =>
-                  openModal({
-                    width: 'm_full',
-                    content: <PasswordVerifyPopup />,
-                  })
-                }
-              >
-                개인정보변경
-              </Button>
+            <div className={styles.avatar_img}>
+              {/* 이미지일경우 */}
+              <Avatar imageUrl="https://github.com/shadcn.png" size="2xl" />
+              {/* 텍스트일경우 */}
+              {/* <Avatar fallback="AB" size="2xl" /> */}
             </div>
-            <div className={styles.avata_img}>
-              <span className={styles.info_avata}>
-                <em className={styles.text}>{'김'}</em>
-              </span>
-              <Avatar imageUrl="https://github.com/shadcn.png" className={styles.info_avata} />
+            <div className={styles.profile}>
+              <div className={styles.info_box}>
+                <span className={styles.name}>김현대</span>
+                <Button size="sm" underline={true} label={'개인정보변경'} />
+              </div>
+              <div className={styles.tenant}>
+                <span>현대오토에버</span>
+                <span>Sales & Marketing</span>
+              </div>
             </div>
           </div>
+
+          <div className={styles.point_box}>
+            <IcoPoint className={styles.ico} />
+            <span className={styles.txt}>나의 포인트</span>
+            <span className={styles.point}>
+              <em>243</em>P
+            </span>
+          </div>
+
+          <div className={styles.recent_visits}>
+            <ul className={styles.list}>
+              <li>
+                <Button className={styles.btn}>
+                  <span className={styles.ico}>
+                    <IcoDocument />
+                  </span>
+                  <span className={styles.txt}>Hi-Sence</span>
+                </Button>
+              </li>
+              <li>
+                <Button className={styles.btn}>
+                  <span className={styles.ico}>
+                    <IcoChart />
+                  </span>
+                  <span className={styles.txt}>법정교육필수</span>
+                </Button>
+              </li>
+            </ul>
+          </div>
+
           <ul className={styles.gnb}>
-            <li>
-              <ul className={styles.gnb_list}>
-                <li>
-                  <Link to={'/'}>
-                    <IcoReview width={20} height={20} stroke="#131c30" />
-                    H-Sence
-                  </Link>
-                </li>
-                <li>
-                  <Link to={'/'}>
-                    <IcoMybook width={20} height={20} stroke="#131c30" />
-                    법정필수교육
-                  </Link>
-                </li>
-              </ul>
-            </li>
             <li>
               <div className={styles.gnb_title}>
                 <strong>기술인증</strong>
               </div>
               <ul className={styles.gnb_list}>
                 <li>
-                  <Link to={'/'}>H-Sence</Link>
+                  <Link to={'/'}>금융자격지원제도</Link>
                 </li>
                 <li>
-                  <Link to={'/'}>법정필수교육</Link>
+                  <Link to={'/'}>SPA 승진제도</Link>
                 </li>
               </ul>
             </li>
+
             <li>
               <div className={styles.gnb_title}>
                 <strong>학습계획</strong>
@@ -83,6 +89,7 @@ const NavigationPopupMComponent = () => {
                 </li>
               </ul>
             </li>
+
             <li>
               <div className={styles.gnb_title}>
                 <strong>HMCP</strong>

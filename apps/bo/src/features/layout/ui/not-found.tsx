@@ -1,10 +1,11 @@
+import { EmptyText } from '@learnway/ui/empty-text';
+import { Button } from '@learnway/ui/button';
 // import { Link } from '@tanstack/react-router';
 // import styles from '@learnway/styles/bo/assets/styles/modules/not-found.module.css';
 
 import { useTranslation } from 'react-i18next';
 import { useRouter } from '@tanstack/react-router';
 
-import { Button, EmptyText } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import pageStyles from '@learnway/styles/bo/assets/styles/modules/page-container.module.css';
 

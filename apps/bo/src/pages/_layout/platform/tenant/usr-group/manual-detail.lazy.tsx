@@ -1,56 +1,47 @@
-import React, { useState, useEffect, useRef } from 'react';
 import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
-import { createColumnHelper, ColumnDef, Table } from '@tanstack/react-table';
+import { ColumnDef, createColumnHelper, Table } from '@tanstack/react-table';
 import { t } from 'i18next';
+import { useEffect, useRef, useState } from 'react';
 
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 
 import {
-  Input,
-  ContentsRow,
-  Button,
-  GridBox,
-  useGridBox,
-  ChipListModalSelectorFormField,
-  useModal,
-  FormSubTitle,
-  Checkbox,
-} from '@learnway/ui';
-import {
-  DynamicFormConfig,
-  useDynamicForm,
   CODE_GROUP,
-  useSearchBox,
+  DynamicFormConfig,
   SearchBoxConfig,
+  useDynamicForm,
+  useSearchBox,
 } from '@learnway/hooks';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { Checkbox } from '@learnway/ui/checkbox';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { ChipListModalSelectorFormField } from '@learnway/ui/form-field';
+import { GridBox, useGridBox } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
 
 import {
+  ChannelListChoiceModal,
+  ContentsButtons,
   FormRow,
   LinkBox,
-  ContentsButtons,
-  ChannelListChoiceModal,
   UserChoiceModal,
-  UserGroupOrganizationShuttleModal, UserShuttleModal,
+  UserGroupOrganizationShuttleModal,
 } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
 
-import { GridExcelUploadButton } from '@shared/ui';
-
-import { MainContents, PageContainer } from '@shared/ui';
 import {
   useCreateUserGroupManual,
   useFetchUserGroupDetail,
   useUpdateUserGroupManual,
 } from '@entities/user-group';
+import { queryOptions } from '@entities/user-group/service/user-group.queries';
 import { FormDisplay } from '@features/form';
 import { useFetchAuthUser } from '@learnway/auth/entities';
-import { queryOptions } from '@entities/user-group/service/user-group.queries';
 import { Role, Tenant } from '@learnway/auth/types';
+import { MainContents, PageContainer } from '@shared/ui';
 import { useWatch } from 'react-hook-form';
-import {
-  getUserStatus
-} from '@features/platform-management/company/company-user-management/service/company-user.service';
-import { EnGlobalConst } from '@types';
 
 export const Route = createLazyFileRoute('/_layout/platform/tenant/usr-group/manual-detail')({
   component: RouteComponent,
@@ -75,7 +66,6 @@ function RouteComponent() {
 
   const { openModal, confirm: openConfirm, alert: openAlert } = useModal();
   const [tenantInfo, setTenantInfo] = useState<Tenant>();
-  const [roleInfo, setRoleInfo] = useState<Role>();
   const [modalUserGroups, setModalUserGroups] = useState<any>(null);
   const [tableInstance, setTableInstance] = useState<Table<any>>();
   const [userGroupSettings, setUserGroupSettings] = useState<any>();
@@ -170,7 +160,7 @@ function RouteComponent() {
         return { userUuid: row.userUuid, userName: row.userName };
       });
       console.log('payload {} => ', payload);
-      if (await openConfirm('저장 하시겠습니까?')) {
+      if (await openConfirm(t('저장 하시겠습니까?'))) {
         update(payload);
       }
     } else {
@@ -188,7 +178,7 @@ function RouteComponent() {
       });
 
       console.log('payload {} => ', payload);
-      if (await openConfirm('저장 하시겠습니까?')) {
+      if (await openConfirm(t('저장 하시겠습니까?'))) {
         create(payload);
       }
     }
@@ -203,11 +193,14 @@ function RouteComponent() {
   };
 
   const openUserGroupModal = () => {
-    if (tenantInfo && roleInfo) {
+    if (tenantInfo) {
       openModal({
         width: 'xl',
-        content: <UserGroupOrganizationShuttleModal
-          tenantIds={[tenantInfo.tenantId]} roleIds={[roleInfo.roleId]}/>,
+        content: (
+          <UserGroupOrganizationShuttleModal
+            tenantIds={[tenantInfo.tenantId]}
+          />
+        ),
         onClose(data: any) {
           if (data) {
             console.log('Modal {} => ', data);
@@ -288,7 +281,6 @@ function RouteComponent() {
     console.log('### loginUser', loginUser);
     if (loginUser) {
       setTenantInfo(loginUser.activeTenant);
-      setRoleInfo(loginUser.activeRole)
       setValue('tenantName', loginUser.activeTenant?.tenantName);
     }
   }, [loginUser]);
@@ -306,15 +298,15 @@ function RouteComponent() {
       <ContentsButtons>
         <LinkBox>
           <Button onClick={handleListButtonClick} variant="point" size="sm">
-            목록
+            {t('목록')}
           </Button>
         </LinkBox>
 
         <Button onClick={handleResetButtonClick} variant="point" size="sm">
-          초기화
+          {t('초기화')}
         </Button>
         <Button variant="primary" size="sm" onClick={handleModifyButtonClick}>
-          저장
+          {t('저장')}
         </Button>
       </ContentsButtons>
       <MainContents>
@@ -521,7 +513,7 @@ const searchManualConfig = (): SearchBoxConfig => ({
             return '';
           },
           isSearchable: true,
-          placeholder: '입력 또는 선택',
+          placeholder: t('입력 또는 선택'),
         },
       },
       {
@@ -541,7 +533,7 @@ const searchManualConfig = (): SearchBoxConfig => ({
 });
 
 const gridManualConfig = {
-  title: '유저그룹 설정 목록',
+  title: t('유저그룹 설정 목록'),
   query: queryOptions.blackwhiteUsers,
   columns: [],
   data: [],

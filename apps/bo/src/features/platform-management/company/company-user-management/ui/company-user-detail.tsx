@@ -4,7 +4,8 @@ import {
   CompanyUserDetailLearningHistory,
 } from '@features/platform-management/company';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import { FormSubTitle, Tabs } from '@learnway/ui';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Tabs } from '@learnway/ui/tabs';
 import { useRouter, useRouterState } from '@tanstack/react-router';
 import { EnGlobalConst } from '@types';
 import { t } from 'i18next';

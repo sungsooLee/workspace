@@ -23,6 +23,7 @@
       "@learnway/shared": ["libs/shared/src/index.ts"],
       "@learnway/styles/*": ["libs/styles/src/lib/*"],
       "@learnway/ui": ["libs/ui/src/index.ts"],
+      "@learnway/ui/*": ["libs/ui/src/lib/*"],
       "@learnway/auth/*": ["libs/auth/src/lib/*"],
       "@learnway/bo-components": ["apps/bo/src/shared/storybook.ts"],
       "@learnway/types": ["libs/types/src/index.ts"]

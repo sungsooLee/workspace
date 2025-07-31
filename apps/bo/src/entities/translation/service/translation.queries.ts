@@ -12,45 +12,34 @@ export const queryKeys = {
     'translation-exists',
     keyTypeCode,
     messageCode,
-  ],
-};
+  ] };
 
 export const translationQueryOptions = {
   all: (params: MultilingualQueryParams) => ({
     queryKey: queryKeys.all,
     queryFn: () => TranslationService.fetchTranslations(params),
     cacheTime: 0,
-    staleTime: 0,
-  }),
+    staleTime: 0 }),
   getStatus: (multilingualId: number) => ({
     queryKey: queryKeys.getStatus(multilingualId),
-    queryFn: () => TranslationService.fetchTranslationStatus(multilingualId),
-  }),
+    queryFn: () => TranslationService.fetchTranslationStatus(multilingualId) }),
   checkExists: (keyTypeCode: string, messageCode: string) => ({
     queryKey: queryKeys.checkExists(keyTypeCode, messageCode),
-    queryFn: () => TranslationService.fetchTranslationExists({ keyTypeCode, messageCode }),
-  }),
-};
+    queryFn: () => TranslationService.fetchTranslationExists({ keyTypeCode, messageCode }) }) };
 
 export const mutateOptions = {
   update: () => ({
     mutationFn: (payload: MultilingualUpdateReqParams) =>
-      TranslationService.updateTranslation(payload),
-  }),
+      TranslationService.updateTranslation(payload) }),
   delete: () => ({
     mutationFn: (tenantId?: number) =>
-      tenantId ? TenantService.deleteTenant(tenantId) : skipToken,
-  }),
+      tenantId ? TenantService.deleteTenant(tenantId) : skipToken }),
   deploy: () => ({
-    mutationFn: (payload: { locale: string }) => TranslationService.deployTranslation(payload),
-  }),
+    mutationFn: (payload: { locale: string }) => TranslationService.deployTranslation(payload) }),
   createByExcel: () => ({
     mutationFn: ({
       data,
-      params,
-    }: {
+      params }: {
       data: MultilingualExcel[];
       params: { targetLocale: string };
-    }) => TranslationService.createTranslationByExcel(data, params),
-  }),
-};
+    }) => TranslationService.createTranslationByExcel(data, params) }) };

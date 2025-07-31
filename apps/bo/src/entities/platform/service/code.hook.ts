@@ -18,8 +18,7 @@ export function useFetchCodeGroups() {
       const codeGroups = keyBy(data, 'groupCode');
       codeConfig.set(codeGroups);
       return codeGroups;
-    }, [data]),
-  };
+    }, [data]) };
 }
 
 export function useCodesByCodeGroup(codeGroup: CODE_GROUP) {
@@ -28,14 +27,12 @@ export function useCodesByCodeGroup(codeGroup: CODE_GROUP) {
   return {
     data: useCreationWithI18n(() => {
       return codeConfig.getCodesByCodeGroup(codeGroup);
-    }, [data, codeGroup]),
-  };
+    }, [data, codeGroup]) };
 }
 
 export function useLabelByCode(codeGroup: CODE_GROUP, code: string) {
   return {
     data: useCreationWithI18n(() => {
       return codeConfig.getLabelByCode(codeGroup, code);
-    }, [codeGroup, code]),
-  };
+    }, [codeGroup, code]) };
 }

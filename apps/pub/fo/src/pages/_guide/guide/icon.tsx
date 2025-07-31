@@ -66,6 +66,7 @@ import {
   IcoDelete03,
   IcoDelete04,
   IcoDivice,
+  IcoDocument,
   IcoDotpoints,
   IcoDownArrow,
   IcoDownload,
@@ -206,6 +207,7 @@ import {
   IcoVideoPlay,
   IcoVideoStop,
   IcoWarning,
+  IcoWordArrow,
   IcoXclose,
 } from '@learnway/icons';
 import { createFileRoute } from '@tanstack/react-router';
@@ -1255,6 +1257,16 @@ function RouteComponent() {
       name: 'IcoNudge10',
       Component: <IcoNudge10 width={24} height={24} />,
       file: 'ic_nudge10.svg (색상변경금지)',
+    },
+    {
+      name: 'IcoWordArrow',
+      Component: <IcoWordArrow width={15} height={10} />,
+      file: 'ic_word_arrow.svg (색상변경금지)',
+    },
+    {
+      name: 'IcoDocument',
+      Component: <IcoDocument width={48} height={48} />,
+      file: 'ic_document.svg (색상변경금지)',
     },
   ];
   return (

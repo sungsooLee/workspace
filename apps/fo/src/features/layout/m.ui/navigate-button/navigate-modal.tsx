@@ -3,8 +3,6 @@ import { isMobile } from 'react-device-detect';
 import { useTranslation } from 'react-i18next';
 import { Link } from '@tanstack/react-router';
 
-import { Button, ModalBody, ModalContainer, ModalTitle, useModal } from '@learnway/ui';
-
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { Menu } from '@learnway/auth/types';
 
@@ -12,6 +10,8 @@ import { useMenuHierarchy } from '../../../../entities/menu';
 
 import { UserAvatar } from '../../ui/user-avatar/user-avatar';
 import styles from '@learnway/styles/fo/features/layout/m.ui/navigate-button/navigate-modal.module.css';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalTitle, useModal } from '@learnway/ui/modal';
 
 const NavigateModalComponent = () => {
   const { t } = useTranslation();

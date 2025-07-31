@@ -1,11 +1,13 @@
-import React, { forwardRef } from 'react';
-import styles from './shared-channel-grid-form-field.module.css';
-import { cn } from '@learnway/shared';
 import { BaseFormFieldProps } from '@learnway/hooks';
-import { Button, EditCheckboxCell, GridBox, useModal } from '@learnway/ui';
-import { useTranslation } from 'react-i18next';
-import { CellContext } from '@tanstack/react-table';
+import { cn } from '@learnway/shared';
+import { EditCheckboxCell, GridBox } from '@learnway/ui/grid';
 import { ChannelChoiceModal } from '@shared/ui';
+import { CellContext } from '@tanstack/react-table';
+import { forwardRef } from 'react';
+import { useTranslation } from 'react-i18next';
+import styles from './shared-channel-grid-form-field.module.css';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 
 interface SharedChannelGridFormFieldComponentProps extends BaseFormFieldProps<any[]> {
   onClick?: (value?: any) => void;
@@ -27,17 +29,14 @@ const SharedChannelGridFormFieldComponent = forwardRef<
       accessorKey: 'checked',
       size: 100,
       meta: {
-        cellAlign: 'center',
-      },
-      cell: (info: CellContext<any, boolean>) => <EditCheckboxCell info={info} />,
-    },
+        cellAlign: 'center' },
+      cell: (info: CellContext<any, boolean>) => <EditCheckboxCell info={info} /> },
     {
       accessorKey: 'delete',
       header: t('삭제'),
       size: 80,
       meta: {
-        cellAlign: 'center',
-      },
+        cellAlign: 'center' },
       cell: (info: CellContext<any, string>) => (
         <Button
           label={'삭제'}
@@ -45,8 +44,7 @@ const SharedChannelGridFormFieldComponent = forwardRef<
           size={'xs'}
           onClick={() => info.table.options.meta?.removeData(info.row.index)}
         />
-      ),
-    },
+      ) },
   ];
 
   /**
@@ -64,8 +62,7 @@ const SharedChannelGridFormFieldComponent = forwardRef<
    */
   const handleChannelModalButtonClick = async () => {
     const data = await openModal({
-      content: <ChannelChoiceModal />,
-    });
+      content: <ChannelChoiceModal /> });
     const isDuplicated = value?.some((d) => d.channelId === data?.channelId);
     if (data && !isDuplicated) {
       const newItem = {
@@ -73,8 +70,7 @@ const SharedChannelGridFormFieldComponent = forwardRef<
         tenantName: 'tenantName1', // TODO: ChannelChoiceModal 에서 내려받은 내용
         channelId: data.channelId,
         channelName: data.channelName,
-        checked: false,
-      };
+        checked: false };
       onChange?.([...value, newItem]);
     }
   };

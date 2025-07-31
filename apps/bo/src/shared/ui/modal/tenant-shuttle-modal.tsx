@@ -1,22 +1,15 @@
-import { useState, forwardRef, useRef } from 'react';
-import { t } from 'i18next';
-import {
-  Button,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  useModal,
-  ShuttleGridToGrid,
-  ShuttleGridToGridImperative,
-  Divider,
-} from '@learnway/ui';
-import { SearchBox } from '@shared/ui/search-box';
-import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
-import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { tenantQueryOptions } from '@entities/tenant/service/tenant.queries';
+import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
+import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
+import { Divider } from '@learnway/ui/elements';
+import { ShuttleGridToGrid, ShuttleGridToGridImperative } from '@learnway/ui/shuttle-grid-to-grid';
+import { SearchBox } from '@shared/ui/search-box';
 import { useQueryClient } from '@tanstack/react-query';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { t } from 'i18next';
+import { forwardRef, useRef, useState } from 'react';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
 const TenantShuttleModalComponent = forwardRef((_) => {
   const ref = useRef<ShuttleGridToGridImperative>(null);

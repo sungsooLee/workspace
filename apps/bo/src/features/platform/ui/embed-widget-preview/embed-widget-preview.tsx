@@ -11,8 +11,7 @@ const EmbedWidgetPreviewComponent = ({
   componentId,
   width,
   height,
-  isMobile = false,
-}: EmbedWidgetPreviewComponentProps) => {
+  isMobile = false }: EmbedWidgetPreviewComponentProps) => {
   return (
     <iframe
       src={`${import.meta.env.VITE_FO_DOMAIN}/widget/${componentId}?isMobile=${isMobile}`}

@@ -1,5 +1,5 @@
 import { t } from 'i18next';
-import { GridBox, useGridBox } from '@learnway/ui';
+import { GridBox, useGridBox } from '@learnway/ui/grid';
 import { createColumnHelper, ColumnDef } from '@tanstack/react-table';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig } from '@learnway/hooks';
@@ -39,32 +39,26 @@ const searchConfig: SearchBoxConfig = {
         name: 'externalUserType',
         type: 'text',
         label: t('사외이용자 유형'),
-        value: '',
-      },
+        value: '' },
       {
         name: 'compayId',
         type: 'text',
         label: t('회사'),
-        value: '',
-      },
+        value: '' },
       {
         name: 'userNo',
         type: 'text',
         label: t('사번'),
-        value: '',
-      },
+        value: '' },
       {
         name: 'userName',
         type: 'text',
         label: t('이름'),
-        value: '',
-      },
+        value: '' },
     ],
   ],
   validator: {
-    compayId: { required: true },
-  },
-};
+    compayId: { required: true } } };
 
 const gridConfig = {
   query: usersQueryOptions.list,
@@ -73,9 +67,7 @@ const gridConfig = {
   pagination: {
     pageSize: 10,
     pageIndex: 1,
-    totalRows: 2,
-  },
-};
+    totalRows: 2 } };
 
 const columnHelper = createColumnHelper();
 const columns = [
@@ -83,47 +75,39 @@ const columns = [
     cell: (info) => info.getValue(),
     header: '사외이용자 유형',
     enableGrouping: false,
-    size: 170,
-  }),
+    size: 170 }),
   columnHelper.accessor('companyName', {
     cell: (info) => info.getValue(),
     header: '회사',
     enableGrouping: false,
-    size: 170,
-  }),
+    size: 170 }),
   columnHelper.accessor('dep', {
     cell: (info) => info.getValue(),
     header: '부서',
     size: 170,
-    enableGrouping: false,
-  }),
+    enableGrouping: false }),
   columnHelper.accessor('position', {
     cell: (info) => info.getValue(),
     header: '직위',
-    size: 170,
-  }),
+    size: 170 }),
   columnHelper.accessor('userNo', {
     cell: (info) => info.getValue(),
     header: '사번',
     size: 170,
-    enableGrouping: false,
-  }),
+    enableGrouping: false }),
   columnHelper.accessor('userName', {
     cell: (info) => info.getValue(),
     header: '이름',
     size: 170,
-    enableGrouping: false,
-  }),
+    enableGrouping: false }),
   columnHelper.accessor('opt2', {
     cell: (info) => info.getValue(),
     header: '재직여부',
     size: 150,
-    enableGrouping: false,
-  }),
+    enableGrouping: false }),
   columnHelper.accessor('opt3', {
     cell: (info) => info.getValue(),
     header: '계정상태',
     size: 150,
-    enableGrouping: false,
-  }),
+    enableGrouping: false }),
 ] as ColumnDef<any, unknown>[];

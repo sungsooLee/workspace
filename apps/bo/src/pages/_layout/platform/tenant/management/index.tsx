@@ -1,13 +1,13 @@
 import { createFileRoute, useRouter } from '@tanstack/react-router';
+import { t } from 'i18next';
 
 import { PageContainer, MainContents, ContentsButtons } from '@shared/ui';
-import { Button } from '@learnway/ui';
 
 import { TenantManagmentList } from '@features/platform-management/tenant/ui/tenant-managment-list';
+import { Button } from '@learnway/ui/button';
 
 export const Route = createFileRoute('/_layout/platform/tenant/management/')({
-  component: RouteComponent,
-});
+  component: RouteComponent });
 
 function RouteComponent() {
   const router = useRouter();
@@ -20,7 +20,7 @@ function RouteComponent() {
           size="sm"
           onClick={() => router.navigate({ to: '/platform/tenant/management/regist' })}
         >
-          등록
+          {t('등록')}
         </Button>
       </ContentsButtons>
       <MainContents>

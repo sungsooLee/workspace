@@ -1,18 +1,17 @@
+import { useModal } from '@learnway/ui/modal';
 import {
   useMutation,
   UseMutationResult,
   useQuery,
   UseQueryOptions,
-  UseQueryResult,
+  UseQueryResult
 } from '@tanstack/react-query';
 import { mutateOptions, queryOptions } from './label-messages.queries';
 import {
   LabelMessage,
   LabelMessagesQueryParams,
   MutationHookOptions,
-  PaginationResponse,
-} from '@types';
-import { useModal } from '@learnway/ui';
+  PaginationResponse } from '@types';
 
 /**
  * 라벨 메시지 목록을 가져오는 쿼리 훅.
@@ -62,8 +61,7 @@ export const useCreateLabelMessage = (
       if (options?.onSuccess) {
         options.onSuccess(data, variables, context);
       }
-    },
-  });
+    } });
 };
 
 /**
@@ -85,6 +83,5 @@ export const useUpdateLabelMessage = (
       if (options?.onSuccess) {
         options.onSuccess(data, variables, context);
       }
-    },
-  });
+    } });
 };

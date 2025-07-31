@@ -1,12 +1,14 @@
+import { OptionCard } from '@learnway/ui/option-card';
 import { memo, useCallback, useEffect, useState } from 'react';
-import { OptionCard } from '@learnway/ui';
-import { getRandomId } from '@learnway/shared';
-import { cn } from '@learnway/shared';
-import { ChipList } from '@learnway/ui';
 
 import styles from '@learnway/styles/fo/features/category/category-filter-popup.module.css';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { t } from 'i18next';
+import { isMobile } from 'react-device-detect';
 
 interface FilterPopupComponentProps {
+  filterCodes: any,
   initialFilters?: any; // 초기 필터 값 (이전에 선택한 값)
   setModalData?: (data: any) => void; // Modal에서 제공하는 데이터 설정 함수
 }
@@ -70,7 +72,9 @@ const CATEGORY_TITLES = {
   [FILTER_CATEGORIES.LANGUAGE]: '언어',
 };
 
-const FilterPopupComponent = ({ initialFilters, setModalData }: FilterPopupComponentProps) => {
+const FilterPopupComponent = ({ filterCodes, initialFilters, setModalData }: FilterPopupComponentProps) => {
+  const { closeModal } = useModal();
+
   // 모든 필터 선택을 하나의 상태로 통합 관리
   const [selectedFilters, setSelectedFilters] = useState({
     [FILTER_CATEGORIES.LECTURE_TYPE]: [],
@@ -127,52 +131,50 @@ const FilterPopupComponent = ({ initialFilters, setModalData }: FilterPopupCompo
     }));
   }, []);
 
-  // 칩 삭제 핸들러
-  const handleChipDelete = useCallback((deletedChip: any) => {
-    // 삭제된 칩의 카테고리에서 해당 값 제거
-    if (deletedChip.category) {
-      setSelectedFilters((prev: any) => ({
-        ...prev,
-        [deletedChip.category]: prev[deletedChip.category].filter(
-          (value: any) => value !== deletedChip.value,
-        ),
-      }));
-    }
-  }, []);
-
   return (
-    <div>
-      <ul className={styles.filter_wrap}>
-        {/* 동적으로 모든 필터 카테고리 렌더링 */}
-        {Object.entries(FILTER_OPTIONS).map(([category, options]) => (
-          <li key={category}>
-            <strong className={styles.tit}>{CATEGORY_TITLES[category]}</strong>
-            <div className={styles.filter_box}>
-              <OptionCard
-                cols={4}
-                options={options}
-                multiple
-                value={selectedFilters[category]}
-                onOptionsSelect={(selected) => handleFilterChange(category, selected)}
-              />
-            </div>
-          </li>
-        ))}
-      </ul>
-
-      {selectedChips.length > 0 && (
-        <div className={styles.look}>
-          <ChipList
-            options={selectedChips}
-            className={styles.chip_list}
-            hideBorder
-            type="line"
-            size="sm"
-            onDelete={handleChipDelete}
-          />
+    <ModalContainer>
+      <ModalTitle>{t('필터')}</ModalTitle>
+      <ModalBody>
+        <div className={styles.start}>
+          <ul className={styles.filter_wrap}>
+            {/* 동적으로 모든 필터 카테고리 렌더링 */}
+            {Object.entries(FILTER_OPTIONS).map(([category, options]) => (
+              <li key={category}>
+                <strong className={styles.tit}>{CATEGORY_TITLES[category]}</strong>
+                <div className={styles.filter_box}>
+                  <OptionCard
+                    cols={isMobile ? 2 : 4}
+                    options={options}
+                    multiple
+                    value={selectedFilters[category]}
+                    onOptionsSelect={(selected) => handleFilterChange(category, selected)}
+                  />
+                </div>
+              </li>
+            ))}
+          </ul>
+          {/*<div className={styles.look}>*/}
+          {/*  <ChipList*/}
+          {/*    options={options}*/}
+          {/*    className={styles.chip_list}*/}
+          {/*    hideBorder*/}
+          {/*    type="line"*/}
+          {/*    size="sm"*/}
+          {/*  />*/}
+          {/*</div>*/}
         </div>
-      )}
-    </div>
+      </ModalBody>
+      <ModalFooter>
+        <Button
+          className={styles.btn_reset}
+          variant={'gray'}
+          size={'lg'}
+          onClick={() => closeModal()}
+          label={t('초기화')}
+        />
+        <Button variant={'primary'} size={'lg'} onClick={() => closeModal()} label={t('적용')} />
+      </ModalFooter>
+    </ModalContainer>
   );
 };
 

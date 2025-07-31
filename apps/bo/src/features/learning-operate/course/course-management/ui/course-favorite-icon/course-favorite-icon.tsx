@@ -13,8 +13,7 @@ const Component: FC<CourseFavoriteIconProps> = ({ courseId, isFavorite: initFavo
     onSuccess: () => {
       console.log('aaa');
       setIsFavorite(!isFavorite);
-    },
-  });
+    } });
 
   const handleClick = () => {
     console.log('courseId', courseId);

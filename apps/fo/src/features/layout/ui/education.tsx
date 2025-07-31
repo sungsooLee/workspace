@@ -7,7 +7,8 @@ import {
   IcoTeacher,
   IcoTime,
 } from '@learnway/icons';
-import { Button, useModal } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 import { memo, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import { CourseCancelReasonPopup, EducationPlacePopup } from '../../../features/layout';
@@ -30,6 +31,9 @@ interface EducationProps {
   edu?: any;
   courseEnrollCompletePopup?: () => void;
   CourseCancelCompletePopup?: () => void;
+  dashboardRef?: any;
+  goToScrollRef?: any;
+  handleTab?: any;
 }
 
 const EducationComponent = ({
@@ -37,6 +41,9 @@ const EducationComponent = ({
   edu,
   courseEnrollCompletePopup,
   CourseCancelCompletePopup,
+  dashboardRef,
+  goToScrollRef,
+  handleTab,
 }: EducationProps) => {
   const navigate = useNavigate();
 
@@ -235,9 +242,16 @@ const EducationComponent = ({
           </Button> */}
           {/* <br /> */}
           {/* 학습하기 - 학습중,학습하기,학습완료,이수,미이수 모두 강의실로 이동 / 학습완료 중 복습가능,불가능 따라 스타일은 두개 */}
-          {/* <Button variant="primary" size="xl">
-            학습중
-          </Button> */}
+          <Button
+            variant="primary"
+            size="xl"
+            onClick={() => {
+              handleTab('0', 0);
+              goToScrollRef(dashboardRef);
+            }}
+          >
+            학습하기
+          </Button>
         </div>
       </div>
       <div className={styles.info_box}>

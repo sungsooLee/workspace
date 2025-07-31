@@ -94,56 +94,6 @@ export interface UserUpdateRequest {
 }
 ```
 
-## 🌐 API 클라이언트 설정
-
-### shared/api/client.ts
-
-```typescript
-import axios from 'axios';
-import { toast } from '@learnway/ui';
-
-export const apiClient = axios.create({
-  baseURL: process.env.VITE_API_BASE_URL || '/api',
-  timeout: 10000,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
-
-// 요청 인터셉터
-apiClient.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('accessToken');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => Promise.reject(error),
-);
-
-// 응답 인터셉터
-apiClient.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    const { response } = error;
-
-    // 401 에러 처리
-    if (response?.status === 401) {
-      // 토큰 갱신 로직 또는 로그인 페이지로 이동
-      window.location.href = '/login';
-    }
-
-    // 일반 에러 메시지
-    if (response?.data?.message) {
-      toast.error(response.data.message);
-    }
-
-    return Promise.reject(error);
-  },
-);
-```
-
 ## 🔌 API 함수 구현
 
 ### entities/user/api/user.ts
@@ -182,7 +132,6 @@ export const userApi = {
 
 ```typescript
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { toast } from '@learnway/ui';
 import { userApi } from '../api';
 import type { UserListParams, UserCreateRequest, UserUpdateRequest } from '../types';
 
@@ -235,11 +184,8 @@ export const useCreateUser = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: userQueryKeys.lists() });
-      toast.success('사용자가 생성되었습니다.');
     },
-    onError: () => {
-      toast.error('사용자 생성에 실패했습니다.');
-    },
+    onError: () => {},
   });
 };
 
@@ -255,11 +201,8 @@ export const useUpdateUser = () => {
     onSuccess: (data, variables) => {
       queryClient.invalidateQueries({ queryKey: userQueryKeys.lists() });
       queryClient.invalidateQueries({ queryKey: userQueryKeys.detail(variables.id) });
-      toast.success('사용자 정보가 수정되었습니다.');
     },
-    onError: () => {
-      toast.error('사용자 수정에 실패했습니다.');
-    },
+    onError: () => {},
   });
 };
 
@@ -273,11 +216,8 @@ export const useDeleteUser = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: userQueryKeys.lists() });
-      toast.success('사용자가 삭제되었습니다.');
     },
-    onError: () => {
-      toast.error('사용자 삭제에 실패했습니다.');
-    },
+    onError: () => {},
   });
 };
 ```

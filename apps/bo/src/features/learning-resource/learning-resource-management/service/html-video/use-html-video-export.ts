@@ -22,14 +22,10 @@ export const useHtmlVideoExport = (provider: DynamicFormProvider) => {
             contentUuid: result.destContentUuid,
             listParam: {
               tenantId: result.destTenantId,
-              channelUuid: result.destChannelUuid,
-            },
-          },
-          replace: true,
-        });
+              channelUuid: result.destChannelUuid } },
+          replace: true });
       }
-    },
-  });
+    } });
 
   const handleTranslateAction = useCallback(() => {
     const { tenantId, channelUuid } = listParam;
@@ -41,8 +37,7 @@ export const useHtmlVideoExport = (provider: DynamicFormProvider) => {
       contentUuid,
       tenantId: listParam?.tenantId ?? -1,
       destChannelUuid: listParam?.channelUuid ?? '',
-      languageCountryCode,
-    });
+      languageCountryCode });
   }, [contentUuid, languageCountryCode, listParam]);
 
   return { handleTranslateAction };

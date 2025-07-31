@@ -1,8 +1,8 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { MainContents, PageContainer } from '@shared/ui';
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
-import { SearchBox } from '../../../shared/ui/search-box';
+import { MainContents, PageContainer } from '@shared/ui';
+import { createFileRoute } from '@tanstack/react-router';
 import { t } from 'i18next';
+import { SearchBox } from '../../../shared/ui/search-box';
 
 export const Route = createFileRoute('/_layout/menu/type4')({
   component: RouteComponent,

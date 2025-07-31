@@ -6,8 +6,7 @@ export const Route = createFileRoute('/_layout/learning/course/')({
   component: RouteComponent,
   beforeLoad: () => {
     useCourseStore.getState().reset();
-  },
-});
+  } });
 
 function RouteComponent() {
   return <CourseList />;

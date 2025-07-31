@@ -1,11 +1,13 @@
-import React, { FC } from 'react';
-import { Button, ExcelConfig, useModal } from '../../../index';
-import { UseFormReturn } from 'react-hook-form';
-import { fileDownload } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
-import styles from './grid-box.module.css';
-import { t } from 'i18next';
 import { IcoDownload, IcoUploadCloud } from '@learnway/icons';
+import { fileDownload } from '@learnway/shared';
+import { t } from 'i18next';
+import { FC } from 'react';
+import { UseFormReturn } from 'react-hook-form';
+import { Button } from '../../button';
+import { useModal } from '../../modal';
+import { ExcelConfig } from '../types';
+import styles from './grid-box.module.css';
 
 export const ExcelButtons: FC<{ config?: ExcelConfig; getParams?: UseFormReturn['getValues'] }> = ({
   config,
@@ -20,7 +22,7 @@ export const ExcelButtons: FC<{ config?: ExcelConfig; getParams?: UseFormReturn[
     const params = getParams ? getParams() : {};
 
     const executeDownload = async () => {
-      await fileDownload({ url: `${PMSApiPrefix()}` + download, params });
+      await fileDownload({ url: `${PMSApiPrefix()}${download}`, params });
     };
 
     if (onBeforeDownload) await onBeforeDownload(executeDownload);

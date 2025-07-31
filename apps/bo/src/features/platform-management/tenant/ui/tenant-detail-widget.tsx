@@ -4,19 +4,15 @@ import { t } from 'i18next';
 import { FC, forwardRef, useEffect, useState } from 'react';
 
 import { cn } from '@learnway/shared';
+import { FormSubTitle } from '@learnway/ui/base-form';
 import {
-  Button,
   CheckboxGroupFormField,
   ChipListModalSelectorFormField,
-  ContentsRow,
-  FormSubTitle,
-  Input,
-  List,
   RadioGroupFormField,
-  TableBox,
   TextareaFormField,
-  useModal,
-} from '@learnway/ui';
+} from '@learnway/ui/form-field';
+import { TableBox } from '@learnway/ui/grid';
+import { List } from '@learnway/ui/list';
 import { FormRow, NoticeBox, SwitchFormField } from '@shared/ui';
 
 import { SectionLayout } from '@shared/ui';
@@ -27,6 +23,10 @@ import {
   useUpdateTenantWidget,
 } from '@entities/widgets/service/widgets.hook';
 import { BaseFormFieldProps, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
 import { ChannelChoiceModal } from '@shared/ui';
 import { EnDeviceType, EnFormMode } from '@types';
 import dataWrapStyles from './data-wrap.module.css';
@@ -198,7 +198,7 @@ const TenantDetailWidgetComponent: FC<any> = () => {
                   className="btn_text"
                 />
                 <Button
-                  label={'+ ' + t('위젯추가')}
+                  label={`+ ${t('위젯추가')}`}
                   variant={'text'}
                   size={'sm'}
                   className="btn_text"
@@ -254,7 +254,7 @@ const TenantDetailWidgetComponent: FC<any> = () => {
                   disabled={EnFormMode.NONE === formMode}
                 />
                 <Button
-                  label={'-' + t('삭제')}
+                  label={`-${t('삭제')}`}
                   variant="text"
                   size="sm"
                   disabled={EnFormMode.NONE === formMode}
@@ -462,7 +462,7 @@ const columns = () =>
       cell: (prop: any) => {
         return <strong>{prop.row.original.c1}</strong>;
       },
-      header: '구분',
+      header: t('구분'),
       enableGrouping: false,
       size: 50,
       maxSize: 50,
@@ -485,7 +485,7 @@ const columns = () =>
           </div>
         );
       },
-      header: '컴포넌트 ID',
+      header: t('컴포넌트 ID'),
       enableGrouping: false,
       size: 300,
       meta: {

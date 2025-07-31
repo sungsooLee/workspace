@@ -1,8 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { mutateOptions } from './translation.queries';
-import { useModal } from '@learnway/ui';
 import { translationQueryOptions as queryOptions } from './translation.queries';
 import { MultilingualUpdateReqParams } from '@types';
+import { useModal } from '@learnway/ui/modal';
 
 const useTranslationHook = (options?: any) => {
   const { alert: openAlert } = useModal();
@@ -13,13 +13,11 @@ const useTranslationHook = (options?: any) => {
       console.log('data => ', data);
       openAlert({
         content: '정상적으로 수정되었습니다.',
-        type: 'complete',
-      });
+        type: 'complete' });
       if (options?.onSuccess) {
         options.onSuccess(data, variables, context);
       }
-    },
-  });
+    } });
 
   const { mutate: createByExcelMutate } = useMutation({
     ...mutateOptions.createByExcel(),
@@ -28,8 +26,7 @@ const useTranslationHook = (options?: any) => {
       if (options?.onSuccess) {
         options.onSuccess(data, variables, context);
       }
-    },
-  });
+    } });
 
   const handleUpdate = (modifyData: MultilingualUpdateReqParams) => {
     updateMutate(modifyData);
@@ -41,8 +38,7 @@ const useTranslationHook = (options?: any) => {
 
   return {
     update: handleUpdate,
-    createByExcel: handleCreateByExcel,
-  };
+    createByExcel: handleCreateByExcel };
 };
 
 export const useTranslation = useTranslationHook;
@@ -63,14 +59,12 @@ export function useDeployTranslation(options: any) {
         options.onSuccess(dataTagErrorSymbol, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
   return {
     deploy: (payload: any, callback?: any) => {
       mutation.mutate(payload, callback);
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }

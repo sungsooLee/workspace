@@ -1,19 +1,15 @@
 import { cn } from '@learnway/shared';
-import {
-  CheckboxGroupFormField,
-  ContentsRow,
-  ContentsRowItem,
-  FormGuideText,
-  RadioGroupFormField,
-} from '@learnway/ui';
+import { FormGuideText } from '@learnway/ui/base-form';
+import { CheckboxGroupFormField, RadioGroupFormField } from '@learnway/ui/form-field';
 import { t } from 'i18next';
 import { FC } from 'react';
 
 import { FormDisplay } from '@features/form/ui/form-display';
-import { FormItem, FormRow } from '@shared/ui';
+import { FormRow } from '@shared/ui';
 
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
+import { ContentsRow, ContentsRowItem } from '@learnway/ui/contents-row';
 
 const LoginAuthenticationSettingInformationComponent: FC<any> = ({
   provider,
@@ -63,7 +59,10 @@ const LoginAuthenticationSettingInformationComponent: FC<any> = ({
           </div>
         </ContentsRowItem>
         <ContentsRowItem>
-          <FormDisplay provider={provider} dependencies={[{ name: 'isUseTwoFactorAuth', value: true }]}>
+          <FormDisplay
+            provider={provider}
+            dependencies={[{ name: 'isUseTwoFactorAuth', value: true }]}
+          >
             <ContentsRow>
               <FormRow
                 className={dynamicFormStyles.w_half}

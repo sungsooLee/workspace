@@ -2,8 +2,7 @@ import { CourseManagement } from '@features/learning-operate/course/course-manag
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/_layout/learning/course/management/')({
-  component: RouteComponent,
-});
+  component: RouteComponent });
 
 function RouteComponent() {
   return <CourseManagement />;

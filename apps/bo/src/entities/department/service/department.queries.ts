@@ -8,23 +8,20 @@ export const queryKeys = {
   detail: (deptId: number) => ['department-detail', deptId],
   tree: (companyCode: string[]) => ['department-tree', ...companyCode],
   child: (param: any) => ['department-child', param],
-  user: (param: any) => ['department-user', param],
-};
+  user: (param: any) => ['department-user', param] };
 
 export const queryOptions = {
   list: (param: any) => ({
     queryKey: queryKeys.list,
     queryFn: () => DepartmentService.getDepartmentList(param),
     cacheTime: 0,
-    staleTime: 0,
-  }),
+    staleTime: 0 }),
   detail: (deptId: number) => ({
     queryKey: queryKeys.detail(deptId),
     queryFn: () => {
       return deptId ? DepartmentService.getDepartmentDetail(deptId) : undefined;
     },
-    disabled: !deptId,
-  }),
+    disabled: !deptId }),
 
   tree: (companyCode: string[]) => ({
     queryKey: queryKeys.tree(companyCode),
@@ -32,33 +29,24 @@ export const queryOptions = {
       const companys = companyCode.filter((item) => item !== undefined);
       return companys.length > 0 ? DepartmentService.getDepartmentTree(companyCode) : undefined;
     },
-    disabled: !companyCode,
-  }),
+    disabled: !companyCode }),
   child: (param: any) => ({
     queryKey: queryKeys.child(param),
     queryFn: () => {
       return DepartmentService.getDepartmentChildDepartmentList(param);
-    },
-  }),
+    } }),
   user: (param: any) => ({
     queryKey: queryKeys.user(param),
     queryFn: () => {
       return DepartmentService.getDepartmentUserList(param);
-    },
-  }),
-};
+    } }) };
 
 export const mutateOptions = {
   create: () => ({
-    mutationFn: (payload: any) => DepartmentService.createDepartment(payload),
-  }),
+    mutationFn: (payload: any) => DepartmentService.createDepartment(payload) }),
   update: () => ({
-    mutationFn: (payload: any) => DepartmentService.updateDepartment(payload),
-  }),
+    mutationFn: (payload: any) => DepartmentService.updateDepartment(payload) }),
   delete: () => ({
-    mutationFn: (payload: any) => DepartmentService.deleteDepartment(payload),
-  }),
+    mutationFn: (payload: any) => DepartmentService.deleteDepartment(payload) }),
   move: () => ({
-    mutationFn: (payload: any) => DepartmentService.moveDepartment(payload),
-  }),
-};
+    mutationFn: (payload: any) => DepartmentService.moveDepartment(payload) }) };

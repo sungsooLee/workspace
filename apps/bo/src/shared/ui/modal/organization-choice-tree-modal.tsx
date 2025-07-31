@@ -1,28 +1,18 @@
-import React, { FC, useEffect, useState } from 'react';
 import { t } from 'i18next';
+import { useEffect, useState } from 'react';
 
-import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
 import popContentsStyles from '@features/platform-management/tenant/ui/pop-contents-layout.module.css';
+import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
 
-import {
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  useModal,
-  Button,
-  TreeContainer,
-  TreeView,
-  TreeNode,
-  TreeEventPayload,
-  TreeBox,
-} from '@learnway/ui';
+import { TreeBox, TreeContainer, TreeNode } from '@learnway/ui/tree-view';
 
 import { transformDepartmentApiDataToTreeData } from '@features/platform-management/company/company-organization-management/service/company-organization.service';
 
 import { useGetCompanyDepartmentTree } from '@entities/department';
-import { getAllTreeKeys, getAllParent } from '@features/platform-management/tenant';
 import { findOrganizationPathById } from '@features/platform-management/company';
+import { getAllParent, getAllTreeKeys } from '@features/platform-management/tenant';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
 /**
  * 화면번호: NLP_BO_TMS_1111_09 (회사조직조회 팝업(공통))

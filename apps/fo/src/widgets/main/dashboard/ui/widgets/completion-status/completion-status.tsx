@@ -1,17 +1,17 @@
 import { memo } from 'react';
 
-import { ProgressBar } from '@learnway/ui';
 import { IcoCheck, IcoMessageText } from '@learnway/icons';
 
+import { ProgressBar } from '@learnway/ui/progress';
 import type { EmbedWidgetProps } from '../../widget-container/widget-container';
-import styles from './completion-status.module.css';
 import statusStyles from './completion-status-status.module.css';
+import styles from './completion-status.module.css';
 
 const CompletionStatusComponent = ({ data }: EmbedWidgetProps) => {
   return (
     <div className={styles.start}>
-      {/* 
-        학습전 : status_before 
+      {/*
+        학습전 : status_before
         학습중 : status_progress
         학습완료 (이수) : status_completed
         학습미완료 (미이수) : status_incomplete

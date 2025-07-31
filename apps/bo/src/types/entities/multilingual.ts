@@ -5,8 +5,7 @@ export enum keyTypeCode {
   LEARNER_MENU = 'LEARNER_MENU',
   HRD_CENTER_MENU = 'HRD_CENTER_MENU',
   LABEL = 'LABEL',
-  MESSAGE = 'MESSAGE',
-}
+  MESSAGE = 'MESSAGE' }
 
 export type MultilingualExcel = {
   no?: number;

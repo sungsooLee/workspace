@@ -1,16 +1,19 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Avatar } from '@learnway/ui/avatar';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 // import { t } from 'i18next';
 
-import { useRouter, Link } from '@tanstack/react-router';
+import { Link } from '@tanstack/react-router';
 import { useCreation } from 'ahooks';
 
-import { Avatar, Popover, Button, useModal } from '@learnway/ui';
 import { IcLogOut01, IcoBuilding01 } from '@learnway/icons';
-import { cn, getFullImagePath } from '@learnway/shared';
+import { getFullImagePath } from '@learnway/shared';
+import { Popover } from '@learnway/ui/popover';
 
-import styles from './user-avatar.module.css';
 import { useFetchAuthUser, useLogoutUser, useUserDetail } from '@learnway/auth/entities';
+import styles from './user-avatar.module.css';
 
 export const AvataFallback = ({ name }: { name?: string }) => {
   const firstUnit = useCreation(() => {
@@ -37,8 +40,7 @@ export const PopoverContent = () => {
   const logoutAlert = async () => {
     const feedback = await openConfirm({
       title: t('LABEL.confirm.logout.title'),
-      content: t('LABEL.confirm.logout.message'),
-    });
+      content: t('LABEL.confirm.logout.message') });
     feedback && logout();
   };
 

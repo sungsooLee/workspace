@@ -1,20 +1,17 @@
 import { useSystemCodeDetail } from '@entities/common-code/service/system-code.hook';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
-import {
-  ContentsRow,
-  Divider,
-  FormSubTitle,
-  GridBox,
-  GridImperative,
-  Input,
-  SplitPanel,
-  Textarea,
-} from '@learnway/ui';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Divider, SplitPanel } from '@learnway/ui/elements';
+import { GridBox } from '@learnway/ui/grid';
 import { FormRow } from '@shared/ui';
 import { createColumnHelper, Table } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { GridImperative } from '@learnway/ui/grid';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { Textarea } from '@learnway/ui/textarea';
 
 const columnHelper = createColumnHelper<any>();
 const listGridColumns = [
@@ -23,9 +20,7 @@ const listGridColumns = [
     cell: ({ getValue }) => getValue(),
     header: t('LABEL.cdGroupId'),
     meta: {
-      size: 'auto',
-    },
-  }),
+      size: 'auto' } }),
 ];
 // };
 
@@ -34,18 +29,15 @@ const detailGridColumns = () => {
     columnHelper.accessor('cdId', {
       cell: ({ getValue }) => getValue(),
       header: t('LABEL.cdId'),
-      size: 150,
-    }),
+      size: 150 }),
     columnHelper.accessor('cdName', {
       cell: ({ getValue }) => getValue(),
       header: t('LABEL.cdName'),
-      size: 150,
-    }),
+      size: 150 }),
     columnHelper.accessor('cdContent', {
       cell: ({ getValue }) => getValue(),
       header: t('LABEL.content', { type: t('LABEL.cdId') }),
-      size: 250,
-    }),
+      size: 250 }),
     // columnHelper.accessor('multilingualKey', {
     //   cell: ({ getValue }) => getValue(),
     //   header: t('LABEL.multilingualKey'),
@@ -219,42 +211,35 @@ const formConfig = (): DynamicFormConfig => ({
       type: 'text',
       label: t('LABEL.cdGroupId'),
       value: '',
-      placeholder: '',
-    },
+      placeholder: '' },
     {
       name: 'cdId',
       type: 'text',
       label: t('LABEL.cdId'),
       value: '',
-      placeholder: '',
-    },
+      placeholder: '' },
     {
       name: 'cdName',
       type: 'text',
       label: t('LABEL.cdName'),
       value: '',
-      placeholder: '',
-    },
+      placeholder: '' },
     {
       name: 'cdContent',
       type: 'text',
       label: t('LABEL.content', { type: t('LABEL.cdId') }),
       value: '',
-      placeholder: '',
-    },
+      placeholder: '' },
     {
       name: 'multilingualKey',
       type: 'text',
       label: t('LABEL.multilingualKey'),
       value: '',
-      placeholder: '',
-    },
+      placeholder: '' },
     {
       name: 'referenceVal1',
       type: 'textarea',
       label: t('LABEL.referenceVal1'),
       value: '',
-      placeholder: '',
-    },
-  ],
-});
+      placeholder: '' },
+  ] });

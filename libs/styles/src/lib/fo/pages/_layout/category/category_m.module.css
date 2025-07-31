@@ -1,0 +1,164 @@
+.start {
+  &.detail_m {
+    @apply px-[16px] pb-[40px] pt-[16px];
+  }
+
+  .category_box {
+    li {
+      @apply relative inline-block align-top;
+      button {
+        @apply body_3_r relative text-[var(--gray7)];
+        span {
+          @apply relative ml-[4px] flex h-[20px] w-[20px] items-center justify-center rounded-[50%] border-[1px] border-solid border-[var(--gray4)];
+        }
+        .arr {
+          @apply mx-[12px];
+        }
+      }
+    }
+  }
+
+  .gray_box {
+    @apply -mx-[16px] bg-[var(--blue98)] px-[16px] py-[24px];
+    .box {
+      @apply flex items-center;
+      .select {
+        @apply h-[40px] w-full;
+        button {
+          @apply h-[40px] rounded-[8px] px-[16px];
+        }
+        & > div {
+          & > div {
+            @apply !min-h-[40px] rounded-[8px];
+          }
+        }
+      }
+      .btn_drop {
+        @apply label-xl relative h-[44px] w-full !rounded-[8px] border-[1px] border-solid border-[var(--gray75)] bg-white pl-[16px] pr-[30px] text-[var(--gray10)];
+        svg {
+          @apply absolute right-[14px] top-1/2 -translate-y-1/2;
+        }
+      }
+      & + .box {
+        @apply mt-[8px];
+      }
+    }
+    .search_input {
+      @apply mr-[8px] flex-1;
+      [class*='nlp--input'] {
+        @apply border-[1px] border-solid border-[var(--gray75)] bg-white;
+      }
+    }
+    .filter_wrap {
+      .btn_filter {
+        @apply h-[44px] w-[44px] !rounded-[8px];
+        &::after {
+          @apply bg-[var(--red65)];
+        }
+        &[class*='selected'] {
+          @apply bg-[var(--blue50)];
+        }
+      }
+    }
+  }
+
+  .btn_filter {
+    @apply !flex h-[40px] w-[40px] !justify-center border-[1px] border-solid border-[var(--gray5)] bg-[#fff];
+    &.selected {
+      @apply relative bg-[var(--primary1)];
+      &::after {
+        @apply absolute right-[-3px] top-[-3px] h-[12px] w-[12px] rounded-[50%] bg-[var(--secondary1)] content-[''];
+      }
+    }
+  }
+
+  .lists_wrap {
+    @apply mt-[24px];
+    .align {
+      @apply mb-[16px] flex items-center justify-between;
+      .left {
+        .txt {
+          @apply title2-b text-[var(--gray10)];
+          em {
+            @apply title2-b text-[var(--blue50)];
+          }
+        }
+      }
+      .right {
+        @apply flex items-center;
+        .box {
+          @apply relative flex items-center;
+          & + .box {
+            @apply ml-[8px] pl-[8px];
+            &::after {
+              @apply absolute left-0 top-[50%] h-[12px] w-[1px] -translate-y-1/2 bg-[#d9d9d9] content-[''];
+            }
+          }
+          button {
+            @apply label-lg !min-h-[auto] !border-0 !p-0 text-[var(--gray35)];
+          }
+          .array {
+            @apply min-w-[80px];
+          }
+        }
+        .btn_box {
+          @apply relative ml-[8px] flex h-[36px] items-center rounded-[4px] border border-solid border-[var(--gray90)];
+          &::before {
+            @apply absolute left-1/2 top-0 h-full w-[1px] bg-[var(--gray90)] content-[''];
+          }
+          .btn_order {
+            @apply h-[36px] w-[36px];
+            &:nth-last-child(1) {
+              @apply ml-[0.5px];
+            }
+            svg {
+              path {
+                @apply stroke-[#B7BBC3];
+              }
+            }
+            &.active {
+              svg {
+                path {
+                  @apply stroke-[#131416];
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .list {
+      @apply mt-[16px];
+      .list_box {
+        & > li {
+          @apply inline-block w-[calc((100%/2)-8px)] align-top;
+          &:nth-child(2n) {
+            @apply ml-[16px];
+          }
+          &:nth-child(n + 3) {
+            @apply mt-[32px];
+          }
+        }
+        &.horizontal {
+          & > li {
+            @apply !ml-0 w-full;
+            & > div {
+              & > div {
+                & > div:nth-child(1) {
+                  @apply w-[120px];
+                }
+              }
+            }
+            & + li {
+              @apply !mt-[24px];
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .pagenation {
+    @apply mt-[24px];
+  }
+}

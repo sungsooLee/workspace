@@ -28,7 +28,7 @@ function useCategoryBreadcrumbs(currentCategoryId: number | null, tenantId: numb
     };
 
     if (currentCategoryId) {
-      findParent(categories.children, currentCategoryId);
+      findParent(categories.children, categoryId);
     }
 
     return path;

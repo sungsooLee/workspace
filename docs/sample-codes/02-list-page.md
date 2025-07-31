@@ -64,46 +64,47 @@ import { userQueryOptions, User } from '@entities/user';
 import React, { FC } from 'react';
 import { SearchBox } from '@shared/ui';
 import { useDynamicForm2 } from '@learnway/hooks';
+import { t } from 'i18next';
 
 // 검색 필드 설정
 const searchFields = [
   [
     {
       name: 'name',
-      label: '이름',
+      label: t('이름'),
       type: 'text',
-      placeholder: '이름을 입력하세요',
+      placeholder: t('이름을 입력하세요'),
     },
     {
       name: 'email',
-      label: '이메일',
+      label: t('이메일'),
       type: 'text',
-      placeholder: '이메일을 입력하세요',
+      placeholder: t('이메일을 입력하세요'),
     },
   ],
   [
     {
       name: 'role',
-      label: '역할',
+      label: t('역할'),
       type: 'select',
-      placeholder: '역할을 선택하세요',
+      placeholder: t('역할을 선택하세요'),
       options: [
-        { value: '', label: '전체' },
-        { value: 'admin', label: '관리자' },
-        { value: 'manager', label: '매니저' },
-        { value: 'user', label: '사용자' },
+        { value: '', label: t('전체') },
+        { value: 'admin', label: t('관리자') },
+        { value: 'manager', label: t('매니저') },
+        { value: 'user', label: t('사용자') },
       ],
     },
     {
       name: 'status',
-      label: '상태',
+      label: t('상태'),
       type: 'select',
-      placeholder: '상태를 선택하세요',
+      placeholder: t('상태를 선택하세요'),
       options: [
-        { value: '', label: '전체' },
-        { value: 'active', label: '활성' },
-        { value: 'inactive', label: '비활성' },
-        { value: 'pending', label: '대기' },
+        { value: '', label: t('전체') },
+        { value: 'active', label: t('활성') },
+        { value: 'inactive', label: t('비활성') },
+        { value: 'pending', label: t('대기') },
       ],
     },
   ],
@@ -205,9 +206,9 @@ export const UserList: React.FC<UserListProps> = () => {
       size: 100,
       cell: (info) => {
         const roleLabels = {
-          admin: '관리자',
-          manager: '매니저',
-          user: '사용자',
+          admin: t('관리자'),
+          manager: t('매니저'),
+          user: t('사용자'),
         };
         return roleLabels[info.getValue()] || info.getValue();
       },
@@ -218,9 +219,9 @@ export const UserList: React.FC<UserListProps> = () => {
       size: 100,
       cell: (info) => {
         const statusLabels = {
-          active: '활성',
-          inactive: '비활성',
-          pending: '대기',
+          active: t('활성'),
+          inactive: t('비활성'),
+          pending: t('대기'),
         };
         return statusLabels[info.getValue()] || info.getValue();
       },
@@ -355,13 +356,13 @@ const searchFields = [
   [
     {
       name: 'keyword',
-      label: '통합검색',
+      label: t('통합검색'),
       type: 'text',
-      placeholder: '이름, 이메일로 검색',
+      placeholder: t('이름, 이메일로 검색'),
     },
     {
       name: 'dateRange',
-      label: '생성일',
+      label: t('생성일'),
       type: 'dateRange',
     },
   ],

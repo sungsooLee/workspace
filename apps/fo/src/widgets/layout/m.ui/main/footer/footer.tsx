@@ -1,19 +1,18 @@
+import { Link } from '@tanstack/react-router';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from '@tanstack/react-router';
 
-import { cn } from '@learnway/shared';
+import { IcoArray, IcoEye, IcoHome03, IcoMybook, IcoSearch } from '@learnway/icons';
 
-import { Language } from '../../../../../features/platform';
-import { Button, useModal, useSearchStore } from '@learnway/ui';
-import { IcoHome03, IcoDotpoints, IcoSearch, IcoMybook, IcoEye, IcoArray } from '@learnway/icons';
-
-import styles from '@learnway/styles/fo/widgets/layout/m.ui/main/footer/footer.module.css';
 import { CategoryPopup } from '@features/layout';
 import { useFetchAuthUser } from '@learnway/auth/entities';
+import styles from '@learnway/styles/fo/widgets/layout/m.ui/main/footer/footer.module.css';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
+import { useSearchStore } from '@learnway/ui/stores';
 
 function FooterComponent() {
-  const {data: loginUser} = useFetchAuthUser();
+  const { data: loginUser } = useFetchAuthUser();
 
   const { t } = useTranslation();
   const { openModal } = useModal();
@@ -26,9 +25,9 @@ function FooterComponent() {
   const handleCategoryPopup = () => {
     openModal({
       width: 'm_full',
-      content: <CategoryPopup activeTenantId={loginUser!.activeTenant!.tenantId}/>,
-    })
-  }
+      content: <CategoryPopup activeTenantId={loginUser!.activeTenant!.tenantId} />,
+    });
+  };
 
   return (
     <div className={`${styles.start} ${styles.footer_fixed}`}>
@@ -42,7 +41,7 @@ function FooterComponent() {
           </li>
           <li>
             <Button onClick={handleCategoryPopup}>
-              <IcoArray width={24} height={24} stroke="#131C30"  fill="none"/>
+              <IcoArray width={24} height={24} stroke="#131C30" fill="none" />
               <span>학습테마</span>
             </Button>
           </li>

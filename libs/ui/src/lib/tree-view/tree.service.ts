@@ -4,9 +4,6 @@ export const generateKey = (): string => {
   return Math.random().toString(36).substr(2, 9);
 };
 
-// 레벨별 들여쓰기 상수
-export const LEVEL_INDENT = 28;
-
 /**
  * 트리에서 최적의 멀티레벨 존 위치를 찾음 (가장 깊은 레벨의 마지막 형제)
  * @param nodes 트리 노드 배열

@@ -1,4 +1,5 @@
 import { useState, memo } from 'react';
+import { t } from 'i18next';
 
 import styles from '@learnway/styles/fo/pages/_learning/side-panel/popup/curriculum-popup.module.css';
 import { ModalBody, ModalContainer, ModalTitle } from '../../../../modal/modal-container';
@@ -19,7 +20,7 @@ const CurriculumPopupComponent = () => {
 
   return (
     <ModalContainer>
-      <ModalTitle>{'커리큘럼'}</ModalTitle>
+      <ModalTitle>{t('커리큘럼')}</ModalTitle>
       <ModalBody>
         <div className={`${styles.start} ${styles.curriculum_wrap}`}>
           <ul>

@@ -1,40 +1,33 @@
-import { useEffect, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import { learningResourceQueryOptions } from '@entities/learning-resource';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { GridFormField, TextareaFormField } from '@learnway/ui/form-field';
+import { EditTextareaCell } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 import { useQuery } from '@tanstack/react-query';
 import { createColumnHelper } from '@tanstack/react-table';
-import {
-  Button,
-  ContentsRow,
-  EditTextareaCell,
-  FormSubTitle,
-  GridFormField,
-  Input,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  TextareaFormField,
-  useModal,
-} from '@learnway/ui';
-import { learningResourceQueryOptions } from '@entities/learning-resource';
 import {
   EnQuestionLevel,
   EnQuestionType,
   QuestionItemOption,
   QuestionListForRetrieveRes,
 } from '@types';
+import { useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
-import styles from '@learnway/styles/bo/pages/_layout/learning/popup-question-detail.module.css';
-import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
-import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
-import { cn, isEmptyData } from '@learnway/shared';
-import { FormRow2 } from '@shared/ui';
-import { useDynamicForm2 } from '@learnway/hooks';
+import { FormDisplay } from '@features/form';
 import {
   QUESTION_LEVELS,
   QUESTION_TYPES,
 } from '@features/learning-resource/learning-resource-management/service/exam-util';
-import { FormDisplay } from '@features/form';
+import { useDynamicForm2 } from '@learnway/hooks';
+import { cn, isEmptyData } from '@learnway/shared';
+import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
+import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
+import styles from '@learnway/styles/bo/pages/_layout/learning/popup-question-detail.module.css';
+import { FormRow2 } from '@shared/ui';
 
 type QuestionDetailInfoProps = {
   data: QuestionListForRetrieveRes;

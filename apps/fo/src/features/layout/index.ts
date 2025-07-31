@@ -14,7 +14,7 @@ export * from './ui/arrays';
 export * from './ui/filter';
 export * from './ui/category-layer-button';
 export * from './popup/category-popup';
-export * from './ui/thumnail-list';
+export * from './ui/thumbnail-list';
 export * from './ui/integrated-search/integrated-search-procedure';
 export * from './ui/integrated-search/integrated-search-shorts';
 export * from './ui/integrated-search/integrated-search-channel';

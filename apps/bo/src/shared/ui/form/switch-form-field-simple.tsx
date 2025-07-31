@@ -1,6 +1,6 @@
-import { Switch } from '@learnway/ui';
 import { ElementRef, forwardRef } from 'react';
 import * as Primitive from '@radix-ui/react-switch';
+import { Switch } from '@learnway/ui/switch';
 
 export interface SwitchFormFieldSimpleProps {
   value?: boolean;

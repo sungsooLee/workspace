@@ -1,12 +1,14 @@
 import { DropdownFormField } from '@features/form';
 import { FormDisplay } from '@features/form/ui/form-display';
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
-import { ContentsRow, Input, RadioGroupFormField } from '@learnway/ui';
+import { RadioGroupFormField } from '@learnway/ui/form-field';
 import { FormRow2, SwitchFormField } from '@shared/ui';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useCourseCreateSubPage } from '../../../../hooks/use-course-create-sub-page';
 import { CourseTabBaseProps } from '../../../../types/type';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
 
 const CourseRegistrationComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) => {
   const { t } = useTranslation();
@@ -38,8 +40,7 @@ const CourseRegistrationComponent = forwardRef<HTMLElement, CourseTabBaseProps>(
             element={
               <DropdownFormField
                 optionsConfig={{
-                  codeGroup: CODE_GROUP['pms.approval.ApprovalLineType'],
-                }}
+                  codeGroup: CODE_GROUP['pms.approval.ApprovalLineType'] }}
               />
             }
           />
@@ -65,10 +66,8 @@ const CourseRegistrationComponent = forwardRef<HTMLElement, CourseTabBaseProps>(
                           value={''}
                           element={<Input prefixText={t('정원')} suffixText={t('명')} />}
                         />
-                      ),
-                    },
-                  ],
-                }}
+                      ) },
+                  ] }}
               />
             }
           />
@@ -96,10 +95,8 @@ const CourseRegistrationComponent = forwardRef<HTMLElement, CourseTabBaseProps>(
                           value={''}
                           element={<Input prefixText={t('대기 정원')} suffixText={t('명')} />}
                         />
-                      ),
-                    },
-                  ],
-                }}
+                      ) },
+                  ] }}
               />
             }
           />
@@ -112,8 +109,7 @@ const CourseRegistrationComponent = forwardRef<HTMLElement, CourseTabBaseProps>(
             element={
               <RadioGroupFormField
                 optionsConfig={{
-                  codeGroup: CODE_GROUP['mock.options.possible'],
-                }}
+                  codeGroup: CODE_GROUP['mock.options.possible'] }}
               />
             }
           />
@@ -130,8 +126,7 @@ const CourseRegistrationComponent = forwardRef<HTMLElement, CourseTabBaseProps>(
             element={
               <RadioGroupFormField
                 optionsConfig={{
-                  codeGroup: CODE_GROUP['mock.options.use'],
-                }}
+                  codeGroup: CODE_GROUP['mock.options.use'] }}
               />
             }
           />

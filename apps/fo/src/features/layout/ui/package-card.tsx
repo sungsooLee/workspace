@@ -1,7 +1,7 @@
-import { Button } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 
 import styles from '@learnway/styles/fo/features/layout/ui/package-card.module.css';
+import { Button } from '@learnway/ui/button';
 
 interface PackageCardData {
   label?: string;

@@ -1,9 +1,10 @@
 import { useTranslation } from 'react-i18next';
 
-import { Button, EmptyText } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import pageStyles from '@learnway/styles/bo/assets/styles/modules/page-container.module.css';
 import { useRouter } from '@tanstack/react-router';
+import { EmptyText } from '@learnway/ui/empty-text';
+import { Button } from '@learnway/ui/button';
 
 export const ErrorComponent = ({ error }: { error: any }) => {
   const { t } = useTranslation();

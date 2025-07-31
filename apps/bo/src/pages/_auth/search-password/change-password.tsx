@@ -11,30 +11,20 @@ export const Route = createFileRoute('/_auth/search-password/change-password')({
         format: 'string',
         conditions: [
           {
-            fn: (values: any) => !['PHONE', 'EMAIL'].includes(values.authToolType),
-          },
-        ],
-      },
+            fn: (values: any) => !['PHONE', 'EMAIL'].includes(values.authToolType) },
+        ] },
       phoneNumber: {
         format: 'object',
         required: {
           fn: (data) => {
             return isEmpty(data.phoneNumber) && data.authToolType === 'PHONE';
-          },
-        },
-      },
+          } } },
       email: {
         format: 'object',
         required: {
-          fn: (data) => data.authToolType === 'EMAIL',
-        },
-      },
-    },
+          fn: (data) => data.authToolType === 'EMAIL' } } },
     meta: {
-      title: 'LABEL.common.passwordInput',
-    },
-  }),
-});
+      title: 'LABEL.common.passwordInput' } }) });
 
 function RouteComponent() {
   return <ChangePasswordBySearchAccountPage route={Route} />;

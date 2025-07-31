@@ -1,13 +1,10 @@
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 
-import { PageContainer, MainContents, ContentsButtons, LinkBox } from '@shared/ui';
+import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui';
 
-import { Button } from '@learnway/ui';
-
-import {
-  TenantUserRegist,
-} from '@features/platform-management/tenant';
+import { TenantUserRegist } from '@features/platform-management/tenant';
+import { Button } from '@learnway/ui/button';
 import { useRef } from 'react';
 
 export const Route = createLazyFileRoute('/_layout/platform/tenant/user/user-regist')({

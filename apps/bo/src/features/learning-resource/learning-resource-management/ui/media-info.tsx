@@ -7,7 +7,8 @@ import {
 import { LEARNING_TYPE } from '@learnway/config';
 import { IcoStatusFail } from '@learnway/icons';
 import style from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
-import { Button, Spinner } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { Spinner } from '@learnway/ui/spinner';
 import { ProcessingStatus } from '@types';
 import { t } from 'i18next';
 import ReactPlayer from 'react-player';

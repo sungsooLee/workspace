@@ -1,13 +1,14 @@
 import { memo } from 'react';
 import { Link } from '@tanstack/react-router';
 
-import { Button, useModal } from '@learnway/ui';
 import { IcoArray, IcoHome03, IcoSetting01 } from '@learnway/icons';
 
 import { MobileNavigateModal } from './navigate-modal';
 
 import styles from '@learnway/styles/fo/features/layout/m.ui/navigate-button/navigate-button.module.css';
 import '@learnway/styles/fo/features/layout/m.ui/navigate-button/navigate-button.css';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 
 const NavigateButtonComponent = () => {
   const { openModal } = useModal();

@@ -1,11 +1,11 @@
-import { FC, useState, useRef, useImperativeHandle } from 'react';
-import { t } from 'i18next';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
-import { Tabs } from '@learnway/ui';
+import { t } from 'i18next';
+import { FC, useRef, useState } from 'react';
 
-import { TenantDetailLearningRoleTree } from './tenant-detail-learning-role-tree';
-import { TenantDetailLearningRoleMenu } from './tenant-detail-learning-role-menu';
+import { Tabs } from '@learnway/ui/tabs';
 import { TenantDetailLearningRoleGrant } from './tenant-detail-learning-role-grant';
+import { TenantDetailLearningRoleMenu } from './tenant-detail-learning-role-menu';
+import { TenantDetailLearningRoleTree } from './tenant-detail-learning-role-tree';
 
 enum TabKey {
   FO_ROLE = 'FO_ROLE',

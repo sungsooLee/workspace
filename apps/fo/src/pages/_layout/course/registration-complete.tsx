@@ -1,6 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import { Button, useModal } from '@learnway/ui';
 import { isMobile } from 'react-device-detect';
 import { MobileView, BrowserView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
@@ -10,6 +9,8 @@ import proccessResultStyles from '@learnway/styles/fo/widgets/auth/ui/proccess-r
 import styles from '@learnway/styles/fo/pages/_layout/course/registration-complete.module.css';
 
 import { IcoSucess03, IcoError02 } from '@learnway/icons';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 
 export const Route = createFileRoute('/_layout/course/registration-complete')({
   component: RouteComponent,

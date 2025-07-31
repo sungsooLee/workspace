@@ -34,17 +34,14 @@ export const getPayloadFromBlogSubmit = (options: {
     isDeleted: false,
     isOpened: true,
     tags: options.data.tags.map((tag: Tag | string) => ({
-      tagName: typeof tag === 'string' ? tag : tag.tagName,
-    })),
+      tagName: typeof tag === 'string' ? tag : tag.tagName })),
     blogContent: getParsedDataFromString(options.data.blogContent),
     contentAddInfoType: ContentAddInfoType.VIDEO_ADD_INFO, // 블로그(초)
-    contentAddInfo: options.data.contentAddInfo,
-  };
+    contentAddInfo: options.data.contentAddInfo };
 
   if (options.mode === 'UPDATE') {
     Object.assign(payload, {
-      contentUuid: options.contentUuid ?? '',
-    } as BlogUpdateReq);
+      contentUuid: options.contentUuid ?? '' } as BlogUpdateReq);
   }
 
   console.log('payload ===>', payload);

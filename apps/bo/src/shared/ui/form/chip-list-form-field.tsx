@@ -1,9 +1,10 @@
-import { forwardRef } from 'react';
-import { ChipList, ChipListComponentProps } from '@learnway/ui';
+import { BaseFormFieldProps } from '@learnway/hooks';
 import { cn } from '@learnway/shared';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import { BaseFormFieldProps } from '@learnway/hooks';
+import { ChipList, ChipListComponentProps } from '@learnway/ui/chips';
 import { isString } from 'lodash';
+import { forwardRef } from 'react';
+// TODO: Fix unknown imports: ChipList, ChipListComponentProps from '@learnway/ui'
 
 export interface ChipListFormFieldProps extends BaseFormFieldProps<string[]> {
   /** 입력 제한에 대한 안내 문구입니다. 예: "최대 {limitSize}개까지 입력 가능". */

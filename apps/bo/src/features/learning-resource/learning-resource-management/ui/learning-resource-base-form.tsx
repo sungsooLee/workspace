@@ -1,12 +1,11 @@
-import { t } from 'i18next';
+import { CODE_GROUP, DynamicFormProvider } from '@learnway/hooks';
+import { ContentsRow } from '@learnway/ui/contents-row';
 import {
-  ContentsRow,
   EditorFormField,
-  Input,
   InputModalSelectorFormField,
   TextareaFormField,
-} from '@learnway/ui';
-import { CODE_GROUP, DynamicFormProvider } from '@learnway/hooks';
+} from '@learnway/ui/form-field';
+import { Input } from '@learnway/ui/input';
 import {
   ChannelChoiceModal,
   ChipListFormField,
@@ -15,6 +14,7 @@ import {
   SwitchFormField,
   UserChoiceModal,
 } from '@shared/ui';
+import { t } from 'i18next';
 
 import { ContentCreateType, EnFormMode } from '@types';
 

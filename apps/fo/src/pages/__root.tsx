@@ -1,12 +1,13 @@
+import { createRootRouteWithContext, Outlet } from '@tanstack/react-router';
 import { lazy, Suspense } from 'react';
-import { Outlet, createRootRouteWithContext } from '@tanstack/react-router';
 
-import { ModalWrapper, ToastWrapper, useModalStore } from '@learnway/ui';
+import { NotFound } from '@features/layout';
+import { useRenewalMenuStateFromRouting } from '@learnway/auth/entities';
 import { useCodeStoreShare, useGlobalRouterEvent } from '@learnway/hooks';
 import { PageRouteContext } from '@learnway/shared';
-import { useRenewalMenuStateFromRouting } from '@learnway/auth/entities';
-// import { useSessionTimout } from '@learnway/auth/features';
-import { NotFound } from '@features/layout';
+import { ModalWrapper } from '@learnway/ui/modal';
+import { useModalStore } from '@learnway/ui/stores/useModalStore';
+import { ToastWrapper } from '@learnway/ui/toast';
 
 const TanStackRouterDevtools = lazy(() =>
   import.meta.env.VITE_APP_ENV === 'local'

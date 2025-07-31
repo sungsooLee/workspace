@@ -1,8 +1,8 @@
-import { Switch } from '@learnway/ui';
 import { ElementRef, forwardRef, useEffect, useMemo } from 'react';
 import { BaseFormFieldProps, useDynamicFormContext } from '@learnway/hooks';
 import * as Primitive from '@radix-ui/react-switch';
 import { useWatch } from 'react-hook-form';
+import { Switch } from '@learnway/ui/switch';
 
 const SwitchFormFieldComponent = forwardRef<
   ElementRef<typeof Primitive.Root>,
@@ -17,16 +17,14 @@ const SwitchFormFieldComponent = forwardRef<
       getValues,
       switchConfig,
       disabled,
-      invert,
-    },
+      invert },
     ref,
   ) => {
     const { onChangeGuideText } = useDynamicFormContext();
 
     const watched = useWatch({
       control,
-      name: switchConfig?.labelTarget || '',
-    });
+      name: switchConfig?.labelTarget || '' });
 
     const fieldLabel = useMemo<string>(() => {
       if (_fieldLabel) return _fieldLabel;

@@ -316,5 +316,5 @@ export const DEFAULT_FIELD_CONFIG: Record<string, FieldConfig> = {
   //       ratingScale: 5,
   //       categories: ['프론트엔드', '백엔드', '데이터베이스', '클라우드'],
   //     },
-  //   },
+  //   }
 };

@@ -3,15 +3,14 @@ import { useTranslation } from 'react-i18next';
 
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
+import { Button } from '@learnway/ui/button';
 import {
-  Button,
   DndTreeView,
   findNodeByKey,
   TreeContainer,
   TreeEventPayload,
   TreeNode,
-  TreeView,
-} from '@learnway/ui';
+} from '@learnway/ui/tree-view';
 
 // 컴포넌트 정의
 const CategoryTreeComponent: FC<any> = ({

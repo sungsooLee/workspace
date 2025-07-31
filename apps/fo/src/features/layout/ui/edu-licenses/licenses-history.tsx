@@ -1,16 +1,10 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { Link } from '@tanstack/react-router';
-import {
-  Button,
-  ContentsRow,
-  Panel,
-  DatePicker,
-  Dropdown,
-  Input,
-  TableBox,
-  Pagination,
-} from '@learnway/ui';
+import { DatePicker } from '@learnway/ui/date-picker';
+import { TableBox } from '@learnway/ui/grid';
+import { Pagination } from '@learnway/ui/pagination';
+import { Panel } from '@learnway/ui/panel';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
 import { IcoPlus, IcoDownload } from '@learnway/icons';
@@ -21,6 +15,11 @@ import bulletStyles from '@learnway/styles/fo/shared/ui/list/bullet.module.css';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic.form.module.css';
 import { stubArray } from 'lodash';
+// TODO: Fix unknown imports:  from '@learnway/ui'
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { Input } from '@learnway/ui/input';
 
 const LicensesHistoryComponent = () => {
   const [selectedValues, setSelectedValues] = useState<string[]>([]);

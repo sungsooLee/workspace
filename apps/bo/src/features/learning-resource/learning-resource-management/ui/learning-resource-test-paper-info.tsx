@@ -1,13 +1,8 @@
 import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
 import { t } from 'i18next';
-import {
-  ContentsRow,
-  FormSubTitle,
-  Input,
-  RadioGroupFormField,
-  SplitPanel,
-  TextareaFormField,
-} from '@learnway/ui';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { SplitPanel } from '@learnway/ui/elements';
+import { RadioGroupFormField, TextareaFormField } from '@learnway/ui/form-field';
 import { ExamResultVisibleMoment, ExamTemplateType } from '@types';
 import { CheckBoxFormField, FormRow2, SwitchFormField } from '@shared/ui';
 import { isEmptyData } from '@learnway/shared';
@@ -21,6 +16,8 @@ import { ExamBasicInfoProps, PageMode, TabFormRef } from '../service/test-paper/
 import { LearningResourceBaseForm } from './learning-resource-base-form';
 
 import styles from '@learnway/styles/bo/pages/_layout/learning/test-detail.module.css';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
 
 const TestPaperInfoComponent = forwardRef<TabFormRef, ExamBasicInfoProps>(
   ({ basicInfoForm, contentUuid = '', mode, data = {}, hasMapping = false }, ref) => {
@@ -46,8 +43,7 @@ const TestPaperInfoComponent = forwardRef<TabFormRef, ExamBasicInfoProps>(
     useImperativeHandle(ref, () => ({
       save: (data?: Record<string, any>) => {
         saveBasicInfo?.(data);
-      },
-    }));
+      } }));
 
     useEffect(() => {
       // 상세 설정
@@ -91,9 +87,7 @@ const TestPaperInfoComponent = forwardRef<TabFormRef, ExamBasicInfoProps>(
                   required: {
                     fn: (values: Record<string, any>) => {
                       return !values.questionCount || values.questionCount < 1;
-                    },
-                  },
-                }}
+                    } } }}
                 element={<Input type="number" suffixText={t('개')} min={0} disabled={hasMapping} />}
                 placeholder="0"
               />
@@ -140,8 +134,7 @@ const TestPaperInfoComponent = forwardRef<TabFormRef, ExamBasicInfoProps>(
                 element={
                   <SwitchFormField
                     switchConfig={{
-                      label: (value: boolean) => (value ? '제어' : '제어안함 '),
-                    }}
+                      label: (value: boolean) => (value ? '제어' : '제어안함 ') }}
                     disabled={hasMapping}
                   />
                 }
@@ -160,8 +153,7 @@ const TestPaperInfoComponent = forwardRef<TabFormRef, ExamBasicInfoProps>(
                 element={
                   <SwitchFormField
                     switchConfig={{
-                      label: (value: boolean) => (value ? '공개' : '비공개 '),
-                    }}
+                      label: (value: boolean) => (value ? '공개' : '비공개 ') }}
                     disabled={hasMapping}
                   />
                 }
@@ -259,8 +251,7 @@ const TestPaperInfoComponent = forwardRef<TabFormRef, ExamBasicInfoProps>(
                 element={
                   <SwitchFormField
                     switchConfig={{
-                      label: (value: boolean) => (value ? t('LABEL.button.apply') : '미적용 '),
-                    }}
+                      label: (value: boolean) => (value ? t('LABEL.button.apply') : '미적용 ') }}
                     disabled={hasMapping}
                   />
                 }
@@ -281,8 +272,7 @@ const TestPaperInfoComponent = forwardRef<TabFormRef, ExamBasicInfoProps>(
                 element={
                   <SwitchFormField
                     switchConfig={{
-                      label: (value: boolean) => (value ? '자동제출' : '직접제출 '),
-                    }}
+                      label: (value: boolean) => (value ? '자동제출' : '직접제출 ') }}
                     disabled={hasMapping}
                   />
                 }
@@ -303,8 +293,7 @@ const TestPaperInfoComponent = forwardRef<TabFormRef, ExamBasicInfoProps>(
                 element={
                   <SwitchFormField
                     switchConfig={{
-                      label: (value: boolean) => (value ? '종료안내' : '안내안함 '),
-                    }}
+                      label: (value: boolean) => (value ? '종료안내' : '안내안함 ') }}
                     disabled={hasMapping}
                   />
                 }

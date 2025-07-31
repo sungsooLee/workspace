@@ -2,7 +2,7 @@ import { queryOptions } from '@entities/label-messages-mock';
 import { t } from 'i18next';
 import { DATE_TIME_FORMAT, formatDate } from '@learnway/shared';
 import React, { useEffect } from 'react';
-import { GridBox, useGridBox } from '@learnway/ui';
+import { GridBox, useGridBox } from '@learnway/ui/grid';
 import { LabelMessage, LabelMessagesQueryParams } from '@types';
 
 interface RightPanelProps {
@@ -46,8 +46,7 @@ const gridConfig = {
     {
       name: 'labelMessageMultilingulKey',
       label: t('LABEL.grid.column.labelMessageCode'),
-      size: 200,
-    },
+      size: 200 },
     // 라벨/메세지
     { name: 'labelMessageName', label: t('LABEL.grid.column.labelMessage'), size: 200 },
     // 사용여부
@@ -55,25 +54,20 @@ const gridConfig = {
       name: 'isUsed',
       label: t('LABEL.grid.column.useYn'),
       size: 104,
-      render: (info: any) => (info.getValue() ? 'Y' : 'N'),
-    },
+      render: (info: any) => (info.getValue() ? 'Y' : 'N') },
     // 등록자
     {
       name: 'createdBy',
       size: 139,
-      label: t('LABEL.grid.column.createdBy'),
-    },
+      label: t('LABEL.grid.column.createdBy') },
     // 등록일
     {
       name: 'createdDate',
       label: t('LABEL.grid.column.createdDate'),
       size: 200,
-      render: (info: any) => formatDate(info.getValue(), DATE_TIME_FORMAT.DATETIME_SEC),
-    },
+      render: (info: any) => formatDate(info.getValue(), DATE_TIME_FORMAT.DATETIME_SEC) },
   ],
   gridState: {
     page: 0,
     size: 10,
-    sort: [],
-  },
-};
+    sort: [] } };

@@ -1,33 +1,29 @@
 import { PageContainer } from '@shared/ui';
+import { useModal } from '@learnway/ui/modal';
 // IA105 / NLP_BO_CMS_1058 // IA105 / NLP_BO_CMS_1017 // IA106 / NLP_BO_CMS_1060
 import {
   usePostDraftETC,
   usePostDraftHTMLVideo,
   usePostDraftScorm,
-  usePostDraftVideos,
-} from '@entities/learning-resource';
+  usePostDraftVideos } from '@entities/learning-resource';
 import {
   getDetailPathByContentType,
   LearningResourceFileUploadModal,
-  LearningTypeChoiceModal,
-} from '@features/learning-resource';
+  LearningTypeChoiceModal } from '@features/learning-resource';
 import { ChannelChoiceModal } from '@shared/ui';
 import { getDefaultLang, LEARNING_TYPE } from '@learnway/config';
-import { useModal } from '@learnway/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import {
   PostDraftETCRes,
   PostDraftHtmlVideoRes,
   PostDraftScormRes,
-  PostDraftVideosRes,
-} from '@types';
+  PostDraftVideosRes } from '@types';
 
 import { pick } from 'lodash';
 import { useEffect, useState } from 'react';
 
 export const Route = createFileRoute('/_layout/learning/learning-resource/regist')({
-  component: RouteComponent,
-});
+  component: RouteComponent });
 
 function RouteComponent() {
   const router = useRouter();
@@ -45,24 +41,19 @@ function RouteComponent() {
         return router.navigate({
           to: getDetailPathByContentType(LEARNING_TYPE.VIDEO),
           state: {
-            contentUuid: result.contents[0].contentUuid,
-          },
-          replace: true,
-        });
+            contentUuid: result.contents[0].contentUuid },
+          replace: true });
       }
       router.navigate({
         to: '/learning/learning-resource',
         state: {
-          listParam,
-        },
-        replace: true,
-      });
+          listParam },
+        replace: true });
     },
     onError: (error: any) => {
       console.error(error);
       // 에러 얼럿 띄우면서 다시 리스트 화면으로?
-    },
-  });
+    } });
 
   const { create: postDraftScorm } = usePostDraftScorm({
     onSuccess: (result: PostDraftScormRes) => {
@@ -70,24 +61,19 @@ function RouteComponent() {
         return router.navigate({
           to: getDetailPathByContentType(LEARNING_TYPE.SCORM),
           state: {
-            contentUuid: result.contents[0].contentUuid,
-          },
-          replace: true,
-        });
+            contentUuid: result.contents[0].contentUuid },
+          replace: true });
       }
       router.navigate({
         to: '/learning/learning-resource',
         state: {
-          listParam,
-        },
-        replace: true,
-      });
+          listParam },
+        replace: true });
     },
     onError: (error: any) => {
       console.error(error);
       // 에러 얼럿 띄우면서 다시 리스트 화면으로?
-    },
-  });
+    } });
 
   const { upload: postDraftHTMLVideo } = usePostDraftHTMLVideo({
     onSuccess: (result: PostDraftHtmlVideoRes) => {
@@ -95,41 +81,32 @@ function RouteComponent() {
         return router.navigate({
           to: getDetailPathByContentType(LEARNING_TYPE.HTML5_VIDEO),
           state: {
-            contentUuid: result.contentUuid,
-          },
-          replace: true,
-        });
+            contentUuid: result.contentUuid },
+          replace: true });
       }
       router.navigate({
         to: '/learning/learning-resource',
         state: {
-          listParam,
-        },
-        replace: true,
-      });
-    },
-  });
+          listParam },
+        replace: true });
+    } });
 
   const { create: postDraftETC } = usePostDraftETC({
     onSuccess: (result: PostDraftETCRes) => {
       return router.navigate({
         to: getDetailPathByContentType(LEARNING_TYPE.ETC),
         state: {
-          contentUuid: result.contentUuid,
-        },
-        replace: true,
-      });
+          contentUuid: result.contentUuid },
+        replace: true });
     },
     onError: (error: any) => {
       console.error(error);
       // 에러 얼럿 띄우면서 다시 리스트 화면으로?
-    },
-  });
+    } });
 
   const uploadVideo = async () => {
     const channelInfo = await openModal({
-      content: <ChannelChoiceModal />,
-    });
+      content: <ChannelChoiceModal /> });
     if (!channelInfo) {
       setSelectedType('');
       return;
@@ -137,8 +114,7 @@ function RouteComponent() {
 
     const fileUuids = await openModal({
       content: <LearningResourceFileUploadModal channel={channelInfo} type={LEARNING_TYPE.VIDEO} />,
-      width: 'lg',
-    });
+      width: 'lg' });
     if (!fileUuids) {
       setSelectedType('');
       return;
@@ -149,14 +125,12 @@ function RouteComponent() {
       languageCountryCode: getDefaultLang().toUpperCase(),
       tenantId: channelInfo.tenantId,
       channelUuid: channelInfo.channelUuid,
-      fileUuids,
-    });
+      fileUuids });
   };
 
   const uploadScorm = async () => {
     const channelInfo = await openModal({
-      content: <ChannelChoiceModal />,
-    });
+      content: <ChannelChoiceModal /> });
     if (!channelInfo) {
       setSelectedType('');
       return;
@@ -164,8 +138,7 @@ function RouteComponent() {
 
     const fileUuids = await openModal({
       content: <LearningResourceFileUploadModal channel={channelInfo} type={LEARNING_TYPE.SCORM} />,
-      width: 'lg',
-    });
+      width: 'lg' });
     if (!fileUuids) {
       setSelectedType('');
       return;
@@ -176,14 +149,12 @@ function RouteComponent() {
       languageCountryCode: getDefaultLang().toUpperCase(),
       tenantId: channelInfo.tenantId,
       channelUuid: channelInfo.channelUuid,
-      fileUuids,
-    });
+      fileUuids });
   };
 
   const uploadHTML5 = async () => {
     const channelInfo = await openModal({
-      content: <ChannelChoiceModal />,
-    });
+      content: <ChannelChoiceModal /> });
 
     if (!channelInfo) {
       setSelectedType('');
@@ -198,8 +169,7 @@ function RouteComponent() {
           maxFileCount={1}
         />
       ),
-      width: 'lg',
-    });
+      width: 'lg' });
 
     if (!fileUuid) {
       setSelectedType('');
@@ -212,14 +182,12 @@ function RouteComponent() {
       languageCountryCode: getDefaultLang().toUpperCase(),
       tenantId: channelInfo.tenantId,
       channelUuid: channelInfo.channelUuid,
-      fileUuid,
-    });
+      fileUuid });
   };
 
   const uploadETC = async () => {
     const channelInfo = await openModal({
-      content: <ChannelChoiceModal />,
-    });
+      content: <ChannelChoiceModal /> });
     if (!channelInfo) {
       setSelectedType('');
       return;
@@ -233,8 +201,7 @@ function RouteComponent() {
           maxFileCount={1}
         />
       ),
-      width: 'lg',
-    });
+      width: 'lg' });
     if (!fileUuid) {
       setSelectedType('');
       return;
@@ -245,20 +212,17 @@ function RouteComponent() {
       languageCountryCode: getDefaultLang().toUpperCase(),
       tenantId: channelInfo.tenantId,
       channelUuid: channelInfo.channelUuid,
-      fileUuid,
-    });
+      fileUuid });
   };
 
   const selectType = async () => {
     const type = await openModal({
       content: <LearningTypeChoiceModal />,
-      width: 'lg',
-    });
+      width: 'lg' });
     if (!type) {
       router.navigate({
         to: '/learning/learning-resource',
-        replace: true,
-      });
+        replace: true });
     } else setSelectedType(type);
   };
 
@@ -311,8 +275,7 @@ function RouteComponent() {
         router.navigate({
           to: '/learning/resource/blog/view',
           state: { mode: 'CREATE' },
-          replace: true,
-        });
+          replace: true });
         break;
       }
       // 설문
@@ -325,8 +288,7 @@ function RouteComponent() {
         router.navigate({
           to: '/learning/resource/test-paper/view',
           state: { mode: 'CREATE' },
-          replace: true,
-        });
+          replace: true });
         break;
       }
       // 문제은행

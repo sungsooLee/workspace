@@ -1,20 +1,13 @@
-import {
-  Button,
-  GridBox,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  useModal,
-} from '@learnway/ui';
-import { useState, useEffect, useRef } from 'react';
+import { useGetExternalEducationComponents } from '@entities/external-education';
 import {
   DEFAULT_FIELD_CONFIG,
   FieldType,
 } from '@features/external-education/types/form-field.types';
+import { Button } from '@learnway/ui/button';
+import { GridBox } from '@learnway/ui/grid';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 import { createColumnHelper } from '@tanstack/react-table';
-import { useGetExternalEducationComponents } from '@entities/external-education';
-import { ExternalCourseFormEnrollType } from '@types';
+import { useEffect, useState } from 'react';
 
 export interface ApplicationItem {
   id: number;

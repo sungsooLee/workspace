@@ -69,6 +69,9 @@
               @apply mr-[6px];
             }
           }
+          [class*='text_error'] {
+            @apply text-[var(--status1)];
+          }
           &.show_icon {
             @apply relative pl-[30px];
             .depth_icon {

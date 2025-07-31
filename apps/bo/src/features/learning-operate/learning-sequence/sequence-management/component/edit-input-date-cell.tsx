@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useRef } from 'react';
+import { DatePicker } from '@learnway/ui/date-picker';
+import { Input, InputProps } from '@learnway/ui/input';
 import { CellContext } from '@tanstack/react-table';
-import { Input, InputProps } from '@learnway/ui';
-import { DatePicker } from '@learnway/ui';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface EduRow {
   id?: string;

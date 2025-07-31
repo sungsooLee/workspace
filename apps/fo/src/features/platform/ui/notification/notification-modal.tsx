@@ -1,11 +1,11 @@
 import { memo, useState } from 'react';
 
-import { ModalBody, ModalContainer, ModalTitle } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 
 import { Notification } from './notification';
 
 import styles from './notification-modal.module.css';
+import { ModalBody, ModalContainer, ModalTitle } from '@learnway/ui/modal';
 
 const NotificationModalComponent = () => {
   return (

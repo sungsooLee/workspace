@@ -20,9 +20,7 @@ import { QueryClient } from '@tanstack/react-query';
 const defaultPageRouteConfig: PageRouteConfig<PageMeta> = {
   authorization: true,
   meta: {
-    title: '',
-  },
-};
+    title: '' } };
 
 export const decodeJwt = (token: string | null) => {
   if (!token) {
@@ -151,8 +149,7 @@ export function pageRouteConfig(routeConfig?: PageRouteConfig<PageMeta>) {
           return {
             pathname: location.pathname,
             meta: route.options.staticData?.meta,
-            route: route,
-          };
+            route: route };
         }
         // console.log('beforeLoad setPageRouteState', state);
         if (state?.pathname === location.pathname && route) {
@@ -196,10 +193,7 @@ export function pageRouteConfig(routeConfig?: PageRouteConfig<PageMeta>) {
           staticData: {
             meta: {
               ...defaultPageRouteConfig.meta,
-              ...routeConfig.meta,
-            },
-          },
-        }
+              ...routeConfig.meta } } }
       : {}),
     staleTime: 0,
     onLeave: (match: any) => {
@@ -211,8 +205,6 @@ export function pageRouteConfig(routeConfig?: PageRouteConfig<PageMeta>) {
     // query string validation 처리, tanstack router의 RouteOption을 그대로 사용(for 타입 추론)
     ...(routeConfig?.validateSearch
       ? {
-          validateSearch: buildJodObject(routeConfig?.validateSearch),
-        }
-      : {}),
-  };
+          validateSearch: buildJodObject(routeConfig?.validateSearch) }
+      : {}) };
 }

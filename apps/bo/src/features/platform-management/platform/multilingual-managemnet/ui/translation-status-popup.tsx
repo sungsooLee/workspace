@@ -2,19 +2,13 @@ import { useTranslationStatus } from '@entities/translation/service/translation.
 import { useLanguageMap } from '@learnway/hooks';
 import { cn } from '@learnway/shared';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
-import {
-  Button,
-  FormSubTitle,
-  GridBox,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  useModal,
-} from '@learnway/ui';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { GridBox } from '@learnway/ui/grid';
 import { createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { useMemo } from 'react';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
 interface TranslationStatusPopupProps {
   baseLanguage: string;
@@ -47,15 +41,13 @@ export const TranslationStatusPopup = (props: TranslationStatusPopupProps) => {
           const locale = info.getValue();
           return getLanguageName(locale);
         },
-        header: t('번역언어'),
-      }),
+        header: t('번역언어') }),
       columnHelper.accessor('translation', {
         cell: (info) => {
           const value = info.getValue();
           return value || value === '' ? '번역 완료' : '번역 미완료';
         },
-        header: t('번역상태'),
-      }),
+        header: t('번역상태') }),
     ],
     [getLanguageName],
   );

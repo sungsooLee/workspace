@@ -8,8 +8,7 @@ import { MainContents, PageContainer, SectionLayout } from '@shared/ui';
 // 다국어 처리
 export const Route = createFileRoute('/_layout/platform/category/')({
   component: RouteComponent,
-  ...pageRouteConfig({}),
-});
+  ...pageRouteConfig({}) });
 
 function RouteComponent() {
   return (

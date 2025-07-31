@@ -32,8 +32,7 @@ const ChannelDetailUserGroupComponent = (props: ChannelDetailUserGroupProps, ref
     register() {
       setFormMode(EnFormMode.ADD);
       setUserGroupId(undefined);
-    },
-  }));
+    } }));
 
   const handleOnUserChange = (userGroupId: number) => {
     setFormMode(EnFormMode.VIEW);

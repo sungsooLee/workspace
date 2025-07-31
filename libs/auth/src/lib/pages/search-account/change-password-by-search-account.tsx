@@ -1,17 +1,21 @@
 import { useRouter } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
-import { ContentsRow, DynamicFormField, Button, useModal, Input } from '@learnway/ui';
-import { z, cn } from '@learnway/shared';
-import { useDynamicForm, DynamicFormConfig, useCurrentRoute } from '@learnway/hooks';
+import { ContentsRow } from '@learnway/ui/contents-row';
+
+import { Button } from '@learnway/ui/button';
+
+import { useModal } from '@learnway/ui/modal';
+
+import { DynamicFormConfig, useCurrentRoute, useDynamicForm } from '@learnway/hooks';
+import { cn } from '@learnway/shared';
 
 import { FormRow, NoticeBox } from '../../shared/ui';
 
+import { useUpdatePasswordByEmail, useUpdatePasswordByPhoneNumber } from '../../entities';
 import { GoogleOtpGuideButton } from '../../features/auth';
-import { useUpdatePasswordByPhoneNumber, useUpdatePasswordByEmail } from '../../entities';
 
 import styles from '@learnway/styles/fo/pages/_auth/search-account/change-password.module.css';
-import { t } from 'i18next';
 
 export function ChangePasswordBySearchAccountPage({ route }: any) {
   const router = useRouter();

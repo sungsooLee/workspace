@@ -1,8 +1,10 @@
 import { IcoMinus } from '@learnway/icons';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
-import { Button, FormSubTitle, TableBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { TableBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import { LinkBox } from '@shared/ui';
 import { t } from 'i18next';
+import { Button } from '@learnway/ui/button';
 
 interface ChannelDetailHomeBannerProps {
   onAddClick: () => void;
@@ -54,76 +56,56 @@ const gridConfig = (): useGridBoxConfig => ({
       label: t('썸네일'),
       size: 100,
       meta: {
-        cellAlign: 'center',
-      },
-    },
+        cellAlign: 'center' } },
     {
       name: 'bannerType',
       label: t('배너 유형'),
       size: 120,
       meta: {
-        cellAlign: 'center',
-      },
-    },
+        cellAlign: 'center' } },
     {
       name: 'bannerName',
-      label: t('배너명'),
-    },
+      label: t('배너명') },
     {
       name: 'period',
       label: t('게재 기간'),
       size: 220,
       meta: {
-        cellAlign: 'center',
-      },
-    },
+        cellAlign: 'center' } },
     {
       name: 'status',
       label: t('상태'),
       size: 140,
       meta: {
-        cellAlign: 'center',
-      },
-    },
+        cellAlign: 'center' } },
     {
       name: 'viewCount',
       label: t('노출'),
       size: 100,
       meta: {
-        cellAlign: 'center',
-      },
-    },
+        cellAlign: 'center' } },
     {
       name: 'clickCount',
       label: t('클릭'),
       size: 100,
       meta: {
-        cellAlign: 'center',
-      },
-    },
+        cellAlign: 'center' } },
     {
       name: 'modifiedDate',
       label: t('수정일'),
       size: 250,
       meta: {
-        cellAlign: 'center',
-      },
-    },
+        cellAlign: 'center' } },
     {
       name: 'isView',
       label: t('노출여부'),
       size: 120,
       meta: {
-        cellAlign: 'center',
-      },
-    },
+        cellAlign: 'center' } },
     {
       name: 'move',
       label: t('순서 이동'),
       size: 90,
       meta: {
-        cellAlign: 'center',
-      },
-    },
-  ],
-});
+        cellAlign: 'center' } },
+  ] });

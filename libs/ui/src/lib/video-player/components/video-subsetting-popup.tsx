@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import { t } from 'i18next';
 import { IcoCheck } from '@learnway/icons';
 
 import styles from './video-subsetting-popup.module.css';
@@ -8,7 +9,7 @@ import { Button } from '../../button/button';
 const VideoSubsettingPopupComponent = () => {
   return (
     <ModalContainer>
-      <ModalTitle>{'자막'}</ModalTitle>
+      <ModalTitle>{t('자막')}</ModalTitle>
       <ModalBody>
         <div className={`${styles.start} ${styles.video_subsetting}`}>
           <ul>
@@ -28,10 +29,10 @@ const VideoSubsettingPopupComponent = () => {
       </ModalBody>
       <ModalFooter>
         <Button variant={'gray'} size={'lg'}>
-          <span>취소</span>
+          <span>{t('취소')}</span>
         </Button>
         <Button variant={'primary'} size={'lg'}>
-          <span>확인</span>
+          <span>{t('확인')}</span>
         </Button>
       </ModalFooter>
     </ModalContainer>

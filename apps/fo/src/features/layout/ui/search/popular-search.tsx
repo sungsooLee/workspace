@@ -1,7 +1,7 @@
 import { memo } from 'react';
-import { Button } from '@learnway/ui';
 
 import styles from '@learnway/styles/fo/features/layout/ui/popular-searches.module.css';
+import { Button } from '@learnway/ui/button';
 
 interface PopularSearchProps {
   className?: string;

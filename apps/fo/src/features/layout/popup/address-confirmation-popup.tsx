@@ -1,8 +1,9 @@
 import React, { memo } from 'react';
-import { ModalBody, ModalContainer, ModalTitle, ModalFooter, Button, useModal } from '@learnway/ui';
 
 import styles from '@learnway/styles/fo/features/layout/popup/address-confirmation-popup.module.css';
 import { Address } from '@types';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalTitle, ModalFooter, useModal } from '@learnway/ui/modal';
 
 interface Props {
   address: Address;

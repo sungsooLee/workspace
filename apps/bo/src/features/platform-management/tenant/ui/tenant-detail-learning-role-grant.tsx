@@ -4,21 +4,15 @@ import { roleManagerQueryOptions } from '@entities/role/service/role-manage.quer
 import { transformRoleApiDataToTreeData } from '@features/platform-management/tenant/service/tenant-detail-tree.service';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import {
-  Button,
-  ChipListModalSelectorFormField,
-  ContentsRow,
-  Dropdown,
-  FormSubTitle,
-  GridBox,
-  Input,
-  TreeBox,
-  TreeContainer,
-  TreeNode,
-  useGridBox,
-  useModal,
-  useToast,
-} from '@learnway/ui';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { ChipListModalSelectorFormField } from '@learnway/ui/form-field';
+import { GridBox, useGridBox } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
+import { useToast } from '@learnway/ui/toast';
+import { TreeBox, TreeContainer, TreeNode } from '@learnway/ui/tree-view';
 import {
   FormRow,
   SectionLayout,
@@ -38,6 +32,7 @@ import RoleManagerService from '@entities/role/api/role-manager';
 import { IcoMinus, IcoPlus } from '@learnway/icons';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import styles from '@learnway/styles/bo/features/role/role-info.module.css';
+import { useModal } from '@learnway/ui/modal';
 
 /**
  * 화면번호:
@@ -154,7 +149,7 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
       });
       handleOnSearch();
     } else {
-      alert('사용자를 선택하세요.');
+      alert(t('사용자를 선택하세요.'));
     }
   };
 
@@ -200,7 +195,7 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
         console.log('payload => ', payload);
         saveRoleUserGroups(payload, {
           onSuccess: () => {
-            openToast({ title: '유저그룹 역할부여 추가 했습니다.', type: 'success' });
+            openToast({ title: t('유저그룹 역할부여 추가 했습니다.'), type: 'success' });
           },
         });
       }
@@ -215,7 +210,7 @@ const TenantDetailLearningRoleGrantComponent = ({ roleInfo, siteScope }: any, re
           initLevel={2}
           treeId={'1'}
           showSearchKeyword
-          title={'역할 목록'}
+          title={t('역할 목록')}
           selectedNode={selectedRole}
           handleSelectedNodeChange={handleRoleSelect}
         />

@@ -1,4 +1,4 @@
-import { Button, Divider } from '@learnway/ui';
+import { Divider } from '@learnway/ui/elements';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
 import { Link } from '@tanstack/react-router';
 import { t } from 'i18next';
@@ -6,6 +6,7 @@ import { useCoursePage } from '../../hooks/use-course-page';
 import { CourseGrid } from './course-grid';
 import { CourseSearchForm } from '../course-search-form/course-search-form';
 import { isLocalhost } from '@learnway/shared';
+import { Button } from '@learnway/ui/button';
 
 const CourseListComponent = () => {
   const {
@@ -20,8 +21,7 @@ const CourseListComponent = () => {
     handleBatchUploadClick,
     handleCourseOpenClick,
     handleCopyClick,
-    handleShareClick,
-  } = useCoursePage();
+    handleShareClick } = useCoursePage();
 
   return (
     <PageContainer>
@@ -38,8 +38,7 @@ const CourseListComponent = () => {
               to="/learning/course/detail"
               state={{
                 courseId: 7,
-                courseName: '스마트제조를 위한 스마트공장 구축 및 추진실무 - MES구축',
-              }}
+                courseName: '스마트제조를 위한 스마트공장 구축 및 추진실무 - MES구축' }}
               className="link"
             >
               상세7

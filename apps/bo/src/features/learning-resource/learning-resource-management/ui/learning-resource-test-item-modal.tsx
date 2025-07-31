@@ -1,31 +1,29 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { CellContext } from '@tanstack/react-table';
 import { t } from 'i18next';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import styles from '@learnway/styles/bo/pages/_layout/learning/popup-question-detail.module.css';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
+import styles from '@learnway/styles/bo/pages/_layout/learning/popup-question-detail.module.css';
 
+import { cn } from '@learnway/shared';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { GridFormField, RadioGroupFormField, TextareaFormField } from '@learnway/ui/form-field';
 import {
-  Button,
-  ContentsRow,
   EditCheckboxCell,
   EditInputCell,
   EditRadioCell,
   EditTextareaCell,
-  FormSubTitle,
-  GridFormField,
-  Input,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  RadioGroupFormField,
-  TextareaFormField,
-  useModal,
-} from '@learnway/ui';
-import { cn } from '@learnway/shared';
+} from '@learnway/ui/grid';
 
+import { FormDisplay } from '@features/form';
+import { S3_PATH, useDynamicForm2 } from '@learnway/hooks';
+import { IcoMenu01 } from '@learnway/icons';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { FormRow2, SingleAttachmentFormField, SwitchFormField } from '@shared/ui';
 import {
   ContentInformation,
   ContentType,
@@ -36,14 +34,10 @@ import {
   QuestionItem,
   QuestionItemGridRow,
 } from '@types';
-import { FormRow2, SingleAttachmentFormField, SwitchFormField } from '@shared/ui';
-import { S3_PATH, useDynamicForm2 } from '@learnway/hooks';
-import { FormDisplay } from '@features/form';
-import { IcoMenu01 } from '@learnway/icons';
 
+import { useCreateQuestionItem, useGetQuestionItem } from '@entities/learning-resource';
 import { EditSingleAttachmentCell } from '@features/form/ui/edit-single-attachment-cell';
 import { useWatch } from 'react-hook-form';
-import { useCreateQuestionItem, useGetQuestionItem } from '@entities/learning-resource';
 
 const LearningResourceTestItemModalComponent = ({
   contentInfo,

@@ -4,8 +4,7 @@ import { MainContents, PageContainer } from '@shared/ui';
 import { createLazyFileRoute } from '@tanstack/react-router';
 
 export const Route = createLazyFileRoute('/_layout/learning/learning-resource/shared-storage')({
-  component: RouteComponent,
-});
+  component: RouteComponent });
 
 function RouteComponent() {
   return (

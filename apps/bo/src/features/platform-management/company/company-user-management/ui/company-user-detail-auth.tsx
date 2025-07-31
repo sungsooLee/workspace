@@ -1,12 +1,8 @@
 import { FormDisplay } from '@features/form';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
-import {
-  CheckboxGroupFormField,
-  ContentsRow,
-  ContentsRowItem,
-  FormSubTitle,
-  RadioGroupFormField,
-} from '@learnway/ui';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { ContentsRow, ContentsRowItem } from '@learnway/ui/contents-row';
+import { CheckboxGroupFormField, RadioGroupFormField } from '@learnway/ui/form-field';
 import { FormItem, FormRow } from '@shared/ui';
 import { t } from 'i18next';
 

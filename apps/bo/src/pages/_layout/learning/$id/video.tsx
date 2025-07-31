@@ -13,13 +13,11 @@ type ProductSearch = {
 const productSearchSchema = z.object({
   page: z.number().default(1),
   filter: z.string().default(''),
-  sort: z.enum(['newest', 'oldest', 'price']).default('newest'),
-});
+  sort: z.enum(['newest', 'oldest', 'price']).default('newest') });
 
 export const Route = createFileRoute('/_layout/learning/$id/video')({
   component: RouteComponent,
-  validateSearch: productSearchSchema,
-});
+  validateSearch: productSearchSchema });
 
 function RouteComponent() {
   const { id } = Route.useParams();

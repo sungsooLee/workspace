@@ -1,22 +1,21 @@
-import { menuQueryOptions } from './../../menu/service/menu.queries';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import type { MutateOptions } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import { cookieService } from '@learnway/shared';
 import type { MutateCallback } from '@learnway/shared';
-import type { PhoneNumberValue } from '@learnway/ui';
+import { cookieService } from '@learnway/shared';
+import type { PhoneNumberValue } from '@learnway/ui/phone-number';
 
 import {
   userMutateOptions as mutateOptions,
   userQueryOptions as queryOptions,
 } from './users.queries';
 
+import { getConfig } from '@learnway/config';
 import type { AuthUser, Role, Tenant } from '../../../types';
 import {
   useFetchAuthUser,
   useUpdateAuthUser,
 } from '../../authorization/service/authorization.hook';
-import { getConfig } from '@learnway/config';
 
 interface phoneNumberPayload {
   name: string;

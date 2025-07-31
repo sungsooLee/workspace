@@ -1,29 +1,27 @@
-import { memo, useState } from 'react';
-import { Link } from '@tanstack/react-router';
-import { Button, useModal, ProgressCheck } from '@learnway/ui';
-import { isMobile } from 'react-device-detect';
 import {
+  IcoArrowUp,
   IcoLearning01,
   IcoLearning02,
   IcoLearning03,
   IcoLearning04,
   IcoLearning05,
   IcoLearning06,
-  IcoPrevPlay,
   IcoPrevNext,
+  IcoPrevPlay,
   IcoXclose,
-  IcoLinkblank,
-  IcoArrowUp,
 } from '@learnway/icons';
+import { memo, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import { CurriculumPopup } from './popup/curriculum-popup';
-import { NextLearningPopup } from './popup/next-learning-popup';
 
 import styles from '@learnway/styles/fo/pages/_learning/side-panel/side-panel.module.css';
 
-import { useLearningWindow } from '../../learnway-learning-window.store';
 import { DATE_TIME_FORMAT, duration } from '@learnway/shared';
-import { convertUploadFilesToFileInfos } from '@learnway/hooks';
-import { CmsLearningCompletionStatus } from '@learnway/types';
+import { t } from 'i18next';
+import { Button } from '../../../button';
+import { useModal } from '../../../modal';
+import { ProgressCheck } from '../../../progress';
+import { useLearningWindow } from '../../learnway-learning-window.store';
 
 interface ChildData {
   className?: string;
@@ -58,9 +56,9 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
     const lessonName = playList ? playList[playIndex + addValue].lessonName : '';
     const result = await openConfirm({
       title: `${moduleName} (${lessonName})`,
-      content: '삭제버튼을 누르면 선택하신 항목이 모두 저장되며, 복구할 수 없습니다.',
-      okButtonLabel: isNext ? '다음 강의' : '이전 강의',
-      cancelButtonLabel: '다시보기',
+      content: t('삭제버튼을 누르면 선택하신 항목이 모두 저장되며, 복구할 수 없습니다.'),
+      okButtonLabel: isNext ? t('다음 강의') : t('이전 강의'),
+      cancelButtonLabel: t('다시보기'),
     });
     if (result) {
       if (isNext) {
@@ -104,12 +102,12 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
   };
 
   const menu = [
-    { tit: '커리큘럼', icon: IcoLearning01 },
-    { tit: 'AI 요약', icon: IcoLearning02 },
-    { tit: '내노트', icon: IcoLearning03 },
-    { tit: '댓글', icon: IcoLearning04 },
-    { tit: '질문답변', icon: IcoLearning05 },
-    { tit: '후기', icon: IcoLearning06, New: true },
+    { tit: t('커리큘럼'), icon: IcoLearning01 },
+    { tit: t('AI 요약'), icon: IcoLearning02 },
+    { tit: t('내노트'), icon: IcoLearning03 },
+    { tit: t('댓글'), icon: IcoLearning04 },
+    { tit: t('질문답변'), icon: IcoLearning05 },
+    { tit: t('후기'), icon: IcoLearning06, New: true },
   ];
 
   return (
@@ -236,10 +234,10 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
                 )}
 
                 {/* 내노트 */}
-                {menuContents[1] && <div className={styles.note}>내노트</div>}
+                {menuContents[1] && <div className={styles.note}>{t('내노트')}</div>}
 
                 {/* 커뮤니티 */}
-                {menuContents[2] && <div className={styles.community}>커뮤니티</div>}
+                {menuContents[2] && <div className={styles.community}>{t('커뮤니티')}</div>}
 
                 {/* 내노트 */}
                 {menuContents[3] && <div className={styles.faq}>FAQ</div>}
@@ -289,14 +287,14 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
               onClick={() => handlePriveNextClick(false)}
             >
               <IcoPrevPlay width={isMobile ? 20 : 32} height={isMobile ? 20 : 32} />
-              <span>이전</span>
+              <span>{t('이전')}</span>
             </Button>
             <Button
               disabled={!(playList && playList.length > playIndex + 1)}
               onClick={() => handlePriveNextClick(true)}
             >
               <IcoPrevNext width={isMobile ? 20 : 32} height={isMobile ? 20 : 32} />
-              <span>다음</span>
+              <span>{t('다음')}</span>
             </Button>
           </div>
         )}

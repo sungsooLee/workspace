@@ -1,56 +1,41 @@
-import React, { FC, useEffect, useState } from 'react';
+import { cn } from '@learnway/shared';
+import { ChipListModalSelectorFormField } from '@learnway/ui/form-field';
+import { DndTreeView, TreeContainer, TreeNode } from '@learnway/ui/tree-view';
+import { FormRow, SwitchFormField } from '@shared/ui';
 import { useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
-import { cn } from '@learnway/shared';
-import {
-  TreeNode,
-  useModal,
-  Button,
-  TreeContainer,
-  TreeView,
-  ContentsRow,
-  Input,
-  Textarea,
-  ChipListModalSelectorFormField,
-  DndTreeView,
-} from '@learnway/ui';
-import { FormInfoArea, FormRow, ContentsHistoryInfoFormField, SwitchFormField } from '@shared/ui';
+import { useEffect, useState } from 'react';
 
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 
-import {
-  DuplicateCodeGuideText,
-  findMenuPathById,
-} from '@features/platform-management/platform/category-managemnet';
+import { findMenuPathById } from '@features/platform-management/platform/category-managemnet';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
+import { Textarea } from '@learnway/ui/textarea';
 
-import { TenantDetailCategoryMappingModal } from './tenant-detail-category-mapping-modal';
 import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
+import { TenantDetailCategoryMappingModal } from './tenant-detail-category-mapping-modal';
 
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 
+import { useCheckExistsCategory } from '@entities/category';
+import { useFetchTenant } from '@entities/tenant';
 import {
+  useCreateTenantCategory,
   useDeleteTenantCategory,
   useFetchTenantCategory,
-  useUpdateTenantCategory,
+  useFetchTenantCategoryDetail,
   useMoveTenantCategory,
-  useCreateTenantCategory,
+  useUpdateTenantCategory,
 } from '@entities/tenant/service/tenant-category.hook';
-import { useFetchTenant } from '@entities/tenant';
 import { transformApiDataToTreeData } from '@features/platform-management/platform/category-managemnet';
-import {
-  getAllTreeKeys,
-  getFirstExpandKeys,
-  transformMenuApiDataToTreeData,
-} from '@features/platform-management/tenant/service/tenant-detail-tree.service';
-import { useFetchTenantCategoryDetail } from '@entities/tenant/service/tenant-category.hook';
-import { useCheckExistsCategory } from '@entities/category';
+import { getAllTreeKeys } from '@features/platform-management/tenant/service/tenant-detail-tree.service';
 
 import { UserGroupTabsChoiceModal } from '@shared/ui';
 import { EnFormMode, TenantCategoryCreate, TenantCategoryUpdate } from '@types';
-
-import { TenantCategoryDetail } from '@types';
 
 enum EnCategoryType {
   TENANT = 'TENANT',
@@ -410,7 +395,7 @@ const TenantDetailCategoryComponent = ({ roleInfo }: { roleInfo?: string }) => {
 
     const oneDepthKeys = getAllKeys(treeData);
     setExpandedKeys(oneDepthKeys);
-  }
+  };
 
   return (
     <div className={cn(layoutStyles.start, layoutStyles.wrap)}>

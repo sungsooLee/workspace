@@ -1,7 +1,7 @@
-import { FC, isValidElement, ReactNode, useEffect, useMemo, useRef, useState } from 'react';
-import { FormDisplayProps } from './type';
+import { DynamicFormField } from '@learnway/ui/dynamic-form-field';
+import { FC, isValidElement, ReactNode, useEffect, useState } from 'react';
 import { useWatch } from 'react-hook-form';
-import { DynamicFormField } from '@learnway/ui';
+import { FormDisplayProps } from './type';
 
 /**
  * 특정 Value 에 의존해 특정 내용들에 대한 Display 을 처리 하는 컴포넌트.
@@ -15,8 +15,7 @@ import { DynamicFormField } from '@learnway/ui';
  const { provider, onSubmit, control } = useDynamicForm(formConfig);
  const [manager] = useWatch({
    control,
-   name: ['manager'],
- });
+   name: ['manager'] });
  const [isTest, setIsTest] = useState(false);
 
  const handleOnDisplay = useCallback((values: any) => {

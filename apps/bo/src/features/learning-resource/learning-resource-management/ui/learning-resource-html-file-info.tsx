@@ -3,7 +3,6 @@ import { useChangeHTML5VideoFile } from '@entities/learning-resource';
 import { LearningResourceFileUploadModal } from '@features/learning-resource';
 import { LEARNING_TYPE } from '@learnway/config';
 import { formatFileSize, useFileManager } from '@learnway/hooks';
-import { Button, useModal } from '@learnway/ui';
 import { ChannelChoiceModal, PreviewLearningWindow } from '@shared/ui';
 import { ContentStatusCode, HtmlVideoFileChangeRes } from '@types';
 import { t } from 'i18next';
@@ -11,6 +10,8 @@ import { useCallback, useEffect, useState } from 'react';
 
 import movieStyles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
 import styles from './html-detail.module.css';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 
 type FileInfoProps = {
   contentUuid: string;
@@ -33,8 +34,7 @@ const FileInfoComponent = ({ contentUuid, uuid, status }: FileInfoProps) => {
         { label: t('파일명'), value: originalFileName.split('.')[0] },
         {
           label: t('원본용량'),
-          value: formatFileSize(fileSize),
-        },
+          value: formatFileSize(fileSize) },
         { label: t('파일형식'), value: fileType },
       ]);
     }
@@ -51,15 +51,13 @@ const FileInfoComponent = ({ contentUuid, uuid, status }: FileInfoProps) => {
       if (result?.fileUuid) {
         setFileUuid(result.fileUuid);
       }
-    },
-  });
+    } });
 
   const { openModal } = useModal();
 
   const handleClickFileChange = async () => {
     const channelInfo = await openModal({
-      content: <ChannelChoiceModal />,
-    });
+      content: <ChannelChoiceModal /> });
 
     if (!channelInfo) {
       return;
@@ -73,8 +71,7 @@ const FileInfoComponent = ({ contentUuid, uuid, status }: FileInfoProps) => {
           maxFileCount={1}
         />
       ),
-      width: 'lg',
-    });
+      width: 'lg' });
 
     if (!uploadedFileUuid) {
       return;
@@ -86,8 +83,7 @@ const FileInfoComponent = ({ contentUuid, uuid, status }: FileInfoProps) => {
   const openHTMLVideoPreviewPopup = useCallback(() => {
     openModal({
       width: 'full',
-      content: <PreviewLearningWindow contentUuid={contentUuid} />,
-    });
+      content: <PreviewLearningWindow contentUuid={contentUuid} /> });
   }, [contentUuid]);
 
   useEffect(() => {

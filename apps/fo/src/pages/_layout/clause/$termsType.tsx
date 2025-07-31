@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useCreation, useUnmount } from 'ahooks';
 
 import { useCurrentRoute } from '@learnway/hooks';
-import { Dropdown, HtmlContent } from '@learnway/ui';
+import { HtmlContent } from '@learnway/ui/html-content';
 
 import { pageRouteConfig } from '../../../features/auth';
 
@@ -12,6 +12,7 @@ import { useFetchTermsVersions, useFetchTerms } from '../../../entities/terms';
 import type { TermsType } from '../../../types';
 
 import styles from '@learnway/styles/fo/pages/_layout/terms/terms.module.css';
+import { Dropdown } from '@learnway/ui/dropdown';
 
 export const Route = createFileRoute('/_layout/clause/$termsType')({
   component: RouteComponent,

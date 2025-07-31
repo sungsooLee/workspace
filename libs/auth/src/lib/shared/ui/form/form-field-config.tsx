@@ -1,17 +1,16 @@
+import { FormFieldConfig } from '@learnway/hooks';
+import { Input } from '@learnway/ui/input';
+
 import {
   CheckboxGroupFormField,
-  Input,
   InputModalSelectorFormField,
-  PhoneNumberFormField,
   RadioGroupFormField,
-  Textarea,
   TextareaFormField,
-} from '@learnway/ui';
-import { FormFieldConfig } from '@learnway/hooks';
-
-import { SwitchFormField } from './switch-form-field';
+} from '@learnway/ui/form-field';
+import { PhoneNumberFormField } from '@learnway/ui/phone-number';
+import { Textarea } from '@learnway/ui/textarea';
 import { CheckBoxFormField } from './checkbox-form-field';
-
+import { SwitchFormField } from './switch-form-field';
 export const formFieldConfig: FormFieldConfig = {
   password: Input,
   number: Input,

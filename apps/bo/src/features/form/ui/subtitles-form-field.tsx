@@ -1,4 +1,3 @@
-import { forwardRef, useEffect, useRef, useState } from 'react';
 import {
   BaseFormFieldProps,
   CODE_GROUP,
@@ -8,13 +7,17 @@ import {
   useFormOptions,
   useS3Uploader,
 } from '@learnway/hooks';
-import { Button, ContentsRow, Dropdown, Input } from '@learnway/ui';
-import { t } from 'i18next';
 import { IcoDelete04 } from '@learnway/icons';
-import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
-import { VideoSubtitle } from '@types';
-import { map } from 'lodash';
 import { getDefaultLang } from '@learnway/shared';
+import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { Input } from '@learnway/ui/input';
+import { VideoSubtitle } from '@types';
+import { t } from 'i18next';
+import { map } from 'lodash';
+import { forwardRef, useEffect, useRef, useState } from 'react';
 
 interface SubtitlesFormFieldProps extends BaseFormFieldProps<VideoSubtitle[]> {
   uploadConfig?: S3UploaderConfig;

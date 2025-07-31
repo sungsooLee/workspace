@@ -1,13 +1,7 @@
 import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
-import {
-  Button,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  Tabs,
-  useModal,
-} from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { Tabs } from '@learnway/ui/tabs';
 import { CombineUserGroup, UserGroupType } from '@types';
 import { t } from 'i18next';
 import { forwardRef, useState } from 'react';

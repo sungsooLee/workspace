@@ -17,8 +17,7 @@ interface EditSinglAttachmentCellProps<T> {
 
 const EditSingleAttachmentCell = <T,>({
   info,
-  singleAttahment,
-}: EditSinglAttachmentCellProps<T>) => {
+  singleAttahment }: EditSinglAttachmentCellProps<T>) => {
   const { table, row, cell, getValue } = info;
   const [value, setValue] = useState<string>(getValue());
 

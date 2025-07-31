@@ -1,8 +1,9 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
-import { TreeNode } from '@learnway/ui';
+import { TreeNode } from '@learnway/ui/tree-view';
 import { CurriculumResponse, MAPPING_CURRICULUM_TYPE, MODULE_TYPE } from '@types';
 import { buildTreeFromCurriculumData, findParentNode } from '../services';
 import { FormState } from '../types/form.types';
+// TODO: Fix unknown imports:  from '@learnway/ui'
 
 interface UseCurriculumTreeProps {
   curriculumDetail: CurriculumResponse | undefined;
@@ -15,8 +16,7 @@ export const useCurriculumTree = ({
   curriculumDetail,
   onNodeSelect,
   formState,
-  curriculumId,
-}: UseCurriculumTreeProps) => {
+  curriculumId }: UseCurriculumTreeProps) => {
   const [treeData, setTreeData] = useState<TreeNode[]>([]);
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
   const prevSelectedNodeRef = useRef<TreeNode | null>(null);
@@ -163,6 +163,5 @@ export const useCurriculumTree = ({
     expandParentNodes,
     handleNodeSelect,
     customDropValidator,
-    renderNodeDragHandle,
-  };
+    renderNodeDragHandle };
 };

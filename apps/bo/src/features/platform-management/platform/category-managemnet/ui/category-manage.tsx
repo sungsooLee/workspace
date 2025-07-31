@@ -23,18 +23,18 @@ import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { IcoMinus } from '@learnway/icons';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
+import { Textarea } from '@learnway/ui/textarea';
 import {
-  Button,
-  ContentsRow,
   findNodePath,
-  Input,
-  Textarea,
   TreeBox,
   TreeContainer,
   TreeEventPayload,
   TreeNode,
-  useModal,
-} from '@learnway/ui';
+} from '@learnway/ui/tree-view';
 import { FormRow, SwitchFormField } from '@shared/ui';
 
 const FORM_MODE = {

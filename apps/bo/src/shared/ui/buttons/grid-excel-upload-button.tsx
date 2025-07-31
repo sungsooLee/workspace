@@ -1,7 +1,8 @@
-import { Button, useModal } from '@learnway/ui';
 import { ExcelUploadModal } from '@shared/ui';
 import { IcoUploadCloud } from '@learnway/icons';
 import { t } from 'i18next';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 
 interface ExcelButtonsProps {
   validateUrl?: string;
@@ -18,8 +19,7 @@ const GridExcelUploadButtonComponent: React.FC<ExcelButtonsProps> = ({
   disabled = false,
   className,
   affairsType = 'PMS',
-  formDataName = 'file',
-}) => {
+  formDataName = 'file' }) => {
   const { openModal } = useModal();
 
   // 업로드
@@ -33,8 +33,7 @@ const GridExcelUploadButtonComponent: React.FC<ExcelButtonsProps> = ({
             formDataName={formDataName}
           />
         ),
-        width: 'lg',
-      });
+        width: 'lg' });
       if (result) onUpload?.(result);
     }
   };

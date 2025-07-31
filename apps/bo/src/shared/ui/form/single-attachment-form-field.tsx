@@ -1,13 +1,12 @@
 // IA011 / NLP_BO_PMS_1100_5
 import { forwardRef, useEffect, useState } from 'react';
-import { SingleAttachment } from '@learnway/ui'; // @learnway/ui에서 Attachment 컴포넌트 import
+import { SingleAttachment } from '@learnway/ui/attachment'; // @learnway/ui에서 Attachment 컴포넌트 import
 import {
   BaseFormFieldProps,
   formatFileSize,
   S3UploaderConfig,
   useFileManager,
-  useS3Uploader,
-} from '@learnway/hooks'; // @learnway/hooks에서 폼 필드 기본 props 타입 import
+  useS3Uploader } from '@learnway/hooks'; // @learnway/hooks에서 폼 필드 기본 props 타입 import
 import { compact, first, map } from 'lodash';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 
@@ -55,8 +54,7 @@ const SingleAttachmentFormFieldComponent = forwardRef<
       async = true,
       acceptFiles = [],
       maxFileCount = 1,
-      maxFileSize = 5 * 1024 * 1024,
-    } = uploadConfig;
+      maxFileSize = 5 * 1024 * 1024 } = uploadConfig;
 
     const { getFileInfo, getGroupInfo } = useFileManager();
     const {
@@ -69,8 +67,7 @@ const SingleAttachmentFormFieldComponent = forwardRef<
       onRemove,
       onFetch,
       inputAccept,
-      groupUuid,
-    } = useS3Uploader({
+      groupUuid } = useS3Uploader({
       s3Path,
       affairsType,
       languageCode,
@@ -80,8 +77,7 @@ const SingleAttachmentFormFieldComponent = forwardRef<
       async,
       acceptFiles,
       maxFileCount,
-      maxFileSize,
-    });
+      maxFileSize });
 
     const [fileUuid, setFileUuid] = useState<string>('');
 

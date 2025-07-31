@@ -1,12 +1,9 @@
-import { Enrollment } from '@features/learning-operate/learning-sequence/enrollment-application/ui/enrollment';
 import {
   SequenceDetail,
   SequenceList,
 } from '@features/learning-operate/learning-sequence/sequence-management';
-import { Button, Divider, ToggleButtonGroup, useModal } from '@learnway/ui';
-import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
+import { MainContents, PageContainer } from '@shared/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { t } from 'i18next';
 import { useState } from 'react';
 import { Mode } from '../-common/type';
 

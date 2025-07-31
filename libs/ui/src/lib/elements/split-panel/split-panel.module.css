@@ -9,6 +9,9 @@
   .divider {
     @apply !mx-[32px] !flex h-auto !w-[1px] shrink-0 bg-[var(--gray4)];
   }
+  & + [class*='table_box'] {
+    @apply mt-[32px];
+  }
 }
 
 [class*='divider'],

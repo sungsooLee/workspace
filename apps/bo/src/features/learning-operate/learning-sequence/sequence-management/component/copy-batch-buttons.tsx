@@ -1,14 +1,13 @@
-import { Button } from '@learnway/ui';
 import { t } from 'i18next';
 import { memo } from 'react';
+import { Button } from '@learnway/ui/button';
 
 const CopyBatchButtons = memo(
   ({
     disabledCopy,
     disabledBatch,
     onCopyRow,
-    onBatch,
-  }: {
+    onBatch }: {
     disabledCopy: boolean;
     disabledBatch: boolean;
     onCopyRow: () => void;

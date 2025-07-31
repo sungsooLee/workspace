@@ -1,4 +1,5 @@
-import { FormSubTitle, List } from '@learnway/ui';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { List } from '@learnway/ui/list';
 
 const LeftPanelComponent = ({ value, onChange }: any) => {
   const dummyOptions = Array(5)

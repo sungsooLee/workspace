@@ -1,16 +1,17 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { cn } from '@learnway/shared';
-import { Popover, SelectOption } from '@learnway/ui';
-import { IcoCheck02, IcoArrowDown } from '@learnway/icons';
-import { Button } from '@learnway/ui';
-import { getDefaultLang } from '@learnway/config';
 import { useFetchAuthUser } from '@learnway/auth/entities';
+import { getDefaultLang } from '@learnway/config';
+import { IcoArrowDown, IcoCheck02 } from '@learnway/icons';
+import { cn } from '@learnway/shared';
+import { Popover } from '@learnway/ui/popover';
 
-import { useSetLanguage, useLanguageSelectOptions } from '@features/layout';
+import { useLanguageSelectOptions, useSetLanguage } from '@features/layout';
 
 import styles from './language.module.css';
+import { Button } from '@learnway/ui/button';
+import { SelectOption } from '@learnway/ui/type';
 
 const PopoverContent = ({ data }: { data?: SelectOption[] }) => {
   const { t, i18n } = useTranslation();

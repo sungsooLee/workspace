@@ -26,8 +26,7 @@ export const FormFieldWrapper: React.FC<FormFieldWrapperProps> = ({
   fieldKey,
   preview = false,
   children,
-  className,
-}) => {
+  className }) => {
   const isRequired = required;
   const hasError = !!error;
 

@@ -1,8 +1,10 @@
 import { useState, memo } from 'react';
-import { ModalTitle, ModalBody, ModalContainer, ModalFooter, Button, Textarea } from '@learnway/ui';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import styles from '@learnway/styles/fo/features/layout/popup/course-cancel-reason-popup.module.css';
+import { Button } from '@learnway/ui/button';
+import { ModalTitle, ModalBody, ModalContainer, ModalFooter } from '@learnway/ui/modal';
+import { Textarea } from '@learnway/ui/textarea';
 
 const CourseCancelReasonPopupComponent = ({
   okCallback,

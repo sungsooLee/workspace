@@ -1,9 +1,9 @@
 import { useTranslation } from 'react-i18next';
 
-import { Button, ModalBody, ModalContainer, ModalFooter, useModal, ModalTitle } from '@learnway/ui';
-import { cn } from '@learnway/shared';
-import { DynamicFormField, ContentsRow } from '@learnway/ui';
-import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
 import { FormRow, NoticeBox } from '../../../../shared/ui';
 

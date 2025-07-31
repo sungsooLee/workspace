@@ -1,4 +1,3 @@
-import { Tabs } from '@learnway/ui';
 import { EnUserGroupType } from '@types';
 import { t } from 'i18next';
 import { FC, useState } from 'react';
@@ -6,6 +5,7 @@ import { CompanyDetailHROrganization } from './company-detail-hr-organization';
 import { CompanyDetailHRLink } from './company-detail-ht-link';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
+import { Tabs } from '@learnway/ui/tabs';
 
 const CompanyDetailHRComponent: FC<any> = () => {
   const [selectedTabKey, setSelectedTabKey] = useState<string>(EnUserGroupType.ORGANIZATION);

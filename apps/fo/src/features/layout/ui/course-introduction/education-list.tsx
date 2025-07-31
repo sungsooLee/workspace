@@ -1,11 +1,14 @@
 import { IcoArrowDown } from '@learnway/icons';
-import { Button, Dropdown, PopoverList } from '@learnway/ui';
 import { forwardRef, memo, useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import { Arrays, Education } from '../..';
 
 import styles from '@learnway/styles/fo/features/layout/ui/course-introduction/education.module.css';
 import dropdownPopoverStyles from '@learnway/styles/fo/shared/ui/dropdown-popover/dropdown-popover.module.css';
+import { Button } from '@learnway/ui/button';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { PopoverList } from '@learnway/ui/popover-list';
+import { t } from 'i18next';
 
 interface Props {
   educationsTemp?: any;
@@ -15,6 +18,9 @@ interface Props {
   setIsAll: any;
   isAll: any;
   setOpeningYear: any;
+  dashboardRef?: any;
+  goToScrollRef?: any;
+  handleTab?: any;
 }
 
 const CourseEducationCompoment = forwardRef<HTMLDivElement, Props>(
@@ -27,12 +33,15 @@ const CourseEducationCompoment = forwardRef<HTMLDivElement, Props>(
       setOpeningYear,
       setIsAll,
       isAll,
+      dashboardRef,
+      goToScrollRef,
+      handleTab,
     },
     ref,
   ) => {
     // 소팅 조건
     const arrays = {
-      items: ['수강신청 가능', '전체보기'],
+      items: [t('수강신청 가능'), t('전체보기')],
       initialSelectedItem: isAll ? 1 : 0, // 초기 선택값
     };
     const handleIsAllArraySelect = (index: number | null) => {
@@ -67,7 +76,7 @@ const CourseEducationCompoment = forwardRef<HTMLDivElement, Props>(
 
     return (
       <div ref={ref} className={`${styles.start} ${styles.education_wrap}`}>
-        <h2>교육일정</h2>
+        <h2>{t('교육일정')}</h2>
         {/* 퍼블수정 20250708 마크업 수정 */}
         <div className={styles.filter_wrap}>
           {isMobile ? (
@@ -112,7 +121,7 @@ const CourseEducationCompoment = forwardRef<HTMLDivElement, Props>(
             options={dateValuesOptions}
             value={dateValues}
             onChange={(selected) => setDateValues(selected)}
-            placeholder="년도별 옵션"
+            placeholder={t('년도별 옵션')}
             variant="default"
             isMulti={false}
             size={'md'}
@@ -136,11 +145,14 @@ const CourseEducationCompoment = forwardRef<HTMLDivElement, Props>(
                     edu={edu}
                     courseEnrollCompletePopup={courseEnrollCompletePopup}
                     CourseCancelCompletePopup={CourseCancelCompletePopup}
+                    dashboardRef={dashboardRef}
+                    goToScrollRef={goToScrollRef}
+                    handleTab={handleTab}
                   />
                 </li>
               ))
             ) : (
-              <div>교육일정이 없습니다</div>
+              <div>{t('교육일정이 없습니다')}</div>
             )}
           </ul>
 
@@ -151,7 +163,7 @@ const CourseEducationCompoment = forwardRef<HTMLDivElement, Props>(
                 onClick={() => setMore((prev) => !prev)}
                 className={more ? styles.active : ''}
               >
-                {more === true ? '과정 정보 접기' : '과정 정보 펼치기'}
+                {more === true ? t('과정 정보 접기') : t('과정 정보 펼치기')}
                 <IcoArrowDown width={16} height={16} stroke="#4d525c" />
               </Button>
             </div>

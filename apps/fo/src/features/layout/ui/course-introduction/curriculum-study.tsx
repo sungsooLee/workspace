@@ -1,8 +1,9 @@
+import styles from '@learnway/styles/fo/features/layout/ui/course-introduction/curriculum-study.module.css';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
+import { ProgressCheck } from '@learnway/ui/progress';
 import { memo } from 'react';
 import { isMobile } from 'react-device-detect';
-import { Button, useModal, ProgressCheck } from '@learnway/ui';
-import styles from '@learnway/styles/fo/features/layout/ui/course-introduction/curriculum-study.module.css';
-import { IcoArrowDown } from '@learnway/icons';
 import { NoticeDetailPopup } from '../../../../features/layout/';
 
 interface CurriculumStudyProps {

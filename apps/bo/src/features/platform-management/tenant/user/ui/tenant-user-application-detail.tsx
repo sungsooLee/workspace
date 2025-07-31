@@ -6,21 +6,20 @@ import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 
 import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { FormSubTitle } from '@learnway/ui/base-form';
 import {
   ChipListModalSelectorFormField,
-  ContentsRow,
-  EditInputCell,
-  EditSwitchCell,
-  FormSubTitle,
   GridFormField,
-  Input,
   RadioGroupFormField,
-  useModal,
-} from '@learnway/ui';
+} from '@learnway/ui/form-field';
 
 import { FormDisplay } from '@features/form/ui/form-display';
 import { getUserStatus } from '@features/platform-management/company/company-user-management/service/company-user.service';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { EditInputCell, EditSwitchCell } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
 import { ContentsHistoryInfoFormField, FormRow } from '@shared/ui';
 import { EnGlobalConst } from '@types';
 interface userDetailProps {

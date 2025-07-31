@@ -4,10 +4,11 @@ import { useTranslation } from 'react-i18next';
 
 import { pageRouteConfig } from '@features/auth';
 
-import { Button, ContentsRow } from '@learnway/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { FormRow } from '@shared/ui';
 import { queryOptions } from '@entities/course';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
 
 export const Route = createFileRoute('/_layout/')({
   component: HomeComponent,

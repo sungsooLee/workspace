@@ -1,9 +1,6 @@
-import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { IcoCaution } from '@learnway/icons';
-import { cn } from '@learnway/shared';
-import { useModal, Button } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
 
 import styles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide.module.css';
 

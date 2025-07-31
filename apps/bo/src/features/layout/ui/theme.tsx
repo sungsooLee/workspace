@@ -2,14 +2,14 @@ import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { values } from 'lodash';
 
-import { Avatar, Popover } from '@learnway/ui';
+import { Popover } from '@learnway/ui/popover';
 import { useFetchAuthUser } from '@learnway/auth/entities';
+import { Avatar } from '@learnway/ui/avatar';
 
 enum Themes {
   DEFAULT = 'default',
   RED = 'red',
-  GREEN = 'green',
-}
+  GREEN = 'green' }
 
 const PopoverContent = () => {
   const handleTheme = (theme: string) => {

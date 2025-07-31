@@ -11,8 +11,7 @@ export const useExamLoaderData = () => {
   const tenantId = loginUser?.activeTenant?.tenantId ?? -1;
 
   const {
-    state: { mode = PageMode.CREATE, contentUuid = '', listParam },
-  } = useCurrentRoute();
+    state: { mode = PageMode.CREATE, contentUuid = '', listParam } } = useCurrentRoute();
 
   const { data, refetch: refetchContentDetail } = useQuery(
     learningResourceQueryOptions.getContent<TestPaperBasicInfoDetail>(contentUuid),

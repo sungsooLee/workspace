@@ -30,15 +30,13 @@ export default class TenantService {
   static existTenant(tenantName: string, tenantId: number | undefined) {
     return httpService.get<boolean>(`${PMSApiPrefix()}/tenants/exists`, {
       tenantName: tenantName,
-      tenantId: tenantId,
-    });
+      tenantId: tenantId });
   }
 
   //전체 목록 가지고 오기 임시 (size 값으로)
   static async fetchAllTenant() {
     const data = await httpService.get<PageableContent<any>>(`${PMSApiPrefix()}/tenants`, {
-      size: 100000,
-    });
+      size: 100000 });
 
     return data.content;
   }
@@ -85,9 +83,7 @@ function genTenantCreate(payload: any) {
       isUseRotemTenantCustomOption: payload.isRotemTenantCustomOption,
       isUseOutsourcingTenantCustomOption: payload.isOutsourcingTenantCustomOption,
       isUseWiaTenantCustomOption: payload.isWiaTenantCustomOption,
-      isUseAutoeverTenantCustomOption: payload.isAutoeverTenantCustomOption,
-    },
-  };
+      isUseAutoeverTenantCustomOption: payload.isAutoeverTenantCustomOption } };
 }
 
 function genTenantUpdate(payload: any) {
@@ -124,7 +120,5 @@ function genTenantUpdate(payload: any) {
       isUseRotemTenantCustomOption: payload.isRotemTenantCustomOption,
       isUseOutsourcingTenantCustomOption: payload.isOutsourcingTenantCustomOption,
       isUseWiaTenantCustomOption: payload.isWiaTenantCustomOption,
-      isUseAutoeverTenantCustomOption: payload.isAutoeverTenantCustomOption,
-    },
-  };
+      isUseAutoeverTenantCustomOption: payload.isAutoeverTenantCustomOption } };
 }

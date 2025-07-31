@@ -56,8 +56,7 @@ import {
   ExamPaperQuestionCountUpdateReq,
   TenantCodeType,
   TestPaperBasicInfoSaveReq,
-  TestPaperBasicInfoSaveRes,
-} from '@types';
+  TestPaperBasicInfoSaveRes } from '@types';
 import { omit, pick } from 'lodash';
 
 export default class LearningResourceService {
@@ -113,8 +112,7 @@ export default class LearningResourceService {
     const { contentUuid, tenantId, channelUuid } = params;
     return httpService.get(`${CMSApiPrefix()}/content/${contentUuid}/channel/sharing`, {
       tenantId,
-      channelUuid,
-    });
+      channelUuid });
   }
 
   static postContentCopy(contentUuid: string): Promise<PostContentCopyRes> {

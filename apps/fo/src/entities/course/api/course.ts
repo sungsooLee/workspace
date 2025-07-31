@@ -1,13 +1,5 @@
-import { httpService, objectToQueryString } from '@learnway/shared';
 import { LMSApiPrefix } from '@learnway/config';
-import {
-  PassCriteriaData,
-  CourseResponse,
-  CourseEnrollStatusType,
-  CourseType,
-  PassMethodType,
-  TrainingLevelType,
-} from '@types';
+import { httpService } from '@learnway/shared';
 
 export default class CourseService {
   // 과정 정보 조회
@@ -174,7 +166,9 @@ export default class CourseService {
 
   // 과정 차수 불러오기
   static async fetchSequences(courseId: string, reqDto: any): Promise<any> {
-    return await httpService.get<any>(`${LMSApiPrefix()}/course/${courseId}/sequences`, { ...reqDto });
+    return await httpService.get<any>(`${LMSApiPrefix()}/course/${courseId}/sequences`, {
+      ...reqDto,
+    });
   }
   // 과정 차수 단건 불러오기
   static async fetchSequenceOne(courseSequenceId: string): Promise<any> {
@@ -240,6 +234,10 @@ export default class CourseService {
     //   message: '좋아요',
     // };
     return await httpService.post(`${LMSApiPrefix()}/course/${courseId}/like`, {});
+  }
+  // 나의 학습 진행율 조회
+  static async postDashboardLearningProgress(payload: any) {
+    return await httpService.post(`${LMSApiPrefix()}/students/learning/progress`, payload);
   }
 
   static fetchCourse(courseId: number) {

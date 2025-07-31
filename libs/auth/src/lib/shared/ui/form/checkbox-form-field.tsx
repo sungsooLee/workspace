@@ -1,8 +1,8 @@
-import { forwardRef } from 'react';
 import { BaseFormFieldProps } from '@learnway/hooks';
-import { Checkbox } from '@learnway/ui';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import { Checkbox } from '@learnway/ui/checkbox';
 import clsx from 'clsx';
+import { forwardRef } from 'react';
 
 interface CheckboxFormFieldProps extends BaseFormFieldProps<boolean> {
   checkConfig?: {

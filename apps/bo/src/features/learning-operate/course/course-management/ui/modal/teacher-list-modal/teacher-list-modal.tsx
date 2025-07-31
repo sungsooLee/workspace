@@ -1,15 +1,9 @@
 import React, { forwardRef, useState } from 'react';
-import {
-  Button,
-  GridBox,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  useModal,
-} from '@learnway/ui';
+import { GridBox } from '@learnway/ui/grid';
 import styles from './teacher-list-modal.module.css';
 import { useTranslation } from 'react-i18next';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
 export interface TeacherListModalProps {
   dummy?: boolean;
@@ -67,6 +61,5 @@ const getMockData = () => {
   return {
     data: Array(10)
       .fill(null)
-      .map((d, i) => ({ id: `id${i}`, name: `manager${i}` })),
-  };
+      .map((d, i) => ({ id: `id${i}`, name: `manager${i}` })) };
 };

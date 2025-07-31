@@ -1,28 +1,21 @@
-import { memo, useCallback, useEffect } from 'react';
-import { useBoolean, useCounter } from 'react-use';
+import { memo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useBoolean, useCounter } from 'react-use';
 
-import {
-  Button,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  useModal,
-  ModalTitle,
-  InputTimer,
-} from '@learnway/ui';
-import { cn } from '@learnway/shared';
-import { DynamicFormField, ContentsRow } from '@learnway/ui';
-import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
-import { FormRow } from '../../../../shared/ui';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+
+import { InputTimer } from '@learnway/ui/input';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 import {
   useFetchAuthUser,
-  useVerifySMS,
   useSendVerifySMS,
   useUpdatePhoneNumber,
   useUserDetail,
+  useVerifySMS,
 } from '../../../../entities';
-import { t } from 'i18next';
+import { FormRow } from '../../../../shared/ui';
 
 const TIME_LIMIT_VERIFY = 180;
 

@@ -1,20 +1,12 @@
 import { useUpdateStudentsSequence } from '@entities/learning-sequence/service/learning-sequence.hook';
 import { queryOptions } from '@entities/learning-sequence/service/learning-sequence.queries';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import {
-  Button,
-  GridBox,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  useGridBox,
-  useGridBoxConfig,
-  useModal,
-} from '@learnway/ui';
+import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { useCallback, useEffect, useState } from 'react';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
 /**
  * NLP_BO_LMS_0052 : 차수변경 팝업
@@ -35,25 +27,21 @@ const gridConfig: useGridBoxConfig = {
   gridState: {
     page: 0,
     size: 10,
-    sort: [],
-  },
-};
+    sort: [] } };
 
 const SequenceChangeModalComponent = ({
   courseId: courseIdProps,
   courseSequenceName: courseSequenceNameProps,
   isUsed: isUsedProps,
   openingYear: openingYearProps,
-  studentId: studentIdProps,
-}: SequenceChangeModalComponentProps) => {
+  studentId: studentIdProps }: SequenceChangeModalComponentProps) => {
   const [selectedItem, setSelectedItem] = useState() as any;
   const [param, setParam] = useState() as any;
   const [columns, setColumns] = useState() as any;
   const { closeModal, confirm: openConfirm, showSaveComplete } = useModal();
   const searchParam = () => {
     const searchData = {
-      ...param,
-    };
+      ...param };
     return searchData;
   };
   const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, searchParam);
@@ -65,8 +53,7 @@ const SequenceChangeModalComponent = ({
         header: t('차수명'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
-        size: 425,
-      }),
+        size: 425 }),
       columnHelper.accessor('courseSequenceStartDate', {
         header: t('학습 시작일'),
         cell: (info) => {
@@ -79,8 +66,7 @@ const SequenceChangeModalComponent = ({
             );
         },
         enableGrouping: false,
-        size: 169,
-      }),
+        size: 169 }),
       columnHelper.accessor('courseSequenceEndDateTimeMerge', {
         header: t('학습 종료일'),
         cell: (info) => {
@@ -93,8 +79,7 @@ const SequenceChangeModalComponent = ({
             );
         },
         enableGrouping: false,
-        size: 158,
-      }),
+        size: 158 }),
     ] as ColumnDef<any, unknown>[];
 
     setColumns(columns);
@@ -106,8 +91,7 @@ const SequenceChangeModalComponent = ({
       courseId: courseIdProps,
       courseSequenceName: courseSequenceNameProps,
       isUsed: isUsedProps,
-      openingYear: openingYearProps,
-    };
+      openingYear: openingYearProps };
     setParam(payload);
     gridFetch(payload);
   }, []);
@@ -117,14 +101,12 @@ const SequenceChangeModalComponent = ({
     if (selectedItem.length === 0) return;
     const confirm = await openConfirm({
       title: t('차수변경을 하시겠습니까?'),
-      content: t('선택하신 대상에 차수변경 하시겠습니까?'),
-    });
+      content: t('선택하신 대상에 차수변경 하시겠습니까?') });
     if (!confirm) return;
 
     const payload = {
       studentId: studentIdProps,
-      courseSequenceId: selectedItem.courseSequenceId,
-    };
+      courseSequenceId: selectedItem.courseSequenceId };
     console.log('payload=>', payload);
     await updateStudentsSequence(payload, {
       onSuccess: async (data: any, variables: any, context: any) => {
@@ -134,8 +116,7 @@ const SequenceChangeModalComponent = ({
       },
       onError: (data: any, variables: any, context: any) => {
         console.log('onError:', data);
-      },
-    });
+      } });
   };
 
   const columnHelper = createColumnHelper<any>();

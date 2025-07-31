@@ -37,8 +37,7 @@ export const responseDataToFormData = (d: Course, c: CourseConfig = {} as Course
     courseValidityRange: {
       from: d.courseValidityStartDateTime, // 과정 유효 시작일
       to: d.courseValidityEndDateTime, // 과정 유효 종료일
-    },
-  };
+    } };
 };
 
 /**

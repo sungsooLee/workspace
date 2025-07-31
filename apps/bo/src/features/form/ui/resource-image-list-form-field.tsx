@@ -1,10 +1,12 @@
-import React, { forwardRef } from 'react';
 import { BaseFormFieldProps } from '@learnway/hooks';
-import { Button, List, Thumbnail } from '@learnway/ui';
-import { useTranslation } from 'react-i18next';
-import style from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
-import styles from './resource-image-list-form-field.module.css';
 import { cn } from '@learnway/shared';
+import style from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
+import { List } from '@learnway/ui/list';
+import { Thumbnail } from '@learnway/ui/thumbnail';
+import { forwardRef } from 'react';
+import { useTranslation } from 'react-i18next';
+import styles from './resource-image-list-form-field.module.css';
+import { Button } from '@learnway/ui/button';
 
 interface ResourceImageListFormFieldPros extends BaseFormFieldProps<any[]> {
   dummy?: string;

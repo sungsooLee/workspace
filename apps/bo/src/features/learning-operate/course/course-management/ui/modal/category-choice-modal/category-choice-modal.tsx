@@ -1,18 +1,11 @@
 import { useFetchTenantCategoryTreePopup } from '@entities/tenant';
-import {
-  Button,
-  transformApiDataToTreeData,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  ShuttleTreeToChipsV2,
-  useModal,
-  useShuttleTreeToChips,
-} from '@learnway/ui';
+import { ShuttleTreeToChipsV2, useShuttleTreeToChips } from '@learnway/ui/shuttle-tree-to-chips-v2';
+import { transformApiDataToTreeData } from '@learnway/ui/tree-view';
 import { forwardRef, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './category-choice-modal.module.css';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
 export interface CategoryChoiceModalProps {
   /** 테넌트 아이디 배열 */

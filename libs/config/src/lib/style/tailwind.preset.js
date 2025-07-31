@@ -707,6 +707,10 @@ module.exports = {
         '.min-w-auto': {
           minWidth: 'auto !important',
         },
+        '.popover-scroll': {
+          'max-height': 'calc(100vh - 170px)',
+          'overflow-y': 'auto',
+        },
       });
     },
   ],

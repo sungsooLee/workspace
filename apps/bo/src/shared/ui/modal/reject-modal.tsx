@@ -1,19 +1,13 @@
 import React, { FC } from 'react';
 import { t } from 'i18next';
-import {
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  useModal,
-  Button,
-  ContentsRow,
-  TextareaFormField,
-} from '@learnway/ui';
+import { TextareaFormField } from '@learnway/ui/form-field';
 import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
 import { FormRow } from '@shared/ui';
 
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
 const RejectModalComponent: FC<any> = () => {
   const { closeModal } = useModal();
@@ -58,10 +52,7 @@ const formConfig: DynamicFormConfig = {
       label: t('반려 사유'),
       value: '',
       placeholder: t('반려 시 반려 사유를 반드시 입력해 주세요.'),
-      maxLength: 150,
-    },
+      maxLength: 150 },
   ],
   validator: {
-    rejectReason: true,
-  },
-};
+    rejectReason: true } };

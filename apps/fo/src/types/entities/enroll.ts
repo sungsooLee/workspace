@@ -1,4 +1,4 @@
-import { SortRequest } from '@learnway/ui';
+import { SortRequest } from '@learnway/ui/type';
 
 type ISODateString = string;
 

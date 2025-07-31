@@ -1,4 +1,5 @@
-import { TreeNode } from '@learnway/ui';
+import { TreeNode } from '@learnway/ui/tree-view';
+// TODO: Fix unknown imports:  from '@learnway/ui'
 
 export const findNodeByApiId = (nodes: TreeNode[], apiId: string): TreeNode | null => {
   for (const node of nodes) {

@@ -1,11 +1,11 @@
 import React from 'react';
-import { Button } from '@learnway/ui';
 import { IcoMinus } from '@learnway/icons';
 import { t } from 'i18next';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
 import { FROM_STATUS, FORM_MODE } from '@shared/const';
 import { MAPPING_CURRICULUM_TYPE, MODULE_TYPE } from '@types';
 import { FormState } from '../types/form.types';
+import { Button } from '@learnway/ui/button';
 
 interface FormActionButtonsProps {
   formStatus: FROM_STATUS;
@@ -20,8 +20,7 @@ export const FormActionButtons: React.FC<FormActionButtonsProps> = ({
   mode,
   formState,
   onDelete,
-  onSave,
-}) => {
+  onSave }) => {
   if (formStatus !== FROM_STATUS.NONE && (mode === FORM_MODE.create || mode === FORM_MODE.detail)) {
     // FIXED모듈 하위의 레슨일 경우에는 disabled 처리
     const isLessonUnderFixedModule =

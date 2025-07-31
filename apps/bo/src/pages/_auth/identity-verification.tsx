@@ -9,8 +9,8 @@ export const Route = createFileRoute('/_auth/identity-verification')({
   ...pageRouteConfig({
     // meta: {
     //   title: '본인 인증',
-    // },
-  }),
+    // }
+  })
 });
 
 function RouteComponent() {

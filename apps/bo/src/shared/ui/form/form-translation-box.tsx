@@ -1,6 +1,7 @@
 import { forwardRef } from 'react';
-import { Input, Textarea } from '@learnway/ui';
 import { useWatch } from 'react-hook-form';
+import { Input } from '@learnway/ui/input';
+import { Textarea } from '@learnway/ui/textarea';
 
 /**
  * 다국어 등록 수정 화면에서

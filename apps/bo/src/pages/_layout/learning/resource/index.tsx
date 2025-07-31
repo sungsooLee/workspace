@@ -1,15 +1,13 @@
-import { useState } from 'react';
-import { Button, useModal } from '@learnway/ui';
+import { LearningTypeChoiceModal } from '@features/learning-resource';
 import { LEARNING_TYPE } from '@learnway/config';
-import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
-import {
-  LearningResourceFileUploadModal,
-  LearningTypeChoiceModal,
-} from '@features/learning-resource';
-import { t } from 'i18next';
-import { SearchBox } from '../../../../shared/ui/search-box';
 import { useSearchBox } from '@learnway/hooks';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
+import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
+import { createFileRoute, useRouter } from '@tanstack/react-router';
+import { t } from 'i18next';
+import { useState } from 'react';
+import { SearchBox } from '../../../../shared/ui/search-box';
 
 export const Route = createFileRoute('/_layout/learning/resource/')({
   component: RouteComponent,
@@ -38,8 +36,7 @@ function RouteComponent() {
       case LEARNING_TYPE.VIDEO: {
         /*const videoUploadResult = await openModal({
           content: <LearningResourceFileUploadModal />,
-          width: 'lg',
-        });*/
+          width: 'lg' });*/
         router.navigate({
           to: '/learning/learning-resource/video/view',
           state: { permission: 'WRITE' },

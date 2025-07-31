@@ -8,15 +8,13 @@ import { translationQueryOptions } from '@entities/translation';
 import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
 import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
-import {
-  Button,
-  ContentsRow,
-  FormSubTitle,
-  Input,
-  RadioGroupFormField,
-  Textarea,
-  useModal,
-} from '@learnway/ui';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { RadioGroupFormField } from '@learnway/ui/form-field';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
+import { Textarea } from '@learnway/ui/textarea';
 import {
   // DuplicateCheckInputFormField,
   FormRow,

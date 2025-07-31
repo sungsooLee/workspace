@@ -1,18 +1,26 @@
-import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
-import { DynamicFormConfig, DynamicFormValues, useDynamicForm } from '@learnway/hooks';
-import { PageContainer, ContentsButtons, LinkBox, MainContents } from '@shared/ui';
-import { Button, ContentsRow, DynamicFormField, InputModalSelectorFormField } from '@learnway/ui';
-import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '../../../../../shared/ui/form';
-import { FormDisplay } from '../../../../../features/form/ui/form-display';
 import {
   DateRangePickerFormField,
   ResourceImageListFormField,
   SharedChannelGridFormField,
 } from '@features/form/ui';
-import React from 'react';
-import { t } from 'i18next';
-import { ChannelChoiceModal, ManagerChoiceModal, SubContents } from '@shared/ui';
+import { DynamicFormConfig, DynamicFormValues, useDynamicForm } from '@learnway/hooks';
 import { getRandomId } from '@learnway/shared';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { InputModalSelectorFormField } from '@learnway/ui/form-field';
+import {
+  ChannelChoiceModal,
+  ContentsButtons,
+  LinkBox,
+  MainContents,
+  ManagerChoiceModal,
+  PageContainer,
+  SubContents,
+} from '@shared/ui';
+import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
+import { t } from 'i18next';
+import { FormDisplay } from '../../../../../features/form/ui/form-display';
+import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '../../../../../shared/ui/form';
 
 export const Route = createFileRoute('/_layout/learning/resource/view/image')({
   component: RouteComponent,
@@ -428,6 +436,6 @@ const formConfig: DynamicFormConfig = {
     //   required: {
     //     fn: (values: Record<string, any>) => values.isExternalDevelopmentCompany,
     //   },
-    // },
+    // }
   },
 };

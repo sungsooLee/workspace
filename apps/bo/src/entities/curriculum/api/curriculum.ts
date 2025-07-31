@@ -14,8 +14,7 @@ import {
   GeneralLessonSaveParams,
   LessonUpdateParams,
   CurriculumUpdateRequest,
-  CurriculumDndParams,
-} from '@types';
+  CurriculumDndParams } from '@types';
 
 export class CurriculumService {
   /**

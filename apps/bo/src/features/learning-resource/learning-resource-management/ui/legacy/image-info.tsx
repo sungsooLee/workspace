@@ -1,6 +1,8 @@
-import React, { FC, useState } from 'react';
-import { Button, List, SelectOption } from '@learnway/ui';
 import style from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
+import { Button } from '@learnway/ui/button';
+import { List } from '@learnway/ui/list';
+import { SelectOption } from '@learnway/ui/type';
+import { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const ImageInfoComponent: FC<any> = () => {

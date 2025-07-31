@@ -1,8 +1,8 @@
 import {
+  translationQueryOptions,
   useDeployTranslation,
   useTranslation,
-} from '@entities/translation/service/translation.hook';
-import { translationQueryOptions } from '@entities/translation/service/translation.queries';
+} from '@entities/translation';
 import { TranslationStatusPopup } from '@features/platform-management/platform/multilingual-managemnet';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { PMSApiPrefix } from '@learnway/config';
@@ -16,16 +16,10 @@ import {
   useSearchBox,
 } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import {
-  Button,
-  CountText,
-  Divider,
-  EditInputCell,
-  EditTextareaCell,
-  TableBox,
-  useGridBox,
-  useModal,
-} from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { CountText, Divider } from '@learnway/ui/elements';
+import { EditInputCell, EditTextareaCell, TableBox, useGridBox } from '@learnway/ui/grid';
+import { useModal } from '@learnway/ui/modal';
 import {
   ContentsButtons,
   GridExcelDownloadButton,
@@ -498,7 +492,7 @@ const createGridConfig = (onCellClick: (data: any) => void, currentTargetLocale:
       // enableHiding: true,
       // meta: {
       //   hidden: true,
-      // },
+      // }
     },
     {
       name: 'keyTypeName',

@@ -10,7 +10,7 @@ import {
   useCourseLastTriggered,
 } from '@features/learning-operate/course/course-management';
 import { useDynamicForm2 } from '@learnway/hooks';
-import { useModal } from '@learnway/ui';
+import { useModal } from '@learnway/ui/modal';
 import { usePageState } from '@shared/lib/use-page-state';
 import { getCurrentAuthUser } from '@shared/lib/util/query-utils';
 import { useNavigate } from '@tanstack/react-router';

@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useCreation } from 'ahooks';
 
-import { SelectOption } from '@learnway/ui';
 import { CODE_GROUP, Code } from '@learnway/config';
 import { getDefaultLang, setDefaultLang } from '@learnway/config';
 import { useUpdateUser } from '@learnway/auth/entities';
 
 import { useCodesByCodeGroup, useFetchAsyncI18nResource } from '../../../entities/platform';
+import { SelectOption } from '@learnway/ui/type';
 
 const AVALIABLE_LANGUAGES = ['en', 'ko'];
 
@@ -22,11 +22,9 @@ export function useLanguageSelectOptions() {
             ({
               label: code.name,
               value: code.code,
-              extra: code,
-            }) as SelectOption,
+              extra: code }) as SelectOption,
         );
-    }, [data]),
-  };
+    }, [data]) };
 }
 
 export function useSetLanguage() {
@@ -53,6 +51,5 @@ export function useSetLanguage() {
         });
       }
     },
-    inProgress,
-  };
+    inProgress };
 }

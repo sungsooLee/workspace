@@ -80,8 +80,7 @@ export const useSequenceForm = (sequenceId?: string) => {
     saveTabData,
     deleteTabData,
     changeTab,
-    getTabValues: () => tabRefs.current[activeTab]?.getValues?.() ?? null,
-  };
+    getTabValues: () => tabRefs.current[activeTab]?.getValues?.() ?? null };
 };
 
 /**
@@ -97,6 +96,5 @@ const responseDataToFormData = (response: Course) => {
 const formDataToRequestData = (formData: Partial<Course>, activeTab: SequenceTab): Course => {
   return {
     ...formData,
-    wizardStep: activeTab,
-  } as Course;
+    wizardStep: activeTab } as Course;
 };

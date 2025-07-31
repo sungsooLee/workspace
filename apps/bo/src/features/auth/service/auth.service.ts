@@ -3,8 +3,7 @@ import {
   useLoginUser,
   useReissue,
   useUpdateAuthUser,
-  useUpdateUser,
-} from '@learnway/auth/entities';
+  useUpdateUser } from '@learnway/auth/entities';
 import type { AuthUser } from '@learnway/auth/types';
 
 import { cookieService, MutateCallback } from '@learnway/shared';
@@ -57,8 +56,7 @@ export function useAuthSignin() {
         onError: async (error, variables, context) => {
           // loginErrorAlert(error);
           callback?.onError && callback.onError(error, variables, context);
-        },
-      });
+        } });
     },
     reissue: async (): Promise<AuthUser | undefined> => {
       const user = await reissue();
@@ -69,8 +67,7 @@ export function useAuthSignin() {
       );
       // await usePermissionStore.getState().fetchPermissions(); //임시 사용가능한 API 목록 Fetch
       return updatedUser;
-    },
-  };
+    } };
 }
 
 export function getSavedUserid(): string | undefined {

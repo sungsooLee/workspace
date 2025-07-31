@@ -1,13 +1,13 @@
+import { useMatches, useRouter } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
-import { useRouter, useMatches } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
-import { useModal } from '@learnway/ui';
-import { cn } from '@learnway/shared';
 import { useCurrentRoute } from '@learnway/hooks';
+import { cn } from '@learnway/shared';
+import { useModal } from '@learnway/ui/modal';
 
-import { AuthForm, AuthFormData } from '../features/auth';
 import { useAsyncFetchEmail } from '../entities';
+import { AuthForm, AuthFormData } from '../features/auth';
 
 import styles from '@learnway/styles/fo/pages/_auth/search-account/search-account.module.css';
 

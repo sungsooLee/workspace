@@ -185,4 +185,10 @@ export const mutateOptions = {
       return LearningSequenceService.updateStudentsSequence(payload);
     },
   }),
+  // 수강생 일괄 등록
+  updateStudentsList: () => ({
+    mutationFn: (payload: any) => {
+      return LearningSequenceService.updateStudentsList(payload);
+    },
+  }),
 };

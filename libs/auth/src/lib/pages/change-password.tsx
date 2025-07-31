@@ -1,14 +1,21 @@
 import { useRouter } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
-import { ContentsRow, DynamicFormField, Button, useModal } from '@learnway/ui';
-import { cn, formatDate, DATE_TIME_FORMAT } from '@learnway/shared';
-import { useDynamicForm, DynamicFormConfig, useCurrentRoute } from '@learnway/hooks';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { cn, DATE_TIME_FORMAT, formatDate } from '@learnway/shared';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
 
-import { FormRow, NoticeBox, HighlightMessageBox } from '../shared/ui';
-import { GoogleOtpGuideButton } from '../features/auth';
-import { useReissue, useUpdatePassword, useUpdatePasswordExpireDate } from '../entities';
-import { useLogoutUser, useFetchAuthUser } from '../entities';
+import { useModal } from '@learnway/ui/modal';
+
+import {
+  useFetchAuthUser,
+  useLogoutUser,
+  useReissue,
+  useUpdatePassword,
+  useUpdatePasswordExpireDate,
+} from '../entities';
+import { FormRow, HighlightMessageBox, NoticeBox } from '../shared/ui';
 
 import styles from '@learnway/styles/fo/pages/_auth/change-password.module.css';
 

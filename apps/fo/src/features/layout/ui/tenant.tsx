@@ -1,7 +1,8 @@
 import { memo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui';
 import { isMobile } from 'react-device-detect';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
 //import styles from '@learnway/styles/fo/features/layout/ui/tenant.module.css';
 import { IcoArrowDown, IcoCheck, IcoArrowForward } from '@learnway/icons';

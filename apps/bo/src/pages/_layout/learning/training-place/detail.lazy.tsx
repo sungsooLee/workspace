@@ -1,10 +1,10 @@
-import { useRef, useEffect } from 'react';
-import { t } from 'i18next';
-import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
-import { Button, useModal } from '@learnway/ui';
 import { TrainingPlaceDetail } from '@features/learning-operate-support/learning-space/learning-space-management/training-place-detail';
+import { Button } from '@learnway/ui/button';
+import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui';
+import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { EnFormMode, EnPageMode } from '@types';
-import { MainContents, PageContainer, LinkBox, ContentsButtons } from '@shared/ui';
+import { t } from 'i18next';
+import { useEffect, useRef } from 'react';
 
 export const Route = createLazyFileRoute('/_layout/learning/training-place/detail')({
   component: RouteComponent,

@@ -1,8 +1,7 @@
 import {
   ExternalCourseForm,
   ExternalCourseFormLayoutParam,
-  ExternalCourseLayoutParam,
-} from '@types';
+  ExternalCourseLayoutParam } from '@types';
 import { ExternalEducationService } from '../api/external-education';
 
 export const queryKeys = {
@@ -15,8 +14,7 @@ export const queryKeys = {
       'registration-layout',
       data.externalCourseFormId,
       data.externalCourseFormEnrollType,
-    ] as const,
-};
+    ] as const };
 
 export const queryOptions = {
   list: (param: any) => ({
@@ -35,44 +33,34 @@ export const queryOptions = {
       );
 
       return ExternalEducationService.getExternalEducationList(filteredParams);
-    },
-  }),
+    } }),
   componentList: ({ tenantId, externalCourseFormEnrollType }: ExternalCourseFormLayoutParam) => ({
     queryKey: [...queryKeys.all, 'components', tenantId],
     queryFn: () =>
       ExternalEducationService.getComponentList({ tenantId, externalCourseFormEnrollType }),
-    enabled: !!tenantId && !!externalCourseFormEnrollType,
-  }),
+    enabled: !!tenantId && !!externalCourseFormEnrollType }),
   detail: (externalCourseFormId: number) => ({
     queryKey: queryKeys.detail(externalCourseFormId),
     queryFn: () => ExternalEducationService.getExternalEducation(externalCourseFormId),
-    enabled: !!externalCourseFormId && externalCourseFormId > 0,
-  }),
+    enabled: !!externalCourseFormId && externalCourseFormId > 0 }),
   registrationLayout: (data: ExternalCourseLayoutParam) => ({
     queryKey: queryKeys.registrationLayout(data),
     queryFn: () => ExternalEducationService.getRegistrationLayout(data),
     enabled:
       !!data.externalCourseFormId &&
       data.externalCourseFormId > 0 &&
-      !!data.externalCourseFormEnrollType,
-  }),
+      !!data.externalCourseFormEnrollType }),
 
   getExternalPopup: (externalCourseFormId: number) => ({
     queryKey: [...queryKeys.all, 'popup', externalCourseFormId],
     queryFn: () => ExternalEducationService.getExternalCoursePopup(externalCourseFormId),
-    enabled: !!externalCourseFormId && externalCourseFormId > 0,
-  }),
-};
+    enabled: !!externalCourseFormId && externalCourseFormId > 0 }) };
 
 export const mutateOptions = {
   createExternalCourseForm: () => ({
     mutationFn: (payload: ExternalCourseForm) =>
-      ExternalEducationService.createExternalEducation(payload),
-  }),
+      ExternalEducationService.createExternalEducation(payload) }),
   createExternalCourseLayout: () => ({
-    mutationFn: (payload: any) => ExternalEducationService.createExternalCourseLayout(payload),
-  }),
+    mutationFn: (payload: any) => ExternalEducationService.createExternalCourseLayout(payload) }),
   createExternalCoursePopup: () => ({
-    mutationFn: (payload: any) => ExternalEducationService.createExternalCoursePopup(payload),
-  }),
-};
+    mutationFn: (payload: any) => ExternalEducationService.createExternalCoursePopup(payload) }) };

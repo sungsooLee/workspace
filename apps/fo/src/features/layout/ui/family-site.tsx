@@ -1,9 +1,8 @@
 import { memo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
-import { Popover } from '@learnway/ui';
+import { IcoArrowDown } from '@learnway/icons';
 import styles from '@learnway/styles/fo/features/layout/ui/family-site.module.css';
-import { IcoCheck, IcoArrowDown } from '@learnway/icons';
+import { Popover } from '@learnway/ui/popover';
 
 const PopoverContent = () => {
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
@@ -20,7 +19,8 @@ const PopoverContent = () => {
             type="button"
             key={idx}
             className={`${styles.btn} ${activeIdx === idx ? styles.active : ''}`}
-            onClick={() => handleClick(idx)}>
+            onClick={() => handleClick(idx)}
+          >
             {btn}
           </button>
         ))}
