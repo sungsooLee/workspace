@@ -598,6 +598,15 @@ export interface QuestionItem {
   options: QuestionItemOption[];
 }
 
+export interface QuestionBasicInfoDetail extends GetContentDetailRes {
+  isExamMapping?: boolean;
+}
+
+export interface UpdateQuestionBankCountInfoReq {
+  contentUuid: string;
+  questionTotalCount: number;
+}
+
 export interface QuestionItemDeleteParam {
   contentUuid: string;
   contentType: string;
