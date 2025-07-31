@@ -1,16 +1,12 @@
 import React, { memo } from 'react';
-import {
-  ModalBody,
-  ModalContainer,
-  ModalTitle,
-  ContentsRow,
-  Input,
-  Button,
-  Pagination,
-} from '@learnway/ui';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import styles from './address-popup.module.css';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { ModalContainer, ModalTitle, ModalBody } from '@learnway/ui/modal';
+import { Pagination } from '@learnway/ui/pagination';
 
 const AddressPopupComponent = () => {
   return (

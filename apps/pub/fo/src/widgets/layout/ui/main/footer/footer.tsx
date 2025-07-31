@@ -4,9 +4,11 @@ import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
 import logoImage from '@learnway/styles/fo/assets/images/logo_foot.png';
-import { Dropdown, Button, useModal } from '@learnway/ui';
+
 import styles from '@learnway/styles/fo/widgets/layout/ui/main/footer/footer.module.css';
 import { AgreementPopup, PrivacyPopup, ContactPopup } from '../../../../../features/auth';
+import { useModal } from '@learnway/ui/modal';
+import { Button } from '@learnway/ui/button';
 function FooterComponent() {
   const { openModal } = useModal();
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
