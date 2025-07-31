@@ -23,7 +23,7 @@ function RouteComponent() {
         <CourseDetail />
       </BrowserView>
       <MobileView>
-        {/* <CourseDetailMobile /> */}
+        <CourseDetailMobile />
       </MobileView>
     </>
   );

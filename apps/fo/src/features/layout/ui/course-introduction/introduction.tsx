@@ -38,34 +38,35 @@ const CourseIntroductionCompoment = forwardRef<HTMLDivElement, Props>(
       return arr.map((a) => ({
         imgSrc: listImage1,
         // imgSrc: a.thumbnail,
-        text: a.name,
+        text: a.courseName,
       }));
     };
 
     // 사전 필수 과정 아코디언
-    const [aforetimeValue, setAforetimeValue] = useState<string>(preRequired[0].id || '');
+    const [aforetimeValue, setAforetimeValue] = useState<string>(preRequired?.[0].id || '');
     const [aforetimeView, setAforetimeView] = useState<boolean>(false);
-    const aforetimeValueItems = preRequired
-      ? [
-          {
-            value: '1',
-            title: (
-              <div className={styles.aforetime_title}>
-                <p>
-                  <IcoEssential width={32} height={32} />
-                  {'사전 필수 과정이 있는 과정입니다'}
-                </p>
-                <span>{aforetimeValue === '1' ? '닫기' : '더보기'}</span>
-              </div>
-            ),
-            children: (
-              <div className={styles.aforetime_contents}>
-                <PackageCardList cardListData={prePackageCardValueFn(preRequired)} />
-              </div>
-            ),
-          },
-        ]
-      : [];
+    const aforetimeValueItems =
+      preRequired && preRequired.length
+        ? [
+            {
+              value: '1',
+              title: (
+                <div className={styles.aforetime_title}>
+                  <p>
+                    <IcoEssential width={32} height={32} />
+                    {'사전 필수 과정이 있는 과정입니다'}
+                  </p>
+                  <span>{aforetimeValue === '1' ? '닫기' : '더보기'}</span>
+                </div>
+              ),
+              children: (
+                <div className={styles.aforetime_contents}>
+                  <PackageCardList cardListData={prePackageCardValueFn(preRequired)} />
+                </div>
+              ),
+            },
+          ]
+        : [];
 
     // 커리큘럼 컨텐츠 리스트
     const CurriculumData = [
@@ -299,8 +300,68 @@ const CourseIntroductionCompoment = forwardRef<HTMLDivElement, Props>(
                       <div className={operatorStyles.profile}>
                         <strong>{item.name}</strong>
                         <div>
-                          <span>{item.position}</span>
-                          <span>{item.teams}</span>
+                          {item.position ? <span>{item.position}</span> : ''}
+                          {item.teams ? <span>{item.teams}</span> : ''}
+                        </div>
+                      </div>
+                      <div className={operatorStyles.definition_list}>
+                        {/* definition module */}
+                        <div
+                          className={`${definitionListStyles.start} ${definitionListStyles.list}`}
+                        >
+                          {item.email && (
+                            <dl>
+                              <dt>이메일</dt>
+                              <dd>{item.email}</dd>
+                            </dl>
+                          )}
+                          {item.phone && (
+                            <dl>
+                              <dt>전화</dt>
+                              <dd>{item.phone}</dd>
+                            </dl>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* 과정 담당자 */}
+          {introduction.coordinator && (
+            <div className={styles.info_box}>
+              <div className={styles.tit_box}>
+                <strong>과정 담당자</strong>
+              </div>
+              <div className={styles.operator_box}>
+                {introduction.coordinator?.map((item: any, index: any) => (
+                  <div key={index} className={`${operatorStyles.start} ${operatorStyles.operator}`}>
+                    {item.profileImage ? (
+                      <div className={operatorStyles.avatar}>
+                        <Avatar
+                          imageUrl="https://github.com/shadcn.png"
+                          size={isMobile ? 'xl' : '2xl'}
+                          className={styles.info_avata}
+                        />
+                      </div>
+                    ) : (
+                      <div className={operatorStyles.avatar}>
+                        <Avatar
+                          imageUrl={avatarDefault}
+                          size={isMobile ? 'xl' : '2xl'}
+                          className={styles.info_avata}
+                        />
+                      </div>
+                    )}
+                    <div className={operatorStyles.txt_box}>
+                      <div className={operatorStyles.profile}>
+                        <strong>{item.name}</strong>
+                        <div>
+                          {item.position ? <span>{item.position}</span> : ''}
+                          {item.teams ? <span>{item.teams}</span> : ''}
                         </div>
                       </div>
                       <div className={operatorStyles.definition_list}>
