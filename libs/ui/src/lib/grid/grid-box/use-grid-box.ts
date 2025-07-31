@@ -1,7 +1,7 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
-import { GridBoxConfig, GridBoxState, useGridBoxConfig, UseGridBoxReturn } from '../types';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { PaginationResponse } from '../../type';
+import { GridBoxConfig, GridBoxState, useGridBoxConfig, UseGridBoxReturn } from '../types';
 import { DEFAULT_GRID_BOX_STATE } from './grid-box';
 
 /**
@@ -105,6 +105,7 @@ export const useGridBox = <T = any>(
     config,
     gridFetch: fetchGridData,
     data: gridData!,
+    setGridData,
   };
 };
 

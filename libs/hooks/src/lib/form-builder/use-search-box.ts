@@ -102,6 +102,7 @@ const useSearchBoxHook = <T extends SearchBoxConfig>(config: T): UseSearchBoxRet
     clearErrors,
     setValue,
     trigger,
+    watch,
   } = methods;
 
   /**
@@ -208,17 +209,17 @@ const useSearchBoxHook = <T extends SearchBoxConfig>(config: T): UseSearchBoxRet
 
     const selectedOption = toPairs(values).map(([key, value]) => {
       const options = getOptions(key);
-      if(isEmpty(options)) return isEmpty(value) ? [key, null] : [key, { value, label: value }];
+      if (isEmpty(options)) return isEmpty(value) ? [key, null] : [key, { value, label: value }];
 
       const selectedOption = isArray(value)
-        ? value.map(_ => find(options, {value: _}))
-        : find(options, {value});
+        ? value.map((_) => find(options, { value: _ }))
+        : find(options, { value });
 
-      if(selectedOption && (!isArray(selectedOption) || first(selectedOption)?.value))
+      if (selectedOption && (!isArray(selectedOption) || first(selectedOption)?.value))
         return [key, selectedOption];
 
       return [key, null];
-    })
+    });
 
     return omitBy(fromPairs(selectedOption), (value) => isNil(value) || value === '');
   };
@@ -249,6 +250,7 @@ const useSearchBoxHook = <T extends SearchBoxConfig>(config: T): UseSearchBoxRet
     onFormChange,
     onFormFocus: handleFocus,
     control: extendedControl,
+    watch,
   };
 };
 
