@@ -116,26 +116,6 @@ function RouteComponent() {
     return true;
   };
 
-  const handleTenantCheck = async (data: any) => {
-    console.log(' ### handleTenantSelectCheck', data);
-
-    // TODO 테넌트/역할 구성 후 제외 필요
-    // return true;
-
-    // TODO 테넌트/역할 없을때 처리
-    // if (!data?.tenents?.length || !data?.roles?.length) {
-    //   loginErrorAlert({ code: AUTH_ERROR_CODE.TENANT_PENDING });
-    //   return false;
-    // }
-
-    // TODO 역할체크도 필요
-    //  테넌트/역할 선택 - 최초 로그인 사용자
-    if (!data?.lastVisitedFoTenantId) {
-      alert('테넌트를 선택해 주세요.');
-    }
-    return true;
-  };
-
   const loginErrorAlert = (error: any) => {
     console.log('loginErrorAlert :: ', error);
 
@@ -274,16 +254,19 @@ function RouteComponent() {
 
         // 로그인 - 비밀번호 변경 3개월 체크
         const checkExpire = await handleExpireCheck(data);
-        // 테넌트 선택 체크
-        const checkTenant = await handleTenantCheck(data);
 
-        if (checkExpire && checkTenant) {
-          router.navigate({ to: search.redirect || '/' });
-          return;
+        if (checkExpire) {
+          //  테넌트 선택 - 최초 로그인 사용자
+          // if (true) {
+          if (!data?.lastVisitedFoTenantId) {
+            router.navigate({ to: '/tenant-select' });
+            return;
+          } else {
+            router.navigate({ to: search.redirect || '/' });
+            return;
+          }
         }
-
         logout();
-
         // 임시 : 사용 가능한 API 목록 fetch
         // await usePermissionStore.getState().fetchPermissions();
       },

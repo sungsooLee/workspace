@@ -86,11 +86,12 @@ async function authorization({ location, context }: { location: ParsedLocation; 
         ),
       );
       if (authUserFetch && menus) {
+        console.log('@ auth fetch', authUserFetch);
+        console.log('@ auth menus222222', convertHierarchyToList(menus));
         authUserFetch.menus = convertHierarchyToList(menus);
         queryClient.setQueryData(authUserQueryKeys.authUser, authUserFetch);
+        return;
       }
-      console.log('@ auth fetch', authUserFetch);
-      console.log('@ auth menus222222', convertHierarchyToList(menus));
     }
 
     if (location.pathname === '/' || !authUserFetch?.menus) {
@@ -125,6 +126,7 @@ export function pageRouteConfig(routeConfig?: PageRouteConfig<PageMeta>) {
         try {
           await authorization({ location, context });
         } catch (e) {
+          console.error('@@@ authorization Error', e);
           if (e === ERROR.PAGE_ACCESS_RIGHTS) {
             throw redirect({ to: '/' });
           } else if (e === ERROR.PASSWORD_EXPIRE) {
