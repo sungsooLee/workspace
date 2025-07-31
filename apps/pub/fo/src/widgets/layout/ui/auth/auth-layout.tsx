@@ -1,14 +1,13 @@
+import { useLocation } from '@tanstack/react-router';
 import { memo, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from '@tanstack/react-router';
-import { cn } from '@learnway/shared';
 
-import { AuthHeader } from './auth-header/auth-header';
-import { AuthContainer } from './auth-container/auth-container';
 import styles from '@learnway/styles/fo/widgets/layout/ui/auth/auth-layout.module.css';
+import { AuthContainer } from './auth-container/auth-container';
+import { AuthHeader } from './auth-header/auth-header';
 
+import { BrowserView, MobileView } from 'react-device-detect';
 import { isSigninPage, PAGE_TITLE_BY_PATH } from '../../../../features/platform';
-import { MobileView, BrowserView } from 'react-device-detect';
 
 interface AuthLayoutComponentProps {
   children: ReactNode;

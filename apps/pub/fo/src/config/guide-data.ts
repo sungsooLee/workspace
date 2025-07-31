@@ -1787,7 +1787,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '2025-07-29',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- tenat-select.tsx',
   },
   {
     screenId: 'NLP_FO_LOG_1000_2',
@@ -1797,7 +1797,7 @@ export const guideData = [
     pageType: 'Page',
     completionDate: '2025-07-29',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- dormant-info.tsx',
   },
   {
     screenId: 'NLP_FO_LOG_1001',

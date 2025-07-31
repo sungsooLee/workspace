@@ -19,6 +19,9 @@
         var(--red95) 60%,
         var(--blue92) 100%
       );
+      .auth_area {
+        @apply pt-[56px];
+      }
     }
 
     .auth_area {
@@ -52,7 +55,7 @@
       }
       /* //이용약관, 개인정보취급방침 레이아웃 */
       &.auth_container {
-        @apply bg-[#ffffff] pt-[0];
+        @apply bg-[#ffffff] py-[0];
         &.login {
           @apply bg-cover bg-center;
           background-image: none;
