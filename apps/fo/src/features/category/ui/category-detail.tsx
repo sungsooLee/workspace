@@ -70,7 +70,7 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
   const [depth, setDepth] = useState(3);
   const [page, setPage] = useState(0);
   const [size , setSize] = useState(20);
-  const [sorting, setSorting] = useState([]);
+  const [sorting, setSorting] = useState(['createdDate,DESC']);
   const [courseName, setCourseName] = useState('');
   const [coursePayload, setCoursePayload] = useState({
     page, size, sort: sorting, categoryId, courseName
@@ -112,15 +112,24 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
     const payload = {
       ...coursePayload,
     }
-    if( sortingIdx ) {
-      setSorting([])
-      payload.sort = []
-      setCoursePayload(payload)
-    } else {
-      setSorting([])
-      payload.sort = []
-      setCoursePayload(payload)
+    switch (sortingIdx) {
+      case 1:
+        setSorting(['courseName']);
+        payload.sort = ['courseName'];
+        setCoursePayload(payload)
+        break;
+      case 2:
+        setSorting(['likeCount,DESC']);
+        payload.sort = ['likeCount,DESC'];
+        setCoursePayload(payload)
+        break;
+      default:
+        setSorting(['createdDate,DESC']);
+        payload.sort = ['createdDate,DESC'];
+        setCoursePayload(payload)
+        break;
     }
+
     await fetchCoursesCategory(payload)
   }
 
