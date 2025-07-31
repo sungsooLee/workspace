@@ -35,3 +35,10 @@
     }
   }
 }
+
+/* mobile */
+:global(body.mobile) {
+  .lang_area {
+    @apply !p-0;
+  }
+}
