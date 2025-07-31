@@ -1,13 +1,13 @@
 import { memo, useEffect, useMemo, useState } from 'react';
 
-import { AutoCompleteDropdown } from '@learnway/ui';
 import {
   useActiveMenuDepthState,
-  useAsycFetchMenusForceRefatch,
+  useAsyncFetchMenusForceRefetch,
   useFetchAuthUser,
   useUpdateTenantRoleLastSelect,
   useUpdateUser,
 } from '@learnway/auth/entities';
+import { AutoCompleteDropdown } from '@learnway/ui';
 
 import { useRouter } from '@tanstack/react-router';
 
@@ -25,7 +25,7 @@ const GnbRoleSelectComponent = ({ className }: Props) => {
   const { setActiveMenuDepthMenu } = useActiveMenuDepthState();
 
   const { data: authUser } = useFetchAuthUser();
-  const { asyncMenus } = useAsycFetchMenusForceRefatch();
+  const { asyncMenus } = useAsyncFetchMenusForceRefetch();
   const { updateMenu, updateActiveTenant, updateActiveRole } = useUpdateUser();
   const { update: updateTenantRole } = useUpdateTenantRoleLastSelect();
 

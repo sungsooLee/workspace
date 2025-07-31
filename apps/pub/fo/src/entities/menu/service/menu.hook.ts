@@ -12,7 +12,7 @@ export function useFetchMenu({ menuId }: { menuId: string }) {
   return useQuery(queryOptions.detail(menuId));
 }
 
-export function useAsycFetchMenus(mutationOptions = {}) {
+export function useAsyncFetchMenus(mutationOptions = {}) {
   const queryClient = useQueryClient();
 
   return {
