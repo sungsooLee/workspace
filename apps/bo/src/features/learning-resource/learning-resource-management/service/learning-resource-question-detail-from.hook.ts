@@ -1,26 +1,32 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { create } from 'zustand';
-import { ContentBaseInfo, ContentInformation, EnFormMode, TestPaperBasicInfoSaveRes } from '@types';
+import {
+  ContentBaseInfo,
+  EnFormMode,
+  QuestionBasicInfoDetail,
+  TestPaperBasicInfoSaveRes,
+} from '@types';
 import {
   useCreateQuestionBankContent,
-  useUpdateQuestionBankContent } from '@entities/learning-resource';
-import { useDynamicForm2, UseDynamicFormResult } from '@learnway/hooks';
+  useUpdateQuestionBankContent,
+} from '@entities/learning-resource';
 import { learningResourceQueryOptions } from '@entities/learning-resource/service/learning-resource.queries';
-import { useState } from 'react';
 
-interface FunctionInfomation {
-  saveBaseInfo: () => void;
+interface FunctionInformation {
+  saveBaseInfo?: () => void;
 }
 
 interface QuestionBankDetailStoreData {
-  baseInfo?: ContentInformation;
+  baseInfo?: QuestionBasicInfoDetail;
+  hasMapping?: boolean;
   formMode: EnFormMode;
-  funcInfo?: FunctionInfomation;
+  funcInfo?: FunctionInformation;
   contentUuid?: string;
 
   setContentUuid: (contentUuid: string) => void;
   setBaseInfo: (baseInfo: any) => void;
-  setFuncInfo: (v: FunctionInfomation) => void;
+  setFuncInfo: (v: FunctionInformation) => void;
+  setHasMapping: (hasMapping: boolean) => void;
 }
 
 const useQuestionDetailFormStore = create<QuestionBankDetailStoreData>((set, get) => ({
@@ -34,27 +40,33 @@ const useQuestionDetailFormStore = create<QuestionBankDetailStoreData>((set, get
     if (baseInfo) formMode = EnFormMode.VIEW;
     set((state: any) => ({ baseInfo, formMode }));
   },
-  setFuncInfo(funcInfo?: FunctionInfomation) {
+  setFuncInfo(funcInfo?: FunctionInformation) {
     set((state) => ({
-      funcInfo }));
+      funcInfo,
+    }));
   },
   setContentUuid(contentUuid?: string) {
     set((state) => ({
-      contentUuid }));
-  } }));
+      contentUuid,
+    }));
+  },
+  setHasMapping(hasMapping: boolean) {
+    set((state) => ({ hasMapping }));
+  },
+}));
 
 export const useLearningResourceQuestionDetailForm = () => {
-  const { baseInfo, formMode, funcInfo, setBaseInfo, setFuncInfo } = useQuestionDetailFormStore(
-    (state) => state,
-  );
+  const { baseInfo, formMode, funcInfo, hasMapping, setBaseInfo, setFuncInfo, setHasMapping } =
+    useQuestionDetailFormStore((state) => state);
 
   const { create } = useCreateQuestionBankContent();
   const { update } = useUpdateQuestionBankContent();
   const queryClient = useQueryClient();
 
   const handleSaveButtonClick = () => {
-    funcInfo?.saveBaseInfo();
+    funcInfo?.saveBaseInfo?.();
   };
+
   const handleUpdateQuestionBankContent = async (payload: ContentBaseInfo) => {
     update(payload);
   };
@@ -69,7 +81,8 @@ export const useLearningResourceQuestionDetailForm = () => {
         },
         onError: (error: any) => {
           console.log('question error', error);
-        } },
+        },
+      },
     );
   };
 
@@ -80,10 +93,15 @@ export const useLearningResourceQuestionDetailForm = () => {
   const handleGetQuestionBankContent = async (contentUuid?: string) => {
     if (contentUuid) {
       const data = await queryClient.fetchQuery(
-        learningResourceQueryOptions.getContent(contentUuid),
+        learningResourceQueryOptions.getContent<QuestionBasicInfoDetail>(contentUuid),
+      );
+
+      const hasMapping = await queryClient.fetchQuery(
+        learningResourceQueryOptions.getCurriculumsMapping(contentUuid),
       );
 
       setBaseInfo(data);
+      setHasMapping(hasMapping);
     } else {
       setBaseInfo(undefined);
     }
@@ -91,9 +109,11 @@ export const useLearningResourceQuestionDetailForm = () => {
   return {
     baseInfo,
     formMode,
+    hasMapping,
     setFuncInfo,
     updateQuestionBank: handleUpdateQuestionBankContent,
     createQuestionBank: handleCreateQuestionBankContent,
     saveButtonClick: handleSaveButtonClick,
-    setBaseInfo: handleGetQuestionBankContent };
+    setBaseInfo: handleGetQuestionBankContent,
+  };
 };

@@ -54,7 +54,7 @@ export type GuidePopupProps = {
 export type TooltipProps = {
   show: boolean;
   content: ReactNode | string;
-  type: ContentCreateType | string | undefined; // 툴팁 아이콘 타입 (추후 새로운 아이콘 필요 시 추가 or 수정 필요)
+  type?: ContentCreateType | string | undefined; // 툴팁 아이콘 타입 (추후 새로운 아이콘 필요 시 추가 or 수정 필요)
 };
 
 /**

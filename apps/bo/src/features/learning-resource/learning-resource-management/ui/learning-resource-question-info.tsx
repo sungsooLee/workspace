@@ -81,8 +81,10 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
       randomCountUpdateData,
       handleCountInputChange,
       updateQuestionCountInfo,
+      selectedQuestionRows,
       setSelectedQuestionRows,
-      handleOnCopyAction,
+      handleOnCopyQuestion,
+      handleOnDeleteQuestion,
     } = useExamQuestionInfoInput(data as TestPaperBasicInfoDetail);
 
     const selectedQuestionCount =
@@ -107,17 +109,21 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
     );
 
     const handleClickRetrieveQuestionModal = useCallback(async () => {
+      if (!data?.examPoolUuid) {
+        return;
+      }
+
       const result = await openModal({
         width: 'xl',
         height: 'fix',
-        content: <LearningResourceQuestionShuttleModal examPoolUuid={data?.examPoolUuid ?? ''} />,
+        content: <LearningResourceQuestionShuttleModal examPoolUuid={data.examPoolUuid} />,
       });
 
       if (result) {
         const { data: refetchResult } = await refetchQuestionList();
         setSelectedQuestions(refetchResult?.filter((q) => q.isUsed) as QuestionItem[]);
       }
-    }, []);
+    }, [data]);
 
     const handleClickAddQuestionButton = useCallback(async () => {
       if (isEmptyData(data)) {
@@ -525,15 +531,16 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
                     variant="text"
                     label={t('LABEL.grid.header.copy', '복사')}
                     icon={<IcoCopy width={16} height={16} stroke="#4C515E" />}
-                    onClick={handleOnCopyAction}
-                    disabled={!questionList.length}
+                    onClick={handleOnCopyQuestion}
+                    disabled={!selectedQuestionRows.length}
                   />
                   <Button
                     type="button"
                     variant="text"
                     label={t('LABEL.grid.header.remove', '삭제')}
                     icon={<IcoMinus width={16} height={16} stroke={'#131C30'} />}
-                    disabled={!questionList.length}
+                    onClick={handleOnDeleteQuestion}
+                    disabled={!selectedQuestionRows.length}
                   />
                 </>
               }

@@ -3,6 +3,7 @@ import { Tabs } from '@learnway/ui/tabs';
 /* IA118 / NLP_BO_CMS_1203 - 나의 학습자원 > 시험지 등록 및 상세 */
 import {
   ContentTopButtons,
+  getTooltipContent,
   LearningResourceQuestionInfo,
   LearningResourceTestPaperInfo,
 } from '@features/learning-resource';
@@ -17,7 +18,7 @@ import {
 } from '@features/learning-resource/learning-resource-management/service';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
 import { createLazyFileRoute, useBlocker, useRouter } from '@tanstack/react-router';
-import { ExamTemplateType, TestPaperBasicInfoSaveRes } from '@types';
+import { ContentCreateType, ExamTemplateType, TestPaperBasicInfoSaveRes } from '@types';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -169,7 +170,13 @@ function RouteComponent() {
 
   return (
     <form onSubmit={onSubmit(handleSubmit)}>
-      <PageContainer>
+      <PageContainer
+        tooltipProps={{
+          show: !!hasMapping || data?.createType !== ContentCreateType.MANUAL,
+          content: t(getTooltipContent(data?.createType)),
+          type: data?.createType,
+        }}
+      >
         <ContentsButtons>
           <ContentTopButtons provider={provider} />
         </ContentsButtons>
