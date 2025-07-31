@@ -107,6 +107,9 @@ export function CourseDetailMobile() {
     });
   };
 
+  // 수강신청 있는 과정
+  const [courseValues, setCourseValues] = useState<string | undefined>(undefined);
+
   const tabTitle: any[] = [
     { title: t('대시보드'), isEroll: false, selectTabNumber: '0', targetRef: dashboardRef },
     { title: t('과정소개'), isEroll: false, selectTabNumber: '1', targetRef: introduceRef },
@@ -355,7 +358,7 @@ export function CourseDetailMobile() {
               curriculum={curriculumData}
             />
           )}
-          {courseData?.educations && (
+          {sequencesData && (
             <CourseEducation
               ref={educationRef}
               educationsTemp={courseData?.educations}
@@ -453,7 +456,7 @@ export function CourseDetailMobile() {
 
   // 학습유형 리스트 open, close
   const [listCategoryOpen, setListCategoryOpen] = useState<boolean>(true);
-  const [listSubTitleOpen, setListSubTitleOpen] = useState<boolean>(false);
+  const [listSubTitleOpen, setListSubTitleOpen] = useState<boolean>(true);
 
   useEffect(() => {
     if (!courseData?.course.courseLike) return;
@@ -530,7 +533,7 @@ export function CourseDetailMobile() {
                 <li className={listCategoryOpen === true ? packageInformationStyles.open : ''}>
                   <IcoCategory width={20} height={20} fill="#4d525c" />
                   <p>{courseData?.course?.data.category}</p>
-                  <Button
+                  {/* <Button
                     onClick={() =>
                       listCategoryOpen === true
                         ? setListCategoryOpen(false)
@@ -538,7 +541,7 @@ export function CourseDetailMobile() {
                     }
                   >
                     <IcoArrowDown width={20} height={20} stroke="#4d525c" />
-                  </Button>
+                  </Button> */}
                 </li>
               )}
               {/* <li>
@@ -571,7 +574,7 @@ export function CourseDetailMobile() {
                 <li className={listSubTitleOpen === true ? packageInformationStyles.open : ''}>
                   <IcoSubtitles02 width={20} height={20} fill="#4d525c" />
                   <p>{courseData?.course?.data.captionLanguage}</p>
-                  <Button
+                  {/* <Button
                     onClick={() =>
                       listSubTitleOpen === true
                         ? setListSubTitleOpen(false)
@@ -579,7 +582,7 @@ export function CourseDetailMobile() {
                     }
                   >
                     <IcoArrowDown width={20} height={20} stroke="#4d525c" />
-                  </Button>
+                  </Button> */}
                 </li>
               )}
             </ul>
@@ -657,6 +660,8 @@ export function CourseDetailMobile() {
           likeCount={likeCount}
           heart={likeChk}
           handleCourseLike={handleCourseLike}
+          courseValues={courseValues}
+          setCourseValues={setCourseValues}
         />
       </MobileContainerFooter>
     </div>

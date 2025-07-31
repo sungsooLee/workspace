@@ -1,12 +1,12 @@
-import { memo, useState } from 'react';
 import {
-  OptionCard,
-  OptionCardItem,
   ModalBody,
   ModalContainer,
-  ModalTitle,
   ModalFooter,
+  ModalTitle,
+  OptionCard,
+  OptionCardItem,
 } from '@learnway/ui';
+import { memo, useState } from 'react';
 
 import { IcoChair, IcoLocation } from '@learnway/icons';
 
@@ -14,10 +14,14 @@ import {
   CourseFixedButton, // 수강신청 버튼
 } from '../../../features/layout';
 
-import lectureStyles from '@learnway/styles/fo/pages/_layout/course-introduction/lecture.module.css';
 import styles from '@learnway/styles/fo/features/layout/popup/course-selection-popup.module.css';
+import lectureStyles from '@learnway/styles/fo/pages/_layout/course-introduction/lecture.module.css';
 
-const CourseSelectionPopupComponent = () => {
+const CourseSelectionPopupComponent = ({
+  setParentCourseValues,
+}: {
+  setParentCourseValues?: any;
+}) => {
   // 퍼블수정 20250703 초기값 추가 및 임의 날짜 데이터 수정
   const [courseValues, setCourseValues] = useState<string | undefined>(undefined);
   const courseOptions = [
@@ -92,13 +96,16 @@ const CourseSelectionPopupComponent = () => {
                 </div>
               </div>
             )}
-            onOptionSelect={(option: OptionCardItem) => setCourseValues(option.value)}
+            onOptionSelect={(option: OptionCardItem) => {
+              setCourseValues(option.value);
+              setParentCourseValues(option.value);
+            }}
           />
         </div>
       </ModalBody>
       <ModalFooter>
         {/* 찜/공유 수강신청 Button */}
-        <CourseFixedButton course={true} />
+        <CourseFixedButton course={true} courseValues={courseValues} />
       </ModalFooter>
     </ModalContainer>
   );

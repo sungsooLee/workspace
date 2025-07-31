@@ -90,6 +90,7 @@ const CourseIntroductionCompoment = forwardRef<HTMLDivElement, Props>(
     const [curriculumValue, setCurriculumValue] = useState<string>('a');
     const curriculumValueItems = curriculum?.moduleList?.map((module: any) => ({
       value: module.moduleId,
+      isDummy: module.isDummy,
       title: (
         <div className={styles.title}>
           <p>
@@ -98,7 +99,7 @@ const CourseIntroductionCompoment = forwardRef<HTMLDivElement, Props>(
           </p>
         </div>
       ),
-      children: <Curriculum curriculumData={module.lessonList} />,
+      children: module.lessonList ? <Curriculum curriculumData={module.lessonList} /> : undefined,
     }));
 
     // 과정 정보 더보기

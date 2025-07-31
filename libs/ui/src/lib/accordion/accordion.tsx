@@ -1,8 +1,8 @@
-import React, { forwardRef } from 'react';
-import * as Primitive from '@radix-ui/react-accordion';
 import { IcoArrowDown, IcoArrowForward } from '@learnway/icons';
-import { isArray, map } from 'lodash';
+import * as Primitive from '@radix-ui/react-accordion';
 import { useCreation } from 'ahooks';
+import { isArray } from 'lodash';
+import React, { forwardRef } from 'react';
 
 import { cn } from '@learnway/shared';
 
@@ -15,6 +15,7 @@ export interface AccordionItem {
   children?: React.ReactNode;
   active?: boolean;
   tenantMappingMenuId?: number;
+  isDummy?: boolean;
 }
 
 export interface AccordionComponentProps {
@@ -82,18 +83,20 @@ const AccordionComponent = forwardRef<
               className={cn(styles.accordion_item)}
               key={item.value}
             >
-              <Primitive.Trigger
-                className={cn(styles.accordion_btn, item.children && 'has_children')}
-              >
-                <span className={cn('accordion_title', item?.active === true ? 'active' : '')}>
-                  {item.children && editionValue?.includes(item.value) ? (
-                    <IcoArrowDown width={16} height={16} stroke="#4C515E" />
-                  ) : (
-                    <IcoArrowForward width={16} height={16} stroke="#4C515E" />
-                  )}
-                  {item.title}
-                </span>
-              </Primitive.Trigger>
+              {!item.isDummy && item.children && (
+                <Primitive.Trigger
+                  className={cn(styles.accordion_btn, item.children && 'has_children')}
+                >
+                  <span className={cn('accordion_title', item?.active === true ? 'active' : '')}>
+                    {item.children && editionValue?.includes(item.value) ? (
+                      <IcoArrowDown width={16} height={16} stroke="#4C515E" />
+                    ) : (
+                      <IcoArrowForward width={16} height={16} stroke="#4C515E" />
+                    )}
+                    {item.title}
+                  </span>
+                </Primitive.Trigger>
+              )}
               <Primitive.Content className={cn(styles.accordion_content)}>
                 {item.children}
               </Primitive.Content>
