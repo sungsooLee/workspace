@@ -1,9 +1,11 @@
-import { useTranslation } from 'react-i18next';
 import { cn } from '@learnway/shared';
-import { Button, useModal } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { useTranslation } from 'react-i18next';
 
-import { GoogleOtpGuideModal } from './google-otp-guide-modal';
+import { useModal } from '@learnway/ui/modal';
+
 import styles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css';
+import { GoogleOtpGuideModal } from './google-otp-guide-modal';
 
 //interface GoogleOtpGuideButtonComponentProps {}
 

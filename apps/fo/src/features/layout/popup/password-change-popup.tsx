@@ -1,20 +1,14 @@
-import { memo } from 'react';
+import { IcoCaution, IcoFormRequired } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import {
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  useModal,
-  Button,
-  ContentsRow,
-  Input,
-} from '@learnway/ui';
-import { IcoFormRequired, IcoCaution } from '@learnway/icons';
+import { memo } from 'react';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
-import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import styles from '@learnway/styles/fo/features/layout/popup/password-change-popup.module.css';
+import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
 const PasswordChangePopupComponent = () => {
   const { alert: openAlert } = useModal();

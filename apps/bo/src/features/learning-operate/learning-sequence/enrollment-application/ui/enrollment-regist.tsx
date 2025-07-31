@@ -2,16 +2,10 @@ import { queryOptions } from '@entities/learning-sequence/service/learning-seque
 import { LMSApiPrefix } from '@learnway/config';
 import { SearchBoxProvider } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, getDateToString, SelectOption } from '@learnway/shared';
-import {
-  Button,
-  Divider,
-  GridBox,
-  StatsSummary,
-  StatsSummaryData,
-  useGridBox,
-  useGridBoxConfig,
-  useModal,
-} from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { Divider, StatsSummary, StatsSummaryData } from '@learnway/ui/elements';
+import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
+import { useModal } from '@learnway/ui/modal';
 import { Mode } from '@pages/_layout/learning/learning-sequence/-common/type';
 import { GridExcelDownloadButton, SearchBox } from '@shared/ui';
 import { useQueryClient } from '@tanstack/react-query';
@@ -216,7 +210,7 @@ const EnrollmentRegistComponent = ({
   const handleOnSearch = useCallback((data: any) => {
     const payload = {
       openingYear: 2025,
-      courseSequenceId: 2,
+      courseSequenceId: 40,
       enrollStatusType: data.enrollStatusType || '',
       learningStartDate: '2025-06-22',
       learningEndDate: '2025-08-22',

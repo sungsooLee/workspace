@@ -1,6 +1,6 @@
 import { forwardRef, memo } from 'react';
 import { isMobile } from 'react-device-detect';
-import { Carousel } from '@learnway/ui';
+import { Carousel } from '@learnway/ui/carousel';
 import { IcoStar } from '@learnway/icons';
 import { Review, ReviewRating } from '../../../../features/layout/';
 

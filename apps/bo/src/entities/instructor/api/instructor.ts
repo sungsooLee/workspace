@@ -8,8 +8,7 @@ export default class InstructorService {
     const params = {
       tenantId: payload,
       siteScope: 'BO',
-      roleType: 'TUTOR',
-    };
+      roleType: 'TUTOR' };
     return httpService.get<any[]>(`${PMSApiPrefix()}/roles`, params);
   }
 

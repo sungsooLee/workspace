@@ -1,14 +1,11 @@
-import {
-  SelectedChip,
-  ShuttleTreeToChipsV2,
-  transformApiDataToTreeData,
-  useShuttleTreeToChips,
-} from '@learnway/ui';
-import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
-import { useEffect, useMemo } from 'react';
-import { cn } from '@learnway/shared';
-import { CombineUserGroup } from '@types';
 import { useFetchCustomGroupsTree } from '@entities/user-group';
+import { cn } from '@learnway/shared';
+import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
+import { ShuttleTreeToChipsV2, useShuttleTreeToChips } from '@learnway/ui/shuttle-tree-to-chips-v2';
+import { transformApiDataToTreeData } from '@learnway/ui/tree-view';
+import { SelectedChip } from '@learnway/ui/type';
+import { CombineUserGroup } from '@types';
+import { useEffect, useMemo } from 'react';
 
 type UserGroupCustomComponentProps = {
   option: CombineUserGroup[];

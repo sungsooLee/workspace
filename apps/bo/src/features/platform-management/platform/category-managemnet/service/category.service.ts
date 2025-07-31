@@ -1,5 +1,6 @@
-import { findNodeByKey, findNodePath, TreeNode } from '@learnway/ui';
+import { TreeNode } from '@learnway/ui/tree-view';
 import type { Category, CategoryCreate } from '@types';
+// TODO: Fix unknown imports: findNodeByKey, findNodePath from '@learnway/ui'
 
 /**
  * API 응답 데이터에서 menuId를 key로 변환하고 isUsed 속성을 추가하는 함수
@@ -28,16 +29,14 @@ export const transformApiDataToTreeData = (apiData: any) => {
         menuId: node.id?.toString(),
         // 추가 속성
         code: node.id,
-        sortOrder: node.sortSeq,
-      };
+        sortOrder: node.sortSeq };
 
       // 자식 노드가 있는 경우 재귀적으로 변환
       if (node.children && node.children.length > 0) {
         node.children = node.children.map((n: any) => ({
           ...n,
           parentKey: node.id?.toString(),
-          parentMenuName: node.name,
-        }));
+          parentMenuName: node.name }));
         transformedNode.children = transform(node.children);
       }
 

@@ -3,8 +3,7 @@ import { create } from 'zustand';
 import { ContentBaseInfo, ContentInformation, EnFormMode, TestPaperBasicInfoSaveRes } from '@types';
 import {
   useCreateQuestionBankContent,
-  useUpdateQuestionBankContent,
-} from '@entities/learning-resource';
+  useUpdateQuestionBankContent } from '@entities/learning-resource';
 import { useDynamicForm2, UseDynamicFormResult } from '@learnway/hooks';
 import { learningResourceQueryOptions } from '@entities/learning-resource/service/learning-resource.queries';
 import { useState } from 'react';
@@ -37,15 +36,12 @@ const useQuestionDetailFormStore = create<QuestionBankDetailStoreData>((set, get
   },
   setFuncInfo(funcInfo?: FunctionInfomation) {
     set((state) => ({
-      funcInfo,
-    }));
+      funcInfo }));
   },
   setContentUuid(contentUuid?: string) {
     set((state) => ({
-      contentUuid,
-    }));
-  },
-}));
+      contentUuid }));
+  } }));
 
 export const useLearningResourceQuestionDetailForm = () => {
   const { baseInfo, formMode, funcInfo, setBaseInfo, setFuncInfo } = useQuestionDetailFormStore(
@@ -73,8 +69,7 @@ export const useLearningResourceQuestionDetailForm = () => {
         },
         onError: (error: any) => {
           console.log('question error', error);
-        },
-      },
+        } },
     );
   };
 
@@ -100,6 +95,5 @@ export const useLearningResourceQuestionDetailForm = () => {
     updateQuestionBank: handleUpdateQuestionBankContent,
     createQuestionBank: handleCreateQuestionBankContent,
     saveButtonClick: handleSaveButtonClick,
-    setBaseInfo: handleGetQuestionBankContent,
-  };
+    setBaseInfo: handleGetQuestionBankContent };
 };

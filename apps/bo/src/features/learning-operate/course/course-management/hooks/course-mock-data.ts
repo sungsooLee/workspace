@@ -18,8 +18,7 @@ export const getDummyCourseConfig = (): CourseConfig => {
     relatedCourseOption: 'OPTIONAL',
     adminDataOption: 'OPTIONAL',
     allowedContentTypes: ['VIDEO', 'EXAM', 'ASSIGNMENT'],
-    fileStorageType: 'AWS_INTERNAL',
-  };
+    fileStorageType: 'AWS_INTERNAL' };
 };
 
 // 이러닝1
@@ -32,8 +31,7 @@ export const getDummyCourse = () => {
     tenantList: [
       {
         tenantId: 2,
-        tenantName: '현대카드👨‍💻🔥💯🚀',
-      },
+        tenantName: '현대카드👨‍💻🔥💯🚀' },
     ],
     primaryCategoryId: 11,
     categories: [
@@ -44,8 +42,7 @@ export const getDummyCourse = () => {
         categoryContent: '',
         categoryPath: 'ROOT>아래에 5뎁스 있음 >1-1',
         isPrimary: true,
-        tenantIds: [2],
-      },
+        tenantIds: [2] },
     ],
     targetList: [
       {
@@ -55,10 +52,8 @@ export const getDummyCourse = () => {
         combiners: [
           {
             combineType: 'USER_GROUP',
-            combineValue: 1678,
-          },
-        ],
-      },
+            combineValue: 1678 },
+        ] },
     ],
     language: 'KO',
     courseName: 'CLASS - A',
@@ -153,8 +148,7 @@ export const getDummyCourse = () => {
     courseValidityEndHour: null,
     thumbnailFileGroupUuid: null,
     primaryThumbnailFileUuid: null,
-    tagNames: [],
-  };
+    tagNames: [] };
 };
 
 // 클래스
@@ -171,8 +165,7 @@ export const getDummyCourse2 = (): Course => {
         categoryContent: '',
         categoryPath: 'ROOT>한글명-CATE00011>1-1',
         isPrimary: false,
-        tenantIds: [2],
-      },
+        tenantIds: [2] },
     ],
     primaryCategoryId: 1,
     targetList: [],
@@ -194,8 +187,7 @@ export const getDummyCourse2 = (): Course => {
     coordinatorEmail: '담당자@email.com',
     operatorTelNo: '44445555',
     operatorEmail: '운영자@email.com',
-    learningSpaceNameKeyIn: 'xx',
-  } as unknown as Course;
+    learningSpaceNameKeyIn: 'xx' } as unknown as Course;
 };
 
 // 이러닝 > 4단계
@@ -209,8 +201,7 @@ export const getDummyCourse4 = (): Course => {
     tenantList: [
       {
         tenantId: 2,
-        tenantName: '현대카드👨‍💻🔥💯🚀',
-      },
+        tenantName: '현대카드👨‍💻🔥💯🚀' },
     ],
     primaryCategoryId: 23,
     categories: [
@@ -221,8 +212,7 @@ export const getDummyCourse4 = (): Course => {
         categoryContent: '성희롱 예방교육',
         categoryPath: 'ROOT>필수교육>성희롱 예방교육',
         isPrimary: true,
-        tenantIds: [2, 3, 4],
-      },
+        tenantIds: [2, 3, 4] },
       {
         categoryId: 38,
         name: '중학교 2학년',
@@ -230,8 +220,7 @@ export const getDummyCourse4 = (): Course => {
         categoryContent: '고딩 2학년 카테고리 내용입니다.',
         categoryPath: 'ROOT>중학교>중학교 2학년',
         isPrimary: false,
-        tenantIds: [2, 3, 4],
-      },
+        tenantIds: [2, 3, 4] },
     ],
     targetList: [
       {
@@ -240,10 +229,8 @@ export const getDummyCourse4 = (): Course => {
           {
             combineType: 'USER_GROUP',
             combineValue: 1678,
-            combinerPath: ['업무과', '죽전대리점'],
-          },
-        ],
-      },
+            combinerPath: ['업무과', '죽전대리점'] },
+        ] },
     ],
     language: 'KO',
     courseName: '과정명 ..... 33333333333',
@@ -321,14 +308,12 @@ export const getDummyCourse4 = (): Course => {
       examWeights: 25,
       asgmtWeights: 25,
       scoreSum: 220,
-      weightSum: 100,
-    },
+      weightSum: 100 },
     isNoticeEnabled: false,
     isQnaBoardEnabled: false,
     isSharingAllowed: false,
     tutorId: 4,
     tutorName: '김규원',
     outsourcingCompanyId: 9,
-    outsourcingCompanyName: '신민제',
-  };
+    outsourcingCompanyName: '신민제' };
 };

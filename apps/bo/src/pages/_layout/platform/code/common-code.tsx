@@ -1,21 +1,22 @@
-import { useEffect, useState } from 'react';
-import { t } from 'i18next';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { Button, GridState } from '@learnway/ui';
+import { t } from 'i18next';
+import { useEffect, useState } from 'react';
 
-import { pageRouteConfig } from '@features/auth';
-import { SearchBoxConfig, useCurrentRoute, useSearchBox } from '@learnway/hooks';
-import { SearchBox, ContentsButtons } from '@shared/ui';
 import { useCodeList } from '@entities/common-code/service/common-code.hook';
+import { pageRouteConfig } from '@features/auth';
 import { CommonCodeGrid } from '@features/platform-management/platform/code-managemnet/ui/common-code-grid';
-import { MainContents, PageContainer } from '@shared/ui';
+import { SearchBoxConfig, useCurrentRoute, useSearchBox } from '@learnway/hooks';
+import { GridState } from '@learnway/ui/grid';
+import { ContentsButtons, MainContents, PageContainer, SearchBox } from '@shared/ui';
+import { Button } from '@learnway/ui/button';
 
 export const Route = createFileRoute('/_layout/platform/code/common-code')({
   component: RouteComponent,
   ...pageRouteConfig({
     meta: {
       title: 'LABEL.page.title.commonCdManage',
-      // title: '공통코드관리',
+      // title: '공통코드관리'
+      //
     },
   }),
 });

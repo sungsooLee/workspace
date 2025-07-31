@@ -1,14 +1,13 @@
-/* eslint-disable @nx/enforce-module-boundaries */
-import React, { forwardRef, useEffect, useRef, useState, useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
 import { isString } from 'lodash';
+import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
-import { Button } from '../button/button';
 import { IcoAlertComplete, IcoCaution, IcoError, IcoWarning } from '@learnway/icons'; // icon
-import styles from './alert.module.css';
-import { useModal } from '../modal/modal.hook';
-import { ModalBody, ModalContainer, ModalFooter, ModalTitle } from '@learnway/ui';
 import { cn } from '@learnway/shared';
+import { Button } from '../button/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle } from '../modal';
+import { useModal } from '../modal/modal.hook';
+import styles from './alert.module.css';
 
 export interface AlertComponentProps {
   className?: string;

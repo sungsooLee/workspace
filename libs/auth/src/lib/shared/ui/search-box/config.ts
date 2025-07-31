@@ -1,4 +1,4 @@
-import { Input } from '@learnway/ui';
+import { Input } from '@learnway/ui/input';
 //import { FormSelect } from '../form/form-row/dialogs/form-select';
 
 export const searchDialogConfig = {

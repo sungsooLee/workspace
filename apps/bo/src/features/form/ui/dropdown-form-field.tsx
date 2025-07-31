@@ -1,6 +1,6 @@
-import React, { forwardRef } from 'react';
 import { BaseFormFieldProps, OptionsConfig, SelectOption, useFormOptions } from '@learnway/hooks';
-import { Dropdown, DropdownComponentProps } from '@learnway/ui';
+import { Dropdown, DropdownComponentProps } from '@learnway/ui/dropdown';
+import { forwardRef } from 'react';
 
 interface DropdownFormFieldType extends BaseFormFieldProps<string> {
   options?: SelectOption[];

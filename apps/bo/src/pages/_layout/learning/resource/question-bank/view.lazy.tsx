@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react';
 import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 
-import { Button } from '@learnway/ui';
 import { ContentsButtons, LinkBox, MainContents, PageContainer, SubContents } from '@shared/ui';
 
 import { useLearningResourceQuestionDetailForm } from '@features/learning-resource/learning-resource-management/service/learning-resource-question-detail-from.hook';
 import { LearningResourceQuestionBank } from '@features/learning-resource/learning-resource-management/ui/learning-resource-question-bank';
+import { Button } from '@learnway/ui/button';
 
 export const Route = createLazyFileRoute('/_layout/learning/resource/question-bank/view')({
-  component: RouteComponent,
-});
+  component: RouteComponent });
 
 function RouteComponent() {
   const router = useRouter();

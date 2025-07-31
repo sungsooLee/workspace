@@ -53,8 +53,7 @@ export default class TenantMenuManageService {
     // console.log(`${tenantId}  ${deviceType}`);
     return httpService.get<any>(`${PMSApiPrefix()}/menus/tenantMappingTree`, {
       tenantId,
-      menuScope,
-    });
+      menuScope });
   }
 
   static changeMenuTenantDnd(payload: any): Promise<any> {
@@ -82,14 +81,12 @@ function createTenantMenuCreateByAny(data: any) {
     parentMenuId: data.parentMenuId,
     menuName: data.menuName,
     menuDesc: data.menuDesc,
-    menuUrlParam: data.menuUrlParam,
-  };
+    menuUrlParam: data.menuUrlParam };
 }
 
 function createTenantMenuDnd(data: any) {
   return {
     destinationParentId: data.destinationParentId,
     sortOrder: data.sortOrder,
-    menuScopeCode: data.menuScopeCode,
-  };
+    menuScopeCode: data.menuScopeCode };
 }

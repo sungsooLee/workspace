@@ -1,15 +1,9 @@
 import React, { forwardRef, useState } from 'react';
-import {
-  Button,
-  GridBox,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  useModal,
-} from '@learnway/ui';
+import { GridBox } from '@learnway/ui/grid';
 import styles from './channel-list-modal.module.css';
 import { useTranslation } from 'react-i18next';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
 export interface ChannelListModalProps {
   dummy?: boolean;
@@ -71,7 +65,5 @@ const getMockData = () => {
       .map((d, i) => ({
         channelId: `channel_id${i}`,
         channelName: `channel_name${i}`,
-        etc: 'etc',
-      })),
-  };
+        etc: 'etc' })) };
 };

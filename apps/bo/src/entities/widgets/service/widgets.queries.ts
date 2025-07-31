@@ -8,8 +8,7 @@ export const queryKeys = {
   all: ['widgets'] as const,
   detail: (widgetCode: string) => [...queryKeys.all, widgetCode] as const,
   allTenantWidget: (tenantId: number) => [...queryKeys.all, tenantId] as const,
-  listWithTenant: () => [...queryKeys.all, 'fortenant'] as const,
-};
+  listWithTenant: () => [...queryKeys.all, 'fortenant'] as const };
 
 export const widgetsQueryOptions = {
   all: (params: any) => ({
@@ -26,12 +25,9 @@ export const widgetsQueryOptions = {
           return {
             ...widget,
             deviceNames: deviceNames.join(', '),
-            status: widget.isUsed ? '사용' : '사용불가',
-          };
-        }),
-      };
-    },
-  }),
+            status: widget.isUsed ? '사용' : '사용불가' };
+        }) };
+    } }),
   get: (widgetCode?: string) =>
     widgetCode
       ? {
@@ -51,8 +47,7 @@ export const widgetsQueryOptions = {
                       {
                         type: 'PC',
                         componentId: data.componentPcId,
-                        size: `${data.pcWidth} * ${data.pcHeight}`,
-                      },
+                        size: `${data.pcWidth} * ${data.pcHeight}` },
                     ]
                   : []),
                 ...(data.isMobileExposed
@@ -60,43 +55,33 @@ export const widgetsQueryOptions = {
                       {
                         type: 'Mobile',
                         componentId: data.componentMobileId,
-                        size: `${data.mobileWidth} * ${data.mobileHeight}`,
-                      },
+                        size: `${data.mobileWidth} * ${data.mobileHeight}` },
                     ]
                   : []),
-              ],
-            };
-          },
-        }
+              ] };
+          } }
       : getQuerySkipToken<Widget>(),
 
   allTenantWidget: (tenantId: number) =>
     tenantId
       ? {
           queryKey: queryKeys.allTenantWidget(tenantId),
-          queryFn: () => WidgetsService.getWidgetsTenant(tenantId),
-        }
+          queryFn: () => WidgetsService.getWidgetsTenant(tenantId) }
       : getQuerySkipToken<any>(),
 
   listWithTenant: (param: any) => ({
     queryKeys: queryKeys.listWithTenant,
-    queryFn: async () => WidgetsService.getWidgetsWithTenant(param),
-  }),
-};
+    queryFn: async () => WidgetsService.getWidgetsWithTenant(param) }) };
 
 export const mutateOptions = {
   createTenant: () => ({
     mutationFn: ({ tenantId, body }: { tenantId: number; body: any }) =>
-      WidgetsService.postWidgetsTenantMappings(tenantId, body),
-  }),
+      WidgetsService.postWidgetsTenantMappings(tenantId, body) }),
   moveTenantWidget: () => ({
     mutationFn: (payload: any) => {
       return WidgetsService.moveWidgetsTenantMappings(payload);
-    },
-  }),
+    } }),
   updateTenantWidget: () => ({
     mutationFn: ({ tenantWidgetId, body }: { tenantWidgetId: number; body: any }) => {
       return WidgetsService.putWidgetsTenantMappings(tenantWidgetId, body);
-    },
-  }),
-};
+    } }) };

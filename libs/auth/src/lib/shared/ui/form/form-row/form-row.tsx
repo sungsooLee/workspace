@@ -1,6 +1,6 @@
-import React, { FC, memo } from 'react';
-import { BaseFormRow } from '@learnway/ui';
 import { FormRowProps as BaseFormRowProps } from '@learnway/hooks';
+import { BaseFormRow } from '@learnway/ui/base-form';
+import { FC, memo } from 'react';
 import { formFieldConfig } from '../form-field-config';
 
 /**

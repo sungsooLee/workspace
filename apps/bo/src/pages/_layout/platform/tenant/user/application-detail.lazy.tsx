@@ -1,18 +1,17 @@
 import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
 
-import { PageContainer, MainContents, ContentsButtons, LinkBox } from '@shared/ui';
+import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui';
 
-import { Tabs, Button, useModal } from '@learnway/ui';
-
-import { TenantUserApplicationDetail } from '@features/platform-management/tenant';
 import {
   useApproveAccountUser,
   useFetchUser,
   useRejectAccountUser,
 } from '@entities/users/service/users.hook';
-import React, { useEffect, useState } from 'react';
-import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
+import { TenantUserApplicationDetail } from '@features/platform-management/tenant';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
+import { useEffect, useState } from 'react';
 
 export const Route = createLazyFileRoute('/_layout/platform/tenant/user/application-detail')({
   component: RouteComponent,

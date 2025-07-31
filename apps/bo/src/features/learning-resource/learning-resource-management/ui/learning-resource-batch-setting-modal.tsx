@@ -2,29 +2,23 @@ import { IcoAlertCircle, IcoFormRequired } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import {
-  Button,
-  Checkbox,
-  ContentsRow,
-  DatePicker,
-  FormSubTitle,
-  GridBox,
-  InputModalSelectorFormField,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  PhoneNumber,
-  Switch,
-  Tooltip,
-  useModal,
-} from '@learnway/ui';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { DatePicker } from '@learnway/ui/date-picker';
+import { InputModalSelectorFormField } from '@learnway/ui/form-field';
+import { GridBox } from '@learnway/ui/grid';
+import { PhoneNumber } from '@learnway/ui/phone-number';
+import { Tooltip } from '@learnway/ui/tooltip';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { useState } from 'react';
 import popLayoutstyles from './contents-layout.module.css';
 import { SelectCoordinatorModal } from './learning-resource-select-coordinator-modal';
 import styles from './setting-item.module.css';
+import { Button } from '@learnway/ui/button';
+import { Checkbox } from '@learnway/ui/checkbox';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { Switch } from '@learnway/ui/switch';
 
 function BatchSettingModalComponent() {
   const { closeModal } = useModal();
@@ -38,9 +32,7 @@ function BatchSettingModalComponent() {
       enableGrouping: false,
       meta: {
         headerAlign: 'left',
-        cellAlign: 'left',
-      },
-    }),
+        cellAlign: 'left' } }),
   ] as ColumnDef<any, unknown>[];
 
   const [date, setDate] = useState(new Date());
@@ -59,8 +51,7 @@ function BatchSettingModalComponent() {
     2: false,
     3: false,
     4: false,
-    5: false,
-  });
+    5: false });
 
   const handleCheckedChange = (id: number) => (checked: boolean) => {
     setChecked((prev) => ({ ...prev, [id]: checked }));
@@ -76,23 +67,17 @@ function BatchSettingModalComponent() {
                 <GridBox
                   data={[
                     {
-                      item: t('담당자'),
-                    },
+                      item: t('담당자') },
                     {
-                      item: t('사용기한'),
-                    },
+                      item: t('사용기한') },
                     {
-                      item: t('교육자원 활용여부'),
-                    },
+                      item: t('교육자원 활용여부') },
                     {
-                      item: t('보안콘텐츠  여부'),
-                    },
+                      item: t('보안콘텐츠  여부') },
                     {
-                      item: t('공유채널 설정'),
-                    },
+                      item: t('공유채널 설정') },
                     {
-                      item: t('검수'),
-                    },
+                      item: t('검수') },
                   ]}
                   columns={columns}
                   title={t('일괄설정 항목')}
@@ -122,8 +107,7 @@ function BatchSettingModalComponent() {
                     <InputModalSelectorFormField
                       modalConfig={{
                         width: 'md',
-                        content: <SelectCoordinatorModal />,
-                      }}
+                        content: <SelectCoordinatorModal /> }}
                       placeholder={t('담당자를 선택하세요.')}
                     />
                   </div>

@@ -1,25 +1,20 @@
-import { useEffect, useRef, useState } from 'react';
-import { t } from 'i18next';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
+import { t } from 'i18next';
+import { useEffect, useRef, useState } from 'react';
 
-import { Button, useModal } from '@learnway/ui';
-import {
-  CODE_GROUP,
-  DynamicFormConfig,
-  S3_PATH,
-  useCodeStore,
-  useDynamicForm2,
-} from '@learnway/hooks';
+import { CODE_GROUP, useCodeStore, useDynamicForm2 } from '@learnway/hooks';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 
-import { MainContents, PageContainer, LinkBox, ContentsButtons } from '@shared/ui';
+import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui';
 
-import { useCreateTenant } from '@entities/tenant/service/tenant.hook';
-import { DuplicateState } from '@features/form';
-import { pageRouteConfig } from '@features/auth';
 import TenantService from '@entities/tenant/api/tenant';
-import { isEqual } from 'lodash';
-import { EnDeviceType, EnFormMode, EnUseCategory } from '@types';
+import { useCreateTenant } from '@entities/tenant/service/tenant.hook';
+import { pageRouteConfig } from '@features/auth';
+import { DuplicateState } from '@features/form';
 import { TenantDetailBaseForm } from '@features/platform-management/tenant/ui/tenant-detail-base-form';
+import { EnDeviceType, EnFormMode, EnUseCategory } from '@types';
+import { isEqual } from 'lodash';
 
 export const Route = createLazyFileRoute('/_layout/platform/tenant/management/regist')({
   component: RouteComponent,
@@ -81,7 +76,7 @@ function RouteComponent() {
       isSecurityPledge: true,
     };
     console.log('payload {} => ', payload);
-    if (await openConfirm('저장 하시겠습니까?')) {
+    if (await openConfirm(t('저장 하시겠습니까?'))) {
       create(payload);
     }
   };

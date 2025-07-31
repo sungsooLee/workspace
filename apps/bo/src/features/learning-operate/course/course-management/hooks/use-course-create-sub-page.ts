@@ -13,7 +13,7 @@ import {
   useUpdateCourseWizard5,
 } from '@entities/course';
 import { UseDynamicFormResult } from '@learnway/hooks';
-import { useModal } from '@learnway/ui';
+import { useModal } from '@learnway/ui/modal';
 import { useNavigate } from '@tanstack/react-router';
 import { useUpdateEffect } from 'ahooks';
 import { formDataToRequestData, responseDataToFormData } from '../service/course-data-convert';

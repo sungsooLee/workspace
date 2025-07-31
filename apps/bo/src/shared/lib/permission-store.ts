@@ -42,8 +42,7 @@ export const usePermissionStore = create<PermissionState>()(
             set({
               apis: apiPermissions,
               loading: false,
-              initialized: true,
-            });
+              initialized: true });
           } catch (error) {
             set({ loading: false });
           }
@@ -53,15 +52,12 @@ export const usePermissionStore = create<PermissionState>()(
           const state = get();
           if (!state.initialized || state.loading) return false;
           return state.apis[apiKey] || false;
-        },
-      }),
+        } }),
       {
         name: 'permission-storage',
         partialize: (state) => ({
           apis: state.apis,
-          initialized: state.initialized,
-        }),
-      },
+          initialized: state.initialized }) },
     ),
   ),
 );

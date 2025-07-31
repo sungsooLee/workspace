@@ -1,41 +1,41 @@
-import { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { t } from 'i18next';
+import { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { useWatch } from 'react-hook-form';
 
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { RadioGroupFormField } from '@learnway/ui/form-field';
 import {
-  Button,
-  ContentsRow,
   CustomDropValidator,
   findNodePath,
   findParentNode,
-  Input,
-  RadioGroupFormField,
-  Textarea,
   TreeBox,
   TreeContainer,
   TreeEventPayload,
   TreeNode,
-  useModal,
-} from '@learnway/ui';
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+} from '@learnway/ui/tree-view';
 
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 
-import { findNodeByApiId } from '../service/api.service';
-import { FormRow, SwitchFormField } from '../../../../../shared/ui';
 import {
-  useFetchProgram,
-  useFetchPrograms,
+  queryKeys,
   useCreateProgram,
-  useUpdateProgram,
   useDeleteProgram,
   useDndProgram,
-} from '../../../../../entities/program/service/program-manage.hook';
-import { useQueryClient } from '@tanstack/react-query';
-import { queryKeys } from '../../../../../entities/program/service/program-manage.queries';
+  useFetchProgram,
+  useFetchPrograms,
+  useUpdateProgram,
+} from '@entities/program';
 import { IcoMinus } from '@learnway/icons';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
+import { Textarea } from '@learnway/ui/textarea';
+import { FormRow, SwitchFormField } from '@shared/ui';
+import { useQueryClient } from '@tanstack/react-query';
 import { transformApiDataToApiTreeData } from '../../menu-managemnet';
+import { findNodeByApiId } from '../service/api.service';
 
 const FORM_MODE = {
   NONE: 'NONE',

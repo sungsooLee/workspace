@@ -1,20 +1,15 @@
 import { queryOptions } from '@entities/learning-sequence/service/learning-sequence.queries';
 import { useDynamicForm2 } from '@learnway/hooks';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
-import {
-  ContentsRow,
-  DatePicker,
-  Input,
-  ModalBody,
-  ModalContainer,
-  ModalTitle,
-  TimeRangePicker,
-} from '@learnway/ui';
+import { DatePicker, TimeRangePicker } from '@learnway/ui/date-picker';
 import { FormRow2 } from '@shared/ui';
 import { useQueryClient } from '@tanstack/react-query';
 import { createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { useEffect } from 'react';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { ModalBody, ModalContainer, ModalTitle } from '@learnway/ui/modal';
 
 /**
  * NLP_BO_LMS_0048 : 레벨 테스트 신청 내역 확인 팝업
@@ -27,16 +22,14 @@ export interface StudentsLevelTestModalComponentProps {
 
 const StudentsLevelTestModalComponent = ({
   courseSequenceId: courseSequenceIdProps,
-  userId: userIdProps,
-}: StudentsLevelTestModalComponentProps) => {
+  userId: userIdProps }: StudentsLevelTestModalComponentProps) => {
   const { provider, updateFormData } = useDynamicForm2();
   const queryClient = useQueryClient();
 
   const initializeData = async () => {
     const payload = {
       courseSequenceId: courseSequenceIdProps,
-      userId: userIdProps,
-    };
+      userId: userIdProps };
     // const payload = {
     //   courseSequenceId: 3,
     //   userId: 364,
@@ -48,17 +41,14 @@ const StudentsLevelTestModalComponent = ({
         availableTestDate1: new Date(result.availableTestDate1),
         availableTestHour: {
           from: new Date(result.availableTestDate1),
-          to: new Date(result.availableTestDate2),
-        },
+          to: new Date(result.availableTestDate2) },
         preferLearnHour: {
           from: new Date(result.preferLearnDate1),
-          to: new Date(result.preferLearnDate2),
-        },
+          to: new Date(result.preferLearnDate2) },
         familyName: result.familyName,
         firstName: result.firstName,
         preferGender: result.preferGender,
-        telNo: result.telNo.replace(/^(\d{3})(\d{4})(\d{4})$/, '$1-$2-$3'),
-      });
+        telNo: result.telNo.replace(/^(\d{3})(\d{4})(\d{4})$/, '$1-$2-$3') });
     }
   };
 

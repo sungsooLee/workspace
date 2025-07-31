@@ -1,17 +1,11 @@
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 // IA106, IA105 / NLP_BO_CMS_1059, NLP_BO_CMS_1060
 
 import { LEARNING_TYPE } from '@learnway/config';
 import { S3_PATH, useS3Uploader } from '@learnway/hooks';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
-import {
-  Button,
-  DndFileProgress,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  useModal,
-} from '@learnway/ui';
+import { DndFileProgress } from '@learnway/ui/dnd-file-progress';
 import { t } from 'i18next';
 import { map } from 'lodash';
 import { FC, useCallback, useEffect, useState } from 'react';
@@ -44,14 +38,12 @@ const acceptFiles = {
   ],
   [LEARNING_TYPE.SCORM]: ['ZIP'],
   [LEARNING_TYPE.HTML5_VIDEO]: ['ZIP'],
-  [LEARNING_TYPE.ETC]: ['PPTX', 'DOX', 'DOCX', 'XLS', 'PSD', 'PDF', 'HWP', 'TXT'],
-};
+  [LEARNING_TYPE.ETC]: ['PPTX', 'DOX', 'DOCX', 'XLS', 'PSD', 'PDF', 'HWP', 'TXT'] };
 
 const LearningResourceFileUploadModalComponent: FC<Props> = ({
   channel,
   type,
-  maxFileCount = 100,
-}) => {
+  maxFileCount = 100 }) => {
   const { closeModal } = useModal();
   const { stats, files, addFiles, onPause, onRetry, onResume, onRemove, inputAccept } =
     useS3Uploader({
@@ -59,8 +51,7 @@ const LearningResourceFileUploadModalComponent: FC<Props> = ({
       affairsType: 'CMS',
       maxFileCount,
       maxFileSize: 4 * 1024 * 1024 * 1024,
-      acceptFiles: acceptFiles[type],
-    });
+      acceptFiles: acceptFiles[type] });
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleAddFiles = (files: File[]) => {

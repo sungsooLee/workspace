@@ -27,6 +27,7 @@ export * from './ui/course-list/course-grid';
 export * from './ui/course-list/course-list';
 export * from './ui/course-management/course-management';
 export * from './ui/course-search-form/course-search-form';
+export * from './ui/course-shared/course-shared';
 export * from './ui/course-stats-summary/course-stats-summary';
 export * from './ui/dialog/form-contact-number/form-manager-input-button';
 export * from './ui/modal/category-choice-modal/category-choice-modal';

@@ -1,5 +1,5 @@
+import { VideoPlayer, VideoPlayerContainer, useVideoPlayer } from '@learnway/ui/video-player';
 import { createLazyFileRoute } from '@tanstack/react-router';
-import { VideoPlayer, VideoPlayerContainer, useVideoPlayer } from '@learnway/ui';
 
 export const Route = createLazyFileRoute('/_unauth/video-player-demo')({
   component: RouteComponent,

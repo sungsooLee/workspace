@@ -2,9 +2,9 @@ import {
   useApproveRequestChannel,
   useRejectRequestChannel,
 } from '@entities/channel/service/request-channel.hook';
-import { useModal } from '@learnway/ui';
-import { t } from 'i18next';
+import { useModal } from '@learnway/ui/modal';
 import { RejectModal } from '@shared/ui';
+import { t } from 'i18next';
 
 export const getChannelUrl = (channelMainId: string) => {
   if (channelMainId) return `${import.meta.env.VITE_FO_DOMAIN}/@${channelMainId}`;

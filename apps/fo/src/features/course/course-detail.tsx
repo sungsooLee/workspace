@@ -12,16 +12,13 @@ import {
   IcoSubtitles02,
 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import {
-  Accordion,
-  Button,
-  OptionCard,
-  OptionCardItem,
-  Panel,
-  Tabs,
-  useModal,
-  useToast,
-} from '@learnway/ui';
+import { Accordion } from '@learnway/ui/accordion';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
+import { OptionCard, OptionCardItem } from '@learnway/ui/option-card';
+import { Panel } from '@learnway/ui/panel';
+import { Tabs } from '@learnway/ui/tabs';
+import { useToast } from '@learnway/ui/toast';
 import { useRouterState } from '@tanstack/react-router';
 import { useEffect, useRef, useState } from 'react';
 
@@ -50,10 +47,12 @@ import {
 import { useChannelDetail } from '@entities/channel/service/channel.hook';
 import { useGetCurriculumnDetail } from '@entities/curriculum';
 import styles from '@learnway/styles/fo/pages/_layout/course-introduction/detail.module.css';
+import { t } from 'i18next';
 
 export function CourseDetail() {
   const routerState = useRouterState();
   const courseId = routerState.location.state?.courseId;
+  const dashboardRef = useRef(null);
   const introduceRef = useRef(null);
   const educationRef = useRef(null);
   const reviewRef = useRef(null);
@@ -65,8 +64,8 @@ export function CourseDetail() {
 
   const { data: courseData } = useCourseFullDetail(courseId || testCourseId);
   const { data: sequencesData } = useCourseSequences(courseId || testCourseId, {
-    openingYear: openingYear,
-    isAll: isAll,
+    openingYear,
+    isAll,
   });
   // const sequencesData = {};
   const { courseLikeRequest, mutate: toggleLikeMutate, isPending: isLikePending } = useCourseLike();
@@ -94,13 +93,13 @@ export function CourseDetail() {
     targetRef?: React.RefObject<HTMLElement> | null;
   }
   const tabTitleSwiper: TabTitleSwiper[] = [
-    { title: '대시보드', isEroll: false, selectTabNumber: '0' },
-    { title: '과정소개', isEroll: false, selectTabNumber: '1' /* targetRef: introduceRef */ },
-    { title: '교육일정', isEroll: true, selectTabNumber: '1', targetRef: educationRef }, // 과정소개 탭 안에서 교욱일정이 있기 때문에 tabNumber값 동일
-    { title: '후기', isEroll: false, selectTabNumber: '1', new: true, targetRef: reviewRef }, // 과정소개 탭 안에서 후기가 있기 때문에 tabNumber값 동일
-    { title: '수강전 문의', isEroll: true, selectTabNumber: '2', new: true },
-    { title: '커뮤니티', isEroll: false, selectTabNumber: '3', new: true },
-    { title: '새소식', isEroll: false, selectTabNumber: '4', new: true },
+    { title: t('대시보드'), isEroll: false, selectTabNumber: '0' },
+    { title: t('과정소개'), isEroll: false, selectTabNumber: '1' /* targetRef: introduceRef */ },
+    { title: t('교육일정'), isEroll: true, selectTabNumber: '1', targetRef: educationRef }, // 과정소개 탭 안에서 교욱일정이 있기 때문에 tabNumber값 동일
+    { title: t('후기'), isEroll: false, selectTabNumber: '1', new: true, targetRef: reviewRef }, // 과정소개 탭 안에서 후기가 있기 때문에 tabNumber값 동일
+    { title: t('수강전 문의'), isEroll: true, selectTabNumber: '2', new: true },
+    { title: t('커뮤니티'), isEroll: false, selectTabNumber: '3', new: true },
+    { title: t('새소식'), isEroll: false, selectTabNumber: '4', new: true },
   ];
 
   const handleTab = (selectTabNumber: string, selectTabContentsNumber: number) => {
@@ -248,26 +247,42 @@ export function CourseDetail() {
     });
   };
 
+  const goToScrollRef = async (targetRef: any) => {
+    try {
+      await waitForRef(targetRef);
+      const target = targetRef?.current;
+      if (target) {
+        const top = target.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({
+          top: top - 50,
+          behavior: 'smooth',
+        });
+      }
+    } catch (error) {
+      console.warn('타겟을 못찾음', error);
+    }
+  };
+
   // 탭 컨텐츠
   const tabTitleContents = [
     {
-      title: '대시보드',
+      title: t('대시보드'),
       key: '0',
       content: (
         <div className={styles.dashboard_content}>
-          <CourseDashboard />
+          <CourseDashboard ref={dashboardRef} />
         </div>
       ),
     },
     {
-      title: '과정소개',
+      title: t('과정소개'),
       key: '1',
       content: (
         <div className={styles.introduction_content}>
-          {courseData?.preRequired && (
+          {courseData?.introduction && (
             <CourseIntroduction
               ref={introduceRef}
-              preRequired={courseData?.preRequired}
+              preRequired={courseData?.preqCourseList}
               introduction={courseData?.introduction}
               curriculum={curriculumData}
             />
@@ -282,6 +297,9 @@ export function CourseDetail() {
               setOpeningYear={setOpeningYear}
               setIsAll={setIsAll}
               isAll={isAll}
+              dashboardRef={dashboardRef}
+              goToScrollRef={goToScrollRef}
+              handleTab={handleTab}
             />
           )}
           {courseData?.reviews && <CourseReview ref={reviewRef} reviews={courseData?.reviews} />}
@@ -293,17 +311,17 @@ export function CourseDetail() {
       ),
     },
     {
-      title: '수강전 문의',
+      title: t('수강전 문의'),
       key: '2',
       content: <div>수강전 문의</div>,
     },
     {
-      title: '커뮤니티',
+      title: t('커뮤니티'),
       key: '3',
       content: <div>커뮤니티</div>,
     },
     {
-      title: '새소식',
+      title: t('새소식'),
       key: '4',
       content: <div>새소식</div>,
     },
@@ -330,6 +348,14 @@ export function CourseDetail() {
       onSuccess: () => {
         setLikeChk((prev) => !prev);
         setLikeCount((prev) => prev + (likeChk ? -1 : 1));
+
+        const message = likeChk
+          ? t('좋아요 목록에서 삭제하였습니다')
+          : t('좋아요 목록에 추가하였습니다');
+        openToast({
+          title: message,
+          type: 'success',
+        });
       },
       onError: () => {
         console.log('좋아요 실패하였습니다');
@@ -682,23 +708,10 @@ export function CourseDetail() {
                         selectedTabTitle === index ? styles.active : '',
                         item.new && styles.new,
                       )}
-                      onClick={async () => {
+                      onClick={() => {
                         handleTab(item.selectTabNumber, index);
-                        if (item.targetRef) {
-                          try {
-                            await waitForRef(item.targetRef);
-                            const target = item.targetRef?.current;
-                            if (target) {
-                              const top = target.getBoundingClientRect().top + window.scrollY;
-                              window.scrollTo({
-                                top: top - 50,
-                                behavior: 'smooth',
-                              });
-                            }
-                          } catch (error) {
-                            console.warn('타겟을 못찾음', error);
-                          }
-                        }
+
+                        if (item.targetRef) goToScrollRef(item.targetRef);
                       }}
                     >
                       {item.title}
@@ -762,23 +775,27 @@ export function CourseDetail() {
               {/* 학습정보 */}
               <div className={packageInformationStyles.list_box}>
                 <ul>
-                  <li>
-                    <IcoBook width={20} height={20} stroke="#4d525c" fill="none" />
-                    <p>{courseData?.course?.data.type}</p>
-                  </li>
-                  <li className={listCategoryOpen === true ? packageInformationStyles.open : ''}>
-                    <IcoCategory width={20} height={20} fill="#4d525c" />
-                    <p>{courseData?.course?.data.category}</p>
-                    <Button
-                      onClick={() =>
-                        listCategoryOpen === true
-                          ? setListCategoryOpen(false)
-                          : setListCategoryOpen(true)
-                      }
-                    >
-                      <IcoArrowDown width={20} height={20} stroke="#4d525c" />
-                    </Button>
-                  </li>
+                  {courseData?.course?.data.type && (
+                    <li>
+                      <IcoBook width={20} height={20} stroke="#4d525c" fill="none" />
+                      <p>{courseData?.course?.data.type}</p>
+                    </li>
+                  )}
+                  {courseData?.course?.data.category && (
+                    <li className={listCategoryOpen === true ? packageInformationStyles.open : ''}>
+                      <IcoCategory width={20} height={20} fill="#4d525c" />
+                      <p>{courseData?.course?.data.category}</p>
+                      <Button
+                        onClick={() =>
+                          listCategoryOpen === true
+                            ? setListCategoryOpen(false)
+                            : setListCategoryOpen(true)
+                        }
+                      >
+                        <IcoArrowDown width={20} height={20} stroke="#4d525c" />
+                      </Button>
+                    </li>
+                  )}
                   {/* <li>
                     <IcoLocation width={20} height={20} stroke="#4d525c" />
                     <p>{courseData?.course?.data.place}</p>
@@ -795,27 +812,31 @@ export function CourseDetail() {
                     <IcoDivice width={20} height={20} fill="#4d525c" />
                     <p>{courseData?.course?.data.lernType}</p>
                   </li> */}
-                  <li>
-                    <IcoLevel width={20} height={20} fill="#4d525c" />
-                    <p>{courseData?.course?.data.level}</p>
-                  </li>
+                  {courseData?.course?.data.level && (
+                    <li>
+                      <IcoLevel width={20} height={20} fill="#4d525c" />
+                      <p>{courseData?.course?.data.level}</p>
+                    </li>
+                  )}
                   {/* <li>
                     <IcoPrize width={20} height={20} fill="#4d525c" />
                     <p>{courseData?.course?.data.certificate}</p>
                   </li> */}
-                  <li className={listSubTitleOpen === true ? packageInformationStyles.open : ''}>
-                    <IcoSubtitles02 width={20} height={20} fill="#4d525c" />
-                    <p>{courseData?.course?.data.captionLanguage}</p>
-                    <Button
-                      onClick={() =>
-                        listSubTitleOpen === true
-                          ? setListSubTitleOpen(false)
-                          : setListSubTitleOpen(true)
-                      }
-                    >
-                      <IcoArrowDown width={20} height={20} stroke="#4d525c" />
-                    </Button>
-                  </li>
+                  {courseData?.course?.data.captionLanguage && (
+                    <li className={listSubTitleOpen === true ? packageInformationStyles.open : ''}>
+                      <IcoSubtitles02 width={20} height={20} fill="#4d525c" />
+                      <p>{courseData?.course?.data.captionLanguage}</p>
+                      <Button
+                        onClick={() =>
+                          listSubTitleOpen === true
+                            ? setListSubTitleOpen(false)
+                            : setListSubTitleOpen(true)
+                        }
+                      >
+                        <IcoArrowDown width={20} height={20} stroke="#4d525c" />
+                      </Button>
+                    </li>
+                  )}
                 </ul>
               </div>
 
@@ -826,7 +847,7 @@ export function CourseDetail() {
                   <div>
                     <IcoCaution width={40} height={40} stroke={'#A9AFB8'} />
                     {/* 퍼블수정 20250624 태그 수정 */}
-                    <strong>현재 수강 신청 가능한 차수가 없습니다.</strong>
+                    <strong>{t('현재 수강 신청 가능한 차수가 없습니다.')}</strong>
                   </div>
                 </Panel>
                 {/* 인원마감/대기신청 */}
@@ -834,8 +855,8 @@ export function CourseDetail() {
                   <div>
                     {/* 퍼블수정 20250624 색상 수정 */}
                     <IcoClock01 width={40} height={40} stroke={'#0056ff'} />
-                    <strong>오전 10:00 수강신청이 시작됩니다!</strong>
-                    <p>수강신청일시는 예고없이 변경될수 있습니다.</p>
+                    <strong>{t('오전 10:00 수강신청이 시작됩니다!')}</strong>
+                    <p>{t('수강신청일시는 예고없이 변경될수 있습니다.')}</p>
                   </div>
                 </Panel>
                 {/* 강의 정보 */}
@@ -888,7 +909,8 @@ export function CourseDetail() {
           >
             <div className={styles.tit_box}>
               <strong>
-                패키지<em>10</em>
+                {t('패키지')}
+                <em>10</em>
               </strong>
             </div>
             <div className={`${packageSideStyles.package_box}`}>

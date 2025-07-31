@@ -84,8 +84,7 @@ export type ApiMappingMenuDetail = {
 export enum MenuScope {
   FO = 'FO',
   BO = 'BO',
-  EX = 'EX',
-}
+  EX = 'EX' }
 
 export type MenuTreeResponse = {
   parentId?: number;

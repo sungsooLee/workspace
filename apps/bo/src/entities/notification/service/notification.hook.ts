@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { queryOptions, mutateOptions, queryKeys } from './notification.queries';
+import { mutateOptions, queryKeys, queryOptions } from './notification.queries';
 
 // 알람 목록, 알람 카운트
 export function useNotifications() {

@@ -202,12 +202,17 @@ export interface CourseResponse {
   career?: string; // 강사 경력
   operatorName?: string; // 운영자 이름
   operatorCompany?: string; // 운영자 회사
-  operatorDept?: string; // 운영자 부서
+  operatorDeptName?: string; // 운영자 부서
   operatorEmail?: string; // 운영자 이메일
   operatorTelNo?: string; // 운영자 전화번호
   relatedCourseList?: Array<RelationCourseItem>; // 연관 학습 목록
   preqCourseList?: Array<RequiredCourseItem>; // 사전 수강 과정 목록
   isLikeCourse?: boolean; // 찜 여부
+  coordinatorName?: string; // 과정 담당자 이름, 회사, 부서, 이메일, 전화번호
+  coordinatorCompany?: string; // 과정 담당자 이름, 회사, 부서, 이메일, 전화번호
+  coordinatorDeptName?: string; // 과정 담당자 이름, 회사, 부서, 이메일, 전화번호
+  coordinatorEmail?: string; // 과정 담당자 이름, 회사, 부서, 이메일, 전화번호
+  coordinatorTelNo?: string; // 과정 담당자 이름, 회사, 부서, 이메일, 전화번호
 }
 
 // 과정 상세 종합 데이터

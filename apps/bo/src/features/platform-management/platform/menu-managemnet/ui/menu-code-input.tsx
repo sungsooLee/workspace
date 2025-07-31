@@ -1,6 +1,7 @@
 import { forwardRef, useEffect } from 'react';
 import { BaseFormFieldProps, useDynamicFormContext } from '@learnway/hooks';
-import { Button, Input } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { Input } from '@learnway/ui/input';
 
 export const DuplicateCodeGuideText = forwardRef<HTMLDivElement, BaseFormFieldProps<string>>(
   (
@@ -17,8 +18,7 @@ export const DuplicateCodeGuideText = forwardRef<HTMLDivElement, BaseFormFieldPr
       codeCheckState,
       handleCodeChange,
       setFormError,
-      menuScope,
-    },
+      menuScope },
     ref,
   ) => {
     const { onChangeGuideText } = useDynamicFormContext();
@@ -82,8 +82,7 @@ export const DuplicateCodeGuideText = forwardRef<HTMLDivElement, BaseFormFieldPr
             // };
             const data = {
               menuScopeCode: menuScope,
-              menuCode: code,
-            };
+              menuCode: code };
             console.log(data);
             // Clear any existing errors and perform the check
             clearFormError && clearFormError(name);

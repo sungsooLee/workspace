@@ -1,11 +1,13 @@
 import { memo } from 'react';
 
-import { Button, Popover, useModal } from '@learnway/ui';
-import { IcoArrowDown } from '@learnway/icons';
 import { useFetchAuthUser, useUpdateTenantRoleLastSelect } from '@learnway/auth/entities';
 import { Tenant } from '@learnway/auth/types';
+import { IcoArrowDown } from '@learnway/icons';
+import { Popover } from '@learnway/ui/popover';
 
 import styles from '@learnway/styles/fo/features/platform/ui/tenant-button/tenant-button.module.css';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 
 const TenantContent = () => {
   const { data } = useFetchAuthUser();

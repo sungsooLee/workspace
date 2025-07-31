@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Link } from '@tanstack/react-router';
 
-import { Button } from '@learnway/ui';
 import { IcoBell03, IcoXclose } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 
 import styles from './notification.module.css';
+import { Button } from '@learnway/ui/button';
 
 interface NotificationInfo {
   id: number;

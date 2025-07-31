@@ -7,10 +7,7 @@ export const Route = createFileRoute('/_layout/')({
   component: HomeComponent,
   ...pageRouteConfig({
     meta: {
-      title: '개발 현황',
-    },
-  }),
-});
+      title: '개발 현황' } }) });
 
 const guideProps: GuidePopupProps = {
   title: '도움말',
@@ -29,8 +26,7 @@ const guideProps: GuidePopupProps = {
     '도움말 목록 입니다.',
     '도움말 목록 입니다.',
     '도움말 목록 입니다.',
-  ],
-};
+  ] };
 
 function HomeComponent() {
   return (
@@ -128,8 +124,7 @@ const munu = [
     pageType: 'Page',
     completionDate: '2025-06-19',
     memo: '404', // 비고
-    end: true,
-  },
+    end: true },
   {
     screenName: '500',
     pageId: '500',
@@ -137,8 +132,7 @@ const munu = [
     pageType: 'Page',
     completionDate: '2025-06-19',
     memo: '500', // 비고
-    end: true,
-  },
+    end: true },
   {
     screenName: 'GNB/LNB',
     pageId: '/',
@@ -146,8 +140,7 @@ const munu = [
     pageType: 'Page',
     completionDate: '-',
     memo: 'GNB, LNB, 알람, My 메뉴', // 비고
-    end: true,
-  },
+    end: true },
   {
     screenName: '로그인',
     pageId: 'login',
@@ -155,8 +148,7 @@ const munu = [
     pageType: 'Page',
     completionDate: '-',
     memo: '', // 비고
-    end: true,
-  },
+    end: true },
   {
     screenName: '회원가입 진행현황',
     pageId: 'signup-progress',
@@ -164,8 +156,7 @@ const munu = [
     pageType: 'Page',
     completionDate: '-',
     memo: '작업 중 api X', // 비고
-    end: false,
-  },
+    end: false },
   {
     screenName: '관리자 회원가입',
     pageId: 'signup',
@@ -173,8 +164,7 @@ const munu = [
     pageType: 'Page',
     completionDate: '-',
     memo: '작업 중 api X', // 비고
-    end: false,
-  },
+    end: false },
   {
     screenName: '나의 정보',
     pageId: 'my-page/info',
@@ -182,8 +172,7 @@ const munu = [
     pageType: 'Page',
     completionDate: '-',
     memo: '작업중 apiX', // 비고
-    end: true,
-  },
+    end: true },
   {
     screenName: '나의 권한',
     pageId: 'my-page/role',
@@ -191,8 +180,7 @@ const munu = [
     pageType: 'Page',
     completionDate: '-',
     memo: '작업중 apiX', // 비고
-    end: true,
-  },
+    end: true },
   {
     screenName: '나의 권한 상세',
     pageId: 'my-page/role/detail',
@@ -201,8 +189,7 @@ const munu = [
     completionDate: '-',
     lastUpdateDate: '-',
     memo: '작업중 apiX', // 비고
-    end: false,
-  },
+    end: false },
   {
     screenName: '나의 학습자원 조회',
     pageId: 'learning/learning-resource',
@@ -211,8 +198,7 @@ const munu = [
     completionDate: '-',
     lastUpdateDate: '-',
     memo: '작업중', // 비고
-    end: false,
-  },
+    end: false },
   {
     screenName: '공통 카테고리',
     pageId: 'platform/category',
@@ -220,8 +206,7 @@ const munu = [
     pageType: 'Page',
     completionDate: '2025-06-17',
     memo: '작업 완료', // 비고
-    end: true,
-  },
+    end: true },
   {
     screenName: '시스템 공통코드 그룹관리',
     pageId: 'platform/code/system-code',
@@ -229,8 +214,7 @@ const munu = [
     pageType: 'Page',
     completionDate: '2025-06-13',
     memo: '작업 완료', // 비고
-    end: true,
-  },
+    end: true },
   {
     screenName: '메뉴 관리',
     pageId: 'platform/menu',
@@ -238,8 +222,7 @@ const munu = [
     pageType: 'Page',
     completionDate: '2025-06-11',
     memo: '작업 완료', // 비고
-    end: true,
-  },
+    end: true },
   {
     screenName: '위젯 관리',
     pageId: 'platform/widget',
@@ -247,8 +230,7 @@ const munu = [
     pageType: 'Page',
     completionDate: '-',
     memo: '작업 중', // 비고
-    end: false,
-  },
+    end: false },
   {
     screenName: '라벨/메시지 관리',
     pageId: 'platform/label-message',
@@ -256,8 +238,7 @@ const munu = [
     pageType: 'Page',
     completionDate: '2025-05-30',
     memo: '작업 완료', // 비고
-    end: true,
-  },
+    end: true },
   {
     screenName: '프로그램 관리',
     pageId: 'platform/program',
@@ -265,8 +246,7 @@ const munu = [
     pageType: 'Page',
     completionDate: '2025-06-12',
     memo: '작업 완료', // 비고
-    end: true,
-  },
+    end: true },
   {
     screenName: '시스템 번역',
     pageId: 'platform/system/multilingual',
@@ -274,8 +254,7 @@ const munu = [
     pageType: 'Page',
     completionDate: '-',
     memo: '작업 완료', // 비고
-    end: false,
-  },
+    end: false },
   {
     screenName: '테넌트 관리',
     pageId: 'tenant/management',
@@ -283,8 +262,7 @@ const munu = [
     pageType: 'Page',
     completionDate: '-',
     memo: '작업 중(조회옵션)', // 비고
-    end: false,
-  },
+    end: false },
   {
     screenName: '테넌트 상세',
     pageId: 'tenant/management/detail',
@@ -292,8 +270,7 @@ const munu = [
     pageType: 'Page',
     completionDate: '-',
     memo: '작업 중 - /tenant/management 에서 조회 후 테넌트명 클릭',
-    end: false,
-  },
+    end: false },
   {
     screenName: '플렛폼 테넌트 관리',
     pageId: 'platform/tenant/management',
@@ -301,8 +278,7 @@ const munu = [
     pageType: 'Page',
     completionDate: '-',
     memo: '작업 중',
-    end: false,
-  },
+    end: false },
   {
     screenName: '테넌트 상세(플렛폼)',
     pageId: 'platform/tenant/management/detail',
@@ -310,8 +286,7 @@ const munu = [
     pageType: 'Page',
     completionDate: '-',
     memo: '작업 중 - /platform/tenant/management 에서 조회 후 테넌트명 클릭',
-    end: false,
-  },
+    end: false },
   {
     screenName: '플렛폼 테넌트 등록',
     pageId: 'platform/tenant/management/regist',
@@ -319,8 +294,7 @@ const munu = [
     pageType: 'Page',
     completionDate: '-',
     memo: '작업 중 (등록 가능)',
-    end: false,
-  },
+    end: false },
   {
     screenName: '플렛폼 테넌트 유저 관리',
     pageId: 'platform/tenant/user',
@@ -328,8 +302,7 @@ const munu = [
     pageType: 'Page',
     completionDate: '-',
     memo: '작업 중',
-    end: false,
-  },
+    end: false },
   {
     screenName: '플렛폼 테넌트 조직 관리',
     pageId: 'platform/tenant/organization',
@@ -337,8 +310,7 @@ const munu = [
     pageType: 'Page',
     completionDate: '-',
     memo: '작업 중 (api - 회사목록api사용)',
-    end: false,
-  },
+    end: false },
   {
     screenName: '플렛폼 테넌트 조직 관리 - 상세',
     pageId: 'platform/tenant/organization/detail',
@@ -346,8 +318,7 @@ const munu = [
     pageType: 'Page',
     completionDate: '-',
     memo: '작업 중 (api x)- /platform/tenant/organization 검색 후 회사명 클릭',
-    end: false,
-  },
+    end: false },
   {
     screenName: '플렛폼 테넌트 유저그룹 수동 관리',
     pageId: 'platform/tenant/usr-group/manual',
@@ -355,8 +326,7 @@ const munu = [
     pageType: 'Page',
     completionDate: '-',
     memo: '작업 중 (api x) - 화면만',
-    end: false,
-  },
+    end: false },
   {
     screenName: '플렛폼 테넌트 유저그룹 등록 상세',
     pageId: 'platform/tenant/usr-group/manual-detail',
@@ -364,8 +334,7 @@ const munu = [
     pageType: 'Page',
     completionDate: '-',
     memo: '작업 중 (api x) - 화면만',
-    end: false,
-  },
+    end: false },
   {
     screenName: '역할 신청 관리',
     pageId: 'platform/role/application',
@@ -373,8 +342,7 @@ const munu = [
     pageType: 'Page',
     completionDate: '2025-07-01',
     memo: '작업 완료',
-    end: true,
-  },
+    end: true },
   {
     screenName: '회사 관리',
     pageId: 'platform/company/management',
@@ -382,8 +350,7 @@ const munu = [
     pageType: 'Page',
     completionDate: '-',
     memo: '작업 완료',
-    end: true,
-  },
+    end: true },
   {
     screenName: '회사 조직 관리',
     pageId: 'platform/company/organization',
@@ -391,8 +358,7 @@ const munu = [
     pageType: 'Page',
     completionDate: '2025-07-10',
     memo: '작업 완료',
-    end: true,
-  },
+    end: true },
   {
     screenName: '회사 유저 관리',
     pageId: 'platform/company/user',
@@ -400,8 +366,7 @@ const munu = [
     pageType: 'Page',
     completionDate: '-',
     memo: '작업 중',
-    end: false,
-  },
+    end: false },
   {
     screenName: 'HR 연동 이력',
     pageId: 'platform/company/hr-history',
@@ -409,8 +374,7 @@ const munu = [
     pageType: 'Page',
     completionDate: '-',
     memo: '작업 중',
-    end: false,
-  },
+    end: false },
   {
     screenName: '교육공간 관리',
     pageId: 'learning/training-place',
@@ -418,8 +382,7 @@ const munu = [
     pageType: 'Page',
     completionDate: '2025-07-07',
     memo: '작업 완료',
-    end: true,
-  },
+    end: true },
   {
     screenName: '채널 개설 신청 관리',
     pageId: 'tenant/channel/request',
@@ -427,8 +390,7 @@ const munu = [
     pageType: 'Page',
     completionDate: '-',
     memo: '작업 중',
-    end: false,
-  },
+    end: false },
   {
     screenName: '채널 관리',
     pageId: 'tenant/channel/management',
@@ -436,8 +398,7 @@ const munu = [
     pageType: 'Page',
     completionDate: '-',
     memo: '작업 중',
-    end: false,
-  },
+    end: false },
   {
     screenName: '강사/튜터 관리',
     pageId: 'learning-operate-support/instructor/management',
@@ -445,8 +406,7 @@ const munu = [
     pageType: 'Page',
     completionDate: '2025-07-11',
     memo: '작업 완료',
-    end: true,
-  },
+    end: true },
   {
     screenName: '차수 관리',
     pageId: 'learning/learning-sequence/sequence-management',
@@ -454,8 +414,7 @@ const munu = [
     pageType: 'Page',
     completionDate: '-',
     memo: '작업 중',
-    end: false,
-  },
+    end: false },
   {
     screenName: '수강신청 목록 조회',
     pageId: 'learning/learning-sequence/enrollment-application',
@@ -463,8 +422,7 @@ const munu = [
     pageType: 'Page',
     completionDate: '-',
     memo: '작업 중',
-    end: false,
-  },
+    end: false },
 ];
 
 const guide = [

@@ -1,36 +1,28 @@
+import { useQueryClient } from '@tanstack/react-query';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { t } from 'i18next';
 import { useEffect, useRef, useState } from 'react';
 import { useWatch } from 'react-hook-form';
-import { t } from 'i18next';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { useQueryClient } from '@tanstack/react-query';
 
 import {
-  Button,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  ShuttleGridToGrid,
-  ShuttleGridToGridImperative,
-  ContentsRow,
-  useModal,
-  Divider,
-} from '@learnway/ui';
-import { IcoRefresh02 } from '@learnway/icons';
-import {
+  CODE_GROUP,
   DynamicFormConfig,
   SearchBoxConfig,
-  useSearchBox,
   useDynamicForm,
-  CODE_GROUP,
+  useSearchBox,
 } from '@learnway/hooks';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Divider } from '@learnway/ui/elements';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { ShuttleGridToGrid, ShuttleGridToGridImperative } from '@learnway/ui/shuttle-grid-to-grid';
 
-import { FormRow, ThumbnailListFormField } from '@shared/ui';
-import { SearchBox } from '@shared/ui/search-box';
-import { usersQueryOptions } from '@entities/users/service/users.queries';
-import { useSaveUsers } from '@entities/role/service/role-manage.hook';
 import { queryOptions as departmentQuery } from '@entities/department';
+import { useSaveUsers } from '@entities/role/service/role-manage.hook';
+import { usersQueryOptions } from '@entities/users/service/users.queries';
 import { DateRangePickerFormField } from '@features/form';
+import { FormRow } from '@shared/ui';
+import { SearchBox } from '@shared/ui/search-box';
 /**
  * 화면번호: NLP_BO_PMS_1110
  *
@@ -86,7 +78,7 @@ const TenantDetailLearningRoleGrantUserShuttleModalComponent = ({ roleId }: { ro
   const handleOnSubmit = async (data: any) => {
     const { dateRange } = getValues();
     if (!option || option.length === 0) {
-      alert('사용자를 선택 하세요.');
+      alert(t('사용자를 선택 하세요.'));
       return;
     }
 

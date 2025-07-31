@@ -16,7 +16,6 @@ function LayoutComponent({ children }: LayoutComponentProps) {
 
   return (
     <div className={styles.start}>
-      {/* <MobileHeader /> */}
       <MobileHeader />
       {/* <MobileContainerHeader /> */}
       <main>{children}</main>

@@ -9,18 +9,11 @@ import {
   useDynamicForm,
   useSearchBox,
 } from '@learnway/hooks';
-import {
-  Button,
-  ContentsRow,
-  Divider,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  ShuttleGridToGrid,
-  ShuttleGridToGridImperative,
-  useModal,
-} from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Divider } from '@learnway/ui/elements';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { ShuttleGridToGrid, ShuttleGridToGridImperative } from '@learnway/ui/shuttle-grid-to-grid';
 import { FormRow } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { useQueryClient } from '@tanstack/react-query';

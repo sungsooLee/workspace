@@ -1,7 +1,7 @@
 import { memo } from 'react';
-import { Button } from '@learnway/ui';
 
 import styles from '@learnway/styles/fo/features/layout/ui/auto-complete-popover.module.css';
+import { Button } from '@learnway/ui/button';
 
 interface AutoCompletePopoverProps {
   className?: string;

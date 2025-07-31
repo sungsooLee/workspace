@@ -2,13 +2,14 @@ import { memo, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import { useTranslation } from 'react-i18next';
 
-import { Button, ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui';
 import { IcoCheck, IcoArrowForward } from '@learnway/icons';
 import { useFetchAuthUser, useUpdateUser } from '@learnway/auth/entities';
 
 import type { Tenant } from '../../../../types';
 
 import styles from '@learnway/styles/fo/features/platform/ui/tenant-button/tenant-button.module.css';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
 const TenantModalComponent = () => {
   const { t } = useTranslation();

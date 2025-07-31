@@ -2,7 +2,8 @@ import { forwardRef, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { isEqual } from 'lodash';
 import { BaseFormFieldProps, useDynamicFormContext } from '@learnway/hooks';
-import { Button, Input } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { Input } from '@learnway/ui/input';
 
 export enum DuplicateState {
   needInput = 'needInput', // 최초 등록 상태인 경우 사용
@@ -56,9 +57,7 @@ export const DuplicateCheckInputFormField = forwardRef<
           ok: 'LABEL.form.validation.ok',
           duplicated: 'LABEL.form.validation.duplicated',
           reCheck: 'LABEL.form.validation.reCheck',
-          needInput: 'LABEL.form.validation.needInput',
-        },
-      },
+          needInput: 'LABEL.form.validation.needInput' } },
       // inputType,
       type,
       ...props
@@ -115,8 +114,7 @@ export const DuplicateCheckInputFormField = forwardRef<
                 break;
               case DuplicateState.duplicated:
                 control.setError(name, {
-                  message: t(dupConfig.langCode.duplicated, { code: label }),
-                });
+                  message: t(dupConfig.langCode.duplicated, { code: label }) });
                 break;
               default:
                 break;

@@ -1,9 +1,9 @@
 import { memo } from 'react';
 
-import { Button, useModal } from '@learnway/ui';
-
 import { WidgetPreviewModal } from './widget-preview-modal';
 import type { Widget } from '@types';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 
 const WidgetPreviewComponent = ({ widget, disabled }: { widget: Widget; disabled?: boolean }) => {
   const { openModal } = useModal();
@@ -17,8 +17,7 @@ const WidgetPreviewComponent = ({ widget, disabled }: { widget: Widget; disabled
         e.stopPropagation();
         openModal({
           width: 'xl',
-          content: <WidgetPreviewModal widget={widget} />,
-        });
+          content: <WidgetPreviewModal widget={widget} /> });
       }}
     >
       {'미리보기'}

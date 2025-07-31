@@ -1,9 +1,8 @@
-/* eslint-disable @nx/enforce-module-boundaries */
-import React, { useState, useRef, useEffect } from 'react';
-import { ReactDatePickerCustomHeaderProps } from 'react-datepicker';
+import { IcoArrowBackward, IcoArrowDownFilled, IcoArrowForward } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { Button } from '@learnway/ui';
-import { IcoArrowForward, IcoArrowBackward, IcoArrowDownFilled } from '@learnway/icons';
+import React, { useEffect, useRef, useState } from 'react';
+import { ReactDatePickerCustomHeaderProps } from 'react-datepicker';
+import { Button } from '../button';
 import styles from './custom-date-picker-header.module.css';
 
 interface CustomDatePickerHeaderProps extends ReactDatePickerCustomHeaderProps {

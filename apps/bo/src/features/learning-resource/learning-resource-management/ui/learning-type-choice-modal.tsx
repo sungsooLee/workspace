@@ -1,3 +1,5 @@
+// TODO: Fix unknown imports: // Button, // ModalFooter from '@learnway/ui'
+import { ModalBody, ModalContainer, ModalTitle, useModal } from '@learnway/ui/modal';
 // IA105 / NLP_BO_CMS_1058
 import {
   IcoBlog,
@@ -13,19 +15,9 @@ import {
   IcoVideo01,
   IcoQuestionBank,
   IcoLive,
-  IcoLiveHive,
-} from '@learnway/icons';
+  IcoLiveHive } from '@learnway/icons';
 import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
-import {
-  // Button,
-  ModalBody,
-  ModalContainer,
-  // ModalFooter,
-  ModalTitle,
-  OptionCard,
-  OptionCardItem,
-  useModal,
-} from '@learnway/ui';
+import { OptionCard, OptionCardItem } from '@learnway/ui/option-card';
 import { useState } from 'react';
 import { LEARNING_TYPE } from '@learnway/config';
 import { EbookInstallGuideModal } from './e-book-install-guide-modal';
@@ -46,8 +38,7 @@ const LearningTypeChoiceModalComponent = () => {
       await openModal({
         hideCloseButton: true,
         width: 'auto',
-        content: <EbookInstallGuideModal />,
-      });
+        content: <EbookInstallGuideModal /> });
       return;
     }
     closeModal(option.value);
@@ -85,80 +76,67 @@ const learningTypes = [
     label: '동영상',
     value: LEARNING_TYPE.VIDEO,
     icon: <IcoVideo01 />,
-    description: '1개 동영상 업로드',
-  },
+    description: '1개 동영상 업로드' },
   {
     label: '이북',
     value: LEARNING_TYPE.E_BOOK,
     icon: <IcoMybook />,
-    description: '설명문구2줄설명',
-  },
+    description: '설명문구2줄설명' },
   { label: '스콤', value: LEARNING_TYPE.SCORM, icon: <IcoEtc />, description: '설명문구2줄설명' },
   {
     label: 'HTML',
     value: LEARNING_TYPE.HTML5_VIDEO,
     icon: <IcoHtml />,
-    description: '설명 문구는 최대 2줄까지 노출됩니다. ',
-  },
+    description: '설명 문구는 최대 2줄까지 노출됩니다. ' },
   {
     label: '이미지',
     value: LEARNING_TYPE.IMAGE,
     icon: <IcoImage01 />,
-    description: '설명 문구는 최대 2줄까지 노출됩니다. ',
-  },
+    description: '설명 문구는 최대 2줄까지 노출됩니다. ' },
   {
     label: '외부 링크',
     value: LEARNING_TYPE.EXTERNAL_LINK,
     icon: <IcoInfoCircle />,
-    description: '설명문구2줄설명',
-  },
+    description: '설명문구2줄설명' },
   {
     label: '외부 위탁',
     value: LEARNING_TYPE.EXTERNAL_CONSIGNMENT,
     icon: <IcoEntrust />,
-    description: '설명문구2줄설명',
-  },
+    description: '설명문구2줄설명' },
   {
     label: '블로그',
     value: LEARNING_TYPE.BLOG,
     icon: <IcoBlog />,
-    description: '설명문구2줄설명',
-  },
+    description: '설명문구2줄설명' },
   {
     label: '시험지',
     value: LEARNING_TYPE.EXAM,
     icon: <IcoExam />,
-    description: '설명문구2줄설명',
-  },
+    description: '설명문구2줄설명' },
   {
     label: '문제은행',
     value: LEARNING_TYPE.EXAM_POOL,
     icon: <IcoQuestionBank />,
-    description: '설명문구2줄설명',
-  },
+    description: '설명문구2줄설명' },
   {
     label: '과제',
     value: LEARNING_TYPE.ASSIGNMENT,
     icon: <IcoHomework />,
-    description: '설명문구2줄설명',
-  },
+    description: '설명문구2줄설명' },
   {
     label: '설문지',
     value: LEARNING_TYPE.SURVEY,
     icon: <IcoSurvey />,
-    description: '설명문구2줄설명',
-  },
+    description: '설명문구2줄설명' },
   { label: '기타', value: LEARNING_TYPE.ETC, icon: <IcoEtc />, description: '설명문구2줄설명' },
   {
     label: '라이브',
     value: LEARNING_TYPE.LIVE,
     icon: <IcoLive />,
-    description: '설명문구2줄설명',
-  },
+    description: '설명문구2줄설명' },
   {
     label: '라이브(HIVE)',
     value: LEARNING_TYPE.HIVE,
     icon: <IcoLiveHive />,
-    description: '설명문구2줄설명',
-  },
+    description: '설명문구2줄설명' },
 ];

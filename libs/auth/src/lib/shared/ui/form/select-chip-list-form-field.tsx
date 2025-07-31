@@ -1,6 +1,9 @@
-import { forwardRef, useEffect, useState } from 'react';
-import { Button, ChipList, Dropdown, SelectOption } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { ChipList } from '@learnway/ui/chips';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { SelectOption } from '@learnway/ui/type';
 import { t } from 'i18next';
+import { forwardRef, useEffect, useState } from 'react';
 
 export interface FormSelectChipListComponentProps {
   value?: any[];

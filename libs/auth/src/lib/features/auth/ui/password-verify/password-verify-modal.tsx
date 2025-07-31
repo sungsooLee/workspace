@@ -1,16 +1,16 @@
-import { memo } from 'react';
 import { useRouter } from '@tanstack/react-router';
+import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Button, ModalBody, ModalContainer, ModalFooter, ModalTitle } from '@learnway/ui';
-import { DynamicFormField, ContentsRow } from '@learnway/ui';
-import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
 
-import { FormRow, EmbededAlert } from '../../../../shared/ui';
 import { useLogoutUser, useVerifyPassword } from '../../../../entities';
+import { EmbededAlert, FormRow } from '../../../../shared/ui';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/widget-management.module.css'; // 화면 css
-import { useModal } from '@learnway/ui';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
 const PasswordVerifyModalComponent = () => {
   const { t } = useTranslation();

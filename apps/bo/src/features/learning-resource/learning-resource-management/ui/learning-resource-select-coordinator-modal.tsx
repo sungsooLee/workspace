@@ -2,18 +2,13 @@ import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.m
 import popSearchStyles from '@learnway/styles/bo/assets/styles/modules/popup-search.module.css';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { useState } from 'react';
-import {
-  Button,
-  Dropdown,
-  Input,
-  List,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  useModal,
-} from '@learnway/ui';
+import { List } from '@learnway/ui/list';
 import { IcoRefresh02, IcoSearch } from '@learnway/icons';
 import { cn } from '@learnway/shared';
+import { Button } from '@learnway/ui/button';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { Input } from '@learnway/ui/input';
+import { ModalBody, ModalContainer, ModalFooter, useModal } from '@learnway/ui/modal';
 
 function SelectCoordinatorModalComponent() {
   const { closeModal } = useModal();
@@ -102,8 +97,7 @@ function SelectCoordinatorModalComponent() {
                 { value: 'type9', label: '선택한 채널의 소속 채널 소유자명9 (사번 또는 이메일)' },
                 {
                   value: 'type10',
-                  label: '선택한 채널의 소속 채널 소유자명10 (사번 또는 이메일)',
-                },
+                  label: '선택한 채널의 소속 채널 소유자명10 (사번 또는 이메일)' },
               ]}
               onOptionsSelect={(options) => console.log(options)}
               hideBorder

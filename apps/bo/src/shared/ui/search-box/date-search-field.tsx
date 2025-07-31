@@ -1,4 +1,5 @@
-import { DatePicker, DatePickerComponentProps } from '@learnway/ui';
+import { DatePickerComponentProps } from '@learnway/ui/date-picker';
+import { DatePicker } from '@learnway/ui/date-picker';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
 import { FC } from 'react';
 

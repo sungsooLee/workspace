@@ -1,5 +1,6 @@
-import { TreeNode } from '@learnway/ui';
+import { TreeNode } from '@learnway/ui/tree-view';
 import { t } from 'i18next';
+// TODO: Fix unknown imports:  from '@learnway/ui'
 
 export const findUserGroupOrganizationPathById = (
   nodes: TreeNode[],
@@ -62,8 +63,7 @@ export const transformUserGroupOrganizationApiDataToTreeData = (
         parentKey: parentId,
         children: node.childList || [],
         _nodeType: 'D',
-        depth: depth,
-      };
+        depth: depth };
 
       if (node.type === 'COMPANY') {
         //회사 노드

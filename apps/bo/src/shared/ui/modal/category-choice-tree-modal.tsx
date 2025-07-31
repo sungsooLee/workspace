@@ -1,30 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { t } from 'i18next';
-import {
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  useModal,
-  Button,
-  TreeContainer,
-  TreeNode,
-  DndTreeView,
-} from '@learnway/ui';
-import { cn } from '@learnway/shared';
+import { transformApiDataToTreeData } from '@features/platform-management/platform/category-managemnet';
+import popContentsStyles from '@features/platform-management/tenant/ui/pop-contents-layout.module.css';
 import { IcoNarrowRight } from '@learnway/icons';
+import { cn } from '@learnway/shared';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
-import popContentsStyles from '@features/platform-management/tenant/ui/pop-contents-layout.module.css';
-import { transformApiDataToTreeData } from '@features/platform-management/platform/category-managemnet';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { DndTreeView, TreeContainer, TreeNode } from '@learnway/ui/tree-view';
+import { t } from 'i18next';
+import { useEffect, useState } from 'react';
 
 import { useFetchCategory } from '@entities/category';
 import {
-  getFirstExpandKeys,
-  getAllTreeKeys,
   copyTreeNode,
+  getAllTreeKeys,
+  getFirstExpandKeys,
   moveNodePosition,
 } from '@features/platform-management/tenant';
+import { Button } from '@learnway/ui/button';
 
 /**
  * 화면번호: NLP_BO_TMS_1002_02 (카테고리 테넌트 매핑)

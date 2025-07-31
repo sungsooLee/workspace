@@ -1,41 +1,34 @@
 import { useRouter, useRouterState } from '@tanstack/react-router';
 import { CellContext } from '@tanstack/react-table';
 import { t } from 'i18next';
-import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
+import { forwardRef, useImperativeHandle, useRef } from 'react';
 
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 
 import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import {
-  Button,
-  ChipListModalSelectorFormField,
-  ContentsRow,
-  DatePicker,
-  EditDropdownCell,
-  EditInputCell,
-  EditSwitchCell,
-  FormSubTitle,
-  GridFormField,
-  Input,
-  useModal,
-} from '@learnway/ui';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { DatePicker } from '@learnway/ui/date-picker';
+import { ChipListModalSelectorFormField, GridFormField } from '@learnway/ui/form-field';
 
 import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
-import { FormDisplay } from '@features/form/ui/form-display';
 import { FormRow, OrganizationChoiceTreeModal } from '@shared/ui';
 
-import { LoginAuthenticationSettingInformation } from '@features/platform-management/company';
-import UsersService from '@entities/users/api/users';
-import { queryOptions as CompanyService } from '@entities/companies/service/companies.queries';
-import { useQueryClient } from '@tanstack/react-query';
-import { useCreateUser } from '@entities/users/service/users.hook';
-import { useCodesByCodeGroup } from '@entities/platform';
 import { useSystemCodeDetail } from '@entities/common-code';
+import { queryOptions as CompanyService } from '@entities/companies/service/companies.queries';
+import UsersService from '@entities/users/api/users';
+import { useCreateUser } from '@entities/users/service/users.hook';
+import { LoginAuthenticationSettingInformation } from '@features/platform-management/company';
 import { CompanyUserDetailAccount } from '@features/platform-management/company/company-user-management/ui/company-user-detail-account';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { EditDropdownCell, EditSwitchCell } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
+import { useQueryClient } from '@tanstack/react-query';
 import { EnFormMode } from '@types';
 
 const EMAIL_REGEX =
-  /(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/;
+  /(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2 }))/;
 
 const duplicateCheckEmployeeNumber = async (companyCode: string) => {
   const result = false;
@@ -109,7 +102,7 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
       lastDept: organization.deptName,
       deptId: organization.deptId,
       firstDept: '',
-      loginRestriction: company.companyLoginRestrictionList
+      loginRestriction: company.companyLoginRestrictionList,
     };
 
     if (organization.depth > 2) {
@@ -122,19 +115,19 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
   const handleOnSubmit = async (data: any) => {
     console.log('#### handleOnSubmit', data);
 
-    if( data.phoneNumber ) {
+    if (data.phoneNumber) {
       const phoneNumber = `0${data.phoneNumber}`;
       const regex = new RegExp('^01[016789]\\d{7,8}$');
-      if( !regex.test(phoneNumber) ) {
+      if (!regex.test(phoneNumber)) {
         setFormError('phoneNumber', t('휴대폰 번호 형식에 맞게 입력해 주세요.'));
         return false;
       }
     }
 
-    if( data.companyNumber ) {
+    if (data.companyNumber) {
       const companyPhoneNumber = `0${data.companyNumber}`;
       const officePhoneRegex = new RegExp('^0(2|[3-6][1-5])\\d{7,8}$');
-      if( !officePhoneRegex.test(companyPhoneNumber) ) {
+      if (!officePhoneRegex.test(companyPhoneNumber)) {
         setFormError('companyNumber', t('연락처 형식에 맞게 입력해 주세요.'));
         return false;
       }

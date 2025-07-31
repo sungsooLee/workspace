@@ -1,21 +1,14 @@
 import { FC, useState, forwardRef, useCallback } from 'react';
 import { t } from 'i18next';
-import {
-  Button,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  GridBox,
-  useModal,
-  useGridBox,
-  Divider,
-} from '@learnway/ui';
+import { Divider } from '@learnway/ui/elements';
+import { GridBox, useGridBox } from '@learnway/ui/grid';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { tenantQueryOptions } from '@entities/tenant/service/tenant.queries';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
 const TenantModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
   const { closeModal } = useModal();
@@ -31,16 +24,13 @@ const TenantModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
           label: t('테넌트'),
           value: undefined,
           optionsConfig: {
-            codeGroup: CODE_GROUP['manual.tenant.tenantId'],
-          },
+            codeGroup: CODE_GROUP['manual.tenant.tenantId'] },
           dropdownConfig: {
             onchange: () => {
               return '';
             },
             isSearchable: true,
-            placeholder: '입력 또는 선택',
-          },
-        },
+            placeholder: '입력 또는 선택' } },
         {
           name: 'companyCode',
           type: 'dropdown',
@@ -49,22 +39,18 @@ const TenantModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
           format: 'object',
           presetOptionLabel: t('LABEL.form.label.all'),
           optionsConfig: {
-            codeGroup: CODE_GROUP['manual.company.companyCode'],
-          },
+            codeGroup: CODE_GROUP['manual.company.companyCode'] },
           dropdownConfig: {
             onchange: () => {
               return '';
             },
             isSearchable: true,
-            placeholder: '입력 또는 선택',
-          },
-        },
+            placeholder: '입력 또는 선택' } },
         {
           name: 'tenantMappingRoleName',
           type: 'text',
           label: t('테넌트 담당자'),
-          value: '',
-        },
+          value: '' },
         {
           name: 'isUsed',
           type: 'dropdown',
@@ -74,15 +60,12 @@ const TenantModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
             { value: '', label: t('전체') },
             { value: 'true', label: t('사용') },
             { value: 'false', label: t('미사용') },
-          ],
-        },
+          ] },
       ],
       [],
     ],
     validator: {
-      tenantId: { required: true },
-    },
-  };
+      tenantId: { required: true } } };
 
   const { provider: sProvider, getValues } = useSearchBox(searchConfig);
 
@@ -92,13 +75,11 @@ const TenantModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
       {
         name: 'no1',
         label: 'NO.',
-        type: 'numbering',
-      },
+        type: 'numbering' },
       {
         name: 'tenantName',
         label: t('테넌트'),
-        render: (info: any) => info.row.original.tenantName,
-      },
+        render: (info: any) => info.row.original.tenantName },
       {
         name: 'companyTenantList',
         label: t('회사'),
@@ -107,8 +88,7 @@ const TenantModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
             return companyName;
           });
           return companyNames.toString();
-        },
-      },
+        } },
       {
         name: 'tenantUserList',
         label: t('테넌트 담당자'),
@@ -117,24 +97,20 @@ const TenantModalComponent: FC<any> = forwardRef(({ rootPath }, ref) => {
             return userName;
           });
           return tenantUserList.toString();
-        },
-      },
+        } },
       {
         name: 'isUsed',
         label: '사용여부',
         render: (info: any) => {
           return info.row.original.isUsed ? t('LABEL.common.enable') : t('LABEL.common.disable');
-        },
-      },
+        } },
     ],
     data: [],
 
     pagination: {
       pageSize: 10,
       pageIndex: 0,
-      totalRows: 0,
-    },
-  };
+      totalRows: 0 } };
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
 
   const [selectedRow, setSelectedRow] = useState();

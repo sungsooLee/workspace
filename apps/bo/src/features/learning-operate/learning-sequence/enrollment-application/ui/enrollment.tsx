@@ -4,7 +4,7 @@ import { queryOptions as sequenceQueryOptions } from '@entities/learning-sequenc
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { generateYears } from '@learnway/shared';
-import { Tabs } from '@learnway/ui';
+import { Tabs } from '@learnway/ui/tabs';
 import { SequenceTabDetail } from '@pages/_layout/learning/learning-sequence/-common/type';
 import { usePageState } from '@shared/lib';
 import { useQueryClient } from '@tanstack/react-query';

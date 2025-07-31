@@ -1,24 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { useRouter, useRouterState, Link } from '@tanstack/react-router';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { useRouter, useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
+import { useEffect, useState } from 'react';
 
-import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import { Button, Divider, GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
-import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
+import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
+import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
+import { Divider } from '@learnway/ui/elements';
+import { GridBox, useGridBox } from '@learnway/ui/grid';
 
 import { useFetchAuthUser } from '@learnway/auth/entities';
 
 import { SearchBox } from '@shared/ui/search-box';
 
-import {
-  queryOptions,
-  queryOptions as companyQueryOptions,
-} from '@entities/companies/service/companies.queries';
+import { queryOptions as companyQueryOptions } from '@entities/companies/service/companies.queries';
+import { Button } from '@learnway/ui/button';
 import { EnGlobalConst } from '@types';
 import { useCreation } from 'ahooks';
-import { widgetsQueryOptions } from '@entities/widgets';
-import { WidgetPreviewButton } from '@features/platform';
 
 const _global = {
   linkClick: (row: any) => {

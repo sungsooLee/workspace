@@ -1,14 +1,15 @@
-import { useEffect, Suspense, lazy } from 'react';
 import { Outlet, createRootRouteWithContext, useRouter } from '@tanstack/react-router';
+import { Suspense, lazy, useEffect } from 'react';
 
-import { ModalWrapper, ToastWrapper, useModalStore } from '@learnway/ui';
-import { useCodeStore, useCodeStoreShare, useGlobalRouterEvent } from '@learnway/hooks';
-import { setupErrorToastListener } from '@learnway/shared';
-import { MinWidthRequired } from '@shared/ui';
-import { useBreakpointModalClose } from '../shared/lib/breakpoint-modal.hook';
 import { NotFound } from '@features/layout';
 import { useFetchAuthUser, useRenewalMenuStateFromRouting } from '@learnway/auth/entities';
-import { PageRouteContext } from '@learnway/shared';
+import { useCodeStoreShare, useGlobalRouterEvent } from '@learnway/hooks';
+import { PageRouteContext, setupErrorToastListener } from '@learnway/shared';
+import { ModalWrapper } from '@learnway/ui/modal';
+import { useModalStore } from '@learnway/ui/stores';
+import { ToastWrapper } from '@learnway/ui/toast';
+import { MinWidthRequired } from '@shared/ui';
+import { useBreakpointModalClose } from '../shared/lib/breakpoint-modal.hook';
 
 const TanStackRouterDevtools = lazy(() =>
   import.meta.env.VITE_APP_ENV === 'local'
@@ -62,7 +63,6 @@ function RootComponent() {
       <ToastWrapper />
       {(import.meta.env.VITE_APP_ENV === 'local' || import.meta.env.VITE_APP_ENV === 'dev') && (
         <Suspense fallback={null}>
-          {/* <ServerStatus /> */}
           <ReactQueryDevtools />
           <TanStackRouterDevtools position="bottom-right" />
         </Suspense>

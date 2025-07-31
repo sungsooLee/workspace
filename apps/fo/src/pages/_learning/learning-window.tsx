@@ -1,36 +1,28 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
 import { createFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
-
-import { t } from 'i18next';
+import { useEffect, useState } from 'react';
 
 import {
-  LearnwayLearningWindowLayout,
-  useLearningWindow,
-  ScormPlayerConfigProperties,
   LearningWindowBaseInfo,
   LearningWindowPlayInfo,
-} from '@learnway/ui';
-import {
-  useVideoWatchInitialize,
-  useVideoWatchLog,
-} from '@entities/learning-resource/service/video.hook';
+  LearnwayLearningWindowLayout,
+  ScormPlayerConfigProperties,
+  useLearningWindow,
+} from '@learnway/ui/learning-window';
+
 import { useGetCurriculumnDetail } from '@entities/curriculum';
 
-import {
-  scormRteApi,
-  html5Api,
-  imageApi,
-  contentApi,
-  useGetScormRteScoInfo,
-  useGetBlogResource,
-  useGetHtml5Resource,
-  useGetImageResource,
-} from '@entities/learning-resource';
-import { CmsEnContentType } from '@learnway/types';
+import { learningResourceApi } from '@entities/learning-resource/api/learning-resource';
 import {
   useEtcContentManager,
-  useGetEtcContentResource,
-} from '@entities/learning-resource/service/etc-content.hook';
+  useGetBlogResource,
+  useGetEtcResource,
+  useGetHtml5Resource,
+  useGetImageResource,
+  useGetScormScoInfo,
+  useGetVideoWatchInitialize,
+  useVideoWatchLog,
+} from '@entities/learning-resource/service/learning-resource.hook';
+import { CmsEnContentType } from '@learnway/types';
 
 export const Route = createFileRoute('/_learning/learning-window')({
   component: RouteComponent,
@@ -63,25 +55,25 @@ function RouteComponent() {
     clearInfo,
     setFuncInfo,
   } = useLearningWindow();
-  const { data: scormInfo } = useGetScormRteScoInfo(scormConfig);
-  const { data: ebookInfo } = useGetScormRteScoInfo(ebookConfig);
+  const { data: scormInfo } = useGetScormScoInfo(scormConfig);
+  const { data: ebookInfo } = useGetScormScoInfo(ebookConfig);
   const { data: curriculum } = useGetCurriculumnDetail(baseInfo?.curriculumId);
-  const { data: videoInfo } = useVideoWatchInitialize(videoConfig);
+  const { data: videoInfo } = useGetVideoWatchInitialize(videoConfig);
   const { data: blogInfo } = useGetBlogResource(blogConfig?.contentUuid);
   const { data: htmlInfo } = useGetHtml5Resource(htmlConfig?.contentUuid);
   const { data: imageInfo } = useGetImageResource(imageConfig?.contentUuid);
-  const { data: etcInfo } = useGetEtcContentResource(etcConfig?.contentUuid);
+  const { data: etcInfo } = useGetEtcResource(etcConfig?.contentUuid);
   const { download } = useEtcContentManager();
 
-  const { watchLog, watchLogStatistics } = useVideoWatchLog();
+  const { videoWatchLog, videoWatchLogStatistics } = useVideoWatchLog();
 
   const handleVideoProgress = async (payload: any) => {
     console.log('handleVideo', payload);
-    watchLog(payload);
+    videoWatchLog(payload);
   };
   const handleVideoWatchStatistics = async (payload: any) => {
     console.log('handelVideoWatchStatistics', payload);
-    watchLogStatistics(payload);
+    videoWatchLogStatistics(payload);
   };
   const handleOtherClickButton = async (playInfo: LearningWindowPlayInfo, otherInfo: any) => {
     console.log('handleOtherClikcButton called');
@@ -211,11 +203,11 @@ function RouteComponent() {
     }
 
     setFuncInfo({
-      lessonProgress: contentApi.getProgressMulti,
-      scormInitialize: scormRteApi.initialize,
-      scormCommit: scormRteApi.commit,
-      html5LearningHistory: html5Api.saveHtml5Learning,
-      galleryLearningHistory: imageApi.saveImageLearning,
+      lessonProgress: learningResourceApi.getProgressMulti,
+      scormInitialize: learningResourceApi.scormInitialize,
+      scormCommit: learningResourceApi.scormCommit,
+      html5LearningHistory: learningResourceApi.saveHtml5Learning,
+      galleryLearningHistory: learningResourceApi.saveImageLearning,
       videoOnProgress: handleVideoProgress,
       videoWatchStatistics: handleVideoWatchStatistics,
       otherClickButton: handleOtherClickButton,

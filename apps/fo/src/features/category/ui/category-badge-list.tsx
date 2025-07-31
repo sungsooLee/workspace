@@ -1,15 +1,15 @@
 import React, { useEffect, useRef } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { IcoArrowForward } from '@learnway/icons';
-import { Chip } from '@learnway/ui';
 
+import { useCategoryNavigation } from '@entities/category/service/category.hook';
 import { Category } from '../../../types/entities/category';
 import { useCategories } from '../services/category.service';
-import { useCategoryNavigation } from '@entities/category/service/category.hook';
 
 import styles from '@learnway/styles/fo/features/category/category-badge-list.module.css';
+import { Chip } from '@learnway/ui/chips';
 
 interface CategoryBadgeListProps {
   onClose?: (categoryId: number) => void;
@@ -53,9 +53,7 @@ export function CategoryBadgeList({ onClose, onClick }: CategoryBadgeListProps) 
   const handleClose = (e: React.MouseEvent, categoryId: number) => {
     e.stopPropagation();
     // 최근 방문 목록에서 제거
-    const updatedIds = recentCategories
-      .filter((cat) => cat.id !== categoryId)
-      .map((cat) => cat.id);
+    const updatedIds = recentCategories.filter((cat) => cat.id !== categoryId).map((cat) => cat.id);
 
     localStorage.setItem('recentCategories', JSON.stringify(updatedIds));
     setRecentCategories((prev) => prev.filter((cat) => cat.id !== categoryId));
@@ -64,9 +62,7 @@ export function CategoryBadgeList({ onClose, onClick }: CategoryBadgeListProps) 
 
   const handleDelete = (categoryId: number) => {
     // 최근 방문 목록에서 제거
-    const updatedIds = recentCategories
-      .filter((cat) => cat.id !== categoryId)
-      .map((cat) => cat.id);
+    const updatedIds = recentCategories.filter((cat) => cat.id !== categoryId).map((cat) => cat.id);
 
     localStorage.setItem('recentCategories', JSON.stringify(updatedIds));
     setRecentCategories((prev) => prev.filter((cat) => cat.id !== categoryId));
@@ -92,14 +88,10 @@ export function CategoryBadgeList({ onClose, onClick }: CategoryBadgeListProps) 
         >
           <div className={styles.lists}>
             {recentCategories.map((item) => (
-              <SwiperSlide
-                key={item.id}
-                className={styles.slide}
-                onClick={() => handleClick(item)}
-              >
+              <SwiperSlide key={item.id} className={styles.slide} onClick={() => handleClick(item)}>
                 <Chip
                   className={styles.item}
-                  option={{ label: item.name, value: item.id + '' }}
+                  option={{ label: item.name, value: `${item.id}` }}
                   onDelete={() => handleDelete(item.id)}
                 />
               </SwiperSlide>

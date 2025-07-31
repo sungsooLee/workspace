@@ -1,16 +1,9 @@
-import { useMemo, useState } from 'react';
-import {
-  Button,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  useModal,
-  ModalTitle,
-  OptionCard,
-  OptionCardItem,
-  FormSubTitle,
-} from '@learnway/ui';
 import { useFetchAuthUser, useUpdateTenantRoleLastSelect } from '@learnway/auth/entities';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { OptionCard, OptionCardItem } from '@learnway/ui/option-card';
+import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 /**

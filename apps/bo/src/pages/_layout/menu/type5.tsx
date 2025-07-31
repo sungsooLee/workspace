@@ -5,7 +5,9 @@ import {
   useDynamicFormContext,
 } from '@learnway/hooks';
 import { buildJodObject, ValidatorConfig } from '@learnway/shared';
-import { Button, ContentsRow, Input } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
 import { FormInfoArea } from '@shared/ui/form/components/form-info-area';
 import { createFileRoute } from '@tanstack/react-router';

@@ -35,8 +35,7 @@ const useVideoResourceHook = (provider: DynamicFormProvider) => {
     onError: (error: any) => {
       console.error(error);
       // 에러 얼럿?
-    },
-  });
+    } });
 
   const handleChangeVideo = (fileUuid: string) => changeVideo({ contentUuid, fileUuid });
 
@@ -118,8 +117,7 @@ const useVideoResourceHook = (provider: DynamicFormProvider) => {
     processingStatus: status,
     playTime,
     videoResource,
-    handleChangeVideo,
-  };
+    handleChangeVideo };
 };
 
 export const useVideoResource = useVideoResourceHook;

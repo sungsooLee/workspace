@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import dayjs from 'dayjs';
-import { ContentsRow } from '@learnway/ui';
 import { cn, isEmptyData } from '@learnway/shared';
 import { UseDynamicFormResult } from '@learnway/hooks';
 import { useFetchAuthUser } from '@learnway/auth/entities';
@@ -11,6 +10,7 @@ import { useRoleInfo } from '../service/util';
 import { LearningResourceBaseForm } from './learning-resource-base-form';
 
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import { ContentsRow } from '@learnway/ui/contents-row';
 
 type BlogDetailProps = {
   form: UseDynamicFormResult;
@@ -23,8 +23,7 @@ const BlogDetailComponent = ({
   form,
   mode,
   blogInfo = {},
-  hasMapping = false,
-}: BlogDetailProps) => {
+  hasMapping = false }: BlogDetailProps) => {
   const { provider, getValues, updateFormData, onFormChange, watch } = form;
 
   const createType = watch('createType');
@@ -40,10 +39,8 @@ const BlogDetailComponent = ({
         coordinatorUuid: loginUser?.uuid,
         coordinatorName: loginUser?.name,
         coordinatorTelCountryCode: loginUser?.phoneNumberNationCode,
-        coordinatorTelNo: loginUser?.phoneNumber,
-      });
-    },
-  });
+        coordinatorTelNo: loginUser?.phoneNumber });
+    } });
 
   useEffect(() => {
     (async () => {
@@ -59,12 +56,10 @@ const BlogDetailComponent = ({
           from: blogInfo.contentUseStartDate
             ? dayjs(blogInfo.contentUseStartDate).toDate()
             : undefined,
-          to: blogInfo.contentUseEndDate ? dayjs(blogInfo.contentUseEndDate).toDate() : undefined,
-        },
+          to: blogInfo.contentUseEndDate ? dayjs(blogInfo.contentUseEndDate).toDate() : undefined },
         blogContent: JSON.stringify(blogInfo.blogContent ?? {}),
         aiSummary: blogInfo.aiSummary ?? '',
-        aiKeyword: blogInfo.aiKeyword ?? '',
-      });
+        aiKeyword: blogInfo.aiKeyword ?? '' });
     }
   }, [blogInfo]);
 

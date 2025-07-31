@@ -180,8 +180,7 @@ export namespace InstructorDto {
    */
   export enum instructorType {
     INTERNAL_INSTRUCTOR = 'INTERNAL_INSTRUCTOR',
-    EXTERNAL_INSTRUCTOR = 'EXTERNAL_INSTRUCTOR',
-  }
+    EXTERNAL_INSTRUCTOR = 'EXTERNAL_INSTRUCTOR' }
   /**
    * 연락처 국가코드
    */
@@ -431,8 +430,7 @@ export namespace InstructorDto {
     ESH_212 = 'ESH_212',
     YEM_967 = 'YEM_967',
     ZMB_260 = 'ZMB_260',
-    ZWE_263 = 'ZWE_263',
-  }
+    ZWE_263 = 'ZWE_263' }
 
   /**
    * 과정 타입
@@ -443,6 +441,5 @@ export namespace InstructorDto {
     CLASS = 'CLASS',
     LIVE = 'LIVE',
     EXAM = 'EXAM',
-    SURVEY = 'SURVEY',
-  }
+    SURVEY = 'SURVEY' }
 }

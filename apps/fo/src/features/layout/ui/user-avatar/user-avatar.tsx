@@ -13,7 +13,11 @@ import {
   IcoRocket,
 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { Avatar, Button, Popover, Switch, useModal } from '@learnway/ui';
+import { Avatar } from '@learnway/ui/avatar';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
+import { Popover } from '@learnway/ui/popover';
+import { Switch } from '@learnway/ui/switch';
 
 import { useSetLanguage } from '@features/platform';
 import languagestyles from '@learnway/styles/fo/features/layout/ui/user-avatar/language.module.css';

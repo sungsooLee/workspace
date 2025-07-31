@@ -1,4 +1,4 @@
-import { IcoHome03, IcoMenu01, IcoSetting01 } from '@learnway/icons';
+import { IcoHome03, IcoMenu01 } from '@learnway/icons';
 import { Button, useModal } from '@learnway/ui';
 import { Link } from '@tanstack/react-router';
 import { memo } from 'react';
@@ -22,9 +22,7 @@ const NavigationMComponent = () => {
                 <Link to={'/'}>
                   <IcoHome03 width={24} height={24} stroke="#131c30"></IcoHome03>
                 </Link>
-                <Link to={'/'}>
-                  <IcoSetting01 width={24} height={24} stroke="#131c30" fill="none"></IcoSetting01>
-                </Link>
+                {/* 퍼블수정 20250731 setting 아이콘 삭제 */}
               </div>
             ),
             content: <NavigationPopupM />,

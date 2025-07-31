@@ -1,8 +1,9 @@
 import { memo, useState } from 'react';
-import { Button, Avatar } from '@learnway/ui';
 import { IcoThumbsUp, IcoDownArrow } from '@learnway/icons';
 
 import styles from '@learnway/styles/fo/features/layout/ui/comment.module.css';
+import { Avatar } from '@learnway/ui/avatar';
+import { Button } from '@learnway/ui/button';
 
 interface CommentProps {
   className?: string;

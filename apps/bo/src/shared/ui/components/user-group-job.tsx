@@ -1,11 +1,11 @@
 import { useFetchUserGroups } from '@entities/user-group';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import {
-  SelectedChip,
   ShuttleGridToChips,
   ShuttleGridToChipsImperative,
   useShuttleGridToChips,
-} from '@learnway/ui';
+} from '@learnway/ui/shuttle-grid-to-chips';
+import { SelectedChip } from '@learnway/ui/type';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { CombineUserGroup } from '@types';
 import { t } from 'i18next';

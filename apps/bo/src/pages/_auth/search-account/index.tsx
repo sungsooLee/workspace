@@ -11,16 +11,10 @@ export const Route = createFileRoute('/_auth/search-account/')({
         default: 'account',
         conditions: [
           {
-            fn: (values: any) => !['account', 'password'].includes(values.tabKey),
-          },
-        ],
-      },
-    },
+            fn: (values: any) => !['account', 'password'].includes(values.tabKey) },
+        ] } },
     meta: {
-      title: 'LABEL.common.searchAccount',
-    },
-  }),
-});
+      title: 'LABEL.common.searchAccount' } }) });
 
 function RouteComponent() {
   return <SearchAccountPage route={Route} enableTab={false} hiddenIcon={false} />;

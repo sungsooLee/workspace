@@ -1,10 +1,10 @@
 import { forwardRef, useCallback, useEffect, useState } from 'react';
 import { BaseFormFieldProps } from '@learnway/hooks';
-import { Input } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import styles from './pass-option-form-field.module.css';
 import { PassCriteriaData } from '@types';
 import { NoticeBox } from '@shared/ui';
+import { Input } from '@learnway/ui/input';
 
 interface PassOptionFormFieldProps extends BaseFormFieldProps<PassCriteriaData> {
   dummy?: boolean;
@@ -36,16 +36,14 @@ const PassOptionFormFieldComponent = forwardRef<HTMLDivElement, PassOptionFormFi
         ...d,
         scoreSum,
         weightSum,
-        totalMinPassScore,
-      };
+        totalMinPassScore };
     }, []);
 
     const handleCriteriaChange = (field: keyof PassCriteriaData, newValue: string) => {
       const numericValue = newValue === '' ? undefined : Number(newValue);
       const newCriteria = {
         ...criteria,
-        [field]: numericValue,
-      };
+        [field]: numericValue };
       const updatedCriteria = calcPassCriteriaData(newCriteria);
       setCriteria(updatedCriteria);
       onChange?.(updatedCriteria);

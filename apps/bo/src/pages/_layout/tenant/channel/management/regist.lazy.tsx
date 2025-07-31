@@ -1,15 +1,14 @@
 import { ChannelDetail, EnChannelRegisterMethod } from '@features/channel';
 import { useFetchAuthUser } from '@learnway/auth/entities';
-import { Button } from '@learnway/ui';
 import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui';
 import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { EnFormMode } from '@types';
 import { t } from 'i18next';
 import { useEffect, useRef } from 'react';
+import { Button } from '@learnway/ui/button';
 
 export const Route = createLazyFileRoute('/_layout/tenant/channel/management/regist')({
-  component: RouteComponent,
-});
+  component: RouteComponent });
 
 function RouteComponent() {
   const router = useRouter();

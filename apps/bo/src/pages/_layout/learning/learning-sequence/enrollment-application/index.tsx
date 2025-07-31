@@ -1,9 +1,13 @@
-import { Button, Divider, Tabs, ToggleButtonGroup, useModal } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { Divider } from '@learnway/ui/elements';
+import { useModal } from '@learnway/ui/modal';
+import { ToggleButtonGroup } from '@learnway/ui/toggle-button-group';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 // import { RoundList } from '@features/learning-operate/round';
 import { Enrollment } from '@features/learning-operate/learning-sequence/enrollment-application/ui/enrollment';
 import { StudentsManagement } from '@features/learning-operate/learning-sequence/students-management/students-management';
+import { Tabs } from '@learnway/ui/tabs';
 import { usePageState } from '@shared/lib';
 import { useMemo } from 'react';
 import { SequenceTab } from '../-common/type';
@@ -99,14 +103,14 @@ function RouteComponent() {
         key: SequenceTab.EVALUATION_MANAGEMENT,
         // content: (
         //   <EvaluationManagement />
-        // ),
+        // )
       },
     ],
     [setTabRef],
   );
 
   return (
-    <PageContainer hideOutLine={true} title={courseName}>
+    <PageContainer hideOutLine={true}>
       <ContentsButtons>
         <ToggleButtonGroup
           defaultValue={'edu'}

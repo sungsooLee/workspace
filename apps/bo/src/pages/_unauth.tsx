@@ -2,8 +2,7 @@ import { createFileRoute, Outlet } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 
 export const Route = createFileRoute('/_unauth')({
-  component: RouteComponent,
-});
+  component: RouteComponent });
 
 function RouteComponent() {
   const isScrolled = useBodyScroll();

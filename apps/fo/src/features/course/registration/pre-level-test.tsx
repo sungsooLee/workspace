@@ -1,16 +1,13 @@
-import { useState } from 'react';
-import {
-  ContentsRow,
-  Input,
-  PhoneNumber,
-  OptionCard,
-  OptionCardItem,
-  DatePicker,
-} from '@learnway/ui';
 import { cn } from '@learnway/shared';
+import { DatePicker } from '@learnway/ui/date-picker';
+import { OptionCard, OptionCardItem } from '@learnway/ui/option-card';
+import { PhoneNumber } from '@learnway/ui/phone-number';
+import { useState } from 'react';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import styles from '@learnway/styles/fo/pages/_layout/course/level.module.css';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
 
 const PreLevelTestComponent = () => {
   const gender = [

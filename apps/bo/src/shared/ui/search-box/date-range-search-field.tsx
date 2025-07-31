@@ -1,5 +1,6 @@
 import { FC } from 'react';
-import { RangeDatePicker, RangeDatePickerProps } from '@learnway/ui';
+import { RangeDatePickerProps } from '@learnway/ui/date-picker';
+import { RangeDatePicker } from '@learnway/ui/date-picker';
 
 /**
  * @description Date Range Picker 시작일~종료일 선택 (YYYY-MM-DD HH:mm:ss ~ YYYY-MM-DD HH:mm:ss)

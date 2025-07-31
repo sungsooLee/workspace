@@ -2,7 +2,7 @@ import {
   InstructorHistory,
   InstructorRegist,
 } from '@features/learning-operate-support/instructor-tutor/instructor-management';
-import { Button } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
 import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui';
 import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { EnPageMode } from '@types';

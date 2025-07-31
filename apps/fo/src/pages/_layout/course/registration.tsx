@@ -1,5 +1,4 @@
 import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { Button, useModal } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import { IcoCaution, IcoLocation, IcoCalendar01, IcoAvatar02, IcoTime } from '@learnway/icons';
 import { MobileView, BrowserView } from 'react-device-detect';
@@ -17,6 +16,8 @@ import { PreLevelTest, TextbookDeliveryAddress } from '@features/course';
 import { useMemo, useState } from 'react';
 import { useSearchParam } from 'react-use';
 import { AddressConfirmationPopup, EducationPlacePopup } from '@features/layout';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 export const Route = createFileRoute('/_layout/course/registration')({
   component: RouteComponent,
 });

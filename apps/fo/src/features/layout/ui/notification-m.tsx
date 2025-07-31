@@ -1,10 +1,11 @@
 import { memo } from 'react';
 import { Link } from '@tanstack/react-router';
-import { Button, useModal } from '@learnway/ui';
 import { NotificationPopupM } from '../../layout';
 import { IcoBell02 } from '@learnway/icons';
 
 import styles from '@learnway/styles/fo/features/layout/ui/notification-m.module.css';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 
 const NotificationMComponent = () => {
   const { openModal } = useModal();

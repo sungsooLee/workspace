@@ -1,14 +1,16 @@
 import { useRouter } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
-import { ContentsRow, Button, useModal } from '@learnway/ui';
+import { DynamicFormConfig, useCurrentRoute, useDynamicForm } from '@learnway/hooks';
 import { cn } from '@learnway/shared';
-import { useDynamicForm, DynamicFormConfig, useCurrentRoute } from '@learnway/hooks';
 
-import { FormRow, NoticeBox, EmbededAlert } from '../../shared';
 import { useExistsEmail } from '../../entities';
+import { EmbededAlert, FormRow, NoticeBox } from '../../shared';
 
 import styles from '@learnway/styles/fo/pages/_auth/signup-progress/signup-progress.module.css';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { useModal } from '@learnway/ui/modal';
 
 export function SignupProgressPage({ route }: any) {
   const { t } = useTranslation();

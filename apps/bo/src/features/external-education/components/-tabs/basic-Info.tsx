@@ -1,11 +1,14 @@
-import { ContentsRow, FormSubTitle, Input, Textarea } from '@learnway/ui';
-import { FormRow2 } from '@shared/ui';
-import { useDynamicForm2 } from '@learnway/hooks';
-import { useEffect, useCallback } from 'react';
 import {
-  useGetExternalEducationDetail,
   useCreateExternalCourseForm,
+  useGetExternalEducationDetail,
 } from '@entities/external-education';
+import { useDynamicForm2 } from '@learnway/hooks';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { Textarea } from '@learnway/ui/textarea';
+import { FormRow2 } from '@shared/ui';
+import { useCallback, useEffect } from 'react';
 
 interface BasicInfoProps {
   formId?: number; // 등록 시에는 없을 수 있음

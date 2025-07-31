@@ -1,11 +1,14 @@
-import { cn } from '@learnway/shared';
-import { memo, useState } from 'react';
-import { Link } from '@tanstack/react-router';
-import { Avatar, Button, Popover, useModal } from '@learnway/ui';
-import { PasswordVerifyPopup } from '../../layout';
 import { IcLogOut01 } from '@learnway/icons';
-import styles from '@learnway/styles/fo/features/layout/ui/user-avatar.module.css';
+import { cn } from '@learnway/shared';
 import fallbackStyles from '@learnway/styles/fo/features/layout/ui/fallback.module.css';
+import styles from '@learnway/styles/fo/features/layout/ui/user-avatar.module.css';
+import { Avatar } from '@learnway/ui/avatar';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
+import { Popover } from '@learnway/ui/popover';
+import { Link } from '@tanstack/react-router';
+import { memo, useState } from 'react';
+import { PasswordVerifyPopup } from '../../layout';
 
 const PopoverContent = () => {
   // 퍼블수정 20250324 : alert -> confirm 으로 변경

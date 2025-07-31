@@ -1,16 +1,16 @@
-import { memo, useState, useEffect, SetStateAction } from 'react';
 import { useRouter } from '@tanstack/react-router';
-import { map, intersection } from 'lodash';
+import { intersection, map } from 'lodash';
+import { memo, SetStateAction, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { cn } from '@learnway/shared';
-import { Accordion, AccordionItem } from '@learnway/ui';
+import { Accordion, AccordionItem } from '@learnway/ui/accordion';
 
-import type { Menu } from '@learnway/auth/types';
 import { useActiveMenuDepthState } from '@learnway/auth/entities';
+import type { Menu } from '@learnway/auth/types';
 
-import styles from './accordion-menu.module.css';
 import { useCreation } from 'ahooks';
+import styles from './accordion-menu.module.css';
 
 interface AccordionMenuComponentProps {
   menus: Menu[];

@@ -1,19 +1,3 @@
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { isEmptyData } from '@learnway/shared';
-import { useModal, useToast } from '@learnway/ui';
-import {
-  EnQuestionLevel,
-  EnQuestionType,
-  ExamPaperQuestionCountUpdateReq,
-  ExamQuestionGenType,
-  QuestionItem,
-  QuestionsCopyReq,
-  QuestionCountInfo,
-  TestPaperBasicInfoDetail,
-  QuestionItemDeleteParam,
-  ContentType,
-} from '@types';
 import {
   learningResourceQueryOptions,
   useCopyQuestionsToExamPaper,
@@ -21,13 +5,30 @@ import {
   useUpdateExamPaperQuestionCount,
   useUpdateQuestionStatus,
 } from '@entities/learning-resource';
+import { isEmptyData } from '@learnway/shared';
+import { useModal } from '@learnway/ui/modal';
+import { useToast } from '@learnway/ui/toast';
+import { useQuery } from '@tanstack/react-query';
 import {
-  QuestionMutationResponse,
+  ContentType,
+  EnQuestionLevel,
+  EnQuestionType,
+  ExamPaperQuestionCountUpdateReq,
+  ExamQuestionGenType,
+  QuestionCountInfo,
+  QuestionItem,
+  QuestionItemDeleteParam,
+  QuestionsCopyReq,
+  TestPaperBasicInfoDetail,
+} from '@types';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import {
   LevelKey,
+  QuestionMutationResponse,
   QuestionStatisticRow,
   SelectedQuestionState,
 } from './type';
-import { useTranslation } from 'react-i18next';
 
 export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) => {
   const { contentUuid, examPoolUuid, questionGenType, questionCount } = basicInfo;

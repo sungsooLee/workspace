@@ -30,8 +30,7 @@ export function useCreateUserGroupManual(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
 
   return {
     create: (payload: any, callback?: any) => {
@@ -39,8 +38,7 @@ export function useCreateUserGroupManual(options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }
 
 export function useUpdateUserGroupManual(options: any) {
@@ -55,8 +53,7 @@ export function useUpdateUserGroupManual(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
 
   return {
     update: (payload: any, callback?: any) => {
@@ -64,6 +61,5 @@ export function useUpdateUserGroupManual(options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }

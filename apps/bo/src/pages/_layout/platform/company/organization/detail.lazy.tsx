@@ -1,13 +1,12 @@
 import { CompanyOrganization } from '@features/platform-management/company';
-import { Button } from '@learnway/ui';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
 import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { useEffect } from 'react';
+import { Button } from '@learnway/ui/button';
 
 export const Route = createLazyFileRoute('/_layout/platform/company/organization/detail')({
-  component: RouteComponent,
-});
+  component: RouteComponent });
 
 function RouteComponent() {
   const router = useRouter();
@@ -18,13 +17,18 @@ function RouteComponent() {
     if (!companyCode) router.navigate({ to: '/platform/company/organization' });
   }, []);
 
+  const handleListClick = () => {
+    const listParam = routerState.location.state?.listParam;
+    router.navigate({ to: '/platform/company/organization', state: { listParam } });
+  };
+
   return (
     <PageContainer>
       <ContentsButtons>
         <Button
           variant="point"
           size="sm"
-          onClick={() => router.navigate({ to: '/platform/company/organization' })}
+          onClick={handleListClick}
           label={t('LABEL.button.list')}
         />
       </ContentsButtons>

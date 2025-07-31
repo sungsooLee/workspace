@@ -1,8 +1,8 @@
 // BaseForm.stories.tsx
-import React, { useState } from 'react';
-import type { Meta } from '@storybook/react';
-import { Badge, Button, List, Thumbnail } from '@learnway/ui';
 import { addOrRemoveItemByKey, getRandomId } from '@learnway/shared';
+import { Badge, Button, List, Thumbnail } from '@learnway/ui';
+import type { Meta } from '@storybook/react';
+import { useState } from 'react';
 
 const dummyOptions = Array(5)
   .fill(null)

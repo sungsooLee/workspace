@@ -25,8 +25,7 @@ export function useCreateCategory(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
 
   return {
     create: (payload: any, callback?: any) => {
@@ -34,8 +33,7 @@ export function useCreateCategory(options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }
 
 export function useDeleteCategory(options: any) {
@@ -52,8 +50,7 @@ export function useDeleteCategory(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
 
   return {
     delete: (payload: any, callback?: any) => {
@@ -61,8 +58,7 @@ export function useDeleteCategory(options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }
 
 export function useUpdateCategory(options: any) {
@@ -80,8 +76,7 @@ export function useUpdateCategory(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
 
   return {
     update: (payload: any, callback?: any) => {
@@ -89,8 +84,7 @@ export function useUpdateCategory(options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }
 
 export function useCheckExistsCategory(options: any) {
@@ -101,8 +95,7 @@ export function useCheckExistsCategory(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...mutateOptions,
-  });
+    ...mutateOptions });
 
   return {
     checkExistsCategory: (payload: any, callback?: any) => {
@@ -110,8 +103,7 @@ export function useCheckExistsCategory(options: any) {
       options?.onSuccess?.(false);
     },
     isSuccess,
-    isError,
-  };
+    isError };
 }
 
 export function useMoveCategory(options: any) {
@@ -128,8 +120,7 @@ export function useMoveCategory(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
 
   return {
     move: (payload: any, callback?: any) => {
@@ -137,6 +128,5 @@ export function useMoveCategory(options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }

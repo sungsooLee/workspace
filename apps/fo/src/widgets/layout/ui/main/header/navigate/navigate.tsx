@@ -9,7 +9,7 @@ import { Link, useRouterState } from '@tanstack/react-router';
 
 import { useMenuHierarchy } from '@learnway/auth/entities';
 import { Menu } from '@learnway/auth/types';
-import { Carousel } from '@learnway/ui';
+import { Carousel } from '@learnway/ui/carousel';
 import styles from './navigate.module.css';
 
 interface NavigateComponentProps {

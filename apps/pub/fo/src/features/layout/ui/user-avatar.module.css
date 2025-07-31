@@ -2,7 +2,7 @@
 .start {
   /* 내정보 */
   .avatar_area {
-    @apply p-[32px];
+    @apply popover-scroll p-[32px];
     .profile_info {
       @apply flex items-center justify-start;
       .avatar_img {

@@ -2,40 +2,33 @@ export enum EnFormMode {
   NONE = 'NONE',
   VIEW = 'VIEW',
   ADD = 'ADD',
-  EMPTY = 'EMPTY',
-}
+  EMPTY = 'EMPTY' }
 export enum EnTenantScope {
   ALL = 'ALL',
-  CURRENT_TENANT = 'CURRENT_TENANT',
-}
+  CURRENT_TENANT = 'CURRENT_TENANT' }
 export enum EnCompanyScope {
   ALL = 'ALL',
   CURRENT_COMPANY = 'CURRENT_COMPANY',
-  MANUAL = 'MANUAL',
-}
+  MANUAL = 'MANUAL' }
 export enum EnChannelScope {
   ALL = 'ALL',
   CURRENT_TENANT_CHANNEL = 'CURRENT_TENANT_CHANNEL',
   CURRENT_CHANNEL_INCLUSIVE = 'CURRENT_CHANNEL_INCLUSIVE',
-  MANUAL = 'MANUAL',
-}
+  MANUAL = 'MANUAL' }
 export enum EnDeptScope {
   ALL = 'ALL',
   CURRENT_TEAM = 'CURRENT_TEAM',
   CURRENT_TEAM_INCLUSIVE = 'CURRENT_TEAM_INCLUSIVE',
-  MANUAL = 'MANUAL',
-}
+  MANUAL = 'MANUAL' }
 
 export enum EnDeviceType {
   isPc = 'isPc',
   isMobile = 'isMobile',
-  isApp = 'isApp',
-}
+  isApp = 'isApp' }
 
 export enum EnUseCategory {
   isCommonCategory = 'isCommonCategory',
-  isTenantCategory = 'isTenantCategory',
-}
+  isTenantCategory = 'isTenantCategory' }
 
 export enum EnTenantDetailTabKey {
   base = 'base',
@@ -45,16 +38,14 @@ export enum EnTenantDetailTabKey {
   learningRole = 'learningRole',
   widget = 'widget',
   banner = 'banner',
-  theme = 'theme',
-}
+  theme = 'theme' }
 
 export enum EnUserState {
   WAIT = 'WAIT',
   NORMAL = 'NORMAL',
   HALT = 'HALT',
   LEAVE = 'LEAVE',
-  DELETE = 'DELETE',
-}
+  DELETE = 'DELETE' }
 
 // 회사 HR 연동 유형
 export enum EnUserGroupType {
@@ -70,26 +61,23 @@ export enum EnUserGroupType {
 export enum EnTreeEventPosition {
   BEFORE = 'BEFORE',
   INSIDE = 'INSIDE',
-  AFTER = 'AFTER',
-}
+  AFTER = 'AFTER' }
 
 export enum EnGlobalConst {
   SYSTEM_COMMON_CODE = 'SYSTEM_COMMON_CODE',
   LEARNER_MENU = 'LEARNER_MENU',
-  HRD_CENTER_MENU = 'HRD_CENTER_MENU',
-}
+  HRD_CENTER_MENU = 'HRD_CENTER_MENU' }
 
 // 공통 컴포넌트의 페이지/모달에서의 사용 여부
 export enum EnPageMode {
   PAGE = 'PAGE',
-  MODAL = 'MODAL',
-}
+  MODAL = 'MODAL' }
 
 /**
  * 이메일 확인용 regex
  */
 export const EMAIL_REGEX =
-  /(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/;
+  /(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2 }))/;
 
 /**
  * UploadedFileStatus
@@ -98,8 +86,7 @@ export enum FileStatus {
   TEMPORARY_SAVE = 'TEMPORARY_SAVE',
   COMPLETE = 'COMPLETE',
   ONGOING = 'ONGOING',
-  FAIL = 'FAIL',
-}
+  FAIL = 'FAIL' }
 
 /**
  * UploadedFileType
@@ -111,8 +98,7 @@ export enum FileType {
   TXT = 'TXT',
   WEB = 'WEB',
   ZIP = 'ZIP',
-  ETC = 'ETC',
-}
+  ETC = 'ETC' }
 
 /**
  * UploadedFileProcessingStatus
@@ -124,8 +110,7 @@ export enum ProcessingStatus {
   STARTED = 'STARTED',
   THUMBNAIL = 'THUMBNAIL',
   ENCODING = 'ENCODING',
-  UPLOADING = 'UPLOADING',
-}
+  UPLOADING = 'UPLOADING' }
 
 /**
  * ContentStatusCode
@@ -135,8 +120,7 @@ export enum ProcessingStatus {
 export enum ContentStatusCode {
   TEMPORARY_SAVE = 'TEMPORARY_SAVE',
   SAVED = 'SAVE',
-  DELETED = 'DELETED',
-}
+  DELETED = 'DELETED' }
 
 /**
  * ContentCreateType
@@ -145,8 +129,7 @@ export enum ContentStatusCode {
 export enum ContentCreateType {
   MANUAL = 'MANUAL',
   TRANSLATE = 'TRANSLATE',
-  SHARED = 'SHARED',
-}
+  SHARED = 'SHARED' }
 
 /**
  * ContentAddInfoType
@@ -155,8 +138,7 @@ export enum ContentCreateType {
 export enum ContentAddInfoType {
   VIDEO_ADD_INFO = 'VIDEO_ADD_INFO', // 초
   EXAM_ADD_INFO = 'EXAM_ADD_INFO', // 건수
-  EXAM_POOL_ADD_INFO = 'EXAM_POOL_ADD_INFO',
-}
+  EXAM_POOL_ADD_INFO = 'EXAM_POOL_ADD_INFO' }
 
 /**
  * ContentType
@@ -176,5 +158,4 @@ export enum ContentType {
   EXAM_POOL = 'EXAM_POOL',
   ASSIGNMENT = 'ASSIGNMENT',
   SURVEY = 'SURVEY',
-  ETC = 'ETC',
-}
+  ETC = 'ETC' }

@@ -3,28 +3,23 @@ import { httpService } from '@learnway/shared';
 import {
   EnrollmentCancelList,
   EnrollmentRegistCount,
-  EnrollmentRegistList,
-} from 'src/types/entities/enrollment';
+  EnrollmentRegistList } from 'src/types/entities/enrollment';
 import {
   LearningSequence,
   LearningSequenceCombo,
-  LearningSequences,
-} from 'src/types/entities/learning-sequence';
+  LearningSequences } from 'src/types/entities/learning-sequence';
 import {
   StudentsDeliveryAddress,
   StudentsHistory,
   StudentsLevelTest,
-  StudentsList,
-} from 'src/types/entities/students';
+  StudentsList } from 'src/types/entities/students';
 
 export default class LearningSequenceService {
   static fetchSequenceList(params: any) {
-    console.log('### fetchSequenceList', params);
     return httpService.get<LearningSequences[]>(`${LMSApiPrefix()}/sequences`, params);
   }
 
   static fetchSequenceOne(sequenceId: number) {
-    console.log('## sequenceId:', sequenceId);
     return httpService.get<LearningSequence>(`${LMSApiPrefix()}/sequence/${sequenceId}`);
   }
 
@@ -104,6 +99,9 @@ export default class LearningSequenceService {
   }
   static updateStudentsSequence(params: any) {
     return httpService.put(`${LMSApiPrefix()}/students/sequence`, params);
+  }
+  static updateStudentsList(params: any) {
+    return httpService.put(`${LMSApiPrefix()}/students/list`, params);
   }
   static fetchStudentsDeliveryAddress(params: any) {
     return httpService.get<StudentsDeliveryAddress>(

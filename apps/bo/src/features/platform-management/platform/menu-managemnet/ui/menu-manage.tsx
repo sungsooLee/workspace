@@ -13,20 +13,20 @@ import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { IcoMinus, IcoPlus } from '@learnway/icons';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { CheckboxGroupFormField } from '@learnway/ui/form-field';
+import { GridBox } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
+import { Textarea } from '@learnway/ui/textarea';
 import {
-  Button,
-  CheckboxGroupFormField,
-  ContentsRow,
   findNodePath,
-  GridBox,
-  Input,
-  Textarea,
   TreeBox,
   TreeContainer,
   TreeEventPayload,
   TreeNode,
-  useModal,
-} from '@learnway/ui';
+} from '@learnway/ui/tree-view';
 import { FormRow, SwitchFormField } from '@shared/ui';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from '@tanstack/react-router';

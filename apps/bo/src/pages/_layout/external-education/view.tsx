@@ -1,12 +1,14 @@
-import { Button, Divider, Tabs } from '@learnway/ui';
-import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
-import { useCallback, useMemo, useRef, useState } from 'react';
-import { createFileRoute, useRouter } from '@tanstack/react-router';
+import { BasicInfo, Registration, Result } from '@features/external-education';
 import {
   EXTERNAL_EDUCATION_TAB_LABELS,
   ExternalEducationTab,
 } from '@features/external-education/types/types';
-import { BasicInfo, Registration, Result } from '@features/external-education';
+import { Button } from '@learnway/ui/button';
+import { Divider } from '@learnway/ui/elements';
+import { Tabs } from '@learnway/ui/tabs';
+import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
+import { createFileRoute, useRouter } from '@tanstack/react-router';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { Popup } from '../../../features/external-education/components/-tabs/popup';
 
 export const Route = createFileRoute('/_layout/external-education/view')({

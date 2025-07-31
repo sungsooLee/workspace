@@ -4,18 +4,21 @@ import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { isEmpty } from 'lodash';
 
-import { Button, ContentsRow, Input, useModal } from '@learnway/ui';
 import { useExpStore, useLogoutUser } from '@learnway/auth/entities';
 import { cn, dateDiff } from '@learnway/shared';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { AUTH_ERROR_CODE } from '@learnway/auth/features/auth';
 
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
 import {
   useAuthSignin,
   getSavedUserid,
   pageRouteConfig,
   TenantRoleModal,
-  LoginErrorAlert,
+  LoginErrorAlert
 } from '@features/auth';
 import { useSetLanguage } from '@features/layout';
 
@@ -33,10 +36,7 @@ export const Route = createFileRoute('/_auth/login')({
     authorization: false,
     meta: {
       title: 'LABEL.common.loginWelcomeMessage',
-      container: AUTH_CONTAINERS.LOGIN,
-    },
-  }),
-});
+      container: AUTH_CONTAINERS.LOGIN } }) });
 
 function RouteComponent() {
   const { t } = useTranslation();
@@ -59,8 +59,7 @@ function RouteComponent() {
     onFormChange({
       username: getSavedUserid() ?? '@ict-companion.com',
       password: 'hae1234',
-      saveId: !isEmpty(getSavedUserid()),
-    });
+      saveId: !isEmpty(getSavedUserid()) });
   }, []);
 
   const loginErrorAlert = (error: any) => {
@@ -71,14 +70,12 @@ function RouteComponent() {
       case AUTH_ERROR_CODE.FAIL_ID_PASSWORD: // 아이디 없음 // 패스워드 실패
         openAlert({
           title: 'LABEL.alert.FAIL_ID_PASSWORD.title',
-          content: 'LABEL.alert.FAIL_ID_PASSWORD.message',
-        });
+          content: 'LABEL.alert.FAIL_ID_PASSWORD.message' });
         break;
       case AUTH_ERROR_CODE.LOGIN_LOCK_PASSWORD_USE: // 잠김 - 패스워드 사용자
         openAlert({
           title: t('LABEL.alert.LOGIN_LOCK_PASSWORD_USE.title'),
-          content: t('LABEL.alert.LOGIN_LOCK_PASSWORD_USE.message'),
-        });
+          content: t('LABEL.alert.LOGIN_LOCK_PASSWORD_USE.message') });
         break;
       case AUTH_ERROR_CODE.LOGIN_LOCK_PASSWORD_NOT_USE: // 잠김 - 패스워드 미사용자
         openAlert({
@@ -87,11 +84,9 @@ function RouteComponent() {
             <LoginErrorAlert
               message={t('LABEL.alert.LOGIN_LOCK_PASSWORD_USE.message')}
               subMessage={t('LABEL.alert.LOGIN_LOCK_PASSWORD_USE.etc', {
-                data: error?.lockDate,
-              })}
+                data: error?.lockDate })}
             />
-          ),
-        });
+          ) });
         break;
       case AUTH_ERROR_CODE.APPROVAL_ADMIN_PENDING: // 어드민 승인 대기
         openAlert({
@@ -100,11 +95,9 @@ function RouteComponent() {
             <LoginErrorAlert
               message={t('LABEL.alert.APPROVAL_ADMIN_PENDING.message')}
               subMessage={t('LABEL.alert.APPROVAL_ADMIN_PENDING.etc', {
-                data: error.loginFailCount,
-              })}
+                data: error.loginFailCount })}
             />
-          ),
-        });
+          ) });
         break;
       case AUTH_ERROR_CODE.APPROVAL_ADMIN_REJECT: // 어드민 승인 반려
         openAlert({
@@ -113,11 +106,9 @@ function RouteComponent() {
             <LoginErrorAlert
               message={t('LABEL.alert.APPROVAL_ADMIN_REJECT.message')}
               subMessage={t('LABEL.alert.APPROVAL_ADMIN_REJECT.etc', {
-                data: error.loginFailCount,
-              })}
+                data: error.loginFailCount })}
             />
-          ),
-        });
+          ) });
         break;
       case AUTH_ERROR_CODE.APPROVAL_CP_PENDING: // CP 승인 대기
         openAlert({
@@ -126,11 +117,9 @@ function RouteComponent() {
             <LoginErrorAlert
               message={t('LABEL.alert.APPROVAL_CP_PENDING.message')}
               subMessage={t('LABEL.alert.APPROVAL_CP_PENDING.etc', {
-                data: error.loginFailCount,
-              })}
+                data: error.loginFailCount })}
             />
-          ),
-        });
+          ) });
         break;
       case AUTH_ERROR_CODE.APPROVAL_CP_REJECT: // CP 승인 반려
         openAlert({
@@ -139,11 +128,9 @@ function RouteComponent() {
             <LoginErrorAlert
               message={t('LABEL.alert.APPROVAL_CP_REJECT.message')}
               subMessage={t('LABEL.alert.APPROVAL_CP_REJECT.etc', {
-                data: error.loginFailCount,
-              })}
+                data: error.loginFailCount })}
             />
-          ),
-        });
+          ) });
         break;
       case AUTH_ERROR_CODE.PASSWORD_CHANGE_PASSWORD_USE: // 패스워드 변경 안내 - 패스워드 사용자
         openAlert({
@@ -151,14 +138,12 @@ function RouteComponent() {
           content: t('LABEL.alert.PASSWORD_CHANGE_PASSWORD_USE.message'),
           onClose: () => {
             router.navigate({ to: '/change-password' });
-          },
-        });
+          } });
         break;
       case AUTH_ERROR_CODE.PASSWORD_CHANGE_PASSWORD_NOT_USE: // 패스워드 변경 안내 - 패스워드 미사용자
         openAlert({
           title: t('LABEL.alert.PASSWORD_CHANGE_PASSWORD_NOT_USE.title'),
-          content: t('LABEL.alert.PASSWORD_CHANGE_PASSWORD_NOT_USE.message'),
-        });
+          content: t('LABEL.alert.PASSWORD_CHANGE_PASSWORD_NOT_USE.message') });
         break;
       case AUTH_ERROR_CODE.TENANT_PENDING: //테넌트 개설 대기중
         openAlert({
@@ -166,8 +151,7 @@ function RouteComponent() {
           content: t('LABEL.alert.TENANT_PENDING.message'),
           onClose: () => {
             logout();
-          },
-        });
+          } });
         break;
       case AUTH_ERROR_CODE.IN_WORKING_TIME: //테넌트 개설 대기중
         openAlert({
@@ -175,8 +159,7 @@ function RouteComponent() {
           content: t('LABEL.alert.IN_WORKING_TIME.message'),
           onClose: () => {
             logout();
-          },
-        });
+          } });
         break;
       case AUTH_ERROR_CODE.OUT_WORKING_TIME: //테넌트 개설 대기중
         openAlert({
@@ -184,8 +167,7 @@ function RouteComponent() {
           content: t('LABEL.alert.OUT_WORKING_TIME.message'),
           onClose: () => {
             logout();
-          },
-        });
+          } });
         break;
       default:
         openAlert({ title: t('LABEL.messages.invalidInputInformation'), content: error?.message });
@@ -205,8 +187,7 @@ function RouteComponent() {
           content: t('LABEL.alert.PASSWORD_CHANGE_PASSWORD_USE.message'),
           onClose: () => {
             router.navigate({ to: '/change-password' });
-          },
-        });
+          } });
         return false;
       } else {
         // 패스워드 미사용자
@@ -215,8 +196,7 @@ function RouteComponent() {
           content: t('LABEL.alert.PASSWORD_CHANGE_PASSWORD_NOT_USE.message'),
           onClose: () => {
             logout();
-          },
-        });
+          } });
         return false;
       }
     }
@@ -247,8 +227,7 @@ function RouteComponent() {
         closeOnOutsideClick: false,
         onClose: (data: any) => {
           return data;
-        },
-      });
+        } });
     }
     return true;
   };
@@ -276,8 +255,7 @@ function RouteComponent() {
       },
       onError: async (data: any) => {
         loginErrorAlert(data);
-      },
-    });
+      } });
   };
 
   return (
@@ -359,32 +337,24 @@ const formConfig: DynamicFormConfig = {
       type: 'text',
       label: 'LABEL.form.input.idEmail',
       value: '',
-      format: 'email',
-    },
+      format: 'email' },
     {
       name: 'password',
       type: 'text',
       label: 'LABEL.form.input.password',
       // maxLength: 10,
-      value: '',
-    },
+      value: '' },
     {
       name: 'saveId',
       type: 'checkbox',
       checkConfig: {
-        label: 'LABEL.common.saveAccount',
-      },
-      value: false,
-    },
+        label: 'LABEL.common.saveAccount' },
+      value: false },
   ],
   validator: {
     username: {
       format: 'email',
-      required: true,
-    },
+      required: true },
     password: {
       format: 'string',
-      required: true,
-    },
-  },
-};
+      required: true } } };

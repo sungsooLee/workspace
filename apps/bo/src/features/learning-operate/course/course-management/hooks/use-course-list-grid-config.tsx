@@ -1,12 +1,13 @@
 import { queryOptions } from '@entities/course/service/course.queries';
 import { CODE_GROUP, getCodeLabel } from '@learnway/hooks';
-import { Button, useModal } from '@learnway/ui';
 import { ShortUrlCopyButton } from '@shared/ui';
 import { Link, useLocation } from '@tanstack/react-router';
 import { CoursesQueryParams } from '@types';
 import { t } from 'i18next';
 import { CourseGridColumn } from '../types/type';
 import { CourseFavoriteIcon } from '../ui/course-favorite-icon/course-favorite-icon';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 
 export const useCourseListGridConfig = () => {
   const { pathname } = useLocation();
@@ -17,39 +18,32 @@ export const useCourseListGridConfig = () => {
     {
       name: 'tenantName',
       label: () => t('LABEL.grid.column.tenant'),
-      size: 140,
-    },
+      size: 140 },
     // 채널
     {
       name: 'channelName',
       label: () => t('LABEL.grid.column.channel'),
-      size: 90,
-    },
+      size: 90 },
     // 과정코드
     {
       name: 'courseId',
       label: () => t('LABEL.grid.column.courseCode'),
       size: 90,
       meta: {
-        cellAlign: 'right',
-      },
-    },
+        cellAlign: 'right' } },
     // 개설연도
     {
       name: 'openingYear',
       label: () => t('LABEL.grid.column.openingDate'),
       size: 90,
       meta: {
-        cellAlign: 'center',
-      },
-    },
+        cellAlign: 'center' } },
     // 과정유형
     {
       name: 'courseType',
       label: () => t('LABEL.grid.column.courseType'),
       size: 90,
-      render: (info: any) => getCodeLabel(CODE_GROUP['lms.course.CourseType'], info.getValue()),
-    },
+      render: (info: any) => getCodeLabel(CODE_GROUP['lms.course.CourseType'], info.getValue()) },
     // 찜
     {
       name: 'isBookmarks',
@@ -59,9 +53,7 @@ export const useCourseListGridConfig = () => {
         return <CourseFavoriteIcon courseId={row?.original?.courseId} isFavorite={getValue()} />;
       },
       meta: {
-        cellAlign: 'center',
-      },
-    },
+        cellAlign: 'center' } },
     // 과정명
     {
       name: 'courseName',
@@ -79,8 +71,7 @@ export const useCourseListGridConfig = () => {
             {courseName}
           </Link>
         );
-      },
-    },
+      } },
     // 언어
     {
       name: 'language',
@@ -89,9 +80,7 @@ export const useCourseListGridConfig = () => {
       render: (info: any) =>
         getCodeLabel(CODE_GROUP['pms.multilingual.LangCountryCode'], info.getValue()),
       meta: {
-        cellAlign: 'center',
-      },
-    },
+        cellAlign: 'center' } },
     // 사용
     {
       name: 'isUsed',
@@ -99,75 +88,59 @@ export const useCourseListGridConfig = () => {
       size: 90,
       render: (info: any) => getCodeLabel(CODE_GROUP['mock.options.use'], info.getValue()),
       meta: {
-        cellAlign: 'center',
-      },
-    },
+        cellAlign: 'center' } },
     // 차수
     {
       name: 'sequenceCount',
       label: () => t('LABEL.grid.column.session'),
       size: 90,
       meta: {
-        cellAlign: 'right',
-      },
-    },
+        cellAlign: 'right' } },
     // 조회
     {
       name: 'viewCount',
       label: () => t('LABEL.grid.column.search'),
       size: 90,
       meta: {
-        cellAlign: 'right',
-      },
-    },
+        cellAlign: 'right' } },
     // 좋아요
     {
       name: 'likesCount',
       label: () => t('LABEL.grid.column.like'),
       size: 90,
       meta: {
-        cellAlign: 'right',
-      },
-    },
+        cellAlign: 'right' } },
     // 공유
     {
       name: 'shareCount',
       label: () => t('LABEL.grid.column.share'),
       size: 90,
       meta: {
-        cellAlign: 'right',
-      },
-    },
+        cellAlign: 'right' } },
     // 후기
     {
       name: 'reviewCount',
       label: () => t('LABEL.grid.column.review'),
       size: 90,
       meta: {
-        cellAlign: 'right',
-      },
-    },
+        cellAlign: 'right' } },
     // 수강생
     {
       name: 'studentCount',
       label: () => t('LABEL.grid.column.student'),
       size: 90,
       meta: {
-        cellAlign: 'right',
-      },
-    },
+        cellAlign: 'right' } },
     // 담당자
     {
       name: 'coordinatorName',
       label: () => t('LABEL.grid.column.manager'),
-      size: 90,
-    },
+      size: 90 },
     // 운영자
     {
       name: 'operatorName',
       label: () => t('LABEL.grid.column.operator'),
-      size: 90,
-    },
+      size: 90 },
     // 미리보기
     {
       name: 'preview',
@@ -187,9 +160,7 @@ export const useCourseListGridConfig = () => {
         />
       ),
       meta: {
-        cellAlign: 'center',
-      },
-    },
+        cellAlign: 'center' } },
     // URL
     {
       name: 'url',
@@ -199,16 +170,13 @@ export const useCourseListGridConfig = () => {
         <ShortUrlCopyButton url={`original url`} params={{ courseId: info?.original?.courseId }} />
       ),
       meta: {
-        cellAlign: 'center',
-      },
-    },
+        cellAlign: 'center' } },
   ];
 
   return {
     title: t('LABEL.grid.title.courseList'),
     query: queryOptions.all<CoursesQueryParams>,
-    columns,
-  };
+    columns };
 };
 
 /**

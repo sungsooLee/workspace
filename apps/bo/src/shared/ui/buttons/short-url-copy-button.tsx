@@ -1,6 +1,8 @@
-import { Button, ButtonComponentProps, useModal } from '@learnway/ui';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+// TODO: Fix unknown imports: ButtonComponentProps from '@learnway/ui'
+import { Button, ButtonComponentProps } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 
 interface ShortUrlCopyButtonProps extends ButtonComponentProps {
   url?: string;

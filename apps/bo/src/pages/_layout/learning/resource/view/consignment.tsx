@@ -1,18 +1,26 @@
-import React from 'react';
-import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
-import { t } from 'i18next';
-import { Button, ContentsRow, DynamicFormField, InputModalSelectorFormField } from '@learnway/ui';
-import { PageContainer, ContentsButtons, MainContents, SubContents, LinkBox } from '@shared/ui';
 import {
   ConsignmentParametersFormField,
   DateRangePickerFormField,
   SharedChannelGridFormField,
 } from '@features/form/ui';
+import { EbookInfo } from '@features/learning-resource';
 import { DynamicFormConfig, DynamicFormValues, useDynamicForm } from '@learnway/hooks';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { InputModalSelectorFormField } from '@learnway/ui/form-field';
+import {
+  ChannelChoiceModal,
+  ContentsButtons,
+  LinkBox,
+  MainContents,
+  ManagerChoiceModal,
+  PageContainer,
+  SubContents,
+} from '@shared/ui';
+import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
+import { t } from 'i18next';
 import { FormDisplay } from '../../../../../features/form/ui/form-display';
 import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '../../../../../shared/ui/form';
-import { ChannelChoiceModal, ManagerChoiceModal } from '@shared/ui';
-import { EbookInfo } from '@features/learning-resource';
 
 export const Route = createFileRoute('/_layout/learning/resource/view/consignment')({
   component: RouteComponent,
@@ -470,6 +478,6 @@ const formConfig: DynamicFormConfig = {
     //       path: '', // 에러가 노출될 경로 // 필수 아님 기본으로는 현재 property
     //     },
     //   ],
-    // },
+    // } } };
   },
 };

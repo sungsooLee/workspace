@@ -7,5 +7,4 @@ export const searchFieldConfig = {
   dropdown: DropdownFormField,
   'auto-dropdown': AutoCompleteDropdownFormField,
   date: DateSearchField,
-  'date-range': DateRangeSearchField,
-};
+  'date-range': DateRangeSearchField };

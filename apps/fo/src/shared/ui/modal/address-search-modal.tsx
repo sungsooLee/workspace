@@ -1,19 +1,15 @@
 import { FC, useState, useEffect } from 'react';
 import { cn } from '@learnway/shared';
 import { t } from 'i18next';
-import {
-  ModalBody,
-  ModalContainer,
-  ModalTitle,
-  ContentsRow,
-  Input,
-  Button,
-  Pagination,
-  useModal,
-} from '@learnway/ui';
+import { Pagination } from '@learnway/ui/pagination';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import styles from '@learnway/styles/fo/features/layout/popup/address-popup.module.css';
+// TODO: Fix unknown imports:  from '@learnway/ui'
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { ModalBody, ModalContainer, ModalTitle, useModal } from '@learnway/ui/modal';
 
 // 페이지별 게시 수
 const PAGE_SIZE = 3;

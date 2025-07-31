@@ -1,8 +1,11 @@
 import { FormDisplay } from '@features/form';
-import { ChipListModalSelectorFormField, ContentsRow, FormSubTitle, Input } from '@learnway/ui';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { ChipListModalSelectorFormField } from '@learnway/ui/form-field';
 import { FormItem, FormRow } from '@shared/ui';
 import { t } from 'i18next';
 import { EnFormMode } from '@types';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
 
 /**
  * 회사 유저 상세 - 계정 정보
@@ -11,8 +14,7 @@ import { EnFormMode } from '@types';
  */
 const CompanyUserDetailAccountComponent = ({
   provider,
-  formMode,
-}: {
+  formMode }: {
   provider: any;
   formMode: EnFormMode;
 }) => {
@@ -69,8 +71,7 @@ const CompanyUserDetailAccountComponent = ({
                     valueField: 'tenantId',
                     hideBorder: true,
                     wordwrap: true,
-                    isOptionHideCloseButton: (option: any) => option,
-                  }}
+                    isOptionHideCloseButton: (option: any) => option }}
                   disabled={true}
                 />
               }

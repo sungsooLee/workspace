@@ -1,9 +1,10 @@
 import { memo, useEffect, useRef, useState } from 'react';
-import { Button, Input } from '@learnway/ui';
 import { IcoSearch } from '@learnway/icons';
 import styles from '@learnway/styles/fo/features/layout/ui/search.module.css';
 import { SearchPopover } from './search-popover';
 import { AutoCompletePopover } from './auto-complete-popover';
+import { Button } from '@learnway/ui/button';
+import { Input } from '@learnway/ui/input';
 
 const MAX_SEARCH_LENGTH = 20;
 const SearchComponent = ({ isMobile }: any) => {

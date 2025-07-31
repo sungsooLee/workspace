@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { ThumbnailPublicUpload } from '@learnway/ui'; // @learnway/ui에서 ThumbnailImageUpload 컴포넌트 import
+import { ThumbnailPublicUpload } from '@learnway/ui/file-upload'; // @learnway/ui에서 ThumbnailImageUpload 컴포넌트 import
 import { BaseFormFieldProps, S3_PATH_TYPE } from '@learnway/hooks'; // @learnway/hooks에서 폼 필드 기본 props 타입 import
 
 /**

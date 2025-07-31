@@ -1,27 +1,22 @@
-import { useEffect, useCallback, useState } from 'react';
-import { useLocation } from '@tanstack/react-router';
-import { useWatch } from 'react-hook-form';
-import { t } from 'i18next';
-import { Link, useRouter } from '@tanstack/react-router';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { Button, Divider, GridBox, useGridBox, useGridBoxConfig, useModal } from '@learnway/ui';
-import { SearchBox } from '@shared/ui/search-box';
-import {
-  useSearchBox,
-  SearchBoxConfig,
-  CODE_GROUP,
-  SelectOption,
-  compactValues,
-} from '@learnway/hooks';
 import { queryOptions } from '@entities/instructor/service/instructor.queries';
-import { useQueryClient } from '@tanstack/react-query';
-import { GridExcelDownloadButton } from '@shared/ui';
-import { LMSApiPrefix } from '@learnway/config';
-import { EnPageMode } from '@types';
-import { IcoPlus } from '@learnway/icons';
-import { InstructorRegistPopup } from '../modal/instructor-regist-modal';
 import { useActiveMenuDepthState, useFetchAuthUser } from '@learnway/auth/entities';
+import { LMSApiPrefix } from '@learnway/config';
+import { CODE_GROUP, SearchBoxConfig, SelectOption, useSearchBox } from '@learnway/hooks';
+import { IcoPlus } from '@learnway/icons';
+import { Button } from '@learnway/ui/button';
+import { Divider } from '@learnway/ui/elements';
+import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
+import { useModal } from '@learnway/ui/modal';
+import { GridExcelDownloadButton } from '@shared/ui';
+import { SearchBox } from '@shared/ui/search-box';
+import { useQueryClient } from '@tanstack/react-query';
+import { useLocation, useRouter } from '@tanstack/react-router';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { EnPageMode } from '@types';
+import { t } from 'i18next';
+import { useCallback, useEffect, useState } from 'react';
 import { Instructors } from 'src/types/entities/instructor';
+import { InstructorRegistPopup } from '../modal/instructor-regist-modal';
 
 const _global = {
   linkClick: (payload: any) => {

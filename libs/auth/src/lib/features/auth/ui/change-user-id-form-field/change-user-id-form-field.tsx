@@ -1,10 +1,9 @@
-import { useTranslation } from 'react-i18next';
 import { isMobile } from 'react-device-detect';
-import { isFunction } from 'lodash';
+import { useTranslation } from 'react-i18next';
 
-import { cn } from '@learnway/shared';
-import { Input, Button, InputProps, useModal } from '@learnway/ui';
-
+import { Button } from '@learnway/ui/button';
+import { Input, InputProps } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
 import { ChangeUserIdModal } from './change-user-id-modal';
 
 interface FormFieldComponentProps {

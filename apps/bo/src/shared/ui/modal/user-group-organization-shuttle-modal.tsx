@@ -1,8 +1,9 @@
-import { Button, ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui';
 import { UserGroupOrganization } from '@shared/ui';
 import { CombineUserGroup } from '@types';
 import { t } from 'i18next';
 import { useState } from 'react';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
 type Props = {
   tenantIds: number[];
@@ -13,8 +14,7 @@ type Props = {
 const UserGroupOrganizationShuttleModalComponent = ({
   tenantIds,
   roleIds = [],
-  option: optionProp,
-}: Props) => {
+  option: optionProp }: Props) => {
   const { closeModal } = useModal();
 
   const [option, setOption] = useState<CombineUserGroup[]>(optionProp ?? []);

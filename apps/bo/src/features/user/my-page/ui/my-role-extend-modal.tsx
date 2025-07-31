@@ -1,6 +1,6 @@
-import { FC, useEffect, useMemo } from 'react';
 import dayjs from 'dayjs';
 import { t, TFunction } from 'i18next';
+import { FC, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import {
@@ -9,20 +9,14 @@ import {
 } from '@entities/role/service/role-manage.hook';
 import { DateRangePickerFormField } from '@features/form/ui';
 import { FormDisplay } from '@features/form/ui/form-display';
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { useDynamicForm } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, formatDate } from '@learnway/shared';
-import {
-  Button,
-  ContentsRow,
-  FormSubTitle,
-  Input,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  Textarea,
-  useModal,
-} from '@learnway/ui';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { Textarea } from '@learnway/ui/textarea';
 import { FormRow } from '@shared/ui';
 
 // request - 연장신청, view 보기, approvel - 승인/반려

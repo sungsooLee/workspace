@@ -12,10 +12,7 @@ export const Route = createFileRoute('/_auth/signup-progress/')({
   ...pageRouteConfig({
     meta: {
       title: 'LABEL.common.signupProgressStatus',
-      container: AUTH_CONTAINERS.AUTH_PROGRESS,
-    },
-  }),
-});
+      container: AUTH_CONTAINERS.AUTH_PROGRESS } }) });
 
 function RouteComponent() {
   return <SignupProgressPage route={Route} />;

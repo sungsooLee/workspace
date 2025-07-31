@@ -2,11 +2,14 @@ import { DateRangePickerFormField, DropdownFormField } from '@features/form';
 import { DynamicFormConfig, S3_PATH, useDynamicForm } from '@learnway/hooks';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
-import { Button, ContentsRow, FormSubTitle, Input } from '@learnway/ui';
+import { FormSubTitle } from '@learnway/ui/base-form';
 import { FormItem, FormRow } from '@shared/ui';
 import { EnFormMode } from '@types';
 import { t } from 'i18next';
 import { forwardRef, useImperativeHandle, useRef } from 'react';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
 
 interface ChannelDetailHomeBannerDetailProps {
   mode: EnFormMode;
@@ -30,8 +33,7 @@ const ChannelDetailHomeBannerDetailComponent = (
     },
     clearForm() {
       onFormChange();
-    },
-  }));
+    } }));
 
   const handleOnSubmit = async (data: any) => {
     console.log('#### handleOnSubmit', data);
@@ -102,40 +104,33 @@ const formConfig = (): DynamicFormConfig => ({
       type: 'dropdown',
       label: t('게재 위치'),
       value: 'CHANNEL_HOME',
-      options: [{ label: t('채널 홈 컨텐츠'), value: 'CHANNEL_HOME' }],
-    },
+      options: [{ label: t('채널 홈 컨텐츠'), value: 'CHANNEL_HOME' }] },
     {
       name: 'bannerName',
       type: 'text',
       label: t('배너명'),
-      value: '',
-    },
+      value: '' },
     {
       name: 'period',
       type: 'date-range',
       label: t('게재 기간'),
       value: {
         from: undefined,
-        to: undefined,
-      },
-    },
+        to: undefined } },
     {
       name: 'status',
       type: 'text',
       label: t('상태'),
       value: '',
-      placeholder: t('등록 후 자동생성'),
-    },
+      placeholder: t('등록 후 자동생성') },
     {
       name: 'isDisplay',
       type: 'switch',
       label: t('노출 여부'),
       value: true,
       switchConfig: {
-        label: (value: boolean) => (value ? t('노출') : t('비노출')),
-      },
-      guideText: t('게재중 상태만 배너가 노출됩니다.'),
-    },
+        label: (value: boolean) => (value ? t('노출') : t('비노출')) },
+      guideText: t('게재중 상태만 배너가 노출됩니다.') },
     {
       label: t('이미지'),
       name: 'channelBannerImageFileGroupUuid',
@@ -147,40 +142,34 @@ const formConfig = (): DynamicFormConfig => ({
         affairsType: 'PMS',
         s3Path: S3_PATH['public/image/channel/main'],
         acceptFiles: ['JPEG', 'JPG', 'PNG', 'GIF'],
-        maxFileSize: 50 * 1024 * 1024,
-      },
+        maxFileSize: 50 * 1024 * 1024 },
       guideText: t(
         '파일 사이즈 000 x 000 / 확장자 JPEG, JPG, PNG, GIF / 업로드 가능 1개 / 파일용량 최대 50 MB',
-      ),
-    },
+      ) },
     {
       name: 'bannerTitle',
       type: 'text',
       label: t('타이틀'),
       value: '',
-      maxLength: 15,
-    },
+      maxLength: 15 },
     {
       name: 'buttonText',
       type: 'text',
       label: t('버튼 텍스트'),
       value: '',
-      maxLength: 6,
-    },
+      maxLength: 6 },
     {
       name: 'subTitle1',
       type: 'text',
       label: t('서브 타이틀 1'),
       value: '',
-      maxLength: 20,
-    },
+      maxLength: 20 },
     {
       name: 'subTitle2',
       type: 'text',
       label: t('서브 타이틀 2'),
       value: '',
-      maxLength: 20,
-    },
+      maxLength: 20 },
     {
       name: 'bannerType',
       type: 'dropdown',
@@ -190,15 +179,13 @@ const formConfig = (): DynamicFormConfig => ({
       options: [
         { label: t('과정'), value: 'COURSE' },
         { label: t('패키지'), value: 'PACKAGE' },
-      ],
-    },
+      ] },
     {
       name: 'landingUrl',
       type: 'text',
       label: t('랜딩 URL'),
       value: '',
-      guideText: t('배너 유형에 따라 랜딩 URL을 조회합니다.'),
-    },
+      guideText: t('배너 유형에 따라 랜딩 URL을 조회합니다.') },
   ],
   validator: {
     bannerName: true,
@@ -209,17 +196,12 @@ const formConfig = (): DynamicFormConfig => ({
           fn: (values) => {
             return !values.period.from || !values.period.to;
           },
-          message: t('시작 및 종료 날짜를 선택하세요'),
-        },
+          message: t('시작 및 종료 날짜를 선택하세요') },
         {
           fn: (values) => {
             return values.period.from > values.period.to;
           },
-          message: t('시작 날짜는 종료 날짜 보다 이전일 이어야 합니다.'),
-        },
-      ],
-    },
+          message: t('시작 날짜는 종료 날짜 보다 이전일 이어야 합니다.') },
+      ] },
     channelBannerImageFileGroupUuid: true,
-    bannerType: true,
-  },
-});
+    bannerType: true } });

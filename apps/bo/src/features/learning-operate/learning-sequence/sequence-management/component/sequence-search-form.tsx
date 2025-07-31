@@ -1,9 +1,10 @@
 import { DropdownFormField } from '@features/form/ui/dropdown-form-field';
 import { generateYears } from '@learnway/shared';
-import { ContentsRow, Input } from '@learnway/ui';
 import { FormRow2, SearchBoxForm } from '@shared/ui';
 import React, { FormEventHandler } from 'react';
 import { useTranslation } from 'react-i18next';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
 
 interface SequenceSearchFormProps {
   provider: any;
@@ -14,8 +15,7 @@ interface SequenceSearchFormProps {
 export const SequenceSearchForm: React.FC<SequenceSearchFormProps> = ({
   provider,
   onSubmit,
-  onSearch,
-}) => {
+  onSearch }) => {
   const { t } = useTranslation();
 
   return (
@@ -34,8 +34,7 @@ export const SequenceSearchForm: React.FC<SequenceSearchFormProps> = ({
             />
           }
           validation={{
-            required: true,
-          }}
+            required: true }}
         />
         {/* 사용여부 */}
         <FormRow2
@@ -51,8 +50,7 @@ export const SequenceSearchForm: React.FC<SequenceSearchFormProps> = ({
             />
           }
           validation={{
-            required: true,
-          }}
+            required: true }}
         />
         {/* 차수명 */}
         <FormRow2

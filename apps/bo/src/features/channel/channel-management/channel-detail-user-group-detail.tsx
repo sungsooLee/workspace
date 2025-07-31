@@ -2,13 +2,15 @@ import { useGetChannelDetail } from '@entities/channel/service/channel.hook';
 import { FormDisplay, InputFormField } from '@features/form';
 import { DynamicFormConfig, SearchBoxConfig, useDynamicForm, useSearchBox } from '@learnway/hooks';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
-import { ContentsRow, FormSubTitle, GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import { ChipListFormField, FormRow, SearchBox } from '@shared/ui';
 import { useRouterState } from '@tanstack/react-router';
 import { createColumnHelper } from '@tanstack/react-table';
 import { EnFormMode } from '@types';
 import { t } from 'i18next';
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from 'react';
+import { ContentsRow } from '@learnway/ui/contents-row';
 
 interface ChannelDetailUserGroupDetailProps {
   mode: EnFormMode;
@@ -45,8 +47,7 @@ const ChannelDetailUserGroupDetailComponent = (
           userGroupName: '',
           isUsed: true,
           channelList: [{ ...channelData }],
-          userGroupSetting: 'USER_GROUP',
-        };
+          userGroupSetting: 'USER_GROUP' };
         updateFormData(initialData);
       } else if (props.mode === EnFormMode.VIEW) {
         const initialData = {
@@ -55,8 +56,7 @@ const ChannelDetailUserGroupDetailComponent = (
           userGroupName: '',
           isUsed: true,
           channelList: [{ ...channelData }],
-          userGroupSetting: 'USER_GROUP',
-        };
+          userGroupSetting: 'USER_GROUP' };
         updateFormData(initialData);
       }
     }
@@ -77,8 +77,7 @@ const ChannelDetailUserGroupDetailComponent = (
     },
     clearForm() {
       onFormChange();
-    },
-  }));
+    } }));
 
   const handleOnSubmit = async (data: any) => {
     console.log('#### handleOnSubmit', data);
@@ -113,8 +112,7 @@ const ChannelDetailUserGroupDetailComponent = (
                 labelField: 'channelName',
                 valueField: 'channelUuid',
                 hideBorder: true,
-                isOptionHideCloseButton: (option: any) => true,
-              }}
+                isOptionHideCloseButton: (option: any) => true }}
               disabled={true}
             />
           }
@@ -166,20 +164,17 @@ const formConfig = (): DynamicFormConfig => ({
       type: 'radio-group',
       label: t('유저그룹 유형'),
       value: 'CHANNEL',
-      options: [{ label: t('채널 유저 그룹'), value: 'CHANNEL' }],
-    },
+      options: [{ label: t('채널 유저 그룹'), value: 'CHANNEL' }] },
     {
       name: 'tenantName',
       type: 'text',
       label: t('테넌트'),
-      value: '',
-    },
+      value: '' },
     {
       name: 'userGroupName',
       type: 'text',
       label: t('유저그룹명'),
-      value: '',
-    },
+      value: '' },
     {
       name: 'isUsed',
       type: 'switch',
@@ -188,16 +183,13 @@ const formConfig = (): DynamicFormConfig => ({
       placeholder: '',
       guideText: t('사용 상태인 경우 유저그룹에서 조회할 수 있습니다.'),
       switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')),
-      },
-    },
+        label: (value: boolean) => (value ? t('사용') : t('미사용')) } },
     {
       label: t('채널'),
       name: 'channelList',
       format: 'array',
       type: 'chip-list',
-      value: [],
-    },
+      value: [] },
     {
       name: 'userGroupSetting',
       type: 'radio-group',
@@ -207,15 +199,12 @@ const formConfig = (): DynamicFormConfig => ({
         { label: t('유저그룹 설정'), value: 'USER_GROUP' },
         { label: t('직접 설정'), value: 'DIRECT' },
       ],
-      guideText: t('선택한 1개의 방식만 유저그룹 대상자로 설정됩니다.'),
-    },
+      guideText: t('선택한 1개의 방식만 유저그룹 대상자로 설정됩니다.') },
   ],
   validator: {
     userGroupName: true,
     channelList: true,
-    userGroupSetting: true,
-  },
-});
+    userGroupSetting: true } });
 
 const gridConfig: useGridBoxConfig = {
   query: '',
@@ -224,9 +213,7 @@ const gridConfig: useGridBoxConfig = {
   gridState: {
     page: 0,
     size: 10,
-    sort: [],
-  },
-};
+    sort: [] } };
 
 const searchConfig: SearchBoxConfig = {
   builders: [
@@ -241,23 +228,19 @@ const searchConfig: SearchBoxConfig = {
           { label: '회사B', value: 'B' },
           { label: '회사C', value: 'C' },
         ],
-        presetOptionLabel: t('선택'),
-      },
+        presetOptionLabel: t('선택') },
       {
         name: 'employeeNumber',
         type: 'text',
         label: t('사번'),
-        value: '',
-      },
+        value: '' },
       {
         name: 'name',
         type: 'text',
         label: t('이름'),
-        value: '',
-      },
+        value: '' },
     ],
-  ],
-};
+  ] };
 
 const columnHelper = createColumnHelper<any>();
 
@@ -265,36 +248,29 @@ const columns = [
   columnHelper.accessor('companyName', {
     cell: (info) => info.getValue(),
     header: t('회사'),
-    enableGrouping: false,
-  }),
+    enableGrouping: false }),
   columnHelper.accessor('roomName', {
     cell: (info) => info.getValue(),
     header: t('실'),
-    enableGrouping: false,
-  }),
+    enableGrouping: false }),
   columnHelper.accessor('deptName', {
     cell: (info) => info.getValue(),
     header: t('소속'),
-    enableGrouping: false,
-  }),
+    enableGrouping: false }),
   columnHelper.accessor('employeeNumber', {
     cell: (info) => info.getValue(),
     header: t('사번'),
-    enableGrouping: false,
-  }),
+    enableGrouping: false }),
   columnHelper.accessor('userName', {
     cell: (info) => info.getValue(),
     header: t('이름'),
-    enableGrouping: false,
-  }),
+    enableGrouping: false }),
   columnHelper.accessor('userStatus', {
     cell: (info) => info.getValue(),
     header: t('재직여부'),
-    enableGrouping: false,
-  }),
+    enableGrouping: false }),
   columnHelper.accessor('accountStatus', {
     cell: (info) => info.getValue(),
     header: t('계정상태'),
-    enableGrouping: false,
-  }),
+    enableGrouping: false }),
 ];

@@ -5,8 +5,7 @@ interface MenuParams {
 }
 
 export const Route = createFileRoute('/_layout/menu/$menuId')({
-  component: RouteComponent,
-});
+  component: RouteComponent });
 
 function RouteComponent() {
   const { menuId } = Route.useParams();

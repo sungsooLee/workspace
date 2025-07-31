@@ -1,17 +1,9 @@
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalTitle, ModalFooter, useModal } from '@learnway/ui/modal';
 // IA105 / NLP_BO_CMS_1017
 
-import {
-  Button,
-  ModalBody,
-  ModalContainer,
-  ModalTitle,
-  ModalFooter,
-  useModal,
-  Divider,
-  GridBox,
-  useGridBox,
-  useGridBoxConfig,
-} from '@learnway/ui';
+import { Divider } from '@learnway/ui/elements';
+import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import { t } from 'i18next';
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { SearchBox, TenantByRoleDropdownFormField } from '@shared/ui';
@@ -42,8 +34,7 @@ const ChannelChoicePopupComponent = () => {
         .value();
       console.log('🚀 ~ return ~ channels:', channels);
       return {
-        data: channels,
-      };
+        data: channels };
     };
   }, [data, channel]);
 
@@ -51,22 +42,18 @@ const ChannelChoicePopupComponent = () => {
     query: (params: any) => {
       return {
         queryKey: ['get-channels-by-tenant-and-role'],
-        queryFn: () => getChannels(params),
-      };
+        queryFn: () => getChannels(params) };
     },
     columns: [
       {
         size: 676,
         name: 'channelUuid',
         label: t('채널명'),
-        render: (_: any) => _.row.original.channelName,
-      },
+        render: (_: any) => _.row.original.channelName },
     ],
     gridState: {
       page: 0,
-      size: 10,
-    },
-  };
+      size: 10 } };
 
   const { provider: sProvider, getValues } = useSearchBox(searchConfig());
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
@@ -120,17 +107,13 @@ const searchConfig = (): SearchBoxConfig => ({
         label: t('테넌트'),
         value: '',
         format: 'object',
-        element: <TenantByRoleDropdownFormField />,
-      },
+        element: <TenantByRoleDropdownFormField /> },
       {
         name: 'channelName',
         type: 'text',
         label: t('채널명'),
-        value: '',
-      },
+        value: '' },
     ],
   ],
   validator: {
-    tenantId: true,
-  },
-});
+    tenantId: true } });

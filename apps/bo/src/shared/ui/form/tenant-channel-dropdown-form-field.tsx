@@ -21,8 +21,7 @@ const TenantChannelDropdownFormFieldComponent = forwardRef<
 
   const tenantId = useWatch({
     control,
-    name: 'tenantId',
-  });
+    name: 'tenantId' });
 
   const filterFn = (item: ChannelByRoleId, id?: number) => {
     if (!enableFilter) return true;
@@ -51,8 +50,7 @@ const TenantChannelDropdownFormFieldComponent = forwardRef<
       ?.map(({ channelName, channelUuid }) => ({
         // 옵션 형식으로 변환
         label: channelName,
-        value: channelUuid,
-      }));
+        value: channelUuid }));
   }, [channel, tenantId]);
 
   useEffect(() => {

@@ -11,7 +11,7 @@ import { AppConfigProvider } from './app/app-config-provider';
 import { routeTree } from './routeTree.gen';
 
 import { registerToastHandler } from '@learnway/shared';
-import { showToast } from '@learnway/ui';
+import { showToast } from '@learnway/ui/stores';
 import type { PageMeta } from './types';
 
 const isLocal = process.env.NODE_ENV === 'local';
@@ -58,7 +58,7 @@ registerToastHandler((config: any) => {
     title: config.title,
     description: config.description,
     type: config.type,
-    // duration: config.duration,
+    // duration: config.duration
   });
 });
 

@@ -28,9 +28,7 @@ const INITIAL_ENROLLMENT_STATE: EnrollmentState = {
     courseId: null,
     courseName: null,
     courseType: null,
-    sequenceId: null,
-  },
-};
+    sequenceId: null } };
 
 // zustand 스토어 생성
 export const useEnrollmentStore = create<EnrollmentStore>((set) => ({

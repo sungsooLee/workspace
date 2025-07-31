@@ -1,6 +1,8 @@
 import React from 'react';
-import { Input, Button, Textarea } from '@learnway/ui';
 import { IcoPlus, IcoMinus } from '@learnway/icons';
+import { Button } from '@learnway/ui/button';
+import { Input } from '@learnway/ui/input';
+import { Textarea } from '@learnway/ui/textarea';
 
 interface ExperienceEntry {
   id: string;
@@ -31,8 +33,7 @@ export const ExperienceField: React.FC<ExperienceFieldProps> = ({
   required = false,
   description,
   maxEntries = 5,
-  showDuration = true,
-}) => {
+  showDuration = true }) => {
   const addEntry = () => {
     if (value.length >= maxEntries) return;
 
@@ -41,8 +42,7 @@ export const ExperienceField: React.FC<ExperienceFieldProps> = ({
       company: '',
       position: '',
       duration: '',
-      description: '',
-    };
+      description: '' };
 
     onChange?.([...value, newEntry]);
   };

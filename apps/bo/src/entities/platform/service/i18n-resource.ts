@@ -8,7 +8,5 @@ export async function fetchI18nResource(languageCode?: string) {
 
   return {
     [lang]: {
-      translation,
-    },
-  };
+      translation } };
 }

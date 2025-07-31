@@ -1,22 +1,15 @@
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 // IA012 / NLP_BO_PMS_1100_6
 import { DropdownFormField } from '@features/form';
 import { useActiveMenuDepthState, useFetchAuthUser } from '@learnway/auth/entities';
 import { CODE_GROUP, SelectOption, useCodeStore, useDynamicForm2 } from '@learnway/hooks';
 import { IcoAlertCircle } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import {
-  Button,
-  ContentsRow,
-  Input,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  RadioGroupFormField,
-  TextareaFormField,
-  Tooltip,
-  useModal,
-} from '@learnway/ui';
+import { RadioGroupFormField, TextareaFormField } from '@learnway/ui/form-field';
+import { Tooltip } from '@learnway/ui/tooltip';
 import { ChipListFormField, FormRow2 } from '@shared/ui';
 import { t } from 'i18next';
 import { first, flatten, get, isArray, map, mapValues, pick, values } from 'lodash';
@@ -29,8 +22,7 @@ interface ExcelDownloadReasonModalComponentProps {
 
 function ExcelDownloadReasonModalCompoment({
   dataCount,
-  paramLabels,
-}: ExcelDownloadReasonModalComponentProps) {
+  paramLabels }: ExcelDownloadReasonModalComponentProps) {
   const { closeModal } = useModal();
   const { data: user } = useFetchAuthUser();
   const { activeMenuDepthMenu } = useActiveMenuDepthState((state) => state);
@@ -52,8 +44,7 @@ function ExcelDownloadReasonModalCompoment({
     LEGAL_REQUEST: CODE_GROUP['pms.excel.DownloadLegalRequestReasonTypeCode'],
     OUTSIDE_SUBMIT: CODE_GROUP['pms.excel.DownloadOutsideSubmitReasonTypeCode'],
     RND: CODE_GROUP['pms.excel.DownloadRndReasonTypeCode'],
-    ETC: CODE_GROUP['pms.excel.DownloadEtcReasonTypeCode'],
-  };
+    ETC: CODE_GROUP['pms.excel.DownloadEtcReasonTypeCode'] };
 
   useEffect(() => {
     if (!downloadReasonType) return;
@@ -90,8 +81,7 @@ function ExcelDownloadReasonModalCompoment({
         mapValues(paramLabels, (option) =>
           isArray(option) ? map(option, (_) => get(_, 'value')) : get(option, 'value'),
         ),
-      ),
-    });
+      ) });
   }
 
   return (
@@ -128,8 +118,7 @@ function ExcelDownloadReasonModalCompoment({
               element={
                 <RadioGroupFormField
                   optionsConfig={{
-                    codeGroup: CODE_GROUP['pms.excel.DownloadReasonTypeCode'],
-                  }}
+                    codeGroup: CODE_GROUP['pms.excel.DownloadReasonTypeCode'] }}
                 />
               }
             />
@@ -142,8 +131,7 @@ function ExcelDownloadReasonModalCompoment({
                 name="downloadDetailReasonType"
                 label={t('LABEL.form.label.downloadDetailReasonType', '상세 사유')}
                 optionsConfig={{
-                  codeGroup: DOWNLOAD_DETAIL_REASON_TYPE_CODE_GROUP[downloadReasonType],
-                }}
+                  codeGroup: DOWNLOAD_DETAIL_REASON_TYPE_CODE_GROUP[downloadReasonType] }}
                 element={<DropdownFormField />}
               />
             </ContentsRow>

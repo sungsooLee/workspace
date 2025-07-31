@@ -4,8 +4,7 @@ import { getQuerySkipToken } from '@learnway/shared';
 
 export const queryKeys = {
   all: ['i18n'] as const,
-  detail: (languageCode: string) => [...queryKeys.all, languageCode] as const,
-};
+  detail: (languageCode: string) => [...queryKeys.all, languageCode] as const };
 
 export const queryOptions = {
   detail: (languageCode?: string) =>
@@ -16,13 +15,9 @@ export const queryOptions = {
             const translation = await I18nResourceService.fetchResource(languageCode);
             return {
               [languageCode]: {
-                translation,
-              },
-            };
-          },
-        }
-      : getQuerySkipToken<any>(),
-};
+                translation } };
+          } }
+      : getQuerySkipToken<any>() };
 
 export const mutateOptions = {
   fetchAsync: () => ({
@@ -30,9 +25,5 @@ export const mutateOptions = {
       const translation = await I18nResourceService.fetchResource(payload);
       return {
         [payload]: {
-          translation,
-        },
-      };
-    },
-  }),
-};
+          translation } };
+    } }) };

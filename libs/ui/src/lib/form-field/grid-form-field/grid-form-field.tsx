@@ -1,8 +1,9 @@
-import React, { forwardRef, useState } from 'react';
-import styles from './grid-form-field.module.css';
-import { cn, getRandomId } from '@learnway/shared';
 import { BaseFormFieldProps } from '@learnway/hooks';
-import { GridBox, GridBoxProps, TableBox } from '@learnway/ui';
+import { cn, getRandomId } from '@learnway/shared';
+import { forwardRef, useState } from 'react';
+import { TableBox } from '../../grid/grid-box/table-box';
+import { GridBoxProps } from '../../grid/types/grid-box';
+import styles from './grid-form-field.module.css';
 
 interface GridFormFieldComponentProps extends BaseFormFieldProps<any[]> {
   /** grid box Props */

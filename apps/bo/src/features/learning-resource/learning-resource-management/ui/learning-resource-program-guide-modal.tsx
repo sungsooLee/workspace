@@ -1,8 +1,10 @@
 import { useFileManager } from '@learnway/hooks';
-import { Button, GridBox, ModalBody, ModalContainer, ModalTitle } from '@learnway/ui';
+import { GridBox } from '@learnway/ui/grid';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { UIEvent } from 'react';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalTitle } from '@learnway/ui/modal';
 
 function ProgramGuideModalComponent() {
   const { s3FileDownload } = useFileManager();
@@ -27,8 +29,7 @@ function ProgramGuideModalComponent() {
             )
           } // 가이드 파일 하드코딩? 코드화?
         />
-      ),
-    },
+      ) },
     {
       fileName: t('TOAST 이북 제작 가이드'),
       download: (
@@ -43,8 +44,7 @@ function ProgramGuideModalComponent() {
             )
           } // 가이드 파일 하드코딩? 코드화?
         />
-      ),
-    },
+      ) },
     {
       fileName: t('스콤 제작 가이드'),
       download: (
@@ -59,8 +59,7 @@ function ProgramGuideModalComponent() {
             )
           } // 가이드 파일 하드코딩? 코드화?
         />
-      ),
-    },
+      ) },
     {
       fileName: t('이러닝 개발 표준 가이드'),
       download: (
@@ -75,8 +74,7 @@ function ProgramGuideModalComponent() {
             )
           } // 가이드 파일 하드코딩? 코드화?
         />
-      ),
-    },
+      ) },
     {
       fileName: t('이러닝 개발 필수 스크립트'),
       download: (
@@ -91,8 +89,7 @@ function ProgramGuideModalComponent() {
             )
           } // 가이드 파일 하드코딩? 코드화?
         />
-      ),
-    },
+      ) },
   ];
 
   const columnHelper = createColumnHelper<any>();
@@ -102,14 +99,12 @@ function ProgramGuideModalComponent() {
       cell: (info) => info.getValue(),
       header: t('파일명'),
       size: 510,
-      enableGrouping: false,
-    }),
+      enableGrouping: false }),
     columnHelper.accessor('download', {
       cell: (info) => info.getValue(),
       header: t('다운로드'),
       size: 220,
-      enableGrouping: false,
-    }),
+      enableGrouping: false }),
   ] as ColumnDef<any, unknown>[];
   return (
     <ModalContainer>

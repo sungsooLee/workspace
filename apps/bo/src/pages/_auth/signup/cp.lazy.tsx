@@ -9,10 +9,7 @@ export const Route = createLazyFileRoute('/_auth/signup/cp')({
   component: RouteComponent,
   ...pageRouteConfig({
     meta: {
-      title: 'CP사 회원가입',
-    },
-  }),
-});
+      title: 'CP사 회원가입' } }) });
 
 function RouteComponent() {
   const { businessCode, cpPage, reset } = useSignupStore((state) => state);

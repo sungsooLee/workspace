@@ -1,9 +1,10 @@
+import { BaseFormFieldProps } from '@learnway/hooks';
+import { cn } from '@learnway/shared';
+import { Input, InputProps } from '@learnway/ui/input';
+import { ModalConfig, useModal } from '@learnway/ui/modal';
+import { t } from 'i18next';
 import { forwardRef } from 'react';
 import styles from './content-choice-selector.module.css';
-import { cn } from '@learnway/shared';
-import { BaseFormFieldProps } from '@learnway/hooks';
-import { t } from 'i18next';
-import { ModalConfig, Input, InputProps, useModal } from '@learnway/ui';
 
 interface ComplexFieldValue {
   [key: string]: string;

@@ -1,13 +1,19 @@
-import { memo, useState } from 'react';
-import { BrowserView, isMobile, MobileView } from 'react-device-detect';
 import { IcoArrowDown, IcoCaution03, IcoDownload02, IcoLock, IcoPdf } from '@learnway/icons';
-import { Button, Panel, Popover, ProgressBar, TableBox, useModal } from '@learnway/ui';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import styles from '@learnway/styles/fo/features/layout/ui/course-introduction/dashboard.module.css';
-import statusStyles from '@learnway/styles/fo/features/layout/ui/course-introduction/status.module.css';
 import pdsStyles from '@learnway/styles/fo/features/layout/ui/course-introduction/pds.module.css';
-import tableListStyles from '@learnway/styles/fo/shared/ui/list/table-list.module.css';
+import statusStyles from '@learnway/styles/fo/features/layout/ui/course-introduction/status.module.css';
 import dropdownPopoverStyles from '@learnway/styles/fo/shared/ui/dropdown-popover/dropdown-popover.module.css';
+import tableListStyles from '@learnway/styles/fo/shared/ui/list/table-list.module.css';
+import { Button } from '@learnway/ui/button';
+import { TableBox } from '@learnway/ui/grid';
+import { useModal } from '@learnway/ui/modal';
+import { ProgressBar } from '@learnway/ui/progress';
+
+import { Panel } from '@learnway/ui/panel';
+import { Popover } from '@learnway/ui/popover';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { forwardRef, memo, useState } from 'react';
+import { BrowserView, isMobile, MobileView } from 'react-device-detect';
 import { CurriculumStudy } from '../../../../features/layout';
 
 const DropdownPopoverCompoment = () => {
@@ -18,7 +24,7 @@ const DropdownPopoverCompoment = () => {
     </div>
   );
 };
-const CourseDashboardCompoment = () => {
+const CourseDashboardCompoment = forwardRef<HTMLDivElement, any>(({}, ref) => {
   const [selectedValues, setSelectedValues] = useState<null>(null);
 
   const progress = 80;
@@ -81,7 +87,7 @@ const CourseDashboardCompoment = () => {
   ] as ColumnDef<any, unknown>[];
 
   return (
-    <div className={styles.start}>
+    <div ref={ref} className={styles.start}>
       <div className={styles.tit_box}>
         <h3>대시보드</h3>
         <Popover
@@ -97,7 +103,7 @@ const CourseDashboardCompoment = () => {
       </div>
 
       <div className={statusStyles.start}>
-        {/* 이수 : completed 
+        {/* 이수 : completed
             미이수 : incomplete
         */}
         <Panel
@@ -311,6 +317,6 @@ const CourseDashboardCompoment = () => {
       </div>
     </div>
   );
-};
+});
 
 export const CourseDashboard = memo(CourseDashboardCompoment);

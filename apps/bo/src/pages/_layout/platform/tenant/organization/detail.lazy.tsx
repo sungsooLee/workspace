@@ -2,14 +2,12 @@ import { useEffect } from 'react';
 import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
 
-import { Button } from '@learnway/ui';
-
 import { CompanyOrganization } from '@features/platform-management/company';
 import { MainContents, PageContainer, ContentsButtons } from '@shared/ui';
+import { Button } from '@learnway/ui/button';
 
 export const Route = createLazyFileRoute('/_layout/platform/tenant/organization/detail')({
-  component: RouteComponent,
-});
+  component: RouteComponent });
 
 /**
  * 화면 번호 : NLP_BO_TMS_1111_03
@@ -29,8 +27,7 @@ function RouteComponent() {
     console.log('listParam-detail', listParam);
     router.navigate({
       to: '/platform/tenant/organization',
-      state: { listParam },
-    });
+      state: { listParam } });
   };
 
   return (

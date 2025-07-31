@@ -5,27 +5,30 @@ import {
   useUpdateStudentsCertification,
   useUpdateStudentsCompletion,
   useUpdateStudentsInfo,
+  useUpdateStudentsList,
 } from '@entities/learning-sequence/service/learning-sequence.hook';
 import { queryOptions as sequenceQueryOptions } from '@entities/learning-sequence/service/learning-sequence.queries';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { LMSApiPrefix } from '@learnway/config';
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, generateYears, getDateToString } from '@learnway/shared';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { Divider, SplitPanel, StatsSummary, StatsSummaryData } from '@learnway/ui/elements';
 import {
-  Button,
-  Divider,
   EditDropdownCell,
   EditInputCell,
-  FormSubTitle,
   GridBox,
-  SplitPanel,
-  StatsSummary,
-  StatsSummaryData,
   useGridBox,
   useGridBoxConfig,
-  useModal,
-} from '@learnway/ui';
-import { GridExcelDownloadButton, GridExcelUploadButton, SearchBox } from '@shared/ui';
+} from '@learnway/ui/grid';
+import { useModal } from '@learnway/ui/modal';
+import {
+  GridExcelDownloadButton,
+  GridExcelUploadButton,
+  SearchBox,
+  UserShuttleModal,
+} from '@shared/ui';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter, useRouterState } from '@tanstack/react-router';
 import { CellContext, ColumnDef, createColumnHelper } from '@tanstack/react-table';
@@ -100,6 +103,7 @@ const StudentsManagementComponent = () => {
   const { deleteStudentsInfo } = useDeleteStudentsInfo({});
   const { updateStudentsCertification } = useUpdateStudentsCertification({});
   const { updateStudentsCompletion } = useUpdateStudentsCompletion({});
+  const { updateStudentsList } = useUpdateStudentsList({});
 
   // 교재
   _global.linkClickBook = (payload: any) => {
@@ -413,21 +417,23 @@ const StudentsManagementComponent = () => {
         header: t('총점'),
         cell: (info) => {
           const original = info.row.original;
-          return (
-            <span className="text_error">
-              {parseInt(original.attendanceScore) +
-                parseInt(original.progressScore) +
-                parseInt(original.examScore) +
-                parseInt(original.asgmtScore)}
-            </span>
-          );
+          const totalScore = statsRightCount[0].value;
+          const rowTotalScore =
+            parseInt(original.attendanceScore) +
+            parseInt(original.progressScore) +
+            parseInt(original.examScore) +
+            parseInt(original.asgmtScore);
+          if (totalScore > rowTotalScore) {
+            return <span className="text_error">{rowTotalScore}</span>;
+          } else {
+            return rowTotalScore;
+          }
         },
         enableGrouping: false,
         size: 100,
       }),
       columnHelper.accessor('attendanceScore', {
         header: t('출석'),
-        // cell: (info) => info.getValue(),
         cell: (info: CellContext<any, string>) => {
           return (
             <EditInputCell
@@ -624,16 +630,15 @@ const StudentsManagementComponent = () => {
     // const payload = {
     //   openingYear: data.openingYear || null,
     //   courseSequenceId: data.courseSequenceId || null,
-    //   // completionStatus: data.completionStatus || '',
-    //   completionStatus: true,
+    //   completionStatus: data.completionStatus,
     //   learningStartDate: data.learningRange?.from
     //     ? getDateToString(data.learningRange?.from, DATE_TIME_FORMAT.DATE)
-    //     : null,
+    //     : '',
     //   learningEndDate: data.learningRange?.to
     //     ? getDateToString(data.learningRange?.to, DATE_TIME_FORMAT.DATE)
-    //     : null,
-    //   companyId: data.company || null,
-    //   deptId: data.deptId || null,
+    //     : '',
+    //   companyId: data.company || '',
+    //   deptId: data.deptId || '',
     //   employeeNumber: data.employeeNumber || '',
     //   name: data.name || '',
     // };
@@ -831,6 +836,41 @@ const StudentsManagementComponent = () => {
     });
   };
 
+  const handleStudentsUpdateList = async (param: any) => {
+    console.log('param=>', param);
+    const searchData = getValues();
+    const payload = {
+      courseSequenceId: searchData.courseSequenceId,
+      userList: param,
+    };
+    // TODO: API연동
+    // await updateStudentsList(payload, {
+    //   onSuccess: async (data: any, variables: any, context: any) => {
+    //     console.log('onSuccess:', data);
+    //     await showSaveComplete();
+    //     handleOnRefresh();
+    //   },
+    //   onError: (data: any, variables: any, context: any) => {
+    //     console.log('onError:', data);
+    //   },
+    // });
+  };
+
+  const handleStudentAdd = async () => {
+    const searchData = getValues();
+    console.log('searchData:', searchData);
+    // return;
+    openModal({
+      width: 'xl',
+      content: <UserShuttleModal />,
+      onClose(data) {
+        if (data) {
+          handleStudentsUpdateList(data);
+        }
+      },
+    });
+  };
+
   const columnHelper = createColumnHelper<any>();
   return (
     <>
@@ -887,7 +927,7 @@ const StudentsManagementComponent = () => {
               onClick={handleSequenceChange}
               disabled={selectedItems.length !== 1}
             />
-            <Button variant="text" label={t('수강생등록')} onClick={(e) => console.log('test')} />
+            <Button variant="text" label={t('수강생등록')} onClick={handleStudentAdd} />
           </>
         }
         excelButtons={

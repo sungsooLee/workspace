@@ -1,31 +1,35 @@
-import { forwardRef, memo } from 'react';
 import { t } from 'i18next';
 
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 
+import { CODE_GROUP, S3_PATH, SelectOption } from '@learnway/hooks';
+import { FormSubTitle } from '@learnway/ui/base-form';
 import {
   CheckboxGroupFormField,
   ChipListModalSelectorFormField,
-  ContentsRow,
-  FormSubTitle,
-  Input,
   RadioGroupFormField,
   TextareaFormField,
-} from '@learnway/ui';
-import { CODE_GROUP, S3_PATH, SelectOption } from '@learnway/hooks';
+} from '@learnway/ui/form-field';
 
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
 import {
-  FormRow2,
+  CompanyChoiceModal,
   FormItem,
+  FormRow2,
   SwitchFormField,
   ThumbnailPublicFormField,
-  CompanyChoiceModal,
   UserChoiceModal,
 } from '@shared/ui';
 
-import { DuplicateCheckInputFormField, DuplicateState, FormDisplay } from '@features/form';
+import {
+  DuplicateCheckInputFormField,
+  DuplicateState,
+  FormDisplay,
+  InputFormField,
+} from '@features/form';
 
-import { EnFormMode, EnDeviceType, EnUseCategory } from '@types';
+import { EnDeviceType, EnFormMode, EnUseCategory } from '@types';
 
 /**
  * 화면번호: NLP_BO_TMS_1002 (테넌트기본 정보)
@@ -154,7 +158,7 @@ const TenantDetailBaseFormComponent = ({
             format: 'string',
             required: true,
           }}
-          element={<Input />}
+          element={<InputFormField />}
         />
       </ContentsRow>
       <ContentsRow>

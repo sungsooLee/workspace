@@ -1,18 +1,16 @@
-import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { cn, isEmptyData } from '@learnway/shared';
+import { SegmentedControlFormField } from '@features/form/ui/segmented-control-form-field';
 import { CMSApiPrefix } from '@learnway/config';
-import {
-  Button,
-  ContentsRow,
-  FormSubTitle,
-  GridBox,
-  Input,
-  RadioGroupFormField,
-  useModal,
-} from '@learnway/ui';
 import { IcoCopy, IcoMenu01, IcoMinus, IcoPlus } from '@learnway/icons';
+import { cn, isEmptyData } from '@learnway/shared';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { RadioGroupFormField } from '@learnway/ui/form-field';
+import { GridBox } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
+import { FormRow2, GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import {
   ContentInformation,
   EnQuestionLevel,
@@ -23,8 +21,8 @@ import {
   QuestionItemGridRow,
   TestPaperBasicInfoDetail,
 } from '@types';
-import { FormRow2, GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
-import { SegmentedControlFormField } from '@features/form/ui/segmented-control-form-field';
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { QUESTION_LEVELS, QUESTION_TYPES } from '../service/exam-util';
 import { getExamTemplateTextByType } from '../service/test-paper/common';
 import {
@@ -33,12 +31,12 @@ import {
   TabFormRef,
 } from '../service/test-paper/type';
 import { useExamQuestionInfoInput } from '../service/test-paper/use-exam-question-info-input';
-import { LearningResourceTestItemModal } from './learning-resource-test-item-modal';
 import { LearningResourceQuestionShuttleModal } from './learning-resource-question-shuttle-modal';
+import { LearningResourceTestItemModal } from './learning-resource-test-item-modal';
 
 /* styles */
-import styles from '@learnway/styles/bo/pages/_layout/learning/test-detail.module.css';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
+import styles from '@learnway/styles/bo/pages/_layout/learning/test-detail.module.css';
 
 const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
   (

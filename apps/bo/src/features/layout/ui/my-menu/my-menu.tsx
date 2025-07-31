@@ -2,7 +2,8 @@ import { memo, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { IcoClock01, IcoStar, IcoStar02 } from '@learnway/icons';
-import { Button, ChipList, List, Popover } from '@learnway/ui';
+import { List } from '@learnway/ui/list';
+import { Popover } from '@learnway/ui/popover';
 
 import { cn } from '@learnway/shared';
 
@@ -18,6 +19,8 @@ import {
   useLayoutStore,
   useUpdateUser,
 } from '@learnway/auth/entities';
+import { Button } from '@learnway/ui/button';
+import { ChipList } from '@learnway/ui/chips';
 import { useRouter } from '@tanstack/react-router';
 import styles from './my-menu.module.css';
 

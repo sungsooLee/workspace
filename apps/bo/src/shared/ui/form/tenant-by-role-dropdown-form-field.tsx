@@ -17,8 +17,7 @@ const TenantByRoleDropdownFormFieldComponent = forwardRef<
     return tenant?.map(({ tenantId, tenantName }) => ({
       // 옵션 형식으로 변환
       label: tenantName,
-      value: tenantId,
-    }));
+      value: tenantId }));
   }, [data?.activeRole, tenant]);
 
   useEffect(() => {

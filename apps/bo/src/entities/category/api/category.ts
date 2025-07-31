@@ -6,8 +6,7 @@ import type {
   CategoryCreate,
   CategoryDetail,
   CategoryMove,
-  CategoryUpdate,
-} from '@types';
+  CategoryUpdate } from '@types';
 
 export default class CategoryService {
   static getCategory(): Promise<Category> {
@@ -27,14 +26,12 @@ export default class CategoryService {
     categoryCode,
     categoryContent,
     id,
-    isUsed,
-  }: CategoryUpdate) {
+    isUsed }: CategoryUpdate) {
     const body = {
       categoryName,
       categoryCode,
       categoryContent,
-      isUsed,
-    };
+      isUsed };
     return httpService.put<any>(`${LMSApiPrefix()}/category/${id}/update`, body);
   }
 
@@ -45,8 +42,7 @@ export default class CategoryService {
   static moveCategory({ id, destinationParentId, sortSeq }: CategoryMove) {
     const body = {
       destinationParentId,
-      sortSeq,
-    };
+      sortSeq };
     return httpService.put<any>(`${LMSApiPrefix()}/category/${id}/dnd`, body);
   }
 

@@ -221,3 +221,19 @@ export function useUpdateStudentsSequence(options: any) {
     data,
   };
 }
+
+export function useUpdateStudentsList(options: any) {
+  const { mutate, isSuccess, isError, data } = useMutation({
+    ...mutateOptions.updateStudentsList(),
+    ...options,
+  });
+
+  return {
+    updateStudentsList: async (payload: any, callback?: any) => {
+      await mutate(payload, callback);
+    },
+    isSuccess,
+    isError,
+    data,
+  };
+}

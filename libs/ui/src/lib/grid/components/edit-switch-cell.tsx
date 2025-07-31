@@ -1,6 +1,6 @@
-import React, { useEffect, useMemo, useState } from 'react';
 import { CellContext } from '@tanstack/react-table';
-import { Switch, SwitchComponentProps } from '@learnway/ui';
+import { useEffect, useMemo, useState } from 'react';
+import { Switch, SwitchComponentProps } from '../../switch';
 
 interface EditSwitchCellProps<T> {
   info: CellContext<T, boolean>;

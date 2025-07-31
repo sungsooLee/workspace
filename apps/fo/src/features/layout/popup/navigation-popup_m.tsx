@@ -2,11 +2,13 @@ import { memo } from 'react';
 import { Link } from '@tanstack/react-router';
 import { PasswordVerifyPopup } from '../../layout';
 import { cn } from '@learnway/shared';
-import { ModalBody, ModalContainer, ModalTitle, useModal, Avatar, Button } from '@learnway/ui';
 
 import { IcoHome03, IcoSetting01, IcoMybook, IcoReview } from '@learnway/icons';
 
 import styles from '@learnway/styles/fo/features/layout/popup/navigate-modal.module.css';
+import { Avatar } from '@learnway/ui/avatar';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalTitle, useModal } from '@learnway/ui/modal';
 
 const NavigationPopupMComponent = () => {
   const { openModal } = useModal();

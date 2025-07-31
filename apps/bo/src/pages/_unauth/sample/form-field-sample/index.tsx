@@ -1,16 +1,16 @@
 import { DropdownFormField } from '@features/form/ui/dropdown-form-field';
 import { ChannelListModal } from '@features/learning-operate/course/course-management';
 import { useDynamicForm2 } from '@learnway/hooks';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
 import {
-  Button,
-  ContentsRow,
   EditorFormField,
-  Input,
   InputModalSelectorFormField,
   RadioGroupFormField,
-  SelectOption,
-  useModal,
-} from '@learnway/ui';
+} from '@learnway/ui/form-field';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
+import { SelectOption } from '@learnway/ui/type';
 import { ContentsButtons, FormRow2, MainContents, PageContainer } from '@shared/ui';
 import { createFileRoute } from '@tanstack/react-router';
 import { t } from 'i18next';
@@ -309,8 +309,7 @@ function RouteComponent() {
               element={
                 <PhoneNumberFormField
                   phoneNumberConfig={{
-                    options: [{ value: 'KOR_82', label: '+82' }],
-                  }}
+                    options: [{ value: 'KOR_82', label: '+82' }] }}
                 />
               }
             />

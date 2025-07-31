@@ -1,10 +1,12 @@
-import { useState, useRef } from 'react';
-import { t } from 'i18next';
-import { Button, Tabs, useModal } from '@learnway/ui';
-import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
-import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import { MenuManage, MenuManageRef } from '@features/platform-management/platform/menu-managemnet';
-import { MainContents, PageContainer, SectionLayout, ContentsButtons } from '@shared/ui';
+import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
+import { Tabs } from '@learnway/ui/tabs';
+import { ContentsButtons, MainContents, PageContainer, SectionLayout } from '@shared/ui';
+import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
+import { t } from 'i18next';
+import { useRef, useState } from 'react';
 
 export const Route = createLazyFileRoute('/_layout/platform/menu/')({
   component: RouteComponent,

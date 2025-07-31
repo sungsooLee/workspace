@@ -1,11 +1,12 @@
 import { memo } from 'react';
-import { Button, useModal } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import { CategoryPopup } from '../popup/category-popup';
 
 import styles from '@learnway/styles/fo/features/layout/ui/category-layer-button.module.css';
 
 import { IcoArray } from '@learnway/icons';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 
 const CategoryLayerButton = () => {
   // modal

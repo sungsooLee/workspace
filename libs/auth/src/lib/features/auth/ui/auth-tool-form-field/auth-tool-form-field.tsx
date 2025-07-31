@@ -1,9 +1,9 @@
-import { useTranslation } from 'react-i18next';
 import { isFunction } from 'lodash';
+import { useTranslation } from 'react-i18next';
 
-import { IcoPhone02, IcoMail } from '@learnway/icons';
+import { IcoMail, IcoPhone02 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { RadioCard } from '@learnway/ui';
+import { RadioCard } from '@learnway/ui/radio-card';
 
 import type { AUTH_TOOL_TYPE } from '../../../../types';
 
