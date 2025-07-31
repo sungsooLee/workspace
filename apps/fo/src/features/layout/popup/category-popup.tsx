@@ -16,9 +16,9 @@ interface CategoryPopupProps {
   activeTenantId: number;
 }
 
-type MainItem = { id: number; label: string; isChild: boolean };
-type SubItem = { id: number; label: string; parentId: number; link: string; };
-type MenuItem = { id: number; label: string; parentId: number; link: string; subItems?: SubItem[]; };
+type MainItem = { id: number; label: string; isChild: boolean; };
+type SubItem = { id: number; label: string; parentId: number; };
+type MenuItem = { id: number; label: string; parentId: number; subItems?: SubItem[]; };
 
 const CategoryPopupComponent = ({ activeTenantId }: CategoryPopupProps) => {
   // 하단 카테고리 이동 내역
@@ -57,7 +57,6 @@ const CategoryPopupComponent = ({ activeTenantId }: CategoryPopupProps) => {
                 id: child.id,
                 label: child.name,
                 parentId: item.id,
-                link: ''
               }
             )
           })
@@ -66,7 +65,6 @@ const CategoryPopupComponent = ({ activeTenantId }: CategoryPopupProps) => {
           id: item.id,
           label: item.name,
           parentId: subTreeData.id,
-          link: item.children.length > 0 ? null : '',
           subItems: children
         }
       });
@@ -120,7 +118,8 @@ const CategoryPopupComponent = ({ activeTenantId }: CategoryPopupProps) => {
                         className={activeId === item.id ? styles.active : ''}
                         label={item.label}
                         icon={
-                          (activeId === item.id && item.isChild) && (
+                          activeId === item.id &&
+                          item.isChild && (
                             <IcoArrowForward
                               className={styles.ico_arrow}
                               width={16}
@@ -141,7 +140,7 @@ const CategoryPopupComponent = ({ activeTenantId }: CategoryPopupProps) => {
             <div className={styles.category_inner}>
               <div className={styles.scroll_box}>
                 <div className={styles.depth_area}>
-                  {menuData.map(({ id, label, subItems, link }) => (
+                  {menuData.map(({ id, label, subItems }) => (
                     <div key={id} className={styles.menu_item}>
                       <div
                         className={cn(
@@ -149,8 +148,10 @@ const CategoryPopupComponent = ({ activeTenantId }: CategoryPopupProps) => {
                           subItems && openId === id ? styles.active : '',
                         )}
                       >
-                        <Link to={link}>{label}</Link>
-                        {(subItems && subItems.length > 0) && (
+                        <Link to={'/category'} state={{ tenantId, categoryId: id }}>
+                          {label}
+                        </Link>
+                        {subItems && subItems.length > 0 && (
                           <Button
                             className={styles.btn_cate}
                             onClick={() => handleClick(id, !!subItems)}
@@ -163,7 +164,9 @@ const CategoryPopupComponent = ({ activeTenantId }: CategoryPopupProps) => {
                         <div className={styles.sub_menu}>
                           {subItems.map((sub) => (
                             <div key={sub.id} className={styles.sub_menu_item}>
-                              <Link to={sub.link}>{sub.label}</Link>
+                              <Link to={'/category'} state={{ tenantId, categoryId: sub.id }}>
+                                {sub.label}
+                              </Link>
                             </div>
                           ))}
                         </div>
