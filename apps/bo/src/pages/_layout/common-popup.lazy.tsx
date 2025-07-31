@@ -1,10 +1,10 @@
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
-import { ChipListModalSelectorFormField } from '@learnway/ui/form-field';
-import { PreviewImage } from '@learnway/ui/preview-image';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
+import { ChipListModalSelectorFormField } from '@learnway/ui/form-field';
 import { useModal } from '@learnway/ui/modal';
+import { PreviewImage } from '@learnway/ui/preview-image';
 import {
   AddressSearchModal,
   CategoryChoiceTreeModal,
@@ -31,7 +31,8 @@ import {
   UserGroupChoiceModal,
   UserGroupOrganizationShuttleModal,
   UserGroupTabsChoiceModal,
-  UserShuttleModal } from '@shared/ui';
+  UserShuttleModal,
+} from '@shared/ui';
 import { AddressSearchFormField } from '@shared/ui/form/address-search-form-field';
 import { createLazyFileRoute } from '@tanstack/react-router';
 import { t } from 'i18next';
@@ -51,7 +52,8 @@ import { CourseType } from '@learnway/types';
 import { PreviewLearningWindow } from '@shared/ui/modal/preview-learning-window';
 
 export const Route = createLazyFileRoute('/_layout/common-popup')({
-  component: RouteComponent });
+  component: RouteComponent,
+});
 
 const imageFileUrl =
   'https://images.pexels.com/photos/842711/pexels-photo-842711.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2';
@@ -75,7 +77,8 @@ function RouteComponent() {
         labelMessageName: item.value,
         labelMessageDesc: item.value,
         isUsed: true,
-        isDeleted: false };
+        isDeleted: false,
+      };
       const data = await LabelMessagesService.fetchAll(labelPostData);
 
       if (data.numberOfElements === 0) {
@@ -117,7 +120,8 @@ function RouteComponent() {
   const handleAddressSearch = () => {
     openModal({
       width: 'sm',
-      content: <AddressSearchModal onSelect={handleAddressSearchResult} /> });
+      content: <AddressSearchModal onSelect={handleAddressSearchResult} />,
+    });
   };
 
   return (
@@ -149,11 +153,13 @@ function RouteComponent() {
                   modalConfig={{
                     content: <CompanyChoiceModal />,
                     title: '',
-                    width: 'xl' }}
+                    width: 'xl',
+                  }}
                   chipList={{
                     labelField: 'name',
                     valueField: 'companyId',
-                    wordwrap: true }}
+                    wordwrap: true,
+                  }}
                 />
               }
             />
@@ -167,11 +173,13 @@ function RouteComponent() {
                   modalConfig={{
                     content: <CompanyShuttleModal />,
                     title: '',
-                    width: 'xl' }}
+                    width: 'xl',
+                  }}
                   chipList={{
                     labelField: 'name',
                     valueField: 'companyId',
-                    wordwrap: true }}
+                    wordwrap: true,
+                  }}
                 />
               }
             />
@@ -250,7 +258,8 @@ function RouteComponent() {
                   e.stopPropagation();
                   openModal({
                     width: 'xl',
-                    content: <UserChoiceModal /> });
+                    content: <UserChoiceModal />,
+                  });
                 }}
               >
                 {'유저 검색(공통)'}
@@ -266,7 +275,8 @@ function RouteComponent() {
                   e.stopPropagation();
                   openModal({
                     width: 'xl',
-                    content: <UserShuttleModal /> });
+                    content: <UserShuttleModal />,
+                  });
                 }}
               >
                 {'유저 검색(셔틀)'}
@@ -284,7 +294,8 @@ function RouteComponent() {
                   e.stopPropagation();
                   openModal({
                     width: 'xl',
-                    content: <CompanyChoiceModal /> });
+                    content: <CompanyChoiceModal />,
+                  });
                 }}
               >
                 {'회사 조회'}
@@ -301,7 +312,8 @@ function RouteComponent() {
                   openModal({
                     width: 'xl',
                     height: 'fix',
-                    content: <CompanyShuttleModal /> });
+                    content: <CompanyShuttleModal />,
+                  });
                 }}
               >
                 {'회사 조회(셔틀)'}
@@ -320,7 +332,8 @@ function RouteComponent() {
                   e.stopPropagation();
                   openModal({
                     width: 'xl',
-                    content: <TenantChoiceModal /> });
+                    content: <TenantChoiceModal />,
+                  });
                 }}
               >
                 {'테넌트 조회'}
@@ -336,7 +349,8 @@ function RouteComponent() {
                   e.stopPropagation();
                   openModal({
                     width: 'xl',
-                    content: <TenantShuttleModal /> });
+                    content: <TenantShuttleModal />,
+                  });
                 }}
               >
                 {'테넌트 조회(셔틀)'}
@@ -353,7 +367,8 @@ function RouteComponent() {
                   e.stopPropagation();
                   openModal({
                     width: 'xl',
-                    content: <ChannelListChoiceModal /> });
+                    content: <ChannelListChoiceModal />,
+                  });
                 }}
               >
                 {'채널 조회'}
@@ -369,7 +384,8 @@ function RouteComponent() {
                   e.stopPropagation();
                   openModal({
                     width: 'xl',
-                    content: <ChannelShuttleModal /> });
+                    content: <ChannelShuttleModal />,
+                  });
                 }}
               >
                 {'채널 조회(셔틀)'}
@@ -386,7 +402,8 @@ function RouteComponent() {
                   e.stopPropagation();
                   openModal({
                     width: 'xl',
-                    content: <MenuChoiceTreeModal menuScopeCode="BO" /> });
+                    content: <MenuChoiceTreeModal menuScopeCode="BO" />,
+                  });
                 }}
               >
                 {'메뉴 조회 팝업(공통)'}
@@ -402,7 +419,8 @@ function RouteComponent() {
                   e.stopPropagation();
                   openModal({
                     width: 'xl',
-                    content: <CategoryChoiceTreeModal /> });
+                    content: <CategoryChoiceTreeModal />,
+                  });
                 }}
               >
                 {'케테고리 조회 팝업(공통)'}
@@ -419,7 +437,8 @@ function RouteComponent() {
                   e.stopPropagation();
                   openModal({
                     width: 'xl',
-                    content: <UserGroupChoiceModal /> });
+                    content: <UserGroupChoiceModal />,
+                  });
                 }}
               >
                 {'유저그룹 대상자 조회 팝업(공통)'}
@@ -435,9 +454,8 @@ function RouteComponent() {
                   e.stopPropagation();
                   openModal({
                     width: 'xl',
-                    content: (
-                      <UserGroupOrganizationShuttleModal tenantIds={[1, 2, 3]} roleIds={[1]} />
-                    ) });
+                    content: <UserGroupOrganizationShuttleModal tenantIds={[1, 2, 3]} />,
+                  });
                 }}
               >
                 {'유저그룹 조회 팝업(조직만)'}
@@ -466,10 +484,12 @@ function RouteComponent() {
                             { combineType: 'USER_GROUP', combineValue: 10 },
                             { combineType: 'USER_GROUP', combineValue: 54 },
                             { combineType: 'USER_GROUP', combineValue: 1678 },
-                          ] },
+                          ],
+                        },
                       ]}
                     />
-                  ) });
+                  ),
+                });
               }}
             >
               {'유저그룹검색'}
@@ -514,7 +534,8 @@ function RouteComponent() {
                       <Button onlyIcon onClick={() => downloadByUrl(imageFileUrl)}>
                         <IcoDownload width={40} height={40} stroke="#131C30" />
                       </Button>
-                    ) });
+                    ),
+                  });
                 }}
               >
                 {'이미지 미리보기'}
@@ -531,7 +552,8 @@ function RouteComponent() {
                   e.stopPropagation();
                   openModal({
                     width: 'md',
-                    content: <OrganizationChoiceTreeModal companyCodes={['H199', 'H103']} /> });
+                    content: <OrganizationChoiceTreeModal companyCodes={['H199', 'H103']} />,
+                  });
                 }}
               >
                 {'회사조직조회팝업'}
@@ -552,7 +574,8 @@ function RouteComponent() {
                         companyCodes={['H199', 'H103']}
                         originList={organizations}
                       />
-                    ) });
+                    ),
+                  });
                   console.log(retval);
                   setOrganizations(retval);
                 }}
@@ -571,7 +594,8 @@ function RouteComponent() {
                 onClick={(e) => {
                   openModal({
                     width: 'xl',
-                    content: <TrainingPlaceDetailModal mode={EnFormMode.VIEW} spaceId={10} /> });
+                    content: <TrainingPlaceDetailModal mode={EnFormMode.VIEW} spaceId={10} />,
+                  });
                 }}
               >
                 {'교육공간 조회 팝업'}
@@ -591,7 +615,8 @@ function RouteComponent() {
                     content: <TrainingPlaceChoiceModal />,
                     onClose(data: any) {
                       console.log('교육공간 선택 결과', data);
-                    } });
+                    },
+                  });
                 }}
               >
                 {'교육공간 선택 팝업'}
@@ -610,7 +635,8 @@ function RouteComponent() {
                     content: <TrainingPlaceDetailModal mode={EnFormMode.ADD} />,
                     onClose(data: any) {
                       console.log('교육공간 등록 결과', data);
-                    } });
+                    },
+                  });
                 }}
               >
                 {'교육공간 등록'}
@@ -642,7 +668,8 @@ function RouteComponent() {
                     ),
                     onClose(data: any) {
                       console.log('컨텐츠 미리 보기 팝업', data);
-                    } });
+                    },
+                  });
                 }}
               >
                 {'컨텐츠 미리 보기 팝업'}
@@ -662,7 +689,8 @@ function RouteComponent() {
                     content: <CourseChoiceModal />,
                     onClose(data: any) {
                       console.log('과정 조회 결과', data);
-                    } });
+                    },
+                  });
                 }}
               >
                 {'과정 조회'}
@@ -681,7 +709,8 @@ function RouteComponent() {
                     content: <PackageChoiceModal />,
                     onClose(data: any) {
                       console.log('패키지 조회 결과', data);
-                    } });
+                    },
+                  });
                 }}
               >
                 {'패키지 조회'}
@@ -704,7 +733,8 @@ const formConfig: DynamicFormConfig = {
       format: 'array',
       value: [],
       placeholder: '',
-      description: '' },
+      description: '',
+    },
     {
       name: 'companyShuttle',
       type: 'custom',
@@ -712,7 +742,8 @@ const formConfig: DynamicFormConfig = {
       format: 'array',
       value: [],
       placeholder: '',
-      description: '' },
+      description: '',
+    },
     {
       name: 'address',
       type: 'custom',
@@ -721,20 +752,24 @@ const formConfig: DynamicFormConfig = {
       format: 'string',
       fields: {
         postalCode: 'postalCode',
-        address: 'address' } },
+        address: 'address',
+      },
+    },
     {
       label: '',
       name: 'postalCode',
       type: 'hidden',
       format: 'string',
-      value: '' },
+      value: '',
+    },
     {
       name: 'addressDetail',
       type: 'text',
       label: t('상세 주소'),
       value: '',
       placeholder: '',
-      maxLength: 50 },
+      maxLength: 50,
+    },
     {
       name: 'thumbnailPublic',
       label: t('썸네일'),
@@ -743,7 +778,8 @@ const formConfig: DynamicFormConfig = {
       s3Path: S3_PATH['public/image/thumbnail'],
       value: [],
       description:
-        '파일 사이즈 000 x 000 / 확장자 JPEG, JPG, PNG, GIF / 업로드 가능 00개 / 파일용량 최대 00 MB' },
+        '파일 사이즈 000 x 000 / 확장자 JPEG, JPG, PNG, GIF / 업로드 가능 00개 / 파일용량 최대 00 MB',
+    },
 
     { name: 'selectedThumbnail1', type: 'hidden', value: '' },
     {
@@ -756,9 +792,11 @@ const formConfig: DynamicFormConfig = {
       showDefault: true,
       uploadConfig: {
         affairType: 'CMS',
-        s3Path: S3_PATH['upload/content/image'] },
+        s3Path: S3_PATH['upload/content/image'],
+      },
       description:
-        '파일 사이즈 000 x 000 / 확장자 JPEG, JPG, PNG, GIF / 업로드 가능 00개 / 파일용량 최대 00 MB' },
+        '파일 사이즈 000 x 000 / 확장자 JPEG, JPG, PNG, GIF / 업로드 가능 00개 / 파일용량 최대 00 MB',
+    },
     { name: 'selectedThumbnail2', type: 'hidden', value: '' },
     {
       name: 'thumbnailFiles',
@@ -770,17 +808,21 @@ const formConfig: DynamicFormConfig = {
       showDefault: CourseType.ELEARNING1,
       uploadConfig: {
         affairType: 'CMS',
-        s3Path: S3_PATH['upload/content/image'] },
+        s3Path: S3_PATH['upload/content/image'],
+      },
       description:
-        '파일 사이즈 000 x 000 / 확장자 JPEG, JPG, PNG, GIF / 업로드 가능 00개 / 파일용량 최대 00 MB' },
+        '파일 사이즈 000 x 000 / 확장자 JPEG, JPG, PNG, GIF / 업로드 가능 00개 / 파일용량 최대 00 MB',
+    },
     {
       name: 'attachment',
       type: 'attachment',
       uuidType: 'group',
       uploadConfig: {
         affairsType: 'PMS',
-        s3Path: 'upload/temp/attachment' },
-      value: '' },
+        s3Path: 'upload/temp/attachment',
+      },
+      value: '',
+    },
     {
       name: 'singleAttachment',
       type: 'single-attachment',
@@ -788,9 +830,12 @@ const formConfig: DynamicFormConfig = {
       uploadConfig: {
         affairsType: 'LMS',
         s3Path: S3_PATH['upload/content/image'],
-        acceptFiles: ['JPEG', 'JPG', 'PNG', 'GIF'] },
-      value: '' },
-  ] };
+        acceptFiles: ['JPEG', 'JPG', 'PNG', 'GIF'],
+      },
+      value: '',
+    },
+  ],
+};
 
 function jsonToPaths(obj: any, parentPath = ''): any[] {
   const result = [];
