@@ -1,23 +1,19 @@
 import { isMobile } from 'react-device-detect';
-import { cn } from '@learnway/shared';
+import { cn, SelectOption } from '@learnway/shared';
 import { createFileRoute } from '@tanstack/react-router';
 import { IcoFormRequired, IcoArrowForward } from '@learnway/icons';
 import styles from './signup-step3.module.css';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic.form.module.css';
-import {
-  Button,
-  Stepper,
-  SelectOption,
-  Input,
-  Checkbox,
-  ContentsRow,
-  PhoneNumber,
-  InputTimer,
-} from '@learnway/ui';
 
 import { MobileView, BrowserView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input, InputTimer } from '@learnway/ui/input';
+import { PhoneNumber } from '@learnway/ui/phone-number';
+import { Stepper } from '@learnway/ui/stepper';
+import { Checkbox } from '@radix-ui/react-checkbox';
 
 export const Route = createFileRoute('/_auth/signup-step3')({
   component: RouteComponent,

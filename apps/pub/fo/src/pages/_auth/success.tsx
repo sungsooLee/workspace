@@ -1,6 +1,6 @@
 import { IcoCheck02 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { Button } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
 import { createFileRoute } from '@tanstack/react-router';
 import { AuthTitle } from '../../features/auth';
 

@@ -1,13 +1,16 @@
 import { isMobile } from 'react-device-detect';
-import { cn } from '@learnway/shared';
+import { cn, SelectOption } from '@learnway/shared';
 import { createFileRoute } from '@tanstack/react-router';
 import { IcoFormRequired } from '@learnway/icons';
 import styles from './signup-step2.module.css';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
-import { Button, Stepper, SelectOption, Input, ContentsRow } from '@learnway/ui';
 
 import { MobileView, BrowserView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { Stepper } from '@learnway/ui/stepper';
 
 export const Route = createFileRoute('/_auth/signup-step2')({
   component: RouteComponent,

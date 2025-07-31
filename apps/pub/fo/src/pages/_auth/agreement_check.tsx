@@ -1,11 +1,13 @@
 import { isMobile } from 'react-device-detect';
 import { cn } from '@learnway/shared';
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { Button, Checkbox } from '@learnway/ui';
+
 import { IcoArrowForward } from '@learnway/icons';
 import styles from './agreement-check.module.css'; // 페이지 모듈
 
 import proccessResultStyles from '@learnway/styles/fo/widgets/auth/ui/proccess-result.module.css';
+import { Checkbox } from '@learnway/ui/checkbox';
+import { Button } from '@learnway/ui/button';
 
 export const Route = createFileRoute('/_auth/agreement_check')({
   component: RouteComponent,

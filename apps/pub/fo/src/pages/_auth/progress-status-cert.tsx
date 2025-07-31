@@ -14,15 +14,12 @@ import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box
 
 import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-form.module.css';
 import embededAlert from '@learnway/styles/fo/shared/ui/embeded-alert/embeded-alert.module.css';
-import {
-  Button,
-  ContentsRow,
-  Input,
-  InputTimer,
-  PhoneNumber,
-  RadioCard,
-  useModal,
-} from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input, InputTimer } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
+import { PhoneNumber } from '@learnway/ui/phone-number';
+import { RadioCard } from '@learnway/ui/radio-card';
 
 export const Route = createFileRoute('/_auth/progress-status-cert')({
   component: RouteComponent,

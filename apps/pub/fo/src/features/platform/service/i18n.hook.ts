@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useCreation } from 'ahooks';
 
-import { SelectOption } from '@learnway/ui';
+import { SelectOption } from '@learnway/ui/type';
 import { CODE_GROUP, Code } from '@learnway/config';
 import { getDefaultLang, setDefaultLang } from '@learnway/config';
 

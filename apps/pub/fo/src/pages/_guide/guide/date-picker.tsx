@@ -1,4 +1,4 @@
-import { DatePicker } from '@learnway/ui';
+import { DatePicker } from '@learnway/ui/date-picker';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/_guide/guide/date-picker')({
@@ -14,7 +14,7 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-import { DatePicker } from '@learnway/ui'; // 사용할 icon 함수명 호출
+import { DatePicker } from '@learnway/ui/date-picker'; // 사용할 icon 함수명 호출
   
 // 적용방법(예시)
 <DatePicker displayType={'day'} size={'lg'} />

@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Divider } from '@learnway/ui';
+import { Divider } from '@learnway/ui/elements';
 
 export const Route = createFileRoute('/_guide/guide/divider')({
   component: RouteComponent,
@@ -15,7 +15,7 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-  import { Divider } from '@learnway/ui';
+  import { Divider } from '@learnway/ui/elements';
     
   // 적용방법(예시)
   <Divider />`}

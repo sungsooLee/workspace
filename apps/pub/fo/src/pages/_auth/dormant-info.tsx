@@ -7,7 +7,7 @@ import { IcoMoreHorizontal } from '@learnway/icons';
 import styles from './dormant-info.module.css';
 import proccessResultStyles from '@learnway/styles/fo/widgets/auth/ui/proccess-result.module.css'; // 결과모듈
 import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
-import { Button } from '@learnway/ui';
+import { Button } from '@learnway/ui/buton';
 
 export const Route = createFileRoute('/_auth/dormant-info')({
   component: RouteComponent,

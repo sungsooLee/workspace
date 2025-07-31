@@ -1,23 +1,20 @@
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import {
-  Input,
-  Button,
-  Textarea,
-  Dropdown,
-  Tooltip,
-  ChipList,
-  SelectOption,
-  Switch,
-  RadioGroup,
-  Checkbox,
-  ContentsRow,
-  InputTimer,
-} from '@learnway/ui';
+
 import { IcoFormRequired, IcoArrowDown, IcoAlertCircle, IcoCloseCircle } from '@learnway/icons';
-import { cn } from '@learnway/shared';
+import { cn, SelectOption } from '@learnway/shared';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic.form.module.css';
+import { Button } from '@learnway/ui/button';
+import { ChipList } from '@learnway/ui/chips';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { Input, InputTimer } from '@learnway/ui/input';
+import { Textarea } from '@learnway/ui/textarea';
+import { Tooltip } from '@learnway/ui/tooltip/tooltip';
+import { Switch } from '@learnway/ui/switch';
+import { RadioGroup } from '@learnway/ui/radio-group/radio-group';
+import { Checkbox } from '@learnway/ui/checkbox';
 
 export const Route = createFileRoute('/_guide/guide/form')({
   component: RouteComponent,

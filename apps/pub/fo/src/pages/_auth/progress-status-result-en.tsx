@@ -7,7 +7,10 @@ import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.cs
 import hightlightMessageBoxStyles from '@learnway/styles/fo/shared/ui/highlight-message-box/highlight-message-box.module.css';
 import proccessResultStyles from '@learnway/styles/fo/widgets/auth/ui/proccess-result.module.css'; // 결과모듈
 import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic.form.module.css';
-import { Button, Input, ContentsRow, PhoneNumber } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { PhoneNumber } from '@learnway/ui/phone-number';
 
 export const Route = createFileRoute('/_auth/progress-status-result-en')({
   component: RouteComponent,

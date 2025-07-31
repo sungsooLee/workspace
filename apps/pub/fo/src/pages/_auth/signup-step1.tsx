@@ -1,13 +1,16 @@
 import { IcoBuilding01, IcoCaution, IcoOverseasDealer } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
-import { Button, RadioCard, SelectOption, Stepper } from '@learnway/ui';
 import { createFileRoute } from '@tanstack/react-router';
 import memberToolFormField from './member-tool-form-field.module.css'; // 회원유형 모듈
 import styles from './signup-step1.module.css';
 
 import { BrowserView, MobileView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
+import { SelectOption } from '@learnway/ui/type';
+import { Stepper } from '@learnway/ui/stepper';
+import { Button } from '@learnway/ui/button';
+import { RadioCard } from '@learnway/ui/radio-card';
 
 export const Route = createFileRoute('/_auth/signup-step1')({
   component: RouteComponent,

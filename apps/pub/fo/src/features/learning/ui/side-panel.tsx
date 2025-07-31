@@ -1,6 +1,6 @@
 import { memo, useState } from 'react';
 import { Link } from '@tanstack/react-router';
-import { Button, useModal, ProgressCheck } from '@learnway/ui';
+
 import { isMobile } from 'react-device-detect';
 import {
   IcoLearning01,
@@ -20,6 +20,9 @@ import { CurriculumPopup, NextLearningPopup } from '../../../features/learning';
 import styles from '@learnway/styles/fo/pages/_learning/side-panel/side-panel.module.css';
 import { ChartNoAxesColumnDecreasing } from 'lucide-react';
 import { boolean } from 'zod';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
+import { ProgressCheck } from '@learnway/ui/progress';
 
 interface ChildData {
   className?: string;

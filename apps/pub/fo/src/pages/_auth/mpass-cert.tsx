@@ -8,10 +8,14 @@ import styles from './mpass-cert.module.css';
 import otpToolFormField from './otp-tool-form-field.module.css';
 //import searchAccountFormStyles from '@learnway/styles/fo/pages/_auth/search-account/-components/search-account-form.module.css';
 import embededAlert from '@learnway/styles/fo/shared/ui/embeded-alert/embeded-alert.module.css';
-import { Button, ContentsRow, Input, RadioCard, useModal } from '@learnway/ui';
 import { BrowserView, MobileView } from 'react-device-detect';
 import { MpassPopup } from '../../features/auth/';
 import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
+import { RadioCard } from '@learnway/ui/radio-card';
 
 export const Route = createFileRoute('/_auth/mpass-cert')({
   component: RouteComponent,

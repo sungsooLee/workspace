@@ -5,13 +5,18 @@ import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-
 import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css'; // 구글 otp 가이드 버튼
 import embededAlert from '@learnway/styles/fo/shared/ui/embeded-alert/embeded-alert.module.css';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css'; // 유의사항
-import { Button, ContentsRow, Input, RadioCard, useModal } from '@learnway/ui';
+
 import { createFileRoute } from '@tanstack/react-router';
 import { BrowserView, isMobile, MobileView } from 'react-device-detect';
 import { GoogleCertGuidePopup, GoogleQrcodePopup, MpassPopup } from '../../features/auth';
 import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
 import styles from './google-cert.module.css';
 import otpToolFormFieldStyles from './otp-tool-form-field.module.css'; // 라디오 카드
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
+import { RadioCard } from '@learnway/ui/radio-card';
 
 export const Route = createFileRoute('/_auth/google-cert')({
   component: RouteComponent,

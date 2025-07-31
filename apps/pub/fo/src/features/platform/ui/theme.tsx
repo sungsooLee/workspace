@@ -2,7 +2,8 @@ import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { values } from 'lodash';
 
-import { Avatar, Popover } from '@learnway/ui';
+import { Avatar } from '@learnway/ui/avatar';
+import { Popover } from '@learnway/ui/popover';
 
 //import { useFetchAuthUser } from '../../../entities';
 
