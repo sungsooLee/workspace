@@ -36,7 +36,7 @@ const CategoryChoiceModalComponent = forwardRef<HTMLDivElement, CategoryChoiceMo
         data
           ? transformApiDataToTreeData(data, {
               idKey: 'id',
-              titleKey: 'path',
+              titleKey: 'name',
               childrenKey: 'children',
               pathJoinText: '>',
             })
@@ -45,7 +45,7 @@ const CategoryChoiceModalComponent = forwardRef<HTMLDivElement, CategoryChoiceMo
     );
     const { selectedItems, handleSelectItem, cancelSelectItem, cancelAll } =
       useShuttleTreeToChips();
-
+    console.log('tree', { data, treeData });
     return (
       <ModalContainer>
         <ModalTitle>{t('카테고리 선택')}</ModalTitle>

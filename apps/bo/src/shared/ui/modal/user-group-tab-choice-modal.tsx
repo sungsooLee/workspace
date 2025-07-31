@@ -32,6 +32,7 @@ const UserGroupTabModalComponent = forwardRef(
     roleIds = [],
     option: optionProp,
   }: UserGroupTabModalProps) => {
+    console.log('------', tenantIds);
     const { closeModal } = useModal();
 
     const [selectedTabKey, setSelectedTabKey] = useState<UserGroupType>(initialTab);

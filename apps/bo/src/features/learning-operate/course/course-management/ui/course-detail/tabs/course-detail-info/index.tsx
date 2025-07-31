@@ -19,6 +19,7 @@ import {
   RadioGroupFormField,
   SplitPanel,
   TextareaFormField,
+  useModal,
 } from '@learnway/ui';
 import {
   ChipListFormField,
@@ -31,6 +32,7 @@ import {
   ThumbnailListFormField,
   TrainingPlaceChoiceModal,
   UserChoiceModal,
+  UserGroupChoiceModal,
   UserGroupTabsChoiceModal,
 } from '@shared/ui';
 import { forwardRef } from 'react';
@@ -41,6 +43,7 @@ import { CourseDetailTabBaseProps, CourseDetailTabFormRef } from '../../../../ty
 const DetailInfoComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBaseProps>(
   (_, ref) => {
     const { t } = useTranslation();
+    const { openModal } = useModal();
 
     const { provider, getValues, onFormChange, courseConfig, courseId } =
       useCourseDetailSubCourse();
@@ -178,6 +181,7 @@ const DetailInfoComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBa
                 element={
                   <ChipListModalSelectorFormField
                     modalConfig={() => ({
+                      width: 'xl',
                       content: (
                         <UserGroupTabsChoiceModal
                           tenantIds={getValues().tenantIds}
@@ -191,6 +195,18 @@ const DetailInfoComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBa
                       wordwrap: true,
                     }}
                     showAddButton
+                  />
+                }
+                actionNode={
+                  <Button
+                    variant="text"
+                    label={t('대상자')}
+                    onClick={(e: any) => {
+                      openModal({
+                        width: 'xl',
+                        content: <UserGroupChoiceModal groups={getValues().targetList} />,
+                      });
+                    }}
                   />
                 }
               />
