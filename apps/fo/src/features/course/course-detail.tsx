@@ -54,6 +54,7 @@ import styles from '@learnway/styles/fo/pages/_layout/course-introduction/detail
 export function CourseDetail() {
   const routerState = useRouterState();
   const courseId = routerState.location.state?.courseId;
+  const dashboardRef = useRef(null);
   const introduceRef = useRef(null);
   const educationRef = useRef(null);
   const reviewRef = useRef(null);
@@ -248,6 +249,22 @@ export function CourseDetail() {
     });
   };
 
+  const goToScrollRef = async (targetRef: any) => {
+    try {
+      await waitForRef(targetRef);
+      const target = targetRef?.current;
+      if (target) {
+        const top = target.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({
+          top: top - 50,
+          behavior: 'smooth',
+        });
+      }
+    } catch (error) {
+      console.warn('타겟을 못찾음', error);
+    }
+  };
+
   // 탭 컨텐츠
   const tabTitleContents = [
     {
@@ -255,7 +272,7 @@ export function CourseDetail() {
       key: '0',
       content: (
         <div className={styles.dashboard_content}>
-          <CourseDashboard />
+          <CourseDashboard ref={dashboardRef} />
         </div>
       ),
     },
@@ -264,10 +281,10 @@ export function CourseDetail() {
       key: '1',
       content: (
         <div className={styles.introduction_content}>
-          {courseData?.preRequired && (
+          {courseData?.introduction && (
             <CourseIntroduction
               ref={introduceRef}
-              preRequired={courseData?.preRequired}
+              preRequired={courseData?.preqCourseList}
               introduction={courseData?.introduction}
               curriculum={curriculumData}
             />
@@ -282,6 +299,9 @@ export function CourseDetail() {
               setOpeningYear={setOpeningYear}
               setIsAll={setIsAll}
               isAll={isAll}
+              dashboardRef={dashboardRef}
+              goToScrollRef={goToScrollRef}
+              handleTab={handleTab}
             />
           )}
           {courseData?.reviews && <CourseReview ref={reviewRef} reviews={courseData?.reviews} />}
@@ -682,23 +702,10 @@ export function CourseDetail() {
                         selectedTabTitle === index ? styles.active : '',
                         item.new && styles.new,
                       )}
-                      onClick={async () => {
+                      onClick={() => {
                         handleTab(item.selectTabNumber, index);
-                        if (item.targetRef) {
-                          try {
-                            await waitForRef(item.targetRef);
-                            const target = item.targetRef?.current;
-                            if (target) {
-                              const top = target.getBoundingClientRect().top + window.scrollY;
-                              window.scrollTo({
-                                top: top - 50,
-                                behavior: 'smooth',
-                              });
-                            }
-                          } catch (error) {
-                            console.warn('타겟을 못찾음', error);
-                          }
-                        }
+
+                        if (item.targetRef) goToScrollRef(item.targetRef);
                       }}
                     >
                       {item.title}
@@ -762,23 +769,27 @@ export function CourseDetail() {
               {/* 학습정보 */}
               <div className={packageInformationStyles.list_box}>
                 <ul>
-                  <li>
-                    <IcoBook width={20} height={20} stroke="#4d525c" fill="none" />
-                    <p>{courseData?.course?.data.type}</p>
-                  </li>
-                  <li className={listCategoryOpen === true ? packageInformationStyles.open : ''}>
-                    <IcoCategory width={20} height={20} fill="#4d525c" />
-                    <p>{courseData?.course?.data.category}</p>
-                    <Button
-                      onClick={() =>
-                        listCategoryOpen === true
-                          ? setListCategoryOpen(false)
-                          : setListCategoryOpen(true)
-                      }
-                    >
-                      <IcoArrowDown width={20} height={20} stroke="#4d525c" />
-                    </Button>
-                  </li>
+                  {courseData?.course?.data.type && (
+                    <li>
+                      <IcoBook width={20} height={20} stroke="#4d525c" fill="none" />
+                      <p>{courseData?.course?.data.type}</p>
+                    </li>
+                  )}
+                  {courseData?.course?.data.category && (
+                    <li className={listCategoryOpen === true ? packageInformationStyles.open : ''}>
+                      <IcoCategory width={20} height={20} fill="#4d525c" />
+                      <p>{courseData?.course?.data.category}</p>
+                      <Button
+                        onClick={() =>
+                          listCategoryOpen === true
+                            ? setListCategoryOpen(false)
+                            : setListCategoryOpen(true)
+                        }
+                      >
+                        <IcoArrowDown width={20} height={20} stroke="#4d525c" />
+                      </Button>
+                    </li>
+                  )}
                   {/* <li>
                     <IcoLocation width={20} height={20} stroke="#4d525c" />
                     <p>{courseData?.course?.data.place}</p>
@@ -795,27 +806,31 @@ export function CourseDetail() {
                     <IcoDivice width={20} height={20} fill="#4d525c" />
                     <p>{courseData?.course?.data.lernType}</p>
                   </li> */}
-                  <li>
-                    <IcoLevel width={20} height={20} fill="#4d525c" />
-                    <p>{courseData?.course?.data.level}</p>
-                  </li>
+                  {courseData?.course?.data.level && (
+                    <li>
+                      <IcoLevel width={20} height={20} fill="#4d525c" />
+                      <p>{courseData?.course?.data.level}</p>
+                    </li>
+                  )}
                   {/* <li>
                     <IcoPrize width={20} height={20} fill="#4d525c" />
                     <p>{courseData?.course?.data.certificate}</p>
                   </li> */}
-                  <li className={listSubTitleOpen === true ? packageInformationStyles.open : ''}>
-                    <IcoSubtitles02 width={20} height={20} fill="#4d525c" />
-                    <p>{courseData?.course?.data.captionLanguage}</p>
-                    <Button
-                      onClick={() =>
-                        listSubTitleOpen === true
-                          ? setListSubTitleOpen(false)
-                          : setListSubTitleOpen(true)
-                      }
-                    >
-                      <IcoArrowDown width={20} height={20} stroke="#4d525c" />
-                    </Button>
-                  </li>
+                  {courseData?.course?.data.captionLanguage && (
+                    <li className={listSubTitleOpen === true ? packageInformationStyles.open : ''}>
+                      <IcoSubtitles02 width={20} height={20} fill="#4d525c" />
+                      <p>{courseData?.course?.data.captionLanguage}</p>
+                      <Button
+                        onClick={() =>
+                          listSubTitleOpen === true
+                            ? setListSubTitleOpen(false)
+                            : setListSubTitleOpen(true)
+                        }
+                      >
+                        <IcoArrowDown width={20} height={20} stroke="#4d525c" />
+                      </Button>
+                    </li>
+                  )}
                 </ul>
               </div>
 

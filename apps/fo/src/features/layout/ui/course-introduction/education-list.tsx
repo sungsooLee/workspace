@@ -15,6 +15,9 @@ interface Props {
   setIsAll: any;
   isAll: any;
   setOpeningYear: any;
+  dashboardRef?: any;
+  goToScrollRef?: any;
+  handleTab?: any;
 }
 
 const CourseEducationCompoment = forwardRef<HTMLDivElement, Props>(
@@ -27,6 +30,9 @@ const CourseEducationCompoment = forwardRef<HTMLDivElement, Props>(
       setOpeningYear,
       setIsAll,
       isAll,
+      dashboardRef,
+      goToScrollRef,
+      handleTab,
     },
     ref,
   ) => {
@@ -136,6 +142,9 @@ const CourseEducationCompoment = forwardRef<HTMLDivElement, Props>(
                     edu={edu}
                     courseEnrollCompletePopup={courseEnrollCompletePopup}
                     CourseCancelCompletePopup={CourseCancelCompletePopup}
+                    dashboardRef={dashboardRef}
+                    goToScrollRef={goToScrollRef}
+                    handleTab={handleTab}
                   />
                 </li>
               ))
