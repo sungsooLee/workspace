@@ -1,6 +1,6 @@
-import { memo, useRef, useLayoutEffect, useState, ReactNode } from 'react';
 import { cn } from '@learnway/shared';
-import { Tooltip } from '@learnway/ui';
+import { Tooltip } from '@learnway/ui/tooltip';
+import { memo, ReactNode, useLayoutEffect, useRef, useState } from 'react';
 import styles from './word-wrap.module.css';
 
 interface WordWrapComponentProps {

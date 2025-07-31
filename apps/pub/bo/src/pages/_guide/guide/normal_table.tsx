@@ -1,7 +1,7 @@
+import { cn } from '@learnway/shared';
+import { Input } from '@learnway/ui/input';
 import { createFileRoute } from '@tanstack/react-router';
 import styles from './table_styles.module.css';
-import { cn } from '@learnway/shared';
-import { Input } from '@learnway/ui';
 
 export const Route = createFileRoute('/_guide/guide/normal_table')({
   component: RouteComponent,

@@ -1,5 +1,5 @@
+import { ShuttleGridToGrid } from '@learnway/ui/shuttle-grid-to-grid';
 import { createFileRoute } from '@tanstack/react-router';
-import { ShuttleGridToGrid } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
 export const Route = createFileRoute('/_guide/guide/shuttle-grid')({

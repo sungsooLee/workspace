@@ -1,5 +1,5 @@
+import { Switch } from '@learnway/ui/switch';
 import { createFileRoute } from '@tanstack/react-router';
-import { Switch } from '@learnway/ui';
 
 export const Route = createFileRoute('/_guide/guide/switch')({
   component: RouteComponent,
@@ -15,7 +15,7 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-import { Switch } from '@learnway/ui';
+import { Switch } from '@learnway/ui/switch';
 
 // 적용방법(예시)
 <Switch id="id-1" label="Label" />

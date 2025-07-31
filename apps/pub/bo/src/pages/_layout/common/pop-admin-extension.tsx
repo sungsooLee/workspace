@@ -1,25 +1,19 @@
-/* eslint-disable @nx/enforce-module-boundaries */
-import { useEffect, useRef } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import {
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  useModal,
-  Button,
-  ContentsRow,
-  Textarea,
-  Input,
-  DatePicker,
-  FormSubTitle,
-} from '@learnway/ui';
+import { useEffect } from 'react';
+
+import { IcoFormRequired, IcoRefresh02 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { IcoRefresh02, IcoFormRequired } from '@learnway/icons';
 
 /* style */
-import popContentsStyles from './pop-contents-layout.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { DatePicker } from '@learnway/ui/date-picker';
+import { Input } from '@learnway/ui/input';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { Textarea } from '@learnway/ui/textarea';
+import popContentsStyles from './pop-contents-layout.module.css';
 
 export const Route = createFileRoute('/_layout/common/pop-admin-extension')({
   component: RouteComponent,

@@ -3,16 +3,17 @@
 
 import { createFileRoute } from '@tanstack/react-router';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import { SectionLayout } from '../-components/section-layout';
-import { SplitPanel, Tabs, TreeBox, TreeContainer, TreeNode } from '@learnway/ui';
 // import { MainContents } from '../../../../../../bo/src/widgets/layout/ui/container/slot/main-contents';
 import { MainContents } from '../../../../../../bo/src/shared/ui/layout/slot/main-contents';
 
 /** tab contents */
-import { HeadquartersInfo } from './-contents/headquarters-info';
+import { SplitPanel } from '@learnway/ui/elements';
+import { Tabs } from '@learnway/ui/tabs';
+import { TreeBox, TreeNode } from '@learnway/ui/tree-view';
 import { AffiliationGroup } from './-contents/affiliation-group';
-import { TalentDevelopmentTeam } from './-contents/talent-development-team';
 import { CurrentTeamCharge } from './-contents/current-team-charge';
+import { HeadquartersInfo } from './-contents/headquarters-info';
+import { TalentDevelopmentTeam } from './-contents/talent-development-team';
 
 export const Route = createFileRoute('/_layout/completion/education_operate_group')({
   component: RouteComponent,

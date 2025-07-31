@@ -1,21 +1,9 @@
-import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import {
-  Carousel,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  useModal,
-  Button,
-  ContentsRow,
-  DatePicker,
-  Editor,
-  Badge,
-} from '@learnway/ui';
+import { useState } from 'react';
+
+import { IcoHeart } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import { Navigation } from 'swiper/modules';
-import { IcoHeart } from '@learnway/icons';
 
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 
@@ -24,6 +12,13 @@ import thumbnailImg from '../../../assets/images/thumb/thumbnail_image.jpg';
 
 // import styles from './count-list.module.css';
 // import btnStyles from './segment-button.module.css';
+import { Badge } from '@learnway/ui/badge';
+import { Button } from '@learnway/ui/button';
+import { Carousel } from '@learnway/ui/carousel';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { DatePicker } from '@learnway/ui/date-picker';
+import { Editor } from '@learnway/ui/editor/editor';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 import listStyles from './order-list.module.css';
 
 export const Route = createFileRoute('/_guide/guide/test')({
@@ -169,25 +164,25 @@ function RouteComponent() {
         <div className={styles.item}>
           <span className={styles.label}>{'조회'}</span>
           <strong className={styles.num}>
-            {'000,000'} 
+            {'000,000'}
           </strong>
         </div>
         <div className={styles.item}>
           <span className={styles.label}>{'조회'}</span>
           <strong className={styles.num}>
-            {'000,000'} 
+            {'000,000'}
           </strong>
         </div>
         <div className={styles.item}>
           <span className={styles.label}>{'조회'}</span>
           <strong className={styles.num}>
-            {'000,000'} 
+            {'000,000'}
           </strong>
         </div>
         <div className={styles.item}>
           <span className={styles.label}>{'조회'}</span>
           <strong className={styles.num}>
-            {'000,000'} 
+            {'000,000'}
           </strong>
         </div>
       </div> */}

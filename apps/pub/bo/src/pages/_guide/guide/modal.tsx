@@ -1,36 +1,31 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { isMobile } from 'react-device-detect';
-import {
-  Button,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  useModal,
-  Dropdown,
-  Input,
-  Checkbox,
-  GridBox,
-  Divider,
-} from '@learnway/ui';
-import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import { useState } from 'react';
 
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { cn } from '@learnway/shared';
+import { useState } from 'react';
+import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
+
 import {
-  IcoRefresh02,
-  IcoSearch,
   IcoClipboard,
   IcoClock01,
-  IcoFormRequired,
-  IcoDownload,
   IcoCopy,
+  IcoDownload,
+  IcoFormRequired,
+  IcoRefresh02,
+  IcoSearch,
 } from '@learnway/icons';
+import { cn } from '@learnway/shared';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
 /* style */
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
+import { Button } from '@learnway/ui/button';
+import { Checkbox } from '@learnway/ui/checkbox';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { Divider } from '@learnway/ui/elements';
+import { GridBox } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
 const ContentModal = () => {
   const { closeModal } = useModal();
@@ -429,7 +424,7 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-import { ModalBody, ModalContainer, ModalFooter, ModalTitle, ModalDescription, useModal  } from '@learnway/ui';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, ModalDescription, useModal  } from '@learnway/ui/modal';
 // Modal open, close
 const { openModal,  closeModal } = useModal();
 
@@ -475,7 +470,7 @@ openModal({
         <div className="code_example">
           <pre className="code_block">
             <code>{`
-import { Button, useModal } from '@learnway/ui';
+import { Button, useModal } from '@learnway/ui/modal';
 const CustomFooter = () => {
     const { closeModal } = useModal();
     return (
@@ -488,7 +483,7 @@ const CustomFooter = () => {
         </Button>
       </>
     );
-  };          
+  };
 <Button
 onClick={() =>
   openModal(<BasicModalContent />, {
@@ -520,7 +515,7 @@ onClick={() =>
             <code>{`const CustomFooter = () => {
   const { closeModal } = useModal();
   return (
-    <>   
+    <>
     // 예시
     <Button
       onClick={() =>
@@ -572,7 +567,7 @@ export const MpassPopup = memo(MpassPopupCompoment);
         <div className="code_example">
           <pre className="code_block">
             <code>{`// import
-import { Button, useModal } from '@learnway/ui';
+import { Button, useModal } from '@learnway/ui/modal';
 
 // 호출
 const { openModal } = useModal();
@@ -599,7 +594,7 @@ const { closeModal } = useModal();
           <pre className="code_block">
             <code>{`// import
 import { useEffect } from 'react';
-import { Button, useModal } from '@learnway/ui';
+import { Button, useModal } from '@learnway/ui/modal';
 
 // 호출
 const { openModal, closeModal } = useModal();

@@ -1,8 +1,9 @@
-import { useEffect } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
-import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal, Button } from '@learnway/ui';
-import { cn } from '@learnway/shared';
 import { IcoNarrowRight } from '@learnway/icons';
+import { cn } from '@learnway/shared';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { createFileRoute } from '@tanstack/react-router';
+import { useEffect } from 'react';
 import popContentsStyles from './pop-contents-layout.module.css';
 
 export const Route = createFileRoute('/_layout/common/pop-category-select')({

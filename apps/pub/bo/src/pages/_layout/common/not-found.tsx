@@ -1,7 +1,7 @@
-import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import { Button } from '@learnway/ui';
 import styles from '@learnway/styles/bo/assets/styles/modules/not-found.module.css';
+import { Button } from '@learnway/ui/button';
+import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/_layout/common/not-found')({
   component: RouteComponent,

@@ -1,11 +1,10 @@
 import { memo, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { IcoArrowBackward, IcoArrowDown } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { Button } from '@learnway/ui';
-import { IcoArrowDown, IcoArrowBackward } from '@learnway/icons';
+import { Button } from '@learnway/ui/button';
 
-import { useActiveMenuDepthState } from '../../../../../features/platform';
 import { AccordionMenu } from './accordion-menu/accordion-menu';
 
 import styles from './lnb.module.css';

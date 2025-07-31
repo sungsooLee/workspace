@@ -1,15 +1,15 @@
-import { memo, useState, useEffect } from 'react';
-import { Link, useRouter } from '@tanstack/react-router';
-import { map, intersection } from 'lodash';
+import { useRouter } from '@tanstack/react-router';
+import { intersection, map } from 'lodash';
+import { memo, useEffect, useState } from 'react';
 
 import { cn } from '@learnway/shared';
-import { Accordion, AccordionItem } from '@learnway/ui';
+import { Accordion, AccordionItem } from '@learnway/ui/accordion';
 
-import { Menu } from '../../../../../../types/entities';
 import { useActiveMenuDepthState } from '@learnway/auth/entities';
+import { Menu } from '../../../../../../types/entities';
 
-import styles from './accordion-menu.module.css';
 import { useCreation } from 'ahooks';
+import styles from './accordion-menu.module.css';
 
 interface AccordionMenuComponentProps {
   menus: Menu[];

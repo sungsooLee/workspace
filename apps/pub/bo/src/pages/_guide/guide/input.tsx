@@ -1,5 +1,5 @@
+import { Input } from '@learnway/ui/input';
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { Input } from '@learnway/ui';
 
 export const Route = createFileRoute('/_guide/guide/input')({
   component: RouteComponent,
@@ -17,9 +17,9 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-import { Input } from '@learnway/ui';
+import { Input } from '@learnway/ui/input';
 
-// 적용방법(예시) 
+// 적용방법(예시)
  <Input
     id="name"
     type="text"

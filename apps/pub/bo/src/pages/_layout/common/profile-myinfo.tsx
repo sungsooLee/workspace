@@ -1,8 +1,6 @@
-/* eslint-disable @nx/enforce-module-boundaries */
-import { useState } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
-import { Avatar, FormSubTitle } from '@learnway/ui';
 import { cn } from '@learnway/shared';
+import { createFileRoute } from '@tanstack/react-router';
+import { useState } from 'react';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 
 /* style */
@@ -11,6 +9,8 @@ import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.
 import styles from './profile-myinfo.module.css';
 
 /* company logo image */
+import { Avatar } from '@learnway/ui/avatar';
+import { FormSubTitle } from '@learnway/ui/base-form';
 import imgLogo from '../../../assets/images/temp/img_temp_company_logo.png';
 
 export const Route = createFileRoute('/_layout/common/profile-myinfo')({

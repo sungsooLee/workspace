@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { Tabs } from '@learnway/ui/tabs';
 import { createFileRoute } from '@tanstack/react-router';
-import { Tabs } from '@learnway/ui';
+import { useState } from 'react';
 
 export const Route = createFileRoute('/_guide/guide/tabs')({
   component: RouteComponent,
@@ -81,7 +81,7 @@ function RouteComponent() {
           <code>
             {`// 초기 import
 import React, { useState } from 'react';
-import { Tabs } from '@learnway/ui';
+import { Tabs } from '@learnway/ui/tabs';
 const [selectedTabKey , selectedTabKey2] = useState<string>('');
   const items = [
     {
@@ -110,7 +110,7 @@ const [selectedTabKey , selectedTabKey2] = useState<string>('');
       content: <h2>Tab E content</h2>,
     },
   ];
-  
+
 // div 내용이 여러줄일경우 (<></>), 묶어준다.
 content: (
   <>

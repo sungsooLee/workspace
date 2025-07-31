@@ -1,23 +1,18 @@
-import { useEffect, useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { cn } from '@learnway/shared';
-import {
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  useModal,
-  Button,
-  Dropdown,
-  Input,
-  ShuttleGridToGrid,
-  Divider,
-} from '@learnway/ui';
+import { useEffect, useState } from 'react';
+
 import { IcoRefresh02, IcoSearch } from '@learnway/icons';
+import { cn } from '@learnway/shared';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
-import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
+import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
+import { Button } from '@learnway/ui/button';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { Divider } from '@learnway/ui/elements';
+import { Input } from '@learnway/ui/input';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { ShuttleGridToGrid } from '@learnway/ui/shuttle-grid-to-grid';
 
 export const Route = createFileRoute('/_layout/common/pop-user-search-check')({
   component: RouteComponent,

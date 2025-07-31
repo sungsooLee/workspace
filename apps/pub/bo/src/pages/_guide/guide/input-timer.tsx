@@ -1,5 +1,5 @@
+import { InputTimer } from '@learnway/ui/input';
 import { createFileRoute } from '@tanstack/react-router';
-import { InputTimer } from '@learnway/ui';
 
 export const Route = createFileRoute('/_guide/guide/input-timer')({
   component: RouteComponent,
@@ -15,9 +15,9 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-        import { InputTimer } from '@learnway/ui';
-        
-        // 적용방법(예시) 
+        import { InputTimer } from '@learnway/ui/input';
+
+        // 적용방법(예시)
         <InputTimer
             startTimer={1}
             initialTime={300}

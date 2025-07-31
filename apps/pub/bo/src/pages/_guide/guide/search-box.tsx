@@ -1,19 +1,13 @@
-import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import { useState } from 'react';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
-import {
-  Button,
-  // Tooltip,
-  DatePicker,
-  // Switch,
-  // ThumbnailImageUpload,
-  // ChipList,
-  // SelectOption,
-  Input,
-  Dropdown,
-} from '@learnway/ui';
-import { IcoRefresh02, IcoSearch, IcoArrowDownDouble, IcoFormRequired } from '@learnway/icons';
+import { createFileRoute } from '@tanstack/react-router';
+import { useState } from 'react';
+
+import { IcoArrowDownDouble, IcoFormRequired, IcoRefresh02, IcoSearch } from '@learnway/icons';
+import { Button } from '@learnway/ui/button';
+import { DatePicker } from '@learnway/ui/date-picker';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { Input } from '@learnway/ui/input';
 
 export const Route = createFileRoute('/_guide/guide/search-box')({
   component: RouteComponent,

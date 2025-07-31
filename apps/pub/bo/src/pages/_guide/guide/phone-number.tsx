@@ -1,5 +1,5 @@
+import { PhoneNumber } from '@learnway/ui/phone-number';
 import { createFileRoute } from '@tanstack/react-router';
-import { PhoneNumber } from '@learnway/ui';
 
 export const Route = createFileRoute('/_guide/guide/phone-number')({
   component: RouteComponent,
@@ -16,7 +16,7 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-  import { PhoneNumber } from '@learnway/ui';`}
+  import { PhoneNumber } from '@learnway/ui/phone-number';`}
           </code>
         </pre>
       </div>
