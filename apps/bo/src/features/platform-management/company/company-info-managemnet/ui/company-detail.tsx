@@ -25,6 +25,7 @@ import { ContentsRow, ContentsRowItem } from '@learnway/ui/contents-row';
 import { useModal } from '@learnway/ui/modal';
 import { Switch } from '@learnway/ui/switch';
 import { useToast } from '@learnway/ui/toast';
+import { getCurrentAuthUser } from '@shared/lib';
 
 const EMAIL_REGEX =
   /(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2 }))/;
@@ -33,6 +34,7 @@ const CompanyDetailComponent = (props: any, ref: any) => {
   const router = useRouter();
   const routerState = useRouterState();
   const companyCode = routerState.location.state?.companyCode;
+  const loginUser = getCurrentAuthUser();
 
   const { data: detailData, refetch } = useFetchCompany(companyCode);
 
@@ -231,9 +233,11 @@ const CompanyDetailComponent = (props: any, ref: any) => {
   };
 
   const chooseUserGroup = () => {
+    // 회사 기준 유저그룹 조회 필요하나, 임시로 activeTenant 적용
+    const tenantIds = loginUser?.activeTenant?.tenantId ? [loginUser?.activeTenant?.tenantId] : [];
     openModal({
       width: 'xl',
-      content: <UserGroupTabsChoiceModal tenantIds={[]} />,
+      content: <UserGroupTabsChoiceModal tenantIds={tenantIds} />,
       onClose(data: any) {
         console.log('### selectedUserGroups', data);
         if (data) {
@@ -251,11 +255,13 @@ const CompanyDetailComponent = (props: any, ref: any) => {
 
   const changeUserGroup = (info: any) => {
     console.log('### info', info);
+    // 회사 기준 유저그룹 조회 필요하나, 임시로 activeTenant 적용
+    const tenantIds = loginUser?.activeTenant?.tenantId ? [loginUser?.activeTenant?.tenantId] : [];
     openModal({
       width: 'xl',
       content: (
         <UserGroupTabsChoiceModal
-          tenantIds={[]}
+          tenantIds={tenantIds}
           option={info.original.companyLoginRestrictionWhiteUserGroupList}
         />
       ),
