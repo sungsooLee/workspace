@@ -1,11 +1,9 @@
+import { IcoArrowDown, IcoClose02, IcoLang } from '@learnway/icons';
+import { Button, ModalBody, ModalContainer, ModalTitle, Popover, useModal } from '@learnway/ui';
 import { memo, useState } from 'react';
-import { Link } from '@tanstack/react-router';
-import { isMobile } from 'react-device-detect';
-import { useTranslation } from 'react-i18next';
-import { Button, Popover } from '@learnway/ui';
+import { BrowserView, MobileView } from 'react-device-detect';
 import styles from './language.module.css';
 import popoverInnerStyles from './popover-inner.module.css';
-import { IcoArrowDown, IcoLang, IcoClose02 } from '@learnway/icons';
 
 const PopoverContent = () => {
   const [selectedLang, setSelectedLang] = useState('한국어');
@@ -30,29 +28,57 @@ const PopoverContent = () => {
   ];
 
   return (
-    <div className={`${styles.start} ${popoverInnerStyles.start}`}>
-      <div className={popoverInnerStyles.title_area}>
-        <h2>언어</h2>
-        <Popover.Close>
-          <Button variant="expand" size="sm" onlyIcon>
-            <IcoClose02 className={popoverInnerStyles.btn_close} />
-          </Button>
-        </Popover.Close>
-      </div>
+    <>
+      {/* PC */}
+      <BrowserView>
+        <div className={`${styles.start} ${popoverInnerStyles.start}`}>
+          <div className={popoverInnerStyles.title_area}>
+            <h2>언어</h2>
+            <Popover.Close>
+              <Button variant="expand" size="sm" onlyIcon>
+                <IcoClose02 className={popoverInnerStyles.btn_close} />
+              </Button>
+            </Popover.Close>
+          </div>
 
-      <div className={styles.lang_area}>
-        <ul className={styles.lang_list}>
-          {languages.map((lang) => (
-            <li key={lang.value}>
-              <Button
-                label={lang.label}
-                className={selectedLang === lang.label ? styles.active : ''}
-              />
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
+          <div className={styles.lang_area}>
+            <ul className={styles.lang_list}>
+              {languages.map((lang) => (
+                <li key={lang.value}>
+                  <Button
+                    label={lang.label}
+                    className={selectedLang === lang.label ? styles.active : ''}
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </BrowserView>
+
+      {/* Mobile */}
+      <MobileView>
+        <ModalContainer>
+          <ModalTitle>{'언어'}</ModalTitle>
+          <ModalBody>
+            <div className={`${styles.start} ${popoverInnerStyles.start}`}>
+              <div className={styles.lang_area}>
+                <ul className={styles.lang_list}>
+                  {languages.map((lang) => (
+                    <li key={lang.value}>
+                      <Button
+                        label={lang.label}
+                        className={selectedLang === lang.label ? styles.active : ''}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </ModalBody>
+        </ModalContainer>
+      </MobileView>
+    </>
   );
 };
 
@@ -61,16 +87,12 @@ interface LanguageComponentProp {
 }
 
 const LanguageComponent = ({ className }: LanguageComponentProp) => {
+  const { closeModal } = useModal();
+  const { openModal } = useModal();
   return (
-    // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
-      {isMobile ? (
-        <Link to={'/'} className={`${styles.btn_language} ${className}`}>
-          <IcoLang className={styles.ic_lang} />
-          <span className={styles.select}>{'KR'}</span>
-          <IcoArrowDown width={16} height={16} stroke="#131C30" />
-        </Link>
-      ) : (
+      {/* pc */}
+      <BrowserView>
         <Popover
           popoverContent={<PopoverContent />}
           className={`${styles.btn_language} ${className}`}
@@ -82,7 +104,24 @@ const LanguageComponent = ({ className }: LanguageComponentProp) => {
           <span className={styles.select}>{'KR'}</span>
           <IcoArrowDown width={16} height={16} stroke="#131C30" />
         </Popover>
-      )}
+      </BrowserView>
+
+      {/* mobile */}
+      <MobileView>
+        <Button
+          className={`${styles.btn_language} ${className}`}
+          onClick={() =>
+            openModal({
+              width: 'm_full',
+              content: <PopoverContent />,
+            })
+          }
+        >
+          <IcoLang className={styles.ic_lang} />
+          <span className={styles.select}>{'KR'}</span>
+          <IcoArrowDown width={16} height={16} stroke="#131C30" />
+        </Button>
+      </MobileView>
     </>
   );
 };

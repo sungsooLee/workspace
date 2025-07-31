@@ -18,3 +18,9 @@
     }
   }
 }
+
+:global(body.mobile) {
+  .start {
+    @apply min-w-auto rounded-none border-none shadow-none;
+  }
+}
