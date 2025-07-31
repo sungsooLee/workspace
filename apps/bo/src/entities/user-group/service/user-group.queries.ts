@@ -27,11 +27,12 @@ export const queryOptions = {
     staleTime: 0,
     enabled: tenantIds.length > 0 && !!roleId,
   }),
-  customGroupsTree: (userGroupName?: string) => ({
+  customGroupsTree: (roleId: number, userGroupName?: string) => ({
     queryKey: queryKeys.customGroupsTree,
-    queryFn: () => UserGroupsService.fetchCustomGroupsTree(userGroupName),
+    queryFn: () => UserGroupsService.fetchCustomGroupsTree(roleId, userGroupName),
     cacheTime: 0,
     staleTime: 0,
+    enabled: !!roleId,
   }),
   blackwhiteUsers: (params: any) => ({
     queryKey: ['blackwhite-users', params.companyId, params.page],

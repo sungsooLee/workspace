@@ -1,4 +1,5 @@
 import { useFetchCustomGroupsTree } from '@entities/user-group';
+import { useFetchAuthUser } from '@learnway/auth/entities';
 import { cn } from '@learnway/shared';
 import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { ShuttleTreeToChipsV2, useShuttleTreeToChips } from '@learnway/ui/shuttle-tree-to-chips-v2';
@@ -13,7 +14,8 @@ type UserGroupCustomComponentProps = {
 };
 
 const UserGroupCustomComponent = ({ option, handleSetOption }: UserGroupCustomComponentProps) => {
-  const { data } = useFetchCustomGroupsTree();
+  const { data: authUser } = useFetchAuthUser();
+  const { data } = useFetchCustomGroupsTree(authUser?.activeRole?.roleId);
 
   const treeData = useMemo(() => {
     return data ? transformApiDataToTreeData(data) : [];
