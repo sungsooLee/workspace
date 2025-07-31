@@ -1,7 +1,7 @@
 import { CompanyUserDetail } from '@features/platform-management/company';
 import { Button } from '@learnway/ui';
 import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui';
-import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
+import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { useRef } from 'react';
 
@@ -11,6 +11,7 @@ export const Route = createLazyFileRoute('/_layout/platform/company/user/detail'
 
 function RouteComponent() {
   const router = useRouter();
+  const routerState = useRouterState();
 
   const formRef = useRef<HTMLFormElement>(null);
   const handleOnSave = () => {
@@ -21,6 +22,11 @@ function RouteComponent() {
     if (formRef.current?.clearForm) formRef.current.clearForm();
   };
 
+  const handleListClick = () => {
+    const listParam = routerState.location.state?.listParam;
+    router.navigate({ to: '/platform/company/user', state: { listParam } });
+  };
+
   return (
     <PageContainer>
       <ContentsButtons>
@@ -28,7 +34,7 @@ function RouteComponent() {
           <Button
             variant="point"
             size="sm"
-            onClick={() => router.navigate({ to: '/platform/company/user' })}
+            onClick={handleListClick}
             label={t('LABEL.button.list')}
           />
         </LinkBox>
