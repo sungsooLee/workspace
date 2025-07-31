@@ -1,6 +1,8 @@
 import { cn } from '@learnway/shared';
+import { useState } from 'react';
 import styles from './search-display.module.css';
 
+import { PopHeaderActions } from './pop-header-actions';
 import { SearchBefore } from './search-before';
 import { SearchInputWrap } from './search-input-wrap';
 import { SearchSubmitted } from './search-submitted';
@@ -13,28 +15,23 @@ interface SearchDisplayProps {
   searchState: SearchState;
   displayFormat?: string;
   className?: string;
+  onBack?: () => void;
 }
 
 export const SearchDisplay: React.FC<SearchDisplayProps> = ({
   searchState,
   displayFormat,
   className,
+  onBack,
 }) => {
-  const renderContent = () => {
-    // 입력 전
-    if (searchState === 'before') {
-      return <SearchBefore />;
-    }
-    // 입력 중
-    if (searchState === 'typing') {
-      return <SearchTyping />;
-    }
-    // 입력 후
-    if (searchState === 'submitted') {
-      return <SearchSubmitted />;
-    }
+  const [inputhValue, setInputValue] = useState('');
 
-    return null;
+  const hasValue = inputhValue.trim().length > 0;
+
+  const renderContent = () => {
+    // 입력 전 : SearchBefore , 입력 중 : SearchTyping, 입력 후 : SearchSubmitted
+    if (searchState === 'submitted') return <SearchSubmitted />;
+    return hasValue ? <SearchTyping /> : <SearchBefore />;
   };
 
   return (
@@ -50,10 +47,13 @@ export const SearchDisplay: React.FC<SearchDisplayProps> = ({
       <div className={styles.contents}>
         {(searchState === 'before' || searchState === 'typing') && (
           <SearchInputWrap
-            buttonActive={false}
+            buttonActive={hasValue ? true : false}
             placeholder={'처음엔 다 어려워요! 추천 키워드부터 가볍게 출발~'}
+            value={inputhValue}
+            onChange={(e) => setInputValue(e.target.value)}
           />
         )}
+        {searchState === 'submitted' && <PopHeaderActions onBack={onBack} />}
         {renderContent()}
       </div>
     </div>

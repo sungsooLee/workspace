@@ -1,12 +1,13 @@
+/* eslint-disable no-restricted-imports */
 /* eslint-disable @nx/enforce-module-boundaries */
+import { IcoArrowDown, IcoClose02 } from '@learnway/icons';
+import { Button, Popover } from '@learnway/ui';
 import { createFileRoute } from '@tanstack/react-router';
 import { useState } from 'react';
-import { IcoArrowDown, IcoClose02 } from '@learnway/icons';
-import { Popover, Button } from '@learnway/ui';
 
-import dropdownPopoverStyles from '../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
 import tooltipPopoverStyles from '@learnway/styles/bo/assets/styles/modules/tootip-popover.module.css';
 import { NoticeBox } from '../../../../../../bo/src/shared/ui/';
+import dropdownPopoverStyles from '../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
 
 export const Route = createFileRoute('/_guide/guide/popover')({
   component: RouteComponent,
@@ -94,7 +95,7 @@ function RouteComponent() {
 
         <div className="code_example">
           <pre className="code_block">
-            <code>{`// import 
+            <code>{`// import
 import { memo } from 'react';
 import { Popover } from '@learnway/ui';
 
@@ -107,7 +108,7 @@ const PopoverContent = () => {
 };
 
 const PopOverCompoment = () => {
-  
+
   return (
     <Popover
       popoverContent={<PopoverContent />}
@@ -145,7 +146,7 @@ export const PopOverCompoment = memo(PopOverCompoment);`}</code>
 
         <div className="code_example">
           <pre className="code_block">
-            <code>{`// import 
+            <code>{`// import
 import { memo } from 'react';
 import { Popover, Button } from '@learnway/ui';
 import dropdownPopoverStyles from '../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
@@ -162,7 +163,7 @@ const DropdownPopoverCompoment = () => {
 };
 
 const PopOverCompoment = () => {
-  
+
   return (
     <Popover
       popoverContent={<DropdownPopoverCompoment />}
@@ -201,7 +202,7 @@ export const PopOverCompoment = memo(PopOverCompoment);`}</code>
 
         <div className="code_example">
           <pre className="code_block">
-            <code>{`// import 
+            <code>{`// import
 import { memo } from 'react';
 import { Popover, Button } from '@learnway/ui';
 import dropdownPopoverStyles from '../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
@@ -218,7 +219,7 @@ const DropdownPopoverCompoment = () => {
 };
 
 const PopOverCompoment = () => {
-  
+
   return (
     <Popover
       popoverContent={<DropdownPopoverCompoment />}

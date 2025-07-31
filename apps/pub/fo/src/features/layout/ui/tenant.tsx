@@ -1,9 +1,11 @@
-import { memo, useState } from 'react';
-import { Popover, Button, useModal } from '@learnway/ui';
 import { IcoArrowDown } from '@learnway/icons';
+import { Button, Popover, useModal } from '@learnway/ui';
+import { memo, useState } from 'react';
+import { BrowserView, MobileView } from 'react-device-detect';
+import { TenantPopup } from '../../layout';
 
-import styles from '@learnway/styles/fo/features/platform/ui/tenant-button/tenant-button.module.css';
 import logoImage from '@learnway/styles/fo/assets/images/logo_foot.png';
+import styles from '@learnway/styles/fo/features/platform/ui/tenant-button/tenant-button.module.css';
 
 const TenantContent = ({
   selectedTenant,
@@ -66,26 +68,50 @@ const TenantContent = ({
 
 const TenantComponent = () => {
   const [selectedTenant, setSelectedTenant] = useState<string | null>(null);
+  const { openModal } = useModal();
 
   return (
-    <Popover
-      popoverContent={
-        <TenantContent selectedTenant={selectedTenant} onSelect={setSelectedTenant} />
-      }
-      className={styles.btn_tenant}
-      side="bottom"
-      align="end"
-      sideOffset={20}
-    >
-      <div className={styles.select}>
-        <span className={styles.text}>
-          {selectedTenant ? selectedTenant : <img src={logoImage} alt="Logo" />}
-        </span>
-      </div>
-      <span className={styles.ico}>
-        <IcoArrowDown />
-      </span>
-    </Popover>
+    <>
+      {/* 퍼블수정 20250731 pc, mobile 분기처리 */}
+      {/* pc */}
+      <BrowserView>
+        <Popover
+          popoverContent={
+            <TenantContent selectedTenant={selectedTenant} onSelect={setSelectedTenant} />
+          }
+          className={styles.btn_tenant}
+          side="bottom"
+          align="end"
+          sideOffset={20}
+        >
+          <div className={styles.select}>
+            <span className={styles.text}>
+              {selectedTenant ? selectedTenant : <img src={logoImage} alt="Logo" />}
+            </span>
+          </div>
+          <span className={styles.ico}>
+            <IcoArrowDown />
+          </span>
+        </Popover>
+      </BrowserView>
+
+      {/* mobile */}
+      <MobileView>
+        <Button
+          className={styles.btn_tenant}
+          onClick={() =>
+            openModal({
+              width: 'm_full',
+              content: <TenantPopup />,
+            })
+          }
+        >
+          <span className={styles.ico}>
+            <IcoArrowDown />
+          </span>
+        </Button>
+      </MobileView>
+    </>
   );
 };
 
