@@ -5,8 +5,7 @@ import { z } from '@learnway/shared';
 import { authSSOQueryOptions, getHMGSSORedirectUrl } from '@learnway/auth/entities';
 
 const ssoSearchSchema = z.object({
-  company: z.string().required(),
-});
+  company: z.string().required() });
 
 export const Route = createFileRoute('/sso/')({
   component: RouteComponent,
@@ -14,8 +13,7 @@ export const Route = createFileRoute('/sso/')({
   beforeLoad: async ({
     location,
     context,
-    search,
-  }: {
+    search }: {
     location: ParsedLocation;
     context: any;
     search: any;
@@ -24,8 +22,7 @@ export const Route = createFileRoute('/sso/')({
     const data = await queryClient.fetchQuery(authSSOQueryOptions.healthcheck(search.company));
     data.redirectUri = `${import.meta.env.VITE_BO_DOMAIN}/sso/redirect`;
     window.location.href = getHMGSSORedirectUrl(data);
-  },
-});
+  } });
 
 function RouteComponent() {
   return <div></div>;

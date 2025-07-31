@@ -1,13 +1,12 @@
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 
 import { PageContainer, MainContents, ContentsButtons } from '@shared/ui';
-import { Button } from '@learnway/ui';
 
 import { TenantManagmentList } from '@features/platform-management/tenant/ui/tenant-managment-list';
+import { Button } from '@learnway/ui/button';
 
 export const Route = createFileRoute('/_layout/platform/tenant/management/')({
-  component: RouteComponent,
-});
+  component: RouteComponent });
 
 function RouteComponent() {
   const router = useRouter();

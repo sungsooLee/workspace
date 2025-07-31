@@ -3,7 +3,8 @@ import NotificationService from '../api/notification';
 export const queryKeys = {
   all: ['notifications'] as const,
   count: ['notifications-count'] as const,
-  // unreadCount: (userUUID: string) => [...queryKeys.all, 'unread', userUUID] as const,
+  // unreadCount: (userUUID: string) => [...queryKeys.all, 'unread', userUUID] as const
+  //
 };
 
 export const queryOptions = {

@@ -1,9 +1,10 @@
-import { Button, useModal } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import styles from '@learnway/styles/fo/features/layout/ui/category-layer-button.module.css';
 import { IcoArray } from '@learnway/icons';
 import { memo, useState } from 'react';
 import { CategoryPopup } from '@features/layout';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 
 interface CategoryPopupProps {
   id: number;

@@ -1,11 +1,14 @@
 import { FormDisplay } from '@features/form/ui/form-display';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { cn, formUtils } from '@learnway/shared';
-import { ChipListModalSelectorFormField, ContentsRow, FormSubTitle, Input } from '@learnway/ui';
+import { ChipListModalSelectorFormField } from '@learnway/ui/form-field';
+import { FormSubTitle } from '@learnway/ui/base-form';
 import { FormRow } from '@shared/ui';
 import { t } from 'i18next';
 
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
 
 const ChannelDetailBoardArticleDetailComponent = () => {
   const { provider, updateFormData, onSubmit, setFormError, clearFormError, getValues } =
@@ -26,13 +29,11 @@ const ChannelDetailBoardArticleDetailComponent = () => {
               chipList={{
                 labelField: 'name',
                 valueField: 'value',
-                hideBorder: true,
-              }}
+                hideBorder: true }}
               modalConfig={{
                 title: '',
                 width: 'xl',
-                content: '',
-              }}
+                content: '' }}
               disabled={true}
             />
           }
@@ -98,36 +99,31 @@ const formConfig: DynamicFormConfig = {
       options: [
         { value: 'opt1', label: '채널 대상자' },
         { value: 'opt2', label: '개별 설정' },
-      ],
-    },
+      ] },
     {
       name: 'userGroupList',
       type: 'custom',
       label: t('유저그룹 설정'),
       format: 'array',
-      value: [],
-    },
+      value: [] },
     {
       name: 'boardType',
       type: 'dropdown',
       label: t('게시판 유형'),
       value: '',
-      options: [{ value: '', label: t('채널 게시판') }],
-    },
+      options: [{ value: '', label: t('채널 게시판') }] },
     {
       name: 'boardCode',
       type: 'text',
       label: t('게시판 코드'),
       value: '',
-      placeholder: '',
-    },
+      placeholder: '' },
     {
       name: 'articleDivision',
       type: 'dropdown',
       label: t('게시물 분류'),
       value: '',
-      options: [{ value: '', label: t('일반') }],
-    },
+      options: [{ value: '', label: t('일반') }] },
     {
       name: 'isFixed',
       type: 'radio-group',
@@ -137,17 +133,14 @@ const formConfig: DynamicFormConfig = {
       options: [
         { value: true, label: t('고정') },
         { value: false, label: t('미고정') },
-      ],
-    },
+      ] },
     {
       name: 'duration',
       type: 'date-range',
       label: t('게재 기간'),
       value: {
         from: formUtils.nowDate({ unit: 'day', offset: -30 }),
-        to: formUtils.nowDate(),
-      },
-    },
+        to: formUtils.nowDate() } },
     {
       name: 'isActive',
       type: 'radio-group',
@@ -156,21 +149,18 @@ const formConfig: DynamicFormConfig = {
       options: [
         { value: true, label: t('노출') },
         { value: false, label: t('비노출') },
-      ],
-    },
+      ] },
     {
       name: 'title',
       type: 'text',
       label: t('제목'),
       value: '',
-      placeholder: '',
-    },
+      placeholder: '' },
     {
       name: 'content',
       type: 'textarea',
       label: t('내용'),
-      value: '',
-    },
+      value: '' },
     {
       name: 'attachment',
       type: 'attachment',
@@ -178,10 +168,8 @@ const formConfig: DynamicFormConfig = {
         affairsType: 'PMS',
         s3Path: 'upload/temp/attachment', // 업무에 맞는 폴더로 변경해야 합니다.
         maxFileCount: 5,
-        maxFileSize: 50 * 1024 * 1024,
-      },
-      value: [],
-    },
+        maxFileSize: 50 * 1024 * 1024 },
+      value: [] },
     {
       name: 'isSecret',
       type: 'radio-group',
@@ -190,8 +178,7 @@ const formConfig: DynamicFormConfig = {
       options: [
         { value: true, label: t('공개') },
         { value: false, label: t('비밀') },
-      ],
-    },
+      ] },
     {
       name: 'useCommentLike',
       type: 'radio-group',
@@ -200,26 +187,21 @@ const formConfig: DynamicFormConfig = {
       options: [
         { value: true, label: t('사용') },
         { value: false, label: t('미사용') },
-      ],
-    },
+      ] },
     {
       name: 'useAnswer',
       type: 'switch',
       label: t('답글 등록 여부'),
       value: true,
       switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')),
-      },
-    },
+        label: (value: boolean) => (value ? t('사용') : t('미사용')) } },
     {
       name: 'useComment',
       type: 'switch',
       label: t('댓글 등록 여부'),
       value: true,
       switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')),
-      },
-    },
+        label: (value: boolean) => (value ? t('사용') : t('미사용')) } },
     {
       name: 'answerType',
       type: 'checkbox-group',
@@ -231,8 +213,7 @@ const formConfig: DynamicFormConfig = {
         { value: 'EMAIL', label: t('이메일') },
         { value: 'SMS', label: t('SMS') },
         { value: 'KAKAO', label: t('카카오톡') },
-      ],
-    },
+      ] },
     {
       name: 'commentType',
       type: 'checkbox-group',
@@ -244,8 +225,6 @@ const formConfig: DynamicFormConfig = {
         { value: 'EMAIL', label: t('이메일') },
         { value: 'SMS', label: t('SMS') },
         { value: 'KAKAO', label: t('카카오톡') },
-      ],
-    },
+      ] },
   ],
-  validator: { duration: true, title: true, content: true },
-};
+  validator: { duration: true, title: true, content: true } };

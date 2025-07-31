@@ -3,7 +3,8 @@ import {
   InstructorListPopup,
   InstructorRegistPopup,
 } from '@features/learning-operate-support/instructor-tutor/instructor-management';
-import { Button, useModal } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { EnPageMode } from '@types';

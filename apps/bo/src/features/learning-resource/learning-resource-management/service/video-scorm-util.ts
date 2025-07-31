@@ -4,8 +4,7 @@ export function convertToScormForm(data: any) {
   const _ = cloneDeep(data);
   _.contentUseDate = {
     from: _.contentUseStartDate ? new Date(_.contentUseStartDate) : undefined,
-    to: _.contentUseEndDate ? new Date(_.contentUseEndDate) : undefined,
-  };
+    to: _.contentUseEndDate ? new Date(_.contentUseEndDate) : undefined };
   _.aiSummary = _.aiSummary ?? '';
   _.aiKeyword = _.aiKeyword ?? '';
   return _;

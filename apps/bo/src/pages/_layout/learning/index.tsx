@@ -3,13 +3,13 @@ import {
   TeacherListModal,
 } from '@features/learning-operate/course/course-management';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
 import {
-  Button,
   ChipListModalSelectorFormField,
-  ContentsRow,
-  Input,
   InputModalSelectorFormField,
-} from '@learnway/ui';
+} from '@learnway/ui/form-field';
+import { Input } from '@learnway/ui/input';
 import { ContentsButtons, FormRow, MainContents, PageContainer, SubContents } from '@shared/ui';
 import { createFileRoute } from '@tanstack/react-router';
 import { t } from 'i18next';

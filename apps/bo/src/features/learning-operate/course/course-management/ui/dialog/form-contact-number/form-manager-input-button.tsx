@@ -1,6 +1,5 @@
 import { forwardRef, useEffect, useState } from 'react';
-
-import { Input } from '@learnway/ui';
+import { Input } from '@learnway/ui/input';
 
 export interface IPhoneNumber {
   countryCode: string; // 국가 코드

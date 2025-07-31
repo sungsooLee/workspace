@@ -24,7 +24,6 @@ export default class RequestChannelService {
 
   static async putRequestChannel(payload: any) {
     return httpService.put<any>(`${PMSApiPrefix()}/request/channel/${payload.channelRequestUuid}`, {
-      channelSecretType: payload.channelSecretType,
-    });
+      channelSecretType: payload.channelSecretType });
   }
 }

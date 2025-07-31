@@ -1,9 +1,11 @@
 import { cn } from '@learnway/shared';
 import { FC } from 'react';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
 
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { Button, ContentsRow, FormSubTitle } from '@learnway/ui';
+import { FormSubTitle } from '@learnway/ui/base-form';
 /* style */
 import fileUploadStyles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css'; // 파일 업로드
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
@@ -19,8 +21,7 @@ const TenantDetailBannerViewComponent: FC<{}> = ({}) => {
     onFormChange,
     getValues,
     clearFormError,
-    setFormError,
-  } = useDynamicForm(formConfig);
+    setFormError } = useDynamicForm(formConfig);
   return (
     <div className={cn(styles.start, styles.wrap)}>
       <FormSubTitle
@@ -105,7 +106,5 @@ const formConfig: DynamicFormConfig = {
       type: 'custom',
       label: '이미지',
       value: [],
-      placeholder: '',
-    },
-  ],
-};
+      placeholder: '' },
+  ] };

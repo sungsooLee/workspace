@@ -1,4 +1,9 @@
 import {
+// TODO: Fix unknown imports:  from '@learnway/ui'
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
+import { Tabs } from '@learnway/ui/tab';
+import { useToast } from '@learnway/ui/toast';
   IcoArrowDown,
   IcoBook,
   IcoCategory,
@@ -12,16 +17,9 @@ import {
   IcoSubtitles02,
 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import {
-  Accordion,
-  Button,
-  OptionCard,
-  OptionCardItem,
-  Panel,
-  Tabs,
-  useModal,
-  useToast,
-} from '@learnway/ui';
+import { Accordion } from '@learnway/ui/accordion';
+import { OptionCard, OptionCardItem } from '@learnway/ui/option-card';
+import { Panel } from '@learnway/ui/panel';
 import { useRouterState } from '@tanstack/react-router';
 import { useEffect, useRef, useState } from 'react';
 

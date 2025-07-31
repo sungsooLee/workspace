@@ -8,15 +8,11 @@ import { MyRoleExtendModal } from '@features/user/my-page/ui/my-role-extend-moda
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import {
-  Button,
-  Checkbox,
-  Divider,
-  GridBox,
-  useGridBox,
-  useGridBoxConfig,
-  useModal,
-} from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { Checkbox } from '@learnway/ui/checkbox';
+import { Divider } from '@learnway/ui/elements';
+import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
+import { useModal } from '@learnway/ui/modal';
 import { MainContents, PageContainer, RejectModal, RoleApplicationHistoryModal } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { useQueryClient } from '@tanstack/react-query';

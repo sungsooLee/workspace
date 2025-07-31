@@ -4,8 +4,7 @@ export const ENROLL_STATUS_KEYS = {
   ENROLL_DONE: t('결재/승인 완료'),
   ENROLL_REQUEST: t('신청중'),
   CANCEL_DONE: t('취소'),
-  REJECT_DONE: t('반려'),
-} as const;
+  REJECT_DONE: t('반려') } as const;
 
 export type EnrollStatusType = keyof typeof ENROLL_STATUS_KEYS;
 

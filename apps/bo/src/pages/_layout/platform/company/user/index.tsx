@@ -3,8 +3,7 @@ import { MainContents, PageContainer } from '@shared/ui';
 import { CompanyUserList } from '@features/platform-management/company';
 
 export const Route = createFileRoute('/_layout/platform/company/user/')({
-  component: RouteComponent,
-});
+  component: RouteComponent });
 
 function RouteComponent() {
   return (

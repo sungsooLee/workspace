@@ -1,9 +1,9 @@
 import { IcoArrowDownDouble, IcoRefresh02, IcoSearch } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
-import { Button } from '@learnway/ui';
 import { t } from 'i18next';
 import React, { FC, FormEvent, KeyboardEvent, useState } from 'react';
+import { Button } from '@learnway/ui/button';
 
 /**
  * 검색 박스 안에 DynamicForm 을 넣어 구성 하는 경우 사용 할 수 있음.

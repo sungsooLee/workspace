@@ -1,25 +1,19 @@
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import {
-  ContentsRow,
-  ModalBody,
-  ModalContainer,
-  ModalTitle,
-  TextareaFormField,
-  useModal,
-} from '@learnway/ui';
+import { TextareaFormField } from '@learnway/ui/form-field';
 import { FormRow } from '@shared/ui';
 import { t } from 'i18next';
 import { FC, useEffect } from 'react';
 
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { ModalBody, ModalContainer, ModalTitle, useModal } from '@learnway/ui/modal';
 
 export interface EnrollmentCancelReasonModalComponent {
   reason: string;
 }
 
 const EnrollmentCancelReasonModalComponent: FC<any> = ({
-  reason: reasonProps,
-}: EnrollmentCancelReasonModalComponent) => {
+  reason: reasonProps }: EnrollmentCancelReasonModalComponent) => {
   const { closeModal } = useModal();
   const { provider, onSubmit, updateFormData } = useDynamicForm(formConfig);
 
@@ -60,7 +54,5 @@ const formConfig: DynamicFormConfig = {
       type: 'textarea',
       label: t('사유'),
       value: '',
-      maxLength: 150,
-    },
-  ],
-};
+      maxLength: 150 },
+  ] };

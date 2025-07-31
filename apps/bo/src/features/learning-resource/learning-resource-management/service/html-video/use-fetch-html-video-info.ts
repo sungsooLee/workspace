@@ -34,6 +34,5 @@ export const useFetchHtmlVideoInfo = () => {
     data,
     hasMapping,
     htmlStatus,
-    listParam: state?.listParam,
-  };
+    listParam: state?.listParam };
 };

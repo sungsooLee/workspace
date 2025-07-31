@@ -1,11 +1,14 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Button, ChipList, OptionCard, useModal, OptionCardItem } from '@learnway/ui';
+import { OptionCard, OptionCardItem } from '@learnway/ui/option-card';
 import { cn } from '@learnway/shared';
 import styles from '@learnway/styles/fo/features/category/category-filter.module.css';
 
 import { IcoFilter, IcoRefresh02 } from '@learnway/icons';
 import { CategoryFilterPopup } from '@features/category/ui/category-filter-popup';
 import { CODE_GROUP, useCodeStore } from '@learnway/hooks';
+import { ChipList } from '@learnway/ui/chip-list';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 
 const FilterComponent = ({ onOptionChange }: any) => {
   const { getCode } = useCodeStore();

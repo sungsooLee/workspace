@@ -5,8 +5,7 @@ import {
   PageableContent,
   UserGroupsParam,
   UserGroupsResponse,
-  UsersByIdsParam,
-} from '@types';
+  UsersByIdsParam } from '@types';
 
 export default class UserGroupService {
   static fetchUserGroups(
@@ -15,8 +14,7 @@ export default class UserGroupService {
   ): Promise<UserGroupsResponse[]> {
     return httpService.get(`${PMSApiPrefix()}/userGroup/user-groups`, {
       tenantIds,
-      ...params,
-    });
+      ...params });
   }
 
   static fetchOrganizationTree(
@@ -27,14 +25,12 @@ export default class UserGroupService {
     return httpService.get(`${PMSApiPrefix()}/userGroup/organization-tree`, {
       tenantIds,
       roleIds,
-      tenantName,
-    });
+      tenantName });
   }
 
   static fetchCustomGroupsTree(userGroupName?: string): Promise<OrganizationTreeResponse> {
     return httpService.get(`${PMSApiPrefix()}/userGroup/custom-groups-tree`, {
-      userGroupName,
-    });
+      userGroupName });
   }
 
   static fetchBlackwhiteUsers(body: any) {

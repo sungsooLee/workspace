@@ -26,8 +26,7 @@ export function registerApi<TResponse = any, TParams = any, TPayload = any>(
     key,
     method,
     getFullUrl: urlFactory,
-    description,
-  };
+    description };
 
   if (API_REGISTRY[key]) {
     console.warn(`API 키 '${key}'가 이미 등록되어 있습니다. 중복 등록은 무시됩니다.`);
@@ -63,8 +62,7 @@ export function useApiQuery<TResponse = any, TParams = any, TError = Error>(
     if (!hasPermission) {
       eventService.emit(HTTP_EVENTS.REACT_QUERY_ERROR, {
         title: 'Permission Error',
-        message: `'${api.key}' 작업 권한이 없습니다`,
-      });
+        message: `'${api.key}' 작업 권한이 없습니다` });
       throw new Error(`'${api.key}' 작업 권한이 없습니다`);
     }
     const url = api.getFullUrl(params);
@@ -75,13 +73,11 @@ export function useApiQuery<TResponse = any, TParams = any, TError = Error>(
     queryKey,
     queryFn,
     enabled: options?.enabled !== false && hasPermission,
-    ...options,
-  });
+    ...options });
 
   return {
     ...query,
-    hasPermission,
-  };
+    hasPermission };
 }
 
 export function useApiMutation<TResponse = any, TPayload = any, TParams = any, TError = Error>(
@@ -103,8 +99,7 @@ export function useApiMutation<TResponse = any, TPayload = any, TParams = any, T
     if (!hasPermission) {
       eventService.emit(HTTP_EVENTS.REACT_QUERY_ERROR, {
         title: 'Permission Error',
-        message: `'${api.key}' 작업 권한이 없습니다`,
-      });
+        message: `'${api.key}' 작업 권한이 없습니다` });
 
       const error = new Error(`API 키 '${api.key}'에 대한 권한이 없습니다.`) as TError;
 
@@ -127,8 +122,7 @@ export function useApiMutation<TResponse = any, TPayload = any, TParams = any, T
     if (!hasPermission) {
       eventService.emit(HTTP_EVENTS.REACT_QUERY_ERROR, {
         title: 'Permission Error',
-        message: `'${api.key}' 작업 권한이 없습니다`,
-      });
+        message: `'${api.key}' 작업 권한이 없습니다` });
 
       const error = new Error(`API 키 '${api.key}'에 대한 권한이 없습니다.`) as TError;
 
@@ -195,8 +189,7 @@ export function useApiMutation<TResponse = any, TPayload = any, TParams = any, T
     if (invalidateQueries && invalidateQueries.length > 0) {
       for (const queryKey of invalidateQueries) {
         await queryClient.invalidateQueries({
-          queryKey: queryKey as unknown[],
-        });
+          queryKey: queryKey as unknown[] });
       }
     }
 
@@ -215,15 +208,13 @@ export function useApiMutation<TResponse = any, TPayload = any, TParams = any, T
     mutationFn,
     onSuccess: handleSuccess,
     onError: handleError,
-    ...restOptions,
-  });
+    ...restOptions });
 
   return {
     ...mutation,
     mutate: customMutate,
     mutateAsync: customMutateAsync,
-    hasPermission,
-  };
+    hasPermission };
 }
 
 export function buildUrl(baseUrl: string, path: string, params?: Record<string, any>): string {

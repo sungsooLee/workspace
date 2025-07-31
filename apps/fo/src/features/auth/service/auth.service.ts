@@ -1,4 +1,4 @@
-import {
+import { useModal } from '@learnway/ui/modal';
   useLoginUser,
   useReissue,
   useUpdateUser,
@@ -7,7 +7,6 @@ import {
 import type { AuthUser } from '@learnway/auth/types';
 import { getConfig } from '@learnway/config';
 import { cookieService, MutateCallback } from '@learnway/shared';
-import { useModal } from '@learnway/ui';
 
 interface LoginParams {
   username: string;

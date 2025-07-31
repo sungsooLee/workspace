@@ -1,14 +1,9 @@
 import { useNavigate } from '@tanstack/react-router';
 import { useCallback, useEffect, useState } from 'react';
 
-import { useModal } from '@learnway/ui';
+import { useModal } from '@learnway/ui/modal';
 import { usePageState } from '@shared/lib/use-page-state';
-import {
-  ContentViewType,
-  useCheckDirtyForm,
-  useCourseActions,
-  useCourseCreateInfo,
-} from '../store/use-course-store';
+import { ContentViewType, useCheckDirtyForm, useCourseActions } from '../store/use-course-store';
 import { CourseTab } from '../types/type';
 
 // 라우터 state에서 전달받는 값의 타입 정의

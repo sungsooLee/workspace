@@ -2,18 +2,19 @@ import { useMount } from 'ahooks';
 import { ReactNode, useEffect, useState } from 'react';
 
 import {
+  // TODO: Fix unknown imports: Spinner from '@learnway/ui'
   initAxios,
   initI18N,
   initZod,
   // getDefaultLang,
   setConfig,
 } from '@learnway/config';
-import { Spinner } from '@learnway/ui';
 
 import { useFetchCodeGroups, useFetchI18nResource } from '../entities/platform';
 import { useAuthSignin } from '../features/auth';
 
 import { useFetchAuthUser } from '@learnway/auth/entities';
+import { Spinner } from '@learnway/ui/spinner';
 import '../styles.css';
 
 declare global {

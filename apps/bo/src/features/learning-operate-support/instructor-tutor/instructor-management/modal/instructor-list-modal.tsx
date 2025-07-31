@@ -1,8 +1,9 @@
 import { t } from 'i18next';
-import { Button, ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui';
 import { InstructorList } from '../ui/instructor-list';
 import { EnPageMode } from '@types';
 import { useState } from 'react';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
 /**
  * 화면 번호 NLP_BO_LMS0014 : 강사/튜터 선택(팝업)
@@ -14,8 +15,7 @@ const InstructorListModal = () => {
   const handleOnSubmit = async () => {
     if (selectedItem == null) {
       await openAlert({
-        title: t('강사/튜터를 선택해주세요.'),
-      });
+        title: t('강사/튜터를 선택해주세요.') });
       return;
     }
     closeModal(selectedItem);

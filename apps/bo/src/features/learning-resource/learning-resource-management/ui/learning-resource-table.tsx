@@ -1,3 +1,5 @@
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 // IA102 / NLP_BO_CMS_1001
 import { learningResourceQueryOptions, usePostContentCopy } from '@entities/learning-resource';
 import { getDetailPathByContentType, getDetailRouterState } from '@features/learning-resource';
@@ -10,25 +12,17 @@ import {
   compactValues,
   SelectOption,
   useCurrentRoute,
-  useSearchBox,
-} from '@learnway/hooks';
+  useSearchBox } from '@learnway/hooks';
 import { IcoAlertCircle, IcoClock01, IcoCopy, IcoDownArrow, IcoDownload } from '@learnway/icons';
 import { DATE_TIME_FORMAT, duration } from '@learnway/shared';
-import {
-  Button,
-  Divider,
-  GridBox,
-  Tooltip,
-  useGridBox,
-  useGridBoxConfig,
-  useModal,
-} from '@learnway/ui';
+import { Divider } from '@learnway/ui/elements';
+import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
+import { Tooltip } from '@learnway/ui/tooltip';
 import {
   GridExcelDownloadButton,
   PreviewLearningWindow,
   TenantByRoleDropdownFormField,
-  TenantChannelDropdownFormField,
-} from '@shared/ui';
+  TenantChannelDropdownFormField } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { useRouter } from '@tanstack/react-router';
 import { ContentCreateType, ContentInfo, ContentInformation } from '@types';
@@ -54,15 +48,12 @@ function LearningResourceTableComponent() {
       router.navigate({
         to: getDetailPathByContentType(result.contentType),
         state: {
-          contentUuid: result.contentUuid,
-        },
-      });
+          contentUuid: result.contentUuid } });
     },
     onError: (error: any) => {
       console.error(error);
       // 에러 얼럿?
-    },
-  });
+    } });
 
   const searchConfig: any = {
     builders: [
@@ -73,16 +64,14 @@ function LearningResourceTableComponent() {
           label: t('LABEL.form.label.tenant', '테넌트'),
           value: '',
           format: 'object',
-          element: <TenantByRoleDropdownFormField />,
-        },
+          element: <TenantByRoleDropdownFormField /> },
         {
           name: 'channelUuid',
           type: 'custom',
           label: t('LABEL.form.label.channel', '채널'),
           value: '',
           format: 'object',
-          element: <TenantChannelDropdownFormField enableFilter />,
-        },
+          element: <TenantChannelDropdownFormField enableFilter /> },
         {
           name: 'contentTypes',
           type: 'dropdown',
@@ -92,15 +81,12 @@ function LearningResourceTableComponent() {
           variant: 'text',
           presetOptionLabel: t('LABEL.form.label.all', '전체'),
           optionsConfig: {
-            codeGroup: CODE_GROUP['cms.content.ContentType'],
-          },
-        },
+            codeGroup: CODE_GROUP['cms.content.ContentType'] } },
         {
           name: 'contentName',
           type: 'text',
           label: t('LABEL.form.label.contentName', '학습자원명'),
-          value: '',
-        },
+          value: '' },
       ],
       [
         {
@@ -112,8 +98,7 @@ function LearningResourceTableComponent() {
           options: [
             { value: 'true', label: 'Y' },
             { value: 'false', label: 'N' },
-          ],
-        },
+          ] },
         {
           name: 'isContentEnabled',
           type: 'dropdown',
@@ -123,8 +108,7 @@ function LearningResourceTableComponent() {
           options: [
             { value: 'true', label: t('사용가능') },
             { value: 'false', label: t('사용불가') },
-          ],
-        },
+          ] },
         {
           name: 'isCourseUsed',
           type: 'dropdown',
@@ -134,14 +118,12 @@ function LearningResourceTableComponent() {
           options: [
             { value: 'true', label: 'Y' },
             { value: 'false', label: 'N' },
-          ],
-        },
+          ] },
         {
           name: 'coordinatorName',
           type: 'text',
           label: t('LABEL.form.label.coordinator', '담당자'),
-          value: '',
-        },
+          value: '' },
       ],
       [
         {
@@ -151,28 +133,21 @@ function LearningResourceTableComponent() {
           value: '',
           presetOptionLabel: t('LABEL.form.label.select', '선택'),
           optionsConfig: {
-            codeGroup: CODE_GROUP['pms.multilingual.LangCountryCode'],
-          },
-        },
+            codeGroup: CODE_GROUP['pms.multilingual.LangCountryCode'] } },
         {
           name: 'createdBy',
           type: 'text',
           label: t('LABEL.form.label.createdBy', '등록자'),
-          value: '',
-        },
+          value: '' },
         {
-          type: 'empty',
-        },
+          type: 'empty' },
         {
-          type: 'empty',
-        },
+          type: 'empty' },
       ],
     ],
     validator: {
       tenantId: true,
-      channelUuid: true,
-    },
-  };
+      channelUuid: true } };
 
   const gridConfig: useGridBoxConfig = {
     query: learningResourceQueryOptions.getContents,
@@ -181,15 +156,13 @@ function LearningResourceTableComponent() {
         size: 79,
         name: 'contentType',
         label: t('LABEL.grid.column.contentType', '유형'),
-        render: (_: any) => t(`cms.content.ContentType.${_.getValue()}`),
-      },
+        render: (_: any) => t(`cms.content.ContentType.${_.getValue()}`) },
       {
         size: 338,
         name: 'contentName',
         label: t('LABEL.grid.column.contentName', '학습자원명'),
         meta: {
-          size: 'auto',
-        },
+          size: 'auto' },
         render: (_: any) => (
           <span className="flex">
             {_.row.original.createType === ContentCreateType.TRANSLATE && (
@@ -203,37 +176,29 @@ function LearningResourceTableComponent() {
                   to: getDetailPathByContentType(_.row.original.contentType),
                   state: {
                     ...getDetailRouterState(_.row.original.contentUuid, _.row.original.contentType),
-                    listParam: params,
-                  },
-                });
+                    listParam: params } });
               }}
             >
               {_.getValue()}
             </Button>
           </span>
-        ),
-      },
+        ) },
       {
         size: 127,
         name: 'tenantName',
         label: t('LABEL.grid.column.tenant', '테넌트'),
         meta: {
-          size: 'auto',
-        },
-      },
+          size: 'auto' } },
       {
         size: 153,
         name: 'channelName',
         label: t('LABEL.grid.column.channel', '채널'),
         meta: {
-          size: 'auto',
-        },
-      },
+          size: 'auto' } },
       {
         size: 104,
         name: 'coordinatorName',
-        label: t('LABEL.grid.column.coordinator', '담당자'),
-      },
+        label: t('LABEL.grid.column.coordinator', '담당자') },
       {
         size: 125,
         name: 'contentAddInfo',
@@ -249,8 +214,7 @@ function LearningResourceTableComponent() {
               {duration(_.getValue(), DATE_TIME_FORMAT.HOUR_MIN_SEC)}
             </span>
           );
-        },
-      },
+        } },
       {
         size: 137,
         name: 'util',
@@ -263,8 +227,7 @@ function LearningResourceTableComponent() {
                 e.stopPropagation();
                 openModal({
                   width: 'full',
-                  content: <PreviewLearningWindow contentUuid={_.row.original.contentUuid} />,
-                });
+                  content: <PreviewLearningWindow contentUuid={_.row.original.contentUuid} /> });
               }}
             >
               {t('LABEL.grid.column.preview', '미리보기')}
@@ -283,20 +246,17 @@ function LearningResourceTableComponent() {
               )
             }
           </span>
-        ),
-      },
+        ) },
       {
         size: 95,
         name: 'isContentEnabled',
         label: t('LABEL.grid.column.isContentEnabled', '사용가능'),
-        render: (_: any) => (_.getValue() ? t('사용가능') : t('사용불가')),
-      },
+        render: (_: any) => (_.getValue() ? t('사용가능') : t('사용불가')) },
       {
         size: 83,
         name: 'languageCountryCode',
         label: t('LABEL.grid.column.translation', '번역'),
-        render: (_: any) => t(`pms.multilingual.LangCountryCode.${_.getValue()}`),
-      },
+        render: (_: any) => t(`pms.multilingual.LangCountryCode.${_.getValue()}`) },
       {
         size: 79,
         name: 'modifiedDate',
@@ -313,24 +273,20 @@ function LearningResourceTableComponent() {
                     lastModifiedBy={_.row.original.lastModifiedBy}
                     modifiedDate={_.getValue()}
                   />
-                ),
-              });
+                ) });
             }}
           >
             {t('LABEL.form.label.view', '보기')}
           </Button>
-        ),
-      },
-    ],
-  };
+        ) },
+    ] };
 
   const {
     provider: searchProvider,
     getValues,
     getValuesWithLabel,
     onFormChange,
-    onFormValid,
-  } = useSearchBox(searchConfig);
+    onFormValid } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch, data } = useGridBox<ContentInfo>(gridConfig, getValues);
   const [params, setParams] = useState<Record<string, any>>({});
   const [valuesWithLabel, setValuesWithLabel] = useState<Record<string, SelectOption>>({});
@@ -365,15 +321,13 @@ function LearningResourceTableComponent() {
     await openModal({
       width: 'xl',
       height: 'fix',
-      content: <LearningResourceShareShuttleModal data={selectedRows[0]} />,
-    });
+      content: <LearningResourceShareShuttleModal data={selectedRows[0]} /> });
   }
 
   function openProgramGuide() {
     openModal({
       width: 'md',
-      content: <ProgramGuideModal />,
-    });
+      content: <ProgramGuideModal /> });
   }
 
   function openBatchSetting() {
@@ -384,8 +338,7 @@ function LearningResourceTableComponent() {
         content: t(
           'LABEL.alert.contentTypeNotMatched.content',
           '일괄설정은 같은 유형의 학습자원들에서만 적용됩니다.',
-        ),
-      });
+        ) });
     }
 
     const selectedIsCourseUsed = map(selectedRows, 'isCourseUsed');
@@ -393,22 +346,19 @@ function LearningResourceTableComponent() {
       // API로 체크하도록 변경해야 함
       return alert({
         title: t('LABEL.alert.isCourseUsed.title', '교육과정에서 사용 중입니다.'),
-        content: t('LABEL.alert.isCourseUsed.content', '사용 중인 학습자원은 일괄설정 불가합니다.'),
-      });
+        content: t('LABEL.alert.isCourseUsed.content', '사용 중인 학습자원은 일괄설정 불가합니다.') });
     }
 
     openModal({
       width: 'xl',
-      content: <BatchSettingModal />,
-    });
+      content: <BatchSettingModal /> });
   }
 
   function handleCopy() {
     if (selectedRows.length !== 1) {
       return alert({
         title: t('LABEL.alert.canNotCopy.title', '1개의 학습자원을 선택하세요'),
-        content: t('LABEL.alert.canNotCopy.content', '복사기능은 1개의 학습자원들서만 적용됩니다.'),
-      });
+        content: t('LABEL.alert.canNotCopy.content', '복사기능은 1개의 학습자원들서만 적용됩니다.') });
     }
 
     postContentCopy(selectedRows[0].contentUuid);

@@ -3,15 +3,9 @@ import { useState } from 'react';
 import { t } from 'i18next';
 import { useCreation } from 'ahooks';
 
-import {
-  ContentsRow,
-  DynamicFormField,
-  Button,
-  useModal,
-  Stepper,
-  SelectOption,
-  RadioCard,
-} from '@learnway/ui';
+import { SelectOption } from '@learnway/ui/dropdown';
+import { RadioCard } from '@learnway/ui/radio-card';
+import { Stepper } from '@learnway/ui/stepper';
 import { z, cn } from '@learnway/shared';
 import { useDynamicForm } from '@learnway/hooks';
 import { IcoOverseasDealer, IcoBuilding01 } from '@learnway/icons';
@@ -20,6 +14,10 @@ import { FormRow, NoticeBox } from '../../../shared/ui';
 import { MEMBER_TYPE } from '@learnway/auth/types';
 
 import styles from '@learnway/styles/fo/pages/_auth/search-account/search-account.module.css';
+// TODO: Fix unknown imports: DynamicFormField,  from '@learnway/ui'
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { useModal } from '@learnway/ui/modal';
 
 //type MEMBER_TYPE = (typeof MEMBER_TYPE)[keyof typeof MEMBER_TYPE];
 

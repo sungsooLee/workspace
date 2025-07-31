@@ -1,22 +1,17 @@
+import { DatePicker, RangeDatePicker } from '@learnway/ui/date-picker';
+import { CheckboxGroupFormField, RadioGroupFormField } from '@learnway/ui/form-field';
+import { Input } from '@learnway/ui/input';
+import { Star } from '@learnway/ui/star';
+import { Textarea } from '@learnway/ui/textarea';
 import React, { ChangeEvent } from 'react';
 import {
-  Input,
-  Textarea,
-  RadioGroupFormField,
-  CheckboxGroupFormField,
-  DatePicker,
-  RangeDatePicker,
-  StarRating,
-  Star,
-} from '@learnway/ui';
-import {
-  FieldConfig,
-  InputFieldConfig,
-  SelectFieldConfig,
-  DateFieldConfig,
-  FileFieldConfig,
   CustomFieldConfig,
+  DateFieldConfig,
+  FieldConfig,
+  FileFieldConfig,
+  InputFieldConfig,
   RatingFieldConfig,
+  SelectFieldConfig,
 } from '../types/form-field.types';
 import { AddressField } from './custom-fields/address-field';
 import { ExperienceField } from './custom-fields/experience-field';

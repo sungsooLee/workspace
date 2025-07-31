@@ -1,7 +1,9 @@
 import { memo, useState } from 'react';
 import { BrowserView, isMobile, MobileView } from 'react-device-detect';
 import { IcoArrowDown, IcoCaution03, IcoDownload02, IcoLock, IcoPdf } from '@learnway/icons';
-import { Button, Panel, Popover, ProgressBar, TableBox, useModal } from '@learnway/ui';
+import { TableBox } from '@learnway/ui/grid';
+import { Panel } from '@learnway/ui/panel';
+import { Popover } from '@learnway/ui/popover-list';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import styles from '@learnway/styles/fo/features/layout/ui/course-introduction/dashboard.module.css';
 import statusStyles from '@learnway/styles/fo/features/layout/ui/course-introduction/status.module.css';
@@ -9,6 +11,9 @@ import pdsStyles from '@learnway/styles/fo/features/layout/ui/course-introductio
 import tableListStyles from '@learnway/styles/fo/shared/ui/list/table-list.module.css';
 import dropdownPopoverStyles from '@learnway/styles/fo/shared/ui/dropdown-popover/dropdown-popover.module.css';
 import { CurriculumStudy } from '../../../../features/layout';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
+import { ProgressBar } from '@learnway/ui/progress-bar';
 
 const DropdownPopoverCompoment = () => {
   return (

@@ -1,5 +1,5 @@
+import { RangeDatePicker, RangeDatePickerProps } from '@learnway/ui/date-picker';
 import { FC } from 'react';
-import { RangeDatePicker, RangeDatePickerProps } from '@learnway/ui';
 
 // interface DateRangePickerFormFieldProps extends Omit<RangeDatePickerProps> {
 //   value?: { from?: Date; to?: Date };

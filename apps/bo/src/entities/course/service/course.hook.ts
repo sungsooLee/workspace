@@ -10,8 +10,7 @@ import {
   CoursePopupQueryParams,
   CoursesQueryParams,
   MutationHookOptions,
-  PaginationResponse,
-} from '../../../types';
+  PaginationResponse } from '../../../types';
 import { mutateOptions, queryOptions } from './course.queries';
 
 /**
@@ -47,8 +46,7 @@ export const useCreateCourse = (
 ): UseMutationResult<Course, Error, Course, unknown> => {
   return useMutation({
     ...mutateOptions.create(),
-    ...options,
-  });
+    ...options });
 };
 
 /**
@@ -61,8 +59,7 @@ export const useCopyCourse = (
 ): UseMutationResult<Course, Error, { courseId: number; tenantId: number }, unknown> => {
   return useMutation({
     ...mutateOptions.copy(),
-    ...options,
-  });
+    ...options });
 };
 /**
  * 기존 코스 정보를 업데이트하는 뮤테이션 훅.
@@ -74,8 +71,7 @@ export const useUpdateCourse = (
 ): UseMutationResult<Course, Error, Course, unknown> => {
   return useMutation({
     ...mutateOptions.update(),
-    ...options,
-  });
+    ...options });
 };
 
 /**
@@ -89,8 +85,7 @@ export const useDeleteCourse = (
   // 반환 타입 any는 실제 API 응답 타입으로 명시 권장
   return useMutation({
     ...mutateOptions.delete(),
-    ...options,
-  });
+    ...options });
 };
 
 /**
@@ -103,8 +98,7 @@ export const useUpdateCourseWizard1 = (
 ): UseMutationResult<Course, Error, Course, unknown> => {
   return useMutation({
     ...mutateOptions.updateWizard1(),
-    ...options,
-  });
+    ...options });
 };
 
 /**
@@ -117,8 +111,7 @@ export const useUpdateCourseWizard2 = (
 ): UseMutationResult<Course, Error, Course, unknown> => {
   return useMutation({
     ...mutateOptions.updateWizard2(),
-    ...options,
-  });
+    ...options });
 };
 
 /**
@@ -131,8 +124,7 @@ export const useUpdateCourseWizard3 = (
 ): UseMutationResult<Course, Error, Course, unknown> => {
   return useMutation({
     ...mutateOptions.updateWizard3(),
-    ...options,
-  });
+    ...options });
 };
 
 /**
@@ -145,8 +137,7 @@ export const useUpdateCourseWizard4 = (
 ): UseMutationResult<Course, Error, Course, unknown> => {
   return useMutation({
     ...mutateOptions.updateWizard4(),
-    ...options,
-  });
+    ...options });
 };
 
 /**
@@ -159,8 +150,7 @@ export const useUpdateCourseWizard5 = (
 ): UseMutationResult<Course, Error, Course, unknown> => {
   return useMutation({
     ...mutateOptions.updateWizard5(),
-    ...options,
-  });
+    ...options });
 };
 
 /**
@@ -205,6 +195,5 @@ export const useUpdateFavorite = (
 ): UseMutationResult<any, Error, { id: number }, unknown> => {
   return useMutation({
     ...mutateOptions.updateFavorite(),
-    ...options,
-  });
+    ...options });
 };

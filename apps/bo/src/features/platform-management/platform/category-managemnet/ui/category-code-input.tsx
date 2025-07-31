@@ -2,7 +2,8 @@ import { forwardRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { BaseFormFieldProps, useDynamicFormContext } from '@learnway/hooks';
-import { Button, Input } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { Input } from '@learnway/ui/input';
 
 export const DuplicateCodeGuideText = forwardRef<HTMLDivElement, BaseFormFieldProps<string>>(
   (
@@ -18,8 +19,7 @@ export const DuplicateCodeGuideText = forwardRef<HTMLDivElement, BaseFormFieldPr
       disabled,
       codeCheckState,
       handleCodeChange,
-      setFormError,
-    },
+      setFormError },
     ref,
   ) => {
     const { t } = useTranslation();

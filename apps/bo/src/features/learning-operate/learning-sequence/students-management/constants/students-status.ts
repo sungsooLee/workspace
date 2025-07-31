@@ -4,8 +4,7 @@ export const STUDENTS_STATUS_KEYS = {
   LEARNING: '학습 중',
   ASSIGNMENT_DONE: '과제 완료',
   QUIZ_DONE: '평가 완료',
-  SURVEY_DONE: '설문 완료',
-} as const;
+  SURVEY_DONE: '설문 완료' } as const;
 
 export const STUDENTS_COURSE_TYPE_KEYS = {
   ELEARNING1: '이러닝1',
@@ -13,8 +12,7 @@ export const STUDENTS_COURSE_TYPE_KEYS = {
   CLASS: '클래스',
   LIVE: '라이브',
   EXAM: '시험',
-  SURVEY: '설문',
-} as const;
+  SURVEY: '설문' } as const;
 
 export type StudentsStatusType = keyof typeof STUDENTS_STATUS_KEYS;
 export type StudentCourseType = keyof typeof STUDENTS_COURSE_TYPE_KEYS;

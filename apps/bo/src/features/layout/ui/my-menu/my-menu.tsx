@@ -1,18 +1,17 @@
 import { memo, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { ChipList, Popover, List, Button } from '@learnway/ui';
-import { IcoStar, IcoStar02, IcoClock01 } from '@learnway/icons';
+import { IcoClock01, IcoStar, IcoStar02 } from '@learnway/icons';
+import { List } from '@learnway/ui/list';
+import { Popover } from '@learnway/ui/popover';
 
 import { cn } from '@learnway/shared';
 
-import styles from './my-menu.module.css';
 import {
   useDeleteMenuFavorites,
   useFetchMenuFavorites,
   useMoveMenuFavorites,
 } from '@entities/menu';
-import { useRouter } from '@tanstack/react-router';
 import {
   useActiveMenuDepthState,
   useAsycFetchMenusForceRefatch,
@@ -20,6 +19,10 @@ import {
   useLayoutStore,
   useUpdateUser,
 } from '@learnway/auth/entities';
+import { Button } from '@learnway/ui/button';
+import { ChipList } from '@learnway/ui/chips';
+import { useRouter } from '@tanstack/react-router';
+import styles from './my-menu.module.css';
 
 const PopoverContent = () => {
   const { t } = useTranslation();

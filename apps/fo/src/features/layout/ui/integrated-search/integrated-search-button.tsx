@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from '@tanstack/react-router';
-import { Button } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import styles from '@learnway/styles/fo/features/layout/ui/integrated-search/integrated-search-button.module.css';
+import { Button } from '@learnway/ui/button';
 
 interface Item {
   title: string;

@@ -8,5 +8,4 @@ export const queryKeys = {
     cdGroupName?: string;
     isUsed?: string;
   }) => [...queryKeys.all, 'list', params] as const,
-  detail: (cdGroupId: string) => [...queryKeys.all, 'detail', cdGroupId] as const,
-};
+  detail: (cdGroupId: string) => [...queryKeys.all, 'detail', cdGroupId] as const };

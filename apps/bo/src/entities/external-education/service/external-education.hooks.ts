@@ -8,8 +8,7 @@ export function useGetExternalEducationListQuery(params: any) {
 
 export function useGetExternalEducationComponents({
   tenantId,
-  externalCourseFormEnrollType,
-}: ExternalCourseFormLayoutParam) {
+  externalCourseFormEnrollType }: ExternalCourseFormLayoutParam) {
   return useQuery(queryOptions.componentList({ tenantId, externalCourseFormEnrollType }));
 }
 
@@ -33,16 +32,14 @@ export function useCreateExternalCourseForm(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
   return {
     create: (payload: any, callback?: any) => {
       mutation.mutate(payload, callback);
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }
 
 export function useCreateExternalCourseLayout(options: any) {
@@ -57,16 +54,14 @@ export function useCreateExternalCourseLayout(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
   return {
     create: (payload: any, callback?: any) => {
       mutation.mutate(payload, callback);
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }
 
 export function useCreateExternalCoursePopup(options: any) {
@@ -79,17 +74,14 @@ export function useCreateExternalCoursePopup(options: any) {
       }
       // 팝업 쿼리키 무효화 - 저장 후 최신 데이터 자동 재조회
       queryClient.invalidateQueries({
-        queryKey: [...queryKeys.all, 'popup', variables.externalCourseFormId],
-      });
+        queryKey: [...queryKeys.all, 'popup', variables.externalCourseFormId] });
     },
-    ...options,
-  });
+    ...options });
   return {
     create: (payload: any, callback?: any) => {
       mutation.mutate(payload, callback);
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }

@@ -1,21 +1,17 @@
 import { queryOptions } from '@entities/training-place/service/space.queries';
 import { CODE_GROUP, SearchBoxConfig, useFileManager, useSearchBox } from '@learnway/hooks';
 import { IcoDownload } from '@learnway/icons';
-import {
-  Button,
-  Divider,
-  GridBox,
-  PreviewImage,
-  useGridBox,
-  useGridBoxConfig,
-  useModal,
-} from '@learnway/ui';
+import { Divider } from '@learnway/ui/elements';
+import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
+import { PreviewImage } from '@learnway/ui/preview-image';
 import { SearchBox } from '@shared/ui/search-box';
 import { Link } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { EnGlobalConst, EnPageMode } from '@types';
 import { t } from 'i18next';
 import { forwardRef, useCallback, useImperativeHandle } from 'react';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 
 interface TrainingPlaceListProps {
   pageMode: EnPageMode;
@@ -41,8 +37,7 @@ const TrainingPlaceListComponent = (props: TrainingPlaceListProps, ref: any) => 
     reload() {
       console.log('reload');
       gridFetch();
-    },
-  }));
+    } }));
 
   const columnHelper = createColumnHelper<any>();
 
@@ -51,15 +46,13 @@ const TrainingPlaceListComponent = (props: TrainingPlaceListProps, ref: any) => 
       header: t('테넌트'),
       cell: (info) => info.getValue(),
       enableGrouping: false,
-      size: 180,
-    }),
+      size: 180 }),
     columnHelper.accessor('onOffLineType', {
       header: t('교육공간 타입'),
       cell: (info) =>
         t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.lms.space.OnOffLineType.${info.getValue()}`),
       enableGrouping: false,
-      size: 180,
-    }),
+      size: 180 }),
     columnHelper.accessor('learningSpaceName', {
       header: t('교육공간명'),
       cell: (info) => {
@@ -69,24 +62,21 @@ const TrainingPlaceListComponent = (props: TrainingPlaceListProps, ref: any) => 
             <Link
               to={'/learning/training-place/detail'}
               state={{
-                learningSpaceId: info.row.original.learningSpaceId,
-              }}
+                learningSpaceId: info.row.original.learningSpaceId }}
               className="link"
             >
               {info.row.original.learningSpaceName}
             </Link>
           );
       },
-      enableGrouping: false,
-    }),
+      enableGrouping: false }),
     columnHelper.accessor('addressUrl', {
       header: t('주소 / URL'),
       cell: (info) => {
         return info.getValue();
       },
       enableGrouping: false,
-      size: 390,
-    }),
+      size: 390 }),
     columnHelper.accessor('isUsed', {
       header: t('사용여부'),
       cell: (info) => (info.getValue() ? t('사용') : t('미사용')),
@@ -94,9 +84,7 @@ const TrainingPlaceListComponent = (props: TrainingPlaceListProps, ref: any) => 
       size: 150,
       enableSorting: false,
       meta: {
-        cellAlign: 'center',
-      },
-    }),
+        cellAlign: 'center' } }),
   ] as ColumnDef<any, unknown>[];
 
   const onHandleSelect = (row: any) => {
@@ -115,8 +103,7 @@ const TrainingPlaceListComponent = (props: TrainingPlaceListProps, ref: any) => 
           <Button onlyIcon onClick={() => fileDownload(preview)}>
             <IcoDownload width={40} height={40} stroke="#131C30" />
           </Button>
-        ),
-      });
+        ) });
     }
   };
 
@@ -151,9 +138,7 @@ const TrainingPlaceListComponent = (props: TrainingPlaceListProps, ref: any) => 
           enableSorting: false,
           size: 150,
           meta: {
-            cellAlign: 'center',
-          },
-        }),
+            cellAlign: 'center' } }),
       );
       break;
     case EnPageMode.MODAL:
@@ -166,9 +151,7 @@ const TrainingPlaceListComponent = (props: TrainingPlaceListProps, ref: any) => 
           enableGrouping: false,
           size: 150,
           meta: {
-            cellAlign: 'center',
-          },
-        }),
+            cellAlign: 'center' } }),
       );
       break;
   }
@@ -200,10 +183,8 @@ const searchConfig = (): SearchBoxConfig => ({
         label: t('테넌트'),
         value: '',
         optionsConfig: {
-          codeGroup: CODE_GROUP['manual.bo.my.tenant.tenantId'],
-        },
-        presetOptionLabel: t('선택'),
-      },
+          codeGroup: CODE_GROUP['manual.bo.my.tenant.tenantId'] },
+        presetOptionLabel: t('선택') },
       {
         name: 'onOffLineType',
         type: 'dropdown',
@@ -211,9 +192,7 @@ const searchConfig = (): SearchBoxConfig => ({
         value: '',
         presetOptionLabel: t('전체'),
         optionsConfig: {
-          codeGroup: CODE_GROUP['lms.space.OnOffLineType'],
-        },
-      },
+          codeGroup: CODE_GROUP['lms.space.OnOffLineType'] } },
       {
         name: 'isUsed',
         type: 'dropdown',
@@ -223,17 +202,14 @@ const searchConfig = (): SearchBoxConfig => ({
           { value: '', label: t('전체') },
           { value: true, label: t('사용') },
           { value: false, label: t('미사용') },
-        ],
-      },
+        ] },
       {
         name: 'learningSpaceName',
         type: 'text',
         label: t('교육공간명'),
-        value: '',
-      },
+        value: '' },
     ],
-  ],
-});
+  ] });
 
 const gridConfig: useGridBoxConfig = {
   query: queryOptions.list,
@@ -241,13 +217,10 @@ const gridConfig: useGridBoxConfig = {
     {
       name: 'no1',
       label: 'NO.',
-      type: 'numbering',
-    },
+      type: 'numbering' },
   ],
   data: [],
   gridState: {
     page: 0,
     size: 10,
-    sort: [],
-  },
-};
+    sort: [] } };

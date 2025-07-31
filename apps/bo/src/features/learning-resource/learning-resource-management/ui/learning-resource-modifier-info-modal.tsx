@@ -1,6 +1,6 @@
+import { ModalContainer, ModalBody, ModalTitle } from '@learnway/ui/modal';
 // IA102 / NLP_BO_CMS_1055
 import { cn, DATE_TIME_FORMAT, formatDate } from '@learnway/shared';
-import { ModalContainer, ModalBody, ModalTitle } from '@learnway/ui';
 import styles from '@learnway/styles/bo/assets/styles/modules/info-list-box.module.css';
 import { t } from 'i18next';
 import { learningResourceQueryOptions } from '@entities/learning-resource';
@@ -13,8 +13,7 @@ interface ModifierInfoModalComponentProps {
 
 function ModifierInfoModalComponent({
   lastModifiedBy,
-  modifiedDate,
-}: ModifierInfoModalComponentProps) {
+  modifiedDate }: ModifierInfoModalComponentProps) {
   const { data } = useQuery(learningResourceQueryOptions.getUser(lastModifiedBy));
 
   return (

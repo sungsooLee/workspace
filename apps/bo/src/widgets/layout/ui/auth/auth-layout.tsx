@@ -11,8 +11,7 @@ import styles from '@learnway/styles/bo/widgets/layout/ui/auth/auth-layout.modul
 
 export const AUTH_CONTAINERS = {
   LOGIN: 'login-container',
-  AUTH_PROGRESS: 'AUTH_PROGRESS',
-};
+  AUTH_PROGRESS: 'AUTH_PROGRESS' };
 
 interface AuthLayoutComponentProps {
   children: ReactNode;

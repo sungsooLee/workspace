@@ -3,15 +3,14 @@ import { createFileRoute, useRouter } from '@tanstack/react-router';
 
 import { pageRouteConfig } from '@features/auth/index';
 import { MyPage } from '@features/user/my-page/ui/my-page';
-import { Button } from '@learnway/ui';
 import { useTranslation } from 'react-i18next';
+import { Button } from '@learnway/ui/button';
 
 /* company logo image */
 // import imgLogo from '../../../../assets/images/temp/img_temp_company_logo.png';
 export const Route = createFileRoute('/_layout/my-page/info/')({
   component: RouteComponent,
-  ...pageRouteConfig({}),
-});
+  ...pageRouteConfig({}) });
 
 function RouteComponent() {
   const router = useRouter();

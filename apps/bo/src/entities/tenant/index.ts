@@ -1,6 +1,6 @@
+export * from './api/tenant';
 export * from './api/tenant-attribute';
 export * from './api/tenant-category';
-export * from './api/tenant';
 export * from './service/tenant-attribute.hook';
 export * from './service/tenant-attribute.queries';
 export * from './service/tenant-category.hook';

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Input, Button } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { Input } from '@learnway/ui/input';
 
 interface AddressFieldProps {
   label?: string;
@@ -22,8 +23,7 @@ export const AddressField: React.FC<AddressFieldProps> = ({
   error,
   disabled = false,
   required = false,
-  description,
-}) => {
+  description }) => {
   const handleZipCodeSearch = () => {
     // 실제 구현에서는 다음 주소 API 등을 사용
     // 현재는 데모용으로 빈 함수
@@ -34,8 +34,7 @@ export const AddressField: React.FC<AddressFieldProps> = ({
 
     onChange({
       ...value,
-      [field]: newValue,
-    });
+      [field]: newValue });
   };
 
   return (

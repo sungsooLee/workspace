@@ -31,8 +31,7 @@ export const SkillRatingField: React.FC<SkillRatingFieldProps> = ({
   required = false,
   description,
   ratingScale = 5,
-  categories = ['프론트엔드', '백엔드', '데이터베이스'],
-}) => {
+  categories = ['프론트엔드', '백엔드', '데이터베이스'] }) => {
   const updateRating = (categoryIndex: number, skillIndex: number, rating: number) => {
     if (!onChange) return;
 
@@ -40,15 +39,13 @@ export const SkillRatingField: React.FC<SkillRatingFieldProps> = ({
     if (!newValue[categoryIndex]) {
       newValue[categoryIndex] = {
         category: categories[categoryIndex],
-        skills: [],
-      };
+        skills: [] };
     }
 
     if (!newValue[categoryIndex].skills[skillIndex]) {
       newValue[categoryIndex].skills[skillIndex] = {
         skill: `스킬 ${skillIndex + 1}`,
-        rating: 0,
-      };
+        rating: 0 };
     }
 
     newValue[categoryIndex].skills[skillIndex].rating = rating;

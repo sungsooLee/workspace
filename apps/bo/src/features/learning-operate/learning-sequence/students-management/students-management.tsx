@@ -11,19 +11,16 @@ import { useFetchAuthUser } from '@learnway/auth/entities';
 import { LMSApiPrefix } from '@learnway/config';
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, generateYears, getDateToString } from '@learnway/shared';
+import { Button } from '@learnway/ui/button';
+import { Divider, SplitPanel, StatsSummary, StatsSummaryData } from '@learnway/ui/elements';
 import {
-  Button,
-  Divider,
   EditDropdownCell,
   EditInputCell,
   GridBox,
-  SplitPanel,
-  StatsSummary,
-  StatsSummaryData,
   useGridBox,
   useGridBoxConfig,
-  useModal,
-} from '@learnway/ui';
+} from '@learnway/ui/grid';
+import { useModal } from '@learnway/ui/modal';
 import { GridExcelDownloadButton, GridExcelUploadButton, SearchBox } from '@shared/ui';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter, useRouterState } from '@tanstack/react-router';

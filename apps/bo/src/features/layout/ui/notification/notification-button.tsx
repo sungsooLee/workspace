@@ -1,14 +1,17 @@
 import { memo, useMemo } from 'react';
 
-import { Popover, Badge, Button, useModal } from '@learnway/ui';
 import { IcoAlarmFill } from '@learnway/icons';
 import { cn } from '@learnway/shared';
+import { Badge } from '@learnway/ui/badge';
+import { Popover } from '@learnway/ui/popover';
 
 import { NotificationList } from './notification-list';
 
-import styles from './notification-button.module.css';
 import { useNotifications, useNotificationsActionForAll } from '@entities/notification';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 import { t } from 'i18next';
+import styles from './notification-button.module.css';
 
 const PopoverContent = () => {
   const { notifications } = useNotifications();
@@ -71,7 +74,7 @@ const NotificationComponent = () => {
         {count !== 0 && (
           <Badge
             className={styles.count_view}
-            option={{ label: count + '', value: 'A' }}
+            option={{ label: `${count}`, value: 'A' }}
             variant="number"
             status="new"
             size="sm"

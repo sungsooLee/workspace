@@ -4,12 +4,15 @@ import { t } from 'i18next';
 import movieInfoStyles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
 import previewImg from '@assets/images/temp/img_exam_basic.jpg';
 
-import { Button, FormSubTitle, SplitPanel, useModal } from '@learnway/ui';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { SplitPanel } from '@learnway/ui/elements';
 import { CODE_GROUP, DynamicFormConfig, useDynamicForm2 } from '@learnway/hooks';
 
 import { LearningResourceBaseForm } from './learning-resource-base-form';
 import { useLearningResourceQuestionDetailForm } from '../service/learning-resource-question-detail-from.hook';
 import { ContentBaseInfo } from '@types';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 
 const LearningResourceQuestionBankDetailComponent = (props: any, ref: any) => {
   const { alert, openModal, confirm: openConfirm } = useModal();
@@ -23,8 +26,7 @@ const LearningResourceQuestionBankDetailComponent = (props: any, ref: any) => {
     if (
       await openConfirm({
         title: '저장 하시겠습니까?',
-        content: '입력한 정보로 저장합니다.',
-      })
+        content: '입력한 정보로 저장합니다.' })
     ) {
       const payload = getValues();
       console.log('formSave', payload);

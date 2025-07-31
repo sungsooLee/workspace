@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 
 import { IcoCaution03 } from '@learnway/icons';
-import { Button, Checkbox, useModal } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import { useDeleteUser, useLogoutUser } from '@learnway/auth/entities';
 
@@ -12,6 +11,9 @@ import { pageRouteConfig } from '../../../../features/auth';
 import { BrowserFooter, MobileResponsiveContainerFooter } from '../../../../shared/m.ui';
 
 import styles from '@learnway/styles/fo/pages/_layout/my-page/privacy/withdraw-menbership.module.css';
+import { Button } from '@learnway/ui/button';
+import { Checkbox } from '@learnway/ui/checkbox';
+import { useModal } from '@learnway/ui/modal';
 
 export const Route = createFileRoute('/_layout/my-page/privacy/withdraw-menbership')({
   component: RouteComponent,

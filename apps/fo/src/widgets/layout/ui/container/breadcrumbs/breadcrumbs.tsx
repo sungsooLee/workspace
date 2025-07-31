@@ -3,7 +3,7 @@ import { memo } from 'react';
 import styles from './breadcrumbs.module.css';
 import { Link, useRouterState } from '@tanstack/react-router';
 import { IcoHome03, IcoArrowForward, IcoArrowDown } from '@learnway/icons';
-import { Popover } from '@learnway/ui';
+import { Popover } from '@learnway/ui/popover-list';
 import { useCategoryBreadcrumbs } from '../../../service/breadcurmb.hooks';
 import { Category } from '../../../../../types/entities/category';
 import { useCategoryTree } from '@entities/category';

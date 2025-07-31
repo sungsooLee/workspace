@@ -1,16 +1,11 @@
 import { memo, useState } from 'react';
-import {
-  OptionCard,
-  OptionCardItem,
-  ModalBody,
-  ModalContainer,
-  ModalTitle,
-  ModalFooter,
-} from '@learnway/ui';
+import { OptionCard, OptionCardItem } from '@learnway/ui/option-card';
 
 import { IcoChair, IcoLocation } from '@learnway/icons';
 
 import {
+// TODO: Fix unknown imports:  from '@learnway/ui'
+import { ModalBody, ModalContainer, ModalTitle, ModalFooter } from '@learnway/ui/modal';
   CourseFixedButton, // 수강신청 버튼
 } from '../../../features/layout';
 

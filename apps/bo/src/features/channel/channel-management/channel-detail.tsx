@@ -1,16 +1,16 @@
 import { DuplicateCheckInputFormField, DuplicateState, FormDisplay } from '@features/form';
 import { CODE_GROUP, DynamicFormConfig, S3_PATH, useDynamicForm } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { ContentsRow } from '@learnway/ui/contents-row';
 import {
   ChipListModalSelectorFormField,
-  ContentsRow,
-  FormSubTitle,
-  Input,
   RadioGroupFormField,
   TextareaFormField,
-  useModal,
-  useToast,
-} from '@learnway/ui';
+} from '@learnway/ui/form-field';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
+import { useToast } from '@learnway/ui/toast';
 import {
   ChipListFormField,
   FormItem,

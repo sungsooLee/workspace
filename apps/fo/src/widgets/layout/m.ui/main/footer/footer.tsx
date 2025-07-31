@@ -5,12 +5,14 @@ import { Link } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 
 import { Language } from '../../../../../features/platform';
-import { Button, useModal, useSearchStore } from '@learnway/ui';
 import { IcoHome03, IcoDotpoints, IcoSearch, IcoMybook, IcoEye, IcoArray } from '@learnway/icons';
 
 import styles from '@learnway/styles/fo/widgets/layout/m.ui/main/footer/footer.module.css';
 import { CategoryPopup } from '@features/layout';
 import { useFetchAuthUser } from '@learnway/auth/entities';
+// TODO: Fix unknown imports: useSearchStore from '@learnway/ui'
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 
 function FooterComponent() {
   const {data: loginUser} = useFetchAuthUser();

@@ -14,20 +14,13 @@ export const Route = createFileRoute('/_auth/search-password/')({
         default: 'password',
         conditions: [
           {
-            fn: (values: any) => !['account', 'password'].includes(values.tabKey),
-          },
-        ],
-      },
+            fn: (values: any) => !['account', 'password'].includes(values.tabKey) },
+        ] },
       step: {
         format: 'string',
-        default: 'email',
-      },
-    },
+        default: 'email' } },
     meta: {
-      title: 'LABEL.common.searchPassword',
-    },
-  }),
-});
+      title: 'LABEL.common.searchPassword' } }) });
 
 type step = 'email' | 'auth';
 

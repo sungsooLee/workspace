@@ -2,7 +2,7 @@ import { memo, useEffect, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { isMobile } from 'react-device-detect';
 
-import { Popover, Button, useModal } from '@learnway/ui';
+import { Popover } from '@learnway/ui/popover-list';
 import { IcoBell02, IcoArray } from '@learnway/icons';
 import { PMSApiPrefix } from '@learnway/config';
 import { useFetchAuthUser } from '@learnway/auth/entities';
@@ -15,6 +15,8 @@ import { NotificationModal } from './notification-modal';
 import { Notification } from './notification';
 
 import styles from './notification-button.module.css';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 
 const PopoverContent = () => {
   return (

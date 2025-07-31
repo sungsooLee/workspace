@@ -4,8 +4,7 @@ import {
   useGetExternalPopup,
   useCreateExternalCoursePopup,
   useGetRegistrationLayout,
-  useCreateExternalCourseLayout,
-} from '@entities/external-education';
+  useCreateExternalCourseLayout } from '@entities/external-education';
 
 export function useExternalEducationForm(formId?: number) {
   const { provider, getValues, updateFormData, onFormValid } = useDynamicForm2();
@@ -14,12 +13,10 @@ export function useExternalEducationForm(formId?: number) {
   const { data: popupData } = useGetExternalPopup(formId || 0);
   const { data: registrationLayout } = useGetRegistrationLayout({
     externalCourseFormId: formId || 0,
-    externalCourseFormEnrollType: 'REGISTRATION' as any,
-  });
+    externalCourseFormEnrollType: 'REGISTRATION' as any });
   const { data: resultLayout } = useGetRegistrationLayout({
     externalCourseFormId: formId || 0,
-    externalCourseFormEnrollType: 'RESULT' as any,
-  });
+    externalCourseFormEnrollType: 'RESULT' as any });
   
   // API 호출 함수들
   const { create: createPopup } = useCreateExternalCoursePopup({});
@@ -39,8 +36,7 @@ export function useExternalEducationForm(formId?: number) {
         dateRange: { 
           from: popupData.popupStartDate || null, 
           to: popupData.popupEndDate || null 
-        },
-      };
+        } };
       updateFormData(formData);
     }
   }, [popupData?.externalCourseFormPopupId]);
@@ -60,14 +56,12 @@ export function useExternalEducationForm(formId?: number) {
         popupStartDate: formValues.dateRange?.from || null,
         popupEndDate: formValues.dateRange?.to || null,
         isPopupExposed: formValues.isPopupExposed || false,
-        tenantId: 1,
-      };
+        tenantId: 1 };
       
       return new Promise<boolean>((resolve) => {
         createPopup(createData, {
           onSuccess: () => resolve(true),
-          onError: () => resolve(false),
-        });
+          onError: () => resolve(false) });
       });
     } catch {
       return false;
@@ -84,21 +78,18 @@ export function useExternalEducationForm(formId?: number) {
       const layouts = applicationItems.map((item: any) => ({
         externalCourseFormComponentId: item.id,
         isMandatory: item.isMandatory,
-        sortOrder: item.order,
-      }));
+        sortOrder: item.order }));
       
       const saveData = {
         externalCourseFormId: formId,
         externalCourseFormEnrollType: 'REGISTRATION',
-        layouts,
-      };
+        layouts };
       
       if (formId && layouts.length > 0) {
         return new Promise<boolean>((resolve) => {
           createRegistrationLayout(saveData, {
             onSuccess: () => resolve(true),
-            onError: () => resolve(false),
-          });
+            onError: () => resolve(false) });
         });
       }
       return true;
@@ -116,21 +107,18 @@ export function useExternalEducationForm(formId?: number) {
       const layouts = resultItems.map((item: any) => ({
         externalCourseFormComponentId: item.id,
         isMandatory: item.isMandatory,
-        sortOrder: item.order,
-      }));
+        sortOrder: item.order }));
       
       const saveData = {
         externalCourseFormId: formId,
         externalCourseFormEnrollType: 'RESULT',
-        layouts,
-      };
+        layouts };
       
       if (formId && layouts.length > 0) {
         return new Promise<boolean>((resolve) => {
           createResultLayout(saveData, {
             onSuccess: () => resolve(true),
-            onError: () => resolve(false),
-          });
+            onError: () => resolve(false) });
         });
       }
       return true;
@@ -149,6 +137,5 @@ export function useExternalEducationForm(formId?: number) {
     resultLayout,
     savePopup,
     saveRegistration,
-    saveResult,
-  };
+    saveResult };
 }

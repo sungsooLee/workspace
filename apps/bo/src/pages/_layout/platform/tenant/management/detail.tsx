@@ -1,19 +1,19 @@
-import { useState, useRef } from 'react';
-import { useRouter, useRouterState, createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
+import { useRef, useState } from 'react';
 
-import { MainContents, PageContainer, ContentsButtons, LinkBox } from '@shared/ui';
+import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
-
-import { Tabs, Button } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { Tabs } from '@learnway/ui/tabs';
 
 /* tab contents */
 import {
-  TenantDetailLearningRole,
-  TenantDetailCategory,
-  TenantDetailMenu,
   TenantDetailBase,
+  TenantDetailCategory,
+  TenantDetailLearningRole,
+  TenantDetailMenu,
 } from '@features/platform-management/tenant';
 
 import { EnTenantDetailTabKey } from '@types';

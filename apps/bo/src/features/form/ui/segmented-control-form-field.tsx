@@ -1,9 +1,9 @@
-import { forwardRef } from 'react';
 import { BaseFormFieldProps } from '@learnway/hooks';
-import { TabItemProps, Tabs } from '@learnway/ui';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import styles from '@learnway/styles/bo/pages/_layout/learning/test-detail.module.css';
+import { TabItemProps, Tabs } from '@learnway/ui/tabs';
+import { forwardRef } from 'react';
 
 interface SegmentedControlFormFieldProps extends BaseFormFieldProps<string> {
   items: TabItemProps[];

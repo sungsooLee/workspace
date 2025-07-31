@@ -1,8 +1,7 @@
 import type {
-  UseQueryOptions,
   DefinedInitialDataOptions,
   UndefinedInitialDataOptions,
-  AnyDataTag,
+  UseQueryOptions,
 } from '@tanstack/react-query';
 import { skipToken } from '@tanstack/react-query';
 import { endsWith, isEmpty, startsWith } from 'lodash';

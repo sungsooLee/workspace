@@ -9,8 +9,7 @@ export const QUESTION_TYPES: (
     [EnQuestionType.MULTIPLE]: t('다답식'),
     [EnQuestionType.OX]: t('OX'),
     [EnQuestionType.SHORT_ANSWER]: t('단답식'),
-    [EnQuestionType.ESSAY]: t('주관식'),
-  });
+    [EnQuestionType.ESSAY]: t('주관식') });
 
 export const QUESTION_LEVELS: (
   t: TFunction<'translation', undefined>,
@@ -18,5 +17,4 @@ export const QUESTION_LEVELS: (
   Object.freeze({
     [EnQuestionLevel.HARD]: t('상'),
     [EnQuestionLevel.MEDIUM]: t('중'),
-    [EnQuestionLevel.EASY]: t('하'),
-  });
+    [EnQuestionLevel.EASY]: t('하') });

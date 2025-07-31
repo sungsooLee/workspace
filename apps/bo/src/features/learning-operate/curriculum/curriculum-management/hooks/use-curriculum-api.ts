@@ -14,8 +14,7 @@ import {
   useUpdateFixedModule,
   useUpdateGeneralModule,
   useUpdateLessonByFixed,
-  useUpdateLessonByGeneral,
-} from '@entities/curriculum';
+  useUpdateLessonByGeneral } from '@entities/curriculum';
 import { MODULE_TYPE } from '@types';
 import { getTimeValueFromHour } from '@learnway/shared';
 
@@ -49,8 +48,7 @@ export const useCurriculumApi = ({ curriculumId, onFormChange }: UseCurriculumAp
           return createCurriculumGeneralModule(
             {
               ...data,
-              curriculumId,
-            },
+              curriculumId },
             { onSuccess },
           );
         },
@@ -58,12 +56,10 @@ export const useCurriculumApi = ({ curriculumId, onFormChange }: UseCurriculumAp
           return createCurriculumFixedModule(
             {
               ...data,
-              curriculumId,
-            },
+              curriculumId },
             { onSuccess },
           );
-        },
-      };
+        } };
       return strategies[moduleType];
     },
     [createCurriculumGeneralModule, createCurriculumFixedModule, curriculumId],
@@ -76,8 +72,7 @@ export const useCurriculumApi = ({ curriculumId, onFormChange }: UseCurriculumAp
           const updateData = {
             moduleId: data.moduleId,
             moduleName: data.moduleName,
-            moduleDescription: data.moduleDescription,
-          };
+            moduleDescription: data.moduleDescription };
           return updateCurriculumGeneralModule(updateData, { onSuccess });
         },
         [MODULE_TYPE.FIXED]: (data: any, onSuccess: (response: any) => void) => {
@@ -85,11 +80,9 @@ export const useCurriculumApi = ({ curriculumId, onFormChange }: UseCurriculumAp
             moduleId: data.moduleId,
             moduleName: data.moduleName,
             moduleDescription: data.moduleDescription,
-            totalTime: getTimeValueFromHour(data.contentDuration),
-          };
+            totalTime: getTimeValueFromHour(data.contentDuration) };
           return updateCurriculumFixedModule(updateData, { onSuccess });
-        },
-      };
+        } };
       return strategies[moduleType];
     },
     [updateCurriculumGeneralModule, updateCurriculumFixedModule],
@@ -164,6 +157,5 @@ export const useCurriculumApi = ({ curriculumId, onFormChange }: UseCurriculumAp
 
     // 유틸리티 함수
     extractIdFromNodeId,
-    calculateSortOrder,
-  };
+    calculateSortOrder };
 };

@@ -1,3 +1,5 @@
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
   useActiveMenuDepthState,
@@ -15,7 +17,8 @@ import {
   IcoTranslation,
 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { Button, Popover, Tooltip, useModal } from '@learnway/ui';
+import { Popover } from '@learnway/ui/popover';
+import { Tooltip } from '@learnway/ui/tooltip';
 import { useCreation } from 'ahooks';
 import { t } from 'i18next';
 import { isEmpty, last } from 'lodash';
@@ -227,7 +230,8 @@ const PageContainerComponent: FC<{
           menuId: currentMenu?.menuId,
           // TODO tenantId 는 있어야하지 않나?
           // tenantId: currentMenu?.tenantId,
-          // userId: authUser?.userId,
+          // userId: authUser?.userId
+          //
         },
         {
           onSuccess: async (data: any) => {

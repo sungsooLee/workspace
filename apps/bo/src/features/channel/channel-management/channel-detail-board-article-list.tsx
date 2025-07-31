@@ -1,18 +1,20 @@
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { formUtils } from '@learnway/shared';
-import { Button, Checkbox, Divider, GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
+import { Divider } from '@learnway/ui/elements';
+import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import { SearchBox } from '@shared/ui/search-box';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { useCallback } from 'react';
+import { Button } from '@learnway/ui/button';
+import { Checkbox } from '@learnway/ui/checkbox';
 
 interface ChannelDetailBoardArticleListProps {
   onArticleClick?: (articleId: number) => void;
 }
 
 const ChannelDetailBoardArticleListComponent = ({
-  onArticleClick,
-}: ChannelDetailBoardArticleListProps) => {
+  onArticleClick }: ChannelDetailBoardArticleListProps) => {
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig());
   const { config: gConfig, gridFetch, data: gridData } = useGridBox(gridConfig, getValues);
 
@@ -34,21 +36,18 @@ const ChannelDetailBoardArticleListComponent = ({
       cell: (info) => info.getValue(),
       header: t('게시판 유형'),
       size: 130,
-      enableGrouping: false,
-    }),
+      enableGrouping: false }),
     columnHelper.accessor('boardCode', {
       cell: (info) => info.getValue(),
       header: t('게시판 코드'),
       size: 100,
-      enableGrouping: false,
-    }),
+      enableGrouping: false }),
 
     columnHelper.accessor('articleDivision', {
       cell: (info) => info.getValue(),
       header: t('게시물 분류'),
       enableGrouping: false,
-      size: 120,
-    }),
+      size: 120 }),
     columnHelper.accessor('title', {
       cell: (info) => (
         <Button className="link" onClick={() => handleArticleClick(info.row.original.articleId)}>
@@ -56,44 +55,37 @@ const ChannelDetailBoardArticleListComponent = ({
         </Button>
       ),
       header: t('제목'),
-      enableGrouping: false,
-    }),
+      enableGrouping: false }),
     columnHelper.accessor('isFixed', {
       cell: (info) => (info.getValue() ? t('고정') : t('비고정')),
       header: t('고정 공지 여부'),
       enableGrouping: false,
-      size: 130,
-    }),
+      size: 130 }),
     columnHelper.accessor('fixedDuration', {
       cell: (info) => info.getValue(),
       header: t('고정 공지 게시 기간'),
       enableGrouping: false,
-      size: 190,
-    }),
+      size: 190 }),
     columnHelper.accessor('isActive', {
       cell: (info) => (info.getValue() ? t('노출') : t('비노출')),
       header: t('노출 여부'),
       enableGrouping: false,
-      size: 120,
-    }),
+      size: 120 }),
     columnHelper.accessor('view', {
       cell: (info) => info.getValue(),
       header: t('조회수'),
       enableGrouping: false,
-      size: 120,
-    }),
+      size: 120 }),
     columnHelper.accessor('createdBy', {
       cell: (info) => info.getValue(),
       header: t('등록자'),
       size: 130,
-      enableGrouping: false,
-    }),
+      enableGrouping: false }),
     columnHelper.accessor('createdDate', {
       cell: (info) => info.getValue(),
       header: t('등록일'),
       enableGrouping: false,
-      size: 130,
-    }),
+      size: 130 }),
   ] as ColumnDef<any, unknown>[];
 
   return (
@@ -121,22 +113,19 @@ const searchConfig = (): SearchBoxConfig => ({
         type: 'dropdown',
         label: t('게시판 유형'),
         value: '',
-        options: [{ value: '', label: t('전체') }],
-      },
+        options: [{ value: '', label: t('전체') }] },
       {
         name: 'boardDivision',
         type: 'dropdown',
         label: t('게시판 분류'),
         value: '',
-        options: [{ value: '', label: t('전체') }],
-      },
+        options: [{ value: '', label: t('전체') }] },
       {
         name: 'title',
         type: 'text',
         label: t('제목'),
         value: '',
-        placeholder: '',
-      },
+        placeholder: '' },
     ],
     [
       {
@@ -144,27 +133,22 @@ const searchConfig = (): SearchBoxConfig => ({
         type: 'dropdown',
         label: t('고정 공지 여부'),
         value: '',
-        options: [{ value: '', label: t('전체') }],
-      },
+        options: [{ value: '', label: t('전체') }] },
       {
         name: 'isActive',
         type: 'dropdown',
         label: t('노출 여부'),
         value: '',
-        options: [{ value: '', label: t('전체') }],
-      },
+        options: [{ value: '', label: t('전체') }] },
       {
         name: 'registerDate',
         type: 'date-range',
         label: t('등록 기간'),
         value: {
           from: formUtils.nowDate({ unit: 'day', offset: -30 }),
-          to: formUtils.nowDate(),
-        },
-      },
+          to: formUtils.nowDate() } },
     ],
-  ],
-});
+  ] });
 
 const gridConfig: useGridBoxConfig = {
   query: '',
@@ -172,8 +156,7 @@ const gridConfig: useGridBoxConfig = {
     {
       name: 'no1',
       label: 'NO.',
-      type: 'numbering',
-    },
+      type: 'numbering' },
   ],
   data: [
     {
@@ -187,13 +170,10 @@ const gridConfig: useGridBoxConfig = {
       isActive: true,
       view: 1000,
       createdBy: '김현대',
-      createdDate: '2025-01-01 11:11:11',
-    },
+      createdDate: '2025-01-01 11:11:11' },
   ],
 
   gridState: {
     page: 0,
     size: 10,
-    sort: [],
-  },
-};
+    sort: [] } };

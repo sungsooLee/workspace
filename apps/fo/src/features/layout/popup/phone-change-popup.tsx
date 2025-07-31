@@ -1,22 +1,16 @@
 import { memo } from 'react';
 import { cn } from '@learnway/shared';
-import {
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  useModal,
-  Button,
-  ContentsRow,
-  Input,
-  PhoneNumber,
-  InputTimer,
-} from '@learnway/ui';
+import { PhoneNumber } from '@learnway/ui/phone-number';
 
 import { IcoFormRequired } from '@learnway/icons';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import styles from '@learnway/styles/fo/features/layout/popup/phone-change-popup.module.css';
+// TODO: Fix unknown imports: InputTimer,  from '@learnway/ui'
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
 const PhoneChangePopupComponent = () => {
   const { alert: openAlert } = useModal();

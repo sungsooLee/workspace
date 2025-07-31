@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import { createLazyFileRoute } from '@tanstack/react-router';
-import { t } from 'i18next';
-import { Tabs } from '@learnway/ui';
-import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import { pageRouteConfig } from '@features/auth';
 import { ApiTree } from '@features/platform-management/platform/api-managemnet/ui/api-tree';
+import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
+import { Tabs } from '@learnway/ui/tabs';
 import { MainContents, PageContainer, SectionLayout } from '@shared/ui';
+import { createLazyFileRoute } from '@tanstack/react-router';
+import { t } from 'i18next';
+import { useState } from 'react';
 
 export const Route = createLazyFileRoute('/_layout/platform/program/')({
   component: RouteComponent,

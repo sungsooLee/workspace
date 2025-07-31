@@ -1,15 +1,15 @@
-import { GridBox, ModalBody, ModalContainer, ModalTitle } from '@learnway/ui';
+import { GridBox } from '@learnway/ui/grid';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { useEffect, useState } from 'react';
+import { ModalBody, ModalContainer, ModalTitle } from '@learnway/ui/modal';
 
 export interface StudentsEnrollmentTypeHistoryModalComponentProps {
   selectedItem: object;
 }
 
 const StudentsEnrollmentTypeHistoryModalComponent = ({
-  selectedItem,
-}: StudentsEnrollmentTypeHistoryModalComponentProps) => {
+  selectedItem }: StudentsEnrollmentTypeHistoryModalComponentProps) => {
   const [columns, setColumns] = useState() as any;
   useEffect(() => {
     console.log('##selectedItems=>', selectedItem);
@@ -18,26 +18,22 @@ const StudentsEnrollmentTypeHistoryModalComponent = ({
         header: t('신청일'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
-        size: 152,
-      }),
+        size: 152 }),
       columnHelper.accessor('2', {
         header: t('입과방식'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
-        size: 132,
-      }),
+        size: 132 }),
       columnHelper.accessor('3', {
         header: t('상태'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
-        size: 167,
-      }),
+        size: 167 }),
       columnHelper.accessor('4', {
         header: t('사유'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
-        size: 289,
-      }),
+        size: 289 }),
     ] as ColumnDef<any, unknown>[];
 
     setColumns(columns);

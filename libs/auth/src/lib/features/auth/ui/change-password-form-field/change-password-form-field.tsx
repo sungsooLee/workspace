@@ -1,13 +1,13 @@
-import { useTranslation } from 'react-i18next';
 import { isMobile } from 'react-device-detect';
-import { isFunction } from 'lodash';
+import { useTranslation } from 'react-i18next';
 
-import { cn } from '@learnway/shared';
-import { Input, Button, InputProps, useModal } from '@learnway/ui';
+import { Input, InputProps } from '@learnway/ui/input';
 
 //import styles from './auth-tool-form-field.module.css';
 //import styles from '@learnway/styles/fo/features/auth/ui/auth-tool-form-field/auth-tool-form-field.module.css';
 
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 import { ChangePasswordModal } from './change-password-modal';
 
 interface FormFieldComponentProps {

@@ -1,4 +1,7 @@
-import { Button, Divider, Tabs, ToggleButtonGroup } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { Divider } from '@learnway/ui/elements';
+import { Tabs } from '@learnway/ui/tabs';
+import { ToggleButtonGroup } from '@learnway/ui/toggle-button-group';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
 import { useMemo } from 'react';
 import { useCourseDetailPage } from '../../hooks/use-course-detail-page';

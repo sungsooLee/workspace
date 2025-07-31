@@ -1,31 +1,23 @@
 import { SectionLayout } from '@shared/ui';
-import React, { FC, useEffect, useState } from 'react';
-import { useRouterState, useRouter } from '@tanstack/react-router';
+import { useRouter, useRouterState } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
+import React, { FC, useEffect, useState } from 'react';
 
-import {
-  Button,
-  CheckboxGroupFormField,
-  ContentsRow,
-  DndTreeView,
-  DynamicFormField,
-  GridBox,
-  Input,
-  TextareaFormField,
-  TreeContainer,
-  TreeNode,
-  TreeView,
-  useModal,
-} from '@learnway/ui';
+import { CheckboxGroupFormField, TextareaFormField } from '@learnway/ui/form-field';
+import { GridBox } from '@learnway/ui/grid';
+import { DndTreeView, TreeContainer, TreeNode } from '@learnway/ui/tree-view';
 
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { cn } from '@learnway/shared';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
-import { ContentsHistoryInfoFormField, FormRow, SwitchFormField } from '@shared/ui';
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { FormRow, SwitchFormField } from '@shared/ui';
 
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
 import { EnFormMode } from '@types';
 import { TenantDetailMenuMappingModal } from './tenant-detail-menu-mapping-modal';
 /** Hook 정의 */
@@ -44,11 +36,11 @@ import {
   transformMenuApiDataToTreeData,
 } from '@features/platform-management/tenant/service/tenant-detail-tree.service';
 
-import { EnDeviceType } from '@types';
 import {
   ApiInfoModal,
   findMenuPathById,
 } from '@features/platform-management/platform/menu-managemnet';
+import { EnDeviceType } from '@types';
 
 //Column Helper 정의
 const columnHelper = createColumnHelper<any>();

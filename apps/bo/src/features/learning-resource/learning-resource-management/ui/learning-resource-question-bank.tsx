@@ -1,12 +1,12 @@
 import { forwardRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Tabs, useModal } from '@learnway/ui';
-
-import { LearningResourceQuestionBankDetail } from './learning-resource-question-bank-detail';
+import { useModal } from '@learnway/ui/modal';
+import { Tabs } from '@learnway/ui/tabs';
 import { EnFormMode } from '@types';
-import { LearningResourceQuestionBankQuestion } from './learning-resource-question-bank-question';
 import { useLearningResourceQuestionDetailForm } from '../service/learning-resource-question-detail-from.hook';
+import { LearningResourceQuestionBankDetail } from './learning-resource-question-bank-detail';
+import { LearningResourceQuestionBankQuestion } from './learning-resource-question-bank-question';
 
 enum QuestionTab {
   QUESTION_BASE = 'QUESTION_BASE',

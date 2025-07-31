@@ -13,8 +13,7 @@ export interface Tenant {
     isUseRotemTenantCustomOption: boolean,
     isUseOutsourcingTenantCustomOption: boolean,
     isUseWiaTenantCustomOption: boolean,
-    isUseAutoeverTenantCustomOption: boolean,
-  };
+    isUseAutoeverTenantCustomOption: boolean };
   tenantId: number;
   tenantSite: string;
   tenantName: string;

@@ -1,33 +1,28 @@
-import { useEffect, useRef, useState } from 'react';
-import { t } from 'i18next';
-import { useRouter } from '@tanstack/react-router';
-import { cn, DATE_TIME_FORMAT, formatISODateString } from '@learnway/shared';
-import { createColumnHelper } from '@tanstack/react-table';
-import {
-  Button,
-  ContentsRow,
-  DynamicFormField,
-  GridBox,
-  GridState,
-  Input,
-  Textarea,
-  useModal,
-  GridBoxState,
-} from '@learnway/ui';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { IcoPlus } from '@learnway/icons';
+import { cn, DATE_TIME_FORMAT, formatISODateString } from '@learnway/shared';
+import { GridBox, GridBoxState } from '@learnway/ui/grid';
+import { useRouter } from '@tanstack/react-router';
+import { createColumnHelper } from '@tanstack/react-table';
+import { t } from 'i18next';
+import { useEffect, useRef, useState } from 'react';
 
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
-import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
-import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
-import { CommonCodeGroup } from '@types';
 import {
   useCommonCodeGroupDetail,
   useCreateCommonCodeGroup,
   useUpdateCommonCodGroup,
 } from '@entities/common-code/service/common-code-group.hook';
+import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
+import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
+import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
+import { Textarea } from '@learnway/ui/textarea';
 import { ContentsHistoryInfoFormField, FormRow, SwitchFormField } from '@shared/ui';
+import { CommonCodeGroup } from '@types';
 
 // 폼 관련 필드 목록
 const FORM_FIELDS = [
@@ -272,8 +267,8 @@ const CommonCodeGroupGridComponent = ({
               pagination={{
                 pageNumber: page,
                 totalPages: totalRows || 0,
-                onPageChange: onPageChange,
-                onPageSizeChange: onPageSizeChange,
+                onPageChange,
+                onPageSizeChange,
               }}
               columnPinning={{ columns: ['numbering', 'cdGroupId', 'cdGroupName'] }}
               onRowSelect={handleRowSelect}
@@ -441,8 +436,8 @@ const columns = (router: any) => {
                 router.navigate({
                   to: '/platform/code/common-code',
                   state: {
-                    cdGroupId: cdGroupId,
-                    cdGroupName: cdGroupName,
+                    cdGroupId,
+                    cdGroupName,
                   },
                 });
               }

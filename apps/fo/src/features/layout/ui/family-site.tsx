@@ -1,7 +1,7 @@
 import { memo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Popover } from '@learnway/ui';
+import { Popover } from '@learnway/ui/popover-list';
 import styles from '@learnway/styles/fo/features/layout/ui/family-site.module.css';
 import { IcoCheck, IcoArrowDown } from '@learnway/icons';
 

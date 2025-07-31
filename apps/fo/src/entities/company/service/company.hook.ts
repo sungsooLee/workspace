@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { queryOptions } from './company.queries';
 import { Company } from '../model/company';
-import { SelectOption } from '@learnway/ui';
+import { SelectOption } from '@learnway/ui/dropdown';
 
 export function useFetchCompanies() {
   return useQuery(queryOptions.all());

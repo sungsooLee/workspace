@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
 import { DynamicFormConfig, DynamicFormValues, useDynamicForm } from '@learnway/hooks';
 import { PageContainer, ContentsButtons, LinkBox, MainContents, SubContents } from '@shared/ui';
-import { Button, ContentsRow, DynamicFormField, InputModalSelectorFormField } from '@learnway/ui';
+import { InputModalSelectorFormField } from '@learnway/ui/form-field';
 import { ContentsHistoryInfoFormField, FormGroup, FormRow } from '../../../../../shared/ui/form';
 import { FormDisplay } from '../../../../../features/form/ui/form-display';
 import { DateRangePickerFormField, VideoDurationFormField } from '@features/form/ui';
@@ -10,10 +10,12 @@ import React from 'react';
 import { t } from 'i18next';
 import { ChannelChoiceModal, ManagerChoiceModal } from '@shared/ui';
 import { MovieInfo } from '@features/learning-resource';
+// TODO: Fix unknown imports: DynamicFormField from '@learnway/ui'
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
 
 export const Route = createFileRoute('/_layout/learning/resource/view/html-video')({
-  component: RouteComponent,
-});
+  component: RouteComponent });
 
 function RouteComponent() {
   const router = useRouter();
@@ -66,8 +68,7 @@ function RouteComponent() {
                   modalConfig={{
                     title: '',
                     width: 'md',
-                    content: <ChannelChoiceModal />,
-                  }}
+                    content: <ChannelChoiceModal /> }}
                 />
               }
             />
@@ -90,8 +91,7 @@ function RouteComponent() {
                   modalConfig={{
                     title: '',
                     width: 'md',
-                    content: <ManagerChoiceModal />,
-                  }}
+                    content: <ManagerChoiceModal /> }}
                 />
               }
             />
@@ -189,14 +189,12 @@ const formConfig: DynamicFormConfig = {
     {
       name: 'channelId',
       type: 'hidden',
-      value: '',
-    },
+      value: '' },
     {
       label: t('채널'),
       name: 'channelName',
       type: 'custom',
-      value: '',
-    },
+      value: '' },
     {
       label: t('학습자원명'),
       name: 'learningResourceName',
@@ -205,39 +203,32 @@ const formConfig: DynamicFormConfig = {
       placeholder: '학습자원명을 입력하세요.',
       maxLength: 150,
       validation: {
-        type: 'string',
-      },
-    },
+        type: 'string' } },
     {
       label: t('학습자원 설명'),
       name: 'learningResourceDescription',
       type: 'textarea',
       value: '',
       placeholder: '콘텐츠에 대한 설명을 입력해주세요.',
-      maxLength: 2000,
-    },
+      maxLength: 2000 },
     {
       name: 'managerId',
       type: 'text',
-      value: '',
-    },
+      value: '' },
     {
       label: t('담당자'),
       name: 'managerName',
       type: 'custom',
-      value: '',
-    },
+      value: '' },
     {
       label: t('nationCode'),
       name: 'nationCode',
       type: 'hidden',
-      value: 'KR',
-    },
+      value: 'KR' },
     {
       name: 'nationCode',
       type: 'hidden',
-      value: 'KR',
-    },
+      value: 'KR' },
     {
       label: t('연락처'),
       name: 'contact',
@@ -245,52 +236,43 @@ const formConfig: DynamicFormConfig = {
       value: '',
       fields: {
         nationCode: 'nationCode',
-        number: 'contact',
-      },
-    },
+        number: 'contact' } },
     {
       label: t('사용기한'),
       name: 'expirationDate',
       type: 'switch',
       value: false,
       format: 'boolean',
-      tooltip: '사용기한 내 콘텐츠 공유/교육자원활용이  가능합니다.',
-    },
+      tooltip: '사용기한 내 콘텐츠 공유/교육자원활용이  가능합니다.' },
     {
       name: 'expirationDateFrom',
       type: 'custom',
       value: '',
-      guideText: '사용기한 가이드 텍스트',
-    },
+      guideText: '사용기한 가이드 텍스트' },
     {
       name: 'expirationDateTo',
       type: 'custom',
-      value: '',
-    },
+      value: '' },
     {
       label: t('외주개발업체정보'),
       name: 'isExternalDevelopmentCompany',
       type: 'switch',
       format: 'boolean',
-      value: false,
-    },
+      value: false },
     {
       label: t('외주개발업체'),
       name: 'externalDevelopmentCompany',
       type: 'custom',
-      value: '',
-    },
+      value: '' },
     {
       label: t('외주개발업체 담당자'),
       name: 'externalDevelopmentCompanyManager',
       type: 'text',
-      value: '',
-    },
+      value: '' },
     {
       name: 'externalDevelopmentCompanyNationCode',
       type: 'hidden',
-      value: 'KR',
-    },
+      value: 'KR' },
     {
       label: t('외주개발업체 연락처'),
       name: 'externalDevelopmentCompanyContact',
@@ -298,9 +280,7 @@ const formConfig: DynamicFormConfig = {
       value: '',
       fields: {
         nationCode: 'externalDevelopmentCompanyNationCode',
-        number: 'externalDevelopmentCompanyContact',
-      },
-    },
+        number: 'externalDevelopmentCompanyContact' } },
     {
       label: t('동영상 재생 시간'),
       name: 'videoDuration',
@@ -309,16 +289,13 @@ const formConfig: DynamicFormConfig = {
       value: {
         hour: 0,
         minute: 0,
-        second: 0,
-      },
-    },
+        second: 0 } },
     {
       label: t('썸네일'),
       name: 'thumbnails',
       type: 'thumbnail-list',
       format: 'array',
-      value: [],
-    },
+      value: [] },
     {
       label: t('태그'),
       name: 'tags',
@@ -327,8 +304,7 @@ const formConfig: DynamicFormConfig = {
       placeholder: '한글, 영문, 숫자 포함 9자 이하 태그를 입력하세요.(9자 초과할 경우 얼럿)',
       limitPlaceholder: '여러개의 태그는 쉼표로 구분',
       tooltip: '태그는 학습자원 검색 시 활용되고, 학습자에게는 10개까지만 보여집니다.',
-      value: [],
-    },
+      value: [] },
     {
       label: t('학습자원개요 (AI 자동 추출)'),
       name: 'learningResourceOverview',
@@ -336,8 +312,7 @@ const formConfig: DynamicFormConfig = {
       readOnly: true,
       placeholder: '키워드는 AI 자동 추출되어 표기 됩니다.',
       maxLength: 2000,
-      value: '',
-    },
+      value: '' },
     {
       label: t('키워드 (AI 자동 추출)'),
       name: 'keywords',
@@ -345,31 +320,26 @@ const formConfig: DynamicFormConfig = {
       readOnly: true,
       placeholder: '키워드는 AI 자동 추출되어 표기 됩니다.',
       maxLength: 2000,
-      value: '',
-    },
+      value: '' },
     {
       label: t('교육지원활용 여부'),
       name: 'isTrainingSupport',
       type: 'switch',
       format: 'boolean',
       switchConfig: {
-        label: (value: boolean) => (value ? '활용가능' : '활용불가'),
-      },
+        label: (value: boolean) => (value ? '활용가능' : '활용불가') },
       guideText: '해당 학습자원으로 교육 과정을 개설할 수 없습니다.',
-      value: true,
-    },
+      value: true },
     {
       label: t('보안컨텐츠여부'),
       name: 'isSecurityContent',
       type: 'switch',
       format: 'boolean',
       switchConfig: {
-        label: (value: boolean) => (value ? '보안 적용' : '보안 미적용'),
-      },
+        label: (value: boolean) => (value ? '보안 적용' : '보안 미적용') },
       guideText:
         '동영상에 워터마크가 제공되고, DRM 솔루션 적용 및 화면캡쳐 방지 기능이 적용되어 동영상 보안을 강화할수 없습니다.',
-      value: true,
-    },
+      value: true },
     {
       label: t('자막여부'),
       name: 'isSubtitles',
@@ -378,16 +348,13 @@ const formConfig: DynamicFormConfig = {
       switchConfig: {
         label: (value: boolean, getValues) =>
           value ? `자막 ${getValues().subtitles.length}개` : '자막 없음',
-        labelTarget: 'subtitles',
-      },
-      value: true,
-    },
+        labelTarget: 'subtitles' },
+      value: true },
     {
       name: 'subtitles',
       type: 'custom',
       format: 'array',
-      value: [],
-    },
+      value: [] },
     {
       label: t('검수확인'),
       name: 'isInspectionConfirmed',
@@ -395,10 +362,8 @@ const formConfig: DynamicFormConfig = {
       format: 'boolean',
       guideText: '등록하고자 한 동영상이며, 처음부터 끝까지 정상적으로 재생됨이 확인되었습니다.',
       checkConfig: {
-        reverse: true,
-      },
-      value: false,
-    },
+        reverse: true },
+      value: false },
     {
       label: t('저작권확인'),
       name: 'isCopyrightConfirmed',
@@ -407,10 +372,8 @@ const formConfig: DynamicFormConfig = {
         '저작권법(제25조2항)에 따라 학습자원(동영상,이미지등)은 해당 학습플랫폼에서만 이용가능하며, 이 외의 공간에서 저작물을 공유 또는 게시하는 행위는 저작권법 위반에 해당될 수 있음에 동의합니다.',
       type: 'checkbox',
       checkConfig: {
-        reverse: true,
-      },
-      value: false,
-    },
+        reverse: true },
+      value: false },
     {
       label: t('보안확인'),
       name: 'isSecurityConfirmed',
@@ -419,10 +382,8 @@ const formConfig: DynamicFormConfig = {
         '보안콘텐츠 미 설정 시, 불법복제, 무단사용,저작권 침해 위험에 노출되고, 이에 따른 피해를 입을 수 있음에 인지합니다',
       type: 'checkbox',
       checkConfig: {
-        reverse: true,
-      },
-      value: false,
-    },
+        reverse: true },
+      value: false },
   ],
   validator: {
     channelName: {
@@ -433,8 +394,7 @@ const formConfig: DynamicFormConfig = {
           fn: (values: Record<string, any>) => values.age > 10,
           path: '', // 에러가 노출될 경로 // 필수 아님 기본으로는 현재 property
         },
-      ],
-    },
+      ] },
     videoDuration: {
       required: (values: Record<string, any>) => {
         return (
@@ -442,13 +402,8 @@ const formConfig: DynamicFormConfig = {
           values.videoDuration.minute === 0 &&
           values.videoDuration.second === 0
         );
-      },
-    },
+      } },
     externalDevelopmentCompanyManager: {
       required: {
-        fn: (values: Record<string, any>) => values.isExternalDevelopmentCompany,
-      },
-    },
-    learningResourceName: true,
-  },
-};
+        fn: (values: Record<string, any>) => values.isExternalDevelopmentCompany } },
+    learningResourceName: true } };

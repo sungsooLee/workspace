@@ -1,7 +1,7 @@
 import { FC } from 'react';
-import { Button } from '@learnway/ui';
 import style from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
 import { useTranslation } from 'react-i18next';
+import { Button } from '@learnway/ui/button';
 
 const BlogInfoComponentComponent: FC<any> = () => {
   const { t } = useTranslation();

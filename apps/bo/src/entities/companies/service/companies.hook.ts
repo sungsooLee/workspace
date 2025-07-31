@@ -22,8 +22,7 @@ export function useCreateCompany(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
 
   return {
     create: (payload: any, callback?: any) => {
@@ -31,8 +30,7 @@ export function useCreateCompany(options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }
 
 export function useUpdateCompany(options: any) {
@@ -47,8 +45,7 @@ export function useUpdateCompany(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
 
   return {
     update: (payload: any, callback?: any) => {
@@ -56,8 +53,7 @@ export function useUpdateCompany(options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }
 
 export function useCheckExistsCompanyCode(options: any) {
@@ -68,8 +64,7 @@ export function useCheckExistsCompanyCode(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...mutateOptions,
-  });
+    ...mutateOptions });
 
   return {
     checkExistsCompanyCode: (payload: any, callback?: any) => {
@@ -77,6 +72,5 @@ export function useCheckExistsCompanyCode(options: any) {
       options?.onSuccess?.(false);
     },
     isSuccess,
-    isError,
-  };
+    isError };
 }

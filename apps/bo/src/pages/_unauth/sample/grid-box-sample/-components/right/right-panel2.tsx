@@ -1,8 +1,8 @@
 import { useFetchLabelMessages } from '@entities/label-messages-mock';
-import { t } from 'i18next';
 import { DATE_TIME_FORMAT, formatDate } from '@learnway/shared';
+import { GridBox, GridBoxSearchInputCondition, GridBoxState } from '@learnway/ui/grid';
+import { t } from 'i18next';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { GridBox, GridBoxSearchInputCondition, GridBoxState } from '@learnway/ui';
 
 interface RightPanelProps {
   /** 초기 테이블 파라미터 (검색 조건, 페이지 정보 등) */

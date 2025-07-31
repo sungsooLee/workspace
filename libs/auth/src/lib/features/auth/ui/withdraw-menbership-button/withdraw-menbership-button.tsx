@@ -1,8 +1,7 @@
-import { useTranslation } from 'react-i18next';
 import { useRouter } from '@tanstack/react-router';
+import { useTranslation } from 'react-i18next';
 
-import { cn } from '@learnway/shared';
-import { Button } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
 
 //interface WithdrawMembershipButtonComponentProps {}
 

@@ -1,4 +1,3 @@
-import { Button, useModal } from '@learnway/ui';
 import { usePersonalInfoCheck } from '@learnway/auth/entities';
 import { fileDownload } from '@learnway/shared';
 import { IcoDownload } from '@learnway/icons';
@@ -6,6 +5,8 @@ import { t } from 'i18next';
 import { ExcelDownloadReasonModal } from '../modal/excel-download-reason-modal';
 import { SelectOption } from '@learnway/hooks';
 import { useState } from 'react';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 
 interface ExcelButtonsProps {
   method?: string;
@@ -26,8 +27,7 @@ const GridExcelDownloadButtonComponent: React.FC<ExcelButtonsProps> = ({
   dataCount = 0,
   onBeforeDownload,
   disabled = false,
-  className,
-}) => {
+  className }) => {
   const { openModal } = useModal();
   const { hasPersonalInfo, currentMenu } = usePersonalInfoCheck();
   const [isDownloading, setIsDownloading] = useState(false);
@@ -42,8 +42,7 @@ const GridExcelDownloadButtonComponent: React.FC<ExcelButtonsProps> = ({
         await fileDownload({
           url,
           params,
-          method,
-        });
+          method });
       } finally {
         setIsDownloading(false);
       }
@@ -56,8 +55,7 @@ const GridExcelDownloadButtonComponent: React.FC<ExcelButtonsProps> = ({
           width: 'md',
           content: (
             <ExcelDownloadReasonModal dataCount={dataCount} paramLabels={downloadParamLabels} />
-          ),
-        });
+          ) });
         if (!downloadReason) return;
       }
 
@@ -68,8 +66,7 @@ const GridExcelDownloadButtonComponent: React.FC<ExcelButtonsProps> = ({
       await executeDownload({
         ...params,
         menuId: currentMenu?.menuId,
-        ...(downloadReason && { downloadReason }),
-      });
+        ...(downloadReason && { downloadReason }) });
     } catch (error) {
       console.error('다운로드 중 오류 발생:', error);
       setIsDownloading(false);

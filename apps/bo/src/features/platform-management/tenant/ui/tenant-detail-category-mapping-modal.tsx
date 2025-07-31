@@ -1,35 +1,25 @@
-import React, { FC, useEffect, useState } from 'react';
-import { t } from 'i18next';
-import {
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  useModal,
-  Button,
-  TreeContainer,
-  TreeView,
-  TreeNode,
-  TreeEventPayload,
-  DndTreeView,
-} from '@learnway/ui';
-import { cn } from '@learnway/shared';
 import { IcoNarrowRight } from '@learnway/icons';
+import { cn } from '@learnway/shared';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
+import { DndTreeView, TreeContainer, TreeNode } from '@learnway/ui/tree-view';
+import { t } from 'i18next';
+import { FC, useEffect, useState } from 'react';
 import popContentsStyles from './pop-contents-layout.module.css';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 //import { transformApiDataToTreeData } from '@features/category/service/category.service';
-import { transformApiDataToTreeData } from '@features/platform-management/platform/category-managemnet';
-import {
-  useFetchTenantCategory,
-  useMappingTenantCategory,
-  useDeleteTenantCategory,
-  useMoveTenantCategory,
-} from '@entities/tenant/service/tenant-category.hook';
 import { useFetchCategory } from '@entities/category';
 import {
-  getFirstExpandKeys,
+  useDeleteTenantCategory,
+  useFetchTenantCategory,
+  useMappingTenantCategory,
+  useMoveTenantCategory,
+} from '@entities/tenant/service/tenant-category.hook';
+import { transformApiDataToTreeData } from '@features/platform-management/platform/category-managemnet';
+import {
   getAllTreeKeys,
+  getFirstExpandKeys,
 } from '@features/platform-management/tenant/service/tenant-detail-tree.service';
 
 type ActionFunction = (payload: any) => void;
@@ -145,19 +135,17 @@ const TenantDetailCategoryMappingModalComponent: FC<any> = ({ tenantId, onNodeCh
     }
     if (sourceNode.depth !== targetDepth) {
       alert(
-        '동일한 레벨 내에서만 매핑 및 이동이 가능합니다. src:' +
-          sourceNode.depth +
-          '/dest:' +
-          targetDepth,
+        `동일한 레벨 내에서만 매핑 및 이동이 가능합니다. src:${sourceNode.depth}/dest:${
+          targetDepth
+        }`,
       );
       return false;
     }
     if (sourceNode.parentKey !== parentKey) {
       alert(
-        '동일한 부모 카테고리에만 매핑 및 이동이 가능합니다. src:' +
-          sourceNode.parentKey +
-          '/dest:' +
-          parentKey,
+        `동일한 부모 카테고리에만 매핑 및 이동이 가능합니다. src:${sourceNode.parentKey}/dest:${
+          parentKey
+        }`,
       );
       return false;
     }

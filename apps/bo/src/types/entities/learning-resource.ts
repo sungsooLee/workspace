@@ -1,5 +1,5 @@
 import { CourseType } from '@features/learning-operate/course/course-management';
-import { PaginationRequest, PaginationResponse } from '@learnway/ui';
+import { PaginationRequest, PaginationResponse } from '@learnway/ui/type';
 import {
   ContentAddInfoType,
   ContentCreateType,

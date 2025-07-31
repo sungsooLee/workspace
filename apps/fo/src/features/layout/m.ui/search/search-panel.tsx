@@ -1,8 +1,9 @@
-import { Button, useSearchHistoryListener, useSearchStore } from '@learnway/ui';
 import styles from '@learnway/styles/fo/widgets/layout/m.ui/main/container/container-header.module.css';
 import { IcoArrowBackward } from '@learnway/icons';
 import { useEffect } from 'react';
 import { Search } from '../../ui/search/search';
+// TODO: Fix unknown imports: useSearchHistoryListener, useSearchStore from '@learnway/ui'
+import { Button } from '@learnway/ui/button';
 
 export const SearchOverlay = () => {
   const isSearchOpen = useSearchStore((state: any) => state.isSearchOpen);

@@ -3,7 +3,8 @@ import { getChannelUrl } from '@features/channel/channel-application/service/cha
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { getDateToString } from '@learnway/shared';
-import { Button, Divider, GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
+import { Divider } from '@learnway/ui/elements';
+import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
@@ -11,10 +12,10 @@ import { createColumnHelper } from '@tanstack/react-table';
 import { ChannelParam, EnGlobalConst } from '@types';
 import { t } from 'i18next';
 import { useCallback, useEffect, useState } from 'react';
+import { Button } from '@learnway/ui/button';
 
 export const Route = createFileRoute('/_layout/tenant/channel/management/')({
-  component: RouteComponent,
-});
+  component: RouteComponent });
 
 function RouteComponent() {
   const router = useRouter();
@@ -31,9 +32,7 @@ function RouteComponent() {
     gridState: {
       page: 0,
       size: 10,
-      sort: [],
-    },
-  };
+      sort: [] } };
 
   const searchParam = () => {
     const data = getValues();
@@ -43,8 +42,7 @@ function RouteComponent() {
         ? getDateToString(new Date(data.regDate.from), 'YYYYMMDD')
         : '',
       regEndDate: data.regDate.to ? getDateToString(new Date(data.regDate.to), 'YYYYMMDD') : '',
-      roleId: loginUser?.activeRole?.roleId,
-    };
+      roleId: loginUser?.activeRole?.roleId };
     return searchData;
   };
 
@@ -74,8 +72,7 @@ function RouteComponent() {
             onClick={() =>
               router.navigate({
                 to: '/tenant/channel/management/regist',
-                state: { method: 'direct' },
-              })
+                state: { method: 'direct' } })
             }
             label={t('채널 직접 개설')}
           />
@@ -105,10 +102,8 @@ const searchConfig = (): SearchBoxConfig => ({
         label: t('개설방식'),
         value: '',
         optionsConfig: {
-          codeGroup: CODE_GROUP['pms.channel.ChannelCreationType'],
-        },
-        presetOptionLabel: t('전체'),
-      },
+          codeGroup: CODE_GROUP['pms.channel.ChannelCreationType'] },
+        presetOptionLabel: t('전체') },
       {
         name: 'tenantId',
         type: 'dropdown',
@@ -116,29 +111,24 @@ const searchConfig = (): SearchBoxConfig => ({
         label: t('테넌트'),
         value: undefined,
         optionsConfig: {
-          codeGroup: CODE_GROUP['manual.tenant.tenantId'],
-        },
+          codeGroup: CODE_GROUP['manual.tenant.tenantId'] },
         dropdownConfig: {
           onchange: () => {
             return '';
           },
           isSearchable: true,
           isClearable: true,
-          placeholder: '입력 또는 선택',
-        },
-      },
+          placeholder: '입력 또는 선택' } },
       {
         name: 'channelName',
         type: 'text',
         label: t('채널명'),
-        value: '',
-      },
+        value: '' },
       {
         name: 'channelMainId',
         type: 'text',
         label: t('채널 핸들'),
-        value: '',
-      },
+        value: '' },
     ],
     [
       {
@@ -147,10 +137,8 @@ const searchConfig = (): SearchBoxConfig => ({
         label: t('체널 유형'),
         value: '',
         optionsConfig: {
-          codeGroup: CODE_GROUP['pms.channel.ChannelTenatMappingType'],
-        },
-        presetOptionLabel: t('전체'),
-      },
+          codeGroup: CODE_GROUP['pms.channel.ChannelTenatMappingType'] },
+        presetOptionLabel: t('전체') },
       {
         name: 'isUsed',
         type: 'dropdown',
@@ -160,8 +148,7 @@ const searchConfig = (): SearchBoxConfig => ({
           { value: '', label: t('전체') },
           { value: 'true', label: t('사용') },
           { value: 'false', label: t('미사용') },
-        ],
-      },
+        ] },
       {
         name: 'isDisplay',
         type: 'dropdown',
@@ -172,20 +159,16 @@ const searchConfig = (): SearchBoxConfig => ({
           { value: undefined, label: t('전체') },
           { value: true, label: t('노출') },
           { value: false, label: t('비노출') },
-        ],
-      },
+        ] },
       {
         name: 'regDate',
         type: 'date-range',
         label: t('등록 기간'),
         value: {
           from: undefined,
-          to: undefined,
-        },
-      },
+          to: undefined } },
     ],
-  ],
-});
+  ] });
 
 const columnHelper = createColumnHelper<any>();
 
@@ -198,9 +181,7 @@ const columns = () => [
     enableGrouping: false,
     enableSorting: false,
     meta: {
-      cellAlign: 'center',
-    },
-  }),
+      cellAlign: 'center' } }),
   columnHelper.accessor('tenantList', {
     cell: (info) => {
       if (info.row.original.tenantList.length === 1)
@@ -208,14 +189,12 @@ const columns = () => [
       else if (info.row.original.tenantList.length > 1)
         return t('{{name}} 외 {{count}}', {
           name: info.row.original.tenantList[0].tenantName,
-          count: info.row.original.tenantList.length - 1,
-        });
+          count: info.row.original.tenantList.length - 1 });
       return '-';
     },
     header: t('테넌트'),
     enableGrouping: false,
-    enableSorting: false,
-  }),
+    enableSorting: false }),
 
   columnHelper.accessor('channelName', {
     cell: (info) => (
@@ -228,8 +207,7 @@ const columns = () => [
       </Link>
     ),
     header: t('채널명'),
-    enableGrouping: false,
-  }),
+    enableGrouping: false }),
   columnHelper.accessor('channelMainId', {
     cell: (info) => (
       <Button
@@ -239,8 +217,7 @@ const columns = () => [
       />
     ),
     header: t('채널 핸들'),
-    enableGrouping: false,
-  }),
+    enableGrouping: false }),
   columnHelper.accessor('channelTenatMappingType', {
     cell: (info) =>
       t(
@@ -251,9 +228,7 @@ const columns = () => [
     enableGrouping: false,
     enableSorting: false,
     meta: {
-      cellAlign: 'center',
-    },
-  }),
+      cellAlign: 'center' } }),
   columnHelper.accessor('channelSecretType', {
     cell: (info) =>
       t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.channel.ChannelSecretType.${info.getValue()}`),
@@ -262,9 +237,7 @@ const columns = () => [
     enableGrouping: false,
     enableSorting: false,
     meta: {
-      cellAlign: 'center',
-    },
-  }),
+      cellAlign: 'center' } }),
   columnHelper.accessor('channelSubscriptionType', {
     cell: (info) =>
       t(
@@ -275,9 +248,7 @@ const columns = () => [
     enableSorting: false,
     size: 90,
     meta: {
-      cellAlign: 'center',
-    },
-  }),
+      cellAlign: 'center' } }),
   columnHelper.accessor('channelOwnerUserList', {
     cell: (info) => {
       if (info.row.original.channelOwnerUserList.length === 1)
@@ -285,14 +256,12 @@ const columns = () => [
       else if (info.row.original.channelOwnerUserList.length > 1)
         return t('{{name}} 외 {{count}}', {
           name: info.row.original.channelOwnerUserList[0].userName,
-          count: info.row.original.channelOwnerUserList.length - 1,
-        });
+          count: info.row.original.channelOwnerUserList.length - 1 });
       return '-';
     },
     header: t('채널 소유자'),
     enableGrouping: false,
-    enableSorting: false,
-  }),
+    enableSorting: false }),
   columnHelper.accessor('isUsed', {
     cell: (info) => (info.getValue() ? t('사용') : t('미사용')),
     header: t('사용여부'),
@@ -300,9 +269,7 @@ const columns = () => [
     enableSorting: false,
     size: 90,
     meta: {
-      cellAlign: 'center',
-    },
-  }),
+      cellAlign: 'center' } }),
   columnHelper.accessor('isDisplay', {
     cell: (info) => (info.getValue() ? t('노출') : t('비노출')),
     header: t('노출 여부'),
@@ -310,7 +277,5 @@ const columns = () => [
     enableSorting: false,
     size: 90,
     meta: {
-      cellAlign: 'center',
-    },
-  }),
+      cellAlign: 'center' } }),
 ];

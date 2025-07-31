@@ -1,14 +1,17 @@
 import { queryOptions } from '@entities/label-messages-mock';
 import { useDynamicForm2 } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, formatDate } from '@learnway/shared';
-import { Button, Divider, GridBox, PopoverList, useGridBox } from '@learnway/ui';
+import { Divider } from '@learnway/ui/elements';
+import { GridBox, useGridBox } from '@learnway/ui/grid';
+import { PopoverList } from '@learnway/ui/popover-list';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
 import { createFileRoute } from '@tanstack/react-router';
+import { createColumnHelper } from '@tanstack/react-table';
 import { LabelMessage, LabelMessagesQueryParams } from '@types';
 import { t } from 'i18next';
 import { useCallback, useMemo } from 'react';
 import { SearchBox } from './-components/search-box';
-import { createColumnHelper } from '@tanstack/react-table';
+import { Button } from '@learnway/ui/button';
 
 export const Route = createFileRoute('/_unauth/sample/search-box-grid-box-sample/')({
   component: RouteComponent,

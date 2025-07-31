@@ -6,17 +6,19 @@ import { useCallback, useState } from 'react';
 import { queryOptions as requestChannelQueryOptions } from '@entities/channel/service/request-channel.queries';
 import { useChannelApplication } from '@features/channel/channel-application/service/channel-application.service';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
-import { Button, Checkbox, Divider, GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
+import { Divider } from '@learnway/ui/elements';
+import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import { MainContents, PageContainer, TenantByRoleDropdownFormField } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { ColumnDef, createColumnHelper, Table } from '@tanstack/react-table';
 import { EnGlobalConst } from '@types';
 
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
+import { Button } from '@learnway/ui/button';
+import { Checkbox } from '@learnway/ui/checkbox';
 
 export const Route = createFileRoute('/_layout/tenant/channel/request/')({
-  component: RouteComponent,
-});
+  component: RouteComponent });
 
 const _global = {
   linkClick: (uuid: string) => {
@@ -27,8 +29,7 @@ const _global = {
   },
   channelDetailClick: (uuid: string) => {
     return;
-  },
-};
+  } };
 
 function RouteComponent() {
   const router = useRouter();
@@ -51,8 +52,7 @@ function RouteComponent() {
         : '',
       approvalEndDate: data.approvalDate.to
         ? getDateToString(new Date(data.approvalDate.to), 'YYYYMMDD')
-        : '',
-    };
+        : '' };
     gridFetch(searchData);
   }, []);
 
@@ -91,25 +91,19 @@ function RouteComponent() {
     router.navigate({
       to: '/tenant/channel/request/detail',
       state: {
-        channelRequestUuid: uuid,
-      },
-    });
+        channelRequestUuid: uuid } });
   };
   _global.openChannelClick = (uuid: string) => {
     router.navigate({
       to: '/tenant/channel/management/regist',
       state: {
-        requestUuid: uuid,
-      },
-    });
+        requestUuid: uuid } });
   };
   _global.channelDetailClick = (uuid: string) => {
     router.navigate({
       to: '/tenant/channel/management/detail',
       state: {
-        channelUuid: uuid,
-      },
-    });
+        channelUuid: uuid } });
   };
 
   return (
@@ -163,22 +157,19 @@ const searchConfig = (): SearchBoxConfig => ({
         label: t('테넌트'),
         value: '',
         format: 'object',
-        element: <TenantByRoleDropdownFormField />,
-      },
+        element: <TenantByRoleDropdownFormField /> },
       {
         name: 'channelName',
         type: 'text',
         label: t('채널명'),
         value: '',
-        placeholder: '',
-      },
+        placeholder: '' },
       {
         name: 'requesterEmployeeNumber',
         type: 'text',
         label: t('신청자 사번'),
         value: '',
-        placeholder: '',
-      },
+        placeholder: '' },
     ],
     [
       {
@@ -188,30 +179,23 @@ const searchConfig = (): SearchBoxConfig => ({
         value: '',
         optionsConfig: {
           options: [{ value: '', label: t('LABEL.all') }],
-          codeGroup: CODE_GROUP['pms.channel.ChannelApprovalStatusType'],
-        },
-      },
+          codeGroup: CODE_GROUP['pms.channel.ChannelApprovalStatusType'] } },
       {
         name: 'regDate',
         label: t('신청일'),
         type: 'date-range',
         value: {
           from: undefined,
-          to: undefined,
-        },
-      },
+          to: undefined } },
       {
         name: 'approvalDate',
         label: t('접수/반려일'),
         type: 'date-range',
         value: {
           from: undefined,
-          to: undefined,
-        },
-      },
+          to: undefined } },
     ],
-  ],
-});
+  ] });
 
 const gridConfig: useGridBoxConfig = {
   query: requestChannelQueryOptions.list,
@@ -220,9 +204,7 @@ const gridConfig: useGridBoxConfig = {
   gridState: {
     page: 0,
     size: 10,
-    sort: [],
-  },
-};
+    sort: [] } };
 
 const columnHelper = createColumnHelper<any>();
 
@@ -237,8 +219,7 @@ const columns = () =>
       meta: {
         align: 'center',
         headerAlign: 'center',
-        cellAlign: 'center',
-      },
+        cellAlign: 'center' },
       enableSorting: false,
       header: ({ table }) => (
         <div style={{ width: '100%', textAlign: 'center' }}>
@@ -265,8 +246,7 @@ const columns = () =>
             />
           </div>
         );
-      },
-    }),
+      } }),
     columnHelper.accessor('channelRequestId', {
       cell: (info) => (
         <Button
@@ -278,27 +258,23 @@ const columns = () =>
       ),
       header: t('신청 ID'),
       enableGrouping: false,
-      size: 160,
-    }),
+      size: 160 }),
     columnHelper.accessor('tenantName', {
       cell: (info) => info.getValue(),
       header: t('테넌트'),
       size: 160,
-      enableGrouping: false,
-    }),
+      enableGrouping: false }),
     columnHelper.accessor('channelName', {
       cell: (info) => info.getValue(),
       header: t('채널명'),
       size: 160,
-      enableGrouping: false,
-    }),
+      enableGrouping: false }),
 
     columnHelper.accessor('channelMainId', {
       cell: (info) => info.getValue(),
       header: t('채널 핸들'),
       size: 100,
-      enableGrouping: false,
-    }),
+      enableGrouping: false }),
     columnHelper.accessor('channelTenatMappingType', {
       cell: (info) =>
         t(
@@ -307,41 +283,35 @@ const columns = () =>
       header: t('채널 유형'),
       size: 80,
       enableGrouping: false,
-      enableSorting: false,
-    }),
+      enableSorting: false }),
     columnHelper.accessor('channelSecretType', {
       cell: (info) =>
         t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.channel.ChannelSecretType.${info.getValue()}`),
       header: t('채널 구분'),
       size: 80,
       enableGrouping: false,
-      enableSorting: false,
-    }),
+      enableSorting: false }),
     columnHelper.accessor('companyName', {
       cell: (info) => info.getValue(),
       header: t('회사'),
       enableGrouping: false,
-      size: 120,
-    }),
+      size: 120 }),
     columnHelper.accessor('reqeusterEmployeeNumber', {
       cell: (info) => info.getValue(),
       header: t('사번'),
       enableGrouping: false,
-      size: 100,
-    }),
+      size: 100 }),
     columnHelper.accessor('reqeusterName', {
       cell: (info) => info.getValue(),
       header: t('이름'),
       enableGrouping: false,
-      size: 100,
-    }),
+      size: 100 }),
     columnHelper.accessor('requestDate', {
       cell: (info) =>
         getDateToString(new Date(info.row.original.requestDate), DATE_TIME_FORMAT.DATETIME_SEC),
       header: t('신청일'),
       size: 160,
-      enableGrouping: false,
-    }),
+      enableGrouping: false }),
     columnHelper.accessor('approvalStatusType', {
       cell: (info) =>
         t(
@@ -350,14 +320,12 @@ const columns = () =>
       header: t('신청 상태'),
       enableGrouping: false,
       enableSorting: false,
-      size: 90,
-    }),
+      size: 90 }),
     columnHelper.accessor('approverName', {
       cell: (info) => info.getValue(),
       header: t('결재자'),
       enableGrouping: false,
-      size: 90,
-    }),
+      size: 90 }),
     columnHelper.accessor('approvalDate', {
       cell: (info) =>
         info.getValue() === null
@@ -368,8 +336,7 @@ const columns = () =>
             ),
       header: t('접수/반려일'),
       size: 160,
-      enableGrouping: false,
-    }),
+      enableGrouping: false }),
     columnHelper.accessor('channelOpen', {
       cell: (info) => {
         if (info.row.original.approvalStatusType === 'ACCEPTED')
@@ -401,6 +368,5 @@ const columns = () =>
       header: t('채널 확인'),
       size: 80,
       enableGrouping: false,
-      enableSorting: false,
-    }),
+      enableSorting: false }),
   ] as ColumnDef<any, unknown>[];

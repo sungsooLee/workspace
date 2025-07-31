@@ -1,5 +1,5 @@
+import { Spinner } from '@learnway/ui/spinner';
 import { useIsMutating } from '@tanstack/react-query';
-import { Spinner } from '@learnway/ui';
 
 interface GlobalLoadingIndicatorProps {
   children: React.ReactNode;

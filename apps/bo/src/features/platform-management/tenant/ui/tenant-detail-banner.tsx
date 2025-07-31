@@ -1,6 +1,6 @@
+import { Tabs } from '@learnway/ui/tabs';
 import { SectionLayout } from '@shared/ui';
-import { FC, useState } from 'react';
-import { Tabs } from '@learnway/ui';
+import { FC } from 'react';
 
 /* styles */
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';

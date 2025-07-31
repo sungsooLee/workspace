@@ -1,33 +1,29 @@
-import { useEffect, useRef, useState } from 'react';
 import { t } from 'i18next';
 import { trim } from 'lodash';
+import { useEffect, useRef, useState } from 'react';
 
-import { cn, DATE_TIME_FORMAT, formatISODateString } from '@learnway/shared';
-import { createColumnHelper } from '@tanstack/react-table';
-import { useRouter } from '@tanstack/react-router';
-import { IcoPlus } from '@learnway/icons';
-import {
-  Button,
-  ContentsRow,
-  GridBox,
-  GridImperative,
-  GridState,
-  Input,
-  Textarea,
-  useModal,
-} from '@learnway/ui';
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
-import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
-import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
-import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 import {
   useCommonCodeDetail,
   useCreateCommonCode,
   useUpdateCommonCode,
 } from '@entities/common-code/service/common-code.hook';
-import { CommonCode } from '@types';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { IcoPlus } from '@learnway/icons';
+import { cn, DATE_TIME_FORMAT, formatISODateString } from '@learnway/shared';
+import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
+import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
+import boxStyles from '@learnway/styles/bo/assets/styles/modules/wrap-box.module.css'; // 하단 layout style - line
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { GridBox, GridImperative, GridState } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
+import { Textarea } from '@learnway/ui/textarea';
 import { ContentsHistoryInfoFormField, FormRow, SwitchFormField } from '@shared/ui';
+import { useRouter } from '@tanstack/react-router';
+import { createColumnHelper } from '@tanstack/react-table';
+import { CommonCode } from '@types';
 
 // 폼 관련 필드 목록
 const FORM_FIELDS = [
@@ -276,7 +272,7 @@ const CommonCodeGridComponent = ({
     if (detailData && !isLoading && formMode === FORM_MODE.VIEW && !dataProcessed) {
       console.log(detailData);
       const data = detailData as any;
-      updateFormData({ ...data, cdSeq: data.cdSeq ? data.cdSeq + '' : '' });
+      updateFormData({ ...data, cdSeq: data.cdSeq ? `${data.cdSeq}` : '' });
       // 데이터 처리 완료 표시
       setDataProcessed(true);
     }
@@ -319,8 +315,8 @@ const CommonCodeGridComponent = ({
               pagination={{
                 pageNumber: page,
                 totalPages: totalRows || 0,
-                onPageChange: onPageChange,
-                onPageSizeChange: onPageSizeChange,
+                onPageChange,
+                onPageSizeChange,
               }}
               columnPinning={{ columns: ['numbering', 'cdGroupId', 'cdGroupName'] }}
               onRowSelect={handleRowSelect}

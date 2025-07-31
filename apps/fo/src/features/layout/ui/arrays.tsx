@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Button } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 
 import styles from '@learnway/styles/fo/features/layout/ui/arrays.module.css';
+import { Button } from '@learnway/ui/button';
 
 // 퍼블수정 20250313 : 값 받아서 뿌려주게 전체수정
 interface ArraysProps {

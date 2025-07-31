@@ -1,11 +1,12 @@
 import { memo } from 'react';
 
-import { Button, Popover } from '@learnway/ui';
+import { Popover } from '@learnway/ui/popover-list';
 import { IcoBell04, IcoClose02, IcoHistory } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 
 import styles from './history.module.css';
 import popoverInnerStyles from './history-contents.module.css';
+import { Button } from '@learnway/ui/button';
 
 const HistoryContents = () => {
   const activityList = [

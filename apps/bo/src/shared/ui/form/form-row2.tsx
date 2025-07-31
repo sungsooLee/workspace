@@ -1,5 +1,5 @@
 import React, { FC, memo, useEffect } from 'react';
-import { BaseFormRow2 } from '@learnway/ui';
+import { BaseFormRow2 } from '@learnway/ui/base-form';
 import { FormRowFieldConfig, FormRowProps as BaseFormRowProps } from '@learnway/hooks';
 import { formFieldConfig } from './form-field-config';
 
@@ -65,8 +65,7 @@ const FormRowComponent: FC<FormRowProps> = ({
     validation,
     maxLength,
     options,
-    ...restProps,
-  };
+    ...restProps };
 
   return (
     <BaseFormRow2

@@ -1,10 +1,13 @@
 import { IcoArrowDown, IcoEssential, IcoSymbol } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { Accordion, Avatar, Button, ChipList } from '@learnway/ui';
+import { Accordion } from '@learnway/ui/accordion';
 import { Link } from '@tanstack/react-router';
 import { forwardRef, memo, useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import { Curriculum, PackageCardList } from '../../../../features/layout/';
+import { ChipList } from '@learnway/ui/chip-list';
+import { Avatar } from '@learnway/ui/avatar';
+import { Button } from '@learnway/ui/button';
 // import { initialConfig as editorConfig } from '@learnway/ui/src/lib/editor/config/editor.config';
 // import { HtmlContent } from '@learnway/ui/src/lib/html-content/html-content';
 import { initialConfig as editorConfig } from '../../../../../../../libs/ui/src/lib/editor/config/editor.config'; // 임시로 상대경로

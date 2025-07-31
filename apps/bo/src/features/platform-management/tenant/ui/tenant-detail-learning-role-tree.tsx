@@ -19,18 +19,16 @@ import {
   transformRoleApiDataToTreeData,
 } from '@features/platform-management/tenant/service/tenant-detail-tree.service';
 import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
 import {
-  Button,
   ChipListModalSelectorFormField,
-  ContentsRow,
-  FormSubTitle,
-  Input,
   RadioGroupFormField,
   TextareaFormField,
-  TreeBox,
-  TreeContainer,
-  TreeNode,
-} from '@learnway/ui';
+} from '@learnway/ui/form-field';
+import { Input } from '@learnway/ui/input';
+import { TreeBox, TreeContainer, TreeNode } from '@learnway/ui/tree-view';
 import {
   ChannelListChoiceModal,
   CompanyShuttleModal,

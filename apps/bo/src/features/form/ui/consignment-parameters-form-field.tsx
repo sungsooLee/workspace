@@ -1,10 +1,11 @@
 import React, { forwardRef } from 'react';
 import { BaseFormFieldProps } from '@learnway/hooks';
-import { Button, Input } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 
 import styles from './consignment-parameters-form-field.module.css';
 import { useTranslation } from 'react-i18next';
+import { Button } from '@learnway/ui/button';
+import { Input } from '@learnway/ui/input';
 
 interface ConsignmentParameterProp {
   name: string;
@@ -73,8 +74,7 @@ const mergeValueIntoFixedParameters = (
     const newItem = valueItem || d;
     return {
       ...newItem,
-      fixed: true,
-    };
+      fixed: true };
   });
   const userParameters = value?.filter((d: ConsignmentParameterProp) => !d.fixed);
   return [...parameters, ...userParameters];

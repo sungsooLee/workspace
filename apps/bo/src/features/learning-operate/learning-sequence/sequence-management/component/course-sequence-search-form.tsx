@@ -2,7 +2,8 @@ import { DateRangePickerFormField } from '@features/form';
 import { DropdownFormField } from '@features/form/ui/dropdown-form-field';
 import { CODE_GROUP } from '@learnway/hooks';
 import { generateYears } from '@learnway/shared';
-import { ContentsRow, Input } from '@learnway/ui';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
 import {
   FormRow2,
   SearchBoxForm,

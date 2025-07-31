@@ -1,12 +1,11 @@
 // IA011 / NLP_BO_PMS_1100_05_01
 import { forwardRef, useEffect, useState } from 'react';
-import { ThumbnailImageUpload } from '@learnway/ui'; // @learnway/ui에서 ThumbnailImageUpload 컴포넌트 import
+import { ThumbnailImageUpload } from '@learnway/ui/file-upload'; // @learnway/ui에서 ThumbnailImageUpload 컴포넌트 import
 import {
   S3UploaderConfig,
   BaseFormFieldProps,
   ThumbnailFileValue,
-  useFileManager,
-} from '@learnway/hooks'; // @learnway/hooks에서 폼 필드 기본 props 타입 import
+  useFileManager } from '@learnway/hooks'; // @learnway/hooks에서 폼 필드 기본 props 타입 import
 import { difference, first, isArray, isEqual, uniq } from 'lodash';
 import { CourseType } from '@learnway/types';
 
@@ -63,8 +62,7 @@ const ThumbnailImageUploadFormFieldComponent = forwardRef<
       const groupUuids = uniq(fileInfos.map((file) => file.group!.groupUuid));
       setValues({
         groupUuid: first(groupUuids),
-        files: fileInfos,
-      });
+        files: fileInfos });
     }
 
     async function fetchGroupInfo(groupUuid: string) {
@@ -72,8 +70,7 @@ const ThumbnailImageUploadFormFieldComponent = forwardRef<
       if (groupInfo.files.length === 0)
         return setValues({
           groupUuid,
-          files: [],
-        });
+          files: [] });
 
       return fetchFileInfo(groupInfo.files.map((_) => _.fileUuid));
     }

@@ -1,5 +1,6 @@
 import { CompanyDetail, CompanyDetailHR } from '@features/platform-management/company';
-import { Button, Tabs } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { Tabs } from '@learnway/ui/tabs';
 import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui';
 import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { EnFormMode } from '@types';

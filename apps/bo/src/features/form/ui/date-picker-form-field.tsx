@@ -1,6 +1,6 @@
-import { FC } from 'react';
 import styles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import { DatePicker, DatePickerComponentProps } from '@learnway/ui';
+import { DatePicker, DatePickerComponentProps } from '@learnway/ui/date-picker';
+import { FC } from 'react';
 
 /**
  * @description Date Picker 단일 선택 (YYYY-MM-DD HH:MM:SS)

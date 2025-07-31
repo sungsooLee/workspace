@@ -1,4 +1,4 @@
-import { Button, Divider } from '@learnway/ui';
+import { Divider } from '@learnway/ui/elements';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
 import { Link } from '@tanstack/react-router';
 import { t } from 'i18next';
@@ -6,6 +6,7 @@ import { useCoursePage } from '../../hooks/use-course-page';
 
 import { CourseSearchForm } from '../course-search-form/course-search-form';
 import { CourseGrid } from '../course-list/course-grid';
+import { Button } from '@learnway/ui/button';
 
 const CourseManagementComponent = () => {
   const {
@@ -16,8 +17,7 @@ const CourseManagementComponent = () => {
     selectedRows,
     buttonState,
     handleOnSearch,
-    handleGridRowsSelect,
-  } = useCoursePage();
+    handleGridRowsSelect } = useCoursePage();
 
   return (
     <PageContainer>

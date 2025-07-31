@@ -3,14 +3,14 @@ import { t } from 'i18next';
 
 import { useLearningResourceQuestionDetailForm } from '@features/learning-resource/learning-resource-management/service/learning-resource-question-detail-from.hook';
 import { LearningResourceQuestionBank } from '@features/learning-resource/learning-resource-management/ui/learning-resource-question-bank';
-import { Button, useModal } from '@learnway/ui';
 import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { EnFormMode } from '@types';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 
 export const Route = createLazyFileRoute('/_layout/learning/resource/question-bank/regist')({
-  component: RouteComponent,
-});
+  component: RouteComponent });
 
 function RouteComponent() {
   const router = useRouter();
@@ -26,8 +26,7 @@ function RouteComponent() {
     if (
       await openConfirm({
         title: t('이동 하시겠습니까?'),
-        content: t('입력 중인 항목이 초기화됩니다.'),
-      })
+        content: t('입력 중인 항목이 초기화됩니다.') })
     ) {
       router.navigate({ to: '/learning/learning-resource' });
     }

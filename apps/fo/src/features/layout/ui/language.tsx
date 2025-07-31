@@ -3,9 +3,10 @@ import { Link } from '@tanstack/react-router';
 import { isMobile } from 'react-device-detect';
 import { useTranslation } from 'react-i18next';
 
-import { Button, Popover } from '@learnway/ui';
+import { Popover } from '@learnway/ui/popover-list';
 import styles from '@learnway/styles/fo/features/layout/ui/language.module.css';
 import { IcoArrowDown } from '@learnway/icons';
+import { Button } from '@learnway/ui/button';
 
 const PopoverContent = () => {
   const [activeIdx, setActiveIdx] = useState<number | null>(null);

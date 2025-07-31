@@ -1,10 +1,11 @@
 import { lazy, Suspense } from 'react';
 import { Outlet, createRootRouteWithContext } from '@tanstack/react-router';
 
-import { ModalWrapper, ToastWrapper, useModalStore } from '@learnway/ui';
 import { useCodeStoreShare, useGlobalRouterEvent } from '@learnway/hooks';
 import { PageRouteContext } from '@learnway/shared';
 import { useRenewalMenuStateFromRouting } from '@learnway/auth/entities';
+// TODO: Fix unknown imports: ModalWrapper, ToastWrapper from '@learnway/ui'
+import { useModalStore } from '@learnway/ui/stores/useModalStore';
 // import { useSessionTimout } from '@learnway/auth/features';
 import { NotFound } from '@features/layout';
 

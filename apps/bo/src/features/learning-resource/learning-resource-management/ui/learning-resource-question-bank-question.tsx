@@ -1,14 +1,17 @@
+import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
+import styles from '@learnway/styles/bo/pages/_layout/learning/test-detail.module.css';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import styles from '@learnway/styles/bo/pages/_layout/learning/test-detail.module.css';
-import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
 
-import { cn } from '@learnway/shared';
-import { Button, FormSubTitle, GridBox, Input, useModal } from '@learnway/ui';
-import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
 import { IcoCopy, IcoMenu01, IcoMinus, IcoPlus } from '@learnway/icons';
-import { LearningResourceTestItemModal } from './learning-resource-test-item-modal';
+import { cn } from '@learnway/shared';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { GridBox } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
+import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
 import { QuestionItemGridRow } from '@types';
 import { QUESTION_LEVELS, QUESTION_TYPES } from '../service/exam-util';
 import {
@@ -17,6 +20,7 @@ import {
   updateNewStatistics,
 } from '../service/learning-resource-question-service';
 import { useQuestionBankInfoInput } from '../service/question-bank/use-question-bank-info-input';
+import { LearningResourceTestItemModal } from './learning-resource-test-item-modal';
 
 const LearningResourceQuestionBankQuestionComponent = () => {
   const { t } = useTranslation();

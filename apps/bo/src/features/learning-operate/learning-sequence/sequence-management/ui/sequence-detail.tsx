@@ -7,17 +7,17 @@ import { DateRangePickerFormField, DropdownFormField, FormDisplay } from '@featu
 import { InstructorListPopup } from '@features/learning-operate-support/instructor-tutor/instructor-management';
 import { TriggerKey } from '@features/learning-operate/course/course-management';
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { SplitPanel } from '@learnway/ui/elements';
 import {
   ChipListModalSelectorFormField,
-  ContentsRow,
-  FormSubTitle,
-  Input,
   InputModalSelectorFormField,
-  PhoneNumberFormField,
   RadioGroupFormField,
-  SplitPanel,
-  useModal,
-} from '@learnway/ui';
+} from '@learnway/ui/form-field';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
+import { PhoneNumberFormField } from '@learnway/ui/phone-number';
 import {
   FormRow,
   FormRow2,

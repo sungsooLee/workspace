@@ -1,7 +1,6 @@
 import {
   TriggerKey,
-  useCourseLastTriggered,
-} from '@features/learning-operate/course/course-management';
+  useCourseLastTriggered } from '@features/learning-operate/course/course-management';
 import { useNavigate } from '@tanstack/react-router';
 import { useUpdateEffect } from 'ahooks';
 import { forwardRef } from 'react';

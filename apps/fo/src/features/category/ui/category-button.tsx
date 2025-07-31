@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from '@tanstack/react-router';
 
-import { Button, ModalBody, ModalContainer, ModalTitle, useModal } from '@learnway/ui';
 import { IcoArray, IcoArrowForward } from '@learnway/icons';
 
 import styles from '@learnway/styles/fo/features/category/category-button.module.css';
@@ -9,6 +8,8 @@ import { RecentVisits } from '@features/layout';
 import { cn } from '@learnway/shared';
 import { useCategoryTree } from '@entities/category';
 import { t } from 'i18next';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalTitle, useModal } from '@learnway/ui/modal';
 
 interface CategoryPopupProps {
   id: number;

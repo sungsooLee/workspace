@@ -1,16 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { createFileRoute, Link, useRouterState } from '@tanstack/react-router';
 import { Navigation } from 'swiper/modules';
-import {
-  Carousel,
-  ContentsRow,
-  Input,
-  Pagination,
-  Dropdown,
-  EmptyText,
-  Button,
-  Popover,
-} from '@learnway/ui';
+import { Carousel } from '@learnway/ui/carousel';
+import { Pagination } from '@learnway/ui/pagination';
+import { Popover } from '@learnway/ui/popover-list';
 import dropdownPopoverStyles from '../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
 import styles from '@learnway/styles/fo/pages/_layout/category/category.module.css';
 import { cn } from '@learnway/shared';
@@ -23,6 +16,11 @@ import bnrCImage2 from '../../../assets/images/banner/banner_category_02.png';
 import { IcoArray, IcoArrowDown, IcoDotpoints } from '@learnway/icons';
 import { queryOptions, useFetchCategoryDetail } from '@entities/category';
 import CategoryService from '@entities/category/api/category';
+import { EmptyText } from '@learnway/ui/empty-text';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { Input } from '@learnway/ui/input';
 
 export const Route = createFileRoute('/_layout/_category/category')({
   component: RouteComponent,

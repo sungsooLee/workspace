@@ -12,16 +12,12 @@ import React, {
   useState,
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  Button,
-  CountText,
-  Grid,
-  GridBoxProps,
-  GridBoxState,
-  GridImperative,
-  Pagination,
-} from '../../../';
-import { GridBoxColumn } from '../types/grid-box';
+import { Button } from '../../button';
+import { CountText } from '../../elements';
+import { Pagination } from '../../pagination';
+import { Grid } from '../grid';
+import { GridBoxState, GridImperative } from '../types';
+import { GridBoxColumn, GridBoxProps } from '../types/grid-box';
 import { GridBoxSearchInput, GridBoxSearchInputCondition } from './grid-box-search-input';
 import styles from './grid-box.module.css';
 

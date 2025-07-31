@@ -1,11 +1,11 @@
 import { memo } from 'react';
 
-import { ProgressBar } from '@learnway/ui';
 import { IcoCheck, IcoMessageText } from '@learnway/icons';
 
 import type { EmbedWidgetProps } from '../../widget-container/widget-container';
 import styles from './completion-status.module.css';
 import statusStyles from './completion-status-status.module.css';
+import { ProgressBar } from '@learnway/ui/progress-bar';
 
 const CompletionStatusComponent = ({ data }: EmbedWidgetProps) => {
   return (

@@ -1,10 +1,10 @@
 import { memo, useCallback, useEffect, useState } from 'react';
-import { OptionCard } from '@learnway/ui';
+import { OptionCard } from '@learnway/ui/option-card';
 import { getRandomId } from '@learnway/shared';
 import { cn } from '@learnway/shared';
-import { ChipList } from '@learnway/ui';
 
 import styles from '@learnway/styles/fo/features/category/category-filter-popup.module.css';
+import { ChipList, ChipList } from '@learnway/ui/chip-list';
 
 interface FilterPopupComponentProps {
   initialFilters?: any; // 초기 필터 값 (이전에 선택한 값)

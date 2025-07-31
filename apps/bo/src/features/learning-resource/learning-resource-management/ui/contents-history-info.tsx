@@ -1,9 +1,9 @@
 import { t } from 'i18next';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import { Button } from '@learnway/ui';
 import { GetContentDetailRes } from '@types';
 
 import style from '@learnway/styles/bo/assets/styles/modules/contents-history-info.module.css';
+import { Button } from '@learnway/ui/button';
 
 interface ContentsHistoryInfoComponentProp {
   type?: string;

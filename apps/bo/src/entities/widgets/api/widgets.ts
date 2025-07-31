@@ -21,8 +21,7 @@ export default class WidgetsService {
       `${PMSApiPrefix()}/widgets/tenant-mappings/${payload.tenantWidgetId}/dnd`,
       payload,
       {
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      },
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
     );
   }
   static postWidgetsTenantMappings(tenantId: number, body: any): Promise<any> {
@@ -33,14 +32,12 @@ export default class WidgetsService {
     isUsed,
     widgetName,
     size,
-    page,
-  }: { isUsed?: boolean; widgetName?: string } & FetchPaginationParam): Promise<any> {
+    page }: { isUsed?: boolean; widgetName?: string } & FetchPaginationParam): Promise<any> {
     const url = objectToQueryString(`${PMSApiPrefix()}/widgets`, {
       widgetName,
       isUsed,
       size,
-      page,
-    });
+      page });
     return httpService.get<any>(url);
   }
   static fetchWidget(widgetCode: string): Promise<any> {

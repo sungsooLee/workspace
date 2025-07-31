@@ -1,9 +1,10 @@
 import { useTranslation } from 'react-i18next';
 import { useRouter } from '@tanstack/react-router';
 
-import { Button, EmptyText } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import pageStyles from '@learnway/styles/bo/assets/styles/modules/page-container.module.css';
+import { EmptyText } from '@learnway/ui/empty-text';
+import { Button } from '@learnway/ui/button';
 
 // 404 에러코드 노출로 주석처리
 // const NotFoundComponent = () => {

@@ -3,7 +3,8 @@ import { useRouter, useRouterState, Link } from '@tanstack/react-router';
 import { createColumnHelper, ColumnDef } from '@tanstack/react-table';
 import { t } from 'i18next';
 
-import { Button, Divider, GridBox, useGridBox, useModal } from '@learnway/ui';
+import { Divider } from '@learnway/ui/elements';
+import { GridBox, useGridBox } from '@learnway/ui/grid';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 
@@ -15,12 +16,13 @@ import { queryOptions as userGroupManualOptions } from '@entities/user-group/ser
 import { CombineUserGroup, EnGlobalConst, UserGroupType } from '@types';
 import { UserGroupChoiceModal, UserGroupOrganizationShuttleModal } from '@shared/ui';
 import { useFetchUserGroupDetail } from '@entities/user-group';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 
 const _global = {
   linkClick: (userGroupId: number) => {
     return;
-  },
-};
+  } };
 
 /**
  * 화면번호 : NLP_BO_PMS_2001 (유저그룹수동관리)
@@ -40,9 +42,7 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
       to: `/platform/tenant/usr-group/manual-detail`,
       state: {
         userGroupId,
-        listParam: getValues(),
-      },
-    });
+        listParam: getValues() } });
   };
 
   const gridInitConfig = useCreation(
@@ -53,13 +53,11 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
           name: 'no',
           label: t('NO.'),
           type: 'numbering',
-          enableSorting: false,
-        },
+          enableSorting: false },
         {
           name: 'tenantName',
           label: t('테넌트명'),
-          size: 159,
-        },
+          size: 159 },
         {
           name: 'userGroupOriginType',
           label: t('유저그룹유형'),
@@ -68,8 +66,7 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
               `${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.user.UserGroupOriginType.${info.getValue()}`,
             );
           },
-          size: 163,
-        },
+          size: 163 },
         {
           name: 'opt2',
           label: t('채널'),
@@ -80,8 +77,7 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
             }
             return info.getValue();
           },
-          enableSorting: false,
-        },
+          enableSorting: false },
         {
           name: 'opt3',
           label: t('개인'),
@@ -92,8 +88,7 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
             }
             return info.getValue();
           },
-          enableSorting: false,
-        },
+          enableSorting: false },
         {
           name: 'userGroupName',
           label: t('유저그룹명'),
@@ -107,8 +102,7 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
               </Button>
             );
           },
-          size: 207,
-        },
+          size: 207 },
         {
           name: 'userCount',
           label: t('대상자'),
@@ -116,10 +110,8 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
             return `${info.getValue().toLocaleString('ko-KR')}명`;
           },
           meta: {
-            cellAlign: 'right',
-          },
-          size: 127,
-        },
+            cellAlign: 'right' },
+          size: 127 },
         {
           name: 'userGroupId',
           label: t('대상자 확인'),
@@ -134,10 +126,8 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
                   {
                     combineType: 'USER_GROUP',
                     combineValue: data.userGroupId,
-                    combineName: '',
-                  },
-                ],
-              },
+                    combineName: '' },
+                ] },
             ];
 
             return (
@@ -148,8 +138,7 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
                   e.stopPropagation();
                   openModal({
                     width: 'xl',
-                    content: <UserGroupChoiceModal groups={combiners} />,
-                  });
+                    content: <UserGroupChoiceModal groups={combiners} /> });
                 }}
               >
                 {t('대상자')}
@@ -157,11 +146,9 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
             );
           },
           meta: {
-            cellAlign: 'center',
-          },
+            cellAlign: 'center' },
           size: 96,
-          enableSorting: false,
-        },
+          enableSorting: false },
         {
           name: 'isUsed',
           label: t('사용여부'),
@@ -169,10 +156,8 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
             return info.row.original.isUsed ? t('사용') : t('미사용');
           },
           meta: {
-            cellAlign: 'center',
-          },
-          size: 88,
-        },
+            cellAlign: 'center' },
+          size: 88 },
         {
           name: 'createdDate',
           label: t('등록일'),
@@ -183,10 +168,8 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
             );
           },
           meta: {
-            cellAlign: 'center',
-          },
-          size: 194,
-        },
+            cellAlign: 'center' },
+          size: 194 },
         {
           name: 'modifiedDate',
           label: t('수정일'),
@@ -197,18 +180,14 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
             );
           },
           meta: {
-            cellAlign: 'center',
-          },
-          size: 194,
-        },
+            cellAlign: 'center' },
+          size: 194 },
       ],
       data: [],
       gridState: {
         page: 0,
         size: 20,
-        sort: [],
-      },
-    }),
+        sort: [] } }),
     [],
   );
 
@@ -218,8 +197,7 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
     setOptions,
     setValue,
     onFormChange,
-    onFormValid,
-  } = useSearchBox(searchConfig());
+    onFormValid } = useSearchBox(searchConfig());
   const { config: gConfig, gridFetch } = useGridBox(gridInitConfig);
 
   const handleOnSearch = (data: any) => {
@@ -245,8 +223,7 @@ const TenantUserGroupManualManagementListComponent: FC<any> = ({ rootPath }) => 
 
     const tenantIdOptions = loginUser.tenants.map((tenant) => ({
       value: tenant.tenantId,
-      label: tenant.tenantName,
-    }));
+      label: tenant.tenantName }));
 
     setOptions('tenantId', tenantIdOptions);
     if (loginUser.activeTenant) setValue('tenantId', loginUser.activeTenant.tenantId ?? '');
@@ -274,8 +251,7 @@ const searchConfig = (): SearchBoxConfig => ({
         format: 'object',
         value: '',
         presetOptionLabel: t('LABEL.form.label.select'),
-        options: [],
-      },
+        options: [] },
       {
         name: 'userGroupOriginType',
         type: 'dropdown',
@@ -283,29 +259,24 @@ const searchConfig = (): SearchBoxConfig => ({
         value: '',
         presetOptionLabel: t('전체'),
         optionsConfig: {
-          codeGroup: CODE_GROUP['pms.user.UserGroupOriginType'],
-        },
-      },
+          codeGroup: CODE_GROUP['pms.user.UserGroupOriginType'] } },
       {
         name: 'originName',
         type: 'text',
         label: t('채널'),
-        value: '',
-      },
+        value: '' },
       {
         name: 'originName',
         type: 'text',
         label: t('개인'),
-        value: '',
-      },
+        value: '' },
     ],
     [
       {
         name: 'userGroupName',
         type: 'text',
         label: t('유저그룹명'),
-        value: '',
-      },
+        value: '' },
       {
         name: 'isUsed',
         type: 'dropdown',
@@ -315,26 +286,21 @@ const searchConfig = (): SearchBoxConfig => ({
           { value: '', label: t('전체') },
           { value: 'true', label: t('사용') },
           { value: 'false', label: t('미사용') },
-        ],
-      },
+        ] },
       {
         name: 'dateRange',
         type: 'date-range',
         label: t('수정기간'),
         format: 'object',
-        value: { from: undefined, to: undefined },
-      },
+        value: { from: undefined, to: undefined } },
       {
         name: '',
         type: 'hidden',
-        value: '',
-      },
+        value: '' },
     ],
   ],
   validator: {
-    tenantId: true,
-  },
-});
+    tenantId: true } });
 
 // const gridConfig = {
 //   query: '',

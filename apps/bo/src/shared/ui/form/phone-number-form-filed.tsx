@@ -1,6 +1,6 @@
-import { PhoneNumber, PhoneNumberValue } from '@learnway/ui';
-import { forwardRef } from 'react';
 import { BaseFormFieldProps } from '@learnway/hooks';
+import { PhoneNumber, PhoneNumberValue } from '@learnway/ui/phone-number';
+import { forwardRef } from 'react';
 import { useWatch } from 'react-hook-form';
 interface PhoneNumberFormFieldProps extends BaseFormFieldProps<string> {
   fields?: {

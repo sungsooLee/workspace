@@ -1,35 +1,29 @@
-import React, { FC, useEffect, useState } from 'react';
-import { t } from 'i18next';
-import {
-  ModalBody,
-  ModalContainer,
-  ModalTitle,
-  useModal,
-  Button,
-  TreeContainer,
-  TreeNode,
-  DndTreeView,
-} from '@learnway/ui';
-import { cn } from '@learnway/shared';
-import { IcoNarrowRight } from '@learnway/icons';
-import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
-import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
-import popContentsStyles from './pop-contents-layout.module.css';
-import { transformMenuApiDataToTreeData } from '@features/platform-management/tenant/service/tenant-detail-tree.service';
 import { useMenuManageFetchTree } from '@entities/menu/service/menu-manage.hook';
 import {
-  useFetchMenuTenantMappingTree,
+  useChangeMenuTenentDnd,
   useCreateMenuTenant,
   useDeleteMenuTenent,
-  useChangeMenuTenentDnd,
+  useFetchMenuTenantMappingTree,
 } from '@entities/menu/service/tenant-menu-manage.hook';
+import { transformApiDataToTreeData } from '@features/platform-management/platform/menu-managemnet';
 import {
   getAllParentAndChildTreeById,
-  getFirstExpandKeys,
   getAllTreeKeys,
+  getFirstExpandKeys,
   moveTenantMenuNodeCheck,
+  transformMenuApiDataToTreeData,
 } from '@features/platform-management/tenant/service/tenant-detail-tree.service';
-import { transformApiDataToTreeData } from '@features/platform-management/platform/menu-managemnet';
+import { IcoNarrowRight } from '@learnway/icons';
+import { cn } from '@learnway/shared';
+import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
+import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
+import { ModalBody, ModalContainer, ModalTitle, useModal } from '@learnway/ui/modal';
+
+import { Button } from '@learnway/ui/button';
+import { DndTreeView, TreeContainer, TreeNode } from '@learnway/ui/tree-view';
+import { t } from 'i18next';
+import { FC, useEffect, useState } from 'react';
+import popContentsStyles from './pop-contents-layout.module.css';
 
 /**
  * 화면번호: NLP_BO_TMS_1002_01_02 (학습자메뉴매핑), NLP_BO_TMS_1002_01_05 (HRD 메뉴 매핑)

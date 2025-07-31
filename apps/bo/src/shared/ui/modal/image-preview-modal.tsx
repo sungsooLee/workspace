@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { cn } from '@learnway/shared';
-import { ModalBody, ModalContainer, Button } from '@learnway/ui';
 import { IcoArrowPrev, IcoArrowNext } from '@learnway/icons';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer } from '@learnway/ui/modal';
 // style
 import styles from '@learnway/styles/bo/assets/styles/modules/pop-image-preview.module.css';
 

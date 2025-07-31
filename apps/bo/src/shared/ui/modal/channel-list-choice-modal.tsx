@@ -1,21 +1,14 @@
 import { useState } from 'react';
 import { t } from 'i18next';
-import {
-  Button,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  GridBox,
-  useModal,
-  useGridBox,
-  Divider,
-} from '@learnway/ui';
+import { Divider } from '@learnway/ui/elements';
+import { GridBox, useGridBox } from '@learnway/ui/grid';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { queryOptions } from '@entities/channel/service/channel.queries';
 import { ChannelParam } from '@types';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
 type Props = {
   roleId?: string;
@@ -34,16 +27,13 @@ const ChannelListModalComponent = ({ roleId = '' }: Props) => {
           label: t('테넌트'),
           value: undefined,
           optionsConfig: {
-            codeGroup: CODE_GROUP['manual.tenant.tenantId'],
-          },
+            codeGroup: CODE_GROUP['manual.tenant.tenantId'] },
           dropdownConfig: {
             onchange: () => {
               return '';
             },
             isSearchable: true,
-            placeholder: '입력 선택',
-          },
-        },
+            placeholder: '입력 선택' } },
         {
           name: 'channelName',
           type: 'dropdown',
@@ -56,9 +46,7 @@ const ChannelListModalComponent = ({ roleId = '' }: Props) => {
               return '';
             },
             isSearchable: true,
-            placeholder: '입력 선택',
-          },
-        },
+            placeholder: '입력 선택' } },
         {
           name: 'companyId',
           type: 'dropdown',
@@ -67,12 +55,10 @@ const ChannelListModalComponent = ({ roleId = '' }: Props) => {
           value: '',
           presetOptionLabel: t('LABEL.form.label.all'),
           optionsConfig: {
-            codeGroup: CODE_GROUP['manual.company.companyId'],
-          },
+            codeGroup: CODE_GROUP['manual.company.companyId'] },
           isSearchable: true,
           isClearable: true,
-          placeholder: '입력 선택',
-        },
+          placeholder: '입력 선택' },
       ],
       [
         {
@@ -80,8 +66,7 @@ const ChannelListModalComponent = ({ roleId = '' }: Props) => {
           label: t('채널 소유자'),
           type: 'text',
           value: '',
-          placeholder: '입력',
-        },
+          placeholder: '입력' },
         {
           name: 'isSecretChannel',
           type: 'dropdown',
@@ -92,14 +77,11 @@ const ChannelListModalComponent = ({ roleId = '' }: Props) => {
           options: [
             {
               value: '비밀채널',
-              label: t('비밀채널'),
-            },
+              label: t('비밀채널') },
             {
               value: '일반채널',
-              label: t('일반채널'),
-            },
-          ],
-        },
+              label: t('일반채널') },
+          ] },
         {
           name: 'isUsed',
           type: 'dropdown',
@@ -109,11 +91,9 @@ const ChannelListModalComponent = ({ roleId = '' }: Props) => {
           options: [
             { value: 'true', label: t('사용') },
             { value: 'false', label: t('미사용') },
-          ],
-        },
+          ] },
       ],
-    ],
-  };
+    ] };
 
   const { provider: sProvider, getValues } = useSearchBox(searchConfig);
 
@@ -123,23 +103,19 @@ const ChannelListModalComponent = ({ roleId = '' }: Props) => {
       {
         name: 'tenantName',
         label: t('테넌트'),
-        render: (info: any) => info.row.original.tenantName,
-      },
+        render: (info: any) => info.row.original.tenantName },
       {
         name: 'channelName',
         label: t('채널'),
-        render: (info: any) => info.row.original.channelName,
-      },
+        render: (info: any) => info.row.original.channelName },
       {
         name: 'companyName',
         label: t('회사'),
-        render: (info: any) => info.row.original.companyName,
-      },
+        render: (info: any) => info.row.original.companyName },
       {
         name: 'channelOwnerName',
         label: t('채널 소유자'),
-        render: (info: any) => info.row.original.channelOwnerName,
-      },
+        render: (info: any) => info.row.original.channelOwnerName },
       {
         name: 'isUniversalChannel',
         label: t('채널구분'),
@@ -147,24 +123,20 @@ const ChannelListModalComponent = ({ roleId = '' }: Props) => {
           return info.row.original.isUniversalChannel
             ? t('LABEL.common.enable')
             : t('LABEL.common.disable');
-        },
-      },
+        } },
       {
         name: 'isUsed',
         label: '사용여부',
         render: (info: any) => {
           return info.row.original.isUsed ? t('LABEL.common.enable') : t('LABEL.common.disable');
-        },
-      },
+        } },
     ],
     data: [],
 
     pagination: {
       pageSize: 10,
       pageIndex: 0,
-      totalRows: 0,
-    },
-  };
+      totalRows: 0 } };
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
 
   const [selectedRow, setSelectedRow] = useState();

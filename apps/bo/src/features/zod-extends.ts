@@ -6,8 +6,7 @@ import {
   ZodNullable,
   ZodUnion,
   ZodNull,
-  ZodNumber,
-} from 'zod';
+  ZodNumber } from 'zod';
 
 // baseZ를 복사해서 새로운 z 객체를 만듭니다.
 const z = { ...baseZ };

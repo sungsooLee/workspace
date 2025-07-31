@@ -1,6 +1,8 @@
-import React, { forwardRef, useEffect, useState } from 'react';
 import { BaseFormFieldProps, OptionsConfig, SelectOption, useFormOptions } from '@learnway/hooks';
-import { AutoCompleteDropdown, Dropdown, DropdownComponentProps } from '@learnway/ui';
+import {
+  AutoCompleteDropdown,
+  AutoCompleteDropdownComponentProps as DropdownComponentProps } from '@learnway/ui/auto-complete';
+import { forwardRef, useEffect, useState } from 'react';
 
 interface DropdownFormFieldType extends BaseFormFieldProps<string> {
   options?: SelectOption[];

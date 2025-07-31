@@ -3,7 +3,7 @@ import { useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { useEffect, useState } from 'react';
 
-import { TreeBox } from '@learnway/ui';
+import { TreeBox } from '@learnway/ui/tree-view';
 
 import { transformDepartmentApiDataToTreeData } from '@features/platform-management/company/company-organization-management/service/company-organization.service';
 

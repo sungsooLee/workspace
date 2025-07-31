@@ -1,15 +1,9 @@
+import { Button } from '@learnway/ui/button';
+import { ModalContainer, ModalBody, ModalTitle, ModalFooter, useModal } from '@learnway/ui/modal';
 // IA106 / NLP_BO_CMS_1053 스콤 보기
 
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import {
-  Button,
-  ModalContainer,
-  ModalBody,
-  ModalTitle,
-  GridBox,
-  ModalFooter,
-  useModal,
-} from '@learnway/ui';
+import { GridBox } from '@learnway/ui/grid';
 import { t } from 'i18next';
 import { ScormOrgn } from '@types';
 import { useEffect, useState } from 'react';
@@ -35,8 +29,7 @@ function ScormViewModalComponent({ scormData }: ScormViewModalComponentProps) {
           items?.map(({ itemTitle, itemUrl }) => ({
             orgnTitle,
             itemTitle,
-            itemUrl,
-          })),
+            itemUrl })),
         ),
       ),
     );
@@ -49,14 +42,12 @@ function ScormViewModalComponent({ scormData }: ScormViewModalComponentProps) {
       cell: (info) => info.getValue(),
       header: t('모듈'),
       size: 240,
-      enableGrouping: false,
-    }),
+      enableGrouping: false }),
     columnHelper.accessor('itemTitle', {
       cell: (info) => info.getValue(),
       header: t('레슨'),
       size: 338,
-      enableGrouping: false,
-    }),
+      enableGrouping: false }),
     columnHelper.accessor('itemUrl', {
       cell: (info) => (
         <a className="underline" href={info.getValue()} target="_blank">
@@ -65,8 +56,7 @@ function ScormViewModalComponent({ scormData }: ScormViewModalComponentProps) {
       ),
       header: t('미리보기'),
       size: 120,
-      enableGrouping: false,
-    }),
+      enableGrouping: false }),
   ] as ColumnDef<ScormData, string>[];
 
   return (

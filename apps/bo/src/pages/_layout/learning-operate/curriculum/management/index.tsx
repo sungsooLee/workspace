@@ -1,13 +1,12 @@
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
-import { Button } from '@learnway/ui';
 import { FORM_MODE } from '@shared/const';
 import { useState } from 'react';
 import { CurriculumDetail } from '@features/learning-operate/curriculum';
+import { Button } from '@learnway/ui/button';
 
 export const Route = createFileRoute('/_layout/learning-operate/curriculum/management/')({
-  component: RouteComponent,
-});
+  component: RouteComponent });
 
 function RouteComponent() {
   const router = useRouter();
@@ -31,8 +30,7 @@ function RouteComponent() {
   // 목록으로 이동
   const handleGoToList = () => {
     router.navigate({
-      to: '/learning-operate/curriculum',
-    });
+      to: '/learning-operate/curriculum' });
     //
   };
 

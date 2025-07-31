@@ -1,7 +1,8 @@
 import { useState, forwardRef } from 'react';
 import { t } from 'i18next';
-import { Button, ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui';
 import { UserChoice } from '../components/user-choice';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
 type UserChoiceModalComponentProps = {
   title?: string;

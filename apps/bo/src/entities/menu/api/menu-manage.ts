@@ -114,14 +114,12 @@ export default class MenuMangerService {
    */
   static moveMenuFavorites({
     favoritesMenuId,
-    sortOrder,
-  }: {
+    sortOrder }: {
     favoritesMenuId: any;
     sortOrder: any;
   }): Promise<any> {
     return httpService.post<any>(`${PMSApiPrefix()}/menus/favorites/${favoritesMenuId}/dnd`, {
-      sortOrder,
-    });
+      sortOrder });
   }
 }
 
@@ -148,5 +146,4 @@ export const MenuManageApi = {
   ),
   update: registerApi('menuManage.update', 'PUT', createPmsUrl('/menus/:menuId'), '메뉴 수정'),
   delete: registerApi('menuManage.delete', 'DELETE', createPmsUrl('/menus/:menuId'), '메뉴 삭제'),
-  move: registerApi('menuManage.move', 'POST', createPmsUrl('/menus/:menuId/dnd'), '메뉴 DND'),
-};
+  move: registerApi('menuManage.move', 'POST', createPmsUrl('/menus/:menuId/dnd'), '메뉴 DND') };

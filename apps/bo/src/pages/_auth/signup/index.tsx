@@ -4,20 +4,19 @@ import { useMemo, useState } from 'react';
 import { pageRouteConfig } from '@features/auth/index';
 import { IcoBuilding01, IcoUser01 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { Button, RadioCard, Stepper } from '@learnway/ui';
+import { RadioCard } from '@learnway/ui/radio-card';
+import { Stepper } from '@learnway/ui/stepper';
 
 import { adminItems, cpItems } from '@features/user/signup/ui/signup-select';
 import styles from '@features/user/signup/ui/signup-select.module.css';
+import { Button } from '@learnway/ui/button';
 
 // 관리자 회원가입
 export const Route = createFileRoute('/_auth/signup/')({
   component: RouteComponent,
   ...pageRouteConfig({
     meta: {
-      title: '관리자 회원가입',
-    },
-  }),
-});
+      title: '관리자 회원가입' } }) });
 
 function RouteComponent() {
   const router = useRouter();
@@ -59,8 +58,7 @@ function RouteComponent() {
                     <IcoBuilding01 width={48} height={48} className={styles.ico1} />
                     <span>CP사 회원가입</span>
                   </div>
-                ),
-              },
+                ) },
               {
                 value: 'type2',
                 label: (
@@ -68,8 +66,7 @@ function RouteComponent() {
                     <IcoUser01 width={48} height={48} className={styles.ico2} />
                     <span>관리자 권한 신청</span>
                   </div>
-                ),
-              },
+                ) },
             ]}
             defaultValue={'type1'}
             onValueChange={handleValueChange}

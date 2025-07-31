@@ -1,6 +1,8 @@
 import { BaseFormFieldProps } from '@learnway/hooks';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
-import { Button, Input, InputProps, useModal } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { Input, InputProps } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
 import { AddressSearchModal } from '@shared/ui';
 import { isEqual } from 'lodash';
 import { forwardRef, useEffect, useMemo, useState } from 'react';

@@ -7,7 +7,8 @@ import {
 import { ChannelDetailSubscriber } from '@features/channel/channel-management/channel-detail-subscriber';
 import { ChannelDetailUser } from '@features/channel/channel-management/channel-detail-user';
 import { ChannelDetailUserGroup } from '@features/channel/channel-management/channel-detail-user-group';
-import { Button, Tabs } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { Tabs } from '@learnway/ui/tabs';
 import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui';
 import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { EnFormMode } from '@types';

@@ -1,23 +1,20 @@
 import { memo } from 'react';
-import { useBoolean, useCounter } from 'react-use';
 import { useTranslation } from 'react-i18next';
+import { useBoolean, useCounter } from 'react-use';
+
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { InputTimer } from '@learnway/ui/input';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
 import {
-  Button,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  useModal,
-  ModalTitle,
-  InputTimer,
-} from '@learnway/ui';
-import { cn } from '@learnway/shared';
-import { DynamicFormField, ContentsRow } from '@learnway/ui';
-import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
-
-import { FormRow, EmbededAlert } from '../../../../shared/ui';
-import { useVerifyEmail, useSendVerifyEmail } from '../../../../entities';
-import { useFetchAuthUser, useUpdateUser } from '../../../../entities';
+  useFetchAuthUser,
+  useSendVerifyEmail,
+  useUpdateUser,
+  useVerifyEmail,
+} from '../../../../entities';
+import { EmbededAlert, FormRow } from '../../../../shared/ui';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/widget-management.module.css'; // 화면 css
 

@@ -4,18 +4,8 @@ import { t } from 'i18next';
 
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 
-import {
-  Button,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  GridBox,
-  useModal,
-  useGridBox,
-  useGridBoxConfig,
-  Divider,
-} from '@learnway/ui';
+import { Divider } from '@learnway/ui/elements';
+import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 
@@ -24,6 +14,8 @@ import { SearchBox } from '@shared/ui/search-box';
 import { queryOptions as companyQueryOptions } from '@entities/companies/service/companies.queries';
 
 import { EnGlobalConst } from '@types';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
 /**
  * 화면 번호: NLP_BO_TMS_1001_19 or 화면번호 NLP_BO_PMS_1107
@@ -39,9 +31,7 @@ const CompanyModalComponent = forwardRef((props, ref) => {
           value: '',
           optionsConfig: {
             options: [{ label: t('전체'), value: '' }],
-            codeGroup: CODE_GROUP['pms.company.CompanyType'],
-          },
-        },
+            codeGroup: CODE_GROUP['pms.company.CompanyType'] } },
         {
           name: 'companyCode',
           type: 'dropdown',
@@ -50,25 +40,20 @@ const CompanyModalComponent = forwardRef((props, ref) => {
           format: 'object',
           presetOptionLabel: t('LABEL.form.label.all'),
           optionsConfig: {
-            codeGroup: CODE_GROUP['manual.company.companyCode'],
-          },
+            codeGroup: CODE_GROUP['manual.company.companyCode'] },
           dropdownConfig: {
             onchange: () => {
               return '';
             },
             isSearchable: true,
-            placeholder: '입력 또는 선택',
-          },
-        },
+            placeholder: '입력 또는 선택' } },
       ],
-    ],
-  };
+    ] };
 
   const gridConfig: useGridBoxConfig = {
     query: companyQueryOptions.listPopup,
     columns: [],
-    data: [],
-  };
+    data: [] };
 
   const columnHelper = createColumnHelper<any>();
   const columns = [
@@ -76,33 +61,27 @@ const CompanyModalComponent = forwardRef((props, ref) => {
       cell: (info) =>
         t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.company.CompanyType.${info.getValue()}`),
       header: t('그룹'),
-      size: 210,
-    }),
+      size: 210 }),
     columnHelper.accessor('name', {
       cell: (info) => info.getValue(),
       header: t('회사'),
-      size: 210,
-    }),
+      size: 210 }),
     columnHelper.accessor('rpsntrName', {
       cell: (info) => info.getValue(),
       header: t('대표자'),
-      size: 210,
-    }),
+      size: 210 }),
     columnHelper.accessor('brn', {
       cell: (info) => info.getValue(),
       header: t('사업자 등록번호'),
-      size: 220,
-    }),
+      size: 220 }),
     columnHelper.accessor('managerPhone', {
       cell: (info) => info.getValue(),
       header: t('대표 전화'),
-      size: 210,
-    }),
+      size: 210 }),
     columnHelper.accessor('managerEmail', {
       cell: (info) => info.getValue(),
       header: t('대표 이메일'),
-      size: 210,
-    }),
+      size: 210 }),
   ] as ColumnDef<any, unknown>[];
   const { closeModal } = useModal();
   const { provider: sProvider, getValues } = useSearchBox(searchConfig);

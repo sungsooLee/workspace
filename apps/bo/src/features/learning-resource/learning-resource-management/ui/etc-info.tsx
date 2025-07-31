@@ -1,10 +1,10 @@
+import { useModal } from '@learnway/ui/modal';
 // IA109 / NLP_BO_CMS_1027, NLP_BO_CMS_1009
 
 import { usePutETCChange } from '@entities/learning-resource';
 import { LEARNING_TYPE } from '@learnway/config';
 import { DynamicFormProvider, FileInfo, useFileManager } from '@learnway/hooks';
 import { formatBytes, splitFileName } from '@learnway/shared';
-import { useModal } from '@learnway/ui';
 import { ProcessingStatus } from '@types';
 import { t } from 'i18next';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -51,8 +51,7 @@ const ETCInfoComponent = ({ provider }: MovieInfoProps) => {
     onError: (error: any) => {
       console.error(error);
       // 에러 얼럿?
-    },
-  });
+    } });
 
   const changeFile = useCallback(async () => {
     const fileUuid = await openModal({
@@ -63,8 +62,7 @@ const ETCInfoComponent = ({ provider }: MovieInfoProps) => {
           type={LEARNING_TYPE.ETC}
           maxFileCount={1}
         />
-      ),
-    });
+      ) });
     if (!fileUuid) return;
 
     changeETC({ contentUuid, fileUuid });
@@ -95,12 +93,10 @@ const ETCInfoComponent = ({ provider }: MovieInfoProps) => {
   const buttons = [
     {
       label: t('원본 다운로드'),
-      onClick: downloadOriginal,
-    },
+      onClick: downloadOriginal },
     {
       label: t('파일 변경'),
-      onClick: changeFile,
-    },
+      onClick: changeFile },
   ];
 
   return (

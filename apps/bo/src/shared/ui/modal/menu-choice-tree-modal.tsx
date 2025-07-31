@@ -1,44 +1,23 @@
-import React, { FC, useEffect, useState } from 'react';
-import { t } from 'i18next';
-import {
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  useModal,
-  Button,
-  TreeContainer,
-  TreeView,
-  TreeNode,
-  TreeEventPayload,
-  DndTreeView,
-} from '@learnway/ui';
-import { cn } from '@learnway/shared';
-import { IcoNarrowRight } from '@learnway/icons';
-import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
-import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
-import popContentsStyles from '@features/platform-management/tenant/ui/pop-contents-layout.module.css';
-import { transformMenuApiDataToTreeData } from '@features/platform-management/tenant/service/tenant-detail-tree.service';
 import { useMenuManageFetchTree } from '@entities/menu/service/menu-manage.hook';
 import {
-  useFetchMenuTenantMappingTree,
-  useCreateMenuTenant,
-  useDeleteMenuTenent,
-  useChangeMenuTenentDnd,
-} from '@entities/menu/service/tenant-menu-manage.hook';
-import {
-  getAllParentAndChildrenByKey,
-  getAllParentAndAllChildById,
-  getFirstExpandKeys,
-  getAllTreeKeys,
-  getAllParent,
-  getNodeByKey,
-  genMap,
-  deleteNodeByNode,
   copyTreeNode,
+  deleteNodeByNode,
+  genMap,
+  getAllTreeKeys,
+  getFirstExpandKeys,
+  getNodeByKey,
 } from '@features/platform-management/tenant';
-
-import { isEqual } from 'lodash';
+import { transformMenuApiDataToTreeData } from '@features/platform-management/tenant/service/tenant-detail-tree.service';
+import popContentsStyles from '@features/platform-management/tenant/ui/pop-contents-layout.module.css';
+import { IcoNarrowRight } from '@learnway/icons';
+import { cn } from '@learnway/shared';
+import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
+import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { DndTreeView, TreeContainer, TreeNode } from '@learnway/ui/tree-view';
+import { t } from 'i18next';
+import { useEffect, useState } from 'react';
+import { Button } from '../../../../../../libs/ui/src/lib/button';
 
 /**
  * 화면번호: NLP_BO_PMS_1100_02_07 메뉴 조회 팝업(공통)

@@ -9,8 +9,7 @@ export function useFetchInstructors(param: any) {
 export function useCreateTutor(options: any) {
   const { mutateAsync, isSuccess, isError, data } = useMutation({
     ...instructorMutateOptions.createTutor(),
-    ...options,
-  });
+    ...options });
 
   return {
     create: async (payload: any, callback?: any) => {
@@ -18,15 +17,13 @@ export function useCreateTutor(options: any) {
     },
     isSuccess,
     isError,
-    data,
-  };
+    data };
 }
 
 export function useCreateUser(options: any) {
   const { mutateAsync, isSuccess, isError, data } = useMutation({
     ...roleMutateOptions.modifyUserToRole(),
-    ...options,
-  });
+    ...options });
 
   return {
     create: async (payload: any, callback?: any) => {
@@ -34,15 +31,13 @@ export function useCreateUser(options: any) {
     },
     isSuccess,
     isError,
-    data,
-  };
+    data };
 }
 
 export function useCreateInstructor(options: any) {
   const { mutateAsync, isSuccess, isError, data } = useMutation({
     ...instructorMutateOptions.createInstructor(),
-    ...options,
-  });
+    ...options });
 
   return {
     create: async (payload: any, callback?: any) => {
@@ -50,15 +45,13 @@ export function useCreateInstructor(options: any) {
     },
     isSuccess,
     isError,
-    data,
-  };
+    data };
 }
 
 export function useUpdateInstructor(options: any) {
   const { mutate, isSuccess, isError, data } = useMutation({
     ...instructorMutateOptions.updateInstructor(),
-    ...options,
-  });
+    ...options });
 
   return {
     update: (payload: any, callback?: any) => {
@@ -66,15 +59,13 @@ export function useUpdateInstructor(options: any) {
     },
     isSuccess,
     isError,
-    data,
-  };
+    data };
 }
 
 export function useDeleteInstructor(options: any) {
   const { mutate, isSuccess, isError, data } = useMutation({
     ...instructorMutateOptions.deleteInstructor(),
-    ...options,
-  });
+    ...options });
 
   return {
     delete: (payload: any, callback?: any) => {
@@ -82,6 +73,5 @@ export function useDeleteInstructor(options: any) {
     },
     isSuccess,
     isError,
-    data,
-  };
+    data };
 }

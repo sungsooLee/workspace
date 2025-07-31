@@ -3,6 +3,8 @@ import { useMount } from 'ahooks';
 import { isMobile } from 'react-device-detect';
 
 import {
+// TODO: Fix unknown imports: Spinner from '@learnway/ui'
+import { useModal } from '@learnway/ui/modal';
   initI18N,
   initZod,
   initAxios,
@@ -10,7 +12,6 @@ import {
   API_FO_URI,
   tokenService,
 } from '@learnway/config';
-import { Spinner, useModal } from '@learnway/ui';
 
 import { useFetchI18nResource, useFetchCodeGroups } from '../entities/platform';
 import { useAuthSignin } from '../features/auth';

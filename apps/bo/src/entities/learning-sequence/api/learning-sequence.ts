@@ -3,19 +3,16 @@ import { httpService } from '@learnway/shared';
 import {
   EnrollmentCancelList,
   EnrollmentRegistCount,
-  EnrollmentRegistList,
-} from 'src/types/entities/enrollment';
+  EnrollmentRegistList } from 'src/types/entities/enrollment';
 import {
   LearningSequence,
   LearningSequenceCombo,
-  LearningSequences,
-} from 'src/types/entities/learning-sequence';
+  LearningSequences } from 'src/types/entities/learning-sequence';
 import {
   StudentsDeliveryAddress,
   StudentsHistory,
   StudentsLevelTest,
-  StudentsList,
-} from 'src/types/entities/students';
+  StudentsList } from 'src/types/entities/students';
 
 export default class LearningSequenceService {
   static fetchSequenceList(params: any) {

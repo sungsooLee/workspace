@@ -1,13 +1,16 @@
 import { useRouter } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
-import { z, cn } from '@learnway/shared';
-import { Button, ContentsRow, PhoneNumber, DynamicFormField, Input } from '@learnway/ui';
 import { useDynamicForm } from '@learnway/hooks';
+import { cn } from '@learnway/shared';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
 
 import { FormRow, ProccessResult } from '../../shared';
 
 import styles from '@learnway/styles/fo/pages/_auth/signup-progress/result.module.css';
+import { PhoneNumber } from '@learnway/ui/phone-number';
 
 export function ResultBySignupProgressPage({ route }: any) {
   const { t } = useTranslation();

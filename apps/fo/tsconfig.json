@@ -14,6 +14,7 @@
       "@learnway/icons": ["../../libs/icons/src/index.ts"],
       "@learnway/shared": ["../../libs/shared/src/index.ts"],
       "@learnway/ui": ["../../libs/ui/src/index.ts"],
+      "@learnway/ui/*": ["../../libs/ui/src/lib/*"],
       "@learnway/auth/*": ["../../libs/auth/src/lib/*"],
       "@learnway/styles/*": ["../../libs/styles/src/lib/*"],
       "@learnway/types": ["../../libs/types/src/index.ts"],

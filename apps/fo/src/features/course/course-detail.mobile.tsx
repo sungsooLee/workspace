@@ -1,19 +1,17 @@
 import { useEffect, useState } from 'react';
 import { createFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
+import { Accordion } from '@learnway/ui/accordion';
+import { Carousel } from '@learnway/ui/carousel';
+import { SelectOption } from '@learnway/ui/dropdown';
+import { OptionCard, OptionCardItem } from '@learnway/ui/option-card';
+import { Panel } from '@learnway/ui/panel';
 import {
-  Button,
-  Tabs,
-  Accordion,
-  OptionCard,
-  OptionCardItem,
-  useModal,
-  Panel,
-  useToast,
-  SelectOption,
-  Carousel,
-} from '@learnway/ui';
-import {
+// TODO: Fix unknown imports:  from '@learnway/ui'
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
+import { Tabs } from '@learnway/ui/tab';
+import { useToast } from '@learnway/ui/toast';
   IcoHeart,
   IcoStar,
   IcoCaution,

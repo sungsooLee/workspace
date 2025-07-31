@@ -1,13 +1,12 @@
 import { memo, useEffect, useMemo, useState } from 'react';
 
-import { AutoCompleteDropdown } from '@learnway/ui';
+import { AutoCompleteDropdown } from '@learnway/ui/auto-complete';
 import {
   useActiveMenuDepthState,
   useAsycFetchMenusForceRefatch,
   useFetchAuthUser,
   useUpdateTenantRoleLastSelect,
-  useUpdateUser,
-} from '@learnway/auth/entities';
+  useUpdateUser } from '@learnway/auth/entities';
 
 import { useRouter } from '@tanstack/react-router';
 
@@ -34,8 +33,7 @@ const GnbRoleSelectComponent = ({ className }: Props) => {
     return authUser?.tenants?.map?.((tenant) => ({
       value: String(tenant.tenantId),
       label: tenant.tenantName,
-      ...tenant,
-    }));
+      ...tenant }));
   }, [authUser?.tenants]);
 
   // 역할 목록
@@ -45,8 +43,7 @@ const GnbRoleSelectComponent = ({ className }: Props) => {
       ?.map?.((role) => ({
         value: String(role.roleId),
         label: role.roleName,
-        ...role,
-      }))
+        ...role }))
       ?.filter((role) => role.tenantId === authUser?.activeTenant?.tenantId);
   }, [authUser?.activeTenant?.tenantId, authUser?.roles]);
 
@@ -55,12 +52,10 @@ const GnbRoleSelectComponent = ({ className }: Props) => {
 
   const [selectedTenant, setSelectedTenant] = useState<any | null>({
     label: authUser?.activeTenant?.tenantName,
-    value: authUser?.activeTenant?.tenantId,
-  });
+    value: authUser?.activeTenant?.tenantId });
   const [selectedRole, setSelectedRole] = useState<any | null>({
     label: authUser?.activeRole?.roleName,
-    value: authUser?.activeRole?.roleId,
-  });
+    value: authUser?.activeRole?.roleId });
 
   useEffect(() => {
     if (authUser?.activeTenant?.tenantId !== authUser?.activeRole?.tenantId) {
@@ -96,8 +91,7 @@ const GnbRoleSelectComponent = ({ className }: Props) => {
     // updateActiveRole(newValue);
     await updateTenantRole({
       lastVisitedBoRoleId: newValue?.roleId,
-      lastVisitedBoTenantId: authUser?.activeTenant?.tenantId,
-    });
+      lastVisitedBoTenantId: authUser?.activeTenant?.tenantId });
 
     if (authUser?.activeTenant?.tenantId) {
       const menus = await asyncMenus(authUser?.activeTenant?.tenantId, newValue?.roleId);
@@ -132,8 +126,7 @@ const GnbRoleSelectComponent = ({ className }: Props) => {
     // updateTenantRole 에서 유저정보 업데이트 하므로 주석
     // updateActiveTenant(newValue);
     await updateTenantRole({
-      lastVisitedBoTenantId: newValue.tenantId,
-    });
+      lastVisitedBoTenantId: newValue.tenantId });
   };
 
   const handleTenantLoadOptions = async (searchText: string, callback?: any): Promise<any[]> => {

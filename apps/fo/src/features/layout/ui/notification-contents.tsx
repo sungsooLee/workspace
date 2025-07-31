@@ -1,10 +1,10 @@
 import { memo, useState } from 'react';
 import { Link } from '@tanstack/react-router';
-import { Button } from '@learnway/ui';
 import { IcoBell03, IcoXclose } from '@learnway/icons';
 import { isMobile } from 'react-device-detect';
 
 import styles from '@learnway/styles/fo/features/layout/ui/notification-contents.module.css';
+import { Button } from '@learnway/ui/button';
 
 interface NotificationInfo {
   id: number;

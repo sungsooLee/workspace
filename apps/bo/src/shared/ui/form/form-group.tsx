@@ -7,8 +7,7 @@ import styles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 const FormGroupComponent: FC<{ children: ReactNode; required?: boolean; title?: string }> = ({
   children,
   title = '',
-  required = false,
-}) => {
+  required = false }) => {
   return (
     <div className={styles.form_contents_wrap}>
       {title && (

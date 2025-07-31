@@ -13,21 +13,14 @@ import { findOrganizationPathById } from '@features/platform-management/company'
 import { transformDepartmentApiDataToTreeData } from '@features/platform-management/company/company-organization-management/service/company-organization.service';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { cn } from '@learnway/shared';
-import {
-  Button,
-  ChipListModalSelectorFormField,
-  ContentsRow,
-  FormSubTitle,
-  Input,
-  SplitPanel,
-  Tabs,
-  TextareaFormField,
-  TreeBox,
-  TreeContainer,
-  TreeEventPayload,
-  TreeNode,
-  useModal,
-} from '@learnway/ui';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { SplitPanel } from '@learnway/ui/elements';
+import { ChipListModalSelectorFormField, TextareaFormField } from '@learnway/ui/form-field';
+import { Input } from '@learnway/ui/input';
+import { Tabs } from '@learnway/ui/tabs';
+import { TreeBox, TreeContainer, TreeEventPayload, TreeNode } from '@learnway/ui/tree-view';
 import { FormRow, UserChoiceModal } from '@shared/ui';
 import { useQueryClient } from '@tanstack/react-query';
 import { EnFormMode } from '@types';
@@ -39,6 +32,7 @@ import { CompanyOrganizationUserList } from './company-organization-info-user';
 
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
 import styles from '@learnway/styles/bo/features/role/role-info.module.css';
+import { useModal } from '@learnway/ui/modal';
 
 export enum EnOrganizationShowType {
   check = 'check',

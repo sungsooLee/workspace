@@ -28,8 +28,7 @@ export const NodeFormRenderer: React.FC<NodeFormRendererProps> = ({
   updateFormData,
   watch,
   clearAllValidators,
-  curriculumData,
-}) => {
+  curriculumData }) => {
   const { activeFormType, selectedNode, parentNode, isEditing } = formState;
 
   switch (activeFormType) {

@@ -1,7 +1,8 @@
 import { queryOptions } from '@entities/companies/service/companies.queries';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import { Divider, GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
+import { Divider } from '@learnway/ui/elements';
+import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import { SearchBox } from '@shared/ui/search-box';
 import { Link } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
@@ -27,8 +28,7 @@ const CompanyListComponent = ({ detailPath }: CompanyListProps) => {
         : '',
       modifyEndDate: data.modifyDate.to
         ? getDateToString(new Date(data.modifyDate.to), 'YYYYMMDD')
-        : '',
-    };
+        : '' };
     gridFetch(searchData);
   }, []);
 
@@ -41,9 +41,7 @@ const CompanyListComponent = ({ detailPath }: CompanyListProps) => {
         t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.company.CompanyType.${info.getValue()}`),
       enableGrouping: false,
       meta: {
-        size: 'auto',
-      },
-    }),
+        size: 'auto' } }),
     columnHelper.accessor('name', {
       header: t('회사명'),
       cell: (info) => {
@@ -52,8 +50,7 @@ const CompanyListComponent = ({ detailPath }: CompanyListProps) => {
             to={detailPath}
             state={{
               companyCode: info.row.original.companyCode,
-              companyId: info.row.original.companyId,
-            }}
+              companyId: info.row.original.companyId }}
             className="link"
           >
             {info.row.original.name}
@@ -62,27 +59,21 @@ const CompanyListComponent = ({ detailPath }: CompanyListProps) => {
       },
       enableGrouping: false,
       meta: {
-        size: 'auto',
-      },
-    }),
+        size: 'auto' } }),
     columnHelper.accessor('isUsed', {
       header: t('사용여부'),
       cell: (info) => (info.getValue() ? t('사용') : t('미사용')),
       enableGrouping: false,
       meta: {
         cellAlign: 'center',
-        size: 'auto',
-      },
-    }),
+        size: 'auto' } }),
     columnHelper.accessor('lastModifiedBy', {
       header: t('수정자'),
       cell: (info) =>
         info.row.original.isUseLinkageSystem ? t('시스템') : info.row.original.lastModifiedBy,
       enableGrouping: false,
       meta: {
-        size: 'auto',
-      },
-    }),
+        size: 'auto' } }),
     columnHelper.accessor('modifiedDate', {
       header: t('수정일'),
       cell: (info) =>
@@ -95,9 +86,7 @@ const CompanyListComponent = ({ detailPath }: CompanyListProps) => {
       enableGrouping: false,
       meta: {
         cellAlign: 'center',
-        size: 'auto',
-      },
-    }),
+        size: 'auto' } }),
   ] as ColumnDef<any, unknown>[];
 
   return (
@@ -121,16 +110,13 @@ const searchConfig = (): SearchBoxConfig => ({
         value: '',
         presetOptionLabel: t('전체'),
         optionsConfig: {
-          codeGroup: CODE_GROUP['pms.company.CompanyType'],
-        },
-      },
+          codeGroup: CODE_GROUP['pms.company.CompanyType'] } },
       {
         name: 'name',
         type: 'text',
         label: t('회사명'),
         value: '',
-        placeholder: '',
-      },
+        placeholder: '' },
       {
         name: 'isUsed',
         type: 'dropdown',
@@ -140,17 +126,14 @@ const searchConfig = (): SearchBoxConfig => ({
           { value: '', label: t('전체') },
           { value: 'true', label: t('사용') },
           { value: 'false', label: t('미사용') },
-        ],
-      },
+        ] },
       {
         name: 'modifyDate',
         type: 'date-range',
         label: t('수정 기간'),
         value: {
           from: undefined,
-          to: undefined,
-        },
-      },
+          to: undefined } },
     ],
   ],
   validator: {
@@ -158,20 +141,14 @@ const searchConfig = (): SearchBoxConfig => ({
       conditions: [
         {
           fn: (values: any) => !values.modifyDate?.from && values.modifyDate?.to,
-          message: t('시작 날짜를 선택하세요'),
-        },
+          message: t('시작 날짜를 선택하세요') },
         {
           fn: (values: any) => values.modifyDate?.from && !values.modifyDate?.to,
-          message: t('종료 날짜를 선택하세요.'),
-        },
+          message: t('종료 날짜를 선택하세요.') },
         {
           fn: (values: any) => values.modifyDate.from > values.modifyDate.to,
-          message: t('시작 날짜는 종료 날짜 보다 이전일 이어야 합니다.'),
-        },
-      ],
-    },
-  },
-});
+          message: t('시작 날짜는 종료 날짜 보다 이전일 이어야 합니다.') },
+      ] } } });
 
 const gridConfig: useGridBoxConfig = {
   query: queryOptions.list,
@@ -179,13 +156,10 @@ const gridConfig: useGridBoxConfig = {
     {
       name: 'no1',
       label: 'NO.',
-      type: 'numbering',
-    },
+      type: 'numbering' },
   ],
   data: [],
   gridState: {
     page: 0,
     size: 10,
-    sort: [],
-  },
-};
+    sort: [] } };

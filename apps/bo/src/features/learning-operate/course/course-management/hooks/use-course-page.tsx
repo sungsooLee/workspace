@@ -4,7 +4,8 @@ import {
   useCourseListGridConfig,
 } from '@features/learning-operate/course/course-management';
 import { useDynamicForm2 } from '@learnway/hooks';
-import { useGridBox, useModal } from '@learnway/ui';
+import { useGridBox } from '@learnway/ui/grid';
+import { useModal } from '@learnway/ui/modal';
 import { getCurrentAuthUser } from '@shared/lib/util/query-utils';
 import { useRouter } from '@tanstack/react-router';
 import { CourseListItem } from '@types';

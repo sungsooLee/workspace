@@ -1,6 +1,4 @@
-import { FC, useCallback, useMemo } from 'react';
-import styles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css';
-import { Badge, Button, ProgressBar } from '@learnway/ui';
+import { UploadFile } from '@learnway/hooks';
 import {
   IcoComplete02,
   IcoFileExcel,
@@ -10,10 +8,14 @@ import {
   IcoUploadCloud,
 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { UploadFile } from '@learnway/hooks';
-import { useDropzone } from 'react-dropzone';
-import { DndFileProgressProps } from './types';
+import styles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css';
 import { t } from 'i18next';
+import { FC, useCallback } from 'react';
+import { useDropzone } from 'react-dropzone';
+import { Badge } from '../badge';
+import { Button } from '../button/button';
+import { ProgressBar } from '../progress/progress-bar/progress-bar';
+import { DndFileProgressProps } from './types';
 
 const DndFileProgressComponent: FC<DndFileProgressProps> = ({
   files,

@@ -1,18 +1,4 @@
-import {
-  Button,
-  ContentsRow,
-  DateRange,
-  EditDropdownCell,
-  EditSwitchCell,
-  EditTimeRangeCell,
-  GridFormField,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  RadioGroupFormField,
-  useModal,
-} from '@learnway/ui';
+import { GridFormField, RadioGroupFormField } from '@learnway/ui/form-field';
 import { t } from 'i18next';
 import { FC, useEffect, useState } from 'react';
 import { useWatch } from 'react-hook-form';
@@ -24,6 +10,11 @@ import { CellContext } from '@tanstack/react-table';
 import { EnFormMode } from '@types';
 
 import { DateRangePickerFormField } from '@features/form';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { EditDropdownCell, EditSwitchCell, EditTimeRangeCell } from '@learnway/ui/grid';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { DateRange } from '@learnway/ui/type';
 import dayjs from 'dayjs';
 
 const LoginRestrictTimeSettingModalComponent: FC<any> = ({

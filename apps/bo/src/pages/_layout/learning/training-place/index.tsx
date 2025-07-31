@@ -1,5 +1,5 @@
 import { TrainingPlaceList } from '@features/learning-operate-support/learning-space/learning-space-management/training-place-list';
-import { Button } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { EnPageMode } from '@types';

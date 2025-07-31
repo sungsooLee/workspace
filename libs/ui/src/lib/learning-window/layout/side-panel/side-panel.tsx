@@ -1,29 +1,26 @@
-import { memo, useState } from 'react';
-import { Link } from '@tanstack/react-router';
-import { Button, useModal, ProgressCheck } from '@learnway/ui';
-import { isMobile } from 'react-device-detect';
 import {
+  IcoArrowUp,
   IcoLearning01,
   IcoLearning02,
   IcoLearning03,
   IcoLearning04,
   IcoLearning05,
   IcoLearning06,
-  IcoPrevPlay,
   IcoPrevNext,
+  IcoPrevPlay,
   IcoXclose,
-  IcoLinkblank,
-  IcoArrowUp,
 } from '@learnway/icons';
+import { memo, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import { CurriculumPopup } from './popup/curriculum-popup';
-import { NextLearningPopup } from './popup/next-learning-popup';
 
 import styles from '@learnway/styles/fo/pages/_learning/side-panel/side-panel.module.css';
 
-import { useLearningWindow } from '../../learnway-learning-window.store';
 import { DATE_TIME_FORMAT, duration } from '@learnway/shared';
-import { convertUploadFilesToFileInfos } from '@learnway/hooks';
-import { CmsLearningCompletionStatus } from '@learnway/types';
+import { Button } from '../../../button';
+import { useModal } from '../../../modal';
+import { ProgressCheck } from '../../../progress';
+import { useLearningWindow } from '../../learnway-learning-window.store';
 
 interface ChildData {
   className?: string;

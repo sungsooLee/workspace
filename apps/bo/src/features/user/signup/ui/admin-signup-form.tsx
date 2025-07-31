@@ -1,23 +1,18 @@
-import { useState } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
-import { cn } from '@learnway/shared';
-import {
-  Button,
-  Stepper,
-  ContentsRow,
-  Input,
-  Dropdown,
-  DropdownOption,
-  DatePicker,
-  Textarea,
-  InputModalSelectorFormField,
-} from '@learnway/ui';
-import { IcoFormRequired } from '@learnway/icons';
-import styles from './admin-signup-form.module.css';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
-// import { TenantSearchPopup } from '../../features/auth'; // 테넌트명 조회 팝업
 import { adminItems } from '@features/user/signup/ui/signup-select';
+import { IcoFormRequired } from '@learnway/icons';
+import { cn } from '@learnway/shared';
+import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { DatePicker } from '@learnway/ui/date-picker';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { InputModalSelectorFormField } from '@learnway/ui/form-field';
+import { Input } from '@learnway/ui/input';
+import { Stepper } from '@learnway/ui/stepper';
+import { Textarea } from '@learnway/ui/textarea';
+import { useState } from 'react';
+import styles from './admin-signup-form.module.css';
 
 export function AdminSignupForm() {
   const [selectedValues, setSelectedValues] = useState<string[] | null>(['option2']);
@@ -228,7 +223,7 @@ export function AdminSignupForm() {
                   modalConfig={
                     {
                       // width: 'lg',
-                      // content: <TenantSearchPopup />,
+                      // content: <TenantSearchPopup />
                     }
                   }
                 />

@@ -1,4 +1,4 @@
-import { GridBoxConfig } from '@learnway/ui';
+import { GridBoxConfig } from '@learnway/ui/grid';
 import { ColumnMeta } from '@tanstack/react-table';
 import { Course, CourseConfig, CourseListItem, CoursesQueryParams } from '@types';
 
@@ -151,8 +151,7 @@ export enum CourseTab {
   STEP2 = 'STEP2',
   STEP3 = 'STEP3',
   STEP4 = 'STEP4',
-  STEP5 = 'STEP5',
-}
+  STEP5 = 'STEP5' }
 
 /**
  * 과정 상세 조회 탭 enum
@@ -165,5 +164,4 @@ export enum CourseDetailTab {
   COURSE_DETAIL = 'COURSE_DETAIL',
   CURRICULUM = 'CURRICULUM',
   SEQUENCE = 'SEQUENCE',
-  COMMUNITY = 'COMMUNITY',
-}
+  COMMUNITY = 'COMMUNITY' }

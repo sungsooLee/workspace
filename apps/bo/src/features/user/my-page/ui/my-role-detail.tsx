@@ -17,16 +17,12 @@ import {
   useSearchBox,
 } from '@learnway/hooks';
 import { cn, DATE_TIME_FORMAT, formatDate } from '@learnway/shared';
-import {
-  Button,
-  ChipListModalSelectorFormField,
-  ContentsRow,
-  FormSubTitle,
-  GridBox,
-  RadioGroupFormField,
-  useGridBox,
-  useModal,
-} from '@learnway/ui';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { ChipListModalSelectorFormField, RadioGroupFormField } from '@learnway/ui/form-field';
+import { GridBox, useGridBox } from '@learnway/ui/grid';
+import { useModal } from '@learnway/ui/modal';
 import {
   ContentsButtons,
   ContentsHistoryInfoFormField,

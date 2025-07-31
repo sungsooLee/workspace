@@ -8,8 +8,7 @@ export enum EnChannelDetailHomeMode {
   HOME = 'HOME',
   BANNER = 'BANNER',
   COURSE_KEYWORD = 'COURSE_KEYWORD',
-  PACKAGE_KEYWORD = 'PACKAGE_KEYWORD',
-}
+  PACKAGE_KEYWORD = 'PACKAGE_KEYWORD' }
 
 interface ChannelDetailHomeProps {
   onButtonLayoutChange: (layout: EnButtonLayout) => void;

@@ -2,13 +2,13 @@ import { memo, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { cn } from '@learnway/shared';
-import { Button } from '@learnway/ui';
 import { IcoArrowDown, IcoArrowBackward } from '@learnway/icons';
 
 import { useActiveMenuDepthState } from '@learnway/auth/entities';
 import { AccordionMenu } from './accordion-menu/accordion-menu';
 
 import styles from './lnb.module.css';
+import { Button } from '@learnway/ui/button';
 
 function LNBComponent() {
   const { t } = useTranslation();

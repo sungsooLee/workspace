@@ -8,7 +8,7 @@ import { CODE_GROUP, getDefaultLang } from '@learnway/config';
 import { useCodeGroup, useLanguageStore } from '@learnway/hooks';
 import { IcoArrowDown, IcoLang } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { Button, Popover } from '@learnway/ui';
+import { Popover } from '@learnway/ui/popover-list';
 
 import { useCodesByCodeGroup, type Code } from '../../../../entities/platform';
 import { useSetLanguage } from '../../service/i18n.hook';
@@ -16,6 +16,7 @@ import { useSetLanguage } from '../../service/i18n.hook';
 import { useCreation } from 'ahooks';
 import { lowerCase } from 'lodash';
 import styles from './language.module.css';
+import { Button } from '@learnway/ui/button';
 
 const DEFAULT_LANGUAGE_CODES = ['ko', 'en'];
 

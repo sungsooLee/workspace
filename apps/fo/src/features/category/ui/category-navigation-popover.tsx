@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Link } from '@tanstack/react-router';
 
 import { IcoArrowDown, IcoArrowForward } from '@learnway/icons';
-import { Button } from '@learnway/ui';
 
 import { Category } from '@types';
 import { useCategoryNavigation } from '@entities/category/service/category.hook';
@@ -12,6 +11,7 @@ import bnrImage1 from '@assets/images/banner/banner_cate1.png';
 import bnrImage2 from '@assets/images/banner/banner_cate2.png';
 
 import styles from '@learnway/styles/fo/features/category/category-navigation-popover.module.css';
+import { Button } from '@learnway/ui/button';
 
 interface CategoryLayerProps {
   isOpen: boolean;

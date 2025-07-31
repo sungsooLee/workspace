@@ -1,18 +1,5 @@
-// IA011 / NLP_BO_PMS_1100_4
-import { useCallback, useMemo, useState, useEffect } from 'react';
-import styles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css';
-import {
-  Badge,
-  Button,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  ProgressBar,
-  useModal,
-} from '@learnway/ui';
-import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
-import { acceptFilesToAccept, cn, httpService } from '@learnway/shared';
+import { CMSApiPrefix, LMSApiPrefix, PMSApiPrefix } from '@learnway/config';
+import { formatFileSize } from '@learnway/hooks';
 import {
   IcoComplete02,
   IcoDownload,
@@ -20,12 +7,18 @@ import {
   IcoTrash03,
   IcoUploadCloud,
 } from '@learnway/icons';
+import { acceptFilesToAccept, cn, httpService } from '@learnway/shared';
+import styles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css';
+import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
+import { Badge } from '@learnway/ui/badge';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { ProgressBar } from '@learnway/ui/progress';
 import { NoticeBox } from '@shared/ui';
-import { formatFileSize, UploadStatus } from '@learnway/hooks';
-import { CMSApiPrefix, LMSApiPrefix, PMSApiPrefix } from '@learnway/config';
-import { compact } from 'lodash';
-import { useDropzone } from 'react-dropzone';
 import { t } from 'i18next';
+import { compact } from 'lodash';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useDropzone } from 'react-dropzone';
 
 interface ExcelUploadModalProps {
   validateUrl: string;
@@ -140,7 +133,7 @@ const ExcelUploadModalComponent = ({
 
         setProgressMessage('파일 검증 중입니다. 잠시만 기다려주세요');
 
-        // const response = await fetch(`${, {
+        // const response = await fetch(`${ {
         //   method: 'POST',
         //   body: formData,
         // });

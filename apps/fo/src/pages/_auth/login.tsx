@@ -7,7 +7,6 @@ import { useTranslation } from 'react-i18next';
 import { useLogoutUser, useSessionTimeoutAlertState } from '@learnway/auth/entities';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { cn, dateDiff } from '@learnway/shared';
-import { Button, ContentsRow, Input, useModal } from '@learnway/ui';
 
 import { getSavedUserid, pageRouteConfig, useAuthSignin } from '@features/auth';
 import { useSetLanguage } from '@features/platform';
@@ -25,6 +24,10 @@ import { TFunction } from 'i18next';
 import snsGoogleImage from '@assets/images/common/logo_sns_google.png';
 import snskakaoImage from '@assets/images/common/logo_sns_kakao.png';
 import snsNaverImage from '@assets/images/common/logo_sns_naver.png';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
 
 export const Route = createFileRoute('/_auth/login')({
   component: RouteComponent,

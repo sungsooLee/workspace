@@ -158,25 +158,21 @@ export type CurriculumDndParams = {
 
 export enum LESSON_TYPE {
   GENERAL = 'GENERAL',
-  RESOURCE = 'RESOURCE',
-}
+  RESOURCE = 'RESOURCE' }
 
 export enum MAPPING_CURRICULUM_TYPE {
   LESSON = 'LESSON',
   MODULE = 'MODULE',
-  CURRICULUM = 'CURRICULUM',
-}
+  CURRICULUM = 'CURRICULUM' }
 
 export enum MODULE_TYPE {
   GENERAL = 'GENERAL',
-  FIXED = 'FIXED',
-}
+  FIXED = 'FIXED' }
 
 export enum CURRICULUM_TYPE {
   GENERAL = 'GENERAL',
   ASSESSMENT = 'ASSESSMENT',
-  SURVEY = 'SURVEY',
-}
+  SURVEY = 'SURVEY' }
 
 export enum CONTENT_TYPE {
   VIDEO = 'VIDEO',
@@ -191,5 +187,4 @@ export enum CONTENT_TYPE {
   EXAM_POOL = 'EXAM_POOL',
   ASSIGNMENT = 'ASSIGNMENT',
   SURVEY = 'SURVEY',
-  ETC = 'ETC',
-}
+  ETC = 'ETC' }

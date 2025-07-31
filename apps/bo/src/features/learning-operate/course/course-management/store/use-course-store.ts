@@ -11,14 +11,12 @@ export enum TriggerKey {
   COPY = 'copy',
   TRANSLATE = 'translate',
   DELETE = 'delete',
-  VALUES = 'values',
-}
+  VALUES = 'values' }
 
 // 컨텐츠 뷰 타입 enum
 export enum ContentViewType {
   LIST = 'list',
-  DETAIL = 'detail',
-}
+  DETAIL = 'detail' }
 
 // 트리거 페이로드 타입
 interface TriggerPayload {
@@ -61,10 +59,8 @@ const INITIAL_COURSE_STATE: CourseState = {
     courseType: '',
     sequenceId: 0,
     contentViewType: ContentViewType.LIST,
-    activeTab: CourseTab.STEP1,
-  },
-  checkDirtyForm: null,
-};
+    activeTab: CourseTab.STEP1 },
+  checkDirtyForm: null };
 
 // zustand 스토어 생성
 export const useCourseStore = create<CourseStore>((set) => ({

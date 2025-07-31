@@ -6,8 +6,7 @@ import { PageableContent } from '@types';
 export class HmgDepartmentService {
   static getDepartmentTree(companyCode: string[]): Promise<Department> {
     return httpService.get<Department>(`${PMSApiPrefix()}/hmg/department/tree`, {
-      companyCodeList: companyCode,
-    });
+      companyCodeList: companyCode });
   }
 
   /**

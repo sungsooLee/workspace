@@ -1,18 +1,11 @@
-import { FC, forwardRef, useEffect, useState } from 'react';
-import { t } from 'i18next';
-import {
-  Button,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  ShuttleTreeToChips,
-  TreeNode,
-  useModal,
-} from '@learnway/ui';
-import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { useMenuManageFetchTree } from '@entities/menu';
 import { transformMenuApiDataToTreeData } from '@features/platform-management/tenant/service/tenant-detail-tree.service';
+import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { ShuttleTreeToChips, TreeNode } from '@learnway/ui/tree-view';
+import { t } from 'i18next';
+import { FC, forwardRef, useEffect, useState } from 'react';
 
 const MenuModalComponent: FC<any> = forwardRef(({ menuScopeCode }, ref) => {
   const { closeModal } = useModal();

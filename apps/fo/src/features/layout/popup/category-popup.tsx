@@ -1,8 +1,7 @@
 import React, { memo, useEffect, useState } from 'react';
 import { Link } from '@tanstack/react-router';
-import { Carousel } from '@learnway/ui';
+import { Carousel } from '@learnway/ui/carousel';
 import { cn } from '@learnway/shared';
-import { Button, Chip, ModalBody, ModalContainer, ModalTitle } from '@learnway/ui';
 import { Navigation } from 'swiper/modules';
 
 import { IcoArrowBackward, IcoArrowForward, IcoArrowUp } from '@learnway/icons';
@@ -11,6 +10,9 @@ import { t } from 'i18next';
 
 import styles from '@learnway/styles/fo/features/layout/popup/category-popup.module.css';
 import { useCategoryTree } from '@entities/category';
+import { Button, Button } from '@learnway/ui/button';
+import { Chip, Chip } from '@learnway/ui/chip';
+import { ModalBody, ModalContainer, ModalTitle, ModalBody, ModalContainer, ModalTitle } from '@learnway/ui/modal';
 
 interface CategoryPopupProps {
   activeTenantId: number;

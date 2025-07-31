@@ -1,18 +1,13 @@
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { cn } from '@learnway/shared';
 import styles from '@learnway/styles/bo/assets/styles/modules/popup-search.module.css';
-import {
-  Button,
-  ContentsRow,
-  List,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  useModal,
-} from '@learnway/ui';
+import { List } from '@learnway/ui/list';
 import { t } from 'i18next';
 import { useState } from 'react';
 import { SearchBox } from '../search-box';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { ModalBody, ModalContainer, ModalFooter, useModal } from '@learnway/ui/modal';
 
 const ManagerChoicePopupComponent = () => {
   const { closeModal } = useModal();
@@ -54,8 +49,7 @@ const ManagerChoicePopupComponent = () => {
   const handleOnClose = () => {
     closeModal({
       managerId: '',
-      managerName: '',
-    });
+      managerName: '' });
   };
   const handleOnConfirm = () => {
     if (!option) return;
@@ -118,14 +112,12 @@ const searchConfig: SearchBoxConfig = {
           { value: 'CATEGORY', label: t('카테고리') },
           { value: 'ERROR', label: t('에러') },
           { value: 'MESSAGE', label: t('메세지') },
-        ],
-      },
+        ] },
       {
         name: 'translationCode',
         type: 'text',
         label: t('다국어 코드'),
-        value: '',
-      },
+        value: '' },
       {
         name: 'isUsed',
         type: 'dropdown',
@@ -135,8 +127,6 @@ const searchConfig: SearchBoxConfig = {
           { value: '', label: '전체' },
           { value: 'Y', label: '사용' },
           { value: 'N', label: '미사용' },
-        ],
-      },
+        ] },
     ],
-  ],
-};
+  ] };

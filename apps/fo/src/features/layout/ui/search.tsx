@@ -1,13 +1,14 @@
 import { memo, useState, useRef } from 'react';
 import { Link } from '@tanstack/react-router';
 import styles from '@learnway/styles/fo/features/layout/ui/search.module.css';
-import { Input, Button } from '@learnway/ui';
 import { IcoSearch } from '@learnway/icons';
 
 import { SearchPopover } from './search-popover';
 import { AutoCompletePopover } from './auto-complete-popover';
 
 import searchImage from '@learnway/styles/fo/assets/images/common/logo_symbol.png';
+import { Button } from '@learnway/ui/button';
+import { Input } from '@learnway/ui/input';
 
 const SearchCompoment = () => {
   const [searchPopover, setSearchPopover] = useState<boolean>(false);

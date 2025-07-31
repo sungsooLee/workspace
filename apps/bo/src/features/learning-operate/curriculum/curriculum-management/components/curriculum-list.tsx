@@ -1,13 +1,13 @@
 import { t } from 'i18next';
-import { Divider, GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
+import { Divider } from '@learnway/ui/elements';
+import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import { CODE_GROUP, SearchBoxConfig, useLanguageMap, useSearchBox } from '@learnway/hooks';
 import { queryOptions } from '@entities/curriculum';
 import { useEffect, useState } from 'react';
 import {
   SearchBox,
   TenantByRoleDropdownFormField,
-  TenantChannelDropdownFormField,
-} from '@shared/ui';
+  TenantChannelDropdownFormField } from '@shared/ui';
 import { useRouter } from '@tanstack/react-router';
 export const CurriculumList = () => {
   const { getLanguageName } = useLanguageMap();
@@ -24,16 +24,14 @@ export const CurriculumList = () => {
           format: 'object',
           value: '',
           element: <TenantByRoleDropdownFormField />,
-          readOnly: true,
-        },
+          readOnly: true },
         {
           name: 'channelUuid',
           type: 'custom',
           label: t('채널'),
           format: 'object',
           value: '',
-          element: <TenantChannelDropdownFormField />,
-        },
+          element: <TenantChannelDropdownFormField /> },
         // {
         //   name: 'contentTypes',
         //   type: 'dropdown',
@@ -56,28 +54,22 @@ export const CurriculumList = () => {
           value: '',
           presetOptionLabel: t('LABEL.form.label.select', '선택'),
           optionsConfig: {
-            codeGroup: CODE_GROUP['pms.multilingual.LangCountryCode'],
-          },
-        },
+            codeGroup: CODE_GROUP['pms.multilingual.LangCountryCode'] } },
         {
           name: 'coordinatorName',
           label: t('담당자'),
           type: 'text',
-          value: '',
-        },
+          value: '' },
         {
           name: 'curriculumName',
           label: t('커리큘럼명'),
           type: 'text',
-          value: '',
-        },
+          value: '' },
       ],
     ],
     validator: {
       tenantId: true,
-      channelUuid: true,
-    },
-  });
+      channelUuid: true } });
 
   const gridBoxConfig: useGridBoxConfig = {
     query: (param: any) => queryOptions.list(param),
@@ -87,17 +79,13 @@ export const CurriculumList = () => {
         label: t('ID'),
         size: 100,
         meta: {
-          cellAlign: 'center',
-        },
-      },
+          cellAlign: 'center' } },
       {
         name: 'curriculumType',
         label: t('유형'),
         size: 100,
         meta: {
-          cellAlign: 'center',
-        },
-      },
+          cellAlign: 'center' } },
       {
         name: 'curriculumName',
         label: t('커리큘럼명'),
@@ -110,21 +98,18 @@ export const CurriculumList = () => {
               onClick={() =>
                 router.navigate({
                   to: '/learning-operate/curriculum/management',
-                  state: { curriculumId },
-                })
+                  state: { curriculumId } })
               }
             >
               {info.getValue()}
             </p>
           );
           // const tenantName = info.getValue();
-        },
-      },
+        } },
       {
         name: 'tenantName',
         label: t('테넌트'),
-        size: 200,
-      },
+        size: 200 },
       { name: 'channelName', label: t('채널'), size: 200 },
       { name: 'coordinatorName', label: t('담당자'), size: 200 },
       {
@@ -132,41 +117,34 @@ export const CurriculumList = () => {
         label: t('언어'),
         size: 100,
         meta: {
-          cellAlign: 'center',
-        },
+          cellAlign: 'center' },
         render: (info: any) => {
           const locale = info.getValue();
           return getLanguageName(locale);
-        },
-      },
+        } },
       {
         name: 'preview',
         label: t('미리보기'),
         size: 100,
         meta: {
-          cellAlign: 'center',
-        },
+          cellAlign: 'center' },
         render: (info: any) => (
           <p className="underline" onClick={() => console.log(info)}>
             미리보기
           </p>
-        ),
-      },
+        ) },
       {
         name: 'editInfo',
         label: t('수정정보'),
         size: 100,
         meta: {
-          cellAlign: 'center',
-        },
+          cellAlign: 'center' },
         render: (info: any) => (
           <p className="underline" onClick={() => console.log(info)}>
             보기
           </p>
-        ),
-      },
-    ],
-  };
+        ) },
+    ] };
 
   const { provider, getValues, onFormChange } = useSearchBox(SearchBoxConfig());
   const { config, gridFetch } = useGridBox(gridBoxConfig, getValues);

@@ -28,11 +28,9 @@ export const getPayloadFromHtmlMetadataSubmit = (options: { data: any; contentUu
     isDeleted: false,
     isOpened: true,
     tags: options.data.tags.map((tag: Tag | string) => ({
-      tagName: typeof tag === 'string' ? tag : tag.tagName,
-    })),
+      tagName: typeof tag === 'string' ? tag : tag.tagName })),
     contentAddInfoType: ContentAddInfoType.VIDEO_ADD_INFO,
-    contentAddInfo: options.data.contentAddInfo,
-  };
+    contentAddInfo: options.data.contentAddInfo };
 
   console.log('payload ===>', payload);
 

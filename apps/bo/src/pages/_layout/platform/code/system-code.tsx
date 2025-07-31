@@ -12,10 +12,7 @@ export const Route = createFileRoute('/_layout/platform/code/system-code')({
   component: RouteComponent,
   ...pageRouteConfig({
     meta: {
-      title: 'LABEL.page.title.systemCdManage',
-    },
-  }),
-});
+      title: 'LABEL.page.title.systemCdManage' } }) });
 
 function RouteComponent() {
   const { provider: sProvider, getValues } = useSearchBox(searchConfig);
@@ -31,8 +28,7 @@ function RouteComponent() {
     const list = data as any;
     if (list) {
       const transformedData = list.map((item: string) => ({
-        enumNames: item,
-      }));
+        enumNames: item }));
       setListData(transformedData);
       setFilteredData(transformedData);
     }
@@ -70,8 +66,6 @@ const searchConfig: SearchBoxConfig = {
         name: 'enumName',
         type: 'text',
         label: t('LABEL.cdGroupId'),
-        value: '',
-      },
+        value: '' },
     ],
-  ],
-};
+  ] };

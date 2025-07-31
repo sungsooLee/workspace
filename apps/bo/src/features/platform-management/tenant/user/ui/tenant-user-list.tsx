@@ -5,7 +5,8 @@ import { createColumnHelper, ColumnDef } from '@tanstack/react-table';
 import { useQueryClient } from '@tanstack/react-query';
 import { t } from 'i18next';
 
-import { Button, Divider, GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
+import { Divider } from '@learnway/ui/elements';
+import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP, SelectOption } from '@learnway/hooks';
 
@@ -18,12 +19,12 @@ import { tenantQueryOptions } from '@entities/tenant';
 import { usersQueryOptions } from '@entities/users/service/users.queries';
 import { queryOptions, queryOptions as companysQueryOptions } from '@entities/companies/service/companies.queries';
 import { useCreation } from 'ahooks';
+import { Button } from '@learnway/ui/button';
 
 const _global = {
   linkClick: (userUuid: string) => {
     return;
-  },
-};
+  } };
 
 /**
  * 화면번호 : NLP_BO_TMS_1111_07 테넌트-유저관리
@@ -42,9 +43,7 @@ const TenantUserListComponent: FC<any> = ({ rootPath }) => {
       to: `${rootPath}/tenant/user/detail`,
       state: {
         userUuid,
-        listParam: getValues(),
-      },
-    });
+        listParam: getValues() } });
   };
 
   const gridInitConfig = useCreation(
@@ -111,9 +110,7 @@ const TenantUserListComponent: FC<any> = ({ rootPath }) => {
           },
           size: 88,
           meta: {
-            cellAlign: 'center',
-          },
-        },
+            cellAlign: 'center' } },
         {
           name: 'opt10', label: t('잠김해제'), size: 88
         },
@@ -134,8 +131,7 @@ const TenantUserListComponent: FC<any> = ({ rootPath }) => {
       gridState: {
         page: 0,
         size: 20,
-        sort: [],
-      }
+        sort: [] }
     }),
     []
   );
@@ -146,8 +142,7 @@ const TenantUserListComponent: FC<any> = ({ rootPath }) => {
     setOptions,
     getValues,
     onFormChange,
-    onFormValid,
-  } = useSearchBox(searchConfig());
+    onFormValid } = useSearchBox(searchConfig());
   const { config: gConfig, gridFetch } = useGridBox(gridInitConfig, getValues);
 
   const tenantIdWatch = useWatch({ control: searchProvider.control, name: 'tenantId' });
@@ -175,8 +170,7 @@ const TenantUserListComponent: FC<any> = ({ rootPath }) => {
 
     const tenantIdOptions = loginUser.tenants.map((tenant) => ({
       value: tenant.tenantId,
-      label: tenant.tenantName,
-    }));
+      label: tenant.tenantName }));
 
     setOptions('tenantId', tenantIdOptions);
     if (loginUser.activeTenant) setValue('tenantId', loginUser.activeTenant.tenantId ?? '');
@@ -191,8 +185,7 @@ const TenantUserListComponent: FC<any> = ({ rootPath }) => {
         );
         const companyIdOptions = companys.map((item) => ({
           label: item.name,
-          value: item.companyId,
-        }));
+          value: item.companyId }));
         setOptions('companyId', companyIdOptions);
       })();
     } else {
@@ -221,8 +214,7 @@ const searchConfig = (): SearchBoxConfig => ({
         format: 'object',
         value: '',
         presetOptionLabel: t('LABEL.form.label.select'),
-        options: [],
-      },
+        options: [] },
       {
         name: 'companyId',
         type: 'dropdown',
@@ -230,41 +222,34 @@ const searchConfig = (): SearchBoxConfig => ({
         format: 'object',
         value: '',
         presetOptionLabel: t('LABEL.form.label.select'),
-        options: [],
-      },
+        options: [] },
       {
         name: 'employeeNumber',
         type: 'text',
         label: t('사번'),
-        value: '',
-      },
+        value: '' },
     ],
     [
       {
         name: 'companyManagerName',
         type: 'text',
         label: t('학습자 역할'),
-        value: '',
-      },
+        value: '' },
       {
         name: 'opt2',
         type: 'text',
         label: t('계정상태'),
-        value: '',
-      },
+        value: '' },
       {
         name: 'dateRange',
         type: 'date-range',
         label: t('회원가입 기간'),
         format: 'object',
-        value: { from: undefined, to: undefined },
-      },
+        value: { from: undefined, to: undefined } },
     ],
   ],
   validator: {
-    tenantId: true,
-  },
-});
+    tenantId: true } });
 
 // const gridConfig = (): useGridBoxConfig => ({
 //   query: usersQueryOptions.list,

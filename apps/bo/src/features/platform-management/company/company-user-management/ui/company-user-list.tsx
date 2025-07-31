@@ -5,7 +5,8 @@ import { getUserStatus } from '@features/platform-management/company/company-use
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import { Button, Divider, GridBox, useGridBox, useGridBoxConfig, useModal } from '@learnway/ui';
+import { Divider } from '@learnway/ui/elements';
+import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { useQueryClient } from '@tanstack/react-query';
@@ -16,6 +17,8 @@ import dayjs from 'dayjs';
 import { t } from 'i18next';
 import { useCallback, useEffect, useState } from 'react';
 import { useWatch } from 'react-hook-form';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 
 const _global = {
   unlockClick: (row: any) => {
@@ -29,8 +32,7 @@ const _global = {
   },
   getDetailPath: (): string => {
     return '';
-  },
-};
+  } };
 
 const CompanyUserListComponent = () => {
   const location = useLocation();
@@ -43,8 +45,7 @@ const CompanyUserListComponent = () => {
     provider: searchProvider,
     getValues,
     setValue,
-    setOptions,
-  } = useSearchBox(searchConfig());
+    setOptions } = useSearchBox(searchConfig());
 
   const searchParam = () => {
     const data = getValues();
@@ -58,8 +59,7 @@ const CompanyUserListComponent = () => {
     const searchData = {
       ...data,
       createdDateFrom,
-      createdDateTo,
-    };
+      createdDateTo };
     console.log('searchData', searchData);
     return searchData;
   };
@@ -83,8 +83,7 @@ const CompanyUserListComponent = () => {
         );
         const companyIdOptions = companys.map((item) => ({
           label: item.name,
-          value: item.companyId,
-        }));
+          value: item.companyId }));
         setOptions('companyId', companyIdOptions);
       })();
     } else {
@@ -97,8 +96,7 @@ const CompanyUserListComponent = () => {
 
     const tenantIdOptions = loginUser.tenants.map((tenant) => ({
       value: tenant.tenantId,
-      label: tenant.tenantName,
-    }));
+      label: tenant.tenantName }));
 
     setOptions('tenantId', tenantIdOptions);
     if (loginUser.activeTenant) setValue('tenantId', loginUser.activeTenant.tenantId ?? '');
@@ -120,17 +118,14 @@ const CompanyUserListComponent = () => {
     if (
       await openConfirm({
         title: t('계정 잠김을 해제하시겠습니까?'),
-        content: message,
-      })
+        content: message })
     ) {
       const payload = {
-        uuids: [row.uuid],
-      };
+        uuids: [row.uuid] };
       unlock(payload, {
         onSuccess: () => {
           gridFetch(searchParam());
-        },
-      });
+        } });
     }
   };
   _global.loginClick = (row: any) => {
@@ -188,10 +183,8 @@ const searchConfig = (): SearchBoxConfig => ({
         label: t('테넌트'),
         value: '',
         optionsConfig: {
-          codeGroup: CODE_GROUP['manual.tenant.tenantId'],
-        },
-        presetOptionLabel: t('LABEL.form.label.select'),
-      },
+          codeGroup: CODE_GROUP['manual.tenant.tenantId'] },
+        presetOptionLabel: t('LABEL.form.label.select') },
       {
         name: 'companyId',
         type: 'dropdown',
@@ -199,15 +192,13 @@ const searchConfig = (): SearchBoxConfig => ({
         format: 'object',
         value: '',
         presetOptionLabel: t('LABEL.form.label.select'),
-        options: [],
-      },
+        options: [] },
       {
         name: 'employeeNumber',
         type: 'text',
         label: t('사번'),
         value: '',
-        placeholder: '',
-      },
+        placeholder: '' },
     ],
     [
       {
@@ -216,19 +207,15 @@ const searchConfig = (): SearchBoxConfig => ({
         label: t('계정 상태'),
         value: '',
         optionsConfig: {
-          codeGroup: CODE_GROUP['pms.user.UserState'],
-        },
-        presetOptionLabel: t('전체'),
-      },
+          codeGroup: CODE_GROUP['pms.user.UserState'] },
+        presetOptionLabel: t('전체') },
       {
         name: 'createdDate',
         type: 'date-range',
         label: t('회원가입 기간'),
         value: {
           from: undefined,
-          to: undefined,
-        },
-      },
+          to: undefined } },
     ],
   ],
   validator: {
@@ -237,20 +224,14 @@ const searchConfig = (): SearchBoxConfig => ({
       conditions: [
         {
           fn: (values: any) => !values.createdDate?.from && values.createdDate?.to,
-          message: t('시작 날짜를 선택하세요'),
-        },
+          message: t('시작 날짜를 선택하세요') },
         {
           fn: (values: any) => values.createdDate?.from && !values.createdDate?.to,
-          message: t('종료 날짜를 선택하세요.'),
-        },
+          message: t('종료 날짜를 선택하세요.') },
         {
           fn: (values: any) => values.createdDate.from > values.createdDate.to,
-          message: t('시작 날짜는 종료 날짜 보다 이전일 이어야 합니다.'),
-        },
-      ],
-    },
-  },
-});
+          message: t('시작 날짜는 종료 날짜 보다 이전일 이어야 합니다.') },
+      ] } } });
 
 const gridConfig: useGridBoxConfig = {
   query: usersQueryOptions.list,
@@ -258,17 +239,14 @@ const gridConfig: useGridBoxConfig = {
     {
       name: 'no1',
       label: 'NO.',
-      type: 'numbering',
-    },
+      type: 'numbering' },
   ],
   data: [],
 
   gridState: {
     page: 0,
     size: 10,
-    sort: [],
-  },
-};
+    sort: [] } };
 
 const columnHelper = createColumnHelper<any>();
 
@@ -288,8 +266,7 @@ const columns = () =>
       },
       enableGrouping: false,
       enableSorting: false,
-      size: 120,
-    }),
+      size: 120 }),
     columnHelper.accessor('companyEntity.companyType', {
       header: t('그룹'),
       cell: (info) =>
@@ -298,56 +275,47 @@ const columns = () =>
         ),
       enableGrouping: false,
       enableSorting: false,
-      size: 120,
-    }),
+      size: 120 }),
     columnHelper.accessor('companyEntity.name', {
       header: t('회사'),
       cell: (info) => info.row.original.company.name,
       enableGrouping: false,
       enableSorting: false,
-      size: 120,
-    }),
+      size: 120 }),
     columnHelper.accessor('deptEntity.deptName', {
       header: t('소속'),
       cell: (info) => info.row.original.dept?.deptName,
       enableGrouping: false,
       size: 120,
-      id: 'deptEntity.deptName',
-    }),
+      id: 'deptEntity.deptName' }),
     columnHelper.accessor('positionName', {
       header: t('호칭(직위)'),
       cell: (info) => info.getValue(),
       enableGrouping: false,
       size: 120,
       meta: {
-        cellAlign: 'center',
-      },
-    }),
+        cellAlign: 'center' } }),
     columnHelper.accessor('employeeNumber', {
       header: t('사번'),
       cell: (info) => info.getValue(),
       enableGrouping: false,
       size: 120,
       meta: {
-        cellAlign: 'center',
-      },
-    }),
+        cellAlign: 'center' } }),
     columnHelper.accessor('name', {
       header: t('이름'),
       cell: (info) => (
         <Link
           to={_global.getDetailPath()}
           state={{
-            userUuid: info.row.original.uuid,
-          }}
+            userUuid: info.row.original.uuid }}
           className="link"
         >
           {info.row.original.name}
         </Link>
       ),
       enableGrouping: false,
-      size: 120,
-    }),
+      size: 120 }),
     // 재직, 정직, 휴직 : deletedDate, isOnLeave, isSuspended, retireDate이 null인지 여부로 확인
     columnHelper.accessor('userStatus', {
       cell: (info) => {
@@ -358,10 +326,8 @@ const columns = () =>
       header: t('재직여부'),
       size: 88,
       meta: {
-        cellAlign: 'center',
-      },
-      enableSorting: false,
-    }),
+        cellAlign: 'center' },
+      enableSorting: false }),
     // enabledDate, lockedDate, dormantDate, deletedDate이 null인지 여부로 판단
     // 대기(회원가입 승인 전), 정상, 휴면(1년 미로그인), 잠김(비밀번호 5회 오류)
     columnHelper.accessor('accountStatus', {
@@ -376,10 +342,8 @@ const columns = () =>
       header: t('계정상태'),
       size: 88,
       meta: {
-        cellAlign: 'center',
-      },
-      enableSorting: false,
-    }),
+        cellAlign: 'center' },
+      enableSorting: false }),
     columnHelper.accessor('unlock', {
       header: t('잠김해제'),
       cell: (info) => (
@@ -394,11 +358,9 @@ const columns = () =>
       ),
       enableGrouping: false,
       meta: {
-        cellAlign: 'center',
-      },
+        cellAlign: 'center' },
       size: 88,
-      enableSorting: false,
-    }),
+      enableSorting: false }),
     columnHelper.accessor('login', {
       header: t('로그인'),
       cell: (info) => (
@@ -412,11 +374,9 @@ const columns = () =>
       ),
       enableGrouping: false,
       meta: {
-        cellAlign: 'center',
-      },
+        cellAlign: 'center' },
       enableSorting: false,
-      size: 88,
-    }),
+      size: 88 }),
     // linkageSystem값이 null이면 직접 가입, 아니면 I/F
     columnHelper.accessor('createdDate', {
       header: t('회원가입일'),
@@ -433,9 +393,7 @@ const columns = () =>
             : '',
       enableGrouping: false,
       meta: {
-        cellAlign: 'center',
-      },
+        cellAlign: 'center' },
       id: 'userEntity.createdDate',
-      size: 160,
-    }),
+      size: 160 }),
   ] as ColumnDef<any, unknown>[];

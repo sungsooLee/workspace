@@ -1,7 +1,6 @@
 import {
   TriggerKey,
-  useCourseLastTriggered,
-} from '@features/learning-operate/course/course-management';
+  useCourseLastTriggered } from '@features/learning-operate/course/course-management';
 import { usePageState } from '@shared/lib';
 import { useNavigate } from '@tanstack/react-router';
 import { useUpdateEffect } from 'ahooks';
@@ -20,15 +19,12 @@ export function useCourseDetailSubSequence() {
           to: '/learning/course/detail',
           state: {
             courseId: initCourseId,
-            courseName: '스마트제조를 위한 스마트공장 구축 및 추진실무 - MES구축',
-          },
-        });
+            courseName: '스마트제조를 위한 스마트공장 구축 및 추진실무 - MES구축' } });
         break;
     }
   }, [lastTriggered]);
 
   return {
     courseId: initCourseId,
-    sequenceId: initSequenceId,
-  };
+    sequenceId: initSequenceId };
 }

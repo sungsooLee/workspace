@@ -1,4 +1,4 @@
-import { ContentsRow, Input, PhoneNumber, Button, useModal } from '@learnway/ui';
+import { PhoneNumber } from '@learnway/ui/phone-number';
 import { cn } from '@learnway/shared';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
@@ -7,6 +7,10 @@ import { BrowserView, MobileView } from 'react-device-detect';
 import { AddressSearchModal } from '@shared/ui';
 import styles from '@learnway/styles/fo/pages/_layout/course/textbook.module.css';
 import { AddressSearchResult } from '@types';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
 
 type Props = {
   onAddressSearchResult: (value: AddressSearchResult) => void;

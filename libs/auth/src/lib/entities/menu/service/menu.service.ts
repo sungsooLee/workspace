@@ -1,17 +1,15 @@
-import { last } from 'lodash';
-import { useCallback, useEffect, useMemo } from 'react';
-import { useCreation } from 'ahooks';
 import { useRouterState } from '@tanstack/react-router';
+import { useCreation } from 'ahooks';
+import { useEffect, useMemo } from 'react';
 
 import { useFetchAuthUser } from '../../authorization';
 
-import { useFetchMenus } from './menu.hook';
 import { Menu } from '../../../types';
+import { useFetchMenus } from './menu.hook';
 
+import { getConfig } from '@learnway/config';
 import { useActiveMenuDepthState } from '../store/use-active-menu-depth';
 import { useLayoutStore } from '../store/use-layout-sotre';
-import { useModal } from '@learnway/ui';
-import { getConfig } from '@learnway/config';
 
 /**
  * 메뉴 정보를 트리 구조로 반환

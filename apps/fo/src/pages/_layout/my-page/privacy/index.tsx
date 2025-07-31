@@ -2,10 +2,12 @@ import { useEffect } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
-import { Avatar, ContentsRow, DynamicFormField } from '@learnway/ui';
 import { IcoImage01 } from '@learnway/icons';
 import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
 import {
+// TODO: Fix unknown imports: DynamicFormField from '@learnway/ui'
+import { Avatar } from '@learnway/ui/avatar';
+import { ContentsRow } from '@learnway/ui/contents-row';
   // ChangeUserIdFormField,
   // ChangePhoneNumberFormField,
   // ChangePasswordFormField,

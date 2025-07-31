@@ -1,14 +1,14 @@
+import { useFetchUserGroups } from '@entities/user-group';
 import {
-  SelectedChip,
   ShuttleGridToChips,
   ShuttleGridToChipsImperative,
   useShuttleGridToChips,
-} from '@learnway/ui';
-import { useEffect, useMemo, useRef } from 'react';
+} from '@learnway/ui/shuttle-grid-to-chips';
+import { SelectedChip } from '@learnway/ui/type';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { t } from 'i18next';
-import { useFetchUserGroups } from '@entities/user-group';
 import { CombineUserGroup } from '@types';
+import { t } from 'i18next';
+import { useEffect, useMemo, useRef } from 'react';
 
 type UserGroupJobGroupComponentProps = {
   tenantIds: number[];
