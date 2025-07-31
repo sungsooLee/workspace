@@ -1,3 +1,5 @@
+import { IcoArrowDown, IcoArrowDownDouble, IcoArrowUp, IcoArrowUpDouble } from '@learnway/icons';
+import { cn, gridStateToSortQueryParams } from '@learnway/shared'; // t 함수 필요 시 import
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -14,19 +16,15 @@ import {
   Row,
   RowSelectionState,
   SortingState,
-  Table,
   useReactTable,
   VisibilityState,
 } from '@tanstack/react-table';
-import { useEffect, useMemo, useRef, useState } from 'react';
 import { isEmpty } from 'lodash';
-import { GridProps } from './types/grid'; // GridProps 타입 import
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { cn, findRowSelection, gridStateToSortQueryParams } from '@learnway/shared'; // t 함수 필요 시 import
-import styles from './grid.module.css';
 import { Checkbox } from '../checkbox/checkbox';
-import { Button } from '../button/button';
-import { IcoArrowDown, IcoArrowUp, IcoArrowDownDouble, IcoArrowUpDouble } from '@learnway/icons';
+import styles from './grid.module.css';
+import { GridProps } from './types/grid'; // GridProps 타입 import
 
 // useGridTable의 반환 타입 정의 (필요한 부분만 예시)
 interface UseGridTableReturn<T extends object> {
@@ -421,6 +419,10 @@ export function useGridTable<T extends object>(
 
   // 그리드 상태 변화(e.g. 필터, 소팅, 순서, visibility)에 따른 콜백 전달
   useEffect(() => {
+    console.log('xx : onStateChange', {
+      sorting,
+      columns,
+    });
     onStateChange?.({
       sort: gridStateToSortQueryParams({ sorting }, columns),
     });
