@@ -3,6 +3,7 @@ import { httpService } from '@learnway/shared';
 import {
   BlogCreateReq,
   BlogUpdateReq,
+  ChannelCodeType,
   ContentBaseInfo,
   ContentCourseMappingParams,
   ContentCourseMappingRes,
@@ -374,6 +375,26 @@ export default class LearningResourceService {
     return httpService.get<GetSharedBoxContentsRes>(
       `${CMSApiPrefix()}/contents/share/sharedBox`,
       params,
+    );
+  }
+
+  /**
+   * 공유함 출발지 테넌트 코드 목록 조회
+   */
+  static getSharedBoxTenantCodes(lastVisitedBoRoleId: number) {
+    return httpService.get<TenantCodeType[]>(
+      `${CMSApiPrefix()}/contents/share/sharedBox/tenant/codes`,
+      { lastVisitedBoRoleId },
+    );
+  }
+
+  /**
+   * 공유함 출발지 채널 코드 목록 조회
+   */
+  static getSharedBoxChannelCodes(srcTenantId: number) {
+    return httpService.get<ChannelCodeType[]>(
+      `${CMSApiPrefix()}/contents/share/sharedBox/tenant/channel/codes`,
+      { srcTenantId },
     );
   }
 }

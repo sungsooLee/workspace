@@ -20,7 +20,7 @@ import {
 import { SearchBox } from '@shared/ui';
 import { useQueryClient } from '@tanstack/react-query';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { ChannelCodeType, ContentInfo, TenantCodeType } from '@types';
+import { ContentInfo, TenantChannelCodeType, TenantCodeType } from '@types';
 import { pick } from 'lodash';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -76,7 +76,7 @@ const LearningResourceShareShuttleModalComponent = ({ data }: ResourceShareShutt
 
   const { provider: sProvider, getValues } = useSearchBox(sharingInfoSearchConfig);
 
-  const [gridData, setGridData] = useState<ChannelCodeType[]>([]);
+  const [gridData, setGridData] = useState<TenantChannelCodeType[]>([]);
 
   const handleOnSearch = async (params: Record<string, any>) => {
     const result = await queryClient.fetchQuery(

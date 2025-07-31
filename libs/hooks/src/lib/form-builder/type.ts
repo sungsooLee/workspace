@@ -622,6 +622,8 @@ export type UseSearchBoxReturn = {
      */
     isFieldRequired: (fieldName: string) => boolean;
   };
+
+  watch: UseFormReturn['watch'];
 };
 
 export type DynamicFormContextType = {

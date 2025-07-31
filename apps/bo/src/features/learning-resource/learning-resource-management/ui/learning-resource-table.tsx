@@ -149,7 +149,7 @@ function LearningResourceTableComponent() {
           type: 'dropdown',
           label: t('LABEL.form.label.langCountryCode', '언어'),
           value: '',
-          presetOptionLabel: t('LABEL.form.label.select', '선택'),
+          presetOptionLabel: t('LABEL.form.label.all', '전체'),
           optionsConfig: {
             codeGroup: CODE_GROUP['pms.multilingual.LangCountryCode'],
           },

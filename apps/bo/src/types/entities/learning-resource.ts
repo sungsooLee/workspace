@@ -700,13 +700,13 @@ export interface GetShareTenantsChannelsParams {
 }
 
 export interface ChannelCodeType {
-  tenantId: number;
-  tenantName: string;
   channelUuid: string;
   channelName: string;
 }
 
-export type GetShareTenantsChannelsRes = ChannelCodeType[];
+export type TenantChannelCodeType = TenantCodeType & ChannelCodeType;
+
+export type GetShareTenantsChannelsRes = TenantChannelCodeType[];
 
 export interface GetSharedBoxContentsParams extends PaginationRequest {
   lastVisitedBoRoledId: number;
