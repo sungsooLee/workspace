@@ -3,18 +3,20 @@ import * as Primitive from '@radix-ui/react-dialog';
 import { cn, getSlot } from '@learnway/shared';
 import styles from './modal-container.module.css';
 import { CommonReactElementProps } from '../type';
+import { ModalSize } from './type';
 
 export interface ModalContainerProps<T = any> extends CommonReactElementProps {
   title?: string; // openModal(ModalConfig) : ModalConfig.title 값
   description?: string; // openModal(ModalConfig) : ModalConfig.description 값
   children?: React.ReactNode;
+  width?: ModalSize;
 }
 
 const ModalContainerComponent: React.FC<ModalContainerProps> = ({
   title,
   children,
   className,
-  ...props
+  width,
 }) => {
   const TitleSlot = getSlot(children, ModalTitle);
   const DescSlot = getSlot(children, ModalDescription);
@@ -57,7 +59,14 @@ const ModalContainerComponent: React.FC<ModalContainerProps> = ({
   }, [children]);
 
   return (
-    <div className={cn(styles.start, className, 'nlp--modal-content')}>
+    <div
+      className={cn(
+        styles.start,
+        className,
+        width && `modal-content-width-${width}`,
+        'nlp--modal-content',
+      )}
+    >
       {/* title */}
       <Primitive.Title ref={titleRef} className={styles.title}>
         {TitleSlot}
