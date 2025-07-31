@@ -5,32 +5,38 @@ import {
   PageableContent,
   UserGroupsParam,
   UserGroupsResponse,
-  UsersByIdsParam } from '@types';
+  UsersByIdsParam,
+} from '@types';
 
 export default class UserGroupService {
   static fetchUserGroups(
     tenantIds: number[],
+    roleId: number,
     params: UserGroupsParam,
   ): Promise<UserGroupsResponse[]> {
     return httpService.get(`${PMSApiPrefix()}/userGroup/user-groups`, {
       tenantIds,
-      ...params });
+      roleId,
+      ...params,
+    });
   }
 
   static fetchOrganizationTree(
     tenantIds: number[],
-    roleIds: number[],
+    roleId: number,
     tenantName?: string,
   ): Promise<OrganizationTreeResponse> {
     return httpService.get(`${PMSApiPrefix()}/userGroup/organization-tree`, {
       tenantIds,
-      roleIds,
-      tenantName });
+      roleId,
+      tenantName,
+    });
   }
 
   static fetchCustomGroupsTree(userGroupName?: string): Promise<OrganizationTreeResponse> {
     return httpService.get(`${PMSApiPrefix()}/userGroup/custom-groups-tree`, {
-      userGroupName });
+      userGroupName,
+    });
   }
 
   static fetchBlackwhiteUsers(body: any) {

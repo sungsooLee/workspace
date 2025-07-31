@@ -456,8 +456,7 @@ function RouteComponent() {
                   content: (
                     <UserGroupTabsChoiceModal
                       initialTab="ORGANIZATION"
-                      tenantIds={[1, 2, 3]}
-                      roleIds={[1]}
+                      tenantIds={[1]}
                       option={[
                         {
                           pathKey: '2-54-9-10&&2-54&&3-1678',

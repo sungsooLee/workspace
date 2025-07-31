@@ -1,4 +1,5 @@
 import { useFetchUserGroups } from '@entities/user-group';
+import { useFetchAuthUser } from '@learnway/auth/entities';
 import {
   ShuttleGridToChips,
   ShuttleGridToChipsImperative,
@@ -22,7 +23,10 @@ const UserGroupJobComponent = ({
   handleSetOption,
 }: UserGroupJobComponentProps) => {
   const ref = useRef<ShuttleGridToChipsImperative>(null);
-  const { data = [] } = useFetchUserGroups(tenantIds, { userGroupType: 'JOB' });
+  const { data: authUser } = useFetchAuthUser();
+  const { data = [] } = useFetchUserGroups(tenantIds, authUser?.activeRole?.roleId, {
+    userGroupType: 'JOB',
+  });
   const gridData = useMemo<any[]>(
     () =>
       data.map(({ fullName, companyId, tenantId, userGroupId, userGroupName, ...others }) => ({
