@@ -134,6 +134,7 @@ function RouteComponent() {
   useEffect(() => {
     if( categoryInfo ) {
       (async () => {
+        console.log('### categoryInfo => ', categoryInfo);
         const payload = {
           ...coursePayload,
           categoryId: categoryInfo.categoryId,

@@ -239,3 +239,4 @@ export * from './lib/video-player/types/video-player.type';
 export * from './lib/video-player/video-player';
 export * from './lib/video-player/video-player-container';
 export * from './lib/word-wrap/word-wrap';
+export * from './lib/toggle-button/toggle-button';
