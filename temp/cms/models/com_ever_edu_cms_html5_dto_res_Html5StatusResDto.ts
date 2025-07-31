@@ -11,15 +11,21 @@ export type com_ever_edu_cms_html5_dto_res_Html5StatusResDto = {
      * HTML 파일 아이디
      */
     fileUuid?: string;
-    contentType?: com_ever_edu_cms_html5_dto_res_Html5StatusResDto.contentType;
-    contentStatusCode?: com_ever_edu_cms_html5_dto_res_Html5StatusResDto.contentStatusCode;
     /**
-     * HTML 처리 상태 코드 Enum(cms.html5.Html5ProcessingStatus) - FAIL|COMPLETE|STARTED|PARSING|UPLOADING
+     * Enum(cms.content.ContentType)<br>- VIDEO: 동영상<br>- EBOOK: 이북<br>- SCORM: 스콤<br>- HTML5_VIDEO: HTML 동영상<br>- IMAGE: 이미지<br>- EXTERNAL_LINK: 외부링크<br>- EXTERNAL_AGENCY: 외부위탁<br>- BLOG: 블로그<br>- EXAM: 시험지<br>- EXAM_POOL: 문제은행<br>- ASSIGNMENT: 과제<br>- SURVEY: 설문지<br>- ETC: 기타
      */
+    contentType?: com_ever_edu_cms_html5_dto_res_Html5StatusResDto.contentType;
+    /**
+     * Enum(cms.content.ContentStatusCode)<br>- TEMPORARY_SAVE<br>- SAVED<br>- DELETED
+     */
+    contentStatusCode?: com_ever_edu_cms_html5_dto_res_Html5StatusResDto.contentStatusCode;
     processingStatus?: com_ever_edu_cms_html5_dto_res_Html5StatusResDto.processingStatus;
     isDrafted?: boolean;
 };
 export namespace com_ever_edu_cms_html5_dto_res_Html5StatusResDto {
+    /**
+     * Enum(cms.content.ContentType)<br>- VIDEO: 동영상<br>- EBOOK: 이북<br>- SCORM: 스콤<br>- HTML5_VIDEO: HTML 동영상<br>- IMAGE: 이미지<br>- EXTERNAL_LINK: 외부링크<br>- EXTERNAL_AGENCY: 외부위탁<br>- BLOG: 블로그<br>- EXAM: 시험지<br>- EXAM_POOL: 문제은행<br>- ASSIGNMENT: 과제<br>- SURVEY: 설문지<br>- ETC: 기타
+     */
     export enum contentType {
         VIDEO = 'VIDEO',
         EBOOK = 'EBOOK',
@@ -35,14 +41,14 @@ export namespace com_ever_edu_cms_html5_dto_res_Html5StatusResDto {
         SURVEY = 'SURVEY',
         ETC = 'ETC',
     }
+    /**
+     * Enum(cms.content.ContentStatusCode)<br>- TEMPORARY_SAVE<br>- SAVED<br>- DELETED
+     */
     export enum contentStatusCode {
         TEMPORARY_SAVE = 'TEMPORARY_SAVE',
         SAVE = 'SAVE',
         DELETE = 'DELETE',
     }
-    /**
-     * HTML 처리 상태 코드 Enum(cms.html5.Html5ProcessingStatus) - FAIL|COMPLETE|STARTED|PARSING|UPLOADING
-     */
     export enum processingStatus {
         NONE = 'NONE',
         FAIL = 'FAIL',

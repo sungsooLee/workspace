@@ -2,17 +2,18 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { com_ever_edu_lms_course_dto_res_CourseShareSearchResDto } from './com_ever_edu_lms_course_dto_res_CourseShareSearchResDto';
 import type { org_springdoc_core_converters_models_SortObject } from './org_springdoc_core_converters_models_SortObject';
 import type { PageableObject } from './PageableObject';
-export type org_springframework_data_domain_PageJava_lang_Object = {
+export type org_springframework_data_domain_PageCom_ever_edu_lms_course_dto_res_CourseShareSearchResDto = {
     totalPages?: number;
     totalElements?: number;
     size?: number;
-    content?: Array<Record<string, any>>;
+    content?: Array<com_ever_edu_lms_course_dto_res_CourseShareSearchResDto>;
     number?: number;
     sort?: Array<org_springdoc_core_converters_models_SortObject>;
-    pageable?: PageableObject;
     numberOfElements?: number;
+    pageable?: PageableObject;
     first?: boolean;
     last?: boolean;
     empty?: boolean;

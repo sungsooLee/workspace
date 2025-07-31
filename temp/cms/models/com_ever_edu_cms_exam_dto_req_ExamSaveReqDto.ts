@@ -5,6 +5,9 @@
 import type { com_ever_edu_cms_tag_dto_req_TagReqDto } from './com_ever_edu_cms_tag_dto_req_TagReqDto';
 export type com_ever_edu_cms_exam_dto_req_ExamSaveReqDto = {
     contentName: string;
+    /**
+     * Enum(pms.multilingual.LangCountryCode)
+     */
     languageCountryCode: com_ever_edu_cms_exam_dto_req_ExamSaveReqDto.languageCountryCode;
     tenantId: number;
     channelUuid: string;
@@ -29,6 +32,9 @@ export type com_ever_edu_cms_exam_dto_req_ExamSaveReqDto = {
      * Enum(cms.contentContentAddInfoType)<br>- VIDEO_ADD_INFO(초)<br>- EXAM_ADD_INFO(건수)
      */
     contentAddInfoType?: com_ever_edu_cms_exam_dto_req_ExamSaveReqDto.contentAddInfoType;
+    /**
+     * 콘텐츠 추가정보 코드 별 초/건수 값
+     */
     contentAddInfo?: number;
     isSecured?: boolean;
     isDeleted?: boolean;
@@ -112,6 +118,9 @@ export type com_ever_edu_cms_exam_dto_req_ExamSaveReqDto = {
     examEndNoticeMessage?: string;
 };
 export namespace com_ever_edu_cms_exam_dto_req_ExamSaveReqDto {
+    /**
+     * Enum(pms.multilingual.LangCountryCode)
+     */
     export enum languageCountryCode {
         KO = 'KO',
         EN = 'EN',

@@ -66,6 +66,7 @@ export class BoFileService {
                 400: `Bad Request`,
                 401: `Unauthorized`,
                 404: `Not Found`,
+                405: `Method Not Allowed`,
                 422: `Unprocessable Entity`,
                 500: `Internal Server Error`,
             },

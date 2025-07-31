@@ -6,7 +6,13 @@ export type com_ever_edu_cms_image_dto_req_ImagesDraftReqDto = {
     tenantId: number;
     tenantName: string;
     channelUuid: string;
+    /**
+     * Enum(pms.multilingual.LangCountryCode)
+     */
     languageCountryCode: com_ever_edu_cms_image_dto_req_ImagesDraftReqDto.languageCountryCode;
+    /**
+     * Enum(pms.file.StorageType)<br>-S3<br>-HMG
+     */
     storageType: com_ever_edu_cms_image_dto_req_ImagesDraftReqDto.storageType;
     /**
      * 이미지파일 UUID 목록
@@ -14,6 +20,9 @@ export type com_ever_edu_cms_image_dto_req_ImagesDraftReqDto = {
     images: Array<string>;
 };
 export namespace com_ever_edu_cms_image_dto_req_ImagesDraftReqDto {
+    /**
+     * Enum(pms.multilingual.LangCountryCode)
+     */
     export enum languageCountryCode {
         KO = 'KO',
         EN = 'EN',
@@ -40,6 +49,9 @@ export namespace com_ever_edu_cms_image_dto_req_ImagesDraftReqDto {
         HR = 'HR',
         ET = 'ET',
     }
+    /**
+     * Enum(pms.file.StorageType)<br>-S3<br>-HMG
+     */
     export enum storageType {
         S3 = 'S3',
         HMG = 'HMG',

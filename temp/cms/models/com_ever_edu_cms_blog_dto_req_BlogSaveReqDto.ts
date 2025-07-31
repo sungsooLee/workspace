@@ -6,6 +6,9 @@ import type { com_ever_edu_cms_tag_dto_req_TagReqDto } from './com_ever_edu_cms_
 import type { com_fasterxml_jackson_databind_JsonNode } from './com_fasterxml_jackson_databind_JsonNode';
 export type com_ever_edu_cms_blog_dto_req_BlogSaveReqDto = {
     contentName: string;
+    /**
+     * Enum(pms.multilingual.LangCountryCode)
+     */
     languageCountryCode: com_ever_edu_cms_blog_dto_req_BlogSaveReqDto.languageCountryCode;
     tenantId: number;
     channelUuid: string;
@@ -30,6 +33,9 @@ export type com_ever_edu_cms_blog_dto_req_BlogSaveReqDto = {
      * Enum(cms.contentContentAddInfoType)<br>- VIDEO_ADD_INFO(초)<br>- EXAM_ADD_INFO(건수)
      */
     contentAddInfoType?: com_ever_edu_cms_blog_dto_req_BlogSaveReqDto.contentAddInfoType;
+    /**
+     * 콘텐츠 추가정보 코드 별 초/건수 값
+     */
     contentAddInfo?: number;
     isSecured?: boolean;
     isDeleted?: boolean;
@@ -38,6 +44,9 @@ export type com_ever_edu_cms_blog_dto_req_BlogSaveReqDto = {
     blogContent?: com_fasterxml_jackson_databind_JsonNode;
 };
 export namespace com_ever_edu_cms_blog_dto_req_BlogSaveReqDto {
+    /**
+     * Enum(pms.multilingual.LangCountryCode)
+     */
     export enum languageCountryCode {
         KO = 'KO',
         EN = 'EN',

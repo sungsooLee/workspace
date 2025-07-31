@@ -5,6 +5,10 @@
 import type { com_ever_edu_external_blackandwhite_dto_req_WhiteGroupReqDto_WizardStepNew } from './com_ever_edu_external_blackandwhite_dto_req_WhiteGroupReqDto_WizardStepNew';
 export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew = {
     /**
+     * 소유 테넌트 ID
+     */
+    tenantId: number;
+    /**
      * 과정타입 (lms.course.CourseType)
      */
     courseType: com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStepNew.courseType;

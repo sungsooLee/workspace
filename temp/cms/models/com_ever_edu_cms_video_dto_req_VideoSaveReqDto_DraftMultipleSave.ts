@@ -3,6 +3,9 @@
 /* tslint:disable */
 /* eslint-disable */
 export type com_ever_edu_cms_video_dto_req_VideoSaveReqDto_DraftMultipleSave = {
+    /**
+     * Enum(pms.multilingual.LangCountryCode)
+     */
     languageCountryCode: com_ever_edu_cms_video_dto_req_VideoSaveReqDto_DraftMultipleSave.languageCountryCode;
     tenantId: number;
     channelUuid: string;
@@ -12,6 +15,9 @@ export type com_ever_edu_cms_video_dto_req_VideoSaveReqDto_DraftMultipleSave = {
     fileUuids: Array<string>;
 };
 export namespace com_ever_edu_cms_video_dto_req_VideoSaveReqDto_DraftMultipleSave {
+    /**
+     * Enum(pms.multilingual.LangCountryCode)
+     */
     export enum languageCountryCode {
         KO = 'KO',
         EN = 'EN',

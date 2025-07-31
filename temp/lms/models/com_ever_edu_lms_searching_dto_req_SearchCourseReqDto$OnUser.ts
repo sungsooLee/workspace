@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type com_ever_edu_lms_search_course_dto_req_CourseSearchReqDto$OnUser = {
+export type com_ever_edu_lms_searching_dto_req_SearchCourseReqDto$OnUser = {
     /**
      * 인덱스명
      */

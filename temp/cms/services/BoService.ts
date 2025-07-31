@@ -908,7 +908,7 @@ export class BoService {
     }
     /**
      * 단건 블로그 콘텐츠 수정
-     * 단건 블로그 콘텐츠를 수정한다.
+     * 단건 블로그 콘텐츠를 수정한다.<br>블로그 콘텐츠는 HTML 편집기의 JSON 결과물
      * @param requestBody
      * @returns com_ever_edu_cms_blog_dto_res_BlogContentResDto OK
      * @throws ApiError
@@ -1522,12 +1522,14 @@ export class BoService {
      * 공유 팝업에서 타채널에 공유한 목록을 조회한다.
      * @param tenantId 출발지 테넌트 ID
      * @param channelUuid 출발지 채널 UUID
+     * @param contentUuid 출발지 콘텐츠 UUID
      * @returns com_ever_edu_cms_content_dto_res_ShareContentResDto OK
      * @throws ApiError
      */
     public static findShareContent(
         tenantId: number,
         channelUuid: string,
+        contentUuid: string,
     ): CancelablePromise<Array<com_ever_edu_cms_content_dto_res_ShareContentResDto>> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -1535,6 +1537,7 @@ export class BoService {
             query: {
                 'tenantId': tenantId,
                 'channelUuid': channelUuid,
+                'contentUuid': contentUuid,
             },
             errors: {
                 400: `Bad Request`,
@@ -1698,7 +1701,7 @@ export class BoService {
     }
     /**
      * 단건 블로그 콘텐츠 생성
-     * 단건 블로그 콘텐츠를 생성한다.
+     * 단건 블로그 콘텐츠를 생성한다.<br>블로그 콘텐츠는 HTML 편집기의 JSON 결과물
      * @param requestBody
      * @returns com_ever_edu_cms_blog_dto_res_BlogContentResDto OK
      * @throws ApiError
@@ -2077,8 +2080,8 @@ export class BoService {
      * @param channelUuid
      * @param isPublished
      * @param isUsed
-     * @param languageCountryCode
-     * @param curriculumName
+     * @param languageCountryCode Enum(pms.multilingual.LangCountryCode)
+     * @param curriculumName Like 검색
      * @param coordinatorName
      * @param openingYear
      * @param page Zero-based page index (0..N)
@@ -2276,7 +2279,7 @@ export class BoService {
     public static getShareTenantChannelList(
         contentUuid: string,
         tenantId: number,
-        channelName: string,
+        channelName?: string,
     ): CancelablePromise<Array<com_ever_edu_cms_content_dto_res_ShareTenantChannelCodeResDto>> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -2457,7 +2460,7 @@ export class BoService {
      * 학습 자원 현지화(내보내기) 목록을 조회한다.<br><br><b>페이징 정보</b>: <br> - totalElements: 쿼리 결과물의 전체 데이터 갯수 <br> - totalPages: 페이징하였을 때 나오는 총 페이지의 갯수 <br> - size: 페이지 당 데이터 수 설정 값(rows per page) <br> - numberOfElements: 페이지에 존재하는 요소의 갯수(최대 size와 동일) <br> - number: 요소를 가져온 페이지의 번호. 0 ~
      * @param tenantId
      * @param channelName
-     * @param languageCountryCode
+     * @param languageCountryCode Enum(pms.multilingual.LangCountryCode)
      * @param isMockUp
      * @param page Zero-based page index (0..N)
      * @param size The size of the page to be returned
@@ -2706,6 +2709,7 @@ export class BoService {
      * 과정 매핑 콘텐츠 목록 조회
      * 과정에 매핑된 콘텐츠 목록 조회하는 api입니다.
      * @param contentUuid 콘텐츠 UUID
+     * @param lastVisitedBoRoleId 사용자가 선택한 롤 ID
      * @param courseType 과정유형
      * @param courseName 과정명(Like 검색)
      * @param page Zero-based page index (0..N)
@@ -2716,6 +2720,7 @@ export class BoService {
      */
     public static getsCourseMappingByContentUuid(
         contentUuid: string,
+        lastVisitedBoRoleId: number,
         courseType?: 'ELEARNING1' | 'ELEARNING2' | 'CLASS' | 'LIVE' | 'EXAM' | 'SURVEY',
         courseName?: string,
         page?: number,
@@ -2731,6 +2736,7 @@ export class BoService {
             query: {
                 'courseType': courseType,
                 'courseName': courseName,
+                'lastVisitedBoRoleId': lastVisitedBoRoleId,
                 'page': page,
                 'size': size,
                 'sort': sort,

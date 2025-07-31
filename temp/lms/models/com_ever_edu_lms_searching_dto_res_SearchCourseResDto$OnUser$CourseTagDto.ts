@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type com_ever_edu_lms_search_course_dto_res_CourseSearchResDto$OnUser$CourseTagDto = {
+export type com_ever_edu_lms_searching_dto_res_SearchCourseResDto$OnUser$CourseTagDto = {
     tagName?: string;
 };
 

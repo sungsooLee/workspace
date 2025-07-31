@@ -16,6 +16,14 @@ export type com_ever_edu_cms_scorm_dto_rte_ScoContentReqDto = {
      */
     curriculumId?: number;
     /**
+     * 모듈 ID
+     */
+    moduleId?: number;
+    /**
+     * 레슨 ID
+     */
+    lessonId?: number;
+    /**
      * 콘텐츠 UUID
      */
     contentUuid: string;

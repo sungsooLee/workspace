@@ -31,7 +31,7 @@ export type { com_ever_edu_cms_content_dto_req_SharedBoxContentReqDto$ShareDesti
 export type { com_ever_edu_cms_content_dto_res_BatchSettingsResDto } from './models/com_ever_edu_cms_content_dto_res_BatchSettingsResDto';
 export type { com_ever_edu_cms_content_dto_res_CheckSharingPossibleResDto } from './models/com_ever_edu_cms_content_dto_res_CheckSharingPossibleResDto';
 export { com_ever_edu_cms_content_dto_res_ContentExportResDto } from './models/com_ever_edu_cms_content_dto_res_ContentExportResDto';
-export type { com_ever_edu_cms_content_dto_res_ContentProgressListResDto } from './models/com_ever_edu_cms_content_dto_res_ContentProgressListResDto';
+export { com_ever_edu_cms_content_dto_res_ContentProgressListResDto } from './models/com_ever_edu_cms_content_dto_res_ContentProgressListResDto';
 export { com_ever_edu_cms_content_dto_res_ContentProgressResDto } from './models/com_ever_edu_cms_content_dto_res_ContentProgressResDto';
 export { com_ever_edu_cms_content_dto_res_ContentResDto } from './models/com_ever_edu_cms_content_dto_res_ContentResDto';
 export { com_ever_edu_cms_content_dto_res_ContentTranslationResDto } from './models/com_ever_edu_cms_content_dto_res_ContentTranslationResDto';

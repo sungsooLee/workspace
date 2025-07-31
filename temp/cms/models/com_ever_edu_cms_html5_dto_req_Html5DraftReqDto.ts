@@ -5,13 +5,16 @@
 export type com_ever_edu_cms_html5_dto_req_Html5DraftReqDto = {
     tenantId: number;
     channelUuid: string;
-    languageCountryCode: com_ever_edu_cms_html5_dto_req_Html5DraftReqDto.languageCountryCode;
     /**
-     * 파일 UUID
+     * Enum(pms.multilingual.LangCountryCode)
      */
+    languageCountryCode: com_ever_edu_cms_html5_dto_req_Html5DraftReqDto.languageCountryCode;
     fileUuid: string;
 };
 export namespace com_ever_edu_cms_html5_dto_req_Html5DraftReqDto {
+    /**
+     * Enum(pms.multilingual.LangCountryCode)
+     */
     export enum languageCountryCode {
         KO = 'KO',
         EN = 'EN',

@@ -4,52 +4,29 @@
 /* eslint-disable */
 import type { com_ever_edu_global_excel_dto_req_ExcelDownloadReasonReqDto } from './com_ever_edu_global_excel_dto_req_ExcelDownloadReasonReqDto';
 export type com_ever_edu_cms_content_dto_req_ContentExcelExportReqDto = {
-    /**
-     * [필수]테넌트 UUID
-     */
     tenantId: number;
-    /**
-     * [필수]채널 UUID
-     */
     channelUuid?: string;
     /**
-     * 콘텐츠 분류(복수선택) Enum(cms.content.ContentType) - 유형(복수선택), null OR VIDEO|EBOOK|SCORM|HTML5_VIDEO|IMAGE|EXTERNAL_LINK|EXTERNAL_AGENCY|BLOG|EXAM|EXAM_POOL|ASSIGNMENT|SURVEY|ETC
+     * Enum(cms.content.ContentType)Enum(cms.content.ContentType)<br>- VIDEO: 동영상<br>- EBOOK: 이북<br>- SCORM: 스콤<br>- HTML5_VIDEO: HTML 동영상<br>- IMAGE: 이미지<br>- EXTERNAL_LINK: 외부링크<br>- EXTERNAL_AGENCY: 외부위탁<br>- BLOG: 블로그<br>- EXAM: 시험지<br>- EXAM_POOL: 문제은행<br>- ASSIGNMENT: 과제<br>- SURVEY: 설문지<br>- ETC: 기타
      */
     contentTypes?: Array<'VIDEO' | 'EBOOK' | 'SCORM' | 'HTML5_VIDEO' | 'IMAGE' | 'EXTERNAL_LINK' | 'EXTERNAL_AGENCY' | 'BLOG' | 'EXAM' | 'EXAM_POOL' | 'ASSIGNMENT' | 'SURVEY' | 'ETC'>;
-    /**
-     * 콘텐츠 이름 (학습자원명)
-     */
     contentName?: string;
-    /**
-     * 벤더사 여부(외주 개발 여부) - null|true|false
-     */
     isVendored?: boolean;
-    /**
-     * 사용가능 상태 여부
-     */
     isContentEnabled?: boolean;
-    /**
-     * 텐츠 과정 활용 여부(교육자원 활용 여부) - null|true|false
-     */
     isCourseUsed?: boolean;
-    /**
-     * 담당자명
-     */
     coordinatorName?: string;
     /**
-     * 국가 언어 코드 Enum(pms.multilingual.LangCountryCode)
+     * Enum(pms.multilingual.LangCountryCode)
      */
     languageCountryCode?: com_ever_edu_cms_content_dto_req_ContentExcelExportReqDto.languageCountryCode;
-    /**
-     * 메뉴ID
-     */
+    lastVisitedBoRoleId?: number;
     menuId: number;
     downloadReason?: com_ever_edu_global_excel_dto_req_ExcelDownloadReasonReqDto;
     isMockUp?: boolean;
 };
 export namespace com_ever_edu_cms_content_dto_req_ContentExcelExportReqDto {
     /**
-     * 국가 언어 코드 Enum(pms.multilingual.LangCountryCode)
+     * Enum(pms.multilingual.LangCountryCode)
      */
     export enum languageCountryCode {
         KO = 'KO',

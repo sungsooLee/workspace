@@ -202,8 +202,8 @@ export class FoService {
         });
     }
     /**
-     * 블로그 이력을 쌓는다
-     * 블로그 이력을 쌓는다
+     * 블로그 학습이력 저장
+     * 블로그 학습이력을 저장한다.
      * @param requestBody
      * @returns number OK
      * @throws ApiError
@@ -417,8 +417,8 @@ export class FoService {
      * @param channelUuid
      * @param isPublished
      * @param isUsed
-     * @param languageCountryCode
-     * @param curriculumName
+     * @param languageCountryCode Enum(pms.multilingual.LangCountryCode)
+     * @param curriculumName Like 검색
      * @param coordinatorName
      * @param openingYear
      * @param page Zero-based page index (0..N)

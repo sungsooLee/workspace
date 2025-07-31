@@ -4,10 +4,6 @@
 /* eslint-disable */
 export type com_ever_edu_pms_role_dto_req_RoleCreateReqDto = {
     /**
-     * 사이트 구분(cmmon.SiteScope)
-     */
-    siteScope?: com_ever_edu_pms_role_dto_req_RoleCreateReqDto.siteScope;
-    /**
      * 역할 타입(pms.role.RoleType)
      */
     roleType?: com_ever_edu_pms_role_dto_req_RoleCreateReqDto.roleType;
@@ -66,13 +62,6 @@ export type com_ever_edu_pms_role_dto_req_RoleCreateReqDto = {
 };
 export namespace com_ever_edu_pms_role_dto_req_RoleCreateReqDto {
     /**
-     * 사이트 구분(cmmon.SiteScope)
-     */
-    export enum siteScope {
-        FO = 'FO',
-        BO = 'BO',
-    }
-    /**
      * 역할 타입(pms.role.RoleType)
      */
     export enum roleType {
@@ -80,9 +69,12 @@ export namespace com_ever_edu_pms_role_dto_req_RoleCreateReqDto {
         TENANT_MANAGER = 'TENANT_MANAGER',
         CHANNEL_OWNER = 'CHANNEL_OWNER',
         CHANNEL_MEMBER = 'CHANNEL_MEMBER',
-        CHANNEL_GUEST = 'CHANNEL_GUEST',
+        CHANNEL_GUEST_OPERATION = 'CHANNEL_GUEST_OPERATION',
+        CHANNEL_GUEST_COURSE = 'CHANNEL_GUEST_COURSE',
         POLICY_MANAGER = 'POLICY_MANAGER',
         TUTOR = 'TUTOR',
+        LEADER = 'LEADER',
+        MEMBER = 'MEMBER',
     }
     /**
      * 테넌트 적용 범위(pms.role.TenantScope)

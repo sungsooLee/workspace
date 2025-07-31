@@ -4,6 +4,9 @@
 /* eslint-disable */
 import type { com_ever_edu_cms_curriculum_dto_res_ModuleResDto } from './com_ever_edu_cms_curriculum_dto_res_ModuleResDto';
 export type com_ever_edu_cms_curriculum_dto_res_CurriculumResDto = {
+    /**
+     * Enum(cms.curriculum.MappingCurriculumType)<br>- LESSON<br>- MODULE<br>- CURRICULUM
+     */
     mappingCurriculumType?: com_ever_edu_cms_curriculum_dto_res_CurriculumResDto.mappingCurriculumType;
     curriculumId?: number;
     curriculumName?: string;
@@ -12,7 +15,13 @@ export type com_ever_edu_cms_curriculum_dto_res_CurriculumResDto = {
     tenantName?: string;
     channelUuid?: string;
     channelName?: string;
+    /**
+     * Enum(cms.curriculum.CurriculumType)<br>- GENERAL: 일반(이러닝I,II, 클래스, 라이브)<br>- ASSESSMENT:평가<br>- SURVEY: 설문
+     */
     curriculumType?: com_ever_edu_cms_curriculum_dto_res_CurriculumResDto.curriculumType;
+    /**
+     * Enum(pms.multilingual.LangCountryCode)
+     */
     languageCountryCode?: com_ever_edu_cms_curriculum_dto_res_CurriculumResDto.languageCountryCode;
     coordinatorUuid?: string;
     coordinatorName?: string;
@@ -35,16 +44,25 @@ export type com_ever_edu_cms_curriculum_dto_res_CurriculumResDto = {
     moduleList?: Array<com_ever_edu_cms_curriculum_dto_res_ModuleResDto>;
 };
 export namespace com_ever_edu_cms_curriculum_dto_res_CurriculumResDto {
+    /**
+     * Enum(cms.curriculum.MappingCurriculumType)<br>- LESSON<br>- MODULE<br>- CURRICULUM
+     */
     export enum mappingCurriculumType {
         LESSON = 'LESSON',
         MODULE = 'MODULE',
         CURRICULUM = 'CURRICULUM',
     }
+    /**
+     * Enum(cms.curriculum.CurriculumType)<br>- GENERAL: 일반(이러닝I,II, 클래스, 라이브)<br>- ASSESSMENT:평가<br>- SURVEY: 설문
+     */
     export enum curriculumType {
         GENERAL = 'GENERAL',
         ASSESSMENT = 'ASSESSMENT',
         SURVEY = 'SURVEY',
     }
+    /**
+     * Enum(pms.multilingual.LangCountryCode)
+     */
     export enum languageCountryCode {
         KO = 'KO',
         EN = 'EN',

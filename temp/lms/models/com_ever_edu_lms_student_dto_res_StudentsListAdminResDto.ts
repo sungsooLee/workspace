@@ -83,6 +83,10 @@ export type com_ever_edu_lms_student_dto_res_StudentsListAdminResDto = {
      * 수료 상태
      */
     isCertified?: boolean;
+    /**
+     * 입과 방식
+     */
+    enrollmentType?: com_ever_edu_lms_student_dto_res_StudentsListAdminResDto.enrollmentType;
 };
 export namespace com_ever_edu_lms_student_dto_res_StudentsListAdminResDto {
     /**
@@ -94,6 +98,14 @@ export namespace com_ever_edu_lms_student_dto_res_StudentsListAdminResDto {
         ASSIGNMENT_DONE = 'ASSIGNMENT_DONE',
         QUIZ_DONE = 'QUIZ_DONE',
         SURVEY_DONE = 'SURVEY_DONE',
+    }
+    /**
+     * 입과 방식
+     */
+    export enum enrollmentType {
+        SELF_APPLY = 'SELF_APPLY',
+        MANAGER_ASSIGN = 'MANAGER_ASSIGN',
+        SYSTEM_REGISTERED = 'SYSTEM_REGISTERED',
     }
 }
 

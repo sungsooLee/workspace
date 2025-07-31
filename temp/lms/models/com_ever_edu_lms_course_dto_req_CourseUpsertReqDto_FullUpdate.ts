@@ -131,6 +131,10 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_FullUpdate = {
      */
     isDuplicateEnrollAllowed?: boolean;
     /**
+     * 수강전 문의
+     */
+    isPreEnrollQuestionAllowed?: boolean;
+    /**
      * 학습 환경 설정 여부
      */
     isLearnEnvEnabled?: boolean;

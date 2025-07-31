@@ -24,7 +24,7 @@ export type com_ever_edu_pms_holiday_dto_res_HolidayResDto = {
      */
     companyName?: string;
     /**
-     * 휴일 유형
+     * 휴일 유형 enum : HolidayType
      */
     holidayType?: com_ever_edu_pms_holiday_dto_res_HolidayResDto.holidayType;
     /**
@@ -54,7 +54,7 @@ export type com_ever_edu_pms_holiday_dto_res_HolidayResDto = {
 };
 export namespace com_ever_edu_pms_holiday_dto_res_HolidayResDto {
     /**
-     * 휴일 유형
+     * 휴일 유형 enum : HolidayType
      */
     export enum holidayType {
         LEGAL_HOLIDAY = 'LEGAL_HOLIDAY',

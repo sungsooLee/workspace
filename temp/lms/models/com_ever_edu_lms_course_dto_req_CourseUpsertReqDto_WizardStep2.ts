@@ -35,6 +35,10 @@ export type com_ever_edu_lms_course_dto_req_CourseUpsertReqDto_WizardStep2 = {
      * 차수 중복수강
      */
     isDuplicateEnrollAllowed?: boolean;
+    /**
+     * 수강전 문의
+     */
+    isPreEnrollQuestionAllowed?: boolean;
     learningSpaceNameValid?: boolean;
     instructorValid?: boolean;
 };

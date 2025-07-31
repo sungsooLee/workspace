@@ -2,8 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type com_ever_edu_lms_search_keyword_dto_res_SearchKeywordResponseDto = {
+export type com_ever_edu_lms_searching_dto_res_SearchKeywordPopularResponseDto = {
     keyword?: string;
-    searchDateTime?: string;
+    searchCount?: number;
 };
 

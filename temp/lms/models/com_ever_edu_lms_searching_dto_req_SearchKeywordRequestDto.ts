@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type com_ever_edu_lms_search_keyword_dto_req_SearchKeywordRequestDto = {
+export type com_ever_edu_lms_searching_dto_req_SearchKeywordRequestDto = {
     userUuid?: string;
     tenantId?: number;
     keyword?: string;

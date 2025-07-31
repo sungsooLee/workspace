@@ -6,6 +6,9 @@ export type com_ever_edu_cms_etc_dto_req_EtcContentDraftReqDto = {
     tenantId: number;
     tenantName: string;
     channelUuid: string;
+    /**
+     * Enum(pms.multilingual.LangCountryCode)
+     */
     languageCountryCode: com_ever_edu_cms_etc_dto_req_EtcContentDraftReqDto.languageCountryCode;
     /**
      * 파일 UUID
@@ -13,6 +16,9 @@ export type com_ever_edu_cms_etc_dto_req_EtcContentDraftReqDto = {
     fileUuid: string;
 };
 export namespace com_ever_edu_cms_etc_dto_req_EtcContentDraftReqDto {
+    /**
+     * Enum(pms.multilingual.LangCountryCode)
+     */
     export enum languageCountryCode {
         KO = 'KO',
         EN = 'EN',

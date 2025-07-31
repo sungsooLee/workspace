@@ -4,38 +4,26 @@
 /* eslint-disable */
 import type { com_ever_edu_pms_file_dto_res_FileInfoResDto } from './com_ever_edu_pms_file_dto_res_FileInfoResDto';
 export type com_ever_edu_pms_file_dto_res_GroupInfoResDto = {
-    /**
-     * 파일그룹 UUID
-     */
     groupUuid?: string;
     /**
-     * 업무분류유형. 코드그룹(pms.file.FileAffairsType) - LMS|PMS|CMS
+     * Enum(pms.file.FileAffairsType) - LMS|PMS|CMS
      */
     affairsType?: com_ever_edu_pms_file_dto_res_GroupInfoResDto.affairsType;
     /**
-     * 저정소유형코드. 코드그룹(pms.file.StorageType) - S3|HMG
+     * Enum(pms.file.StorageType) - S3|HMG
      */
     storageType?: com_ever_edu_pms_file_dto_res_GroupInfoResDto.storageType;
     /**
-     * 기본경로. 1-2Depth 경로<br>경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)<br> Ex&gt; upload/community/board/2025/01/02/file.ppt -&gt; upload/community/board
+     * 기본경로. 1-2Depth 경로<br>경로 구성: (1depth:upload)(2depth:/대분류/소분류)(3depth:/yyyy/mm/dd)(/4depth:파일명)<br>Ex&gt; upload/community/board/2025/01/02/file.ppt -&gt; upload/community/board
      */
     basicPath?: string;
-    /**
-     * 언어코드
-     */
     languageCode?: string;
-    /**
-     * 사용여부
-     */
     isUsed?: boolean;
-    /**
-     * 파일목록
-     */
     files?: Array<com_ever_edu_pms_file_dto_res_FileInfoResDto>;
 };
 export namespace com_ever_edu_pms_file_dto_res_GroupInfoResDto {
     /**
-     * 업무분류유형. 코드그룹(pms.file.FileAffairsType) - LMS|PMS|CMS
+     * Enum(pms.file.FileAffairsType) - LMS|PMS|CMS
      */
     export enum affairsType {
         LMS = 'LMS',
@@ -43,7 +31,7 @@ export namespace com_ever_edu_pms_file_dto_res_GroupInfoResDto {
         CMS = 'CMS',
     }
     /**
-     * 저정소유형코드. 코드그룹(pms.file.StorageType) - S3|HMG
+     * Enum(pms.file.StorageType) - S3|HMG
      */
     export enum storageType {
         S3 = 'S3',
