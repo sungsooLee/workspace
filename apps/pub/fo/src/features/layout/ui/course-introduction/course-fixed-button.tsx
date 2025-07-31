@@ -1,7 +1,7 @@
 import { memo, useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import { isMobile } from 'react-device-detect';
-import { Button, useModal } from '@learnway/ui';
+import { useModal } from '@learnway/ui/modal';
 import { IcoHeart, IcoShare } from '@learnway/icons';
 
 import {
@@ -9,6 +9,7 @@ import {
 } from '../../../../features/layout';
 
 import styles from './course-fixed-button.module.css';
+import { Button } from '@learnway/ui/button';
 
 interface CourseFixedButton {
   course?: boolean; // 차수 유/무

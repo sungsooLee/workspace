@@ -2,21 +2,16 @@ import { IcoCaution, IcoFormRequired } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
-import {
-  Button,
-  ContentsRow,
-  Input,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  useModal,
-} from '@learnway/ui';
+
 import { memo } from 'react';
 import styles from './google-input-popup.module.css';
 
 import { BrowserView, MobileView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { useModal, ModalContainer, ModalTitle, ModalBody, ModalFooter } from '@learnway/ui/modal';
 
 const GoogleInputPopupCompoment = () => {
   const { closeModal } = useModal();

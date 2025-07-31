@@ -9,7 +9,7 @@ import {
   IcoLoading02,
   IcoPdf,
 } from '@learnway/icons';
-import { Button, Panel, Popover, ProgressBar, TableBox, useModal } from '@learnway/ui';
+
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import styles from '@learnway/styles/fo/features/layout/ui/course-introduction/dashboard.module.css';
 import statusStyles from '@learnway/styles/fo/features/layout/ui/course-introduction/status.module.css';
@@ -17,6 +17,9 @@ import pdsStyles from '@learnway/styles/fo/features/layout/ui/course-introductio
 import tableListStyles from '@learnway/styles/fo/shared/ui/list/table-list.module.css';
 import dropdownPopoverStyles from '@learnway/styles/fo/shared/ui/dropdown-popover/dropdown-popover.module.css';
 import { CurriculumStudy } from '../../../../features/layout';
+import { Button } from '@learnway/ui/button';
+import { TableBox } from '@learnway/ui/grid/grid-box/table-box';
+import { Popover } from '@learnway/ui/popover';
 
 const DropdownPopoverCompoment = () => {
   return (

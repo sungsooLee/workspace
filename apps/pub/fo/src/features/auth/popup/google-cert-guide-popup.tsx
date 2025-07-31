@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { cn } from '@learnway/shared';
 import { isMobile } from 'react-device-detect';
-import { Button, ModalBody, ModalContainer, ModalTitle, useModal } from '@learnway/ui';
+
 import styles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide.module.css';
 
 import imgGuide2 from '@learnway/styles/fo/assets/images/popup/google_guide_img2.png';
@@ -14,6 +14,8 @@ import imgGuideM3 from '@learnway/styles/fo/assets/images/popup/google_guide_img
 import imgGuideM4 from '@learnway/styles/fo/assets/images/popup/google_guide_img4_m.png';
 import imgGuideM5 from '@learnway/styles/fo/assets/images/popup/google_guide_img5_m.png';
 import imgGuideM6 from '@learnway/styles/fo/assets/images/popup/google_guide_img6_m.png';
+import { ModalBody, ModalContainer, ModalTitle } from '@learnway/ui/modal';
+import { Button } from '@learnway/ui/button';
 
 const GoogleCertGuidePopupCompoment = () => {
   //const { closeModal } = useModal();

@@ -1,22 +1,15 @@
 import { memo, useState } from 'react';
-import { OptionCard, OptionCardItem } from '@learnway/ui';
+import { OptionCard, OptionCardItem } from '@learnway/ui/option-card';
 import { isMobile } from 'react-device-detect';
 
 import { cn } from '@learnway/shared';
 // 퍼블수정 20250314 import modal추가
-import {
-  ChipList,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  useModal,
-  Button,
-} from '@learnway/ui';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
 import { IcoRefresh02 } from '@learnway/icons';
 
 import styles from './filter-popup.module.css';
+import { Button } from '@learnway/ui/button';
 
 const filter = [
   { label: '클래스', value: 'a' },

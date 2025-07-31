@@ -1,18 +1,13 @@
 import { memo, useEffect, useRef, useState } from 'react';
 import { MobileView, BrowserView, isMobile } from 'react-device-detect';
 import { cn } from '@learnway/shared';
-import {
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  Button,
-  useModal,
-  TableBox,
-} from '@learnway/ui';
+
 import styles from '@learnway/styles/fo/features/layout/popup/notice-detail-popup.module.css';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import tableListStyles from '../../../shared/ui/list/table-list.module.css';
+import { Button } from '@learnway/ui/button';
+import { TableBox } from '@learnway/ui/grid/grid-box/table-box';
+import { useModal, ModalContainer, ModalTitle, ModalBody, ModalFooter } from '@learnway/ui/modal';
 
 const NoticeDetailPopupComponent = () => {
   const { openModal, closeModal } = useModal();

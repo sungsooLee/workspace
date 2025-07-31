@@ -1,10 +1,11 @@
-import { Avatar, Button, ModalBody, ModalContainer, ModalTitle } from '@learnway/ui';
 import { Link } from '@tanstack/react-router';
 import { memo } from 'react';
 
 import { IcoChart, IcoDocument, IcoPoint } from '@learnway/icons';
 
 import styles from './navigation-popup_m.module.css';
+import { Button } from '@learnway/ui/button';
+import { ModalContainer, ModalTitle, ModalBody } from '@learnway/ui/modal';
 
 const NavigationPopupMComponent = () => {
   return (

@@ -5,9 +5,11 @@ import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/con
 import { IcoCaution } from '@learnway/icons';
 import imgQrcode from '@learnway/styles/fo/assets/images/temp/img_qrcode.png';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
-import { Button, ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui';
+
 import { GoogleInputPopup, GoogleKeyPopup } from '../../../features/auth';
 import styles from './google-qrcode-popup.module.css';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { Button } from '@learnway/ui/button';
 
 const GoogleQrcodePopupCompoment = () => {
   const { openModal } = useModal();

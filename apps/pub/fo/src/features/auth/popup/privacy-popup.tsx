@@ -1,17 +1,12 @@
 import { memo } from 'react';
 import { cn } from '@learnway/shared';
 import styles from './privacy-popup.module.css';
-import {
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  Button,
-  useModal,
-  Dropdown,
-} from '@learnway/ui';
+
 import { MobileView, BrowserView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { Button } from '@learnway/ui/button';
+import { Dropdown } from '@learnway/ui/dropdown';
 
 const PrivacyPopupCompoment = () => {
   const { closeModal } = useModal();

@@ -1,11 +1,13 @@
 import { memo, useState } from 'react';
 import { isMobile } from 'react-device-detect';
-import { Button, Popover, Dropdown } from '@learnway/ui';
+import { Popover } from '@learnway/ui/popover';
 import { IcoArrowDown } from '@learnway/icons';
 import { Arrays, Education } from '../../../../features/layout';
 
 import dropdownPopoverStyles from '../../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
 import styles from './education.module.css';
+import { Button } from '@learnway/ui/button';
+import { Dropdown } from '@learnway/ui/dropdown';
 
 const CourseEducationCompoment = () => {
   // 소팅 조건

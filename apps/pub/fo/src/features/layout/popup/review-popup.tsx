@@ -1,17 +1,13 @@
 import { memo, useState } from 'react';
-import {
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  Button,
-  ContentsRow,
-  Textarea,
-} from '@learnway/ui';
+
 import { IcoStar } from '@learnway/icons';
 import bulletStyles from '../../../shared/ui/list/bullet.module.css';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import styles from './review-popup.module.css';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { ModalContainer, ModalTitle, ModalBody, ModalFooter } from '@learnway/ui/modal';
+import { Textarea } from '@learnway/ui/textarea';
 
 const ReviewPopupComponent = () => {
   // 임시 초기값 (값 전달 필요)

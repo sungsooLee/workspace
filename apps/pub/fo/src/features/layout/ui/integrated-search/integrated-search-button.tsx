@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from '@tanstack/react-router';
-import { Button } from '@learnway/ui';
+
 import { cn } from '@learnway/shared';
 import styles from './integrated-search-button.module.css';
 
