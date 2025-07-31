@@ -22,16 +22,35 @@ function BreadcrumbsComponent({ tenantId, currentCategoryId }: BreadcrumbsProps)
   const breadcrumbPath = useCategoryBreadcrumbs(currentCategoryId, tenantId);
   const { data: categories } = useCategoryTree(tenantId);
 
-  const renderPopoverContent = (category: Category) => {
+  const renderPopoverContent = (idx: number) => {
     let siblings: Category[] = [];
-    if (category.depth === 1) {
-      siblings = categories.children.filter((cat: any) => cat.depth === 1);
+    // if (category.depth === 1) {
+    //   siblings = categories.children.filter((cat: any) => cat.depth === 1);
+    // } else {
+    //   siblings =
+    //     categories.children.find((cat: any) =>
+    //       cat.children?.some((child: Category) => child.id === category.id),
+    //     )?.children || [];
+    // }
+    if( idx === 0 ) {
+      siblings = categories.children;
     } else {
-      siblings =
-        categories.children.find((cat: any) =>
-          cat.children?.some((child: Category) => child.id === category.id),
-        )?.children || [];
+      const parentCategory = breadcrumbPath[idx - 1];
+
+      const traverse = (nodes: any) => {
+        for(const node of nodes) {
+          if(node.id === parentCategory.id) {
+            siblings = node.children ?? [];
+            return;
+          }
+          if(node.children) traverse(node.children);
+        }
+      }
+
+      traverse(categories.children);
     }
+
+    const currentBreadcrumb = breadcrumbPath[idx];
 
     return (
       <div className={`${styles.start} ${styles.hover_menu}`}>
@@ -41,7 +60,7 @@ function BreadcrumbsComponent({ tenantId, currentCategoryId }: BreadcrumbsProps)
               <Link
                 to="/category"
                 state={{ categoryId: sibling.id.toString() }}
-                className={sibling.id === category.id ? styles.active : ''}
+                className={sibling.id === currentBreadcrumb.id ? styles.active : ''}
               >
                 {sibling.name}
               </Link>
@@ -64,7 +83,7 @@ function BreadcrumbsComponent({ tenantId, currentCategoryId }: BreadcrumbsProps)
         {breadcrumbPath.map((category, index) => (
           <li key={category.id} className={styles.link_item}>
             <Popover
-              popoverContent={renderPopoverContent(category)}
+              popoverContent={renderPopoverContent(index)}
               className={styles.btn_menu}
               side="bottom"
               align="start"
