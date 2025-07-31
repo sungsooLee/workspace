@@ -257,7 +257,6 @@ const EnrollmentComponent = () => {
       items={tabItems}
       type="line"
       size="sm"
-      showContentBorder
       selectedTabKey={selectedTabKey}
       onTabChange={handleTabChange}
     />

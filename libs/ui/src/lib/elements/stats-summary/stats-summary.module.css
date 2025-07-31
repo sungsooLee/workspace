@@ -19,5 +19,11 @@
         @apply absolute left-0 top-0 h-[48px] w-[1px] bg-[#D6DAE1] content-[''];
       }
     }
+    & + [class*='table_box'] {
+      @apply mt-[32px];
+    }
   }
+}
+[class*='divider'] + .start {
+  @apply !mt-[32px];
 }
