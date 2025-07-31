@@ -1,6 +1,7 @@
 import { queryOptions } from '@entities/companies/service/companies.queries';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
+import { Button } from '@learnway/ui/button';
 import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox } from '@learnway/ui/grid';
 import { SearchBox } from '@shared/ui/search-box';

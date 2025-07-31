@@ -6,6 +6,7 @@ import { FC } from 'react';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 
 /* tab contents */
+import { t } from 'i18next';
 import { TenantDetailBannerList } from './tenant-detail-banner-list';
 import { TenantDetailBannerView } from './tenant-detail-banner-view';
 

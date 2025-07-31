@@ -17,6 +17,7 @@ import { CurriculumPopup } from './popup/curriculum-popup';
 import styles from '@learnway/styles/fo/pages/_learning/side-panel/side-panel.module.css';
 
 import { DATE_TIME_FORMAT, duration } from '@learnway/shared';
+import { t } from 'i18next';
 import { Button } from '../../../button';
 import { useModal } from '../../../modal';
 import { ProgressCheck } from '../../../progress';

@@ -11,12 +11,12 @@ import { useFetchAuthUser } from '@learnway/auth/entities';
 import { LMSApiPrefix } from '@learnway/config';
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, generateYears, getDateToString } from '@learnway/shared';
+import { FormSubTitle } from '@learnway/ui/base-form';
 import { Button } from '@learnway/ui/button';
 import { Divider, SplitPanel, StatsSummary, StatsSummaryData } from '@learnway/ui/elements';
 import {
   EditDropdownCell,
   EditInputCell,
-  FormSubTitle,
   GridBox,
   useGridBox,
   useGridBoxConfig,
