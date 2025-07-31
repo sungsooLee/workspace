@@ -10,7 +10,12 @@ import {
   LearningSequenceCombo,
   LearningSequences,
 } from 'src/types/entities/learning-sequence';
-import { StudentHistory, StudentsList } from 'src/types/entities/students';
+import {
+  StudentsDeliveryAddress,
+  StudentsHistory,
+  StudentsLevelTest,
+  StudentsList,
+} from 'src/types/entities/students';
 
 export default class LearningSequenceService {
   static fetchSequenceList(params: any) {
@@ -83,6 +88,30 @@ export default class LearningSequenceService {
     return httpService.put(`${LMSApiPrefix()}/students/certification/reason`, params);
   }
   static fetchStudentsHistory(params: any) {
-    return httpService.get<StudentHistory[]>(`${LMSApiPrefix()}/students/history`, params);
+    return httpService.get<StudentsHistory[]>(`${LMSApiPrefix()}/students/history`, params);
+  }
+  static updateStudentsInfo(params: any) {
+    return httpService.put(`${LMSApiPrefix()}/students/info`, params);
+  }
+  static deleteStudentsInfo(params: any) {
+    return httpService.delete(`${LMSApiPrefix()}/students/delete`, params);
+  }
+  static updateStudentsCertification(params: any) {
+    return httpService.put(`${LMSApiPrefix()}/students/certification`, params);
+  }
+  static updateStudentsCompletion(params: any) {
+    return httpService.put(`${LMSApiPrefix()}/students/completion`, params);
+  }
+  static updateStudentsSequence(params: any) {
+    return httpService.put(`${LMSApiPrefix()}/students/sequence`, params);
+  }
+  static fetchStudentsDeliveryAddress(params: any) {
+    return httpService.get<StudentsDeliveryAddress>(
+      `${LMSApiPrefix()}/students/delivery/address`,
+      params,
+    );
+  }
+  static fetchStudentsLevelTest(params: any) {
+    return httpService.get<StudentsLevelTest>(`${LMSApiPrefix()}/students/level-test`, params);
   }
 }

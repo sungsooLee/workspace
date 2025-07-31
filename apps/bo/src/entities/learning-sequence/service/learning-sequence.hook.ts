@@ -141,3 +141,83 @@ export function useUpdateStudentsReason(options: any) {
     data,
   };
 }
+
+export function useUpdateStudentsInfo(options: any) {
+  const { mutate, isSuccess, isError, data } = useMutation({
+    ...mutateOptions.updateStudentsInfo(),
+    ...options,
+  });
+
+  return {
+    updateStudentsInfo: async (payload: any, callback?: any) => {
+      await mutate(payload, callback);
+    },
+    isSuccess,
+    isError,
+    data,
+  };
+}
+
+export function useDeleteStudentsInfo(options: any) {
+  const { mutate, isSuccess, isError, data } = useMutation({
+    ...mutateOptions.deleteStudentsInfo(),
+    ...options,
+  });
+
+  return {
+    deleteStudentsInfo: async (payload: any, callback?: any) => {
+      await mutate(payload, callback);
+    },
+    isSuccess,
+    isError,
+    data,
+  };
+}
+
+export function useUpdateStudentsCertification(options: any) {
+  const { mutate, isSuccess, isError, data } = useMutation({
+    ...mutateOptions.updateStudentsCertification(),
+    ...options,
+  });
+
+  return {
+    updateStudentsCertification: async (payload: any, callback?: any) => {
+      await mutate(payload, callback);
+    },
+    isSuccess,
+    isError,
+    data,
+  };
+}
+
+export function useUpdateStudentsCompletion(options: any) {
+  const { mutate, isSuccess, isError, data } = useMutation({
+    ...mutateOptions.updateStudentsCompletion(),
+    ...options,
+  });
+
+  return {
+    updateStudentsCompletion: async (payload: any, callback?: any) => {
+      await mutate(payload, callback);
+    },
+    isSuccess,
+    isError,
+    data,
+  };
+}
+
+export function useUpdateStudentsSequence(options: any) {
+  const { mutate, isSuccess, isError, data } = useMutation({
+    ...mutateOptions.updateStudentsSequence(),
+    ...options,
+  });
+
+  return {
+    updateStudentsSequence: async (payload: any, callback?: any) => {
+      await mutate(payload, callback);
+    },
+    isSuccess,
+    isError,
+    data,
+  };
+}

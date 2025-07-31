@@ -1,7 +1,13 @@
-import { useEffect, useCallback, useState, useRef } from 'react';
-import { t } from 'i18next';
-import { Link, useRouter } from '@tanstack/react-router';
-import { CellContext, ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import {
+  useCopySequence,
+  useCreateSequence,
+  useDeleteSequenceList,
+  useUpdateSequenceList,
+} from '@entities/learning-sequence/service/learning-sequence.hook';
+import { queryOptions } from '@entities/learning-sequence/service/learning-sequence.queries';
+import { SequenceBatchModal } from '@features/learning-operate/learning-sequence/sequence-management';
+import { LMSApiPrefix } from '@learnway/config';
+import { SelectOption, useDynamicForm2 } from '@learnway/hooks';
 import {
   Button,
   Divider,
@@ -13,23 +19,16 @@ import {
   useGridBoxConfig,
   useModal,
 } from '@learnway/ui';
-import { CODE_GROUP, SelectOption, useDynamicForm2 } from '@learnway/hooks';
-import { queryOptions } from '@entities/learning-sequence/service/learning-sequence.queries';
-import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
-import { LMSApiPrefix } from '@learnway/config';
-import { SequenceBatchModal } from '@features/learning-operate/learning-sequence/sequence-management';
-import { EditInputDateCell } from '../component/edit-input-date-cell';
-import { CopyBatchButtons } from '../component/copy-batch-buttons';
 import { Mode } from '@pages/_layout/learning/learning-sequence/-common/type';
-import { SequenceSearchForm } from '../component/sequence-search-form';
+import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
+import { useRouter } from '@tanstack/react-router';
+import { CellContext, ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { t } from 'i18next';
+import { useCallback, useEffect, useState } from 'react';
+import { CopyBatchButtons } from '../component/copy-batch-buttons';
 import { CourseSequenceSearchForm } from '../component/course-sequence-search-form';
-import {
-  useCopySequence,
-  useCreateSequence,
-  useDeleteSequenceList,
-  useFetchCourseSequences,
-  useUpdateSequenceList,
-} from '@entities/learning-sequence/service/learning-sequence.hook';
+import { EditInputDateCell } from '../component/edit-input-date-cell';
+import { SequenceSearchForm } from '../component/sequence-search-form';
 
 type SequenceListComponentProps = {
   setMode: (value: string) => void;
@@ -440,6 +439,10 @@ const SequenceListComponent = ({
     // 변경된 행만 추출
     const editedRows = gConfig.gridData?.content.filter((current, index) => {
       const original = originalData[index];
+      // const original = originalData.find(
+      //   (x) => x.courseId === current.courseId && x.courseSequenceId === current.courseSequenceId,
+      // );
+      console.log('original=>', original);
       return isEdited(original, current);
     });
 
