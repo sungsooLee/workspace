@@ -62,6 +62,8 @@ export const queryKeys = {
   questionListForRetrieve: ['question-list-for-retrieve'] as const,
   shareTenantsChannels: (contentUuid: string) => ['share-tenants-channels', contentUuid] as const,
   sharedBoxContents: ['shared-box-contents'] as const,
+  sharedBoxTenantCodes: ['shared-box-tenant-codes'] as const,
+  sharedBoxChannelCodes: ['shared-box-channel-codes'] as const,
 };
 
 export const learningResourceQueryOptions = {
@@ -187,6 +189,18 @@ export const learningResourceQueryOptions = {
   getSharedBoxContents: (params: GetSharedBoxContentsParams) => ({
     queryKey: queryKeys.shareTenantsChannels,
     queryFn: () => LearningResourceService.getSharedBoxContents(params),
+    enabled: true,
+  }),
+
+  getSharedBoxTenantCodes: (lastVisitedBoRoleId: number) => ({
+    queryKey: queryKeys.sharedBoxTenantCodes,
+    queryFn: () => LearningResourceService.getSharedBoxTenantCodes(lastVisitedBoRoleId),
+    enabled: true,
+  }),
+
+  getSharedBoxChannelCodes: (srcTenantId: number) => ({
+    queryKey: queryKeys.sharedBoxChannelCodes,
+    queryFn: () => LearningResourceService.getSharedBoxChannelCodes(srcTenantId),
     enabled: true,
   }),
 };

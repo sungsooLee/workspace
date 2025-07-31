@@ -1,6 +1,5 @@
 // IA104 / NLP_BO_CMS_1045 학습자원 현지화-공유함
 import { learningResourceQueryOptions, usePostContentExport } from '@entities/learning-resource';
-import LearningResourceService from '@entities/learning-resource/api/learning-resource';
 import { getDetailPathByContentType, getDetailRouterState } from '@features/learning-resource';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import {
@@ -15,6 +14,7 @@ import { formatDate } from '@learnway/shared';
 import { Button, Divider, GridBox, useGridBox, useGridBoxConfig, useModal } from '@learnway/ui';
 import { PreviewLearningWindow } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from '@tanstack/react-router';
 import {
   ContentCreateType,
@@ -32,6 +32,7 @@ function LearningResourceSharedTableComponent() {
   } = useCurrentRoute();
 
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { openModal } = useModal();
 
   const { exportContent } = usePostContentExport({
@@ -297,8 +298,8 @@ function LearningResourceSharedTableComponent() {
   useEffect(() => {
     if (authUser && authUser.lastVisitedBoRoleId)
       (async () => {
-        const tenantOptions = await LearningResourceService.getSharedBoxTenantCodes(
-          authUser.lastVisitedBoRoleId!,
+        const tenantOptions = await queryClient.fetchQuery(
+          learningResourceQueryOptions.getSharedBoxTenantCodes(authUser.lastVisitedBoRoleId!),
         );
         setOptions(
           'sourceTenantId',
@@ -316,7 +317,9 @@ function LearningResourceSharedTableComponent() {
       return;
     }
     (async () => {
-      const channelOptions = await LearningResourceService.getSharedBoxChannelCodes(sourceTenantId);
+      const channelOptions = await queryClient.fetchQuery(
+        learningResourceQueryOptions.getSharedBoxChannelCodes(sourceTenantId),
+      );
       setOptions(
         'sourceChannelUuid',
         channelOptions.map(({ channelUuid: value, channelName: label }) => ({ value, label })),
