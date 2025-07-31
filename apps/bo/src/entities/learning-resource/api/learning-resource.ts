@@ -10,6 +10,7 @@ import {
   ContentExportRes,
   ContentSharingInfoReq,
   ContentSharingInfoRes,
+  ExamPaperQuestionCountUpdateReq,
   FetchTranslationListRes,
   GetContentDetailRes,
   GetContentsParams,
@@ -17,6 +18,8 @@ import {
   GetScormFileChangeRes,
   GetScormResourceRes,
   GetScormStatusRes,
+  GetSharedBoxContentsParams,
+  GetSharedBoxContentsRes,
   GetShareTenantsChannelsParams,
   GetShareTenantsChannelsRes,
   GetVideoFileChangeRes,
@@ -46,14 +49,13 @@ import {
   PutVideoChangeRes,
   PutVideoUpdateParams,
   PutVideoUpdateRes,
+  QuestionCountInfo,
   QuestionItem,
   QuestionItemDeleteParam,
   QuestionListForRetrieveReq,
   QuestionListForRetrieveRes,
   QuestionsCopyReq,
   QuestionStatusUpdateReq,
-  QuestionCountInfo,
-  ExamPaperQuestionCountUpdateReq,
   TenantCodeType,
   TestPaperBasicInfoSaveReq,
   TestPaperBasicInfoSaveRes,
@@ -362,6 +364,16 @@ export default class LearningResourceService {
     return httpService.get<GetShareTenantsChannelsRes>(
       `${CMSApiPrefix()}/contents/share/${params.contentUuid}/tenants/${params.tenantId}/channels`,
       pick(params, 'channelName'),
+    );
+  }
+
+  /**
+   * 공유함 학습자원 조회
+   */
+  static getSharedBoxContents(params: GetSharedBoxContentsParams) {
+    return httpService.get<GetSharedBoxContentsRes>(
+      `${CMSApiPrefix()}/contents/share/sharedBox`,
+      params,
     );
   }
 }
