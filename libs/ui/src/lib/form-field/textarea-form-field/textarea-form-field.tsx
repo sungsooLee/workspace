@@ -27,8 +27,24 @@ const TextareaFormFieldComponent = forwardRef<HTMLTextAreaElement, TextareaFormF
       }
       ownerOnChange?.(event.target.value);
     };
+    const {
+      clearAllValidators,
+      addValidator,
+      registerField,
+      originalValues,
+      onFormChange,
+      fieldRefs,
+      subText,
+      guideText,
+      getValues,
+      setValue,
+      onFormFocus,
+      watch,
+      error,
+      ...newProps
+    } = props as any;
 
-    return <Textarea {...props} ref={ref} onChange={handleChange} />;
+    return <Textarea {...newProps} ref={ref} onChange={handleChange} />;
   },
 );
 export const TextareaFormField = TextareaFormFieldComponent;

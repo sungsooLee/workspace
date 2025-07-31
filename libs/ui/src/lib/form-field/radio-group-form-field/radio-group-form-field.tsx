@@ -38,6 +38,22 @@ const RadioGroupFormFieldComponent = forwardRef<HTMLDivElement, RadioGroupFormFi
       });
     }, [options, optionsConfig]);
 
+    const {
+      clearAllValidators,
+      addValidator,
+      registerField,
+      originalValues,
+      onFormChange,
+      fieldRefs,
+      subText,
+      guideText,
+      getValues,
+      setValue,
+      onFormFocus,
+      watch,
+      error,
+      ...newProps
+    } = props;
     return (
       <RadioGroup
         ref={ref}
@@ -51,7 +67,7 @@ const RadioGroupFormFieldComponent = forwardRef<HTMLDivElement, RadioGroupFormFi
         options={radioOptions as RadioGroupOption[]}
         cols={cols}
         onValueChange={onChange}
-        {...props}
+        {...newProps}
       />
     );
   },

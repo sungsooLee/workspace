@@ -27,7 +27,7 @@ import {
   QuestionListForRetrieveReq,
   QuestionsCopyReq,
   QuestionStatusUpdateReq,
-  RandomQuestionCountUpdateReq,
+  ExamPaperQuestionCountUpdateReq,
   TestPaperBasicInfoSaveReq,
 } from '@types';
 import LearningResourceService from '../api/learning-resource';
@@ -267,7 +267,7 @@ export const mutateOptions = {
       LearningResourceService.updateQuestionStatus(params),
   }),
   updateExamPaperQuestionCountInfo: () => ({
-    mutationFn: (params: RandomQuestionCountUpdateReq) =>
+    mutationFn: (params: ExamPaperQuestionCountUpdateReq) =>
       LearningResourceService.updateExamPaperQuestionCountInfo(params),
   }),
   copyQuestionsToExamPaper: () => ({

@@ -1,4 +1,7 @@
+import { queryOptions } from '@entities/learning-sequence/service/learning-sequence.queries';
+import { LMSApiPrefix } from '@learnway/config';
 import { SearchBoxProvider } from '@learnway/hooks';
+import { DATE_TIME_FORMAT, getDateToString, SelectOption } from '@learnway/shared';
 import {
   Button,
   Divider,
@@ -9,20 +12,17 @@ import {
   useGridBoxConfig,
   useModal,
 } from '@learnway/ui';
+import { Mode } from '@pages/_layout/learning/learning-sequence/-common/type';
 import { GridExcelDownloadButton, SearchBox } from '@shared/ui';
-import { queryOptions } from '@entities/learning-sequence/service/learning-sequence.queries';
-import { useCallback, useEffect, useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import { useRouter } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
-import { LMSApiPrefix } from '@learnway/config';
+import { useCallback, useEffect, useState } from 'react';
 import { FieldValues, UseFormGetValues, UseFormSetValue } from 'react-hook-form';
-import { DATE_TIME_FORMAT, getDateToString, SelectOption } from '@learnway/shared';
-import { useRouter } from '@tanstack/react-router';
-import { Mode } from '@pages/_layout/learning/learning-sequence/-common/type';
-import { RegistPaymentModal } from '../modal/regist-payment-modal';
-import { ForceApprovalModal } from '../modal/force-approval-modal';
-import { useQueryClient } from '@tanstack/react-query';
 import { getEnrollStatusName } from '../constants/enroll-status';
+import { ForceApprovalModal } from '../modal/force-approval-modal';
+import { RegistPaymentModal } from '../modal/regist-payment-modal';
 import { useEnrollmentStore } from '../store/use-enrollment-store';
 
 const _global = {
@@ -214,33 +214,33 @@ const EnrollmentRegistComponent = ({
   };
 
   const handleOnSearch = useCallback((data: any) => {
-    // const payload = {
-    //   openingYear: 2025,
-    //   courseSequenceId: 2,
-    //   enrollStatusType: data.enrollStatusType || '',
-    //   learningStartDate: '2025-06-22',
-    //   learningEndDate: '2025-08-22',
-    //   companyId: 54,
-    //   deptId: 1,
-    //   employeeNumber: data.employeeNumber || '',
-    //   name: data.name || '',
-    // };
-
     const payload = {
-      openingYear: data.openingYear || null,
-      courseSequenceId: data.courseSequenceId || null,
+      openingYear: 2025,
+      courseSequenceId: 2,
       enrollStatusType: data.enrollStatusType || '',
-      learningStartDate: data.learningRange?.from
-        ? getDateToString(data.learningRange?.from, DATE_TIME_FORMAT.DATE)
-        : null,
-      learningEndDate: data.learningRange?.to
-        ? getDateToString(data.learningRange?.to, DATE_TIME_FORMAT.DATE)
-        : null,
-      companyId: data.company || null,
-      deptId: data.deptId || null,
+      learningStartDate: '2025-06-22',
+      learningEndDate: '2025-08-22',
+      companyId: 54,
+      deptId: 1,
       employeeNumber: data.employeeNumber || '',
       name: data.name || '',
     };
+
+    // const payload = {
+    //   openingYear: data.openingYear || null,
+    //   courseSequenceId: data.courseSequenceId || null,
+    //   enrollStatusType: data.enrollStatusType || '',
+    //   learningStartDate: data.learningRange?.from
+    //     ? getDateToString(data.learningRange?.from, DATE_TIME_FORMAT.DATE)
+    //     : null,
+    //   learningEndDate: data.learningRange?.to
+    //     ? getDateToString(data.learningRange?.to, DATE_TIME_FORMAT.DATE)
+    //     : null,
+    //   companyId: data.company || null,
+    //   deptId: data.deptId || null,
+    //   employeeNumber: data.employeeNumber || '',
+    //   name: data.name || '',
+    // };
 
     setParams({
       ...payload,
@@ -317,14 +317,12 @@ const EnrollmentRegistComponent = ({
           </>
         }
         excelButtons={
-          <>
-            <GridExcelDownloadButton
-              url={`${LMSApiPrefix()}/enrolls/excel`}
-              params={params}
-              dataCount={data?.totalElements}
-              disabled={!data?.totalElements}
-            />
-          </>
+          <GridExcelDownloadButton
+            url={`${LMSApiPrefix()}/enrolls/excel`}
+            params={params}
+            dataCount={data?.totalElements}
+            disabled={!data?.totalElements}
+          />
         }
       />
     </>

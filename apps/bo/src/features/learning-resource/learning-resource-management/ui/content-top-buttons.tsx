@@ -1,13 +1,14 @@
-import { useCallback, useMemo } from 'react';
-import { useBlocker, useRouter } from '@tanstack/react-router';
-import { t } from 'i18next';
+import { useDeleteContent, usePostContentExport } from '@entities/learning-resource';
+import { useFetchAuthUser } from '@learnway/auth/entities';
 import { LEARNING_TYPE } from '@learnway/config';
 import { DynamicFormProvider, useCurrentRoute } from '@learnway/hooks';
 import { Button, Divider, useModal } from '@learnway/ui';
 import { ContentCourseMappingModal } from '@shared/ui';
+import { useBlocker, useRouter } from '@tanstack/react-router';
 import { ContentCreateType, ContentExportRes, ContentInformation } from '@types';
+import { t } from 'i18next';
+import { useCallback, useMemo } from 'react';
 import { TranslationListModal } from './learning-resource-translation-list-modal';
-import { useDeleteContent, usePostContentExport } from '@entities/learning-resource';
 
 interface Props {
   provider: DynamicFormProvider;
@@ -15,6 +16,8 @@ interface Props {
 }
 
 const ContentTopButtonsComponent = ({ provider, hasMapping = false }: Props) => {
+  const { data: authUser } = useFetchAuthUser();
+
   const { openModal, alert: openAlert, confirm: openConfirm } = useModal();
   const router = useRouter();
   const {
@@ -98,7 +101,11 @@ const ContentTopButtonsComponent = ({ provider, hasMapping = false }: Props) => 
   const handleCourseMapping = useCallback(() => {
     openModal({
       content: (
-        <ContentCourseMappingModal contentUuid={contentUuid} channelUuid={data.channelUuid} />
+        <ContentCourseMappingModal
+          contentUuid={contentUuid}
+          channelUuid={data.channelUuid}
+          lastVisitedBoRoleId={authUser!.lastVisitedBoRoleId!}
+        />
       ),
       width: 'lg',
     });
@@ -148,7 +155,12 @@ const ContentTopButtonsComponent = ({ provider, hasMapping = false }: Props) => 
           <Button variant="gray" size="sm">
             {t('과정 개설')}
           </Button>
-          <Button variant="point" size="sm" onClick={handleCourseMapping}>
+          <Button
+            variant="point"
+            size="sm"
+            onClick={handleCourseMapping}
+            disabled={authUser?.activeRole?.roleType === 'CHANNEL_GUEST_COURSE'}
+          >
             {t('매핑과정')}
           </Button>
           <Button

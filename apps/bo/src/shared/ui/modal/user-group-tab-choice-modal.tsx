@@ -1,31 +1,37 @@
-import { useState, forwardRef } from 'react';
-import { t } from 'i18next';
+import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import {
   Button,
   ModalBody,
   ModalContainer,
   ModalFooter,
   ModalTitle,
-  useModal,
   Tabs,
+  useModal,
 } from '@learnway/ui';
-import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
-import { UserGroupOrganization } from '../components/user-group-organization';
-import { UserGroupJobPosition } from '../components/user-group-job-position';
-import { UserGroupJobGroup } from '../components/user-group-job-group';
-import { UserGroupJobTitle } from '../components/user-group-job-title';
-import { UserGroupJob } from '../components/user-group-job';
-import { UserGroupCustom } from '../components/user-group-custom';
 import { CombineUserGroup, UserGroupType } from '@types';
+import { t } from 'i18next';
+import { forwardRef, useState } from 'react';
+import { UserGroupCustom } from '../components/user-group-custom';
+import { UserGroupJob } from '../components/user-group-job';
+import { UserGroupJobGroup } from '../components/user-group-job-group';
+import { UserGroupJobPosition } from '../components/user-group-job-position';
+import { UserGroupJobTitle } from '../components/user-group-job-title';
+import { UserGroupOrganization } from '../components/user-group-organization';
 
 type UserGroupTabModalProps = {
   initialTab?: UserGroupType;
   tenantIds?: number[];
+  roleIds?: number[];
   option?: CombineUserGroup[];
 };
 
 const UserGroupTabModalComponent = forwardRef(
-  ({ initialTab = 'ORGANIZATION', tenantIds = [], option: optionProp }: UserGroupTabModalProps) => {
+  ({
+    initialTab = 'ORGANIZATION',
+    tenantIds = [],
+    roleIds = [],
+    option: optionProp,
+  }: UserGroupTabModalProps) => {
     const { closeModal } = useModal();
 
     const [selectedTabKey, setSelectedTabKey] = useState<UserGroupType>(initialTab);
@@ -53,6 +59,7 @@ const UserGroupTabModalComponent = forwardRef(
                 content: (
                   <UserGroupOrganization
                     tenantIds={tenantIds}
+                    roleIds={roleIds}
                     option={option}
                     handleSetOption={setOption}
                   />

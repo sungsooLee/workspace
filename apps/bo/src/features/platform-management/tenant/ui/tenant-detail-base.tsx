@@ -46,6 +46,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
     getValues,
     clearFormError,
     setFormError,
+    formState,
   } = useDynamicForm2();
 
   const formRef = useRef<HTMLFormElement>(null);
@@ -105,7 +106,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
   };
 
   useEffect(() => {
-    if (tenantData) {
+    if (tenantData && formState.isReady) {
       console.log('#### tenantData {} => ', tenantData);
       const device = [];
       const useCategory = [];
@@ -160,7 +161,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
         isAutoeverTenantCustomOption: platformAttributeProperties.isUseAutoeverTenantCustomOption,
       });
     }
-  }, [tenantData]);
+  }, [tenantData, formState.isReady]);
 
   useEffect(() => {
     const init = async () => {

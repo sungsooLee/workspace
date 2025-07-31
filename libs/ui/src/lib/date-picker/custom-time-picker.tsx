@@ -2,6 +2,7 @@ import { ko } from 'date-fns/locale';
 import { t } from 'i18next';
 import { useEffect, useRef, useState } from 'react';
 import { Popover } from '../popover/popover';
+import { PopoverCloseWrapper } from '../popover/popover-close-wrapper';
 
 export const PopoverTimeInput = ({
   value,
@@ -142,11 +143,11 @@ export const PopoverTimeInput = ({
     if (showSeconds) {
       // HH:MM:SS 형식
       if (formattedText.length >= 2) {
-        formattedText = formattedText.slice(0, 2) + ':' + formattedText.slice(2);
+        formattedText = `${formattedText.slice(0, 2)}:${formattedText.slice(2)}`;
         inputStage = 'minute'; // 2자리 입력 후 분으로 이동
       }
       if (formattedText.length >= 5) {
-        formattedText = formattedText.slice(0, 5) + ':' + formattedText.slice(5);
+        formattedText = `${formattedText.slice(0, 5)}:${formattedText.slice(5)}`;
         inputStage = 'second'; // 5자리 입력 후 초로 이동
       }
       if (formattedText.length > 8) {
@@ -155,7 +156,7 @@ export const PopoverTimeInput = ({
     } else {
       // HH:MM 형식
       if (formattedText.length >= 2) {
-        formattedText = formattedText.slice(0, 2) + ':' + formattedText.slice(2);
+        formattedText = `${formattedText.slice(0, 2)}:${formattedText.slice(2)}`;
         inputStage = 'minute'; // 2자리 입력 후 분으로 이동
       }
       if (formattedText.length > 5) {
@@ -482,20 +483,24 @@ const StandaloneTimeInput = ({
           <div className="time_text">{locale === ko ? t('분') : t('Minute')}</div>
           <div className="column_options">
             {minuteOptions.map((m, i) => (
-              <div
-                ref={(ref) => (minuteOptionsRefs.current[i] = ref)}
-                key={`minute-${m}`}
-                data-minute={m}
-                className={`time_option ${m === selectedMinute ? 'selected' : ''}`}
-                onClick={() => selectionStep !== 'hour' && handleMinuteClick(m)}
-                style={{
-                  backgroundColor: m === selectedMinute ? '#EDFCFF' : 'transparent',
-                  cursor: selectionStep === 'minute' ? 'pointer' : 'default',
-                  // opacity: selectionStep !== 'hour' ? 1 : 0.3,
-                }}
-              >
-                {formatNumber(m)}
-              </div>
+              <PopoverCloseWrapper key={`okko_${i}`} childrenOnly={showSeconds}>
+                <div
+                  ref={(ref) => (minuteOptionsRefs.current[i] = ref)}
+                  key={`minute-${m}`}
+                  data-minute={m}
+                  className={`time_option ${m === selectedMinute ? 'selected' : ''}`}
+                  onClick={() => handleMinuteClick(m)}
+                  // 제한 제거 selectionStep !== 'hour'
+                  // onClick={() => selectionStep !== 'hour' && handleMinuteClick(m)}
+                  style={{
+                    backgroundColor: m === selectedMinute ? '#EDFCFF' : 'transparent',
+                    cursor: selectionStep === 'minute' ? 'pointer' : 'default',
+                    // opacity: selectionStep !== 'hour' ? 1 : 0.3,
+                  }}
+                >
+                  {formatNumber(m)}
+                </div>
+              </PopoverCloseWrapper>
             ))}
           </div>
         </div>
@@ -505,20 +510,22 @@ const StandaloneTimeInput = ({
             <div className="time_text">{locale === ko ? t('초') : t('Second')}</div>
             <div className="column_options">
               {secondOptions.map((s, i) => (
-                <div
-                  ref={(ref) => (secondOptionsRefs.current[i] = ref)}
-                  key={`second-${s}`}
-                  data-second={s}
-                  className={`time_option ${s === selectedSecond ? 'selected' : ''}`}
-                  onClick={() => selectionStep === 'second' && handleSecondClick(s)}
-                  style={{
-                    backgroundColor: s === selectedSecond ? '#EDFCFF' : 'transparent',
-                    cursor: selectionStep === 'second' ? 'pointer' : 'default',
-                    opacity: selectionStep === 'second' ? 1 : 0.3,
-                  }}
-                >
-                  {formatNumber(s)}
-                </div>
+                <Popover.Close asChild>
+                  <div
+                    ref={(ref) => (secondOptionsRefs.current[i] = ref)}
+                    key={`second-${s}`}
+                    data-second={s}
+                    className={`time_option ${s === selectedSecond ? 'selected' : ''}`}
+                    onClick={() => selectionStep === 'second' && handleSecondClick(s)}
+                    style={{
+                      backgroundColor: s === selectedSecond ? '#EDFCFF' : 'transparent',
+                      cursor: selectionStep === 'second' ? 'pointer' : 'default',
+                      opacity: selectionStep === 'second' ? 1 : 0.3,
+                    }}
+                  >
+                    {formatNumber(s)}
+                  </div>
+                </Popover.Close>
               ))}
             </div>
           </div>
