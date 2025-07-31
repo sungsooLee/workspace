@@ -2,8 +2,8 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { convertHierarchyToList } from '@learnway/shared';
 
-import { queryOptions } from './menu.queries';
 import { Role } from '@learnway/auth/types';
+import { queryOptions } from './menu.queries';
 
 export function useFetchMenus(tenantId?: number, roles?: Role[]) {
   return useQuery(queryOptions.all(tenantId, roles));
@@ -13,7 +13,7 @@ export function useFetchMenu({ menuId }: { menuId: number }) {
   return useQuery(queryOptions.detail(menuId));
 }
 
-export function useAsycFetchMenus(mutationOptions = {}) {
+export function useAsyncFetchMenus(mutationOptions = {}) {
   const queryClient = useQueryClient();
 
   return {

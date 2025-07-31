@@ -1,11 +1,10 @@
 import {
+  useAsyncFetchMenus,
   useLoginUser,
   useReissue,
   useUpdateUser,
-  useAsycFetchMenus,
 } from '@learnway/auth/entities';
 import type { AuthUser } from '@learnway/auth/types';
-import { getConfig } from '@learnway/config';
 import { cookieService, MutateCallback } from '@learnway/shared';
 import { useModal } from '@learnway/ui';
 
@@ -19,7 +18,7 @@ export function useAuthSignin() {
   const { login } = useLoginUser();
   const { reissue } = useReissue();
   const { updateMenu } = useUpdateUser();
-  const { asyncMenus } = useAsycFetchMenus();
+  const { asyncMenus } = useAsyncFetchMenus();
   const { alert } = useModal();
 
   return {

@@ -2,7 +2,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { convertHierarchyToList } from '@learnway/shared';
 
-import { menuQueryOptions as queryOptions, menuQueryKeys as queryKeys } from './menu.queries';
+import { menuQueryKeys as queryKeys, menuQueryOptions as queryOptions } from './menu.queries';
 
 export function useFetchMenus(tenantId?: number, roleId?: number | string) {
   return useQuery(queryOptions.all(tenantId, roleId));
@@ -12,7 +12,7 @@ export function useFetchMenu({ menuId }: { menuId: number }) {
   return useQuery(queryOptions.detail(menuId));
 }
 
-export function useAsycFetchMenus(mutationOptions = {}) {
+export function useAsyncFetchMenus(mutationOptions = {}) {
   const queryClient = useQueryClient();
 
   return {
@@ -45,7 +45,7 @@ export function useAsycFetchMenus(mutationOptions = {}) {
   };
 }
 
-export function useAsycFetchMenusForceRefatch(mutationOptions = {}) {
+export function useAsyncFetchMenusForceRefetch(mutationOptions = {}) {
   const queryClient = useQueryClient();
 
   return {
@@ -55,7 +55,7 @@ export function useAsycFetchMenusForceRefatch(mutationOptions = {}) {
       // if (!tenantId || !roleId) return [];
       if (!tenantId) return [];
 
-      console.log('useAsycFetchMenusForceRefatch');
+      console.log('useAsyncFetchMenusForceRefetch');
 
       try {
         await queryClient.invalidateQueries({ queryKey: queryKeys.all });
