@@ -93,7 +93,7 @@ function RouteComponent() {
       }
       // 문제은행
       case LEARNING_TYPE.EXAM_POOL: {
-        router.navigate({ to: '/learning/resource/question-bank/regist' });
+        router.navigate({ to: '/learning/resource/question-bank/view' });
         break;
       }
 

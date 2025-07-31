@@ -145,7 +145,8 @@
       "tooltip": {
         "learningResourceIsUsed": "해당 학습자원은 과정에서 사용 중입니다.\n일부 정보만 변경할 수 있고, 삭제 및 업로드 파일 변경은 할 수 없습니다.",
         "learningResourceIsTranslated": "번역된 학습자원입니다.",
-        "learningResourceIsShared": "공유된 학습자원입니다."
+        "learningResourceIsShared": "공유된 학습자원입니다.",
+        "learningResourceIsExamMapped": "해당 학습자원은 시험지에 매핑 중입니다. 일부 정보만 변경할 수 있고, 삭제는 할 수 없습니다."
       }
     },
     "modal": {

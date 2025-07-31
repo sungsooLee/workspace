@@ -1,48 +1,129 @@
-import { useEffect, useState } from 'react';
-import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { createLazyFileRoute } from '@tanstack/react-router';
+import { useTranslation } from 'react-i18next';
 
-import { ContentsButtons, LinkBox, MainContents, PageContainer, SubContents } from '@shared/ui';
+import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
 
 import { useLearningResourceQuestionDetailForm } from '@features/learning-resource/learning-resource-management/service/learning-resource-question-detail-from.hook';
-import { LearningResourceQuestionBank } from '@features/learning-resource/learning-resource-management/ui/learning-resource-question-bank';
-import { Button } from '@learnway/ui/button';
+import { useCurrentRoute, useDynamicForm2 } from '@learnway/hooks';
+import { useModal } from '@learnway/ui/modal';
+import { QuestionBankTabFormRef } from '@features/learning-resource/learning-resource-management/service/question-bank/type';
+import { LearningResourceQuestionBankDetail } from '@features/learning-resource/learning-resource-management/ui/learning-resource-question-bank-detail';
+import { LearningResourceQuestionBankQuestion } from '@features/learning-resource/learning-resource-management/ui/learning-resource-question-bank-question';
+import { ContentTopButtons, getTooltipContent } from '@features/learning-resource';
+import { Tabs } from '@learnway/ui/tabs';
+import { ContentCreateType, EnFormMode } from '@types';
+
+enum QuestionTab {
+  QUESTION_BASE = 'QUESTION_BASE',
+  QUESTION_ITEM = 'QUESTION_ITEM',
+}
 
 export const Route = createLazyFileRoute('/_layout/learning/resource/question-bank/view')({
-  component: RouteComponent });
+  component: RouteComponent,
+});
 
 function RouteComponent() {
-  const router = useRouter();
-  const routerState = useRouterState();
+  const {
+    state: { contentUuid },
+  } = useCurrentRoute();
 
-  const { saveButtonClick, setBaseInfo } = useLearningResourceQuestionDetailForm();
+  const { t } = useTranslation();
 
-  const handleListButtonClick = async () => {
-    router.navigate({ to: '/learning/learning-resource' });
+  const { alert, confirm: openConfirm } = useModal();
+
+  const form = useDynamicForm2();
+  const { provider, onSubmit, watch } = form;
+
+  const isExamMapping = watch('isExamMapping');
+
+  const { setBaseInfo, baseInfo, formMode, hasMapping } = useLearningResourceQuestionDetailForm();
+
+  const baseInfoRef = useRef<QuestionBankTabFormRef>(null);
+  const questionInfoRef = useRef<QuestionBankTabFormRef>(null);
+
+  const [selectedTabKey, setSelectedTabKey] = useState<string>(QuestionTab.QUESTION_BASE);
+
+  const handleTabChange = (tabKey: string) => {
+    setSelectedTabKey(tabKey);
   };
 
-  const contentUuid = routerState.location.state?.contentUuid;
+  const handleBeforeTabChange = async (currentTabKey: string, nextTabKey: string) => {
+    console.log('formMode', formMode, baseInfo);
+    if (nextTabKey === QuestionTab.QUESTION_ITEM && formMode === EnFormMode.ADD) {
+      alert({
+        title: t('입력한 정보를 저장하세요.'),
+        content: t('저장된적 없는 경우 다음단계로 이동할수 없습니다.'),
+      });
+      return false;
+    } else if (contentUuid) {
+      const result = await openConfirm({
+        title: t('이동 하시겠습니까?'),
+        content: t('입력 중인 항목이 초기화됩니다.'),
+      });
+      return result;
+    }
+
+    return true;
+  };
+
+  const items = useMemo(
+    () => [
+      {
+        title: t('문제은행 정보'),
+        key: QuestionTab.QUESTION_BASE,
+        content: <LearningResourceQuestionBankDetail ref={baseInfoRef} form={form} />,
+      },
+      {
+        title: t('문항추가'),
+        key: QuestionTab.QUESTION_ITEM,
+        content: <LearningResourceQuestionBankQuestion ref={questionInfoRef} />,
+      },
+    ],
+    [provider],
+  );
+
+  const handleOnSubmit = async (data: Record<string, any>) => {
+    if (baseInfoRef.current) {
+      baseInfoRef.current?.save?.(data);
+    } else if (questionInfoRef.current) {
+      questionInfoRef.current?.complete?.();
+    }
+  };
 
   useEffect(() => {
-    if (!contentUuid) return;
     setBaseInfo(contentUuid);
   }, [contentUuid]);
 
   return (
-    <PageContainer>
-      <ContentsButtons>
-        <LinkBox>
-          <Button variant="point" size="sm" onClick={handleListButtonClick}>
-            목록
-          </Button>
-        </LinkBox>
-
-        <Button type="submit" variant="primary" size="sm" onClick={() => saveButtonClick()}>
-          저장
-        </Button>
-      </ContentsButtons>
-      <MainContents>
-        <LearningResourceQuestionBank />
-      </MainContents>
-    </PageContainer>
+    <form onSubmit={onSubmit(handleOnSubmit)}>
+      <PageContainer
+        tooltipProps={{
+          show: isExamMapping,
+          content: t(
+            getTooltipContent(
+              baseInfo?.createType !== ContentCreateType.MANUAL
+                ? baseInfo?.createType
+                : 'EXAM_MAPPING',
+            ),
+          ),
+          type: baseInfo?.createType,
+        }}
+      >
+        <ContentsButtons>
+          <ContentTopButtons provider={provider} hasMapping={isExamMapping} />
+        </ContentsButtons>
+        <MainContents>
+          <Tabs
+            selectedTabKey={selectedTabKey}
+            items={items}
+            type="progress"
+            size="sm"
+            onTabChange={handleTabChange}
+            onBeforeTabChange={handleBeforeTabChange}
+          />
+        </MainContents>
+      </PageContainer>
+    </form>
   );
 }

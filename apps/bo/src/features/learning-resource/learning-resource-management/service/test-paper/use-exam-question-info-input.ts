@@ -260,9 +260,13 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
     },
   });
 
-  const handleOnCopyAction = useCallback(() => {
+  const handleOnCopyQuestion = useCallback(() => {
+    if (!examPoolUuid) {
+      return;
+    }
+
     const payload: QuestionsCopyReq = {
-      examPoolContentUuid: examPoolUuid as string,
+      examPoolContentUuid: examPoolUuid,
       questionUuidList: selectedQuestionRows.map((q) => q.examQuestionUuid),
     };
 
@@ -285,7 +289,7 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
     },
   });
 
-  const handleDeleteQuestionAction = useCallback(() => {
+  const handleOnDeleteQuestion = useCallback(() => {
     const payload: QuestionItemDeleteParam = {
       contentUuid,
       contentType: ContentType.EXAM,
@@ -425,8 +429,9 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
     setRandomCountUpdateData,
     handleCountInputChange,
     updateQuestionCountInfo,
+    selectedQuestionRows,
     setSelectedQuestionRows,
-    handleOnCopyAction,
-    handleDeleteQuestionAction,
+    handleOnCopyQuestion,
+    handleOnDeleteQuestion,
   };
 };

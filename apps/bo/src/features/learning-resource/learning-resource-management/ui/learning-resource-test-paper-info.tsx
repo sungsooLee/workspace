@@ -43,7 +43,8 @@ const TestPaperInfoComponent = forwardRef<TabFormRef, ExamBasicInfoProps>(
     useImperativeHandle(ref, () => ({
       save: (data?: Record<string, any>) => {
         saveBasicInfo?.(data);
-      } }));
+      },
+    }));
 
     useEffect(() => {
       // 상세 설정
@@ -54,7 +55,7 @@ const TestPaperInfoComponent = forwardRef<TabFormRef, ExamBasicInfoProps>(
 
     return (
       <SplitPanel size={['auto', 416]} divider>
-        <div>
+        <div key="base1">
           <div className={styles.wrap}>
             <FormSubTitle label={t('기본 정보')} />
 
@@ -87,7 +88,9 @@ const TestPaperInfoComponent = forwardRef<TabFormRef, ExamBasicInfoProps>(
                   required: {
                     fn: (values: Record<string, any>) => {
                       return !values.questionCount || values.questionCount < 1;
-                    } } }}
+                    },
+                  },
+                }}
                 element={<Input type="number" suffixText={t('개')} min={0} disabled={hasMapping} />}
                 placeholder="0"
               />
@@ -134,7 +137,8 @@ const TestPaperInfoComponent = forwardRef<TabFormRef, ExamBasicInfoProps>(
                 element={
                   <SwitchFormField
                     switchConfig={{
-                      label: (value: boolean) => (value ? '제어' : '제어안함 ') }}
+                      label: (value: boolean) => (value ? '제어' : '제어안함 '),
+                    }}
                     disabled={hasMapping}
                   />
                 }
@@ -153,7 +157,8 @@ const TestPaperInfoComponent = forwardRef<TabFormRef, ExamBasicInfoProps>(
                 element={
                   <SwitchFormField
                     switchConfig={{
-                      label: (value: boolean) => (value ? '공개' : '비공개 ') }}
+                      label: (value: boolean) => (value ? '공개' : '비공개 '),
+                    }}
                     disabled={hasMapping}
                   />
                 }
@@ -251,7 +256,8 @@ const TestPaperInfoComponent = forwardRef<TabFormRef, ExamBasicInfoProps>(
                 element={
                   <SwitchFormField
                     switchConfig={{
-                      label: (value: boolean) => (value ? t('LABEL.button.apply') : '미적용 ') }}
+                      label: (value: boolean) => (value ? t('LABEL.button.apply') : '미적용 '),
+                    }}
                     disabled={hasMapping}
                   />
                 }
@@ -272,7 +278,8 @@ const TestPaperInfoComponent = forwardRef<TabFormRef, ExamBasicInfoProps>(
                 element={
                   <SwitchFormField
                     switchConfig={{
-                      label: (value: boolean) => (value ? '자동제출' : '직접제출 ') }}
+                      label: (value: boolean) => (value ? '자동제출' : '직접제출 '),
+                    }}
                     disabled={hasMapping}
                   />
                 }
@@ -293,7 +300,8 @@ const TestPaperInfoComponent = forwardRef<TabFormRef, ExamBasicInfoProps>(
                 element={
                   <SwitchFormField
                     switchConfig={{
-                      label: (value: boolean) => (value ? '종료안내' : '안내안함 ') }}
+                      label: (value: boolean) => (value ? '종료안내' : '안내안함 '),
+                    }}
                     disabled={hasMapping}
                   />
                 }
@@ -327,7 +335,7 @@ const TestPaperInfoComponent = forwardRef<TabFormRef, ExamBasicInfoProps>(
           </div>
         </div>
         {/* 시험지 기본 이미지 영역 */}
-        <div>
+        <div key="base2">
           <FormSubTitle noLine label={t('cms.content.ContentType.EXAM')} />
           <div className={movieInfoStyles.media}>
             <img src={previewImg} width="100%" alt="" />
