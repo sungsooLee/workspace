@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Button, ChipList, OptionCard, useModal, OptionCardItem } from '@learnway/ui';
+import { Button, ChipList, OptionCard, useModal } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import styles from '@learnway/styles/fo/features/category/category-filter.module.css';
 
@@ -105,6 +105,9 @@ const FilterComponent = ({ onOptionChange }: any) => {
           size="lg"
           //onChange={handleChipOptionsChange}
         />
+      </div>
+      <div className={styles.reset}>
+        <Button className={styles.btn_reset} label={'초기화'} />
       </div>
     </div>
   );
