@@ -66,6 +66,7 @@ import {
   IcoDelete03,
   IcoDelete04,
   IcoDivice,
+  IcoDocument,
   IcoDotpoints,
   IcoDownArrow,
   IcoDownload,
@@ -1261,6 +1262,11 @@ function RouteComponent() {
       name: 'IcoWordArrow',
       Component: <IcoWordArrow width={15} height={10} />,
       file: 'ic_word_arrow.svg (색상변경금지)',
+    },
+    {
+      name: 'IcoDocument',
+      Component: <IcoDocument width={48} height={48} />,
+      file: 'ic_document.svg (색상변경금지)',
     },
   ];
   return (
