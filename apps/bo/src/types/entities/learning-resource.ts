@@ -703,7 +703,7 @@ export interface ChannelCodeType {
   tenantId: number;
   tenantName: string;
   channelUuid: string;
-  cahnnelName: string;
+  channelName: string;
 }
 
 export type GetShareTenantsChannelsRes = ChannelCodeType[];
