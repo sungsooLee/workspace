@@ -1,10 +1,14 @@
-import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import { Button, Stepper, ContentsRow, Input } from '@learnway/ui';
+import { createFileRoute } from '@tanstack/react-router';
+// Stepper
 import { IcoCaution, IcoFormRequired } from '@learnway/icons';
-import styles from './admin-auth-step2.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import noticeBoxStyles from '@learnway/styles/bo/shared/ui/notice-box/notice-box.module.css';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { Stepper } from '@learnway/ui/stepper';
+import styles from './admin-auth-step2.module.css';
 
 export const Route = createFileRoute('/_auth/admin-auth-step2')({
   component: RouteComponent,

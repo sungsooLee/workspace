@@ -1,11 +1,12 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { Button } from '@learnway/ui';
+
 import { cn } from '@learnway/shared';
 
+import { IcoComplete } from '@learnway/icons';
 import styles from '@learnway/styles/bo/pages/_auth/search-account/result.module.css'; // 페이지 모듈
-import proccessResultStyles from '@learnway/styles/fo/widgets/auth/ui/proccess-result.module.css'; // 결과모듈
 import hightlightMessageBoxStyles from '@learnway/styles/fo/shared/ui/highlight-message-box/highlight-message-box.module.css'; // 블루박스
-import { IcoComplete, IcoCaution02 } from '@learnway/icons';
+import proccessResultStyles from '@learnway/styles/fo/widgets/auth/ui/proccess-result.module.css'; // 결과모듈
+import { Button } from '@learnway/ui/button';
 
 export const Route = createFileRoute('/_auth/search-id-success')({
   component: RouteComponent,

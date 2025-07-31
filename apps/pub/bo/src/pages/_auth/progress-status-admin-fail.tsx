@@ -1,13 +1,18 @@
-import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { Button, DatePicker, Input, Dropdown, Textarea } from '@learnway/ui';
-import { IcoCheck02, IcoFormRequired, IcoComplete, IcoSucess, IcoCaution02 } from '@learnway/icons';
+import { useState } from 'react';
+
+import { IcoCaution02, IcoFormRequired } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import authFormStyles from '@learnway/styles/bo/features/auth/ui/auth-form/auth-form.module.css';
 import styles from '@learnway/styles/bo/pages/_auth/signup-progress/result.module.css';
 import hightlightMessageBoxStyles from '@learnway/styles/bo/shared/ui/highlight-message-box/highlight-message-box.module.css';
 import proccessResultStyles from '@learnway/styles/bo/widgets/auth/ui/proccess-result.module.css'; // 결과모듈
-import authFormStyles from '@learnway/styles/bo/features/auth/ui/auth-form/auth-form.module.css';
+import { Button } from '@learnway/ui/button';
+import { DatePicker } from '@learnway/ui/date-picker';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { Input } from '@learnway/ui/input';
+import { Textarea } from '@learnway/ui/textarea';
 
 export const Route = createFileRoute('/_auth/progress-status-admin-fail')({
   component: RouteComponent,

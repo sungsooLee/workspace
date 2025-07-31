@@ -1,5 +1,5 @@
+import { Checkbox } from '@learnway/ui/checkbox';
 import { createFileRoute } from '@tanstack/react-router';
-import { Checkbox } from '@learnway/ui';
 
 export const Route = createFileRoute('/_guide/guide/checkbox')({
   component: RouteComponent,
@@ -15,7 +15,7 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-import { Checkbox } from '@learnway/ui';
+import { Checkbox } from '@learnway/ui/checkbox';
 
 // 적용방법(예시)
 <Checkbox size="lg" label="default" />`}

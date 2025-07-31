@@ -1,5 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Button, useModal } from '@learnway/ui';
+
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 
 export const Route = createFileRoute('/_guide/guide/alert')({
   component: RouteComponent,
@@ -109,7 +111,7 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-import { Button, useModal } from '@learnway/ui';
+import { Button, useModal } from '@learnway/ui/modal';
 
 // 실행 함수 (한번만 선언)
 const { alert: openAlert } = useModal();
@@ -157,7 +159,7 @@ const handleClickAlert = () => {
     });
   };
 
-    
+
   // 사용 코드
   <Button variant="text" onClick={() => handleClickAlert()}>Confirm창 열기</Button>`}
             </code>
@@ -195,7 +197,7 @@ const { alert: openAlert } = useModal();
   });
 };
 
-    
+
 // 사용 코드
 <Button variant="text" onClick={() => handleClickAlert2()}>Confirm창 열기(아이콘 case)</Button>`}
             </code>
@@ -233,7 +235,7 @@ const { alert: openAlert } = useModal();
     });
   };
 
-    
+
   // 사용 코드
   <Button variant="text" onClick={() => handleClickAlert3()}>Alert창 열기(아이콘 X)</Button>`}
             </code>
@@ -271,7 +273,7 @@ const handleClickAlert4 = () => {
   });
 };
 
-    
+
   // 사용 코드
   <Button variant="text" onClick={() => handleClickAlert4()}>Alert창 열기(아이콘 error)</Button>`}
             </code>
@@ -309,7 +311,7 @@ const handleClickAlert5 = () => {
   });
 };
 
-    
+
   // 사용 코드
   <Button variant="text" onClick={() => handleClickAlert5()}>Alert창 열기(아이콘 warning)</Button>`}
             </code>
@@ -347,7 +349,7 @@ const handleClickAlert6 = () => {
     });
   };
 
-    
+
   // 사용 코드
  <Button variant="text" onClick={() => handleClickAlert6()}>Alert창 열기(아이콘 complete)</Button>`}
             </code>

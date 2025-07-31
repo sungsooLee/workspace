@@ -1,21 +1,15 @@
-import { memo, useState } from 'react';
 import { cn } from '@learnway/shared';
+import { memo, useState } from 'react';
 import styles from './tenant-search-popup.module.css';
-import {
-  Button,
-  ContentsRow,
-  Dropdown,
-  DropdownOption,
-  GridBox,
-  Input,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  RadioGroup,
-  useModal,
-} from '@learnway/ui';
+
 import { IcoSearch } from '@learnway/icons';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { GridBox } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { RadioGroup } from '@learnway/ui/radio-group/radio-group';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
 const TenantSearchPopupCompoment = () => {
@@ -131,7 +125,7 @@ const TenantSearchPopupCompoment = () => {
             pagination={{
               pageSize,
               pageIndex,
-              totalRows: 10,
+              totalPages: 10,
               onPageChange: setPageIndex,
               onPageSizeChange: setPageSize,
             }}

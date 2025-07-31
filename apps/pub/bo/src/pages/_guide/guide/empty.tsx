@@ -1,5 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Button, EmptyText } from '@learnway/ui';
+
+import { Button } from '@learnway/ui/button';
+import { EmptyText } from '@learnway/ui/empty-text';
 
 export const Route = createFileRoute('/_guide/guide/empty')({
   component: RouteComponent,

@@ -1,9 +1,10 @@
-import { memo } from 'react';
-import styles from './google-key-popup.module.css';
-import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import { IcoCaution } from '@learnway/icons';
-import { GoogleQrcodePopup, GoogleInputPopup } from '../../../features/auth';
-import { Button, ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui';
+import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { memo } from 'react';
+import { GoogleInputPopup, GoogleQrcodePopup } from '../../../features/auth';
+import styles from './google-key-popup.module.css';
 
 const GoogleKeyPopupCompoment = () => {
   const { closeModal } = useModal();

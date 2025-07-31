@@ -1,10 +1,12 @@
 import { memo, useState } from 'react';
 
-import { Button, Popover, Badge } from '@learnway/ui';
 import { IcoAlarmFill, IcoBell03, IcoXclose } from '@learnway/icons';
-import { Link } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
+import { Link } from '@tanstack/react-router';
 
+import { Badge } from '@learnway/ui/badge';
+import { Button } from '@learnway/ui/button';
+import { Popover } from '@learnway/ui/Popover';
 import styles from './notification.module.css';
 
 // import { useFetchAuthUser } from '../../../entities';

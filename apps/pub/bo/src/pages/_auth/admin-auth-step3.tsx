@@ -1,11 +1,17 @@
-import { useState } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
+import { IcoCaution, IcoFormRequired, IcoMail, IcoPhone02 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { Button, Stepper, ContentsRow, Input, RadioCard, InputTimer, Dropdown } from '@learnway/ui';
-import { IcoCaution, IcoFormRequired, IcoPhone02, IcoMail } from '@learnway/icons';
-import styles from './admin-auth-step3.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import noticeBoxStyles from '@learnway/styles/bo/shared/ui/notice-box/notice-box.module.css';
+import { createFileRoute } from '@tanstack/react-router';
+import { useState } from 'react';
+import styles from './admin-auth-step3.module.css';
+
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { Input, InputTimer } from '@learnway/ui/input';
+import { RadioCard } from '@learnway/ui/radio-card';
+import { Stepper } from '@learnway/ui/stepper';
 
 export const Route = createFileRoute('/_auth/admin-auth-step3')({
   component: RouteComponent,

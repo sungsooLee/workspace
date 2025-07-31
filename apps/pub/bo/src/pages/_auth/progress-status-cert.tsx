@@ -1,16 +1,21 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { useState } from 'react';
+import { IcoCaution, IcoFormRequired, IcoMail, IcoPhone02 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { IcoPhone02, IcoMail, IcoCaution, IcoFormRequired } from '@learnway/icons';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import styles from '@learnway/styles/bo/pages/_auth/search-account/search-account.module.css';
 import noticeBoxStyles from '@learnway/styles/bo/shared/ui/notice-box/notice-box.module.css';
+import { createFileRoute } from '@tanstack/react-router';
+import { useState } from 'react';
 
 import authFormStyles from '@learnway/styles/bo/features/auth/ui/auth-form/auth-form.module.css';
 
 // import authToolFormFieldStyles from './auth-tool-form-field.module.css';
 import embededAlert from '@learnway/styles/bo/shared/ui/embeded-alert/embeded-alert.module.css';
-import { Button, RadioCard, Input, Dropdown, ContentsRow, useModal } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
+import { RadioCard } from '@learnway/ui/radio-card';
 
 export const Route = createFileRoute('/_auth/progress-status-cert')({
   component: RouteComponent,

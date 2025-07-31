@@ -1,9 +1,13 @@
-import { cn } from '@learnway/shared';
 import { createFileRoute } from '@tanstack/react-router';
+
 import { IcoFormRequired } from '@learnway/icons';
-import styles from './signup-step2.module.css';
+import { cn, SelectOption } from '@learnway/shared';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import { Button, Stepper, SelectOption, Input, ContentsRow } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { Stepper } from '@learnway/ui/stepper';
+import styles from './signup-step2.module.css';
 
 export const Route = createFileRoute('/_auth/signup-step2')({
   component: RouteComponent,

@@ -1,33 +1,26 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import {
-  Input,
-  Button,
-  Textarea,
-  Dropdown,
-  Tooltip,
-  ChipList,
-  SelectOption,
-  Switch,
-  RadioGroup,
-  Checkbox,
-  ContentsRow,
-  InputTimer,
-  DndFileProgress,
-} from '@learnway/ui';
-import {
-  IcoFormRequired,
-  IcoArrowDown,
-  IcoAlertCircle,
-  IcoCloseCircle,
-  IcoPaperClip,
-} from '@learnway/icons';
+import { useState } from 'react';
+
 import { S3_PATH, useS3Uploader } from '@learnway/hooks';
-import { cn } from '@learnway/shared';
+import { IcoAlertCircle, IcoCloseCircle, IcoFormRequired, IcoPaperClip } from '@learnway/icons';
+import { cn, SelectOption } from '@learnway/shared';
 import { ContentsHistoryInfoFormField } from '../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
+
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
+
+import { Button } from '@learnway/ui/button';
+import { Checkbox } from '@learnway/ui/checkbox';
+import { ChipList } from '@learnway/ui/chips';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { DndFileProgress } from '@learnway/ui/dnd-file-progress';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { Input, InputTimer } from '@learnway/ui/input';
+import { RadioGroup } from '@learnway/ui/radio-group/radio-group';
+import { Switch } from '@learnway/ui/switch';
+import { Textarea } from '@learnway/ui/textarea';
+import { Tooltip } from '@learnway/ui/tooltip';
 
 export const Route = createFileRoute('/_guide/guide/form')({
   component: RouteComponent,

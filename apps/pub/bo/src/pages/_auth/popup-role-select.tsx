@@ -1,19 +1,12 @@
-/* eslint-disable @nx/enforce-module-boundaries */
-import { useEffect, useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { cn } from '@learnway/shared';
-import {
-  Button,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  useModal,
-  ModalTitle,
-  OptionCard,
-  OptionCardItem,
-  FormSubTitle,
-} from '@learnway/ui';
+import { useEffect, useState } from 'react';
 
+import { cn } from '@learnway/shared';
+
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { OptionCard, OptionCardItem } from '@learnway/ui/option-card';
 import styles from './admin-auth-step4.module.css';
 
 export const Route = createFileRoute('/_auth/popup-role-select')({

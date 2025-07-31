@@ -1,10 +1,10 @@
 import { memo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
-import { cn } from '@learnway/shared';
-import { Button, Popover } from '@learnway/ui';
-import styles from './language.module.css';
 import { IcoArrowDown, IcoCheck02 } from '@learnway/icons';
+import { cn } from '@learnway/shared';
+import { Button } from '@learnway/ui/button';
+import { Popover } from '@learnway/ui/Popover';
+import styles from './language.module.css';
 
 const PopoverContent = () => {
   const [activeIdx, setActiveIdx] = useState<number>(0);

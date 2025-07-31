@@ -1,14 +1,18 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { IcoCaution, IcoFormRequired, IcoShieldTick01 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { IcoCaution, IcoShieldTick01, IcoFormRequired } from '@learnway/icons';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import otpToolFormField from './otp-tool-form-field.module.css';
-import styles from './mpass-cert.module.css';
-import noticeBoxStyles from '@learnway/styles/bo/shared/ui/notice-box/notice-box.module.css';
 import authFormStyles from '@learnway/styles/bo/features/auth/ui/auth-form/auth-form.module.css'; // 찾기폼
 import embededAlert from '@learnway/styles/bo/shared/ui/embeded-alert/embeded-alert.module.css';
-import { Button, RadioCard, useModal, ContentsRow, Input } from '@learnway/ui';
+import noticeBoxStyles from '@learnway/styles/bo/shared/ui/notice-box/notice-box.module.css';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
+import { RadioCard } from '@learnway/ui/radio-card';
+import { createFileRoute } from '@tanstack/react-router';
 import { MpassPopup } from '../../features/auth/';
+import styles from './mpass-cert.module.css';
+import otpToolFormField from './otp-tool-form-field.module.css';
 
 export const Route = createFileRoute('/_auth/mpass-cert-otp')({
   component: RouteComponent,

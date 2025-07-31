@@ -1,11 +1,16 @@
-import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { cn } from '@learnway/shared';
+import { useState } from 'react';
+
 import { IcoCaution, IcoFormRequired, IcoMail, IcoPhone02 } from '@learnway/icons';
+import { cn } from '@learnway/shared';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import signupStyles from './signup.module.css';
-import styles from './signup.module.css';
-import { Button, ContentsRow, Input, RadioCard, Select, useModal } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
+import { RadioCard } from '@learnway/ui/radio-card';
+import { default as signupStyles, default as styles } from './signup.module.css';
 
 export const Route = createFileRoute('/_auth/progress-status-certify')({
   component: RouteComponent,
