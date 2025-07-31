@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 
-import { IcoComplete } from '@learnway/icons';
+import { IcoCheck02 } from '@learnway/icons';
 import proccessResultStyles from '@learnway/styles/fo/widgets/auth/ui/proccess-result.module.css';
 
 export const Route = createFileRoute('/_guide/guide/result')({
@@ -25,7 +25,7 @@ function RouteComponent() {
             <div className={proccessResultStyles.start}>
               <i className={proccessResultStyles.ico}>
                 {/* 정상처리 */}
-                <IcoComplete className={proccessResultStyles.ico1} />
+                <IcoCheck02 className={proccessResultStyles.ico1} />
               </i>
               <h3 className={proccessResultStyles.title}>
                 {/* 정상처리 */}

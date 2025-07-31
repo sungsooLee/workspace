@@ -1,10 +1,7 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from '@tanstack/react-router';
 
-import { cn } from '@learnway/shared';
-
-import { Logo, Tenant, NotificationM, NavigationM } from '../../../../../features/layout';
+import { Logo, NavigationM, Tenant } from '../../../../../features/layout';
 
 import styles from '@learnway/styles/fo/widgets/layout/m.ui/main/header/header.module.css';
 
@@ -23,7 +20,7 @@ function HeaderComponent() {
         </div>
 
         <div className={styles.util}>
-          <NotificationM />
+          {/* 퍼블수정 20250731 모바일 알림 삭제 */}
           <NavigationM />
         </div>
       </header>

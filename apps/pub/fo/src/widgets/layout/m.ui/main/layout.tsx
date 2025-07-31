@@ -1,12 +1,8 @@
-import { ReactNode, useEffect } from 'react';
+import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { cn } from '@learnway/shared';
-
-import { MobileContainerHeader } from './container/container-header';
-import { MobileHeader } from './header/header';
-import { MobileFooter } from './footer/footer';
 import { Footer } from '../../ui/main/footer/footer';
+import { MobileHeader } from './header/header';
 
 //import styles from './layout.module.css';
 import styles from '@learnway/styles/fo/widgets/layout/m.ui/main/layout.module.css';
@@ -21,8 +17,8 @@ function LayoutComponent({ children }: LayoutComponentProps) {
   return (
     <div className={styles.start}>
       {/* <MobileHeader /> */}
-      {/* <MobileHeader /> */}
-      <MobileContainerHeader />
+      <MobileHeader />
+      {/* <MobileContainerHeader /> */}
       <main>{children}</main>
       {/* 하단 반응형 footer */}
       <Footer />

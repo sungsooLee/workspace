@@ -47,7 +47,7 @@
   .ico {
     @apply ml-[20px] inline-flex h-[28px] w-[28px] items-center justify-center rounded-[6px] bg-[var(--gray98)];
     svg {
-      @apply h-[16px] w-[16px];
+      @apply mx-0 h-[16px] w-[16px];
       stroke: var(--gray10);
     }
   }
@@ -56,9 +56,12 @@
 /* mobile */
 :global(body.mobile) {
   .btn_tenant {
-    @apply pl-[4px];
+    @apply min-w-auto !px-0;
     .select {
       @apply hidden;
+    }
+    span {
+      @apply ml-0 h-[20px] w-[20px] rounded-[4px];
     }
   }
   .tenant_content {

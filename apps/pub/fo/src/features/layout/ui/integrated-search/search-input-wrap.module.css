@@ -8,9 +8,12 @@
     @apply flex-1;
   }
   .btn_action {
-    @apply !h-[44px] !w-[44px] !min-w-[44px] shrink-0 overflow-hidden !rounded-full bg-[var(--gray92)];
+    @apply !h-[44px] !w-[44px] !min-w-[44px] shrink-0 overflow-hidden !rounded-full bg-[var(--blue65)];
     svg {
       @apply -rotate-90;
+    }
+    &:disabled {
+      @apply bg-[var(--gray92)];
     }
   }
 }

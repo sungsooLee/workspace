@@ -203,6 +203,7 @@ export { ReactComponent as IcoVideo01 } from './lib/ic_video_recorder_01.svg'; /
 export { ReactComponent as IcoVideo02 } from './lib/ic_video_recorder_02.svg'; // video2
 export { ReactComponent as IcoVideoStop } from './lib/ic_video_stop.svg';
 export { ReactComponent as IcoWarning } from './lib/ic_warning.svg'; // alert warning icon 48*48
+export { ReactComponent as IcoWordArrow } from './lib/ic_word_arrow.svg';
 export { ReactComponent as IcoXclose } from './lib/ic_x_close.svg'; // x close
 export { ReactComponent as IcoChart } from './lib/ico_chart.svg';
 export { ReactComponent as IcoPaper } from './lib/ico_paper.svg';
