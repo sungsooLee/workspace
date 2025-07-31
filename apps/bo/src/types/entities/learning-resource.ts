@@ -720,7 +720,7 @@ export interface GetSharedBoxContentsParams extends PaginationRequest {
   sharedDateEnd?: string;
 }
 
-export interface GetSharedBoxContent {
+export interface SharedBoxContent {
   sourceTenantId: number; //	원본 테넌트 idinteger($int64)
   sourceTenantName: string; //	원본 테넌트명string
   sourceChannelUuid: string; // 원본 채널 UUIDstring
@@ -742,4 +742,4 @@ export interface GetSharedBoxContent {
   sharedDate: string; //	공유타임스탬프string($date-time)
 }
 
-export type GetSharedBoxContentsRes = PaginationResponse<GetSharedBoxContent>;
+export type GetSharedBoxContentsRes = PaginationResponse<SharedBoxContent>;

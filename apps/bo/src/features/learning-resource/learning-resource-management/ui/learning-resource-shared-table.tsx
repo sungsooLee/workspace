@@ -1,5 +1,5 @@
 // IA104 / NLP_BO_CMS_1045 학습자원 현지화-공유함
-import { learningResourceQueryOptions } from '@entities/learning-resource';
+import { learningResourceQueryOptions, usePostContentExport } from '@entities/learning-resource';
 import LearningResourceService from '@entities/learning-resource/api/learning-resource';
 import { getDetailPathByContentType, getDetailRouterState } from '@features/learning-resource';
 import { useFetchAuthUser } from '@learnway/auth/entities';
@@ -16,7 +16,12 @@ import { Button, Divider, GridBox, useGridBox, useGridBoxConfig, useModal } from
 import { PreviewLearningWindow } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { useRouter } from '@tanstack/react-router';
-import { ContentCreateType, ContentInfo, GetSharedBoxContent } from '@types';
+import {
+  ContentCreateType,
+  ContentExportRes,
+  GetSharedBoxContentsRes,
+  SharedBoxContent,
+} from '@types';
 import { t } from 'i18next';
 import { useEffect, useState } from 'react';
 
@@ -28,6 +33,33 @@ function LearningResourceSharedTableComponent() {
 
   const router = useRouter();
   const { openModal } = useModal();
+
+  const { exportContent } = usePostContentExport({
+    onSuccess: (result: ContentExportRes) => {
+      if (result.destContentUuid) {
+        setGridData(
+          (prev) =>
+            ({
+              ...prev,
+              content: prev?.content.map((_) =>
+                _.sourceContentUuid === result.srcContentUuid
+                  ? { ..._, sharedCount: _.sharedCount + 1 }
+                  : _,
+              ),
+            }) as GetSharedBoxContentsRes,
+        );
+      }
+    },
+  });
+
+  const handleShareButton = (row: SharedBoxContent) => {
+    exportContent({
+      tenantId: row.destTenantId,
+      contentUuid: row.sourceContentUuid,
+      destChannelUuid: row.destChannelUuid,
+      languageCountryCode: row.languageCountryCode,
+    });
+  };
 
   const searchConfig: any = {
     builders: [
@@ -211,7 +243,11 @@ function LearningResourceSharedTableComponent() {
         name: 'shareButtonUtil',
         label: t('LABEL.grid.column.util', '기능'),
         render: (_: any) => (
-          <Button variant="gray2" disabled={_.row.original.sharedCount}>
+          <Button
+            variant="gray2"
+            disabled={_.row.original.sharedCount}
+            onClick={() => handleShareButton(_.row.original)}
+          >
             {t('가져가기')}
           </Button>
         ),
@@ -228,7 +264,11 @@ function LearningResourceSharedTableComponent() {
     watch,
     setOptions,
   } = useSearchBox(searchConfig);
-  const { config: gConfig, gridFetch } = useGridBox<ContentInfo>(gridConfig, getValues);
+  const {
+    config: gConfig,
+    gridFetch,
+    setGridData,
+  } = useGridBox<SharedBoxContent>(gridConfig, getValues);
   const [params, setParams] = useState<Record<string, any>>({});
 
   function handleSearch({ sharedDate, ...rawQuery }: Record<string, any>) {
@@ -288,7 +328,7 @@ function LearningResourceSharedTableComponent() {
     <>
       <SearchBox provider={searchProvider} onSearch={handleSearch} />
       <Divider />
-      <GridBox<GetSharedBoxContent>
+      <GridBox<SharedBoxContent>
         config={gConfig}
         showNumberingColumn
         getRowClassName={(row) => {
