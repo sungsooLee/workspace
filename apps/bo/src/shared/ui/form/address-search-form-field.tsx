@@ -1,13 +1,11 @@
-import { forwardRef, useState, useEffect } from 'react';
-import { useMemo } from 'react';
-import { isEqual } from 'lodash';
-import { Button, Input, useModal } from '@learnway/ui';
-import { useTranslation } from 'react-i18next';
 import { BaseFormFieldProps } from '@learnway/hooks';
-import { InputProps } from '@learnway/ui';
-import { useWatch } from 'react-hook-form';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+import { Button, Input, InputProps, useModal } from '@learnway/ui';
 import { AddressSearchModal } from '@shared/ui';
+import { isEqual } from 'lodash';
+import { forwardRef, useEffect, useMemo, useState } from 'react';
+import { useWatch } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 interface AddressFormFieldProps extends BaseFormFieldProps<string> {
   fields?: {
@@ -126,7 +124,7 @@ const AddressSearchComponent = function ({
           onClick={handleAddressSearchButtonClick}
           disabled={disabled}
         >
-          {'우편번호찾기'}
+          {t('우편번호찾기')}
         </Button>
       </div>
     </div>

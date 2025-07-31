@@ -1,4 +1,4 @@
-import CourseService from '../api/course';
+import { UseQueryOptions } from '@tanstack/react-query';
 import {
   Course,
   CourseConfig,
@@ -9,7 +9,7 @@ import {
   CoursesQueryParams,
   PaginationResponse,
 } from '../../../types';
-import { UseQueryOptions } from '@tanstack/react-query';
+import CourseService from '../api/course';
 
 export const queryKeys = {
   all: ['courses'] as const,
@@ -60,7 +60,7 @@ export const mutateOptions = {
   }),
   // 과정 복사
   copy: () => ({
-    mutationFn: (id: number) => CourseService.copy(id),
+    mutationFn: (payload: { courseId: number; tenantId: number }) => CourseService.copy(payload),
   }),
   // 과정 수정
   update: () => ({

@@ -37,3 +37,7 @@ export const useCategoryTree = (tenantId: number) => {
 export const useFetchCategoryDetail = (categoryId: number) => {
   return useQuery(queryOptions.detail(categoryId));
 }
+
+export const useFetchCoursesCategory = (payload: any) => {
+  return useQuery(queryOptions.coursesCategory(payload));
+}

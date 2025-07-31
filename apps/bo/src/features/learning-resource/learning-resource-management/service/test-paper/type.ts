@@ -4,7 +4,7 @@ import {
   EnQuestionLevel,
   EnQuestionType,
   ExamQuestionGenType,
-  RandomQuestionCountInfo,
+  QuestionCountInfo,
   TestPaperBasicInfoDetail,
   TestPaperBasicInfoSaveReq,
 } from '@types';
@@ -21,8 +21,8 @@ export enum ExamTab {
 }
 
 export interface TabFormRef {
-  save?: () => Promise<void> | void;
-  update?: () => Promise<void> | void;
+  save?: (data?: Record<string, any>) => Promise<void> | void;
+  complete?: () => Promise<void> | void;
   getValues?: () => any;
   updateFormData?: (data?: Record<string, any>) => void;
   updateFormDataByKey?: (key: string, value: any) => void;
@@ -41,7 +41,6 @@ type ExamBasicInfoForm = {
 export interface ExamBasicInfoProps {
   basicInfoForm: ExamBasicInfoForm;
   contentUuid?: string;
-  tenantId: number;
   mode: PageMode;
   data?: Partial<TestPaperBasicInfoDetail>;
   hasMapping?: boolean;
@@ -69,4 +68,6 @@ export type SelectedQuestionState = Record<
   Partial<Record<EnQuestionLevel, number>>
 >;
 
-export type LevelKey = keyof Omit<RandomQuestionCountInfo, 'questionType'>;
+export type LevelKey = keyof Omit<QuestionCountInfo, 'questionType'>;
+
+export type QuestionMutationResponse = { result: boolean };

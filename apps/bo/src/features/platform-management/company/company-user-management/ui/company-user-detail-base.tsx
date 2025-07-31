@@ -1,4 +1,3 @@
-import { useSystemCodeDetail } from '@entities/common-code';
 import EnrollService from '@entities/enroll/api/enroll';
 import { useUpdateUser } from '@entities/users/service/users.hook';
 import { DuplicateState } from '@features/form';
@@ -10,6 +9,7 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { EnFormMode, EnGlobalConst } from '@types';
 import { t } from 'i18next';
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { DeliveryAddress } from 'src/types/entities/enroll';
 import { getUserStatus } from '../service/company-user.service';
 import { CompanyUserDetailAccount } from './company-user-detail-account';
 import { CompanyUserDetailAuthentication } from './company-user-detail-auth';
@@ -32,20 +32,11 @@ function compareLatestDate(dates: string[]) {
 }
 
 const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: any) => {
-  const {
-    provider,
-    control,
-    updateFormData,
-    onSubmit,
-    onFormChange,
-    clearFormError,
-    getValues,
-    setFormError,
-  } = useDynamicForm(formConfig());
+  const { provider, updateFormData, onSubmit, onFormChange, setFormError } =
+    useDynamicForm(formConfig());
 
   const { confirm: openConfirm } = useModal();
   const { open: openToast } = useToast();
-  const { data: codeGroupData } = useSystemCodeDetail('cmmon.TelCountryCode');
 
   const { update } = useUpdateUser({
     onSuccess: (data: any) => {
@@ -55,8 +46,7 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
     },
   });
 
-  const [roleData, setRoleData] = useState<any[]>([]);
-  const [deliveryList, setDeliveryList] = useState<any[]>([]);
+  const [deliveryList, setDeliveryList] = useState<DeliveryAddress[]>([]);
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
@@ -637,28 +627,39 @@ const deliveryListColumns = () =>
   [
     columnHelper.accessor('courseId', {
       header: t('과정번호'),
-      size: 125,
+      size: 100,
+      enableSorting: false,
     }),
     columnHelper.accessor('courseName', {
       header: t('과정명'),
-      size: 260,
+      size: 200,
+      enableSorting: false,
     }),
     columnHelper.accessor('courseSequenceName', {
       header: t('차수명'),
-      size: 277,
+      size: 200,
+      enableSorting: false,
     }),
     columnHelper.accessor('address', {
       header: t('교재배송 주소'),
-      cell: (info) =>
-        `[${info.row.original.postalCode}] ${info.row.original.address} ${info.row.original.addressDetail}`,
+      cell: (info) => {
+        if (info.row.original.postalCode && info.row.original.address)
+          return `[${info.row.original.postalCode}] ${info.row.original.address} ${info.row.original.addressDetail ?? ''}`;
+        return '';
+      },
+      meta: {
+        size: 'auto',
+      },
+      enableSorting: false,
     }),
     columnHelper.accessor('bookName', {
       header: t('교재명'),
-      size: 140,
+      size: 200,
+      enableSorting: false,
     }),
     columnHelper.accessor('learningStartDateTime', {
       header: t('학습 기간'),
-      size: 260,
+      size: 220,
       meta: {
         cellAlign: 'center',
       },
@@ -667,5 +668,6 @@ const deliveryListColumns = () =>
           return `${getDateToString(new Date(info.row.original.learningStartDateTime), 'YYYY-MM-DD')} ~ ${getDateToString(new Date(info.row.original.learningEndDateTime), 'YYYY-MM-DD')}`;
         return '';
       },
+      enableSorting: false,
     }),
   ] as ColumnDef<any, unknown>[];

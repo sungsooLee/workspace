@@ -30,7 +30,7 @@ import {
   ContentsButtons,
   ChannelListChoiceModal,
   UserChoiceModal,
-  UserGroupOrganizationShuttleModal,
+  UserGroupOrganizationShuttleModal, UserShuttleModal,
 } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
 
@@ -45,10 +45,12 @@ import {
 import { FormDisplay } from '@features/form';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { queryOptions } from '@entities/user-group/service/user-group.queries';
-import { Tenant } from '@learnway/auth/types';
-import { useGetChannelDetail } from '@entities/channel/service/channel.hook';
-import { useQuery } from '@tanstack/react-query';
+import { Role, Tenant } from '@learnway/auth/types';
 import { useWatch } from 'react-hook-form';
+import {
+  getUserStatus
+} from '@features/platform-management/company/company-user-management/service/company-user.service';
+import { EnGlobalConst } from '@types';
 
 export const Route = createLazyFileRoute('/_layout/platform/tenant/usr-group/manual-detail')({
   component: RouteComponent,
@@ -73,6 +75,7 @@ function RouteComponent() {
 
   const { openModal, confirm: openConfirm, alert: openAlert } = useModal();
   const [tenantInfo, setTenantInfo] = useState<Tenant>();
+  const [roleInfo, setRoleInfo] = useState<Role>();
   const [modalUserGroups, setModalUserGroups] = useState<any>(null);
   const [tableInstance, setTableInstance] = useState<Table<any>>();
   const [userGroupSettings, setUserGroupSettings] = useState<any>();
@@ -195,15 +198,16 @@ function RouteComponent() {
   const handleOnSearchManual = (searchData: any) => {
     if (modalUserGroups) {
       searchData = { ...searchData, groups: [{ combiners: modalUserGroups }] };
+      gridManualFetch(searchData);
     }
-    gridManualFetch(searchData);
   };
 
   const openUserGroupModal = () => {
-    if (tenantInfo) {
+    if (tenantInfo && roleInfo) {
       openModal({
         width: 'xl',
-        content: <UserGroupOrganizationShuttleModal tenantIds={[tenantInfo.tenantId]} />,
+        content: <UserGroupOrganizationShuttleModal
+          tenantIds={[tenantInfo.tenantId]} roleIds={[roleInfo.roleId]}/>,
         onClose(data: any) {
           if (data) {
             console.log('Modal {} => ', data);
@@ -284,6 +288,7 @@ function RouteComponent() {
     console.log('### loginUser', loginUser);
     if (loginUser) {
       setTenantInfo(loginUser.activeTenant);
+      setRoleInfo(loginUser.activeRole)
       setValue('tenantName', loginUser.activeTenant?.tenantName);
     }
   }, [loginUser]);

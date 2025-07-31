@@ -5,6 +5,7 @@ import {
 } from '@features/learning-operate/course/course-management';
 import { useDynamicForm2 } from '@learnway/hooks';
 import { useGridBox, useModal } from '@learnway/ui';
+import { getCurrentAuthUser } from '@shared/lib/util/query-utils';
 import { useRouter } from '@tanstack/react-router';
 import { CourseListItem } from '@types';
 import { useCallback, useMemo, useState } from 'react';
@@ -113,7 +114,8 @@ export const useCoursePage = (): CourseManagementHookResult => {
    */
   const handleCopyClick = useCallback(async () => {
     if (await confirm(t('복사하시겠습니까?'))) {
-      copyCourse(selectedRows[0].courseId);
+      const { lastVisitedBoTenantId } = getCurrentAuthUser() || {}; // 현재 로그인한 사용자의 테넌트 ID
+      copyCourse({ courseId: selectedRows[0].courseId, tenantId: lastVisitedBoTenantId || -1 });
     }
   }, [selectedRows]);
 

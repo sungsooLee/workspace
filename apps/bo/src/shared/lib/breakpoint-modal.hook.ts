@@ -1,3 +1,4 @@
+import { isDisableAuth } from '@learnway/shared';
 import { useEffect, useRef } from 'react';
 import { useWindowSize } from 'react-use';
 
@@ -26,6 +27,11 @@ export const useBreakpointModalClose = (closeCallback: () => void, breakpoint = 
 
     prevWidthRef.current = width;
   }, [width, closeCallback, breakpoint]);
+
+  // 테스트 모드에서 강제로 끄기 위해
+  if (isDisableAuth()) {
+    return false;
+  }
 
   return width < breakpoint;
 };

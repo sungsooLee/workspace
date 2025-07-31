@@ -300,24 +300,9 @@ const BasicInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) 
         {/*연락처*/}
         <FormRow2
           provider={provider}
-          name={'연락처1'}
+          name={'coordinatorTelNo'}
           label={t('연락처')}
-          element={
-            <>
-              <FormRow2
-                provider={provider}
-                name={'coordinatorTelCountryCode'}
-                element={
-                  <DropdownFormField
-                    optionsConfig={{
-                      codeGroup: CODE_GROUP['cmmon.TelCountryCode'],
-                    }}
-                  />
-                }
-              />
-              <FormRow2 provider={provider} name={'coordinatorTelNo'} element={<Input />} />
-            </>
-          }
+          element={<Input />}
         />
         {/*이메일*/}
         <FormRow2
@@ -353,24 +338,9 @@ const BasicInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) 
         {/*연락처*/}
         <FormRow2
           provider={provider}
-          name={'연락처2'}
+          name={'operatorTelNo'}
           label={t('연락처')}
-          element={
-            <>
-              <FormRow2
-                provider={provider}
-                name={'operatorTelCountryCode'}
-                element={
-                  <DropdownFormField
-                    optionsConfig={{
-                      codeGroup: CODE_GROUP['cmmon.TelCountryCode'],
-                    }}
-                  />
-                }
-              />
-              <FormRow2 provider={provider} name={'operatorTelNo'} element={<Input />} />
-            </>
-          }
+          element={<Input />}
         />
         {/*이메일*/}
         <FormRow2

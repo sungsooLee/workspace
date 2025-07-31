@@ -31,10 +31,26 @@ const ThumbnailPublicFormFieldComponent = forwardRef<
     props,
     ref, // forwardRef로 전달받은 Ref 객체
   ) => {
+    const {
+      clearAllValidators,
+      addValidator,
+      registerField,
+      originalValues,
+      onFormChange,
+      fieldRefs,
+      subText,
+      guideText,
+      getValues,
+      setValue,
+      onFormFocus,
+      watch,
+      error,
+      ...newProps
+    } = props;
     return (
       <ThumbnailPublicUpload
         ref={ref} // forwardRef로 받은 Ref를 ThumbnailImageUpload 컴포넌트에 연결
-        {...props} // ThumbnailImageUpload에 전달될 수 있는 나머지 props (예: className)
+        {...newProps} // ThumbnailImageUpload에 전달될 수 있는 나머지 props (예: className)
       />
     );
   },

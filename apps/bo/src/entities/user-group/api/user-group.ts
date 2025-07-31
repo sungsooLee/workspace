@@ -1,11 +1,11 @@
-import { httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
+import { httpService } from '@learnway/shared';
 import {
-  UserGroupsResponse,
-  UserGroupsParam,
-  UsersByIdsParam,
   OrganizationTreeResponse,
-  PageableContent, Tenant,
+  PageableContent,
+  UserGroupsParam,
+  UserGroupsResponse,
+  UsersByIdsParam,
 } from '@types';
 
 export default class UserGroupService {
@@ -21,10 +21,12 @@ export default class UserGroupService {
 
   static fetchOrganizationTree(
     tenantIds: number[],
+    roleIds: number[],
     tenantName?: string,
   ): Promise<OrganizationTreeResponse> {
     return httpService.get(`${PMSApiPrefix()}/userGroup/organization-tree`, {
       tenantIds,
+      roleIds,
       tenantName,
     });
   }

@@ -1,27 +1,29 @@
-import {
-  transformApiDataToTreeData,
-  ShuttleTreeToChipsV2,
-  useShuttleTreeToChips,
-  SelectedChip,
-} from '@learnway/ui';
-import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
-import { useEffect, useMemo } from 'react';
-import { cn } from '@learnway/shared';
 import { useFetchOrganizationTree } from '@entities/user-group';
+import { cn } from '@learnway/shared';
+import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
+import {
+  SelectedChip,
+  ShuttleTreeToChipsV2,
+  transformApiDataToTreeData,
+  useShuttleTreeToChips,
+} from '@learnway/ui';
 import { CombineUserGroup } from '@types';
+import { useEffect, useMemo } from 'react';
 
 type UserGroupOrganizationComponentProps = {
   tenantIds: number[];
+  roleIds: number[];
   option: CombineUserGroup[];
   handleSetOption: (data: CombineUserGroup[]) => void;
 };
 
 const UserGroupOrganizationComponent = ({
   tenantIds,
+  roleIds,
   option,
   handleSetOption,
 }: UserGroupOrganizationComponentProps) => {
-  const { data } = useFetchOrganizationTree(tenantIds);
+  const { data } = useFetchOrganizationTree(tenantIds, roleIds);
 
   const treeData = useMemo(() => {
     return data ? transformApiDataToTreeData(data) : [];

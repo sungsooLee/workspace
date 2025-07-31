@@ -17,7 +17,7 @@ const CategoryLayerButton = () => {
         onClick={() =>
           openModal({
             width: 'm_full',
-            content: <CategoryPopup />,
+            content: <CategoryPopup activeTenantId={0}/>,
           })
         }
       >

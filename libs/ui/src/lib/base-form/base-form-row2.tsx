@@ -171,16 +171,7 @@ const DynamicFormContainer: FC<FormRowProps> = ({
               // align="start"
               content={t(formConfig.tooltip as any)}
             >
-              <Button
-                onlyIcon
-                type="button"
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                }}
-              >
-                <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
-              </Button>
+              <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
             </Tooltip>
           )}
           {infoArea && <span className={styles.info_area}>{infoArea}</span>}

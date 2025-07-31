@@ -1,7 +1,3 @@
----
-applyTo: '**/src/**'
----
-
 # FSD 아키텍처 컨벤션 가이드
 
 ## 📋 목차
@@ -9,6 +5,7 @@ applyTo: '**/src/**'
 - [FSD 아키텍처 개요](#fsd-아키텍처-개요)
 - [계층 구조와 의존성 규칙](#계층-구조와-의존성-규칙)
 - [폴더 구조 표준](#폴더-구조-표준)
+- [타입 선언 위치 가이드](#타입-선언-위치-가이드)
 - [Import 규칙](#import-규칙)
 - [자주 발생하는 위반 사항](#자주-발생하는-위반-사항)
 - [명명 규칙](#명명-규칙)
@@ -74,7 +71,6 @@ src/
 │   └── index.ts
 ├── pages/
 │   ├── {route-name}/       # 라우트별 페이지
-│   │   ├── ui/
 │   │   └── index.ts
 │   └── index.ts
 ├── widgets/
@@ -104,6 +100,126 @@ src/
     ├── types/              # 공통 타입
     ├── constants/          # 상수
     └── index.ts
+```
+
+## 📝 타입 선언 위치 가이드
+
+FSD 아키텍처에서 타입 선언은 다음과 같은 원칙에 따라 배치합니다:
+
+### 1. Entity 레이어의 model 폴더
+
+도메인 모델과 관련된 핵심 타입들을 정의합니다.
+
+```typescript
+// entities/user/model/types.ts
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: UserRole;
+}
+
+export enum UserRole {
+  ADMIN = 'ADMIN',
+  USER = 'USER',
+}
+```
+
+### 2. Shared 레이어
+
+여러 feature나 entity에서 공통으로 사용되는 타입을 정의합니다.
+
+```typescript
+// shared/types/api.ts
+export interface ApiResponse<T> {
+  data: T;
+  status: number;
+  message?: string;
+}
+
+// shared/types/common.ts
+export type Nullable<T> = T | null;
+export type Optional<T> = T | undefined;
+```
+
+### 3. 각 Feature의 model 폴더
+
+해당 feature에서만 사용되는 타입을 정의합니다.
+
+```typescript
+// features/auth/model/types.ts
+export interface AuthFormValues {
+  email: string;
+  password: string;
+  rememberMe?: boolean;
+}
+
+export type AuthStatus = 'idle' | 'loading' | 'authenticated' | 'error';
+```
+
+### 4. API 관련 타입
+
+API 요청/응답 타입은 각 slice의 api 폴더 또는 shared/api에 정의합니다.
+
+```typescript
+// features/user/api/types.ts
+export interface UserListRequest {
+  page: number;
+  limit: number;
+  filter?: UserFilter;
+}
+
+export interface UserListResponse {
+  users: User[];
+  total: number;
+}
+
+// shared/api/types.ts
+export interface PaginationParams {
+  page: number;
+  limit: number;
+}
+```
+
+### 5. 컴포넌트 전용 타입
+
+컴포넌트에서만 사용되는 타입은 해당 컴포넌트 파일에 직접 선언합니다.
+
+```typescript
+// features/user/ui/user-card.tsx
+interface UserCardProps {
+  user: User;
+  onEdit?: (id: string) => void;
+  variant?: 'default' | 'compact';
+}
+
+export const UserCard: React.FC<UserCardProps> = ({ user, onEdit, variant = 'default' }) => {
+  // ...
+};
+```
+
+### 타입 배치 원칙
+
+1. **재사용성 기준**
+   - 2개 이상의 slice에서 사용 → `shared/types`
+   - 특정 entity 전반에서 사용 → `entities/*/model/types.ts`
+   - 특정 feature 내에서만 사용 → `features/*/model/types.ts`
+   - 단일 컴포넌트에서만 사용 → 컴포넌트 파일 내부
+
+2. **도메인 분리**
+   - 비즈니스 도메인 타입 → `entities`
+   - UI/폼 관련 타입 → `features`
+   - 유틸리티/헬퍼 타입 → `shared`
+
+3. **Public API 원칙**
+   - 외부에서 사용될 타입은 반드시 index.ts를 통해 export
+   - 내부 구현 타입은 export하지 않음
+
+```typescript
+// entities/user/index.ts
+export type { User, UserRole } from './model/types';
+export type { UserApiResponse } from './api/types';
+// 내부 구현 타입은 export하지 않음
 ```
 
 ## 🔗 Import 규칙

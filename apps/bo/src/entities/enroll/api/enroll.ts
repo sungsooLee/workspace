@@ -1,5 +1,6 @@
 import { LMSApiPrefix } from '@learnway/config';
 import { httpService } from '@learnway/shared';
+import { DeliveryAddress } from 'src/types/entities/enroll';
 
 /**
  * 수강 관리 API
@@ -10,7 +11,7 @@ export default class EnrollService {
    * @param userUuid
    * @returns
    */
-  static async fetchEnrollDeliveryList(userUuid: string): Promise<any> {
+  static async fetchEnrollDeliveryList(userUuid: string): Promise<DeliveryAddress[]> {
     return httpService.get(`${LMSApiPrefix()}/enroll/delivery/list`, { userUuid });
   }
 }

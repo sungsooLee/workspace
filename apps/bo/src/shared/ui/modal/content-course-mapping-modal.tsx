@@ -1,5 +1,7 @@
 // IA105 / NLP_BO_CMS_1038	매핑과정보기(팝업)
 
+import { learningResourceQueryOptions } from '@entities/learning-resource';
+import { CODE_GROUP, getCodeLabel, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import {
   Button,
   Divider,
@@ -12,25 +14,28 @@ import {
   useGridBoxConfig,
   useModal,
 } from '@learnway/ui';
-import { t } from 'i18next';
 import {
   SearchBox,
   TenantByRoleDropdownFormField,
   TenantChannelDropdownFormField,
 } from '@shared/ui';
-import { CODE_GROUP, getCodeLabel, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
-import { useEffect } from 'react';
 import { useRouter } from '@tanstack/react-router';
-import { learningResourceQueryOptions } from '@entities/learning-resource';
 import { ContentCourseMappingParams } from '@types';
+import { t } from 'i18next';
 import { omit } from 'lodash';
+import { useEffect } from 'react';
 
 interface Props {
   contentUuid: string;
   channelUuid: string;
+  lastVisitedBoRoleId: number;
 }
 
-const ContentCourseMappingModalComponent = ({ contentUuid, channelUuid }: Props) => {
+const ContentCourseMappingModalComponent = ({
+  contentUuid,
+  channelUuid,
+  lastVisitedBoRoleId,
+}: Props) => {
   const router = useRouter();
   const { closeModal, confirm } = useModal();
 
@@ -83,10 +88,10 @@ const ContentCourseMappingModalComponent = ({ contentUuid, channelUuid }: Props)
 
   const gridBoxConfig: useGridBoxConfig = {
     query: (params: ContentCourseMappingParams) =>
-      learningResourceQueryOptions.getContentCourseMapping(
-        contentUuid,
-        omit(params, 'tenantId', 'channelUuid'),
-      ),
+      learningResourceQueryOptions.getContentCourseMapping(contentUuid, {
+        ...omit(params, 'tenantId', 'channelUuid'),
+        lastVisitedBoRoleId,
+      }),
     gridState: {
       page: 0,
       size: 10,

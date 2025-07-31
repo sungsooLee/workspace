@@ -1,31 +1,17 @@
 import { DropdownFormField } from '@features/form/ui/dropdown-form-field';
-import {
-  ChannelListModal,
-  ManagerListModal,
-  TeacherListModal,
-} from '@features/learning-operate/course/course-management';
+import { ChannelListModal } from '@features/learning-operate/course/course-management';
 import { useDynamicForm2 } from '@learnway/hooks';
 import {
   Button,
-  CheckboxGroupFormField,
-  ChipListModalSelectorFormField,
   ContentsRow,
   EditorFormField,
   Input,
   InputModalSelectorFormField,
-  ListModalSelectorFormField,
   RadioGroupFormField,
   SelectOption,
-  TextareaFormField,
   useModal,
 } from '@learnway/ui';
-import {
-  ChipListFormField,
-  ContentsButtons,
-  FormRow2,
-  MainContents,
-  PageContainer,
-} from '@shared/ui';
+import { ContentsButtons, FormRow2, MainContents, PageContainer } from '@shared/ui';
 import { createFileRoute } from '@tanstack/react-router';
 import { t } from 'i18next';
 import LabelMessagesService from '../../../../entities/label-messages-mock/api/label-messages';
@@ -299,191 +285,6 @@ function RouteComponent() {
               label={t('과정명')}
               maxLength={10}
               element={<Input />}
-            />
-          </ContentsRow>
-          {/* 과정내용 */}
-          <ContentsRow>
-            <FormRow2
-              provider={provider}
-              name={'과정내용'}
-              label={t('과정내용')}
-              element={<TextareaFormField />}
-            />
-          </ContentsRow>
-          {/* ChipListFormField */}
-          <ContentsRow>
-            <FormRow2
-              provider={provider}
-              name={'태그'}
-              label={t('태그 - 인풋 칩 리스트')}
-              format={'array'}
-              value={['현대자동차 A', '현대자동차 B', '현대자동차 C']}
-              element={
-                <ChipListFormField
-                  chipListConfig={{
-                    emptyMessage: 'XCXC',
-                  }}
-                />
-              }
-            />
-          </ContentsRow>
-          {/* 강사 */}
-          <ContentsRow>
-            <FormRow2
-              provider={provider}
-              name={'강사'}
-              label={t('강사 - ChipListModalSelectorFormField')}
-              format={'array'}
-              value={[]}
-              validation={{
-                required: true,
-                // format: 'array',
-                // conditions: [
-                //   {
-                //     fn: (values: any) => values.강사 && values.강사.length > 0,
-                //     message: '최소 1명 이상의 강사를 선택해주세요.',
-                //   },
-                // ],
-              }}
-              element={
-                <ChipListModalSelectorFormField
-                  modalConfig={{ content: <TeacherListModal channelId={getValues()?.channelId} /> }}
-                  chipList={{
-                    labelField: 'name',
-                    valueField: 'id',
-                    wordwrap: true,
-                  }}
-                />
-              }
-            />
-          </ContentsRow>
-          {/* 강사2 */}
-          <ContentsRow>
-            <FormRow2
-              provider={provider}
-              name={'강사2'}
-              label={t('강사 - ChipListModalSelectorFormField')}
-              format={'array'}
-              value={[]}
-              element={
-                <ChipListModalSelectorFormField
-                  showAddButton
-                  modalConfig={{ content: <TeacherListModal channelId={getValues()?.channelId} /> }}
-                  chipList={{
-                    labelField: 'name',
-                    valueField: 'id',
-                    wordwrap: true,
-                  }}
-                  actionNode={
-                    <Button
-                      variant="text"
-                      size="sm"
-                      label={t('대상자')}
-                      onClick={() => openModal({ content: <ManagerListModal /> })}
-                    />
-                  }
-                />
-              }
-            />
-          </ContentsRow>
-          {/* checkbox codeGroup */}
-          <ContentsRow>
-            <FormRow2
-              provider={provider}
-              name={'checkboxCodeGroup'}
-              label={t('checkbox - checkboxGroupFormField(codeGroup)')}
-              value={[]}
-              element={
-                <CheckboxGroupFormField
-                  optionsConfig={{ codeGroup: 'test' }}
-                  showSelectAll
-                  cols={4}
-                />
-              }
-            />
-          </ContentsRow>
-          {/* checkbox api */}
-          <ContentsRow>
-            <FormRow2
-              provider={provider}
-              name={'checkboxApi'}
-              label={t('checkbox - checkboxGroupFormField(api)')}
-              value={[]}
-              element={
-                <CheckboxGroupFormField
-                  optionsConfig={{
-                    labelField: 'cdName',
-                    valueField: 'cdId',
-                    api: {
-                      fn: LabelMessagesService.fetchChannelMock,
-                    },
-                  }}
-                  showSelectAll
-                  cols={4}
-                />
-              }
-            />
-          </ContentsRow>
-          {/* 운영자 & 연락처 */}
-          <ContentsRow>
-            <FormRow2 provider={provider} name={'managerId'} type={'hidden'} value={''} />
-            <FormRow2
-              provider={provider}
-              name={'managerName'}
-              label={t('운영자 - InputModalSelectorFormField')}
-              format={'string'}
-              element={
-                <InputModalSelectorFormField
-                  modalConfig={{
-                    content: <ManagerListModal />,
-                  }}
-                  transformModalData={(modalData: any) => ({
-                    managerId: modalData?.id,
-                    managerName: modalData?.name,
-                  })}
-                />
-              }
-            />
-          </ContentsRow>
-          {/* 테넌트 */}
-          <ContentsRow>
-            <FormRow2
-              provider={provider}
-              name={'테넌트'}
-              label={t('테넌트 - 우측 액션버튼 + chip list')}
-              format={'array'}
-              value={[{ label: 'AA', value: 'value1' }]}
-              chipListConfig={{}}
-            />
-          </ContentsRow>
-          {/* 공개범위 */}
-          <ContentsRow>
-            <FormRow2
-              provider={provider}
-              name={'공개범위'}
-              label={t('공개범위 - ListModalSelectorFormField')}
-              format={'array'}
-              value={[{ targetId: 'target1', targetName: 'targetname1' }]}
-              placeholder={''}
-              description={''}
-              element={
-                <ListModalSelectorFormField
-                  modalConfig={{
-                    content: <ManagerListModal />,
-                  }}
-                  transformModalData={(modalData: any) => ({
-                    targetId: modalData?.id,
-                    targetName: modalData?.name,
-                  })}
-                  button={{
-                    label: t('공개범위 설정'),
-                  }}
-                  list={{
-                    labelField: 'targetName',
-                    valueField: 'targetId',
-                  }}
-                />
-              }
             />
           </ContentsRow>
           {/* 썸네일 리스트 */}

@@ -12,6 +12,8 @@ export const queryKeys = {
   studentsListLeftCount: ['learning-sequence-students-list-left-count'] as const,
   studentsListRightCount: ['learning-sequence-students-list-right-count'] as const,
   studentsHistory: ['learning-sequence-students-history'] as const,
+  studentsDeliveryAddress: ['learning-sequence-students-delivery-address'] as const,
+  studentsLevelTest: ['learning-sequence-students-level-test'] as const,
 };
 
 export const queryOptions = {
@@ -92,6 +94,20 @@ export const queryOptions = {
     cacheTime: 0,
     staleTime: 0,
   }),
+  // 수강생 배송지 조회
+  studentsDeliveryAddress: (params: any) => ({
+    queryKey: queryKeys.studentsDeliveryAddress,
+    queryFn: () => LearningSequenceService.fetchStudentsDeliveryAddress(params),
+    cacheTime: 0,
+    staleTime: 0,
+  }),
+  // 수강생 사전 레벨 테스트 조회
+  studentsLevelTest: (params: any) => ({
+    queryKey: queryKeys.studentsLevelTest,
+    queryFn: () => LearningSequenceService.fetchStudentsLevelTest(params),
+    cacheTime: 0,
+    staleTime: 0,
+  }),
 };
 
 export const mutateOptions = {
@@ -137,6 +153,36 @@ export const mutateOptions = {
   updateStudentsReason: () => ({
     mutationFn: (payload: any) => {
       return LearningSequenceService.updateStudentsReason(payload);
+    },
+  }),
+  // 수강생 정보 수정
+  updateStudentsInfo: () => ({
+    mutationFn: (payload: any) => {
+      return LearningSequenceService.updateStudentsInfo(payload);
+    },
+  }),
+  // 수강생 정보 삭제
+  deleteStudentsInfo: () => ({
+    mutationFn: (payload: any) => {
+      return LearningSequenceService.deleteStudentsInfo(payload);
+    },
+  }),
+  // 수강생 수료여부 수정
+  updateStudentsCertification: () => ({
+    mutationFn: (payload: any) => {
+      return LearningSequenceService.updateStudentsCertification(payload);
+    },
+  }),
+  // 수강생 이수여부 수정
+  updateStudentsCompletion: () => ({
+    mutationFn: (payload: any) => {
+      return LearningSequenceService.updateStudentsCompletion(payload);
+    },
+  }),
+  // 수강생 차수 수정
+  updateStudentsSequence: () => ({
+    mutationFn: (payload: any) => {
+      return LearningSequenceService.updateStudentsSequence(payload);
     },
   }),
 };

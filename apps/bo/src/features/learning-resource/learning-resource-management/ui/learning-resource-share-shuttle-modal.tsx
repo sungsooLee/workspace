@@ -1,6 +1,10 @@
 // IA104 / NLP_BO_CMS_1044 학습자원 현지화-공유설정(팝업)
-import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
+import { learningResourceQueryOptions } from '@entities/learning-resource';
+import LearningResourceService from '@entities/learning-resource/api/learning-resource';
+import { useSearchBox } from '@learnway/hooks';
 import { cn } from '@learnway/shared';
+import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
+import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
 import {
   Button,
   Divider,
@@ -13,19 +17,13 @@ import {
   ShuttleGridToGridImperative,
   useModal,
 } from '@learnway/ui';
-import {
-  SearchBox,
-  TenantByRoleDropdownFormField,
-  TenantChannelDropdownFormField,
-} from '@shared/ui';
+import { SearchBox } from '@shared/ui';
+import { useQueryClient } from '@tanstack/react-query';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { ContentInfo } from '@types';
-import { TFunction } from 'i18next';
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { ChannelCodeType, ContentInfo, TenantCodeType } from '@types';
+import { pick } from 'lodash';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-
-import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
-import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
 
 type ResourceShareShuttleModalProps = {
   data: ContentInfo;
@@ -33,46 +31,71 @@ type ResourceShareShuttleModalProps = {
 
 const LearningResourceShareShuttleModalComponent = ({ data }: ResourceShareShuttleModalProps) => {
   const { t } = useTranslation();
+  const queryClient = useQueryClient();
 
   const ref = useRef<ShuttleGridToGridImperative>(null);
 
   const { closeModal } = useModal();
 
-  const { provider: sProvider } = useSearchBox(sharingInfoSearchConfig(t));
-
-  const [gridData, setGridData] = useState<any[]>([
-    {
-      sharedBoxId: 0,
-      sourceTenantId: 1,
-      sourceTenantName: 'tenant1',
-      sourceChannelUuid: '3d3e39a1-5c08-454e-a5a3-3f977096449f',
-      sourceChannelName: 'channel1',
-      destTenantId: 1,
-      destTenantName: 'tenant2',
-      destChannelUuid: 'eb192472-e452-47a7-ba22-765a48805e61',
-      destChannelName: 'channel2',
+  const sharingInfoSearchConfig: any = {
+    builders: [
+      [
+        {
+          name: 'tenantId',
+          type: 'dropdown',
+          label: t('LABEL.form.label.tenant', '테넌트'),
+          format: 'object',
+          value: data.tenantId,
+          optionsConfig: {
+            api: {
+              fn: () => LearningResourceService.getShareTenantCodes(data.contentUuid),
+              select: (tenants: TenantCodeType[]) =>
+                tenants.map(({ tenantId, tenantName }) => ({ label: tenantName, value: tenantId })),
+            },
+          },
+        },
+        {
+          name: 'channelName',
+          type: 'text',
+          label: t('LABEL.form.label.channel', '채널'),
+          format: 'string',
+          value: '',
+        },
+        {
+          type: 'empty',
+        },
+        {
+          type: 'empty',
+        },
+      ],
+    ],
+    validator: {
+      tenantId: true,
     },
-    {
-      sharedBoxId: 0,
-      sourceTenantId: 2,
-      sourceTenantName: 'tenant1',
-      sourceChannelUuid: '3d3e39a1-5c08-454e-a5a3-3f977096449f',
-      sourceChannelName: 'channel1',
-      destTenantId: 2,
-      destTenantName: 'tenant3',
-      destChannelUuid: 'eb192472-e452-47a7-ba22-765a48805e64',
-      destChannelName: 'channel2',
-    },
-  ]);
-
-  const handleOnSearch = (params: Record<string, any>) => {
-    console.log('search params', params);
   };
+
+  const { provider: sProvider, getValues } = useSearchBox(sharingInfoSearchConfig);
+
+  const [gridData, setGridData] = useState<ChannelCodeType[]>([]);
+
+  const handleOnSearch = async (params: Record<string, any>) => {
+    const result = await queryClient.fetchQuery(
+      learningResourceQueryOptions.getShareTenantsChannels({
+        contentUuid: data.contentUuid,
+        ...pick(params, 'tenantId', 'channelName'),
+      }),
+    );
+    setGridData(result);
+  };
+
+  useEffect(() => {
+    handleOnSearch(getValues());
+  }, []);
 
   const columns = useMemo(() => {
     const columnHelper = createColumnHelper<any>();
     return [
-      columnHelper.accessor('destTenantName', {
+      columnHelper.accessor('tenantName', {
         header: t('테넌트'),
         cell: (info) => info.getValue(),
         meta: {
@@ -80,7 +103,7 @@ const LearningResourceShareShuttleModalComponent = ({ data }: ResourceShareShutt
           cellAlign: 'left',
         },
       }),
-      columnHelper.accessor('destChannelName', {
+      columnHelper.accessor('channelName', {
         header: t('채널'),
         cell: (info) => info.getValue(),
         meta: {
@@ -135,12 +158,7 @@ const LearningResourceShareShuttleModalComponent = ({ data }: ResourceShareShutt
           <FormSubTitle label={t('공유 정보')} />
           <SearchBox provider={sProvider} onSearch={handleOnSearch} />
           <Divider />
-          <ShuttleGridToGrid
-            ref={ref}
-            columns={columns}
-            gridData={gridData}
-            rowKey="destChannelUuid"
-          />
+          <ShuttleGridToGrid ref={ref} columns={columns} gridData={gridData} rowKey="channelUuid" />
         </div>
       </ModalBody>
       <ModalFooter>
@@ -158,28 +176,5 @@ const LearningResourceShareShuttleModalComponent = ({ data }: ResourceShareShutt
 };
 
 LearningResourceShareShuttleModalComponent.displayName = 'LearningResourceShareShuttleModal';
-
-const sharingInfoSearchConfig = (t: TFunction<'translation', undefined>): SearchBoxConfig => ({
-  builders: [
-    [
-      {
-        name: 'tenantId',
-        type: 'custom',
-        label: t('LABEL.form.label.tenant'),
-        format: 'object',
-        value: '',
-        element: <TenantByRoleDropdownFormField />,
-      },
-      {
-        name: 'channelUuid',
-        type: 'custom',
-        label: t('LABEL.form.label.channel'),
-        format: 'object',
-        value: '',
-        element: <TenantChannelDropdownFormField enableFilter />,
-      },
-    ],
-  ],
-});
 
 export const LearningResourceShareShuttleModal = LearningResourceShareShuttleModalComponent;

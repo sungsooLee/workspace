@@ -5,28 +5,26 @@ import styles from '@learnway/styles/bo/pages/_layout/learning/test-detail.modul
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
 
 import { cn } from '@learnway/shared';
-import { Button, FormSubTitle, GridBox, Input, RadioGroupFormField, useModal } from '@learnway/ui';
-import { useLearningResourceQuestionDetailForm } from '../service/learning-resource-question-detail-from.hook';
+import { Button, FormSubTitle, GridBox, Input, useModal } from '@learnway/ui';
 import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
 import { IcoCopy, IcoMenu01, IcoMinus, IcoPlus } from '@learnway/icons';
 import { LearningResourceTestItemModal } from './learning-resource-test-item-modal';
-import { useGetQuestionItemList } from '@entities/learning-resource';
 import { QuestionItemGridRow } from '@types';
+import { QUESTION_LEVELS, QUESTION_TYPES } from '../service/exam-util';
 import {
   initStatisticRow,
   QuestionStatisticRow,
   updateNewStatistics,
 } from '../service/learning-resource-question-service';
+import { useQuestionBankInfoInput } from '../service/question-bank/use-question-bank-info-input';
 
 const LearningResourceQuestionBankQuestionComponent = () => {
   const { t } = useTranslation();
 
-  const { alert, openModal, confirm: openConfirm } = useModal();
+  const { openModal } = useModal();
   const [statistic, setStatistic] = useState<QuestionStatisticRow[]>(initStatisticRow(t));
 
-  const { baseInfo } = useLearningResourceQuestionDetailForm();
-
-  const { data: questionItemList } = useGetQuestionItemList(baseInfo?.contentUuid);
+  const { baseInfo, questionItemList } = useQuestionBankInfoInput();
 
   const handleAddQuestionButtonClick = async () => {
     if (baseInfo) {
@@ -122,18 +120,17 @@ const LearningResourceQuestionBankQuestionComponent = () => {
         },
       }),
       columnHelper.accessor('questionType', {
-        cell: (info) => info.getValue(),
+        cell: (info) => QUESTION_TYPES(t)[info.getValue()],
         header: t('문항유형'),
         enableGrouping: false,
         size: 216,
         meta: {
           headerAlign: 'center', // 헤더 정렬
           cellAlign: 'left', // 셀 정렬
-          cellClass: 'title',
         },
       }),
       columnHelper.accessor('questionLevel', {
-        cell: (info) => info.getValue(),
+        cell: (info) => QUESTION_LEVELS(t)[info.getValue()],
         header: t('난이도'),
         enableGrouping: false,
         size: 104,
@@ -152,29 +149,12 @@ const LearningResourceQuestionBankQuestionComponent = () => {
           cellAlign: 'center', // 셀 정렬
         },
       }),
-      columnHelper.accessor('isUsed', {
-        cell: (info) => (
-          <RadioGroupFormField
-            value={`${info.getValue()}`}
-            options={[
-              { value: 'true', label: t('사용') },
-              { value: 'false', label: t('미사용') },
-            ]}
-          />
-        ),
-        header: t('사용'),
-        size: 240,
-        enableGrouping: false,
-        meta: {
-          headerAlign: 'center', // 헤더 정렬
-          cellAlign: 'left', // 셀 정렬
-        },
-      }),
       columnHelper.accessor('orderChange', {
         cell: (info) => <IcoMenu01 width={24} height={24} fill="#A9AFB8" stroke="#4c515e" />,
         header: t('순서변경'),
         size: 104,
         enableGrouping: false,
+        enableSorting: false,
         meta: {
           headerAlign: 'center', // 헤더 정렬
           cellAlign: 'center', // 셀 정렬
@@ -193,6 +173,7 @@ const LearningResourceQuestionBankQuestionComponent = () => {
     });
     setStatistic(newStatistic);
   }, [questionItemList]);
+
   return (
     <div className={styles.wrap}>
       <FormSubTitle label={t('기본정보')} noLine />
@@ -214,20 +195,21 @@ const LearningResourceQuestionBankQuestionComponent = () => {
             </tr>
             <tr>
               <th scope="row">{t('유형')}</th>
-              <td>{'문제은행'}</td>
+              <td>{t('문제은행')}</td>
               <th scope="row">{t('학습자원명')}</th>
               <td>{baseInfo?.contentName}</td>
             </tr>
             <tr>
               <th scope="row">{t('문제은행 언어')}</th>
-              <td colSpan={3}>{baseInfo?.languageCountryCode}</td>
+              <td colSpan={3}>
+                {t(`pms.multilingual.LangCountryCode.${baseInfo?.languageCountryCode}`)}
+              </td>
             </tr>
           </tbody>
         </table>
       </div>
-      {/* 퍼블수정 20250613 : lineType 추가 */}
-      <FormSubTitle label={t('문항정보')} lineType={'dark'} />
 
+      <FormSubTitle label={t('문항정보')} lineType="dark" />
       <div className={styles.table_wrap}>
         <GridBox
           title=" "
@@ -263,7 +245,7 @@ const LearningResourceQuestionBankQuestionComponent = () => {
             <div className="custom_info_wrap">
               <strong className="table_tit font-normal">{t('문항목록')}</strong>
               <strong className="table_tit font-normal">{t('전체')}</strong>
-              <span className="count_info">0</span>
+              <span className="count_info">{questionItemList?.length ?? 0}</span>
             </div>
           }
           className={styles.list_table}

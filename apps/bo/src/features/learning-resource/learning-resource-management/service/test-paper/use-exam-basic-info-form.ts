@@ -51,9 +51,9 @@ export const useExamBasicInfoForm = (options: {
     },
   });
 
-  const saveBasicInfo = async (data?: any, isOnGenTypeChange?: boolean) => {
+  const saveBasicInfo = async (data: Record<string, any>, isOnGenTypeChange?: boolean) => {
     const requestData = getExamSaveRequestDataFromFormData({
-      values: getBasicInfoValues() as TestPaperBasicInfoFormData,
+      values: data as TestPaperBasicInfoFormData,
       mode: options.mode,
       contentUuid: options.contentUuid,
     });

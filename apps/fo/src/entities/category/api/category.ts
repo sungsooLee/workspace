@@ -7,11 +7,15 @@ export default class CategoryService {
     return new Promise((resolve) => setTimeout(() => resolve(categoryMock as any)));
   }
 
-  static getCategoryTree(tenantId: number) {
+  static getFetchCategoryTree(tenantId: number) {
     return httpService.get<any>(`${LMSApiPrefix()}/tenant-category/tree/${tenantId}`);
   }
 
-  static getCategoryDetail(categoryId: number) {
+  static getFetchCategoryDetail(categoryId: number) {
     return httpService.get<any>(`${LMSApiPrefix()}/category/${categoryId}`);
+  }
+
+  static getFetchCoursesCategory(payload: any) {
+    return httpService.get<any>(`${LMSApiPrefix()}/courses/category`, payload);
   }
 }

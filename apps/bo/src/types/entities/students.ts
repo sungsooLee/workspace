@@ -22,7 +22,7 @@ export interface StudentsList {
   enrollmentType: string;
 }
 
-export interface StudentHistory {
+export interface StudentsHistory {
   courseId: number;
   courseSequenceId: number;
   courseSequenceName: string;
@@ -37,4 +37,27 @@ export interface StudentHistory {
   learningEndDate: string;
   courseType: string;
   attendanceScore: number;
+}
+
+export interface StudentsDeliveryAddress {
+  recipientName: string;
+  countryCode: string;
+  telNo: string;
+  postalCode: string;
+  address: string;
+  addressDetail: string;
+}
+
+export interface StudentsLevelTest {
+  enrollId: number;
+  availableTestDate1: string;
+  availableTestDate2: string;
+  countryCode: string;
+  courseId: number;
+  familyName: string;
+  firstName: string;
+  preferGender: string;
+  preferLearnDate1: string;
+  preferLearnDate2: string;
+  telNo: string;
 }

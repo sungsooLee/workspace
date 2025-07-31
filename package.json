@@ -12,7 +12,7 @@
     "dev:pb-fo": "npx nx serve pb-fo",
     "build:fo": "npx nx build fo",
     "build:bo": "npx nx build bo",
-    "analyze:bo": "npx nx build bo --configuration=production",
+    "analyze:bo": "npx nx build bo --configuration=dev",
     "build:pb-bo": "npx nx build pb-bo",
     "build:pb-fo": "npx nx build pb-fo",
     "build:libs": "npx nx build config & npx nx build editor & npx nx build hooks & npx nx build icons & npx nx build shared & npx nx build ui & npx nx build auth",

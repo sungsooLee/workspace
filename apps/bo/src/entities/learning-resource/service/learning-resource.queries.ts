@@ -9,6 +9,7 @@ import {
   ExamQuestionGenType,
   GetContentDetailRes,
   GetContentsParams,
+  GetShareTenantsChannelsParams,
   HtmlVideoFileChangeReq,
   HtmlVideoMetadataReq,
   PostDraftETCParams,
@@ -26,7 +27,7 @@ import {
   QuestionListForRetrieveReq,
   QuestionsCopyReq,
   QuestionStatusUpdateReq,
-  RandomQuestionCountUpdateReq,
+  ExamPaperQuestionCountUpdateReq,
   TestPaperBasicInfoSaveReq,
 } from '@types';
 import LearningResourceService from '../api/learning-resource';
@@ -58,6 +59,7 @@ export const queryKeys = {
     ['question-bank-question-item', examQuestionUuid] as const,
   randomQuestionCount: (examUuid: string) => ['random-question-count', examUuid] as const,
   questionListForRetrieve: ['question-list-for-retrieve'] as const,
+  shareTenantsChannels: (contentUuid: string) => ['share-tenants-channels', contentUuid] as const,
 };
 
 export const learningResourceQueryOptions = {
@@ -111,13 +113,6 @@ export const learningResourceQueryOptions = {
     cacheTime: 0,
     staleTime: 0,
     enabled: !!params.contentUuid,
-  }),
-  getProgramGuideDownload: (params: any) => ({
-    queryKey: queryKeys.programGuideDownload,
-    queryFn: () => LearningResourceService.fetchProgramGuideDownload(),
-    cacheTime: 0,
-    staleTime: 0,
-    enabled: false,
   }),
   getHTML5Resource: (contentUuid: string) => ({
     queryKey: queryKeys.html5Resource,
@@ -178,6 +173,12 @@ export const learningResourceQueryOptions = {
     queryFn: () => LearningResourceService.fetchQuestionListForRetrieve(params),
     cacheTime: 0,
     staleTime: 0,
+    enabled: true,
+  }),
+
+  getShareTenantsChannels: (params: GetShareTenantsChannelsParams) => ({
+    queryKey: queryKeys.shareTenantsChannels(params.contentUuid),
+    queryFn: () => LearningResourceService.getShareTenantsChannels(params),
     enabled: true,
   }),
 };
@@ -266,7 +267,7 @@ export const mutateOptions = {
       LearningResourceService.updateQuestionStatus(params),
   }),
   updateExamPaperQuestionCountInfo: () => ({
-    mutationFn: (params: RandomQuestionCountUpdateReq) =>
+    mutationFn: (params: ExamPaperQuestionCountUpdateReq) =>
       LearningResourceService.updateExamPaperQuestionCountInfo(params),
   }),
   copyQuestionsToExamPaper: () => ({
