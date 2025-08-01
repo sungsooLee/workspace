@@ -1,3 +1,34 @@
+/**
+ * 회사 목록 조회 요청
+ */
+export interface CompanyListParams {
+  page?: number;
+  size?: number;
+  sort?: string[];
+  tenantId?: number;
+  isUseLinkageSystem?: string;
+  companyCode?: string;
+  name?: string;
+  isUsed?: boolean;
+  managerName?: string;
+  companyType?: CompanyType;
+  regStartDate?: string;
+  regEndDate?: string;
+  modifyStartDate?: string;
+  modifyEndDate?: string;
+}
+
+/**
+ * 회사 코드 중복 체크 요청
+ */
+export interface CompanyCodeExistParams {
+  companyCode: string;
+  companyId?: number;
+}
+
+/**
+ * 회사 정보 응답
+ */
 export interface CompanyResponse extends CompanyCreateRequest {
   /**
    * 회사 ID
@@ -33,13 +64,16 @@ export interface CompanyResponse extends CompanyCreateRequest {
   modifiedDate: string;
 }
 
+/**
+ * 회사 생성/수정 요청
+ */
 export interface CompanyCreateRequest {
   /**
    * 회사코드
    */
   companyCode: string;
   /**
-   * 회사유형코드
+   * 회사유형
    */
   companyType: CompanyType;
   /**
@@ -136,7 +170,7 @@ export interface CompanyCreateRequest {
    */
   twoFactorAuthPlatformTypeList: TwoFactorAuthPlatformType[];
   /**
-   * 2차 인증 유형 유형
+   * 2차 인증 유형
    */
   twoFactorAuthType: TwoFactorAuthType;
   /**
@@ -365,6 +399,9 @@ export interface BlackAndWhiteCombiner {
   combineName: string;
 }
 
+/**
+ * 회사 유형
+ */
 export enum CompanyType {
   CAR = 'CAR',
   GLOBAL = 'GLOBAL',
@@ -378,11 +415,17 @@ export enum CompanyType {
   ETC = 'ETC',
 }
 
+/**
+ * 인사 데이터 수동 관리 유형
+ */
 export enum HrInfoManageType {
   MANUAL_MANAGE = 'MANUAL_MANAGE',
   AUTO_MANAGE = 'AUTO_MANAGE',
 }
 
+/**
+ * 회원 가입 유형
+ */
 export enum CompanyMemberJoinType {
   FO_JOIN_DEALER = 'FO_JOIN_DEALER',
   FO_JOIN_NORMAL = 'FO_JOIN_NORMAL',
@@ -390,11 +433,17 @@ export enum CompanyMemberJoinType {
   BO_JOIN_MANAGER = 'BO_JOIN_MANAGER',
 }
 
+/**
+ * 연동시스템 유형
+ */
 export enum LinkageType {
   INTERFACE = 'INTERFACE',
   FTP = 'FTP',
 }
 
+/**
+ * 연동시스템
+ */
 export enum LinkageSystem {
   GIM = 'GIM',
   HSW = 'HSW',
@@ -407,6 +456,9 @@ export enum LinkageSystem {
   GETIS = 'GETIS',
 }
 
+/**
+ * 서비스 타입
+ */
 export enum PlatformServiceType {
   BASIC = 'BASIC',
   CORE = 'CORE',
@@ -415,12 +467,18 @@ export enum PlatformServiceType {
   FREE_CHARGE = 'FREE_CHARGE',
 }
 
+/**
+ * SSO 로그인 유형
+ */
 export enum SsoType {
   HMG_SSO = 'HMG_SSO',
   AUTOWAY = 'AUTOWAY',
   AES_Link = 'AES_Link',
 }
 
+/**
+ * 비밀번호 인증유형
+ */
 export enum PasswordAuthType {
   PLATFORM = 'PLATFORM',
   HMG_SSO = 'HMG_SSO',
@@ -428,11 +486,17 @@ export enum PasswordAuthType {
   DENIED_PASSWORD = 'DENIED_PASSWORD',
 }
 
+/**
+ * 2차인증 플랫폼유형
+ */
 export enum TwoFactorAuthPlatformType {
   FO_PLATFORM = 'FO_PLATFORM',
   BO_PLATFORM = 'BO_PLATFORM',
 }
 
+/**
+ * 2차 인증 유형
+ */
 export enum TwoFactorAuthType {
   MPASS = 'MPASS',
   MPASS_OTP = 'MPASS_OTP',
@@ -440,6 +504,9 @@ export enum TwoFactorAuthType {
   GOOGLE_OTP = 'GOOGLE_OTP',
 }
 
+/**
+ * 워터마크 위치
+ */
 export enum WatermarkPosition {
   TOP_LEFT = 'TOP_LEFT',
   TOP_CENTER = 'TOP_CENTER',
@@ -464,17 +531,26 @@ export enum IpAccessControlType {
   ACCESS_ALL = 'ACCESS_ALL',
 }
 
+/**
+ * 로그인 제한 구분
+ */
 export enum LoginRestrictionType {
   LOGIN_TIME_RESTRICTION = 'LOGIN_TIME_RESTRICTION',
   WORK_TIME_RESTRICTION = 'WORK_TIME_RESTRICTION',
   NONE = 'NONE',
 }
 
+/**
+ * 로그인 제한 설정 방식
+ */
 export enum LoginRestrictionSettingType {
   TIME_SETTING = 'TIME_SETTING',
   HR_INFO_SETTING = 'HR_INFO_SETTING',
 }
 
+/**
+ * 요일
+ */
 export enum DayOfWeekType {
   MONDAY = 'MONDAY',
   TUESDAY = 'TUESDAY',
@@ -485,6 +561,9 @@ export enum DayOfWeekType {
   SUNDAY = 'SUNDAY',
 }
 
+/**
+ * 유저그룹 조합 종류 타입
+ */
 export enum CombineType {
   USER_GROUP = 'USER_GROUP',
 }

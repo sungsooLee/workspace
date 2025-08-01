@@ -316,7 +316,10 @@ const CompanyDetailComponent = (props: any, ref: any) => {
   };
 
   const duplicateCheck = async (companyCode: string) => {
-    const payload = { companyCode };
+    const payload =
+      props.mode === EnFormMode.VIEW && detailData
+        ? { companyCode, companyId: detailData.companyId }
+        : { companyCode };
     const result: boolean = await CompaniesService.existsCode(payload);
 
     if (result) return DuplicateState.duplicated;
