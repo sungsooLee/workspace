@@ -6,6 +6,10 @@ export function useFetchCourseRegistrationDetails(sequenceUuid: string) {
   return useQuery(queryOptions.courseRegistrationDetails(sequenceUuid));
 }
 
+export function useFetchCourseRegistrationStatus(enrollQueueId: number) {
+  return useQuery(queryOptions.courseRegistrationStatus(enrollQueueId));
+}
+
 export function useCreateSingleCourseApplicationQueue(body: EnrollRequest) {
   return useMutation(queryOptions.singleCourseApplicationQueue(body));
 }

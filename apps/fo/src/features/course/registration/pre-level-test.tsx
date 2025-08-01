@@ -2,14 +2,26 @@ import { cn } from '@learnway/shared';
 import { DatePicker } from '@learnway/ui/date-picker';
 import { OptionCard, OptionCardItem } from '@learnway/ui/option-card';
 import { PhoneNumber } from '@learnway/ui/phone-number';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import styles from '@learnway/styles/fo/pages/_layout/course/level.module.css';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { Input } from '@learnway/ui/input';
 
-const PreLevelTestComponent = () => {
+interface Props {
+  firstName: string;
+  onChangeFirstName: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  familyName: string;
+  onChangeFamilyName: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+}
+
+const PreLevelTestComponent = ({
+  firstName,
+  onChangeFirstName,
+  familyName,
+  onChangeFamilyName,
+}: Props) => {
   const gender = [
     { label: '상관없음', value: 'value1' },
     { label: '남자', value: 'value2' },
@@ -39,23 +51,25 @@ const PreLevelTestComponent = () => {
                 <Input
                   id="name1"
                   type="text"
-                  value="text"
+                  value={firstName}
                   placeholder="Frist name"
                   inputSize={'lg'}
-                  error
+                  onChange={onChangeFirstName}
+                  // error
                 />
                 {/* error message */}
-                <p className={cn(formStyles.guide_text, formStyles.error)}>
+                {/* <p className={cn(formStyles.guide_text, formStyles.error)}>
                   영문 이름을 입력해주세요
-                </p>
+                </p> */}
               </div>
               <div>
                 <Input
                   id="name2"
                   type="text"
-                  value="text"
+                  value={familyName}
                   placeholder="Family name"
                   inputSize={'lg'}
+                  onChange={onChangeFamilyName}
                 />
                 {/* error message */}
                 {/* <p className={cn(formStyles.guide_text, formStyles.error)}>영문 성을 입력해주세요</p> */}

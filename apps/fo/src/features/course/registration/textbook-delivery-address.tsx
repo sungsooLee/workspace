@@ -1,6 +1,4 @@
 import { cn } from '@learnway/shared';
-import { PhoneNumber } from '@learnway/ui/phone-number';
-
 import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic.form.module.css';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import styles from '@learnway/styles/fo/pages/_layout/course/textbook.module.css';
@@ -8,18 +6,29 @@ import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
+import { PhoneNumber } from '@learnway/ui/phone-number';
 import { AddressSearchModal } from '@shared/ui';
 import { Address, AddressSearchResult } from '@types';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { BrowserView, MobileView } from 'react-device-detect';
 
 type Props = {
+  recipientName: string;
+  onChangeRecipientName: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  addressDetail: string;
+  onChangeAddressDetail: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onAddressSearchResult: (value: Address) => void;
 };
 
-const TextbookDeliveryAddressComponent = ({ onAddressSearchResult }: Props) => {
-  const [address, setAddress] = useState<AddressSearchResult>();
+const TextbookDeliveryAddressComponent = ({
+  recipientName,
+  onChangeRecipientName,
+  addressDetail,
+  onChangeAddressDetail,
+  onAddressSearchResult,
+}: Props) => {
   const { openModal } = useModal();
+  const [address, setAddress] = useState<AddressSearchResult>();
 
   const handleAddressSearchResult = async () => {
     const newAddress: AddressSearchResult = await openModal({
@@ -28,8 +37,7 @@ const TextbookDeliveryAddressComponent = ({ onAddressSearchResult }: Props) => {
     });
     setAddress(newAddress);
     const { zipNo, roadAddr } = newAddress;
-    onAddressSearchResult({ postalCode: zipNo, roadAddress: roadAddr, detail: '101동 107호' });
-    // setEditionValue({ postalCode: address.zipNo, address: address.roadAddr });
+    onAddressSearchResult({ postalCode: zipNo, roadAddress: roadAddr });
   };
 
   return (
@@ -48,7 +56,8 @@ const TextbookDeliveryAddressComponent = ({ onAddressSearchResult }: Props) => {
               <Input
                 id="name2"
                 type="text"
-                value="text"
+                value={recipientName}
+                onChange={onChangeRecipientName}
                 placeholder="이름을 입력해주세요"
                 inputSize={'lg'}
               />
@@ -101,14 +110,8 @@ const TextbookDeliveryAddressComponent = ({ onAddressSearchResult }: Props) => {
                     type="text"
                     placeholder="상세주소를 입력해주세요"
                     inputSize={'lg'}
-                    value=""
-                  />
-                  <Input
-                    id="addr3"
-                    type="text"
-                    placeholder="상세주소를 입력해주세요"
-                    inputSize={'lg'}
-                    value=""
+                    value={addressDetail}
+                    onChange={onChangeAddressDetail}
                   />
                 </BrowserView>
                 {/* mo */}
@@ -118,8 +121,8 @@ const TextbookDeliveryAddressComponent = ({ onAddressSearchResult }: Props) => {
                     type="text"
                     placeholder="주소를 입력해주세요"
                     inputSize={'lg'}
-                    value={''}
-                    readOnly
+                    value={addressDetail}
+                    onChange={onChangeAddressDetail}
                   />
                   <Input
                     id="addr5"

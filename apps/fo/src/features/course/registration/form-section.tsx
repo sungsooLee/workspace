@@ -8,38 +8,36 @@ import styles from '@learnway/styles/fo/pages/_layout/course/registration.module
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
-import { Address } from '@types';
-import { useMemo, useState } from 'react';
+import { useRouter, useRouterState } from '@tanstack/react-router';
 import { BrowserView, isMobile, MobileView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
-import { useCourseRegistrationStore } from './store/use-course-registration';
-
-type COURSE_REGISTRATION_FORMAT = 'ALL' | 'LEVEL_TEST' | 'TEXTBOOK';
+import { useFormSection } from './hook/form-section-hook';
 
 interface Props {
-  courseSequenceId: string;
-  currentCourseRegistrationFormat: COURSE_REGISTRATION_FORMAT;
+  isShowLevelTest: boolean;
+  isShowTextbook: boolean;
 }
 
-const FormSectionComponent = ({ courseSequenceId, currentCourseRegistrationFormat }: Props) => {
-  const { langLevelTest, bookDeliveryInfo } = useCourseRegistrationStore();
+const FormSectionComponent = ({ isShowLevelTest, isShowTextbook }: Props) => {
+  const routerState = useRouterState();
+  const router = useRouter();
+  const { courseSequenceId } = routerState.location.state;
   const { openModal, confirm: openConfirm } = useModal();
 
-  const isShowLevelTest = useMemo(
-    () => ['ALL', 'LEVEL_TEST'].includes(currentCourseRegistrationFormat),
-    [currentCourseRegistrationFormat],
-  );
-
-  const isShowTextbook = useMemo(
-    () => ['ALL', 'TEXTBOOK'].includes(currentCourseRegistrationFormat),
-    [currentCourseRegistrationFormat],
-  );
-
-  const [addressResult, setAddressResult] = useState<Address>();
-
-  const onAddressSearchResult = (value: Address) => {
-    setAddressResult(value);
-  };
+  const {
+    familyName,
+    onChangeFamilyName,
+    firstName,
+    onChangeFirstName,
+    recipientName,
+    onChangeRecipientName,
+    addressDetail,
+    onChangeAddressDetail,
+    addressResult,
+    onAddressSearchResult,
+    langLevelTest,
+    bookDeliveryInfo,
+  } = useFormSection();
 
   const { mutateAsync: createSingleCourseApplicationQueue } = useCreateSingleCourseApplicationQueue(
     { courseSequenceId, additionalInfo: { langLevelTest, bookDeliveryInfo } },
@@ -50,27 +48,25 @@ const FormSectionComponent = ({ courseSequenceId, currentCourseRegistrationForma
         width: isMobile ? 'm_full' : 'md',
         content: (
           <AddressConfirmationPopup
-            address={{
-              roadAddress: addressResult.roadAddress,
-              postalCode: addressResult.postalCode,
-              detail: addressResult.detail,
-            }}
-            name="김현대"
-            phoneNumber="01012341234"
+            address={{ ...addressResult, detail: addressDetail }}
+            name={recipientName}
+            phoneNumber={'0101231234'}
           />
         ),
       });
       if (isConfirm) {
-        await createSingleCourseApplicationQueue();
-        // router.navigate({
-        //   to: '/course/registration-complete',
-        // });
+        const enrollQueueId = await createSingleCourseApplicationQueue();
+
+        router.navigate({
+          to: '/course/registration-pending',
+          state: { enrollQueueId },
+        });
       }
     }
   };
 
-  const cancel = () => {
-    openConfirm({
+  const cancel = async () => {
+    const isConfirm = await openConfirm({
       title: <>수강 신청을 취소하시겠습니까?</>,
       content: (
         <p className="whitespace-pre">{`지금 취소하실 경우\n입력한 내용은 저장되지 않습니다.`}</p>
@@ -84,13 +80,24 @@ const FormSectionComponent = ({ courseSequenceId, currentCourseRegistrationForma
       {/* 입력정보 */}
       <div className={styles.input_wrap}>
         {/* 사전 레벨테스트 */}
-        {isShowLevelTest && <PreLevelTest />}
-        {currentCourseRegistrationFormat === 'ALL' && (
-          <div className="my-12 h-1 w-full bg-[#EFF0F1]" />
+        {isShowLevelTest && (
+          <PreLevelTest
+            familyName={familyName}
+            onChangeFamilyName={onChangeFamilyName}
+            firstName={firstName}
+            onChangeFirstName={onChangeFirstName}
+          />
         )}
+        {isShowLevelTest && isShowTextbook && <div className="my-12 h-1 w-full bg-[#EFF0F1]" />}
         {/* 교재 배송지 */}
         {isShowTextbook && (
-          <TextbookDeliveryAddress onAddressSearchResult={onAddressSearchResult} />
+          <TextbookDeliveryAddress
+            recipientName={recipientName}
+            onChangeRecipientName={onChangeRecipientName}
+            addressDetail={addressDetail}
+            onChangeAddressDetail={onChangeAddressDetail}
+            onAddressSearchResult={onAddressSearchResult}
+          />
         )}
       </div>
       {/* 안내사항 */}

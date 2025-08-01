@@ -1,6 +1,7 @@
-import { httpService } from '@learnway/shared';
 import { LMSApiPrefix } from '@learnway/config';
+import { httpService } from '@learnway/shared';
 import {
+  CourseEnrollQueueStateIdResponse,
   CourseEnrollQueueStateResponse,
   CourseEnrollResponse,
   CourseEnrollsssParams,
@@ -30,7 +31,7 @@ export default class EnrollService {
    * @param body
    * @returns
    */
-  static async createEnroll(body: EnrollRequest): Promise<void> {
+  static async createEnroll(body: EnrollRequest): Promise<number> {
     return httpService.post(`${LMSApiPrefix()}/enroll`, body);
   }
 
@@ -57,5 +58,17 @@ export default class EnrollService {
     courseSequenceId: number,
   ): Promise<CourseEnrollQueueStateResponse> {
     return httpService.get(`${LMSApiPrefix()}/enroll/queue/state`, { courseSequenceId });
+  }
+
+  /**
+   * 수강신청 상태 조회
+   * 수강 신청 대기 ID로 수강 신청 상태를 조회한다
+   * @param enrollQueueId
+   * @returns
+   */
+  static async fetchEnrollQueueStateId(
+    enrollQueueId: number,
+  ): Promise<CourseEnrollQueueStateIdResponse> {
+    return httpService.get(`${LMSApiPrefix()}/enroll/queue/state/id`, { enrollQueueId });
   }
 }
