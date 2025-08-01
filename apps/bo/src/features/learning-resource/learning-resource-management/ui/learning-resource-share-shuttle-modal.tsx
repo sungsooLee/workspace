@@ -80,8 +80,25 @@ const LearningResourceShareShuttleModalComponent = ({ data }: Props) => {
     setGridData(result);
   };
 
+  const fetchSharedContents = async () => {
+    const result = await queryClient.fetchQuery(
+      learningResourceQueryOptions.getSharedContents(
+        pick(data, ['contentUuid', 'tenantId', 'channelUuid']),
+      ),
+    );
+    setSelectedGridData(
+      result.map((_) => ({
+        tenantId: _.destTenantId,
+        tenantName: _.destTenantName,
+        channelUuid: _.destChannelUuid,
+        channelName: _.destChannelName,
+      })),
+    );
+  };
+
   useEffect(() => {
     handleOnSearch(getValues());
+    fetchSharedContents();
   }, []);
 
   const columns = useMemo(() => {

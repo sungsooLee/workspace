@@ -11,6 +11,7 @@ import {
   GetContentDetailRes,
   GetContentsParams,
   GetSharedBoxContentsParams,
+  GetSharedContentsParams,
   GetShareTenantsChannelsParams,
   HtmlVideoFileChangeReq,
   HtmlVideoMetadataReq,
@@ -62,6 +63,7 @@ export const queryKeys = {
   randomQuestionCount: (examUuid: string) => ['random-question-count', examUuid] as const,
   questionListForRetrieve: ['question-list-for-retrieve'] as const,
   shareTenantsChannels: (contentUuid: string) => ['share-tenants-channels', contentUuid] as const,
+  sharedContents: ['shared-contents'] as const,
   sharedBoxContents: ['shared-box-contents'] as const,
   sharedBoxTenantCodes: ['shared-box-tenant-codes'] as const,
   sharedBoxChannelCodes: ['shared-box-channel-codes'] as const,
@@ -184,6 +186,12 @@ export const learningResourceQueryOptions = {
   getShareTenantsChannels: (params: GetShareTenantsChannelsParams) => ({
     queryKey: queryKeys.shareTenantsChannels(params.contentUuid),
     queryFn: () => LearningResourceService.getShareTenantsChannels(params),
+    enabled: true,
+  }),
+
+  getSharedContents: (params: GetSharedContentsParams) => ({
+    queryKey: queryKeys.sharedContents,
+    queryFn: () => LearningResourceService.getSharedContents(params),
     enabled: true,
   }),
 
