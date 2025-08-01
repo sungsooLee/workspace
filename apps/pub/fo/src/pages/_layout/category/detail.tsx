@@ -1,18 +1,17 @@
+import { cn, getRandomId } from '@learnway/shared';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import React, { useState } from 'react';
-import { cn, getRandomId } from '@learnway/shared';
 
-import { isMobile } from 'react-device-detect';
-import { Arrays, Filter } from '../../../features/layout';
 import {
   IcoArray,
-  IcoDotpoints,
   IcoArrowDown,
-  IcoPlay,
-  IcoStar,
+  IcoDotpoints,
   IcoEye,
   IcoHeart,
+  IcoPlay,
+  IcoStar,
 } from '@learnway/icons';
+import { Arrays, Filter } from '../../../features/layout';
 
 import dropdownPopoverStyles from '../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
 import styles from './detail.module.css';
@@ -22,15 +21,15 @@ import bnrCImage2 from '@learnway/styles/fo/assets/images/banner/banner_category
 
 /* ThumbnailList */
 import bannerImg from '@learnway/styles/fo/assets/images/banner/img_banner_sample.jpg';
-import ThumbnailList from '../../-components/thumb/thumb-nail-list';
+import { Badge } from '@learnway/ui/badge';
 import { Button } from '@learnway/ui/button';
 import { Carousel } from '@learnway/ui/carousel';
 import { Dropdown } from '@learnway/ui/dropdown';
 import { EmptyText } from '@learnway/ui/empty-text';
 import { Input } from '@learnway/ui/input';
-import { Badge } from '@learnway/ui/badge';
-import { Popover } from '@learnway/ui/popover';
 import { Pagination } from '@learnway/ui/pagination';
+import { Popover } from '@learnway/ui/popover';
+import ThumbnailList from '../../-components/thumb/thumb-nail-list';
 
 export const Route = createFileRoute('/_layout/category/detail')({
   component: RouteComponent,
@@ -80,8 +79,9 @@ function RouteComponent() {
   // 리스트 정렬 버튼 제어
   const [isActive, setIsActive] = useState<boolean>(false);
 
-  const handleButtonClick = () => {
-    isActive ? setIsActive(false) : setIsActive(true);
+  const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const value = e.currentTarget.dataset.side;
+    setIsActive(value === 'left');
   };
 
   const item = [
@@ -568,13 +568,15 @@ function RouteComponent() {
                 onlyIcon={true}
                 icon={<IcoDotpoints width={20} height={20} fill="none" />}
                 className={cn(styles.btn_order, isActive ? styles.active : null)}
-                onClick={() => handleButtonClick()}
+                data-side="left"
+                onClick={handleButtonClick}
               />
               <Button
                 onlyIcon={true}
                 className={cn(styles.btn_order, !isActive ? styles.active : null)}
                 icon={<IcoArray width={20} height={20} fill="#fff" stroke="#131416" />}
-                onClick={() => handleButtonClick()}
+                data-side="right"
+                onClick={handleButtonClick}
               />
             </div>
           </div>

@@ -57,8 +57,9 @@ function RouteComponent() {
   // 리스트 정렬 버튼 제어
   const [isActive, setIsActive] = useState<boolean>(false);
 
-  const handleButtonClick = () => {
-    isActive ? setIsActive(false) : setIsActive(true);
+  const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const value = e.currentTarget.dataset.side;
+    setIsActive(value === 'left');
   };
 
   const item = [
@@ -329,13 +330,15 @@ function RouteComponent() {
                 onlyIcon={true}
                 icon={<IcoDotpoints width={20} height={20} fill="none" />}
                 className={cn(styles.btn_order, isActive ? styles.active : null)}
-                onClick={() => handleButtonClick()}
+                data-side="left"
+                onClick={handleButtonClick}
               />
               <Button
                 onlyIcon={true}
                 className={cn(styles.btn_order, !isActive ? styles.active : null)}
                 icon={<IcoArray width={20} height={20} fill="#fff" stroke="#131416" />}
-                onClick={() => handleButtonClick()}
+                data-side="right"
+                onClick={handleButtonClick}
               />
             </div>
           </div>
