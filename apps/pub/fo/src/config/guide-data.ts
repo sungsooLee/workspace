@@ -202,17 +202,17 @@ export const guideData = [
     screenName: 'M_최근 학습활동',
     layoutType: '', // 자동 분리됨 작성x
     pageId: '',
-    pageType: 'Page',
-    completionDate: '',
+    pageType: 'Pop-up',
+    completionDate: '2025-08-01',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- history-contents.tsx (pc, mobile 같이 사용)',
   },
   {
     screenId: 'NLP_FO_GNB_MA_1013',
     screenName: 'M_My',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: '/',
-    pageType: 'Page',
+    pageId: '',
+    pageType: 'Pop-up',
     completionDate: '2025-08-01',
     lastUpdateDate: '',
     remarks:
