@@ -266,14 +266,14 @@ const CompanyDetailComponent = (props: any, ref: any) => {
         />
       ),
       onClose(data: any) {
-        console.log('### selectedUserGroups', data);
         if (data) {
           setLoginRestrictTimeSettings((prev) => {
             const newSettings = [...prev];
-            newSettings[data.index] = {
-              ...newSettings[data.index],
+            newSettings[info.index] = {
+              ...newSettings[info.index],
               companyLoginRestrictionWhiteUserGroupList: data,
             };
+            console.log('### newSettings', data);
             return newSettings;
           });
         }
