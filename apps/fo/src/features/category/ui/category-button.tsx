@@ -158,7 +158,7 @@ const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
             </div>
           </div>
           {/* 최근방문 */}
-          <RecentVisits items={recentCategory}/>
+          <RecentVisits items={recentCategory} handleOnLink={childMenuHandleClick}/>
         </div>
       </ModalBody>
     </ModalContainer>

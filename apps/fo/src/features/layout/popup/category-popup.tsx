@@ -82,7 +82,10 @@ const CategoryPopupComponent = ({ activeTenantId }: CategoryPopupProps) => {
 
   const handleLinkClick = (id: number) => async (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
+    create({categoryId: id});
+  }
 
+  const onChipClickHandler = (id: number) => async () => {
     create({categoryId: id});
   }
 
@@ -106,7 +109,10 @@ const CategoryPopupComponent = ({ activeTenantId }: CategoryPopupProps) => {
       });
       const recent = recentCategory.map((item: any) => {
         return (
-          <Chip option={{ label: item.categoryName, value: item.categoryId }} />
+          <Chip
+            option={{ label: item.categoryName, value: item.categoryId }}
+            onClick={onChipClickHandler(item.categoryId)}
+          />
         )
       });
 

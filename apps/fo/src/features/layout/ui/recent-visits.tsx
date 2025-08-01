@@ -9,9 +9,10 @@ import { Navigation } from 'swiper/modules';
 
 interface RecentVisitsProps {
   items: SelectOption[];
+  handleOnLink: (categoryId: number) => void;
 }
 
-const RecentVisitsCompoment = ({items}: RecentVisitsProps) => {
+const RecentVisitsCompoment = ({items, handleOnLink}: RecentVisitsProps) => {
   const prevRef = useRef<HTMLDivElement | null>(null);
   const nextRef = useRef<HTMLDivElement | null>(null);
   const swiperRef = useRef<any>(null);
@@ -44,7 +45,7 @@ const RecentVisitsCompoment = ({items}: RecentVisitsProps) => {
         <div className={styles.lists}>
           {items.map((item, index) => (
             <SwiperSlide key={index} className={styles.slide}>
-              <Chip className={styles.item} option={{ label: item.label, value: item.value }} />
+              <Chip className={styles.item} option={{ label: item.label, value: item.value }} onClick={() => handleOnLink(item.value)}/>
             </SwiperSlide>
           ))}
         </div>
