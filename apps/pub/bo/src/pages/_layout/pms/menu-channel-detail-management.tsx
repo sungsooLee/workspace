@@ -1,10 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { cn } from '@learnway/shared';
-import { TableBox } from '@learnway/ui';
+import { createColumnHelper } from '@tanstack/react-table';
 
-import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
+import { TableBox } from '@learnway/ui/grid';
+
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
+import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 
 export const Route = createFileRoute('/_layout/pms/menu-channel-detail-management')({
   component: RouteComponent,

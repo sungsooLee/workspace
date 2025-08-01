@@ -1,15 +1,15 @@
 /* eslint-disable import/first */
+import { Tabs } from '@learnway/ui/tabs';
 import { createFileRoute } from '@tanstack/react-router';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import { Tabs } from '@learnway/ui';
 
 export const Route = createFileRoute('/_layout/pms/menu-tenant-user-management')({
   component: RouteComponent,
 });
 
 /* tab contents */
-import { TenantUser } from './-tabcontents/tenant-user'; // 유저
 import { TenantMemberApply } from './-tabcontents/tenant-member-apply'; // 회원가입 신청
+import { TenantUser } from './-tabcontents/tenant-user'; // 유저
 
 function RouteComponent() {
   const items = [

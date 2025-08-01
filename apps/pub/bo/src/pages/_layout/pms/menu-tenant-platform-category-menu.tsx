@@ -7,22 +7,19 @@ import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css'; // 타이틀 css
-import {
-  Button,
-  ContentsRow,
-  DndTreeView,
-  Input,
-  Switch,
-  Tabs,
-  Textarea,
-  Tooltip,
-  TreeContainer,
-  TreeNode,
-} from '@learnway/ui';
+
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import pageStyles from './tenant-menu-management.module.css';
 
 import { IcoAlertCircle, IcoFormRequired } from '@learnway/icons';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { Switch } from '@learnway/ui/switch';
+import { Tabs } from '@learnway/ui/tabs';
+import { Textarea } from '@learnway/ui/textarea';
+import { Tooltip } from '@learnway/ui/tooltip';
+import { DndTreeView, TreeContainer, TreeNode } from '@learnway/ui/tree-view';
 import { ContentsHistoryInfoFormField } from '../../../shared/ui/contents-history-info-form-field';
 
 export const Route = createFileRoute('/_layout/pms/menu-tenant-platform-category-menu')({

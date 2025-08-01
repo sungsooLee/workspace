@@ -1,13 +1,13 @@
+import { cn } from '@learnway/shared';
+import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
+import { Tabs } from '@learnway/ui/tabs';
 import { createFileRoute } from '@tanstack/react-router';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import pageStyles from './tenant-menu-management.module.css';
-import { Tabs } from '@learnway/ui';
-import { cn } from '@learnway/shared';
 
 /* tab contents */
-import { TenantPlatformLearningMenu } from './-tabcontents/tenant-platform-learning-menu'; // 학습자 메뉴
 import { TenantPlatformHrdMenu } from './-tabcontents/tenant-platform-hrd-menu'; // HRD 메뉴
+import { TenantPlatformLearningMenu } from './-tabcontents/tenant-platform-learning-menu'; // 학습자 메뉴
 
 export const Route = createFileRoute('/_layout/pms/menu-tenant-platform-learning-menu')({
   component: RouteComponent,

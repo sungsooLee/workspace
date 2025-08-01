@@ -1,15 +1,6 @@
 import { IcoFormRequired } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import {
-  Button,
-  ContentsRow,
-  FormSubTitle,
-  Input,
-  RadioGroupFormField,
-  Switch,
-  Tabs,
-  Textarea,
-} from '@learnway/ui';
+
 import { createFileRoute } from '@tanstack/react-router';
 import { useState } from 'react';
 import { ContentsHistoryInfoFormField } from '../../../shared/ui/contents-history-info-form-field';
@@ -20,6 +11,14 @@ import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.cs
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 
 /* tab contents */
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { RadioGroupFormField } from '@learnway/ui/form-field';
+import { Input } from '@learnway/ui/input';
+import { Switch } from '@learnway/ui/switch';
+import { Tabs } from '@learnway/ui/tabs';
+import { Textarea } from '@learnway/ui/textarea';
 import { DirectSetting } from './-tabcontents/direct-setting'; // 직접 설정
 import { LearningExceptionSetting } from './-tabcontents/learning-exception-setting'; // 학습자 제외 설정
 import { UserGroupSetting } from './-tabcontents/user-group-setting'; // 유저그룹 설정

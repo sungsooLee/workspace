@@ -1,6 +1,7 @@
 import { IcoFormRequired, IcoPpt, IcoRefresh02, IcoSearch, IcoTrash03 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import { createFileRoute } from '@tanstack/react-router';
+
 import { useState } from 'react';
 import { ContentsHistoryInfoFormField } from '../../../shared/ui/contents-history-info-form-field';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
@@ -12,23 +13,16 @@ import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.modu
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
 
-import {
-  Button,
-  ContentsRow,
-  Divider,
-  Dropdown,
-  FormSubTitle,
-  GridBox,
-  Input,
-  InputModalSelectorFormField,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  RadioGroupFormField,
-  Textarea,
-  useModal,
-} from '@learnway/ui';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { Divider } from '@learnway/ui/elements';
+import { InputModalSelectorFormField, RadioGroupFormField } from '@learnway/ui/form-field';
+import { GridBox } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { Textarea } from '@learnway/ui/textarea';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
 export const Route = createFileRoute('/_layout/pms/menu-education-register-detail')({
