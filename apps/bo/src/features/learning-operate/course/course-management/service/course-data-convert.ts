@@ -69,21 +69,20 @@ export const formDataToRequestData = (d: Course) => {
   }
 
   // 카테고리 아이디 배열
-  d.categoryIds = d.categories?.map((d: any) => d.categoryId);
+  d.categoryIds = (d.categories || [])?.map((d: any) => d.categoryId);
   // 대표 카테고리
   d.primaryCategoryId = d.primaryCategoryId || d.categories?.[0]?.categoryId;
 
   // 학습대상 - TODO targetList == '' 인 경우가 있음 (원인 파악전까지)
-  d.targetList = Array.isArray(d.targetList) ? d.targetList : undefined;
   // 학습대상-ID 배열
-  d.targetListIds = d.targetList?.map((d: any) => d.id);
+  d.targetListIds = (d.targetList || [])?.map((d: any) => d.id);
 
   // 사전 필수과정
-  const preRequisiteCourseIds = d.preRequisiteCourseList
+  const preRequisiteCourseIds = (d.preRequisiteCourseList || [])
     ?.map((d) => d.courseId)
     ?.filter((id): id is number => id !== undefined);
   // 연관 과정
-  const relatedCourseIds = d.relatedCourseList
+  const relatedCourseIds = (d.relatedCourseList || [])
     ?.map((d) => d.courseId)
     ?.filter((id): id is number => id !== undefined);
 

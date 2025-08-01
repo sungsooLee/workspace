@@ -4,7 +4,12 @@ import { CourseChoiceModal } from '@features/learning-operate/course/course-mana
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import { FormSubTitle } from '@learnway/ui/base-form';
 import { SplitPanel } from '@learnway/ui/elements';
-import { CheckboxGroupFormField, ChipListModalSelectorFormField, InputModalSelectorFormField, RadioGroupFormField } from '@learnway/ui/form-field';
+import {
+  CheckboxGroupFormField,
+  ChipListModalSelectorFormField,
+  InputModalSelectorFormField,
+  RadioGroupFormField,
+} from '@learnway/ui/form-field';
 import { FormRow, FormRow2, PassOptionFormField, SwitchFormField } from '@shared/ui';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -27,7 +32,8 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
   console.log('----- basic', {
     channelUuid,
     courseType,
-    values: getValues() });
+    values: getValues(),
+  });
 
   return (
     <div>
@@ -52,7 +58,8 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
             element={
               <RadioGroupFormField
                 optionsConfig={{
-                  codeGroup: CODE_GROUP['lms.course.DeviceRestrictType'] }}
+                  codeGroup: CODE_GROUP['lms.course.DeviceRestrictType'],
+                }}
               />
             }
           />
@@ -65,7 +72,8 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
             element={
               <RadioGroupFormField
                 optionsConfig={{
-                  codeGroup: CODE_GROUP['mock.options.use'] }}
+                  codeGroup: CODE_GROUP['mock.options.use'],
+                }}
               />
             }
           />
@@ -77,7 +85,8 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
             element={
               <RadioGroupFormField
                 optionsConfig={{
-                  codeGroup: CODE_GROUP['lms.course.LearningRestrictTimeType'] }}
+                  codeGroup: CODE_GROUP['lms.course.LearningRestrictTimeType'],
+                }}
               />
             }
           />
@@ -111,8 +120,10 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
                             />
                           }
                         />
-                      ) },
-                  ] }}
+                      ),
+                    },
+                  ],
+                }}
               />
             }
           />
@@ -125,7 +136,8 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
             element={
               <RadioGroupFormField
                 optionsConfig={{
-                  codeGroup: CODE_GROUP['mock.options.use'] }}
+                  codeGroup: CODE_GROUP['mock.options.use'],
+                }}
               />
             }
           />
@@ -138,7 +150,8 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
             element={
               <RadioGroupFormField
                 optionsConfig={{
-                  codeGroup: CODE_GROUP['mock.options.use'] }}
+                  codeGroup: CODE_GROUP['mock.options.use'],
+                }}
               />
             }
           />
@@ -190,8 +203,10 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
                             />
                           }
                         />
-                      ) },
-                  ] }}
+                      ),
+                    },
+                  ],
+                }}
               />
             }
           />
@@ -204,7 +219,8 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
             element={
               <RadioGroupFormField
                 optionsConfig={{
-                  codeGroup: CODE_GROUP['mock.options.use'] }}
+                  codeGroup: CODE_GROUP['mock.options.use'],
+                }}
               />
             }
           />
@@ -217,7 +233,8 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
             element={
               <RadioGroupFormField
                 optionsConfig={{
-                  codeGroup: CODE_GROUP['mock.options.use'] }}
+                  codeGroup: CODE_GROUP['mock.options.use'],
+                }}
               />
             }
           />
@@ -233,7 +250,8 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
             element={
               <RadioGroupFormField
                 optionsConfig={{
-                  codeGroup: CODE_GROUP['mock.options.use'] }}
+                  codeGroup: CODE_GROUP['mock.options.use'],
+                }}
               />
             }
           />
@@ -245,7 +263,8 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
             element={
               <RadioGroupFormField
                 optionsConfig={{
-                  codeGroup: CODE_GROUP['cms.video.PlayBackRate'] }}
+                  codeGroup: CODE_GROUP['cms.video.PlayBackRate'],
+                }}
               />
             }
           />
@@ -275,7 +294,8 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
             element={
               <RadioGroupFormField
                 optionsConfig={{
-                  codeGroup: CODE_GROUP['lms.course.PassMethodType'] }}
+                  codeGroup: CODE_GROUP['lms.course.PassMethodType'],
+                }}
               />
             }
           />
@@ -288,7 +308,8 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
             element={
               <RadioGroupFormField
                 optionsConfig={{
-                  codeGroup: CODE_GROUP['mock.options.use'] }}
+                  codeGroup: CODE_GROUP['mock.options.use'],
+                }}
               />
             }
           />
@@ -312,8 +333,10 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
                           name={'recognizedStudyPoint'}
                           element={<Input type={'number'} min={0} suffixText={t('포인트')} />}
                         />
-                      ) },
-                  ] }}
+                      ),
+                    },
+                  ],
+                }}
               />
             }
           />
@@ -350,7 +373,8 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
                           format={'number'}
                           element={<Input type={'number'} min={0} suffixText={t('분')} />}
                         />
-                      ) },
+                      ),
+                    },
                     {
                       value: 'COUNT_TIME', // 회수 및 학습시간
                       node: (
@@ -370,8 +394,10 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
                             element={<Input type={'number'} min={0} suffixText={t('분')} />}
                           />
                         </SplitPanel>
-                      ) },
-                  ] }}
+                      ),
+                    },
+                  ],
+                }}
               />
             }
           />
@@ -406,7 +432,8 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
             element={
               <RadioGroupFormField
                 optionsConfig={{
-                  codeGroup: CODE_GROUP['mock.options.use'] }}
+                  codeGroup: CODE_GROUP['mock.options.use'],
+                }}
               />
             }
           />
@@ -419,7 +446,8 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
             element={
               <RadioGroupFormField
                 optionsConfig={{
-                  codeGroup: CODE_GROUP['mock.options.use'] }}
+                  codeGroup: CODE_GROUP['mock.options.use'],
+                }}
               />
             }
           />
@@ -430,10 +458,12 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
             name={'communityList'}
             label={t('커뮤니티')}
             format={'array'}
+            type={'array'}
             element={
               <CheckboxGroupFormField
                 optionsConfig={{
-                  codeGroup: CODE_GROUP['lms.course.CommunityType'] }}
+                  codeGroup: CODE_GROUP['lms.course.CommunityType'],
+                }}
               />
             }
           />
@@ -445,7 +475,8 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
             element={
               <RadioGroupFormField
                 optionsConfig={{
-                  codeGroup: CODE_GROUP['mock.options.use'] }}
+                  codeGroup: CODE_GROUP['mock.options.use'],
+                }}
               />
             }
           />
@@ -479,15 +510,43 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
                   codeGroup: CODE_GROUP['lms.course.InstructorAssignType'],
                   optionsNode: [
                     {
+                      value: 'REGISTERED', // 강사선택
+                      node: (
+                        // 강사 직접입력
+                        <FormRow2
+                          provider={provider}
+                          name={'instructorName'}
+                          label={''}
+                          element={
+                            <InputModalSelectorFormField
+                              modalConfig={{
+                                content: <InstructorListPopup />,
+                              }}
+                              transformModalData={(modalData: any) => {
+                                return {
+                                  instructorId: modalData.instructorId,
+                                  instructorName: modalData.instructorName,
+                                };
+                              }}
+                            />
+                          }
+                        />
+                      ),
+                    },
+                    {
                       value: 'MANUAL', // 직접입력
                       node: (
                         // 강사 직접입력
                         <FormRow2 provider={provider} name={'instructorName'} element={<Input />} />
-                      ) },
-                  ] }}
+                      ),
+                    },
+                  ],
+                }}
               />
             }
           />
+          {/* 강사 ID */}
+          <FormRow2 provider={provider} name={'instructorId'} format={'number'} type={'hidden'} />
         </ContentsRow>
       </FormDisplay>
 
@@ -548,16 +607,19 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
             element={
               <ChipListModalSelectorFormField
                 modalConfig={{
+                  width: 'xl',
                   content: (
                     <CourseChoiceModal
                       tenantIds={getValues()?.tenantIds}
                       channelUuid={getValues()?.channelUuid}
                     />
-                  ) }}
+                  ),
+                }}
                 chipList={{
                   labelField: 'courseName',
                   valueField: 'courseId',
-                  wordwrap: true }}
+                  wordwrap: true,
+                }}
                 showAddButton
               />
             }
@@ -573,16 +635,19 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
             element={
               <ChipListModalSelectorFormField
                 modalConfig={{
+                  width: 'xl',
                   content: (
                     <CourseChoiceModal
                       tenantIds={getValues()?.tenantIds}
                       channelUuid={getValues()?.channelUuid}
                     />
-                  ) }}
+                  ),
+                }}
                 chipList={{
                   labelField: 'courseName',
                   valueField: 'courseId',
-                  wordwrap: true }}
+                  wordwrap: true,
+                }}
                 showAddButton
               />
             }
@@ -602,7 +667,8 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           element={
             <DropdownFormField
               optionsConfig={{
-                codeGroup: CODE_GROUP['lms.course.HmgStandardMainCategory'] }}
+                codeGroup: CODE_GROUP['lms.course.HmgStandardMainCategory'],
+              }}
             />
           }
         />
@@ -614,7 +680,8 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           element={
             <DropdownFormField
               optionsConfig={{
-                codeGroup: CODE_GROUP['lms.course.HmgStandardSubCategory'] }}
+                codeGroup: CODE_GROUP['lms.course.HmgStandardSubCategory'],
+              }}
             />
           }
         />
@@ -642,8 +709,10 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
                         format={'number'}
                         element={<Input type={'number'} min={0} suffixText={t('원')} />}
                       />
-                    ) },
-                ] }}
+                    ),
+                  },
+                ],
+              }}
             />
           }
         />
@@ -668,8 +737,10 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
                         format={'number'}
                         element={<Input type={'number'} min={0} suffixText={t('원')} />}
                       />
-                    ) },
-                ] }}
+                    ),
+                  },
+                ],
+              }}
             />
           }
         />
@@ -685,7 +756,8 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
           element={
             <RadioGroupFormField
               optionsConfig={{
-                codeGroup: CODE_GROUP['mock.options.use'] }}
+                codeGroup: CODE_GROUP['mock.options.use'],
+              }}
             />
           }
         />
@@ -715,7 +787,8 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
             element={
               <RadioGroupFormField
                 optionsConfig={{
-                  codeGroup: CODE_GROUP['mock.options.use'] }}
+                  codeGroup: CODE_GROUP['mock.options.use'],
+                }}
               />
             }
           />
@@ -728,7 +801,8 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
             element={
               <RadioGroupFormField
                 optionsConfig={{
-                  codeGroup: CODE_GROUP['mock.options.use'] }}
+                  codeGroup: CODE_GROUP['mock.options.use'],
+                }}
               />
             }
           />
@@ -743,11 +817,13 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
             element={
               <InputModalSelectorFormField
                 modalConfig={{
-                  content: <InstructorListPopup /> }}
+                  content: <InstructorListPopup />,
+                }}
                 transformModalData={(modalData: any) => {
                   return {
                     tutorId: modalData.instructorId,
-                    tutorName: modalData.instructorName };
+                    tutorName: modalData.instructorName,
+                  };
                 }}
               />
             }
@@ -762,11 +838,13 @@ const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
             element={
               <InputModalSelectorFormField
                 modalConfig={{
-                  content: <InstructorListPopup /> }}
+                  content: <InstructorListPopup />,
+                }}
                 transformModalData={(modalData: any) => {
                   return {
                     outsourcingCompanyId: modalData.instructorId,
-                    outsourcingCompanyName: modalData.instructorName };
+                    outsourcingCompanyName: modalData.instructorName,
+                  };
                 }}
               />
             }

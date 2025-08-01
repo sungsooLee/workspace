@@ -463,7 +463,8 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
         dynamicBuilders.forEach((prop) => {
           const value = data[prop.name];
           // TODO date-range 에 대한 form data set 변경이 필요한경우 여기에 작성
-          objectParams[prop.name] = value ?? '';
+          objectParams[prop.name] = value;
+          // objectParams[prop.name] = value ?? '';
         });
 
         onValid(objectParams);
