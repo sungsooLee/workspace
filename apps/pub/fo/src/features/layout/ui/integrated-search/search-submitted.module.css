@@ -29,5 +29,16 @@
         @apply title2 mt-[4px] text-[var(--gray25)];
       }
     }
+    .result_wrap {
+      .recommand_view {
+        @apply flex;
+        [class*='nlp--thumbnail'] {
+          @apply w-[324px] shrink-0;
+        }
+        .info_wrap {
+          @apply ml-[16px] flex flex-1 flex-col flex-wrap;
+        }
+      }
+    }
   }
 }
