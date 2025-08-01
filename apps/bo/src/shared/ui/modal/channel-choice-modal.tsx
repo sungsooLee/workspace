@@ -10,7 +10,7 @@ import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import { SearchBox, TenantByRoleDropdownFormField } from '@shared/ui';
 import { t } from 'i18next';
-import { chain, get } from 'lodash-es';
+import { get } from 'lodash-es';
 import { useMemo, useState } from 'react';
 
 interface Channel {
@@ -30,12 +30,11 @@ const ChannelChoicePopupComponent = () => {
         return { data: [] };
       };
     return ({ tenantId, channelName }: { tenantId: number; channelName: string }) => {
-      const channels = chain(channel)
+      const channels = channel
         .filter((c) => Boolean(c.tenantList.find((t) => t.tenantId === tenantId))) // tenant 필터
         .filter(
           (c) => !channelName || c.channelName.toLowerCase().includes(channelName.toLowerCase()),
-        ) // 이름 필터
-        .value();
+        ); // 이름 필터
       console.log('🚀 ~ return ~ channels:', channels);
       return {
         data: channels,
