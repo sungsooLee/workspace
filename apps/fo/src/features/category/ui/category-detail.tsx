@@ -70,7 +70,7 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
 
   const [depth, setDepth] = useState(3);
   const [page, setPage] = useState(0);
-  const [size , setSize] = useState(4);
+  const [size , setSize] = useState(20);
   const [sorting, setSorting] = useState(['createdDate,DESC']);
   const [courseName, setCourseName] = useState('');
   const [searchResult, setSearchResult] = useState('');
@@ -238,13 +238,13 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
                   <div
                     className={`${dropdownPopoverStyles.start} ${dropdownPopoverStyles.dropdown_wrap}`}
                   >
-                    <Popover.Close onClick={() => handlePageSizeChange(4)}>
+                    <Popover.Close onClick={() => handlePageSizeChange(20)}>
                       {20 + t('개씩')}
                     </Popover.Close>
-                    <Popover.Close onClick={() => handlePageSizeChange(6)}>
+                    <Popover.Close onClick={() => handlePageSizeChange(50)}>
                       {50 + t('개씩')}
                     </Popover.Close>
-                    <Popover.Close onClick={() => handlePageSizeChange(8)}>
+                    <Popover.Close onClick={() => handlePageSizeChange(80)}>
                       {80 + t('개씩')}
                     </Popover.Close>
                   </div>
