@@ -1,5 +1,5 @@
-import { PageContainer } from '@shared/ui';
 import { useModal } from '@learnway/ui/modal';
+import { PageContainer } from '@shared/ui';
 // IA105 / NLP_BO_CMS_1058 // IA105 / NLP_BO_CMS_1017 // IA106 / NLP_BO_CMS_1060
 import {
   usePostDraftETC,
@@ -12,8 +12,8 @@ import {
   LearningResourceFileUploadModal,
   LearningTypeChoiceModal,
 } from '@features/learning-resource';
-import { ChannelChoiceModal } from '@shared/ui';
 import { getDefaultLang, LEARNING_TYPE } from '@learnway/config';
+import { ChannelChoiceModal } from '@shared/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import {
   PostDraftETCRes,
@@ -302,8 +302,8 @@ function RouteComponent() {
         break;
       }
       // 외부위탁
-      case LEARNING_TYPE.EXTERNAL_CONSIGNMENT: {
-        router.navigate({ to: '/learning/resource/external_consignment/view', replace: true });
+      case LEARNING_TYPE.COMMISSIONED_CONTENT: {
+        router.navigate({ to: '/learning/resource/commission-contents/view', replace: true });
         break;
       }
       // 블로그
