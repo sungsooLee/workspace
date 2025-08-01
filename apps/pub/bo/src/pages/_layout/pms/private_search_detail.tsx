@@ -1,21 +1,20 @@
-/* eslint-disable @nx/enforce-module-boundaries */
 import { createFileRoute } from '@tanstack/react-router';
-import { cn } from '@learnway/shared';
-import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
+
 import {
-  Input,
-  RadioGroup,
-  ContentsRow,
-  PhoneNumber,
-  Textarea,
   ChipList,
+  ContentsRow,
   FormSubTitle,
+  Input,
+  PhoneNumber,
+  RadioGroup,
+  Textarea,
 } from '@learnway/ui';
+import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 
 /* style */
-import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import { ContentsHistoryInfoFormField } from '../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
+import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
+import { ContentsHistoryInfoFormField } from '../../../shared/ui/contents-history-info-form-field';
 
 export const Route = createFileRoute('/_layout/pms/private_search_detail')({
   component: RouteComponent,

@@ -1,10 +1,10 @@
 /* eslint-disable no-restricted-imports */
 /* eslint-disable import/first */
 /* eslint-disable @nx/enforce-module-boundaries */
+import { Tabs } from '@learnway/ui/tabs';
 import { createFileRoute } from '@tanstack/react-router';
-import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { MainContents } from '../../../../../../bo/src/shared/ui/layout/slot/main-contents';
-import { Tabs } from '@learnway/ui';
+import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 
 export const Route = createFileRoute('/_layout/lms/procedure-open-setting')({
   component: RouteComponent,

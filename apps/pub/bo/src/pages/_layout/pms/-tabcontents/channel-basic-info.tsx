@@ -1,28 +1,28 @@
-/* eslint-disable @nx/enforce-module-boundaries */
 import { FC, useState } from 'react';
-import { cn } from '@learnway/shared';
+
 import { IcoFormRequired } from '@learnway/icons';
+import { cn } from '@learnway/shared';
 import {
-  ContentsRow,
   Button,
-  Input,
-  Textarea,
-  RadioGroupFormField,
   ChipListModalSelectorFormField,
+  ContentsRow,
+  Input,
+  ModalBody,
+  ModalContainer,
+  ModalFooter,
+  ModalTitle,
+  RadioGroupFormField,
   Switch,
   Tabs,
+  Textarea,
   useModal,
-  ModalBody,
-  ModalTitle,
-  ModalFooter,
-  ModalContainer,
 } from '@learnway/ui';
-import { ContentsHistoryInfoFormField } from '../../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
+import { ContentsHistoryInfoFormField } from '../../../../shared/ui/contents-history-info-form-field';
 
 /* style */
-import styles from './channel-basic-info.module.css';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
+import styles from './channel-basic-info.module.css';
 
 const ChannelBasicInfoComponent: FC<{}> = ({}) => {
   const [checked, setChecked] = useState<{ [key: number]: boolean }>({

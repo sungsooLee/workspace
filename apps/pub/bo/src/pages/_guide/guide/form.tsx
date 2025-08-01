@@ -1,11 +1,10 @@
-/* eslint-disable @nx/enforce-module-boundaries */
 import { createFileRoute } from '@tanstack/react-router';
 import { useState } from 'react';
 
 import { S3_PATH, useS3Uploader } from '@learnway/hooks';
 import { IcoAlertCircle, IcoCloseCircle, IcoFormRequired, IcoPaperClip } from '@learnway/icons';
 import { cn, SelectOption } from '@learnway/shared';
-import { ContentsHistoryInfoFormField } from '../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
+import { ContentsHistoryInfoFormField } from '../../../shared/ui/contents-history-info-form-field';
 
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form

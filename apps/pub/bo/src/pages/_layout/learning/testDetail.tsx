@@ -1,13 +1,14 @@
 import { createFileRoute } from '@tanstack/react-router';
+
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import { Tabs } from '@learnway/ui';
 
 /* style */
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 
 /* tab contents */
-import { TestInfo } from './-tabcontents/test-info'; // 시험지 정보(OMR 시험지)
+import { Tabs } from '@learnway/ui/tabs';
 import { QuestionInfo } from './-tabcontents/question-info'; // 문항 추가(랜덤형)
+import { TestInfo } from './-tabcontents/test-info'; // 시험지 정보(OMR 시험지)
 
 export const Route = createFileRoute('/_layout/learning/testDetail')({
   component: RouteComponent,

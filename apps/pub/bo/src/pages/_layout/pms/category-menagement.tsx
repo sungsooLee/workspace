@@ -1,18 +1,24 @@
-/* eslint-disable @nx/enforce-module-boundaries */
 import { createFileRoute } from '@tanstack/react-router';
 import { useState } from 'react';
-import { cn } from '@learnway/shared';
-import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import { ContentsHistoryInfoFormField } from '../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
-/* style  */
-import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
-import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
-import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css'; // 타이틀 css
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
-import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 
-import { Button, ContentsRow, Textarea, Input, Tooltip, Switch } from '@learnway/ui';
-import { IcoFormRequired, IcoAlertCircle } from '@learnway/icons';
+import { cn } from '@learnway/shared';
+
+import { ContentsHistoryInfoFormField } from '../../../shared/ui/contents-history-info-form-field';
+import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
+/* style  */
+import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
+import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
+import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
+import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css'; // 타이틀 css
+
+import { IcoAlertCircle, IcoFormRequired } from '@learnway/icons';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { Switch } from '@learnway/ui/switch';
+import { Textarea } from '@learnway/ui/textarea';
+import { Tooltip } from '@learnway/ui/tooltip';
 
 export const Route = createFileRoute('/_layout/pms/category-menagement')({
   component: RouteComponent,

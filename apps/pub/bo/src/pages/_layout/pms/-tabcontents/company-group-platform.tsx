@@ -1,29 +1,29 @@
-/* eslint-disable @nx/enforce-module-boundaries */
 import { FC, useState } from 'react';
+
+import { IcoFormRequired, IcoMinus, IcoRefresh02, IcoSearch } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { IcoMinus, IcoFormRequired, IcoRefresh02, IcoSearch } from '@learnway/icons';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import {
-  TreeBox,
-  TreeContainer,
-  TreeNode,
-  Input,
   Button,
-  ContentsRow,
-  Textarea,
   ChipListModalSelectorFormField,
-  useModal,
+  ContentsRow,
+  Divider,
+  Dropdown,
+  FormSubTitle,
+  GridBox,
+  Input,
   ModalBody,
   ModalContainer,
   ModalFooter,
   ModalTitle,
-  Divider,
-  Dropdown,
-  GridBox,
-  FormSubTitle,
+  Textarea,
+  TreeBox,
+  TreeContainer,
+  TreeNode,
+  useModal,
 } from '@learnway/ui';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { SectionLayout } from '../../-components/section-layout';
-import { ContentsHistoryInfoFormField } from '../../../../../../../bo/src/shared/ui/form';
+import { ContentsHistoryInfoFormField } from '../../../../shared/ui/contents-history-info-form-field';
 
 /* style */
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';

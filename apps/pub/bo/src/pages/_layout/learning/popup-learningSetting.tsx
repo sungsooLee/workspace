@@ -1,38 +1,32 @@
-/* eslint-disable @nx/enforce-module-boundaries */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import {
-  Button,
-  Checkbox,
-  ContentsRow,
-  DatePicker,
-  Dropdown,
-  GridBox,
-  Input,
-  InputModalSelectorFormField,
-  List,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  PhoneNumber,
-  SplitPanel,
-  Switch,
-  Tooltip,
-  useModal,
-  FormSubTitle,
-} from '@learnway/ui';
+import { useEffect, useState } from 'react';
+
 import { IcoAlertCircle, IcoFormRequired, IcoRefresh02, IcoSearch } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 
 /* CSS */
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form module css
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
-import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
-import popSearchStyles from '@learnway/styles/bo/assets/styles/modules/popup-search.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form module css
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
+import popSearchStyles from '@learnway/styles/bo/assets/styles/modules/popup-search.module.css';
+import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { Checkbox } from '@learnway/ui/checkbox';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { DatePicker } from '@learnway/ui/date-picker';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { SplitPanel } from '@learnway/ui/elements';
+import { InputModalSelectorFormField } from '@learnway/ui/form-field';
+import { GridBox } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
+import { List } from '@learnway/ui/list';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { PhoneNumber } from '@learnway/ui/phone-number';
+import { Switch } from '@learnway/ui/switch';
+import { Tooltip } from '@learnway/ui/tooltip';
 import styles from './settimg-item.module.css'; // 화면 css
 
 export const Route = createFileRoute('/_layout/learning/popup-learningSetting')({

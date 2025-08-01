@@ -1,13 +1,13 @@
-/* eslint-disable @nx/enforce-module-boundaries */
 import { FC, useState } from 'react';
+
 import { cn } from '@learnway/shared';
-import { ContentsHistoryInfoFormField } from '../../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
+import { ContentsHistoryInfoFormField } from '../../../../shared/ui/contents-history-info-form-field';
 /* css */
-import styles from './tenant-attribute01.module.css';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import { IcoAlertCircle, IcoFormRequired } from '@learnway/icons';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
-import { IcoFormRequired, IcoAlertCircle } from '@learnway/icons';
-import { ContentsRow, Input, Switch, Tooltip, Button } from '@learnway/ui';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import { Button, ContentsRow, Input, Switch, Tooltip } from '@learnway/ui';
+import styles from './tenant-attribute01.module.css';
 // eslint-disable-next-line no-empty-pattern
 const TenantAttribute01Component: FC<{}> = ({}) => {
   // switch

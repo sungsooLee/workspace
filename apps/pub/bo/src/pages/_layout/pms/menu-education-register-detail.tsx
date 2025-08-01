@@ -1,35 +1,33 @@
-/* eslint-disable no-restricted-imports */
-/* eslint-disable @nx/enforce-module-boundaries */
-import { useState } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
+import { IcoFormRequired, IcoPpt, IcoRefresh02, IcoSearch, IcoTrash03 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { IcoRefresh02, IcoSearch, IcoFormRequired, IcoTrash03, IcoPpt } from '@learnway/icons';
+import { createFileRoute } from '@tanstack/react-router';
+import { useState } from 'react';
+import { ContentsHistoryInfoFormField } from '../../../shared/ui/contents-history-info-form-field';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import { ContentsHistoryInfoFormField } from '../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
 
-import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
-import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import fileUploadStyles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css'; // 파일 업로드
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
+import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
+import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
 
 import {
   Button,
-  Input,
-  Dropdown,
   ContentsRow,
+  Divider,
+  Dropdown,
+  FormSubTitle,
+  GridBox,
+  Input,
   InputModalSelectorFormField,
   ModalBody,
   ModalContainer,
   ModalFooter,
   ModalTitle,
-  useModal,
-  GridBox,
-  Textarea,
   RadioGroupFormField,
-  Divider,
-  FormSubTitle,
+  Textarea,
+  useModal,
 } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 

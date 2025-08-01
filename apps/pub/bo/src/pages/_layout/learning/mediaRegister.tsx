@@ -1,10 +1,8 @@
-/* eslint-disable no-restricted-imports */
-/* eslint-disable @nx/enforce-module-boundaries */
 import { createFileRoute } from '@tanstack/react-router';
 import { useState } from 'react';
 
 import { cn, getRandomId, SelectOption } from '@learnway/shared';
-import { ContentsHistoryInfoFormField } from '../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
+import { ContentsHistoryInfoFormField } from '../../../shared/ui/contents-history-info-form-field';
 
 import movieInfoStyles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';

@@ -1,32 +1,27 @@
-/* eslint-disable @nx/enforce-module-boundaries */
+import { createFileRoute } from '@tanstack/react-router';
 import { useState } from 'react';
-import { createFileRoute, Link } from '@tanstack/react-router';
+
 import { IcoRefresh02, IcoSearch } from '@learnway/icons';
-import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { ContentsHistoryInfoFormField } from '../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
+import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
+
+import { IcoFormRequired } from '@learnway/icons';
+import { cn } from '@learnway/shared';
+import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
+import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
-import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
-import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css'; // 타이틀 css
-import { cn } from '@learnway/shared';
-import { IcoFormRequired } from '@learnway/icons';
-
-import {
-  Button,
-  GridBox,
-  DatePicker,
-  Switch,
-  // ThumbnailImageUpload,
-  // ChipList,
-  // SelectOption,
-  Input,
-  Dropdown,
-  ContentsRow,
-  Divider,
-} from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { DatePicker } from '@learnway/ui/date-picker';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { Divider } from '@learnway/ui/elements';
+import { GridBox } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
+import { Switch } from '@learnway/ui/switch';
+import { ContentsHistoryInfoFormField } from '../../../shared/ui/contents-history-info-form-field';
 
 export const Route = createFileRoute('/_layout/pms/menu-platform-common-group')({
   component: RouteComponent,

@@ -1,34 +1,28 @@
-/* eslint-disable @nx/enforce-module-boundaries */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import {
-  Button,
-  useModal,
-  ModalTitle,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ContentsRow,
-  RadioGroupFormField,
-  Textarea,
-  Switch,
-  Input,
-  TableBox,
-  Checkbox,
-  Dropdown,
-  FormSubTitle,
-} from '@learnway/ui';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { cn } from '@learnway/shared';
+import { useEffect, useState } from 'react';
+
 import { IcoFormRequired, IcoMenu01 } from '@learnway/icons';
+import { cn } from '@learnway/shared';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
 /* style */
+import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import uploadStyles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css'; // 파일 업로드
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { Checkbox } from '@learnway/ui/checkbox';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { RadioGroupFormField } from '@learnway/ui/form-field';
+import { TableBox } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { Switch } from '@learnway/ui/switch';
+import { Textarea } from '@learnway/ui/textarea';
 import styles from './popup-question-detail.module.css';
 
 export const Route = createFileRoute('/_layout/learning/popup-question-detail')({
