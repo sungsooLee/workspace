@@ -14,7 +14,7 @@ function RouteComponent() {
   const [isOpen, setIsOpen] = useState<boolean>(true);
 
   const PopoverContent = () => {
-    const [searchState, setSearchState] = useState<SearchState>('before'); // ✅ 상태 선언
+    const [searchState, setSearchState] = useState<SearchState>('before'); // 화면 초기 설정
 
     const handleBack = () => {
       setSearchState('typing');
