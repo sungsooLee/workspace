@@ -313,6 +313,7 @@ const BasicInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) 
           provider={provider}
           name={'coordinatorEmail'}
           label={t('이메일')}
+          validation={{ required: true }}
           element={<Input />}
         />
         {/*담당자 ID - hidden */}
