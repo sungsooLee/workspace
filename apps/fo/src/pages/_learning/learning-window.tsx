@@ -22,7 +22,11 @@ import {
   useGetVideoWatchInitialize,
   useVideoWatchLog,
 } from '@entities/learning-resource/service/learning-resource.hook';
-import { CmsEnContentType } from '@learnway/types';
+import {
+  CmsEnContentType,
+  CmsVideoWatchLogReq,
+  CmsVideoWatchLogStatisticsReq,
+} from '@learnway/types';
 
 export const Route = createFileRoute('/_learning/learning-window')({
   component: RouteComponent,
@@ -67,11 +71,11 @@ function RouteComponent() {
 
   const { videoWatchLog, videoWatchLogStatistics } = useVideoWatchLog();
 
-  const handleVideoProgress = async (payload: any) => {
+  const handleVideoProgress = async (payload: CmsVideoWatchLogReq) => {
     console.log('handleVideo', payload);
     videoWatchLog(payload);
   };
-  const handleVideoWatchStatistics = async (payload: any) => {
+  const handleVideoWatchStatistics = async (payload: CmsVideoWatchLogStatisticsReq) => {
     console.log('handelVideoWatchStatistics', payload);
     videoWatchLogStatistics(payload);
   };

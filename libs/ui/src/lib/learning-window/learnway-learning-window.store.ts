@@ -93,15 +93,20 @@ interface Module {
   contentUuid: string;
   orgnId: number;
   itemId: number;
+  scoId: string;
+  contentType: CmsEnContentType;
+  lessonName: string;
 }
 
 /** 레슨 정보 */
 interface Lesson {
   lessonId: number;
+  contentType: CmsEnContentType;
   contentUuid: string;
+  itemId: number;
   orgnId?: number;
   scoId?: string;
-  contentType: CmsEnContentType;
+  lessonName: string;
 }
 
 /** 스콤 및 비디오 player 에서 사용할 함수 정보 */
@@ -121,7 +126,7 @@ interface FunctionInfomation {
   /** 커리큘럼의 모든 lesson의 진척 조회 함수 */
   lessonProgress: (payload: CmsContentProgressMultiReq) => Promise<CmsContentProgressMultiRes>;
   /** 기타/라이브/링크 클릭 */
-  otherClickButton: (playInfo: LearningWindowPlayInfo, otherInfo: any) => Promise<void>;
+  otherClickButton: (playInfo: LearningWindowPlayInfo, otherInfo: CmsOtherInfo) => Promise<void>;
 }
 
 interface LearningWindowStoreData {
@@ -305,7 +310,7 @@ export const useLearningWindow = () => {
             itemId: module.itemId,
           });
         } else if (module.lessonList) {
-          module.lessonList.forEach((lesson: any) => {
+          module.lessonList.forEach((lesson) => {
             contents.push({
               courseSequenceId: _baseInfo?.sequenceId,
               courseId: _baseInfo?.courseId,
@@ -343,8 +348,8 @@ export const useLearningWindow = () => {
    * @returns
    */
   const genPlayInfoByCurriculum = (
-    nowBaseInfo: any,
-    nowCurriculum: any,
+    nowBaseInfo: LearningWindowBaseInfo,
+    nowCurriculum: Curriculum,
     moduleId?: number,
     lessonId?: number,
   ): LearningWindowPlayInfo | undefined => {
@@ -396,7 +401,7 @@ export const useLearningWindow = () => {
   };
 
   const setPlayListByCurriculum = (curriculum: any) => {
-    const playList: any[] = [];
+    const playList: PlayListItem[] = [];
     curriculum?.moduleList &&
       curriculum.moduleList.forEach((module: any) => {
         if (module?.isDummy) {
@@ -438,6 +443,7 @@ export const useLearningWindow = () => {
   };
 
   const handleSetPlayInfo = (moduleId: number, lessonId: number, curriculum?: any) => {
+    if (!_baseInfo) return;
     const workCurriculum = curriculum || _curriculum;
     const playInfo = genPlayInfoByCurriculum(_baseInfo, workCurriculum, moduleId, lessonId);
     console.log('============', playInfo);
