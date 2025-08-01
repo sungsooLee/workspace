@@ -23,11 +23,13 @@ export interface ThumbnailData {
   likeCount: number
   // labelCustomNode
   imageUrl: string;
+  thumbnailFileGroupUuid: string;
   toggleButton?: boolean;
   // infoCustomNode
   isNew: boolean;
-  isAccepting: boolean;
-  dayOrDay: string;
+  isEnrollOpen: boolean;
+  isLike: boolean;
+  dday: number;
   tagLabels: string[];
 }
 
@@ -44,6 +46,8 @@ export const ThumbnailItem: React.FC<ThumbnailItemProps> = ({
   stacked = false,
   className,
 }) => {
+  console.log('### thumbnailFileGroupUuid => ', data.thumbnailFileGroupUuid)
+  console.log('### isLike => ', data.isLike)
   return (
     <div
       className={cn(
@@ -76,7 +80,7 @@ export const ThumbnailItem: React.FC<ThumbnailItemProps> = ({
               )
             }
             {
-              data.isAccepting && (
+              data.isEnrollOpen && (
                 <Badge
                   variant="text"
                   status="gray"
@@ -86,12 +90,12 @@ export const ThumbnailItem: React.FC<ThumbnailItemProps> = ({
               )
             }
             {
-              data.dayOrDay && (
+              (data.dday && data.dday !== 0) && (
                 <Badge
                   variant="text"
                   status="caution"
                   size="xs"
-                  option={{ label: data.dayOrDay, value: `${getRandomId()}` }}
+                  option={{ label: `D-${data.dday}`, value: `${getRandomId()}` }}
                 />
               )
             }
@@ -130,7 +134,7 @@ export const ThumbnailItem: React.FC<ThumbnailItemProps> = ({
           </div>
         </div>
       </Link>
-      {data.toggleButton && <ToggleButton variant={'heart'} className={styles.toggle_btn} />}
+      {data.isLike && <ToggleButton variant={'heart'} className={styles.toggle_btn} />}
     </div>
   );
 };
