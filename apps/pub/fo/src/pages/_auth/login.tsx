@@ -1,11 +1,10 @@
 import { cn } from '@learnway/shared';
-import { createFileRoute, Link } from '@tanstack/react-router';
-
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import styles from '@learnway/styles/fo/pages/_auth/login.module.css';
 import { Button } from '@learnway/ui/button';
 import { Checkbox } from '@learnway/ui/checkbox';
 import { Input } from '@learnway/ui/input';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import snsGoogleImage from '../../assets/images/common/logo_sns_google.png';
 import snskakaoImage from '../../assets/images/common/logo_sns_kakao.png';
 import snsNaverImage from '../../assets/images/common/logo_sns_naver.png';

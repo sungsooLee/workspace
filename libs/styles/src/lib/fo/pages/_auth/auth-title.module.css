@@ -9,3 +9,17 @@
     }
   }
 }
+
+/* mobile */
+:global(body.mobile) {
+  @screen mobile {
+    h2 {
+      .title {
+        @apply headline2-b;
+      }
+      .info {
+        @apply title3 mt-[4px];
+      }
+    }
+  }
+}

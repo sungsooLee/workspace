@@ -2,15 +2,16 @@ import { IcoNarrowRight } from '@learnway/icons';
 
 import logoImage from '@learnway/styles/fo/assets/images/common/logo_symbol.png';
 
-import styles from './search-input-wrap.module.css';
-import { Input } from '@learnway/ui/input';
 import { Button } from '@learnway/ui/button';
+import { Input } from '@learnway/ui/input';
+import styles from './search-input-wrap.module.css';
 
 interface SearchInputWrapProps {
   buttonActive?: boolean;
   placeholder?: string;
   value?: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onClick?: () => void;
 }
 
 export const SearchInputWrap: React.FC<SearchInputWrapProps> = ({
@@ -18,6 +19,7 @@ export const SearchInputWrap: React.FC<SearchInputWrapProps> = ({
   placeholder,
   value,
   onChange,
+  onClick,
 }) => {
   return (
     <div className={styles.search_input_wrap}>
@@ -35,6 +37,7 @@ export const SearchInputWrap: React.FC<SearchInputWrapProps> = ({
         onlyIcon={true}
         icon={<IcoNarrowRight width={24} height={24} stroke={'#fff'} />}
         disabled={!buttonActive}
+        onClick={onClick}
       />
     </div>
   );

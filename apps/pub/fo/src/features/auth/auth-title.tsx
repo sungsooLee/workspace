@@ -1,9 +1,8 @@
-import { memo } from 'react';
-import { useLocation } from '@tanstack/react-router';
-import { MobileView, BrowserView } from 'react-device-detect';
-import { PAGE_META_BY_PATH, isSigninPage } from '../../features/platform';
-import { MobileAuthContainerHeader } from '../../widgets/layout/m.ui/auth/auth-container/auth-container-header';
 import styles from '@learnway/styles/fo/pages/_auth/auth-title.module.css';
+import { useLocation } from '@tanstack/react-router';
+import { memo } from 'react';
+import { BrowserView, MobileView } from 'react-device-detect';
+import { PAGE_META_BY_PATH, isSigninPageInfo } from '../../features/platform';
 
 const AuthTitleCompoment = () => {
   const location = useLocation();
@@ -13,21 +12,20 @@ const AuthTitleCompoment = () => {
   return (
     <div className={styles.start}>
       <BrowserView>
-        <h2 className={isSigninPage(location.pathname) ? styles.title_login : ''}>
-          {/* 퍼블확인용 */}
+        <h2 className={isSigninPageInfo(location.pathname) ? styles.title_login : ''}>
           <span className={styles.title}>{meta.title}</span>
           <span className={styles.info}>{meta.info}</span>
         </h2>
       </BrowserView>
+
       <MobileView>
-        {isSigninPage(location.pathname) ? (
-          <h2 className={styles.title_login}>
-            {/* 퍼블확인용 */}
+        {isSigninPageInfo(location.pathname) ? (
+          <h2 className={isSigninPageInfo(location.pathname) ? styles.title_login : ''}>
             <span className={styles.title}>{meta.title}</span>
             <span className={styles.info}>{meta.info}</span>
           </h2>
         ) : (
-          <MobileAuthContainerHeader />
+          ''
         )}
       </MobileView>
     </div>

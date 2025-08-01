@@ -1,5 +1,5 @@
 import { useCodeGroup } from '@learnway/hooks';
-import { IcoClose02 } from '@learnway/icons';
+import { IcoArrowBackward, IcoClose02 } from '@learnway/icons';
 
 import { Avatar } from '@learnway/ui/avatar';
 import { Button } from '@learnway/ui/button';
@@ -10,13 +10,23 @@ import styles from './user-avatar.module.css';
 
 import { UserMy } from './user-my';
 
+/* 퍼블수정 20250801 전체적으로 수정 (pc, mobile 같이 사용) */
 const PopoverContent = () => {
-  const [contents, setContents] = useState('profile');
+  const [contents, setContents] = useState<string>('profile');
   const { data } = useCodeGroup('pms.multilingual.LangCountryCode', {});
 
   return (
     <div className={`${styles.start} ${popoverInnerStyles.start}`}>
       <div className={popoverInnerStyles.title_area}>
+        {/* 타입 언어 시 노출 */}
+        {contents === 'lang' ? (
+          <Button className={popoverInnerStyles.btn_back} onClick={() => setContents('profile')}>
+            <IcoArrowBackward width={24} height={24} stroke="#131416" />
+          </Button>
+        ) : (
+          ''
+        )}
+
         <h2>{contents === 'profile' ? '내정보' : '언어'}</h2>
         <Popover.Close>
           <Button variant="expand" size="sm" onlyIcon>
@@ -24,7 +34,7 @@ const PopoverContent = () => {
           </Button>
         </Popover.Close>
       </div>
-      <UserMy onChangeType={setContents} />
+      <UserMy onChangeType={setContents} onParentChangeType={contents} />
     </div>
   );
 };

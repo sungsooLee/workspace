@@ -3,9 +3,10 @@ import { memo } from 'react';
 
 import { IcoChart, IcoDocument, IcoPoint } from '@learnway/icons';
 
-import styles from './navigation-popup_m.module.css';
+import { Avatar } from '@learnway/ui/avatar';
 import { Button } from '@learnway/ui/button';
-import { ModalContainer, ModalTitle, ModalBody } from '@learnway/ui/modal';
+import { ModalBody, ModalContainer, ModalTitle } from '@learnway/ui/modal';
+import styles from './navigation-popup_m.module.css';
 
 const NavigationPopupMComponent = () => {
   return (

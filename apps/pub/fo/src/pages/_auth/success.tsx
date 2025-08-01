@@ -49,12 +49,12 @@ function RouteComponent() {
           </p>
 
           <div className={`${hightlightMessageBoxStyles.start} ${styles.noti_box}`}>
-            <div>
+            <div className={hightlightMessageBoxStyles.info_txt_box}>
               <span className={hightlightMessageBoxStyles.info_txt}>
-                휴면 해제일 : <strong>YYYY-MM-DD</strong>
+                <span>휴면 해제일</span> <strong>YYYY-MM-DD</strong>
               </span>
               <span className={hightlightMessageBoxStyles.info_txt}>
-                휴면 해제 방법 : <strong>휴대폰 / 이메일 본인인증</strong>
+                <span>휴면 해제 방법</span> <strong>휴대폰 / 이메일 본인인증</strong>
               </span>
             </div>
           </div>
@@ -63,7 +63,6 @@ function RouteComponent() {
         </div>
         {/* 결과모듈 */}
 
-        {/* 퍼블수정 20250324 : 버튼 모바일 분기처리 */}
         <BrowserView>
           <div className={cn(styles.btn_wrap, 'auth--btn_wrap')}>
             <Button variant="primary" size="xl">

@@ -1,7 +1,9 @@
 import { useCodeGroup } from '@learnway/hooks';
 import {
+  IcoBookFill,
   IcoChart,
   IcoCheck02,
+  IcoHeartFill,
   IcoLearning03,
   IcoPaper,
   IcoPoint,
@@ -11,8 +13,8 @@ import { Avatar } from '@learnway/ui/avatar';
 import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
 import { Switch } from '@learnway/ui/switch';
-import { memo, useState } from 'react';
-import { isMobile } from 'react-device-detect';
+import { memo, useEffect, useState } from 'react';
+import { BrowserView, isMobile } from 'react-device-detect';
 import languagestyles from './language.module.css';
 import styles from './user-my.module.css';
 
@@ -22,11 +24,12 @@ interface LanguagePorps {
   onChangelanguage: (newLanguage: string) => void;
 }
 
-// 부모페이지에게 넘길 컨텐츠 타입
 interface ContentTypeProps {
-  onChangeType: (value: string) => void;
+  onChangeType: (value: string) => void; // 자식에서 부모에게 넘기는 컨텐츠 타입
+  onParentChangeType?: string; // 부모에서 자식에게 넘기는 컨텐츠 타입
 }
 
+// 언어
 const LanguageComponent = ({ language, contentType, onChangelanguage }: LanguagePorps) => {
   const languages = [
     { label: '한국어 (Korea)', value: 'ko' },
@@ -87,7 +90,8 @@ const LanguageComponent = ({ language, contentType, onChangelanguage }: Language
   );
 };
 
-const UserMyComponent = ({ onChangeType }: ContentTypeProps) => {
+// 내 정보
+const UserMyComponent = ({ onChangeType, onParentChangeType }: ContentTypeProps) => {
   const { confirm: openConfirm } = useModal();
   const [isChecked, setIsChecked] = useState(false);
   const [language, setLanguage] = useState('한국어');
@@ -105,6 +109,18 @@ const UserMyComponent = ({ onChangeType }: ContentTypeProps) => {
   const handleProfileType = () => {
     setContentType('profile');
     onChangeType('profile');
+  };
+
+  useEffect(() => {
+    handleParentType();
+  }, [onParentChangeType]);
+
+  // 부모 타입이 변경
+  const handleParentType = () => {
+    if (onParentChangeType === 'profile') {
+      setContentType('profile');
+      onChangeType('profile');
+    }
   };
 
   const handleClickAlert2 = () => {
@@ -160,16 +176,33 @@ const UserMyComponent = ({ onChangeType }: ContentTypeProps) => {
             </span>
           </div>
 
-          <Button variant="primary" size="xl" className={styles.btn_my}>
-            나의 학습
-          </Button>
+          <div className={styles.btn_my_box}>
+            {isMobile ? (
+              <>
+                <Button className={styles.btn_my}>
+                  <IcoBookFill width={40} height={40} />
+                  나의 학습
+                </Button>
+                <Button className={styles.btn_heart}>
+                  <IcoHeartFill width={40} height={40} />
+                  찜한 과정
+                </Button>
+              </>
+            ) : (
+              <Button variant="primary" size="xl" className={styles.btn_my}>
+                나의 학습
+              </Button>
+            )}
+          </div>
 
           <div className={styles.recent_visits}>
             <h3>최근 방문</h3>
+            {/* 방문 o */}
             <ul className={styles.list}>
               <li>
                 <Button className={styles.btn}>
                   <span className={styles.ico}>
+                    {/* 아이콘 디자인 수정 예정 */}
                     <IcoChart />
                   </span>
                   <span className={styles.txt}>결재함</span>
@@ -178,6 +211,7 @@ const UserMyComponent = ({ onChangeType }: ContentTypeProps) => {
               <li>
                 <Button className={styles.btn}>
                   <span className={styles.ico}>
+                    {/* 아이콘 디자인 수정 예정 */}
                     <IcoPaper />
                   </span>
                   <span className={styles.txt}>학습이력</span>
@@ -186,15 +220,19 @@ const UserMyComponent = ({ onChangeType }: ContentTypeProps) => {
               <li>
                 <Button className={styles.btn}>
                   <span className={styles.ico}>
+                    {/* 아이콘 디자인 수정 예정 */}
                     <IcoRocket />
                   </span>
                   <span className={styles.txt}>찜한 과정</span>
                 </Button>
               </li>
             </ul>
+            {/* 방문 x */}
+            <div className={styles.no_list}>
+              <p>아직 방문한 화면이 없어요.</p>
+            </div>
           </div>
           <ul className={styles.info_list}>
-            <li></li>
             <li>
               <span className={styles.txt}>알림</span>
               <Switch
@@ -225,14 +263,16 @@ const UserMyComponent = ({ onChangeType }: ContentTypeProps) => {
             </li>
           </ul>
 
-          <div className={styles.btn_log}>
-            <Button
-              size="md"
-              underline={true}
-              label={'로그아웃'}
-              onClick={() => handleClickAlert2()}
-            />
-          </div>
+          <BrowserView>
+            <div className={styles.btn_log}>
+              <Button
+                size="md"
+                underline={true}
+                label={'로그아웃'}
+                onClick={() => handleClickAlert2()}
+              />
+            </div>
+          </BrowserView>
         </div>
       ) : (
         <LanguageComponent
