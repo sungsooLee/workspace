@@ -1,7 +1,4 @@
-import {
-  useApproveRequestChannel,
-  useRejectRequestChannel,
-} from '@entities/channel/service/request-channel.hook';
+import { useApproveRequestChannel, useRejectRequestChannel } from '@entities/channel';
 import { useModal } from '@learnway/ui/modal';
 import { RejectModal } from '@shared/ui';
 import { t } from 'i18next';

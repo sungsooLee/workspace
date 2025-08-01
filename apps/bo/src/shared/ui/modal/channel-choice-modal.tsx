@@ -1,17 +1,17 @@
 import { Button } from '@learnway/ui/button';
-import { ModalBody, ModalContainer, ModalTitle, ModalFooter, useModal } from '@learnway/ui/modal';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 // IA105 / NLP_BO_CMS_1017
 
-import { Divider } from '@learnway/ui/elements';
-import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
-import { t } from 'i18next';
-import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
-import { SearchBox, TenantByRoleDropdownFormField } from '@shared/ui';
+import { useFetchChannelByRoleId } from '@entities/channel';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { AuthUser } from '@learnway/auth/types';
-import { useMemo, useState } from 'react';
+import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
+import { Divider } from '@learnway/ui/elements';
+import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
+import { SearchBox, TenantByRoleDropdownFormField } from '@shared/ui';
+import { t } from 'i18next';
 import { chain, get } from 'lodash';
-import { useFetchChannelByRoleId } from '@entities/channel/service/channel.hook';
+import { useMemo, useState } from 'react';
 
 interface Channel {
   channelUuid: string;
@@ -34,7 +34,8 @@ const ChannelChoicePopupComponent = () => {
         .value();
       console.log('🚀 ~ return ~ channels:', channels);
       return {
-        data: channels };
+        data: channels,
+      };
     };
   }, [data, channel]);
 
@@ -42,18 +43,22 @@ const ChannelChoicePopupComponent = () => {
     query: (params: any) => {
       return {
         queryKey: ['get-channels-by-tenant-and-role'],
-        queryFn: () => getChannels(params) };
+        queryFn: () => getChannels(params),
+      };
     },
     columns: [
       {
         size: 676,
         name: 'channelUuid',
         label: t('채널명'),
-        render: (_: any) => _.row.original.channelName },
+        render: (_: any) => _.row.original.channelName,
+      },
     ],
     gridState: {
       page: 0,
-      size: 10 } };
+      size: 10,
+    },
+  };
 
   const { provider: sProvider, getValues } = useSearchBox(searchConfig());
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
@@ -107,13 +112,17 @@ const searchConfig = (): SearchBoxConfig => ({
         label: t('테넌트'),
         value: '',
         format: 'object',
-        element: <TenantByRoleDropdownFormField /> },
+        element: <TenantByRoleDropdownFormField />,
+      },
       {
         name: 'channelName',
         type: 'text',
         label: t('채널명'),
-        value: '' },
+        value: '',
+      },
     ],
   ],
   validator: {
-    tenantId: true } });
+    tenantId: true,
+  },
+});

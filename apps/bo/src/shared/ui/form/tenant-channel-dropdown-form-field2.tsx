@@ -1,4 +1,4 @@
-import { useFetchChannelByRoleId } from '@entities/channel/service/channel.hook';
+import { useFetchChannelByRoleId } from '@entities/channel';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { AuthUser } from '@learnway/auth/types';
 import { BaseFormFieldProps } from '@learnway/hooks';
@@ -24,14 +24,16 @@ const TenantChannelDropdownFormField2Component = forwardRef<
       // tenantId가 -1이면 필터 없이 전체 반환
       return channel.map(({ channelName, channelUuid }) => ({
         label: channelName,
-        value: channelUuid }));
+        value: channelUuid,
+      }));
     }
     // tenantId가 있으면 필터 적용
     return channel
       .filter((d) => !!d.tenantList.find((t) => t.tenantId === tenantId))
       .map(({ channelName, channelUuid }) => ({
         label: channelName,
-        value: channelUuid }));
+        value: channelUuid,
+      }));
   }, [channel, tenantId]);
 
   return (
