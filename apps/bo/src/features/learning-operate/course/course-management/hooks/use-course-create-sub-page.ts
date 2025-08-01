@@ -163,12 +163,15 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
   // courseData 변경 시 폼 데이터 갱신
   useEffect(() => {
     if (courseData) {
-      const formData = responseDataToFormData(courseData);
+      console.log('>>>>> courseData', courseData);
+      const formData = responseDataToFormData(courseData, courseConfig);
+      console.log('>>>>> formdata', formData);
+
       updateFormData(formData);
     } else {
       updateFormData({ courseType: initCourseType });
     }
-  }, [courseData, initCourseType]);
+  }, [courseData, courseConfig, initCourseType]);
 
   // form state 변경 시 코스 생성 정보 업데이트 - 무한 반복 방지를 위해 제거
   useEffect(() => {

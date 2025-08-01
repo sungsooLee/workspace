@@ -40,7 +40,8 @@ const CourseRegistrationComponent = forwardRef<HTMLElement, CourseTabBaseProps>(
             element={
               <DropdownFormField
                 optionsConfig={{
-                  codeGroup: CODE_GROUP['pms.approval.ApprovalLineType'] }}
+                  codeGroup: CODE_GROUP['pms.approval.ApprovalLineType'],
+                }}
               />
             }
           />
@@ -66,8 +67,10 @@ const CourseRegistrationComponent = forwardRef<HTMLElement, CourseTabBaseProps>(
                           value={''}
                           element={<Input prefixText={t('정원')} suffixText={t('명')} />}
                         />
-                      ) },
-                  ] }}
+                      ),
+                    },
+                  ],
+                }}
               />
             }
           />
@@ -95,8 +98,10 @@ const CourseRegistrationComponent = forwardRef<HTMLElement, CourseTabBaseProps>(
                           value={''}
                           element={<Input prefixText={t('대기 정원')} suffixText={t('명')} />}
                         />
-                      ) },
-                  ] }}
+                      ),
+                    },
+                  ],
+                }}
               />
             }
           />
@@ -109,7 +114,8 @@ const CourseRegistrationComponent = forwardRef<HTMLElement, CourseTabBaseProps>(
             element={
               <RadioGroupFormField
                 optionsConfig={{
-                  codeGroup: CODE_GROUP['mock.options.possible'] }}
+                  codeGroup: CODE_GROUP['mock.options.possible'],
+                }}
               />
             }
           />
@@ -126,7 +132,8 @@ const CourseRegistrationComponent = forwardRef<HTMLElement, CourseTabBaseProps>(
             element={
               <RadioGroupFormField
                 optionsConfig={{
-                  codeGroup: CODE_GROUP['mock.options.use'] }}
+                  codeGroup: CODE_GROUP['mock.options.use'],
+                }}
               />
             }
           />
