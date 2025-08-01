@@ -18,4 +18,21 @@ export default class CategoryService {
   static getFetchCoursesCategory(payload: any) {
     return httpService.get<any>(`${LMSApiPrefix()}/courses/category`, payload);
   }
+
+  static getFetchCategoryRecent() {
+    return httpService.get<any>(`${LMSApiPrefix()}/category/recent`);
+  }
+
+  static saveRecentCategory(categoryId: number) {
+    return httpService.post<any>(`${LMSApiPrefix()}/${categoryId}/recent`, {});
+  }
+
+  static async getFetchRecentCategory(tenantId: number) {
+    const categoryTree = await this.getFetchCategoryTree(tenantId);
+    const recentCategory = await this.getFetchCategoryRecent();
+    return {
+      tree: categoryTree,
+      recent: recentCategory,
+    };
+  }
 }

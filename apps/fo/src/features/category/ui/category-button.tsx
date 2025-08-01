@@ -5,7 +5,7 @@ import { IcoArray, IcoArrowForward } from '@learnway/icons';
 
 import { useCategoryTree } from '@entities/category';
 import { RecentVisits } from '@features/layout';
-import { cn } from '@learnway/shared';
+import { cn, SelectOption } from '@learnway/shared';
 import styles from '@learnway/styles/fo/features/category/category-button.module.css';
 import { Button } from '@learnway/ui/button';
 import { ModalBody, ModalContainer, ModalTitle, useModal } from '@learnway/ui/modal';
@@ -24,6 +24,7 @@ const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
   const [mainData, setMainData] = useState<MainItem[]>([]);
   const [subData, setSubData] = useState<SubItem[]>([]);
   const [childData, setChildData] = useState<ChildItem[]>([]);
+  const [recentCategory, setRecentCategory] = useState<SelectOption[]>([]);
 
   const [activeId, setActiveId] = useState<number>();
   const [activeSubId, setActiveSubId] = useState<number>();
@@ -37,7 +38,7 @@ const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
     setChildData([]);
     if (isChild) {
       // 2 Depth
-      const subTreeData = categoryTree.children.filter((item: any) => item.id === id)[0];
+      const subTreeData = categoryTree?.tree.children.filter((item: any) => item.id === id)[0];
       const twoDepthData = subTreeData.children.map((item: any) => {
         return {
           id: item.id,
@@ -56,7 +57,7 @@ const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
     setActiveSubId(id);
     if (isChild) {
       // 3 Depth
-      const subTreeData = categoryTree.children.filter((item: any) => item.id === parentId)[0];
+      const subTreeData = categoryTree?.tree.children.filter((item: any) => item.id === parentId)[0];
       const twoDepthData = subTreeData.children.filter((item: any) => item.id === id)[0];
       const threeDepthData = twoDepthData.children.map((item: any) => {
         return {
@@ -77,7 +78,8 @@ const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
 
   useEffect(() => {
     if (categoryTree) {
-      const mainTreeData: any[] = categoryTree.children;
+      const mainTreeData: any[] = categoryTree?.tree.children;
+      const recentCategory = categoryTree?.recent;
       // 1 Depth
       const oneDepthData = mainTreeData.map((item) => {
         return {
@@ -86,7 +88,12 @@ const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
           isChild: item.children.length > 0 ? true : false,
         };
       });
+      const recent = recentCategory.map((item: any) => {
+        return {label: item.categoryName, value: item.categoryId}
+      });
+
       setMainData(oneDepthData);
+      setRecentCategory(recent);
     }
   }, [categoryTree]);
 
@@ -151,7 +158,7 @@ const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
             </div>
           </div>
           {/* 최근방문 */}
-          <RecentVisits />
+          <RecentVisits items={recentCategory}/>
         </div>
       </ModalBody>
     </ModalContainer>

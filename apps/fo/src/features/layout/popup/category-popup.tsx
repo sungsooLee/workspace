@@ -1,14 +1,14 @@
 import { cn } from '@learnway/shared';
 import { Carousel } from '@learnway/ui/carousel';
 import { Link } from '@tanstack/react-router';
-import { memo, useEffect, useState } from 'react';
+import { memo, ReactNode, useEffect, useState } from 'react';
 import { Navigation } from 'swiper/modules';
 
 import { IcoArrowBackward, IcoArrowForward, IcoArrowUp } from '@learnway/icons';
 
 import { t } from 'i18next';
 
-import { useCategoryTree } from '@entities/category';
+import { queryOptions, useCategoryTree } from '@entities/category';
 import styles from '@learnway/styles/fo/features/layout/popup/category-popup.module.css';
 import { Button } from '@learnway/ui/button';
 import { Chip } from '@learnway/ui/chips';
@@ -24,17 +24,17 @@ type MenuItem = { id: number; label: string; parentId: number; subItems?: SubIte
 
 const CategoryPopupComponent = ({ activeTenantId }: CategoryPopupProps) => {
   // 하단 카테고리 이동 내역
-  const items = [
-    <Chip option={{ label: '기업경영', value: 'a' }} />,
-    <Chip option={{ label: 'Ai교육', value: 'b' }} />,
-    <Chip option={{ label: 'IT', value: 'c' }} />,
-    <Chip option={{ label: '마케팅', value: 'd' }} />,
-    <Chip option={{ label: '경영/기획', value: 'e' }} />,
-  ];
+  // const items = [
+  //   <Chip option={{ label: '기업경영', value: 'a' }} />,
+  //   <Chip option={{ label: 'Ai교육', value: 'b' }} />,
+  //   <Chip option={{ label: 'IT', value: 'c' }} />,
+  //   <Chip option={{ label: '마케팅', value: 'd' }} />,
+  //   <Chip option={{ label: '경영/기획', value: 'e' }} />,
+  // ];
 
   const [mainData, setMainData] = useState<MainItem[]>([]);
   const [menuData, setMenuData] = useState<MenuItem[]>([]);
-
+  const [recentCategory, setRecentCategory] = useState<ReactNode[]>([]);
   const [activeId, setActiveId] = useState<number>();
   const [tenantId, setTenantId] = useState<number>(activeTenantId);
 
@@ -49,7 +49,7 @@ const CategoryPopupComponent = ({ activeTenantId }: CategoryPopupProps) => {
     setActiveId(id);
     if (isChild) {
       // 2 Depth
-      const subTreeData = categoryTree.children.filter((item: any) => item.id === id)[0];
+      const subTreeData = categoryTree?.tree.children.filter((item: any) => item.id === id)[0];
       const menuData = subTreeData.children.map((item: any) => {
         const children: SubItem[] = [];
         if (item.children && item.children.length > 0) {
@@ -82,7 +82,8 @@ const CategoryPopupComponent = ({ activeTenantId }: CategoryPopupProps) => {
   useEffect(() => {
     if (categoryTree) {
       console.log('### categoryTreeData => ', categoryTree);
-      const mainTreeData: any[] = categoryTree.children;
+      const mainTreeData: any[] = categoryTree?.tree.children;
+      const recentCategory = categoryTree?.recent;
       // 1 Depth
       const oneDepthData = mainTreeData.map((item) => {
         return {
@@ -91,7 +92,14 @@ const CategoryPopupComponent = ({ activeTenantId }: CategoryPopupProps) => {
           isChild: item.children.length > 0 ? true : false,
         };
       });
+      const recent = recentCategory.map((item: any) => {
+        return (
+          <Chip option={{ label: item.categoryName, value: item.categoryId }} />
+        )
+      });
+
       setMainData(oneDepthData);
+      setRecentCategory(recent);
     }
   }, [categoryTree]);
 
@@ -177,10 +185,10 @@ const CategoryPopupComponent = ({ activeTenantId }: CategoryPopupProps) => {
               </div>
             </div>
           </div>
-          {items.length > 0 && (
+          {(recentCategory && recentCategory.length > 0) && (
             <div className={styles.swiper}>
               <Carousel
-                items={items}
+                items={recentCategory}
                 slidesPerView={'auto'}
                 className={styles.category_carousel}
                 spaceBetween={8}
