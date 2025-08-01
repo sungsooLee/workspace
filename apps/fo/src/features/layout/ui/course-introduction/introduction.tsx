@@ -91,19 +91,21 @@ const CourseIntroductionCompoment = forwardRef<HTMLDivElement, Props>(
 
     // 커리큘럼 아코디언
     const [curriculumValue, setCurriculumValue] = useState<string>('a');
-    const curriculumValueItems = curriculum?.moduleList?.map((module: any) => ({
-      value: module.moduleId,
-      isDummy: module.isDummy,
-      title: (
-        <div className={styles.title}>
-          <p>
-            {module.moduleName}
-            <span>{module.totalTime && module.totalTime + '분'}</span>
-          </p>
-        </div>
-      ),
-      children: module.lessonList ? <Curriculum curriculumData={module.lessonList} /> : undefined,
-    }));
+    const curriculumValueItems = curriculum?.moduleList
+      ?.filter((item: any) => item.lessonList && item.lessonList.length)
+      .map((module: any) => ({
+        value: module.moduleId,
+        isDummy: module.isDummy,
+        title: (
+          <div className={styles.title}>
+            <p>
+              {module.moduleName}
+              <span>{module.totalTime && module.totalTime + '분'}</span>
+            </p>
+          </div>
+        ),
+        children: module.lessonList ? <Curriculum curriculumData={module.lessonList} /> : undefined,
+      }));
 
     // 과정 정보 더보기
     const [more, setMore] = useState<boolean>(false);

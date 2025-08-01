@@ -2,6 +2,7 @@ import styles from '@learnway/styles/fo/features/layout/ui/course-introduction/c
 import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
 import { ProgressCheck } from '@learnway/ui/progress';
+import { useRouter } from '@tanstack/react-router';
 import { memo } from 'react';
 import { isMobile } from 'react-device-detect';
 import { NoticeDetailPopup } from '../../../../features/layout/';
@@ -12,6 +13,23 @@ interface CurriculumStudyProps {
 
 const CurriculumStudyComponent = ({ className }: CurriculumStudyProps) => {
   const { openModal } = useModal();
+  const router = useRouter();
+  const handleLearningWindow = () => {
+    router.navigate({
+      to: `/learning-window`,
+      state: {
+        learningInfo: {
+          courseName: '강의실',
+          courseId: 1,
+          sequenceId: 1,
+          curriculumId: 3,
+          moduleId: /* values.moduleId ? parseInt(values.moduleId) : */ undefined,
+          lessonId: /* values.lessonId ? parseInt(values.lessonId) : */ undefined,
+        },
+      },
+    });
+  };
+
   return (
     <div className={`${styles.start} ${styles.curriculum} ${className || ''}`}>
       <ol>
@@ -69,7 +87,12 @@ const CurriculumStudyComponent = ({ className }: CurriculumStudyProps) => {
                       학습이력
                     </Button>
                   </span>
-                  <Button variant="primary" size={isMobile ? 'ts' : 'sm'} className={styles.btn}>
+                  <Button
+                    variant="primary"
+                    size={isMobile ? 'ts' : 'sm'}
+                    className={styles.btn}
+                    onClick={handleLearningWindow}
+                  >
                     학습하기
                   </Button>
                 </div>
@@ -83,7 +106,12 @@ const CurriculumStudyComponent = ({ className }: CurriculumStudyProps) => {
                   <span className={styles.stats}>
                     <em>학습전 (15분)</em>
                   </span>
-                  <Button variant="primary" size={isMobile ? 'ts' : 'sm'} className={styles.btn}>
+                  <Button
+                    variant="primary"
+                    size={isMobile ? 'ts' : 'sm'}
+                    className={styles.btn}
+                    onClick={handleLearningWindow}
+                  >
                     학습하기
                   </Button>
                 </div>
@@ -145,7 +173,12 @@ const CurriculumStudyComponent = ({ className }: CurriculumStudyProps) => {
                       학습이력
                     </Button>
                   </span>
-                  <Button variant="primary" size={isMobile ? 'ts' : 'sm'} className={styles.btn}>
+                  <Button
+                    variant="primary"
+                    size={isMobile ? 'ts' : 'sm'}
+                    className={styles.btn}
+                    onClick={handleLearningWindow}
+                  >
                     학습하기
                   </Button>
                 </div>
@@ -159,7 +192,12 @@ const CurriculumStudyComponent = ({ className }: CurriculumStudyProps) => {
                   <span className={styles.stats}>
                     <em>학습전 (15분)</em>
                   </span>
-                  <Button variant="primary" size={isMobile ? 'ts' : 'sm'} className={styles.btn}>
+                  <Button
+                    variant="primary"
+                    size={isMobile ? 'ts' : 'sm'}
+                    className={styles.btn}
+                    onClick={handleLearningWindow}
+                  >
                     학습하기
                   </Button>
                 </div>
