@@ -25,7 +25,6 @@ export default class CategoryService {
   }
 
   static createRecentCategory(payload: any) {
-    console.log('### category.ts => ', payload.categoryId);
     return httpService.post<any>(`${LMSApiPrefix()}/category/${payload.categoryId}/recent`, {});
   }
 

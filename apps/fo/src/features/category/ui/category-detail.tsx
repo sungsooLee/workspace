@@ -90,6 +90,7 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
   };
   const handlePageSizeChange = async (value: number) => {
     setSize(value)
+    setPage(0);
   }
 
   const handleFilterOptionChange = async (options: any) => {
@@ -142,6 +143,7 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
         console.log('### categoryInfo => ', categoryInfo);
         const payload = {
           ...coursePayload,
+          page, size,
           categoryId: categoryInfo.categoryId,
         }
         setCoursePayload(payload);
@@ -206,6 +208,7 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
             </div>
           </li>
           <li>
+            {/* 수강신청 필터는 '이러닝1, 라이브, 설문' 일때는 비표시 */}
             <Filter onOptionChange={handleFilterOptionChange} />
           </li>
         </ul>
@@ -289,8 +292,8 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
       {data.content && data.content.length > 0 && (
         <Pagination
           className={cn(styles.pagenation, styles.paginationItem)}
-          pageNumber={0}
-          totalPages={5}
+          pageNumber={page}
+          totalPages={data.totalPages}
           hidePageSizeOptions={true}
           hidePageInfo={true}
           showFirstButton={false}
