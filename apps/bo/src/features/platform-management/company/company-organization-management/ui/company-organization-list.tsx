@@ -11,7 +11,7 @@ import { useFetchAuthUser } from '@learnway/auth/entities';
 
 import { SearchBox } from '@shared/ui/search-box';
 
-import { queryOptions as companyQueryOptions } from '@entities/companies/service/companies.queries';
+import { queryOptions as companyQueryOptions } from '@entities/companies';
 import { Button } from '@learnway/ui/button';
 import { EnGlobalConst } from '@types';
 import { useCreation } from 'ahooks';

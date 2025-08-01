@@ -1,10 +1,14 @@
 import EnrollService from '@entities/enroll/api/enroll';
-import { useUpdateUser } from '@entities/users/service/users.hook';
+import { useUpdateUser } from '@entities/users';
 import { DuplicateState } from '@features/form';
 import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { FormSubTitle } from '@learnway/ui/base-form';
+import { ContentsRow } from '@learnway/ui/contents-row';
 import { GridBox } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
+import { useToast } from '@learnway/ui/toast';
 import { ContentsHistoryInfoFormField, FormItem, FormRow } from '@shared/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { EnFormMode, EnGlobalConst } from '@types';
@@ -16,10 +20,6 @@ import { CompanyUserDetailAccount } from './company-user-detail-account';
 import { CompanyUserDetailAuthentication } from './company-user-detail-auth';
 import { CompanyUserDetailJob } from './company-user-detail-job';
 import { CompanyUserDetailPersonal } from './company-user-detail-personal';
-import { ContentsRow } from '@learnway/ui/contents-row';
-import { Input } from '@learnway/ui/input';
-import { useModal } from '@learnway/ui/modal';
-import { useToast } from '@learnway/ui/toast';
 
 interface CompanyUserDetailBaseProps {
   userInfo: any;
@@ -48,7 +48,8 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
       openToast({ title: t('저장 하였습니다.'), type: 'success' });
       props.userRefetch();
       updateFormData(data);
-    } });
+    },
+  });
 
   const [deliveryList, setDeliveryList] = useState<DeliveryAddress[]>([]);
   const formRef = useRef<HTMLFormElement>(null);
@@ -69,7 +70,8 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
         deptName: user.dept?.deptName,
         email: {
           fieldValue: user.email,
-          checkState: DuplicateState.okStart },
+          checkState: DuplicateState.okStart,
+        },
         gender:
           user.gender && t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.user.Gender.${user.gender}`),
         area: user.locale?.displayCountry,
@@ -114,7 +116,8 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
           user.foTwoFactorAuthEnabled && 'FO_PLATFORM',
         ],
         '2FAType': user.twoFactorAuthType,
-        limitLogin: user.company.companyLoginRestrictionList };
+        limitLogin: user.company.companyLoginRestrictionList,
+      };
       if (user.lockedDate === null) {
         if (user.dormantDate !== null) {
           initialData.accountStatus = 'INACTIVE_LOCK';
@@ -137,7 +140,8 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
         const result = Array.from({ length: maxLength }, (_, i) => ({
           id: `${user.jobDomain[i] ?? null}_${user.jobRole[i] ?? null}`,
           role1: user.jobDomain[i] ?? null,
-          role2: user.jobRole[i] ?? null }));
+          role2: user.jobRole[i] ?? null,
+        }));
         initialData.jobDomains = result;
       }
 
@@ -155,7 +159,8 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
     },
     clearForm() {
       onFormChange();
-    } }));
+    },
+  }));
 
   const handleOnSubmit = async (data: any) => {
     console.log('#### handleOnSubmit', data);
@@ -196,7 +201,8 @@ const CompanyUserDetailBaseComponent = (props: CompanyUserDetailBaseProps, ref: 
       authType: data.authType,
       twoFactorAuthType: data['2FAType'],
       foTwoFactorAuthEnabled: false,
-      boTwoFactorAuthEnabled: false };
+      boTwoFactorAuthEnabled: false,
+    };
 
     if (data.userState === '2') {
       payload.isOnLeave = true;
@@ -298,19 +304,22 @@ const formConfig = (): DynamicFormConfig => ({
       type: 'text',
       label: t('이름'),
       value: '',
-      placeholder: ' ' },
+      placeholder: ' ',
+    },
     {
       name: 'engName',
       type: 'text',
       label: t('영문 이름'),
       value: '',
-      placeholder: ' ' },
+      placeholder: ' ',
+    },
     {
       name: 'employeeNumber',
       type: 'text',
       label: t('사번'),
       value: '',
-      placeholder: ' ' },
+      placeholder: ' ',
+    },
     {
       name: 'email',
       type: 'custom',
@@ -318,124 +327,148 @@ const formConfig = (): DynamicFormConfig => ({
       value: { fieldValue: '', checkState: DuplicateState.needInput },
       format: 'object',
       placeholder: ' ',
-      disabled: true },
+      disabled: true,
+    },
     {
       name: 'birthday',
       type: 'text',
       label: t('생년월일'),
       format: 'object',
-      value: undefined },
+      value: undefined,
+    },
     {
       name: 'gender',
       type: 'dropdown',
       label: t('성별'),
       value: '',
       optionsConfig: {
-        codeGroup: CODE_GROUP['pms.user.Gender'] } },
+        codeGroup: CODE_GROUP['pms.user.Gender'],
+      },
+    },
     {
       name: 'area',
       type: 'text',
       label: t('지역'),
       value: '',
-      placeholder: ' ' },
+      placeholder: ' ',
+    },
     {
       label: t('휴대폰 번호'),
       name: 'phoneNumber',
       type: 'text',
       format: 'number',
       value: '',
-      disabled: true },
+      disabled: true,
+    },
     {
       label: t('연락처 (사무실)'),
       name: 'companyPhoneNumber',
       type: 'text',
       format: 'number',
       value: '',
-      placeholder: '' },
+      placeholder: '',
+    },
     {
       name: 'companyName',
       type: 'text',
       label: t('회사'),
       value: '',
-      placeholder: '' },
+      placeholder: '',
+    },
     {
       name: 'deptName',
       type: 'text',
       label: t('소속'),
       value: '',
-      placeholder: '' },
+      placeholder: '',
+    },
     {
       name: 'position',
       type: 'text',
       label: t('보직'),
       value: '',
-      placeholder: '' },
+      placeholder: '',
+    },
     {
       name: 'positionName',
       type: 'text',
       label: t('호칭(직위)'),
       value: '',
-      placeholder: '' },
+      placeholder: '',
+    },
     {
       name: 'jobDomain',
       type: 'custom',
       label: t('직군'),
       value: [],
-      placeholder: '' },
+      placeholder: '',
+    },
     {
       name: 'joinDate',
       type: 'text',
       label: t('입사일'),
       value: '',
-      placeholder: '' },
+      placeholder: '',
+    },
     {
       name: 'retireDate',
       type: 'text',
       label: t('퇴사일'),
       value: '',
-      placeholder: '' },
+      placeholder: '',
+    },
     {
       name: 'promotionDate',
       type: 'text',
       label: t('최근 승진일'),
       value: '',
-      placeholder: '' },
+      placeholder: '',
+    },
     {
       name: 'userStatus',
       type: 'radio-group',
       label: t('재직 상태'),
       value: '',
       optionsConfig: {
-        codeGroup: CODE_GROUP['pms.user.Status'] } },
+        codeGroup: CODE_GROUP['pms.user.Status'],
+      },
+    },
     {
       name: 'userModifyDate',
       type: 'text',
       label: t('재직 상태 변경일'),
       value: '',
-      placeholder: ' ' },
+      placeholder: ' ',
+    },
     {
       name: 'hrInfoManageType',
       type: 'radio-group',
       label: t('인사 데이터 관리 방식'),
       value: '',
       optionsConfig: {
-        codeGroup: CODE_GROUP['pms.company.HrInfoManageType'] } },
+        codeGroup: CODE_GROUP['pms.company.HrInfoManageType'],
+      },
+    },
     {
       name: 'companyMemberJoinTypeList',
       type: 'checkbox-group',
       label: t('회원 가입 유형'),
       value: [],
       optionsConfig: {
-        codeGroup: CODE_GROUP['pms.company.CompanyMemberJoinType'] },
-      guideText: t('수동 관리는 다수 선택할 수 있으며, 자동 관리는 하나만 선택할 수 있습니다.') },
+        codeGroup: CODE_GROUP['pms.company.CompanyMemberJoinType'],
+      },
+      guideText: t('수동 관리는 다수 선택할 수 있으며, 자동 관리는 하나만 선택할 수 있습니다.'),
+    },
     {
       name: 'linkageSystem',
       type: 'radio-group',
       label: t('회원 가입 유형'),
       value: '',
       optionsConfig: {
-        codeGroup: CODE_GROUP['pms.company.LinkageSystem'] },
-      guideText: t('수동 관리는 다수 선택할 수 있으며, 자동 관리는 하나만 선택할 수 있습니다.') },
+        codeGroup: CODE_GROUP['pms.company.LinkageSystem'],
+      },
+      guideText: t('수동 관리는 다수 선택할 수 있으며, 자동 관리는 하나만 선택할 수 있습니다.'),
+    },
     {
       name: 'accountStatus',
       type: 'radio-group',
@@ -449,83 +482,101 @@ const formConfig = (): DynamicFormConfig => ({
         { value: 'LOCK', label: '잠김' },
         { value: 'INACTIVE', label: '휴면(정상)' },
         { value: 'INACTIVE_LOCK', label: '휴면(잠김)' },
-      ] },
+      ],
+    },
     {
       name: 'lastAccountStatusUpdateDate',
       type: 'text',
       label: t('계정 상태 최종 변경일'),
       value: '',
-      placeholder: '' },
+      placeholder: '',
+    },
     {
       name: 'dormantDate',
       type: 'text',
       label: t('휴면 상태 변경일'),
       value: '',
-      placeholder: '' },
+      placeholder: '',
+    },
     {
       name: 'approvalStatus',
       type: 'text',
       label: t('승인상태'),
       value: '',
-      placeholder: '' },
+      placeholder: '',
+    },
     {
       name: 'lastApprovalStatusUpdateDate',
       type: 'text',
       label: t('승인상태 최종 변경일'),
       value: '',
-      placeholder: '' },
+      placeholder: '',
+    },
     {
       name: 'tenantList',
       type: 'custom',
       label: t('테넌트'),
       value: [],
-      format: 'array' },
+      format: 'array',
+    },
     {
       name: 'isUseSso',
       type: 'switch',
       label: t('SSO 로그인 사용 및 SSO 로그인 유형'),
       value: true,
       switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')) } },
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+    },
     {
       name: 'ssoTypeList',
       type: 'radio-group',
       label: '',
       value: '',
       optionsConfig: {
-        codeGroup: CODE_GROUP['pms.company.SsoType'] } },
+        codeGroup: CODE_GROUP['pms.company.SsoType'],
+      },
+    },
     {
       name: 'authType',
       type: 'radio-group',
       label: t('비밀번호 인증 유형'),
       value: '',
       optionsConfig: {
-        codeGroup: CODE_GROUP['pms.company.PasswordAuthType'] },
+        codeGroup: CODE_GROUP['pms.company.PasswordAuthType'],
+      },
       guideText: t(
         '플랫폼은 플랫폼에서 비밀번호를 관리하고, 그외의 유형은 각 시스템에서 비밀번호를 관리합니다.',
-      ) },
+      ),
+    },
     {
       name: 'isUseTwoFactorAuth',
       type: 'switch',
       label: t('로그인 2차 인증 사용'),
       value: true,
       switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')) } },
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+    },
     {
       name: 'twoFactorAuthPlatformTypeList',
       type: 'checkbox-group',
       label: '',
       value: ['FO_PLATFORM', 'BO_PLATFORM'],
       optionsConfig: {
-        codeGroup: CODE_GROUP['pms.company.TwoFactorAuthPlatformType'] } },
+        codeGroup: CODE_GROUP['pms.company.TwoFactorAuthPlatformType'],
+      },
+    },
     {
       name: '2FAType',
       type: 'radio-group',
       label: t('2차 인증 유형'),
       value: 'GOOGLE_OTP',
       optionsConfig: {
-        codeGroup: CODE_GROUP['pms.company.TwoFactorAuthType'] },
-      guideText: t('로그인 2차 인증 사용하는 경우 2차 인증 유형을 선택할 수 있습니다.') },
+        codeGroup: CODE_GROUP['pms.company.TwoFactorAuthType'],
+      },
+      guideText: t('로그인 2차 인증 사용하는 경우 2차 인증 유형을 선택할 수 있습니다.'),
+    },
     {
       name: 'limitLogin',
       type: 'checkbox-group',
@@ -536,12 +587,14 @@ const formConfig = (): DynamicFormConfig => ({
         { label: t('근태 연동 로그인 제한'), value: 'opt2' },
         { label: t('제한 없음'), value: 'opt3' },
       ],
-      guideText: t('로그인 시간 제한 선택 시 회사관리 제한 시간에는 로그인할 수 없습니다.') },
+      guideText: t('로그인 시간 제한 선택 시 회사관리 제한 시간에는 로그인할 수 없습니다.'),
+    },
     {
       name: 'jobDomains',
       type: 'custom',
       label: '',
-      value: [] },
+      value: [],
+    },
   ],
   validator: {
     name: true,
@@ -555,17 +608,23 @@ const formConfig = (): DynamicFormConfig => ({
             if (fieldValue === '') return true;
             return false;
           },
-          message: t('LABEL.form.validation.needInput', { code: t('이메일') }) },
+          message: t('LABEL.form.validation.needInput', { code: t('이메일') }),
+        },
         {
           fn: (values: Record<string, any>) =>
             values.email.checkState === DuplicateState.check ||
             values.email.checkState === DuplicateState.needInput,
-          message: t('LABEL.form.validation.check', { code: t('이메일') }) },
+          message: t('LABEL.form.validation.check', { code: t('이메일') }),
+        },
         {
           fn: (values: Record<string, any>) =>
             values.email.checkState === DuplicateState.duplicated,
-          message: t('LABEL.form.validation.duplicated', { code: t('이메일') }) },
-      ] } } });
+          message: t('LABEL.form.validation.duplicated', { code: t('이메일') }),
+        },
+      ],
+    },
+  },
+});
 
 const columnHelper = createColumnHelper<any>();
 
@@ -574,15 +633,18 @@ const deliveryListColumns = () =>
     columnHelper.accessor('courseId', {
       header: t('과정번호'),
       size: 100,
-      enableSorting: false }),
+      enableSorting: false,
+    }),
     columnHelper.accessor('courseName', {
       header: t('과정명'),
       size: 200,
-      enableSorting: false }),
+      enableSorting: false,
+    }),
     columnHelper.accessor('courseSequenceName', {
       header: t('차수명'),
       size: 200,
-      enableSorting: false }),
+      enableSorting: false,
+    }),
     columnHelper.accessor('address', {
       header: t('교재배송 주소'),
       cell: (info) => {
@@ -591,21 +653,26 @@ const deliveryListColumns = () =>
         return '';
       },
       meta: {
-        size: 'auto' },
-      enableSorting: false }),
+        size: 'auto',
+      },
+      enableSorting: false,
+    }),
     columnHelper.accessor('bookName', {
       header: t('교재명'),
       size: 200,
-      enableSorting: false }),
+      enableSorting: false,
+    }),
     columnHelper.accessor('learningStartDateTime', {
       header: t('학습 기간'),
       size: 220,
       meta: {
-        cellAlign: 'center' },
+        cellAlign: 'center',
+      },
       cell: (info) => {
         if (info.row.original.learningStartDateTime && info.row.original.learningEndDateTime)
           return `${getDateToString(new Date(info.row.original.learningStartDateTime), 'YYYY-MM-DD')} ~ ${getDateToString(new Date(info.row.original.learningEndDateTime), 'YYYY-MM-DD')}`;
         return '';
       },
-      enableSorting: false }),
+      enableSorting: false,
+    }),
   ] as ColumnDef<any, unknown>[];

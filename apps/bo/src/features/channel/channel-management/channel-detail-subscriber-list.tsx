@@ -1,5 +1,5 @@
 import { useGetChannelDetail } from '@entities/channel';
-import { queryOptions as companysQueryOptions } from '@entities/companies/service/companies.queries';
+import { queryOptions as companysQueryOptions } from '@entities/companies';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { getDateToString } from '@learnway/shared';
 import { Button } from '@learnway/ui/button';
