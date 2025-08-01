@@ -18,8 +18,7 @@ function AuthLayoutComponent({ children }: AuthLayoutComponentProps) {
 
   const location = useLocation();
   const pageTitle = PAGE_TITLE_BY_PATH[location.pathname];
-  console.log('현재 path:', location.pathname);
-  console.log('AuthHeader 조건 결과:', isSigninPageInfo(location.pathname));
+
   return (
     <>
       {/* {meta.mobile.showHeader && <AuthHeader />} */}

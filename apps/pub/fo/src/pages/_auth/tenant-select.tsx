@@ -1,15 +1,14 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { MobileView, BrowserView } from 'react-device-detect';
-import { AuthTitle } from '../../features/auth';
-import { useState } from 'react';
 import { cn } from '@learnway/shared';
-import { IcoCaution } from '@learnway/icons';
-import styles from './tenant-select.module.css';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css'; // 폼모듈
-import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { OptionCard, OptionCardItem } from '@learnway/ui/option-card';
+import { createFileRoute } from '@tanstack/react-router';
+import { useState } from 'react';
+import { BrowserView, MobileView } from 'react-device-detect';
+import { AuthTitle } from '../../features/auth';
+import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
+import styles from './tenant-select.module.css';
 
 export const Route = createFileRoute('/_auth/tenant-select')({
   component: RouteComponent,
