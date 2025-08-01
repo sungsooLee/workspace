@@ -1,23 +1,22 @@
-/* eslint-disable @nx/enforce-module-boundaries */
 import { FC, useState } from 'react';
+
+import { IcoAlertCircle, IcoFormRequired } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { ContentsHistoryInfoFormField } from '../../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
-import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css'; // 타이틀 css
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
-import {
-  Button,
-  ContentsRow,
-  Textarea,
-  CheckboxGroupFormField,
-  Switch,
-  Tooltip,
-  Input,
-  GridBox,
-} from '@learnway/ui';
-import { IcoFormRequired, IcoAlertCircle } from '@learnway/icons';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
+import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css'; // 타이틀 css
+
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { CheckboxGroupFormField } from '@learnway/ui/form-field';
+import { GridBox } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
+import { Switch } from '@learnway/ui/switch';
+import { Textarea } from '@learnway/ui/textarea';
+import { Tooltip } from '@learnway/ui/tooltip';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { ContentsHistoryInfoFormField } from '../../../../shared/ui/contents-history-info-form-field';
 // eslint-disable-next-line no-empty-pattern
 const LearningMenuComponent: FC<{}> = ({}) => {
   // switch : 보안콘텐츠 여부

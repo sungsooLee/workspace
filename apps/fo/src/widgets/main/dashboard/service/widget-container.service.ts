@@ -1,5 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query';
-import { has } from 'lodash';
+import { has } from 'lodash-es';
 import { useCreation } from 'ahooks';
 
 import { widgetComponentConfig } from '../ui/widget-container/widget-component-config';

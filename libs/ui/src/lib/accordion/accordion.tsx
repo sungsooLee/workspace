@@ -1,7 +1,7 @@
 import { IcoArrowDown, IcoArrowForward } from '@learnway/icons';
 import * as Primitive from '@radix-ui/react-accordion';
 import { useCreation } from 'ahooks';
-import { isArray } from 'lodash';
+import { isArray } from 'lodash-es';
 import React, { forwardRef } from 'react';
 
 import { cn } from '@learnway/shared';

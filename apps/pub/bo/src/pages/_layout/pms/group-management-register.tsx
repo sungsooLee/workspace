@@ -1,24 +1,22 @@
-/* eslint-disable @nx/enforce-module-boundaries */
-import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
+import { useState } from 'react';
+
 import { cn } from '@learnway/shared';
-import {
-  Button,
-  ContentsRow,
-  CheckboxGroupFormField,
-  Switch,
-  PhoneNumber,
-  Input,
-  RadioGroupFormField,
-  FormSubTitle,
-} from '@learnway/ui';
-import { IcoFormRequired, IcoAlertCircle } from '@learnway/icons';
+import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
+
+import { IcoFormRequired } from '@learnway/icons';
 
 /** style */
-import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
+import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { CheckboxGroupFormField, RadioGroupFormField } from '@learnway/ui/form-field';
+import { Input } from '@learnway/ui/input';
+import { PhoneNumber } from '@learnway/ui/phone-number';
+import { Switch } from '@learnway/ui/switch';
 
 export const Route = createFileRoute('/_layout/pms/group-management-register')({
   component: RouteComponent,

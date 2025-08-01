@@ -1,15 +1,10 @@
-import { useEffect } from 'react';
-import { createFileRoute, Link } from '@tanstack/react-router';
+import { createFileRoute } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import {
-  Button,
-  useModal,
-  ModalContainer,
-  ModalBody,
-  ModalFooter,
-  ModalTitle,
-  GridBox,
-} from '@learnway/ui';
+import { useEffect } from 'react';
+
+import { Button } from '@learnway/ui/button';
+import { GridBox } from '@learnway/ui/grid';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
 export const Route = createFileRoute('/_layout/learning/pop-program-guide')({
   component: RouteComponent,

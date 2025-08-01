@@ -1,8 +1,11 @@
 import { ALL_OPTION } from '@learnway/hooks';
-import { AutoCompleteDropdown, Dropdown, DropdownOption } from '@learnway/ui';
+
+import { AutoCompleteDropdown } from '@learnway/ui/auto-complete';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { DropdownOption } from '@learnway/ui/type';
 import { Meta, StoryObj } from '@storybook/react/*';
 import { t } from 'i18next';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export default {
   title: 'Bo-Components/SelectBox&DropdownList',
@@ -320,7 +323,7 @@ const sampleOptions: DropdownOption[] = [
 
 const loadOptions = (inputValue: string): Promise<DropdownOption[]> => {
   return new Promise<DropdownOption[]>((resolve) => {
-    console.log('API 호출 해야함' + inputValue);
+    console.log(`API 호출 해야함${inputValue}`);
     setTimeout(() => {
       const filteredOptions = sampleOptions.filter(
         (option: DropdownOption) =>

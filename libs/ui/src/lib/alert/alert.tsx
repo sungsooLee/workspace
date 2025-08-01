@@ -1,4 +1,4 @@
-import { isString } from 'lodash';
+import { isString } from 'lodash-es';
 import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 

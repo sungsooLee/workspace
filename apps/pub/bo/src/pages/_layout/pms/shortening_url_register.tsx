@@ -1,26 +1,23 @@
-/* eslint-disable @nx/enforce-module-boundaries */
-import { useState } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
-import {
-  Button,
-  ChipList,
-  ContentsRow,
-  Input,
-  Switch,
-  Textarea,
-  RadioGroupFormField,
-  GridBox,
-  FormSubTitle,
-} from '@learnway/ui';
-import { IcoFormRequired, IcoCopy, IcoMinus } from '@learnway/icons';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { IcoCopy, IcoFormRequired, IcoMinus } from '@learnway/icons';
 import { cn } from '@learnway/shared';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { ChipList } from '@learnway/ui/chips';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { RadioGroupFormField } from '@learnway/ui/form-field';
+import { GridBox } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
+import { Switch } from '@learnway/ui/switch';
+import { Textarea } from '@learnway/ui/textarea';
+import { createFileRoute } from '@tanstack/react-router';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { useState } from 'react';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 
 // style
-import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 
 export const Route = createFileRoute('/_layout/pms/shortening_url_register')({
   component: RouteComponent,

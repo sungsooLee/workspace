@@ -1,11 +1,14 @@
-/* eslint-disable @nx/enforce-module-boundaries */
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
+
 import { cn } from '@learnway/shared';
+import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
-import { Textarea, Button, Tooltip, FormSubTitle } from '@learnway/ui';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { Textarea } from '@learnway/ui/textarea';
+import { Tooltip } from '@learnway/ui/tooltip';
 
 export const Route = createFileRoute('/_layout/pms/menu-channel-open-detail-management')({
   component: RouteComponent,

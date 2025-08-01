@@ -1,4 +1,4 @@
-import { queryOptions } from '@entities/channel/service/channel.queries';
+import { queryOptions } from '@entities/channel';
 import { getChannelUrl } from '@features/channel/channel-application/service/channel-application.service';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';

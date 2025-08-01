@@ -1,5 +1,5 @@
 import { QueryClient } from '@tanstack/react-query';
-import { merge } from 'lodash';
+import { merge } from 'lodash-es';
 import { eventService, HTTP_EVENTS } from '@learnway/shared';
 
 export const twentyFourHoursInMs = 1000 * 60 * 60 * 24;

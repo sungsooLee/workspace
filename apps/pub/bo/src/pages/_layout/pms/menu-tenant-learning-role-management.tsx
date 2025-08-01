@@ -1,15 +1,15 @@
+import { cn } from '@learnway/shared';
+import { Tabs } from '@learnway/ui/tabs';
 import { createFileRoute } from '@tanstack/react-router';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import { Tabs } from '@learnway/ui';
-import { cn } from '@learnway/shared';
 
 /* styles */
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 
 /* tab contents */
-import { TenantLearningRoleMenu } from './-tabcontents/tenant-learning-role-menu'; // 학습자 역할정보
 import { TenantLearningMenuSetting } from './-tabcontents/tenant-learning-menu-setting'; // 학습자 메뉴설정
 import { TenantLearningRoleGrant } from './-tabcontents/tenant-learning-role-grant'; // 학습자 역할부여
+import { TenantLearningRoleMenu } from './-tabcontents/tenant-learning-role-menu'; // 학습자 역할정보
 
 export const Route = createFileRoute('/_layout/pms/menu-tenant-learning-role-management')({
   component: RouteComponent,

@@ -1,12 +1,14 @@
-/* eslint-disable @nx/enforce-module-boundaries */
-import { FC } from 'react';
 import { cn } from '@learnway/shared';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { TableBox } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { Button, Input, TableBox, FormSubTitle } from '@learnway/ui';
+import { FC } from 'react';
 
 /* styles */
-import styles from './main-widget-detail.module.css';
 import dataWrapStyles from './data-wrap.module.css';
+import styles from './main-widget-detail.module.css';
 
 const MainWidgetDetailComponent: FC<{}> = ({}) => {
   // Table

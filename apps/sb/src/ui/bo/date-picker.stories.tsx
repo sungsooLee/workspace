@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
-import { DatePicker, DatePickerType, RangeDatePicker } from '@learnway/ui';
 import { getDefaultLang, setDefaultLang } from '@learnway/shared';
-import 'react-datepicker/dist/react-datepicker.css';
-import i18next from 'i18next';
-import { initReactI18next } from 'react-i18next';
+import { DatePicker, DatePickerType, RangeDatePicker } from '@learnway/ui/date-picker';
+import type { Meta, StoryObj } from '@storybook/react';
 import { addDays } from 'date-fns';
+import i18next from 'i18next';
+import React, { useEffect, useState } from 'react';
+import 'react-datepicker/dist/react-datepicker.css';
+import { initReactI18next } from 'react-i18next';
 
 interface StorybookI18nProviderProps {
   children: React.ReactNode;
@@ -82,9 +82,9 @@ export default {
     docs: {
       description: {
         component: `
-        - 날짜 및 시간은 직접 입력하거나 레이어드 팝업을 제공하여 선택할 수 있다.  
-        - 시간 설정이 필요한 경우 날짜 입력필드 우측에 시간 입력필드를 배치한다.  
-        - 시간 설정은 30분(오전/오후) 단위를 기본으로 하나 업무에 따라 10-20분 등 설계 시 다르게 설계될 수 있다.  
+        - 날짜 및 시간은 직접 입력하거나 레이어드 팝업을 제공하여 선택할 수 있다.
+        - 시간 설정이 필요한 경우 날짜 입력필드 우측에 시간 입력필드를 배치한다.
+        - 시간 설정은 30분(오전/오후) 단위를 기본으로 하나 업무에 따라 10-20분 등 설계 시 다르게 설계될 수 있다.
         - 상세 시/분, 시/분/초 설정은 오전/오후를 제공하지 않고 상세하게 설정할 수 있도록 제공하며, 업무에 따라 다르게 설계될 수 있다.
         `,
       },

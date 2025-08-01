@@ -2,7 +2,7 @@ import { createElement } from 'react';
 // import { ErrorComponent, redirect } from '@tanstack/react-router';
 import { redirect } from '@tanstack/react-router';
 import type { ParsedLocation } from '@tanstack/react-router';
-import { isEmpty } from 'lodash';
+import { isEmpty } from 'lodash-es';
 import { ZodSchema } from 'zod';
 
 import { authUserQueryKeys, mutateOptions, menuQueryOptions } from '@learnway/auth/entities';

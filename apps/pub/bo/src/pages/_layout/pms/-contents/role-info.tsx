@@ -1,32 +1,25 @@
-/* eslint-disable no-restricted-imports */
-/* eslint-disable @nx/enforce-module-boundaries */
 import { FC, useState } from 'react';
-import { cn } from '@learnway/shared';
-import {
-  Button,
-  ContentsRow,
-  Input,
-  Textarea,
-  Switch,
-  RadioGroupFormField,
-  ChipListModalSelectorFormField,
-  ModalTitle,
-  ModalContainer,
-  ModalBody,
-  ModalFooter,
-  Dropdown,
-  useModal,
-  FormSubTitle,
-} from '@learnway/ui';
-import { ContentsHistoryInfoFormField } from '../../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
+
 import { IcoFormRequired, IcoRefresh02, IcoSearch } from '@learnway/icons';
+import { cn } from '@learnway/shared';
+
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { ChipListModalSelectorFormField, RadioGroupFormField } from '@learnway/ui/form-field';
+import { Input } from '@learnway/ui/input';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { Switch } from '@learnway/ui/switch';
+import { Textarea } from '@learnway/ui/textarea';
+import { ContentsHistoryInfoFormField } from '../../../../shared/ui/contents-history-info-form-field';
 
 /* style */
-import styles from '@learnway/styles/bo/features/role/role-info.module.css';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
-import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
+import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
+import styles from '@learnway/styles/bo/features/role/role-info.module.css';
 
 const RoleInfoComponent: FC<{}> = ({}) => {
   // switch : 사용기한

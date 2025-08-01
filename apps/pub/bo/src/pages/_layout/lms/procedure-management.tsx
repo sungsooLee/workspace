@@ -1,14 +1,19 @@
-import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
+import { useState } from 'react';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import { Input, Dropdown, Button, GridBox, Divider } from '@learnway/ui';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { IcoRefresh02, IcoSearch, IcoFormRequired, IcoStar } from '@learnway/icons';
+
+import { IcoFormRequired, IcoRefresh02, IcoSearch, IcoStar } from '@learnway/icons';
 import { cn } from '@learnway/shared';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
 /** style */
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
+import { Button } from '@learnway/ui/button';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { Divider } from '@learnway/ui/elements';
+import { GridBox } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
 
 export const Route = createFileRoute('/_layout/lms/procedure-management')({
   component: RouteComponent,

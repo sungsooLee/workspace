@@ -1,7 +1,8 @@
-/* eslint-disable @nx/enforce-module-boundaries */
-import { FC, useState } from 'react';
 import { cn, getRandomId } from '@learnway/shared';
-import { Button, List, FormSubTitle } from '@learnway/ui';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { List } from '@learnway/ui/list';
+import { FC, useState } from 'react';
 import styles from './main-widget.module.css';
 
 const menuLength = 5;

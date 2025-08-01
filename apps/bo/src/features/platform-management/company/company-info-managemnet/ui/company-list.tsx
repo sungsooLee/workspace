@@ -1,4 +1,4 @@
-import { queryOptions } from '@entities/companies/service/companies.queries';
+import { queryOptions } from '@entities/companies';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { Button } from '@learnway/ui/button';

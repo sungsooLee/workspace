@@ -5,7 +5,6 @@ export const queryKeys = {
   all: ['categories'] as const,
   tree: ['category-tree'] as const,
   detail: ['category-detail'] as const,
-  coursesCategory: ['course-category'] as const,
 };
 
 export const queryOptions = {
@@ -30,14 +29,17 @@ export const queryOptions = {
   }),
   tree: (tenantId: number) => ({
     queryKey: [...queryKeys.tree, tenantId],
-    queryFn: () => CategoryService.getFetchCategoryTree(tenantId)
+    queryFn: () => CategoryService.getFetchRecentCategory(tenantId)
   }),
   detail: (categoryId: number) => ({
     queryKey: queryKeys.detail,
     queryFn: async () => CategoryService.getFetchCategoryDetail(categoryId),
   }),
-  coursesCategory: (payload: any) => ({
-    queryKey: queryKeys.coursesCategory,
-    queryFn: async () => CategoryService.getFetchCoursesCategory(payload),
-  }),
+
 };
+
+export const categoryMutateOptions = {
+  create: () => ({
+    mutationFn: (payload: {categoryId: number}) => CategoryService.createRecentCategory(payload),
+  })
+}

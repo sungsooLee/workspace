@@ -1,6 +1,6 @@
+import { Button } from '@learnway/ui/button';
+import { TreeBox, TreeContainer, TreeNode } from '@learnway/ui/tree-view';
 import type { Meta, StoryObj } from '@storybook/react';
-import { useState } from 'react';
-import { Button, TreeBox, TreeContainer, TreeNode, TreeToTree } from '@learnway/ui';
 import i18n from 'i18next';
 import { I18nextProvider } from 'react-i18next';
 

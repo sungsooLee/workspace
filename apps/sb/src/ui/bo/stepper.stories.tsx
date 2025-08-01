@@ -1,8 +1,7 @@
 // BaseForm.stories.tsx
-import React from 'react';
+import { Stepper } from '@learnway/ui/stepper';
+import { SelectOption } from '@learnway/ui/type';
 import type { Meta } from '@storybook/react';
-import { SelectOption, Stepper } from '@learnway/ui';
-
 export default {
   title: 'Bo-Components/Stepper',
   component: Stepper,

@@ -1,36 +1,28 @@
-/* eslint-disable no-restricted-imports */
-/* eslint-disable @nx/enforce-module-boundaries */
-import { useState } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
+import { IcoFormRequired, IcoPpt, IcoRefresh02, IcoSearch, IcoTrash03 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { IcoRefresh02, IcoSearch, IcoFormRequired, IcoTrash03, IcoPpt } from '@learnway/icons';
-import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import { ContentsHistoryInfoFormField } from '../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
+import { createFileRoute } from '@tanstack/react-router';
 
-import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
-import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
+import { useState } from 'react';
+import { ContentsHistoryInfoFormField } from '../../../shared/ui/contents-history-info-form-field';
+import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
+
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import fileUploadStyles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css'; // 파일 업로드
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
+import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
+import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
 
-import {
-  Button,
-  Input,
-  Dropdown,
-  ContentsRow,
-  InputModalSelectorFormField,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  useModal,
-  GridBox,
-  Textarea,
-  RadioGroupFormField,
-  Divider,
-  FormSubTitle,
-} from '@learnway/ui';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { Divider } from '@learnway/ui/elements';
+import { InputModalSelectorFormField, RadioGroupFormField } from '@learnway/ui/form-field';
+import { GridBox } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { Textarea } from '@learnway/ui/textarea';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
 export const Route = createFileRoute('/_layout/pms/menu-education-register-detail')({

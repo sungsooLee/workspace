@@ -8,7 +8,7 @@ import {
   useQuery,
   skipToken,
 } from '@tanstack/react-query';
-import { isEmpty, isFunction } from 'lodash';
+import { isEmpty, isFunction } from 'lodash-es';
 
 import { PageInfo, QueryFnPagingData } from '@learnway/shared';
 

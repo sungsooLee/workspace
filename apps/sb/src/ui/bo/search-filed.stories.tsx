@@ -1,22 +1,23 @@
 import type { Meta, StoryObj } from '@storybook/react';
+
+import { FormRow } from '@learnway/auth/shared';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
 import {
-  Button,
   ChipListModalSelectorFormField,
-  ContentsRow,
-  GridBox,
-  Input,
   InputModalSelectorFormField,
-  ListModalSelectorFormField,
+} from '@learnway/ui/form-field';
+import { GridBox } from '@learnway/ui/grid';
+import {
   ModalBody,
   ModalContainer,
   ModalFooter,
   ModalTitle,
   ModalWrapper,
   useModal,
-} from '@learnway/ui';
-import { forwardRef, useState } from 'react';
+} from '@learnway/ui/modal';
 import { t } from 'i18next';
-import { FormRow } from '../../../../../libs/auth/src/lib/shared';
+import { forwardRef, useState } from 'react';
 import { DynamicFormConfig, useDynamicForm } from '../../../../../libs/hooks/src';
 
 export default {
@@ -46,7 +47,7 @@ const getMockData = () => {
 };
 
 const TestModal = forwardRef<HTMLDivElement, any>(({ ...props }, ref) => {
-  const { close } = useModal();
+  const { closeModal: close } = useModal();
   const { data: gridData }: any = getMockData();
   const [option, setOption] = useState<{ value: string; label: string }>();
 

@@ -1,27 +1,20 @@
-import { useState } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
-import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { cn } from '@learnway/shared';
+import { createFileRoute } from '@tanstack/react-router';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { useState } from 'react';
+import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 
 /* css */
-import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import { IcoFormRequired } from '@learnway/icons';
-
-import {
-  // Button,
-  ContentsRow,
-  Input,
-  Switch,
-  Textarea,
-  GridBox,
-  CheckboxGroupFormField,
-  RadioGroupFormField,
-  TableBox,
-} from '@learnway/ui';
-
+import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { CheckboxGroupFormField, RadioGroupFormField } from '@learnway/ui/form-field';
+import { GridBox, TableBox } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
+import { Switch } from '@learnway/ui/switch';
+import { Textarea } from '@learnway/ui/textarea';
 export const Route = createFileRoute('/_layout/pms/widget-detail')({
   component: RouteComponent,
 });

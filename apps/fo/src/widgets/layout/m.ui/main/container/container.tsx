@@ -1,7 +1,7 @@
 import { memo, ReactNode } from 'react';
 import { useActiveMenuDepthState } from '@learnway/auth/entities';
 import { useCreation } from 'ahooks';
-import { last } from 'lodash';
+import { last } from 'lodash-es';
 
 import { MobileContainerHeader } from './container-header';
 

@@ -1,4 +1,4 @@
-import { last } from 'lodash';
+import { last } from 'lodash-es';
 import { create } from 'zustand';
 import { Menu } from '../../../types';
 

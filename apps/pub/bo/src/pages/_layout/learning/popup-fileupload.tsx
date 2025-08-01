@@ -1,16 +1,7 @@
-import { useEffect } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import {
-  Badge,
-  Button,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  ProgressBar,
-  useModal,
-} from '@learnway/ui';
+import { createFileRoute } from '@tanstack/react-router';
+import { useEffect } from 'react';
+
 import {
   IcoComplete02,
   IcoPause,
@@ -20,9 +11,13 @@ import {
   IcoUploadCloud,
 } from '@learnway/icons';
 
-import styles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css'; // 파일 업로드
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/box-data.module.css'; // 상단 박스 선택된 영역
+import styles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css'; // 파일 업로드
 import PopupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css'; // 팝업 styles
+import { Badge } from '@learnway/ui/badge';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { ProgressBar } from '@learnway/ui/progress';
 
 export const Route = createFileRoute('/_layout/learning/popup-fileupload')({
   component: RouteComponent,

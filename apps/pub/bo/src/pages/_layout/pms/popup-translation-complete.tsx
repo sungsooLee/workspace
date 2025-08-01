@@ -1,22 +1,15 @@
-/* eslint-disable @nx/enforce-module-boundaries */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from 'react';
+import { cn } from '@learnway/shared';
 import { createFileRoute } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { cn } from '@learnway/shared';
+import { useEffect } from 'react';
 
-import {
-  Button,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  useModal,
-  ModalTitle,
-  GridBox,
-  Tooltip,
-  FormSubTitle,
-} from '@learnway/ui';
 import { IcoAlertCircle } from '@learnway/icons';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { GridBox } from '@learnway/ui/grid';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { Tooltip } from '@learnway/ui/tooltip';
 
 /** style */
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';

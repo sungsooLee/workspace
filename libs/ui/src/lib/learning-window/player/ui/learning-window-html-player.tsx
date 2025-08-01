@@ -23,23 +23,25 @@ const LearningWindowHtmlPlayerComponent: FC<any> = () => {
     setIframeUrl(itemUrl);
 
     setTimeout(() => {
-      const payload = {
-        courseSequenceId: playInfo?.sequenceId,
-        courseId: playInfo?.courseId,
-        curriculumId: playInfo?.curriculumId,
-        moduleId: playInfo?.moduleId,
-        lessonId: playInfo?.lessonId,
-        contentUuid: playInfo?.contentUuid,
-        playRate: 100,
-      };
-      funcInfo?.html5LearningHistory(payload);
+      if (playInfo) {
+        const payload = {
+          courseSequenceId: playInfo.sequenceId,
+          courseId: playInfo.courseId,
+          curriculumId: playInfo.curriculumId,
+          moduleId: playInfo.moduleId,
+          lessonId: playInfo.lessonId,
+          contentUuid: playInfo.contentUuid,
+          playRate: 100,
+        };
+        funcInfo?.html5LearningHistory(payload);
+      }
     }, 5000);
   }, [htmlInfo]);
 
   return (
     <div className={`${styles.start} ${styles.iframe}`}>
       <div className={styles.iframe_contents}>
-        <iframe src={iframeUrl} title="HTML Content" className={styles.iframe} />
+        <iframe src={iframeUrl} title="HTML Content" className={styles.iframe}></iframe>
       </div>
     </div>
   );

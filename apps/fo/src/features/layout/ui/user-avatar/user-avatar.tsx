@@ -24,7 +24,7 @@ import languagestyles from '@learnway/styles/fo/features/layout/ui/user-avatar/l
 import popoverInnerStyles from '@learnway/styles/fo/features/layout/ui/user-avatar/popover-inner.module.css';
 import styles from '@learnway/styles/fo/features/layout/ui/user-avatar/user-avatar.module.css';
 import { useRouter } from '@tanstack/react-router';
-import { lowerCase } from 'lodash';
+import { lowerCase } from 'lodash-es';
 
 //import { useLoginTimeout } from '../../../feature/platform/service/loginTimeout.hooks';
 

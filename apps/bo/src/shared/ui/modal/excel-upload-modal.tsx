@@ -15,15 +15,16 @@ import { Button } from '@learnway/ui/button';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 import { ProgressBar } from '@learnway/ui/progress';
 import { NoticeBox } from '@shared/ui';
-import { t } from 'i18next';
-import { compact } from 'lodash';
+import { compact } from 'lodash-es';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { useTranslation } from 'react-i18next';
 
 interface ExcelUploadModalProps {
   validateUrl: string;
   affairsType?: 'PMS' | 'CMS' | 'LMS';
   formDataName?: string;
+  validationResultRequired?: boolean;
   templateUrls?: {
     xlsx?: string;
     csv?: string;
@@ -70,6 +71,7 @@ const ExcelUploadModalComponent = ({
   validateUrl,
   affairsType = 'PMS',
   formDataName = 'file',
+  validationResultRequired = true,
   templateUrls,
 }: ExcelUploadModalProps) => {
   const acceptFiles = ['xlsx', 'xls'];
@@ -79,6 +81,7 @@ const ExcelUploadModalComponent = ({
   const acceptFileString = useMemo(() => acceptFilesToAccept(acceptFiles), [acceptFiles]);
 
   const { closeModal } = useModal();
+  const { t } = useTranslation();
 
   const [files, setFiles] = useState<UploadFile[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -124,14 +127,14 @@ const ExcelUploadModalComponent = ({
       setStatus(Status.UPLOADING);
       setFiles(compact([file]).map(toUploadFile));
       setIsLoading(true);
-      setProgressMessage('파일을 업로드하고 있습니다...');
+      setProgressMessage(t('파일을 업로드하고 있습니다...'));
 
       try {
         // FormData로 파일 전송
         const formData = new FormData();
         formData.append(formDataName, file);
 
-        setProgressMessage('파일 검증 중입니다. 잠시만 기다려주세요');
+        setProgressMessage(t('파일 검증 중입니다. 잠시만 기다려주세요'));
 
         // const response = await fetch(`${ {
         //   method: 'POST',
@@ -163,11 +166,11 @@ const ExcelUploadModalComponent = ({
         if (success) {
           setStatus(Status.COMPLETED);
           setFiles((prev) => prev.map((_) => ({ ..._, status: Status.COMPLETED, progress: 100 })));
-          setProgressMessage('업로드가 완료되었습니다.');
+          setProgressMessage(t('업로드가 완료되었습니다.'));
         } else {
           setStatus(Status.FAILED);
           setFiles((prev) => prev.map((_) => ({ ..._, status: Status.FAILED, progress: 100 })));
-          setProgressMessage('업로드 중 오류가 발생했습니다.');
+          setProgressMessage(t('업로드 중 오류가 발생했습니다.'));
         }
       } catch (error: any) {
         console.error('Validation error:', error);
@@ -181,7 +184,7 @@ const ExcelUploadModalComponent = ({
           setFiles((prev) => prev.map((_) => ({ ..._, status: Status.FAILED })));
         }
         setFiles((prev) => prev.map((_) => ({ ..._, status: Status.FAILED, progress: 100 })));
-        setProgressMessage('업로드 중 오류가 발생했습니다.');
+        setProgressMessage(t('업로드 중 오류가 발생했습니다.'));
       } finally {
         setIsLoading(false);
       }
@@ -288,9 +291,19 @@ const ExcelUploadModalComponent = ({
     return statusMap[file.status] || statusMap.default;
   };
 
+  /**
+   * 확인 버튼 비활성화 처리 조건 설정
+   */
+  const completeButtonDisabled = useMemo(() => {
+    if (validationResultRequired) {
+      return !(status === Status.COMPLETED && validationResult?.successRows?.length);
+    }
+    return status !== Status.COMPLETED;
+  }, [status, validationResult, validationResultRequired]);
+
   return (
     <ModalContainer>
-      <ModalTitle>엑셀 업로드</ModalTitle>
+      <ModalTitle>{t('엑셀 업로드')}</ModalTitle>
       <ModalBody>
         <div className={popupStyles.wrap}>
           <div className={cn(styles.start, styles.wrap)}>
@@ -307,7 +320,7 @@ const ExcelUploadModalComponent = ({
                     </strong>
                     <span
                       className={styles.file_guide}
-                    >{`${acceptFileString} ${maxFileCount === 1 ? ` / 최대 1개 파일` : ''} ${maxFileSize ? `/ Max file size : ${formatFileSize(maxFileSize)}` : ''} `}</span>
+                    >{`${acceptFileString} ${maxFileCount === 1 ? ` / ${t('최대 1개 파일')}` : ''} ${maxFileSize ? `/ Max file size : ${formatFileSize(maxFileSize)}` : ''} `}</span>
                     <input {...getInputProps()} accept={acceptFileString} />
                   </Button>
                 </div>
@@ -405,8 +418,14 @@ const ExcelUploadModalComponent = ({
           label={t('확인')}
           variant={'primary'}
           size={'lg'}
-          onClick={() => closeModal(validationResult?.successRows)}
-          disabled={!(status === Status.COMPLETED && validationResult?.successRows?.length)}
+          onClick={() =>
+            closeModal(
+              validationResultRequired
+                ? validationResult?.successRows
+                : { uploadResult: status === Status.COMPLETED },
+            )
+          }
+          disabled={completeButtonDisabled}
         />
       </ModalFooter>
     </ModalContainer>

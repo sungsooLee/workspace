@@ -1,7 +1,7 @@
 // BaseForm.stories.tsx
-import React from 'react';
+import { Button } from '@learnway/ui/button';
+import { EmptyText } from '@learnway/ui/empty-text';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Button, EmptyText } from '@learnway/ui';
 import { useTranslation } from 'react-i18next';
 
 export default {

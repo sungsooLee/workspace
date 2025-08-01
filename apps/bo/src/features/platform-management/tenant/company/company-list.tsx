@@ -1,15 +1,15 @@
-import { useEffect, useCallback, useState } from 'react';
-import { useLocation, Link } from '@tanstack/react-router';
-import { t } from 'i18next';
-import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { queryOptions } from '@entities/companies';
+import { useFetchAuthUser } from '@learnway/auth/entities';
+import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
+import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import { SearchBox } from '@shared/ui/search-box';
-import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
-import { queryOptions } from '@entities/companies/service/companies.queries';
+import { Link } from '@tanstack/react-router';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { EnGlobalConst } from '@types';
-import { useFetchAuthUser } from '@learnway/auth/entities';
+import { t } from 'i18next';
+import { useEffect, useState } from 'react';
 
 const TenantCompanyListComponent = () => {
   const { data: loginUser } = useFetchAuthUser();
@@ -28,7 +28,8 @@ const TenantCompanyListComponent = () => {
         : '',
       modifyEndDate: data.modifyDate.to
         ? getDateToString(new Date(data.modifyDate.to), 'YYYYMMDD')
-        : '' };
+        : '',
+    };
     return searchData;
   };
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig());
@@ -62,8 +63,8 @@ const TenantCompanyListComponent = () => {
       <Divider />
       <GridBox config={gConfig} columns={columns()} showNumberingColumn title={t('회사 목록')} />
     </>
-  )
-}
+  );
+};
 
 export const TenantCompanyList = TenantCompanyListComponent;
 
@@ -77,13 +78,16 @@ const searchConfig = (): SearchBoxConfig => ({
         value: '',
         optionsConfig: {
           options: [{ value: '', label: t('전체') }],
-          codeGroup: CODE_GROUP['pms.company.CompanyType'] } },
+          codeGroup: CODE_GROUP['pms.company.CompanyType'],
+        },
+      },
       {
         name: 'name',
         type: 'text',
         label: t('회사명'),
         value: '',
-        placeholder: '' },
+        placeholder: '',
+      },
       {
         name: 'isUsed',
         type: 'dropdown',
@@ -93,14 +97,17 @@ const searchConfig = (): SearchBoxConfig => ({
           { value: '', label: t('전체') },
           { value: true, label: t('사용') },
           { value: false, label: t('미사용') },
-        ] },
+        ],
+      },
       {
         name: 'modifyDate',
         type: 'date-range',
         label: t('수정 기간'),
         value: {
           from: undefined,
-          to: undefined } },
+          to: undefined,
+        },
+      },
     ],
   ],
   validator: {
@@ -108,14 +115,20 @@ const searchConfig = (): SearchBoxConfig => ({
       conditions: [
         {
           fn: (values: any) => !values.modifyDate?.from && values.modifyDate?.to,
-          message: t('시작 날짜를 선택하세요') },
+          message: t('시작 날짜를 선택하세요'),
+        },
         {
           fn: (values: any) => values.modifyDate?.from && !values.modifyDate?.to,
-          message: t('종료 날짜를 선택하세요.') },
+          message: t('종료 날짜를 선택하세요.'),
+        },
         {
           fn: (values: any) => values.modifyDate.from > values.modifyDate.to,
-          message: t('시작 날짜는 종료 날짜 보다 이전일 이어야 합니다.') },
-      ] } } });
+          message: t('시작 날짜는 종료 날짜 보다 이전일 이어야 합니다.'),
+        },
+      ],
+    },
+  },
+});
 
 const gridConfig: useGridBoxConfig = {
   query: queryOptions.list,
@@ -124,46 +137,62 @@ const gridConfig: useGridBoxConfig = {
   gridState: {
     page: 0,
     size: 10,
-    sort: [] } };
+    sort: [],
+  },
+};
 
 const columnHelper = createColumnHelper<any>();
 
-const columns = () => [
-  columnHelper.accessor('companyType', {
-    header: t('그룹'),
-    cell: (info) =>
-      t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.company.CompanyType.${info.getValue()}`),
-    meta: {
-      size: 'auto' } }),
-  columnHelper.accessor('name', {
-    header: t('회사명'),
-    cell: (info) => (
-      <Link
-        to="/platform/tenant/company/detail"
-        state={{
-          companyCode: info.row.original.companyCode }}
-        className="link"
-      >
-        {info.row.original.name}
-      </Link>
-    ),
-    meta: {
-      size: 'auto' } }),
-  columnHelper.accessor('isUsed', {
-    header: t('회사정보 사용'),
-    cell: (info) => (info.getValue() ? t('사용') : t('미사용')) }),
-  columnHelper.accessor('lastModifiedBy', {
-    header: t('수정자'),
-    cell: (info) =>
-      info.row.original.isUseLinkageSystem ? '시스템' : info.row.original.lastModifiedBy,
-    meta: {
-      size: 'auto' } }),
-  columnHelper.accessor('modifiedDate', {
-    header: t('수정일'),
-    cell: (info) =>
-      info.getValue() === null
-        ? ''
-        : getDateToString(new Date(info.row.original.modifiedDate), DATE_TIME_FORMAT.DATETIME_SEC),
-    meta: {
-      size: 'auto' } }),
-] as ColumnDef<any, unknown>[];
+const columns = () =>
+  [
+    columnHelper.accessor('companyType', {
+      header: t('그룹'),
+      cell: (info) =>
+        t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.company.CompanyType.${info.getValue()}`),
+      meta: {
+        size: 'auto',
+      },
+    }),
+    columnHelper.accessor('name', {
+      header: t('회사명'),
+      cell: (info) => (
+        <Link
+          to="/platform/tenant/company/detail"
+          state={{
+            companyCode: info.row.original.companyCode,
+          }}
+          className="link"
+        >
+          {info.row.original.name}
+        </Link>
+      ),
+      meta: {
+        size: 'auto',
+      },
+    }),
+    columnHelper.accessor('isUsed', {
+      header: t('회사정보 사용'),
+      cell: (info) => (info.getValue() ? t('사용') : t('미사용')),
+    }),
+    columnHelper.accessor('lastModifiedBy', {
+      header: t('수정자'),
+      cell: (info) =>
+        info.row.original.isUseLinkageSystem ? '시스템' : info.row.original.lastModifiedBy,
+      meta: {
+        size: 'auto',
+      },
+    }),
+    columnHelper.accessor('modifiedDate', {
+      header: t('수정일'),
+      cell: (info) =>
+        info.getValue() === null
+          ? ''
+          : getDateToString(
+              new Date(info.row.original.modifiedDate),
+              DATE_TIME_FORMAT.DATETIME_SEC,
+            ),
+      meta: {
+        size: 'auto',
+      },
+    }),
+  ] as ColumnDef<any, unknown>[];

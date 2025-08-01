@@ -1,12 +1,12 @@
-import { useFetchChannelByRoleId } from '@entities/channel/service/channel.hook';
+import { useFetchChannelByRoleId } from '@entities/channel';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { AuthUser } from '@learnway/auth/types';
 import { BaseFormFieldProps } from '@learnway/hooks';
+import { ChannelByRoleId } from '@types';
 import { t } from 'i18next';
-import { forwardRef, useEffect, useMemo, useRef } from 'react';
-import { DropdownFormField } from '../../../features/form/ui/dropdown-form-field';
+import { forwardRef, useEffect, useMemo } from 'react';
 import { useWatch } from 'react-hook-form';
-import { ChannelByRoleId, TenantList } from '@types';
+import { DropdownFormField } from '../../../features/form/ui/dropdown-form-field';
 
 interface TenantChannelDropdownFormFieldProps extends BaseFormFieldProps<string> {
   enableFilter: boolean; // 테넌트 id 필터 적용 여부
@@ -21,7 +21,8 @@ const TenantChannelDropdownFormFieldComponent = forwardRef<
 
   const tenantId = useWatch({
     control,
-    name: 'tenantId' });
+    name: 'tenantId',
+  });
 
   const filterFn = (item: ChannelByRoleId, id?: number) => {
     if (!enableFilter) return true;
@@ -50,7 +51,8 @@ const TenantChannelDropdownFormFieldComponent = forwardRef<
       ?.map(({ channelName, channelUuid }) => ({
         // 옵션 형식으로 변환
         label: channelName,
-        value: channelUuid }));
+        value: channelUuid,
+      }));
   }, [channel, tenantId]);
 
   useEffect(() => {

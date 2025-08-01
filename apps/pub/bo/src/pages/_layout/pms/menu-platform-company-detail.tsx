@@ -1,11 +1,11 @@
+import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
+import { Tabs } from '@learnway/ui/tabs';
 import { createFileRoute } from '@tanstack/react-router';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
-import { Tabs } from '@learnway/ui';
 
 /* tab contents */
-import { CompanyInfomation } from './-tabcontents/company-infomation'; // 회사정보
 import { AutoUserGroup } from './-tabcontents/auto-user-group'; // 자동유저그룹관리
+import { CompanyInfomation } from './-tabcontents/company-infomation'; // 회사정보
 
 export const Route = createFileRoute('/_layout/pms/menu-platform-company-detail')({
   component: RouteComponent,

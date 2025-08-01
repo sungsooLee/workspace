@@ -1,25 +1,19 @@
-/* eslint-disable react/jsx-no-useless-fragment */
-/* eslint-disable @nx/enforce-module-boundaries */
+import { cn, SelectOption } from '@learnway/shared';
 import { FC } from 'react';
-import { cn } from '@learnway/shared';
-import {
-  ContentsRow,
-  DatePicker,
-  ImageOption,
-  RadioGroupFormField,
-  ThumbnailImageUpload,
-  Tooltip,
-  ChipList,
-  SelectOption,
-  FormSubTitle,
-} from '@learnway/ui';
+
 import { IcoAlertCircle, IcoFormRequired } from '@learnway/icons';
 
 /* style */
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 
 /* images */
-import defaultImg from '../../../../assets/images/thumb/img_thumb_default.jpg';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { ChipList } from '@learnway/ui/chips';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { DatePicker } from '@learnway/ui/date-picker';
+import { ThumbnailPublicUpload } from '@learnway/ui/file-upload';
+import { RadioGroupFormField } from '@learnway/ui/form-field';
+import { Tooltip } from '@learnway/ui/tooltip';
 // import defaultImg from '../../../assets/images/thumb/img_thumb_default.jpg';
 
 const OpenSettingComponent: FC<{}> = ({}) => {
@@ -108,21 +102,21 @@ const OpenSettingComponent: FC<{}> = ({}) => {
             </Tooltip>
           </label>
           <div className={formStyles.input_box}>
-            <ThumbnailImageUpload
-              options={[
-                /* 동영상 추출 전 */
-                // { id: '1', path: defaultImg },
-                /* 동영상 추출 후 */
-                { id: '1', path: 'https://lodash.com/assets/img/lodash.svg' },
-                { id: '2', path: 'https://lodash.com/assets/img/lodash.svg' },
-                { id: '3', path: 'https://lodash.com/assets/img/lodash.svg' },
-                { id: '4', path: 'https://lodash.com/assets/img/lodash.svg' },
-                { id: '5', path: 'https://lodash.com/assets/img/lodash.svg' },
-                { id: '6', path: defaultImg } /* default 추천 썸네일 */,
-              ]}
-              disabled={true}
-              onChange={(options: ImageOption[]) => console.log('onChange', options)}
-              onCheckedChange={(options: ImageOption[]) => console.log('onCheckedChange', options)}
+            <ThumbnailPublicUpload
+              // options={[
+              //   /* 동영상 추출 전 */
+              //   // { id: '1', path: defaultImg },
+              //   /* 동영상 추출 후 */
+              //   { id: '1', path: 'https://lodash.com/assets/img/lodash.svg' },
+              //   { id: '2', path: 'https://lodash.com/assets/img/lodash.svg' },
+              //   { id: '3', path: 'https://lodash.com/assets/img/lodash.svg' },
+              //   { id: '4', path: 'https://lodash.com/assets/img/lodash.svg' },
+              //   { id: '5', path: 'https://lodash.com/assets/img/lodash.svg' },
+              //   { id: '6', path: defaultImg } /* default 추천 썸네일 */,
+              // ]}
+              // disabled={true}
+              onChange={(options: any) => console.log('onChange', options)}
+              // onCheckedChange={(options: ImageOption[]) => console.log('onCheckedChange', options)}
             />
           </div>
         </div>

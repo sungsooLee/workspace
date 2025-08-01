@@ -1,14 +1,11 @@
-import { FC, useState } from 'react';
 import { cn } from '@learnway/shared';
-import {
-  Button,
-  TreeView,
-  TreeNode,
-  Input,
-  TreeContainer,
-  DndTreeView,
-  FormSubTitle,
-} from '@learnway/ui';
+import { FC, useState } from 'react';
+
+import { DndTreeView, TreeContainer, TreeNode } from '@learnway/ui/tree-view';
+
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { Input } from '@learnway/ui/input';
 /* style */
 import styles from './role-list.module.css';
 

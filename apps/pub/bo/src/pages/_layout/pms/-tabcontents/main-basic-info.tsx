@@ -1,21 +1,19 @@
-import { FC, useState } from 'react';
 import { cn } from '@learnway/shared';
-import {
-  Button,
-  ContentsRow,
-  ChipList,
-  RadioGroupFormField,
-  CheckboxGroupFormField,
-  Input,
-  DatePicker,
-} from '@learnway/ui';
+import { FC } from 'react';
 
-import { IcoPlus, IcoFormRequired } from '@learnway/icons';
+import { Button } from '@learnway/ui/button';
+import { ChipList } from '@learnway/ui/chips';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { DatePicker } from '@learnway/ui/date-picker';
+import { CheckboxGroupFormField, RadioGroupFormField } from '@learnway/ui/form-field';
+import { Input } from '@learnway/ui/input';
+
+import { IcoFormRequired, IcoPlus } from '@learnway/icons';
 
 /* style */
-import styles from './main-basic-info.module.css';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import styles from './main-basic-info.module.css';
 
 const MainBasicInfoCopmonent: FC<{}> = ({}) => {
   return (

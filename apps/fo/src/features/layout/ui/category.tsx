@@ -52,7 +52,7 @@ const PopoverContent = () => {
     <div className={`${styles.start} ${styles.category_area}`}>
       <div className={styles.category}>
         {/* 최근방문 */}
-        <RecentVisits />
+        <RecentVisits items={[]} handleOnLink={() => null}/>
 
         {/* 카테고리 영역 */}
         <div className={styles.category_container}>

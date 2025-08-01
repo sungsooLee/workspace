@@ -76,16 +76,23 @@ function RouteComponent() {
     videoWatchLogStatistics(payload);
   };
   const handleOtherClickButton = async (playInfo: LearningWindowPlayInfo, otherInfo: any) => {
-    console.log('handleOtherClikcButton called');
     if (otherInfo.contentType === CmsEnContentType.ETC) {
-      download({
-        courseSequenceId: playInfo.sequenceId,
-        courseId: playInfo.courseId,
-        curriculumId: playInfo.curriculumId,
-        moduleId: playInfo.moduleId,
-        lessonId: playInfo.lessonId,
-        contentUuid: otherInfo.contentUuid,
-      });
+      if (
+        playInfo.sequenceId !== undefined &&
+        playInfo.courseId !== undefined &&
+        playInfo.curriculumId !== undefined &&
+        playInfo.moduleId !== undefined &&
+        playInfo.lessonId !== undefined
+      ) {
+        download({
+          courseSequenceId: playInfo.sequenceId,
+          courseId: playInfo.courseId,
+          curriculumId: playInfo.curriculumId,
+          moduleId: playInfo.moduleId,
+          lessonId: playInfo.lessonId,
+          contentUuid: otherInfo.contentUuid,
+        });
+      }
     }
   };
 

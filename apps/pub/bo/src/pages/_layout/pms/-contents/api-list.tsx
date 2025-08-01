@@ -1,7 +1,8 @@
-import { FC } from 'react';
 import { cn } from '@learnway/shared';
-import { GridBox, Button } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { GridBox } from '@learnway/ui/grid';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { FC } from 'react';
 /* style */
 import styles from './role-list-search.module.css';
 

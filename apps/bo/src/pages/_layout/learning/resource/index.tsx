@@ -72,8 +72,8 @@ function RouteComponent() {
       }
 
       // 외부위탁
-      case LEARNING_TYPE.EXTERNAL_CONSIGNMENT: {
-        router.navigate({ to: '/learning/resource/external_consignment/view' });
+      case LEARNING_TYPE.COMMISSIONED_CONTENT: {
+        router.navigate({ to: '/learning/resource/commission-contents/view' });
         break;
       }
       // 블로그

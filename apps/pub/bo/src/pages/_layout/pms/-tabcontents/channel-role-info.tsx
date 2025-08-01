@@ -1,6 +1,10 @@
-import { FC, useState } from 'react';
 import { cn } from '@learnway/shared';
-import { Tabs, GridBox, Button, DatePicker } from '@learnway/ui';
+import { FC, useState } from 'react';
+
+import { Button } from '@learnway/ui/button';
+import { DatePicker } from '@learnway/ui/date-picker';
+import { GridBox } from '@learnway/ui/grid';
+import { Tabs } from '@learnway/ui/tabs';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
 /* style */

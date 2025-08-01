@@ -1,6 +1,5 @@
-import React from 'react';
+import { Editor } from '@learnway/ui/editor';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Editor } from '@learnway/ui';
 
 export default {
   title: 'Bo-Components/Editor',

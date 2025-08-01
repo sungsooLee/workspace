@@ -1,22 +1,18 @@
-/* eslint-disable @nx/enforce-module-boundaries */
 import { createFileRoute } from '@tanstack/react-router';
-import { cn } from '@learnway/shared';
+
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { Textarea } from '@learnway/ui/textarea';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import {
-  Input,
-  RadioGroup,
-  ContentsRow,
-  PhoneNumber,
-  Textarea,
-  ChipList,
-  FormSubTitle,
-} from '@learnway/ui';
 
 /* style */
-import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import { ContentsHistoryInfoFormField } from '../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
-
+import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
+import { ChipList } from '@learnway/ui/chips';
+import { PhoneNumber } from '@learnway/ui/phone-number';
+import { RadioGroup } from '@learnway/ui/radio-group';
+import { ContentsHistoryInfoFormField } from '../../../shared/ui/contents-history-info-form-field';
 export const Route = createFileRoute('/_layout/pms/private_search_detail')({
   component: RouteComponent,
 });

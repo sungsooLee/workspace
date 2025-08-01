@@ -1,17 +1,17 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { mutateOptions, queryOptions } from './request-channel.queries';
+import { requestMutateOptions, requestQueryOptions } from './request-channel.queries';
 
 export function useGetRequestChannelList(params: any) {
-  return useQuery(queryOptions.list(params));
+  return useQuery(requestQueryOptions.list(params));
 }
 
 export function useGetRequestChannelDetail(channelRequestUuid: string) {
-  return useQuery(queryOptions.detail(channelRequestUuid));
+  return useQuery(requestQueryOptions.detail(channelRequestUuid));
 }
 
 export function useApproveRequestChannel(options: any) {
   const mutation = useMutation({
-    ...mutateOptions.approve(),
+    ...requestMutateOptions.approve(),
     ...options,
   });
   return {
@@ -24,7 +24,7 @@ export function useApproveRequestChannel(options: any) {
 
 export function useRejectRequestChannel(options: any) {
   const mutation = useMutation({
-    ...mutateOptions.reject(),
+    ...requestMutateOptions.reject(),
     ...options,
   });
   return {
@@ -37,7 +37,7 @@ export function useRejectRequestChannel(options: any) {
 
 export function useUpdateRequestChannel(options: any) {
   const mutation = useMutation({
-    ...mutateOptions.update(),
+    ...requestMutateOptions.update(),
     ...options,
   });
   return {

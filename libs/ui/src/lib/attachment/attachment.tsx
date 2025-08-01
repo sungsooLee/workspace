@@ -22,7 +22,7 @@ import { Badge } from '../badge/badge';
 import { Button } from '../button/button';
 import { Checkbox } from '../checkbox/checkbox';
 import { useModal } from '../modal/modal.hook';
-import { compact, first, get, map, sum } from 'lodash';
+import { compact, first, get, map, sum } from 'lodash-es';
 
 const AttachmentComponent = ({
   files,

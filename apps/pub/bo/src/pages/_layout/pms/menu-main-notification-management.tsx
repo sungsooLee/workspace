@@ -1,15 +1,21 @@
-/* eslint-disable @nx/enforce-module-boundaries */
-import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
+import { useState } from 'react';
+
+import { IcoRefresh02, IcoSearch } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import { Input, Dropdown, Button, GridBox, Divider, DatePicker, Badge } from '@learnway/ui';
-import { IcoRefresh02, IcoSearch, IcoDownload } from '@learnway/icons';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 
 /* style */
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
+import { Badge } from '@learnway/ui/badge';
+import { Button } from '@learnway/ui/button';
+import { DatePicker } from '@learnway/ui/date-picker';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { Divider } from '@learnway/ui/elements';
+import { GridBox } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
 
 export const Route = createFileRoute('/_layout/pms/menu-main-notification-management')({
   component: RouteComponent,

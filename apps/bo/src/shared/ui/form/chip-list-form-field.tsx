@@ -2,7 +2,7 @@ import { BaseFormFieldProps } from '@learnway/hooks';
 import { cn } from '@learnway/shared';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { ChipList, ChipListComponentProps } from '@learnway/ui/chips';
-import { isString } from 'lodash';
+import { isString } from 'lodash-es';
 import { forwardRef } from 'react';
 // TODO: Fix unknown imports: ChipList, ChipListComponentProps from '@learnway/ui'
 

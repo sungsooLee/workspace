@@ -7,7 +7,7 @@ import { S3_PATH, useS3Uploader } from '@learnway/hooks';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { DndFileProgress } from '@learnway/ui/dnd-file-progress';
 import { t } from 'i18next';
-import { map } from 'lodash';
+import { map } from 'lodash-es';
 import { FC, useCallback, useEffect, useState } from 'react';
 
 interface Props {

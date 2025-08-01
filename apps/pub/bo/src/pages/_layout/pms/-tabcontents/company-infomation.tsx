@@ -1,20 +1,17 @@
-import { FC, useState } from 'react';
 import { cn } from '@learnway/shared';
-import styles from './company-infomation.module.css';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
-import {
-  Button,
-  ContentsRow,
-  Textarea,
-  CheckboxGroupFormField,
-  Switch,
-  PhoneNumber,
-  Tooltip,
-  Input,
-  RadioGroupFormField,
-} from '@learnway/ui';
-import { IcoFormRequired, IcoAlertCircle } from '@learnway/icons';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
+import { FC, useState } from 'react';
+import styles from './company-infomation.module.css';
+
+import { IcoAlertCircle, IcoFormRequired } from '@learnway/icons';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { RadioGroupFormField } from '@learnway/ui/form-field';
+import { Input } from '@learnway/ui/input';
+import { PhoneNumber } from '@learnway/ui/phone-number';
+import { Switch } from '@learnway/ui/switch';
+import { Tooltip } from '@learnway/ui/tooltip';
 // eslint-disable-next-line no-empty-pattern
 const CompanyInfomationComponent: FC<{}> = ({}) => {
   // switch : 사용기한

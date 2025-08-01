@@ -145,7 +145,7 @@ const EnrollmentComponent = () => {
       courseSequenceId: true,
     },
   };
-  const { provider: searchProvider, getValues, setValue, setOptions } = useSearchBox(searchConfig);
+  const { provider: searchProvider, getValues, setValue, setOptions, } = useSearchBox(searchConfig);
 
   const companyId = useWatch({ control: searchProvider.control, name: 'companyId' });
   const openingYear = useWatch({ control: searchProvider.control, name: 'openingYear' });
@@ -176,10 +176,7 @@ const EnrollmentComponent = () => {
     const result = await queryClient.fetchQuery(
       sequenceQueryOptions.enrollmentSequenceCombo(payload),
     );
-    // setOptions('courseSequenceId', [
-    //   { label: '1', value: 1 },
-    //   { label: '2', value: 2 },
-    // ]);
+
     if (result) {
       console.log('result=>', result);
       const sequenceIdOptions = result.map((item: any) => ({

@@ -1,6 +1,5 @@
-import { queryOptions as companysQueryOptions } from '@entities/companies/service/companies.queries';
-import { useUnlockUser } from '@entities/users/service/users.hook';
-import { usersQueryOptions } from '@entities/users/service/users.queries';
+import { queryOptions as companysQueryOptions } from '@entities/companies';
+import { usersQueryOptions, useUnlockUser } from '@entities/users';
 import { getUserStatus } from '@features/platform-management/company/company-user-management/service/company-user.service';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';

@@ -1,4 +1,4 @@
-import { queryOptions } from '@entities/training-place/service/space.queries';
+import { queryOptions } from '@entities/training-place';
 import { CODE_GROUP, SearchBoxConfig, useFileManager, useSearchBox } from '@learnway/hooks';
 import { IcoDownload } from '@learnway/icons';
 import { Button } from '@learnway/ui/button';

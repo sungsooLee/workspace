@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
+
+import { Tabs } from '@learnway/ui/tabs';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import { Tabs } from '@learnway/ui';
 
 /* tab contents */
 import { GroupInfo } from './-tabcontents/group-info';

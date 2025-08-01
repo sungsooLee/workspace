@@ -13,6 +13,8 @@ export enum CmsEnContentType {
   EXTERNAL_LINK = 'EXTERNAL_LINK',
   /** 외부 위탁 */
   EXTERNAL_AGENCY = 'EXTERNAL_AGENCY',
+  /** 외부 위탁 250801 */
+  COMMISSIONED_CONTENT = 'COMMISSIONED_CONTENT',
   /** 블로그 */
   BLOG = 'BLOG',
   /** 시험 */
@@ -33,7 +35,7 @@ export enum CmsLearningCompletionStatus {
   NOT_ATTEMPTED = 'NOT_ATTEMPTED',
 }
 
-export interface CmsImageContent {
+export interface CmsImageResource {
   contentUuid: string;
   contentType: string;
   images: CmsImageItem[];
@@ -116,4 +118,58 @@ export interface CmsContentProgressResDto {
   itemId: number;
   progress: number;
   completionStatus: CmsLearningCompletionStatus;
+}
+
+export interface CmsContentProgressMultiRes {
+  courseSequenceId: number;
+  courseId: number;
+  curriculumId: number;
+  progress: number;
+  completionStatus: string;
+  progressList: CmsContentProgressResDto[];
+}
+
+export interface CmsEtcResource {
+  contentUuid: string;
+  contentType: string;
+  fileInfo: CmsFileInfo;
+}
+
+export interface CmsFileInfo {
+  groupUuid: string;
+  fileId: number;
+  fileUuid: string;
+  fileName: string;
+  storageType: string;
+  bucket: string;
+  filePath: string;
+  fileSize: number;
+  extType: string;
+  uploadStatus: string;
+}
+
+export interface CmsContentProgressMultiReq {
+  contents: CmsContentProgressReq[];
+}
+
+export interface CmsContentProgressReq {
+  courseSequenceId: number;
+  courseId: number;
+  curriculumId: number;
+  moduleId: number;
+  lessonId: number;
+  orgnId?: number;
+  itemId?: number;
+  contentUuid: string;
+  userUuid?: string;
+}
+
+export interface CmsHtml5LearningReq {
+  courseSequenceId?: number;
+  courseId?: number;
+  curriculumId?: number;
+  moduleId?: number;
+  lessonId?: number;
+  contentUuid?: string;
+  playRate: number;
 }

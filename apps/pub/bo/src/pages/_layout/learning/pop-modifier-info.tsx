@@ -1,8 +1,9 @@
-import { useEffect } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import { Button, useModal, ModalContainer, ModalBody, ModalFooter, ModalTitle } from '@learnway/ui';
+import { createFileRoute } from '@tanstack/react-router';
+import { useEffect } from 'react';
 
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 import styles from './info-list-box.module.css';
 
 export const Route = createFileRoute('/_layout/learning/pop-modifier-info')({

@@ -15,7 +15,7 @@ import { useSetLanguage } from '../../service/i18n.hook';
 
 import { Button } from '@learnway/ui/button';
 import { useCreation } from 'ahooks';
-import { lowerCase } from 'lodash';
+import { lowerCase } from 'lodash-es';
 import styles from './language.module.css';
 
 const DEFAULT_LANGUAGE_CODES = ['ko', 'en'];

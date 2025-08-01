@@ -1,10 +1,15 @@
-import { useState } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
-import { cn } from '@learnway/shared';
-import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import { Button, Input, GridBox, Dropdown, DatePicker, Divider } from '@learnway/ui';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { IcoRefresh02, IcoSearch } from '@learnway/icons';
+import { cn } from '@learnway/shared';
+import { Button } from '@learnway/ui/button';
+import { DatePicker } from '@learnway/ui/date-picker';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { Divider } from '@learnway/ui/elements';
+import { GridBox } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
+import { createFileRoute } from '@tanstack/react-router';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { useState } from 'react';
+import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 
 /** style */
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';

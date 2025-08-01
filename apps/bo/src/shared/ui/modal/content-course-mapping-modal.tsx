@@ -13,7 +13,7 @@ import {
 import { useRouter } from '@tanstack/react-router';
 import { ContentCourseMappingParams } from '@types';
 import { t } from 'i18next';
-import { omit } from 'lodash';
+import { omit } from 'lodash-es';
 import { useEffect } from 'react';
 
 interface Props {

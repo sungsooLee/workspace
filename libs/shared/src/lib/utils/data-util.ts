@@ -1,5 +1,5 @@
 import { t } from 'i18next';
-import { isArray } from 'lodash';
+import { isArray } from 'lodash-es';
 
 /**
  * 특정 키 값을 기준으로 객체를 리스트에 추가하거나 제거하는 함수

@@ -18,7 +18,7 @@ import { DragHandleContext, GridBox } from '@learnway/ui/grid';
 import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
 import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
-import { QuestionItemGridRow } from '@types';
+import { QuestionItem, QuestionItemGridRow } from '@types';
 import { QUESTION_LEVELS, QUESTION_TYPES } from '../service/exam-util';
 import {
   initStatisticRow,
@@ -124,6 +124,14 @@ const LearningResourceQuestionBankQuestionComponent = forwardRef<QuestionBankTab
         setQuestionItemList(refetchResult);
       }
     }, [baseInfo]);
+
+    const handleOnExcelUpload = useCallback(async (result: Record<string, any>) => {
+      const { uploadResult } = result;
+      if (uploadResult) {
+        const { data: refetchResult = [] } = await refetchQuestionItemList();
+        setQuestionItemList(refetchResult.filter((q) => q.isUsed) as QuestionItem[]);
+      }
+    }, []);
 
     const statisticColumns = useMemo<ColumnDef<QuestionStatisticRow, any>[]>(() => {
       // Table
@@ -382,6 +390,8 @@ const LearningResourceQuestionBankQuestionComponent = forwardRef<QuestionBankTab
                     validateUrl={`/exam/questions/${baseInfo?.contentUuid}/upload`}
                     affairsType="CMS"
                     formDataName="multipartFile"
+                    validationResultRequired={false}
+                    onUpload={handleOnExcelUpload}
                   />
                   <GridExcelDownloadButton
                     method="post"

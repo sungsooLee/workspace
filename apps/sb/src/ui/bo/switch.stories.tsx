@@ -1,7 +1,6 @@
 // BaseForm.stories.tsx
-import React from 'react';
+import { Switch } from '@learnway/ui/switch';
 import type { Meta } from '@storybook/react';
-import { Switch } from '@learnway/ui';
 
 export default {
   title: 'Bo-Components/Toggle',

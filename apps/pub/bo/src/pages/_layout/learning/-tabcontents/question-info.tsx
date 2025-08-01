@@ -1,23 +1,21 @@
-/* eslint-disable @nx/enforce-module-boundaries */
-import { FC } from 'react';
-import { Link } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
+import { Link } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import {
-  ContentsRow,
-  Tabs,
-  TableBox,
-  Input,
-  RadioGroupFormField,
-  FormSubTitle,
-} from '@learnway/ui';
-import { IcoMenu01, IcoFormRequired } from '@learnway/icons';
+import { FC } from 'react';
+
+import { IcoFormRequired, IcoMenu01 } from '@learnway/icons';
 
 /* styles */
-import styles from './test-detail.module.css';
-import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { RadioGroupFormField } from '@learnway/ui/form-field';
+import { TableBox } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
+import { Tabs } from '@learnway/ui/tabs';
+import styles from './test-detail.module.css';
 
 const QuestionInfoComponent: FC<{}> = ({}) => {
   const items = [

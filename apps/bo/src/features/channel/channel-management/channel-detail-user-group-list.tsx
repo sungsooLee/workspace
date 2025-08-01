@@ -1,6 +1,7 @@
-import { useGetChannelDetail } from '@entities/channel/service/channel.hook';
+import { useGetChannelDetail } from '@entities/channel';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { getDateToString } from '@learnway/shared';
+import { Button } from '@learnway/ui/button';
 import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import { getCurrentAuthUser } from '@shared/lib';
@@ -9,12 +10,12 @@ import { useRouterState } from '@tanstack/react-router';
 import { createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { useCallback, useEffect } from 'react';
-import { Button } from '@learnway/ui/button';
 
 const _global = {
   linkClick: (userGroupId: number) => {
     return;
-  } };
+  },
+};
 
 interface ChannelDetailUserGroupListProps {
   onChange: (userGroupId: number) => void;
@@ -38,7 +39,8 @@ const ChannelDetailUserGroupListComponent = ({ onChange }: ChannelDetailUserGrou
         : '',
       modifiedEndDate: data.modifiedDate.to
         ? getDateToString(new Date(data.modifiedDate.to), 'YYYYMMDD')
-        : '' };
+        : '',
+    };
     return searchData;
   };
 
@@ -51,7 +53,8 @@ const ChannelDetailUserGroupListComponent = ({ onChange }: ChannelDetailUserGrou
         'tenantId',
         channelData.tenantList.map((tenant: any) => ({
           label: tenant.tenantName,
-          value: tenant.tenantId })),
+          value: tenant.tenantId,
+        })),
       );
     }
   }, [channelData]);
@@ -91,7 +94,8 @@ const searchConfig: SearchBoxConfig = {
         label: t('테넌트'),
         format: 'object',
         value: '',
-        option: [] },
+        option: [],
+      },
       {
         name: 'userGroupOriginType',
         type: 'dropdown',
@@ -100,19 +104,23 @@ const searchConfig: SearchBoxConfig = {
         format: 'object',
         presetOptionLabel: t('LABEL.form.label.all'),
         optionsConfig: {
-          codeGroup: CODE_GROUP['pms.user.UserGroupOriginType'] } },
+          codeGroup: CODE_GROUP['pms.user.UserGroupOriginType'],
+        },
+      },
       {
         name: 'channelName',
         type: 'text',
         label: t('채널'),
-        value: '' },
+        value: '',
+      },
     ],
     [
       {
         name: 'userGroupName',
         type: 'text',
         label: t('유저그룹명'),
-        value: '' },
+        value: '',
+      },
       {
         name: 'isUsed',
         type: 'dropdown',
@@ -122,16 +130,20 @@ const searchConfig: SearchBoxConfig = {
           { value: '', label: t('전체') },
           { value: true, label: t('사용') },
           { value: false, label: t('미사용') },
-        ] },
+        ],
+      },
       {
         name: 'modifiedDate',
         label: '수정 기간',
         type: 'date-range',
         value: {
           from: undefined,
-          to: undefined } },
+          to: undefined,
+        },
+      },
     ],
-  ] };
+  ],
+};
 
 const gridConfig: useGridBoxConfig = {
   query: '',
@@ -145,12 +157,15 @@ const gridConfig: useGridBoxConfig = {
       memberCount: '10,000명',
       isUsed: '사용',
       createdDate: '2025-01-01 15:00:00',
-      modifiedDate: '2025-01-01 15:00:00' },
+      modifiedDate: '2025-01-01 15:00:00',
+    },
   ],
   gridState: {
     page: 0,
     size: 1000,
-    sort: [] } };
+    sort: [],
+  },
+};
 
 const columnHelper = createColumnHelper<any>();
 
@@ -158,15 +173,18 @@ const columns = [
   columnHelper.accessor('tenantName', {
     cell: (info) => info.getValue(),
     header: t('테넌트'),
-    enableGrouping: false }),
+    enableGrouping: false,
+  }),
   columnHelper.accessor('userGroupOriginType', {
     cell: (info) => info.getValue(),
     header: t('유저그룹 유형'),
-    enableGrouping: false }),
+    enableGrouping: false,
+  }),
   columnHelper.accessor('channelName', {
     cell: (info) => info.getValue(),
     header: t('채널'),
-    enableGrouping: false }),
+    enableGrouping: false,
+  }),
   columnHelper.accessor('userGroupName', {
     cell: (info) => (
       <Button
@@ -177,34 +195,44 @@ const columns = [
       />
     ),
     header: t('유저그룹명'),
-    enableGrouping: false }),
+    enableGrouping: false,
+  }),
   columnHelper.accessor('memberCount', {
     cell: (info) => info.getValue(),
     header: t('대상자'),
-    enableGrouping: false }),
+    enableGrouping: false,
+  }),
   columnHelper.accessor('members', {
     cell: (info) => <Button variant="gray" label={t('대상자')} />,
     header: t('대상자 확인'),
     enableGrouping: false,
     meta: {
-      cellAlign: 'center' },
-    enableSorting: false }),
+      cellAlign: 'center',
+    },
+    enableSorting: false,
+  }),
   columnHelper.accessor('isUsed', {
     cell: (info) => info.getValue(),
     header: t('사용 여부'),
     enableGrouping: false,
     meta: {
-      cellAlign: 'center' } }),
+      cellAlign: 'center',
+    },
+  }),
   columnHelper.accessor('createdDate', {
     cell: (info) => info.getValue(),
     header: t('등록일'),
     enableGrouping: false,
     meta: {
-      cellAlign: 'center' } }),
+      cellAlign: 'center',
+    },
+  }),
   columnHelper.accessor('modifiedDate', {
     cell: (info) => info.getValue(),
     header: t('수정일'),
     enableGrouping: false,
     meta: {
-      cellAlign: 'center' } }),
+      cellAlign: 'center',
+    },
+  }),
 ];

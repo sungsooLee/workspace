@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useRouter } from '@tanstack/react-router';
-import { isEmpty } from 'lodash';
+import { isEmpty } from 'lodash-es';
 import { useEffect } from 'react';
 import { BrowserView, MobileView } from 'react-device-detect';
 import { useTranslation } from 'react-i18next';

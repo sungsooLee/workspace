@@ -1,5 +1,6 @@
+import { Button } from '@learnway/ui/button';
+import { Divider, SplitPanel } from '@learnway/ui/elements';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Button, Divider, SplitPanel } from '@learnway/ui';
 
 export default {
   title: 'Bo-Components/Elements',

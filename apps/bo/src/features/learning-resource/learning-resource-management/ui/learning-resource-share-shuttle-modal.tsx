@@ -15,7 +15,7 @@ import { SearchBox } from '@shared/ui';
 import { useQueryClient } from '@tanstack/react-query';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { ContentInfo, TenantChannelCodeType, TenantCodeType } from '@types';
-import { pick } from 'lodash';
+import { pick } from 'lodash-es';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 

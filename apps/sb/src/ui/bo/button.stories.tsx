@@ -1,6 +1,6 @@
+import { Button } from '@learnway/ui/button';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Button } from '@learnway/ui';
-import { Camera, Settings } from 'lucide-react';
+import { Camera } from 'lucide-react';
 
 export default {
   title: 'Bo-Components/Button',
@@ -14,10 +14,10 @@ export default {
         component: `
 **Button의 중요도**
 
-- Button의 정렬은 우측 정렬을 기본으로 하며 Primary Button을 최우측으로 배치한다.  
-- 버튼은 중요도에 따라 최우측이 가능 중요도가 높고, 좌측으로 갈수록 중요도가 낮은 버튼으로 배치한다.  
-- 유사한 기능을 가진 Button을 가까이 배치한다. 같은 기능을 가진 Button이 많은 화면에서 일관되게 적용되는 경우 동일한 곳에 위치하는 것을 권장한다.  
-- 공통버튼 (CRUD)는 좌측에서 부터 신규/추가, 삭제, 저장 순으로 배치한다.  
+- Button의 정렬은 우측 정렬을 기본으로 하며 Primary Button을 최우측으로 배치한다.
+- 버튼은 중요도에 따라 최우측이 가능 중요도가 높고, 좌측으로 갈수록 중요도가 낮은 버튼으로 배치한다.
+- 유사한 기능을 가진 Button을 가까이 배치한다. 같은 기능을 가진 Button이 많은 화면에서 일관되게 적용되는 경우 동일한 곳에 위치하는 것을 권장한다.
+- 공통버튼 (CRUD)는 좌측에서 부터 신규/추가, 삭제, 저장 순으로 배치한다.
 
         `,
       },

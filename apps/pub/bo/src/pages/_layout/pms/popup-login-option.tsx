@@ -1,28 +1,21 @@
-import { useEffect, useRef, useState } from 'react';
+import { IcoFormRequired } from '@learnway/icons';
+import { cn } from '@learnway/shared';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { Input } from '@learnway/ui/input';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { Switch } from '@learnway/ui/switch';
 import { createFileRoute } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { cn } from '@learnway/shared';
-import {
-  Button,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  useModal,
-  ModalTitle,
-  ContentsRow,
-  RadioGroupFormField,
-  Input,
-  DatePicker,
-  TableBox,
-  Dropdown,
-  Switch,
-} from '@learnway/ui';
-import { IcoFormRequired } from '@learnway/icons';
+import { useEffect, useState } from 'react';
 
 /** style */
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
-
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
+import { DatePicker } from '@learnway/ui/date-picker';
+import { RadioGroupFormField } from '@learnway/ui/form-field';
+import { TableBox } from '@learnway/ui/grid';
 export const Route = createFileRoute('/_layout/pms/popup-login-option')({
   component: RouteComponent,
 });

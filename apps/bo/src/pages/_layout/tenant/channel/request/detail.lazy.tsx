@@ -1,7 +1,4 @@
-import {
-  useGetRequestChannelDetail,
-  useUpdateRequestChannel,
-} from '@entities/channel/service/request-channel.hook';
+import { useGetRequestChannelDetail, useUpdateRequestChannel } from '@entities/channel';
 import { getChannelUrl, useChannelApplication } from '@features/channel';
 import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';

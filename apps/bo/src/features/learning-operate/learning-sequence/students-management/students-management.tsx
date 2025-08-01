@@ -19,6 +19,7 @@ import {
   EditDropdownCell,
   EditInputCell,
   GridBox,
+  GridBoxState,
   useGridBox,
   useGridBoxConfig,
 } from '@learnway/ui/grid';
@@ -72,7 +73,7 @@ const gridConfig: useGridBoxConfig = {
   data: [],
   gridState: {
     page: 0,
-    size: 10,
+    size: 20,
     sort: [],
   },
 };
@@ -245,7 +246,7 @@ const StudentsManagementComponent = () => {
     },
   };
   const { provider: searchProvider, getValues, setValue, setOptions } = useSearchBox(searchConfig);
-  const { config: gConfig, gridFetch, data: gridData } = useGridBox(gridConfig, getValues);
+  const { config: gConfig, gridFetch, data: gridData } = useGridBox(gridConfig);
   const [columns, setColumns] = useState() as any;
   const companyId = useWatch({ control: searchProvider.control, name: 'companyId' });
   const openingYear = useWatch({ control: searchProvider.control, name: 'openingYear' });
@@ -417,7 +418,7 @@ const StudentsManagementComponent = () => {
         header: t('총점'),
         cell: (info) => {
           const original = info.row.original;
-          const totalScore = statsRightCount[0].value;
+          const totalScore = statsRightCount.length > 0 ? statsRightCount[0].value : 0;
           const rowTotalScore =
             parseInt(original.attendanceScore) +
             parseInt(original.progressScore) +
@@ -613,35 +614,44 @@ const StudentsManagementComponent = () => {
     }
   };
 
-  const handleOnSearch = useCallback((data: any) => {
-    console.log('## handleOnSearch', data);
-    const payload = {
-      openingYear: 2025,
-      courseSequenceId: 40,
-      completionStatus: false,
-      learningStartDate: '',
-      learningEndDate: '',
-      companyId: '',
-      deptId: '',
+  const getSearchParam = () => {
+    const data = getValues();
+    return {
+      openingYear: data.openingYear || null,
+      courseSequenceId: data.courseSequenceId || null,
+      completionStatus: data.completionStatus,
+      learningStartDate: data.learningRange?.from
+        ? getDateToString(data.learningRange?.from, DATE_TIME_FORMAT.DATE)
+        : '',
+      learningEndDate: data.learningRange?.to
+        ? getDateToString(data.learningRange?.to, DATE_TIME_FORMAT.DATE)
+        : '',
+      companyId: data.company || '',
+      deptId: data.deptId || '',
       employeeNumber: data.employeeNumber || '',
       name: data.name || '',
     };
-
-    // const payload = {
-    //   openingYear: data.openingYear || null,
-    //   courseSequenceId: data.courseSequenceId || null,
-    //   completionStatus: data.completionStatus,
-    //   learningStartDate: data.learningRange?.from
-    //     ? getDateToString(data.learningRange?.from, DATE_TIME_FORMAT.DATE)
-    //     : '',
-    //   learningEndDate: data.learningRange?.to
-    //     ? getDateToString(data.learningRange?.to, DATE_TIME_FORMAT.DATE)
-    //     : '',
-    //   companyId: data.company || '',
-    //   deptId: data.deptId || '',
+    // return {
+    //   openingYear: 2025,
+    //   courseSequenceId: 40,
+    //   completionStatus: false,
+    //   learningStartDate: '',
+    //   learningEndDate: '',
+    //   companyId: '',
+    //   deptId: '',
     //   employeeNumber: data.employeeNumber || '',
     //   name: data.name || '',
     // };
+  };
+
+  // 페이지 변경이나 검색 시 플래그 리셋
+  const handleStateChange = (newState: GridBoxState) => {
+    gridFetch(getSearchParam(), newState);
+  };
+
+  const handleOnSearch = useCallback(() => {
+    console.log('## handleOnSearch');
+    const payload = getSearchParam();
 
     setParams({
       ...payload,
@@ -655,8 +665,7 @@ const StudentsManagementComponent = () => {
 
   const handleOnRefresh = () => {
     console.log('### handleOnRefresh');
-    const searchValues = getValues();
-    handleOnSearch(searchValues);
+    handleOnSearch();
   };
 
   const handleRowsSelect = useCallback((rows: any[]) => {
@@ -887,13 +896,14 @@ const StudentsManagementComponent = () => {
         </>
       </SplitPanel>
       <GridBox
-        config={gConfig}
-        // data={gridData}
+        // config={gConfig}
+        gridData={gridData}
         columns={columns}
         multiple={true}
         disabledSelectionToggle
         title={t('수강생 목록')}
         onRowsSelect={handleRowsSelect}
+        onStateChange={handleStateChange}
         customButtonNode={
           <>
             <Button

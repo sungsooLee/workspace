@@ -14,7 +14,7 @@ import searchBoxStyles from '@learnway/styles/fo/features/layout/ui/edu-licenses
 import bulletStyles from '@learnway/styles/fo/shared/ui/list/bullet.module.css';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic.form.module.css';
-import { stubArray } from 'lodash';
+import { stubArray } from 'lodash-es';
 // TODO: Fix unknown imports:  from '@learnway/ui'
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';

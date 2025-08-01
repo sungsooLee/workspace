@@ -62,7 +62,7 @@ import {
   TestPaperBasicInfoSaveRes,
   UpdateQuestionBankCountInfoReq,
 } from '@types';
-import { omit, pick } from 'lodash';
+import { omit, pick } from 'lodash-es';
 
 export default class LearningResourceService {
   static fetchChannelsByTenantId(param: {
