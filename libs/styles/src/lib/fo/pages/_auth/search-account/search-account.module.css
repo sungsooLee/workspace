@@ -58,6 +58,11 @@
       }
       .signup_noti {
       }
+      .auth_box {
+        .info {
+          @apply title3 pb-[16px] text-[var(--gray35)];
+        }
+      }
     }
   }
 }

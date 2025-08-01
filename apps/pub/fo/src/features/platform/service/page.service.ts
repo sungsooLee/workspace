@@ -4,7 +4,7 @@ export const PAGE_TITLE_BY_PATH: Record<string, string> = {
   '/pb-fo/signup-step2': '회원가입',
   '/pb-fo/signup-step3': '회원가입',
   '/pb-fo/login': 'Welcome\nLearning-Way',
-  '/pb-fo/success': '', // 휴먼 계정 해제결과와 동일,
+  '/pb-fo/success': '휴면 계정 해제', // 휴먼 계정 해제결과와 동일,
   '/pb-fo/progress-status-email': '회원가입 진행현황',
   '/pb-fo/progress-status-cert': '회원가입 진행현황',
   '/pb-fo/progress-status-result': '회원가입 진행현황',
@@ -19,6 +19,8 @@ export const PAGE_TITLE_BY_PATH: Record<string, string> = {
   '/pb-fo/signup-step2-en': 'Create An Account',
   '/pb-fo/signup-step3-en': 'Create An Account',
   '/pb-fo/agreement-privacy': '이용약관 및 개인정보 처리방침',
+  '/pb-fo/dormant-info': '휴면 계정 안내',
+  '/pb-fo/tenant-select': '테넌트 선택',
 };
 
 export function isSigninPage(path: string): boolean {

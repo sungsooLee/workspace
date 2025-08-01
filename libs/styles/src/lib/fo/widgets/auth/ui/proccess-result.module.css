@@ -55,18 +55,30 @@
         svg {
           @apply h-[56px] w-[56px];
         }
-        .ico1 {
-          @apply h-[32px] w-[32px];
+
+        &:has(.ico1) {
+          @apply h-[56px] w-[56px];
+          svg {
+            @apply h-auto w-[22px];
+          }
         }
         .ico2 {
-          @apply h-[32px] w-[32px];
+        }
+        .ico3 {
+        }
+        + h3.title,
+        + h4.title {
+          @apply mt-[16px];
+        }
+        + .noti {
+          @apply mt-[40px];
         }
       }
       h3.title {
-        @apply title5-b;
+        @apply title4-b;
       }
       .noti {
-        @apply body-sm mt-[8px] text-[var(--gray35)];
+        @apply body-sm mt-[8px];
       }
       .noti_box {
         @apply mt-[24px];

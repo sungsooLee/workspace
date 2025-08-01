@@ -1,9 +1,9 @@
 .start {
   @apply body-md rounded-[8px] bg-[var(--blue98)] p-[24px] text-left text-[var(--blue50)];
-  .info_txt{
-    @apply block;
-    &:not(:first-child){
-      @apply mt-[8px];
+  .info_txt_box {
+    @apply grid grid-cols-[max-content_1fr] gap-x-[20px] gap-y-[8px];
+    .info_txt {
+      display: contents;
     }
   }
 }
@@ -11,7 +11,7 @@
 :global(body.mobile) {
   @screen mobile {
     .start {
-      @apply body_4_r;
+      @apply body-sm;
     }
   }
 }

@@ -90,7 +90,9 @@
     .start {
       &.login {
         &.auth_wrap {
+          @apply pt-[40px];
           .auth_box {
+            @apply h-auto overflow-y-hidden pt-[40px];
           }
         }
         .login_info {

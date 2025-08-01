@@ -12,5 +12,17 @@
 /* mobile */
 :global(body.mobile) {
   @screen mobile {
+    .start {
+      &.tenant_select {
+        .auth_form {
+          @apply mt-[0];
+          .card {
+            @apply flex flex-col gap-[12px];
+          }
+        }
+        .btn_wrap {
+        }
+      }
+    }
   }
 }

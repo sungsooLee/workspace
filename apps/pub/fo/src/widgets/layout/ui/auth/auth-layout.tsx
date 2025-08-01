@@ -7,7 +7,8 @@ import { AuthContainer } from './auth-container/auth-container';
 import { AuthHeader } from './auth-header/auth-header';
 
 import { BrowserView, MobileView } from 'react-device-detect';
-import { isSigninPageInfo, PAGE_TITLE_BY_PATH } from '../../../../features/platform';
+import { isSigninPage, PAGE_TITLE_BY_PATH } from '../../../../features/platform';
+import { MobileAuthContainerHeader } from '../../m.ui/auth/auth-container/auth-container-header';
 
 interface AuthLayoutComponentProps {
   children: ReactNode;
@@ -26,7 +27,9 @@ function AuthLayoutComponent({ children }: AuthLayoutComponentProps) {
       <BrowserView>
         <AuthHeader />
       </BrowserView>
-      <MobileView>{isSigninPageInfo(location.pathname) ? <AuthHeader /> : ''}</MobileView>
+      <MobileView>
+        {isSigninPage(location.pathname) ? <AuthHeader /> : <MobileAuthContainerHeader />}
+      </MobileView>
 
       <div className={`${styles.start} ${styles.container}`}>
         <div className={styles.inner}>

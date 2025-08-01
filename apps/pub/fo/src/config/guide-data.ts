@@ -1792,7 +1792,7 @@ export const guideData = [
   },
   {
     screenId: 'NLP_FO_LOG_1000_2',
-    screenName: '휴먼계정 안내',
+    screenName: '휴면계정 안내',
     layoutType: '', // 자동 분리됨 작성x
     pageId: '/',
     pageType: 'Page',

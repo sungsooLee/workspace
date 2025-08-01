@@ -33,6 +33,7 @@ function RouteComponent() {
                   cols={2}
                   options={dummyOptions}
                   onOptionSelect={(option: OptionCardItem) => setValues(option.value)}
+                  className={styles.card}
                 />
               </div>
             </ContentsRow>

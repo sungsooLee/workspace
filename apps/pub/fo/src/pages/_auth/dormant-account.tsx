@@ -1,25 +1,20 @@
 import { IcoCaution, IcoFormRequired, IcoMail02, IcoPhone03 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
-import styles from '@learnway/styles/fo/pages/_auth/search-account/search-account.module.css';
-import { createFileRoute } from '@tanstack/react-router';
-import { AuthTitle } from '../../features/auth';
-// import searchAccountFormStyles from './search-account-form.module.css';
-
-import authToolFormFieldStyles from './auth-tool-form-field.module.css';
-
-import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
-// import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css';
-
 import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-form.module.css';
-
-import { BrowserView, MobileView } from 'react-device-detect';
-import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
+import styles from '@learnway/styles/fo/pages/_auth/search-account/search-account.module.css';
+import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { Input, InputTimer } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
 import { RadioCard } from '@learnway/ui/radio-card';
+import { createFileRoute, useLocation } from '@tanstack/react-router';
+import { BrowserView, MobileView } from 'react-device-detect';
+import { AuthTitle } from '../../features/auth';
+import { PAGE_META_BY_PATH } from '../../features/platform';
+import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
+import authToolFormFieldStyles from './auth-tool-form-field.module.css';
 
 export const Route = createFileRoute('/_auth/dormant-account')({
   component: RouteComponent,
@@ -27,12 +22,20 @@ export const Route = createFileRoute('/_auth/dormant-account')({
 
 function RouteComponent() {
   const { openModal } = useModal();
+  const location = useLocation();
+  const pathname = location.pathname;
+
+  const meta = PAGE_META_BY_PATH[pathname] ?? { title: '', info: '' };
 
   return (
     <form className="form_row">
       <div className={`${styles.start} ${styles.auth_wrap} ${styles.search_account}`}>
         <div className={cn(styles.auth_box, 'auth--box')}>
           <AuthTitle />
+
+          <MobileView>
+            <div className={styles.info}>{meta.info}</div>
+          </MobileView>
 
           <ContentsRow>
             <div className={formStyles.form_item}>

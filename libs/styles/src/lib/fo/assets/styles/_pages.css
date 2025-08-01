@@ -61,7 +61,7 @@ h4.auth--title {
 /* mobile */
 body.mobile {
   .auth--box {
-    @apply h-[100dvh] overflow-y-auto p-0 px-[16px];
+    @apply h-[100dvh] overflow-y-auto px-[16px] pb-[100px] pt-[72px];
   }
   .auth--btn_wrap {
     button {
