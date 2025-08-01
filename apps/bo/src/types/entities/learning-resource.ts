@@ -233,21 +233,21 @@ export interface GetContentsParams extends PaginationRequest {
 }
 
 export interface ContentInfo {
-  tenantId: string; // 테넌트 id
+  tenantId: number; // 테넌트 id
   tenantName: string; //	테넌트 이름[...]
   channelUuid: string; //	채널 UUID[...]
   channelName: string; //	채널명[...]
   contentUuid: string; //	콘텐츠 uuid[...]
   contentName: string; //	학습자원명[...]
   contentType: ContentType; //	콘텐츠 분류 코드 Enum(ContentType) - VIDEO|EXAM|SURVEY|ASSIGNMENT|HTML5|YOUTUBE|BLOG|SCORM|DEFAULT[...]
-  groupContentId: string; //	학습자원 그룹ID[...]
+  groupContentId: number; //	학습자원 그룹ID[...]
   createType: ContentCreateType; //	콘텐츠 생성 유형, MANUAL|TRANSLATE|SHARED[...]
   contentStatusCode: ContentStatusCode; //	콘텐츠 상태 코드 Enum(ContentStatusCode) - TEMPORARY_SAVE|SAVED|DELETED[...]
-  isContentEnabled: string; //	사용 가능 여부[...]
+  isContentEnabled: boolean; //	사용 가능 여부[...]
   coordinatorUuid: string; //	담당자 ID[...]
   coordinatorName: string; //	담당자명[...]
   contentAddInfoType: ContentAddInfoType; //	콘텐츠 추가정보 코드 Enum(ContentAddInfoType) - VIDEO_ADD_INFO(초)|EXAM_ADD_INFO(건수)[...]
-  contentAddInfo: string; //	콘텐츠 추가 정보, 콘텐츠 추가정보 코드 별 초/건수 값[...]
+  contentAddInfo: number; //	콘텐츠 추가 정보, 콘텐츠 추가정보 코드 별 초/건수 값[...]
   languageCountryCode: string; //	국가 언어 코드[...]
   createdBy: string; //	최초등록자아이디[...]
   createdDate: string; //	최초등록타임스탬프[...]
@@ -255,6 +255,7 @@ export interface ContentInfo {
   modifiedDate: string; //	최종수정타임스탬프[...]
   creatorName: string; //	최초등록자명[...]
   modifyerName: string; //	최종수정자명[...]
+  contentId: number;
 }
 
 export type GetContentsRes = PaginationResponse<ContentInfo>;
@@ -697,6 +698,45 @@ export interface ContentSharingInfoRes {
   reason: string;
 }
 
+export type GetSharedContentsParams = ContentSharingInfoReq;
+
+export interface SharedContent {
+  sharedBoxId: number; //	integer($int64)
+  sourceTenantId: number; //	출발지 테넌트 idinteger($int64)
+  sourceTenantName: string; //	출발지 테넌트 이름string
+  sourceChannelUuid: string; //	출발지 채널 UUIDstring
+  sourceChannelName: string; //	출발지 채널 이름string
+  destTenantId: number; //	도착지 테넌트 idinteger($int64)
+  destTenantName: string; //	도착지 테넌트 이름string
+  destChannelUuid: string; //	도착지 채널 UUIDstring
+  destChannelName: string; //	도착지 테넌트 이름string
+}
+
+export type GetSharedContentsRes = SharedContent[];
+
+export interface PostShareContentsParams {
+  sourceContentUuid: string; //	string 출발지 콘텐츠 UUID
+  sourceTenantId: number; //	integer($int64)
+  sourceChannelUuid: string; //	string 출발지 채널 UUID
+  isOriginalCopyDownload: boolean; //	boolean 원본파일 다운로드 여부
+  shareDestinations: {
+    destTenantId: number; //	integer($int64) 도착지 테넌트 id
+    destChannelUuid: string; //	string 도착지 채널 UUID
+  }[];
+}
+
+export interface PostShareContentsRes {
+  contentUuid: string; //	콘텐츠 UUIDstring
+  sourceTenantId: number; //	출발지 테넌트 idinteger($int64)
+  sourceChannelUuid: string; //	출발지 채널 UUIDstring
+  isOriginalCopyDownload: boolean; //	원본파일 다운로드 여부boolean
+  shareDestinations: {
+    sharedBoxId: number; //	공유함 IDinteger($int64)
+    destTenantId: number; //	도착지 테넌트 idinteger($int64)
+    destChannelUuid: string; //	도착지 채널 UUIDstring
+  }[];
+}
+
 export interface TenantCodeType {
   tenantId: number;
   tenantName: string;
@@ -721,7 +761,7 @@ export interface GetSharedBoxContentsParams extends PaginationRequest {
   lastVisitedBoRoledId: number;
   sourceTenantId: number;
   sourceChannelUuid: string;
-  contentTypes?: ContentType | ContentType[];
+  contentTypes?: ContentType[];
   contentName?: string;
   isContentEnabled?: boolean;
   languageCountryCode?: string;
@@ -729,11 +769,7 @@ export interface GetSharedBoxContentsParams extends PaginationRequest {
   sharedDateEnd?: string;
 }
 
-export interface SharedBoxContent {
-  sourceTenantId: number; //	원본 테넌트 idinteger($int64)
-  sourceTenantName: string; //	원본 테넌트명string
-  sourceChannelUuid: string; // 원본 채널 UUIDstring
-  sourceChannelName: string; // 원본 채널 이름string
+export interface SharedBoxContent extends Omit<SharedContent, 'sharedBoxId'> {
   sourceContentUuid: string; //	원본 학습자원 UUIDstring
   sourceContentName: string; //	원본 학습자원명string
   sourceGroupContentId: number; // 원본 학습자원 그룹ID
@@ -741,10 +777,6 @@ export interface SharedBoxContent {
   contentCreateType: ContentCreateType; //	string
   languageCountryCode: string; //	원본 학습자원 국가 언어 코드string
   isContentEnabled: boolean; //	원본 학습자원 사용가능 여부boolean
-  destTenantId: number; //	목적지 테넌트 idinteger($int64)
-  destTenantName: string; //	목적지 테넌트명string
-  destChannelUuid: string; //	목적지 채널 UUIDstring
-  destChannelName: string; //	목적지 채널명string
   sharerUuid: string; //	공유자 UUIDstring
   sharerName: string; //	공유자명string
   sharedCount: string; //	공유 횟수integer($int64)

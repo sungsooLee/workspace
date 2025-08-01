@@ -7,8 +7,9 @@ import { addOrRemoveItemByKey, cn } from '@learnway/shared';
 import styles from './shuttle-grid-to-grid-v2.module.css';
 
 import { IcoNarrowRight } from '@learnway/icons';
-import { GridBox, GridBoxProps, GridImperative } from '../grid';
+import { difference, map } from 'lodash-es';
 import { Button } from '../button';
+import { GridBox, GridBoxProps, GridImperative } from '../grid';
 
 // ShuttleGridToGridV2 컴포넌트의 props 타입 정의
 export interface ShuttleGridToGridV2Props
@@ -85,7 +86,7 @@ const ShuttleGridToGridV2Component = (
 ) => {
   const { t } = useTranslation();
   // 우측 그리드 데이터 상태
-  const [rightGridData, setRightGridData] = useState<any>([]);
+  const [rightGridData, setRightGridData] = useState<any[]>([]);
   // 좌/우 그리드의 imperative ref
   const leftGridRef = useRef<GridImperative>(null);
   const rightGridRef = useRef<GridImperative>(null);
@@ -110,7 +111,7 @@ const ShuttleGridToGridV2Component = (
     ...columns,
     {
       accessorKey: 'select-col',
-      header: ({ table }) => t('선택'),
+      header: () => t('선택'),
       size: 94,
       meta: {
         headerAlign: 'left',
@@ -122,14 +123,10 @@ const ShuttleGridToGridV2Component = (
           <Button
             label={t('선택')}
             variant={
-              rightGridData?.find((d: any) => d[rowKey] === (row?.original as any)?.[rowKey])
-                ? 'primary'
-                : 'gray2'
+              rightGridData.find((d) => d[rowKey] === row.original[rowKey]) ? 'primary' : 'gray2'
             }
             className={
-              rightGridData?.find((d: any) => d[rowKey] === (row?.original as any)?.[rowKey])
-                ? styles.active
-                : ''
+              rightGridData.find((d) => d[rowKey] === row.original[rowKey]) ? styles.active : ''
             }
             size={'xs'}
             onClick={() => {
@@ -204,9 +201,9 @@ const ShuttleGridToGridV2Component = (
    */
   const syncLeftGridSelection = useCallback(() => {
     // 우측 그리드에 데이터가 있고, 좌측 테이블 인스턴스가 있을 때
-    if (rightGridData?.length > 0 && leftTableInstance) {
+    if (rightGridData.length > 0 && leftTableInstance) {
       const newRowSelection: Record<string, boolean> = {};
-      rightGridData.forEach((item: any) => {
+      rightGridData.forEach((item) => {
         // 좌측 그리드에서 동일한 rowKey를 가진 행 찾기
         const findRow = leftTableInstance
           ?.getRowModel()
@@ -238,11 +235,14 @@ const ShuttleGridToGridV2Component = (
    * (외부에서 선택된 아이템이 바뀌었을 때 동기화)
    */
   useEffect(() => {
-    // 사용자가 직접 선택한 행만 필터링
-    const userSelectedRows = rightGridData?.filter((row: any) => row.isUserSelected);
-    // 외부 selectedItems와 합쳐서 새로운 우측 그리드 데이터 생성
-    const newRightGridData = [...userSelectedRows, ...selectedItems];
-    setRightGridData((state: any) => newRightGridData);
+    const rightKeys = map(rightGridData, rowKey);
+    const newKeys = map(selectedItems, rowKey);
+    const added = difference(newKeys, rightKeys);
+    const removed = difference(rightKeys, newKeys);
+    if (added.length || removed.length)
+      // 사용자가 직접 선택한 행만 필터링
+      // 외부 selectedItems와 합쳐서 새로운 우측 그리드 데이터 생성
+      setRightGridData((prev) => [...prev.filter((row) => row.isUserSelected), ...selectedItems]);
   }, [selectedItems]);
 
   /**

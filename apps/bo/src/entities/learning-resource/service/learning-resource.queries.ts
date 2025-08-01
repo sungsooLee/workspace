@@ -11,6 +11,7 @@ import {
   GetContentDetailRes,
   GetContentsParams,
   GetSharedBoxContentsParams,
+  GetSharedContentsParams,
   GetShareTenantsChannelsParams,
   HtmlVideoFileChangeReq,
   HtmlVideoMetadataReq,
@@ -18,6 +19,7 @@ import {
   PostDraftHtmlVideoParams,
   PostDraftScormParams,
   PostDraftVideosParams,
+  PostShareContentsParams,
   PutETCChangeParams,
   PutETCUpdateParams,
   PutScormChangeParams,
@@ -62,6 +64,7 @@ export const queryKeys = {
   randomQuestionCount: (examUuid: string) => ['random-question-count', examUuid] as const,
   questionListForRetrieve: ['question-list-for-retrieve'] as const,
   shareTenantsChannels: (contentUuid: string) => ['share-tenants-channels', contentUuid] as const,
+  sharedContents: ['shared-contents'] as const,
   sharedBoxContents: ['shared-box-contents'] as const,
   sharedBoxTenantCodes: ['shared-box-tenant-codes'] as const,
   sharedBoxChannelCodes: ['shared-box-channel-codes'] as const,
@@ -187,6 +190,12 @@ export const learningResourceQueryOptions = {
     enabled: true,
   }),
 
+  getSharedContents: (params: GetSharedContentsParams) => ({
+    queryKey: queryKeys.sharedContents,
+    queryFn: () => LearningResourceService.getSharedContents(params),
+    enabled: true,
+  }),
+
   getSharedBoxContents: (params: GetSharedBoxContentsParams) => ({
     queryKey: queryKeys.shareTenantsChannels,
     queryFn: () => LearningResourceService.getSharedBoxContents(params),
@@ -239,6 +248,10 @@ export const mutateOptions = {
   }),
   putETCChange: () => ({
     mutationFn: (params: PutETCChangeParams) => LearningResourceService.putETCChange(params),
+  }),
+  postShareContents: () => ({
+    mutationFn: (params: PostShareContentsParams) =>
+      LearningResourceService.postShareContents(params),
   }),
   postDraftHTML5: () => ({
     mutationFn: (params: PostDraftHtmlVideoParams) =>

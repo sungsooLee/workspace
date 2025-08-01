@@ -21,6 +21,8 @@ import {
   GetScormStatusRes,
   GetSharedBoxContentsParams,
   GetSharedBoxContentsRes,
+  GetSharedContentsParams,
+  GetSharedContentsRes,
   GetShareTenantsChannelsParams,
   GetShareTenantsChannelsRes,
   GetVideoFileChangeRes,
@@ -38,6 +40,8 @@ import {
   PostDraftScormRes,
   PostDraftVideosParams,
   PostDraftVideosRes,
+  PostShareContentsParams,
+  PostShareContentsRes,
   PutETCChangeParams,
   PutETCChangeRes,
   PutETCUpdateParams,
@@ -375,6 +379,19 @@ export default class LearningResourceService {
       `${CMSApiPrefix()}/contents/share/${params.contentUuid}/tenants/${params.tenantId}/channels`,
       pick(params, 'channelName'),
     );
+  }
+  /**
+   * 공유 팝업 공유채널 목록 조회
+   */
+  static getSharedContents(params: GetSharedContentsParams) {
+    return httpService.get<GetSharedContentsRes>(`${CMSApiPrefix()}/contents/share`, params);
+  }
+
+  /**
+   * 공유 팝업 공유채널 목록 저장
+   */
+  static postShareContents(params: PostShareContentsParams) {
+    return httpService.post<PostShareContentsRes>(`${CMSApiPrefix()}/contents/share`, params);
   }
 
   /**
