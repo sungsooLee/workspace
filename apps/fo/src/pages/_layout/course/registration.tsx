@@ -10,7 +10,6 @@ import { useModal } from '@learnway/ui/modal';
 import { createFileRoute, useRouterState } from '@tanstack/react-router';
 import { Address } from '@types';
 import dayjs from 'dayjs';
-import _ from 'lodash';
 import { useMemo } from 'react';
 import { isMobile } from 'react-device-detect';
 import { useSearchParam } from 'react-use';
@@ -48,7 +47,9 @@ function RouteComponent() {
     [currentCourseRegistrationFormat],
   );
 
-  const toSafeNumber = (value?: number | null): number => _.defaultTo(value, 0);
+  function toSafeNumber(value?: number | null): number {
+    return value ?? 0;
+  }
 
   return (
     <div className={`${styles.start} ${styles.course}`}>
