@@ -1,6 +1,7 @@
 import { queryOptions as companysQueryOptions } from '@entities/companies/service/companies.queries';
 import { queryOptions as departmentQueryOptions } from '@entities/department';
 import { queryOptions as sequenceQueryOptions } from '@entities/learning-sequence/service/learning-sequence.queries';
+import { usersQueryOptions } from '@entities/users';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { generateYears } from '@learnway/shared';
@@ -127,8 +128,10 @@ const EnrollmentComponent = () => {
           type: 'dropdown',
           label: t('LABEL.form.label.employeeNumber', '사번'),
           format: 'object',
-          value: '',
-          presetOptionLabel: t('LABEL.form.label.select', '선택'),
+          isSearchable: true,
+          isClearable: true,
+          value: undefined,
+          placeholder: t('LABEL.form.label.select', '선택'),
           options: [],
         },
         {
@@ -148,6 +151,7 @@ const EnrollmentComponent = () => {
   const { provider: searchProvider, getValues, setValue, setOptions } = useSearchBox(searchConfig);
 
   const companyId = useWatch({ control: searchProvider.control, name: 'companyId' });
+  const deptId = useWatch({ control: searchProvider.control, name: 'deptId' });
   const openingYear = useWatch({ control: searchProvider.control, name: 'openingYear' });
 
   const handleTabChange = (tabKey: string) => {
@@ -178,7 +182,6 @@ const EnrollmentComponent = () => {
     );
 
     if (result) {
-      console.log('result=>', result);
       const sequenceIdOptions = result.map((item: any) => ({
         label: item.courseSequenceName,
         value: item.courseSequenceId,
@@ -198,6 +201,12 @@ const EnrollmentComponent = () => {
           'deptId',
           content.map((_: any) => ({ value: _.deptId, label: _.deptName })),
         );
+
+      setValue('employeeNumber', undefined);
+      setEmployeeNumberOption({
+        tenantId: loginUser?.activeTenant?.tenantId,
+        companyId,
+      });
     })();
   }, [selectedTabKey, companyId]);
 
@@ -208,6 +217,27 @@ const EnrollmentComponent = () => {
       value: item.companyId,
     }));
     setOptions('companyId', companyIdOptions);
+  };
+
+  useEffect(() => {
+    setValue('employeeNumber', undefined);
+    if (!deptId && deptId !== 0) return;
+    setEmployeeNumberOption({
+      tenantId: loginUser?.activeTenant?.tenantId,
+      companyId,
+      deptId,
+    });
+  }, [selectedTabKey, deptId]);
+
+  const setEmployeeNumberOption = async (param: any) => {
+    const users = await queryClient.fetchQuery(usersQueryOptions.all(param));
+    if (users) {
+      const employeeNumberOptions = users.content.map((item) => ({
+        label: item.employeeNumber,
+        value: item.employeeNumber,
+      }));
+      setOptions('employeeNumber', employeeNumberOptions);
+    }
   };
 
   const tabItems = [

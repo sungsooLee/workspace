@@ -8,6 +8,7 @@ import {
   useUpdateStudentsList,
 } from '@entities/learning-sequence/service/learning-sequence.hook';
 import { queryOptions as sequenceQueryOptions } from '@entities/learning-sequence/service/learning-sequence.queries';
+import { usersQueryOptions } from '@entities/users';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { LMSApiPrefix } from '@learnway/config';
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
@@ -227,8 +228,10 @@ const StudentsManagementComponent = () => {
           type: 'dropdown',
           label: t('LABEL.form.label.employeeNumber', '사번'),
           format: 'object',
-          value: '',
-          presetOptionLabel: t('LABEL.form.label.select', '선택'),
+          isSearchable: true,
+          isClearable: true,
+          value: undefined,
+          placeholder: t('LABEL.form.label.select', '선택'),
           options: [],
         },
         {
@@ -249,6 +252,7 @@ const StudentsManagementComponent = () => {
   const { config: gConfig, gridFetch, data: gridData } = useGridBox(gridConfig);
   const [columns, setColumns] = useState() as any;
   const companyId = useWatch({ control: searchProvider.control, name: 'companyId' });
+  const deptId = useWatch({ control: searchProvider.control, name: 'deptId' });
   const openingYear = useWatch({ control: searchProvider.control, name: 'openingYear' });
 
   useEffect(() => {
@@ -270,19 +274,16 @@ const StudentsManagementComponent = () => {
   }, [openingYear]);
 
   const setSequenceOption = async () => {
-    console.log('### setSequenceOption');
     const searchValues = getValues();
     const payload = {
       openingYear: searchValues.openingYear,
       courseId: courseIdKey,
     };
-    console.log('payload=>', payload);
     const result = await queryClient.fetchQuery(
       sequenceQueryOptions.enrollmentSequenceCombo(payload),
     );
 
     if (result) {
-      console.log('result=>', result);
       const sequenceIdOptions = result.map((item: any) => ({
         label: item.courseSequenceName,
         value: item.courseSequenceId,
@@ -302,17 +303,43 @@ const StudentsManagementComponent = () => {
           'deptId',
           content.map((_: any) => ({ value: _.deptId, label: _.deptName })),
         );
+
+      setValue('employeeNumber', undefined);
+      setEmployeeNumberOption({
+        tenantId: loginUser?.activeTenant?.tenantId,
+        companyId,
+      });
     })();
   }, [companyId]);
 
   const setCompanyOption = async (tenantId: number) => {
-    console.log('### setCompanyOption');
     const companys = await queryClient.fetchQuery(companysQueryOptions.tenantCompany(tenantId));
     const companyIdOptions = companys.map((item) => ({
       label: item.name,
       value: item.companyId,
     }));
     setOptions('companyId', companyIdOptions);
+  };
+
+  useEffect(() => {
+    setValue('employeeNumber', undefined);
+    if (!deptId && deptId !== 0) return;
+    setEmployeeNumberOption({
+      tenantId: loginUser?.activeTenant?.tenantId,
+      companyId,
+      deptId,
+    });
+  }, [deptId]);
+
+  const setEmployeeNumberOption = async (param: any) => {
+    const users = await queryClient.fetchQuery(usersQueryOptions.all(param));
+    if (users) {
+      const employeeNumberOptions = users.content.map((item) => ({
+        label: item.employeeNumber,
+        value: item.employeeNumber,
+      }));
+      setOptions('employeeNumber', employeeNumberOptions);
+    }
   };
 
   useEffect(() => {

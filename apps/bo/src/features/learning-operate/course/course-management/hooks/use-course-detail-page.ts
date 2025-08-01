@@ -1,8 +1,8 @@
+import { usePageState } from '@shared/lib';
 import { useNavigate } from '@tanstack/react-router';
 import { useCallback, useMemo, useState } from 'react';
 import { ContentViewType, useCourseActions, useCourseCreateInfo } from '../store/use-course-store';
 import { CourseDetailTab } from '../types/type';
-import { usePageState } from '@shared/lib';
 // 라우터 state에서 전달받는 값의 타입 정의
 export interface CourseDetailPageLocationState {
   courseId?: number; // 과정 ID
@@ -47,10 +47,13 @@ export const useCourseDetailPage = () => {
     const state = {
       courseId,
       courseName,
-      sequenceId: contentViewType === ContentViewType.LIST ? undefined : sequenceId };
+      sequenceId: contentViewType === ContentViewType.LIST ? undefined : sequenceId,
+      meta: { title: courseName },
+    };
     navigate({
       to: '/learning/learning-sequence/enrollment-application',
-      state });
+      state,
+    });
   }, [courseId, sequenceId]);
 
   /**
@@ -65,17 +68,20 @@ export const useCourseDetailPage = () => {
         isList: true,
         isDelete: true,
         isSave: true,
-        isDivider: true };
+        isDivider: true,
+      };
     }
     // 커리큘럼 탭일 때
     if (activeTab === CourseDetailTab.CURRICULUM) {
       return {
-        isList: true };
+        isList: true,
+      };
     }
     // 차수 탭일 때 (목록)
     if (activeTab === CourseDetailTab.SEQUENCE && contentViewType === ContentViewType.LIST) {
       return {
-        isList: true };
+        isList: true,
+      };
     }
     // 차수 탭일 때 (상세)
     if (activeTab === CourseDetailTab.SEQUENCE && contentViewType !== ContentViewType.LIST) {
@@ -83,12 +89,14 @@ export const useCourseDetailPage = () => {
         isList: true,
         isDelete: true,
         isSave: true,
-        isDivider: true };
+        isDivider: true,
+      };
     }
     // 커뮤니티 탭일 때
     if (activeTab === CourseDetailTab.COMMUNITY) {
       return {
-        isList: true };
+        isList: true,
+      };
     }
     return {};
   }, [activeTab, contentViewType]);
@@ -103,5 +111,6 @@ export const useCourseDetailPage = () => {
     // 버튼 표시 상태
     visibleButtons,
     // 수강관리 화면으로 이동
-    moveEnrollmentManagementPage };
+    moveEnrollmentManagementPage,
+  };
 };
