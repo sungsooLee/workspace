@@ -1,17 +1,17 @@
-import { FC, useState } from 'react';
 import { cn, getRandomId } from '@learnway/shared';
+import { FC, useState } from 'react';
 
 import {
-  IcoPlay,
-  IcoStar,
-  IcoEye,
-  IcoHeart,
+  IcoArray,
   IcoArrowDown,
   IcoDotpoints,
-  IcoArray,
+  IcoEye,
+  IcoHeart,
+  IcoPlay,
+  IcoStar,
 } from '@learnway/icons';
-import { Arrays } from '../../../../features/layout';
 import { isMobile } from 'react-device-detect';
+import { Arrays } from '../../../../features/layout';
 
 /* ThumbnailList */
 import bannerImg from '@learnway/styles/fo/assets/images/banner/img_banner_sample.jpg';
@@ -21,16 +21,7 @@ import ThumbnailList from '../../../-components/thumb/thumb-nail-list';
 import { FilterModal } from './filter-modal';
 
 /* style */
-import styles from './course-contents.module.css';
 import dropdownPopoverStyles from '../../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
-
-import { Badge } from '@learnway/ui/badge';
-import { Button } from '@learnway/ui/button';
-import { Dropdown } from '@learnway/ui/dropdown';
-import { Input } from '@learnway/ui/input';
-import { Popover } from '@learnway/ui/popover';
-import { Checkbox } from '@learnway/ui/checkbox';
-import { Pagination } from '@learnway/ui/pagination';
 
 const CourseComponent: FC = () => {
   // dropdown
@@ -712,7 +703,7 @@ const CourseComponent: FC = () => {
         {/* Thumnail List */}
         <ThumbnailList
           items={item}
-          cols={isMobile ? (isActive ? 1 : 2) : isActive ? 4 : 2}
+          cols={isMobile ? (isActive ? 1 : 2) : isActive ? 2 : 4}
           direction={isActive ? 'horizontal' : 'vertical'}
         />
         {/* pagination */}
