@@ -14,14 +14,14 @@ function RouteComponent() {
   const [isOpen, setIsOpen] = useState<boolean>(true);
 
   const PopoverContent = () => {
-    const [searchState, setSearchState] = useState<SearchState>('before'); // 화면 초기 설정
+    const [searchState, setSearchState] = useState<SearchState>('before'); // 화면 초기 설정(입력 전)
 
     const handleBack = () => {
-      setSearchState('typing');
+      setSearchState('typing'); // 입력 중
     };
 
     const handleSubmit = () => {
-      setSearchState('submitted');
+      setSearchState('submitted'); // 입력 후 검색
     };
 
     return (
