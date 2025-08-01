@@ -1,7 +1,10 @@
 import { Popover } from '@learnway/ui/popover';
 import { createFileRoute } from '@tanstack/react-router';
 import { useState } from 'react';
-import { SearchDisplay } from '../../../features/layout/ui/integrated-search/search-display'; //
+import {
+  SearchDisplay,
+  SearchState,
+} from '../../../features/layout/ui/integrated-search/search-display';
 
 export const Route = createFileRoute('/_layout/main/integrated-search')({
   component: RouteComponent,
@@ -11,17 +14,22 @@ function RouteComponent() {
   const [isOpen, setIsOpen] = useState<boolean>(true);
 
   const PopoverContent = () => {
-    // 이전 버튼 클릭
-    const [isClicked, setIsClicked] = useState<boolean>(false);
+    const [searchState, setSearchState] = useState<SearchState>('before'); // ✅ 상태 선언
+
     const handleBack = () => {
-      setIsClicked(true);
+      setSearchState('typing');
+    };
+
+    const handleSubmit = () => {
+      setSearchState('submitted');
     };
 
     return (
       <SearchDisplay
-        searchState={isClicked ? 'typing' : 'submitted'}
+        searchState={searchState}
         displayFormat={'popover'}
         onBack={handleBack}
+        onSubmitSearch={handleSubmit}
       />
     );
   };

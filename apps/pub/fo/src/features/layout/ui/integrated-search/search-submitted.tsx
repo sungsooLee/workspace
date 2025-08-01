@@ -1,4 +1,11 @@
-import { IcoAiSymbol, IcoHeart, IcoPlus, IcoWordArrow } from '@learnway/icons';
+import {
+  IcoAiSymbol,
+  IcoHeart,
+  IcoNarrowRight,
+  IcoPlus,
+  IcoSearch,
+  IcoWordArrow,
+} from '@learnway/icons';
 import { cn, getRandomId } from '@learnway/shared';
 import { Badge } from '@learnway/ui/badge';
 
@@ -7,6 +14,7 @@ import bannerImg from '@learnway/styles/fo/assets/images/banner/img_banner_sampl
 import avatarImg from '@learnway/styles/fo/assets/images/menu/course/img_avatar.jpg';
 
 /* styles */
+import { Button } from '@learnway/ui/button';
 import { Thumbnail } from '@learnway/ui/thumbnail';
 import { Link } from '@tanstack/react-router';
 import ThumbnailList from '../../../../pages/-components/thumb/thumb-nail-list';
@@ -15,7 +23,12 @@ import styles from './search-submitted.module.css';
 type linkListProps = {
   label: string;
   external?: boolean;
-  linkUrl?: string;
+};
+
+type wordListProps = {
+  label: React.ReactNode;
+  link?: string;
+  showDeleteBtn?: boolean;
 };
 
 export const SearchSubmitted: React.FC = () => {
@@ -130,19 +143,54 @@ export const SearchSubmitted: React.FC = () => {
     {
       label: '다른 맞춤 추천을 받을래요',
       external: false,
-      linkUrl: '/',
     },
     {
       label: '더 많은 콘텐츠를 한번에 볼래요',
       external: true,
-      linkUrl: '/',
+    },
+  ];
+  const linkList2: linkListProps[] = [
+    {
+      label: '‘리더십’과  관련된 다른 검색어가 궁금해요',
+      external: false,
+    },
+    {
+      label: '학습 유형별로 골라보고 싶어요',
+      external: true,
+    },
+    {
+      label: '더 많은 콘텐츠를 한번에 볼래요',
+      external: true,
     },
   ];
 
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-    e.preventDefault(); // 기본 이동 막기
-    console.log('링크 클릭됨');
-  };
+  const wordItems: wordListProps[] = [
+    {
+      label: (
+        <span className={styles.label}>
+          <em className={styles.point}>{'리더십'}</em> 강의 추천
+        </span>
+      ),
+      link: '/',
+    },
+    {
+      label: (
+        <span className={styles.label}>
+          일을 성장으로 바꾸는 법, 강의 추천 <em className={styles.point}>{'리더십'}</em>
+        </span>
+      ),
+      link: '/',
+    },
+    {
+      label: (
+        <span className={styles.label}>
+          신임 리더 생존 패키지 <em className={styles.point}>{'리더십'}</em> 올리기 강좌
+        </span>
+      ),
+      link: '/',
+    },
+  ];
+
   return (
     <div className={cn(styles.start, styles.search_submitted)}>
       <div className={styles.message_wrap}>
@@ -218,15 +266,17 @@ export const SearchSubmitted: React.FC = () => {
             <em className={styles.point}>{'리더십 콘텐츠'}</em>를 좀 더 알아보시겠어요?
           </strong>
         </div>
-        {/* button list */}
+        {/* link list */}
         {linkList.length > 0 && (
           <ul className={styles.select_list}>
             {linkList.map((item, index) => (
               <li key={index}>
-                <Link to={item.linkUrl} onClick={handleClick} className={styles.link}>
-                  {item.label}
-                  {item.external && <IcoPlus width={16} height={16} stroke="#131416" />}
-                </Link>
+                <Button
+                  className={styles.link}
+                  label={item.label}
+                  icon={item.external && <IcoPlus width={16} height={16} stroke="#131416" />}
+                  size={'md'}
+                />
               </li>
             ))}
           </ul>
@@ -256,6 +306,47 @@ export const SearchSubmitted: React.FC = () => {
             원하시는 콘텐츠를 자세히 알려주시겠어요?
           </strong>
         </div>
+        {/* link list */}
+        {linkList2.length > 0 && (
+          <ul className={styles.select_list}>
+            {linkList2.map((item, index) => (
+              <li key={index}>
+                <Button
+                  className={styles.link}
+                  label={item.label}
+                  icon={item.external && <IcoPlus width={16} height={16} stroke="#131416" />}
+                  size={'md'}
+                />
+              </li>
+            ))}
+          </ul>
+        )}
+        {/* question_wrap */}
+        <p className={styles.question_wrap}>
+          <span className={styles.text}>
+            {'‘리더십’과  관련된 다른 검색어가 궁금해요'}
+            <IcoWordArrow className={styles.icon_arrow} />
+          </span>
+        </p>
+        {/* title */}
+        <div className={styles.title_wrap}>
+          <strong className={styles.title}>
+            <em className={styles.point}>{'리더십'}</em>과 관련해서 많은 사람들이 검색한 연관
+            검색어를 추천해 드릴게요.
+          </strong>
+        </div>
+        {/* word list */}
+        {wordItems.length > 0 && (
+          <ul className={styles.word_list}>
+            {wordItems.map((item, index) => (
+              <li key={index}>
+                <IcoSearch className={styles.icon_search} />
+                <Link to={item.link}>{item.label}</Link>
+                <IcoNarrowRight className={styles.icon_arrow} />
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );
