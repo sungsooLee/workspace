@@ -45,7 +45,7 @@ const CheckboxGroupFormFieldComponent = forwardRef<HTMLDivElement, CheckboxGroup
      * @returns {void}
      */
     const handleCheckChange = (checked: boolean, checkedValue: string) => {
-      const checkOptions = [...value, checkedValue];
+      const checkOptions = [...(value ?? []), checkedValue];
       const unCheckOptions = value?.filter((d: string) => d !== checkedValue);
       onChange(checked ? checkOptions : unCheckOptions);
     };

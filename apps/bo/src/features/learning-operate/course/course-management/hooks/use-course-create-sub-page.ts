@@ -5,6 +5,7 @@ import {
   useCreateCourse,
   useDeleteCourse,
   useFetchCourse,
+  useFetchCourseAndConfig,
   useFetchCourseConfig,
   useUpdateCourseWizard1,
   useUpdateCourseWizard2,
@@ -38,12 +39,16 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
   const channelUuid = watch('channelUuid');
 
   // courseData를 먼저 가져와서 channelUuid를 확보
-  const { data: courseData } = useFetchCourse(courseId);
+
+  // const { data: courseData } = useFetchCourse(courseId);
+
+  // const { data: courseConfig } = useFetchCourseConfig(
+  //   useMemo(() => ({ courseType, channelUuid }), [courseType, channelUuid]),
+  // );
+
+  const { course: courseData, courseConfig } = useFetchCourseAndConfig(courseId);
 
   // 과정 설정 정보(courseConfig) 조회
-  const { data: courseConfig } = useFetchCourseConfig(
-    useMemo(() => ({ courseType, channelUuid }), [courseType, channelUuid]),
-  );
 
   // 과정 생성 뮤테이션
   const { mutate: createCourse } = useCreateCourse({
@@ -152,14 +157,31 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
 
   // 과정 상세 조회시 폼 데이터 갱신
   useEffect(() => {
-    if (courseData && courseConfig) {
+    console.log('1111', { courseData, courseConfig });
+    if (courseData) {
       const formData = responseDataToFormData(courseData, courseConfig);
       updateFormData(formData);
-    } else if (!courseData && !courseConfig) {
-      // 등록 최초에 과정유형 기본값 선택
-      updateFormData({ courseType: initCourseType, channelUuid });
     }
-  }, [courseData, courseConfig, initCourseType, channelUuid]);
+  }, [courseData, courseConfig]);
+
+  // 등록 최초에 과정유형 기본값 선택 (dwondown 기능 개발 되면 삭제 예정)
+  useEffect(() => {
+    if (initCourseType) {
+      console.log('222222', initCourseType);
+      updateFormData({ courseType: initCourseType });
+    }
+  }, [initCourseType]);
+
+  // 과정 상세 조회시 폼 데이터 갱신
+  // useEffect(() => {
+  //   if (courseData && courseConfig) {
+  //     const formData = responseDataToFormData(courseData, courseConfig);
+  //     updateFormData(formData);
+  //   } else if (!courseData && !courseConfig) {
+  //     // 등록 최초에 과정유형 기본값 선택
+  //     updateFormData({ courseType: initCourseType, channelUuid });
+  //   }
+  // }, [courseData, courseConfig, initCourseType, channelUuid]);
 
   // form state 변경 시 코스 생성 정보 업데이트 - 무한 반복 방지를 위해 제거
   useEffect(() => {

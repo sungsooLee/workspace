@@ -152,8 +152,8 @@ const BasicInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) 
             <Button
               variant="text"
               label={t('대상자')}
+              disabled={!getValues().targetList?.length}
               onClick={(e: any) => {
-                // e.stopPropagation();
                 openModal({
                   width: 'xl',
                   content: <UserGroupChoiceModal groups={getValues().targetList} />,

@@ -201,6 +201,7 @@ const DetailInfoComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBa
                   <Button
                     variant="text"
                     label={t('대상자')}
+                    disabled={!getValues().targetList?.length}
                     onClick={(e: any) => {
                       openModal({
                         width: 'xl',
@@ -1078,6 +1079,7 @@ const DetailInfoComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBa
                   element={
                     <ChipListModalSelectorFormField
                       modalConfig={{
+                        width: 'xl',
                         content: (
                           <CourseChoiceModal
                             tenantIds={getValues()?.tenantIds}
@@ -1105,6 +1107,7 @@ const DetailInfoComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBa
                   element={
                     <ChipListModalSelectorFormField
                       modalConfig={{
+                        width: 'xl',
                         content: (
                           <CourseChoiceModal
                             tenantIds={getValues()?.tenantIds}
