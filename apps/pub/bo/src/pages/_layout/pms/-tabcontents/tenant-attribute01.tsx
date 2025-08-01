@@ -6,7 +6,12 @@ import { ContentsHistoryInfoFormField } from '../../../../shared/ui/contents-his
 import { IcoAlertCircle, IcoFormRequired } from '@learnway/icons';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import { Button, ContentsRow, Input, Switch, Tooltip } from '@learnway/ui';
+
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { Switch } from '@learnway/ui/switch';
+import { Tooltip } from '@learnway/ui/tooltip';
 import styles from './tenant-attribute01.module.css';
 // eslint-disable-next-line no-empty-pattern
 const TenantAttribute01Component: FC<{}> = ({}) => {

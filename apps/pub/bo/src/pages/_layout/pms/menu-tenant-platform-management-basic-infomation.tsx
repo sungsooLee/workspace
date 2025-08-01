@@ -3,26 +3,21 @@ import { useState } from 'react';
 
 import { IcoAlertCircle, IcoFormRequired, IcoRefresh02, IcoSearch } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import {
-  Button,
-  CheckboxGroupFormField,
-  ChipListModalSelectorFormField,
-  ContentsRow,
-  Dropdown,
-  GridBox,
-  ImageOption,
-  Input,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  Switch,
-  Tabs,
-  Textarea,
-  ThumbnailImageUpload,
-  Tooltip,
-  useModal,
-} from '@learnway/ui';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { ThumbnailImageUpload } from '@learnway/ui/file-upload';
+import { CheckboxGroupFormField, ChipListModalSelectorFormField } from '@learnway/ui/form-field';
+import { GridBox } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
+import { Switch } from '@learnway/ui/switch';
+import { Tabs } from '@learnway/ui/tabs';
+import { Textarea } from '@learnway/ui/textarea';
+import { ImageOption } from '@learnway/ui/thumbnail';
+import { Tooltip } from '@learnway/ui/tooltip';
+
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { useTranslation } from 'react-i18next';
 import { ContentsHistoryInfoFormField } from '../../../shared/ui/contents-history-info-form-field';

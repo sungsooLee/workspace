@@ -1,7 +1,8 @@
 // BaseForm.stories.tsx
-import React from 'react';
+import { ThumbnailImageUpload } from '@learnway/ui/file-upload';
+import { ImageOption } from '@learnway/ui/thumbnail';
 import type { Meta } from '@storybook/react';
-import { ImageOption, ThumbnailImageUpload } from '@learnway/ui';
+import React from 'react';
 
 export default {
   title: 'Components/FileUpload',

@@ -2,25 +2,19 @@ import { FC, useState } from 'react';
 
 import { IcoFormRequired, IcoMinus, IcoRefresh02, IcoSearch } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import {
-  Button,
-  ChipListModalSelectorFormField,
-  ContentsRow,
-  Divider,
-  Dropdown,
-  FormSubTitle,
-  GridBox,
-  Input,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  Textarea,
-  TreeBox,
-  TreeContainer,
-  TreeNode,
-  useModal,
-} from '@learnway/ui';
+
+import { TreeBox, TreeContainer, TreeNode } from '@learnway/ui/tree-view';
+
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { Divider } from '@learnway/ui/elements';
+import { ChipListModalSelectorFormField } from '@learnway/ui/form-field';
+import { GridBox } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { Textarea } from '@learnway/ui/textarea';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { SectionLayout } from '../../-components/section-layout';
 import { ContentsHistoryInfoFormField } from '../../../../shared/ui/contents-history-info-form-field';

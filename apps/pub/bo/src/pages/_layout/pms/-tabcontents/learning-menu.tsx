@@ -6,16 +6,15 @@ import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inn
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css'; // 타이틀 css
-import {
-  Button,
-  CheckboxGroupFormField,
-  ContentsRow,
-  GridBox,
-  Input,
-  Switch,
-  Textarea,
-  Tooltip,
-} from '@learnway/ui';
+
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { CheckboxGroupFormField } from '@learnway/ui/form-field';
+import { GridBox } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
+import { Switch } from '@learnway/ui/switch';
+import { Textarea } from '@learnway/ui/textarea';
+import { Tooltip } from '@learnway/ui/tooltip';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { ContentsHistoryInfoFormField } from '../../../../shared/ui/contents-history-info-form-field';
 // eslint-disable-next-line no-empty-pattern

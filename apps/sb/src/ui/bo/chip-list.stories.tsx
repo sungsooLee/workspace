@@ -1,6 +1,7 @@
 // BaseForm.stories.tsx
 import { getMockOption, getRandomId } from '@learnway/shared';
-import { Button, ChipList } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { ChipList } from '@learnway/ui/chips';
 import type { Meta } from '@storybook/react';
 import { useState } from 'react';
 

@@ -3,15 +3,14 @@ import { FC, useState } from 'react';
 
 import { IcoMinus, IcoPlus } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import {
-  Button,
-  ChipList,
-  ContentsRow,
-  Dropdown,
-  FormSubTitle,
-  GridBox,
-  Input,
-} from '@learnway/ui';
+
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { ChipList } from '@learnway/ui/chips';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { GridBox } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
 
 /* style */
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form

@@ -1,11 +1,10 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable react/jsx-no-useless-fragment */
 import { ReactQueryConfigProvider } from '@learnway/config';
 import { IcoDownload, IcoSetting } from '@learnway/icons';
 import { getRandomId, getRowSelectionByList } from '@learnway/shared';
+
+import { Button } from '@learnway/ui/button';
+import { CountText } from '@learnway/ui/elements';
 import {
-  Button,
-  CountText,
   EditCheckboxCell,
   EditDropdownCell,
   EditInputCell,
@@ -17,10 +16,10 @@ import {
   GridBoxSearchInputCondition,
   GridBoxState,
   GridState,
-  ModalWrapper,
-  PaginationResponse,
   TableBox,
-} from '@learnway/ui';
+} from '@learnway/ui/grid';
+import { ModalWrapper } from '@learnway/ui/modal';
+import { PaginationResponse } from '@learnway/ui/type';
 import { Meta, StoryObj } from '@storybook/react/*';
 import { useQuery } from '@tanstack/react-query';
 import {

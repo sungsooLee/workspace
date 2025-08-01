@@ -2,21 +2,15 @@ import { FC, useState } from 'react';
 
 import { IcoFormRequired } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import {
-  Button,
-  ChipListModalSelectorFormField,
-  ContentsRow,
-  Input,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  RadioGroupFormField,
-  Switch,
-  Tabs,
-  Textarea,
-  useModal,
-} from '@learnway/ui';
+
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { ChipListModalSelectorFormField, RadioGroupFormField } from '@learnway/ui/form-field';
+import { Input } from '@learnway/ui/input';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { Switch } from '@learnway/ui/switch';
+import { Tabs } from '@learnway/ui/tabs';
+import { Textarea } from '@learnway/ui/textarea';
 import { ContentsHistoryInfoFormField } from '../../../../shared/ui/contents-history-info-form-field';
 
 /* style */

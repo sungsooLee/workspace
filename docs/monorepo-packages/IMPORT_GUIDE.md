@@ -9,9 +9,9 @@
 다음 컴포넌트들은 자주 사용되므로 기존처럼 barrel export로 import 가능합니다:
 
 ```typescript
-import { 
-  Button, 
-  Input, 
+import {
+  Button,
+  Input,
   InputTimer,
   Checkbox,
   Switch,
@@ -36,7 +36,7 @@ import {
   Tabs,
   EmptyText,
   ProgressBar,
-  ProgressCheck
+  ProgressCheck,
 } from '@learnway/ui';
 ```
 
@@ -148,7 +148,7 @@ import { FileItem } from '@learnway/ui/lib/file-upload/uppy-file-upload';
 {
   "compilerOptions": {
     "paths": {
-      "@learnway/ui": ["libs/ui/src/index.ts"],
+      // "@learnway/ui": ["libs/ui/src/index.ts"],
       "@learnway/ui/*": ["libs/ui/src/*"]
     }
   }

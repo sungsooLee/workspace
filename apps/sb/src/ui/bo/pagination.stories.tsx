@@ -1,7 +1,7 @@
 // BaseForm.stories.tsx
-import React, { useEffect } from 'react';
+import { Pagination } from '@learnway/ui/pagination';
 import type { Meta } from '@storybook/react';
-import { Button, Pagination } from '@learnway/ui';
+import React, { useEffect } from 'react';
 
 export default {
   title: 'Bo-Components/Pagination',

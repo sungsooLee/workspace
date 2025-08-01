@@ -6,7 +6,13 @@ import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inn
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css'; // 타이틀 css
-import { Button, ContentsRow, Input, RadioGroupFormField, Switch, Textarea } from '@learnway/ui';
+
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { RadioGroupFormField } from '@learnway/ui/form-field';
+import { Input } from '@learnway/ui/input';
+import { Switch } from '@learnway/ui/switch';
+import { Textarea } from '@learnway/ui/textarea';
 import { ContentsHistoryInfoFormField } from '../../../../shared/ui/contents-history-info-form-field';
 const ApiLearningMenuComponent: FC<{}> = ({}) => {
   // switch : 보안콘텐츠 여부
