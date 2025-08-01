@@ -23,8 +23,9 @@ export default class CategoryService {
     return httpService.get<any>(`${LMSApiPrefix()}/category/recent`);
   }
 
-  static saveRecentCategory(categoryId: number) {
-    return httpService.post<any>(`${LMSApiPrefix()}/${categoryId}/recent`, {});
+  static createRecentCategory(payload: any) {
+    console.log('### category.ts => ', payload.categoryId);
+    return httpService.post<any>(`${LMSApiPrefix()}/category/${payload.categoryId}/recent`, {});
   }
 
   static async getFetchRecentCategory(tenantId: number) {

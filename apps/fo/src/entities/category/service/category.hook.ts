@@ -1,5 +1,5 @@
-import { useQuery } from '@tanstack/react-query';
-import { queryOptions } from './category.queries';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { categoryMutateOptions, queryOptions } from './category.queries';
 import { useRouter } from '@tanstack/react-router';
 import { Category } from '../../../types/entities/category';
 
@@ -36,4 +36,25 @@ export const useCategoryTree = (tenantId: number) => {
 
 export const useFetchCategoryDetail = (categoryId: number) => {
   return useQuery(queryOptions.detail(categoryId));
+}
+
+export const useCreateRecentCategory = (options: any) => {
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    ...categoryMutateOptions.create(),
+    onSuccess: async (data: any, variables, context) => {
+      // 공통 메세지 처리 등...
+      if (options.onSuccess) {
+        options.onSuccess(data, variables, context);
+      }
+    },
+    ...options });
+
+  return {
+    create: (payload: any, callback?: any) => {
+      mutation.mutate(payload, callback);
+    },
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data };
 }
