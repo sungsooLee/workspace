@@ -34,15 +34,20 @@ import { LearningResourceQuestionShuttleModal } from '@features/learning-resourc
 
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
 import styles from '@learnway/styles/bo/pages/_layout/learning/test-detail.module.css';
-// import {
-//   closestCenter,
-//   DndContext,
-//   DragEndEvent,
-//   DragStartEvent,
-//   MeasuringStrategy,
-// } from '@dnd-kit/core';
-// import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
-// import { arrayMove } from '@dnd-kit/sortable';
+import {
+  closestCenter,
+  DndContext,
+  DragEndEvent,
+  KeyboardSensor,
+  MeasuringStrategy,
+  MouseSensor,
+  PointerSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core';
+import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
+import { arrayMove } from '@dnd-kit/sortable';
 
 const DragHandle = () => {
   const dragContext = useContext(DragHandleContext);
@@ -65,6 +70,17 @@ const LearningResourceQuestionBankQuestionComponent = forwardRef<QuestionBankTab
     const { t } = useTranslation();
 
     const { openModal } = useModal();
+    const sensors = useSensors(
+      useSensor(PointerSensor, {}),
+      useSensor(MouseSensor, {
+        activationConstraint: {
+          distance: 10,
+        },
+      }),
+      useSensor(TouchSensor, {}),
+      useSensor(KeyboardSensor, {}),
+    );
+
     const [statistic, setStatistic] = useState<QuestionStatisticRow[]>(initStatisticRow(t));
 
     const {
@@ -327,102 +343,107 @@ const LearningResourceQuestionBankQuestionComponent = forwardRef<QuestionBankTab
         </ContentsRow>
         <ContentsRow>
           <div className={styles.table_wrap}>
-            {/*<DndContext*/}
-            {/*  collisionDetection={closestCenter}*/}
-            {/*  modifiers={[restrictToVerticalAxis]}*/}
-            {/*  measuring={{*/}
-            {/*    droppable: {*/}
-            {/*      strategy: MeasuringStrategy.Always,*/}
-            {/*    },*/}
-            {/*  }}*/}
-            {/*  onDragStart={(e: DragStartEvent) => console.log(e)}*/}
-            {/*  onDragEnd={(event: DragEndEvent) => {*/}
-            {/*    const { active, over } = event;*/}
+            <DndContext
+              sensors={sensors}
+              collisionDetection={closestCenter}
+              modifiers={[restrictToVerticalAxis]}
+              measuring={{
+                droppable: {
+                  strategy: MeasuringStrategy.Always,
+                },
+              }}
+              onDragEnd={(event: DragEndEvent) => {
+                const { active, over } = event;
+                console.log(active, over);
 
-            {/*    if (!over || active.id === over.id) {*/}
-            {/*      return;*/}
-            {/*    }*/}
+                if (!over || active.id === over.id) {
+                  return;
+                }
 
-            {/*    const oldIndex = questionItemList.findIndex((item) => item.sortSeq === active.id);*/}
-            {/*    const newIndex = questionItemList.findIndex((item) => item.sortSeq === over.id);*/}
-            {/*    console.log(oldIndex, newIndex);*/}
+                const oldIndex = questionItemList.findIndex((item) => item.sortSeq === active.id);
+                const newIndex = questionItemList.findIndex((item) => item.sortSeq === over.id);
 
-            {/*    if (oldIndex !== -1 && newIndex !== -1) {*/}
-            {/*      // arrayMove를 사용하여 부드러운 재배열*/}
-            {/*      const reorderedItems = arrayMove(questionItemList, oldIndex, newIndex);*/}
+                if (oldIndex !== -1 && newIndex !== -1) {
+                  // arrayMove를 사용하여 부드러운 재배열
+                  const reorderedItems = arrayMove(questionItemList, oldIndex, newIndex);
 
-            {/*      // order 필드를 새로운 순서로 업데이트*/}
-            {/*      const updatedItems = reorderedItems.map((item, index) => ({*/}
-            {/*        ...item,*/}
-            {/*        order: index + 1,*/}
-            {/*      }));*/}
-            {/*    }*/}
-            {/*  }}*/}
-            {/*>*/}
-            <GridBox
-              title=" "
-              showTotalCount={false}
-              disabledSelectionToggle
-              tableMode
-              data={questionItemList}
-              columns={questionListColumns}
-              multiple
-              showNumberingColumn
-              // enableDragAndDrop
-              onRowsSelect={setSelectedQuestionRows}
-              hideRowSelectionCheckBox={false}
-              titleCustomNode={
-                <div className="custom_info_wrap pt-[1.2rem]">
-                  <strong className="table_tit text-[1.4rem] font-normal">{t('문항목록')}</strong>
-                  <strong className="table_tit text-[1.4rem] font-normal">{t('전체')}</strong>
-                  <span className="count_info">{questionItemList?.length ?? 0}</span>
-                </div>
-              }
-              className={styles.list_table}
-              customButtonNode={
-                <>
-                  <Button
-                    variant="text"
-                    label={t('불러오기')}
-                    onClick={handleClickRetrieveQuestionModal}
-                  />
-                  <GridExcelUploadButton
-                    validateUrl={`/exam/questions/${baseInfo?.contentUuid}/upload`}
-                    affairsType="CMS"
-                    formDataName="multipartFile"
-                    validationResultRequired={false}
-                    onUpload={handleOnExcelUpload}
-                  />
-                  <GridExcelDownloadButton
-                    method="post"
-                    url={`${CMSApiPrefix()}/exam/questions/${baseInfo?.contentUuid}/download`}
-                    params={{}}
-                    disabled={!questionItemList.length}
-                  />
-                  <Button
-                    variant="text"
-                    label={t('LABEL.grid.header.add', '추가')}
-                    onClick={handleAddQuestionButtonClick}
-                    icon={<IcoPlus width={16} height={16} stroke="#4C515E" />}
-                  />
-                  <Button
-                    variant="text"
-                    label={t('LABEL.grid.header.copy', '복사')}
-                    icon={<IcoCopy width={16} height={16} stroke="#4C515E" />}
-                    onClick={handleOnCopyQuestion}
-                    disabled={!selectedQuestionRows.length}
-                  />
-                  <Button
-                    variant="text"
-                    label={t('LABEL.grid.header.remove', '삭제')}
-                    icon={<IcoMinus width={16} height={16} stroke="#131C30" />}
-                    onClick={handleOnDeleteQuestion}
-                    disabled={!selectedQuestionRows.length}
-                  />
-                </>
-              }
-            />
-            {/*</DndContext>*/}
+                  // order 필드를 새로운 순서로 업데이트
+                  const updatedItems = reorderedItems.map((item, index) => ({
+                    ...item,
+                    order: index + 1,
+                  }));
+
+                  setQuestionItemList(updatedItems);
+
+                  return updatedItems;
+                }
+              }}
+            >
+              <GridBox
+                title=" "
+                showTotalCount={false}
+                disabledSelectionToggle
+                tableMode
+                data={questionItemList}
+                columns={questionListColumns}
+                multiple
+                showNumberingColumn
+                enableDragAndDrop
+                onRowsSelect={setSelectedQuestionRows}
+                hideRowSelectionCheckBox={false}
+                rowId="sortSeq"
+                titleCustomNode={
+                  <div className="custom_info_wrap pt-[1.2rem]">
+                    <strong className="table_tit text-[1.4rem] font-normal">{t('문항목록')}</strong>
+                    <strong className="table_tit text-[1.4rem] font-normal">{t('전체')}</strong>
+                    <span className="count_info">{questionItemList?.length ?? 0}</span>
+                  </div>
+                }
+                className={styles.list_table}
+                customButtonNode={
+                  <>
+                    <Button
+                      variant="text"
+                      label={t('불러오기')}
+                      onClick={handleClickRetrieveQuestionModal}
+                    />
+                    <GridExcelUploadButton
+                      validateUrl={`/exam/questions/${baseInfo?.contentUuid}/upload`}
+                      affairsType="CMS"
+                      formDataName="multipartFile"
+                      validationResultRequired={false}
+                      onUpload={handleOnExcelUpload}
+                    />
+                    <GridExcelDownloadButton
+                      method="post"
+                      url={`${CMSApiPrefix()}/exam/questions/${baseInfo?.contentUuid}/download`}
+                      params={{}}
+                      disabled={!questionItemList.length}
+                    />
+                    <Button
+                      variant="text"
+                      label={t('LABEL.grid.header.add', '추가')}
+                      onClick={handleAddQuestionButtonClick}
+                      icon={<IcoPlus width={16} height={16} stroke="#4C515E" />}
+                    />
+                    <Button
+                      variant="text"
+                      label={t('LABEL.grid.header.copy', '복사')}
+                      icon={<IcoCopy width={16} height={16} stroke="#4C515E" />}
+                      onClick={handleOnCopyQuestion}
+                      disabled={!selectedQuestionRows.length}
+                    />
+                    <Button
+                      variant="text"
+                      label={t('LABEL.grid.header.remove', '삭제')}
+                      icon={<IcoMinus width={16} height={16} stroke="#131C30" />}
+                      onClick={handleOnDeleteQuestion}
+                      disabled={!selectedQuestionRows.length}
+                    />
+                  </>
+                }
+              />
+            </DndContext>
           </div>
         </ContentsRow>
       </div>
