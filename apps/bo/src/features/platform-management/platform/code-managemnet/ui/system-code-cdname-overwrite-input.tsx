@@ -2,7 +2,8 @@ import { forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { BaseFormFieldProps, useDynamicFormContext } from '@learnway/hooks';
-import { Button, Input } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { Input } from '@learnway/ui/input';
 
 interface CdNameOverwriteInputProps extends BaseFormFieldProps<string> {
   onOverwrite?: (cdNameOver: string) => void;
