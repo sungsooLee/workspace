@@ -1,5 +1,5 @@
 // IA104 / NLP_BO_CMS_1044 학습자원 현지화-공유설정(팝업)
-import { learningResourceQueryOptions } from '@entities/learning-resource';
+import { learningResourceQueryOptions, usePostShareContents } from '@entities/learning-resource';
 import LearningResourceService from '@entities/learning-resource/api/learning-resource';
 import { useSearchBox } from '@learnway/hooks';
 import { cn } from '@learnway/shared';
@@ -13,7 +13,7 @@ import { ShuttleGridToGridV2 } from '@learnway/ui/shuttle-grid-to-grid-v2';
 import { SearchBox } from '@shared/ui';
 import { useQueryClient } from '@tanstack/react-query';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { ContentInfo, TenantChannelCodeType, TenantCodeType } from '@types';
+import { ContentInfo, PostShareContentsRes, TenantChannelCodeType, TenantCodeType } from '@types';
 import { pick } from 'lodash-es';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -27,6 +27,16 @@ const LearningResourceShareShuttleModalComponent = ({ data }: Props) => {
   const queryClient = useQueryClient();
 
   const { closeModal } = useModal();
+
+  const { create: postShareContents } = usePostShareContents({
+    onSuccess: (result: PostShareContentsRes) => {
+      closeModal(result);
+    },
+    onError: (error: any) => {
+      console.error(error);
+      // 에러 얼럿?
+    },
+  });
 
   const sharingInfoSearchConfig: any = {
     builders: [
@@ -132,8 +142,16 @@ const LearningResourceShareShuttleModalComponent = ({ data }: Props) => {
   }, []);
 
   const handleClickSaveButton = () => {
-    console.log('save');
-    closeModal();
+    postShareContents({
+      sourceContentUuid: data.contentUuid,
+      sourceTenantId: data.tenantId,
+      sourceChannelUuid: data.channelUuid,
+      isOriginalCopyDownload: true,
+      shareDestinations: selectedGridData.map((_) => ({
+        destTenantId: _.tenantId,
+        destChannelUuid: _.channelUuid,
+      })),
+    });
   };
 
   return (

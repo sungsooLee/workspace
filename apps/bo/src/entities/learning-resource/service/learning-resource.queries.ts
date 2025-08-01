@@ -19,6 +19,7 @@ import {
   PostDraftHtmlVideoParams,
   PostDraftScormParams,
   PostDraftVideosParams,
+  PostShareContentsParams,
   PutETCChangeParams,
   PutETCUpdateParams,
   PutScormChangeParams,
@@ -247,6 +248,10 @@ export const mutateOptions = {
   }),
   putETCChange: () => ({
     mutationFn: (params: PutETCChangeParams) => LearningResourceService.putETCChange(params),
+  }),
+  postShareContents: () => ({
+    mutationFn: (params: PostShareContentsParams) =>
+      LearningResourceService.postShareContents(params),
   }),
   postDraftHTML5: () => ({
     mutationFn: (params: PostDraftHtmlVideoParams) =>
