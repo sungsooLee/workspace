@@ -30,6 +30,7 @@ import { CopyBatchButtons } from '../component/copy-batch-buttons';
 import { CourseSequenceSearchForm } from '../component/course-sequence-search-form';
 import { EditInputDateCell } from '../component/edit-input-date-cell';
 import { SequenceSearchForm } from '../component/sequence-search-form';
+import { getLeaningStatusTypeName } from '../constants/constants';
 
 type SequenceListComponentProps = {
   setMode: (value: string) => void;
@@ -85,7 +86,7 @@ const SequenceListComponent = ({
     mode: 'onSubmit', // 서브밋할 때만 validation 실행
     reValidateMode: 'onChange', // 에러 발생 후에는 값 변경시 즉시 재검증
   });
-  const { gridFetch, data: gridData } = useGridBox(gridConfig);
+  const { gridFetch, data: gridData, setGridData } = useGridBox(gridConfig);
   const [params, setParams] = useState<Record<string, any>>({});
 
   useEffect(() => {
@@ -192,9 +193,7 @@ const SequenceListComponent = ({
       }),
       columnHelper.accessor('learningStatusType', {
         header: t('상태'),
-        cell: (info) => info.getValue(),
-        // cell: (info: any) =>
-        //   getCodeLabel(CODE_GROUP['lms.sequence.LearningStatusType'], info.getValue()),
+        cell: (info) => getLeaningStatusTypeName(info.getValue()),
         enableGrouping: false,
         size: 88,
       }),
@@ -436,16 +435,20 @@ const SequenceListComponent = ({
 
     // 변경된 행만 추출
     const editedRows = changeData.filter((current, index) => {
-      const original = gridData.content[index];
+      // const original = gridData.content[index];
+      const original = gridData.content.find(
+        (x) =>
+          x.courseSequenceId === current.courseSequenceId &&
+          x.courseSequenceNo === current.courseSequenceNo,
+      );
       return isEdited(original, current);
     });
 
+    console.log('## editedRows=>', editedRows);
     if (editedRows && editedRows.length === 0) {
       openAlert(t('변경된 항목이 없습니다.'));
       return;
     }
-
-    console.log('## editedRows=>', editedRows);
 
     const invalidItems = editedRows
       ?.map((x: any, index: number) => {
@@ -503,7 +506,38 @@ const SequenceListComponent = ({
   };
 
   const handleInstanceChange = (param: any[]) => {
-    setChangeData(param);
+    if (!changeData || changeData.length === 0) {
+      setChangeData(param);
+    } else {
+      const newChangeData = [...changeData]; // 변경본 복사
+
+      param.forEach((element) => {
+        let changedCol = '';
+
+        if (element.courseSequenceNo !== null) changedCol = 'courseSequenceNo';
+        if (element.enrollmentStartDateTime !== null) changedCol = 'enrollmentStartDateTime';
+        if (element.enrollmentEndDateTime !== null) changedCol = 'enrollmentEndDateTime';
+        if (element.courseSequenceStartDateTime !== null)
+          changedCol = 'courseSequenceStartDateTime';
+        if (element.courseSequenceEndDateTime !== null) changedCol = 'courseSequenceEndDateTime';
+        if (element.learningStartDays !== null) changedCol = 'learningStartDays';
+
+        if (changedCol !== '') {
+          const idx = newChangeData.findIndex(
+            (x) => x.courseSequenceId === element.courseSequenceId,
+          );
+
+          if (idx !== -1) {
+            // 기존 row가 있을 경우 -> 해당 필드만 갱신
+            newChangeData[idx] = {
+              ...newChangeData[idx],
+              [changedCol]: element[changedCol],
+            };
+          }
+        }
+      });
+      setChangeData(newChangeData);
+    }
   };
 
   const columnHelper = createColumnHelper<any>();

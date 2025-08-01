@@ -14,7 +14,7 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { useCallback, useEffect, useState } from 'react';
 import { FieldValues, UseFormGetValues, UseFormSetValue } from 'react-hook-form';
-import { getEnrollStatusName } from '../constants/enroll-status';
+import { getEnrollStatusName } from '../constants/constants';
 import { ForceApprovalModal } from '../modal/force-approval-modal';
 import { RegistPaymentModal } from '../modal/regist-payment-modal';
 import { useEnrollmentStore } from '../store/use-enrollment-store';
