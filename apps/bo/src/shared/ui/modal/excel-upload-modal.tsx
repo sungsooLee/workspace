@@ -16,7 +16,7 @@ import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@l
 import { ProgressBar } from '@learnway/ui/progress';
 import { NoticeBox } from '@shared/ui';
 import { t } from 'i18next';
-import { compact } from 'lodash';
+import { compact } from 'lodash-es';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 

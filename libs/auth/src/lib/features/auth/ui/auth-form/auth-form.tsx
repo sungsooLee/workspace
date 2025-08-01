@@ -1,4 +1,4 @@
-import { isEmpty, isFunction } from 'lodash';
+import { isEmpty, isFunction } from 'lodash-es';
 import { useEffect } from 'react';
 import { useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';

@@ -4,7 +4,7 @@ import type {
   UseQueryOptions,
 } from '@tanstack/react-query';
 import { skipToken } from '@tanstack/react-query';
-import { endsWith, isEmpty, startsWith } from 'lodash';
+import { endsWith, isEmpty, startsWith } from 'lodash-es';
 
 export function decodeQueryString(qs: string = window.location.search.substr(1)) {
   // expects qs to not have a ?

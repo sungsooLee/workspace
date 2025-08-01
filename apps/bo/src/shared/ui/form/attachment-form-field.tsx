@@ -7,7 +7,7 @@ import {
   S3UploaderConfig,
   useFileManager,
   useS3Uploader } from '@learnway/hooks'; // @learnway/hooks에서 폼 필드 기본 props 타입 import
-import { compact, difference, map } from 'lodash';
+import { compact, difference, map } from 'lodash-es';
 
 /**
  * AttachmentFormField 컴포넌트의 props 인터페이스

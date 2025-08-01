@@ -10,7 +10,7 @@ import searchBoxStyles from './search-box.module.css';
 import bulletStyles from '../../../../shared/ui/list/bullet.module.css';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic.form.module.css';
-import { stubArray } from 'lodash';
+import { stubArray } from 'lodash-es';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { Dropdown } from '@learnway/ui/dropdown';

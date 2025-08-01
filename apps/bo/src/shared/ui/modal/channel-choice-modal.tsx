@@ -10,7 +10,7 @@ import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import { SearchBox, TenantByRoleDropdownFormField } from '@shared/ui';
 import { t } from 'i18next';
-import { chain, get } from 'lodash';
+import { chain, get } from 'lodash-es';
 import { useMemo, useState } from 'react';
 
 interface Channel {

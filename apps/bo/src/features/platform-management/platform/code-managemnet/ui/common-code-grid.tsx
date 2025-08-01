@@ -1,5 +1,5 @@
 import { t } from 'i18next';
-import { trim } from 'lodash';
+import { trim } from 'lodash-es';
 import { useEffect, useRef, useState } from 'react';
 
 import {

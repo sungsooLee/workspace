@@ -9,7 +9,7 @@ import { Input } from '../input/input';
 import styles from './thumbnail-image-upload.module.css';
 import { IcoUploadCloud } from '@learnway/icons';
 import { FileInfo, S3_PATH, S3_PATH_TYPE, useFileManager } from '@learnway/hooks';
-import { difference, isEmpty } from 'lodash';
+import { difference, isEmpty } from 'lodash-es';
 
 export interface ThumbnailImageUploadV2Props {
   /**

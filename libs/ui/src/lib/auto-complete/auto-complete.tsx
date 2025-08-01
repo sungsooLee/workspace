@@ -2,7 +2,7 @@ import { forwardRef, useMemo } from 'react';
 import { ActionMeta, MultiValue, SingleValue, components } from 'react-select';
 import { useCreation } from 'ahooks';
 import AsyncSelect from 'react-select/async';
-import { map } from 'lodash';
+import { map } from 'lodash-es';
 
 import { IcoDelete03, IcoArrowDown } from '@learnway/icons';
 import { cn } from '@learnway/shared';

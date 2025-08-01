@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { cn } from '@learnway/shared';
 import { useState, useEffect } from 'react';
 import { useCreation } from 'ahooks';
-import { isEqual } from 'lodash';
+import { isEqual } from 'lodash-es';
 
 import { getNationCodeFromBrowser } from '@learnway/shared';
 

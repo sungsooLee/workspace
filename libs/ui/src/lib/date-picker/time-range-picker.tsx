@@ -1,6 +1,6 @@
 import { forwardRef, useEffect, useState, useRef } from 'react';
 import { useCreation } from 'ahooks';
-import { isEqual } from 'lodash';
+import { isEqual } from 'lodash-es';
 import dayjs, { OpUnitType } from 'dayjs';
 
 import { DATE_TIME_FORMAT, getDateTimeFormat } from '@learnway/shared';

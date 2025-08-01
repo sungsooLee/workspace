@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { buildJodObject, ValidatorConfig, ValidatorFormat } from '@learnway/shared';
-import { find, first, fromPairs, isArray, isEmpty, isNil, omitBy, toPairs } from 'lodash';
+import { find, first, fromPairs, isArray, isEmpty, isNil, omitBy, toPairs } from 'lodash-es';
 import { FormEvent, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { DynamicFormProvider, SearchBoxConfig, SelectOption, UseSearchBoxReturn } from './type';

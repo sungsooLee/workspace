@@ -22,7 +22,7 @@ import {
   PostDraftVideosRes,
 } from '@types';
 
-import { pick } from 'lodash';
+import { pick } from 'lodash-es';
 import { useEffect, useState } from 'react';
 
 export const Route = createFileRoute('/_layout/learning/learning-resource/regist')({

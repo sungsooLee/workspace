@@ -1,6 +1,6 @@
 import type { ParsedLocation } from '@tanstack/react-router';
 import { ErrorComponent, redirect } from '@tanstack/react-router';
-import { isEmpty } from 'lodash';
+import { isEmpty } from 'lodash-es';
 import { createElement } from 'react';
 import { ZodSchema } from 'zod';
 

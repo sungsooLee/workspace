@@ -1,4 +1,4 @@
-import { values } from 'lodash';
+import { values } from 'lodash-es';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 

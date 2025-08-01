@@ -1,5 +1,5 @@
 import { useRouter } from '@tanstack/react-router';
-import { intersection, map } from 'lodash';
+import { intersection, map } from 'lodash-es';
 import { memo, SetStateAction, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 

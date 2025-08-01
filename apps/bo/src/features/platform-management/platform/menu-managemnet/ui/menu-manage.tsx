@@ -33,7 +33,7 @@ import { useRouter } from '@tanstack/react-router';
 import { CellContext, ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { ApiMappingMenuDetail, MenuDetail } from '@types';
 import { t } from 'i18next';
-import { isEqual } from 'lodash';
+import { isEqual } from 'lodash-es';
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { useWatch } from 'react-hook-form';
 import {

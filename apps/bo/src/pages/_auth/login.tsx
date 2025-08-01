@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { createFileRoute, useRouter, Link } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
-import { isEmpty } from 'lodash';
+import { isEmpty } from 'lodash-es';
 
 import { useExpStore, useLogoutUser } from '@learnway/auth/entities';
 import { cn, dateDiff } from '@learnway/shared';

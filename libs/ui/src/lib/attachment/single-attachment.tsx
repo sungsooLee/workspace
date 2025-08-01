@@ -8,7 +8,7 @@ import { AttachmentProps } from './types';
 import { t } from 'i18next';
 import { Button } from '../button/button';
 import { useModal } from '../modal/modal.hook';
-import { compact, first, get } from 'lodash';
+import { compact, first, get } from 'lodash-es';
 import { cn, splitFileName } from '@learnway/shared';
 
 const SingleAttachmentComponent = ({
