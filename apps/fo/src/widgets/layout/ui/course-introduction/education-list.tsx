@@ -1,7 +1,7 @@
 import { IcoArrowDown } from '@learnway/icons';
 import { forwardRef, memo, useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
-import { Arrays, Education } from '../..';
+import { Arrays, Education } from '../../../../widgets/layout';
 
 import styles from '@learnway/styles/fo/features/layout/ui/course-introduction/education.module.css';
 import dropdownPopoverStyles from '@learnway/styles/fo/shared/ui/dropdown-popover/dropdown-popover.module.css';

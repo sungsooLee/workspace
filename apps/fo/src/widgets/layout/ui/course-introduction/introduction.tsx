@@ -7,7 +7,7 @@ import { ChipList } from '@learnway/ui/chips';
 import { Link } from '@tanstack/react-router';
 import { forwardRef, memo, useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
-import { Curriculum, PackageCardList } from '../../../../features/layout/';
+import { Curriculum, PackageCardList } from '../../../../widgets/layout';
 // import { initialConfig as editorConfig } from '@learnway/ui/src/lib/editor/config/editor.config';
 // import { HtmlContent } from '@learnway/ui/src/lib/html-content/html-content';
 import { initialConfig as editorConfig } from '../../../../../../../libs/ui/src/lib/editor/config/editor.config'; // 임시로 상대경로

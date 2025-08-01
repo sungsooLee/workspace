@@ -1,34 +1,38 @@
-import React, { FC, useEffect, useState } from 'react';
-import { Input } from '@learnway/ui/input';
-import { Button } from '@learnway/ui/button';
-import { Popover } from '@learnway/ui/popover';
-import { EmptyText } from '@learnway/ui/empty-text';
-import { Pagination } from '@learnway/ui/pagination';
-import { useModal } from '@learnway/ui/modal';
+import { IcoArray, IcoArrowDown, IcoDotpoints, IcoFilter } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { IcoArray, IcoArrowDown, IcoDotpoints, IcoFilter, IcoPlay } from '@learnway/icons';
-import dropdownPopoverStyles from '../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
 import styles from '@learnway/styles/fo/pages/_layout/category/category_m.module.css';
+import { Button } from '@learnway/ui/button';
+import { EmptyText } from '@learnway/ui/empty-text';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
+import { Pagination } from '@learnway/ui/pagination';
+import { Popover } from '@learnway/ui/popover';
+import { FC, useEffect, useState } from 'react';
+import dropdownPopoverStyles from '../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
 
-import { FilterPopup, ThumbnailList } from '@features/layout';
-import CategoryService from '@entities/category/api/category';
-import { t } from 'i18next'
 import { useFetchCategoryDetail } from '@entities/category';
+import CategoryService from '@entities/category/api/category';
+import { FilterPopup } from '@features/layout';
 import { CategoryDetailComponentProps } from '@pages/_layout/_category/category';
+import { ThumbnailList } from '@widgets/layout';
+import { t } from 'i18next';
 
-
-const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponentProps) => {
+const CategoryDetailComponent: FC<any> = ({ categoryId }: CategoryDetailComponentProps) => {
   const { openModal } = useModal();
 
   const { data: categoryInfo } = useFetchCategoryDetail(categoryId);
 
   const [depth, setDepth] = useState(3);
   const [page, setPage] = useState(0);
-  const [size , setSize] = useState(20);
+  const [size, setSize] = useState(20);
   const [sorting, setSorting] = useState(['createdDate,DESC']);
   const [courseName, setCourseName] = useState('');
   const [coursePayload, setCoursePayload] = useState({
-    page, size, sort: sorting, categoryId, courseName
+    page,
+    size,
+    sort: sorting,
+    categoryId,
+    courseName,
   });
   const [data, setData] = useState<any>({});
   const [sortingDisabled, setSortingDisabled] = useState(true);
@@ -44,69 +48,69 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
     setPage(value);
   };
   const handlePageSizeChange = (value: number) => {
-    setSize(value)
-  }
+    setSize(value);
+  };
 
   const handleFilterOptionChange = async (options: any) => {
     const payload = {
       ...coursePayload,
-      courseType: options.map( (row: any) => row.value),
-    }
+      courseType: options.map((row: any) => row.value),
+    };
     setCoursePayload(payload);
-    await fetchCoursesCategory(payload)
+    await fetchCoursesCategory(payload);
   };
 
   const handleOnSearch = async () => {
     const payload = {
       ...coursePayload,
-      courseName
-    }
-    setCoursePayload(payload)
-    await fetchCoursesCategory(payload)
-  }
+      courseName,
+    };
+    setCoursePayload(payload);
+    await fetchCoursesCategory(payload);
+  };
 
   const handleSearchSortable = async (sortingIdx: any) => {
     const payload = {
       ...coursePayload,
-    }
+    };
     switch (sortingIdx) {
       case 1:
         setSorting(['courseName']);
         payload.sort = ['courseName'];
-        setCoursePayload(payload)
+        setCoursePayload(payload);
         break;
       case 2:
         setSorting(['likeCount,DESC']);
         payload.sort = ['likeCount,DESC'];
-        setCoursePayload(payload)
+        setCoursePayload(payload);
         break;
       default:
         setSorting(['createdDate,DESC']);
         payload.sort = ['createdDate,DESC'];
-        setCoursePayload(payload)
+        setCoursePayload(payload);
         break;
     }
-    await fetchCoursesCategory(payload)
-  }
+    await fetchCoursesCategory(payload);
+  };
 
   useEffect(() => {
-    if( categoryInfo ) {
+    if (categoryInfo) {
       (async () => {
         console.log('### categoryInfo => ', categoryInfo);
         const payload = {
           ...coursePayload,
           categoryId: categoryInfo.categoryId,
-        }
+        };
         setCoursePayload(payload);
-        await fetchCoursesCategory(payload)
+        await fetchCoursesCategory(payload);
       })();
     }
-  }, [categoryInfo, page, size])
+  }, [categoryInfo, page, size]);
 
   const fetchCoursesCategory = async (payload: any) => {
     const courses = await CategoryService.getFetchCoursesCategory(payload);
-    setData(courses)
-  }
+    setData(courses);
+  };
 
   return (
     <div className={cn(styles.start, styles.detail_m)}>
@@ -178,7 +182,9 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
             <div className={styles.box}>
               <Popover
                 popoverContent={
-                  <div className={`${dropdownPopoverStyles.start} ${dropdownPopoverStyles.dropdown_wrap}`}>
+                  <div
+                    className={`${dropdownPopoverStyles.start} ${dropdownPopoverStyles.dropdown_wrap}`}
+                  >
                     <Button>최신순</Button>
                     <Button>과정명순</Button>
                     <Button>조회순</Button>
@@ -197,10 +203,18 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
               {/* 퍼블수정 20250513 : dropdown > popover로 변경 */}
               <Popover
                 popoverContent={
-                  <div className={`${dropdownPopoverStyles.start} ${dropdownPopoverStyles.dropdown_wrap}`}>
-                    <Popover.Close onClick={() => handlePageSizeChange(20)}>{20 + t('개씩')}</Popover.Close>
-                    <Popover.Close onClick={() => handlePageSizeChange(50)}>{50 + t('개씩')}</Popover.Close>
-                    <Popover.Close onClick={() => handlePageSizeChange(80)}>{80 + t('개씩')}</Popover.Close>
+                  <div
+                    className={`${dropdownPopoverStyles.start} ${dropdownPopoverStyles.dropdown_wrap}`}
+                  >
+                    <Popover.Close onClick={() => handlePageSizeChange(20)}>
+                      {20 + t('개씩')}
+                    </Popover.Close>
+                    <Popover.Close onClick={() => handlePageSizeChange(50)}>
+                      {50 + t('개씩')}
+                    </Popover.Close>
+                    <Popover.Close onClick={() => handlePageSizeChange(80)}>
+                      {80 + t('개씩')}
+                    </Popover.Close>
                   </div>
                 }
                 className={`${dropdownPopoverStyles.btn} ${dropdownPopoverStyles.text}`}
@@ -242,8 +256,7 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
               description={t('다른 과정명으로 검색해 보세요.')}
             />
           </div>
-          )
-        }
+        )}
         {/* pagination */}
         {data.content && data.content.length > 0 && (
           <Pagination
@@ -260,6 +273,6 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
       </div>
     </div>
   );
-}
+};
 
 export const CategoryDetail = CategoryDetailComponent;

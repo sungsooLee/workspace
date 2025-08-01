@@ -1,8 +1,8 @@
+import { IcoStar } from '@learnway/icons';
+import { Carousel } from '@learnway/ui/carousel';
+import { Review, ReviewRating } from '@widgets/layout';
 import { forwardRef, memo } from 'react';
 import { isMobile } from 'react-device-detect';
-import { Carousel } from '@learnway/ui/carousel';
-import { IcoStar } from '@learnway/icons';
-import { Review, ReviewRating } from '../../../../features/layout/';
 
 import styles from '@learnway/styles/fo/features/layout/ui/course-introduction/review.module.css';
 

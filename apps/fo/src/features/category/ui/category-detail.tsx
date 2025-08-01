@@ -1,56 +1,50 @@
-import React, { FC, useEffect, useState } from 'react';
-import { Link, useRouterState } from '@tanstack/react-router';
+import { Filter } from '@features/category/ui/category-filter';
+import { cn } from '@learnway/shared';
+import styles from '@learnway/styles/fo/pages/_layout/category/category.module.css';
+import { Link } from '@tanstack/react-router';
+import { Arrays, ThumbnailList } from '@widgets/layout';
+import { t } from 'i18next';
+import { FC, useEffect, useState } from 'react';
 import { Navigation } from 'swiper/modules';
 import dropdownPopoverStyles from '../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
-import styles from '@learnway/styles/fo/pages/_layout/category/category.module.css';
-import { cn } from '@learnway/shared';
-import { Filter } from '@features/category/ui/category-filter';
-import { Arrays, ThumbnailList } from '@features/layout';
-import { t } from 'i18next';
 
-import bnrCImage1 from '../../../assets/images/banner/banner_category_01.png';
-import bnrCImage2 from '../../../assets/images/banner/banner_category_02.png';
-import { IcoArray, IcoArrowDown, IcoDotpoints } from '@learnway/icons';
 import { useFetchCategoryDetail } from '@entities/category';
 import CategoryService from '@entities/category/api/category';
+import { IcoArray, IcoArrowDown, IcoDotpoints } from '@learnway/icons';
 import { CategoryDetailComponentProps } from '@pages/_layout/_category/category';
+import bnrCImage1 from '../../../assets/images/banner/banner_category_01.png';
+import bnrCImage2 from '../../../assets/images/banner/banner_category_02.png';
 
+import { Button } from '@learnway/ui/button';
 import { Carousel } from '@learnway/ui/carousel';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { Dropdown } from '@learnway/ui/dropdown';
-import { Input } from '@learnway/ui/input';
-import { Button } from '@learnway/ui/button';
-import { Popover } from '@learnway/ui/popover';
 import { EmptyText } from '@learnway/ui/empty-text';
+import { Input } from '@learnway/ui/input';
 import { Pagination } from '@learnway/ui/pagination';
+import { Popover } from '@learnway/ui/popover';
 
 // 4,5,6 뎁스 일 때 사용하는 더미 데이터
-const topOptions = (
-  [
-    { value: 'a', label: '대분류' },
-    { value: 'b', label: 'ST1' },
-    { value: 'c', label: '아이오닉 6' },
-    { value: 'd', label: '아이오닉 5' },
-    { value: 'e', label: '코나' },
-    { value: 'f', label: '넥쏘' },
-    { value: 'g', label: '포터' },
-    { value: 'h', label: '캐스퍼' },
-  ]
-);
-const middleOptions = (
-  [
-    { value: 'a', label: '중분류' },
-    { value: 'b', label: 'NE PE(2024)' },
-    { value: 'c', label: 'NE(2021)' },
-  ]
-);
-const bottomOptions = (
-  [
-    { value: 'a', label: '소분류' },
-    { value: 'b', label: '상품정보' },
-    { value: 'c', label: '기술정보' },
-  ]
-);
+const topOptions = [
+  { value: 'a', label: '대분류' },
+  { value: 'b', label: 'ST1' },
+  { value: 'c', label: '아이오닉 6' },
+  { value: 'd', label: '아이오닉 5' },
+  { value: 'e', label: '코나' },
+  { value: 'f', label: '넥쏘' },
+  { value: 'g', label: '포터' },
+  { value: 'h', label: '캐스퍼' },
+];
+const middleOptions = [
+  { value: 'a', label: '중분류' },
+  { value: 'b', label: 'NE PE(2024)' },
+  { value: 'c', label: 'NE(2021)' },
+];
+const bottomOptions = [
+  { value: 'a', label: '소분류' },
+  { value: 'b', label: '상품정보' },
+  { value: 'c', label: '기술정보' },
+];
 // 배너 관리 더미 데이터
 const items = [
   <Link to={'/'}>
@@ -64,17 +58,21 @@ const items = [
   </Link>,
 ];
 
-const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponentProps) => {
+const CategoryDetailComponent: FC<any> = ({ categoryId }: CategoryDetailComponentProps) => {
   const { data: categoryInfo } = useFetchCategoryDetail(categoryId);
 
   const [depth, setDepth] = useState(3);
   const [page, setPage] = useState(0);
-  const [size , setSize] = useState(20);
+  const [size, setSize] = useState(20);
   const [sorting, setSorting] = useState(['createdDate,DESC']);
   const [courseName, setCourseName] = useState('');
   const [searchResult, setSearchResult] = useState('');
   const [coursePayload, setCoursePayload] = useState({
-    page, size, sort: sorting, categoryId, courseName
+    page,
+    size,
+    sort: sorting,
+    categoryId,
+    courseName,
   });
   const [data, setData] = useState<any>({});
   const [sortingDisabled, setSortingDisabled] = useState(true);
@@ -88,71 +86,71 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
     setPage(value);
   };
   const handlePageSizeChange = async (value: number) => {
-    setSize(value)
-  }
+    setSize(value);
+  };
 
   const handleFilterOptionChange = async (options: any) => {
     const payload = {
       ...coursePayload,
-      courseType: options.map( (row: any) => row.value),
-    }
+      courseType: options.map((row: any) => row.value),
+    };
     setCoursePayload(payload);
-    await fetchCoursesCategory(payload)
+    await fetchCoursesCategory(payload);
   };
 
   const handleOnSearch = async () => {
     const payload = {
       ...coursePayload,
-      courseName
-    }
-    setCoursePayload(payload)
-    await fetchCoursesCategory(payload)
-    setSearchResult(courseName)
-  }
+      courseName,
+    };
+    setCoursePayload(payload);
+    await fetchCoursesCategory(payload);
+    setSearchResult(courseName);
+  };
 
   const handleSearchSortable = async (sortingIdx: any) => {
     const payload = {
       ...coursePayload,
-    }
+    };
     switch (sortingIdx) {
       case 1:
         setSorting(['courseName']);
         payload.sort = ['courseName'];
-        setCoursePayload(payload)
+        setCoursePayload(payload);
         break;
       case 2:
         setSorting(['likeCount,DESC']);
         payload.sort = ['likeCount,DESC'];
-        setCoursePayload(payload)
+        setCoursePayload(payload);
         break;
       default:
         setSorting(['createdDate,DESC']);
         payload.sort = ['createdDate,DESC'];
-        setCoursePayload(payload)
+        setCoursePayload(payload);
         break;
     }
 
-    await fetchCoursesCategory(payload)
-  }
+    await fetchCoursesCategory(payload);
+  };
 
   useEffect(() => {
-    if( categoryInfo ) {
+    if (categoryInfo) {
       (async () => {
         console.log('### categoryInfo => ', categoryInfo);
         const payload = {
           ...coursePayload,
           categoryId: categoryInfo.categoryId,
-        }
+        };
         setCoursePayload(payload);
-        await fetchCoursesCategory(payload)
+        await fetchCoursesCategory(payload);
       })();
     }
-  }, [categoryInfo, page, size])
+  }, [categoryInfo, page, size]);
 
   const fetchCoursesCategory = async (payload: any) => {
     const courses = await CategoryService.getFetchCoursesCategory(payload);
-    setData(courses)
-  }
+    setData(courses);
+  };
 
   return (
     <div className={styles.start}>
@@ -299,6 +297,6 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
       )}
     </div>
   );
-}
+};
 
 export const CategoryDetail = CategoryDetailComponent;

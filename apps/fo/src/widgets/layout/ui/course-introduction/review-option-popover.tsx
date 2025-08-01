@@ -1,9 +1,9 @@
-import { memo } from 'react';
-import { isMobile } from 'react-device-detect';
-import { ReviewPopup } from '../../../../features/layout/';
 import styles from '@learnway/styles/fo/features/layout/ui/course-introduction/review-option-popover.module.css';
 import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
+import { memo } from 'react';
+import { isMobile } from 'react-device-detect';
+import { ReviewPopup } from '../../../../widgets/layout';
 
 interface ReviewOptionPopoverProps {
   className?: string;
