@@ -101,8 +101,8 @@ export const guideData = [
     pageId: '',
     pageType: 'Pop-up',
     completionDate: '2025-03-21',
-    lastUpdateDate: '2025-07-31',
-    remarks: '- tenant-popup.tsx',
+    lastUpdateDate: '2025-08-01',
+    remarks: '- tenant.tsx (pc, mobile 하나로 사용)',
   },
   {
     screenId: 'NLP_FO_GNB_M_1002',
@@ -143,8 +143,9 @@ export const guideData = [
     pageId: 'setting/setting-language_m',
     pageType: 'Pop-up',
     completionDate: '2025-03-21',
-    lastUpdateDate: '2025-07-28',
-    remarks: '- setting-language-popup.tsx (기존 Page에서 Popup으로 변경)',
+    lastUpdateDate: '2025-08-01',
+    remarks:
+      '- user-my.tsx (내 정보, 언어설정 같이 사용)\n- 내 정보, 언어설정 컴포넌트 pc, mobile 같이 사용',
   },
   {
     screenId: 'NLP_FO_GNB_MA_1007',
@@ -185,6 +186,37 @@ export const guideData = [
     completionDate: '2025-03-27',
     lastUpdateDate: '2025-07-21',
     remarks: '- 로그인 푸터 팝업과 동일\n- privacy-pop.tsx',
+  },
+  {
+    screenId: 'NLP_FO_GNB_MA_1011',
+    screenName: 'M_더보기',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: '',
+    pageType: 'Pop-up',
+    completionDate: '2025-08-01',
+    lastUpdateDate: '',
+    remarks: '- gnb-popup-m.tsx',
+  },
+  {
+    screenId: 'NLP_FO_GNB_MA_1012',
+    screenName: 'M_최근 학습활동',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: '',
+    pageType: 'Page',
+    completionDate: '',
+    lastUpdateDate: '',
+    remarks: '',
+  },
+  {
+    screenId: 'NLP_FO_GNB_MA_1013',
+    screenName: 'M_My',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: '/',
+    pageType: 'Page',
+    completionDate: '2025-08-01',
+    lastUpdateDate: '',
+    remarks:
+      '- user-my.tsx (내 정보, 언어설정 같이 사용)\n- 내 정보, 언어설정 컴포넌트 pc, mobile 같이 사용',
   },
   {
     screenId: 'NLP_FO_CHB_1000',
@@ -507,8 +539,8 @@ export const guideData = [
     pageId: '/',
     pageType: 'Pop-up',
     completionDate: '2025-03-24',
-    lastUpdateDate: '',
-    remarks: '- user-avatar.tsx (안에 포함)',
+    lastUpdateDate: '2025-08-01',
+    remarks: '- user-my.tsx (안에 포함)',
   },
   {
     screenId: 'NLP_FO_LOG_1100',

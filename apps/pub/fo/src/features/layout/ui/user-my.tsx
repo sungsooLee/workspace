@@ -29,6 +29,7 @@ interface ContentTypeProps {
   onParentChangeType?: string; // 부모에서 자식에게 넘기는 컨텐츠 타입
 }
 
+// 언어
 const LanguageComponent = ({ language, contentType, onChangelanguage }: LanguagePorps) => {
   const languages = [
     { label: '한국어 (Korea)', value: 'ko' },
@@ -89,6 +90,7 @@ const LanguageComponent = ({ language, contentType, onChangelanguage }: Language
   );
 };
 
+// 내 정보
 const UserMyComponent = ({ onChangeType, onParentChangeType }: ContentTypeProps) => {
   const { confirm: openConfirm } = useModal();
   const [isChecked, setIsChecked] = useState(false);

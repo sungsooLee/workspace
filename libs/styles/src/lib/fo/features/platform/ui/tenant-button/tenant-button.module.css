@@ -64,31 +64,27 @@
       @apply ml-0 h-[20px] w-[20px] rounded-[4px];
     }
   }
+  .tenant_modal {
+    @apply -my-[16px];
+  }
   .tenant_content {
-    @apply -mx-[20px] -mt-[16px] w-auto px-[20px];
+    @apply h-auto w-full rounded-e-none p-0 shadow-none;
     .tenant_wrap {
       .tenant_list {
-        @apply -mx-[20px] w-[calc(100%+40px)];
         li {
-          @apply w-full px-[20px];
-          .btn {
-            @apply relative;
-            .txt {
-              i {
-                @apply absolute right-[20px] top-1/2 h-[20px] w-[20px] -translate-y-1/2;
-              }
+          @apply w-full;
+          > button {
+            @apply title2 relative min-h-[56px] !pl-0 !pr-[32px] text-[var(--gray35)];
+            &.active,
+            &:hover {
+              @apply bg-[inherit] text-[var(--gray35)];
             }
-          }
-          .btn_refresh {
-            span {
-              @apply flex w-full items-center justify-between;
+            svg {
+              @apply absolute right-0 top-1/2 mx-0 -translate-y-1/2;
             }
           }
           & + li {
-            @apply border-t-[1px] border-solid border-[var(--gray3)];
-          }
-          .tip {
-            @apply !left-[17px];
+            @apply border-t-[1px] border-solid border-[var(--gray92)];
           }
         }
       }

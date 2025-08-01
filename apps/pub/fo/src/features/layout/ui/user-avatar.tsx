@@ -10,6 +10,7 @@ import styles from './user-avatar.module.css';
 
 import { UserMy } from './user-my';
 
+/* 퍼블수정 20250801 전체적으로 수정 (pc, mobile 같이 사용) */
 const PopoverContent = () => {
   const [contents, setContents] = useState<string>('profile');
   const { data } = useCodeGroup('pms.multilingual.LangCountryCode', {});
