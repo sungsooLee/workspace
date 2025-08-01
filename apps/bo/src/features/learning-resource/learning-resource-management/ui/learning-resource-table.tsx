@@ -27,7 +27,7 @@ import { SearchBox } from '@shared/ui/search-box';
 import { useRouter } from '@tanstack/react-router';
 import { ContentCreateType, ContentInfo, ContentInformation } from '@types';
 import { t } from 'i18next';
-import { first, get, map, some, uniq } from 'lodash';
+import { first, get, map, some, uniq } from 'lodash-es';
 import { useEffect, useState } from 'react';
 import { BatchSettingModal } from './learning-resource-batch-setting-modal';
 import { ModifierInfoModal } from './learning-resource-modifier-info-modal';

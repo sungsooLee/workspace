@@ -1,7 +1,6 @@
 import { queryOptions } from '@entities/instructor/service/instructor.queries';
-import { useActiveMenuDepthState, useFetchAuthUser } from '@learnway/auth/entities';
 import { LMSApiPrefix } from '@learnway/config';
-import { CODE_GROUP, SearchBoxConfig, SelectOption, useSearchBox } from '@learnway/hooks';
+import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { IcoPlus } from '@learnway/icons';
 import { Button } from '@learnway/ui/button';
 import { Divider } from '@learnway/ui/elements';
@@ -10,7 +9,7 @@ import { useModal } from '@learnway/ui/modal';
 import { GridExcelDownloadButton } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { useQueryClient } from '@tanstack/react-query';
-import { useLocation, useRouter } from '@tanstack/react-router';
+import { useRouter } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { EnPageMode } from '@types';
 import { t } from 'i18next';
@@ -103,10 +102,6 @@ const InstructorListComponent = ({ viewMode, setSelectedItem }: InstructorListPr
     },
   };
 
-  const location = useLocation();
-  const { data: user } = useFetchAuthUser();
-  const { activeMenuDepthMenu } = useActiveMenuDepthState((state) => state);
-
   _global.linkClick = (payload: any) => {
     router.navigate({
       to: '/learning-operate-support/instructor/management/instructor-regist',
@@ -126,7 +121,6 @@ const InstructorListComponent = ({ viewMode, setSelectedItem }: InstructorListPr
   } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
   const [params, setParams] = useState<Record<string, any>>({});
-  const [valuesWithLabel, setValuesWithLabel] = useState<Record<string, SelectOption>>({});
 
   useEffect(() => {
     let columns = [
@@ -206,22 +200,9 @@ const InstructorListComponent = ({ viewMode, setSelectedItem }: InstructorListPr
       employeeIdOrEmail: data.employeeIdOrEmail,
     };
 
-    const excelParam = {
-      downloadReason: {
-        userUuid: user?.uuid,
-        menuPath: activeMenuDepthMenu?.map((menu) => menu.menuName).join(' > '),
-        dataCount: 1500,
-        requestParameter: 'string',
-        downloadReasonType: 'AFFAIRS',
-        downloadDetailReasonType: 'AFFAIRS01',
-        downloadDetailReason: 'string',
-      },
-    };
     setParams({
       ...searchData,
-      ...excelParam,
     });
-    setValuesWithLabel(getValuesWithLabel());
     gridFetch(searchData);
   }, []);
 
@@ -248,7 +229,6 @@ const InstructorListComponent = ({ viewMode, setSelectedItem }: InstructorListPr
               method="post"
               url={`${LMSApiPrefix()}/instructor/excel`}
               params={params}
-              paramLabels={valuesWithLabel}
               dataCount={data?.totalElements}
               disabled={!data?.totalElements}
             />

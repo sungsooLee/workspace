@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useCreation } from 'ahooks';
-import { keyBy } from 'lodash';
+import { keyBy } from 'lodash-es';
 
 import { codeConfig, CODE_GROUP } from '@learnway/config';
 import { useCreationWithI18n } from '@learnway/hooks';

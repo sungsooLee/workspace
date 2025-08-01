@@ -1,0 +1,14 @@
+.start {
+  &.gnb_wrap {
+    ul {
+      li {
+        button {
+          @apply flex min-h-[56px] w-full items-center justify-between !px-0;
+        }
+        & + li {
+          @apply border-t-[1px] border-solid border-[var(--gray92)];
+        }
+      }
+    }
+  }
+}

@@ -5,7 +5,7 @@ import { useRouterState } from '@tanstack/react-router';
 
 import { CODE_GROUP, useCodeStore, useDynamicForm2 } from '@learnway/hooks';
 
-import { isEqual } from 'lodash';
+import { isEqual } from 'lodash-es';
 import { DuplicateState } from '@features/form';
 import { useFetchTenant, useUpdateTenant } from '@entities/tenant';
 import TenantService from '@entities/tenant/api/tenant';

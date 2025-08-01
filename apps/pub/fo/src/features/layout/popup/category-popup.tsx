@@ -1,16 +1,17 @@
-import React, { memo, useState } from 'react';
 import { Link } from '@tanstack/react-router';
+import { memo, useState } from 'react';
 
 import { cn } from '@learnway/shared';
 
 import { Navigation } from 'swiper/modules';
 
-import { IcoArrowUp, IcoArrowForward, IcoArrowBackward } from '@learnway/icons';
+import { IcoArrowBackward, IcoArrowForward, IcoArrowUp } from '@learnway/icons';
 
-import styles from './category-popup.module.css';
 import { Button } from '@learnway/ui/button';
+import { Carousel } from '@learnway/ui/carousel';
 import { Chip } from '@learnway/ui/chips';
-import { ModalContainer, ModalTitle, ModalBody } from '@learnway/ui/modal';
+import { ModalBody, ModalContainer, ModalTitle } from '@learnway/ui/modal';
+import styles from './category-popup.module.css';
 
 const CategoryPopupComponent = () => {
   // 상단 배너 스와이퍼

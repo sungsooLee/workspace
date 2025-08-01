@@ -7,7 +7,7 @@ import { GridBox } from '@learnway/ui/grid';
 import { t } from 'i18next';
 import { ScormOrgn } from '@types';
 import { useEffect, useState } from 'react';
-import { flatten } from 'lodash';
+import { flatten } from 'lodash-es';
 
 interface ScormViewModalComponentProps {
   scormData: ScormOrgn[];

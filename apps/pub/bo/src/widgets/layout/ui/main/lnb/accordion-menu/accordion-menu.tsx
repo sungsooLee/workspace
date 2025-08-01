@@ -1,5 +1,5 @@
 import { useRouter } from '@tanstack/react-router';
-import { intersection, map } from 'lodash';
+import { intersection, map } from 'lodash-es';
 import { memo, useEffect, useState } from 'react';
 
 import { cn } from '@learnway/shared';

@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { merge } from 'lodash';
+import { merge } from 'lodash-es';
 
 const twentyFourHoursInMs = 1000 * 60 * 60 * 24;
 const fiveMinutes = 1000 * 60 * 5;

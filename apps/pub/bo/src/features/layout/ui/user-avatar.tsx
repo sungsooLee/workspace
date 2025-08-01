@@ -7,7 +7,7 @@ import styles from './user-avatar.module.css';
 import { Avatar } from '@learnway/ui/avatar';
 import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
-import { Popover } from '@learnway/ui/Popover';
+import { Popover } from '@learnway/ui/popover';
 import imgLogo from '../../../assets/images/temp/img_temp_company_logo.png';
 
 const PopoverContent = () => {

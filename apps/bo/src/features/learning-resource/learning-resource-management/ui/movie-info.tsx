@@ -7,7 +7,7 @@ import { DynamicFormProvider, useFileManager } from '@learnway/hooks';
 import { formatBytes } from '@learnway/shared';
 import { PreviewLearningWindow } from '@shared/ui';
 import { t } from 'i18next';
-import { max } from 'lodash';
+import { max } from 'lodash-es';
 import { useCallback, useMemo } from 'react';
 import { LearningResourceFileUploadModal } from './learning-resource-file-upload-modal';
 import { MediaInfo } from './media-info';

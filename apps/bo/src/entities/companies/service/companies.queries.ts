@@ -1,61 +1,76 @@
-import { skipToken } from '@tanstack/react-query';
 import { getQuerySkipToken } from '@learnway/shared';
-import CompaniesService from '../api/companies';
 import { Company } from '@learnway/types';
+import { skipToken } from '@tanstack/react-query';
+import CompaniesService from '../api/companies';
+import { CompanyCreateRequest } from '../types/company.types';
 
 export const queryKeys = {
   all: ['companies'] as const,
   list: ['companies-page'] as const,
   listPopup: ['companies-popup'] as const,
-  detail: (code: string) => [...queryKeys.all, code] as const };
+  detail: (code: string) => [...queryKeys.all, code] as const,
+};
 
 export const queryOptions = {
   all: (params: any) => ({
     queryKey: queryKeys.all,
-    queryFn: async (): Promise<any> => CompaniesService.fetchAll(params) }),
+    queryFn: async (): Promise<any> => CompaniesService.fetchAll(params),
+  }),
   list: (params: any) => ({
     queryKey: queryKeys.list,
     queryFn: () => CompaniesService.fetchList(params),
     cacheTime: 0,
-    staleTime: 0 }),
+    staleTime: 0,
+  }),
   listPopup: (params: any) => ({
     queryKey: queryKeys.listPopup,
     queryFn: () => CompaniesService.fetchListPopup(params),
     cacheTime: 0,
-    staleTime: 0 }),
+    staleTime: 0,
+  }),
   listPopupAll: (params: any) => ({
     queryKey: queryKeys.listPopup,
     queryFn: () => CompaniesService.fetchListPopupAll(params),
     cacheTime: 0,
-    staleTime: 0 }),
+    staleTime: 0,
+  }),
   detail: (code?: string) =>
     code
       ? {
           queryKey: queryKeys.detail(code),
-          queryFn: (): Promise<any> => CompaniesService.fetch(code) }
+          queryFn: (): Promise<any> => CompaniesService.fetch(code),
+        }
       : getQuerySkipToken<any>(),
   detailBrn: (brn?: string) =>
     brn
       ? {
           queryKey: queryKeys.detail(brn),
-          queryFn: (): Promise<any> => CompaniesService.fetchBrn(brn) }
+          queryFn: (): Promise<any> => CompaniesService.fetchBrn(brn),
+        }
       : getQuerySkipToken<Company>(),
   tenantCompany: (tenantId?: number) =>
     tenantId
       ? {
           queryKey: [...queryKeys.all, 'tenantCompany', tenantId],
           queryFn: async () => {
-            const pagedata = await CompaniesService.fetchAll({ tenantId: tenantId });
+            const pagedata = await CompaniesService.fetchAll({ tenantId });
             return pagedata.content;
-          } }
-      : getQuerySkipToken<any[]>() };
+          },
+        }
+      : getQuerySkipToken<any[]>(),
+};
 
 export const mutateOptions = {
   create: () => ({
-    mutationFn: (payload: Company) => CompaniesService.create(payload) }),
+    mutationFn: (payload: CompanyCreateRequest) => CompaniesService.create(payload),
+  }),
   update: () => ({
-    mutationFn: (payload: Company) => CompaniesService.update(payload) }),
+    mutationFn: (payload: CompanyCreateRequest) => CompaniesService.update(payload),
+  }),
   delete: () => ({
-    mutationFn: (id?: number) => (id ? CompaniesService.delete(id) : skipToken) }),
+    mutationFn: (id?: number) => (id ? CompaniesService.delete(id) : skipToken),
+  }),
   checkExists: () => ({
-    mutationFn: (payload: any) => CompaniesService.existsCode(payload) }) };
+    mutationFn: (payload: any) => CompaniesService.existsCode(payload),
+  }),
+};

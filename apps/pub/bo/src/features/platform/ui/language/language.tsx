@@ -6,7 +6,7 @@ import { IcoArrowDown, IcoCheck } from '@learnway/icons';
 import { useSetLanguage } from '../../../platform';
 
 import { Button } from '@learnway/ui/button';
-import { Popover } from '@learnway/ui/Popover';
+import { Popover } from '@learnway/ui/popover';
 import { SelectOption } from '@learnway/ui/type';
 import styles from './language.module.css';
 

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useRouter, useLocation, useMatches, Route } from '@tanstack/react-router';
-import { isFunction, last } from 'lodash';
+import { isFunction, last } from 'lodash-es';
 import { useCreation } from 'ahooks';
 
 import { RouteEventCallback, CurrentRoute } from '@learnway/shared';

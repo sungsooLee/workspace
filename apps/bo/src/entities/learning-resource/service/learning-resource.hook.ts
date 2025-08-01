@@ -1,16 +1,17 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { learningResourceQueryOptions, mutateOptions } from './learning-resource.queries';
 import {
   BlogCreateReq,
   BlogUpdateReq,
   ContentBaseInfo,
   ContentExportReq,
+  ExamPaperQuestionCountUpdateReq,
   HtmlVideoFileChangeReq,
   HtmlVideoMetadataReq,
   PostDraftETCParams,
   PostDraftHtmlVideoParams,
   PostDraftScormParams,
   PostDraftVideosParams,
+  PostShareContentsParams,
   PutETCChangeParams,
   PutETCUpdateParams,
   PutScormChangeParams,
@@ -21,10 +22,10 @@ import {
   QuestionItemDeleteParam,
   QuestionsCopyReq,
   QuestionStatusUpdateReq,
-  ExamPaperQuestionCountUpdateReq,
   TestPaperBasicInfoSaveReq,
   UpdateQuestionBankCountInfoReq,
 } from '@types';
+import { learningResourceQueryOptions, mutateOptions } from './learning-resource.queries';
 
 export function usePostContentCopy(options?: any) {
   const mutation = useMutation({
@@ -173,6 +174,20 @@ export function usePutETCChange(options?: any) {
 
   return {
     update: (payload: PutETCChangeParams) => mutation.mutate(payload as any),
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+    data: mutation.data,
+  };
+}
+
+export function usePostShareContents(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.postShareContents(),
+    ...options,
+  });
+
+  return {
+    create: (payload: PostShareContentsParams) => mutation.mutate(payload as any),
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
     data: mutation.data,

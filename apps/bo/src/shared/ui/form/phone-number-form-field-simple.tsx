@@ -1,6 +1,6 @@
 import { CODE_GROUP, useCodeStore } from '@learnway/hooks';
 import { PhoneNumber, PhoneNumberValue } from '@learnway/ui/phone-number';
-import { isEqual } from 'lodash';
+import { isEqual } from 'lodash-es';
 import React, { forwardRef, useEffect, useState } from 'react';
 
 export interface PhoneNumberFormFieldSimpleProps {

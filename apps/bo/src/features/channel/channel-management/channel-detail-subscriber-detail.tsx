@@ -1,4 +1,4 @@
-import { useFetchUser } from '@entities/users/service/users.hook';
+import { useFetchUser } from '@entities/users';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { FormSubTitle } from '@learnway/ui/base-form';
 import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
@@ -8,10 +8,10 @@ import { forwardRef, useCallback, useImperativeHandle } from 'react';
 
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
-import { SearchBox } from '@shared/ui';
-import { createColumnHelper } from '@tanstack/react-table';
 import { useModal } from '@learnway/ui/modal';
 import { useToast } from '@learnway/ui/toast';
+import { SearchBox } from '@shared/ui';
+import { createColumnHelper } from '@tanstack/react-table';
 
 interface ChannelDetailSubscriberDetailProps {
   userUuid: string;
@@ -44,7 +44,8 @@ const ChannelDetailSubscriberDetailComponent = (
         : '',
       unsubscribeEndDate: data.unsubscribeDate.to
         ? getDateToString(new Date(data.unsubscribeDate.to), 'YYYYMMDD')
-        : '' };
+        : '',
+    };
     return searchData;
   };
 
@@ -67,8 +68,10 @@ const ChannelDetailSubscriberDetailComponent = (
             openToast({ title: t('구독을 해지 하였습니다.'), type: 'success' });
             props.onUnsubscribe();
           }
-        } });
-    } }));
+        },
+      });
+    },
+  }));
 
   const handleOnSearch = useCallback((data: any) => {
     gridFetch(searchParam());
@@ -196,7 +199,8 @@ const searchConfig: SearchBoxConfig = {
           { label: t('해지'), value: 'B' },
           { label: t('재구독'), value: 'C' },
         ],
-        presetOptionLabel: t('전체') },
+        presetOptionLabel: t('전체'),
+      },
       {
         name: 'updateDivision',
         type: 'dropdown',
@@ -206,23 +210,29 @@ const searchConfig: SearchBoxConfig = {
           { label: t('사용자'), value: 'A' },
           { label: t('관리자'), value: 'B' },
         ],
-        presetOptionLabel: t('전체') },
+        presetOptionLabel: t('전체'),
+      },
       {
         name: 'subscribeDate',
         label: '구독 신청 기간',
         type: 'date-range',
         value: {
           from: undefined,
-          to: undefined } },
+          to: undefined,
+        },
+      },
       {
         name: 'unsubscribeDate',
         label: '구독 해지 기간',
         type: 'date-range',
         value: {
           from: undefined,
-          to: undefined } },
+          to: undefined,
+        },
+      },
     ],
-  ] };
+  ],
+};
 
 const gridConfig: useGridBoxConfig = {
   query: '',
@@ -231,7 +241,9 @@ const gridConfig: useGridBoxConfig = {
   gridState: {
     page: 0,
     size: 1000,
-    sort: [] } };
+    sort: [],
+  },
+};
 
 const columnHelper = createColumnHelper<any>();
 
@@ -239,25 +251,31 @@ const columns = [
   columnHelper.accessor('channelSubscriptionType', {
     cell: (info) => info.getValue(),
     header: t('구독 방식'),
-    enableGrouping: false }),
+    enableGrouping: false,
+  }),
   columnHelper.accessor('channelSubscribeStatus', {
     cell: (info) => info.getValue(),
     header: t('상태'),
-    enableGrouping: false }),
+    enableGrouping: false,
+  }),
   columnHelper.accessor('updateDivision', {
     cell: (info) => info.getValue(),
     header: t('수정 구분'),
-    enableGrouping: false }),
+    enableGrouping: false,
+  }),
   columnHelper.accessor('modifiedBy', {
     cell: (info) => info.getValue(),
     header: t('수정자'),
-    enableGrouping: false }),
+    enableGrouping: false,
+  }),
   columnHelper.accessor('subscribeDate', {
     cell: (info) => info.getValue(),
     header: t('구독 신청일'),
-    enableGrouping: false }),
+    enableGrouping: false,
+  }),
   columnHelper.accessor('unsubscribeDate', {
     cell: (info) => info.getValue(),
     header: t('구독 해지일'),
-    enableGrouping: false }),
+    enableGrouping: false,
+  }),
 ];

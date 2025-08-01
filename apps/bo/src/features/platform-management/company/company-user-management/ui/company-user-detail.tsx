@@ -1,4 +1,4 @@
-import { useFetchUser } from '@entities/users/service/users.hook';
+import { useFetchUser } from '@entities/users';
 import {
   CompanyUserDetailBase,
   CompanyUserDetailLearningHistory,

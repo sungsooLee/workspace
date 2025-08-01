@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { isString } from 'lodash';
+import { isString } from 'lodash-es';
 
 import { cn } from '@learnway/shared';
 

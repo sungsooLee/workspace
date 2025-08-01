@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 import { IcoArray, IcoArrowForward } from '@learnway/icons';
 
-import { useCategoryTree } from '@entities/category';
+import { useCategoryTree, useCreateRecentCategory } from '@entities/category';
 import { RecentVisits } from '@features/layout';
 import { cn, SelectOption } from '@learnway/shared';
 import styles from '@learnway/styles/fo/features/category/category-button.module.css';
@@ -13,7 +13,7 @@ import { t } from 'i18next';
 
 interface CategoryPopupProps {
   id: number;
-  onNavigate: (tenantId: number, categoryId: number) => void;
+  onNavigate: (categoryId: number) => void;
 }
 
 type MainItem = { id: number; label: string; isChild: boolean };
@@ -73,7 +73,7 @@ const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
 
   const childMenuHandleClick = (id: number) => {
     setActiveChildId(id);
-    onNavigate(tenantId, id);
+    onNavigate(id);
   };
 
   useEffect(() => {
@@ -114,7 +114,7 @@ const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
                         className={activeId === item.id ? styles.active : ''}
                         label={item.label}
                         icon={item.isChild && <IcoArrowForward className={styles.ico_arrow} />}
-                        onClick={() => onNavigate(tenantId, item.id)}
+                        onClick={() => onNavigate(item.id)}
                         onMouseOver={() => menuHandleHover(item.id, item.isChild)}
                       />
                     </li>
@@ -132,7 +132,7 @@ const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
                         className={activeSubId === item.id ? styles.active : ''}
                         label={item.label}
                         icon={item.isChild && <IcoArrowForward className={styles.ico_arrow} />}
-                        onClick={() => onNavigate(tenantId, item.id)}
+                        onClick={() => onNavigate(item.id)}
                         onMouseOver={() => subMenuHandleHover(item.id, item.parentId, item.isChild)}
                       />
                     </li>
@@ -158,7 +158,7 @@ const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
             </div>
           </div>
           {/* 최근방문 */}
-          <RecentVisits items={recentCategory}/>
+          <RecentVisits items={recentCategory} handleOnLink={childMenuHandleClick}/>
         </div>
       </ModalBody>
     </ModalContainer>
@@ -169,22 +169,22 @@ export const CategoryButton = ({ tenantId }: { tenantId?: number }) => {
   const router = useRouter();
   const { openModal } = useModal();
 
-  // useEffect(() => {
-  //   return router.history.subscribe((navigation) => {
-  //     onOpenChange(false);
-  //   });
-  // }, [router.history, onOpenChange]);
+  const { create } = useCreateRecentCategory({
+    onSuccess: async (data: any) => {
+      router.navigate({
+        to: '/category',
+        replace: true,
+        state: {
+          ...router.state.location.state,
+          tenantId,
+          categoryId: data,
+        },
+      });
+    }
+  })
 
-  const handlerSelectedCategoryClick = (tenantId: number, categoryId: number) => {
-    router.navigate({
-      to: '/category',
-      replace: true,
-      state: {
-        ...router.state.location.state,
-        tenantId,
-        categoryId,
-      },
-    });
+  const handlerSelectedCategoryClick = (categoryId: number) => {
+    create({categoryId});
   };
 
   return (

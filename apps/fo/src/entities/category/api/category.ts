@@ -1,6 +1,7 @@
 import categoryMock from '../../mock/category.json';
 import { httpService } from '@learnway/shared';
 import { LMSApiPrefix } from '@learnway/config';
+import { CurriculumService } from '@entities/curriculum';
 
 export default class CategoryService {
   static getCategories(params: any) {
@@ -23,8 +24,9 @@ export default class CategoryService {
     return httpService.get<any>(`${LMSApiPrefix()}/category/recent`);
   }
 
-  static saveRecentCategory(categoryId: number) {
-    return httpService.post<any>(`${LMSApiPrefix()}/${categoryId}/recent`, {});
+  static createRecentCategory(payload: any) {
+    console.log('### category.ts => ', payload.categoryId);
+    return httpService.post<any>(`${LMSApiPrefix()}/category/${payload.categoryId}/recent`, {});
   }
 
   static async getFetchRecentCategory(tenantId: number) {
@@ -35,4 +37,5 @@ export default class CategoryService {
       recent: recentCategory,
     };
   }
+
 }

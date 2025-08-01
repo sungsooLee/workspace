@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useCreation } from 'ahooks';
-import { keys } from 'lodash';
+import { keys } from 'lodash-es';
 
 import { getLicenses } from '@learnway/config';
 

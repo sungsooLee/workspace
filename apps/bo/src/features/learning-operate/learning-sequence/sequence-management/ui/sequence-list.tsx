@@ -7,13 +7,14 @@ import {
 import { queryOptions } from '@entities/learning-sequence/service/learning-sequence.queries';
 import { SequenceBatchModal } from '@features/learning-operate/learning-sequence/sequence-management';
 import { LMSApiPrefix } from '@learnway/config';
-import { SelectOption, useDynamicForm2 } from '@learnway/hooks';
+import { useDynamicForm2 } from '@learnway/hooks';
 import { Button } from '@learnway/ui/button';
 import { Divider } from '@learnway/ui/elements';
 import {
   EditDatePickerCell,
   EditInputCell,
   GridBox,
+  GridBoxState,
   useGridBox,
   useGridBoxConfig,
 } from '@learnway/ui/grid';
@@ -52,8 +53,8 @@ const gridConfig: useGridBoxConfig = {
   columns: [],
   data: [],
   gridState: {
-    // page: 0,
-    // size: 1,
+    page: 0,
+    size: 2000,
     sort: [],
   },
 };
@@ -63,7 +64,6 @@ const SequenceListComponent = ({
   setSequenceId,
   courseId: courseIdProps,
 }: SequenceListComponentProps) => {
-  console.log('## courseIdProps:', courseIdProps);
   const router = useRouter();
   const { openModal, confirm: openConfirm, alert: openAlert, showSaveComplete } = useModal();
   const [columns, setColumns] = useState() as any;
@@ -73,8 +73,7 @@ const SequenceListComponent = ({
   const { updateSequenceList } = useUpdateSequenceList({});
   const { deleteSequenceList } = useDeleteSequenceList({});
   const { copySequence } = useCopySequence({});
-  const [originalData, setOriginalData] = useState<any[]>([]);
-  const [didSearch, setDidSearch] = useState(false); // 조회 완료 플래그
+  const [changeData, setChangeData] = useState<any[]>([]);
 
   _global.linkClick = (payload: any) => {
     setMode(Mode.DETAIL);
@@ -86,10 +85,8 @@ const SequenceListComponent = ({
     mode: 'onSubmit', // 서브밋할 때만 validation 실행
     reValidateMode: 'onChange', // 에러 발생 후에는 값 변경시 즉시 재검증
   });
-  const { config: gConfig, gridFetch, data: gridData } = useGridBox(gridConfig, getValues);
+  const { gridFetch, data: gridData } = useGridBox(gridConfig);
   const [params, setParams] = useState<Record<string, any>>({});
-  const [valuesWithLabel, setValuesWithLabel] = useState<Record<string, SelectOption>>({});
-  const [showSaveButton, setShowSaveButton] = useState<any>();
 
   useEffect(() => {
     const openYearColumn = [
@@ -196,7 +193,8 @@ const SequenceListComponent = ({
       columnHelper.accessor('learningStatusType', {
         header: t('상태'),
         cell: (info) => info.getValue(),
-        // cell: (info) => CODE_GROUP['lms.sequence.LearningStatusType'],
+        // cell: (info: any) =>
+        //   getCodeLabel(CODE_GROUP['lms.sequence.LearningStatusType'], info.getValue()),
         enableGrouping: false,
         size: 88,
       }),
@@ -243,23 +241,14 @@ const SequenceListComponent = ({
 
   const handleOnRefresh = () => {
     console.log('### handleOnRefresh');
-    const searchValues = getValues();
-    handleOnSearch(searchValues);
+    handleOnSearch();
   };
 
-  useEffect(() => {
-    if (didSearch && gridData) {
-      setOriginalData(gridData.content); // ✅ 최초 조회만 저장
-      setDidSearch(false);
-    }
-  }, [didSearch, gridData]);
-
-  const handleOnSearch = useCallback((param: any) => {
-    console.log('## search param:', param);
-    let payload = {};
+  const getSearchParam = () => {
+    const param = getValues();
     if (!courseIdProps) {
       // 메뉴 진입
-      payload = {
+      return {
         tenantId: param.tenantId,
         channelUuid: param.channelUuid,
         openingYear: parseInt(param.openingYear),
@@ -272,20 +261,30 @@ const SequenceListComponent = ({
       };
     } else {
       // 탭 진입
-      payload = {
+      return {
         courseId: courseIdProps,
         openingYear: parseInt(param.openingYear),
         isUsed: param.isUsed === 'true',
         courseSequenceName: param.courseSequenceName,
       };
     }
+  };
+
+  // 페이지 변경이나 검색 시 플래그 리셋
+  const handleStateChange = (newState: GridBoxState) => {
+    gridFetch(getSearchParam(), { page: 0, size: 2000, sort: newState.sort });
+  };
+
+  const handleOnSearch = useCallback(() => {
+    console.log('## handleOnSearch');
+    const payload = getSearchParam();
     setParams({
       ...payload,
     });
-    // setValuesWithLabel(getValuesWithLabel());
+
     console.log('##payload:', payload);
     gridFetch(payload);
-    setDidSearch(true); // ✅ 조회 완료 신호
+    setChangeData([]);
   }, []);
 
   const handleRowsSelect = useCallback((rows: any[]) => {
@@ -295,7 +294,6 @@ const SequenceListComponent = ({
   const [inputAdd, setInputAdd] = useState<number>();
   const [inputCopy, setInputCopy] = useState<number>();
   const onAddRow = async () => {
-    console.log('data=>', gridData);
     if (!inputAdd || inputAdd <= 0) return;
     const confirmRes = await openConfirm({
       title: t('차수를 추가 하시겠습니까?'),
@@ -433,16 +431,12 @@ const SequenceListComponent = ({
 
   const handleSaveClick = async () => {
     console.log('##save');
-    console.log('originalData=>', originalData);
-    console.log('gConfig:', gConfig);
+    console.log('changeData:', changeData);
+    console.log('gridData:', gridData.content);
 
     // 변경된 행만 추출
-    const editedRows = gConfig.gridData?.content.filter((current, index) => {
-      const original = originalData[index];
-      // const original = originalData.find(
-      //   (x) => x.courseId === current.courseId && x.courseSequenceId === current.courseSequenceId,
-      // );
-      console.log('original=>', original);
+    const editedRows = changeData.filter((current, index) => {
+      const original = gridData.content[index];
       return isEdited(original, current);
     });
 
@@ -508,6 +502,10 @@ const SequenceListComponent = ({
     });
   };
 
+  const handleInstanceChange = (param: any[]) => {
+    setChangeData(param);
+  };
+
   const columnHelper = createColumnHelper<any>();
   return (
     <>
@@ -522,12 +520,15 @@ const SequenceListComponent = ({
       )}
       <Divider />
       <GridBox
-        config={gConfig}
         columns={columns}
+        gridData={gridData}
         multiple={true}
         disabledSelectionToggle
         title={t('차수 목록')}
+        onChange={handleInstanceChange}
+        onStateChange={handleStateChange}
         onRowsSelect={handleRowsSelect}
+        hidePagination
         customButtonNode={
           courseIdProps && (
             <>
@@ -566,7 +567,6 @@ const SequenceListComponent = ({
             <GridExcelDownloadButton
               url={`${LMSApiPrefix()}/sequences/excel`}
               params={params}
-              paramLabels={valuesWithLabel}
               dataCount={gridData?.totalElements}
               disabled={!gridData?.totalElements}
             />

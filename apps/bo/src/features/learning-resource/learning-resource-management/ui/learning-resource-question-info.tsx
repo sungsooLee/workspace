@@ -80,6 +80,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
       updateQuestionStatus,
       randomCountUpdateData,
       handleCountInputChange,
+      debouncedUpdateRandomCount: updateRandomCount,
       updateQuestionCountInfo,
       selectedQuestionRows,
       setSelectedQuestionRows,
@@ -160,6 +161,14 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
       [data],
     );
 
+    const handleOnExcelUpload = useCallback(async (result: Record<string, any>) => {
+      const { uploadResult } = result;
+      if (uploadResult) {
+        const { data: refetchResult } = await refetchQuestionList();
+        setSelectedQuestions(refetchResult?.filter((q) => q.isUsed) as QuestionItem[]);
+      }
+    }, []);
+
     const questionStates: QuestionStatisticRow[] = useMemo(
       () => [
         {
@@ -227,7 +236,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
               suffixText={
                 questionGenTypeByForm === ExamQuestionGenType.RANDOM ? `/ ${info.getValue()}` : ''
               }
-              onChange={(e) => handleCountInputChange(e, info.row.original, 'hard')}
+              onChange={(e) => updateRandomCount(e.target.value, info.row.original, 'hard')}
               placeholder="0"
             />
           ),
@@ -251,7 +260,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
               suffixText={
                 questionGenTypeByForm === ExamQuestionGenType.RANDOM ? `/ ${info.getValue()}` : ''
               }
-              onChange={(e) => handleCountInputChange(e, info.row.original, 'medium')}
+              onChange={(e) => updateRandomCount(e.target.value, info.row.original, 'medium')}
               placeholder="0"
             />
           ),
@@ -275,7 +284,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
               suffixText={
                 questionGenTypeByForm === ExamQuestionGenType.RANDOM ? `/ ${info.getValue()}` : ''
               }
-              onChange={(e) => handleCountInputChange(e, info.row.original, 'easy')}
+              onChange={(e) => updateRandomCount(e.target.value, info.row.original, 'easy')}
               placeholder="0"
             />
           ),
@@ -512,6 +521,8 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
                     validateUrl={`/exam/questions/${data?.examPoolUuid}/upload`}
                     affairsType="CMS"
                     formDataName="multipartFile"
+                    validationResultRequired={false}
+                    onUpload={handleOnExcelUpload}
                   />
                   <GridExcelDownloadButton
                     method="post"

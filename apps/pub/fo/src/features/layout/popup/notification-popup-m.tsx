@@ -1,12 +1,12 @@
-import { memo, useState } from 'react';
-import { cn } from '@learnway/shared';
-import { NotificationContents } from '../../layout';
 import { IcoSetting01 } from '@learnway/icons';
+import { cn } from '@learnway/shared';
+import { memo } from 'react';
+import { NotificationContents } from '../../layout';
 
-import styles from './notification-popup-m.module.css';
 import { Button } from '@learnway/ui/button';
-import { ModalContainer, ModalTitle, ModalBody } from '@learnway/ui/modal';
+import { ModalBody, ModalContainer, ModalTitle } from '@learnway/ui/modal';
 import { Popover } from '@learnway/ui/popover';
+import styles from './notification-popup-m.module.css';
 
 const NotificationPopupMComponent = () => {
   return (

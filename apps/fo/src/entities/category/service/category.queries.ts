@@ -40,6 +40,6 @@ export const queryOptions = {
 
 export const categoryMutateOptions = {
   create: () => ({
-    mutationFn: (categoryId: number) => CategoryService.saveRecentCategory(categoryId),
+    mutationFn: (payload: {categoryId: number}) => CategoryService.createRecentCategory(payload),
   })
 }

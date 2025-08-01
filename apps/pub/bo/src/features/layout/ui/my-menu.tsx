@@ -6,7 +6,7 @@ import { cn, getRandomId, SelectOption } from '@learnway/shared';
 import { Button } from '@learnway/ui/button';
 import { ChipList } from '@learnway/ui/chips';
 import { List } from '@learnway/ui/list';
-import { Popover } from '@learnway/ui/Popover';
+import { Popover } from '@learnway/ui/popover';
 import styles from './my-menu.module.css';
 
 // import { useFetchAuthUser } from '../../../entities';

@@ -3,7 +3,7 @@ import { memo, useState } from 'react';
 import { IcoArrowDown, IcoCheck02 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import { Button } from '@learnway/ui/button';
-import { Popover } from '@learnway/ui/Popover';
+import { Popover } from '@learnway/ui/popover';
 import styles from './language.module.css';
 
 const PopoverContent = () => {

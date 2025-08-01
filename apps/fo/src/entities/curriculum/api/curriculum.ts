@@ -5,4 +5,7 @@ export class CurriculumService {
   static getDetail(curriculumId: number): Promise<any> {
     return httpService.get<any>(`${CMSApiPrefix()}/curriculum/${curriculumId}`);
   }
+  static getFetchCurriculumDuration(curriculumIds: number[]): Promise<any> {
+    return httpService.get<any>(`${CMSApiPrefix()}/curriculums/duration`, { curriculumIds });
+  }
 }

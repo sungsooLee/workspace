@@ -1,35 +1,42 @@
-import { ShuttleGridToGridImperative } from '@learnway/ui/shuttle-grid-to-grid';
-import { Button } from '@learnway/ui/button';
-import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 // IA104 / NLP_BO_CMS_1044 학습자원 현지화-공유설정(팝업)
-import { learningResourceQueryOptions } from '@entities/learning-resource';
+import { learningResourceQueryOptions, usePostShareContents } from '@entities/learning-resource';
 import LearningResourceService from '@entities/learning-resource/api/learning-resource';
 import { useSearchBox } from '@learnway/hooks';
 import { cn } from '@learnway/shared';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
 import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
 import { Divider } from '@learnway/ui/elements';
-import { ShuttleGridToGrid } from '@learnway/ui/shuttle-grid-to-grid';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { ShuttleGridToGridV2 } from '@learnway/ui/shuttle-grid-to-grid-v2';
 import { SearchBox } from '@shared/ui';
 import { useQueryClient } from '@tanstack/react-query';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { ContentInfo, TenantChannelCodeType, TenantCodeType } from '@types';
-import { pick } from 'lodash';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { ContentInfo, PostShareContentsRes, TenantChannelCodeType, TenantCodeType } from '@types';
+import { pick } from 'lodash-es';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-type ResourceShareShuttleModalProps = {
+type Props = {
   data: ContentInfo;
 };
 
-const LearningResourceShareShuttleModalComponent = ({ data }: ResourceShareShuttleModalProps) => {
+const LearningResourceShareShuttleModalComponent = ({ data }: Props) => {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
 
-  const ref = useRef<ShuttleGridToGridImperative>(null);
-
   const { closeModal } = useModal();
+
+  const { create: postShareContents } = usePostShareContents({
+    onSuccess: (result: PostShareContentsRes) => {
+      closeModal(result);
+    },
+    onError: (error: any) => {
+      console.error(error);
+      // 에러 얼럿?
+    },
+  });
 
   const sharingInfoSearchConfig: any = {
     builders: [
@@ -44,37 +51,64 @@ const LearningResourceShareShuttleModalComponent = ({ data }: ResourceShareShutt
             api: {
               fn: () => LearningResourceService.getShareTenantCodes(data.contentUuid),
               select: (tenants: TenantCodeType[]) =>
-                tenants.map(({ tenantId, tenantName }) => ({ label: tenantName, value: tenantId })) } } },
+                tenants.map(({ tenantId, tenantName }) => ({ label: tenantName, value: tenantId })),
+            },
+          },
+        },
         {
           name: 'channelName',
           type: 'text',
           label: t('LABEL.form.label.channel', '채널'),
           format: 'string',
-          value: '' },
+          value: '',
+        },
         {
-          type: 'empty' },
+          type: 'empty',
+        },
         {
-          type: 'empty' },
+          type: 'empty',
+        },
       ],
     ],
     validator: {
-      tenantId: true } };
+      tenantId: true,
+    },
+  };
 
   const { provider: sProvider, getValues } = useSearchBox(sharingInfoSearchConfig);
 
   const [gridData, setGridData] = useState<TenantChannelCodeType[]>([]);
+  const [selectedGridData, setSelectedGridData] = useState<TenantChannelCodeType[]>([]);
 
   const handleOnSearch = async (params: Record<string, any>) => {
     const result = await queryClient.fetchQuery(
       learningResourceQueryOptions.getShareTenantsChannels({
         contentUuid: data.contentUuid,
-        ...pick(params, 'tenantId', 'channelName') }),
+        ...pick(params, 'tenantId', 'channelName'),
+      }),
     );
     setGridData(result);
   };
 
+  const fetchSharedContents = async () => {
+    const result = await queryClient.fetchQuery(
+      learningResourceQueryOptions.getSharedContents(
+        pick(data, ['contentUuid', 'tenantId', 'channelUuid']),
+      ),
+    );
+    setSelectedGridData(
+      result.map((_) => ({
+        tenantId: _.destTenantId,
+        tenantName: _.destTenantName,
+        channelUuid: _.destChannelUuid,
+        channelName: _.destChannelName,
+      })),
+    );
+  };
+
   useEffect(() => {
     handleOnSearch(getValues());
+    fetchSharedContents();
   }, []);
 
   const columns = useMemo(() => {
@@ -85,23 +119,39 @@ const LearningResourceShareShuttleModalComponent = ({ data }: ResourceShareShutt
         cell: (info) => info.getValue(),
         meta: {
           headerAlign: 'left',
-          cellAlign: 'left' } }),
+          cellAlign: 'left',
+        },
+      }),
       columnHelper.accessor('channelName', {
         header: t('채널'),
         cell: (info) => info.getValue(),
         meta: {
           headerAlign: 'left',
-          cellAlign: 'left' } }),
+          cellAlign: 'left',
+        },
+      }),
     ] as ColumnDef<any, unknown>[];
   }, []);
+
+  const handleChange = (selected: any) => {
+    setSelectedGridData(selected);
+  };
 
   const handleClickCloseButton = useCallback(() => {
     closeModal();
   }, []);
 
   const handleClickSaveButton = () => {
-    console.log('save');
-    closeModal();
+    postShareContents({
+      sourceContentUuid: data.contentUuid,
+      sourceTenantId: data.tenantId,
+      sourceChannelUuid: data.channelUuid,
+      isOriginalCopyDownload: true,
+      shareDestinations: selectedGridData.map((_) => ({
+        destTenantId: _.tenantId,
+        destChannelUuid: _.channelUuid,
+      })),
+    });
   };
 
   return (
@@ -139,7 +189,15 @@ const LearningResourceShareShuttleModalComponent = ({ data }: ResourceShareShutt
           <FormSubTitle label={t('공유 정보')} />
           <SearchBox provider={sProvider} onSearch={handleOnSearch} />
           <Divider />
-          <ShuttleGridToGrid ref={ref} columns={columns} gridData={gridData} rowKey="channelUuid" />
+          <ShuttleGridToGridV2
+            columns={columns}
+            gridData={gridData}
+            rowKey="channelUuid"
+            leftTitle={t('채널 목록')}
+            rightTitle={t('선택 목록')}
+            selectedItems={selectedGridData}
+            onSelectedChange={handleChange}
+          />
         </div>
       </ModalBody>
       <ModalFooter>

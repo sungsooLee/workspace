@@ -16,7 +16,7 @@ import { Dropdown } from '@learnway/ui/dropdown';
 import { Input } from '@learnway/ui/input';
 import { VideoSubtitle } from '@types';
 import { t } from 'i18next';
-import { map } from 'lodash';
+import { map } from 'lodash-es';
 import { forwardRef, useEffect, useRef, useState } from 'react';
 
 interface SubtitlesFormFieldProps extends BaseFormFieldProps<VideoSubtitle[]> {
