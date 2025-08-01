@@ -697,6 +697,22 @@ export interface ContentSharingInfoRes {
   reason: string;
 }
 
+export type GetSharedContentsParams = ContentSharingInfoReq;
+
+export interface SharedContent {
+  sharedBoxId: number; //	integer($int64)
+  sourceTenantId: number; //	출발지 테넌트 idinteger($int64)
+  sourceTenantName: string; //	출발지 테넌트 이름string
+  sourceChannelUuid: string; //	출발지 채널 UUIDstring
+  sourceChannelName: string; //	출발지 채널 이름string
+  destTenantId: number; //	도착지 테넌트 idinteger($int64)
+  destTenantName: string; //	도착지 테넌트 이름string
+  destChannelUuid: string; //	도착지 채널 UUIDstring
+  destChannelName: string; //	도착지 테넌트 이름string
+}
+
+export type GetSharedContentsRes = SharedContent[];
+
 export interface TenantCodeType {
   tenantId: number;
   tenantName: string;
@@ -721,7 +737,7 @@ export interface GetSharedBoxContentsParams extends PaginationRequest {
   lastVisitedBoRoledId: number;
   sourceTenantId: number;
   sourceChannelUuid: string;
-  contentTypes?: ContentType | ContentType[];
+  contentTypes?: ContentType[];
   contentName?: string;
   isContentEnabled?: boolean;
   languageCountryCode?: string;
@@ -729,11 +745,7 @@ export interface GetSharedBoxContentsParams extends PaginationRequest {
   sharedDateEnd?: string;
 }
 
-export interface SharedBoxContent {
-  sourceTenantId: number; //	원본 테넌트 idinteger($int64)
-  sourceTenantName: string; //	원본 테넌트명string
-  sourceChannelUuid: string; // 원본 채널 UUIDstring
-  sourceChannelName: string; // 원본 채널 이름string
+export interface SharedBoxContent extends Omit<SharedContent, 'sharedBoxId'> {
   sourceContentUuid: string; //	원본 학습자원 UUIDstring
   sourceContentName: string; //	원본 학습자원명string
   sourceGroupContentId: number; // 원본 학습자원 그룹ID
@@ -741,10 +753,6 @@ export interface SharedBoxContent {
   contentCreateType: ContentCreateType; //	string
   languageCountryCode: string; //	원본 학습자원 국가 언어 코드string
   isContentEnabled: boolean; //	원본 학습자원 사용가능 여부boolean
-  destTenantId: number; //	목적지 테넌트 idinteger($int64)
-  destTenantName: string; //	목적지 테넌트명string
-  destChannelUuid: string; //	목적지 채널 UUIDstring
-  destChannelName: string; //	목적지 채널명string
   sharerUuid: string; //	공유자 UUIDstring
   sharerName: string; //	공유자명string
   sharedCount: string; //	공유 횟수integer($int64)
