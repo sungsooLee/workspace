@@ -13,6 +13,8 @@ export enum CmsEnContentType {
   EXTERNAL_LINK = 'EXTERNAL_LINK',
   /** 외부 위탁 */
   EXTERNAL_AGENCY = 'EXTERNAL_AGENCY',
+  /** 외부 위탁 250801 */
+  COMMISSIONED_CONTENT = 'COMMISSIONED_CONTENT',
   /** 블로그 */
   BLOG = 'BLOG',
   /** 시험 */
