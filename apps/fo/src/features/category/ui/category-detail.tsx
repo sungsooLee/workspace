@@ -70,7 +70,7 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
 
   const [depth, setDepth] = useState(3);
   const [page, setPage] = useState(0);
-  const [size , setSize] = useState(20);
+  const [size , setSize] = useState(4);
   const [sorting, setSorting] = useState(['createdDate,DESC']);
   const [courseName, setCourseName] = useState('');
   const [searchResult, setSearchResult] = useState('');
@@ -90,6 +90,7 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
   };
   const handlePageSizeChange = async (value: number) => {
     setSize(value)
+    setPage(0);
   }
 
   const handleFilterOptionChange = async (options: any) => {
@@ -142,6 +143,7 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
         console.log('### categoryInfo => ', categoryInfo);
         const payload = {
           ...coursePayload,
+          page, size,
           categoryId: categoryInfo.categoryId,
         }
         setCoursePayload(payload);
@@ -206,6 +208,7 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
             </div>
           </li>
           <li>
+            {/* 수강신청 필터는 '이러닝1, 라이브, 설문' 일때는 비표시 */}
             <Filter onOptionChange={handleFilterOptionChange} />
           </li>
         </ul>
@@ -235,13 +238,13 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
                   <div
                     className={`${dropdownPopoverStyles.start} ${dropdownPopoverStyles.dropdown_wrap}`}
                   >
-                    <Popover.Close onClick={() => handlePageSizeChange(20)}>
+                    <Popover.Close onClick={() => handlePageSizeChange(4)}>
                       {20 + t('개씩')}
                     </Popover.Close>
-                    <Popover.Close onClick={() => handlePageSizeChange(50)}>
+                    <Popover.Close onClick={() => handlePageSizeChange(6)}>
                       {50 + t('개씩')}
                     </Popover.Close>
-                    <Popover.Close onClick={() => handlePageSizeChange(80)}>
+                    <Popover.Close onClick={() => handlePageSizeChange(8)}>
                       {80 + t('개씩')}
                     </Popover.Close>
                   </div>
@@ -289,8 +292,8 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
       {data.content && data.content.length > 0 && (
         <Pagination
           className={cn(styles.pagenation, styles.paginationItem)}
-          pageNumber={0}
-          totalPages={5}
+          pageNumber={page}
+          totalPages={data.totalPages}
           hidePageSizeOptions={true}
           hidePageInfo={true}
           showFirstButton={false}
