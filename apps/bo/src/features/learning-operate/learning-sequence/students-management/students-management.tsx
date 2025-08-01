@@ -873,23 +873,23 @@ const StudentsManagementComponent = () => {
   };
 
   const handleStudentsUpdateList = async (param: any) => {
-    console.log('param=>', param);
     const searchData = getValues();
     const payload = {
       courseSequenceId: searchData.courseSequenceId,
-      userList: param,
+      userList: param.map((x: any) => x.uuid),
     };
-    // TODO: API연동
-    // await updateStudentsList(payload, {
-    //   onSuccess: async (data: any, variables: any, context: any) => {
-    //     console.log('onSuccess:', data);
-    //     await showSaveComplete();
-    //     handleOnRefresh();
-    //   },
-    //   onError: (data: any, variables: any, context: any) => {
-    //     console.log('onError:', data);
-    //   },
-    // });
+
+    console.log('payload=>', payload);
+    await updateStudentsList(payload, {
+      onSuccess: async (data: any, variables: any, context: any) => {
+        console.log('onSuccess:', data);
+        await showSaveComplete();
+        handleOnRefresh();
+      },
+      onError: (data: any, variables: any, context: any) => {
+        console.log('onError:', data);
+      },
+    });
   };
 
   const handleStudentAdd = async () => {
