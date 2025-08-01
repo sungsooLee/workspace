@@ -1,6 +1,7 @@
 import { IcoArray, IcoArrowDown, IcoDotpoints, IcoFilter, IcoPlay } from '@learnway/icons';
 import { cn, getRandomId } from '@learnway/shared';
-
+import { createFileRoute } from '@tanstack/react-router';
+import { useState } from 'react';
 
 import { CategoryDepthPopupM, FilterPopup } from '../../../features/layout';
 
@@ -16,6 +17,7 @@ import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
 import { Pagination } from '@learnway/ui/pagination';
 import { Popover } from '@learnway/ui/popover';
+import ThumbnailList from '../../-components/thumb/thumb-nail-list';
 
 export const Route = createFileRoute('/_layout/category/detail_m')({
   component: RouteComponent,
