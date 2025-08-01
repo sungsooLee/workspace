@@ -152,9 +152,9 @@ export interface CmsContentProgressMultiReq {
 }
 
 export interface CmsContentProgressReq {
-  courseSequenceId: number;
-  courseId: number;
-  curriculumId: number;
+  courseSequenceId?: number;
+  courseId?: number;
+  curriculumId?: number;
   moduleId: number;
   lessonId: number;
   orgnId?: number;
