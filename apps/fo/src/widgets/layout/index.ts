@@ -22,7 +22,6 @@ export * from './ui/main/layout';
 export * from './popup/course-selection-popup';
 export * from './popup/notice-detail-popup';
 export * from './popup/review-popup';
-export * from './ui/arrays';
 export * from './ui/course-introduction/course-fixed-button';
 export * from './ui/course-introduction/curriculum-study';
 export * from './ui/course-introduction/dashboard';
@@ -35,5 +34,5 @@ export * from './ui/education';
 export * from './ui/package-card-list';
 export * from './ui/review';
 export * from './ui/review-rating';
-export * from './ui/thumbnail-list';
+
 

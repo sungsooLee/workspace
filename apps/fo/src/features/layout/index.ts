@@ -12,6 +12,7 @@ export * from './popup/notification-popup-m';
 export * from './popup/password-change-popup';
 export * from './popup/password-verify-popup';
 export * from './popup/phone-change-popup';
+export * from './ui/arrays';
 export * from './ui/category';
 export * from './ui/category-layer-button';
 export * from './ui/comment';
@@ -37,6 +38,7 @@ export * from './ui/package-card';
 export * from './ui/recent-visits';
 export * from './ui/search';
 export * from './ui/tenant';
+export * from './ui/thumbnail-list';
 
 export * from './m.ui/navigate-button/navigate-button';
 export * from './m.ui/navigate-button/navigate-modal';
@@ -50,3 +52,4 @@ export * from './ui/search/recommended-search';
 export * from './ui/search/search-popover';
 export * from './ui/user-avatar/user-avatar';
 export * from './ui/user-name';
+
