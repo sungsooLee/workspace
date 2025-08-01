@@ -40,15 +40,6 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
   // courseData를 먼저 가져와서 channelUuid를 확보
   const { data: courseData } = useFetchCourse(courseId);
 
-  // courseConfigParams를 courseData와 courseCreateInfo로부터 생성
-  // const courseConfigParams = useMemo(
-  //   () => ({
-  //     courseType,
-  //     channelUuid: courseData?.channelUuid,
-  //   }),
-  //   [courseType, courseData?.channelUuid],
-  // );
-
   // 과정 설정 정보(courseConfig) 조회
   const { data: courseConfig } = useFetchCourseConfig(
     useMemo(() => ({ courseType, channelUuid }), [courseType, channelUuid]),
@@ -149,7 +140,6 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
 
   // 저장/삭제 트리거 감지 effect
   useUpdateEffect(() => {
-    // form이 dirty한 경우 early return
     switch (lastTriggered?.key) {
       case TriggerKey.SAVE:
         handleSave();
@@ -160,18 +150,16 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
     }
   }, [lastTriggered]);
 
-  // courseData 변경 시 폼 데이터 갱신
+  // 과정 상세 조회시 폼 데이터 갱신
   useEffect(() => {
-    if (courseData) {
-      console.log('>>>>> courseData', courseData);
+    if (courseData && courseConfig) {
       const formData = responseDataToFormData(courseData, courseConfig);
-      console.log('>>>>> formdata', formData);
-
       updateFormData(formData);
-    } else {
-      updateFormData({ courseType: initCourseType });
+    } else if (!courseData && !courseConfig) {
+      // 등록 최초에 과정유형 기본값 선택
+      updateFormData({ courseType: initCourseType, channelUuid });
     }
-  }, [courseData, courseConfig, initCourseType]);
+  }, [courseData, courseConfig, initCourseType, channelUuid]);
 
   // form state 변경 시 코스 생성 정보 업데이트 - 무한 반복 방지를 위해 제거
   useEffect(() => {
@@ -183,6 +171,7 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
     isUpdateMode,
     loadMockData,
     courseConfig,
+    initCourseType,
   };
 };
 

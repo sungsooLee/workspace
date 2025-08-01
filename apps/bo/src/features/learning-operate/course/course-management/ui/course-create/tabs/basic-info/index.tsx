@@ -35,7 +35,7 @@ const BasicInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) 
   const form = useDynamicForm2();
   const { provider, getValues, onFormChange } = form;
 
-  const { isUpdateMode } = useCourseCreateSubPage(form);
+  const { isUpdateMode, initCourseType } = useCourseCreateSubPage(form);
 
   return (
     <form>
