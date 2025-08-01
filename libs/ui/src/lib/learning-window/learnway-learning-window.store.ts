@@ -1,5 +1,10 @@
 import { create } from 'zustand';
-import { CmsEnContentType, CmsImageContent, CmsLearningCompletionStatus } from '@learnway/types';
+import {
+  CmsEnContentType,
+  CmsHtml5LearningReq,
+  CmsImageResource,
+  CmsLearningCompletionStatus,
+} from '@learnway/types';
 
 export interface LearningWindowPlayInfo {
   isDirect?: boolean;
@@ -91,7 +96,7 @@ interface FunctionInfomation {
   /** 비디오 이력 정제 처리 호출 */
   videoWatchStatistics: (payload: any) => Promise<any>;
   /** Html5 학습 이력 저장 */
-  html5LearningHistory: (payload: any) => void;
+  html5LearningHistory: (payload: CmsHtml5LearningReq) => void;
   /** galleary 학습 이력 저장 */
   galleryLearningHistory: (payload: any) => void;
   /** 커리큘럼의 모든 lesson의 진척 조회 함수 */
@@ -116,8 +121,8 @@ interface LearningWindowStoreData {
 
   scormInfo: any;
   setScormInfo: (v: any) => void;
-  galleryInfo?: CmsImageContent;
-  setGalleryInfo: (v: CmsImageContent) => void;
+  galleryInfo?: CmsImageResource;
+  setGalleryInfo: (v: CmsImageResource) => void;
   videoInfo: any;
   setVideoInfo: (v: any) => void;
   blogInfo: any;

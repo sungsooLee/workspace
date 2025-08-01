@@ -89,3 +89,12 @@ export interface Children2 {
   format: number;
   version: number;
 }
+
+export interface EtcContentDownloadReq {
+  courseSequenceId: number;
+  courseId: number;
+  curriculumId: number;
+  moduleId: number;
+  lessonId: number;
+  contentUuid: string;
+}

@@ -1,8 +1,8 @@
 import { MutateOptions, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getQuerySkipToken } from '@learnway/shared';
 import { learningResourceApi } from '../api/learning-resource';
-import { BlogResource } from '../types/learning-resource.types';
-import { CmsImageContent, CmsVideoContentInfoResDto } from '@learnway/types';
+import { BlogResource, Content, EtcContentDownloadReq } from '../types/learning-resource.types';
+import { CmsEtcResource, CmsImageResource, CmsVideoContentInfoResDto } from '@learnway/types';
 
 export const learningResourceQueryKeys = {
   all: ['learning-resource'] as const,
@@ -38,7 +38,7 @@ export const learningResourceQueryOptions = {
           queryKey: learningResourceQueryKeys.content(contentUuid),
           queryFn: () => learningResourceApi.getContent(contentUuid),
         }
-      : getQuerySkipToken<any>(),
+      : getQuerySkipToken<Content>(),
 
   blogResource: (contentUuid?: string) =>
     contentUuid
@@ -54,7 +54,7 @@ export const learningResourceQueryOptions = {
           queryKey: learningResourceQueryKeys.etcResource(contentUuid),
           queryFn: () => learningResourceApi.getEtcResource(contentUuid),
         }
-      : getQuerySkipToken<any>(),
+      : getQuerySkipToken<CmsEtcResource>(),
 
   html5Resource: (contentUuid?: string) =>
     contentUuid
@@ -70,7 +70,7 @@ export const learningResourceQueryOptions = {
           queryKey: learningResourceQueryKeys.imageResource(contentUuid),
           queryFn: () => learningResourceApi.getImageResource(contentUuid),
         }
-      : getQuerySkipToken<CmsImageContent>(),
+      : getQuerySkipToken<CmsImageResource>(),
 
   videoWatchInitialize: (param?: any) =>
     param
@@ -112,7 +112,7 @@ export function useGetContent(contentUuid?: string) {
  * @returns
  */
 export const useEtcContentManager = () => {
-  const download = (param: any) => learningResourceApi.download(param);
+  const download = (param: EtcContentDownloadReq) => learningResourceApi.download(param);
   return {
     download,
   };
