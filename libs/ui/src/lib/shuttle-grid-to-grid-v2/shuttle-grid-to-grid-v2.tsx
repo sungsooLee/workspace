@@ -7,8 +7,8 @@ import { addOrRemoveItemByKey, cn } from '@learnway/shared';
 import styles from './shuttle-grid-to-grid-v2.module.css';
 
 import { IcoNarrowRight } from '@learnway/icons';
-
-import { Button, GridBox, GridBoxProps, GridImperative } from '../..';
+import { GridBox, GridBoxProps, GridImperative } from '../grid';
+import { Button } from '../button';
 
 // ShuttleGridToGridV2 컴포넌트의 props 타입 정의
 export interface ShuttleGridToGridV2Props

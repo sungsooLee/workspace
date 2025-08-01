@@ -33,8 +33,7 @@ export function useCodeList(params: CodeListParams) {
   );
   return {
     ...result,
-    data: result.data as PageableContent<any> | undefined,
-  };
+    data: result.data as PageableContent<any> | undefined };
 }
 
 export function useCommonCodeDetail(
@@ -57,12 +56,10 @@ export function useCreateCommonCode(queryParams: CodeListParams, options?: any) 
       }
     },
     invalidateQueries: queryParams ? [queryKeys.list(queryParams)] : [queryKeys.all],
-    ...options,
-  });
+    ...options });
   return {
     ...mutation,
-    create: mutation.mutate,
-  };
+    create: mutation.mutate };
 }
 
 export function useUpdateCommonCode(queryParams: CodeListParams, options?: any) {
@@ -72,21 +69,18 @@ export function useUpdateCommonCode(queryParams: CodeListParams, options?: any) 
     onSuccess: async (data, variables, context) => {
       if (data?.cdGroupId) {
         await queryClient.invalidateQueries({
-          queryKey: queryKeys.detail(data.cdGroupId, data.cdId),
-        });
+          queryKey: queryKeys.detail(data.cdGroupId, data.cdId) });
       }
       if (options?.onSuccess) {
         options.onSuccess(data, variables, context);
       }
     },
     invalidateQueries: queryParams ? [queryKeys.list(queryParams)] : [queryKeys.all],
-    ...options,
-  });
+    ...options });
 
   return {
     ...mutation,
     update: (payload: any, callback?: any) => {
       mutation.mutate(payload, callback);
-    },
-  };
+    } };
 }

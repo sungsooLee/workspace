@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Avatar } from '@learnway/ui';
+import { Avatar } from '@learnway/ui/avatar';
 
 export const Route = createFileRoute('/_guide/guide/avatar')({
   component: RouteComponent,
@@ -17,7 +17,7 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-import { Avatar } from '@learnway/ui';`}
+import { Avatar } from '@learnway/ui/avatar';`}
           </code>
         </pre>
       </div>

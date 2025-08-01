@@ -1,3 +1,6 @@
+import { cn, getRandomId } from '@learnway/shared';
+import { FC, useState } from 'react';
+
 import {
   IcoArray,
   IcoArrowDown,
@@ -7,9 +10,6 @@ import {
   IcoPlay,
   IcoStar,
 } from '@learnway/icons';
-import { cn, getRandomId } from '@learnway/shared';
-import { Badge, Button, Checkbox, Dropdown, Input, Pagination, Popover } from '@learnway/ui';
-import { FC, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import { Arrays } from '../../../../features/layout';
 
@@ -22,7 +22,6 @@ import { FilterModal } from './filter-modal';
 
 /* style */
 import dropdownPopoverStyles from '../../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
-import styles from './course-contents.module.css';
 
 const CourseComponent: FC = () => {
   // dropdown

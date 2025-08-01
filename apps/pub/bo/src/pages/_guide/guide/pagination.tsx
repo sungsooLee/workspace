@@ -1,6 +1,5 @@
-import React from 'react';
+import { Pagination } from '@learnway/ui/pagination';
 import { createFileRoute } from '@tanstack/react-router';
-import { Pagination } from '@learnway/ui';
 
 export const Route = createFileRoute('/_guide/guide/pagination')({
   component: RouteComponent,
@@ -15,9 +14,9 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-import { Pagination } from '@learnway/ui';
+import { Pagination } from '@learnway/ui/pagination';
 
-// 적용방법(예시) 
+// 적용방법(예시)
 <Pagination pageNumber={0} totalPages={100} />`}
           </code>
         </pre>

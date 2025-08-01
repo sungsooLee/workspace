@@ -1,7 +1,7 @@
 import { useCreation } from 'ahooks';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
-import { TableBox } from '@learnway/ui';
+import { TableBox } from '@learnway/ui/grid';
 
 export function WidgetComponentTable({ data }: { data: any }) {
   const tableColumns = useCreation(() => {
@@ -11,24 +11,18 @@ export function WidgetComponentTable({ data }: { data: any }) {
         header: '구분',
         meta: {
           headerAlign: 'left',
-          cellAlign: 'left',
-        },
-      }),
+          cellAlign: 'left' } }),
       columnHelper.accessor('componentId', {
         header: '컴포넌트 ID',
 
         meta: {
           headerAlign: 'center',
-          cellAlign: 'left',
-        },
-      }),
+          cellAlign: 'left' } }),
       columnHelper.accessor('size', {
         header: '사이즈(가로*세로) pixel',
         meta: {
           headerAlign: 'center',
-          cellAlign: 'left',
-        },
-      }),
+          cellAlign: 'left' } }),
     ] as ColumnDef<any, unknown>[];
   }, []);
 

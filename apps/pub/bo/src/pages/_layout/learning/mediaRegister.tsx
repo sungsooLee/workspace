@@ -1,66 +1,60 @@
 /* eslint-disable no-restricted-imports */
 /* eslint-disable @nx/enforce-module-boundaries */
-import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { cn, getRandomId } from '@learnway/shared';
+import { useState } from 'react';
+
+import { cn, getRandomId, SelectOption } from '@learnway/shared';
 import { ContentsHistoryInfoFormField } from '../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
 
-import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import movieInfoStyles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
+import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 /* 퍼블수정 20240317 : libs로 경로 수정 S  */
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import popSearchStyles from '@learnway/styles/bo/assets/styles/modules/popup-search.module.css';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
-import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 /* 퍼블수정 20240317 : libs로 경로 수정 E  */
-import fileStyles from './file-wrap.module.css'; // 오른쪽 파일 리스트
 import fileInfoStyles from './file-info.module.css';
+import fileStyles from './file-wrap.module.css'; // 오른쪽 파일 리스트
 
-import defaultImg from '../../../assets/images/thumb/img_thumb_default.jpg';
-import {
-  Button,
-  Checkbox,
-  CheckboxGroupFormField,
-  ChipList,
-  ContentsRow,
-  DatePicker,
-  Dropdown,
-  ImageOption,
-  Input,
-  InputModalSelectorFormField,
-  List,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  PhoneNumber,
-  RadioGroup,
-  RadioGroupFormField,
-  SelectOption,
-  Spinner,
-  Switch,
-  Tabs,
-  Textarea,
-  Thumbnail,
-  ThumbnailImageUpload,
-  Tooltip,
-  useModal,
-  FormSubTitle,
-  SplitPanel,
-} from '@learnway/ui';
-import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import {
   IcoAlertCircle,
   IcoCloseCircle,
+  IcoDelete04,
   IcoFormRequired,
+  IcoLoading,
   IcoRefresh02,
   IcoSearch,
   IcoStatusFail,
-  IcoDelete04,
-  IcoLoading,
 } from '@learnway/icons';
+import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 
 /* images */
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { Checkbox } from '@learnway/ui/checkbox';
+import { ChipList } from '@learnway/ui/chips';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { DatePicker } from '@learnway/ui/date-picker';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { SplitPanel } from '@learnway/ui/elements';
+import {
+  CheckboxGroupFormField,
+  InputModalSelectorFormField,
+  RadioGroupFormField,
+} from '@learnway/ui/form-field';
+import { Input } from '@learnway/ui/input';
+import { List } from '@learnway/ui/list';
+import { ModalBody, ModalContainer, ModalFooter, useModal } from '@learnway/ui/modal';
+import { PhoneNumber } from '@learnway/ui/phone-number';
+import { RadioGroup } from '@learnway/ui/radio-group';
+import { Spinner } from '@learnway/ui/spinner';
+import { Switch } from '@learnway/ui/switch';
+import { Tabs } from '@learnway/ui/tabs';
+import { Textarea } from '@learnway/ui/textarea';
+import { Thumbnail } from '@learnway/ui/thumbnail';
+import { Tooltip } from '@learnway/ui/tooltip';
 import mediaImg from '../../../assets/images/temp/img_temp_media.jpg';
 
 export const Route = createFileRoute('/_layout/learning/mediaRegister')({

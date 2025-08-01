@@ -1,3 +1,6 @@
+import { ShuttleGridToGridImperative } from '@learnway/ui/shuttle-grid-to-grid';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 // IA104 / NLP_BO_CMS_1044 학습자원 현지화-공유설정(팝업)
 import { learningResourceQueryOptions } from '@entities/learning-resource';
 import LearningResourceService from '@entities/learning-resource/api/learning-resource';
@@ -5,22 +8,13 @@ import { useSearchBox } from '@learnway/hooks';
 import { cn } from '@learnway/shared';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
-import {
-  Button,
-  Divider,
-  FormSubTitle,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  ShuttleGridToGrid,
-  ShuttleGridToGridImperative,
-  useModal,
-} from '@learnway/ui';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Divider } from '@learnway/ui/elements';
+import { ShuttleGridToGrid } from '@learnway/ui/shuttle-grid-to-grid';
 import { SearchBox } from '@shared/ui';
 import { useQueryClient } from '@tanstack/react-query';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { ChannelCodeType, ContentInfo, TenantCodeType } from '@types';
+import { ContentInfo, TenantChannelCodeType, TenantCodeType } from '@types';
 import { pick } from 'lodash';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -50,40 +44,31 @@ const LearningResourceShareShuttleModalComponent = ({ data }: ResourceShareShutt
             api: {
               fn: () => LearningResourceService.getShareTenantCodes(data.contentUuid),
               select: (tenants: TenantCodeType[]) =>
-                tenants.map(({ tenantId, tenantName }) => ({ label: tenantName, value: tenantId })),
-            },
-          },
-        },
+                tenants.map(({ tenantId, tenantName }) => ({ label: tenantName, value: tenantId })) } } },
         {
           name: 'channelName',
           type: 'text',
           label: t('LABEL.form.label.channel', '채널'),
           format: 'string',
-          value: '',
-        },
+          value: '' },
         {
-          type: 'empty',
-        },
+          type: 'empty' },
         {
-          type: 'empty',
-        },
+          type: 'empty' },
       ],
     ],
     validator: {
-      tenantId: true,
-    },
-  };
+      tenantId: true } };
 
   const { provider: sProvider, getValues } = useSearchBox(sharingInfoSearchConfig);
 
-  const [gridData, setGridData] = useState<ChannelCodeType[]>([]);
+  const [gridData, setGridData] = useState<TenantChannelCodeType[]>([]);
 
   const handleOnSearch = async (params: Record<string, any>) => {
     const result = await queryClient.fetchQuery(
       learningResourceQueryOptions.getShareTenantsChannels({
         contentUuid: data.contentUuid,
-        ...pick(params, 'tenantId', 'channelName'),
-      }),
+        ...pick(params, 'tenantId', 'channelName') }),
     );
     setGridData(result);
   };
@@ -100,17 +85,13 @@ const LearningResourceShareShuttleModalComponent = ({ data }: ResourceShareShutt
         cell: (info) => info.getValue(),
         meta: {
           headerAlign: 'left',
-          cellAlign: 'left',
-        },
-      }),
+          cellAlign: 'left' } }),
       columnHelper.accessor('channelName', {
         header: t('채널'),
         cell: (info) => info.getValue(),
         meta: {
           headerAlign: 'left',
-          cellAlign: 'left',
-        },
-      }),
+          cellAlign: 'left' } }),
     ] as ColumnDef<any, unknown>[];
   }, []);
 

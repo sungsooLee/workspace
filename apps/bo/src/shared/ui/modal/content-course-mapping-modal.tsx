@@ -1,24 +1,15 @@
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 // IA105 / NLP_BO_CMS_1038	매핑과정보기(팝업)
 
 import { learningResourceQueryOptions } from '@entities/learning-resource';
 import { CODE_GROUP, getCodeLabel, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
-import {
-  Button,
-  Divider,
-  GridBox,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  useGridBox,
-  useGridBoxConfig,
-  useModal,
-} from '@learnway/ui';
+import { Divider } from '@learnway/ui/elements';
+import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import {
   SearchBox,
   TenantByRoleDropdownFormField,
-  TenantChannelDropdownFormField,
-} from '@shared/ui';
+  TenantChannelDropdownFormField } from '@shared/ui';
 import { useRouter } from '@tanstack/react-router';
 import { ContentCourseMappingParams } from '@types';
 import { t } from 'i18next';
@@ -34,8 +25,7 @@ interface Props {
 const ContentCourseMappingModalComponent = ({
   contentUuid,
   channelUuid,
-  lastVisitedBoRoleId,
-}: Props) => {
+  lastVisitedBoRoleId }: Props) => {
   const router = useRouter();
   const { closeModal, confirm } = useModal();
 
@@ -49,8 +39,7 @@ const ContentCourseMappingModalComponent = ({
           value: '',
           format: 'object',
           element: <TenantByRoleDropdownFormField />,
-          readOnly: true,
-        },
+          readOnly: true },
         {
           name: 'channelUuid',
           type: 'custom',
@@ -58,8 +47,7 @@ const ContentCourseMappingModalComponent = ({
           value: '',
           format: 'object',
           element: <TenantChannelDropdownFormField enableFilter />,
-          readOnly: true,
-        },
+          readOnly: true },
         {
           name: 'courseType',
           type: 'dropdown',
@@ -69,33 +57,26 @@ const ContentCourseMappingModalComponent = ({
           format: 'string',
           presetOptionLabel: t('LABEL.form.label.all', '전체'),
           optionsConfig: {
-            codeGroup: CODE_GROUP['lms.course.CourseType'],
-          },
-        },
+            codeGroup: CODE_GROUP['lms.course.CourseType'] } },
         {
           name: 'courseName',
           label: t('과정명'),
           type: 'text',
-          value: '',
-        },
+          value: '' },
       ],
     ],
     validator: {
       tenantId: true,
-      channelUuid: true,
-    },
-  });
+      channelUuid: true } });
 
   const gridBoxConfig: useGridBoxConfig = {
     query: (params: ContentCourseMappingParams) =>
       learningResourceQueryOptions.getContentCourseMapping(contentUuid, {
         ...omit(params, 'tenantId', 'channelUuid'),
-        lastVisitedBoRoleId,
-      }),
+        lastVisitedBoRoleId }),
     gridState: {
       page: 0,
-      size: 10,
-    },
+      size: 10 },
     // query: (param: any) => {
     //   return {
     //     queryKey: ['get-content-course-mapping'],
@@ -110,8 +91,7 @@ const ContentCourseMappingModalComponent = ({
         width: 104,
         name: 'courseType',
         label: t('유형'),
-        render: (_: any) => getCodeLabel(CODE_GROUP['lms.course.CourseType'], _.getValue()),
-      },
+        render: (_: any) => getCodeLabel(CODE_GROUP['lms.course.CourseType'], _.getValue()) },
       { width: 571, name: 'courseName', label: t('과정명') },
       { width: 104, name: 'language', label: t('언어') },
       {
@@ -124,19 +104,15 @@ const ContentCourseMappingModalComponent = ({
             onClick={async () => {
               const confirmed = await confirm({
                 title: t('이동하시겠습니까?'),
-                content: t('입력중인 항목이 초기화됩니다.'),
-              });
+                content: t('입력중인 항목이 초기화됩니다.') });
               if (confirmed)
                 router.navigate({
                   to: '/learning/course/detail',
-                  state: { courseId: row.original.courseId },
-                });
+                  state: { courseId: row.original.courseId } });
             }}
           />
-        ),
-      },
-    ],
-  };
+        ) },
+    ] };
 
   const { provider, getValues, onFormChange } = useSearchBox(searchBoxConfig());
   const { config, gridFetch } = useGridBox(gridBoxConfig, getValues);

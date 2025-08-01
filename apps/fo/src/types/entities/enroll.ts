@@ -1,6 +1,4 @@
-import { SortRequest } from '@learnway/ui';
-
-type ISODateString = string;
+import { ISODateString, SortRequest } from '@types';
 
 export interface CourseEnrollResponse {
   courseEnrollId: number;
@@ -86,7 +84,7 @@ export interface ApprovalInfo {
 }
 
 export interface EnrollRequest {
-  courseSequenceUuid: string;
+  courseSequenceId: string;
   additionalInfo: {
     langLevelTest?: LangLevelTest;
     bookDeliveryInfo?: BookDeliveryInfo;

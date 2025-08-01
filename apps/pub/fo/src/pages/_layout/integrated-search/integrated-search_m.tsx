@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { Button } from '@learnway/ui';
 import { IcoArrowForward } from '@learnway/icons';
 import {
   IntegratedSearchButton,

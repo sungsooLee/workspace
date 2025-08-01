@@ -1,7 +1,8 @@
+import { cn } from '@learnway/shared';
+import { Button } from '@learnway/ui/button';
+import { Tabs } from '@learnway/ui/tabs';
 import { createFileRoute } from '@tanstack/react-router';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import { Tabs, Button } from '@learnway/ui';
-import { cn } from '@learnway/shared';
 
 /* fab */
 import fabStyles from '@learnway/styles/bo/assets/styles/modules/fab.module.css';

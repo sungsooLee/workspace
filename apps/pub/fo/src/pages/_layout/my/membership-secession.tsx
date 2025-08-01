@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Button, Checkbox } from '@learnway/ui';
+
 import { IcoError02 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import { MobileView, BrowserView } from 'react-device-detect';
@@ -10,6 +10,8 @@ import { isMobile } from 'react-device-detect';
 //import styles from './membership-secession.module.css';
 import myPageContainerStyles from '@learnway/styles/fo/widgets/layout/ui/main/container/my-page-container.module.css';
 import styles from '@learnway/styles/fo/pages/_layout/my-page/privacy/withdraw-menbership.module.css';
+import { Button } from '@learnway/ui/button';
+import { Checkbox } from '@radix-ui/react-checkbox';
 
 export const Route = createFileRoute('/_layout/my/membership-secession')({
   component: RouteComponent,

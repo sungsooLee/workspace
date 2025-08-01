@@ -17,8 +17,7 @@ export function useGetModuleDetail(moduleId: number) {
 export function useGetLessonDetail(data: { moduleId?: number; lessonId?: number }) {
   return useQuery({
     ...queryOptions.lessonDetail(data),
-    enabled: !!(data.lessonId && data.lessonId > 0 && data.moduleId && data.moduleId > 0),
-  });
+    enabled: !!(data.lessonId && data.lessonId > 0 && data.moduleId && data.moduleId > 0) });
 }
 
 export function useCreateCurriculum(options: any) {
@@ -32,8 +31,7 @@ export function useCreateCurriculum(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
 
   return {
     create: (payload: any, callback?: any) => {
@@ -41,8 +39,7 @@ export function useCreateCurriculum(options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }
 
 export function useUpdateCurriculum(options: any) {
@@ -56,8 +53,7 @@ export function useUpdateCurriculum(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
 
   return {
     update: (payload: any, callback?: any) => {
@@ -65,8 +61,7 @@ export function useUpdateCurriculum(options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }
 
 export function useDeleteCurriculum(options: any) {
@@ -77,8 +72,7 @@ export function useDeleteCurriculum(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
 
   return {
     delete: (payload: any, callback?: any) => {
@@ -86,8 +80,7 @@ export function useDeleteCurriculum(options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }
 
 export function useCopyCurriculum(options: any) {
@@ -98,8 +91,7 @@ export function useCopyCurriculum(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
 
   return {
     copy: (payload: any, callback?: any) => {
@@ -107,8 +99,7 @@ export function useCopyCurriculum(options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }
 
 export function useCreateGeneralModule(options: any) {
@@ -122,8 +113,7 @@ export function useCreateGeneralModule(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
 
   return {
     create: (payload: any, callback?: any) => {
@@ -131,8 +121,7 @@ export function useCreateGeneralModule(options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }
 
 export function useUpdateGeneralModule(options: any) {
@@ -146,8 +135,7 @@ export function useUpdateGeneralModule(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
 
   return {
     update: (payload: any, callback?: any) => {
@@ -155,8 +143,7 @@ export function useUpdateGeneralModule(options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }
 
 export function useCreateFixedModule(options: any) {
@@ -170,8 +157,7 @@ export function useCreateFixedModule(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
 
   return {
     create: (payload: any, callback?: any) => {
@@ -179,8 +165,7 @@ export function useCreateFixedModule(options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }
 
 export function useUpdateFixedModule(options: any) {
@@ -194,8 +179,7 @@ export function useUpdateFixedModule(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
 
   return {
     update: (payload: any, callback?: any) => {
@@ -203,8 +187,7 @@ export function useUpdateFixedModule(options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }
 
 export function useCreateLessonByModule(options: any) {
@@ -218,8 +201,7 @@ export function useCreateLessonByModule(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
 
   return {
     create: (payload: any, callback?: any) => {
@@ -227,8 +209,7 @@ export function useCreateLessonByModule(options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }
 export function useCreateLessonByCurriculum(options: any) {
   const queryClient = useQueryClient();
@@ -240,8 +221,7 @@ export function useCreateLessonByCurriculum(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
 
   return {
     create: (payload: any, callback?: any) => {
@@ -249,8 +229,7 @@ export function useCreateLessonByCurriculum(options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }
 export function useUpdateLessonByFixed(options: any) {
   const queryClient = useQueryClient();
@@ -263,8 +242,7 @@ export function useUpdateLessonByFixed(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
 
   return {
     update: (payload: any, callback?: any) => {
@@ -272,8 +250,7 @@ export function useUpdateLessonByFixed(options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }
 
 export function useUpdateLessonByGeneral(options: any) {
@@ -287,8 +264,7 @@ export function useUpdateLessonByGeneral(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
 
   return {
     update: (payload: any, callback?: any) => {
@@ -296,8 +272,7 @@ export function useUpdateLessonByGeneral(options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }
 
 export function useDndCurriculumTree(curriculumId?: number, options?: any): any {
@@ -322,8 +297,7 @@ export function useDndCurriculumTree(curriculumId?: number, options?: any): any 
       if (options?.onSettled) {
         options.onSettled(data, error, variables, context?.userContext);
       }
-    },
-  });
+    } });
 }
 
 export function useDeleteCurriculumModule(options?: any) {
@@ -337,16 +311,14 @@ export function useDeleteCurriculumModule(options?: any) {
       if (options?.onSuccess) {
         await options.onSuccess(data, variables, context);
       }
-    },
-  });
+    } });
   return {
     delete: (payload: any, callback?: any) => {
       mutation.mutate(payload, callback);
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }
 
 export function useDeleteCurriculumLesson(options?: any) {
@@ -360,8 +332,7 @@ export function useDeleteCurriculumLesson(options?: any) {
       if (options?.onSuccess) {
         await options.onSuccess(data, variables, context);
       }
-    },
-  });
+    } });
 
   return {
     delete: (payload: any, callback?: any) => {
@@ -369,6 +340,5 @@ export function useDeleteCurriculumLesson(options?: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }

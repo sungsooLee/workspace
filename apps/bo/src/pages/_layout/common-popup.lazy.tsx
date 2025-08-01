@@ -1,12 +1,10 @@
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
-import {
-  Button,
-  ChipListModalSelectorFormField,
-  ContentsRow,
-  PreviewImage,
-  useModal,
-} from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { ChipListModalSelectorFormField } from '@learnway/ui/form-field';
+import { useModal } from '@learnway/ui/modal';
+import { PreviewImage } from '@learnway/ui/preview-image';
 import {
   AddressSearchModal,
   CategoryChoiceTreeModal,
@@ -456,9 +454,7 @@ function RouteComponent() {
                   e.stopPropagation();
                   openModal({
                     width: 'xl',
-                    content: (
-                      <UserGroupOrganizationShuttleModal tenantIds={[1, 2, 3]} roleIds={[1]} />
-                    ),
+                    content: <UserGroupOrganizationShuttleModal tenantIds={[1, 2, 3]} />,
                   });
                 }}
               >
@@ -478,8 +474,7 @@ function RouteComponent() {
                   content: (
                     <UserGroupTabsChoiceModal
                       initialTab="ORGANIZATION"
-                      tenantIds={[1, 2, 3]}
-                      roleIds={[1]}
+                      tenantIds={[1]}
                       option={[
                         {
                           pathKey: '2-54-9-10&&2-54&&3-1678',

@@ -1,22 +1,16 @@
 import { useState, useRef } from 'react';
 import { t } from 'i18next';
-import {
-  Button,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  useModal,
-  ShuttleGridToGrid,
-  ShuttleGridToGridImperative,
-  Divider,
-} from '@learnway/ui';
+import { Divider } from '@learnway/ui/elements';
+import { ShuttleGridToGrid } from '@learnway/ui/shuttle-grid-to-grid';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { queryOptions } from '@entities/channel/service/channel.queries';
 import { useQueryClient } from '@tanstack/react-query';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { ShuttleGridToGridImperative } from '@learnway/ui/shuttle-grid-to-grid';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
 type Props = {
   roleId?: string;
@@ -36,16 +30,13 @@ const ChannelShuttleModalComponent = ({ roleId = '' }: Props) => {
           format: 'object',
           value: undefined,
           optionsConfig: {
-            codeGroup: CODE_GROUP['manual.tenant.tenantId'],
-          },
+            codeGroup: CODE_GROUP['manual.tenant.tenantId'] },
           dropdownConfig: {
             onchange: () => {
               return '';
             },
             isSearchable: true,
-            placeholder: '입력 선택',
-          },
-        },
+            placeholder: '입력 선택' } },
         {
           name: 'channelName',
           type: 'dropdown',
@@ -58,16 +49,13 @@ const ChannelShuttleModalComponent = ({ roleId = '' }: Props) => {
               return '';
             },
             isSearchable: true,
-            placeholder: '입력 선택',
-          },
-        },
+            placeholder: '입력 선택' } },
         {
           name: 'channelOwnerId',
           label: t('채널 소유자'),
           type: 'text',
           value: '',
-          placeholder: '입력',
-        },
+          placeholder: '입력' },
         {
           name: 'isUsed',
           type: 'dropdown',
@@ -77,11 +65,9 @@ const ChannelShuttleModalComponent = ({ roleId = '' }: Props) => {
             { value: '', label: t('전체') },
             { value: 'true', label: t('사용') },
             { value: 'false', label: t('미사용') },
-          ],
-        },
+          ] },
       ],
-    ],
-  };
+    ] };
 
   const { provider: sProvider } = useSearchBox(searchConfig);
 
@@ -94,25 +80,21 @@ const ChannelShuttleModalComponent = ({ roleId = '' }: Props) => {
       meta: {
         headerAlign: 'left', // 헤더만 가운데 정렬
         cellAlign: 'left', // 셀은 오른쪽 정렬
-      },
-    }),
+      } }),
     columnHelper.accessor('channelName', {
       header: t('채널'),
       size: 132,
-      cell: (info) => info.getValue(),
-    }),
+      cell: (info) => info.getValue() }),
     columnHelper.accessor('channelOwnerId', {
       header: t('채널 소유자'),
       size: 132,
-      cell: (info) => info.getValue(),
-    }),
+      cell: (info) => info.getValue() }),
     columnHelper.accessor('isUsed', {
       header: t('사용여부'),
       size: 132,
       cell: (info) => {
         return info.row.original.isUsed ? t('LABEL.common.enable') : t('LABEL.common.disable');
-      },
-    }),
+      } }),
   ] as ColumnDef<any, unknown>[];
 
   const handleOnConfirm = () => {

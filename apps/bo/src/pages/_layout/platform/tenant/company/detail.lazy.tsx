@@ -4,14 +4,12 @@ import { t } from 'i18next';
 
 import { PageContainer, MainContents, ContentsButtons, LinkBox } from '@shared/ui';
 
-import { Button } from '@learnway/ui';
-
 import { CompanyDetail } from '@features/platform-management/company';
 import { EnFormMode } from '@types';
+import { Button } from '@learnway/ui/button';
 
 export const Route = createLazyFileRoute('/_layout/platform/tenant/company/detail')({
-  component: RouteComponent,
-});
+  component: RouteComponent });
 
 /**
  * 화면번호: NLP_BO_TMS_1111_20

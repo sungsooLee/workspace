@@ -1,13 +1,12 @@
-/* eslint-disable no-restricted-imports */
-/* eslint-disable @nx/enforce-module-boundaries */
 import { IcoArrowDown, IcoClose02 } from '@learnway/icons';
-import { Button, Popover } from '@learnway/ui';
 import { createFileRoute } from '@tanstack/react-router';
 import { useState } from 'react';
 
 import tooltipPopoverStyles from '@learnway/styles/bo/assets/styles/modules/tootip-popover.module.css';
-import { NoticeBox } from '../../../../../../bo/src/shared/ui/';
+import { Button } from '@learnway/ui/button';
+import { Popover } from '@learnway/ui/Popover';
 import dropdownPopoverStyles from '../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
+import { NoticeBox } from '../../../shared/ui/notice-box';
 
 export const Route = createFileRoute('/_guide/guide/popover')({
   component: RouteComponent,
@@ -97,7 +96,7 @@ function RouteComponent() {
           <pre className="code_block">
             <code>{`// import
 import { memo } from 'react';
-import { Popover } from '@learnway/ui';
+import { Popover } from '@learnway/ui/popover';
 
 const PopoverContent = () => {
   return (
@@ -148,7 +147,7 @@ export const PopOverCompoment = memo(PopOverCompoment);`}</code>
           <pre className="code_block">
             <code>{`// import
 import { memo } from 'react';
-import { Popover, Button } from '@learnway/ui';
+import { Popover, Button } from '@learnway/ui/';
 import dropdownPopoverStyles from '../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
 
 const DropdownPopoverCompoment = () => {
@@ -204,7 +203,7 @@ export const PopOverCompoment = memo(PopOverCompoment);`}</code>
           <pre className="code_block">
             <code>{`// import
 import { memo } from 'react';
-import { Popover, Button } from '@learnway/ui';
+import { Popover, Button } from '@learnway/ui/';
 import dropdownPopoverStyles from '../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
 
 const DropdownPopoverCompoment = () => {

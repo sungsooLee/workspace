@@ -1,14 +1,12 @@
-import {
-  SelectedChip,
-  ShuttleTreeToChipsV2,
-  transformApiDataToTreeData,
-  useShuttleTreeToChips,
-} from '@learnway/ui';
-import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
-import { useEffect, useMemo } from 'react';
-import { cn } from '@learnway/shared';
-import { CombineUserGroup } from '@types';
 import { useFetchCustomGroupsTree } from '@entities/user-group';
+import { useFetchAuthUser } from '@learnway/auth/entities';
+import { cn } from '@learnway/shared';
+import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
+import { ShuttleTreeToChipsV2, useShuttleTreeToChips } from '@learnway/ui/shuttle-tree-to-chips-v2';
+import { transformApiDataToTreeData } from '@learnway/ui/tree-view';
+import { SelectedChip } from '@learnway/ui/type';
+import { CombineUserGroup } from '@types';
+import { useEffect, useMemo } from 'react';
 
 type UserGroupCustomComponentProps = {
   option: CombineUserGroup[];
@@ -16,7 +14,8 @@ type UserGroupCustomComponentProps = {
 };
 
 const UserGroupCustomComponent = ({ option, handleSetOption }: UserGroupCustomComponentProps) => {
-  const { data } = useFetchCustomGroupsTree();
+  const { data: authUser } = useFetchAuthUser();
+  const { data } = useFetchCustomGroupsTree(authUser?.activeRole?.roleId);
 
   const treeData = useMemo(() => {
     return data ? transformApiDataToTreeData(data) : [];

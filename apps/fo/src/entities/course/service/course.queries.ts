@@ -1,7 +1,6 @@
-import { UseQueryOptions } from '@tanstack/react-query';
-import { CourseResponse } from '@types';
-import CourseService from '../api/course';
 import { getQuerySkipToken } from '@learnway/shared';
+import { UseQueryOptions } from '@tanstack/react-query';
+import CourseService from '../api/course';
 
 // import CourseService, { TreeService } from "../api/course"
 // export const treeKeys = {
@@ -21,7 +20,7 @@ export const queryKeys = {
   sequenceOne: (sequenceId: string) => ['sequence', sequenceId] as const,
   package: (id: string) => ['package', id] as const,
   packageItems: (id: string, packageId: string) => ['packageItems', id, packageId] as const,
-  dashboard: (id: string) => ['dashboard', id] as const,
+  dashboard: (option: any) => ['dashboard', option.courseId] as const,
 };
 export const queryOptions = {
   // 과정 정보 조회
@@ -39,7 +38,7 @@ export const queryOptions = {
       CourseService.fetchSequences(id, { openingYear: reqDto.openingYear, isAll: reqDto.isAll }),
   }),
   // 과정 차수 단건 불러오기
-  courseSequenceOne: (sequenceId: string): UseQueryOptions => ({
+  courseSequenceOne: (sequenceId: string) => ({
     queryKey: queryKeys.sequenceOne(sequenceId),
     queryFn: () => CourseService.fetchSequenceOne(sequenceId),
   }),
@@ -54,9 +53,9 @@ export const queryOptions = {
     queryFn: () => CourseService.fetchCoursePackageItems(id, packageId),
   }),
   // 과정 대시보드 불러오기
-  courseDashboardData: (id: string): UseQueryOptions => ({
-    queryKey: queryKeys.dashboard(id),
-    queryFn: () => CourseService.fetchDashboard(id),
+  courseDashboardData: (option: any): UseQueryOptions => ({
+    queryKey: queryKeys.dashboard(option),
+    queryFn: () => CourseService.postDashboardLearningProgress(option),
   }),
 };
 
@@ -88,4 +87,9 @@ export const mutateOptions = {
           queryFn: () => CourseService.fetchCourse(courseId),
         }
       : getQuerySkipToken<any>(),
+
+  // 나의 학습 진행율 조회
+  dashboardLearningProgress: () => ({
+    mutationFn: (payload: any) => CourseService.postDashboardLearningProgress(payload),
+  }),
 };

@@ -1,6 +1,7 @@
-import { Button, ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui';
 import FieldRenderer from '../field-renderer';
 import { DEFAULT_FIELD_CONFIG } from '../../types/form-field.types';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
 const PreviewComponentModalComponent = ({ componentId }: any) => {
   const fieldConfig = DEFAULT_FIELD_CONFIG[componentId];

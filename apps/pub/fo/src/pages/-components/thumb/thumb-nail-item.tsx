@@ -2,7 +2,8 @@ import React from 'react';
 import styles from './thumb-nail-item.module.css';
 import { Link } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import { Badge, Thumbnail } from '@learnway/ui';
+import { Thumbnail } from '@learnway/ui/thumbnail';
+import { Badge } from '@learnway/ui/badge';
 import ToggleButton from '../toggle-button/toggle-button';
 
 export interface ThumbnailData {

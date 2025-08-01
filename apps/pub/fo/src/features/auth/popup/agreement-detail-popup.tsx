@@ -1,14 +1,7 @@
 import { memo } from 'react';
 import styles from './agreement-detail-popup.module.css';
-import {
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  Button,
-  useModal,
-  Select,
-} from '@learnway/ui';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { Button } from '@learnway/ui/button';
 
 const AgreementDetailPopupCompoment = () => {
   const { closeModal } = useModal();

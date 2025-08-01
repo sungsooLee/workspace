@@ -1,12 +1,13 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Popover, SelectOption } from '@learnway/ui';
-import { IcoCheck, IcoArrowDown } from '@learnway/icons';
-import { Button } from '@learnway/ui';
+import { IcoArrowDown, IcoCheck } from '@learnway/icons';
 
-import { useSetLanguage, useLanguageSelectOptions } from '../../../platform';
+import { useSetLanguage } from '../../../platform';
 
+import { Button } from '@learnway/ui/button';
+import { Popover } from '@learnway/ui/Popover';
+import { SelectOption } from '@learnway/ui/type';
 import styles from './language.module.css';
 
 const PopoverContent = ({ data }: { data?: SelectOption[] }) => {
@@ -29,7 +30,8 @@ const PopoverContent = ({ data }: { data?: SelectOption[] }) => {
           <Button
             key={`LANGUAGE${index}`}
             className={`${styles.btn} ${code.value === i18n.language ? styles.active : ''}`}
-            onClick={() => handleLanguage(code.value)}>
+            onClick={() => handleLanguage(code.value)}
+          >
             {code.label} {code.value === i18n.language && <IcoCheck width={20} height={20} />}
           </Button>
         ))}

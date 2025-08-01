@@ -1,5 +1,5 @@
 import { Table } from '@tanstack/react-table';
-import React from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { PaginationResponse } from '../../type';
 import { GridBoxSearchInputCondition } from '../grid-box/grid-box-search-input';
 import { GridBoxState, GridProps } from './grid';
@@ -64,6 +64,7 @@ export interface UseGridBoxReturn<T = any> {
   config: GridBoxConfig<T>;
   gridFetch: (condition?: Record<string, any>, state?: GridBoxState) => Promise<void>;
   data: PaginationResponse<T>;
+  setGridData: Dispatch<SetStateAction<PaginationResponse<T> | undefined>>;
 }
 
 /**

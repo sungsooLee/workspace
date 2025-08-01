@@ -6,20 +6,21 @@ import {
   CourseStatsSummary,
 } from '@features/learning-operate/course/course-management';
 import { CODE_GROUP, S3_PATH } from '@learnway/hooks';
+import { Badge } from '@learnway/ui/badge';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { SplitPanel } from '@learnway/ui/elements';
 import {
-  Badge,
-  Button,
   ChipListModalSelectorFormField,
-  ContentsRow,
   EditorFormField,
-  FormSubTitle,
-  Input,
   InputModalSelectorFormField,
   ListModalSelectorFormField,
   RadioGroupFormField,
-  SplitPanel,
   TextareaFormField,
-} from '@learnway/ui';
+} from '@learnway/ui/form-field';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
 import {
   ChipListFormField,
   FormRow,
@@ -31,6 +32,7 @@ import {
   ThumbnailListFormField,
   TrainingPlaceChoiceModal,
   UserChoiceModal,
+  UserGroupChoiceModal,
   UserGroupTabsChoiceModal,
 } from '@shared/ui';
 import { forwardRef } from 'react';
@@ -41,6 +43,7 @@ import { CourseDetailTabBaseProps, CourseDetailTabFormRef } from '../../../../ty
 const DetailInfoComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBaseProps>(
   (_, ref) => {
     const { t } = useTranslation();
+    const { openModal } = useModal();
 
     const { provider, getValues, onFormChange, courseConfig, courseId } =
       useCourseDetailSubCourse();
@@ -178,6 +181,7 @@ const DetailInfoComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBa
                 element={
                   <ChipListModalSelectorFormField
                     modalConfig={() => ({
+                      width: 'xl',
                       content: (
                         <UserGroupTabsChoiceModal
                           tenantIds={getValues().tenantIds}
@@ -191,6 +195,18 @@ const DetailInfoComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBa
                       wordwrap: true,
                     }}
                     showAddButton
+                  />
+                }
+                actionNode={
+                  <Button
+                    variant="text"
+                    label={t('대상자')}
+                    onClick={(e: any) => {
+                      openModal({
+                        width: 'xl',
+                        content: <UserGroupChoiceModal groups={getValues().targetList} />,
+                      });
+                    }}
                   />
                 }
               />

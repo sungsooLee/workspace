@@ -13,8 +13,7 @@ function SectionLayoutComponent({
   isLineVisible,
   children,
   className,
-  contentsRatio,
-}: SectionLayoutComponentProps) {
+  contentsRatio }: SectionLayoutComponentProps) {
   return (
     <div
       className={cn(

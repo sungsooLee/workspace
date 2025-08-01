@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { Carousel } from '@learnway/ui';
+import { Carousel } from '@learnway/ui/carousel';
 import bnrCImage1 from '@learnway/styles/fo/assets/images/banner/banner_category_01.png';
 import bnrCImage2 from '@learnway/styles/fo/assets/images/banner/banner_category_02.png';
 

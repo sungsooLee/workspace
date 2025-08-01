@@ -1,7 +1,7 @@
-import { Tabs } from '@learnway/ui';
 import { forwardRef, useEffect, useState } from 'react';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
+import { Tabs } from '@learnway/ui/tabs';
 import { EnButtonLayout } from '@pages/_layout/tenant/channel/management/detail.lazy';
 import { ChannelDetailBoardArticle } from './channel-detail-board-article';
 

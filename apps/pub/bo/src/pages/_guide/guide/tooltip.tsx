@@ -1,6 +1,7 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { Button, Tooltip } from '@learnway/ui';
 import { IcoAlertCircle } from '@learnway/icons';
+import { Button } from '@learnway/ui/button';
+import { Tooltip } from '@learnway/ui/tooltip';
+import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/_guide/guide/tooltip')({
   component: RouteComponent,
@@ -30,7 +31,7 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-import { Button, Tooltip } from '@learnway/ui';
+import { Button, Tooltip } from '@learnway/ui/button';
 import { IcoAlertCircle } from '@learnway/icons'; // 아이콘
 
 // 적용방법(예시)

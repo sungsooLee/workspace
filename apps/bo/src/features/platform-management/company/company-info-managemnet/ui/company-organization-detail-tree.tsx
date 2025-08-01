@@ -1,9 +1,11 @@
 import { UserGroupCompanyService } from '@entities/user-group/api/user-group-company';
 import { transformUserGroupOrganizationApiDataToTreeData } from '@features/platform-management/company';
-import { Button, TreeBox, TreeContainer, TreeNode } from '@learnway/ui';
+import { TreeBox, TreeContainer, TreeNode } from '@learnway/ui/tree-view';
 import { useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { useEffect, useState } from 'react';
+// TODO: Fix unknown imports: TreeContainer from '@learnway/ui'
+import { Button } from '@learnway/ui/button';
 
 interface CompanyOrganizationDetailTreeProps {
   title: string;

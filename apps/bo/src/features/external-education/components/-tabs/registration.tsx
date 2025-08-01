@@ -1,25 +1,26 @@
-import { Button, FormSubTitle, RadioGroupFormField, TableBox, useModal } from '@learnway/ui';
-import styles from '@learnway/styles/bo/pages/_layout/learning/test-detail.module.css';
-import { createColumnHelper } from '@tanstack/react-table';
-import { IcoPlus, IcoMinus } from '@learnway/icons';
-import { useState, useContext, useEffect, useCallback } from 'react';
-import { DndContext, DragEndEvent, closestCenter, MeasuringStrategy } from '@dnd-kit/core';
+import { closestCenter, DndContext, DragEndEvent, MeasuringStrategy } from '@dnd-kit/core';
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 import { arrayMove } from '@dnd-kit/sortable';
+import {
+  useCreateExternalCourseLayout,
+  useGetRegistrationLayout,
+} from '@entities/external-education';
 import {
   AddComponentModal,
   ApplicationItem,
 } from '@features/external-education/components/modal/add-component-modal';
-import { DragHandleContext } from '@learnway/ui';
-import {
-  useGetRegistrationLayout,
-  ExternalEducationService,
-  useCreateExternalCourseLayout,
-} from '@entities/external-education';
 import { DEFAULT_FIELD_CONFIG } from '@features/external-education/types/form-field.types';
-import { PreviewComponentModal } from '../modal/preview-component-modal';
+import { IcoMinus, IcoPlus } from '@learnway/icons';
+import styles from '@learnway/styles/bo/pages/_layout/learning/test-detail.module.css';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { RadioGroupFormField } from '@learnway/ui/form-field';
+import { DragHandleContext, TableBox } from '@learnway/ui/grid';
+import { useModal } from '@learnway/ui/modal';
+import { createColumnHelper } from '@tanstack/react-table';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { FormPreviewModal } from '../modal/form-preview-modal';
-
+import { PreviewComponentModal } from '../modal/preview-component-modal';
 // 드래그 핸들 컴포넌트 - DnD는 TableBox 내부에서 처리
 const DragHandle = () => {
   const dragContext = useContext(DragHandleContext);

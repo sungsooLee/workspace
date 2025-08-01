@@ -4,10 +4,13 @@ import { createFileRoute } from '@tanstack/react-router';
 import { IcoCaution, IcoArrowForward } from '@learnway/icons';
 import styles from './agreement-privacy.module.css';
 import embededAlert from '@learnway/styles/fo/shared/ui/embeded-alert/embeded-alert.module.css';
-import { Button, Checkbox, useModal } from '@learnway/ui';
+
 import { AgreementDetailPopup } from '../../features/auth';
 import { MobileView, BrowserView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
+import { Checkbox } from '@learnway/ui/checkbox';
 
 export const Route = createFileRoute('/_auth/agreement-privacy')({
   component: RouteComponent,

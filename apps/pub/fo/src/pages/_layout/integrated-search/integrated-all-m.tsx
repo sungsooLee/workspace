@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { Button } from '@learnway/ui';
 import {
   IntegratedSearchButton,
   IntegratedSearchProcedure,
@@ -15,6 +14,7 @@ import { IcoArrowForward } from '@learnway/icons';
 
 import bannerStyles from '../../../shared/ui/visual/banner.module.css';
 import styles from './integrated-all-m.module.css';
+import { Button } from '@learnway/ui/button';
 
 export const Route = createFileRoute('/_layout/integrated-search/integrated-all-m')({
   component: RouteComponent,

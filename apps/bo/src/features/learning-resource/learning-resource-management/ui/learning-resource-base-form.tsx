@@ -1,12 +1,11 @@
-import { t } from 'i18next';
+import { CODE_GROUP, DynamicFormProvider } from '@learnway/hooks';
+import { ContentsRow } from '@learnway/ui/contents-row';
 import {
-  ContentsRow,
   EditorFormField,
-  Input,
   InputModalSelectorFormField,
   TextareaFormField,
-} from '@learnway/ui';
-import { CODE_GROUP, DynamicFormProvider } from '@learnway/hooks';
+} from '@learnway/ui/form-field';
+import { Input } from '@learnway/ui/input';
 import {
   ChannelChoiceModal,
   ChipListFormField,
@@ -15,12 +14,14 @@ import {
   SwitchFormField,
   UserChoiceModal,
 } from '@shared/ui';
+import { t } from 'i18next';
 
 import { ContentCreateType, EnFormMode } from '@types';
 
 import { DropdownFormField, FormDisplay, SecondDurationTimeFormField } from '@features/form';
 import { DateRangePickerFormField } from '@features/form/ui';
 import { User } from '@learnway/types';
+import { useTranslation } from 'react-i18next';
 
 const LearningResourceBaseFormComponent = ({
   provider,
@@ -49,6 +50,8 @@ const LearningResourceBaseFormComponent = ({
   /** 학습자원 생성 타입 (수기/번역/공유) */
   createType?: ContentCreateType;
 }) => {
+  const { t } = useTranslation();
+
   const { watch } = provider;
   const isCourseUsed = watch('isCourseUsed');
 
@@ -65,7 +68,7 @@ const LearningResourceBaseFormComponent = ({
         <FormRow2
           provider={provider}
           name="channelName"
-          label={'채널'}
+          label={t('채널')}
           validation={{ required: true }}
           format="object"
           element={
@@ -90,7 +93,7 @@ const LearningResourceBaseFormComponent = ({
         <FormRow2
           provider={provider}
           name="languageCountryCode"
-          label={'언어'}
+          label={t('언어')}
           format="object"
           validation={{ required: true }}
           element={
@@ -107,7 +110,7 @@ const LearningResourceBaseFormComponent = ({
         <FormRow2
           provider={provider}
           name="contentName"
-          label={'학습자원명'}
+          label={t('학습자원명')}
           value=""
           validation={{ required: true }}
           element={<Input type="text" maxLength={contentNameMaxLength} readOnly={hasMapping} />}
@@ -118,7 +121,7 @@ const LearningResourceBaseFormComponent = ({
         <FormRow2
           provider={provider}
           name="description"
-          label="학습자원 설명"
+          label={t('학습자원 설명')}
           value=""
           element={<TextareaFormField maxLength={2000} />}
         />
@@ -127,7 +130,7 @@ const LearningResourceBaseFormComponent = ({
       <ContentsRow>
         <FormRow2
           provider={provider}
-          label="담당자"
+          label={t('담당자')}
           name="coordinatorName"
           validation={{ required: true }}
           element={
@@ -135,7 +138,7 @@ const LearningResourceBaseFormComponent = ({
               modalConfig={{
                 title: '',
                 width: 'md',
-                content: <UserChoiceModal title="담당자" />,
+                content: <UserChoiceModal title={t('담당자')} />,
               }}
               transformModalData={(data: User) => ({
                 coordinatorUuid: data.uuid,
@@ -187,13 +190,13 @@ const LearningResourceBaseFormComponent = ({
       <ContentsRow type="horizontal" className="inactive">
         <FormRow2
           provider={provider}
-          label="외주개발업체정보"
+          label={t('외주개발업체정보')}
           name="isVendored"
           element={<SwitchFormField disabled={editDisabled} />}
           value={false}
           format="boolean"
           switchConfig={{
-            label: (value: boolean) => (value ? '있음' : '없음'),
+            label: (value: boolean) => (value ? t('있음') : t('없음')),
           }}
         />
       </ContentsRow>
@@ -260,7 +263,7 @@ const LearningResourceBaseFormComponent = ({
           <FormRow2
             provider={provider}
             name="contentAddInfo"
-            label={'학습 시간'}
+            label={t('학습 시간')}
             format="number"
             value={0}
             element={<SecondDurationTimeFormField readOnly={readOnlyLessonTime || editDisabled} />}
@@ -276,9 +279,9 @@ const LearningResourceBaseFormComponent = ({
           value={[]}
           validation={{ required: true }}
           element={<ChipListFormField />}
-          placeholder="한글, 영문, 숫자 포함 9자 이하 태그를 입력하세요."
-          limitPlaceholder="여러개의 태그는 쉼표로 구분"
-          tooltip="태그는 학습자원 검색 시 활용되고, 학습자에게는 10개까지만 보여집니다."
+          placeholder={t('한글, 영문, 숫자 포함 9자 이하 태그를 입력하세요.')}
+          limitPlaceholder={t('여러개의 태그는 쉼표로 구분')}
+          tooltip={t('태그는 학습자원 검색 시 활용되고, 학습자에게는 10개까지만 보여집니다.')}
           chipListConfig={{
             showInput: true,
             labelField: 'tagName',
@@ -293,7 +296,7 @@ const LearningResourceBaseFormComponent = ({
             <FormRow2
               provider={provider}
               name="aiSummary"
-              label="학습자원 개요 (AI 자동 추출)"
+              label={t('학습자원 개요 (AI 자동 추출)')}
               value=""
               element={<TextareaFormField maxLength={2000} readOnly />}
               placeholder={t('키워드는 AI 자동 추출되어 표기됩니다.')}
@@ -303,7 +306,7 @@ const LearningResourceBaseFormComponent = ({
             <FormRow2
               provider={provider}
               name="aiKeyword"
-              label="키워드 (AI 자동 추출)"
+              label={t('키워드 (AI 자동 추출)')}
               value=""
               element={<TextareaFormField maxLength={2000} readOnly />}
               placeholder={t('키워드는 AI 자동 추출되어 표기됩니다.')}
@@ -316,12 +319,12 @@ const LearningResourceBaseFormComponent = ({
       <ContentsRow type="horizontal" className="inactive">
         <FormRow2
           provider={provider}
-          label="교육자원활용"
+          label={t('교육자원활용')}
           name="isCourseUsed"
           format="boolean"
           element={<SwitchFormField />}
           switchConfig={{
-            label: (value: boolean) => (value ? '활용가능' : '활용불가'),
+            label: (value: boolean) => (value ? t('활용가능') : t('활용불가')),
           }}
           guideText={t(
             `해당 학습자원으로 교육 과정을 개설할 수 ${isCourseUsed ? '있습니다' : '없습니다'}.`,

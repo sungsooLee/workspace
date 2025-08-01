@@ -1,5 +1,5 @@
+import { Panel } from '@learnway/ui/panel';
 import { createFileRoute } from '@tanstack/react-router';
-import { Panel } from '@learnway/ui';
 
 export const Route = createFileRoute('/_guide/guide/panel')({
   component: RouteComponent,
@@ -23,9 +23,9 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-import { Panel } from '@learnway/ui';
+import { Panel } from '@learnway/ui/panel';
 
-// 적용방법(예시) 
+// 적용방법(예시)
 <Panel type="line" hideHeaderUnderline>
   <div className="p-10">content</div> // 내용은 자유
 </Panel>`}
@@ -53,9 +53,9 @@ import { Panel } from '@learnway/ui';
           <pre className="code_block">
             <code>
               {`// 초기 import
-import { Panel } from '@learnway/ui';
+import { Panel } from '@learnway/ui/panel';
 
-// 적용방법(예시) 
+// 적용방법(예시)
 <Panel
   title="타이틀"
   hideHeaderUnderline
@@ -84,9 +84,9 @@ import { Panel } from '@learnway/ui';
           <pre className="code_block">
             <code>
               {`// 초기 import
-import { Panel } from '@learnway/ui';
+import { Panel } from '@learnway/ui/panel';
 
-// 적용방법(예시) 
+// 적용방법(예시)
 <Panel
   hideHeaderUnderline
   actions=""

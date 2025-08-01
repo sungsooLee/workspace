@@ -1,21 +1,13 @@
 import { t } from 'i18next';
-import {
-  Button,
-  Divider,
-  GridBox,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  useGridBox,
-  useGridBoxConfig,
-  useModal,
-} from '@learnway/ui';
+import { Divider } from '@learnway/ui/elements';
+import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import { SearchBox } from '../search-box';
 import { CODE_GROUP, SearchBoxConfig, useLanguageMap, useSearchBox } from '@learnway/hooks';
 import { TenantByRoleDropdownFormField, TenantChannelDropdownFormField } from '../form';
 import { queryOptions } from '@entities/curriculum';
 import { useEffect, useState } from 'react';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
 interface Props {
   initialTenantId?: number;
@@ -32,8 +24,7 @@ export const CurriculumChoiceModal = ({
   initialContentType,
   openingYear,
   languageCountryCode,
-  curriculumName,
-}: Props) => {
+  curriculumName }: Props) => {
   const { closeModal } = useModal();
 
   const { getLanguageName } = useLanguageMap();
@@ -49,16 +40,14 @@ export const CurriculumChoiceModal = ({
           value: initialTenantId || '',
           format: 'object',
           element: <TenantByRoleDropdownFormField />,
-          readOnly: true,
-        },
+          readOnly: true },
         {
           name: 'channelUuid',
           type: 'custom',
           label: t('채널'),
           value: initialChannelUuid || '',
           format: 'object',
-          element: <TenantChannelDropdownFormField readOnly />,
-        },
+          element: <TenantChannelDropdownFormField readOnly /> },
         // {
         //   name: 'contentTypes',
         //   type: 'dropdown',
@@ -89,22 +78,17 @@ export const CurriculumChoiceModal = ({
           value: '',
           presetOptionLabel: t('LABEL.form.label.select', '선택'),
           optionsConfig: {
-            codeGroup: CODE_GROUP['pms.multilingual.LangCountryCode'],
-          },
-        },
+            codeGroup: CODE_GROUP['pms.multilingual.LangCountryCode'] } },
         {
           name: 'curriculumName',
           label: t('커리큘럼명'),
           type: 'text',
-          value: '',
-        },
+          value: '' },
       ],
     ],
     validator: {
       tenantId: true,
-      channelUuid: true,
-    },
-  });
+      channelUuid: true } });
 
   const gridBoxConfig: useGridBoxConfig = {
     query: (param: any) => queryOptions.list(param),
@@ -114,9 +98,7 @@ export const CurriculumChoiceModal = ({
         label: t('개설연도'),
         size: 100,
         meta: {
-          cellAlign: 'center',
-        },
-      },
+          cellAlign: 'center' } },
       //   { field: 'con', headerName: t('유형'), width: 200 }, 유형 아직 없음
       { name: 'curriculumName', label: t('커리큘럼명'), size: 400 },
       {
@@ -124,28 +106,23 @@ export const CurriculumChoiceModal = ({
         label: t('언어'),
         size: 100,
         meta: {
-          cellAlign: 'center',
-        },
+          cellAlign: 'center' },
         render: (info: any) => {
           const locale = info.getValue();
           return getLanguageName(locale);
-        },
-      },
+        } },
       {
         name: 'preview',
         label: t('미리보기'),
         size: 100,
         meta: {
-          cellAlign: 'center',
-        },
+          cellAlign: 'center' },
         render: (info: any) => (
           <p className="underline" onClick={() => console.log(info)}>
             미리보기
           </p>
-        ),
-      },
-    ],
-  };
+        ) },
+    ] };
 
   const { provider, getValues, onFormChange } = useSearchBox(SearchBoxConfig());
   const { config, gridFetch } = useGridBox(gridBoxConfig, getValues);

@@ -1,55 +1,47 @@
-import React, { useState, useEffect, useRef } from 'react';
 import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
-import { createColumnHelper, ColumnDef, Table } from '@tanstack/react-table';
+import { ColumnDef, createColumnHelper, Table } from '@tanstack/react-table';
 import { t } from 'i18next';
+import { useEffect, useRef, useState } from 'react';
 
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 
 import {
-  Input,
-  ContentsRow,
-  Button,
-  GridBox,
-  useGridBox,
-  ChipListModalSelectorFormField,
-  useModal,
-  FormSubTitle,
-  Checkbox,
-} from '@learnway/ui';
-import {
-  DynamicFormConfig,
-  useDynamicForm,
   CODE_GROUP,
-  useSearchBox,
+  DynamicFormConfig,
   SearchBoxConfig,
+  useDynamicForm,
+  useSearchBox,
 } from '@learnway/hooks';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { Checkbox } from '@learnway/ui/checkbox';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { ChipListModalSelectorFormField } from '@learnway/ui/form-field';
+import { GridBox, useGridBox } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
 
 import {
+  ChannelListChoiceModal,
+  ContentsButtons,
   FormRow,
   LinkBox,
-  ContentsButtons,
-  ChannelListChoiceModal,
   UserChoiceModal,
   UserGroupOrganizationShuttleModal,
-  UserShuttleModal,
 } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
 
-import { GridExcelUploadButton } from '@shared/ui';
-
-import { MainContents, PageContainer } from '@shared/ui';
 import {
   useCreateUserGroupManual,
   useFetchUserGroupDetail,
   useUpdateUserGroupManual,
 } from '@entities/user-group';
+import { queryOptions } from '@entities/user-group/service/user-group.queries';
 import { FormDisplay } from '@features/form';
 import { useFetchAuthUser } from '@learnway/auth/entities';
-import { queryOptions } from '@entities/user-group/service/user-group.queries';
 import { Role, Tenant } from '@learnway/auth/types';
+import { MainContents, PageContainer } from '@shared/ui';
 import { useWatch } from 'react-hook-form';
-import { getUserStatus } from '@features/platform-management/company/company-user-management/service/company-user.service';
-import { EnGlobalConst } from '@types';
 
 export const Route = createLazyFileRoute('/_layout/platform/tenant/usr-group/manual-detail')({
   component: RouteComponent,
@@ -74,7 +66,6 @@ function RouteComponent() {
 
   const { openModal, confirm: openConfirm, alert: openAlert } = useModal();
   const [tenantInfo, setTenantInfo] = useState<Tenant>();
-  const [roleInfo, setRoleInfo] = useState<Role>();
   const [modalUserGroups, setModalUserGroups] = useState<any>(null);
   const [tableInstance, setTableInstance] = useState<Table<any>>();
   const [userGroupSettings, setUserGroupSettings] = useState<any>();
@@ -202,13 +193,12 @@ function RouteComponent() {
   };
 
   const openUserGroupModal = () => {
-    if (tenantInfo && roleInfo) {
+    if (tenantInfo) {
       openModal({
         width: 'xl',
         content: (
           <UserGroupOrganizationShuttleModal
             tenantIds={[tenantInfo.tenantId]}
-            roleIds={[roleInfo.roleId]}
           />
         ),
         onClose(data: any) {
@@ -291,7 +281,6 @@ function RouteComponent() {
     console.log('### loginUser', loginUser);
     if (loginUser) {
       setTenantInfo(loginUser.activeTenant);
-      setRoleInfo(loginUser.activeRole);
       setValue('tenantName', loginUser.activeTenant?.tenantName);
     }
   }, [loginUser]);

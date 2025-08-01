@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Chip, ChipList, SelectOption } from '@learnway/ui';
+import { Chip, ChipList } from '@learnway/ui/chips';
+import { SelectOption } from '@learnway/ui/type';
 
 export const Route = createFileRoute('/_guide/guide/chips')({
   component: RouteComponent,
@@ -43,7 +44,8 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-import { Chip, ChipList, SelectOption } from '@learnway/ui';
+import { Chip, ChipList } from '@learnway/ui/chips';
+import { SelectOption } from '@learnway/ui/type';
 
 // 적용방법(예시)
 <Chip

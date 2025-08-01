@@ -2,8 +2,7 @@ import {
   useMutation,
   useQuery,
   useQueryClient,
-  UseQueryOptions,
-} from '@tanstack/react-query';
+  UseQueryOptions } from '@tanstack/react-query';
 
 import { queryOptions, mutateOptions, queryKeys } from './tenant-category.queries';
 import { Category } from '@types';
@@ -30,8 +29,7 @@ export function useCreateTenantCategory(tenantId: number, options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
 
   return {
     create: (payload: any, callback?: any) => {
@@ -39,8 +37,7 @@ export function useCreateTenantCategory(tenantId: number, options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }
 
 export function useDeleteTenantCategory(tenantId: number, options: any) {
@@ -57,8 +54,7 @@ export function useDeleteTenantCategory(tenantId: number, options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
 
   return {
     delete: (payload: any, callback?: any) => {
@@ -66,8 +62,7 @@ export function useDeleteTenantCategory(tenantId: number, options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }
 
 export function useUpdateTenantCategory(tenantId: number, options: any) {
@@ -85,8 +80,7 @@ export function useUpdateTenantCategory(tenantId: number, options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
 
   return {
     update: (payload: any, callback?: any) => {
@@ -94,8 +88,7 @@ export function useUpdateTenantCategory(tenantId: number, options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }
 
 export function useMoveTenantCategory(tenantId: number, options: any) {
@@ -112,8 +105,7 @@ export function useMoveTenantCategory(tenantId: number, options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
 
   return {
     move: (payload: any, callback?: any) => {
@@ -121,8 +113,7 @@ export function useMoveTenantCategory(tenantId: number, options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }
 
 export function useMappingTenantCategory(tenantId: number, options: any) {
@@ -139,8 +130,7 @@ export function useMappingTenantCategory(tenantId: number, options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
 
   return {
     mapping: (payload: any, callback?: any) => {
@@ -148,14 +138,12 @@ export function useMappingTenantCategory(tenantId: number, options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }
 
 // [BO] 과정 생성 카테고리 팝업
 export function useFetchTenantCategoryTreePopup(tenantIds: Array<number>, options?: Omit<UseQueryOptions<Category, Error>, 'queryKey' | 'queryFn'>) {
   return useQuery({
     ...queryOptions.fetchTenantCategoryTreePopup(tenantIds),
-    ...options,
-  });
+    ...options });
 }

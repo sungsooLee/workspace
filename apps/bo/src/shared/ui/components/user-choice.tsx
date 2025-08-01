@@ -1,5 +1,6 @@
 import { t } from 'i18next';
-import { Divider, GridBox, useGridBox } from '@learnway/ui';
+import { Divider } from '@learnway/ui/elements';
+import { GridBox, useGridBox } from '@learnway/ui/grid';
 import { createColumnHelper, ColumnDef } from '@tanstack/react-table';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
@@ -25,13 +26,11 @@ const UserChoiceComponent = ({ handleRowSelect }: Props) => {
           label: '회사',
           value: undefined,
           optionsConfig: {
-            codeGroup: CODE_GROUP['manual.company.companyId'],
-          },
+            codeGroup: CODE_GROUP['manual.company.companyId'] },
           format: 'number',
           isSearchable: true,
           isClearable: true,
-          placeholder: '입력 선택',
-        },
+          placeholder: '입력 선택' },
         {
           name: 'deptId',
           type: 'dropdown',
@@ -41,26 +40,22 @@ const UserChoiceComponent = ({ handleRowSelect }: Props) => {
           options: [],
           format: 'object',
           isSearchable: true,
-          isClearable: true,
-        },
+          isClearable: true },
       ],
       [
         {
           name: 'employeeNumber',
           type: 'text',
           label: '사번',
-          value: '',
-        },
+          value: '' },
         {
           name: 'userName',
           type: 'text',
           label: '이름',
-          value: '',
-        },
+          value: '' },
       ],
     ],
-    validator: { companyId: { required: true } },
-  };
+    validator: { companyId: { required: true } } };
 
   const gridConfig = {
     query: usersQueryOptions.list,
@@ -69,9 +64,7 @@ const UserChoiceComponent = ({ handleRowSelect }: Props) => {
     pagination: {
       pageSize: 10,
       pageIndex: 1,
-      totalRows: 2,
-    },
-  };
+      totalRows: 2 } };
 
   const columnHelper = createColumnHelper<any>();
   const columns = [
@@ -80,39 +73,33 @@ const UserChoiceComponent = ({ handleRowSelect }: Props) => {
       cell: (info) => info.row.original.company.name,
       header: '회사',
       enableGrouping: false,
-      size: 210,
-    }),
+      size: 210 }),
     columnHelper.accessor('dept', {
       id: 'dept',
       cell: (info) => info.row.original.dept.deptName,
       header: '소속',
       size: 150,
-      enableGrouping: false,
-    }),
+      enableGrouping: false }),
     columnHelper.accessor('employeeNumber', {
       id: 'employeeNumber',
       cell: (info) => info.getValue(),
       header: '사번',
       size: 220,
-      enableGrouping: false,
-    }),
+      enableGrouping: false }),
     columnHelper.accessor('name', {
       id: 'name',
       cell: (info) => info.getValue(),
       header: '이름',
       size: 220,
-      enableGrouping: false,
-    }),
+      enableGrouping: false }),
     columnHelper.accessor('employmentStatus', {
       cell: (info) => info.getValue(),
       header: '재직여부',
-      enableGrouping: false,
-    }),
+      enableGrouping: false }),
     columnHelper.accessor('accountType', {
       cell: (info) => info.getValue(),
       header: '계정상태',
-      enableGrouping: false,
-    }),
+      enableGrouping: false }),
   ] as ColumnDef<any, unknown>[];
 
   const { provider: sProvider, getValues, setOptions, setValue } = useSearchBox(searchConfig);

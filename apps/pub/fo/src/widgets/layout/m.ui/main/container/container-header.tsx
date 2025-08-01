@@ -3,7 +3,7 @@ import { useActiveMenuDepthState } from '@learnway/auth/entities';
 import { useCreation } from 'ahooks';
 import { last } from 'lodash';
 import { Link, useRouter, useCanGoBack } from '@tanstack/react-router';
-import { Button } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
 import { IcoArrowBackward, IcoXclose } from '@learnway/icons';
 import { CategoryButton, Search } from '../../../../../features/layout';
 

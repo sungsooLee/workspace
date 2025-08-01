@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { ProgressBar, ProgressCheck } from '@learnway/ui';
+import { ProgressBar, ProgressCheck } from '@learnway/ui/progress';
 
 export const Route = createFileRoute('/_guide/guide/progress')({
   component: RouteComponent,
@@ -14,7 +14,7 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-  import { Progress, ProgressCheck } from '@learnway/ui';
+  import { Progress, ProgressCheck } from '@learnway/ui/progress';
   
   // 적용방법(예시) % 기준으로 value값 추가, 실패인 경우 isFailed 속성 추가, 90%이상일때, 100%일때 컬러 변경됨
   <ProgressBar progress={40} />

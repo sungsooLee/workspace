@@ -1,6 +1,5 @@
 import { memo } from 'react';
 import { Link } from '@tanstack/react-router';
-import { Input, Button } from '@learnway/ui';
 import { IcoSearch } from '@learnway/icons';
 
 import { RecentSearches } from './recent-searches';
@@ -8,6 +7,8 @@ import { RecommendedSearches } from './recommended-searches';
 import { PopularSearches } from './popular-searches';
 
 import styles from '@learnway/styles/fo/features/layout/ui/search-popover.module.css';
+import { Button } from '@learnway/ui/button';
+import { Input } from '@learnway/ui/input';
 
 interface SearchPopoverProps {
   className?: string;

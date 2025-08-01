@@ -1,7 +1,6 @@
 import { IcoArrowDown, IcoClose02, IcoLang } from '@learnway/icons';
 import { Button, ModalBody, ModalContainer, ModalTitle, Popover, useModal } from '@learnway/ui';
 import { memo, useState } from 'react';
-import { BrowserView, MobileView } from 'react-device-detect';
 import styles from './language.module.css';
 import popoverInnerStyles from './popover-inner.module.css';
 

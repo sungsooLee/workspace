@@ -26,8 +26,7 @@ export function useCreateDepartment(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
 
   return {
     create: (payload: any, callback?: any) => {
@@ -35,8 +34,7 @@ export function useCreateDepartment(options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }
 
 export function useUpdateDepartment(options: any) {
@@ -51,8 +49,7 @@ export function useUpdateDepartment(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
 
   return {
     update: (payload: any, callback?: any) => {
@@ -60,8 +57,7 @@ export function useUpdateDepartment(options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }
 
 export function useDeleteDepartment(options: any) {
@@ -76,8 +72,7 @@ export function useDeleteDepartment(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
 
   return {
     delete: (payload: any, callback?: any) => {
@@ -85,8 +80,7 @@ export function useDeleteDepartment(options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }
 
 export function useMoveDepartment(options: any) {
@@ -101,8 +95,7 @@ export function useMoveDepartment(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
 
   return {
     move: (payload: any, callback?: any) => {
@@ -110,6 +103,5 @@ export function useMoveDepartment(options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }

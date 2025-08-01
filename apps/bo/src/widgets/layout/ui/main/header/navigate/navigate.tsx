@@ -33,8 +33,7 @@ function NavigateComponent() {
       if (node.isHiddenMenu === false) {
         return {
           ...node,
-          children: filteredChildren,
-        };
+          children: filteredChildren };
       }
       return null;
     }

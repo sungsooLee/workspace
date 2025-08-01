@@ -9,14 +9,9 @@ export const Route = createLazyFileRoute('/_auth/search-account/result')({
     validateState: {
       email: {
         format: 'email',
-        required: true,
-      },
-    },
+        required: true } },
     meta: {
-      title: 'LABEL.common.accountSearch',
-    },
-  }),
-});
+      title: 'LABEL.common.accountSearch' } }) });
 
 function RouteComponent() {
   return <ResultBySearchAccountPage route={Route} />;

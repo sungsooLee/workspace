@@ -1,11 +1,12 @@
 import { CourseTabBaseProps } from '@features/learning-operate/course/course-management';
 import { CurriculumDetail } from '@features/learning-operate/curriculum/curriculum-management/ui/curriculum-detail';
 import { useDynamicForm2 } from '@learnway/hooks';
-import { Button, FormSubTitle } from '@learnway/ui';
+import { FormSubTitle } from '@learnway/ui/base-form';
 import { FORM_MODE } from '@shared/const';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useCourseCreateSubPage } from '../../../../hooks/use-course-create-sub-page';
+import { Button } from '@learnway/ui/button';
 
 const CurriculumComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) => {
   const { t } = useTranslation();
@@ -29,8 +30,7 @@ const CurriculumComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref)
         onCurriculumCreated={(curriculumId: number) => {
           console.log('----- onCurriculumCreated', curriculumId);
           onFormChange({
-            primaryCurriculumId: curriculumId,
-          });
+            primaryCurriculumId: curriculumId });
         }}
       />
     </div>

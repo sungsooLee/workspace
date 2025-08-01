@@ -6,8 +6,7 @@ import { authSSOQueryOptions } from '@learnway/auth/entities';
 
 const ssoSearchSchema = z.object({
   state: z.string().required(),
-  code: z.string().required(),
-});
+  code: z.string().required() });
 
 export const Route = createFileRoute('/sso/redirect')({
   component: RouteComponent,
@@ -15,8 +14,7 @@ export const Route = createFileRoute('/sso/redirect')({
   beforeLoad: async ({
     location,
     context,
-    search,
-  }: {
+    search }: {
     location: ParsedLocation;
     context: any;
     search: any;
@@ -25,13 +23,11 @@ export const Route = createFileRoute('/sso/redirect')({
     const parameters = {
       state: search.state,
       authorizationCode: search.code,
-      timezone: 'Asia/Seoul"',
-    };
+      timezone: 'Asia/Seoul"' };
     const data = await queryClient.fetchQuery(authSSOQueryOptions.authSSOLogin(parameters));
     console.log('redirect data', search, data);
     //router.history.push(search.redirect);
-  },
-});
+  } });
 
 function RouteComponent() {
   return <div>Hello "/sso"!</div>;

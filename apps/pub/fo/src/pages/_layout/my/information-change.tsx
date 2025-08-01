@@ -1,6 +1,5 @@
 import { IcoCaution } from '@learnway/icons';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
-import { Button, ContentsRow, Input, useModal } from '@learnway/ui';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { isMobile } from 'react-device-detect';
 import { PasswordChangePopup, PhoneChangePopup } from '../../../features/layout';
@@ -9,6 +8,10 @@ import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.cs
 //import styles from './information-change.module.css';
 import styles from '@learnway/styles/fo/pages/_layout/my-page/privacy/change-information.module.css';
 import myPageContainerStyles from '@learnway/styles/fo/widgets/layout/ui/main/container/my-page-container.module.css';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
 
 export const Route = createFileRoute('/_layout/my/information-change')({
   component: RouteComponent,

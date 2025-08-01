@@ -1,13 +1,11 @@
-import {
-  ContentsRow,
-  EditDropdownCell,
-  EditSwitchCell,
-  FormSubTitle,
-  GridFormField,
-} from '@learnway/ui';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { GridFormField } from '@learnway/ui/form-field';
 import { FormRow } from '@shared/ui';
 import { CellContext } from '@tanstack/react-table';
 import { t } from 'i18next';
+// TODO: Fix unknown imports: EditDropdownCell, EditSwitchCell from '@learnway/ui'
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { EditDropdownCell, EditSwitchCell } from '@learnway/ui/grid';
 
 /**
  * 회사 유저 상세 - 직군/직무 정보

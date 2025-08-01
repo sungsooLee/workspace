@@ -1,5 +1,5 @@
+import { Button } from '@learnway/ui/button';
 import { createFileRoute } from '@tanstack/react-router';
-import { Button } from '@learnway/ui';
 
 export const Route = createFileRoute('/_layout/test')({
   component: RouteComponent,

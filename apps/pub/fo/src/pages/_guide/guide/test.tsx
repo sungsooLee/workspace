@@ -6,7 +6,9 @@ import ThumbnailList from '../../-components/thumb/thumb-nail-list';
 import { IcoEye, IcoHeart, IcoPlay, IcoStar } from '@learnway/icons';
 import { getRandomId } from '@learnway/shared';
 import bannerImg from '@learnway/styles/fo/assets/images/banner/img_banner_sample.jpg';
-import { Badge, Button, Popover } from '@learnway/ui';
+import { Badge } from '@learnway/ui/badge';
+import { Button } from '@learnway/ui/button';
+import { Popover } from '@learnway/ui/popover';
 
 export const Route = createFileRoute('/_guide/guide/test')({
   component: RouteComponent,

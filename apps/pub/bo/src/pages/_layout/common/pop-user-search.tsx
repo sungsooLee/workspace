@@ -1,18 +1,12 @@
-import { useEffect } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import {
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  useModal,
-  Tabs,
-  Button,
-} from '@learnway/ui';
+import { useEffect } from 'react';
 
 /* tab contents */
-import { UserMenu } from './-tabcontents/user-menu';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { Tabs } from '@learnway/ui/tabs';
 import { OutsideUserMenu } from './-tabcontents/outside-user-menu';
+import { UserMenu } from './-tabcontents/user-menu';
 
 export const Route = createFileRoute('/_layout/common/pop-user-search')({
   component: RouteComponent,

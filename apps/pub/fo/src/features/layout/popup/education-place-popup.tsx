@@ -1,10 +1,12 @@
 import { memo } from 'react';
-import { ModalBody, ModalContainer, ModalTitle, Popover } from '@learnway/ui';
+
 import { isMobile } from 'react-device-detect';
 
 import styles from './education-place-popup.module.css';
 
 import mapImage from '@learnway/styles/fo/assets/images/temp/img_map.png';
+import { ModalContainer, ModalTitle, ModalBody } from '@learnway/ui/modal';
+import { Popover } from '@learnway/ui/popover';
 
 // 약도보기 popover
 const CopyPopoverComponent = () => {

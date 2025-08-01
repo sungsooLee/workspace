@@ -1,4 +1,6 @@
-import { Button, Divider, Tabs } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { Divider } from '@learnway/ui/elements';
+import { Tabs } from '@learnway/ui/tabs';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';

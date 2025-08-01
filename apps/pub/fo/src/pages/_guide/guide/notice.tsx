@@ -1,6 +1,6 @@
 import { IcoCaution } from '@learnway/icons';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
-import { Button } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
 import { createFileRoute, Link } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/_guide/guide/notice')({

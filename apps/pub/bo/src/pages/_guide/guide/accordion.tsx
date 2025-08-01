@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useState } from 'react';
-import { Accordion } from '@learnway/ui';
+
+import { Accordion } from '@learnway/ui/accordion';
 
 export const Route = createFileRoute('/_guide/guide/accordion')({
   component: RouteComponent,
@@ -43,7 +44,7 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-  import { Accordion } from '@learnway/ui';
+  import { Accordion } from '@learnway/ui/accordion';
   import { getRandomId } from '@learnway/shared';
 
   const dummyItems = [
@@ -58,7 +59,7 @@ function RouteComponent() {
     children: <div>Content B</div>,
   },
 ];
-  
+
   // 적용방법(예시)
   <Accordion />`}
           </code>

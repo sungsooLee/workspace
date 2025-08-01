@@ -1,6 +1,5 @@
-/* eslint-disable @nx/enforce-module-boundaries */
 import { createFileRoute } from '@tanstack/react-router';
-import { NoticeBox } from '../../../../../../bo/src/shared/ui/';
+import { NoticeBox } from '../../../shared/ui/notice-box';
 
 export const Route = createFileRoute('/_guide/guide/notice-box')({
   component: RouteComponent,
@@ -28,7 +27,7 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-  import { NoticeBox } from '../../../../../../bo/src/shared/ui/';`}
+  import { NoticeBox } from '../../../shared/ui/notice-box';`}
           </code>
         </pre>
       </div>

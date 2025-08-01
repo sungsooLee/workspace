@@ -1,6 +1,5 @@
-import { FC } from 'react';
-import { useEffect, useState } from 'react';
-import { ShuttleTreeToChips, TreeNode } from '@learnway/ui';
+import { ShuttleTreeToChips, TreeNode } from '@learnway/ui/tree-view';
+import { FC, useState } from 'react';
 
 const UserGroupComponent: FC<{}> = ({}) => {
   const sampleData: TreeNode[] = [

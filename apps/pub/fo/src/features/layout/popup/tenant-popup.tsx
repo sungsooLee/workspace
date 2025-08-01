@@ -1,8 +1,9 @@
-import { Button, ModalBody, ModalContainer, ModalTitle, useModal } from '@learnway/ui';
 import { memo, useState } from 'react';
 
 import { IcoCheck02 } from '@learnway/icons';
 import styles from './tenant-popup.module.css';
+import { Button } from '@learnway/ui/button';
+import { useModal, ModalContainer, ModalTitle, ModalBody } from '@learnway/ui/modal';
 
 const TenantPopupComponent = () => {
   const { confirm: openConfirm } = useModal();

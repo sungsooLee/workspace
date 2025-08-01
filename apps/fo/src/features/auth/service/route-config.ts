@@ -1,15 +1,15 @@
-import { createElement } from 'react';
-import { ErrorComponent, redirect } from '@tanstack/react-router';
 import type { ParsedLocation } from '@tanstack/react-router';
+import { ErrorComponent, redirect } from '@tanstack/react-router';
 import { isEmpty } from 'lodash';
+import { createElement } from 'react';
 import { ZodSchema } from 'zod';
 
-import { authUserQueryKeys, mutateOptions, menuQueryOptions } from '@learnway/auth/entities';
+import { authUserQueryKeys, menuQueryOptions, mutateOptions } from '@learnway/auth/entities';
 
 import type { AuthUser } from '@learnway/auth/types';
 import { ERROR, tokenService } from '@learnway/config';
-import { buildJodObject, convertHierarchyToList, dateDiff } from '@learnway/shared';
 import type { PageRouteConfig } from '@learnway/shared';
+import { buildJodObject, convertHierarchyToList, dateDiff } from '@learnway/shared';
 
 import type { PageMeta } from '../../../types';
 // import { ErrorComponent } from '@features/layout';
@@ -42,7 +42,7 @@ export const decodeJwt = (token: string | null) => {
       atob(base64)
         .split('')
         .map(function (c) {
-          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+          return `%${`00${c.charCodeAt(0).toString(16)}`.slice(-2)}`;
         })
         .join(''),
     );
@@ -86,11 +86,12 @@ async function authorization({ location, context }: { location: ParsedLocation; 
         ),
       );
       if (authUserFetch && menus) {
+        console.log('@ auth fetch', authUserFetch);
+        console.log('@ auth menus222222', convertHierarchyToList(menus));
         authUserFetch.menus = convertHierarchyToList(menus);
         queryClient.setQueryData(authUserQueryKeys.authUser, authUserFetch);
+        return;
       }
-      console.log('@ auth fetch', authUserFetch);
-      console.log('@ auth menus222222', convertHierarchyToList(menus));
     }
 
     if (location.pathname === '/' || !authUserFetch?.menus) {
@@ -107,7 +108,7 @@ async function authorization({ location, context }: { location: ParsedLocation; 
     }
     return;
   }
-  /* 메뉴별 접근 권한에 대한 설계 필요 
+  /* 메뉴별 접근 권한에 대한 설계 필요
   const unauthScreen = authUser?.menus.some((menu: any) => menu.path === location.pathname);
   if (!unauthScreen) {
     throw ERROR.PAGE_ACCESS_RIGHTS;
@@ -125,6 +126,7 @@ export function pageRouteConfig(routeConfig?: PageRouteConfig<PageMeta>) {
         try {
           await authorization({ location, context });
         } catch (e) {
+          console.error('@@@ authorization Error', e);
           if (e === ERROR.PAGE_ACCESS_RIGHTS) {
             throw redirect({ to: '/' });
           } else if (e === ERROR.PASSWORD_EXPIRE) {

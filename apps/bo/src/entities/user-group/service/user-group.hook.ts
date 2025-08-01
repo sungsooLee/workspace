@@ -2,20 +2,16 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { UserGroupsParam } from '@types';
 import { queryKeys, queryOptions, userGroupManualOptions } from './user-group.queries';
 
-export function useFetchUserGroups(tenantIds: number[], params: UserGroupsParam) {
-  return useQuery(queryOptions.usergroups(tenantIds, params));
+export function useFetchUserGroups(tenantIds: number[], roleId = 0, params: UserGroupsParam) {
+  return useQuery(queryOptions.usergroups(tenantIds, roleId, params));
 }
 
-export function useFetchOrganizationTree(
-  tenantIds: number[],
-  roleIds: number[],
-  tenantName?: string,
-) {
-  return useQuery(queryOptions.organizationTree(tenantIds, roleIds, tenantName));
+export function useFetchOrganizationTree(tenantIds: number[], roleId = 0, tenantName?: string) {
+  return useQuery(queryOptions.organizationTree(tenantIds, roleId, tenantName));
 }
 
-export function useFetchCustomGroupsTree(userGroupName?: string) {
-  return useQuery(queryOptions.customGroupsTree(userGroupName));
+export function useFetchCustomGroupsTree(roleId = 0, userGroupName?: string) {
+  return useQuery(queryOptions.customGroupsTree(roleId, userGroupName));
 }
 
 export function useFetchUserGroupDetail(userGroupId: number) {

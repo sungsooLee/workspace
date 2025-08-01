@@ -1,8 +1,10 @@
 import { memo } from 'react';
-import { ModalBody, ModalContainer, ModalFooter, Button, Spinner } from '@learnway/ui';
+
 import { isMobile } from 'react-device-detect';
 
 import styles from './accepting-popup.module.css';
+import { Button } from '@learnway/ui/button';
+import { ModalContainer, ModalBody, ModalFooter } from '@learnway/ui/modal';
 
 const AcceptingPopupComponent = () => {
   return (

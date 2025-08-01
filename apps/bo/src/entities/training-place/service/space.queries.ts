@@ -4,36 +4,27 @@ import { getQuerySkipToken } from '@learnway/shared';
 export const queryKeys = {
   all: ['spaces'] as const,
   list: ['space-page'] as const,
-  detail: (id: number) => [...queryKeys.all, id] as const,
-};
+  detail: (id: number) => [...queryKeys.all, id] as const };
 
 export const queryOptions = {
   list: (params: any) => ({
     queryKey: queryKeys.list,
     queryFn: () => SpaceService.fetchList(params),
     cacheTime: 0,
-    staleTime: 0,
-  }),
+    staleTime: 0 }),
   detail: (id?: number) =>
     id
       ? {
           queryKey: queryKeys.detail(id),
-          queryFn: (): Promise<any> => SpaceService.fetch(id),
-        }
-      : getQuerySkipToken<any>(),
-};
+          queryFn: (): Promise<any> => SpaceService.fetch(id) }
+      : getQuerySkipToken<any>() };
 
 export const mutateOptions = {
   create: () => ({
-    mutationFn: (payload: any) => SpaceService.create(payload),
-  }),
+    mutationFn: (payload: any) => SpaceService.create(payload) }),
   update: () => ({
-    mutationFn: (payload: any) => SpaceService.update(payload),
-  }),
+    mutationFn: (payload: any) => SpaceService.update(payload) }),
   delete: () => ({
-    mutationFn: (id: number) => SpaceService.delete(id),
-  }),
+    mutationFn: (id: number) => SpaceService.delete(id) }),
   checkExists: () => ({
-    mutationFn: (code: string) => SpaceService.existsCode(code),
-  }),
-};
+    mutationFn: (code: string) => SpaceService.existsCode(code) }) };

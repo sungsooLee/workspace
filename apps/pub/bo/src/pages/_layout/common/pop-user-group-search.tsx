@@ -1,18 +1,13 @@
-import { useEffect } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import {
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  useModal,
-  Tabs,
-  Button,
-  Tooltip,
-} from '@learnway/ui';
-import { IcoRefresh02, IcoAlertCircle } from '@learnway/icons';
+import { useEffect } from 'react';
+
+import { IcoAlertCircle, IcoRefresh02 } from '@learnway/icons';
 
 /* tab contents */
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { Tabs } from '@learnway/ui/tabs';
+import { Tooltip } from '@learnway/ui/tooltip';
 import { UserGroup } from './-tabcontents/group';
 
 export const Route = createFileRoute('/_layout/common/pop-user-group-search')({

@@ -1,11 +1,12 @@
 import { memo } from 'react';
 
-import styles from './google-qrcode-popup.module.css';
-import noticeBoxStyles from '@learnway/styles/bo/shared/ui/notice-box/notice-box.module.css';
 import { IcoCaution } from '@learnway/icons';
+import noticeBoxStyles from '@learnway/styles/bo/shared/ui/notice-box/notice-box.module.css';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 import imgQrcode from '../../../assets/images/temp/img_qrcode.png';
-import { Button, ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui';
 import { GoogleInputPopup, GoogleKeyPopup } from '../../../features/auth';
+import styles from './google-qrcode-popup.module.css';
 
 const GoogleQrcodePopupCompoment = () => {
   const { openModal } = useModal();

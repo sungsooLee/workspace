@@ -3,6 +3,7 @@ import { httpService } from '@learnway/shared';
 import {
   BlogCreateReq,
   BlogUpdateReq,
+  ChannelCodeType,
   ContentBaseInfo,
   ContentCourseMappingParams,
   ContentCourseMappingRes,
@@ -10,6 +11,7 @@ import {
   ContentExportRes,
   ContentSharingInfoReq,
   ContentSharingInfoRes,
+  ExamPaperQuestionCountUpdateReq,
   FetchTranslationListRes,
   GetContentDetailRes,
   GetContentsParams,
@@ -17,6 +19,8 @@ import {
   GetScormFileChangeRes,
   GetScormResourceRes,
   GetScormStatusRes,
+  GetSharedBoxContentsParams,
+  GetSharedBoxContentsRes,
   GetShareTenantsChannelsParams,
   GetShareTenantsChannelsRes,
   GetVideoFileChangeRes,
@@ -46,17 +50,17 @@ import {
   PutVideoChangeRes,
   PutVideoUpdateParams,
   PutVideoUpdateRes,
+  QuestionCountInfo,
   QuestionItem,
   QuestionItemDeleteParam,
   QuestionListForRetrieveReq,
   QuestionListForRetrieveRes,
   QuestionsCopyReq,
   QuestionStatusUpdateReq,
-  QuestionCountInfo,
-  ExamPaperQuestionCountUpdateReq,
   TenantCodeType,
   TestPaperBasicInfoSaveReq,
   TestPaperBasicInfoSaveRes,
+  UpdateQuestionBankCountInfoReq,
 } from '@types';
 import { omit, pick } from 'lodash';
 
@@ -211,7 +215,7 @@ export default class LearningResourceService {
   }
 
   /**
-   * 시험지의 유형별/난이도별 문항수 수정 (랜덤으로 입력했을 경우)
+   * 시험지의 유형별/난이도별 문항수 수정
    * @param body
    */
   static updateExamPaperQuestionCountInfo(body: ExamPaperQuestionCountUpdateReq) {
@@ -237,6 +241,14 @@ export default class LearningResourceService {
 
   static updateQuestionBankContent(body: ContentBaseInfo) {
     return httpService.put<TestPaperBasicInfoSaveRes>(`${CMSApiPrefix()}/exam/pool`, body);
+  }
+
+  /**
+   * 문제은행 유형별/난이도별 문항수 수정
+   * @param body
+   */
+  static updateQuestionBankQuestionCountInfo(body: UpdateQuestionBankCountInfoReq) {
+    return httpService.put(`${CMSApiPrefix()}/exam/pool/add`, body);
   }
 
   /**
@@ -362,6 +374,36 @@ export default class LearningResourceService {
     return httpService.get<GetShareTenantsChannelsRes>(
       `${CMSApiPrefix()}/contents/share/${params.contentUuid}/tenants/${params.tenantId}/channels`,
       pick(params, 'channelName'),
+    );
+  }
+
+  /**
+   * 공유함 학습자원 조회
+   */
+  static getSharedBoxContents(params: GetSharedBoxContentsParams) {
+    return httpService.get<GetSharedBoxContentsRes>(
+      `${CMSApiPrefix()}/contents/share/sharedBox`,
+      params,
+    );
+  }
+
+  /**
+   * 공유함 출발지 테넌트 코드 목록 조회
+   */
+  static getSharedBoxTenantCodes(lastVisitedBoRoleId: number) {
+    return httpService.get<TenantCodeType[]>(
+      `${CMSApiPrefix()}/contents/share/sharedBox/tenant/codes`,
+      { lastVisitedBoRoleId },
+    );
+  }
+
+  /**
+   * 공유함 출발지 채널 코드 목록 조회
+   */
+  static getSharedBoxChannelCodes(srcTenantId: number) {
+    return httpService.get<ChannelCodeType[]>(
+      `${CMSApiPrefix()}/contents/share/sharedBox/tenant/channel/codes`,
+      { srcTenantId },
     );
   }
 }

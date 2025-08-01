@@ -3,8 +3,10 @@ import { memo, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 
 import logoImage from '@learnway/styles/fo/assets/images/logo_foot.png';
+
 import styles from '@learnway/styles/fo/widgets/layout/ui/main/footer/footer.module.css';
-import { Button, useModal } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 import { AgreementPopup, PrivacyPopup } from '../../../../../features/auth';
 function FooterComponent() {
   const { openModal } = useModal();

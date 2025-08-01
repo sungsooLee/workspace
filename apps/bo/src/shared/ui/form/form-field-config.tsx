@@ -1,11 +1,4 @@
-import {
-  CheckboxGroupFormField,
-  Input,
-  InputModalSelectorFormField,
-  RadioGroupFormField,
-  Textarea,
-  TextareaFormField,
-} from '@learnway/ui';
+import { CheckboxGroupFormField, InputModalSelectorFormField, RadioGroupFormField, TextareaFormField } from '@learnway/ui/form-field';
 import { FormTranslationBox } from './form-translation-box';
 import { SwitchFormField } from './switch-form-field';
 import { FormFieldConfig } from '@learnway/hooks';
@@ -17,6 +10,8 @@ import { ThumbnailListFormField } from './thumbnail-list-form-field';
 import { ThumbnailPublicFormField } from './thumbnail-public-form-field';
 import { AttachmentFormField } from './attachment-form-field';
 import { SingleAttachmentFormField } from './single-attachment-form-field';
+import { Input } from '@learnway/ui/input';
+import { Textarea } from '@learnway/ui/textarea';
 
 export const formFieldConfig: FormFieldConfig = {
   alphanumeric: Input,
@@ -37,5 +32,4 @@ export const formFieldConfig: FormFieldConfig = {
   'thumbnail-list': ThumbnailListFormField,
   'thumbnail-public': ThumbnailPublicFormField,
   attachment: AttachmentFormField,
-  'single-attachment': SingleAttachmentFormField,
-};
+  'single-attachment': SingleAttachmentFormField };

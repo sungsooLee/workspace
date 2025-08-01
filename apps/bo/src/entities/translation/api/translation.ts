@@ -4,8 +4,7 @@ import { PaginationResponse } from '../../../types';
 import {
   MultilingualListItem,
   MultilingualQueryParams,
-  MultilingualUpdateReqParams,
-} from '../../../types/entities/multilingual';
+  MultilingualUpdateReqParams } from '../../../types/entities/multilingual';
 import { AxiosResponse } from 'axios';
 
 export default class TranslationService {
@@ -47,8 +46,7 @@ export default class TranslationService {
 
   static fetchTranslationExists({
     keyTypeCode,
-    messageCode,
-  }: {
+    messageCode }: {
     keyTypeCode: string;
     messageCode: string;
   }) {

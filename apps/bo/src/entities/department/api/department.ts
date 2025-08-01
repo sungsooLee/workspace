@@ -40,8 +40,7 @@ export class DepartmentService {
    */
   static getDepartmentTree(companyCode: string[]): Promise<Department> {
     return httpService.get<Department>(`${PMSApiPrefix()}/department/tree`, {
-      companyCodeList: companyCode,
-    });
+      companyCodeList: companyCode });
   }
 
   /**

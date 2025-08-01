@@ -1,37 +1,33 @@
-/* eslint-disable @nx/enforce-module-boundaries */
-import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
+import { useState } from 'react';
+
 import {
-  Input,
-  Button,
-  Textarea,
-  Dropdown,
-  Tooltip,
-  ChipList,
-  SelectOption,
-  Switch,
-  RadioGroup,
-  Checkbox,
-  DatePicker,
-  ThumbnailImageUpload,
-  Spinner,
-} from '@learnway/ui';
-import {
-  IcoFormRequired,
-  IcoArrowDown,
   IcoAlertCircle,
+  IcoArrowDown,
   IcoCloseCircle,
+  IcoFormRequired,
   IcoStatusFail,
 } from '@learnway/icons';
-import { cn } from '@learnway/shared';
-import { ImageOption } from '@learnway/ui';
+import { cn, SelectOption } from '@learnway/shared';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 
-import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
-import movieInfoStyles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form css
+import movieInfoStyles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
+import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 
 /* images */
+import { Button } from '@learnway/ui/button';
+import { Checkbox } from '@learnway/ui/checkbox';
+import { ChipList } from '@learnway/ui/chips';
+import { DatePicker } from '@learnway/ui/date-picker';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { ThumbnailPublicUpload } from '@learnway/ui/file-upload';
+import { Input } from '@learnway/ui/input';
+import { RadioGroup } from '@learnway/ui/radio-group';
+import { Spinner } from '@learnway/ui/spinner';
+import { Switch } from '@learnway/ui/switch';
+import { Textarea } from '@learnway/ui/textarea';
+import { Tooltip } from '@learnway/ui/tooltip';
 import mediaImg from '../../../assets/images/temp/img_temp_media.jpg';
 
 export const Route = createFileRoute('/_layout/learning/mediaDetail')({
@@ -348,22 +344,19 @@ function RouteComponent() {
             </label>
             {/* 25-02-18 : 썸네일 수정 S */}
             <div className={formStyles.input_box}>
-              <ThumbnailImageUpload
-                options={[
-                  { id: '1', path: 'https://lodash.com/assets/img/lodash.svg' },
-                  { id: '2', path: 'https://lodash.com/assets/img/lodash.svg' },
-                  { id: '3', path: 'https://lodash.com/assets/img/lodash.svg' },
-                  { id: '4', path: 'https://lodash.com/assets/img/lodash.svg' },
-                  { id: '5', path: 'https://lodash.com/assets/img/lodash.svg' },
-                  { id: '6', path: 'https://lodash.com/assets/img/lodash.svg' },
-                ]}
+              <ThumbnailPublicUpload
+                // options={[
+                //   { id: '1', path: 'https://lodash.com/assets/img/lodash.svg' },
+                //   { id: '2', path: 'https://lodash.com/assets/img/lodash.svg' },
+                //   { id: '3', path: 'https://lodash.com/assets/img/lodash.svg' },
+                //   { id: '4', path: 'https://lodash.com/assets/img/lodash.svg' },
+                //   { id: '5', path: 'https://lodash.com/assets/img/lodash.svg' },
+                //   { id: '6', path: 'https://lodash.com/assets/img/lodash.svg' },
+                // ]}
                 description={
                   '동영상을 표현하는 썸네일을 선택하거나 업로드 하세요. (미선택 시 자동 선택)'
                 }
-                onChange={(options: ImageOption[]) => console.log('onChange', options)}
-                onCheckedChange={(options: ImageOption[]) =>
-                  console.log('onCheckedChange', options)
-                }
+                onChange={(options: any) => console.log('onChange', options)}
               />
             </div>
             {/* 25-02-18 : 썸네일 수정 E */}

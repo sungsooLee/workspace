@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { ContentsRow, Input, RadioGroupFormField, Textarea } from '@learnway/ui';
+import { RadioGroupFormField } from '@learnway/ui/form-field';
 import { FormRow2, ResourceChoiceModal } from '@shared/ui';
 import { DynamicFormProvider } from '@learnway/hooks';
 import { MODULE_TYPE } from '@types';
@@ -11,6 +11,9 @@ import { learningResourceQueryOptions } from '@entities/learning-resource';
 import { useQuery } from '@tanstack/react-query';
 import { useGetScormDetail } from '@entities/contents';
 import { useGetModuleDetail } from '@entities/curriculum';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { Textarea } from '@learnway/ui/textarea';
 
 interface ModuleFormProps {
   provider: DynamicFormProvider;
@@ -31,8 +34,7 @@ export const ModuleForm: React.FC<ModuleFormProps> = ({
   watch,
   isEditing,
   moduleId,
-  curriculumData,
-}) => {
+  curriculumData }) => {
   const moduleType = watch('moduleType') || MODULE_TYPE.GENERAL;
   const contentName = watch('contentName');
 
@@ -41,8 +43,7 @@ export const ModuleForm: React.FC<ModuleFormProps> = ({
   // contentUuid가 있을 때만 쿼리 실행
   const { data: contentDetail, isLoading: isLoadingContent } = useQuery({
     ...learningResourceQueryOptions.getContent(moduleData?.contentUuid || ''),
-    enabled: !!(isEditing && moduleData?.contentUuid && moduleData.contentUuid.trim() !== ''),
-  });
+    enabled: !!(isEditing && moduleData?.contentUuid && moduleData.contentUuid.trim() !== '') });
 
   const [refetchContentUuid, setRefetchContentUuid] = useState(undefined);
   const { data, refetch } = useGetScormDetail(refetchContentUuid || '');
@@ -58,8 +59,7 @@ export const ModuleForm: React.FC<ModuleFormProps> = ({
         moduleDescription: moduleData.moduleDescription,
         contentDuration: { ...getHourValueFromTime(moduleData.totalTime) },
         contentUuid: moduleData.contentUuid || '',
-        contentName: contentDetail?.contentName || moduleData.contentName || '',
-      };
+        contentName: contentDetail?.contentName || moduleData.contentName || '' };
 
       Object.entries(initialData).forEach(([key, value]) => {
         provider.setValue(key, value);
@@ -71,8 +71,7 @@ export const ModuleForm: React.FC<ModuleFormProps> = ({
         moduleDescription: '',
         contentDuration: { hour: 0, minute: 0, second: 0 },
         contentUuid: '',
-        contentName: '',
-      };
+        contentName: '' };
 
       Object.entries(defaultData).forEach(([key, value]) => {
         provider.setValue(key, value);
@@ -140,8 +139,7 @@ export const ModuleForm: React.FC<ModuleFormProps> = ({
                         initialChannelUuid={curriculumData?.channelUuid}
                         initialContentType={curriculumData?.contentType || 'SCORM'}
                       />
-                    ),
-                  }}
+                    ) }}
                   transformModalData={(data: any) => {
                     const { contentUuid, contentName } = data;
                     if (data && contentUuid && contentName) {
@@ -182,10 +180,8 @@ export const ModuleForm: React.FC<ModuleFormProps> = ({
                       const { hour = 0, minute = 0, second = 0 } = value;
                       return !(hour > 0 || minute > 0 || second > 0); // 모든 값이 0이면 에러
                     },
-                    message: t('학습시간은 1초 이상으로 설정하여야 합니다.'),
-                  },
-                ],
-              }}
+                    message: t('학습시간은 1초 이상으로 설정하여야 합니다.') },
+                ] }}
               element={<DurationTimeFormField />}
             />
           </ContentsRow>

@@ -5,18 +5,14 @@ import {
   AdminSignupAuth,
   AdminSignupForm,
   AdminSignupIdCheck,
-  useSignupStore,
-} from '@features/user/signup';
+  useSignupStore } from '@features/user/signup';
 
 // 관리자 회원가입 - 일반 권한 신청
 export const Route = createLazyFileRoute('/_auth/signup/admin')({
   component: RouteComponent,
   ...pageRouteConfig({
     meta: {
-      title: '관리자 권한 신청',
-    },
-  }),
-});
+      title: '관리자 권한 신청' } }) });
 
 function RouteComponent() {
   const { adminPage, reset } = useSignupStore((state) => state);

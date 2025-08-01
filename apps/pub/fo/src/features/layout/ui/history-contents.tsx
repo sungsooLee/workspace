@@ -1,6 +1,6 @@
 import { memo, useState } from 'react';
 import { Link } from '@tanstack/react-router';
-import { Button } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
 import { IcoBell02, IcoXclose } from '@learnway/icons';
 import { isMobile } from 'react-device-detect';
 

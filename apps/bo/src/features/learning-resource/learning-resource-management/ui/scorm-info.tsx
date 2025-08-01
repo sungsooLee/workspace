@@ -1,10 +1,10 @@
+import { useModal } from '@learnway/ui/modal';
 //  IA106 / NLP_BO_CMS_1032, NLP_BO_CMS_1014
 
 import { useScormResource } from '@entities/learning-resource';
 import { LEARNING_TYPE } from '@learnway/config';
 import { DynamicFormProvider, useFileManager } from '@learnway/hooks';
 import { formatBytes } from '@learnway/shared';
-import { useModal } from '@learnway/ui';
 import { PreviewLearningWindow } from '@shared/ui';
 import { t } from 'i18next';
 import { useCallback, useMemo } from 'react';
@@ -26,8 +26,7 @@ const ScormInfoComponent = ({ provider }: MovieInfoProps) => {
     processingStatus: status,
     playTime,
     scormResource,
-    handleChangeScorm,
-  } = useScormResource(provider);
+    handleChangeScorm } = useScormResource(provider);
 
   const fileUuid = useMemo(() => scormResource?.fileInfo.fileUuid, [scormResource]);
   const downloadOriginal = useCallback(() => {
@@ -46,8 +45,7 @@ const ScormInfoComponent = ({ provider }: MovieInfoProps) => {
           type={LEARNING_TYPE.SCORM}
           maxFileCount={1}
         />
-      ),
-    });
+      ) });
     if (!fileUuid) return;
 
     handleChangeScorm(fileUuid);
@@ -57,15 +55,13 @@ const ScormInfoComponent = ({ provider }: MovieInfoProps) => {
     if (scormResource?.children)
       openModal({
         width: 'md',
-        content: <ScormViewModal scormData={scormResource.children} />,
-      });
+        content: <ScormViewModal scormData={scormResource.children} /> });
   }, [scormResource]);
 
   const preview = useCallback(() => {
     openModal({
       width: 'full',
-      content: <PreviewLearningWindow contentUuid={contentUuid} />,
-    });
+      content: <PreviewLearningWindow contentUuid={contentUuid} /> });
   }, [contentUuid]);
   // media info_list
   const infoList = [
@@ -86,20 +82,16 @@ const ScormInfoComponent = ({ provider }: MovieInfoProps) => {
   const buttons = [
     {
       label: t('원본 다운로드'),
-      onClick: downloadOriginal,
-    },
+      onClick: downloadOriginal },
     {
       label: t('파일 변경'),
-      onClick: changeFile,
-    },
+      onClick: changeFile },
     {
       label: t('스콤보기'),
-      onClick: scormView,
-    },
+      onClick: scormView },
     {
       label: t('미리보기'),
-      onClick: preview,
-    },
+      onClick: preview },
   ];
 
   return (

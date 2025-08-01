@@ -1,6 +1,7 @@
 // IA104 / NLP_BO_CMS_1045 학습자원 현지화-공유함
-import { learningResourceQueryOptions } from '@entities/learning-resource';
+import { learningResourceQueryOptions, usePostContentExport } from '@entities/learning-resource';
 import { getDetailPathByContentType, getDetailRouterState } from '@features/learning-resource';
+import { useFetchAuthUser } from '@learnway/auth/entities';
 import {
   ALL_OPTION,
   CODE_GROUP,
@@ -9,44 +10,79 @@ import {
   useSearchBox,
 } from '@learnway/hooks';
 import { IcoDownArrow } from '@learnway/icons';
-import { Button, Divider, GridBox, useGridBox, useGridBoxConfig, useModal } from '@learnway/ui';
-import {
-  PreviewLearningWindow,
-  TenantByRoleDropdownFormField,
-  TenantChannelDropdownFormField,
-} from '@shared/ui';
+import { formatDate } from '@learnway/shared';
+import { Button } from '@learnway/ui/button';
+import { Divider } from '@learnway/ui/elements';
+import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
+import { useModal } from '@learnway/ui/modal';
+import { PreviewLearningWindow } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from '@tanstack/react-router';
-import { ContentCreateType, ContentInfo } from '@types';
+import {
+  ContentCreateType,
+  ContentExportRes,
+  GetSharedBoxContentsRes,
+  SharedBoxContent,
+} from '@types';
 import { t } from 'i18next';
 import { useEffect, useState } from 'react';
 
 function LearningResourceSharedTableComponent() {
+  const { data: authUser } = useFetchAuthUser();
   const {
     state: { listParam },
   } = useCurrentRoute();
 
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { openModal } = useModal();
+
+  const { exportContent } = usePostContentExport({
+    onSuccess: (result: ContentExportRes) => {
+      if (result.destContentUuid) {
+        setGridData(
+          (prev) =>
+            ({
+              ...prev,
+              content: prev?.content.map((_) =>
+                _.sourceContentUuid === result.srcContentUuid
+                  ? { ..._, sharedCount: _.sharedCount + 1 }
+                  : _,
+              ),
+            }) as GetSharedBoxContentsRes,
+        );
+      }
+    },
+  });
+
+  const handleShareButton = (row: SharedBoxContent) => {
+    exportContent({
+      tenantId: row.destTenantId,
+      contentUuid: row.sourceContentUuid,
+      destChannelUuid: row.destChannelUuid,
+      languageCountryCode: row.languageCountryCode,
+    });
+  };
 
   const searchConfig: any = {
     builders: [
       [
         {
-          name: 'tenantId',
-          type: 'custom',
+          name: 'sourceTenantId',
+          type: 'dropdown',
           label: t('LABEL.form.label.tenant', '테넌트'),
-          value: '',
           format: 'object',
-          element: <TenantByRoleDropdownFormField />,
+          presetOptionLabel: t('LABEL.form.label.select', '선택'),
+          value: authUser?.activeTenant?.tenantId,
         },
         {
-          name: 'channelUuid',
-          type: 'custom',
+          name: 'sourceChannelUuid',
+          type: 'dropdown',
           label: t('LABEL.form.label.channel', '채널'),
-          value: '',
           format: 'object',
-          element: <TenantChannelDropdownFormField enableFilter />,
+          presetOptionLabel: t('LABEL.form.label.select', '선택'),
+          value: '',
         },
         {
           name: 'contentTypes',
@@ -82,61 +118,49 @@ function LearningResourceSharedTableComponent() {
           },
         },
         {
-          name: 'langCountryCode',
+          name: 'languageCountryCode',
           type: 'dropdown',
           label: t('LABEL.form.label.langCountryCode', '언어'),
           value: '',
-          presetOptionLabel: t('LABEL.form.label.select', '선택'),
+          presetOptionLabel: t('LABEL.form.label.all', '전체'),
           optionsConfig: {
             codeGroup: CODE_GROUP['pms.multilingual.LangCountryCode'],
           },
         },
         {
-          name: 'isReceived',
-          type: 'dropdown',
-          label: t('수신상태'),
-          value: '',
-          presetOptionLabel: t('LABEL.form.label.all', '전체'),
-          optionsConfig: {
-            options: [
-              { value: 'false', label: t('수신대기') },
-              { value: 'true', label: t('수신완료') },
-            ],
-          },
-        },
-        {
-          name: 'shared-period',
+          name: 'sharedDate',
           type: 'date-range',
           label: t('공유된 기간'),
           value: { from: undefined, to: undefined },
+          format: 'object',
         },
       ],
     ],
     validator: {
-      tenantId: true,
-      channelUuid: true,
+      sourceTenantId: true,
+      sourceChannelUuid: true,
     },
   };
 
   const gridConfig: useGridBoxConfig = {
-    query: learningResourceQueryOptions.getContents,
+    query: learningResourceQueryOptions.getSharedBoxContents,
     columns: [
       {
         size: 79,
-        name: 'contentType',
+        name: 'sourceContentType',
         label: t('LABEL.grid.column.contentType', '유형'),
         render: (_: any) => t(`cms.content.ContentType.${_.getValue()}`),
       },
       {
         size: 338,
-        name: 'contentName',
+        name: 'sourceContentName',
         label: t('LABEL.grid.column.contentName', '학습자원명'),
         meta: {
           size: 'auto',
         },
         render: (_: any) => (
           <span className="flex">
-            {_.row.original.createType === ContentCreateType.TRANSLATE && (
+            {_.row.original.contentCreateType === ContentCreateType.TRANSLATE && (
               <IcoDownArrow width={16} height={16} stroke="#4C515E" />
             )}
             <Button
@@ -144,9 +168,12 @@ function LearningResourceSharedTableComponent() {
               onClick={(e) => {
                 e.stopPropagation();
                 router.navigate({
-                  to: getDetailPathByContentType(_.row.original.contentType),
+                  to: getDetailPathByContentType(_.row.original.sourceContentType),
                   state: {
-                    ...getDetailRouterState(_.row.original.contentUuid, _.row.original.contentType),
+                    ...getDetailRouterState(
+                      _.row.original.sourceContentUuid,
+                      _.row.original.sourceContentType,
+                    ),
                     listParam: params,
                   },
                 });
@@ -159,7 +186,7 @@ function LearningResourceSharedTableComponent() {
       },
       {
         size: 127,
-        name: 'tenantName',
+        name: 'sourceTenantName',
         label: t('LABEL.grid.column.tenant', '테넌트'),
         meta: {
           size: 'auto',
@@ -167,7 +194,7 @@ function LearningResourceSharedTableComponent() {
       },
       {
         size: 153,
-        name: 'channelName',
+        name: 'sourceChannelName',
         label: t('LABEL.grid.column.channel', '채널'),
         meta: {
           size: 'auto',
@@ -184,7 +211,7 @@ function LearningResourceSharedTableComponent() {
               e.stopPropagation();
               openModal({
                 width: 'full',
-                content: <PreviewLearningWindow contentUuid={_.row.original.contentUuid} />,
+                content: <PreviewLearningWindow contentUuid={_.row.original.sourceContentUuid} />,
               });
             }}
           >
@@ -211,16 +238,20 @@ function LearningResourceSharedTableComponent() {
       },
       {
         size: 100,
-        name: 'isReceived',
+        name: 'sharedCount',
         label: t('수신상태'),
         render: (_: any) => (_.getValue() ? t('수신완료') : t('수신대기')),
       },
       {
         size: 100,
-        name: 'isReceived',
+        name: 'shareButtonUtil',
         label: t('LABEL.grid.column.util', '기능'),
         render: (_: any) => (
-          <Button variant="gray2" disabled={_.getValue()}>
+          <Button
+            variant="gray2"
+            disabled={_.row.original.sharedCount}
+            onClick={() => handleShareButton(_.row.original)}
+          >
             {t('가져가기')}
           </Button>
         ),
@@ -231,17 +262,29 @@ function LearningResourceSharedTableComponent() {
   const {
     provider: searchProvider,
     getValues,
+    setValue,
     onFormChange,
     onFormValid,
+    watch,
+    setOptions,
   } = useSearchBox(searchConfig);
-  const { config: gConfig, gridFetch, data } = useGridBox<ContentInfo>(gridConfig, getValues);
+  const {
+    config: gConfig,
+    gridFetch,
+    setGridData,
+  } = useGridBox<SharedBoxContent>(gridConfig, getValues);
   const [params, setParams] = useState<Record<string, any>>({});
 
-  function handleSearch(rawQuery: Record<string, any>) {
-    const processedQuery = compactValues(rawQuery);
+  function handleSearch({ sharedDate, ...rawQuery }: Record<string, any>) {
+    const processedQuery = {
+      ...compactValues(rawQuery),
+      ...(sharedDate?.from && { sharedDateStart: formatDate(sharedDate.from) }),
+      ...(sharedDate?.to && { sharedDateEnd: formatDate(sharedDate.to) }),
+    };
+    console.log('🚀 ~ handleSearch ~ rawQuery:', rawQuery, processedQuery);
 
     setParams(processedQuery);
-    gridFetch(processedQuery);
+    gridFetch({ lastVisitedBoRoleId: authUser?.lastVisitedBoRoleId, ...processedQuery });
   }
 
   useEffect(() => {
@@ -255,15 +298,47 @@ function LearningResourceSharedTableComponent() {
     })();
   }, [listParam]);
 
+  useEffect(() => {
+    if (authUser && authUser.lastVisitedBoRoleId)
+      (async () => {
+        const tenantOptions = await queryClient.fetchQuery(
+          learningResourceQueryOptions.getSharedBoxTenantCodes(authUser.lastVisitedBoRoleId!),
+        );
+        setOptions(
+          'sourceTenantId',
+          tenantOptions.map(({ tenantId: value, tenantName: label }) => ({ value, label })),
+        );
+      })();
+  }, [authUser]);
+
+  const sourceTenantId = watch('sourceTenantId');
+
+  useEffect(() => {
+    setValue('sourceChannelUuid', '');
+    if (sourceTenantId === '') {
+      setOptions('sourceChannelUuid', []);
+      return;
+    }
+    (async () => {
+      const channelOptions = await queryClient.fetchQuery(
+        learningResourceQueryOptions.getSharedBoxChannelCodes(sourceTenantId),
+      );
+      setOptions(
+        'sourceChannelUuid',
+        channelOptions.map(({ channelUuid: value, channelName: label }) => ({ value, label })),
+      );
+    })();
+  }, [sourceTenantId]);
+
   return (
     <>
       <SearchBox provider={searchProvider} onSearch={handleSearch} />
       <Divider />
-      <GridBox<ContentInfo>
+      <GridBox<SharedBoxContent>
         config={gConfig}
         showNumberingColumn
         getRowClassName={(row) => {
-          if (row.createType === ContentCreateType.TRANSLATE) return 'bg-[--secondary9]';
+          if (row.contentCreateType === ContentCreateType.TRANSLATE) return 'bg-[--secondary9]';
           return '';
         }}
       />

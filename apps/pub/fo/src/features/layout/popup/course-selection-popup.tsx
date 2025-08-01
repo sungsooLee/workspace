@@ -1,12 +1,4 @@
 import { memo, useState } from 'react';
-import {
-  OptionCard,
-  OptionCardItem,
-  ModalBody,
-  ModalContainer,
-  ModalTitle,
-  ModalFooter,
-} from '@learnway/ui';
 
 import { IcoChair, IcoLocation } from '@learnway/icons';
 
@@ -16,6 +8,8 @@ import {
 
 import lectureStyles from '../../../pages/_layout/course-introduction/lecture.module.css';
 import styles from './course-selection-popup.module.css';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle } from '@learnway/ui/modal';
+import { OptionCard, OptionCardItem } from '@learnway/ui/option-card';
 
 const CourseSelectionPopupComponent = () => {
   // 퍼블수정 20250703 초기값 추가 및 임의 날짜 데이터 수정

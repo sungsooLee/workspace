@@ -1,7 +1,7 @@
 import { useCreation } from 'ahooks';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
-import { GridBox } from '@learnway/ui';
+import { GridBox } from '@learnway/ui/grid';
 
 export function WidgetAssignedTenantGrid({ data }: { data: any }) {
   const gridColumns = useCreation(() => {
@@ -11,25 +11,19 @@ export function WidgetAssignedTenantGrid({ data }: { data: any }) {
         header: '테넌트명',
         meta: {
           headerAlign: 'left',
-          cellAlign: 'left',
-        },
-      }),
+          cellAlign: 'left' } }),
       columnHelper.accessor('isVisible', {
         header: '노출여부',
         cell: ({ row }: any) => (row?.isVisible ? 'Y' : 'N'),
         meta: {
           headerAlign: 'center',
-          cellAlign: 'center',
-        },
-      }),
+          cellAlign: 'center' } }),
       columnHelper.accessor('isRequired', {
         header: '필수여부',
         cell: ({ row }: any) => (row?.isRequired ? 'Y' : 'N'),
         meta: {
           headerAlign: 'center',
-          cellAlign: 'center',
-        },
-      }),
+          cellAlign: 'center' } }),
     ] as ColumnDef<any, unknown>[];
   }, []);
 

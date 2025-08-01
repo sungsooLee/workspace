@@ -1,11 +1,10 @@
-import { useState } from 'react';
 import { useCreation } from 'ahooks';
+import { useState } from 'react';
 
-import { SelectOption } from '@learnway/ui';
-import { CODE_GROUP, Code } from '@learnway/config';
-import { getDefaultLang, setDefaultLang } from '@learnway/config';
 import { useUpdateUser } from '@learnway/auth/entities';
+import { CODE_GROUP, Code, getDefaultLang, setDefaultLang } from '@learnway/config';
 
+import { SelectOption } from '@learnway/shared';
 import { useCodesByCodeGroup, useFetchAsyncI18nResource } from '../../../entities/platform';
 
 const AVALIABLE_LANGUAGES = ['en', 'ko'];

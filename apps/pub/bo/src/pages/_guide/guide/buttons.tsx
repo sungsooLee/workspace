@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Button } from '@learnway/ui';
-import { IcoSearch, IcoPlus, IcoDownload, IcoClose } from '@learnway/icons';
+
+import { IcoClose, IcoDownload, IcoPlus, IcoSearch } from '@learnway/icons';
+import { Button } from '@learnway/ui/button';
 
 export const Route = createFileRoute('/_guide/guide/buttons')({
   component: RouteComponent,
@@ -17,7 +18,7 @@ function RouteComponent() {
           <pre className="code_block">
             <code>
               {`// 초기 import
-import { Button } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
 
 // 적용방법(예시)
 <Button variant="primary" size="xs">버튼</Button>`}

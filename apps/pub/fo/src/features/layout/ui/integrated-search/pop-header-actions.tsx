@@ -1,7 +1,9 @@
 import { IcoArrowBackward, IcoClose02 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { Button, Popover } from '@learnway/ui';
+
 import styles from './pop-header-actions.module.css';
+import { Popover } from '@learnway/ui/popover';
+import { Button } from '@learnway/ui/button';
 
 interface ButtonProps {
   onBack?: () => void;

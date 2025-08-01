@@ -3,8 +3,7 @@ import {
   ExternalCourseFormListRequest,
   ExternalCourseLayoutParam,
   ExternalCourseLayoutRequest,
-  PageableContent,
-} from '@types';
+  PageableContent } from '@types';
 import { httpService } from '@learnway/shared';
 import { LMSApiPrefix } from '@learnway/config';
 import { ExternalCourseForm } from '@types';
@@ -53,8 +52,7 @@ export class ExternalEducationService {
    */
   static getComponentList({
     tenantId,
-    externalCourseFormEnrollType,
-  }: {
+    externalCourseFormEnrollType }: {
     tenantId: number;
     externalCourseFormEnrollType: ExternalCourseFormEnrollType;
   }): Promise<any> {

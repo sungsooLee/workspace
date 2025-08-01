@@ -1,10 +1,13 @@
 import { useState } from 'react';
-import { Button, ChipList, useModal, OptionCard, OptionCardItem } from '@learnway/ui';
 import { FilterPopup } from '../popup/filter-popup';
 import { cn, getRandomId } from '@learnway/shared';
 import styles from './filter.module.css';
 
 import { IcoFilter, IcoRefresh02 } from '@learnway/icons';
+import { Button } from '@learnway/ui/button';
+import { ChipList } from '@learnway/ui/chips';
+import { useModal } from '@learnway/ui/modal';
+import { OptionCard, OptionCardItem } from '@learnway/ui/option-card';
 
 const FilterComponent = () => {
   // modal

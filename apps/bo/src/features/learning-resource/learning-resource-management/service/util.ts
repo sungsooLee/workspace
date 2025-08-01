@@ -39,12 +39,14 @@ export const getDetailRouterState = (contentUuid: string, contentType: string) =
   return state;
 };
 
-export const getTooltipContent = (createType?: ContentCreateType) => {
+export const getTooltipContent = (createType?: any) => {
   switch (createType) {
     case 'TRANSLATE':
       return 'LABEL.page.tooltip.learningResourceIsTranslated';
     case 'SHARED':
       return 'LABEL.page.tooltip.learningResourceIsShared';
+    case 'EXAM_MAPPING':
+      return 'LABEL.page.tooltip.learningResourceIsExamMapped';
     default:
       return 'LABEL.page.tooltip.learningResourceIsUsed';
   }

@@ -1,7 +1,8 @@
 import React, { memo } from 'react';
-import { ModalBody, ModalContainer, ModalTitle, ModalFooter, Button } from '@learnway/ui';
 
 import styles from './address-confirmation-popup.module.css';
+import { Button } from '@learnway/ui/button';
+import { ModalContainer, ModalTitle, ModalBody, ModalFooter } from '@learnway/ui/modal';
 
 const AddressConfirmationPopupComponent = () => {
   return (

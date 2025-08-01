@@ -1,5 +1,5 @@
+import { Spinner } from '@learnway/ui/spinner';
 import { createFileRoute } from '@tanstack/react-router';
-import { Spinner } from '@learnway/ui';
 
 export const Route = createFileRoute('/_guide/guide/spinner')({
   component: RouteComponent,
@@ -15,7 +15,7 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-  import { Spinner } from '@learnway/ui';`}
+  import { Spinner } from '@learnway/ui/spinner';`}
           </code>
         </pre>
       </div>

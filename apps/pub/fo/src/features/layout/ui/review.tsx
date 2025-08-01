@@ -1,6 +1,7 @@
 import { memo, useState } from 'react';
 import { isMobile } from 'react-device-detect';
-import { Avatar, Popover } from '@learnway/ui';
+import { Avatar } from '@learnway/ui/avatar';
+import { Popover } from '@learnway/ui/popover';
 import { IcoStar, IcoMoreVertical } from '@learnway/icons';
 import { ReviewOptionPopover, Comment } from '../../../features/layout';
 

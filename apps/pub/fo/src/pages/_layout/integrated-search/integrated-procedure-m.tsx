@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import { Button, Popover, Pagination } from '@learnway/ui';
+
 import { IntegratedSearchButton, IntegratedSearchProcedure } from '../../../features/layout';
 import { IcoArray, IcoDotpoints, IcoFilter, IcoArrowDown } from '@learnway/icons';
 
 import dropdownPopoverStyles from '../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
 import styles from './integrated-procedure-m.module.css';
+import { Button } from '@learnway/ui/button';
+import { Popover } from '@learnway/ui/popover';
+import { Pagination } from '@learnway/ui/pagination';
 
 export const Route = createFileRoute('/_layout/integrated-search/integrated-procedure-m')({
   component: RouteComponent,

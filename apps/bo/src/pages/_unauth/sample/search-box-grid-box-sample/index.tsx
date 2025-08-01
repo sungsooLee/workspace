@@ -1,7 +1,10 @@
 import { queryOptions } from '@entities/label-messages-mock';
 import { useDynamicForm2 } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, formatDate } from '@learnway/shared';
-import { Button, Divider, GridBox, PopoverList, useGridBox } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { Divider } from '@learnway/ui/elements';
+import { GridBox, useGridBox } from '@learnway/ui/grid';
+import { PopoverList } from '@learnway/ui/popover-list';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
 import { createFileRoute } from '@tanstack/react-router';
 import { LabelMessage, LabelMessagesQueryParams } from '@types';

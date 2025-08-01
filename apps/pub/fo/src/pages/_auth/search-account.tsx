@@ -15,17 +15,12 @@ import authToolFormFieldStyles from './auth-tool-form-field.module.css'; // ì¹´ë
 import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
 //import { pageRouteConfig } from '../../features/auth';
 import { GoogleCertGuidePopup } from '../../features/auth';
-
-import {
-  Button,
-  ContentsRow,
-  Input,
-  InputTimer,
-  PhoneNumber,
-  RadioCard,
-  Tabs,
-  useModal,
-} from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input, InputTimer } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
+import { PhoneNumber } from '@learnway/ui/phone-number';
+import { RadioCard } from '@learnway/ui/radio-card';
 
 export const Route = createFileRoute('/_auth/search-account')({
   component: RouteComponent,

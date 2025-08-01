@@ -1,13 +1,12 @@
+import { useCodeGroupList } from '@entities/common-code/service/common-code-group.hook';
+import { pageRouteConfig } from '@features/auth';
+import { CommonCodeGroupGrid } from '@features/platform-management/platform/code-managemnet/ui/common-code-group-grid';
+import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
+import { GridBoxState } from '@learnway/ui/grid';
+import { MainContents, PageContainer, SearchBox } from '@shared/ui';
 import { createFileRoute } from '@tanstack/react-router';
 import { t } from 'i18next';
-import { GridBoxState } from '@learnway/ui';
-import { pageRouteConfig } from '@features/auth';
-import { useCodeGroupList } from '@entities/common-code/service/common-code-group.hook';
 import { useState } from 'react';
-import { SearchBox } from '@shared/ui';
-import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
-import { CommonCodeGroupGrid } from '@features/platform-management/platform/code-managemnet/ui/common-code-group-grid';
-import { MainContents, PageContainer } from '@shared/ui';
 
 export const Route = createFileRoute('/_layout/platform/code/common-code-group')({
   component: RouteComponent,

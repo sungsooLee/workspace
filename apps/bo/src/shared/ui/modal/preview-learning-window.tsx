@@ -1,12 +1,11 @@
-import { FC, useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { FC, useEffect, useState } from 'react';
 
-import { LearnwayLearningWindowLayout, useLearningWindow } from '@learnway/ui';
-
-import { learningResourceQueryOptions, useFetchBlogContent } from '@entities/learning-resource';
-import { ContentType } from '@types';
-import { CmsImageContent, CmsImageItem } from '@learnway/types';
 import { useGetCurriculumDetail } from '@entities/curriculum';
+import { learningResourceQueryOptions } from '@entities/learning-resource';
+import { CmsImageItem } from '@learnway/types';
+import { LearnwayLearningWindowLayout, useLearningWindow } from '@learnway/ui/learning-window';
+import { ContentType } from '@types';
 
 /**
  *

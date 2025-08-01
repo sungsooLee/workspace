@@ -1,25 +1,20 @@
 import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { useState } from 'react';
-import { t } from 'i18next';
 import { useCreation } from 'ahooks';
+import { t } from 'i18next';
+import { useState } from 'react';
 
-import {
-  ContentsRow,
-  DynamicFormField,
-  Button,
-  useModal,
-  Stepper,
-  SelectOption,
-  RadioCard,
-} from '@learnway/ui';
-import { z, cn } from '@learnway/shared';
-import { useDynamicForm } from '@learnway/hooks';
-import { IcoOverseasDealer, IcoBuilding01 } from '@learnway/icons';
+import { IcoBuilding01, IcoOverseasDealer } from '@learnway/icons';
+import { cn } from '@learnway/shared';
+import { RadioCard } from '@learnway/ui/radio-card';
+import { Stepper } from '@learnway/ui/stepper';
+import { SelectOption } from '@learnway/ui/type';
 
-import { FormRow, NoticeBox } from '../../../shared/ui';
 import { MEMBER_TYPE } from '@learnway/auth/types';
+import { NoticeBox } from '../../../shared/ui';
 
 import styles from '@learnway/styles/fo/pages/_auth/search-account/search-account.module.css';
+// TODO: Fix unknown imports: DynamicFormField,  from '@learnway/ui'
+import { Button } from '@learnway/ui/button';
 
 //type MEMBER_TYPE = (typeof MEMBER_TYPE)[keyof typeof MEMBER_TYPE];
 

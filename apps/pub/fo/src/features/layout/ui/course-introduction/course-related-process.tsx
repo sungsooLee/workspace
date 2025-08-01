@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import { isMobile } from 'react-device-detect';
-import { Carousel, Badge } from '@learnway/ui';
+import { Carousel } from '@learnway/ui/carousel';
+import { Badge } from '@learnway/ui/badge';
 import { getRandomId } from '@learnway/shared';
 import { IcoStar, IcoPlay, IcoEye, IcoHeart } from '@learnway/icons';
 

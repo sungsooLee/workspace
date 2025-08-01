@@ -1,5 +1,5 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { ColumnDef, Table } from '@tanstack/react-table';
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { cn } from '@learnway/shared';
@@ -8,7 +8,8 @@ import styles from './shuttle-grid-to-grid.module.css';
 
 import { IcoNarrowRight } from '@learnway/icons';
 
-import { Button, GridBoxProps, GridBox, GridImperative } from '../../';
+import { Button } from '../button';
+import { GridBox, GridBoxProps, GridImperative } from '../grid';
 
 export interface ShuttleGridToGridProps
   extends Pick<

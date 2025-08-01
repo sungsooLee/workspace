@@ -1,5 +1,5 @@
+import { RadioGroup } from '@learnway/ui/radio-group';
 import { createFileRoute } from '@tanstack/react-router';
-import { RadioGroup } from '@learnway/ui';
 
 export const Route = createFileRoute('/_guide/guide/radio')({
   component: RouteComponent,
@@ -19,7 +19,7 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-import { RadioGroup } from '@learnway/ui';
+import { RadioGroup } from '@learnway/ui/radio-group';
 
 // 적용방법(예시)
 <RadioGroup

@@ -1,5 +1,4 @@
 import { memo, useState } from 'react';
-import { Button, useModal } from '@learnway/ui';
 import { isMobile } from 'react-device-detect';
 import {
   IcoArrowDown,
@@ -14,6 +13,8 @@ import { EducationPlacePopup } from '../../../features/layout';
 
 import bulletStyles from '../../../shared/ui/list/bullet.module.css';
 import styles from './education.module.css';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 
 interface EducationProps {
   className?: string;

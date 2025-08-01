@@ -1,8 +1,7 @@
-import React, { forwardRef, useState, useEffect } from 'react';
-import { PhoneNumber, PhoneNumberValue } from '@learnway/ui';
-import { useCodeStore, CODE_GROUP } from '@learnway/hooks';
-import { getNationCodeFromBrowser } from '@learnway/shared';
+import { CODE_GROUP, useCodeStore } from '@learnway/hooks';
+import { PhoneNumber, PhoneNumberValue } from '@learnway/ui/phone-number';
 import { isEqual } from 'lodash';
+import React, { forwardRef, useEffect, useState } from 'react';
 
 export interface PhoneNumberFormFieldSimpleProps {
   value?: PhoneNumberValue;

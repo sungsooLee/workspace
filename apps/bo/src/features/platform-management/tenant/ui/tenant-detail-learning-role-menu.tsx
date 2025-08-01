@@ -1,37 +1,27 @@
+import { getRowSelectionByList } from '@learnway/shared';
+import { GridBox } from '@learnway/ui/grid';
+import { TreeBox, TreeNode } from '@learnway/ui/tree-view';
 import { SectionLayout } from '@shared/ui';
-import { useEffect, useState, forwardRef, useImperativeHandle } from 'react';
-import { t } from 'i18next';
 import { useRouterState } from '@tanstack/react-router';
-import {
-  Button,
-  Checkbox,
-  GridBox,
-  RadioGroup,
-  RadioGroupFormField,
-  TreeBox,
-  TreeNode,
-  useModal,
-} from '@learnway/ui';
 import { CellContext, createColumnHelper, Table } from '@tanstack/react-table';
-import { DATE_TIME_FORMAT, formatDate, getRandomId, getRowSelectionByList } from '@learnway/shared';
+import { t } from 'i18next';
+import { forwardRef, useEffect, useState } from 'react';
 
 import { TenantDetailLearningRoleMenuMappingModal } from './tenant-detail-learning-role-menu-mapping-modal';
 
 import {
-  useFetchRoleTree,
-  useFetchRoleMenus,
   useFetchMenuApis,
+  useFetchRoleMenus,
+  useFetchRoleTree,
   useModifyMenusAndApiToRole,
 } from '@entities/role/service/role-manage.hook';
+import { Button } from '@learnway/ui/button';
 
 import {
-  getAllTreeKeys,
-  getFirstExpandKeys,
-  moveNodeCheck,
-  transformRoleApiDataToTreeData,
   transformMenuApiDataToTreeData,
+  transformRoleApiDataToTreeData,
 } from '@features/platform-management/tenant/service/tenant-detail-tree.service';
-import { EnFormMode, EnTenantScope, EnCompanyScope, EnChannelScope, EnDeptScope } from '@types';
+import { useModal } from '@learnway/ui/modal';
 
 const columnHelper = createColumnHelper<any>();
 

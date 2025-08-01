@@ -4,7 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { TermsButton } from '@features/main';
 
 import styles from '@learnway/styles/fo/widgets/layout/ui/auth/auth-footer/auth-footer.module.css';
-import { Button, useModal } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 
 function AuthFooterComponent() {
   const { t } = useTranslation();

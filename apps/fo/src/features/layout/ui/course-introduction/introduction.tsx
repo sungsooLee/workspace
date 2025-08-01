@@ -1,6 +1,9 @@
 import { IcoArrowDown, IcoEssential, IcoSymbol } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { Accordion, Avatar, Button, ChipList } from '@learnway/ui';
+import { Accordion } from '@learnway/ui/accordion';
+import { Avatar } from '@learnway/ui/avatar';
+import { Button } from '@learnway/ui/button';
+import { ChipList } from '@learnway/ui/chips';
 import { Link } from '@tanstack/react-router';
 import { forwardRef, memo, useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
@@ -90,6 +93,7 @@ const CourseIntroductionCompoment = forwardRef<HTMLDivElement, Props>(
     const [curriculumValue, setCurriculumValue] = useState<string>('a');
     const curriculumValueItems = curriculum?.moduleList?.map((module: any) => ({
       value: module.moduleId,
+      isDummy: module.isDummy,
       title: (
         <div className={styles.title}>
           <p>
@@ -98,7 +102,7 @@ const CourseIntroductionCompoment = forwardRef<HTMLDivElement, Props>(
           </p>
         </div>
       ),
-      children: <Curriculum curriculumData={module.lessonList} />,
+      children: module.lessonList ? <Curriculum curriculumData={module.lessonList} /> : undefined,
     }));
 
     // 과정 정보 더보기

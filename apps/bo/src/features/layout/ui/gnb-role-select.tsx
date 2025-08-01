@@ -7,7 +7,7 @@ import {
   useUpdateTenantRoleLastSelect,
   useUpdateUser,
 } from '@learnway/auth/entities';
-import { AutoCompleteDropdown } from '@learnway/ui';
+import { AutoCompleteDropdown } from '@learnway/ui/auto-complete';
 
 import { useRouter } from '@tanstack/react-router';
 

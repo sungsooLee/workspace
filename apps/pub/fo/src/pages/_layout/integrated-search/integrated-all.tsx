@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { isMobile } from 'react-device-detect';
-import { Button } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
 import {
   IntegratedSearchProcedure,
   IntegratedSearchShorts,

@@ -2,7 +2,9 @@ import { memo, useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import { isMobile } from 'react-device-detect';
 import { cn } from '@learnway/shared';
-import { ChipList, SelectOption, Avatar, Button, Accordion } from '@learnway/ui';
+import { Accordion } from '@learnway/ui/accordion';
+import { Avatar } from '@learnway/ui/avatar';
+import { SelectOption } from '@learnway/ui/type';
 import { IcoSymbol, IcoEssential, IcoArrowDown } from '@learnway/icons';
 import { Curriculum, PackageCardList } from '../../../../features/layout';
 
@@ -16,6 +18,7 @@ import styles from './introduction.module.css';
 import discriminationImg from '@learnway/styles/fo/assets/images/temp/img_discrimination.png';
 import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 import avatarDefault from '@learnway/styles/fo/assets/images/common/img_avatar.png';
+import { ChipList } from '@learnway/ui/chips';
 
 const CourseIntroductionCompoment = () => {
   // 태그

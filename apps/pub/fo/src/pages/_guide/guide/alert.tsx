@@ -1,5 +1,6 @@
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 import { createFileRoute } from '@tanstack/react-router';
-import { Button, useModal } from '@learnway/ui';
 
 export const Route = createFileRoute('/_guide/guide/alert')({
   component: RouteComponent,
@@ -108,7 +109,8 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-import { Button, useModal } from '@learnway/ui';
+import { Button } from '@learnway/ui/btton';
+import { useModal } from '@learnway/ui/modal';
 
 // 실행 함수 (한번만 선언)
 const { alert: openAlert } = useModal();

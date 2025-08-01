@@ -1,22 +1,20 @@
 /* eslint-disable no-restricted-imports */
 /* eslint-disable @nx/enforce-module-boundaries */
 import { createFileRoute } from '@tanstack/react-router';
-import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import { SectionLayout } from '../-components/section-layout';
-import {
-  TreeBox,
-  TreeNode,
-  Button,
-  TableBox,
-  Input,
-  Switch,
-  Checkbox,
-  FormSubTitle,
-  SplitPanel,
-} from '@learnway/ui';
-import { MainContents } from '../../../../../../bo/src/shared/ui/layout/slot/main-contents';
-import { IcoMinus, IcoPlus } from '@learnway/icons';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+
+import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
+
+import { IcoMinus, IcoPlus } from '@learnway/icons';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { Checkbox } from '@learnway/ui/checkbox';
+import { SplitPanel } from '@learnway/ui/elements';
+import { TableBox } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
+import { Switch } from '@learnway/ui/switch';
+import { TreeBox, TreeNode } from '@learnway/ui/tree-view';
+import { MainContents } from '../../../../../../bo/src/shared/ui/layout/slot/main-contents';
 
 export const Route = createFileRoute('/_layout/completion/detail-calculation-reason')({
   component: RouteComponent,

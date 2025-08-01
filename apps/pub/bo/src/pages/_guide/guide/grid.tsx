@@ -1,15 +1,21 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { Button, GridBox, Tooltip, Checkbox, DatePicker } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { useState } from 'react';
+
 import {
+  IcoAlertCircle,
+  IcoClipboard,
+  IcoClock01,
+  IcoCopy,
   IcoDownload,
   IcoInfoCircle,
-  IcoClock01,
-  IcoClipboard,
-  IcoCopy,
-  IcoAlertCircle,
 } from '@learnway/icons';
+import { Button } from '@learnway/ui/button';
+import { DatePicker } from '@learnway/ui/date-picker';
+import { GridBox } from '@learnway/ui/grid';
+
+import { Checkbox } from '@learnway/ui/checkbox';
+import { Tooltip } from '@learnway/ui/tooltip';
 import { WordWrap } from './-component/word-wrap';
 
 export const Route = createFileRoute('/_guide/guide/grid')({
@@ -363,7 +369,7 @@ function RouteComponent() {
           <pre className="code_block">
             <code>
               {`// 초기 import
-import { GridBox } from '@learnway/ui';
+import { GridBox } from '@learnway/ui/';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
 <GridBox

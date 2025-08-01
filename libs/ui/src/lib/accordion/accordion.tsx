@@ -1,8 +1,8 @@
-import React, { forwardRef } from 'react';
-import * as Primitive from '@radix-ui/react-accordion';
 import { IcoArrowDown, IcoArrowForward } from '@learnway/icons';
-import { isArray, map } from 'lodash';
+import * as Primitive from '@radix-ui/react-accordion';
 import { useCreation } from 'ahooks';
+import { isArray } from 'lodash';
+import React, { forwardRef } from 'react';
 
 import { cn } from '@learnway/shared';
 
@@ -15,6 +15,7 @@ export interface AccordionItem {
   children?: React.ReactNode;
   active?: boolean;
   tenantMappingMenuId?: number;
+  isDummy?: boolean;
 }
 
 export interface AccordionComponentProps {

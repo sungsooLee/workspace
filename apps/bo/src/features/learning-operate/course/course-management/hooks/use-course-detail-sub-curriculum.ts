@@ -1,8 +1,7 @@
 import {
   TriggerKey,
   useCourseCreateInfo,
-  useCourseLastTriggered,
-} from '@features/learning-operate/course/course-management';
+  useCourseLastTriggered } from '@features/learning-operate/course/course-management';
 import { useNavigate } from '@tanstack/react-router';
 import { useUpdateEffect } from 'ahooks';
 
@@ -15,13 +14,11 @@ export function useCourseDetailSubCurriculum() {
     switch (lastTriggered?.key) {
       case TriggerKey.LIST:
         navigate({
-          to: '/learning/course',
-        });
+          to: '/learning/course' });
         break;
     }
   }, [lastTriggered]);
 
   return {
-    courseId,
-  };
+    courseId };
 }

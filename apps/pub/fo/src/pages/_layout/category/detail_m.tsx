@@ -1,10 +1,7 @@
 import { IcoArray, IcoArrowDown, IcoDotpoints, IcoFilter, IcoPlay } from '@learnway/icons';
 import { cn, getRandomId } from '@learnway/shared';
-import { Badge, Button, Input, Pagination, Popover, useModal } from '@learnway/ui';
-import { createFileRoute } from '@tanstack/react-router';
-import { useState } from 'react';
 
-import ThumbnailList from '../../-components/thumb/thumb-nail-list';
+
 import { CategoryDepthPopupM, FilterPopup } from '../../../features/layout';
 
 import dropdownPopoverStyles from '../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
@@ -13,6 +10,12 @@ import styles from './detail_m.module.css';
 
 /* ThumbnailList */
 import bannerImg from '@learnway/styles/fo/assets/images/banner/img_banner_sample.jpg';
+import { Badge } from '@learnway/ui/badge';
+import { Button } from '@learnway/ui/button';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
+import { Pagination } from '@learnway/ui/pagination';
+import { Popover } from '@learnway/ui/popover';
 
 export const Route = createFileRoute('/_layout/category/detail_m')({
   component: RouteComponent,

@@ -1,18 +1,11 @@
-import { useEffect, useState, ReactNode } from 'react';
 import { useMount } from 'ahooks';
-import { isMobile } from 'react-device-detect';
+import { ReactNode, useEffect, useState } from 'react';
 
-import {
-  initI18N,
-  initZod,
-  initAxios,
-  setConfig,
-  API_FO_URI,
-  tokenService,
-} from '@learnway/config';
-import { Spinner, useModal } from '@learnway/ui';
+import { API_FO_URI, initAxios, initI18N, initZod, setConfig } from '@learnway/config';
+import { useModal } from '@learnway/ui/modal';
+import { Spinner } from '@learnway/ui/spinner';
 
-import { useFetchI18nResource, useFetchCodeGroups } from '../entities/platform';
+import { useFetchCodeGroups, useFetchI18nResource } from '../entities/platform';
 import { useAuthSignin } from '../features/auth';
 
 import '../styles.css';
@@ -25,7 +18,6 @@ declare global {
   }
 }
 
-/* eslint-disable-next-line */
 export interface AppConfigProviderProps {
   children?: ReactNode;
 }

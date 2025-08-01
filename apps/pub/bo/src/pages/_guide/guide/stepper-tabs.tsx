@@ -1,5 +1,5 @@
+import { StepperTabs } from '@learnway/ui/tabs/stepper-tabs/stepper-tabs';
 import { createFileRoute } from '@tanstack/react-router';
-import { StepperTabs } from '@learnway/ui';
 
 export const Route = createFileRoute('/_guide/guide/stepper-tabs')({
   component: RouteComponent,
@@ -31,7 +31,7 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-  import { StepperTabs } from '@learnway/ui';  
+  import { StepperTabs } from '@learnway/ui/tabs/stepper-tabs/stepper-tabs';
   const items = [
     {
       title: 'Tab A',

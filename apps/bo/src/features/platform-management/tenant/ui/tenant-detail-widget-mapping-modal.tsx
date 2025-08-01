@@ -1,17 +1,7 @@
 import { FC, useState } from 'react';
 import { t } from 'i18next';
 import { getRandomId, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import {
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  useModal,
-  Button,
-  GridBox,
-  useGridBox,
-  Checkbox,
-} from '@learnway/ui';
+import { GridBox, useGridBox } from '@learnway/ui/grid';
 import { SearchBox } from '@shared/ui/search-box';
 import { useSearchBox, SearchBoxConfig } from '@learnway/hooks';
 import { WidgetPreviewButton } from '@features/platform';
@@ -20,6 +10,9 @@ import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-content
 
 import { widgetsQueryOptions } from '@entities/widgets/service/widgets.queries';
 import { useCreateTenantWidget } from '@entities/widgets/service/widgets.hook';
+import { Button } from '@learnway/ui/button';
+import { Checkbox } from '@learnway/ui/checkbox';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
 const TenantDetailWidgetMappingModalComponent: FC<{ tenantId: number }> = ({ tenantId }) => {
   const [tableInstance, setTableInstance] = useState<Table<any>>();
@@ -31,8 +24,7 @@ const TenantDetailWidgetMappingModalComponent: FC<{ tenantId: number }> = ({ ten
   const { createTenantWidget } = useCreateTenantWidget({
     onSuccess: () => {
       closeModal();
-    },
-  });
+    } });
   const handleOnSearch = (param: any) => {
     console.log('handleOnSearch click', param);
     gridFetch({ ...param, tenantId: tenantId });
@@ -46,9 +38,7 @@ const TenantDetailWidgetMappingModalComponent: FC<{ tenantId: number }> = ({ ten
         body: {
           widgetTypeList: saveRows
             .filter((item) => !item.original.isTenantApplied)
-            .map((item) => item.original.widgetCode),
-        },
-      };
+            .map((item) => item.original.widgetCode) } };
 
       createTenantWidget(payload);
     }
@@ -94,8 +84,7 @@ const searchConfig: SearchBoxConfig = {
         name: 'widgetName',
         type: 'text',
         label: t('위젯명'),
-        value: '',
-      },
+        value: '' },
       {
         name: 'deviceType',
         type: 'dropdown',
@@ -106,8 +95,7 @@ const searchConfig: SearchBoxConfig = {
           { label: t('전체'), value: 'ALL' },
           { label: 'PC', value: 'PC' },
           { label: 'Mobile', value: 'MOBILE' },
-        ],
-      },
+        ] },
       {
         name: 'tenantApplied',
         type: 'dropdown',
@@ -117,11 +105,9 @@ const searchConfig: SearchBoxConfig = {
           { label: t('선택'), value: '' },
           { label: 'Y', value: 'true' },
           { label: 'N', value: 'false' },
-        ],
-      },
+        ] },
     ],
-  ],
-};
+  ] };
 
 const gridConfig = {
   query: widgetsQueryOptions.listWithTenant,
@@ -131,9 +117,7 @@ const gridConfig = {
   pagination: {
     pageSize: 10,
     pageIndex: 0,
-    totalRows: 0,
-  },
-};
+    totalRows: 0 } };
 
 const columnHelper = createColumnHelper<any>();
 
@@ -146,8 +130,7 @@ const columns = [
     meta: {
       align: 'center',
       headerAlign: 'center',
-      cellAlign: 'center',
-    },
+      cellAlign: 'center' },
     enableSorting: false,
     header: ({ table }) => (
       <div style={{ width: '100%', textAlign: 'center' }}>
@@ -174,16 +157,14 @@ const columns = [
           />
         </div>
       );
-    },
-  }),
+    } }),
 
   columnHelper.accessor('numbering', {
     id: 'numbering',
     cell: ({ row }) => row.index,
     header: 'NO.',
     size: 64,
-    enableGrouping: false,
-  }),
+    enableGrouping: false }),
   columnHelper.accessor('widgetName', {
     id: 'widgetName',
     cell: (info) => {
@@ -191,8 +172,7 @@ const columns = [
     },
     header: t('위젯명'),
     enableGrouping: false,
-    size: 708,
-  }),
+    size: 708 }),
   columnHelper.accessor('device', {
     id: 'device',
     cell: ({ row }) => {
@@ -203,15 +183,13 @@ const columns = [
     },
     header: t('디바이스'),
     size: 200,
-    enableGrouping: false,
-  }),
+    enableGrouping: false }),
   columnHelper.accessor('isTenantApplied', {
     id: 'isTenantApplied',
     cell: (info) => (info.getValue() ? 'Y' : 'N'),
     header: t('테넌트적용여부'),
     size: 200,
-    enableGrouping: false,
-  }),
+    enableGrouping: false }),
 
   columnHelper.accessor('showbutton', {
     cell: ({ row }) => {
@@ -219,6 +197,5 @@ const columns = [
     },
     header: t('미리보기'),
     size: 88,
-    enableGrouping: false,
-  }),
+    enableGrouping: false }),
 ] as ColumnDef<any, unknown>[];

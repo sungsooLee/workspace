@@ -1,10 +1,11 @@
 import { useMemo } from 'react';
 
 import { cn, formatDate, formatPhoneNumber, getFullImagePath } from '@learnway/shared';
-import { Avatar, FormSubTitle } from '@learnway/ui';
+import { FormSubTitle } from '@learnway/ui/base-form';
 
 import { useFetchAuthUser, useUserDetail } from '@learnway/auth/entities';
 import { useCreation } from 'ahooks';
+import { Avatar } from '@learnway/ui/avatar';
 
 /* style */
 import { IcoBuilding01 } from '@learnway/icons';

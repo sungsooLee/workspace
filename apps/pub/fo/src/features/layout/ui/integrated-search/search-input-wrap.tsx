@@ -1,9 +1,10 @@
 import { IcoNarrowRight } from '@learnway/icons';
-import { Button, Input } from '@learnway/ui';
 
 import logoImage from '@learnway/styles/fo/assets/images/common/logo_symbol.png';
 
 import styles from './search-input-wrap.module.css';
+import { Input } from '@learnway/ui/input';
+import { Button } from '@learnway/ui/button';
 
 interface SearchInputWrapProps {
   buttonActive?: boolean;

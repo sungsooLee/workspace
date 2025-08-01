@@ -1,11 +1,14 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { cn } from '@learnway/shared';
 import { IcoCaution, IcoFormRequired } from '@learnway/icons';
-import styles from '@learnway/styles/bo/pages/_auth/change-password.module.css';
+import { cn } from '@learnway/shared';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import noticeBoxStyles from '@learnway/styles/bo/shared/ui/notice-box/notice-box.module.css';
+import styles from '@learnway/styles/bo/pages/_auth/change-password.module.css';
 import hightlightMessageBoxStyles from '@learnway/styles/bo/shared/ui/highlight-message-box/highlight-message-box.module.css';
-import { Button, Input, useModal, ContentsRow } from '@learnway/ui';
+import noticeBoxStyles from '@learnway/styles/bo/shared/ui/notice-box/notice-box.module.css';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
+import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/_auth/password-modify')({
   component: RouteComponent,
@@ -16,7 +19,7 @@ function RouteComponent() {
   const handleClickAlert = () => {
     openAlert({
       title: <>비밀번호가 변경되었습니다.</>,
-      description: <>변경된 비밀번호로 다시 로그인해 주세요.</>,
+      content: <>변경된 비밀번호로 다시 로그인해 주세요.</>,
     });
   };
   return (

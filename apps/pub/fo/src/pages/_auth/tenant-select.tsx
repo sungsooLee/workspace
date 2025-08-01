@@ -7,7 +7,9 @@ import { IcoCaution } from '@learnway/icons';
 import styles from './tenant-select.module.css';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css'; // 폼모듈
 import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
-import { Button, ContentsRow, OptionCard, OptionCardItem } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { OptionCard, OptionCardItem } from '@learnway/ui/option-card';
 
 export const Route = createFileRoute('/_auth/tenant-select')({
   component: RouteComponent,

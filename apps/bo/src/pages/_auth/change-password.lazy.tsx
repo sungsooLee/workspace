@@ -9,10 +9,7 @@ export const Route = createLazyFileRoute('/_auth/change-password')({
   ...pageRouteConfig({
     authorization: true,
     meta: {
-      title: 'LABEL.common.passwordChange',
-    },
-  }),
-});
+      title: 'LABEL.common.passwordChange' } }) });
 
 function RouteComponent() {
   return <ChangePasswordPage route={Route} />;

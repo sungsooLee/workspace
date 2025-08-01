@@ -1,13 +1,12 @@
 import { CompanyUserDetail } from '@features/platform-management/company';
-import { Button } from '@learnway/ui';
 import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui';
 import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { useRef } from 'react';
+import { Button } from '@learnway/ui/button';
 
 export const Route = createLazyFileRoute('/_layout/platform/company/user/detail')({
-  component: RouteComponent,
-});
+  component: RouteComponent });
 
 function RouteComponent() {
   const router = useRouter();

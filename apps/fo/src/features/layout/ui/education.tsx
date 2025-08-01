@@ -7,7 +7,8 @@ import {
   IcoTeacher,
   IcoTime,
 } from '@learnway/icons';
-import { Button, useModal } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 import { memo, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import { CourseCancelReasonPopup, EducationPlacePopup } from '../../../features/layout';
@@ -213,7 +214,7 @@ const EducationComponent = ({
             variant="primary"
             size="xl"
             onClick={() => {
-              const sendData = { courseSequenceUuid: edu.courseSequenceId };
+              const sendData = { courseSequenceId: edu.courseSequenceId };
               navigate({ to: '/course/registration', state: sendData });
             }}
           >

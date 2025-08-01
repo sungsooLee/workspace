@@ -19,8 +19,7 @@ export default class CompaniesService {
   static fetchListPopupAll(params: any) {
     return httpService.get<PageableContent<any>>(`${PMSApiPrefix()}/companies/popup`, {
       ...params,
-      size: 5000,
-    });
+      size: 5000 });
   }
 
   // 회사 조회

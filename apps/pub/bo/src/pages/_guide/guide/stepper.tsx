@@ -1,5 +1,6 @@
+import { Stepper } from '@learnway/ui/stepper';
+import { SelectOption } from '@learnway/ui/type';
 import { createFileRoute } from '@tanstack/react-router';
-import { SelectOption, Stepper } from '@learnway/ui';
 
 export const Route = createFileRoute('/_guide/guide/stepper')({
   component: RouteComponent,
@@ -31,8 +32,8 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-import { SelectOption, Stepper } from '@learnway/ui';
-            
+import { SelectOption, Stepper } from '@learnway/ui/stepper';
+
 // 적용방법(예시)
 
 const items = [

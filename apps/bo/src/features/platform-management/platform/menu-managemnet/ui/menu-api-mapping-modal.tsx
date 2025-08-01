@@ -1,21 +1,13 @@
-import {
-  Button,
-  findNodesByKeys,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  ShuttleTreeToChips,
-  TreeNode,
-  useModal,
-} from '@learnway/ui';
-import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
-import { useEffect, useState } from 'react';
-import { transformApiDataToApiTreeData, treeExpandAll } from '../service/menu.service';
-import { ApiInfoModal } from './api-info-modal';
 import { cn } from '@learnway/shared';
+import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { findNodesByKeys, ShuttleTreeToChips, TreeNode } from '@learnway/ui/tree-view';
 import { t } from 'i18next';
+import { useEffect, useState } from 'react';
 import { useFetchPrograms } from '../../../../../entities/program/service/program-manage.hook';
+import { transformApiDataToApiTreeData } from '../service/menu.service';
+import { ApiInfoModal } from './api-info-modal';
 
 const MenuApiMappingModalComponent = ({ menuScopeCode, selectedApiKeys }: any) => {
   const { openModal, closeModal } = useModal();

@@ -1,18 +1,12 @@
-import {
-  CommonReactElementProps,
-  ModalBody,
-  ModalContainer,
-  ModalTitle,
-  OptionCard,
-  useModal,
-} from '@learnway/ui';
-import { IcoVideo01, IcoVideo02, IcoClass, IcoLive, IcoSurvey, IcoEntrust } from '@learnway/icons';
-import styles from './course-type-option-card-modal.module.css';
+import { useCodeGroup } from '@learnway/hooks';
+import { IcoClass, IcoEntrust, IcoLive, IcoSurvey, IcoVideo01, IcoVideo02 } from '@learnway/icons';
+import { getMockCourseType, mergeEnumDataWithKeys } from '@learnway/shared';
+import { ModalBody, ModalContainer, ModalTitle, useModal } from '@learnway/ui/modal';
+import { OptionCard } from '@learnway/ui/option-card';
+import { CommonReactElementProps } from '@learnway/ui/type';
 import { forwardRef, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { t } from 'i18next';
-import { getMockCourseType, mergeEnumDataWithKeys } from '@learnway/shared';
-import { useCodeGroup } from '@learnway/hooks';
+import styles from './course-type-option-card-modal.module.css';
 
 export interface CourseTypeOptionCardModalProps extends CommonReactElementProps {
   dummy?: boolean;

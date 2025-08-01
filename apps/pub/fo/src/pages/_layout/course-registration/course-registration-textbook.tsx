@@ -1,6 +1,5 @@
 import { IcoAvatar02, IcoCalendar01, IcoCaution, IcoLocation, IcoTime } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { Button, ContentsRow, Input, PhoneNumber, useModal } from '@learnway/ui';
 import { createFileRoute } from '@tanstack/react-router';
 import { BrowserView, isMobile, MobileView } from 'react-device-detect';
 import { AddressPopup, EducationPlacePopup } from '../../../features/layout';
@@ -12,6 +11,11 @@ import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import educationStyles from '../../../features/layout/ui/education.module.css';
 import styles from './course-registration-textbook.module.css';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
+import { PhoneNumber } from '@learnway/ui/phone-number';
 export const Route = createFileRoute('/_layout/course-registration/course-registration-textbook')({
   component: RouteComponent,
 });

@@ -1,10 +1,10 @@
 import { t } from 'i18next';
 import { useDynamicForm2 } from '@learnway/hooks';
-import { useModal } from '@learnway/ui';
 import { TestPaperBasicInfoSaveRes } from '@types';
 import { useCreateExamPaperContent, useUpdateExamPaperContent } from '@entities/learning-resource';
 import { getExamSaveRequestDataFromFormData } from './common';
 import { PageMode, TestPaperBasicInfoFormData } from './type';
+import { useModal } from '@learnway/ui/modal';
 
 export const useExamBasicInfoForm = (options: {
   mode: PageMode;
@@ -21,14 +21,12 @@ export const useExamBasicInfoForm = (options: {
     onFormChange: onBasicInfoFormChange,
     onFormValid,
     formState,
-    onSubmit,
-  } = useDynamicForm2();
+    onSubmit } = useDynamicForm2();
 
   const updateFormDataByKey = (key: string, value: any) => {
     updateBasicInfoFormData({
       ...getBasicInfoValues(),
-      [key]: value,
-    });
+      [key]: value });
   };
 
   const { create: createExamBasicInfo } = useCreateExamPaperContent({
@@ -40,23 +38,20 @@ export const useExamBasicInfoForm = (options: {
       if (isSuccess) {
         options.onSaveSuccess?.(result);
       }
-    },
-  });
+    } });
 
   const { update: updateExamBasicInfo } = useUpdateExamPaperContent({
     onSuccess: (result: unknown) => {
       console.log(result);
 
       options.onUpdateSuccess?.(options.contentUuid);
-    },
-  });
+    } });
 
   const saveBasicInfo = async (data: Record<string, any>, isOnGenTypeChange?: boolean) => {
     const requestData = getExamSaveRequestDataFromFormData({
       values: data as TestPaperBasicInfoFormData,
       mode: options.mode,
-      contentUuid: options.contentUuid,
-    });
+      contentUuid: options.contentUuid });
 
     console.log('submit', options.mode, requestData);
 
@@ -64,8 +59,7 @@ export const useExamBasicInfoForm = (options: {
       ? true
       : await confirm({
           title: t('LABEL.confirm.save.title'),
-          content: t('LABEL.confirm.save.message'),
-        });
+          content: t('LABEL.confirm.save.message') });
 
     if (result) {
       if (options.mode === PageMode.CREATE) {
@@ -85,6 +79,5 @@ export const useExamBasicInfoForm = (options: {
     saveBasicInfo,
     onSubmit,
     onFormValid,
-    formState,
-  };
+    formState };
 };

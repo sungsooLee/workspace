@@ -1,8 +1,8 @@
 import { memo, useState } from 'react';
-import { Carousel, Button } from '@learnway/ui';
 
 import styles from '@learnway/styles/fo/widgets/layout/ui/container/related-search.module.css';
 import { Navigation } from 'swiper/modules';
+import { Button } from '@learnway/ui/button';
 
 function RelatedSearchComponent() {
   const items = [

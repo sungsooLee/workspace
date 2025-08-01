@@ -29,9 +29,7 @@ export function useExternalEducationPopup(formId?: number, isActive?: boolean) {
       isPopupExposed: serverData.isPopupExposed || false,
       dateRange: {
         from: serverData.popupStartDate || null,
-        to: serverData.popupEndDate || null,
-      },
-    };
+        to: serverData.popupEndDate || null } };
   };
 
   // 폼 데이터를 API 요청 데이터로 변환
@@ -44,8 +42,7 @@ export function useExternalEducationPopup(formId?: number, isActive?: boolean) {
       popupStartDate: formData.dateRange?.from || null,
       popupEndDate: formData.dateRange?.to || null,
       isPopupExposed: formData.isPopupExposed || false,
-      tenantId: 1,
-    };
+      tenantId: 1 };
   };
 
   // 탭이 활성화될 때 데이터 로드 플래그 리셋
@@ -78,8 +75,7 @@ export function useExternalEducationPopup(formId?: number, isActive?: boolean) {
         create(requestData, {
           onSuccess: () => {
             resolve(true);
-          },
-        });
+          } });
       });
     } catch (error) {
       return false;
@@ -100,6 +96,5 @@ export function useExternalEducationPopup(formId?: number, isActive?: boolean) {
     handleFormSubmit,
     isPopupPeriod,
     data,
-    isLoading,
-  };
+    isLoading };
 }

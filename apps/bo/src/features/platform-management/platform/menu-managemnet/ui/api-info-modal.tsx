@@ -1,7 +1,10 @@
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
-import { ContentsRow, Input, ModalBody, ModalContainer, ModalTitle, Textarea } from '@learnway/ui';
 import { useFetchProgram } from '../../../../../entities/program/service/program-manage.hook';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { ModalBody, ModalContainer, ModalTitle } from '@learnway/ui/modal';
+import { Textarea } from '@learnway/ui/textarea';
 
 const ApiInfoModalComponent = ({ apiId }: any) => {
   const { data } = useFetchProgram(apiId);

@@ -1,5 +1,6 @@
-import { Button, ModalBody, ModalContainer, ModalFooter, useModal } from '@learnway/ui';
 import styles from '@learnway/styles/bo/assets/styles/modules/e-book.module.css'; // 퍼블수정 20240318 : libs로 경로 수정
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, useModal } from '@learnway/ui/modal';
 const EbookInstallGuideModalComponent = () => {
   const { closeModal } = useModal();
   return (

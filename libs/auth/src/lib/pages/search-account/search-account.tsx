@@ -1,14 +1,16 @@
-import { useState } from 'react';
 import { useRouter } from '@tanstack/react-router';
 import { useCreation } from 'ahooks';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Tabs, useModal } from '@learnway/ui';
-import { cn } from '@learnway/shared';
-import { useCurrentRoute } from '@learnway/hooks';
+import { useModal } from '@learnway/ui/modal';
+import { Tabs } from '@learnway/ui/tabs';
 
-import { AuthForm, AuthFormData } from '../../features/auth';
+import { useCurrentRoute } from '@learnway/hooks';
+import { cn } from '@learnway/shared';
+
 import { useAsyncFetchEmail } from '../../entities';
+import { AuthForm, AuthFormData } from '../../features/auth';
 import { EmbededAlert } from '../../shared/ui';
 
 import styles from '@learnway/styles/fo/pages/_auth/search-account/search-account.module.css';

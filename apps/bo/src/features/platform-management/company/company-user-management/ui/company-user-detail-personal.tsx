@@ -1,8 +1,11 @@
 import { t } from 'i18next';
-import { ContentsRow, FormSubTitle, Input, DatePicker } from '@learnway/ui';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { DatePicker } from '@learnway/ui/date-picker';
 import { FormRow } from '@shared/ui';
 import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
 import UsersService from '@entities/users/api/users';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
 
 /**
  * 회사 유저 상세 - 개인 정보

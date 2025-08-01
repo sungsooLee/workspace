@@ -1,46 +1,39 @@
-/* eslint-disable no-restricted-imports */
-/* eslint-disable @nx/enforce-module-boundaries */
-import { FC, useState } from 'react';
-import { cn } from '@learnway/shared';
-import { NoticeBox } from '../../../../../../../bo/src/shared/ui';
-import {
-  Button,
-  CheckboxGroupFormField,
-  ContentsRow,
-  Dropdown,
-  Input,
-  InputModalSelectorFormField,
-  List,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  PhoneNumber,
-  RadioGroupFormField,
-  Switch,
-  Tabs,
-  Textarea,
-  Tooltip,
-  useModal,
-  ThumbnailImageUpload,
-  ImageOption,
-  ChipList,
-  SplitPanel,
-  FormSubTitle,
-} from '@learnway/ui';
 import { IcoAlertCircle, IcoFormRequired, IcoRefresh02, IcoSearch } from '@learnway/icons';
+import { cn } from '@learnway/shared';
+import { FC, useState } from 'react';
+
+import { NoticeBox } from '../../../../shared/ui/notice-box';
 
 /* style */
-import styles from './test-detail.module.css';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import movieInfoStyles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
-import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import popSearchStyles from '@learnway/styles/bo/assets/styles/modules/popup-search.module.css';
+import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
+import styles from './test-detail.module.css';
 
 /* images */
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { ChipList } from '@learnway/ui/chips';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { SplitPanel } from '@learnway/ui/elements';
+import {
+  CheckboxGroupFormField,
+  InputModalSelectorFormField,
+  RadioGroupFormField,
+} from '@learnway/ui/form-field';
+import { Input } from '@learnway/ui/input';
+import { List } from '@learnway/ui/list';
+import { ModalBody, ModalContainer, ModalFooter, useModal } from '@learnway/ui/modal';
+import { PhoneNumber } from '@learnway/ui/phone-number';
+import { Switch } from '@learnway/ui/switch';
+import { Tabs } from '@learnway/ui/tabs';
+import { Textarea } from '@learnway/ui/textarea';
+import { Tooltip } from '@learnway/ui/tooltip';
 import previewImg from '../../../../assets/images/temp/img_exam_basic.jpg';
-import selectedImg from '../../../../assets/images/thumb/img_thumb_hyundai.jpg';
 
 const TestInfoComponent: FC<{}> = ({}) => {
   const { closeModal } = useModal();

@@ -1,9 +1,13 @@
 import React from 'react';
-import styles from '@learnway/styles/fo/features/layout/ui/thumb-nail-item.module.css';
-import { Link } from '@tanstack/react-router';
-import { cn, getRandomId } from '@learnway/shared';
-import { Badge, Thumbnail, ToggleButton } from '@learnway/ui';
 import { IcoEye, IcoHeart, IcoStar } from '@learnway/icons';
+import { cn, getRandomId } from '@learnway/shared';
+import styles from '@learnway/styles/fo/features/layout/ui/thumb-nail-item.module.css';
+import { Badge } from '@learnway/ui/badge';
+import { Thumbnail } from '@learnway/ui/thumbnail';
+import { ToggleButton } from '@learnway/ui/toggle-button';
+
+import { Link } from '@tanstack/react-router';
+import { t } from 'i18next';
 
 // 임시 이미지
 import bnrCImage1 from '../../../assets/images/banner/banner_category_02.png';
@@ -18,7 +22,6 @@ export interface ThumbnailData {
   viewCount: number,
   likeCount: number
   // labelCustomNode
-  linkUrl: string;
   imageUrl: string;
   toggleButton?: boolean;
   // infoCustomNode
@@ -52,7 +55,7 @@ export const ThumbnailItem: React.FC<ThumbnailItemProps> = ({
         'thumbnail_item',
       )}
     >
-      <Link to={data.linkUrl ?? '/'} className={styles.thumbnail_link}>
+      <Link to={'/'} state={{}} className={styles.thumbnail_link}>
         {/* thumbnail , badge */}
         <div className={styles.thumbnail_view}>
           <Thumbnail
@@ -78,7 +81,7 @@ export const ThumbnailItem: React.FC<ThumbnailItemProps> = ({
                   variant="text"
                   status="gray"
                   size="xs"
-                  option={{ label: '접수중', value: `${getRandomId()}` }}
+                  option={{ label: t('적용'), value: `${getRandomId()}` }}
                 />
               )
             }
@@ -116,11 +119,11 @@ export const ThumbnailItem: React.FC<ThumbnailItemProps> = ({
               <IcoStar width={20} height={20} stroke="#0056FF" fill="#0056FF" />
               <em>{data.starRatingAverage}</em>
             </span>
-                <span>
+            <span>
               <IcoEye width={20} height={20} fill="none" stroke="#4D525C" />
               <em>{data.viewCount}</em>
             </span>
-                <span>
+            <span>
               <IcoHeart width={20} height={20} stroke="#F58B75" fill="#F58B75" />
               <em>{data.likeCount}</em>
             </span>

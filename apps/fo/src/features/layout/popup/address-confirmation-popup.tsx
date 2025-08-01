@@ -1,7 +1,8 @@
-import React, { memo } from 'react';
-import { ModalBody, ModalContainer, ModalTitle, ModalFooter, Button, useModal } from '@learnway/ui';
+import { memo } from 'react';
 
 import styles from '@learnway/styles/fo/features/layout/popup/address-confirmation-popup.module.css';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 import { Address } from '@types';
 
 interface Props {
@@ -44,7 +45,7 @@ const AddressConfirmationPopupComponent = ({ address, name, phoneNumber }: Props
               <dd>
                 {address.postalCode}
                 <br />
-                {address.roadAddress}
+                {`${address.roadAddress}, ${address.detail}`}
               </dd>
             </dl>
           </div>

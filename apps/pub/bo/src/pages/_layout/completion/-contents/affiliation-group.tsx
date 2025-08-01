@@ -1,8 +1,9 @@
-/* eslint-disable @nx/enforce-module-boundaries */
-import { FC } from 'react';
-import { Button, GridBox } from '@learnway/ui';
-import { NoticeBox } from '../../../../../../../bo/src/shared/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+
+import { Button } from '@learnway/ui/button';
+import { GridBox } from '@learnway/ui/grid';
+import { FC } from 'react';
+import { NoticeBox } from '../../../../shared/ui/notice-box';
 
 const AffiliationGroupComponent: FC<{}> = ({}) => {
   const columnHelper = createColumnHelper<any>();

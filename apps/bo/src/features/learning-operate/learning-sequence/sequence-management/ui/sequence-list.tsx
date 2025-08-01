@@ -8,17 +8,17 @@ import { queryOptions } from '@entities/learning-sequence/service/learning-seque
 import { SequenceBatchModal } from '@features/learning-operate/learning-sequence/sequence-management';
 import { LMSApiPrefix } from '@learnway/config';
 import { SelectOption, useDynamicForm2 } from '@learnway/hooks';
+import { Button } from '@learnway/ui/button';
+import { Divider } from '@learnway/ui/elements';
 import {
-  Button,
-  Divider,
   EditDatePickerCell,
   EditInputCell,
   GridBox,
-  Input,
   useGridBox,
   useGridBoxConfig,
-  useModal,
-} from '@learnway/ui';
+} from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
 import { Mode } from '@pages/_layout/learning/learning-sequence/-common/type';
 import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
 import { useRouter } from '@tanstack/react-router';

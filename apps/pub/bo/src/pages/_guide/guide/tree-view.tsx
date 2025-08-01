@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { DndTreeView, TreeContainer } from '@learnway/ui/tree-view';
+import { TreeNode } from '@learnway/ui/tree-view/type';
 import { createFileRoute } from '@tanstack/react-router';
-import { TreeView, TreeNode, DndTreeView, TreeContainer } from '@learnway/ui';
+import { useState } from 'react';
 
 const sampleData: TreeNode[] = [
   {
@@ -45,9 +46,9 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-  import { Button, Tooltip } from '@learnway/ui';
+  import { Button, Tooltip } from '@learnway/ui/';
   import { IcoAlertCircle } from '@learnway/icons'; // 아이콘
-  
+
   // 적용방법(예시)
   <Tooltip side="top" align="end" content={'tooltip content'}>
     <Button onlyIcon>

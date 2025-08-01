@@ -1,10 +1,13 @@
-import { memo, useState } from 'react';
-import { Link } from '@tanstack/react-router';
-import { Avatar, Button, Popover, useModal } from '@learnway/ui';
 import { IcLogOut01, IcoBuilding01 } from '@learnway/icons';
+import { Link } from '@tanstack/react-router';
+import { memo, useState } from 'react';
 import styles from './user-avatar.module.css';
 
 /* company logo image */
+import { Avatar } from '@learnway/ui/avatar';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
+import { Popover } from '@learnway/ui/Popover';
 import imgLogo from '../../../assets/images/temp/img_temp_company_logo.png';
 
 const PopoverContent = () => {

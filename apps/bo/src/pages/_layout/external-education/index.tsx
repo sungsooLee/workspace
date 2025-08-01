@@ -1,14 +1,16 @@
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { ContentsButtons, MainContents, PageContainer, SearchBox } from '@shared/ui';
-import { Button, Divider, GridBox, Input, useGridBox, useGridBoxConfig } from '@learnway/ui';
+import { Divider } from '@learnway/ui/elements';
+import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import { t } from 'i18next';
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { useEffect, useState } from 'react';
 import { queryOptions } from '@entities/external-education';
+import { Button } from '@learnway/ui/button';
+import { Input } from '@learnway/ui/input';
 
 export const Route = createFileRoute('/_layout/external-education/')({
-  component: RouteComponent,
-});
+  component: RouteComponent });
 
 function RouteComponent() {
   const router = useRouter();
@@ -25,16 +27,14 @@ function RouteComponent() {
           value: '1',
           // element: <TenantByRoleDropdownFormField />,
           element: <Input />,
-          readOnly: true,
-        },
+          readOnly: true },
         {
           name: 'channelUuid',
           type: 'custom',
           label: t('신청양식'),
           format: 'object',
           value: '',
-          element: <Input />,
-        },
+          element: <Input /> },
         {
           name: 'contentTypes',
           type: 'dropdown',
@@ -47,11 +47,9 @@ function RouteComponent() {
             { label: t('사용'), value: 'Y' },
             { label: t('미사용'), value: 'N' },
             { label: t('임시저장'), value: 'S' },
-          ],
-        },
+          ] },
       ],
-    ],
-  });
+    ] });
 
   const gridBoxConfig: useGridBoxConfig = {
     query: (param: any) => queryOptions.list(param),
@@ -69,15 +67,13 @@ function RouteComponent() {
                 e.preventDefault();
                 router.navigate({
                   to: `/external-education/view`,
-                  state: { formId: info.row.original.externalCourseFormId },
-                });
+                  state: { formId: info.row.original.externalCourseFormId } });
               }}
             >
               {externalCourseFormTitle}
             </span>
           );
-        },
-      },
+        } },
       {
         name: 'externalFormStatusType',
         label: t('사용여부'),
@@ -85,10 +81,8 @@ function RouteComponent() {
         render: (info: any) => {
           const status = info.row.original.externalFormStatusType;
           return status === 'USE' ? t('사용') : status === 'IN_USE' ? t('미사용') : t('임시저장');
-        },
-      },
-    ],
-  };
+        } },
+    ] };
 
   const { provider, getValues } = useSearchBox(SearchBoxConfig());
   const { config, gridFetch } = useGridBox(gridBoxConfig);

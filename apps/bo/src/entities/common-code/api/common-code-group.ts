@@ -18,5 +18,4 @@ export const CommonCodeGroupApi = {
     'PUT',
     createPmsUrl('/code-groups/:cdGroupId'),
     '코드 그룹 업데이트',
-  ),
-};
+  ) };

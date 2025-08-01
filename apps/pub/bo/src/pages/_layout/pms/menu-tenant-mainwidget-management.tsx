@@ -1,16 +1,16 @@
-/* eslint-disable @nx/enforce-module-boundaries */
 import { createFileRoute } from '@tanstack/react-router';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import { SplitPanel, Tabs } from '@learnway/ui';
+
 import { cn } from '@learnway/shared';
-import { NoticeBox } from '../../../../../../bo/src/shared/ui/';
-import { SectionLayout } from '../-components/section-layout';
+import { NoticeBox } from '../../../shared/ui/notice-box';
 
 /* styles */
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import pageStyles from './tenant-menu-management.module.css';
 
 /* contents */
+import { SplitPanel } from '@learnway/ui/elements';
+import { Tabs } from '@learnway/ui/tabs';
 import { MainWidget } from './-contents/main-widget';
 import { MainWidgetDetail } from './-contents/main-widget-detail';
 

@@ -1,5 +1,5 @@
 import { cn } from '@learnway/shared';
-import { Button, ContentsRow, Input, useModal } from '@learnway/ui';
+
 import { createFileRoute } from '@tanstack/react-router';
 import { BrowserView, MobileView } from 'react-device-detect';
 //import styles from './password-modify.module.css';
@@ -11,6 +11,10 @@ import hightlightMessageBoxStyles from '@learnway/styles/fo/shared/ui/highlight-
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import { GoogleCertGuidePopup } from '../../features/auth';
 import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
 
 export const Route = createFileRoute('/_auth/password-modify')({
   component: RouteComponent,

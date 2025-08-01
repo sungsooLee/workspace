@@ -1,7 +1,8 @@
 import { DropdownFormField } from '@features/form/ui/dropdown-form-field';
 import { CODE_GROUP } from '@learnway/hooks';
 import { generateYears } from '@learnway/shared';
-import { ContentsRow, Input } from '@learnway/ui';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
 import {
   FormRow2,
   SearchBoxForm,
@@ -52,7 +53,7 @@ export const CourseSearchForm: React.FC<CourseSearchFormProps> = ({
         {/* 개설년도 */}
         <FormRow2
           provider={provider}
-          name="openingDate"
+          name="openYear"
           label={t('LABEL.form.label.openingDate')}
           element={
             <DropdownFormField
@@ -80,8 +81,9 @@ export const CourseSearchForm: React.FC<CourseSearchFormProps> = ({
         {/* 사용여부 */}
         <FormRow2
           provider={provider}
-          name="useYn"
+          name="isUsed"
           label={t('LABEL.form.label.useYn')}
+          format={'boolean'}
           element={
             <DropdownFormField
               presetOptionLabel={t('LABEL.form.label.all')}
@@ -101,7 +103,7 @@ export const CourseSearchForm: React.FC<CourseSearchFormProps> = ({
         {/* 과정코드 */}
         <FormRow2
           provider={provider}
-          name="courseCode"
+          name="courseId"
           label={t('LABEL.form.label.courseCode')}
           element={<Input />}
         />

@@ -1,13 +1,14 @@
-import { useEffect, useRef } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
-import { ModalBody, ModalContainer, useModal, Button } from '@learnway/ui';
-import { IcoDownload, IcoArrowPrev, IcoArrowNext } from '@learnway/icons';
+import { IcoArrowNext, IcoArrowPrev, IcoDownload } from '@learnway/icons';
 import { cn } from '@learnway/shared';
+import { createFileRoute } from '@tanstack/react-router';
+import { useEffect } from 'react';
 
 // style
 import styles from '@learnway/styles/bo/assets/styles/modules/pop-image-preview.module.css';
 
 /* images */
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, useModal } from '@learnway/ui/modal';
 import mapImg from '../../../assets/images/temp/img_temp_map.jpg';
 
 export const Route = createFileRoute('/_layout/common/pop-image-preview')({

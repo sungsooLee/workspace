@@ -14,15 +14,13 @@ export function useSpaceMutation(type: 'create' | 'update' | 'delete', options: 
       queryClient.invalidateQueries({ queryKey: queryKeys.list });
       if (options.onSuccess) await options.onSuccess(data, variables, context);
     },
-    ...options,
-  });
+    ...options });
 
   return {
     mutate: (payload: any, callback?: any) => mutation.mutate(payload, callback),
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }
 
 export function useCheckExistsSpaceCode(options: any) {
@@ -32,14 +30,12 @@ export function useCheckExistsSpaceCode(options: any) {
       if (options.onSuccess) {
         options.onSuccess(data, variables, context);
       }
-    },
-  });
+    } });
 
   return {
     checkExistsSpaceCode: (payload: any, callback?: any) => {
       mutate(payload, callback);
     },
     isSuccess,
-    isError,
-  };
+    isError };
 }

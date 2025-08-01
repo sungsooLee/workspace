@@ -1,27 +1,19 @@
-/* eslint-disable @nx/enforce-module-boundaries */
-import { FC } from 'react';
-import { forwardRef, useState } from 'react';
+import { FC, forwardRef, useState } from 'react';
+
 import { cn } from '@learnway/shared';
-import {
-  ContentsRow,
-  Button,
-  RadioGroupFormField,
-  Input,
-  Textarea,
-  ChipListModalSelectorFormField,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  useModal,
-  GridBox,
-  FormSubTitle,
-} from '@learnway/ui';
-import { IcoMinus } from '@learnway/icons';
-import { IcoFormRequired } from '@learnway/icons';
+
+import { IcoFormRequired, IcoMinus } from '@learnway/icons';
 
 /* style */
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { ChipListModalSelectorFormField, RadioGroupFormField } from '@learnway/ui/form-field';
+import { GridBox } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { Textarea } from '@learnway/ui/textarea';
 
 const HeadquartersInfoComponent: FC<{}> = ({}) => {
   const getMockData = () => {
@@ -32,7 +24,7 @@ const HeadquartersInfoComponent: FC<{}> = ({}) => {
     };
   };
   const TestModal = forwardRef<HTMLDivElement, any>(({ ...props }, ref) => {
-    const { close } = useModal();
+    const { closeModal: close } = useModal();
     const { data: gridData }: any = getMockData();
     const [option, setOption] = useState<{ value: string; label: string }>();
 

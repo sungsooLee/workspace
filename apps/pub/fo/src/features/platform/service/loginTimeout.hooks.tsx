@@ -1,7 +1,7 @@
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 
-import { useModal } from '@learnway/ui';
-import { useLogoutUser } from '@learnway/config';
+import { useModal } from '@learnway/ui/modal';
+import { useLogoutUser } from '@learnway/auth/entities';
 
 interface ExtensionModalProps {
   initialTime: number;
@@ -56,7 +56,7 @@ export function useLoginTimeout() {
       closeAllModalModal();
       openAlert({
         title: '자동 로그아웃',
-        description: '로그인 시간이 만료되어 자동 로그아웃되었습니다.',
+        content: '로그인 시간이 만료되어 자동 로그아웃되었습니다.',
         type: 'warning',
         onClose: () => {
           logout();
@@ -84,7 +84,7 @@ export function useLoginTimeout() {
       if (timeRemain <= 5 && !isCancelAlert.current) {
         openAlert({
           title: '로그인 시간 연장',
-          description: <ExtensionModal initialTime={5} onTimeout={handleLogout} />,
+          content: <ExtensionModal initialTime={5} onTimeout={handleLogout} />,
 
           okButtonLabel: '로그인연장',
           onClose: (result?: boolean) => {

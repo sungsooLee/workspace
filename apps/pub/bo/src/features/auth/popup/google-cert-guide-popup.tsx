@@ -1,6 +1,9 @@
 import { memo } from 'react';
-import { Button, ModalBody, ModalContainer, ModalTitle } from '@learnway/ui';
+
 import styles from '@learnway/styles/bo/features/auth/ui/google-otp-guide/google-otp-guide.module.css';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalTitle } from '@learnway/ui/modal';
+
 import imgGuide2 from '../../../assets/images/popup/google_guide_img2.png';
 import imgGuide3 from '../../../assets/images/popup/google_guide_img3.png';
 import imgGuide4 from '../../../assets/images/popup/google_guide_img4.png';

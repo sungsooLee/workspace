@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { Button } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
 
 import styles from '@learnway/styles/fo/features/layout/ui/popular-searches.module.css';
 

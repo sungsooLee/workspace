@@ -4,12 +4,17 @@ import { createFileRoute } from '@tanstack/react-router';
 import { IcoFormRequired } from '@learnway/icons';
 import styles from './signup-step2.module.css';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
-import { Button, Stepper, SelectOption, Dropdown, ContentsRow, RadioCard } from '@learnway/ui';
 
 import { MobileView, BrowserView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
 
 import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic.form.module.css';
+import { SelectOption } from '@learnway/ui/type';
+import { Stepper } from '@learnway/ui/stepper';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { RadioCard } from '@learnway/ui/radio-card';
 
 export const Route = createFileRoute('/_auth/signup-step2-en')({
   component: RouteComponent,

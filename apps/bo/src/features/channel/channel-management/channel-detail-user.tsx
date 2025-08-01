@@ -1,20 +1,16 @@
 import { FormDisplay } from '@features/form';
 import { DynamicFormConfig, SearchBoxConfig, useDynamicForm, useSearchBox } from '@learnway/hooks';
-import {
-  Button,
-  ChipListModalSelectorFormField,
-  ContentsRow,
-  Divider,
-  FormSubTitle,
-  GridBox,
-  useGridBox,
-  useGridBoxConfig,
-} from '@learnway/ui';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Divider } from '@learnway/ui/elements';
+import { ChipListModalSelectorFormField } from '@learnway/ui/form-field';
+import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import { EnButtonLayout } from '@pages/_layout/tenant/channel/management/detail.lazy';
 import { FormItem, FormRow, SearchBox, UserGroupOrganizationShuttleModal } from '@shared/ui';
 import { createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from 'react';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
 
 interface ChannelDetailUserProps {
   onButtonLayoutChange?: (layout: EnButtonLayout) => void;
@@ -49,8 +45,7 @@ const ChannelDetailUserComponent = (props: ChannelDetailUserProps, ref: any) => 
     },
     clearForm() {
       onFormChange();
-    },
-  }));
+    } }));
 
   const handleOnSearchForUser = useCallback((data: any) => {
     gridFetchForUser(data);
@@ -85,14 +80,12 @@ const ChannelDetailUserComponent = (props: ChannelDetailUserProps, ref: any) => 
                   showInput: false,
                   labelField: 'pathValue',
                   valueField: 'pathKey',
-                  wordwrap: true,
-                }}
+                  wordwrap: true }}
                 modalConfig={{
                   title: '',
                   width: 'xl',
                   height: 'fix',
-                  content: <UserGroupOrganizationShuttleModal tenantIds={[1, 2, 3]} />,
-                }}
+                  content: <UserGroupOrganizationShuttleModal tenantIds={[1, 2, 3]} /> }}
                 actionNode={<Button variant="text" label={t('대상자')} />}
               />
             }
@@ -145,21 +138,17 @@ const formConfig = (): DynamicFormConfig => ({
         { label: t('유저그룹 설정'), value: 'USER_GROUP' },
         { label: t('직접 설정'), value: 'DIRECT' },
       ],
-      guideText: t('선택한 1개의 방식만 채널 대상자로 설정됩니다.'),
-    },
+      guideText: t('선택한 1개의 방식만 채널 대상자로 설정됩니다.') },
     {
       name: 'userGroup',
       type: 'custom',
       label: t('유저그룹 역할부여'),
       format: 'array',
-      value: [],
-    },
+      value: [] },
   ],
   validator: {
     channelUserSetting: true,
-    userGroup: true,
-  },
-});
+    userGroup: true } });
 
 const searchConfig: SearchBoxConfig = {
   builders: [
@@ -174,23 +163,19 @@ const searchConfig: SearchBoxConfig = {
           { label: '회사B', value: 'B' },
           { label: '회사C', value: 'C' },
         ],
-        presetOptionLabel: t('선택'),
-      },
+        presetOptionLabel: t('선택') },
       {
         name: 'employeeNumber',
         type: 'text',
         label: t('사번'),
-        value: '',
-      },
+        value: '' },
       {
         name: 'name',
         type: 'text',
         label: t('이름'),
-        value: '',
-      },
+        value: '' },
     ],
-  ],
-};
+  ] };
 
 const gridConfig: useGridBoxConfig = {
   query: '',
@@ -199,9 +184,7 @@ const gridConfig: useGridBoxConfig = {
   gridState: {
     page: 0,
     size: 10,
-    sort: [],
-  },
-};
+    sort: [] } };
 
 const columnHelper = createColumnHelper<any>();
 
@@ -209,36 +192,29 @@ const columns = [
   columnHelper.accessor('companyName', {
     cell: (info) => info.getValue(),
     header: t('회사'),
-    enableGrouping: false,
-  }),
+    enableGrouping: false }),
   columnHelper.accessor('roomName', {
     cell: (info) => info.getValue(),
     header: t('실'),
-    enableGrouping: false,
-  }),
+    enableGrouping: false }),
   columnHelper.accessor('deptName', {
     cell: (info) => info.getValue(),
     header: t('소속'),
-    enableGrouping: false,
-  }),
+    enableGrouping: false }),
   columnHelper.accessor('employeeNumber', {
     cell: (info) => info.getValue(),
     header: t('사번'),
-    enableGrouping: false,
-  }),
+    enableGrouping: false }),
   columnHelper.accessor('userName', {
     cell: (info) => info.getValue(),
     header: t('이름'),
-    enableGrouping: false,
-  }),
+    enableGrouping: false }),
   columnHelper.accessor('userStatus', {
     cell: (info) => info.getValue(),
     header: t('재직여부'),
-    enableGrouping: false,
-  }),
+    enableGrouping: false }),
   columnHelper.accessor('accountStatus', {
     cell: (info) => info.getValue(),
     header: t('계정상태'),
-    enableGrouping: false,
-  }),
+    enableGrouping: false }),
 ];

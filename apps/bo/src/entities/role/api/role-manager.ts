@@ -126,8 +126,7 @@ export default class RoleManagerService {
    */
   static fetchRoleMenuApis(roleId: string, temantMappingMenuId: number): Promise<any> {
     return httpService.get<any>(`${PMSApiPrefix()}/roles/${roleId}/apis`, {
-      menuId: temantMappingMenuId,
-    });
+      menuId: temantMappingMenuId });
   }
   /**
    * 역할 tree 조회
@@ -138,8 +137,7 @@ export default class RoleManagerService {
   static fetchRoleTree(tenantId: number, siteScope: string) {
     return httpService.get<any>(`${PMSApiPrefix()}/roles/tree`, {
       tenantId,
-      siteScope,
-    });
+      siteScope });
   }
 
   /**
@@ -149,8 +147,7 @@ export default class RoleManagerService {
    */
   static fetchMyRoles(siteScope: string) {
     return httpService.get<any>(`${PMSApiPrefix()}/roles/me`, {
-      siteScope,
-    });
+      siteScope });
   }
 
   /**
@@ -202,8 +199,7 @@ export default class RoleManagerService {
    */
   static fetchRoleApplicationHistories(id: number) {
     return httpService.get<any>(`${PMSApiPrefix()}/role-applications/histories`, {
-      roleApplicationId: id,
-    });
+      roleApplicationId: id });
   }
 }
 

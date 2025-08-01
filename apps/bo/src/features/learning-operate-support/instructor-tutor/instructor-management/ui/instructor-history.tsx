@@ -2,17 +2,13 @@ import { useEffect, useCallback, useState } from 'react';
 import { t } from 'i18next';
 import { Link, useRouter } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import {
-  Divider,
-  Dropdown,
-  GridBox,
-  Input,
-  useGridBox,
-  useGridBoxConfig,
-  useModal,
-} from '@learnway/ui';
+import { Divider } from '@learnway/ui/elements';
+import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import { useSearchBox, SearchBoxConfig } from '@learnway/hooks';
 import { queryOptions } from '@entities/instructor/service/instructor.queries';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
 
 /**
  * NLP_BO_LMS_0028_1 : 강사이력 조회
@@ -44,23 +40,19 @@ const InstructorHistoryComponent = (props: any) => {
           name: 'instructorId',
           type: 'text',
           value: props.instructorId,
-          placeholder: '',
-        },
+          placeholder: '' },
         {
           name: 'searchKey',
           type: 'text',
           value: selectedValue === 0 ? '' : selectedValue === 1 ? 'courseName' : 'sequenceName',
-          placeholder: '',
-        },
+          placeholder: '' },
         {
           name: 'keyword',
           type: 'text',
           value: inputValue,
-          placeholder: '',
-        },
+          placeholder: '' },
       ],
-    ],
-  };
+    ] };
 
   const gridConfig: useGridBoxConfig = {
     query: queryOptions.history,
@@ -68,16 +60,13 @@ const InstructorHistoryComponent = (props: any) => {
       {
         name: 'no1',
         label: 'NO.',
-        type: 'numbering',
-      },
+        type: 'numbering' },
     ],
     data: [],
     gridState: {
       page: 0,
       size: 10,
-      sort: [],
-    },
-  };
+      sort: [] } };
 
   const { provider: searchProvider, getValues } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
@@ -91,8 +80,7 @@ const InstructorHistoryComponent = (props: any) => {
       ...getValues,
       instructorId: props.instructorId,
       searchKey: selectedValue === 0 ? '' : selectedValue === 1 ? 'courseName' : 'sequenceName',
-      keyword: inputValue,
-    };
+      keyword: inputValue };
     gridFetch(searchData);
   }, [selectedValue, inputValue]);
 
@@ -102,38 +90,31 @@ const InstructorHistoryComponent = (props: any) => {
     columnHelper.accessor('courseType', {
       header: t('과정 타입'),
       cell: (info) => info.getValue(),
-      enableGrouping: false,
-    }),
+      enableGrouping: false }),
     columnHelper.accessor('courseName', {
       header: t('과정명'),
       cell: (info) => info.getValue(),
-      enableGrouping: false,
-    }),
+      enableGrouping: false }),
     columnHelper.accessor('sequenceName', {
       header: t('차수명'),
       cell: (info) => info.getValue(),
-      enableGrouping: false,
-    }),
+      enableGrouping: false }),
     columnHelper.accessor('learningStartDate', {
       header: t('교육 시작일'),
       cell: (info) => info.getValue(),
-      enableGrouping: false,
-    }),
+      enableGrouping: false }),
     columnHelper.accessor('learningEndDate', {
       header: t('교육 종료일'),
       cell: (info) => info.getValue(),
-      enableGrouping: false,
-    }),
+      enableGrouping: false }),
     columnHelper.accessor('score', {
       header: t('점수'),
       cell: (info) => info.getValue(),
-      enableGrouping: false,
-    }),
+      enableGrouping: false }),
     columnHelper.accessor('creditMin', {
       header: t('인정시간(분)'),
       cell: (info) => info.getValue(),
-      enableGrouping: false,
-    }),
+      enableGrouping: false }),
   ] as ColumnDef<any, unknown>[];
 
   return (

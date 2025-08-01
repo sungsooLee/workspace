@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { ChipList, SelectOption, Accordion, Button, useToast, Avatar, Badge } from '@learnway/ui';
+
 import { getRandomId } from '@learnway/shared';
 import {
   IcoHeart,
@@ -36,6 +36,12 @@ import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_
 import package1 from '@learnway/styles/fo/assets/images/temp/img_package_01.png';
 import avatarDefault from '@learnway/styles/fo/assets/images/common/img_avatar.png';
 import bannerImg from '@learnway/styles/fo/assets/images/banner/img_banner_sample.jpg';
+import { Badge } from '@learnway/ui/badge';
+import { useToast } from '@learnway/ui/toast';
+import { Button } from '@learnway/ui/button';
+import { ChipList } from '@learnway/ui/chips';
+import { Accordion } from '@learnway/ui/accordion';
+import { Avatar } from '@learnway/ui/avatar';
 
 export const Route = createFileRoute('/_layout/course-introduction/package-m')({
   component: RouteComponent,

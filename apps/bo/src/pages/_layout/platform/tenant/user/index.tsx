@@ -5,11 +5,11 @@ import { useEffect, useState } from 'react';
 
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
 
-import { Button, Tabs } from '@learnway/ui';
-
 import { useFetchAuthUser } from '@learnway/auth/entities';
 
 import { TenantUserRegistApplicationList } from '@features/platform-management/tenant';
+import { Button } from '@learnway/ui/button';
+import { Tabs } from '@learnway/ui/tabs';
 
 import { CompanyUserList } from '@features/platform-management/company';
 

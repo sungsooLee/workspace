@@ -2,10 +2,11 @@ import { useRouter } from '@tanstack/react-router';
 import { AuthForm, AuthFormData } from '@learnway/auth/features/auth';
 import { useSignupStore } from '@features/user/signup';
 import { cn } from '@learnway/shared';
-import { Button, Stepper } from '@learnway/ui';
+import { Stepper } from '@learnway/ui/stepper';
 import { useState } from 'react';
 import styles from './admin-signup-auth.module.css';
 import { adminItems } from '@features/user/signup/ui/signup-select';
+import { Button } from '@learnway/ui/button';
 
 export function AdminSignupAuth() {
   const { setAdminPage } = useSignupStore((state) => state);

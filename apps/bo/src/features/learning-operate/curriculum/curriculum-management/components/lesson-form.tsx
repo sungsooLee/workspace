@@ -1,26 +1,24 @@
-import { useEffect, useRef } from 'react';
-import {
-  Button,
-  ContentsRow,
-  DropdownOption,
-  Input,
-  RadioGroupFormField,
-  Textarea,
-  useModal,
-} from '@learnway/ui';
-import { FormRow2, ResourceChoiceModal } from '@shared/ui';
+import { learningResourceQueryOptions } from '@entities/learning-resource';
+import { DropdownFormField, DurationTimeFormField } from '@features/form/ui';
 import { DynamicFormProvider } from '@learnway/hooks';
+import { IcoPlus } from '@learnway/icons';
+import { getHourValueFromTime } from '@learnway/shared';
+import subTitleStyles from '@learnway/styles/bo/assets/styles/modules/form-sub-title.module.css';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { RadioGroupFormField } from '@learnway/ui/form-field';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
+import { Textarea } from '@learnway/ui/textarea';
+import { DropdownOption } from '@learnway/ui/type';
+import { FormRow2, ResourceChoiceModal } from '@shared/ui';
+import { PreviewLearningWindow } from '@shared/ui/modal/preview-learning-window';
+import { useQuery } from '@tanstack/react-query';
 import { LESSON_TYPE, MODULE_TYPE } from '@types';
 import { t } from 'i18next';
-import { ContentChoiceModalSelector } from './content-choice-selector';
-import { DropdownFormField, DurationTimeFormField } from '@features/form/ui';
-import { getHourValueFromTime } from '@learnway/shared';
-import { learningResourceQueryOptions } from '@entities/learning-resource';
-import { useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import { useGetLessonDetail } from '../../../../../entities/curriculum';
-import subTitleStyles from '@learnway/styles/bo/assets/styles/modules/form-sub-title.module.css';
-import { IcoPlus } from '@learnway/icons';
-import { PreviewLearningWindow } from '@shared/ui/modal/preview-learning-window';
+import { ContentChoiceModalSelector } from './content-choice-selector';
 
 interface LessonFormProps {
   provider: DynamicFormProvider;

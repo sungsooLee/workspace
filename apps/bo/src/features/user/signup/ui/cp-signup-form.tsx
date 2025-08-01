@@ -1,24 +1,22 @@
+import { IcoArrowForward, IcoFormRequired } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { IcoFormRequired, IcoArrowForward } from '@learnway/icons';
-import {
-  Button,
-  Stepper,
-  SelectOption,
-  Input,
-  Checkbox,
-  ContentsRow,
-  PhoneNumber,
-  InputTimer,
-  InputModalSelectorFormField,
-  useModal,
-} from '@learnway/ui';
+import { InputModalSelectorFormField } from '@learnway/ui/form-field';
+import { PhoneNumber } from '@learnway/ui/phone-number';
+import { Stepper } from '@learnway/ui/stepper';
+import { SelectOption } from '@learnway/ui/type';
 
-import styles from './cp-signup-form.module.css';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import { useSignupStore } from '@features/user/signup/store/use-signup-store';
 import { cpItems } from '@features/user/signup/ui/signup-select';
+import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { useRouter } from '@tanstack/react-router';
+import styles from './cp-signup-form.module.css';
+// TODO: Fix unknown imports: InputTimer from '@learnway/ui'
+import { Button } from '@learnway/ui/button';
+import { Checkbox } from '@learnway/ui/checkbox';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input, InputTimer } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
 
 export const CPSignupForm = () => {
   const router = useRouter();
@@ -116,7 +114,7 @@ export const CPSignupForm = () => {
                     modalConfig={
                       {
                         // width: 'lg',
-                        // content: <TenantSearchPopup />,
+                        // content: <TenantSearchPopup /> }
                       }
                     }
                   />

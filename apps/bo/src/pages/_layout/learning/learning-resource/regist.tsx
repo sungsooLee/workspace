@@ -1,4 +1,5 @@
 import { PageContainer } from '@shared/ui';
+import { useModal } from '@learnway/ui/modal';
 // IA105 / NLP_BO_CMS_1058 // IA105 / NLP_BO_CMS_1017 // IA106 / NLP_BO_CMS_1060
 import {
   usePostDraftETC,
@@ -13,7 +14,6 @@ import {
 } from '@features/learning-resource';
 import { ChannelChoiceModal } from '@shared/ui';
 import { getDefaultLang, LEARNING_TYPE } from '@learnway/config';
-import { useModal } from '@learnway/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import {
   PostDraftETCRes,
@@ -331,7 +331,7 @@ function RouteComponent() {
       }
       // 문제은행
       case LEARNING_TYPE.EXAM_POOL: {
-        router.navigate({ to: '/learning/resource/question-bank/regist' });
+        router.navigate({ to: '/learning/resource/question-bank/view' });
         break;
       }
 

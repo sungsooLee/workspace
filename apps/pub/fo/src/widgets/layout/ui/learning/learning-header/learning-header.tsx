@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { isMobile } from 'react-device-detect';
 import { useLocation } from '@tanstack/react-router';
-import { Button } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
 
 import { IcoArrowBackward, IcoChevronRight } from '@learnway/icons';
 

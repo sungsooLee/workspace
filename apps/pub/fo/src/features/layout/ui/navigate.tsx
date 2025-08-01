@@ -2,7 +2,7 @@ import { memo, useEffect, useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import styles from './navigate.module.css';
 import { IcoArrow } from '@learnway/icons';
-import { Carousel } from '@learnway/ui';
+import { Carousel } from '@learnway/ui/carousel';
 import { Navigation } from 'swiper/modules';
 import { menuData } from '../../platform/service/menuData';
 

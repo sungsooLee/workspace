@@ -1,29 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @nx/enforce-module-boundaries */
+
+import { cn } from '@learnway/shared';
 import { createFileRoute } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
-import { cn } from '@learnway/shared';
 
-import {
-  Button,
-  ContentsRow,
-  DatePicker,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  Switch,
-  Tooltip,
-  useModal,
-  FormSubTitle,
-} from '@learnway/ui';
 import { IcoAlertCircle, IcoFormRequired } from '@learnway/icons';
 
 /* style */
+import dataInfostyles from '@learnway/styles/bo/assets/styles/modules/data-info.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form module css
 import popLayoutstyles from '@learnway/styles/bo/assets/styles/modules/popup-layout.module.css';
-import dataInfostyles from '@learnway/styles/bo/assets/styles/modules/data-info.module.css';
 import selectMenuStyles from '@learnway/styles/bo/assets/styles/modules/select-menu.module.css';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { DatePicker } from '@learnway/ui/date-picker';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { Switch } from '@learnway/ui/switch';
+import { Tooltip } from '@learnway/ui/tooltip';
 
 export const Route = createFileRoute('/_layout/common/pop-data-range-setting')({
   component: RouteComponent,

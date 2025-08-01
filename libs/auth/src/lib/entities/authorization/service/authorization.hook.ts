@@ -1,11 +1,11 @@
-import { createElement, useEffect, useRef, useState } from 'react';
-import { useRouter } from '@tanstack/react-router';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useRouter } from '@tanstack/react-router';
 import dayjs from 'dayjs';
+import { createElement, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { type MutateCallback } from '@learnway/shared';
-import { useModal } from '@learnway/ui';
+import { useModal } from '@learnway/ui/modal';
 
 import { SessionTimeoutConfirm } from '../../../features';
 import type { AuthUser } from '../../../types';

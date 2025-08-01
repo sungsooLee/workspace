@@ -17,8 +17,7 @@ export function useCreateUser(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
 
   return {
     create: (payload: any, callback?: any) => {
@@ -26,8 +25,7 @@ export function useCreateUser(options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }
 
 export function useUnlockUser(options: any) {
@@ -38,8 +36,7 @@ export function useUnlockUser(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...mutateOptions,
-  });
+    ...mutateOptions });
 
   return {
     unlock: (payload: any, callback?: any) => {
@@ -47,8 +44,7 @@ export function useUnlockUser(options: any) {
       options?.onSuccess?.(false);
     },
     isSuccess,
-    isError,
-  };
+    isError };
 }
 
 export function useApproveAccountUser(options: any) {
@@ -68,8 +64,7 @@ export function useApproveAccountUser(options: any) {
       options?.onSuccess?.(false);
     },
     isSuccess,
-    isError,
-  }
+    isError }
 }
 
 export function useRejectAccountUser(options: any) {
@@ -89,8 +84,7 @@ export function useRejectAccountUser(options: any) {
       options?.onSuccess?.(false);
     },
     isSuccess,
-    isError,
-  }
+    isError }
 }
 
 export function useUpdateUser(options: any) {
@@ -101,8 +95,7 @@ export function useUpdateUser(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
 
   return {
     update: (payload: any, callback?: any) => {
@@ -110,6 +103,5 @@ export function useUpdateUser(options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }

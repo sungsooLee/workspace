@@ -35,8 +35,7 @@ const useScormResourceHook = (provider: DynamicFormProvider) => {
     onError: (error: any) => {
       console.error(error);
       // 에러 얼럿?
-    },
-  });
+    } });
 
   const handleChangeScorm = (fileUuid: string) => changeScorm({ contentUuid, fileUuid });
 
@@ -118,8 +117,7 @@ const useScormResourceHook = (provider: DynamicFormProvider) => {
     processingStatus: status,
     playTime,
     scormResource,
-    handleChangeScorm,
-  };
+    handleChangeScorm };
 };
 
 export const useScormResource = useScormResourceHook;

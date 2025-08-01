@@ -2,7 +2,8 @@ import { useGetChannelDetail } from '@entities/channel/service/channel.hook';
 import { queryOptions as companysQueryOptions } from '@entities/companies/service/companies.queries';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { getDateToString } from '@learnway/shared';
-import { Button, Divider, GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui';
+import { Divider } from '@learnway/ui/elements';
+import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import { SearchBox } from '@shared/ui';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouterState } from '@tanstack/react-router';
@@ -10,12 +11,12 @@ import { createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { useCallback, useEffect } from 'react';
 import { useWatch } from 'react-hook-form';
+import { Button } from '@learnway/ui/button';
 
 const _global = {
   linkClick: (uuid: string) => {
     return;
-  },
-};
+  } };
 
 interface ChannelDetailSubscriberListProps {
   onChange: (userUuid: string) => void;
@@ -47,8 +48,7 @@ const ChannelDetailSubscriberListComponent = ({ onChange }: ChannelDetailSubscri
         : '',
       unsubscribeEndDate: data.unsubscribeDate.to
         ? getDateToString(new Date(data.unsubscribeDate.to), 'YYYYMMDD')
-        : '',
-    };
+        : '' };
     return searchData;
   };
 
@@ -63,8 +63,7 @@ const ChannelDetailSubscriberListComponent = ({ onChange }: ChannelDetailSubscri
         'tenantId',
         channelData.tenantList.map((tenant: any) => ({
           label: tenant.tenantName,
-          value: tenant.tenantId,
-        })),
+          value: tenant.tenantId })),
       );
     }
   }, [channelData]);
@@ -78,8 +77,7 @@ const ChannelDetailSubscriberListComponent = ({ onChange }: ChannelDetailSubscri
         );
         const companyIdOptions = companys.map((item) => ({
           label: item.name,
-          value: item.companyId,
-        }));
+          value: item.companyId }));
         setOptions('companyId', companyIdOptions);
       })();
     } else {
@@ -122,9 +120,7 @@ const searchConfig: SearchBoxConfig = {
           },
           isSearchable: true,
           isClearable: true,
-          placeholder: t('입력 또는 선택'),
-        },
-      },
+          placeholder: t('입력 또는 선택') } },
       {
         name: 'companyId',
         type: 'dropdown',
@@ -135,15 +131,12 @@ const searchConfig: SearchBoxConfig = {
         dropdownConfig: {
           isSearchable: true,
           isClearable: true,
-          placeholder: t('입력 또는 선택'),
-        },
-      },
+          placeholder: t('입력 또는 선택') } },
       {
         name: 'employeeNumber',
         type: 'text',
         label: t('사번'),
-        value: '',
-      },
+        value: '' },
     ],
     [
       {
@@ -155,10 +148,8 @@ const searchConfig: SearchBoxConfig = {
             label: t('구독 방식'),
             value: '',
             optionsConfig: {
-              codeGroup: CODE_GROUP['pms.channel.ChannelSubscriptionType'],
-            },
-            presetOptionLabel: t('전체'),
-          },
+              codeGroup: CODE_GROUP['pms.channel.ChannelSubscriptionType'] },
+            presetOptionLabel: t('전체') },
           {
             name: 'channelSubscribeStatus',
             type: 'dropdown',
@@ -169,31 +160,24 @@ const searchConfig: SearchBoxConfig = {
               { label: t('해지'), value: 'B' },
               { label: t('재구독'), value: 'C' },
             ],
-            presetOptionLabel: t('전체'),
-          },
-        ],
-      },
+            presetOptionLabel: t('전체') },
+        ] },
       {
         name: 'subscribeDate',
         label: '구독 신청 기간',
         type: 'date-range',
         value: {
           from: undefined,
-          to: undefined,
-        },
-      },
+          to: undefined } },
       {
         name: 'unsubscribeDate',
         label: '구독 해지 기간',
         type: 'date-range',
         value: {
           from: undefined,
-          to: undefined,
-        },
-      },
+          to: undefined } },
     ],
-  ],
-};
+  ] };
 
 const gridConfig: useGridBoxConfig = {
   query: '',
@@ -208,15 +192,12 @@ const gridConfig: useGridBoxConfig = {
       channelSubscriptionType: '수동 구독',
       channelSubscribeStatus: '구독',
       subscribeDate: '2025-01-01 15:00:00',
-      unsubscribeDate: '2025-01-01 15:00:00',
-    },
+      unsubscribeDate: '2025-01-01 15:00:00' },
   ],
   gridState: {
     page: 0,
     size: 1000,
-    sort: [],
-  },
-};
+    sort: [] } };
 
 const columnHelper = createColumnHelper<any>();
 
@@ -224,23 +205,19 @@ const columns = [
   columnHelper.accessor('tenantName', {
     cell: (info) => info.getValue(),
     header: t('테넌트'),
-    enableGrouping: false,
-  }),
+    enableGrouping: false }),
   columnHelper.accessor('companyName', {
     cell: (info) => info.getValue(),
     header: t('회사'),
-    enableGrouping: false,
-  }),
+    enableGrouping: false }),
   columnHelper.accessor('deptName', {
     cell: (info) => info.getValue(),
     header: t('소속'),
-    enableGrouping: false,
-  }),
+    enableGrouping: false }),
   columnHelper.accessor('employeeNumber', {
     cell: (info) => info.getValue(),
     header: t('사번'),
-    enableGrouping: false,
-  }),
+    enableGrouping: false }),
   columnHelper.accessor('userName', {
     cell: (info) => (
       <Button
@@ -251,26 +228,21 @@ const columns = [
       />
     ),
     header: t('이름'),
-    enableGrouping: false,
-  }),
+    enableGrouping: false }),
   columnHelper.accessor('channelSubscriptionType', {
     cell: (info) => info.getValue(),
     header: t('구독 방식'),
-    enableGrouping: false,
-  }),
+    enableGrouping: false }),
   columnHelper.accessor('channelSubscribeStatus', {
     cell: (info) => info.getValue(),
     header: t('상태'),
-    enableGrouping: false,
-  }),
+    enableGrouping: false }),
   columnHelper.accessor('subscribeDate', {
     cell: (info) => info.getValue(),
     header: t('구독 신청일'),
-    enableGrouping: false,
-  }),
+    enableGrouping: false }),
   columnHelper.accessor('unsubscribeDate', {
     cell: (info) => info.getValue(),
     header: t('구독 해지일'),
-    enableGrouping: false,
-  }),
+    enableGrouping: false }),
 ];

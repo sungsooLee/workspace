@@ -1,15 +1,15 @@
+import { BaseFormFieldProps } from '@learnway/hooks';
 import { ChangeEvent, forwardRef, useEffect, useState } from 'react';
 import { NumberFormatValues } from 'react-number-format';
-import { BaseFormFieldProps } from '@learnway/hooks';
-import { Button, Input } from '@learnway/ui';
 
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import {
   changeSecoundToTimeValue,
   changeTimeValueToSecound,
   TimeValueType,
 } from '@learnway/shared';
+import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import { Input } from '@learnway/ui/input';
 
 type TimeChangeKeyType = 'hour' | 'minute' | 'second';
 

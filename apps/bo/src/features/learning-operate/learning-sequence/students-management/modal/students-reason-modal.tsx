@@ -1,28 +1,21 @@
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import {
-  Button,
-  ContentsRow,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  TextareaFormField,
-  useModal,
-} from '@learnway/ui';
+import { TextareaFormField } from '@learnway/ui/form-field';
 import { FormRow } from '@shared/ui';
 import { t } from 'i18next';
 import { FC, useEffect, useRef, useState } from 'react';
 
 import { useUpdateStudentsReason } from '@entities/learning-sequence/service/learning-sequence.hook';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
 export interface StudentsReasonModalComponent {
   selectedItem: any;
 }
 
 const StudentsReasonModalComponent: FC<any> = ({
-  selectedItem: selectedItemProps,
-}: StudentsReasonModalComponent) => {
+  selectedItem: selectedItemProps }: StudentsReasonModalComponent) => {
   const formRef = useRef<HTMLFormElement>(null);
   const { closeModal, showSaveComplete } = useModal();
   const { provider, onSubmit, updateFormData } = useDynamicForm(formConfig);
@@ -41,8 +34,7 @@ const StudentsReasonModalComponent: FC<any> = ({
     if (formData.reason === null || formData.reason === '') return;
     const payload = {
       studentId: selectedItemProps.studentId,
-      reason: formData.reason,
-    };
+      reason: formData.reason };
 
     await updateStudentsReason(payload, {
       onSuccess: async (data: any, variables: any, context: any) => {
@@ -52,8 +44,7 @@ const StudentsReasonModalComponent: FC<any> = ({
       },
       onError: (data: any, variables: any, context: any) => {
         console.log('onError:', data);
-      },
-    });
+      } });
   };
   const handleOnSave = async () => {
     const form = formRef.current;
@@ -98,7 +89,5 @@ const formConfig: DynamicFormConfig = {
       type: 'textarea',
       label: t('사유'),
       value: '',
-      maxLength: 150,
-    },
-  ],
-};
+      maxLength: 150 },
+  ] };

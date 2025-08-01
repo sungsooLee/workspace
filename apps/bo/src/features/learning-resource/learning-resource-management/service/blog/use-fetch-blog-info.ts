@@ -18,6 +18,5 @@ export const useFetchBlogInfo = () => {
     contentUuid: state?.contentUuid,
     data,
     hasMapping,
-    listParam: state?.listParam,
-  };
+    listParam: state?.listParam };
 };

@@ -1,6 +1,6 @@
 import { IcoCaution } from '@learnway/icons';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
-import { Button, ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui';
+
 import { memo } from 'react';
 import { BrowserView, isMobile, MobileView } from 'react-device-detect';
 import { GoogleInputPopup, GoogleQrcodePopup } from '../../../features/auth';
@@ -8,6 +8,8 @@ import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/con
 import styles from './google-key-popup.module.css';
 
 import { cn } from '@learnway/shared';
+import { Button } from '@learnway/ui/button';
+import { useModal, ModalContainer, ModalTitle, ModalBody, ModalFooter } from '@learnway/ui/modal';
 
 const GoogleKeyPopupCompoment = () => {
   const { closeModal } = useModal();

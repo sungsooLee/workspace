@@ -1,6 +1,6 @@
-import { Button } from '@learnway/ui';
 import styles from '@learnway/styles/fo/features/layout/ui/recommended-searches.module.css';
 import { memo } from 'react';
+import { Button } from '@learnway/ui/button';
 
 interface RecommendedSearchProps {
   className?: string;

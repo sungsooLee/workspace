@@ -1,24 +1,26 @@
-import React, { memo, useEffect, useState } from 'react';
-import { Link } from '@tanstack/react-router';
-import { Carousel } from '@learnway/ui';
 import { cn } from '@learnway/shared';
-import { Button, Chip, ModalBody, ModalContainer, ModalTitle } from '@learnway/ui';
+import { Carousel } from '@learnway/ui/carousel';
+import { Link } from '@tanstack/react-router';
+import { memo, useEffect, useState } from 'react';
 import { Navigation } from 'swiper/modules';
 
 import { IcoArrowBackward, IcoArrowForward, IcoArrowUp } from '@learnway/icons';
 
 import { t } from 'i18next';
 
-import styles from '@learnway/styles/fo/features/layout/popup/category-popup.module.css';
 import { useCategoryTree } from '@entities/category';
+import styles from '@learnway/styles/fo/features/layout/popup/category-popup.module.css';
+import { Button } from '@learnway/ui/button';
+import { Chip } from '@learnway/ui/chips';
+import { ModalBody, ModalContainer, ModalTitle } from '@learnway/ui/modal';
 
 interface CategoryPopupProps {
   activeTenantId: number;
 }
 
-type MainItem = { id: number; label: string; isChild: boolean; };
-type SubItem = { id: number; label: string; parentId: number; };
-type MenuItem = { id: number; label: string; parentId: number; subItems?: SubItem[]; };
+type MainItem = { id: number; label: string; isChild: boolean };
+type SubItem = { id: number; label: string; parentId: number };
+type MenuItem = { id: number; label: string; parentId: number; subItems?: SubItem[] };
 
 const CategoryPopupComponent = ({ activeTenantId }: CategoryPopupProps) => {
   // 하단 카테고리 이동 내역
@@ -37,36 +39,34 @@ const CategoryPopupComponent = ({ activeTenantId }: CategoryPopupProps) => {
   const [tenantId, setTenantId] = useState<number>(activeTenantId);
 
   const [firstMenuWithSub, setFirstMenuWithSub] = useState(
-    menuData.find((item) => item.subItems)?.id ?? null
+    menuData.find((item) => item.subItems)?.id ?? null,
   );
   const [openId, setOpenId] = useState<number | null>(firstMenuWithSub);
 
-  const { data: categoryTree, refetch: categoryRefetch} = useCategoryTree(tenantId);
+  const { data: categoryTree, refetch: categoryRefetch } = useCategoryTree(tenantId);
 
   const menuHandleClick = (id: number, isChild: boolean) => {
     setActiveId(id);
-    if( isChild ) {
+    if (isChild) {
       // 2 Depth
-      const subTreeData = categoryTree.children.filter( (item: any) => item.id === id)[0];
-      const menuData = subTreeData.children.map( (item: any) => {
+      const subTreeData = categoryTree.children.filter((item: any) => item.id === id)[0];
+      const menuData = subTreeData.children.map((item: any) => {
         const children: SubItem[] = [];
-        if( item.children && item.children.length > 0 ) {
-          item.children.forEach( (child: any) => {
-            children.push(
-              {
-                id: child.id,
-                label: child.name,
-                parentId: item.id,
-              }
-            )
-          })
+        if (item.children && item.children.length > 0) {
+          item.children.forEach((child: any) => {
+            children.push({
+              id: child.id,
+              label: child.name,
+              parentId: item.id,
+            });
+          });
         }
         return {
           id: item.id,
           label: item.name,
           parentId: subTreeData.id,
-          subItems: children
-        }
+          subItems: children,
+        };
       });
       setMenuData(menuData);
     } else {
@@ -80,26 +80,26 @@ const CategoryPopupComponent = ({ activeTenantId }: CategoryPopupProps) => {
   };
 
   useEffect(() => {
-    if( categoryTree ) {
+    if (categoryTree) {
       console.log('### categoryTreeData => ', categoryTree);
       const mainTreeData: any[] = categoryTree.children;
       // 1 Depth
-      const oneDepthData = mainTreeData.map(item => {
+      const oneDepthData = mainTreeData.map((item) => {
         return {
           id: item.id,
           label: item.name,
           isChild: item.children.length > 0 ? true : false,
-        }
-      })
+        };
+      });
       setMainData(oneDepthData);
     }
   }, [categoryTree]);
 
   useEffect(() => {
-    if( menuData ) {
-      setFirstMenuWithSub(menuData.find((item) => item.subItems)?.id ?? null)
+    if (menuData) {
+      setFirstMenuWithSub(menuData.find((item) => item.subItems)?.id ?? null);
     }
-  }, [menuData])
+  }, [menuData]);
 
   return (
     <ModalContainer>

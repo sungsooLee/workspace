@@ -4,18 +4,9 @@ import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
 import { FormDisplay } from '@features/form/ui/form-display';
 import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { cn, DATE_TIME_FORMAT, getDateToString, getStringToDate } from '@learnway/shared';
-import {
-  Button,
-  ContentsRow,
-  ContentsRowItem,
-  FormGuideText,
-  FormSubTitle,
-  GridBox,
-  RadioGroupFormField,
-  Switch,
-  useModal,
-  useToast,
-} from '@learnway/ui';
+import { FormGuideText, FormSubTitle } from '@learnway/ui/base-form';
+import { RadioGroupFormField } from '@learnway/ui/form-field';
+import { GridBox } from '@learnway/ui/grid';
 import { FormRow, UserGroupChoiceModal, UserGroupTabsChoiceModal } from '@shared/ui';
 import { LoginRestrictTimeSettingModal } from '@shared/ui/modal/login-restrict-time-setting-modal';
 import { useRouter, useRouterState } from '@tanstack/react-router';
@@ -28,14 +19,22 @@ import { LoginAuthenticationSettingInformation } from './login-authentication-se
 
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
+// TODO: Fix unknown imports: ContentsRowItem from '@learnway/ui'
+import { Button } from '@learnway/ui/button';
+import { ContentsRow, ContentsRowItem } from '@learnway/ui/contents-row';
+import { useModal } from '@learnway/ui/modal';
+import { Switch } from '@learnway/ui/switch';
+import { useToast } from '@learnway/ui/toast';
+import { getCurrentAuthUser } from '@shared/lib';
 
 const EMAIL_REGEX =
-  /(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/;
+  /(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2 }))/;
 
 const CompanyDetailComponent = (props: any, ref: any) => {
   const router = useRouter();
   const routerState = useRouterState();
   const companyCode = routerState.location.state?.companyCode;
+  const loginUser = getCurrentAuthUser();
 
   const { data: detailData, refetch } = useFetchCompany(companyCode);
 
@@ -234,9 +233,11 @@ const CompanyDetailComponent = (props: any, ref: any) => {
   };
 
   const chooseUserGroup = () => {
+    // 회사 기준 유저그룹 조회 필요하나, 임시로 activeTenant 적용
+    const tenantIds = loginUser?.activeTenant?.tenantId ? [loginUser?.activeTenant?.tenantId] : [];
     openModal({
       width: 'xl',
-      content: <UserGroupTabsChoiceModal tenantIds={[]} />,
+      content: <UserGroupTabsChoiceModal tenantIds={tenantIds} />,
       onClose(data: any) {
         console.log('### selectedUserGroups', data);
         if (data) {
@@ -254,11 +255,13 @@ const CompanyDetailComponent = (props: any, ref: any) => {
 
   const changeUserGroup = (info: any) => {
     console.log('### info', info);
+    // 회사 기준 유저그룹 조회 필요하나, 임시로 activeTenant 적용
+    const tenantIds = loginUser?.activeTenant?.tenantId ? [loginUser?.activeTenant?.tenantId] : [];
     openModal({
       width: 'xl',
       content: (
         <UserGroupTabsChoiceModal
-          tenantIds={[]}
+          tenantIds={tenantIds}
           option={info.original.companyLoginRestrictionWhiteUserGroupList}
         />
       ),
@@ -348,9 +351,13 @@ const CompanyDetailComponent = (props: any, ref: any) => {
     }),
     columnHelper.accessor('restrictionStrDate', {
       cell: (info) =>
-        getDateToString(new Date(info.row.original.restrictionDate.from), DATE_TIME_FORMAT.DATE) +
-        ' ~ ' +
-        getDateToString(new Date(info.row.original.restrictionDate.to), DATE_TIME_FORMAT.DATE),
+        `${getDateToString(
+          new Date(info.row.original.restrictionDate.from),
+          DATE_TIME_FORMAT.DATE,
+        )} ~ ${getDateToString(
+          new Date(info.row.original.restrictionDate.to),
+          DATE_TIME_FORMAT.DATE,
+        )}`,
       header: t('제한 기간'),
       size: 200,
       enableGrouping: false,

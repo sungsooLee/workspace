@@ -14,7 +14,7 @@ import {
   IcoTime,
 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { Accordion, Button, Carousel, Tabs, useModal, useToast } from '@learnway/ui';
+
 import { createFileRoute } from '@tanstack/react-router';
 import { useState } from 'react';
 import { MobileView } from 'react-device-detect';
@@ -42,6 +42,9 @@ import {
   default as bnrImage1,
   default as listImage1,
 } from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
+import { useModal } from '@learnway/ui/modal';
+import { Button } from '@learnway/ui/button';
+import { useToast } from '@learnway/ui/toast';
 
 export const Route = createFileRoute('/_layout/course-introduction/detail-m')({
   component: RouteComponent,

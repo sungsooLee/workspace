@@ -1,10 +1,12 @@
 import { memo, useEffect, useRef } from 'react';
 import styles from './recent-visits.module.css';
 import { IcoArrowForward } from '@learnway/icons';
-import { Chip, SelectOption } from '@learnway/ui';
+
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { Navigation } from 'swiper/modules';
+import { SelectOption } from '@learnway/ui/type';
+import { Chip } from '@learnway/ui/chips';
 
 const RecentVisitsCompoment = () => {
   const items: SelectOption[] = [

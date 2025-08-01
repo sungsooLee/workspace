@@ -1,9 +1,9 @@
+import { isFunction } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { useBoolean } from 'react-use';
-import { isFunction } from 'lodash';
 
-import { cn } from '@learnway/shared';
-import { Input, Button, InputProps } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { Input, InputProps } from '@learnway/ui/input';
 
 //import styles from './auth-tool-form-field.module.css';
 //import styles from '@learnway/styles/fo/features/auth/ui/auth-tool-form-field/auth-tool-form-field.module.css';

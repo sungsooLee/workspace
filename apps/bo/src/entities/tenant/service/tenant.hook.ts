@@ -4,8 +4,7 @@ import type { MutateOptions, UseQueryOptions, UseQueryResult } from '@tanstack/r
 import {
   tenantQueryKeys,
   tenantQueryOptions as queryOptions,
-  tenantMutateOptions,
-} from './tenant.queries';
+  tenantMutateOptions } from './tenant.queries';
 import { PaginationResponse, Tenant, TenantByRoleId } from '@types';
 
 export function useFetchTenant(tenantId?: number) {
@@ -37,8 +36,7 @@ export function useCreateTenant(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
 
   return {
     create: (payload: any, callback?: any) => {
@@ -46,8 +44,7 @@ export function useCreateTenant(options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }
 
 export function useUpdateTenant(options: any) {
@@ -62,8 +59,7 @@ export function useUpdateTenant(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options,
-  });
+    ...options });
 
   return {
     update: (payload: any, callback?: any) => {
@@ -71,6 +67,5 @@ export function useUpdateTenant(options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }

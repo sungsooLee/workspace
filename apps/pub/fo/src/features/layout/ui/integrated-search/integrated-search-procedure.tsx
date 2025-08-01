@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router';
 import { useState } from 'react';
 import { cn } from '@learnway/shared';
-import { Button, EmptyText } from '@learnway/ui';
+import { EmptyText } from '@learnway/ui/empty-text';
 import { MobileView, BrowserView } from 'react-device-detect';
 import { isMobile } from 'react-device-detect';
 
@@ -12,6 +12,7 @@ import thumnailImgStyles from '../../../../shared/ui/thumnail/thumnail-img.modul
 import styles from './integrated-search-procedure.module.css';
 
 import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
+import { Button } from '@learnway/ui/button';
 
 const IntegratedSearchProcedureComponent = () => {
   // 썸네일 list 세로형 : vertical, 가로형 : horizontal

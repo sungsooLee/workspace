@@ -1,12 +1,9 @@
+import { useModal } from '@learnway/ui/modal';
+import { Tabs } from '@learnway/ui/tabs';
 /* IA118 / NLP_BO_CMS_1203 - 나의 학습자원 > 시험지 등록 및 상세 */
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { createLazyFileRoute, useBlocker, useRouter } from '@tanstack/react-router';
-import { Tabs, useModal } from '@learnway/ui';
-import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
-import { ExamTemplateType, TestPaperBasicInfoSaveRes } from '@types';
 import {
   ContentTopButtons,
+  getTooltipContent,
   LearningResourceQuestionInfo,
   LearningResourceTestPaperInfo,
 } from '@features/learning-resource';
@@ -19,6 +16,11 @@ import {
   useExamLoaderData,
   useExamPaperForm,
 } from '@features/learning-resource/learning-resource-management/service';
+import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
+import { createLazyFileRoute, useBlocker, useRouter } from '@tanstack/react-router';
+import { ContentCreateType, ExamTemplateType, TestPaperBasicInfoSaveRes } from '@types';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 
@@ -168,7 +170,13 @@ function RouteComponent() {
 
   return (
     <form onSubmit={onSubmit(handleSubmit)}>
-      <PageContainer>
+      <PageContainer
+        tooltipProps={{
+          show: !!hasMapping || data?.createType !== ContentCreateType.MANUAL,
+          content: t(getTooltipContent(data?.createType)),
+          type: data?.createType,
+        }}
+      >
         <ContentsButtons>
           <ContentTopButtons provider={provider} />
         </ContentsButtons>

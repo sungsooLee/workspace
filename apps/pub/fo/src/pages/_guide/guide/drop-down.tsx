@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useState } from 'react';
-import { Dropdown } from '@learnway/ui';
+import { Dropdown } from '@learnway/ui/dropdown';
 
 export const Route = createFileRoute('/_guide/guide/drop-down')({
   component: RouteComponent,
@@ -38,7 +38,7 @@ function RouteComponent() {
           <code>
             {`// 초기 import
       import { useState } from 'react';
-      import { Dropdown } from '@learnway/ui';
+      import { Dropdown } from '@learnway/ui/dropdown';
 
       const [selectedValues, setSelectedValues] = useState<string[]>([]);
       const options = [

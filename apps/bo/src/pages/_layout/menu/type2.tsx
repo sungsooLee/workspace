@@ -6,7 +6,9 @@ import {
   useCodeStore,
   useDynamicForm,
 } from '@learnway/hooks';
-import { Button, CheckboxGroupFormField, ContentsRow, RadioGroupFormField } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { CheckboxGroupFormField, RadioGroupFormField } from '@learnway/ui/form-field';
 import { ContentsButtons, FormRow, MainContents, PageContainer, SubContents } from '@shared/ui';
 import { createFileRoute } from '@tanstack/react-router';
 import { MovieInfo } from '@widgets/contents/movie-info';

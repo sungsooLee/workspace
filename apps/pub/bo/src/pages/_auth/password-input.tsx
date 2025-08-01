@@ -1,10 +1,13 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { cn } from '@learnway/shared';
-import { Button, ContentsRow, Input } from '@learnway/ui';
-import styles from '@learnway/styles/bo/pages/_auth/search-account/change-password.module.css';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import noticeBoxStyles from '@learnway/styles/bo/shared/ui/notice-box/notice-box.module.css';
+
 import { IcoCaution, IcoFormRequired } from '@learnway/icons';
+import { cn } from '@learnway/shared';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import styles from '@learnway/styles/bo/pages/_auth/search-account/change-password.module.css';
+import noticeBoxStyles from '@learnway/styles/bo/shared/ui/notice-box/notice-box.module.css';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
 
 export const Route = createFileRoute('/_auth/password-input')({
   component: RouteComponent,

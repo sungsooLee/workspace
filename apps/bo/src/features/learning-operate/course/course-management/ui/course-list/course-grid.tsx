@@ -1,9 +1,10 @@
-import { Button, GridBox } from '@learnway/ui';
+import { GridBox } from '@learnway/ui/grid';
 import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
 import { CourseListItem } from '@types';
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CourseButtonState } from '../../types/type';
+import { Button } from '@learnway/ui/button';
 
 interface CourseGridProps {
   config: any;
@@ -22,8 +23,7 @@ export const CourseGrid: React.FC<CourseGridProps> = ({
   getValues,
   onRowsSelect,
   onCopyClick,
-  onShareClick,
-}) => {
+  onShareClick }) => {
   const { t } = useTranslation();
 
   const customButtonNode = useMemo(
@@ -47,8 +47,7 @@ export const CourseGrid: React.FC<CourseGridProps> = ({
       showNumberingColumn
       copyButton={{
         disabled: !buttonState.copy,
-        onClick: () => onCopyClick?.(),
-      }}
+        onClick: () => onCopyClick?.() }}
       onRowsSelect={onRowsSelect}
       customButtonNode={customButtonNode}
       excelButtons={

@@ -7,9 +7,12 @@ import styles from '@learnway/styles/fo/pages/_auth/signup-progress/result.modul
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import hightlightMessageBoxStyles from '@learnway/styles/fo/shared/ui/highlight-message-box/highlight-message-box.module.css';
 import proccessResultStyles from '@learnway/styles/fo/widgets/auth/ui/proccess-result.module.css'; // 결과모듈
-import { Button, Input, ContentsRow, PhoneNumber } from '@learnway/ui';
 import { MobileView, BrowserView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { PhoneNumber } from '@learnway/ui/phone-number';
 
 export const Route = createFileRoute('/_auth/progress-status-result')({
   component: RouteComponent,

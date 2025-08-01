@@ -2,16 +2,17 @@ import { FC, useState } from 'react';
 import { t } from 'i18next';
 import { cn, getRandomId } from '@learnway/shared';
 
-import { Button, FormSubTitle, List } from '@learnway/ui';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { List } from '@learnway/ui/list';
 import styles from './banner-list.module.css';
+import { Button } from '@learnway/ui/button';
 
 const menuLength = 15;
 const menuOptions = Array(menuLength)
   .fill(null)
   .map((d, i) => ({
     id: getRandomId(),
-    name: `배너${i}`,
-  }));
+    name: `배너${i}` }));
 
 const TenantDetailBannerListComponent: FC<{}> = ({}) => {
   const [myOptions, setMyOptions] = useState(menuOptions);

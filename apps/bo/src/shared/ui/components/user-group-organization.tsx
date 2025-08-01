@@ -1,29 +1,27 @@
 import { useFetchOrganizationTree } from '@entities/user-group';
+import { useFetchAuthUser } from '@learnway/auth/entities';
 import { cn } from '@learnway/shared';
 import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
-import {
-  SelectedChip,
-  ShuttleTreeToChipsV2,
-  transformApiDataToTreeData,
-  useShuttleTreeToChips,
-} from '@learnway/ui';
+import { ShuttleTreeToChipsV2, useShuttleTreeToChips } from '@learnway/ui/shuttle-tree-to-chips-v2';
+import { SelectedChip } from '@learnway/ui/type';
 import { CombineUserGroup } from '@types';
 import { useEffect, useMemo } from 'react';
 
+import { transformApiDataToTreeData } from '@learnway/ui/tree-view';
+
 type UserGroupOrganizationComponentProps = {
   tenantIds: number[];
-  roleIds: number[];
   option: CombineUserGroup[];
   handleSetOption: (data: CombineUserGroup[]) => void;
 };
 
 const UserGroupOrganizationComponent = ({
   tenantIds,
-  roleIds,
   option,
   handleSetOption,
 }: UserGroupOrganizationComponentProps) => {
-  const { data } = useFetchOrganizationTree(tenantIds, roleIds);
+  const { data: authUser } = useFetchAuthUser();
+  const { data } = useFetchOrganizationTree(tenantIds, authUser?.activeRole?.roleId);
 
   const treeData = useMemo(() => {
     return data ? transformApiDataToTreeData(data) : [];

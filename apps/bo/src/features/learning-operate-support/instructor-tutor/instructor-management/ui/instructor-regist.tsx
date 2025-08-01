@@ -6,6 +6,9 @@ import {
   useUpdateInstructor,
 } from '@entities/instructor/service/instructor.hook';
 import { queryOptions } from '@entities/instructor/service/instructor.queries';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter, useRouterState } from '@tanstack/react-router';
 import dayjs from 'dayjs';
@@ -14,17 +17,14 @@ import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 're
 import { useWatch } from 'react-hook-form';
 
 import { CODE_GROUP, DynamicFormConfig, S3_PATH, useDynamicForm } from '@learnway/hooks';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { DatePicker } from '@learnway/ui/date-picker';
 import {
-  ContentsRow,
-  DatePicker,
-  FormSubTitle,
-  Input,
   InputModalSelectorFormField,
-  PhoneNumberFormField,
   RadioGroupFormField,
   TextareaFormField,
-  useModal,
-} from '@learnway/ui';
+} from '@learnway/ui/form-field';
+import { PhoneNumberFormField } from '@learnway/ui/phone-number';
 
 import {
   DateRangePickerFormField,
@@ -38,7 +38,7 @@ import { SingleAttachmentFormField } from '@shared/ui/form/single-attachment-for
 import { EnFormMode, EnPageMode } from '@types';
 
 const EMAIL_REGEX =
-  /(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/;
+  /(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2 }))/;
 
 /**
  * 화면번호: NLP_BO_LMS_0028

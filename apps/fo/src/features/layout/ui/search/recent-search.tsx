@@ -1,8 +1,9 @@
 import { memo, useState } from 'react';
 
 import styles from '@learnway/styles/fo/features/layout/ui/recent-searches.module.css';
-import { Button, EmptyText } from '@learnway/ui';
 import { IcoSearch, IcoXclose } from '@learnway/icons';
+import { EmptyText } from '@learnway/ui/empty-text';
+import { Button } from '@learnway/ui/button';
 
 interface RecentSearchesProps {
   className?: string;

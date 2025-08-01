@@ -1,15 +1,6 @@
 import { IcoAvatar02, IcoCalendar01, IcoCaution, IcoLocation, IcoTime } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import {
-  Button,
-  ContentsRow,
-  DatePicker,
-  Input,
-  OptionCard,
-  OptionCardItem,
-  PhoneNumber,
-  useModal,
-} from '@learnway/ui';
+
 import { createFileRoute } from '@tanstack/react-router';
 import { useState } from 'react';
 import { BrowserView, isMobile, MobileView } from 'react-device-detect';
@@ -27,6 +18,14 @@ import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
 import educationStyles from '../../../features/layout/ui/education.module.css';
 import styles from './course-registration-all.module.css';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
+import { OptionCard, OptionCardItem } from '@learnway/ui/option-card';
+import { PhoneNumber } from '@learnway/ui/phone-number';
+import { DatePicker } from '@learnway/ui/date-picker';
+
 export const Route = createFileRoute('/_layout/course-registration/course-registration-all')({
   component: RouteComponent,
 });

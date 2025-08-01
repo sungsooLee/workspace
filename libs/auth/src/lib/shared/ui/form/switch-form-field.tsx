@@ -1,5 +1,5 @@
-import { Switch } from '@learnway/ui';
-import React, { forwardRef, useEffect } from 'react';
+import { Switch } from '@learnway/ui/switch';
+import { forwardRef, useEffect } from 'react';
 
 const SwitchFormFieldComponent = forwardRef<any, any>(({ value, onChange }, ref) => {
   useEffect(() => {

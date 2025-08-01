@@ -1,10 +1,10 @@
-import React, { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 import { isMobile } from 'react-device-detect';
 
-import stylesWeb from '@learnway/styles/fo/pages/_learning/learning.module.css';
 import stylesMobile from '@learnway/styles/fo/pages/_learning/learning-m.module.css';
-import { useLearningWindow } from '@learnway/ui';
+import stylesWeb from '@learnway/styles/fo/pages/_learning/learning.module.css';
+import { useLearningWindow } from '../../learnway-learning-window.store';
 
 const styles = isMobile ? stylesMobile : stylesWeb;
 const LearningWindowHtmlPlayerComponent: FC<any> = () => {

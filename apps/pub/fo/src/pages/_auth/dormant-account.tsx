@@ -12,10 +12,14 @@ import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box
 // import googleOtpGuideButtonStyles from '@learnway/styles/fo/features/auth/ui/google-otp-guide/google-otp-guide-button.module.css';
 
 import authFormStyles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-form.module.css';
-import { Button, ContentsRow, Input, InputTimer, RadioCard, useModal } from '@learnway/ui';
 
 import { BrowserView, MobileView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input, InputTimer } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
+import { RadioCard } from '@learnway/ui/radio-card';
 
 export const Route = createFileRoute('/_auth/dormant-account')({
   component: RouteComponent,

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Link, Outlet, createRootRoute } from '@tanstack/react-router';
-import { ModalWrapper, ToastWrapper } from '@learnway/ui';
+import { ModalWrapper } from '@learnway/ui/modal';
+import { ToastWrapper } from '@learnway/ui/toast';
 
 export const Route = createRootRoute({
   component: RootComponent,

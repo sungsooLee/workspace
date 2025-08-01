@@ -1,21 +1,14 @@
-import { memo } from 'react';
 import { useCreation } from 'ahooks';
-import { Link } from '@tanstack/react-router';
+import { memo } from 'react';
 
-import {
-  Button,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  useModal,
-  ModalTitle,
-  Tabs,
-} from '@learnway/ui';
 import { cn } from '@learnway/shared';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/widget-management.module.css'; // 화면 css
-import type { Widget } from '../../../../types';
+import type { Widget } from '@types';
 
+import { Button } from '@learnway/ui/button';
+import { Tabs } from '@learnway/ui/tabs';
 import { EmbedWidgetPreview } from '../embed-widget-preview/embed-widget-preview';
 
 const WidgetPreviewModalComponent = ({ widget }: { widget: Widget }) => {

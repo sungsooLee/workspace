@@ -6,9 +6,11 @@ import {
   ContentCourseMappingParams,
   ContentExportReq,
   ContentSharingInfoReq,
+  ExamPaperQuestionCountUpdateReq,
   ExamQuestionGenType,
   GetContentDetailRes,
   GetContentsParams,
+  GetSharedBoxContentsParams,
   GetShareTenantsChannelsParams,
   HtmlVideoFileChangeReq,
   HtmlVideoMetadataReq,
@@ -27,8 +29,8 @@ import {
   QuestionListForRetrieveReq,
   QuestionsCopyReq,
   QuestionStatusUpdateReq,
-  ExamPaperQuestionCountUpdateReq,
   TestPaperBasicInfoSaveReq,
+  UpdateQuestionBankCountInfoReq,
 } from '@types';
 import LearningResourceService from '../api/learning-resource';
 
@@ -60,6 +62,9 @@ export const queryKeys = {
   randomQuestionCount: (examUuid: string) => ['random-question-count', examUuid] as const,
   questionListForRetrieve: ['question-list-for-retrieve'] as const,
   shareTenantsChannels: (contentUuid: string) => ['share-tenants-channels', contentUuid] as const,
+  sharedBoxContents: ['shared-box-contents'] as const,
+  sharedBoxTenantCodes: ['shared-box-tenant-codes'] as const,
+  sharedBoxChannelCodes: ['shared-box-channel-codes'] as const,
 };
 
 export const learningResourceQueryOptions = {
@@ -181,6 +186,24 @@ export const learningResourceQueryOptions = {
     queryFn: () => LearningResourceService.getShareTenantsChannels(params),
     enabled: true,
   }),
+
+  getSharedBoxContents: (params: GetSharedBoxContentsParams) => ({
+    queryKey: queryKeys.shareTenantsChannels,
+    queryFn: () => LearningResourceService.getSharedBoxContents(params),
+    enabled: true,
+  }),
+
+  getSharedBoxTenantCodes: (lastVisitedBoRoleId: number) => ({
+    queryKey: queryKeys.sharedBoxTenantCodes,
+    queryFn: () => LearningResourceService.getSharedBoxTenantCodes(lastVisitedBoRoleId),
+    enabled: true,
+  }),
+
+  getSharedBoxChannelCodes: (srcTenantId: number) => ({
+    queryKey: queryKeys.sharedBoxChannelCodes,
+    queryFn: () => LearningResourceService.getSharedBoxChannelCodes(srcTenantId),
+    enabled: true,
+  }),
 };
 
 export const mutateOptions = {
@@ -250,10 +273,13 @@ export const mutateOptions = {
     mutationFn: (params: ContentBaseInfo) =>
       LearningResourceService.createQuestionBankContent(params),
   }),
-
   updateQuestionBankContent: () => ({
     mutationFn: (params: ContentBaseInfo) =>
       LearningResourceService.updateQuestionBankContent(params),
+  }),
+  updateQuestionBankQuestionCountInfo: () => ({
+    mutationFn: (params: UpdateQuestionBankCountInfoReq) =>
+      LearningResourceService.updateQuestionBankQuestionCountInfo(params),
   }),
   createQuestionItem: () => ({
     mutationFn: (params: QuestionItem) => LearningResourceService.createQuestionItem(params),

@@ -2,23 +2,17 @@ import { IcoCaution, IcoFormRequired } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css'; // 폼모듈
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css'; // 유의사항
-import {
-  Button,
-  ContentsRow,
-  Dropdown,
-  Input,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  Textarea,
-  UppyUpload,
-  useModal,
-} from '@learnway/ui';
+
 import { memo } from 'react';
 import { BrowserView, MobileView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';
 import styles from './contact-popup.module.css';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { Input } from '@learnway/ui/input';
+import { useModal, ModalContainer, ModalTitle, ModalBody, ModalFooter } from '@learnway/ui/modal';
+import { Textarea } from '@learnway/ui/textarea';
 
 const ContactPopupCompoment = () => {
   const { closeModal } = useModal();

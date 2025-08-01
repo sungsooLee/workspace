@@ -1,9 +1,10 @@
 import { memo, useState } from 'react';
-import { ModalBody, ModalContainer, ModalTitle, useModal, Button } from '@learnway/ui';
 
 import { IcoCheck } from '@learnway/icons';
 
 import styles from './setting-language-popup.module.css';
+import { Button } from '@learnway/ui/button';
+import { useModal, ModalContainer, ModalTitle, ModalBody } from '@learnway/ui/modal';
 
 const SettingLanguagePopupComponent = () => {
   const { confirm: openConfirm } = useModal();

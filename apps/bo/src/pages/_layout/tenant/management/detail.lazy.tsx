@@ -1,21 +1,21 @@
-import { ReactNode, useState, useEffect, useRef } from 'react';
 import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
+import { useRef, useState } from 'react';
 
-import { PageContainer, MainContents, ContentsButtons, LinkBox } from '@shared/ui';
+import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
-
-import { Tabs, Button } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { Tabs } from '@learnway/ui/tabs';
 
 /* tab contents */
 import {
-  TenantDetailLearningRole,
-  TenantDetailBanner,
-  TenantDetailWidget,
-  TenantDetailMenu,
-  TenantDetailCategory,
   TenantDetailAttribute,
+  TenantDetailBanner,
+  TenantDetailCategory,
+  TenantDetailLearningRole,
+  TenantDetailMenu,
+  TenantDetailWidget,
 } from '@features/platform-management/tenant';
 
 import { EnTenantDetailTabKey } from '@types';
@@ -112,7 +112,7 @@ function RouteComponent() {
     {
       title: t('테넌트 역할 관리'),
       key: EnTenantDetailTabKey.learningRole,
-      content: <TenantDetailLearningRole roleInfo={'TENANT'}/>,
+      content: <TenantDetailLearningRole roleInfo={'TENANT'} />,
     },
     {
       title: t('테넌트 위젯 관리'),

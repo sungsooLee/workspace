@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Badge } from '@learnway/ui';
+import { Badge } from '@learnway/ui/badge';
 
 export const Route = createFileRoute('/_guide/guide/badge')({
   component: RouteComponent,
@@ -24,7 +24,7 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-import { Badge } from '@learnway/ui';
+import { Badge } from '@learnway/ui/badge';
 
 // 적용방법(예시)
 <Badge option={{ label: 'html', value: 'html' }} />;`}

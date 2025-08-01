@@ -5,7 +5,10 @@ import { getUserStatus } from '@features/platform-management/company/company-use
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import { Button, Divider, GridBox, useGridBox, useModal } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { Divider } from '@learnway/ui/elements';
+import { GridBox, useGridBox } from '@learnway/ui/grid';
+import { useModal } from '@learnway/ui/modal';
 import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { useQueryClient } from '@tanstack/react-query';
@@ -180,12 +183,10 @@ const CompanyUserListComponent = ({ detailPath }: CompanyUserListProps) => {
         },
         {
           name: 'deptEntity.deptName',
+          id: 'deptEntity.deptName',
           label: t('소속'),
           render: (info: any) => info.row.original.dept?.deptName,
           size: 120,
-          meta: {
-            sortKey: 'deptEntity.deptName',
-          },
         },
         {
           name: 'positionName',
@@ -291,6 +292,7 @@ const CompanyUserListComponent = ({ detailPath }: CompanyUserListProps) => {
         // linkageSystem값이 null이면 직접 가입, 아니면 I/F
         {
           name: 'createdDate',
+          id: 'userEntity.createdDate',
           label: t('회원가입일'),
           render: (info: any) =>
             info.row.original.linkageSystem === null
@@ -309,7 +311,6 @@ const CompanyUserListComponent = ({ detailPath }: CompanyUserListProps) => {
           size: 160,
           meta: {
             cellAlign: 'center',
-            sortKey: 'userEntity.createdDate',
           },
         },
       ],

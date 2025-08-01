@@ -1,12 +1,18 @@
-import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { cn } from '@learnway/shared';
+import { useState } from 'react';
+
 import { IcoCaution, IcoFormRequired, IcoMail, IcoPhone02 } from '@learnway/icons';
-import styles from '@learnway/styles/bo/pages/_auth/change-password.module.css';
+import { cn } from '@learnway/shared';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import noticeBoxStyles from '@learnway/styles/bo/shared/ui/notice-box/notice-box.module.css';
+import styles from '@learnway/styles/bo/pages/_auth/change-password.module.css';
 import embededAlert from '@learnway/styles/bo/shared/ui/embeded-alert/embeded-alert.module.css';
-import { Button, ContentsRow, Input, RadioCard, Dropdown, useModal } from '@learnway/ui';
+import noticeBoxStyles from '@learnway/styles/bo/shared/ui/notice-box/notice-box.module.css';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { Input } from '@learnway/ui/input';
+import { useModal } from '@learnway/ui/modal';
+import { RadioCard } from '@learnway/ui/radio-card';
 
 export const Route = createFileRoute('/_auth/search-account')({
   component: RouteComponent,

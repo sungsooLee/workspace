@@ -1,20 +1,13 @@
-import React, {
-  FC,
-  FormEvent,
-  KeyboardEvent,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
-import { Button, DynamicFormField } from '@learnway/ui';
+import { SelectOption } from '@learnway/hooks';
+import { IcoArrowDownDouble, IcoFormRequired, IcoRefresh02, IcoSearch } from '@learnway/icons';
+import { cn } from '@learnway/shared';
+import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
+import { Button } from '@learnway/ui/button';
+import { DynamicFormField } from '@learnway/ui/dynamic-form-field';
+import { t } from 'i18next';
+import React, { FC, FormEvent, KeyboardEvent, useCallback, useMemo, useState } from 'react';
 import { searchFieldConfig } from './search-field-config';
 import { SearchBoxProps } from './type';
-import { cn } from '@learnway/shared';
-import { IcoArrowDownDouble, IcoFormRequired, IcoRefresh02, IcoSearch } from '@learnway/icons';
-import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
-import { t } from 'i18next';
-import { SelectOption } from '@learnway/hooks';
 
 /**
  * 검색 박스 컴포넌트 ( config 에 의거해 자동 렌더링 됨 )

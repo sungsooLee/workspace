@@ -1,9 +1,8 @@
-import { Button, useSearchHistoryListener, useSearchStore } from '@learnway/ui';
-import styles from '@learnway/styles/fo/widgets/layout/m.ui/main/container/container-header.module.css';
 import { IcoArrowBackward } from '@learnway/icons';
-import { useEffect } from 'react';
+import styles from '@learnway/styles/fo/widgets/layout/m.ui/main/container/container-header.module.css';
+import { Button } from '@learnway/ui/button';
+import { useSearchHistoryListener, useSearchStore } from '@learnway/ui/stores';
 import { Search } from '../../ui/search/search';
-
 export const SearchOverlay = () => {
   const isSearchOpen = useSearchStore((state: any) => state.isSearchOpen);
   const closeSearch = useSearchStore((state: any) => state.closeSearch);

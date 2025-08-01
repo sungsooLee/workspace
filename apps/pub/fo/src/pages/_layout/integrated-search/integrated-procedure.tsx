@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
 import { isMobile } from 'react-device-detect';
-import { Popover, Button, Pagination } from '@learnway/ui';
+import { Popover } from '@learnway/ui/popover';
+import { Pagination } from '@learnway/ui/pagination';
+import { Button } from '@learnway/ui/button';
 import { IcoArray, IcoDotpoints, IcoArrowDown } from '@learnway/icons';
 import {
   Arrays,

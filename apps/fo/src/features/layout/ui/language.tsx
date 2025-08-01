@@ -1,11 +1,11 @@
-import { memo, useState } from 'react';
 import { Link } from '@tanstack/react-router';
+import { memo, useState } from 'react';
 import { isMobile } from 'react-device-detect';
-import { useTranslation } from 'react-i18next';
 
-import { Button, Popover } from '@learnway/ui';
-import styles from '@learnway/styles/fo/features/layout/ui/language.module.css';
 import { IcoArrowDown } from '@learnway/icons';
+import styles from '@learnway/styles/fo/features/layout/ui/language.module.css';
+import { Button } from '@learnway/ui/button';
+import { Popover } from '@learnway/ui/popover';
 
 const PopoverContent = () => {
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
@@ -54,7 +54,6 @@ interface LanguageComponentProp {
 
 const LanguageComponent = ({ className }: LanguageComponentProp) => {
   return (
-    // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
       {/* 퍼블수정 20250321 : 언어 분기처리 (pc,mobile) */}
       {isMobile ? (

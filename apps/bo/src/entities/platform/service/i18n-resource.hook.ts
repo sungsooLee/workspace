@@ -16,8 +16,7 @@ export function useFetchAsyncI18nResource(mutationOptions = {}) {
     onSuccess: async (data: any, variables, context) => {
       // 공통 메세지 처리 등...
     },
-    ...mutationOptions,
-  });
+    ...mutationOptions });
 
   return {
     fetch: async (languageCode: string): Promise<any> => {
@@ -31,6 +30,5 @@ export function useFetchAsyncI18nResource(mutationOptions = {}) {
       setI18nResource(languageCode, resource);
 
       return resource;
-    },
-  };
+    } };
 }

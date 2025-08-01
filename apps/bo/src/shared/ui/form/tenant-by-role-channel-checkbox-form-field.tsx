@@ -2,7 +2,7 @@ import { useFetchChannelByRoleId } from '@entities/channel/service/channel.hook'
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { AuthUser } from '@learnway/auth/types';
 import { BaseFormFieldProps } from '@learnway/hooks';
-import { CheckboxGroupFormField } from '@learnway/ui';
+import { CheckboxGroupFormField } from '@learnway/ui/form-field';
 import { ChannelByRoleId, TenantList } from '@types';
 import { forwardRef, useMemo } from 'react';
 
@@ -28,8 +28,7 @@ const TenantByRoleChannelCheckboxFormFieldComponent = forwardRef<
     return channel.tenantList.map((d: TenantList) => ({
       // 옵션 형식으로 변환
       label: d.tenantName,
-      value: d.tenantId,
-    }));
+      value: d.tenantId }));
   }, [channel?.tenantList, channelUuid]);
 
   return <CheckboxGroupFormField {...props} options={options} value={value} onChange={onChange} />;

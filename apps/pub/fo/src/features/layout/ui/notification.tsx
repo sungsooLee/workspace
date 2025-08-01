@@ -1,11 +1,12 @@
 import { memo, useState } from 'react';
 
-import { Button, Popover } from '@learnway/ui';
+import { Popover } from '@learnway/ui/popover';
 import { IcoBell02 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import { NotificationContents } from '../../layout';
 
 import styles from './notification.module.css';
+import { Button } from '@learnway/ui/button';
 
 const PopoverContent = () => {
   return (

@@ -1,13 +1,21 @@
-import { useCallback, useEffect, useState } from 'react';
-import { Button, ChipList, OptionCard, useModal } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 import styles from '@learnway/styles/fo/features/category/category-filter.module.css';
+import { OptionCard } from '@learnway/ui/option-card';
+import { useEffect, useState } from 'react';
 
-import { IcoFilter, IcoRefresh02 } from '@learnway/icons';
 import { CategoryFilterPopup } from '@features/category/ui/category-filter-popup';
 import { CODE_GROUP, useCodeStore } from '@learnway/hooks';
+import { IcoFilter } from '@learnway/icons';
+import { Button } from '@learnway/ui/button';
+import { ChipList } from '@learnway/ui/chips';
+import { useModal } from '@learnway/ui/modal';
+import { isMobile } from 'react-device-detect';
 
-const FilterComponent = ({ onOptionChange }: any) => {
+interface FilterComponentProps {
+  onOptionChange: (option: any) => void;
+}
+
+const FilterComponent = ({ onOptionChange }: FilterComponentProps) => {
   const { getCode } = useCodeStore();
 
   // modal
@@ -43,7 +51,7 @@ const FilterComponent = ({ onOptionChange }: any) => {
     openModal({
       // title: '필터',
       width: 'md',
-      content: <CategoryFilterPopup initialFilters={filtersByCategory} />,
+      content: <CategoryFilterPopup initialFilters={filtersByCategory} filterCodes={filter}/>,
       onClose: (data: any) => {
         // 확인 버튼을 눌러 모달이 닫힐 때 데이터를 받음
         if (data && data.selectedChips) {
@@ -97,17 +105,18 @@ const FilterComponent = ({ onOptionChange }: any) => {
           onOptionsSelect={handleCardOptionsSelect}
           value={selectedCardOptions.map((option: any) => option.value)} // 값만 전달
         />
-        <ChipList
-          options={selectedChipOptions}
-          className={styles.chip_list}
-          hideBorder
-          type="line"
-          size="lg"
-          //onChange={handleChipOptionsChange}
-        />
-      </div>
-      <div className={styles.reset}>
-        <Button className={styles.btn_reset} label={'초기화'} />
+        {
+          isMobile && (
+            <ChipList
+              options={selectedChipOptions}
+              className={styles.chip_list}
+              hideBorder
+              type="line"
+              size="lg"
+              //onChange={handleChipOptionsChange}
+            />
+          )
+        }
       </div>
     </div>
   );

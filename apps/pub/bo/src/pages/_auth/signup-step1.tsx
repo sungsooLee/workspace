@@ -1,8 +1,11 @@
-import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
+import { useState } from 'react';
+
 import { IcoBuilding01, IcoUser01 } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { Button, RadioCard, Stepper } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { RadioCard } from '@learnway/ui/radio-card';
+import { Stepper } from '@learnway/ui/stepper';
 import styles from './signup-step1.module.css';
 
 export const Route = createFileRoute('/_auth/signup-step1')({

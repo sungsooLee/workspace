@@ -1,8 +1,10 @@
 import { memo, useState } from 'react';
-import { ModalBody, ModalContainer, ModalFooter, Button, Dropdown } from '@learnway/ui';
 import { cn } from '@learnway/shared';
 
 import styles from '@learnway/styles/fo/features/layout/popup/category-depth-popup-m.module.css';
+import { Button } from '@learnway/ui/button';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { ModalBody, ModalContainer, ModalFooter } from '@learnway/ui/modal';
 
 const CategoryDepthPopupMComponent = () => {
   const [depth01, setDepth01] = useState<string[]>(['대분류']);

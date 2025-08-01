@@ -1,19 +1,11 @@
-import {
-  useMutation,
-  UseMutationResult,
-  useQuery,
-  useQueryClient,
-  UseQueryOptions,
-  UseQueryResult,
-} from '@tanstack/react-query';
+import { useModal } from '@learnway/ui/modal';
+import { useMutation, UseMutationResult, useQuery, useQueryClient, UseQueryOptions, UseQueryResult } from '@tanstack/react-query';
 import { mutateOptions, queryKeys, queryOptions } from './label-messages.queries';
 import {
   LabelMessage,
   LabelMessagesQueryParams,
   MutationHookOptions,
-  PaginationResponse,
-} from '@types';
-import { useModal } from '@learnway/ui';
+  PaginationResponse } from '@types';
 
 /**
  * 라벨 메시지 목록을 가져오는 쿼리 훅.
@@ -42,8 +34,7 @@ export const useFetchLabelMessage = <T = LabelMessage>(
 ): UseQueryResult<T, Error> => {
   return useQuery({
     ...queryOptions.detail<T>(id),
-    ...options,
-  });
+    ...options });
 };
 
 /**
@@ -62,18 +53,15 @@ export const useCreateLabelMessage = (
     ...options,
     onSuccess: async (data, variables, context) => {
       await queryClient.invalidateQueries({
-        queryKey: [queryKeys.detail(data.labelMessageId ?? Number(data.labelMessageId))],
-      });
+        queryKey: [queryKeys.detail(data.labelMessageId ?? Number(data.labelMessageId))] });
       await queryClient.invalidateQueries({
-        queryKey: [queryKeys.all],
-      });
+        queryKey: [queryKeys.all] });
 
       // 추가적인 성공 처리 로직이 있다면 실행
       if (options?.onSuccess) {
         options.onSuccess(data, variables, context);
       }
-    },
-  });
+    } });
 };
 
 /**
@@ -93,6 +81,5 @@ export const useUpdateLabelMessage = (
       if (options?.onSuccess) {
         options.onSuccess(data, variables, context);
       }
-    },
-  });
+    } });
 };

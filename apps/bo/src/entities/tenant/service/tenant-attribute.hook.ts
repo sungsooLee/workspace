@@ -2,8 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   tenantAttributeQueryKeys,
   tenantAttributeQueryOptions as queryOptions,
-  tenantAttributeMutateOptions,
-} from './tenant-attribute.queries';
+  tenantAttributeMutateOptions } from './tenant-attribute.queries';
 
 export function useTenantAttributeCompany(tenantId?: number) {
   return useQuery(queryOptions.all(tenantId));
@@ -12,8 +11,7 @@ export function useTenantAttributeCompany(tenantId?: number) {
 export function useUpdateTenantAttributeCompany(tenantId: number, options: any) {
   const mutation = useMutation({
     ...tenantAttributeMutateOptions.update(),
-    ...options,
-  });
+    ...options });
 
   return {
     update: (payload: any, callback?: any) => {
@@ -21,6 +19,5 @@ export function useUpdateTenantAttributeCompany(tenantId: number, options: any) 
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data,
-  };
+    data: mutation.data };
 }

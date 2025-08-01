@@ -1,16 +1,15 @@
-import { useState } from 'react';
 import { useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
+import { useState } from 'react';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 
-import { Tabs } from '@learnway/ui';
-
 import {
+  CompanyOrganizationCheck,
   EnOrganizationShowType,
   TenantCompanyOrganizationTree,
-  CompanyOrganizationCheck,
 } from '@features/platform-management/company';
+import { Tabs } from '@learnway/ui/tabs';
 
 const CompanyOrganizationComponent = () => {
   const routerState = useRouterState();

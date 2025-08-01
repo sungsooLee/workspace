@@ -1,7 +1,8 @@
 import { isMobile } from 'react-device-detect';
-import { Button, EmptyText } from '@learnway/ui';
+import { EmptyText } from '@learnway/ui/empty-text';
 
 import styles from './integrated-search-knowledge.module.css';
+import { Button } from '@learnway/ui/button';
 
 const IntegratedSearchKnowledgeComponent = () => {
   return (

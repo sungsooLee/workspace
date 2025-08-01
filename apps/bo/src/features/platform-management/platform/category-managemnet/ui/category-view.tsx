@@ -1,18 +1,21 @@
-import React, { FC, useEffect, useMemo, useState } from 'react';
-import { t } from 'i18next';
-import { useTranslation } from 'react-i18next';
 import { useRouter } from '@tanstack/react-router';
+import { t } from 'i18next';
+import React, { FC, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
-import { Button, ContentsRow, DynamicFormField, Input, TextareaFormField } from '@learnway/ui';
-import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
+import { TextareaFormField } from '@learnway/ui/form-field';
 
+import { useCheckExistsCategory, useFetchCategoryDetail } from '@entities/category';
 import {
   DuplicateCodeGuideText,
   findMenuPathById,
 } from '@features/platform-management/platform/category-managemnet';
-import { useCheckExistsCategory, useFetchCategoryDetail } from '@entities/category';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
 import { FormRow, SwitchFormField } from '@shared/ui';
 
 const CategoryViewComponent: FC<any> = ({
@@ -323,9 +326,7 @@ const CategoryViewComponent: FC<any> = ({
                     to: '/platform/system/multilingual',
                     state: {
                       keyType: 'CATEGORY', // 다국어 분류 - 공통코드
-                      multilinguaKey: code,
-                    },
-                  });
+                      multilinguaKey: code } });
                 }}
                 disabled={isInitMode || (mode === 'view' && isRoot)}
               >

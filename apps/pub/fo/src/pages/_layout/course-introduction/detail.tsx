@@ -1,17 +1,7 @@
 import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import {
-  Button,
-  Tabs,
-  Accordion,
-  OptionCard,
-  OptionCardItem,
-  useModal,
-  Panel,
-  useToast,
-  SelectOption,
-} from '@learnway/ui';
+
 import {
   IcoHeart,
   IcoStar,
@@ -52,6 +42,13 @@ import styles from '@learnway/styles/fo/pages/_layout/course-introduction/detail
 import playImg from '@learnway/styles/fo/assets/images/common/img_play.png';
 import bnrImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
+import { OptionCard, OptionCardItem } from '@learnway/ui/option-card';
+import { Panel } from '@learnway/ui/panel';
+import { useToast } from '@learnway/ui/toast';
+import { Tabs } from '@learnway/ui/tabs';
+import { Accordion } from '@learnway/ui/accordion';
 
 export const Route = createFileRoute('/_layout/course-introduction/detail')({
   component: RouteComponent,

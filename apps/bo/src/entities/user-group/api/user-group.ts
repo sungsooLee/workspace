@@ -11,28 +11,34 @@ import {
 export default class UserGroupService {
   static fetchUserGroups(
     tenantIds: number[],
+    roleId: number,
     params: UserGroupsParam,
   ): Promise<UserGroupsResponse[]> {
     return httpService.get(`${PMSApiPrefix()}/userGroup/user-groups`, {
       tenantIds,
+      roleId,
       ...params,
     });
   }
 
   static fetchOrganizationTree(
     tenantIds: number[],
-    roleIds: number[],
+    roleId: number,
     tenantName?: string,
   ): Promise<OrganizationTreeResponse> {
     return httpService.get(`${PMSApiPrefix()}/userGroup/organization-tree`, {
       tenantIds,
-      roleIds,
+      roleId,
       tenantName,
     });
   }
 
-  static fetchCustomGroupsTree(userGroupName?: string): Promise<OrganizationTreeResponse> {
+  static fetchCustomGroupsTree(
+    roleId: number,
+    userGroupName?: string,
+  ): Promise<OrganizationTreeResponse> {
     return httpService.get(`${PMSApiPrefix()}/userGroup/custom-groups-tree`, {
+      roleId,
       userGroupName,
     });
   }

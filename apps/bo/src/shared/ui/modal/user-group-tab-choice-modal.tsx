@@ -1,13 +1,7 @@
 import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
-import {
-  Button,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  Tabs,
-  useModal,
-} from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { Tabs } from '@learnway/ui/tabs';
 import { CombineUserGroup, UserGroupType } from '@types';
 import { t } from 'i18next';
 import { forwardRef, useState } from 'react';
@@ -21,17 +15,11 @@ import { UserGroupOrganization } from '../components/user-group-organization';
 type UserGroupTabModalProps = {
   initialTab?: UserGroupType;
   tenantIds?: number[];
-  roleIds?: number[];
   option?: CombineUserGroup[];
 };
 
 const UserGroupTabModalComponent = forwardRef(
-  ({
-    initialTab = 'ORGANIZATION',
-    tenantIds = [],
-    roleIds = [],
-    option: optionProp,
-  }: UserGroupTabModalProps) => {
+  ({ initialTab = 'ORGANIZATION', tenantIds = [], option: optionProp }: UserGroupTabModalProps) => {
     const { closeModal } = useModal();
 
     const [selectedTabKey, setSelectedTabKey] = useState<UserGroupType>(initialTab);
@@ -59,7 +47,6 @@ const UserGroupTabModalComponent = forwardRef(
                 content: (
                   <UserGroupOrganization
                     tenantIds={tenantIds}
-                    roleIds={roleIds}
                     option={option}
                     handleSetOption={setOption}
                   />

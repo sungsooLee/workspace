@@ -1,5 +1,5 @@
 import React, { FC, memo } from 'react';
-import { BaseFormRow } from '@learnway/ui';
+import { BaseFormRow } from '@learnway/ui/base-form';
 import { FormRowProps as BaseFormRowProps } from '@learnway/hooks';
 import { formFieldConfig } from './form-field-config';
 
@@ -23,8 +23,7 @@ const FormRowComponent: FC<FormRowProps> = ({
   children,
   name,
   element,
-  infoNode,
-}) => {
+  infoNode }) => {
   return (
     <BaseFormRow
       provider={provider}

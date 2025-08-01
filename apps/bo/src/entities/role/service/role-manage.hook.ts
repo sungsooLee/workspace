@@ -1,11 +1,11 @@
+import { useModal } from '@learnway/ui/modal';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import {
-  roleQueryKeys,
-  roleManagerQueryOptions as queryOptions,
-  roleMutateOptions as mutateOptions,
-} from './role-manage.queries';
-import { useModal } from '@learnway/ui';
 import { RoleApplication, RoleApplicationParam } from '@types';
+import {
+  roleMutateOptions as mutateOptions,
+  roleManagerQueryOptions as queryOptions,
+  roleQueryKeys,
+} from './role-manage.queries';
 
 export function useFetchRole(roleCode: string) {
   return useQuery({ ...queryOptions.getRole(roleCode), enabled: !!roleCode });
@@ -140,7 +140,7 @@ export function useSaveRoleUserGroups(options: any) {
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
     data: mutation.data,
-  }
+  };
 }
 
 export function useCreateMyRoleApplication<T = RoleApplicationParam>(options: any) {

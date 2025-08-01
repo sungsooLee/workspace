@@ -1,22 +1,16 @@
 // IA102 / NLP_BO_CMS_1001_2_FUNCTION 컨텐트 복사 팝업 - 기획 확인 필요
 
-import styles from './copy.module.css';
-import { useTranslation } from 'react-i18next';
-import {
-  Button,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  Spinner,
-  useModal,
-} from '@learnway/ui';
-import { useEffect, useState } from 'react';
-import { cn } from '@learnway/shared';
 import { usePostContentCopy } from '@entities/learning-resource';
-import { useRouter } from '@tanstack/react-router';
 import { getDetailPathByContentType } from '@features/learning-resource';
+import { cn } from '@learnway/shared';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { Spinner } from '@learnway/ui/spinner';
+import { useRouter } from '@tanstack/react-router';
 import { ContentInformation } from '@types';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import styles from './copy.module.css';
 
 const CopyModalComponent = ({ contentUuid }: { contentUuid: string }) => {
   const { t } = useTranslation();

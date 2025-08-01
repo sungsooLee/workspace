@@ -21,8 +21,7 @@ const NoticeBoxComponent: FC<NoticeComponentProps> = ({
   outLine = false,
   iconVisible = true,
   type = 'bullet',
-  className,
-}: NoticeComponentProps) => {
+  className }: NoticeComponentProps) => {
   const { t } = useTranslation();
   return (
     <div

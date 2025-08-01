@@ -1,35 +1,31 @@
-import { useEffect } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { cn } from '@learnway/shared';
-import {
-  Badge,
-  Button,
-  Checkbox,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  ProgressBar,
-  useModal,
-} from '@learnway/ui';
+import { useEffect } from 'react';
+
 import {
   IcoAlertCircle,
   IcoCloseCircle,
   IcoComplete02,
+  IcoFilePng,
+  IcoFileUpload,
   IcoFormRequired,
   IcoPaperClip,
   IcoPause,
   IcoPpt,
   IcoRefresh,
   IcoTrash03,
-  IcoFileUpload,
-  IcoFilePng,
 } from '@learnway/icons';
+import { cn } from '@learnway/shared';
 
-import styles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css'; // 파일 업로드
 import boxStyles from '@learnway/styles/bo/assets/styles/modules/box-data.module.css'; // 상단 박스 선택된 영역
-import PopupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css'; // 팝업 styles
+import styles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css'; // 파일 업로드
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import PopupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css'; // 팝업 styles
+
+import { Badge } from '@learnway/ui/badge';
+import { Button } from '@learnway/ui/button';
+import { Checkbox } from '@learnway/ui/checkbox';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { ProgressBar } from '@learnway/ui/progress';
 
 export const Route = createFileRoute('/_guide/guide/file-upload')({
   component: RouteComponent,

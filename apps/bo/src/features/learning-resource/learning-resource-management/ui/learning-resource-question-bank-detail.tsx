@@ -1,86 +1,110 @@
-import { FC, useEffect, useImperativeHandle, useRef } from 'react';
-import { t } from 'i18next';
+import { forwardRef, useEffect, useImperativeHandle } from 'react';
 
 import movieInfoStyles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
 import previewImg from '@assets/images/temp/img_exam_basic.jpg';
 
-import { Button, FormSubTitle, SplitPanel, useModal } from '@learnway/ui';
-import { CODE_GROUP, DynamicFormConfig, useDynamicForm2 } from '@learnway/hooks';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { SplitPanel } from '@learnway/ui/elements';
+import { UseDynamicFormResult } from '@learnway/hooks';
 
 import { LearningResourceBaseForm } from './learning-resource-base-form';
 import { useLearningResourceQuestionDetailForm } from '../service/learning-resource-question-detail-from.hook';
 import { ContentBaseInfo } from '@types';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
+import {
+  QuestionBankFormData,
+  QuestionBankTabFormRef,
+} from '@features/learning-resource/learning-resource-management/service/question-bank/type';
+import { useTranslation } from 'react-i18next';
+import { getQuestionBankRequestData } from '@features/learning-resource/learning-resource-management/service/question-bank/common';
+import dayjs from 'dayjs';
+import { isLocalhost } from '@learnway/shared';
+import { FormRow2 } from '@shared/ui';
 
-const LearningResourceQuestionBankDetailComponent = (props: any, ref: any) => {
-  const { alert, openModal, confirm: openConfirm } = useModal();
-  const { baseInfo, formMode, setFuncInfo, createQuestionBank } =
+type QuestionBankDetailProps = {
+  form: UseDynamicFormResult;
+};
+
+const LearningResourceQuestionBankDetailComponent = forwardRef<
+  QuestionBankTabFormRef,
+  QuestionBankDetailProps
+>(({ form }, ref) => {
+  const { t } = useTranslation();
+
+  const { confirm: openConfirm } = useModal();
+  const { baseInfo, formMode, hasMapping, createQuestionBank } =
     useLearningResourceQuestionDetailForm();
 
-  const { provider, getValues, onFormValid, onSubmit, updateFormData } = useDynamicForm2();
-  const formRef = useRef<HTMLFormElement>(null);
+  const { provider, getValues, updateFormData } = form;
 
-  const handleOnSubmit = async (data: any) => {
+  const handleSaveBasicInfo = async (data: Record<string, any>) => {
     if (
       await openConfirm({
         title: '저장 하시겠습니까?',
         content: '입력한 정보로 저장합니다.',
       })
     ) {
-      const payload = getValues();
+      const payload = getQuestionBankRequestData({ data: data as QuestionBankFormData }); //getValues();
       console.log('formSave', payload);
       createQuestionBank(payload as ContentBaseInfo);
     }
   };
-  const handleFormSave = async () => {
-    const form = formRef.current;
-    if (form) {
-      form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
-    }
-  };
-  useEffect(() => {
-    if (!baseInfo) return;
-    console.log('baseInfo', baseInfo);
-    updateFormData(baseInfo);
-  }, [baseInfo]);
+
+  useImperativeHandle(ref, () => ({
+    save: (data?: Record<string, any>) => handleSaveBasicInfo(data as Record<string, any>),
+  }));
 
   useEffect(() => {
-    console.log('ok form');
-    setFuncInfo({ saveBaseInfo: handleFormSave });
-  }, []);
+    if (!baseInfo) return;
+
+    console.log('baseInfo', baseInfo);
+    updateFormData({
+      ...baseInfo,
+      contentUseDate: {
+        from: baseInfo.contentUseStartDate
+          ? dayjs(baseInfo.contentUseStartDate).toDate()
+          : undefined,
+        to: baseInfo.contentUseEndDate ? dayjs(baseInfo.contentUseEndDate).toDate() : undefined,
+      },
+    });
+  }, [baseInfo]);
 
   return (
     <SplitPanel size={['auto', 416]} divider>
       <div key="base1">
-        <Button
-          label="test"
-          onClick={() => {
-            console.log(getValues());
-          }}
+        {isLocalhost() && (
+          <Button
+            type="button"
+            label="test"
+            onClick={() => {
+              console.log(getValues());
+            }}
+          />
+        )}
+        <FormSubTitle label={t('기본정보')} />
+        <LearningResourceBaseForm
+          provider={provider}
+          formMode={formMode}
+          hasMapping={hasMapping}
+          contentNameMaxLength={10}
         />
-        <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
-          <FormSubTitle label={t('기본정보')} />
-          <LearningResourceBaseForm provider={provider} formMode={formMode} />
-        </form>
+        <FormRow2
+          provider={provider}
+          name="isExamMapping"
+          type="hidden"
+          format="boolean"
+          value={false}
+        />
       </div>
       <div key="base2">
-        <FormSubTitle noLine label={'문제은행'} />
-        {/* btn_list */}
-        {/* <ul className={movieInfoStyles.btn_list}>
-            {buttons.map((btn, index) => (
-              <li>
-                <Button key={index} onClick={btn.onClick} className={movieInfoStyles.btn_text}>
-                  {btn.label}
-                </Button>
-              </li>
-            ))}
-          </ul> */}
-        {/* 이미지 영역 */}
+        <FormSubTitle noLine label={t('문제은행')} />
         <div className={movieInfoStyles.media}>
           <img src={previewImg} width="100%" alt="" />
         </div>
       </div>
     </SplitPanel>
   );
-};
+});
 
 export const LearningResourceQuestionBankDetail = LearningResourceQuestionBankDetailComponent;

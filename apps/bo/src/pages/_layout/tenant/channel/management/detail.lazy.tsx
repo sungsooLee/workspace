@@ -7,7 +7,8 @@ import {
 import { ChannelDetailSubscriber } from '@features/channel/channel-management/channel-detail-subscriber';
 import { ChannelDetailUser } from '@features/channel/channel-management/channel-detail-user';
 import { ChannelDetailUserGroup } from '@features/channel/channel-management/channel-detail-user-group';
-import { Button, Tabs } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { Tabs } from '@learnway/ui/tabs';
 import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui';
 import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { EnFormMode } from '@types';
@@ -69,6 +70,11 @@ function RouteComponent() {
         return userGroupFormRef;
     }
     return undefined;
+  };
+
+  const handleOnList = () => {
+    const listParam = routerState.location.state?.listParam;
+    router.navigate({ to: '/tenant/channel/management', state: { listParam } });
   };
 
   const handleOnSave = () => {
@@ -166,12 +172,7 @@ function RouteComponent() {
     <PageContainer hideOutLine={true}>
       <ContentsButtons>
         <LinkBox>
-          <Button
-            variant="point"
-            size="sm"
-            onClick={() => router.navigate({ to: '/tenant/channel/management' })}
-            label={t('LABEL.button.list')}
-          />
+          <Button variant="point" size="sm" onClick={handleOnList} label={t('LABEL.button.list')} />
         </LinkBox>
         {buttonLayout === EnButtonLayout.REGISTER && (
           <Button variant="point" size="sm" onClick={handleOnRegister} label={t('등록')} />

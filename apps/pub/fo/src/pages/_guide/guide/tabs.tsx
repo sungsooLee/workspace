@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { Tabs } from '@learnway/ui';
+import { Tabs } from '@learnway/ui/tabs';
 
 export const Route = createFileRoute('/_guide/guide/tabs')({
   component: RouteComponent,
@@ -76,7 +76,7 @@ function RouteComponent() {
           <code>
             {`// 초기 import
 import React, { useState } from 'react';
-import { Tabs } from '@learnway/ui';
+import { Tabs } from '@learnway/ui/tabs';
 const [selectedTabKey , selectedTabKey2] = useState<string>('');
   const items = [
     {

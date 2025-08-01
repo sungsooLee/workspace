@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Dropdown } from '@learnway/ui';
+import { Dropdown } from '@learnway/ui/dropdown';
 
 export const Route = createFileRoute('/_guide/guide/select')({
   component: RouteComponent,
@@ -15,7 +15,7 @@ function RouteComponent() {
         <pre className="code_block">
           <code>
             {`// 초기 import
-import { Select } from '@learnway/ui';`}
+import { Select } from '@learnway/ui/dropdown';`}
           </code>
         </pre>
       </div>

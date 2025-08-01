@@ -1,16 +1,17 @@
 /* eslint-disable import/first */
 
 import { createFileRoute } from '@tanstack/react-router';
+
+import { Tabs } from '@learnway/ui/tabs';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import { Tabs } from '@learnway/ui';
 
 export const Route = createFileRoute('/_layout/language/language_subjects_management')({
   component: RouteComponent,
 });
 
 /* tab contents */
-import { TestLists } from './-tabcontents/test-lists'; // 어학시험 과목 목록
 import { RegistrationApplyStatus } from './-tabcontents/registration-apply-status'; // 등록신청 현황
+import { TestLists } from './-tabcontents/test-lists'; // 어학시험 과목 목록
 
 function RouteComponent() {
   const items = [

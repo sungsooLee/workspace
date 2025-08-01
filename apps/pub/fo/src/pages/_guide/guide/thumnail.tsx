@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import React, { useState } from 'react';
 import { cn } from '@learnway/shared';
-import { Button } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
 
 import thumnailStyles from '../../../shared/ui/thumnail/thumnail.module.css';
 import thumnailImgStyles from '../../../shared/ui/thumnail/thumnail-img.module.css';
@@ -148,7 +148,7 @@ import { Link } from '@tanstack/react-router';
 import thumnailStyles from '../../../shared/ui/thumnail/thumnail.module.css';
 import thumnailImgStyles from '../../../shared/ui/thumnail/thumnail-img.module.css';
 import { cn } from '@learnway/shared';
-import { Button } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
 import {
   IcoPlay,
   IcoRating,
@@ -394,7 +394,7 @@ import { Link } from '@tanstack/react-router';
 import thumnailStyles from '../../../shared/ui/thumnail/thumnail.module.css';
 import thumnailImgStyles from '../../../shared/ui/thumnail/thumnail-img.module.css';
 import { cn } from '@learnway/shared';
-import { Button } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
 import {
   IcoPlay,
   IcoRating,

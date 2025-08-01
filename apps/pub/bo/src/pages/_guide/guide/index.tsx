@@ -1,9 +1,8 @@
 /* eslint-disable @nx/enforce-module-boundaries */
-import React, { useState, useEffect } from 'react';
-import { createFileRoute, useRouter, Link } from '@tanstack/react-router';
-import { Button } from '@learnway/ui';
-import { guideData } from '../../../config'; // 퍼블 목록 데이터
+import { createFileRoute } from '@tanstack/react-router';
+import { useEffect, useState } from 'react';
 import '../../../../../../../libs/styles/src/lib/bo/assets/styles/guide.css';
+import { guideData } from '../../../config'; // 퍼블 목록 데이터
 
 export const Route = createFileRoute('/_guide/guide/')({
   component: RouteComponent,

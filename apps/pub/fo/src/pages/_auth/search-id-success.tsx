@@ -1,7 +1,6 @@
 import { isMobile } from 'react-device-detect';
 import { cn } from '@learnway/shared';
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { Button } from '@learnway/ui';
 import { IcoCaution02, IcoComplete } from '@learnway/icons';
 
 import styles from '@learnway/styles/fo/pages/_auth/search-account/result.module.css'; // 페이지 모듈
@@ -10,6 +9,7 @@ import proccessResultStyles from '@learnway/styles/fo/widgets/auth/ui/proccess-r
 import hightlightMessageBoxStyles from '@learnway/styles/fo/shared/ui/highlight-message-box/highlight-message-box.module.css'; // 블루박스
 import { MobileView, BrowserView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
+import { Button } from '@learnway/ui/button';
 
 export const Route = createFileRoute('/_auth/search-id-success')({
   component: RouteComponent,

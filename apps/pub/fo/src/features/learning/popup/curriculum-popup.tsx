@@ -1,9 +1,11 @@
 import { useState, memo } from 'react';
 import { Link } from '@tanstack/react-router';
-import { ModalBody, ModalContainer, ModalTitle, ProgressCheck } from '@learnway/ui';
+
 import { IcoLink } from '@learnway/icons';
 
 import styles from '@learnway/styles/fo/pages/_learning/side-panel/popup/curriculum-popup.module.css';
+import { ModalContainer, ModalTitle, ModalBody } from '@learnway/ui/modal';
+import { ProgressCheck } from '@learnway/ui/progress';
 
 interface ChildData {
   panelState: boolean;

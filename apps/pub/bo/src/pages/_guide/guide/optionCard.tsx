@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { OptionCard, OptionCardItem } from '@learnway/ui';
 import { createFileRoute } from '@tanstack/react-router';
+import { useState } from 'react';
 
 import {
   IcoBlog,
@@ -13,6 +12,7 @@ import {
   IcoVideo01,
   IcoVideo02,
 } from '@learnway/icons';
+import { OptionCard, OptionCardItem } from '@learnway/ui/option-card';
 
 export const Route = createFileRoute('/_guide/guide/optionCard')({
   component: RouteComponent,
@@ -89,12 +89,12 @@ function RouteComponent() {
           <code>
             {`// 초기 import
   import { OptionCard } from '@/libs/ui/src';
-  
+
   // 적용방법(예시)
   const [values, setValues] = useState<string[]>(); 선언
   단일선택인 경우 아닌 경우 props :  multiple
   multiple인 경우 onOptionsSelect 아닌경우 onOptionSelect
-  한줄에 나열된 length 정의 props : cols 
+  한줄에 나열된 length 정의 props : cols
   <ProgressBar progress={40} />`}
           </code>
         </pre>

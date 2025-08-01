@@ -1,25 +1,27 @@
+import { isEmpty, isFunction } from 'lodash';
 import { useEffect } from 'react';
-import { useBoolean, useCounter } from 'react-use';
 import { useWatch } from 'react-hook-form';
-import { isFunction, isEmpty } from 'lodash';
 import { useTranslation } from 'react-i18next';
+import { useBoolean, useCounter } from 'react-use';
 
-import { Button, ContentsRow, InputTimer } from '@learnway/ui';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { cn, formatDate } from '@learnway/shared';
-import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
+import { InputTimer } from '@learnway/ui/input';
 
 import {
-  useVerifyEmail,
   useSendVerifyEmail,
-  useVerifyPhoneNumber,
   useSendVerifyPhoneNumber,
+  useVerifyEmail,
+  useVerifyPhoneNumber,
 } from '../../../../entities';
+import { AuthToolFormField } from '../../../../features/auth';
+import { BrowserFooter, MobileFooter, MobileResponsiveContainerFooter } from '../../../../shared';
 import { FormRow, NoticeBox } from '../../../../shared/ui';
-import { AuthToolFormField, VerifyUserIdFormField } from '../../../../features/auth';
-import { MobileResponsiveContainerFooter, BrowserFooter, MobileFooter } from '../../../../shared';
 import { AUTH_TOOL_TYPE } from '../../../../types';
 
 import styles from '@learnway/styles/fo/features/auth/ui/auth-form/auth-form.module.css';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
 
 const TIME_LIMIT_VERIFY = 180;
 
@@ -64,7 +66,7 @@ function AuthFormComponent({
   const { provider, onSubmit, onFormChange, control, getValues, setFormError, onFormValid } =
     useDynamicForm(authFormConfig);
 
-  const authToolType = useWatch({ control: control, name: 'authToolType' });
+  const authToolType = useWatch({ control, name: 'authToolType' });
 
   const [verifyTimer, verifyTimerCounter] = useCounter(0);
 

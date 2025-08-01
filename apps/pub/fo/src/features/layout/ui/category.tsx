@@ -1,10 +1,12 @@
 import { memo, useState } from 'react';
 import { Link, useRouter } from '@tanstack/react-router';
 import { IcoMenu02, IcoXclose, IcoArrowDown, IcoArrowForward, IcoArray } from '@learnway/icons';
-import { Button, useModal, ModalContainer, ModalTitle, ModalBody } from '@learnway/ui';
+
 import styles from './category.module.css';
 import { RecentVisits } from './recent-visits';
 import { cn } from '@learnway/shared';
+import { Button } from '@learnway/ui/button';
+import { ModalContainer, ModalTitle, ModalBody, useModal } from '@learnway/ui/modal';
 
 interface CategoryPopupProps {
   isOpen: boolean;

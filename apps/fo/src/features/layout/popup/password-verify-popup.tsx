@@ -1,20 +1,13 @@
-import { memo } from 'react';
-import { cn } from '@learnway/shared';
-import {
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  useModal,
-  Button,
-  ContentsRow,
-  Input,
-  EmptyText,
-} from '@learnway/ui';
 import { IcoSucess02 } from '@learnway/icons';
+import { cn } from '@learnway/shared';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { memo } from 'react';
 
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import styles from '@learnway/styles/fo/features/layout/popup/password-verify-popup.module.css';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
 
 const PasswordVerifyPopupComponent = () => {
   const { alert: openAlert } = useModal();

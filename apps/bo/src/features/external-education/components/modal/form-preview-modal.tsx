@@ -1,8 +1,9 @@
-import { Button, ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui';
 import FieldRenderer, { FormFieldsRenderer } from '../field-renderer';
 import { DEFAULT_FIELD_CONFIG, FieldType } from '../../types/form-field.types';
 import { useState } from 'react';
 import { ApplicationItem } from './add-component-modal';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
 interface FormPreviewModalProps {
   applicationItems: ApplicationItem[];
@@ -21,8 +22,7 @@ const FormPreviewModalComponent = ({ applicationItems }: FormPreviewModalProps) 
   const handleFormChange = (fieldKey: string, value: unknown) => {
     setFormValues((prev) => ({
       ...prev,
-      [fieldKey]: value,
-    }));
+      [fieldKey]: value }));
   };
 
   // 기본값 설정

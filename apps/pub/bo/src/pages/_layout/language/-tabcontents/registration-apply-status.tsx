@@ -1,11 +1,18 @@
-import { FC, useState } from 'react';
-import { cn } from '@learnway/shared';
-import { Input, Button, GridBox, Divider, RadioGroupFormField } from '@learnway/ui';
-import { IcoRefresh02, IcoSearch } from '@learnway/icons';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { FC, useState } from 'react';
+
+import { cn } from '@learnway/shared';
+
+import { IcoRefresh02, IcoSearch } from '@learnway/icons';
 
 /* style */
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
+import { Button } from '@learnway/ui/button';
+import { Divider } from '@learnway/ui/elements';
+import { RadioGroupFormField } from '@learnway/ui/form-field';
+import { GridBox } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
+
 const RegistrationApplyStatusComponent: FC<{}> = ({}) => {
   //grid
   const [pageNumber, setpageNumber] = useState(0);

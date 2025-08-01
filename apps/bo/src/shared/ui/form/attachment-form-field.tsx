@@ -1,13 +1,12 @@
 /* eslint-disable react/jsx-no-useless-fragment */
 // IA011 / NLP_BO_PMS_1100_5
 import { forwardRef, useEffect, useState } from 'react';
-import { Attachment } from '@learnway/ui'; // @learnway/ui에서 Attachment 컴포넌트 import
+import { Attachment } from '@learnway/ui/attachment'; // @learnway/ui에서 Attachment 컴포넌트 import
 import {
   BaseFormFieldProps,
   S3UploaderConfig,
   useFileManager,
-  useS3Uploader,
-} from '@learnway/hooks'; // @learnway/hooks에서 폼 필드 기본 props 타입 import
+  useS3Uploader } from '@learnway/hooks'; // @learnway/hooks에서 폼 필드 기본 props 타입 import
 import { compact, difference, map } from 'lodash';
 
 /**
@@ -52,8 +51,7 @@ const AttachmentFormFieldComponent = forwardRef<
       async = true,
       acceptFiles = [],
       maxFileCount = 10,
-      maxFileSize = 5 * 1024 * 1024,
-    } = uploadConfig;
+      maxFileSize = 5 * 1024 * 1024 } = uploadConfig;
 
     const { getFileInfo, getGroupInfo } = useFileManager();
     const {
@@ -66,8 +64,7 @@ const AttachmentFormFieldComponent = forwardRef<
       onRemove,
       onFetch,
       inputAccept,
-      groupUuid,
-    } = useS3Uploader({
+      groupUuid } = useS3Uploader({
       s3Path,
       affairsType,
       languageCode,
@@ -77,8 +74,7 @@ const AttachmentFormFieldComponent = forwardRef<
       async,
       acceptFiles,
       maxFileCount,
-      maxFileSize,
-    });
+      maxFileSize });
 
     const [fileUuids, setFileUuids] = useState<string[]>([]);
 

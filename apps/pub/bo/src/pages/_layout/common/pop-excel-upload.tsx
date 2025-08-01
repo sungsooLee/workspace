@@ -1,17 +1,7 @@
-/* eslint-disable @nx/enforce-module-boundaries */
-import { useEffect } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import {
-  Badge,
-  Button,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  ProgressBar,
-  useModal,
-} from '@learnway/ui';
+import { createFileRoute } from '@tanstack/react-router';
+import { useEffect } from 'react';
+
 import {
   IcoComplete02,
   IcoDownload,
@@ -25,7 +15,11 @@ import {
 /* styles */
 import styles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css'; // 파일 업로드
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
-import { NoticeBox } from '../../../../../../bo/src/shared/ui/';
+import { Badge } from '@learnway/ui/badge';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { ProgressBar } from '@learnway/ui/progress';
+import { NoticeBox } from '../../../shared/ui/notice-box';
 
 export const Route = createFileRoute('/_layout/common/pop-excel-upload')({
   component: RouteComponent,

@@ -6,7 +6,7 @@ import { last } from 'lodash';
 import { Link, useRouter, useCanGoBack } from '@tanstack/react-router';
 
 import { IcoArrowBackward, IcoXclose } from '@learnway/icons';
-import { Button } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
 
 import { isSigninPage, PAGE_TITLE_BY_PATH } from '../../../../../features/platform';
 

@@ -11,5 +11,4 @@ export const queryKeys = {
     cdName?: string;
   }) => [...queryKeys.all, 'list', params] as const,
   detail: (cdGroupId: string, cdId: string) =>
-    [...queryKeys.all, 'detail', cdGroupId, cdId] as const,
-};
+    [...queryKeys.all, 'detail', cdGroupId, cdId] as const };

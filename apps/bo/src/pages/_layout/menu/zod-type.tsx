@@ -1,8 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { z } from '@learnway/shared';
 export const Route = createFileRoute('/_layout/menu/zod-type')({
-  component: RouteComponent,
-});
+  component: RouteComponent });
 
 function RouteComponent() {
   // 원래는 z.string()은 기본 required이지만,
@@ -13,16 +12,14 @@ function RouteComponent() {
     .array(
       z.object({
         name: z.string(),
-        experience: z.number(),
-      }),
+        experience: z.number() }),
     )
     .optional();
 
   arraySchema.parse([
     {
       name: '1234',
-      experience: '1123',
-    },
+      experience: '1123' },
   ]);
   nameSchema.parse(''); // 에러: "이름은 필수입니다."
   numberSchema.parse('');

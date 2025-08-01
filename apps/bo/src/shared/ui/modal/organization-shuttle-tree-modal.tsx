@@ -6,18 +6,8 @@ import { cn } from '@learnway/shared';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
 
-import {
-  Button,
-  ChipsForTreeShuttle,
-  FormSubTitle,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  TreeBox,
-  TreeNode,
-  useModal,
-} from '@learnway/ui';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { ChipsForTreeShuttle, TreeBox, TreeNode } from '@learnway/ui/tree-view';
 
 import { IcoNarrowRight, IcoRefresh02 } from '@learnway/icons';
 
@@ -26,6 +16,8 @@ import { transformDepartmentApiDataToTreeData } from '@features/platform-managem
 import { useGetCompanyDepartmentTree } from '@entities/department';
 import { findOrganizationPathById } from '@features/platform-management/company';
 import { genMap } from '@features/platform-management/tenant';
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
 /**
  * 화면번호: NLP_BO_TMS_1111_09 (회사조직조회 팝업(공통))

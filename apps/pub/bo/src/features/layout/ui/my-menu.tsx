@@ -1,10 +1,13 @@
 import { memo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { IcoClock01, IcoStar, IcoStar02 } from '@learnway/icons';
+import { cn, getRandomId, SelectOption } from '@learnway/shared';
+import { Button } from '@learnway/ui/button';
+import { ChipList } from '@learnway/ui/chips';
+import { List } from '@learnway/ui/list';
+import { Popover } from '@learnway/ui/Popover';
 import styles from './my-menu.module.css';
-import { ChipList, Popover, SelectOption, List, Button } from '@learnway/ui';
-import { IcoStar, IcoStar02, IcoClock01 } from '@learnway/icons';
-import { cn, getRandomId } from '@learnway/shared';
 
 // import { useFetchAuthUser } from '../../../entities';
 

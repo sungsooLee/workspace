@@ -9,8 +9,7 @@ import {
   CoursePopupListItem,
   CoursePopupQueryParams,
   CoursesQueryParams,
-  PaginationResponse,
-} from '../../../types';
+  PaginationResponse } from '../../../types';
 
 /**
  * 과정 관련 API 요청을 처리하는 서비스 클래스.

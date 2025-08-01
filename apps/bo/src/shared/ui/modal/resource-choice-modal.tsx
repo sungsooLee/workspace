@@ -1,3 +1,4 @@
+import { queryOptions } from '@entities/contents';
 import {
   CODE_GROUP,
   SearchBoxConfig,
@@ -5,22 +6,13 @@ import {
   useLanguageMap,
   useSearchBox,
 } from '@learnway/hooks';
-import {
-  Button,
-  Divider,
-  GridBox,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  useGridBox,
-  useGridBoxConfig,
-  useModal,
-} from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { Divider } from '@learnway/ui/elements';
+import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 import { t } from 'i18next';
-import { TenantByRoleDropdownFormField, TenantChannelDropdownFormField } from '../form';
-import { queryOptions } from '@entities/contents';
 import { useEffect, useState } from 'react';
+import { TenantByRoleDropdownFormField, TenantChannelDropdownFormField } from '../form';
 import { SearchBox } from '../search-box';
 
 interface Props {

@@ -3,7 +3,6 @@ import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useRouterState } from '@tanstack/react-router';
 
-import { useModal } from '@learnway/ui';
 import { CODE_GROUP, useCodeStore, useDynamicForm2 } from '@learnway/hooks';
 
 import { isEqual } from 'lodash';
@@ -13,6 +12,7 @@ import TenantService from '@entities/tenant/api/tenant';
 import { EnDeviceType, EnFormMode, EnUseCategory } from '@types';
 
 import { TenantDetailBaseForm } from './tenant-detail-base-form';
+import { useModal } from '@learnway/ui/modal';
 
 /**
  * 화면번호: NLP_BO_TMS_1002 (테넌트기본 정보)
@@ -26,8 +26,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
 
   const [languageTypeList, setLanguageTypeList] = useState<any[]>([]);
   const [checked, setChecked] = useState<{ [key: number]: boolean }>({
-    1: false,
-  });
+    1: false });
   const tenantId = routerState.location.state?.tenantId;
 
   const { t } = useTranslation();
@@ -36,8 +35,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
   const { update } = useUpdateTenant({
     onSuccess: () => {
       refetch();
-    },
-  });
+    } });
   const {
     provider,
     updateFormData,
@@ -46,8 +44,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
     getValues,
     clearFormError,
     setFormError,
-    formState,
-  } = useDynamicForm2();
+    formState } = useDynamicForm2();
 
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -62,8 +59,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
     },
     clearForm() {
       onFormChange();
-    },
-  }));
+    } }));
 
   const duplicateCheck = async (tenantName: string) => {
     const result: boolean = await TenantService.existTenant(tenantName, tenantId);
@@ -88,13 +84,10 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
       tenantTagList: tagStringList.map((item: string) => ({ tagName: item })),
       tenantUserList: data.tenantUserList.map((item: any) => ({
         tenantId,
-        userUuid: item.uuid,
-      })),
+        userUuid: item.uuid })),
       companyTenantList: data.companyTenantList.map((v: any) => ({
         tenantId,
-        companyId: v.companyId,
-      })),
-    };
+        companyId: v.companyId })) };
     console.log('payload {} => ', payload);
     if (await openConfirm(t('저장 하시겠습니까?'))) {
       update(payload);
@@ -138,12 +131,10 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
         tenantTagList: tag,
         companyTenantList: tenantData.companyTenantList.map((item) => ({
           companyId: item.companyId,
-          name: item.companyName,
-        })),
+          name: item.companyName })),
         tenantUserList: tenantData.tenantUserList.map((item) => ({
           uuid: item.userUuid,
-          name: item.userName ?? t('이름 없음'),
-        })),
+          name: item.userName ?? t('이름 없음') })),
         isEnrollOption: platformAttributeProperties.isUseEnrollOption,
         isTextBookOption: platformAttributeProperties.isUseTextBookOption,
         isInstructorOption: platformAttributeProperties.isUseInstructorOption,
@@ -158,8 +149,7 @@ const TenantDetailBaseComponent = (props: any, ref: any) => {
         isOutsourcingTenantCustomOption:
           platformAttributeProperties.isUseOutsourcingTenantCustomOption,
         isWiaTenantCustomOption: platformAttributeProperties.isUseWiaTenantCustomOption,
-        isAutoeverTenantCustomOption: platformAttributeProperties.isUseAutoeverTenantCustomOption,
-      });
+        isAutoeverTenantCustomOption: platformAttributeProperties.isUseAutoeverTenantCustomOption });
     }
   }, [tenantData, formState.isReady]);
 

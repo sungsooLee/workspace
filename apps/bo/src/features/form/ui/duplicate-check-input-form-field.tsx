@@ -1,8 +1,8 @@
-import { forwardRef, useEffect, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
-import { isEqual } from 'lodash';
 import { BaseFormFieldProps, useDynamicFormContext } from '@learnway/hooks';
-import { Button, Input, InputValidationConfig } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { Input, InputValidationConfig } from '@learnway/ui/input';
+import { forwardRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export enum DuplicateState {
   needInput = 'needInput', // 최초 등록 상태인 경우 사용

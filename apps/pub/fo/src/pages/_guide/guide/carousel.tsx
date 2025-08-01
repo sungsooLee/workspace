@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { Carousel } from '@learnway/ui';
+import { Carousel } from '@learnway/ui/carousel';
 
 export const Route = createFileRoute('/_guide/guide/carousel')({
   component: RouteComponent,
@@ -34,7 +34,7 @@ function RouteComponent() {
           <code>
             {`// 초기 import
 import { createFileRoute } from '@tanstack/react-router';
-import { Carousel } from '@learnway/ui';
+import { Carousel } from '@learnway/ui/carousel';
 
 const carouselItems = [<h3>item A</h3>, <h3>item B</h3>, <h3>item C</h3>];
 

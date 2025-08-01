@@ -23,6 +23,7 @@ import {
   QuestionStatusUpdateReq,
   ExamPaperQuestionCountUpdateReq,
   TestPaperBasicInfoSaveReq,
+  UpdateQuestionBankCountInfoReq,
 } from '@types';
 
 export function usePostContentCopy(options?: any) {
@@ -320,6 +321,19 @@ export function useUpdateQuestionBankContent(options?: any) {
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
     data: mutation.data,
+  };
+}
+
+export function useUpdateQuestionBankQuestionCountInfo(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.updateQuestionBankQuestionCountInfo(),
+    ...options,
+  });
+
+  return {
+    update: (payload: UpdateQuestionBankCountInfoReq) => mutation.mutate(payload as any),
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
   };
 }
 

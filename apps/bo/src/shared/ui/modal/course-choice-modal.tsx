@@ -1,19 +1,13 @@
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { SelectOption } from '@learnway/shared';
-import {
-  Checkbox,
-  Divider,
-  GridBox,
-  ModalBody,
-  ModalContainer,
-  ModalTitle,
-  useGridBox,
-  useGridBoxConfig,
-} from '@learnway/ui';
+import { Divider } from '@learnway/ui/elements';
+import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import dayjs from 'dayjs';
 import { t } from 'i18next';
 import { useCallback, useEffect } from 'react';
 import { SearchBox } from '../search-box';
+import { Checkbox } from '@learnway/ui/checkbox';
+import { ModalBody, ModalContainer, ModalTitle } from '@learnway/ui/modal';
 
 export const CourseChoiceModal = () => {
   const { provider, getValues, setOptions, setValue, onFormChange } = useSearchBox(searchConfig());
@@ -31,8 +25,7 @@ export const CourseChoiceModal = () => {
       const year = currentYear - i;
       return {
         label: year.toString(),
-        value: year.toString(),
-      } as SelectOption;
+        value: year.toString() } as SelectOption;
     });
   };
 
@@ -66,16 +59,13 @@ const searchConfig = (): SearchBoxConfig => ({
         type: 'dropdown',
         value: '',
         optionsConfig: {
-          codeGroup: CODE_GROUP['lms.course.CourseType'],
-        },
-        presetOptionLabel: t('전체'),
-      },
+          codeGroup: CODE_GROUP['lms.course.CourseType'] },
+        presetOptionLabel: t('전체') },
       {
         name: 'courseName',
         label: t('과정명'),
         type: 'text',
-        value: '',
-      },
+        value: '' },
       {
         name: 'courseTarget',
         label: t('학습 대상'),
@@ -84,22 +74,19 @@ const searchConfig = (): SearchBoxConfig => ({
         options: [
           { label: t('전체 설정'), value: 'ALL' }, // 채널 대상자 모두 노출
           { label: t('선택 설정'), value: 'SELECTED' }, // 해당 유저그룹만 과정 노출
-        ],
-      },
+        ] },
       {
         name: 'coordinatorName',
         label: t('담당자'),
         type: 'text',
-        value: '',
-      },
+        value: '' },
     ],
     [
       {
         name: 'operatorName',
         label: t('운영자'),
         type: 'text',
-        value: '',
-      },
+        value: '' },
       {
         name: 'isUsed',
         type: 'dropdown',
@@ -108,27 +95,22 @@ const searchConfig = (): SearchBoxConfig => ({
         options: [
           { value: true, label: t('사용') },
           { value: false, label: t('미사용') },
-        ],
-      },
+        ] },
       {
         name: 'openingYear',
         type: 'dropdown',
         label: t('개설년도'),
         value: '',
-        options: [],
-      },
+        options: [] },
       {
         name: 'courseValidityDate',
         label: '과정 유효기간',
         type: 'date-range',
         value: {
           from: undefined,
-          to: undefined,
-        },
-      },
+          to: undefined } },
     ],
-  ],
-});
+  ] });
 
 const gridConfig = (): useGridBoxConfig => ({
   query: '',
@@ -138,70 +120,53 @@ const gridConfig = (): useGridBoxConfig => ({
       label: t('과정 유형'),
       size: 100,
       meta: {
-        cellAlign: 'center',
-      },
-    },
+        cellAlign: 'center' } },
     {
       name: 'courseCode',
       label: t('과정 코드'),
-      size: 100,
-    },
+      size: 100 },
     {
       name: 'courseName',
-      label: t('과정명'),
-    },
+      label: t('과정명') },
     {
       name: 'courseSequence',
       label: t('차수'),
       size: 80,
       meta: {
-        cellAlign: 'center',
-      },
-    },
+        cellAlign: 'center' } },
     {
       name: 'courseTarget',
       label: t('학습 대상'),
       size: 100,
       meta: {
-        cellAlign: 'center',
-      },
-    },
+        cellAlign: 'center' } },
     {
       name: 'coordinatorName',
       label: t('담당자'),
-      size: 100,
-    },
+      size: 100 },
     {
       name: 'operatorName',
       label: t('운영자'),
-      size: 100,
-    },
+      size: 100 },
     {
       name: 'isUsed',
       label: t('사용 여부'),
       size: 80,
       meta: {
-        cellAlign: 'center',
-      },
+        cellAlign: 'center' },
       render: (info: any) => {
         info.getValue() ? t('사용') : t('미사용');
-      },
-    },
+      } },
     {
       name: 'openingYear',
       label: t('개설년도'),
       size: 80,
       meta: {
-        cellAlign: 'center',
-      },
-    },
+        cellAlign: 'center' } },
     {
       name: 'courseValidityStartDate',
       label: t('과정 유효기간'),
       size: 200,
       meta: {
-        cellAlign: 'center',
-      },
-    },
-  ],
-});
+        cellAlign: 'center' } },
+  ] });

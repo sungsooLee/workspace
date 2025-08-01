@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import React, { useState } from 'react';
 import { cn } from '@learnway/shared';
-import { Button } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
 
 import bannerStyles from '../../../shared/ui/visual/banner.module.css';
 

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { cn } from '@learnway/shared';
-import { Button } from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
 import { Link } from '@tanstack/react-router';
 
 /* style */

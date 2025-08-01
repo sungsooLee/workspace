@@ -4,7 +4,7 @@ import { Link } from '@tanstack/react-router';
 
 /* style */
 import styles from './shorts-item.module.css';
-import { Badge } from '@learnway/ui';
+import { Badge } from '@learnway/ui/badge';
 
 interface Item {
   badgeLabel?: string;
