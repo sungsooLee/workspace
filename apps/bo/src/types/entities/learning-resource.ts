@@ -233,21 +233,21 @@ export interface GetContentsParams extends PaginationRequest {
 }
 
 export interface ContentInfo {
-  tenantId: string; // 테넌트 id
+  tenantId: number; // 테넌트 id
   tenantName: string; //	테넌트 이름[...]
   channelUuid: string; //	채널 UUID[...]
   channelName: string; //	채널명[...]
   contentUuid: string; //	콘텐츠 uuid[...]
   contentName: string; //	학습자원명[...]
   contentType: ContentType; //	콘텐츠 분류 코드 Enum(ContentType) - VIDEO|EXAM|SURVEY|ASSIGNMENT|HTML5|YOUTUBE|BLOG|SCORM|DEFAULT[...]
-  groupContentId: string; //	학습자원 그룹ID[...]
+  groupContentId: number; //	학습자원 그룹ID[...]
   createType: ContentCreateType; //	콘텐츠 생성 유형, MANUAL|TRANSLATE|SHARED[...]
   contentStatusCode: ContentStatusCode; //	콘텐츠 상태 코드 Enum(ContentStatusCode) - TEMPORARY_SAVE|SAVED|DELETED[...]
-  isContentEnabled: string; //	사용 가능 여부[...]
+  isContentEnabled: boolean; //	사용 가능 여부[...]
   coordinatorUuid: string; //	담당자 ID[...]
   coordinatorName: string; //	담당자명[...]
   contentAddInfoType: ContentAddInfoType; //	콘텐츠 추가정보 코드 Enum(ContentAddInfoType) - VIDEO_ADD_INFO(초)|EXAM_ADD_INFO(건수)[...]
-  contentAddInfo: string; //	콘텐츠 추가 정보, 콘텐츠 추가정보 코드 별 초/건수 값[...]
+  contentAddInfo: number; //	콘텐츠 추가 정보, 콘텐츠 추가정보 코드 별 초/건수 값[...]
   languageCountryCode: string; //	국가 언어 코드[...]
   createdBy: string; //	최초등록자아이디[...]
   createdDate: string; //	최초등록타임스탬프[...]
@@ -255,6 +255,7 @@ export interface ContentInfo {
   modifiedDate: string; //	최종수정타임스탬프[...]
   creatorName: string; //	최초등록자명[...]
   modifyerName: string; //	최종수정자명[...]
+  contentId: number;
 }
 
 export type GetContentsRes = PaginationResponse<ContentInfo>;
