@@ -3,3 +3,5 @@ export * from './form';
 export * from './highlight-message-box/highlight-message-box';
 export * from './embeded-alert/embeded-alert';
 export * from './modal/address-search-modal';
+export * from './thumnail/list/thumbnail-list';
+export * from './thumnail/item/thumbnail-item';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { IcoEye, IcoHeart, IcoStar } from '@learnway/icons';
 import { cn, getRandomId } from '@learnway/shared';
-import styles from '@learnway/styles/fo/features/layout/ui/thumb-nail-item.module.css';
+import styles from './thumbnail-item.module.css';
 import { Badge } from '@learnway/ui/badge';
 import { Thumbnail } from '@learnway/ui/thumbnail';
 import { ToggleButton } from '@learnway/ui/toggle-button';
@@ -10,7 +10,7 @@ import { Link } from '@tanstack/react-router';
 import { t } from 'i18next';
 
 // 임시 이미지
-import bnrCImage1 from '../../../assets/images/banner/banner_category_02.png';
+import bnrCImage1 from '@assets/images/banner/banner_category_02.png';
 
 export interface ThumbnailData {
   courseId: number,

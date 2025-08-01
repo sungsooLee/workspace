@@ -10,11 +10,12 @@ import { IcoArray, IcoArrowDown, IcoDotpoints, IcoFilter, IcoPlay } from '@learn
 import dropdownPopoverStyles from '../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
 import styles from '@learnway/styles/fo/pages/_layout/category/category_m.module.css';
 
-import { FilterPopup, ThumbnailList } from '@features/layout';
+import { FilterPopup } from '@features/layout';
 import CategoryService from '@entities/category/api/category';
 import { t } from 'i18next'
 import { useFetchCategoryDetail } from '@entities/category';
 import { CategoryDetailComponentProps } from '@pages/_layout/_category/category';
+import { ThumbnailList } from '@shared/ui/thumnail/list/thumbnail-list';
 
 
 const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponentProps) => {
