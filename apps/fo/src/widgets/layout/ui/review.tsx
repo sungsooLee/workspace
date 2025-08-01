@@ -1,8 +1,8 @@
 import { IcoMoreVertical, IcoStar } from '@learnway/icons';
 import { Popover } from '@learnway/ui/popover';
+import { ReviewOptionPopover } from '@widgets/layout';
 import { memo } from 'react';
 import { isMobile } from 'react-device-detect';
-import { ReviewOptionPopover } from '../../../features/layout';
 
 import styles from '@learnway/styles/fo/features/layout/ui/review.module.css';
 import { Avatar } from '@learnway/ui/avatar';

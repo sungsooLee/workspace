@@ -5,7 +5,7 @@ import { ProgressCheck } from '@learnway/ui/progress';
 import { useRouter } from '@tanstack/react-router';
 import { memo } from 'react';
 import { isMobile } from 'react-device-detect';
-import { NoticeDetailPopup } from '../../../../features/layout/';
+import { NoticeDetailPopup } from '../../../../widgets/layout';
 
 interface CurriculumStudyProps {
   className?: string;

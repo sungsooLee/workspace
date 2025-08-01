@@ -24,7 +24,7 @@ import {
   CourseIntroduction, // 교육일정
   CourseReview, // 수강신청 취소 사유 입력
   PackageCardList,
-} from '../../features/layout/';
+} from '@widgets/layout';
 
 import packageInformationStyles from '@learnway/styles/fo/pages/_layout/course-introduction/package-information.module.css';
 import packageSideStyles from '@learnway/styles/fo/pages/_layout/course-introduction/package-side.module.css';

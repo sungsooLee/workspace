@@ -6,7 +6,7 @@ import { IcoChair, IcoLocation } from '@learnway/icons';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle } from '@learnway/ui/modal';
 import {
   CourseFixedButton, // 수강신청 버튼
-} from '../../../features/layout';
+} from '../../../widgets/layout';
 
 import styles from '@learnway/styles/fo/features/layout/popup/course-selection-popup.module.css';
 import lectureStyles from '@learnway/styles/fo/pages/_layout/course-introduction/lecture.module.css';
