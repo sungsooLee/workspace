@@ -1,6 +1,7 @@
 import categoryMock from '../../mock/category.json';
 import { httpService } from '@learnway/shared';
 import { LMSApiPrefix } from '@learnway/config';
+import { CurriculumService } from '@entities/curriculum';
 
 export default class CategoryService {
   static getCategories(params: any) {
@@ -35,5 +36,23 @@ export default class CategoryService {
       tree: categoryTree,
       recent: recentCategory,
     };
+  }
+
+  static async getFetchCoursesCategoryList(payload: any) {
+    const courses = await this.getFetchCoursesCategory(payload);
+    const fileGroupUuid = new Set<string>();
+    const curriculumIds = new Set<number>();
+    if( courses.content && courses.content.length > 0 ) {
+      courses.content.map((item: any) => {
+        if( item.thumbnailFileGroupUuid ) {
+          fileGroupUuid.add(item.thumbnailFileGroupUuid)
+        }
+        if( item.curriculumId ) {
+          curriculumIds.add(item.curriculumId)
+        }
+      });
+    }
+    console.log('#### File Group Uuid => ', Array.from(fileGroupUuid));
+    const curriculums = await CurriculumService.getFetchCurriculumDuration(Array.from(curriculumIds))
   }
 }
