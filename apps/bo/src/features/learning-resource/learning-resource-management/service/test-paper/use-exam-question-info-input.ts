@@ -21,7 +21,7 @@ import {
   QuestionsCopyReq,
   TestPaperBasicInfoDetail,
 } from '@types';
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   LevelKey,
@@ -29,6 +29,7 @@ import {
   QuestionStatisticRow,
   SelectedQuestionState,
 } from './type';
+import { debounce } from 'lodash-es';
 
 export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) => {
   const { contentUuid, examPoolUuid, questionGenType, questionCount } = basicInfo;
@@ -150,15 +151,7 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
   }, []);
 
   const handleCountInputChange = useCallback(
-    (
-      e: ChangeEvent<HTMLInputElement>,
-      rowItem: QuestionStatisticRow,
-      key: 'hard' | 'medium' | 'easy',
-    ) => {
-      const {
-        target: { value },
-      } = e;
-
+    (value: string, rowItem: QuestionStatisticRow, key: 'hard' | 'medium' | 'easy') => {
       let parsedValue =
         (value !== '' && isNaN(Number(value))) || Number(value) < 0
           ? 0
@@ -184,6 +177,16 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
         },
       }));
     },
+    [],
+  );
+
+  const debouncedUpdateRandomCount = useMemo(
+    () =>
+      debounce(
+        (value: string, rowItem: QuestionStatisticRow, key: 'hard' | 'medium' | 'easy') =>
+          handleCountInputChange(value, rowItem, key),
+        2000,
+      ),
     [],
   );
 
@@ -428,6 +431,7 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
     randomCountUpdateData,
     setRandomCountUpdateData,
     handleCountInputChange,
+    debouncedUpdateRandomCount,
     updateQuestionCountInfo,
     selectedQuestionRows,
     setSelectedQuestionRows,
