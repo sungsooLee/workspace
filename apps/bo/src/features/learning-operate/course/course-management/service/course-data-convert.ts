@@ -35,8 +35,8 @@ export const responseDataToFormData = (d: Course, c: CourseConfig = {} as Course
       asgmtWeights: d.asgmtWeights, // 과제 반영 비율
     },
     courseValidityRange: {
-      from: d.courseValidityStartDateTime, // 과정 유효 시작일
-      to: d.courseValidityEndDateTime, // 과정 유효 종료일
+      from: d.courseValidityStartDateTime ? new Date(d.courseValidityStartDateTime) : undefined, // 과정 유효 시작일
+      to: d.courseValidityEndDateTime ? new Date(d.courseValidityEndDateTime) : undefined, // 과정 유효 종료일
     },
   };
 };
