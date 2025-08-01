@@ -139,11 +139,14 @@
     }
 
     .info_list {
-      @apply mt-[24px] flex flex-col gap-[24px] border-t-[1px] border-solid border-[var(--gray90)] pb-[24px];
+      @apply mt-[24px] flex flex-col border-t-[1px] border-solid border-[var(--gray90)] py-[24px];
       > li {
-        @apply flex items-center justify-between;
+        @apply flex h-[40px] items-center justify-between;
         .txt {
           @apply body-md text-[var(--gray35)];
+        }
+        & + li {
+          @apply mt-[24px];
         }
       }
     }
@@ -206,9 +209,28 @@
             }
           }
         }
+        .recent_visits {
+          @apply mt-[40px] border-none;
+          .list {
+            > li {
+              .ico {
+                @apply h-[104px];
+              }
+            }
+          }
+        }
       }
       .lang_area {
         @apply -my-[16px];
+      }
+      .info_list {
+        @apply mt-[40px] gap-0 border-none py-0;
+        > li {
+          @apply h-[56px];
+          & + li {
+            @apply mt-0;
+          }
+        }
       }
     }
   }

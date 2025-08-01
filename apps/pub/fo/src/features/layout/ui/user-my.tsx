@@ -14,7 +14,7 @@ import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
 import { Switch } from '@learnway/ui/switch';
 import { memo, useEffect, useState } from 'react';
-import { isMobile } from 'react-device-detect';
+import { BrowserView, isMobile } from 'react-device-detect';
 import languagestyles from './language.module.css';
 import styles from './user-my.module.css';
 
@@ -199,6 +199,7 @@ const UserMyComponent = ({ onChangeType, onParentChangeType }: ContentTypeProps)
               <li>
                 <Button className={styles.btn}>
                   <span className={styles.ico}>
+                    {/* 아이콘 디자인 수정 예정 */}
                     <IcoChart />
                   </span>
                   <span className={styles.txt}>결재함</span>
@@ -207,6 +208,7 @@ const UserMyComponent = ({ onChangeType, onParentChangeType }: ContentTypeProps)
               <li>
                 <Button className={styles.btn}>
                   <span className={styles.ico}>
+                    {/* 아이콘 디자인 수정 예정 */}
                     <IcoPaper />
                   </span>
                   <span className={styles.txt}>학습이력</span>
@@ -215,15 +217,16 @@ const UserMyComponent = ({ onChangeType, onParentChangeType }: ContentTypeProps)
               <li>
                 <Button className={styles.btn}>
                   <span className={styles.ico}>
+                    {/* 아이콘 디자인 수정 예정 */}
                     <IcoRocket />
                   </span>
                   <span className={styles.txt}>찜한 과정</span>
                 </Button>
               </li>
             </ul>
+            <div></div>
           </div>
           <ul className={styles.info_list}>
-            <li></li>
             <li>
               <span className={styles.txt}>알림</span>
               <Switch
@@ -254,14 +257,16 @@ const UserMyComponent = ({ onChangeType, onParentChangeType }: ContentTypeProps)
             </li>
           </ul>
 
-          <div className={styles.btn_log}>
-            <Button
-              size="md"
-              underline={true}
-              label={'로그아웃'}
-              onClick={() => handleClickAlert2()}
-            />
-          </div>
+          <BrowserView>
+            <div className={styles.btn_log}>
+              <Button
+                size="md"
+                underline={true}
+                label={'로그아웃'}
+                onClick={() => handleClickAlert2()}
+              />
+            </div>
+          </BrowserView>
         </div>
       ) : (
         <LanguageComponent

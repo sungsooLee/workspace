@@ -1,6 +1,6 @@
 import { IcoArrowForward } from '@learnway/icons';
 import { Button } from '@learnway/ui/button';
-import { ModalBody, ModalContainer, ModalTitle, useModal } from '@learnway/ui/modal';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 import { memo, useState } from 'react';
 import { UserMy } from '../ui/user-my';
 
@@ -8,6 +8,7 @@ import styles from './gnb-popup-m.module.css';
 
 const UserMyModal = () => {
   const [contents, setContents] = useState('profile');
+  const { closeModal } = useModal();
 
   return (
     <ModalContainer>
@@ -17,6 +18,13 @@ const UserMyModal = () => {
           <UserMy onChangeType={setContents} />
         </div>
       </ModalBody>
+      {contents === 'profile' ? (
+        <ModalFooter>
+          <Button variant={'primary'} size={'lx'} onClick={() => closeModal()} label={'로그아웃'} />
+        </ModalFooter>
+      ) : (
+        ''
+      )}
     </ModalContainer>
   );
 };
