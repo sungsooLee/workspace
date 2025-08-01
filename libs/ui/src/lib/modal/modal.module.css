@@ -166,7 +166,7 @@
     [class*='modal-content'] {
       @apply !max-h-[calc(100dvh-60px)] px-[16px] pt-[60px];
       [class*='modal-content'] {
-        @apply border-0 !p-0 !pb-[16px];
+        @apply border-0 !px-[16px] !pb-[16px] !pt-[44px];
       }
     }
     [class*='footer'] {
@@ -175,6 +175,21 @@
         @apply rounded-[8px];
       }
     }
+  }
+  &:has([class*='modal-content-width-sm']) {
+    @apply w-[600px];
+  }
+  &:has([class*='modal-content-width-lg']) {
+    @apply w-[1024px];
+  }
+  &:has([class*='modal-content-width-md']) {
+    @apply w-[800px];
+  }
+  &:has([class*='modal-content-width-lg']) {
+    @apply w-[1024px];
+  }
+  &:has([class*='modal-content-width-xl']) {
+    @apply w-[1400px];
   }
 }
 /* .md,

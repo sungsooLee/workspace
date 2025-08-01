@@ -1268,6 +1268,11 @@ function RouteComponent() {
       Component: <IcoDocument width={48} height={48} />,
       file: 'ic_document.svg (색상변경금지)',
     },
+    {
+      name: 'IcoAiSymbol',
+      Component: <IcoDocument width={12} height={12} />,
+      file: 'ico_ai_symbol.svg (색상변경금지)',
+    },
   ];
   return (
     <div>

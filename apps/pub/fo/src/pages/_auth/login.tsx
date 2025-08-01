@@ -1,17 +1,15 @@
-import { isMobile } from 'react-device-detect';
 import { cn } from '@learnway/shared';
 import { createFileRoute, Link } from '@tanstack/react-router';
 
-import { AuthTitle } from '../../features/auth';
-//import styles from './login.module.css';
-import styles from '@learnway/styles/fo/pages/_auth/login.module.css';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
-import snsNaverImage from '../../assets/images/common/logo_sns_naver.png';
-import snskakaoImage from '../../assets/images/common/logo_sns_kakao.png';
-import snsGoogleImage from '../../assets/images/common/logo_sns_google.png';
-import { Input } from '@learnway/ui/input';
-import { Checkbox } from '@learnway/ui/checkbox';
+import styles from '@learnway/styles/fo/pages/_auth/login.module.css';
 import { Button } from '@learnway/ui/button';
+import { Checkbox } from '@learnway/ui/checkbox';
+import { Input } from '@learnway/ui/input';
+import snsGoogleImage from '../../assets/images/common/logo_sns_google.png';
+import snskakaoImage from '../../assets/images/common/logo_sns_kakao.png';
+import snsNaverImage from '../../assets/images/common/logo_sns_naver.png';
+import { AuthTitle } from '../../features/auth';
 
 export const Route = createFileRoute('/_auth/login')({
   component: RouteComponent,

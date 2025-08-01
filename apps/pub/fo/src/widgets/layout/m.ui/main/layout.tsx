@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Footer } from '../../ui/main/footer/footer';
+import { MobileFooter } from './footer/footer';
 import { MobileHeader } from './header/header';
 
 //import styles from './layout.module.css';
@@ -20,9 +20,9 @@ function LayoutComponent({ children }: LayoutComponentProps) {
       {/* <MobileContainerHeader /> */}
       <main>{children}</main>
       {/* 하단 반응형 footer */}
-      <Footer />
+      {/* <Footer /> */}
       {/* {pageMeta?.mobile?.showFooter && <MobileFooter />} */}
-      {/* <MobileFooter /> */}
+      <MobileFooter />
     </div>
   );
 }

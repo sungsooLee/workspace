@@ -1,14 +1,17 @@
-import { memo } from 'react';
 import { Link } from '@tanstack/react-router';
+import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { GnbPopupM } from '../../../../../features/layout';
 
 import styles from '@learnway/styles/fo/widgets/layout/m.ui/main/footer/footer.module.css';
 
+import { IcoDotpoints, IcoEye, IcoHome03, IcoMybook, IcoSearch } from '@learnway/icons';
 import { Button } from '@learnway/ui/button';
-import { IcoHome03, IcoDotpoints, IcoSearch, IcoMybook, IcoEye } from '@learnway/icons';
+import { useModal } from '@learnway/ui/modal';
 
 function FooterComponent() {
   const { t } = useTranslation();
+  const { openModal } = useModal();
 
   return (
     <div className={`${styles.start} ${styles.footer_fixed}`}>
@@ -42,6 +45,19 @@ function FooterComponent() {
             <Button>
               <IcoEye width={24} height={24} stroke="#131C30" />
               <span>채널</span>
+            </Button>
+          </li>
+          <li>
+            <Button
+              onClick={() =>
+                openModal({
+                  width: 'm_bottom_sheet',
+                  content: <GnbPopupM />,
+                })
+              }
+            >
+              <IcoEye width={24} height={24} stroke="#131C30" />
+              <span>더보기</span>
             </Button>
           </li>
         </ul>
