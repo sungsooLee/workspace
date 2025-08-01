@@ -15,6 +15,7 @@ import {
   EnQuestionType,
   ExamPaperQuestionCountUpdateReq,
   ExamQuestionGenType,
+  MutationResponse,
   QuestionCountInfo,
   QuestionItem,
   QuestionItemDeleteParam,
@@ -23,12 +24,7 @@ import {
 } from '@types';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  LevelKey,
-  QuestionMutationResponse,
-  QuestionStatisticRow,
-  SelectedQuestionState,
-} from './type';
+import { LevelKey, QuestionStatisticRow, SelectedQuestionState } from './type';
 import { debounce } from 'lodash-es';
 
 export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) => {
@@ -248,7 +244,7 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
   const [selectedQuestionRows, setSelectedQuestionRows] = useState<QuestionItem[]>([]);
 
   const { copy: copyQuestions } = useCopyQuestionsToExamPaper({
-    onSuccess: ({ result }: QuestionMutationResponse) => {
+    onSuccess: ({ result }: MutationResponse) => {
       if (result) {
         openToast({
           title: t('복사되었습니다.'),
@@ -277,7 +273,7 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
   }, [examPoolUuid, selectedQuestionRows]);
 
   const { delete: deleteQuestion } = useDeleteQuestionItemList({
-    onSuccess: ({ result }: QuestionMutationResponse) => {
+    onSuccess: ({ result }: MutationResponse) => {
       if (result) {
         openToast({
           title: t('삭제되었습니다.'),

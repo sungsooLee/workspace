@@ -8,6 +8,7 @@ import {
 import { useLearningResourceQuestionDetailForm } from '../learning-resource-question-detail-from.hook';
 import {
   ContentType,
+  MutationResponse,
   QuestionItem,
   QuestionItemDeleteParam,
   QuestionsCopyReq,
@@ -15,7 +16,6 @@ import {
 } from '@types';
 import { useToast } from '@learnway/ui/toast';
 import { useTranslation } from 'react-i18next';
-import { QuestionMutationResponse } from './type';
 
 export const useQuestionBankInfoInput = () => {
   const { t } = useTranslation();
@@ -56,7 +56,7 @@ export const useQuestionBankInfoInput = () => {
   }, []);
 
   const { copy: copyQuestions } = useCopyQuestionsToExamPaper({
-    onSuccess: ({ result }: QuestionMutationResponse) => {
+    onSuccess: ({ result }: MutationResponse) => {
       if (result) {
         openToast({
           title: t('복사되었습니다.'),
@@ -85,7 +85,7 @@ export const useQuestionBankInfoInput = () => {
   }, [contentUuid, selectedQuestionRows]);
 
   const { delete: deleteQuestion } = useDeleteQuestionItemList({
-    onSuccess: ({ result }: QuestionMutationResponse) => {
+    onSuccess: ({ result }: MutationResponse) => {
       if (result) {
         openToast({
           title: t('삭제되었습니다.'),

@@ -6,16 +6,19 @@ import {
   ExamQuestionGenType,
   QuestionCountInfo,
   TestPaperBasicInfoDetail,
-  TestPaperBasicInfoSaveReq } from '@types';
+  TestPaperBasicInfoSaveReq,
+} from '@types';
 import { DynamicFormProvider } from '@learnway/hooks';
 
 export enum PageMode {
   CREATE = 'CREATE',
-  UPDATE = 'UPDATE' }
+  UPDATE = 'UPDATE',
+}
 
 export enum ExamTab {
   PAPER = 'PAPER',
-  QUESTION = 'QUESTION' }
+  QUESTION = 'QUESTION',
+}
 
 export interface TabFormRef {
   save?: (data?: Record<string, any>) => Promise<void> | void;
@@ -66,5 +69,3 @@ export type SelectedQuestionState = Record<
 >;
 
 export type LevelKey = keyof Omit<QuestionCountInfo, 'questionType'>;
-
-export type QuestionMutationResponse = { result: boolean };
