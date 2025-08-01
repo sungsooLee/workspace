@@ -713,6 +713,29 @@ export interface SharedContent {
 
 export type GetSharedContentsRes = SharedContent[];
 
+export interface PostShareContentsParams {
+  sourceContentUuid: string; //	string 출발지 콘텐츠 UUID
+  sourceTenantId: number; //	integer($int64)
+  sourceChannelUuid: string; //	string 출발지 채널 UUID
+  isOriginalCopyDownload: boolean; //	boolean 원본파일 다운로드 여부
+  shareDestinations: {
+    destTenantId: number; //	integer($int64) 도착지 테넌트 id
+    destChannelUuid: string; //	string 도착지 채널 UUID
+  }[];
+}
+
+export interface PostShareContentsRes {
+  contentUuid: string; //	콘텐츠 UUIDstring
+  sourceTenantId: number; //	출발지 테넌트 idinteger($int64)
+  sourceChannelUuid: string; //	출발지 채널 UUIDstring
+  isOriginalCopyDownload: boolean; //	원본파일 다운로드 여부boolean
+  shareDestinations: {
+    sharedBoxId: number; //	공유함 IDinteger($int64)
+    destTenantId: number; //	도착지 테넌트 idinteger($int64)
+    destChannelUuid: string; //	도착지 채널 UUIDstring
+  }[];
+}
+
 export interface TenantCodeType {
   tenantId: number;
   tenantName: string;
