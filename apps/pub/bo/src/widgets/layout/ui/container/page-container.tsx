@@ -1,23 +1,24 @@
-/* eslint-disable no-restricted-imports */
-/* eslint-disable @nx/enforce-module-boundaries */
-import React, { memo, ReactNode, useState, useEffect, useRef } from 'react';
 import { Link } from '@tanstack/react-router';
+import { memo, ReactNode, useEffect, useRef, useState } from 'react';
 // import { useTranslation } from 'react-i18next';
-import { Breadcrumbs } from './breadcrumbs/breadcrumbs';
-import { Button, Popover, Divider, Tooltip } from '@learnway/ui';
-import styles from '@learnway/styles/bo/assets/styles/modules/page-container.module.css';
-import fabStyles from '@learnway/styles/bo/assets/styles/modules/fab.module.css'; /* fab */
-import tooltipPopoverStyles from '@learnway/styles/bo/assets/styles/modules/tootip-popover.module.css';
-import { NoticeBox } from '../../../../../../../bo/src/shared/ui';
 import {
-  IcoStar,
-  IcoArrowLineTop,
   IcoAlertCircle,
+  IcoArrowLineTop,
   IcoClose02,
-  IcoTranslation,
   IcoImport,
+  IcoStar,
+  IcoTranslation,
 } from '@learnway/icons'; // 2025-02-14 버튼 케이스 추가
 import { cn } from '@learnway/shared';
+import fabStyles from '@learnway/styles/bo/assets/styles/modules/fab.module.css'; /* fab */
+import styles from '@learnway/styles/bo/assets/styles/modules/page-container.module.css';
+import tooltipPopoverStyles from '@learnway/styles/bo/assets/styles/modules/tootip-popover.module.css';
+import { Button } from '@learnway/ui/button';
+import { Divider } from '@learnway/ui/elements';
+import { Popover } from '@learnway/ui/Popover';
+import { Tooltip } from '@learnway/ui/tooltip';
+import { NoticeBox } from '../../../../shared/ui/notice-box';
+import { Breadcrumbs } from './breadcrumbs/breadcrumbs';
 
 interface PageContainerComponentProps {
   children: ReactNode;

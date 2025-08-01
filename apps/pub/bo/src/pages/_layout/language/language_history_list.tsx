@@ -1,29 +1,24 @@
-/* eslint-disable @nx/enforce-module-boundaries */
-import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
+import { useState } from 'react';
+
 import { cn } from '@learnway/shared';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import {
-  Input,
-  Dropdown,
-  Button,
-  GridBox,
-  Divider,
-  DatePicker,
-  ChipListModalSelectorFormField,
-  useModal,
-  ModalTitle,
-  ModalContainer,
-  ModalBody,
-  ModalFooter,
-} from '@learnway/ui';
-import { IcoRefresh02, IcoSearch, IcoArrowDownDouble, IcoDownload } from '@learnway/icons';
+
+import { IcoArrowDownDouble, IcoDownload, IcoRefresh02, IcoSearch } from '@learnway/icons';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
 /* style */
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
-import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
+import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
+import { Button } from '@learnway/ui/button';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { Divider } from '@learnway/ui/elements';
+import { ChipListModalSelectorFormField } from '@learnway/ui/form-field';
+import { GridBox } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import DatePicker from 'react-datepicker';
 
 export const Route = createFileRoute('/_layout/language/language_history_list')({
   component: RouteComponent,

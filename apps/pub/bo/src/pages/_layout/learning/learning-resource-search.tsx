@@ -1,22 +1,29 @@
-import { useState } from 'react';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { cn } from '@learnway/shared';
+import { useState } from 'react';
+
 import {
-  IcoRefresh02,
-  IcoSearch,
   IcoClipboard,
   IcoClock01,
-  IcoFormRequired,
-  IcoDownload,
   IcoCopy,
+  IcoDownload,
+  IcoFormRequired,
+  IcoRefresh02,
+  IcoSearch,
 } from '@learnway/icons';
-import { Button, Input, GridBox, Dropdown, Checkbox, Divider } from '@learnway/ui';
+import { cn } from '@learnway/shared';
+
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 
 /* style */
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
+import { Button } from '@learnway/ui/button';
+import { Checkbox } from '@learnway/ui/checkbox';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { Divider } from '@learnway/ui/elements';
+import { GridBox } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
 
 export const Route = createFileRoute('/_layout/learning/learning-resource-search')({
   component: RouteComponent,

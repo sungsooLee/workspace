@@ -1,4 +1,3 @@
-/* eslint-disable @nx/enforce-module-boundaries */
 import { cn } from '@learnway/shared';
 import { createFileRoute } from '@tanstack/react-router';
 import { useEffect } from 'react';
@@ -20,7 +19,7 @@ import { Badge } from '@learnway/ui/badge';
 import { Button } from '@learnway/ui/button';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 import { ProgressBar } from '@learnway/ui/progress';
-import { NoticeBox } from '../../../../../../bo/src/shared/ui/';
+import { NoticeBox } from '../../../shared/ui/notice-box';
 
 export const Route = createFileRoute('/_layout/common/pop-excel-upload')({
   component: RouteComponent,

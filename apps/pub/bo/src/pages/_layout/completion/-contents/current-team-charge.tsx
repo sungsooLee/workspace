@@ -1,12 +1,16 @@
-/* eslint-disable react/jsx-no-useless-fragment */
-import { FC, useState } from 'react';
-import { cn } from '@learnway/shared';
-import { Button, GridBox, Dropdown, Input, Divider } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { FC, useState } from 'react';
+
 import { IcoRefresh02, IcoSearch } from '@learnway/icons';
+import { cn } from '@learnway/shared';
 
 /* style */
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
+import { Button } from '@learnway/ui/button';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { Divider } from '@learnway/ui/elements';
+import { GridBox } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
 
 const CurrentTeamChargeComponent: FC<{}> = ({}) => {
   const columnHelper = createColumnHelper<any>();

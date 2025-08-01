@@ -1,8 +1,6 @@
-import { FC } from 'react';
 import { cn } from '@learnway/shared';
-import styles from './tabcontents01.module.css';
-import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css'; // 타이틀 style
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
+import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css'; // 타이틀 style
 import {
   // Button,
   // // Tooltip,
@@ -12,7 +10,9 @@ import {
   // // ChipList,
   // // SelectOption,
   Input,
-} from '@learnway/ui';
+} from '@learnway/ui/input';
+import { FC } from 'react';
+import styles from './tabcontents01.module.css';
 // eslint-disable-next-line no-empty-pattern
 const TabContents01Component: FC<{}> = ({}) => {
   return (

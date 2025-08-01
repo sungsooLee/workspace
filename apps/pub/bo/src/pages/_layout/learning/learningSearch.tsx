@@ -1,25 +1,16 @@
-/* eslint-disable @nx/enforce-module-boundaries */
 import { createFileRoute } from '@tanstack/react-router';
-import React, { useState } from 'react';
+import { useState } from 'react';
+
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import {
-  // Spinner,
-  // Textarea,
-  Button,
-  // Tooltip,
-  // DatePicker,
-  // Switch,
-  // ThumbnailImageUpload,
-  // ChipList,
-  // SelectOption,
-  Input,
-  Dropdown,
-  Divider,
-} from '@learnway/ui';
-import { IcoRefresh02, IcoSearch, IcoFormRequired } from '@learnway/icons';
+
+import { IcoFormRequired, IcoRefresh02, IcoSearch } from '@learnway/icons';
+import { cn } from '@learnway/shared';
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
-import { cn } from '@learnway/shared';
+import { Button } from '@learnway/ui/button';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { Divider } from '@learnway/ui/elements';
+import { Input } from '@learnway/ui/input';
 
 export const Route = createFileRoute('/_layout/learning/learningSearch')({
   component: RouteComponent,

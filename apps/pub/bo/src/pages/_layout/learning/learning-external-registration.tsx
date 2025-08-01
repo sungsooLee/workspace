@@ -1,46 +1,38 @@
-/* eslint-disable @nx/enforce-module-boundaries */
-import { FC, useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { cn } from '@learnway/shared';
+import { useState } from 'react';
+
+import { cn, SelectOption } from '@learnway/shared';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import {
-  Button,
-  ContentsRow,
-  Dropdown,
-  Input,
-  InputModalSelectorFormField,
-  List,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  PhoneNumber,
-  DatePicker,
-  Checkbox,
-  SelectOption,
-  Switch,
-  Textarea,
-  Tooltip,
-  useModal,
-  ThumbnailImageUpload,
-  ImageOption,
-  ChipList,
-  FormSubTitle,
-} from '@learnway/ui';
 
 import { IcoAlertCircle, IcoFormRequired, IcoRefresh02, IcoSearch } from '@learnway/icons';
 
 // style
-import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
+import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import movieInfoStyles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
-import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
-import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
+import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import popSearchStyles from '@learnway/styles/bo/assets/styles/modules/popup-search.module.css';
+import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
 
 /* images */
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { Checkbox } from '@learnway/ui/checkbox';
+import { ChipList } from '@learnway/ui/chips';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { DatePicker } from '@learnway/ui/date-picker';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { ThumbnailPublicUpload } from '@learnway/ui/file-upload';
+import { InputModalSelectorFormField } from '@learnway/ui/form-field';
+import { Input } from '@learnway/ui/input';
+import { List } from '@learnway/ui/list';
+import { ModalBody, ModalContainer, ModalFooter, useModal } from '@learnway/ui/modal';
+import { PhoneNumber } from '@learnway/ui/phone-number';
+import { Switch } from '@learnway/ui/switch';
+import { Textarea } from '@learnway/ui/textarea';
+import { Tooltip } from '@learnway/ui/tooltip';
 import previewImg from '../../../assets/images/temp/img_exam_basic.jpg';
-import selectedImg from '../../../assets/images/thumb/img_thumb_hyundai.jpg';
 
 export const Route = createFileRoute('/_layout/learning/learning-external-registration')({
   component: RouteComponent,
@@ -702,12 +694,9 @@ function RouteComponent() {
                 </span>
               </label>
               <div className={formStyles.input_box}>
-                <ThumbnailImageUpload
-                  options={[{ id: '1', path: selectedImg }]}
-                  onChange={(options: ImageOption[]) => console.log('onChange', options)}
-                  onCheckedChange={(options: ImageOption[]) =>
-                    console.log('onCheckedChange', options)
-                  }
+                <ThumbnailPublicUpload
+                  // options={[{ id: '1', path: selectedImg }]}
+                  onChange={(options: string[]) => console.log('onChange', options)}
                 />
               </div>
               <p className={cn(formStyles.guide_text)}>

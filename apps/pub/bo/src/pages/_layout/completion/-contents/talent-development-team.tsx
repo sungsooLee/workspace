@@ -1,8 +1,9 @@
-/* eslint-disable react/jsx-no-useless-fragment */
-import { FC, useState } from 'react';
-import { Button, GridBox } from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { NoticeBox } from '../../../../../../../bo/src/shared/ui';
+import { FC } from 'react';
+
+import { Button } from '@learnway/ui/button';
+import { GridBox } from '@learnway/ui/grid';
+import { NoticeBox } from '../../../../shared/ui/notice-box';
 
 const TalentDevelopmentTeamComponent: FC<{}> = ({}) => {
   const columnHelper = createColumnHelper<any>();

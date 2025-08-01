@@ -1,9 +1,13 @@
 import { FC, useState } from 'react';
-import { cn } from '@learnway/shared';
-import styles from './tabcontents02.module.css';
-import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
-import { Button, Dropdown, Input, Divider } from '@learnway/ui';
+
 import { IcoRefresh02, IcoSearch } from '@learnway/icons';
+import { cn } from '@learnway/shared';
+import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
+import { Button } from '@learnway/ui/button';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { Divider } from '@learnway/ui/elements';
+import { Input } from '@learnway/ui/input';
+import styles from './tabcontents02.module.css';
 // eslint-disable-next-line no-empty-pattern
 const TabContents02Component: FC<{}> = ({}) => {
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
