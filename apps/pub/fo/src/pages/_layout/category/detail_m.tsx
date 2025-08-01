@@ -1,3 +1,4 @@
+import { createFileRoute } from '@tanstack/react-router'
 import { IcoArray, IcoArrowDown, IcoDotpoints, IcoFilter, IcoPlay } from '@learnway/icons';
 import { cn, getRandomId } from '@learnway/shared';
 
