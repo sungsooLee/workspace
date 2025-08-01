@@ -1,54 +1,20 @@
 .start {
-  .history_area {
-    @apply popover-scroll p-[32px];
-    .history_list {
-      @apply flex max-w-[380px] flex-col gap-[24px] overflow-hidden;
-      > li {
-        @apply relative pl-[44px];
-
-        &.now {
-          &::after {
-            @apply bg-[var(--blue50)];
-          }
-        }
-        &::after {
-          @apply absolute left-0 top-[5px] h-[12px] w-[12px] rounded-full bg-[var(--gray90)] content-[''];
-        }
-        &::before {
-          @apply absolute left-[5px] top-[23px] h-full w-[1px] bg-[var(--gray90)] content-[''];
-        }
-        .subject {
-          @apply title4-b line-clamp-2 text-ellipsis;
-        }
-        .date {
-          @apply body-md mt-[8px] block text-[var(--gray65)];
-        }
+  &.history_info {
+    @apply relative top-[-2px] flex min-h-[40px] items-center;
+    button {
+      @apply min-h-[40px];
+    }
+    .count_view {
+      @apply absolute right-[2px] top-[2px] flex h-[20px] w-[24px] items-center justify-center rounded-[10px] bg-[#ff4646] text-[12px] font-medium text-[var(--white)];
+    }
+    .noti {
+      @apply absolute right-[0] top-[8px] flex h-[4px] w-[4px] items-center justify-center rounded-[10px] bg-[#ff4646] text-[12px];
+    }
+    .text {
+      @apply body_3_r absolute -bottom-[40px] -left-[9px] whitespace-nowrap rounded-[4px] bg-[var(--primary1)] px-[16px] py-[8px] text-white;
+      &::before {
+        @apply absolute -top-[10px] left-[12px] rotate-[90deg] border-b-[10px] border-r-[15px] border-t-[10px] border-solid border-[var(--primary1)] border-b-transparent border-t-transparent content-[''];
       }
-    }
-  }
-  .empty {
-    @apply body-lg-b flex flex-col justify-center gap-[20px] py-[24px] text-center;
-    .ico_bell {
-      @apply mx-auto h-[40px] w-[40px];
-    }
-  }
-}
-
-.history_info {
-  @apply relative top-[-2px] flex min-h-[40px] items-center;
-  button {
-    @apply min-h-[40px];
-  }
-  .count_view {
-    @apply absolute right-[2px] top-[2px] flex h-[20px] w-[24px] items-center justify-center rounded-[10px] bg-[#ff4646] text-[12px] font-medium text-[var(--white)];
-  }
-  .noti {
-    @apply absolute right-[0] top-[8px] flex h-[4px] w-[4px] items-center justify-center rounded-[10px] bg-[#ff4646] text-[12px];
-  }
-  .text {
-    @apply body_3_r absolute -bottom-[40px] -left-[9px] whitespace-nowrap rounded-[4px] bg-[var(--primary1)] px-[16px] py-[8px] text-white;
-    &::before {
-      @apply absolute -top-[10px] left-[12px] rotate-[90deg] border-b-[10px] border-r-[15px] border-t-[10px] border-solid border-[var(--primary1)] border-b-transparent border-t-transparent content-[''];
     }
   }
 }

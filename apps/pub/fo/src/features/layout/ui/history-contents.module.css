@@ -1,51 +1,35 @@
 .start {
-  &.history_contents {
-    @apply scrollbar relative max-h-[578px] overflow-y-auto overflow-x-hidden pb-[16px];
-    &::after {
-      @apply fixed bottom-0 left-0 h-[16px] w-full rounded-b-[16px] bg-white content-[''];
-    }
+  .history_area {
+    @apply popover-scroll p-[32px];
+    .history_list {
+      @apply flex max-w-[380px] flex-col gap-[24px] overflow-hidden;
+      > li {
+        @apply relative pl-[44px];
 
-    .empty {
-      @apply body_bo_1_b flex h-[334px] flex-col items-center justify-center text-center text-[var(--gray9)];
-      .ico_bell {
-        @apply mb-[8px] flex;
-      }
-      .sub_text {
-        @apply body_bo_2_r block text-[var(--gray9)];
+        &.now {
+          &::after {
+            @apply bg-[var(--blue50)];
+          }
+        }
+        &::after {
+          @apply absolute left-0 top-[5px] h-[12px] w-[12px] rounded-full bg-[var(--gray90)] content-[''];
+        }
+        &::before {
+          @apply absolute left-[5px] top-[23px] h-full w-[1px] bg-[var(--gray90)] content-[''];
+        }
+        .subject {
+          @apply title4-b line-clamp-2 text-ellipsis;
+        }
+        .date {
+          @apply body-md mt-[8px] block text-[var(--gray65)];
+        }
       }
     }
-
-    .info_list {
-      .info_item {
-        @apply py-[20px] pl-[32px] pr-[20px];
-        &:not(:first-child) {
-          @apply border-t-[1px] border-solid border-[var(--gray3)];
-        }
-        &.yet {
-          @apply bg-[#fff9e7];
-        }
-        .title_wrap {
-          @apply flex justify-between;
-          .title {
-            @apply inline-flex items-center pr-[12px];
-          }
-          .date {
-            @apply ml-[8px] inline-flex text-[1.2rem] font-normal text-[var(--gray6)];
-          }
-          .btn_close {
-            @apply min-h-[20px] min-w-[20px] shrink-0;
-          }
-        }
-        .link {
-          @apply body_bo_2_r text-[var(--gray7)] underline;
-        }
-        .message {
-          @apply body_3_r mt-[8px] text-[var(--gray7)];
-        }
-        .time {
-          @apply mt-[8px] flex text-[1.2rem] leading-[1rem] text-[var(--gray6)];
-        }
-      }
+  }
+  .empty {
+    @apply body-lg-b flex flex-col justify-center gap-[20px] py-[24px] text-center;
+    .ico_bell {
+      @apply mx-auto h-[40px] w-[40px];
     }
   }
 }
@@ -53,13 +37,25 @@
 :global(body.mobile) {
   @screen mobile {
     .start {
-      &.alarm_contents {
-        @apply max-h-none pb-0;
-        &::after {
-          @apply hidden;
-        }
-        .empty {
-          @apply mt-[42px] justify-start;
+      .history_area {
+        @apply p-0;
+        .history_list {
+          @apply gap-[16px];
+          > li {
+            @apply pl-[32px];
+            .subject {
+              @apply title2-b leading-[20px];
+            }
+            .date {
+              @apply body-sm leading-[21px] text-[var(--gray75)];
+            }
+            &::before {
+              @apply top-[22px] h-[calc(100%-12px)];
+            }
+            &::after {
+              @apply top-[4px];
+            }
+          }
         }
       }
     }

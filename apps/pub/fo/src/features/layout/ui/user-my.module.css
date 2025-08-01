@@ -136,6 +136,12 @@
           }
         }
       }
+      .no_list {
+        @apply mt-[20px] flex min-h-[100px] items-center justify-center rounded-[12px] border-[1px] border-solid border-[var(--gray85)];
+        p {
+          @apply title2 text-[var(--gray75)];
+        }
+      }
     }
 
     .info_list {

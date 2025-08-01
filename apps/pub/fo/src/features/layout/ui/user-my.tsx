@@ -197,6 +197,7 @@ const UserMyComponent = ({ onChangeType, onParentChangeType }: ContentTypeProps)
 
           <div className={styles.recent_visits}>
             <h3>최근 방문</h3>
+            {/* 방문 o */}
             <ul className={styles.list}>
               <li>
                 <Button className={styles.btn}>
@@ -226,7 +227,10 @@ const UserMyComponent = ({ onChangeType, onParentChangeType }: ContentTypeProps)
                 </Button>
               </li>
             </ul>
-            <div></div>
+            {/* 방문 x */}
+            <div className={styles.no_list}>
+              <p>아직 방문한 화면이 없어요.</p>
+            </div>
           </div>
           <ul className={styles.info_list}>
             <li>
