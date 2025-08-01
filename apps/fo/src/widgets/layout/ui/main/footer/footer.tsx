@@ -1,13 +1,10 @@
 import { memo } from 'react';
-import { Link } from '@tanstack/react-router';
-import { useTranslation } from 'react-i18next';
 
 import logoImage from '../../../../../assets/images/logo_footer.png';
 
 import { TermsButton } from '../../../../../features/main';
 
 import styles from '@learnway/styles/fo/widgets/layout/ui/main/footer/footer.module.css';
-import { Dropdown } from '@learnway/ui/dropdown';
 
 function FooterComponent() {
   return (
@@ -39,9 +36,9 @@ function FooterComponent() {
                 <li>
                   <TermsButton termsType="PRIVACY_POLICY" />
                 </li>
-                <li>
+                {/* <li>
                   <Link to={'/license'}>오픈소스 라이선스</Link>
-                </li>
+                </li> */}
               </ul>
             </div>
 

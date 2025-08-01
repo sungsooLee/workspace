@@ -82,7 +82,7 @@ function NavigateComponent({ onMouseEnter, hoverMenu }: NavigateComponentProps) 
                   onMouseEnter={() => handleEnter(item)}
                   className={hoverMenu?.menuId === item.menuId ? styles.active : ''}
                 >
-                  <span>{t(item.menuCode)}</span>
+                  <span>{t(`LEARNER_MENU.${item.menuCode}`)}</span>
                 </Link>
                 {/* {item.isLabel && <span className={`${styles.label} ${styles.color1}`}>마감임박</span>} */}
               </div>
