@@ -1,6 +1,6 @@
 /* language.module.css */
 .btn_language {
-  @apply box-border flex min-h-[40px] items-center justify-between text-[1.4rem] text-[var(--gray9)];
+  @apply label-md-b box-border flex min-h-[40px] items-center justify-between text-[var(--gray10)];
   &[data-state='open'] {
     svg {
       @apply rotate-180;
@@ -38,6 +38,16 @@
 
 /* mobile */
 :global(body.mobile) {
+  .btn_language {
+    @apply min-h-[auto];
+    .select {
+      @apply label-md-b mx-[4px] inline-block text-[var(--gray10)];
+    }
+    svg {
+      @apply !mx-0;
+    }
+  }
+
   .lang_area {
     @apply !p-0;
   }

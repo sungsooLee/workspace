@@ -8,3 +8,9 @@
     }
   }
 }
+
+/* mobile */
+:global(body.mobile) {
+  @screen mobile {
+  }
+}

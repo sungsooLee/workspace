@@ -51,8 +51,8 @@ h4.auth--title {
       @apply m-auto max-w-[200px];
     }
   }
-  .nlp--button{
-    +.nlp--button{
+  .nlp--button {
+    + .nlp--button {
       @apply !ml-[12px];
     }
   }
@@ -61,7 +61,7 @@ h4.auth--title {
 /* mobile */
 body.mobile {
   .auth--box {
-    @apply px-[20px] pb-[20px] pt-[16px];
+    @apply h-[100dvh] overflow-y-auto p-0 px-[16px];
   }
   .auth--btn_wrap {
     button {
