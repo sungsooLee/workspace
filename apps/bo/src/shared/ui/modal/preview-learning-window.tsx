@@ -107,8 +107,13 @@ const PreviewLearningWindowComponent: FC<any> = ({
     if (!curriculum) return;
     if (!playList) return;
     if (scoId) {
-      const info = getScormItemByScoId(scoId);
-      setScormInfo({ ...info, itemURL: info.itemUrl });
+      curriculum.moduleList.forEach((module) => {
+        module.lessonList.forEach((lesson) => {
+          if (lesson.scoId === scoId) {
+            setPlayInfo(module.moduleId, lesson.lessonId);
+          }
+        });
+      });
     } else {
       if (playList.length > 0) {
         const first = playList[0];
@@ -128,7 +133,9 @@ const PreviewLearningWindowComponent: FC<any> = ({
           setCurriculum(genCuliculumInfo(data));
         } else {
           const info = getScormItemByScoId(playInfo?.scoId);
-          setScormInfo({ ...info, itemURL: info.itemUrl });
+          if (info) {
+            setScormInfo({ ...info, itemURL: info.itemUrl });
+          }
         }
         break;
       case ContentType.BLOG:
