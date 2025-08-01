@@ -145,7 +145,7 @@ const EnrollmentComponent = () => {
       courseSequenceId: true,
     },
   };
-  const { provider: searchProvider, getValues, setValue, setOptions, } = useSearchBox(searchConfig);
+  const { provider: searchProvider, getValues, setValue, setOptions } = useSearchBox(searchConfig);
 
   const companyId = useWatch({ control: searchProvider.control, name: 'companyId' });
   const openingYear = useWatch({ control: searchProvider.control, name: 'openingYear' });
