@@ -691,6 +691,7 @@ export const MenuManage = forwardRef<MenuManageRef, { menuScope: string }>(({ me
                       to: '/platform/system/multilingual',
                       state: {
                         keyType: menuScope === 'FO' ? 'LEARNER_MENU' : 'HRD_CENTER_MENU',
+                        isMenuEntry: true,
                         multilingualKey: menuCode,
                         translation: menuName,
                       },
