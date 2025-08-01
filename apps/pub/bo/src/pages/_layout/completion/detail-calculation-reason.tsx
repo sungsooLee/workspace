@@ -1,5 +1,3 @@
-/* eslint-disable no-restricted-imports */
-/* eslint-disable @nx/enforce-module-boundaries */
 import { createFileRoute } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 
@@ -14,7 +12,7 @@ import { TableBox } from '@learnway/ui/grid';
 import { Input } from '@learnway/ui/input';
 import { Switch } from '@learnway/ui/switch';
 import { TreeBox, TreeNode } from '@learnway/ui/tree-view';
-import { MainContents } from '../../../../../../bo/src/shared/ui/layout/slot/main-contents';
+import { MainContents } from '../../../shared/ui/main-contents';
 
 export const Route = createFileRoute('/_layout/completion/detail-calculation-reason')({
   component: RouteComponent,
