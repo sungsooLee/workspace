@@ -30,6 +30,7 @@ import {
   QuestionItemDeleteParam,
   QuestionListForRetrieveReq,
   QuestionsCopyReq,
+  QuestionSortReq,
   QuestionStatusUpdateReq,
   TestPaperBasicInfoSaveReq,
   UpdateQuestionBankCountInfoReq,
@@ -312,5 +313,8 @@ export const mutateOptions = {
   copyQuestionsToExamPaper: () => ({
     mutationFn: (params: QuestionsCopyReq) =>
       LearningResourceService.copyQuestionsToExamPaper(params),
+  }),
+  changeQuestionOrder: () => ({
+    mutationFn: (params: QuestionSortReq) => LearningResourceService.changeQuestionOrder(params),
   }),
 };
