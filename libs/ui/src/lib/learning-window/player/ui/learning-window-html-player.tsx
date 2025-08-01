@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 
 import { isMobile } from 'react-device-detect';
 
@@ -10,6 +10,8 @@ const styles = isMobile ? stylesMobile : stylesWeb;
 const LearningWindowHtmlPlayerComponent: FC<any> = () => {
   const [iframeUrl, setIframeUrl] = useState<string>();
   const { playInfo, htmlInfo, funcInfo } = useLearningWindow();
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+
   useEffect(() => {
     if (!htmlInfo) return;
     console.log('html', htmlInfo);
@@ -37,6 +39,35 @@ const LearningWindowHtmlPlayerComponent: FC<any> = () => {
       }
     }, 5000);
   }, [htmlInfo]);
+
+  useEffect(() => {
+    const handleKeyDown = (event: any) => {
+      if (
+        iframeRef.current &&
+        iframeRef.current.contentWindow &&
+        iframeRef.current.contentWindow.document
+      ) {
+        const iframeEvent = new KeyboardEvent('keydown', {
+          key: event.key,
+          code: event.code,
+          keyCode: event.keyCode,
+          charCode: event.charCode,
+          which: event.which,
+          shiftKey: event.shiftKey,
+          ctrlKey: event.ctrlKey,
+          metaKey: event.metaKey,
+          altKey: event.altKey,
+          bubbles: true,
+        });
+        iframeRef.current.contentWindow.document.dispatchEvent(iframeEvent);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
 
   return (
     <div className={`${styles.start} ${styles.iframe}`}>
