@@ -1,9 +1,8 @@
 // BaseForm.stories.tsx
-import React, { useMemo, useState } from 'react';
-import type { Meta } from '@storybook/react';
-import { Button, OptionCard, OptionCardItem } from '@learnway/ui';
 import { IcoBuilding01 } from '@learnway/icons';
-import { getRandomId } from '@learnway/shared';
+import { OptionCard, OptionCardItem } from '@learnway/ui/option-card';
+import type { Meta } from '@storybook/react';
+import { useState } from 'react';
 
 const dummy = Array(5)
   .fill(null)

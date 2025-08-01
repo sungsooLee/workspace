@@ -12,8 +12,9 @@ const Component: FC<CourseFavoriteIconProps> = ({ courseId, isFavorite: initFavo
   const { mutate: updateFavorite } = useUpdateFavorite({
     onSuccess: () => {
       console.log('aaa');
-      setIsFavorite(!isFavorite);
-    } });
+      setIsFavorite((prev) => !prev);
+    },
+  });
 
   const handleClick = () => {
     console.log('courseId', courseId);

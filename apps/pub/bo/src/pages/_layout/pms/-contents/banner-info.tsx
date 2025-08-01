@@ -1,11 +1,13 @@
-import { FC } from 'react';
 import { cn } from '@learnway/shared';
-import { Button, ContentsRow, FormSubTitle } from '@learnway/ui';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { FC } from 'react';
 /* style */
-import styles from './banner-info.module.css';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import fileUploadStyles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css'; // 파일 업로드
 import { IcoFormRequired, IcoPpt, IcoTrash03 } from '@learnway/icons';
+import fileUploadStyles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css'; // 파일 업로드
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import styles from './banner-info.module.css';
 
 const BannerInfoComponent: FC<{}> = ({}) => {
   return (

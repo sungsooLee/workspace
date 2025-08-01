@@ -1,40 +1,34 @@
-/* eslint-disable @nx/enforce-module-boundaries */
-import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
+import { useState } from 'react';
+
+import { IcoAlertCircle, IcoFormRequired, IcoRefresh02, IcoSearch } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { useTranslation } from 'react-i18next';
-import { ContentsHistoryInfoFormField } from '../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
-import { IcoFormRequired, IcoAlertCircle, IcoRefresh02, IcoSearch } from '@learnway/icons';
-import {
-  ContentsRow,
-  Input,
-  Textarea,
-  CheckboxGroupFormField,
-  Tooltip,
-  Button,
-  Switch,
-  ThumbnailImageUpload,
-  ImageOption,
-  ChipListModalSelectorFormField,
-  useModal,
-  ModalTitle,
-  ModalContainer,
-  ModalBody,
-  ModalFooter,
-  Dropdown,
-  GridBox,
-  Tabs,
-  // TransferGrid,
-} from '@learnway/ui';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { ThumbnailImageUpload } from '@learnway/ui/file-upload';
+import { CheckboxGroupFormField, ChipListModalSelectorFormField } from '@learnway/ui/form-field';
+import { GridBox } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
+import { Switch } from '@learnway/ui/switch';
+import { Tabs } from '@learnway/ui/tabs';
+import { Textarea } from '@learnway/ui/textarea';
+import { ImageOption } from '@learnway/ui/thumbnail';
+import { Tooltip } from '@learnway/ui/tooltip';
+
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { useTranslation } from 'react-i18next';
+import { ContentsHistoryInfoFormField } from '../../../shared/ui/contents-history-info-form-field';
+import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 
 /* style */
-import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
-import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
+import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
 
 /* image */
 import selectedImg from '../../../assets/images/thumb/img_thumb_hyundai.jpg';

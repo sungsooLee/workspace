@@ -1,12 +1,7 @@
-// BaseForm.stories.tsx
-import {
-  Button,
-  ShuttleGridToGrid,
-  ShuttleGridToGridV2,
-  ShuttleTreeToChips,
-  TreeNode,
-  TreeToTree,
-} from '@learnway/ui';
+import { Button } from '@learnway/ui/button';
+import { ShuttleGridToGrid } from '@learnway/ui/shuttle-grid-to-grid';
+import { ShuttleGridToGridV2 } from '@learnway/ui/shuttle-grid-to-grid-v2';
+import { ShuttleTreeToChips, TreeNode, TreeToTree } from '@learnway/ui/tree-view';
 import type { Meta } from '@storybook/react';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import i18n from 'i18next';

@@ -1,8 +1,8 @@
 // BaseForm.stories.tsx
-import React, { useState } from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
-import { Checkbox } from '@learnway/ui';
+import { Checkbox } from '@learnway/ui/checkbox';
 import { CheckedState } from '@radix-ui/react-checkbox';
+import type { Meta, StoryObj } from '@storybook/react';
+import React from 'react';
 
 export default {
   title: 'Bo-Components/Checkbox',
@@ -21,7 +21,15 @@ export default {
   },
   decorators: [
     (Story) => (
-      <div style={{ width: '100%', padding: '20px', alignItems : 'center', display: 'flex', justifyContent: 'center'}}>
+      <div
+        style={{
+          width: '100%',
+          padding: '20px',
+          alignItems: 'center',
+          display: 'flex',
+          justifyContent: 'center',
+        }}
+      >
         <Story />
       </div>
     ),

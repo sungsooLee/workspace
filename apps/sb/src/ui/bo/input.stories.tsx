@@ -1,9 +1,11 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Button, Input, InputTimer } from '@learnway/ui';
-import { useState } from 'react';
-import { cn } from '../../../../../libs/shared/src';
 import styles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import { Input, InputTimer } from '@learnway/ui/input';
+
+import { Button } from '@learnway/ui/button';
+import type { Meta, StoryObj } from '@storybook/react';
+import { useState } from 'react';
 import { IcoFormRequired } from '../../../../../libs/icons/src';
+import { cn } from '../../../../../libs/shared/src';
 
 const meta: Meta<typeof Input> = {
   title: 'Bo-Components/TextField',

@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import LearningResourceService from '../api/learning-resource';
 import { isProcessing, isProcessingCompleted, isProcessingNone } from './util';
 import { GetVideoResourceRes, PutVideoChangeRes } from '@types';
-import { get, omit, pick } from 'lodash';
+import { get, omit, pick } from 'lodash-es';
 import { DATE_TIME_FORMAT, duration } from '@learnway/shared';
 import { usePutVideoChange } from './learning-resource.hook';
 

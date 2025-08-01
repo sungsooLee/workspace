@@ -1,24 +1,20 @@
-/* eslint-disable no-restricted-imports */
-/* eslint-disable @nx/enforce-module-boundaries */
-import { FC, useState } from 'react';
-import { cn } from '@learnway/shared';
-import {
-  Button,
-  ContentsRow,
-  Input,
-  Dropdown,
-  GridBox,
-  ChipList,
-  FormSubTitle,
-} from '@learnway/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { ContentsHistoryInfoFormField } from '../../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
-import { IcoFormRequired, IcoRefresh02, IcoSearch, IcoPlus, IcoMinus } from '@learnway/icons';
+import { FC, useState } from 'react';
+
+import { IcoMinus, IcoPlus } from '@learnway/icons';
+import { cn } from '@learnway/shared';
+
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { ChipList } from '@learnway/ui/chips';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { GridBox } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
 
 /* style */
-import styles from '@learnway/styles/bo/features/role/role-info.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
-import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
+import styles from '@learnway/styles/bo/features/role/role-info.module.css';
 
 const RoleGrantComponent: FC<{}> = ({}) => {
   const [selectedValues, setSelectedValues] = useState<string[]>([]);

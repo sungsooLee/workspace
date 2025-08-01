@@ -1,13 +1,19 @@
-import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
+import { useState } from 'react';
+
 import { cn } from '@learnway/shared';
-import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { Button, Input, Dropdown, TableBox, Divider } from '@learnway/ui';
-import { IcoRefresh02, IcoSearch, IcoFormRequired } from '@learnway/icons';
+import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
+
+import { IcoFormRequired, IcoRefresh02, IcoSearch } from '@learnway/icons';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css';
+import { Button } from '@learnway/ui/button';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { Divider } from '@learnway/ui/elements';
+import { TableBox } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
 
 export const Route = createFileRoute('/_layout/pms/language_management')({
   component: RouteComponent,

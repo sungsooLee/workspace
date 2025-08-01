@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { values } from 'lodash';
+import { values } from 'lodash-es';
 
 import { Avatar } from '@learnway/ui/avatar';
 import { Popover } from '@learnway/ui/popover';

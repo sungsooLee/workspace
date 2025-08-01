@@ -4,7 +4,7 @@ import { Button } from '@learnway/ui/button';
 import { Input, InputProps } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
 import { AddressSearchModal } from '@shared/ui';
-import { isEqual } from 'lodash';
+import { isEqual } from 'lodash-es';
 import { forwardRef, useEffect, useMemo, useState } from 'react';
 import { useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';

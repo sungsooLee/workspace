@@ -1,16 +1,15 @@
-/* eslint-disable @nx/enforce-module-boundaries */
+import { cn } from '@learnway/shared';
 import { createFileRoute } from '@tanstack/react-router';
 import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import { cn } from '@learnway/shared';
-import { Tabs, FormSubTitle } from '@learnway/ui';
 
 /* styles */
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
 
 /* tab contents */
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Tabs } from '@learnway/ui/tabs';
 import { TenantUserInfo } from './-tabcontents/tenant-user-info';
-
 export const Route = createFileRoute('/_layout/pms/menu-tenant-user-education')({
   component: RouteComponent,
 });

@@ -1,29 +1,27 @@
-/* eslint-disable @nx/enforce-module-boundaries */
-import { useState } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
-import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
 import { IcoFormRequired } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import {
-  ContentsRow,
-  Button,
-  Input,
-  Textarea,
-  RadioGroupFormField,
-  Switch,
-  Tabs,
-  FormSubTitle,
-} from '@learnway/ui';
-import { ContentsHistoryInfoFormField } from '../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
 
-import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import { createFileRoute } from '@tanstack/react-router';
+import { useState } from 'react';
+import { ContentsHistoryInfoFormField } from '../../../shared/ui/contents-history-info-form-field';
+import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
+
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
+import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 
 /* tab contents */
-import { UserGroupSetting } from './-tabcontents/user-group-setting'; // 유저그룹 설정
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { RadioGroupFormField } from '@learnway/ui/form-field';
+import { Input } from '@learnway/ui/input';
+import { Switch } from '@learnway/ui/switch';
+import { Tabs } from '@learnway/ui/tabs';
+import { Textarea } from '@learnway/ui/textarea';
 import { DirectSetting } from './-tabcontents/direct-setting'; // 직접 설정
 import { LearningExceptionSetting } from './-tabcontents/learning-exception-setting'; // 학습자 제외 설정
+import { UserGroupSetting } from './-tabcontents/user-group-setting'; // 유저그룹 설정
 
 export const Route = createFileRoute('/_layout/pms/menu-channel-register')({
   component: RouteComponent,

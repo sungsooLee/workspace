@@ -1,23 +1,16 @@
-import { useEffect, useState } from 'react';
+import { IcoRefresh02, IcoSearch } from '@learnway/icons';
+import { cn } from '@learnway/shared';
+import { Button } from '@learnway/ui/button';
+import { GridBox } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 import { createFileRoute } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { cn } from '@learnway/shared';
-import { IcoRefresh02, IcoSearch } from '@learnway/icons';
-import {
-  Button,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  useModal,
-  ModalTitle,
-  Input,
-  GridBox,
-  Divider,
-} from '@learnway/ui';
+import { useEffect, useState } from 'react';
 
 /* style */
 import searchStyles from '@learnway/styles/bo/assets/styles/modules/search-box.module.css'; // search-box.module.css
-
+import { Divider } from '@learnway/ui/elements';
 export const Route = createFileRoute('/_layout/pms/pop-channel-search')({
   component: RouteComponent,
 });

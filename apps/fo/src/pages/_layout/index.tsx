@@ -43,7 +43,7 @@ function HomeComponent() {
     router.navigate({
       to: `/course/detail`,
       state: {
-        courseId: values.courseId,
+        courseId: values.detailCourseId,
       },
     });
   };
@@ -113,7 +113,7 @@ const formConfig: DynamicFormConfig = {
       name: 'detailCourseId',
       type: 'text',
       label: '과정Id',
-      value: '1',
+      value: '7',
     },
     {
       name: 'courseId',

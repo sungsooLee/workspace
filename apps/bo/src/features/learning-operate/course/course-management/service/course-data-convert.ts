@@ -37,7 +37,8 @@ export const responseDataToFormData = (d: Course, c: CourseConfig = {} as Course
     courseValidityRange: {
       from: d.courseValidityStartDateTime, // 과정 유효 시작일
       to: d.courseValidityEndDateTime, // 과정 유효 종료일
-    } };
+    },
+  };
 };
 
 /**
@@ -70,7 +71,10 @@ export const formDataToRequestData = (d: Course) => {
   // 카테고리 아이디 배열
   d.categoryIds = d.categories?.map((d: any) => d.categoryId);
   // 대표 카테고리
-  // d.primaryCategoryId = d.categories?.[0]?.categoryId;
+  d.primaryCategoryId = d.primaryCategoryId || d.categories?.[0]?.categoryId;
+
+  // 학습대상 - TODO targetList == '' 인 경우가 있음 (원인 파악전까지)
+  d.targetList = Array.isArray(d.targetList) ? d.targetList : undefined;
   // 학습대상-ID 배열
   d.targetListIds = d.targetList?.map((d: any) => d.id);
 

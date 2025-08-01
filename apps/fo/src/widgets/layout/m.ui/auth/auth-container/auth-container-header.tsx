@@ -1,7 +1,7 @@
 import { memo, ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useCreation } from 'ahooks';
-import { last } from 'lodash';
+import { last } from 'lodash-es';
 import { Link, useRouter, useCanGoBack } from '@tanstack/react-router';
 
 import { IcoArrowBackward, IcoXclose } from '@learnway/icons';

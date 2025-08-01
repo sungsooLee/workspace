@@ -1,9 +1,9 @@
-import { values } from 'lodash';
+import { values } from 'lodash-es';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Avatar } from '@learnway/ui/avatar';
-import { Popover } from '@learnway/ui/Popover';
+import { Popover } from '@learnway/ui/popover';
 
 enum Themes {
   DEFAULT = 'default',

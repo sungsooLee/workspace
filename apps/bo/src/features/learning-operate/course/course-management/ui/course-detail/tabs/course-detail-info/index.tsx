@@ -351,6 +351,8 @@ const DetailInfoComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBa
                       coordinatorUuid: data.uuid,
                       coordinatorName: `${data.name}/${data?.dept?.deptName}`,
                       coordinatorDeptName: `${data.name}/${data?.dept?.deptName}`,
+                      coordinatorTelNo: data.phoneNumber,
+                      coordinatorEmail: data.email,
                     })}
                   />
                 }
@@ -360,6 +362,7 @@ const DetailInfoComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBa
                 provider={provider}
                 name={'coordinatorTelNo'}
                 label={t('연락처')}
+                validation={{ required: true }}
                 element={<Input />}
               />
               {/*이메일*/}
@@ -367,6 +370,7 @@ const DetailInfoComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBa
                 provider={provider}
                 name={'coordinatorEmail'}
                 label={t('이메일')}
+                validation={{ required: true }}
                 element={<Input />}
               />
               {/*담당자 ID - hidden */}
@@ -389,6 +393,8 @@ const DetailInfoComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBa
                       operatorUuid: data.uuid,
                       operatorName: `${data.name}/${data?.dept?.deptName}`,
                       operatorDeptName: `${data.name}/${data?.dept?.deptName}`,
+                      operatorTelNo: data.phoneNumber,
+                      operatorEmail: data.email,
                     })}
                   />
                 }
@@ -398,6 +404,7 @@ const DetailInfoComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBa
                 provider={provider}
                 name={'operatorTelNo'}
                 label={t('연락처')}
+                validation={{ required: true }}
                 element={<Input />}
               />
               {/*이메일*/}
@@ -405,6 +412,7 @@ const DetailInfoComponent = forwardRef<CourseDetailTabFormRef, CourseDetailTabBa
                 provider={provider}
                 name={'operatorEmail'}
                 label={t('이메일')}
+                validation={{ required: true }}
                 element={<Input />}
               />
               {/*운영자 ID - hidden */}

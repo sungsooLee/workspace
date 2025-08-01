@@ -1,6 +1,7 @@
+import { Button } from '@learnway/ui/button';
+import { ToastWrapper, useToast } from '@learnway/ui/toast';
 import type { Meta, StoryObj } from '@storybook/react';
-import React, { useEffect } from 'react';
-import { useToast, ToastWrapper, Button } from '@learnway/ui';
+import { useEffect } from 'react';
 
 // Toast 테스트를 위한 래퍼 컴포넌트
 const ToastTester = ({
@@ -20,7 +21,7 @@ const ToastTester = ({
   autoTrigger?: boolean;
   showCloseButton?: boolean;
 }) => {
-  const { open, closeAllModal } = useToast();
+  const { open, closeAll: closeAllModal } = useToast();
 
   const handleShowToast = () => {
     const config = {

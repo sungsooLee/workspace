@@ -3,7 +3,7 @@ import { createFileRoute, useRouter, useRouterState } from '@tanstack/react-rout
 import { t } from 'i18next';
 import { useCallback, useEffect, useState } from 'react';
 
-import { queryOptions as requestChannelQueryOptions } from '@entities/channel/service/request-channel.queries';
+import { requestQueryOptions } from '@entities/channel';
 import { useChannelApplication } from '@features/channel/channel-application/service/channel-application.service';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { Divider } from '@learnway/ui/elements';
@@ -87,7 +87,7 @@ function RouteComponent() {
 
   const gridInitConfig = useCreation(
     () => ({
-      query: requestChannelQueryOptions.list,
+      query: requestQueryOptions.list,
       columns: [],
       data: [],
       gridState: {

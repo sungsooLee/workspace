@@ -1,28 +1,22 @@
-/* eslint-disable @nx/enforce-module-boundaries */
 import { FC, useState } from 'react';
-import { cn } from '@learnway/shared';
+
 import { IcoFormRequired } from '@learnway/icons';
-import {
-  ContentsRow,
-  Button,
-  Input,
-  Textarea,
-  RadioGroupFormField,
-  ChipListModalSelectorFormField,
-  Switch,
-  Tabs,
-  useModal,
-  ModalBody,
-  ModalTitle,
-  ModalFooter,
-  ModalContainer,
-} from '@learnway/ui';
-import { ContentsHistoryInfoFormField } from '../../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
+import { cn } from '@learnway/shared';
+
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { ChipListModalSelectorFormField, RadioGroupFormField } from '@learnway/ui/form-field';
+import { Input } from '@learnway/ui/input';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { Switch } from '@learnway/ui/switch';
+import { Tabs } from '@learnway/ui/tabs';
+import { Textarea } from '@learnway/ui/textarea';
+import { ContentsHistoryInfoFormField } from '../../../../shared/ui/contents-history-info-form-field';
 
 /* style */
-import styles from './channel-basic-info.module.css';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
+import styles from './channel-basic-info.module.css';
 
 const ChannelBasicInfoComponent: FC<{}> = ({}) => {
   const [checked, setChecked] = useState<{ [key: number]: boolean }>({

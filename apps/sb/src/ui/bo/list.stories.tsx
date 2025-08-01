@@ -1,6 +1,10 @@
 // BaseForm.stories.tsx
 import { addOrRemoveItemByKey, getRandomId } from '@learnway/shared';
-import { Badge, Button, List, Thumbnail } from '@learnway/ui';
+
+import { Badge } from '@learnway/ui/badge';
+import { Button } from '@learnway/ui/button';
+import { List } from '@learnway/ui/list';
+import { Thumbnail } from '@learnway/ui/thumbnail';
 import type { Meta } from '@storybook/react';
 import { useState } from 'react';
 

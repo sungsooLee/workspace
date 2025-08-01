@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import { cn } from '@learnway/shared';
-import { ChipList, SelectOption } from '@learnway/ui';
+
+import { ChipList } from '@learnway/ui/chips';
 // eslint-disable-next-line no-empty-pattern
 const UserGroupSettingComponent: FC<{}> = ({}) => {
   const options: SelectOption[] = [

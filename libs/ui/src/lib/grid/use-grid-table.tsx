@@ -19,7 +19,7 @@ import {
   useReactTable,
   VisibilityState,
 } from '@tanstack/react-table';
-import { isEmpty } from 'lodash';
+import { isEmpty } from 'lodash-es';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Checkbox } from '../checkbox/checkbox';

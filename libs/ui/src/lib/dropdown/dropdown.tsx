@@ -1,5 +1,5 @@
 import { useCreation } from 'ahooks';
-import { difference, filter, find, map } from 'lodash';
+import { difference, filter, find, map } from 'lodash-es';
 import React, { forwardRef, useEffect, useMemo, useState } from 'react';
 import Select, { ActionMeta, components, MultiValue, SingleValue } from 'react-select';
 

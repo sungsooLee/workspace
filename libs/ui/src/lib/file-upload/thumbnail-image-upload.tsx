@@ -14,7 +14,7 @@ import {
   ThumbnailFileValue,
   useS3Uploader,
 } from '@learnway/hooks';
-import { compact, difference, map } from 'lodash';
+import { compact, difference, map } from 'lodash-es';
 import { CourseType } from '@learnway/types';
 
 export interface ThumbnailImageUploadProps {

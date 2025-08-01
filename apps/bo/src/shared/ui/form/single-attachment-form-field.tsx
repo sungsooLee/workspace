@@ -7,7 +7,7 @@ import {
   S3UploaderConfig,
   useFileManager,
   useS3Uploader } from '@learnway/hooks'; // @learnway/hooks에서 폼 필드 기본 props 타입 import
-import { compact, first, map } from 'lodash';
+import { compact, first, map } from 'lodash-es';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 
 /**

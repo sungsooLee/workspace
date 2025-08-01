@@ -6,7 +6,7 @@ import { Link } from '@tanstack/react-router';
 
 import { Badge } from '@learnway/ui/badge';
 import { Button } from '@learnway/ui/button';
-import { Popover } from '@learnway/ui/Popover';
+import { Popover } from '@learnway/ui/popover';
 import styles from './notification.module.css';
 
 // import { useFetchAuthUser } from '../../../entities';

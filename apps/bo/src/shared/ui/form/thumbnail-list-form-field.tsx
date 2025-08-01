@@ -6,7 +6,7 @@ import {
   BaseFormFieldProps,
   ThumbnailFileValue,
   useFileManager } from '@learnway/hooks'; // @learnway/hooks에서 폼 필드 기본 props 타입 import
-import { difference, first, isArray, isEqual, uniq } from 'lodash';
+import { difference, first, isArray, isEqual, uniq } from 'lodash-es';
 import { CourseType } from '@learnway/types';
 
 /**

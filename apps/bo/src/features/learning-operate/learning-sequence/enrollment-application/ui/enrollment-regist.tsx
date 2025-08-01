@@ -4,7 +4,7 @@ import { SearchBoxProvider } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, getDateToString, SelectOption } from '@learnway/shared';
 import { Button } from '@learnway/ui/button';
 import { Divider, StatsSummary, StatsSummaryData } from '@learnway/ui/elements';
-import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
+import { GridBox, GridBoxState, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import { useModal } from '@learnway/ui/modal';
 import { Mode } from '@pages/_layout/learning/learning-sequence/-common/type';
 import { GridExcelDownloadButton, SearchBox } from '@shared/ui';
@@ -48,7 +48,7 @@ const gridConfig: useGridBoxConfig = {
   data: [],
   gridState: {
     page: 0,
-    size: 10,
+    size: 20,
     sort: [],
   },
 };
@@ -62,7 +62,7 @@ const EnrollmentRegistComponent = ({
   const { enrollmentCreateInfo } = useEnrollmentStore();
   const router = useRouter();
   const { openModal, confirm: openConfirm, alert } = useModal();
-  const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
+  const { config: gConfig, gridFetch, data } = useGridBox(gridConfig);
   const [columns, setColumns] = useState() as any;
   const [selectedRows, setSelectedRows] = useState<any[]>();
   const [statsCount, setStatsCount] = useState<Array<StatsSummaryData>>([]);
@@ -198,7 +198,6 @@ const EnrollmentRegistComponent = ({
 
   const setStats = async (payload: any) => {
     const result = await queryClient.fetchQuery(queryOptions.enrollmentRegistCount(payload));
-    console.log('## result =>', result);
     if (result) {
       const statsCount = result.countInfo.map((x: any) => {
         return { label: getEnrollStatusName(x.enrollStstusType), value: x.count };
@@ -207,45 +206,51 @@ const EnrollmentRegistComponent = ({
     }
   };
 
-  const handleOnSearch = useCallback((data: any) => {
-    const payload = {
-      openingYear: 2025,
-      courseSequenceId: 40,
+  const getSearchParam = () => {
+    const data = getValues();
+    return {
+      openingYear: data.openingYear || null,
+      courseSequenceId: data.courseSequenceId || null,
       enrollStatusType: data.enrollStatusType || '',
-      learningStartDate: '2025-06-22',
-      learningEndDate: '2025-08-22',
-      companyId: 54,
-      deptId: 1,
+      learningStartDate: data.learningRange?.from
+        ? getDateToString(data.learningRange?.from, DATE_TIME_FORMAT.DATE)
+        : null,
+      learningEndDate: data.learningRange?.to
+        ? getDateToString(data.learningRange?.to, DATE_TIME_FORMAT.DATE)
+        : null,
+      companyId: data.company || null,
+      deptId: data.deptId || null,
       employeeNumber: data.employeeNumber || '',
       name: data.name || '',
     };
-
-    // const payload = {
-    //   openingYear: data.openingYear || null,
-    //   courseSequenceId: data.courseSequenceId || null,
-    //   enrollStatusType: data.enrollStatusType || '',
-    //   learningStartDate: data.learningRange?.from
-    //     ? getDateToString(data.learningRange?.from, DATE_TIME_FORMAT.DATE)
-    //     : null,
-    //   learningEndDate: data.learningRange?.to
-    //     ? getDateToString(data.learningRange?.to, DATE_TIME_FORMAT.DATE)
-    //     : null,
-    //   companyId: data.company || null,
-    //   deptId: data.deptId || null,
-    //   employeeNumber: data.employeeNumber || '',
-    //   name: data.name || '',
+    // return {
+    //   openingYear: 2025,
+    //   courseSequenceId: 40,
+    //   enrollStatusType: '',
+    //   learningStartDate: '2025-06-22',
+    //   learningEndDate: '2025-08-22',
+    //   companyId: null,
+    //   deptId: null,
+    //   employeeNumber: '',
+    //   name: '',
     // };
+  };
+
+  // 페이지 변경이나 검색 시 플래그 리셋
+  const handleStateChange = (newState: GridBoxState) => {
+    gridFetch(getSearchParam(), newState);
+  };
+
+  const handleOnSearch = useCallback(() => {
+    const payload = getSearchParam();
 
     setParams({
       ...payload,
     });
-    // setValuesWithLabel(getValuesWithLabel());
 
     console.log('## payload=>', payload);
     setStats(payload);
-    console.log('setStats completed');
     gridFetch(payload);
-    console.log('gridFetch completed');
   }, []);
 
   const handleBulkApproval = async () => {
@@ -283,15 +288,14 @@ const EnrollmentRegistComponent = ({
     <>
       <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
       <Divider />
-      {/* <StatsSummary data={getStats()} /> */}
       <StatsSummary data={statsCount} />
       <GridBox
-        config={gConfig}
-        // data={gridData}
+        gridData={data}
         columns={columns}
         multiple={true}
         disabledSelectionToggle
         title={t('수강신청 목록')}
+        onStateChange={handleStateChange}
         onRowsSelect={(rows: any) => {
           setSelectedRows(rows);
         }}

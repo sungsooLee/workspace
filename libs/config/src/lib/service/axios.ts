@@ -1,7 +1,7 @@
 // import { useActiveMenuDepthState } from '../../../../auth/src/lib/entities/menu';
 import type { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import axios from 'axios';
-import { isFunction, last } from 'lodash';
+import { isFunction, last } from 'lodash-es';
 import qs from 'qs'; // qs 라이브러리 임포트
 import { HttpMethod, httpService } from '@learnway/shared';
 

@@ -1,6 +1,6 @@
 import { forwardRef, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { isEqual } from 'lodash';
+import { isEqual } from 'lodash-es';
 import { BaseFormFieldProps, useDynamicFormContext } from '@learnway/hooks';
 import { Button } from '@learnway/ui/button';
 import { Input } from '@learnway/ui/input';

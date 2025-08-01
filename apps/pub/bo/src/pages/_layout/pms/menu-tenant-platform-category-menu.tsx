@@ -1,28 +1,26 @@
-/* eslint-disable @nx/enforce-module-boundaries */
-import { useState } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
-import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
-import pageStyles from './tenant-menu-management.module.css';
-import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css'; // 타이틀 css
-import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
-import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
-import { DndTreeView, Tabs, TreeContainer } from '@learnway/ui';
-import { cn } from '@learnway/shared';
-import {
-  Button,
-  ContentsRow,
-  Textarea,
-  Switch,
-  Tooltip,
-  Input,
-  TreeView,
-  TreeNode,
-} from '@learnway/ui';
+import { useState } from 'react';
 
-import { ContentsHistoryInfoFormField } from '../../../../../../bo/src/shared/ui/form/contents-history-info-form-field';
-import { IcoFormRequired, IcoAlertCircle } from '@learnway/icons';
+import { cn } from '@learnway/shared';
+import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
+import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
+import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
+import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css'; // 타이틀 css
+
+import { PageContainer } from '../../../widgets/layout/ui/container/page-container';
+import pageStyles from './tenant-menu-management.module.css';
+
+import { IcoAlertCircle, IcoFormRequired } from '@learnway/icons';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
+import { Switch } from '@learnway/ui/switch';
+import { Tabs } from '@learnway/ui/tabs';
+import { Textarea } from '@learnway/ui/textarea';
+import { Tooltip } from '@learnway/ui/tooltip';
+import { DndTreeView, TreeContainer, TreeNode } from '@learnway/ui/tree-view';
+import { ContentsHistoryInfoFormField } from '../../../shared/ui/contents-history-info-form-field';
 
 export const Route = createFileRoute('/_layout/pms/menu-tenant-platform-category-menu')({
   component: RouteComponent,

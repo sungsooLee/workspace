@@ -1,38 +1,27 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useRef } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import {
-  Button,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  OptionCard,
-  useModal,
-} from '@learnway/ui';
-import { getRandomId } from '@learnway/shared';
-import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css'; // 퍼블수정 20240318 : libs로 경로 수정
-import eBookstyles from '@learnway/styles/bo/assets/styles/modules/e-book.module.css'; // 퍼블수정 20240318 : libs로 경로 수정
+import { useEffect } from 'react';
+
 import {
   IcoBlog,
   IcoEntrust,
   IcoEtc,
+  IcoExam,
+  IcoFolder,
+  IcoHomework,
   IcoHtml,
   IcoImage01,
   IcoInfoCircle,
   IcoMybook,
-  IcoVideo01,
-  IcoVideo02,
-  IcoSurvey,
-  IcoMultiScorm,
   IcoQuestionBank,
-  IcoLive,
-  IcoLiveHive,
-  IcoHomework,
-  IcoFolder,
-  IcoExam,
-  // IcoClass,
+  IcoSurvey,
+  IcoVideo01,
 } from '@learnway/icons';
+import { getRandomId } from '@learnway/shared';
+import eBookstyles from '@learnway/styles/bo/assets/styles/modules/e-book.module.css'; // 퍼블수정 20240318 : libs로 경로 수정
+import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css'; // 퍼블수정 20240318 : libs로 경로 수정
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { OptionCard } from '@learnway/ui/option-card';
 
 export const Route = createFileRoute('/_layout/learning/popup-learningRegisteration')({
   component: RouteComponent,

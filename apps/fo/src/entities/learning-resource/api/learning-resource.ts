@@ -1,18 +1,25 @@
 import { fileDownload, httpService } from '@learnway/shared';
 import { CMSApiPrefix } from '@learnway/config';
-import { BlogResource } from '../types/learning-resource.types';
-import { CmsImageContent, CmsVideoContentInfoResDto } from '@learnway/types';
+import { BlogResource, Content, EtcContentDownloadReq } from '../types/learning-resource.types';
+import {
+  CmsContentProgressMultiReq,
+  CmsContentProgressMultiRes,
+  CmsEtcResource,
+  CmsHtml5LearningReq,
+  CmsImageResource,
+  CmsVideoResource,
+} from '@learnway/types';
 
 export const learningResourceApi = {
   getBlogResource: (contentUuid: string) =>
     httpService.get<BlogResource>(`${CMSApiPrefix()}/blog/${contentUuid}/resource`),
 
-  download: (params: any) => {
+  download: (params: EtcContentDownloadReq) => {
     return fileDownload({ url: `${CMSApiPrefix()}/etc/content/download`, params });
   },
 
   getEtcResource: (contentUuid: string) => {
-    return httpService.get<any>(`${CMSApiPrefix()}/etc/${contentUuid}/resource`);
+    return httpService.get<CmsEtcResource>(`${CMSApiPrefix()}/etc/${contentUuid}/resource`);
   },
 
   /**
@@ -21,17 +28,20 @@ export const learningResourceApi = {
    * @returns
    */
   getContent: (contentUuid: string) =>
-    httpService.get<any>(`${CMSApiPrefix()}/content/${contentUuid}`),
+    httpService.get<Content>(`${CMSApiPrefix()}/content/${contentUuid}`),
 
   /**
    * 여러 컨텐츠의 진행율 조회
    * @param payload
    * @returns
    */
-  getProgressMulti: (payload: any) =>
-    httpService.post<any>(`${CMSApiPrefix()}/content/progress/multi`, payload),
+  getProgressMulti: (payload: CmsContentProgressMultiReq) =>
+    httpService.post<CmsContentProgressMultiRes>(
+      `${CMSApiPrefix()}/content/progress/multi`,
+      payload,
+    ),
 
-  saveHtml5Learning: (payload: any) => {
+  saveHtml5Learning: (payload: CmsHtml5LearningReq) => {
     return httpService.post<any>(`${CMSApiPrefix()}/html5/learning`, payload);
   },
   getHtml5Resource: (contentUuid: string) => {
@@ -42,7 +52,7 @@ export const learningResourceApi = {
     return httpService.post<any>(`${CMSApiPrefix()}/image/learning`, payload);
   },
   getImageResource: (contentUuid: string) => {
-    return httpService.get<CmsImageContent>(`${CMSApiPrefix()}/image/${contentUuid}/resource`);
+    return httpService.get<CmsImageResource>(`${CMSApiPrefix()}/image/${contentUuid}/resource`);
   },
 
   getScormScoInfo: (param: any) => {
@@ -67,7 +77,7 @@ export const learningResourceApi = {
 
   videoWwatchInitialize: (payload: any) => {
     const { contentUuid } = payload;
-    return httpService.get<CmsVideoContentInfoResDto>(
+    return httpService.get<CmsVideoResource>(
       `${CMSApiPrefix()}/video/${contentUuid}/watch/initialize`,
       payload,
     );

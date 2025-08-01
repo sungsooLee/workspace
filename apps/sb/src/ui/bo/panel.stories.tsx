@@ -1,7 +1,8 @@
 // BaseForm.stories.tsx
+import { Button } from '@learnway/ui/button';
+import { Panel } from '@learnway/ui/panel';
+import type { Meta } from '@storybook/react';
 import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
-import { Button, Panel } from '@learnway/ui';
 
 export default {
   title: 'Bo-Components/Panel',

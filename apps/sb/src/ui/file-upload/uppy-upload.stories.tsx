@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { FileItem, UppyUpload } from '@learnway/ui/file-upload';
 import type { Meta } from '@storybook/react';
-import { FileItem, UppyUpload } from '@learnway/ui';
+import { useState } from 'react';
 
 export default {
   title: 'Components/UppyUpload',

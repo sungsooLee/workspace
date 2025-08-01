@@ -1,29 +1,23 @@
-/* eslint-disable @nx/enforce-module-boundaries */
 import { FC, useState } from 'react';
+
+import { IcoFormRequired, IcoMinus, IcoRefresh02, IcoSearch } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { IcoMinus, IcoFormRequired, IcoRefresh02, IcoSearch } from '@learnway/icons';
+
+import { TreeBox, TreeContainer, TreeNode } from '@learnway/ui/tree-view';
+
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Dropdown } from '@learnway/ui/dropdown';
+import { Divider } from '@learnway/ui/elements';
+import { ChipListModalSelectorFormField } from '@learnway/ui/form-field';
+import { GridBox } from '@learnway/ui/grid';
+import { Input } from '@learnway/ui/input';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { Textarea } from '@learnway/ui/textarea';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import {
-  TreeBox,
-  TreeContainer,
-  TreeNode,
-  Input,
-  Button,
-  ContentsRow,
-  Textarea,
-  ChipListModalSelectorFormField,
-  useModal,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  ModalTitle,
-  Divider,
-  Dropdown,
-  GridBox,
-  FormSubTitle,
-} from '@learnway/ui';
 import { SectionLayout } from '../../-components/section-layout';
-import { ContentsHistoryInfoFormField } from '../../../../../../../bo/src/shared/ui/form';
+import { ContentsHistoryInfoFormField } from '../../../../shared/ui/contents-history-info-form-field';
 
 /* style */
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';

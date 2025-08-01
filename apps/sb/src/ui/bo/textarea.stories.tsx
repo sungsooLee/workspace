@@ -1,8 +1,11 @@
 // BaseForm.stories.tsx
-import React, { ChangeEvent, useState } from 'react';
+import { ContentsRow } from '@learnway/ui/contents-row';
 import type { Meta, StoryObj } from '@storybook/react';
-import { ContentsRow, Textarea, TextareaFormField } from '@learnway/ui';
-import { FormRow } from '../../../../../libs/auth/src/lib/shared';
+import React from 'react';
+
+import { FormRow } from '@learnway/auth/shared';
+import { TextareaFormField } from '@learnway/ui/form-field';
+import { Textarea } from '@learnway/ui/textarea';
 import { DynamicFormConfig, useDynamicForm } from '../../../../../libs/hooks/src';
 
 export default {

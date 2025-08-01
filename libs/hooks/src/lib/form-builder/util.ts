@@ -1,4 +1,4 @@
-import { filter, isArray, isNil, mapValues, omitBy } from 'lodash';
+import { filter, isArray, isNil, mapValues, omitBy } from 'lodash-es';
 import { DynamicFormConfig, FormConfig, GroupConfig, SearchBoxConfig } from './type';
 
 /**

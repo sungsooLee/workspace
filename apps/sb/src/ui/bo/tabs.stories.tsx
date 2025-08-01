@@ -1,7 +1,8 @@
-import React, { useRef, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { ModalWrapper, StepperTabs, Tabs, useModal } from '@learnway/ui';
+import { useRef } from 'react';
 
+import { ModalWrapper, useModal } from '@learnway/ui/modal';
+import { StepperTabs, Tabs } from '@learnway/ui/tabs';
 const meta: Meta<typeof Tabs> = {
   title: 'Bo-Components/Tabs',
   component: Tabs,
@@ -90,7 +91,7 @@ export const Interactive: Story = {
     size: 'md',
     variant: 'primary',
     selectedTabKey: 'a',
-    items: items,
+    items,
   },
   parameters: {
     docs: {
@@ -149,7 +150,7 @@ export const AllTypes: Story = {
     size: 'md',
     variant: 'primary',
     selectedTabKey: 'a',
-    items: items,
+    items,
   },
 };
 
@@ -178,7 +179,7 @@ export const BeforeTabChange: Story = {
     type: 'fill',
     size: 'md',
     variant: 'primary',
-    items: items,
+    items,
   },
   parameters: {
     docs: {
@@ -288,7 +289,7 @@ export const StepperTab: Story = {
     </div>
   ),
   args: {
-    items: items,
+    items,
     size: 'md',
     variant: 'primary',
   },
@@ -315,7 +316,7 @@ export const VariantComparison: Story = {
     type: 'fill',
     size: 'md',
     selectedTabKey: 'a',
-    items: items,
+    items,
   },
   parameters: {
     docs: {
@@ -344,7 +345,7 @@ export const SizeComparison: Story = {
     type: 'fill',
     variant: 'primary',
     selectedTabKey: 'a',
-    items: items,
+    items,
   },
   parameters: {
     docs: {

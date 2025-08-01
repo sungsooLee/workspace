@@ -176,10 +176,7 @@ const EnrollmentComponent = () => {
     const result = await queryClient.fetchQuery(
       sequenceQueryOptions.enrollmentSequenceCombo(payload),
     );
-    // setOptions('courseSequenceId', [
-    //   { label: '1', value: 1 },
-    //   { label: '2', value: 2 },
-    // ]);
+
     if (result) {
       console.log('result=>', result);
       const sequenceIdOptions = result.map((item: any) => ({

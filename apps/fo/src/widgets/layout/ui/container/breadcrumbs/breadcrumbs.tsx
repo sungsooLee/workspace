@@ -33,7 +33,7 @@ function BreadcrumbsComponent({ tenantId, currentCategoryId }: BreadcrumbsProps)
     //     )?.children || [];
     // }
     if (idx === 0) {
-      siblings = categories.children;
+      siblings = categories?.tree.children;
     } else {
       const parentCategory = breadcrumbPath[idx - 1];
 
@@ -47,7 +47,7 @@ function BreadcrumbsComponent({ tenantId, currentCategoryId }: BreadcrumbsProps)
         }
       };
 
-      traverse(categories.children);
+      traverse(categories?.tree.children);
     }
 
     const currentBreadcrumb = breadcrumbPath[idx];

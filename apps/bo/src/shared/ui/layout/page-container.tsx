@@ -21,7 +21,7 @@ import { Popover } from '@learnway/ui/popover';
 import { Tooltip } from '@learnway/ui/tooltip';
 import { useCreation } from 'ahooks';
 import { t } from 'i18next';
-import { isEmpty } from 'lodash';
+import { isEmpty } from 'lodash-es';
 import {
   Children,
   FC,

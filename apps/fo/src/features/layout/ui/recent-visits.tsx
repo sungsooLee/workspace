@@ -7,20 +7,12 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Chip } from '@learnway/ui/chips';
 import { Navigation } from 'swiper/modules';
 
-const RecentVisitsCompoment = () => {
-  const items: SelectOption[] = [
-    // { label: '현대자동차 현대자동차현대자동차 A', value: 'A' },
-    // { label: '현대자동차 B', value: 'B' },
-    // { label: '현대자동차 C', value: 'C' },
-    // { label: '현대자동차 D', value: 'E' },
-    // { label: '현대자동차 F', value: 'F' },
-    // { label: '현대자동차 g', value: 'g' },
-    // { label: '현대자동차 h', value: 'h' },
-    // { label: '현대자동차 i', value: 'i' },
-    // { label: '현대자동차 j', value: 'j' },
-    // { label: '현대자동차 k', value: 'k' },
-  ];
+interface RecentVisitsProps {
+  items: SelectOption[];
+  handleOnLink: (categoryId: number) => void;
+}
 
+const RecentVisitsCompoment = ({items, handleOnLink}: RecentVisitsProps) => {
   const prevRef = useRef<HTMLDivElement | null>(null);
   const nextRef = useRef<HTMLDivElement | null>(null);
   const swiperRef = useRef<any>(null);
@@ -53,7 +45,7 @@ const RecentVisitsCompoment = () => {
         <div className={styles.lists}>
           {items.map((item, index) => (
             <SwiperSlide key={index} className={styles.slide}>
-              <Chip className={styles.item} option={{ label: item.label, value: item.value }} />
+              <Chip className={styles.item} option={{ label: item.label, value: item.value }} onClick={() => handleOnLink(item.value)}/>
             </SwiperSlide>
           ))}
         </div>

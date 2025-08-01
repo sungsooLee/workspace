@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Input } from '../../input/input';
-import { debounce } from 'lodash'; // grid CSS
+import { debounce } from 'lodash-es'; // grid CSS
 import { Button } from '../../button/button';
 import { useModal } from '../../modal/modal.hook';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle } from '../../modal/modal-container';

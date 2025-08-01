@@ -12,7 +12,7 @@ import { RadioGroupFormField, TextareaFormField } from '@learnway/ui/form-field'
 import { Tooltip } from '@learnway/ui/tooltip';
 import { ChipListFormField, FormRow2 } from '@shared/ui';
 import { t } from 'i18next';
-import { first, flatten, get, isArray, map, mapValues, pick, values } from 'lodash';
+import { first, flatten, get, isArray, map, mapValues, pick, values } from 'lodash-es';
 import { useEffect } from 'react';
 
 interface ExcelDownloadReasonModalComponentProps {

@@ -1,5 +1,23 @@
 import { create } from 'zustand';
-import { CmsEnContentType, CmsImageContent, CmsLearningCompletionStatus } from '@learnway/types';
+import {
+  CmsBlogResource,
+  CmsContentProgressMultiReq,
+  CmsContentProgressMultiRes,
+  CmsContentProgressResDto,
+  CmsEnContentType,
+  CmsHtml5LearningReq,
+  CmsHtml5Resource,
+  CmsImageLearningReq,
+  CmsImageResource,
+  CmsLearningCompletionStatus,
+  CmsOtherInfo,
+  CmsScormRteCommitReq,
+  CmsScormRteInitializeReq,
+  CmsScormRteScoInfo,
+  CmsVideoResource,
+  CmsVideoWatchLogReq,
+  CmsVideoWatchLogStatisticsReq,
+} from '@learnway/types';
 
 export interface LearningWindowPlayInfo {
   isDirect?: boolean;
@@ -83,19 +101,19 @@ interface Lesson {
 /** 스콤 및 비디오 player 에서 사용할 함수 정보 */
 interface FunctionInfomation {
   /** 스콤  Initialize 호출 함수 */
-  scormInitialize: (payload: any) => void;
+  scormInitialize: (payload: CmsScormRteInitializeReq) => void;
   /** 스콤 Commit 호출 함수 */
-  scormCommit: (payload: any) => void;
+  scormCommit: (payload: CmsScormRteCommitReq) => void;
   /** 비디오 Progress 호출 함수 */
-  videoOnProgress: (payload: any) => Promise<any>;
+  videoOnProgress: (payload: CmsVideoWatchLogReq) => void;
   /** 비디오 이력 정제 처리 호출 */
-  videoWatchStatistics: (payload: any) => Promise<any>;
+  videoWatchStatistics: (payload: CmsVideoWatchLogStatisticsReq) => void;
   /** Html5 학습 이력 저장 */
-  html5LearningHistory: (payload: any) => void;
+  html5LearningHistory: (payload: CmsHtml5LearningReq) => void;
   /** galleary 학습 이력 저장 */
-  galleryLearningHistory: (payload: any) => void;
+  galleryLearningHistory: (payload: CmsImageLearningReq) => void;
   /** 커리큘럼의 모든 lesson의 진척 조회 함수 */
-  lessonProgress: (payload: any) => Promise<any>;
+  lessonProgress: (payload: CmsContentProgressMultiReq) => Promise<CmsContentProgressMultiRes>;
   /** 기타/라이브/링크 클릭 */
   otherClickButton: (playInfo: LearningWindowPlayInfo, otherInfo: any) => Promise<void>;
 }
@@ -106,33 +124,33 @@ interface LearningWindowStoreData {
   curriculum?: Curriculum;
   playInfo?: LearningWindowPlayInfo;
   playList?: PlayListItem[];
-  progressInfo: Map<string, any>;
+  progressInfo: Map<string, CmsContentProgressResDto>;
   setBaseInfo: (v?: LearningWindowBaseInfo) => void;
   setPlayInfo: (v?: LearningWindowPlayInfo) => void;
   setCurriculum: (v?: Curriculum) => void;
   setPlayList: (v?: PlayListItem[]) => void;
-  setProgressInfo: (v: Map<string, any>) => void;
+  setProgressInfo: (v: Map<string, CmsContentProgressResDto>) => void;
   clearInfo: () => void;
 
-  scormInfo: any;
-  setScormInfo: (v: any) => void;
-  galleryInfo?: CmsImageContent;
-  setGalleryInfo: (v: CmsImageContent) => void;
-  videoInfo: any;
-  setVideoInfo: (v: any) => void;
-  blogInfo: any;
-  setBlogInfo: (v: any) => void;
-  htmlInfo: any;
-  setHtmlInfo: (v: any) => void;
+  scormInfo?: CmsScormRteScoInfo;
+  setScormInfo: (v?: CmsScormRteScoInfo) => void;
+  galleryInfo?: CmsImageResource;
+  setGalleryInfo: (v?: CmsImageResource) => void;
+  videoInfo?: CmsVideoResource;
+  setVideoInfo: (v?: CmsVideoResource) => void;
+  blogInfo?: CmsBlogResource;
+  setBlogInfo: (v?: CmsBlogResource) => void;
+  htmlInfo?: CmsHtml5Resource;
+  setHtmlInfo: (v?: CmsHtml5Resource) => void;
   /** ebookInfo 는 scormInfo 와 동일 한 값이다. (스콤 변형 형태로 컨텐츠를 제공 하는 것으로 보임) */
-  ebookInfo: any;
-  setEbookInfo: (v: any) => void;
+  ebookInfo?: any;
+  setEbookInfo: (v?: any) => void;
 
-  otherInfo: any;
-  setOtherInfo: (v: any) => void;
+  otherInfo?: CmsOtherInfo;
+  setOtherInfo: (v?: CmsOtherInfo) => void;
 
   funcInfo?: FunctionInfomation;
-  setFuncInfo: (v: FunctionInfomation) => void;
+  setFuncInfo: (v?: FunctionInfomation) => void;
 }
 
 const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
@@ -166,19 +184,19 @@ const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
     });
   },
 
-  setBaseInfo(baseInfo?: LearningWindowBaseInfo) {
+  setBaseInfo(baseInfo) {
     set((state) => ({ baseInfo }));
   },
-  setProgressInfo(progressInfo: Map<string, any>) {
+  setProgressInfo(progressInfo) {
     set((state) => ({ progressInfo }));
   },
-  setCurriculum(curriculum?: Curriculum) {
+  setCurriculum(curriculum) {
     set((state) => ({ curriculum }));
   },
-  setPlayList(playList?: PlayListItem[]) {
+  setPlayList(playList) {
     set((state) => ({ playList }));
   },
-  setScormInfo(scormInfo: any) {
+  setScormInfo(scormInfo) {
     set((state) => ({ scormInfo }));
   },
   setGalleryInfo(galleryInfo) {
@@ -187,18 +205,18 @@ const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
     }));
   },
 
-  setVideoInfo(videoInfo: any) {
+  setVideoInfo(videoInfo) {
     set((state) => ({
       videoInfo,
     }));
   },
 
-  setBlogInfo(blogInfo: any) {
+  setBlogInfo(blogInfo) {
     set((state) => ({
       blogInfo,
     }));
   },
-  setHtmlInfo(htmlInfo: any) {
+  setHtmlInfo(htmlInfo) {
     set((state) => ({
       htmlInfo,
     }));
@@ -208,12 +226,12 @@ const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
       ebookInfo,
     }));
   },
-  setOtherInfo(otherInfo: any) {
+  setOtherInfo(otherInfo) {
     set((state) => ({
       otherInfo,
     }));
   },
-  setFuncInfo(funcInfo?: FunctionInfomation) {
+  setFuncInfo(funcInfo) {
     set((state) => ({
       funcInfo,
     }));
@@ -437,8 +455,8 @@ export const useLearningWindow = () => {
   const getProgressNumber = (moduleId: number, lessonId: number) => {
     if (progressInfo) {
       const key = `${moduleId}_${lessonId}`;
-      if (progressInfo.has(key)) {
-        const item = progressInfo.get(key);
+      const item = progressInfo.get(key);
+      if (item) {
         return item.completionStatus === CmsLearningCompletionStatus.COMPLETED ? 100 : 0;
       }
     }

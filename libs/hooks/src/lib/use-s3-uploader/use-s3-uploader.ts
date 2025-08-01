@@ -14,7 +14,7 @@ import {
   deleteFileInfo,
 } from './api';
 import { FileInfo } from '../use-file-manager/type';
-import { first, uniq } from 'lodash';
+import { first, uniq } from 'lodash-es';
 
 /**
  * 새로운 S3 업로더 훅 - 단순화된 구조

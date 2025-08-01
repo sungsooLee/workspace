@@ -176,6 +176,21 @@
       }
     }
   }
+  &:has([class*='modal-content-width-sm']) {
+    @apply w-[600px];
+  }
+  &:has([class*='modal-content-width-lg']) {
+    @apply w-[1024px];
+  }
+  &:has([class*='modal-content-width-md']) {
+    @apply w-[800px];
+  }
+  &:has([class*='modal-content-width-lg']) {
+    @apply w-[1024px];
+  }
+  &:has([class*='modal-content-width-xl']) {
+    @apply w-[1400px];
+  }
 }
 /* .md,
 .lg,

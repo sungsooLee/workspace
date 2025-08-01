@@ -1,21 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import {
-  Button,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  useModal,
-  ModalTitle,
-  Tabs,
-} from '@learnway/ui';
 import styles from '@learnway/styles/bo/assets/styles/modules/widget-management.module.css'; // 화면 css
+import { Button } from '@learnway/ui/button';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { Tabs } from '@learnway/ui/tabs';
+import { createFileRoute } from '@tanstack/react-router';
+import { useEffect } from 'react';
 
 /* tab contents */
-import { PcContents } from './-tabcontents/pc-contents'; // PC
 import { MobileContents } from './-tabcontents/mobile-contents'; // Mobile
+import { PcContents } from './-tabcontents/pc-contents'; // PC
 
 export const Route = createFileRoute('/_layout/pms/popup-widget-management')({
   component: RouteComponent,

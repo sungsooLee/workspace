@@ -1,17 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from 'react';
 import { createFileRoute } from '@tanstack/react-router';
-import {
-  Button,
-  useModal,
-  ModalTitle,
-  ModalBody,
-  ModalContainer,
-  ModalFooter,
-  UppyUpload,
-} from '@learnway/ui';
+import { useEffect } from 'react';
+
 import { cn } from '@learnway/shared';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
+import { Button } from '@learnway/ui/button';
+import { UppyUpload } from '@learnway/ui/file-upload';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
 export const Route = createFileRoute('/_layout/learning/popup-upload')({
   component: RouteComponent,

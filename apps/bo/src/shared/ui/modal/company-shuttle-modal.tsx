@@ -1,17 +1,15 @@
-import { useRef, useState } from 'react';
+import { queryOptions as companyQueryOptions } from '@entities/companies';
+import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
+import { Button } from '@learnway/ui/button';
+import { Divider } from '@learnway/ui/elements';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { ShuttleGridToGrid, ShuttleGridToGridImperative } from '@learnway/ui/shuttle-grid-to-grid';
+import { SearchBox } from '@shared/ui/search-box';
 import { useQueryClient } from '@tanstack/react-query';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { t } from 'i18next';
-import { IcoRefresh02 } from '@learnway/icons';
-import { Divider } from '@learnway/ui/elements';
-import { ShuttleGridToGrid } from '@learnway/ui/shuttle-grid-to-grid';
-import { SearchBoxConfig, useSearchBox, CODE_GROUP } from '@learnway/hooks';
-import { SearchBox } from '@shared/ui/search-box';
-import { queryOptions as companyQueryOptions } from '@entities/companies/service/companies.queries';
 import { EnGlobalConst } from '@types';
-import { ShuttleGridToGridImperative } from '@learnway/ui/shuttle-grid-to-grid';
-import { Button } from '@learnway/ui/button';
-import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { t } from 'i18next';
+import { useRef, useState } from 'react';
 /**
  * 화면번호: NLP_BO_TMS_1001_19_01
  * @returns
@@ -88,7 +86,9 @@ const searchConfig = (): SearchBoxConfig => ({
         value: '',
         optionsConfig: {
           options: [{ label: t('전체'), value: '' }],
-          codeGroup: CODE_GROUP['pms.company.CompanyType'] } },
+          codeGroup: CODE_GROUP['pms.company.CompanyType'],
+        },
+      },
       {
         name: 'companyCode',
         type: 'dropdown',
@@ -97,15 +97,19 @@ const searchConfig = (): SearchBoxConfig => ({
         format: 'object',
         presetOptionLabel: t('LABEL.form.label.all'),
         optionsConfig: {
-          codeGroup: CODE_GROUP['manual.company.companyCode'] },
+          codeGroup: CODE_GROUP['manual.company.companyCode'],
+        },
         dropdownConfig: {
           onchange: () => {
             return '';
           },
           isSearchable: true,
-          placeholder: '입력 또는 선택' } },
+          placeholder: '입력 또는 선택',
+        },
+      },
     ],
-  ] });
+  ],
+});
 
 const columnHelper = createColumnHelper<any>();
 const columns = () =>
@@ -115,22 +119,26 @@ const columns = () =>
       cell: (info) =>
         t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.company.CompanyType.${info.getValue()}`),
       header: t('그룹'),
-      size: 132 }),
+      size: 132,
+    }),
     columnHelper.accessor('name', {
       id: 'name',
       cell: (info) => info.getValue(),
       header: t('회사'),
-      size: 132 }),
+      size: 132,
+    }),
     columnHelper.accessor('rpsntrName', {
       id: 'rpsntrName',
       cell: (info) => info.getValue(),
       header: t('대표자'),
-      size: 132 }),
+      size: 132,
+    }),
 
     columnHelper.accessor('managerPhone', {
       id: 'managerPhone',
       cell: (info) => info.getValue(),
       header: t('대표전화'),
       size: 132,
-      enableGrouping: false }),
+      enableGrouping: false,
+    }),
   ] as ColumnDef<any, unknown>[];
