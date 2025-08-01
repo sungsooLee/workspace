@@ -131,6 +131,7 @@ const BasicInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) 
           element={
             <ChipListModalSelectorFormField
               modalConfig={() => ({
+                width: 'xl',
                 content: (
                   <UserGroupTabsChoiceModal
                     tenantIds={getValues().tenantIds}
@@ -293,6 +294,8 @@ const BasicInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) 
                 coordinatorUuid: data.uuid,
                 coordinatorName: data.uuid ? `${data.name}/${data?.dept?.deptName}` : '',
                 coordinatorDeptName: data.uuid ? `${data.name}/${data?.dept?.deptName}` : '',
+                coordinatorTelNo: data.phoneNumber,
+                coordinatorEmail: data.email,
               })}
             />
           }
@@ -302,6 +305,7 @@ const BasicInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) 
           provider={provider}
           name={'coordinatorTelNo'}
           label={t('연락처')}
+          validation={{ required: true }}
           element={<Input />}
         />
         {/*이메일*/}
@@ -331,6 +335,8 @@ const BasicInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) 
                 operatorUuid: data.uuid,
                 operatorName: data.uuid ? `${data.name}/${data?.dept?.deptName}` : '',
                 operatorDeptName: data.uuid ? `${data.name}/${data?.dept?.deptName}` : '',
+                operatorTelNo: data.phoneNumber,
+                operatorEmail: data.email,
               })}
             />
           }
@@ -340,6 +346,7 @@ const BasicInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) 
           provider={provider}
           name={'operatorTelNo'}
           label={t('연락처')}
+          validation={{ required: true }}
           element={<Input />}
         />
         {/*이메일*/}
@@ -347,6 +354,7 @@ const BasicInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) 
           provider={provider}
           name={'operatorEmail'}
           label={t('이메일')}
+          validation={{ required: true }}
           element={<Input />}
         />
         {/*운영자 ID - hidden */}

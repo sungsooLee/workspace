@@ -35,7 +35,7 @@ export const useCoursePage = (): CourseManagementHookResult => {
   const { mutate: copyCourse } = useCopyCourse({
     onSuccess: async (response: any) => {
       console.log('useUpdateCourse :: onSuccess', response);
-      await alert(t('복사가 완료되었습니다.'));
+      await alert(t('과정이 복사 되었습니다.'));
       gridFetch(getValues());
     },
   });

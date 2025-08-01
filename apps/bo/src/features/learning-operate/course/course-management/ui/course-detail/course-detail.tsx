@@ -1,5 +1,6 @@
 import { Button } from '@learnway/ui/button';
 import { Divider } from '@learnway/ui/elements';
+import { useModal } from '@learnway/ui/modal';
 import { Tabs } from '@learnway/ui/tabs';
 import { ToggleButtonGroup } from '@learnway/ui/toggle-button-group';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
@@ -14,6 +15,7 @@ import { Sequence } from './tabs/sequence';
 
 const Component = () => {
   const { trigger } = useCourseActions();
+  const { alert } = useModal();
 
   // 커스텀 훅 사용
   const { activeTab, courseName, changeTab, visibleButtons, moveEnrollmentManagementPage } =
@@ -67,7 +69,7 @@ const Component = () => {
             variant="point"
             size="sm"
             label={'과정 번역'}
-            onClick={() => console.log('과정 번역')}
+            onClick={() => alert('과정 번역 (m1)')}
           />
         )}
         {!!visibleButtons?.isCopy && (
