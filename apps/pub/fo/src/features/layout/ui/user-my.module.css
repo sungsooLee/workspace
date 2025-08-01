@@ -88,8 +88,11 @@
       }
     }
 
-    .btn_my {
-      @apply mt-[20px] w-full;
+    .btn_my_box {
+      @apply mt-[20px] flex w-full;
+      button {
+        @apply flex-1;
+      }
     }
 
     .recent_visits {
@@ -158,6 +161,51 @@
     .start {
       .avatar_area {
         @apply max-h-none p-0;
+        .profile_info {
+          .profile {
+            .info_box {
+              .name {
+                @apply title5-b;
+              }
+              button {
+                @apply label-sm ml-[8px];
+              }
+            }
+            .tenant {
+              @apply body-md mt-[4px] block;
+              > span {
+                @apply block;
+                &::before {
+                  @apply hidden;
+                }
+              }
+            }
+          }
+        }
+        .point_box {
+          @apply mt-[16px] p-[16px];
+          .point {
+            @apply title3-b;
+            em {
+              @apply mr-[4px];
+            }
+          }
+        }
+        .btn_my_box {
+          @apply mt-[40px];
+          button {
+            @apply title2-b flex-1 items-center justify-center !px-0 text-[var(--gray35)];
+            svg {
+              @apply ml-0 mr-[8px];
+            }
+            & + button {
+              @apply relative;
+              &::before {
+                @apply absolute left-0 top-1/2 h-[24px] w-px -translate-y-1/2 bg-[var(--gray90)] content-[''];
+              }
+            }
+          }
+        }
       }
       .lang_area {
         @apply -my-[16px];

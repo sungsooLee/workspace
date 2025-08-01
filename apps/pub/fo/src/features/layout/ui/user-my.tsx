@@ -1,7 +1,9 @@
 import { useCodeGroup } from '@learnway/hooks';
 import {
+  IcoBookFill,
   IcoChart,
   IcoCheck02,
+  IcoHeartFill,
   IcoLearning03,
   IcoPaper,
   IcoPoint,
@@ -11,7 +13,7 @@ import { Avatar } from '@learnway/ui/avatar';
 import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
 import { Switch } from '@learnway/ui/switch';
-import { memo, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import languagestyles from './language.module.css';
 import styles from './user-my.module.css';
@@ -22,9 +24,9 @@ interface LanguagePorps {
   onChangelanguage: (newLanguage: string) => void;
 }
 
-// 부모페이지에게 넘길 컨텐츠 타입
 interface ContentTypeProps {
-  onChangeType: (value: string) => void;
+  onChangeType: (value: string) => void; // 자식에서 부모에게 넘기는 컨텐츠 타입
+  onParentChangeType?: string; // 부모에서 자식에게 넘기는 컨텐츠 타입
 }
 
 const LanguageComponent = ({ language, contentType, onChangelanguage }: LanguagePorps) => {
@@ -87,7 +89,7 @@ const LanguageComponent = ({ language, contentType, onChangelanguage }: Language
   );
 };
 
-const UserMyComponent = ({ onChangeType }: ContentTypeProps) => {
+const UserMyComponent = ({ onChangeType, onParentChangeType }: ContentTypeProps) => {
   const { confirm: openConfirm } = useModal();
   const [isChecked, setIsChecked] = useState(false);
   const [language, setLanguage] = useState('한국어');
@@ -105,6 +107,18 @@ const UserMyComponent = ({ onChangeType }: ContentTypeProps) => {
   const handleProfileType = () => {
     setContentType('profile');
     onChangeType('profile');
+  };
+
+  useEffect(() => {
+    handleParentType();
+  }, [onParentChangeType]);
+
+  // 부모 타입이 변경
+  const handleParentType = () => {
+    if (onParentChangeType === 'profile') {
+      setContentType('profile');
+      onChangeType('profile');
+    }
   };
 
   const handleClickAlert2 = () => {
@@ -160,9 +174,24 @@ const UserMyComponent = ({ onChangeType }: ContentTypeProps) => {
             </span>
           </div>
 
-          <Button variant="primary" size="xl" className={styles.btn_my}>
-            나의 학습
-          </Button>
+          <div className={styles.btn_my_box}>
+            {isMobile ? (
+              <>
+                <Button className={styles.btn_my}>
+                  <IcoBookFill width={40} height={40} />
+                  나의 학습
+                </Button>
+                <Button className={styles.btn_heart}>
+                  <IcoHeartFill width={40} height={40} />
+                  찜한 과정
+                </Button>
+              </>
+            ) : (
+              <Button variant="primary" size="xl" className={styles.btn_my}>
+                나의 학습
+              </Button>
+            )}
+          </div>
 
           <div className={styles.recent_visits}>
             <h3>최근 방문</h3>

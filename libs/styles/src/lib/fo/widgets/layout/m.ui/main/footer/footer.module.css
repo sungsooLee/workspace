@@ -1,7 +1,7 @@
 /* foote.module.css */
 .start {
   &.footer_fixed {
-    @apply fixed bottom-[5px] left-0 h-[50px] w-full;
+    @apply fixed bottom-0 left-0 h-[66px] w-full bg-white px-[20px] py-[6px] pb-[8px] shadow-[0_-2px_6px_rgba(0,0,0,.05)];
     .fixed_menu {
       .menu_list {
         @apply flex w-full items-center justify-between;
@@ -11,7 +11,14 @@
           button {
             @apply m-auto flex w-full flex-col items-center justify-end;
             span {
-              @apply body_4_b mt-[5px] block;
+              @apply label-md-b mt-[5px] block text-[var(--gray75)];
+            }
+          }
+          &.active {
+            button {
+              span {
+                @apply text-[var(--blue50)];
+              }
             }
           }
         }
