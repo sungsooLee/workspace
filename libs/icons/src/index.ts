@@ -25,6 +25,7 @@ export { ReactComponent as IcoBell03 } from './lib/ic_bell_03.svg'; // bell03 li
 export { ReactComponent as IcoBell04 } from './lib/ic_bell_04.svg';
 export { ReactComponent as IcoBlog } from './lib/ic_blog.svg'; // blog
 export { ReactComponent as IcoBook } from './lib/ic_book.svg';
+export { ReactComponent as IcoBookFill } from './lib/ic_book_fill.svg';
 export { ReactComponent as IcoBoxMinus } from './lib/ic_box_minus.svg';
 export { ReactComponent as IcoBoxPlus } from './lib/ic_box_plus.svg';
 export { ReactComponent as IcoLinkblank } from './lib/ic_btn_pop.svg'; // link blank line
@@ -89,11 +90,22 @@ export { ReactComponent as IcoFillActive } from './lib/ic_fill_active.svg'; // t
 export { ReactComponent as IcoFilter } from './lib/ic_filter.svg'; // filter
 export { ReactComponent as IcoFolder } from './lib/ic_folder.svg'; // folder
 export { ReactComponent as IcoFolderOpen } from './lib/ic_folder_open.svg';
+export { ReactComponent as IcoFooter01 } from './lib/ic_footer_01.svg';
+export { ReactComponent as IcoFooter02 } from './lib/ic_footer_02.svg';
+export { ReactComponent as IcoFooter03 } from './lib/ic_footer_03.svg';
+export { ReactComponent as IcoFooter04 } from './lib/ic_footer_04.svg';
+export { ReactComponent as IcoFooter05 } from './lib/ic_footer_05.svg';
+export { ReactComponent as IcoFooterOn01 } from './lib/ic_footer_on_01.svg';
+export { ReactComponent as IcoFooterOn02 } from './lib/ic_footer_on_02.svg';
+export { ReactComponent as IcoFooterOn03 } from './lib/ic_footer_on_03.svg';
+export { ReactComponent as IcoFooterOn04 } from './lib/ic_footer_on_04.svg';
+export { ReactComponent as IcoFooterOn05 } from './lib/ic_footer_on_05.svg';
 export { ReactComponent as IcoFormRequired } from './lib/ic_form_required.svg'; // form required icon 9*8
 export { ReactComponent as IcoGrid01 } from './lib/ic_grid-01.svg';
 export { ReactComponent as IcoGridFilter } from './lib/ic_grid_filter.svg'; // 16*16 grid filter
 export { ReactComponent as IcoGridOrder } from './lib/ic_grid_order.svg'; // grid order
 export { ReactComponent as IcoHeart } from './lib/ic_heart.svg'; // heart
+export { ReactComponent as IcoHeartFill } from './lib/ic_heart_fill.svg';
 export { ReactComponent as IcoHistory } from './lib/ic_history.svg';
 export { ReactComponent as IcoHome03 } from './lib/ic_home-03.svg'; // 16*16 bread Home FO
 export { ReactComponent as IcoHome02 } from './lib/ic_home02.svg'; // 12*12 bread Home BO

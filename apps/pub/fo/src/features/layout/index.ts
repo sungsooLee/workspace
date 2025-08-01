@@ -17,7 +17,6 @@ export * from './popup/password-verify-popup';
 export * from './popup/phone-change-popup';
 export * from './popup/review-popup';
 export * from './popup/setting-language-popup';
-export * from './popup/tenant-popup';
 export * from './ui/arrays';
 export * from './ui/category';
 export * from './ui/category-layer-button';

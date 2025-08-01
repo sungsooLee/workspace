@@ -16,6 +16,7 @@ interface SearchDisplayProps {
   displayFormat?: string;
   className?: string;
   onBack?: () => void;
+  onSubmitSearch?: () => void;
 }
 
 export const SearchDisplay: React.FC<SearchDisplayProps> = ({
@@ -23,6 +24,7 @@ export const SearchDisplay: React.FC<SearchDisplayProps> = ({
   displayFormat,
   className,
   onBack,
+  onSubmitSearch,
 }) => {
   const [inputhValue, setInputValue] = useState('');
 
@@ -51,6 +53,7 @@ export const SearchDisplay: React.FC<SearchDisplayProps> = ({
             placeholder={'처음엔 다 어려워요! 추천 키워드부터 가볍게 출발~'}
             value={inputhValue}
             onChange={(e) => setInputValue(e.target.value)}
+            onClick={onSubmitSearch}
           />
         )}
         {searchState === 'submitted' && <PopHeaderActions onBack={onBack} />}
