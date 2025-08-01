@@ -2,7 +2,7 @@ import { MutateOptions, useMutation, useQuery, useQueryClient } from '@tanstack/
 import { getQuerySkipToken } from '@learnway/shared';
 import { learningResourceApi } from '../api/learning-resource';
 import { BlogResource, Content, EtcContentDownloadReq } from '../types/learning-resource.types';
-import { CmsEtcResource, CmsImageResource, CmsVideoContentInfoResDto } from '@learnway/types';
+import { CmsEtcResource, CmsImageResource, CmsVideoResource } from '@learnway/types';
 
 export const learningResourceQueryKeys = {
   all: ['learning-resource'] as const,
@@ -78,7 +78,7 @@ export const learningResourceQueryOptions = {
           queryKey: learningResourceQueryKeys.videoWatchInitialize(param),
           queryFn: () => learningResourceApi.videoWwatchInitialize(param),
         }
-      : getQuerySkipToken<CmsVideoContentInfoResDto>(),
+      : getQuerySkipToken<CmsVideoResource>(),
 
   scormScoInfo: (param?: any) =>
     param

@@ -48,7 +48,7 @@ export interface Content {
   description: string;
   vendorName: any;
   isOpened: boolean;
-  blogContent: BlogContent;
+  blogContent: any;
 }
 
 export interface Tag {
@@ -56,45 +56,11 @@ export interface Tag {
   tagName: string;
 }
 
-export interface BlogContent {
-  root: Root2;
-}
-
-export interface Root2 {
-  type: string;
-  format: string;
-  indent: number;
-  version: number;
-  children: Children[];
-  direction: string;
-}
-
-export interface Children {
-  type: string;
-  format: string;
-  indent: number;
-  version: number;
-  children: Children2[];
-  direction: string;
-  textStyle: string;
-  textFormat: number;
-}
-
-export interface Children2 {
-  mode: string;
-  text: string;
-  type: string;
-  style: string;
-  detail: number;
-  format: number;
-  version: number;
-}
-
 export interface EtcContentDownloadReq {
-  courseSequenceId: number;
-  courseId: number;
-  curriculumId: number;
-  moduleId: number;
-  lessonId: number;
-  contentUuid: string;
+  courseSequenceId?: number;
+  courseId?: number;
+  curriculumId?: number;
+  moduleId?: number;
+  lessonId?: number;
+  contentUuid?: string;
 }

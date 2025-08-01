@@ -3,7 +3,7 @@ import { FC, useEffect, useState } from 'react';
 
 import { useGetCurriculumDetail } from '@entities/curriculum';
 import { learningResourceQueryOptions } from '@entities/learning-resource';
-import { CmsImageItem } from '@learnway/types';
+import { CmsContentProgressMultiRes, CmsHtml5Resource, CmsImageItem } from '@learnway/types';
 import { LearnwayLearningWindowLayout, useLearningWindow } from '@learnway/ui/learning-window';
 import { ContentType } from '@types';
 
@@ -132,13 +132,13 @@ const PreviewLearningWindowComponent: FC<any> = ({
         }
         break;
       case ContentType.BLOG:
-        setBlogInfo(data);
+        setBlogInfo(data as any);
         break;
       case ContentType.VIDEO:
         setVideoInfo(data);
         break;
       case ContentType.HTML5_VIDEO:
-        setHtmlInfo(data.resource);
+        setHtmlInfo(data.resource as CmsHtml5Resource);
         break;
       case ContentType.IMAGE:
         setGalleryInfo({
@@ -149,8 +149,9 @@ const PreviewLearningWindowComponent: FC<any> = ({
         break;
     }
     setFuncInfo({
-      lessonProgress: async (payload) => {
+      lessonProgress: async (payload: any) => {
         console.log('lessonProgress called', payload);
+        return {} as CmsContentProgressMultiRes;
       },
       scormInitialize: async (payload) => {
         console.log('scormInitialize called ', payload);
