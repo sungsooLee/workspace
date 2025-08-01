@@ -4,10 +4,9 @@ import { useState } from 'react';
 
 import tooltipPopoverStyles from '@learnway/styles/bo/assets/styles/modules/tootip-popover.module.css';
 import { Button } from '@learnway/ui/button';
-import { Popover } from '@learnway/ui/Popover';
+import { Popover } from '@learnway/ui/popover';
 import dropdownPopoverStyles from '../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
 import { NoticeBox } from '../../../shared/ui/notice-box';
-
 export const Route = createFileRoute('/_guide/guide/popover')({
   component: RouteComponent,
 });

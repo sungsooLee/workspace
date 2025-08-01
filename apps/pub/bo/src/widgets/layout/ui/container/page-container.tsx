@@ -15,7 +15,7 @@ import styles from '@learnway/styles/bo/assets/styles/modules/page-container.mod
 import tooltipPopoverStyles from '@learnway/styles/bo/assets/styles/modules/tootip-popover.module.css';
 import { Button } from '@learnway/ui/button';
 import { Divider } from '@learnway/ui/elements';
-import { Popover } from '@learnway/ui/Popover';
+import { Popover } from '@learnway/ui/popover';
 import { Tooltip } from '@learnway/ui/tooltip';
 import { NoticeBox } from '../../../../shared/ui/notice-box';
 import { Breadcrumbs } from './breadcrumbs/breadcrumbs';

@@ -3,8 +3,8 @@ import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useFetchAuthUser } from '@learnway/auth/entities';
-import { Popover } from '@learnway/ui/Popover';
 import { Avatar } from '@learnway/ui/avatar';
+import { Popover } from '@learnway/ui/popover';
 
 enum Themes {
   DEFAULT = 'default',
