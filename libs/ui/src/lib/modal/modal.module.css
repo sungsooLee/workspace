@@ -144,6 +144,9 @@
           @apply h-[calc(100%-65px)] !max-h-none p-[16px];
         }
       }
+      [class*='nlp--modal-content'] {
+        @apply !p-[0];
+      }
     }
     [class*='nlp--button'] {
       &[aria-label='Close'] {
@@ -163,11 +166,11 @@
     [class*='modal-content'] {
       @apply !max-h-[calc(100dvh-60px)] px-[16px] pt-[60px];
       [class*='modal-content'] {
-        @apply !p-0 !pb-[16px] border-0;
+        @apply border-0 !p-0 !pb-[16px];
       }
     }
     [class*='footer'] {
-      @apply !py-[16px] !px-0;
+      @apply !px-0 !py-[16px];
       [class*='nlp--button'] {
         @apply rounded-[8px];
       }
@@ -225,40 +228,6 @@
 
 .btn_close {
   @apply absolute right-[16px] top-[12px] z-[3] flex items-center justify-center;
-}
-
-.Fieldset {
-  all: unset;
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.Label {
-  font-size: 15px;
-  color: var(--violet-11);
-  width: 90px;
-  text-align: right;
-}
-
-.Input {
-  all: unset;
-  width: 100%;
-  flex: 1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 4px;
-  padding: 0 10px;
-  font-size: 15px;
-  line-height: 1;
-  color: var(--violet-11);
-  box-shadow: 0 0 0 1px var(--violet-7);
-  height: 35px;
-  &:focus {
-    box-shadow: 0 0 0 2px var(--violet-8);
-  }
 }
 
 .modal_wrap {

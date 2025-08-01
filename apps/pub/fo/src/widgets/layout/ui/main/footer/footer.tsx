@@ -1,14 +1,13 @@
+import { Link } from '@tanstack/react-router';
 import { memo, useState } from 'react';
 import { isMobile } from 'react-device-detect';
-import { Link } from '@tanstack/react-router';
-import { useTranslation } from 'react-i18next';
 
 import logoImage from '@learnway/styles/fo/assets/images/logo_foot.png';
 
 import styles from '@learnway/styles/fo/widgets/layout/ui/main/footer/footer.module.css';
-import { AgreementPopup, PrivacyPopup, ContactPopup } from '../../../../../features/auth';
-import { useModal } from '@learnway/ui/modal';
 import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
+import { AgreementPopup, PrivacyPopup } from '../../../../../features/auth';
 function FooterComponent() {
   const { openModal } = useModal();
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
@@ -101,7 +100,7 @@ function FooterComponent() {
           </div>
 
           {/* <div className={styles.family_site_info}>
-           
+
             <Dropdown
               options={options}
               value={selectedValues}
