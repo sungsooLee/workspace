@@ -11,7 +11,7 @@ export const Route = createFileRoute('/_layout/course/registration-pending')({
 });
 
 function RouteComponent() {
-  const { alert: openAlert, openModal } = useModal();
+  const { alert: openAlert, openModal, closeAllModal } = useModal();
 
   const routerState = useRouterState();
   const router = useRouter();
@@ -48,9 +48,11 @@ function RouteComponent() {
       enrollQueueStatusType === 'QUOTA_EXCEED' ||
       enrollQueueStatusType === 'ERROR'
     ) {
+      closeAllModal();
       router.navigate({
         to: '/course/registration-complete',
         state: { enrollQueueId },
+        replace: true,
       });
     }
   }, [enrollQueueStatusType]);
