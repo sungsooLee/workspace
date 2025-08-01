@@ -1,4 +1,4 @@
-export * from './lib/entities/cms/learning-resource.type';
+export * from './lib/entities/cms/cms-learning-resource.type';
 export * from './lib/entities/company';
 export * from './lib/entities/companyDept';
 export * from './lib/entities/companyLoginRestriction';

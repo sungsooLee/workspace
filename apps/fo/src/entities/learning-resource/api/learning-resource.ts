@@ -7,7 +7,7 @@ import {
   CmsEtcResource,
   CmsHtml5LearningReq,
   CmsImageResource,
-  CmsVideoContentInfoResDto,
+  CmsVideoResource,
 } from '@learnway/types';
 
 export const learningResourceApi = {
@@ -77,7 +77,7 @@ export const learningResourceApi = {
 
   videoWwatchInitialize: (payload: any) => {
     const { contentUuid } = payload;
-    return httpService.get<CmsVideoContentInfoResDto>(
+    return httpService.get<CmsVideoResource>(
       `${CMSApiPrefix()}/video/${contentUuid}/watch/initialize`,
       payload,
     );
