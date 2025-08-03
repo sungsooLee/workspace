@@ -8,12 +8,10 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/utilities';
 
-/*
-@import './assets/styles/components/index.css';
-@import './assets/styles/global.css';
-*/
-@import '../../../libs/styles/src/lib/bo/assets/styles/components/index.css';
-@import '../../../libs/styles/src/lib/bo/assets/styles/global.css';
+/* 핵심 스타일들만 메인 번들에 포함 - 최소한으로 축소 */
+/* 전체 import 제거하여 번들 크기 대폭 감소 */
+
+/* 나머지는 제거하여 lazy loading으로 처리 */
 
 @layer base {
 }

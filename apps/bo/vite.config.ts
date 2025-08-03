@@ -19,6 +19,7 @@ export default defineConfig(({ mode }) => {
   return {
     root: __dirname,
     cacheDir: '../../node_modules/.vite/apps/bo',
+    publicDir: 'public',
     server: {
       port: 4200,
       host: 'localhost',
@@ -41,8 +42,26 @@ export default defineConfig(({ mode }) => {
       },
     },
     optimizeDeps: {
-      include: ['react', 'react-dom', '@tanstack/react-router', '@tanstack/react-query'],
-      exclude: ['@tanstack/router-devtools', '@tanstack/react-query-devtools'],
+      include: [
+        'react',
+        'react-dom',
+        '@tanstack/react-router',
+        '@tanstack/react-query',
+        '@tanstack/react-table',
+        'react-hook-form',
+        '@hookform/resolvers',
+        'zod',
+        'dayjs',
+        'lodash-es',
+      ],
+      exclude: [
+        '@tanstack/router-devtools',
+        '@tanstack/react-query-devtools',
+        '@learnway/ui',
+        '@learnway/shared',
+        '@learnway/config',
+        '@learnway/hooks',
+      ],
     },
     preview: {
       port: 4300,
@@ -54,7 +73,7 @@ export default defineConfig(({ mode }) => {
       nxCopyAssetsPlugin(['*.md']),
       !isTest &&
         tanstackRouter({
-          autoCodeSplitting: false, // 일시적으로 비활성화
+          autoCodeSplitting: true,
           generatedRouteTree: './src/routeTree.gen.ts',
         }),
       svgr({
@@ -99,15 +118,19 @@ export default defineConfig(({ mode }) => {
       minify: 'esbuild',
       target: 'es2020',
       cssCodeSplit: true,
+      cssMinify: true,
       chunkSizeWarningLimit: 1000,
       rollupOptions: {
+        treeshake: true,
         output: {
           entryFileNames: 'assets/[name].[hash].js',
           chunkFileNames: (chunkInfo) => {
-            // lazy 청크는 별도 폴더로 분리
+            // Tanstack Router의 lazy 로딩된 청크들
             const facadeModuleId = chunkInfo.facadeModuleId ? chunkInfo.facadeModuleId : '';
-            if (facadeModuleId.includes('.lazy.')) {
-              return 'assets/lazy/[name].[hash].js';
+            const isDynamicImport = chunkInfo.isDynamicEntry || facadeModuleId.includes('.lazy.');
+
+            if (isDynamicImport) {
+              return 'assets/[name].[hash].js';
             }
             return 'assets/[name].[hash].js';
           },
@@ -125,7 +148,11 @@ export default defineConfig(({ mode }) => {
           },
           manualChunks: {
             vendor: ['react', 'react-dom'],
-            router: ['react-router-dom', '@tanstack/react-router'],
+
+            router: ['@tanstack/react-router'],
+            query: ['@tanstack/react-query'],
+            table: ['@tanstack/react-table'],
+
             ui: [
               '@radix-ui/react-dialog',
               '@radix-ui/react-dropdown-menu',
@@ -135,11 +162,12 @@ export default defineConfig(({ mode }) => {
               '@radix-ui/react-tabs',
               '@radix-ui/react-toast',
             ],
-            query: ['@tanstack/react-query'],
-            table: ['@tanstack/react-table'],
-            utils: ['lodash-es', 'dayjs', 'date-fns'],
-            icons: ['@radix-ui/react-icons', 'lucide-react'],
+
             form: ['react-hook-form', '@hookform/resolvers', 'zod'],
+
+            utils: ['lodash-es', 'dayjs', 'date-fns'],
+
+            icons: ['@radix-ui/react-icons', 'lucide-react'],
           },
         },
         external: [],
