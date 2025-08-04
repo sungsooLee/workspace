@@ -22,7 +22,6 @@ interface Props {
 }
 
 function VideoViewComponent({ content, hasMapping }: Props) {
-  console.log('🚀 ~ VideoViewComponent ~ content:', content);
   const { confirm: openConfirm } = useModal();
 
   const { provider, onSubmit, updateFormData, formState, getValues } = useDynamicForm2();

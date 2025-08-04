@@ -6,7 +6,7 @@ import { useCurrentRoute } from '@learnway/hooks';
 import { PageContainer } from '@shared/ui';
 import { useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
-import { VideoView } from '@widgets/learning/learning-resource/video-view';
+import { EtcView, HtmlView, ScormView, VideoView } from '@widgets/learning/learning-resource';
 
 export const Route = createFileRoute('/_layout/learning/learning-resource/view')({
   component: RouteComponent,
@@ -24,8 +24,8 @@ function RouteComponent() {
     learningResourceQueryOptions.getCurriculumsMapping(contentUuid),
   );
 
-  if (fetchError) {
-    console.log('🚀 ~ RouteComponent ~ fetchError:', fetchError);
+  if (!contentUuid || fetchError) {
+    if (fetchError) console.error('🚀 ~ RouteComponent ~ fetchError:', fetchError);
     return <NotFound />;
   }
 
@@ -36,6 +36,12 @@ function RouteComponent() {
   switch (content.contentType) {
     case LEARNING_TYPE.VIDEO:
       return <VideoView content={content} hasMapping={hasMapping} />;
+    case LEARNING_TYPE.SCORM:
+      return <ScormView content={content} hasMapping={hasMapping} />;
+    case LEARNING_TYPE.ETC:
+      return <EtcView content={content} hasMapping={hasMapping} />;
+    case LEARNING_TYPE.HTML5_VIDEO:
+      return <HtmlView content={content} hasMapping={hasMapping} />;
   }
 
   return <NotFound />;
