@@ -20,7 +20,7 @@
         var(--blue92) 100%
       );
       .auth_area {
-        @apply pt-[56px];
+        @apply pt-0;
       }
     }
 
