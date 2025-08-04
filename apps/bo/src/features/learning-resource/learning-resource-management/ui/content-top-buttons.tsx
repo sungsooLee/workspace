@@ -137,7 +137,7 @@ const ContentTopButtonsComponent = ({ provider, hasMapping = false }: Props) => 
 
   return (
     <>
-      {!isDrafted && (
+      {contentUuid && !isDrafted && (
         <>
           <Button variant="gray" size="sm">
             {t('과정 개설')}
@@ -171,7 +171,7 @@ const ContentTopButtonsComponent = ({ provider, hasMapping = false }: Props) => 
       <Button variant="point" size="sm" onClick={handleDelete} disabled={hasMapping}>
         {t('삭제')}
       </Button>
-      {!isDrafted && (
+      {contentUuid && !isDrafted && (
         <Button
           variant="point"
           size="sm"

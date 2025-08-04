@@ -1,11 +1,13 @@
-import { useModal } from '@learnway/ui/modal';
 /* IA110 / NLP_BO_CMS_1013 - 나의 학습자원 > 블로그 삳세 */
-import { useCallback, useRef } from 'react';
-import { createLazyFileRoute } from '@tanstack/react-router';
-import { useTranslation } from 'react-i18next';
-import { useDynamicForm2 } from '@learnway/hooks';
-import { ContentCreateType } from '@types';
 import defaultImage from '@assets/images/thumb/img_thumb_default.jpg';
+import {
+  ContentTopButtons,
+  getTooltipContent,
+  LearningResourceBlogDetail,
+} from '@features/learning-resource';
+import { useBlogContentForm } from '@features/learning-resource/learning-resource-management/service';
+import { useDynamicForm2 } from '@learnway/hooks';
+import { useModal } from '@learnway/ui/modal';
 import {
   ContentsButtons,
   MainContents,
@@ -13,23 +15,17 @@ import {
   PreviewLearningWindow,
   SubContents,
 } from '@shared/ui';
-import {
-  useBlogContentForm,
-  useFetchBlogInfo,
-} from '@features/learning-resource/learning-resource-management/service';
-import {
-  ContentTopButtons,
-  getTooltipContent,
-  LearningResourceBlogDetail,
-} from '@features/learning-resource';
-
+import { ContentCreateType, ContentInformation } from '@types';
+import { useCallback, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from './blog-detail.module.css';
 
-export const Route = createLazyFileRoute('/_layout/learning/resource/blog/view')({
-  component: RouteComponent,
-});
+interface Props {
+  content?: ContentInformation;
+  hasMapping?: boolean;
+}
 
-function RouteComponent() {
+function RouteComponent({ content, hasMapping }: Props) {
   const { t } = useTranslation();
 
   const formRef = useRef<HTMLFormElement>(null);
@@ -37,16 +33,14 @@ function RouteComponent() {
   const form = useDynamicForm2();
   const { provider, onSubmit } = form;
 
-  const { contentUuid, data, hasMapping, listParam } = useFetchBlogInfo();
-
   const { openModal } = useModal();
 
   const openBlogPreviewPopup = useCallback(async () => {
     await openModal({
       width: 'full',
-      content: <PreviewLearningWindow contentUuid={contentUuid} />,
+      content: <PreviewLearningWindow contentUuid={content?.contentUuid} />,
     });
-  }, [contentUuid]);
+  }, [content?.contentUuid]);
 
   const { handleOnSubmit } = useBlogContentForm({ provider });
 
@@ -54,9 +48,9 @@ function RouteComponent() {
     <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
       <PageContainer
         tooltipProps={{
-          show: !!hasMapping || data?.createType !== ContentCreateType.MANUAL,
-          content: t(getTooltipContent(data?.createType)),
-          type: data?.createType,
+          show: !!hasMapping || content?.createType !== ContentCreateType.MANUAL,
+          content: t(getTooltipContent(content?.createType)),
+          type: content?.createType,
         }}
       >
         <ContentsButtons>
@@ -66,8 +60,8 @@ function RouteComponent() {
         <MainContents>
           <LearningResourceBlogDetail
             form={form}
-            contentUuid={contentUuid}
-            blogInfo={data}
+            contentUuid={content?.contentUuid}
+            blogInfo={content}
             hasMapping={hasMapping}
           />
         </MainContents>
@@ -75,7 +69,7 @@ function RouteComponent() {
         <SubContents>
           <div className={styles.sub_container}>
             <strong className={styles.title}>{t('cms.content.ContentType.BLOG')}</strong>
-            {contentUuid && (
+            {content?.contentUuid && (
               <p className={styles.preview} onClick={openBlogPreviewPopup}>
                 {t('LABEL.button.preview')}
               </p>
@@ -89,3 +83,4 @@ function RouteComponent() {
     </form>
   );
 }
+export const BlogView = RouteComponent;

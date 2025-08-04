@@ -19,12 +19,7 @@ import { PreviewLearningWindow } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from '@tanstack/react-router';
-import {
-  ContentCreateType,
-  ContentExportRes,
-  GetSharedBoxContentsRes,
-  SharedBoxContent,
-} from '@types';
+import { ContentCreateType, ContentExportRes, SharedBoxContent } from '@types';
 import { t } from 'i18next';
 import { useEffect, useState } from 'react';
 
@@ -36,33 +31,36 @@ function LearningResourceSharedTableComponent() {
 
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { openModal } = useModal();
+  const { openModal, confirm: openConfirm } = useModal();
 
   const { exportContent } = usePostContentExport({
     onSuccess: (result: ContentExportRes) => {
       if (result.destContentUuid) {
-        setGridData(
-          (prev) =>
-            ({
-              ...prev,
-              content: prev?.content.map((_) =>
-                _.sourceContentUuid === result.srcContentUuid
-                  ? { ..._, sharedCount: _.sharedCount + 1 }
-                  : _,
-              ),
-            }) as GetSharedBoxContentsRes,
-        );
+        router.navigate({
+          to: '/learning/learning-resource',
+          state: {
+            listParam: {
+              tenantId: result.destTenantId,
+              channelUuid: result.destChannelUuid,
+            },
+          },
+        });
       }
     },
   });
 
-  const handleShareButton = (row: SharedBoxContent) => {
-    exportContent({
-      tenantId: row.destTenantId,
-      contentUuid: row.sourceContentUuid,
-      destChannelUuid: row.destChannelUuid,
-      languageCountryCode: row.languageCountryCode,
+  const handleShareButton = async (row: SharedBoxContent) => {
+    const confirmed = await openConfirm({
+      title: t('가져가시겠습니까?'),
+      content: t("'확인' 선택 시 학습자원 목록으로 이동합니다."),
     });
+    if (confirmed)
+      exportContent({
+        tenantId: row.destTenantId,
+        contentUuid: row.sourceContentUuid,
+        destChannelUuid: row.destChannelUuid,
+        languageCountryCode: row.languageCountryCode,
+      });
   };
 
   const searchConfig: any = {
@@ -71,7 +69,7 @@ function LearningResourceSharedTableComponent() {
         {
           name: 'sourceTenantId',
           type: 'dropdown',
-          label: t('LABEL.form.label.tenant', '테넌트'),
+          label: t('발신 테넌트'),
           format: 'object',
           presetOptionLabel: t('LABEL.form.label.select', '선택'),
           value: authUser?.activeTenant?.tenantId,
@@ -79,7 +77,7 @@ function LearningResourceSharedTableComponent() {
         {
           name: 'sourceChannelUuid',
           type: 'dropdown',
-          label: t('LABEL.form.label.channel', '채널'),
+          label: t('발신 채널'),
           format: 'object',
           presetOptionLabel: t('LABEL.form.label.select', '선택'),
           value: '',
@@ -186,16 +184,16 @@ function LearningResourceSharedTableComponent() {
       },
       {
         size: 127,
-        name: 'sourceTenantName',
-        label: t('LABEL.grid.column.tenant', '테넌트'),
+        name: 'destTenantName',
+        label: t('수신 테넌트'),
         meta: {
           size: 'auto',
         },
       },
       {
         size: 153,
-        name: 'sourceChannelName',
-        label: t('LABEL.grid.column.channel', '채널'),
+        name: 'destChannelName',
+        label: t('수신 채널'),
         meta: {
           size: 'auto',
         },
@@ -247,11 +245,7 @@ function LearningResourceSharedTableComponent() {
         name: 'shareButtonUtil',
         label: t('LABEL.grid.column.util', '기능'),
         render: (_: any) => (
-          <Button
-            variant="gray2"
-            disabled={_.row.original.sharedCount}
-            onClick={() => handleShareButton(_.row.original)}
-          >
+          <Button variant="gray2" onClick={() => handleShareButton(_.row.original)}>
             {t('가져가기')}
           </Button>
         ),
