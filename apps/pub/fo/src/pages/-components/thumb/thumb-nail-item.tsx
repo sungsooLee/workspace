@@ -1,10 +1,10 @@
-import React from 'react';
-import styles from './thumb-nail-item.module.css';
-import { Link } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
-import { Thumbnail } from '@learnway/ui/thumbnail';
 import { Badge } from '@learnway/ui/badge';
+import { ImageFallBack } from '@learnway/ui/image-fallback/image-fallback';
+import { Link } from '@tanstack/react-router';
+import React from 'react';
 import ToggleButton from '../toggle-button/toggle-button';
+import styles from './thumb-nail-item.module.css';
 
 export interface ThumbnailData {
   linkUrl?: string;
@@ -45,12 +45,12 @@ const ThumbnailItem: React.FC<ThumbnailItemProps> = ({
       <Link to={data.linkUrl} className={styles.thumbnail_link}>
         {/* thumbnail , badge */}
         <div className={styles.thumbnail_view}>
-          <Thumbnail
-            stacked={stacked}
-            path={data.imageUrl}
-            enableHover={false}
+          <ImageFallBack
+            imageUrl={data.imageUrl}
             className={styles.thumbnail_image}
+            stacked={stacked}
           />
+
           {data.labelCustomNode && <div className={styles.custom_node}>{data.labelCustomNode}</div>}
           {data.indexNumber && <span className={styles.index_node}>{data.indexNumber}</span>}
         </div>

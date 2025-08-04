@@ -1,15 +1,15 @@
-import { FC, useState } from 'react';
 import { cn, getRandomId } from '@learnway/shared';
 import { Link } from '@tanstack/react-router';
+import { FC, useState } from 'react';
 
 import {
-  IcoPlay,
-  IcoStar,
+  IcoArrowForward,
   IcoEye,
   IcoHeart,
+  IcoPlay,
   IcoPlus,
-  IcoArrowForward,
   IcoSearch,
+  IcoStar,
 } from '@learnway/icons';
 import { isMobile } from 'react-device-detect';
 
@@ -20,15 +20,15 @@ import shortsImg from '@learnway/styles/fo/assets/images/temp/img_shorts.jpg';
 import ThumbnailList from '../../../-components/thumb/thumb-nail-list';
 
 /* style */
-import styles from './course-contents.module.css';
-import { BannerItem } from './banner-item'; // 상단 배너
-import { ShortsItem } from './shorts-item'; // 하단 shorts
 import { Badge } from '@learnway/ui/badge';
-import { Carousel } from '@learnway/ui/carousel';
 import { Button } from '@learnway/ui/button';
+import { Carousel } from '@learnway/ui/carousel';
 import { Dropdown } from '@learnway/ui/dropdown';
+import { ImageFallBack } from '@learnway/ui/image-fallback/image-fallback';
 import { Input } from '@learnway/ui/input';
-import { Thumbnail } from '@learnway/ui/thumbnail';
+import { BannerItem } from './banner-item'; // 상단 배너
+import styles from './course-contents.module.css';
+import { ShortsItem } from './shorts-item'; // 하단 shorts
 
 const CourseHomeComponent: FC = () => {
   // Search
@@ -733,7 +733,7 @@ const CourseHomeComponent: FC = () => {
       {/* package_list_wrap */}
       <div className={styles.package_list_wrap}>
         <div className={styles.package_banner}>
-          <Thumbnail stacked={true} path={bannerImg} enableHover={false} />
+          <ImageFallBack stacked={true} imageUrl={bannerImg} />
           <div className={styles.package_copy}>
             <div className={styles.badge_view}>
               <Badge

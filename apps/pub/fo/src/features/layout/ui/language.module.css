@@ -49,7 +49,7 @@
   }
 
   .lang_area {
-    @apply max-h-none !p-0;
+    @apply -mt-[16px] max-h-none !p-0;
     .lang_list {
       li {
         button {
