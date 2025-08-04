@@ -73,7 +73,7 @@ function LearningResourceSharedTableComponent() {
         {
           name: 'sourceTenantId',
           type: 'dropdown',
-          label: t('LABEL.form.label.tenant', '테넌트'),
+          label: t('발신 테넌트'),
           format: 'object',
           presetOptionLabel: t('LABEL.form.label.select', '선택'),
           value: authUser?.activeTenant?.tenantId,
@@ -81,7 +81,7 @@ function LearningResourceSharedTableComponent() {
         {
           name: 'sourceChannelUuid',
           type: 'dropdown',
-          label: t('LABEL.form.label.channel', '채널'),
+          label: t('발신 채널'),
           format: 'object',
           presetOptionLabel: t('LABEL.form.label.select', '선택'),
           value: '',
@@ -188,16 +188,16 @@ function LearningResourceSharedTableComponent() {
       },
       {
         size: 127,
-        name: 'sourceTenantName',
-        label: t('LABEL.grid.column.tenant', '테넌트'),
+        name: 'destTenantName',
+        label: t('수신 테넌트'),
         meta: {
           size: 'auto',
         },
       },
       {
         size: 153,
-        name: 'sourceChannelName',
-        label: t('LABEL.grid.column.channel', '채널'),
+        name: 'destChannelName',
+        label: t('수신 채널'),
         meta: {
           size: 'auto',
         },
