@@ -1,11 +1,10 @@
-import { useCallback } from 'react';
-import { TreeNode } from '@learnway/ui/tree-view';
-import { CurriculumResponse, MAPPING_CURRICULUM_TYPE, MODULE_TYPE, LESSON_TYPE } from '@types';
 import { getTimeValueFromHour } from '@learnway/shared';
-import { findParentNode, buildTreeFromCurriculumData } from '../services';
+import { TreeNode } from '@learnway/ui/tree-view';
 import { useQueryClient } from '@tanstack/react-query';
-import { queryKeys } from '@entities/curriculum';
 import { useRouter } from '@tanstack/react-router';
+import { CurriculumResponse, LESSON_TYPE, MAPPING_CURRICULUM_TYPE, MODULE_TYPE } from '@types';
+import { useCallback } from 'react';
+import { buildTreeFromCurriculumData, findParentNode } from '../services';
 
 interface UseCurriculumActionsProps {
   curriculumId: number;
@@ -46,7 +45,8 @@ export const useCurriculumActions = ({
   router,
   resetFormState,
   expandedKeys,
-  setExpandedKeys }: UseCurriculumActionsProps) => {
+  setExpandedKeys,
+}: UseCurriculumActionsProps) => {
   const queryClient = useQueryClient();
 
   const handleFormSubmit = useCallback(
@@ -73,12 +73,15 @@ export const useCurriculumActions = ({
               vendorTelCountryCode: data.vendorTelNo.nationCode,
               vendorTelNo: data.vendorTelNo.number,
               vendorCoordinatorUuid: data.vendorCoordinatorUuid,
-              vendorCoordinatorName: data.vendorCoordinatorName }) };
+              vendorCoordinatorName: data.vendorCoordinatorName,
+            }),
+          };
 
           if (isEditing && formState.selectedNode && curriculumDetail) {
             const updateData = {
               ...curriculumData,
-              curriculumId: curriculumDetail.curriculumId };
+              curriculumId: curriculumDetail.curriculumId,
+            };
             api.updateCurriculum(updateData, {
               onSuccess: (updatedCurriculum: CurriculumResponse) => {
                 const newNode: TreeNode = {
@@ -88,9 +91,11 @@ export const useCurriculumActions = ({
                   type: MAPPING_CURRICULUM_TYPE.CURRICULUM,
                   parentId: parentNode?.id || null,
                   children: [],
-                  data: updatedCurriculum };
+                  data: updatedCurriculum,
+                };
                 handleNodeSelect(newNode);
-              } });
+              },
+            });
           } else {
             api.createCurriculum(curriculumData, {
               onSuccess: (createdCurriculum: CurriculumResponse) => {
@@ -106,9 +111,11 @@ export const useCurriculumActions = ({
                   type: MAPPING_CURRICULUM_TYPE.CURRICULUM,
                   parentId: parentNode?.id || null,
                   children: [],
-                  data: createdCurriculum };
+                  data: createdCurriculum,
+                };
                 handleNodeSelect(newNode);
-              } });
+              },
+            });
           }
           break;
         }
@@ -128,7 +135,9 @@ export const useCurriculumActions = ({
                   children: [],
                   data: {
                     moduleId: updateModule.moduleId,
-                    ...updateModule } };
+                    ...updateModule,
+                  },
+                };
                 clearAllValidators();
                 handleNodeSelect(updatedNode, true);
               });
@@ -142,7 +151,9 @@ export const useCurriculumActions = ({
               ...(data.moduleType === MODULE_TYPE.FIXED && {
                 orgnId: data.orgnId,
                 contentUuid: data.contentUuid,
-                contentDuration: data.contentDuration }) };
+                contentDuration: data.contentDuration,
+              }),
+            };
 
             const createModuleFn = api.moduleCreateStrategy(moduleType as MODULE_TYPE);
             if (createModuleFn) {
@@ -160,7 +171,9 @@ export const useCurriculumActions = ({
                     moduleId: createdModuleId,
                     moduleName: data.moduleName,
                     moduleType: data.moduleType,
-                    moduleDescription: data.moduleDescription } };
+                    moduleDescription: data.moduleDescription,
+                  },
+                };
 
                 expandParentNodes(parentNode);
                 handleNodeSelect(newNode, true);
@@ -209,7 +222,8 @@ export const useCurriculumActions = ({
           lessonId: extractedLessonId,
           lessonName: data.lessonName,
           lessonDescription: data.lessonDescription,
-          learningTime: getTimeValueFromHour(data.learningTime) };
+          learningTime: getTimeValueFromHour(data.learningTime),
+        };
 
         if (isParentCurriculum || isParentGeneralModule) {
           api.updateLessonByGeneral(lessonData, {
@@ -246,7 +260,8 @@ export const useCurriculumActions = ({
                   handleNodeSelect(updatedLessonNode, true);
                 }
               }
-            } });
+            },
+          });
         } else if (isParentFixedModule) {
           api.updateLessonByFixed(
             { lessonId: extractedLessonId, lessonName: data.lessonName },
@@ -261,7 +276,8 @@ export const useCurriculumActions = ({
                     'lesson',
                     extractedLessonId,
                     parentNode?.data.moduleId,
-                  ] });
+                  ],
+                });
 
                 const updatedNode: TreeNode = {
                   id: updatedLessonId,
@@ -276,10 +292,13 @@ export const useCurriculumActions = ({
                     lessonType: data.lessonType || 'TOC',
                     lessonDescription: data.lessonDescription,
                     learningTime: getTimeValueFromHour(data.learningTime),
-                    moduleId: parentNode?.data.moduleId } };
+                    moduleId: parentNode?.data.moduleId,
+                  },
+                };
                 expandParentNodes(parentNode);
                 handleNodeSelect(updatedNode, true);
-              } },
+              },
+            },
           );
         }
       } else {
@@ -288,12 +307,14 @@ export const useCurriculumActions = ({
           lessonName: data.lessonName,
           lessonDescription: data.lessonDescription,
           lessonType: data.lessonType || 'GENERAL',
-          learningTime: getTimeValueFromHour(data.learningTime) };
+          learningTime: getTimeValueFromHour(data.learningTime),
+        };
 
         const lessonDataCurriculum = {
           ...lessonData,
           contentUuid: data.contentUuid,
-          contentName: data.contentName };
+          contentName: data.contentName,
+        };
 
         const saveLessonData =
           data.lessonType === LESSON_TYPE.GENERAL ? lessonData : lessonDataCurriculum;
@@ -304,7 +325,8 @@ export const useCurriculumActions = ({
           api.createLessonByCurriculum(
             {
               ...saveLessonData,
-              curriculumId },
+              curriculumId,
+            },
             {
               onSuccess: async (createdLessonResponse: any) => {
                 onFormChange();
@@ -345,13 +367,15 @@ export const useCurriculumActions = ({
                     handleNodeSelect(createdLessonNode, true);
                   }
                 }
-              } },
+              },
+            },
           );
         } else {
           api.createLessonByModule(
             {
               ...saveLessonData,
-              moduleId: parentNode?.data.moduleId },
+              moduleId: parentNode?.data.moduleId,
+            },
             {
               onSuccess: async (createdLessonId: number) => {
                 onFormChange();
@@ -369,11 +393,14 @@ export const useCurriculumActions = ({
                     lessonType: data.lessonType || 'TOC',
                     lessonDescription: data.lessonDescription,
                     learningTime: getTimeValueFromHour(data.learningTime),
-                    moduleId: parentNode?.data.moduleId } };
+                    moduleId: parentNode?.data.moduleId,
+                  },
+                };
 
                 expandParentNodes(parentNode);
                 handleNodeSelect(newNode, true);
-              } },
+              },
+            },
           );
         }
       }
@@ -384,7 +411,8 @@ export const useCurriculumActions = ({
   const handleDeleteNode = useCallback(
     ({
       selectedNode: node,
-      parentNode }: {
+      parentNode,
+    }: {
       selectedNode: TreeNode | null;
       parentNode: TreeNode | null;
     }) => {
@@ -398,6 +426,7 @@ export const useCurriculumActions = ({
           node.type === MAPPING_CURRICULUM_TYPE.LESSON
             ? node.moduleId
             : api.extractIdFromNodeId(node.id);
+        handleNodeSelect(null);
 
         api.deleteCurriculumModule(
           { curriculumId, moduleId },
@@ -409,12 +438,14 @@ export const useCurriculumActions = ({
               if (rootNode) {
                 handleNodeSelect(rootNode);
               }
-            } },
+            },
+          },
         );
       } else if (node.type === MAPPING_CURRICULUM_TYPE.LESSON && node.level === 2) {
         if (!parentNode) return;
         const lessonId = api.extractIdFromNodeId(node.id);
         const moduleId = api.extractIdFromNodeId(parentNode.id);
+        handleNodeSelect(null);
 
         api.deleteCurriculumLesson(
           { moduleId, lessonId },
@@ -426,7 +457,8 @@ export const useCurriculumActions = ({
               if (rootNode) {
                 handleNodeSelect(rootNode);
               }
-            } },
+            },
+          },
         );
       } else if (node.type === MAPPING_CURRICULUM_TYPE.CURRICULUM) {
         const curriculumId = api.extractIdFromNodeId(node.id);
@@ -436,8 +468,10 @@ export const useCurriculumActions = ({
             onSuccess: () => {
               if (router)
                 router.navigate({
-                  to: '/learning-operate/curriculum' });
-            } },
+                  to: '/learning-operate/curriculum',
+                });
+            },
+          },
         );
       }
     },
@@ -479,7 +513,8 @@ export const useCurriculumActions = ({
           fromMappingId: api.extractIdFromNodeId(sourceNode.id),
           toParentMappingType,
           toParentMappingId,
-          sortOrder };
+          sortOrder,
+        };
         api.dndCurriculumMutation.mutate(payload, {
           onSuccess: async (data: any) => {
             const refreshedData = await refetchCurriculumDetail();
@@ -517,7 +552,8 @@ export const useCurriculumActions = ({
                 handleNodeSelect(movedNode, true);
               }
             }
-          } });
+          },
+        });
       }
     },
     [api, curriculumId, onFormChange, handleNodeSelect, treeData, expandedKeys, setExpandedKeys],
@@ -526,5 +562,6 @@ export const useCurriculumActions = ({
   return {
     handleFormSubmit,
     handleDeleteNode,
-    handleTreeAction };
+    handleTreeAction,
+  };
 };
