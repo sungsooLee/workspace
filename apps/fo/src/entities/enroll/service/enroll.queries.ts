@@ -14,6 +14,8 @@ export const queryKeys = {
     ['courseRegistrationStatus', enrollQueueId] as const,
   singleCourseApplicationQueue: ['singleCourseApplicationQueue'] as const,
   deleteCourseApplication: ['deleteCourseApplication'] as const,
+  postCourseWaiting: ['postCourseWaiting'] as const,
+  deleteCourseWaiting: ['deleteCourseWaiting'] as const,
 };
 
 export const queryOptions = {
@@ -40,5 +42,21 @@ export const queryOptions = {
 
   deleteCourseApplication: (): UseMutationOptions<unknown, unknown, EnrollDeleteRequest> => ({
     mutationFn: (body: EnrollDeleteRequest) => EnrollService.deleteEnroll(body),
+  }),
+
+  postCourseWaiting: (body: number): UseMutationOptions<number> => ({
+    mutationKey: queryKeys.postCourseWaiting,
+    mutationFn: () => EnrollService.createEnrollWaiting(body),
+    onSuccess: (data) => {
+      // console.log(data);
+    },
+  }),
+
+  deleteCourseWaiting: (body: number): UseMutationOptions<number> => ({
+    mutationKey: queryKeys.deleteCourseWaiting,
+    mutationFn: () => EnrollService.deleteEnrollWaiting(body),
+    onSuccess: (data) => {
+      // console.log(data);
+    },
   }),
 };

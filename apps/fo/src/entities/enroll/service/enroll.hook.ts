@@ -28,3 +28,11 @@ export function useDeleteCourseApplication(
     ...mutation,
   };
 }
+
+export function usePostCourseWaiting(body: any) {
+  return useMutation(queryOptions.postCourseWaiting(body));
+}
+
+export function useDeleteCourseWaiting(body: any) {
+  return useMutation(queryOptions.deleteCourseWaiting(body));
+}

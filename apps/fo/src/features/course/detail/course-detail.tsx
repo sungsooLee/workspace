@@ -146,15 +146,6 @@ export function CourseDetail() {
     });
   };
 
-  // Alert 퍼블수정 20250708 (전체적으로 수정)
-  // 수강대기 신청 완료
-  const CourseWaitAlert = () => {
-    openAlert({
-      title: '수강대기 신청',
-      content: '수강대기 신청이 완료되었습니다.',
-    });
-  };
-
   // 수강신청 완료
   const CourseEnrollComplete = () => {
     openAlert({
