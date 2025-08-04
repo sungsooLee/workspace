@@ -14,6 +14,7 @@ const CourseListComponent = () => {
     provider,
     getValues,
     onSubmit,
+    onReset,
     gConfig,
     selectedRows,
     buttonState,
@@ -24,6 +25,8 @@ const CourseListComponent = () => {
     handleCopyClick,
     handleShareClick,
   } = useCoursePage();
+
+  console.log('🚀 ~ CourseListComponent ~ onReset:', onReset);
 
   return (
     <PageContainer>
@@ -48,7 +51,12 @@ const CourseListComponent = () => {
 
       <MainContents>
         {/* 검색 */}
-        <CourseSearchForm provider={provider} onSubmit={onSubmit} onSearch={handleOnSearch} />
+        <CourseSearchForm
+          provider={provider}
+          onSubmit={onSubmit}
+          onSearch={handleOnSearch}
+          onReset={onReset}
+        />
         {/* Divider */}
         <Divider />
         {/* 그리드 */}

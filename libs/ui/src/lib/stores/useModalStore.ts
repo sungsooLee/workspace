@@ -1,6 +1,6 @@
+import { last } from 'lodash-es';
 import { create } from 'zustand';
 import { ModalConfig } from '../modal/type';
-import { last } from 'lodash-es';
 
 interface ModalStore {
   modals: ModalConfig[]; // modal stack

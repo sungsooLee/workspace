@@ -17,17 +17,19 @@ interface CourseSearchFormProps {
   provider: any;
   onSubmit: (handler: (data: CourseSearchFormData) => void) => (event: React.FormEvent) => void;
   onSearch: (data: CourseSearchFormData) => void;
+  onReset: () => void;
 }
 
 export const CourseSearchForm: React.FC<CourseSearchFormProps> = ({
   provider,
   onSubmit,
   onSearch,
+  onReset,
 }) => {
   const { t } = useTranslation();
 
   return (
-    <SearchBoxForm onSearch={onSubmit(onSearch)}>
+    <SearchBoxForm onSearch={onSubmit(onSearch)} onReset={onReset}>
       <ContentsRow>
         {/* 테넌트 */}
         <FormRow2
