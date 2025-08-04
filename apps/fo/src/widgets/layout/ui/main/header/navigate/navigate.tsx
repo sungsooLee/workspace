@@ -104,4 +104,7 @@ function NavigateComponent({ onMouseEnter, hoverMenu }: NavigateComponentProps) 
   );
 }
 
+/**
+ * @description PC GNB 전체메뉴 NLP_FO_GNB_1000
+ */
 export const Navigate = memo(NavigateComponent);
