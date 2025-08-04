@@ -135,6 +135,9 @@
           .icon_arrow {
             @apply ml-auto h-[16px] w-[16px] shrink-0 -rotate-45 stroke-[var(--gray75)];
           }
+          &:not(:has(.btn_delete)) a {
+            @apply flex-1;
+          }
           &:not(:first-child) {
             @apply border-t-[1px] border-solid border-[var(--gray95)];
           }
