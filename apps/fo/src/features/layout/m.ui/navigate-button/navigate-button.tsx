@@ -1,12 +1,12 @@
-import { memo } from 'react';
 import { Link } from '@tanstack/react-router';
+import { memo } from 'react';
 
-import { IcoArray, IcoHome03, IcoSetting01 } from '@learnway/icons';
+import { IcoHome03, IcoMenu01 } from '@learnway/icons';
 
 import { MobileNavigateModal } from './navigate-modal';
 
-import styles from '@learnway/styles/fo/features/layout/m.ui/navigate-button/navigate-button.module.css';
 import '@learnway/styles/fo/features/layout/m.ui/navigate-button/navigate-button.css';
+import styles from '@learnway/styles/fo/features/layout/m.ui/navigate-button/navigate-button.module.css';
 import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
 
@@ -23,19 +23,19 @@ const NavigateButtonComponent = () => {
                 <Link to={'/'}>
                   <IcoHome03 width={24} height={24} stroke="#131c30"></IcoHome03>
                 </Link>
-                <Link to={'/setting'}>
-                  <IcoSetting01 width={24} height={24} stroke="#131c30" fill="none"></IcoSetting01>
-                </Link>
               </div>
             ),
             content: <MobileNavigateModal />,
           })
         }
       >
-        <IcoArray width={24} height={24} stroke="#131c30" fill="none" />
+        <IcoMenu01 width={24} height={24} stroke="#131c30" fill="none" />
       </Button>
     </div>
   );
 };
 
+/**
+ * @description MO M_전체메뉴 팝업 NLP_FO_GNB_M_1002
+ */
 export const MobileNavigateButton = memo(NavigateButtonComponent);

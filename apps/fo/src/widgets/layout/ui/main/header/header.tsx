@@ -115,4 +115,7 @@ function HeaderComponent() {
   );
 }
 
+/**
+ * @description PC 헤더 FO_GNB_1000
+ */
 export const Header = memo(HeaderComponent);
