@@ -162,6 +162,8 @@ interface LearningWindowStoreData {
 
   funcInfo?: FunctionInfomation;
   setFuncInfo: (v?: FunctionInfomation) => void;
+  previewMobile?: boolean;
+  setPreviewMobile: (v?: boolean) => void;
 }
 
 const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
@@ -179,6 +181,7 @@ const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
   otherInfo: undefined,
   funcInfo: undefined,
   progressInfo: new Map(),
+  previewMobile: undefined,
 
   setPlayInfo(playInfo?: LearningWindowPlayInfo) {
     if (!playInfo) {
@@ -247,7 +250,11 @@ const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
       funcInfo,
     }));
   },
-
+  setPreviewMobile(previewMobile) {
+    set((state) => ({
+      previewMobile,
+    }));
+  },
   clearInfo() {
     set((state) => ({
       galleryInfo: undefined,
@@ -270,6 +277,7 @@ export const useLearningWindow = () => {
     ebookInfo,
     otherInfo,
     funcInfo,
+    previewMobile,
     playIndex: _playIndex,
     playList: _playList,
     baseInfo: _baseInfo,
@@ -291,6 +299,7 @@ export const useLearningWindow = () => {
     setOtherInfo,
     setFuncInfo,
     clearInfo,
+    setPreviewMobile,
   } = useLearningWindowStore((state) => state);
 
   const readAllLessonProgress = async (curriculum: Curriculum) => {
@@ -525,5 +534,7 @@ export const useLearningWindow = () => {
     clearInfo,
     getProgressNumber,
     resetProgressive,
+    previewMobile,
+    setPreviewMobile,
   };
 };

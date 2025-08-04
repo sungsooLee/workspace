@@ -6,6 +6,7 @@ import { learningResourceQueryOptions } from '@entities/learning-resource';
 import { CmsContentProgressMultiRes, CmsHtml5Resource, CmsImageItem } from '@learnway/types';
 import { LearnwayLearningWindowLayout, useLearningWindow } from '@learnway/ui/learning-window';
 import { ContentType } from '@types';
+import { Button } from '@learnway/ui/button';
 
 /**
  *
@@ -21,6 +22,7 @@ const PreviewLearningWindowComponent: FC<any> = ({
   curriculumId?: number;
   scoId?: string;
 }) => {
+  const [isPc, setIsPc] = useState<boolean>(true);
   const {
     playList,
     playInfo,
@@ -35,6 +37,7 @@ const PreviewLearningWindowComponent: FC<any> = ({
     setCurriculum,
     clearInfo,
     setBaseInfo,
+    setPreviewMobile,
   } = useLearningWindow();
 
   const [newContentUuid, setNewContentUuid] = useState<string>();
@@ -193,6 +196,10 @@ const PreviewLearningWindowComponent: FC<any> = ({
   }, [contentUuid]);
 
   useEffect(() => {
+    setPreviewMobile(!isPc);
+  }, [isPc]);
+
+  useEffect(() => {
     if (!curriculumnData) return;
     setCurriculum(curriculumnData);
   }, [curriculumnData]);
@@ -200,7 +207,31 @@ const PreviewLearningWindowComponent: FC<any> = ({
     setBaseInfo({ courseName: '미리보기', courseId: 0, curriculumId: 0, sequenceId: 0 });
   }, []);
 
-  return <LearnwayLearningWindowLayout />;
+  return (
+    <div>
+      <Button
+        variant={isPc ? 'primary' : 'gray'}
+        size="md"
+        label="PC"
+        style={{ zIndex: 10, position: 'absolute', top: 22, right: 140 }}
+        onClick={() => {
+          setIsPc(true);
+        }}
+      />
+      <Button
+        variant={isPc ? 'gray' : 'primary'}
+        size="md"
+        label="Mobile"
+        style={{ zIndex: 10, position: 'absolute', top: 22, right: 60 }}
+        onClick={() => {
+          setIsPc(false);
+        }}
+      />
+      <div className={isPc ? 'auto' : 'flex w-[300px] justify-center'}>
+        <LearnwayLearningWindowLayout />
+      </div>
+    </div>
+  );
 };
 
 export const PreviewLearningWindow = PreviewLearningWindowComponent;
