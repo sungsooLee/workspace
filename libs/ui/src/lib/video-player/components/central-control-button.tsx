@@ -35,15 +35,14 @@ const CentralControlButton = ({
 
   return (
     <div className={`${styles.start} ${styles.control}`}>
-      {playIndex > 0 && (
-        <button
-          onClick={() => {
-            handlePriveNextClick(false);
-          }}
-        >
-          <IcoPrevPlayFill width={isMobile ? 32 : 44} height={isMobile ? 32 : 44} />
-        </button>
-      )}
+      <button
+        disabled={playIndex === 0}
+        onClick={() => {
+          handlePriveNextClick(false);
+        }}
+      >
+        <IcoPrevPlayFill width={isMobile ? 32 : 44} height={isMobile ? 32 : 44} />
+      </button>
       <button className={styles.btn_control} onClick={togglePlay}>
         {playing ? (
           <IcoVideoStop width={isMobile ? 32 : 44} height={isMobile ? 32 : 44} />
@@ -51,15 +50,15 @@ const CentralControlButton = ({
           <IcoVideoPlay width={isMobile ? 32 : 44} height={isMobile ? 32 : 44} />
         )}
       </button>
-      {playList && playList.length > playIndex + 1 && (
-        <button
-          onClick={() => {
-            handlePriveNextClick(true);
-          }}
-        >
-          <IcoNextPlayFill width={isMobile ? 32 : 44} height={isMobile ? 32 : 44} />
-        </button>
-      )}
+
+      <button
+        disabled={playList && playList.length <= playIndex + 1}
+        onClick={() => {
+          handlePriveNextClick(true);
+        }}
+      >
+        <IcoNextPlayFill width={isMobile ? 32 : 44} height={isMobile ? 32 : 44} />
+      </button>
     </div>
   );
 };

@@ -9,6 +9,8 @@ import styles from '@learnway/styles/fo/pages/_learning/learning.module.css';
 
 import video from '@learnway/styles/fo/assets/images/temp/video.mp4';
 import { useModal } from '@learnway/ui/modal';
+import { useLearningWindow } from '@learnway/ui/learning-window';
+import { useVideoPlayer, VideoPlayer, VideoPlayerContainer } from '@learnway/ui/video-player';
 
 export const Route = createFileRoute('/_learning/video')({
   component: RouteComponent,
