@@ -11,10 +11,9 @@ import { ChipList } from '@learnway/ui/chips';
 interface FilterPopupComponentProps {
   filterCodes: any,
   initialFilters?: any; // 초기 필터 값 (이전에 선택한 값)
-  setModalData?: (data: any) => void; // Modal에서 제공하는 데이터 설정 함수
 }
 
-const FilterPopupComponent = ({ filterCodes, initialFilters, setModalData }: FilterPopupComponentProps) => {
+const FilterPopupComponent = ({ filterCodes, initialFilters }: FilterPopupComponentProps) => {
   const exceptValue = [ 'ELEARNING1', 'LIVE', 'SURVEY' ]
 
   const { closeModal } = useModal();
