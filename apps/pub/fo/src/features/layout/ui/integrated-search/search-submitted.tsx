@@ -15,7 +15,7 @@ import avatarImg from '@learnway/styles/fo/assets/images/menu/course/img_avatar.
 
 /* styles */
 import { Button } from '@learnway/ui/button';
-import { Thumbnail } from '@learnway/ui/thumbnail';
+import { ImageFallBack } from '@learnway/ui/image-fallback/image-fallback';
 import { Link } from '@tanstack/react-router';
 import ThumbnailList from '../../../../pages/-components/thumb/thumb-nail-list';
 import styles from './search-submitted.module.css';
@@ -213,7 +213,7 @@ export const SearchSubmitted: React.FC = () => {
           {/* recommand_wrap */}
           <div className={styles.recommand_wrap}>
             <div className={styles.recommand_view}>
-              <Thumbnail path={bannerImg} enableHover={false} />
+              <ImageFallBack imageUrl={bannerImg} className={styles.img_wrap} />
               <div className={styles.info_wrap}>
                 {items.length > 0 && (
                   <div className={styles.badge_wrap}>
@@ -276,6 +276,7 @@ export const SearchSubmitted: React.FC = () => {
                   label={item.label}
                   icon={item.external && <IcoPlus width={16} height={16} stroke="#131416" />}
                   size={'md'}
+                  iconAlign={'right'}
                 />
               </li>
             ))}
@@ -315,6 +316,7 @@ export const SearchSubmitted: React.FC = () => {
                   className={styles.link}
                   label={item.label}
                   icon={item.external && <IcoPlus width={16} height={16} stroke="#131416" />}
+                  iconAlign={'right'}
                   size={'md'}
                 />
               </li>

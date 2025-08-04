@@ -43,11 +43,9 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
   const [filter, setFilter] = useState<any>();
   const [difficultyCodes, setDifficultyCodes] = useState<any>();
   const [languageCodes, setLanguageCodes] = useState<any>();
+  const [initialSelectedItem, setInitialSelectedItem] = useState<any>(0);
 
-  const arrays = {
-    items: [t('최신순'), t('과정명순'), t('조회순')],
-    initialSelectedItem: 0, // 초기 선택값
-  };
+  const arrays = [t('최신순'), t('과정명순'), t('조회순')];
 
   const handlePageChange = (value: number) => {
     setPage(value);
@@ -81,15 +79,6 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
     });
   };
 
-  const handleFilterOptionChange = async (options: any) => {
-    const payload = {
-      ...coursePayload,
-      courseType: options.map( (row: any) => row.value),
-    }
-    setCoursePayload(payload);
-    await fetchCoursesCategory(payload)
-  };
-
   const handleOnSearch = async () => {
     const payload = {
       ...coursePayload,
@@ -100,6 +89,7 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
   }
 
   const handleSearchSortable = async (sortingIdx: any) => {
+    setInitialSelectedItem(sortingIdx)
     const payload = {
       ...coursePayload,
     }
@@ -123,6 +113,24 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
     await fetchCoursesCategory(payload)
   }
 
+  const fetchCoursesCategory = async (payload: any) => {
+    const courses = await CategoryService.getFetchCoursesCategory(payload);
+    setData(courses)
+  }
+
+  useEffect(() => {
+    (async () => {
+      if( selectedCardOptions ) {
+        const payload = {
+          ...coursePayload,
+          courseType: selectedCardOptions.map( (row: any) => row.value),
+        }
+        setCoursePayload(payload);
+        await fetchCoursesCategory(payload)
+      }
+    })();
+  }, [selectedCardOptions]);
+
   useEffect(() => {
     if( categoryInfo ) {
       (async () => {
@@ -137,11 +145,6 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
       })();
     }
   }, [categoryInfo, page, size])
-
-  const fetchCoursesCategory = async (payload: any) => {
-    const courses = await CategoryService.getFetchCoursesCategory(payload);
-    setData(courses)
-  }
 
   useEffect(() => {
     (async () => {
@@ -176,57 +179,21 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
     <div className={cn(styles.start, styles.detail_m)}>
       <div className={styles.gray_box}>
         <div className={styles.box}>
-          {/* 분류가 1개인 경우 */}
-          {/* <Dropdown
-            className={styles.select}
-            options={[
-              { value: 'a', label: '분류선택' },
-              { value: 'b', label: 'ST1' },
-              { value: 'c', label: '아이오닉 6' },
-              { value: 'd', label: '아이오닉 5' },
-              { value: 'e', label: '코나' },
-              { value: 'f', label: '넥쏘' },
-              { value: 'g', label: '포터' },
-              { value: 'h', label: '캐스퍼' },
-            ]}
-            value={divisionValues}
-            onChange={(selected) => setDivisionValues(selected)}
-          /> */}
-          {/* 분류가 2개 이상인 경우 */}
-          {/*<Button*/}
-          {/*  className={styles.btn_drop}*/}
-          {/*  onClick={() =>*/}
-          {/*    openModal({*/}
-          {/*      width: 'm_bottom_sheet',*/}
-          {/*      content: <CategoryDepthPopupM />,*/}
-          {/*    })*/}
-          {/*  }*/}
-          {/*  icon={<IcoArrowDown width={16} height={16} stroke="#131c30" />}*/}
-          {/*  label={'분류선택'}*/}
-          {/*/>*/}
-        </div>
-        <div className={styles.box}>
           <div className={styles.search_input}>
-            <Input id="" type="text" placeholder="과정명 검색" inputSize={'lg'} showSearchIcon />
+            <Input
+              type="text"
+              placeholder="과정명 검색"
+              inputSize={'lg'}
+              showSearchIcon
+              value={courseName}
+              onChange={(e) => {
+                setCourseName(e.target.value);
+              }}
+              onEnterKeyDown={handleOnSearch}
+            />
           </div>
 
           <div className={styles.filter_wrap}>
-            {/*<Button*/}
-            {/*  className={cn(styles.btn_filter, selectCheck === true ? styles.selected : '')}*/}
-            {/*  onClick={() =>*/}
-            {/*    openModal({*/}
-            {/*      width: 'm_bottom_sheet',*/}
-            {/*      content: <FilterPopup />,*/}
-            {/*    })*/}
-            {/*  }*/}
-            {/*>*/}
-            {/*  <IcoFilter*/}
-            {/*    width={20}*/}
-            {/*    height={20}*/}
-            {/*    fill="none"*/}
-            {/*    stroke={selectCheck === true ? '#fff' : '#07287e'}*/}
-            {/*  />*/}
-            {/*</Button>*/}
             <Button
               className={cn(styles.btn_filter, selectCheck === true ? styles.selected : '')}
               onClick={handleOpenFilterModal}
@@ -253,10 +220,12 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
             <div className={styles.box}>
               <Popover
                 popoverContent={
-                  <div className={`${dropdownPopoverStyles.start} ${dropdownPopoverStyles.dropdown_wrap}`}>
-                    <Button>최신순</Button>
-                    <Button>과정명순</Button>
-                    <Button>조회순</Button>
+                  <div
+                    className={`${dropdownPopoverStyles.start} ${dropdownPopoverStyles.dropdown_wrap}`}
+                  >
+                    <Popover.Close onClick={() => handleSearchSortable(0)}>{arrays[0]}</Popover.Close>
+                    <Popover.Close onClick={() => handleSearchSortable(1)}>{arrays[1]}</Popover.Close>
+                    <Popover.Close onClick={() => handleSearchSortable(2)}>{arrays[2]}</Popover.Close>
                   </div>
                 }
                 className={cn(dropdownPopoverStyles.btn, dropdownPopoverStyles.text)}
@@ -264,7 +233,7 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
                 align="end"
                 sideOffset={10}
               >
-                <span>{'최신순'}</span>
+                <span>{arrays[initialSelectedItem]}</span>
                 <IcoArrowDown width={16} height={16} stroke="#131C30" />
               </Popover>
             </div>
@@ -272,10 +241,18 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
               {/* 퍼블수정 20250513 : dropdown > popover로 변경 */}
               <Popover
                 popoverContent={
-                  <div className={`${dropdownPopoverStyles.start} ${dropdownPopoverStyles.dropdown_wrap}`}>
-                    <Popover.Close onClick={() => handlePageSizeChange(20)}>{20 + t('개씩')}</Popover.Close>
-                    <Popover.Close onClick={() => handlePageSizeChange(50)}>{50 + t('개씩')}</Popover.Close>
-                    <Popover.Close onClick={() => handlePageSizeChange(80)}>{80 + t('개씩')}</Popover.Close>
+                  <div
+                    className={`${dropdownPopoverStyles.start} ${dropdownPopoverStyles.dropdown_wrap}`}
+                  >
+                    <Popover.Close onClick={() => handlePageSizeChange(20)}>
+                      {20 + t('개씩')}
+                    </Popover.Close>
+                    <Popover.Close onClick={() => handlePageSizeChange(50)}>
+                      {50 + t('개씩')}
+                    </Popover.Close>
+                    <Popover.Close onClick={() => handlePageSizeChange(80)}>
+                      {80 + t('개씩')}
+                    </Popover.Close>
                   </div>
                 }
                 className={`${dropdownPopoverStyles.btn} ${dropdownPopoverStyles.text}`}
@@ -287,7 +264,7 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
                 <IcoArrowDown width={16} height={16} stroke="#131C30" />
               </Popover>
             </div>
-            <div className={styles.btn_box}>
+            <div className={styles.box}>
               <Button
                 onClick={() => {
                   setSortingDisabled(!sortingDisabled);
@@ -317,8 +294,7 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
               description={t('다른 과정명으로 검색해 보세요.')}
             />
           </div>
-          )
-        }
+        )}
         {/* pagination */}
         {data.content && data.content.length > 0 && (
           <Pagination

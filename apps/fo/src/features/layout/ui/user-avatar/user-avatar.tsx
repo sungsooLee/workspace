@@ -262,6 +262,11 @@ const PopoverContent = () => {
   );
 };
 
+// TODO 직군/직무, 각종 링크, 포인트, 이벤트 메뉴 확인필요
+/**
+ * @description FO GNB 아바타 FO_COM_1004
+ *
+ */
 const AvatarCompoment = ({ className }: any) => {
   const { data: authUser } = useFetchAuthUser();
 

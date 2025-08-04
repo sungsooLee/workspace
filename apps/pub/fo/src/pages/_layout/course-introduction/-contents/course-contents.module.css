@@ -75,7 +75,7 @@
       .package_banner {
         @apply relative flex-1;
         .package_copy {
-          @apply absolute left-0 top-0 z-[4] w-full bg-transparent px-[36px] py-[50px];
+          @apply absolute left-0 top-0 z-[4] h-full w-full bg-transparent p-[36px];
           .badge_view {
             span {
               @apply mr-[8px] inline-flex;

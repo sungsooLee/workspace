@@ -1,5 +1,5 @@
 import { queryOptions as courseSharedQueryOptions } from '@entities/course-shared/service/course-shared.queries';
-import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
+import { GridBox, GridBoxState, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import { ModalBody, ModalContainer, ModalTitle } from '@learnway/ui/modal';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
@@ -25,19 +25,19 @@ const gridConfig: useGridBoxConfig = {
 };
 
 const CourseSharedHistoryModalComponent = ({
-  courseShareId,
+  courseShareId: courseShareIdProps,
 }: CourseSharedHistoryModalComponentProps) => {
   const [columns, setColumns] = useState() as any;
+  const searchParam = () => {
+    return { courseShareId: courseShareIdProps };
+  };
   const { config: gConfig, gridFetch, data: gridData } = useGridBox(gridConfig);
 
   const handleOnSearch = async () => {
-    const payload = { courseShareId };
-    console.log('payload=>', payload);
-    gridFetch(payload);
+    gridFetch(searchParam());
   };
 
   useEffect(() => {
-    console.log('##courseShareId=>', courseShareId);
     const columns = [
       columnHelper.accessor('userNmae', {
         header: t('가져간 사람'),
@@ -57,16 +57,21 @@ const CourseSharedHistoryModalComponent = ({
     handleOnSearch();
   }, []);
 
+  // 페이지 변경이나 검색 시 플래그 리셋
+  const handleStateChange = (newState: GridBoxState) => {
+    gridFetch(searchParam(), newState);
+  };
+
   const columnHelper = createColumnHelper<any>();
   return (
     <ModalContainer>
       <ModalTitle>{t('가져간 이력보기')}</ModalTitle>
       <ModalBody>
         <GridBox
-          config={gConfig}
           columns={columns}
           showNumberingColumn={false}
           clientSideSorting={true}
+          onStateChange={handleStateChange}
           title={t('이력정보 목록')}
         />
       </ModalBody>
