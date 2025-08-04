@@ -275,7 +275,6 @@ export const useVideoPlayer = ({
 
   /**
    * ⏮ 5초 되감기 - 키보드 좌 클릭
-   * @deprecated 기획내용에서 빠짐
    */
   const handleRewind = () => {
     const current = playerRef.current;
@@ -287,7 +286,6 @@ export const useVideoPlayer = ({
 
   /**
    * ⏭ 5초 앞으로 - 키보드 우 클릭
-   * @deprecated 기획내용에서 빠짐
    */
   const handleForward = () => {
     const current = playerRef.current;
