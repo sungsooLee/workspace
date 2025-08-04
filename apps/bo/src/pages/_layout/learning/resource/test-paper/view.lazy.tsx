@@ -33,8 +33,7 @@ function RouteComponent() {
 
   const router = useRouter();
 
-  const { mode, contentUuid, data, refetchContentDetail, hasMapping, listParam } =
-    useExamLoaderData();
+  const { contentUuid, data, refetchContentDetail, hasMapping, listParam } = useExamLoaderData();
 
   const { alert, confirm: openConfirm } = useModal();
 
@@ -50,7 +49,6 @@ function RouteComponent() {
     onSubmit,
     saveBasicInfo,
   } = useExamBasicInfoForm({
-    mode,
     contentUuid,
     onSaveSuccess: (result?: TestPaperBasicInfoSaveRes) => {
       if (!result) {
@@ -59,7 +57,7 @@ function RouteComponent() {
       if (result?.examUuid) {
         router.navigate({
           to: '/learning/resource/test-paper/view',
-          state: { mode: 'UPDATE', contentUuid: result.examUuid },
+          state: { contentUuid: result.examUuid },
           replace: true,
         });
       }
@@ -72,7 +70,7 @@ function RouteComponent() {
   const tabItems = useMemo(
     () => [
       {
-        title: `${t('시험지 정보')}${mode === PageMode.UPDATE ? `(${getExamTemplateTextByType(data?.examTemplateType as ExamTemplateType, t)})` : ''}`,
+        title: `${t('시험지 정보')}${contentUuid ? `(${getExamTemplateTextByType(data?.examTemplateType as ExamTemplateType, t)})` : ''}`,
         key: ExamTab.PAPER,
         content: (
           <LearningResourceTestPaperInfo
@@ -86,7 +84,6 @@ function RouteComponent() {
               saveBasicInfo,
             }}
             contentUuid={contentUuid}
-            mode={mode}
             data={data}
             hasMapping={hasMapping}
           />
@@ -100,7 +97,6 @@ function RouteComponent() {
             ref={questionInfoRef}
             basicInfoForm={{ provider, getValues, updateFormDataByKey, saveBasicInfo }}
             contentUuid={contentUuid}
-            mode={mode}
             data={data}
             hasMapping={hasMapping}
             questionGenType={questionGenType}

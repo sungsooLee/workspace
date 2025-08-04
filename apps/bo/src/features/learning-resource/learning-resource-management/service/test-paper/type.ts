@@ -41,7 +41,6 @@ type ExamBasicInfoForm = {
 export interface ExamBasicInfoProps {
   basicInfoForm: ExamBasicInfoForm;
   contentUuid?: string;
-  mode: PageMode;
   data?: Partial<TestPaperBasicInfoDetail>;
   hasMapping?: boolean;
 }

@@ -19,7 +19,7 @@ export const Route = createLazyFileRoute('/_layout/learning/resource/assignment/
 function RouteComponent() {
   const { t } = useTranslation();
 
-  const { mode, contentUuid, listParam, data, refetchContentDetail, hasMapping } =
+  const { contentUuid, listParam, data, refetchContentDetail, hasMapping } =
     useAssignmentLoaderData();
 
   const form = useDynamicForm2();

@@ -3,11 +3,10 @@ import { useDynamicForm2 } from '@learnway/hooks';
 import { TestPaperBasicInfoSaveRes } from '@types';
 import { useCreateExamPaperContent, useUpdateExamPaperContent } from '@entities/learning-resource';
 import { getExamSaveRequestDataFromFormData } from './common';
-import { PageMode, TestPaperBasicInfoFormData } from './type';
+import { TestPaperBasicInfoFormData } from './type';
 import { useModal } from '@learnway/ui/modal';
 
 export const useExamBasicInfoForm = (options: {
-  mode: PageMode;
   contentUuid: string;
   onSaveSuccess?: (result?: TestPaperBasicInfoSaveRes) => void;
   onUpdateSuccess?: (result?: unknown) => void | Promise<void>;
@@ -53,11 +52,8 @@ export const useExamBasicInfoForm = (options: {
   const saveBasicInfo = async (data: Record<string, any>, isOnGenTypeChange?: boolean) => {
     const requestData = getExamSaveRequestDataFromFormData({
       values: data as TestPaperBasicInfoFormData,
-      mode: options.mode,
       contentUuid: options.contentUuid,
     });
-
-    console.log('submit', options.mode, requestData);
 
     const result = isOnGenTypeChange
       ? true
@@ -67,9 +63,9 @@ export const useExamBasicInfoForm = (options: {
         });
 
     if (result) {
-      if (options.mode === PageMode.CREATE) {
+      if (!options.contentUuid) {
         createExamBasicInfo(requestData);
-      } else if (options.mode === PageMode.UPDATE) {
+      } else {
         updateExamBasicInfo(requestData);
       }
     }

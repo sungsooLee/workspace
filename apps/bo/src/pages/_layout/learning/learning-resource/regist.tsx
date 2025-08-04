@@ -310,7 +310,6 @@ function RouteComponent() {
       case LEARNING_TYPE.BLOG: {
         router.navigate({
           to: '/learning/resource/blog/view',
-          state: { mode: 'CREATE' },
           replace: true,
         });
         break;
@@ -324,7 +323,6 @@ function RouteComponent() {
       case LEARNING_TYPE.EXAM: {
         router.navigate({
           to: '/learning/resource/test-paper/view',
-          state: { mode: 'CREATE' },
           replace: true,
         });
         break;
@@ -340,7 +338,6 @@ function RouteComponent() {
       case LEARNING_TYPE.ASSIGNMENT: {
         router.navigate({
           to: '/learning/resource/assignment/view',
-          state: { mode: 'CREATE' },
           replace: true,
         });
         break;

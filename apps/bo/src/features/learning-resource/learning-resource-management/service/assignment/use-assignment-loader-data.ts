@@ -4,7 +4,7 @@ import { learningResourceQueryOptions } from '@entities/learning-resource';
 
 export const useAssignmentLoaderData = () => {
   const {
-    state: { mode = 'CREATE', contentUuid = '', listParam },
+    state: { contentUuid = '', listParam },
   } = useCurrentRoute();
 
   const { data, refetch: refetchContentDetail } = useQuery(
@@ -15,5 +15,5 @@ export const useAssignmentLoaderData = () => {
     learningResourceQueryOptions.getCurriculumsMapping(contentUuid),
   );
 
-  return { mode, contentUuid, listParam, data, refetchContentDetail, hasMapping };
+  return { contentUuid, listParam, data, refetchContentDetail, hasMapping };
 };
