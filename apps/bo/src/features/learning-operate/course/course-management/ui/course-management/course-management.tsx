@@ -1,12 +1,9 @@
 import { Divider } from '@learnway/ui/elements';
-import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
-import { Link } from '@tanstack/react-router';
-import { t } from 'i18next';
+import { MainContents, PageContainer } from '@shared/ui';
 import { useCoursePage } from '../../hooks/use-course-page';
 
-import { CourseSearchForm } from '../course-search-form/course-search-form';
 import { CourseGrid } from '../course-list/course-grid';
-import { Button } from '@learnway/ui/button';
+import { CourseSearchForm } from '../course-search-form/course-search-form';
 
 const CourseManagementComponent = () => {
   const {
@@ -17,13 +14,20 @@ const CourseManagementComponent = () => {
     selectedRows,
     buttonState,
     handleOnSearch,
-    handleGridRowsSelect } = useCoursePage();
+    handleGridRowsSelect,
+    onReset,
+  } = useCoursePage();
 
   return (
     <PageContainer>
       <MainContents>
         {/* 검색 */}
-        <CourseSearchForm provider={provider} onSubmit={onSubmit} onSearch={handleOnSearch} />
+        <CourseSearchForm
+          provider={provider}
+          onSubmit={onSubmit}
+          onSearch={handleOnSearch}
+          onReset={onReset}
+        />
         {/* Divider */}
         <Divider />
         {/* 그리드 */}
