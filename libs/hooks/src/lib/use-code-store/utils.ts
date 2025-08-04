@@ -103,10 +103,15 @@ export const getCodeLabel = (
   }
 
   try {
-    const { code } = useCodeStore.getState();
+    const { code, setCode } = useCodeStore.getState();
     const cachedData = code[codeGroup];
 
     if (!Array.isArray(cachedData) || cachedData.length === 0) {
+      // 캐시된 데이터가 없으면 API 호출하여 데이터 로드
+      fetchCodeGroup(codeGroup).then((data) => {
+        setCode(codeGroup, data);
+      });
+
       return defaultValue;
     }
 

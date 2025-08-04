@@ -188,7 +188,7 @@ export const CurriculumList = () => {
     <>
       <SearchBox provider={provider} onSearch={gridFetch} />
       <Divider />
-      <GridBox config={config} showNumberingColumn onRowSelect={setSelectedRow} />
+      <GridBox config={config} multiple onRowSelect={setSelectedRow} />
     </>
   );
 };
