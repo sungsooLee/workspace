@@ -140,14 +140,11 @@
       @apply h-full max-h-none overflow-y-auto;
       & > div {
         @apply h-full;
-        & > div {
-          @apply h-[calc(100%-65px)] !max-h-none p-[16px];
-        }
       }
       [class*='nlp--modal-content'] {
-        @apply !p-[0];
+        @apply h-full !max-h-none !p-[0];
         [class*='modal-content'] {
-          @apply border-0;
+          @apply h-[calc(100%-56px)] border-0 !p-[16px];
         }
       }
     }
@@ -166,14 +163,16 @@
     h2 {
       @apply title3-b absolute left-0 right-0 top-0 flex !h-[44px] items-start pt-[17px] leading-[22px] text-[var(--gray10)];
     }
-    [class*='modal-content'] {
-      @apply !max-h-[calc(100dvh-60px)] px-[16px] pt-[60px];
+    .content_body {
       [class*='modal-content'] {
-        @apply border-0 !px-[16px] !pb-[16px] !pt-[44px];
+        @apply !max-h-[calc(100dvh-60px)] px-[16px] pt-[60px];
+        [class*='modal-content'] {
+          @apply border-0 !px-[16px] !pb-[16px] !pt-[60px];
+        }
       }
     }
     [class*='footer'] {
-      @apply !px-0 !py-[16px];
+      @apply !px-[16px] !py-[16px];
       [class*='nlp--button'] {
         @apply rounded-[8px];
       }

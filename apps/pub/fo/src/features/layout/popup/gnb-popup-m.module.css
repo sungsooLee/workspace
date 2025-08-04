@@ -1,5 +1,6 @@
 .start {
   &.gnb_wrap {
+    @apply -mt-[16px];
     ul {
       li {
         button {
