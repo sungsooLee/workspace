@@ -315,8 +315,6 @@ export const useLearningWindow = () => {
             moduleId: module.moduleId,
             lessonId: module.lessonId,
             contentUuid: module.contentUuid,
-            orgnId: module.orgnId,
-            itemId: module.itemId,
           });
         } else if (module.lessonList) {
           module.lessonList.forEach((lesson) => {
@@ -327,8 +325,6 @@ export const useLearningWindow = () => {
               moduleId: module.moduleId,
               lessonId: lesson.lessonId,
               contentUuid: lesson.contentUuid,
-              orgnId: lesson.orgnId,
-              itemId: lesson.itemId,
             });
           });
         }
