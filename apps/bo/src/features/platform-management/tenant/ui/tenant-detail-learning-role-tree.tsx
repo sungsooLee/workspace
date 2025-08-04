@@ -18,7 +18,7 @@ import {
   moveRoleCheck,
   transformRoleApiDataToTreeData,
 } from '@features/platform-management/tenant/service/tenant-detail-tree.service';
-import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { CODE_GROUP, DynamicFormConfig, useCodeStore, useDynamicForm } from '@learnway/hooks';
 import { FormSubTitle } from '@learnway/ui/base-form';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
@@ -37,7 +37,14 @@ import {
   SectionLayout,
   SwitchFormField,
 } from '@shared/ui';
-import { EnChannelScope, EnCompanyScope, EnDeptScope, EnFormMode, EnTenantScope } from '@types';
+import {
+  EnChannelScope,
+  EnCompanyScope,
+  EnDeptScope,
+  EnFormMode,
+  EnGlobalConst,
+  EnTenantScope,
+} from '@types';
 
 /**
  * 화면번호:
@@ -49,32 +56,185 @@ import { EnChannelScope, EnCompanyScope, EnDeptScope, EnFormMode, EnTenantScope 
  */
 const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref: any) => {
   const routerState = useRouterState();
+  const codeStore = useCodeStore();
+
   const [formMode, setFormMode] = useState(EnFormMode.NONE);
   const [selectedRoleNode, setSelectedRoleNode] = useState<any>(null);
   const [roleTreeData, setRoleTreeData] = useState([]);
+  const [roleTypes, setRoleTypes] = useState<any[]>([]);
+  const [totalRoleTypes, setTotalRoleTypes] = useState<any[]>([]);
 
   const tenantId = routerState.location.state?.tenantId;
   const tenantName = routerState.location.state?.tenantName;
   const companyCodes = routerState.location.state?.companyCodes;
 
-  const formConfig = { ...formBaseConfig() };
-
-  formConfig.builders.push({
-    name: 'tenantScope',
-    type: 'radio-group',
-    label: t('테넌트 적용 범위'),
-    value: EnTenantScope.ALL,
-    options: [
+  const formConfig: DynamicFormConfig = {
+    builders: [
       {
+        name: 'tenantScope',
+        type: 'radio-group',
+        label: t('테넌트 적용 범위'),
         value: EnTenantScope.ALL,
-        label: t('모든 테넌트'),
+        optionsConfig: {
+          codeGroup: CODE_GROUP['pms.role.TenantScope'],
+        },
       },
       {
-        value: EnTenantScope.CURRENT_TENANT,
-        label: tenantName,
+        name: 'parentRoleId',
+        label: '',
+        type: 'hidden',
+        value: '',
+        format: 'string',
+      },
+      {
+        name: 'roleId',
+        type: 'text',
+        format: 'number',
+        label: t('역할 번호'),
+        value: '',
+      },
+      {
+        name: 'roleType',
+        type: 'dropdown',
+        label: t('역할 타입'),
+        value: '',
+        presetOptionLabel: t('LABEL.form.label.select'),
+        options: roleTypes,
+      },
+      {
+        name: 'name',
+        type: 'text',
+        label: t('역할명'),
+        value: '',
+      },
+      {
+        name: 'description',
+        type: 'textarea',
+        label: t('역할 설명'),
+        value: '',
+      },
+      {
+        name: 'companyScope',
+        type: 'radio-group',
+        label: t('회사 접근 범위'),
+        value: EnCompanyScope.ALL,
+        optionsConfig: {
+          codeGroup: CODE_GROUP['pms.role.CompanyScope'],
+        },
+      },
+      {
+        name: 'companyIds',
+        label: '',
+        type: 'array',
+        format: 'array',
+        value: [],
+      },
+      {
+        name: 'channelScope',
+        type: 'radio-group',
+        label: t('채널 접근 범위'),
+        value: EnChannelScope.ALL,
+        optionsConfig: {
+          codeGroup: CODE_GROUP['pms.role.ChannelScope'],
+        },
+      },
+      {
+        name: 'channelUuids',
+        label: '',
+        type: 'custom',
+        format: 'array',
+        value: [],
+      },
+      {
+        name: 'deptScope',
+        type: 'radio-group',
+        label: t('조직 접근 범위'),
+        value: EnDeptScope.ALL,
+        optionsConfig: {
+          codeGroup: CODE_GROUP['pms.role.DeptScope'],
+        },
+      },
+      {
+        name: 'deptIds',
+        label: '',
+        type: 'custom',
+        format: 'array',
+        value: [],
+      },
+      {
+        name: 'isUsed',
+        type: 'switch',
+        label: t('역할 사용 여부'),
+        value: false,
+        switchConfig: {
+          label: (value: boolean) => (value ? t('사용함') : t('사용안함')),
+        },
+      },
+      {
+        name: 'sortOrder',
+        label: '',
+        type: 'number',
+        value: 0,
+      },
+      {
+        name: 'tenantScope',
+        type: 'radio-group',
+        label: t('테넌트 적용 범위'),
+        value: EnTenantScope.ALL,
+        options: [
+          {
+            value: EnTenantScope.ALL,
+            label: t('모든 테넌트'),
+          },
+          {
+            value: EnTenantScope.CURRENT_TENANT,
+            label: tenantName,
+          },
+        ],
       },
     ],
-  });
+    validator: {
+      parentRoleId: {
+        required: {
+          fn: (values) => {
+            return false;
+          },
+        },
+      },
+      name: {
+        required: true,
+      },
+      tenantScope: { required: true },
+      companyScope: { required: true },
+      channelScope: { required: true },
+      deptScope: { required: true },
+      roleType: true,
+      companyIds: {
+        required: {
+          fn: (value) => {
+            return value.companyScope === EnCompanyScope.MANUAL && value.companyIds?.length <= 0;
+          },
+          message: t('회사를 선택 하세요.'),
+        },
+      },
+      channelIds: {
+        required: {
+          fn: (value) => {
+            return value.channelScope === EnChannelScope.MANUAL && value.channelIds?.length <= 0;
+          },
+          message: t('채널을 선택 하세요.'),
+        },
+      },
+      deptIds: {
+        required: {
+          fn: (value) => {
+            return value.deptScope === EnDeptScope.MANUAL && value.deptIds?.length <= 0;
+          },
+          message: t('팀을 선택 하세요.'),
+        },
+      },
+    },
+  };
 
   const { createRole, updateRole, deleteRole } = useRoleManager({
     onRoleDeleteSuccess: () => {
@@ -108,6 +268,52 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
       return true;
     },
   }));
+
+  // useEffect(() => {
+
+  //   setTotalRoleTypes();
+  //     const channelMemberRoleTypes = roleTypes
+  //       .map((role) => role.cdId)
+  //       .filter((cdId: string) => ['CHANNEL_OWNER', 'CHANNEL_MEMBER'].includes(cdId));
+  // },[]);
+
+  useEffect(() => {
+    const init = async () => {
+      const types = await codeStore.getCode(CODE_GROUP['pms.role.RoleType']);
+      setTotalRoleTypes(types);
+    };
+    init();
+  }, []);
+
+  useEffect(() => {
+    console.log('#### totalRoleTypes', totalRoleTypes);
+    if (totalRoleTypes.length > 0) {
+      const addableRoletypes = totalRoleTypes.filter(
+        (role: any) =>
+          !role.cdId.startsWith('CHANNEL') &&
+          role.cdId !== 'PLATFORM_MANAGER' &&
+          role.cdId !== 'TENANT_MANAGER',
+      );
+      switch (formMode) {
+        case EnFormMode.VIEW:
+          setRoleTypes(
+            totalRoleTypes.map((role) => ({
+              value: role.cdId,
+              label: t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.role.RoleType.${role.cdId}`),
+            })),
+          );
+          break;
+        case EnFormMode.ADD:
+          setRoleTypes(
+            addableRoletypes.map((role) => ({
+              value: role.cdId,
+              label: t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.role.RoleType.${role.cdId}`),
+            })),
+          );
+          break;
+      }
+    }
+  }, [formMode, totalRoleTypes]);
 
   const handleOnSubmit = async (formData: any) => {
     const parentRoleId = formData.parentRoleId === 'root' ? undefined : formData.parentRoleId;
@@ -444,157 +650,3 @@ const TenantDetailLearningRoleTreeComponent = ({ roleInfo, siteScope }: any, ref
 };
 
 export const TenantDetailLearningRoleTree = forwardRef(TenantDetailLearningRoleTreeComponent);
-
-const formBaseConfig = (): DynamicFormConfig => ({
-  builders: [
-    {
-      name: 'tenantScope',
-      type: 'radio-group',
-      label: t('테넌트 적용 범위'),
-      value: EnTenantScope.ALL,
-      optionsConfig: {
-        codeGroup: CODE_GROUP['pms.role.TenantScope'],
-      },
-    },
-    {
-      name: 'parentRoleId',
-      label: '',
-      type: 'hidden',
-      value: '',
-      format: 'string',
-    },
-    {
-      name: 'roleId',
-      type: 'text',
-      format: 'number',
-      label: t('역할 번호'),
-      value: '',
-    },
-    {
-      name: 'roleType',
-      type: 'dropdown',
-      label: t('역할 타입'),
-      value: '',
-      presetOptionLabel: t('LABEL.form.label.select'),
-      optionsConfig: {
-        codeGroup: CODE_GROUP['pms.role.RoleType'],
-      },
-    },
-    {
-      name: 'name',
-      type: 'text',
-      label: t('역할명'),
-      value: '',
-    },
-    {
-      name: 'description',
-      type: 'textarea',
-      label: t('역할 설명'),
-      value: '',
-    },
-    {
-      name: 'companyScope',
-      type: 'radio-group',
-      label: t('회사 접근 범위'),
-      value: EnCompanyScope.ALL,
-      optionsConfig: {
-        codeGroup: CODE_GROUP['pms.role.CompanyScope'],
-      },
-    },
-    {
-      name: 'companyIds',
-      label: '',
-      type: 'array',
-      format: 'array',
-      value: [],
-    },
-    {
-      name: 'channelScope',
-      type: 'radio-group',
-      label: t('채널 접근 범위'),
-      value: EnChannelScope.ALL,
-      optionsConfig: {
-        codeGroup: CODE_GROUP['pms.role.ChannelScope'],
-      },
-    },
-    {
-      name: 'channelUuids',
-      label: '',
-      type: 'custom',
-      format: 'array',
-      value: [],
-    },
-    {
-      name: 'deptScope',
-      type: 'radio-group',
-      label: t('조직 접근 범위'),
-      value: EnDeptScope.ALL,
-      optionsConfig: {
-        codeGroup: CODE_GROUP['pms.role.DeptScope'],
-      },
-    },
-    {
-      name: 'deptIds',
-      label: '',
-      type: 'custom',
-      format: 'array',
-      value: [],
-    },
-    {
-      name: 'isUsed',
-      type: 'switch',
-      label: t('역할 사용 여부'),
-      value: false,
-      switchConfig: {
-        label: (value: boolean) => (value ? t('사용함') : t('사용안함')),
-      },
-    },
-    {
-      name: 'sortOrder',
-      label: '',
-      type: 'number',
-      value: 0,
-    },
-  ],
-  validator: {
-    parentRoleId: {
-      required: {
-        fn: (values) => {
-          return false;
-        },
-      },
-    },
-    name: {
-      required: true,
-    },
-    tenantScope: { required: true },
-    companyScope: { required: true },
-    channelScope: { required: true },
-    deptScope: { required: true },
-    roleType: true,
-    companyIds: {
-      required: {
-        fn: (value) => {
-          return value.companyScope === EnCompanyScope.MANUAL && value.companyIds?.length <= 0;
-        },
-        message: t('회사를 선택 하세요.'),
-      },
-    },
-    channelIds: {
-      required: {
-        fn: (value) => {
-          return value.channelScope === EnChannelScope.MANUAL && value.channelIds?.length <= 0;
-        },
-        message: t('채널을 선택 하세요.'),
-      },
-    },
-    deptIds: {
-      required: {
-        fn: (value) => {
-          return value.deptScope === EnDeptScope.MANUAL && value.deptIds?.length <= 0;
-        },
-        message: t('팀을 선택 하세요.'),
-      },
-    },
-  },
-});
