@@ -69,6 +69,7 @@ const CourseSharedHistoryModalComponent = ({
       <ModalBody>
         <GridBox
           columns={columns}
+          gridData={gridData}
           showNumberingColumn={false}
           clientSideSorting={true}
           onStateChange={handleStateChange}
