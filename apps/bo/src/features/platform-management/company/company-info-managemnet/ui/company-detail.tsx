@@ -28,7 +28,7 @@ import { useToast } from '@learnway/ui/toast';
 import { getCurrentAuthUser } from '@shared/lib';
 
 const EMAIL_REGEX =
-  /(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2 }))/;
+  /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/;
 
 const CompanyDetailComponent = (props: any, ref: any) => {
   const router = useRouter();
@@ -1108,6 +1108,7 @@ const formConfig = (): DynamicFormConfig => ({
             console.log('# values', values);
             if (!values.companyEmail || values.companyEmail.trim().length === 0) return false;
             const pattern = new RegExp(EMAIL_REGEX, 'i');
+            console.log('### mail', values.companyEmail.trim());
             return !pattern.test(values.companyEmail.trim());
           },
           message: t('이메일 형식에 맞게 입력해 주세요.'),
