@@ -79,15 +79,6 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
     });
   };
 
-  const handleFilterOptionChange = async (options: any) => {
-    const payload = {
-      ...coursePayload,
-      courseType: options.map( (row: any) => row.value),
-    }
-    setCoursePayload(payload);
-    await fetchCoursesCategory(payload)
-  };
-
   const handleOnSearch = async () => {
     const payload = {
       ...coursePayload,
@@ -122,6 +113,24 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
     await fetchCoursesCategory(payload)
   }
 
+  const fetchCoursesCategory = async (payload: any) => {
+    const courses = await CategoryService.getFetchCoursesCategory(payload);
+    setData(courses)
+  }
+
+  useEffect(() => {
+    (async () => {
+      if( selectedCardOptions ) {
+        const payload = {
+          ...coursePayload,
+          courseType: selectedCardOptions.map( (row: any) => row.value),
+        }
+        setCoursePayload(payload);
+        await fetchCoursesCategory(payload)
+      }
+    })();
+  }, [selectedCardOptions]);
+
   useEffect(() => {
     if( categoryInfo ) {
       (async () => {
@@ -136,11 +145,6 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
       })();
     }
   }, [categoryInfo, page, size])
-
-  const fetchCoursesCategory = async (payload: any) => {
-    const courses = await CategoryService.getFetchCoursesCategory(payload);
-    setData(courses)
-  }
 
   useEffect(() => {
     (async () => {
