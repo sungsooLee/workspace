@@ -16,9 +16,8 @@ export class UserGroupCompanyService {
    * @param companyId
    * @returns
    */
-  static getCompanyOrganizationTree(companyId: number): Promise<any> {
-    return httpService.get<any>(`${PMSApiPrefix()}/userGroup/company/organization-tree`, {
-      companyId });
+  static getCompanyOrganizationTree(param: any): Promise<any> {
+    return httpService.get<any>(`${PMSApiPrefix()}/userGroup/company/organization-tree`, param);
   }
 
   /**

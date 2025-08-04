@@ -5,6 +5,6 @@ export function useGetCompanyUserGroups(param: any) {
   return useQuery(queryOptions.userGroups(param));
 }
 
-export function useGetCompanyOrganizationTree(companyId: number) {
-  return useQuery(queryOptions.userGroupTree(companyId));
+export function useGetCompanyOrganizationTree(param: any) {
+  return useQuery(queryOptions.userGroupTree(param));
 }

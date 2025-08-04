@@ -22,7 +22,7 @@ export const useCoursePage = (): CourseManagementHookResult => {
   const router = useRouter();
   const { openModal, alert, confirm } = useModal();
   const { t } = useTranslation();
-  const { provider, getValues, onSubmit } = useDynamicForm2({
+  const { provider, getValues, onSubmit, onReset } = useDynamicForm2({
     builders: [],
     mode: 'onSubmit', // 서브밋할 때만 validation 실행
     reValidateMode: 'onChange', // 에러 발생 후에는 값 변경시 즉시 재검증
@@ -93,21 +93,21 @@ export const useCoursePage = (): CourseManagementHookResult => {
    * 과정 개설 핸들러
    */
   const handleCourseOpenClick = useCallback(async () => {
-    try {
-      const { value } = await openModal({
+    const { value: courseType } =
+      (await openModal({
         content: <CourseTypeOptionCardModal />,
         width: 'md',
-      });
+      })) || {};
 
-      router.navigate({
-        to: '/learning/course/create',
-        state: {
-          courseType: value as CourseType,
-        },
-      });
-    } catch (error) {
-      console.error('과정 개설 중 오류 발생:', error);
-    }
+    // 취소 버튼 클릭시 종료
+    if (!courseType) return;
+
+    router.navigate({
+      to: '/learning/course/create',
+      state: {
+        courseType: courseType as CourseType,
+      },
+    });
   }, [openModal, router]);
 
   /**
@@ -131,6 +131,7 @@ export const useCoursePage = (): CourseManagementHookResult => {
     provider,
     getValues,
     onSubmit,
+    onReset,
     gConfig,
     selectedRows,
     buttonState,

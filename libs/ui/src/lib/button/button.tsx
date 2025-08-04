@@ -1,8 +1,8 @@
-import React, { forwardRef } from 'react';
 import { Loader2 } from 'lucide-react';
+import React, { forwardRef } from 'react';
 
-import { cn } from '@learnway/shared';
 import { IcoArrowForward } from '@learnway/icons';
+import { cn } from '@learnway/shared';
 
 import styles from './button.module.css';
 
@@ -136,6 +136,9 @@ const ButtonComponent = forwardRef<HTMLButtonElement, ButtonComponentProps>(
       if (preventDefault) {
         e.preventDefault();
       }
+      // 포커스 제거
+      e.currentTarget.blur();
+      // 클릭 이벤트 실행
       onClick?.(e);
     };
 

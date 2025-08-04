@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 
 import {
   IcoBlog,
+  IcoEbook,
   IcoEntrust,
   IcoEtc,
   IcoExam,
@@ -11,7 +12,6 @@ import {
   IcoHtml,
   IcoImage01,
   IcoInfoCircle,
-  IcoMybook,
   IcoQuestionBank,
   IcoSurvey,
   IcoVideo01,
@@ -81,7 +81,7 @@ const TypeSelectContent = () => {
     {
       label: '이북',
       value: getRandomId(),
-      icon: <IcoMybook />,
+      icon: <IcoEbook />,
       description: '설명문구2줄설명',
     },
     { label: '스콤', value: getRandomId(), icon: <IcoFolder />, description: '설명문구2줄설명' },

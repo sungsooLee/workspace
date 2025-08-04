@@ -279,7 +279,8 @@ export type UseDynamicFormResult = {
   onFormValid: UseFormReturn['trigger'];
   /** 필드 값 변경 핸들러 */
   onFormChange: (values?: Record<string, any>) => void;
-
+  /** 폼 초기화 */
+  onReset: () => void;
   /** react-hook-form에서 제공하는 컨트롤 객체 */
   control: UseFormReturn['control'] & {
     /** 필드가 필수인지 확인하는 함수 */

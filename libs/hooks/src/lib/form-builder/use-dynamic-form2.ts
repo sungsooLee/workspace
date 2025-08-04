@@ -1,9 +1,9 @@
-import { FormEvent, useMemo, useRef, useState, useCallback, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { buildJodObject, ValidatorConfig, ValidatorFormat } from '@learnway/shared';
+import { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { DynamicFormConfig, DynamicFormProvider, FormConfig, UseDynamicFormResult } from './type';
 import { extractDynamicFormDefaultValues } from './util';
-import { buildJodObject, ValidatorConfig, ValidatorFormat } from '@learnway/shared';
 
 /**
  * 주어진 폼 설정(config)을 기반으로 react-hook-form을 초기화하는 커스텀 훅.
@@ -495,5 +495,6 @@ export const useDynamicForm2 = <T extends DynamicFormConfig>(config?: T): UseDyn
     watch,
     getInitByBuilders,
     clearAllValidators,
+    onReset: onFormChange,
   };
 };

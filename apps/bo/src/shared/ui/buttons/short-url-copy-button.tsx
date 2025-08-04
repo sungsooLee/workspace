@@ -29,14 +29,15 @@ const Component: React.FC<ShortUrlCopyButtonProps> = ({
   };
 
   const handleClick = async () => {
-    try {
-      const shortUrl = await createShortUrl();
-      await navigator.clipboard.writeText(shortUrl);
-      alert(`복사되었습니다: ${shortUrl}`);
-    } catch (err: any) {
-      console.error('복사 중 오류가 발생했습니다.', err);
-      alert('복사 중 오류가 발생했습니다.');
-    }
+    alert('준비중입니다.');
+    // try {
+    //   const shortUrl = await createShortUrl();
+    //   await navigator.clipboard.writeText(shortUrl);
+    //   alert(`복사되었습니다: ${shortUrl}`);
+    // } catch (err: any) {
+    //   console.error('복사 중 오류가 발생했습니다.', err);
+    //   alert('복사 중 오류가 발생했습니다.');
+    // }
   };
 
   return (

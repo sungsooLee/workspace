@@ -70,6 +70,7 @@ export { ReactComponent as IcoDotpoints } from './lib/ic_dotpoints-02.svg';
 export { ReactComponent as IcoDownArrow } from './lib/ic_down_arrow.svg'; // down arrow
 export { ReactComponent as IcoDownload } from './lib/ic_download.svg'; // 16*16 grid download
 export { ReactComponent as IcoDownload02 } from './lib/ic_download02.svg';
+export { ReactComponent as IcoEbook } from './lib/ic_ebook.svg';
 export { ReactComponent as IcoEntrust } from './lib/ic_entrust.svg'; // entrust
 export { ReactComponent as IcoError } from './lib/ic_error.svg'; // alert error icon 48*48
 export { ReactComponent as IcoError02 } from './lib/ic_error_02.svg';
