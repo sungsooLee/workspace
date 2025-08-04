@@ -109,10 +109,8 @@ const LearningResourceTestItemModalComponent = ({
           : contentInfo.contentUuid;
       const questionItem = { ...restData, contentUuid: paramUuid };
       createQuestionItem(questionItem, {
-        onSuccess: (data: any) => {
-          console.log('ok ', data);
-
-          data && onSuccessCallback?.();
+        onSuccess: (result: any) => {
+          onSuccessCallback?.();
           closeModal();
         },
         onError: (error: any) => {
@@ -498,8 +496,8 @@ const LearningResourceTestItemModalComponent = ({
                         title: '보기목록',
                         guideText: '보기의 첨부파일은 최대1개, 이미지파일만 가능합니다.',
                         multiple: true,
-                        showAdd: contentInfo?.examTemplateType !== ExamTemplateType.QUIZ,
-                        showRemove: contentInfo?.examTemplateType !== ExamTemplateType.QUIZ,
+                        showAdd: questionTypeWatch !== EnQuestionType.OX,
+                        showRemove: questionTypeWatch !== EnQuestionType.OX,
                         showTotalCount: true,
                         columns: gridColumn,
                         isRowSelected: (row: object) => {
