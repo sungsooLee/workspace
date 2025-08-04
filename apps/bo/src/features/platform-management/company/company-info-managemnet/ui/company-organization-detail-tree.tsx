@@ -6,6 +6,7 @@ import { t } from 'i18next';
 import { useEffect, useState } from 'react';
 // TODO: Fix unknown imports: TreeContainer from '@learnway/ui'
 import { Button } from '@learnway/ui/button';
+import { getCurrentAuthUser } from '@shared/lib';
 
 interface CompanyOrganizationDetailTreeProps {
   title: string;
@@ -49,7 +50,11 @@ const CompanyOrganizationDetailTreeComponent = ({
 
   useEffect(() => {
     const init = async () => {
-      const data = await UserGroupCompanyService.getCompanyOrganizationTree(companyId);
+      const loginUser = getCurrentAuthUser();
+      const data = await UserGroupCompanyService.getCompanyOrganizationTree({
+        companyId,
+        roleId: loginUser?.activeRole?.roleId,
+      });
       setCompanyOrganizationData(data);
     };
     if (companyId) init();
