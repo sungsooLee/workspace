@@ -35,11 +35,8 @@
         .recommand_wrap {
           .recommand_view {
             @apply mb-[16px] flex;
-            [class*='nlp--thumbnail'] {
+            .img_wrap {
               @apply w-[324px] shrink-0;
-              [class*='image_wrap'] {
-                @apply overflow-hidden rounded-[8px];
-              }
             }
             .info_wrap {
               @apply ml-[16px] flex flex-1 flex-col flex-wrap;
@@ -107,7 +104,7 @@
         li {
           @apply mr-[8px] inline-flex;
           .link {
-            @apply label-md flex h-[36px] items-center rounded-[18px] border border-solid border-[var(--gray90)] px-[12px] text-[var(--gray10)];
+            @apply label-md flex h-[36px] items-center !rounded-[18px] border border-solid border-[var(--gray90)] px-[12px] text-[var(--gray10)];
             svg {
               @apply ml-[4px];
             }

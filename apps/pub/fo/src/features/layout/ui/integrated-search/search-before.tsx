@@ -15,6 +15,7 @@ import styles from './search-before.module.css';
 
 /* image */
 import cardImg from '@learnway/styles/fo/assets/images/banner/img_banner_sample.jpg';
+import { ImageFallBack } from '@learnway/ui/image-fallback/image-fallback';
 
 type btnProps = {
   label: string;
@@ -157,7 +158,7 @@ export const SearchBefore: React.FC = () => {
             <li>
               <Link to={item.link} key={index} className={styles.link}>
                 <div className={styles.img_wrap}>
-                  <img src={item.imgUrl} alt="" />
+                  <ImageFallBack imageUrl={item.imgUrl} />
                 </div>
                 <div className={styles.info}>
                   <strong className={styles.label}>{item.label}</strong>
