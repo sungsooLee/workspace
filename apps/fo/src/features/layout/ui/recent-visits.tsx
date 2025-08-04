@@ -26,7 +26,7 @@ const RecentVisitsCompoment = ({items, handleOnLink}: RecentVisitsProps) => {
       swiperInstance.navigation.init();
       swiperInstance.navigation.update();
     }
-  }, []);
+  }, [items]);
 
   return (
     <div className={`${styles.start} ${styles.recent_visits}`}>
