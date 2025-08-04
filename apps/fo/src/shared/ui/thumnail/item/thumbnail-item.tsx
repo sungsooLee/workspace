@@ -1,26 +1,26 @@
-import React from 'react';
 import { IcoEye, IcoHeart, IcoStar } from '@learnway/icons';
 import { cn, getRandomId } from '@learnway/shared';
-import styles from './thumbnail-item.module.css';
 import { Badge } from '@learnway/ui/badge';
-import { Thumbnail } from '@learnway/ui/thumbnail';
 import { ToggleButton } from '@learnway/ui/toggle-button';
+import React from 'react';
+import styles from './thumbnail-item.module.css';
 
 import { Link } from '@tanstack/react-router';
 import { t } from 'i18next';
 
 // 임시 이미지
 import bnrCImage1 from '@assets/images/banner/banner_category_02.png';
+import { ImageFallBack } from '@learnway/ui/image-fallback/image-fallback';
 
 export interface ThumbnailData {
-  courseId: number,
-  courseName: string,
-  courseType: string,
-  curriculumId: number,
+  courseId: number;
+  courseName: string;
+  courseType: string;
+  curriculumId: number;
   // countInfoNode
-  starRatingAverage: number,
-  viewCount: number,
-  likeCount: number
+  starRatingAverage: number;
+  viewCount: number;
+  likeCount: number;
   // labelCustomNode
   imageUrl: string;
   toggleButton?: boolean;
@@ -59,43 +59,36 @@ export const ThumbnailItem: React.FC<ThumbnailItemProps> = ({
       <Link to={'/'} state={{}} className={styles.thumbnail_link}>
         {/* thumbnail , badge */}
         <div className={styles.thumbnail_view}>
-          <Thumbnail
+          <ImageFallBack
             stacked={stacked}
-            path={data.imageUrl ? data.imageUrl : bnrCImage1}
-            enableHover={false}
+            imageUrl={data.imageUrl ? data.imageUrl : bnrCImage1}
             className={styles.thumbnail_image}
           />
           <div className={styles.custom_node}>
-            {
-              data.isNew && (
-                <Badge
-                  variant="text"
-                  status="primary"
-                  size="xs"
-                  option={{ label: 'New', value: `${getRandomId()}` }}
-                />
-              )
-            }
-            {
-              data.isEnrollOpen && (
-                <Badge
-                  variant="text"
-                  status="gray"
-                  size="xs"
-                  option={{ label: t('적용'), value: `${getRandomId()}` }}
-                />
-              )
-            }
-            {
-              (data.dday && data.dday !== 0) && (
-                <Badge
-                  variant="text"
-                  status="caution"
-                  size="xs"
-                  option={{ label: `D-${data.dday}`, value: `${getRandomId()}` }}
-                />
-              )
-            }
+            {data.isNew && (
+              <Badge
+                variant="text"
+                status="primary"
+                size="xs"
+                option={{ label: 'New', value: `${getRandomId()}` }}
+              />
+            )}
+            {data.isEnrollOpen && (
+              <Badge
+                variant="text"
+                status="gray"
+                size="xs"
+                option={{ label: t('적용'), value: `${getRandomId()}` }}
+              />
+            )}
+            {data.dday && data.dday !== 0 && (
+              <Badge
+                variant="text"
+                status="caution"
+                size="xs"
+                option={{ label: `D-${data.dday}`, value: `${getRandomId()}` }}
+              />
+            )}
           </div>
         </div>
         <div className={styles.thumbnail_info}>
@@ -115,7 +108,7 @@ export const ThumbnailItem: React.FC<ThumbnailItemProps> = ({
           {/* title */}
           <p className={styles.thumbnail_title}>{data.courseName}</p>
           {/* icon info  */}
-          <div className={styles.count_info_node} >
+          <div className={styles.count_info_node}>
             <span>
               <IcoStar width={20} height={20} stroke="#0056FF" fill="#0056FF" />
               <em>{data.starRatingAverage}</em>
