@@ -340,7 +340,7 @@ export function CourseDetail() {
   const handleCourseLike = async () => {
     if (isLikePending) return;
 
-    toggleLikeMutate(courseId || testCourseId, {
+    await toggleLikeMutate(courseId || testCourseId, {
       onSuccess: () => {
         setLikeChk((prev) => !prev);
         setLikeCount((prev) => prev + (likeChk ? -1 : 1));

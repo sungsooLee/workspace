@@ -76,6 +76,13 @@ export interface CourseEnrollsssResponse {
   empty: boolean;
 }
 
+export interface CourseEnrollDeleteResponse {
+  status: number;
+  message: string;
+  enrollQueueStatusType: EnrollQueueStatusType;
+  code: string;
+}
+
 export interface LangLevelTest {
   familyName: string;
   firstName: string;
@@ -112,4 +119,9 @@ export interface EnrollRequest {
       approverInfos: ApprovalInfo[];
     };
   };
+}
+
+export interface EnrollDeleteRequest {
+  courseSequenceId: string;
+  approvalReason: string;
 }

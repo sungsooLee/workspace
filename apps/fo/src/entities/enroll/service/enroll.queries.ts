@@ -1,5 +1,10 @@
 import { UseMutationOptions, UseQueryOptions } from '@tanstack/react-query';
-import { CourseEnrollQueueStateIdResponse, CourseEnrollResponse, EnrollRequest } from '@types';
+import {
+  CourseEnrollQueueStateIdResponse,
+  CourseEnrollResponse,
+  EnrollDeleteRequest,
+  EnrollRequest,
+} from '@types';
 import EnrollService from '../api/enroll';
 
 export const queryKeys = {
@@ -8,6 +13,7 @@ export const queryKeys = {
   courseRegistrationStatus: (enrollQueueId: number) =>
     ['courseRegistrationStatus', enrollQueueId] as const,
   singleCourseApplicationQueue: ['singleCourseApplicationQueue'] as const,
+  deleteCourseApplication: ['deleteCourseApplication'] as const,
 };
 
 export const queryOptions = {
@@ -30,5 +36,9 @@ export const queryOptions = {
     onSuccess: (data) => {
       // console.log(data);
     },
+  }),
+
+  deleteCourseApplication: (): UseMutationOptions<unknown, unknown, EnrollDeleteRequest> => ({
+    mutationFn: (body: EnrollDeleteRequest) => EnrollService.deleteEnroll(body),
   }),
 };
