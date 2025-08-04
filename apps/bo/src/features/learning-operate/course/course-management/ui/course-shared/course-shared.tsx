@@ -3,7 +3,7 @@ import { useCopyCourseShared } from '@entities/course-shared/service/course-shar
 import { queryOptions as courseSharedQueryOptions } from '@entities/course-shared/service/course-shared.queries';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { AuthUser } from '@learnway/auth/types';
-import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
+import { CODE_GROUP, getCodeLabel, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { Button } from '@learnway/ui/button';
 import { Divider } from '@learnway/ui/elements';
@@ -103,6 +103,7 @@ const CourseSharedComponent = () => {
       to: '/learning/course/detail',
       state: {
         courseId: payload.courseId,
+        courseName: payload.courseName,
         meta: { title: payload.courseName },
       },
     });
@@ -130,7 +131,7 @@ const CourseSharedComponent = () => {
           type: 'dropdown',
           label: t('LABEL.form.label.originChannelUuid', '공유한 채널'),
           value: '',
-          format: 'number',
+          format: 'string',
           presetOptionLabel: t('LABEL.form.label.select', '선택'),
           options: [],
         },
@@ -138,7 +139,7 @@ const CourseSharedComponent = () => {
           name: 'targetChannelUuid',
           type: 'dropdown',
           label: t('LABEL.form.label.targetChannelUuid', '공유 받은 채널'),
-          format: 'number',
+          format: 'string',
           value: '',
           presetOptionLabel: t('LABEL.form.label.select', '선택'),
           options: [],
@@ -185,7 +186,7 @@ const CourseSharedComponent = () => {
       }),
       columnHelper.accessor('courseType', {
         header: t('과정유형'),
-        cell: (info) => info.getValue(),
+        cell: (info: any) => getCodeLabel(CODE_GROUP['lms.course.CourseType'], info.getValue()),
         enableGrouping: false,
         size: 80,
       }),
@@ -207,7 +208,8 @@ const CourseSharedComponent = () => {
       }),
       columnHelper.accessor('language', {
         header: t('언어'),
-        cell: (info) => info.getValue(),
+        cell: (info: any) =>
+          getCodeLabel(CODE_GROUP['pms.multilingual.LangCountryCode'], info.getValue()),
         enableGrouping: false,
         size: 80,
       }),
