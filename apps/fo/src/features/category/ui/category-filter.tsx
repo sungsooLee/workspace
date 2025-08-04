@@ -10,12 +10,14 @@ import { Button } from '@learnway/ui/button';
 import { ChipList } from '@learnway/ui/chips';
 import { useModal } from '@learnway/ui/modal';
 import { isMobile } from 'react-device-detect';
+import { t } from 'i18next';
 
 interface FilterComponentProps {
   onOptionChange: (option: any) => void;
 }
 
 const FilterComponent = ({ onOptionChange }: FilterComponentProps) => {
+  const showLanguageCode = ['KO', 'EN', 'ZH', 'JA']
   const { getCode } = useCodeStore();
 
   // modal
@@ -28,11 +30,19 @@ const FilterComponent = ({ onOptionChange }: FilterComponentProps) => {
   const [selectedChipOptions, setSelectedChipOptions] = useState([]);
 
   const [filter, setFilter] = useState<any>();
+  const [difficultyCodes, setDifficultyCodes] = useState<any>();
+  const [languageCodes, setLanguageCodes] = useState<any>();
 
   const handleOpenFilterModal = () => {
     // 현재 선택된 필터 칩에서 카테고리별 필터 값 추출
     const codes = {
       lectureType: filter,
+      enrollment: [
+        {label: t('수강신청 가능'), value: 'allow'},
+        {label: t('수강신청 불가능'), value: 'reject'}
+      ],
+      difficulty: difficultyCodes,
+      language: languageCodes,
     }
     openModal({
       // title: '필터',
@@ -41,13 +51,6 @@ const FilterComponent = ({ onOptionChange }: FilterComponentProps) => {
       onClose: (data: any) => {
         if( data ) {
           setSelectedCardOptions(data)
-        }
-
-        // 확인 버튼을 눌러 모달이 닫힐 때 데이터를 받음
-        if (data && data.selectedChips) {
-          console.log('모달에서 선택된 필터:', data);
-          // 선택된 필터 칩 목록 업데이트 (바닥에 표시할 칩 목록)
-          setSelectedChipOptions(data.selectedChips);
         }
       },
     });
@@ -70,7 +73,26 @@ const FilterComponent = ({ onOptionChange }: FilterComponentProps) => {
       const defaultOptions = data.map((item: any) => {
         return { label: item.cdName, value: item.value };
       });
+      const difficultyData = await getCode(CODE_GROUP['lms.course.TrainingLevelType']);
+      const difficultyOptions = difficultyData
+        .filter((item: any) => item.cdId !== 'NONE')
+        .map((item: any) => {
+          return { label: item.cdContent, value: item.value };
+        });
+      const languageData = await getCode(CODE_GROUP['pms.multilingual.LangCountryCode']);
+      const languageOptions = languageData
+        .filter((item: any) => showLanguageCode.includes(item.cdId) )
+        .map((item: any) => {
+          return { label: item.referenceVal1.korLanguageName, value: item.value };
+        });
+      const etcLanguageValue = languageData
+        .filter((item: any) => !showLanguageCode.includes(item.cdId) )
+        .map((item: any) => item.value);
+      languageOptions.push({label: t('기타 언어'), value: etcLanguageValue});
+
       setFilter(defaultOptions)
+      setDifficultyCodes(difficultyOptions)
+      setLanguageCodes(languageOptions)
     })();
   }, []);
 
