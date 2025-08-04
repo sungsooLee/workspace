@@ -3,12 +3,12 @@ import { useState } from 'react';
 
 import {
   IcoBlog,
+  IcoEbook,
   IcoEntrust,
   IcoEtc,
   IcoHtml,
   IcoImage01,
   IcoInfoCircle,
-  IcoMybook,
   IcoVideo01,
   IcoVideo02,
 } from '@learnway/icons';
@@ -68,7 +68,7 @@ function RouteComponent() {
     {
       label: '이북',
       value: 'm',
-      icon: <IcoMybook />,
+      icon: <IcoEbook />,
       description: '설명문구2줄설명',
     },
     { label: '스콤', value: 'n', icon: <IcoEtc />, description: '설명문구2줄설명' },
