@@ -5,7 +5,7 @@ import dropdownPopoverStyles from '../../../shared/ui/dropdown-popover/dropdown-
 import styles from '@learnway/styles/fo/pages/_layout/category/category.module.css';
 import { cn } from '@learnway/shared';
 import { Filter } from '@features/category/ui/category-filter';
-import { Arrays, ThumbnailList } from '@features/layout';
+import { Arrays } from '@features/layout';
 import { t } from 'i18next';
 
 import bnrCImage1 from '../../../assets/images/banner/banner_category_01.png';
@@ -23,6 +23,7 @@ import { Button } from '@learnway/ui/button';
 import { Popover } from '@learnway/ui/popover';
 import { EmptyText } from '@learnway/ui/empty-text';
 import { Pagination } from '@learnway/ui/pagination';
+import { ThumbnailList } from '@shared/ui/thumnail/list/thumbnail-list';
 
 // 4,5,6 뎁스 일 때 사용하는 더미 데이터
 const topOptions = (
@@ -89,6 +90,7 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
   };
   const handlePageSizeChange = async (value: number) => {
     setSize(value)
+    setPage(0);
   }
 
   const handleFilterOptionChange = async (options: any) => {
@@ -141,6 +143,7 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
         console.log('### categoryInfo => ', categoryInfo);
         const payload = {
           ...coursePayload,
+          page, size,
           categoryId: categoryInfo.categoryId,
         }
         setCoursePayload(payload);
@@ -205,6 +208,7 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
             </div>
           </li>
           <li>
+            {/* 수강신청 필터는 '이러닝1, 라이브, 설문' 일때는 비표시 */}
             <Filter onOptionChange={handleFilterOptionChange} />
           </li>
         </ul>
@@ -288,8 +292,8 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
       {data.content && data.content.length > 0 && (
         <Pagination
           className={cn(styles.pagenation, styles.paginationItem)}
-          pageNumber={0}
-          totalPages={5}
+          pageNumber={page}
+          totalPages={data.totalPages}
           hidePageSizeOptions={true}
           hidePageInfo={true}
           showFirstButton={false}

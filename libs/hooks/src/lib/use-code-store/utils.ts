@@ -15,9 +15,9 @@ const defaultFetchCodeGroup = async <K extends CODE_GROUP_TYPE>(
   filter: Record<string, any> = {},
 ): Promise<Code[K]> => {
   try {
-    const response = await httpService.get<any>(`${PMSApiPrefix()}/enum/${group}`, filter);
+    const response = await httpService.get<any>(`${PMSApiPrefix()}/enums/${group}`, filter);
 
-    const groupData = response?.[0]?.[group];
+    const groupData = response?.[group];
     if (!Array.isArray(groupData)) {
       return [];
     }

@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { type MutateCallback } from '@learnway/shared';
 import { useModal } from '@learnway/ui/modal';
 
+import { useCodeStore } from '@learnway/hooks';
 import { SessionTimeoutConfirm } from '../../../features';
 import type { AuthUser } from '../../../types';
 import { useExpStore } from '../store/use-exp-store';
@@ -86,12 +87,13 @@ export function useReissue(mutationOptions = {}) {
 export function useLogoutUser(mutationOptions = {}) {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { reset } = useExpStore();
+  const { reset: expReset } = useExpStore();
+  const { reset: codeReset } = useCodeStore();
 
   const { mutate, isSuccess, isError } = useMutation({
     ...mutateOptions.logout(),
     onSuccess: async (data) => {
-      reset();
+      expReset();
       queryClient.invalidateQueries({ queryKey: queryKeys.authUser });
       queryClient.removeQueries({ queryKey: queryKeys.authUser });
     },
@@ -105,7 +107,8 @@ export function useLogoutUser(mutationOptions = {}) {
         mutate(payload, {
           ...callback,
           onSuccess: (data) => {
-            reset();
+            expReset();
+            codeReset();
             queryClient.invalidateQueries({ queryKey: queryKeys.authUser });
             queryClient.removeQueries({ queryKey: queryKeys.authUser });
             router.navigate({ to: '/login' });

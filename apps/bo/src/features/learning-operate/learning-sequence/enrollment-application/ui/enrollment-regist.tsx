@@ -62,12 +62,11 @@ const EnrollmentRegistComponent = ({
   const { enrollmentCreateInfo } = useEnrollmentStore();
   const router = useRouter();
   const { openModal, confirm: openConfirm, alert } = useModal();
-  const { config: gConfig, gridFetch, data } = useGridBox(gridConfig);
+  const { config: gConfig, gridFetch, data: gridData } = useGridBox(gridConfig);
   const [columns, setColumns] = useState() as any;
   const [selectedRows, setSelectedRows] = useState<any[]>();
   const [statsCount, setStatsCount] = useState<Array<StatsSummaryData>>([]);
   const [params, setParams] = useState<Record<string, any>>({});
-  const [valuesWithLabel, setValuesWithLabel] = useState<Record<string, SelectOption>>({});
   const queryClient = useQueryClient();
 
   _global.linkClickSequenceName = (payload: any) => {
@@ -290,7 +289,7 @@ const EnrollmentRegistComponent = ({
       <Divider />
       <StatsSummary data={statsCount} />
       <GridBox
-        gridData={data}
+        gridData={gridData}
         columns={columns}
         multiple={true}
         disabledSelectionToggle
@@ -318,8 +317,8 @@ const EnrollmentRegistComponent = ({
           <GridExcelDownloadButton
             url={`${LMSApiPrefix()}/enrolls/excel`}
             params={params}
-            dataCount={data?.totalElements}
-            disabled={!data?.totalElements}
+            dataCount={gridData?.totalElements}
+            disabled={!gridData?.totalElements}
           />
         }
       />

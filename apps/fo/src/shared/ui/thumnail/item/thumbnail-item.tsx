@@ -1,7 +1,7 @@
 import React from 'react';
 import { IcoEye, IcoHeart, IcoStar } from '@learnway/icons';
 import { cn, getRandomId } from '@learnway/shared';
-import styles from '@learnway/styles/fo/features/layout/ui/thumb-nail-item.module.css';
+import styles from './thumbnail-item.module.css';
 import { Badge } from '@learnway/ui/badge';
 import { Thumbnail } from '@learnway/ui/thumbnail';
 import { ToggleButton } from '@learnway/ui/toggle-button';
@@ -10,7 +10,7 @@ import { Link } from '@tanstack/react-router';
 import { t } from 'i18next';
 
 // 임시 이미지
-import bnrCImage1 from '../../../assets/images/banner/banner_category_02.png';
+import bnrCImage1 from '@assets/images/banner/banner_category_02.png';
 
 export interface ThumbnailData {
   courseId: number,
@@ -23,14 +23,13 @@ export interface ThumbnailData {
   likeCount: number
   // labelCustomNode
   imageUrl: string;
-  thumbnailFileGroupUuid: string;
   toggleButton?: boolean;
   // infoCustomNode
   isNew: boolean;
   isEnrollOpen: boolean;
   isLike: boolean;
   dday: number;
-  tagLabels: string[];
+  tags: string[];
 }
 
 interface ThumbnailItemProps {
@@ -46,8 +45,6 @@ export const ThumbnailItem: React.FC<ThumbnailItemProps> = ({
   stacked = false,
   className,
 }) => {
-  console.log('### thumbnailFileGroupUuid => ', data.thumbnailFileGroupUuid)
-  console.log('### isLike => ', data.isLike)
   return (
     <div
       className={cn(
@@ -64,7 +61,7 @@ export const ThumbnailItem: React.FC<ThumbnailItemProps> = ({
         <div className={styles.thumbnail_view}>
           <Thumbnail
             stacked={stacked}
-            path={data.imageUrl ? '' : bnrCImage1}
+            path={data.imageUrl ? data.imageUrl : bnrCImage1}
             enableHover={false}
             className={styles.thumbnail_image}
           />
@@ -102,9 +99,9 @@ export const ThumbnailItem: React.FC<ThumbnailItemProps> = ({
           </div>
         </div>
         <div className={styles.thumbnail_info}>
-          {data.tagLabels && data.tagLabels.length > 0 && (
+          {data.tags && data.tags.length > 0 && (
             <div className={styles.tag_list}>
-              {data.tagLabels.map((tag, index) => (
+              {data.tags.map((tag, index) => (
                 <Badge
                   key={index}
                   variant="outline"
@@ -134,7 +131,7 @@ export const ThumbnailItem: React.FC<ThumbnailItemProps> = ({
           </div>
         </div>
       </Link>
-      {data.isLike && <ToggleButton variant={'heart'} className={styles.toggle_btn} />}
+      <ToggleButton variant={'heart'} className={styles.toggle_btn} />
     </div>
   );
 };

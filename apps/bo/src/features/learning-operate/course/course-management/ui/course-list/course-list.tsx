@@ -1,12 +1,13 @@
+import { isLocalhost } from '@learnway/shared';
+import { Button } from '@learnway/ui/button';
 import { Divider } from '@learnway/ui/elements';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
 import { Link } from '@tanstack/react-router';
 import { t } from 'i18next';
+import { useState } from 'react';
 import { useCoursePage } from '../../hooks/use-course-page';
-import { CourseGrid } from './course-grid';
 import { CourseSearchForm } from '../course-search-form/course-search-form';
-import { isLocalhost } from '@learnway/shared';
-import { Button } from '@learnway/ui/button';
+import { CourseGrid } from './course-grid';
 
 const CourseListComponent = () => {
   const {
@@ -21,31 +22,14 @@ const CourseListComponent = () => {
     handleBatchUploadClick,
     handleCourseOpenClick,
     handleCopyClick,
-    handleShareClick } = useCoursePage();
+    handleShareClick,
+  } = useCoursePage();
 
   return (
     <PageContainer>
       <ContentsButtons>
-        {isLocalhost() && (
-          <>
-            <Link to="/learning/course/create" className="link">
-              신규 /
-            </Link>
-            <Link to="/learning/course/create" state={{ courseId: 7 }} className="link">
-              등록7 /
-            </Link>
-            <Link
-              to="/learning/course/detail"
-              state={{
-                courseId: 7,
-                courseName: '스마트제조를 위한 스마트공장 구축 및 추진실무 - MES구축' }}
-              className="link"
-            >
-              상세7
-            </Link>
-            <Divider orientation={'vertical'} />
-          </>
-        )}
+        {/* 테스트 링크 박스 */}
+        {isLocalhost() && <TestLinkBox />}
         <Button
           type="button"
           variant="point"
@@ -83,3 +67,39 @@ const CourseListComponent = () => {
 };
 
 export const CourseList = CourseListComponent;
+
+// 테스트 링크 박스
+const TestLinkBox = () => {
+  const [courseId, setCourseId] = useState(7);
+  return (
+    <>
+      <input
+        type="text"
+        value={courseId}
+        onChange={(e: any) => setCourseId(e.target.value)}
+        className="w-[50px]"
+        aria-label="Course ID"
+      />
+      <Link
+        to="/learning/course/create"
+        state={{ courseId }}
+        className="link"
+        style={{ display: 'inline-block', width: 40, textAlign: 'center' }}
+      >
+        등록
+      </Link>
+      <Link
+        to="/learning/course/detail"
+        state={{
+          courseId,
+          courseName: '라우팅시 넘긴 과정 이름',
+        }}
+        className="link"
+        style={{ display: 'inline-block', width: 40, textAlign: 'center' }}
+      >
+        상세
+      </Link>
+      <Divider orientation={'vertical'} />
+    </>
+  );
+};

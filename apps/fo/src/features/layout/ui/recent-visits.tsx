@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { Chip } from '@learnway/ui/chips';
 import { Navigation } from 'swiper/modules';
+import { t } from 'i18next';
 
 interface RecentVisitsProps {
   items: SelectOption[];
@@ -29,38 +30,42 @@ const RecentVisitsCompoment = ({items, handleOnLink}: RecentVisitsProps) => {
 
   return (
     <div className={`${styles.start} ${styles.recent_visits}`}>
-      <h3 className={styles.tit}>최근방문</h3>
-      {/* 방문한 카테고리가 없을경우
-      <div className={styles.no_visits}>최근 방문한 카테고리가 없습니다.</div>*/}
+      <h3 className={styles.tit}>{t('최근방문')}</h3>
+      {
+        (items.length === 0) ? (
+          <div className={styles.no_visits}>{t('최근 방문한 카테고리가 없습니다.')}</div>
+        ) : (
+          <>
+            <Swiper
+              ref={swiperRef}
+              spaceBetween={8}
+              slidesPerView="auto"
+              loop={false}
+              modules={[Navigation]}
+              className={styles.recent_swiper}
+            >
+              <div className={styles.lists}>
+                {items.map((item, index) => (
+                  <SwiperSlide key={index} className={styles.slide}>
+                    <Chip className={styles.item} option={{ label: item.label, value: item.value }} onClick={() => handleOnLink(item.value)}/>
+                  </SwiperSlide>
+                ))}
+              </div>
+            </Swiper>
 
-      {/* 방문한 카테고리가 있을경우 */}
-      <Swiper
-        ref={swiperRef}
-        spaceBetween={8}
-        slidesPerView="auto"
-        loop={false}
-        modules={[Navigation]}
-        className={styles.recent_swiper}
-      >
-        <div className={styles.lists}>
-          {items.map((item, index) => (
-            <SwiperSlide key={index} className={styles.slide}>
-              <Chip className={styles.item} option={{ label: item.label, value: item.value }} onClick={() => handleOnLink(item.value)}/>
-            </SwiperSlide>
-          ))}
-        </div>
-      </Swiper>
-
-      <div ref={prevRef} className={styles.recent_button_prev}>
-        <div className={styles.btn}>
-          <IcoArrowForward width={16} height={16} stroke="#6F798B" />
-        </div>
-      </div>
-      <div ref={nextRef} className={styles.recent_button_next}>
-        <div className={styles.btn}>
-          <IcoArrowForward width={16} height={16} stroke="#6F798B" />
-        </div>
-      </div>
+            <div ref={prevRef} className={styles.recent_button_prev}>
+              <div className={styles.btn}>
+                <IcoArrowForward width={16} height={16} stroke="#6F798B" />
+              </div>
+            </div>
+            <div ref={nextRef} className={styles.recent_button_next}>
+              <div className={styles.btn}>
+                <IcoArrowForward width={16} height={16} stroke="#6F798B" />
+              </div>
+            </div>
+          </>
+        )
+      }
     </div>
   );
 };

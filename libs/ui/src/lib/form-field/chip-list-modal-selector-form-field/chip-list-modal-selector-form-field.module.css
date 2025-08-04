@@ -54,7 +54,7 @@
 .custom_btn_wrap {
   @apply relative z-[1] -mt-[38px] flex items-center justify-end;
   [class*='nlp--button'] {
-    @apply !button_bo_2_r inline-flex items-center !text-[var(--gray8)];
+    @apply !button_bo_2_r inline-flex items-center text-[var(--gray8)];
     svg {
       @apply mr-[4px];
     }
@@ -62,6 +62,12 @@
       @apply !ml-0;
       &::before {
         @apply mr-[8px] h-[12px] w-[1px] bg-[var(--gray5)] content-[''];
+      }
+    }
+    &:disabled {
+      @apply text-[var(--gray5)];
+      svg {
+        @apply stroke-[var(--gray5)];
       }
     }
   }

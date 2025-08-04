@@ -26,7 +26,7 @@ function NavigateHoverComponent({ hoverMenu, isOpen, onClose }: NavigateHoverCom
     <div className={`${styles.start} ${styles.menu_all} ${styles.active}`} onMouseLeave={onClose}>
       <div className={styles.menu_inner}>
         <div className={styles.menu_info}>
-          <h2 className={styles.tit}>{t(hoverMenu.menuCode)}</h2>
+          <h2 className={styles.tit}>{t(`LEARNER_MENU.${hoverMenu.menuCode}`)}</h2>
           <div className={styles.info}>{hoverMenu.menuDesc}</div>
         </div>
 
@@ -35,12 +35,12 @@ function NavigateHoverComponent({ hoverMenu, isOpen, onClose }: NavigateHoverCom
             <div key={subIndex} className={styles.menu_div}>
               <div className={styles.menu_list}>
                 <h3 className={styles.tit}>
-                  <span>{t(menu.menuCode)}</span>
+                  <span>{t(`LEARNER_MENU.${menu.menuCode}`)}</span>
                 </h3>
                 <ul className={styles.list}>
                   {menu.children?.map((sub, itemIndex) => (
                     <li key={itemIndex}>
-                      <Link to={sub.path}>{t(sub.menuCode)}</Link>
+                      <Link to={sub.path}>{t(`LEARNER_MENU.${sub.menuCode}`)}</Link>
                     </li>
                   ))}
                 </ul>

@@ -13,7 +13,6 @@ import { ChipListModalSelectorFormField, GridFormField } from '@learnway/ui/form
 import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
 import { FormRow, OrganizationChoiceTreeModal } from '@shared/ui';
 
-import { useSystemCodeDetail } from '@entities/common-code';
 import { queryOptions as CompanyService } from '@entities/companies/service/companies.queries';
 import UsersService from '@entities/users/api/users';
 import { useCreateUser } from '@entities/users/service/users.hook';
@@ -49,7 +48,6 @@ const TenantUserRegistComponent = (props: any, ref: any) => {
   const queryClient = useQueryClient();
 
   const { openModal, confirm: openConfirm, alert: openAlert } = useModal();
-  const { data: codeGroupData } = useSystemCodeDetail('cmmon.TelCountryCode');
 
   const formRef = useRef<HTMLFormElement>(null);
 

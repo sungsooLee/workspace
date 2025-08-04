@@ -1,3 +1,4 @@
+export * from './';
 export * from './content-top-buttons';
 export * from './etc-info';
 export * from './learning-resource-blog-detail';
@@ -18,4 +19,3 @@ export * from './legacy/ebook-info';
 export * from './legacy/image-info';
 export * from './movie-info';
 export * from './scorm-info';
-

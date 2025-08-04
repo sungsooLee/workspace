@@ -1,11 +1,11 @@
 import { DynamicFormProvider } from '@learnway/hooks';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import LearningResourceService from '../api/learning-resource';
-import { isProcessing, isProcessingCompleted, isProcessingNone } from './util';
+import { DATE_TIME_FORMAT, duration } from '@learnway/shared';
 import { GetScormResourceRes, PutScormChangeRes } from '@types';
 import { get, omit, pick } from 'lodash-es';
-import { DATE_TIME_FORMAT, duration } from '@learnway/shared';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import LearningResourceService from '../api/learning-resource';
 import { usePutScormChange } from './learning-resource.hook';
+import { isProcessing, isProcessingCompleted, isProcessingNone } from './util';
 
 const scormChangeKey = (contentUuid: string) => `scormChangeResource${contentUuid}`;
 
@@ -19,6 +19,7 @@ const useScormResourceHook = (provider: DynamicFormProvider) => {
   const status = watch('processingStatus');
   const playTime = duration(watch('contentAddInfo'), DATE_TIME_FORMAT.HOUR_MIN_SEC);
   const contentUuid = watch('contentUuid');
+  console.log('🚀 ~ useScormResourceHook ~ contentUuid:', contentUuid);
 
   const [scormChangeId, setScormChangeId] = useState<number | undefined>();
 
@@ -35,7 +36,8 @@ const useScormResourceHook = (provider: DynamicFormProvider) => {
     onError: (error: any) => {
       console.error(error);
       // 에러 얼럿?
-    } });
+    },
+  });
 
   const handleChangeScorm = (fileUuid: string) => changeScorm({ contentUuid, fileUuid });
 
@@ -117,7 +119,8 @@ const useScormResourceHook = (provider: DynamicFormProvider) => {
     processingStatus: status,
     playTime,
     scormResource,
-    handleChangeScorm };
+    handleChangeScorm,
+  };
 };
 
 export const useScormResource = useScormResourceHook;

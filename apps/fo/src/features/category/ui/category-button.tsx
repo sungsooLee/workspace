@@ -169,12 +169,6 @@ export const CategoryButton = ({ tenantId }: { tenantId?: number }) => {
   const router = useRouter();
   const { openModal } = useModal();
 
-  // useEffect(() => {
-  //   return router.history.subscribe((navigation) => {
-  //     onOpenChange(false);
-  //   });
-  // }, [router.history, onOpenChange]);
-
   const { create } = useCreateRecentCategory({
     onSuccess: async (data: any) => {
       router.navigate({

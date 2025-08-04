@@ -7,7 +7,7 @@ import { isMobile } from 'react-device-detect';
 
 import {
   CourseSelectionPopup, // 차수선택 팝업
-} from '../../../../features/layout/';
+} from '../../../../widgets/layout';
 
 import styles from '@learnway/styles/fo/features/layout/ui/course-introduction/course-fixed-button.module.css';
 import { t } from 'i18next';

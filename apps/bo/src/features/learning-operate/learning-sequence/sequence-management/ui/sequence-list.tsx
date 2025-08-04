@@ -7,7 +7,7 @@ import {
 import { queryOptions } from '@entities/learning-sequence/service/learning-sequence.queries';
 import { SequenceBatchModal } from '@features/learning-operate/learning-sequence/sequence-management';
 import { LMSApiPrefix } from '@learnway/config';
-import { SelectOption, useDynamicForm2 } from '@learnway/hooks';
+import { useDynamicForm2 } from '@learnway/hooks';
 import { Button } from '@learnway/ui/button';
 import { Divider } from '@learnway/ui/elements';
 import {
@@ -87,7 +87,6 @@ const SequenceListComponent = ({
   });
   const { gridFetch, data: gridData } = useGridBox(gridConfig);
   const [params, setParams] = useState<Record<string, any>>({});
-  const [valuesWithLabel, setValuesWithLabel] = useState<Record<string, SelectOption>>({});
 
   useEffect(() => {
     const openYearColumn = [
@@ -568,7 +567,6 @@ const SequenceListComponent = ({
             <GridExcelDownloadButton
               url={`${LMSApiPrefix()}/sequences/excel`}
               params={params}
-              paramLabels={valuesWithLabel}
               dataCount={gridData?.totalElements}
               disabled={!gridData?.totalElements}
             />

@@ -1,11 +1,11 @@
 import { queryOptions } from '@entities/learning-sequence/service/learning-sequence.queries';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
+import { ModalBody, ModalContainer, ModalTitle } from '@learnway/ui/modal';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { useCallback, useEffect, useState } from 'react';
 import { getStudentCourseTypeName } from '../constants/students-status';
-import { ModalBody, ModalContainer, ModalTitle } from '@learnway/ui/modal';
 
 /**
  * NLP_BO_LMS_0046 : 학습 이력 팝업
@@ -22,12 +22,15 @@ const gridConfig: useGridBoxConfig = {
   data: [],
   gridState: {
     page: 0,
-    size: 5,
-    sort: [] } };
+    size: 10,
+    sort: [],
+  },
+};
 
 const StudentsHistoryModalComponent = ({
   userId: userIdProps,
-  courseId: courseIdProps }: StudentsHistoryModalComponentProps) => {
+  courseId: courseIdProps,
+}: StudentsHistoryModalComponentProps) => {
   const [columns, setColumns] = useState() as any;
   const { config: gConfig, gridFetch, data } = useGridBox(gridConfig);
 
@@ -37,17 +40,20 @@ const StudentsHistoryModalComponent = ({
         header: t('학습유형'),
         cell: (info) => getStudentCourseTypeName(info.getValue()),
         enableGrouping: false,
-        size: 71 }),
+        size: 71,
+      }),
       columnHelper.accessor('courseName', {
         header: t('과정명'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
-        size: 350 }),
+        size: 350,
+      }),
       columnHelper.accessor('courseSequenceName', {
         header: t('과정차수'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
-        size: 150 }),
+        size: 150,
+      }),
       columnHelper.accessor('learningRange', {
         header: t('교육기간'),
         cell: (info) => {
@@ -67,7 +73,8 @@ const StudentsHistoryModalComponent = ({
           }
         },
         enableGrouping: false,
-        size: 265 }),
+        size: 265,
+      }),
     ] as ColumnDef<any, unknown>[];
 
     setColumns(columns);
@@ -77,7 +84,8 @@ const StudentsHistoryModalComponent = ({
   const handleOnSearch = useCallback(() => {
     const payload = {
       userId: userIdProps,
-      courseId: courseIdProps };
+      courseId: courseIdProps,
+    };
     gridFetch(payload);
   }, []);
 

@@ -42,6 +42,7 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
     gotoBeforeLesson,
     gotoNextLesson,
     getProgressNumber,
+    resetProgressive,
   } = useLearningWindow();
   const { openModal, confirm: openConfirm } = useModal();
 
@@ -80,6 +81,11 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
 
       if (menuSelected === true) {
         return;
+      }
+      //* 커리큘럼 메뉴 호출 시 Progressive 다시 조회 함 */
+      if (index === 0) {
+        console.log('진척율 조회 호출');
+        resetProgressive();
       }
     }
     const data: ChildData = {

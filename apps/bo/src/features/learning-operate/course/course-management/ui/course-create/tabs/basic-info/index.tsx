@@ -35,7 +35,7 @@ const BasicInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) 
   const form = useDynamicForm2();
   const { provider, getValues, onFormChange } = form;
 
-  const { isUpdateMode } = useCourseCreateSubPage(form);
+  const { isUpdateMode, initCourseType } = useCourseCreateSubPage(form);
 
   return (
     <form>
@@ -49,7 +49,7 @@ const BasicInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) 
           name={'courseType'}
           label={t('유형')}
           disabled={isUpdateMode}
-          validation={{ required: true }}
+          validation={{ required: true, format: 'string' }}
           element={
             <DropdownFormField
               optionsConfig={{
@@ -64,7 +64,7 @@ const BasicInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) 
           name={'channelUuid'}
           label={t('채널')}
           disabled={isUpdateMode}
-          validation={{ required: true }}
+          validation={{ required: true, format: 'string' }}
           element={<TenantChannelDropdownFormField2 tenantId={-1} />}
         />
       </ContentsRow>
@@ -78,7 +78,7 @@ const BasicInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) 
           name={'tenantIds'}
           label={t('테넌트')}
           format={'array'}
-          validation={{ required: true }}
+          validation={{ required: true, format: 'array' }}
           element={<TenantByRoleChannelCheckboxFormField channelUuid={getValues().channelUuid} />}
         />
       </ContentsRow>
@@ -89,7 +89,7 @@ const BasicInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) 
           name={'categories'}
           label={t('카테고리')}
           format={'object'}
-          validation={{ required: true }}
+          validation={{ required: true, format: 'object' }}
           element={
             <ListModalSelectorFormField
               deletable
@@ -152,8 +152,8 @@ const BasicInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) 
             <Button
               variant="text"
               label={t('대상자')}
+              disabled={!getValues().targetList?.length}
               onClick={(e: any) => {
-                // e.stopPropagation();
                 openModal({
                   width: 'xl',
                   content: <UserGroupChoiceModal groups={getValues().targetList} />,
@@ -172,7 +172,7 @@ const BasicInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) 
           provider={provider}
           name={'language'}
           label={t('언어')}
-          validation={{ required: true }}
+          validation={{ required: true, format: 'string' }}
           element={
             <DropdownFormField
               optionsConfig={{
@@ -188,7 +188,7 @@ const BasicInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) 
           provider={provider}
           name={'courseName'}
           label={t('과정명')}
-          validation={{ required: true }}
+          validation={{ required: true, format: 'string' }}
           element={<Input maxLength={40} />}
         />
       </ContentsRow>
@@ -198,7 +198,7 @@ const BasicInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) 
           provider={provider}
           name={'courseContent'}
           label={t('교육내용')}
-          validation={{ required: true }}
+          validation={{ required: true, format: 'string' }}
           element={<EditorFormField />}
         />
       </ContentsRow>
@@ -208,7 +208,7 @@ const BasicInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) 
           provider={provider}
           name={'trainingLevelType'}
           label={t('난이도')}
-          validation={{ required: true }}
+          validation={{ required: true, format: 'string' }}
           element={
             <RadioGroupFormField
               optionsConfig={{
@@ -222,7 +222,7 @@ const BasicInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) 
           provider={provider}
           name={'learningSpaceType'}
           label={t('교육공간')}
-          validation={{ required: true }}
+          validation={{ required: true, format: 'string' }}
           element={
             <RadioGroupFormField
               optionsConfig={{
@@ -284,7 +284,7 @@ const BasicInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) 
           provider={provider}
           name={'coordinatorName'}
           label={t('담당자')}
-          validation={{ required: true }}
+          validation={{ required: true, format: 'string' }}
           element={
             <InputModalSelectorFormField
               modalConfig={{
@@ -305,7 +305,7 @@ const BasicInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) 
           provider={provider}
           name={'coordinatorTelNo'}
           label={t('연락처')}
-          validation={{ required: true }}
+          validation={{ required: true, format: 'string' }}
           element={<Input />}
         />
         {/*이메일*/}
@@ -313,7 +313,7 @@ const BasicInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) 
           provider={provider}
           name={'coordinatorEmail'}
           label={t('이메일')}
-          validation={{ required: true }}
+          validation={{ required: true, format: 'string' }}
           element={<Input />}
         />
         {/*담당자 ID - hidden */}
@@ -326,7 +326,7 @@ const BasicInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) 
           provider={provider}
           name={'operatorName'}
           label={t('운영자')}
-          validation={{ required: true }}
+          validation={{ required: true, format: 'string' }}
           element={
             <InputModalSelectorFormField
               modalConfig={{
@@ -347,7 +347,7 @@ const BasicInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) 
           provider={provider}
           name={'operatorTelNo'}
           label={t('연락처')}
-          validation={{ required: true }}
+          validation={{ required: true, format: 'string' }}
           element={<Input />}
         />
         {/*이메일*/}
@@ -355,7 +355,7 @@ const BasicInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) 
           provider={provider}
           name={'operatorEmail'}
           label={t('이메일')}
-          validation={{ required: true }}
+          validation={{ required: true, format: 'string' }}
           element={<Input />}
         />
         {/*운영자 ID - hidden */}

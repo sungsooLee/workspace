@@ -1,14 +1,14 @@
 import { DropdownFormField } from '@features/form';
 import { FormDisplay } from '@features/form/ui/form-display';
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
+import { ContentsRow } from '@learnway/ui/contents-row';
 import { RadioGroupFormField } from '@learnway/ui/form-field';
+import { Input } from '@learnway/ui/input';
 import { FormRow2, SwitchFormField } from '@shared/ui';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useCourseCreateSubPage } from '../../../../hooks/use-course-create-sub-page';
 import { CourseTabBaseProps } from '../../../../types/type';
-import { ContentsRow } from '@learnway/ui/contents-row';
-import { Input } from '@learnway/ui/input';
 
 const CourseRegistrationComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) => {
   const { t } = useTranslation();
@@ -36,11 +36,12 @@ const CourseRegistrationComponent = forwardRef<HTMLElement, CourseTabBaseProps>(
             provider={provider}
             name={'approvalLineType'}
             label={t('승인 결재 라인')}
-            validation={{ required: true }}
+            validation={{ required: true, format: 'string' }}
             element={
               <DropdownFormField
                 optionsConfig={{
-                  codeGroup: CODE_GROUP['pms.approval.ApprovalLineType'] }}
+                  codeGroup: CODE_GROUP['pms.approval.ApprovalLineType'],
+                }}
               />
             }
           />
@@ -50,7 +51,7 @@ const CourseRegistrationComponent = forwardRef<HTMLElement, CourseTabBaseProps>(
             name={'isMaxEnrollQuotaRestricted'}
             label={t('정원')}
             format={'boolean'}
-            validation={{ required: true }}
+            validation={{ required: true, format: 'boolean' }}
             element={
               <RadioGroupFormField
                 optionsConfig={{
@@ -66,8 +67,10 @@ const CourseRegistrationComponent = forwardRef<HTMLElement, CourseTabBaseProps>(
                           value={''}
                           element={<Input prefixText={t('정원')} suffixText={t('명')} />}
                         />
-                      ) },
-                  ] }}
+                      ),
+                    },
+                  ],
+                }}
               />
             }
           />
@@ -79,7 +82,7 @@ const CourseRegistrationComponent = forwardRef<HTMLElement, CourseTabBaseProps>(
             provider={provider}
             name={'waitListPickMethodType'}
             label={t('수강신청 대기')}
-            validation={{ required: true }}
+            validation={{ required: true, format: 'string' }}
             element={
               <RadioGroupFormField
                 optionsConfig={{
@@ -95,8 +98,10 @@ const CourseRegistrationComponent = forwardRef<HTMLElement, CourseTabBaseProps>(
                           value={''}
                           element={<Input prefixText={t('대기 정원')} suffixText={t('명')} />}
                         />
-                      ) },
-                  ] }}
+                      ),
+                    },
+                  ],
+                }}
               />
             }
           />
@@ -106,10 +111,12 @@ const CourseRegistrationComponent = forwardRef<HTMLElement, CourseTabBaseProps>(
             name={'isDuplicateEnrollAllowed'}
             label={t('차수 중복수강')}
             format={'boolean'}
+            validation={{ required: true, format: 'boolean' }}
             element={
               <RadioGroupFormField
                 optionsConfig={{
-                  codeGroup: CODE_GROUP['mock.options.possible'] }}
+                  codeGroup: CODE_GROUP['mock.options.possible'],
+                }}
               />
             }
           />
@@ -122,11 +129,12 @@ const CourseRegistrationComponent = forwardRef<HTMLElement, CourseTabBaseProps>(
             name={'isPreEnrollQuestionAllowed'}
             label={t('수강전 문의')}
             format={'boolean'}
-            // validation={{ required: true }}
+            validation={{ required: true, format: 'boolean' }}
             element={
               <RadioGroupFormField
                 optionsConfig={{
-                  codeGroup: CODE_GROUP['mock.options.use'] }}
+                  codeGroup: CODE_GROUP['mock.options.use'],
+                }}
               />
             }
           />

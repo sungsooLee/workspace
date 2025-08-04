@@ -10,11 +10,12 @@ import { IcoArray, IcoArrowDown, IcoDotpoints, IcoFilter, IcoPlay } from '@learn
 import dropdownPopoverStyles from '../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
 import styles from '@learnway/styles/fo/pages/_layout/category/category_m.module.css';
 
-import { FilterPopup, ThumbnailList } from '@features/layout';
+import { FilterPopup } from '@features/layout';
 import CategoryService from '@entities/category/api/category';
 import { t } from 'i18next'
 import { useFetchCategoryDetail } from '@entities/category';
 import { CategoryDetailComponentProps } from '@pages/_layout/_category/category';
+import { ThumbnailList } from '@shared/ui/thumnail/list/thumbnail-list';
 
 
 const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponentProps) => {
@@ -45,6 +46,7 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
   };
   const handlePageSizeChange = (value: number) => {
     setSize(value)
+    setPage(0)
   }
 
   const handleFilterOptionChange = async (options: any) => {
@@ -95,6 +97,7 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
         console.log('### categoryInfo => ', categoryInfo);
         const payload = {
           ...coursePayload,
+          page, size,
           categoryId: categoryInfo.categoryId,
         }
         setCoursePayload(payload);
@@ -248,8 +251,8 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
         {data.content && data.content.length > 0 && (
           <Pagination
             className={cn(styles.pagenation, styles.paginationItem)}
-            pageNumber={0}
-            totalPages={5}
+            pageNumber={page}
+            totalPages={data.totalPages}
             hidePageSizeOptions={true}
             hidePageInfo={true}
             showFirstButton={false}

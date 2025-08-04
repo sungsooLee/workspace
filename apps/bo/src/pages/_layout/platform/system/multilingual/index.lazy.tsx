@@ -170,14 +170,12 @@ function RouteComponent() {
   const { update } = useTranslation({
     onSuccess: () => {
       setIsSubmitting(false);
-      setShouldUpdateOriginalData(true);
       gridFetch(getGridFetchParams());
     },
   });
 
   const { createByExcel } = useTranslation({
     onSuccess: () => {
-      setShouldUpdateOriginalData(true);
       gridFetch(getGridFetchParams());
     },
   });
@@ -187,8 +185,6 @@ function RouteComponent() {
   const [currentTargetLocale, setCurrentTargetLocale] = useState<string>('');
 
   const [successTranslationCount, setSuccessTranslationCount] = useState<number>(0);
-  const originalDataRef = useRef<any>(null);
-  const [shouldUpdateOriginalData, setShouldUpdateOriginalData] = useState<boolean>(true);
 
   const handleCellClick = useCallback(
     (data: any) => {
@@ -207,48 +203,14 @@ function RouteComponent() {
   const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getGridFetchParams);
   const gridStateRef = useRef<any>(null); // 그리드 상태 저장용
 
-  // 커스텀 훅을 사용한 간단한 변경사항 확인
-  // const { confirmChanges } = useUnsavedChangesConfirm(originalDataRef.current, data?.content, {
-  //   compareFields: ['targetLanguage'], // 비교할 필드 지정
-  //   deepCompare: false,
-  //   confirmFunction: confirm,
-  //   confirmOptions: {
-  //     title: t('LABEL.confirm.unsaved.title'),
-  //     content: t('LABEL.confirm.unsaved.message'),
-  //   },
-  // });
-
-  const withUnsavedChangesCheck = useCallback(
-    <T extends any[]>(action: (...args: T) => void | Promise<void>) => {
-      return async (...args: T) => {
-        // if (!(await confirmChanges())) return;
-        await action(...args);
-      };
-    },
-    [],
-  );
-
-  const wrappedGridConfig = useMemo(() => {
-    const originalOnStateChange = gConfig.onStateChange;
-    return {
-      ...gConfig,
-      onStateChange: async (state: any) => {
-        // if (!(await confirmChanges())) return;
-        gridStateRef.current = state; // 그리드 상태 저장
-        setShouldUpdateOriginalData(true); // 소트 후 새 데이터로 originalData 업데이트
-        originalOnStateChange?.(state);
-      },
-    };
-  }, [gConfig]);
-
   /**
    * @param data
    */
   const handleOnSearch = async (form: any) => {
     // if (!(await confirmChanges())) return;
     setCurrentTargetLocale(getValues('targetLocale'));
-    originalDataRef.current = null; // 검색 시 즉시 초기화
-    setShouldUpdateOriginalData(true); // 검색 시 originalData 업데이트 허용
+    // originalDataRef.current = null; // 검색 시 즉시 초기화
+    // setShouldUpdateOriginalData(true); // 검색 시 originalData 업데이트 허용
     gridFetch(getGridFetchParams(), { ...gridStateRef.current, page: 0 });
     setValuesWithLabel(getValuesWithLabel());
   };
@@ -256,10 +218,10 @@ function RouteComponent() {
   /**
    *  번역본 S3 배포
    */
-  const handleDeployMultilingual = withUnsavedChangesCheck(async () => {
+  const handleDeployMultilingual = async () => {
     const locale = getValues('targetLocale').toLowerCase();
     deploy({ locale });
-  });
+  };
 
   /**
    * 번역본 저장
@@ -334,10 +296,13 @@ function RouteComponent() {
         keyTypeCode: state?.keyType,
         multilingualKey: state?.multilingualKey || '',
         translation: state.translation || '',
+        isMenuEntry: state?.isMenuEntry || false,
         targetLocale: 'EN',
       });
       if (await onFormValid()) {
-        handleOnSearch(getValues());
+        handleOnSearch(getValues()).finally(() => {
+          onFormChange({ ...getValues(), isMenuEntry: false });
+        });
       }
     }
   };
@@ -373,16 +338,8 @@ function RouteComponent() {
   useEffect(() => {
     if (data?.content?.length > 0) {
       setSuccessTranslationCount(data.content[0].targetTranslatedCount);
-      if (shouldUpdateOriginalData) {
-        originalDataRef.current = JSON.parse(JSON.stringify(data.content));
-        setShouldUpdateOriginalData(false);
-      }
     } else {
       setSuccessTranslationCount(0);
-      if (shouldUpdateOriginalData) {
-        originalDataRef.current = null;
-        setShouldUpdateOriginalData(false);
-      }
     }
   }, [data?.content]);
 
@@ -395,9 +352,9 @@ function RouteComponent() {
               type="button"
               variant="point"
               size="sm"
-              onClick={withUnsavedChangesCheck(() => {
+              onClick={() => {
                 router.navigate({ to: '/platform/menu' });
-              })}
+              }}
             >
               {t('LABEL.platform.system.multilingual.platform-menu')}
             </Button>
@@ -406,9 +363,9 @@ function RouteComponent() {
               type="button"
               variant="point"
               size="sm"
-              onClick={withUnsavedChangesCheck(() => {
+              onClick={() => {
                 router.navigate({ to: '/platform/label-message' });
-              })}
+              }}
             >
               {t('LABEL.platform.system.multilingual.platform-message')}
             </Button>
@@ -448,7 +405,7 @@ function RouteComponent() {
           />
           <Divider />
           <TableBox
-            config={wrappedGridConfig}
+            config={gConfig}
             titleCustomNode={
               <>
                 {/*번역완료 개수*/}

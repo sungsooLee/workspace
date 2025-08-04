@@ -3,6 +3,7 @@ import {
   CmsBlogResource,
   CmsContentProgressMultiReq,
   CmsContentProgressMultiRes,
+  CmsContentProgressReq,
   CmsContentProgressResDto,
   CmsEnContentType,
   CmsHtml5LearningReq,
@@ -83,10 +84,15 @@ interface Curriculum {
 
 /** 모듈 정보 */
 interface Module {
+  isDummy: boolean;
   moduleId: number;
   mappingModuleType: string;
   lessonList: Lesson[];
   moduleName: string;
+  lessonId: number;
+  contentUuid: string;
+  orgnId: number;
+  itemId: number;
 }
 
 /** 레슨 정보 */
@@ -282,12 +288,23 @@ export const useLearningWindow = () => {
     clearInfo,
   } = useLearningWindowStore((state) => state);
 
-  const readAllLessonProgress = async (curriculum: any) => {
+  const readAllLessonProgress = async (curriculum: Curriculum) => {
     //_baseInfo
-    const contents: any[] = [];
+    const contents: CmsContentProgressReq[] = [];
     if (curriculum.moduleList) {
-      curriculum.moduleList.forEach((module: any) => {
-        if (module.lessonList) {
+      curriculum.moduleList.forEach((module) => {
+        if (module.isDummy) {
+          contents.push({
+            courseSequenceId: _baseInfo?.sequenceId,
+            courseId: _baseInfo?.courseId,
+            curriculumId: _baseInfo?.curriculumId,
+            moduleId: module.moduleId,
+            lessonId: module.lessonId,
+            contentUuid: module.contentUuid,
+            orgnId: module.orgnId,
+            itemId: module.itemId,
+          });
+        } else if (module.lessonList) {
           module.lessonList.forEach((lesson: any) => {
             contents.push({
               courseSequenceId: _baseInfo?.sequenceId,
@@ -463,6 +480,13 @@ export const useLearningWindow = () => {
 
     return 0;
   };
+
+  const resetProgressive = () => {
+    if (_curriculum) {
+      readAllLessonProgress(_curriculum);
+    }
+  };
+
   return {
     playIndex: _playIndex,
     playList: _playList,
@@ -494,5 +518,6 @@ export const useLearningWindow = () => {
     gotoBeforeLesson,
     clearInfo,
     getProgressNumber,
+    resetProgressive,
   };
 };

@@ -1,8 +1,10 @@
+import { useRouter } from '@tanstack/react-router';
 import { useCreation } from 'ahooks';
+import { lowerCase } from 'lodash-es';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { useFetchAuthUser, useLogoutUser } from '@learnway/auth/entities';
+import { useFetchAuthUser, useLogoutUser, useUserDetail } from '@learnway/auth/entities';
 import { useCodeGroup, useLanguageStore } from '@learnway/hooks';
 import {
   IcoChart,
@@ -12,7 +14,7 @@ import {
   IcoPoint,
   IcoRocket,
 } from '@learnway/icons';
-import { cn } from '@learnway/shared';
+import { cn, getFullImagePath } from '@learnway/shared';
 import { Avatar } from '@learnway/ui/avatar';
 import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
@@ -23,8 +25,6 @@ import { useSetLanguage } from '@features/platform';
 import languagestyles from '@learnway/styles/fo/features/layout/ui/user-avatar/language.module.css';
 import popoverInnerStyles from '@learnway/styles/fo/features/layout/ui/user-avatar/popover-inner.module.css';
 import styles from '@learnway/styles/fo/features/layout/ui/user-avatar/user-avatar.module.css';
-import { useRouter } from '@tanstack/react-router';
-import { lowerCase } from 'lodash-es';
 
 //import { useLoginTimeout } from '../../../feature/platform/service/loginTimeout.hooks';
 
@@ -53,8 +53,10 @@ const PopoverContent = () => {
   const { confirm: openConfirm, openModal } = useModal();
   const { set: setLanguage } = useSetLanguage();
   const { data: authUser } = useFetchAuthUser();
+  const { data: user } = useUserDetail();
+
   const { data: langCodes } = useCodeGroup('pms.multilingual.LangCountryCode', {});
-  const { lang, setLang } = useLanguageStore((state) => state);
+  const { lang } = useLanguageStore((state) => state);
 
   const { logout } = useLogoutUser();
 
@@ -130,7 +132,11 @@ const PopoverContent = () => {
           <div className={styles.profile_info}>
             <div className={styles.avatar_img}>
               {/* 이미지일경우 */}
-              <Avatar imageUrl="https://github.com/shadcn.png" size="2xl" />
+              <Avatar
+                imageUrl={getFullImagePath(authUser?.avataImage)}
+                size="2xl"
+                fallback={<AvataFallback name={authUser?.name} />}
+              />
               {/* 텍스트일경우 */}
               {/* <Avatar fallback="AB" size="2xl" /> */}
               <span className={styles.ico}>
@@ -237,15 +243,13 @@ const PopoverContent = () => {
         // 퍼블수정 20250728 : languagestyles 스타일 */}
         <div className={languagestyles.lang_area}>
           <ul className={languagestyles.lang_list}>
-            {languages.map((lang) => (
-              <li key={lang.value}>
+            {languages.map((language) => (
+              <li key={language.value}>
                 <Button
-                  label={`${lang.label} (${lang.enLabel}) `}
-                  className={
-                    authUser?.userLanguageSetCode === lang.value ? languagestyles.active : ''
-                  }
+                  label={`${language.label} (${language.enLabel}) `}
+                  className={language.value === lang ? languagestyles.active : ''}
                   onClick={() => {
-                    setLanguage(lang.value);
+                    setLanguage(language.value);
                     setContentType('profile'); // 다시 profile 화면으로 전환
                   }}
                 />
@@ -269,7 +273,10 @@ const AvatarCompoment = ({ className }: any) => {
       align="end"
       sideOffset={10}
     >
-      <Avatar imageUrl={authUser?.avataImage} fallback={<AvataFallback name={authUser?.name} />} />
+      <Avatar
+        imageUrl={getFullImagePath(authUser?.avataImage)}
+        fallback={<AvataFallback name={authUser?.name} />}
+      />
     </Popover>
   );
 };

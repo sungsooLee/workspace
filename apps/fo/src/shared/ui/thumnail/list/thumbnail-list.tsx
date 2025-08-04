@@ -1,7 +1,7 @@
 import React, { memo, useState } from 'react';
 import { cn } from '@learnway/shared';
-import styles from '@learnway/styles/fo/features/layout/ui/thumbnail-list.module.css';
-import { ThumbnailItem, ThumbnailData } from '@features/category/ui/thumb-nail-item';
+import styles from './thumbnail-list.module.css';
+import { ThumbnailItem, ThumbnailData } from '@shared/ui/thumnail/item/thumbnail-item';
 
 interface ThumbnailListProps {
   items: ThumbnailData[];

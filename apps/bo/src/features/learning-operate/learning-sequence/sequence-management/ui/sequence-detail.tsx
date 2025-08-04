@@ -8,6 +8,7 @@ import { InstructorListPopup } from '@features/learning-operate-support/instruct
 import { TriggerKey } from '@features/learning-operate/course/course-management';
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import { FormSubTitle } from '@learnway/ui/base-form';
+import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { SplitPanel } from '@learnway/ui/elements';
 import {
@@ -27,6 +28,7 @@ import {
   TenantChannelDropdownFormField2,
   TrainingPlaceChoiceModal,
   UserChoiceModal,
+  UserGroupChoiceModal,
   UserGroupTabsChoiceModal,
 } from '@shared/ui';
 import { useQueryClient } from '@tanstack/react-query';
@@ -52,7 +54,7 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
     console.log('##courseIdProps=>', courseIdProps);
     console.log('##sequenceIdProps=>', sequenceIdProps);
     const { t } = useTranslation();
-    const { confirm: openConfirm, showSaveComplete } = useModal();
+    const { confirm: openConfirm, openModal, showSaveComplete } = useModal();
     const formRef = useRef<HTMLFormElement>(null);
     const {
       provider,
@@ -185,9 +187,11 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                 name={'targetList'}
                 format={'object'}
                 label={t('학습대상(유저그룹)')}
+                validation={{ required: true }}
                 element={
                   <ChipListModalSelectorFormField
                     modalConfig={() => ({
+                      width: 'xl',
                       content: (
                         <UserGroupTabsChoiceModal
                           tenantIds={getValues().tenantIds}
@@ -201,7 +205,18 @@ const SequenceDetailComponent = forwardRef<HTMLElement, SequenceDetailComponentP
                       wordwrap: true,
                     }}
                     showAddButton
-                    transformModalData={(data: any) => console.log('data', data)}
+                  />
+                }
+                actionNode={
+                  <Button
+                    variant="text"
+                    label={t('대상자')}
+                    onClick={(e: any) => {
+                      openModal({
+                        width: 'xl',
+                        content: <UserGroupChoiceModal groups={getValues().targetList} />,
+                      });
+                    }}
                   />
                 }
               />
@@ -1531,6 +1546,8 @@ const responseDataToFormData = (d: LearningSequence): any => {
       examWeights: d.examWeights, // 평가 반영 비율
       asgmtWeights: d.asgmtWeights, // 과제 반영 비율
     },
+    // 학습대상 - TODO targetList == '' 인 경우가 있음 (원인 파악전까지)
+    targetList: Array.isArray(d.targetList) ? d.targetList : undefined,
   };
 };
 

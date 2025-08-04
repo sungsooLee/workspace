@@ -3,8 +3,14 @@
   @apply min-w-[440px] rounded-[8px] border border-solid border-[var(--gray3)] bg-[var(--white)] shadow-[0px_2px_10px_rgba(0,0,0,0.08)];
   .title_area {
     @apply flex items-center justify-between border-b-[1px] border-solid border-[var(--gray90)] px-[24px] py-[20px];
+    .btn_back {
+      @apply mr-[4px] !px-0;
+      svg {
+        @apply mx-0;
+      }
+    }
     h2 {
-      @apply title4-b;
+      @apply title4-b flex-1 leading-[24px];
     }
     button {
       @apply !h-[24px] !w-[24px] !min-w-[24px] !border-none;
