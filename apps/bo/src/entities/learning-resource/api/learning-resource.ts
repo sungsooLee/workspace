@@ -32,6 +32,7 @@ import {
   HtmlVideoFileChangeReq,
   HtmlVideoMetadataReq,
   HtmlVideoStatus,
+  MutationResponse,
   PostContentCopyRes,
   PostDraftETCParams,
   PostDraftETCRes,
@@ -60,6 +61,7 @@ import {
   QuestionListForRetrieveReq,
   QuestionListForRetrieveRes,
   QuestionsCopyReq,
+  QuestionSortReq,
   QuestionStatusUpdateReq,
   TenantCodeType,
   TestPaperBasicInfoSaveReq,
@@ -312,8 +314,16 @@ export default class LearningResourceService {
    * 시험 문항 단건 또는 다건 복사
    * @param body
    */
-  static copyQuestionsToExamPaper(body: QuestionsCopyReq): Promise<{ result: boolean }> {
+  static copyQuestionsToExamPaper(body: QuestionsCopyReq): Promise<MutationResponse> {
     return httpService.post(`${CMSApiPrefix()}/exam/questions/copy`, body);
+  }
+
+  /**
+   * 시험 문항 순서 변경
+   * @param body
+   */
+  static changeQuestionOrder(body: QuestionSortReq): Promise<MutationResponse> {
+    return httpService.put(`${CMSApiPrefix()}/exam/question/sort`, body);
   }
 
   /**

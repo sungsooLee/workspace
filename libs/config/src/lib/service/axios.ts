@@ -1,12 +1,13 @@
 // import { useActiveMenuDepthState } from '../../../../auth/src/lib/entities/menu';
 import type { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import axios from 'axios';
-import { isFunction, last } from 'lodash-es';
+import { isFunction } from 'lodash-es';
 import qs from 'qs'; // qs 라이브러리 임포트
+
 import { HttpMethod, httpService } from '@learnway/shared';
 
-import { tokenService } from './token.service';
 import { OAuthApiPrefix } from '../service/config.service';
+import { tokenService } from './token.service';
 
 interface axiosConfig {
   onRejected?: (error: any) => Promise<any>;
@@ -84,7 +85,8 @@ export function initAxios(extendConfig?: axiosConfig) {
         if (
           errorResponse?.status === 401 &&
           !config.url.includes('/token-reissue') &&
-          !config.url.includes('/login')
+          !config.url.includes('/login') &&
+          !config.url.includes('/enums')
         ) {
           return await reissueProccess(error);
         }

@@ -1,13 +1,12 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { MobileView, BrowserView } from 'react-device-detect';
-import { AuthTitle } from '../../features/auth';
-import { useState } from 'react';
-import { cn } from '@learnway/shared';
 import { IcoMoreHorizontal } from '@learnway/icons';
-import styles from './dormant-info.module.css';
+import { cn } from '@learnway/shared';
 import proccessResultStyles from '@learnway/styles/fo/widgets/auth/ui/proccess-result.module.css'; // 결과모듈
-import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
 import { Button } from '@learnway/ui/button';
+import { createFileRoute } from '@tanstack/react-router';
+import { BrowserView, MobileView } from 'react-device-detect';
+import { AuthTitle } from '../../features/auth';
+import { MobileContainerFooter } from '../../shared/m.ui/container-footer/container-footer';
+import styles from './dormant-info.module.css';
 
 export const Route = createFileRoute('/_auth/dormant-info')({
   component: RouteComponent,

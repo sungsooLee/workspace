@@ -1,14 +1,14 @@
-import { IcoArrowDown } from '@learnway/icons';
+import { IcoArrowDown, IcoCheck02 } from '@learnway/icons';
 import { Popover } from '@learnway/ui/popover';
 import { memo, useState } from 'react';
-import { BrowserView, MobileView } from 'react-device-detect';
-import { TenantPopup } from '../../layout';
+import { BrowserView, isMobile, MobileView } from 'react-device-detect';
 
 import logoImage from '@learnway/styles/fo/assets/images/logo_foot.png';
 import styles from '@learnway/styles/fo/features/platform/ui/tenant-button/tenant-button.module.css';
 import { Button } from '@learnway/ui/button';
-import { useModal } from '@learnway/ui/modal';
+import { ModalBody, ModalContainer, ModalTitle, useModal } from '@learnway/ui/modal';
 
+/* 퍼블수정 20250801 전체적으로 수정 (pc, mobile 같이 사용) */
 const TenantContent = ({
   selectedTenant,
   onSelect,
@@ -59,6 +59,9 @@ const TenantContent = ({
                 className={selectedTenant === tenant ? styles.active : ''}
               >
                 {tenant}
+                {isMobile && selectedTenant === tenant && (
+                  <IcoCheck02 width="16" height="16" stroke="#0056ff" />
+                )}
               </Button>
             </li>
           ))}
@@ -68,13 +71,26 @@ const TenantContent = ({
   );
 };
 
+const TenantModal = () => {
+  const [selectedTenant, setSelectedTenant] = useState<string | null>(null);
+  return (
+    <ModalContainer>
+      <ModalTitle>{'언어 설정'}</ModalTitle>
+      <ModalBody>
+        <div className={`${styles.start} ${styles.tenant_modal}`}>
+          <TenantContent selectedTenant={selectedTenant} onSelect={setSelectedTenant} />
+        </div>
+      </ModalBody>
+    </ModalContainer>
+  );
+};
+
 const TenantComponent = () => {
   const [selectedTenant, setSelectedTenant] = useState<string | null>(null);
   const { openModal } = useModal();
 
   return (
     <>
-      {/* 퍼블수정 20250731 pc, mobile 분기처리 */}
       {/* pc */}
       <BrowserView>
         <Popover
@@ -104,7 +120,7 @@ const TenantComponent = () => {
           onClick={() =>
             openModal({
               width: 'm_full',
-              content: <TenantPopup />,
+              content: <TenantModal />,
             })
           }
         >

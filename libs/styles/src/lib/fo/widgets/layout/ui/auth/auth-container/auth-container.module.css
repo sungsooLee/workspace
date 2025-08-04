@@ -65,7 +65,7 @@
         }
 
         .auth_area {
-          @apply mb-0 w-full pb-[100px] pt-[56px];
+          @apply mb-0 w-full py-[0];
           h2 {
             &.title_login {
               @apply title_6_b mt-[0] block flex h-[96px] items-center justify-center rounded-none p-[0] px-[31px];

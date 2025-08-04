@@ -63,6 +63,9 @@
     &:active {
       @apply border-[var(--blue35)] bg-[var(--blue95)] text-[var(--blue35)];
     }
+    &:disabled {
+      @apply !border-[var(--gray90)] bg-white !text-[var(--gray85)];
+    }
   }
   &[class*='only_icon'] {
     @apply !rounded-[6px];

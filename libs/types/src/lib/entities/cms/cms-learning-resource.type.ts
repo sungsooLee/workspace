@@ -183,7 +183,7 @@ export interface CmsScormBaseReq {
   contentUuid: string;
 }
 
-export interface CmsScormRtcScoInfoReq extends CmsScormBaseReq {
+export interface CmsScormRteScoInfoReq extends CmsScormBaseReq {
   orgnId: number;
   scoId: string;
 }
@@ -222,6 +222,8 @@ export interface CmsVideoWatchLogStatisticsReq extends CmsBaseLearningReq {}
 export interface CmsImageLearningReq extends CmsBaseLearningReq {
   resourceId: number;
 }
+
+export interface CmsVideoWatchInitializeReq extends CmsBaseLearningReq {}
 
 /**
  * [공통] 학습자원 학습 진행률 정보 객체

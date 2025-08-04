@@ -13,7 +13,6 @@ import { Accordion } from '@learnway/ui/accordion';
 import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
 import { OptionCard, OptionCardItem } from '@learnway/ui/option-card';
-import { Panel } from '@learnway/ui/panel';
 import { Tabs } from '@learnway/ui/tabs';
 import { useToast } from '@learnway/ui/toast';
 import { useRouterState } from '@tanstack/react-router';
@@ -26,7 +25,7 @@ import {
   CourseIntroduction, // 교육일정
   CourseReview, // 수강신청 버튼
   PackageCardList,
-} from '../../features/layout/';
+} from '@widgets/layout';
 
 import lectureStyles from '@learnway/styles/fo/pages/_layout/course-introduction/lecture.module.css';
 import packageInformationStyles from '@learnway/styles/fo/pages/_layout/course-introduction/package-information.module.css';

@@ -2,7 +2,16 @@ import { MutateOptions, useMutation, useQuery, useQueryClient } from '@tanstack/
 import { getQuerySkipToken } from '@learnway/shared';
 import { learningResourceApi } from '../api/learning-resource';
 import { BlogResource, Content, EtcContentDownloadReq } from '../types/learning-resource.types';
-import { CmsEtcResource, CmsImageResource, CmsVideoResource } from '@learnway/types';
+import {
+  CmsEtcResource,
+  CmsImageResource,
+  CmsScormRteScoInfo,
+  CmsScormRteScoInfoReq,
+  CmsVideoResource,
+  CmsVideoWatchInitializeReq,
+  CmsVideoWatchLogReq,
+  CmsVideoWatchLogStatisticsReq,
+} from '@learnway/types';
 
 export const learningResourceQueryKeys = {
   all: ['learning-resource'] as const,
@@ -72,30 +81,31 @@ export const learningResourceQueryOptions = {
         }
       : getQuerySkipToken<CmsImageResource>(),
 
-  videoWatchInitialize: (param?: any) =>
+  videoWatchInitialize: (param?: CmsVideoWatchInitializeReq) =>
     param
       ? {
           queryKey: learningResourceQueryKeys.videoWatchInitialize(param),
-          queryFn: () => learningResourceApi.videoWwatchInitialize(param),
+          queryFn: () => learningResourceApi.videoWatchInitialize(param),
         }
       : getQuerySkipToken<CmsVideoResource>(),
 
-  scormScoInfo: (param?: any) =>
+  scormScoInfo: (param?: CmsScormRteScoInfoReq) =>
     param
       ? {
           queryKey: learningResourceQueryKeys.scormScoInfo(param),
           queryFn: () => learningResourceApi.getScormScoInfo(param),
         }
-      : getQuerySkipToken<any>(),
+      : getQuerySkipToken<CmsScormRteScoInfo>(),
 };
 
 export const learningReousrceMutateOptions = {
   videoWatchLog: () => ({
-    mutationFn: (payload: any) => learningResourceApi.videoWatchLog(payload),
+    mutationFn: (payload: CmsVideoWatchLogReq) => learningResourceApi.videoWatchLog(payload),
   }),
 
   videoWatchLogStatistics: () => ({
-    mutationFn: (payload: any) => learningResourceApi.videoWatchLogStatistics(payload),
+    mutationFn: (payload: CmsVideoWatchLogStatisticsReq) =>
+      learningResourceApi.videoWatchLogStatistics(payload),
   }),
 };
 

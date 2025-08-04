@@ -668,6 +668,21 @@ export interface QuestionsCopyReq {
   questionUuidList: string[];
 }
 
+export interface QuestionSortItem {
+  examQuestionUuid: string;
+  sortSeq: number;
+}
+
+export interface QuestionSortReq {
+  contentUuid: string;
+  contentType: ContentType;
+  mappingList: QuestionSortItem[];
+}
+
+export interface MutationResponse {
+  result: boolean;
+}
+
 export interface ContentExportReq {
   contentUuid: string;
   tenantId: number;

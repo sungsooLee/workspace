@@ -16,6 +16,7 @@ const LearningWindowScormPlayerComponent: FC<any> = () => {
   const [iframeUrl, setIframeUrl] = useState<string>();
   const { playInfo, scormInfo, funcInfo } = useLearningWindow();
 
+  const iframeRef = useRef<HTMLIFrameElement>(null);
   useEffect(() => {
     if (!scormInfo) return;
     if (!funcInfo) return;
@@ -46,10 +47,39 @@ const LearningWindowScormPlayerComponent: FC<any> = () => {
     };
   }, [funcInfo, scormInfo]);
 
+  useEffect(() => {
+    const handleKeyDown = (event: any) => {
+      if (
+        iframeRef.current &&
+        iframeRef.current.contentWindow &&
+        iframeRef.current.contentWindow.document
+      ) {
+        const iframeEvent = new KeyboardEvent('keydown', {
+          key: event.key,
+          code: event.code,
+          keyCode: event.keyCode,
+          charCode: event.charCode,
+          which: event.which,
+          shiftKey: event.shiftKey,
+          ctrlKey: event.ctrlKey,
+          metaKey: event.metaKey,
+          altKey: event.altKey,
+          bubbles: true,
+        });
+        iframeRef.current.contentWindow.document.dispatchEvent(iframeEvent);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
   return (
     <div className={`${styles.start} ${styles.iframe}`}>
       <div className={styles.iframe_contents}>
-        <iframe src={iframeUrl} title="SCORM Content" className={styles.iframe} />
+        <iframe ref={iframeRef} src={iframeUrl} title="SCORM Content" className={styles.iframe} />
       </div>
     </div>
   );

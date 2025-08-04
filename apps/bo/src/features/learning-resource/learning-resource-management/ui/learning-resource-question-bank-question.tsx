@@ -25,15 +25,14 @@ import {
   QuestionStatisticRow,
   updateNewStatistics,
 } from '../service/learning-resource-question-service';
-import { useQuestionBankInfoInput } from '../service/question-bank/use-question-bank-info-input';
-import { LearningResourceTestItemModal } from './learning-resource-test-item-modal';
-import { QuestionBankTabFormRef } from '@features/learning-resource/learning-resource-management/service/question-bank/type';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { CMSApiPrefix } from '@learnway/config';
-import { LearningResourceQuestionShuttleModal } from '@features/learning-resource/learning-resource-management/ui/learning-resource-question-shuttle-modal';
+import { QuestionBankTabFormRef } from '../service/question-bank/type';
+import { useQuestionBankInfoInput } from '../service/question-bank/use-question-bank-info-input';
+import { LearningResourceTestItemModal } from './learning-resource-test-item-modal';
+import { LearningResourceQuestionShuttleModal } from './learning-resource-question-shuttle-modal';
 
-import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
-import styles from '@learnway/styles/bo/pages/_layout/learning/test-detail.module.css';
+// Drag and Drop 관련
 import {
   closestCenter,
   DndContext,
@@ -48,6 +47,9 @@ import {
 } from '@dnd-kit/core';
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 import { arrayMove } from '@dnd-kit/sortable';
+
+import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
+import styles from '@learnway/styles/bo/pages/_layout/learning/test-detail.module.css';
 
 const DragHandle = () => {
   const dragContext = useContext(DragHandleContext);
@@ -354,7 +356,6 @@ const LearningResourceQuestionBankQuestionComponent = forwardRef<QuestionBankTab
               }}
               onDragEnd={(event: DragEndEvent) => {
                 const { active, over } = event;
-                console.log(active, over);
 
                 if (!over || active.id === over.id) {
                   return;
@@ -362,6 +363,7 @@ const LearningResourceQuestionBankQuestionComponent = forwardRef<QuestionBankTab
 
                 const oldIndex = questionItemList.findIndex((item) => item.sortSeq === active.id);
                 const newIndex = questionItemList.findIndex((item) => item.sortSeq === over.id);
+                console.log(oldIndex, newIndex);
 
                 if (oldIndex !== -1 && newIndex !== -1) {
                   // arrayMove를 사용하여 부드러운 재배열
@@ -375,7 +377,7 @@ const LearningResourceQuestionBankQuestionComponent = forwardRef<QuestionBankTab
 
                   setQuestionItemList(updatedItems);
 
-                  return updatedItems;
+                  // return updatedItems;
                 }
               }}
             >
@@ -388,7 +390,7 @@ const LearningResourceQuestionBankQuestionComponent = forwardRef<QuestionBankTab
                 columns={questionListColumns}
                 multiple
                 showNumberingColumn
-                enableDragAndDrop
+                // enableDragAndDrop
                 onRowsSelect={setSelectedQuestionRows}
                 hideRowSelectionCheckBox={false}
                 rowId="sortSeq"

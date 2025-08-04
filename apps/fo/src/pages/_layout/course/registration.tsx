@@ -1,30 +1,31 @@
-import { IcoAvatar02, IcoCalendar01, IcoLocation, IcoTime } from '@learnway/icons';
-import { formatMinutesToHours } from '@learnway/shared';
-import { createFileRoute, useRouterState } from '@tanstack/react-router';
-import { isMobile } from 'react-device-detect';
-
 import { useCourseSequenceOne } from '@entities/course';
 import { FormSection } from '@features/course';
 import { EducationPlacePopup } from '@features/layout';
+import { IcoAvatar02, IcoCalendar01, IcoLocation, IcoTime } from '@learnway/icons';
+import { formatMinutesToHours } from '@learnway/shared';
 import educationStyles from '@learnway/styles/fo/pages/_layout/course/education.module.css';
 import styles from '@learnway/styles/fo/pages/_layout/course/registration.module.css';
 import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
+import { createFileRoute, useRouterState } from '@tanstack/react-router';
 import { Address } from '@types';
 import dayjs from 'dayjs';
+import { useMemo } from 'react';
+import { isMobile } from 'react-device-detect';
 import { useSearchParam } from 'react-use';
+
 export const Route = createFileRoute('/_layout/course/registration')({
   component: RouteComponent,
 });
 
-type COURSE_REGISTRATION_FORMAT = 'ALL' | 'LEVEL_TEST' | 'TEXTBOOK';
+type CourseRegistrationFormatType = 'ALL' | 'LEVEL_TEST' | 'TEXTBOOK';
 
 function RouteComponent() {
-  const { openModal, alert: openAlert, confirm: openConfirm } = useModal();
+  const { openModal } = useModal();
   const path = useSearchParam('format');
   const DEFAULT_COURSE_REGISTRATION_FORMAT = 'ALL';
   const currentCourseRegistrationFormat =
-    (path as COURSE_REGISTRATION_FORMAT) || DEFAULT_COURSE_REGISTRATION_FORMAT;
+    (path as CourseRegistrationFormatType) || DEFAULT_COURSE_REGISTRATION_FORMAT;
 
   const routerState = useRouterState();
   const { courseSequenceId } = routerState.location.state;
@@ -35,6 +36,20 @@ function RouteComponent() {
     roadAddress: '서울시 강남구 테헤란로 510',
     postalCode: '12345',
   };
+
+  const isShowLevelTest = useMemo(
+    () => ['ALL', 'LEVEL_TEST'].includes(currentCourseRegistrationFormat),
+    [currentCourseRegistrationFormat],
+  );
+
+  const isShowTextbook = useMemo(
+    () => ['ALL', 'TEXTBOOK'].includes(currentCourseRegistrationFormat),
+    [currentCourseRegistrationFormat],
+  );
+
+  function toSafeNumber(value?: number | null): number {
+    return value ?? 0;
+  }
 
   return (
     <div className={`${styles.start} ${styles.course}`}>
@@ -68,8 +83,8 @@ function RouteComponent() {
                   <li>
                     <IcoAvatar02 width={20} height={20} viewBox="0 0 24 24" fill="#4d525c" />
                     <span>
-                      {data?.enrollCount ?? 0} / {data?.maxEnrollQuota ?? 0} (잔여{' '}
-                      <em>{data?.maxEnrollQuota ?? 0}</em>)
+                      {toSafeNumber(data.enrollCount)} / {toSafeNumber(data.maxEnrollQuota)} (잔여{' '}
+                      <em>{toSafeNumber(data.maxEnrollQuota) - toSafeNumber(data.enrollCount)}</em>)
                     </span>
                   </li>
                   {/* 시간이 없을 시 클래스 educationStyles.full 추가 */}
@@ -99,10 +114,7 @@ function RouteComponent() {
       )}
 
       {/* 입력정보 */}
-      <FormSection
-        courseSequenceId={courseSequenceId}
-        currentCourseRegistrationFormat={currentCourseRegistrationFormat}
-      />
+      <FormSection isShowLevelTest={isShowLevelTest} isShowTextbook={isShowTextbook} />
     </div>
   );
 }

@@ -8,5 +8,3 @@ export interface QuestionBankTabFormRef {
 export interface QuestionBankFormData extends ContentBaseInfo {
   contentUseDate?: { from: Date | undefined; to: Date | undefined };
 }
-
-export type QuestionMutationResponse = { result: boolean };

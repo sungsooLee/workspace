@@ -12,3 +12,25 @@
     }
   }
 }
+
+/* mobile */
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      &.dormant_info {
+        .btn_wrap {
+        }
+        .dormant {
+          i {
+            &[class*='ico'] {
+              @apply h-[56px] w-[56px];
+              svg {
+                @apply w-[30px];
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -397,7 +397,7 @@ export interface CourseSequenceResponse {
   learningEndDateTime: ISODateString;
   maxEnrollQuota: number;
   enrollCount?: null;
-  learningSpaceType?: null;
+  learningSpaceType?: LearningSpaceType;
   learningSpaceEntity?: null;
   learningSpaceNameKeyIn?: null;
   recognizedStudyMinType: 'TIME';

@@ -1,8 +1,7 @@
+import { CourseDetail } from '@features/course/detail/course-detail';
+import { CourseDetailMobile } from '@features/course/detail/course-detail.mobile';
 import { createFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { BrowserView, MobileView } from 'react-device-detect';
-import { CourseDetail } from '@features/course/course-detail';
-import { CourseDetailMobile } from '@features/course/course-detail.mobile';
-import { useEffect } from 'react';
 
 export const Route = createFileRoute('/_layout/course/detail')({
   component: RouteComponent,

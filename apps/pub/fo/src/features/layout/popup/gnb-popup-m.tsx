@@ -1,13 +1,15 @@
 import { IcoArrowForward } from '@learnway/icons';
 import { Button } from '@learnway/ui/button';
-import { ModalBody, ModalContainer, ModalTitle, useModal } from '@learnway/ui/modal';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 import { memo, useState } from 'react';
-import { UserMy } from '../ui/user-my';
-
+import { HistoryContents } from '../ui/history-contents'; // 최근 학습활동
+import { UserMy } from '../ui/user-my'; // 내 정보
 import styles from './gnb-popup-m.module.css';
 
+// My Modal
 const UserMyModal = () => {
   const [contents, setContents] = useState('profile');
+  const { closeModal } = useModal();
 
   return (
     <ModalContainer>
@@ -15,6 +17,27 @@ const UserMyModal = () => {
       <ModalBody>
         <div className={`${styles.start} ${styles.user_modal}`}>
           <UserMy onChangeType={setContents} />
+        </div>
+      </ModalBody>
+      {contents === 'profile' ? (
+        <ModalFooter>
+          <Button variant={'primary'} size={'lx'} onClick={() => closeModal()} label={'로그아웃'} />
+        </ModalFooter>
+      ) : (
+        ''
+      )}
+    </ModalContainer>
+  );
+};
+
+// 최근 학습활동 Modal
+const HistoryModal = () => {
+  return (
+    <ModalContainer>
+      <ModalTitle>{'최근 학습활동'}</ModalTitle>
+      <ModalBody>
+        <div className={`${styles.start} ${styles.history_modal}`}>
+          <HistoryContents />
         </div>
       </ModalBody>
     </ModalContainer>
@@ -43,7 +66,14 @@ const GnbPopupMComponent = () => {
               </Button>
             </li>
             <li>
-              <Button>
+              <Button
+                onClick={() =>
+                  openModal({
+                    width: 'm_full',
+                    content: <HistoryModal />,
+                  })
+                }
+              >
                 최근학습활동
                 <IcoArrowForward width={20} height={20} stroke="#6f798b" />
               </Button>

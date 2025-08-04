@@ -5,10 +5,14 @@ import {
 import { useModal } from '@learnway/ui/modal';
 import { useToast } from '@learnway/ui/toast';
 import { useQueryClient } from '@tanstack/react-query';
-import { QuestionListForRetrieveReq, QuestionListForRetrieveRes, QuestionsCopyReq } from '@types';
+import {
+  MutationResponse,
+  QuestionListForRetrieveReq,
+  QuestionListForRetrieveRes,
+  QuestionsCopyReq,
+} from '@types';
 import { t } from 'i18next';
 import { useCallback, useState } from 'react';
-import { QuestionMutationResponse } from './test-paper/type';
 
 export const useQuestionSearchAndCopy = (examPoolUuid: string) => {
   const queryClient = useQueryClient();
@@ -33,7 +37,7 @@ export const useQuestionSearchAndCopy = (examPoolUuid: string) => {
   }, []);
 
   const { copy: copyQuestionsToExam } = useCopyQuestionsToExamPaper({
-    onSuccess: ({ result }: QuestionMutationResponse) => {
+    onSuccess: ({ result }: MutationResponse) => {
       if (result) {
         openToast({
           title: t('복사되었습니다.'),

@@ -15,7 +15,7 @@ import { Popover } from '@learnway/ui/popover';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { forwardRef, memo, useState } from 'react';
 import { BrowserView, isMobile, MobileView } from 'react-device-detect';
-import { CurriculumStudy } from '../../../../features/layout';
+import { CurriculumStudy } from '../../../../widgets/layout';
 
 const DropdownPopoverCompoment = () => {
   return (
@@ -31,9 +31,9 @@ const CourseDashboardCompoment = forwardRef<HTMLDivElement, any>(({}, ref) => {
   const progress = 80;
 
   const { data: dashboardData } = useCourseDashboardData({
-    courseId: 7,
-    courseSequenceId: 32,
-    curriculumId: 3,
+    courseId: 1,
+    courseSequenceId: 1,
+    curriculumId: 1,
   });
   console.log('대시보드 데이터', dashboardData);
 

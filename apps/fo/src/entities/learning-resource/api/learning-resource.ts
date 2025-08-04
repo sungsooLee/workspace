@@ -7,7 +7,14 @@ import {
   CmsEtcResource,
   CmsHtml5LearningReq,
   CmsImageResource,
+  CmsScormRteCommitReq,
+  CmsScormRteInitializeReq,
+  CmsScormRteScoInfo,
+  CmsScormRteScoInfoReq,
   CmsVideoResource,
+  CmsVideoWatchInitializeReq,
+  CmsVideoWatchLogReq,
+  CmsVideoWatchLogStatisticsReq,
 } from '@learnway/types';
 
 export const learningResourceApi = {
@@ -55,27 +62,27 @@ export const learningResourceApi = {
     return httpService.get<CmsImageResource>(`${CMSApiPrefix()}/image/${contentUuid}/resource`);
   },
 
-  getScormScoInfo: (param: any) => {
-    return httpService.get<any>(`${CMSApiPrefix()}/scorm/rte/sco/info`, param);
+  getScormScoInfo: (param: CmsScormRteScoInfoReq) => {
+    return httpService.get<CmsScormRteScoInfo>(`${CMSApiPrefix()}/scorm/rte/sco/info`, param);
   },
 
-  scormCommit: (payload: any) => {
-    return httpService.put<any>(`${CMSApiPrefix()}/scorm/rte/commit`, payload);
+  scormCommit: (payload: CmsScormRteCommitReq) => {
+    return httpService.put(`${CMSApiPrefix()}/scorm/rte/commit`, payload);
   },
 
-  scormInitialize: (payload: any) => {
-    return httpService.post<any>(`${CMSApiPrefix()}/scorm/rte/initialize`, payload);
+  scormInitialize: (payload: CmsScormRteInitializeReq) => {
+    return httpService.post(`${CMSApiPrefix()}/scorm/rte/initialize`, payload);
   },
 
-  videoWatchLog: (payload: any) => {
-    return httpService.post<any>(`${CMSApiPrefix()}/video/watch-log`, payload);
+  videoWatchLog: (payload: CmsVideoWatchLogReq) => {
+    return httpService.post(`${CMSApiPrefix()}/video/watch-log`, payload);
   },
 
-  videoWatchLogStatistics: (payload: any) => {
-    return httpService.post<any>(`${CMSApiPrefix()}/video/watch-log/statistics`, payload);
+  videoWatchLogStatistics: (payload: CmsVideoWatchLogStatisticsReq) => {
+    return httpService.post(`${CMSApiPrefix()}/video/watch-log/statistics`, payload);
   },
 
-  videoWwatchInitialize: (payload: any) => {
+  videoWatchInitialize: (payload: CmsVideoWatchInitializeReq) => {
     const { contentUuid } = payload;
     return httpService.get<CmsVideoResource>(
       `${CMSApiPrefix()}/video/${contentUuid}/watch/initialize`,

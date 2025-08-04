@@ -21,6 +21,7 @@ import {
   QuestionItem,
   QuestionItemDeleteParam,
   QuestionsCopyReq,
+  QuestionSortReq,
   QuestionStatusUpdateReq,
   TestPaperBasicInfoSaveReq,
   UpdateQuestionBankCountInfoReq,
@@ -428,6 +429,19 @@ export function useCopyQuestionsToExamPaper(options?: any) {
 
   return {
     copy: (params: QuestionsCopyReq) => mutation.mutate(params as any),
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+  };
+}
+
+export function useChangeQuestionOrder(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.changeQuestionOrder(),
+    ...options,
+  });
+
+  return {
+    sort: (params: QuestionSortReq) => mutation.mutate(params as any),
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
   };
