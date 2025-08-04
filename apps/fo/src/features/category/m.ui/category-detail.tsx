@@ -15,7 +15,7 @@ import { t } from 'i18next'
 import { useFetchCategoryDetail } from '@entities/category';
 import { CategoryDetailComponentProps } from '@pages/_layout/_category/category';
 import { ThumbnailList } from '@shared/ui/thumnail/list/thumbnail-list';
-import { CategoryFilterPopup } from '@features/category/ui/category-filter-popup';
+import { CategoryFilterPopup } from '@shared/ui/category/category-filter-popup';
 import { CODE_GROUP, useCodeStore } from '@learnway/hooks';
 
 

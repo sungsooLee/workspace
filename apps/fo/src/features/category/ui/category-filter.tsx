@@ -3,7 +3,7 @@ import styles from '@learnway/styles/fo/features/category/category-filter.module
 import { OptionCard } from '@learnway/ui/option-card';
 import { useEffect, useState } from 'react';
 
-import { CategoryFilterPopup } from '@features/category/ui/category-filter-popup';
+import { CategoryFilterPopup } from '@shared/ui/category/category-filter-popup';
 import { CODE_GROUP, useCodeStore } from '@learnway/hooks';
 import { IcoFilter } from '@learnway/icons';
 import { Button } from '@learnway/ui/button';

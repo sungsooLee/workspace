@@ -1,5 +1,5 @@
 import { OptionCard, OptionCardItem } from '@learnway/ui/option-card';
-import { memo, useCallback, useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 
 import styles from '@learnway/styles/fo/features/category/category-filter-popup.module.css';
 import { Button } from '@learnway/ui/button';
