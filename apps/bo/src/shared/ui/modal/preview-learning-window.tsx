@@ -34,6 +34,7 @@ const PreviewLearningWindowComponent: FC<any> = ({
     setFuncInfo,
     setCurriculum,
     clearInfo,
+    setBaseInfo,
   } = useLearningWindow();
 
   const [newContentUuid, setNewContentUuid] = useState<string>();
@@ -195,6 +196,9 @@ const PreviewLearningWindowComponent: FC<any> = ({
     if (!curriculumnData) return;
     setCurriculum(curriculumnData);
   }, [curriculumnData]);
+  useEffect(() => {
+    setBaseInfo({ courseName: '미리보기', courseId: 0, curriculumId: 0, sequenceId: 0 });
+  }, []);
 
   return <LearnwayLearningWindowLayout />;
 };
