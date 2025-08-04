@@ -98,7 +98,7 @@ export const learningResourceQueryOptions = {
     queryFn: () => LearningResourceService.fetchContent(contentUuid) as T,
     cacheTime: 0,
     staleTime: 0,
-    enabled: !!contentUuid,
+    enabled: true,
   }),
   getContentCourseMapping: (contentUuid: string, params: ContentCourseMappingParams) => ({
     queryKey: queryKeys.contentCourseMapping(contentUuid),

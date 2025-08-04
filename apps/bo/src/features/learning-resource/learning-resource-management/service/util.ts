@@ -1,14 +1,13 @@
-import { useCallback } from 'react';
 import { AuthUser } from '@learnway/auth/types';
+import { LEARNING_TYPE } from '@learnway/config';
 import { CODE_GROUP, useCodeStore } from '@learnway/hooks';
 import { isEmptyData } from '@learnway/shared';
-import { LEARNING_TYPE } from '@learnway/config';
-import { ContentCreateType } from '@types';
+import { useCallback } from 'react';
 
 export const getDetailPathByContentType = (contentType: string): string => {
   switch (contentType) {
     case LEARNING_TYPE.VIDEO:
-      return '/learning/learning-resource/video/view';
+      return '/learning/learning-resource/view';
     case LEARNING_TYPE.BLOG:
       return '/learning/resource/blog/view';
     case LEARNING_TYPE.SCORM:

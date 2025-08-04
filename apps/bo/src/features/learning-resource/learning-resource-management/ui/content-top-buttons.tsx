@@ -1,16 +1,16 @@
 import { useDeleteContent, usePostContentExport } from '@entities/learning-resource';
 import { useFetchAuthUser } from '@learnway/auth/entities';
-import { LEARNING_TYPE } from '@learnway/config';
 import { DynamicFormProvider, useCurrentRoute } from '@learnway/hooks';
+import { Button } from '@learnway/ui/button';
 import { Divider } from '@learnway/ui/elements';
+import { useModal } from '@learnway/ui/modal';
 import { ContentCourseMappingModal } from '@shared/ui';
 import { useBlocker, useRouter } from '@tanstack/react-router';
 import { ContentCreateType, ContentExportRes, ContentInformation } from '@types';
 import { t } from 'i18next';
 import { useCallback, useMemo } from 'react';
+import { getDetailPathByContentType } from '../service/util';
 import { TranslationListModal } from './learning-resource-translation-list-modal';
-import { Button } from '@learnway/ui/button';
-import { useModal } from '@learnway/ui/modal';
 
 interface Props {
   provider: DynamicFormProvider;
@@ -23,7 +23,8 @@ const ContentTopButtonsComponent = ({ provider, hasMapping = false }: Props) => 
   const { openModal, alert: openAlert, confirm: openConfirm } = useModal();
   const router = useRouter();
   const {
-    state: { listParam } } = useCurrentRoute();
+    state: { listParam },
+  } = useCurrentRoute();
   const { watch, getValues, formState } = provider;
 
   const tenantId = watch('tenantId');
@@ -44,8 +45,10 @@ const ContentTopButtonsComponent = ({ provider, hasMapping = false }: Props) => 
       if (!formState.isDirty) return false;
       return !(await openConfirm({
         title: t('이동 하시겠습니까?'),
-        content: t('입력 중인 항목이 초기화됩니다.') }));
-    } });
+        content: t('입력 중인 항목이 초기화됩니다.'),
+      }));
+    },
+  });
 
   const { delete: deleteContent } = useDeleteContent({
     onSuccess: (result: number) => {
@@ -53,28 +56,15 @@ const ContentTopButtonsComponent = ({ provider, hasMapping = false }: Props) => 
       return router.navigate({
         to: '/learning/learning-resource',
         state: { listParam },
-        replace: true });
-    } });
+        replace: true,
+      });
+    },
+  });
 
-  const detailUrl = useMemo(() => {
-    switch (contentType) {
-      case LEARNING_TYPE.VIDEO:
-        return '/learning/learning-resource/video/view';
-      case LEARNING_TYPE.SCORM:
-        return '/learning/learning-resource/scorm/view';
-      case LEARNING_TYPE.HTML5_VIDEO:
-        return '/learning/resource/html-video/view';
-      case LEARNING_TYPE.BLOG:
-        return '/learning/resource/blog/view';
-      case LEARNING_TYPE.EXAM:
-        return '/learning/resource/test-paper/view';
-      case LEARNING_TYPE.EXAM_POOL:
-        return '/learning/resource/question-bank/view';
-      // TODO: 학습자원 유형 상세페이지 추가 예정
-      default:
-        return '/learning/learning-resource';
-    }
-  }, [contentType]);
+  const detailUrl = useMemo(
+    () => getDetailPathByContentType(contentType) || '/learning/learning-resource',
+    [contentType],
+  );
 
   const { exportContent } = usePostContentExport({
     onSuccess: (result: ContentExportRes) => {
@@ -86,10 +76,14 @@ const ContentTopButtonsComponent = ({ provider, hasMapping = false }: Props) => 
             listParam: {
               ...listParam,
               tenantId: result.destTenantId,
-              channelUuid: result.destChannelUuid } },
-          replace: true });
+              channelUuid: result.destChannelUuid,
+            },
+          },
+          replace: true,
+        });
       }
-    } });
+    },
+  });
 
   const handleCourseMapping = useCallback(() => {
     openModal({
@@ -100,27 +94,31 @@ const ContentTopButtonsComponent = ({ provider, hasMapping = false }: Props) => 
           lastVisitedBoRoleId={authUser!.lastVisitedBoRoleId!}
         />
       ),
-      width: 'lg' });
+      width: 'lg',
+    });
   }, [contentUuid, data]);
 
   const handleTranslationList = useCallback(() => {
     if (!data) return;
     openModal({
       content: <TranslationListModal contentInfo={data} />,
-      width: 'lg' });
+      width: 'lg',
+    });
   }, [data]);
 
   const handleDelete = useCallback(async () => {
     if (isCourseUsed) {
       await openAlert({
         title: t('과정에서 사용 중입니다.'),
-        content: t('과정에서 사용중인 학습자원은 삭제할 수 없습니다.') });
+        content: t('과정에서 사용중인 학습자원은 삭제할 수 없습니다.'),
+      });
       return;
     }
     if (
       await openConfirm({
         title: t('삭제 하시겠습니까?'),
-        content: t('삭제 후 목록으로 이동합니다.') })
+        content: t('삭제 후 목록으로 이동합니다.'),
+      })
     ) {
       deleteContent(contentUuid as string);
     }
@@ -133,7 +131,8 @@ const ContentTopButtonsComponent = ({ provider, hasMapping = false }: Props) => 
       tenantId,
       contentUuid,
       destChannelUuid: data.channelUuid,
-      languageCountryCode: data.languageCountryCode });
+      languageCountryCode: data.languageCountryCode,
+    });
   }, [tenantId, contentUuid, data]);
 
   return (
