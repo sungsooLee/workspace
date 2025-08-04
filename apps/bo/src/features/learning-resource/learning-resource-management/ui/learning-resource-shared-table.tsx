@@ -284,7 +284,7 @@ function LearningResourceSharedTableComponent() {
     console.log('🚀 ~ handleSearch ~ rawQuery:', rawQuery, processedQuery);
 
     setParams(processedQuery);
-    gridFetch({ lastVisitedBoRoleId: authUser?.lastVisitedBoRoleId, ...processedQuery });
+    gridFetch({ lastVisitedBoRoleId: authUser?.activeRole?.roleId, ...processedQuery });
   }
 
   useEffect(() => {
@@ -299,11 +299,13 @@ function LearningResourceSharedTableComponent() {
   }, [listParam]);
 
   useEffect(() => {
-    if (authUser && authUser.lastVisitedBoRoleId)
+    if (authUser && authUser.activeRole?.roleId)
       (async () => {
         const tenantOptions = await queryClient.fetchQuery(
-          learningResourceQueryOptions.getSharedBoxTenantCodes(authUser.lastVisitedBoRoleId!),
+          learningResourceQueryOptions.getSharedBoxTenantCodes(authUser.activeRole!.roleId),
         );
+        const foundOption = tenantOptions.find((_) => _.tenantId === authUser.activeRole?.tenantId);
+        setValue('sourceTenantId', foundOption ? authUser?.activeTenant?.tenantId : '');
         setOptions(
           'sourceTenantId',
           tenantOptions.map(({ tenantId: value, tenantName: label }) => ({ value, label })),

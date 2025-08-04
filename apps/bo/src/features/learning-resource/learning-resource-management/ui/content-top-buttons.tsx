@@ -91,7 +91,7 @@ const ContentTopButtonsComponent = ({ provider, hasMapping = false }: Props) => 
         <ContentCourseMappingModal
           contentUuid={contentUuid}
           channelUuid={data.channelUuid}
-          lastVisitedBoRoleId={authUser!.lastVisitedBoRoleId!}
+          lastVisitedBoRoleId={authUser!.activeRole!.roleId}
         />
       ),
       width: 'lg',
