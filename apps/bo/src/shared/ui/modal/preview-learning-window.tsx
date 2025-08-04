@@ -43,10 +43,10 @@ const PreviewLearningWindowComponent: FC<any> = ({
   const [newContentUuid, setNewContentUuid] = useState<string>();
 
   const { data, error: fetchError } = useQuery(
-    learningResourceQueryOptions.getContent(newContentUuid ?? ''),
+    learningResourceQueryOptions.getContent(newContentUuid || ''),
   );
 
-  const { data: curriculumnData } = useGetCurriculumDetail(curriculumId ?? 0);
+  const { data: curriculumnData } = useGetCurriculumDetail(curriculumId || 0);
   const getScormItemByScoId = (scoId?: string) => {
     if (!scoId) return;
     let retval: any;
@@ -209,7 +209,7 @@ const PreviewLearningWindowComponent: FC<any> = ({
 
   return (
     <div>
-      <Button
+      {/* <Button
         variant={isPc ? 'primary' : 'gray'}
         size="md"
         label="PC"
@@ -226,7 +226,7 @@ const PreviewLearningWindowComponent: FC<any> = ({
         onClick={() => {
           setIsPc(false);
         }}
-      />
+       /> */}
       <div className={isPc ? 'auto' : 'flex w-[300px] justify-center'}>
         <LearnwayLearningWindowLayout />
       </div>

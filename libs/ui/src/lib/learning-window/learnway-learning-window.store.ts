@@ -305,7 +305,7 @@ export const useLearningWindow = () => {
   const readAllLessonProgress = async (curriculum: Curriculum) => {
     //_baseInfo
     const contents: CmsContentProgressReq[] = [];
-    if (curriculum.moduleList) {
+    if (curriculum?.moduleList) {
       curriculum.moduleList.forEach((module) => {
         if (module.isDummy) {
           contents.push({
