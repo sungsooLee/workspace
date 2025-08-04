@@ -1,256 +1,129 @@
 import { createFileRoute } from '@tanstack/react-router';
+import React, { useEffect, useRef, useState } from 'react';
+
 export const Route = createFileRoute('/_guide/guide/typography')({
   component: RouteComponent,
 });
 
+type FontPreviewProps = {
+  className: string;
+  tag: keyof JSX.IntrinsicElements;
+  text?: string;
+};
+
+function FontPreview({
+  className,
+  tag = 'div',
+  text = '현대자동차 교육플랫폼에 오신 걸을 환영합니다.',
+}: FontPreviewProps) {
+  const ref = useRef<HTMLElement | null>(null);
+  const [styles, setStyles] = useState<{
+    fontSize?: string;
+    fontWeight?: string;
+  }>({});
+
+  useEffect(() => {
+    if (ref.current) {
+      const computed = getComputedStyle(ref.current);
+      setStyles({
+        fontSize: computed.fontSize,
+        fontWeight: computed.fontWeight,
+      });
+    }
+  }, []);
+
+  return (
+    <div className="flex_box">
+      <div className="desc">
+        <code>
+          <strong>{className}</strong>
+        </code>
+        <ul className="font-info">
+          <li>font-size: {styles.fontSize}</li>
+          <li>font-weight: {styles.fontWeight}</li>
+        </ul>
+      </div>
+
+      {React.createElement(tag, {
+        className,
+        ref,
+        children: text,
+      })}
+    </div>
+  );
+}
+
+type TypographyGroup = {
+  groupName: string;
+  items: {
+    title: string;
+    className: string;
+    tag: keyof JSX.IntrinsicElements;
+  }[];
+};
+
 function RouteComponent() {
-  const groups = [
+  const groups: TypographyGroup[] = [
     {
       groupName: 'Display',
       items: [
-        {
-          title: 'Display',
-          className: 'display1',
-          preview: `<div class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</div>`,
-          code: `@apply display1;`,
-        },
-        {
-          title: 'Display',
-          className: 'display1-b',
-          preview: `<div class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</div>`,
-          code: `@apply display1-b;`,
-        },
+        { title: 'Display', className: 'display1', tag: 'div' },
+        { title: 'Display', className: 'display1-b', tag: 'div' },
       ],
     },
     {
       groupName: 'Headline',
       items: [
-        {
-          title: 'Headline',
-          className: 'headline1',
-          preview: `<h4 class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</h4>`,
-          code: `@apply headline1;`,
-        },
-        {
-          title: 'Headline',
-          className: 'headline1-b',
-          preview: `<h4 class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</h4>`,
-          code: `@apply headline1-b;`,
-        },
-        {
-          title: 'Headline',
-          className: 'headline2',
-          preview: `<h3 class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</h3>`,
-          code: `@apply headline2;`,
-        },
-        {
-          title: 'Headline',
-          className: 'headline2-b',
-          preview: `<h3 class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</h3>`,
-          code: `@apply headline2-b;`,
-        },
-        {
-          title: 'Headline',
-          className: 'headline3',
-          preview: `<h3 class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</h3>`,
-          code: `@apply headline3;`,
-        },
-        {
-          title: 'Headline',
-          className: 'headline3-b',
-          preview: `<h3 class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</h3>`,
-          code: ` @apply headline3-b;`,
-        },
-        {
-          title: 'Headline',
-          className: 'headline4',
-          preview: `<h2 class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</h2>`,
-          code: `@apply headline4;`,
-        },
-
-        {
-          title: 'Headline',
-          className: 'headline4-b',
-          preview: `<h2 class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</h2>`,
-          code: `@apply headline4-b;`,
-        },
+        { title: 'Headline', className: 'headline1', tag: 'h4' },
+        { title: 'Headline', className: 'headline1-b', tag: 'h4' },
+        { title: 'Headline', className: 'headline2', tag: 'h3' },
+        { title: 'Headline', className: 'headline2-b', tag: 'h3' },
+        { title: 'Headline', className: 'headline3', tag: 'h3' },
+        { title: 'Headline', className: 'headline3-b', tag: 'h3' },
+        { title: 'Headline', className: 'headline4', tag: 'h2' },
+        { title: 'Headline', className: 'headline4-b', tag: 'h2' },
       ],
     },
     {
       groupName: 'Title',
       items: [
-        {
-          title: 'Title',
-          className: 'title1',
-          preview: `<h4 class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</h4>`,
-          code: `@apply title1;`,
-        },
-        {
-          title: 'Title',
-          className: 'title1-b',
-          preview: `<h4 class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</h4>`,
-          code: `@apply title1-b;`,
-        },
-        {
-          title: 'Title',
-          className: 'title2',
-          preview: `<h4 class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</h4>`,
-          code: `@apply title2;`,
-        },
-        {
-          title: 'Title',
-          className: 'title2-b',
-          preview: `<h4 class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</h4>`,
-          code: `@apply title2-b;`,
-        },
-        {
-          title: 'Title',
-          className: 'title3',
-          preview: `<h3 class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</h3>`,
-          code: `@apply title3;`,
-        },
-        {
-          title: 'Title',
-          className: 'title3-b',
-          preview: `<h3 class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</h3>`,
-          code: `@apply title3-b;`,
-        },
-        {
-          title: 'Title',
-          className: 'title4',
-          preview: `<h3 class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</h3>`,
-          code: `@apply title4;`,
-        },
-        {
-          title: 'Title',
-          className: 'title4-b',
-          preview: `<h3 class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</h3>`,
-          code: `@apply title4-b;`,
-        },
-        {
-          title: 'Title',
-          className: 'title5',
-          preview: `<h4 class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</h4>`,
-          code: `@apply title5-b;`,
-        },
+        { title: 'Title', className: 'title1', tag: 'h4' },
+        { title: 'Title', className: 'title1-b', tag: 'h4' },
+        { title: 'Title', className: 'title2', tag: 'h4' },
+        { title: 'Title', className: 'title2-b', tag: 'h4' },
+        { title: 'Title', className: 'title3', tag: 'h3' },
+        { title: 'Title', className: 'title3-b', tag: 'h3' },
+        { title: 'Title', className: 'title4', tag: 'h3' },
+        { title: 'Title', className: 'title4-b', tag: 'h3' },
+        { title: 'Title', className: 'title5', tag: 'h4' },
       ],
     },
     {
       groupName: 'Body',
       items: [
-        {
-          title: 'Body',
-          className: 'body-lg',
-          preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</span>`,
-          code: `@apply body-lg;`,
-        },
-        {
-          title: 'Body',
-          className: 'body-lg-b',
-          preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</span>`,
-          code: `@apply body-lg-b;`,
-        },
-        {
-          title: 'Body',
-          className: 'body-md',
-          preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</span>`,
-          code: `@apply body-md;`,
-        },
-        {
-          title: 'Body',
-          className: 'body-md-b',
-          preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</span>`,
-          code: `@apply body-md-b;`,
-        },
-        {
-          title: 'Body',
-          className: 'body-sm',
-          preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</span>`,
-          code: `@apply body-sm;`,
-        },
-        {
-          title: 'Body',
-          className: 'body-sm-b',
-          preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</span>`,
-          code: `@apply body-sm-b;`,
-        },
-        {
-          title: 'Body',
-          className: 'body-xsm',
-          preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</span>`,
-          code: `@apply body-xsm;`,
-        },
-        {
-          title: 'Body',
-          className: 'body-xsm-b',
-          preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</span>`,
-          code: `@apply body-xsm-b;`,
-        },
+        { title: 'Body', className: 'body-lg', tag: 'span' },
+        { title: 'Body', className: 'body-lg-b', tag: 'span' },
+        { title: 'Body', className: 'body-md', tag: 'span' },
+        { title: 'Body', className: 'body-md-b', tag: 'span' },
+        { title: 'Body', className: 'body-sm', tag: 'span' },
+        { title: 'Body', className: 'body-sm-b', tag: 'span' },
+        { title: 'Body', className: 'body-xsm', tag: 'span' },
+        { title: 'Body', className: 'body-xsm-b', tag: 'span' },
       ],
     },
     {
       groupName: 'Label',
       items: [
-        {
-          title: 'Label',
-          className: 'label-xl',
-          preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</span>`,
-          code: ` @apply label-xl;`,
-        },
-        {
-          title: 'Label',
-          className: 'label-xl-b',
-          preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</span>`,
-          code: ` @apply label-xl-b;`,
-        },
-        {
-          title: 'Label',
-          className: 'label-lg',
-          preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</span>`,
-          code: ` @apply label-lg;`,
-        },
-        {
-          title: 'Label',
-          className: 'label-lg-b',
-          preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</span>`,
-          code: ` @apply label-lg-b;`,
-        },
-        {
-          title: 'Label',
-          className: 'label-md',
-          preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</span>`,
-          code: ` @apply label-md;`,
-        },
-        {
-          title: 'Label',
-          className: 'label-md-b',
-          preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</span>`,
-          code: ` @apply label-md-b;`,
-        },
-        {
-          title: 'Label',
-          className: 'label-sm',
-          preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</span>`,
-          code: ` @apply label-sm;`,
-        },
-        {
-          title: 'Label',
-          className: 'label-sm-b',
-          preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</span>`,
-          code: ` @apply label-sm-b;`,
-        },
-        {
-          title: 'Label',
-          className: 'label-xs',
-          preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</span>`,
-          code: ` @apply label-xs;`,
-        },
-        {
-          title: 'Label',
-          className: 'label-xs-b',
-          preview: `<span class="{className}">현대자동차 교육플랫폼에 오신 걸을 환영합니다.</span>`,
-          code: ` @apply label-xs-b;`,
-        },
+        { title: 'Label', className: 'label-xl', tag: 'span' },
+        { title: 'Label', className: 'label-xl-b', tag: 'span' },
+        { title: 'Label', className: 'label-lg', tag: 'span' },
+        { title: 'Label', className: 'label-lg-b', tag: 'span' },
+        { title: 'Label', className: 'label-md', tag: 'span' },
+        { title: 'Label', className: 'label-md-b', tag: 'span' },
+        { title: 'Label', className: 'label-sm', tag: 'span' },
+        { title: 'Label', className: 'label-sm-b', tag: 'span' },
+        { title: 'Label', className: 'label-xs', tag: 'span' },
+        { title: 'Label', className: 'label-xs-b', tag: 'span' },
       ],
     },
   ];
@@ -274,21 +147,10 @@ function RouteComponent() {
             <h3 className="guide_tit3">{group.groupName}</h3>
             {group.items.map((example, itemIndex) => (
               <div key={itemIndex}>
-                <div className="flex_box">
-                  <div className="desc">
-                    <code>
-                      <strong>{example.className}</strong>
-                    </code>
-                  </div>
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: example.preview.replace('{className}', example.className),
-                    }}
-                  />
-                </div>
+                <FontPreview className={example.className} tag={example.tag} />
                 <div className="code_example">
                   <pre className="code_block css">
-                    <code>{example.code.trim()}</code>
+                    <code>@apply {example.className};</code>
                   </pre>
                 </div>
               </div>
