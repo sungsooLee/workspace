@@ -21,7 +21,7 @@ export const getDetailPathByContentType = (contentType: string): string => {
     case LEARNING_TYPE.ASSIGNMENT:
       return '/learning/resource/assignment/view';
     case LEARNING_TYPE.ETC:
-      return '/learning/learning-resource/etc/view';
+      return '/learning/learning-resource/view';
   }
   return '';
 };
