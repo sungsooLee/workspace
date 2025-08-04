@@ -13,16 +13,16 @@ import { memo, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import { CourseCancelReasonPopup, EducationPlacePopup } from '../../../features/layout';
 
+import { useCourseEnrollWaiting, useCourseEnrollWaitingCancle } from '@entities/course';
 import {
-  // useCourseEnroll,
-  useCourseEnrollCancle,
-  useCourseEnrollWaiting,
-  useCourseEnrollWaitingCancle,
-  useCourseLike,
-} from '@entities/course';
+  useDeleteCourseApplication,
+  useDeleteCourseWaiting,
+  usePostCourseWaiting,
+} from '@entities/enroll';
 import { DATE_TIME_FORMAT, formatISODateString } from '@learnway/shared';
 import styles from '@learnway/styles/fo/features/layout/ui/education.module.css';
 import bulletStyles from '@learnway/styles/fo/shared/ui/list/bullet.module.css';
+import { useModalStore } from '@learnway/ui/stores';
 import { useNavigate } from '@tanstack/react-router';
 import { InstructorType, InstructorTypeLabel } from '@types';
 
@@ -63,12 +63,18 @@ const EducationComponent = ({
   //   },
   // });
   // 수강 취소하기
-  const { enrollCancleRequest } = useCourseEnrollCancle({
-    onSuccess: (data: any) => {
-      console.log('data12121221344231', data);
-      if (data.code === 200) CourseCancelCompletePopup && CourseCancelCompletePopup();
-    },
-  });
+  // const { enrollCancleRequest } = useCourseEnrollCancle({
+  //   onSuccess: (data: any) => {
+  //     console.log('data12121221344231', data);
+  //     if (data.code === 200) CourseCancelCompletePopup && CourseCancelCompletePopup();
+  //   },
+  // });
+
+  const {
+    deleteCourseApplication,
+    mutate: deleteEnrollMutate,
+    isPending: isDeleteEnrollPending,
+  } = useDeleteCourseApplication();
   // 수강대기 하기
   const { enrollWaitingRequest } = useCourseEnrollWaiting({
     onSuccess: (data: any) => {
@@ -83,30 +89,52 @@ const EducationComponent = ({
       if (data.code === 200) courseEnrollCompletePopup && courseEnrollCompletePopup();
     },
   });
-  // 찜하기
-  const { courseLikeRequest } = useCourseLike({
-    onSuccess: (data: any) => {
-      console.log('data121212', data);
-      if (data.code === 200) courseEnrollCompletePopup && courseEnrollCompletePopup();
-    },
+
+  const { mutateAsync: postCourseWaiting } = usePostCourseWaiting({
+    courseSequenceId: edu.courseSequenceId,
+  });
+  const { mutateAsync: deleteCourseWaiting } = useDeleteCourseWaiting({
+    courseSequenceId: edu.courseSequenceId,
   });
 
-  const handleCourseCancelReason = () => {
-    console.log('넘어와');
-
-    setTimeout(() => {
-      openModal({
-        content: (
-          <CourseCancelReasonPopup
-            okCallback={handleEnrollCancleRequest}
-            closeCallback={closeModal}
-          />
-        ),
-      });
-    }, 50);
+  // Alert 퍼블수정 20250708 (전체적으로 수정)
+  // 수강대기 신청 완료
+  const CourseWaitAlert = () => {
+    openAlert({
+      title: '수강대기 신청',
+      content: '수강대기 신청이 완료되었습니다.',
+    });
+  };
+  const CourseWaitDeleteAlert = () => {
+    openAlert({
+      title: '수강대기 신청 취소',
+      content: '수강대기 신청이 취소되었습니다.',
+    });
   };
 
-  // 수강신청 취소 신청
+  // 수강신청 취소 사유 입력 팝업 - confirm팝업 통해서 접근
+  const handleCourseCancelReason = () => {
+    // console.log('취소이유');
+    const openNextReasonModal = () => {
+      const currentState = useModalStore.getState();
+      if (currentState.modals.length === 0) {
+        openModal({
+          content: (
+            <CourseCancelReasonPopup
+              okCallback={handleEnrollCancleRequest}
+              closeCallback={closeModal}
+            />
+          ),
+        });
+      } else {
+        setTimeout(openNextReasonModal, 10);
+      }
+    };
+
+    openNextReasonModal();
+  };
+
+  // 수강신청 취소 신청 confirm 팝업
   const handleCourseCancelConfirm = () => {
     openConfirm({
       title: '수강 신청을 취소하시겠습니까?',
@@ -120,7 +148,6 @@ const EducationComponent = ({
       okButtonLabel: '확인',
       cancelButtonLabel: '아니요',
       onClose: (value: boolean) => {
-        console.log('####', value);
         // closeModal();
         if (value) {
           handleCourseCancelReason();
@@ -129,25 +156,54 @@ const EducationComponent = ({
     });
   };
 
-  // 수강 신청하기
-  // const handleEnrollRequest = () => {
-  //   console.log('1');
+  // 수강 취소 데이터 전송하기
+  const handleEnrollCancleRequest = async (reason: string) => {
+    if (isDeleteEnrollPending) return;
 
-  //   enrollRequest({ courseId: '111111' });
+    console.log('1', edu.courseSequenceId, reason);
 
-  //   // if (courseEnrollCompletePopup) courseEnrollCompletePopup();
-  // };
+    // return;
 
-  // 수강 취소하기
-  const handleEnrollCancle = () => {
-    handleCourseCancelConfirm();
-  };
-  const handleEnrollCancleRequest = (reason: string) => {
-    console.log('1', reason);
-
-    enrollCancleRequest({ courseId: '111111', cancelReason: reason });
+    await deleteEnrollMutate(
+      { courseSequenceId: edu.courseSequenceId, approvalReason: reason },
+      {
+        onSuccess: () => {
+          console.log('취소되었습니다');
+          openAlert({
+            title: '수강취소 되었습니다',
+          });
+        },
+        onError: () => {
+          console.log('취소 에러입니다');
+          openAlert({
+            title: '수강취소 ERROR',
+          });
+        },
+      },
+    );
 
     // if (courseEnrollCompletePopup) courseEnrollCompletePopup();
+  };
+
+  const handlePostCourseWaiting = () => {
+    postCourseWaiting()
+      .then((result) => {
+        console.log('수강대기', result);
+        CourseWaitAlert();
+      })
+      .catch((error) => {
+        console.error('수강대기', error);
+      });
+  };
+  const handleDeleteCourseWaiting = () => {
+    deleteCourseWaiting()
+      .then((result) => {
+        console.log('수강대기취소', result);
+        CourseWaitDeleteAlert();
+      })
+      .catch((error) => {
+        console.error('수강대기취소', error);
+      });
   };
 
   // 수강대기 하기
@@ -227,12 +283,12 @@ const EducationComponent = ({
           </Button> */}
           {/* <br /> */}
           {/* 수강대기 신청 - 잔여석 0자리일때 신청 */}
-          {/* <Button variant="line" size="xl" onClick={handleEnrollWaitingRequest}>
+          {/* <Button variant="line" size="xl" onClick={handlePostCourseWaiting}>
             수강대기 신청
           </Button> */}
           {/* <br /> */}
-          {/* 수강대기 신청 취소 - 잔여석 0자리일때 신청 */}
-          {/* <Button variant="gray" size="xl" onClick={handleEnrollWaitingCancleRequest}>
+          {/* 수강대기 신청 취소 - 잔여석 0자리일때 신청 취소 */}
+          {/* <Button variant="gray" size="xl" onClick={handleDeleteCourseWaiting}>
             수강대기 취소
           </Button> */}
           {/* <br /> */}

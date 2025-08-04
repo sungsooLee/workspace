@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useMemo } from 'react';
 import { t } from 'i18next';
 import { FormSubTitle } from '@learnway/ui/base-form';
 import { SplitPanel } from '@learnway/ui/elements';
@@ -12,7 +12,7 @@ import movieInfoStyles from '@learnway/styles/bo/assets/styles/modules/movie-inf
 import previewImg from '@assets/images/temp/img_exam_basic.jpg';
 
 import { convertDetailInfoToFormData } from '../service/test-paper/common';
-import { ExamBasicInfoProps, PageMode, TabFormRef } from '../service/test-paper/type';
+import { ExamBasicInfoProps, TabFormRef } from '../service/test-paper/type';
 import { LearningResourceBaseForm } from './learning-resource-base-form';
 
 import styles from '@learnway/styles/bo/pages/_layout/learning/test-detail.module.css';
@@ -20,7 +20,7 @@ import { ContentsRow } from '@learnway/ui/contents-row';
 import { Input } from '@learnway/ui/input';
 
 const TestPaperInfoComponent = forwardRef<TabFormRef, ExamBasicInfoProps>(
-  ({ basicInfoForm, contentUuid = '', mode, data = {}, hasMapping = false }, ref) => {
+  ({ basicInfoForm, contentUuid = '', data = {}, hasMapping = false }, ref) => {
     const { provider, onFormChange, saveBasicInfo } = basicInfoForm;
 
     const examTemplateTypeOptions = useMemo(
@@ -48,7 +48,7 @@ const TestPaperInfoComponent = forwardRef<TabFormRef, ExamBasicInfoProps>(
 
     useEffect(() => {
       // 상세 설정
-      if (mode === PageMode.UPDATE && !isEmptyData(data) && onFormChange) {
+      if (contentUuid && !isEmptyData(data) && onFormChange) {
         convertDetailInfoToFormData(data, onFormChange);
       }
     }, [data]);

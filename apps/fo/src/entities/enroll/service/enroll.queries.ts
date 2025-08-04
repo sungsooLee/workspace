@@ -1,5 +1,10 @@
 import { UseMutationOptions, UseQueryOptions } from '@tanstack/react-query';
-import { CourseEnrollQueueStateIdResponse, CourseEnrollResponse, EnrollRequest } from '@types';
+import {
+  CourseEnrollQueueStateIdResponse,
+  CourseEnrollResponse,
+  EnrollDeleteRequest,
+  EnrollRequest,
+} from '@types';
 import EnrollService from '../api/enroll';
 
 export const queryKeys = {
@@ -8,6 +13,9 @@ export const queryKeys = {
   courseRegistrationStatus: (enrollQueueId: number) =>
     ['courseRegistrationStatus', enrollQueueId] as const,
   singleCourseApplicationQueue: ['singleCourseApplicationQueue'] as const,
+  deleteCourseApplication: ['deleteCourseApplication'] as const,
+  postCourseWaiting: ['postCourseWaiting'] as const,
+  deleteCourseWaiting: ['deleteCourseWaiting'] as const,
 };
 
 export const queryOptions = {
@@ -27,6 +35,26 @@ export const queryOptions = {
   singleCourseApplicationQueue: (body: EnrollRequest): UseMutationOptions<number> => ({
     mutationKey: queryKeys.singleCourseApplicationQueue,
     mutationFn: () => EnrollService.createEnroll(body),
+    onSuccess: (data) => {
+      // console.log(data);
+    },
+  }),
+
+  deleteCourseApplication: (): UseMutationOptions<unknown, unknown, EnrollDeleteRequest> => ({
+    mutationFn: (body: EnrollDeleteRequest) => EnrollService.deleteEnroll(body),
+  }),
+
+  postCourseWaiting: (body: number): UseMutationOptions<number> => ({
+    mutationKey: queryKeys.postCourseWaiting,
+    mutationFn: () => EnrollService.createEnrollWaiting(body),
+    onSuccess: (data) => {
+      // console.log(data);
+    },
+  }),
+
+  deleteCourseWaiting: (body: number): UseMutationOptions<number> => ({
+    mutationKey: queryKeys.deleteCourseWaiting,
+    mutationFn: () => EnrollService.deleteEnrollWaiting(body),
     onSuccess: (data) => {
       // console.log(data);
     },

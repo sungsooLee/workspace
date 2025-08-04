@@ -14,16 +14,17 @@ import { ContentsRow } from '@learnway/ui/contents-row';
 
 type BlogDetailProps = {
   form: UseDynamicFormResult;
-  mode: 'CREATE' | 'UPDATE';
+  contentUuid: string;
   blogInfo?: Partial<BlogDetailRes>;
   hasMapping?: boolean;
 };
 
 const BlogDetailComponent = ({
   form,
-  mode,
+  contentUuid,
   blogInfo = {},
-  hasMapping = false }: BlogDetailProps) => {
+  hasMapping = false,
+}: BlogDetailProps) => {
   const { provider, getValues, updateFormData, onFormChange, watch } = form;
 
   const createType = watch('createType');
@@ -39,8 +40,10 @@ const BlogDetailComponent = ({
         coordinatorUuid: loginUser?.uuid,
         coordinatorName: loginUser?.name,
         coordinatorTelCountryCode: loginUser?.phoneNumberNationCode,
-        coordinatorTelNo: loginUser?.phoneNumber });
-    } });
+        coordinatorTelNo: loginUser?.phoneNumber,
+      });
+    },
+  });
 
   useEffect(() => {
     (async () => {
@@ -49,17 +52,19 @@ const BlogDetailComponent = ({
   }, [loginUser]);
 
   useEffect(() => {
-    if (mode === 'UPDATE' && !isEmptyData(blogInfo)) {
+    if (contentUuid && !isEmptyData(blogInfo)) {
       onFormChange({
         ...blogInfo,
         contentUseDate: {
           from: blogInfo.contentUseStartDate
             ? dayjs(blogInfo.contentUseStartDate).toDate()
             : undefined,
-          to: blogInfo.contentUseEndDate ? dayjs(blogInfo.contentUseEndDate).toDate() : undefined },
+          to: blogInfo.contentUseEndDate ? dayjs(blogInfo.contentUseEndDate).toDate() : undefined,
+        },
         blogContent: JSON.stringify(blogInfo.blogContent ?? {}),
         aiSummary: blogInfo.aiSummary ?? '',
-        aiKeyword: blogInfo.aiKeyword ?? '' });
+        aiKeyword: blogInfo.aiKeyword ?? '',
+      });
     }
   }, [blogInfo]);
 
@@ -78,7 +83,7 @@ const BlogDetailComponent = ({
       <MediaContentRequiredCheckFormField provider={provider} />
 
       {/* 이력정보 */}
-      {mode === 'UPDATE' && (
+      {contentUuid && (
         <ContentsRow className={cn(formStyles.no_line, formStyles.space2)}>
           <ContentsHistoryInfoFormField provider={provider} />
         </ContentsRow>

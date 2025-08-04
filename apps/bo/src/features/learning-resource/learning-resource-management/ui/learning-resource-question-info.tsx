@@ -46,7 +46,6 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
     {
       basicInfoForm,
       contentUuid = '',
-      mode,
       data,
       hasMapping = false,
       questionGenType,

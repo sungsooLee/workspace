@@ -14,7 +14,6 @@ import {
   SwitchFormField,
   UserChoiceModal,
 } from '@shared/ui';
-import { t } from 'i18next';
 
 import { ContentCreateType, EnFormMode } from '@types';
 
@@ -55,7 +54,7 @@ const LearningResourceBaseFormComponent = ({
   const { watch } = provider;
   const isCourseUsed = watch('isCourseUsed');
 
-  const editDisabled = createType !== ContentCreateType.MANUAL;
+  const editDisabled = hasMapping || createType !== ContentCreateType.MANUAL;
 
   return (
     <>
@@ -322,7 +321,7 @@ const LearningResourceBaseFormComponent = ({
           label={t('교육자원활용')}
           name="isCourseUsed"
           format="boolean"
-          element={<SwitchFormField />}
+          element={<SwitchFormField disabled={hasMapping} />}
           switchConfig={{
             label: (value: boolean) => (value ? t('활용가능') : t('활용불가')),
           }}

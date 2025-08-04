@@ -172,7 +172,7 @@ const SequenceListComponent = ({
           align: 'center',
         },
       }),
-      columnHelper.accessor('courseSequenceStartDateTime', {
+      columnHelper.accessor('learningStartDateTime', {
         header: t('학습 시작일'),
         cell: (info) => {
           if (info.row.original.learningStartType === 'DAYS_AFTER_ENROLL')
@@ -183,7 +183,7 @@ const SequenceListComponent = ({
         enableGrouping: false,
         size: 300,
       }),
-      columnHelper.accessor('courseSequenceEndDateTimeMerge', {
+      columnHelper.accessor('learningEndDateTimeTimeMerge', {
         header: t('학습 종료일'),
         cell: (info: CellContext<any, string>) => {
           return <EditInputDateCell info={info} input={{ suffixText: t('일') }} />;
@@ -418,8 +418,8 @@ const SequenceListComponent = ({
 
     if (current.learningStartType === 'FIXED_DATE') {
       if (
-        original.courseSequenceStartDateTime !== current.courseSequenceStartDateTime ||
-        original.courseSequenceEndDateTime !== current.courseSequenceEndDateTime
+        original.learningStartDateTime !== current.learningStartDateTime ||
+        original.learningEndDateTime !== current.learningEndDateTime
       ) {
         return true;
       }
@@ -462,7 +462,7 @@ const SequenceListComponent = ({
           console.log('학습시작입 타입 누락');
           error = true;
         } else if (x.learningStartType === 'FIXED_DATE') {
-          if (!x.courseSequenceStartDateTime || !x.courseSequenceEndDateTime) {
+          if (!x.learningStartDateTime || !x.learningEndDateTime) {
             console.log('학습시작일 누락');
             error = true;
           }
@@ -486,9 +486,8 @@ const SequenceListComponent = ({
         learningStartType: x.learningStartType ?? null,
         learningStartDays: x.learningStartType === 'DAYS_AFTER_ENROLL' ? x.learningStartDays : null,
         learningStartDateTime:
-          x.learningStartType === 'FIXED_DATE' ? x.courseSequenceStartDateTime : null,
-        learningEndDateTime:
-          x.learningStartType === 'FIXED_DATE' ? x.courseSequenceEndDateTime : null,
+          x.learningStartType === 'FIXED_DATE' ? x.learningStartDateTime : null,
+        learningEndDateTime: x.learningStartType === 'FIXED_DATE' ? x.learningEndDateTime : null,
       };
     });
 
@@ -517,9 +516,8 @@ const SequenceListComponent = ({
         if (element.courseSequenceNo !== null) changedCol = 'courseSequenceNo';
         if (element.enrollmentStartDateTime !== null) changedCol = 'enrollmentStartDateTime';
         if (element.enrollmentEndDateTime !== null) changedCol = 'enrollmentEndDateTime';
-        if (element.courseSequenceStartDateTime !== null)
-          changedCol = 'courseSequenceStartDateTime';
-        if (element.courseSequenceEndDateTime !== null) changedCol = 'courseSequenceEndDateTime';
+        if (element.learningStartDateTime !== null) changedCol = 'learningStartDateTime';
+        if (element.learningEndDateTime !== null) changedCol = 'learningEndDateTime';
         if (element.learningStartDays !== null) changedCol = 'learningStartDays';
 
         if (changedCol !== '') {

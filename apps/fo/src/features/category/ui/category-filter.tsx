@@ -3,61 +3,54 @@ import styles from '@learnway/styles/fo/features/category/category-filter.module
 import { OptionCard } from '@learnway/ui/option-card';
 import { useEffect, useState } from 'react';
 
-import { CategoryFilterPopup } from '@features/category/ui/category-filter-popup';
+import { CategoryFilterPopup } from '@shared/ui/category/category-filter-popup';
 import { CODE_GROUP, useCodeStore } from '@learnway/hooks';
 import { IcoFilter } from '@learnway/icons';
 import { Button } from '@learnway/ui/button';
 import { ChipList } from '@learnway/ui/chips';
 import { useModal } from '@learnway/ui/modal';
 import { isMobile } from 'react-device-detect';
+import { t } from 'i18next';
 
 interface FilterComponentProps {
   onOptionChange: (option: any) => void;
 }
 
 const FilterComponent = ({ onOptionChange }: FilterComponentProps) => {
+  const showLanguageCode = ['KO', 'EN', 'ZH', 'JA']
   const { getCode } = useCodeStore();
 
   // modal
   const { openModal } = useModal();
   // 선택된 값이 있으면 true 변경
   const [selectCheck, setSelectCheck] = useState(false);
-  const [filters, setFilters] = useState<any>({
-    categories: [], // OptionCard에서 선택된 카테고리 값들
-    types: [], // ChipList에서 선택된 타입 값들
-  });
   // OptionCard에서 선택된 옵션 상태
   const [selectedCardOptions, setSelectedCardOptions] = useState([]);
   // ChipList에서 선택된 옵션 상태
   const [selectedChipOptions, setSelectedChipOptions] = useState([]);
-  const [filter, setFilter] = useState<any>();
 
-  const getFiltersByCategory = () => {
-    const filtersByCategory: any = {};
-    selectedChipOptions.forEach((chip: any) => {
-      if (chip.category) {
-        if (!filtersByCategory[chip.category]) {
-          filtersByCategory[chip.category] = [];
-        }
-        filtersByCategory[chip.category].push(chip.value);
-      }
-    });
-    return filtersByCategory;
-  };
+  const [filter, setFilter] = useState<any>();
+  const [difficultyCodes, setDifficultyCodes] = useState<any>();
+  const [languageCodes, setLanguageCodes] = useState<any>();
 
   const handleOpenFilterModal = () => {
     // 현재 선택된 필터 칩에서 카테고리별 필터 값 추출
-    const filtersByCategory = getFiltersByCategory();
+    const codes = {
+      lectureType: filter,
+      enrollment: [
+        {label: t('수강신청 가능'), value: 'allow'},
+        {label: t('수강신청 불가능'), value: 'reject'}
+      ],
+      difficulty: difficultyCodes,
+      language: languageCodes,
+    }
     openModal({
       // title: '필터',
       width: 'md',
-      content: <CategoryFilterPopup initialFilters={filtersByCategory} filterCodes={filter}/>,
+      content: <CategoryFilterPopup initialFilters={selectedCardOptions} filterCodes={codes}/>,
       onClose: (data: any) => {
-        // 확인 버튼을 눌러 모달이 닫힐 때 데이터를 받음
-        if (data && data.selectedChips) {
-          console.log('모달에서 선택된 필터:', data);
-          // 선택된 필터 칩 목록 업데이트 (바닥에 표시할 칩 목록)
-          setSelectedChipOptions(data.selectedChips);
+        if( data ) {
+          setSelectedCardOptions(data)
         }
       },
     });
@@ -67,6 +60,12 @@ const FilterComponent = ({ onOptionChange }: FilterComponentProps) => {
     setSelectedCardOptions(selectedOptions);
     onOptionChange(selectedOptions)
   };
+  //
+  useEffect(() => {
+    // 선택된 항목이 있는지 확인
+    const hasSelections = selectedCardOptions.length > 0 || selectedChipOptions.length > 0;
+    setSelectCheck(hasSelections);
+  }, [selectedCardOptions, selectedChipOptions]);
 
   useEffect(() => {
     (async () => {
@@ -74,7 +73,26 @@ const FilterComponent = ({ onOptionChange }: FilterComponentProps) => {
       const defaultOptions = data.map((item: any) => {
         return { label: item.cdName, value: item.value };
       });
+      const difficultyData = await getCode(CODE_GROUP['lms.course.TrainingLevelType']);
+      const difficultyOptions = difficultyData
+        .filter((item: any) => item.cdId !== 'NONE')
+        .map((item: any) => {
+          return { label: item.cdContent, value: item.value };
+        });
+      const languageData = await getCode(CODE_GROUP['pms.multilingual.LangCountryCode']);
+      const languageOptions = languageData
+        .filter((item: any) => showLanguageCode.includes(item.cdId) )
+        .map((item: any) => {
+          return { label: item.referenceVal1.korLanguageName, value: item.value };
+        });
+      const etcLanguageValue = languageData
+        .filter((item: any) => !showLanguageCode.includes(item.cdId) )
+        .map((item: any) => item.value);
+      languageOptions.push({label: t('기타 언어'), value: etcLanguageValue});
+
       setFilter(defaultOptions)
+      setDifficultyCodes(difficultyOptions)
+      setLanguageCodes(languageOptions)
     })();
   }, []);
 
@@ -121,138 +139,5 @@ const FilterComponent = ({ onOptionChange }: FilterComponentProps) => {
     </div>
   );
 }
-
-// const FilterComponent = ({ onOptionChange }: any) => {
-//   // modal
-//   const { openModal } = useModal();
-//
-//   // 선택된 값이 있으면 true 변경
-//   const [selectCheck, setSelectCheck] = useState(false);
-//
-//   const [filters, setFilters] = useState<any>({
-//     categories: [], // OptionCard에서 선택된 카테고리 값들
-//     types: [], // ChipList에서 선택된 타입 값들
-//   });
-//
-//   // OptionCard에서 선택된 옵션 상태
-//   const [selectedCardOptions, setSelectedCardOptions] = useState([]);
-//
-//   // ChipList에서 선택된 옵션 상태
-//   const [selectedChipOptions, setSelectedChipOptions] = useState([]);
-//
-//   const filter = [
-//     { label: '클래스', value: 'category_class' },
-//     { label: '동영상', value: 'category_video' },
-//     { label: '이북', value: 'category_ebook' },
-//     { label: '웹', value: 'category_web' },
-//     { label: '링크', value: 'category_link' },
-//     { label: '시험', value: 'category_exam' },
-//     { label: '라이브', value: 'category_live' },
-//     { label: '패키지', value: 'category_package' },
-//   ];
-//
-//   // 선택된 필터 칩에서 카테고리별 필터 값 추출 (팝업 초기값용)
-//   const getFiltersByCategory = useCallback(() => {
-//     const filtersByCategory: any = {};
-//
-//     selectedChipOptions.forEach((chip: any) => {
-//       if (chip.category) {
-//         if (!filtersByCategory[chip.category]) {
-//           filtersByCategory[chip.category] = [];
-//         }
-//         filtersByCategory[chip.category].push(chip.value);
-//       }
-//     });
-//
-//     return filtersByCategory;
-//   }, [selectedChipOptions]);
-//
-//   // 필터 상태가 변경될 때마다 selectCheck 업데이트 및 통합 필터 업데이트
-//   useEffect(() => {
-//     // 선택된 항목이 있는지 확인
-//     const hasSelections = selectedCardOptions.length > 0 || selectedChipOptions.length > 0;
-//     setSelectCheck(hasSelections);
-//
-//     // 통합 필터 상태 업데이트
-//     setFilters({
-//       categories: selectedCardOptions.map((item: any) => item.value),
-//       types: selectedChipOptions.map((item: any) => item.value),
-//     });
-//   }, [selectedCardOptions, selectedChipOptions]);
-//
-//   useEffect(() => {
-//     onOptionChange(filters);
-//   }, [filters, onOptionChange]);
-//
-//   // OptionCard 선택 처리 핸들러
-//   const handleCardOptionsSelect = (selectedOptions: any) => {
-//     setSelectedCardOptions(selectedOptions);
-//     console.log('Card 선택 옵션:', selectedOptions);
-//   };
-//
-//   // ChipList 선택 처리 핸들러
-//   const handleChipOptionsChange = (selectedOptions: any) => {
-//     setSelectedChipOptions(selectedOptions);
-//     console.log('Chip 선택 옵션:', selectedOptions);
-//   };
-//
-//   // 필터 모달 열기 핸들러
-//   const handleOpenFilterModal = () => {
-//     // 현재 선택된 필터 칩에서 카테고리별 필터 값 추출
-//     const filtersByCategory = getFiltersByCategory();
-//
-//     openModal({
-//       // title: '필터',
-//       width: 'md',
-//       content: <CategoryFilterPopup initialFilters={filtersByCategory} />,
-//       onClose: (data: any) => {
-//         // 확인 버튼을 눌러 모달이 닫힐 때 데이터를 받음
-//         if (data && data.selectedChips) {
-//           console.log('모달에서 선택된 필터:', data);
-//
-//           // 선택된 필터 칩 목록 업데이트 (바닥에 표시할 칩 목록)
-//           setSelectedChipOptions(data.selectedChips);
-//         }
-//       },
-//     });
-//   };
-//
-//   return (
-//     <div className={`${styles.start} ${styles.filter_wrap}`}>
-//       <div className={styles.filter_btn_box}>
-//         <Button
-//           className={cn(styles.filter_btn, selectCheck === true ? styles.selected : '')}
-//           onClick={handleOpenFilterModal}
-//         >
-//           <IcoFilter
-//             width={20}
-//             height={20}
-//             fill="none"
-//             stroke={selectCheck === true ? '#fff' : '#07287e'}
-//           ></IcoFilter>
-//         </Button>
-//       </div>
-//
-//       <div className={styles.select_box}>
-//         <OptionCard
-//           cols={8}
-//           options={filter}
-//           multiple
-//           className={styles.option_card}
-//           onOptionsSelect={handleCardOptionsSelect}
-//           value={selectedCardOptions.map((option: any) => option.value)} // 값만 전달
-//         />
-//         <ChipList
-//           options={selectedChipOptions}
-//           className={styles.chip_list}
-//           hideBorder
-//           type="line"
-//           size="lg"
-//           //onChange={handleChipOptionsChange}
-//         />
-//       </div>
-//     </div>
-//   );
-// };
 
 export const Filter = FilterComponent;

@@ -14,15 +14,16 @@ import { Button } from '../../../button/button';
 function LearningHeaderComponent() {
   const router = useRouter();
   const canGoBack = useCanGoBack();
-  const { baseInfo, playInfo } = useLearningWindow();
+  const { baseInfo, playInfo, previewMobile } = useLearningWindow();
   const handleBackButtonClick = () => {
     if (canGoBack) router.history.back();
   };
+  const isMobileView = previewMobile === undefined ? isMobile : previewMobile;
   return (
     <div className={`${styles.start} ${styles.learning_header}`}>
       <header className={styles.header_area}>
         {/* 퍼블수정 20250716 : 마크업 수정 */}
-        {isMobile ? (
+        {isMobileView ? (
           <div className={styles.header_info}>
             <Button onClick={handleBackButtonClick}>
               <IcoArrowBackward width={24} height={24} stroke="#131416" />
