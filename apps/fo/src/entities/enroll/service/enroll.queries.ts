@@ -21,7 +21,12 @@ export const queryOptions = {
   ): UseQueryOptions<CourseEnrollQueueStateIdResponse> => ({
     queryKey: queryKeys.courseRegistrationStatus(enrollQueueId),
     queryFn: () => EnrollService.fetchEnrollQueueStateId(enrollQueueId),
-    refetchInterval: 3000,
+    refetchInterval: (data) => {
+      if (data && data.state.data?.enrollQueueStatusType !== 'QUEUE') {
+        return false; // refetch 멈춤
+      }
+      return 3000; // 3초마다 polling
+    },
   }),
 
   singleCourseApplicationQueue: (body: EnrollRequest): UseMutationOptions<number> => ({
