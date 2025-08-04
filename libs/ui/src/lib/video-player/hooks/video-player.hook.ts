@@ -274,26 +274,26 @@ export const useVideoPlayer = ({
   };
 
   /**
-   * ⏮ 10초 되감기
+   * ⏮ 5초 되감기 - 키보드 좌 클릭
    * @deprecated 기획내용에서 빠짐
    */
   const handleRewind = () => {
     const current = playerRef.current;
     if (current) {
       const time = current.getCurrentTime();
-      current.seekTo(time - 10, 'seconds');
+      current.seekTo(time - 5, 'seconds');
     }
   };
 
   /**
-   * ⏭ 10초 앞으로
+   * ⏭ 5초 앞으로 - 키보드 우 클릭
    * @deprecated 기획내용에서 빠짐
    */
   const handleForward = () => {
     const current = playerRef.current;
     if (current) {
       const time = current.getCurrentTime();
-      current.seekTo(time + 10, 'seconds');
+      current.seekTo(time + 5, 'seconds');
     }
   };
 

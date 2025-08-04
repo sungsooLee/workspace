@@ -127,6 +127,12 @@ interface FunctionInfomation {
   lessonProgress: (payload: CmsContentProgressMultiReq) => Promise<CmsContentProgressMultiRes>;
   /** 기타/라이브/링크 클릭 */
   otherClickButton: (playInfo: LearningWindowPlayInfo, otherInfo: CmsOtherInfo) => Promise<void>;
+  /**
+   * 과정 > 대시보드 이동
+   * @param courseId
+   * @returns
+   */
+  goCoursePage: (courseId: number) => void;
 }
 
 interface LearningWindowStoreData {

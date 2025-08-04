@@ -187,6 +187,9 @@ const PreviewLearningWindowComponent: FC<any> = ({
       otherClickButton: async (playInfo, otherInfo) => {
         console.log('otherClickButton called', playInfo, otherInfo);
       },
+      goCoursePage: (courseId) => {
+        console.log('gotoCourse called', courseId);
+      },
     });
   }, [data]);
 
