@@ -1,0 +1,21 @@
+/* image-fallback.module.css */
+.start {
+  @apply flex aspect-[16/9] w-full items-center justify-center overflow-hidden;
+  .img {
+    @apply h-full w-full rounded-[8px] object-cover;
+  }
+  .fallback {
+  }
+  &.stacked {
+    @apply pt-[14px];
+    &::before {
+      @apply absolute -top-[7px] left-[12px] z-[1] h-full w-[calc(100%-24px)] rounded-[12px] border-t-[1px] border-solid border-white bg-[var(--gray75)] content-[''];
+    }
+    &::after {
+      @apply absolute -top-[14px] left-[28px] z-[0] h-full w-[calc(100%-56px)] rounded-[12px] bg-[var(--gray90)] content-[''];
+    }
+    .img {
+      @apply relative z-[2];
+    }
+  }
+}
