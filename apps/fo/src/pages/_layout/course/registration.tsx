@@ -83,8 +83,16 @@ function RouteComponent() {
                   <li>
                     <IcoAvatar02 width={20} height={20} viewBox="0 0 24 24" fill="#4d525c" />
                     <span>
-                      {toSafeNumber(data.enrollCount)} / {toSafeNumber(data.maxEnrollQuota)} (잔여{' '}
-                      <em>{toSafeNumber(data.maxEnrollQuota) - toSafeNumber(data.enrollCount)}</em>)
+                      {toSafeNumber(data.enrollCount)}
+                      {data.maxEnrollQuota != null && (
+                        <>
+                          / {toSafeNumber(data.maxEnrollQuota)} (잔여{' '}
+                          <em>
+                            {toSafeNumber(data.maxEnrollQuota) - toSafeNumber(data.enrollCount)}
+                          </em>
+                          )
+                        </>
+                      )}
                     </span>
                   </li>
                   {/* 시간이 없을 시 클래스 educationStyles.full 추가 */}
