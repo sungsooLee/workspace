@@ -35,7 +35,7 @@ const CourseTypeOptionCardModalComponent = forwardRef<
   const optionsData = useMemo(() => getLocalOptions(courseTypeData), [courseTypeData]);
 
   return (
-    <ModalContainer>
+    <ModalContainer width="md">
       <ModalTitle>{t('과정 유형 선택')}</ModalTitle>
       <ModalBody>
         <div className={styles.wrap}>
