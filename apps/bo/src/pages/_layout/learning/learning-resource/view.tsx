@@ -24,8 +24,8 @@ function RouteComponent() {
     learningResourceQueryOptions.getCurriculumsMapping(contentUuid),
   );
 
-  if (fetchError) {
-    console.log('🚀 ~ RouteComponent ~ fetchError:', fetchError);
+  if (!contentUuid || fetchError) {
+    if (fetchError) console.log('🚀 ~ RouteComponent ~ fetchError:', fetchError);
     return <NotFound />;
   }
 
