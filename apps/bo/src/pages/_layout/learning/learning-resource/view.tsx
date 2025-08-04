@@ -6,7 +6,7 @@ import { useCurrentRoute } from '@learnway/hooks';
 import { PageContainer } from '@shared/ui';
 import { useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
-import { EtcView, ScormView, VideoView } from '@widgets/learning/learning-resource';
+import { EtcView, HtmlView, ScormView, VideoView } from '@widgets/learning/learning-resource';
 
 export const Route = createFileRoute('/_layout/learning/learning-resource/view')({
   component: RouteComponent,
@@ -40,6 +40,8 @@ function RouteComponent() {
       return <ScormView content={content} hasMapping={hasMapping} />;
     case LEARNING_TYPE.ETC:
       return <EtcView content={content} hasMapping={hasMapping} />;
+    case LEARNING_TYPE.HTML5_VIDEO:
+      return <HtmlView content={content} hasMapping={hasMapping} />;
   }
 
   return <NotFound />;

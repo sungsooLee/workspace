@@ -13,7 +13,7 @@ export const getDetailPathByContentType = (contentType: string): string => {
     case LEARNING_TYPE.SCORM:
       return '/learning/learning-resource/view';
     case LEARNING_TYPE.HTML5_VIDEO:
-      return '/learning/resource/html-video/view';
+      return '/learning/learning-resource/view';
     case LEARNING_TYPE.EXAM:
       return '/learning/resource/test-paper/view';
     case LEARNING_TYPE.EXAM_POOL:

@@ -1,8 +1,8 @@
-import { useCallback } from 'react';
-import { useRouter } from '@tanstack/react-router';
-import { DynamicFormProvider, useCurrentRoute } from '@learnway/hooks';
-import { ContentExportRes } from '@types';
 import { usePostContentExport } from '@entities/learning-resource';
+import { DynamicFormProvider, useCurrentRoute } from '@learnway/hooks';
+import { useRouter } from '@tanstack/react-router';
+import { ContentExportRes } from '@types';
+import { useCallback } from 'react';
 
 export const useHtmlVideoExport = (provider: DynamicFormProvider) => {
   const router = useRouter();
@@ -17,15 +17,19 @@ export const useHtmlVideoExport = (provider: DynamicFormProvider) => {
     onSuccess: (result: ContentExportRes) => {
       if (result.destContentUuid) {
         router.navigate({
-          to: '/learning/resource/html-video/view',
+          to: '/learning/learning-resource/view',
           state: {
             contentUuid: result.destContentUuid,
             listParam: {
               tenantId: result.destTenantId,
-              channelUuid: result.destChannelUuid } },
-          replace: true });
+              channelUuid: result.destChannelUuid,
+            },
+          },
+          replace: true,
+        });
       }
-    } });
+    },
+  });
 
   const handleTranslateAction = useCallback(() => {
     const { tenantId, channelUuid } = listParam;
@@ -37,7 +41,8 @@ export const useHtmlVideoExport = (provider: DynamicFormProvider) => {
       contentUuid,
       tenantId: listParam?.tenantId ?? -1,
       destChannelUuid: listParam?.channelUuid ?? '',
-      languageCountryCode });
+      languageCountryCode,
+    });
   }, [contentUuid, languageCountryCode, listParam]);
 
   return { handleTranslateAction };
