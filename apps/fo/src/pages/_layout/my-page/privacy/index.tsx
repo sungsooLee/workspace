@@ -23,13 +23,13 @@ import { Avatar } from '@learnway/ui/avatar';
 import { ContentsRow } from '@learnway/ui/contents-row';
 
 import { pageRouteConfig } from '../../../../features/auth';
-import { AvataFallback } from '../../../../features/layout';
 import { MAIN_CONTAINERS } from '../../../../widgets/layout';
 
 import { FormRow, NoticeBox } from '../../../../shared/ui';
 
 import styles from '@learnway/styles/fo/pages/_layout/my-page/privacy/change-information.module.css';
 
+import { AvataFallback } from '@features/layout/ui/user-avatar/user-avatar-fallback';
 import { useCurrentRoute } from '@learnway/hooks';
 export const Route = createFileRoute('/_layout/my-page/privacy/')({
   component: RouteComponent,

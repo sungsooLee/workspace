@@ -1,8 +1,9 @@
-import { FunctionComponent, memo, SVGProps, useMemo, useState } from 'react';
+import { useRouter } from '@tanstack/react-router';
+import { FunctionComponent, memo, SVGProps, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { useFetchAuthUser } from '@learnway/auth/entities';
 import {
-  IcoArrowForward,
   IcoFooter01,
   IcoFooter02,
   IcoFooter03,
@@ -14,110 +15,14 @@ import {
   IcoFooterOn04,
   IcoFooterOn05,
 } from '@learnway/icons';
-
-import { CategoryPopup } from '@features/layout';
-import { useFetchAuthUser } from '@learnway/auth/entities';
 import { cn } from '@learnway/shared';
 import styles from '@learnway/styles/fo/widgets/layout/m.ui/main/footer/footer.module.css';
 import { Button } from '@learnway/ui/button';
-import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { useModal } from '@learnway/ui/modal';
 import { useSearchStore } from '@learnway/ui/stores';
-import { useRouter } from '@tanstack/react-router';
 
-// My Modal
-const UserMyModal = () => {
-  const [contents, setContents] = useState('profile');
-  const { closeModal } = useModal();
-
-  return (
-    <ModalContainer>
-      <ModalTitle>{contents === 'profile' ? ' ' : '언어'}</ModalTitle>
-      <ModalBody>
-        <div className={`${styles.start} ${styles.user_modal}`}>
-          {/* <UserMy onChangeType={setContents} /> */}
-        </div>
-      </ModalBody>
-      {contents === 'profile' ? (
-        <ModalFooter>
-          <Button variant={'primary'} size={'lx'} onClick={() => closeModal()} label={'로그아웃'} />
-        </ModalFooter>
-      ) : (
-        ''
-      )}
-    </ModalContainer>
-  );
-};
-
-// 최근 학습활동 Modal
-const HistoryModal = () => {
-  return (
-    <ModalContainer>
-      <ModalTitle>{'최근 학습활동'}</ModalTitle>
-      <ModalBody>
-        <div className={`${styles.start} ${styles.history_modal}`}>{/* <HistoryContents /> */}</div>
-      </ModalBody>
-    </ModalContainer>
-  );
-};
-
-const GnbPopupMComponent = () => {
-  const { openModal } = useModal();
-  return (
-    <ModalContainer>
-      <ModalTitle>{'더보기'}</ModalTitle>
-      <ModalBody>
-        <div className={`${styles.start} ${styles.gnb_wrap}`}>
-          <ul>
-            <li>
-              <Button
-                onClick={() =>
-                  openModal({
-                    width: 'm_full',
-                    content: <UserMyModal />,
-                  })
-                }
-              >
-                My
-                <IcoArrowForward width={20} height={20} stroke="#6f798b" />
-              </Button>
-            </li>
-            <li>
-              <Button
-                onClick={() =>
-                  openModal({
-                    width: 'm_full',
-                    content: <HistoryModal />,
-                  })
-                }
-              >
-                최근학습활동
-                <IcoArrowForward width={20} height={20} stroke="#6f798b" />
-              </Button>
-            </li>
-            <li>
-              <Button>
-                알림
-                <IcoArrowForward width={20} height={20} stroke="#6f798b" />
-              </Button>
-            </li>
-            <li>
-              <Button>
-                소모임
-                <IcoArrowForward width={20} height={20} stroke="#6f798b" />
-              </Button>
-            </li>
-            <li>
-              <Button>
-                자주묻는질문(Q&A)
-                <IcoArrowForward width={20} height={20} stroke="#6f798b" />
-              </Button>
-            </li>
-          </ul>
-        </div>
-      </ModalBody>
-    </ModalContainer>
-  );
-};
+import { CategoryPopup } from '@features/layout';
+import { MoreButtonModal } from '@widgets/layout/m.ui/main/more-button-modal';
 
 interface MobileFooterBtn {
   title: string;
@@ -189,7 +94,7 @@ function FooterComponent() {
       action: () =>
         openModal({
           width: 'm_bottom_sheet',
-          content: <GnbPopupMComponent />,
+          content: <MoreButtonModal />,
         }),
       active: false,
       iconOn: IcoFooterOn05,

@@ -1,0 +1,243 @@
+/* user-my.module.css */
+.start {
+  /* 내정보 */
+  .avatar_area {
+    @apply popover-scroll p-[32px];
+    .profile_info {
+      @apply flex items-center justify-start;
+      .avatar_img {
+        @apply relative;
+        [class*='nlp--avatar'] {
+          @apply rounded-full border border-solid border-[var(--blue65)];
+        }
+        .ico {
+          @apply absolute bottom-[0] right-[0] block h-[24px] w-[24px] rounded-full bg-[var(--blue65)];
+          button {
+            @apply !bg-transparent;
+            svg {
+              @apply h-[12px] w-[12px] !stroke-white;
+            }
+          }
+        }
+        .start {
+          @apply h-[66px] w-[66px];
+        }
+        .avatar_box {
+          @apply flex items-center justify-center;
+          .info_avata {
+            @apply h-[66px] w-[66px];
+            & + .info_avata {
+              @apply -ml-[12px];
+            }
+          }
+        }
+        .name {
+          @apply flex h-[66px] w-[66px] items-center justify-center rounded-[50%] bg-[#00afd5];
+          .text {
+            @apply title_3_b text-white;
+          }
+          & + .info_avata {
+            @apply -ml-[12px];
+          }
+        }
+      }
+
+      .profile {
+        @apply ml-[20px] flex-row text-left;
+        .info_box {
+          @apply flex items-center;
+          .name {
+            @apply headline1-b text-[var(--gray10)];
+          }
+
+          button {
+            @apply ml-[12px];
+          }
+        }
+        .tenant {
+          @apply body-sm mt-[8px] flex items-center text-[var(--gray35)];
+          > span {
+            @apply relative flex items-center;
+            &:first-child {
+              @apply before:hidden;
+            }
+            &::before {
+              @apply relative top-[0] mx-[6px] h-[12px] w-[1px] bg-[var(--gray90)] content-[''];
+            }
+          }
+        }
+      }
+    }
+
+    .point_box {
+      @apply mt-[20px] flex items-center justify-between rounded-[12px] bg-[var(--gray98)] p-[20px];
+      .txt {
+        @apply title2 ml-[4px] flex-1 items-center justify-start text-[var(--gray10)];
+      }
+      .point {
+        @apply title4 text-[var(--gray35)];
+        em {
+          @apply title4-b font-normal text-[var(--blue50)];
+        }
+      }
+      svg {
+        &.ico {
+          @apply h-[24px] w-[24px];
+          fill: #ff8245;
+        }
+      }
+    }
+
+    .btn_my_box {
+      @apply mt-[20px] flex w-full;
+      button {
+        @apply flex-1;
+      }
+    }
+
+    .recent_visits {
+      @apply mt-[24px] border-t-[1px] border-solid border-[var(--gray90)] pt-[20px];
+      h3 {
+        @apply title3-b text-[var(--gray10)];
+      }
+      .list {
+        @apply mt-[20px] flex flex-row justify-between gap-[12px];
+        > li {
+          @apply flex w-full flex-col justify-center text-center;
+          .btn {
+            @apply !m-0 flex w-full flex-col justify-center !p-0 text-center;
+          }
+          .txt {
+            @apply title1 mt-[8px];
+          }
+          .ico {
+            @apply flex h-[118px] w-full items-center justify-center rounded-[12px] bg-[var(--gray98)];
+          }
+          &:nth-child(1) {
+            .ico {
+              svg {
+                @apply h-[62px] w-[67px];
+              }
+            }
+          }
+          &:nth-child(2) {
+            .ico {
+              svg {
+                @apply h-[75px] w-[72px];
+              }
+            }
+          }
+          &:nth-child(3) {
+            .ico {
+              svg {
+                @apply h-[64px] w-[61px];
+              }
+            }
+          }
+        }
+      }
+      .no_list {
+        @apply mt-[20px] flex min-h-[100px] items-center justify-center rounded-[12px] border-[1px] border-solid border-[var(--gray85)];
+        p {
+          @apply title2 text-[var(--gray75)];
+        }
+      }
+    }
+
+    .info_list {
+      @apply mt-[24px] flex flex-col border-t-[1px] border-solid border-[var(--gray90)] py-[24px];
+      > li {
+        @apply flex h-[40px] items-center justify-between;
+        .txt {
+          @apply body-md text-[var(--gray35)];
+        }
+        & + li {
+          @apply mt-[24px];
+        }
+      }
+    }
+    .btn_log {
+      @apply flex justify-center border-t-[1px] border-solid border-[var(--gray90)] pb-[8px] pt-[24px];
+      svg {
+        @apply mr-[10px];
+      }
+    }
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      .avatar_area {
+        @apply max-h-none p-0;
+        .profile_info {
+          .profile {
+            .info_box {
+              .name {
+                @apply title5-b;
+              }
+              button {
+                @apply label-sm ml-[8px];
+              }
+            }
+            .tenant {
+              @apply body-md mt-[4px] block;
+              > span {
+                @apply block;
+                &::before {
+                  @apply hidden;
+                }
+              }
+            }
+          }
+        }
+        .point_box {
+          @apply mt-[16px] p-[16px];
+          .point {
+            @apply title3-b;
+            em {
+              @apply mr-[4px];
+            }
+          }
+        }
+        .btn_my_box {
+          @apply mt-[40px];
+          button {
+            @apply title2-b flex-1 items-center justify-center !px-0 text-[var(--gray35)];
+            svg {
+              @apply ml-0 mr-[8px];
+            }
+            & + button {
+              @apply relative;
+              &::before {
+                @apply absolute left-0 top-1/2 h-[24px] w-px -translate-y-1/2 bg-[var(--gray90)] content-[''];
+              }
+            }
+          }
+        }
+        .recent_visits {
+          @apply mt-[40px] border-none;
+          .list {
+            > li {
+              .ico {
+                @apply h-[104px];
+              }
+            }
+          }
+        }
+      }
+      .lang_area {
+        @apply -my-[16px];
+      }
+      .info_list {
+        @apply mt-[40px] gap-0 border-none py-0;
+        > li {
+          @apply h-[56px];
+          & + li {
+            @apply mt-0;
+          }
+        }
+      }
+    }
+  }
+}
