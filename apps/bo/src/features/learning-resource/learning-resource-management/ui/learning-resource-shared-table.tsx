@@ -46,7 +46,9 @@ function LearningResourceSharedTableComponent() {
             ({
               ...prev,
               content: prev?.content.map((_) =>
-                _.sourceContentUuid === result.srcContentUuid
+                _.sourceContentUuid === result.srcContentUuid &&
+                _.sourceChannelUuid === result.srcChannelUuid &&
+                _.destChannelUuid === result.destChannelUuid
                   ? { ..._, sharedCount: _.sharedCount + 1 }
                   : _,
               ),
