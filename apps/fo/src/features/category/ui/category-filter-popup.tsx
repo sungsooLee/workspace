@@ -1,4 +1,4 @@
-import { OptionCard } from '@learnway/ui/option-card';
+import { OptionCard, OptionCardItem } from '@learnway/ui/option-card';
 import { memo, useCallback, useEffect, useState } from 'react';
 
 import styles from '@learnway/styles/fo/features/category/category-filter-popup.module.css';
@@ -18,86 +18,45 @@ const FilterPopupComponent = ({ filterCodes, initialFilters, setModalData }: Fil
   const exceptValue = [ 'ELEARNING1', 'LIVE', 'SURVEY' ]
 
   const { closeModal } = useModal();
-  const [filterOptions, setFilterOptions] = useState(() => {
-    const initial = new Map<number, object>();
-    initial.set(1, {
-      lectureType: {
-        title: t('과정유형'),
-        options: filterCodes.lectureType,
-      }
-    });
-    initial.set(2, {
-      enrollment: {
-        title: t('수강신청'),
-        options: filterCodes.enrollment,
-      }
-    });
-    initial.set(3, {
-      difficulty: {
-        title: t('난이도'),
-        options: filterCodes.difficulty,
-      }
-    });
-    initial.set(4, {
-      language: {
-        title: t('언어'),
-        options: filterCodes.language,
-      },
-    });
-    return initial;
-  });
-  const [selectedOptions, setSelectedOptions] = useState(initialFilters);
+  const [lectureFilter, setLectureFilter] = useState(filterCodes.lectureType);
+  const [enrollmentFilter, setEnrollmentFilter] = useState(filterCodes.enrollment);
+  const [difficultyFilter, setDifficultyFilter] = useState(filterCodes.difficulty);
+  const [languageFilter, setLanguageFilter] = useState(filterCodes.language);
+  const [isShowEnrollment, setIsShowEnrollment] = useState(true);
 
-  const handleFilterChange = (selectedOption: any) => {
-    const checkOptions = selectedOption.filter( (option: any) => exceptValue.includes(option.value));
-    if( checkOptions.length > 0 ){
-      setFilterOptions((prev: any) => {
-        const newMap = new Map<number, object>();
-        for(const [key, value] of prev.entries()) {
-          if( key !== 2 ) newMap.set(key, value)
-        }
-        console.log('### newMap', newMap)
-        return newMap;
-      })
+  const handleLectureFilter = (selected: any) => {
+    const checkValue = selected.map((d: OptionCardItem) => d.value).filter((item: any) => exceptValue.includes(item))
+    if( checkValue && checkValue.length > 0 ) {
+      setIsShowEnrollment(false)
     } else {
-      setFilterOptions(prev => {
-        const newMap = new Map(prev);
-        newMap.set(2, {
-          enrollment: {
-            title: t('수강신청'),
-            options: filterCodes.enrollment,
-          }
-        })
-        const sortedEntries = Array.from(newMap.entries()).sort(
-          ([a], [b]) => Number(a) - Number(b)
-        );
-
-        return new Map(sortedEntries);
-      });
+      setIsShowEnrollment(true)
     }
-    setSelectedOptions(selectedOption)
+    setLectureFilter(selected.map((d: OptionCardItem) => d.value))
   }
+
   const handleClearFilter = () => {
-    if( selectedOptions.length !== 0 ) {
-      setSelectedOptions([])
-    }
+    setLectureFilter([])
+    setEnrollmentFilter([])
+    setDifficultyFilter([])
+    setLanguageFilter([])
   }
   const handleCloseModal = () => {
+    const selectedOptions: any[] = []
+    Object.values(filterCodes).flat().forEach((item: any) => {
+      if( lectureFilter.includes(item.value) || difficultyFilter.includes(item.value)
+          || enrollmentFilter.includes(item.value) || languageFilter.includes(item.value)) {
+        selectedOptions.push(item)
+      }
+    })
     closeModal(selectedOptions)
   }
 
   useEffect(() => {
     if(initialFilters && initialFilters.length > 0) {
-      const checkOptions = initialFilters.filter((option: any) => exceptValue.includes(option.value));
-      if( checkOptions.length > 0 ){
-        setFilterOptions((prev: any) => {
-          const newMap = new Map<number, object>();
-          for(const [key, value] of prev.entries()) {
-            if( key !== 2 ) newMap.set(key, value)
-          }
-          return newMap;
-        })
-      }
+      const init = initialFilters.map((filter: any) => filter.value);
+      const check = init.filter((item: any) => exceptValue.includes(item));
+      if( check && check.length > 0 ) setIsShowEnrollment(false)
+      setLectureFilter(initialFilters.map((filter: any) => filter.value))
     }
   }, [initialFilters]);
 
@@ -107,30 +66,64 @@ const FilterPopupComponent = ({ filterCodes, initialFilters, setModalData }: Fil
       <ModalBody>
         <div className={styles.start}>
           <ul className={styles.filter_wrap}>
-            {/* 동적으로 모든 필터 카테고리 렌더링 */
-              Array.from(filterOptions.entries()).map(([number, category], idx) => {
-                return (
-                  <li key={idx}>
-                    {
-                      Object.entries(category).map(([key, value]) => (
-                        <>
-                          <strong className={styles.tit}>{value.title}</strong>
-                          <div className={styles.filter_box}>
-                            <OptionCard
-                              cols={isMobile ? 2 : 4}
-                              options={value.options}
-                              multiple
-                              value={selectedOptions.map((filter: any) => filter.value)}
-                              onOptionsSelect={handleFilterChange}
-                            />
-                          </div>
-                        </>
-                      ))
-                    }
-                  </li>
-                )
-              })
+            <li>
+              <strong className={styles.tit}>{t('과정 유형')}</strong>
+              <div className={styles.filter_box}>
+                <OptionCard
+                  cols={isMobile ? 2 : 4}
+                  options={filterCodes.lectureType}
+                  multiple
+                  value={lectureFilter}
+                  onOptionsSelect={handleLectureFilter}
+                />
+              </div>
+            </li>
+            {
+              isShowEnrollment && (
+                <li>
+                  <strong className={styles.tit}>{t('수강 신청')}</strong>
+                  <div className={styles.filter_box}>
+                    <OptionCard
+                      cols={isMobile ? 2 : 4}
+                      options={filterCodes.enrollment}
+                      multiple
+                      value={enrollmentFilter}
+                      onOptionsSelect={(options: OptionCardItem[]) =>
+                        setEnrollmentFilter(options.map((d: OptionCardItem) => d.value))
+                      }
+                    />
+                  </div>
+                </li>
+              )
             }
+            <li>
+              <strong className={styles.tit}>{t('난이도')}</strong>
+              <div className={styles.filter_box}>
+                <OptionCard
+                  cols={isMobile ? 2 : 4}
+                  options={filterCodes.difficulty}
+                  multiple
+                  value={difficultyFilter}
+                  onOptionsSelect={(options: OptionCardItem[]) =>
+                    setDifficultyFilter(options.map((d: OptionCardItem) => d.value))
+                  }
+                />
+              </div>
+            </li>
+            <li>
+              <strong className={styles.tit}>{t('언어')}</strong>
+              <div className={styles.filter_box}>
+                <OptionCard
+                  cols={isMobile ? 2 : 4}
+                  options={filterCodes.language}
+                  multiple
+                  value={languageFilter}
+                  onOptionsSelect={(options: OptionCardItem[]) =>
+                    setLanguageFilter(options.map((d: OptionCardItem) => d.value))
+                  }
+                />
+              </div>
+            </li>
           </ul>
           {/*<div className={styles.look}>*/}
           {/*  <ChipList*/}
