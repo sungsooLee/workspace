@@ -37,7 +37,7 @@ function RouteComponent() {
 
   const isExamMapping = watch('isExamMapping');
 
-  const { setBaseInfo, baseInfo, formMode, hasMapping } = useLearningResourceQuestionDetailForm();
+  const { setBaseInfo, baseInfo, formMode } = useLearningResourceQuestionDetailForm();
 
   const baseInfoRef = useRef<QuestionBankTabFormRef>(null);
   const questionInfoRef = useRef<QuestionBankTabFormRef>(null);
@@ -67,7 +67,7 @@ function RouteComponent() {
     return true;
   };
 
-  const items = useMemo(
+  const tabItems = useMemo(
     () => [
       {
         title: t('문제은행 정보'),
@@ -116,7 +116,7 @@ function RouteComponent() {
         <MainContents>
           <Tabs
             selectedTabKey={selectedTabKey}
-            items={items}
+            items={tabItems}
             type="progress"
             size="sm"
             onTabChange={handleTabChange}

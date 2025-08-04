@@ -338,7 +338,11 @@ function RouteComponent() {
       // line 3
       // 과제
       case LEARNING_TYPE.ASSIGNMENT: {
-        router.navigate({ to: '/learning/resource/assignment/view', replace: true });
+        router.navigate({
+          to: '/learning/resource/assignment/view',
+          state: { mode: 'CREATE' },
+          replace: true,
+        });
         break;
       }
       // 기타
