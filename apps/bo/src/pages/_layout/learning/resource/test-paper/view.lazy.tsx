@@ -17,7 +17,7 @@ import {
   useExamPaperForm,
 } from '@features/learning-resource/learning-resource-management/service';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
-import { createLazyFileRoute, useBlocker, useRouter } from '@tanstack/react-router';
+import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { ContentCreateType, ExamTemplateType, TestPaperBasicInfoSaveRes } from '@types';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -49,7 +49,6 @@ function RouteComponent() {
     onBasicInfoFormChange: onFormChange,
     onSubmit,
     saveBasicInfo,
-    formState,
   } = useExamBasicInfoForm({
     mode,
     contentUuid,
@@ -67,18 +66,6 @@ function RouteComponent() {
     },
     onUpdateSuccess: async (result?: unknown) => {
       await refetchContentDetail();
-    },
-  });
-
-  useBlocker({
-    shouldBlockFn: async () => {
-      if (!formState.isDirty) {
-        return false;
-      }
-      return !(await openConfirm({
-        title: t('이동 하시겠습니까?'),
-        content: t('입력 중인 항목이 초기화됩니다.'),
-      }));
     },
   });
 
