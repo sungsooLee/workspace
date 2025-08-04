@@ -6,7 +6,7 @@ import { useCurrentRoute } from '@learnway/hooks';
 import { PageContainer } from '@shared/ui';
 import { useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
-import { VideoView } from '@widgets/learning/learning-resource/video-view';
+import { ScormView, VideoView } from '@widgets/learning/learning-resource';
 
 export const Route = createFileRoute('/_layout/learning/learning-resource/view')({
   component: RouteComponent,
@@ -36,6 +36,8 @@ function RouteComponent() {
   switch (content.contentType) {
     case LEARNING_TYPE.VIDEO:
       return <VideoView content={content} hasMapping={hasMapping} />;
+    case LEARNING_TYPE.SCORM:
+      return <ScormView content={content} hasMapping={hasMapping} />;
   }
 
   return <NotFound />;

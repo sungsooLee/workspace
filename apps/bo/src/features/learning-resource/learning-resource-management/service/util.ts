@@ -11,7 +11,7 @@ export const getDetailPathByContentType = (contentType: string): string => {
     case LEARNING_TYPE.BLOG:
       return '/learning/resource/blog/view';
     case LEARNING_TYPE.SCORM:
-      return '/learning/learning-resource/scorm/view';
+      return '/learning/learning-resource/view';
     case LEARNING_TYPE.HTML5_VIDEO:
       return '/learning/resource/html-video/view';
     case LEARNING_TYPE.EXAM:
