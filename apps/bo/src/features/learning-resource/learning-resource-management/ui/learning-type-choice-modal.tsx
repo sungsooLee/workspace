@@ -4,6 +4,7 @@ import { ModalBody, ModalContainer, ModalTitle, useModal } from '@learnway/ui/mo
 import { LEARNING_TYPE } from '@learnway/config';
 import {
   IcoBlog,
+  IcoEbook,
   IcoEntrust,
   IcoEtc,
   IcoExam,
@@ -13,7 +14,6 @@ import {
   IcoInfoCircle,
   IcoLive,
   IcoLiveHive,
-  IcoMybook,
   IcoQuestionBank,
   IcoSurvey,
   IcoVideo01,
@@ -83,7 +83,7 @@ const learningTypes = [
   {
     label: '이북',
     value: LEARNING_TYPE.E_BOOK,
-    icon: <IcoMybook />,
+    icon: <IcoEbook />,
     description: '설명문구2줄설명',
   },
   { label: '스콤', value: LEARNING_TYPE.SCORM, icon: <IcoEtc />, description: '설명문구2줄설명' },

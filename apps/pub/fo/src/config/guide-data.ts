@@ -140,7 +140,7 @@ export const guideData = [
     screenId: 'NLP_FO_GNB_M_1006',
     screenName: 'M_언어설정',
     layoutType: '', // 자동 분리됨 작성x
-    pageId: 'setting/setting-language_m',
+    pageId: '',
     pageType: 'Pop-up',
     completionDate: '2025-03-21',
     lastUpdateDate: '2025-08-01',
