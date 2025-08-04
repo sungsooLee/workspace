@@ -50,7 +50,7 @@ const FilterComponent = ({ onOptionChange }: FilterComponentProps) => {
       content: <CategoryFilterPopup initialFilters={selectedCardOptions} filterCodes={codes}/>,
       onClose: (data: any) => {
         if( data ) {
-          setSelectedCardOptions(data)
+          handleCardOptionsSelect(data)
         }
       },
     });
