@@ -1,11 +1,11 @@
-import { useCallback } from 'react';
-import { useRouter } from '@tanstack/react-router';
-import { useTranslation } from 'react-i18next';
-import { DynamicFormProvider } from '@learnway/hooks';
-import { BlogPostRes, BlogUpdateReq } from '@types';
 import { useCreateBlogContent, useUpdateBlogContent } from '@entities/learning-resource';
-import { getPayloadFromBlogSubmit } from '../learning-resource-blog-form-submit';
+import { DynamicFormProvider } from '@learnway/hooks';
 import { useModal } from '@learnway/ui/modal';
+import { useRouter } from '@tanstack/react-router';
+import { BlogPostRes, BlogUpdateReq } from '@types';
+import { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
+import { getPayloadFromBlogSubmit } from '../learning-resource-blog-form-submit';
 
 export const useBlogContentForm = (options: { provider: DynamicFormProvider }) => {
   const router = useRouter();
@@ -18,7 +18,7 @@ export const useBlogContentForm = (options: { provider: DynamicFormProvider }) =
 
   const routingParams = useCallback((info: BlogPostRes) => {
     return {
-      to: '/learning/resource/blog/view',
+      to: '/learning/learning-resource/view',
       state: {
         contentUuid: info.contentUuid,
         listParam: {

@@ -309,7 +309,8 @@ function RouteComponent() {
       // 블로그
       case LEARNING_TYPE.BLOG: {
         router.navigate({
-          to: '/learning/resource/blog/view',
+          to: '/learning/learning-resource/new',
+          state: { contentType: selectedType },
           replace: true,
         });
         break;
