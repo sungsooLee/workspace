@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { FormRow } from '@learnway/auth/shared';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import {
@@ -18,7 +19,6 @@ import {
 } from '@learnway/ui/modal';
 import { t } from 'i18next';
 import { forwardRef, useState } from 'react';
-import { DynamicFormConfig, useDynamicForm } from '../../../../../libs/hooks/src';
 
 export default {
   title: 'Bo-Components/SearchField',

@@ -23,15 +23,15 @@ function RouteComponent() {
     [data],
   );
 
-  useEffect(() => {
+  const handlingEnrollStatus = async () => {
     if (enrollQueueStatusType === 'QUEUE') {
-      openModal({
+      await openModal({
         width: isMobile ? 'm_full' : 'md',
         hideCloseButton: true,
         content: <AcceptingPopup />,
       });
     } else if (enrollQueueStatusType === 'WAITING') {
-      openAlert({
+      await openAlert({
         title: <>수강신청 대기자 등록</>,
         content: (
           <>
@@ -43,6 +43,12 @@ function RouteComponent() {
           </>
         ),
       });
+    } else if (enrollQueueStatusType === 'INVALID_COURSE') {
+      await openAlert({
+        title: <>유효하지 않은 과정/차수</>,
+        content: <>본 과정의 유효하지 않은 과정/차수로 등록되었습니다.</>,
+      });
+      router.history.back();
     } else if (
       enrollQueueStatusType === 'PROCESSED' ||
       enrollQueueStatusType === 'QUOTA_EXCEED' ||
@@ -55,6 +61,10 @@ function RouteComponent() {
         replace: true,
       });
     }
+  };
+
+  useEffect(() => {
+    handlingEnrollStatus();
   }, [enrollQueueStatusType]);
   return <div></div>;
 }

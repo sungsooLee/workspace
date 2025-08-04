@@ -63,9 +63,9 @@
       .link {
         @apply flex w-full flex-wrap rounded-[8px] bg-[var(--blue98)] p-[12px];
         .img_wrap {
-          @apply h-[56px] w-[100px] shrink-0 overflow-hidden rounded-[4px];
+          @apply w-[100px] shrink-0 overflow-hidden;
           img {
-            @apply h-full w-full;
+            @apply h-full w-full rounded-[4px];
           }
         }
         .info {

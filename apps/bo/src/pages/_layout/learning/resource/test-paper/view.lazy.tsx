@@ -17,7 +17,7 @@ import {
   useExamPaperForm,
 } from '@features/learning-resource/learning-resource-management/service';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
-import { createLazyFileRoute, useBlocker, useRouter } from '@tanstack/react-router';
+import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { ContentCreateType, ExamTemplateType, TestPaperBasicInfoSaveRes } from '@types';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -33,8 +33,7 @@ function RouteComponent() {
 
   const router = useRouter();
 
-  const { mode, contentUuid, data, refetchContentDetail, hasMapping, listParam } =
-    useExamLoaderData();
+  const { contentUuid, data, refetchContentDetail, hasMapping, listParam } = useExamLoaderData();
 
   const { alert, confirm: openConfirm } = useModal();
 
@@ -49,9 +48,7 @@ function RouteComponent() {
     onBasicInfoFormChange: onFormChange,
     onSubmit,
     saveBasicInfo,
-    formState,
   } = useExamBasicInfoForm({
-    mode,
     contentUuid,
     onSaveSuccess: (result?: TestPaperBasicInfoSaveRes) => {
       if (!result) {
@@ -60,7 +57,7 @@ function RouteComponent() {
       if (result?.examUuid) {
         router.navigate({
           to: '/learning/resource/test-paper/view',
-          state: { mode: 'UPDATE', contentUuid: result.examUuid },
+          state: { contentUuid: result.examUuid },
           replace: true,
         });
       }
@@ -70,22 +67,10 @@ function RouteComponent() {
     },
   });
 
-  useBlocker({
-    shouldBlockFn: async () => {
-      if (!formState.isDirty) {
-        return false;
-      }
-      return !(await openConfirm({
-        title: t('이동 하시겠습니까?'),
-        content: t('입력 중인 항목이 초기화됩니다.'),
-      }));
-    },
-  });
-
   const tabItems = useMemo(
     () => [
       {
-        title: `${t('시험지 정보')}${mode === PageMode.UPDATE ? `(${getExamTemplateTextByType(data?.examTemplateType as ExamTemplateType, t)})` : ''}`,
+        title: `${t('시험지 정보')}${contentUuid ? `(${getExamTemplateTextByType(data?.examTemplateType as ExamTemplateType, t)})` : ''}`,
         key: ExamTab.PAPER,
         content: (
           <LearningResourceTestPaperInfo
@@ -99,7 +84,6 @@ function RouteComponent() {
               saveBasicInfo,
             }}
             contentUuid={contentUuid}
-            mode={mode}
             data={data}
             hasMapping={hasMapping}
           />
@@ -113,7 +97,6 @@ function RouteComponent() {
             ref={questionInfoRef}
             basicInfoForm={{ provider, getValues, updateFormDataByKey, saveBasicInfo }}
             contentUuid={contentUuid}
-            mode={mode}
             data={data}
             hasMapping={hasMapping}
             questionGenType={questionGenType}

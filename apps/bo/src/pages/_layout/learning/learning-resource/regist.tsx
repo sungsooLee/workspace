@@ -310,7 +310,6 @@ function RouteComponent() {
       case LEARNING_TYPE.BLOG: {
         router.navigate({
           to: '/learning/resource/blog/view',
-          state: { mode: 'CREATE' },
           replace: true,
         });
         break;
@@ -324,7 +323,6 @@ function RouteComponent() {
       case LEARNING_TYPE.EXAM: {
         router.navigate({
           to: '/learning/resource/test-paper/view',
-          state: { mode: 'CREATE' },
           replace: true,
         });
         break;
@@ -338,7 +336,10 @@ function RouteComponent() {
       // line 3
       // 과제
       case LEARNING_TYPE.ASSIGNMENT: {
-        router.navigate({ to: '/learning/resource/assignment/view', replace: true });
+        router.navigate({
+          to: '/learning/resource/assignment/view',
+          replace: true,
+        });
         break;
       }
       // 기타

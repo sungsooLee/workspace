@@ -7,7 +7,13 @@ export interface CourseEnrollResponse {
 }
 
 type EnrollStatusType = 'ENROLL_DONE';
-export type EnrollQueueStatusType = 'QUEUE' | 'PROCESSED' | 'WAITING' | 'QUOTA_EXCEED' | 'ERROR';
+export type EnrollQueueStatusType =
+  | 'QUEUE'
+  | 'PROCESSED'
+  | 'WAITING'
+  | 'QUOTA_EXCEED'
+  | 'INVALID_COURSE'
+  | 'ERROR';
 /**
  * QUEUE:수강신청 큐에 들어간 상태 - 처리 진행중
  * PROCESSED:수강신청이 정상 처리된 상태 - 신청 완료 상태
@@ -76,6 +82,13 @@ export interface CourseEnrollsssResponse {
   empty: boolean;
 }
 
+export interface CourseEnrollDeleteResponse {
+  status: number;
+  message: string;
+  enrollQueueStatusType: EnrollQueueStatusType;
+  code: string;
+}
+
 export interface LangLevelTest {
   familyName: string;
   firstName: string;
@@ -112,4 +125,9 @@ export interface EnrollRequest {
       approverInfos: ApprovalInfo[];
     };
   };
+}
+
+export interface EnrollDeleteRequest {
+  courseSequenceId: string;
+  approvalReason: string;
 }
