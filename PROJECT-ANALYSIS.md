@@ -1,4 +1,4 @@
-# Learning Way 프로젝트 분석
+# 차세대 학습 플랫폼 프로젝트 FE
 
 ## 프로젝트 개요
 
@@ -71,12 +71,8 @@ fe/
 #### ESLint 설정
 
 - any 타입에 대해 'warn' 레벨로만 설정
-- 일부 중요한 규칙 비활성화
 
-#### 번들 크기
-
-- `chunkSizeWarningLimit`: 1000KB 설정
-- 일부 청크가 크게 분할될 가능성
+#### 번들 크기 -> 메인(index) 번들 사이즈 3MB
 
 #### 테스트 파일
 
@@ -106,7 +102,7 @@ fe/
   - 동적 builder 관리
   - `clearAllValidators` 기능
 
-## 2. 상세/등록 화면 구현 패턴 불일치 🔴
+## 2. 상세/등록 화면 구현 패턴 불일치
 
 ### Pattern 1: mode 기반 단일 컴포넌트
 
@@ -132,7 +128,7 @@ const CompanyRegistComponent = () => { ... }
 
 - 개발자마다 선호하는 패턴이 다름 => 햔재는 패턴1로 가이드 문서 작업하고 표준으로 진행 안내.
 
-## 3. API 호출 패턴의 일관성 부족 🟡
+## 3. API 호출 패턴의 일관성 부족
 
 ### 메서드 명명 규칙 혼재
 
@@ -158,7 +154,7 @@ fetchListTenant(params?: any): Promise<any>
 fetchAll<T>(params?: CourseSearchReqDto): Promise<T>
 ```
 
-## 4. 에러 처리 및 사용자 피드백 불일치 🟡
+## 4. 에러 처리 및 사용자 피드백 불일치
 
 ### 에러 처리 방식
 
