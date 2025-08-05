@@ -39,3 +39,9 @@ export interface PaginationResponse<T> {
     // totalPages: number; // <GridBox pagination={data?.pageable} /> 에러나서 임시로 넣음..
   };
 }
+
+export interface MutateQueryOption<T> {
+  body: T;
+  onSuccess?: () => void;
+  onError?: (error: Error, variables: void, context: unknown) => Promise<unknown>;
+}

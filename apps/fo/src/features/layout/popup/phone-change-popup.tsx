@@ -1,25 +1,42 @@
-import { cn } from '@learnway/shared';
-import { PhoneNumber } from '@learnway/ui/phone-number';
-import { memo } from 'react';
-
+import { useChangePhoneNumber } from '@entities/user';
+import { useFetchAuthUser } from '@learnway/auth/entities';
 import { IcoFormRequired } from '@learnway/icons';
-
+import { cn } from '@learnway/shared';
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import styles from '@learnway/styles/fo/features/layout/popup/phone-change-popup.module.css';
-// TODO: Fix unknown imports: InputTimer,  from '@learnway/ui'
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { InputTimer } from '@learnway/ui/input';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { PhoneNumber } from '@learnway/ui/phone-number';
+import { memo } from 'react';
 
 const PhoneChangePopupComponent = () => {
   const { alert: openAlert } = useModal();
 
+  const { data } = useFetchAuthUser();
+
+  const { mutateAsync } = useChangePhoneNumber({
+    body: {
+      name: data?.username ?? '',
+      birthday: '1989-11-06',
+      currentPhoneNumber: '01044444444',
+      newPhoneNumber: '01055555555',
+    },
+    onSuccess: () =>
+      openAlert({
+        content: <>휴대폰 번호가 변경되었습니다.</>,
+      }),
+    onError: async ({ message }) => {
+      await openAlert({
+        content: message,
+      });
+    },
+  });
+
   // 이메일 아이디 변경 alert
-  const phoneChangeAlert = () => {
-    openAlert({
-      content: <>휴대폰 번호가 변경되었습니다.</>,
-    });
+  const changePhoneNumber = async () => {
+    await mutateAsync();
   };
 
   return (
@@ -89,7 +106,7 @@ const PhoneChangePopupComponent = () => {
       </ModalBody>
       <ModalFooter>
         <Button label={'취소'} variant="gray" size="lg"></Button>
-        <Button label={'변경'} variant={'primary'} size={'lg'} onClick={() => phoneChangeAlert()} />
+        <Button label={'변경'} variant={'primary'} size={'lg'} onClick={changePhoneNumber} />
       </ModalFooter>
     </ModalContainer>
   );
