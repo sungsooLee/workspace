@@ -7,6 +7,9 @@
         @apply bg-[var(--secondary5)];
       }
     }
+    &.b_color_01 {
+      @apply border-[var(--blue50)];
+    }
   }
 }
 

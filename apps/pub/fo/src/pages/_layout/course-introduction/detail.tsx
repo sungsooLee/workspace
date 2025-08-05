@@ -1,54 +1,55 @@
-import { useState } from 'react';
-import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '@learnway/shared';
+import { createFileRoute } from '@tanstack/react-router';
+import { useState } from 'react';
 
 import {
-  IcoHeart,
-  IcoStar,
-  IcoCaution,
-  IcoClock01,
+  IcoArrowDown,
   IcoBook,
   IcoBuilding,
   IcoCategory,
+  IcoCaution,
+  IcoChair,
+  IcoClock01,
   IcoDivice,
+  IcoEye,
+  IcoHeart,
   IcoLevel,
   IcoLocation,
   IcoPrize,
+  IcoStar,
   IcoSubtitles02,
   IcoTime,
-  IcoEye,
-  IcoArrowDown,
-  IcoChair,
 } from '@learnway/icons';
 import {
-  CourseDashboard,
-  CourseIntroduction, // 과정소개
-  CourseEducation, // 교육일정
-  CourseReview, // 후기
-  CourseRelatedProcess, // 연관과정
-  CourseFixedButton, // 수강신청 버튼
-  CourseCancelReasonPopup, // 수강신청 취소 사유 입력
-  PackageCardList, // 패키지 카드
+  CourseDashboard, // 과정소개
+  CourseEducation, // 연관과정
+  CourseFixedButton,
+  CourseIntroduction, // 후기
+  CourseRelatedProcess, // 교육일정
+  CourseReview, // 수강신청 취소 사유 입력
+  PackageCardList,
 } from '../../../features/layout';
 
+import styles from '@learnway/styles/fo/pages/_layout/course-introduction/detail.module.css';
+import lectureStyles from '@learnway/styles/fo/pages/_layout/course-introduction/lecture.module.css';
+import packageInformationStyles from '@learnway/styles/fo/pages/_layout/course-introduction/package-information.module.css';
+import packageSideStyles from '@learnway/styles/fo/pages/_layout/course-introduction/package-side.module.css';
 import pageContentsStyles from '@learnway/styles/fo/pages/_page-contents.module.css';
 import pageFullInner from '@learnway/styles/fo/widgets/layout/ui/container/page-full-inner.module.css';
-import packageInformationStyles from '@learnway/styles/fo/pages/_layout/course-introduction/package-information.module.css';
-import lectureStyles from '@learnway/styles/fo/pages/_layout/course-introduction/lecture.module.css';
-import packageSideStyles from '@learnway/styles/fo/pages/_layout/course-introduction/package-side.module.css';
-import styles from '@learnway/styles/fo/pages/_layout/course-introduction/detail.module.css';
 
 // 이미지
 import playImg from '@learnway/styles/fo/assets/images/common/img_play.png';
-import bnrImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
-import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
+import {
+  default as bnrImage1,
+  default as listImage1,
+} from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
+import { Accordion } from '@learnway/ui/accordion';
 import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
 import { OptionCard, OptionCardItem } from '@learnway/ui/option-card';
 import { Panel } from '@learnway/ui/panel';
-import { useToast } from '@learnway/ui/toast';
 import { Tabs } from '@learnway/ui/tabs';
-import { Accordion } from '@learnway/ui/accordion';
+import { useToast } from '@learnway/ui/toast';
 
 export const Route = createFileRoute('/_layout/course-introduction/detail')({
   component: RouteComponent,
