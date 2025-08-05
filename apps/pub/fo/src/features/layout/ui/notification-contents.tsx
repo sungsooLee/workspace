@@ -1,4 +1,4 @@
-import { IcoBell04, IcoMoreHorizontal } from '@learnway/icons';
+import { IcoBell04, IcoFolder, IcoMoreHorizontal } from '@learnway/icons';
 import dropdownPopoverStyles from '@learnway/styles/fo/shared/ui/dropdown-popover/dropdown-popover.module.css';
 import { Badge } from '@learnway/ui/badge';
 import { Button } from '@learnway/ui/button';
@@ -154,6 +154,7 @@ const NotificationContentsComponent = () => {
       {filteredNotifications.length === 0 ? (
         <div className={styles.empty}>
           <IcoBell04 className={styles.ico_bell} />
+          <IcoFolder className={styles.ico_bell} />
           {selectedTabKey === 'e' ? '보관함이 없습니다.' : '알림이 없습니다.'}
         </div>
       ) : (
