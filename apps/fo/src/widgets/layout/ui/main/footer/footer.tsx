@@ -2,8 +2,7 @@ import { memo } from 'react';
 
 import logoImage from '../../../../../assets/images/logo_footer.png';
 
-import { TermsButton } from '../../../../../features/main';
-
+import { TermsButton } from '@features/main/support/ui/terms-button/terms-button';
 import styles from '@learnway/styles/fo/widgets/layout/ui/main/footer/footer.module.css';
 
 function FooterComponent() {
