@@ -1,10 +1,10 @@
-import React, { forwardRef } from 'react';
 import * as Primitive from '@radix-ui/react-radio-group';
+import React, { forwardRef, useEffect } from 'react';
 
 import { cn } from '@learnway/shared';
 
-import { RadioGroupOption } from './type';
 import styles from './radio-group.module.css';
+import { RadioGroupOption } from './type';
 
 export interface RadioGroupComponentProps extends React.ComponentProps<typeof Primitive.Root> {
   value?: string;
@@ -31,10 +31,20 @@ const RadioGroupComponent = forwardRef<
       size,
       orientation = 'horizontal',
       name,
+      onValueChange,
       ...props
     },
     ref,
   ) => {
+    const handleValueChange = (newValue: string) => {
+      console.log('radio-group handleValueChange', newValue);
+      onValueChange?.(newValue);
+    };
+
+    useEffect(() => {
+      console.log('radio-group options', options);
+    }, [options]);
+
     return (
       <Primitive.Root
         className={cn(
@@ -48,6 +58,7 @@ const RadioGroupComponent = forwardRef<
         )}
         defaultValue={defaultValue}
         value={value}
+        onValueChange={handleValueChange}
         {...props}
       >
         {options.map((option: RadioGroupOption, index: number) => {

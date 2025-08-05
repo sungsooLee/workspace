@@ -76,8 +76,6 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
   const { modals } = useModalStore();
   const pickerRef = useRef<any>(null);
 
-  console.log('#### date-picker2 : locale', locale);
-
   const { showPicker, showTimeInput, showSeconds, showHourInput } =
     getDatePickerVisibility(displayType);
 

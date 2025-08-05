@@ -1,7 +1,12 @@
-import { DateRangePickerFormField, PeriodPickerFormField } from '@features/form';
+import LabelMessagesService from '@entities/label-messages-mock/api/label-messages';
+import { DropdownFormField, PeriodPickerFormField } from '@features/form';
+import { DatePickerFormField2 } from '@features/form/ui';
 import { useDynamicForm2 } from '@learnway/hooks';
+import { SelectOption } from '@learnway/shared';
+import { FormSubTitle } from '@learnway/ui/base-form';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
+import { RadioGroupFormField } from '@learnway/ui/form-field';
 import { useModal } from '@learnway/ui/modal';
 import { ContentsButtons, FormRow2, MainContents, PageContainer } from '@shared/ui';
 import { createFileRoute } from '@tanstack/react-router';
@@ -79,28 +84,19 @@ function RouteComponent() {
           <Button type={'submit'} variant="point" size="sm" label={'Form submit'} />
         </ContentsButtons>
         <MainContents>
+          <FormSubTitle label={'Date Picker'} />
           <ContentsRow>
             <FormRow2
               provider={provider}
               name={'day'}
               label={'day'}
-              element={<PeriodPickerFormField datePickerConfig={{ displayType: 'day' }} />}
+              element={<DatePickerFormField2 datePickerConfig={{ displayType: 'day' }} />}
             />
-          </ContentsRow>
-          <ContentsRow>
-            <FormRow2
-              provider={provider}
-              name={'time'}
-              label={'time'}
-              element={<PeriodPickerFormField datePickerConfig={{ displayType: 'time' }} />}
-            />
-          </ContentsRow>
-          <ContentsRow>
             <FormRow2
               provider={provider}
               name={'time-hm'}
               label={'time-hm'}
-              element={<PeriodPickerFormField datePickerConfig={{ displayType: 'time-hm' }} />}
+              element={<DatePickerFormField2 datePickerConfig={{ displayType: 'time-hm' }} />}
             />
           </ContentsRow>
           <ContentsRow>
@@ -108,15 +104,13 @@ function RouteComponent() {
               provider={provider}
               name={'day-time'}
               label={'day-time'}
-              element={<PeriodPickerFormField datePickerConfig={{ displayType: 'day-time' }} />}
+              element={<DatePickerFormField2 datePickerConfig={{ displayType: 'day-time' }} />}
             />
-          </ContentsRow>
-          <ContentsRow>
             <FormRow2
               provider={provider}
               name={'day-time-h'}
               label={'day-time-h'}
-              element={<PeriodPickerFormField datePickerConfig={{ displayType: 'day-time-h' }} />}
+              element={<DatePickerFormField2 datePickerConfig={{ displayType: 'day-time-h' }} />}
             />
           </ContentsRow>
           <ContentsRow>
@@ -124,35 +118,67 @@ function RouteComponent() {
               provider={provider}
               name={'day-time-hm'}
               label={'day-time-hm'}
+              element={<DatePickerFormField2 datePickerConfig={{ displayType: 'day-time-hm' }} />}
+            />
+            <FormRow2
+              provider={provider}
+              name={'day-time-hms'}
+              label={'day-time-hms'}
+              element={<DatePickerFormField2 datePickerConfig={{ displayType: 'day-time-hms' }} />}
+            />
+          </ContentsRow>
+
+          <FormSubTitle label={'Range Date Picker'} />
+          <ContentsRow>
+            <FormRow2
+              provider={provider}
+              name={'day2'}
+              label={'day'}
+              element={<PeriodPickerFormField datePickerConfig={{ displayType: 'day' }} />}
+            />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow2
+              provider={provider}
+              name={'time-hm2'}
+              label={'time-hm'}
+              element={<PeriodPickerFormField datePickerConfig={{ displayType: 'time-hm' }} />}
+            />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow2
+              provider={provider}
+              name={'day-time2'}
+              label={'day-time'}
+              element={<PeriodPickerFormField datePickerConfig={{ displayType: 'day-time' }} />}
+            />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow2
+              provider={provider}
+              name={'day-time-h2'}
+              label={'day-time-h'}
+              element={<PeriodPickerFormField datePickerConfig={{ displayType: 'day-time-h' }} />}
+            />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow2
+              provider={provider}
+              name={'day-time-hm2'}
+              label={'day-time-hm'}
               element={<PeriodPickerFormField datePickerConfig={{ displayType: 'day-time-hm' }} />}
             />
           </ContentsRow>
           <ContentsRow>
             <FormRow2
               provider={provider}
-              name={'day-time-hms'}
+              name={'day-time-hms2'}
               label={'day-time-hms'}
               element={<PeriodPickerFormField datePickerConfig={{ displayType: 'day-time-hms' }} />}
             />
           </ContentsRow>
-          <ContentsRow>
-            <FormRow2
-              provider={provider}
-              name={'courseValidityRange'}
-              label={t('노출 기간')}
-              format={'object'}
-              validation={{ required: true, format: 'object' }}
-              element={<DateRangePickerFormField displayType={'day-time-h'} />}
-            />
-          </ContentsRow>
-          {/* <ContentsRow>
-            <FormRow2
-              provider={provider}
-              name={'periodPickerDayTime'}
-              label={t('기간 선택 (day-time)')}
-              element={<PeriodPickerFormField datePickerConfig={{ displayType: 'day-time' }} />}
-            />
-          </ContentsRow>
+
+          <FormSubTitle label={'Radio Group'} />
           <ContentsRow>
             <FormRow2
               provider={provider}
@@ -161,7 +187,7 @@ function RouteComponent() {
               element={<RadioGroupFormField optionsConfig={{ codeGroup: 'test' }} />}
             />
           </ContentsRow>
-          <ContentsRow>
+          {/* <ContentsRow>
             <FormRow2
               provider={provider}
               name={'radioCodeGroupWithNode'}
@@ -219,7 +245,9 @@ function RouteComponent() {
                 />
               }
             />
-          </ContentsRow>
+          </ContentsRow> */}
+
+          <FormSubTitle label={'Dropdown'} />
           <ContentsRow>
             <FormRow2
               provider={provider}
@@ -280,16 +308,6 @@ function RouteComponent() {
               }
             />
           </ContentsRow>
-          <ContentsRow>
-            <FormRow2
-              provider={provider}
-              name={'courseValidityRange'}
-              label={t('노출 기간')}
-              format={'object'}
-              validation={{ required: true, format: 'object' }}
-              element={<DateRangePickerFormField displayType={'day-time-h'} />}
-            />
-          </ContentsRow> */}
         </MainContents>
       </PageContainer>
     </form>
