@@ -4,9 +4,7 @@ import { CourseDetailTab, CourseTab } from '../types/type';
 import {
   useCreateCourse,
   useDeleteCourse,
-  useFetchCourse,
   useFetchCourseAndConfig,
-  useFetchCourseConfig,
   useUpdateCourseWizard1,
   useUpdateCourseWizard2,
   useUpdateCourseWizard3,
