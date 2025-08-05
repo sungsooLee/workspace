@@ -6,6 +6,7 @@ import axios, {
   AxiosResponse,
   CancelTokenSource,
 } from 'axios';
+import { isNumber, isString } from 'lodash-es';
 import { encodeQueryString, eventService, getFileResponse, HTTP_EVENTS } from '../../index';
 
 const API_REQUEST_TIMEOUT = 9000;
@@ -188,6 +189,8 @@ export class HttpService {
         if (response.status >= 200 && response.status < 300) {
           if (response.data instanceof Blob) {
             return getFileResponse(response);
+          } else if (isString(response.data) || isNumber(response.data)) {
+            return response.data;
           }
           return response.data.data;
         } else {
