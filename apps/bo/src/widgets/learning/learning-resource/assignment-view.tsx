@@ -25,8 +25,8 @@ function AssignmentViewComponent({ content, hasMapping }: Props) {
 
   const contentUuid = content?.contentUuid ?? '';
 
-  const form = useDynamicForm2();
-  const { provider, onSubmit } = form;
+  const basicInfoForm = useDynamicForm2();
+  const { provider, onSubmit } = basicInfoForm;
 
   const basicInfoRef = useRef<AssignmentTabRef>(null);
   const assignmentInfoRef = useRef<AssignmentTabRef>(null);
@@ -42,7 +42,13 @@ function AssignmentViewComponent({ content, hasMapping }: Props) {
       {
         title: t('과제 정보'),
         key: AssignmentTab.BASIC_INFO,
-        content: <LearningResourceAssignmentBasicInfo ref={basicInfoRef} provider={provider} />,
+        content: (
+          <LearningResourceAssignmentBasicInfo
+            ref={basicInfoRef}
+            basicInfoForm={basicInfoForm}
+            content={content}
+          />
+        ),
       },
       {
         title: t('과제물 관리'),
