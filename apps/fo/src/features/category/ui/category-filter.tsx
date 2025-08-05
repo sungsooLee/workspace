@@ -25,7 +25,7 @@ const FilterComponent = ({ onOptionChange }: FilterComponentProps) => {
   // 선택된 값이 있으면 true 변경
   const [selectCheck, setSelectCheck] = useState(false);
   // OptionCard에서 선택된 옵션 상태
-  const [selectedCardOptions, setSelectedCardOptions] = useState([]);
+  const [selectedCardOptions, setSelectedCardOptions] = useState({lecture: []});
   // ChipList에서 선택된 옵션 상태
   const [selectedChipOptions, setSelectedChipOptions] = useState([]);
 
@@ -50,20 +50,25 @@ const FilterComponent = ({ onOptionChange }: FilterComponentProps) => {
       content: <CategoryFilterPopup initialFilters={selectedCardOptions} filterCodes={codes}/>,
       onClose: (data: any) => {
         if( data ) {
-          handleCardOptionsSelect(data)
+          setSelectedCardOptions(data)
+          onOptionChange(data.lecture)
         }
       },
     });
   };
   // OptionCard 선택 처리 핸들러
   const handleCardOptionsSelect = (selectedOptions: any) => {
-    setSelectedCardOptions(selectedOptions);
-    onOptionChange(selectedOptions)
+    const options = {
+      ...selectedCardOptions,
+      lecture: selectedOptions
+    }
+    setSelectedCardOptions(options);
+    onOptionChange(options)
   };
   //
   useEffect(() => {
     // 선택된 항목이 있는지 확인
-    const hasSelections = selectedCardOptions.length > 0 || selectedChipOptions.length > 0;
+    const hasSelections = Object.values(selectedCardOptions).some((item: any) => item.length > 0);
     setSelectCheck(hasSelections);
   }, [selectedCardOptions, selectedChipOptions]);
 
@@ -121,7 +126,7 @@ const FilterComponent = ({ onOptionChange }: FilterComponentProps) => {
           multiple
           className={styles.option_card}
           onOptionsSelect={handleCardOptionsSelect}
-          value={selectedCardOptions.map((option: any) => option.value)} // 값만 전달
+          value={selectedCardOptions.lecture.map((option: any) => option.value)} // 값만 전달
         />
         {
           isMobile && (

@@ -1,13 +1,17 @@
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
+import { Checkbox } from '@learnway/ui/checkbox';
 import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
+import { ModalBody, ModalContainer, ModalTitle } from '@learnway/ui/modal';
 import { t } from 'i18next';
 import { useCallback } from 'react';
 import { SearchBox } from '../search-box';
-import { Checkbox } from '@learnway/ui/checkbox';
-import { ModalBody, ModalContainer, ModalTitle } from '@learnway/ui/modal';
 
-export const PackageChoiceModal = () => {
+interface PackageChoiceProps {
+  channelUuid: string;
+}
+
+export const PackageChoiceModal = ({ channelUuid }: PackageChoiceProps) => {
   const { provider, getValues, setOptions, setValue, onFormChange } = useSearchBox(searchConfig());
   const { config, gridFetch } = useGridBox(gridConfig(), getValues);
 
@@ -39,7 +43,8 @@ const searchConfig = (): SearchBoxConfig => ({
         name: 'packageName',
         label: t('패키지명'),
         type: 'text',
-        value: '' },
+        value: '',
+      },
       {
         name: 'isUsed',
         type: 'dropdown',
@@ -48,16 +53,20 @@ const searchConfig = (): SearchBoxConfig => ({
         options: [
           { value: true, label: t('사용') },
           { value: false, label: t('미사용') },
-        ] },
+        ],
+      },
       {
         name: 'createdDate',
         label: '등록일',
         type: 'date-range',
         value: {
           from: undefined,
-          to: undefined } },
+          to: undefined,
+        },
+      },
     ],
-  ] });
+  ],
+});
 
 const gridConfig = (): useGridBoxConfig => ({
   query: '',
@@ -65,35 +74,46 @@ const gridConfig = (): useGridBoxConfig => ({
     {
       name: 'packageCode',
       label: t('과정 코드'),
-      size: 120 },
+      size: 120,
+    },
     {
       name: 'packageName',
-      label: t('패키지명') },
+      label: t('패키지명'),
+    },
     {
       name: 'courseCount',
       label: t('과정수'),
       size: 80,
       meta: {
-        cellAlign: 'center' } },
+        cellAlign: 'center',
+      },
+    },
     {
       name: 'isUsed',
       label: t('사용 여부'),
       size: 80,
       meta: {
-        cellAlign: 'center' },
+        cellAlign: 'center',
+      },
       render: (info: any) => {
         info.getValue() ? t('사용') : t('미사용');
-      } },
+      },
+    },
     {
       name: 'createdDate',
       label: t('등록일'),
       size: 200,
       meta: {
-        cellAlign: 'center' } },
+        cellAlign: 'center',
+      },
+    },
     {
       name: 'packageValidityStartDate',
       label: t('패키지 유효기간'),
       size: 200,
       meta: {
-        cellAlign: 'center' } },
-  ] });
+        cellAlign: 'center',
+      },
+    },
+  ],
+});

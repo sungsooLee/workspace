@@ -686,7 +686,9 @@ function RouteComponent() {
                 onClick={(e) => {
                   openModal({
                     width: 'xl',
-                    content: <CourseChoiceModal />,
+                    content: (
+                      <CourseChoiceModal channelUuid="a771d734-ffcf-40fb-8297-9f4f1e8e0498" />
+                    ),
                     onClose(data: any) {
                       console.log('과정 조회 결과', data);
                     },
@@ -706,7 +708,9 @@ function RouteComponent() {
                 onClick={(e) => {
                   openModal({
                     width: 'xl',
-                    content: <PackageChoiceModal />,
+                    content: (
+                      <PackageChoiceModal channelUuid="a771d734-ffcf-40fb-8297-9f4f1e8e0498" />
+                    ),
                     onClose(data: any) {
                       console.log('패키지 조회 결과', data);
                     },

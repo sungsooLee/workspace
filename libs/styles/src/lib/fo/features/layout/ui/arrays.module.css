@@ -2,9 +2,9 @@
   &.array {
     @apply flex items-center;
     button {
-      @apply !body_3_r whitespace-nowrap !p-0 text-[var(--gray8)];
+      @apply !body-md whitespace-nowrap !p-0 text-[var(--gray8)];
       &.active {
-        @apply !body_3_b;
+        @apply !body-md-b;
       }
       & + button {
         @apply relative ml-[8px] !pl-[8px];

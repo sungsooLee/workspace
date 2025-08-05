@@ -23,6 +23,8 @@ import {
   GetSharedBoxContentsRes,
   GetSharedContentsParams,
   GetSharedContentsRes,
+  GetSharedHistoryParams,
+  GetSharedHistoryRes,
   GetShareTenantsChannelsParams,
   GetShareTenantsChannelsRes,
   GetVideoFileChangeRes,
@@ -431,6 +433,16 @@ export default class LearningResourceService {
     return httpService.get<ChannelCodeType[]>(
       `${CMSApiPrefix()}/contents/share/sharedBox/tenant/channel/codes`,
       { srcTenantId },
+    );
+  }
+
+  /**
+   *
+   */
+  static getSharedHistory({ sourceContentUuid, destChannelUuid }: GetSharedHistoryParams) {
+    return httpService.get<GetSharedHistoryRes>(
+      `${CMSApiPrefix()}/contents/share/sharedBox/${sourceContentUuid}/history`,
+      { destChannelUuid },
     );
   }
 }

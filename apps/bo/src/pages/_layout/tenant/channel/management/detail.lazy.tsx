@@ -1,5 +1,5 @@
 import {
-  ChannelDetail,
+  ChannelDetailBase,
   ChannelDetailBoard,
   ChannelDetailHome,
   ChannelDetailRole,
@@ -113,7 +113,7 @@ function RouteComponent() {
       title: t('기본 정보'),
       key: EnTabKeys.BASE,
       content: (
-        <ChannelDetail
+        <ChannelDetailBase
           ref={baseFormRef}
           mode={EnFormMode.VIEW}
           onButtonLayoutChange={handleButtonLayoutChange}

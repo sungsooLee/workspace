@@ -40,22 +40,47 @@ const FilterPopupComponent = ({ filterCodes, initialFilters }: FilterPopupCompon
     setLanguageFilter([])
   }
   const handleCloseModal = () => {
-    const selectedOptions: any[] = []
+    const lectureOptions: any[] = []
+    const enrollmentOptions: any[] = []
+    const difficultyOptions: any[] = []
+    const languageOptions: any[] = []
     Object.values(filterCodes).flat().forEach((item: any) => {
-      if( lectureFilter.includes(item.value) || difficultyFilter.includes(item.value)
-          || enrollmentFilter.includes(item.value) || languageFilter.includes(item.value)) {
-        selectedOptions.push(item)
+      if( lectureFilter.includes(item.value) ) {
+        lectureOptions.push(item)
+      } else if( enrollmentFilter.value === item.value ) {
+        enrollmentOptions.push(item)
+      } else if( difficultyFilter.includes(item.value) ) {
+        difficultyOptions.push(item)
+      } else if( languageFilter.includes(item.value) ) {
+        languageOptions.push(item)
       }
     })
+    const selectedOptions = {
+      lecture: lectureOptions,
+      enrollment: enrollmentOptions,
+      difficulty: difficultyOptions,
+      language: languageOptions,
+    }
     closeModal(selectedOptions)
   }
 
   useEffect(() => {
-    if(initialFilters && initialFilters.length > 0) {
-      const init = initialFilters.map((filter: any) => filter.value);
+    if(initialFilters && Object.values(initialFilters).some((item: any) => item.length > 0)) {
+      const lecture = initialFilters.lecture;
+      const enrollment = initialFilters.enrollment;
+      const difficulty = initialFilters.difficulty;
+      const language = initialFilters.language;
+
+      const init = lecture.map((filter: any) => filter.value);
       const check = init.filter((item: any) => exceptValue.includes(item));
       if( check && check.length > 0 ) setIsShowEnrollment(false)
-      setLectureFilter(initialFilters.map((filter: any) => filter.value))
+      setLectureFilter(lecture.map((filter: any) => filter.value))
+      if( enrollment && enrollment.length > 0 )
+        setEnrollmentFilter(enrollment.map((filter: any) => filter.value))
+      if( difficulty && difficulty.length > 0 )
+        setDifficultyFilter(difficulty.map((filter: any) => filter.value))
+      if( language && language.length > 0 )
+        setLanguageFilter(language.map((filter: any) => filter.value))
     }
   }, [initialFilters]);
 
@@ -85,11 +110,14 @@ const FilterPopupComponent = ({ filterCodes, initialFilters }: FilterPopupCompon
                     <OptionCard
                       cols={isMobile ? 2 : 4}
                       options={filterCodes.enrollment}
-                      multiple
                       value={enrollmentFilter}
-                      onOptionsSelect={(options: OptionCardItem[]) =>
-                        setEnrollmentFilter(options.map((d: OptionCardItem) => d.value))
-                      }
+                      onOptionSelect={(options: OptionCardItem) => {
+                        if( enrollmentFilter.value === options.value ) {
+                          setEnrollmentFilter({})
+                        } else {
+                          setEnrollmentFilter(options)
+                        }
+                      }}
                     />
                   </div>
                 </li>

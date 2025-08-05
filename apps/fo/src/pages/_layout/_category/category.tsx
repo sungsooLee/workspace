@@ -1,7 +1,7 @@
 import { createFileRoute, useRouterState } from '@tanstack/react-router';
 import { isMobile } from 'react-device-detect';
 import { CategoryDetail } from '@features/category/ui/category-detail';
-import { CategoryDetail as MobileCategoryDetail } from '@features/category/m.ui/category-detail';
+import { CategoryDetailM as MobileCategoryDetail } from '@features/category/m.ui/category-detail';
 import { pageRouteConfig } from '@features/auth';
 
 export interface CategoryDetailComponentProps {
