@@ -45,7 +45,7 @@ const ChannelDetailHomeComponent = (props: ChannelDetailHomeProps, ref: any) => 
             setFormMode(EnFormMode.ADD);
             setSelectedBannerId(undefined);
           }}
-          onDetailClick={(bannerId) => {
+          onDetailClick={(bannerId: number) => {
             setHomeMode(EnChannelDetailHomeMode.BANNER);
             setFormMode(EnFormMode.VIEW);
             setSelectedBannerId(bannerId);

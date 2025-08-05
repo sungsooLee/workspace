@@ -18,6 +18,11 @@ export enum EnChannelDetailTabKeys {
   USER_GROUP = 'USER_GROUP',
 }
 
+export interface ChannelHomeBannerListProps {
+  onAddClick?: () => void;
+  onDetailClick: (bannerId: number) => void;
+}
+
 export interface ChannelHomeBannerDetailProps {
   mode: EnFormMode;
   bannerId?: number | undefined;

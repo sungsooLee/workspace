@@ -12,12 +12,9 @@ import { t } from 'i18next';
 import { forwardRef, useImperativeHandle, useRef } from 'react';
 import { ChannelHomeBannerDetailProps } from '../../../types/type';
 
-const ChannelDetailHomeBannerDetailComponent = (
-  { mode, bannerId, onCompleted }: ChannelHomeBannerDetailProps,
-  ref: any,
-) => {
+const ChannelDetailHomeBannerDetailComponent = (props: ChannelHomeBannerDetailProps, ref: any) => {
   const { provider, onSubmit, onFormChange, getValues, onInquiryLinkUrl, linkUrlInquiryDisabled } =
-    useChannelHomeBannerDetail({ mode, bannerId, onCompleted });
+    useChannelHomeBannerDetail(props);
 
   const formRef = useRef<HTMLFormElement>(null);
   useImperativeHandle(ref, () => ({
