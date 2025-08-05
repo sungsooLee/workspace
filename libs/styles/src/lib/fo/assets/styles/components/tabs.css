@@ -51,6 +51,20 @@
         }
       }
     }
+    &.lg {
+      & > [role='tablist'] {
+        & > [role='tab'] {
+          @apply title3-b;
+        }
+      }
+    }
+    &.xl {
+      & > [role='tablist'] {
+        & > [role='tab'] {
+          @apply title3-b;
+        }
+      }
+    }
     &.xl2 {
       & > [role='tablist'] {
         & > [role='tab'] {
