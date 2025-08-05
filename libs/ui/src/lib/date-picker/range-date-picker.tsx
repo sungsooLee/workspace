@@ -1,19 +1,19 @@
-import { forwardRef, useEffect, useState, ForwardRefRenderFunction, useRef } from 'react';
-import Primitive from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import './date-picker.css';
-import { IcoCalendar01, IcoClock01 } from '@learnway/icons';
+import { IcoCalendar01 } from '@learnway/icons';
 import { cn, getDatePickerPlaceholder, getDefaultLang } from '@learnway/shared';
+import { enUS, ko } from 'date-fns/locale';
+import { forwardRef, ForwardRefRenderFunction, useEffect, useRef, useState } from 'react';
+import Primitive from 'react-datepicker';
+import { Locale } from 'react-datepicker/dist/date_utils';
+import 'react-datepicker/dist/react-datepicker.css';
+import ReactDOM from 'react-dom';
+import { useTranslation } from 'react-i18next';
+import { useModalStore } from '../stores/useModalStore';
 import { BaseFieldProps } from '../type';
 import { CustomDatePickerHeader } from './custom-date-picker-header';
-import { PopoverTimeInput } from './custom-time-picker';
 import { PopoverHourInput } from './custom-hour-picker';
-import { ko, enUS } from 'date-fns/locale';
-import { useTranslation } from 'react-i18next';
-import { Locale } from 'react-datepicker/dist/date_utils';
+import { PopoverTimeInput } from './custom-time-picker';
 import { DatePickerType } from './date-picker';
-import { useModalStore } from '../stores/useModalStore';
-import ReactDOM from 'react-dom';
+import './date-picker.css';
 
 const dayjsToDateFnsLocaleMap: Record<string, any> = {
   ko,
@@ -204,206 +204,204 @@ const RangeDatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, RangeDa
 
   return (
     <div className={cn('nlp--datepicker-time', 'nlp--datepicker-from-to', size)} ref={ref}>
-      <div className="datepicker_from_to">
-        <div className="nlp--datepicker-calendar">
-          <Primitive
-            ref={startPickerRef}
-            showIcon
-            selectsStart
-            selected={startDate}
-            startDate={startDate}
-            endDate={endDate}
-            dateFormat={dateFormat}
-            shouldCloseOnSelect={true}
-            readOnly={readOnly}
-            disabled={disabled}
-            minDate={minDate}
-            maxDate={maxDate}
-            placeholderText={getPlaceholderByType('day', currentLocale)}
-            icon={<IcoCalendar01 width={16} height={16} stroke="#4C515E" fill="none" />}
-            isClearable={true}
-            wrapperClassName={'datepicker_wrap'}
-            className={cn('datepicker_input', className)}
-            onChange={handleStartDateChange}
-            onKeyDown={handleKeyDown}
-            excludeDates={disabledDates}
-            renderDayContents={(day) => {
-              return <span className="date_text">{day}</span>;
-            }}
-            renderCustomHeader={(headerProps: any) => (
-              <CustomDatePickerHeader {...headerProps} locale={currentLocale} />
-            )}
-            locale={currentLocale}
-            popperPlacement="bottom-start"
-            popperContainer={
-              modals.length
-                ? undefined
-                : (props) => ReactDOM.createPortal(props.children, document.body)
-            }
-          />
-          {showHourPicker && (
-            <div className="nlp--datepicker-time">
-              <PopoverHourInput
-                value={startDate}
-                onChange={(date: Date | undefined) => {
-                  if (date) {
-                    handleStartDateChange(date);
-                  }
-                }}
-                placeholder={getPlaceholderByType('time-h', currentLocale)}
-                locale={currentLocale}
-              />
-            </div>
+      <div className="nlp--datepicker-calendar">
+        <Primitive
+          ref={startPickerRef}
+          showIcon
+          selectsStart
+          selected={startDate}
+          startDate={startDate}
+          endDate={endDate}
+          dateFormat={dateFormat}
+          shouldCloseOnSelect={true}
+          readOnly={readOnly}
+          disabled={disabled}
+          minDate={minDate}
+          maxDate={maxDate}
+          placeholderText={getPlaceholderByType('day', currentLocale)}
+          icon={<IcoCalendar01 width={16} height={16} stroke="#4C515E" fill="none" />}
+          isClearable={true}
+          wrapperClassName={'datepicker_wrap'}
+          className={cn('datepicker_input', className)}
+          onChange={handleStartDateChange}
+          onKeyDown={handleKeyDown}
+          excludeDates={disabledDates}
+          renderDayContents={(day) => {
+            return <span className="date_text">{day}</span>;
+          }}
+          renderCustomHeader={(headerProps: any) => (
+            <CustomDatePickerHeader {...headerProps} locale={currentLocale} />
           )}
-          {showTimePicker && (
-            <div className="nlp--datepicker-time">
-              <PopoverTimeInput
-                value={startDate}
-                onChange={(date: Date | undefined) => {
-                  if (date) {
-                    handleStartDateChange(date);
-                  }
-                }}
-                minuteStep={minuteStep}
-                secondStep={secondStep}
-                showSeconds={showSeconds}
-                placeholder={getPlaceholderByType('time-hm', currentLocale)}
-                locale={currentLocale}
-              />
-            </div>
-          )}
-          {showTimeStep && (
-            <div className={cn('nlp--datepicker-time', 'time_step')}>
-              <Primitive
-                showIcon
-                shouldCloseOnSelect
-                readOnly={readOnly}
-                disabled={disabled}
-                showTimeSelect
-                showTimeSelectOnly
-                selected={startDate}
-                placeholderText={getPlaceholderByType('time-step', currentLocale)}
-                // icon={<IcoCalendar01 width={16} height={16} stroke="#4C515E" fill="none" />}
-                isClearable={true}
-                dateFormat={currentLocale === ko ? 'aa h:mm' : 'h:mm aa'}
-                timeFormat={currentLocale === ko ? 'aa h:mm' : 'h:mm aa'}
-                wrapperClassName={'datepicker_wrap'}
-                className={cn('datepicker_input', className)}
-                onChange={handleStartDateChange}
-                excludeDates={disabledDates}
-                locale={currentLocale}
-                timeIntervals={minuteStep}
-                timeCaption=""
-                popperPlacement="bottom-start"
-                popperContainer={
-                  modals.length
-                    ? undefined
-                    : (props) => ReactDOM.createPortal(props.children, document.body)
+          locale={currentLocale}
+          popperPlacement="bottom-start"
+          popperContainer={
+            modals.length
+              ? undefined
+              : (props) => ReactDOM.createPortal(props.children, document.body)
+          }
+        />
+        {showHourPicker && (
+          <div className="nlp--datepicker-time">
+            <PopoverHourInput
+              value={startDate}
+              onChange={(date: Date | undefined) => {
+                if (date) {
+                  handleStartDateChange(date);
                 }
-              />
-            </div>
-          )}
-        </div>
-        <span className="hyphen"></span>
-        <div className="nlp--datepicker-calendar">
-          <Primitive
-            ref={endPickerRef}
-            showIcon
-            selectsEnd
-            selected={endDate}
-            startDate={startDate}
-            endDate={endDate}
-            dateFormat={dateFormat}
-            shouldCloseOnSelect={true}
-            readOnly={readOnly}
-            disabled={disabled}
-            minDate={startDate || minDate}
-            maxDate={maxDate}
-            placeholderText={getPlaceholderByType('day', currentLocale)}
-            icon={<IcoCalendar01 width={16} height={16} stroke="#4C515E" fill="none" />}
-            isClearable={true}
-            wrapperClassName={'datepicker_wrap'}
-            className={cn('datepicker_input', className)}
-            onChange={handleEndDateChange}
-            onKeyDown={handleKeyDown}
-            excludeDates={disabledDates}
-            renderDayContents={(day) => {
-              return <span className="date_text">{day}</span>;
-            }}
-            renderCustomHeader={(headerProps: any) => (
-              <CustomDatePickerHeader {...headerProps} locale={currentLocale} />
-            )}
-            locale={currentLocale}
-            popperPlacement="bottom-start"
-            popperContainer={
-              modals.length
-                ? undefined
-                : (props) => ReactDOM.createPortal(props.children, document.body)
-            }
-          />
-          {showHourPicker && (
-            <div className="nlp--datepicker-time">
-              <PopoverHourInput
-                value={endDate}
-                onChange={(date: Date | undefined) => {
-                  if (date) {
-                    handleEndDateChange(date);
-                  }
-                }}
-                placeholder={getPlaceholderByType('time-h', currentLocale)}
-                locale={currentLocale}
-              />
-            </div>
-          )}
-          {showTimePicker && (
-            <div className="nlp--datepicker-time">
-              <PopoverTimeInput
-                value={endDate}
-                onChange={(date: Date | undefined) => {
-                  if (date) {
-                    handleEndDateChange(date);
-                  }
-                }}
-                minuteStep={minuteStep}
-                secondStep={secondStep}
-                showSeconds={showSeconds}
-                placeholder={getPlaceholderByType('time-hm', currentLocale)}
-                locale={currentLocale}
-              />
-            </div>
-          )}
-          {showTimeStep && (
-            <div className={cn('nlp--datepicker-time', 'time_step')}>
-              <Primitive
-                showIcon
-                shouldCloseOnSelect
-                readOnly={readOnly}
-                disabled={disabled}
-                showTimeSelect
-                showTimeSelectOnly
-                selected={endDate}
-                placeholderText={getPlaceholderByType('time-step', currentLocale)}
-                // icon={<IcoClock01 width={16} height={16} stroke="#5C636E" fill="none" />}
-                isClearable={true}
-                dateFormat={currentLocale === ko ? 'aa h:mm' : 'h:mm aa'}
-                timeFormat={currentLocale === ko ? 'aa h:mm' : 'h:mm aa'}
-                wrapperClassName={'datepicker_wrap'}
-                className={cn('datepicker_input', className)}
-                onChange={handleEndDateChange}
-                excludeDates={disabledDates}
-                locale={currentLocale}
-                timeIntervals={minuteStep}
-                timeCaption=""
-                popperPlacement="bottom-start"
-                popperContainer={
-                  modals.length
-                    ? undefined
-                    : (props) => ReactDOM.createPortal(props.children, document.body)
+              }}
+              placeholder={getPlaceholderByType('time-h', currentLocale)}
+              locale={currentLocale}
+            />
+          </div>
+        )}
+        {showTimePicker && (
+          <div className="nlp--datepicker-time">
+            <PopoverTimeInput
+              value={startDate}
+              onChange={(date: Date | undefined) => {
+                if (date) {
+                  handleStartDateChange(date);
                 }
-              />
-            </div>
+              }}
+              minuteStep={minuteStep}
+              secondStep={secondStep}
+              showSeconds={showSeconds}
+              placeholder={getPlaceholderByType('time-hm', currentLocale)}
+              locale={currentLocale}
+            />
+          </div>
+        )}
+        {showTimeStep && (
+          <div className={cn('nlp--datepicker-time', 'time_step')}>
+            <Primitive
+              showIcon
+              shouldCloseOnSelect
+              readOnly={readOnly}
+              disabled={disabled}
+              showTimeSelect
+              showTimeSelectOnly
+              selected={startDate}
+              placeholderText={getPlaceholderByType('time-step', currentLocale)}
+              // icon={<IcoCalendar01 width={16} height={16} stroke="#4C515E" fill="none" />}
+              isClearable={true}
+              dateFormat={currentLocale === ko ? 'aa h:mm' : 'h:mm aa'}
+              timeFormat={currentLocale === ko ? 'aa h:mm' : 'h:mm aa'}
+              wrapperClassName={'datepicker_wrap'}
+              className={cn('datepicker_input', className)}
+              onChange={handleStartDateChange}
+              excludeDates={disabledDates}
+              locale={currentLocale}
+              timeIntervals={minuteStep}
+              timeCaption=""
+              popperPlacement="bottom-start"
+              popperContainer={
+                modals.length
+                  ? undefined
+                  : (props) => ReactDOM.createPortal(props.children, document.body)
+              }
+            />
+          </div>
+        )}
+      </div>
+      <span className="hyphen"></span>
+      <div className="nlp--datepicker-calendar">
+        <Primitive
+          ref={endPickerRef}
+          showIcon
+          selectsEnd
+          selected={endDate}
+          startDate={startDate}
+          endDate={endDate}
+          dateFormat={dateFormat}
+          shouldCloseOnSelect={true}
+          readOnly={readOnly}
+          disabled={disabled}
+          minDate={startDate || minDate}
+          maxDate={maxDate}
+          placeholderText={getPlaceholderByType('day', currentLocale)}
+          icon={<IcoCalendar01 width={16} height={16} stroke="#4C515E" fill="none" />}
+          isClearable={true}
+          wrapperClassName={'datepicker_wrap'}
+          className={cn('datepicker_input', className)}
+          onChange={handleEndDateChange}
+          onKeyDown={handleKeyDown}
+          excludeDates={disabledDates}
+          renderDayContents={(day) => {
+            return <span className="date_text">{day}</span>;
+          }}
+          renderCustomHeader={(headerProps: any) => (
+            <CustomDatePickerHeader {...headerProps} locale={currentLocale} />
           )}
-        </div>
+          locale={currentLocale}
+          popperPlacement="bottom-start"
+          popperContainer={
+            modals.length
+              ? undefined
+              : (props) => ReactDOM.createPortal(props.children, document.body)
+          }
+        />
+        {showHourPicker && (
+          <div className="nlp--datepicker-time">
+            <PopoverHourInput
+              value={endDate}
+              onChange={(date: Date | undefined) => {
+                if (date) {
+                  handleEndDateChange(date);
+                }
+              }}
+              placeholder={getPlaceholderByType('time-h', currentLocale)}
+              locale={currentLocale}
+            />
+          </div>
+        )}
+        {showTimePicker && (
+          <div className="nlp--datepicker-time">
+            <PopoverTimeInput
+              value={endDate}
+              onChange={(date: Date | undefined) => {
+                if (date) {
+                  handleEndDateChange(date);
+                }
+              }}
+              minuteStep={minuteStep}
+              secondStep={secondStep}
+              showSeconds={showSeconds}
+              placeholder={getPlaceholderByType('time-hm', currentLocale)}
+              locale={currentLocale}
+            />
+          </div>
+        )}
+        {showTimeStep && (
+          <div className={cn('nlp--datepicker-time', 'time_step')}>
+            <Primitive
+              showIcon
+              shouldCloseOnSelect
+              readOnly={readOnly}
+              disabled={disabled}
+              showTimeSelect
+              showTimeSelectOnly
+              selected={endDate}
+              placeholderText={getPlaceholderByType('time-step', currentLocale)}
+              // icon={<IcoClock01 width={16} height={16} stroke="#5C636E" fill="none" />}
+              isClearable={true}
+              dateFormat={currentLocale === ko ? 'aa h:mm' : 'h:mm aa'}
+              timeFormat={currentLocale === ko ? 'aa h:mm' : 'h:mm aa'}
+              wrapperClassName={'datepicker_wrap'}
+              className={cn('datepicker_input', className)}
+              onChange={handleEndDateChange}
+              excludeDates={disabledDates}
+              locale={currentLocale}
+              timeIntervals={minuteStep}
+              timeCaption=""
+              popperPlacement="bottom-start"
+              popperContainer={
+                modals.length
+                  ? undefined
+                  : (props) => ReactDOM.createPortal(props.children, document.body)
+              }
+            />
+          </div>
+        )}
       </div>
     </div>
   );

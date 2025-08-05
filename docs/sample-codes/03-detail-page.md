@@ -227,7 +227,7 @@ export const UserDetailForm: React.FC<UserDetailFormProps> = ({
           name="email"
           label={t('이메일')}
           placeholder={t('이메일을 입력하세요')}
-          validation={{ 
+          validation={{
             required: t('이메일은 필수입니다.'),
             pattern: {
               value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -278,8 +278,8 @@ import {
 } from '@features/user-management/service';
 import { UserDetailForm } from '@features/user-management';
 
-export const Route = createLazyFileRoute('/user-management/detail')({ 
-  component: RouteComponent 
+export const Route = createLazyFileRoute('/user-management/detail')({
+  component: RouteComponent
 });
 
 function RouteComponent() {
@@ -329,7 +329,7 @@ function RouteComponent() {
           >
             {t('목록')}
           </Button>
-          
+
           <Button
             type="submit"
             variant="primary"
@@ -403,35 +403,7 @@ router.navigate({
 });
 ```
 
-### 2. 폼 필드 커스터마이징
-
-```typescript
-// 추가 필드 예시
-<ContentsRow>
-  <FormRow2
-    provider={provider}
-    name="phone"
-    label={t('전화번호')}
-    placeholder={t('전화번호를 입력하세요')}
-    validation={{ 
-      pattern: {
-        value: /^[0-9-]+$/,
-        message: t('올바른 전화번호 형식을 입력하세요.')
-      }
-    }}
-    element={<Input />}
-  />
-  <FormRow2
-    provider={provider}
-    name="department"
-    label={t('부서')}
-    placeholder={t('부서를 선택하세요')}
-    element={<Select options={departmentOptions} />}
-  />
-</ContentsRow>
-```
-
-### 3. 저장 후 동작 커스터마이징
+### 2. 저장 후 동작 커스터마이징
 
 ```typescript
 // 저장 후 목록으로 이동
@@ -441,13 +413,6 @@ const { mutate: createUser } = useCreateUser({
       to: '/user-management',
       state: listParam,
     });
-  },
-});
-
-// 저장 후 상세 페이지 유지 (기본 동작)
-const { mutate: createUser } = useCreateUser({
-  onSuccess: (result: User) => {
-    router.navigate(routingParams(result));
   },
 });
 ```

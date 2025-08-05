@@ -1,6 +1,6 @@
+import { useInput } from '@learnway/hooks';
 import { Address, BookDeliveryInfo, LangLevelTest } from '@types';
 import { useState } from 'react';
-import { useInput } from './input-hook';
 
 const useFormSection = () => {
   const { value: familyName, onChange: onChangeFamilyName } = useInput();

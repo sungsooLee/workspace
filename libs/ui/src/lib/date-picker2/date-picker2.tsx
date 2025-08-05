@@ -203,12 +203,10 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
 
   return (
     <div className={cn('nlp--datepicker-time', 'nlp--datepicker-from-to')}>
-      <div className="datepicker_from_to">
-        <div className="nlp--datepicker-calendar">
-          {showPicker && <Picker />}
-          {showHourInput && <HourInput />}
-          {showTimeInput && <TimeInput />}
-        </div>
+      <div className="nlp--datepicker-calendar">
+        {showPicker && <Picker />}
+        {showHourInput && <HourInput />}
+        {showTimeInput && <TimeInput />}
       </div>
     </div>
   );
