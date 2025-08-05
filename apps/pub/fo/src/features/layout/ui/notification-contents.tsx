@@ -4,6 +4,7 @@ import { Badge } from '@learnway/ui/badge';
 import { Button } from '@learnway/ui/button';
 import { Popover } from '@learnway/ui/popover';
 import { Tabs } from '@learnway/ui/tabs';
+import { useToast } from '@learnway/ui/toast';
 import { Link } from '@tanstack/react-router';
 import { memo, useState } from 'react';
 
@@ -19,10 +20,24 @@ const TotalopoverCompoment = () => {
 };
 
 const ListopoverCompoment = () => {
+  const { open } = useToast();
+
+  const handleClickToast = () => {
+    open({
+      title: '삭제되었습니다',
+      actionLabel: '취소하기',
+      type: 'success',
+      // duration: 5000,
+      // showCloseButton: true,
+      onActionClick: () => {
+        console.log('버튼 클릭');
+      },
+    });
+  };
   return (
     <div className={`${dropdownPopoverStyles.start} ${dropdownPopoverStyles.dropdown_wrap}`}>
       <Button>읽음 상태로 표시</Button>
-      <Button>삭제</Button>
+      <Button label="삭제" onClick={handleClickToast} />
       <Button>보관{/* 보관해제 */}</Button>
     </div>
   );
@@ -104,6 +119,10 @@ const categoryLabelMap: Record<NotificationInfo['category'], string> = {
 const NotificationContentsComponent = () => {
   const [selectedTabKey, setSelectedTabKey] = useState<NotificationInfo['category']>('a');
 
+  const toggleExpand = (id: number) => {
+    setExpandedIds((prev) => (prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]));
+  };
+
   const tabItems = [
     { title: '전체', key: 'a' },
     { title: '학습', key: 'b' },
@@ -116,6 +135,10 @@ const NotificationContentsComponent = () => {
     selectedTabKey === 'a'
       ? dummyNotifications
       : dummyNotifications.filter((n) => n.category === selectedTabKey);
+
+  const [expandedIds, setExpandedIds] = useState<number[]>([]); // 펼쳐진 알림 id 배열
+
+  const isExpanded = (id: number) => expandedIds.includes(id);
 
   return (
     <div className={`${styles.start} ${styles.alarm_contents}`}>
@@ -186,7 +209,28 @@ const NotificationContentsComponent = () => {
                 <div className={styles.message_wrap}>
                   <div className={styles.title}>{noti.title}</div>
                   <div className={styles.message}>{noti.message}</div>
+                  <div className={`${styles.group} ${isExpanded(noti.id) ? 'block' : 'hidden'}`}>
+                    <ul className={styles.list}>
+                      <li>
+                        <Button className={styles.link}>같은 그룹끼리 제목 보여줌</Button>
+                      </li>
+                      <li>
+                        <Button className={styles.link}>같은 그룹끼리 제목 보여줌</Button>
+                      </li>
+                      <li>
+                        <Button className={styles.link}>같은 그룹끼리 제목 보여줌</Button>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
+
+                <Button
+                  size="sm"
+                  underline={true}
+                  label={isExpanded(noti.id) ? '접기' : '9건 더보기'}
+                  className={styles.btn_more}
+                  onClick={() => toggleExpand(noti.id)}
+                />
               </li>
             ))}
           </ul>
