@@ -1,9 +1,9 @@
-import { useEffect, useState, useCallback } from 'react';
+import { getMockCodeGroupOption } from '@learnway/shared';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { CODE_GROUP } from '../use-code-store/constants';
 import { useCodeStore } from '../use-code-store/use-code-store';
 import { OptionsConfig, SelectOption } from './type';
-import { CODE_GROUP } from '../use-code-store/constants';
-import { getMockCodeGroupOption } from '@learnway/shared';
 
 /**
  * Form 에서 CodeGroup에 대한 로딩을 위한 커스텀 훅
@@ -27,17 +27,33 @@ const useFormOptionsHook = (
   const { getCode } = useCodeStore();
   const { t } = useTranslation();
 
+  // optionsConfig의 안정적인 참조를 위한 메모이제이션
+  const stableOptionsConfig = useMemo(
+    () => optionsConfig,
+    [
+      optionsConfig?.codeGroup,
+      optionsConfig?.api,
+      optionsConfig?.labelField,
+      optionsConfig?.valueField,
+      optionsConfig?.transformOptions,
+      optionsConfig?.options,
+    ],
+  );
+
   /**
    * 옵션에 번역을 적용하는 함수 (codeGroup용)
    * @param options - 번역할 옵션 배열
    * @returns 번역이 적용된 옵션 배열
    */
-  const applyTranslation = (options: SelectOption[]): SelectOption[] => {
-    return options.map((option) => ({
-      ...option,
-      label: t(option.label || ''),
-    }));
-  };
+  const applyTranslation = useCallback(
+    (options: SelectOption[]): SelectOption[] => {
+      return options.map((option) => ({
+        ...option,
+        label: t(option.label || ''),
+      }));
+    },
+    [t],
+  );
 
   /**
    * 필드 매핑을 적용하는 함수
@@ -46,13 +62,16 @@ const useFormOptionsHook = (
    */
   const applyFieldMapping = useCallback(
     (options: any[]): SelectOption[] => {
+      const labelField = stableOptionsConfig?.labelField || 'label';
+      const valueField = stableOptionsConfig?.valueField || 'value';
+
       return options.map((option) => ({
         ...option,
-        label: option[optionsConfig?.labelField || 'label'] || option.label || '',
-        value: option[optionsConfig?.valueField || 'value'] || option.value,
+        label: option[labelField] || option.label || '',
+        value: option[valueField] || option.value,
       }));
     },
-    [optionsConfig?.labelField, optionsConfig?.valueField],
+    [stableOptionsConfig?.labelField, stableOptionsConfig?.valueField],
   );
 
   /**
@@ -60,74 +79,80 @@ const useFormOptionsHook = (
    * @param codeGroup - 코드 그룹명
    * @returns 코드 그룹에서 가져온 옵션 배열
    */
-  const getCodeGroupOptions = async (codeGroup: string): Promise<SelectOption[]> => {
-    // mock code group
-    if (
-      ['test', CODE_GROUP['mock.options.use'], CODE_GROUP['mock.options.possible']].includes(
-        codeGroup,
-      )
-    ) {
-      const mockOptions = getMockCodeGroupOption(codeGroup);
-      return applyFieldMapping(mockOptions);
-    }
+  const getCodeGroupOptions = useCallback(
+    async (codeGroup: string): Promise<SelectOption[]> => {
+      // mock code group
+      if (
+        ['test', CODE_GROUP['mock.options.use'], CODE_GROUP['mock.options.possible']].includes(
+          codeGroup,
+        )
+      ) {
+        const mockOptions = getMockCodeGroupOption(codeGroup);
+        return applyFieldMapping(mockOptions);
+      }
 
-    // optionsConfig > options 에 등록된 값은 조회와 상관없이 앞에 선언 됩니다.
-    const optionConfigOptions: SelectOption[] = optionsConfig?.options || [];
-    const codeStoreOptions = await getCode(codeGroup);
-    const allOptions = [...optionConfigOptions, ...codeStoreOptions];
-    const mappedOptions = applyFieldMapping(allOptions);
-    return applyTranslation(mappedOptions);
-  };
+      // optionsConfig > options 에 등록된 값은 조회와 상관없이 앞에 선언 됩니다.
+      const optionConfigOptions: SelectOption[] = stableOptionsConfig?.options || [];
+      const codeStoreOptions = await getCode(codeGroup);
+      const allOptions = [...optionConfigOptions, ...codeStoreOptions];
+      const mappedOptions = applyFieldMapping(allOptions);
+      return applyTranslation(mappedOptions);
+    },
+    [getCode, applyFieldMapping, applyTranslation, stableOptionsConfig?.options],
+  );
 
   /**
    * API에서 옵션을 가져오는 함수
    * @param api - API 설정 객체
    * @returns API에서 가져온 옵션 배열
    */
-  const getApiOptions = async (api: OptionsConfig['api']): Promise<SelectOption[]> => {
-    if (!api || api.enabled === false) {
-      return [];
-    }
-    const { fn, select } = api;
-    const apiOptions = await fn();
-    const newOptions = select ? select(apiOptions) : apiOptions;
-    return applyFieldMapping(newOptions);
-  };
+  const getApiOptions = useCallback(
+    async (api: OptionsConfig['api']): Promise<SelectOption[]> => {
+      if (!api || api.enabled === false) {
+        return [];
+      }
+      const { fn, select } = api;
+      const apiOptions = await fn();
+      const newOptions = select ? select(apiOptions) : apiOptions;
+      return applyFieldMapping(newOptions);
+    },
+    [applyFieldMapping],
+  );
 
   /**
    * options 가 없고 optionsConfig 가 있을때만 작동
    * 동적 옵션 초기화 함수
    */
-  const initOptionConfig = async () => {
-    if (!optionsConfig) {
+  const initOptionConfig = useCallback(async () => {
+    if (!stableOptionsConfig) {
       return;
     }
 
     let resultOptions: SelectOption[] = [];
 
     // 코드 그룹에서 옵션 가져오기
-    if (optionsConfig.codeGroup) {
-      resultOptions = await getCodeGroupOptions(optionsConfig.codeGroup);
+    if (stableOptionsConfig.codeGroup) {
+      resultOptions = await getCodeGroupOptions(stableOptionsConfig.codeGroup);
     }
     // API에서 옵션 가져오기
-    else if (optionsConfig.api) {
-      resultOptions = await getApiOptions(optionsConfig.api);
+    else if (stableOptionsConfig.api) {
+      resultOptions = await getApiOptions(stableOptionsConfig.api);
     }
 
     // 옵션 변환 함수가 있으면 적용
-    if (optionsConfig.transformOptions) {
-      resultOptions = optionsConfig.transformOptions(resultOptions);
+    if (stableOptionsConfig.transformOptions) {
+      resultOptions = stableOptionsConfig.transformOptions(resultOptions);
     }
 
     setCurrentOptions(resultOptions);
-  };
+  }, [stableOptionsConfig, getCodeGroupOptions, getApiOptions, setCurrentOptions]);
 
   // 컴포넌트 마운트 시 동적 옵션 초기화
   useEffect(() => {
-    if (!options && optionsConfig) {
+    if (!options && stableOptionsConfig) {
       initOptionConfig();
     }
-  }, []);
+  }, [options, stableOptionsConfig, initOptionConfig]);
 
   // 정적 옵션이 변경될 때마다 필드 매핑 적용
   useEffect(() => {
@@ -135,7 +160,7 @@ const useFormOptionsHook = (
       const mappedOptions = applyFieldMapping(options);
       setCurrentOptions(mappedOptions);
     }
-  }, [options?.length]);
+  }, [options, applyFieldMapping, setCurrentOptions]);
 
   return currentOptions;
 };

@@ -37,8 +37,6 @@ const BasicInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) 
 
   const { isUpdateMode, initCourseType } = useCourseCreateSubPage(form);
 
-  console.log('initCourseType', initCourseType);
-
   return (
     <form>
       {/*기본정보*/}

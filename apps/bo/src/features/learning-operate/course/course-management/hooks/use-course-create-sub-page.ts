@@ -155,7 +155,6 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
 
   // 과정 상세 조회시 폼 데이터 갱신
   useEffect(() => {
-    console.log('1111', { courseData, courseConfig });
     if (courseData) {
       const formData = responseDataToFormData(courseData, courseConfig);
       updateFormData(formData);
@@ -165,7 +164,6 @@ export const useCourseCreateSubPage = (form: UseDynamicFormResult) => {
   // 등록 최초에 과정유형 기본값 선택 (dwondown 기능 개발 되면 삭제 예정)
   useEffect(() => {
     if (initCourseType) {
-      console.log('222222', initCourseType);
       updateFormData({ courseType: initCourseType });
     }
   }, [initCourseType]);

@@ -1,7 +1,7 @@
 import * as Primitive from '@radix-ui/react-radio-group';
-import React, { forwardRef, useEffect } from 'react';
+import React, { forwardRef, useEffect, useRef } from 'react';
 
-import { cn } from '@learnway/shared';
+import { cn, stringify } from '@learnway/shared';
 
 import styles from './radio-group.module.css';
 import { RadioGroupOption } from './type';
@@ -36,12 +36,27 @@ const RadioGroupComponent = forwardRef<
     },
     ref,
   ) => {
+    const prevOptionsRef = useRef<string>('');
+
     const handleValueChange = (newValue: string) => {
-      console.log('radio-group handleValueChange', newValue);
       onValueChange?.(newValue);
     };
 
+    // options 배열이 이전 값과 동일하면 useEffect가 재실행되지 않도록 JSON.stringify로 비교
+
     useEffect(() => {
+      const optionsString = stringify(options);
+      // options가 이전과 동일하면 실행하지 않음
+      if (prevOptionsRef.current === optionsString) {
+        return;
+      }
+      // options 값 업데이트
+      prevOptionsRef.current = optionsString;
+      // 첫 번째 옵션 값 설정
+      const firstValue = options?.[0]?.value;
+      if (firstValue !== undefined) {
+        handleValueChange(firstValue);
+      }
       console.log('radio-group options', options);
     }, [options]);
 

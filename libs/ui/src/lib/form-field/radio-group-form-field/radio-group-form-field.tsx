@@ -1,9 +1,9 @@
+import { BaseFormFieldProps, OptionsConfig, useFormOptions } from '@learnway/hooks';
+import { cn } from '@learnway/shared';
 import { forwardRef, useMemo } from 'react';
 import { RadioGroup } from '../../radio-group/radio-group';
-import { cn } from '@learnway/shared';
-import styles from './radio-group-form-field.module.css';
-import { BaseFormFieldProps, OptionsConfig, useFormOptions } from '@learnway/hooks';
 import { RadioGroupOption } from '../../radio-group/type';
+import styles from './radio-group-form-field.module.css';
 
 /**
  * RadioGroup 폼 필드 컴포넌트의 Props 인터페이스
@@ -36,7 +36,7 @@ const RadioGroupFormFieldComponent = forwardRef<HTMLDivElement, RadioGroupFormFi
             }
           : option;
       });
-    }, [options, optionsConfig]);
+    }, [options, optionsConfig?.optionsNode]);
 
     const {
       clearAllValidators,
