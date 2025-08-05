@@ -3,19 +3,21 @@
 ## 개요
 
 이 샘플 코드는 FSD(Feature-Sliced Design) 아키텍처를 기반으로 한 React + TypeScript 목록 조회 화면 구현을 보여줍니다.
-프로젝트에서 실제 사용하는 **SearchBox**, **Divider**, **GridBox** 컴포넌트를 활용한 완전한 목록 화면을 제공합니다.
+프로젝트에서 실제 사용하는 **SearchBoxForm**, **Divider**, **GridBox** 컴포넌트를 활용한 완전한 목록 화면을 제공합니다.
 
 ## 주요 특징
 
 - **FSD 아키텍처 준수**: 각 레이어별 역할 분담
-- **실제 프로젝트 패턴**: SearchBox + Divider + GridBox 조합
+- **실제 프로젝트 패턴**: SearchBoxForm + Divider + GridBox 조합
 - **React Query 활용**: 효율적인 데이터 페칭 및 캐싱
 - **useDynamicForm2 & useGridBox**: 프로젝트 표준 커스텀 훅 활용
 - **TypeScript 타입 안전성**: 컴파일 타임 에러 방지
 
 ## 핵심 컴포넌트
 
-- **SearchBox**: `useDynamicForm2`를 활용한 동적 검색 폼
+- **SearchBoxForm**: `useDynamicForm2`를 활용한 동적 검색 폼
+- **FormRow2**: 폼 필드의 레이블과 입력 요소를 관리하는 컴포넌트
+- **ContentsRow**: 폼 필드를 행 단위로 그룹화하는 레이아웃 컴포넌트
 - **Divider**: 검색 영역과 목록 영역 구분
 - **GridBox**: `useGridBox`와 TanStack Table 기반 데이터 그리드
 
@@ -34,8 +36,7 @@ src/
 ├── features/
 │   └── user-management/
 │       └── ui/
-│           ├── user-list.tsx    # 메인 목록 컴포넌트
-│           └── search-box.tsx   # 검색 박스 래퍼
+│           └── user-list.tsx    # 메인 목록 컴포넌트 (SearchBoxForm 포함)
 ├── shared/
 │   └── ui/
 │       ├── search-box/          # SearchBox 컴포넌트
@@ -58,92 +59,21 @@ API 레이어가 구현되면 다음과 같이 import하여 사용할 수 있습
 import { userQueryOptions, User } from '@entities/user';
 ```
 
-## 1. 검색 박스 컴포넌트 (features/user-management/ui/user-search-box.tsx)
-
-```typescript
-import React, { FC } from 'react';
-import { SearchBox } from '@shared/ui';
-import { useDynamicForm2 } from '@learnway/hooks';
-import { t } from 'i18next';
-
-// 검색 필드 설정
-const searchFields = [
-  [
-    {
-      name: 'name',
-      label: t('이름'),
-      type: 'text',
-      placeholder: t('이름을 입력하세요'),
-    },
-    {
-      name: 'email',
-      label: t('이메일'),
-      type: 'text',
-      placeholder: t('이메일을 입력하세요'),
-    },
-  ],
-  [
-    {
-      name: 'role',
-      label: t('역할'),
-      type: 'select',
-      placeholder: t('역할을 선택하세요'),
-      options: [
-        { value: '', label: t('전체') },
-        { value: 'admin', label: t('관리자') },
-        { value: 'manager', label: t('매니저') },
-        { value: 'user', label: t('사용자') },
-      ],
-    },
-    {
-      name: 'status',
-      label: t('상태'),
-      type: 'select',
-      placeholder: t('상태를 선택하세요'),
-      options: [
-        { value: '', label: t('전체') },
-        { value: 'active', label: t('활성') },
-        { value: 'inactive', label: t('비활성') },
-        { value: 'pending', label: t('대기') },
-      ],
-    },
-  ],
-];
-
-interface UserSearchBoxProps {
-  onSearch: (data: any) => void;
-}
-
-export const UserSearchBox: FC<UserSearchBoxProps> = ({ onSearch }) => {
-  // useDynamicForm2 초기화 (프로젝트 표준 훅)
-  const dynamicFormProvider = useDynamicForm2({
-    builders: searchFields,
-    defaultValues: {},
-  });
-
-  return (
-    <SearchBox
-      provider={dynamicFormProvider}
-      onSearch={onSearch}
-    />
-  );
-};
-```
-
-## 2. 메인 목록 컴포넌트 (features/user-management/ui/user-list.tsx)
+## 1. 목록 컴포넌트 (features/user-management/ui/user-list.tsx)
 
 ```typescript
 import React, { useCallback, useMemo } from 'react';
 import { createColumnHelper } from '@tanstack/react-table';
-import { useDynamicForm2 } from '@learnway/hooks';
-import { Button, Divider, GridBox, useGridBox } from '@learnway/ui';
-import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
+import { useDynamicForm2, CODE_GROUP, getCodeLabel } from '@learnway/hooks';
+import { Button, Divider, GridBox, useGridBox, Input } from '@learnway/ui';
+import { ContentsButtons, MainContents, PageContainer, ContentsRow, FormRow2, SearchBoxForm } from '@shared/ui';
+import { DropdownFormField } from '@features/form/ui/dropdown-form-field';
+import { DateRangePickerFormField } from '@features/form/ui/date-range-picker-form-field';
 import { userQueryOptions } from '@entities/user';
 import { User } from '@entities/user';
-import { formatDate, DATE_TIME_FORMAT } from '@learnway/shared';
+import { formatDate, DATE_TIME_FORMAT, generateYears } from '@learnway/shared';
 import { useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
-import { UserSearchBox } from './user-search-box';
 
 // GridBox 설정
 const gridConfig = {
@@ -260,8 +190,98 @@ export const UserList: React.FC<UserListProps> = () => {
       </ContentsButtons>
 
       <MainContents>
-        <UserSearchBox onSearch={handleOnSearch} />
+        {/* SearchBoxForm 사용 */}
+        <SearchBoxForm onSearch={onSubmit(handleOnSearch)}>
+          <ContentsRow>
+            {/* 사용자명 */}
+            <FormRow2
+              provider={provider}
+              name={'userName'}
+              label={t('사용자명')}
+              element={<Input placeholder={t('사용자명을 입력하세요')} />}
+            />
+            {/* 이메일 */}
+            <FormRow2
+              provider={provider}
+              name={'email'}
+              label={t('이메일')}
+              element={<Input placeholder={t('이메일을 입력하세요')} />}
+            />
+            {/* 역할 */}
+            <FormRow2
+              provider={provider}
+              name={'role'}
+              label={t('역할')}
+              element={
+                <DropdownFormField
+                  presetOptionLabel={t('전체')}
+                  optionsConfig={{
+                    codeGroup: CODE_GROUP['user.role']
+                  }}
+                />
+              }
+            />
+            {/* 상태 */}
+            <FormRow2
+              provider={provider}
+              name={'status'}
+              label={t('상태')}
+              element={
+                <DropdownFormField
+                  presetOptionLabel={t('전체')}
+                  optionsConfig={{
+                    codeGroup: CODE_GROUP['user.status']
+                  }}
+                />
+              }
+            />
+          </ContentsRow>
+          <ContentsRow>
+            {/* 부서 */}
+            <FormRow2
+              provider={provider}
+              name={'department'}
+              label={t('부서')}
+              element={<Input placeholder={t('부서명을 입력하세요')} />}
+            />
+            {/* 직급 */}
+            <FormRow2
+              provider={provider}
+              name={'position'}
+              label={t('직급')}
+              element={
+                <DropdownFormField
+                  presetOptionLabel={t('전체')}
+                  optionsConfig={{
+                    codeGroup: CODE_GROUP['user.position']
+                  }}
+                />
+              }
+            />
+            {/* 가입년도 */}
+            <FormRow2
+              provider={provider}
+              name={'joinYear'}
+              label={t('가입년도')}
+              element={
+                <DropdownFormField
+                  options={generateYears(10)}
+                  presetOptionLabel={t('전체')}
+                />
+              }
+            />
+            {/* 가입일 */}
+            <FormRow2
+              provider={provider}
+              name={'createdDate'}
+              label={t('가입일')}
+              element={<DateRangePickerFormField />}
+            />
+          </ContentsRow>
+        </SearchBoxForm>
+
         <Divider />
+
         <GridBox
           config={gConfig}
           columns={columns}
@@ -274,6 +294,28 @@ export const UserList: React.FC<UserListProps> = () => {
     </PageContainer>
   );
 };
+```
+
+## 2. SearchBoxForm 사용법
+
+`SearchBoxForm`은 검색 조건을 관리하는 폼 래퍼 컴포넌트로, `useDynamicForm2`와 함께 사용됩니다.
+
+### 주요 특징:
+
+- `ContentsRow`로 검색 필드를 행 단위로 그룹화
+- `FormRow2`로 각 필드의 레이블과 입력 요소 관리
+- `onSubmit` 핸들러로 검색 실행
+- 다양한 입력 요소 지원 (Input, DropdownFormField, DateRangePickerFormField 등)
+
+### 사용 예시:
+
+```typescript
+<SearchBoxForm onSearch={onSubmit(handleOnSearch)}>
+  <ContentsRow>
+    <FormRow2 provider={provider} name="field1" label="라벨1" element={<Input />} />
+    <FormRow2 provider={provider} name="field2" label="라벨2" element={<DropdownFormField />} />
+  </ContentsRow>
+</SearchBoxForm>
 ```
 
 ## 3. 목록 페이지 컴포넌트 (pages/user-management/index.tsx)
@@ -348,23 +390,36 @@ const customGridConfig = {
 };
 ```
 
-### 3. SearchBox 필드 커스텀마이징
+### 3. SearchBoxForm 필드 커스터마이징
 
 ```typescript
-// 검색 필드 추가/수정
-const searchFields = [
-  [
-    {
-      name: 'keyword',
-      label: t('통합검색'),
-      type: 'text',
-      placeholder: t('이름, 이메일로 검색'),
-    },
-    {
-      name: 'dateRange',
-      label: t('생성일'),
-      type: 'dateRange',
-    },
-  ],
-];
+// 검색 필드 추가/수정 예제
+<SearchBoxForm onSearch={onSubmit(handleOnSearch)}>
+  <ContentsRow>
+    <FormRow2
+      provider={provider}
+      name={'keyword'}
+      label={t('통합검색')}
+      element={<Input placeholder={t('이름, 이메일로 검색')} />}
+    />
+    <FormRow2
+      provider={provider}
+      name={'dateRange'}
+      label={t('생성일')}
+      element={<DateRangePickerFormField />}
+    />
+  </ContentsRow>
+</SearchBoxForm>
+```
+
+### 4. FormRow2 hidden 필드 활용
+
+```typescript
+// 숨겨진 필드로 고정값 전달
+<FormRow2
+  provider={provider}
+  name={'tenantId'}
+  type="hidden"
+  value={tenantId}
+/>
 ```
