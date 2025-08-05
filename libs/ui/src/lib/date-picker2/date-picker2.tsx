@@ -140,6 +140,9 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
         className={cn('datepicker_input', className)}
         onChange={handleChange}
         excludeDates={disabledDates}
+        renderDayContents={(day) => {
+          return <span className="date_text">{day}</span>;
+        }}
         renderYearContent={
           displayType === 'year'
             ? (year: number) => {
