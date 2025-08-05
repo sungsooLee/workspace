@@ -6,7 +6,7 @@ export enum AssignmentTab {
 }
 
 export interface AssignmentTabRef {
-  save?: (data?: Record<string, any>) => Promise<void> | void;
+  save?: (data: Record<string, any>) => Promise<void> | void;
   complete?: () => Promise<void> | void;
 }
 

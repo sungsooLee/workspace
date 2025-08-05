@@ -325,4 +325,10 @@ export const mutateOptions = {
   changeQuestionOrder: () => ({
     mutationFn: (params: QuestionSortReq) => LearningResourceService.changeQuestionOrder(params),
   }),
+  createAssignment: () => ({
+    mutationFn: (params: ContentBaseInfo) => LearningResourceService.createAssignment(params),
+  }),
+  updateAssignment: () => ({
+    mutationFn: (params: ContentBaseInfo) => LearningResourceService.updateAssignment(params),
+  }),
 };

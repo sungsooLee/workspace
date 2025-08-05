@@ -1,32 +1,21 @@
 import { useToggleDisplayChannelBanner } from '@entities/channel';
 import { channelBannerQueryOptions } from '@entities/channel/service/channel-banner.queries';
-import { IcoMinus } from '@learnway/icons';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
-import { FormSubTitle } from '@learnway/ui/base-form';
 import { Button } from '@learnway/ui/button';
-import { CountText } from '@learnway/ui/elements';
-import { GridBox, useGridBox } from '@learnway/ui/grid';
+import { useGridBox } from '@learnway/ui/grid';
 import { Switch } from '@learnway/ui/switch';
 import { useToast } from '@learnway/ui/toast';
-import { LinkBox } from '@shared/ui';
 import { useRouterState } from '@tanstack/react-router';
 import { EnGlobalConst } from '@types';
 import { t } from 'i18next';
 import { useEffect, useState } from 'react';
+import { ChannelHomeBannerListProps } from '../types/type';
 
-interface ChannelDetailHomeBannerProps {
-  onAddClick: () => void;
-  onDetailClick: (bannerId: number) => void;
-}
-
-const ChannelDetailHomeBannerComponent = ({
-  onAddClick,
-  onDetailClick,
-}: ChannelDetailHomeBannerProps) => {
+export const useChannelHomeBannerList = (props: ChannelHomeBannerListProps) => {
   const routerState = useRouterState();
   const channelUuid = routerState.location.state?.channelUuid;
 
+  const { onDetailClick } = props;
   const { open: openToast } = useToast();
 
   const { toggleDisplay } = useToggleDisplayChannelBanner({});
@@ -177,47 +166,5 @@ const ChannelDetailHomeBannerComponent = ({
     }
   }, [gridData]);
 
-  return (
-    <>
-      <FormSubTitle
-        label={t('홈 배너 관리')}
-        lineType="light"
-        titleNode={
-          <p className={formStyles.guide_text}>
-            {t('노출 가능한 배너가 3개 이상인 경우 순서에 따라 최대 3개만 노출됩니다.')}
-          </p>
-        }
-      />
-      <GridBox
-        config={gridConfig}
-        multiple
-        tableMode
-        showTotalCount={false}
-        titleCustomNode={
-          <>
-            <CountText label={t('노출')} count={displayedCount} />
-            <CountText label={t('전체')} count={totalCount} />
-          </>
-        }
-        customButtonNode={
-          <>
-            <LinkBox>
-              <Button variant="text" size="sm" label={t('미리보기')} />
-            </LinkBox>
-            <Button
-              variant="outline"
-              size="sm"
-              label={t('삭제')}
-              icon={<IcoMinus width={16} height={16} stroke={'#131C30'} />}
-            />
-            <Button variant="save" size="sm" label={t('등록')} onClick={onAddClick} />
-          </>
-        }
-        disabledSelectionToggle
-        hidePagination
-      />
-    </>
-  );
+  return { gridConfig, displayedCount, totalCount };
 };
-
-export const ChannelDetailHomeBanner = ChannelDetailHomeBannerComponent;

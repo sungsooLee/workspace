@@ -183,7 +183,7 @@ export const useCourseListGridConfig = () => {
           disabled={!info?.original?.isUsed}
           stopPropagation
           onClick={() => {
-            alert('과정상세 페이지 이동');
+            alert('준비중입니다.');
           }}
         />
       ),

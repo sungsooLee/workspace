@@ -329,6 +329,20 @@ export default class LearningResourceService {
   }
 
   /**
+   * 과제 단건 등록
+   */
+  static createAssignment(body: ContentBaseInfo): Promise<string> {
+    return httpService.post(`${CMSApiPrefix()}/assignment`, body);
+  }
+
+  /**
+   * 과제 단건 수정
+   */
+  static updateAssignment(body: ContentBaseInfo): Promise<string> {
+    return httpService.put(`${CMSApiPrefix()}/assignment`, body);
+  }
+
+  /**
    * 비디오 컨텐츠 상태 조회
    */
   static getVideoStatus(contentUuid: string) {

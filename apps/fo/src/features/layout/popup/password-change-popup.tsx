@@ -1,7 +1,8 @@
+import { useChangePassword } from '@entities/user';
+import { useFetchAuthUser } from '@learnway/auth/entities';
+import { useInput } from '@learnway/hooks';
 import { IcoCaution, IcoFormRequired } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { memo } from 'react';
-
 import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 import styles from '@learnway/styles/fo/features/layout/popup/password-change-popup.module.css';
 import noticeBoxStyles from '@learnway/styles/fo/shared/ui/notice-box/notice-box.module.css';
@@ -9,19 +10,40 @@ import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { Input } from '@learnway/ui/input';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { memo } from 'react';
+import { isMobile } from 'react-device-detect';
 
 const PasswordChangePopupComponent = () => {
   const { alert: openAlert } = useModal();
+  const currentPassword = useInput();
+  const newPassword = useInput();
+  const confirmNewPassword = useInput();
 
-  // 비밀번호 변경 alert
-  const passwordChangeAlert = () => {
-    openAlert({
-      content: <>비밀번호가 변경되었습니다.</>,
-    });
+  const { data } = useFetchAuthUser();
+
+  const { mutateAsync } = useChangePassword({
+    body: {
+      username: data?.email ?? '',
+      oldPassword: currentPassword.value,
+      newPassword: confirmNewPassword.value,
+    },
+    onSuccess: () =>
+      openAlert({
+        content: <>비밀번호가 변경되었습니다.</>,
+      }),
+    onError: async ({ message }) => {
+      await openAlert({
+        content: message,
+      });
+    },
+  });
+
+  const updateChangePassword = async () => {
+    await mutateAsync();
   };
 
   return (
-    <ModalContainer>
+    <ModalContainer width={isMobile ? 'm_full' : 'sm'}>
       <ModalTitle>{'비밀번호 변경'}</ModalTitle>
       <ModalBody>
         <div className={`${styles.start} ${styles.pw_change}`}>
@@ -36,7 +58,13 @@ const PasswordChangePopupComponent = () => {
                   </span>
                 </label>
                 <div className={formStyles.input_box}>
-                  <Input id="password" type="password" placeholder="비밀번호" />
+                  <Input
+                    value={currentPassword.value}
+                    onChange={currentPassword.onChange}
+                    id="password"
+                    type="password"
+                    placeholder="비밀번호"
+                  />
                 </div>
               </div>
             </ContentsRow>
@@ -52,6 +80,8 @@ const PasswordChangePopupComponent = () => {
                 </label>
                 <div className={formStyles.input_box}>
                   <Input
+                    value={newPassword.value}
+                    onChange={newPassword.onChange}
                     id="password2"
                     type="password"
                     placeholder="비밀번호(영문자, 숫자, 특수문자 3가지 조합 8자리 이상)"
@@ -71,6 +101,8 @@ const PasswordChangePopupComponent = () => {
                 </label>
                 <div className={formStyles.input_box}>
                   <Input
+                    value={confirmNewPassword.value}
+                    onChange={confirmNewPassword.onChange}
                     id="password3"
                     type="password"
                     placeholder="새로운 비밀번호 재입력"
@@ -110,12 +142,7 @@ const PasswordChangePopupComponent = () => {
       </ModalBody>
       <ModalFooter>
         <Button label={'취소'} variant="gray" size="lg"></Button>
-        <Button
-          label={'변경'}
-          variant={'primary'}
-          size={'lg'}
-          onClick={() => passwordChangeAlert()}
-        />
+        <Button label={'변경'} variant={'primary'} size={'lg'} onClick={updateChangePassword} />
       </ModalFooter>
     </ModalContainer>
   );

@@ -10,7 +10,7 @@ import {
   CmsImageItem,
 } from '@learnway/types';
 import { LearnwayLearningWindowLayout, useLearningWindow } from '@learnway/ui/learning-window';
-import { ContentInformation, ContentType } from '@types';
+import { ContentInformation, ContentType, GetVideoResourceRes } from '@types';
 import { Button } from '@learnway/ui/button';
 import { useFileManager } from '@learnway/hooks';
 import { useModal } from '@learnway/ui/modal';
@@ -165,6 +165,8 @@ const PreviewLearningWindowComponent: FC<any> = ({
           const info = getScormItemByScoId(playInfo?.scoId);
           if (info) {
             setScormInfo({ ...info, itemURL: info.itemUrl });
+          } else {
+            openAlert(`not found content information ${data.contentUuid}`);
           }
         }
         break;
@@ -173,12 +175,23 @@ const PreviewLearningWindowComponent: FC<any> = ({
         setBlogInfo(data as any);
         break;
       case ContentType.VIDEO:
-        setCurriculum(genCuliculumInfoOneContent(data));
-        setVideoInfo(data);
+        {
+          setCurriculum(genCuliculumInfoOneContent(data));
+          const dataVideo = data as any;
+          if (dataVideo.masterVideo) {
+            setVideoInfo(data);
+          } else {
+            openAlert(`not found content information ${data.contentUuid}`);
+          }
+        }
         break;
       case ContentType.HTML5_VIDEO:
         setCurriculum(genCuliculumInfoOneContent(data));
-        setHtmlInfo(data.resource as CmsHtml5Resource);
+        if (data.resource) {
+          setHtmlInfo(data.resource as CmsHtml5Resource);
+        } else {
+          openAlert(`not found content information ${data.contentUuid}`);
+        }
         break;
       case ContentType.IMAGE:
         setCurriculum(genCuliculumInfoOneContent(data));
@@ -208,6 +221,8 @@ const PreviewLearningWindowComponent: FC<any> = ({
         }
 
         break;
+      default:
+        openAlert('This content is not suported');
     }
     setFuncInfo({
       lessonProgress: async (payload: any) => {

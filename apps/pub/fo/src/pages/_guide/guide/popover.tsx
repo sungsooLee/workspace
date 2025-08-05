@@ -1,9 +1,8 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { useState } from 'react';
 import { IcoArrowDown } from '@learnway/icons';
 import { Popover } from '@learnway/ui/popover';
+import { createFileRoute } from '@tanstack/react-router';
 
-import dropdownPopoverStyles from '../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
+import dropdownPopoverStyles from '@learnway/styles/fo/shared/ui/dropdown-popover/dropdown-popover.module.css';
 import { Button } from '@learnway/ui/button';
 
 export const Route = createFileRoute('/_guide/guide/popover')({
@@ -15,6 +14,17 @@ const PopoverContent = () => {
 };
 
 const DropdownPopoverCompoment = () => {
+  return (
+    <div className={`${dropdownPopoverStyles.start} ${dropdownPopoverStyles.dropdown_wrap}`}>
+      <Button>년도별 보기1</Button>
+      <Button>년도별 보기2</Button>
+      <Button>년도별 보기3</Button>
+      <Button>년도별 보기444444444</Button>
+    </div>
+  );
+};
+
+const DropdownPopoverCompoment2 = () => {
   return (
     <div className={`${dropdownPopoverStyles.start} ${dropdownPopoverStyles.dropdown_wrap}`}>
       <Button>년도별 보기1</Button>
@@ -55,7 +65,7 @@ function RouteComponent() {
 
         <div className="code_example">
           <pre className="code_block">
-            <code>{`// import 
+            <code>{`// import
 import { memo } from 'react';
 import { Popover } from '@learnway/ui/';
 
@@ -68,7 +78,7 @@ const PopoverContent = () => {
 };
 
 const PopOverCompoment = () => {
-  
+
   return (
     <Popover
       popoverContent={<PopoverContent />}
@@ -106,11 +116,11 @@ export const PopOverCompoment = memo(PopOverCompoment);`}</code>
 
         <div className="code_example">
           <pre className="code_block">
-            <code>{`// import 
+            <code>{`// import
 import { memo } from 'react';
 import { Popover } from '@learnway/ui/popover';
 import { Button } from '@learnway/ui/button';
-import dropdownPopoverStyles from '../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
+import dropdownPopoverStyles from '@learnway/styles/fo/shared/ui/dropdown-popover/dropdown-popover.module.css';
 
 const DropdownPopoverCompoment = () => {
   return (
@@ -124,7 +134,7 @@ const DropdownPopoverCompoment = () => {
 };
 
 const PopOverCompoment = () => {
-  
+
   return (
     <Popover
       popoverContent={<DropdownPopoverCompoment />}
@@ -163,11 +173,11 @@ export const PopOverCompoment = memo(PopOverCompoment);`}</code>
 
         <div className="code_example">
           <pre className="code_block">
-            <code>{`// import 
+            <code>{`// import
 import { memo } from 'react';
 import { Popover } from '@learnway/ui/popover';
 import { Button } from '@learnway/ui/button';
-import dropdownPopoverStyles from '../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
+import dropdownPopoverStyles from '@learnway/styles/fo/shared/ui/dropdown-popover/dropdown-popover.module.css';
 
 const DropdownPopoverCompoment = () => {
   return (
@@ -181,7 +191,7 @@ const DropdownPopoverCompoment = () => {
 };
 
 const PopOverCompoment = () => {
-  
+
   return (
     <Popover
       popoverContent={<DropdownPopoverCompoment />}

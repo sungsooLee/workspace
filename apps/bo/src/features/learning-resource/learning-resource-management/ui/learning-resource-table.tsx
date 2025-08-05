@@ -1,11 +1,13 @@
-import { Button } from '@learnway/ui/button';
-import { useModal } from '@learnway/ui/modal';
 // IA102 / NLP_BO_CMS_1001
 import { learningResourceQueryOptions, usePostContentCopy } from '@entities/learning-resource';
-import { getDetailPathByContentType, getDetailRouterState } from '@features/learning-resource';
+import {
+  getDetailPathByContentType,
+  getDetailRouterState,
+  isContentCompleted,
+} from '@features/learning-resource';
 import { LearningResourceShareShuttleModal } from '@features/learning-resource/learning-resource-management/ui/learning-resource-share-shuttle-modal';
 import { useFetchAuthUser } from '@learnway/auth/entities';
-import { CMSApiPrefix } from '@learnway/config';
+import { CMSApiPrefix, LEARNING_TYPE } from '@learnway/config';
 import {
   ALL_OPTION,
   CODE_GROUP,
@@ -14,10 +16,19 @@ import {
   useCurrentRoute,
   useSearchBox,
 } from '@learnway/hooks';
-import { IcoAlertCircle, IcoClock01, IcoCopy, IcoDownArrow, IcoDownload } from '@learnway/icons';
+import {
+  IcoAlertCircle,
+  IcoClock01,
+  IcoCopy,
+  IcoDownArrow,
+  IcoDownload,
+  IcoImport,
+} from '@learnway/icons';
 import { DATE_TIME_FORMAT, duration } from '@learnway/shared';
+import { Button } from '@learnway/ui/button';
 import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
+import { useModal } from '@learnway/ui/modal';
 import { Tooltip } from '@learnway/ui/tooltip';
 import {
   GridExcelDownloadButton,
@@ -187,9 +198,16 @@ function LearningResourceTableComponent() {
           size: 'auto',
         },
         render: (_: any) => (
-          <span className="flex">
+          <span className="flex items-center">
             {_.row.original.createType === ContentCreateType.TRANSLATE && (
-              <IcoDownArrow width={16} height={16} stroke="#4C515E" />
+              <span className="mr-2">
+                <IcoDownArrow width={16} height={16} stroke="#4C515E" />
+              </span>
+            )}
+            {_.row.original.createType === ContentCreateType.SHARED && (
+              <span className="mr-2">
+                <IcoImport width={16} height={16} stroke="#4C515E" />
+              </span>
             )}
             <Button
               className="link"
@@ -240,8 +258,10 @@ function LearningResourceTableComponent() {
             return `${_.getValue()}${t('개')}`;
 
           return (
-            <span className="flex">
-              <IcoClock01 width={16} height={16} stroke="#131C30" />{' '}
+            <span className="flex items-center">
+              <span className="mr-2">
+                <IcoClock01 width={16} height={16} stroke="#131C30" />
+              </span>
               {duration(_.getValue(), DATE_TIME_FORMAT.HOUR_MIN_SEC)}
             </span>
           );
@@ -255,8 +275,21 @@ function LearningResourceTableComponent() {
           <span>
             <Button
               className="link"
-              onClick={(e) => {
+              onClick={async (e) => {
                 e.stopPropagation();
+                if (
+                  !(await isContentCompleted(
+                    _.row.original.contentUuid,
+                    _.row.original.contentType,
+                  ))
+                )
+                  return await alert({
+                    title: t('미리보기 할 수 없는 교육자원입니다.'),
+                    content:
+                      _.row.original.contentType === LEARNING_TYPE.VIDEO
+                        ? t('인코딩 완료되지 않은 교육자원은\n미리보기 할 수 없습니다.')
+                        : t('패키지 등록이 완료되지 않은 교육자원은\n미리보기 할 수 없습니다.'),
+                  });
                 openModal({
                   width: 'full',
                   content: <PreviewLearningWindow contentUuid={_.row.original.contentUuid} />,
@@ -357,6 +390,15 @@ function LearningResourceTableComponent() {
     if (selectedRows.length !== 1) {
       return;
     }
+
+    if (!(await isContentCompleted(selectedRows[0].contentUuid, selectedRows[0].contentType)))
+      return await alert({
+        title: t('공유할 수 없는 교육자원입니다.'),
+        content:
+          selectedRows[0].contentType === LEARNING_TYPE.VIDEO
+            ? t('인코딩 완료되지 않은 교육자원은\n공유할 수 없습니다.')
+            : t('패키지 등록이 완료되지 않은 교육자원은\n공유할 수 없습니다.'),
+      });
 
     await openModal({
       width: 'xl',

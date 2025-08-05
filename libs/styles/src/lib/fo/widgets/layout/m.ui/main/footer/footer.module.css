@@ -9,7 +9,7 @@
           @apply w-full items-end;
           a,
           button {
-            @apply m-auto flex w-full flex-col items-center justify-end;
+            @apply m-auto flex w-full flex-col items-center justify-end !px-0;
             span {
               @apply label-md-b mt-[5px] block text-[var(--gray75)];
             }

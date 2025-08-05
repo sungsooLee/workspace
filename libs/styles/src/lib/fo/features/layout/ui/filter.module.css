@@ -69,9 +69,12 @@
     }
 
     .reset {
-      @apply body_2_r absolute bottom-0 right-0 flex items-center text-[var(--gray8)];
-      .ico_reset {
-        @apply mr-[8px];
+      @apply absolute bottom-0 right-0 flex items-center;
+      [class*='nlp--button'] {
+        @apply label-xl text-[var(--gray35)];
+        .ico_reset {
+          @apply mr-[8px];
+        }
       }
     }
   }

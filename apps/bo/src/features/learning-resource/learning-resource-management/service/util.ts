@@ -1,7 +1,9 @@
+import LearningResourceService from '@entities/learning-resource/api/learning-resource';
 import { AuthUser } from '@learnway/auth/types';
 import { LEARNING_TYPE } from '@learnway/config';
 import { CODE_GROUP, useCodeStore } from '@learnway/hooks';
 import { isEmptyData } from '@learnway/shared';
+import { ProcessingStatus } from '@types';
 import { useCallback } from 'react';
 
 export const getDetailPathByContentType = (contentType: string): string => {
@@ -17,6 +19,32 @@ export const getDetailPathByContentType = (contentType: string): string => {
       return '/learning/learning-resource/view';
   }
   return '';
+};
+
+export const isContentCompleted = async (contentUuid: string, type: string) => {
+  switch (type) {
+    case LEARNING_TYPE.VIDEO: {
+      return (
+        (await LearningResourceService.getVideoStatus(contentUuid)).processingStatus ===
+        ProcessingStatus.COMPLETE
+      );
+    }
+    case LEARNING_TYPE.SCORM: {
+      return (
+        (await LearningResourceService.getScormStatus(contentUuid)).processingStatus ===
+        ProcessingStatus.COMPLETE
+      );
+    }
+    case LEARNING_TYPE.HTML5_VIDEO: {
+      return (
+        (await LearningResourceService.fetchHTML5Status(contentUuid)).processingStatus ===
+        ProcessingStatus.COMPLETE
+      );
+    }
+    case LEARNING_TYPE.E_BOOK:
+    default:
+      return true;
+  }
 };
 
 export const getDetailRouterState = (contentUuid: string, contentType: string) => {

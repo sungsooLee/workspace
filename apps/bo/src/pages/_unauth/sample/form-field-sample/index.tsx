@@ -1,4 +1,4 @@
-import { DateRangePickerFormField } from '@features/form';
+import { DateRangePickerFormField, PeriodPickerFormField } from '@features/form';
 import { useDynamicForm2 } from '@learnway/hooks';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
@@ -16,7 +16,11 @@ function RouteComponent() {
   const { provider, onSubmit, getValues, watch, onFormValid } = useDynamicForm2();
 
   // DropdownCodeGroup 필드 값 감시
-  const dropdownCodeGroup = watch('DropdownCodeGroup');
+  // const radioCodeGroup = watch('radioCodeGroup');
+  // const dropdownCodeGroup = watch('DropdownCodeGroup');
+  const dropdownCodeGroup = 'test';
+
+  // console.log('radioCodeGroup => ', radioCodeGroup);
 
   const handleSetValue = () => {
     const { onFormChange } = provider;
@@ -75,9 +79,63 @@ function RouteComponent() {
           <Button type={'submit'} variant="point" size="sm" label={'Form submit'} />
         </ContentsButtons>
         <MainContents>
-          {/* 라디오 api*/}
           <ContentsRow>
-            {/*노출 기간*/}
+            <FormRow2
+              provider={provider}
+              name={'day'}
+              label={'day'}
+              element={<PeriodPickerFormField datePickerConfig={{ displayType: 'day' }} />}
+            />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow2
+              provider={provider}
+              name={'time'}
+              label={'time'}
+              element={<PeriodPickerFormField datePickerConfig={{ displayType: 'time' }} />}
+            />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow2
+              provider={provider}
+              name={'time-hm'}
+              label={'time-hm'}
+              element={<PeriodPickerFormField datePickerConfig={{ displayType: 'time-hm' }} />}
+            />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow2
+              provider={provider}
+              name={'day-time'}
+              label={'day-time'}
+              element={<PeriodPickerFormField datePickerConfig={{ displayType: 'day-time' }} />}
+            />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow2
+              provider={provider}
+              name={'day-time-h'}
+              label={'day-time-h'}
+              element={<PeriodPickerFormField datePickerConfig={{ displayType: 'day-time-h' }} />}
+            />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow2
+              provider={provider}
+              name={'day-time-hm'}
+              label={'day-time-hm'}
+              element={<PeriodPickerFormField datePickerConfig={{ displayType: 'day-time-hm' }} />}
+            />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow2
+              provider={provider}
+              name={'day-time-hms'}
+              label={'day-time-hms'}
+              element={<PeriodPickerFormField datePickerConfig={{ displayType: 'day-time-hms' }} />}
+            />
+          </ContentsRow>
+          <ContentsRow>
             <FormRow2
               provider={provider}
               name={'courseValidityRange'}
@@ -87,6 +145,151 @@ function RouteComponent() {
               element={<DateRangePickerFormField displayType={'day-time-h'} />}
             />
           </ContentsRow>
+          {/* <ContentsRow>
+            <FormRow2
+              provider={provider}
+              name={'periodPickerDayTime'}
+              label={t('기간 선택 (day-time)')}
+              element={<PeriodPickerFormField datePickerConfig={{ displayType: 'day-time' }} />}
+            />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow2
+              provider={provider}
+              name={'radioCodeGroup'}
+              label={t('라디오 - 코드그룹')}
+              element={<RadioGroupFormField optionsConfig={{ codeGroup: 'test' }} />}
+            />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow2
+              provider={provider}
+              name={'radioCodeGroupWithNode'}
+              label={t('라디오 - 코드그룹 - 커스텀노드')}
+              element={
+                <RadioGroupFormField
+                  optionsConfig={{
+                    codeGroup: 'test',
+                    transformOptions: (options: SelectOption[]) => {
+                      return options.filter((option: SelectOption) => option.value !== 'test4');
+                    },
+                    optionsNode: [
+                      {
+                        value: 'test1',
+                        node: (
+                          <FormRow2
+                            provider={provider}
+                            name={'라디오커스텀_인풋'}
+                            value={''}
+                            element={<Input />}
+                          />
+                        ),
+                      },
+                      {
+                        value: 'test2',
+                        node: (
+                          <>
+                            <FormRow2
+                              provider={provider}
+                              name={'라디오커스텀_모달_아이디'}
+                              type={'hidden'}
+                              value={''}
+                            />
+                            <FormRow2
+                              provider={provider}
+                              name={'라디오커스텀_모달_이름'}
+                              value={''}
+                              element={
+                                <InputModalSelectorFormField
+                                  modalConfig={{
+                                    content: <ChannelListModal />,
+                                  }}
+                                  transformModalData={(data: any) => ({
+                                    라디오커스텀_모달_아이디: data.channelId,
+                                    라디오커스텀_모달_이름: data.channelName,
+                                  })}
+                                />
+                              }
+                            />
+                          </>
+                        ),
+                      },
+                    ],
+                  }}
+                />
+              }
+            />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow2
+              provider={provider}
+              name={'DropdownApi'}
+              label={'Dropdown - api 사용'}
+              element={
+                <DropdownFormField
+                  optionsConfig={{
+                    labelField: 'cdName',
+                    valueField: 'cdId',
+                    api: {
+                      fn: (param?: string) => LabelMessagesService.fetchChannelMock(param),
+                    },
+                  }}
+                />
+              }
+            />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow2
+              provider={provider}
+              name={'DropdownCodeGroupRelation'}
+              label={`Dropdown - codeGroup ('Dropdown - codeGroup 사용' 변경시 재조회)`}
+              element={
+                <DropdownFormField
+                  key={`dropdown-relation-${dropdownCodeGroup}`}
+                  optionsConfig={{
+                    codeGroup: 'test',
+                    transformOptions: (options: SelectOption[]) => {
+                      return options.filter(
+                        (option: SelectOption) => option.value !== dropdownCodeGroup,
+                      );
+                    },
+                  }}
+                />
+              }
+            />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow2
+              provider={provider}
+              name={'DropdownApiRelation'}
+              label={`Dropdown - api ('Dropdown - codeGroup 사용' 변경시 재조회)`}
+              element={
+                <DropdownFormField
+                  key={`dropdown-api-relation-${dropdownCodeGroup}`}
+                  optionsConfig={{
+                    labelField: 'cdName',
+                    valueField: 'cdId',
+                    api: {
+                      fn: () => {
+                        console.log('dropdownCodeGroup =>=>=>=>=> ', dropdownCodeGroup);
+                        return LabelMessagesService.fetchChannelMock(dropdownCodeGroup);
+                      },
+                    },
+                  }}
+                />
+              }
+            />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow2
+              provider={provider}
+              name={'courseValidityRange'}
+              label={t('노출 기간')}
+              format={'object'}
+              validation={{ required: true, format: 'object' }}
+              element={<DateRangePickerFormField displayType={'day-time-h'} />}
+            />
+          </ContentsRow> */}
         </MainContents>
       </PageContainer>
     </form>

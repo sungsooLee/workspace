@@ -7,6 +7,7 @@ export * from './ui/duration-time-form-field';
 export * from './ui/form-display';
 export * from './ui/input-form-field';
 export * from './ui/media-content-required-check-form-field';
+export * from './ui/period-picker-form-field';
 export * from './ui/resource-image-list-form-field';
 export * from './ui/second-duration-time-form-field';
 export * from './ui/shared-channel-grid-form-field';

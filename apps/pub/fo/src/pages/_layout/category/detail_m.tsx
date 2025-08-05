@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 import { CategoryDepthPopupM, FilterPopup } from '../../../features/layout';
 
-import dropdownPopoverStyles from '../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
+import dropdownPopoverStyles from '@learnway/styles/fo/shared/ui/dropdown-popover/dropdown-popover.module.css';
 
 import styles from './detail_m.module.css';
 

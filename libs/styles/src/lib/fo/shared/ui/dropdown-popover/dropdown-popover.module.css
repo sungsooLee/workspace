@@ -1,10 +1,10 @@
 .start {
   &.dropdown_wrap {
-    @apply flex flex-col rounded-[8px] border-[1px] border-solid border-[var(--gray6)] bg-white p-[8px] shadow-[0_2px_6px_rgba(0,0,0,.2)];
+    @apply flex flex-col rounded-[8px] border-[1px] border-solid border-[var(--blue50)] bg-white p-[8px] shadow-[0_2px_6px_rgba(0,0,0,.2)];
     button {
-      @apply label-lg !m-0 px-[12px] py-[8px] text-[var(--gray35)];
+      @apply label-md !m-0 px-[12px] py-[8px] text-[var(--gray35)];
       &:hover {
-        @apply bg-[var(--secondary5)];
+        @apply label-md-b bg-[var(--blue95)] text-[var(--gray10)];
       }
     }
   }

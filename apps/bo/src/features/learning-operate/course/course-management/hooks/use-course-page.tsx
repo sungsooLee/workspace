@@ -96,7 +96,6 @@ export const useCoursePage = (): CourseManagementHookResult => {
     const { value: courseType } =
       (await openModal({
         content: <CourseTypeOptionCardModal />,
-        width: 'md',
       })) || {};
 
     // 취소 버튼 클릭시 종료

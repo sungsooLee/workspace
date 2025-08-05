@@ -1,17 +1,56 @@
-import { IcoBell04 } from '@learnway/icons';
+import { IcoBell04, IcoFolder, IcoMoreHorizontal } from '@learnway/icons';
+import dropdownPopoverStyles from '@learnway/styles/fo/shared/ui/dropdown-popover/dropdown-popover.module.css';
+import { Badge } from '@learnway/ui/badge';
 import { Button } from '@learnway/ui/button';
+import { Popover } from '@learnway/ui/popover';
 import { Tabs } from '@learnway/ui/tabs';
+import { useToast } from '@learnway/ui/toast';
+import { Link } from '@tanstack/react-router';
 import { memo, useState } from 'react';
+
 import styles from './notification-contents.module.css';
 
+const TotalopoverCompoment = () => {
+  return (
+    <div className={`${dropdownPopoverStyles.start} ${dropdownPopoverStyles.dropdown_wrap}`}>
+      <Button>모두 읽음 상태로 표시</Button>
+      <Button>전체삭제</Button>
+    </div>
+  );
+};
+
+const ListopoverCompoment = () => {
+  const { open } = useToast();
+
+  const handleClickToast = () => {
+    open({
+      title: '삭제되었습니다',
+      actionLabel: '취소하기',
+      type: 'success',
+      // duration: 5000,
+      // showCloseButton: true,
+      onActionClick: () => {
+        console.log('버튼 클릭');
+      },
+    });
+  };
+  return (
+    <div className={`${dropdownPopoverStyles.start} ${dropdownPopoverStyles.dropdown_wrap}`}>
+      <Button>읽음 상태로 표시</Button>
+      <Button label="삭제" onClick={handleClickToast} />
+      <Button>보관{/* 보관해제 */}</Button>
+    </div>
+  );
+};
 interface NotificationInfo {
   id: number;
-  title: string;
-  message: string;
+  title: React.ReactNode;
+  message: React.ReactNode;
   time: string;
+  isNew: boolean;
   isRead: boolean;
   hasLink: boolean;
-  category: 'a' | 'b' | 'c' | 'd' | 'archive';
+  category: 'a' | 'b' | 'c' | 'd' | 'e'; // 전체(a), 학습(b), 배지(c), 공지(d), 보관함(e)
 }
 
 const dummyNotifications: NotificationInfo[] = [
@@ -20,6 +59,7 @@ const dummyNotifications: NotificationInfo[] = [
     title: '공지사항 안내',
     message: '시스템 점검 안내입니다.',
     time: '5분 전',
+    isNew: true,
     isRead: false,
     hasLink: true,
     category: 'd',
@@ -29,102 +69,173 @@ const dummyNotifications: NotificationInfo[] = [
     title: '배지 획득',
     message: '프론트엔드 마스터 배지를 획득했어요!',
     time: '1시간 전',
+    isNew: false,
     isRead: true,
     hasLink: false,
-    category: 'c',
-  },
-  {
-    id: 3,
-    title: '강의 완료',
-    message: 'React 고급 강의를 완료했어요.',
-    time: '어제',
-    isRead: false,
-    hasLink: true,
     category: 'b',
   },
   {
-    id: 4,
-    title: '보관된 알림',
-    message: '이 알림은 보관함에 있어요.',
-    time: '3일 전',
+    id: 3,
+    title: (
+      <Link to="/" className={styles.link}>
+        서버점검
+      </Link>
+    ),
+    message: '서버점검 시간입니다.',
+    time: '어제',
+    isNew: false,
     isRead: true,
+    hasLink: true,
+    category: 'd',
+  },
+  {
+    id: 4,
+    title: 'AI 전문가의 길은 멀고도 어렵다.',
+    message: (
+      <>
+        <strong>프론트엔드 마스터 배지를 획득했어요!</strong> 수강신청 승인{' '}
+        <Button size="md" variant={'primary'} underline={true} className={styles.link}>
+          N건
+        </Button>{' '}
+        결재 대기중입니다.
+      </>
+    ),
+    time: '1시간 전',
+    isNew: false,
+    isRead: false,
     hasLink: false,
-    category: 'archive',
+    category: 'b',
   },
 ];
 
-const items = [
-  { title: '전체', key: 'a' },
-  { title: '학습', key: 'b' },
-  { title: '배지', key: 'c' },
-  { title: '공지', key: 'd' },
-];
+const categoryLabelMap: Record<NotificationInfo['category'], string> = {
+  a: '전체',
+  b: '학습',
+  c: '배지',
+  d: '공지',
+  e: '보관함',
+};
 
 const NotificationContentsComponent = () => {
-  const [selectedTabKey, setSelectedTabKey] = useState<'a' | 'b' | 'c' | 'd'>('a');
-  const [isArchiveView, setIsArchiveView] = useState(false);
+  const [selectedTabKey, setSelectedTabKey] = useState<NotificationInfo['category']>('a');
 
-  const handleTabChange = (key: string) => {
-    setSelectedTabKey(key as 'a' | 'b' | 'c' | 'd');
-    setIsArchiveView(false); // 탭 클릭 시 보관함 뷰 해제
+  const toggleExpand = (id: number) => {
+    setExpandedIds((prev) => (prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]));
   };
 
-  const handleArchiveClick = () => {
-    setIsArchiveView(true);
-  };
+  const tabItems = [
+    { title: '전체', key: 'a' },
+    { title: '학습', key: 'b' },
+    { title: '배지', key: 'c' },
+    { title: '공지', key: 'd' },
+    // '보관함(e)'은 탭에서 제거
+  ];
 
-  const filteredNotifications = isArchiveView
-    ? dummyNotifications.filter((n) => n.category === 'archive')
-    : selectedTabKey === 'a'
-      ? dummyNotifications.filter((n) => n.category !== 'archive')
+  const filteredNotifications =
+    selectedTabKey === 'a'
+      ? dummyNotifications
       : dummyNotifications.filter((n) => n.category === selectedTabKey);
+
+  const [expandedIds, setExpandedIds] = useState<number[]>([]); // 펼쳐진 알림 id 배열
+
+  const isExpanded = (id: number) => expandedIds.includes(id);
 
   return (
     <div className={`${styles.start} ${styles.alarm_contents}`}>
-      <div className={styles.header}>
+      <div className={styles.tab_header}>
         <Tabs
           selectedTabKey={selectedTabKey}
-          onTabChange={handleTabChange}
-          items={items}
+          onTabChange={(key) => setSelectedTabKey(key as NotificationInfo['category'])}
+          items={tabItems}
           type="line"
           variant="gray"
         />
-        <button
-          onClick={handleArchiveClick}
-          className={`${styles.archive_button} ${isArchiveView ? styles.active : ''}`}
-        >
-          보관함
-        </button>
-      </div>
-
-      <div className={styles.total}>
-        <strong>{filteredNotifications.length}</strong>개의 알림이 있습니다.
+        <Button size="ts" className={styles.archive} onClick={() => setSelectedTabKey('e')}>
+          <IcoFolder className={styles.ico} />
+        </Button>
       </div>
 
       {filteredNotifications.length === 0 ? (
         <div className={styles.empty}>
           <IcoBell04 className={styles.ico_bell} />
-          새로운 알림이 없습니다.
-          <span className={styles.sub_text}>알림은 30일 동안 보관됩니다.</span>
+
+          {selectedTabKey === 'e' ? '보관함이 없습니다.' : '알림이 없습니다.'}
         </div>
       ) : (
-        <ul className={styles.info_list}>
-          {filteredNotifications.map((noti) => (
-            <li
-              className={`${styles.info_item} ${!noti.isRead ? styles.active : ''}`}
-              key={noti.id}
+        <>
+          {' '}
+          <div className={styles.total_box}>
+            <span className={styles.total}>
+              <strong>127</strong> 개의 알림이 있습니다.
+            </span>
+
+            <Popover
+              popoverContent={<TotalopoverCompoment />}
+              side="bottom"
+              align="start"
+              sideOffset={10}
             >
-              <div className={styles.title_wrap}>
-                <strong className={styles.title}>{noti.title}</strong>
-              </div>
-              <div className={styles.message_wrap}>
-                <p className={styles.message}>{noti.message}</p>
-                <Button variant="underline" size="sm" label={'9건 더보기'} />
-                <p className={styles.time}>{noti.time}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
+              <IcoMoreHorizontal className={styles.ico} />
+            </Popover>
+          </div>
+          <ul className={styles.info_list}>
+            {filteredNotifications.map((noti) => (
+              <li
+                className={` ${styles.info_item} ${noti.isNew ? styles.new : ''} ${noti.isRead ? styles.active : ''} `}
+                key={noti.id}
+              >
+                <div className={styles.head}>
+                  <Badge
+                    option={{
+                      label: categoryLabelMap[noti.category],
+                      value: categoryLabelMap[noti.category],
+                    }}
+                    status="primary"
+                    rounded
+                    size="sm"
+                  />
+                  <div className={styles.list_set}>
+                    <span className={styles.time}>{noti.time}</span>
+                    <Popover
+                      popoverContent={<ListopoverCompoment />}
+                      side="bottom"
+                      align="start"
+                      sideOffset={10}
+                    >
+                      <IcoMoreHorizontal className={styles.ico} />
+                    </Popover>
+                  </div>
+                </div>
+                <div className={styles.message_wrap}>
+                  <div className={styles.title}>{noti.title}</div>
+                  <div className={styles.message}>{noti.message}</div>
+                  <div className={`${styles.group} ${isExpanded(noti.id) ? 'block' : 'hidden'}`}>
+                    <ul className={styles.list}>
+                      <li>
+                        <Button className={styles.link}>같은 그룹끼리 제목 보여줌</Button>
+                      </li>
+                      <li>
+                        <Button className={styles.link}>같은 그룹끼리 제목 보여줌</Button>
+                      </li>
+                      <li>
+                        <Button className={styles.link}>같은 그룹끼리 제목 보여줌</Button>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <Button
+                  size="sm"
+                  underline={true}
+                  label={isExpanded(noti.id) ? '접기' : '9건 더보기'}
+                  className={styles.btn_more}
+                  onClick={() => toggleExpand(noti.id)}
+                />
+              </li>
+            ))}
+          </ul>
+          <div className={styles.noti_txt}>최근 30일간의 알림만 보관됩니다.</div>
+        </>
       )}
     </div>
   );
