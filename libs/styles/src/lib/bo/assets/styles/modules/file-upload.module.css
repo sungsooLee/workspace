@@ -338,29 +338,42 @@
         }
         .upload_status {
           .file_item {
-            @apply block px-[16px];
+            @apply min-h-[64px] px-[16px];
             .file_name {
-              @apply inline-flex;
+              @apply min-w-auto inline-flex w-[calc(100%-40px)];
               svg {
                 @apply shrink-0;
               }
               em {
                 @apply truncate;
+                & + svg {
+                  @apply mr-0;
+                }
               }
             }
+            .status_view {
+              @apply hidden;
+            }
             .progress_area {
-              @apply inline-flex w-auto max-w-[166px] justify-start;
-              .progress_wrap {
+              @apply w-[calc(100%-70px)] justify-start;
+              [class*='progress_wrap'] {
+                @apply w-full;
+                [class*='progress_status'] {
+                  @apply mr-0 min-w-[50px] text-left;
+                }
                 [class*='nlp--progress'] {
-                  @apply w-auto;
+                  @apply w-full;
                 }
               }
             }
             .control_wrap {
-              @apply inline-flex;
+              @apply ml-auto w-[20px];
             }
             .delele_btn_wrap {
-              @apply inline-flex;
+              @apply ml-[10px];
+              [class*='nlp--button'] svg {
+                @apply mx-0;
+              }
             }
           }
         }

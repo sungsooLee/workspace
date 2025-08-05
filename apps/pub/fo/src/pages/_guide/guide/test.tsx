@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-// import { useState } from 'react';
+import { useEffect } from 'react';
 // import ThumbnailList from '../../-components/thumb/thumb-nail-list';
 
 // // 이미지
@@ -31,6 +31,7 @@ import { Button } from '@learnway/ui/button';
 import { Checkbox } from '@learnway/ui/checkbox';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 import { ProgressBar } from '@learnway/ui/progress';
+import { isMobile } from 'react-device-detect';
 
 export const Route = createFileRoute('/_guide/guide/test')({
   component: RouteComponent,
@@ -448,12 +449,12 @@ function RouteComponent() {
   // };
 
   const { openModal } = useModal();
-  // useEffect(() => {
-  //   openModal({
-  //     width: isMobile ? 'm_full' : 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
-  //     content: <FileUploadContent />,
-  //   });
-  // }, [openModal]);
+  useEffect(() => {
+    openModal({
+      width: isMobile ? 'm_full' : 'md', // sm(600px), md(800px), lg(1024px), xl(1400px)
+      content: <FileUploadContent />,
+    });
+  }, [openModal]);
 
   return (
     <div>
