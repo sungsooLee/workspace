@@ -6,7 +6,7 @@
     }
 
     .empty {
-      @apply title5-b flex h-[100px] flex-col items-center justify-center pt-[25px] text-center text-[var(--gray35)];
+      @apply title5-b flex h-[100px] flex-col items-center justify-center pt-[25px] text-center text-[var(--gray10)];
       .ico_bell {
         @apply mb-[8px] flex h-[40px] w-[40px];
       }
