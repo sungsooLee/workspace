@@ -70,6 +70,7 @@ function HtmlViewComponent({ content, hasMapping }: Props) {
   return (
     <form onSubmit={onSubmit(handleSubmit)}>
       <PageContainer
+        title={t('HTML 상세')}
         tooltipProps={{
           show: !!hasMapping || content?.createType !== ContentCreateType.MANUAL,
           content: t(getTooltipContent(content?.createType)),

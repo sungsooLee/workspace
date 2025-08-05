@@ -13,6 +13,9 @@ import {
   ScormView,
   VideoView,
 } from '@widgets/learning/learning-resource';
+import { ExamView } from '@widgets/learning/learning-resource/exam-view';
+import { QuestionBasicInfoDetail, TestPaperBasicInfoDetail } from '@types';
+import { ExamPoolView } from '@widgets/learning/learning-resource/exam-pool-view';
 
 export const Route = createFileRoute('/_layout/learning/learning-resource/view')({
   component: RouteComponent,
@@ -50,6 +53,10 @@ function RouteComponent() {
       return <HtmlView content={content} hasMapping={hasMapping} />;
     case LEARNING_TYPE.BLOG:
       return <BlogView content={content} hasMapping={hasMapping} />;
+    case LEARNING_TYPE.EXAM:
+      return <ExamView content={content as TestPaperBasicInfoDetail} hasMapping={hasMapping} />;
+    case LEARNING_TYPE.EXAM_POOL:
+      return <ExamPoolView content={content as QuestionBasicInfoDetail} hasMapping={hasMapping} />;
   }
 
   return <NotFound />;

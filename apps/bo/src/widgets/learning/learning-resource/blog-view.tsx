@@ -47,6 +47,7 @@ function RouteComponent({ content, hasMapping }: Props) {
   return (
     <form ref={formRef} onSubmit={onSubmit(handleOnSubmit)}>
       <PageContainer
+        title={t('블로그 상세')}
         tooltipProps={{
           show: !!hasMapping || content?.createType !== ContentCreateType.MANUAL,
           content: t(getTooltipContent(content?.createType)),
