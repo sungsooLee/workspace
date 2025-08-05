@@ -799,3 +799,34 @@ export interface SharedBoxContent extends Omit<SharedContent, 'sharedBoxId'> {
 }
 
 export type GetSharedBoxContentsRes = PaginationResponse<SharedBoxContent>;
+
+export interface GetSharedHistoryParams {
+  sourceContentUuid: string;
+  destChannelUuid: string;
+}
+
+export interface ShareDestination {
+  destContentUuid: string; //도착지 콘텐츠 UUID
+  destContentName: string; //도착지 콘텐츠명
+  destTenantId: number; //도착지 테넌트 ID
+  destTenantName: string; //도착지 테넌트명
+  destChannelUuid: string; //도착지 채널 UUID
+  destChannelName: string; //도착지 채널 이름
+  languageCountryCode: string; //도착지 콘텐츠 국가 언어 코드 Enum(pms.multilingual.LangCountryCode)
+  languageCountryCodeName: string; //도착지 콘텐츠 국가 언어 코드
+  recieverUuid: string; //수신자 UUID
+  recieverName: string; //수신자이름
+  recievedDate: Date;
+}
+
+export interface GetSharedHistoryRes {
+  sourceContentUuid: string; //	출발지 콘텐츠 UUIDstring
+  sourceContentName: string; //	출발지 콘텐츠명string
+  sourceTenantId: number; //	출발지 테넌트 IDinteger($int64)
+  sourceTenantName: string; //	출발지 테넌트명string
+  sourceChannelUuid: string; //	출발지 채널 UUIDstring
+  sourceChannelName: string; //	출발지 채널 이름string
+  languageCountryCode: string; //	출발지 콘텐츠 국가 언어 코드string
+  languageCountryCodeName: string; //	출발지 콘텐츠 국가 언어명string
+  shareDestinations: ShareDestination[];
+}

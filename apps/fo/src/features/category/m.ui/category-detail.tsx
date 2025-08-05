@@ -39,7 +39,9 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
   // 필터 선택된 값이 있으면 true 변경
   const [selectCheck, setSelectCheck] = useState(false);
 
-  const [selectedCardOptions, setSelectedCardOptions] = useState([]);
+  const [selectedCardOptions, setSelectedCardOptions] = useState({
+    lecture: [], enrollment: [], difficulty: [], language: []
+  });
   const [filter, setFilter] = useState<any>();
   const [difficultyCodes, setDifficultyCodes] = useState<any>();
   const [languageCodes, setLanguageCodes] = useState<any>();
@@ -71,8 +73,8 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
       content: <CategoryFilterPopup initialFilters={selectedCardOptions} filterCodes={codes}/>,
       onClose: (data: any) => {
         if( data ) {
-          if( data.length> 0 ) setSelectCheck(true)
-          else setSelectCheck(false);
+          const isAllEmpty = Object.values(data).some((item: any) => item.length > 0);
+          setSelectCheck(isAllEmpty);
           setSelectedCardOptions(data)
         }
       },
@@ -121,9 +123,13 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
   useEffect(() => {
     (async () => {
       if( selectedCardOptions ) {
+        const enrollment = selectedCardOptions.enrollment ? selectedCardOptions.enrollment.map((row: any) => row.value) : [];
         const payload = {
           ...coursePayload,
-          courseType: selectedCardOptions.map( (row: any) => row.value),
+          courseType: selectedCardOptions.lecture ? selectedCardOptions.lecture.map( (row: any) => row.value) : null,
+          trainingLevelType: selectedCardOptions.difficulty ? selectedCardOptions.difficulty.map( (row: any) => row.value) : null,
+          language: selectedCardOptions.language ? selectedCardOptions.language.map( (row: any) => row.value) : null,
+          isEnrollEnabled: enrollment.length !== 0 ? enrollment[0] === 'allow' : null,
         }
         setCoursePayload(payload);
         await fetchCoursesCategory(payload)
@@ -134,7 +140,6 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
   useEffect(() => {
     if( categoryInfo ) {
       (async () => {
-        console.log('### categoryInfo => ', categoryInfo);
         const payload = {
           ...coursePayload,
           page, size,
@@ -313,4 +318,4 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
   );
 }
 
-export const CategoryDetail = CategoryDetailComponent;
+export const CategoryDetailM = CategoryDetailComponent;

@@ -157,6 +157,15 @@
       }
     }
   }
+  &.m_full {
+    .content_body {
+      [class*='nlp--modal-content'] {
+        [class*='modal-content'] {
+          @apply !max-h-none;
+        }
+      }
+    }
+  }
   /* mobile bottom sheet */
   &.m_bottom_sheet {
     @apply bottom-0 top-auto h-auto max-h-[calc(100%-60px)] !rounded-t-[16px] rounded-b-none;

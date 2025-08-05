@@ -13,21 +13,14 @@ export const useExamBasicInfoForm = (options: {
 }) => {
   const { confirm } = useModal();
 
-  const {
-    provider: basicInfoProvider,
-    getValues: getBasicInfoValues,
-    updateFormData: updateBasicInfoFormData,
-    onFormChange: onBasicInfoFormChange,
-    onFormValid,
-    onSubmit,
-  } = useDynamicForm2();
+  const basicInfoForm = useDynamicForm2();
 
-  const updateFormDataByKey = (key: string, value: any) => {
-    updateBasicInfoFormData({
-      ...getBasicInfoValues(),
-      [key]: value,
-    });
-  };
+  // const updateFormDataByKey = (key: string, value: any) => {
+  //   updateBasicInfoFormData({
+  //     ...getBasicInfoValues(),
+  //     [key]: value,
+  //   });
+  // };
 
   const { create: createExamBasicInfo } = useCreateExamPaperContent({
     onSuccess: (result: TestPaperBasicInfoSaveRes) => {
@@ -49,18 +42,16 @@ export const useExamBasicInfoForm = (options: {
     },
   });
 
-  const saveBasicInfo = async (data: Record<string, any>, isOnGenTypeChange?: boolean) => {
+  const saveBasicInfo = async (data: Record<string, any> /*isOnGenTypeChange?: boolean*/) => {
     const requestData = getExamSaveRequestDataFromFormData({
       values: data as TestPaperBasicInfoFormData,
       contentUuid: options.contentUuid,
     });
 
-    const result = isOnGenTypeChange
-      ? true
-      : await confirm({
-          title: t('LABEL.confirm.save.title'),
-          content: t('LABEL.confirm.save.message'),
-        });
+    const result = await confirm({
+      title: t('LABEL.confirm.save.title'),
+      content: t('LABEL.confirm.save.message'),
+    });
 
     if (result) {
       if (!options.contentUuid) {
@@ -72,13 +63,14 @@ export const useExamBasicInfoForm = (options: {
   };
 
   return {
-    basicInfoProvider,
-    getBasicInfoValues,
-    updateBasicInfoFormData,
-    updateFormDataByKey,
-    onBasicInfoFormChange,
+    basicInfoForm,
+    // basicInfoProvider,
+    // getBasicInfoValues,
+    // updateBasicInfoFormData,
+    // updateFormDataByKey,
+    // onBasicInfoFormChange,
     saveBasicInfo,
-    onSubmit,
-    onFormValid,
+    // onSubmit,
+    // onFormValid,
   };
 };

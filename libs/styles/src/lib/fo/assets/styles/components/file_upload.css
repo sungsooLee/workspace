@@ -52,15 +52,22 @@
         [class*='control_wrap'] {
           & > svg {
             @apply fill-[var(--blue50)];
-          }
-          & > [class*='nlp--button'] {
-            & > svg {
+            &[class*='icon_refresh'] {
               @apply fill-[var(--blue75)];
+            }
+            &[class*='icon_pause'] {
+              @apply fill-[var(--gray75)];
             }
           }
         }
         [class*='file_name'] em {
           @apply label-xl text-[var(--gray35)];
+        }
+        [class*='status_view'] em {
+          @apply label-lg text-[var(--gray35)];
+        }
+        [class*='progress_area'] p {
+          @apply label-lg text-[var(--gray35)];
         }
       }
     }

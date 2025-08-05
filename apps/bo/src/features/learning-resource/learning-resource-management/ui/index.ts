@@ -8,6 +8,7 @@ export * from './learning-resource-html-detail';
 export * from './learning-resource-html-file-info';
 export * from './learning-resource-question-info';
 export * from './learning-resource-scorm-detail';
+export * from './learning-resource-shared-info-modal';
 export * from './learning-resource-shared-table';
 export * from './learning-resource-table';
 export * from './learning-resource-test-paper-info';

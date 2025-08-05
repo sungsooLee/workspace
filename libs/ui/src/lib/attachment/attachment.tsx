@@ -1,28 +1,27 @@
 // IA011 / NLP_BO_PMS_1100_5
-import { useCallback, useState } from 'react';
-import styles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css';
+import { UploadFile, useFileManager } from '@learnway/hooks';
 import {
   IcoAlertCircle,
   IcoComplete02,
   IcoFileExcel,
+  IcoFileUpload,
   IcoPaperClip,
   IcoPause,
   IcoRefresh,
   IcoTrash03,
-  IcoFileUpload,
 } from '@learnway/icons';
 import { cn, formatBytes } from '@learnway/shared';
-import { UploadFile, useFileManager } from '@learnway/hooks';
-import { useDropzone } from 'react-dropzone';
-import { AttachmentProps } from './types';
+import styles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css';
 import { t } from 'i18next';
-import { Info, Paperclip } from 'lucide-react';
-import { ProgressBar } from '../progress/progress-bar/progress-bar';
+import { compact, first, get, map, sum } from 'lodash-es';
+import { useCallback, useState } from 'react';
+import { useDropzone } from 'react-dropzone';
 import { Badge } from '../badge/badge';
 import { Button } from '../button/button';
 import { Checkbox } from '../checkbox/checkbox';
 import { useModal } from '../modal/modal.hook';
-import { compact, first, get, map, sum } from 'lodash-es';
+import { ProgressBar } from '../progress/progress-bar/progress-bar';
+import { AttachmentProps } from './types';
 
 const AttachmentComponent = ({
   files,
@@ -194,7 +193,7 @@ const AttachmentComponent = ({
               onClick={() => onPause(file.id)}
               disabled={readOnly || disabled}
             >
-              <IcoPause width={20} height={20} fill="#A9AFB8" />
+              <IcoPause width={20} height={20} fill="#A9AFB8" className={styles.icon_pause} />
             </Button>,
           )}
           <div className={styles.delele_btn_wrap}></div>
@@ -212,7 +211,7 @@ const AttachmentComponent = ({
               onClick={() => onPause(file.id)}
               disabled={readOnly || disabled}
             >
-              <IcoPause width={20} height={20} fill="#A9AFB8" />
+              <IcoPause width={20} height={20} fill="#A9AFB8" className={styles.icon_pause} />
             </Button>,
           )}
           <div className={styles.delele_btn_wrap}></div>
@@ -273,7 +272,7 @@ const AttachmentComponent = ({
               onClick={() => (file.status === 'paused' ? onResume(file.id) : onRetry(file.id))}
               disabled={readOnly || disabled}
             >
-              <IcoRefresh width={20} height={20} fill="#00AFD5" />
+              <IcoRefresh width={20} height={20} fill="#00AFD5" className={styles.icon_refresh} />
             </Button>,
           )}
           <div className={styles.delele_btn_wrap}>{renderDeleteButton(true)}</div>

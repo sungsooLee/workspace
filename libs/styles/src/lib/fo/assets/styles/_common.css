@@ -21,7 +21,7 @@ html {
 }
 
 body {
-  @apply scrollbar overflow-x-hidden text-[1.6rem] font-[400] leading-[160%] text-[var(--gray10)];
+  @apply scrollbar overflow-x-hidden break-all text-[1.6rem] font-[400] leading-[160%] text-[var(--gray10)];
 }
 
 strong {
