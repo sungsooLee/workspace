@@ -541,7 +541,7 @@ function RouteComponent() {
       </div>
 
       <div className={styles.lists_wrap}>
-        {/* <p className={styles.search_text}>“파파파파”의 검색결과</p> */}
+        <p className={styles.search_text}>“파파파파”의 검색결과</p>
 
         <div className={styles.align}>
           <div className={styles.left}>
