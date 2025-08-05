@@ -1,6 +1,6 @@
 .start {
   &.btn {
-    @apply box-border inline-flex items-center justify-start leading-[1rem];
+    @apply box-border inline-flex flex-wrap items-center justify-start whitespace-nowrap leading-[1rem];
     /* Size ( 24 | 28 | 32 | 36 | 40 | 44 | 48 | 52 ) */
     &.ts {
       @apply button_bo_3_r !h-[24px] min-w-[50px] justify-center rounded-[4px] px-[6px];
@@ -15,7 +15,7 @@
       @apply button_bo_2_b !h-[36px] min-w-[50px] justify-center px-[12px];
     }
     &.lg {
-      @apply button_bo_2_b !h-[40px] min-w-[50px] justify-center whitespace-nowrap !px-[12px];
+      @apply button_bo_2_b !h-[40px] min-w-[50px] justify-center !px-[12px];
     }
     &.lx {
       @apply button_bo_2_b !h-[44px] min-w-[50px] justify-center px-[12px];

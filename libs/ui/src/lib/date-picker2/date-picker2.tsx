@@ -140,6 +140,9 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
         className={cn('datepicker_input', className)}
         onChange={handleChange}
         excludeDates={disabledDates}
+        renderDayContents={(day) => {
+          return <span className="date_text">{day}</span>;
+        }}
         renderYearContent={
           displayType === 'year'
             ? (year: number) => {
@@ -202,12 +205,10 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
 
   return (
     <div className={cn('nlp--datepicker-time', 'nlp--datepicker-from-to')}>
-      <div className="datepicker_from_to">
-        <div className="nlp--datepicker-calendar">
-          {showPicker && <Picker />}
-          {showHourInput && <HourInput />}
-          {showTimeInput && <TimeInput />}
-        </div>
+      <div className="nlp--datepicker-calendar">
+        {showPicker && <Picker />}
+        {showHourInput && <HourInput />}
+        {showTimeInput && <TimeInput />}
       </div>
     </div>
   );

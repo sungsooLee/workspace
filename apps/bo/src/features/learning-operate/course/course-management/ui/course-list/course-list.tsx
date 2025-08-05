@@ -90,7 +90,7 @@ const TestLinkBox = () => {
         to="/learning/course/create"
         state={{ courseId }}
         className="link"
-        style={{ display: 'inline-block', width: 40, textAlign: 'center' }}
+        style={{ display: 'inline-block', width: 40, textAlign: 'center', border: '1px solid' }}
       >
         등록
       </Link>
@@ -101,9 +101,17 @@ const TestLinkBox = () => {
           courseName: '라우팅시 넘긴 과정 이름',
         }}
         className="link"
-        style={{ display: 'inline-block', width: 40, textAlign: 'center' }}
+        style={{ display: 'inline-block', width: 40, textAlign: 'center', border: '1px solid' }}
       >
         상세
+      </Link>
+      <Link
+        to="/learning/course/create"
+        state={{ courseId, courseType: 'ELEARNING1' }}
+        className="link"
+        style={{ display: 'inline-block', width: 60, textAlign: 'center', border: '1px solid' }}
+      >
+        산규등록
       </Link>
       <Divider orientation={'vertical'} />
     </>

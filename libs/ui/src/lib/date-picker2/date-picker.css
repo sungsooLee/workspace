@@ -185,29 +185,29 @@
   }
 
   .react-datepicker__day--in-selecting-range:not(
-      .react-datepicker__day--in-range,
-      .react-datepicker__month-text--in-range,
-      .react-datepicker__quarter-text--in-range,
-      .react-datepicker__year-text--in-range
-    ),
+    .react-datepicker__day--in-range,
+    .react-datepicker__month-text--in-range,
+    .react-datepicker__quarter-text--in-range,
+    .react-datepicker__year-text--in-range
+  ),
   .react-datepicker__month-text--in-selecting-range:not(
-      .react-datepicker__day--in-range,
-      .react-datepicker__month-text--in-range,
-      .react-datepicker__quarter-text--in-range,
-      .react-datepicker__year-text--in-range
-    ),
+    .react-datepicker__day--in-range,
+    .react-datepicker__month-text--in-range,
+    .react-datepicker__quarter-text--in-range,
+    .react-datepicker__year-text--in-range
+  ),
   .react-datepicker__quarter-text--in-selecting-range:not(
-      .react-datepicker__day--in-range,
-      .react-datepicker__month-text--in-range,
-      .react-datepicker__quarter-text--in-range,
-      .react-datepicker__year-text--in-range
-    ),
+    .react-datepicker__day--in-range,
+    .react-datepicker__month-text--in-range,
+    .react-datepicker__quarter-text--in-range,
+    .react-datepicker__year-text--in-range
+  ),
   .react-datepicker__year-text--in-selecting-range:not(
-      .react-datepicker__day--in-range,
-      .react-datepicker__month-text--in-range,
-      .react-datepicker__quarter-text--in-range,
-      .react-datepicker__year-text--in-range
-    ) {
+    .react-datepicker__day--in-range,
+    .react-datepicker__month-text--in-range,
+    .react-datepicker__quarter-text--in-range,
+    .react-datepicker__year-text--in-range
+  ) {
     @apply bg-[#EAF1FA];
   }
 
@@ -387,6 +387,7 @@
 
 /* from-to */
 .nlp--datepicker-from-to {
+  @apply flex w-full;
   .react-datepicker__month-container + .react-datepicker__month-container {
     @apply ml-[32px];
   }
@@ -453,10 +454,32 @@
 }
 
 .nlp--datepicker-from-to {
-  .datepicker_from_to {
-    @apply flex w-full;
+  @apply flex w-full;
+  .nlp--datepicker-time {
+    @apply flex-1;
     .nlp--datepicker-calendar {
-      @apply flex flex-1 gap-x-[8px];
+      @apply flex w-full;
+      .datepicker_wrap {
+        @apply flex-1;
+      }
+      .nlp--datepicker-time {
+        @apply flex-1;
+      }
+      .nlp--popover-trigger {
+        @apply w-full;
+      }
+    }
+  }
+  .nlp--datepicker-calendar {
+    @apply flex flex-1 gap-x-[8px];
+    .datepicker_wrap {
+      @apply flex-1;
+    }
+    .nlp--datepicker-time {
+      @apply flex-1;
+      .nlp--popover-trigger {
+        @apply w-full;
+      }
     }
   }
 }

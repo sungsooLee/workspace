@@ -31,7 +31,8 @@ function HtmlViewComponent({ content, hasMapping }: Props) {
   const { confirm: openConfirm } = useModal();
 
   const form = useDynamicForm2();
-  const { provider, onSubmit } = form;
+  const { provider, onSubmit, watch } = form;
+  const processingStatus = watch('processingStatus');
 
   const { update: updateMetadata } = useUpdateHTML5Metadata({
     onSuccess: (result: HtmlVideoMetadataRes) => {
@@ -90,7 +91,7 @@ function HtmlViewComponent({ content, hasMapping }: Props) {
             <LearningResourceHtmlFileInfo
               contentUuid={content.contentUuid}
               uuid={content.fileUuid}
-              status={content?.contentStatusCode ?? ContentStatusCode.TEMPORARY_SAVE}
+              processingStatus={processingStatus}
             />
           )}
         </SubContents>

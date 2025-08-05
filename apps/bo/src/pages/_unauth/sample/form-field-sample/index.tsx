@@ -82,17 +82,57 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow2
               provider={provider}
-              name={'periodPicker'}
-              label={t('기간 선택')}
+              name={'day'}
+              label={'day'}
+              element={<PeriodPickerFormField datePickerConfig={{ displayType: 'day' }} />}
+            />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow2
+              provider={provider}
+              name={'time'}
+              label={'time'}
+              element={<PeriodPickerFormField datePickerConfig={{ displayType: 'time' }} />}
+            />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow2
+              provider={provider}
+              name={'time-hm'}
+              label={'time-hm'}
+              element={<PeriodPickerFormField datePickerConfig={{ displayType: 'time-hm' }} />}
+            />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow2
+              provider={provider}
+              name={'day-time'}
+              label={'day-time'}
+              element={<PeriodPickerFormField datePickerConfig={{ displayType: 'day-time' }} />}
+            />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow2
+              provider={provider}
+              name={'day-time-h'}
+              label={'day-time-h'}
               element={<PeriodPickerFormField datePickerConfig={{ displayType: 'day-time-h' }} />}
             />
           </ContentsRow>
           <ContentsRow>
             <FormRow2
               provider={provider}
-              name={'periodPicker'}
-              label={t('기간 선택')}
-              element={<PeriodPickerFormField datePickerConfig={{ displayType: 'day-time-h' }} />}
+              name={'day-time-hm'}
+              label={'day-time-hm'}
+              element={<PeriodPickerFormField datePickerConfig={{ displayType: 'day-time-hm' }} />}
+            />
+          </ContentsRow>
+          <ContentsRow>
+            <FormRow2
+              provider={provider}
+              name={'day-time-hms'}
+              label={'day-time-hms'}
+              element={<PeriodPickerFormField datePickerConfig={{ displayType: 'day-time-hms' }} />}
             />
           </ContentsRow>
           <ContentsRow>
