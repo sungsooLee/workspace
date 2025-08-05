@@ -15,8 +15,9 @@ import { useModal } from '@learnway/ui/modal';
 import { Switch } from '@learnway/ui/switch';
 import { memo, useEffect, useState } from 'react';
 import { BrowserView, isMobile } from 'react-device-detect';
-import languagestyles from './language.module.css';
-import styles from './user-my.module.css';
+
+import languagestyles from '@learnway/styles/fo/features/layout/ui/user-avatar/language.module.css';
+import styles from '@learnway/styles/fo/features/layout/ui/user-avatar/user-my.module.css';
 
 interface LanguagePorps {
   language?: string;

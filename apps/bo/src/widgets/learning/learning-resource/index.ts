@@ -1,3 +1,4 @@
+export * from './blog-view';
 export * from './etc-view';
 export * from './html-view';
 export * from './scorm-view';

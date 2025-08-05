@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
-import dayjs from 'dayjs';
-import { cn, isEmptyData } from '@learnway/shared';
-import { UseDynamicFormResult } from '@learnway/hooks';
-import { useFetchAuthUser } from '@learnway/auth/entities';
-import { BlogDetailRes } from '@types';
-import { ContentsHistoryInfoFormField } from '@shared/ui';
 import { MediaContentRequiredCheckFormField } from '@features/form/ui';
+import { useFetchAuthUser } from '@learnway/auth/entities';
+import { UseDynamicFormResult } from '@learnway/hooks';
+import { cn, isEmptyData } from '@learnway/shared';
+import { ContentsHistoryInfoFormField } from '@shared/ui';
+import { BlogDetailRes } from '@types';
+import dayjs from 'dayjs';
+import { useEffect } from 'react';
 import { useRoleInfo } from '../service/util';
 import { LearningResourceBaseForm } from './learning-resource-base-form';
 
@@ -14,7 +14,7 @@ import { ContentsRow } from '@learnway/ui/contents-row';
 
 type BlogDetailProps = {
   form: UseDynamicFormResult;
-  contentUuid: string;
+  contentUuid?: string;
   blogInfo?: Partial<BlogDetailRes>;
   hasMapping?: boolean;
 };

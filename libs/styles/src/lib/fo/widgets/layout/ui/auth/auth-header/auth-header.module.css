@@ -36,6 +36,11 @@
 
         .header_area {
           @apply h-[56px] w-full !pl-[20px] pr-[16px];
+          .top_area {
+            .auth {
+              @apply !px-0;
+            }
+          }
 
           h1 {
             img {
