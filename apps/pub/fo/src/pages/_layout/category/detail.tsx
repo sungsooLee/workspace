@@ -13,7 +13,7 @@ import {
 } from '@learnway/icons';
 import { Arrays, Filter } from '../../../features/layout';
 
-import dropdownPopoverStyles from '../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
+import dropdownPopoverStyles from '@learnway/styles/fo/shared/ui/dropdown-popover/dropdown-popover.module.css';
 import styles from './detail.module.css';
 
 import bnrCImage1 from '@learnway/styles/fo/assets/images/banner/banner_category_01.png';

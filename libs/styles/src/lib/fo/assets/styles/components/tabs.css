@@ -33,7 +33,7 @@
         @apply !bg-[var(--gray85)];
       }
       & > [role='tab'] {
-        @apply !title2-b px-[8px] !text-[var(--gray50)];
+        @apply title2-b px-[8px] !text-[var(--gray50)];
         .nlp--badge {
           @apply right-[8px] top-1/2 -mt-[6px] h-[6px] w-[6px] rounded-[3px] bg-[var(--red50)];
         }
@@ -51,10 +51,24 @@
         }
       }
     }
+    &.lg {
+      & > [role='tablist'] {
+        & > [role='tab'] {
+          @apply title3-b;
+        }
+      }
+    }
+    &.xl {
+      & > [role='tablist'] {
+        & > [role='tab'] {
+          @apply title3-b;
+        }
+      }
+    }
     &.xl2 {
       & > [role='tablist'] {
         & > [role='tab'] {
-          @apply !title4-b;
+          @apply title4-b;
         }
       }
     }

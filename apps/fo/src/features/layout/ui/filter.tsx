@@ -100,16 +100,11 @@ const FilterComponent = () => {
       </div>
 
       <div className={styles.reset}>
-        <Button className={styles.btn_reset}>
-          <IcoRefresh02
-            className={styles.ico_reset}
-            width={20}
-            height={20}
-            fill="none"
-            stroke="#131c30"
-          ></IcoRefresh02>
-          초기화
-        </Button>
+        <Button
+          className={styles.btn_reset}
+          label={'초기화'}
+          icon={<IcoRefresh02 width={20} height={20} fill="none" stroke="#4D525C" />}
+        />
       </div>
     </div>
   );

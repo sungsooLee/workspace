@@ -1,6 +1,6 @@
 .start {
   &.alarm_contents {
-    @apply popover-scroll relative px-[32px] pb-[32px] pt-[20px];
+    @apply popover-scroll relative max-w-[440px] px-[32px] pb-[32px] pt-[20px];
     &::after {
       @apply fixed bottom-0 left-0 h-[16px] w-full rounded-b-[16px] bg-white content-[''];
     }
@@ -15,35 +15,52 @@
       }
     }
 
+    .total_box {
+      @apply mt-[24px] flex justify-between;
+      .total {
+        @apply title3 text-[var(--gray10)];
+        strong {
+          @apply text-[var(--blue50)];
+        }
+      }
+      svg {
+        @apply h-[20px] w-[20px] rotate-90 fill-[var(--gray35)];
+      }
+    }
+
     .info_list {
       .info_item {
-        @apply py-[20px] pl-[32px] pr-[20px];
-        &:not(:first-child) {
-          @apply border-t-[1px] border-solid border-[var(--gray3)];
-        }
+        @apply mt-[16px] rounded-[12px] border border-solid border-[var(--gray90)] p-[24px];
+
         &.active {
-          @apply bg-[#fff9e7];
+          @apply opacity-[.5];
         }
-        .title_wrap {
-          @apply flex justify-between;
-          .title {
-            @apply inline-flex items-center pr-[12px];
-          }
-          .date {
-            @apply ml-[8px] inline-flex text-[1.2rem] font-normal text-[var(--gray6)];
-          }
-          .btn_close {
-            @apply min-h-[20px] min-w-[20px] shrink-0;
-          }
+        &.new {
+          @apply bg-[var(--blue95)];
         }
+
         .link {
-          @apply body_bo_2_r text-[var(--gray7)] underline;
+          @apply !body-md-b min-w-auto text-[var(--blue50)] underline;
         }
-        .message {
-          @apply body_3_r mt-[8px] text-[var(--gray7)];
+        .message_wrap {
+          @apply mt-[12px];
+          .title,
+          .message {
+            @apply body-md;
+          }
         }
-        .time {
-          @apply mt-[8px] flex text-[1.2rem] leading-[1rem] text-[var(--gray6)];
+      }
+
+      .head {
+        @apply flex items-center justify-between;
+        .list_set {
+          @apply flex items-center;
+          .time {
+            @apply body-sm mr-[4px] inline-block text-[var(--gray50)];
+          }
+          svg {
+            @apply h-[20px] w-[20px] rotate-90 fill-[var(--gray35)];
+          }
         }
       }
     }

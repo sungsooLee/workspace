@@ -1,6 +1,6 @@
+import { cn } from '@learnway/shared';
 import { useState } from 'react';
 import { FilterPopup } from '../popup/filter-popup';
-import { cn, getRandomId } from '@learnway/shared';
 import styles from './filter.module.css';
 
 import { IcoFilter, IcoRefresh02 } from '@learnway/icons';
@@ -102,7 +102,11 @@ const FilterComponent = () => {
       </div>
 
       <div className={styles.reset}>
-        <Button className={styles.btn_reset} label={'초기화'} />
+        <Button
+          className={styles.btn_reset}
+          label={'초기화'}
+          icon={<IcoRefresh02 width={20} height={20} fill="none" stroke="#4D525C" />}
+        />
       </div>
     </div>
   );
