@@ -1,19 +1,18 @@
-import React, { useState } from 'react';
-import { createFileRoute, Link } from '@tanstack/react-router';
+import { IcoArray, IcoArrowDown, IcoDotpoints } from '@learnway/icons';
 import { cn } from '@learnway/shared';
-import { isMobile } from 'react-device-detect';
-import { Popover } from '@learnway/ui/popover';
-import { Pagination } from '@learnway/ui/pagination';
 import { Button } from '@learnway/ui/button';
-import { IcoArray, IcoDotpoints, IcoArrowDown } from '@learnway/icons';
+import { Pagination } from '@learnway/ui/pagination';
+import { Popover } from '@learnway/ui/popover';
+import { createFileRoute, Link } from '@tanstack/react-router';
+import React, { useState } from 'react';
 import {
   Arrays,
   Filter,
-  IntegratedSearchProcedure,
   IntegratedSearchButton,
+  IntegratedSearchProcedure,
 } from '../../../features/layout';
 
-import dropdownPopoverStyles from '../../../shared/ui/dropdown-popover/dropdown-popover.module.css';
+import dropdownPopoverStyles from '@learnway/styles/fo/shared/ui/dropdown-popover/dropdown-popover.module.css';
 import styles from './integrated-procedure.module.css';
 
 import ImgNotice from '@learnway/styles/fo/assets/images/thumb/img_notice_01.png';
