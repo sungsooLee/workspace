@@ -12,6 +12,7 @@ import {
   GetContentsParams,
   GetSharedBoxContentsParams,
   GetSharedContentsParams,
+  GetSharedHistoryParams,
   GetShareTenantsChannelsParams,
   HtmlVideoFileChangeReq,
   HtmlVideoMetadataReq,
@@ -69,6 +70,7 @@ export const queryKeys = {
   sharedBoxContents: ['shared-box-contents'] as const,
   sharedBoxTenantCodes: ['shared-box-tenant-codes'] as const,
   sharedBoxChannelCodes: ['shared-box-channel-codes'] as const,
+  sharedHistory: ['shared-history'] as const,
 };
 
 export const learningResourceQueryOptions = {
@@ -212,6 +214,12 @@ export const learningResourceQueryOptions = {
   getSharedBoxChannelCodes: (srcTenantId: number) => ({
     queryKey: queryKeys.sharedBoxChannelCodes,
     queryFn: () => LearningResourceService.getSharedBoxChannelCodes(srcTenantId),
+    enabled: true,
+  }),
+
+  getSharedHistory: (params: GetSharedHistoryParams) => ({
+    queryKey: queryKeys.sharedHistory,
+    queryFn: () => LearningResourceService.getSharedHistory(params),
     enabled: true,
   }),
 };
