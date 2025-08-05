@@ -6,12 +6,19 @@
     }
 
     .empty {
-      @apply body_bo_1_b flex h-[334px] flex-col items-center justify-center text-center text-[var(--gray9)];
+      @apply title5-b flex h-[100px] flex-col items-center justify-center pt-[25px] text-center text-[var(--gray35)];
       .ico_bell {
-        @apply mb-[8px] flex;
+        @apply mb-[8px] flex h-[40px] w-[40px];
       }
-      .sub_text {
-        @apply body_bo_2_r block text-[var(--gray9)];
+    }
+
+    .tab_header {
+      @apply relative;
+      .archive {
+        @apply min-w-auto absolute right-0 top-1/2 -translate-y-1/2 border-none !p-0;
+        .ico {
+          @apply h-[24px] w-[24px] stroke-[var(--gray50)];
+        }
       }
     }
 
@@ -63,6 +70,10 @@
           }
         }
       }
+    }
+
+    .noti_txt {
+      @apply body-sm mt-[16px] text-center text-[var(--gray50)];
     }
   }
 }

@@ -42,8 +42,11 @@ import {
   default as bnrImage1,
   default as listImage1,
 } from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
-import { useModal } from '@learnway/ui/modal';
+import { Accordion } from '@learnway/ui/accordion';
 import { Button } from '@learnway/ui/button';
+import { Carousel } from '@learnway/ui/carousel';
+import { useModal } from '@learnway/ui/modal';
+import { Tabs } from '@learnway/ui/tabs';
 import { useToast } from '@learnway/ui/toast';
 
 export const Route = createFileRoute('/_layout/course-introduction/detail-m')({
