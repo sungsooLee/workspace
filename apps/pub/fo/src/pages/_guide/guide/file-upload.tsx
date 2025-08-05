@@ -3,11 +3,8 @@ import { useEffect } from 'react';
 
 import {
   IcoAlertCircle,
-  IcoCloseCircle,
   IcoComplete02,
-  IcoFilePng,
   IcoFileUpload,
-  IcoFormRequired,
   IcoPaperClip,
   IcoPause,
   IcoPpt,
@@ -18,7 +15,6 @@ import { cn } from '@learnway/shared';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/file-upload.module.css'; // 파일 업로드
 import PopupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
-import formStyles from '@learnway/styles/fo/assets/styles/modules/form.module.css';
 
 import { Badge } from '@learnway/ui/badge';
 import { Button } from '@learnway/ui/button';
@@ -199,85 +195,6 @@ function RouteComponent() {
                 <IcoTrash03 width={20} height={20} stroke="#131C30" />
               </Button>
             </div>
-          </div>
-        </div>
-        {/* 파일 업로드 다른 타입 */}
-        <div className={styles.upload_status_type2}>
-          {/* file_box */}
-          <div className={styles.file_box}>
-            <div className={styles.file_inner}>
-              <IcoPpt width={'24'} height={'25'} className={styles.icon_type} />
-            </div>
-            <Button className={styles.btn_cancel} onlyIcon>
-              <IcoCloseCircle width={24} height={24} fill="#6F798B" stroke="#ffffff" />
-            </Button>
-            <p className={styles.file_name}>{'file.pdf'}</p>
-          </div>
-          {/* file_box */}
-          <div className={styles.file_box}>
-            <div className={styles.file_inner}>
-              <IcoPpt width={'24'} height={'25'} className={styles.icon_type} />
-            </div>
-            <Button className={styles.btn_cancel} onlyIcon>
-              <IcoCloseCircle width={24} height={24} fill="#6F798B" stroke="#ffffff" />
-            </Button>
-            <p className={styles.file_name}>{'file.pdf'}</p>
-          </div>
-        </div>
-      </div>
-      {/* 단일로 사용하는 경우 : 첨부 전 케이스 */}
-      <div className={styles.upload_single}>
-        <div className={styles.view_file}>
-          <div className={styles.attach_area}>
-            <p className={styles.text}>버튼을 클릭하여 파일을 추가하세요.</p>
-          </div>
-        </div>
-        <Button className={styles.btn_attach} size={'sm'} variant={'gray'}>
-          <input type="file" className={styles.input_file} />
-          {'파일첨부'}
-        </Button>
-      </div>
-      {/* 단일로 사용하는 경우 : 첨부 후 케이스 */}
-      <div className={styles.upload_single}>
-        <div className={styles.view_file}>
-          {/* 퍼블수정 20250701 : 파일 첨부 후 구분 클래스 추가(attached) S  */}
-          <div className={cn(styles.attach_area, styles.attached)}>
-            {/* 퍼블수정 20250701 : 파일 첨부 후 구분 클래스 추가(attached) E  */}
-            <p className={styles.attach_view}>
-              <IcoFilePng width={'16'} height={'16'} className={styles.icon_type} />
-              <span className={styles.attached_name}>{'파일명.png'}</span>
-            </p>
-            <Button className={styles.btn_clear} onlyIcon>
-              <IcoTrash03 width={20} height={20} stroke="#131C30" />
-            </Button>
-          </div>
-        </div>
-        <Button className={styles.btn_attach} size={'sm'} variant={'gray'}>
-          <input type="file" className={styles.input_file} />
-          {'파일첨부'}
-        </Button>
-      </div>
-      {/* form_item에서 사용하는 경우 */}
-      {/* form_item */}
-      <div className={formStyles.form_item}>
-        <label htmlFor="name-channel" className={formStyles.form_label}>
-          <span className={formStyles.form_text}>채널</span>
-          {/* 필수 케이스 */}
-          <span className={cn(formStyles.status, formStyles.required)}>
-            <IcoFormRequired width={12} height={12} />
-          </span>
-        </label>
-        <div className={formStyles.input_box}>
-          <div className={styles.upload_single}>
-            <div className={styles.view_file}>
-              <div className={styles.attach_area}>
-                <p className={styles.text}>버튼을 클릭하여 파일을 추가하세요.</p>
-              </div>
-            </div>
-            <Button className={styles.btn_attach} size={'sm'} variant={'gray'}>
-              <input type="file" className={styles.input_file} />
-              {'파일첨부'}
-            </Button>
           </div>
         </div>
       </div>

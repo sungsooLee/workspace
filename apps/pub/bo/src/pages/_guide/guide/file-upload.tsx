@@ -170,7 +170,12 @@ function RouteComponent() {
                     </div>
                     <div className={styles.control_wrap}>
                       <Button className={styles.btn_status} onlyIcon>
-                        <IcoRefresh width={20} height={20} fill="#00AFD5" />
+                        <IcoRefresh
+                          width={20}
+                          height={20}
+                          fill="#00AFD5"
+                          className={styles.icon_refresh}
+                        />
                       </Button>
                     </div>
                     <div className={styles.delele_btn_wrap}>
@@ -198,7 +203,12 @@ function RouteComponent() {
                     </div>
                     <div className={styles.control_wrap}>
                       <Button className={styles.btn_status} onlyIcon>
-                        <IcoRefresh width={20} height={20} fill="#00AFD5" />
+                        <IcoRefresh
+                          width={20}
+                          height={20}
+                          fill="#00AFD5"
+                          className={styles.icon_refresh}
+                        />
                       </Button>
                     </div>
                     <div className={styles.delele_btn_wrap}>
@@ -221,7 +231,12 @@ function RouteComponent() {
                     </div>
                     <div className={styles.control_wrap}>
                       <Button className={styles.btn_status} onlyIcon>
-                        <IcoPause width={20} height={20} fill="#A9AFB8" />
+                        <IcoPause
+                          width={20}
+                          height={20}
+                          fill="#A9AFB8"
+                          className={styles.icon_pause}
+                        />
                       </Button>
                     </div>
                     <div className={styles.delele_btn_wrap}>
@@ -244,7 +259,12 @@ function RouteComponent() {
                     </div>
                     <div className={styles.control_wrap}>
                       <Button className={styles.btn_status} onlyIcon>
-                        <IcoPause width={20} height={20} fill="#A9AFB8" />
+                        <IcoPause
+                          width={20}
+                          height={20}
+                          fill="#A9AFB8"
+                          className={styles.icon_pause}
+                        />
                       </Button>
                     </div>
                     <div className={styles.delele_btn_wrap}>

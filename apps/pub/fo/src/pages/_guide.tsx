@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { createFileRoute, Outlet, Link, useLocation } from '@tanstack/react-router';
-// eslint-disable-next-line @nx/enforce-module-boundaries
+/* eslint-disable @nx/enforce-module-boundaries */
+/* eslint-disable no-restricted-imports */
+import { createFileRoute, Link, Outlet, useLocation } from '@tanstack/react-router';
+import { useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import '../../../../../libs/styles/src/lib/fo/assets/styles/global.css';
-// eslint-disable-next-line @nx/enforce-module-boundaries
 import '../../../../../libs/styles/src/lib/fo/assets/styles/guide.css';
 // import styles from './_guide.module.css';
 
@@ -106,32 +107,34 @@ function RouteComponent() {
 
   return (
     <div className="guide_wrap">
-      <div className="aside">
-        <h1>
-          <Link to={'/guide'}>Publish Guide(FO)</Link>
-        </h1>
-        <div className="menu">
-          <ul>
-            {menuItems.map(({ title, subItems }) => (
-              <li key={title}>
-                <span className="tit" onClick={() => toggleVisibility(title)}>
-                  {title}
-                  <span className="arrow">▼</span>
-                </span>
-                {subItems && !visibleList[title] && (
-                  <ul>
-                    {subItems.map(({ label, path }) => (
-                      <li key={path} className={currentPath === path ? 'active' : ''}>
-                        <Link to={path}>{label}</Link>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </li>
-            ))}
-          </ul>
+      {!isMobile && (
+        <div className="aside">
+          <h1>
+            <Link to={'/guide'}>Publish Guide(FO)</Link>
+          </h1>
+          <div className="menu">
+            <ul>
+              {menuItems.map(({ title, subItems }) => (
+                <li key={title}>
+                  <span className="tit" onClick={() => toggleVisibility(title)}>
+                    {title}
+                    <span className="arrow">▼</span>
+                  </span>
+                  {subItems && !visibleList[title] && (
+                    <ul>
+                      {subItems.map(({ label, path }) => (
+                        <li key={path} className={currentPath === path ? 'active' : ''}>
+                          <Link to={path}>{label}</Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
-      </div>
+      )}
 
       <div className="preview">
         <div className="guide_box">

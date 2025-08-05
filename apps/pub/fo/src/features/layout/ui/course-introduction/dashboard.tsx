@@ -1,25 +1,27 @@
-import { memo, useState } from 'react';
-import { BrowserView, isMobile, MobileView } from 'react-device-detect';
 import {
   IcoArrowDown,
-  IcoCaution03,
-  IcoLock,
-  IcoPlus,
   IcoCalendar01,
+  IcoCaution03,
   IcoLoading02,
+  IcoLock,
   IcoPdf,
+  IcoPlus,
 } from '@learnway/icons';
+import { memo, useState } from 'react';
+import { BrowserView, isMobile, MobileView } from 'react-device-detect';
 
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import styles from '@learnway/styles/fo/features/layout/ui/course-introduction/dashboard.module.css';
-import statusStyles from '@learnway/styles/fo/features/layout/ui/course-introduction/status.module.css';
 import pdsStyles from '@learnway/styles/fo/features/layout/ui/course-introduction/pds.module.css';
-import tableListStyles from '@learnway/styles/fo/shared/ui/list/table-list.module.css';
+import statusStyles from '@learnway/styles/fo/features/layout/ui/course-introduction/status.module.css';
 import dropdownPopoverStyles from '@learnway/styles/fo/shared/ui/dropdown-popover/dropdown-popover.module.css';
-import { CurriculumStudy } from '../../../../features/layout';
+import tableListStyles from '@learnway/styles/fo/shared/ui/list/table-list.module.css';
 import { Button } from '@learnway/ui/button';
 import { TableBox } from '@learnway/ui/grid/grid-box/table-box';
+import { Panel } from '@learnway/ui/panel';
 import { Popover } from '@learnway/ui/popover';
+import { ProgressBar } from '@learnway/ui/progress/progress-bar/progress-bar';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { CurriculumStudy } from '../../../../features/layout';
 
 const DropdownPopoverCompoment = () => {
   return (
