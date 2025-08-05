@@ -105,7 +105,7 @@ function LearningResourceTableComponent() {
         {
           name: 'contentName',
           type: 'text',
-          label: t('LABEL.form.label.contentName', '학습자원명'),
+          label: t('LABEL.form.label.contentName', '교육자원명'),
           value: '',
         },
       ],
@@ -193,7 +193,7 @@ function LearningResourceTableComponent() {
       {
         size: 338,
         name: 'contentName',
-        label: t('LABEL.grid.column.contentName', '학습자원명'),
+        label: t('LABEL.grid.column.contentName', '교육자원명'),
         meta: {
           size: 'auto',
         },
@@ -418,10 +418,10 @@ function LearningResourceTableComponent() {
     const selectedContentTypes = map(selectedRows, 'contentType');
     if (uniq(selectedContentTypes).length !== 1) {
       return alert({
-        title: t('LABEL.alert.contentTypeNotMatched.title', '같은 유형의 학습자원들을 선택하세요.'),
+        title: t('LABEL.alert.contentTypeNotMatched.title', '같은 유형의 교육자원들을 선택하세요.'),
         content: t(
           'LABEL.alert.contentTypeNotMatched.content',
-          '일괄설정은 같은 유형의 학습자원들에서만 적용됩니다.',
+          '일괄설정은 같은 유형의 교육자원들에서만 적용됩니다.',
         ),
       });
     }
@@ -431,7 +431,7 @@ function LearningResourceTableComponent() {
       // API로 체크하도록 변경해야 함
       return alert({
         title: t('LABEL.alert.isCourseUsed.title', '교육과정에서 사용 중입니다.'),
-        content: t('LABEL.alert.isCourseUsed.content', '사용 중인 학습자원은 일괄설정 불가합니다.'),
+        content: t('LABEL.alert.isCourseUsed.content', '사용 중인 교육자원은 일괄설정 불가합니다.'),
       });
     }
 
@@ -444,8 +444,8 @@ function LearningResourceTableComponent() {
   function handleCopy() {
     if (selectedRows.length !== 1) {
       return alert({
-        title: t('LABEL.alert.canNotCopy.title', '1개의 학습자원을 선택하세요'),
-        content: t('LABEL.alert.canNotCopy.content', '복사기능은 1개의 학습자원들서만 적용됩니다.'),
+        title: t('LABEL.alert.canNotCopy.title', '1개의 교육자원을 선택하세요'),
+        content: t('LABEL.alert.canNotCopy.content', '복사기능은 1개의 교육자원들서만 적용됩니다.'),
       });
     }
 
@@ -501,7 +501,7 @@ function LearningResourceTableComponent() {
                   <pre>
                     {t(
                       'LABEL.grid.tooltip.batchSetting',
-                      '학습자원의 담당자, 사용기한, 공유채널설정, \n교육자원활용, 보안콘텐츠 적용, 검수진행을 \n한번에 할 수 있어요.',
+                      '교육자원의 담당자, 사용기한, 공유채널설정, \n교육자원활용, 보안콘텐츠 적용, 검수진행을 \n한번에 할 수 있어요.',
                     )}
                   </pre>
                 }

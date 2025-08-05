@@ -57,7 +57,7 @@
       },
       "learningResourceFileUploadModal": {
         "uploaderLabel": "파일은 1개당 최대 4GB 이하로 가능 합니다.",
-        "uploaderGuideText": "업로드된 동영상은 학습자원목록에서 조회가능합니다.",
+        "uploaderGuideText": "업로드된 동영상은 교육자원목록에서 조회가능합니다.",
         "sizeError": "4GB 이하의 파일을 업로드 하세요.",
         "extensionError": "지원하는 형식의 파일을 업로드 하세요."
       },
@@ -143,10 +143,10 @@
       },
       "menu": {},
       "tooltip": {
-        "learningResourceIsUsed": "해당 학습자원은 과정에서 사용 중입니다.\n일부 정보만 변경할 수 있고, 삭제 및 업로드 파일 변경은 할 수 없습니다.",
-        "learningResourceIsTranslated": "번역된 학습자원입니다.",
-        "learningResourceIsShared": "공유된 학습자원입니다.",
-        "learningResourceIsExamMapped": "해당 학습자원은 시험지에 매핑 중입니다. 일부 정보만 변경할 수 있고, 삭제는 할 수 없습니다."
+        "learningResourceIsUsed": "해당 교육자원은 과정에서 사용 중입니다.\n일부 정보만 변경할 수 있고, 삭제 및 업로드 파일 변경은 할 수 없습니다.",
+        "learningResourceIsTranslated": "번역된 교육자원입니다.",
+        "learningResourceIsShared": "공유된 교육자원입니다.",
+        "learningResourceIsExamMapped": "해당 교육자원은 시험지에 매핑 중입니다. 일부 정보만 변경할 수 있고, 삭제는 할 수 없습니다."
       }
     },
     "modal": {
@@ -455,7 +455,7 @@
       "fileSize": "파일용량",
       "menuList": "메뉴 목록",
       "web": "웹",
-      "explanationOfLearningResources": "학습자원 설명",
+      "explanationOfLearningResources": "교육자원 설명",
       "questionManagement": "문항 관리",
       "courseOpening": "과정개설",
       "applicationDateForAuthorization": "권한 신청일",
@@ -514,7 +514,7 @@
         "copy": "복사"
       },
       "tooltip": {
-        "batchSetting": "학습자원의 담당자, 사용기한, 공유채널설정, \n교육자원활용, 보안콘텐츠 적용, 검수진행을 \n한번에 할 수 있어요."
+        "batchSetting": "교육자원의 담당자, 사용기한, 공유채널설정, \n교육자원활용, 보안콘텐츠 적용, 검수진행을 \n한번에 할 수 있어요."
       },
       "column": {
         "no": "NO.",
@@ -561,7 +561,7 @@
         "map": "약도",
         "link": "링크",
         "contentType": "유형",
-        "contentName": "학습자원명",
+        "contentName": "교육자원명",
         "coordinator": "담당자",
         "detailInfo": "세부정보",
         "util": "기능",
@@ -643,7 +643,7 @@
         "isUsed": "사용 가능",
         "address": "주소",
         "contentType": "유형",
-        "contentName": "학습자원명",
+        "contentName": "교육자원명",
         "isVendored": "외주여부",
         "isContentEnabled": "사용가능",
         "isCourseUsed": "교육활용",
@@ -850,16 +850,16 @@
       "movableSameLevel": "동일한 레벨 내에서만 매핑 및 이동이 가능합니다.",
       "movableSameParent": "동일한 부모 {{type}}에만 매핑 및 이동이 가능합니다.",
       "contentTypeNotMatched": {
-        "title": "같은 유형의 학습자원들을 선택하세요.",
-        "content": "일괄설정은 같은 유형의 학습자원들에서만 적용됩니다."
+        "title": "같은 유형의 교육자원들을 선택하세요.",
+        "content": "일괄설정은 같은 유형의 교육자원들에서만 적용됩니다."
       },
       "isCourseUsed": {
         "title": "교육과정에서 사용 중입니다.",
-        "content": "사용 중인 학습자원은 일괄설정 불가합니다."
+        "content": "사용 중인 교육자원은 일괄설정 불가합니다."
       },
       "canNotCopy": {
-        "title": "1개의 학습자원을 선택하세요",
-        "content": "복사기능은 1개의 학습자원들서만 적용됩니다."
+        "title": "1개의 교육자원을 선택하세요",
+        "content": "복사기능은 1개의 교육자원들서만 적용됩니다."
       },
       "FAIL_ID_PASSWORD": {
         "title": "입력 정보를 확인해 주세요.",

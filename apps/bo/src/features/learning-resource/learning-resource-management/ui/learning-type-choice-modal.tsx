@@ -48,7 +48,7 @@ const LearningTypeChoiceModalComponent = () => {
 
   return (
     <ModalContainer>
-      <ModalTitle>{'학습자원 유형 선택'}</ModalTitle>
+      <ModalTitle>{'교육자원 유형 선택'}</ModalTitle>
       <ModalBody>
         <div className={styles.wrap}>
           <OptionCard

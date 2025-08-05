@@ -95,7 +95,7 @@ const LearningResourceQuestionInfoComponent = ({ data }: QuestionDetailInfoProps
                 <tr>
                   <th scope="row">{t('시험지 유형')}</th>
                   <td>-</td>
-                  <th scope="row">{t('학습자원명')}</th>
+                  <th scope="row">{t('교육자원명')}</th>
                   <td>{data.contentName}</td>
                 </tr>
                 <tr>

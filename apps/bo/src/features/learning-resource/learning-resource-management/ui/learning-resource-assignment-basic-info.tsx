@@ -55,7 +55,7 @@ const LearningResourceAssignmentBasicInfoComponent = forwardRef<
       <div key="base1">
         <div className={styles.wrap}>
           <FormSubTitle label={t('기본 정보')} />
-          {/* 학습자원 공통 정보 입력 영역 */}
+          {/* 교육자원 공통 정보 입력 영역 */}
           <LearningResourceBaseForm provider={provider} />
         </div>
       </div>
