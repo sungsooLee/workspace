@@ -147,6 +147,7 @@ export const CODE_GROUP = {
   'pms.user.UserGroupType': 'pms.user.UserGroupType',
   'pms.user.UserState': 'pms.user.UserState',
   'pms.widget.DeviceType': 'pms.widget.DeviceType',
+  'pms.holiday.HolidayType': 'pms.holiday.HolidayType',
   'vps.video.FfmpegTaskTyp': 'vps.video.FfmpegTaskTyp ',
 
   // 메뉴얼
