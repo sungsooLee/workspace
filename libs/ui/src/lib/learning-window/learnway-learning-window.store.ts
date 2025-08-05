@@ -133,6 +133,13 @@ interface FunctionInfomation {
    * @returns
    */
   goCoursePage: (courseId: number) => void;
+
+  /**
+   * 홈버튼
+   * @param courseId
+   * @returns
+   */
+  goHomePage: () => void;
 }
 
 interface LearningWindowStoreData {
@@ -269,6 +276,7 @@ const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
       blogInfo: undefined,
       htmlInfo: undefined,
       ebookInfo: undefined,
+      otherInfo: undefined,
     }));
   },
 }));
