@@ -18,6 +18,7 @@ import languagestyles from '@learnway/styles/fo/features/layout/ui/user-avatar/l
 import userMyStyles from '@learnway/styles/fo/features/layout/ui/user-avatar/user-my.module.css';
 
 import { UserMyModal } from '@features/layout/m.ui/user-my-modal';
+import { useRouter } from '@tanstack/react-router';
 import { AvataFallback } from './user-avatar-fallback';
 
 //TODO 최근 방문한 화면 아이콘은 어떻게 처리 하나요?
@@ -36,6 +37,7 @@ const UserAvatarContentsComponent = ({ contentType, setContentType }: any) => {
   const { lang } = useLanguageStore((state) => state);
 
   const { logout } = useLogoutUser();
+  const { navigate } = useRouter();
 
   const [isChecked, setIsChecked] = useState(false);
 
@@ -68,6 +70,10 @@ const UserAvatarContentsComponent = ({ contentType, setContentType }: any) => {
     return lang;
   }, [lang, langCodes]);
 
+  const goToInformationChange = () => {
+    navigate({ to: '/my-page/information-change' });
+  };
+
   return (
     <div className={userMyStyles.start}>
       {contentType === 'profile' ? (
@@ -90,7 +96,12 @@ const UserAvatarContentsComponent = ({ contentType, setContentType }: any) => {
             <div className={userMyStyles.profile}>
               <div className={userMyStyles.info_box}>
                 <span className={userMyStyles.name}>{authUser?.name}</span>
-                <Button size="sm" underline={true} label={t('개인정보변경')} />
+                <Button
+                  onClick={goToInformationChange}
+                  size="sm"
+                  underline={true}
+                  label={t('개인정보변경')}
+                />
               </div>
               <div className={userMyStyles.tenant}>
                 <span>{authUser?.company?.name}</span>

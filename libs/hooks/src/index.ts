@@ -24,6 +24,7 @@ export * from './lib/use-contents-map/use-contents-map';
 export * from './lib/use-file-manager/type';
 export * from './lib/use-file-manager/use-file-manager';
 export * from './lib/use-file-uploader/use-file-uploader';
+export * from './lib/use-input/use-input.hook';
 export * from './lib/use-language-map';
 export * from './lib/use-mobile';
 export * from './lib/use-s3-uploader/constants';
