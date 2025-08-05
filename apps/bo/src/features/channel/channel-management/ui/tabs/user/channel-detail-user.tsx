@@ -10,7 +10,7 @@ import { FormItem, FormRow, SearchBox, UserGroupOrganizationShuttleModal } from 
 import { createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from 'react';
-import { EnChannelDetailButtonLayout } from './types/type';
+import { EnChannelDetailButtonLayout } from '../../../types/type';
 
 interface ChannelDetailUserProps {
   onButtonLayoutChange?: (layout: EnChannelDetailButtonLayout) => void;

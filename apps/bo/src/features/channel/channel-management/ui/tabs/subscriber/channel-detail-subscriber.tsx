@@ -1,7 +1,7 @@
 import { forwardRef, useEffect, useState } from 'react';
+import { EnChannelDetailButtonLayout } from '../../../types/type';
 import { ChannelDetailSubscriberDetail } from './channel-detail-subscriber-detail';
 import { ChannelDetailSubscriberList } from './channel-detail-subscriber-list';
-import { EnChannelDetailButtonLayout } from './types/type';
 
 interface ChannelDetailSubscriberProps {
   onButtonLayoutChange?: (layout: EnChannelDetailButtonLayout) => void;

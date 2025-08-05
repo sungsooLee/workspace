@@ -8,7 +8,7 @@ import { useRouterState } from '@tanstack/react-router';
 import { createColumnHelper, Table } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { useCallback, useEffect, useState } from 'react';
-import { EnChannelDetailButtonLayout } from './types/type';
+import { EnChannelDetailButtonLayout } from '../../../types/type';
 
 interface ChannelDetailRoleProps {
   onButtonLayoutChange: (layout: EnChannelDetailButtonLayout) => void;

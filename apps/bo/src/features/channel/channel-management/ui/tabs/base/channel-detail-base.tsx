@@ -30,8 +30,8 @@ import { useFetchAuthUser } from '@learnway/auth/entities';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import { useRouter, useRouterState } from '@tanstack/react-router';
 import { useWatch } from 'react-hook-form';
-import { getChannelUrl } from '../channel-application/service/channel-application.service';
-import { EnChannelDetailButtonLayout } from './types/type';
+import { getChannelUrl } from '../../../../channel-application/service/channel-application.service';
+import { EnChannelDetailButtonLayout } from '../../../types/type';
 
 export enum EnChannelRegisterMethod {
   REQUEST = 'REQUEST',

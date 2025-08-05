@@ -1,8 +1,8 @@
 import { EnFormMode } from '@types';
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
+import { EnChannelDetailButtonLayout } from '../../../types/type';
 import { ChannelDetailUserGroupDetail } from './channel-detail-user-group-detail';
 import { ChannelDetailUserGroupList } from './channel-detail-user-group-list';
-import { EnChannelDetailButtonLayout } from './types/type';
 
 interface ChannelDetailUserGroupProps {
   onButtonLayoutChange?: (layout: EnChannelDetailButtonLayout) => void;

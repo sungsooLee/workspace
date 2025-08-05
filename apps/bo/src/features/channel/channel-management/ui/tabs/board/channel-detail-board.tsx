@@ -2,8 +2,8 @@ import { forwardRef, useEffect, useState } from 'react';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import { Tabs } from '@learnway/ui/tabs';
+import { EnChannelDetailButtonLayout } from '../../../types/type';
 import { ChannelDetailBoardArticle } from './channel-detail-board-article';
-import { EnChannelDetailButtonLayout } from './types/type';
 
 interface ChannelDetailBoardProps {
   onButtonLayoutChange: (layout: EnChannelDetailButtonLayout) => void;

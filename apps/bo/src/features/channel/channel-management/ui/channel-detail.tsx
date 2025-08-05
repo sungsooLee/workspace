@@ -1,12 +1,3 @@
-import {
-  ChannelDetailBase,
-  ChannelDetailBoard,
-  ChannelDetailHome,
-  ChannelDetailRole,
-} from '@features/channel';
-import { ChannelDetailSubscriber } from '@features/channel/channel-management/channel-detail-subscriber';
-import { ChannelDetailUser } from '@features/channel/channel-management/channel-detail-user';
-import { ChannelDetailUserGroup } from '@features/channel/channel-management/channel-detail-user-group';
 import { Button } from '@learnway/ui/button';
 import { Tabs } from '@learnway/ui/tabs';
 import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui';
@@ -14,7 +5,14 @@ import { useRouter, useRouterState } from '@tanstack/react-router';
 import { EnFormMode } from '@types';
 import { t } from 'i18next';
 import { useRef, useState } from 'react';
-import { EnChannelDetailButtonLayout, EnChannelDetailTabKeys } from './types/type';
+import { EnChannelDetailButtonLayout, EnChannelDetailTabKeys } from '../types/type';
+import { ChannelDetailBase } from './tabs/base/channel-detail-base';
+import { ChannelDetailBoard } from './tabs/board/channel-detail-board';
+import { ChannelDetailHome } from './tabs/home/channel-detail-home';
+import { ChannelDetailRole } from './tabs/role/channel-detail-role';
+import { ChannelDetailSubscriber } from './tabs/subscriber/channel-detail-subscriber';
+import { ChannelDetailUserGroup } from './tabs/user-group/channel-detail-user-group';
+import { ChannelDetailUser } from './tabs/user/channel-detail-user';
 
 const ChannelDetailComponent = () => {
   const router = useRouter();

@@ -1,8 +1,8 @@
 import { EnFormMode } from '@types';
 import { forwardRef, useEffect, useState } from 'react';
+import { EnChannelDetailButtonLayout } from '../../../types/type';
 import { ChannelDetailHomeBanner } from './channel-detail-home-banner';
 import { ChannelDetailHomeBannerDetail } from './channel-detail-home-banner-detail';
-import { EnChannelDetailButtonLayout } from './types/type';
 
 export enum EnChannelDetailHomeMode {
   HOME = 'HOME',
