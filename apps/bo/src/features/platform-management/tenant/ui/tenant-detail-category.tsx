@@ -34,8 +34,9 @@ import {
 import { transformApiDataToTreeData } from '@features/platform-management/platform/category-managemnet';
 import { getAllTreeKeys } from '@features/platform-management/tenant/service/tenant-detail-tree.service';
 
+import { TenantCategoryCreate, TenantCategoryUpdate } from '@entities/tenant';
+import { EnFormMode } from '@shared/types/enums';
 import { UserGroupTabsChoiceModal } from '@shared/ui';
-import { EnFormMode, TenantCategoryCreate, TenantCategoryUpdate } from '@types';
 
 enum EnCategoryType {
   TENANT = 'TENANT',

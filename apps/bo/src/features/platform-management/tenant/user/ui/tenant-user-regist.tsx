@@ -23,8 +23,8 @@ import { ContentsRow } from '@learnway/ui/contents-row';
 import { EditDropdownCell, EditSwitchCell } from '@learnway/ui/grid';
 import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
+import { EnFormMode } from '@shared/types/enums';
 import { useQueryClient } from '@tanstack/react-query';
-import { EnFormMode } from '@types';
 
 const EMAIL_REGEX =
   /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/;

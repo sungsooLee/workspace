@@ -1,4 +1,4 @@
-import { PaginationRequest } from './api';
+import { PaginationRequest } from '../../../shared/types/api';
 
 /**
  * 과정 정보 (목록 조회)

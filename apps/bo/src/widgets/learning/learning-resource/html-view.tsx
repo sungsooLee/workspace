@@ -1,5 +1,9 @@
 /* IA112 / NLP_BO_CMS_1022 - 나의 학습자원 > HTML 상세(저장 및 조회용) */
-import { useUpdateHTML5Metadata } from '@entities/learning-resource';
+import {
+  ContentInformation,
+  HtmlVideoMetadataRes,
+  useUpdateHTML5Metadata,
+} from '@entities/learning-resource';
 import {
   ContentTopButtons,
   getTooltipContent,
@@ -9,14 +13,9 @@ import {
 import { getPayloadFromHtmlMetadataSubmit } from '@features/learning-resource/learning-resource-management/service/learning-resource-html-form-submit';
 import { useDynamicForm2 } from '@learnway/hooks';
 import { useModal } from '@learnway/ui/modal';
+import { ContentCreateType, ContentStatusCode } from '@shared/types/enums';
 import { ContentsButtons, MainContents, PageContainer, SubContents } from '@shared/ui';
 import { useRouter } from '@tanstack/react-router';
-import {
-  ContentCreateType,
-  ContentInformation,
-  ContentStatusCode,
-  HtmlVideoMetadataRes,
-} from '@types';
 import { useTranslation } from 'react-i18next';
 
 interface Props {

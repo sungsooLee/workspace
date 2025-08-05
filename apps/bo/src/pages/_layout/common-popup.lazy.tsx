@@ -45,7 +45,7 @@ import langCodes from '@entities/mock/i18n-resource-ko.json';
 import LabelMessagesService from '@entities/label-messages/api/label-messages';
 import { IcoDownload } from '@learnway/icons';
 
-import { EnFormMode } from '@types';
+import { EnFormMode } from '@shared/types/enums';
 
 import { useDeployTranslation } from '@entities/translation/service/translation.hook';
 import { CourseType } from '@learnway/types';

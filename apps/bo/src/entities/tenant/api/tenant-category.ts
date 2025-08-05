@@ -1,7 +1,7 @@
 import { httpService } from '@learnway/shared';
 import { LMSApiPrefix } from '@learnway/config';
-import { Category, CategoryDetail } from '@types';
-import { TenantCategoryDetail } from 'src/types/entities/tenant-category';
+import { Category, CategoryDetail } from '@entities/category/model/category.types';
+import { TenantCategoryDetail } from '../model/tenant-category.types';
 
 export default class TenantCategoryService {
   static getTenantCategory(tenantId: number): Promise<Category> {

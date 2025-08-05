@@ -27,8 +27,8 @@ import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
+import { EnDeviceType, EnFormMode } from '@shared/types/enums';
 import { ChannelChoiceModal } from '@shared/ui';
-import { EnDeviceType, EnFormMode } from '@types';
 import dataWrapStyles from './data-wrap.module.css';
 import styles from './main-widget.module.css';
 

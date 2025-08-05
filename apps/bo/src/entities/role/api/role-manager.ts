@@ -1,7 +1,8 @@
-import { httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
-import { Role } from '../../../types/entities/role';
-import { PaginationResponse, RoleApplication } from '@types';
+import { httpService } from '@learnway/shared';
+import { PaginationResponse } from '@shared/types/api';
+import { Role } from '@shared/types/role';
+import { RoleApplication } from '@shared/types/role-application';
 
 /**
  * PMS > 역할관리 API 모음
@@ -126,7 +127,8 @@ export default class RoleManagerService {
    */
   static fetchRoleMenuApis(roleId: string, temantMappingMenuId: number): Promise<any> {
     return httpService.get<any>(`${PMSApiPrefix()}/roles/${roleId}/apis`, {
-      menuId: temantMappingMenuId });
+      menuId: temantMappingMenuId,
+    });
   }
   /**
    * 역할 tree 조회
@@ -137,7 +139,8 @@ export default class RoleManagerService {
   static fetchRoleTree(tenantId: number, siteScope: string) {
     return httpService.get<any>(`${PMSApiPrefix()}/roles/tree`, {
       tenantId,
-      siteScope });
+      siteScope,
+    });
   }
 
   /**
@@ -147,7 +150,8 @@ export default class RoleManagerService {
    */
   static fetchMyRoles(siteScope: string) {
     return httpService.get<any>(`${PMSApiPrefix()}/roles/me`, {
-      siteScope });
+      siteScope,
+    });
   }
 
   /**
@@ -199,7 +203,8 @@ export default class RoleManagerService {
    */
   static fetchRoleApplicationHistories(id: number) {
     return httpService.get<any>(`${PMSApiPrefix()}/role-applications/histories`, {
-      roleApplicationId: id });
+      roleApplicationId: id,
+    });
   }
 }
 

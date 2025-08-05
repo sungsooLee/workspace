@@ -1,5 +1,10 @@
 // IA104 / NLP_BO_CMS_1045 학습자원 현지화-공유함
-import { learningResourceQueryOptions, usePostContentExport } from '@entities/learning-resource';
+import {
+  ContentExportRes,
+  learningResourceQueryOptions,
+  SharedBoxContent,
+  usePostContentExport,
+} from '@entities/learning-resource';
 import {
   getDetailPathByContentType,
   getDetailRouterState,
@@ -19,11 +24,11 @@ import { Button } from '@learnway/ui/button';
 import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import { useModal } from '@learnway/ui/modal';
+import { ContentCreateType } from '@shared/types/enums';
 import { PreviewLearningWindow } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from '@tanstack/react-router';
-import { ContentCreateType, ContentExportRes, SharedBoxContent } from '@types';
 import { t } from 'i18next';
 import { useEffect, useState } from 'react';
 

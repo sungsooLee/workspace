@@ -2,17 +2,17 @@ import { queryOptions as departmentQueryOptions } from '@entities/department';
 import { queryOptions } from '@entities/user-group/service/user-group.queries';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
+import { Button } from '@learnway/ui/button';
 import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox } from '@learnway/ui/grid';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { BlackwhiteUsersParam } from '@shared/types/user-group';
 import { SearchBox } from '@shared/ui/search-box';
 import { useQueryClient } from '@tanstack/react-query';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { BlackwhiteUsersParam } from '@types';
 import { t } from 'i18next';
 import { useEffect, useState } from 'react';
 import { useWatch } from 'react-hook-form';
-import { Button } from '@learnway/ui/button';
-import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
 const UserGroupModalComponent = ({ groups }: Pick<BlackwhiteUsersParam, 'groups'>) => {
   const searchConfig: SearchBoxConfig = {
@@ -26,10 +26,12 @@ const UserGroupModalComponent = ({ groups }: Pick<BlackwhiteUsersParam, 'groups'
           value: '',
           presetOptionLabel: t('LABEL.form.label.all'),
           optionsConfig: {
-            codeGroup: CODE_GROUP['manual.company.companyId'] },
+            codeGroup: CODE_GROUP['manual.company.companyId'],
+          },
           isSearchable: true,
           isClearable: true,
-          placeholder: '입력 선택' },
+          placeholder: '입력 선택',
+        },
         {
           name: 'deptId',
           type: 'dropdown',
@@ -39,46 +41,57 @@ const UserGroupModalComponent = ({ groups }: Pick<BlackwhiteUsersParam, 'groups'
           options: [],
           format: 'object',
           isSearchable: true,
-          isClearable: true },
+          isClearable: true,
+        },
         {
           name: 'employeeNumber',
           type: 'text',
           label: t('사번'),
-          value: '' },
+          value: '',
+        },
       ],
       [
         {
           name: 'userName',
           type: 'text',
           label: t('이름'),
-          value: '' },
+          value: '',
+        },
       ],
-    ] };
+    ],
+  };
   const columnHelper = createColumnHelper<any>();
   const columns = [
     columnHelper.accessor('companyName', {
       cell: (info) => info.getValue(),
-      header: '회사' }),
+      header: '회사',
+    }),
     columnHelper.accessor('deptName', {
       cell: (info) => info.getValue(),
-      header: '소속' }),
+      header: '소속',
+    }),
     columnHelper.accessor('employeeNumber', {
       cell: (info) => info.getValue(),
-      header: '사번' }),
+      header: '사번',
+    }),
     columnHelper.accessor('userName', {
       cell: (info) => info.getValue(),
-      header: '이름' }),
+      header: '이름',
+    }),
     columnHelper.accessor('status', {
       cell: (info) => info.getValue(),
-      header: '재직여부' }),
+      header: '재직여부',
+    }),
     columnHelper.accessor('accountStatus', {
       cell: (info) => info.getValue(),
-      header: '계정상태' }),
+      header: '계정상태',
+    }),
   ] as ColumnDef<any, unknown>[];
   const gridConfig = {
     query: (data: any) => queryOptions.blackwhiteUsers({ ...data, groups }),
     columns: [],
-    data: [] };
+    data: [],
+  };
 
   const { closeModal } = useModal();
   const { provider: sProvider, getValues, setOptions, setValue } = useSearchBox(searchConfig);

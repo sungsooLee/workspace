@@ -32,15 +32,10 @@ import {
   SearchBox,
 } from '@shared/ui';
 
-import {
-  EnChannelScope,
-  EnCompanyScope,
-  EnDeptScope,
-  EnTenantScope,
-  RoleApplication,
-} from '@types';
+import { EnChannelScope, EnCompanyScope, EnDeptScope, EnTenantScope } from '@shared/types/enums';
 
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
+import { RoleApplication } from '@shared/types/role-application';
 
 const MyRoleDetailComponent = ({ route }: any) => {
   const { state } = useCurrentRoute();

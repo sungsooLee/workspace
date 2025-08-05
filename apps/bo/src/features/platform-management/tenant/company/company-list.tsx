@@ -4,10 +4,10 @@ import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
+import { EnGlobalConst } from '@shared/types/enums';
 import { SearchBox } from '@shared/ui/search-box';
 import { Link } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { EnGlobalConst } from '@types';
 import { t } from 'i18next';
 import { useEffect, useState } from 'react';
 

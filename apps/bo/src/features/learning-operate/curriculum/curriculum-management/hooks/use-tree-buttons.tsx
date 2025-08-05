@@ -1,12 +1,12 @@
-import React from 'react';
-import { TreeNode } from '@learnway/ui/tree-view';
-import { FormState, NODE_CHILDREN_MAP } from '../types/form.types';
+import { MAPPING_CURRICULUM_TYPE } from '@entities/curriculum';
 import { IcoPlus } from '@learnway/icons';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
-import { MAPPING_CURRICULUM_TYPE } from '@types';
-import { CurriculumChoiceModal } from '@shared/ui/modal/curriculum-choice-modal';
 import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
+import { TreeNode } from '@learnway/ui/tree-view';
+import { CurriculumChoiceModal } from '@shared/ui/modal/curriculum-choice-modal';
+import React from 'react';
+import { FormState, NODE_CHILDREN_MAP } from '../types/form.types';
 
 interface UseTreeButtonsProps {
   onAddNode: (nodeType: MAPPING_CURRICULUM_TYPE, parentNode: TreeNode | null) => void;
@@ -19,7 +19,8 @@ export const useTreeButtons = ({
   onAddNode,
   formState,
   curriculumDetail,
-  onCurriculumLoad }: UseTreeButtonsProps) => {
+  onCurriculumLoad,
+}: UseTreeButtonsProps) => {
   const { openModal } = useModal();
   const renderNodeButtons = (node: TreeNode, level: number): React.ReactNode => {
     const nodeType = node.type as MAPPING_CURRICULUM_TYPE;
@@ -85,7 +86,8 @@ export const useTreeButtons = ({
         if (selectedCurriculum && onCurriculumLoad) {
           onCurriculumLoad(selectedCurriculum.curriculumId);
         }
-      } });
+      },
+    });
   };
 
   const renderCustomTreeButtons = (
@@ -119,5 +121,6 @@ export const useTreeButtons = ({
 
   return {
     renderNodeButtons,
-    renderCustomTreeButtons };
+    renderCustomTreeButtons,
+  };
 };

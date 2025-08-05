@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
-import { TreeNode } from '@learnway/ui/tree-view';
 import {
-// TODO: Fix unknown imports:  from '@learnway/ui'
+  MAPPING_CURRICULUM_TYPE,
   useGetCurriculumDetail,
   useGetLessonDetail,
-  useGetModuleDetail } from '@entities/curriculum';
-import { MAPPING_CURRICULUM_TYPE } from '@types';
+  useGetModuleDetail,
+} from '@entities/curriculum';
+import { TreeNode } from '@learnway/ui/tree-view';
+import { useEffect, useState } from 'react';
 
 interface UseNodeDataProps {
   selectedNode: TreeNode | null;
@@ -30,19 +30,21 @@ export const useNodeData = ({ selectedNode, curriculumId, isEditing = true }: Us
   const {
     data: curriculumData,
     isLoading: isCurriculumLoading,
-    error: curriculumError } = useGetCurriculumDetail(shouldFetchCurriculum ? curriculumId : 0);
+    error: curriculumError,
+  } = useGetCurriculumDetail(shouldFetchCurriculum ? curriculumId : 0);
 
   // 모듈 상세 조회
   const moduleId = shouldFetchModule ? selectedNode?.data?.moduleId : 0;
   const {
     data: moduleData,
     isLoading: isModuleLoading,
-    error: moduleError } = useGetModuleDetail(moduleId);
+    error: moduleError,
+  } = useGetModuleDetail(moduleId);
 
   // 레슨 상세 조회 (레슨이 선택되고 lessonId가 유효할 때만)
   const rawLessonId = shouldFetchLesson ? selectedNode?.data?.lessonId || selectedNode?.id : 0;
-  const lessonId = shouldFetchLesson 
-    ? typeof rawLessonId === 'string' 
+  const lessonId = shouldFetchLesson
+    ? typeof rawLessonId === 'string'
       ? parseInt(rawLessonId.toString().replace('lesson-', ''))
       : rawLessonId
     : 0;
@@ -54,7 +56,8 @@ export const useNodeData = ({ selectedNode, curriculumId, isEditing = true }: Us
   const {
     data: lessonData,
     isLoading: isLessonLoading,
-    error: lessonError } = useGetLessonDetail(
+    error: lessonError,
+  } = useGetLessonDetail(
     shouldCallLessonDetail ? { lessonId, moduleId: tmpModuleId } : { lessonId: 0, moduleId: 0 },
   );
 
@@ -103,7 +106,8 @@ export const useNodeData = ({ selectedNode, curriculumId, isEditing = true }: Us
     data: currentData,
     isLoading,
     error,
-    nodeType: selectedNode?.type || null };
+    nodeType: selectedNode?.type || null,
+  };
 };
 
 export const useNodeActions = (nodeType: MAPPING_CURRICULUM_TYPE | null) => {
@@ -135,5 +139,6 @@ export const useNodeActions = (nodeType: MAPPING_CURRICULUM_TYPE | null) => {
 
   return {
     createAction: getCreateAction(),
-    updateAction: getUpdateAction() };
+    updateAction: getUpdateAction(),
+  };
 };

@@ -1,4 +1,4 @@
-import { EnFormMode } from '@types';
+import { EnFormMode } from '@shared/types/enums';
 
 // 등록 / 초기화,저장 / 구독 해지
 export enum EnChannelDetailButtonLayout {

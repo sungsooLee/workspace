@@ -1,20 +1,18 @@
-import { useCallback, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import {
-  useCopyQuestionsToExamPaper,
-  useDeleteQuestionItemList,
-  useGetQuestionItemList,
-  useUpdateQuestionBankQuestionCountInfo,
-} from '@entities/learning-resource';
-import {
-  ContentType,
   MutationResponse,
   QuestionItem,
   QuestionItemDeleteParam,
   QuestionsCopyReq,
   UpdateQuestionBankCountInfoReq,
-} from '@types';
+  useCopyQuestionsToExamPaper,
+  useDeleteQuestionItemList,
+  useGetQuestionItemList,
+  useUpdateQuestionBankQuestionCountInfo,
+} from '@entities/learning-resource';
 import { useToast } from '@learnway/ui/toast';
+import { ContentType } from '@shared/types/enums';
+import { useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useLearningResourceQuestionDetailForm } from '../learning-resource-question-detail-from.hook';
 import { useQuestionSort } from '../learning-resource-question-sort.hook';
 

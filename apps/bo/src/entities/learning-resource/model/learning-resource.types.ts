@@ -8,7 +8,7 @@ import {
   FileStatus,
   FileType,
   ProcessingStatus,
-} from './enum';
+} from '@shared/types/enums';
 
 export interface MediaContentSaveReq {
   contentName: string;
@@ -526,7 +526,9 @@ export type PutScormChangeParams = PutVideoChangeParams;
 
 export type PutETCChangeParams = PutVideoChangeParams;
 
-export interface PutETCChangeRes {}
+export interface PutETCChangeRes {
+  //
+}
 
 export interface PutVideoChangeRes {
   resourceId: number;

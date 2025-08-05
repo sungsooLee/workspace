@@ -6,7 +6,6 @@ import {
   CurriculumResponse,
   CurriculumSearchParams,
   GeneralModuleSaveParams,
-  PageableContent,
   GeneralModuleUpdateParams,
   FixedModuleSaveParams,
   FixedModuleUpdateParams,
@@ -14,7 +13,8 @@ import {
   GeneralLessonSaveParams,
   LessonUpdateParams,
   CurriculumUpdateRequest,
-  CurriculumDndParams } from '@types';
+  CurriculumDndParams } from '../model/curriculum.types';
+import { PageableContent } from '../../../shared/types/page-meta';
 
 export class CurriculumService {
   /**

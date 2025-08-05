@@ -1,4 +1,4 @@
-import { EnFormMode } from '@types';
+import { EnFormMode } from '@shared/types/enums';
 import { forwardRef, useEffect, useState } from 'react';
 import { EnChannelDetailButtonLayout } from '../../../types/type';
 import { ChannelDetailHomeBanner } from './channel-detail-home-banner';

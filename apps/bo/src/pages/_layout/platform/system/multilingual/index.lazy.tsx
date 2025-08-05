@@ -1,4 +1,5 @@
 import {
+  MultilingualUpdateReqParams,
   translationQueryOptions,
   useDeployTranslation,
   useTranslation,
@@ -31,7 +32,6 @@ import {
 import { SearchBox } from '@shared/ui/search-box';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { CellContext } from '@tanstack/react-table';
-import { MultilingualUpdateReqParams } from '@types';
 import { t } from 'i18next';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useWatch } from 'react-hook-form';

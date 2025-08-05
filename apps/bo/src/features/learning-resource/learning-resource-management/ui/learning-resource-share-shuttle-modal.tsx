@@ -1,5 +1,12 @@
 // IA104 / NLP_BO_CMS_1044 학습자원 현지화-공유설정(팝업)
-import { learningResourceQueryOptions, usePostShareContents } from '@entities/learning-resource';
+import {
+  ContentInfo,
+  learningResourceQueryOptions,
+  PostShareContentsRes,
+  TenantChannelCodeType,
+  TenantCodeType,
+  usePostShareContents,
+} from '@entities/learning-resource';
 import LearningResourceService from '@entities/learning-resource/api/learning-resource';
 import { useSearchBox } from '@learnway/hooks';
 import { cn } from '@learnway/shared';
@@ -13,7 +20,6 @@ import { ShuttleGridToGridV2 } from '@learnway/ui/shuttle-grid-to-grid-v2';
 import { SearchBox } from '@shared/ui';
 import { useQueryClient } from '@tanstack/react-query';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { ContentInfo, PostShareContentsRes, TenantChannelCodeType, TenantCodeType } from '@types';
 import { pick } from 'lodash-es';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';

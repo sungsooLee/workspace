@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { queryOptions, mutateOptions, queryKeys } from './category.queries';
-import { CategoryDetail } from '@types';
+import { CategoryDetail } from '../model/category.types';
 
 export function useFetchCategory() {
   return useQuery(queryOptions.all());

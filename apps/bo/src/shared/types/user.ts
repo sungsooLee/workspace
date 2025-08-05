@@ -1,4 +1,5 @@
-import { ISODateString, PaginationRequest } from '@types';
+import { PaginationRequest } from './api';
+import { ISODateString } from './common';
 
 export type UsersParams = PaginationRequest & {
   tenantId?: number;

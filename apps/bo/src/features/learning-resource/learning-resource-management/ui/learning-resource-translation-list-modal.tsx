@@ -1,17 +1,17 @@
 import { Button } from '@learnway/ui/button';
-import { ModalContainer, ModalBody, ModalTitle, ModalFooter, useModal } from '@learnway/ui/modal';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 // IA104 / NLP_BO_CMS_1043 번역현황
 
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { ContentInformation, learningResourceQueryOptions } from '@entities/learning-resource';
+import { cn } from '@learnway/shared';
+import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
 import { FormSubTitle } from '@learnway/ui/base-form';
 import { GridBox } from '@learnway/ui/grid';
-import { t } from 'i18next';
-import { ContentCreateType, ContentInformation } from '@types';
-import { useEffect, useState } from 'react';
-import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
-import { cn } from '@learnway/shared';
-import { learningResourceQueryOptions } from '@entities/learning-resource';
+import { ContentCreateType } from '@shared/types/enums';
 import { useQuery } from '@tanstack/react-query';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { t } from 'i18next';
+import { useEffect, useState } from 'react';
 
 interface TranslationListModalComponentProps {
   contentInfo: ContentInformation;
@@ -43,11 +43,13 @@ function TranslationListModalComponent({ contentInfo }: TranslationListModalComp
     columnHelper.accessor('languageCountryCode', {
       cell: (_) => t(`pms.multilingual.LangCountryCode.${_.getValue()}`),
       header: t('번역언어'),
-      enableGrouping: false }),
+      enableGrouping: false,
+    }),
     columnHelper.accessor('createType', {
       cell: (_) => (!_.getValue() ? t('번역필요') : t('번역')),
       header: t('번역상태'),
-      enableGrouping: false }),
+      enableGrouping: false,
+    }),
   ] as ColumnDef<TranslationListData, string>[];
 
   return (

@@ -1,10 +1,10 @@
+import { CoursesQueryParams } from '@entities/course';
 import { queryOptions } from '@entities/course/service/course.queries';
 import { CODE_GROUP, getCodeLabel } from '@learnway/hooks';
 import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
 import { ShortUrlCopyButton } from '@shared/ui';
 import { Link, useLocation } from '@tanstack/react-router';
-import { CoursesQueryParams } from '@types';
 import { t } from 'i18next';
 import { CourseGridColumn } from '../types/type';
 import { CourseFavoriteIcon } from '../ui/course-favorite-icon/course-favorite-icon';

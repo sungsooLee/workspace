@@ -8,7 +8,7 @@ import {
   GeneralLessonSaveParams,
   GeneralModuleSaveParams,
   GeneralModuleUpdateParams,
-  LessonUpdateParams } from '@types';
+  LessonUpdateParams } from '../model/curriculum.types';
 import { CurriculumService } from '../api/curriculum';
 
 export const queryKeys = {

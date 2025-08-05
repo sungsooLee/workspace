@@ -1,5 +1,6 @@
 import { CMSApiPrefix, PMSApiPrefix } from '@learnway/config';
 import { httpService } from '@learnway/shared';
+import { omit, pick } from 'lodash-es';
 import {
   BlogCreateReq,
   BlogUpdateReq,
@@ -69,8 +70,7 @@ import {
   TestPaperBasicInfoSaveReq,
   TestPaperBasicInfoSaveRes,
   UpdateQuestionBankCountInfoReq,
-} from '@types';
-import { omit, pick } from 'lodash-es';
+} from '../model/learning-resource.types';
 
 export default class LearningResourceService {
   static fetchChannelsByTenantId(param: {
@@ -82,7 +82,7 @@ export default class LearningResourceService {
   }
 
   static fetchUser(uuid: string): Promise<any> {
-    return httpService.get(`${PMSApiPrefix()}/users/` + uuid);
+    return httpService.get(`${PMSApiPrefix()}/users/${uuid}`);
   }
 
   static fetchContents(params: GetContentsParams): Promise<GetContentsRes> {

@@ -1,6 +1,7 @@
 import { PMSApiPrefix } from '@learnway/config';
 import { httpService } from '@learnway/shared';
-import { ChannelByRoleId, ChannelParam, ChannelResponse, PaginationResponse } from '@types';
+import { ChannelByRoleId, ChannelParam, ChannelResponse } from '../model/channel.types';
+import { PaginationResponse } from '../../../shared/types/api';
 
 export default class ChannelService {
   static async getChannelList(

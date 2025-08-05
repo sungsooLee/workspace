@@ -1,5 +1,5 @@
+import { EnQuestionLevel, EnQuestionType, QuestionItem } from '@entities/learning-resource';
 import { TFunction } from 'i18next';
-import { EnQuestionLevel, EnQuestionType, QuestionItem } from '@types';
 
 export type QuestionStatisticRow = {
   title: string;

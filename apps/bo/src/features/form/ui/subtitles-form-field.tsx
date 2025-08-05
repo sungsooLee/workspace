@@ -1,3 +1,4 @@
+import { VideoSubtitle } from '@entities/learning-resource';
 import {
   BaseFormFieldProps,
   CODE_GROUP,
@@ -14,7 +15,6 @@ import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { Dropdown } from '@learnway/ui/dropdown';
 import { Input } from '@learnway/ui/input';
-import { VideoSubtitle } from '@types';
 import { t } from 'i18next';
 import { map } from 'lodash-es';
 import { forwardRef, useEffect, useRef, useState } from 'react';

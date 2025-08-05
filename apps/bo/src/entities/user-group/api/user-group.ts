@@ -1,12 +1,12 @@
 import { PMSApiPrefix } from '@learnway/config';
 import { httpService } from '@learnway/shared';
+import { PageableContent } from '@shared/types/page-meta';
 import {
   OrganizationTreeResponse,
-  PageableContent,
   UserGroupsParam,
   UserGroupsResponse,
   UsersByIdsParam,
-} from '@types';
+} from '@shared/types/user-group';
 
 export default class UserGroupService {
   static fetchUserGroups(

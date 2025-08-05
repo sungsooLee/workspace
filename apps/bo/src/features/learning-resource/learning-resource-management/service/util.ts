@@ -3,7 +3,7 @@ import { AuthUser } from '@learnway/auth/types';
 import { LEARNING_TYPE } from '@learnway/config';
 import { CODE_GROUP, useCodeStore } from '@learnway/hooks';
 import { isEmptyData } from '@learnway/shared';
-import { ProcessingStatus } from '@types';
+import { ProcessingStatus } from '@shared/types/enums';
 import { useCallback } from 'react';
 
 export const getDetailPathByContentType = (contentType: string): string => {

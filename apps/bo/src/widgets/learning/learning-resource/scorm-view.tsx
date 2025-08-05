@@ -1,5 +1,9 @@
 //  IA106 / NLP_BO_CMS_1032, NLP_BO_CMS_1014 / 학습자원조회_나의 학습자원_등록_스콤
-import { usePutScormUpdate } from '@entities/learning-resource';
+import {
+  ContentInformation,
+  PutScormUpdateRes,
+  usePutScormUpdate,
+} from '@entities/learning-resource';
 import {
   ContentTopButtons,
   convertToScormForm,
@@ -11,8 +15,8 @@ import {
 import { useDynamicForm2 } from '@learnway/hooks';
 import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
+import { ContentCreateType } from '@shared/types/enums';
 import { ContentsButtons, MainContents, PageContainer, SubContents } from '@shared/ui';
-import { ContentCreateType, ContentInformation, PutScormUpdateRes } from '@types';
 import { t } from 'i18next';
 import { useEffect } from 'react';
 

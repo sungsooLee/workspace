@@ -1,10 +1,10 @@
-import { FC, useEffect, useState, useCallback } from 'react';
-import { t } from 'i18next';
-import { CompanyDetailHRUsergroup } from './company-detail-hr-usergroup';
 import { CompanyOrganizationDetailTree } from '@features/platform-management/company/company-info-managemnet/ui/company-organization-detail-tree';
+import { t } from 'i18next';
+import { FC, useState } from 'react';
+import { CompanyDetailHRUsergroup } from './company-detail-hr-usergroup';
 
-import { EnUserGroupType } from '@types';
 import { SplitPanel } from '@learnway/ui/elements';
+import { EnUserGroupType } from '@shared/types/enums';
 
 const CompanyDetailHROrganizationComponent: FC<any> = () => {
   const [userGroupId, setUserGroupId] = useState<any>(null);

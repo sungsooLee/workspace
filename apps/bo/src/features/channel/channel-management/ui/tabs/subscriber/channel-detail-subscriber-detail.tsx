@@ -2,7 +2,7 @@ import { useFetchUser } from '@entities/users';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { FormSubTitle } from '@learnway/ui/base-form';
 import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
-import { EnGlobalConst } from '@types';
+import { EnGlobalConst } from '@shared/types/enums';
 import { t } from 'i18next';
 import { forwardRef, useCallback, useImperativeHandle } from 'react';
 

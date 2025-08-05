@@ -5,10 +5,10 @@ import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic
 import { FormSubTitle } from '@learnway/ui/base-form';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
+import { EnFormMode } from '@shared/types/enums';
 import { ChipListFormField, FormRow, SearchBox } from '@shared/ui';
 import { useRouterState } from '@tanstack/react-router';
 import { createColumnHelper } from '@tanstack/react-table';
-import { EnFormMode } from '@types';
 import { t } from 'i18next';
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from 'react';
 

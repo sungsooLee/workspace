@@ -16,27 +16,26 @@ import {
   EditTextareaCell,
 } from '@learnway/ui/grid';
 
+import {
+  ContentInformation,
+  EnQuestionLevel,
+  EnQuestionType,
+  ExamTemplateType,
+  QuestionItem,
+  QuestionItemGridRow,
+  useCreateQuestionItem,
+  useGetQuestionItem,
+} from '@entities/learning-resource';
 import { FormDisplay } from '@features/form';
+import { EditSingleAttachmentCell } from '@features/form/ui/edit-single-attachment-cell';
 import { S3_PATH, useDynamicForm2 } from '@learnway/hooks';
 import { IcoMenu01 } from '@learnway/icons';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { Input } from '@learnway/ui/input';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { ContentType, EnFormMode } from '@shared/types/enums';
 import { FormRow2, SingleAttachmentFormField, SwitchFormField } from '@shared/ui';
-import {
-  ContentInformation,
-  ContentType,
-  EnFormMode,
-  EnQuestionLevel,
-  EnQuestionType,
-  ExamTemplateType,
-  QuestionItem,
-  QuestionItemGridRow,
-} from '@types';
-
-import { useCreateQuestionItem, useGetQuestionItem } from '@entities/learning-resource';
-import { EditSingleAttachmentCell } from '@features/form/ui/edit-single-attachment-cell';
 import { useWatch } from 'react-hook-form';
 
 const LearningResourceTestItemModalComponent = ({

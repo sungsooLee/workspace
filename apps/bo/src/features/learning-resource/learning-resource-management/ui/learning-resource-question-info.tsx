@@ -1,5 +1,13 @@
-import { forwardRef, useCallback, useImperativeHandle, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import {
+  ContentInformation,
+  EnQuestionLevel,
+  EnQuestionType,
+  ExamQuestionGenType,
+  ExamTemplateType,
+  QuestionItem,
+  QuestionItemGridRow,
+  TestPaperBasicInfoDetail,
+} from '@entities/learning-resource';
 import { SegmentedControlFormField } from '@features/form/ui/segmented-control-form-field';
 import { CMSApiPrefix } from '@learnway/config';
 import { IcoCopy, IcoMinus, IcoPlus } from '@learnway/icons';
@@ -13,16 +21,8 @@ import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
 import { FormRow2, GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import {
-  ContentInformation,
-  EnQuestionLevel,
-  EnQuestionType,
-  ExamQuestionGenType,
-  ExamTemplateType,
-  QuestionItem,
-  QuestionItemGridRow,
-  TestPaperBasicInfoDetail,
-} from '@types';
+import { forwardRef, useCallback, useImperativeHandle, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { QUESTION_LEVELS, QUESTION_TYPES } from '../service/exam-util';
 import { getExamTemplateTextByType } from '../service/test-paper/common';
 import {
@@ -35,11 +35,11 @@ import { LearningResourceQuestionShuttleModal } from './learning-resource-questi
 import { LearningResourceTestItemModal } from './learning-resource-test-item-modal';
 
 /* styles */
-import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
-import styles from '@learnway/styles/bo/pages/_layout/learning/test-detail.module.css';
-import { QuestionDragHandle } from '@features/learning-resource/learning-resource-management/ui/learning-resource-question-drag-handle';
 import { closestCenter, DndContext, MeasuringStrategy } from '@dnd-kit/core';
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
+import { QuestionDragHandle } from '@features/learning-resource/learning-resource-management/ui/learning-resource-question-drag-handle';
+import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
+import styles from '@learnway/styles/bo/pages/_layout/learning/test-detail.module.css';
 
 const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
   (

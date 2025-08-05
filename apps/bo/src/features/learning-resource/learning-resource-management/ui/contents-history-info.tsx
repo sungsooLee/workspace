@@ -1,6 +1,6 @@
-import { t } from 'i18next';
+import { GetContentDetailRes } from '@entities/learning-resource';
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import { GetContentDetailRes } from '@types';
+import { t } from 'i18next';
 
 import style from '@learnway/styles/bo/assets/styles/modules/contents-history-info.module.css';
 import { Button } from '@learnway/ui/button';

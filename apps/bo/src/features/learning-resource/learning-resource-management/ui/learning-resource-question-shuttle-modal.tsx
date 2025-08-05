@@ -1,3 +1,4 @@
+import { QuestionListForRetrieveRes } from '@entities/learning-resource';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { Button } from '@learnway/ui/button';
 import { Divider } from '@learnway/ui/elements';
@@ -9,7 +10,6 @@ import {
   TenantChannelDropdownFormField,
 } from '@shared/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { QuestionListForRetrieveRes } from '@types';
 import { TFunction } from 'i18next';
 import { useCallback, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';

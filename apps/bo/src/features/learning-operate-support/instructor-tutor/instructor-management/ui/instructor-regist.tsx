@@ -34,8 +34,8 @@ import {
 import { FormDisplay } from '@features/form/ui/form-display';
 import { AttachmentFormField, FormRow, UserChoiceModal } from '@shared/ui';
 
+import { EnFormMode, EnPageMode } from '@shared/types/enums';
 import { SingleAttachmentFormField } from '@shared/ui/form/single-attachment-form-field';
-import { EnFormMode, EnPageMode } from '@types';
 
 const EMAIL_REGEX =
   /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/;

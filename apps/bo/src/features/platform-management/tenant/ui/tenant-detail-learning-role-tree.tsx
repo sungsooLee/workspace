@@ -30,6 +30,14 @@ import {
 import { Input } from '@learnway/ui/input';
 import { TreeBox, TreeContainer, TreeNode } from '@learnway/ui/tree-view';
 import {
+  EnChannelScope,
+  EnCompanyScope,
+  EnDeptScope,
+  EnFormMode,
+  EnGlobalConst,
+  EnTenantScope,
+} from '@shared/types/enums';
+import {
   ChannelListChoiceModal,
   CompanyShuttleModal,
   FormRow,
@@ -37,14 +45,6 @@ import {
   SectionLayout,
   SwitchFormField,
 } from '@shared/ui';
-import {
-  EnChannelScope,
-  EnCompanyScope,
-  EnDeptScope,
-  EnFormMode,
-  EnGlobalConst,
-  EnTenantScope,
-} from '@types';
 
 /**
  * 화면번호:

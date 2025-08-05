@@ -1,8 +1,8 @@
 import { TrainingPlaceList } from '@features/learning-operate-support/learning-space/learning-space-management/training-place-list';
 import { Button } from '@learnway/ui/button';
+import { EnPageMode } from '@shared/types/enums';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { EnPageMode } from '@types';
 import { t } from 'i18next';
 
 export const Route = createFileRoute('/_layout/learning/training-place/')({

@@ -1,9 +1,8 @@
-import { useFetchChannelByRoleId } from '@entities/channel';
+import { ChannelByRoleId, TenantList, useFetchChannelByRoleId } from '@entities/channel';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { AuthUser } from '@learnway/auth/types';
 import { BaseFormFieldProps } from '@learnway/hooks';
 import { CheckboxGroupFormField } from '@learnway/ui/form-field';
-import { ChannelByRoleId, TenantList } from '@types';
 import { forwardRef, useMemo } from 'react';
 
 interface TenantByRoleChannelCheckboxFormFieldProps extends BaseFormFieldProps<Array<string>> {

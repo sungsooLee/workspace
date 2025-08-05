@@ -1,4 +1,4 @@
-import { SortResponse } from './api';
+import { SortResponse } from '../../../shared/types/api';
 
 export interface SequencesRequest {
   eduYear: number;

@@ -1,6 +1,9 @@
+import {
+  CourseSharedHistoryList,
+  CourseSharedList,
+} from '@entities/course-shared/model/course-shared.types';
 import { LMSApiPrefix } from '@learnway/config';
 import { httpService } from '@learnway/shared';
-import { CourseSharedHistoryList, CourseSharedList } from 'src/types/entities/course-shared';
 
 export default class CourseSharedService {
   static fetchCourseSharedList(params: any) {

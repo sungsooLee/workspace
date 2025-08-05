@@ -1,26 +1,28 @@
 import { createElement } from 'react';
 // import { ErrorComponent, redirect } from '@tanstack/react-router';
-import { redirect } from '@tanstack/react-router';
 import type { ParsedLocation } from '@tanstack/react-router';
+import { redirect } from '@tanstack/react-router';
 import { isEmpty } from 'lodash-es';
 import { ZodSchema } from 'zod';
 
-import { authUserQueryKeys, mutateOptions, menuQueryOptions } from '@learnway/auth/entities';
+import { authUserQueryKeys, menuQueryOptions, mutateOptions } from '@learnway/auth/entities';
 
 import type { AuthUser } from '@learnway/auth/types';
 import { ERROR, tokenService } from '@learnway/config';
-import { buildJodObject, convertHierarchyToList, dateDiff } from '@learnway/shared';
 import type { PageRouteConfig } from '@learnway/shared';
+import { buildJodObject, convertHierarchyToList, dateDiff } from '@learnway/shared';
 
-import type { PageMeta } from '../../../types';
 import { ErrorComponent } from '@features/layout';
+import type { PageMeta } from '@shared/types/page-meta';
 import { QueryClient } from '@tanstack/react-query';
 
 // Default Routing config
 const defaultPageRouteConfig: PageRouteConfig<PageMeta> = {
   authorization: true,
   meta: {
-    title: '' } };
+    title: '',
+  },
+};
 
 export const decodeJwt = (token: string | null) => {
   if (!token) {
@@ -36,7 +38,7 @@ export const decodeJwt = (token: string | null) => {
       atob(base64)
         .split('')
         .map(function (c) {
-          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+          return `%${`00${c.charCodeAt(0).toString(16)}`.slice(-2)}`;
         })
         .join(''),
     );
@@ -193,7 +195,10 @@ export function pageRouteConfig(routeConfig?: PageRouteConfig<PageMeta>) {
           staticData: {
             meta: {
               ...defaultPageRouteConfig.meta,
-              ...routeConfig.meta } } }
+              ...routeConfig.meta,
+            },
+          },
+        }
       : {}),
     staleTime: 0,
     onLeave: (match: any) => {
@@ -205,6 +210,8 @@ export function pageRouteConfig(routeConfig?: PageRouteConfig<PageMeta>) {
     // query string validation 처리, tanstack router의 RouteOption을 그대로 사용(for 타입 추론)
     ...(routeConfig?.validateSearch
       ? {
-          validateSearch: buildJodObject(routeConfig?.validateSearch) }
-      : {}) };
+          validateSearch: buildJodObject(routeConfig?.validateSearch),
+        }
+      : {}),
+  };
 }

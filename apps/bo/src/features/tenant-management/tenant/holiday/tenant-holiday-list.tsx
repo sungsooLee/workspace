@@ -1,134 +1,142 @@
-import React, { FC, useEffect, useState } from 'react';
-import { useRouter, useRouterState } from '@tanstack/react-router';
+import { queryOptions as companysQueryOptions } from '@entities/companies';
+import { holidayQueryOptions } from '@entities/holiday/service/holiday.queries';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
-import { t } from 'i18next';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import { GridBox, useGridBox } from '@learnway/ui/grid';
-import { SearchBox } from '@shared/ui';
 import { Divider } from '@learnway/ui/elements';
-import { queryOptions as companysQueryOptions } from '@entities/companies';
+import { GridBox, useGridBox } from '@learnway/ui/grid';
+import { EnGlobalConst } from '@shared/types/enums';
+import { SearchBox } from '@shared/ui';
 import { useQueryClient } from '@tanstack/react-query';
-import { useWatch } from 'react-hook-form';
-import { holidayQueryOptions } from '@entities/holiday/service/holiday.queries';
+import { useRouter, useRouterState } from '@tanstack/react-router';
 import { useCreation } from 'ahooks';
-import { EnGlobalConst } from '@types';
+import { t } from 'i18next';
+import { FC, useEffect } from 'react';
+import { useWatch } from 'react-hook-form';
 
 /**
  * 화면번호 : NLP_BO_TMS_2015 휴일 관리
  * @param rootPath
  * @constructor
  */
-const TenantHolidayListComponent: FC<any> = ({rootPath}) => {
+const TenantHolidayListComponent: FC<any> = ({ rootPath }) => {
   const router = useRouter();
   const routerState = useRouterState();
   const queryClient = useQueryClient();
 
   const { data: loginUser } = useFetchAuthUser();
 
-  const gridInitConfig = useCreation(() => ({
-    query: holidayQueryOptions.list,
-    columns: [
-      {
-        name: 'no',
-        label: t('NO.'),
-        type: 'numbering',
-        enableSorting: false
-      },
-      {
-        name: 'tenantName',
-        label: t('테넌트명'),
-        size: 132
-      },
-      {
-        name: 'companyName',
-        label: t('회사'),
-        size: 132
-      },
-      {
-        name: 'holidayName',
-        label: t('휴일명'),
-        size: 132
-      },
-      {
-        name: 'startDate',
-        label: t('휴일 기간'),
-        render: (info: any) => {
-          const startDate = getDateToString(new Date(info.row.original.startDate), DATE_TIME_FORMAT.DATE);
-          const endDate = getDateToString(new Date(info.row.original.endDate), DATE_TIME_FORMAT.DATE);
-          if( startDate === endDate ){
-            return `${startDate}`;
-          } else {
-            return `${startDate} ~ ${endDate}`;
-          }
+  const gridInitConfig = useCreation(
+    () => ({
+      query: holidayQueryOptions.list,
+      columns: [
+        {
+          name: 'no',
+          label: t('NO.'),
+          type: 'numbering',
+          enableSorting: false,
         },
-        size: 194,
-        meta: {
-          cellAlign: 'center'
-        }
-      },
-      {
-        name: 'holidayType',
-        label: t('휴일 유형'),
-        render: (info: any) => {
-          return t(
-            `${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.holiday.HolidayType.${info.getValue()}`,
-          )
+        {
+          name: 'tenantName',
+          label: t('테넌트명'),
+          size: 132,
         },
-        size: 159,
-        meta: {
-          cellAlign: 'center'
-        }
-      },
-      {
-        name: 'isUsed',
-        label: t('사용여부'),
-        render: (info: any) => {
-          return info.row.original.isUsed ? t('사용') : t('미사용');
+        {
+          name: 'companyName',
+          label: t('회사'),
+          size: 132,
         },
-        size: 88,
-        meta: {
-          cellAlign: 'center'
-        }
-      },
-      {
-        name: 'createdDate',
-        label: t('등록일'),
-        render: (info: any) => {
-          return getDateToString(
-            new Date(info.row.original.createdDate),
-            DATE_TIME_FORMAT.DATETIME_SEC,
-          );
+        {
+          name: 'holidayName',
+          label: t('휴일명'),
+          size: 132,
         },
-        meta: {
-          cellAlign: 'center'
+        {
+          name: 'startDate',
+          label: t('휴일 기간'),
+          render: (info: any) => {
+            const startDate = getDateToString(
+              new Date(info.row.original.startDate),
+              DATE_TIME_FORMAT.DATE,
+            );
+            const endDate = getDateToString(
+              new Date(info.row.original.endDate),
+              DATE_TIME_FORMAT.DATE,
+            );
+            if (startDate === endDate) {
+              return `${startDate}`;
+            } else {
+              return `${startDate} ~ ${endDate}`;
+            }
+          },
+          size: 194,
+          meta: {
+            cellAlign: 'center',
+          },
         },
-        size: 194
-      },
-      {
-        name: 'modifiedDate',
-        label: t('수정일'),
-        render: (info: any) => {
-          return getDateToString(
-            new Date(info.row.original.modifiedDate),
-            DATE_TIME_FORMAT.DATETIME_SEC,
-          );
+        {
+          name: 'holidayType',
+          label: t('휴일 유형'),
+          render: (info: any) => {
+            return t(
+              `${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.holiday.HolidayType.${info.getValue()}`,
+            );
+          },
+          size: 159,
+          meta: {
+            cellAlign: 'center',
+          },
         },
-        meta: {
-          cellAlign: 'center'
+        {
+          name: 'isUsed',
+          label: t('사용여부'),
+          render: (info: any) => {
+            return info.row.original.isUsed ? t('사용') : t('미사용');
+          },
+          size: 88,
+          meta: {
+            cellAlign: 'center',
+          },
         },
-        size: 194
-      },
-    ],
-    data: [],
+        {
+          name: 'createdDate',
+          label: t('등록일'),
+          render: (info: any) => {
+            return getDateToString(
+              new Date(info.row.original.createdDate),
+              DATE_TIME_FORMAT.DATETIME_SEC,
+            );
+          },
+          meta: {
+            cellAlign: 'center',
+          },
+          size: 194,
+        },
+        {
+          name: 'modifiedDate',
+          label: t('수정일'),
+          render: (info: any) => {
+            return getDateToString(
+              new Date(info.row.original.modifiedDate),
+              DATE_TIME_FORMAT.DATETIME_SEC,
+            );
+          },
+          meta: {
+            cellAlign: 'center',
+          },
+          size: 194,
+        },
+      ],
+      data: [],
 
-    gridState: {
-      page: 0,
-      size: 20,
-      sort: []
-    },
-  }), []);
-
+      gridState: {
+        page: 0,
+        size: 20,
+        sort: [],
+      },
+    }),
+    [],
+  );
 
   const {
     provider: searchProvider,
@@ -136,38 +144,43 @@ const TenantHolidayListComponent: FC<any> = ({rootPath}) => {
     setOptions,
     setValue,
     onFormChange,
-    onFormValid } = useSearchBox(searchConfig());
+    onFormValid,
+  } = useSearchBox(searchConfig());
 
   const handleOnSearchParam = () => {
     const data = getValues();
-    console.log('### ', data)
+    console.log('### ', data);
     const payload = {
       ...data,
       dateRange: null,
-      startDate: data.dateRange.from && getDateToString(new Date(data.dateRange.from), DATE_TIME_FORMAT.DATE),
-      endDate: data.dateRange.to && getDateToString(new Date(data.dateRange.to), DATE_TIME_FORMAT.DATE),
-    }
+      startDate:
+        data.dateRange.from &&
+        getDateToString(new Date(data.dateRange.from), DATE_TIME_FORMAT.DATE),
+      endDate:
+        data.dateRange.to && getDateToString(new Date(data.dateRange.to), DATE_TIME_FORMAT.DATE),
+    };
     const filteredPayload = Object.fromEntries(
       Object.entries(payload).filter(
         ([_, value]) => value !== null && value !== undefined && value !== '',
       ),
     );
-    return filteredPayload
+    return filteredPayload;
   };
-  const { config: gConfig, gridFetch,  } = useGridBox(gridInitConfig, handleOnSearchParam);
+  const { config: gConfig, gridFetch } = useGridBox(gridInitConfig, handleOnSearchParam);
   const tenantIdWatch = useWatch({ control: searchProvider.control, name: 'tenantId' });
 
   const handleOnSearch = () => {
     const payload = handleOnSearchParam();
     gridFetch(payload);
-  }
+  };
 
   useEffect(() => {
     if (!loginUser) return;
 
     const tenantIdOptions = loginUser.tenants.map((tenant) => ({
       value: tenant.tenantId,
-      label: tenant.tenantName }));
+      label: tenant.tenantName,
+    }));
     setOptions('tenantId', tenantIdOptions);
     if (loginUser.activeTenant) setValue('tenantId', loginUser.activeTenant.tenantId ?? '');
   }, [loginUser]);
@@ -195,12 +208,10 @@ const TenantHolidayListComponent: FC<any> = ({rootPath}) => {
     <>
       <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
       <Divider />
-      <GridBox
-        config={gConfig}
-      />
+      <GridBox config={gConfig} />
     </>
   );
-}
+};
 
 export const TenantHolidayList = TenantHolidayListComponent;
 
@@ -214,7 +225,7 @@ const searchConfig = (): SearchBoxConfig => ({
         format: 'object',
         value: '',
         presetOptionLabel: t('LABEL.form.label.select'),
-        options: []
+        options: [],
       },
       {
         name: 'companyCode',
@@ -239,8 +250,8 @@ const searchConfig = (): SearchBoxConfig => ({
         value: '',
         presetOptionLabel: t('전체'),
         optionsConfig: {
-          codeGroup: CODE_GROUP['pms.holiday.HolidayType']
-        }
+          codeGroup: CODE_GROUP['pms.holiday.HolidayType'],
+        },
       },
       {
         name: 'isUsed',
@@ -251,18 +262,18 @@ const searchConfig = (): SearchBoxConfig => ({
           { value: '', label: t('전체') },
           { value: 'true', label: t('사용') },
           { value: 'false', label: t('미사용') },
-        ]
+        ],
       },
       {
         name: 'dateRange',
         type: 'date-range',
         label: t('휴일기간'),
         format: 'object',
-        value: { from: undefined, to: undefined }
+        value: { from: undefined, to: undefined },
       },
-    ]
+    ],
   ],
   validator: {
-    tenantId: true
-  }
+    tenantId: true,
+  },
 });

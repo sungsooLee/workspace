@@ -1,4 +1,4 @@
-import { PaginationRequest } from './api';
+import { PaginationRequest } from '../../../shared/types/api';
 
 export interface LabelMessage {
   /**

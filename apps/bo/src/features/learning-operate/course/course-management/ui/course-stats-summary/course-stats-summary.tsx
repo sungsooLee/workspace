@@ -1,9 +1,7 @@
-import { useFetchCourseCounts } from '@entities/course';
-import { StatsSummaryData } from '@learnway/ui/elements';
-import { StatsSummary } from '@learnway/ui/elements';
-import { CourseCounts } from '@types';
-import { HTMLAttributes } from 'react';
+import { CourseCounts, useFetchCourseCounts } from '@entities/course';
+import { StatsSummary, StatsSummaryData } from '@learnway/ui/elements';
 import { t } from 'i18next';
+import { HTMLAttributes } from 'react';
 
 export interface CourseStatsSummaryComponentProps extends HTMLAttributes<HTMLDivElement> {
   courseId: number;
@@ -21,24 +19,31 @@ const getSummaryData = (data?: CourseCounts): Array<StatsSummaryData> => {
   return [
     {
       label: t('조회'),
-      value: data.viewCount },
+      value: data.viewCount,
+    },
     {
       label: t('찜'),
-      value: data.bookmarkCount },
+      value: data.bookmarkCount,
+    },
     {
       label: t('공유'),
-      value: data.shareCount },
+      value: data.shareCount,
+    },
     {
       label: t('후기'),
-      value: data.reviewCount },
+      value: data.reviewCount,
+    },
     {
       label: t('수강신청'),
-      value: data.enrollmentCount },
+      value: data.enrollmentCount,
+    },
     {
       label: t('수강생'),
-      value: data.studentCount },
+      value: data.studentCount,
+    },
     {
       label: t('이수'),
-      value: data.completeCount },
+      value: data.completeCount,
+    },
   ];
 };

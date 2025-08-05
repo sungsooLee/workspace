@@ -1,6 +1,9 @@
-import { useCreateAssignment, useUpdateAssignment } from '@entities/learning-resource';
+import {
+  ContentBaseInfo,
+  useCreateAssignment,
+  useUpdateAssignment,
+} from '@entities/learning-resource';
 import { useRouter } from '@tanstack/react-router';
-import { ContentBaseInfo } from '@types';
 
 export const useAssignmentBasicInfoForm = (options: { contentUuid: string | undefined }) => {
   const router = useRouter();

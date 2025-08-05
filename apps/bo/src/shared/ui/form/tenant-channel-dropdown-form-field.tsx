@@ -1,8 +1,7 @@
-import { useFetchChannelByRoleId } from '@entities/channel';
+import { ChannelByRoleId, useFetchChannelByRoleId } from '@entities/channel';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { AuthUser } from '@learnway/auth/types';
 import { BaseFormFieldProps } from '@learnway/hooks';
-import { ChannelByRoleId } from '@types';
 import { t } from 'i18next';
 import { forwardRef, useEffect, useMemo } from 'react';
 import { useWatch } from 'react-hook-form';

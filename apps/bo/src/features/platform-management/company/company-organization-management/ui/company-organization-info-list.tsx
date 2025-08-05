@@ -2,17 +2,17 @@ import { useDeleteDepartment } from '@entities/department/service/department.hoo
 import { queryOptions as departmentQuery } from '@entities/department/service/department.queries';
 import { hmgQueryOptions as hmgDepartmentQuery } from '@entities/department/service/hmg-department.queries';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
+import { Checkbox } from '@learnway/ui/checkbox';
 import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox } from '@learnway/ui/grid';
+import { useModal } from '@learnway/ui/modal';
+import { EnGlobalConst } from '@shared/types/enums';
 import { GridExcelUploadButton } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { ColumnDef, createColumnHelper, Table } from '@tanstack/react-table';
-import { EnGlobalConst } from '@types';
 import { t } from 'i18next';
 import { useEffect, useState } from 'react';
 import { EnOrganizationShowType } from './company-organization-tree';
-import { Checkbox } from '@learnway/ui/checkbox';
-import { useModal } from '@learnway/ui/modal';
 
 /**
  * 화면번호: NLP_BO_TMS_1111_03 테넌트-회사조직 대상자 (조직)
@@ -21,7 +21,8 @@ import { useModal } from '@learnway/ui/modal';
 const CompanyOrganizationInfoListComponent = ({
   companyCode,
   showType,
-  deptId }: {
+  deptId,
+}: {
   companyCode: string;
   showType: string;
   deptId: number;
@@ -36,21 +37,26 @@ const CompanyOrganizationInfoListComponent = ({
           value: '',
           presetOptionLabel: t('전체'),
           optionsConfig: {
-            codeGroup: CODE_GROUP['pms.company.HrInfoManageType'] } },
+            codeGroup: CODE_GROUP['pms.company.HrInfoManageType'],
+          },
+        },
         {
           name: 'deptName',
           type: 'text',
           label: t('조직명'),
           value: '',
-          placeholder: t('입력') },
+          placeholder: t('입력'),
+        },
         {
           name: 'deptManagerName',
           type: 'text',
           label: t('조직장 이름'),
           value: '',
-          placeholder: t('입력') },
+          placeholder: t('입력'),
+        },
       ],
-    ] };
+    ],
+  };
 
   const { confirm: openConfirm, alert: openAlert } = useModal();
   const [tableInstance, setTableInstance] = useState<Table<any>>();
@@ -94,8 +100,10 @@ const CompanyOrganizationInfoListComponent = ({
         title: t('삭제되었습니다.'),
         onClose: () => {
           gridFetch();
-        } });
-    } });
+        },
+      });
+    },
+  });
 
   useEffect(() => {
     gridFetch();
@@ -107,24 +115,29 @@ const CompanyOrganizationInfoListComponent = ({
       cell: (info) =>
         t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.company.HrInfoManageType.${info.getValue()}`),
       header: t('조직 등록 유형'),
-      size: 152 }),
+      size: 152,
+    }),
     columnHelper.accessor('deptCode', {
       cell: (info) => info.getValue(),
       header: t('조직코드'),
-      size: 240 }),
+      size: 240,
+    }),
 
     columnHelper.accessor('deptName', {
       cell: (info) => info.getValue(),
       header: t('조직명'),
-      size: 200 }),
+      size: 200,
+    }),
     columnHelper.accessor('managerEmployeeNumber', {
       cell: (info) => info.getValue(),
       header: t('조직장 사번'),
-      size: 120 }),
+      size: 120,
+    }),
     columnHelper.accessor('managerName', {
       cell: (info) => info.getValue(),
       header: t('조직장 이름'),
-      size: 104 }),
+      size: 104,
+    }),
   ] as ColumnDef<any, unknown>[];
 
   const checkboxColumn = columnHelper.accessor('checkbox', {
@@ -136,7 +149,8 @@ const CompanyOrganizationInfoListComponent = ({
     meta: {
       align: 'center',
       headerAlign: 'center',
-      cellAlign: 'center' },
+      cellAlign: 'center',
+    },
     enableSorting: false,
     header: ({ table }) => (
       <div style={{ width: '100%', textAlign: 'center' }}>
@@ -163,7 +177,8 @@ const CompanyOrganizationInfoListComponent = ({
           />
         </div>
       );
-    } });
+    },
+  });
   const columnsPlatform = [checkboxColumn, ...columns];
 
   const handleRemoveClick = async () => {
@@ -176,7 +191,8 @@ const CompanyOrganizationInfoListComponent = ({
       if (await openConfirm(t('삭제 하시겠습니까?'))) {
         const payload = {
           companyCode,
-          deptIdList: deptIdsToRemove };
+          deptIdList: deptIdsToRemove,
+        };
         deleteDepartment(payload);
       }
     }
@@ -239,7 +255,9 @@ const gridConfigOrg = {
   gridState: {
     page: 0,
     size: 10,
-    sort: [] } };
+    sort: [],
+  },
+};
 
 const gridConfigPlat = {
   query: departmentQuery.child,
@@ -249,4 +267,6 @@ const gridConfigPlat = {
   gridState: {
     page: 0,
     size: 10,
-    sort: [] } };
+    sort: [],
+  },
+};

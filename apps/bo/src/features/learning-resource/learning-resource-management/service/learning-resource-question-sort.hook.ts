@@ -1,5 +1,3 @@
-import { Dispatch, SetStateAction, useCallback } from 'react';
-import { QueryClient } from '@tanstack/react-query';
 import {
   DragEndEvent,
   KeyboardSensor,
@@ -11,8 +9,16 @@ import {
   useSensors,
 } from '@dnd-kit/core';
 import { arrayMove } from '@dnd-kit/sortable';
-import { ContentType, MutationResponse, QuestionItem, QuestionSortItem } from '@types';
-import { learningResourceQueryOptions, useChangeQuestionOrder } from '@entities/learning-resource';
+import {
+  learningResourceQueryOptions,
+  MutationResponse,
+  QuestionItem,
+  QuestionSortItem,
+  useChangeQuestionOrder,
+} from '@entities/learning-resource';
+import { ContentType } from '@shared/types/enums';
+import { QueryClient } from '@tanstack/react-query';
+import { Dispatch, SetStateAction, useCallback } from 'react';
 
 export const useQuestionSort = (options: {
   contentUuid: string;

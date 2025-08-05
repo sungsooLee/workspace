@@ -1,4 +1,8 @@
-import { learningResourceQueryOptions } from '@entities/learning-resource';
+import {
+  learningResourceQueryOptions,
+  SharedBoxContent,
+  ShareDestination,
+} from '@entities/learning-resource';
 import { cn, DATE_TIME_FORMAT, formatDate } from '@learnway/shared';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
@@ -8,7 +12,6 @@ import { GridBox } from '@learnway/ui/grid';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 import { useQuery } from '@tanstack/react-query';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { SharedBoxContent, ShareDestination } from '@types';
 import { t } from 'i18next';
 import { pick } from 'lodash-es';
 

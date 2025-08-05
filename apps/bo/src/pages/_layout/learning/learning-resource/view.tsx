@@ -1,5 +1,9 @@
 // IA105 / NLP_BO_CMS_1016, NLP_BO_CMS_1002 / 학습자원조회_나의 학습자원_등록_동영상
-import { learningResourceQueryOptions } from '@entities/learning-resource';
+import {
+  learningResourceQueryOptions,
+  QuestionBasicInfoDetail,
+  TestPaperBasicInfoDetail,
+} from '@entities/learning-resource';
 import { NotFound } from '@features/layout';
 import { LEARNING_TYPE } from '@learnway/config';
 import { useCurrentRoute } from '@learnway/hooks';
@@ -13,9 +17,8 @@ import {
   ScormView,
   VideoView,
 } from '@widgets/learning/learning-resource';
-import { ExamView } from '@widgets/learning/learning-resource/exam-view';
-import { QuestionBasicInfoDetail, TestPaperBasicInfoDetail } from '@types';
 import { ExamPoolView } from '@widgets/learning/learning-resource/exam-pool-view';
+import { ExamView } from '@widgets/learning/learning-resource/exam-view';
 
 export const Route = createFileRoute('/_layout/learning/learning-resource/view')({
   component: RouteComponent,

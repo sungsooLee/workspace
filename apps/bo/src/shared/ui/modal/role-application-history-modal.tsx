@@ -1,11 +1,11 @@
 import RoleManagerService from '@entities/role/api/role-manager';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { GridBox } from '@learnway/ui/grid';
+import { ModalBody, ModalContainer, ModalTitle } from '@learnway/ui/modal';
+import { EnGlobalConst } from '@shared/types/enums';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { EnGlobalConst } from '@types';
 import { t } from 'i18next';
 import { useEffect, useState } from 'react';
-import { ModalBody, ModalContainer, ModalTitle } from '@learnway/ui/modal';
 
 const RoleApplicationHistoryModalComponent = ({ applicationId }: { applicationId: number }) => {
   const [gridData, setGridData] = useState<any[]>([]);
@@ -57,25 +57,29 @@ const columns = (): ColumnDef<any, unknown>[] => [
     enableSorting: false,
     size: 180,
     meta: {
-      cellAlign: 'center' } }),
+      cellAlign: 'center',
+    },
+  }),
   columnHelper.accessor('createdBy', {
     header: t('이력 생성자 정보'),
     cell: (info) => {
       console.log('row', info.row.original);
       if (info.row.original.status === 'APPROVED' || info.row.original.status === 'REJECTED')
-        return info.row.original.approver.name + ' / ' + info.row.original.approver.employeeNumber;
-      return info.row.original.applicant.name + ' / ' + info.row.original.applicant.employeeNumber;
+        return `${info.row.original.approver.name} / ${info.row.original.approver.employeeNumber}`;
+      return `${info.row.original.applicant.name} / ${info.row.original.applicant.employeeNumber}`;
     },
     enableGrouping: false,
     enableSorting: false,
-    size: 180 }),
+    size: 180,
+  }),
   columnHelper.accessor('status', {
     header: t('내용'),
     cell: (info) =>
       t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.role.RoleApplicationStatus.${info.getValue()}`),
     enableGrouping: false,
     enableSorting: false,
-    size: 180 }),
+    size: 180,
+  }),
   columnHelper.accessor('reason', {
     header: t('세부 내용'),
     cell: (info) => {
@@ -92,5 +96,7 @@ const columns = (): ColumnDef<any, unknown>[] => [
     enableGrouping: false,
     enableSorting: false,
     meta: {
-      size: 'auto' } }),
+      size: 'auto',
+    },
+  }),
 ];

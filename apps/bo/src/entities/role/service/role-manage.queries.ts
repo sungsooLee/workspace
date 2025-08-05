@@ -1,6 +1,7 @@
 import TenantMenuManageService from '@entities/menu/api/menu-tenant-manage';
 import { getQuerySkipToken } from '@learnway/shared';
-import { Role, RoleApplicationParam } from '@types';
+import { Role } from '@shared/types/role';
+import { RoleApplicationParam } from '@shared/types/role-application';
 import RoleManagerService from '../api/role-manager';
 
 export const roleQueryKeys = {
@@ -15,7 +16,8 @@ export const roleQueryKeys = {
   userRoleMe: ['users-role-me'] as const,
   myApplications: ['my-application-list'] as const,
   myApplication: ['my-application-detail'] as const,
-  applications: ['applications'] as const };
+  applications: ['applications'] as const,
+};
 
 const genRoleMenuTree = (menus: any[], roleMenu: any, contains: any[] = []) => {
   for (const menu of menus) {
@@ -35,12 +37,14 @@ export const roleManagerQueryOptions = {
     queryKey: roleQueryKeys.list,
     queryFn: () => RoleManagerService.fetchRolesList({ ...params, siteScope: 'BO' }),
     cacheTime: 0,
-    staleTime: 0 }),
+    staleTime: 0,
+  }),
   // 특정 역할 조회
   getRole: (roleId: string) => ({
     queryKey: [...roleQueryKeys.all, ...roleQueryKeys.roles, roleId],
     queryFn: async () => RoleManagerService.fetchRole(roleId),
-    enabled: !!roleId }),
+    enabled: !!roleId,
+  }),
 
   // 역할에 할당된 메뉴 목록 조회
   getRoleMenus: (tenantId: number, siteScope: string, roleId: string) => ({
@@ -62,7 +66,8 @@ export const roleManagerQueryOptions = {
 
       return rootMenu;
     },
-    enabled: !!roleId }),
+    enabled: !!roleId,
+  }),
 
   // 메뉴에 속한 API 목록 조회
   getMenuApis: (roleCode: string, tenantMappingMenuId: number) => ({
@@ -85,44 +90,53 @@ export const roleManagerQueryOptions = {
       }
       return {
         roleMenuApiList: [...roleMenuApiMap.keys()],
-        apiMappingMenuList: menuDetail.apiMappingMenuList };
+        apiMappingMenuList: menuDetail.apiMappingMenuList,
+      };
     },
-    enabled: !!tenantMappingMenuId }),
+    enabled: !!tenantMappingMenuId,
+  }),
 
   // 역할 트리 조회
   getRoleTree: (tenantId: number, siteScope: string) => ({
     queryKey: [roleQueryKeys.all, roleQueryKeys.tree, tenantId, siteScope],
     queryFn: async () => RoleManagerService.fetchRoleTree(tenantId, siteScope),
-    enabled: !!tenantId }),
+    enabled: !!tenantId,
+  }),
 
   //역할 사용자 조회
   getRoleUserList: (param: any) => ({
     queryKey: [roleQueryKeys.all, roleQueryKeys.users],
-    queryFn: async () => RoleManagerService.fetchRoleUserList(param) }),
+    queryFn: async () => RoleManagerService.fetchRoleUserList(param),
+  }),
 
   //역할 사용자 그룹 조회
   getRoleUserGroups: (roleId: string) => ({
     queryKey: [roleQueryKeys.all, roleQueryKeys.userGroups],
     queryFn: async () =>
-      roleId ? RoleManagerService.fetchRoleUserGroups(roleId) : getQuerySkipToken() }),
+      roleId ? RoleManagerService.fetchRoleUserGroups(roleId) : getQuerySkipToken(),
+  }),
 
   //역할 조회
   getMyRoles: (siteScope: string) => ({
     queryKey: [roleQueryKeys.all, roleQueryKeys.userRoleMe],
     queryFn: async () =>
-      siteScope ? RoleManagerService.fetchMyRoles(siteScope) : getQuerySkipToken() }),
+      siteScope ? RoleManagerService.fetchMyRoles(siteScope) : getQuerySkipToken(),
+  }),
   // 나의 역할 신청 목록 조회
   getMyRoleApplications: (payload: any) => ({
     queryKey: [...roleQueryKeys.myApplications, payload.roleId],
     queryFn: async () =>
-      payload ? RoleManagerService.fetchMyRoleApplications(payload) : getQuerySkipToken() }),
+      payload ? RoleManagerService.fetchMyRoleApplications(payload) : getQuerySkipToken(),
+  }),
   // 나의 역할 신청 조회 단건
   getMyRoleApplication: (roleApplicationId: number) => ({
     queryKey: [...roleQueryKeys.myApplication],
     queryFn: async () =>
       roleApplicationId
         ? RoleManagerService.fetchMyRoleApplication(roleApplicationId)
-        : getQuerySkipToken() }) };
+        : getQuerySkipToken(),
+  }),
+};
 
 /**
  * 역할 신청 관리
@@ -132,7 +146,9 @@ export const roleApplicationQueryOptions = {
     queryKey: roleQueryKeys.applications,
     queryFn: () => RoleManagerService.fetchRoleApplications(params),
     cacheTime: 0,
-    staleTime: 0 }) };
+    staleTime: 0,
+  }),
+};
 
 type roleParam = {
   roleId: string;
@@ -142,38 +158,48 @@ type roleParam = {
 export const roleMutateOptions = {
   // 역할 생성
   createRole: () => ({
-    mutationFn: (payload: Role) => RoleManagerService.createRole(payload) }),
+    mutationFn: (payload: Role) => RoleManagerService.createRole(payload),
+  }),
 
   // 역할 삭제
   deleteRole: () => ({
-    mutationFn: (roleId: string) => RoleManagerService.deleteRole(roleId) }),
+    mutationFn: (roleId: string) => RoleManagerService.deleteRole(roleId),
+  }),
 
   // 역할 수정
   updateRole: () => ({
-    mutationFn: (payload: Role) => RoleManagerService.updateRole(payload) }),
+    mutationFn: (payload: Role) => RoleManagerService.updateRole(payload),
+  }),
 
   // 역할에 메뉴 할당
   modifyMenusAndApiToRole: () => ({
     mutationFn: ({ roleId, body }: roleParam) =>
-      RoleManagerService.modifyMenusAndApiToRole(roleId, body) }),
+      RoleManagerService.modifyMenusAndApiToRole(roleId, body),
+  }),
 
   //역할 위치이동
   movePosition: () => ({
     mutationFn: ({ roleId, body }: roleParam) =>
-      RoleManagerService.modifyRolePosition(roleId, body) }),
+      RoleManagerService.modifyRolePosition(roleId, body),
+  }),
 
   //역할 사용자 관리
   modifyUserToRole: () => ({
-    mutationFn: ({ roleId, body }: roleParam) => RoleManagerService.modifyUserToRole(roleId, body) }),
+    mutationFn: ({ roleId, body }: roleParam) => RoleManagerService.modifyUserToRole(roleId, body),
+  }),
 
   // 나의 역할 신청
   createMyRoleApplication: () => ({
     mutationFn: (payload: RoleApplicationParam) =>
-      RoleManagerService.createMyRoleApplication(payload) }),
+      RoleManagerService.createMyRoleApplication(payload),
+  }),
 
   approveRoleApplications: () => ({
-    mutationFn: (payload: any) => RoleManagerService.approveRoleApplication(payload) }),
+    mutationFn: (payload: any) => RoleManagerService.approveRoleApplication(payload),
+  }),
 
   modifyUserGroupToRole: () => ({
     mutationFn: ({ roleId, body }: roleParam) =>
-      RoleManagerService.modifyUserGroupToRole(roleId, body) }) };
+      RoleManagerService.modifyUserGroupToRole(roleId, body),
+  }),
+};

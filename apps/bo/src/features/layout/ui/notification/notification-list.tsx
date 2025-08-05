@@ -4,10 +4,9 @@ import { IcoBell03, IcoXclose } from '@learnway/icons';
 import { cn, DATE_TIME_FORMAT } from '@learnway/shared';
 import { Popover } from '@learnway/ui/popover';
 
-import { useNotificationsAction } from '@entities/notification';
+import { Notification, useNotificationsAction } from '@entities/notification';
 import { formatTimeAgo } from '@learnway/shared';
 import { Button } from '@learnway/ui/button';
-import { Notification } from '@types';
 import { t } from 'i18next';
 import styles from './notification.module.css';
 

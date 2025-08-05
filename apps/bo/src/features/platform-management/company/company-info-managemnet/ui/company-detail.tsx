@@ -7,11 +7,11 @@ import { cn, DATE_TIME_FORMAT, getDateToString, getStringToDate } from '@learnwa
 import { FormGuideText, FormSubTitle } from '@learnway/ui/base-form';
 import { RadioGroupFormField } from '@learnway/ui/form-field';
 import { GridBox } from '@learnway/ui/grid';
+import { EnFormMode, EnGlobalConst } from '@shared/types/enums';
 import { FormRow, UserGroupChoiceModal, UserGroupTabsChoiceModal } from '@shared/ui';
 import { LoginRestrictTimeSettingModal } from '@shared/ui/modal/login-restrict-time-setting-modal';
 import { useRouter, useRouterState } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper, Table } from '@tanstack/react-table';
-import { EnFormMode, EnGlobalConst } from '@types';
 import dayjs from 'dayjs';
 import { t } from 'i18next';
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
@@ -19,7 +19,6 @@ import { LoginAuthenticationSettingInformation } from './login-authentication-se
 
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
-// TODO: Fix unknown imports: ContentsRowItem from '@learnway/ui'
 import { Button } from '@learnway/ui/button';
 import { ContentsRow, ContentsRowItem } from '@learnway/ui/contents-row';
 import { useModal } from '@learnway/ui/modal';

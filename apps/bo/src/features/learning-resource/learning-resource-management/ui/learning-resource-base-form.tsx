@@ -15,7 +15,7 @@ import {
   UserChoiceModal,
 } from '@shared/ui';
 
-import { ContentCreateType, EnFormMode } from '@types';
+import { ContentCreateType, EnFormMode } from '@shared/types/enums';
 
 import { DropdownFormField, FormDisplay, SecondDurationTimeFormField } from '@features/form';
 import { DateRangePickerFormField } from '@features/form/ui';

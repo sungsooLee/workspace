@@ -12,7 +12,7 @@ import { routeTree } from './routeTree.gen';
 
 import { registerToastHandler } from '@learnway/shared';
 import { showToast } from '@learnway/ui/stores';
-import type { PageMeta } from './types';
+import type { PageMeta } from '@shared/types/page-meta';
 
 const isLocal = process.env.NODE_ENV === 'local';
 

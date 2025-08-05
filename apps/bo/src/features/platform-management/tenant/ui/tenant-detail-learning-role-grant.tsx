@@ -13,6 +13,7 @@ import { GridBox, useGridBox } from '@learnway/ui/grid';
 import { Input } from '@learnway/ui/input';
 import { useToast } from '@learnway/ui/toast';
 import { TreeBox, TreeContainer, TreeNode } from '@learnway/ui/tree-view';
+import { EnFormMode } from '@shared/types/enums';
 import {
   FormRow,
   SectionLayout,
@@ -22,7 +23,6 @@ import {
 } from '@shared/ui';
 import { useRouterState } from '@tanstack/react-router';
 import { createColumnHelper, Table } from '@tanstack/react-table';
-import { EnFormMode } from '@types';
 import { t } from 'i18next';
 import { forwardRef, useEffect, useRef, useState } from 'react';
 import { FieldValues, useWatch } from 'react-hook-form';

@@ -1,16 +1,16 @@
+import { UseDynamicFormResult } from '@learnway/hooks';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { SplitPanel } from '@learnway/ui/elements';
 import { forwardRef, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
-import { UseDynamicFormResult } from '@learnway/hooks';
-import { SplitPanel } from '@learnway/ui/elements';
-import { FormSubTitle } from '@learnway/ui/base-form';
 import { AssignmentBasicInfoFormData, AssignmentTabRef } from '../service/assignment/type';
 import { LearningResourceBaseForm } from './learning-resource-base-form';
 
-import styles from '@learnway/styles/bo/pages/_layout/learning/assignment-detail.module.css';
-import movieInfoStyles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
 import previewImg from '@assets/images/temp/img_exam_basic.jpg';
-import { ContentBaseInfo, ContentInformation, Tag } from '@types';
+import { ContentBaseInfo, ContentInformation } from '@entities/learning-resource';
 import { useAssignmentBasicInfoForm } from '@features/learning-resource/learning-resource-management/service/assignment/use-assignment-basic-info-form';
+import movieInfoStyles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
+import styles from '@learnway/styles/bo/pages/_layout/learning/assignment-detail.module.css';
 
 type AssignmentBasicInfoProps = {
   basicInfoForm: UseDynamicFormResult;

@@ -27,11 +27,11 @@ import {
   TreeEventPayload,
   TreeNode,
 } from '@learnway/ui/tree-view';
+import { ApiMappingMenuDetail, MenuDetail } from '@shared/types/menu';
 import { FormRow, SwitchFormField } from '@shared/ui';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from '@tanstack/react-router';
 import { CellContext, ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { ApiMappingMenuDetail, MenuDetail } from '@types';
 import { t } from 'i18next';
 import { isEqual } from 'lodash-es';
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';

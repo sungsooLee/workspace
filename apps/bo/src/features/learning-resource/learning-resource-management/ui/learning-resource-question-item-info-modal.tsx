@@ -1,4 +1,10 @@
-import { learningResourceQueryOptions } from '@entities/learning-resource';
+import {
+  EnQuestionLevel,
+  EnQuestionType,
+  learningResourceQueryOptions,
+  QuestionItemOption,
+  QuestionListForRetrieveRes,
+} from '@entities/learning-resource';
 import { FormSubTitle } from '@learnway/ui/base-form';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
@@ -8,12 +14,6 @@ import { Input } from '@learnway/ui/input';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 import { useQuery } from '@tanstack/react-query';
 import { createColumnHelper } from '@tanstack/react-table';
-import {
-  EnQuestionLevel,
-  EnQuestionType,
-  QuestionItemOption,
-  QuestionListForRetrieveRes,
-} from '@types';
 import { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 

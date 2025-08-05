@@ -1,26 +1,26 @@
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
 
-import movieInfoStyles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
 import previewImg from '@assets/images/temp/img_exam_basic.jpg';
+import movieInfoStyles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
 
+import { UseDynamicFormResult } from '@learnway/hooks';
 import { FormSubTitle } from '@learnway/ui/base-form';
 import { SplitPanel } from '@learnway/ui/elements';
-import { UseDynamicFormResult } from '@learnway/hooks';
 
-import { LearningResourceBaseForm } from './learning-resource-base-form';
-import { useLearningResourceQuestionDetailForm } from '../service/learning-resource-question-detail-from.hook';
-import { ContentBaseInfo } from '@types';
-import { Button } from '@learnway/ui/button';
-import { useModal } from '@learnway/ui/modal';
+import { ContentBaseInfo } from '@entities/learning-resource';
+import { getQuestionBankRequestData } from '@features/learning-resource/learning-resource-management/service/question-bank/common';
 import {
   QuestionBankFormData,
   QuestionBankTabFormRef,
 } from '@features/learning-resource/learning-resource-management/service/question-bank/type';
-import { useTranslation } from 'react-i18next';
-import { getQuestionBankRequestData } from '@features/learning-resource/learning-resource-management/service/question-bank/common';
-import dayjs from 'dayjs';
 import { isLocalhost } from '@learnway/shared';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 import { FormRow2 } from '@shared/ui';
+import dayjs from 'dayjs';
+import { useTranslation } from 'react-i18next';
+import { useLearningResourceQuestionDetailForm } from '../service/learning-resource-question-detail-from.hook';
+import { LearningResourceBaseForm } from './learning-resource-base-form';
 
 type QuestionBankDetailProps = {
   form: UseDynamicFormResult;

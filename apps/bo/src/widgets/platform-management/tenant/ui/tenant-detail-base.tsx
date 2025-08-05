@@ -1,18 +1,17 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
-import { t } from 'i18next';
-import { useTranslation } from 'react-i18next';
 import { useRouterState } from '@tanstack/react-router';
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { CODE_GROUP, useCodeStore, useDynamicForm2 } from '@learnway/hooks';
 
-import { isEqual } from 'lodash-es';
-import { DuplicateState } from '@features/form';
 import { useFetchTenant, useUpdateTenant } from '@entities/tenant';
 import TenantService from '@entities/tenant/api/tenant';
-import { EnDeviceType, EnFormMode, EnUseCategory } from '@types';
+import { DuplicateState } from '@features/form';
+import { EnDeviceType, EnFormMode, EnUseCategory } from '@shared/types/enums';
+import { isEqual } from 'lodash-es';
 
-import { TenantDetailBaseForm } from '../../../../features/platform-management/tenant/ui/tenant-detail-base-form';
 import { useModal } from '@learnway/ui/modal';
+import { TenantDetailBaseForm } from '../../../../features/platform-management/tenant/ui/tenant-detail-base-form';
 
 /**
  * 화면번호: NLP_BO_TMS_1002 (테넌트기본 정보)

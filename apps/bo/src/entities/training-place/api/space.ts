@@ -1,7 +1,7 @@
 import { httpService } from '@learnway/shared';
 import { LMSApiPrefix } from '@learnway/config';
-import { PageableContent } from '@types';
-import { SpaceListItem, Space } from 'src/types/entities/space';
+import { PageableContent } from '@shared/types/page-meta';
+import { SpaceListItem, Space } from '@shared/types/space';
 
 export default class SpaceService {
   static fetchList(params: any) {

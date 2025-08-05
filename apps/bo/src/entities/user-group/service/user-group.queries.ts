@@ -1,5 +1,5 @@
 import { getQuerySkipToken } from '@learnway/shared';
-import { UserGroupManual, UserGroupsParam } from '@types';
+import { UserGroupManual, UserGroupsParam } from '@shared/types/user-group';
 import UserGroupsService from '../api/user-group';
 
 export const queryKeys = {

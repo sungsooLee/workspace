@@ -18,7 +18,7 @@ import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
-import { EnFormMode } from '@types';
+import { EnFormMode } from '@shared/types/enums';
 import { TenantDetailMenuMappingModal } from './tenant-detail-menu-mapping-modal';
 /** Hook 정의 */
 import {
@@ -40,7 +40,7 @@ import {
   ApiInfoModal,
   findMenuPathById,
 } from '@features/platform-management/platform/menu-managemnet';
-import { EnDeviceType } from '@types';
+import { EnDeviceType } from '@shared/types/enums';
 
 //Column Helper 정의
 const columnHelper = createColumnHelper<any>();

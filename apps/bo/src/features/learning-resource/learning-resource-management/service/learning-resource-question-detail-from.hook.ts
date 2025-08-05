@@ -1,16 +1,14 @@
-import { useQueryClient } from '@tanstack/react-query';
-import { create } from 'zustand';
 import {
   ContentBaseInfo,
-  EnFormMode,
   QuestionBasicInfoDetail,
   TestPaperBasicInfoSaveRes,
-} from '@types';
-import {
   useCreateQuestionBankContent,
   useUpdateQuestionBankContent,
 } from '@entities/learning-resource';
 import { learningResourceQueryOptions } from '@entities/learning-resource/service/learning-resource.queries';
+import { EnFormMode } from '@shared/types/enums';
+import { useQueryClient } from '@tanstack/react-query';
+import { create } from 'zustand';
 
 interface FunctionInformation {
   saveBaseInfo?: () => void;

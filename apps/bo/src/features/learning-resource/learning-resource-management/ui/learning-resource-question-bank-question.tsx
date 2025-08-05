@@ -1,36 +1,36 @@
-import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useState } from 'react';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { QuestionItem, QuestionItemGridRow } from '@entities/learning-resource';
+import { CMSApiPrefix } from '@learnway/config';
 import { IcoCopy, IcoMinus, IcoPlus } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import { FormSubTitle } from '@learnway/ui/base-form';
 import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
 import { GridBox } from '@learnway/ui/grid';
 import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
 import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
-import { QuestionItem, QuestionItemGridRow } from '@types';
 import { QUESTION_LEVELS, QUESTION_TYPES } from '../service/exam-util';
 import {
   initStatisticRow,
   QuestionStatisticRow,
   updateNewStatistics,
 } from '../service/learning-resource-question-service';
-import { ContentsRow } from '@learnway/ui/contents-row';
-import { CMSApiPrefix } from '@learnway/config';
 import { QuestionBankTabFormRef } from '../service/question-bank/type';
 import { useQuestionBankInfoInput } from '../service/question-bank/use-question-bank-info-input';
-import { LearningResourceTestItemModal } from './learning-resource-test-item-modal';
 import { LearningResourceQuestionShuttleModal } from './learning-resource-question-shuttle-modal';
+import { LearningResourceTestItemModal } from './learning-resource-test-item-modal';
 
 // Drag and Drop 관련
 import { closestCenter, DndContext, MeasuringStrategy } from '@dnd-kit/core';
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 
+import { QuestionDragHandle } from '@features/learning-resource/learning-resource-management/ui/learning-resource-question-drag-handle';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
 import styles from '@learnway/styles/bo/pages/_layout/learning/test-detail.module.css';
-import { QuestionDragHandle } from '@features/learning-resource/learning-resource-management/ui/learning-resource-question-drag-handle';
 
 interface QuestionBankQuestionProps {
   isExamMapping?: boolean;

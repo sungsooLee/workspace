@@ -1,12 +1,13 @@
 import {
+  ExternalCourseForm,
   ExternalCourseFormEnrollType,
   ExternalCourseFormListRequest,
   ExternalCourseLayoutParam,
   ExternalCourseLayoutRequest,
-  PageableContent } from '@types';
-import { httpService } from '@learnway/shared';
+} from '@entities/external-education';
 import { LMSApiPrefix } from '@learnway/config';
-import { ExternalCourseForm } from '@types';
+import { httpService } from '@learnway/shared';
+import { PageableContent } from '@shared/types/page-meta';
 
 export class ExternalEducationService {
   /**
@@ -52,7 +53,8 @@ export class ExternalEducationService {
    */
   static getComponentList({
     tenantId,
-    externalCourseFormEnrollType }: {
+    externalCourseFormEnrollType,
+  }: {
     tenantId: number;
     externalCourseFormEnrollType: ExternalCourseFormEnrollType;
   }): Promise<any> {

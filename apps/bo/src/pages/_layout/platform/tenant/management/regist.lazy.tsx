@@ -13,7 +13,7 @@ import { useCreateTenant } from '@entities/tenant/service/tenant.hook';
 import { pageRouteConfig } from '@features/auth';
 import { DuplicateState } from '@features/form';
 import { TenantDetailBaseForm } from '@features/platform-management/tenant/ui/tenant-detail-base-form';
-import { EnDeviceType, EnFormMode, EnUseCategory } from '@types';
+import { EnDeviceType, EnFormMode, EnUseCategory } from '@shared/types/enums';
 import { isEqual } from 'lodash-es';
 
 export const Route = createLazyFileRoute('/_layout/platform/tenant/management/regist')({

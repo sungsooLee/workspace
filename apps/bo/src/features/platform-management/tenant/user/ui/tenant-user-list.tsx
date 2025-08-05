@@ -1,30 +1,29 @@
-import { FC, useState, useEffect, useCallback } from 'react';
-import { useWatch } from 'react-hook-form';
-import { useRouter, useRouterState, Link } from '@tanstack/react-router';
-import { createColumnHelper, ColumnDef } from '@tanstack/react-table';
 import { useQueryClient } from '@tanstack/react-query';
+import { Link, useRouter, useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
+import { FC, useEffect } from 'react';
+import { useWatch } from 'react-hook-form';
 
+import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
+import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { Divider } from '@learnway/ui/elements';
-import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
-import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import { useSearchBox, SearchBoxConfig, CODE_GROUP, SelectOption } from '@learnway/hooks';
+import { GridBox, useGridBox } from '@learnway/ui/grid';
 
 import { useFetchAuthUser } from '@learnway/auth/entities';
 
 import { SearchBox } from '@shared/ui/search-box';
 
-import { EnGlobalConst } from '@types';
-import { tenantQueryOptions } from '@entities/tenant';
+import { queryOptions as companysQueryOptions } from '@entities/companies/service/companies.queries';
 import { usersQueryOptions } from '@entities/users/service/users.queries';
-import { queryOptions, queryOptions as companysQueryOptions } from '@entities/companies/service/companies.queries';
-import { useCreation } from 'ahooks';
 import { Button } from '@learnway/ui/button';
+import { EnGlobalConst } from '@shared/types/enums';
+import { useCreation } from 'ahooks';
 
 const _global = {
   linkClick: (userUuid: string) => {
     return;
-  } };
+  },
+};
 
 /**
  * 화면번호 : NLP_BO_TMS_1111_07 테넌트-유저관리
@@ -43,7 +42,9 @@ const TenantUserListComponent: FC<any> = ({ rootPath }) => {
       to: `${rootPath}/tenant/user/detail`,
       state: {
         userUuid,
-        listParam: getValues() } });
+        listParam: getValues(),
+      },
+    });
   };
 
   const gridInitConfig = useCreation(
@@ -51,89 +52,121 @@ const TenantUserListComponent: FC<any> = ({ rootPath }) => {
       query: usersQueryOptions.list,
       columns: [
         {
-          name: 'tenantName', label: t('테넌트'), size: 120
+          name: 'tenantName',
+          label: t('테넌트'),
+          size: 120,
         },
         {
-          name: 'company', label: t('그룹'), render: (row: any) => {
+          name: 'company',
+          label: t('그룹'),
+          render: (row: any) => {
             return t(
               `${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.company.CompanyType.${row.row.original.company.companyType}`,
             );
           },
-          size: 120
+          size: 120,
         },
         {
-          name: 'company', label: t('회사'), render: (row: any) => {
-            return row.row.original.company.name
+          name: 'company',
+          label: t('회사'),
+          render: (row: any) => {
+            return row.row.original.company.name;
           },
-          size: 120
+          size: 120,
         },
         {
-          name: 'opt3', label: t('소속'), render: (row: any) => {
-            return row.row.original.dept?.deptName
+          name: 'opt3',
+          label: t('소속'),
+          render: (row: any) => {
+            return row.row.original.dept?.deptName;
           },
-          size: 120
+          size: 120,
         },
         {
-          name: 'opt4', label: t('직위'), render: (row: any) => {
+          name: 'opt4',
+          label: t('직위'),
+          render: (row: any) => {
             return (
               <Link to={row.row.original.tenantSite} className="link">
                 {row.row.original.tenantId}
               </Link>
-            )
+            );
           },
-          size: 120
+          size: 120,
         },
         {
-          name: 'employeeNumber', label: t('사번'), size: 120
+          name: 'employeeNumber',
+          label: t('사번'),
+          size: 120,
         },
         {
-          name: 'name', label: t('이름'), render: (row: any) => {
+          name: 'name',
+          label: t('이름'),
+          render: (row: any) => {
             return (
               <Button
                 label={`${row.getValue()}`}
                 className="link"
                 onClick={() => _global.linkClick(row.row.original.uuid)}
               />
-            )
+            );
           },
-          size: 120
+          size: 120,
         },
         {
-          name: 'opt7', label: t('학습자 역할'), size: 120
+          name: 'opt7',
+          label: t('학습자 역할'),
+          size: 120,
         },
         {
-          name: 'opt8', label: t('재직여부'), size: 88
+          name: 'opt8',
+          label: t('재직여부'),
+          size: 88,
         },
         {
-          name: 'userState', label: t('계정상태'), render: (row: any) => {
-            return t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.user.UserState.${row.getValue()}`)
+          name: 'userState',
+          label: t('계정상태'),
+          render: (row: any) => {
+            return t(`${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.user.UserState.${row.getValue()}`);
           },
           size: 88,
           meta: {
-            cellAlign: 'center' } },
-        {
-          name: 'opt10', label: t('잠김해제'), size: 88
+            cellAlign: 'center',
+          },
         },
         {
-          name: 'opt11', label: t('로그인'), render: (row: any) => {
-            return (<Button variant="gray" label={t('로그인')} />)
-          },
-          size: 88
+          name: 'opt10',
+          label: t('잠김해제'),
+          size: 88,
         },
         {
-          name: 'createdDate', label: t('회원가입일'), render: (row: any) => {
-            return getDateToString(new Date(row.getValue() as string), DATE_TIME_FORMAT.DATETIME_SEC)
+          name: 'opt11',
+          label: t('로그인'),
+          render: (row: any) => {
+            return <Button variant="gray" label={t('로그인')} />;
           },
-          size: 120
+          size: 88,
+        },
+        {
+          name: 'createdDate',
+          label: t('회원가입일'),
+          render: (row: any) => {
+            return getDateToString(
+              new Date(row.getValue() as string),
+              DATE_TIME_FORMAT.DATETIME_SEC,
+            );
+          },
+          size: 120,
         },
       ],
       data: [],
       gridState: {
         page: 0,
         size: 20,
-        sort: [] }
+        sort: [],
+      },
     }),
-    []
+    [],
   );
 
   const {
@@ -142,7 +175,8 @@ const TenantUserListComponent: FC<any> = ({ rootPath }) => {
     setOptions,
     getValues,
     onFormChange,
-    onFormValid } = useSearchBox(searchConfig());
+    onFormValid,
+  } = useSearchBox(searchConfig());
   const { config: gConfig, gridFetch } = useGridBox(gridInitConfig, getValues);
 
   const tenantIdWatch = useWatch({ control: searchProvider.control, name: 'tenantId' });
@@ -170,7 +204,8 @@ const TenantUserListComponent: FC<any> = ({ rootPath }) => {
 
     const tenantIdOptions = loginUser.tenants.map((tenant) => ({
       value: tenant.tenantId,
-      label: tenant.tenantName }));
+      label: tenant.tenantName,
+    }));
 
     setOptions('tenantId', tenantIdOptions);
     if (loginUser.activeTenant) setValue('tenantId', loginUser.activeTenant.tenantId ?? '');
@@ -185,7 +220,8 @@ const TenantUserListComponent: FC<any> = ({ rootPath }) => {
         );
         const companyIdOptions = companys.map((item) => ({
           label: item.name,
-          value: item.companyId }));
+          value: item.companyId,
+        }));
         setOptions('companyId', companyIdOptions);
       })();
     } else {
@@ -214,7 +250,8 @@ const searchConfig = (): SearchBoxConfig => ({
         format: 'object',
         value: '',
         presetOptionLabel: t('LABEL.form.label.select'),
-        options: [] },
+        options: [],
+      },
       {
         name: 'companyId',
         type: 'dropdown',
@@ -222,34 +259,41 @@ const searchConfig = (): SearchBoxConfig => ({
         format: 'object',
         value: '',
         presetOptionLabel: t('LABEL.form.label.select'),
-        options: [] },
+        options: [],
+      },
       {
         name: 'employeeNumber',
         type: 'text',
         label: t('사번'),
-        value: '' },
+        value: '',
+      },
     ],
     [
       {
         name: 'companyManagerName',
         type: 'text',
         label: t('학습자 역할'),
-        value: '' },
+        value: '',
+      },
       {
         name: 'opt2',
         type: 'text',
         label: t('계정상태'),
-        value: '' },
+        value: '',
+      },
       {
         name: 'dateRange',
         type: 'date-range',
         label: t('회원가입 기간'),
         format: 'object',
-        value: { from: undefined, to: undefined } },
+        value: { from: undefined, to: undefined },
+      },
     ],
   ],
   validator: {
-    tenantId: true } });
+    tenantId: true,
+  },
+});
 
 // const gridConfig = (): useGridBoxConfig => ({
 //   query: usersQueryOptions.list,

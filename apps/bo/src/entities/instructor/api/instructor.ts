@@ -1,14 +1,19 @@
+import {
+  Instructor,
+  InstructorHistory,
+  Instructors,
+} from '@entities/instructor/model/instructor.types';
+import { LMSApiPrefix, PMSApiPrefix } from '@learnway/config';
 import { httpService } from '@learnway/shared';
-import { PageableContent } from '@types';
-import { PMSApiPrefix, LMSApiPrefix } from '@learnway/config';
-import { InstructorHistory, Instructor, Instructors } from 'src/types/entities/instructor';
+import { PageableContent } from '@shared/types/page-meta';
 
 export default class InstructorService {
   static fetchRolesByTenantId(payload: number) {
     const params = {
       tenantId: payload,
       siteScope: 'BO',
-      roleType: 'TUTOR' };
+      roleType: 'TUTOR',
+    };
     return httpService.get<any[]>(`${PMSApiPrefix()}/roles`, params);
   }
 

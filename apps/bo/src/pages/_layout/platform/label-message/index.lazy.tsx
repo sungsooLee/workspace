@@ -1,20 +1,20 @@
+import { LabelMessagesQueryParams } from '@entities/label-messages';
 import { queryOptions } from '@entities/label-messages/service/label-messages.queries';
 import { MessageDetail } from '@features/platform-management/platform/label-message-managemnet';
 import { CODE_GROUP, useSearchBox } from '@learnway/hooks';
 import { IcoPlus } from '@learnway/icons';
 import { DATE_TIME_FORMAT, formatISODateString, getRowSelectionByList } from '@learnway/shared';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
+import { Button } from '@learnway/ui/button';
 import { Divider, SplitPanel } from '@learnway/ui/elements';
 import { GridBox, GridBoxState, useGridBox } from '@learnway/ui/grid';
 import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { Table } from '@tanstack/react-table';
-import { LabelMessagesQueryParams } from '@types';
 import { t } from 'i18next';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button } from '@learnway/ui/button';
 
 export const Route = createLazyFileRoute('/_layout/platform/label-message/')({
   component: RouteComponent,

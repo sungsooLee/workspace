@@ -16,7 +16,7 @@ import {
 } from '@features/platform-management/tenant';
 import { TenantDetailBase } from '@widgets/platform-management/tenant/ui/tenant-detail-base';
 
-import { EnTenantDetailTabKey } from '@types';
+import { EnTenantDetailTabKey } from '@shared/types/enums';
 
 export const Route = createFileRoute('/_layout/platform/tenant/management/detail')({
   component: RouteComponent,

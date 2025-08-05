@@ -1,4 +1,4 @@
-import { queryOptions } from '@entities/channel';
+import { ChannelParam, queryOptions } from '@entities/channel';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { Button } from '@learnway/ui/button';
@@ -6,7 +6,6 @@ import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox } from '@learnway/ui/grid';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 import { SearchBox } from '@shared/ui/search-box';
-import { ChannelParam } from '@types';
 import { t } from 'i18next';
 import { useState } from 'react';
 

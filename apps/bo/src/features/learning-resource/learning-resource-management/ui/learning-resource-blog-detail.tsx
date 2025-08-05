@@ -1,9 +1,9 @@
+import { BlogDetailRes } from '@entities/learning-resource';
 import { MediaContentRequiredCheckFormField } from '@features/form/ui';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { UseDynamicFormResult } from '@learnway/hooks';
 import { cn, isEmptyData } from '@learnway/shared';
 import { ContentsHistoryInfoFormField } from '@shared/ui';
-import { BlogDetailRes } from '@types';
 import dayjs from 'dayjs';
 import { useEffect } from 'react';
 import { useRoleInfo } from '../service/util';

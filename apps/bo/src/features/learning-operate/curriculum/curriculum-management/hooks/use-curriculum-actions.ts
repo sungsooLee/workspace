@@ -1,8 +1,13 @@
+import {
+  CurriculumResponse,
+  LESSON_TYPE,
+  MAPPING_CURRICULUM_TYPE,
+  MODULE_TYPE,
+} from '@entities/curriculum';
 import { getTimeValueFromHour } from '@learnway/shared';
 import { TreeNode } from '@learnway/ui/tree-view';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from '@tanstack/react-router';
-import { CurriculumResponse, LESSON_TYPE, MAPPING_CURRICULUM_TYPE, MODULE_TYPE } from '@types';
 import { useCallback } from 'react';
 import { buildTreeFromCurriculumData, findParentNode } from '../services';
 

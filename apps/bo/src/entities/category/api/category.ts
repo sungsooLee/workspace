@@ -6,7 +6,7 @@ import type {
   CategoryCreate,
   CategoryDetail,
   CategoryMove,
-  CategoryUpdate } from '@types';
+  CategoryUpdate } from '../model/category.types';
 
 export default class CategoryService {
   static getCategory(): Promise<Category> {

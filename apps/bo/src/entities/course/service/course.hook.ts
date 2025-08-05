@@ -1,6 +1,8 @@
 import type { UseMutationResult, UseQueryOptions, UseQueryResult } from '@tanstack/react-query';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
+import { PaginationResponse } from '@shared/types/api';
+import { MutationHookOptions } from '@shared/types/react-query';
 import {
   Course,
   CourseConfig,
@@ -9,9 +11,7 @@ import {
   CoursePopupListItem,
   CoursePopupQueryParams,
   CoursesQueryParams,
-  MutationHookOptions,
-  PaginationResponse,
-} from '../../../types';
+} from '../model/course.types';
 import { mutateOptions, queryOptions } from './course.queries';
 
 export const useFetchCourseAndConfig = (id: number) => {

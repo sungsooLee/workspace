@@ -1,10 +1,13 @@
-import { t } from 'i18next';
+import {
+  TestPaperBasicInfoSaveRes,
+  useCreateExamPaperContent,
+  useUpdateExamPaperContent,
+} from '@entities/learning-resource';
 import { useDynamicForm2 } from '@learnway/hooks';
-import { TestPaperBasicInfoSaveRes } from '@types';
-import { useCreateExamPaperContent, useUpdateExamPaperContent } from '@entities/learning-resource';
+import { useModal } from '@learnway/ui/modal';
+import { t } from 'i18next';
 import { getExamSaveRequestDataFromFormData } from './common';
 import { TestPaperBasicInfoFormData } from './type';
-import { useModal } from '@learnway/ui/modal';
 
 export const useExamBasicInfoForm = (options: {
   contentUuid: string;

@@ -18,7 +18,7 @@ import {
   TenantDetailWidget,
 } from '@features/platform-management/tenant';
 
-import { EnTenantDetailTabKey } from '@types';
+import { EnTenantDetailTabKey } from '@shared/types/enums';
 
 export const Route = createLazyFileRoute('/_layout/tenant/management/detail')({
   component: RouteComponent,

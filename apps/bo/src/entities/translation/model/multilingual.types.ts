@@ -1,11 +1,12 @@
-import { PaginationRequest } from './api';
+import { PaginationRequest } from '@shared/types/api';
 
 export enum keyTypeCode {
   SYSTEM_COMMON_CODE = 'SYSTEM_COMMON_CODE',
   LEARNER_MENU = 'LEARNER_MENU',
   HRD_CENTER_MENU = 'HRD_CENTER_MENU',
   LABEL = 'LABEL',
-  MESSAGE = 'MESSAGE' }
+  MESSAGE = 'MESSAGE',
+}
 
 export type MultilingualExcel = {
   no?: number;

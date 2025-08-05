@@ -1,5 +1,9 @@
 //  IA105 / NLP_BO_CMS_1016, NLP_BO_CMS_1002 / 학습자원조회_나의 학습자원_등록_동영상(자체)
-import { usePutVideoUpdate } from '@entities/learning-resource';
+import {
+  ContentInformation,
+  PutVideoUpdateRes,
+  usePutVideoUpdate,
+} from '@entities/learning-resource';
 import {
   ContentTopButtons,
   convertToVideoForm,
@@ -11,8 +15,8 @@ import {
 import { useDynamicForm2 } from '@learnway/hooks';
 import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
+import { ContentCreateType } from '@shared/types/enums';
 import { ContentsButtons, MainContents, PageContainer, SubContents } from '@shared/ui';
-import { ContentCreateType, ContentInformation, PutVideoUpdateRes } from '@types';
 import { t } from 'i18next';
 import { useEffect } from 'react';
 

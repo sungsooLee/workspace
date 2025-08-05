@@ -8,8 +8,8 @@ import {
   CourseListItem,
   CoursePopupListItem,
   CoursePopupQueryParams,
-  CoursesQueryParams,
-  PaginationResponse } from '../../../types';
+  CoursesQueryParams } from '../model/course.types';
+import { PaginationResponse } from '@shared/types/api';
 
 /**
  * 과정 관련 API 요청을 처리하는 서비스 클래스.

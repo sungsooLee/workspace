@@ -1,16 +1,9 @@
 /* IA118 / NLP_BO_CMS_1203 - 나의 학습자원 > 시험지 등록 및 상세 */
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useRouter } from '@tanstack/react-router';
-import { QueryClient } from '@tanstack/react-query';
-import { useTranslation } from 'react-i18next';
 import {
-  ContentCreateType,
   ExamTemplateType,
   TestPaperBasicInfoDetail,
   TestPaperBasicInfoSaveRes,
-} from '@types';
-import { useModal } from '@learnway/ui/modal';
-import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
+} from '@entities/learning-resource';
 import {
   ContentTopButtons,
   getTooltipContent,
@@ -24,6 +17,13 @@ import {
   useExamBasicInfoForm,
   useExamPaperForm,
 } from '@features/learning-resource/learning-resource-management/service';
+import { useModal } from '@learnway/ui/modal';
+import { ContentCreateType } from '@shared/types/enums';
+import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
+import { QueryClient } from '@tanstack/react-query';
+import { useRouter } from '@tanstack/react-router';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import { Tabs } from '@learnway/ui/tabs';

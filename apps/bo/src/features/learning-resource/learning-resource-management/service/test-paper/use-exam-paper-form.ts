@@ -1,5 +1,5 @@
+import { ExamQuestionGenType, TestPaperBasicInfoDetail } from '@entities/learning-resource';
 import { useRef, useState } from 'react';
-import { ExamQuestionGenType, TestPaperBasicInfoDetail } from '@types';
 import { TabFormRef } from './type';
 
 export const useExamPaperForm = (data: TestPaperBasicInfoDetail | undefined) => {

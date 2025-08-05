@@ -2,10 +2,10 @@ import { Button } from '@learnway/ui/button';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 // IA106 / NLP_BO_CMS_1053 스콤 보기
 
+import { ScormOrgn } from '@entities/learning-resource';
 import { GridBox } from '@learnway/ui/grid';
 import { PreviewLearningWindow } from '@shared/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { ScormOrgn } from '@types';
 import { t } from 'i18next';
 import { flatten } from 'lodash-es';
 import { useEffect, useState } from 'react';

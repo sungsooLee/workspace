@@ -1,5 +1,6 @@
+import { BlogCreateReq, BlogUpdateReq, Tag } from '@entities/learning-resource';
 import { getParsedDataFromString } from '@learnway/shared';
-import { BlogCreateReq, BlogUpdateReq, ContentAddInfoType, Tag } from '@types';
+import { ContentAddInfoType } from '@shared/types/enums';
 
 export const getPayloadFromBlogSubmit = (options: {
   data: Record<string, any>;

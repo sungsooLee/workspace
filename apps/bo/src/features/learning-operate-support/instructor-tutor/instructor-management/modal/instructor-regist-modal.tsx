@@ -1,9 +1,9 @@
-import { t } from 'i18next';
-import { InstructorRegist } from '../ui/instructor-regist';
-import { EnPageMode } from '@types';
-import { useRef } from 'react';
 import { Button } from '@learnway/ui/button';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { EnPageMode } from '@shared/types/enums';
+import { t } from 'i18next';
+import { useRef } from 'react';
+import { InstructorRegist } from '../ui/instructor-regist';
 
 /**
  * 화면 번호 NLP_BO_LMS0013, NLP_BO_LMS0015 : 강사/튜터 등록(팝업)
@@ -18,7 +18,8 @@ type InstructorRegistModalProps = {
 const InstructorRegistModal = ({
   instructorId,
   readOnly = false,
-  refreshOnSearch }: InstructorRegistModalProps) => {
+  refreshOnSearch,
+}: InstructorRegistModalProps) => {
   const { closeModal } = useModal();
   const formRef = useRef<HTMLFormElement>(null);
 

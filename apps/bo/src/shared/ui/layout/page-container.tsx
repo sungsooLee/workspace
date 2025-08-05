@@ -41,8 +41,8 @@ import { useCreateMenuFavorites, useDeleteMenuFavorites } from '@entities/menu';
 import fabStyles from '@learnway/styles/bo/assets/styles/modules/fab.module.css'; /* fab */
 import styles from '@learnway/styles/bo/assets/styles/modules/page-container.module.css';
 import tooltipPopoverStyles from '@learnway/styles/bo/assets/styles/modules/tootip-popover.module.css';
+import { ContentCreateType } from '@shared/types/enums';
 import { NoticeBox } from '@shared/ui';
-import { ContentCreateType } from '@types';
 
 export type GuidePopupProps = {
   title?: string;

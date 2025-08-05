@@ -1,10 +1,10 @@
-import React from 'react';
+import { MAPPING_CURRICULUM_TYPE } from '@entities/curriculum';
 import { DynamicFormProvider } from '@learnway/hooks';
+import React from 'react';
 import { FormState } from '../types/form.types';
 import { CurriculumForm } from './curriculum-form';
-import { MAPPING_CURRICULUM_TYPE } from '@types';
-import { ModuleForm } from './module-form';
 import { LessonForm } from './lesson-form';
+import { ModuleForm } from './module-form';
 interface NodeFormRendererProps {
   formState: FormState;
   onFormSubmit: (data: any) => void;
@@ -28,7 +28,8 @@ export const NodeFormRenderer: React.FC<NodeFormRendererProps> = ({
   updateFormData,
   watch,
   clearAllValidators,
-  curriculumData }) => {
+  curriculumData,
+}) => {
   const { activeFormType, selectedNode, parentNode, isEditing } = formState;
 
   switch (activeFormType) {

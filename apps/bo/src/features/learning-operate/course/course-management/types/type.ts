@@ -1,6 +1,6 @@
+import { Course, CourseConfig, CourseListItem } from '@entities/course';
 import { GridBoxConfig } from '@learnway/ui/grid';
 import { ColumnMeta } from '@tanstack/react-table';
-import { Course, CourseConfig, CourseListItem } from '@types';
 
 // ===== 과정 관리 페이지 타입 =====
 

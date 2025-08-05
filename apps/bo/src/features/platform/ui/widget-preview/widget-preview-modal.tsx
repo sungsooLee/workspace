@@ -4,8 +4,8 @@ import { memo } from 'react';
 import { cn } from '@learnway/shared';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
+import type { Widget } from '@entities/widgets';
 import styles from '@learnway/styles/bo/assets/styles/modules/widget-management.module.css'; // 화면 css
-import type { Widget } from '@types';
 
 import { Button } from '@learnway/ui/button';
 import { Tabs } from '@learnway/ui/tabs';

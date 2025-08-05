@@ -1,3 +1,4 @@
+import { LearningSequence } from '@entities/learning-sequence';
 import {
   useDeleteSequence,
   useUpdateSequence,
@@ -35,7 +36,6 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useUpdateEffect } from 'ahooks';
 import { forwardRef, useCallback, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { LearningSequence } from 'src/types/entities/learning-sequence';
 
 type SequenceDetailComponentProps = {
   mode: string;

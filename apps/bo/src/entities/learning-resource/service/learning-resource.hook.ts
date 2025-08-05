@@ -25,7 +25,7 @@ import {
   QuestionStatusUpdateReq,
   TestPaperBasicInfoSaveReq,
   UpdateQuestionBankCountInfoReq,
-} from '@types';
+} from '../model/learning-resource.types';
 import { learningResourceQueryOptions, mutateOptions } from './learning-resource.queries';
 
 export function usePostContentCopy(options?: any) {

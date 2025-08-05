@@ -1,5 +1,5 @@
 import { UseQueryOptions } from '@tanstack/react-query';
-import { ChannelByRoleId, ChannelParam } from '@types';
+import { ChannelByRoleId, ChannelParam } from '../model/channel.types';
 import ChannelService from '../api/channel';
 
 const CHANNEL_KEY = 'channel';

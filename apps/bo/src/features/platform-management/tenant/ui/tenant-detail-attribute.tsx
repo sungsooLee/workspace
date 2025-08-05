@@ -19,7 +19,7 @@ import { ContentsRow } from '@learnway/ui/contents-row';
 import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
 import { Switch } from '@learnway/ui/switch';
-import { EnDeviceType, EnUseCategory } from '@types';
+import { EnDeviceType, EnUseCategory } from '@shared/types/enums';
 
 /** Hook 정의 */
 import {

@@ -11,6 +11,7 @@ import {
 import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
 import { useToast } from '@learnway/ui/toast';
+import { EnFormMode } from '@shared/types/enums';
 import {
   ChipListFormField,
   FormItem,
@@ -18,7 +19,6 @@ import {
   TenantShuttleModal,
   UserShuttleModal,
 } from '@shared/ui';
-import { EnFormMode } from '@types';
 import { t } from 'i18next';
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';

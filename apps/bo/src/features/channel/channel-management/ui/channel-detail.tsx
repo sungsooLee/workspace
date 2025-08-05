@@ -1,8 +1,8 @@
 import { Button } from '@learnway/ui/button';
 import { Tabs } from '@learnway/ui/tabs';
+import { EnFormMode } from '@shared/types/enums';
 import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui';
 import { useRouter, useRouterState } from '@tanstack/react-router';
-import { EnFormMode } from '@types';
 import { t } from 'i18next';
 import { useRef, useState } from 'react';
 import { EnChannelDetailButtonLayout, EnChannelDetailTabKeys } from '../types/type';

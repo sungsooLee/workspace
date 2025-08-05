@@ -21,9 +21,9 @@ import { ChipListModalSelectorFormField, TextareaFormField } from '@learnway/ui/
 import { Input } from '@learnway/ui/input';
 import { Tabs } from '@learnway/ui/tabs';
 import { TreeBox, TreeContainer, TreeEventPayload, TreeNode } from '@learnway/ui/tree-view';
+import { EnFormMode } from '@shared/types/enums';
 import { FormRow, UserChoiceModal } from '@shared/ui';
 import { useQueryClient } from '@tanstack/react-query';
-import { EnFormMode } from '@types';
 import { t } from 'i18next';
 import { useEffect, useState } from 'react';
 import { useWatch } from 'react-hook-form';

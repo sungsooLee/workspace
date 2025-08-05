@@ -1,3 +1,4 @@
+import { LESSON_TYPE, MODULE_TYPE, useGetLessonDetail } from '@entities/curriculum';
 import { learningResourceQueryOptions } from '@entities/learning-resource';
 import { DropdownFormField, DurationTimeFormField } from '@features/form/ui';
 import { DynamicFormProvider } from '@learnway/hooks';
@@ -14,10 +15,8 @@ import { DropdownOption } from '@learnway/ui/type';
 import { FormRow2, ResourceChoiceModal } from '@shared/ui';
 import { PreviewLearningWindow } from '@shared/ui/modal/preview-learning-window';
 import { useQuery } from '@tanstack/react-query';
-import { LESSON_TYPE, MODULE_TYPE } from '@types';
 import { t } from 'i18next';
 import { useEffect } from 'react';
-import { useGetLessonDetail } from '../../../../../entities/curriculum';
 import { ContentChoiceModalSelector } from './content-choice-selector';
 
 interface LessonFormProps {

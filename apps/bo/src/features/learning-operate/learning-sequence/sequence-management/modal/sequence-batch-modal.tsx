@@ -1,30 +1,21 @@
-import { t } from 'i18next';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import { FormSubTitle } from '@learnway/ui/base-form';
-import { DatePicker } from '@learnway/ui/date-picker';
 import { SplitPanel } from '@learnway/ui/elements';
 import { RadioGroupFormField } from '@learnway/ui/form-field';
 import { GridBox } from '@learnway/ui/grid';
-import { RadioCard } from '@learnway/ui/radio-card';
-import { RadioGroup } from '@learnway/ui/radio-group';
-import { ToggleButtonGroup } from '@learnway/ui/toggle-button-group';
-import { EnPageMode } from '@types';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { FormRow, FormRow2, SwitchFormField } from '@shared/ui';
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { t } from 'i18next';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { cn, SelectOption } from '@learnway/shared';
-
-import { DateRangePickerFormField } from '@features/form';
 import { useBulkUpdateSequence } from '@entities/learning-sequence/service/learning-sequence.hook';
-import { GridImperative } from '@learnway/ui/grid';
+import { DateRangePickerFormField } from '@features/form';
 import { Button } from '@learnway/ui/button';
-import { Checkbox } from '@learnway/ui/checkbox';
 import { ContentsRow } from '@learnway/ui/contents-row';
+import { GridImperative } from '@learnway/ui/grid';
 import { Input } from '@learnway/ui/input';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
-import { Textarea } from '@learnway/ui/textarea';
 
 export interface SequenceBatchModalComponentProps {
   courseId?: number;
@@ -36,7 +27,8 @@ export interface SequenceBatchModalComponentProps {
  */
 const SequenceBatchModalComponent = ({
   courseId: courseIdProps,
-  selectedItems }: SequenceBatchModalComponentProps) => {
+  selectedItems,
+}: SequenceBatchModalComponentProps) => {
   const { closeModal, confirm: openConfirm, alert: openAlert, showSaveComplete } = useModal();
   const [columns, setColumns] = useState() as any;
   const [gridData, setGridData] = useState<any[]>([]);
@@ -52,7 +44,8 @@ const SequenceBatchModalComponent = ({
         header: t('전체'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
-        size: 58 }),
+        size: 58,
+      }),
     ] as ColumnDef<any, unknown>[];
 
     setColumns(columns);
@@ -82,38 +75,46 @@ const SequenceBatchModalComponent = ({
         label: () => t('차수 사용 여부'),
         value: true,
         switchConfig: {
-          label: (value: boolean) => (value ? t('사용') : t('미사용')) } },
+          label: (value: boolean) => (value ? t('사용') : t('미사용')),
+        },
+      },
       {
         name: 'enrollmentRange',
         type: 'date-range',
         format: 'object',
         label: () => t('수강신청 기간'),
-        value: { from: undefined, to: undefined } },
+        value: { from: undefined, to: undefined },
+      },
       {
         name: 'learningStartType',
         type: 'object',
         format: 'object',
         label: () => t('학습 기간'),
-        value: false },
+        value: false,
+      },
       {
         name: 'learningRange',
         type: 'date-range',
         format: 'object',
-        value: { from: undefined, to: undefined } },
+        value: { from: undefined, to: undefined },
+      },
       {
         name: 'learningStartDays',
         type: 'number',
-        value: undefined },
+        value: undefined,
+      },
       {
         name: 'isMaxEnrollQuotaRestricted',
         type: 'boolean',
         format: 'object',
         label: () => t('정원'),
-        value: false },
+        value: false,
+      },
       {
         name: 'maxEnrollQuota',
         type: 'number',
-        value: undefined },
+        value: undefined,
+      },
     ],
     validator: {
       isUsed: true,
@@ -125,13 +126,16 @@ const SequenceBatchModalComponent = ({
               console.log('values.enrollmentRange=>', values.enrollmentRange);
               return !values.enrollmentRange.from || !values.enrollmentRange.to;
             },
-            message: t('시작 및 종료 날짜를 선택하세요') },
+            message: t('시작 및 종료 날짜를 선택하세요'),
+          },
           {
             fn: (values) => {
               return values.enrollmentRange.from > values.enrollmentRange.to;
             },
-            message: t('시작 날짜는 종료 날짜 보다 이전일 이어야 합니다.') },
-        ] },
+            message: t('시작 날짜는 종료 날짜 보다 이전일 이어야 합니다.'),
+          },
+        ],
+      },
       isMaxEnrollQuotaRestricted: {
         required: true,
         conditions: [
@@ -142,8 +146,12 @@ const SequenceBatchModalComponent = ({
               }
               return false;
             },
-            message: t('정원을 입력해주세요.') },
-        ] } } };
+            message: t('정원을 입력해주세요.'),
+          },
+        ],
+      },
+    },
+  };
   const {
     provider,
     updateFormData,
@@ -153,7 +161,8 @@ const SequenceBatchModalComponent = ({
     getValues,
     setValue,
     formState,
-    control } = useDynamicForm(formConfig);
+    control,
+  } = useDynamicForm(formConfig);
 
   const handleOnSave = () => {
     const form = formRef.current;
@@ -166,7 +175,8 @@ const SequenceBatchModalComponent = ({
     console.log('form :', formData);
     if (selectedRowsKey.length === 0) {
       await openAlert({
-        title: t('항목을 선택해주세요.') });
+        title: t('항목을 선택해주세요.'),
+      });
       return;
     }
 
@@ -186,7 +196,8 @@ const SequenceBatchModalComponent = ({
       isMaxEnrollQuotaRestricted: formData.isMaxEnrollQuotaRestricted,
       maxEnrollQuota: formData.isMaxEnrollQuotaRestricted
         ? parseInt(formData.maxEnrollQuota)
-        : null };
+        : null,
+    };
 
     console.log('## payload=>', payload);
 
@@ -198,7 +209,8 @@ const SequenceBatchModalComponent = ({
       },
       onError: (data: any, variables: any, context: any) => {
         console.log('onError:', data);
-      } });
+      },
+    });
   };
 
   const columnHelper = createColumnHelper<any>();
@@ -260,7 +272,8 @@ const SequenceBatchModalComponent = ({
                                 value={''}
                                 element={<DateRangePickerFormField />}
                               />
-                            ) },
+                            ),
+                          },
                           {
                             value: true,
                             label: t('기간 지정'),
@@ -277,7 +290,8 @@ const SequenceBatchModalComponent = ({
                                   />
                                 }
                               />
-                            ) },
+                            ),
+                          },
                         ]}
                       />
                     }
@@ -296,7 +310,8 @@ const SequenceBatchModalComponent = ({
                           codeGroup: 'mock.options.use',
                           optionsNode: [
                             {
-                              value: false },
+                              value: false,
+                            },
                             {
                               value: true,
                               node: (
@@ -312,8 +327,10 @@ const SequenceBatchModalComponent = ({
                                     />
                                   }
                                 />
-                              ) },
-                          ] }}
+                              ),
+                            },
+                          ],
+                        }}
                       />
                     }
                   />

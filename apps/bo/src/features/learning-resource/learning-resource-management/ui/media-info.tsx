@@ -9,7 +9,7 @@ import { IcoStatusFail } from '@learnway/icons';
 import style from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
 import { Button } from '@learnway/ui/button';
 import { Spinner } from '@learnway/ui/spinner';
-import { ProcessingStatus } from '@types';
+import { ProcessingStatus } from '@shared/types/enums';
 import { t } from 'i18next';
 import ReactPlayer from 'react-player';
 

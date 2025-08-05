@@ -5,7 +5,7 @@ import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.mod
 import { ShuttleTreeToChipsV2, useShuttleTreeToChips } from '@learnway/ui/shuttle-tree-to-chips-v2';
 import { transformApiDataToTreeData } from '@learnway/ui/tree-view';
 import { SelectedChip } from '@learnway/ui/type';
-import { CombineUserGroup } from '@types';
+import { CombineUserGroup } from '@shared/types/user-group';
 import { useEffect, useMemo } from 'react';
 
 type UserGroupCustomComponentProps = {

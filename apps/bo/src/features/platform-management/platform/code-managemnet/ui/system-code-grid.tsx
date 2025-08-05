@@ -9,8 +9,8 @@ import { createColumnHelper, Table } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+import { keyTypeCode, MultilingualUpdateReqParams } from '@entities/translation';
 import { useTranslation } from '@entities/translation/service/translation.hook';
-import { keyTypeCode, MultilingualUpdateReqParams } from '@types';
 import { CdNameOverwriteInput } from './system-code-cdname-overwrite-input';
 
 import { ContentsRow } from '@learnway/ui/contents-row';

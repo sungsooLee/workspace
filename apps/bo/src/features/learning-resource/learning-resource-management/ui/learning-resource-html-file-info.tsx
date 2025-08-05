@@ -1,17 +1,17 @@
 import defaultImage from '@assets/images/thumb/img_thumb_default.jpg';
-import { useChangeHTML5VideoFile } from '@entities/learning-resource';
+import { HtmlVideoFileChangeRes, useChangeHTML5VideoFile } from '@entities/learning-resource';
 import { LearningResourceFileUploadModal } from '@features/learning-resource';
 import { LEARNING_TYPE } from '@learnway/config';
 import { formatFileSize, useFileManager } from '@learnway/hooks';
 import { ChannelChoiceModal, PreviewLearningWindow } from '@shared/ui';
-import { HtmlVideoFileChangeRes, ProcessingStatus } from '@types';
 import { t } from 'i18next';
 import { useCallback, useEffect, useState } from 'react';
 
 import movieStyles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
-import styles from './html-detail.module.css';
 import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
+import { ProcessingStatus } from '@shared/types/enums';
+import styles from './html-detail.module.css';
 
 type FileInfoProps = {
   contentUuid: string;

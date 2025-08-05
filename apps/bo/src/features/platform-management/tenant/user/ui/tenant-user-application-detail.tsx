@@ -20,8 +20,8 @@ import { ContentsRow } from '@learnway/ui/contents-row';
 import { EditInputCell, EditSwitchCell } from '@learnway/ui/grid';
 import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
+import { EnGlobalConst } from '@shared/types/enums';
 import { ContentsHistoryInfoFormField, FormRow } from '@shared/ui';
-import { EnGlobalConst } from '@types';
 interface userDetailProps {
   userData: any;
 }

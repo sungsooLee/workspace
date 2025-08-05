@@ -1,5 +1,10 @@
 // IA102 / NLP_BO_CMS_1001
-import { learningResourceQueryOptions, usePostContentCopy } from '@entities/learning-resource';
+import {
+  ContentInfo,
+  ContentInformation,
+  learningResourceQueryOptions,
+  usePostContentCopy,
+} from '@entities/learning-resource';
 import {
   getDetailPathByContentType,
   getDetailRouterState,
@@ -30,6 +35,7 @@ import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import { useModal } from '@learnway/ui/modal';
 import { Tooltip } from '@learnway/ui/tooltip';
+import { ContentCreateType } from '@shared/types/enums';
 import {
   GridExcelDownloadButton,
   PreviewLearningWindow,
@@ -38,7 +44,6 @@ import {
 } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { useRouter } from '@tanstack/react-router';
-import { ContentCreateType, ContentInfo, ContentInformation } from '@types';
 import { t } from 'i18next';
 import { first, get, map, some, uniq } from 'lodash-es';
 import { useEffect, useState } from 'react';

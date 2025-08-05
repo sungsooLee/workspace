@@ -5,9 +5,9 @@ import { useWatch } from 'react-hook-form';
 
 import { CODE_GROUP, DynamicFormConfig, useCodeStore, useDynamicForm } from '@learnway/hooks';
 import { formUtils } from '@learnway/shared';
+import { EnFormMode } from '@shared/types/enums';
 import { FormRow } from '@shared/ui';
 import { CellContext } from '@tanstack/react-table';
-import { EnFormMode } from '@types';
 
 import { DateRangePickerFormField } from '@features/form';
 import { Button } from '@learnway/ui/button';

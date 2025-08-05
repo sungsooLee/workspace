@@ -1,24 +1,23 @@
-import React, { FC, useState, useEffect } from 'react';
-import { useWatch } from 'react-hook-form';
-import { useRouter, useRouterState, Link } from '@tanstack/react-router';
-import { createColumnHelper, ColumnDef, Table } from '@tanstack/react-table';
-import { useQueryClient } from '@tanstack/react-query';
-import { t } from 'i18next';
-import { Divider } from '@learnway/ui/elements';
-import { GridBox, useGridBox } from '@learnway/ui/grid';
-import { useSearchBox, SearchBoxConfig, CODE_GROUP } from '@learnway/hooks';
-import { useFetchAuthUser } from '@learnway/auth/entities';
-import { SearchBox } from '@shared/ui/search-box';
-import { usersQueryOptions } from '@entities/users/service/users.queries';
 import { tenantQueryOptions } from '@entities/tenant';
-import { EnGlobalConst } from '@types';
-import { getUserStatus } from '@features/platform-management/company/company-user-management/service/company-user.service';
-import { TenantByRoleDropdownFormField } from '@shared/ui';
-import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { useApproveAccountUser, useRejectAccountUser } from '@entities/users/service/users.hook';
+import { usersQueryOptions } from '@entities/users/service/users.queries';
+import { useFetchAuthUser } from '@learnway/auth/entities';
+import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
+import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { Button } from '@learnway/ui/button';
 import { Checkbox } from '@learnway/ui/checkbox';
+import { Divider } from '@learnway/ui/elements';
+import { GridBox, useGridBox } from '@learnway/ui/grid';
 import { useModal } from '@learnway/ui/modal';
+import { EnGlobalConst } from '@shared/types/enums';
+import { TenantByRoleDropdownFormField } from '@shared/ui';
+import { SearchBox } from '@shared/ui/search-box';
+import { useQueryClient } from '@tanstack/react-query';
+import { useRouter, useRouterState } from '@tanstack/react-router';
+import { ColumnDef, createColumnHelper, Table } from '@tanstack/react-table';
+import { t } from 'i18next';
+import { FC, useEffect, useState } from 'react';
+import { useWatch } from 'react-hook-form';
 
 const _global = {
   linkClick: (userUuid: string) => {
@@ -26,7 +25,8 @@ const _global = {
   },
   getTenantId: (): number | undefined => {
     return undefined;
-  } };
+  },
+};
 
 /**
  * 화면번호 : NLP_BO_TMS_1111_15 테넌트-유저관리 (회원 가입 신청)
@@ -53,7 +53,9 @@ const TenantUserRegistApplicationListComponent: FC<any> = ({ rootPath }) => {
       to: `${rootPath}/tenant/user/application-detail`,
       state: {
         userUuid,
-        listParam: getValues() } });
+        listParam: getValues(),
+      },
+    });
   };
 
   const {
@@ -62,7 +64,8 @@ const TenantUserRegistApplicationListComponent: FC<any> = ({ rootPath }) => {
     setOptions,
     getValues,
     onFormChange,
-    onFormValid } = useSearchBox(searchConfig());
+    onFormValid,
+  } = useSearchBox(searchConfig());
   const { config: gConfig, gridFetch } = useGridBox(gridConfig, getValues);
 
   const tenantIdWatch = useWatch({ control: searchProvider.control, name: 'tenantId' });
@@ -78,7 +81,8 @@ const TenantUserRegistApplicationListComponent: FC<any> = ({ rootPath }) => {
     if (checkTarget?.length !== 0) {
       alert({
         title: isApproval ? '승인 확인' : '반려 확인',
-        content: '선택한 대상 중 이미 승인된 대상이 있습니다. 확인 후 다시 시도해주세요.' });
+        content: '선택한 대상 중 이미 승인된 대상이 있습니다. 확인 후 다시 시도해주세요.',
+      });
       return;
     }
     confirmModal({
@@ -99,7 +103,8 @@ const TenantUserRegistApplicationListComponent: FC<any> = ({ rootPath }) => {
               {
                 onSuccess: () => {
                   gridFetch(getValues());
-                } },
+                },
+              },
             );
           } else {
             // 반려
@@ -108,11 +113,13 @@ const TenantUserRegistApplicationListComponent: FC<any> = ({ rootPath }) => {
               {
                 onSuccess: () => {
                   gridFetch(getValues());
-                } },
+                },
+              },
             );
           }
         }
-      } });
+      },
+    });
   };
 
   useEffect(() => {
@@ -133,7 +140,8 @@ const TenantUserRegistApplicationListComponent: FC<any> = ({ rootPath }) => {
 
     const tenantIdOptions = loginUser.tenants.map((tenant) => ({
       value: tenant.tenantId,
-      label: tenant.tenantName }));
+      label: tenant.tenantName,
+    }));
     const tenantIds = tenantIdOptions.map((item) => item.value);
     setOptions('tenantId', tenantIdOptions);
     setTenantId(loginUser.activeTenant?.tenantId);
@@ -155,7 +163,8 @@ const TenantUserRegistApplicationListComponent: FC<any> = ({ rootPath }) => {
         );
         const companyIdOptions = companys.map((item) => ({
           label: item.name,
-          value: item.companyId }));
+          value: item.companyId,
+        }));
         setOptions('companyId', companyIdOptions);
       })();
     } else {
@@ -220,7 +229,8 @@ const searchConfig = (): SearchBoxConfig => ({
         label: t('테넌트'),
         format: 'number',
         value: '',
-        element: <TenantByRoleDropdownFormField /> },
+        element: <TenantByRoleDropdownFormField />,
+      },
       {
         name: 'companyId',
         type: 'dropdown',
@@ -228,19 +238,22 @@ const searchConfig = (): SearchBoxConfig => ({
         format: 'object',
         value: '',
         presetOptionLabel: t('LABEL.form.label.select'),
-        options: [] },
+        options: [],
+      },
       {
         name: 'email',
         type: 'text',
         label: t('이메일'),
-        value: '' },
+        value: '',
+      },
     ],
     [
       {
         name: 'employeeNumber',
         type: 'text',
         label: t('사번'),
-        value: '' },
+        value: '',
+      },
       {
         name: 'userState',
         type: 'dropdown',
@@ -250,17 +263,21 @@ const searchConfig = (): SearchBoxConfig => ({
           { value: 'WAIT', label: t('대기') },
           { value: '', label: t('전체') },
           { value: 'NORMAL', label: t('승인') },
-        ] },
+        ],
+      },
       {
         name: 'dateRange',
         type: 'date-range',
         label: t('신청기간'),
         format: 'object',
-        value: { from: undefined, to: undefined } },
+        value: { from: undefined, to: undefined },
+      },
     ],
   ],
   validator: {
-    tenantId: true } });
+    tenantId: true,
+  },
+});
 
 const gridConfig = {
   query: usersQueryOptions.list,
@@ -270,7 +287,9 @@ const gridConfig = {
   pagination: {
     pageSize: 20,
     pageIndex: 0,
-    totalRows: 0 } };
+    totalRows: 0,
+  },
+};
 
 const columnHelper = createColumnHelper<any>();
 const columns = () =>
@@ -283,7 +302,8 @@ const columns = () =>
       meta: {
         align: 'center',
         headerAlign: 'center',
-        cellAlign: 'center' },
+        cellAlign: 'center',
+      },
       enableSorting: false,
       header: ({ table }) => {
         return (
@@ -310,7 +330,8 @@ const columns = () =>
             />
           </div>
         );
-      } }),
+      },
+    }),
     columnHelper.accessor('tenantName', {
       cell: (info) => {
         const found = info.row.original.tenants.find((tenant: any) => {
@@ -324,7 +345,8 @@ const columns = () =>
       },
       header: t('테넌트'),
       size: 114,
-      enableSorting: false }),
+      enableSorting: false,
+    }),
     columnHelper.accessor('opt1', {
       cell: (info) => {
         return t(
@@ -333,31 +355,38 @@ const columns = () =>
       },
       header: t('그룹'),
       size: 114,
-      enableSorting: false }),
+      enableSorting: false,
+    }),
     columnHelper.accessor('opt2', {
       cell: (info) => info.row.original.company.name,
       header: t('회사'),
       size: 114,
-      enableSorting: false }),
+      enableSorting: false,
+    }),
     columnHelper.accessor('opt3', {
       cell: (info) => info.row.original.dept?.deptName,
       header: t('소속'),
       size: 114,
-      enableSorting: false }),
+      enableSorting: false,
+    }),
     columnHelper.accessor('positionName', {
       cell: (info) => info.getValue(),
       header: t('호칭(지위)'),
-      size: 114 }),
+      size: 114,
+    }),
     columnHelper.accessor('email', {
       cell: (info) => info.getValue(),
       header: t('이메일'),
-      size: 114 }),
+      size: 114,
+    }),
     columnHelper.accessor('employeeNumber', {
       cell: (info) => info.getValue(),
       header: t('사번'),
       meta: {
-        cellAlign: 'center' },
-      size: 88 }),
+        cellAlign: 'center',
+      },
+      size: 88,
+    }),
     columnHelper.accessor('name', {
       cell: (info) => {
         return (
@@ -369,14 +398,16 @@ const columns = () =>
         );
       },
       header: t('이름'),
-      size: 88 }),
+      size: 88,
+    }),
     columnHelper.accessor('createdDate', {
       cell: (info) =>
         info.row.original.createdDate
           ? getDateToString(new Date(info.row.original.createdDate), DATE_TIME_FORMAT.DATETIME_SEC)
           : '',
       header: t('신청일'),
-      size: 114 }),
+      size: 114,
+    }),
     columnHelper.accessor('opt10', {
       cell: (info) => {
         if (info.row.original.enabledDate) {
@@ -386,14 +417,17 @@ const columns = () =>
       },
       header: t('승인 상태'),
       meta: {
-        cellAlign: 'center' },
+        cellAlign: 'center',
+      },
       size: 76,
-      enableSorting: false }),
+      enableSorting: false,
+    }),
     columnHelper.accessor('enabledDate', {
       cell: (info) =>
         info.row.original.enabledDate
           ? getDateToString(new Date(info.row.original.enabledDate), DATE_TIME_FORMAT.DATETIME_SEC)
           : '',
       header: t('승인일'),
-      size: 114 }),
+      size: 114,
+    }),
   ] as ColumnDef<any, unknown>[];

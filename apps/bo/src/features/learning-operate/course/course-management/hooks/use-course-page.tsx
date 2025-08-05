@@ -1,4 +1,4 @@
-import { useCopyCourse, useUpdateFavorite } from '@entities/course';
+import { CourseListItem, useCopyCourse, useUpdateFavorite } from '@entities/course';
 import {
   CourseTypeOptionCardModal,
   useCourseListGridConfig,
@@ -8,7 +8,6 @@ import { useGridBox } from '@learnway/ui/grid';
 import { useModal } from '@learnway/ui/modal';
 import { getCurrentAuthUser } from '@shared/lib/util/query-utils';
 import { useRouter } from '@tanstack/react-router';
-import { CourseListItem } from '@types';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {

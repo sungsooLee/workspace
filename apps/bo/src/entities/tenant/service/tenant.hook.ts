@@ -1,11 +1,12 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import type { MutateOptions, UseQueryOptions, UseQueryResult } from '@tanstack/react-query';
+import type { UseQueryOptions, UseQueryResult } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
+import { TenantByRoleId } from '../model/tenant.types';
 import {
-  tenantQueryKeys,
   tenantQueryOptions as queryOptions,
-  tenantMutateOptions } from './tenant.queries';
-import { PaginationResponse, Tenant, TenantByRoleId } from '@types';
+  tenantMutateOptions,
+  tenantQueryKeys,
+} from './tenant.queries';
 
 export function useFetchTenant(tenantId?: number) {
   return useQuery(queryOptions.detail(tenantId));
@@ -36,7 +37,8 @@ export function useCreateTenant(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options });
+    ...options,
+  });
 
   return {
     create: (payload: any, callback?: any) => {
@@ -44,7 +46,8 @@ export function useCreateTenant(options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data };
+    data: mutation.data,
+  };
 }
 
 export function useUpdateTenant(options: any) {
@@ -59,7 +62,8 @@ export function useUpdateTenant(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options });
+    ...options,
+  });
 
   return {
     update: (payload: any, callback?: any) => {
@@ -67,5 +71,6 @@ export function useUpdateTenant(options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data };
+    data: mutation.data,
+  };
 }

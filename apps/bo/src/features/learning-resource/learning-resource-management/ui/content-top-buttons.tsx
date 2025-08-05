@@ -1,12 +1,17 @@
-import { useDeleteContent, usePostContentExport } from '@entities/learning-resource';
+import {
+  ContentExportRes,
+  ContentInformation,
+  useDeleteContent,
+  usePostContentExport,
+} from '@entities/learning-resource';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { DynamicFormProvider, useCurrentRoute } from '@learnway/hooks';
 import { Button } from '@learnway/ui/button';
 import { Divider } from '@learnway/ui/elements';
 import { useModal } from '@learnway/ui/modal';
+import { ContentCreateType } from '@shared/types/enums';
 import { ContentCourseMappingModal } from '@shared/ui';
 import { useBlocker, useRouter } from '@tanstack/react-router';
-import { ContentCreateType, ContentExportRes, ContentInformation } from '@types';
 import { t } from 'i18next';
 import { useCallback, useMemo } from 'react';
 import { getDetailPathByContentType } from '../service/util';

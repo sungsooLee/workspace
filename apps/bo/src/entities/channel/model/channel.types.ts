@@ -1,4 +1,5 @@
-import { ISODateString, PaginationRequest } from '@types';
+import { ISODateString } from '../../../shared/types/common';
+import { PaginationRequest } from '../../../shared/types/api';
 
 export interface ChannelByRoleId {
   channelUuid: string;

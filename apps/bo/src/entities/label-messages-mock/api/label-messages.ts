@@ -1,6 +1,7 @@
-import { getMockCourseType, getRandomId, httpService } from '@learnway/shared';
+import { LabelMessage, LabelMessagesQueryParams } from '@entities/label-messages';
 import { PMSApiPrefix } from '@learnway/config';
-import { LabelMessage, LabelMessagesQueryParams, PaginationResponse } from '@types';
+import { getMockCourseType, getRandomId, httpService } from '@learnway/shared';
+import { PaginationResponse } from '@shared/types/api';
 
 /**
  * 테스트 용
@@ -83,7 +84,7 @@ export const mockData = (params?: LabelMessagesQueryParams): PaginationResponse<
     .fill(null)
     .map((_, i) => ({
       labelMessageId: i,
-      labelMessageMultilingulKey: 'key' + i,
+      labelMessageMultilingulKey: `key${i}`,
       labelMessageType: 'LABEL',
       labelMessageName: getRandomId(),
       labelMessageDesc: 'bbb22',
@@ -91,7 +92,8 @@ export const mockData = (params?: LabelMessagesQueryParams): PaginationResponse<
       createdBy: '9488404@ict-companion.com',
       createdDate: '2025-04-22T22:32:42.684Z',
       lastModifiedBy: '9488404@ict-companion.com',
-      modifiedDate: '2025-05-02T00:43:24.852Z' }));
+      modifiedDate: '2025-05-02T00:43:24.852Z',
+    }));
   // 로컬 테스트용
   const [sortKey, sortType] = params?.sort?.at(0)?.split(',') || [];
   const sortContent = content.sort((a: any, b: any) => {
@@ -113,10 +115,12 @@ export const mockData = (params?: LabelMessagesQueryParams): PaginationResponse<
       sort: {
         empty: false,
         sorted: !!sortKey,
-        unsorted: false },
+        unsorted: false,
+      },
       offset: 0,
       paged: true,
-      unpaged: false },
+      unpaged: false,
+    },
     totalElements: 1000,
     totalPages: 100,
     last: false,
@@ -125,8 +129,10 @@ export const mockData = (params?: LabelMessagesQueryParams): PaginationResponse<
     sort: {
       empty: false,
       sorted: !!sortKey,
-      unsorted: false },
+      unsorted: false,
+    },
     numberOfElements: params?.size || 10,
     first: true,
-    empty: false };
+    empty: false,
+  };
 };

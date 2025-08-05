@@ -4,7 +4,7 @@ import { forwardRef, useImperativeHandle, useState } from 'react';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import { Tabs } from '@learnway/ui/tabs';
-import { EnGlobalConst } from '@types';
+import { EnGlobalConst } from '@shared/types/enums';
 import { TenantDetailMenuTree } from './tenant-detail-menu-tree';
 /**
  * 화면번호:
