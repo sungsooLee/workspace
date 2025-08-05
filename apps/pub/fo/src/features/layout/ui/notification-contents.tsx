@@ -1,4 +1,4 @@
-import { IcoBell04, IcoMoreHorizontal } from '@learnway/icons';
+import { IcoBell04, IcoFolder, IcoMoreHorizontal } from '@learnway/icons';
 import dropdownPopoverStyles from '@learnway/styles/fo/shared/ui/dropdown-popover/dropdown-popover.module.css';
 import { Badge } from '@learnway/ui/badge';
 import { Button } from '@learnway/ui/button';
@@ -127,71 +127,71 @@ const NotificationContentsComponent = () => {
           type="line"
           variant="gray"
         />
-        <Button
-          size="sm"
-          variant={selectedTabKey === 'e' ? 'primary' : 'gray'}
-          onClick={() => setSelectedTabKey('e')}
-        >
-          보관함
+        <Button size="ts" className={styles.archive} onClick={() => setSelectedTabKey('e')}>
+          <IcoFolder className={styles.ico} />
         </Button>
-      </div>
-
-      <div className={styles.total_box}>
-        <span className={styles.total}>
-          <strong>127</strong> 개의 알림이 있습니다.
-        </span>
-
-        <Popover
-          popoverContent={<TotalopoverCompoment />}
-          side="bottom"
-          align="start"
-          sideOffset={10}
-        >
-          <IcoMoreHorizontal className={styles.ico} />
-        </Popover>
       </div>
 
       {filteredNotifications.length === 0 ? (
         <div className={styles.empty}>
           <IcoBell04 className={styles.ico_bell} />
+
           {selectedTabKey === 'e' ? '보관함이 없습니다.' : '알림이 없습니다.'}
         </div>
       ) : (
-        <ul className={styles.info_list}>
-          {filteredNotifications.map((noti) => (
-            <li
-              className={` ${styles.info_item} ${noti.isNew ? styles.new : ''} ${noti.isRead ? styles.active : ''} `}
-              key={noti.id}
+        <>
+          {' '}
+          <div className={styles.total_box}>
+            <span className={styles.total}>
+              <strong>127</strong> 개의 알림이 있습니다.
+            </span>
+
+            <Popover
+              popoverContent={<TotalopoverCompoment />}
+              side="bottom"
+              align="start"
+              sideOffset={10}
             >
-              <div className={styles.head}>
-                <Badge
-                  option={{
-                    label: categoryLabelMap[noti.category],
-                    value: categoryLabelMap[noti.category],
-                  }}
-                  status="primary"
-                  rounded
-                  size="sm"
-                />
-                <div className={styles.list_set}>
-                  <span className={styles.time}>{noti.time}</span>
-                  <Popover
-                    popoverContent={<ListopoverCompoment />}
-                    side="bottom"
-                    align="start"
-                    sideOffset={10}
-                  >
-                    <IcoMoreHorizontal className={styles.ico} />
-                  </Popover>
+              <IcoMoreHorizontal className={styles.ico} />
+            </Popover>
+          </div>
+          <ul className={styles.info_list}>
+            {filteredNotifications.map((noti) => (
+              <li
+                className={` ${styles.info_item} ${noti.isNew ? styles.new : ''} ${noti.isRead ? styles.active : ''} `}
+                key={noti.id}
+              >
+                <div className={styles.head}>
+                  <Badge
+                    option={{
+                      label: categoryLabelMap[noti.category],
+                      value: categoryLabelMap[noti.category],
+                    }}
+                    status="primary"
+                    rounded
+                    size="sm"
+                  />
+                  <div className={styles.list_set}>
+                    <span className={styles.time}>{noti.time}</span>
+                    <Popover
+                      popoverContent={<ListopoverCompoment />}
+                      side="bottom"
+                      align="start"
+                      sideOffset={10}
+                    >
+                      <IcoMoreHorizontal className={styles.ico} />
+                    </Popover>
+                  </div>
                 </div>
-              </div>
-              <div className={styles.message_wrap}>
-                <div className={styles.title}>{noti.title}</div>
-                <div className={styles.message}>{noti.message}</div>
-              </div>
-            </li>
-          ))}
-        </ul>
+                <div className={styles.message_wrap}>
+                  <div className={styles.title}>{noti.title}</div>
+                  <div className={styles.message}>{noti.message}</div>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <div className={styles.noti_txt}>최근 30일간의 알림만 보관됩니다.</div>
+        </>
       )}
     </div>
   );
