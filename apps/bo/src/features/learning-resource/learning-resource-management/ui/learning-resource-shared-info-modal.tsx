@@ -1,13 +1,16 @@
-import { cn } from '@learnway/shared';
+import { learningResourceQueryOptions } from '@entities/learning-resource';
+import { cn, DATE_TIME_FORMAT, formatDate } from '@learnway/shared';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
 import { FormSubTitle } from '@learnway/ui/base-form';
 import { Button } from '@learnway/ui/button';
 import { GridBox } from '@learnway/ui/grid';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { useQuery } from '@tanstack/react-query';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { SharedBoxContent } from '@types';
+import { SharedBoxContent, ShareDestination } from '@types';
 import { t } from 'i18next';
+import { pick } from 'lodash-es';
 
 interface Props {
   data: SharedBoxContent;
@@ -15,8 +18,13 @@ interface Props {
 
 const LearingResourceSharedInfoModalComponent = ({ data }: Props) => {
   const { closeModal } = useModal();
+  const { data: gridData } = useQuery(
+    learningResourceQueryOptions.getSharedHistory(
+      pick(data, ['sourceContentUuid', 'destChannelUuid']),
+    ),
+  );
 
-  const columnHelper = createColumnHelper<any>();
+  const columnHelper = createColumnHelper<ShareDestination>();
 
   const columns = [
     columnHelper.accessor('destTenantName', {
@@ -31,19 +39,19 @@ const LearingResourceSharedInfoModalComponent = ({ data }: Props) => {
       size: 185,
       enableGrouping: false,
     }),
-    columnHelper.accessor('name', {
+    columnHelper.accessor('recieverName', {
       cell: (info) => info.getValue(),
       header: t('수신자'),
       size: 185,
       enableGrouping: false,
     }),
-    columnHelper.accessor('date', {
-      cell: (info) => info.getValue(),
+    columnHelper.accessor('recievedDate', {
+      cell: (info) => formatDate(info.getValue(), DATE_TIME_FORMAT.DATETIME_MIN),
       header: t('수신일'),
       size: 185,
       enableGrouping: false,
     }),
-  ] as ColumnDef<any, string>[];
+  ] as ColumnDef<ShareDestination, string>[];
 
   return (
     <ModalContainer width="md">
@@ -76,7 +84,12 @@ const LearingResourceSharedInfoModalComponent = ({ data }: Props) => {
               </tbody>
             </table>
           </div>
-          <GridBox title={t('수신현황')} disabledSelectionToggle columns={columns} data={[]} />
+          <GridBox
+            title={t('수신현황')}
+            disabledSelectionToggle
+            columns={columns}
+            data={gridData?.shareDestinations || []}
+          />
         </div>
       </ModalBody>
       <ModalFooter>
