@@ -24,17 +24,17 @@ import { FormRow2 } from '@shared/ui';
 
 type QuestionBankDetailProps = {
   form: UseDynamicFormResult;
+  isExamMapping?: boolean;
 };
 
 const LearningResourceQuestionBankDetailComponent = forwardRef<
   QuestionBankTabFormRef,
   QuestionBankDetailProps
->(({ form }, ref) => {
+>(({ form, isExamMapping }, ref) => {
   const { t } = useTranslation();
 
   const { confirm: openConfirm } = useModal();
-  const { baseInfo, formMode, hasMapping, createQuestionBank } =
-    useLearningResourceQuestionDetailForm();
+  const { baseInfo, formMode, createQuestionBank } = useLearningResourceQuestionDetailForm();
 
   const { provider, getValues, updateFormData } = form;
 
@@ -86,7 +86,7 @@ const LearningResourceQuestionBankDetailComponent = forwardRef<
         <LearningResourceBaseForm
           provider={provider}
           formMode={formMode}
-          hasMapping={hasMapping}
+          hasMapping={!!isExamMapping}
           contentNameMaxLength={10}
         />
         <FormRow2

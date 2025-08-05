@@ -100,6 +100,11 @@ module.exports = {
         lineHeight: '140%',
       };
 
+      const bodyTitle = {
+        letterSpacing: '0',
+        lineHeight: '150%',
+      };
+
       addComponents({
         '.scrollbar': {
           '&::-webkit-scrollbar': {
@@ -597,49 +602,49 @@ module.exports = {
         },
 
         '.body-lg': {
-          ...baseTitle,
+          ...bodyTitle,
           fontSize: '1.6rem',
           fontWeight: '400',
         },
 
         '.body-lg-b': {
-          ...baseTitle,
+          ...bodyTitle,
           fontSize: '1.6rem',
           fontWeight: '600',
         },
 
         '.body-md': {
-          ...baseTitle,
+          ...bodyTitle,
           fontSize: '1.4rem',
           fontWeight: '400',
         },
 
         '.body-md-b': {
-          ...baseTitle,
+          ...bodyTitle,
           fontSize: '1.4rem',
           fontWeight: '600',
         },
 
         '.body-sm': {
-          ...baseTitle,
+          ...bodyTitle,
           fontSize: '1.3rem',
           fontWeight: '400',
         },
 
         '.body-sm-b': {
-          ...baseTitle,
+          ...bodyTitle,
           fontSize: '1.3rem',
           fontWeight: '600',
         },
 
         '.body-xsm': {
-          ...baseTitle,
+          ...bodyTitle,
           fontSize: '1.1rem',
           fontWeight: '400',
         },
 
         '.body-xsm-b': {
-          ...baseTitle,
+          ...bodyTitle,
           fontSize: '1.1rem',
           fontWeight: '600',
         },

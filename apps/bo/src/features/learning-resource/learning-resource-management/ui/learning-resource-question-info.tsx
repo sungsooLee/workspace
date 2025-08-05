@@ -1,3 +1,5 @@
+import { forwardRef, useCallback, useImperativeHandle, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { SegmentedControlFormField } from '@features/form/ui/segmented-control-form-field';
 import { CMSApiPrefix } from '@learnway/config';
 import { IcoCopy, IcoMinus, IcoPlus } from '@learnway/icons';
@@ -21,8 +23,6 @@ import {
   QuestionItemGridRow,
   TestPaperBasicInfoDetail,
 } from '@types';
-import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
 import { QUESTION_LEVELS, QUESTION_TYPES } from '../service/exam-util';
 import { getExamTemplateTextByType } from '../service/test-paper/common';
 import {
@@ -56,12 +56,12 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
     const { t } = useTranslation();
     const { openModal } = useModal();
 
-    const { provider: basicInfoProvider, getValues, saveBasicInfo } = basicInfoForm;
+    const { provider: basicInfoProvider, getValues } = basicInfoForm;
 
     const { watch } = basicInfoProvider;
     const questionGenTypeByForm = watch('questionGenType');
 
-    const isMount = useRef<boolean>(false);
+    // const isMount = useRef<boolean>(false);
 
     const questionStatusGuideText =
       questionGenTypeByForm === ExamQuestionGenType.RANDOM
@@ -389,15 +389,15 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
       complete: async () => await updateQuestionCountInfo(),
     }));
 
-    useEffect(() => {
-      if (isMount.current) {
-        if (questionGenTypeByForm === ExamQuestionGenType.RANDOM) {
-          saveBasicInfo?.(getValues(), true);
-        }
-      } else {
-        isMount.current = true;
-      }
-    }, [questionGenTypeByForm]);
+    // useEffect(() => {
+    //   if (isMount.current) {
+    //     if (questionGenTypeByForm === ExamQuestionGenType.RANDOM) {
+    //       saveBasicInfo?.(getValues(), true);
+    //     }
+    //   } else {
+    //     isMount.current = true;
+    //   }
+    // }, [questionGenTypeByForm]);
 
     return (
       <div className={styles.wrap}>
