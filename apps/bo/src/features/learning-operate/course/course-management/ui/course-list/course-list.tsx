@@ -26,8 +26,6 @@ const CourseListComponent = () => {
     handleShareClick,
   } = useCoursePage();
 
-  console.log('🚀 ~ CourseListComponent ~ onReset:', onReset);
-
   return (
     <PageContainer>
       <ContentsButtons>

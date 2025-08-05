@@ -1,11 +1,13 @@
-import { Button } from '@learnway/ui/button';
-import { useModal } from '@learnway/ui/modal';
 // IA102 / NLP_BO_CMS_1001
 import { learningResourceQueryOptions, usePostContentCopy } from '@entities/learning-resource';
-import { getDetailPathByContentType, getDetailRouterState } from '@features/learning-resource';
+import {
+  getDetailPathByContentType,
+  getDetailRouterState,
+  isContentCompleted,
+} from '@features/learning-resource';
 import { LearningResourceShareShuttleModal } from '@features/learning-resource/learning-resource-management/ui/learning-resource-share-shuttle-modal';
 import { useFetchAuthUser } from '@learnway/auth/entities';
-import { CMSApiPrefix } from '@learnway/config';
+import { CMSApiPrefix, LEARNING_TYPE } from '@learnway/config';
 import {
   ALL_OPTION,
   CODE_GROUP,
@@ -16,8 +18,10 @@ import {
 } from '@learnway/hooks';
 import { IcoAlertCircle, IcoClock01, IcoCopy, IcoDownArrow, IcoDownload } from '@learnway/icons';
 import { DATE_TIME_FORMAT, duration } from '@learnway/shared';
+import { Button } from '@learnway/ui/button';
 import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
+import { useModal } from '@learnway/ui/modal';
 import { Tooltip } from '@learnway/ui/tooltip';
 import {
   GridExcelDownloadButton,
@@ -255,8 +259,21 @@ function LearningResourceTableComponent() {
           <span>
             <Button
               className="link"
-              onClick={(e) => {
+              onClick={async (e) => {
                 e.stopPropagation();
+                if (
+                  !(await isContentCompleted(
+                    _.row.original.contentUuid,
+                    _.row.original.contentType,
+                  ))
+                )
+                  return await alert({
+                    title: t('미리보기 할 수 없는 교육자원입니다.'),
+                    content:
+                      _.row.original.contentType === LEARNING_TYPE.VIDEO
+                        ? t('인코딩 완료되지 않은 교육자원은\n미리보기 할 수 없습니다.')
+                        : t('패키지 등록이 완료되지 않은 교육자원은\n미리보기 할 수 없습니다.'),
+                  });
                 openModal({
                   width: 'full',
                   content: <PreviewLearningWindow contentUuid={_.row.original.contentUuid} />,
@@ -357,6 +374,15 @@ function LearningResourceTableComponent() {
     if (selectedRows.length !== 1) {
       return;
     }
+
+    if (!(await isContentCompleted(selectedRows[0].contentUuid, selectedRows[0].contentType)))
+      return await alert({
+        title: t('공유할 수 없는 교육자원입니다.'),
+        content:
+          selectedRows[0].contentType === LEARNING_TYPE.VIDEO
+            ? t('인코딩 완료되지 않은 교육자원은\n공유할 수 없습니다.')
+            : t('패키지 등록이 완료되지 않은 교육자원은\n공유할 수 없습니다.'),
+      });
 
     await openModal({
       width: 'xl',

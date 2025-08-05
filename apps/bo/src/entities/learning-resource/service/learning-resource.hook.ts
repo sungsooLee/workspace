@@ -446,3 +446,29 @@ export function useChangeQuestionOrder(options?: any) {
     isError: mutation.isError,
   };
 }
+
+export function useCreateAssignment(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.createAssignment(),
+    ...options,
+  });
+
+  return {
+    create: (params: ContentBaseInfo) => mutation.mutate(params as any),
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+  };
+}
+
+export function useUpdateAssignment(options?: any) {
+  const mutation = useMutation({
+    ...mutateOptions.updateAssignment(),
+    ...options,
+  });
+
+  return {
+    update: (params: ContentBaseInfo) => mutation.mutate(params as any),
+    isSuccess: mutation.isSuccess,
+    isError: mutation.isError,
+  };
+}

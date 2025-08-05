@@ -1,6 +1,6 @@
-import { EnButtonLayout } from '@pages/_layout/tenant/channel/management/detail.lazy';
 import { EnFormMode } from '@types';
 import { forwardRef, useEffect, useState } from 'react';
+import { EnChannelDetailButtonLayout } from '../../../types/type';
 import { ChannelDetailHomeBanner } from './channel-detail-home-banner';
 import { ChannelDetailHomeBannerDetail } from './channel-detail-home-banner-detail';
 
@@ -12,7 +12,7 @@ export enum EnChannelDetailHomeMode {
 }
 
 interface ChannelDetailHomeProps {
-  onButtonLayoutChange: (layout: EnButtonLayout) => void;
+  onButtonLayoutChange: (layout: EnChannelDetailButtonLayout) => void;
 }
 
 const ChannelDetailHomeComponent = (props: ChannelDetailHomeProps, ref: any) => {
@@ -25,12 +25,12 @@ const ChannelDetailHomeComponent = (props: ChannelDetailHomeProps, ref: any) => 
     if (props.onButtonLayoutChange) {
       switch (homeMode) {
         case EnChannelDetailHomeMode.HOME:
-          props.onButtonLayoutChange(EnButtonLayout.NONE);
+          props.onButtonLayoutChange(EnChannelDetailButtonLayout.NONE);
           break;
         case EnChannelDetailHomeMode.BANNER:
         case EnChannelDetailHomeMode.COURSE_KEYWORD:
         case EnChannelDetailHomeMode.PACKAGE_KEYWORD:
-          props.onButtonLayoutChange(EnButtonLayout.RESET_AND_SAVE);
+          props.onButtonLayoutChange(EnChannelDetailButtonLayout.RESET_AND_SAVE);
           break;
       }
     }

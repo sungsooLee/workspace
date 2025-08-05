@@ -1,8 +1,8 @@
-import { t } from 'i18next';
-import { useRef, useState } from 'react';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { t } from 'i18next';
+import { useRef, useState } from 'react';
 
 /* style */
 import dataInfostyles from '@learnway/styles/bo/assets/styles/modules/data-info.module.css';
@@ -17,8 +17,8 @@ import { FormSubTitle } from '@learnway/ui/base-form';
 import { Tooltip } from '@learnway/ui/tooltip';
 
 import { useSaveUsers } from '@entities/role/service/role-manage.hook';
-import { FormRow } from '@shared/ui';
 import { DateRangePickerFormField } from '@features/form';
+import { FormRow } from '@shared/ui';
 
 /**
  * 화면번호: NLP_BO_PMS_1111 (데이터접근범위 일괄적용)
@@ -26,7 +26,8 @@ import { DateRangePickerFormField } from '@features/form';
  */
 const TenantDetailLearningRoleGrantRangeModalComponent = ({
   roleId,
-  userList }: {
+  userList,
+}: {
   roleId: number;
   userList: any[];
 }) => {
@@ -39,7 +40,8 @@ const TenantDetailLearningRoleGrantRangeModalComponent = ({
 
   // switch : 사용기한
   const [checked, setChecked] = useState<{ [key: number]: boolean }>({
-    1: false });
+    1: false,
+  });
 
   const {
     provider,
@@ -48,7 +50,8 @@ const TenantDetailLearningRoleGrantRangeModalComponent = ({
     onFormChange,
     getValues,
     clearFormError,
-    setFormError } = useDynamicForm(formConfig());
+    setFormError,
+  } = useDynamicForm(formConfig());
 
   const { saveUsersRole: saveRoleUsers } = useSaveUsers({});
 
@@ -59,7 +62,8 @@ const TenantDetailLearningRoleGrantRangeModalComponent = ({
       userUuid: item.userUuid,
       startDate: activeIndex === 1 ? dateRange.from : item.startDate,
       endDate: activeIndex === 1 ? dateRange.to : item.endDate,
-      isUsed: activeIndex === 0 ? isUsed : item.isUsed }));
+      isUsed: activeIndex === 0 ? isUsed : item.isUsed,
+    }));
 
     const payload = { roleId, body: { addUserUuids: addUsers } };
     console.log('getValues----', payload, userList);
@@ -197,14 +201,17 @@ const formConfig = (): DynamicFormConfig => ({
       name: 'activeIndex',
       type: 'hidden',
       label: '',
-      value: 0 },
+      value: 0,
+    },
     {
       name: 'isUsed',
       type: 'switch',
       label: t('역할 사용 여부'),
       value: true,
       switchConfig: {
-        label: (value: boolean) => (value ? t('사용') : t('미사용')) } },
+        label: (value: boolean) => (value ? t('사용') : t('미사용')),
+      },
+    },
     {
       name: 'dateRange',
       type: 'date-range',
@@ -212,7 +219,8 @@ const formConfig = (): DynamicFormConfig => ({
       format: 'object',
       value: { from: undefined, to: undefined },
       placeholder: '',
-      maxLength: 150 },
+      maxLength: 150,
+    },
   ],
   validator: {
     isUsed: true,
@@ -221,18 +229,26 @@ const formConfig = (): DynamicFormConfig => ({
         fn: (values) => {
           console.log('required', values);
           return values.activeIndex === 1;
-        } },
+        },
+      },
       conditions: [
         {
           fn: (values) => values.activeIndex === 1 && !values.dateRange?.from,
-          message: t('시작 및 종료 날짜를 선택하세요') },
+          message: t('시작 및 종료 날짜를 선택하세요'),
+        },
         {
           fn: (values) => values.activeIndex === 1 && !values.dateRange?.from,
-          message: t('시작 날짜를 선택하세요') },
+          message: t('시작 날짜를 선택하세요'),
+        },
         {
           fn: (values) => values.activeIndex === 1 && !values.dateRange?.to,
-          message: t('종료 날짜를 선택하세요.') },
+          message: t('종료 날짜를 선택하세요.'),
+        },
         {
           fn: (values) => values.activeIndex === 1 && values.dateRange.from > values.dateRange.to,
-          message: t('시작 날짜는 종료 날짜 보다 이전일 이어야 합니다.') },
-      ] } } });
+          message: t('시작 날짜는 종료 날짜 보다 이전일 이어야 합니다.'),
+        },
+      ],
+    },
+  },
+});

@@ -3,10 +3,17 @@ import { FC, useEffect, useState } from 'react';
 
 import { useGetCurriculumDetail } from '@entities/curriculum';
 import { learningResourceQueryOptions } from '@entities/learning-resource';
-import { CmsContentProgressMultiRes, CmsHtml5Resource, CmsImageItem } from '@learnway/types';
+import {
+  CmsContentProgressMultiRes,
+  CmsEnContentType,
+  CmsHtml5Resource,
+  CmsImageItem,
+} from '@learnway/types';
 import { LearnwayLearningWindowLayout, useLearningWindow } from '@learnway/ui/learning-window';
-import { ContentType } from '@types';
+import { ContentInformation, ContentType, GetVideoResourceRes } from '@types';
 import { Button } from '@learnway/ui/button';
+import { useFileManager } from '@learnway/hooks';
+import { useModal } from '@learnway/ui/modal';
 
 /**
  *
@@ -22,7 +29,9 @@ const PreviewLearningWindowComponent: FC<any> = ({
   curriculumId?: number;
   scoId?: string;
 }) => {
+  const { alert: openAlert } = useModal();
   const [isPc, setIsPc] = useState<boolean>(true);
+
   const {
     playList,
     playInfo,
@@ -33,6 +42,7 @@ const PreviewLearningWindowComponent: FC<any> = ({
     setPlayInfo,
     setScormInfo,
     setGalleryInfo,
+    setOtherInfo,
     setFuncInfo,
     setCurriculum,
     clearInfo,
@@ -47,6 +57,7 @@ const PreviewLearningWindowComponent: FC<any> = ({
   );
 
   const { data: curriculumnData } = useGetCurriculumDetail(curriculumId || 0);
+  const { getFileInfo, fileDownload } = useFileManager();
   const getScormItemByScoId = (scoId?: string) => {
     if (!scoId) return;
     let retval: any;
@@ -86,6 +97,21 @@ const PreviewLearningWindowComponent: FC<any> = ({
     const retval = { moduleList };
 
     return retval;
+  };
+
+  const genCuliculumInfoOneContent = (data: ContentInformation): any => {
+    return {
+      moduleList: [
+        {
+          moduleId: 1,
+          lessonId: 1,
+          isDummy: true,
+          lessonName: data.contentName,
+          contentUuid: data.channelUuid,
+          contentType: data.contentType,
+        },
+      ],
+    };
   };
 
   useEffect(() => {
@@ -139,25 +165,64 @@ const PreviewLearningWindowComponent: FC<any> = ({
           const info = getScormItemByScoId(playInfo?.scoId);
           if (info) {
             setScormInfo({ ...info, itemURL: info.itemUrl });
+          } else {
+            openAlert(`not found content information ${data.contentUuid}`);
           }
         }
         break;
       case ContentType.BLOG:
+        setCurriculum(genCuliculumInfoOneContent(data));
         setBlogInfo(data as any);
         break;
       case ContentType.VIDEO:
-        setVideoInfo(data);
+        {
+          setCurriculum(genCuliculumInfoOneContent(data));
+          const dataVideo = data as any;
+          if (dataVideo.masterVideo) {
+            setVideoInfo(data);
+          } else {
+            openAlert(`not found content information ${data.contentUuid}`);
+          }
+        }
         break;
       case ContentType.HTML5_VIDEO:
-        setHtmlInfo(data.resource as CmsHtml5Resource);
+        setCurriculum(genCuliculumInfoOneContent(data));
+        if (data.resource) {
+          setHtmlInfo(data.resource as CmsHtml5Resource);
+        } else {
+          openAlert(`not found content information ${data.contentUuid}`);
+        }
         break;
       case ContentType.IMAGE:
+        setCurriculum(genCuliculumInfoOneContent(data));
         setGalleryInfo({
           contentType: data.contentType,
           contentUuid: data.contentUuid,
           images: data.images as CmsImageItem[],
         });
         break;
+      case ContentType.ETC:
+        setCurriculum(genCuliculumInfoOneContent(data));
+
+        if (data.fileUuid) {
+          getFileInfo(data.fileUuid).then((result) => {
+            setOtherInfo({
+              label: result.originalFileName,
+              lessonTime: undefined,
+              contentUuid: data.contentUuid,
+              contentType: CmsEnContentType.search(data.contentType),
+              fileInfo: {
+                ...result,
+                groupUuid: result.group?.groupUuid,
+                fileName: result.originalFileName,
+              },
+            });
+          });
+        }
+
+        break;
+      default:
+        openAlert('This content is not suported');
     }
     setFuncInfo({
       lessonProgress: async (payload: any) => {
@@ -186,9 +251,17 @@ const PreviewLearningWindowComponent: FC<any> = ({
       },
       otherClickButton: async (playInfo, otherInfo) => {
         console.log('otherClickButton called', playInfo, otherInfo);
+        if (otherInfo.contentType === CmsEnContentType.ETC) {
+          if (otherInfo.fileInfo) {
+            fileDownload(otherInfo.fileInfo.fileUuid);
+          }
+        }
       },
       goCoursePage: (courseId) => {
-        console.log('gotoCourse called', courseId);
+        console.log('goCoursePage called', courseId);
+      },
+      goHomePage: () => {
+        console.log('goHomePage called');
       },
     });
   }, [data]);

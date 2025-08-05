@@ -29,6 +29,13 @@ export enum CmsEnContentType {
   ETC = 'ETC',
 }
 
+export namespace CmsEnContentType {
+  export const search = (name: string): CmsEnContentType => {
+    const data = CmsEnContentType[name as keyof typeof CmsEnContentType];
+    return data as CmsEnContentType;
+  };
+}
+
 export enum CmsLearningCompletionStatus {
   COMPLETED = 'COMPLETED',
   INCOMPLETE = 'INCOMPLETE',
@@ -117,16 +124,16 @@ export interface CmsEtcResource {
 }
 
 export interface CmsFileInfo {
-  groupUuid: string;
-  fileId: number;
+  groupUuid?: string;
+  fileId?: number;
   fileUuid: string;
   fileName: string;
-  storageType: string;
-  bucket: string;
+  storageType?: string;
+  bucket?: string;
   filePath: string;
   fileSize: number;
-  extType: string;
-  uploadStatus: string;
+  extType?: string;
+  uploadStatus?: string;
 }
 
 export interface CmsHtml5Resource {

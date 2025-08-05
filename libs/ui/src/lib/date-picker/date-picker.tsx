@@ -1,7 +1,3 @@
-import { forwardRef, useEffect, useState, ForwardRefRenderFunction } from 'react';
-import Primitive from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import './date-picker.css';
 import { IcoCalendar01 } from '@learnway/icons';
 import {
   cn,
@@ -10,18 +6,21 @@ import {
   getDateTimeFormat,
   getDefaultLang,
 } from '@learnway/shared';
-import { BaseFieldProps } from '../type';
 import { useCreation } from 'ahooks';
-import { convertDateFormatToFns } from './date-picker.service';
-import { PopoverTimeInput } from './custom-time-picker';
-import { ReactNode } from 'react';
-import { CustomDatePickerHeader } from './custom-date-picker-header';
-import { ko, enUS } from 'date-fns/locale';
-import { useTranslation } from 'react-i18next';
+import { enUS, ko } from 'date-fns/locale';
+import { forwardRef, ForwardRefRenderFunction, ReactNode, useEffect, useState } from 'react';
+import Primitive from 'react-datepicker';
 import { Locale } from 'react-datepicker/dist/date_utils';
+import 'react-datepicker/dist/react-datepicker.css';
 import ReactDOM from 'react-dom';
+import { useTranslation } from 'react-i18next';
 import { useModalStore } from '../stores/useModalStore';
+import { BaseFieldProps } from '../type';
+import { CustomDatePickerHeader } from './custom-date-picker-header';
 import { PopoverHourInput } from './custom-hour-picker';
+import { PopoverTimeInput } from './custom-time-picker';
+import './date-picker.css';
+import { convertDateFormatToFns } from './date-picker.service';
 
 export const convertDateFormatToFnsWithSlash = (format: string): string => {
   return format.replace(/-/g, '/');
@@ -33,6 +32,7 @@ const dayjsToDateFnsLocaleMap: Record<string, any> = {
   en: enUS,
 };
 
+// TODO: date-fns format 과 동일하게 수정 필요 (https://date-fns.org/docs/format 참고)
 export type DatePickerType =
   | 'day'
   | 'year'
@@ -43,7 +43,8 @@ export type DatePickerType =
   | 'day-time'
   | 'day-time-h'
   | 'day-time-hm'
-  | 'day-time-hms'; // 팝오버 스타일의 시간 선택기 컴포넌트
+  | 'day-time-hms' // 팝오버 스타일의 시간 선택기 컴포넌트
+  | 'YYYYMMDD';
 
 export interface DatePickerComponentProps extends BaseFieldProps<Date> {
   displayType?: DatePickerType;

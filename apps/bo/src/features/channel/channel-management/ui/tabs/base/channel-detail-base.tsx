@@ -28,24 +28,24 @@ import RequestChannelService from '@entities/channel/api/request-channel';
 import { useCreateChannel, useUpdateChannel } from '@entities/channel/service/channel.hook';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
-import { EnButtonLayout } from '@pages/_layout/tenant/channel/management/detail.lazy';
 import { useRouter, useRouterState } from '@tanstack/react-router';
 import { useWatch } from 'react-hook-form';
-import { getChannelUrl } from '../channel-application/service/channel-application.service';
+import { getChannelUrl } from '../../../../channel-application/service/channel-application.service';
+import { EnChannelDetailButtonLayout } from '../../../types/type';
 
 export enum EnChannelRegisterMethod {
   REQUEST = 'REQUEST',
   MANUAL = 'MANUAL',
 }
 
-interface ChannelDetailProps {
+interface ChannelDetailBaseProps {
   mode: EnFormMode;
   method?: EnChannelRegisterMethod;
   requestId?: string;
-  onButtonLayoutChange?: (layout: EnButtonLayout) => void;
+  onButtonLayoutChange?: (layout: EnChannelDetailButtonLayout) => void;
 }
 
-const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
+const ChannelDetailBaseComponent = (props: ChannelDetailBaseProps, ref: any) => {
   const { t } = useTranslation();
   const router = useRouter();
 
@@ -105,7 +105,8 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
 
   useEffect(() => {
     console.log('### props.method', props.method);
-    props.onButtonLayoutChange && props.onButtonLayoutChange(EnButtonLayout.RESET_AND_SAVE);
+    props.onButtonLayoutChange &&
+      props.onButtonLayoutChange(EnChannelDetailButtonLayout.RESET_AND_SAVE);
 
     if (!loginUser) return;
     console.log('### loginUser', loginUser);
@@ -778,7 +779,7 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
   );
 };
 
-export const ChannelDetail = forwardRef(ChannelDetailComponent);
+export const ChannelDetailBase = forwardRef(ChannelDetailBaseComponent);
 
 const formConfig = (): DynamicFormConfig => ({
   builders: [

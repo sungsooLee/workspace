@@ -1,7 +1,7 @@
 import { IcoFooter01, IcoFooter02, IcoFooter03, IcoFooter04, IcoFooterOn05 } from '@learnway/icons';
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { GnbPopupM } from '../../../../../features/layout';
+import { CategoryPopup, GnbPopupM } from '../../../../../features/layout';
 
 import styles from '@learnway/styles/fo/widgets/layout/m.ui/main/footer/footer.module.css';
 
@@ -24,7 +24,14 @@ function FooterComponent() {
             </Button>
           </li>
           <li>
-            <Button>
+            <Button
+              onClick={() =>
+                openModal({
+                  width: 'm_full',
+                  content: <CategoryPopup />,
+                })
+              }
+            >
               <IcoFooter02 width={24} height={24} />
               {/* <IcoFooterOn02 width={24} height={24} /> */}
               <span>학습테마</span>

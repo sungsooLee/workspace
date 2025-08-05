@@ -25,7 +25,7 @@ interface Props {
   hasMapping?: boolean;
 }
 
-function RouteComponent({ content, hasMapping }: Props) {
+function BlogViewComponent({ content, hasMapping }: Props) {
   const { t } = useTranslation();
 
   const formRef = useRef<HTMLFormElement>(null);
@@ -84,4 +84,7 @@ function RouteComponent({ content, hasMapping }: Props) {
     </form>
   );
 }
-export const BlogView = RouteComponent;
+
+BlogViewComponent.displayName = 'BlogView';
+
+export const BlogView = BlogViewComponent;
