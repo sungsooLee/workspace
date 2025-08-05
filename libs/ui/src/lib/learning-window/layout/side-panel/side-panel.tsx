@@ -281,6 +281,7 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
                       : sendValueToParent(index)
                   }
                   className={`${menuNumber === index ? styles.active : ''} ${item.New && styles.new}`}
+                  disabled={index > 0 && previewMobile !== undefined}
                 >
                   <item.icon width={isMobileView ? 24 : 32} height={isMobileView ? 24 : 32} />
                   <span>{item.tit}</span>
