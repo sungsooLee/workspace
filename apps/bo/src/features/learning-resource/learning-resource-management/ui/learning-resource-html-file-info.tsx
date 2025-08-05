@@ -4,7 +4,7 @@ import { LearningResourceFileUploadModal } from '@features/learning-resource';
 import { LEARNING_TYPE } from '@learnway/config';
 import { formatFileSize, useFileManager } from '@learnway/hooks';
 import { ChannelChoiceModal, PreviewLearningWindow } from '@shared/ui';
-import { ContentStatusCode, HtmlVideoFileChangeRes } from '@types';
+import { HtmlVideoFileChangeRes, ProcessingStatus } from '@types';
 import { t } from 'i18next';
 import { useCallback, useEffect, useState } from 'react';
 
@@ -16,10 +16,10 @@ import { useModal } from '@learnway/ui/modal';
 type FileInfoProps = {
   contentUuid: string;
   uuid: string;
-  status: ContentStatusCode;
+  processingStatus: ProcessingStatus;
 };
 
-const FileInfoComponent = ({ contentUuid, uuid, status }: FileInfoProps) => {
+const FileInfoComponent = ({ contentUuid, uuid, processingStatus }: FileInfoProps) => {
   const [fileUuid, setFileUuid] = useState<string>(uuid);
   const [fileAttrs, setFileAttrs] = useState<{ label: string; value: string }[]>([]);
 
@@ -34,7 +34,8 @@ const FileInfoComponent = ({ contentUuid, uuid, status }: FileInfoProps) => {
         { label: t('파일명'), value: originalFileName.split('.')[0] },
         {
           label: t('원본용량'),
-          value: formatFileSize(fileSize) },
+          value: formatFileSize(fileSize),
+        },
         { label: t('파일형식'), value: fileType },
       ]);
     }
@@ -51,13 +52,15 @@ const FileInfoComponent = ({ contentUuid, uuid, status }: FileInfoProps) => {
       if (result?.fileUuid) {
         setFileUuid(result.fileUuid);
       }
-    } });
+    },
+  });
 
   const { openModal } = useModal();
 
   const handleClickFileChange = async () => {
     const channelInfo = await openModal({
-      content: <ChannelChoiceModal /> });
+      content: <ChannelChoiceModal />,
+    });
 
     if (!channelInfo) {
       return;
@@ -71,7 +74,8 @@ const FileInfoComponent = ({ contentUuid, uuid, status }: FileInfoProps) => {
           maxFileCount={1}
         />
       ),
-      width: 'lg' });
+      width: 'lg',
+    });
 
     if (!uploadedFileUuid) {
       return;
@@ -83,7 +87,8 @@ const FileInfoComponent = ({ contentUuid, uuid, status }: FileInfoProps) => {
   const openHTMLVideoPreviewPopup = useCallback(() => {
     openModal({
       width: 'full',
-      content: <PreviewLearningWindow contentUuid={contentUuid} /> });
+      content: <PreviewLearningWindow contentUuid={contentUuid} />,
+    });
   }, [contentUuid]);
 
   useEffect(() => {
@@ -110,7 +115,7 @@ const FileInfoComponent = ({ contentUuid, uuid, status }: FileInfoProps) => {
             onClick={handleClickFileChange}
           />
         </li>
-        {status === ContentStatusCode.SAVED && (
+        {processingStatus === ProcessingStatus.COMPLETE && (
           <li>
             <Button
               type="button"
