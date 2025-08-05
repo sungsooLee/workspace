@@ -13,7 +13,7 @@ import {
   useCurrentRoute,
   useSearchBox,
 } from '@learnway/hooks';
-import { IcoDownArrow } from '@learnway/icons';
+import { IcoDownArrow, IcoImport } from '@learnway/icons';
 import { formatDate } from '@learnway/shared';
 import { Button } from '@learnway/ui/button';
 import { Divider } from '@learnway/ui/elements';
@@ -189,9 +189,16 @@ function LearningResourceSharedTableComponent() {
           size: 'auto',
         },
         render: (_: any) => (
-          <span className="flex">
+          <span className="flex items-center">
             {_.row.original.contentCreateType === ContentCreateType.TRANSLATE && (
-              <IcoDownArrow width={16} height={16} stroke="#4C515E" />
+              <span className="mr-2">
+                <IcoDownArrow width={16} height={16} stroke="#4C515E" />
+              </span>
+            )}
+            {_.row.original.createType === ContentCreateType.SHARED && (
+              <span className="mr-2">
+                <IcoImport width={16} height={16} stroke="#4C515E" />
+              </span>
             )}
             <Button
               className="link"

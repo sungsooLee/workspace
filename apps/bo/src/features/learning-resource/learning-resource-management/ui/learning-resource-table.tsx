@@ -16,7 +16,14 @@ import {
   useCurrentRoute,
   useSearchBox,
 } from '@learnway/hooks';
-import { IcoAlertCircle, IcoClock01, IcoCopy, IcoDownArrow, IcoDownload } from '@learnway/icons';
+import {
+  IcoAlertCircle,
+  IcoClock01,
+  IcoCopy,
+  IcoDownArrow,
+  IcoDownload,
+  IcoImport,
+} from '@learnway/icons';
 import { DATE_TIME_FORMAT, duration } from '@learnway/shared';
 import { Button } from '@learnway/ui/button';
 import { Divider } from '@learnway/ui/elements';
@@ -191,9 +198,16 @@ function LearningResourceTableComponent() {
           size: 'auto',
         },
         render: (_: any) => (
-          <span className="flex">
+          <span className="flex items-center">
             {_.row.original.createType === ContentCreateType.TRANSLATE && (
-              <IcoDownArrow width={16} height={16} stroke="#4C515E" />
+              <span className="mr-2">
+                <IcoDownArrow width={16} height={16} stroke="#4C515E" />
+              </span>
+            )}
+            {_.row.original.createType === ContentCreateType.SHARED && (
+              <span className="mr-2">
+                <IcoImport width={16} height={16} stroke="#4C515E" />
+              </span>
             )}
             <Button
               className="link"
@@ -244,8 +258,10 @@ function LearningResourceTableComponent() {
             return `${_.getValue()}${t('개')}`;
 
           return (
-            <span className="flex">
-              <IcoClock01 width={16} height={16} stroke="#131C30" />{' '}
+            <span className="flex items-center">
+              <span className="mr-2">
+                <IcoClock01 width={16} height={16} stroke="#131C30" />
+              </span>
               {duration(_.getValue(), DATE_TIME_FORMAT.HOUR_MIN_SEC)}
             </span>
           );
