@@ -1,4 +1,4 @@
-// IA105 / NLP_BO_CMS_1016, NLP_BO_CMS_1002 / 학습자원조회_나의 학습자원_등록_동영상
+// IA105 / NLP_BO_CMS_1016, NLP_BO_CMS_1002 / 교육자원조회_나의 교육자원_등록_동영상
 import { learningResourceQueryOptions } from '@entities/learning-resource';
 import { NotFound } from '@features/layout';
 import { LEARNING_TYPE } from '@learnway/config';

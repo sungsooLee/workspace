@@ -6918,18 +6918,18 @@
       "path": "/learning/resource",
       "children": [
         {
-          "title": "학습자원 관리",
+          "title": "교육자원 관리",
           "roles": "ROLE_ADMIN",
           "children": [
             {
-              "title": "학습자원 조회",
+              "title": "교육자원 조회",
               "roles": "ROLE_ADMIN",
               "tenantName": "현대자동차",
               "isShortCutArea": false,
               "path": "/learning/resource/education/list",
               "children": [
                 {
-                  "title": "학습자원 등록",
+                  "title": "교육자원 등록",
                   "roles": "ROLE_ADMIN",
                   "tenantName": "현대자동차",
                   "isShortCutArea": false,
@@ -6942,19 +6942,19 @@
                       "isShortCutArea": false,
                       "path": "/learning/resource/education/register/video",
                       "parentNode": {
-                        "title": "학습자원 등록",
+                        "title": "교육자원 등록",
                         "roles": "ROLE_ADMIN",
                         "tenantName": "현대자동차",
                         "isShortCutArea": false,
                         "path": "/learning/resource/education/register",
                         "parentNode": {
-                          "title": "학습자원 조회",
+                          "title": "교육자원 조회",
                           "roles": "ROLE_ADMIN",
                           "tenantName": "현대자동차",
                           "isShortCutArea": false,
                           "path": "/learning/resource/education/list",
                           "parentNode": {
-                            "title": "학습자원 관리",
+                            "title": "교육자원 관리",
                             "roles": "ROLE_ADMIN",
                             "tenantName": "현대자동차",
                             "isShortCutArea": false,
@@ -6981,13 +6981,13 @@
                     }
                   ],
                   "parentNode": {
-                    "title": "학습자원 조회",
+                    "title": "교육자원 조회",
                     "roles": "ROLE_ADMIN",
                     "tenantName": "현대자동차",
                     "isShortCutArea": false,
                     "path": "/learning/resource/education/list",
                     "parentNode": {
-                      "title": "학습자원 관리",
+                      "title": "교육자원 관리",
                       "roles": "ROLE_ADMIN",
                       "tenantName": "현대자동차",
                       "isShortCutArea": false,
@@ -7011,7 +7011,7 @@
                 }
               ],
               "parentNode": {
-                "title": "학습자원 관리",
+                "title": "교육자원 관리",
                 "roles": "ROLE_ADMIN",
                 "tenantName": "현대자동차",
                 "isShortCutArea": false,
@@ -7031,12 +7031,12 @@
               "key": "cyc8eaco2pd"
             },
             {
-              "title": "학습자원 조회",
+              "title": "교육자원 조회",
               "roles": "ROLE_ADMIN",
               "tenantName": "현대자동차",
               "isShortCutArea": false,
               "parentNode": {
-                "title": "학습자원 관리",
+                "title": "교육자원 관리",
                 "roles": "ROLE_ADMIN",
                 "tenantName": "현대자동차",
                 "isShortCutArea": false,
@@ -7061,7 +7061,7 @@
               "tenantName": "현대자동차",
               "isShortCutArea": false,
               "parentNode": {
-                "title": "학습자원 관리",
+                "title": "교육자원 관리",
                 "roles": "ROLE_ADMIN",
                 "tenantName": "현대자동차",
                 "isShortCutArea": false,
@@ -7086,7 +7086,7 @@
               "tenantName": "현대자동차",
               "isShortCutArea": false,
               "parentNode": {
-                "title": "학습자원 관리",
+                "title": "교육자원 관리",
                 "roles": "ROLE_ADMIN",
                 "tenantName": "현대자동차",
                 "isShortCutArea": false,
@@ -7111,7 +7111,7 @@
               "tenantName": "현대자동차",
               "isShortCutArea": false,
               "parentNode": {
-                "title": "학습자원 관리",
+                "title": "교육자원 관리",
                 "roles": "ROLE_ADMIN",
                 "tenantName": "현대자동차",
                 "isShortCutArea": false,
@@ -7131,12 +7131,12 @@
               "key": "rj7tfvabu4n"
             },
             {
-              "title": "학습자원 검수",
+              "title": "교육자원 검수",
               "roles": "ROLE_ADMIN",
               "tenantName": "현대자동차",
               "isShortCutArea": false,
               "parentNode": {
-                "title": "학습자원 관리",
+                "title": "교육자원 관리",
                 "roles": "ROLE_ADMIN",
                 "tenantName": "현대자동차",
                 "isShortCutArea": false,
@@ -7156,12 +7156,12 @@
               "key": "k78cn32vh3i"
             },
             {
-              "title": "학습자원 공유",
+              "title": "교육자원 공유",
               "roles": "ROLE_ADMIN",
               "tenantName": "현대자동차",
               "isShortCutArea": false,
               "parentNode": {
-                "title": "학습자원 관리",
+                "title": "교육자원 관리",
                 "roles": "ROLE_ADMIN",
                 "tenantName": "현대자동차",
                 "isShortCutArea": false,
@@ -7357,18 +7357,18 @@
       "key": "680dzdn7i8q"
     },
     {
-      "title": "학습자원 관리",
+      "title": "교육자원 관리",
       "roles": "ROLE_ADMIN",
       "children": [
         {
-          "title": "학습자원 조회",
+          "title": "교육자원 조회",
           "roles": "ROLE_ADMIN",
           "tenantName": "현대자동차",
           "isShortCutArea": false,
           "path": "/learning/resource/education/list",
           "children": [
             {
-              "title": "학습자원 등록",
+              "title": "교육자원 등록",
               "roles": "ROLE_ADMIN",
               "tenantName": "현대자동차",
               "isShortCutArea": false,
@@ -7381,19 +7381,19 @@
                   "isShortCutArea": false,
                   "path": "/learning/resource/education/register/video",
                   "parentNode": {
-                    "title": "학습자원 등록",
+                    "title": "교육자원 등록",
                     "roles": "ROLE_ADMIN",
                     "tenantName": "현대자동차",
                     "isShortCutArea": false,
                     "path": "/learning/resource/education/register",
                     "parentNode": {
-                      "title": "학습자원 조회",
+                      "title": "교육자원 조회",
                       "roles": "ROLE_ADMIN",
                       "tenantName": "현대자동차",
                       "isShortCutArea": false,
                       "path": "/learning/resource/education/list",
                       "parentNode": {
-                        "title": "학습자원 관리",
+                        "title": "교육자원 관리",
                         "roles": "ROLE_ADMIN",
                         "tenantName": "현대자동차",
                         "isShortCutArea": false,
@@ -7420,13 +7420,13 @@
                 }
               ],
               "parentNode": {
-                "title": "학습자원 조회",
+                "title": "교육자원 조회",
                 "roles": "ROLE_ADMIN",
                 "tenantName": "현대자동차",
                 "isShortCutArea": false,
                 "path": "/learning/resource/education/list",
                 "parentNode": {
-                  "title": "학습자원 관리",
+                  "title": "교육자원 관리",
                   "roles": "ROLE_ADMIN",
                   "tenantName": "현대자동차",
                   "isShortCutArea": false,
@@ -7450,7 +7450,7 @@
             }
           ],
           "parentNode": {
-            "title": "학습자원 관리",
+            "title": "교육자원 관리",
             "roles": "ROLE_ADMIN",
             "tenantName": "현대자동차",
             "isShortCutArea": false,
@@ -7470,12 +7470,12 @@
           "key": "cyc8eaco2pd"
         },
         {
-          "title": "학습자원 조회",
+          "title": "교육자원 조회",
           "roles": "ROLE_ADMIN",
           "tenantName": "현대자동차",
           "isShortCutArea": false,
           "parentNode": {
-            "title": "학습자원 관리",
+            "title": "교육자원 관리",
             "roles": "ROLE_ADMIN",
             "tenantName": "현대자동차",
             "isShortCutArea": false,
@@ -7500,7 +7500,7 @@
           "tenantName": "현대자동차",
           "isShortCutArea": false,
           "parentNode": {
-            "title": "학습자원 관리",
+            "title": "교육자원 관리",
             "roles": "ROLE_ADMIN",
             "tenantName": "현대자동차",
             "isShortCutArea": false,
@@ -7525,7 +7525,7 @@
           "tenantName": "현대자동차",
           "isShortCutArea": false,
           "parentNode": {
-            "title": "학습자원 관리",
+            "title": "교육자원 관리",
             "roles": "ROLE_ADMIN",
             "tenantName": "현대자동차",
             "isShortCutArea": false,
@@ -7550,7 +7550,7 @@
           "tenantName": "현대자동차",
           "isShortCutArea": false,
           "parentNode": {
-            "title": "학습자원 관리",
+            "title": "교육자원 관리",
             "roles": "ROLE_ADMIN",
             "tenantName": "현대자동차",
             "isShortCutArea": false,
@@ -7570,12 +7570,12 @@
           "key": "rj7tfvabu4n"
         },
         {
-          "title": "학습자원 검수",
+          "title": "교육자원 검수",
           "roles": "ROLE_ADMIN",
           "tenantName": "현대자동차",
           "isShortCutArea": false,
           "parentNode": {
-            "title": "학습자원 관리",
+            "title": "교육자원 관리",
             "roles": "ROLE_ADMIN",
             "tenantName": "현대자동차",
             "isShortCutArea": false,
@@ -7595,12 +7595,12 @@
           "key": "k78cn32vh3i"
         },
         {
-          "title": "학습자원 공유",
+          "title": "교육자원 공유",
           "roles": "ROLE_ADMIN",
           "tenantName": "현대자동차",
           "isShortCutArea": false,
           "parentNode": {
-            "title": "학습자원 관리",
+            "title": "교육자원 관리",
             "roles": "ROLE_ADMIN",
             "tenantName": "현대자동차",
             "isShortCutArea": false,
@@ -7635,14 +7635,14 @@
       "key": "uzgshou54s"
     },
     {
-      "title": "학습자원 조회",
+      "title": "교육자원 조회",
       "roles": "ROLE_ADMIN",
       "tenantName": "현대자동차",
       "isShortCutArea": false,
       "path": "/learning/resource/education/list",
       "children": [
         {
-          "title": "학습자원 등록",
+          "title": "교육자원 등록",
           "roles": "ROLE_ADMIN",
           "tenantName": "현대자동차",
           "isShortCutArea": false,
@@ -7655,19 +7655,19 @@
               "isShortCutArea": false,
               "path": "/learning/resource/education/register/video",
               "parentNode": {
-                "title": "학습자원 등록",
+                "title": "교육자원 등록",
                 "roles": "ROLE_ADMIN",
                 "tenantName": "현대자동차",
                 "isShortCutArea": false,
                 "path": "/learning/resource/education/register",
                 "parentNode": {
-                  "title": "학습자원 조회",
+                  "title": "교육자원 조회",
                   "roles": "ROLE_ADMIN",
                   "tenantName": "현대자동차",
                   "isShortCutArea": false,
                   "path": "/learning/resource/education/list",
                   "parentNode": {
-                    "title": "학습자원 관리",
+                    "title": "교육자원 관리",
                     "roles": "ROLE_ADMIN",
                     "tenantName": "현대자동차",
                     "isShortCutArea": false,
@@ -7694,13 +7694,13 @@
             }
           ],
           "parentNode": {
-            "title": "학습자원 조회",
+            "title": "교육자원 조회",
             "roles": "ROLE_ADMIN",
             "tenantName": "현대자동차",
             "isShortCutArea": false,
             "path": "/learning/resource/education/list",
             "parentNode": {
-              "title": "학습자원 관리",
+              "title": "교육자원 관리",
               "roles": "ROLE_ADMIN",
               "tenantName": "현대자동차",
               "isShortCutArea": false,
@@ -7724,7 +7724,7 @@
         }
       ],
       "parentNode": {
-        "title": "학습자원 관리",
+        "title": "교육자원 관리",
         "roles": "ROLE_ADMIN",
         "tenantName": "현대자동차",
         "isShortCutArea": false,
@@ -7744,7 +7744,7 @@
       "key": "cyc8eaco2pd"
     },
     {
-      "title": "학습자원 등록",
+      "title": "교육자원 등록",
       "roles": "ROLE_ADMIN",
       "tenantName": "현대자동차",
       "isShortCutArea": false,
@@ -7757,19 +7757,19 @@
           "isShortCutArea": false,
           "path": "/learning/resource/education/register/video",
           "parentNode": {
-            "title": "학습자원 등록",
+            "title": "교육자원 등록",
             "roles": "ROLE_ADMIN",
             "tenantName": "현대자동차",
             "isShortCutArea": false,
             "path": "/learning/resource/education/register",
             "parentNode": {
-              "title": "학습자원 조회",
+              "title": "교육자원 조회",
               "roles": "ROLE_ADMIN",
               "tenantName": "현대자동차",
               "isShortCutArea": false,
               "path": "/learning/resource/education/list",
               "parentNode": {
-                "title": "학습자원 관리",
+                "title": "교육자원 관리",
                 "roles": "ROLE_ADMIN",
                 "tenantName": "현대자동차",
                 "isShortCutArea": false,
@@ -7796,13 +7796,13 @@
         }
       ],
       "parentNode": {
-        "title": "학습자원 조회",
+        "title": "교육자원 조회",
         "roles": "ROLE_ADMIN",
         "tenantName": "현대자동차",
         "isShortCutArea": false,
         "path": "/learning/resource/education/list",
         "parentNode": {
-          "title": "학습자원 관리",
+          "title": "교육자원 관리",
           "roles": "ROLE_ADMIN",
           "tenantName": "현대자동차",
           "isShortCutArea": false,
@@ -7831,19 +7831,19 @@
       "isShortCutArea": false,
       "path": "/learning/resource/education/register/video",
       "parentNode": {
-        "title": "학습자원 등록",
+        "title": "교육자원 등록",
         "roles": "ROLE_ADMIN",
         "tenantName": "현대자동차",
         "isShortCutArea": false,
         "path": "/learning/resource/education/register",
         "parentNode": {
-          "title": "학습자원 조회",
+          "title": "교육자원 조회",
           "roles": "ROLE_ADMIN",
           "tenantName": "현대자동차",
           "isShortCutArea": false,
           "path": "/learning/resource/education/list",
           "parentNode": {
-            "title": "학습자원 관리",
+            "title": "교육자원 관리",
             "roles": "ROLE_ADMIN",
             "tenantName": "현대자동차",
             "isShortCutArea": false,
@@ -7869,12 +7869,12 @@
       "key": "uhupvqrd6l"
     },
     {
-      "title": "학습자원 조회",
+      "title": "교육자원 조회",
       "roles": "ROLE_ADMIN",
       "tenantName": "현대자동차",
       "isShortCutArea": false,
       "parentNode": {
-        "title": "학습자원 관리",
+        "title": "교육자원 관리",
         "roles": "ROLE_ADMIN",
         "tenantName": "현대자동차",
         "isShortCutArea": false,
@@ -7899,7 +7899,7 @@
       "tenantName": "현대자동차",
       "isShortCutArea": false,
       "parentNode": {
-        "title": "학습자원 관리",
+        "title": "교육자원 관리",
         "roles": "ROLE_ADMIN",
         "tenantName": "현대자동차",
         "isShortCutArea": false,
@@ -7924,7 +7924,7 @@
       "tenantName": "현대자동차",
       "isShortCutArea": false,
       "parentNode": {
-        "title": "학습자원 관리",
+        "title": "교육자원 관리",
         "roles": "ROLE_ADMIN",
         "tenantName": "현대자동차",
         "isShortCutArea": false,
@@ -7949,7 +7949,7 @@
       "tenantName": "현대자동차",
       "isShortCutArea": false,
       "parentNode": {
-        "title": "학습자원 관리",
+        "title": "교육자원 관리",
         "roles": "ROLE_ADMIN",
         "tenantName": "현대자동차",
         "isShortCutArea": false,
@@ -7969,12 +7969,12 @@
       "key": "rj7tfvabu4n"
     },
     {
-      "title": "학습자원 검수",
+      "title": "교육자원 검수",
       "roles": "ROLE_ADMIN",
       "tenantName": "현대자동차",
       "isShortCutArea": false,
       "parentNode": {
-        "title": "학습자원 관리",
+        "title": "교육자원 관리",
         "roles": "ROLE_ADMIN",
         "tenantName": "현대자동차",
         "isShortCutArea": false,
@@ -7994,12 +7994,12 @@
       "key": "k78cn32vh3i"
     },
     {
-      "title": "학습자원 공유",
+      "title": "교육자원 공유",
       "roles": "ROLE_ADMIN",
       "tenantName": "현대자동차",
       "isShortCutArea": false,
       "parentNode": {
-        "title": "학습자원 관리",
+        "title": "교육자원 관리",
         "roles": "ROLE_ADMIN",
         "tenantName": "현대자동차",
         "isShortCutArea": false,

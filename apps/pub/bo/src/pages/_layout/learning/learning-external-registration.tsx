@@ -362,7 +362,7 @@ function RouteComponent() {
             {/* form_item */}
             <div className={formStyles.form_item}>
               <label htmlFor="name-markText" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>학습자원명</span>
+                <span className={formStyles.form_text}>교육자원명</span>
                 {/* 필수 케이스 */}
                 <span className={cn(formStyles.status, formStyles.required)}>
                   <IcoFormRequired width={12} height={12} />
@@ -377,7 +377,7 @@ function RouteComponent() {
             {/* form_item */}
             <div className={formStyles.form_item}>
               <label htmlFor="name-explain" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>학습자원 설명</span>
+                <span className={formStyles.form_text}>교육자원 설명</span>
               </label>
               <div className={formStyles.input_box}>
                 <Textarea
@@ -700,7 +700,7 @@ function RouteComponent() {
                 />
               </div>
               <p className={cn(formStyles.guide_text)}>
-                학습자원을 표현하는 썸네일을 선택하거나 업로드 하세요. (미선택 시 자동 선택)
+                교육자원을 표현하는 썸네일을 선택하거나 업로드 하세요. (미선택 시 자동 선택)
               </p>
             </div>
           </ContentsRow>
@@ -717,7 +717,7 @@ function RouteComponent() {
                   className={formStyles.tooltip}
                   side="bottom"
                   align="start"
-                  content={'태그는 학습자원 검색 시 활용되고, 학습자에게는 10개까지만 보여집니다.'}
+                  content={'태그는 교육자원 검색 시 활용되고, 학습자에게는 10개까지만 보여집니다.'}
                 >
                   <Button onlyIcon>
                     <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
@@ -746,7 +746,7 @@ function RouteComponent() {
             {/* Textarea type */}
             <div className={formStyles.form_item}>
               <label htmlFor="name-auto" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>학습자원 개요 (AI 자동 추출)</span>
+                <span className={formStyles.form_text}>교육자원 개요 (AI 자동 추출)</span>
               </label>
               <div className={formStyles.input_box}>
                 <Textarea
@@ -800,7 +800,7 @@ function RouteComponent() {
                 />
               </div>
               <p className={formStyles.guide_text}>
-                해당 학습자원으로 교육 과정을 개설할 수 {checked[3] ? '있습니다.' : '없습니다.'}
+                해당 교육자원으로 교육 과정을 개설할 수 {checked[3] ? '있습니다.' : '없습니다.'}
               </p>
             </div>
           </ContentsRow>
@@ -812,7 +812,7 @@ function RouteComponent() {
                   className={formStyles.tooltip}
                   side="bottom"
                   align="start"
-                  content={'설정된 채널에 해당 학습자원이 공유됩니다.'}
+                  content={'설정된 채널에 해당 교육자원이 공유됩니다.'}
                 >
                   <Button onlyIcon>
                     <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />

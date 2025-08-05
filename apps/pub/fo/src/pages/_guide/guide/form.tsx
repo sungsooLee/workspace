@@ -142,7 +142,7 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
           {/* form_item */}
           <div className={formStyles.form_item}>
             <label htmlFor="name-1-2" className={formStyles.form_label}>
-              <span className={formStyles.form_text}>학습자원명</span>
+              <span className={formStyles.form_text}>교육자원명</span>
               {/* 필수 케이스 */}
               <span className={cn(formStyles.status, formStyles.required)}>
                 <IcoFormRequired width={12} height={12} />
@@ -172,7 +172,7 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
                 id="name-1-3"
                 type="text"
                 disabled
-                placeholder="학습자원을 분류할 카테고리를 선택하세요."
+                placeholder="교육자원을 분류할 카테고리를 선택하세요."
               />
               <Button variant="gray" size="lg">
                 선택
@@ -361,7 +361,7 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
           {/* Textarea type */}
           <div className={formStyles.form_item}>
             <label htmlFor="name-1-9" className={formStyles.form_label}>
-              <span className={formStyles.form_text}>학습자원 개요 (AI 자동 추출)</span>
+              <span className={formStyles.form_text}>교육자원 개요 (AI 자동 추출)</span>
               <Button
                 className={formStyles.btn_toggle}
                 onlyIcon
@@ -634,7 +634,7 @@ import dynamicFormStyles from '@learnway/styles/fo/assets/styles/modules/dynamic
               </span>
               <span className={formStyles.sub_test}>
                 {
-                  '저작권법(제25조2항)에 따라 학습자원(동영상,이미지등)은 해당 학습플랫폼에서만 이용가능하며, 이 외의 공간에서 저작물을 공유 또는 게시하는 행위는 저작권법 위반에 해당될 수 있음에  동의합니다.'
+                  '저작권법(제25조2항)에 따라 교육자원(동영상,이미지등)은 해당 학습플랫폼에서만 이용가능하며, 이 외의 공간에서 저작물을 공유 또는 게시하는 행위는 저작권법 위반에 해당될 수 있음에  동의합니다.'
                 }
               </span>
             </label>

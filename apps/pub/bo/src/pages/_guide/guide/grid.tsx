@@ -415,7 +415,7 @@ import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
           guideText={'텍스트'}
           customButtonNode={
             <>
-              <Checkbox label={'나의 학습자원'} size={'md'} />
+              <Checkbox label={'나의 교육자원'} size={'md'} />
               <Button
                 label={'프로그램/가이드 다운로드'}
                 icon={<IcoDownload width={16} height={16} stroke={'#4C515E'} />}

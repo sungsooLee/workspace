@@ -176,7 +176,7 @@ export const LessonForm: React.FC<LessonFormProps> = ({
             <FormRow2
               provider={provider}
               name="contentType"
-              label={t('학습자원 유형')}
+              label={t('교육자원 유형')}
               format="string"
               validation={{ required: true }}
               element={
@@ -197,7 +197,7 @@ export const LessonForm: React.FC<LessonFormProps> = ({
               <FormRow2
                 provider={provider}
                 name="contentName"
-                label={t('학습자원')}
+                label={t('교육자원')}
                 format="string"
                 disabled={isEditing}
                 validation={{ required: true }}

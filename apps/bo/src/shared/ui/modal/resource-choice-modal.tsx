@@ -84,7 +84,7 @@ const ResourceChoiceModalComponent = ({
         },
         {
           name: 'contentName',
-          label: t('학습자원명'),
+          label: t('교육자원명'),
           type: 'text',
           value: '',
         },
@@ -108,11 +108,11 @@ const ResourceChoiceModalComponent = ({
           return getContentsTypeName(type);
         },
       },
-      // TODO: 학습자원 링크 누르면 학습자원의 상세 팝업 떠야함.
+      // TODO: 교육자원 링크 누르면 교육자원의 상세 팝업 떠야함.
       {
         size: 300,
         name: 'contentName',
-        label: t('학습자원명'),
+        label: t('교육자원명'),
       },
       // TODO: 세부정보 유형마다 다르게 보여줘야됨.
       {
@@ -170,7 +170,7 @@ const ResourceChoiceModalComponent = ({
 
   return (
     <ModalContainer>
-      <ModalTitle>{t('학습자원 선택')}</ModalTitle>
+      <ModalTitle>{t('교육자원 선택')}</ModalTitle>
       <ModalBody>
         <SearchBox provider={provider} onSearch={gridFetch} />
         <Divider />
