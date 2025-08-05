@@ -1,6 +1,10 @@
 // IA104 / NLP_BO_CMS_1045 학습자원 현지화-공유함
 import { learningResourceQueryOptions, usePostContentExport } from '@entities/learning-resource';
-import { getDetailPathByContentType, getDetailRouterState } from '@features/learning-resource';
+import {
+  getDetailPathByContentType,
+  getDetailRouterState,
+  LearingResourceSharedInfoModal,
+} from '@features/learning-resource';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import {
   ALL_OPTION,
@@ -246,7 +250,22 @@ function LearningResourceSharedTableComponent() {
         size: 100,
         name: 'sharedCount',
         label: t('수신상태'),
-        render: (_: any) => (_.getValue() ? t('수신완료') : t('수신대기')),
+        render: (_: any) =>
+          _.getValue() ? (
+            <Button
+              className="link"
+              onClick={(e) => {
+                e.stopPropagation();
+                openModal({
+                  content: <LearingResourceSharedInfoModal data={_.row.original} />,
+                });
+              }}
+            >
+              {t('수신완료')}
+            </Button>
+          ) : (
+            t('수신대기')
+          ),
       },
       {
         size: 100,
