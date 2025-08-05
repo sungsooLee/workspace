@@ -6,7 +6,10 @@ export function useChannelBanners(params: any) {
 }
 
 export function useChannelBanner(params: any) {
-  return useQuery(channelBannerQueryOptions.detail(params));
+  return useQuery({
+    ...channelBannerQueryOptions.detail(params),
+    enabled: !!(params.channelUuid && params.bannerId),
+  });
 }
 
 export function useCreateChannelBanner(options: any) {

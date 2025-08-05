@@ -8,7 +8,8 @@ export enum EnChannelDetailHomeMode {
   HOME = 'HOME',
   BANNER = 'BANNER',
   COURSE_KEYWORD = 'COURSE_KEYWORD',
-  PACKAGE_KEYWORD = 'PACKAGE_KEYWORD' }
+  PACKAGE_KEYWORD = 'PACKAGE_KEYWORD',
+}
 
 interface ChannelDetailHomeProps {
   onButtonLayoutChange: (layout: EnButtonLayout) => void;
@@ -17,6 +18,8 @@ interface ChannelDetailHomeProps {
 const ChannelDetailHomeComponent = (props: ChannelDetailHomeProps, ref: any) => {
   const [homeMode, setHomeMode] = useState(EnChannelDetailHomeMode.HOME);
   const [formMode, setFormMode] = useState(EnFormMode.NONE);
+
+  const [selectedBannerId, setSelectedBannerId] = useState<number>();
 
   useEffect(() => {
     if (props.onButtonLayoutChange) {
@@ -40,11 +43,24 @@ const ChannelDetailHomeComponent = (props: ChannelDetailHomeProps, ref: any) => 
           onAddClick={() => {
             setHomeMode(EnChannelDetailHomeMode.BANNER);
             setFormMode(EnFormMode.ADD);
+            setSelectedBannerId(undefined);
+          }}
+          onDetailClick={(bannerId) => {
+            setHomeMode(EnChannelDetailHomeMode.BANNER);
+            setFormMode(EnFormMode.VIEW);
+            setSelectedBannerId(bannerId);
           }}
         />
       )}
       {homeMode === EnChannelDetailHomeMode.BANNER && (
-        <ChannelDetailHomeBannerDetail ref={ref} mode={formMode} />
+        <ChannelDetailHomeBannerDetail
+          ref={ref}
+          mode={formMode}
+          bannerId={selectedBannerId}
+          onCompleted={() => {
+            setHomeMode(EnChannelDetailHomeMode.HOME);
+          }}
+        />
       )}
     </>
   );

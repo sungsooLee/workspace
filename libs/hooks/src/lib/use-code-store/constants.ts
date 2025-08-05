@@ -88,6 +88,8 @@ export const CODE_GROUP = {
   'pms.channel.ChannelTargetUserSettingType': 'pms.channel.ChannelTargetUserSettingType',
   'pms.channel.ChannelTenatMappingType': 'pms.channel.ChannelTenatMappingType',
   'pms.channel.ChannelType': 'pms.channel.ChannelType',
+  'pms.channel.ChannelBannerPositionType': 'pms.channel.ChannelBannerPositionType',
+  'pms.channel.ChannelBannerType': 'pms.channel.ChannelBannerType',
   'pms.company.ApplicationProcess': 'pms.company.ApplicationProcess',
   'pms.company.ApprovalMatrix': 'pms.company.ApprovalMatrix',
   'pms.company.ChannelApprovalMatrix': 'pms.company.ChannelApprovalMatrix',
