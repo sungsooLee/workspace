@@ -38,14 +38,14 @@ export enum EnChannelRegisterMethod {
   MANUAL = 'MANUAL',
 }
 
-interface ChannelDetailProps {
+interface ChannelDetailBaseProps {
   mode: EnFormMode;
   method?: EnChannelRegisterMethod;
   requestId?: string;
   onButtonLayoutChange?: (layout: EnButtonLayout) => void;
 }
 
-const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
+const ChannelDetailBaseComponent = (props: ChannelDetailBaseProps, ref: any) => {
   const { t } = useTranslation();
   const router = useRouter();
 
@@ -778,7 +778,7 @@ const ChannelDetailComponent = (props: ChannelDetailProps, ref: any) => {
   );
 };
 
-export const ChannelDetail = forwardRef(ChannelDetailComponent);
+export const ChannelDetailBase = forwardRef(ChannelDetailBaseComponent);
 
 const formConfig = (): DynamicFormConfig => ({
   builders: [
