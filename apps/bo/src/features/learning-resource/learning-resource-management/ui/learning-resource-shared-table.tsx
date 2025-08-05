@@ -272,7 +272,11 @@ function LearningResourceSharedTableComponent() {
         name: 'shareButtonUtil',
         label: t('LABEL.grid.column.util', '기능'),
         render: (_: any) => (
-          <Button variant="gray2" onClick={() => handleShareButton(_.row.original)}>
+          <Button
+            variant="gray2"
+            onClick={() => handleShareButton(_.row.original)}
+            disabled={!_.row.original.isContentEnabled}
+          >
             {t('가져가기')}
           </Button>
         ),
