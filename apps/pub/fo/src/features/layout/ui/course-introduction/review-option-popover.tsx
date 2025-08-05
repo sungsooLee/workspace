@@ -1,16 +1,15 @@
 import { memo } from 'react';
 import { isMobile } from 'react-device-detect';
 
-import { ReviewPopup } from '../../../../features/layout';
-import styles from './review-option-popover.module.css';
+import styles from '@learnway/styles/fo/features/layout/ui/course-introduction/review-option-popover.module.css';
+import dropdownPopoverStyles from '@learnway/styles/fo/shared/ui/dropdown-popover/dropdown-popover.module.css';
 import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
+import { ReviewPopup } from '../../../../features/layout';
 
-interface ReviewOptionPopoverProps {
-  className?: string;
-}
+// 퍼블수정 20250805 interface 및 className 삭제
 
-function ReviewOptionPopoverComponent({ className }: ReviewOptionPopoverProps) {
+function ReviewOptionPopoverComponent() {
   const { openModal } = useModal();
   const { confirm: openConfirm } = useModal();
 
@@ -24,7 +23,10 @@ function ReviewOptionPopoverComponent({ className }: ReviewOptionPopoverProps) {
   };
 
   return (
-    <div className={`${styles.start} ${styles.review_option} ${className}`}>
+    // 퍼블수정 20250805 className 수정
+    <div
+      className={`${dropdownPopoverStyles.start} ${dropdownPopoverStyles.dropdown_wrap} ${dropdownPopoverStyles.b_color_01} ${styles.review_option}`}
+    >
       <ul>
         <li>
           {/* 후기 팝업 미정 */}

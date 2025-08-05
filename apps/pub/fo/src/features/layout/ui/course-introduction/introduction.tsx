@@ -1,23 +1,24 @@
-import { memo, useState } from 'react';
-import { Link } from '@tanstack/react-router';
-import { isMobile } from 'react-device-detect';
+import { IcoArrowDown, IcoEssential, IcoSymbol } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import { Accordion } from '@learnway/ui/accordion';
 import { Avatar } from '@learnway/ui/avatar';
 import { SelectOption } from '@learnway/ui/type';
-import { IcoSymbol, IcoEssential, IcoArrowDown } from '@learnway/icons';
+import { Link } from '@tanstack/react-router';
+import { memo, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import { Curriculum, PackageCardList } from '../../../../features/layout';
 
-import operatorStyles from '../../../../pages/_layout/course-introduction/operator.module.css';
 import definitionListStyles from '../../../../pages/_layout/course-introduction/definition-list.module.css';
+import operatorStyles from '../../../../pages/_layout/course-introduction/operator.module.css';
 import dataNoticeStyles from '../../../../shared/ui/data-display/notice.module.css';
 import bulletStyles from '../../../../shared/ui/list/bullet.module.css';
 import styles from './introduction.module.css';
 
 // 이미지
-import discriminationImg from '@learnway/styles/fo/assets/images/temp/img_discrimination.png';
-import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
 import avatarDefault from '@learnway/styles/fo/assets/images/common/img_avatar.png';
+import listImage1 from '@learnway/styles/fo/assets/images/temp/category_product_01.png';
+import discriminationImg from '@learnway/styles/fo/assets/images/temp/img_discrimination.png';
+import { Button } from '@learnway/ui/button';
 import { ChipList } from '@learnway/ui/chips';
 
 const CourseIntroductionCompoment = () => {
