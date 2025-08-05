@@ -100,6 +100,11 @@ module.exports = {
         lineHeight: '140%',
       };
 
+      const bodyTitle = {
+        letterSpacing: '0',
+        lineHeight: '150%',
+      };
+
       addComponents({
         '.scrollbar': {
           '&::-webkit-scrollbar': {
@@ -484,13 +489,13 @@ module.exports = {
 
         '.headline1': {
           ...baseTitle,
-          fontSize: '2.2rem',
+          fontSize: '2rem',
           fontWeight: '400',
         },
 
         '.headline1-b': {
           ...baseTitle,
-          fontSize: '2.2rem',
+          fontSize: '2rem',
           fontWeight: '600',
         },
 
@@ -520,13 +525,13 @@ module.exports = {
 
         '.headline4': {
           ...baseTitle,
-          fontSize: '3.2rem',
+          fontSize: '3rem',
           fontWeight: '400',
         },
 
         '.headline4-b': {
           ...baseTitle,
-          fontSize: '3.2rem',
+          fontSize: '3rem',
           fontWeight: '600',
         },
 
@@ -550,109 +555,109 @@ module.exports = {
 
         '.title2': {
           ...baseTitle,
-          fontSize: '1.4rem',
+          fontSize: '1.2rem',
           fontWeight: '400',
         },
 
         '.title2-b': {
           ...baseTitle,
-          fontSize: '1.4rem',
+          fontSize: '1.2rem',
           fontWeight: '600',
         },
 
         '.title3': {
           ...baseTitle,
-          fontSize: '1.6rem',
+          fontSize: '1.3rem',
           fontWeight: '400',
         },
 
         '.title3-b': {
           ...baseTitle,
-          fontSize: '1.6rem',
+          fontSize: '1.3rem',
           fontWeight: '600',
         },
 
         '.title4': {
           ...baseTitle,
-          fontSize: '1.8rem',
+          fontSize: '1.6rem',
           fontWeight: '400',
         },
 
         '.title4-b': {
           ...baseTitle,
-          fontSize: '1.8rem',
+          fontSize: '1.6rem',
           fontWeight: '600',
         },
 
         '.title5': {
           ...baseTitle,
-          fontSize: '2rem',
+          fontSize: '1.8rem',
           fontWeight: '400',
         },
 
         '.title5-b': {
           ...baseTitle,
-          fontSize: '2rem',
+          fontSize: '1.8rem',
           fontWeight: '600',
         },
 
         '.body-lg': {
-          ...baseTitle,
-          fontSize: '1.8rem',
+          ...bodyTitle,
+          fontSize: '1.6rem',
           fontWeight: '400',
         },
 
         '.body-lg-b': {
-          ...baseTitle,
-          fontSize: '1.8rem',
+          ...bodyTitle,
+          fontSize: '1.6rem',
           fontWeight: '600',
         },
 
         '.body-md': {
-          ...baseTitle,
-          fontSize: '1.6rem',
+          ...bodyTitle,
+          fontSize: '1.4rem',
           fontWeight: '400',
         },
 
         '.body-md-b': {
-          ...baseTitle,
-          fontSize: '1.6rem',
+          ...bodyTitle,
+          fontSize: '1.4rem',
           fontWeight: '600',
         },
 
         '.body-sm': {
-          ...baseTitle,
-          fontSize: '1.4rem',
+          ...bodyTitle,
+          fontSize: '1.3rem',
           fontWeight: '400',
         },
 
         '.body-sm-b': {
-          ...baseTitle,
-          fontSize: '1.4rem',
+          ...bodyTitle,
+          fontSize: '1.3rem',
           fontWeight: '600',
         },
 
         '.body-xsm': {
-          ...baseTitle,
-          fontSize: '1.2rem',
+          ...bodyTitle,
+          fontSize: '1.1rem',
           fontWeight: '400',
         },
 
         '.body-xsm-b': {
-          ...baseTitle,
-          fontSize: '1.2rem',
+          ...bodyTitle,
+          fontSize: '1.1rem',
           fontWeight: '600',
         },
 
         '.label-xl': {
           ...baseTitle,
-          fontSize: '1.6rem',
+          fontSize: '1.5rem',
           fontWeight: '400',
         },
 
         '.label-xl-b': {
           ...baseTitle,
-          fontSize: '1.6rem',
+          fontSize: '1.5rem',
           fontWeight: '600',
         },
 

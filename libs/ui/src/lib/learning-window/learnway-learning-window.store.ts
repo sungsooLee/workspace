@@ -127,6 +127,19 @@ interface FunctionInfomation {
   lessonProgress: (payload: CmsContentProgressMultiReq) => Promise<CmsContentProgressMultiRes>;
   /** 기타/라이브/링크 클릭 */
   otherClickButton: (playInfo: LearningWindowPlayInfo, otherInfo: CmsOtherInfo) => Promise<void>;
+  /**
+   * 과정 > 대시보드 이동
+   * @param courseId
+   * @returns
+   */
+  goCoursePage: (courseId: number) => void;
+
+  /**
+   * 홈버튼
+   * @param courseId
+   * @returns
+   */
+  goHomePage: () => void;
 }
 
 interface LearningWindowStoreData {
@@ -162,6 +175,8 @@ interface LearningWindowStoreData {
 
   funcInfo?: FunctionInfomation;
   setFuncInfo: (v?: FunctionInfomation) => void;
+  previewMobile?: boolean;
+  setPreviewMobile: (v?: boolean) => void;
 }
 
 const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
@@ -179,6 +194,7 @@ const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
   otherInfo: undefined,
   funcInfo: undefined,
   progressInfo: new Map(),
+  previewMobile: undefined,
 
   setPlayInfo(playInfo?: LearningWindowPlayInfo) {
     if (!playInfo) {
@@ -247,7 +263,11 @@ const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
       funcInfo,
     }));
   },
-
+  setPreviewMobile(previewMobile) {
+    set((state) => ({
+      previewMobile,
+    }));
+  },
   clearInfo() {
     set((state) => ({
       galleryInfo: undefined,
@@ -256,6 +276,7 @@ const useLearningWindowStore = create<LearningWindowStoreData>((set, get) => ({
       blogInfo: undefined,
       htmlInfo: undefined,
       ebookInfo: undefined,
+      otherInfo: undefined,
     }));
   },
 }));
@@ -270,6 +291,7 @@ export const useLearningWindow = () => {
     ebookInfo,
     otherInfo,
     funcInfo,
+    previewMobile,
     playIndex: _playIndex,
     playList: _playList,
     baseInfo: _baseInfo,
@@ -291,12 +313,13 @@ export const useLearningWindow = () => {
     setOtherInfo,
     setFuncInfo,
     clearInfo,
+    setPreviewMobile,
   } = useLearningWindowStore((state) => state);
 
   const readAllLessonProgress = async (curriculum: Curriculum) => {
     //_baseInfo
     const contents: CmsContentProgressReq[] = [];
-    if (curriculum.moduleList) {
+    if (curriculum?.moduleList) {
       curriculum.moduleList.forEach((module) => {
         if (module.isDummy) {
           contents.push({
@@ -306,8 +329,6 @@ export const useLearningWindow = () => {
             moduleId: module.moduleId,
             lessonId: module.lessonId,
             contentUuid: module.contentUuid,
-            orgnId: module.orgnId,
-            itemId: module.itemId,
           });
         } else if (module.lessonList) {
           module.lessonList.forEach((lesson) => {
@@ -318,8 +339,6 @@ export const useLearningWindow = () => {
               moduleId: module.moduleId,
               lessonId: lesson.lessonId,
               contentUuid: lesson.contentUuid,
-              orgnId: lesson.orgnId,
-              itemId: lesson.itemId,
             });
           });
         }
@@ -525,5 +544,7 @@ export const useLearningWindow = () => {
     clearInfo,
     getProgressNumber,
     resetProgressive,
+    previewMobile,
+    setPreviewMobile,
   };
 };

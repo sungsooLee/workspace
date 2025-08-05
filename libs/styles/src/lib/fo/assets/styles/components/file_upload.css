@@ -8,14 +8,24 @@
       @apply !font-semibold !text-[var(--gray8)];
     }
   }
+  [class*='file_text'] {
+    svg {
+      @apply !fill-[var(--gray75)];
+    }
+    [class*='info_text'] {
+      @apply !title2 !text-[var(--gray65)];
+    }
+  }
+
   [class*='file_length'] {
-    @apply !text-[var(--gray35)];
+    @apply !title2 !text-[var(--gray35)];
     span,
     strong {
-      @apply !text-[var(--blue50)];
+      @apply !title2-b !text-[var(--blue50)];
     }
   }
   [class*='file_volume'] {
+    @apply !title2-b !text-[var(--blue50)];
     em {
       @apply !text-[var(--blue50)];
     }
@@ -37,6 +47,30 @@
     [class*='file_title'] {
       @apply !text-[var(--gray10)];
     }
+    [class*='upload_status'] {
+      [class*='file_item'] {
+        [class*='control_wrap'] {
+          & > svg {
+            @apply fill-[var(--blue50)];
+            &[class*='icon_refresh'] {
+              @apply fill-[var(--blue75)];
+            }
+            &[class*='icon_pause'] {
+              @apply fill-[var(--gray75)];
+            }
+          }
+        }
+        [class*='file_name'] em {
+          @apply label-xl text-[var(--gray35)];
+        }
+        [class*='status_view'] em {
+          @apply label-lg text-[var(--gray35)];
+        }
+        [class*='progress_area'] p {
+          @apply label-lg text-[var(--gray35)];
+        }
+      }
+    }
   }
   [class*='attach_area'] {
     [class*='btn_file'] {
@@ -49,6 +83,13 @@
         .icon_upload path {
           @apply fill-[var(--gray75)];
         }
+      }
+    }
+  }
+  [class*='upload_single'] {
+    [class*='nlp--button'] {
+      &[class*='btn_attach'] {
+        @apply !body-sm !px-0 !font-normal text-[var(--gray10)];
       }
     }
   }

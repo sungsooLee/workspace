@@ -51,5 +51,12 @@
         }
       }
     }
+    &.xl2 {
+      & > [role='tablist'] {
+        & > [role='tab'] {
+          @apply !title4-b;
+        }
+      }
+    }
   }
 }

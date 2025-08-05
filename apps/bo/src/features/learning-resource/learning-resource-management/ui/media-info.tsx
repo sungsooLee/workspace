@@ -81,7 +81,7 @@ const MediaInfoComponent = ({ status, buttons, type, url, infoList }: MediaInfoC
           {/* media(비디오 영역) */}
           {type === LEARNING_TYPE.VIDEO && url && (
             <div className={style.media}>
-              <ReactPlayer url={url} playing controls width={416} />
+              <ReactPlayer url={url} controls width={416} />
             </div>
           )}
           {type === LEARNING_TYPE.SCORM && (

@@ -12,6 +12,7 @@ import {
   GetContentsParams,
   GetSharedBoxContentsParams,
   GetSharedContentsParams,
+  GetSharedHistoryParams,
   GetShareTenantsChannelsParams,
   HtmlVideoFileChangeReq,
   HtmlVideoMetadataReq,
@@ -69,6 +70,7 @@ export const queryKeys = {
   sharedBoxContents: ['shared-box-contents'] as const,
   sharedBoxTenantCodes: ['shared-box-tenant-codes'] as const,
   sharedBoxChannelCodes: ['shared-box-channel-codes'] as const,
+  sharedHistory: ['shared-history'] as const,
 };
 
 export const learningResourceQueryOptions = {
@@ -214,6 +216,12 @@ export const learningResourceQueryOptions = {
     queryFn: () => LearningResourceService.getSharedBoxChannelCodes(srcTenantId),
     enabled: true,
   }),
+
+  getSharedHistory: (params: GetSharedHistoryParams) => ({
+    queryKey: queryKeys.sharedHistory,
+    queryFn: () => LearningResourceService.getSharedHistory(params),
+    enabled: true,
+  }),
 };
 
 export const mutateOptions = {
@@ -316,5 +324,11 @@ export const mutateOptions = {
   }),
   changeQuestionOrder: () => ({
     mutationFn: (params: QuestionSortReq) => LearningResourceService.changeQuestionOrder(params),
+  }),
+  createAssignment: () => ({
+    mutationFn: (params: ContentBaseInfo) => LearningResourceService.createAssignment(params),
+  }),
+  updateAssignment: () => ({
+    mutationFn: (params: ContentBaseInfo) => LearningResourceService.updateAssignment(params),
   }),
 };

@@ -10,11 +10,11 @@ import { Tabs } from '@learnway/ui/tabs';
 
 /* tab contents */
 import {
-  TenantDetailBase,
   TenantDetailCategory,
   TenantDetailLearningRole,
   TenantDetailMenu,
 } from '@features/platform-management/tenant';
+import { TenantDetailBase } from '@widgets/platform-management/tenant/ui/tenant-detail-base';
 
 import { EnTenantDetailTabKey } from '@types';
 

@@ -9,6 +9,7 @@ import { useLearningWindow } from '../../learnway-learning-window.store';
 const styles = isMobile ? stylesMobile : stylesWeb;
 const LearningWindowHtmlPlayerComponent: FC<any> = () => {
   const [iframeUrl, setIframeUrl] = useState<string>();
+
   const { playInfo, htmlInfo, funcInfo } = useLearningWindow();
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
@@ -23,8 +24,7 @@ const LearningWindowHtmlPlayerComponent: FC<any> = () => {
       itemUrl = url.pathname;
     }
     setIframeUrl(itemUrl);
-
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       if (playInfo) {
         const payload = {
           courseSequenceId: playInfo.sequenceId,
@@ -38,6 +38,9 @@ const LearningWindowHtmlPlayerComponent: FC<any> = () => {
         funcInfo?.html5LearningHistory(payload);
       }
     }, 5000);
+    return () => {
+      clearTimeout(timeoutId);
+    };
   }, [htmlInfo]);
 
   useEffect(() => {

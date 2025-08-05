@@ -228,7 +228,7 @@ const getDetailUrl = (row: any, pathname: string): string => {
 
   // 수강관리 화면
   if (pathname === '/learning/course/management') {
-    return '/learning/learning-sequence/enrollment-application'; // 수강관리 > ??
+    return '/learning/learning-sequence/enrollment-application'; // 수강관리 > 수강신청 관리 페이지
   }
 
   // 과정 등록 완료 (5단계 저장 이후)ㄴ

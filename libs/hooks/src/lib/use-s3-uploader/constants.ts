@@ -4,6 +4,7 @@ export const S3_PATH = {
   'upload/content/image': 'upload/content/image', // URL 접근이 필요한 이미지
   'public/image/channel/profile': 'public/image/channel/profile', // 채널 프로필 이미지
   'public/image/channel/main': 'public/image/channel/main', // 채널 홈 이미지
+  'public/image/channel/banner': 'public/image/channel/banner', // 채널 홈 배너 이미지
   'public/image/banner': 'public/image/banner', // 배너 이미지
   'public/image/board': 'public/image/board', // 게시판 편집기 이미지
   'public/image/logo': 'public/image/logo', // 로고 이미지

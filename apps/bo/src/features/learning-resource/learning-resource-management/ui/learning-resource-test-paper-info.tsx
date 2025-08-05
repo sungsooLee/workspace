@@ -1,10 +1,12 @@
-import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useMemo } from 'react';
 import { t } from 'i18next';
 import { FormSubTitle } from '@learnway/ui/base-form';
 import { SplitPanel } from '@learnway/ui/elements';
 import { RadioGroupFormField, TextareaFormField } from '@learnway/ui/form-field';
 import { ExamResultVisibleMoment, ExamTemplateType } from '@types';
 import { CheckBoxFormField, FormRow2, SwitchFormField } from '@shared/ui';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { Input } from '@learnway/ui/input';
 import { isEmptyData } from '@learnway/shared';
 
 import { FormDisplay } from '@features/form';
@@ -12,16 +14,14 @@ import movieInfoStyles from '@learnway/styles/bo/assets/styles/modules/movie-inf
 import previewImg from '@assets/images/temp/img_exam_basic.jpg';
 
 import { convertDetailInfoToFormData } from '../service/test-paper/common';
-import { ExamBasicInfoProps, PageMode, TabFormRef } from '../service/test-paper/type';
+import { ExamBasicInfoProps, TabFormRef } from '../service/test-paper/type';
 import { LearningResourceBaseForm } from './learning-resource-base-form';
 
 import styles from '@learnway/styles/bo/pages/_layout/learning/test-detail.module.css';
-import { ContentsRow } from '@learnway/ui/contents-row';
-import { Input } from '@learnway/ui/input';
 
 const TestPaperInfoComponent = forwardRef<TabFormRef, ExamBasicInfoProps>(
-  ({ basicInfoForm, contentUuid = '', mode, data = {}, hasMapping = false }, ref) => {
-    const { provider, onFormChange, saveBasicInfo } = basicInfoForm;
+  ({ basicInfoForm, saveBasicInfo, contentUuid = '', data = {}, hasMapping = false }, ref) => {
+    const { provider, onFormChange } = basicInfoForm;
 
     const examTemplateTypeOptions = useMemo(
       () => [
@@ -41,14 +41,14 @@ const TestPaperInfoComponent = forwardRef<TabFormRef, ExamBasicInfoProps>(
     );
 
     useImperativeHandle(ref, () => ({
-      save: (data?: Record<string, any>) => {
+      save: (data: Record<string, any>) => {
         saveBasicInfo?.(data);
       },
     }));
 
     useEffect(() => {
       // 상세 설정
-      if (mode === PageMode.UPDATE && !isEmptyData(data) && onFormChange) {
+      if (contentUuid && !isEmptyData(data) && onFormChange) {
         convertDetailInfoToFormData(data, onFormChange);
       }
     }, [data]);

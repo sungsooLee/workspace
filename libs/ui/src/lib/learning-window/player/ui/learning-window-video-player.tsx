@@ -67,8 +67,20 @@ const LearningWindowVideoPlayerComponent: FC<any> = () => {
     player.setVideoInfo(videoInfo);
   }, [videoInfo]);
   useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'ArrowLeft') {
+        console.log('Left arrow clicked!');
+        player.handleRewind();
+      } else if (event.key === 'ArrowRight') {
+        console.log('Right arrow clicked!');
+        player.handleForward();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+
     return () => {
       handleVideoEnd();
+      window.removeEventListener('keydown', handleKeyDown);
     };
   }, []);
 

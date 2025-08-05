@@ -25,33 +25,6 @@ import { EmptyText } from '@learnway/ui/empty-text';
 import { Pagination } from '@learnway/ui/pagination';
 import { ThumbnailList } from '@shared/ui/thumnail/list/thumbnail-list';
 
-// 4,5,6 뎁스 일 때 사용하는 더미 데이터
-const topOptions = (
-  [
-    { value: 'a', label: '대분류' },
-    { value: 'b', label: 'ST1' },
-    { value: 'c', label: '아이오닉 6' },
-    { value: 'd', label: '아이오닉 5' },
-    { value: 'e', label: '코나' },
-    { value: 'f', label: '넥쏘' },
-    { value: 'g', label: '포터' },
-    { value: 'h', label: '캐스퍼' },
-  ]
-);
-const middleOptions = (
-  [
-    { value: 'a', label: '중분류' },
-    { value: 'b', label: 'NE PE(2024)' },
-    { value: 'c', label: 'NE(2021)' },
-  ]
-);
-const bottomOptions = (
-  [
-    { value: 'a', label: '소분류' },
-    { value: 'b', label: '상품정보' },
-    { value: 'c', label: '기술정보' },
-  ]
-);
 // 배너 관리 더미 데이터
 const items = [
   <Link to={'/'}>
@@ -65,17 +38,74 @@ const items = [
   </Link>,
 ];
 
+function findNodeById(tree: any[], targetId: number): any | null {
+  for (const node of tree) {
+    if (node.id === targetId) return node;
+
+    if (node.children) {
+      const found = findNodeById(node.children, targetId);
+      if (found) return found;
+    }
+  }
+  return null;
+}
+
+function collectDepths(treeNode: any): {
+  depth4: { label: string; value: number }[];
+  depth5: { parentId?: number; label: string; value: number }[];
+} {
+  const depth4: { label: string; value: number }[] = [
+    {label: t('대분류'), value: 0}
+  ];
+  const depth5: { parentId?: number; label: string; value: number }[] = [
+    {label: t('소분류'), value: 0}
+  ];
+
+  if (!treeNode?.children) return { depth4, depth5 };
+
+  for (const node4 of treeNode.children) {
+    depth4.push({
+      label: node4.name,
+      value: node4.id,
+    });
+
+    if (node4.children) {
+      for (const node5 of node4.children) {
+        depth5.push({
+          parentId: node4.id,
+          label: node5.name,
+          value: node5.id,
+        });
+      }
+    }
+  }
+
+  return { depth4, depth5 };
+}
+
+type TopOptionsType = { label: string; value: number; }
+type MiddleOptionsType = { parentId?: number; label: string; value: number; };
+
 const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponentProps) => {
+  const routerState = useRouterState();
   const { data: categoryInfo } = useFetchCategoryDetail(categoryId);
 
-  const [depth, setDepth] = useState(3);
+  // 4,5,6 뎁스 사용 시 노출하 SelectBox 데이터
+  const [depth, setDepth] = useState(0);
+  const [targetNode, setTargetNode] = useState(null);
+  const [topOptions, setTopOptions] = useState<TopOptionsType[]>([]);
+  const [topOptionValue, setTopOptionValue] = useState<string|null>();
+  const [middleOptions, setMiddleOptions] = useState<MiddleOptionsType[]>([]);
+  const [middleOptionValue, setMiddleOptionValue] = useState<string|null>();
+
+  const [tenantId, setTenantId] = useState(routerState.location.state.tenantId);
   const [page, setPage] = useState(0);
   const [size , setSize] = useState(20);
   const [sorting, setSorting] = useState(['createdDate,DESC']);
   const [courseName, setCourseName] = useState('');
   const [searchResult, setSearchResult] = useState('');
   const [coursePayload, setCoursePayload] = useState({
-    page, size, sort: sorting, categoryId, courseName
+    page, size, sort: sorting, categoryId
   });
   const [data, setData] = useState<any>({});
   const [sortingDisabled, setSortingDisabled] = useState(true);
@@ -94,9 +124,13 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
   }
 
   const handleFilterOptionChange = async (options: any) => {
+    const enrollment = options.enrollment ? options.enrollment.map((row: any) => row.value) : [];
     const payload = {
       ...coursePayload,
-      courseType: options.map( (row: any) => row.value),
+      courseType: options.lecture ? options.lecture.map( (row: any) => row.value) : null,
+      trainingLevelType: options.difficulty ? options.difficulty.map( (row: any) => row.value) : null,
+      language: options.language ? options.language.map( (row: any) => row.value) : null,
+      isEnrollEnabled: enrollment.length !== 0 ? enrollment[0] === 'allow' : null,
     }
     setCoursePayload(payload);
     await fetchCoursesCategory(payload)
@@ -137,10 +171,52 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
     await fetchCoursesCategory(payload)
   }
 
+  const handleShowDepthSelector = (option: number) => {
+    if( option === 0 ) {
+      setTopOptionValue(null);
+      setMiddleOptions([])
+      setMiddleOptionValue(null)
+    } else {
+      const { depth4, depth5 } = collectDepths(targetNode);
+      const value = depth4.flat().filter((row: TopOptionsType) => row.value === option);
+      setTopOptionValue(value[0].label)
+
+      const isChild = depth5.flat().filter((value: MiddleOptionsType) => (value.parentId && value.parentId === option))
+      if( isChild.length > 0 ) {
+        setMiddleOptions(depth5)
+      } else {
+        setMiddleOptions([])
+        setMiddleOptionValue(null)
+      }
+    }
+  }
+
+  const handleChangeSelector = (option: number) => {
+    if( option === 0 ) {
+      setMiddleOptionValue(null)
+    } else {
+      const { depth5 } = collectDepths(targetNode);
+      const value = depth5.flat().filter((row: TopOptionsType) => row.value === option);
+      setMiddleOptionValue(value[0].label)
+    }
+  }
+
+  useEffect(() => {
+    if( depth === 3) {
+      (async() => {
+        const categoryTree = await CategoryService.getFetchCategoryTree(tenantId)
+        const targetCategory = findNodeById(categoryTree.children, categoryId)
+        const { depth4 } = collectDepths(targetCategory)
+        setTargetNode(targetCategory)
+        setTopOptions(depth4)
+      })();
+    }
+  }, [depth]);
+
   useEffect(() => {
     if( categoryInfo ) {
       (async () => {
-        console.log('### categoryInfo => ', categoryInfo);
+        setDepth(routerState.location.state.depth);
         const payload = {
           ...coursePayload,
           page, size,
@@ -177,16 +253,29 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
             <div className={styles.search_division}>
               {
                 /* 카테고리 4,5,6 뎁스 영역 */
-                depth > 3 && (
-                  <ContentsRow className={styles.search_area}>
-                    <Dropdown className={styles.search_select} size="lg" options={topOptions} />
-                    <Dropdown className={styles.search_select} size="lg" options={middleOptions} />
-                    <Dropdown className={styles.search_select} size="lg" options={bottomOptions} />
-                  </ContentsRow>
+                depth === 3 && (
+                  <div className={styles.search_area}>
+                    <Dropdown
+                      className={styles.search_select}
+                      size="lg"
+                      options={topOptions}
+                      value={topOptionValue}
+                      placeholder={t('대분류')}
+                      onChange={handleShowDepthSelector}
+                    />
+                    <Dropdown
+                      className={styles.search_select}
+                      size="lg"
+                      options={middleOptions}
+                      value={middleOptionValue}
+                      placeholder={t('소분류')}
+                      onChange={handleChangeSelector}
+                    />
+                  </div>
                 )
               }
 
-              <ContentsRow className={styles.search_input}>
+              <div className={styles.search_input}>
                 <Input
                   type="text"
                   placeholder="과정명 검색"
@@ -204,7 +293,7 @@ const CategoryDetailComponent: FC<any> = ({categoryId} : CategoryDetailComponent
                   size={'lx'}
                   onClick={handleOnSearch}
                 />
-              </ContentsRow>
+              </div>
             </div>
           </li>
           <li>

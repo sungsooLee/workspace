@@ -1,26 +1,26 @@
-import { memo, useState } from 'react';
+import { memo } from 'react';
 
+import { IcoBell02, IcoClose02 } from '@learnway/icons';
 import { Popover } from '@learnway/ui/popover';
-import { IcoBell02 } from '@learnway/icons';
-import { cn } from '@learnway/shared';
 import { NotificationContents } from '../../layout';
 
-import styles from './notification.module.css';
 import { Button } from '@learnway/ui/button';
+import styles from './notification.module.css';
+import popoverInnerStyles from './popover-inner.module.css';
 
 const PopoverContent = () => {
   return (
-    <div className={cn(styles.start, styles.alarm_wrap)}>
-      <div className={styles.alarm_content}>
-        {/* alarm_header */}
-        <div className={styles.alarm_header}>
-          <strong className={styles.tit}>{'알림'}</strong>
-          <div className={styles.btn_wrap}>
-            <Button className={styles.btn}>전체읽음</Button>
-            <Button className={styles.btn}>전체삭제</Button>
-          </div>
-        </div>
+    <div className={`${styles.start} ${popoverInnerStyles.start}`}>
+      <div className={popoverInnerStyles.title_area}>
+        <h2>알림</h2>
+        <Popover.Close>
+          <Button variant="expand" size="sm" onlyIcon>
+            <IcoClose02 className={popoverInnerStyles.btn_close} />
+          </Button>
+        </Popover.Close>
+      </div>
 
+      <div className={styles.alarm_content}>
         {/* contents */}
         <NotificationContents />
       </div>
@@ -37,6 +37,7 @@ const NotificationComponent = () => {
       <Popover popoverContent={<PopoverContent />} side="bottom" align="end" sideOffset={5}>
         <span className={styles.alarm_info22}>
           <IcoBell02 width={24} height={24} stroke="#131C30" />
+          {/* 알림이 있을경우 */}
           <em className={styles.noti}></em>
         </span>
       </Popover>

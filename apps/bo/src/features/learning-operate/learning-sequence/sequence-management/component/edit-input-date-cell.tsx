@@ -6,7 +6,7 @@ import React, { useEffect, useRef, useState } from 'react';
 interface EduRow {
   id?: string;
   learningStartType: string;
-  courseSequenceEndDateTime: Date;
+  learningEndDateTime: Date;
   learningStartDays: number;
 }
 
@@ -24,7 +24,7 @@ const EditInputDateCell = <T extends EduRow>({
   input: inputProps,
 }: EditInputDateCellProps<T>) => {
   const { table, row, cell, getValue } = info;
-  const { learningStartType, courseSequenceEndDateTime, learningStartDays } = row.original;
+  const { learningStartType, learningEndDateTime, learningStartDays } = row.original;
 
   const [value, setValue] = useState<any>(getValue());
   const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -34,7 +34,7 @@ const EditInputDateCell = <T extends EduRow>({
     if (newValue !== lastSavedValueRef.current) {
       let columnId = '' as string;
       if (learningStartType === 'DAYS_AFTER_ENROLL') columnId = 'learningStartDays';
-      else columnId = 'courseSequenceEndDateTime';
+      else columnId = 'learningEndDateTime';
       table.options.meta?.updateData(row.index, columnId, newValue);
       lastSavedValueRef.current = newValue;
     }
@@ -96,7 +96,7 @@ const EditInputDateCell = <T extends EduRow>({
     return (
       <DatePicker
         displayType="day-time-h"
-        value={courseSequenceEndDateTime}
+        value={learningEndDateTime}
         size="md"
         onChange={handleDateChange}
       />

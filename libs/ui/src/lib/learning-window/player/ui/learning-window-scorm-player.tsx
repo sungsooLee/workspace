@@ -48,7 +48,7 @@ const LearningWindowScormPlayerComponent: FC<any> = () => {
   }, [funcInfo, scormInfo]);
 
   useEffect(() => {
-    const handleKeyDown = (event: any) => {
+    const handleKeyDown = (event: KeyboardEvent) => {
       if (
         iframeRef.current &&
         iframeRef.current.contentWindow &&

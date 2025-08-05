@@ -1,6 +1,6 @@
 import { queryOptions } from '@entities/learning-sequence/service/learning-sequence.queries';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
-import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
+import { GridBox, GridBoxState, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import { ModalBody, ModalContainer, ModalTitle } from '@learnway/ui/modal';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
@@ -32,7 +32,13 @@ const StudentsHistoryModalComponent = ({
   courseId: courseIdProps,
 }: StudentsHistoryModalComponentProps) => {
   const [columns, setColumns] = useState() as any;
-  const { config: gConfig, gridFetch, data } = useGridBox(gridConfig);
+  const searchParam = () => {
+    return {
+      userId: userIdProps,
+      courseId: courseIdProps,
+    };
+  };
+  const { config: gConfig, gridFetch, data: gridData } = useGridBox(gridConfig);
 
   useEffect(() => {
     const columns = [
@@ -82,12 +88,13 @@ const StudentsHistoryModalComponent = ({
   }, []);
 
   const handleOnSearch = useCallback(() => {
-    const payload = {
-      userId: userIdProps,
-      courseId: courseIdProps,
-    };
-    gridFetch(payload);
+    gridFetch(searchParam());
   }, []);
+
+  // 페이지 변경이나 검색 시 플래그 리셋
+  const handleStateChange = (newState: GridBoxState) => {
+    gridFetch(searchParam(), newState);
+  };
 
   const columnHelper = createColumnHelper<any>();
   return (
@@ -95,10 +102,11 @@ const StudentsHistoryModalComponent = ({
       <ModalTitle>{t('학습 이력 정보')}</ModalTitle>
       <ModalBody>
         <GridBox
-          config={gConfig}
           columns={columns}
+          gridData={gridData}
           showNumberingColumn={false}
           clientSideSorting={true}
+          onStateChange={handleStateChange}
           title={t('이력정보 목록')}
         />
       </ModalBody>

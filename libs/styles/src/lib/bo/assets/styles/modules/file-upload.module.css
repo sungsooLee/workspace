@@ -104,17 +104,17 @@
     }
   }
   .file_item {
-    @apply relative flex h-[42px] w-full items-center px-[20px];
+    @apply relative flex h-[42px] w-full flex-wrap items-center px-[20px];
     .check {
-      @apply w-[24px] shrink-0;
+      @apply mr-[12px] w-[24px] shrink-0;
     }
     .file_name {
-      @apply flex min-w-0 max-w-full flex-grow;
+      @apply flex min-w-0 max-w-full flex-1;
       svg {
         @apply mr-[8px] inline-block h-[24px] w-[24px] shrink-0;
       }
       em {
-        @apply block min-w-0 truncate;
+        @apply line-clamp-1 min-w-0 truncate;
       }
     }
     .status_view {
@@ -127,6 +127,12 @@
       @apply flex w-[40px] shrink-0 items-center justify-center;
       [class*='nlp--badge'] {
         @apply h-[16px] w-[16px] rounded-[8px];
+      }
+      .icon_refresh {
+        @apply fill-[#00AFD5];
+      }
+      .icon_pause {
+        @apply fill-[#A9AFB8];
       }
     }
     .progress_area {
@@ -262,7 +268,7 @@
 .guide_text {
   @apply body_bo_2_r relative mt-[8px] pl-[8px] text-[var(--gray8)];
   &::before {
-    @apply absolute left-0 top-1/2 h-[4px] w-[4px] -translate-y-1/2 rounded-full bg-[var(--gray8)] content-[''];
+    @apply absolute left-0 top-[12px] h-[4px] w-[4px] -translate-y-1/2 rounded-full bg-[var(--gray8)] content-[''];
   }
   &.error {
     @apply text-[var(--status1)];
@@ -294,6 +300,84 @@
   .file_ing {
     em {
       @apply text-[var(--secondary1)];
+    }
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      .info_wrap {
+        @apply flex-col items-start;
+        .title_area {
+          @apply mb-[4px];
+          .title {
+            @apply title3-b;
+          }
+        }
+        .btn_area {
+          .file_text {
+            svg {
+              @apply hidden;
+            }
+          }
+          [class*='nlp--button'] {
+            @apply !px-0;
+          }
+        }
+      }
+      .file_wrap {
+        @apply max-h-[240px];
+        .attach_area {
+          .file_title {
+            @apply title2-b;
+          }
+          .file_guide {
+            @apply body-xsm;
+          }
+        }
+        .upload_status {
+          .file_item {
+            @apply min-h-[64px] px-[16px];
+            .file_name {
+              @apply min-w-auto inline-flex w-[calc(100%-40px)];
+              svg {
+                @apply shrink-0;
+              }
+              em {
+                @apply truncate;
+                & + svg {
+                  @apply mr-0;
+                }
+              }
+            }
+            .status_view {
+              @apply hidden;
+            }
+            .progress_area {
+              @apply w-[calc(100%-70px)] justify-start;
+              [class*='progress_wrap'] {
+                @apply w-full;
+                [class*='progress_status'] {
+                  @apply mr-0 min-w-[50px] text-left;
+                }
+                [class*='nlp--progress'] {
+                  @apply w-full;
+                }
+              }
+            }
+            .control_wrap {
+              @apply ml-auto w-[20px];
+            }
+            .delele_btn_wrap {
+              @apply ml-[10px];
+              [class*='nlp--button'] svg {
+                @apply mx-0;
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

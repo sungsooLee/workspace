@@ -1,10 +1,12 @@
+import { memo, useState } from 'react';
+
 import { IcoArrowForward } from '@learnway/icons';
 import { Button } from '@learnway/ui/button';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
-import { memo, useState } from 'react';
 import { HistoryContents } from '../ui/history-contents'; // 최근 학습활동
 import { UserMy } from '../ui/user-my'; // 내 정보
-import styles from './gnb-popup-m.module.css';
+
+import styles from '@learnway/styles/fo/widgets/layout/m.ui/main/footer/gnb-popup-m.module.css';
 
 // My Modal
 const UserMyModal = () => {

@@ -6,6 +6,7 @@ import {
   CourseEnrollResponse,
   CourseEnrollsssParams,
   CourseEnrollsssResponse,
+  EnrollDeleteRequest,
   EnrollRequest,
   PaginationRequest,
 } from '@types';
@@ -70,5 +71,35 @@ export default class EnrollService {
     enrollQueueId: number,
   ): Promise<CourseEnrollQueueStateIdResponse> {
     return httpService.get(`${LMSApiPrefix()}/enroll/queue/state/id`, { enrollQueueId });
+  }
+
+  /**
+   * 수강신청 취소
+   * 수강 신청 ID로 수강 신청 상태를 취소한다
+   * @param EnrollDeleteRequest
+   * @returns
+   */
+  static async deleteEnroll(body: EnrollDeleteRequest): Promise<void> {
+    return httpService.delete(`${LMSApiPrefix()}/enroll`, body);
+  }
+
+  /**
+   * 수강대기 신청
+   * 수강신청 대기를 한다
+   * @param courseSequenceId
+   * @returns
+   */
+  static async createEnrollWaiting(courseSequenceId: number): Promise<number> {
+    return httpService.post(`${LMSApiPrefix()}/enroll/waitlist`, courseSequenceId);
+  }
+
+  /**
+   * 수강대기 취소
+   * 수강신청 대기를 취소한다
+   * @param courseSequenceId
+   * @returns
+   */
+  static async deleteEnrollWaiting(courseSequenceId: number): Promise<number> {
+    return httpService.delete(`${LMSApiPrefix()}/enroll/waitlist`, courseSequenceId);
   }
 }

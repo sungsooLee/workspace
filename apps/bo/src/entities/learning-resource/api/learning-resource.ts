@@ -23,6 +23,8 @@ import {
   GetSharedBoxContentsRes,
   GetSharedContentsParams,
   GetSharedContentsRes,
+  GetSharedHistoryParams,
+  GetSharedHistoryRes,
   GetShareTenantsChannelsParams,
   GetShareTenantsChannelsRes,
   GetVideoFileChangeRes,
@@ -327,6 +329,20 @@ export default class LearningResourceService {
   }
 
   /**
+   * 과제 단건 등록
+   */
+  static createAssignment(body: ContentBaseInfo): Promise<string> {
+    return httpService.post(`${CMSApiPrefix()}/assignment`, body);
+  }
+
+  /**
+   * 과제 단건 수정
+   */
+  static updateAssignment(body: ContentBaseInfo): Promise<string> {
+    return httpService.put(`${CMSApiPrefix()}/assignment`, body);
+  }
+
+  /**
    * 비디오 컨텐츠 상태 조회
    */
   static getVideoStatus(contentUuid: string) {
@@ -431,6 +447,16 @@ export default class LearningResourceService {
     return httpService.get<ChannelCodeType[]>(
       `${CMSApiPrefix()}/contents/share/sharedBox/tenant/channel/codes`,
       { srcTenantId },
+    );
+  }
+
+  /**
+   *
+   */
+  static getSharedHistory({ sourceContentUuid, destChannelUuid }: GetSharedHistoryParams) {
+    return httpService.get<GetSharedHistoryRes>(
+      `${CMSApiPrefix()}/contents/share/sharedBox/${sourceContentUuid}/history`,
+      { destChannelUuid },
     );
   }
 }

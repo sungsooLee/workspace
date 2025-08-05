@@ -99,6 +99,17 @@ function RouteComponent() {
       }
     }
   };
+  const handleGoCoursePage = (courseId: number) => {
+    router.navigate({
+      to: `/course/detail`,
+      state: {
+        courseId,
+      },
+    });
+  };
+  const handleGoHomePage = () => {
+    router.navigate({ to: `/` });
+  };
 
   useEffect(() => {
     if (!scormInfo) return;
@@ -222,6 +233,8 @@ function RouteComponent() {
       videoOnProgress: handleVideoProgress,
       videoWatchStatistics: handleVideoWatchStatistics,
       otherClickButton: handleOtherClickButton,
+      goCoursePage: handleGoCoursePage,
+      goHomePage: handleGoHomePage,
     });
   }, []);
 

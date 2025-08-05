@@ -38,6 +38,7 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
     playInfo,
     playList,
     playIndex,
+    previewMobile,
     setPlayInfo,
     gotoBeforeLesson,
     gotoNextLesson,
@@ -116,9 +117,11 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
     { tit: t('후기'), icon: IcoLearning06, New: true },
   ];
 
+  const isMobileView = previewMobile === undefined ? isMobile : previewMobile;
+
   return (
     <div className={`${styles.start} ${menuSelected ? styles.active : ''}`}>
-      {isMobile || (
+      {isMobileView || (
         <div>
           {menuSelected ? (
             <div className={styles.menu_contents}>
@@ -270,7 +273,7 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
                 <Button
                   key={index}
                   onClick={() =>
-                    isMobile
+                    isMobileView
                       ? openModal({
                           width: 'm_full',
                           content: <CurriculumPopup />,
@@ -278,8 +281,9 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
                       : sendValueToParent(index)
                   }
                   className={`${menuNumber === index ? styles.active : ''} ${item.New && styles.new}`}
+                  disabled={index > 0 && previewMobile !== undefined}
                 >
-                  <item.icon width={isMobile ? 24 : 32} height={isMobile ? 24 : 32} />
+                  <item.icon width={isMobileView ? 24 : 32} height={isMobileView ? 24 : 32} />
                   <span>{item.tit}</span>
                 </Button>
               ))}
@@ -292,15 +296,21 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
               disabled={!(playIndex !== 0 && playList && playIndex < playList.length)}
               onClick={() => handlePriveNextClick(false)}
             >
-              <IcoPrevPlay width={isMobile ? 20 : 32} height={isMobile ? 20 : 32} />
-              <span>{t('이전')}</span>
+              <IcoPrevPlay width={isMobileView ? 20 : 32} height={isMobileView ? 20 : 32} />
+              <span>
+                {!(playIndex !== 0 && playList && playIndex < playList.length)
+                  ? t('처음')
+                  : t('이전')}
+              </span>
             </Button>
             <Button
               disabled={!(playList && playList.length > playIndex + 1)}
               onClick={() => handlePriveNextClick(true)}
             >
-              <IcoPrevNext width={isMobile ? 20 : 32} height={isMobile ? 20 : 32} />
-              <span>{t('다음')}</span>
+              <IcoPrevNext width={isMobileView ? 20 : 32} height={isMobileView ? 20 : 32} />
+              <span>
+                {!(playList && playList.length > playIndex + 1) ? t('마지막') : t('다음')}
+              </span>
             </Button>
           </div>
         )}

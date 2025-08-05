@@ -5,3 +5,4 @@ export * from './embeded-alert/embeded-alert';
 export * from './modal/address-search-modal';
 export * from './thumnail/list/thumbnail-list';
 export * from './thumnail/item/thumbnail-item';
+export * from './category/category-filter-popup';

@@ -1,28 +1,20 @@
-import { useCallback } from 'react';
 import { AuthUser } from '@learnway/auth/types';
+import { LEARNING_TYPE } from '@learnway/config';
 import { CODE_GROUP, useCodeStore } from '@learnway/hooks';
 import { isEmptyData } from '@learnway/shared';
-import { LEARNING_TYPE } from '@learnway/config';
-import { ContentCreateType } from '@types';
+import { useCallback } from 'react';
 
 export const getDetailPathByContentType = (contentType: string): string => {
   switch (contentType) {
     case LEARNING_TYPE.VIDEO:
-      return '/learning/learning-resource/video/view';
     case LEARNING_TYPE.BLOG:
-      return '/learning/resource/blog/view';
     case LEARNING_TYPE.SCORM:
-      return '/learning/learning-resource/scorm/view';
     case LEARNING_TYPE.HTML5_VIDEO:
-      return '/learning/resource/html-video/view';
     case LEARNING_TYPE.EXAM:
-      return '/learning/resource/test-paper/view';
     case LEARNING_TYPE.EXAM_POOL:
-      return '/learning/resource/question-bank/view';
     case LEARNING_TYPE.ASSIGNMENT:
-      return '/learning/resource/assignment/view';
     case LEARNING_TYPE.ETC:
-      return '/learning/learning-resource/etc/view';
+      return '/learning/learning-resource/view';
   }
   return '';
 };

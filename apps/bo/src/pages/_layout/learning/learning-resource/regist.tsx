@@ -309,8 +309,8 @@ function RouteComponent() {
       // 블로그
       case LEARNING_TYPE.BLOG: {
         router.navigate({
-          to: '/learning/resource/blog/view',
-          state: { mode: 'CREATE' },
+          to: '/learning/learning-resource/new',
+          state: { contentType: selectedType },
           replace: true,
         });
         break;
@@ -323,22 +323,30 @@ function RouteComponent() {
       // 시험지
       case LEARNING_TYPE.EXAM: {
         router.navigate({
-          to: '/learning/resource/test-paper/view',
-          state: { mode: 'CREATE' },
+          to: '/learning/learning-resource/new',
+          state: { contentType: selectedType },
           replace: true,
         });
         break;
       }
       // 문제은행
       case LEARNING_TYPE.EXAM_POOL: {
-        router.navigate({ to: '/learning/resource/question-bank/view' });
+        router.navigate({
+          to: '/learning/learning-resource/new',
+          state: { contentType: selectedType },
+          replace: true,
+        });
         break;
       }
 
       // line 3
       // 과제
       case LEARNING_TYPE.ASSIGNMENT: {
-        router.navigate({ to: '/learning/resource/assignment/view', replace: true });
+        router.navigate({
+          to: '/learning/learning-resource/new',
+          state: { contentType: selectedType },
+          replace: true,
+        });
         break;
       }
       // 기타

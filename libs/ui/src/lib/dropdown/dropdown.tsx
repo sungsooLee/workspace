@@ -38,6 +38,7 @@ export interface ReactSelectComponentProps {
   name?: string;
   onBlur?: () => void;
   noOptionsMessage?: string;
+  error?: boolean;
 }
 
 // error, readonly, disabled
@@ -184,6 +185,7 @@ const PrimitiveComponent = forwardRef<any, ReactSelectComponentProps>(
       name,
       noOptionsMessage,
       onBlur,
+      error,
       ...props
     },
     ref,
@@ -225,6 +227,7 @@ const PrimitiveComponent = forwardRef<any, ReactSelectComponentProps>(
           styles.select_wrap,
           isDisabled && styles.disabled,
           isReadonly && styles.readonly,
+          error && styles.error,
           'dropdown',
           className,
         )}
@@ -281,6 +284,7 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
       disabled,
       readOnly,
       noOptionsMessage,
+      error,
       ...props
     },
     ref,
@@ -389,6 +393,7 @@ const DropdownComponent = forwardRef<any, DropdownComponentProps>(
         isReadonly={readOnly}
         isDisabled={disabled}
         noOptionsMessage={noOptionsMessage}
+        error={error}
         {...props}
       />
     );

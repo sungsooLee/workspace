@@ -1,17 +1,27 @@
-import { queryOptions as sequenceQueryOptions } from '@entities/learning-sequence/service/learning-sequence.queries';
-import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
+import { useFetchChannelByRoleId } from '@entities/channel';
+import { useCopyCourseShared } from '@entities/course-shared/service/course-shared.hook';
+import { queryOptions as courseSharedQueryOptions } from '@entities/course-shared/service/course-shared.queries';
+import { useFetchAuthUser } from '@learnway/auth/entities';
+import { AuthUser } from '@learnway/auth/types';
+import { CODE_GROUP, getCodeLabel, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { Button } from '@learnway/ui/button';
 import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import { useModal } from '@learnway/ui/modal';
 import { MainContents, PageContainer, SearchBox } from '@shared/ui';
+import { useNavigate } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { CourseSharedHistoryModal } from '../modal/course-shared-modal/course-shared-history-modal';
 
+/**
+ * NLP_BO_LMS_0056 : 과정 공유함 목록 조회
+ * @returns
+ */
 const gridConfig: useGridBoxConfig = {
-  query: sequenceQueryOptions.studentsList,
+  query: courseSharedQueryOptions.list,
   columns: [],
   data: [],
   gridState: {
@@ -28,7 +38,7 @@ const _global = {
   linkClickHistory: (payload: any) => {
     return;
   },
-  linkClickBring: (payload: any) => {
+  linkClickGetCourse: (payload: any) => {
     return;
   },
 };
@@ -36,44 +46,81 @@ const _global = {
 const CourseSharedComponent = () => {
   const [columns, setColumns] = useState() as any;
   const { openModal, confirm: openConfirm, alert: openAlert, showSaveComplete } = useModal();
+  const { copyCourseShared } = useCopyCourseShared({});
+  const { data: authUser } = useFetchAuthUser<AuthUser>();
+  const { data: channel } = useFetchChannelByRoleId(authUser?.activeRole?.roleId as number);
+  const navigate = useNavigate();
+
+  const channelOptions = useMemo(() => {
+    if (!channel) return [];
+    if (authUser?.activeTenant?.tenantId === -1) {
+      // tenantId가 -1이면 필터 없이 전체 반환
+      return channel.map(({ channelName, channelUuid }) => ({
+        label: channelName,
+        value: channelUuid,
+      }));
+    }
+    // tenantId가 있으면 필터 적용
+    return channel
+      .filter((d) => !!d.tenantList.find((t) => t.tenantId === authUser?.activeTenant?.tenantId))
+      .map(({ channelName, channelUuid }) => ({
+        label: channelName,
+        value: channelUuid,
+      }));
+  }, [authUser?.activeTenant?.tenantId, channel]);
+
+  useEffect(() => {
+    setValue('targetChannelUuid', '');
+    setOptions('targetChannelUuid', channelOptions);
+  }, [channelOptions]);
+
+  const handleGetCourse = async (payload: any) => {
+    const confirmRes = await openConfirm({
+      title: t('과정을 가져오시겠습니까?'),
+      content: t('과정운영의 과정목록으로 복사됩니다.'),
+    });
+    if (!confirmRes) return;
+
+    const param = {
+      courseId: payload.courseId,
+      tenantId: authUser?.activeTenant?.tenantId,
+    };
+    await copyCourseShared(param, {
+      onSuccess: async (data: any, variables: any, context: any) => {
+        console.log('onSuccess:', data);
+        await showSaveComplete();
+        handleOnRefresh();
+      },
+      onError: (data: any, variables: any, context: any) => {
+        console.log('onError:', data);
+      },
+    });
+  };
 
   // 과정명
   _global.linkClickCourseName = (payload: any) => {
-    // openModal({
-    //   width: 'sm',
-    //   content: (
-    //     <StudentsBookDeliveryModal
-    //       courseSequenceId={payload.courseSequenceId}
-    //       userId={payload.userId}
-    //     />
-    //   ),
-    // });
+    navigate({
+      to: '/learning/course/detail',
+      state: {
+        courseId: payload.courseId,
+        courseName: payload.courseName,
+        meta: { title: payload.courseName },
+      },
+    });
   };
 
   // 가져간 이력
   _global.linkClickHistory = (payload: any) => {
-    // openModal({
-    //   width: 'sm',
-    //   content: (
-    //     <StudentsBookDeliveryModal
-    //       courseSequenceId={payload.courseSequenceId}
-    //       userId={payload.userId}
-    //     />
-    //   ),
-    // });
+    console.log('payload=>', payload);
+    openModal({
+      width: 'sm',
+      content: <CourseSharedHistoryModal courseShareId={payload.courseShareId} />,
+    });
   };
 
   // 가져오기
-  _global.linkClickBring = (payload: any) => {
-    // openModal({
-    //   width: 'sm',
-    //   content: (
-    //     <StudentsBookDeliveryModal
-    //       courseSequenceId={payload.courseSequenceId}
-    //       userId={payload.userId}
-    //     />
-    //   ),
-    // });
+  _global.linkClickGetCourse = (payload: any) => {
+    handleGetCourse(payload);
   };
 
   const searchConfig: SearchBoxConfig = {
@@ -84,7 +131,7 @@ const CourseSharedComponent = () => {
           type: 'dropdown',
           label: t('LABEL.form.label.originChannelUuid', '공유한 채널'),
           value: '',
-          format: 'number',
+          format: 'string',
           presetOptionLabel: t('LABEL.form.label.select', '선택'),
           options: [],
         },
@@ -92,7 +139,7 @@ const CourseSharedComponent = () => {
           name: 'targetChannelUuid',
           type: 'dropdown',
           label: t('LABEL.form.label.targetChannelUuid', '공유 받은 채널'),
-          format: 'number',
+          format: 'string',
           value: '',
           presetOptionLabel: t('LABEL.form.label.select', '선택'),
           options: [],
@@ -118,8 +165,8 @@ const CourseSharedComponent = () => {
       ],
     ],
     validator: {
-      originChannelUuid: true,
-      targetChannelUuid: true,
+      // originChannelUuid: true,
+      // targetChannelUuid: true,
     },
   };
 
@@ -139,7 +186,7 @@ const CourseSharedComponent = () => {
       }),
       columnHelper.accessor('courseType', {
         header: t('과정유형'),
-        cell: (info) => info.getValue(),
+        cell: (info: any) => getCodeLabel(CODE_GROUP['lms.course.CourseType'], info.getValue()),
         enableGrouping: false,
         size: 80,
       }),
@@ -161,7 +208,8 @@ const CourseSharedComponent = () => {
       }),
       columnHelper.accessor('language', {
         header: t('언어'),
-        cell: (info) => info.getValue(),
+        cell: (info: any) =>
+          getCodeLabel(CODE_GROUP['pms.multilingual.LangCountryCode'], info.getValue()),
         enableGrouping: false,
         size: 80,
       }),
@@ -176,7 +224,7 @@ const CourseSharedComponent = () => {
       }),
       columnHelper.accessor('isComplete', {
         header: t('상태'),
-        cell: (info) => info.getValue(),
+        cell: (info) => (info.getValue() ? t('완료') : t('대기')),
         enableGrouping: false,
         size: 90,
       }),
@@ -196,44 +244,23 @@ const CourseSharedComponent = () => {
         enableGrouping: false,
         size: 86,
       }),
-      columnHelper.accessor('bring', {
+      columnHelper.accessor('getCourse', {
         header: t('가져오기'),
-        cell: (info) => {
+        cell: ({ row }) => {
           return (
             <Button
-              onClick={() => {
-                _global.linkClickBring(info.row.original as any);
-              }}
               label={t('가져오기')}
+              variant={'gray2'}
+              size={'xs'}
+              onClick={() => {
+                _global.linkClickGetCourse(row.original as any);
+              }}
             />
           );
         },
         enableGrouping: false,
         size: 80,
       }),
-      // columnHelper.accessor('reason', {
-      //   header: t('미이수사유'),
-      //   cell: (info) => {
-      //     if (info.row.original.isCertified) return '';
-      //     let title = '';
-      //     if (info.row.original.reason === null) {
-      //       title = t('사유입력');
-      //     } else {
-      //       title = t('사유보기');
-      //     }
-      //     return (
-      //       <Button
-      //         className="link"
-      //         onClick={() => {
-      //           _global.linkClickReason(info.row.original as any);
-      //         }}
-      //         label={title}
-      //       />
-      //     );
-      //   },
-      //   enableGrouping: false,
-      //   size: 70,
-      // }),
     ] as ColumnDef<any, unknown>[];
 
     setColumns(columns);
@@ -242,13 +269,24 @@ const CourseSharedComponent = () => {
   const { provider: searchProvider, getValues, setValue, setOptions } = useSearchBox(searchConfig);
   const { config: gConfig, gridFetch, data: gridData } = useGridBox(gridConfig, getValues);
 
+  const handleOnRefresh = () => {
+    console.log('### handleOnRefresh');
+    handleOnSearch(getValues());
+  };
+
   const handleOnSearch = useCallback((data: any) => {
     console.log('## handleOnSearch', data);
+    // const payload = {
+    //   originChannelUuid: data.originChannelUuid,
+    //   targetChannelUuid: data.targetChannelUuid,
+    //   courseName: data.courseName,
+    //   isComplete: data.isComplete,
+    // };
     const payload = {
-      originChannelUuid: data.originChannelUuid,
-      targetChannelUuid: data.targetChannelUuid,
-      courseName: data.courseName,
-      isComplete: data.isComplete,
+      originChannelUuid: 'd4bf5f43-3184-445b-8985-f316619909db',
+      targetChannelUuid: '67bbca16-4180-4982-a4e0-d192212dd7c8',
+      courseName: '',
+      isComplete: false,
     };
 
     gridFetch(payload);
@@ -260,15 +298,7 @@ const CourseSharedComponent = () => {
       <MainContents>
         <SearchBox provider={searchProvider} onSearch={handleOnSearch} />
         <Divider />
-        <GridBox
-          showNumberingColumn
-          config={gConfig}
-          // data={gridData}
-          columns={columns}
-          multiple={true}
-          disabledSelectionToggle
-          title={t('과정 목록')}
-        />
+        <GridBox showNumberingColumn config={gConfig} columns={columns} title={t('과정 목록')} />
       </MainContents>
     </PageContainer>
   );

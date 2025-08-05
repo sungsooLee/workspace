@@ -1,6 +1,10 @@
 // IA104 / NLP_BO_CMS_1045 학습자원 현지화-공유함
 import { learningResourceQueryOptions, usePostContentExport } from '@entities/learning-resource';
-import { getDetailPathByContentType, getDetailRouterState } from '@features/learning-resource';
+import {
+  getDetailPathByContentType,
+  getDetailRouterState,
+  LearingResourceSharedInfoModal,
+} from '@features/learning-resource';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import {
   ALL_OPTION,
@@ -19,12 +23,7 @@ import { PreviewLearningWindow } from '@shared/ui';
 import { SearchBox } from '@shared/ui/search-box';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from '@tanstack/react-router';
-import {
-  ContentCreateType,
-  ContentExportRes,
-  GetSharedBoxContentsRes,
-  SharedBoxContent,
-} from '@types';
+import { ContentCreateType, ContentExportRes, SharedBoxContent } from '@types';
 import { t } from 'i18next';
 import { useEffect, useState } from 'react';
 
@@ -36,33 +35,36 @@ function LearningResourceSharedTableComponent() {
 
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { openModal } = useModal();
+  const { openModal, confirm: openConfirm } = useModal();
 
   const { exportContent } = usePostContentExport({
     onSuccess: (result: ContentExportRes) => {
       if (result.destContentUuid) {
-        setGridData(
-          (prev) =>
-            ({
-              ...prev,
-              content: prev?.content.map((_) =>
-                _.sourceContentUuid === result.srcContentUuid
-                  ? { ..._, sharedCount: _.sharedCount + 1 }
-                  : _,
-              ),
-            }) as GetSharedBoxContentsRes,
-        );
+        router.navigate({
+          to: '/learning/learning-resource',
+          state: {
+            listParam: {
+              tenantId: result.destTenantId,
+              channelUuid: result.destChannelUuid,
+            },
+          },
+        });
       }
     },
   });
 
-  const handleShareButton = (row: SharedBoxContent) => {
-    exportContent({
-      tenantId: row.destTenantId,
-      contentUuid: row.sourceContentUuid,
-      destChannelUuid: row.destChannelUuid,
-      languageCountryCode: row.languageCountryCode,
+  const handleShareButton = async (row: SharedBoxContent) => {
+    const confirmed = await openConfirm({
+      title: t('가져가시겠습니까?'),
+      content: t("'확인' 선택 시 학습자원 목록으로 이동합니다."),
     });
+    if (confirmed)
+      exportContent({
+        tenantId: row.destTenantId,
+        contentUuid: row.sourceContentUuid,
+        destChannelUuid: row.destChannelUuid,
+        languageCountryCode: row.languageCountryCode,
+      });
   };
 
   const searchConfig: any = {
@@ -71,7 +73,7 @@ function LearningResourceSharedTableComponent() {
         {
           name: 'sourceTenantId',
           type: 'dropdown',
-          label: t('LABEL.form.label.tenant', '테넌트'),
+          label: t('발신 테넌트'),
           format: 'object',
           presetOptionLabel: t('LABEL.form.label.select', '선택'),
           value: authUser?.activeTenant?.tenantId,
@@ -79,7 +81,7 @@ function LearningResourceSharedTableComponent() {
         {
           name: 'sourceChannelUuid',
           type: 'dropdown',
-          label: t('LABEL.form.label.channel', '채널'),
+          label: t('발신 채널'),
           format: 'object',
           presetOptionLabel: t('LABEL.form.label.select', '선택'),
           value: '',
@@ -143,7 +145,15 @@ function LearningResourceSharedTableComponent() {
   };
 
   const gridConfig: useGridBoxConfig = {
-    query: learningResourceQueryOptions.getSharedBoxContents,
+    query: ({ sharedDate, ...rawQuery }: Record<string, any>) => {
+      const processedQuery = {
+        ...compactValues(rawQuery),
+        ...(sharedDate?.from && { sharedDateStart: formatDate(sharedDate.from) }),
+        ...(sharedDate?.to && { sharedDateEnd: formatDate(sharedDate.to) }),
+        lastVisitedBoRoleId: authUser?.activeRole?.roleId,
+      };
+      return learningResourceQueryOptions.getSharedBoxContents(processedQuery);
+    },
     columns: [
       {
         size: 79,
@@ -186,16 +196,16 @@ function LearningResourceSharedTableComponent() {
       },
       {
         size: 127,
-        name: 'sourceTenantName',
-        label: t('LABEL.grid.column.tenant', '테넌트'),
+        name: 'destTenantName',
+        label: t('수신 테넌트'),
         meta: {
           size: 'auto',
         },
       },
       {
         size: 153,
-        name: 'sourceChannelName',
-        label: t('LABEL.grid.column.channel', '채널'),
+        name: 'destChannelName',
+        label: t('수신 채널'),
         meta: {
           size: 'auto',
         },
@@ -240,7 +250,22 @@ function LearningResourceSharedTableComponent() {
         size: 100,
         name: 'sharedCount',
         label: t('수신상태'),
-        render: (_: any) => (_.getValue() ? t('수신완료') : t('수신대기')),
+        render: (_: any) =>
+          _.getValue() ? (
+            <Button
+              className="link"
+              onClick={(e) => {
+                e.stopPropagation();
+                openModal({
+                  content: <LearingResourceSharedInfoModal data={_.row.original} />,
+                });
+              }}
+            >
+              {t('수신완료')}
+            </Button>
+          ) : (
+            t('수신대기')
+          ),
       },
       {
         size: 100,
@@ -249,8 +274,8 @@ function LearningResourceSharedTableComponent() {
         render: (_: any) => (
           <Button
             variant="gray2"
-            disabled={_.row.original.sharedCount}
             onClick={() => handleShareButton(_.row.original)}
+            disabled={!_.row.original.isContentEnabled}
           >
             {t('가져가기')}
           </Button>
@@ -268,23 +293,12 @@ function LearningResourceSharedTableComponent() {
     watch,
     setOptions,
   } = useSearchBox(searchConfig);
-  const {
-    config: gConfig,
-    gridFetch,
-    setGridData,
-  } = useGridBox<SharedBoxContent>(gridConfig, getValues);
+  const { config: gConfig, gridFetch } = useGridBox<SharedBoxContent>(gridConfig, getValues);
   const [params, setParams] = useState<Record<string, any>>({});
 
-  function handleSearch({ sharedDate, ...rawQuery }: Record<string, any>) {
-    const processedQuery = {
-      ...compactValues(rawQuery),
-      ...(sharedDate?.from && { sharedDateStart: formatDate(sharedDate.from) }),
-      ...(sharedDate?.to && { sharedDateEnd: formatDate(sharedDate.to) }),
-    };
-    console.log('🚀 ~ handleSearch ~ rawQuery:', rawQuery, processedQuery);
-
-    setParams(processedQuery);
-    gridFetch({ lastVisitedBoRoleId: authUser?.lastVisitedBoRoleId, ...processedQuery });
+  function handleSearch(data: Record<string, any>) {
+    setParams(data);
+    gridFetch(data);
   }
 
   useEffect(() => {
@@ -299,11 +313,13 @@ function LearningResourceSharedTableComponent() {
   }, [listParam]);
 
   useEffect(() => {
-    if (authUser && authUser.lastVisitedBoRoleId)
+    if (authUser && authUser.activeRole?.roleId)
       (async () => {
         const tenantOptions = await queryClient.fetchQuery(
-          learningResourceQueryOptions.getSharedBoxTenantCodes(authUser.lastVisitedBoRoleId!),
+          learningResourceQueryOptions.getSharedBoxTenantCodes(authUser.activeRole!.roleId),
         );
+        const foundOption = tenantOptions.find((_) => _.tenantId === authUser.activeRole?.tenantId);
+        setValue('sourceTenantId', foundOption ? authUser?.activeTenant?.tenantId : '');
         setOptions(
           'sourceTenantId',
           tenantOptions.map(({ tenantId: value, tenantName: label }) => ({ value, label })),

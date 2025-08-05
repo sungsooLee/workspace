@@ -126,13 +126,13 @@ const CompanyDetailComponent = (props: any, ref: any) => {
 
   const { create } = useCreateCompany({
     onSuccess: () => {
-      openToast({ title: '저장 하였습니다.', type: 'success' });
+      openToast({ title: t('저장 하였습니다.'), type: 'success' });
       router.navigate({ to: '/platform/company/management' });
     },
   });
   const { update } = useUpdateCompany({
     onSuccess: () => {
-      openToast({ title: '저장 하였습니다.', type: 'success' });
+      openToast({ title: t('저장 하였습니다.'), type: 'success' });
       refetch();
     },
   });
