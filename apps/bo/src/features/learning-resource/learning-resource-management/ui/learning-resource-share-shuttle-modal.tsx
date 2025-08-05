@@ -1,4 +1,4 @@
-// IA104 / NLP_BO_CMS_1044 학습자원 현지화-공유설정(팝업)
+// IA104 / NLP_BO_CMS_1044 교육자원 현지화-공유설정(팝업)
 import { learningResourceQueryOptions, usePostShareContents } from '@entities/learning-resource';
 import LearningResourceService from '@entities/learning-resource/api/learning-resource';
 import { useSearchBox } from '@learnway/hooks';
@@ -177,7 +177,7 @@ const LearningResourceShareShuttleModalComponent = ({ data }: Props) => {
                   <td>{data?.channelName}</td>
                 </tr>
                 <tr>
-                  <th scope="row">{t('학습자원명')}</th>
+                  <th scope="row">{t('교육자원명')}</th>
                   <td>{data?.contentName}</td>
                   <th scope="row">{t('언어')}</th>
                   <td>{t(`pms.multilingual.LangCountryCode.${data?.languageCountryCode}`)}</td>

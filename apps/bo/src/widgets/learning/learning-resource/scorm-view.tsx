@@ -1,4 +1,4 @@
-//  IA106 / NLP_BO_CMS_1032, NLP_BO_CMS_1014 / 학습자원조회_나의 학습자원_등록_스콤
+//  IA106 / NLP_BO_CMS_1032, NLP_BO_CMS_1014 / 교육자원조회_나의 교육자원_등록_스콤
 import { usePutScormUpdate } from '@entities/learning-resource';
 import {
   ContentTopButtons,
