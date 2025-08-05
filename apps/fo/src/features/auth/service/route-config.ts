@@ -121,8 +121,10 @@ async function authorization({ location, context }: { location: ParsedLocation; 
 export function pageRouteConfig(routeConfig?: PageRouteConfig<PageMeta>) {
   return {
     beforeLoad: async ({ location, context, params, search, preload, route }: any) => {
+      // 환경변수로 인증 체크 비활성화 확인 (테스트 용)
+      const isAuthDisabled = import.meta.env.VITE_DISABLE_AUTH === 'true';
       // 인증 정보 확인
-      if (routeConfig?.authorization) {
+      if (!isAuthDisabled && routeConfig?.authorization) {
         try {
           await authorization({ location, context });
         } catch (e) {

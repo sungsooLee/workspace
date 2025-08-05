@@ -54,10 +54,11 @@ export const CourseGrid: React.FC<CourseGridProps> = ({
       customButtonNode={customButtonNode}
       excelButtons={
         <>
-          <GridExcelUploadButton validateUrl={'/api/v1/course/validation/excel/upload'} />
+          <GridExcelUploadButton validateUrl={'/api/v1/course/validation/excel/upload'} disabled />
           <GridExcelDownloadButton
             url={'/api/v1/course/validation/excel/export'}
             params={getValues()}
+            disabled
           />
           {/* <GridExcelDownloadButton
               method="post"

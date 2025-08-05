@@ -18,7 +18,7 @@ const DynamicFormFieldComponent2: FC<DynamicFormFieldProps> = ({
   ...props
 }) => {
   useEffect(() => {
-    console.log('dynamic - form', control);
+    // console.log('dynamic - form', control);
   }, [control]);
   if (!control || !name || !component) return;
 
