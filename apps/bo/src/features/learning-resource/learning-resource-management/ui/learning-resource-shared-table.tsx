@@ -141,7 +141,15 @@ function LearningResourceSharedTableComponent() {
   };
 
   const gridConfig: useGridBoxConfig = {
-    query: learningResourceQueryOptions.getSharedBoxContents,
+    query: ({ sharedDate, ...rawQuery }: Record<string, any>) => {
+      const processedQuery = {
+        ...compactValues(rawQuery),
+        ...(sharedDate?.from && { sharedDateStart: formatDate(sharedDate.from) }),
+        ...(sharedDate?.to && { sharedDateEnd: formatDate(sharedDate.to) }),
+        lastVisitedBoRoleId: authUser?.activeRole?.roleId,
+      };
+      return learningResourceQueryOptions.getSharedBoxContents(processedQuery);
+    },
     columns: [
       {
         size: 79,
@@ -262,23 +270,12 @@ function LearningResourceSharedTableComponent() {
     watch,
     setOptions,
   } = useSearchBox(searchConfig);
-  const {
-    config: gConfig,
-    gridFetch,
-    setGridData,
-  } = useGridBox<SharedBoxContent>(gridConfig, getValues);
+  const { config: gConfig, gridFetch } = useGridBox<SharedBoxContent>(gridConfig, getValues);
   const [params, setParams] = useState<Record<string, any>>({});
 
-  function handleSearch({ sharedDate, ...rawQuery }: Record<string, any>) {
-    const processedQuery = {
-      ...compactValues(rawQuery),
-      ...(sharedDate?.from && { sharedDateStart: formatDate(sharedDate.from) }),
-      ...(sharedDate?.to && { sharedDateEnd: formatDate(sharedDate.to) }),
-    };
-    console.log('🚀 ~ handleSearch ~ rawQuery:', rawQuery, processedQuery);
-
-    setParams(processedQuery);
-    gridFetch({ lastVisitedBoRoleId: authUser?.activeRole?.roleId, ...processedQuery });
+  function handleSearch(data: Record<string, any>) {
+    setParams(data);
+    gridFetch(data);
   }
 
   useEffect(() => {
