@@ -7,7 +7,7 @@
   @apply box-border border-0 py-[16px] pl-[16px] pr-[calc(100%-880px)] outline-none;
 }
 .nlp--editor-tool-bar {
-  @apply body_bo_2_r sticky left-0 top-0 z-[1] w-full bg-white;
+  @apply body_bo_2_r scrollbar sticky left-0 top-0 z-[1] w-full overflow-x-auto bg-white;
 }
 .nlp--content-editable-placeholder {
   @apply body_bo_2_r !text-[var(--gray5)];
