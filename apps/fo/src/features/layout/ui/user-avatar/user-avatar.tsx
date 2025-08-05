@@ -12,6 +12,7 @@ import popoverInnerStyles from '@learnway/styles/fo/features/layout/ui/user-avat
 import styles from '@learnway/styles/fo/features/layout/ui/user-avatar/user-avatar.module.css';
 
 import { UserAvatarContents } from './user-avatar-contents';
+import { UserAvatarContentsLanguage } from './user-avatar-contents-language';
 import { AvataFallback } from './user-avatar-fallback';
 
 const PopoverContent = () => {
@@ -52,7 +53,11 @@ const PopoverContent = () => {
           </Button>
         )}
       </div>
-      <UserAvatarContents contentType={contentType} setContentType={setContentType} />
+      {contentType === 'profile' ? (
+        <UserAvatarContents contentType={contentType} setContentType={setContentType} />
+      ) : (
+        <UserAvatarContentsLanguage contentType={contentType} setContentType={setContentType} />
+      )}
     </div>
   );
 };

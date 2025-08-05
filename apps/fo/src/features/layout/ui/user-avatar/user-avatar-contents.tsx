@@ -14,10 +14,9 @@ import { Switch } from '@learnway/ui/switch';
 
 import { useSetLanguage } from '@features/platform';
 
-import languagestyles from '@learnway/styles/fo/features/layout/ui/user-avatar/language.module.css';
 import userMyStyles from '@learnway/styles/fo/features/layout/ui/user-avatar/user-my.module.css';
 
-import { UserMyModal } from '@features/layout/m.ui/user-my-modal';
+import { LanguageModal } from '@features/layout/m.ui/language-modal';
 import { useRouter } from '@tanstack/react-router';
 import { AvataFallback } from './user-avatar-fallback';
 
@@ -76,71 +75,69 @@ const UserAvatarContentsComponent = ({ contentType, setContentType }: any) => {
 
   return (
     <div className={userMyStyles.start}>
-      {contentType === 'profile' ? (
-        // 내정보
-        <div className={userMyStyles.avatar_area}>
-          <div className={userMyStyles.profile_info}>
-            <div className={userMyStyles.avatar_img}>
-              {/* 이미지일경우 */}
-              <Avatar
-                imageUrl={getFullImagePath(authUser?.avataImage)}
-                size="2xl"
-                fallback={<AvataFallback name={authUser?.name} />}
-              />
-              {/* 텍스트일경우 */}
-              {/* <Avatar fallback="AB" size="2xl" /> */}
-              <span className={userMyStyles.ico}>
-                <Button variant="ghost" size="ts" onlyIcon={true} icon={<IcoLearning03 />} />
-              </span>
-            </div>
-            <div className={userMyStyles.profile}>
-              <div className={userMyStyles.info_box}>
-                <span className={userMyStyles.name}>{authUser?.name}</span>
-                <Button
-                  onClick={goToInformationChange}
-                  size="sm"
-                  underline={true}
-                  label={t('개인정보변경')}
-                />
-              </div>
-              <div className={userMyStyles.tenant}>
-                <span>{authUser?.company?.name}</span>
-                <span>{authUser?.dept?.deptName}</span>
-                <span>직군/직무</span>
-              </div>
-            </div>
-          </div>
-
-          <div className={userMyStyles.point_box}>
-            <IcoPoint className={userMyStyles.ico} />
-            <span className={userMyStyles.txt}>{t('나의 포인트')}</span>
-            <span className={userMyStyles.point}>
-              <em>243</em>P
+      <div className={userMyStyles.avatar_area}>
+        <div className={userMyStyles.profile_info}>
+          <div className={userMyStyles.avatar_img}>
+            {/* 이미지일경우 */}
+            <Avatar
+              imageUrl={getFullImagePath(authUser?.avataImage)}
+              size="2xl"
+              fallback={<AvataFallback name={authUser?.name} />}
+            />
+            {/* 텍스트일경우 */}
+            {/* <Avatar fallback="AB" size="2xl" /> */}
+            <span className={userMyStyles.ico}>
+              <Button variant="ghost" size="ts" onlyIcon={true} icon={<IcoLearning03 />} />
             </span>
           </div>
+          <div className={userMyStyles.profile}>
+            <div className={userMyStyles.info_box}>
+              <span className={userMyStyles.name}>{authUser?.name}</span>
+              <Button
+                onClick={goToInformationChange}
+                size="sm"
+                underline={true}
+                label={t('개인정보변경')}
+              />
+            </div>
+            <div className={userMyStyles.tenant}>
+              <span>{authUser?.company?.name}</span>
+              <span>{authUser?.dept?.deptName}</span>
+              <span>직군/직무</span>
+            </div>
+          </div>
+        </div>
 
-          <div className={userMyStyles.btn_my_box}>
-            {isMobile ? (
-              <>
-                <Button className={userMyStyles.btn_my}>
-                  <IcoBookFill width={40} height={40} />
-                  {t('나의 학습')}
-                </Button>
-                <Button className={userMyStyles.btn_heart}>
-                  <IcoHeartFill width={40} height={40} />
-                  {t('찜한 과정')}
-                </Button>
-              </>
-            ) : (
-              <Button variant="primary" size="xl" className={userMyStyles.btn_my}>
+        <div className={userMyStyles.point_box}>
+          <IcoPoint className={userMyStyles.ico} />
+          <span className={userMyStyles.txt}>{t('나의 포인트')}</span>
+          <span className={userMyStyles.point}>
+            <em>243</em>P
+          </span>
+        </div>
+
+        <div className={userMyStyles.btn_my_box}>
+          {isMobile ? (
+            <>
+              <Button className={userMyStyles.btn_my}>
+                <IcoBookFill width={40} height={40} />
                 {t('나의 학습')}
               </Button>
-            )}
-          </div>
+              <Button className={userMyStyles.btn_heart}>
+                <IcoHeartFill width={40} height={40} />
+                {t('찜한 과정')}
+              </Button>
+            </>
+          ) : (
+            <Button variant="primary" size="xl" className={userMyStyles.btn_my}>
+              {t('나의 학습')}
+            </Button>
+          )}
+        </div>
 
-          <div className={userMyStyles.recent_visits}>
-            <h3>{t('최근 방문')}</h3>
-            {/* <ul className={userMyStyles.list}>
+        <div className={userMyStyles.recent_visits}>
+          <h3>{t('최근 방문')}</h3>
+          {/* <ul className={userMyStyles.list}>
               <li>
                 <Button className={userMyStyles.btn}>
                   <span className={userMyStyles.ico}>
@@ -166,82 +163,61 @@ const UserAvatarContentsComponent = ({ contentType, setContentType }: any) => {
                 </Button>
               </li>
             </ul> */}
-            {/* 방문 x */}
-            <div className={userMyStyles.no_list}>
-              <p>{t('아직 방문한 화면이 없어요.')}</p>
-            </div>
+          {/* 방문 x */}
+          <div className={userMyStyles.no_list}>
+            <p>{t('아직 방문한 화면이 없어요.')}</p>
           </div>
-          <ul className={userMyStyles.info_list}>
-            <li></li>
-            <li>
-              <span className={userMyStyles.txt}>{t('알림')}</span>
-              <Switch
-                checked={isChecked}
-                onCheckedChange={setIsChecked}
-                label={isChecked ? 'ON' : 'OFF'}
-              />
-            </li>
-
-            <li>
-              <span className={userMyStyles.txt}>{t('언어')}</span>
-              <Button
-                variant="arrow"
-                size="md"
-                label={currentLanguage}
-                onClick={() => {
-                  if (isMobile) {
-                    openModal({
-                      width: 'm_full',
-                      content: <UserMyModal contentTypeProps={'lang'} />,
-                    });
-                  } else {
-                    setContentType('lang');
-                  }
-                }}
-              />
-            </li>
-
-            <li>
-              <span className={userMyStyles.txt}>{t('HRD 센터')}</span>
-              <Button variant="arrow" size="md" label={t('바로가기')} />
-            </li>
-
-            <li>
-              <span className={userMyStyles.txt}>{t('권한 신청')}</span>
-              <Button variant="arrow" size="md" label={t('바로가기')} />
-            </li>
-          </ul>
-          <BrowserView>
-            <div className={userMyStyles.btn_log}>
-              <Button
-                size="md"
-                underline={true}
-                label={t('로그아웃')}
-                onClick={() => logoutAlert()}
-              />
-            </div>
-          </BrowserView>
         </div>
-      ) : (
-        // 언어 language.tsx 동일
-        // 퍼블수정 20250728 : languagestyles 스타일 */}
-        <div className={languagestyles.lang_area}>
-          <ul className={languagestyles.lang_list}>
-            {languages.map((language) => (
-              <li key={language.value}>
-                <Button
-                  label={`${language.label} (${language.enLabel}) `}
-                  className={language.value === lang ? languagestyles.active : ''}
-                  onClick={() => {
-                    setLanguage(language.value);
-                    setContentType('profile'); // 다시 profile 화면으로 전환
-                  }}
-                />
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+        <ul className={userMyStyles.info_list}>
+          <li></li>
+          <li>
+            <span className={userMyStyles.txt}>{t('알림')}</span>
+            <Switch
+              checked={isChecked}
+              onCheckedChange={setIsChecked}
+              label={isChecked ? 'ON' : 'OFF'}
+            />
+          </li>
+
+          <li>
+            <span className={userMyStyles.txt}>{t('언어')}</span>
+            <Button
+              variant="arrow"
+              size="md"
+              label={currentLanguage}
+              onClick={() => {
+                setContentType('lang');
+                if (isMobile) {
+                  openModal({
+                    width: 'm_full',
+                    content: <LanguageModal />,
+                  });
+                }
+              }}
+            />
+          </li>
+
+          <li>
+            <span className={userMyStyles.txt}>{t('HRD 센터')}</span>
+            <Button variant="arrow" size="md" label={t('바로가기')} />
+          </li>
+
+          <li>
+            <span className={userMyStyles.txt}>{t('권한 신청')}</span>
+            <Button variant="arrow" size="md" label={t('바로가기')} />
+          </li>
+        </ul>
+        <BrowserView>
+          <div className={userMyStyles.btn_log}>
+            <Button
+              size="md"
+              underline={true}
+              label={t('로그아웃')}
+              onClick={() => logoutAlert()}
+            />
+          </div>
+        </BrowserView>
+      </div>
     </div>
   );
 };
