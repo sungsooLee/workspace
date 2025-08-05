@@ -26,9 +26,7 @@ const DropdownPopoverCompoment = () => {
 
 const DropdownPopoverCompoment2 = () => {
   return (
-    <div
-      className={`${dropdownPopoverStyles.start} ${dropdownPopoverStyles.dropdown_wrap} ${dropdownPopoverStyles.b_color_01}`}
-    >
+    <div className={`${dropdownPopoverStyles.start} ${dropdownPopoverStyles.dropdown_wrap}`}>
       <Button>년도별 보기1</Button>
       <Button>년도별 보기2</Button>
       <Button>년도별 보기3</Button>
@@ -197,63 +195,6 @@ const PopOverCompoment = () => {
   return (
     <Popover
       popoverContent={<DropdownPopoverCompoment />}
-      className={\`\${dropdownPopoverStyles.btn} \${dropdownPopoverStyles.text}\`}
-      side="bottom"
-      align="end"
-      sideOffset={10}>
-        <span>{'popover dropdown text 형식'}</span>
-        <IcoArrowDown width={16} height={16} stroke="#131C30" />
-    </Popover>
-  );
-};
-
-export const PopOverCompoment = memo(PopOverCompoment);`}</code>
-          </pre>
-        </div>
-      </div>
-
-      <div className="group">
-        <h3 className="guide_tit3">popover (border 색상 다른 타입)</h3>
-
-        <div className="flex_box">
-          <div className="desc w-full">
-            <Popover
-              popoverContent={<DropdownPopoverCompoment2 />}
-              className={`${dropdownPopoverStyles.btn} ${dropdownPopoverStyles.text}`}
-              side="bottom"
-              align="end"
-              sideOffset={10}
-            >
-              <span>popover dropdown text 형식</span>
-              <IcoArrowDown width={16} height={16} stroke="#131C30" />
-            </Popover>
-          </div>
-        </div>
-
-        <div className="code_example">
-          <pre className="code_block">
-            <code>{`// import
-import { memo } from 'react';
-import { Popover } from '@learnway/ui/popover';
-import { Button } from '@learnway/ui/button';
-import dropdownPopoverStyles from '@learnway/styles/fo/shared/ui/dropdown-popover/dropdown-popover.module.css';
-
-const DropdownPopoverCompoment2 = () => {
-  return (
-    <div className={\`\${dropdownPopoverStyles.start} \${dropdownPopoverStyles.dropdown_wrap}\ \${dropdownPopoverStyles.b_color_01}\`}>
-        <Button>년도별 보기1</Button>
-        <Button>년도별 보기2</Button>
-        <Button>년도별 보기3</Button>
-        <Button>년도별 보기444444444</Button>
-      </div>
-  );
-};
-
-const PopOverCompoment = () => {
-
-  return (
-    <Popover
-      popoverContent={<DropdownPopoverCompoment2 />}
       className={\`\${dropdownPopoverStyles.btn} \${dropdownPopoverStyles.text}\`}
       side="bottom"
       align="end"

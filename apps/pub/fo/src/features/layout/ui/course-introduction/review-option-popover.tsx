@@ -25,7 +25,7 @@ function ReviewOptionPopoverComponent() {
   return (
     // 퍼블수정 20250805 className 수정
     <div
-      className={`${dropdownPopoverStyles.start} ${dropdownPopoverStyles.dropdown_wrap} ${dropdownPopoverStyles.b_color_01} ${styles.review_option}`}
+      className={`${dropdownPopoverStyles.start} ${dropdownPopoverStyles.dropdown_wrap} ${styles.review_option}`}
     >
       <ul>
         <li>
