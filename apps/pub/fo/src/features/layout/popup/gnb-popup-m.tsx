@@ -4,6 +4,8 @@ import { IcoArrowForward } from '@learnway/icons';
 import { Button } from '@learnway/ui/button';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 import { HistoryContents } from '../ui/history-contents'; // 최근 학습활동
+import { NotificationContents } from '../ui/notification-contents'; // 최근 학습활동
+
 import { UserMy } from '../ui/user-my'; // 내 정보
 
 import styles from '@learnway/styles/fo/widgets/layout/m.ui/main/footer/gnb-popup-m.module.css';
@@ -46,6 +48,20 @@ const HistoryModal = () => {
   );
 };
 
+// 알림 Modal
+const NotificationyModal = () => {
+  return (
+    <ModalContainer>
+      <ModalTitle>{'알림'}</ModalTitle>
+      <ModalBody>
+        <div className={`${styles.start} ${styles.history_modal}`}>
+          <NotificationContents />
+        </div>
+      </ModalBody>
+    </ModalContainer>
+  );
+};
+
 const GnbPopupMComponent = () => {
   const { openModal } = useModal();
   return (
@@ -81,7 +97,14 @@ const GnbPopupMComponent = () => {
               </Button>
             </li>
             <li>
-              <Button>
+              <Button
+                onClick={() =>
+                  openModal({
+                    width: 'm_full',
+                    content: <NotificationyModal />,
+                  })
+                }
+              >
                 알림
                 <IcoArrowForward width={20} height={20} stroke="#6f798b" />
               </Button>
