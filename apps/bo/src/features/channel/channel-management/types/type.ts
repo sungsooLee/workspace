@@ -1,3 +1,5 @@
+import { EnFormMode } from '@types';
+
 // 등록 / 초기화,저장 / 구독 해지
 export enum EnChannelDetailButtonLayout {
   REGISTER = 'REGISTER',
@@ -14,4 +16,10 @@ export enum EnChannelDetailTabKeys {
   SUBSCRIBER = 'SUBSCRIBER',
   MANAGER_ROLE = 'MANAGER_ROLE',
   USER_GROUP = 'USER_GROUP',
+}
+
+export interface ChannelHomeBannerDetailProps {
+  mode: EnFormMode;
+  bannerId?: number | undefined;
+  onCompleted: () => void;
 }
