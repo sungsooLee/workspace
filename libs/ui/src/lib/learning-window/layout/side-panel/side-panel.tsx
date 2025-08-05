@@ -296,14 +296,20 @@ const SidePanelComponent = ({ onValueChange }: SidePanelProps) => {
               onClick={() => handlePriveNextClick(false)}
             >
               <IcoPrevPlay width={isMobileView ? 20 : 32} height={isMobileView ? 20 : 32} />
-              <span>{t('이전')}</span>
+              <span>
+                {!(playIndex !== 0 && playList && playIndex < playList.length)
+                  ? t('처음')
+                  : t('이전')}
+              </span>
             </Button>
             <Button
               disabled={!(playList && playList.length > playIndex + 1)}
               onClick={() => handlePriveNextClick(true)}
             >
               <IcoPrevNext width={isMobileView ? 20 : 32} height={isMobileView ? 20 : 32} />
-              <span>{t('다음')}</span>
+              <span>
+                {!(playList && playList.length > playIndex + 1) ? t('마지막') : t('다음')}
+              </span>
             </Button>
           </div>
         )}
