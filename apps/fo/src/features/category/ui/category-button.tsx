@@ -13,12 +13,12 @@ import { t } from 'i18next';
 
 interface CategoryPopupProps {
   id: number;
-  onNavigate: (categoryId: number) => void;
+  onNavigate: (categoryId: number, depth: number) => void;
 }
 
-type MainItem = { id: number; label: string; isChild: boolean };
-type SubItem = { id: number; label: string; parentId: number; isChild: boolean };
-type ChildItem = { id: number; label: string };
+type MainItem = { id: number; label: string; isChild: boolean, depth: number };
+type SubItem = { id: number; label: string; parentId: number; isChild: boolean, depth: number };
+type ChildItem = { id: number; label: string, depth: number };
 
 const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
   const [mainData, setMainData] = useState<MainItem[]>([]);
@@ -45,6 +45,7 @@ const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
           label: item.name,
           parentId: subTreeData.id,
           isChild: item.children.length > 0 ? true : false,
+          depth: item.depth,
         };
       });
       setSubData(twoDepthData);
@@ -63,6 +64,7 @@ const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
         return {
           id: item.id,
           label: item.name,
+          depth: item.depth,
         };
       });
       setChildData(threeDepthData);
@@ -72,8 +74,20 @@ const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
   };
 
   const childMenuHandleClick = (id: number) => {
+    function findNodeById(tree: any[], targetId: number): any | null {
+      for (const node of tree) {
+        if (node.id === targetId) return node;
+
+        if (node.children) {
+          const found = findNodeById(node.children, targetId);
+          if (found) return found;
+        }
+      }
+      return null;
+    }
+    const targetMenu = findNodeById(categoryTree?.tree.children, id)
     setActiveChildId(id);
-    onNavigate(id);
+    onNavigate(id, targetMenu.depth);
   };
 
   useEffect(() => {
@@ -86,6 +100,7 @@ const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
           id: item.id,
           label: item.name,
           isChild: item.children.length > 0 ? true : false,
+          depth: item.depth,
         };
       });
       const recent = recentCategory.map((item: any) => {
@@ -114,7 +129,7 @@ const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
                         className={activeId === item.id ? styles.active : ''}
                         label={item.label}
                         icon={item.isChild && <IcoArrowForward className={styles.ico_arrow} />}
-                        onClick={() => onNavigate(item.id)}
+                        onClick={() => onNavigate(item.id, item.depth)}
                         onMouseOver={() => menuHandleHover(item.id, item.isChild)}
                       />
                     </li>
@@ -132,7 +147,7 @@ const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
                         className={activeSubId === item.id ? styles.active : ''}
                         label={item.label}
                         icon={item.isChild && <IcoArrowForward className={styles.ico_arrow} />}
-                        onClick={() => onNavigate(item.id)}
+                        onClick={() => onNavigate(item.id, item.depth)}
                         onMouseOver={() => subMenuHandleHover(item.id, item.parentId, item.isChild)}
                       />
                     </li>
@@ -168,6 +183,7 @@ const PopupContent: React.FC<CategoryPopupProps> = ({ id, onNavigate }) => {
 export const CategoryButton = ({ tenantId }: { tenantId?: number }) => {
   const router = useRouter();
   const { openModal } = useModal();
+  const [depth, setDepth] = useState(0);
 
   const { create } = useCreateRecentCategory({
     onSuccess: async (data: any) => {
@@ -178,12 +194,14 @@ export const CategoryButton = ({ tenantId }: { tenantId?: number }) => {
           ...router.state.location.state,
           tenantId,
           categoryId: data,
+          depth
         },
       });
     }
   })
 
-  const handlerSelectedCategoryClick = (categoryId: number) => {
+  const handlerSelectedCategoryClick = (categoryId: number, depth: number) => {
+    setDepth(depth);
     create({categoryId});
   };
 

@@ -8,7 +8,7 @@ import { IcoArrowBackward, IcoArrowForward, IcoArrowUp } from '@learnway/icons';
 
 import { t } from 'i18next';
 
-import { queryOptions, useCategoryTree, useCreateRecentCategory } from '@entities/category';
+import { useCategoryTree, useCreateRecentCategory } from '@entities/category';
 import styles from '@learnway/styles/fo/features/layout/popup/category-popup.module.css';
 import { Button } from '@learnway/ui/button';
 import { Chip } from '@learnway/ui/chips';
@@ -18,9 +18,9 @@ interface CategoryPopupProps {
   activeTenantId: number;
 }
 
-type MainItem = { id: number; label: string; isChild: boolean };
-type SubItem = { id: number; label: string; parentId: number };
-type MenuItem = { id: number; label: string; parentId: number; subItems?: SubItem[] };
+type MainItem = { id: number; label: string; isChild: boolean; };
+type SubItem = { id: number; label: string; parentId: number, depth: number; };
+type MenuItem = { id: number; label: string; parentId: number; subItems?: SubItem[]; depth: number; };
 
 const CategoryPopupComponent = ({ activeTenantId }: CategoryPopupProps) => {
   const router = useRouter();
@@ -30,6 +30,7 @@ const CategoryPopupComponent = ({ activeTenantId }: CategoryPopupProps) => {
   const [recentCategory, setRecentCategory] = useState<ReactNode[]>([]);
   const [activeId, setActiveId] = useState<number>();
   const [tenantId, setTenantId] = useState<number>(activeTenantId);
+  const [depth, setDepth] = useState(0);
 
   const [firstMenuWithSub, setFirstMenuWithSub] = useState(
     menuData.find((item) => item.subItems)?.id ?? null,
@@ -46,6 +47,7 @@ const CategoryPopupComponent = ({ activeTenantId }: CategoryPopupProps) => {
           ...router.state.location.state,
           tenantId,
           categoryId: data,
+          depth
         },
       });
     }
@@ -64,6 +66,7 @@ const CategoryPopupComponent = ({ activeTenantId }: CategoryPopupProps) => {
               id: child.id,
               label: child.name,
               parentId: item.id,
+              depth: child.depth,
             });
           });
         }
@@ -72,6 +75,7 @@ const CategoryPopupComponent = ({ activeTenantId }: CategoryPopupProps) => {
           label: item.name,
           parentId: subTreeData.id,
           subItems: children,
+          depth: item.depth,
         };
       });
       setMenuData(menuData);
@@ -80,12 +84,26 @@ const CategoryPopupComponent = ({ activeTenantId }: CategoryPopupProps) => {
     }
   };
 
-  const handleLinkClick = (id: number) => async (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleLinkClick = (id: number, depth: number) => async (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
+    setDepth(depth)
     create({categoryId: id});
   }
 
   const onChipClickHandler = (id: number) => async () => {
+    function findNodeById(tree: any[], targetId: number): any | null {
+      for (const node of tree) {
+        if (node.id === targetId) return node;
+
+        if (node.children) {
+          const found = findNodeById(node.children, targetId);
+          if (found) return found;
+        }
+      }
+      return null;
+    }
+    const targetMenu = findNodeById(categoryTree?.tree.children, id);
+    setDepth(targetMenu.depth)
     create({categoryId: id});
   }
 
@@ -96,7 +114,6 @@ const CategoryPopupComponent = ({ activeTenantId }: CategoryPopupProps) => {
 
   useEffect(() => {
     if (categoryTree) {
-      console.log('### categoryTreeData => ', categoryTree);
       const mainTreeData: any[] = categoryTree?.tree.children;
       const recentCategory = categoryTree?.recent;
       // 1 Depth
@@ -105,6 +122,7 @@ const CategoryPopupComponent = ({ activeTenantId }: CategoryPopupProps) => {
           id: item.id,
           label: item.name,
           isChild: item.children.length > 0 ? true : false,
+          depth: item.depth,
         };
       });
       const recent = recentCategory.map((item: any) => {
@@ -166,7 +184,7 @@ const CategoryPopupComponent = ({ activeTenantId }: CategoryPopupProps) => {
             <div className={styles.category_inner}>
               <div className={styles.scroll_box}>
                 <div className={styles.depth_area}>
-                  {menuData.map(({ id, label, subItems }) => (
+                  {menuData.map(({ id, label, subItems, depth }) => (
                     <div key={id} className={styles.menu_item}>
                       <div
                         className={cn(
@@ -174,7 +192,7 @@ const CategoryPopupComponent = ({ activeTenantId }: CategoryPopupProps) => {
                           subItems && openId === id ? styles.active : '',
                         )}
                       >
-                        <Link to={'/category'} onClick={handleLinkClick(id)}>
+                        <Link to={'/category'} onClick={handleLinkClick(id, depth)}>
                           {label}
                         </Link>
                         {subItems && subItems.length > 0 && (
@@ -190,7 +208,7 @@ const CategoryPopupComponent = ({ activeTenantId }: CategoryPopupProps) => {
                         <div className={styles.sub_menu}>
                           {subItems.map((sub) => (
                             <div key={sub.id} className={styles.sub_menu_item}>
-                              <Link to={'/category'} onClick={handleLinkClick(sub.id)}>
+                              <Link to={'/category'} onClick={handleLinkClick(sub.id, sub.depth)}>
                                 {sub.label}
                               </Link>
                             </div>
