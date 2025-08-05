@@ -2,18 +2,18 @@ import { forwardRef, useEffect, useState } from 'react';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import { Tabs } from '@learnway/ui/tabs';
-import { EnButtonLayout } from '@pages/_layout/tenant/channel/management/detail.lazy';
 import { ChannelDetailBoardArticle } from './channel-detail-board-article';
+import { EnChannelDetailButtonLayout } from './types/type';
 
 interface ChannelDetailBoardProps {
-  onButtonLayoutChange: (layout: EnButtonLayout) => void;
+  onButtonLayoutChange: (layout: EnChannelDetailButtonLayout) => void;
 }
 
 const ChannelDetailBoardComponent = (props: ChannelDetailBoardProps, ref: any) => {
   const [selectedTabKey, setSelectedTabKey] = useState<string>('manageArticle');
 
   useEffect(() => {
-    props.onButtonLayoutChange && props.onButtonLayoutChange(EnButtonLayout.NONE);
+    props.onButtonLayoutChange && props.onButtonLayoutChange(EnChannelDetailButtonLayout.NONE);
   }, []);
 
   const handleTabChange = (tabKey: string) => {

@@ -1,11 +1,11 @@
-import { EnButtonLayout } from '@pages/_layout/tenant/channel/management/detail.lazy';
 import { EnFormMode } from '@types';
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import { ChannelDetailUserGroupDetail } from './channel-detail-user-group-detail';
 import { ChannelDetailUserGroupList } from './channel-detail-user-group-list';
+import { EnChannelDetailButtonLayout } from './types/type';
 
 interface ChannelDetailUserGroupProps {
-  onButtonLayoutChange?: (layout: EnButtonLayout) => void;
+  onButtonLayoutChange?: (layout: EnChannelDetailButtonLayout) => void;
 }
 
 const ChannelDetailUserGroupComponent = (props: ChannelDetailUserGroupProps, ref: any) => {
@@ -16,14 +16,14 @@ const ChannelDetailUserGroupComponent = (props: ChannelDetailUserGroupProps, ref
     if (props.onButtonLayoutChange) {
       switch (formMode) {
         case EnFormMode.NONE:
-          props.onButtonLayoutChange(EnButtonLayout.REGISTER);
+          props.onButtonLayoutChange(EnChannelDetailButtonLayout.REGISTER);
           break;
         case EnFormMode.VIEW:
         case EnFormMode.ADD:
-          props.onButtonLayoutChange(EnButtonLayout.RESET_AND_SAVE);
+          props.onButtonLayoutChange(EnChannelDetailButtonLayout.RESET_AND_SAVE);
           break;
         default:
-          props.onButtonLayoutChange(EnButtonLayout.NONE);
+          props.onButtonLayoutChange(EnChannelDetailButtonLayout.NONE);
       }
     }
   }, [props, formMode]);
@@ -32,7 +32,8 @@ const ChannelDetailUserGroupComponent = (props: ChannelDetailUserGroupProps, ref
     register() {
       setFormMode(EnFormMode.ADD);
       setUserGroupId(undefined);
-    } }));
+    },
+  }));
 
   const handleOnUserChange = (userGroupId: number) => {
     setFormMode(EnFormMode.VIEW);

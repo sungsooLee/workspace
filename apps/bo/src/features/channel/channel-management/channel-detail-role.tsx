@@ -2,16 +2,16 @@ import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { getDateToString } from '@learnway/shared';
 import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
-import { EnButtonLayout } from '@pages/_layout/tenant/channel/management/detail.lazy';
+import { useModal } from '@learnway/ui/modal';
 import { SearchBox } from '@shared/ui';
 import { useRouterState } from '@tanstack/react-router';
 import { createColumnHelper, Table } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { useCallback, useEffect, useState } from 'react';
-import { useModal } from '@learnway/ui/modal';
+import { EnChannelDetailButtonLayout } from './types/type';
 
 interface ChannelDetailRoleProps {
-  onButtonLayoutChange: (layout: EnButtonLayout) => void;
+  onButtonLayoutChange: (layout: EnChannelDetailButtonLayout) => void;
 }
 
 const ChannelDetailRoleComponent = ({ onButtonLayoutChange }: ChannelDetailRoleProps) => {
@@ -30,7 +30,8 @@ const ChannelDetailRoleComponent = ({ onButtonLayoutChange }: ChannelDetailRoleP
       roleStartDate: data.roleDate.from
         ? getDateToString(new Date(data.roleDate.from), 'YYYYMMDD')
         : '',
-      roleEndDate: data.roleDate.to ? getDateToString(new Date(data.roleDate.to), 'YYYYMMDD') : '' };
+      roleEndDate: data.roleDate.to ? getDateToString(new Date(data.roleDate.to), 'YYYYMMDD') : '',
+    };
     return searchData;
   };
 
@@ -38,7 +39,7 @@ const ChannelDetailRoleComponent = ({ onButtonLayoutChange }: ChannelDetailRoleP
   const [tableInstance, setTableInstance] = useState<Table<any>>();
 
   useEffect(() => {
-    onButtonLayoutChange && onButtonLayoutChange(EnButtonLayout.NONE);
+    onButtonLayoutChange && onButtonLayoutChange(EnChannelDetailButtonLayout.NONE);
   }, []);
 
   const handleOnSearch = useCallback((data: any) => {
@@ -60,7 +61,8 @@ const ChannelDetailRoleComponent = ({ onButtonLayoutChange }: ChannelDetailRoleP
           if (value) {
             console.log('deleteRows', deleteRows);
           }
-        } });
+        },
+      });
     }
   };
 
@@ -96,7 +98,9 @@ const searchConfig: SearchBoxConfig = {
         format: 'object',
         presetOptionLabel: t('LABEL.form.label.all'),
         optionsConfig: {
-          codeGroup: CODE_GROUP['manual.bo.my.role.roleId'] } },
+          codeGroup: CODE_GROUP['manual.bo.my.role.roleId'],
+        },
+      },
       {
         name: 'companyId',
         type: 'dropdown',
@@ -107,12 +111,14 @@ const searchConfig: SearchBoxConfig = {
           { label: '회사B', value: 'B' },
           { label: '회사C', value: 'C' },
         ],
-        presetOptionLabel: t('선택') },
+        presetOptionLabel: t('선택'),
+      },
       {
         name: 'employeeNumber',
         type: 'text',
         label: t('사번'),
-        value: '' },
+        value: '',
+      },
     ],
     [
       {
@@ -124,7 +130,8 @@ const searchConfig: SearchBoxConfig = {
           { label: t('사용'), value: 'A' },
           { label: t('미사용'), value: 'B' },
         ],
-        presetOptionLabel: t('전체') },
+        presetOptionLabel: t('전체'),
+      },
       {
         name: 'isExpired',
         type: 'dropdown',
@@ -135,16 +142,20 @@ const searchConfig: SearchBoxConfig = {
           { label: t('만료'), value: true },
           { label: t('정상'), value: false },
         ],
-        presetOptionLabel: t('전체') },
+        presetOptionLabel: t('전체'),
+      },
       {
         name: 'roleDate',
         label: t('역할 기간'),
         type: 'date-range',
         value: {
           from: undefined,
-          to: undefined } },
+          to: undefined,
+        },
+      },
     ],
-  ] };
+  ],
+};
 
 const gridConfig: useGridBoxConfig = {
   query: '',
@@ -153,7 +164,9 @@ const gridConfig: useGridBoxConfig = {
   gridState: {
     page: 0,
     size: 1000,
-    sort: [] } };
+    sort: [],
+  },
+};
 
 const columnHelper = createColumnHelper<any>();
 
@@ -161,37 +174,46 @@ const columns = [
   columnHelper.accessor('roleId', {
     cell: (info) => info.getValue(),
     header: t('HRD 담당자 역할'),
-    enableGrouping: false }),
+    enableGrouping: false,
+  }),
   columnHelper.accessor('tenantName', {
     cell: (info) => info.getValue(),
     header: t('테넌트'),
-    enableGrouping: false }),
+    enableGrouping: false,
+  }),
   columnHelper.accessor('companyName', {
     cell: (info) => info.getValue(),
     header: t('회사'),
-    enableGrouping: false }),
+    enableGrouping: false,
+  }),
   columnHelper.accessor('deptName', {
     cell: (info) => info.getValue(),
     header: t('소속'),
-    enableGrouping: false }),
+    enableGrouping: false,
+  }),
   columnHelper.accessor('employeeNumber', {
     cell: (info) => info.getValue(),
     header: t('사번'),
-    enableGrouping: false }),
+    enableGrouping: false,
+  }),
   columnHelper.accessor('roleStatus', {
     cell: (info) => info.getValue(),
     header: t('역할 상태'),
-    enableGrouping: false }),
+    enableGrouping: false,
+  }),
   columnHelper.accessor('roleStartDate', {
     cell: (info) => info.getValue(),
     header: t('역할 시작일'),
-    enableGrouping: false }),
+    enableGrouping: false,
+  }),
   columnHelper.accessor('roleEndDate', {
     cell: (info) => info.getValue(),
     header: t('역할 종료일'),
-    enableGrouping: false }),
+    enableGrouping: false,
+  }),
   columnHelper.accessor('isExpired', {
     cell: (info) => info.getValue(),
     header: t('만료 여부'),
-    enableGrouping: false }),
+    enableGrouping: false,
+  }),
 ];

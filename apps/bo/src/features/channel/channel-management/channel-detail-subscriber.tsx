@@ -1,10 +1,10 @@
-import { EnButtonLayout } from '@pages/_layout/tenant/channel/management/detail.lazy';
 import { forwardRef, useEffect, useState } from 'react';
 import { ChannelDetailSubscriberDetail } from './channel-detail-subscriber-detail';
 import { ChannelDetailSubscriberList } from './channel-detail-subscriber-list';
+import { EnChannelDetailButtonLayout } from './types/type';
 
 interface ChannelDetailSubscriberProps {
-  onButtonLayoutChange?: (layout: EnButtonLayout) => void;
+  onButtonLayoutChange?: (layout: EnChannelDetailButtonLayout) => void;
 }
 
 const ChannelDetailSubscriberComponent = (props: ChannelDetailSubscriberProps, ref: any) => {
@@ -12,8 +12,8 @@ const ChannelDetailSubscriberComponent = (props: ChannelDetailSubscriberProps, r
 
   useEffect(() => {
     if (props.onButtonLayoutChange) {
-      if (userUuid) props.onButtonLayoutChange(EnButtonLayout.CANCEL_SUBSCRIBE);
-      else props.onButtonLayoutChange(EnButtonLayout.NONE);
+      if (userUuid) props.onButtonLayoutChange(EnChannelDetailButtonLayout.CANCEL_SUBSCRIBE);
+      else props.onButtonLayoutChange(EnChannelDetailButtonLayout.NONE);
     }
   }, [props, userUuid]);
 
