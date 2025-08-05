@@ -45,7 +45,7 @@ const RadioGroupComponent = forwardRef<
     // options 배열이 이전 값과 동일하면 useEffect가 재실행되지 않도록 JSON.stringify로 비교
 
     useEffect(() => {
-      const optionsString = stringify(options);
+      const optionsString = stringify({ options, value });
       // options가 이전과 동일하면 실행하지 않음
       if (prevOptionsRef.current === optionsString) {
         return;
@@ -58,7 +58,7 @@ const RadioGroupComponent = forwardRef<
         handleValueChange(firstValue);
       }
       console.log('radio-group options', options);
-    }, [options]);
+    }, [options, value]);
 
     return (
       <Primitive.Root
