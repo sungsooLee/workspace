@@ -16,6 +16,7 @@ import {
 import { ExamView } from '@widgets/learning/learning-resource/exam-view';
 import { QuestionBasicInfoDetail, TestPaperBasicInfoDetail } from '@types';
 import { ExamPoolView } from '@widgets/learning/learning-resource/exam-pool-view';
+import { AssignmentView } from '@widgets/learning/learning-resource/assignment-view';
 
 export const Route = createFileRoute('/_layout/learning/learning-resource/view')({
   component: RouteComponent,
@@ -57,6 +58,8 @@ function RouteComponent() {
       return <ExamView content={content as TestPaperBasicInfoDetail} hasMapping={hasMapping} />;
     case LEARNING_TYPE.EXAM_POOL:
       return <ExamPoolView content={content as QuestionBasicInfoDetail} hasMapping={hasMapping} />;
+    case LEARNING_TYPE.ASSIGNMENT:
+      return <AssignmentView content={content} hasMapping={hasMapping} />;
   }
 
   return <NotFound />;
