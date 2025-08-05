@@ -181,7 +181,7 @@ import formStyles from '../../assets/styles/modules/form.module.css';
           {/* form_item */}
           <div className={formStyles.form_item}>
             <label htmlFor="name-1-2" className={formStyles.form_label}>
-              <span className={formStyles.form_text}>학습자원명</span>
+              <span className={formStyles.form_text}>교육자원명</span>
               {/* 필수 케이스 */}
               <span className={cn(formStyles.status, formStyles.required)}>
                 <IcoFormRequired width={12} height={12} />
@@ -211,7 +211,7 @@ import formStyles from '../../assets/styles/modules/form.module.css';
                 id="name-1-3"
                 type="text"
                 disabled
-                placeholder="학습자원을 분류할 카테고리를 선택하세요."
+                placeholder="교육자원을 분류할 카테고리를 선택하세요."
               />
               <Button variant="gray" size="sm">
                 선택
@@ -380,7 +380,7 @@ import formStyles from '../../assets/styles/modules/form.module.css';
           {/* Textarea type */}
           <div className={formStyles.form_item}>
             <label htmlFor="name-auto" className={formStyles.form_label}>
-              <span className={formStyles.form_text}>학습자원 개요 (AI 자동 추출)</span>
+              <span className={formStyles.form_text}>교육자원 개요 (AI 자동 추출)</span>
             </label>
             <div className={formStyles.input_box}>
               <Textarea
@@ -435,7 +435,7 @@ import formStyles from '../../assets/styles/modules/form.module.css';
               />
             </div>
             <p className={formStyles.guide_text}>
-              해당 학습자원으로 교육 과정을 개설할 수 {checked[3] ? '있습니다.' : '없습니다.'}
+              해당 교육자원으로 교육 과정을 개설할 수 {checked[3] ? '있습니다.' : '없습니다.'}
             </p>
           </div>
         </ContentsRow>
@@ -585,7 +585,7 @@ import formStyles from '../../assets/styles/modules/form.module.css';
                 className={formStyles.tooltip}
                 side="bottom"
                 align="start"
-                content={'설정된 채널에 해당 학습자원이 공유됩니다.'}
+                content={'설정된 채널에 해당 교육자원이 공유됩니다.'}
               >
                 <Button onlyIcon>
                   <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
@@ -645,7 +645,7 @@ import formStyles from '../../assets/styles/modules/form.module.css';
                 <div className={formStyles.input_box}>
                   <Checkbox className={formStyles.checkbox} />
                   <p className={formStyles.sub_text}>
-                    저작권법(제25조2항)에 따라 학습자원(동영상,이미지등)은 해당 학습플랫폼에서만
+                    저작권법(제25조2항)에 따라 교육자원(동영상,이미지등)은 해당 학습플랫폼에서만
                     이용가능하며, 이 외의 공간에서 저작물을 공유 또는 게시하는 행위는 저작권법
                     위반에 해당될 수 있음에 동의합니다.
                   </p>

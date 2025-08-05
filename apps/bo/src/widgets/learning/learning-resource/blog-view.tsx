@@ -1,4 +1,4 @@
-/* IA110 / NLP_BO_CMS_1013 - 나의 학습자원 > 블로그 삳세 */
+/* IA110 / NLP_BO_CMS_1013 - 교육자원 > 블로그 삳세 */
 import defaultImage from '@assets/images/thumb/img_thumb_default.jpg';
 import { ContentInformation } from '@entities/learning-resource';
 import {

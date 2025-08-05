@@ -374,7 +374,7 @@ const TestInfoComponent: FC<{}> = ({}) => {
             {/* form_item */}
             <div className={formStyles.form_item}>
               <label htmlFor="name-1-2" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>학습자원명</span>
+                <span className={formStyles.form_text}>교육자원명</span>
                 {/* 필수 케이스 */}
                 <span className={cn(formStyles.status, formStyles.required, formStyles.error)}>
                   <IcoFormRequired width={12} height={12} />
@@ -400,7 +400,7 @@ const TestInfoComponent: FC<{}> = ({}) => {
             {/* form_item */}
             <div className={formStyles.form_item}>
               <label htmlFor="name-explain" className={formStyles.form_label}>
-                <span className={formStyles.form_text}>학습자원 설명</span>
+                <span className={formStyles.form_text}>교육자원 설명</span>
               </label>
               <div className={formStyles.input_box}>
                 <Textarea
@@ -543,7 +543,7 @@ const TestInfoComponent: FC<{}> = ({}) => {
                 /> */}
               </div>
               <p className={cn(formStyles.guide_text)}>
-                학습자원을 표현하는 썸네일을 선택하거나 업로드 하세요. (미선택 시 자동 선택)
+                교육자원을 표현하는 썸네일을 선택하거나 업로드 하세요. (미선택 시 자동 선택)
               </p>
             </div>
           </ContentsRow>
@@ -581,7 +581,7 @@ const TestInfoComponent: FC<{}> = ({}) => {
                   className={formStyles.tooltip}
                   side="bottom"
                   align="start"
-                  content={'설정된 채널에 해당 학습자원이 공유됩니다.'}
+                  content={'설정된 채널에 해당 교육자원이 공유됩니다.'}
                 >
                   <Button onlyIcon>
                     <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />

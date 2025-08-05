@@ -858,7 +858,7 @@ export const guideData = [
     remarks: '완료', // 비고
   },
   {
-    screenName: 'CMS/학습자원등록 동영상 등록(시험관리 포함)',
+    screenName: 'CMS/교육자원등록 동영상 등록(시험관리 포함)',
     pageId: 'learning/mediaRegister',
     screenId: '',
     pageType: 'Page',
@@ -867,7 +867,7 @@ export const guideData = [
     remarks: '5/12 새로운 케이스 추가', // 비고
   },
   // {
-  //   screenName: 'CMS/학습자원등록_학습자원조회',
+  //   screenName: 'CMS/교육자원등록_교육자원조회',
   //   pageId: 'learning/learningSearch',
   //   screenId: '',
   //   pageType: 'Page',
@@ -876,7 +876,7 @@ export const guideData = [
   //   remarks: '', // 비고
   // },
   {
-    screenName: 'CMS/학습자원 일괄설정',
+    screenName: 'CMS/교육자원 일괄설정',
     pageId: 'learning/popup-learningSetting',
     screenId: '',
     pageType: 'Pop-up',
@@ -885,7 +885,7 @@ export const guideData = [
     remarks: '작업 완료', // 비고
   },
   {
-    screenName: 'CMS/학습자원조회_제작프로그램/가이드 다운로드',
+    screenName: 'CMS/교육자원조회_제작프로그램/가이드 다운로드',
     pageId: 'learning/pop-program-guide',
     screenId: 'NLP_BO_CMS_1056',
     pageType: 'Pop-up',
@@ -894,7 +894,7 @@ export const guideData = [
     remarks: '', // 비고
   },
   {
-    screenName: 'CMS/학습자원조회_수정자 정보',
+    screenName: 'CMS/교육자원조회_수정자 정보',
     pageId: 'learning/pop-modifier-info',
     screenId: 'NLP_BO_CMS_1055',
     pageType: 'Pop-up',
@@ -903,7 +903,7 @@ export const guideData = [
     remarks: '', // 비고
   },
   {
-    screenName: 'CMS/시험관리_학습자원조회',
+    screenName: 'CMS/시험관리_교육자원조회',
     pageId: 'learning/learning-resource-search',
     screenId: 'NLP_BO_CMS_1032',
     pageType: 'Page',
@@ -930,7 +930,7 @@ export const guideData = [
     remarks: '', // 비고
   },
   {
-    screenName: 'CMS/학습자원_등록_외부링크',
+    screenName: 'CMS/교육자원_등록_외부링크',
     pageId: 'learning/learning-external-registration',
     screenId: 'NLP_BO_CMS_1026',
     pageType: 'Page',
@@ -984,7 +984,7 @@ export const guideData = [
   //   remarks: '5/12 부터 진행예정', // 비고
   // },
   // {
-  //   screenName: 'CMS/학습자원 조회상세(동영상)',
+  //   screenName: 'CMS/교육자원 조회상세(동영상)',
   //   pageId: 'learning/mediaDetail',
   //   screenId: '',
   //   pageType: 'Page',

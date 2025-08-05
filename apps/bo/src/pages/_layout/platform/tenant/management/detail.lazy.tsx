@@ -1,4 +1,4 @@
-import { createFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
+import { useRouter, useRouterState, createLazyFileRoute } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { useRef, useState } from 'react';
 
@@ -18,7 +18,7 @@ import { TenantDetailBase } from '@widgets/platform-management/tenant/ui/tenant-
 
 import { EnTenantDetailTabKey } from '@shared/types/enums';
 
-export const Route = createFileRoute('/_layout/platform/tenant/management/detail')({
+export const Route = createLazyFileRoute('/_layout/platform/tenant/management/detail')({
   component: RouteComponent,
 });
 

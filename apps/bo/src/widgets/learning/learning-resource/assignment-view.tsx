@@ -57,11 +57,15 @@ function AssignmentViewComponent({ content, hasMapping }: Props) {
         content: <LearningResourceAssignmentSubmission ref={assignmentInfoRef} />,
       },
     ],
-    [],
+    [basicInfoForm, content],
   );
 
   const handleOnSubmit = (data: Record<string, any>) => {
-    console.log(data);
+    if (basicInfoRef.current) {
+      basicInfoRef.current?.save?.(data);
+    } else if (assignmentInfoRef.current) {
+      //
+    }
   };
 
   useEffect(() => {

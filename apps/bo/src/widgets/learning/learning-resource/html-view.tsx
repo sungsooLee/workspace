@@ -8,7 +8,6 @@ import {
   ContentTopButtons,
   getTooltipContent,
   LearningResourceHtmlDetail,
-  LearningResourceHtmlFileInfo,
 } from '@features/learning-resource';
 import { getPayloadFromHtmlMetadataSubmit } from '@features/learning-resource/learning-resource-management/service/learning-resource-html-form-submit';
 import { useDynamicForm2 } from '@learnway/hooks';
@@ -17,6 +16,8 @@ import { ContentCreateType, ContentStatusCode } from '@shared/types/enums';
 import { ContentsButtons, MainContents, PageContainer, SubContents } from '@shared/ui';
 import { useRouter } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
+
+import { HtmlVideoInfo } from '@features/learning-resource/learning-resource-management/ui/html-video-info';
 
 interface Props {
   content: ContentInformation;
@@ -30,8 +31,7 @@ function HtmlViewComponent({ content, hasMapping }: Props) {
   const { confirm: openConfirm } = useModal();
 
   const form = useDynamicForm2();
-  const { provider, onSubmit, watch } = form;
-  const processingStatus = watch('processingStatus');
+  const { provider, onSubmit } = form;
 
   const { update: updateMetadata } = useUpdateHTML5Metadata({
     onSuccess: (result: HtmlVideoMetadataRes) => {
@@ -86,13 +86,7 @@ function HtmlViewComponent({ content, hasMapping }: Props) {
         </MainContents>
 
         <SubContents>
-          {content?.contentUuid && content?.fileUuid && (
-            <LearningResourceHtmlFileInfo
-              contentUuid={content.contentUuid}
-              uuid={content.fileUuid}
-              processingStatus={processingStatus}
-            />
-          )}
+          <HtmlVideoInfo provider={provider} />
         </SubContents>
       </PageContainer>
     </form>

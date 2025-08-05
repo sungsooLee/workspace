@@ -1361,7 +1361,7 @@ const expandedColumns2 = [
 const tmpExpandData = [
   {
     contentUuid: 'deb189a5-958a-4fef-b2f5-29ab51eaa184',
-    contentName: '학습자원명4',
+    contentName: '교육자원명4',
     langCountryCode: 'EN',
     contentType: 'EXAM',
     contentStatusCode: null,
@@ -1398,7 +1398,7 @@ const tmpExpandData = [
   },
   {
     contentUuid: 'deb189a5-958a-4fef-b2f5-29ab51eaa185',
-    contentName: '학습자원명4',
+    contentName: '교육자원명4',
     langCountryCode: 'KO',
     contentType: 'BLOG',
     contentStatusCode: null,
@@ -1471,7 +1471,7 @@ const tmpExpandData = [
     children: [
       {
         contentUuid: 'deb189a5-958a-4fef-b2f5-29ab51eaa182',
-        contentName: '학습자원명2',
+        contentName: '교육자원명2',
         langCountryCode: 'KO',
         contentType: 'VIDEO',
         contentStatusCode: null,
@@ -1508,7 +1508,7 @@ const tmpExpandData = [
       },
       {
         contentUuid: 'deb189a5-958a-4fef-b2f5-29ab51eaa183',
-        contentName: '학습자원명3',
+        contentName: '교육자원명3',
         langCountryCode: 'KO',
         contentType: 'VIDEO',
         contentStatusCode: null,

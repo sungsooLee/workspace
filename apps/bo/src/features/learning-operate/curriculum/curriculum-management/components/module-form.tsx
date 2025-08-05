@@ -128,7 +128,7 @@ export const ModuleForm: React.FC<ModuleFormProps> = ({
             <FormRow2
               provider={provider}
               name="contentName"
-              label={t('학습자원')}
+              label={t('교육자원')}
               format="string"
               validation={{ required: true }}
               element={

@@ -32,7 +32,9 @@ function BatchSettingModalComponent() {
       enableGrouping: false,
       meta: {
         headerAlign: 'left',
-        cellAlign: 'left' } }),
+        cellAlign: 'left',
+      },
+    }),
   ] as ColumnDef<any, unknown>[];
 
   const [date, setDate] = useState(new Date());
@@ -51,14 +53,15 @@ function BatchSettingModalComponent() {
     2: false,
     3: false,
     4: false,
-    5: false });
+    5: false,
+  });
 
   const handleCheckedChange = (id: number) => (checked: boolean) => {
     setChecked((prev) => ({ ...prev, [id]: checked }));
   };
   return (
     <ModalContainer>
-      <ModalTitle>{t('학습자원 일괄설정')}</ModalTitle>
+      <ModalTitle>{t('교육자원 일괄설정')}</ModalTitle>
       <ModalBody>
         <div className={cn(popLayoutstyles.start, popLayoutstyles.wrap)}>
           <div className={popLayoutstyles.contents}>
@@ -67,17 +70,23 @@ function BatchSettingModalComponent() {
                 <GridBox
                   data={[
                     {
-                      item: t('담당자') },
+                      item: t('담당자'),
+                    },
                     {
-                      item: t('사용기한') },
+                      item: t('사용기한'),
+                    },
                     {
-                      item: t('교육자원 활용여부') },
+                      item: t('교육자원 활용여부'),
+                    },
                     {
-                      item: t('보안콘텐츠  여부') },
+                      item: t('보안콘텐츠  여부'),
+                    },
                     {
-                      item: t('공유채널 설정') },
+                      item: t('공유채널 설정'),
+                    },
                     {
-                      item: t('검수') },
+                      item: t('검수'),
+                    },
                   ]}
                   columns={columns}
                   title={t('일괄설정 항목')}
@@ -87,7 +96,8 @@ function BatchSettingModalComponent() {
                   className={styles.grid}
                   customButtonNode={
                     <p className="grid_info">
-                      {t('대상동영상')} <span className="num">{10}</span>{t('건')}
+                      {t('대상동영상')} <span className="num">{10}</span>
+                      {t('건')}
                     </p>
                   }
                 />
@@ -107,7 +117,8 @@ function BatchSettingModalComponent() {
                     <InputModalSelectorFormField
                       modalConfig={{
                         width: 'md',
-                        content: <SelectCoordinatorModal /> }}
+                        content: <SelectCoordinatorModal />,
+                      }}
                       placeholder={t('담당자를 선택하세요.')}
                     />
                   </div>
@@ -186,13 +197,13 @@ function BatchSettingModalComponent() {
                     <Switch
                       id="name-use"
                       className={dynamicFormStyles.btn_switch}
-                      label={checked[2] ? t('활용 가능'): t('활용 불가')}
+                      label={checked[2] ? t('활용 가능') : t('활용 불가')}
                       checked={checked[2]}
                       onCheckedChange={handleCheckedChange(2)}
                     />
                   </div>
                   <p className={formStyles.guide_text}>
-                    {t('해당 학습자원으로 교육 과정을 개설할 수')}
+                    {t('해당 교육자원으로 교육 과정을 개설할 수')}
                     {checked[2] ? t(' 있습니다.') : t(' 없습니다.')}
                   </p>
                 </div>
@@ -205,7 +216,7 @@ function BatchSettingModalComponent() {
                       className={formStyles.tooltip}
                       side="bottom"
                       align="start"
-                      content={t('설정된 채널에 해당 학습자원이 공유됩니다.')}
+                      content={t('설정된 채널에 해당 교육자원이 공유됩니다.')}
                     >
                       <Button onlyIcon>
                         <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
@@ -244,7 +255,7 @@ function BatchSettingModalComponent() {
                       <div className={formStyles.input_box}>
                         <Checkbox className={formStyles.checkbox} />
                         <p className={formStyles.sub_text}>
-                          {t('등록하고자 한 학습자원이며, 정상적으로 보여짐이 확인되었습니다.')}
+                          {t('등록하고자 한 교육자원이며, 정상적으로 보여짐이 확인되었습니다.')}
                         </p>
                       </div>
                       <p className={cn(formStyles.guide_text, formStyles.error)}>
@@ -263,7 +274,9 @@ function BatchSettingModalComponent() {
                       <div className={formStyles.input_box}>
                         <Checkbox className={formStyles.checkbox} />
                         <p className={formStyles.sub_text}>
-                          {t('저작권법(제25조2항)에 따라 학습자원(동영상,이미지등)은 해당\n학습플랫폼에서만 이용가능하며, 이 외의 공간에서 저작물을 공유 또는\n게시하는 행위는 저작권법 위반에 해당될 수 있음에 동의합니다.')}
+                          {t(
+                            '저작권법(제25조2항)에 따라 교육자원(동영상,이미지등)은 해당\n학습플랫폼에서만 이용가능하며, 이 외의 공간에서 저작물을 공유 또는\n게시하는 행위는 저작권법 위반에 해당될 수 있음에 동의합니다.',
+                          )}
                         </p>
                       </div>
                       <p className={cn(formStyles.guide_text, formStyles.error)}>
@@ -282,7 +295,9 @@ function BatchSettingModalComponent() {
                       <div className={formStyles.input_box}>
                         <Checkbox className={formStyles.checkbox} />
                         <p className={formStyles.sub_text}>
-                          {t('보안콘텐츠 미 설정 시, 불법복제, 무단사용,저작권 침해 위험에 노출되고,\n이에 따른 피해를 입을 수 있음에 인지합니다.')}
+                          {t(
+                            '보안콘텐츠 미 설정 시, 불법복제, 무단사용,저작권 침해 위험에 노출되고,\n이에 따른 피해를 입을 수 있음에 인지합니다.',
+                          )}
                         </p>
                       </div>
                       <p className={cn(formStyles.guide_text, formStyles.error)}>

@@ -32,10 +32,8 @@ export interface MediaContentSaveReq {
   contentThumbnailFileGroupUuid?: string;
   selectedContentThumbnailFileUuid?: string;
   isCourseUsed: boolean;
-  isContentSecured: boolean;
   isInspected: boolean;
   isCopyrighted: boolean;
-  isSecured: boolean;
   isDeleted: boolean;
   isOpened: boolean;
   tags: Tag[] | string[];
@@ -110,7 +108,7 @@ export interface Tag {
  * 컨텐츠 기본 정보
  */
 export interface ContentBaseInfo {
-  /** 학습자원명 */
+  /** 교육자원명 */
   contentName: string;
   /** 국가 언어 코드 */
   languageCountryCode: string;
@@ -118,7 +116,7 @@ export interface ContentBaseInfo {
   tenantId?: number;
   /** 채널 UUID */
   channelUuid: string;
-  /** 학습자원 설명 */
+  /** 교육자원 설명 */
   description?: string;
   /** 담당자 UUID */
   coordinatorUuid: string;
@@ -155,8 +153,6 @@ export interface ContentBaseInfo {
   selectedContentThumbnailFileUuid?: string;
   /** 교육자원 활용 여부 */
   isCourseUsed: boolean;
-  /** 보안콘텐츠 여부 */
-  isContentSecured: boolean;
   /** 검수 확인 여부 */
   isInspected: boolean;
   /** 저작권 확인 여부 */
@@ -165,8 +161,6 @@ export interface ContentBaseInfo {
   contentAddInfoType?: ContentAddInfoType | string;
   /** 콘텐츠 추가 정보 */
   contentAddInfo?: string | number;
-  /** 보안 확인 여부 */
-  isSecured: boolean;
   /** 삭제 여부 */
   isDeleted: boolean;
   /** 공개 여부 */
@@ -200,7 +194,7 @@ export interface ContentInformation extends ContentBaseInfo {
   /** 임시저장 여부 */
   isDrafted: boolean;
 
-  /** 학습자원 개요 (AI자동추출) */
+  /** 교육자원 개요 (AI자동추출) */
   aiSummary?: string;
   /** 키워드 (AI자동추출) */
   aiKeyword?: string;
@@ -238,9 +232,9 @@ export interface ContentInfo {
   channelUuid: string; //	채널 UUID[...]
   channelName: string; //	채널명[...]
   contentUuid: string; //	콘텐츠 uuid[...]
-  contentName: string; //	학습자원명[...]
+  contentName: string; //	교육자원명[...]
   contentType: ContentType; //	콘텐츠 분류 코드 Enum(ContentType) - VIDEO|EXAM|SURVEY|ASSIGNMENT|HTML5|YOUTUBE|BLOG|SCORM|DEFAULT[...]
-  groupContentId: number; //	학습자원 그룹ID[...]
+  groupContentId: number; //	교육자원 그룹ID[...]
   createType: ContentCreateType; //	콘텐츠 생성 유형, MANUAL|TRANSLATE|SHARED[...]
   contentStatusCode: ContentStatusCode; //	콘텐츠 상태 코드 Enum(ContentStatusCode) - TEMPORARY_SAVE|SAVED|DELETED[...]
   isContentEnabled: boolean; //	사용 가능 여부[...]
@@ -787,13 +781,13 @@ export interface GetSharedBoxContentsParams extends PaginationRequest {
 }
 
 export interface SharedBoxContent extends Omit<SharedContent, 'sharedBoxId'> {
-  sourceContentUuid: string; //	원본 학습자원 UUIDstring
-  sourceContentName: string; //	원본 학습자원명string
-  sourceGroupContentId: number; // 원본 학습자원 그룹ID
-  sourceContentType: ContentType; // 원본 학습자원 유형, Enum(cms.content.ContentType)string
+  sourceContentUuid: string; //	원본 교육자원 UUIDstring
+  sourceContentName: string; //	원본 교육자원명string
+  sourceGroupContentId: number; // 원본 교육자원 그룹ID
+  sourceContentType: ContentType; // 원본 교육자원 유형, Enum(cms.content.ContentType)string
   contentCreateType: ContentCreateType; //	string
-  languageCountryCode: string; //	원본 학습자원 국가 언어 코드string
-  isContentEnabled: boolean; //	원본 학습자원 사용가능 여부boolean
+  languageCountryCode: string; //	원본 교육자원 국가 언어 코드string
+  isContentEnabled: boolean; //	원본 교육자원 사용가능 여부boolean
   sharerUuid: string; //	공유자 UUIDstring
   sharerName: string; //	공유자명string
   sharedCount: string; //	공유 횟수integer($int64)

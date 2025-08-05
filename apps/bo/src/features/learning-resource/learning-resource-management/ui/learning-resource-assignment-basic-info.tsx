@@ -1,14 +1,16 @@
+import { ContentBaseInfo, ContentInformation } from '@entities/learning-resource';
 import { UseDynamicFormResult } from '@learnway/hooks';
+import { isEmptyData } from '@learnway/shared';
 import { FormSubTitle } from '@learnway/ui/base-form';
 import { SplitPanel } from '@learnway/ui/elements';
-import { forwardRef, useImperativeHandle } from 'react';
+import dayjs from 'dayjs';
+import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AssignmentBasicInfoFormData, AssignmentTabRef } from '../service/assignment/type';
+import { useAssignmentBasicInfoForm } from '../service/assignment/use-assignment-basic-info-form';
 import { LearningResourceBaseForm } from './learning-resource-base-form';
 
 import previewImg from '@assets/images/temp/img_exam_basic.jpg';
-import { ContentBaseInfo, ContentInformation } from '@entities/learning-resource';
-import { useAssignmentBasicInfoForm } from '@features/learning-resource/learning-resource-management/service/assignment/use-assignment-basic-info-form';
 import movieInfoStyles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
 import styles from '@learnway/styles/bo/pages/_layout/learning/assignment-detail.module.css';
 
@@ -46,22 +48,38 @@ const LearningResourceAssignmentBasicInfoComponent = forwardRef<
 
       delete payload.contentUseDate;
 
+      console.log('payload ===>', payload);
+
       saveBasicInfo(payload as ContentBaseInfo);
     },
   }));
+
+  useEffect(() => {
+    if (content?.contentUuid && !isEmptyData(content)) {
+      onFormChange({
+        ...content,
+        contentUseDate: {
+          from: content.contentUseStartDate
+            ? dayjs(content.contentUseStartDate).toDate()
+            : undefined,
+          to: content.contentUseEndDate ? dayjs(content.contentUseEndDate).toDate() : undefined,
+        },
+      });
+    }
+  }, [content]);
 
   return (
     <SplitPanel size={['auto', 416]} divider>
       <div key="base1">
         <div className={styles.wrap}>
           <FormSubTitle label={t('기본 정보')} />
-          {/* 학습자원 공통 정보 입력 영역 */}
+          {/* 교육자원 공통 정보 입력 영역 */}
           <LearningResourceBaseForm provider={provider} />
         </div>
       </div>
 
       <div key="base2">
-        <FormSubTitle noLine label={t('cms.content.ContentType.EXAM')} />
+        <FormSubTitle noLine label={t('cms.content.ContentType.ASSIGNMENT')} />
         <div className={movieInfoStyles.media}>
           <img src={previewImg} width="100%" alt="" />
         </div>

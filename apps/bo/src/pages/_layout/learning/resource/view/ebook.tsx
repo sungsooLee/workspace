@@ -71,11 +71,11 @@ function RouteComponent() {
               }
             />
           </ContentsRow>
-          {/*학습자원명*/}
+          {/*교육자원명*/}
           <ContentsRow>
             <FormRow provider={provider} name={'learningResourceName'} />
           </ContentsRow>
-          {/*학습자원 설명*/}
+          {/*교육자원 설명*/}
           <ContentsRow>
             <FormRow provider={provider} name={'learningResourceDescription'} />
           </ContentsRow>
@@ -151,7 +151,7 @@ function RouteComponent() {
           <ContentsRow>
             <FormRow provider={provider} name="tags" />
           </ContentsRow>
-          {/*학습자원개요*/}
+          {/*교육자원개요*/}
           <ContentsRow>
             <FormRow provider={provider} name="learningResourceOverview" />
           </ContentsRow>
@@ -214,18 +214,18 @@ const formConfig: DynamicFormConfig = {
       value: '',
     },
     {
-      label: t('학습자원명'),
+      label: t('교육자원명'),
       name: 'learningResourceName',
       type: 'text',
       value: '',
-      placeholder: '학습자원명을 입력하세요.',
+      placeholder: '교육자원명을 입력하세요.',
       maxLength: 150,
       validation: {
         type: 'string',
       },
     },
     {
-      label: t('학습자원 설명'),
+      label: t('교육자원 설명'),
       name: 'learningResourceDescription',
       type: 'textarea',
       value: '',
@@ -331,11 +331,11 @@ const formConfig: DynamicFormConfig = {
       type: 'chip-list',
       placeholder: '한글, 영문, 숫자 포함 9자 이하 태그를 입력하세요.(9자 초과할 경우 얼럿)',
       limitPlaceholder: '여러개의 태그는 쉼표로 구분',
-      tooltip: '태그는 학습자원 검색 시 활용되고, 학습자에게는 10개까지만 보여집니다.',
+      tooltip: '태그는 교육자원 검색 시 활용되고, 학습자에게는 10개까지만 보여집니다.',
       value: [],
     },
     {
-      label: t('학습자원개요 (AI 자동 추출)'),
+      label: t('교육자원개요 (AI 자동 추출)'),
       name: 'learningResourceOverview',
       type: 'textarea',
       readOnly: true,
@@ -360,7 +360,7 @@ const formConfig: DynamicFormConfig = {
       switchConfig: {
         label: (value: boolean) => (value ? '활용가능' : '활용불가'),
       },
-      guideText: '해당 학습자원으로 교육 과정을 개설할 수 없습니다.',
+      guideText: '해당 교육자원으로 교육 과정을 개설할 수 없습니다.',
       value: true,
     },
     {
@@ -407,7 +407,7 @@ const formConfig: DynamicFormConfig = {
       name: 'isCopyrightConfirmed',
       format: 'boolean',
       guideText:
-        '저작권법(제25조2항)에 따라 학습자원(동영상,이미지등)은 해당 학습플랫폼에서만 이용가능하며, 이 외의 공간에서 저작물을 공유 또는 게시하는 행위는 저작권법 위반에 해당될 수 있음에 동의합니다.',
+        '저작권법(제25조2항)에 따라 교육자원(동영상,이미지등)은 해당 학습플랫폼에서만 이용가능하며, 이 외의 공간에서 저작물을 공유 또는 게시하는 행위는 저작권법 위반에 해당될 수 있음에 동의합니다.',
       type: 'checkbox',
       checkConfig: {
         reverse: true,

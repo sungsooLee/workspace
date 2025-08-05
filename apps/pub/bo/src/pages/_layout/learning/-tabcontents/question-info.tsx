@@ -206,8 +206,8 @@ const QuestionInfoComponent: FC<{}> = ({}) => {
             <tr>
               <th scope={'row'}>{'유형'}</th>
               <td>{'시험지'}</td>
-              <th scope={'row'}>{'학습자원명'}</th>
-              <td>{'학습자원명'}</td>
+              <th scope={'row'}>{'교육자원명'}</th>
+              <td>{'교육자원명'}</td>
             </tr>
           </tbody>
         </table>

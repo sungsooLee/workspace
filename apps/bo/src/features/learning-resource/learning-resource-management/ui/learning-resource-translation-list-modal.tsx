@@ -76,7 +76,7 @@ function TranslationListModalComponent({ contentInfo }: TranslationListModalComp
               <tr>
                 <th scope="row">{t('언어')}</th>
                 <td>{t(`pms.multilingual.LangCountryCode.${contentInfo.languageCountryCode}`)}</td>
-                <th scope="row">{t('학습자원명')}</th>
+                <th scope="row">{t('교육자원명')}</th>
                 <td>{contentInfo.contentName}</td>
               </tr>
             </tbody>

@@ -44,9 +44,9 @@ const LearningResourceBaseFormComponent = ({
   readOnlyLessonTime?: boolean;
   /** 블로그 에디터 노출 여부 */
   showBlogEditor?: boolean;
-  /** 학습자원명 입력 가능한 글자수 (기본 최대 150자이나 다른 경우 존재함) */
+  /** 교육자원명 입력 가능한 글자수 (기본 최대 150자이나 다른 경우 존재함) */
   contentNameMaxLength?: number;
-  /** 학습자원 생성 타입 (수기/번역/공유) */
+  /** 교육자원 생성 타입 (수기/번역/공유) */
   createType?: ContentCreateType;
 }) => {
   const { t } = useTranslation();
@@ -104,23 +104,23 @@ const LearningResourceBaseFormComponent = ({
           }
         />
       </ContentsRow>
-      {/*학습자원명*/}
+      {/*교육자원명*/}
       <ContentsRow>
         <FormRow2
           provider={provider}
           name="contentName"
-          label={t('학습자원명')}
+          label={t('교육자원명')}
           value=""
           validation={{ required: true }}
           element={<Input type="text" maxLength={contentNameMaxLength} readOnly={hasMapping} />}
         />
       </ContentsRow>
-      {/*학습자원 설명*/}
+      {/*교육자원 설명*/}
       <ContentsRow>
         <FormRow2
           provider={provider}
           name="description"
-          label={t('학습자원 설명')}
+          label={t('교육자원 설명')}
           value=""
           element={<TextareaFormField maxLength={2000} />}
         />
@@ -280,7 +280,7 @@ const LearningResourceBaseFormComponent = ({
           element={<ChipListFormField />}
           placeholder={t('한글, 영문, 숫자 포함 9자 이하 태그를 입력하세요.')}
           limitPlaceholder={t('여러개의 태그는 쉼표로 구분')}
-          tooltip={t('태그는 학습자원 검색 시 활용되고, 학습자에게는 10개까지만 보여집니다.')}
+          tooltip={t('태그는 교육자원 검색 시 활용되고, 학습자에게는 10개까지만 보여집니다.')}
           chipListConfig={{
             showInput: true,
             labelField: 'tagName',
@@ -288,14 +288,14 @@ const LearningResourceBaseFormComponent = ({
           }}
         />
       </ContentsRow>
-      {/*학습자원 개요 (AI 자동추출), 키워드 (AI 자동 추출)*/}
+      {/*교육자원 개요 (AI 자동추출), 키워드 (AI 자동 추출)*/}
       {showAiInfo && (
         <>
           <ContentsRow>
             <FormRow2
               provider={provider}
               name="aiSummary"
-              label={t('학습자원 개요 (AI 자동 추출)')}
+              label={t('교육자원 개요 (AI 자동 추출)')}
               value=""
               element={<TextareaFormField maxLength={2000} readOnly />}
               placeholder={t('키워드는 AI 자동 추출되어 표기됩니다.')}
@@ -326,7 +326,7 @@ const LearningResourceBaseFormComponent = ({
             label: (value: boolean) => (value ? t('활용가능') : t('활용불가')),
           }}
           guideText={t(
-            `해당 학습자원으로 교육 과정을 개설할 수 ${isCourseUsed ? '있습니다' : '없습니다'}.`,
+            `해당 교육자원으로 교육 과정을 개설할 수 ${isCourseUsed ? '있습니다' : '없습니다'}.`,
           )}
           value={true}
         />

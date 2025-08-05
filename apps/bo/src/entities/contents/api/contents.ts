@@ -5,7 +5,7 @@ import { ContentsListSearchParams, ContentsListSearchResponse } from '../model/c
 
 export class ContentsService {
   /**
-   * 학습자원 목록 조회
+   * 교육자원 목록 조회
    */
   static getContentsList(
     param: ContentsListSearchParams,

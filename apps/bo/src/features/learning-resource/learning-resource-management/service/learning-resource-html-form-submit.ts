@@ -22,10 +22,8 @@ export const getPayloadFromHtmlMetadataSubmit = (options: { data: any; contentUu
     vendorCoordinatorName: options.data.vendorCoordinatorName,
     vendorTelNo: options.data.vendorTelNo,
     isCourseUsed: options.data.isCourseUsed,
-    isContentSecured: options.data.isContentSecured,
     isInspected: options.data.isInspected,
     isCopyrighted: options.data.isCopyrighted,
-    isSecured: true,
     isDeleted: false,
     isOpened: true,
     tags: options.data.tags.map((tag: Tag | string) => ({

@@ -1,4 +1,4 @@
-// IA105 / NLP_BO_CMS_1016, NLP_BO_CMS_1002 / 학습자원조회_나의 학습자원_등록_동영상
+// IA105 / NLP_BO_CMS_1016, NLP_BO_CMS_1002 / 교육자원조회_나의 교육자원_등록_동영상
 import {
   learningResourceQueryOptions,
   QuestionBasicInfoDetail,
@@ -17,6 +17,7 @@ import {
   ScormView,
   VideoView,
 } from '@widgets/learning/learning-resource';
+import { AssignmentView } from '@widgets/learning/learning-resource/assignment-view';
 import { ExamPoolView } from '@widgets/learning/learning-resource/exam-pool-view';
 import { ExamView } from '@widgets/learning/learning-resource/exam-view';
 
@@ -60,6 +61,8 @@ function RouteComponent() {
       return <ExamView content={content as TestPaperBasicInfoDetail} hasMapping={hasMapping} />;
     case LEARNING_TYPE.EXAM_POOL:
       return <ExamPoolView content={content as QuestionBasicInfoDetail} hasMapping={hasMapping} />;
+    case LEARNING_TYPE.ASSIGNMENT:
+      return <AssignmentView content={content} hasMapping={hasMapping} />;
   }
 
   return <NotFound />;
