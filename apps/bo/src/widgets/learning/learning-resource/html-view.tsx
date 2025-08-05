@@ -1,23 +1,23 @@
-/* IA112 / NLP_BO_CMS_1022 - 나의 학습자원 > HTML 상세(저장 및 조회용) */
+/* IA112 / NLP_BO_CMS_1022 - 교육자원 > HTML 상세(저장 및 조회용) */
+import { useRouter } from '@tanstack/react-router';
+import { useTranslation } from 'react-i18next';
 import { useUpdateHTML5Metadata } from '@entities/learning-resource';
 import {
   ContentTopButtons,
   getTooltipContent,
   LearningResourceHtmlDetail,
-  LearningResourceHtmlFileInfo,
 } from '@features/learning-resource';
 import { getPayloadFromHtmlMetadataSubmit } from '@features/learning-resource/learning-resource-management/service/learning-resource-html-form-submit';
 import { useDynamicForm2 } from '@learnway/hooks';
 import { useModal } from '@learnway/ui/modal';
 import { ContentsButtons, MainContents, PageContainer, SubContents } from '@shared/ui';
-import { useRouter } from '@tanstack/react-router';
 import {
   ContentCreateType,
   ContentInformation,
   ContentStatusCode,
   HtmlVideoMetadataRes,
 } from '@types';
-import { useTranslation } from 'react-i18next';
+import { HtmlVideoInfo } from '@features/learning-resource/learning-resource-management/ui/html-video-info';
 
 interface Props {
   content: ContentInformation;
@@ -31,8 +31,7 @@ function HtmlViewComponent({ content, hasMapping }: Props) {
   const { confirm: openConfirm } = useModal();
 
   const form = useDynamicForm2();
-  const { provider, onSubmit, watch } = form;
-  const processingStatus = watch('processingStatus');
+  const { provider, onSubmit } = form;
 
   const { update: updateMetadata } = useUpdateHTML5Metadata({
     onSuccess: (result: HtmlVideoMetadataRes) => {
@@ -87,13 +86,7 @@ function HtmlViewComponent({ content, hasMapping }: Props) {
         </MainContents>
 
         <SubContents>
-          {content?.contentUuid && content?.fileUuid && (
-            <LearningResourceHtmlFileInfo
-              contentUuid={content.contentUuid}
-              uuid={content.fileUuid}
-              processingStatus={processingStatus}
-            />
-          )}
+          <HtmlVideoInfo provider={provider} />
         </SubContents>
       </PageContainer>
     </form>

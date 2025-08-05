@@ -43,11 +43,13 @@ function TranslationListModalComponent({ contentInfo }: TranslationListModalComp
     columnHelper.accessor('languageCountryCode', {
       cell: (_) => t(`pms.multilingual.LangCountryCode.${_.getValue()}`),
       header: t('번역언어'),
-      enableGrouping: false }),
+      enableGrouping: false,
+    }),
     columnHelper.accessor('createType', {
       cell: (_) => (!_.getValue() ? t('번역필요') : t('번역')),
       header: t('번역상태'),
-      enableGrouping: false }),
+      enableGrouping: false,
+    }),
   ] as ColumnDef<TranslationListData, string>[];
 
   return (
@@ -74,7 +76,7 @@ function TranslationListModalComponent({ contentInfo }: TranslationListModalComp
               <tr>
                 <th scope="row">{t('언어')}</th>
                 <td>{t(`pms.multilingual.LangCountryCode.${contentInfo.languageCountryCode}`)}</td>
-                <th scope="row">{t('학습자원명')}</th>
+                <th scope="row">{t('교육자원명')}</th>
                 <td>{contentInfo.contentName}</td>
               </tr>
             </tbody>
