@@ -1,4 +1,4 @@
-/* IA117 / NLP_BO_CMS_1301 - 나의 학습자원 > 과제 등록 및 상세 */
+/* IA117 / NLP_BO_CMS_1301 - 교육자원 > 과제 등록 및 상세 */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ContentCreateType, ContentInformation } from '@types';

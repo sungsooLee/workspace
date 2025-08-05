@@ -1,4 +1,4 @@
-/* IA118 / NLP_BO_CMS_1220 - 나의 학습자원 > 문제은행 등록 및 상세 */
+/* IA118 / NLP_BO_CMS_1220 - 교육자원 > 문제은행 등록 및 상세 */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ContentCreateType, EnFormMode, QuestionBasicInfoDetail } from '@types';

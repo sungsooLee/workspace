@@ -110,7 +110,7 @@ const ContentTopButtonsComponent = ({ provider, hasMapping = false }: Props) => 
     if (isCourseUsed) {
       await openAlert({
         title: t('과정에서 사용 중입니다.'),
-        content: t('과정에서 사용중인 학습자원은 삭제할 수 없습니다.'),
+        content: t('과정에서 사용중인 교육자원은 삭제할 수 없습니다.'),
       });
       return;
     }

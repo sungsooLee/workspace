@@ -375,14 +375,14 @@ export default class LearningResourceService {
   }
 
   /**
-   * 동영상 학습자원 상세 조회
+   * 동영상 교육자원 상세 조회
    */
   static getVideoResource(contentUuid: string) {
     return httpService.get<GetVideoResourceRes>(`${CMSApiPrefix()}/video/${contentUuid}/resource`);
   }
 
   /**
-   * 스콤 학습자원 상세 조회
+   * 스콤 교육자원 상세 조회
    */
   static getScormResource(contentUuid: string) {
     return httpService.get<GetScormResourceRes>(`${CMSApiPrefix()}/scorm/${contentUuid}/resource`);
@@ -421,7 +421,7 @@ export default class LearningResourceService {
   }
 
   /**
-   * 공유함 학습자원 조회
+   * 공유함 교육자원 조회
    */
   static getSharedBoxContents(params: GetSharedBoxContentsParams) {
     return httpService.get<GetSharedBoxContentsRes>(

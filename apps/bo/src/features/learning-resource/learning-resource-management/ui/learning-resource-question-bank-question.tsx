@@ -268,7 +268,7 @@ const LearningResourceQuestionBankQuestionComponent = forwardRef<
             <tr>
               <th scope="row">{t('유형')}</th>
               <td>{t('문제은행')}</td>
-              <th scope="row">{t('학습자원명')}</th>
+              <th scope="row">{t('교육자원명')}</th>
               <td>{baseInfo?.contentName}</td>
             </tr>
             <tr>
