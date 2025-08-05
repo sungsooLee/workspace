@@ -1,6 +1,16 @@
-import { useModal } from '@learnway/ui/modal';
-import { Tabs } from '@learnway/ui/tabs';
 /* IA118 / NLP_BO_CMS_1203 - 나의 학습자원 > 시험지 등록 및 상세 */
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useRouter } from '@tanstack/react-router';
+import { QueryClient } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
+import {
+  ContentCreateType,
+  ExamTemplateType,
+  TestPaperBasicInfoDetail,
+  TestPaperBasicInfoSaveRes,
+} from '@types';
+import { useModal } from '@learnway/ui/modal';
+import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
 import {
   ContentTopButtons,
   getTooltipContent,
@@ -11,44 +21,32 @@ import {
   ExamTab,
   getExamTemplateTextByType,
   getQuestionGenTypeText,
-  PageMode,
   useExamBasicInfoForm,
-  useExamLoaderData,
   useExamPaperForm,
 } from '@features/learning-resource/learning-resource-management/service';
-import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
-import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
-import { ContentCreateType, ExamTemplateType, TestPaperBasicInfoSaveRes } from '@types';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
+import { Tabs } from '@learnway/ui/tabs';
 
-export const Route = createLazyFileRoute('/_layout/learning/resource/test-paper/view')({
-  component: RouteComponent,
-});
+interface Props {
+  content?: TestPaperBasicInfoDetail;
+  hasMapping?: boolean;
+}
 
-function RouteComponent() {
+function ExamViewComponent({ content, hasMapping }: Props) {
   const { t } = useTranslation();
 
+  const queryClient = new QueryClient();
+
   const router = useRouter();
-
-  const { contentUuid, data, refetchContentDetail, hasMapping, listParam } = useExamLoaderData();
-
   const { alert, confirm: openConfirm } = useModal();
 
   const { basicInfoRef, questionInfoRef, questionGenType, setQuestionGenType } =
-    useExamPaperForm(data);
+    useExamPaperForm(content);
 
-  const {
-    basicInfoProvider: provider,
-    getBasicInfoValues: getValues,
-    updateBasicInfoFormData: updateFormData,
-    updateFormDataByKey,
-    onBasicInfoFormChange: onFormChange,
-    onSubmit,
-    saveBasicInfo,
-  } = useExamBasicInfoForm({
+  const contentUuid = content?.contentUuid ?? '';
+
+  const { basicInfoForm, saveBasicInfo } = useExamBasicInfoForm({
     contentUuid,
     onSaveSuccess: (result?: TestPaperBasicInfoSaveRes) => {
       if (!result) {
@@ -56,48 +54,54 @@ function RouteComponent() {
       }
       if (result?.examUuid) {
         router.navigate({
-          to: '/learning/resource/test-paper/view',
+          to: '/learning/learning-resource/view',
           state: { contentUuid: result.examUuid },
           replace: true,
         });
       }
     },
-    onUpdateSuccess: async (result?: unknown) => {
-      await refetchContentDetail();
-    },
+    // onUpdateSuccess: async (result?: unknown) => {
+    //   const refetchedData = await queryClient.fetchQuery(
+    //     learningResourceQueryOptions.getContent<TestPaperBasicInfoDetail>(contentUuid),
+    //   );
+    // },
   });
+
+  const { provider, onSubmit } = basicInfoForm;
+
+  const handleSubmit = (data: Record<string, any>) => {
+    if (basicInfoRef.current) {
+      basicInfoRef.current?.save?.(data);
+    } else if (questionInfoRef.current) {
+      questionInfoRef.current?.complete?.();
+    }
+  };
 
   const tabItems = useMemo(
     () => [
       {
-        title: `${t('시험지 정보')}${contentUuid ? `(${getExamTemplateTextByType(data?.examTemplateType as ExamTemplateType, t)})` : ''}`,
+        title: `${t('시험지 정보')}${contentUuid ? `(${getExamTemplateTextByType(content?.examTemplateType as ExamTemplateType, t)})` : ''}`,
         key: ExamTab.PAPER,
         content: (
           <LearningResourceTestPaperInfo
             ref={basicInfoRef}
-            basicInfoForm={{
-              provider,
-              getValues,
-              updateFormData,
-              onFormChange,
-              onSubmit,
-              saveBasicInfo,
-            }}
+            basicInfoForm={basicInfoForm}
+            saveBasicInfo={saveBasicInfo}
             contentUuid={contentUuid}
-            data={data}
+            data={content}
             hasMapping={hasMapping}
           />
         ),
       },
       {
-        title: `${t('문항 관리')}${data?.questionGenType ? `(${getQuestionGenTypeText(data.questionGenType, t)})` : ''}`,
+        title: `${t('문항 관리')}${content?.questionGenType ? `(${getQuestionGenTypeText(content.questionGenType, t)})` : ''}`,
         key: ExamTab.QUESTION,
         content: (
           <LearningResourceQuestionInfo
             ref={questionInfoRef}
-            basicInfoForm={{ provider, getValues, updateFormDataByKey, saveBasicInfo }}
+            basicInfoForm={basicInfoForm}
             contentUuid={contentUuid}
-            data={data}
+            data={content}
             hasMapping={hasMapping}
             questionGenType={questionGenType}
             setQuestionGenType={setQuestionGenType}
@@ -105,7 +109,7 @@ function RouteComponent() {
         ),
       },
     ],
-    [provider, data],
+    [provider, content],
   );
 
   const [selectedTabKey, setSelectedTabKey] = useState<string>(ExamTab.PAPER);
@@ -136,14 +140,6 @@ function RouteComponent() {
     [saved],
   );
 
-  const handleSubmit = (data: Record<string, any>) => {
-    if (basicInfoRef.current) {
-      basicInfoRef.current?.save?.(data);
-    } else if (questionInfoRef.current) {
-      questionInfoRef.current?.complete?.();
-    }
-  };
-
   useEffect(() => {
     console.log('contentUuid ===>', contentUuid);
     if (contentUuid) {
@@ -154,10 +150,11 @@ function RouteComponent() {
   return (
     <form onSubmit={onSubmit(handleSubmit)}>
       <PageContainer
+        title={t('시험지 상세')}
         tooltipProps={{
-          show: !!hasMapping || data?.createType !== ContentCreateType.MANUAL,
-          content: t(getTooltipContent(data?.createType)),
-          type: data?.createType,
+          show: !!hasMapping || content?.createType !== ContentCreateType.MANUAL,
+          content: t(getTooltipContent(content?.createType)),
+          type: content?.createType,
         }}
       >
         <ContentsButtons>
@@ -165,7 +162,7 @@ function RouteComponent() {
         </ContentsButtons>
 
         <MainContents>
-          <div className="form_row">
+          <div className="form-row">
             <div className={styles.main_contents}>
               <Tabs
                 type="progress"
@@ -182,3 +179,7 @@ function RouteComponent() {
     </form>
   );
 }
+
+ExamViewComponent.displayName = 'ExamView';
+
+export const ExamView = ExamViewComponent;

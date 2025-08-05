@@ -8,7 +8,7 @@ import {
   TestPaperBasicInfoDetail,
   TestPaperBasicInfoSaveReq,
 } from '@types';
-import { DynamicFormProvider } from '@learnway/hooks';
+import { DynamicFormProvider, UseDynamicFormResult } from '@learnway/hooks';
 
 export enum PageMode {
   CREATE = 'CREATE',
@@ -21,7 +21,7 @@ export enum ExamTab {
 }
 
 export interface TabFormRef {
-  save?: (data?: Record<string, any>) => Promise<void> | void;
+  save?: (data: Record<string, any>) => Promise<void> | void;
   complete?: () => Promise<void> | void;
   getValues?: () => any;
   updateFormData?: (data?: Record<string, any>) => void;
@@ -39,7 +39,8 @@ type ExamBasicInfoForm = {
 };
 
 export interface ExamBasicInfoProps {
-  basicInfoForm: ExamBasicInfoForm;
+  basicInfoForm: UseDynamicFormResult;
+  saveBasicInfo?: (data: Record<string, any>) => Promise<void>;
   contentUuid?: string;
   data?: Partial<TestPaperBasicInfoDetail>;
   hasMapping?: boolean;

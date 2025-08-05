@@ -7,19 +7,12 @@ import { useCallback } from 'react';
 export const getDetailPathByContentType = (contentType: string): string => {
   switch (contentType) {
     case LEARNING_TYPE.VIDEO:
-      return '/learning/learning-resource/view';
     case LEARNING_TYPE.BLOG:
-      return '/learning/learning-resource/view';
     case LEARNING_TYPE.SCORM:
-      return '/learning/learning-resource/view';
     case LEARNING_TYPE.HTML5_VIDEO:
-      return '/learning/learning-resource/view';
     case LEARNING_TYPE.EXAM:
-      return '/learning/resource/test-paper/view';
     case LEARNING_TYPE.EXAM_POOL:
-      return '/learning/resource/question-bank/view';
     case LEARNING_TYPE.ASSIGNMENT:
-      return '/learning/resource/assignment/view';
     case LEARNING_TYPE.ETC:
       return '/learning/learning-resource/view';
   }
