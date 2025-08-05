@@ -35,7 +35,7 @@ function LearningResourceSharedTableComponent() {
 
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { openModal, confirm: openConfirm } = useModal();
+  const { openModal, confirm: openConfirm, alert: openAlert } = useModal();
 
   const { exportContent } = usePostContentExport({
     onSuccess: (result: ContentExportRes) => {
@@ -49,6 +49,26 @@ function LearningResourceSharedTableComponent() {
             },
           },
         });
+      }
+    },
+    onError: async (error: any) => {
+      console.error(error);
+      await openAlert({
+        title: t('가져갈 수 없는 학습자원입니다.'),
+        content:
+          //CMS_INAVLID_EXPORT_ENABLE_STATUS(400, "B234", 콘텐츠 사용가능상태가 아닌 콘텐츠는 내보내기가 허용되지 않습니다.
+          error.code === 'B234'
+            ? t('사용기한이 만료된 학습자원은 공유할 수 없습니다.')
+            : // CMS_EXPORT_CONTENT_NOT_FOUND(404, "B235", 공유함에서 콘텐츠 데이터를 찾을 수 없습니다.
+              error.code === 'B235'
+              ? t(
+                  "공유 해제한 학습자원은 가져갈 수 없습니다.\n'확인'선택시 공유함 목록에서 삭제됩니다.",
+                )
+              : error.message,
+      });
+      onFormChange(params);
+      if (await onFormValid()) {
+        handleSearch(getValues());
       }
     },
   });
