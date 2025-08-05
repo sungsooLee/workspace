@@ -7,10 +7,7 @@ import { useCreateBlogContent, useUpdateBlogContent } from '@entities/learning-r
 import { getPayloadFromBlogSubmit } from '../learning-resource-blog-form-submit';
 import { useModal } from '@learnway/ui/modal';
 
-export const useBlogContentForm = (options: {
-  mode: 'CREATE' | 'UPDATE';
-  provider: DynamicFormProvider;
-}) => {
+export const useBlogContentForm = (options: { provider: DynamicFormProvider }) => {
   const router = useRouter();
   const { t } = useTranslation();
   const { confirm: openConfirm } = useModal();
@@ -26,9 +23,11 @@ export const useBlogContentForm = (options: {
         contentUuid: info.contentUuid,
         listParam: {
           tenantId: info.tenantId,
-          channelUuid: info.channelUuid },
-        mode: 'UPDATE' },
-      replace: true };
+          channelUuid: info.channelUuid,
+        },
+      },
+      replace: true,
+    };
   }, []);
 
   const { create: createBlogContent } = useCreateBlogContent({
@@ -36,28 +35,31 @@ export const useBlogContentForm = (options: {
       if (result?.contentUuid) {
         router.navigate(routingParams(result));
       }
-    } });
+    },
+  });
 
   const { update: updateBlogContent } = useUpdateBlogContent({
     onSuccess: (result: BlogPostRes) => {
       if (result?.contentUuid) {
         router.navigate(routingParams(result));
       }
-    } });
+    },
+  });
 
   const handleOnSubmit = async (data: Record<string, any>): Promise<void> => {
     const { payload } = getPayloadFromBlogSubmit({
       data,
       tenantId,
-      mode: options.mode,
-      contentUuid });
+      contentUuid,
+    });
 
     if (
       await openConfirm({
         title: t('LABEL.confirm.save.title'),
-        content: t('LABEL.confirm.save.message') })
+        content: t('LABEL.confirm.save.message'),
+      })
     ) {
-      if (options.mode === 'CREATE') {
+      if (!contentUuid) {
         createBlogContent(payload);
       } else {
         updateBlogContent(payload as BlogUpdateReq);

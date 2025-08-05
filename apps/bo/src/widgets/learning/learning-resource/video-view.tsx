@@ -1,77 +1,63 @@
-import { Button } from '@learnway/ui/button';
-import { useModal } from '@learnway/ui/modal';
 //  IA105 / NLP_BO_CMS_1016, NLP_BO_CMS_1002 / 학습자원조회_나의 학습자원_등록_동영상(자체)
-
-import { learningResourceQueryOptions, usePutVideoUpdate } from '@entities/learning-resource';
-import { NotFound } from '@features/layout';
+import { usePutVideoUpdate } from '@entities/learning-resource';
 import {
   ContentTopButtons,
   convertToVideoForm,
   convertToVideoSubmit,
   getTooltipContent,
   LearningResourceVideoDetail,
-  MovieInfo } from '@features/learning-resource';
-import { useCurrentRoute, useDynamicForm2 } from '@learnway/hooks';
+  MovieInfo,
+} from '@features/learning-resource';
+import { useDynamicForm2 } from '@learnway/hooks';
+import { Button } from '@learnway/ui/button';
+import { useModal } from '@learnway/ui/modal';
 import { ContentsButtons, MainContents, PageContainer, SubContents } from '@shared/ui';
-import { useQuery } from '@tanstack/react-query';
-import { createLazyFileRoute } from '@tanstack/react-router';
-import { ContentCreateType, PutVideoUpdateRes } from '@types';
+import { ContentCreateType, ContentInformation, PutVideoUpdateRes } from '@types';
 import { t } from 'i18next';
 import { useEffect } from 'react';
 
-export const Route = createLazyFileRoute('/_layout/learning/learning-resource/video/view')({
-  component: RouteComponent });
+interface Props {
+  content: ContentInformation;
+  hasMapping?: boolean;
+}
 
-function RouteComponent() {
+function VideoViewComponent({ content, hasMapping }: Props) {
   const { confirm: openConfirm } = useModal();
-  const {
-    state: { contentUuid } } = useCurrentRoute();
-  const { data, error: fetchError } = useQuery(
-    learningResourceQueryOptions.getContent(contentUuid),
-  );
-  const { data: hasMapping } = useQuery(
-    learningResourceQueryOptions.getCurriculumsMapping(contentUuid),
-  );
 
   const { provider, onSubmit, updateFormData, formState, getValues } = useDynamicForm2();
 
   useEffect(() => {
-    if (data) updateFormData(convertToVideoForm(data));
-  }, [data]);
+    if (content) updateFormData(convertToVideoForm(content));
+  }, [content]);
 
   const { update: updateVideoContent } = usePutVideoUpdate({
     onSuccess: (result: PutVideoUpdateRes) => {
       console.log('update success', result);
       updateFormData(convertToVideoForm(result));
-    } });
+    },
+  });
 
   const handleFormSubmit = async (data: any) => {
     if (
       await openConfirm({
         title: t('저장 하시겠습니까?'),
-        content: t('입력한 정보로 저장합니다.') })
+        content: t('입력한 정보로 저장합니다.'),
+      })
     ) {
       updateVideoContent(convertToVideoSubmit(data));
     }
   };
 
-  if (fetchError) {
-    console.log('🚀 ~ RouteComponent ~ fetchError:', fetchError);
-    return <NotFound />;
-  }
-
-  if (!data) {
-    return <PageContainer />;
-  }
   const debug = true;
 
   return (
     <form onSubmit={onSubmit(handleFormSubmit)}>
       <PageContainer
         tooltipProps={{
-          show: !!hasMapping || data?.createType !== ContentCreateType.MANUAL,
-          content: t(getTooltipContent(data?.createType)),
-          type: data?.createType }}
+          show: !!hasMapping || content?.createType !== ContentCreateType.MANUAL,
+          content: t(getTooltipContent(content?.createType)),
+          type: content?.createType,
+        }}
       >
         <ContentsButtons>
           {debug && (
@@ -81,7 +67,7 @@ function RouteComponent() {
                 console.log(
                   '🚀 ~ data & Form values:',
                   formState.isDirty,
-                  data,
+                  content,
                   convertToVideoSubmit(getValues()),
                 )
               }
@@ -101,3 +87,5 @@ function RouteComponent() {
     </form>
   );
 }
+
+export const VideoView = VideoViewComponent;

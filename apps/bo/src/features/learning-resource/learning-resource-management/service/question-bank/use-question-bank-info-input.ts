@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   useCopyQuestionsToExamPaper,
   useDeleteQuestionItemList,
   useGetQuestionItemList,
   useUpdateQuestionBankQuestionCountInfo,
 } from '@entities/learning-resource';
-import { useLearningResourceQuestionDetailForm } from '../learning-resource-question-detail-from.hook';
 import {
   ContentType,
   MutationResponse,
@@ -15,7 +15,8 @@ import {
   UpdateQuestionBankCountInfoReq,
 } from '@types';
 import { useToast } from '@learnway/ui/toast';
-import { useTranslation } from 'react-i18next';
+import { useLearningResourceQuestionDetailForm } from '../learning-resource-question-detail-from.hook';
+import { useQuestionSort } from '../learning-resource-question-sort.hook';
 
 export const useQuestionBankInfoInput = () => {
   const { t } = useTranslation();
@@ -28,7 +29,14 @@ export const useQuestionBankInfoInput = () => {
   const [selectedQuestionRows, setSelectedQuestionRows] = useState<QuestionItem[]>([]);
 
   const { data: questionList = [], refetch } = useGetQuestionItemList(baseInfo?.contentUuid);
-  const contentUuid = baseInfo?.contentUuid;
+  const contentUuid = baseInfo?.contentUuid ?? '';
+
+  const { sensors, handleOnDragEnd } = useQuestionSort({
+    contentUuid,
+    contentType: ContentType.EXAM_POOL,
+    questionItemList,
+    setQuestionItemList,
+  });
 
   const { update: updateCountInfo } = useUpdateQuestionBankQuestionCountInfo();
 
@@ -129,5 +137,7 @@ export const useQuestionBankInfoInput = () => {
     refetchQuestionItemList: refetch,
     handleOnCopyQuestion,
     handleOnDeleteQuestion,
+    dragSensors: sensors,
+    handleOnDragEnd,
   };
 };

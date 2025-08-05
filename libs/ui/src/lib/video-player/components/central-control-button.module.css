@@ -4,6 +4,11 @@
     .btn_control {
       @apply flex h-[80px] w-[80px] items-center justify-center rounded-[50%] bg-[rgba(255,255,255,.5)];
     }
+    button {
+      &:disabled {
+        @apply opacity-50;
+      }
+    }
   }
 }
 

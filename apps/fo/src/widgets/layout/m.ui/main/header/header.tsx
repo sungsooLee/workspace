@@ -1,14 +1,11 @@
 import { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from '@tanstack/react-router';
 
-import { cn } from '@learnway/shared';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 
-import { Language, NotificationButton, TenantButton } from '../../../../../features/platform';
-import { Logo, MobileNavigateButton, Search } from '../../../../../features/layout';
-import { useLogoutUser } from '@learnway/auth/entities';
-import { useFetchTenantByUser } from '../../../../../entities/tenant';
+import { useFetchTenantByUser } from '@entities/tenant';
+import { Logo, MobileNavigateButton } from '@features/layout';
+import { TenantButton } from '@features/platform';
 
 import styles from '@learnway/styles/fo/widgets/layout/m.ui/main/header/header.module.css';
 
@@ -23,11 +20,14 @@ function HeaderComponent() {
       <header className={styles.header}>
         <h1>
           <Logo />
-          <TenantButton />
         </h1>
 
+        <div className={styles.tenant}>
+          <TenantButton />
+        </div>
+
         <div className={styles.util}>
-          <NotificationButton />
+          {/* <NotificationButton /> */}
           <MobileNavigateButton />
         </div>
       </header>
@@ -35,4 +35,8 @@ function HeaderComponent() {
   );
 }
 
+/**
+ * @description MO 헤더 FO_GNB_MA_1000
+ *
+ */
 export const MobileHeader = memo(HeaderComponent);

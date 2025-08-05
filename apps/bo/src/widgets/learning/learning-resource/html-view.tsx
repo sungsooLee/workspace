@@ -1,28 +1,32 @@
-import { useModal } from '@learnway/ui/modal';
 /* IA112 / NLP_BO_CMS_1022 - 나의 학습자원 > HTML 상세(저장 및 조회용) */
-import { useEffect } from 'react';
-import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
-import { ContentsButtons, MainContents, PageContainer, SubContents } from '@shared/ui';
-import { useDynamicForm2 } from '@learnway/hooks';
-import { ContentCreateType, ContentStatusCode, HtmlVideoMetadataRes } from '@types';
 import { useUpdateHTML5Metadata } from '@entities/learning-resource';
 import {
   ContentTopButtons,
   getTooltipContent,
   LearningResourceHtmlDetail,
-  LearningResourceHtmlFileInfo } from '@features/learning-resource';
-import { useFetchHtmlVideoInfo } from '@features/learning-resource/learning-resource-management/service';
+  LearningResourceHtmlFileInfo,
+} from '@features/learning-resource';
 import { getPayloadFromHtmlMetadataSubmit } from '@features/learning-resource/learning-resource-management/service/learning-resource-html-form-submit';
+import { useDynamicForm2 } from '@learnway/hooks';
+import { useModal } from '@learnway/ui/modal';
+import { ContentsButtons, MainContents, PageContainer, SubContents } from '@shared/ui';
+import { useRouter } from '@tanstack/react-router';
+import {
+  ContentCreateType,
+  ContentInformation,
+  ContentStatusCode,
+  HtmlVideoMetadataRes,
+} from '@types';
 import { useTranslation } from 'react-i18next';
 
-export const Route = createLazyFileRoute('/_layout/learning/resource/html-video/view')({
-  component: RouteComponent });
+interface Props {
+  content: ContentInformation;
+  hasMapping?: boolean;
+}
 
-function RouteComponent() {
+function HtmlViewComponent({ content, hasMapping }: Props) {
   const router = useRouter();
   const { t } = useTranslation();
-
-  const { contentUuid, data, hasMapping } = useFetchHtmlVideoInfo();
 
   const { confirm: openConfirm } = useModal();
 
@@ -33,60 +37,59 @@ function RouteComponent() {
     onSuccess: (result: HtmlVideoMetadataRes) => {
       if (result?.contentUuid && result.contentStatusCode === ContentStatusCode.SAVED) {
         return router.navigate({
-          to: '/learning/resource/html-video/view',
+          to: '/learning/learning-resource/view',
           state: {
             contentUuid: result.contentUuid,
             listParam: {
               tenantId: result.tenantId,
-              channelUuid: result.channelUuid } },
-          replace: true });
+              channelUuid: result.channelUuid,
+            },
+          },
+          replace: true,
+        });
       }
-    } });
+    },
+  });
 
   const handleSubmit = async (formData: any): Promise<void> => {
     const { payload } = getPayloadFromHtmlMetadataSubmit({
       data: formData,
-      contentUuid: data?.contentUuid ?? '' });
+      contentUuid: content?.contentUuid ?? '',
+    });
 
     if (
       await openConfirm({
         title: t('LABEL.confirm.save.title'),
-        content: t('LABEL.confirm.save.message') })
+        content: t('LABEL.confirm.save.message'),
+      })
     ) {
       updateMetadata(payload);
     }
   };
 
-  useEffect(() => {
-    if (!contentUuid) {
-      router.navigate({
-        to: '/learning/learning-resource',
-        replace: true });
-    }
-  }, [contentUuid]);
-
   return (
     <form onSubmit={onSubmit(handleSubmit)}>
       <PageContainer
         tooltipProps={{
-          show: !!hasMapping || data?.createType !== ContentCreateType.MANUAL,
-          content: t(getTooltipContent(data?.createType)),
-          type: data?.createType }}
+          show: !!hasMapping || content?.createType !== ContentCreateType.MANUAL,
+          content: t(getTooltipContent(content?.createType)),
+          type: content?.createType,
+        }}
       >
         <ContentsButtons>
           <ContentTopButtons provider={provider} />
         </ContentsButtons>
 
         <MainContents>
-          <LearningResourceHtmlDetail form={form} data={data} hasMapping={hasMapping} />
+          <LearningResourceHtmlDetail form={form} data={content} hasMapping={hasMapping} />
         </MainContents>
 
         <SubContents>
-          {data?.contentUuid && data?.fileUuid && (
+          {content?.contentUuid && content?.fileUuid && (
             <LearningResourceHtmlFileInfo
-              contentUuid={data.contentUuid}
-              uuid={data.fileUuid}
-              status={data?.contentStatusCode ?? ContentStatusCode.TEMPORARY_SAVE}
+              contentUuid={content.contentUuid}
+              uuid={content.fileUuid}
+              status={content?.contentStatusCode ?? ContentStatusCode.TEMPORARY_SAVE}
             />
           )}
         </SubContents>
@@ -94,3 +97,5 @@ function RouteComponent() {
     </form>
   );
 }
+
+export const HtmlView = HtmlViewComponent;

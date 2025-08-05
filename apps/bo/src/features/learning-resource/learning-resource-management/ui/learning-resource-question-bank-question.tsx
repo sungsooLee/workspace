@@ -1,20 +1,12 @@
-import {
-  forwardRef,
-  useCallback,
-  useContext,
-  useEffect,
-  useImperativeHandle,
-  useMemo,
-  useState,
-} from 'react';
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useState } from 'react';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { useTranslation } from 'react-i18next';
 
-import { IcoCopy, IcoMenu01, IcoMinus, IcoPlus } from '@learnway/icons';
+import { IcoCopy, IcoMinus, IcoPlus } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import { FormSubTitle } from '@learnway/ui/base-form';
 import { Button } from '@learnway/ui/button';
-import { DragHandleContext, GridBox } from '@learnway/ui/grid';
+import { GridBox } from '@learnway/ui/grid';
 import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
 import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
@@ -33,55 +25,18 @@ import { LearningResourceTestItemModal } from './learning-resource-test-item-mod
 import { LearningResourceQuestionShuttleModal } from './learning-resource-question-shuttle-modal';
 
 // Drag and Drop 관련
-import {
-  closestCenter,
-  DndContext,
-  DragEndEvent,
-  KeyboardSensor,
-  MeasuringStrategy,
-  MouseSensor,
-  PointerSensor,
-  TouchSensor,
-  useSensor,
-  useSensors,
-} from '@dnd-kit/core';
+import { closestCenter, DndContext, MeasuringStrategy } from '@dnd-kit/core';
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
-import { arrayMove } from '@dnd-kit/sortable';
 
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
 import styles from '@learnway/styles/bo/pages/_layout/learning/test-detail.module.css';
-
-const DragHandle = () => {
-  const dragContext = useContext(DragHandleContext);
-  const { listeners, attributes, setActivatorNodeRef } = dragContext || {};
-  return (
-    <div
-      ref={setActivatorNodeRef}
-      className="flex h-full w-full cursor-move items-center justify-center text-gray-400 hover:text-gray-600"
-      {...attributes}
-      {...listeners}
-      onClick={(e) => e.stopPropagation()} // 드래그 핸들 클릭이 행 클릭으로 전파되지 않도록
-    >
-      <IcoMenu01 width={24} height={24} fill="#A9AFB8" stroke="#4c515e" />
-    </div>
-  );
-};
+import { QuestionDragHandle } from '@features/learning-resource/learning-resource-management/ui/learning-resource-question-drag-handle';
 
 const LearningResourceQuestionBankQuestionComponent = forwardRef<QuestionBankTabFormRef, unknown>(
   (props, ref) => {
     const { t } = useTranslation();
 
     const { openModal } = useModal();
-    const sensors = useSensors(
-      useSensor(PointerSensor, {}),
-      useSensor(MouseSensor, {
-        activationConstraint: {
-          distance: 10,
-        },
-      }),
-      useSensor(TouchSensor, {}),
-      useSensor(KeyboardSensor, {}),
-    );
 
     const [statistic, setStatistic] = useState<QuestionStatisticRow[]>(initStatisticRow(t));
 
@@ -96,6 +51,8 @@ const LearningResourceQuestionBankQuestionComponent = forwardRef<QuestionBankTab
       refetchQuestionItemList,
       handleOnCopyQuestion,
       handleOnDeleteQuestion,
+      dragSensors,
+      handleOnDragEnd,
     } = useQuestionBankInfoInput();
 
     const handleAddQuestionButtonClick = useCallback(async () => {
@@ -252,7 +209,7 @@ const LearningResourceQuestionBankQuestionComponent = forwardRef<QuestionBankTab
           },
         }),
         columnHelper.accessor('orderChange', {
-          cell: (info) => <DragHandle />,
+          cell: (info) => <QuestionDragHandle />,
           header: t('순서변경'),
           size: 104,
           enableGrouping: false,
@@ -346,7 +303,7 @@ const LearningResourceQuestionBankQuestionComponent = forwardRef<QuestionBankTab
         <ContentsRow>
           <div className={styles.table_wrap}>
             <DndContext
-              sensors={sensors}
+              sensors={dragSensors}
               collisionDetection={closestCenter}
               modifiers={[restrictToVerticalAxis]}
               measuring={{
@@ -354,32 +311,7 @@ const LearningResourceQuestionBankQuestionComponent = forwardRef<QuestionBankTab
                   strategy: MeasuringStrategy.Always,
                 },
               }}
-              onDragEnd={(event: DragEndEvent) => {
-                const { active, over } = event;
-
-                if (!over || active.id === over.id) {
-                  return;
-                }
-
-                const oldIndex = questionItemList.findIndex((item) => item.sortSeq === active.id);
-                const newIndex = questionItemList.findIndex((item) => item.sortSeq === over.id);
-                console.log(oldIndex, newIndex);
-
-                if (oldIndex !== -1 && newIndex !== -1) {
-                  // arrayMove를 사용하여 부드러운 재배열
-                  const reorderedItems = arrayMove(questionItemList, oldIndex, newIndex);
-
-                  // order 필드를 새로운 순서로 업데이트
-                  const updatedItems = reorderedItems.map((item, index) => ({
-                    ...item,
-                    order: index + 1,
-                  }));
-
-                  setQuestionItemList(updatedItems);
-
-                  // return updatedItems;
-                }
-              }}
+              onDragEnd={handleOnDragEnd}
             >
               <GridBox
                 title=" "
@@ -390,10 +322,10 @@ const LearningResourceQuestionBankQuestionComponent = forwardRef<QuestionBankTab
                 columns={questionListColumns}
                 multiple
                 showNumberingColumn
-                // enableDragAndDrop
+                enableDragAndDrop
+                rowId="sortSeq"
                 onRowsSelect={setSelectedQuestionRows}
                 hideRowSelectionCheckBox={false}
-                rowId="sortSeq"
                 titleCustomNode={
                   <div className="custom_info_wrap pt-[1.2rem]">
                     <strong className="table_tit text-[1.4rem] font-normal">{t('문항목록')}</strong>

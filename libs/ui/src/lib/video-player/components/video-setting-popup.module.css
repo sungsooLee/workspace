@@ -1,9 +1,10 @@
 .start {
   &.video_setting {
+    @apply -mt-[16px];
     ul {
       li {
         button {
-          @apply flex w-full items-center justify-between py-[18px];
+          @apply flex w-full items-center justify-between !px-0 py-[18px];
           strong {
             @apply title2 text-[var(--gray35)];
           }

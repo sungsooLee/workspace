@@ -104,17 +104,17 @@
     }
   }
   .file_item {
-    @apply relative flex h-[42px] w-full items-center px-[20px];
+    @apply relative flex h-[42px] w-full flex-wrap items-center px-[20px];
     .check {
       @apply w-[24px] shrink-0;
     }
     .file_name {
-      @apply flex min-w-0 max-w-full flex-grow;
+      @apply flex min-w-0 max-w-full flex-1;
       svg {
         @apply mr-[8px] inline-block h-[24px] w-[24px] shrink-0;
       }
       em {
-        @apply block min-w-0 truncate;
+        @apply line-clamp-1 min-w-0 flex-1 truncate;
       }
     }
     .status_view {
@@ -262,7 +262,7 @@
 .guide_text {
   @apply body_bo_2_r relative mt-[8px] pl-[8px] text-[var(--gray8)];
   &::before {
-    @apply absolute left-0 top-1/2 h-[4px] w-[4px] -translate-y-1/2 rounded-full bg-[var(--gray8)] content-[''];
+    @apply absolute left-0 top-[12px] h-[4px] w-[4px] -translate-y-1/2 rounded-full bg-[var(--gray8)] content-[''];
   }
   &.error {
     @apply text-[var(--status1)];
@@ -294,6 +294,23 @@
   .file_ing {
     em {
       @apply text-[var(--secondary1)];
+    }
+  }
+}
+
+:global(body.mobile) {
+  @screen mobile {
+    .start {
+      .file_wrap {
+        .attach_area {
+          .file_title {
+            @apply title2-b;
+          }
+          .file_guide {
+            @apply body-xsm;
+          }
+        }
+      }
     }
   }
 }

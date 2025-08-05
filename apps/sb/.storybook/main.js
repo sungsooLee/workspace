@@ -82,19 +82,30 @@ const config = {
       server: {
         ...config.server,
         fs: {
-          strict: true,
+          strict: false,
           allow: [searchForWorkspaceRoot(process.cwd()), path.resolve(__dirname, '../../../')],
         },
       },
-      /*
       resolve: {
-        alias: {
-          '@libs/ui': path.resolve(__dirname, '../../libs/ui/src/index.ts'),
-          '@libs/editor': path.resolve(__dirname, '../../libs/editor/src/index.ts'),
-          '@libs/shared': path.resolve(__dirname, '../../libs/shared/src/index.ts'),
-          '@libs/hooks': path.resolve(__dirname, '../../libs/hooks/src/index.ts'),
-        },
-      },*/
+        alias: [
+          {
+            find: /^@learnway\/ui\/(.*)$/,
+            replacement: path.resolve(__dirname, '../../../libs/ui/src/lib/$1/index.ts'),
+          },
+          {
+            find: /^@learnway\/shared\/(.*)$/,
+            replacement: path.resolve(__dirname, '../../../libs/shared/src/lib/$1/index.ts'),
+          },
+          {
+            find: /^@learnway\/auth\/(.*)$/,
+            replacement: path.resolve(__dirname, '../../../libs/auth/src/lib/$1/index.ts'),
+          },
+          {
+            find: /^@learnway\/hooks\/(.*)$/,
+            replacement: path.resolve(__dirname, '../../../libs/hooks/src/lib/index.ts'),
+          },
+        ],
+      },
     });
   },
 };

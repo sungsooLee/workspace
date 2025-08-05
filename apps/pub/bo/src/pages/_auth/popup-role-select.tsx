@@ -49,7 +49,7 @@ const Contents = () => {
     <ModalContainer>
       <ModalTitle>{'테넌트&역할 선택'}</ModalTitle>
       <ModalBody>
-        <FormSubTitle label={'테넌트 선택'} size={'sm'} />
+        <FormSubTitle label={'테넌트 선택'} size={'sm'} noLine />
         <OptionCard
           value={tenantvalues}
           cols={2}

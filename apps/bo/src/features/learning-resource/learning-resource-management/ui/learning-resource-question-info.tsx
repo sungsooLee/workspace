@@ -1,6 +1,6 @@
 import { SegmentedControlFormField } from '@features/form/ui/segmented-control-form-field';
 import { CMSApiPrefix } from '@learnway/config';
-import { IcoCopy, IcoMenu01, IcoMinus, IcoPlus } from '@learnway/icons';
+import { IcoCopy, IcoMinus, IcoPlus } from '@learnway/icons';
 import { cn, isEmptyData } from '@learnway/shared';
 import { FormSubTitle } from '@learnway/ui/base-form';
 import { Button } from '@learnway/ui/button';
@@ -37,13 +37,15 @@ import { LearningResourceTestItemModal } from './learning-resource-test-item-mod
 /* styles */
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
 import styles from '@learnway/styles/bo/pages/_layout/learning/test-detail.module.css';
+import { QuestionDragHandle } from '@features/learning-resource/learning-resource-management/ui/learning-resource-question-drag-handle';
+import { closestCenter, DndContext, MeasuringStrategy } from '@dnd-kit/core';
+import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 
 const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
   (
     {
       basicInfoForm,
       contentUuid = '',
-      mode,
       data,
       hasMapping = false,
       questionGenType,
@@ -71,21 +73,21 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
     const {
       questionList,
       selectedQuestions,
-      setSelectedQuestions,
       selectedRandomQuestionCount,
-      refetch: refetchQuestionList,
       questionState,
       scorePerQuestion,
       questionCreateSuccessCallback,
       updateQuestionStatus,
       randomCountUpdateData,
-      handleCountInputChange,
       debouncedUpdateRandomCount: updateRandomCount,
       updateQuestionCountInfo,
       selectedQuestionRows,
       setSelectedQuestionRows,
       handleOnCopyQuestion,
       handleOnDeleteQuestion,
+      dragSensors,
+      handleOnDragEnd,
+      handleQuestionMutationSuccessCallback,
     } = useExamQuestionInfoInput(data as TestPaperBasicInfoDetail);
 
     const selectedQuestionCount =
@@ -121,8 +123,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
       });
 
       if (result) {
-        const { data: refetchResult } = await refetchQuestionList();
-        setSelectedQuestions(refetchResult?.filter((q) => q.isUsed) as QuestionItem[]);
+        await handleQuestionMutationSuccessCallback();
       }
     }, [data]);
 
@@ -164,8 +165,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
     const handleOnExcelUpload = useCallback(async (result: Record<string, any>) => {
       const { uploadResult } = result;
       if (uploadResult) {
-        const { data: refetchResult } = await refetchQuestionList();
-        setSelectedQuestions(refetchResult?.filter((q) => q.isUsed) as QuestionItem[]);
+        await handleQuestionMutationSuccessCallback();
       }
     }, []);
 
@@ -372,7 +372,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
           },
         }),
         columnHelper.accessor('orderChange', {
-          cell: (info) => <IcoMenu01 width={24} height={24} fill="#A9AFB8" stroke="#4c515e" />,
+          cell: (info) => <QuestionDragHandle />,
           header: t('순서변경'),
           enableGrouping: false,
           enableSorting: false,
@@ -490,72 +490,86 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
 
         <ContentsRow>
           <div className={styles.table_wrap}>
-            <GridBox
-              title=" "
-              showTotalCount={false}
-              disabledSelectionToggle
-              tableMode
-              data={questionList}
-              columns={questionListColumns}
-              onRowsSelect={setSelectedQuestionRows}
-              multiple
-              showNumberingColumn
-              hideRowSelectionCheckBox={false}
-              titleCustomNode={
-                <div className="custom_info_wrap pt-[1.2rem]">
-                  <strong className="table_tit text-[1.4rem] font-normal">{t('문항목록')}</strong>
-                  <strong className="table_tit text-[1.4rem] font-normal">{t('전체')}</strong>
-                  <span className="count_info">{questionList.length}</span>
-                </div>
-              }
-              className={styles.list_table}
-              customButtonNode={
-                <>
-                  <Button
-                    type="button"
-                    variant="text"
-                    label={t('불러오기')}
-                    onClick={handleClickRetrieveQuestionModal}
-                  />
-                  <GridExcelUploadButton
-                    validateUrl={`/exam/questions/${data?.examPoolUuid}/upload`}
-                    affairsType="CMS"
-                    formDataName="multipartFile"
-                    validationResultRequired={false}
-                    onUpload={handleOnExcelUpload}
-                  />
-                  <GridExcelDownloadButton
-                    method="post"
-                    url={`${CMSApiPrefix()}/exam/questions/${data?.examPoolUuid}/download`}
-                    params={{}}
-                    disabled={!questionList.length}
-                  />
-                  <Button
-                    type="button"
-                    variant="text"
-                    label={t('LABEL.grid.header.add', '추가')}
-                    onClick={handleClickAddQuestionButton}
-                    icon={<IcoPlus width={16} height={16} stroke={'#4C515E'} />}
-                  />
-                  <Button
-                    type="button"
-                    variant="text"
-                    label={t('LABEL.grid.header.copy', '복사')}
-                    icon={<IcoCopy width={16} height={16} stroke="#4C515E" />}
-                    onClick={handleOnCopyQuestion}
-                    disabled={!selectedQuestionRows.length}
-                  />
-                  <Button
-                    type="button"
-                    variant="text"
-                    label={t('LABEL.grid.header.remove', '삭제')}
-                    icon={<IcoMinus width={16} height={16} stroke={'#131C30'} />}
-                    onClick={handleOnDeleteQuestion}
-                    disabled={!selectedQuestionRows.length}
-                  />
-                </>
-              }
-            />
+            <DndContext
+              sensors={dragSensors}
+              collisionDetection={closestCenter}
+              modifiers={[restrictToVerticalAxis]}
+              measuring={{
+                droppable: {
+                  strategy: MeasuringStrategy.Always,
+                },
+              }}
+              onDragEnd={handleOnDragEnd}
+            >
+              <GridBox
+                title=" "
+                showTotalCount={false}
+                disabledSelectionToggle
+                tableMode
+                data={questionList}
+                columns={questionListColumns}
+                onRowsSelect={setSelectedQuestionRows}
+                multiple
+                showNumberingColumn
+                enableDragAndDrop
+                rowId="sortSeq"
+                hideRowSelectionCheckBox={false}
+                titleCustomNode={
+                  <div className="custom_info_wrap pt-[1.2rem]">
+                    <strong className="table_tit text-[1.4rem] font-normal">{t('문항목록')}</strong>
+                    <strong className="table_tit text-[1.4rem] font-normal">{t('전체')}</strong>
+                    <span className="count_info">{questionList.length}</span>
+                  </div>
+                }
+                className={styles.list_table}
+                customButtonNode={
+                  <>
+                    <Button
+                      type="button"
+                      variant="text"
+                      label={t('불러오기')}
+                      onClick={handleClickRetrieveQuestionModal}
+                    />
+                    <GridExcelUploadButton
+                      validateUrl={`/exam/questions/${data?.examPoolUuid}/upload`}
+                      affairsType="CMS"
+                      formDataName="multipartFile"
+                      validationResultRequired={false}
+                      onUpload={handleOnExcelUpload}
+                    />
+                    <GridExcelDownloadButton
+                      method="post"
+                      url={`${CMSApiPrefix()}/exam/questions/${data?.examPoolUuid}/download`}
+                      params={{}}
+                      disabled={!questionList.length}
+                    />
+                    <Button
+                      type="button"
+                      variant="text"
+                      label={t('LABEL.grid.header.add', '추가')}
+                      onClick={handleClickAddQuestionButton}
+                      icon={<IcoPlus width={16} height={16} stroke={'#4C515E'} />}
+                    />
+                    <Button
+                      type="button"
+                      variant="text"
+                      label={t('LABEL.grid.header.copy', '복사')}
+                      icon={<IcoCopy width={16} height={16} stroke="#4C515E" />}
+                      onClick={handleOnCopyQuestion}
+                      disabled={!selectedQuestionRows.length}
+                    />
+                    <Button
+                      type="button"
+                      variant="text"
+                      label={t('LABEL.grid.header.remove', '삭제')}
+                      icon={<IcoMinus width={16} height={16} stroke={'#131C30'} />}
+                      onClick={handleOnDeleteQuestion}
+                      disabled={!selectedQuestionRows.length}
+                    />
+                  </>
+                }
+              />
+            </DndContext>
           </div>
         </ContentsRow>
       </div>

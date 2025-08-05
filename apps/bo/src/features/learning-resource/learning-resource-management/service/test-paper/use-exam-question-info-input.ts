@@ -1,3 +1,7 @@
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
+import { debounce } from 'lodash-es';
 import {
   learningResourceQueryOptions,
   useCopyQuestionsToExamPaper,
@@ -8,7 +12,6 @@ import {
 import { isEmptyData } from '@learnway/shared';
 import { useModal } from '@learnway/ui/modal';
 import { useToast } from '@learnway/ui/toast';
-import { useQuery } from '@tanstack/react-query';
 import {
   ContentType,
   EnQuestionLevel,
@@ -22,13 +25,11 @@ import {
   QuestionsCopyReq,
   TestPaperBasicInfoDetail,
 } from '@types';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { LevelKey, QuestionStatisticRow, SelectedQuestionState } from './type';
-import { debounce } from 'lodash-es';
+import { useQuestionSort } from '../learning-resource-question-sort.hook';
 
 export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) => {
-  const { contentUuid, examPoolUuid, questionGenType, questionCount } = basicInfo;
+  const { contentUuid = '', examPoolUuid = '', questionGenType, questionCount } = basicInfo;
 
   const { t } = useTranslation();
   const { confirm } = useModal();
@@ -45,26 +46,41 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
     ),
   );
 
+  const handleQuestionMutationSuccessCallback = useCallback(async () => {
+    const { data: refetchResult = [] } = await refetch();
+    setQuestionItemList(refetchResult);
+  }, []);
+
   const questionCreateSuccessCallback = useCallback(async () => {
     openToast({
       title: t('저장되었습니다.'),
       type: 'success',
     });
 
-    const { data: refetchResult } = await refetch();
-    setSelectedQuestions(refetchResult?.filter((q) => q.isUsed) as QuestionItem[]);
+    await handleQuestionMutationSuccessCallback();
   }, []);
 
   const { update: updateQuestionStatus } = useUpdateQuestionStatus({
     onSuccess: async (result: any) => {
       if (result) {
-        const { data: refetchResult } = await refetch();
-        setSelectedQuestions(refetchResult?.filter((q) => q.isUsed) as QuestionItem[]);
+        await handleQuestionMutationSuccessCallback();
       }
     },
   });
 
-  const [selectedQuestions, setSelectedQuestions] = useState<QuestionItem[]>([]);
+  const [questionItemList, setQuestionItemList] = useState<QuestionItem[]>([]);
+  const [_selectedQuestions, setSelectedQuestions] = useState<QuestionItem[]>([]);
+  const selectedQuestions = useMemo(
+    () => questionItemList.filter((q) => q.isUsed),
+    [questionItemList],
+  );
+
+  const { sensors, handleOnDragEnd } = useQuestionSort({
+    contentUuid: examPoolUuid,
+    contentType: ContentType.EXAM,
+    questionItemList,
+    setQuestionItemList,
+  });
 
   const [questionState, setQuestionState] = useState<SelectedQuestionState>({
     [EnQuestionType.SINGLE]: {},
@@ -252,8 +268,7 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
         });
 
         setTimeout(async () => {
-          const { data: refetchResult } = await refetch();
-          setSelectedQuestions(refetchResult?.filter((q) => q.isUsed) as QuestionItem[]);
+          await handleQuestionMutationSuccessCallback();
         }, 100);
       }
     },
@@ -281,8 +296,7 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
         });
 
         setTimeout(async () => {
-          const { data: refetchResult } = await refetch();
-          setSelectedQuestions(refetchResult?.filter((q) => q.isUsed) as QuestionItem[]);
+          await handleQuestionMutationSuccessCallback();
         }, 100);
       }
     },
@@ -299,7 +313,7 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
   }, [contentUuid, selectedQuestionRows]);
 
   useEffect(() => {
-    setSelectedQuestions(questionList.filter((q) => q.isUsed));
+    setQuestionItemList(questionList);
   }, [questionList]);
 
   useEffect(() => {
@@ -415,10 +429,8 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
   }, [randomQuestionInfo]);
 
   return {
-    questionList,
-    refetch,
+    questionList: questionItemList,
     selectedQuestions,
-    setSelectedQuestions,
     selectedRandomQuestionCount,
     questionState,
     scorePerQuestion,
@@ -433,5 +445,8 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
     setSelectedQuestionRows,
     handleOnCopyQuestion,
     handleOnDeleteQuestion,
+    dragSensors: sensors,
+    handleOnDragEnd,
+    handleQuestionMutationSuccessCallback,
   };
 };
