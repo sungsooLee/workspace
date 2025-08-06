@@ -1,5 +1,4 @@
 import { IcoLock, IcoPdf } from '@learnway/icons';
-import styles from '@learnway/styles/fo/features/layout/ui/course-introduction/dashboard.module.css';
 import pdsStyles from '@learnway/styles/fo/features/layout/ui/course-introduction/pds.module.css';
 import { Button } from '@learnway/ui/button';
 import { Panel } from '@learnway/ui/panel';
@@ -29,8 +28,8 @@ function RouteComponent() {
               <Panel hideHeaderUnderline actions="" className="w_full" type="rounded">
                 <div className={pdsStyles.pds_box}>
                   <span className={pdsStyles.txt}>
-                    <IcoPdf className={styles.ico_pds} /> 비즈니스 영어 단어&숙어집.pdf
-                    <IcoLock className={styles.ico_lock} />
+                    <IcoPdf className={pdsStyles.ico} /> 비즈니스 영어 단어&숙어집.pdf
+                    <IcoLock className={pdsStyles.ico_lock} />
                   </span>
                   <div className={pdsStyles.info}>
                     <span className={pdsStyles.size}>200MB</span>
@@ -44,8 +43,8 @@ function RouteComponent() {
               <Panel hideHeaderUnderline actions="" className="w_full" type="rounded">
                 <div className={pdsStyles.pds_box}>
                   <span className={pdsStyles.txt}>
-                    <IcoPdf className={styles.ico_pds} /> 비즈니스 영어 단어&숙어집.pdf
-                    <IcoLock className={styles.ico_lock} />
+                    <IcoPdf className={pdsStyles.ico} /> 비즈니스 영어 단어&숙어집.pdf
+                    <IcoLock className={pdsStyles.ico_lock} />
                   </span>
                   <div className={pdsStyles.info}>
                     <span className={pdsStyles.size}>200MB</span>
@@ -67,8 +66,8 @@ function RouteComponent() {
   <Panel hideHeaderUnderline actions="" className="w_full" type="rounded">
     <div className={pdsStyles.pds_box}>
       <span className={pdsStyles.txt}>
-        <IcoPdf className={styles.ico_pds} /> 비즈니스 영어 단어&숙어집.pdf
-        <IcoLock className={styles.ico_lock} />
+        <IcoPdf className={pdsStyles.ico_pds} /> 비즈니스 영어 단어&숙어집.pdf
+        <IcoLock className={pdsStyles.ico_lock} />
       </span>
       <div className={pdsStyles.info}>
         <span className={pdsStyles.size}>200MB</span>
@@ -82,8 +81,8 @@ function RouteComponent() {
   <Panel hideHeaderUnderline actions="" className="w_full" type="rounded">
     <div className={pdsStyles.pds_box}>
       <span className={pdsStyles.txt}>
-        <IcoPdf className={styles.ico_pds} /> 비즈니스 영어 단어&숙어집.pdf
-        <IcoLock className={styles.ico_lock} />
+        <IcoPdf className={pdsStyles.ico_pds} /> 비즈니스 영어 단어&숙어집.pdf
+        <IcoLock className={pdsStyles.ico_lock} />
       </span>
       <div className={pdsStyles.info}>
         <span className={pdsStyles.size}>200MB</span>
