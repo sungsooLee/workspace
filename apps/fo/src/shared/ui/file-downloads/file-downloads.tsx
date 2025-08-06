@@ -7,7 +7,14 @@ import { Button } from '@learnway/ui/button';
 import { Panel } from '@learnway/ui/panel';
 import { isMobile } from 'react-device-detect';
 
-export const FileDownloads = () => {
+interface Props {
+  label?: string;
+  groupUuid?: string;
+  fileUuids?: string[];
+  fileUuid?: string;
+}
+
+export const FileDownloads = ({ label, groupUuid, fileUuids, fileUuid }: Props) => {
   return (
     <div className={styles.start}>
       <div className={`${styles.info_box} ${styles.curriculum}`}>
