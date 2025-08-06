@@ -3,7 +3,7 @@ import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.modu
 import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
 import { Tabs } from '@learnway/ui/tabs';
-import { ContentsButtons, MainContents, PageContainer, SectionLayout } from '@shared/ui';
+import { ContentsButtons, MainContents, PageContainer, SectionLayout } from '@shared/ui/layout';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { useRef, useState } from 'react';

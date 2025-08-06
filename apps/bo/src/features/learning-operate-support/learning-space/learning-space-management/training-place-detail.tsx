@@ -1,7 +1,5 @@
 import { useSpaceMutation } from '@entities/training-place';
 import SpaceService from '@entities/training-place/api/space';
-import { DropdownFormField, DuplicateCheckInputFormField, DuplicateState } from '@features/form';
-import { FormDisplay } from '@features/form/ui/form-display';
 import { CODE_GROUP, DynamicFormConfig, S3_PATH, useDynamicForm } from '@learnway/hooks';
 import { FormSubTitle } from '@learnway/ui/base-form';
 import { ContentsRow } from '@learnway/ui/contents-row';
@@ -11,9 +9,16 @@ import { useModal } from '@learnway/ui/modal';
 import { useToast } from '@learnway/ui/toast';
 import { EnFormMode, EnPageMode } from '@shared/types/enums';
 import { Space } from '@shared/types/space';
-import { FormRow } from '@shared/ui';
-import { AddressSearchFormField } from '@shared/ui/form/address-search-form-field';
-import { SingleAttachmentFormField } from '@shared/ui/form/single-attachment-form-field';
+
+import {
+  DropdownFormField,
+  DuplicateCheckInputFormField,
+  DuplicateState,
+  FormDisplay,
+  FormRow,
+} from '@shared/ui/form';
+import { AddressSearchFormField } from '@shared/ui/form/ui/address-search-form-field';
+import { SingleAttachmentFormField } from '@shared/ui/form/ui/single-attachment-form-field';
 import { AddressSearchModal } from '@shared/ui/modal/address-search-modal';
 import { useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';

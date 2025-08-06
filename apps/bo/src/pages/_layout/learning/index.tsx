@@ -10,7 +10,8 @@ import {
   InputModalSelectorFormField,
 } from '@learnway/ui/form-field';
 import { Input } from '@learnway/ui/input';
-import { ContentsButtons, FormRow, MainContents, PageContainer, SubContents } from '@shared/ui';
+import { FormRow } from '@shared/ui/form';
+import { ContentsButtons, MainContents, PageContainer, SubContents } from '@shared/ui/layout';
 import { createFileRoute } from '@tanstack/react-router';
 import { t } from 'i18next';
 

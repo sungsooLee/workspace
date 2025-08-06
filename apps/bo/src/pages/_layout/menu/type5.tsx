@@ -8,13 +8,12 @@ import { buildJodObject, ValidatorConfig } from '@learnway/shared';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { Input } from '@learnway/ui/input';
-import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
+import { FormDisplay, SubTitlesFormField } from '@shared/ui/form';
 import { FormInfoArea } from '@shared/ui/form/components/form-info-area';
+import { ContentsButtons, MainContents, PageContainer } from '@shared/ui/layout';
 import { createFileRoute } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { forwardRef, useState } from 'react';
-import { SubTitlesFormField } from '../../../features/form/ui';
-import { FormDisplay } from '../../../features/form/ui/form-display';
 import { ChipListFormField, FormRow } from '../../../shared/ui/form';
 
 export const Route = createFileRoute('/_layout/menu/type5')({

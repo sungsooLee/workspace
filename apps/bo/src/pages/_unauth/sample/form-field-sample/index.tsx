@@ -1,9 +1,9 @@
-import { DateRangePickerFormField, PeriodPickerFormField } from '@features/form';
 import { useDynamicForm2 } from '@learnway/hooks';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { useModal } from '@learnway/ui/modal';
-import { ContentsButtons, FormRow2, MainContents, PageContainer } from '@shared/ui';
+import { DateRangePickerFormField, FormRow2, PeriodPickerFormField } from '@shared/ui/form';
+import { ContentsButtons, MainContents, PageContainer } from '@shared/ui/layout';
 import { createFileRoute } from '@tanstack/react-router';
 import { t } from 'i18next';
 

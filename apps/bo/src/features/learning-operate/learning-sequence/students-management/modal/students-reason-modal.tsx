@@ -1,6 +1,6 @@
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { TextareaFormField } from '@learnway/ui/form-field';
-import { FormRow } from '@shared/ui';
+import { FormRow } from '@shared/ui/form';
 import { t } from 'i18next';
 import { FC, useEffect, useRef, useState } from 'react';
 
@@ -15,7 +15,8 @@ export interface StudentsReasonModalComponent {
 }
 
 const StudentsReasonModalComponent: FC<any> = ({
-  selectedItem: selectedItemProps }: StudentsReasonModalComponent) => {
+  selectedItem: selectedItemProps,
+}: StudentsReasonModalComponent) => {
   const formRef = useRef<HTMLFormElement>(null);
   const { closeModal, showSaveComplete } = useModal();
   const { provider, onSubmit, updateFormData } = useDynamicForm(formConfig);
@@ -34,7 +35,8 @@ const StudentsReasonModalComponent: FC<any> = ({
     if (formData.reason === null || formData.reason === '') return;
     const payload = {
       studentId: selectedItemProps.studentId,
-      reason: formData.reason };
+      reason: formData.reason,
+    };
 
     await updateStudentsReason(payload, {
       onSuccess: async (data: any, variables: any, context: any) => {
@@ -44,7 +46,8 @@ const StudentsReasonModalComponent: FC<any> = ({
       },
       onError: (data: any, variables: any, context: any) => {
         console.log('onError:', data);
-      } });
+      },
+    });
   };
   const handleOnSave = async () => {
     const form = formRef.current;
@@ -89,5 +92,7 @@ const formConfig: DynamicFormConfig = {
       type: 'textarea',
       label: t('사유'),
       value: '',
-      maxLength: 150 },
-  ] };
+      maxLength: 150,
+    },
+  ],
+};

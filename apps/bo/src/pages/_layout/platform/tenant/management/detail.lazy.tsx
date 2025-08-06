@@ -1,8 +1,8 @@
-import { useRouter, useRouterState, createLazyFileRoute } from '@tanstack/react-router';
+import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { useRef, useState } from 'react';
 
-import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui';
+import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui/layout';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import { Button } from '@learnway/ui/button';

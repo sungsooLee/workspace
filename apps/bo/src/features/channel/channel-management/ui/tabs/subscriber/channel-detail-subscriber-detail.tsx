@@ -10,7 +10,7 @@ import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
 import { useModal } from '@learnway/ui/modal';
 import { useToast } from '@learnway/ui/toast';
-import { SearchBox } from '@shared/ui';
+import { SearchBox } from '@shared/ui/search-box';
 import { createColumnHelper } from '@tanstack/react-table';
 
 interface ChannelDetailSubscriberDetailProps {

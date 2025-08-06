@@ -1,7 +1,7 @@
 import { IcoUploadCloud } from '@learnway/icons';
 import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
-import { ExcelUploadModal } from '@shared/ui';
+import { ExcelUploadModal } from '@shared/ui/modal';
 import { t } from 'i18next';
 
 interface ExcelButtonsProps {

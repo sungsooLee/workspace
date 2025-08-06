@@ -1,5 +1,5 @@
 import { Divider } from '@learnway/ui/elements';
-import { MainContents, PageContainer } from '@shared/ui';
+import { MainContents, PageContainer } from '@shared/ui/layout';
 import { useCoursePage } from '../../hooks/use-course-page';
 
 import { CourseGrid } from '../course-list/course-grid';

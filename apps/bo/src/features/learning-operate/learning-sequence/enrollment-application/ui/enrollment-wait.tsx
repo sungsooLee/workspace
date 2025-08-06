@@ -1,20 +1,19 @@
-import { SearchBoxConfig, SearchBoxProvider, useSearchBox } from '@learnway/hooks';
-import { StatsSummaryData } from '@learnway/ui/elements';
-import { Divider, StatsSummary } from '@learnway/ui/elements';
-import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
-import { GridExcelDownloadButton, SearchBox } from '@shared/ui';
 import { queryOptions } from '@entities/learning-sequence/service/learning-sequence.queries';
-import { useCallback, useEffect, useState } from 'react';
+import { LMSApiPrefix } from '@learnway/config';
+import { SearchBoxProvider } from '@learnway/hooks';
+import { DATE_TIME_FORMAT, getDateToString, SelectOption } from '@learnway/shared';
+import { Button } from '@learnway/ui/button';
+import { Divider, StatsSummary, StatsSummaryData } from '@learnway/ui/elements';
+import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
+import { Mode } from '@pages/_layout/learning/learning-sequence/-common/type';
+import { GridExcelDownloadButton } from '@shared/ui/buttons';
+import { SearchBox } from '@shared/ui/search-box';
+import { useRouter } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
-import { LMSApiPrefix } from '@learnway/config';
+import { useCallback, useEffect, useState } from 'react';
 import { FieldValues, UseFormGetValues, UseFormSetValue } from 'react-hook-form';
-import { DATE_TIME_FORMAT, getDateToString, SelectOption } from '@learnway/shared';
-import dayjs from 'dayjs';
-import { useRouter } from '@tanstack/react-router';
-import { Mode } from '@pages/_layout/learning/learning-sequence/-common/type';
 import { useEnrollmentStore } from '../store/use-enrollment-store';
-import { Button } from '@learnway/ui/button';
 
 const _global = {
   linkClickSequenceName: (payload: any) => {
@@ -25,7 +24,8 @@ const _global = {
   },
   linkClickPayment: (payload: any) => {
     return;
-  } };
+  },
+};
 
 /**
  * NLP_BO_LMS_0040 : 수강신청 대기
@@ -42,7 +42,8 @@ const EnrollmentWaitComponent = ({
   searchProvider,
   getValues,
   setValue,
-  setOptions }: EnrollmentWaitComponentProps) => {
+  setOptions,
+}: EnrollmentWaitComponentProps) => {
   const { enrollmentCreateInfo } = useEnrollmentStore();
   const router = useRouter();
   const gridConfig: useGridBoxConfig = {
@@ -52,7 +53,9 @@ const EnrollmentWaitComponent = ({
     gridState: {
       page: 0,
       size: 10,
-      sort: [] } };
+      sort: [],
+    },
+  };
   const { config: gConfig, gridFetch, data } = useGridBox(gridConfig, getValues);
   const [columns, setColumns] = useState() as any;
 
@@ -62,7 +65,9 @@ const EnrollmentWaitComponent = ({
       state: {
         setMode: Mode.DETAIL,
         courseId: 1,
-        sequenceId: 1 } });
+        sequenceId: 1,
+      },
+    });
   };
 
   _global.linkClickEduHistory = (payload: any) => {
@@ -79,12 +84,14 @@ const EnrollmentWaitComponent = ({
         header: t('순번'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
-        size: 58 }),
+        size: 58,
+      }),
       columnHelper.accessor('openingYear', {
         header: t('개설'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
-        size: 58 }),
+        size: 58,
+      }),
       columnHelper.accessor('courseSequenceName', {
         header: t('차수명'),
         cell: (info) => (
@@ -97,7 +104,8 @@ const EnrollmentWaitComponent = ({
           />
         ),
         enableGrouping: false,
-        size: 169 }),
+        size: 169,
+      }),
       columnHelper.accessor('regEndDate', {
         header: t('수강신청 종료일'),
         cell: (info) => {
@@ -105,7 +113,8 @@ const EnrollmentWaitComponent = ({
           return getDateToString(date, DATE_TIME_FORMAT.DATETIME_SEC);
         },
         enableGrouping: false,
-        size: 160 }),
+        size: 160,
+      }),
       columnHelper.accessor('regWaitDate', {
         header: t('수강신청 대기 신청일시'),
         cell: (info) => {
@@ -113,17 +122,20 @@ const EnrollmentWaitComponent = ({
           return getDateToString(date, DATE_TIME_FORMAT.DATETIME_SEC);
         },
         enableGrouping: false,
-        size: 160 }),
+        size: 160,
+      }),
       columnHelper.accessor('management', {
         header: t('관리모드'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
-        size: 90 }),
+        size: 90,
+      }),
       columnHelper.accessor('status', {
         header: t('상태'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
-        size: 90 }),
+        size: 90,
+      }),
       columnHelper.accessor('statusUpdateDate', {
         header: t('상태 업데이트 일시'),
         cell: (info) => {
@@ -131,27 +143,32 @@ const EnrollmentWaitComponent = ({
           return getDateToString(date, DATE_TIME_FORMAT.DATETIME_SEC);
         },
         enableGrouping: false,
-        size: 160 }),
+        size: 160,
+      }),
       columnHelper.accessor('company', {
         header: t('회사'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
-        size: 130 }),
+        size: 130,
+      }),
       columnHelper.accessor('department', {
         header: t('부서'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
-        size: 130 }),
+        size: 130,
+      }),
       columnHelper.accessor('employeeId', {
         header: t('사번'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
-        size: 80 }),
+        size: 80,
+      }),
       columnHelper.accessor('employeeName', {
         header: t('이름'),
         cell: (info) => info.getValue(),
         enableGrouping: false,
-        size: 70 }),
+        size: 70,
+      }),
       columnHelper.accessor('eduHistory', {
         header: t('학습이력'),
         cell: (info) => (
@@ -164,7 +181,8 @@ const EnrollmentWaitComponent = ({
           />
         ),
         enableGrouping: false,
-        size: 80 }),
+        size: 80,
+      }),
     ] as ColumnDef<any, unknown>[];
 
     setColumns(columns);
@@ -174,19 +192,24 @@ const EnrollmentWaitComponent = ({
   const getStats = (): Array<StatsSummaryData> => [
     {
       label: t('수강대기신청'),
-      value: 1000 },
+      value: 1000,
+    },
     {
       label: t('수강신청 링크발송'),
-      value: 1000 },
+      value: 1000,
+    },
     {
       label: t('수강신청 대기중'),
-      value: 1000 },
+      value: 1000,
+    },
     {
       label: t('수강신청 링크만료'),
-      value: 1000 },
+      value: 1000,
+    },
     {
       label: t('수강신청 신청성공'),
-      value: 1000 },
+      value: 1000,
+    },
   ];
 
   const handleOnSearch = useCallback((data: any) => {

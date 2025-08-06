@@ -3,7 +3,7 @@ import {
   SequenceList,
 } from '@features/learning-operate/learning-sequence/sequence-management';
 import { useModal } from '@learnway/ui/modal';
-import { MainContents, PageContainer } from '@shared/ui';
+import { MainContents, PageContainer } from '@shared/ui/layout';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import { Mode } from '../-common/type';

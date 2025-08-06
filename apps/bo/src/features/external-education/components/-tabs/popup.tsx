@@ -1,11 +1,10 @@
 import { useExternalEducationPopup } from '@features/external-education/hooks/use-external-education-popup';
-import { DateRangePickerFormField } from '@features/form';
 import { FormSubTitle } from '@learnway/ui/base-form';
-import { EditorFormField, RadioGroupFormField } from '@learnway/ui/form-field';
-import { FormRow2, SwitchFormField } from '@shared/ui';
-import { useEffect } from 'react';
 import { ContentsRow } from '@learnway/ui/contents-row';
+import { EditorFormField, RadioGroupFormField } from '@learnway/ui/form-field';
 import { Input } from '@learnway/ui/input';
+import { DateRangePickerFormField, FormRow2, SwitchFormField } from '@shared/ui/form';
+import { useEffect } from 'react';
 
 interface PopupProps {
   formId?: number;
@@ -56,7 +55,8 @@ export function Popup({ formId, isActive, onRegisterSave }: PopupProps) {
           element={
             <SwitchFormField
               switchConfig={{
-                label: (value: boolean) => (value ? '기간 설정' : '미설정') }}
+                label: (value: boolean) => (value ? '기간 설정' : '미설정'),
+              }}
             />
           }
         />

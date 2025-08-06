@@ -1,20 +1,19 @@
-import React, { useEffect, useRef } from 'react';
-import { TreeNode } from '@learnway/ui/tree-view';
-import { InputModalSelectorFormField, TextareaFormField } from '@learnway/ui/form-field';
-import { ContentsRow } from '@learnway/ui/contents-row';
-import { Input } from '@learnway/ui/input';
-import {
-  ChannelChoiceModal,
-  FormRow2,
-  ManagerChoiceModal,
-  SwitchFormFieldSimple,
-  PhoneNumberFormFieldSimple
-} from '@shared/ui';
-import { DropdownFormField } from '@features/form';
-import { DynamicFormProvider } from '@learnway/hooks';
-import { useFetchAuthUser } from '@learnway/auth/entities';
-import { useIsManager } from '../hooks/use-role-info';
 import { useGetCurriculumDetail } from '@entities/curriculum';
+import { useFetchAuthUser } from '@learnway/auth/entities';
+import { DynamicFormProvider } from '@learnway/hooks';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { InputModalSelectorFormField, TextareaFormField } from '@learnway/ui/form-field';
+import { Input } from '@learnway/ui/input';
+import { TreeNode } from '@learnway/ui/tree-view';
+import {
+  DropdownFormField,
+  FormRow2,
+  PhoneNumberFormFieldSimple,
+  SwitchFormFieldSimple,
+} from '@shared/ui/form';
+import { ChannelChoiceModal, ManagerChoiceModal } from '@shared/ui/modal';
+import React, { useEffect } from 'react';
+import { useIsManager } from '../hooks/use-role-info';
 
 interface CurriculumFormProps {
   parentNode: TreeNode | null;
@@ -37,7 +36,8 @@ export const CurriculumForm: React.FC<CurriculumFormProps> = ({
   provider,
   updateFormData,
   watch,
-  curriculumId }) => {
+  curriculumId,
+}) => {
   const { data: loginUser } = useFetchAuthUser();
   const { data: curriculumData } = useGetCurriculumDetail(curriculumId || 0);
   const isManager = useIsManager({ loginUser });
@@ -48,10 +48,13 @@ export const CurriculumForm: React.FC<CurriculumFormProps> = ({
         ...curriculumData,
         coordinatorTelNo: {
           nationCode: curriculumData.coordinatorTelCountryCode || '',
-          number: curriculumData.coordinatorTelNo || '' },
+          number: curriculumData.coordinatorTelNo || '',
+        },
         vendorTelNo: {
           nationCode: curriculumData.vendorTelCountryCode || '',
-          number: curriculumData.vendorTelNo || '' } };
+          number: curriculumData.vendorTelNo || '',
+        },
+      };
 
       Object.entries(initialData).forEach(([key, value]) => {
         provider.setValue(key, value);
@@ -64,7 +67,8 @@ export const CurriculumForm: React.FC<CurriculumFormProps> = ({
         coordinatorName: '',
         coordinatorTelNo: { nationCode: '', number: '' },
         vendorTelNo: { nationCode: '', number: '' },
-        isVendored: false };
+        isVendored: false,
+      };
 
       Object.entries(defaultData).forEach(([key, value]) => {
         provider.setValue(key, value);
@@ -112,7 +116,8 @@ export const CurriculumForm: React.FC<CurriculumFormProps> = ({
             <DropdownFormField
               optionsConfig={{
                 options: [{ value: '', label: 'LABEL.form.label.select' }],
-                codeGroup: 'cms.curriculum.CurriculumType' }}
+                codeGroup: 'cms.curriculum.CurriculumType',
+              }}
               placeholder="유형을 선택하세요"
               disabled={isEditing}
             />
@@ -129,7 +134,8 @@ export const CurriculumForm: React.FC<CurriculumFormProps> = ({
             <DropdownFormField
               optionsConfig={{
                 options: [{ value: '', label: 'LABEL.form.label.select' }],
-                codeGroup: 'pms.multilingual.LangCountryCode' }}
+                codeGroup: 'pms.multilingual.LangCountryCode',
+              }}
               placeholder="언어를 선택하세요"
             />
           }

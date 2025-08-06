@@ -1,7 +1,7 @@
 import { queryOptions } from '@entities/department';
 import { useSaveUsers } from '@entities/role';
 import { usersQueryOptions } from '@entities/users/service/users.queries';
-import { DateRangePickerFormField } from '@features/form';
+
 import {
   CODE_GROUP,
   DynamicFormConfig,
@@ -15,7 +15,7 @@ import { Divider } from '@learnway/ui/elements';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 import { ShuttleGridToGrid, ShuttleGridToGridImperative } from '@learnway/ui/shuttle-grid-to-grid';
 import { UsersParams } from '@shared/types/user';
-import { FormRow } from '@shared/ui';
+import { DateRangePickerFormField, FormRow } from '@shared/ui/form';
 import { SearchBox } from '@shared/ui/search-box';
 import { useQueryClient } from '@tanstack/react-query';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';

@@ -16,7 +16,7 @@ import {
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { Input } from '@learnway/ui/input';
-import { FormRow, SwitchFormField } from '@shared/ui';
+import { FormRow, SwitchFormField } from '@shared/ui/form';
 
 const CategoryViewComponent: FC<any> = ({
   treeData,

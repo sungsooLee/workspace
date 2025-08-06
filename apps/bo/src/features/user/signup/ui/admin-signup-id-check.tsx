@@ -1,18 +1,18 @@
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { useSignupStore } from '@features/user/signup';
 import { adminItems } from '@features/user/signup/ui/signup-select';
+import { useExistsEmail } from '@learnway/auth/entities';
+import { tokenService } from '@learnway/config';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { IcoCaution } from '@learnway/icons';
 import { cn } from '@learnway/shared';
 import noticeBoxStyles from '@learnway/styles/bo/shared/ui/notice-box/notice-box.module.css';
-import { Stepper } from '@learnway/ui/stepper';
-import { FormRow } from '@shared/ui';
-import styles from './admin-signup-id-check.module.css';
-import { useRouter } from '@tanstack/react-router';
-import { useExistsEmail } from '@learnway/auth/entities';
-import { tokenService } from '@learnway/config';
-import { useEffect } from 'react';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
+import { Stepper } from '@learnway/ui/stepper';
+import { FormRow } from '@shared/ui/form';
+import { useRouter } from '@tanstack/react-router';
+import { useEffect } from 'react';
+import styles from './admin-signup-id-check.module.css';
 
 // 아이디 확인
 export function AdminSignupIdCheck() {
@@ -42,12 +42,14 @@ export function AdminSignupIdCheck() {
               <div className="whitespace-pre-wrap">
                 {'입력하신 아이디의 진행현황이 없습니다.\n정확한 정보를 다시 입력해 주세요.'}
               </div>
-            ) });
+            ),
+          });
         }
       },
       onError: (error) => {
         console.log(error);
-      } });
+      },
+    });
   };
 
   const handleCancel = () => {
@@ -105,9 +107,13 @@ const formConfig: DynamicFormConfig = {
       type: 'text',
       label: 'LABEL.common.email',
       value: '',
-      placeholder: '이메일(hyunidai.kim@hyundai.com)' },
+      placeholder: '이메일(hyunidai.kim@hyundai.com)',
+    },
   ],
   validator: {
     email: {
       format: 'email',
-      required: true } } };
+      required: true,
+    },
+  },
+};

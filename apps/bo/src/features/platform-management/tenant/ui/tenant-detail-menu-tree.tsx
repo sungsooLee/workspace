@@ -1,4 +1,4 @@
-import { SectionLayout } from '@shared/ui';
+import { SectionLayout } from '@shared/ui/layout';
 import { useRouter, useRouterState } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
@@ -12,7 +12,7 @@ import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { cn } from '@learnway/shared';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
-import { FormRow, SwitchFormField } from '@shared/ui';
+import { FormRow, SwitchFormField } from '@shared/ui/form';
 
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';

@@ -8,7 +8,10 @@ import {
   QuestionItemGridRow,
   TestPaperBasicInfoDetail,
 } from '@entities/learning-resource';
-import { SegmentedControlFormField } from '@features/form/ui/segmented-control-form-field';
+
+import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui/buttons';
+import { FormRow2, SegmentedControlFormField } from '@shared/ui/form';
+
 import { CMSApiPrefix } from '@learnway/config';
 import { IcoCopy, IcoMinus, IcoPlus } from '@learnway/icons';
 import { cn, isEmptyData } from '@learnway/shared';
@@ -19,7 +22,6 @@ import { RadioGroupFormField } from '@learnway/ui/form-field';
 import { GridBox } from '@learnway/ui/grid';
 import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
-import { FormRow2, GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { forwardRef, useCallback, useImperativeHandle, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';

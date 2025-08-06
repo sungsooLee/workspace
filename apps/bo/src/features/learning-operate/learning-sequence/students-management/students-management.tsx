@@ -25,12 +25,9 @@ import {
   useGridBoxConfig,
 } from '@learnway/ui/grid';
 import { useModal } from '@learnway/ui/modal';
-import {
-  GridExcelDownloadButton,
-  GridExcelUploadButton,
-  SearchBox,
-  UserShuttleModal,
-} from '@shared/ui';
+import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui/buttons';
+import { UserShuttleModal } from '@shared/ui/modal';
+import { SearchBox } from '@shared/ui/search-box';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter, useRouterState } from '@tanstack/react-router';
 import { CellContext, ColumnDef, createColumnHelper } from '@tanstack/react-table';

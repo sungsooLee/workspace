@@ -12,7 +12,8 @@ import { useDynamicForm2 } from '@learnway/hooks';
 import { useModal } from '@learnway/ui/modal';
 import { Tabs } from '@learnway/ui/tabs';
 import { ContentCreateType, EnFormMode } from '@shared/types/enums';
-import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
+
+import { ContentsButtons, MainContents, PageContainer } from '@shared/ui/layout';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 

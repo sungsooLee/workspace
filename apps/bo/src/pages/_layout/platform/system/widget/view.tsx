@@ -1,17 +1,16 @@
+import { useWidgets } from '@entities/widgets';
+import { pageRouteConfig } from '@features/auth';
+import { WidgetPreviewButton } from '@features/platform';
+import { WidgetAssignedTenantGrid } from '@features/platform-management/platform/widget-managemnet/ui/widget-assigned-tenant-grid';
+import { WidgetComponentTable } from '@features/platform-management/platform/widget-managemnet/ui/widget-component-table';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
+import { FormRow, FormTranslationBox } from '@shared/ui/form';
+import { ContentsButtons, MainContents, PageContainer } from '@shared/ui/layout';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { useEffect } from 'react';
 import { useWatch } from 'react-hook-form';
-import { pageRouteConfig } from '@features/auth';
-import { FormTranslationBox } from '@shared/ui/form';
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { FormRow } from '@shared/ui';
-import { useWidgets } from '@entities/widgets';
-import { WidgetPreviewButton } from '@features/platform';
-import { WidgetComponentTable } from '@features/platform-management/platform/widget-managemnet/ui/widget-component-table';
-import { WidgetAssignedTenantGrid } from '@features/platform-management/platform/widget-managemnet/ui/widget-assigned-tenant-grid';
-import { MainContents, PageContainer, ContentsButtons } from '@shared/ui';
-import { Button } from '@learnway/ui/button';
-import { ContentsRow } from '@learnway/ui/contents-row';
 
 export const Route = createFileRoute('/_layout/platform/system/widget/view')({
   component: RouteComponent,

@@ -3,7 +3,7 @@ import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { useEffect, useState } from 'react';
 
-import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
+import { ContentsButtons, MainContents, PageContainer } from '@shared/ui/layout';
 
 import { useFetchAuthUser } from '@learnway/auth/entities';
 

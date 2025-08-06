@@ -7,7 +7,7 @@ import {
 import { NotFound } from '@features/layout';
 import { LEARNING_TYPE } from '@learnway/config';
 import { useCurrentRoute } from '@learnway/hooks';
-import { PageContainer } from '@shared/ui';
+import { PageContainer } from '@shared/ui/layout';
 import { useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 import {

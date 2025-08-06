@@ -12,7 +12,7 @@ import { ContentsRow } from '@learnway/ui/contents-row';
 import { GridBox } from '@learnway/ui/grid';
 import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
-import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
+import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui/buttons';
 import { QUESTION_LEVELS, QUESTION_TYPES } from '../service/exam-util';
 import {
   initStatisticRow,

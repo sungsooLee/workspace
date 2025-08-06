@@ -14,13 +14,7 @@ import { Input } from '@learnway/ui/input';
 import { useToast } from '@learnway/ui/toast';
 import { TreeBox, TreeContainer, TreeNode } from '@learnway/ui/tree-view';
 import { EnFormMode } from '@shared/types/enums';
-import {
-  FormRow,
-  SectionLayout,
-  UserGroupChoiceModal,
-  UserGroupTabsChoiceModal,
-  UserShuttleModal,
-} from '@shared/ui';
+import { UserGroupChoiceModal, UserGroupTabsChoiceModal, UserShuttleModal } from '@shared/ui/modal';
 import { useRouterState } from '@tanstack/react-router';
 import { createColumnHelper, Table } from '@tanstack/react-table';
 import { t } from 'i18next';
@@ -33,6 +27,8 @@ import { IcoMinus, IcoPlus } from '@learnway/icons';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
 import styles from '@learnway/styles/bo/features/role/role-info.module.css';
 import { useModal } from '@learnway/ui/modal';
+import { FormRow } from '@shared/ui/form';
+import { SectionLayout } from '@shared/ui/layout';
 
 /**
  * 화면번호:

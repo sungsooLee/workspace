@@ -1,13 +1,13 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter, useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
-import { FC, useEffect, useMemo, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useWatch } from 'react-hook-form';
 
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, getDateToString, SelectOption } from '@learnway/shared';
 import { Divider } from '@learnway/ui/elements';
-import { GridBox, GridBoxConfig, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
+import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 
 import { SearchBoxForm } from '@shared/ui/search-box';
 
@@ -16,10 +16,15 @@ import { useFetchAuthUser } from '@learnway/auth/entities';
 import { queryOptions as companysQueryOptions } from '@entities/companies/service/companies.queries';
 import { tenantQueryOptions } from '@entities/tenant';
 import { Button } from '@learnway/ui/button';
-import { FormItem, FormRow2, TenantByRoleDropdownFormField } from '@shared/ui';
-import { useCreation } from 'ahooks';
 import { ContentsRow } from '@learnway/ui/contents-row';
-import { DropdownFormField, InputFormField } from '@features/form';
+import { useCreation } from 'ahooks';
+
+import {
+  DropdownFormField,
+  FormRow2,
+  InputFormField,
+  TenantByRoleDropdownFormField,
+} from '@shared/ui/form';
 
 /**
  * 화면번호 : NLP_BO_TMS_1000

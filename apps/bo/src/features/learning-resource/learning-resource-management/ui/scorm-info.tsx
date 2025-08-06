@@ -5,7 +5,7 @@ import { useScormResource } from '@entities/learning-resource';
 import { LEARNING_TYPE } from '@learnway/config';
 import { DynamicFormProvider, useFileManager } from '@learnway/hooks';
 import { formatBytes } from '@learnway/shared';
-import { PreviewLearningWindow } from '@shared/ui';
+import { PreviewLearningWindow } from '@shared/ui/modal';
 import { t } from 'i18next';
 import { useCallback, useMemo } from 'react';
 import { LearningResourceFileUploadModal } from './learning-resource-file-upload-modal';

@@ -1,7 +1,7 @@
 import { isLocalhost } from '@learnway/shared';
 import { Button } from '@learnway/ui/button';
 import { Divider } from '@learnway/ui/elements';
-import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
+import { ContentsButtons, MainContents, PageContainer } from '@shared/ui/layout';
 import { Link } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { useState } from 'react';

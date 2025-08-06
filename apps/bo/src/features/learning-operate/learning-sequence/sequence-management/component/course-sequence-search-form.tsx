@@ -1,15 +1,17 @@
-import { DateRangePickerFormField } from '@features/form';
-import { DropdownFormField } from '@features/form/ui/dropdown-form-field';
 import { CODE_GROUP } from '@learnway/hooks';
 import { generateYears } from '@learnway/shared';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { Input } from '@learnway/ui/input';
+
 import {
+  DateRangePickerFormField,
+  DropdownFormField,
   FormRow2,
-  SearchBoxForm,
   TenantByRoleDropdownFormField,
   TenantChannelDropdownFormField,
-} from '@shared/ui';
+} from '@shared/ui/form';
+import { SearchBoxForm } from '@shared/ui/search-box';
+
 import React, { FormEventHandler } from 'react';
 import { useTranslation } from 'react-i18next';
 

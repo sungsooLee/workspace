@@ -3,7 +3,7 @@ import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import { EnGlobalConst } from '@shared/types/enums';
-import { MainContents, PageContainer } from '@shared/ui';
+import { MainContents, PageContainer } from '@shared/ui/layout';
 import { SearchBox } from '@shared/ui/search-box';
 import { createFileRoute } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';

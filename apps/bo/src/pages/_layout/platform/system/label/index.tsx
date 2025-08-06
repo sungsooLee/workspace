@@ -1,9 +1,10 @@
-import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { PageContainer, ContentsButtons, MainContents } from '@shared/ui';
 import { Button } from '@learnway/ui/button';
+import { ContentsButtons, MainContents, PageContainer } from '@shared/ui/layout';
+import { createFileRoute, useRouter } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/_layout/platform/system/label/')({
-  component: RouteComponent });
+  component: RouteComponent,
+});
 
 function RouteComponent() {
   const router = useRouter();
@@ -12,7 +13,8 @@ function RouteComponent() {
    */
   const handleNewTranslation = () => {
     router.navigate({
-      to: '/platform/system/multilingual' });
+      to: '/platform/system/multilingual',
+    });
   };
 
   return (

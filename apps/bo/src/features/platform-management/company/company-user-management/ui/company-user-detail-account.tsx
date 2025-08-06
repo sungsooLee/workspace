@@ -1,10 +1,10 @@
-import { FormDisplay } from '@features/form';
 import { FormSubTitle } from '@learnway/ui/base-form';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { ChipListModalSelectorFormField } from '@learnway/ui/form-field';
 import { Input } from '@learnway/ui/input';
 import { EnFormMode } from '@shared/types/enums';
-import { FormItem, FormRow } from '@shared/ui';
+import { FormDisplay, FormItem, FormRow } from '@shared/ui/form';
+
 import { t } from 'i18next';
 
 /**

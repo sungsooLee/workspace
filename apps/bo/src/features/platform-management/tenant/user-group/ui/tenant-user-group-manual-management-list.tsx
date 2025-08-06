@@ -14,7 +14,7 @@ import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
 import { EnGlobalConst } from '@shared/types/enums';
 import { CombineUserGroup } from '@shared/types/user-group';
-import { UserGroupChoiceModal } from '@shared/ui';
+import { UserGroupChoiceModal } from '@shared/ui/modal';
 import { SearchBox } from '@shared/ui/search-box';
 import { useCreation } from 'ahooks';
 

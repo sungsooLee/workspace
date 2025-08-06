@@ -6,7 +6,8 @@ import {
 import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
 import { EnPageMode } from '@shared/types/enums';
-import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
+
+import { ContentsButtons, MainContents, PageContainer } from '@shared/ui/layout';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 

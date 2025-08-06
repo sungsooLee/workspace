@@ -13,7 +13,8 @@ import { getPayloadFromHtmlMetadataSubmit } from '@features/learning-resource/le
 import { useDynamicForm2 } from '@learnway/hooks';
 import { useModal } from '@learnway/ui/modal';
 import { ContentCreateType, ContentStatusCode } from '@shared/types/enums';
-import { ContentsButtons, MainContents, PageContainer, SubContents } from '@shared/ui';
+
+import { ContentsButtons, MainContents, PageContainer, SubContents } from '@shared/ui/layout';
 import { useRouter } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 

@@ -22,25 +22,21 @@ import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
 
 import {
-  ChannelListChoiceModal,
-  ContentsButtons,
-  FormRow,
-  LinkBox,
-  UserChoiceModal,
-  UserGroupOrganizationShuttleModal,
-} from '@shared/ui';
-import { SearchBox } from '@shared/ui/search-box';
-
-import {
   useCreateUserGroupManual,
   useFetchUserGroupDetail,
   useUpdateUserGroupManual,
 } from '@entities/user-group';
 import { queryOptions } from '@entities/user-group/service/user-group.queries';
-import { FormDisplay } from '@features/form';
 import { useFetchAuthUser } from '@learnway/auth/entities';
-import { Role, Tenant } from '@learnway/auth/types';
-import { MainContents, PageContainer } from '@shared/ui';
+import { Tenant } from '@learnway/auth/types';
+import { FormDisplay, FormRow } from '@shared/ui/form';
+import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui/layout';
+import {
+  ChannelListChoiceModal,
+  UserChoiceModal,
+  UserGroupOrganizationShuttleModal,
+} from '@shared/ui/modal';
+import { SearchBox } from '@shared/ui/search-box';
 import { useWatch } from 'react-hook-form';
 
 export const Route = createLazyFileRoute('/_layout/platform/tenant/usr-group/manual-detail')({
@@ -196,11 +192,7 @@ function RouteComponent() {
     if (tenantInfo) {
       openModal({
         width: 'xl',
-        content: (
-          <UserGroupOrganizationShuttleModal
-            tenantIds={[tenantInfo.tenantId]}
-          />
-        ),
+        content: <UserGroupOrganizationShuttleModal tenantIds={[tenantInfo.tenantId]} />,
         onClose(data: any) {
           if (data) {
             console.log('Modal {} => ', data);

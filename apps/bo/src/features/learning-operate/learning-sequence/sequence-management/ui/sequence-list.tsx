@@ -21,7 +21,7 @@ import {
 import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
 import { Mode } from '@pages/_layout/learning/learning-sequence/-common/type';
-import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
+import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui/buttons';
 import { useRouter } from '@tanstack/react-router';
 import { CellContext, ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';

@@ -1,8 +1,8 @@
-import { DropdownFormField, FormDisplay } from '@features/form';
 import { InstructorListPopup } from '@features/learning-operate-support/instructor-tutor/instructor-management/modal/instructor-list-modal';
 import { CourseChoiceModal } from '@features/learning-operate/course/course-management';
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import { FormSubTitle } from '@learnway/ui/base-form';
+import { ContentsRow } from '@learnway/ui/contents-row';
 import { SplitPanel } from '@learnway/ui/elements';
 import {
   CheckboxGroupFormField,
@@ -10,13 +10,19 @@ import {
   InputModalSelectorFormField,
   RadioGroupFormField,
 } from '@learnway/ui/form-field';
-import { FormRow, FormRow2, PassOptionFormField, SwitchFormField } from '@shared/ui';
+import { Input } from '@learnway/ui/input';
+import {
+  DropdownFormField,
+  FormDisplay,
+  FormRow,
+  FormRow2,
+  PassOptionFormField,
+  SwitchFormField,
+} from '@shared/ui/form';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useCourseCreateSubPage } from '../../../../hooks/use-course-create-sub-page';
 import { CourseTabBaseProps } from '../../../../types/type';
-import { ContentsRow } from '@learnway/ui/contents-row';
-import { Input } from '@learnway/ui/input';
 
 const DetailInfoComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, ref) => {
   const { t } = useTranslation();

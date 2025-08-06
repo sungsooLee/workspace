@@ -1,4 +1,3 @@
-import { DropdownFormField } from '@features/form';
 import { CategoryChoiceModal } from '@features/learning-operate/course/course-management';
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import { Badge } from '@learnway/ui/badge';
@@ -15,14 +14,17 @@ import {
 import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
 import {
+  DropdownFormField,
   FormRow2,
   TenantByRoleChannelCheckboxFormField,
   TenantChannelDropdownFormField2,
+} from '@shared/ui/form';
+import {
   TrainingPlaceChoiceModal,
   UserChoiceModal,
   UserGroupChoiceModal,
   UserGroupTabsChoiceModal,
-} from '@shared/ui';
+} from '@shared/ui/modal';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useCourseCreateSubPage } from '../../../../hooks/use-course-create-sub-page';

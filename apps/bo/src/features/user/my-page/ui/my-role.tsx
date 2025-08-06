@@ -12,7 +12,7 @@ import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox } from '@learnway/ui/grid';
 import { useModal } from '@learnway/ui/modal';
 import { RoleApplication } from '@shared/types/role-application';
-import { TenantByRoleDropdownFormField, TenantChannelDropdownFormField } from '@shared/ui';
+import { TenantByRoleDropdownFormField, TenantChannelDropdownFormField } from '@shared/ui/form';
 import { SearchBox } from '@shared/ui/search-box';
 import { useRouter } from '@tanstack/react-router';
 import { CellContext, createColumnHelper } from '@tanstack/react-table';

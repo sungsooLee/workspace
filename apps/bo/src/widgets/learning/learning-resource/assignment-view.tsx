@@ -7,7 +7,8 @@ import { LearningResourceAssignmentBasicInfo } from '@features/learning-resource
 import { LearningResourceAssignmentSubmission } from '@features/learning-resource/learning-resource-management/ui/learning-resource-assignment-submission';
 import { useDynamicForm2 } from '@learnway/hooks';
 import { TabItemProps, Tabs } from '@learnway/ui/tabs';
-import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
+
+import { ContentsButtons, MainContents, PageContainer } from '@shared/ui/layout';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 

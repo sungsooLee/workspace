@@ -16,7 +16,7 @@ import {
 import { isLocalhost } from '@learnway/shared';
 import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
-import { FormRow2 } from '@shared/ui';
+import { FormRow2 } from '@shared/ui/form';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
 import { useLearningResourceQuestionDetailForm } from '../service/learning-resource-question-detail-from.hook';

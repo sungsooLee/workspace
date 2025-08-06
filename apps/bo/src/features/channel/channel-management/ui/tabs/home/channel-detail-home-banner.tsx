@@ -5,7 +5,7 @@ import { FormSubTitle } from '@learnway/ui/base-form';
 import { Button } from '@learnway/ui/button';
 import { CountText } from '@learnway/ui/elements';
 import { GridBox } from '@learnway/ui/grid';
-import { LinkBox } from '@shared/ui';
+import { LinkBox } from '@shared/ui/layout';
 import { t } from 'i18next';
 import { ChannelHomeBannerListProps } from '../../../types/type';
 

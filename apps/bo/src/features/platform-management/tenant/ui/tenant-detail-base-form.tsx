@@ -12,21 +12,18 @@ import {
 } from '@learnway/ui/form-field';
 
 import { ContentsRow } from '@learnway/ui/contents-row';
-import {
-  CompanyChoiceModal,
-  FormItem,
-  FormRow2,
-  SwitchFormField,
-  ThumbnailPublicFormField,
-  UserChoiceModal,
-} from '@shared/ui';
 
 import {
   DuplicateCheckInputFormField,
   DuplicateState,
   FormDisplay,
+  FormItem,
+  FormRow2,
   InputFormField,
-} from '@features/form';
+  SwitchFormField,
+  ThumbnailPublicFormField,
+} from '@shared/ui/form';
+import { CompanyChoiceModal, UserChoiceModal } from '@shared/ui/modal';
 
 import { EnDeviceType, EnFormMode, EnUseCategory } from '@shared/types/enums';
 

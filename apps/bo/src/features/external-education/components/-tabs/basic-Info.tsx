@@ -7,7 +7,7 @@ import { FormSubTitle } from '@learnway/ui/base-form';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { Input } from '@learnway/ui/input';
 import { Textarea } from '@learnway/ui/textarea';
-import { FormRow2 } from '@shared/ui';
+import { FormRow2 } from '@shared/ui/form';
 import { useCallback, useEffect } from 'react';
 
 interface BasicInfoProps {

@@ -10,7 +10,7 @@ import { Button } from '@learnway/ui/button';
 import { Divider } from '@learnway/ui/elements';
 import { useModal } from '@learnway/ui/modal';
 import { ContentCreateType } from '@shared/types/enums';
-import { ContentCourseMappingModal } from '@shared/ui';
+import { ContentCourseMappingModal } from '@shared/ui/modal';
 import { useBlocker, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { useCallback, useMemo } from 'react';

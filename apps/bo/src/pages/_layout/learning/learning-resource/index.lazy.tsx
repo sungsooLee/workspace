@@ -1,11 +1,12 @@
 import { Button } from '@learnway/ui/button';
 // IA102 / NLP_BO_CMS_1001
-import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { LearningResourceTable } from '@features/learning-resource';
-import { MainContents, PageContainer, ContentsButtons } from '@shared/ui';
+import { ContentsButtons, MainContents, PageContainer } from '@shared/ui/layout';
+import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 
 export const Route = createLazyFileRoute('/_layout/learning/learning-resource/')({
-  component: RouteComponent });
+  component: RouteComponent,
+});
 
 function RouteComponent() {
   const router = useRouter();

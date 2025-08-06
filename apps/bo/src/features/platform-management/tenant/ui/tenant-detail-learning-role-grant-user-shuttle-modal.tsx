@@ -20,8 +20,9 @@ import { ShuttleGridToGrid, ShuttleGridToGridImperative } from '@learnway/ui/shu
 import { queryOptions as departmentQuery } from '@entities/department';
 import { useSaveUsers } from '@entities/role/service/role-manage.hook';
 import { usersQueryOptions } from '@entities/users/service/users.queries';
-import { DateRangePickerFormField } from '@features/form';
-import { FormRow } from '@shared/ui';
+
+import { DateRangePickerFormField, FormRow } from '@shared/ui/form';
+
 import { SearchBox } from '@shared/ui/search-box';
 /**
  * 화면번호: NLP_BO_PMS_1110

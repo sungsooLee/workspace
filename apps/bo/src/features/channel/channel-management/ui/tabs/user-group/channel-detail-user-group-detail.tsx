@@ -1,12 +1,12 @@
 import { useGetChannelDetail } from '@entities/channel';
-import { FormDisplay, InputFormField } from '@features/form';
 import { DynamicFormConfig, SearchBoxConfig, useDynamicForm, useSearchBox } from '@learnway/hooks';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import { FormSubTitle } from '@learnway/ui/base-form';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import { EnFormMode } from '@shared/types/enums';
-import { ChipListFormField, FormRow, SearchBox } from '@shared/ui';
+import { ChipListFormField, FormDisplay, FormRow, InputFormField } from '@shared/ui/form';
+import { SearchBox } from '@shared/ui/search-box';
 import { useRouterState } from '@tanstack/react-router';
 import { createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';

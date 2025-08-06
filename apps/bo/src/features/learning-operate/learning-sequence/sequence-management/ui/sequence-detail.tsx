@@ -4,7 +4,6 @@ import {
   useUpdateSequence,
 } from '@entities/learning-sequence/service/learning-sequence.hook';
 import { queryOptions } from '@entities/learning-sequence/service/learning-sequence.queries';
-import { DateRangePickerFormField, DropdownFormField, FormDisplay } from '@features/form';
 import { InstructorListPopup } from '@features/learning-operate-support/instructor-tutor/instructor-management';
 import { TriggerKey } from '@features/learning-operate/course/course-management';
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
@@ -20,18 +19,25 @@ import {
 import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
 import { PhoneNumberFormField } from '@learnway/ui/phone-number';
+
 import {
+  DateRangePickerFormField,
+  DropdownFormField,
+  FormDisplay,
   FormRow,
   FormRow2,
   PassOptionFormField,
   SwitchFormField,
   TenantByRoleChannelCheckboxFormField,
   TenantChannelDropdownFormField2,
+} from '@shared/ui/form';
+import {
   TrainingPlaceChoiceModal,
   UserChoiceModal,
   UserGroupChoiceModal,
   UserGroupTabsChoiceModal,
-} from '@shared/ui';
+} from '@shared/ui/modal';
+
 import { useQueryClient } from '@tanstack/react-query';
 import { useUpdateEffect } from 'ahooks';
 import { forwardRef, useCallback, useEffect, useRef } from 'react';

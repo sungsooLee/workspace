@@ -1,7 +1,7 @@
-import { MainContents, PageContainer, GuidePopupProps } from '@shared/ui';
+import { pageRouteConfig } from '@features/auth/index';
+import { GuidePopupProps, MainContents, PageContainer } from '@shared/ui/layout';
 import { createFileRoute } from '@tanstack/react-router';
 import style from './index.module.css';
-import { pageRouteConfig } from '@features/auth/index';
 
 export const Route = createFileRoute('/_layout/')({
   component: HomeComponent,
