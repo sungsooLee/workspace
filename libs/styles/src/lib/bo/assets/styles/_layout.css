@@ -40,12 +40,12 @@ body.scrolled {
 
 .layout_wrap {
   .scroll_inner {
-    @apply !h-[calc(100vh-140px)];
+    @apply !h-[calc(100vh-134px)];
   }
 }
 
 .content_wrap > div {
-  @apply min-h-[calc(100vh-248px)];
+  @apply min-h-[calc(100vh-242px)];
 }
 
 .content_wrap.scroll_hidden {
