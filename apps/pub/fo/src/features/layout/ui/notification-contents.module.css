@@ -85,12 +85,63 @@
   @screen mobile {
     .start {
       &.alarm_contents {
-        @apply max-h-none pb-0;
+        @apply max-h-none p-0 pb-[32px];
         &::after {
-          @apply hidden;
         }
+
         .empty {
-          @apply mt-[42px] justify-start;
+          .ico_bell {
+          }
+        }
+
+        .tab_header {
+          @apply relative;
+          .archive {
+            .ico {
+            }
+          }
+        }
+
+        .total_box {
+          @apply mt-[16px];
+          .total {
+            strong {
+            }
+          }
+          svg {
+          }
+        }
+
+        .info_list {
+          .info_item {
+            @apply p-[16px];
+            &.active {
+            }
+            &.new {
+            }
+
+            .link {
+            }
+            .message_wrap {
+              .title,
+              .message {
+              }
+            }
+          }
+
+          .head {
+            .list_set {
+              .time {
+              }
+              svg {
+              }
+            }
+          }
+          .btn_more {
+          }
+        }
+
+        .noti_txt {
         }
       }
     }

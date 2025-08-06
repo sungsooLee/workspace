@@ -94,9 +94,9 @@ const dummyNotifications: NotificationInfo[] = [
     message: (
       <>
         <strong>프론트엔드 마스터 배지를 획득했어요!</strong> 수강신청 승인{' '}
-        <Button size="md" variant={'primary'} underline={true} className={styles.link}>
+        <Link to="/" className={styles.link}>
           N건
-        </Button>{' '}
+        </Link>{' '}
         결재 대기중입니다.
       </>
     ),
@@ -172,7 +172,7 @@ const NotificationContentsComponent = () => {
             <Popover
               popoverContent={<TotalopoverCompoment />}
               side="bottom"
-              align="start"
+              align="end"
               sideOffset={10}
             >
               <IcoMoreHorizontal className={styles.ico} />
@@ -199,7 +199,7 @@ const NotificationContentsComponent = () => {
                     <Popover
                       popoverContent={<ListopoverCompoment />}
                       side="bottom"
-                      align="start"
+                      align="end"
                       sideOffset={10}
                     >
                       <IcoMoreHorizontal className={styles.ico} />
@@ -212,13 +212,19 @@ const NotificationContentsComponent = () => {
                   <div className={`${styles.group} ${isExpanded(noti.id) ? 'block' : 'hidden'}`}>
                     <ul className={styles.list}>
                       <li>
-                        <Button className={styles.link}>같은 그룹끼리 제목 보여줌</Button>
+                        <Link to="/" className={styles.link}>
+                          같은 그룹끼리 제목 보여줌
+                        </Link>
                       </li>
                       <li>
-                        <Button className={styles.link}>같은 그룹끼리 제목 보여줌</Button>
+                        <Link to="/" className={styles.link}>
+                          같은 그룹끼리 제목 보여줌
+                        </Link>
                       </li>
                       <li>
-                        <Button className={styles.link}>같은 그룹끼리 제목 보여줌</Button>
+                        <Link to="/" className={styles.link}>
+                          같은 그룹끼리 제목 보여줌
+                        </Link>
                       </li>
                     </ul>
                   </div>

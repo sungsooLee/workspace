@@ -8,7 +8,7 @@
         li {
           @apply label-lg text-[var(--gray35)];
           > button {
-            @apply block w-full rounded-[4px] p-[12px] text-left leading-[140%];
+            @apply ellipsis block w-full rounded-[4px] p-[12px] text-left leading-[140%];
             &.active,
             &:hover {
               @apply bg-[var(--blue95)] text-[var(--gray10)];
