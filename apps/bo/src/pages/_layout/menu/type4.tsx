@@ -1,5 +1,5 @@
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
-import { MainContents, PageContainer } from '@shared/ui';
+import { MainContents, PageContainer } from '@shared/ui/layout';
 import { createFileRoute } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { SearchBox } from '../../../shared/ui/search-box';

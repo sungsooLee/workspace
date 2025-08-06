@@ -3,7 +3,7 @@ import { queryOptions } from '@entities/course/service/course.queries';
 import { CODE_GROUP, getCodeLabel } from '@learnway/hooks';
 import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
-import { ShortUrlCopyButton } from '@shared/ui';
+import { ShortUrlCopyButton } from '@shared/ui/buttons';
 import { Link, useLocation } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { CourseGridColumn } from '../types/type';

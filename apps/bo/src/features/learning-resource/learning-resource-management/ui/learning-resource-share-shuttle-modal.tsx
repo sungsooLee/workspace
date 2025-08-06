@@ -17,7 +17,7 @@ import { Button } from '@learnway/ui/button';
 import { Divider } from '@learnway/ui/elements';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 import { ShuttleGridToGridV2 } from '@learnway/ui/shuttle-grid-to-grid-v2';
-import { SearchBox } from '@shared/ui';
+import { SearchBox } from '@shared/ui/search-box';
 import { useQueryClient } from '@tanstack/react-query';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { pick } from 'lodash-es';

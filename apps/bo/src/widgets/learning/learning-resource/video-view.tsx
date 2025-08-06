@@ -16,7 +16,8 @@ import { useDynamicForm2 } from '@learnway/hooks';
 import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
 import { ContentCreateType } from '@shared/types/enums';
-import { ContentsButtons, MainContents, PageContainer, SubContents } from '@shared/ui';
+
+import { ContentsButtons, MainContents, PageContainer, SubContents } from '@shared/ui/layout';
 import { t } from 'i18next';
 import { useEffect } from 'react';
 

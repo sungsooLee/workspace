@@ -4,10 +4,10 @@ import { useTranslation } from 'react-i18next';
 
 import { CODE_GROUP, useCodeStore, useDynamicForm2 } from '@learnway/hooks';
 
-import { useFetchTenant, useUpdateTenant } from '@entities/tenant';
-import { tenantApi } from '@entities/tenant';
-import { DuplicateState } from '@features/form';
+import { tenantApi, useFetchTenant, useUpdateTenant } from '@entities/tenant';
+
 import { EnDeviceType, EnFormMode, EnUseCategory } from '@shared/types/enums';
+import { DuplicateState } from '@shared/ui/form';
 import { isEqual } from 'lodash-es';
 
 import { useModal } from '@learnway/ui/modal';

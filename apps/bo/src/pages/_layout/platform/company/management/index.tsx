@@ -1,11 +1,12 @@
 import { CompanyList } from '@features/platform-management/company';
-import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
+import { Button } from '@learnway/ui/button';
+import { ContentsButtons, MainContents, PageContainer } from '@shared/ui/layout';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
-import { Button } from '@learnway/ui/button';
 
 export const Route = createFileRoute('/_layout/platform/company/management/')({
-  component: RouteComponent });
+  component: RouteComponent,
+});
 
 function RouteComponent() {
   const router = useRouter();

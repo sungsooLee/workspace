@@ -10,7 +10,7 @@ import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox } from '@learnway/ui/grid';
 import { useModal } from '@learnway/ui/modal';
 import { EnGlobalConst } from '@shared/types/enums';
-import { TenantByRoleDropdownFormField } from '@shared/ui';
+import { TenantByRoleDropdownFormField } from '@shared/ui/form';
 import { SearchBox } from '@shared/ui/search-box';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter, useRouterState } from '@tanstack/react-router';

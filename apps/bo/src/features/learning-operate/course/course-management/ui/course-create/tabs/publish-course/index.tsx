@@ -1,9 +1,14 @@
-import { DateRangePickerFormField } from '@features/form/ui';
 import { CODE_GROUP, S3_PATH, useDynamicForm2 } from '@learnway/hooks';
 import { FormSubTitle } from '@learnway/ui/base-form';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { RadioGroupFormField, TextareaFormField } from '@learnway/ui/form-field';
-import { ChipListFormField, FormRow2, ThumbnailListFormField } from '@shared/ui';
+
+import {
+  ChipListFormField,
+  DateRangePickerFormField,
+  FormRow2,
+  ThumbnailListFormField,
+} from '@shared/ui/form';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useCourseCreateSubPage } from '../../../../hooks/use-course-create-sub-page';
@@ -59,6 +64,7 @@ const PublishCourseComponent = forwardRef<HTMLElement, CourseTabBaseProps>((_, r
           element={
             <ThumbnailListFormField
               uuidType={'group'}
+              showDefault={getValues()?.courseType}
               uploadConfig={{
                 affairType: 'LMS',
                 s3Path: S3_PATH['upload/course/thumbnail'],

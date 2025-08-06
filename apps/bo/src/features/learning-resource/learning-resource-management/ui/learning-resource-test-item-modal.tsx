@@ -1,6 +1,7 @@
 import { CellContext } from '@tanstack/react-table';
-import { t } from 'i18next';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useWatch } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
@@ -21,13 +22,22 @@ import {
   EnQuestionLevel,
   EnQuestionType,
   ExamTemplateType,
+  MutationResponse,
   QuestionItem,
+  QuestionItemDeleteParam,
   QuestionItemGridRow,
   useCreateQuestionItem,
+  useDeleteQuestionItemList,
   useGetQuestionItem,
 } from '@entities/learning-resource';
-import { FormDisplay } from '@features/form';
-import { EditSingleAttachmentCell } from '@features/form/ui/edit-single-attachment-cell';
+
+import {
+  EditSingleAttachmentCell,
+  FormDisplay,
+  FormRow2,
+  SingleAttachmentFormField,
+} from '@shared/ui/form';
+
 import { S3_PATH, useDynamicForm2 } from '@learnway/hooks';
 import { IcoMenu01 } from '@learnway/icons';
 import { Button } from '@learnway/ui/button';
@@ -35,49 +45,97 @@ import { ContentsRow } from '@learnway/ui/contents-row';
 import { Input } from '@learnway/ui/input';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 import { ContentType, EnFormMode } from '@shared/types/enums';
-import { FormRow2, SingleAttachmentFormField, SwitchFormField } from '@shared/ui';
-import { useWatch } from 'react-hook-form';
 
 const LearningResourceTestItemModalComponent = ({
   contentInfo,
   questionItemGridRow,
   onSuccessCallback,
+  onDeleteCallback,
 }: {
   contentInfo: ContentInformation & { examPoolUuid?: string; examTemplateType?: ExamTemplateType };
   questionItemGridRow?: QuestionItemGridRow;
   onSuccessCallback?: () => void | Promise<void>;
+  onDeleteCallback?: () => void | Promise<void>;
 }) => {
-  const { closeModal, confirm: openConfirm } = useModal();
-  const [disabledButton, setDisabledButton] = useState(false);
-  const [otherOptions, setOtherOptions] = useState<any[]>();
-  const [formMode, setFormMode] = useState<EnFormMode>(
-    questionItemGridRow ? EnFormMode.VIEW : EnFormMode.ADD,
+  const { t } = useTranslation();
+  const { alert, closeModal, confirm: openConfirm } = useModal();
+
+  const formMode = useMemo<EnFormMode>(
+    () => (questionItemGridRow ? EnFormMode.VIEW : EnFormMode.ADD),
+    [questionItemGridRow],
   );
+
+  const [otherOptions, setOtherOptions] = useState<any[]>();
   const [questionItem, setQuestionItem] = useState<QuestionItem>();
 
   const formRef = useRef<HTMLFormElement>(null);
 
   const { provider, getValues, updateFormData, onFormChange, onSubmit } = useDynamicForm2();
+
   const { data: rowData } = useGetQuestionItem(questionItemGridRow?.examQuestionUuid);
   const { create: createQuestionItem } = useCreateQuestionItem();
+  const { delete: deleteQuestion } = useDeleteQuestionItemList({
+    onSuccess: ({ result }: MutationResponse) => {
+      if (result) {
+        onDeleteCallback?.();
+        closeModal();
+      }
+    },
+  });
 
   // console.log('questionItemGridRow', questionItemGridRow);
-  const imageTypeWatch = useWatch({ control: provider.control, name: 'imageType' });
-  const attachImageWatch = useWatch({ control: provider.control, name: 'fileUuid' });
+  // const imageTypeWatch = useWatch({ control: provider.control, name: 'fileType' });
+  // const attachImageWatch = useWatch({ control: provider.control, name: 'fileUuid' });
   const questionTypeWatch = useWatch({ control: provider.control, name: 'questionType' });
 
-  const handleDeleteButtonClick = () => {
+  const handleDeleteButtonClick = useCallback(async () => {
+    if (!questionItemGridRow?.examQuestionUuid) {
+      return;
+    }
     console.log('delete button click');
-  };
 
-  const handleSaveButtonClick = () => {
+    const payload: QuestionItemDeleteParam = {
+      contentUuid: contentInfo.contentUuid,
+      contentType: contentInfo.contentType,
+      questionUuidList: [questionItemGridRow.examQuestionUuid],
+    };
+
+    if (
+      await openConfirm({
+        title: t('삭제 하시겠습니까?'),
+        content: t('삭제 후 목록으로 이동합니다.'),
+      })
+    ) {
+      deleteQuestion(payload);
+    }
+  }, []);
+
+  const handleSaveButtonClick = useCallback(() => {
     const form = formRef.current;
     if (form) {
       form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
     }
-  };
-  const handleSubmit = async (data: any) => {
+  }, []);
+
+  const handleSubmit = async (data: Record<string, any>) => {
     const { fileAttached, ...restData } = data;
+
+    if (
+      [EnQuestionType.SINGLE, EnQuestionType.MULTIPLE].includes(questionTypeWatch) &&
+      restData.options.length < 2
+    ) {
+      await alert({
+        title: t('보기를 추가하세요.'),
+        content: t('객관식이나 다답식의 경우 보기가 2개 이상이어야 합니다.'),
+      });
+      return;
+    } else if (!restData.options.length) {
+      await alert({
+        title: t('보기를 추가하세요.'),
+        content: t('보기가 1개 이상이어야 합니다.'),
+      });
+      return;
+    }
 
     if (
       questionTypeWatch === EnQuestionType.ESSAY &&
@@ -95,6 +153,16 @@ const LearningResourceTestItemModalComponent = ({
       }
     }
 
+    if (
+      restData.options.map((option: any) => option.isCorrectAnswer).every((item: boolean) => !item)
+    ) {
+      await alert({
+        title: t('정답을 설정하세요.'),
+        content: t('정답이 1개 이상이어야 합니다.'),
+      });
+      return;
+    }
+
     const result = await openConfirm({
       title: t('저장 하시겠습니까?'),
       content: <p>{t('입력한 정보로 저장합니다.')}</p>,
@@ -106,8 +174,8 @@ const LearningResourceTestItemModalComponent = ({
         contentInfo.contentType === ContentType.EXAM
           ? contentInfo?.examPoolUuid
           : contentInfo.contentUuid;
-      const questionItem = { ...restData, contentUuid: paramUuid };
-      createQuestionItem(questionItem, {
+      const payload = { ...restData, isUsed: true, contentUuid: paramUuid };
+      createQuestionItem(payload as QuestionItem, {
         onSuccess: (result: any) => {
           onSuccessCallback?.();
           closeModal();
@@ -149,7 +217,7 @@ const LearningResourceTestItemModalComponent = ({
       case EnQuestionType.MULTIPLE:
       case EnQuestionType.OX:
         retval.push({
-          header: '보기',
+          header: t('보기'),
           accessorKey: 'examOptionText',
           size: 350,
           cell: (info: CellContext<any, string>) =>
@@ -164,7 +232,7 @@ const LearningResourceTestItemModalComponent = ({
           },
         });
         retval.push({
-          header: '첨부파일',
+          header: t('첨부파일'),
           accessorKey: 'fileUuid',
           size: 350,
           cell: (info: CellContext<any, string>) => (
@@ -186,7 +254,7 @@ const LearningResourceTestItemModalComponent = ({
           },
         });
         retval.push({
-          header: '정답',
+          header: t('정답'),
           accessorKey: 'isCorrectAnswer',
           size: 80,
           cell: (info: CellContext<any, any>) => (
@@ -196,7 +264,7 @@ const LearningResourceTestItemModalComponent = ({
                   info={info}
                   checkbox={{
                     variant: EnQuestionType.SINGLE === questionTypeWatch ? 'radio' : 'default',
-                    label: '정답',
+                    label: t('정답'),
                   }}
                   onCheckedChange={(event) => {
                     updateIsCorrectAnswerRadio(info.row.index);
@@ -207,7 +275,7 @@ const LearningResourceTestItemModalComponent = ({
                 <EditRadioCell
                   info={info}
                   radio={{
-                    options: [{ label: '정답', value: true }],
+                    options: [{ label: t('정답'), value: true }],
                   }}
                   onValueChange={(event) => {
                     updateIsCorrectAnswerRadio(info.row.index);
@@ -223,7 +291,7 @@ const LearningResourceTestItemModalComponent = ({
         });
         if (questionTypeWatch !== EnQuestionType.OX) {
           retval.push({
-            header: '순서변경',
+            header: t('순서변경'),
             accessorKey: 'sqlOrder',
             size: 50,
             cell: (info: CellContext<any, string>) => (
@@ -238,7 +306,7 @@ const LearningResourceTestItemModalComponent = ({
         break;
       case EnQuestionType.SHORT_ANSWER:
         retval.push({
-          header: '정답',
+          header: t('정답'),
           accessorKey: 'examOptionText',
           size: 1200,
           cell: (info: CellContext<any, string>) => (
@@ -258,7 +326,6 @@ const LearningResourceTestItemModalComponent = ({
     if (formMode !== EnFormMode.ADD) return;
     if (questionTypeWatch === EnQuestionType.OX) {
       const data = getValues('options');
-      console.log(otherOptions, data);
       if (data && data.length > 0) {
         setOtherOptions(data);
       }
@@ -293,7 +360,7 @@ const LearningResourceTestItemModalComponent = ({
 
   useEffect(() => {
     if (!rowData) return;
-    console.log('rowData', rowData);
+    // console.log('rowData', rowData);
     setQuestionItem(rowData);
   }, [rowData]);
 
@@ -352,11 +419,11 @@ const LearningResourceTestItemModalComponent = ({
                 element={
                   <RadioGroupFormField
                     options={[
-                      { label: '객관식', value: EnQuestionType.SINGLE },
-                      { label: '다답식', value: EnQuestionType.MULTIPLE },
-                      { label: '단답식', value: EnQuestionType.SHORT_ANSWER },
-                      { label: '주관식', value: EnQuestionType.ESSAY },
-                      { label: 'OX', value: EnQuestionType.OX },
+                      { label: t('객관식'), value: EnQuestionType.SINGLE },
+                      { label: t('다답식'), value: EnQuestionType.MULTIPLE },
+                      { label: t('단답식'), value: EnQuestionType.SHORT_ANSWER },
+                      { label: t('주관식'), value: EnQuestionType.ESSAY },
+                      { label: t('OX'), value: EnQuestionType.OX },
                     ]}
                     disabled={contentInfo?.examTemplateType === ExamTemplateType.QUIZ}
                   />
@@ -370,13 +437,13 @@ const LearningResourceTestItemModalComponent = ({
               <FormRow2
                 provider={provider}
                 name="languageCountryCodeName"
-                label="문항언어"
+                label={t('문항언어')}
                 element={<Input id="name-type2-2" type="text" disabled />}
               />
               <FormRow2
                 provider={provider}
                 name="questionLevel"
-                label="난이도"
+                label={t('난이도')}
                 value="HARD"
                 element={
                   <RadioGroupFormField
@@ -393,7 +460,7 @@ const LearningResourceTestItemModalComponent = ({
               <FormRow2
                 provider={provider}
                 name="questionText"
-                label="문항"
+                label={t('문항')}
                 format="string"
                 value=""
                 validation={{ required: true }}
@@ -404,74 +471,29 @@ const LearningResourceTestItemModalComponent = ({
               <FormRow2
                 provider={provider}
                 name="explainText"
-                label="해설"
+                label={t('해설')}
                 format="string"
                 value=""
-                placeholder="내용입력"
+                placeholder={t('내용입력')}
                 element={<TextareaFormField maxLength={2000} />}
               />
             </ContentsRow>
-            <ContentsRow type="horizontal" className="inactive">
+            <ContentsRow>
               <FormRow2
                 provider={provider}
-                name="fileAttached"
-                label="첨부파일"
-                format="boolean"
-                value={false}
-                tooltip="내용입력"
-                validation={{ required: true }}
-                element={<SwitchFormField />}
-                switchConfig={{
-                  label: (value: boolean) => (value ? '파일1개' : '파일없음'),
-                }}
+                name="fileUuid"
+                label={t('이미지 파일')}
+                element={
+                  <SingleAttachmentFormField
+                    uploadConfig={{
+                      affairsType: 'CMS',
+                      s3Path: S3_PATH['upload/content/image'],
+                      acceptFiles: ['JPEG', 'JPG', 'PNG', 'GIF'],
+                    }}
+                  />
+                }
               />
             </ContentsRow>
-            <FormDisplay provider={provider} dependencies={[{ name: 'fileAttached', value: true }]}>
-              <ContentsRow>
-                <FormRow2
-                  provider={provider}
-                  label="첨부유형"
-                  name="imageType"
-                  value="image"
-                  validation={{ required: true }}
-                  element={
-                    <RadioGroupFormField
-                      options={[
-                        { label: '이미지', value: 'image' },
-                        { label: '파일(다운로드)', value: 'file' },
-                      ]}
-                      disabled={attachImageWatch}
-                    />
-                  }
-                />
-              </ContentsRow>
-              <ContentsRow>
-                <FormRow2
-                  provider={provider}
-                  name="fileUuid"
-                  label="파일"
-                  validation={{ required: true }}
-                  element={
-                    imageTypeWatch === 'image' ? (
-                      <SingleAttachmentFormField
-                        uploadConfig={{
-                          affairsType: 'CMS',
-                          s3Path: S3_PATH['upload/content/image'],
-                          acceptFiles: ['JPEG', 'JPG', 'PNG', 'GIF'],
-                        }}
-                      />
-                    ) : (
-                      <SingleAttachmentFormField
-                        uploadConfig={{
-                          affairsType: 'CMS',
-                          s3Path: S3_PATH['upload/content/original'],
-                        }}
-                      />
-                    )
-                  }
-                />
-              </ContentsRow>
-            </FormDisplay>
             <FormDisplay
               provider={provider}
               condition="or"
@@ -492,8 +514,8 @@ const LearningResourceTestItemModalComponent = ({
                     <GridFormField
                       maxRow={10}
                       gridProps={{
-                        title: '보기목록',
-                        guideText: '보기의 첨부파일은 최대1개, 이미지파일만 가능합니다.',
+                        title: t('보기목록'),
+                        guideText: t('보기의 첨부파일은 최대1개, 이미지파일만 가능합니다.'),
                         multiple: true,
                         showAdd: questionTypeWatch !== EnQuestionType.OX,
                         showRemove: questionTypeWatch !== EnQuestionType.OX,
@@ -535,14 +557,7 @@ const LearningResourceTestItemModalComponent = ({
         </form>
       </ModalBody>
       <ModalFooter>
-        <Button
-          label={t('취소')}
-          variant="gray"
-          size="lg"
-          onClick={() => {
-            closeModal();
-          }}
-        />
+        <Button label={t('취소')} variant="gray" size="lg" onClick={closeModal} />
         {formMode === EnFormMode.VIEW && (
           <Button label={t('삭제')} variant="gray" size="lg" onClick={handleDeleteButtonClick} />
         )}

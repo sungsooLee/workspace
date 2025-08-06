@@ -1,10 +1,11 @@
-import React, { forwardRef } from 'react';
 import * as Primitive from '@radix-ui/react-radio-group';
+import React, { forwardRef, useEffect, useRef } from 'react';
 
-import { cn } from '@learnway/shared';
+import { cn, stringify } from '@learnway/shared';
 
-import { RadioGroupOption } from './type';
 import styles from './radio-group.module.css';
+import { RadioGroupOption } from './type';
+import { isNil } from 'lodash-es';
 
 export interface RadioGroupComponentProps extends React.ComponentProps<typeof Primitive.Root> {
   value?: string;
@@ -31,10 +32,36 @@ const RadioGroupComponent = forwardRef<
       size,
       orientation = 'horizontal',
       name,
+      onValueChange,
       ...props
     },
     ref,
   ) => {
+    const prevOptionsRef = useRef<string>('');
+
+    const handleValueChange = (newValue: string) => {
+      onValueChange?.(newValue);
+    };
+
+    useEffect(() => {
+      const optionsString = stringify(options);
+      // options가 이전과 동일하면 실행하지 않음
+      if (prevOptionsRef.current === optionsString) {
+        return;
+      }
+      // options 값 업데이트
+      prevOptionsRef.current = optionsString;
+      //
+      if (!isNil(value)) {
+        return;
+      }
+      // 첫 번째 옵션 값 설정
+      const firstValue = options?.[0]?.value;
+      if (firstValue !== undefined) {
+        handleValueChange(firstValue);
+      }
+    }, [options, value]);
+
     return (
       <Primitive.Root
         className={cn(
@@ -48,6 +75,7 @@ const RadioGroupComponent = forwardRef<
         )}
         defaultValue={defaultValue}
         value={value}
+        onValueChange={handleValueChange}
         {...props}
       >
         {options.map((option: RadioGroupOption, index: number) => {

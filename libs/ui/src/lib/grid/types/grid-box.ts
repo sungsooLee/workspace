@@ -1,4 +1,4 @@
-import { Table } from '@tanstack/react-table';
+import { CellContext, DeepKeys, DeepValue, RowData } from '@tanstack/react-table';
 import { Dispatch, SetStateAction } from 'react';
 import { PaginationResponse } from '../../type';
 import { GridBoxSearchInputCondition } from '../grid-box/grid-box-search-input';
@@ -349,12 +349,7 @@ export interface GridBoxProps<T extends object = object>
   onSearchClick?: (condition: GridBoxSearchInputCondition) => void;
 }
 
-/**
- * GridBox에서 사용하는 사용자 정의 컬럼 타입 정의
- */
-export interface GridBoxColumn<T = unknown> {
-  /** 컬럼의 고유 식별자 또는 데이터 접근 키 */
-  name: string;
+export interface GridBoxColumnBase<TData extends RowData, TValue> {
   /** 컬럼 헤더에 표시될 제목 */
   label: string;
   /** 컬럼 타입 (numbering, data 등) */
@@ -373,13 +368,16 @@ export interface GridBoxColumn<T = unknown> {
     [key: string]: unknown;
   };
   /** 셀 렌더링 함수 */
-  render?: (info: {
-    getValue: () => unknown;
-    row: { original: T };
-    cell: unknown;
-    column: unknown;
-    table: Table<T>;
-  }) => React.ReactNode;
+  render?: (props: CellContext<TData, TValue>) => any;
+}
+
+/**
+ * GridBox에서 사용하는 사용자 정의 컬럼 타입 정의
+ */
+export interface GridBoxColumn<TData extends RowData, TValue = unknown>
+  extends GridBoxColumnBase<TData, TValue> {
+  /** 컬럼의 고유 식별자 또는 데이터 접근 키 */
+  name: string;
 }
 
 export interface GridBoxPagination {
@@ -446,4 +444,24 @@ export interface ExcelConfig {
   };
   onBeforeDownload?: (executeUpload: () => Promise<void>) => Promise<void>;
   onBeforeUpload?: (executeUpload: () => Promise<void>) => Promise<void>;
+}
+
+export type GridBoxColumnHelper<TData extends RowData> = {
+  accessor: <TAccessor extends DeepKeys<TData>, TValue extends DeepValue<TData, TAccessor>>(
+    accessor: TAccessor,
+    column: GridBoxColumnBase<TData, TValue>,
+  ) => GridBoxColumn<TData, TValue>;
+};
+
+/**
+ * gridConfig의 column 생성 helper
+ * @returns
+ */
+export function createGridBoxColumnHelper<TData extends RowData>(): GridBoxColumnHelper<TData> {
+  return {
+    accessor: (accessor, column) => ({
+      ...column,
+      name: accessor,
+    }),
+  };
 }

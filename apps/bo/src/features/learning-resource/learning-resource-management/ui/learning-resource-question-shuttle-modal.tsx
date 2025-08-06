@@ -4,11 +4,7 @@ import { Button } from '@learnway/ui/button';
 import { Divider } from '@learnway/ui/elements';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 import { ShuttleGridToGrid, ShuttleGridToGridImperative } from '@learnway/ui/shuttle-grid-to-grid';
-import {
-  SearchBox,
-  TenantByRoleDropdownFormField,
-  TenantChannelDropdownFormField,
-} from '@shared/ui';
+import { TenantByRoleDropdownFormField, TenantChannelDropdownFormField } from '@shared/ui/form';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { TFunction } from 'i18next';
 import { useCallback, useMemo, useRef } from 'react';
@@ -18,6 +14,7 @@ import { QUESTION_LEVELS, QUESTION_TYPES } from '../service/exam-util';
 import { useQuestionSearchAndCopy } from '../service/learning-resource-question-import.hook';
 import { LearningResourceQuestionItemInfoModal } from './learning-resource-question-item-info-modal';
 
+import { SearchBox } from '@shared/ui/search-box';
 type QuestionShuttleModalProps = {
   examPoolUuid: string;
 };

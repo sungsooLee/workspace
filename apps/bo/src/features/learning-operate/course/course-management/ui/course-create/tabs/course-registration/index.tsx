@@ -1,10 +1,8 @@
-import { DropdownFormField } from '@features/form';
-import { FormDisplay } from '@features/form/ui/form-display';
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { RadioGroupFormField } from '@learnway/ui/form-field';
 import { Input } from '@learnway/ui/input';
-import { FormRow2, SwitchFormField } from '@shared/ui';
+import { DropdownFormField, FormDisplay, FormRow2, SwitchFormField } from '@shared/ui/form';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useCourseCreateSubPage } from '../../../../hooks/use-course-create-sub-page';
@@ -25,7 +23,7 @@ const CourseRegistrationComponent = forwardRef<HTMLElement, CourseTabBaseProps>(
           name={'isEnrollRequired'}
           label={t('수강신청')}
           format={'boolean'}
-          element={<SwitchFormField disabled={courseConfig?.enrollOption === 'IMPOSSIBLE'} />}
+          element={<SwitchFormField disabled={courseConfig?.enrollOption !== 'OPTIONAL'} />}
         />
       </ContentsRow>
       {/*승인 결재 라인, 정원*/}

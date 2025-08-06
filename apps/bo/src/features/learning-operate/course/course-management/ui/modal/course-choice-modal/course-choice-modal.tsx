@@ -1,7 +1,5 @@
 import { CourseListItem, CoursePopupListItem } from '@entities/course';
 import { queryOptions } from '@entities/course/service/course.queries';
-import { DateRangePickerFormField } from '@features/form/ui/date-range-picker-form-field';
-import { DropdownFormField } from '@features/form/ui/dropdown-form-field';
 import { CODE_GROUP, getCodeLabel, useDynamicForm2 } from '@learnway/hooks';
 import { generateYears } from '@learnway/shared';
 import { Button } from '@learnway/ui/button';
@@ -9,8 +7,8 @@ import { ContentsRow } from '@learnway/ui/contents-row';
 import { GridBox, useGridBox } from '@learnway/ui/grid';
 import { Input } from '@learnway/ui/input';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
-import { FormRow2 } from '@shared/ui/form/form-row2';
-import { SearchBoxForm } from '@shared/ui/search-box/search-box-form';
+import { DateRangePickerFormField, DropdownFormField, FormRow2 } from '@shared/ui/form';
+import { SearchBoxForm } from '@shared/ui/search-box';
 import { t } from 'i18next';
 import { forwardRef, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';

@@ -4,8 +4,7 @@ import { CheckboxGroupFormField, RadioGroupFormField } from '@learnway/ui/form-f
 import { t } from 'i18next';
 import { FC } from 'react';
 
-import { FormDisplay } from '@features/form/ui/form-display';
-import { FormRow } from '@shared/ui';
+import { FormDisplay, FormRow } from '@shared/ui/form';
 
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form

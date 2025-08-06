@@ -16,12 +16,14 @@ import { CourseCancelReasonPopup, EducationPlacePopup } from '../../../features/
 import {
   InstructorType,
   InstructorTypeLabel,
+  SequenceEnrollButtonType,
   useCourseEnrollWaiting,
   useCourseEnrollWaitingCancle,
 } from '@entities/course';
 import {
   useDeleteCourseApplication,
   useDeleteCourseWaiting,
+  useFetchCourseRegistrationStatus,
   usePostCourseWaiting,
 } from '@entities/enroll';
 import { DATE_TIME_FORMAT, formatISODateString } from '@learnway/shared';
@@ -59,26 +61,14 @@ const EducationComponent = ({
   const [detail, setDetail] = useState<boolean>();
   const [disabled, setDisabled] = useState(false); // 기간만료, 인원마감 등 case
 
-  // 수강 신청하기
-  // const { enrollRequest } = useCourseEnroll({
-  //   onSuccess: (data: any) => {
-  //     console.log('data121212', data);
-  //     if (data.code === 200) courseEnrollCompletePopup && courseEnrollCompletePopup();
-  //   },
-  // });
-  // 수강 취소하기
-  // const { enrollCancleRequest } = useCourseEnrollCancle({
-  //   onSuccess: (data: any) => {
-  //     console.log('data12121221344231', data);
-  //     if (data.code === 200) CourseCancelCompletePopup && CourseCancelCompletePopup();
-  //   },
-  // });
-
   const {
     deleteCourseApplication,
     mutate: deleteEnrollMutate,
     isPending: isDeleteEnrollPending,
   } = useDeleteCourseApplication();
+  const { data: statusData } = useFetchCourseRegistrationStatus(edu.courseSequenceId);
+  // console.log('sadasdasasdfadsgfasdfg', statusData);
+
   // 수강대기 하기
   const { enrollWaitingRequest } = useCourseEnrollWaiting({
     onSuccess: (data: any) => {
@@ -105,8 +95,9 @@ const EducationComponent = ({
   // 수강대기 신청 완료
   const CourseWaitAlert = () => {
     openAlert({
-      title: '수강대기 신청',
-      content: '수강대기 신청이 완료되었습니다.',
+      title: '수강대기자 등록',
+      content:
+        '본 과정의 수강신청 대기자로 등록되었습니다.\n수강 취소 발생 시 순차적으로 연락드리겠습니다.\n감사합니다.',
     });
   };
   const CourseWaitDeleteAlert = () => {
@@ -189,6 +180,15 @@ const EducationComponent = ({
     // if (courseEnrollCompletePopup) courseEnrollCompletePopup();
   };
 
+  const handleEnrollBeforeCheckEnrollStatus = () => {
+    console.log('수장신청버튼 클릭');
+    const { data } = useFetchCourseRegistrationStatus(edu.courseSequenceId);
+    console.log('수장신청버튼 클릭', data);
+
+    // const sendData = { courseSequenceId: edu.courseSequenceId };
+    // navigate({ to: '/course/registration', state: sendData });
+  };
+
   const handlePostCourseWaiting = () => {
     postCourseWaiting()
       .then((result) => {
@@ -228,6 +228,124 @@ const EducationComponent = ({
     // if (courseEnrollCompletePopup) courseEnrollCompletePopup();
   };
 
+  const buttonGenerator = () => {
+    switch (edu.sequenceEnrollButtonType) {
+      case SequenceEnrollButtonType.EXPIRED: //종료
+        return (
+          <>
+            <Button variant="gray" size="xl" disabled>
+              신청불가
+            </Button>
+          </>
+        );
+      case SequenceEnrollButtonType.NOT_ELIGIBLE: //신청불가
+        return (
+          <>
+            <Button variant="gray" size="xl">
+              신청불가
+            </Button>
+          </>
+        );
+      case SequenceEnrollButtonType.ENROLL: //수강신청
+        return (
+          <>
+            {/* 수강신청 - 수강하기 */}
+            <Button variant="primary" size="xl" onClick={handleEnrollBeforeCheckEnrollStatus}>
+              수강 신청
+            </Button>
+          </>
+        );
+      case SequenceEnrollButtonType.CANCEL_ENROLLMENT: //수강취소
+        return (
+          <>
+            {/* 수강취소 - 사유입력 - 신청완료  */}
+            <Button variant="line" size="xl" onClick={handleCourseCancelConfirm}>
+              수강 취소
+            </Button>
+          </>
+        );
+      case SequenceEnrollButtonType.FULL: //마감
+        return (
+          <>
+            <Button variant="primary" size="xl" disabled>
+              인원 마감
+            </Button>
+          </>
+        );
+      case SequenceEnrollButtonType.WAITLIST_ENROLL: //대기신청
+        return (
+          <>
+            {/* 수강대기 신청 - 잔여석 0자리일때 신청  */}
+            <Button variant="line" size="xl" onClick={handlePostCourseWaiting}>
+              수강대기 신청
+            </Button>
+          </>
+        );
+      case SequenceEnrollButtonType.CANCEL_WAITLIST: //대기취소
+        return (
+          <>
+            {/* 수강대기 신청 취소 - 잔여석 0자리일때 신청 취소  */}
+            <Button variant="gray" size="xl" onClick={handleDeleteCourseWaiting}>
+              수강대기 취소
+            </Button>
+          </>
+        );
+      case SequenceEnrollButtonType.READY_TO_LEARN: //학습준비
+        return (
+          <>
+            <Button variant="gray" size="xl" disabled>
+              학습예정
+            </Button>
+          </>
+        );
+      case SequenceEnrollButtonType.START_LEARNING: //학습시작
+        return (
+          <>
+            {/* 학습하기 - 학습중,학습하기,학습완료,이수,미이수 모두 강의실로 이동 / 학습완료 중 복습가능,불가능 따라 스타일은 두개  */}
+            <Button
+              variant="primary"
+              size="xl"
+              onClick={() => {
+                handleTab('0', 0);
+                goToScrollRef(dashboardRef);
+              }}
+            >
+              학습하기
+            </Button>
+          </>
+        );
+      case SequenceEnrollButtonType.COMPLETED: //완료
+        return (
+          <>
+            <Button variant="line" size="xl">
+              학습완료
+            </Button>
+          </>
+        );
+      case SequenceEnrollButtonType.PASSED: //합격
+        return (
+          <>
+            <Button variant="line" size="xl">
+              이수
+            </Button>
+          </>
+        );
+      case SequenceEnrollButtonType.FAILED: //불합격
+        return (
+          <>
+            <Button variant="line" size="xl">
+              미이수
+            </Button>
+          </>
+        );
+
+      // 수강개설 알림 신청 - 250718 알림기능 미오픈으로 추후로 미룸
+
+      default:
+        break;
+    }
+  };
+
   return (
     <div
       className={`${styles.start} ${styles.education} ${disabled === true ? styles.disabled : ''} ${className || ''}`}
@@ -250,69 +368,7 @@ const EducationComponent = ({
             <p>{edu.courseSequenceName}</p>
           </div>
         </div>
-        <div className={styles.btn_box}>
-          {/* 파란버튼 */}
-          {/* <Button variant="primary" size="xl">
-            수강 신청
-          </Button> */}
-          {/* 흰색흑백버튼 */}
-          {/* <Button variant="gray" size="xl">
-            학습완료
-          </Button> */}
-          {/* 흰색파란버튼 */}
-          {/* <Button variant="line" size="xl">
-            수강 취소
-          </Button> */}
-          {/* 비활성 */}
-          {/* <Button variant="primary" size="xl" disabled>
-            인원 마감
-          </Button> */}
-
-          {/* 수강개설 알림 신청 - 250718 알림기능 미오픈으로 추후로 미룸*/}
-          {/* 수강신청 - 수강하기 */}
-          <Button
-            variant="primary"
-            size="xl"
-            onClick={() => {
-              const sendData = { courseSequenceId: edu.courseSequenceId };
-              navigate({ to: '/course/registration', state: sendData });
-            }}
-          >
-            수강 신청
-          </Button>
-          {/* <br /> */}
-          {/* 수강취소 - 사유입력 - 신청완료 */}
-          {/* <Button variant="line" size="xl" onClick={handleCourseCancelConfirm}>
-            수강 취소
-          </Button> */}
-          {/* <br /> */}
-          {/* 수강대기 신청 - 잔여석 0자리일때 신청 */}
-          {/* <Button variant="line" size="xl" onClick={handlePostCourseWaiting}>
-            수강대기 신청
-          </Button> */}
-          {/* <br /> */}
-          {/* 수강대기 신청 취소 - 잔여석 0자리일때 신청 취소 */}
-          {/* <Button variant="gray" size="xl" onClick={handleDeleteCourseWaiting}>
-            수강대기 취소
-          </Button> */}
-          {/* <br /> */}
-          {/* 수강신청 불가 팝업 - */}
-          {/* <Button variant="line" size="xl">
-            수강 신청 - 불가
-          </Button> */}
-          {/* <br /> */}
-          {/* 학습하기 - 학습중,학습하기,학습완료,이수,미이수 모두 강의실로 이동 / 학습완료 중 복습가능,불가능 따라 스타일은 두개 */}
-          <Button
-            variant="primary"
-            size="xl"
-            onClick={() => {
-              handleTab('0', 0);
-              goToScrollRef(dashboardRef);
-            }}
-          >
-            학습하기
-          </Button>
-        </div>
+        <div className={styles.btn_box}>{buttonGenerator()}</div>
       </div>
       <div className={styles.info_box}>
         <div className={styles.list}>

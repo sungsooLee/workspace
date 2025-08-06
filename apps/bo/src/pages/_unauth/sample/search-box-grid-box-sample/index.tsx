@@ -6,7 +6,7 @@ import { Button } from '@learnway/ui/button';
 import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox } from '@learnway/ui/grid';
 import { PopoverList } from '@learnway/ui/popover-list';
-import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
+import { ContentsButtons, MainContents, PageContainer } from '@shared/ui/layout';
 import { createFileRoute } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { useCallback, useMemo } from 'react';

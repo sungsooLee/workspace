@@ -12,25 +12,20 @@ import { ChipListModalSelectorFormField } from '@learnway/ui/form-field';
 import { useModal } from '@learnway/ui/modal';
 import { PreviewImage } from '@learnway/ui/preview-image';
 import { EnFormMode } from '@shared/types/enums';
+import { AddressSearchFormField } from '@shared/ui/form/ui/address-search-form-field';
 import {
   CategoryChoiceTreeModal,
   ChannelListChoiceModal,
   ChannelShuttleModal,
   CompanyChoiceModal,
   CompanyShuttleModal,
-  ContentsButtons,
   CourseChoiceModal,
-  FormRow,
-  MainContents,
   MenuChoiceTreeModal,
   OrganizationChoiceTreeModal,
   OrganizationShuttleTreeModal,
   PackageChoiceModal,
-  PageContainer,
-  SubContents,
   TenantChoiceModal,
   TenantShuttleModal,
-  ThumbnailListFormField,
   TrainingPlaceChoiceModal,
   TrainingPlaceDetailModal,
   UserChoiceModal,
@@ -38,8 +33,10 @@ import {
   UserGroupOrganizationShuttleModal,
   UserGroupTabsChoiceModal,
   UserShuttleModal,
-} from '@shared/ui';
-import { AddressSearchFormField } from '@shared/ui/form/address-search-form-field';
+} from '@shared/ui/modal';
+
+import { FormRow, ThumbnailListFormField } from '@shared/ui/form';
+import { ContentsButtons, MainContents, PageContainer, SubContents } from '@shared/ui/layout';
 import { PreviewLearningWindow } from '@shared/ui/modal/preview-learning-window';
 import { createLazyFileRoute } from '@tanstack/react-router';
 import { t } from 'i18next';

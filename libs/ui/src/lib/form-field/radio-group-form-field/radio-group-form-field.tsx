@@ -1,9 +1,10 @@
-import { forwardRef, useMemo } from 'react';
-import { RadioGroup } from '../../radio-group/radio-group';
-import { cn } from '@learnway/shared';
-import styles from './radio-group-form-field.module.css';
 import { BaseFormFieldProps, OptionsConfig, useFormOptions } from '@learnway/hooks';
+import { cn } from '@learnway/shared';
+import { forwardRef, useCallback, useMemo } from 'react';
+import { RadioGroup } from '../../radio-group/radio-group';
 import { RadioGroupOption } from '../../radio-group/type';
+import styles from './radio-group-form-field.module.css';
+import { isNil } from 'lodash-es';
 
 /**
  * RadioGroup 폼 필드 컴포넌트의 Props 인터페이스
@@ -36,7 +37,19 @@ const RadioGroupFormFieldComponent = forwardRef<HTMLDivElement, RadioGroupFormFi
             }
           : option;
       });
-    }, [options, optionsConfig]);
+    }, [options, optionsConfig?.optionsNode]);
+
+    const handleValueChange = useCallback(
+      (newValue: string) => {
+        // if (value !== newValue) {
+        console.log('bbbbbbb', { value, newValue });
+        if (isNil(value)) {
+          console.log('bbbbbbbb > 22', { value, newValue });
+          onChange(newValue);
+        }
+      },
+      [value],
+    );
 
     const {
       clearAllValidators,

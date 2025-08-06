@@ -154,6 +154,15 @@
         @apply hidden;
       }
     }
+    &:disabled + [class*='tooltip_btn'] {
+      @apply !pointer-events-none !cursor-not-allowed;
+      svg circle {
+        @apply !fill-[var(--gray5)];
+      }
+    }
+  }
+  [class*='tooltip_btn'] svg {
+    @apply !mr-0;
   }
   & + [class*='nlp--button'] {
     &::before {

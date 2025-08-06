@@ -1,7 +1,7 @@
 import { Button } from '@learnway/ui/button';
 import { Divider } from '@learnway/ui/elements';
 import { Tabs } from '@learnway/ui/tabs';
-import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
+import { ContentsButtons, MainContents, PageContainer } from '@shared/ui/layout';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useCourseCreatePage } from '../../hooks/use-course-create-page';

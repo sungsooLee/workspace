@@ -296,3 +296,39 @@ export const getFullImagePath = (imagePath: string | null | undefined) => {
   const cleanedImagePath = imagePath.startsWith('/') ? imagePath.substring(1) : imagePath;
   return `${host}${cleanedImagePath}`;
 };
+
+/**
+ * 객체 내 순환 참조, React Node, 함수 등을 안전하게 직렬화하는 함수.
+ * JSON.stringify의 replacer 인자를 커스터마이징하여 불필요한 데이터를 제외합니다.
+ *
+ * @param data 직렬화할 객체
+ * @returns JSON 문자열
+ */
+export const stringify = (data: any) => {
+  const seen = new WeakSet();
+
+  const replacer = (key: any, value: any) => {
+    // 함수는 직렬화에서 제외
+    if (typeof value === 'function') {
+      return undefined;
+    }
+
+    // React Node 제외
+    // React 엘리먼트는 '$$typeof' 속성을 가집니다.
+    if (value && value.$$typeof === Symbol.for('react.element')) {
+      return undefined;
+    }
+
+    // 객체이면서 null이 아닌 경우 순환 참조 체크
+    if (typeof value === 'object' && value !== null) {
+      if (seen.has(value)) {
+        return '[Circular]';
+      }
+      seen.add(value);
+    }
+
+    return value;
+  };
+
+  return JSON.stringify(data, replacer);
+};

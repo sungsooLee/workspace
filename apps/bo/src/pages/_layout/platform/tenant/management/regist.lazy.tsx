@@ -6,12 +6,12 @@ import { CODE_GROUP, useCodeStore, useDynamicForm2 } from '@learnway/hooks';
 import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
 
-import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui';
-
 import { tenantApi } from '@entities/tenant';
 import { useCreateTenant } from '@entities/tenant/service/tenant.hook';
 import { pageRouteConfig } from '@features/auth';
-import { DuplicateState } from '@features/form';
+import { DuplicateState } from '@shared/ui/form';
+import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui/layout';
+
 import { TenantDetailBaseForm } from '@features/platform-management/tenant/ui/tenant-detail-base-form';
 import { EnDeviceType, EnFormMode, EnUseCategory } from '@shared/types/enums';
 import { isEqual } from 'lodash-es';

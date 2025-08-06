@@ -166,7 +166,7 @@ export default class CourseService {
   }
 
   // 과정 차수 불러오기
-  static async fetchSequences(courseId: string, reqDto: any): Promise<any> {
+  static async fetchSequences(courseId: number, reqDto: any): Promise<any> {
     return await httpService.get<any>(`${LMSApiPrefix()}/course/${courseId}/sequences`, {
       ...reqDto,
     });

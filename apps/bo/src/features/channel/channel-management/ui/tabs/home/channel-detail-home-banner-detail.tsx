@@ -1,5 +1,4 @@
 import { useChannelHomeBannerDetail } from '@features/channel/channel-management/hooks/use-channel-home-banner-detail';
-import { DateRangePickerFormField, DropdownFormField } from '@features/form';
 import { CODE_GROUP, S3_PATH } from '@learnway/hooks';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
@@ -7,7 +6,14 @@ import { FormSubTitle } from '@learnway/ui/base-form';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { Input } from '@learnway/ui/input';
-import { FormItem, FormRow2, SwitchFormField, ThumbnailListFormField } from '@shared/ui';
+import {
+  DateRangePickerFormField,
+  DropdownFormField,
+  FormItem,
+  FormRow2,
+  SwitchFormField,
+  ThumbnailListFormField,
+} from '@shared/ui/form';
 import { t } from 'i18next';
 import { forwardRef, useImperativeHandle, useRef } from 'react';
 import { ChannelHomeBannerDetailProps } from '../../../types/type';

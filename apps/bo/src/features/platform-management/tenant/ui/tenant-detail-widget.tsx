@@ -13,9 +13,9 @@ import {
 } from '@learnway/ui/form-field';
 import { TableBox } from '@learnway/ui/grid';
 import { List } from '@learnway/ui/list';
-import { FormRow, NoticeBox, SwitchFormField } from '@shared/ui';
-
-import { SectionLayout } from '@shared/ui';
+import { FormRow, SwitchFormField } from '@shared/ui/form';
+import { SectionLayout } from '@shared/ui/layout';
+import { NoticeBox } from '@shared/ui/notice-box';
 
 import {
   useAllTenantWidget,
@@ -28,7 +28,7 @@ import { ContentsRow } from '@learnway/ui/contents-row';
 import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
 import { EnDeviceType, EnFormMode } from '@shared/types/enums';
-import { ChannelChoiceModal } from '@shared/ui';
+import { ChannelChoiceModal } from '@shared/ui/modal';
 import dataWrapStyles from './data-wrap.module.css';
 import styles from './main-widget.module.css';
 

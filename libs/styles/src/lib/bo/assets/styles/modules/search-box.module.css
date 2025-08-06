@@ -98,7 +98,7 @@
       }
     }
     svg {
-      @apply !mr-0 fill-none stroke-none;
+      @apply !mx-0 h-[16px] w-[16px] fill-none stroke-none;
       path {
         @apply stroke-[var(--gray9)];
       }

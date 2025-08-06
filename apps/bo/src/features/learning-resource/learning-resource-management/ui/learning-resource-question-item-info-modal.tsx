@@ -17,7 +17,8 @@ import { createColumnHelper } from '@tanstack/react-table';
 import { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { FormDisplay } from '@features/form';
+import { FormDisplay, FormRow2 } from '@shared/ui/form';
+
 import {
   QUESTION_LEVELS,
   QUESTION_TYPES,
@@ -27,7 +28,6 @@ import { cn, isEmptyData } from '@learnway/shared';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
 import styles from '@learnway/styles/bo/pages/_layout/learning/popup-question-detail.module.css';
-import { FormRow2 } from '@shared/ui';
 
 type QuestionDetailInfoProps = {
   data: QuestionListForRetrieveRes;

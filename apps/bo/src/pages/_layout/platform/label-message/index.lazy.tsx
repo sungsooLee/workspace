@@ -8,7 +8,7 @@ import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inn
 import { Button } from '@learnway/ui/button';
 import { Divider, SplitPanel } from '@learnway/ui/elements';
 import { GridBox, GridBoxState, useGridBox } from '@learnway/ui/grid';
-import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
+import { ContentsButtons, MainContents, PageContainer } from '@shared/ui/layout';
 import { SearchBox } from '@shared/ui/search-box';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { Table } from '@tanstack/react-table';

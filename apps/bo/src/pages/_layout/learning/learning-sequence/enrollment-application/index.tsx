@@ -2,7 +2,7 @@ import { Button } from '@learnway/ui/button';
 import { Divider } from '@learnway/ui/elements';
 import { useModal } from '@learnway/ui/modal';
 import { ToggleButtonGroup } from '@learnway/ui/toggle-button-group';
-import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
+import { ContentsButtons, MainContents, PageContainer } from '@shared/ui/layout';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 // import { RoundList } from '@features/learning-operate/round';
 import { Enrollment } from '@features/learning-operate/learning-sequence/enrollment-application/ui/enrollment';

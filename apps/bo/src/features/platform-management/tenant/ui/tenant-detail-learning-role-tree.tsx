@@ -12,8 +12,9 @@ import {
   useMovePosition,
   useRoleManager,
 } from '@entities/role/service/role-manage.hook';
-import { DropdownFormField } from '@features/form';
-import { FormDisplay } from '@features/form/ui/form-display';
+
+import { DropdownFormField, FormDisplay, FormRow, SwitchFormField } from '@shared/ui/form';
+
 import {
   moveRoleCheck,
   transformRoleApiDataToTreeData,
@@ -37,14 +38,13 @@ import {
   EnGlobalConst,
   EnTenantScope,
 } from '@shared/types/enums';
+import { SectionLayout } from '@shared/ui/layout';
+
 import {
   ChannelListChoiceModal,
   CompanyShuttleModal,
-  FormRow,
   OrganizationChoiceTreeModal,
-  SectionLayout,
-  SwitchFormField,
-} from '@shared/ui';
+} from '@shared/ui/modal';
 
 /**
  * 화면번호:

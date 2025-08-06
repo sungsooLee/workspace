@@ -32,7 +32,7 @@ import { ContentsRow } from '@learnway/ui/contents-row';
 import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
 import { Textarea } from '@learnway/ui/textarea';
-import { FormRow, SwitchFormField } from '@shared/ui';
+import { FormRow, SwitchFormField } from '@shared/ui/form';
 import { useQueryClient } from '@tanstack/react-query';
 import { transformApiDataToApiTreeData } from '../../menu-managemnet';
 import { findNodeByApiId } from '../service/api.service';

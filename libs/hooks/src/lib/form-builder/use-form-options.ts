@@ -1,9 +1,9 @@
-import { useEffect, useState, useCallback } from 'react';
+import { getMockCodeGroupOption } from '@learnway/shared';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { CODE_GROUP } from '../use-code-store/constants';
 import { useCodeStore } from '../use-code-store/use-code-store';
 import { OptionsConfig, SelectOption } from './type';
-import { CODE_GROUP } from '../use-code-store/constants';
-import { getMockCodeGroupOption } from '@learnway/shared';
 
 /**
  * Form 에서 CodeGroup에 대한 로딩을 위한 커스텀 훅
@@ -67,6 +67,8 @@ const useFormOptionsHook = (
         codeGroup,
       )
     ) {
+      // 100ms 지연 후 mockOptions 반환
+      await new Promise((resolve) => setTimeout(resolve, 100));
       const mockOptions = getMockCodeGroupOption(codeGroup);
       return applyFieldMapping(mockOptions);
     }

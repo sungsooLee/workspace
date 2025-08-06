@@ -2,7 +2,7 @@ import { ChannelDetailBase, EnChannelRegisterMethod } from '@features/channel';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { Button } from '@learnway/ui/button';
 import { EnFormMode } from '@shared/types/enums';
-import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui';
+import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui/layout';
 import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { useEffect, useRef } from 'react';

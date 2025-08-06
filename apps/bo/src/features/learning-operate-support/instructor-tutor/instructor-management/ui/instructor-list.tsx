@@ -8,7 +8,7 @@ import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import { useModal } from '@learnway/ui/modal';
 import { EnPageMode } from '@shared/types/enums';
-import { GridExcelDownloadButton } from '@shared/ui';
+import { GridExcelDownloadButton } from '@shared/ui/buttons';
 import { SearchBox } from '@shared/ui/search-box';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from '@tanstack/react-router';

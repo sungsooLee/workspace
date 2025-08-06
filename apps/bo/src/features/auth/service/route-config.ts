@@ -8,7 +8,7 @@ import { ZodSchema } from 'zod';
 import { authUserQueryKeys, menuQueryOptions, mutateOptions } from '@learnway/auth/entities';
 
 import type { AuthUser, Menu } from '@learnway/auth/types';
-import { ERROR, tokenService } from '@learnway/config';
+import { ERROR, getConfig, tokenService } from '@learnway/config';
 import type { PageRouteConfig } from '@learnway/shared';
 import { buildJodObject, convertHierarchyToList, dateDiff } from '@learnway/shared';
 
@@ -24,6 +24,17 @@ const defaultPageRouteConfig: PageRouteConfig<PageMeta> = {
   },
 };
 
+// TODO 개발기 prefix 설정이 되어있어 /bo 붙여줌, 추후제거
+export const getPrefixUrl = () => {
+  if (getConfig().APP_INFO === 'BO') {
+    return '/bo';
+  } else if (getConfig().APP_INFO === 'FO') {
+    return '/fo';
+  } else {
+    return '/bo';
+  }
+};
+
 /**
  * @description 페이지 URL 체크
  * @param menu
@@ -36,7 +47,10 @@ export const accessPageCheck = (menu: Menu[], location: ParsedLocation) => {
   );
   if (import.meta.env.VITE_PAGE_ACCESS_CHECK === 'false') return;
 
-  const isAccessMenu = menu.some((menu: any) => menu.path === location.pathname);
+  // TODO 개발기 prefix 설정이 되어있어 /bo 붙여줌, 추후제거
+  const isAccessMenu = menu.some(
+    (menu: any) => `${getPrefixUrl()}${menu.path}` === `${location.pathname}`,
+  );
 
   console.log('### 3. 메뉴 체크 - 접근가능 :', isAccessMenu);
   if (!isAccessMenu) {
@@ -110,9 +124,10 @@ async function authorization({ location, context }: { location: ParsedLocation; 
 
   console.log('### auth authUserQuery ', authUserQuery);
 
+  console.log('### location.pathname', location.pathname);
   // 3번 체크
   if (authUserQuery) {
-    if (location.pathname === '/') return;
+    if (location.pathname === '/' || location.pathname === `${getPrefixUrl()}/`) return;
     // 메뉴별 접근 권한 체크
     accessPageCheck(authUserQuery?.menus, location);
   } else {
@@ -130,7 +145,7 @@ async function authorization({ location, context }: { location: ParsedLocation; 
       authUserFetch.menus = hierachyMenu;
       queryClient.setQueryData(authUserQueryKeys.authUser, authUserFetch);
     }
-    if (location.pathname === '/') return;
+    if (location.pathname === '/' || location.pathname === `${getPrefixUrl()}/`) return;
 
     // 메뉴별 접근 권한 체크
     accessPageCheck(authUserFetch?.menus, location);

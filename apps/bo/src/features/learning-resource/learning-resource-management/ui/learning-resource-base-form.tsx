@@ -6,19 +6,20 @@ import {
   TextareaFormField,
 } from '@learnway/ui/form-field';
 import { Input } from '@learnway/ui/input';
+
 import {
-  ChannelChoiceModal,
   ChipListFormField,
+  DateRangePickerFormField,
+  DropdownFormField,
+  FormDisplay,
   FormRow2,
-  ManagerChoiceModal,
+  SecondDurationTimeFormField,
   SwitchFormField,
-  UserChoiceModal,
-} from '@shared/ui';
+} from '@shared/ui/form';
+import { ChannelChoiceModal, ManagerChoiceModal, UserChoiceModal } from '@shared/ui/modal';
 
 import { ContentCreateType, EnFormMode } from '@shared/types/enums';
 
-import { DropdownFormField, FormDisplay, SecondDurationTimeFormField } from '@features/form';
-import { DateRangePickerFormField } from '@features/form/ui';
 import { User } from '@learnway/types';
 import { useTranslation } from 'react-i18next';
 

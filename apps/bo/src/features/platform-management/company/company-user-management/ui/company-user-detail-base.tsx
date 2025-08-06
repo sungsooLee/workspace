@@ -1,7 +1,9 @@
 import EnrollService from '@entities/enroll/api/enroll';
 import { DeliveryAddress } from '@entities/enroll/model/enroll.types';
 import { useUpdateUser } from '@entities/users';
-import { DuplicateState } from '@features/form';
+
+import { ContentsHistoryInfoFormField, DuplicateState, FormItem, FormRow } from '@shared/ui/form';
+
 import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { FormSubTitle } from '@learnway/ui/base-form';
@@ -11,7 +13,6 @@ import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
 import { useToast } from '@learnway/ui/toast';
 import { EnFormMode, EnGlobalConst } from '@shared/types/enums';
-import { ContentsHistoryInfoFormField, FormItem, FormRow } from '@shared/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';

@@ -1,14 +1,13 @@
 import { queryOptions as channelQueryOptions, useGetChannelPopup } from '@entities/channel';
-import { queryOptions as courseSharedQueryOptions } from '@entities/course-shared/service/course-shared.queries';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { AuthUser } from '@learnway/auth/types';
 import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { Button } from '@learnway/ui/button';
 import { Divider } from '@learnway/ui/elements';
-import { useGridBoxConfig } from '@learnway/ui/grid';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 import { ShuttleGridToGrid, ShuttleGridToGridImperative } from '@learnway/ui/shuttle-grid-to-grid';
-import { SearchBox, TenantByRoleDropdownFormField } from '@shared/ui';
+import { TenantByRoleDropdownFormField } from '@shared/ui/form';
+import { SearchBox } from '@shared/ui/search-box';
 import { useQueryClient } from '@tanstack/react-query';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
@@ -19,20 +18,6 @@ import { useWatch } from 'react-hook-form';
  * 과정 공유 팝업
  * @returns
  */
-export interface CourseShareModalComponentProps {
-  courseShareId: number;
-}
-
-const gridConfig: useGridBoxConfig = {
-  query: courseSharedQueryOptions.history,
-  columns: [],
-  data: [],
-  gridState: {
-    page: 0,
-    size: 50,
-    sort: [],
-  },
-};
 
 const CourseShareModalComponent = () => {
   const { closeModal, alert, confirm: openConfirm } = useModal();
@@ -91,7 +76,6 @@ const CourseShareModalComponent = () => {
       header: t('테넌트'),
       size: 132,
       cell: (info: any) => {
-        console.log('info.row.original.tenantList=>', info.row.original.tenantList);
         const tenant = info.row.original.tenantList.find((x: any) => x.tenantId === tenantIdWatch);
         return tenant.tenantName || '';
       },

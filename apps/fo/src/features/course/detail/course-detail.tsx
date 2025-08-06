@@ -1,6 +1,8 @@
 import {
+  IcoArrowDown,
   IcoBook,
   IcoCategory,
+  IcoCaution,
   IcoChair,
   IcoEye,
   IcoLevel,
@@ -8,15 +10,22 @@ import {
   IcoStar,
   IcoSubtitles02,
 } from '@learnway/icons';
-import { cn } from '@learnway/shared';
+import { cn, DATE_TIME_FORMAT, formatISODateString } from '@learnway/shared';
 import { Accordion } from '@learnway/ui/accordion';
 import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
 import { OptionCard, OptionCardItem } from '@learnway/ui/option-card';
 import { Tabs } from '@learnway/ui/tabs';
 import { useToast } from '@learnway/ui/toast';
-import { useRouterState } from '@tanstack/react-router';
-import { useEffect, useRef, useState } from 'react';
+import {
+  Dispatch,
+  RefObject,
+  SetStateAction,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 
 import {
   CourseDashboard, // 과정소개
@@ -33,8 +42,8 @@ import packageSideStyles from '@learnway/styles/fo/pages/_layout/course-introduc
 import pageContentsStyles from '@learnway/styles/fo/pages/_page-contents.module.css';
 import pageFullInner from '@learnway/styles/fo/widgets/layout/ui/container/page-full-inner.module.css';
 
+import { SequenceEnrollButtonType, useCourseLike, useCourseSequences } from '@entities/course';
 // 이미지
-import { useCourseFullDetail, useCourseLike, useCourseSequences } from '@entities/course';
 import {
   default as bnrImage1,
   default as listImage1,
@@ -43,29 +52,31 @@ import {
 import { useChannelDetail } from '@entities/channel/service/channel.hook';
 import { useGetCurriculumnDetail } from '@entities/curriculum';
 import styles from '@learnway/styles/fo/pages/_layout/course-introduction/detail.module.css';
+import { Panel } from '@learnway/ui/panel';
 import { t } from 'i18next';
 
-export function CourseDetail() {
-  const routerState = useRouterState();
-  const courseId = routerState.location.state?.courseId;
+export function CourseDetail({ courseId, courseData }: { courseId: any; courseData: any }) {
   const dashboardRef = useRef(null);
   const introduceRef = useRef(null);
   const educationRef = useRef(null);
   const reviewRef = useRef(null);
 
-  const testCourseId = 7;
-
   const [openingYear, setOpeningYear] = useState(2025);
   const [isAll, setIsAll] = useState(true);
+  const [enableEnrollSequences, setEnableEnrollSequences] = useState([]);
 
-  const { data: courseData } = useCourseFullDetail(courseId || testCourseId);
-  const { data: sequencesData } = useCourseSequences(courseId || testCourseId, {
+  const { data: sequencesData } = useCourseSequences(courseId, {
     openingYear,
     isAll,
   });
-  // const sequencesData = {};
-  const { courseLikeRequest, mutate: toggleLikeMutate, isPending: isLikePending } = useCourseLike();
   console.log('@', courseId, courseData, sequencesData);
+
+  // const sequencesData = {};
+  const {
+    courseLikeRequest,
+    mutateAsync: toggleLikeMutate,
+    isPending: isLikePending,
+  } = useCourseLike();
   const { data: channelData } = useChannelDetail(courseData?.channelUuid || '');
   const { data: curriculumData } = useGetCurriculumnDetail(courseData?.curriculumId);
 
@@ -77,8 +88,12 @@ export function CourseDetail() {
   const [likeChk, setLikeChk] = useState<boolean>(courseData?.course.courseLikeChk);
 
   // 탭 순서
-  const [selectedTabTitle, setSelectedTabTitle] = useState<number>(0); // 탭 타이틀 순서
-  const [selectedTabContent, setSelectedTabContent] = useState<string>('0'); // 탭 컨텐츠 순서
+  const [selectedTabTitle, setSelectedTabTitle] = useState<number>(
+    courseData?.isEnrollRequired ? 1 : 0,
+  ); // 탭 타이틀 순서
+  const [selectedTabContent, setSelectedTabContent] = useState<string>(
+    courseData?.isEnrollRequired ? '1' : '0',
+  ); // 탭 컨텐츠 순서
 
   // 탭 타이틀
   interface TabTitleSwiper {
@@ -331,7 +346,7 @@ export function CourseDetail() {
   const handleCourseLike = async () => {
     if (isLikePending) return;
 
-    await toggleLikeMutate(courseId || testCourseId, {
+    await toggleLikeMutate(courseId, {
       onSuccess: () => {
         setLikeChk((prev) => !prev);
         setLikeCount((prev) => prev + (likeChk ? -1 : 1));
@@ -348,19 +363,6 @@ export function CourseDetail() {
         console.log('좋아요 실패하였습니다');
       },
     });
-    // try {
-
-    //   const data = await courseLikeRequest(courseId || testCourseId);
-    //   if (data) {
-    //     setLikeCount((prev) => prev); // 증가
-    //     setLikeChk(!likeChk);
-    //   } else {
-    //     setLikeCount((prev) => prev - 1); // 감소
-    //     setLikeChk(false);
-    //   }
-    // } catch (err) {
-    //   console.error('like course error', err);
-    // }
   };
 
   const packageCardValueFn = (arr: Array<any>) => {
@@ -481,28 +483,33 @@ export function CourseDetail() {
   //   },
   // ];
 
-  const courseOptions = courseData?.class?.map((c: any) => ({
-    label: c.name,
-    value: c.id,
+  const courseOptions = enableEnrollSequences?.map((c: any) => ({
+    label: c.courseSequenceName,
+    value: c.courseSequenceId,
     original: {
-      number: `${c.number}차`,
-      date: `${c.startDate} ~ ${c.endDate}`,
+      number: `${c.courseSequenceNo}차`,
+      date: `${formatISODateString(c.enrollStartDateTime, DATE_TIME_FORMAT.DATE)} ~ ${formatISODateString(c.enrollEndDateTime, DATE_TIME_FORMAT.DATE)}`,
       info: [
         {
           icon: IcoChair,
-          txt: `${c.remainingSeats}`,
+          txt: `${c.maxEnrollQuota - c.enrollCount}`,
         },
         {
           icon: IcoLocation,
-          txt: `${c.location}`,
+          txt: `${c.learningSpaceNameKeyIn}`,
         },
       ],
     },
   }));
 
   // 학습유형 리스트 open, close
-  const [listCategoryOpen, setListCategoryOpen] = useState<boolean>(true);
-  const [listSubTitleOpen, setListSubTitleOpen] = useState<boolean>(true);
+  const [listCategoryOpen, setListCategoryOpen] = useState<boolean>(false);
+  const [listSubTitleOpen, setListSubTitleOpen] = useState<boolean>(false);
+  const [listCategoryBtnView, setListCategoryBtnView] = useState<boolean>(true);
+  const [listSubTitleBtnView, setListSubTitleBtnView] = useState<boolean>(true);
+  const listCategorySpanRef = useRef<HTMLSpanElement>(null);
+  const listSubTitleSpanRef = useRef<HTMLSpanElement>(null);
+  const manualFoldingToggleRef = useRef(false);
 
   const waitForRef = (ref: any, maxWaitTime = 3000) => {
     return new Promise((resolve, reject) => {
@@ -532,12 +539,78 @@ export function CourseDetail() {
     });
   };
 
+  const checkEllipsis = (
+    ref: RefObject<HTMLSpanElement>,
+    setBtnView: Dispatch<SetStateAction<boolean>>,
+  ) => {
+    if (manualFoldingToggleRef.current) {
+      manualFoldingToggleRef.current = false;
+      return;
+    }
+    const el = ref.current as HTMLSpanElement;
+
+    if (!el) return;
+
+    const oldWhiteSpace = el.style.whiteSpace;
+
+    el.style.whiteSpace = 'nowrap';
+    el.style.display = 'inline-block';
+
+    const isEllipsis = el.clientWidth > (el.parentElement?.clientWidth || 0);
+
+    el.style.whiteSpace = oldWhiteSpace;
+    el.style.display = 'inline';
+
+    setBtnView(isEllipsis);
+  };
+
+  useEffect(() => {
+    if (!courseData?.isEnrollRequired) return;
+
+    setLikeCount(courseData.course.courseLike);
+    setLikeChk(courseData.course.courseLikeChk);
+  }, [courseData]);
+
   useEffect(() => {
     if (!courseData?.course.courseLike) return;
 
     setLikeCount(courseData.course.courseLike);
     setLikeChk(courseData.course.courseLikeChk);
   }, [courseData?.course.courseLike]);
+
+  useEffect(() => {
+    if (!sequencesData) return;
+
+    setEnableEnrollSequences(
+      sequencesData.filter(
+        (sequence: any) => sequence.sequenceEnrollButtonType === SequenceEnrollButtonType.ENROLL,
+      ),
+    );
+  }, [sequencesData]);
+
+  useLayoutEffect(() => {
+    checkEllipsis(listCategorySpanRef, setListCategoryBtnView);
+
+    const observer = new ResizeObserver(() => {
+      checkEllipsis(listCategorySpanRef, setListCategoryBtnView);
+    });
+    if (listCategorySpanRef.current?.parentElement) {
+      observer.observe(listCategorySpanRef.current?.parentElement);
+    }
+    return () => observer.disconnect();
+  }, [courseData?.course?.data?.category]);
+
+  useLayoutEffect(() => {
+    checkEllipsis(listSubTitleSpanRef, setListSubTitleBtnView);
+
+    const observer = new ResizeObserver(() => {
+      checkEllipsis(listSubTitleSpanRef, setListSubTitleBtnView);
+    });
+    if (listSubTitleSpanRef.current?.parentElement) {
+      observer.observe(listSubTitleSpanRef.current?.parentElement);
+    }
+    return () => observer.disconnect();
+  }, [courseData?.course?.data?.captionLanguage]);
 
   return (
     <div className={`${styles.start} ${styles.package_wrap}`}>
@@ -773,17 +846,20 @@ export function CourseDetail() {
                     <li className={listCategoryOpen === true ? packageInformationStyles.open : ''}>
                       <IcoCategory width={20} height={20} fill="#4d525c" />
                       <p>
-                        <span>{courseData?.course?.data.category}</span>
+                        <span ref={listCategorySpanRef} style={{ display: 'inline-block' }}>
+                          {courseData?.course?.data.category}
+                        </span>
                       </p>
-                      {/* <Button
-                        onClick={() =>
-                          listCategoryOpen === true
-                            ? setListCategoryOpen(false)
-                            : setListCategoryOpen(true)
-                        }
-                      >
-                        <IcoArrowDown width={20} height={20} stroke="#4d525c" />
-                      </Button> */}
+                      {listCategoryBtnView && (
+                        <Button
+                          onClick={() => {
+                            manualFoldingToggleRef.current = true;
+                            setListCategoryOpen((prev) => !prev);
+                          }}
+                        >
+                          <IcoArrowDown width={20} height={20} stroke="#4d525c" />
+                        </Button>
+                      )}
                     </li>
                   )}
                   {/* <li>
@@ -815,16 +891,21 @@ export function CourseDetail() {
                   {courseData?.course?.data.captionLanguage && (
                     <li className={listSubTitleOpen === true ? packageInformationStyles.open : ''}>
                       <IcoSubtitles02 width={20} height={20} fill="#4d525c" />
-                      <p>{courseData?.course?.data.captionLanguage}</p>
-                      {/* <Button
-                        onClick={() =>
-                          listSubTitleOpen === true
-                            ? setListSubTitleOpen(false)
-                            : setListSubTitleOpen(true)
-                        }
-                      >
-                        <IcoArrowDown width={20} height={20} stroke="#4d525c" />
-                      </Button> */}
+                      <p>
+                        <span ref={listSubTitleSpanRef} style={{ display: 'inline-block' }}>
+                          {courseData?.course?.data.captionLanguage}
+                        </span>
+                      </p>
+                      {listSubTitleBtnView && (
+                        <Button
+                          onClick={() => {
+                            manualFoldingToggleRef.current = true;
+                            setListSubTitleOpen((prev) => prev);
+                          }}
+                        >
+                          <IcoArrowDown width={20} height={20} stroke="#4d525c" />
+                        </Button>
+                      )}
                     </li>
                   )}
                 </ul>
@@ -832,13 +913,51 @@ export function CourseDetail() {
 
               {/* 강의 */}
               <div className={packageInformationStyles.lecture_wrap}>
-                {/* 수강 신청 차수 없을 시 */}
-                {/* <Panel hideHeaderUnderline type="rounded" className={styles.result_box}>
-                  <div>
-                    <IcoCaution width={40} height={40} stroke={'#A9AFB8'} />
-                    <strong>{t('현재 수강 신청 가능한 차수가 없습니다.')}</strong>
-                  </div>
-                </Panel> */}
+                {courseOptions.length ? (
+                  <>
+                    {/* 강의 정보 */}
+                    <OptionCard
+                      cols={1}
+                      size="lg"
+                      value={courseValues}
+                      options={courseOptions}
+                      itemRenderer={({ label, original }: OptionCardItem, index: number) => (
+                        // lectureStyles module
+                        <div
+                          className={`${lectureStyles.start} ${lectureStyles.course_information} ${lectureStyles.course_option}`}
+                          style={{ width: '100%' }}
+                        >
+                          <div className={`${lectureStyles.box}`}>
+                            <p className={lectureStyles.date}>
+                              <span>{original?.date}</span>
+                              <span>{original?.number}</span>
+                            </p>
+                            <strong className={lectureStyles.tit}>{label}</strong>
+                          </div>
+                          <div className={`${lectureStyles.box} `}>
+                            {original.info.map((item: any, index: number) => (
+                              <span key={index} className={`${lectureStyles.info}`}>
+                                <item.icon width={20} height={20} />
+                                {item.txt}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      onOptionSelect={(option: OptionCardItem) => setCourseValues(option.value)}
+                    />
+                  </>
+                ) : (
+                  <>
+                    {/* 수강 신청 차수 없을 시 */}
+                    <Panel hideHeaderUnderline type="rounded" className={styles.result_box}>
+                      <div>
+                        <IcoCaution width={40} height={40} stroke={'#A9AFB8'} />
+                        <strong>{t('현재 수강 신청 가능한 차수가 없습니다.')}</strong>
+                      </div>
+                    </Panel>
+                  </>
+                )}
                 {/* 인원마감/대기신청 */}
                 {/* <Panel hideHeaderUnderline type="rounded" className={styles.result_box}>
                   <div>
@@ -847,42 +966,12 @@ export function CourseDetail() {
                     <p>{t('수강신청일시는 예고없이 변경될수 있습니다.')}</p>
                   </div>
                 </Panel> */}
-                {/* 강의 정보 */}
-                <OptionCard
-                  cols={1}
-                  size="lg"
-                  value={courseValues}
-                  options={courseOptions}
-                  itemRenderer={({ label, original }: OptionCardItem, index: number) => (
-                    // lectureStyles module
-                    <div
-                      className={`${lectureStyles.start} ${lectureStyles.course_information} ${lectureStyles.course_option}`}
-                    >
-                      <div className={`${lectureStyles.box}`}>
-                        <p className={lectureStyles.date}>
-                          <span>{original?.date}</span>
-                          <span>{original?.number}</span>
-                        </p>
-                        <strong className={lectureStyles.tit}>{label}</strong>
-                      </div>
-                      <div className={`${lectureStyles.box} `}>
-                        {original.info.map((item: any, index: number) => (
-                          <span key={index} className={`${lectureStyles.info}`}>
-                            <item.icon width={20} height={20} />
-                            {item.txt}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                  onOptionSelect={(option: OptionCardItem) => setCourseValues(option.value)}
-                />
               </div>
 
               {/* 찜/공유 수강신청 Button */}
               <div className={styles.course_btn_wrap}>
                 <CourseFixedButton
-                  course={courseData?.class.length}
+                  enrollEnable={!!enableEnrollSequences?.length}
                   likeCount={likeCount}
                   heart={likeChk}
                   handleCourseLike={handleCourseLike}
