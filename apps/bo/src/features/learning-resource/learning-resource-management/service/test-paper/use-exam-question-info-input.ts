@@ -58,6 +58,15 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
     await handleQuestionMutationSuccessCallback();
   }, []);
 
+  const questionDeleteSuccessCallback = useCallback(async () => {
+    openToast({
+      title: t('삭제되었습니다.'),
+      type: 'success',
+    });
+
+    await handleQuestionMutationSuccessCallback();
+  }, []);
+
   const { update: updateQuestionStatus } = useUpdateQuestionStatus({
     onSuccess: async (result: any) => {
       if (result) {
@@ -433,6 +442,7 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
     questionState,
     scorePerQuestion,
     questionCreateSuccessCallback,
+    questionDeleteSuccessCallback,
     updateQuestionStatus,
     randomCountUpdateData,
     setRandomCountUpdateData,

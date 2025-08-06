@@ -28,9 +28,10 @@ const EditTextareaCell = <T,>({ info, textarea: textareaProps }: EditTextareaCel
     //   clearTimeout(debounceTimerRef.current);
     // }
 
-    // debounceTimerRef.current = setTimeout(() => {
-    //   saveValue(newValue);
-    // }, 500);
+    // debounceTimerRef.current =
+    setTimeout(() => {
+      saveValue(newValue);
+    }, 500);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
