@@ -549,9 +549,9 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: '',
     pageType: '',
-    completionDate: '',
+    completionDate: '2025-07-08',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- dashboard.tsx (자료실)',
   },
   {
     screenId: 'NLP_FO_CLA_1008_2',
@@ -559,9 +559,9 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: '',
     pageType: '',
-    completionDate: '',
+    completionDate: '2025-07-08',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- dashboard.tsx (자료실)',
   },
   {
     screenId: 'NLP_FO_CHB_1000',
