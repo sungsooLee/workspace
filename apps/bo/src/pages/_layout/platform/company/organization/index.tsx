@@ -1,9 +1,10 @@
 import { CompanyList } from '@features/platform-management/company';
-import { MainContents, PageContainer } from '@shared/ui';
+import { MainContents, PageContainer } from '@shared/ui/layout';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/_layout/platform/company/organization/')({
-  component: RouteComponent });
+  component: RouteComponent,
+});
 
 function RouteComponent() {
   return (

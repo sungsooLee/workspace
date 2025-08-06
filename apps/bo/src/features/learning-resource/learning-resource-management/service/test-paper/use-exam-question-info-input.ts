@@ -1,9 +1,15 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { useTranslation } from 'react-i18next';
-import { debounce } from 'lodash-es';
 import {
+  EnQuestionLevel,
+  EnQuestionType,
+  ExamPaperQuestionCountUpdateReq,
+  ExamQuestionGenType,
   learningResourceQueryOptions,
+  MutationResponse,
+  QuestionCountInfo,
+  QuestionItem,
+  QuestionItemDeleteParam,
+  QuestionsCopyReq,
+  TestPaperBasicInfoDetail,
   useCopyQuestionsToExamPaper,
   useDeleteQuestionItemList,
   useUpdateExamPaperQuestionCount,
@@ -12,21 +18,13 @@ import {
 import { isEmptyData } from '@learnway/shared';
 import { useModal } from '@learnway/ui/modal';
 import { useToast } from '@learnway/ui/toast';
-import {
-  ContentType,
-  EnQuestionLevel,
-  EnQuestionType,
-  ExamPaperQuestionCountUpdateReq,
-  ExamQuestionGenType,
-  MutationResponse,
-  QuestionCountInfo,
-  QuestionItem,
-  QuestionItemDeleteParam,
-  QuestionsCopyReq,
-  TestPaperBasicInfoDetail,
-} from '@types';
-import { LevelKey, QuestionStatisticRow, SelectedQuestionState } from './type';
+import { ContentType } from '@shared/types/enums';
+import { useQuery } from '@tanstack/react-query';
+import { debounce } from 'lodash-es';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useQuestionSort } from '../learning-resource-question-sort.hook';
+import { LevelKey, QuestionStatisticRow, SelectedQuestionState } from './type';
 
 export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) => {
   const { contentUuid = '', examPoolUuid = '', questionGenType, questionCount } = basicInfo;
@@ -54,6 +52,15 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
   const questionCreateSuccessCallback = useCallback(async () => {
     openToast({
       title: t('저장되었습니다.'),
+      type: 'success',
+    });
+
+    await handleQuestionMutationSuccessCallback();
+  }, []);
+
+  const questionDeleteSuccessCallback = useCallback(async () => {
+    openToast({
+      title: t('삭제되었습니다.'),
       type: 'success',
     });
 
@@ -435,6 +442,7 @@ export const useExamQuestionInfoInput = (basicInfo: TestPaperBasicInfoDetail) =>
     questionState,
     scorePerQuestion,
     questionCreateSuccessCallback,
+    questionDeleteSuccessCallback,
     updateQuestionStatus,
     randomCountUpdateData,
     setRandomCountUpdateData,

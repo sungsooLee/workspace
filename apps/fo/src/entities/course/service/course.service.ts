@@ -5,7 +5,7 @@ import {
   CourseTypeLabel,
   TrainingLevelType,
   TrainingLevelTypeLabel,
-} from '@types';
+} from '@entities/course';
 
 const ddata = {
   thumbnail: 'https://cdn.learnway.io/thumbnail/thumbnail.png',

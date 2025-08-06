@@ -1,7 +1,5 @@
 import { TreeNode } from '@learnway/ui/tree-view';
 import { t } from 'i18next';
-import { EnTreeEventPosition } from '@types';
-// TODO: Fix unknown imports:  from '@learnway/ui'
 
 export const findOrganizationPathById = (
   nodes: TreeNode[],
@@ -50,7 +48,7 @@ export const transformDepartmentApiDataToTreeData = (apiData: any, rootName = 'R
       const memberCount = node.deptMemberCount;
       const nodeTitle =
         node.deptId !== 'root'
-          ? node.deptName + ' (' + t('{{count}}명', { count: memberCount.toLocaleString() }) + ')'
+          ? `${node.deptName} (${t('{{count}}명', { count: memberCount.toLocaleString() })})`
           : node.deptName;
       // 새로운 노드 객체 생성
       const transformedNode = {
@@ -62,7 +60,8 @@ export const transformDepartmentApiDataToTreeData = (apiData: any, rootName = 'R
         parentKey: node.parentDeptId?.toString() || '',
         children: node.childList || [],
         _nodeType: 'D',
-        depth };
+        depth,
+      };
 
       if (!node.deptId && !node.parentDeptId) {
         //회사 노드

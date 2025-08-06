@@ -8,10 +8,11 @@ import { useChannelApplication } from '@features/channel/channel-application/ser
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox } from '@learnway/ui/grid';
-import { MainContents, PageContainer, TenantByRoleDropdownFormField } from '@shared/ui';
+import { EnGlobalConst } from '@shared/types/enums';
+import { TenantByRoleDropdownFormField } from '@shared/ui/form';
+import { MainContents, PageContainer } from '@shared/ui/layout';
 import { SearchBox } from '@shared/ui/search-box';
 import { ColumnDef, createColumnHelper, Table } from '@tanstack/react-table';
-import { EnGlobalConst } from '@types';
 
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
 import { Button } from '@learnway/ui/button';

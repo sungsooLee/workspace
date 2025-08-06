@@ -1,6 +1,5 @@
+import { MAPPING_CURRICULUM_TYPE } from '@entities/curriculum';
 import { TreeNode } from '@learnway/ui/tree-view';
-import { MAPPING_CURRICULUM_TYPE } from '@types';
-// TODO: Fix unknown imports:  from '@learnway/ui'
 
 export const NODE_CHILDREN_MAP = {
   [MAPPING_CURRICULUM_TYPE.CURRICULUM]: [

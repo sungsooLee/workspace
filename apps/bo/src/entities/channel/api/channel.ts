@@ -1,6 +1,7 @@
 import { PMSApiPrefix } from '@learnway/config';
 import { httpService } from '@learnway/shared';
-import { ChannelByRoleId, ChannelParam, ChannelResponse, PaginationResponse } from '@types';
+import { ChannelByRoleId, ChannelParam, ChannelResponse } from '../model/channel.types';
+import { PaginationResponse } from '../../../shared/types/api';
 
 export default class ChannelService {
   static async getChannelList(
@@ -9,11 +10,16 @@ export default class ChannelService {
   ): Promise<PaginationResponse<ChannelResponse>> {
     return httpService.get(`${PMSApiPrefix()}/channel`, {
       roleId,
-      ...params });
+      ...params,
+    });
   }
 
   static async getChannelDetail(channelUuid: string) {
     return httpService.get<any>(`${PMSApiPrefix()}/channel/${channelUuid}`);
+  }
+
+  static async getChannelPopup() {
+    return httpService.get<any>(`${PMSApiPrefix()}/channel/popup`);
   }
 
   static async createChannel(payload: any) {
@@ -31,7 +37,8 @@ export default class ChannelService {
   static async existsChannelMainId(channelMainId: string, channelUuid: any = undefined) {
     return httpService.get<any>(`${PMSApiPrefix()}/channel/channelMainId/exist`, {
       channelMainId,
-      channelUuid });
+      channelUuid,
+    });
   }
 
   /**

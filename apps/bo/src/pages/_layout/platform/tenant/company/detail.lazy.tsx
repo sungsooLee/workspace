@@ -1,15 +1,16 @@
-import { useRef } from 'react';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
+import { useRef } from 'react';
 
-import { PageContainer, MainContents, ContentsButtons, LinkBox } from '@shared/ui';
+import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui/layout';
 
 import { CompanyDetail } from '@features/platform-management/company';
-import { EnFormMode } from '@types';
 import { Button } from '@learnway/ui/button';
+import { EnFormMode } from '@shared/types/enums';
 
 export const Route = createLazyFileRoute('/_layout/platform/tenant/company/detail')({
-  component: RouteComponent });
+  component: RouteComponent,
+});
 
 /**
  * 화면번호: NLP_BO_TMS_1111_20

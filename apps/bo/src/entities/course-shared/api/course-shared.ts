@@ -1,6 +1,9 @@
+import {
+  CourseSharedHistoryList,
+  CourseSharedList,
+} from '@entities/course-shared/model/course-shared.types';
 import { LMSApiPrefix } from '@learnway/config';
 import { httpService } from '@learnway/shared';
-import { CourseSharedHistoryList, CourseSharedList } from 'src/types/entities/course-shared';
 
 export default class CourseSharedService {
   static fetchCourseSharedList(params: any) {
@@ -14,9 +17,15 @@ export default class CourseSharedService {
       params,
     );
   }
+  static courseShare(params: any) {
+    return httpService.post(`${LMSApiPrefix()}/course/share`, params);
+  }
   static copyCourseShared(params: any) {
     const courseId = params.courseId;
     delete params.courseId;
     return httpService.post(`${LMSApiPrefix()}/course/shared/${courseId}/copy`, params);
+  }
+  static fetchOriginChannels(params: any) {
+    return httpService.get<any[]>(`${LMSApiPrefix()}/course/shared/originChannels`, params);
   }
 }

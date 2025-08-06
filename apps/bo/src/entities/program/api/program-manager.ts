@@ -1,6 +1,6 @@
-import { httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
-import { Program } from '../../../types/entities/program';
+import { httpService } from '@learnway/shared';
+import { Program } from '../model/program.types';
 
 /**
  * PMS > 프로그램관리(API) API 모음

@@ -1,10 +1,10 @@
+import { CoursesQueryParams } from '@entities/course';
 import { queryOptions } from '@entities/course/service/course.queries';
 import { CODE_GROUP, getCodeLabel } from '@learnway/hooks';
 import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
-import { ShortUrlCopyButton } from '@shared/ui';
+import { ShortUrlCopyButton } from '@shared/ui/buttons';
 import { Link, useLocation } from '@tanstack/react-router';
-import { CoursesQueryParams } from '@types';
 import { t } from 'i18next';
 import { CourseGridColumn } from '../types/type';
 import { CourseFavoriteIcon } from '../ui/course-favorite-icon/course-favorite-icon';
@@ -183,7 +183,7 @@ export const useCourseListGridConfig = () => {
           disabled={!info?.original?.isUsed}
           stopPropagation
           onClick={() => {
-            alert('준비중입니다.');
+            alert('과정상세 페이지 이동');
           }}
         />
       ),
@@ -227,7 +227,7 @@ const getDetailUrl = (row: any, pathname: string): string => {
   const { wizardStep } = row.original || {};
 
   // 수강관리 화면
-  if (pathname === '/learning/course/management') {
+  if (pathname.endsWith('/learning/course/management')) {
     return '/learning/learning-sequence/enrollment-application'; // 수강관리 > 수강신청 관리 페이지
   }
 

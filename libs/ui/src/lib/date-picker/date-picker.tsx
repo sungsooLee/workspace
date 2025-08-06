@@ -279,7 +279,7 @@ const DatePickerComponent: ForwardRefRenderFunction<HTMLDivElement, DatePickerCo
     }
   };
   useEffect(() => {
-    console.log(value);
+    // console.log(value);
     setSelectedDate(value as Date | undefined);
   }, [value]);
 

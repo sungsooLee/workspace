@@ -52,9 +52,9 @@ const ResponModal = () => {
       type: '동영상',
       name: (
         // <Link to={'/'} className="link">
-        //   학습자원명
+        //   교육자원명
         // </Link>
-        <Button className="link" label={'학습자원명'} />
+        <Button className="link" label={'교육자원명'} />
       ),
       tenant: '테넌트',
       channel: '채널',
@@ -86,9 +86,9 @@ const ResponModal = () => {
       type: '동영상',
       name: (
         // <Link to={'/'} className="link">
-        //   학습자원명
+        //   교육자원명
         // </Link>
-        <Button className="link" label={'학습자원명'} />
+        <Button className="link" label={'교육자원명'} />
       ),
       tenant: '테넌트',
       channel: '채널',
@@ -129,7 +129,7 @@ const ResponModal = () => {
     }),
     columnHelper.accessor('name', {
       cell: (info) => info.getValue(),
-      header: '학습자원명',
+      header: '교육자원명',
       size: 380,
       enableGrouping: false,
     }),
@@ -264,7 +264,7 @@ const ResponModal = () => {
                       <div className={searchStyles.inner}>
                         <div className={searchStyles.item}>
                           <label htmlFor="name-4" className={searchStyles.label}>
-                            <span className={searchStyles.text}>학습자원명</span>
+                            <span className={searchStyles.text}>교육자원명</span>
                           </label>
                           <div className={searchStyles.box}>
                             <Input type={'text'} placeholder={'입력'} id={'name-4'} />
@@ -384,7 +384,7 @@ const ResponModal = () => {
                 title="목록"
                 customButtonNode={
                   <>
-                    <Checkbox label={'나의 학습자원'} size={'md'} />
+                    <Checkbox label={'나의 교육자원'} size={'md'} />
                     <Button
                       label={'프로그램/가이드 다운로드'}
                       icon={<IcoDownload width={16} height={16} stroke={'#4C515E'} />}

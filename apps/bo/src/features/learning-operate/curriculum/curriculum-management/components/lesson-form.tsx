@@ -1,5 +1,5 @@
+import { LESSON_TYPE, MODULE_TYPE, useGetLessonDetail } from '@entities/curriculum';
 import { learningResourceQueryOptions } from '@entities/learning-resource';
-import { DropdownFormField, DurationTimeFormField } from '@features/form/ui';
 import { DynamicFormProvider } from '@learnway/hooks';
 import { IcoPlus } from '@learnway/icons';
 import { getHourValueFromTime } from '@learnway/shared';
@@ -11,13 +11,12 @@ import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
 import { Textarea } from '@learnway/ui/textarea';
 import { DropdownOption } from '@learnway/ui/type';
-import { FormRow2, ResourceChoiceModal } from '@shared/ui';
+import { DropdownFormField, DurationTimeFormField, FormRow2 } from '@shared/ui/form';
+import { ResourceChoiceModal } from '@shared/ui/modal';
 import { PreviewLearningWindow } from '@shared/ui/modal/preview-learning-window';
 import { useQuery } from '@tanstack/react-query';
-import { LESSON_TYPE, MODULE_TYPE } from '@types';
 import { t } from 'i18next';
 import { useEffect } from 'react';
-import { useGetLessonDetail } from '../../../../../entities/curriculum';
 import { ContentChoiceModalSelector } from './content-choice-selector';
 
 interface LessonFormProps {
@@ -176,7 +175,7 @@ export const LessonForm: React.FC<LessonFormProps> = ({
             <FormRow2
               provider={provider}
               name="contentType"
-              label={t('학습자원 유형')}
+              label={t('교육자원 유형')}
               format="string"
               validation={{ required: true }}
               element={
@@ -197,7 +196,7 @@ export const LessonForm: React.FC<LessonFormProps> = ({
               <FormRow2
                 provider={provider}
                 name="contentName"
-                label={t('학습자원')}
+                label={t('교육자원')}
                 format="string"
                 disabled={isEditing}
                 validation={{ required: true }}

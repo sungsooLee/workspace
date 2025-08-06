@@ -1,9 +1,9 @@
 import { DynamicFormProvider } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, duration } from '@learnway/shared';
-import { GetScormResourceRes, PutScormChangeRes } from '@types';
 import { get, omit, pick } from 'lodash-es';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import LearningResourceService from '../api/learning-resource';
+import { GetScormResourceRes, PutScormChangeRes } from '../model/learning-resource.types';
 import { usePutScormChange } from './learning-resource.hook';
 import { isProcessing, isProcessingCompleted, isProcessingNone } from './util';
 

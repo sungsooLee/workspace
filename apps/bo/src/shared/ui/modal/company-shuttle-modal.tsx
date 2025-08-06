@@ -4,10 +4,10 @@ import { Button } from '@learnway/ui/button';
 import { Divider } from '@learnway/ui/elements';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 import { ShuttleGridToGrid, ShuttleGridToGridImperative } from '@learnway/ui/shuttle-grid-to-grid';
+import { EnGlobalConst } from '@shared/types/enums';
 import { SearchBox } from '@shared/ui/search-box';
 import { useQueryClient } from '@tanstack/react-query';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { EnGlobalConst } from '@types';
 import { t } from 'i18next';
 import { useRef, useState } from 'react';
 /**

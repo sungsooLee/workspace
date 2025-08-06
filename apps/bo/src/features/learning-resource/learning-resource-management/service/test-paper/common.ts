@@ -1,14 +1,14 @@
-import { TFunction } from 'i18next';
-import dayjs from 'dayjs';
 import {
-  ContentAddInfoType,
   ExamQuestionGenType,
   ExamTemplateType,
   Tag,
   TestPaperBasicInfoDetail,
   TestPaperBasicInfoSaveReq,
-} from '@types';
-import { PageMode, TestPaperBasicInfoFormData } from './type';
+} from '@entities/learning-resource';
+import { ContentAddInfoType } from '@shared/types/enums';
+import dayjs from 'dayjs';
+import { TFunction } from 'i18next';
+import { TestPaperBasicInfoFormData } from './type';
 
 export const getExamSaveRequestDataFromFormData = (options: {
   values: TestPaperBasicInfoFormData;

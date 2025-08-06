@@ -1,36 +1,33 @@
 /* header.module.css */
 .start {
   .header {
-    @apply relative box-border flex h-[100px] min-w-full flex-wrap bg-[#012277] px-[32px] transition-all duration-150 ease-in-out;
+    @apply relative box-border flex h-[94px] min-w-full flex-wrap bg-[#012277] px-[32px] pt-[10px] transition-all duration-150 ease-in-out;
     h1 {
       @apply inline-flex align-top;
       img {
-        @apply h-[40px] w-auto;
+        @apply h-[18px] w-auto;
       }
       [class*='nlp--logo'] {
-        @apply flex h-[50px] pt-[5px];
+        @apply mt-[4px] flex;
       }
       .title {
-        @apply relative ml-[6px] box-border inline-flex h-[40px] pl-[6px] pt-[15px] text-[16px] font-bold text-white;
-        &::before {
-          @apply absolute left-0 top-[33px] -mt-[12px] h-[12px] w-[1px] bg-white opacity-30 content-[''];
-        }
+        @apply relative ml-[6px] box-border inline-flex h-[28px] text-[20px] font-bold leading-[2.8rem] text-white;
       }
     }
     .nav_area {
       @apply flex h-[50px] w-full flex-none items-center pr-[120px];
     }
     .util {
-      @apply absolute right-[36px] top-[6px] flex items-center;
+      @apply absolute right-[32px] top-[8px] flex items-center;
       button:not(:nth-child(1)) {
-        @apply ml-[20px];
+        @apply ml-[16px];
       }
     }
     .quick_menu {
       @apply absolute bottom-0 right-0 z-auto h-[50px] w-auto bg-[#012277] pr-[32px] pt-[5px];
     }
     .option_menu {
-      @apply ml-[32px] mt-[4px] flex items-center;
+      @apply -mt-[2px] ml-[32px] flex items-center align-top;
       button {
         @apply ml-0 pl-[4px];
         & + button {

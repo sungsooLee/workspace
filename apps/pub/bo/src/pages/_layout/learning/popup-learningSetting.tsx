@@ -204,7 +204,7 @@ function RouteComponent() {
     };
     return (
       <ModalContainer>
-        <ModalTitle>{'학습자원 일괄설정'}</ModalTitle>
+        <ModalTitle>{'교육자원 일괄설정'}</ModalTitle>
         <ModalBody>
           <SplitPanel size={['276px', 'auto']} divider>
             <GridBox
@@ -337,7 +337,7 @@ function RouteComponent() {
                     />
                   </div>
                   <p className={formStyles.guide_text}>
-                    해당 학습자원으로 교육 과정을 개설할 수
+                    해당 교육자원으로 교육 과정을 개설할 수
                     {checked[2] ? ' 있습니다.' : ' 없습니다.'}
                   </p>
                 </div>
@@ -350,7 +350,7 @@ function RouteComponent() {
                       className={formStyles.tooltip}
                       side="bottom"
                       align="start"
-                      content={'설정된 채널에 해당 학습자원이 공유됩니다.'}
+                      content={'설정된 채널에 해당 교육자원이 공유됩니다.'}
                     >
                       <Button onlyIcon>
                         <IcoAlertCircle width={16} height={16} fill="#A9AFB8" stroke="#ffffff" />
@@ -390,7 +390,7 @@ function RouteComponent() {
                       <div className={formStyles.input_box}>
                         <Checkbox className={formStyles.checkbox} />
                         <p className={formStyles.sub_text}>
-                          등록하고자 한 학습자원이며, 정상적으로 보여짐이 확인되었습니다.
+                          등록하고자 한 교육자원이며, 정상적으로 보여짐이 확인되었습니다.
                         </p>
                       </div>
                       <p className={cn(formStyles.guide_text, formStyles.error)}>
@@ -410,7 +410,7 @@ function RouteComponent() {
                       <div className={formStyles.input_box}>
                         <Checkbox className={formStyles.checkbox} />
                         <p className={formStyles.sub_text}>
-                          저작권법(제25조2항)에 따라 학습자원(동영상,이미지등)은 해당
+                          저작권법(제25조2항)에 따라 교육자원(동영상,이미지등)은 해당
                           학습플랫폼에서만 이용가능하며, 이 외의 공간에서 저작물을 공유 또는
                           게시하는 행위는 저작권법 위반에 해당될 수 있음에 동의합니다.
                         </p>

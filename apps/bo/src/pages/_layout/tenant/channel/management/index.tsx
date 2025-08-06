@@ -1,4 +1,4 @@
-import { queryOptions } from '@entities/channel';
+import { ChannelParam, queryOptions } from '@entities/channel';
 import { getChannelUrl } from '@features/channel/channel-application/service/channel-application.service';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
@@ -6,10 +6,10 @@ import { getDateToString } from '@learnway/shared';
 import { Button } from '@learnway/ui/button';
 import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox } from '@learnway/ui/grid';
-import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
+import { EnGlobalConst } from '@shared/types/enums';
+import { ContentsButtons, MainContents, PageContainer } from '@shared/ui/layout';
 import { SearchBox } from '@shared/ui/search-box';
 import { createFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
-import { ChannelParam, EnGlobalConst } from '@types';
 import { useCreation } from 'ahooks';
 import { t } from 'i18next';
 import { useCallback, useEffect, useState } from 'react';

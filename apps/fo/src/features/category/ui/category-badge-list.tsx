@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { IcoArrowForward } from '@learnway/icons';
 
 import { useCategoryNavigation } from '@entities/category/service/category.hook';
-import { Category } from '../../../types/entities/category';
+import { Category } from '../../../entities/category/model/category.types';
 import { useCategories } from '../services/category.service';
 
 import styles from '@learnway/styles/fo/features/category/category-badge-list.module.css';

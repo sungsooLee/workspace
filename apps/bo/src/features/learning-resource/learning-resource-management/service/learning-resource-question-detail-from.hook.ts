@@ -1,16 +1,14 @@
-import { useQueryClient } from '@tanstack/react-query';
-import { create } from 'zustand';
 import {
   ContentBaseInfo,
-  EnFormMode,
   QuestionBasicInfoDetail,
   TestPaperBasicInfoSaveRes,
-} from '@types';
-import {
   useCreateQuestionBankContent,
   useUpdateQuestionBankContent,
 } from '@entities/learning-resource';
 import { learningResourceQueryOptions } from '@entities/learning-resource/service/learning-resource.queries';
+import { EnFormMode } from '@shared/types/enums';
+import { useQueryClient } from '@tanstack/react-query';
+import { create } from 'zustand';
 
 interface FunctionInformation {
   saveBaseInfo?: () => void;
@@ -27,6 +25,7 @@ interface QuestionBankDetailStoreData {
   setBaseInfo: (baseInfo: any) => void;
   setFuncInfo: (v: FunctionInformation) => void;
   setHasMapping: (hasMapping: boolean) => void;
+  setFormMode: (contentUuid?: string) => void;
 }
 
 const useQuestionDetailFormStore = create<QuestionBankDetailStoreData>((set, get) => ({
@@ -35,6 +34,13 @@ const useQuestionDetailFormStore = create<QuestionBankDetailStoreData>((set, get
   funcInfo: undefined,
   contentUuid: undefined,
 
+  setFormMode: (contentUuid?: string) => {
+    let formMode = EnFormMode.ADD;
+    if (contentUuid) {
+      formMode = EnFormMode.VIEW;
+    }
+    set((state) => ({ formMode }));
+  },
   setBaseInfo: (baseInfo?: any) => {
     let formMode = EnFormMode.ADD;
     if (baseInfo) formMode = EnFormMode.VIEW;
@@ -56,8 +62,16 @@ const useQuestionDetailFormStore = create<QuestionBankDetailStoreData>((set, get
 }));
 
 export const useLearningResourceQuestionDetailForm = () => {
-  const { baseInfo, formMode, funcInfo, hasMapping, setBaseInfo, setFuncInfo, setHasMapping } =
-    useQuestionDetailFormStore((state) => state);
+  const {
+    baseInfo,
+    formMode,
+    funcInfo,
+    hasMapping,
+    setBaseInfo,
+    setFuncInfo,
+    setHasMapping,
+    setFormMode,
+  } = useQuestionDetailFormStore((state) => state);
 
   const { create } = useCreateQuestionBankContent();
   const { update } = useUpdateQuestionBankContent();
@@ -91,6 +105,7 @@ export const useLearningResourceQuestionDetailForm = () => {
    * @param contentUuid
    */
   const handleGetQuestionBankContent = async (contentUuid?: string) => {
+    console.log(contentUuid);
     if (contentUuid) {
       const data = await queryClient.fetchQuery(
         learningResourceQueryOptions.getContent<QuestionBasicInfoDetail>(contentUuid),
@@ -106,6 +121,19 @@ export const useLearningResourceQuestionDetailForm = () => {
       setBaseInfo(undefined);
     }
   };
+
+  /**
+   * contentUuid 값으로 formMode 설정 (ADD / VIEW)
+   * @param contentUuid
+   */
+  const handleFormModeForTabChange = (contentUuid?: string) => {
+    if (contentUuid) {
+      setFormMode(contentUuid);
+    } else {
+      setFormMode(undefined);
+    }
+  };
+
   return {
     baseInfo,
     formMode,
@@ -115,5 +143,6 @@ export const useLearningResourceQuestionDetailForm = () => {
     createQuestionBank: handleCreateQuestionBankContent,
     saveButtonClick: handleSaveButtonClick,
     setBaseInfo: handleGetQuestionBankContent,
+    setFormMode: handleFormModeForTabChange,
   };
 };

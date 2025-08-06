@@ -5,7 +5,7 @@ import {
   menuManageQueryOptions as queryOptions } from './menu-manage.queries';
 import { useApiQuery } from '../../../shared/lib/use-authorized-query';
 import MenuMangerService, { MenuManageApi } from '../api/menu-manage';
-import { MenuDetail } from '../../../types/entities/menu';
+import { MenuDetail } from '../../../shared/types/menu';
 import { useState } from 'react';
 
 export function useMenuMangeFetchMenus() {

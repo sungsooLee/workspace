@@ -1,12 +1,13 @@
-import { httpService } from '@learnway/shared';
+import { Department, DepartmentUser } from '@entities/department/model/department.types';
 import { PMSApiPrefix } from '@learnway/config';
-import { Department, DepartmentUser } from 'src/types/entities/department';
-import { PageableContent } from '@types';
+import { httpService } from '@learnway/shared';
+import { PageableContent } from '../../../shared/types/page-meta';
 
 export class HmgDepartmentService {
   static getDepartmentTree(companyCode: string[]): Promise<Department> {
     return httpService.get<Department>(`${PMSApiPrefix()}/hmg/department/tree`, {
-      companyCodeList: companyCode });
+      companyCodeList: companyCode,
+    });
   }
 
   /**

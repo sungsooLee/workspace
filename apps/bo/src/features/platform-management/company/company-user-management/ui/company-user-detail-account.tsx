@@ -1,11 +1,11 @@
-import { FormDisplay } from '@features/form';
 import { FormSubTitle } from '@learnway/ui/base-form';
-import { ChipListModalSelectorFormField } from '@learnway/ui/form-field';
-import { FormItem, FormRow } from '@shared/ui';
-import { t } from 'i18next';
-import { EnFormMode } from '@types';
 import { ContentsRow } from '@learnway/ui/contents-row';
+import { ChipListModalSelectorFormField } from '@learnway/ui/form-field';
 import { Input } from '@learnway/ui/input';
+import { EnFormMode } from '@shared/types/enums';
+import { FormDisplay, FormItem, FormRow } from '@shared/ui/form';
+
+import { t } from 'i18next';
 
 /**
  * 회사 유저 상세 - 계정 정보
@@ -14,7 +14,8 @@ import { Input } from '@learnway/ui/input';
  */
 const CompanyUserDetailAccountComponent = ({
   provider,
-  formMode }: {
+  formMode,
+}: {
   provider: any;
   formMode: EnFormMode;
 }) => {
@@ -58,27 +59,26 @@ const CompanyUserDetailAccountComponent = ({
         />
         <FormItem />
       </ContentsRow>
-      {
-        formMode !== EnFormMode.ADD && (
-          <ContentsRow>
-            <FormRow
-              provider={provider}
-              name={'tenantList'}
-              element={
-                <ChipListModalSelectorFormField
-                  chipList={{
-                    labelField: 'tenantName',
-                    valueField: 'tenantId',
-                    hideBorder: true,
-                    wordwrap: true,
-                    isOptionHideCloseButton: (option: any) => option }}
-                  disabled={true}
-                />
-              }
-            />
-          </ContentsRow>
-        )
-      }
+      {formMode !== EnFormMode.ADD && (
+        <ContentsRow>
+          <FormRow
+            provider={provider}
+            name={'tenantList'}
+            element={
+              <ChipListModalSelectorFormField
+                chipList={{
+                  labelField: 'tenantName',
+                  valueField: 'tenantId',
+                  hideBorder: true,
+                  wordwrap: true,
+                  isOptionHideCloseButton: (option: any) => option,
+                }}
+                disabled={true}
+              />
+            }
+          />
+        </ContentsRow>
+      )}
     </>
   );
 };

@@ -1,5 +1,6 @@
-import { ContentAddInfoType, Tag } from '@types';
+import { Tag } from '@entities/learning-resource';
 import { QuestionBankFormData } from '@features/learning-resource/learning-resource-management/service/question-bank/type';
+import { ContentAddInfoType } from '@shared/types/enums';
 
 export const getQuestionBankRequestData = (options: {
   data: QuestionBankFormData;

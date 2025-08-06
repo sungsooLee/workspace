@@ -1,6 +1,9 @@
+import {
+  UpdateChangePhoneNumberRequest,
+  UpdateVerificationsChangePasswordRequest,
+} from '@entities/user';
 import { PMSApiPrefix } from '@learnway/config';
 import { httpService } from '@learnway/shared';
-import { UpdateChangePhoneNumberRequest, UpdateVerificationsChangePasswordRequest } from '@types';
 
 export default class UserService {
   /**

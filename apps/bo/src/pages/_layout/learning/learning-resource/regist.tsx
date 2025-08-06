@@ -1,7 +1,11 @@
 import { useModal } from '@learnway/ui/modal';
-import { PageContainer } from '@shared/ui';
+import { PageContainer } from '@shared/ui/layout';
 // IA105 / NLP_BO_CMS_1058 // IA105 / NLP_BO_CMS_1017 // IA106 / NLP_BO_CMS_1060
 import {
+  PostDraftETCRes,
+  PostDraftHtmlVideoRes,
+  PostDraftScormRes,
+  PostDraftVideosRes,
   usePostDraftETC,
   usePostDraftHTMLVideo,
   usePostDraftScorm,
@@ -13,14 +17,8 @@ import {
   LearningTypeChoiceModal,
 } from '@features/learning-resource';
 import { getDefaultLang, LEARNING_TYPE } from '@learnway/config';
-import { ChannelChoiceModal } from '@shared/ui';
+import { ChannelChoiceModal } from '@shared/ui/modal';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
-import {
-  PostDraftETCRes,
-  PostDraftHtmlVideoRes,
-  PostDraftScormRes,
-  PostDraftVideosRes,
-} from '@types';
 
 import { pick } from 'lodash-es';
 import { useEffect, useState } from 'react';

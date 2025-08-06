@@ -1,18 +1,17 @@
-import { DropdownFormField } from '@features/form/ui/dropdown-form-field';
 import { CODE_GROUP } from '@learnway/hooks';
 import { generateYears } from '@learnway/shared';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { Input } from '@learnway/ui/input';
 import {
+  DropdownFormField,
   FormRow2,
-  SearchBoxForm,
   TenantByRoleDropdownFormField,
   TenantChannelDropdownFormField,
-} from '@shared/ui';
+} from '@shared/ui/form';
+import { SearchBoxForm } from '@shared/ui/search-box';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { CourseSearchFormData } from '../../types/type';
-
 interface CourseSearchFormProps {
   provider: any;
   onSubmit: (handler: (data: CourseSearchFormData) => void) => (event: React.FormEvent) => void;

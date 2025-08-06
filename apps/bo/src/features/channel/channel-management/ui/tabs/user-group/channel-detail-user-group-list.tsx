@@ -5,7 +5,7 @@ import { Button } from '@learnway/ui/button';
 import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import { getCurrentAuthUser } from '@shared/lib';
-import { SearchBox } from '@shared/ui';
+import { SearchBox } from '@shared/ui/search-box';
 import { useRouterState } from '@tanstack/react-router';
 import { createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';

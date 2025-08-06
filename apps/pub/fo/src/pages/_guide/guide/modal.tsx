@@ -1,5 +1,5 @@
 import { Button } from '@learnway/ui/button';
-import { useModal, ModalContainer, ModalTitle, ModalBody, ModalFooter } from '@learnway/ui/modal';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 import { createFileRoute } from '@tanstack/react-router';
 import { isMobile } from 'react-device-detect';
 
@@ -136,7 +136,7 @@ const CustomFooter = () => {
         </Button>
       </>
     );
-  };          
+  };
 <Button
 onClick={() =>
   openModal(<BasicModalContent />, {
@@ -168,7 +168,7 @@ onClick={() =>
             <code>{`const CustomFooter = () => {
   const { closeModal } = useModal();
   return (
-    <>   
+    <>
     // 예시
     <Button
       onClick={() =>
@@ -265,29 +265,28 @@ useEffect(() => {
         </div>
 
         <div className="info">페이지 접근시 모달팝업 자동실행(퍼블확인용)</div>
-      </div>
 
-      <h3 className="guide_tit3">Modal(바텀시트) 띄울때 : 모바일 모드로 확인</h3>
-      <div className="flex_box">
-        <div className="desc">
-          <Button
-            onClick={() =>
-              openModal({
-                width: isMobile ? 'm_bottom_sheet' : 'sm',
-                content: <ContentModal />,
-              })
-            }
-          >
-            바텀시트 팝업 열기
-          </Button>
+        <h3 className="guide_tit3">Modal(바텀시트) 띄울때 : 모바일 모드로 확인</h3>
+        <div className="flex_box">
+          <div className="desc">
+            <Button
+              onClick={() =>
+                openModal({
+                  width: isMobile ? 'm_bottom_sheet' : 'sm',
+                  content: <ContentModal />,
+                })
+              }
+            >
+              바텀시트 팝업 열기
+            </Button>
+          </div>
         </div>
-      </div>
-      <div className="code_example">
-        <pre className="code_block">
-          <code>{`const CustomFooter = () => {
+        <div className="code_example">
+          <pre className="code_block">
+            <code>{`const CustomFooter = () => {
   const { closeModal } = useModal();
   return (
-    <>   
+    <>
     // 예시
     <Button
       onClick={() =>
@@ -300,7 +299,8 @@ useEffect(() => {
     </Button>
     </>
 `}</code>
-        </pre>
+          </pre>
+        </div>
       </div>
     </div>
   );

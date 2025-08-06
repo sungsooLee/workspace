@@ -1,3 +1,4 @@
+import { Instructors } from '@entities/instructor/model/instructor.types';
 import { queryOptions } from '@entities/instructor/service/instructor.queries';
 import { LMSApiPrefix } from '@learnway/config';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
@@ -6,15 +7,14 @@ import { Button } from '@learnway/ui/button';
 import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import { useModal } from '@learnway/ui/modal';
-import { GridExcelDownloadButton } from '@shared/ui';
+import { EnPageMode } from '@shared/types/enums';
+import { GridExcelDownloadButton } from '@shared/ui/buttons';
 import { SearchBox } from '@shared/ui/search-box';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { EnPageMode } from '@types';
 import { t } from 'i18next';
 import { useCallback, useEffect, useState } from 'react';
-import { Instructors } from 'src/types/entities/instructor';
 import { InstructorRegistPopup } from '../modal/instructor-regist-modal';
 
 const _global = {

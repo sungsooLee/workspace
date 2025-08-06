@@ -1,6 +1,6 @@
+import { CourseSequenceResponse } from '@entities/course';
 import { LMSApiPrefix } from '@learnway/config';
 import { httpService } from '@learnway/shared';
-import { CourseSequenceResponse } from '@types';
 
 export default class CourseService {
   // 과정 정보 조회

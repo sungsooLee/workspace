@@ -1,45 +1,50 @@
-import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useState } from 'react';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import {
+  QuestionBasicInfoDetail,
+  QuestionItem,
+  QuestionItemGridRow,
+} from '@entities/learning-resource';
+import { CMSApiPrefix } from '@learnway/config';
 import { IcoCopy, IcoMinus, IcoPlus } from '@learnway/icons';
-import { cn } from '@learnway/shared';
+import { cn, isEmptyData } from '@learnway/shared';
 import { FormSubTitle } from '@learnway/ui/base-form';
 import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
 import { GridBox } from '@learnway/ui/grid';
 import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
-import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
-import { QuestionItem, QuestionItemGridRow } from '@types';
+import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui/buttons';
 import { QUESTION_LEVELS, QUESTION_TYPES } from '../service/exam-util';
 import {
   initStatisticRow,
   QuestionStatisticRow,
   updateNewStatistics,
 } from '../service/learning-resource-question-service';
-import { ContentsRow } from '@learnway/ui/contents-row';
-import { CMSApiPrefix } from '@learnway/config';
 import { QuestionBankTabFormRef } from '../service/question-bank/type';
 import { useQuestionBankInfoInput } from '../service/question-bank/use-question-bank-info-input';
-import { LearningResourceTestItemModal } from './learning-resource-test-item-modal';
 import { LearningResourceQuestionShuttleModal } from './learning-resource-question-shuttle-modal';
+import { LearningResourceTestItemModal } from './learning-resource-test-item-modal';
 
 // Drag and Drop 관련
 import { closestCenter, DndContext, MeasuringStrategy } from '@dnd-kit/core';
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 
+import { QuestionDragHandle } from '@features/learning-resource/learning-resource-management/ui/learning-resource-question-drag-handle';
 import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
 import styles from '@learnway/styles/bo/pages/_layout/learning/test-detail.module.css';
-import { QuestionDragHandle } from '@features/learning-resource/learning-resource-management/ui/learning-resource-question-drag-handle';
 
 interface QuestionBankQuestionProps {
+  content?: QuestionBasicInfoDetail;
   isExamMapping?: boolean;
 }
 
 const LearningResourceQuestionBankQuestionComponent = forwardRef<
   QuestionBankTabFormRef,
   QuestionBankQuestionProps
->(({ isExamMapping }, ref) => {
+>(({ content, isExamMapping }, ref) => {
   const { t } = useTranslation();
 
   const { openModal } = useModal();
@@ -47,7 +52,6 @@ const LearningResourceQuestionBankQuestionComponent = forwardRef<
   const [statistic, setStatistic] = useState<QuestionStatisticRow[]>(initStatisticRow(t));
 
   const {
-    baseInfo,
     questionItemList,
     setQuestionItemList,
     selectedQuestionRows,
@@ -59,29 +63,29 @@ const LearningResourceQuestionBankQuestionComponent = forwardRef<
     handleOnDeleteQuestion,
     dragSensors,
     handleOnDragEnd,
-  } = useQuestionBankInfoInput();
+  } = useQuestionBankInfoInput(content?.contentUuid as string);
 
   const handleAddQuestionButtonClick = useCallback(async () => {
-    if (baseInfo) {
+    if (content) {
       await openModal({
         width: 'xl',
         content: (
           <LearningResourceTestItemModal
-            contentInfo={baseInfo}
+            contentInfo={content}
             onSuccessCallback={questionCreateSuccessCallback}
           />
         ),
       });
     }
-  }, [baseInfo]);
+  }, [content]);
 
   const handleViewQuestionButtonClick = async (questionItemRow: QuestionItemGridRow) => {
-    if (baseInfo) {
+    if (content) {
       await openModal({
         width: 'xl',
         content: (
           <LearningResourceTestItemModal
-            contentInfo={baseInfo}
+            contentInfo={content}
             questionItemGridRow={questionItemRow}
           />
         ),
@@ -90,21 +94,21 @@ const LearningResourceQuestionBankQuestionComponent = forwardRef<
   };
 
   const handleClickRetrieveQuestionModal = useCallback(async () => {
-    if (!baseInfo?.contentUuid) {
+    if (!content?.contentUuid) {
       return;
     }
 
     const result = await openModal({
       width: 'xl',
       height: 'fix',
-      content: <LearningResourceQuestionShuttleModal examPoolUuid={baseInfo.contentUuid} />,
+      content: <LearningResourceQuestionShuttleModal examPoolUuid={content.contentUuid} />,
     });
 
     if (result) {
       const { data: refetchResult = [] } = await refetchQuestionItemList();
       setQuestionItemList(refetchResult);
     }
-  }, [baseInfo]);
+  }, [content]);
 
   const handleOnExcelUpload = useCallback(async (result: Record<string, any>) => {
     const { uploadResult } = result;
@@ -230,14 +234,15 @@ const LearningResourceQuestionBankQuestionComponent = forwardRef<
 
   useImperativeHandle(ref, () => ({
     complete: () => {
-      // console.log('baseInfo', baseInfo);
+      // console.log('content', content);
       handleUpdateQuestionCountInfo();
     },
   }));
 
   useEffect(() => {
     console.log('questionItemList', questionItemList);
-    if (!questionItemList) return;
+    if (isEmptyData(questionItemList)) return;
+
     const newStatistic: QuestionStatisticRow[] = [...initStatisticRow(t)];
 
     questionItemList.forEach((item) => {
@@ -261,20 +266,20 @@ const LearningResourceQuestionBankQuestionComponent = forwardRef<
           <tbody>
             <tr>
               <th scope="row">{t('테넌트')}</th>
-              <td>{baseInfo?.tenantName}</td>
+              <td>{content?.tenantName}</td>
               <th scope="row">{t('채널')}</th>
-              <td>{baseInfo?.channelName}</td>
+              <td>{content?.channelName}</td>
             </tr>
             <tr>
               <th scope="row">{t('유형')}</th>
               <td>{t('문제은행')}</td>
               <th scope="row">{t('교육자원명')}</th>
-              <td>{baseInfo?.contentName}</td>
+              <td>{content?.contentName}</td>
             </tr>
             <tr>
               <th scope="row">{t('문제은행 언어')}</th>
               <td colSpan={3}>
-                {t(`pms.multilingual.LangCountryCode.${baseInfo?.languageCountryCode}`)}
+                {t(`pms.multilingual.LangCountryCode.${content?.languageCountryCode}`)}
               </td>
             </tr>
           </tbody>
@@ -349,7 +354,7 @@ const LearningResourceQuestionBankQuestionComponent = forwardRef<
                     disabled={isExamMapping}
                   />
                   <GridExcelUploadButton
-                    validateUrl={`/exam/questions/${baseInfo?.contentUuid}/upload`}
+                    validateUrl={`/exam/questions/${content?.contentUuid}/upload`}
                     affairsType="CMS"
                     formDataName="multipartFile"
                     validationResultRequired={false}
@@ -358,7 +363,7 @@ const LearningResourceQuestionBankQuestionComponent = forwardRef<
                   />
                   <GridExcelDownloadButton
                     method="post"
-                    url={`${CMSApiPrefix()}/exam/questions/${baseInfo?.contentUuid}/download`}
+                    url={`${CMSApiPrefix()}/exam/questions/${content?.contentUuid}/download`}
                     params={{}}
                     disabled={!questionItemList.length}
                   />

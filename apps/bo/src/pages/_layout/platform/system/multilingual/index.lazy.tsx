@@ -1,4 +1,5 @@
 import {
+  MultilingualUpdateReqParams,
   translationQueryOptions,
   useDeployTranslation,
   useTranslation,
@@ -20,18 +21,11 @@ import { Button } from '@learnway/ui/button';
 import { CountText, Divider } from '@learnway/ui/elements';
 import { EditInputCell, EditTextareaCell, TableBox, useGridBox } from '@learnway/ui/grid';
 import { useModal } from '@learnway/ui/modal';
-import {
-  ContentsButtons,
-  GridExcelDownloadButton,
-  GridExcelUploadButton,
-  LinkBox,
-  MainContents,
-  PageContainer,
-} from '@shared/ui';
+import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui/buttons';
+import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui/layout';
 import { SearchBox } from '@shared/ui/search-box';
 import { createLazyFileRoute, useRouter } from '@tanstack/react-router';
 import { CellContext } from '@tanstack/react-table';
-import { MultilingualUpdateReqParams } from '@types';
 import { t } from 'i18next';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useWatch } from 'react-hook-form';

@@ -1,8 +1,12 @@
-import { useCreateBlogContent, useUpdateBlogContent } from '@entities/learning-resource';
+import {
+  BlogPostRes,
+  BlogUpdateReq,
+  useCreateBlogContent,
+  useUpdateBlogContent,
+} from '@entities/learning-resource';
 import { DynamicFormProvider } from '@learnway/hooks';
 import { useModal } from '@learnway/ui/modal';
 import { useRouter } from '@tanstack/react-router';
-import { BlogPostRes, BlogUpdateReq } from '@types';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getPayloadFromBlogSubmit } from '../learning-resource-blog-form-submit';

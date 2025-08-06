@@ -1,6 +1,6 @@
 import { fileDownload, httpService } from '@learnway/shared';
 import { CMSApiPrefix } from '@learnway/config';
-import { BlogResource, Content, EtcContentDownloadReq } from '../types/learning-resource.types';
+import { BlogResource, Content, EtcContentDownloadReq } from '@entities/learning-resource';
 import {
   CmsContentProgressMultiReq,
   CmsContentProgressMultiRes,

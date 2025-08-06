@@ -1,30 +1,31 @@
+import LabelMessagesService from '@entities/label-messages/api/label-messages';
+import langCodes from '@entities/mock/i18n-resource-ko.json';
+import { useDeployTranslation } from '@entities/translation/service/translation.hook';
+import { DynamicFormConfig, S3_PATH, useDynamicForm } from '@learnway/hooks';
+import { IcoDownload } from '@learnway/icons';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css'; // 화면 내 컨텐츠 레이아웃 css
 import titleStyles from '@learnway/styles/bo/assets/styles/modules/title.module.css';
+import { CourseType } from '@learnway/types';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { ChipListModalSelectorFormField } from '@learnway/ui/form-field';
 import { useModal } from '@learnway/ui/modal';
 import { PreviewImage } from '@learnway/ui/preview-image';
+import { EnFormMode } from '@shared/types/enums';
+import { AddressSearchFormField } from '@shared/ui/form/ui/address-search-form-field';
 import {
-  AddressSearchModal,
   CategoryChoiceTreeModal,
   ChannelListChoiceModal,
   ChannelShuttleModal,
   CompanyChoiceModal,
   CompanyShuttleModal,
-  ContentsButtons,
   CourseChoiceModal,
-  FormRow,
-  MainContents,
   MenuChoiceTreeModal,
   OrganizationChoiceTreeModal,
   OrganizationShuttleTreeModal,
   PackageChoiceModal,
-  PageContainer,
-  SubContents,
   TenantChoiceModal,
   TenantShuttleModal,
-  ThumbnailListFormField,
   TrainingPlaceChoiceModal,
   TrainingPlaceDetailModal,
   UserChoiceModal,
@@ -32,24 +33,14 @@ import {
   UserGroupOrganizationShuttleModal,
   UserGroupTabsChoiceModal,
   UserShuttleModal,
-} from '@shared/ui';
-import { AddressSearchFormField } from '@shared/ui/form/address-search-form-field';
+} from '@shared/ui/modal';
+
+import { FormRow, ThumbnailListFormField } from '@shared/ui/form';
+import { ContentsButtons, MainContents, PageContainer, SubContents } from '@shared/ui/layout';
+import { PreviewLearningWindow } from '@shared/ui/modal/preview-learning-window';
 import { createLazyFileRoute } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { useState } from 'react';
-
-import { DynamicFormConfig, S3_PATH, useDynamicForm } from '@learnway/hooks';
-
-import langCodes from '@entities/mock/i18n-resource-ko.json';
-
-import LabelMessagesService from '@entities/label-messages/api/label-messages';
-import { IcoDownload } from '@learnway/icons';
-
-import { EnFormMode } from '@types';
-
-import { useDeployTranslation } from '@entities/translation/service/translation.hook';
-import { CourseType } from '@learnway/types';
-import { PreviewLearningWindow } from '@shared/ui/modal/preview-learning-window';
 
 export const Route = createLazyFileRoute('/_layout/common-popup')({
   component: RouteComponent,
@@ -101,12 +92,7 @@ function RouteComponent() {
   };
 
   const handleOnSubmit = (data: any) => {
-    console.log('data {} => ', data);
-  };
-
-  const handleAddressSearchResult = (address: any) => {
-    console.log('address', address);
-    updateFormData({ zipNo: address.zipNo, address: address.roadAddr });
+    //
   };
 
   const downloadByUrl = (url: string) => {
@@ -115,13 +101,6 @@ function RouteComponent() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-  };
-
-  const handleAddressSearch = () => {
-    openModal({
-      width: 'sm',
-      content: <AddressSearchModal onSelect={handleAddressSearchResult} />,
-    });
   };
 
   return (
@@ -254,13 +233,7 @@ function RouteComponent() {
                 size={'xs'}
                 className="btn_table flex-1"
                 variant={'gray2'}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  openModal({
-                    width: 'xl',
-                    content: <UserChoiceModal />,
-                  });
-                }}
+                onClick={(e) => openModal({ content: <UserChoiceModal /> })}
               >
                 {'유저 검색(공통)'}
               </Button>
@@ -271,13 +244,7 @@ function RouteComponent() {
                 size={'xs'}
                 className="btn_table flex-1"
                 variant={'gray2'}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  openModal({
-                    width: 'xl',
-                    content: <UserShuttleModal />,
-                  });
-                }}
+                onClick={(e) => openModal({ content: <UserShuttleModal /> })}
               >
                 {'유저 검색(셔틀)'}
               </Button>

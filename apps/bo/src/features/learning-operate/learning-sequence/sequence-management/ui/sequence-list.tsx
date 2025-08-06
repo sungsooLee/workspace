@@ -21,7 +21,7 @@ import {
 import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
 import { Mode } from '@pages/_layout/learning/learning-sequence/-common/type';
-import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
+import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui/buttons';
 import { useRouter } from '@tanstack/react-router';
 import { CellContext, ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
@@ -35,6 +35,7 @@ import { getLeaningStatusTypeName } from '../constants/constants';
 type SequenceListComponentProps = {
   setMode: (value: string) => void;
   setSequenceId: (value: number) => void;
+  lastTriggered?: any;
   courseId?: number; // 과정key가 없다면 메뉴로 진입한 case
 };
 
@@ -152,7 +153,7 @@ const SequenceListComponent = ({
         enableGrouping: false,
         size: 240,
       }),
-      columnHelper.accessor('enrollmentStartDateTime', {
+      columnHelper.accessor('enrollStartDateTime', {
         header: t('수강신청 시작일'),
         cell: (info) => {
           return <EditDatePickerCell info={info} dateOptions={{ displayType: 'day-time-h' }} />;
@@ -160,7 +161,7 @@ const SequenceListComponent = ({
         enableGrouping: false,
         size: 300,
       }),
-      columnHelper.accessor('enrollmentEndDateTime', {
+      columnHelper.accessor('enrollEndDateTime', {
         header: t('수강신청 종료일'),
         cell: (info) => {
           return <EditDatePickerCell info={info} dateOptions={{ displayType: 'day-time-h' }} />;
@@ -404,8 +405,8 @@ const SequenceListComponent = ({
       return true;
     }
     if (
-      original.enrollmentStartDateTime !== current.enrollmentStartDateTime ||
-      original.enrollmentEndDateTime !== current.enrollmentEndDateTime
+      original.enrollStartDateTime !== current.enrollStartDateTime ||
+      original.enrollEndDateTime !== current.enrollEndDateTime
     ) {
       return true;
     }
@@ -454,7 +455,7 @@ const SequenceListComponent = ({
       ?.map((x: any, index: number) => {
         let error = false;
 
-        if (!x.enrollmentStartDateTime || !x.enrollmentEndDateTime) {
+        if (!x.enrollStartDateTime || !x.enrollEndDateTime) {
           console.log('수강일 누락');
           error = true;
         }
@@ -481,8 +482,8 @@ const SequenceListComponent = ({
       return {
         courseSequenceId: x.courseSequenceId ?? null,
         courseSequenceNo: parseInt(x.courseSequenceNo) ?? null,
-        enrollStartDateTime: x.enrollmentStartDateTime ?? null,
-        enrollEndDateTime: x.enrollmentEndDateTime ?? null,
+        enrollStartDateTime: x.enrollStartDateTime ?? null,
+        enrollEndDateTime: x.enrollEndDateTime ?? null,
         learningStartType: x.learningStartType ?? null,
         learningStartDays: x.learningStartType === 'DAYS_AFTER_ENROLL' ? x.learningStartDays : null,
         learningStartDateTime:
@@ -514,8 +515,8 @@ const SequenceListComponent = ({
         let changedCol = '';
 
         if (element.courseSequenceNo !== null) changedCol = 'courseSequenceNo';
-        if (element.enrollmentStartDateTime !== null) changedCol = 'enrollmentStartDateTime';
-        if (element.enrollmentEndDateTime !== null) changedCol = 'enrollmentEndDateTime';
+        if (element.enrollStartDateTime !== null) changedCol = 'enrollStartDateTime';
+        if (element.enrollEndDateTime !== null) changedCol = 'enrollEndDateTime';
         if (element.learningStartDateTime !== null) changedCol = 'learningStartDateTime';
         if (element.learningEndDateTime !== null) changedCol = 'learningEndDateTime';
         if (element.learningStartDays !== null) changedCol = 'learningStartDays';

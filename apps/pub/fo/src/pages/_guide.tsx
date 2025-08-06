@@ -1,8 +1,9 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 /* eslint-disable no-restricted-imports */
+import { IcoCloseCircle, IcoMenu01 } from '@learnway/icons';
+import { Button } from '@learnway/ui/button';
 import { createFileRoute, Link, Outlet, useLocation } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
-import { isMobile } from 'react-device-detect';
 import '../../../../../libs/styles/src/lib/fo/assets/styles/global.css';
 import '../../../../../libs/styles/src/lib/fo/assets/styles/guide.css';
 // import styles from './_guide.module.css';
@@ -72,6 +73,7 @@ function RouteComponent() {
         { label: '썸네일', path: '/guide/thumnail' },
         { label: '배너', path: '/guide/banner' },
         { label: 'data display notice', path: '/guide/data-display' },
+        { label: '다운로드', path: '/guide/download' },
       ],
     },
   ];
@@ -105,39 +107,46 @@ function RouteComponent() {
     }
   };
 
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <div className="guide_wrap">
-      {!isMobile && (
-        <div className="aside">
-          <h1>
-            <Link to={'/guide'}>Publish Guide(FO)</Link>
-          </h1>
-          <div className="menu">
-            <ul>
-              {menuItems.map(({ title, subItems }) => (
-                <li key={title}>
-                  <span className="tit" onClick={() => toggleVisibility(title)}>
-                    {title}
-                    <span className="arrow">▼</span>
-                  </span>
-                  {subItems && !visibleList[title] && (
-                    <ul>
-                      {subItems.map(({ label, path }) => (
-                        <li key={path} className={currentPath === path ? 'active' : ''}>
-                          <Link to={path}>{label}</Link>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </div>
+      <div className={`aside ${isOpen ? 'open' : ''}`}>
+        <h1>
+          <Link to={'/guide'}>Publish Guide(FO)</Link>
+        </h1>
+        <div className="menu">
+          <ul>
+            {menuItems.map(({ title, subItems }) => (
+              <li key={title}>
+                <span className="tit" onClick={() => toggleVisibility(title)}>
+                  {title}
+                  <span className="arrow">▼</span>
+                </span>
+                {subItems && !visibleList[title] && (
+                  <ul>
+                    {subItems.map(({ label, path }) => (
+                      <li key={path} className={currentPath === path ? 'active' : ''}>
+                        <Link to={path}>{label}</Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ))}
+          </ul>
         </div>
-      )}
+      </div>
 
       <div className="preview">
         <div className="guide_box">
+          <Button className="btn_menu" onClick={() => setIsOpen(!isOpen)}>
+            {isOpen ? (
+              <IcoCloseCircle width={30} height={30} stroke="#000" />
+            ) : (
+              <IcoMenu01 width={30} height={30} stroke="#000" />
+            )}
+          </Button>
           <Outlet />
         </div>
       </div>

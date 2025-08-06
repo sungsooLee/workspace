@@ -1,6 +1,6 @@
 import { PMSApiPrefix } from '@learnway/config';
 import { httpService } from '@learnway/shared';
-import { PageableContent } from '@types';
+import { PageableContent } from '@shared/types/page-meta';
 import {
   CompanyCodeExistParams,
   CompanyCreateRequest,

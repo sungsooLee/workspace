@@ -1,6 +1,6 @@
-import { httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
-import { SequenceResponse, SequencesRequest } from '../../../types';
+import { httpService } from '@learnway/shared';
+import { SequenceResponse, SequencesRequest } from '../model/sequence.types';
 
 export default class SequenceService {
   static fetchSequences(params: SequencesRequest): Promise<SequenceResponse> {

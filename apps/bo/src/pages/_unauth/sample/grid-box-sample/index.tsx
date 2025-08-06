@@ -1,14 +1,15 @@
-import React, { useCallback, useState } from 'react';
-import { t } from 'i18next';
-import { createFileRoute } from '@tanstack/react-router';
-import { SplitPanel } from '@learnway/ui/elements';
-import { MainContents, PageContainer, ContentsButtons } from '@shared/ui';
-import { RightPanel } from './-components/right/right-panel';
-import { LeftPanel } from '@pages/_unauth/sample/grid-box-sample/-components/left/left-panel';
 import { Button } from '@learnway/ui/button';
+import { SplitPanel } from '@learnway/ui/elements';
+import { LeftPanel } from '@pages/_unauth/sample/grid-box-sample/-components/left/left-panel';
+import { ContentsButtons, MainContents, PageContainer } from '@shared/ui/layout';
+import { createFileRoute } from '@tanstack/react-router';
+import { t } from 'i18next';
+import React, { useCallback, useState } from 'react';
+import { RightPanel } from './-components/right/right-panel';
 
 export const Route = createFileRoute('/_unauth/sample/grid-box-sample/')({
-  component: RouteComponent });
+  component: RouteComponent,
+});
 
 function RouteComponent() {
   const [listValue, setListValue] = useState<string>();

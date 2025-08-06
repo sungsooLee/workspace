@@ -1,4 +1,4 @@
-import { ProcessingStatus } from '@types';
+import { ProcessingStatus } from '../../../shared/types/enums';
 
 export const isProcessingNone = (status: ProcessingStatus) =>
   !status || status === ProcessingStatus.NONE;

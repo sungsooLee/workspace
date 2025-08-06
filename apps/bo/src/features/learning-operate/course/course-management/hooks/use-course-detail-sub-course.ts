@@ -3,6 +3,7 @@ import {
   useDeleteCourse,
   useFetchCourse,
   useFetchCourseConfig,
+  useTranslateCourse,
   useUpdateCourse,
 } from '@entities/course';
 import {
@@ -28,7 +29,7 @@ export function useCourseDetailSubCourse() {
   const navigate = useNavigate();
 
   // 라우터 state에서 courseId 가져오기
-  const { courseId = -1 } = usePageState<CourseDetailPageLocationState>();
+  const { courseId = -1, courseName } = usePageState<CourseDetailPageLocationState>();
 
   const { provider, getValues, updateFormData, formValues, onSubmit, onFormChange } =
     useDynamicForm2();
@@ -58,7 +59,20 @@ export function useCourseDetailSubCourse() {
   const { mutate: copyCourse } = useCopyCourse({
     onSuccess: async (response: any) => {
       await alert(t('과정이 복사 되었습니다.'));
-      navigate({ to: '/learning/course/detail', state: { courseId: response.data } });
+      navigate({
+        to: '/learning/course/detail',
+        state: { courseId: response.data, meta: { title: `[${t('복사')}]${courseName}` } },
+      });
+    },
+  });
+
+  const { mutate: translateCourse } = useTranslateCourse({
+    onSuccess: async (response: any) => {
+      await alert(t('과정이 복사 되었습니다.'));
+      navigate({
+        to: '/learning/course/detail',
+        state: { courseId: response.data, meta: { title: `[${t('번역')}]${courseName}` } },
+      });
     },
   });
 
@@ -85,6 +99,16 @@ export function useCourseDetailSubCourse() {
     run();
   };
 
+  const handleTranslate = () => {
+    const run = async () => {
+      if (await confirm(t('과정 번역 하시겠습니까?'))) {
+        const { lastVisitedBoTenantId } = getCurrentAuthUser() || {}; // 현재 로그인한 사용자의 테넌트 ID
+        translateCourse({ courseId, tenantId: lastVisitedBoTenantId || -1 });
+      }
+    };
+    run();
+  };
+
   useUpdateEffect(() => {
     switch (lastTriggered?.key) {
       case TriggerKey.LIST:
@@ -97,7 +121,7 @@ export function useCourseDetailSubCourse() {
         handleCopy();
         break;
       case TriggerKey.TRANSLATE:
-        handleSave();
+        handleTranslate();
         break;
       case TriggerKey.DELETE:
         // handleDeleteAction(lastTriggered.payload);

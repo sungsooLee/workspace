@@ -31,7 +31,7 @@ function RouteComponent() {
             <div className={popupStyles.pop_contents}>
               <UppyUpload />
               <p className={cn(popupStyles.sub_text, popupStyles.dot)}>
-                {'업로드된 동영상은 학습자원목록에서 조회가능합니다.'}
+                {'업로드된 동영상은 교육자원목록에서 조회가능합니다.'}
               </p>
             </div>
           </div>

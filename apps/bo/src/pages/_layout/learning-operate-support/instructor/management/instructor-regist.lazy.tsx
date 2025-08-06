@@ -3,9 +3,10 @@ import {
   InstructorRegist,
 } from '@features/learning-operate-support/instructor-tutor/instructor-management';
 import { Button } from '@learnway/ui/button';
-import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui';
+import { EnPageMode } from '@shared/types/enums';
+
+import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui/layout';
 import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
-import { EnPageMode } from '@types';
 import { t } from 'i18next';
 import { useRef } from 'react';
 

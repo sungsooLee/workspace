@@ -19,7 +19,7 @@ export * from './ui/tenant-detail-menu-tree';
 export * from './ui/tenant-detail-menu';
 export * from './ui/tenant-detail-widget-mapping-modal';
 export * from './ui/tenant-detail-widget';
-export * from './ui/tenant-managment-list';
+export * from './ui/tenant-management-list';
 export * from './user-group/ui/tenant-user-group-manual-management-list';
 export * from './user/ui/tenant-user-application-detail';
 export * from './user/ui/tenant-user-list';

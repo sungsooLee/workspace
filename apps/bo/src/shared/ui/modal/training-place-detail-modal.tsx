@@ -1,13 +1,14 @@
-import { useRef } from 'react';
-import { t } from 'i18next';
 import { TrainingPlaceDetail } from '@features/learning-operate-support/learning-space/learning-space-management/training-place-detail';
-import { EnFormMode, EnPageMode } from '@types';
 import { Button } from '@learnway/ui/button';
-import { ModalBody, ModalContainer, ModalTitle, useModal, ModalFooter } from '@learnway/ui/modal';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { EnFormMode, EnPageMode } from '@shared/types/enums';
+import { t } from 'i18next';
+import { useRef } from 'react';
 
 const TrainingPlaceDetailModalComponent = ({
   mode,
-  spaceId }: {
+  spaceId,
+}: {
   mode: EnFormMode;
   spaceId?: number;
 }) => {

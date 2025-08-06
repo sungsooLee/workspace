@@ -233,7 +233,7 @@ export interface CmsImageLearningReq extends CmsBaseLearningReq {
 export interface CmsVideoWatchInitializeReq extends CmsBaseLearningReq {}
 
 /**
- * [공통] 학습자원 학습 진행률 정보 객체
+ * [공통] 교육자원 학습 진행률 정보 객체
  */
 export interface CmsContentProgressResDto {
   courseSequenceId: number;

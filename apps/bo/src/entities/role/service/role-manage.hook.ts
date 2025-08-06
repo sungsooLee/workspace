@@ -1,6 +1,6 @@
 import { useModal } from '@learnway/ui/modal';
+import { RoleApplication, RoleApplicationParam } from '@shared/types/role-application';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { RoleApplication, RoleApplicationParam } from '@types';
 import {
   roleMutateOptions as mutateOptions,
   roleManagerQueryOptions as queryOptions,

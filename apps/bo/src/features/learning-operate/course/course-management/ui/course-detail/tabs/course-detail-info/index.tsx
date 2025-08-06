@@ -1,4 +1,3 @@
-import { DateRangePickerFormField, DropdownFormField, FormDisplay } from '@features/form';
 import { InstructorListPopup } from '@features/learning-operate-support/instructor-tutor/instructor-management';
 import {
   CategoryChoiceModal,
@@ -23,6 +22,9 @@ import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
 import {
   ChipListFormField,
+  DateRangePickerFormField,
+  DropdownFormField,
+  FormDisplay,
   FormRow,
   FormRow2,
   PassOptionFormField,
@@ -30,11 +32,13 @@ import {
   TenantByRoleChannelCheckboxFormField,
   TenantChannelDropdownFormField2,
   ThumbnailListFormField,
+} from '@shared/ui/form';
+import {
   TrainingPlaceChoiceModal,
   UserChoiceModal,
   UserGroupChoiceModal,
   UserGroupTabsChoiceModal,
-} from '@shared/ui';
+} from '@shared/ui/modal';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useCourseDetailSubCourse } from '../../../../hooks/use-course-detail-sub-course';

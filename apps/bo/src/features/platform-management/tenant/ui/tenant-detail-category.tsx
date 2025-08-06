@@ -1,7 +1,15 @@
 import { cn } from '@learnway/shared';
 import { ChipListModalSelectorFormField } from '@learnway/ui/form-field';
 import { DndTreeView, TreeContainer, TreeNode } from '@learnway/ui/tree-view';
-import { FormRow, SwitchFormField } from '@shared/ui';
+
+import {
+  DuplicateCheckInputFormField,
+  DuplicateState,
+  FormRow,
+  SwitchFormField,
+} from '@shared/ui/form';
+import { UserGroupTabsChoiceModal } from '@shared/ui/modal';
+
 import { useRouterState } from '@tanstack/react-router';
 import { t } from 'i18next';
 import { useEffect, useState } from 'react';
@@ -16,7 +24,6 @@ import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
 import { Textarea } from '@learnway/ui/textarea';
 
-import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
 import { TenantDetailCategoryMappingModal } from './tenant-detail-category-mapping-modal';
 
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
@@ -34,8 +41,8 @@ import {
 import { transformApiDataToTreeData } from '@features/platform-management/platform/category-managemnet';
 import { getAllTreeKeys } from '@features/platform-management/tenant/service/tenant-detail-tree.service';
 
-import { UserGroupTabsChoiceModal } from '@shared/ui';
-import { EnFormMode, TenantCategoryCreate, TenantCategoryUpdate } from '@types';
+import { TenantCategoryCreate, TenantCategoryUpdate } from '@entities/tenant';
+import { EnFormMode } from '@shared/types/enums';
 
 enum EnCategoryType {
   TENANT = 'TENANT',

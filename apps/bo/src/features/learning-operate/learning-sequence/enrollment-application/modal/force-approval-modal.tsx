@@ -1,8 +1,8 @@
-import React, { FC } from 'react';
-import { t } from 'i18next';
+import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { TextareaFormField } from '@learnway/ui/form-field';
-import { useDynamicForm, DynamicFormConfig } from '@learnway/hooks';
-import { FormRow } from '@shared/ui';
+import { FormRow } from '@shared/ui/form';
+import { t } from 'i18next';
+import { FC } from 'react';
 
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { Button } from '@learnway/ui/button';
@@ -52,7 +52,10 @@ const formConfig: DynamicFormConfig = {
       label: t('강제승인 사유'),
       value: '',
       placeholder: t('강제승인 시 강제승인 사유를 반드시 입력해 주세요.'),
-      maxLength: 150 },
+      maxLength: 150,
+    },
   ],
   validator: {
-    reason: true } };
+    reason: true,
+  },
+};

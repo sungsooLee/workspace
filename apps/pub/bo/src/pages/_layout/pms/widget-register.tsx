@@ -145,7 +145,7 @@ function RouteComponent() {
                 />
               </div>
               <p className={formStyles.guide_text}>
-                보안콘텐츠 미 설정 시 학습자원의 불법 배포와 보안 위협에
+                보안콘텐츠 미 설정 시 교육자원의 불법 배포와 보안 위협에
                 {checked[1] ? ' 강합니다.' : ' 취약합니다.'}
               </p>
             </div>

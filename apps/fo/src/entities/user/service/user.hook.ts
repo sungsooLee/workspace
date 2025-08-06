@@ -1,10 +1,10 @@
-import { queryOptions } from '@entities/user';
-import { useMutation } from '@tanstack/react-query';
 import {
-  MutateQueryOption,
+  queryOptions,
   UpdateChangePhoneNumberRequest,
   UpdateVerificationsChangePasswordRequest,
-} from '@types';
+} from '@entities/user';
+import { MutateQueryOption } from '@shared/types/api';
+import { useMutation } from '@tanstack/react-query';
 
 export function useChangePassword(
   option: MutateQueryOption<UpdateVerificationsChangePasswordRequest>,

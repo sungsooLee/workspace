@@ -9,7 +9,9 @@ import { Button } from '@learnway/ui/button';
 import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import { useModal } from '@learnway/ui/modal';
-import { MainContents, PageContainer, SearchBox } from '@shared/ui';
+import { MainContents, PageContainer } from '@shared/ui/layout';
+import { SearchBox } from '@shared/ui/search-box';
+import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
 import { t } from 'i18next';
@@ -50,6 +52,7 @@ const CourseSharedComponent = () => {
   const { data: authUser } = useFetchAuthUser<AuthUser>();
   const { data: channel } = useFetchChannelByRoleId(authUser?.activeRole?.roleId as number);
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const channelOptions = useMemo(() => {
     if (!channel) return [];
@@ -72,9 +75,31 @@ const CourseSharedComponent = () => {
   useEffect(() => {
     setValue('targetChannelUuid', '');
     setOptions('targetChannelUuid', channelOptions);
+    getOriginChannelsOptions();
   }, [channelOptions]);
 
+  const getOriginChannelsOptions = async () => {
+    setValue('originChannelUuid', '');
+    setOptions('originChannelUuid', []);
+    if (channelOptions.length === 0) return;
+    const params = { targetChannelUuid: channelOptions.map((x: any) => x.value) };
+    console.log('### params=>', params);
+    const originResult = await queryClient.fetchQuery(
+      courseSharedQueryOptions.originChannels(params),
+    );
+    console.log('originResult=>', originResult);
+    if (originResult) {
+      const options = Array.from(
+        new Map(
+          originResult.map((x) => [x.channelUuid, { label: x.channelName, value: x.channelUuid }]),
+        ).values(),
+      );
+      setOptions('originChannelUuid', options);
+    }
+  };
+
   const handleGetCourse = async (payload: any) => {
+    console.log('payload=>', payload);
     const confirmRes = await openConfirm({
       title: t('과정을 가져오시겠습니까?'),
       content: t('과정운영의 과정목록으로 복사됩니다.'),
@@ -83,13 +108,21 @@ const CourseSharedComponent = () => {
 
     const param = {
       courseId: payload.courseId,
-      tenantId: authUser?.activeTenant?.tenantId,
+      tenantId: authUser?.activeTenant?.tenantId || -1,
+      targetChannelUuid: payload.targetChannelUuid,
     };
     await copyCourseShared(param, {
       onSuccess: async (data: any, variables: any, context: any) => {
         console.log('onSuccess:', data);
         await showSaveComplete();
-        handleOnRefresh();
+        navigate({
+          to: '/learning/course/detail',
+          state: {
+            courseId: data,
+            courseName: payload.courseName,
+            meta: { title: `[${t('공유')}]${payload.courseName}` },
+          },
+        });
       },
       onError: (data: any, variables: any, context: any) => {
         console.log('onError:', data);
@@ -97,7 +130,7 @@ const CourseSharedComponent = () => {
     });
   };
 
-  // 과정명
+  // TODO: 과정명 미리보기 띄워야함
   _global.linkClickCourseName = (payload: any) => {
     navigate({
       to: '/learning/course/detail',
@@ -165,8 +198,8 @@ const CourseSharedComponent = () => {
       ],
     ],
     validator: {
-      // originChannelUuid: true,
-      // targetChannelUuid: true,
+      originChannelUuid: true,
+      targetChannelUuid: true,
     },
   };
 
@@ -242,6 +275,7 @@ const CourseSharedComponent = () => {
           );
         },
         enableGrouping: false,
+        enableSorting: false,
         size: 86,
       }),
       columnHelper.accessor('getCourse', {
@@ -259,6 +293,7 @@ const CourseSharedComponent = () => {
           );
         },
         enableGrouping: false,
+        enableSorting: false,
         size: 80,
       }),
     ] as ColumnDef<any, unknown>[];
@@ -276,18 +311,18 @@ const CourseSharedComponent = () => {
 
   const handleOnSearch = useCallback((data: any) => {
     console.log('## handleOnSearch', data);
-    // const payload = {
-    //   originChannelUuid: data.originChannelUuid,
-    //   targetChannelUuid: data.targetChannelUuid,
-    //   courseName: data.courseName,
-    //   isComplete: data.isComplete,
-    // };
     const payload = {
-      originChannelUuid: 'd4bf5f43-3184-445b-8985-f316619909db',
-      targetChannelUuid: '67bbca16-4180-4982-a4e0-d192212dd7c8',
-      courseName: '',
-      isComplete: false,
+      originChannelUuid: data.originChannelUuid,
+      targetChannelUuid: data.targetChannelUuid,
+      courseName: data.courseName,
+      isComplete: data.isComplete,
     };
+    // const payload = {
+    //   originChannelUuid: 'd4bf5f43-3184-445b-8985-f316619909db',
+    //   targetChannelUuid: '67bbca16-4180-4982-a4e0-d192212dd7c8',
+    //   courseName: '',
+    //   isComplete: false,
+    // };
 
     gridFetch(payload);
   }, []);

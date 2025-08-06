@@ -3,12 +3,13 @@ import { t } from 'i18next';
 import { useRef } from 'react';
 
 import { CompanyDetail } from '@features/platform-management/company';
-import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui';
-import { EnFormMode } from '@types';
 import { Button } from '@learnway/ui/button';
+import { EnFormMode } from '@shared/types/enums';
+import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui/layout';
 
 export const Route = createLazyFileRoute('/_layout/platform/company/management/regist')({
-  component: RouteComponent });
+  component: RouteComponent,
+});
 
 function RouteComponent() {
   const router = useRouter();

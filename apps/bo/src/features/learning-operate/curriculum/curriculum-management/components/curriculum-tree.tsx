@@ -1,10 +1,9 @@
-import React from 'react';
-import { TreeContainer, TreeNode } from '@learnway/ui/tree-view';
-import { TreeBox } from '@learnway/ui/tree-view';
+import { MAPPING_CURRICULUM_TYPE } from '@entities/curriculum';
+import { TreeBox, TreeContainer, TreeNode } from '@learnway/ui/tree-view';
 import { FORM_MODE } from '@shared/const';
-import { FormState } from '../types/form.types';
+import React from 'react';
 import { useTreeButtons } from '../hooks/use-tree-buttons';
-import { MAPPING_CURRICULUM_TYPE } from '@types';
+import { FormState } from '../types/form.types';
 
 interface CurriculumTreeProps {
   mode: FORM_MODE;
@@ -39,12 +38,14 @@ export const CurriculumTree: React.FC<CurriculumTreeProps> = ({
   customDropValidator,
   renderNodeDragHandle,
   curriculumDetail,
-  onCurriculumLoad }) => {
+  onCurriculumLoad,
+}) => {
   const { renderNodeButtons, renderCustomTreeButtons } = useTreeButtons({
     onAddNode,
     formState,
     curriculumDetail,
-    onCurriculumLoad });
+    onCurriculumLoad,
+  });
 
   const customTreeRenderButton = () => {
     if (mode === FORM_MODE.create) {

@@ -10,9 +10,6 @@ import { FormSubTitle } from '@learnway/ui/base-form';
 import { DatePicker } from '@learnway/ui/date-picker';
 import { ChipListModalSelectorFormField, GridFormField } from '@learnway/ui/form-field';
 
-import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
-import { FormRow, OrganizationChoiceTreeModal } from '@shared/ui';
-
 import { queryOptions as CompanyService } from '@entities/companies/service/companies.queries';
 import UsersService from '@entities/users/api/users';
 import { useCreateUser } from '@entities/users/service/users.hook';
@@ -23,8 +20,10 @@ import { ContentsRow } from '@learnway/ui/contents-row';
 import { EditDropdownCell, EditSwitchCell } from '@learnway/ui/grid';
 import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
+import { EnFormMode } from '@shared/types/enums';
+import { DuplicateCheckInputFormField, DuplicateState, FormRow } from '@shared/ui/form';
+import { OrganizationChoiceTreeModal } from '@shared/ui/modal';
 import { useQueryClient } from '@tanstack/react-query';
-import { EnFormMode } from '@types';
 
 const EMAIL_REGEX =
   /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/;

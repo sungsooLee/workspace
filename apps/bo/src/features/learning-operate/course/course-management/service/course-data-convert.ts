@@ -1,5 +1,5 @@
+import { Course, CourseConfig } from '@entities/course';
 import { getCurrentAuthUser } from '@shared/lib';
-import { Course, CourseConfig } from '@types';
 
 /**
  * 과정 조회 응답 데이터를 과정 폼 데이터로 변환

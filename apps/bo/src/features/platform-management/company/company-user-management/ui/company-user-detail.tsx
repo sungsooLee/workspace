@@ -6,8 +6,8 @@ import {
 import { cn, DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { FormSubTitle } from '@learnway/ui/base-form';
 import { Tabs } from '@learnway/ui/tabs';
+import { EnGlobalConst } from '@shared/types/enums';
 import { useRouter, useRouterState } from '@tanstack/react-router';
-import { EnGlobalConst } from '@types';
 import { t } from 'i18next';
 import { useEffect, useState } from 'react';
 

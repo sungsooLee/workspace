@@ -1,13 +1,13 @@
 import { queryOptions } from '@entities/learning-sequence/service/learning-sequence.queries';
 import { useDynamicForm2 } from '@learnway/hooks';
 import popupStyles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
-import { FormRow2 } from '@shared/ui';
-import { useQueryClient } from '@tanstack/react-query';
-import { t } from 'i18next';
-import { useEffect } from 'react';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { Input } from '@learnway/ui/input';
 import { ModalBody, ModalContainer, ModalTitle } from '@learnway/ui/modal';
+import { FormRow2 } from '@shared/ui/form';
+import { useQueryClient } from '@tanstack/react-query';
+import { t } from 'i18next';
+import { useEffect } from 'react';
 
 /**
  * NLP_BO_LMS_0047 : 교재배송지 확인 팝업
@@ -20,14 +20,16 @@ export interface StudentsBookDeliveryModalComponentProps {
 
 const StudentsBookDeliveryModalComponent = ({
   courseSequenceId: courseSequenceIdProps,
-  userId: userIdProps }: StudentsBookDeliveryModalComponentProps) => {
+  userId: userIdProps,
+}: StudentsBookDeliveryModalComponentProps) => {
   const { provider, updateFormData } = useDynamicForm2();
   const queryClient = useQueryClient();
 
   const initializeData = async () => {
     const payload = {
       courseSequenceId: courseSequenceIdProps,
-      userId: userIdProps };
+      userId: userIdProps,
+    };
     // const payload = {
     //   courseSequenceId: 3,
     //   userId: 364,
@@ -37,7 +39,8 @@ const StudentsBookDeliveryModalComponent = ({
       updateFormData({
         recipientName: result.recipientName,
         telNo: result.telNo.replace(/^(\d{3})(\d{4})(\d{4})$/, '$1-$2-$3'),
-        address: `${result.postalCode} ${result.address} ${result.addressDetail}` });
+        address: `${result.postalCode} ${result.address} ${result.addressDetail}`,
+      });
     }
   };
 

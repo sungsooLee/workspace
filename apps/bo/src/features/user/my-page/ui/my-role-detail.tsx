@@ -5,7 +5,7 @@ import { useCallback, useEffect, useMemo } from 'react';
 
 import { useFetchRole } from '@entities/role/service/role-manage.hook';
 import { roleManagerQueryOptions } from '@entities/role/service/role-manage.queries';
-import { FormDisplay } from '@features/form/ui/form-display';
+
 import { MyRoleExtendModal } from '@features/user/my-page/ui/my-role-extend-modal';
 import {
   CODE_GROUP,
@@ -23,24 +23,15 @@ import { ContentsRow } from '@learnway/ui/contents-row';
 import { ChipListModalSelectorFormField, RadioGroupFormField } from '@learnway/ui/form-field';
 import { GridBox, useGridBox } from '@learnway/ui/grid';
 import { useModal } from '@learnway/ui/modal';
-import {
-  ContentsButtons,
-  ContentsHistoryInfoFormField,
-  FormRow,
-  MainContents,
-  PageContainer,
-  SearchBox,
-} from '@shared/ui';
 
-import {
-  EnChannelScope,
-  EnCompanyScope,
-  EnDeptScope,
-  EnTenantScope,
-  RoleApplication,
-} from '@types';
+import { EnChannelScope, EnCompanyScope, EnDeptScope, EnTenantScope } from '@shared/types/enums';
+import { ContentsHistoryInfoFormField, FormDisplay, FormRow } from '@shared/ui/form';
 
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
+import { RoleApplication } from '@shared/types/role-application';
+
+import { ContentsButtons, MainContents, PageContainer } from '@shared/ui/layout';
+import { SearchBox } from '@shared/ui/search-box';
 
 const MyRoleDetailComponent = ({ route }: any) => {
   const { state } = useCurrentRoute();

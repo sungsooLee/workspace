@@ -1,55 +1,52 @@
-import { httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
+import { httpService } from '@learnway/shared';
 
-import { PaginationResponse, Tenant, TenantByRoleId, PageableContent } from '@types';
+import { PageableContent } from '@shared/types/page-meta';
+import { Tenant, TenantByRoleId, TenantSearchParam } from '../model/tenant.types';
 
-export default class TenantService {
-  static fetchTenant(tenantId: number) {
-    return httpService.get<any>(`${PMSApiPrefix()}/tenants/${tenantId}`);
-  }
+export const tenantApi = {
+  fetchTenant: (tenantId: number) => {
+    return httpService.get<Tenant>(`${PMSApiPrefix()}/tenants/${tenantId}`);
+  },
 
-  static updateTenant(payload: any) {
+  updateTenant: (payload: Tenant) => {
     const tenantId = payload.tenantId;
     const reqBody = genTenantUpdate(payload);
     return httpService.put<Tenant>(`${PMSApiPrefix()}/tenants/${tenantId}`, reqBody);
-  }
-
-  static deleteTenant(tenantId: number) {
+  },
+  deleteTenant: (tenantId: number) => {
     return httpService.delete<Tenant>(`${PMSApiPrefix()}/tenants${tenantId}`);
-  }
-
-  static fetchListTenant(params: any) {
-    return httpService.get<PageableContent<any>>(`${PMSApiPrefix()}/tenants`, params);
-  }
-
-  static createTenant(payload: any) {
+  },
+  fetchListTenant: (params: TenantSearchParam) => {
+    return httpService.get<PageableContent<Tenant>>(`${PMSApiPrefix()}/tenants`, params);
+  },
+  createTenant: (payload: Tenant) => {
     const reqbody = genTenantCreate(payload);
     return httpService.post<Tenant>(`${PMSApiPrefix()}/tenants`, reqbody);
-  }
-
-  static existTenant(tenantName: string, tenantId: number | undefined) {
+  },
+  existTenant: (tenantName: string, tenantId?: number) => {
     return httpService.get<boolean>(`${PMSApiPrefix()}/tenants/exists`, {
-      tenantName: tenantName,
-      tenantId: tenantId });
-  }
-
+      tenantName,
+      tenantId,
+    });
+  },
   //전체 목록 가지고 오기 임시 (size 값으로)
-  static async fetchAllTenant() {
-    const data = await httpService.get<PageableContent<any>>(`${PMSApiPrefix()}/tenants`, {
-      size: 100000 });
+  fetchAllTenant: async () => {
+    const data = await httpService.get<PageableContent<Tenant>>(`${PMSApiPrefix()}/tenants`, {
+      size: 100000,
+    });
 
     return data.content;
-  }
-
+  },
   /**
    * @description 테넌트 목록조회 ( 역할 기준 )
    * @param roleId
    * @returns TenantByRoleId[]
    */
-  static fetchTenantByRoleId<T = TenantByRoleId[]>(roleId: number): Promise<T> {
+  fetchTenantByRoleId: <T = TenantByRoleId[]>(roleId: number) => {
     return httpService.get<T>(`${PMSApiPrefix()}/tenants/role/${roleId}`);
-  }
-}
+  },
+};
 
 function genTenantCreate(payload: any) {
   return {
@@ -83,7 +80,9 @@ function genTenantCreate(payload: any) {
       isUseRotemTenantCustomOption: payload.isRotemTenantCustomOption,
       isUseOutsourcingTenantCustomOption: payload.isOutsourcingTenantCustomOption,
       isUseWiaTenantCustomOption: payload.isWiaTenantCustomOption,
-      isUseAutoeverTenantCustomOption: payload.isAutoeverTenantCustomOption } };
+      isUseAutoeverTenantCustomOption: payload.isAutoeverTenantCustomOption,
+    },
+  };
 }
 
 function genTenantUpdate(payload: any) {
@@ -120,5 +119,7 @@ function genTenantUpdate(payload: any) {
       isUseRotemTenantCustomOption: payload.isRotemTenantCustomOption,
       isUseOutsourcingTenantCustomOption: payload.isOutsourcingTenantCustomOption,
       isUseWiaTenantCustomOption: payload.isWiaTenantCustomOption,
-      isUseAutoeverTenantCustomOption: payload.isAutoeverTenantCustomOption } };
+      isUseAutoeverTenantCustomOption: payload.isAutoeverTenantCustomOption,
+    },
+  };
 }

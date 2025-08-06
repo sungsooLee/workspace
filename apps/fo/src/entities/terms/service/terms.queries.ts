@@ -1,7 +1,7 @@
 import { getDefaultLang } from '@learnway/config';
 
+import type { Terms, TermsType, TermsVersion } from '@entities/terms';
 import TermsService from '../api/terms';
-import type { TermsType, Terms, TermsVersion } from '../../../types';
 
 export const queryKeys = {
   all: ['terms'] as const,

@@ -24,18 +24,20 @@ import {
   RadioGroupFormField,
   TextareaFormField,
 } from '@learnway/ui/form-field';
-import { PhoneNumberFormField } from '@learnway/ui/phone-number';
 
 import {
+  AttachmentFormField,
   DateRangePickerFormField,
   DuplicateCheckInputFormField,
   DuplicateState,
-} from '@features/form';
-import { FormDisplay } from '@features/form/ui/form-display';
-import { AttachmentFormField, FormRow, UserChoiceModal } from '@shared/ui';
+  FormDisplay,
+  FormRow,
+  PhoneNumberFormField,
+} from '@shared/ui/form';
+import { UserChoiceModal } from '@shared/ui/modal';
 
-import { SingleAttachmentFormField } from '@shared/ui/form/single-attachment-form-field';
-import { EnFormMode, EnPageMode } from '@types';
+import { EnFormMode, EnPageMode } from '@shared/types/enums';
+import { SingleAttachmentFormField } from '@shared/ui/form/ui/single-attachment-form-field';
 
 const EMAIL_REGEX =
   /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/;

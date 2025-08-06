@@ -1,6 +1,7 @@
 export * from './api/channel';
 export * from './api/channel-banner';
 export * from './api/request-channel';
+export * from './model/channel.types';
 export * from './service/channel-banner.hook';
 export * from './service/channel-banner.queries';
 export * from './service/channel.hook';

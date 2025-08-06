@@ -1,6 +1,7 @@
 import { CMSApiPrefix } from '@learnway/config';
 import { httpService } from '@learnway/shared';
-import { PageableContent, ContentsListSearchParams, ContentsListSearchResponse } from '@types';
+import { PageableContent } from '@shared/types/page-meta';
+import { ContentsListSearchParams, ContentsListSearchResponse } from '../model/contents.types';
 
 export class ContentsService {
   /**

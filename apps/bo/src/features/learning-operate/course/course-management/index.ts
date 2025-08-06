@@ -33,6 +33,7 @@ export * from './ui/dialog/form-contact-number/form-manager-input-button';
 export * from './ui/modal/category-choice-modal/category-choice-modal';
 export * from './ui/modal/channel-list-modal/channel-list-modal';
 export * from './ui/modal/course-choice-modal/course-choice-modal';
+export * from './ui/modal/course-shared-modal/course-share-modal';
 export * from './ui/modal/course-shared-modal/course-shared-history-modal';
 export * from './ui/modal/course-type-option-card-modal/course-type-option-card-modal';
 export * from './ui/modal/manager-list-modal/manager-list-modal';

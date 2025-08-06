@@ -1,5 +1,5 @@
-import { SignupTypeCP, SignupTypeAdmin } from '@types';
 import { create } from 'zustand';
+import { SignupTypeAdmin, SignupTypeCP } from '../types/signup';
 
 interface StoreData {
   businessCode: string;
@@ -10,7 +10,8 @@ interface StoreData {
 const initalData: StoreData = {
   businessCode: '',
   cpPage: 'check',
-  adminPage: 'check' };
+  adminPage: 'check',
+};
 
 interface CPStore extends StoreData {
   reset: () => void;
@@ -26,18 +27,22 @@ export const useSignupStore = create<CPStore>((set, get) => ({
   setBusinessCode: (v: string) => {
     set((state) => ({
       ...state,
-      businessCode: v }));
+      businessCode: v,
+    }));
   },
   setCpPage: (v: SignupTypeCP) => {
     set((state) => ({
       ...state,
-      cpPage: v }));
+      cpPage: v,
+    }));
   },
   setAdminPage: (v: SignupTypeAdmin) => {
     set((state) => ({
       ...state,
-      adminPage: v }));
+      adminPage: v,
+    }));
   },
   reset: () => {
     set({ ...initalData });
-  } }));
+  },
+}));

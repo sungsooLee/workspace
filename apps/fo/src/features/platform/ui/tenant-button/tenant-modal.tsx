@@ -2,10 +2,10 @@ import { memo, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import { useTranslation } from 'react-i18next';
 
-import { IcoCheck, IcoArrowForward } from '@learnway/icons';
 import { useFetchAuthUser, useUpdateUser } from '@learnway/auth/entities';
+import { IcoArrowForward, IcoCheck } from '@learnway/icons';
 
-import type { Tenant } from '../../../../types';
+import type { Tenant } from '@entities/tenant';
 
 import styles from '@learnway/styles/fo/features/platform/ui/tenant-button/tenant-button.module.css';
 import { Button } from '@learnway/ui/button';

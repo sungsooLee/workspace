@@ -6,8 +6,8 @@ import {
   useShuttleGridToChips,
 } from '@learnway/ui/shuttle-grid-to-chips';
 import { SelectedChip } from '@learnway/ui/type';
+import { CombineUserGroup } from '@shared/types/user-group';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { CombineUserGroup } from '@types';
 import { t } from 'i18next';
 import { useEffect, useMemo, useRef } from 'react';
 

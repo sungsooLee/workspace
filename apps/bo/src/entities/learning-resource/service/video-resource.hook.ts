@@ -1,11 +1,11 @@
 import { DynamicFormProvider } from '@learnway/hooks';
+import { DATE_TIME_FORMAT, duration } from '@learnway/shared';
+import { get, omit, pick } from 'lodash-es';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import LearningResourceService from '../api/learning-resource';
-import { isProcessing, isProcessingCompleted, isProcessingNone } from './util';
-import { GetVideoResourceRes, PutVideoChangeRes } from '@types';
-import { get, omit, pick } from 'lodash-es';
-import { DATE_TIME_FORMAT, duration } from '@learnway/shared';
+import { GetVideoResourceRes, PutVideoChangeRes } from '../model/learning-resource.types';
 import { usePutVideoChange } from './learning-resource.hook';
+import { isProcessing, isProcessingCompleted, isProcessingNone } from './util';
 
 const videoChangeKey = (contentUuid: string) => `videoChangeResource${contentUuid}`;
 
@@ -35,7 +35,8 @@ const useVideoResourceHook = (provider: DynamicFormProvider) => {
     onError: (error: any) => {
       console.error(error);
       // 에러 얼럿?
-    } });
+    },
+  });
 
   const handleChangeVideo = (fileUuid: string) => changeVideo({ contentUuid, fileUuid });
 
@@ -117,7 +118,8 @@ const useVideoResourceHook = (provider: DynamicFormProvider) => {
     processingStatus: status,
     playTime,
     videoResource,
-    handleChangeVideo };
+    handleChangeVideo,
+  };
 };
 
 export const useVideoResource = useVideoResourceHook;

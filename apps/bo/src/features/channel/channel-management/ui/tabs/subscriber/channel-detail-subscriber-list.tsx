@@ -5,7 +5,7 @@ import { getDateToString } from '@learnway/shared';
 import { Button } from '@learnway/ui/button';
 import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
-import { SearchBox } from '@shared/ui';
+import { SearchBox } from '@shared/ui/search-box';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouterState } from '@tanstack/react-router';
 import { createColumnHelper } from '@tanstack/react-table';

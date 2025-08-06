@@ -5,16 +5,15 @@ import { useWatch } from 'react-hook-form';
 
 import { CODE_GROUP, DynamicFormConfig, useCodeStore, useDynamicForm } from '@learnway/hooks';
 import { formUtils } from '@learnway/shared';
-import { FormRow } from '@shared/ui';
+import { EnFormMode } from '@shared/types/enums';
 import { CellContext } from '@tanstack/react-table';
-import { EnFormMode } from '@types';
 
-import { DateRangePickerFormField } from '@features/form';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { EditDropdownCell, EditSwitchCell, EditTimeRangeCell } from '@learnway/ui/grid';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 import { DateRange } from '@learnway/ui/type';
+import { DateRangePickerFormField, FormRow } from '@shared/ui/form';
 import dayjs from 'dayjs';
 
 const LoginRestrictTimeSettingModalComponent: FC<any> = ({

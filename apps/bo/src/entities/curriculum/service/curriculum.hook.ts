@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { mutateOptions, queryKeys, queryOptions } from './curriculum.queries';
-import { CurriculumDndParams, CurriculumSearchParams } from '@types';
+import { CurriculumDndParams, CurriculumSearchParams } from '../model/curriculum.types';
 
 export function useGetCurriculumList(param: CurriculumSearchParams) {
   return useQuery(queryOptions.list(param));

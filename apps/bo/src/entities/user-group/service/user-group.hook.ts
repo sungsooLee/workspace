@@ -1,5 +1,5 @@
+import { UserGroupsParam } from '@shared/types/user-group';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { UserGroupsParam } from '@types';
 import { queryKeys, queryOptions, userGroupManualOptions } from './user-group.queries';
 
 export function useFetchUserGroups(tenantIds: number[], roleId = 0, params: UserGroupsParam) {

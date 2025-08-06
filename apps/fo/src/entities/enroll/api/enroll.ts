@@ -1,5 +1,3 @@
-import { LMSApiPrefix } from '@learnway/config';
-import { httpService } from '@learnway/shared';
 import {
   CourseEnrollQueueStateIdResponse,
   CourseEnrollQueueStateResponse,
@@ -8,9 +6,10 @@ import {
   CourseEnrollsssResponse,
   EnrollDeleteRequest,
   EnrollRequest,
-  PaginationRequest,
-} from '@types';
-
+} from '@entities/enroll';
+import { LMSApiPrefix } from '@learnway/config';
+import { httpService } from '@learnway/shared';
+import { PaginationRequest } from '@shared/types/api';
 /**
  * 수강 관리
  * 수강 기능 API 입니다

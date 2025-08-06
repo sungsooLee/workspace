@@ -1,4 +1,4 @@
-import { EnUserGroupType } from '@types';
+import { EnUserGroupType } from '@shared/types/enums';
 import { t } from 'i18next';
 import { FC, useState } from 'react';
 import { CompanyDetailHROrganization } from './company-detail-hr-organization';

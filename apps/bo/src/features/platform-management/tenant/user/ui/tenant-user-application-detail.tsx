@@ -13,15 +13,14 @@ import {
   RadioGroupFormField,
 } from '@learnway/ui/form-field';
 
-import { FormDisplay } from '@features/form/ui/form-display';
 import { getUserStatus } from '@features/platform-management/company/company-user-management/service/company-user.service';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { EditInputCell, EditSwitchCell } from '@learnway/ui/grid';
 import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
-import { ContentsHistoryInfoFormField, FormRow } from '@shared/ui';
-import { EnGlobalConst } from '@types';
+import { EnGlobalConst } from '@shared/types/enums';
+import { ContentsHistoryInfoFormField, FormDisplay, FormRow } from '@shared/ui/form';
 interface userDetailProps {
   userData: any;
 }

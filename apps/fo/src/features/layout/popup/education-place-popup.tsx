@@ -6,7 +6,7 @@ import styles from '@learnway/styles/fo/features/layout/popup/education-place-po
 
 import mapImage from '@learnway/styles/fo/assets/images/temp/img_map.png';
 import { ModalBody, ModalContainer, ModalTitle } from '@learnway/ui/modal';
-import { Address } from '@types';
+import { Address } from '@shared/types/common';
 
 // 약도보기 popover
 const CopyPopoverComponent = () => {

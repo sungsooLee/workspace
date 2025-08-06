@@ -1,4 +1,4 @@
-import { ContentBaseInfo } from '@types';
+import { ContentBaseInfo } from '@entities/learning-resource';
 
 export enum QuestionTab {
   QUESTION_BASE = 'QUESTION_BASE',

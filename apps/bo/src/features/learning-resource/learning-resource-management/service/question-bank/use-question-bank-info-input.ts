@@ -1,35 +1,29 @@
-import { useCallback, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import {
-  useCopyQuestionsToExamPaper,
-  useDeleteQuestionItemList,
-  useGetQuestionItemList,
-  useUpdateQuestionBankQuestionCountInfo,
-} from '@entities/learning-resource';
-import {
-  ContentType,
   MutationResponse,
   QuestionItem,
   QuestionItemDeleteParam,
   QuestionsCopyReq,
   UpdateQuestionBankCountInfoReq,
-} from '@types';
+  useCopyQuestionsToExamPaper,
+  useDeleteQuestionItemList,
+  useGetQuestionItemList,
+  useUpdateQuestionBankQuestionCountInfo,
+} from '@entities/learning-resource';
 import { useToast } from '@learnway/ui/toast';
-import { useLearningResourceQuestionDetailForm } from '../learning-resource-question-detail-from.hook';
+import { ContentType } from '@shared/types/enums';
+import { useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useQuestionSort } from '../learning-resource-question-sort.hook';
 
-export const useQuestionBankInfoInput = () => {
+export const useQuestionBankInfoInput = (contentUuid: string) => {
   const { t } = useTranslation();
 
   const { open: openToast } = useToast();
 
-  const { baseInfo } = useLearningResourceQuestionDetailForm();
-
   const [questionItemList, setQuestionItemList] = useState<QuestionItem[]>([]);
   const [selectedQuestionRows, setSelectedQuestionRows] = useState<QuestionItem[]>([]);
 
-  const { data: questionList = [], refetch } = useGetQuestionItemList(baseInfo?.contentUuid);
-  const contentUuid = baseInfo?.contentUuid ?? '';
+  const { data: questionList = [], refetch } = useGetQuestionItemList(contentUuid);
 
   const { sensors, handleOnDragEnd } = useQuestionSort({
     contentUuid,
@@ -123,11 +117,12 @@ export const useQuestionBankInfoInput = () => {
   }, [contentUuid, selectedQuestionRows]);
 
   useEffect(() => {
-    setQuestionItemList(questionList);
+    if (questionList.length) {
+      setQuestionItemList(questionList);
+    }
   }, [questionList]);
 
   return {
-    baseInfo,
     questionItemList,
     setQuestionItemList,
     selectedQuestionRows,

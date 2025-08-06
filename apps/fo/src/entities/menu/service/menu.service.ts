@@ -3,8 +3,8 @@ import { useCreation } from 'ahooks';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import type { Menu } from '@learnway/auth/types';
 
+import { HookData } from '@shared/types/hooks';
 import { useFetchMenus } from '..';
-import { HookData } from '../../../types';
 
 /**
  * 메뉴 정보를 트리 구조로 반환

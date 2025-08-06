@@ -1,8 +1,8 @@
-import { FormDisplay, SubTitlesFormField } from '@features/form';
+import { FormDisplay, FormRow2, SubTitlesFormField, SwitchFormField } from '@shared/ui/form';
+
 import { DynamicFormProvider } from '@learnway/hooks';
-import { FormRow2, SwitchFormField } from '@shared/ui';
-import { t } from 'i18next';
 import { ContentsRow } from '@learnway/ui/contents-row';
+import { t } from 'i18next';
 
 interface Props {
   provider: DynamicFormProvider;
@@ -20,7 +20,8 @@ const VideoSubtitlesFormComponent = ({ provider }: Props) => {
           provider={provider}
           name="isSubtitles"
           switchConfig={{
-            labelTarget: 'subtitles' }}
+            labelTarget: 'subtitles',
+          }}
           element={
             <SwitchFormField
               fieldLabel={isSubtitles ? `자막 ${videoSubtitles?.length || 0}개` : '자막 없음'}

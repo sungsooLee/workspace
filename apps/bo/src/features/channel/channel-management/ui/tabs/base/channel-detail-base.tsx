@@ -1,4 +1,3 @@
-import { DuplicateCheckInputFormField, DuplicateState, FormDisplay } from '@features/form';
 import { CODE_GROUP, DynamicFormConfig, S3_PATH, useDynamicForm } from '@learnway/hooks';
 import { DATE_TIME_FORMAT, getDateToString } from '@learnway/shared';
 import { FormSubTitle } from '@learnway/ui/base-form';
@@ -11,14 +10,16 @@ import {
 import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
 import { useToast } from '@learnway/ui/toast';
+import { EnFormMode } from '@shared/types/enums';
+
 import {
   ChipListFormField,
+  DuplicateCheckInputFormField,
+  DuplicateState,
+  FormDisplay,
   FormItem,
   FormRow,
-  TenantShuttleModal,
-  UserShuttleModal,
-} from '@shared/ui';
-import { EnFormMode } from '@types';
+} from '@shared/ui/form';
 import { t } from 'i18next';
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -28,6 +29,7 @@ import RequestChannelService from '@entities/channel/api/request-channel';
 import { useCreateChannel, useUpdateChannel } from '@entities/channel/service/channel.hook';
 import { useFetchAuthUser } from '@learnway/auth/entities';
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
+import { TenantShuttleModal, UserShuttleModal } from '@shared/ui/modal';
 import { useRouter, useRouterState } from '@tanstack/react-router';
 import { useWatch } from 'react-hook-form';
 import { getChannelUrl } from '../../../../channel-application/service/channel-application.service';

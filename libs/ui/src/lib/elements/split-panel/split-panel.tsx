@@ -45,12 +45,12 @@ const SplitPanelComponent = ({
         const isLast = index === nodes.length - 1;
 
         return (
-          <>
-            <div key={index} className={cn(styles.panel)} style={style}>
+          <React.Fragment key={index}>
+            <div className={cn(styles.panel)} style={style}>
               {child}
             </div>
             {!isLast && divider && <Divider orientation="vertical" className={styles.divider} />}
-          </>
+          </React.Fragment>
         );
       })}
     </div>

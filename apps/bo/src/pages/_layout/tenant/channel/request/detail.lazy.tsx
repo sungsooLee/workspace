@@ -8,16 +8,10 @@ import { ContentsRow } from '@learnway/ui/contents-row';
 import { RadioGroupFormField, TextareaFormField } from '@learnway/ui/form-field';
 import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
-import {
-  ContentsButtons,
-  FormItem,
-  FormRow,
-  LinkBox,
-  MainContents,
-  PageContainer,
-} from '@shared/ui';
+import { EnGlobalConst } from '@shared/types/enums';
+import { FormItem, FormRow } from '@shared/ui/form';
+import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui/layout';
 import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
-import { EnGlobalConst } from '@types';
 import { t } from 'i18next';
 import { useEffect } from 'react';
 

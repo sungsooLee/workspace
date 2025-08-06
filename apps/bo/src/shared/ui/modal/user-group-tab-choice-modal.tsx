@@ -2,7 +2,7 @@ import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.mod
 import { Button } from '@learnway/ui/button';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 import { Tabs } from '@learnway/ui/tabs';
-import { CombineUserGroup, UserGroupType } from '@types';
+import { CombineUserGroup, UserGroupType } from '@shared/types/user-group';
 import { t } from 'i18next';
 import { forwardRef, useState } from 'react';
 import { UserGroupCustom } from '../components/user-group-custom';

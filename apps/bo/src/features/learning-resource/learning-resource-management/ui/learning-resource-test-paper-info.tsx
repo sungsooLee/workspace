@@ -1,17 +1,17 @@
-import { forwardRef, useEffect, useImperativeHandle, useMemo } from 'react';
-import { t } from 'i18next';
+import { ExamResultVisibleMoment, ExamTemplateType } from '@entities/learning-resource';
+import { isEmptyData } from '@learnway/shared';
 import { FormSubTitle } from '@learnway/ui/base-form';
+import { ContentsRow } from '@learnway/ui/contents-row';
 import { SplitPanel } from '@learnway/ui/elements';
 import { RadioGroupFormField, TextareaFormField } from '@learnway/ui/form-field';
-import { ExamResultVisibleMoment, ExamTemplateType } from '@types';
-import { CheckBoxFormField, FormRow2, SwitchFormField } from '@shared/ui';
-import { ContentsRow } from '@learnway/ui/contents-row';
 import { Input } from '@learnway/ui/input';
-import { isEmptyData } from '@learnway/shared';
+import { t } from 'i18next';
+import { forwardRef, useEffect, useImperativeHandle, useMemo } from 'react';
 
-import { FormDisplay } from '@features/form';
-import movieInfoStyles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
 import previewImg from '@assets/images/temp/img_exam_basic.jpg';
+
+import movieInfoStyles from '@learnway/styles/bo/assets/styles/modules/movie-info.module.css';
+import { CheckBoxFormField, FormDisplay, FormRow2, SwitchFormField } from '@shared/ui/form';
 
 import { convertDetailInfoToFormData } from '../service/test-paper/common';
 import { ExamBasicInfoProps, TabFormRef } from '../service/test-paper/type';

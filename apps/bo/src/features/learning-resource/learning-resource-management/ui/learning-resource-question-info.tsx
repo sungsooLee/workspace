@@ -1,6 +1,17 @@
-import { forwardRef, useCallback, useImperativeHandle, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
-import { SegmentedControlFormField } from '@features/form/ui/segmented-control-form-field';
+import {
+  ContentInformation,
+  EnQuestionLevel,
+  EnQuestionType,
+  ExamQuestionGenType,
+  ExamTemplateType,
+  QuestionItem,
+  QuestionItemGridRow,
+  TestPaperBasicInfoDetail,
+} from '@entities/learning-resource';
+
+import { GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui/buttons';
+import { FormRow2, SegmentedControlFormField } from '@shared/ui/form';
+
 import { CMSApiPrefix } from '@learnway/config';
 import { IcoCopy, IcoMinus, IcoPlus } from '@learnway/icons';
 import { cn, isEmptyData } from '@learnway/shared';
@@ -11,18 +22,9 @@ import { RadioGroupFormField } from '@learnway/ui/form-field';
 import { GridBox } from '@learnway/ui/grid';
 import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
-import { FormRow2, GridExcelDownloadButton, GridExcelUploadButton } from '@shared/ui';
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import {
-  ContentInformation,
-  EnQuestionLevel,
-  EnQuestionType,
-  ExamQuestionGenType,
-  ExamTemplateType,
-  QuestionItem,
-  QuestionItemGridRow,
-  TestPaperBasicInfoDetail,
-} from '@types';
+import { forwardRef, useCallback, useImperativeHandle, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { QUESTION_LEVELS, QUESTION_TYPES } from '../service/exam-util';
 import { getExamTemplateTextByType } from '../service/test-paper/common';
 import {
@@ -35,11 +37,11 @@ import { LearningResourceQuestionShuttleModal } from './learning-resource-questi
 import { LearningResourceTestItemModal } from './learning-resource-test-item-modal';
 
 /* styles */
-import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
-import styles from '@learnway/styles/bo/pages/_layout/learning/test-detail.module.css';
-import { QuestionDragHandle } from '@features/learning-resource/learning-resource-management/ui/learning-resource-question-drag-handle';
 import { closestCenter, DndContext, MeasuringStrategy } from '@dnd-kit/core';
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
+import { QuestionDragHandle } from '@features/learning-resource/learning-resource-management/ui/learning-resource-question-drag-handle';
+import tableStyles from '@learnway/styles/bo/assets/styles/modules/table.module.css';
+import styles from '@learnway/styles/bo/pages/_layout/learning/test-detail.module.css';
 
 const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
   (
@@ -54,7 +56,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
     ref,
   ) => {
     const { t } = useTranslation();
-    const { openModal } = useModal();
+    const { alert, openModal } = useModal();
 
     const { provider: basicInfoProvider, getValues } = basicInfoForm;
 
@@ -77,6 +79,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
       questionState,
       scorePerQuestion,
       questionCreateSuccessCallback,
+      questionDeleteSuccessCallback,
       updateQuestionStatus,
       randomCountUpdateData,
       debouncedUpdateRandomCount: updateRandomCount,
@@ -138,6 +141,7 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
           <LearningResourceTestItemModal
             contentInfo={data as ContentInformation}
             onSuccessCallback={questionCreateSuccessCallback}
+            onDeleteCallback={questionDeleteSuccessCallback}
           />
         ),
       });
@@ -386,18 +390,16 @@ const QuestionInfoComponent = forwardRef<TabFormRef, ExamQuestionInfoProps>(
 
     useImperativeHandle(ref, () => ({
       // 시험지 저장 완료 처리 및 문항 저장
-      complete: async () => await updateQuestionCountInfo(),
+      complete: async () => {
+        if (data?.questionCount !== selectedQuestionCount) {
+          await alert({
+            title: t('문항현황을 확인하세요.'),
+            content: t('시험지 문항수와 선택 문항수는 동일해야합니다.'),
+          });
+        }
+        await updateQuestionCountInfo();
+      },
     }));
-
-    // useEffect(() => {
-    //   if (isMount.current) {
-    //     if (questionGenTypeByForm === ExamQuestionGenType.RANDOM) {
-    //       saveBasicInfo?.(getValues(), true);
-    //     }
-    //   } else {
-    //     isMount.current = true;
-    //   }
-    // }, [questionGenTypeByForm]);
 
     return (
       <div className={styles.wrap}>

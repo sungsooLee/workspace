@@ -1,5 +1,5 @@
 import CategoryService from '@entities/category/api/category';
-import { CategoryCreate, CategoryUpdate, CategoryMove } from '@types';
+import { CategoryCreate, CategoryUpdate, CategoryMove } from '../model/category.types';
 
 export const queryKeys = {
   all: ['category'] as const,

@@ -1,6 +1,5 @@
 import { TreeNode } from '@learnway/ui/tree-view';
-import { EnTreeEventPosition } from '@types';
-// TODO: Fix unknown imports:  from '@learnway/ui'
+import { EnTreeEventPosition } from '@shared/types/enums';
 
 export const getAllTreeKeys = (treeData: TreeNode[]) => {
   const recursive = (nodes: TreeNode[]): string[] => {
@@ -269,7 +268,8 @@ export const transformMenuApiDataToTreeData = (apiData: any, siteScope: string) 
         title: node.menuName || node.menuCode, // title이 없으면 menuCode 사용
         parentKey: node.parentId?.toString(), // parentId를 parentKey로 변환
         children: node.children || [],
-        original: node };
+        original: node,
+      };
 
       // 자식 노드가 있는 경우 재귀적으로 변환
       if (node.children && node.children.length > 0) {
@@ -299,7 +299,8 @@ export const transformRoleMenuApiDataToTreeData = (apiData: any) => {
         key: node.tenantMappingMenuId, // menuId를 key로 사용
         title: node.menuName, // title이 없으면 menuCode 사용
         parentKey: node.parentId?.toString(), // parentId를 parentKey로 변환
-        children: node.children || [] };
+        children: node.children || [],
+      };
 
       // 자식 노드가 있는 경우 재귀적으로 변환
       if (node.children && node.children.length > 0) {
@@ -319,7 +320,8 @@ export const moveTenantMenuNodeCheck = (events: any) => {
   const retValue = {
     tenantMappingMenuId: sourceNode.tenantMappingMenuId,
     sortOrder: targetIndex,
-    menuScopeCode: '' };
+    menuScopeCode: '',
+  };
   let checkChildren = true;
   const sourceLevel = sourceNode.level;
   let targetLevel = events.targetNode.level;
@@ -354,7 +356,8 @@ export const moveNodeCheck = (events: any) => {
   const retValue = {
     tenantMappingMenuId: events.sourceNode.tenantMappingMenuId,
     sortOrder: targetIndex,
-    menuScopeCode: '' };
+    menuScopeCode: '',
+  };
 
   switch (events.position) {
     case 'BEFORE': {
@@ -367,14 +370,16 @@ export const moveNodeCheck = (events: any) => {
       if (events.sourceNode.level === events.targetNode.level + 1) {
         return {
           ...retValue,
-          destinationParentId: events.targetNode.key };
+          destinationParentId: events.targetNode.key,
+        };
       }
       break;
     case 'AFTER':
       if (events.sourceNode.level === events.targetNode.level) {
         return {
           ...retValue,
-          destinationParentId: events.targetNode.parentKey };
+          destinationParentId: events.targetNode.parentKey,
+        };
       }
       break;
   }
@@ -398,7 +403,8 @@ export const transformRoleApiDataToTreeData = (apiData: any) => {
 
         parentKey: node.parentRoleId || 'root', // parentRoleId를 parentKey로 변환
         children: node.children || [],
-        depth: depth };
+        depth,
+      };
       if (node._type) {
         transformedNode.key = 'root';
       }
@@ -423,7 +429,9 @@ export const moveRoleCheck = (events: any) => {
       parentRoleId:
         events.targetNode.level === events.sourceNode.level
           ? events.targetNode.parentRoleId
-          : events.targetNode.roleId } };
+          : events.targetNode.roleId,
+    },
+  };
   switch (events.position) {
     case 'BEFORE': {
       if (events.sourceNode.level === events.targetNode.level) {
@@ -435,14 +443,16 @@ export const moveRoleCheck = (events: any) => {
       if (events.sourceNode.level === events.targetNode.level + 1) {
         return {
           ...retValue,
-          parentRoleId: events.targetNode.key };
+          parentRoleId: events.targetNode.key,
+        };
       }
       break;
     case 'AFTER':
       if (events.sourceNode.level === events.targetNode.level) {
         return {
           ...retValue,
-          parentRoleId: events.targetNode.parentKey };
+          parentRoleId: events.targetNode.parentKey,
+        };
       }
       break;
   }

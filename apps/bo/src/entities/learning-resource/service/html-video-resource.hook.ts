@@ -1,13 +1,13 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { omit } from 'lodash-es';
-import { HtmlVideoFileChangeRes } from '@types';
-import { DynamicFormProvider, FileInfo, useFileManager } from '@learnway/hooks';
 import {
+  HtmlVideoFileChangeRes,
   isProcessing,
   isProcessingNone,
   useChangeHTML5VideoFile,
 } from '@entities/learning-resource';
 import LearningResourceService from '@entities/learning-resource/api/learning-resource';
+import { DynamicFormProvider, FileInfo, useFileManager } from '@learnway/hooks';
+import { omit } from 'lodash-es';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 export const useHtmlVideoResource = (provider: DynamicFormProvider) => {
   const { watch, onFormChange } = provider;

@@ -1,10 +1,9 @@
-import { useFetchCourseRegistrationStatus } from '@entities/enroll';
+import { EnrollQueueStatusType, useFetchCourseRegistrationStatus } from '@entities/enroll';
 import { IcoError02, IcoSucess03 } from '@learnway/icons';
 import styles from '@learnway/styles/fo/pages/_layout/course/registration-complete.module.css';
 import proccessResultStyles from '@learnway/styles/fo/widgets/auth/ui/proccess-result.module.css';
 import { Button } from '@learnway/ui/button';
 import { createFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
-import { EnrollQueueStatusType } from '@types';
 import { useMemo } from 'react';
 import { BrowserView, isMobile, MobileView } from 'react-device-detect';
 import { MobileContainerFooter } from '../../../shared/m.ui/container-footer/container-footer';

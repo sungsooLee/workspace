@@ -13,12 +13,13 @@ import { Checkbox } from '@learnway/ui/checkbox';
 import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import { useModal } from '@learnway/ui/modal';
-import { MainContents, PageContainer, RejectModal, RoleApplicationHistoryModal } from '@shared/ui';
+import { EnGlobalConst } from '@shared/types/enums';
+import { MainContents, PageContainer } from '@shared/ui/layout';
+import { RejectModal, RoleApplicationHistoryModal } from '@shared/ui/modal';
 import { SearchBox } from '@shared/ui/search-box';
 import { useQueryClient } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper, Table } from '@tanstack/react-table';
-import { EnGlobalConst } from '@types';
 import { t } from 'i18next';
 import { useCallback, useEffect, useState } from 'react';
 

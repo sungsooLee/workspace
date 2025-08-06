@@ -1,6 +1,7 @@
 import { httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
-import { LabelMessage, LabelMessagesQueryParams, PaginationResponse } from '@types';
+import { LabelMessage, LabelMessagesQueryParams } from '../model/label-meesage.types';
+import { PaginationResponse } from '../../../shared/types/api';
 
 /**
  * 라벨 메시지 관련 API 요청을 처리하는 서비스 클래스.

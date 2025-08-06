@@ -1,25 +1,25 @@
-import { useState, useEffect, useRef } from 'react';
-import { FormSubTitle } from '@learnway/ui/base-form';
-import { SectionLayout } from '@shared/ui';
-import { FORM_MODE } from '@shared/const';
 import { useGetCurriculumDetail } from '@entities/curriculum';
-import { useDynamicForm2 } from '@learnway/hooks';
 import { useFetchAuthUser } from '@learnway/auth/entities';
+import { useDynamicForm2 } from '@learnway/hooks';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
-import { t } from 'i18next';
+import { FormSubTitle } from '@learnway/ui/base-form';
+import { FORM_MODE } from '@shared/const';
+import { SectionLayout } from '@shared/ui/layout';
 import { useQueryClient } from '@tanstack/react-query';
+import { t } from 'i18next';
+import { useEffect, useRef, useState } from 'react';
 
-import { NodeFormRenderer } from '../components/node-form-renderer';
 import { CurriculumTree } from '../components/curriculum-tree';
 import { FormActionButtons } from '../components/form-action-buttons';
+import { NodeFormRenderer } from '../components/node-form-renderer';
 
-import { useCurriculumTree } from '../hooks/use-curriculum-tree';
-import { useCurriculumForm } from '../hooks/use-curriculum-form';
-import { useCurriculumApi } from '../hooks/use-curriculum-api';
-import { useCurriculumActions } from '../hooks/use-curriculum-actions';
-import { CurriculumDetailResponse, MAPPING_CURRICULUM_TYPE } from '@types';
-import { useRouter } from '@tanstack/react-router';
+import { CurriculumDetailResponse, MAPPING_CURRICULUM_TYPE } from '@entities/curriculum';
 import { useModal } from '@learnway/ui/modal';
+import { useRouter } from '@tanstack/react-router';
+import { useCurriculumActions } from '../hooks/use-curriculum-actions';
+import { useCurriculumApi } from '../hooks/use-curriculum-api';
+import { useCurriculumForm } from '../hooks/use-curriculum-form';
+import { useCurriculumTree } from '../hooks/use-curriculum-tree';
 
 interface CurriculumDetailProps {
   mode: FORM_MODE;
@@ -30,7 +30,8 @@ interface CurriculumDetailProps {
 const CurriculumDetailComponent = ({
   mode,
   curriculumId,
-  onCurriculumCreated }: CurriculumDetailProps) => {
+  onCurriculumCreated,
+}: CurriculumDetailProps) => {
   const { data: loginUser } = useFetchAuthUser();
   const [formKey, setFormKey] = useState(0);
   const { confirm: openConfirm } = useModal();
@@ -46,14 +47,16 @@ const CurriculumDetailComponent = ({
     updateFormData,
     onFormChange,
     watch,
-    clearAllValidators } = useDynamicForm2();
+    clearAllValidators,
+  } = useDynamicForm2();
 
   // Curriculum Detail 조회
   const shouldFetchDetail = mode === FORM_MODE.detail && curriculumId > 0;
   const {
     data: curriculumDetail,
     isLoading: isLoadingDetail,
-    refetch: refetchCurriculumDetail } = useGetCurriculumDetail(shouldFetchDetail ? curriculumId : 0);
+    refetch: refetchCurriculumDetail,
+  } = useGetCurriculumDetail(shouldFetchDetail ? curriculumId : 0);
 
   // Custom 훅
   const {
@@ -64,7 +67,8 @@ const CurriculumDetailComponent = ({
     handleFormCancel,
     updateFormStateForNode,
     resetFormState,
-    setFormState } = useCurriculumForm({ clearAllValidators, setFormKey });
+    setFormState,
+  } = useCurriculumForm({ clearAllValidators, setFormKey });
 
   const {
     treeData,
@@ -74,11 +78,13 @@ const CurriculumDetailComponent = ({
     expandParentNodes,
     handleNodeSelect,
     customDropValidator,
-    renderNodeDragHandle } = useCurriculumTree({
+    renderNodeDragHandle,
+  } = useCurriculumTree({
     curriculumDetail,
     onNodeSelect: updateFormStateForNode,
     formState,
-    curriculumId });
+    curriculumId,
+  });
 
   const api = useCurriculumApi({ curriculumId, onFormChange });
 
@@ -99,7 +105,8 @@ const CurriculumDetailComponent = ({
     formState,
     router,
     expandedKeys,
-    setExpandedKeys });
+    setExpandedKeys,
+  });
 
   const handleSave = async () => {
     if (isSubmitting) return;
@@ -121,7 +128,8 @@ const CurriculumDetailComponent = ({
             handleFormSubmit(formData, formState);
           }
           setIsSubmitting(false);
-        } });
+        },
+      });
     }
   };
 
@@ -138,7 +146,8 @@ const CurriculumDetailComponent = ({
           if (value) {
             handleDeleteNode(formState);
           }
-        } });
+        },
+      });
     }
   };
   useEffect(() => {
@@ -180,7 +189,8 @@ const CurriculumDetailComponent = ({
             if (onCurriculumCreated) {
               onCurriculumCreated(data.curriculumId);
             }
-          } },
+          },
+        },
       );
     }
   };
@@ -212,7 +222,8 @@ const CurriculumDetailComponent = ({
                   if (value) {
                     handleCopyCurriculum(selectedCurriculumId);
                   }
-                } });
+                },
+              });
             }, 100);
           }
         }}
@@ -245,7 +256,8 @@ const CurriculumDetailComponent = ({
             curriculumData={{
               tenantId: curriculumDetail?.tenantId || loginUser?.activeTenant?.tenantId,
               channelUuid: curriculumDetail?.channelUuid,
-              contentType: undefined }}
+              contentType: undefined,
+            }}
           />
         </form>
       </div>

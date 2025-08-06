@@ -1,4 +1,4 @@
-import { queryOptions } from '@entities/course';
+import { CoursePopupQueryParams, queryOptions } from '@entities/course';
 import { CODE_GROUP, SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { SelectOption } from '@learnway/shared';
 import { Checkbox } from '@learnway/ui/checkbox';
@@ -6,7 +6,6 @@ import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import { ModalBody, ModalContainer, ModalTitle } from '@learnway/ui/modal';
 import { getCurrentAuthUser } from '@shared/lib';
-import { CoursePopupQueryParams } from '@types';
 import dayjs from 'dayjs';
 import { t } from 'i18next';
 import { useCallback, useEffect } from 'react';

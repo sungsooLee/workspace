@@ -1,14 +1,83 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import type { MutateOptions, UseQueryOptions, UseQueryResult } from '@tanstack/react-query';
-
 import {
-  tenantQueryKeys,
-  tenantQueryOptions as queryOptions,
-  tenantMutateOptions } from './tenant.queries';
-import { PaginationResponse, Tenant, TenantByRoleId } from '@types';
+  useMutation,
+  useQuery,
+  useQueryClient,
+  type UseQueryOptions,
+  type UseQueryResult,
+} from '@tanstack/react-query';
+
+import { getQuerySkipToken } from '@learnway/shared';
+
+import CompaniesService from '@entities/companies/api/companies';
+
+import { Tenant, TenantByRoleId } from '../model/tenant.types';
+import { tenantApi } from '../api/tenant';
+
+export const tenantQueryKeys = {
+  all: ['tenants'] as const,
+  list: ['tenants-page'] as const,
+  detail: (tenantId: number) => [...tenantQueryKeys.list, tenantId] as const,
+  tenantCompanys: (tenantIds: number[]) => ['tenants-companys', ...tenantIds],
+  tenantByRoleId: (roleId: number) => ['tenants-by-role-id', roleId],
+};
+
+export const tenantQueryOptions = {
+  all: () => ({
+    queryKey: tenantQueryKeys.all,
+    queryFn: async (): Promise<any> => tenantApi.fetchAllTenant(),
+  }),
+  list: (params: any) => ({
+    queryKey: tenantQueryKeys.list,
+    queryFn: () => tenantApi.fetchListTenant(params),
+    cacheTime: 0,
+    staleTime: 0,
+  }),
+  detail: (tenantId?: number) =>
+    tenantId
+      ? {
+          queryKey: tenantQueryKeys.detail(tenantId),
+          queryFn: (): Promise<Tenant> => tenantApi.fetchTenant(tenantId),
+        }
+      : getQuerySkipToken<Tenant>(),
+  tenantCompanys: (tenantIds?: number[]) =>
+    tenantIds && tenantIds.length > 0
+      ? {
+          queryKey: tenantQueryKeys.tenantCompanys(tenantIds),
+          queryFn: async () => {
+            const tenantPromise = tenantApi.fetchAllTenant();
+            const companys = (await CompaniesService.fetchAll({})).content;
+            const tenantList = (await tenantPromise).filter((item) =>
+              tenantIds.includes(item.tenantId),
+            );
+            const allCompanyIds: any[] = [];
+            for (const i of tenantList) {
+              allCompanyIds.push(...i.companyTenantList.map((item: any) => item.companyId));
+            }
+            return companys.filter((item: any) => allCompanyIds.includes(item.companyId));
+          },
+        }
+      : getQuerySkipToken<any[]>(),
+  tenantByRoleId: <T = TenantByRoleId[]>(roleId: number): UseQueryOptions<T> => ({
+    queryKey: tenantQueryKeys.tenantByRoleId(roleId),
+    queryFn: async (): Promise<T> => tenantApi.fetchTenantByRoleId(roleId),
+  }),
+};
+
+export const tenantMutateOptions = {
+  create: () => ({
+    mutationFn: (payload: Tenant) => tenantApi.createTenant(payload),
+  }),
+  update: () => ({
+    mutationFn: (payload: Tenant) => tenantApi.updateTenant(payload),
+  }),
+  delete: () => ({
+    mutationFn: (tenantId?: number) =>
+      tenantId ? tenantApi.deleteTenant(tenantId) : getQuerySkipToken<Tenant>(),
+  }),
+};
 
 export function useFetchTenant(tenantId?: number) {
-  return useQuery(queryOptions.detail(tenantId));
+  return useQuery(tenantQueryOptions.detail(tenantId));
 }
 
 /**
@@ -20,7 +89,11 @@ export const useFetchTenantByRoleId = <T = TenantByRoleId[]>(
   roleId: number,
   options?: UseQueryOptions<T, Error>,
 ): UseQueryResult<T, Error> => {
-  return useQuery({ ...queryOptions.tenantByRoleId<T>(roleId), ...options, staleTime: Infinity });
+  return useQuery({
+    ...tenantQueryOptions.tenantByRoleId<T>(roleId),
+    ...options,
+    staleTime: Infinity,
+  });
 };
 
 export function useCreateTenant(options: any) {
@@ -36,7 +109,8 @@ export function useCreateTenant(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options });
+    ...options,
+  });
 
   return {
     create: (payload: any, callback?: any) => {
@@ -44,7 +118,8 @@ export function useCreateTenant(options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data };
+    data: mutation.data,
+  };
 }
 
 export function useUpdateTenant(options: any) {
@@ -59,7 +134,8 @@ export function useUpdateTenant(options: any) {
         options.onSuccess(data, variables, context);
       }
     },
-    ...options });
+    ...options,
+  });
 
   return {
     update: (payload: any, callback?: any) => {
@@ -67,5 +143,6 @@ export function useUpdateTenant(options: any) {
     },
     isSuccess: mutation.isSuccess,
     isError: mutation.isError,
-    data: mutation.data };
+    data: mutation.data,
+  };
 }

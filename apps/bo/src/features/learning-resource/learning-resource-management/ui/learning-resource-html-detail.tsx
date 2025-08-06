@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react';
-import dayjs from 'dayjs';
+import { HtmlVideoDetailRes } from '@entities/learning-resource';
+import { useFetchAuthUser } from '@learnway/auth/entities';
 import { UseDynamicFormResult } from '@learnway/hooks';
 import { cn, isEmptyData } from '@learnway/shared';
-import { useFetchAuthUser } from '@learnway/auth/entities';
-import { HtmlVideoDetailRes } from '@types';
-import { ContentsHistoryInfoFormField } from '@shared/ui';
-import { MediaContentRequiredCheckFormField } from '@features/form/ui';
+import dayjs from 'dayjs';
+import { useEffect } from 'react';
 import { useRoleInfo } from '../service/util';
 import { LearningResourceBaseForm } from './learning-resource-base-form';
 
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { ContentsRow } from '@learnway/ui/contents-row';
+
+import { ContentsHistoryInfoFormField, MediaContentRequiredCheckFormField } from '@shared/ui/form';
 
 type HtmlDetailProps = {
   form: UseDynamicFormResult;
@@ -33,8 +33,10 @@ const HtmlDetailComponent = ({ form, data = {}, hasMapping = false }: HtmlDetail
         coordinatorUuid: loginUser?.uuid,
         coordinatorName: loginUser?.name,
         coordinatorTelCountryCode: loginUser?.phoneNumberNationCode,
-        coordinatorTelNo: loginUser?.phoneNumber });
-    } });
+        coordinatorTelNo: loginUser?.phoneNumber,
+      });
+    },
+  });
 
   useEffect(() => {
     (async () => {
@@ -48,10 +50,12 @@ const HtmlDetailComponent = ({ form, data = {}, hasMapping = false }: HtmlDetail
         ...data,
         contentUseDate: {
           from: data.contentUseStartDate ? dayjs(data.contentUseStartDate).toDate() : undefined,
-          to: data.contentUseEndDate ? dayjs(data.contentUseEndDate).toDate() : undefined },
+          to: data.contentUseEndDate ? dayjs(data.contentUseEndDate).toDate() : undefined,
+        },
         aiSummary: data.aiSummary ?? '',
         aiKeyword: data.aiKeyword ?? '',
-        resource: data.resource ?? {} });
+        resource: data.resource ?? {},
+      });
     }
   }, [data]);
 

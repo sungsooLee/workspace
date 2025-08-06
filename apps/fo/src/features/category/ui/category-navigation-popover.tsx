@@ -1,14 +1,14 @@
-import { useEffect, useState } from 'react';
 import { Link } from '@tanstack/react-router';
+import { useEffect, useState } from 'react';
 
 import { IcoArrowDown, IcoArrowForward } from '@learnway/icons';
 
-import { Category } from '@types';
+import bnrImage1 from '@assets/images/banner/banner_cate1.png';
+import bnrImage2 from '@assets/images/banner/banner_cate2.png';
+import { Category } from '@entities/category';
 import { useCategoryNavigation } from '@entities/category/service/category.hook';
 import { useCategories } from '../services/category.service';
 import { CategoryBadgeList } from './category-badge-list';
-import bnrImage1 from '@assets/images/banner/banner_cate1.png';
-import bnrImage2 from '@assets/images/banner/banner_cate2.png';
 
 import styles from '@learnway/styles/fo/features/category/category-navigation-popover.module.css';
 import { Button } from '@learnway/ui/button';
@@ -76,7 +76,8 @@ export function CategoryNavigationPopover({ isOpen }: CategoryLayerProps) {
                       <li>
                         <Button
                           onClick={() => handleDepth1Select(category.categoryId)}
-                          className={selectedDepth1 === category.categoryId ? styles.active : ''}>
+                          className={selectedDepth1 === category.categoryId ? styles.active : ''}
+                        >
                           <span>{category.name}</span>
                           {selectedDepth1 === category.categoryId ? (
                             <i>
@@ -114,7 +115,8 @@ export function CategoryNavigationPopover({ isOpen }: CategoryLayerProps) {
                   </h2>
                   <Button
                     onClick={toggleAll}
-                    className={`${styles.btn_cate} ${isAllOpen ? styles.active : ''}`}>
+                    className={`${styles.btn_cate} ${isAllOpen ? styles.active : ''}`}
+                  >
                     <IcoArrowDown width={16} height={16} stroke="#07287E" />
                   </Button>
                 </div>
@@ -131,7 +133,8 @@ export function CategoryNavigationPopover({ isOpen }: CategoryLayerProps) {
                         {category.children && category.children.length > 0 && (
                           <Button
                             className={`${styles.btn_cate} ${openStates[index] ? styles.active : ''}`}
-                            onClick={() => toggleCategory(index)}>
+                            onClick={() => toggleCategory(index)}
+                          >
                             <IcoArrowDown width={16} height={16} stroke="#A9AFB8" />
                           </Button>
                         )}

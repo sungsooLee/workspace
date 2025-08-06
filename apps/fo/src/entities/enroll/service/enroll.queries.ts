@@ -1,10 +1,10 @@
-import { UseMutationOptions, UseQueryOptions } from '@tanstack/react-query';
 import {
   CourseEnrollQueueStateIdResponse,
   CourseEnrollResponse,
   EnrollDeleteRequest,
   EnrollRequest,
-} from '@types';
+} from '@entities/enroll';
+import { UseMutationOptions, UseQueryOptions } from '@tanstack/react-query';
 import EnrollService from '../api/enroll';
 
 export const queryKeys = {

@@ -1,15 +1,14 @@
-import { createFileRoute, useRouterState } from '@tanstack/react-router';
+import { createFileRoute } from '@tanstack/react-router';
+import { useCreation } from 'ahooks';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useState, useEffect } from 'react';
-import { useCreation, useUnmount } from 'ahooks';
 
 import { useCurrentRoute } from '@learnway/hooks';
 import { HtmlContent } from '@learnway/ui/html-content';
 
 import { pageRouteConfig } from '../../../features/auth';
 
-import { useFetchTermsVersions, useFetchTerms } from '../../../entities/terms';
-import type { TermsType } from '../../../types';
+import { TermsType, useFetchTerms, useFetchTermsVersions } from '@entities/terms';
 
 import styles from '@learnway/styles/fo/pages/_layout/terms/terms.module.css';
 import { Dropdown } from '@learnway/ui/dropdown';

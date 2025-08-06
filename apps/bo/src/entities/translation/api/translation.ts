@@ -1,11 +1,12 @@
-import { httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
-import { PaginationResponse } from '../../../types';
+import { httpService } from '@learnway/shared';
+import { PaginationResponse } from '@shared/types/api';
+import { AxiosResponse } from 'axios';
 import {
   MultilingualListItem,
   MultilingualQueryParams,
-  MultilingualUpdateReqParams } from '../../../types/entities/multilingual';
-import { AxiosResponse } from 'axios';
+  MultilingualUpdateReqParams,
+} from '../model/multilingual.types';
 
 export default class TranslationService {
   // 다국어 관리 - 목록 조회
@@ -46,7 +47,8 @@ export default class TranslationService {
 
   static fetchTranslationExists({
     keyTypeCode,
-    messageCode }: {
+    messageCode,
+  }: {
     keyTypeCode: string;
     messageCode: string;
   }) {

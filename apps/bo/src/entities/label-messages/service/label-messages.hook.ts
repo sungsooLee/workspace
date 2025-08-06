@@ -1,11 +1,9 @@
 import { useModal } from '@learnway/ui/modal';
 import { useMutation, UseMutationResult, useQuery, useQueryClient, UseQueryOptions, UseQueryResult } from '@tanstack/react-query';
 import { mutateOptions, queryKeys, queryOptions } from './label-messages.queries';
-import {
-  LabelMessage,
-  LabelMessagesQueryParams,
-  MutationHookOptions,
-  PaginationResponse } from '@types';
+import { LabelMessage, LabelMessagesQueryParams } from '../model/label-meesage.types';
+import { MutationHookOptions } from '../../../shared/types/react-query';
+import { PaginationResponse } from '../../../shared/types/api';
 
 /**
  * 라벨 메시지 목록을 가져오는 쿼리 훅.

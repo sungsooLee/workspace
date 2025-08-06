@@ -3,7 +3,7 @@ import { getDateToString } from '@learnway/shared';
 import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
 import { useModal } from '@learnway/ui/modal';
-import { SearchBox } from '@shared/ui';
+import { SearchBox } from '@shared/ui/search-box';
 import { useRouterState } from '@tanstack/react-router';
 import { createColumnHelper, Table } from '@tanstack/react-table';
 import { t } from 'i18next';

@@ -4,7 +4,7 @@ import { useCategoryTree } from '@entities/category';
 import { IcoArrowDown, IcoArrowForward, IcoHome03 } from '@learnway/icons';
 import { Popover } from '@learnway/ui/popover';
 import { Link, useRouterState } from '@tanstack/react-router';
-import { Category } from '../../../../../types/entities/category';
+import { Category } from '../../../../../entities/category/model/category.types';
 import { useCategoryBreadcrumbs } from '../../../service/breadcurmb.hooks';
 import styles from './breadcrumbs.module.css';
 

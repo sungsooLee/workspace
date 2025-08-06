@@ -1,8 +1,8 @@
-import menuMock from '../../mock/menu.json';
-import { httpService } from '@learnway/shared';
 import { PMSApiPrefix } from '@learnway/config';
+import { httpService } from '@learnway/shared';
+import { MenuTreeResponse } from '@shared/types/menu';
 import { createPmsUrl, registerApi } from '../../../shared/lib/use-authorized-query';
-import { MenuTreeResponse } from '@types';
+import menuMock from '../../mock/menu.json';
 
 /**
  * PMS > 메뉴관리 API 모음
@@ -21,7 +21,7 @@ export default class MenuMangerService {
    * @returns
    */
   static fetchMenuDetail(menuId: string): Promise<any> {
-    return httpService.get<any>(`${PMSApiPrefix()}/menus/` + menuId + `/detail`);
+    return httpService.get<any>(`${PMSApiPrefix()}/menus/${menuId}/detail`);
   }
   /**
    * FO/BO 메뉴 목록 트리 조회
@@ -114,12 +114,14 @@ export default class MenuMangerService {
    */
   static moveMenuFavorites({
     favoritesMenuId,
-    sortOrder }: {
+    sortOrder,
+  }: {
     favoritesMenuId: any;
     sortOrder: any;
   }): Promise<any> {
     return httpService.post<any>(`${PMSApiPrefix()}/menus/favorites/${favoritesMenuId}/dnd`, {
-      sortOrder });
+      sortOrder,
+    });
   }
 }
 
@@ -146,4 +148,5 @@ export const MenuManageApi = {
   ),
   update: registerApi('menuManage.update', 'PUT', createPmsUrl('/menus/:menuId'), '메뉴 수정'),
   delete: registerApi('menuManage.delete', 'DELETE', createPmsUrl('/menus/:menuId'), '메뉴 삭제'),
-  move: registerApi('menuManage.move', 'POST', createPmsUrl('/menus/:menuId/dnd'), '메뉴 DND') };
+  move: registerApi('menuManage.move', 'POST', createPmsUrl('/menus/:menuId/dnd'), '메뉴 DND'),
+};

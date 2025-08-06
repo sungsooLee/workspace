@@ -1,6 +1,6 @@
 export const S3_PATH = {
-  'upload/content/original': 'upload/content/original', // 학습자원 원본 파일
-  'upload/content/thumbnail': 'upload/content/thumbnail', // 학습자원 썸네일
+  'upload/content/original': 'upload/content/original', // 교육자원 원본 파일
+  'upload/content/thumbnail': 'upload/content/thumbnail', // 교육자원 썸네일
   'upload/content/image': 'upload/content/image', // URL 접근이 필요한 이미지
   'public/image/channel/profile': 'public/image/channel/profile', // 채널 프로필 이미지
   'public/image/channel/main': 'public/image/channel/main', // 채널 홈 이미지

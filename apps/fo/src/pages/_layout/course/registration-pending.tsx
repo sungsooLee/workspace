@@ -1,8 +1,7 @@
-import { useFetchCourseRegistrationStatus } from '@entities/enroll';
+import { EnrollQueueStatusType, useFetchCourseRegistrationStatus } from '@entities/enroll';
 import { AcceptingPopup } from '@features/layout';
 import { useModal } from '@learnway/ui/modal';
 import { createFileRoute, useRouter, useRouterState } from '@tanstack/react-router';
-import { EnrollQueueStatusType } from '@types';
 import { useEffect, useMemo } from 'react';
 import { isMobile } from 'react-device-detect';
 

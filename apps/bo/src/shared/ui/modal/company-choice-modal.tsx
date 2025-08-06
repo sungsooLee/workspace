@@ -15,7 +15,7 @@ import { queryOptions as companyQueryOptions } from '@entities/companies';
 
 import { Button } from '@learnway/ui/button';
 import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
-import { EnGlobalConst } from '@types';
+import { EnGlobalConst } from '@shared/types/enums';
 
 /**
  * 화면 번호: NLP_BO_TMS_1001_19 or 화면번호 NLP_BO_PMS_1107

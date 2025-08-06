@@ -1,5 +1,6 @@
+import { BlogCreateReq, BlogUpdateReq, Tag } from '@entities/learning-resource';
 import { getParsedDataFromString } from '@learnway/shared';
-import { BlogCreateReq, BlogUpdateReq, ContentAddInfoType, Tag } from '@types';
+import { ContentAddInfoType } from '@shared/types/enums';
 
 export const getPayloadFromBlogSubmit = (options: {
   data: Record<string, any>;
@@ -26,10 +27,8 @@ export const getPayloadFromBlogSubmit = (options: {
     vendorTelCountryCode: options.data.vendorTelCountryCode,
     vendorTelNo: options.data.vendorTelNo,
     isCourseUsed: options.data.isCourseUsed,
-    isContentSecured: options.data.isContentSecured,
     isInspected: options.data.isInspected,
     isCopyrighted: options.data.isCopyrighted,
-    isSecured: true,
     isDeleted: false,
     isOpened: true,
     tags: options.data.tags.map((tag: Tag | string) => ({

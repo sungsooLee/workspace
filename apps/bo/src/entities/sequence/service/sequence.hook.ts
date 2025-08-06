@@ -1,8 +1,8 @@
 import type { MutateOptions } from '@tanstack/react-query';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
+import { SequenceResponse, SequencesRequest } from '../model/sequence.types';
 import { mutateOptions, queryOptions } from './sequence.queries';
-import { SequenceResponse, SequencesRequest } from '../../../types';
 
 export function useFetchCourses(params: SequencesRequest) {
   return useQuery(queryOptions.all(params));
@@ -20,7 +20,8 @@ export function useCreateCourse(mutationOptions = {}) {
     onSuccess: async (data: any, variables, context) => {
       // 공통 메세지 처리 등...
     },
-    ...mutationOptions });
+    ...mutationOptions,
+  });
 
   return {
     create: (
@@ -30,5 +31,6 @@ export function useCreateCourse(mutationOptions = {}) {
       mutate(payload, callback);
     },
     isSuccess,
-    isError };
+    isError,
+  };
 }

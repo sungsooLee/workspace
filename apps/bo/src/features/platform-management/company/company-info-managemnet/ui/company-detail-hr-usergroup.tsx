@@ -1,19 +1,20 @@
-import { FC, useEffect, useState, useCallback } from 'react';
-import { useRouterState } from '@tanstack/react-router';
-import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { t } from 'i18next';
+import { queryOptions } from '@entities/user-group/service/user-group-company.queries';
+import { SearchBoxConfig, useSearchBox } from '@learnway/hooks';
 import { FormSubTitle } from '@learnway/ui/base-form';
 import { Divider } from '@learnway/ui/elements';
 import { GridBox, useGridBox, useGridBoxConfig } from '@learnway/ui/grid';
+import { EnGlobalConst, EnUserGroupType } from '@shared/types/enums';
 import { SearchBox } from '@shared/ui/search-box';
-import { useSearchBox, SearchBoxConfig } from '@learnway/hooks';
-import { EnUserGroupType, EnGlobalConst } from '@types';
-import { queryOptions } from '@entities/user-group/service/user-group-company.queries';
+import { useRouterState } from '@tanstack/react-router';
+import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
+import { t } from 'i18next';
+import { FC, useCallback, useEffect, useState } from 'react';
 import {
   LinkColumnsForDesignation,
   LinkColumnsForGroup,
+  LinkColumnsForPosition,
   LinkColumnsForRole,
-  LinkColumnsForPosition } from './company-detail-ht-link';
+} from './company-detail-ht-link';
 
 interface CompanyDetailHRUsergroupProps {
   userGroupId?: number;
@@ -24,7 +25,8 @@ interface CompanyDetailHRUsergroupProps {
 const CompanyDetailHRUsergroupComponent: FC<any> = ({
   userGroupId,
   userGroupType,
-  enableInquiryAll = true }: CompanyDetailHRUsergroupProps) => {
+  enableInquiryAll = true,
+}: CompanyDetailHRUsergroupProps) => {
   const routerState = useRouterState();
   const companyId = routerState.location.state?.companyId;
 
@@ -34,9 +36,10 @@ const CompanyDetailHRUsergroupComponent: FC<any> = ({
   const getSearchParam = () => {
     const retval = {
       ...getValues(),
-      userGroupType: userGroupType,
-      companyId: companyId,
-      userGroupIds: userGroupId ? [userGroupId] : [] };
+      userGroupType,
+      companyId,
+      userGroupIds: userGroupId ? [userGroupId] : [],
+    };
 
     return retval;
   };
@@ -48,9 +51,10 @@ const CompanyDetailHRUsergroupComponent: FC<any> = ({
     console.log('### userGroupId', userGroupId);
     if (enableInquiryAll || userGroupId) {
       gridFetch({
-        userGroupType: userGroupType,
-        companyId: companyId,
-        userGroupIds: userGroupId ? [userGroupId] : [] });
+        userGroupType,
+        companyId,
+        userGroupIds: userGroupId ? [userGroupId] : [],
+      });
     }
   }, [enableInquiryAll, companyId, userGroupType, userGroupId, gridFetch]);
 
@@ -59,9 +63,10 @@ const CompanyDetailHRUsergroupComponent: FC<any> = ({
       if (enableInquiryAll || userGroupId) {
         gridFetch({
           ...data,
-          userGroupType: userGroupType,
-          companyId: companyId,
-          userGroupIds: userGroupId ? [userGroupId] : [] });
+          userGroupType,
+          companyId,
+          userGroupIds: userGroupId ? [userGroupId] : [],
+        });
       }
     },
     [enableInquiryAll, companyId, userGroupType, userGroupId, gridFetch],
@@ -74,12 +79,14 @@ const CompanyDetailHRUsergroupComponent: FC<any> = ({
       cell: (info) => info.getValue(),
       header: t('회사'),
       size: 160,
-      enableGrouping: false }),
+      enableGrouping: false,
+    }),
     columnHelper.accessor('deptName', {
       cell: (info) => info.getValue(),
       header: t('소속'),
       size: 160,
-      enableGrouping: false }),
+      enableGrouping: false,
+    }),
   ] as ColumnDef<any, unknown>[];
 
   const columnsNext = [
@@ -87,12 +94,14 @@ const CompanyDetailHRUsergroupComponent: FC<any> = ({
       cell: (info) => info.getValue(),
       header: t('사번'),
       size: 160,
-      enableGrouping: false }),
+      enableGrouping: false,
+    }),
     columnHelper.accessor('userName', {
       cell: (info) => info.getValue(),
       header: t('이름'),
       size: 160,
-      enableGrouping: false }),
+      enableGrouping: false,
+    }),
     columnHelper.accessor('userStatus', {
       cell: (info) =>
         t(
@@ -100,14 +109,16 @@ const CompanyDetailHRUsergroupComponent: FC<any> = ({
         ),
       header: t('재직여부'),
       size: 80,
-      enableGrouping: false }),
+      enableGrouping: false,
+    }),
     columnHelper.accessor('accountStatus', {
       cell: (info) =>
         t(
           `${EnGlobalConst.SYSTEM_COMMON_CODE}.pms.user.AccountStatus.${info.row.original.accountStatus}`,
         ),
       header: t('계정상태'),
-      size: 80 }),
+      size: 80,
+    }),
   ] as ColumnDef<any, unknown>[];
 
   useEffect(() => {
@@ -173,14 +184,17 @@ const searchConfig: SearchBoxConfig = {
         name: 'employeeNumber',
         type: 'text',
         label: t('사번'),
-        value: '' },
+        value: '',
+      },
       {
         name: 'userName',
         type: 'text',
         label: t('이름'),
-        value: '' },
+        value: '',
+      },
     ],
-  ] };
+  ],
+};
 
 const gridConfig: useGridBoxConfig = {
   query: queryOptions.userGroupUsers,
@@ -190,4 +204,6 @@ const gridConfig: useGridBoxConfig = {
   gridState: {
     page: 0,
     size: 10,
-    sort: [] } };
+    sort: [],
+  },
+};

@@ -1,20 +1,18 @@
+import { CourseListItem, CoursePopupListItem } from '@entities/course';
 import { queryOptions } from '@entities/course/service/course.queries';
-import { DateRangePickerFormField } from '@features/form/ui/date-range-picker-form-field';
-import { DropdownFormField } from '@features/form/ui/dropdown-form-field';
 import { CODE_GROUP, getCodeLabel, useDynamicForm2 } from '@learnway/hooks';
 import { generateYears } from '@learnway/shared';
+import { Button } from '@learnway/ui/button';
+import { ContentsRow } from '@learnway/ui/contents-row';
 import { GridBox, useGridBox } from '@learnway/ui/grid';
-import { FormRow2 } from '@shared/ui/form/form-row2';
-import { SearchBoxForm } from '@shared/ui/search-box/search-box-form';
-import { CourseListItem, CoursePopupListItem } from '@types';
+import { Input } from '@learnway/ui/input';
+import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
+import { DateRangePickerFormField, DropdownFormField, FormRow2 } from '@shared/ui/form';
+import { SearchBoxForm } from '@shared/ui/search-box';
 import { t } from 'i18next';
 import { forwardRef, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './course-choice-modal.module.css';
-import { Button } from '@learnway/ui/button';
-import { ContentsRow } from '@learnway/ui/contents-row';
-import { Input } from '@learnway/ui/input';
-import { ModalBody, ModalContainer, ModalFooter, ModalTitle, useModal } from '@learnway/ui/modal';
 
 export interface CourseChoiceModalProps {
   tenantIds: Array<number>;
@@ -73,7 +71,8 @@ const CourseChoiceModalComponent = forwardRef<HTMLDivElement, CourseChoiceModalP
                     <DropdownFormField
                       presetOptionLabel={t('LABEL.form.label.all')}
                       optionsConfig={{
-                        codeGroup: CODE_GROUP['lms.course.CourseType'] }}
+                        codeGroup: CODE_GROUP['lms.course.CourseType'],
+                      }}
                     />
                   }
                 />
@@ -116,7 +115,8 @@ const CourseChoiceModalComponent = forwardRef<HTMLDivElement, CourseChoiceModalP
                     <DropdownFormField
                       presetOptionLabel={t('LABEL.form.label.all')}
                       optionsConfig={{
-                        codeGroup: CODE_GROUP['mock.options.use'] }}
+                        codeGroup: CODE_GROUP['mock.options.use'],
+                      }}
                     />
                   }
                 />
@@ -180,40 +180,49 @@ const gridConfig = {
       name: 'courseType',
       label: () => t('LABEL.grid.column.courseType'),
       size: 90,
-      render: (info: any) => getCodeLabel(CODE_GROUP['lms.course.CourseType'], info.getValue()) },
+      render: (info: any) => getCodeLabel(CODE_GROUP['lms.course.CourseType'], info.getValue()),
+    },
     // 과정코드
     {
       name: 'courseId',
       label: () => t('LABEL.grid.column.courseCode'),
-      size: 90 },
+      size: 90,
+    },
     // 과정명
     {
       name: 'courseName',
       label: () => t('LABEL.grid.column.courseName'),
-      size: 300 },
+      size: 300,
+    },
     // 담당자
     {
       name: 'coordinatorName',
       label: () => t('LABEL.grid.column.manager'),
-      size: 90 },
+      size: 90,
+    },
     // 운영자
     {
       name: 'operatorName',
       label: () => t('LABEL.grid.column.operator'),
-      size: 90 },
+      size: 90,
+    },
     // 사용 여부
     {
       name: 'isUsed',
       label: () => t('LABEL.grid.column.use'),
-      size: 90 },
+      size: 90,
+    },
     // 개설년도
     {
       name: 'openingYear',
       label: () => t('LABEL.grid.column.openingDate'),
-      size: 90 },
+      size: 90,
+    },
     // 과정 유효기간
     {
       name: 'courseValidityPeriod',
       label: () => t('LABEL.grid.column.courseValidityPeriod'),
-      size: 90 },
-  ] };
+      size: 90,
+    },
+  ],
+};

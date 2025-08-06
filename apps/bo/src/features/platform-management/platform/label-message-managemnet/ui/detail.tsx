@@ -5,7 +5,14 @@ import {
   useUpdateLabelMessage,
 } from '@entities/label-messages';
 import { translationQueryOptions } from '@entities/translation';
-import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
+
+import {
+  DuplicateCheckInputFormField,
+  DuplicateState,
+  FormRow,
+  SwitchFormField,
+} from '@shared/ui/form';
+
 import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import layoutStyles from '@learnway/styles/bo/assets/styles/modules/contents-inner-layout.module.css';
 import { FormSubTitle } from '@learnway/ui/base-form';
@@ -15,11 +22,6 @@ import { RadioGroupFormField } from '@learnway/ui/form-field';
 import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
 import { Textarea } from '@learnway/ui/textarea';
-import {
-  // DuplicateCheckInputFormField,
-  FormRow,
-  SwitchFormField,
-} from '@shared/ui/form';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';

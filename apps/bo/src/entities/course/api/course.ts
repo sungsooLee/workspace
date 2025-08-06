@@ -1,5 +1,6 @@
 import { LMSApiPrefix } from '@learnway/config';
 import { httpService } from '@learnway/shared';
+import { PaginationResponse } from '@shared/types/api';
 import {
   Course,
   CourseConfig,
@@ -9,7 +10,7 @@ import {
   CoursePopupListItem,
   CoursePopupQueryParams,
   CoursesQueryParams,
-  PaginationResponse } from '../../../types';
+} from '../model/course.types';
 
 /**
  * 과정 관련 API 요청을 처리하는 서비스 클래스.
@@ -51,6 +52,18 @@ export default class CourseService {
    */
   static async copy(payload: { courseId: number; tenantId: number }): Promise<Course> {
     return httpService.post<Course>(`${LMSApiPrefix()}/course/${payload.courseId}/copy`, payload);
+  }
+
+  /**
+   * 과정을 번역합니다.
+   * @param payload - 번역할 과정 정보.
+   * @returns 번역된 과정 정보 Promise.
+   */
+  static async translate(payload: { courseId: number; tenantId: number }): Promise<Course> {
+    return httpService.post<Course>(
+      `${LMSApiPrefix()}/course/${payload.courseId}/translate`,
+      payload,
+    );
   }
 
   /**

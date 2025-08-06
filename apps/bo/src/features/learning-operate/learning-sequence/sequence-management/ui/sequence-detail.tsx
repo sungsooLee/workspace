@@ -1,9 +1,9 @@
+import { LearningSequence } from '@entities/learning-sequence';
 import {
   useDeleteSequence,
   useUpdateSequence,
 } from '@entities/learning-sequence/service/learning-sequence.hook';
 import { queryOptions } from '@entities/learning-sequence/service/learning-sequence.queries';
-import { DateRangePickerFormField, DropdownFormField, FormDisplay } from '@features/form';
 import { InstructorListPopup } from '@features/learning-operate-support/instructor-tutor/instructor-management';
 import { TriggerKey } from '@features/learning-operate/course/course-management';
 import { CODE_GROUP, useDynamicForm2 } from '@learnway/hooks';
@@ -19,23 +19,29 @@ import {
 import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
 import { PhoneNumberFormField } from '@learnway/ui/phone-number';
+
 import {
+  DateRangePickerFormField,
+  DropdownFormField,
+  FormDisplay,
   FormRow,
   FormRow2,
   PassOptionFormField,
   SwitchFormField,
   TenantByRoleChannelCheckboxFormField,
   TenantChannelDropdownFormField2,
+} from '@shared/ui/form';
+import {
   TrainingPlaceChoiceModal,
   UserChoiceModal,
   UserGroupChoiceModal,
   UserGroupTabsChoiceModal,
-} from '@shared/ui';
+} from '@shared/ui/modal';
+
 import { useQueryClient } from '@tanstack/react-query';
 import { useUpdateEffect } from 'ahooks';
 import { forwardRef, useCallback, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { LearningSequence } from 'src/types/entities/learning-sequence';
 
 type SequenceDetailComponentProps = {
   mode: string;
@@ -1560,7 +1566,7 @@ const responseDataToFormData = (d: LearningSequence): any => {
  */
 export const formDataToRequestData = (d: LearningSequence) => {
   console.log('####formDataToRequestData=>', d);
-  d.curriculumId = 0;
+  d.curriculumId = 0; // TODO: 커리큘럼 개발완료되면 넘어온 값으로 대체되어야함
 
   // 수강취소(미사용/사용)
   if (!d.isEnrollCancelDeadLineActivated) {
@@ -1609,9 +1615,9 @@ export const formDataToRequestData = (d: LearningSequence) => {
     d.recognizedStudyPoint = null; // 인정학습점수(학습포인트)
   }
   // 강사 > 강사선택
-  if (d.instructorAssignType === 'REGISTERED') {
-    d.instructorName = null; // 강사 직접입력
-  }
+  // if (d.instructorAssignType === 'REGISTERED') {
+  //   d.instructorName = null; // 강사 직접입력
+  // }
   // 1인당 교육비 > 미사용
   if (d.isUseTrainingCostPerPerson === false) {
     d.trainingCostPerPerson = null; // 1인당 교육비(원)
@@ -1637,11 +1643,7 @@ export const formDataToRequestData = (d: LearningSequence) => {
     d.learningStartDateTime = d.learningStartRange?.from;
     d.learningEndDateTime = d.learningStartRange?.to;
   }
-  //
 
-  // return {
-  //   ...d,
-  // };
   return {
     tenantIds: d.tenantList ? d.tenantList?.map((x: any) => x.tenantId) : [],
     targetList: d.targetList,

@@ -35,7 +35,7 @@ function RouteComponent() {
       content: <TypeSelectContent />,
     });
   }, [openModal]);
-  return <div>학습자원 조회 유형 선택 팝업</div>;
+  return <div>교육자원 조회 유형 선택 팝업</div>;
 }
 
 const EbookContent = () => {
@@ -158,11 +158,11 @@ const TypeSelectContent = () => {
   return (
     <ModalContainer>
       {/* 퍼블수정 20240418 : ModalTitle 추가, title_wrap 영역 삭제 S */}
-      <ModalTitle>{'학습자원 유형 선택'}</ModalTitle>
+      <ModalTitle>{'교육자원 유형 선택'}</ModalTitle>
       <ModalBody>
         <div className={styles.wrap}>
           {/* <div className={styles.title_wrap}>
-            <h2 className={styles.title}>{'등록할 학습자원의 유형을 선택하세요.'}</h2>
+            <h2 className={styles.title}>{'등록할 교육자원의 유형을 선택하세요.'}</h2>
           </div> */}
           <OptionCard
             cols={5}

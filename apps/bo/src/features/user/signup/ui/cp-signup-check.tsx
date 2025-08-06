@@ -1,19 +1,17 @@
-import { useEffect, useState } from 'react';
 import { cn } from '@learnway/shared';
 import { t } from 'i18next';
+import { useEffect, useState } from 'react';
 
-import { Stepper } from '@learnway/ui/stepper';
-import styles from './cp-signup-check.module.css';
-import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
-import { FormRow } from '@shared/ui';
-import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
-import { useDynamicFormContext } from '@learnway/hooks';
 import { useSignupStore } from '@features/user/signup/store/use-signup-store';
 import { cpItems } from '@features/user/signup/ui/signup-select';
-import { useRouter } from '@tanstack/react-router';
-// TODO: Fix unknown imports: DynamicFormField from '@learnway/ui'
+import { DynamicFormConfig, useDynamicForm, useDynamicFormContext } from '@learnway/hooks';
+import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css';
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
+import { Stepper } from '@learnway/ui/stepper';
+import { FormRow } from '@shared/ui/form';
+import { useRouter } from '@tanstack/react-router';
+import styles from './cp-signup-check.module.css';
 
 // TODO API
 export const CPSignupCheck = () => {
@@ -28,7 +26,8 @@ export const CPSignupCheck = () => {
     onFormChange,
     getValues,
     clearFormError,
-    setFormError } = useDynamicForm(formConfig);
+    setFormError,
+  } = useDynamicForm(formConfig);
   const { setBusinessCode, setCpPage, reset } = useSignupStore((state) => state);
 
   const handleOnSubmit = (data: any) => {
@@ -103,7 +102,10 @@ const formConfig: DynamicFormConfig = {
       label: t('사업자 등록 번호'),
       placeholder: '숫자 10자리 입력(1234567890)',
       value: '',
-      maxLength: 10 },
+      maxLength: 10,
+    },
   ],
   validator: {
-    businessCode: true } };
+    businessCode: true,
+  },
+};

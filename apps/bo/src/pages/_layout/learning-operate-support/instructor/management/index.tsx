@@ -5,9 +5,10 @@ import {
 } from '@features/learning-operate-support/instructor-tutor/instructor-management';
 import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
-import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
+import { EnPageMode } from '@shared/types/enums';
+
+import { ContentsButtons, MainContents, PageContainer } from '@shared/ui/layout';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { EnPageMode } from '@types';
 import { t } from 'i18next';
 
 export const Route = createFileRoute('/_layout/learning-operate-support/instructor/management/')({

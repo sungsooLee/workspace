@@ -1,5 +1,5 @@
 // IA109 / NLP_BO_CMS_1027, NLP_BO_CMS_1009
-import { usePutETCUpdate } from '@entities/learning-resource';
+import { ContentInformation, PutETCUpdateRes, usePutETCUpdate } from '@entities/learning-resource';
 import {
   ContentTopButtons,
   convertToETCForm,
@@ -11,8 +11,9 @@ import {
 import { useDynamicForm2 } from '@learnway/hooks';
 import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
-import { ContentsButtons, MainContents, PageContainer, SubContents } from '@shared/ui';
-import { ContentCreateType, ContentInformation, PutETCUpdateRes } from '@types';
+import { ContentCreateType } from '@shared/types/enums';
+
+import { ContentsButtons, MainContents, PageContainer, SubContents } from '@shared/ui/layout';
 import { t } from 'i18next';
 import { useEffect } from 'react';
 
@@ -21,7 +22,7 @@ interface Props {
   hasMapping?: boolean;
 }
 
-function EtcViewComponent({ content: content, hasMapping }: Props) {
+function EtcViewComponent({ content, hasMapping }: Props) {
   const { confirm: openConfirm } = useModal();
 
   const { provider, onSubmit, updateFormData, formState, getValues } = useDynamicForm2();

@@ -1,4 +1,5 @@
-import { ContentAddInfoType, HtmlVideoMetadataReq, Tag } from '@types';
+import { HtmlVideoMetadataReq, Tag } from '@entities/learning-resource';
+import { ContentAddInfoType } from '@shared/types/enums';
 
 export const getPayloadFromHtmlMetadataSubmit = (options: { data: any; contentUuid: string }) => {
   console.log(options.data);
@@ -21,16 +22,16 @@ export const getPayloadFromHtmlMetadataSubmit = (options: { data: any; contentUu
     vendorCoordinatorName: options.data.vendorCoordinatorName,
     vendorTelNo: options.data.vendorTelNo,
     isCourseUsed: options.data.isCourseUsed,
-    isContentSecured: options.data.isContentSecured,
     isInspected: options.data.isInspected,
     isCopyrighted: options.data.isCopyrighted,
-    isSecured: true,
     isDeleted: false,
     isOpened: true,
     tags: options.data.tags.map((tag: Tag | string) => ({
-      tagName: typeof tag === 'string' ? tag : tag.tagName })),
+      tagName: typeof tag === 'string' ? tag : tag.tagName,
+    })),
     contentAddInfoType: ContentAddInfoType.VIDEO_ADD_INFO,
-    contentAddInfo: options.data.contentAddInfo };
+    contentAddInfo: options.data.contentAddInfo,
+  };
 
   console.log('payload ===>', payload);
 

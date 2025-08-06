@@ -1,11 +1,12 @@
 import { CurriculumList } from '@features/learning-operate/curriculum/curriculum-management/components/curriculum-list';
-import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
+import { Button } from '@learnway/ui/button';
+import { ContentsButtons, MainContents, PageContainer } from '@shared/ui/layout';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { t } from 'i18next';
-import { Button } from '@learnway/ui/button';
 
 export const Route = createFileRoute('/_layout/learning-operate/curriculum/')({
-  component: RouteComponent });
+  component: RouteComponent,
+});
 
 function RouteComponent() {
   const router = useRouter();
@@ -19,7 +20,8 @@ function RouteComponent() {
           size="sm"
           onClick={() => {
             router.navigate({
-              to: '/learning-operate/curriculum/management' });
+              to: '/learning-operate/curriculum/management',
+            });
           }}
         />
       </ContentsButtons>

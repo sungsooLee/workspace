@@ -1,6 +1,7 @@
 import { PMSApiPrefix } from '@learnway/config';
 import { httpService } from '@learnway/shared';
-import { PageableContent, UsersParams } from '@types';
+import { PageableContent } from '../../../shared/types/page-meta';
+import { UsersParams } from '../../../shared/types/user';
 
 export default class UsersService {
   static fetchListUsers(params: UsersParams) {

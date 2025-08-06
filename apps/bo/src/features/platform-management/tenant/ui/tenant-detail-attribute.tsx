@@ -12,21 +12,21 @@ import { FormSubTitle } from '@learnway/ui/base-form';
 import { CheckboxGroupFormField, RadioGroupFormField } from '@learnway/ui/form-field';
 import { Tooltip } from '@learnway/ui/tooltip';
 
-import { FormRow } from '@shared/ui';
-
 import { Button } from '@learnway/ui/button';
 import { ContentsRow } from '@learnway/ui/contents-row';
 import { Input } from '@learnway/ui/input';
 import { useModal } from '@learnway/ui/modal';
 import { Switch } from '@learnway/ui/switch';
-import { EnDeviceType, EnUseCategory } from '@types';
+import { EnDeviceType, EnUseCategory } from '@shared/types/enums';
 
 /** Hook 정의 */
 import {
   useTenantAttributeCompany,
   useUpdateTenantAttributeCompany,
 } from '@entities/tenant/service/tenant-attribute.hook';
-import { FormDisplay } from '@features/form';
+
+import { FormDisplay, FormRow } from '@shared/ui/form';
+
 import { IcoAlertCircle } from '@learnway/icons';
 
 /**

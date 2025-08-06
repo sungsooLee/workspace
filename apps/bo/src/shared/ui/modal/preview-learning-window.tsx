@@ -2,7 +2,8 @@ import { useQuery } from '@tanstack/react-query';
 import { FC, useEffect, useState } from 'react';
 
 import { useGetCurriculumDetail } from '@entities/curriculum';
-import { learningResourceQueryOptions } from '@entities/learning-resource';
+import { ContentInformation, learningResourceQueryOptions } from '@entities/learning-resource';
+import { useFileManager } from '@learnway/hooks';
 import {
   CmsContentProgressMultiRes,
   CmsEnContentType,
@@ -10,10 +11,8 @@ import {
   CmsImageItem,
 } from '@learnway/types';
 import { LearnwayLearningWindowLayout, useLearningWindow } from '@learnway/ui/learning-window';
-import { ContentInformation, ContentType, GetVideoResourceRes } from '@types';
-import { Button } from '@learnway/ui/button';
-import { useFileManager } from '@learnway/hooks';
 import { useModal } from '@learnway/ui/modal';
+import { ContentType } from '@shared/types/enums';
 
 /**
  *

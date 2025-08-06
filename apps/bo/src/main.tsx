@@ -6,13 +6,13 @@ import { appConfig, queryConfig } from '@learnway/config';
 import '@learnway/config/style/font.css';
 import { usePageRouteState } from '@learnway/hooks';
 
-import { GlobalLoadingIndicator } from '@shared/ui';
 import { AppConfigProvider } from './app/app-config-provider';
 import { routeTree } from './routeTree.gen';
 
 import { registerToastHandler } from '@learnway/shared';
 import { showToast } from '@learnway/ui/stores';
-import type { PageMeta } from './types';
+import type { PageMeta } from '@shared/types/page-meta';
+import { GlobalLoadingIndicator } from '@shared/ui/components';
 
 const isLocal = process.env.NODE_ENV === 'local';
 

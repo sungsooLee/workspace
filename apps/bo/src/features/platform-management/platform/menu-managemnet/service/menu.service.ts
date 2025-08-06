@@ -1,7 +1,6 @@
 import { TreeNode } from '@learnway/ui/tree-view';
+import { EnGlobalConst } from '@shared/types/enums';
 import { t } from 'i18next';
-import { EnGlobalConst } from '@types';
-// TODO: Fix unknown imports: findNodeByKey, findNodePath from '@learnway/ui'
 
 export const getMenuTile = (node: any, siteScope: string) => {
   console.log(node);
@@ -47,7 +46,8 @@ export const transformApiDataToTreeData = (apiData: any, siteScope: string) => {
         isShortCutArea: node.isShortCutArea,
         isHiddenMenu: node.isHiddenMenu,
 
-        children: node.children || [] };
+        children: node.children || [],
+      };
 
       // 자식 노드가 있는 경우 재귀적으로 변환
       if (node.children && node.children.length > 0) {
@@ -93,7 +93,8 @@ export const transformApiDataToApiTreeData = (apiData: any) => {
         isUsed: node?.isUsed,
         apiDesc: node?.apiDesc,
         children: node.children || [],
-        fullPath: node?.fullPath };
+        fullPath: node?.fullPath,
+      };
 
       // 자식 노드가 있는 경우 재귀적으로 변환
       if (node.children && node.children.length > 0) {
@@ -131,7 +132,8 @@ export const transformTreeDataToApiFormat = (treeData: any) => {
         isMobileExposed: node.isMobileExposed !== false,
         isShortCutArea: node.isShortCutArea === true,
         sortOrder: node.sortOrder || 0,
-        children: node.children || [] };
+        children: node.children || [],
+      };
 
       // 자식 노드가 있는 경우 재귀적으로 변환
       if (node.children && node.children.length > 0) {

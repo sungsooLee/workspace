@@ -1,19 +1,21 @@
-/* IA118 / NLP_BO_CMS_1220 - 교육자원 > 문제은행 등록 및 상세 */
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { ContentCreateType, EnFormMode, QuestionBasicInfoDetail } from '@types';
+/* IA118 / NLP_BO_CMS_1220 - 나의 학습자원 > 문제은행 등록 및 상세 */
+import { QuestionBasicInfoDetail } from '@entities/learning-resource';
+import { ContentTopButtons, getTooltipContent } from '@features/learning-resource';
+import { useLearningResourceQuestionDetailForm } from '@features/learning-resource/learning-resource-management/service/learning-resource-question-detail-from.hook';
+import {
+  QuestionBankTabFormRef,
+  QuestionTab,
+} from '@features/learning-resource/learning-resource-management/service/question-bank/type';
+import { LearningResourceQuestionBankDetail } from '@features/learning-resource/learning-resource-management/ui/learning-resource-question-bank-detail';
+import { LearningResourceQuestionBankQuestion } from '@features/learning-resource/learning-resource-management/ui/learning-resource-question-bank-question';
 import { useDynamicForm2 } from '@learnway/hooks';
 import { useModal } from '@learnway/ui/modal';
 import { Tabs } from '@learnway/ui/tabs';
-import { ContentsButtons, MainContents, PageContainer } from '@shared/ui';
-import { ContentTopButtons, getTooltipContent } from '@features/learning-resource';
-import {
-  QuestionTab,
-  QuestionBankTabFormRef,
-} from '@features/learning-resource/learning-resource-management/service/question-bank/type';
-import { useLearningResourceQuestionDetailForm } from '@features/learning-resource/learning-resource-management/service/learning-resource-question-detail-from.hook';
-import { LearningResourceQuestionBankDetail } from '@features/learning-resource/learning-resource-management/ui/learning-resource-question-bank-detail';
-import { LearningResourceQuestionBankQuestion } from '@features/learning-resource/learning-resource-management/ui/learning-resource-question-bank-question';
+import { ContentCreateType, EnFormMode } from '@shared/types/enums';
+
+import { ContentsButtons, MainContents, PageContainer } from '@shared/ui/layout';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   content?: QuestionBasicInfoDetail;
@@ -31,7 +33,7 @@ function ExamPoolViewComponent({ content }: Props) {
   const contentUuid = content?.contentUuid ?? '';
   const isExamMapping = watch('isExamMapping');
 
-  const { formMode, setBaseInfo } = useLearningResourceQuestionDetailForm();
+  const [saved, setSaved] = useState<boolean>(false);
 
   const baseInfoRef = useRef<QuestionBankTabFormRef>(null);
   const questionInfoRef = useRef<QuestionBankTabFormRef>(null);
@@ -44,8 +46,8 @@ function ExamPoolViewComponent({ content }: Props) {
 
   const handleBeforeTabChange = useCallback(
     async (currentTabKey: string, nextTabKey: string) => {
-      if (nextTabKey === QuestionTab.QUESTION_ITEM && formMode === EnFormMode.ADD) {
-        alert({
+      if (nextTabKey === QuestionTab.QUESTION_ITEM && !saved) {
+        await alert({
           title: t('입력한 정보를 저장하세요.'),
           content: t('저장된 적 없는 경우 다음 단계로 이동할 수 없습니다.'),
         });
@@ -60,7 +62,7 @@ function ExamPoolViewComponent({ content }: Props) {
 
       return true;
     },
-    [contentUuid],
+    [contentUuid, saved],
   );
 
   const tabItems = useMemo(
@@ -72,6 +74,7 @@ function ExamPoolViewComponent({ content }: Props) {
           <LearningResourceQuestionBankDetail
             ref={baseInfoRef}
             form={basicInfoForm}
+            content={content}
             isExamMapping={isExamMapping}
           />
         ),
@@ -82,6 +85,7 @@ function ExamPoolViewComponent({ content }: Props) {
         content: (
           <LearningResourceQuestionBankQuestion
             ref={questionInfoRef}
+            content={content}
             isExamMapping={isExamMapping}
           />
         ),
@@ -99,7 +103,9 @@ function ExamPoolViewComponent({ content }: Props) {
   };
 
   useEffect(() => {
-    setBaseInfo(contentUuid);
+    if (contentUuid) {
+      setSaved(true);
+    }
   }, [contentUuid]);
 
   return (

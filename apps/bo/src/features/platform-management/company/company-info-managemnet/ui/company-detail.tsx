@@ -1,17 +1,21 @@
 import { useCreateCompany, useFetchCompany, useUpdateCompany } from '@entities/companies';
 import CompaniesService from '@entities/companies/api/companies';
-import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
-import { FormDisplay } from '@features/form/ui/form-display';
 import { CODE_GROUP, DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
 import { cn, DATE_TIME_FORMAT, getDateToString, getStringToDate } from '@learnway/shared';
 import { FormGuideText, FormSubTitle } from '@learnway/ui/base-form';
 import { RadioGroupFormField } from '@learnway/ui/form-field';
 import { GridBox } from '@learnway/ui/grid';
-import { FormRow, UserGroupChoiceModal, UserGroupTabsChoiceModal } from '@shared/ui';
+import { EnFormMode, EnGlobalConst } from '@shared/types/enums';
+import {
+  DuplicateCheckInputFormField,
+  DuplicateState,
+  FormDisplay,
+  FormRow,
+} from '@shared/ui/form';
+import { UserGroupChoiceModal, UserGroupTabsChoiceModal } from '@shared/ui/modal';
 import { LoginRestrictTimeSettingModal } from '@shared/ui/modal/login-restrict-time-setting-modal';
 import { useRouter, useRouterState } from '@tanstack/react-router';
 import { ColumnDef, createColumnHelper, Table } from '@tanstack/react-table';
-import { EnFormMode, EnGlobalConst } from '@types';
 import dayjs from 'dayjs';
 import { t } from 'i18next';
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
@@ -19,7 +23,6 @@ import { LoginAuthenticationSettingInformation } from './login-authentication-se
 
 import dynamicFormStyles from '@learnway/styles/bo/assets/styles/modules/dynamic.form.module.css';
 import formStyles from '@learnway/styles/bo/assets/styles/modules/form.module.css'; // form
-// TODO: Fix unknown imports: ContentsRowItem from '@learnway/ui'
 import { Button } from '@learnway/ui/button';
 import { ContentsRow, ContentsRowItem } from '@learnway/ui/contents-row';
 import { useModal } from '@learnway/ui/modal';

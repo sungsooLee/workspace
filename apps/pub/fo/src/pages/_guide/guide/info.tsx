@@ -14,6 +14,7 @@ function RouteComponent() {
         <br />- 퍼블 작업 폴더 : pub &gt; fo(FO) / pub &gt; bo(BO)
         <br />- FO 기본서체 : 'NanumBarunGothic' / BO 기본서체 : 'Pretendard Variable' / 다국어 :
         기본 시스템 폰트
+        <br />- FO는 적응형과 반응형으로 혼재되어있어, 반응형은 디바이스에서 체크해야한다.
       </div>
       <h3 className="guide_tit3">체크사항</h3>
       <ul className="info_ul">

@@ -4,7 +4,8 @@ import { cn } from '@learnway/shared';
 import styles from '@learnway/styles/bo/assets/styles/modules/popup-contents.module.css';
 import { ShuttleTreeToChipsV2, useShuttleTreeToChips } from '@learnway/ui/shuttle-tree-to-chips-v2';
 import { SelectedChip } from '@learnway/ui/type';
-import { CombineUserGroup } from '@types';
+import { CombineUserGroup } from '@shared/types/user-group';
+
 import { useEffect, useMemo } from 'react';
 
 import { transformApiDataToTreeData } from '@learnway/ui/tree-view';

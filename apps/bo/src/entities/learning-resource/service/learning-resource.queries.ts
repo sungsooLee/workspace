@@ -1,4 +1,5 @@
 import { getQuerySkipToken } from '@learnway/shared';
+import LearningResourceService from '../api/learning-resource';
 import {
   BlogCreateReq,
   BlogUpdateReq,
@@ -35,8 +36,7 @@ import {
   QuestionStatusUpdateReq,
   TestPaperBasicInfoSaveReq,
   UpdateQuestionBankCountInfoReq,
-} from '@types';
-import LearningResourceService from '../api/learning-resource';
+} from '../model/learning-resource.types';
 
 export const queryKeys = {
   channelsByTenantId: ['channels-by-tenant-id'] as const,

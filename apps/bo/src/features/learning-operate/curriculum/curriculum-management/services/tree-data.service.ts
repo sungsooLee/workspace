@@ -1,6 +1,5 @@
+import { CurriculumDetailResponse, CurriculumResponse } from '@entities/curriculum';
 import { TreeNode } from '@learnway/ui/tree-view';
-import { CurriculumDetailResponse, CurriculumResponse } from '@types';
-// TODO: Fix unknown imports:  from '@learnway/ui'
 
 /**
  * 커리큘럼 데이터를 TreeNode 배열로 변환하는 서비스
@@ -36,8 +35,10 @@ export class TreeDataService {
         coordinatorTelNo: curriculum.coordinatorTelNo,
         isVendored: curriculum.isVendored,
         vendorCoordinatorName: curriculum.vendorCoordinatorName,
-        vendorTelNo: curriculum.vendorTelNo },
-      children: [] };
+        vendorTelNo: curriculum.vendorTelNo,
+      },
+      children: [],
+    };
 
     // CurriculumDetailResponse인지 확인 (moduleList 속성이 있는지)
     const detailResponse = curriculum as CurriculumDetailResponse;
@@ -68,7 +69,8 @@ export class TreeDataService {
                   sortOrder: item.sortOrder,
                   isDummy: item.isDummy,
                   mappingCurriculumType: item.mappingCurriculumType,
-                  moduleIndex: index },
+                  moduleIndex: index,
+                },
                 children: item.lessonList
                   ? item.lessonList.map((lesson, lessonIndex: number) => ({
                       id: `lesson-${lesson.lessonId}`,
@@ -86,9 +88,12 @@ export class TreeDataService {
                         mappingCurriculumType: lesson.mappingCurriculumType,
                         moduleType: item.moduleType,
                         sortOrder: lesson.sortOrder || lessonIndex + 1,
-                        moduleId: item.moduleId },
-                      children: [] }))
-                  : [] };
+                        moduleId: item.moduleId,
+                      },
+                      children: [],
+                    }))
+                  : [],
+              };
 
             case 'LESSON':
               // moduleList에 있지만 실제로는 레슨인 경우 (커리큘럼 바로 아래 레슨)
@@ -113,8 +118,10 @@ export class TreeDataService {
                   description: item.lessonDescription,
                   mappingCurriculumType: item.mappingCurriculumType,
                   sortOrder: item.sortOrder,
-                  moduleId: item.moduleId },
-                children: [] };
+                  moduleId: item.moduleId,
+                },
+                children: [],
+              };
 
             default:
               console.warn(`Unknown mappingCurriculumType: ${item.mappingCurriculumType}`);
@@ -138,7 +145,8 @@ export class TreeDataService {
                   sortOrder: item.sortOrder,
                   isDummy: item.isDummy,
                   mappingCurriculumType: item.mappingCurriculumType,
-                  moduleIndex: index },
+                  moduleIndex: index,
+                },
                 children: item.lessonList
                   ? item.lessonList.map((lesson, lessonIndex: number) => ({
                       id: `lesson-${lesson.lessonId}`,
@@ -156,9 +164,12 @@ export class TreeDataService {
                         mappingCurriculumType: lesson.mappingCurriculumType,
                         moduleType: item.moduleType,
                         sortOrder: lesson.sortOrder || lessonIndex + 1,
-                        moduleId: item.moduleId },
-                      children: [] }))
-                  : [] };
+                        moduleId: item.moduleId,
+                      },
+                      children: [],
+                    }))
+                  : [],
+              };
           }
         })
         .filter(Boolean); // null/undefined 항목 제거
@@ -250,7 +261,8 @@ export class TreeDataService {
 
     return {
       isValid: errors.length === 0,
-      errors };
+      errors,
+    };
   }
 
   /**
@@ -269,7 +281,8 @@ export class TreeDataService {
     // 기본적으로 INSIDE로 설정 (필요시 로직 수정 가능)
     return {
       node,
-      dropPosition: 'INSIDE' };
+      dropPosition: 'INSIDE',
+    };
   }
 }
 

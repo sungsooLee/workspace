@@ -8,7 +8,10 @@ import {
   useMoveDepartment,
   useUpdateDepartment,
 } from '@entities/department';
-import { DuplicateCheckInputFormField, DuplicateState } from '@features/form';
+
+import { DuplicateCheckInputFormField, DuplicateState, FormRow } from '@shared/ui/form';
+import { UserChoiceModal } from '@shared/ui/modal';
+
 import { findOrganizationPathById } from '@features/platform-management/company';
 import { transformDepartmentApiDataToTreeData } from '@features/platform-management/company/company-organization-management/service/company-organization.service';
 import { DynamicFormConfig, useDynamicForm } from '@learnway/hooks';
@@ -21,9 +24,8 @@ import { ChipListModalSelectorFormField, TextareaFormField } from '@learnway/ui/
 import { Input } from '@learnway/ui/input';
 import { Tabs } from '@learnway/ui/tabs';
 import { TreeBox, TreeContainer, TreeEventPayload, TreeNode } from '@learnway/ui/tree-view';
-import { FormRow, UserChoiceModal } from '@shared/ui';
+import { EnFormMode } from '@shared/types/enums';
 import { useQueryClient } from '@tanstack/react-query';
-import { EnFormMode } from '@types';
 import { t } from 'i18next';
 import { useEffect, useState } from 'react';
 import { useWatch } from 'react-hook-form';

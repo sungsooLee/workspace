@@ -1,6 +1,8 @@
 import type { UseMutationResult, UseQueryOptions, UseQueryResult } from '@tanstack/react-query';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
+import { PaginationResponse } from '@shared/types/api';
+import { MutationHookOptions } from '@shared/types/react-query';
 import {
   Course,
   CourseConfig,
@@ -9,9 +11,7 @@ import {
   CoursePopupListItem,
   CoursePopupQueryParams,
   CoursesQueryParams,
-  MutationHookOptions,
-  PaginationResponse,
-} from '../../../types';
+} from '../model/course.types';
 import { mutateOptions, queryOptions } from './course.queries';
 
 export const useFetchCourseAndConfig = (id: number) => {
@@ -75,6 +75,19 @@ export const useCopyCourse = (
 ): UseMutationResult<Course, Error, { courseId: number; tenantId: number }, unknown> => {
   return useMutation({
     ...mutateOptions.copy(),
+    ...options,
+  });
+};
+/**
+ * 과정을 번역하는 뮤테이션 훅.
+ * 성공 시 'showSaveComplete' 모달을 표시합니다.
+ * @param [options] - 추가 뮤테이션 설정 옵션.
+ */
+export const useTranslateCourse = (
+  options?: MutationHookOptions<Course, Error, { courseId: number; tenantId: number }, unknown>,
+): UseMutationResult<Course, Error, { courseId: number; tenantId: number }, unknown> => {
+  return useMutation({
+    ...mutateOptions.translate(),
     ...options,
   });
 };

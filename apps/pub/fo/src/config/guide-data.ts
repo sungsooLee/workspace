@@ -400,16 +400,7 @@ export const guideData = [
     lastUpdateDate: '',
     remarks: '- EN',
   },
-  {
-    screenId: 'NLP_FO_ARM_MR_1000',
-    screenName: 'M_알림',
-    layoutType: '', // 자동 분리됨 작성x
-    pageId: '/',
-    pageType: 'Pop-up',
-    completionDate: '2025-03-27',
-    lastUpdateDate: '',
-    remarks: '- notification-m\n- notification-popup-m',
-  },
+
   {
     screenId: 'NLP_FO_MYP_MR_1003',
     screenName: 'M_My_비밀번호 확인_KR',
@@ -558,9 +549,9 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: '',
     pageType: '',
-    completionDate: '',
+    completionDate: '2025-07-08',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- dashboard.tsx (자료실)',
   },
   {
     screenId: 'NLP_FO_CLA_1008_2',
@@ -568,9 +559,9 @@ export const guideData = [
     layoutType: '', // 자동 분리됨 작성x
     pageId: '',
     pageType: '',
-    completionDate: '',
+    completionDate: '2025-07-08',
     lastUpdateDate: '',
-    remarks: '',
+    remarks: '- dashboard.tsx (자료실)',
   },
   {
     screenId: 'NLP_FO_CHB_1000',
@@ -1799,8 +1790,18 @@ export const guideData = [
     pageId: '/',
     pageType: 'Pop-up',
     completionDate: '2025-03-20',
-    lastUpdateDate: '2025-03-20',
-    remarks: 'notification.tsx',
+    lastUpdateDate: '2025-03-20\n2025-08-06',
+    remarks: '- notification\n- notification-contents',
+  },
+  {
+    screenId: 'NLP_FO_ARM_MR_1000',
+    screenName: 'M_알림',
+    layoutType: '', // 자동 분리됨 작성x
+    pageId: '/',
+    pageType: 'Pop-up',
+    completionDate: '2025-03-27',
+    lastUpdateDate: '2025-08-06',
+    remarks: '- notification\n- notification-contents',
   },
   {
     screenId: 'NLP_FO_LOG_1000',
@@ -2221,6 +2222,7 @@ export const guideData = [
     completionDate: '2025-03-05',
     lastUpdateDate: '',
     remarks: '- 영문(국문과 동일)',
+    cancel: true,
   },
   {
     screenId: 'NLP_FO_LOG_1107',
@@ -2231,6 +2233,7 @@ export const guideData = [
     completionDate: '2025-03-05',
     lastUpdateDate: '',
     remarks: '- 버튼 클릭\n- google-qrcode-popup.tsx',
+    cancel: true,
   },
   {
     screenId: 'NLP_FO_LOG_1108',
@@ -2241,6 +2244,7 @@ export const guideData = [
     completionDate: '2025-03-07	',
     lastUpdateDate: '',
     remarks: '- 페이지내 버튼 클릭\n- google-key-popup.tsx',
+    cancel: true,
   },
   {
     screenId: 'NLP_FO_LOG_1109',
@@ -2251,6 +2255,7 @@ export const guideData = [
     completionDate: '2025-03-07',
     lastUpdateDate: '',
     remarks: '- 페이지내 버튼 클릭\n- google-input-popup.tsx',
+    cancel: true,
   },
   {
     screenId: 'NLP_FO_LOG_1110',
@@ -2261,6 +2266,7 @@ export const guideData = [
     completionDate: '2025-03-07	',
     lastUpdateDate: '',
     remarks: '- 페이지내 버튼 클릭\n- google-cert-guide-popup.tsx',
+    cancel: true,
   },
   {
     screenId: 'NLP_FO_LOG_1111',

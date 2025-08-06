@@ -1,16 +1,14 @@
 import {
   learningResourceQueryOptions,
+  MutationResponse,
+  QuestionListForRetrieveReq,
+  QuestionListForRetrieveRes,
+  QuestionsCopyReq,
   useCopyQuestionsToExamPaper,
 } from '@entities/learning-resource';
 import { useModal } from '@learnway/ui/modal';
 import { useToast } from '@learnway/ui/toast';
 import { useQueryClient } from '@tanstack/react-query';
-import {
-  MutationResponse,
-  QuestionListForRetrieveReq,
-  QuestionListForRetrieveRes,
-  QuestionsCopyReq,
-} from '@types';
 import { t } from 'i18next';
 import { useCallback, useState } from 'react';
 

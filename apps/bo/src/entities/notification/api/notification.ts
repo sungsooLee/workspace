@@ -1,5 +1,5 @@
 import { httpService } from '@learnway/shared';
-import { Notification } from '@types';
+import { Notification } from '../model/notification.types';
 
 /**
  * GNB > 알람

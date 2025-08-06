@@ -1,10 +1,9 @@
-import { useState, useCallback, useRef } from 'react';
+import { MAPPING_CURRICULUM_TYPE } from '@entities/curriculum';
 import { TreeNode } from '@learnway/ui/tree-view';
-import { FormState, NODE_CHILDREN_MAP } from '../types/form.types';
 import { FROM_STATUS } from '@shared/const';
-import { MAPPING_CURRICULUM_TYPE } from '@types';
+import { useCallback, useRef, useState } from 'react';
 import { findParentNode } from '../services';
-// TODO: Fix unknown imports:  from '@learnway/ui'
+import { FormState } from '../types/form.types';
 
 interface UseCurriculumFormProps {
   clearAllValidators: () => void;
@@ -18,7 +17,8 @@ export const useCurriculumForm = ({ clearAllValidators, setFormKey }: UseCurricu
     activeFormType: null,
     selectedNode: null,
     parentNode: null,
-    isEditing: false });
+    isEditing: false,
+  });
 
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -29,7 +29,8 @@ export const useCurriculumForm = ({ clearAllValidators, setFormKey }: UseCurricu
         activeFormType: null,
         selectedNode: null,
         parentNode: null,
-        isEditing: false });
+        isEditing: false,
+      });
       setFormStatus(FROM_STATUS.NONE);
 
       clearAllValidators();
@@ -38,7 +39,8 @@ export const useCurriculumForm = ({ clearAllValidators, setFormKey }: UseCurricu
         activeFormType: nodeType,
         selectedNode: parentNode,
         parentNode,
-        isEditing: false });
+        isEditing: false,
+      });
       setFormStatus(FROM_STATUS.CREATE);
       setFormKey((prev) => prev + 1);
     },
@@ -52,7 +54,8 @@ export const useCurriculumForm = ({ clearAllValidators, setFormKey }: UseCurricu
       activeFormType: null,
       selectedNode: null,
       parentNode: null,
-      isEditing: false });
+      isEditing: false,
+    });
     setFormStatus(FROM_STATUS.NONE);
     setFormKey((prev) => prev + 1);
   }, [clearAllValidators, setFormKey]);
@@ -66,7 +69,8 @@ export const useCurriculumForm = ({ clearAllValidators, setFormKey }: UseCurricu
           activeFormType: null,
           selectedNode: null,
           parentNode: null,
-          isEditing: false });
+          isEditing: false,
+        });
         setFormStatus(FROM_STATUS.NONE);
         setFormKey((prev) => prev + 1);
         return;
@@ -76,7 +80,8 @@ export const useCurriculumForm = ({ clearAllValidators, setFormKey }: UseCurricu
         activeFormType: node.type as MAPPING_CURRICULUM_TYPE,
         selectedNode: node,
         parentNode: findParentNode(treeData, node.parentId),
-        isEditing: true });
+        isEditing: true,
+      });
       setFormStatus(FROM_STATUS.EDIT);
       setFormKey((prev) => prev + 1);
     },
@@ -88,7 +93,8 @@ export const useCurriculumForm = ({ clearAllValidators, setFormKey }: UseCurricu
       activeFormType: null,
       selectedNode: null,
       parentNode: null,
-      isEditing: false });
+      isEditing: false,
+    });
     clearAllValidators();
     setFormStatus(FROM_STATUS.NONE);
   }, [clearAllValidators]);
@@ -104,5 +110,6 @@ export const useCurriculumForm = ({ clearAllValidators, setFormKey }: UseCurricu
     updateFormStateForNode,
     resetFormState,
     isDndActive,
-    setIsDndActive };
+    setIsDndActive,
+  };
 };

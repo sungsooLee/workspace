@@ -2,7 +2,7 @@ import { createLazyFileRoute, useRouter, useRouterState } from '@tanstack/react-
 import { t } from 'i18next';
 import { useRef, useState } from 'react';
 
-import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui';
+import { ContentsButtons, LinkBox, MainContents, PageContainer } from '@shared/ui/layout';
 
 import styles from '@learnway/styles/bo/assets/styles/modules/page-contents.module.css';
 import { Button } from '@learnway/ui/button';
@@ -18,7 +18,7 @@ import {
   TenantDetailWidget,
 } from '@features/platform-management/tenant';
 
-import { EnTenantDetailTabKey } from '@types';
+import { EnTenantDetailTabKey } from '@shared/types/enums';
 
 export const Route = createLazyFileRoute('/_layout/tenant/management/detail')({
   component: RouteComponent,

@@ -1,5 +1,3 @@
-import { Dispatch, FormEventHandler, SetStateAction } from 'react';
-import { FieldValues, UseFormGetValues } from 'react-hook-form';
 import {
   EnQuestionLevel,
   EnQuestionType,
@@ -7,8 +5,10 @@ import {
   QuestionCountInfo,
   TestPaperBasicInfoDetail,
   TestPaperBasicInfoSaveReq,
-} from '@types';
+} from '@entities/learning-resource';
 import { DynamicFormProvider, UseDynamicFormResult } from '@learnway/hooks';
+import { Dispatch, FormEventHandler, SetStateAction } from 'react';
+import { FieldValues, UseFormGetValues } from 'react-hook-form';
 
 export enum PageMode {
   CREATE = 'CREATE',

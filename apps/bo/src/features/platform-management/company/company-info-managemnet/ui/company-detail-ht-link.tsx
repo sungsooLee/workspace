@@ -6,14 +6,15 @@ import { FC, useCallback, useEffect, useState } from 'react';
 import { CompanyDetailHRUsergroup } from './company-detail-hr-usergroup';
 
 import { useGetCompanyUserGroups } from '@entities/user-group/service/user-group-company.hook';
-import { EnUserGroupType } from '@types';
 import { Button } from '@learnway/ui/button';
+import { EnUserGroupType } from '@shared/types/enums';
 
 const _global = {
   selectClick: (row: any) => {
     return;
   },
-  selectedUserGroupId: '' };
+  selectedUserGroupId: '',
+};
 
 interface CompanyDetailHRLinkProps {
   type: EnUserGroupType;
@@ -104,7 +105,8 @@ const columnsNext = [
     accessorKey: 'userCount',
     header: t('대상자'),
     cell: (info: any) => t('{{count}}명', { count: info.row.original.userCount.toLocaleString() }),
-    size: 115 },
+    size: 115,
+  },
   {
     name: 'userGroupId',
     header: t('선택'),
@@ -122,7 +124,9 @@ const columnsNext = [
       />
     ),
     meta: {
-      cellAlign: 'center' } },
+      cellAlign: 'center',
+    },
+  },
 ];
 
 export const LinkColumnsForGroup = [
@@ -131,7 +135,8 @@ export const LinkColumnsForGroup = [
     accessorKey: 'userGroupName',
     header: t('직군'),
     size: 115,
-    searchable: true },
+    searchable: true,
+  },
 ];
 export const LinkColumnsForRole = [
   {
@@ -139,13 +144,15 @@ export const LinkColumnsForRole = [
     accessorKey: 'userGroupSubName',
     header: t('직군'),
     size: 115,
-    searchable: true },
+    searchable: true,
+  },
   {
     name: 'userGroupName',
     accessorKey: 'userGroupName',
     header: t('직무'),
     size: 115,
-    searchable: true },
+    searchable: true,
+  },
 ];
 export const LinkColumnsForDesignation = [
   {
@@ -153,7 +160,8 @@ export const LinkColumnsForDesignation = [
     accessorKey: 'userGroupName',
     header: t('호칭'),
     size: 115,
-    searchable: true },
+    searchable: true,
+  },
 ];
 export const LinkColumnsForPosition = [
   {
@@ -161,5 +169,6 @@ export const LinkColumnsForPosition = [
     accessorKey: 'userGroupName',
     header: t('보직'),
     size: 115,
-    searchable: true },
+    searchable: true,
+  },
 ];
