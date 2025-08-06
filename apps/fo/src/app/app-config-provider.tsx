@@ -2,12 +2,10 @@ import { useMount } from 'ahooks';
 import { ReactNode, useEffect, useState } from 'react';
 
 import { API_FO_URI, initAxios, initI18N, initZod, setConfig } from '@learnway/config';
-import { useModal } from '@learnway/ui/modal';
+
+import { useFetchCodeGroups, useFetchI18nResource } from '@entities/platform';
+
 import { Spinner } from '@learnway/ui/spinner';
-
-import { useFetchCodeGroups, useFetchI18nResource } from '../entities/platform';
-import { useAuthSignin } from '../features/auth';
-
 import '../styles.css';
 
 declare global {
@@ -26,8 +24,8 @@ export function AppConfigProvider({ children }: AppConfigProviderProps) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { data: codeGroupData } = useFetchCodeGroups();
   const { data: i18nData } = useFetchI18nResource();
-  const { reissue } = useAuthSignin();
-  const { alert } = useModal();
+  // const { reissue } = useAuthSignin();
+  // const { alert } = useModal();
 
   useMount(async () => {
     // set api prefix by fo
@@ -42,11 +40,11 @@ export function AppConfigProvider({ children }: AppConfigProviderProps) {
       onRejected: async (error: any) => {
         const { config, response: errorResponse } = error;
         if (error?.code === 'ERR_NETWORK' || errorResponse?.status === 500) {
-          await alert({
-            title: '시스템 에러',
-            content: '시스템 관리자에게 문의하세요',
-            type: 'error',
-          });
+          // await alert({
+          //   title: '시스템 에러',
+          //   content: '시스템 관리자에게 문의하세요',
+          //   type: 'error',
+          // });
         }
         return Promise.reject(error);
       },
@@ -62,9 +60,8 @@ export function AppConfigProvider({ children }: AppConfigProviderProps) {
   }, [i18nData]);
 
   useEffect(() => {
-    if (!codeGroupData || !i18nData) {
-      return;
-    }
+    // codeGroupData, i18n 로딩
+    if (!codeGroupData || !i18nData) return;
 
     setIsLoading(false);
   }, [codeGroupData, i18nData]);

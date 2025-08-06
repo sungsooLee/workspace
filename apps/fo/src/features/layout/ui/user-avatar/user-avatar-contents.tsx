@@ -12,7 +12,7 @@ import { Button } from '@learnway/ui/button';
 import { useModal } from '@learnway/ui/modal';
 import { Switch } from '@learnway/ui/switch';
 
-import { useSetLanguage } from '@features/platform';
+import { useSetLanguage } from '@features/layout';
 
 import userMyStyles from '@learnway/styles/fo/features/layout/ui/user-avatar/user-my.module.css';
 
